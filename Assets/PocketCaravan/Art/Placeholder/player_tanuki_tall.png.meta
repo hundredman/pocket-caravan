@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c72a5299baf5d4a31a0884db4fc195d0
+guid: 216fc4adaa79a471089fdbb7e0e38f95
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4072776141119323231
-    second: merchant_tall_0
+      213: 1683963108862651472
+    second: player_tanuki_tall_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: merchant_tall_0
+      name: player_tanuki_tall_0
       rect:
         serializedVersion: 2
-        x: 3
+        x: 0
         y: 0
-        width: 10
-        height: 24
+        width: 16
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f5c7a156258658830800000000000000
-      internalID: 4072776141119323231
+      spriteID: 05cee968683ae5710800000000000000
+      internalID: 1683963108862651472
       vertices: []
       indices: 
       edges: []

@@ -320,7 +320,7 @@ namespace PocketCaravan.EditorTools
                             break;
                         case 'M':
                             var town = db.towns.Find(t => t.id == def.townId);
-                            var npc = Character($"장터 상인 ({(town != null ? town.displayName : "?")})", "merchant_tall", center, objects);
+                            var npc = Character($"장터 상인 ({(town != null ? town.displayName : "?")})", PlaceholderArt.MerchantSprite, center, objects);
                             npc.AddComponent<TownMarket>().town = town;
                             break;
                     }
@@ -342,13 +342,13 @@ namespace PocketCaravan.EditorTools
             }
 
             // 플레이어
-            var player = Character("Player", "player_tall", startPos, null);
+            var player = Character("Player", PlaceholderArt.PlayerSprite, startPos, null);
             var body = player.GetComponent<SpriteRenderer>();
             Object.DestroyImmediate(body);
             var bodyGo = new GameObject("Body");
             bodyGo.transform.SetParent(player.transform, false);
             var sr = bodyGo.AddComponent<SpriteRenderer>();
-            sr.sprite = LoadSprite("player_tall");
+            sr.sprite = LoadSprite(PlaceholderArt.PlayerSprite);
             sr.sortingOrder = 11;
             player.AddComponent<GridMover>();
             player.AddComponent<PlayerController>().body = sr;
