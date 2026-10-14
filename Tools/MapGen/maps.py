@@ -7,36 +7,56 @@ os.makedirs(OUT, exist_ok=True)
 
 
 def naru():
-    """예성 나루 마을: 예성강 나루터의 작은 촌락. 튜토리얼 시작."""
-    m = Map("Naru", "예성 나루 마을", 36, 24, seed=3)
-    # 남쪽 강과 나루터
-    m.water_rect(0, 19, 35, 23)
-    m.bridge(7, 17, 9, 20)                       # 나루 판자
-    m.stamp("boat", 10, 20, force=True)
-    m.road_path([(8, 16), (8, 11)], width=2)     # 나루에서 마을로
-    m.road_rect(12, 9, 21, 12, grade=1)          # 마을 마당
-    m.road_path([(8, 11), (12, 11)], width=2)
-    m.road_path([(21, 10), (27, 10), (31, 9), (35, 9)], width=2, wobble=0)  # 동쪽 예성 길로 (9~10행)
-    # 집
-    m.stamp("house_thatch", 3, 4)
-    m.stamp("house_plain", 10, 4)
-    m.stamp("house_tile", 18, 4)                 # 촌장 댁
-    m.stamp("house_thatch", 25, 4)
-    m.stamp("house_thatch", 2, 12)
-    m.stamp("house_plain", 23, 13)
-    # 장터 한쪽 (짐, 항아리)
-    m.prop(PROPS[0], 13, 13); m.prop(PROPS[1], 14, 13); m.prop(PROPS[2], 16, 14)
-    m.stamp("cart", 18, 13)
+    """예성 나루 마을: 예성강 나루터의 작은 촌락. 정자나무 마당을 중심으로 집 몇 채와 밭. 튜토리얼 시작."""
+    m = Map("Naru", "예성 나루 마을", 40, 28, seed=5)
+    # 남쪽 강과 나루
+    m.water_rect(0, 22, 39, 27)
+    m.water_rect(0, 21, 6, 21); m.water_rect(31, 21, 39, 21)     # 강가 굴곡
+    m.bridge(9, 19, 11, 24)                                      # 나루 판자
+    m.stamp("boat", 12, 23, force=True)
+
+    # 마당과 길: 나루 → 마당 → 동쪽 예성 길
+    m.road_rect(15, 12, 25, 15, grade=1)                         # 정자나무 앞 마당
+    m.road_path([(10, 18), (10, 14), (15, 14)], width=2)
+    m.road_path([(25, 13), (31, 13), (35, 14), (39, 13)], width=2)
+    m.link("E", 12, 4, "Route01", "W", "E")                      # 12~15행, 길 13~14행
+
+    # 정자나무와 평상
+    m.stamp("bigtree", 19, 8, force=True)
+    m.stamp("bench", 19, 11, force=True)
+
+    # 집과 문 앞 길
+    houses = [("house_tile", 17, 3), ("house_thatch", 5, 5), ("house_plain", 27, 5), ("house_thatch", 3, 13), ("house_thatch", 28, 17)]
+    for name, hx, hy in houses:
+        m.stamp(name, hx, hy, force=True)
+    m.door_path(17, 3, 4, 3, 7)        # 촌장 댁 → 정자나무
+    m.door_path(5, 5, 4, 3, 13)
+    m.road_path([(6, 13), (10, 13)], width=1)
+    m.door_path(27, 5, 4, 3, 12)
+    m.door_path(3, 13, 4, 3, 17); m.road_path([(4, 17), (9, 17)], width=1)
+    # 밭 (나루 위쪽 왼편, 오른쪽 언덕 아래)
+    for (px, py) in [(14, 17), (17, 17), (33, 6)]:
+        m.stamp("plot", px, py, force=True)
+        for dx in range(3):
+            m.high[py + 1][px + dx] = K("detail", 6, 2)   # 새싹 (흙더미 위에 보이게)
+    # 울타리 대신 덤불, 꽃밭
+    m.bushes([(4, 9), (5, 9), (8, 9), (9, 9), (26, 9), (27, 9), (31, 9), (2, 18), (3, 18), (7, 18)])
+    m.flowers(2, 2, 37, 20, 22)
+    # 장터 한쪽
+    m.prop(K("element", 3, 0), 25, 16); m.prop(K("element", 0, 1), 26, 16); m.prop(K("element", 1, 1), 27, 16)
+    m.stamp("cart", 22, 17, force=True)
+    m.sign(30, 11, "→ 예성 길\n개경 남문 25리")
+
     # 사람
-    m.add("npc", 19, 8, npc="naru_chief")        # 촌장 (집 앞)
-    m.add("market", 15, 13, town="naru")         # 나루 장터
-    m.add("spawn", 16, 11, id="S0")   # 게임 시작 자리
-    m.link("E", 8, 4, "Route01", "W", "E")      # 8~11행, 길은 9~10행
-    m.sign(28, 12, "→ 예성 길\n개경 남문 25리")
-    # 숲과 나무
+    m.add("npc", 21, 13, npc="naru_chief")       # 촌장: 정자나무 아래
+    m.add("market", 24, 15, town="naru")         # 나루 장터
+    m.talker(12, 20, "뱃사공", "villager_bear_tall", "예성강 물길을 따라 내려가면 벽란도 포구가 나와. 송나라 배도 드나들지.")
+    m.talker(16, 19, "농부", "villager_rabbit_tall", "올해는 볕이 좋아 곡식이 잘 여물었어. 장날에 개경에 내다 팔 참이야.")
+    m.add("spawn", 17, 14, id="S0")              # 게임 시작 자리 (마당)
+
+    # 숲
     m.forest_border(thickness=2)
-    m.scatter("tree", 5, area=(3, 2, 33, 17), margin=1)
-    m.scatter("pine", 4, area=(3, 2, 33, 17), margin=1)
+    m.scatter("roundtree", 3, area=(3, 2, 36, 19), margin=1)
     m.finish()
     return m
 
@@ -56,7 +76,7 @@ def route01():
     m.stamp("house_thatch", 16, 7, force=True)
     m.stamp("bench", 21, 10, force=True)
     m.prop(K("element", 3, 0), 15, 10); m.prop(K("element", 1, 1), 20, 9)
-    m.talker(18, 11, "주모", "villager_gold", "먼 길 가시오? 개경 남문까지는 시내 건너 한참이오. 쉬었다 가시구려.",
+    m.talker(18, 11, "주모", "villager_tanuki_tall", "먼 길 가시오? 개경 남문까지는 시내 건너 한참이오. 쉬었다 가시구려.",
              "개경에 처음 가면 남문 앞 큰길만 따라가시오. 길 잃을 일 없소.")
 
     # 이정표
@@ -64,9 +84,9 @@ def route01():
     m.sign(44, 19, "↑ 개경 남문 10리\n← 예성 나루 마을 15리")
 
     # 길에서 만나는 사람
-    m.talker(35, 17, "길손", "villager_monkey", "벽란도에서 오는 길이오. 거기는 송나라 배가 드나들어 별 물건이 다 있소.")
+    m.talker(35, 17, "길손", "villager_fox_tall", "벽란도에서 오는 길이오. 거기는 송나라 배가 드나들어 별 물건이 다 있소.")
     m.stamp("cart", 46, 22, force=True)
-    m.talker(45, 21, "수레꾼", "villager_pig", "바퀴가 돌부리에 걸렸지 뭐요. 손수레는 길 없는 풀밭에서 영 힘을 못 써.")
+    m.talker(45, 21, "수레꾼", "villager_dog_tall", "바퀴가 돌부리에 걸렸지 뭐요. 손수레는 길 없는 풀밭에서 영 힘을 못 써.")
 
     m.forest_border(thickness=2)
     m.scatter("pine", 18, area=(2, 2, 51, 31), margin=1)

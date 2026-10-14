@@ -19,6 +19,9 @@
 - 퀘스트: `QuestData`(단계 목록) + `QuestManager`(GameEvents를 듣고 진행) + `QuestNpc`(!/? 표시). 대화창 `DialogueUI`, 진행 표시 `QuestTracker`
 - 밸런스 값은 `Resources/GameDatabase.asset`
 - 맵: `Tools/MapGen`(파이썬, 오토타일·스탬프)으로 설계 → `Maps/*.json` + `Art/NinjaAdventure/Tiles/*.png` → `MapJsonBuilder`가 씬 생성
+- 캐릭터: `Tools/ArtGen/tanuki.py`(16×24 동물, 손으로 찍은 픽셀) → `Art/Characters/*_tall_*.png`, 발밑 그림자 `shadow.png`
+- UI 폰트: 갈무리(Galmuri, OFL) `Resources/Fonts`. 창 모양은 `UIStyle.Box`/`UIStyle.Button`
+- 후처리: `Settings/PostFX.asset` (빌더가 매번 다시 씀), 꽃잎·구름 그림자는 `AmbientFX`
 - 레이어: Ground 0, Deco 1, Objects 5, 캐릭터 10~11, Above 20(나무 윗부분), 퀘스트 표시 25. Blocked 타일맵은 그리지 않음
 - 에디터 메뉴 `1. 시작 세트 만들기`: 데이터(코드가 기준, 매번 다시 씀) + 임시 캐릭터 + 맵 씬
 - 지역 구성: 예성 나루 마을(시작) → 예성 길 → 개경(수도, 성벽·남문·시전·만월대) → 동문 밖 닥나무 마을

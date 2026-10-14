@@ -10,7 +10,7 @@ namespace PocketCaravan
         public float realSecondsPerDay = 360f;  // 현실 6분 = 게임 하루
         public int marketDayInterval = 5;       // 5일마다 장날
         public int day = 1;
-        public float minuteOfDay = 6 * 60;      // 아침 6시에 시작
+        public float minuteOfDay = 8 * 60;      // 아침 8시에 시작
 
         public event Action<int> NewHour;
         public event Action<int> NewDay;

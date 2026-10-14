@@ -64,9 +64,8 @@ namespace PocketCaravan
             UIStyle.Begin();
             float w = Mathf.Min(460, UIStyle.VirtualWidth - 20), h = 92;
             var r = new Rect((UIStyle.VirtualWidth - w) / 2, UIStyle.VirtualHeight - h - 26, w, h);
-            GUI.Box(r, "");
-            GUI.Box(r, "");
-            GUI.Label(new Rect(r.x + 10, r.y + 6, w - 20, 16), $"<b>{speaker}</b>", UIStyle.Rich);
+            GUI.Box(r, "", UIStyle.Box);
+            GUI.Label(new Rect(r.x + 10, r.y + 6, w - 20, 16), $"<b><color=#FFE08A>{speaker}</color></b>", UIStyle.Rich);
             GUI.Label(new Rect(r.x + 10, r.y + 24, w - 20, 44), text, UIStyle.Wrap);
 
             float bx = r.xMax - 10;
@@ -81,7 +80,7 @@ namespace PocketCaravan
                 float bw = 74;
                 bx -= bw;
                 string label = i == 0 ? c.label + " (Space)" : (i == choices.Count - 1 ? c.label + " (Esc)" : c.label);
-                if (GUI.Button(new Rect(bx, r.yMax - 24, bw, 18), label)) { Pick(c); return; }
+                if (GUI.Button(new Rect(bx, r.yMax - 24, bw, 18), label, UIStyle.Button)) { Pick(c); return; }
                 bx -= 6;
             }
         }

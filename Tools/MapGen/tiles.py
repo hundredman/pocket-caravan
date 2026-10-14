@@ -115,10 +115,16 @@ STAMPS = {
     "cherry": ("nature", 14, 0, 2, 2, 1, 1, None),
     "cart": ("element", 0, 3, 2, 2, 0, 0, None),
     "bench": ("element", 11, 1, 3, 1, 0, 0, None),
+    "bigtree": ("nature", 3, 18, 3, 3, 2, 2, None),        # 마을 정자나무: 밑동만 막음
+    "roundtree": ("nature", 6, 8, 2, 2, 1, 1, None),
+    "plot": ("field", 0, 0, 3, 3, 0, 0, None),             # 밭 (높은 흙더미)
     "boat": ("boat", 0, 0, 5, 2, 0, 0, None),
 }
 PROPS = [K("element", 3, 0), K("element", 0, 1), K("element", 1, 1), K("element", 4, 0)]
 SIGN = K("element", 0, 2)          # 이정표 나무판
+BUSHES = [K("nature", 0, 10), K("nature", 1, 10), K("nature", 2, 10), K("nature", 6, 10)]
+FLOWER_DECO = [K("nature", 0, 11), K("nature", 1, 11), K("nature", 3, 11), K("nature", 6, 11), K("detail", 5, 2)]
+SPROUT = K("detail", 6, 2)
 FIELD = ("field", 0, 3)            # 높은 풀밭(언덕) 3x3 조각의 왼쪽 위
 
 
@@ -198,8 +204,29 @@ class Map:
                     self.obj[y + dy][x + dx] = key
                 if dy >= block_from:
                     self.blocked[y + dy][x + dx] = True
+                    self.road[y + dy][x + dx] = 0   # 집·나무 밑으로 길이 지나가지 않게
                 self.reserved[y + dy][x + dx] = True
         return True
+
+    def door_path(self, hx, hy, w, h, to_y, door_dx=1):
+        """집 문 앞에서 아래로 좁은 길을 낸다 (문은 아래쪽 줄 door_dx 칸째)."""
+        x = hx + door_dx
+        for y in range(hy + h, to_y + 1):
+            if self.inside(x, y) and not self.blocked[y][x]:
+                self.road[y][x] = max(self.road[y][x], 1)
+                self.reserved[y][x] = True
+
+    def bushes(self, pts):
+        for (x, y) in pts:
+            if self.inside(x, y) and not self.reserved[y][x]:
+                self.prop(self.rng.choice(BUSHES), x, y)
+
+    def flowers(self, x0, y0, x1, y1, n):
+        for _ in range(n):
+            x, y = self.rng.randint(x0, x1), self.rng.randint(y0, y1)
+            if self.inside(x, y) and not self.reserved[y][x] and self.obj[y][x] is None:
+                self.deco[y][x] = self.rng.choice(FLOWER_DECO)
+                self.reserved[y][x] = True
 
     def prop(self, key, x, y, block=True):
         self.obj[y][x] = key

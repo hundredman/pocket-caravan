@@ -49,3 +49,10 @@ Thumbs.db
 # MapGen 미리보기
 Tools/MapGen/preview_*.png
 Tools/MapGen/__pycache__/
+
+# 에디터 복구·크래시 파일
+/Assets/_Recovery/
+/Assets/_Recovery.meta
+mono_crash.*
+/Assets/Screenshots/
+/Assets/Screenshots.meta

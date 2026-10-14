@@ -103,10 +103,10 @@ TextureImporter:
       name: marker_turnin_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 1
-        width: 10
-        height: 15
+        x: 2
+        y: 0
+        width: 12
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

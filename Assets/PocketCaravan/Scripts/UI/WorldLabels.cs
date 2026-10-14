@@ -29,7 +29,7 @@ namespace PocketCaravan
             // 1) 이름표
             foreach (var it in Interactable.All)
             {
-                Vector2 p = ToGui(cam, it.transform.position + new Vector3(0f, 0.75f, 0f));
+                Vector2 p = ToGui(cam, it.transform.position + new Vector3(0f, 1.3f, 0f));
                 if (p.x < -50 || p.y < -20 || p.x > UIStyle.VirtualWidth + 50 || p.y > UIStyle.VirtualHeight + 20) continue;
                 string label = it.Category == Interactable.Kind.Market ? "[장터] " + it.DisplayName : it.DisplayName;
                 Color c = it.Category == Interactable.Kind.Quest ? QuestColor : it.Category == Interactable.Kind.Market ? MarketColor : PersonColor;
@@ -42,7 +42,7 @@ namespace PocketCaravan
             // 2) 말 걸기 안내
             if (player != null && player.TalkTarget != null && !UIState.Blocking)
             {
-                Vector2 p = ToGui(cam, player.TalkTarget.transform.position + new Vector3(0f, -0.6f, 0f));
+                Vector2 p = ToGui(cam, player.TalkTarget.transform.position + new Vector3(0f, -0.7f, 0f));
                 Outlined(new Rect(p.x - 50, p.y, 100, 12), "Space 말 걸기", Color.white, nameStyle);
             }
 
@@ -106,10 +106,10 @@ namespace PocketCaravan
             }
             if (nameStyle == null)
             {
-                nameStyle = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontSize = 9, clipping = TextClipping.Overflow };
+                nameStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.Small, alignment = TextAnchor.MiddleCenter, fontSize = 9, clipping = TextClipping.Overflow };
                 shadowStyle = new GUIStyle(nameStyle);
                 shadowStyle.normal.textColor = new Color(0f, 0f, 0f, 0.8f);
-                guideStyle = new GUIStyle(nameStyle) { fontSize = 11 };
+                guideStyle = new GUIStyle(nameStyle) { font = GUI.skin.font, fontSize = 11 };
             }
         }
 

@@ -21,11 +21,12 @@ namespace PocketCaravan
         public static void Draw()
         {
             entries.RemoveAll(e => Time.unscaledTime > e.until);
-            float w = 300, y = 8;
+            float y = 8;
             foreach (var e in entries)
             {
+                float w = Mathf.Min(300f, UIStyle.Center.CalcSize(new GUIContent(e.text)).x + 28f);
                 var r = new Rect((UIStyle.VirtualWidth - w) / 2, y, w, 20);
-                GUI.Box(r, "");
+                GUI.Box(r, "", UIStyle.Box);
                 GUI.Label(new Rect(r.x + 8, r.y + 2, r.width - 16, r.height), e.text, UIStyle.Center);
                 y += 22;
             }

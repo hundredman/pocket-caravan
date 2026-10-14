@@ -55,7 +55,7 @@ namespace PocketCaravan
         {
             float w = 380, h = 260;
             var r = new Rect((UIStyle.VirtualWidth - w) / 2, (UIStyle.VirtualHeight - h) / 2, w, h);
-            GUI.Box(r, "");
+            GUI.Box(r, "", UIStyle.Box);
             GUILayout.BeginArea(new Rect(r.x + 10, r.y + 8, w - 20, h - 16));
             GUILayout.Label("<b>퀘스트 목록</b>   (Q 닫기)", UIStyle.Rich);
             bool any = false;

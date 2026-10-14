@@ -155,24 +155,34 @@ namespace PocketCaravan.EditorTools
         }
 
         /// <summary>퀘스트 표시 (!, ?). 16×16, 아래쪽 기준.</summary>
+        /// <summary>말풍선 배지: 둥근 노란 판 + 아래 꼬리 + 가운데 진한 글자(! 또는 ?). 텍스처 y=0이 아래.</summary>
         static void SaveMarker(string dir, string name, char ch, Color32 color)
         {
+            var ink = new Color32(0x3A, 0x24, 0x18, 0xFF);
+            var light = new Color32((byte)Mathf.Min(255, color.r + 40), (byte)Mathf.Min(255, color.g + 40), (byte)Mathf.Min(255, color.b + 40), 255);
             var px = new Color32[16 * 16];
             for (int i = 0; i < px.Length; i++) px[i] = Clear;
-            void P(int x, int y) { if (x >= 0 && x < 16 && y >= 0 && y < 16) px[y * 16 + x] = color; }
+            void P(int x, int y, Color32 c) { if (x >= 0 && x < 16 && y >= 0 && y < 16) px[y * 16 + x] = c; }
+            // 판
+            for (int y = 0; y < 16; y++)
+            for (int x = 0; x < 16; x++)
+            {
+                float dx = x - 7.5f, dy = y - 9.5f;
+                if (dx * dx + dy * dy <= 30f) P(x, y, y >= 12 && dx < 0 ? light : color);
+            }
+            // 꼬리
+            P(7, 3, color); P(8, 3, color); P(7, 2, color); P(8, 2, color); P(7, 1, color);
+            // 글자
             if (ch == '!')
             {
-                for (int y = 6; y <= 14; y++) { P(7, y); P(8, y); }
-                for (int y = 2; y <= 3; y++) { P(7, y); P(8, y); }
+                for (int y = 9; y <= 13; y++) { P(7, y, ink); P(8, y, ink); }
+                P(7, 7, ink); P(8, 7, ink);
             }
             else
             {
-                // ? 모양
-                for (int x = 5; x <= 10; x++) { P(x, 14); P(x, 13); }
-                for (int y = 10; y <= 12; y++) { P(10, y); P(11, y); P(4, y + 1); P(5, y + 1); }
-                for (int x = 7; x <= 9; x++) P(x, 9);
-                for (int y = 6; y <= 8; y++) { P(7, y); P(8, y); }
-                for (int y = 2; y <= 3; y++) { P(7, y); P(8, y); }
+                for (int x = 6; x <= 9; x++) P(x, 13, ink);
+                P(5, 12, ink); P(10, 12, ink); P(10, 11, ink); P(9, 10, ink); P(8, 10, ink); P(8, 9, ink); P(7, 9, ink);
+                P(7, 7, ink); P(8, 7, ink);
             }
             // 테두리
             var copy = (Color32[])px.Clone();
@@ -180,9 +190,9 @@ namespace PocketCaravan.EditorTools
             for (int x = 0; x < 16; x++)
             {
                 if (copy[y * 16 + x].a != 0) continue;
-                for (int k = 0; k < 8; k++)
+                for (int k = 0; k < 4; k++)
                 {
-                    int nx = x + new[] { 1, -1, 0, 0, 1, 1, -1, -1 }[k], ny = y + new[] { 0, 0, 1, -1, 1, -1, 1, -1 }[k];
+                    int nx = x + new[] { 1, -1, 0, 0 }[k], ny = y + new[] { 0, 0, 1, -1 }[k];
                     if (nx >= 0 && nx < 16 && ny >= 0 && ny < 16 && copy[ny * 16 + nx].a != 0) { px[y * 16 + x] = Outline; break; }
                 }
             }

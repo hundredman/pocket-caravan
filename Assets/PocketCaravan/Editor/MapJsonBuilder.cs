@@ -4,6 +4,7 @@ using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Tilemaps;
 
@@ -57,18 +58,18 @@ namespace PocketCaravan.EditorTools
 
         static readonly Dictionary<string, NpcDef> QuestNpcs = new Dictionary<string, NpcDef>
         {
-            ["naru_chief"] = new NpcDef { name = "나루 마을 촌장", sprite = "elder", greeting = "예성강 물길이 개경까지 닿으니, 이 작은 나루에도 온갖 짐이 오간다네." },
-            ["gaekju"] = new NpcDef { name = "개경 객주 돈돌", sprite = "gaekju", greeting = "객주는 상인들이 묵고 짐을 맡기는 곳이지. 일거리가 생기면 부르겠네." },
-            ["dakmok_chief"] = new NpcDef { name = "닥나무 마을 촌장", sprite = "dakmokchief", greeting = "우리 마을 종이는 질기고 하얗기로 이름났다네." },
+            ["naru_chief"] = new NpcDef { name = "나루 마을 촌장", sprite = "elder_tall", greeting = "예성강 물길이 개경까지 닿으니, 이 작은 나루에도 온갖 짐이 오간다네." },
+            ["gaekju"] = new NpcDef { name = "개경 객주 돈돌", sprite = "gaekju_tall", greeting = "객주는 상인들이 묵고 짐을 맡기는 곳이지. 일거리가 생기면 부르겠네." },
+            ["dakmok_chief"] = new NpcDef { name = "닥나무 마을 촌장", sprite = "dakmokchief_tall", greeting = "우리 마을 종이는 질기고 하얗기로 이름났다네." },
         };
 
         static readonly (string name, string sprite, string[] lines)[] Villagers =
         {
-            ("비단 장수", "villager_lion", new[] { "시전 거리에는 송나라 비단도, 아라비아 향료도 다 들어온다네.", "벽란도에 큰 배가 들어오는 날이면 값이 출렁이지." }),
-            ("짐꾼", "villager_pig", new[] { "등짐으로는 하루에 몇 번 못 오가. 수레가 있어야 돈이 되지.", "남문 밖 길은 평평해서 수레가 잘 굴러가." }),
-            ("선비", "villager_monkey", new[] { "저 위가 만월대일세. 송악산 아래 임금님이 계시지.", "개경은 고려의 서울이라 사람도 물건도 다 모인다네." }),
-            ("뱃사공", "villager_frog", new[] { "예성강 물길을 따라가면 벽란도 포구가 나오지. 송나라 배도 드나든다네." }),
-            ("떡 장수", "villager_gold", new[] { "장날에는 사람이 두 배로 몰려. 값도 덩달아 오르고." }),
+            ("비단 장수", "villager_fox_tall", new[] { "시전 거리에는 송나라 비단도, 아라비아 향료도 다 들어온다네.", "벽란도에 큰 배가 들어오는 날이면 값이 출렁이지." }),
+            ("짐꾼", "villager_dog_tall", new[] { "등짐으로는 하루에 몇 번 못 오가. 수레가 있어야 돈이 되지.", "남문 밖 길은 평평해서 수레가 잘 굴러가." }),
+            ("선비", "villager_rabbit_tall", new[] { "저 위가 만월대일세. 송악산 아래 임금님이 계시지.", "개경은 고려의 서울이라 사람도 물건도 다 모인다네." }),
+            ("뱃사공", "villager_bear_tall", new[] { "예성강 물길을 따라가면 벽란도 포구가 나오지. 송나라 배도 드나든다네." }),
+            ("떡 장수", "villager_tanuki_tall", new[] { "장날에는 사람이 두 배로 몰려. 값도 덩달아 오르고." }),
         };
 
         [MenuItem("Pocket Caravan/2. 맵 씬 다시 만들기 (JSON → 씬)", priority = 2)]
@@ -197,7 +198,7 @@ namespace PocketCaravan.EditorTools
                         qn.npcId = o.npc; qn.displayName = nd.name; qn.greeting = nd.greeting;
                         var mk = new GameObject("Quest Marker").AddComponent<SpriteRenderer>();
                         mk.transform.SetParent(qn.transform, false);
-                        mk.transform.localPosition = new Vector3(0f, 1.45f, 0f);
+                        mk.transform.localPosition = new Vector3(0f, 1.9f, 0f);
                         mk.sortingOrder = 25;
                         qn.marker = mk;
                         qn.availableSprite = LoadSprite(PlaceholderArt.MarkerAvailable);
@@ -206,7 +207,7 @@ namespace PocketCaravan.EditorTools
                         break;
                     case "market":
                         var t = db.towns.Find(x => x != null && x.id == o.town);
-                        var npc = Character($"장터 상인 ({(t != null ? t.displayName : o.town)})", "merchant", center, objects);
+                        var npc = Character($"장터 상인 ({(t != null ? t.displayName : o.town)})", "merchant_tall", center, objects);
                         npc.AddComponent<TownMarket>().town = t;
                         break;
                     case "talker":
@@ -235,8 +236,9 @@ namespace PocketCaravan.EditorTools
             var sr = bodyGo.AddComponent<SpriteRenderer>();
             sr.sortingOrder = 11;
             var anim = bodyGo.AddComponent<CharacterAnimator>();
-            anim.frames = LoadFrames("tanuki");
+            anim.frames = LoadFrames("tanuki_tall");
             sr.sprite = anim.frames[0];
+            Shadow(player.transform);
             player.AddComponent<PlayerMotor>();
             player.AddComponent<PlayerController>().anim = anim;
 
@@ -258,7 +260,43 @@ namespace PocketCaravan.EditorTools
             var light = new GameObject("Global Light 2D").AddComponent<Light2D>();
             SetInt(light, "m_LightType", 4);
 
+            // 후처리: 은은한 빛번짐, 채도·대비 살짝, 가장자리 어둡게
+            cam.GetUniversalAdditionalCameraData().renderPostProcessing = true;
+            var vol = new GameObject("Post FX").AddComponent<Volume>();
+            vol.isGlobal = true;
+            vol.sharedProfile = PostFxProfile();
+
             EditorSceneManager.SaveScene(scene, path);
+        }
+
+        /// <summary>모든 맵이 함께 쓰는 후처리 설정. 코드가 기준이라 매번 값을 다시 쓴다.</summary>
+        static VolumeProfile PostFxProfile()
+        {
+            string path = $"{Root}/Settings/PostFX.asset";
+            Directory.CreateDirectory($"{Root}/Settings");
+            var profile = AssetDatabase.LoadAssetAtPath<VolumeProfile>(path);
+            if (profile == null)
+            {
+                profile = ScriptableObject.CreateInstance<VolumeProfile>();
+                AssetDatabase.CreateAsset(profile, path);
+            }
+            T Get<T>() where T : VolumeComponent
+            {
+                if (!profile.TryGet<T>(out var c)) { c = profile.Add<T>(true); c.name = typeof(T).Name; AssetDatabase.AddObjectToAsset(c, profile); }
+                c.active = true;
+                return c;
+            }
+            var bloom = Get<Bloom>();
+            bloom.threshold.Override(0.95f); bloom.intensity.Override(0.2f); bloom.scatter.Override(0.6f);
+            var color = Get<ColorAdjustments>();
+            color.saturation.Override(-6f); color.contrast.Override(6f); color.postExposure.Override(0f);
+            var vig = Get<Vignette>();
+            vig.intensity.Override(0.2f); vig.smoothness.Override(0.45f); vig.color.Override(new Color(0.12f, 0.08f, 0.16f));
+            var smh = Get<WhiteBalance>();
+            smh.temperature.Override(-4f); smh.tint.Override(0f);
+            EditorUtility.SetDirty(profile);
+            AssetDatabase.SaveAssets();
+            return profile;
         }
 
         static Vector3Int Cell(MapFile f, int i) => new Vector3Int(i % f.w, f.h - 1 - i / f.w, 0);
@@ -279,7 +317,7 @@ namespace PocketCaravan.EditorTools
             return tm;
         }
 
-        /// <summary>16×16 캐릭터 (Art/Characters/이름_방향프레임.png). 아래를 보고 서 있다.</summary>
+        /// <summary>16×24 캐릭터 (Art/Characters/이름_방향프레임.png). 아래를 보고 서 있다.</summary>
         static GameObject Character(string name, string character, Vector3 pos, Transform parent)
         {
             var go = new GameObject(name);
@@ -290,7 +328,19 @@ namespace PocketCaravan.EditorTools
             var anim = go.AddComponent<CharacterAnimator>();
             anim.frames = LoadFrames(character);
             sr.sprite = anim.frames[0];
+            Shadow(go.transform);
             return go;
+        }
+
+        /// <summary>발밑 그림자. 캐릭터가 땅에 서 있는 느낌을 준다.</summary>
+        static void Shadow(Transform parent)
+        {
+            var go = new GameObject("Shadow");
+            go.transform.SetParent(parent, false);
+            go.transform.localPosition = new Vector3(0f, -0.36f, 0f);
+            var sr = go.AddComponent<SpriteRenderer>();
+            sr.sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Characters/shadow.png");
+            sr.sortingOrder = 9;
         }
 
         static Sprite[] LoadFrames(string character)
@@ -300,7 +350,7 @@ namespace PocketCaravan.EditorTools
             for (int d = 0; d < 4; d++)
                 for (int f = 0; f < 4; f++)
                     frames[d * 4 + f] = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Characters/{character}_{dirs[d]}{f}.png");
-            if (frames[0] == null) Debug.LogWarning($"캐릭터 그림 없음: {character} (Tools/ArtGen/characters.py 실행)");
+            if (frames[0] == null) Debug.LogWarning($"캐릭터 그림 없음: {character} (Tools/ArtGen/tanuki.py 실행)");
             return frames;
         }
 

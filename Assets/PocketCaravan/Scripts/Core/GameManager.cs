@@ -67,6 +67,7 @@ namespace PocketCaravan
             gameObject.AddComponent<QuestTracker>();
             gameObject.AddComponent<DialogueUI>();
             gameObject.AddComponent<WorldLabels>();
+            gameObject.AddComponent<AmbientFX>();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
@@ -76,7 +77,7 @@ namespace PocketCaravan
         }
 
         UnityEngine.Rendering.Universal.Light2D sun;
-        static readonly Color DayColor = Color.white;
+        static readonly Color DayColor = new Color(1f, 0.98f, 0.93f);
         static readonly Color DuskColor = new Color(1f, 0.78f, 0.6f);
         static readonly Color NightColor = new Color(0.45f, 0.5f, 0.8f);
 

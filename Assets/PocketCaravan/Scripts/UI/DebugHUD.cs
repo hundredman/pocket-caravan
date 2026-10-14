@@ -27,7 +27,7 @@ namespace PocketCaravan
                 $"{(map != null ? map.displayName : "")}   {gm.Clock.Label}{(gm.Clock.IsMarketDay ? " 장날" : "")}\n" +
                 $"돈 {p.money}   신용 {p.credit}\n" +
                 $"{vehicle}  짐 {p.cargo.Weight:0.#}/{p.Capacity:0.#}   발밑: {roadName}";
-            GUI.Box(new Rect(6, 6, 230, 52), "");
+            GUI.Box(new Rect(6, 6, 230, 52), "", UIStyle.Box);
             GUI.Label(new Rect(12, 9, 224, 50), text);
 
             GUI.Label(new Rect(6, UIStyle.VirtualHeight - 20, 400, 18), "방향키/WASD 이동 · Shift 달리기 · Space 말 걸기 · Q 퀘스트");
