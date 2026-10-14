@@ -35,13 +35,13 @@ BASE = {
 OUTLINE_TINT = (36, 24, 40)
 
 # ---------- 머리 (13줄) ----------
-# 2등신: 머리 13줄(모자·귀 4 + 얼굴 9) + 몸 8줄 + 다리 3줄 = 24. 머리 폭 12칸, 몸 폭 10칸.
+# 2등신(땅딸막): 위 빈칸 5줄 + 모자·귀 3줄 + 얼굴 8줄 + 몸 5줄 + 다리 3줄 = 24.
+# 머리는 넓고 둥글게(폭 14), 몸은 짧고 좁게(폭 10).
+PAD = 5
 
-# ---------- 머리 위 (4줄) ----------
 HAT = [  # 갓: 챙이 머리보다 넓다
     "......oooo......",
     ".....ohHhho.....",
-    "..oooohhhhoooo..",
     ".ohhhhhhhhhhhho.",
 ]
 HAT_SIDE = HAT
@@ -49,122 +49,101 @@ HAT_BACK = HAT
 
 EARS = {
     "round": {
-        "d": ["................", "................", "...ooo....ooo...", "..offo....offo.."],
-        "r": ["................", "................", "....ooo.........", "...offo........."],
+        "d": ["................", "..ooo......ooo..", ".offo......offo."],
+        "r": ["................", "...ooo..........", "..offo.........."],
     },
     "pointy": {
-        "d": ["................", "...o........o...", "..ofo......ofo..", "..offo....offo.."],
-        "r": ["................", ".....o..........", "....ofo.........", "...offo........."],
+        "d": ["..o..........o..", ".ofo........ofo.", ".offo......offo."],
+        "r": ["....o...........", "...ofo..........", "..offo.........."],
     },
     "big": {  # 사막여우처럼 큰 귀
-        "d": [".o............o.", ".ofo........ofo.", ".offo......offo.", ".offfo....offfo."],
-        "r": ["...o............", "...ofo..........", "...offo.........", "...offfo........"],
+        "d": [".o............o.", "ofo..........ofo", "offo........offo"],
+        "r": ["..o.............", "..ofo...........", "..offo.........."],
     },
     "long": {
-        "d": ["....oo....oo....", "...oflo..olfo...", "...oflo..olfo...", "...oflo..olfo..."],
-        "r": ["....oo..........", "...oflo.........", "...oflo.........", "...oflo........."],
+        "d": ["...oo......oo...", "..oflo....olfo..", "..oflo....olfo.."],
+        "r": ["...oo...........", "..oflo..........", "..oflo.........."],
     },
 }
 
-# ---------- 얼굴 (9줄): 둥근 볼, 아래쪽에 큰 눈 ----------
+# ---------- 얼굴 (8줄): 넓고 둥근 볼, 아래쪽에 큰 눈 ----------
 FACE_FRONT = [
     "...offffffffo...",
     "..offLLffffffo..",
-    "..ofmmmffmmmfo..",
-    "..ofmweffwemfo..",
-    "..ofmeelleemfo..",
-    "..opfllnnllfpo..",
+    ".offmmmffmmmffo.",
+    ".ofmmweffwemmfo.",
+    ".ofmmeelleemmfo.",
+    ".opffllnnllffpo.",
     "..offllllllffo..",
-    "...offffffffo...",
-    ".....oooooo.....",
+    "....oooooooo....",
 ]
 FACE_BACK = [
     "...offffffffo...",
     "..offLLffffffo..",
+    ".offffffffffffo.",
+    ".offffffffffffo.",
+    ".offffffffffffo.",
+    ".offffffffffffo.",
     "..offffffffffo..",
-    "..offffffffffo..",
-    "..offffffffffo..",
-    "..offffffffffo..",
-    "..offffffffffo..",
-    "...offffffffo...",
-    ".....oooooo.....",
+    "....oooooooo....",
 ]
 FACE_SIDE = [  # 오른쪽을 봄
     "...offffffffo...",
     "..offLLffffffo..",
-    "..offfffffmmmo..",
-    "..offffffmwemo..",
-    "..offffffmeemlo.",
-    "..opffffflllllno",
-    "..offfffflllloo.",
-    "...offfffffoo...",
-    ".....oooooo.....",
+    ".offffffffmmmo..",
+    ".offfffffmwemo..",
+    ".offfffffmeemlo.",
+    ".opfffffflllllno",
+    "..offffffllllo..",
+    "....ooooooooo...",
 ]
 
-# ---------- 몸 (8줄) : 팔 흔들기 3가지 ----------
+# ---------- 몸 (5줄) : 팔 흔들기 3가지 ----------
 BODY_FRONT = {
     0: [
-        ".....oclcco.....",
-        "....occclcco....",
-        "...oacccllcao...",
+        "....occlccco....",
+        "...oaacllcaao...",
         "..oaabbbbbbaao..",
         "..ofaccccccafo..",
-        "...occccccccо...".replace("о", "o"),
         "...oaaaaaaaao...",
-        "....oooooooo....",
     ],
-    1: [  # 왼팔 앞(아래로)
-        ".....oclcco.....",
-        "....occclcco....",
-        "...oacccllcao...",
+    1: [  # 왼팔 앞
+        "....occlccco....",
+        "...oaacllcaao...",
         "..oaabbbbbbaao..",
         "..oaaccccccafo..",
-        "..ofoccccccco...",
-        "...oaaaaaaaao...",
-        "....oooooooo....",
+        "..ofoaaaaaaao...",
     ],
     2: [  # 오른팔 앞
-        ".....oclcco.....",
-        "....occclcco....",
-        "...oacccllcao...",
+        "....occlccco....",
+        "...oaacllcaao...",
         "..oaabbbbbbaao..",
         "..ofaccccccaao..",
-        "...ocdcccccofo..".replace("d", "c"),
-        "...oaaaaaaaao...",
-        "....oooooooo....",
+        "...oaaaaaaaofo..",
     ],
 }
 BODY_BACK = {k: [r.replace("l", "c") for r in v] for k, v in BODY_FRONT.items()}
 BODY_SIDE = {
     0: [
-        "......occo......",
-        ".....occcco.....",
+        ".....occco......",
         "....occcccco....",
         "....obbbbbbo....",
-        "....ocaccccо....".replace("о", "o"),
         "....ocafccco....",
         "....oaaaaaao....",
-        "....oooooooo....",
     ],
     1: [  # 팔 앞으로
-        "......occo......",
-        ".....occcco.....",
+        ".....occco......",
         "....occcccco....",
         "....obbbbbbo....",
-        "....occccaao....",
-        "....occcccafo...",
+        "....occccafo....",
         "....oaaaaaao....",
-        "....oooooooo....",
     ],
     2: [  # 팔 뒤로
-        "......occo......",
-        ".....occcco.....",
+        ".....occco......",
         "....occcccco....",
         "....obbbbbbo....",
-        "...oaccccccо....".replace("о", "o"),
-        "...ofacccccо....".replace("о", "o"),
+        "...ofaccccco....",
         "....oaaaaaao....",
-        "....oooooooo....",
     ],
 }
 
@@ -183,8 +162,8 @@ LEGS_SIDE = [
 ]
 
 # 꼬리 (옆·뒤에서 보임). (줄, 왼쪽 x, 글자)
-TAIL_SIDE = [(16, 1, "ofo"), (17, 0, "oftfo"), (18, 0, "otfto"), (19, 1, "ooo")]
-TAIL_BACK = [(18, 6, "oftfo"), (19, 6, "otfto"), (20, 7, "ooo")]
+TAIL_SIDE = [(17, 1, "ofo"), (18, 0, "oftfo"), (19, 0, "otfto"), (20, 1, "ooo")]
+TAIL_BACK = [(19, 6, "oftfo"), (20, 6, "otfto"), (21, 7, "ooo")]
 
 
 def norm(rows):
@@ -209,7 +188,7 @@ def compose(direction, frame, top, hat, mask):
     face = list(face)
     if not mask:
         face = [r.replace("m", "f") for r in face]
-    rows = norm(head_top) + norm(face) + norm(body) + norm(legs)
+    rows = norm(["." * 16] * PAD) + norm(head_top) + norm(face) + norm(body) + norm(legs)
     assert len(rows) == 24
     rows = [list(r) for r in rows]
     tail = TAIL_SIDE if direction == "r" else TAIL_BACK if direction == "u" else []

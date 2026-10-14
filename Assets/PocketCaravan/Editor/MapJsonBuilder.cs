@@ -202,7 +202,7 @@ namespace PocketCaravan.EditorTools
                         qn.npcId = o.npc; qn.displayName = nd.name; qn.greeting = nd.greeting;
                         var mk = new GameObject("Quest Marker").AddComponent<SpriteRenderer>();
                         mk.transform.SetParent(qn.transform, false);
-                        mk.transform.localPosition = new Vector3(0f, 1.9f, 0f);
+                        mk.transform.localPosition = new Vector3(0f, 1.6f, 0f);
                         mk.sortingOrder = 25;
                         qn.marker = mk;
                         qn.availableSprite = LoadSprite(PlaceholderArt.MarkerAvailable);
@@ -248,7 +248,7 @@ namespace PocketCaravan.EditorTools
                         bandit.anim = bgo.GetComponent<CharacterAnimator>();
                         var alert = new GameObject("Alert").AddComponent<SpriteRenderer>();
                         alert.transform.SetParent(bgo.transform, false);
-                        alert.transform.localPosition = new Vector3(0f, 1.6f, 0f);
+                        alert.transform.localPosition = new Vector3(0f, 1.3f, 0f);
                         alert.sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/NinjaAdventure/Ui/emote_alert.png");
                         alert.sortingOrder = 25; alert.enabled = false;
                         bandit.alert = alert;

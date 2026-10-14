@@ -27,7 +27,7 @@
 - 소리: `AudioManager`/`Sfx` (Resources/Audio, Ninja Adventure CC0)
 - 밸런스 값은 `Resources/GameDatabase.asset`
 - 맵: `Tools/MapGen`(파이썬, 오토타일·스탬프)으로 설계 → `Maps/*.json` + `Art/NinjaAdventure/Tiles/*.png` → `MapJsonBuilder`가 씬 생성
-- 캐릭터: `Tools/ArtGen/chars.py`(16×24 동물, 글자 그림 + 색 테두리·명암 뒤처리) → `Art/Characters/*_tall_*.png`, 발밑 그림자 `shadow.png`
+- 캐릭터: `Tools/ArtGen/chars.py`(16×24 안에 2등신 동물, 글자 그림 + 색 테두리·명암 뒤처리) → `Art/Characters/*_tall_*.png`, 발밑 그림자 `shadow.png`
 - UI 폰트: 갈무리(Galmuri, OFL) `Resources/Fonts`. 창 모양은 `UIStyle.Box`/`UIStyle.Button`
 - 후처리: `Settings/PostFX.asset` (빌더가 매번 다시 씀), 꽃잎·구름 그림자는 `AmbientFX`
 - 레이어: Ground 0, Deco 1, Objects 5, 캐릭터 10~11, Above 20(나무 윗부분), 퀘스트 표시 25. Blocked 타일맵은 그리지 않음

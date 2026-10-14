@@ -63,7 +63,7 @@ namespace PocketCaravan
                 : m == QuestMarker.InProgress ? inProgressSprite : null;
             bobTime += Time.deltaTime;
             float bob = Mathf.Floor(Mathf.Sin(bobTime * 4f) * 1.5f + 1.5f) / 16f; // 픽셀 단위로 통통
-            marker.transform.localPosition = new Vector3(0f, 1.9f + bob, 0f); // 이름표 위
+            marker.transform.localPosition = new Vector3(0f, 1.6f + bob, 0f); // 이름표 위
         }
     }
 }
