@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dac4e677a17b4a8dae30087210c342c, type: 3}
+  m_Name: Origin_Goryeo
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.OriginData
+  id: goryeo
+  displayName: "\uACE0\uB824 \uAC1C\uACBD\uC0C1\uC778"
+  homeRegion: {fileID: 11400000, guid: d95bb058a23aa48d8b58779d743714c0, type: 2}
+  startingCredit: 0
+  footfallMultiplier: 1
+  ledgerStaleMultiplier: 0.5
+  resaleDropMultiplier: 1

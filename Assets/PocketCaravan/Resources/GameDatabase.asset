@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 805b1f2fdc9c748a9a203b21a66a8417, type: 3}
+  m_Name: GameDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.GameDatabase
+  startMoney: 100
+  startVehicle: {fileID: 11400000, guid: 2605f065f1d0f40fd90f0c5955299f57, type: 2}
+  startOrigin: {fileID: 11400000, guid: baa3df4a3e3ea42e999ffb10319d746e, type: 2}
+  items:
+  - {fileID: 11400000, guid: 34ab4741f86eb44b3bae564c5daa0f12, type: 2}
+  - {fileID: 11400000, guid: 3b1d3708de2364a25ad4a9d27b2306a1, type: 2}
+  - {fileID: 11400000, guid: c7b553013268140eca99e3276caecd4f, type: 2}
+  - {fileID: 11400000, guid: 9b0a33b14044448d8962b7818d9d0df6, type: 2}
+  - {fileID: 11400000, guid: cb00db234c4f1496797b7984a9849509, type: 2}
+  towns:
+  - {fileID: 11400000, guid: c9c3e50b53fd84e47a560b486663cf0f, type: 2}
+  - {fileID: 11400000, guid: 9c22617e212424b55a590eb911f26529, type: 2}
+  vehicles:
+  - {fileID: 11400000, guid: 2605f065f1d0f40fd90f0c5955299f57, type: 2}
+  - {fileID: 11400000, guid: 913f67411fb2e4eb9868cba57a9545f6, type: 2}
+  realSecondsPerDay: 360
+  stockRecoveryPerHour: 0.04
+  marketDayDemand: 1.15
+  townLevelVolume: 0000000058020000c4090000401f0000
+  maxTownLevel: 3
+  townLevelNames:
+  - 
+  - "\uCD0C\uB77D"
+  - "\uC7A5\uD130 \uB9C8\uC744"
+  - "\uC0C1\uC5C5 \uACE0\uC744"
+  - "\uAD50\uC5ED \uB3C4\uC2DC"
+  roads:
+    thresholds:
+    - 0
+    - 6
+    - 25
+    - 80
+    maxNaturalGrade: 2
+    neighborShare: 0.2
+    decayPerDay: 0.03
+    seededMultiplier: 3
+    gradeNames:
+    - "\uAE38 \uC5C6\uC74C"
+    - "\uC624\uC194\uAE38"
+    - "\uAE38"
+    - "\uD070\uAE38"

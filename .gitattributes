@@ -1,0 +1,26 @@
+* text=auto
+
+*.cs text diff=csharp
+*.md text
+*.json text
+
+# Unity YAML: 줄 끝을 고정하고 자동 병합하지 않음 (충돌 시 한쪽 선택)
+*.unity text eol=lf merge=binary linguist-generated
+*.prefab text eol=lf merge=binary linguist-generated
+*.asset text eol=lf merge=binary linguist-generated
+*.meta text eol=lf
+*.mat text eol=lf merge=binary
+*.anim text eol=lf merge=binary
+*.controller text eol=lf merge=binary
+
+# 바이너리
+*.png binary
+*.jpg binary
+*.psd binary
+*.aseprite binary
+*.ase binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.ttf binary
+*.otf binary
