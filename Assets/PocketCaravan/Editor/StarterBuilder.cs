@@ -223,6 +223,20 @@ namespace PocketCaravan.EditorTools
             {
                 o.id = "goryeo"; o.displayName = "고려 개경상인"; o.homeRegion = goryeo; o.ledgerStaleMultiplier = 0.5f;
             });
+            // 다른 세 출신은 지역을 만들 때 쓸 수 있게 데이터만 먼저 둔다 (수치는 밸런스 시뮬레이션 기준)
+            EnsureFolder(Root + "/Data/Origins");
+            CreateOrLoad<OriginData>($"{Root}/Data/Origins/Origin_Arabia.asset", o =>
+            {
+                o.id = "arabia"; o.displayName = "아라비아 대상"; o.longHaulMinMaps = 3; o.longHaulBonus = 0.05f;
+            });
+            CreateOrLoad<OriginData>($"{Root}/Data/Origins/Origin_Venice.asset", o =>
+            {
+                o.id = "venice"; o.displayName = "베네치아 상인"; o.resaleDropMultiplier = 0.8f;
+            });
+            CreateOrLoad<OriginData>($"{Root}/Data/Origins/Origin_Viking.asset", o =>
+            {
+                o.id = "viking"; o.displayName = "바이킹 교역상"; o.speedMultiplier = 1.05f; o.offroadSpeedMultiplier = 1.3f; o.startingCredit = -2;
+            });
 
             // 마을 재고는 처음 만들 때만 채운다
             if (gaegyeong.stock.Count == 0)

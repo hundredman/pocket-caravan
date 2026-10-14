@@ -42,9 +42,25 @@ namespace PocketCaravan
         /// <summary>플레이어가 살 때 값</summary>
         public int BuyPrice(ItemData item) => MarketMath.Price(item.BasePriceAt(town), Optimal(item), Stock(item), Demand);
 
+        static OriginData Origin => GameManager.I != null ? GameManager.I.Player.origin : null;
+
+        /// <summary>팔 때 재고가 늘어나는 양. 베네치아는 다른 지역 물건을 팔 때 덜 늘어 값이 덜 떨어진다.</summary>
+        public float SellStockDelta(ItemData item)
+        {
+            var o = Origin;
+            bool foreign = item.originTown != null && item.originTown.region != town.region;
+            return foreign && o != null ? o.resaleDropMultiplier : 1f;
+        }
+
         /// <summary>플레이어가 팔 때 받는 값 (한 개를 더 넣었을 때 기준)</summary>
-        public int SellPrice(ItemData item) =>
-            MarketMath.Buyback(MarketMath.Price(item.BasePriceAt(town), Optimal(item), Stock(item) + 1f, Demand));
+        public int SellPrice(ItemData item)
+        {
+            int p = MarketMath.Buyback(MarketMath.Price(item.BasePriceAt(town), Optimal(item), Stock(item) + SellStockDelta(item), Demand));
+            var o = Origin;
+            if (o != null && o.longHaulBonus > 0 && item.MapsFrom(town) >= o.longHaulMinMaps)
+                p = Mathf.RoundToInt(p * (1f + o.longHaulBonus));
+            return p;
+        }
 
         public bool CanBuy(ItemData item) => Stock(item) >= 1f;
 
@@ -56,7 +72,7 @@ namespace PocketCaravan
 
         public void RecordSell(ItemData item, int price)
         {
-            stock[item] = Stock(item) + 1f;
+            stock[item] = Stock(item) + SellStockDelta(item);
             AddVolume(price);
         }
 

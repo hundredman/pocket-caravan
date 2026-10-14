@@ -17,12 +17,12 @@ namespace PocketCaravan
             if (InputReader.QuestLogPressed() && (logOpen || !UIState.Blocking))
             {
                 logOpen = !logOpen;
-                UIState.Blocking = logOpen;
+                if (logOpen) UIState.Blocking = true; else UIState.Release();
             }
             else if (logOpen && InputReader.CancelPressed())
             {
                 logOpen = false;
-                UIState.Blocking = false;
+                UIState.Release();
             }
         }
 

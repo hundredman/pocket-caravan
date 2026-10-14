@@ -6,6 +6,16 @@ namespace PocketCaravan
     public static class UIState
     {
         public static bool Blocking;
+        /// <summary>창이 닫힌 프레임. 닫는 키(E)가 같은 프레임에 '말 걸기'로 또 쓰이지 않게 한다.</summary>
+        public static int ClosedFrame = -1;
+
+        public static void Release()
+        {
+            Blocking = false;
+            ClosedFrame = Time.frameCount;
+        }
+
+        public static bool JustClosed => Time.frameCount == ClosedFrame;
     }
 
     /// <summary>임시 UI(OnGUI)용 한글 폰트와 화면 배율. 정식 UI로 바꾸면 지워도 된다.</summary>

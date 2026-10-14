@@ -11,21 +11,43 @@ namespace PocketCaravan
 #if ENABLE_INPUT_SYSTEM
         static Keyboard K => Keyboard.current;
 
+        static bool Up => K.upArrowKey.isPressed || K.wKey.isPressed;
+        static bool Down => K.downArrowKey.isPressed || K.sKey.isPressed;
+        static bool Left => K.leftArrowKey.isPressed || K.aKey.isPressed;
+        static bool Right => K.rightArrowKey.isPressed || K.dKey.isPressed;
+
+        static Vector2Int last;
+        static int lastFrame = -1;
+
+        /// <summary>여러 방향키를 같이 누르면 마지막에 누른 쪽으로 간다.</summary>
         public static Vector2Int Move()
         {
             var k = K;
             if (k == null) return Vector2Int.zero;
-            if (k.upArrowKey.isPressed || k.wKey.isPressed) return Vector2Int.up;
-            if (k.downArrowKey.isPressed || k.sKey.isPressed) return Vector2Int.down;
-            if (k.leftArrowKey.isPressed || k.aKey.isPressed) return Vector2Int.left;
-            if (k.rightArrowKey.isPressed || k.dKey.isPressed) return Vector2Int.right;
+            if (lastFrame != Time.frameCount)
+            {
+                lastFrame = Time.frameCount;
+                if (k.upArrowKey.wasPressedThisFrame || k.wKey.wasPressedThisFrame) last = Vector2Int.up;
+                else if (k.downArrowKey.wasPressedThisFrame || k.sKey.wasPressedThisFrame) last = Vector2Int.down;
+                else if (k.leftArrowKey.wasPressedThisFrame || k.aKey.wasPressedThisFrame) last = Vector2Int.left;
+                else if (k.rightArrowKey.wasPressedThisFrame || k.dKey.wasPressedThisFrame) last = Vector2Int.right;
+            }
+            if (Held(last)) return last;
+            if (Up) return last = Vector2Int.up;
+            if (Down) return last = Vector2Int.down;
+            if (Left) return last = Vector2Int.left;
+            if (Right) return last = Vector2Int.right;
             return Vector2Int.zero;
         }
 
+        static bool Held(Vector2Int d) =>
+            (d == Vector2Int.up && Up) || (d == Vector2Int.down && Down) || (d == Vector2Int.left && Left) || (d == Vector2Int.right && Right);
+
         public static bool Run() => K != null && (K.leftShiftKey.isPressed || K.rightShiftKey.isPressed);
-        public static bool InteractPressed() => K != null && K.eKey.wasPressedThisFrame;
+        /// <summary>말 걸기·확인: E 또는 Space</summary>
+        public static bool InteractPressed() => K != null && (K.eKey.wasPressedThisFrame || K.spaceKey.wasPressedThisFrame);
         public static bool CancelPressed() => K != null && K.escapeKey.wasPressedThisFrame;
-        public static bool ConfirmPressed() => K != null && (K.spaceKey.wasPressedThisFrame || K.enterKey.wasPressedThisFrame);
+        public static bool ConfirmPressed() => K != null && (K.enterKey.wasPressedThisFrame || K.numpadEnterKey.wasPressedThisFrame);
         public static bool QuestLogPressed() => K != null && K.jKey.wasPressedThisFrame;
 #else
         public static Vector2Int Move()
@@ -38,9 +60,9 @@ namespace PocketCaravan
         }
 
         public static bool Run() => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-        public static bool InteractPressed() => Input.GetKeyDown(KeyCode.E);
+        public static bool InteractPressed() => Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space);
         public static bool CancelPressed() => Input.GetKeyDown(KeyCode.Escape);
-        public static bool ConfirmPressed() => Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return);
+        public static bool ConfirmPressed() => Input.GetKeyDown(KeyCode.Return);
         public static bool QuestLogPressed() => Input.GetKeyDown(KeyCode.J);
 #endif
     }

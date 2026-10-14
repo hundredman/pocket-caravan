@@ -41,7 +41,7 @@ namespace PocketCaravan
         void Close()
         {
             open = false;
-            UIState.Blocking = false;
+            UIState.Release();
         }
 
         void Pick(Choice c)

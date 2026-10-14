@@ -30,13 +30,9 @@ namespace PocketCaravan
         {
             if (UIState.Blocking || GameManager.I == null) return;
 
-            if (InputReader.InteractPressed()) TryInteract();
+            if (InputReader.InteractPressed() && !UIState.JustClosed && !mover.IsMoving) TryInteract();
 
-            if (!mover.IsMoving)
-            {
-                var dir = InputReader.Move();
-                if (dir != Vector2Int.zero) mover.TryMove(dir, CurrentSpeed(dir));
-            }
+            if (!mover.IsMoving) TryStep();
 
             UpdateBody();
         }
@@ -47,16 +43,28 @@ namespace PocketCaravan
             var target = mover.Cell + new Vector3Int(dir.x, dir.y, 0);
             int grade = RoadGrid.Current != null ? RoadGrid.Current.GradeAt(target) : 0;
             float s = p.vehicle != null ? p.vehicle.SpeedOn(grade) : 1f;
-            if (grade == 0 && p.origin != null) s *= p.origin.offroadSpeedMultiplier; // 길 없는 곳
+            if (p.origin != null)
+            {
+                s *= p.origin.speedMultiplier;
+                if (grade == 0) s *= p.origin.offroadSpeedMultiplier; // 길 없는 곳
+            }
             s *= Mathf.Lerp(1f, fullLoadSpeed, p.LoadRatio);
             if (InputReader.Run()) s *= runMultiplier;
             return s;
         }
 
+        void TryStep()
+        {
+            var dir = InputReader.Move();
+            if (dir != Vector2Int.zero) mover.TryMove(dir, CurrentSpeed(dir));
+        }
+
         void OnStepped(Vector3Int cell)
         {
             var exit = MapExit.At(cell);
-            if (exit != null) exit.Use();
+            if (exit != null) { exit.Use(); return; }
+            // 키를 누르고 있으면 멈칫하지 않고 바로 다음 칸으로
+            if (!UIState.Blocking) TryStep();
         }
 
         void TryInteract()
