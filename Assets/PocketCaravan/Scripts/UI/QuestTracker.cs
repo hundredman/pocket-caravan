@@ -47,7 +47,7 @@ namespace PocketCaravan
                 GUI.Label(new Rect(x + 6, y, w - 6, 30), "· " + qm.ProgressText(p), UIStyle.Wrap);
                 y += 28;
             }
-            if (!any) GUI.Label(new Rect(x, y, w, 30), "머리 위에 <b>!</b>가 뜬 사람에게 말을 걸어 보자 (E)", UIStyle.Wrap);
+            if (!any) GUI.Label(new Rect(x, y, w, 30), "머리 위에 <b>!</b>가 뜬 사람에게 다가가 Space로 말을 걸어 보자", UIStyle.Wrap);
         }
 
         void DrawLog(QuestManager qm)
@@ -56,7 +56,7 @@ namespace PocketCaravan
             var r = new Rect((UIStyle.VirtualWidth - w) / 2, (UIStyle.VirtualHeight - h) / 2, w, h);
             GUI.Box(r, "");
             GUILayout.BeginArea(new Rect(r.x + 10, r.y + 8, w - 20, h - 16));
-            GUILayout.Label("<b>퀘스트 목록</b>   (J 닫기)", UIStyle.Rich);
+            GUILayout.Label("<b>퀘스트 목록</b>   (Q 닫기)", UIStyle.Rich);
             bool any = false;
             foreach (var p in qm.Active)
             {

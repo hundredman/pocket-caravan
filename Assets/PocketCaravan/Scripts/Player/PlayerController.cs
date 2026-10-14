@@ -3,45 +3,49 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// 입력을 받아 GridMover를 움직인다. 속도 = 이동 수단의 길 등급별 속도 × 짐 무게 × 달리기.
-    /// 운반 담당은 흔들림·도적 등을 여기(또는 별도 컴포넌트)에 더한다.
+    /// 입력을 받아 PlayerMotor를 움직인다. 속도 = 걷기 속도 × 이동 수단의 길 등급별 속도 × 짐 무게 × 달리기.
+    /// Space로 바라보는 쪽 사람에게 말을 건다. 출구 칸에 들어가면 다음 맵으로 이어진다.
     /// </summary>
-    [RequireComponent(typeof(GridMover))]
+    [RequireComponent(typeof(PlayerMotor))]
     public class PlayerController : MonoBehaviour
     {
         public float runMultiplier = 1.6f;
-        [Tooltip("짐이 가득 찼을 때 속도 배율")] public float fullLoadSpeed = 0.65f;
+        [Tooltip("짐이 가득 찼을 때 속도 배율")] public float fullLoadSpeed = 0.7f;
         [Tooltip("그림이 붙은 자식 (걸을 때 통통 튀는 연출)")] public SpriteRenderer body;
 
-        GridMover mover;
+        PlayerMotor motor;
+        float walkTime;
 
-        public GridMover Mover => mover;
+        public PlayerMotor Motor => motor;
         public static PlayerController Instance { get; private set; }
 
         void Awake()
         {
             Instance = this;
-            mover = GetComponent<GridMover>();
-            mover.Stepped += OnStepped;
+            motor = GetComponent<PlayerMotor>();
             if (body == null) body = GetComponentInChildren<SpriteRenderer>();
         }
 
         void Update()
         {
-            if (UIState.Blocking || GameManager.I == null) return;
+            if (GameManager.I == null) return;
+            bool locked = UIState.Blocking || GameManager.I.IsTravelling;
+            Vector2 input = locked ? Vector2.zero : InputReader.MoveVector();
+            motor.Tick(input, CurrentSpeed(), Time.deltaTime);
 
-            if (InputReader.InteractPressed() && !UIState.JustClosed && !mover.IsMoving) TryInteract();
-
-            if (!mover.IsMoving) TryStep();
-
+            if (!locked)
+            {
+                if (InputReader.InteractPressed() && !UIState.JustClosed) TryInteract();
+                var exit = MapExit.At(motor.Cell);
+                if (exit != null) exit.Use(motor);
+            }
             UpdateBody();
         }
 
-        public float CurrentSpeed(Vector2Int dir)
+        public float CurrentSpeed()
         {
             var p = GameManager.I.Player;
-            var target = mover.Cell + new Vector3Int(dir.x, dir.y, 0);
-            int grade = RoadGrid.Current != null ? RoadGrid.Current.GradeAt(target) : 0;
+            int grade = RoadGrid.Current != null ? RoadGrid.Current.GradeAt(motor.Cell) : 0;
             float s = p.vehicle != null ? p.vehicle.SpeedOn(grade) : 1f;
             if (p.origin != null)
             {
@@ -50,36 +54,27 @@ namespace PocketCaravan
             }
             s *= Mathf.Lerp(1f, fullLoadSpeed, p.LoadRatio);
             if (InputReader.Run()) s *= runMultiplier;
-            return s;
-        }
-
-        void TryStep()
-        {
-            var dir = InputReader.Move();
-            if (dir != Vector2Int.zero) mover.TryMove(dir, CurrentSpeed(dir));
-        }
-
-        void OnStepped(Vector3Int cell)
-        {
-            var exit = MapExit.At(cell);
-            if (exit != null) { exit.Use(); return; }
-            // 키를 누르고 있으면 멈칫하지 않고 바로 다음 칸으로
-            if (!UIState.Blocking) TryStep();
+            return s * motor.walkSpeed;
         }
 
         void TryInteract()
         {
-            var f = mover.Facing;
-            var it = Interactable.At(mover.Cell + new Vector3Int(f.x, f.y, 0));
+            var map = MapRoot.Current;
+            if (map == null) return;
+            Vector2 f = motor.Facing;
+            // 바로 앞, 조금 더 앞 순서로 찾는다
+            var it = Interactable.At(map.WorldToCell(motor.Feet + f * 0.6f)) ?? Interactable.At(map.WorldToCell(motor.Feet + f * 1.1f));
             if (it != null) it.Interact(this);
         }
 
         void UpdateBody()
         {
             if (body == null) return;
-            if (mover.Facing.x != 0) body.flipX = mover.Facing.x < 0;
+            if (motor.Facing.x != 0) body.flipX = motor.Facing.x < 0;
             // 걸을 때 1픽셀 통통 (16 PPU 기준)
-            float bob = mover.IsMoving && mover.StepProgress > 0.25f && mover.StepProgress < 0.75f ? 1f / 16f : 0f;
+            if (motor.IsMoving) walkTime += Time.deltaTime * (2f + motor.Velocity.magnitude);
+            else walkTime = 0f;
+            float bob = motor.IsMoving && Mathf.Repeat(walkTime, 1f) < 0.5f ? 1f / 16f : 0f;
             body.transform.localPosition = new Vector3(0f, bob, 0f);
         }
     }

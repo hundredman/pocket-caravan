@@ -19,6 +19,8 @@ namespace PocketCaravan
             }
         }
 
+        public void SnapNow() => LateUpdate();
+
         void LateUpdate()
         {
             if (target == null) return;

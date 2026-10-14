@@ -17,7 +17,7 @@ namespace PocketCaravan
             var player = PlayerController.Instance;
             if (RoadGrid.Current != null && player != null)
             {
-                int g = RoadGrid.Current.GradeAt(player.Mover.Cell);
+                int g = RoadGrid.Current.GradeAt(player.Motor.Cell);
                 var names = gm.Db.roads.gradeNames;
                 roadName = g < names.Length ? names[g] : g.ToString();
             }
@@ -30,7 +30,7 @@ namespace PocketCaravan
             GUI.Box(new Rect(6, 6, 230, 52), "");
             GUI.Label(new Rect(12, 9, 224, 50), text);
 
-            GUI.Label(new Rect(6, UIStyle.VirtualHeight - 20, 400, 18), "방향키/WASD 이동 · Shift 달리기 · E/Space 말 걸기 · J 퀘스트");
+            GUI.Label(new Rect(6, UIStyle.VirtualHeight - 20, 400, 18), "방향키/WASD 이동 · Shift 달리기 · Space 말 걸기 · Q 퀘스트");
         }
     }
 }

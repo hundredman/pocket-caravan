@@ -242,6 +242,23 @@ class Map:
                 self.stamp(name, x, y)
                 placed += 1
 
+    def link(self, edge, start, length, target, target_spawn, my_spawn):
+        """맵 가장자리 연결. edge: 'N','S','E','W'. start부터 length칸이 출구,
+        한 칸 안쪽 같은 폭이 이 맵에 들어올 때 서는 자리(my_spawn)다.
+        이웃 맵의 같은 폭 출구와 맞추면, 나간 자리 그대로 이어서 들어온다."""
+        if edge in "EW":
+            x = self.w - 1 if edge == "E" else 0
+            sx = x - 1 if edge == "E" else 1
+            self.add("exit", x, start, w=1, h=length, target=target, spawn=target_spawn, edge=edge)
+            self.add("spawn", sx, start, w=1, h=length, id=my_spawn, edge=edge)
+            self.reserve(min(x, sx), start, max(x, sx), start + length - 1)
+        else:
+            y = self.h - 1 if edge == "S" else 0
+            sy = y - 1 if edge == "S" else 1
+            self.add("exit", start, y, w=length, h=1, target=target, spawn=target_spawn, edge=edge)
+            self.add("spawn", start, sy, w=length, h=1, id=my_spawn, edge=edge)
+            self.reserve(start, min(y, sy), start + length - 1, max(y, sy))
+
     def add(self, kind, x, y, **kw):
         self.objects.append(dict(kind=kind, x=x, y=y, **kw))
         self.reserve(x, y, x, y)
@@ -250,7 +267,8 @@ class Map:
     def finish(self):
         def road_mask(a, b):
             if not self.inside(a, b):
-                return False
+                # 맵 밖은 가장자리 칸을 그대로 이어 본다 (길이 맵 경계에서 끊겨 보이지 않게)
+                a = min(max(a, 0), self.w - 1); b = min(max(b, 0), self.h - 1)
             return self.road[b][a] > 0 or self.ground[b][a] == PLANK
 
         def water_mask(a, b):

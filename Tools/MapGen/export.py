@@ -35,7 +35,7 @@ for f in (maps.naru, maps.route01, gaegyeong.build, maps.dakmok):
              blocked=[1 if b else 0 for row in m.blocked for b in row],
              objects=[dict(kind=o["kind"], x=o["x"], y=o["y"], w=o.get("w", 1), h=o.get("h", 1),
                            id=o.get("id", ""), npc=o.get("npc", ""), town=o.get("town", ""),
-                           target=o.get("target", ""), spawn=o.get("spawn", ""), variant=o.get("variant", 0), idx=o.get("idx", 0))
+                           target=o.get("target", ""), spawn=o.get("spawn", ""), edge=o.get("edge", ""), variant=o.get("variant", 0), idx=o.get("idx", 0))
                       for o in m.objects])
     d["palette"] = palette
     with open(os.path.join(map_dir, m.id + ".json"), "w") as fp:

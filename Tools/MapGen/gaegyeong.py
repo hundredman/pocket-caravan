@@ -93,12 +93,11 @@ def build():
                 m.obj[wall_y - 1 + dy][tx + dx] = K("towers", 12 + dx, 0 + dy)
                 m.blocked[wall_y - 1 + dy][tx + dx] = True
     # 사람
-    m.add("spawn", 31, 38, id="S")
-    m.add("spawn", W - 2, 23, id="E")
+
     m.add("npc", 28, 26, npc="gaekju")                 # 객주: 남문에서 올라오면 바로 보이는 곳
     m.add("market", 36, 21, town="gaegyeong")          # 시전 상인
-    m.add("exit", gate_x0, H - 1, w=4, h=1, target="Route01", spawn="E")
-    m.add("exit", W - 1, 22, w=1, h=3, target="Dakmok", spawn="W")
+    m.link("S", gate_x0, 4, "Route01", "N", "S")      # 남문 (폭 4) ↔ 예성 길 북쪽
+    m.link("E", 22, 3, "Dakmok", "W", "E")            # 시전 거리 동쪽 끝 (폭 3) ↔ 닥나무 마을
     villagers = [(20, 23, 0), (40, 24, 1), (31, 15, 2), (44, 22, 0), (16, 32, 1), (47, 32, 2), (25, 12, 0), (38, 13, 1)]
     for i, (vx, vy, sp) in enumerate(villagers):
         m.add("villager", vx, vy, variant=sp, idx=i)

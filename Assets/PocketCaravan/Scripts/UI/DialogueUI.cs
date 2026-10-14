@@ -72,7 +72,7 @@ namespace PocketCaravan
             float bx = r.xMax - 10;
             if (choices.Count == 0)
             {
-                GUI.Label(new Rect(bx - 120, r.yMax - 20, 120, 16), "E 계속", UIStyle.Right);
+                GUI.Label(new Rect(bx - 120, r.yMax - 20, 120, 16), "Space 계속", UIStyle.Right);
                 return;
             }
             for (int i = choices.Count - 1; i >= 0; i--)
@@ -80,7 +80,7 @@ namespace PocketCaravan
                 var c = choices[i];
                 float bw = 74;
                 bx -= bw;
-                string label = i == 0 ? c.label + " (E)" : c.label;
+                string label = i == 0 ? c.label + " (Space)" : (i == choices.Count - 1 ? c.label + " (Esc)" : c.label);
                 if (GUI.Button(new Rect(bx, r.yMax - 24, bw, 18), label)) { Pick(c); return; }
                 bx -= 6;
             }

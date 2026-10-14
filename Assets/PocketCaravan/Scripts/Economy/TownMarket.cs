@@ -101,7 +101,7 @@ namespace PocketCaravan
             GUILayout.FlexibleSpace();
             GUILayout.BeginHorizontal();
             GUILayout.Label(message);
-            if (GUILayout.Button("닫기 (E)", GUILayout.Width(80))) Close();
+            if (GUILayout.Button("닫기 (Esc)", GUILayout.Width(80))) Close();
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }

@@ -16,8 +16,7 @@ def naru():
     m.road_path([(8, 16), (8, 11)], width=2)     # 나루에서 마을로
     m.road_rect(12, 9, 21, 12, grade=1)          # 마을 마당
     m.road_path([(8, 11), (12, 11)], width=2)
-    m.road_path([(21, 10), (27, 10), (31, 9), (35, 9)], width=2, wobble=0)  # 동쪽 1번 길로
-    m.reserve(30, 8, 35, 12)
+    m.road_path([(21, 10), (27, 10), (31, 9), (35, 9)], width=2, wobble=0)  # 동쪽 예성 길로 (9~10행)
     # 집
     m.stamp("house_thatch", 3, 4)
     m.stamp("house_plain", 10, 4)
@@ -31,9 +30,8 @@ def naru():
     # 사람
     m.add("npc", 19, 8, npc="naru_chief")        # 촌장 (집 앞)
     m.add("market", 15, 13, town="naru")         # 나루 장터
-    m.add("spawn", 16, 11, id="S")
-    m.add("spawn", 34, 9, id="E")
-    m.add("exit", 35, 8, w=1, h=4, target="Route01", spawn="W")
+    m.add("spawn", 16, 11, id="S0")   # 게임 시작 자리
+    m.link("E", 8, 4, "Route01", "W", "E")      # 8~11행, 길은 9~10행
     # 숲과 나무
     m.forest_border(thickness=2)
     m.scatter("tree", 5, area=(3, 2, 33, 17), margin=1)
@@ -43,20 +41,18 @@ def naru():
 
 
 def route01():
-    """예성 길: 나루 마을에서 개경 남문까지. 시내와 다리."""
-    m = Map("Route01", "예성 길", 44, 22, seed=7)
-    m.water_rect(24, 0, 26, 21)                  # 시내
-    m.road_path([(0, 10), (8, 10), (14, 8), (20, 9), (28, 9), (34, 11), (43, 11)], width=2, wobble=0)
-    m.bridge(24, 9, 26, 10)
-    m.reserve(0, 8, 2, 13); m.reserve(41, 9, 43, 13)
-    m.add("spawn", 1, 10, id="W")
-    m.add("spawn", 42, 11, id="E")
-    m.add("exit", 0, 9, w=1, h=4, target="Naru", spawn="E")
-    m.add("exit", 43, 10, w=1, h=4, target="Gaegyeong", spawn="S")
+    """예성 길: 서쪽 나루 마을에서 들어와 시내를 건너 북쪽 개경 남문으로 올라간다."""
+    m = Map("Route01", "예성 길", 40, 30, seed=7)
+    m.water_rect(14, 0, 16, 29)                  # 시내 (남북으로 흐름)
+    m.road_path([(0, 9), (8, 9), (12, 10), (20, 10), (26, 12), (30, 14)], width=2)
+    m.bridge(14, 10, 16, 11)
+    m.road_path([(30, 14), (30, 8), (27, 4), (27, 0)], width=4, grade=2)   # 개경 남문 쪽 큰길 (폭 4)
+    m.link("W", 8, 4, "Naru", "E", "W")          # 나루 마을과 같은 8~11행, 길 9~10행
+    m.link("N", 27, 4, "Gaegyeong", "S", "N")    # 개경 남문 폭 4
     m.forest_border(thickness=2)
-    m.scatter("pine", 10, area=(2, 2, 41, 19), margin=1)
-    m.scatter("tree", 8, area=(2, 2, 41, 19), margin=1)
-    m.scatter("cherry", 3, area=(2, 2, 41, 19), margin=1)
+    m.scatter("pine", 12, area=(2, 2, 37, 27), margin=1)
+    m.scatter("tree", 10, area=(2, 2, 37, 27), margin=1)
+    m.scatter("cherry", 4, area=(2, 2, 37, 27), margin=1)
     m.finish()
     return m
 
@@ -64,9 +60,9 @@ def route01():
 def dakmok():
     """닥나무 마을: 종이를 뜨는 마을. 개경 동문 밖."""
     m = Map("Dakmok", "닥나무 마을", 34, 22, seed=11)
-    m.road_path([(0, 11), (10, 11), (14, 10)], width=2, wobble=0)
+    m.road_rect(0, 10, 10, 12, grade=2)          # 개경 동문 큰길(폭 3)에 이어짐
+    m.road_path([(10, 10), (14, 10)], width=3)
     m.road_rect(13, 8, 21, 12, grade=1)
-    m.reserve(0, 9, 2, 13)
     m.water_rect(26, 14, 31, 18)                 # 종이 뜨는 연못
     m.stamp("house_thatch", 6, 3)
     m.stamp("house_plain", 14, 3)
@@ -76,8 +72,7 @@ def dakmok():
     m.add("npc", 11, 9, npc="dakmok_chief")
     m.add("market", 18, 13, town="dakmok")
     m.prop(PROPS[3], 19, 14); m.prop(PROPS[1], 20, 14)
-    m.add("spawn", 1, 11, id="W")
-    m.add("exit", 0, 10, w=1, h=4, target="Gaegyeong", spawn="E")
+    m.link("W", 10, 3, "Gaegyeong", "E", "W")
     m.forest_border(thickness=2)
     m.scatter("tree", 6, area=(3, 2, 30, 18), margin=1)
     m.finish()

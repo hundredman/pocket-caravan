@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,6 +21,12 @@ namespace PocketCaravan
         readonly Dictionary<string, MarketState> markets = new Dictionary<string, MarketState>();
 
         string pendingSpawnId;
+        float pendingOffset;
+        Vector2Int pendingFacing;
+        float fade;   // 0 = 보임, 1 = 검은 화면
+
+        /// <summary>맵을 넘어가는 중 (화면이 어두워졌다 밝아지는 동안 조작을 막음)</summary>
+        public bool IsTravelling { get; private set; }
         bool firstSceneLoaded;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -74,10 +81,23 @@ namespace PocketCaravan
 
         // ---------- 맵 이동 ----------
 
-        public void TravelTo(string sceneName, string spawnId)
+        public void TravelTo(string sceneName, string spawnId, float offset = 0f, Vector2Int facing = default)
         {
-            pendingSpawnId = spawnId;
-            SceneManager.LoadScene(sceneName);
+            if (IsTravelling) return;
+            StartCoroutine(Travel(sceneName, spawnId, offset, facing));
+        }
+
+        IEnumerator Travel(string sceneName, string spawnId, float offset, Vector2Int facing)
+        {
+            IsTravelling = true;
+            for (float t = 0; t < 1f; t += Time.unscaledDeltaTime / 0.12f) { fade = t; yield return null; }
+            fade = 1f;
+            pendingSpawnId = spawnId; pendingOffset = offset; pendingFacing = facing;
+            yield return SceneManager.LoadSceneAsync(sceneName);
+            yield return null;
+            for (float t = 1f; t > 0f; t -= Time.unscaledDeltaTime / 0.18f) { fade = t; yield return null; }
+            fade = 0f;
+            IsTravelling = false;
         }
 
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -91,16 +111,28 @@ namespace PocketCaravan
             if (id != null)
             {
                 var spawn = SpawnPoint.Find(id);
-                var player = FindAnyObjectByType<PlayerController>();
-                if (spawn != null && player != null)
-                    player.transform.position = spawn.transform.position;
+                var player = FindAnyObjectByType<PlayerMotor>();
+                if (spawn != null && player != null) player.Teleport(spawn.PositionFor(pendingOffset), pendingFacing);
+                // 카메라도 바로 따라가게
+                var cam = FindAnyObjectByType<CameraFollow>();
+                if (cam != null) cam.SnapNow();
             }
+            pendingOffset = 0f; pendingFacing = default;
 
             if (MapRoot.Current != null)
             {
                 Notify.Show(MapRoot.Current.displayName, 2.5f);
                 GameEvents.RaiseMapEntered(MapRoot.Current.mapId);
             }
+        }
+
+        void OnGUI()
+        {
+            if (fade <= 0f) return;
+            GUI.depth = -1000;
+            GUI.color = new Color(0f, 0f, 0f, fade);
+            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Texture2D.whiteTexture);
+            GUI.color = Color.white;
         }
 
         // ---------- 장터 ----------

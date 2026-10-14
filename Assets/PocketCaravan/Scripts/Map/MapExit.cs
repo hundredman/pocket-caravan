@@ -4,8 +4,8 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// 밟으면 다른 맵으로 넘어가는 칸들. 오브젝트 위치가 왼쪽 아래 칸, size만큼 덮는다.
-    /// 도착 맵에는 targetSpawnId와 같은 이름의 SpawnPoint가 있어야 한다.
+    /// 맵 가장자리의 출구 칸들. 오브젝트 위치가 왼쪽 아래 칸, size만큼 덮는다.
+    /// 나갈 때의 위치(출구 안에서 몇 칸째인지)를 그대로 넘겨, 다음 맵의 같은 폭 도착 자리에서 이어서 나온다.
     /// </summary>
     public class MapExit : MonoBehaviour
     {
@@ -18,21 +18,26 @@ namespace PocketCaravan
         void OnEnable() => All.Add(this);
         void OnDisable() => All.Remove(this);
 
+        Vector3Int Origin => MapRoot.Current.WorldToCell(transform.position);
+
         public bool Contains(Vector3Int cell)
         {
             if (MapRoot.Current == null) return false;
-            var o = MapRoot.Current.WorldToCell(transform.position);
+            var o = Origin;
             return cell.x >= o.x && cell.x < o.x + size.x && cell.y >= o.y && cell.y < o.y + size.y;
         }
 
-        public void Use()
+        public void Use(PlayerMotor player)
         {
             if (string.IsNullOrEmpty(targetScene))
             {
                 Debug.Log($"[MapExit] {name}: 아직 연결된 맵이 없습니다.");
                 return;
             }
-            GameManager.I.TravelTo(targetScene, targetSpawnId);
+            // 출구 첫 칸 중심에서 몇 칸 떨어져 있는지 (출구가 긴 방향으로)
+            Vector3 first = MapRoot.Current.CellCenter(Origin);
+            float offset = size.x > 1 ? player.transform.position.x - first.x : player.transform.position.y - first.y;
+            GameManager.I.TravelTo(targetScene, targetSpawnId, offset, player.Facing);
         }
 
         public static MapExit At(Vector3Int cell)

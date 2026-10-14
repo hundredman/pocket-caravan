@@ -35,7 +35,7 @@ namespace PocketCaravan.EditorTools
         [Serializable]
         class MapObject
         {
-            public string kind, id, npc, town, target, spawn;
+            public string kind, id, npc, town, target, spawn, edge;
             public int x, y, w = 1, h = 1, variant, idx;
         }
 
@@ -143,7 +143,11 @@ namespace PocketCaravan.EditorTools
                 {
                     case "spawn":
                         var sp = new GameObject($"Spawn {o.id}").AddComponent<SpawnPoint>();
-                        sp.transform.SetParent(objects); sp.transform.position = center; sp.id = o.id;
+                        // 자리의 첫 칸 = 왼쪽 아래 칸 (JSON은 위쪽 기준이라 세로로 긴 자리는 아래 끝 칸)
+                        var first = new Vector3Int(o.x, f.h - 1 - (o.y + o.h - 1), 0);
+                        sp.transform.SetParent(objects); sp.transform.position = grid.GetCellCenterWorld(first);
+                        sp.id = o.id; sp.size = new Vector2Int(o.w, o.h);
+                        center = sp.transform.position;
                         if (o.id == SpawnPoint.StartId) { startPos = center; hasStart = true; }
                         else if (!hasStart && startPos == Vector3.zero) startPos = center;
                         break;
@@ -191,7 +195,7 @@ namespace PocketCaravan.EditorTools
             var sr = bodyGo.AddComponent<SpriteRenderer>();
             sr.sprite = LoadSprite(PlaceholderArt.PlayerSprite);
             sr.sortingOrder = 11;
-            player.AddComponent<GridMover>();
+            player.AddComponent<PlayerMotor>();
             player.AddComponent<PlayerController>().body = sr;
 
             // 카메라: 320×180 기준, 16 PPU 픽셀 퍼펙트
