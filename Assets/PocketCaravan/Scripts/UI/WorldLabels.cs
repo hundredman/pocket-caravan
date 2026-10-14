@@ -33,7 +33,7 @@ namespace PocketCaravan
             {
                 Vector2 p = ToGui(cam, it.transform.position + new Vector3(0f, 1.0f, 0f));
                 if (p.x < -50 || p.y < -20 || p.x > UIStyle.VirtualWidth + 50 || p.y > UIStyle.VirtualHeight + 20) continue;
-                string label = it.Category == Interactable.Kind.Market ? "[장터] " + it.DisplayName : it.DisplayName;
+                string label = it.DisplayName;
                 Color c = it.Category switch
                 {
                     Interactable.Kind.Quest => QuestColor,

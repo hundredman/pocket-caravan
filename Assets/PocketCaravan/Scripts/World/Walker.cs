@@ -25,7 +25,7 @@ namespace PocketCaravan
             }
         }
 
-        public override string DisplayName => Trader != null ? $"[NPC] 상인 {Trader.name}" : "[NPC] 상인";
+        public override string DisplayName => Trader != null ? $"상인 {Trader.name}" : "상인";
 
         void Awake() => blocksMovement = false;
 
