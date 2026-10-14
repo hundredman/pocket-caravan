@@ -35,159 +35,156 @@ BASE = {
 OUTLINE_TINT = (36, 24, 40)
 
 # ---------- 머리 (13줄) ----------
-HAT = [  # 갓: 0~4줄
+# 2등신: 머리 13줄(모자·귀 4 + 얼굴 9) + 몸 8줄 + 다리 3줄 = 24. 머리 폭 12칸, 몸 폭 10칸.
+
+# ---------- 머리 위 (4줄) ----------
+HAT = [  # 갓: 챙이 머리보다 넓다
     "......oooo......",
     ".....ohHhho.....",
-    ".....ohhhho.....",
     "..oooohhhhoooo..",
     ".ohhhhhhhhhhhho.",
 ]
-HAT_SIDE = [
-    "......oooo......",
-    ".....ohHhho.....",
-    ".....ohhhho.....",
-    "..oooohhhhoooo..",
-    ".ohhhhhhhhhhhho.",
-]
+HAT_SIDE = HAT
 HAT_BACK = HAT
 
-FACE_FRONT = [  # 5~12줄
-    "..ooffffffffoo..",
-    ".offLLffffffffo.",
-    "offmmmffffmmmffo",
-    "ofmmwemffmwemmfo",
-    "ofmmeemllmeemmfo",
-    "opflllllnnlllfpo",
-    ".offllllllllffo.",
-    "...ooffffffoo...",
-]
-FACE_BACK = [
-    "..ooffffffffoo..",
-    ".offLLffffffffo.",
-    "offffffffffffffo",
-    "offffffffffffffo",
-    "offffffffffffffo",
-    "offffffffffffffo",
-    ".offffffffffffo.",
-    "...ooffffffoo...",
-]
-FACE_SIDE = [  # 오른쪽을 봄
-    "...ooffffffoo...",
-    "..offLLffffffo..",
-    ".offffffffmmmfo.",
-    ".offffffffmwemo.",
-    ".offffffffmeemlo",
-    ".opfffffffllllno",
-    "..offffffflllloo",
-    "...oofffffooo...",
-]
-
-# 귀 (모자 없는 종). 0~4줄을 바꾼다
 EARS = {
     "round": {
-        "d": ["................", "................", "..ooo......ooo..", ".offo......offo.", ".offfoooooofffo."],
-        "r": ["................", "................", "....ooo.........", "...offo.........", "...offfooooo...."],
+        "d": ["................", "................", "...ooo....ooo...", "..offo....offo.."],
+        "r": ["................", "................", "....ooo.........", "...offo........."],
     },
     "pointy": {
-        "d": ["................", "..o..........o..", ".ofo........ofo.", ".offo......offo.", ".offfoooooofffo."],
-        "r": ["................", "......o.........", ".....ofo........", "....offo........", "...offfoooo....."],
+        "d": ["................", "...o........o...", "..ofo......ofo..", "..offo....offo.."],
+        "r": ["................", ".....o..........", "....ofo.........", "...offo........."],
     },
     "big": {  # 사막여우처럼 큰 귀
-        "d": [".o............o.", ".ofo........ofo.", ".offo......offo.", ".offfo....offfo.", ".offffoooofffffo"],
-        "r": ["....o...........", "....ofo.........", "....offo........", "....offfo.......", "...offffooooo..."],
+        "d": [".o............o.", ".ofo........ofo.", ".offo......offo.", ".offfo....offfo."],
+        "r": ["...o............", "...ofo..........", "...offo.........", "...offfo........"],
     },
     "long": {
-        "d": ["...oo......oo...", "..oflo....olfo..", "..oflo....olfo..", "..oflo....olfo..", ".ooffoooooooffoo"],
-        "r": ["....oo..........", "...oflo.........", "...oflo.........", "...oflo.........", "..ooffooooooo..."],
+        "d": ["....oo....oo....", "...oflo..olfo...", "...oflo..olfo...", "...oflo..olfo..."],
+        "r": ["....oo..........", "...oflo.........", "...oflo.........", "...oflo........."],
     },
 }
 
-# ---------- 몸 (8줄, 13~20) : 팔 흔들기 3가지 ----------
+# ---------- 얼굴 (9줄): 둥근 볼, 아래쪽에 큰 눈 ----------
+FACE_FRONT = [
+    "...offffffffo...",
+    "..offLLffffffo..",
+    "..ofmmmffmmmfo..",
+    "..ofmweffwemfo..",
+    "..ofmeelleemfo..",
+    "..opfllnnllfpo..",
+    "..offllllllffo..",
+    "...offffffffo...",
+    ".....oooooo.....",
+]
+FACE_BACK = [
+    "...offffffffo...",
+    "..offLLffffffo..",
+    "..offffffffffo..",
+    "..offffffffffo..",
+    "..offffffffffo..",
+    "..offffffffffo..",
+    "..offffffffffo..",
+    "...offffffffo...",
+    ".....oooooo.....",
+]
+FACE_SIDE = [  # 오른쪽을 봄
+    "...offffffffo...",
+    "..offLLffffffo..",
+    "..offfffffmmmo..",
+    "..offffffmwemo..",
+    "..offffffmeemlo.",
+    "..opffffflllllno",
+    "..offfffflllloo.",
+    "...offfffffoo...",
+    ".....oooooo.....",
+]
+
+# ---------- 몸 (8줄) : 팔 흔들기 3가지 ----------
 BODY_FRONT = {
     0: [
-        "....oclcccco....",
-        "...occclcccco...",
-        "..oaccccllccao..",
-        ".oaabbbbbbbbaao.",
-        ".ofacccccccccafo",
-        "..ooccccccccoo..",
+        ".....oclcco.....",
+        "....occclcco....",
+        "...oacccllcao...",
+        "..oaabbbbbbaao..",
+        "..ofaccccccafo..",
+        "...occccccccо...".replace("о", "o"),
         "...oaaaaaaaao...",
-        "...oooooooooo...",
+        "....oooooooo....",
     ],
-    1: [  # 왼팔 앞(아래로), 오른팔 뒤
-        "....oclcccco....",
-        "...occclcccco...",
-        "..oaccccllccao..",
-        ".oaabbbbbbbbaao.",
-        ".oaacccccccccao.",
-        ".ofoccccccccofo.",
+    1: [  # 왼팔 앞(아래로)
+        ".....oclcco.....",
+        "....occclcco....",
+        "...oacccllcao...",
+        "..oaabbbbbbaao..",
+        "..oaaccccccafo..",
+        "..ofoccccccco...",
         "...oaaaaaaaao...",
-        "...oooooooooo...",
+        "....oooooooo....",
     ],
     2: [  # 오른팔 앞
-        "....oclcccco....",
-        "...occclcccco...",
-        "..oaccccllccao..",
-        ".oaabbbbbbbbaao.",
-        ".oacccccccccaao.",
-        ".ofoccccccccofo.",
+        ".....oclcco.....",
+        "....occclcco....",
+        "...oacccllcao...",
+        "..oaabbbbbbaao..",
+        "..ofaccccccaao..",
+        "...ocdcccccofo..".replace("d", "c"),
         "...oaaaaaaaao...",
-        "...oooooooooo...",
+        "....oooooooo....",
     ],
 }
-BODY_BACK = {
-    k: [r.replace("l", "c") for r in v] for k, v in BODY_FRONT.items()
-}
+BODY_BACK = {k: [r.replace("l", "c") for r in v] for k, v in BODY_FRONT.items()}
 BODY_SIDE = {
     0: [
+        "......occo......",
         ".....occcco.....",
         "....occcccco....",
-        "....occcccco....",
         "....obbbbbbo....",
-        "....ocacccco....",
-        "....ocafcccco...",
+        "....ocaccccо....".replace("о", "o"),
+        "....ocafccco....",
         "....oaaaaaao....",
         "....oooooooo....",
     ],
     1: [  # 팔 앞으로
+        "......occo......",
         ".....occcco.....",
         "....occcccco....",
-        "....occcccco....",
         "....obbbbbbo....",
-        "....occcaaco....",
-        "....occccafo....",
+        "....occccaao....",
+        "....occcccafo...",
         "....oaaaaaao....",
         "....oooooooo....",
     ],
     2: [  # 팔 뒤로
+        "......occo......",
         ".....occcco.....",
         "....occcccco....",
-        "....occcccco....",
         "....obbbbbbo....",
-        "...oacccccco....",
-        "...ofaccccco....",
+        "...oaccccccо....".replace("о", "o"),
+        "...ofacccccо....".replace("о", "o"),
         "....oaaaaaao....",
         "....oooooooo....",
     ],
 }
 
-# ---------- 다리 (3줄, 21~23) ----------
+# ---------- 다리 (3줄) ----------
 LEGS_FRONT = [
-    ["....okko.okko...", "....okko.okko...", "....osso.osso..."],
-    ["....okko.okko...", "....osso.okko...", ".........osso..."],
-    ["....okko.okko...", "....okko.okko...", "....osso.osso..."],
-    ["....okko.okko...", "....okko.osso...", "....osso......."],
+    ["....okkookko....", "....okkookko....", "....ossoosso...."],
+    ["....okkookko....", "....ossookko....", "........osso...."],
+    ["....okkookko....", "....okkookko....", "....ossoosso...."],
+    ["....okkookko....", "....okkoosso....", "....osso........"],
 ]
 LEGS_SIDE = [
-    [".....okkko......", ".....okkko......", ".....osssoo.....".replace("oo.", "o..")],
-    ["....okko.okko...", "...okko...okko..", "...osso...osso.."],
-    [".....okkko......", ".....okkko......", ".....ossso......"],
-    ["....okkookko....", "....okko.okko...", "....osso.osso..."],
+    ["......okko......", "......okko......", "......osso......"],
+    [".....okkokko....", "....okko.okko...", "....osso.osso..."],
+    ["......okko......", "......okko......", "......osso......"],
+    [".....okkokko....", ".....okkokko....", ".....ossosso...."],
 ]
 
 # 꼬리 (옆·뒤에서 보임). (줄, 왼쪽 x, 글자)
 TAIL_SIDE = [(16, 1, "ofo"), (17, 0, "oftfo"), (18, 0, "otfto"), (19, 1, "ooo")]
-TAIL_BACK = [(19, 6, "oftfo"), (20, 6, "otfto"), (21, 7, "ooo")]
+TAIL_BACK = [(18, 6, "oftfo"), (19, 6, "otfto"), (20, 7, "ooo")]
 
 
 def norm(rows):
