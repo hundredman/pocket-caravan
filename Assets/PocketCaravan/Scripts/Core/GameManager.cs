@@ -66,6 +66,7 @@ namespace PocketCaravan
             gameObject.AddComponent<DebugHUD>();
             gameObject.AddComponent<QuestTracker>();
             gameObject.AddComponent<DialogueUI>();
+            gameObject.AddComponent<WorldLabels>();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 

@@ -13,8 +13,13 @@ namespace PocketCaravan
         [Tooltip("짐이 가득 찼을 때 속도 배율")] public float fullLoadSpeed = 0.7f;
         [Tooltip("그림이 붙은 자식 (걸을 때 통통 튀는 연출)")] public SpriteRenderer body;
 
+        [Tooltip("말을 걸 수 있는 거리 (칸)")] public float talkRange = 1.8f;
+
         PlayerMotor motor;
         float walkTime;
+
+        /// <summary>지금 Space를 누르면 말을 걸 대상 (머리 위 안내 표시용)</summary>
+        public Interactable TalkTarget { get; private set; }
 
         public PlayerMotor Motor => motor;
         public static PlayerController Instance { get; private set; }
@@ -33,9 +38,10 @@ namespace PocketCaravan
             Vector2 input = locked ? Vector2.zero : InputReader.MoveVector();
             motor.Tick(input, CurrentSpeed(), Time.deltaTime);
 
+            TalkTarget = locked ? null : Interactable.Nearest(transform.position, motor.Facing, talkRange);
             if (!locked)
             {
-                if (InputReader.InteractPressed() && !UIState.JustClosed) TryInteract();
+                if (InputReader.InteractPressed() && !UIState.JustClosed && TalkTarget != null) TalkTarget.Interact(this);
                 var exit = MapExit.At(motor.Cell);
                 if (exit != null) exit.Use(motor);
             }
@@ -55,16 +61,6 @@ namespace PocketCaravan
             s *= Mathf.Lerp(1f, fullLoadSpeed, p.LoadRatio);
             if (InputReader.Run()) s *= runMultiplier;
             return s * motor.walkSpeed;
-        }
-
-        void TryInteract()
-        {
-            var map = MapRoot.Current;
-            if (map == null) return;
-            Vector2 f = motor.Facing;
-            // 바로 앞, 조금 더 앞 순서로 찾는다
-            var it = Interactable.At(map.WorldToCell(motor.Feet + f * 0.6f)) ?? Interactable.At(map.WorldToCell(motor.Feet + f * 1.1f));
-            if (it != null) it.Interact(this);
         }
 
         void UpdateBody()

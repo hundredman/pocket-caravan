@@ -42,7 +42,8 @@ namespace PocketCaravan
             foreach (var p in qm.Active)
             {
                 any = true;
-                GUI.Label(new Rect(x, y, w, 16), $"<b>{p.quest.title}</b>", UIStyle.Rich);
+                string mark = p == qm.Tracked ? "<color=#ffd84a>▸</color> " : "";
+                GUI.Label(new Rect(x, y, w, 16), $"{mark}<b>{p.quest.title}</b>", UIStyle.Rich);
                 y += 14;
                 GUI.Label(new Rect(x + 6, y, w - 6, 30), "· " + qm.ProgressText(p), UIStyle.Wrap);
                 y += 28;

@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a432b6cad0b034eaca11ddcf5e2067ac, type: 3}
+  m_Name: WorldIndex
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.WorldIndex
+  maps:
+  - mapId: Naru
+    displayName: "\uC608\uC131 \uB098\uB8E8 \uB9C8\uC744"
+    neighbors:
+    - Route01
+  - mapId: Route01
+    displayName: "\uC608\uC131 \uAE38"
+    neighbors:
+    - Naru
+    - Gaegyeong
+  - mapId: Gaegyeong
+    displayName: "\uAC1C\uACBD"
+    neighbors:
+    - Route01
+    - Dakmok
+  - mapId: Dakmok
+    displayName: "\uB2E5\uB098\uBB34 \uB9C8\uC744"
+    neighbors:
+    - Gaegyeong
+  places:
+  - kind: npc
+    id: naru_chief
+    mapId: Naru
+  - kind: market
+    id: naru
+    mapId: Naru
+  - kind: npc
+    id: gaekju
+    mapId: Gaegyeong
+  - kind: market
+    id: gaegyeong
+    mapId: Gaegyeong
+  - kind: npc
+    id: dakmok_chief
+    mapId: Dakmok
+  - kind: market
+    id: dakmok
+    mapId: Dakmok

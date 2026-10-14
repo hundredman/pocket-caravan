@@ -76,6 +76,8 @@ namespace PocketCaravan.EditorTools
             EnsureFolder(TileAssetDir);
             EnsureFolder(SceneDir);
 
+            BuildWorldIndex();
+
             var paths = new List<string>();
             foreach (var id in MapOrder)
             {
@@ -94,6 +96,31 @@ namespace PocketCaravan.EditorTools
             AssetDatabase.SaveAssets();
             if (paths.Count > 0) EditorSceneManager.OpenScene(paths[0]);
             Debug.Log($"[Pocket Caravan] 맵 {paths.Count}개를 만들었습니다. 시작: {MapOrder[0]}");
+        }
+
+        /// <summary>맵 사이 연결과 NPC·장터 위치를 Resources/WorldIndex에 적는다 (길 안내용).</summary>
+        static void BuildWorldIndex()
+        {
+            const string indexPath = Root + "/Resources/WorldIndex.asset";
+            var index = AssetDatabase.LoadAssetAtPath<WorldIndex>(indexPath);
+            if (index == null) { index = ScriptableObject.CreateInstance<WorldIndex>(); AssetDatabase.CreateAsset(index, indexPath); }
+            index.maps.Clear(); index.places.Clear();
+            foreach (var id in MapOrder)
+            {
+                string json = $"{MapDir}/{id}.json";
+                if (!File.Exists(json)) continue;
+                var f = JsonUtility.FromJson<MapFile>(File.ReadAllText(json));
+                var info = new WorldIndex.MapInfo { mapId = f.id, displayName = f.name };
+                foreach (var o in f.objects)
+                {
+                    if (o.kind == "exit" && !string.IsNullOrEmpty(o.target) && !info.neighbors.Contains(o.target)) info.neighbors.Add(o.target);
+                    if (o.kind == "npc") index.places.Add(new WorldIndex.Place { kind = "npc", id = o.npc, mapId = f.id });
+                    if (o.kind == "market") index.places.Add(new WorldIndex.Place { kind = "market", id = o.town, mapId = f.id });
+                }
+                index.maps.Add(info);
+            }
+            EditorUtility.SetDirty(index);
+            AssetDatabase.SaveAssets();
         }
 
         static void BuildScene(MapFile f, string path)

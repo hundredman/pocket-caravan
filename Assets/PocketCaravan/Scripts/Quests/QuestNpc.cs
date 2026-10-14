@@ -18,6 +18,9 @@ namespace PocketCaravan
 
         float bobTime;
 
+        public override string DisplayName => displayName;
+        public override Kind Category => Kind.Quest;
+
         public override void Interact(PlayerController player)
         {
             var qm = GameManager.I.Quests;
@@ -60,7 +63,7 @@ namespace PocketCaravan
                 : m == QuestMarker.InProgress ? inProgressSprite : null;
             bobTime += Time.deltaTime;
             float bob = Mathf.Floor(Mathf.Sin(bobTime * 4f) * 1.5f + 1.5f) / 16f; // 픽셀 단위로 통통
-            marker.transform.localPosition = new Vector3(0f, 1.75f + bob, 0f);
+            marker.transform.localPosition = new Vector3(0f, 2.3f + bob, 0f); // 이름표 위
         }
     }
 }

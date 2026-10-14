@@ -18,6 +18,9 @@ namespace PocketCaravan
 
         MarketState Market => GameManager.I.GetMarket(town);
 
+        public override string DisplayName => town != null ? $"{town.displayName} 상인" : "장터 상인";
+        public override Kind Category => Kind.Market;
+
         public override void Interact(PlayerController player)
         {
             if (town == null) { Debug.LogWarning($"{name}: TownData가 비어 있습니다."); return; }

@@ -9,6 +9,8 @@ namespace PocketCaravan
         [TextArea] public string[] lines = { "좋은 날이오." };
         int next;
 
+        public override string DisplayName => displayName;
+
         public override void Interact(PlayerController player)
         {
             if (lines == null || lines.Length == 0) return;

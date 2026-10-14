@@ -24,6 +24,9 @@ namespace PocketCaravan
         readonly HashSet<QuestData> finished = new HashSet<QuestData>();
 
         public IEnumerable<Progress> Active => active.Values;
+
+        /// <summary>길 안내를 할 퀘스트 (가장 최근에 받은 것)</summary>
+        public Progress Tracked { get; private set; }
         public bool IsFinished(QuestData q) => finished.Contains(q);
 
         public QuestManager(List<QuestData> quests)
@@ -79,6 +82,7 @@ namespace PocketCaravan
             if (!CanStart(q)) return;
             var p = new Progress { quest = q };
             active[q] = p;
+            Tracked = p;
             if (q.giveItem != null && q.giveCount > 0) GameManager.I.Player.cargo.Add(q.giveItem, q.giveCount);
             Notify.Show($"퀘스트 수락: {q.title}");
             CheckPassive(p);
@@ -160,6 +164,7 @@ namespace PocketCaravan
             var q = p.quest;
             active.Remove(q);
             finished.Add(q);
+            if (Tracked == p) { Tracked = null; foreach (var other in active.Values) Tracked = other; }
             var player = GameManager.I.Player;
             player.money += q.rewardMoney;
             player.credit += q.rewardCredit;
@@ -168,6 +173,34 @@ namespace PocketCaravan
             if (q.rewardCredit > 0) reward += $" 신용 +{q.rewardCredit}";
             Notify.Show($"퀘스트 완료: {q.title}{reward}");
             if (!string.IsNullOrEmpty(q.finishNote)) Notify.Show(q.finishNote, 6f);
+        }
+
+        /// <summary>
+        /// 이 단계를 하려면 어디로 가야 하는지. kind: "npc"(npc id), "market"(마을 id), "map"(맵 id). 없으면 null.
+        /// </summary>
+        public (string kind, string id)? TargetOf(QuestObjective o)
+        {
+            if (o == null) return null;
+            switch (o.type)
+            {
+                case ObjectiveType.Talk:
+                case ObjectiveType.Deliver:
+                    // 전할 물건이 모자라면, 그 물건을 파는 곳 먼저
+                    if (o.type == ObjectiveType.Deliver && o.item != null && !o.item.questItem
+                        && GameManager.I.Player.cargo.Count(o.item) < o.count && o.item.originTown != null)
+                        return ("market", o.item.originTown.id);
+                    return ("npc", o.targetId);
+                case ObjectiveType.VisitMap:
+                    return ("map", o.targetId);
+                case ObjectiveType.Buy:
+                    return o.item != null && o.item.originTown != null ? ("market", o.item.originTown.id) : ((string, string)?)null;
+                case ObjectiveType.BuyVehicle:
+                    foreach (var t in GameManager.I.Db.towns)
+                        if (t != null && t.vehiclesForSale.Contains(o.vehicle)) return ("market", t.id);
+                    return null;
+                default:
+                    return null;
+            }
         }
 
         public string ProgressText(Progress p)
