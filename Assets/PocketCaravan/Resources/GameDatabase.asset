@@ -35,11 +35,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5f1b114771f824928af105094288dc10, type: 2}
   - {fileID: 11400000, guid: 6bae5cc8d980f47b2ada23154ca5d297, type: 2}
   - {fileID: 11400000, guid: ab3a358175d5c454fbed185e93daa283, type: 2}
+  - {fileID: 11400000, guid: 709f938f526f44a88b72dc69b61ff181, type: 2}
   - {fileID: 11400000, guid: 3bd12302f8f4345af8f59a6f83d962dd, type: 2}
+  crateIcon: {fileID: 21300000, guid: ec46ec01583204ea6bbd211cd1094e76, type: 3}
   realSecondsPerDay: 360
   stockRecoveryPerHour: 0.04
   marketDayDemand: 1.15
-  townLevelVolume: 0000000058020000c4090000401f0000
+  townLevelVolume: 00000000f401000008070000401f0000
   maxTownLevel: 3
   townLevelNames:
   - 

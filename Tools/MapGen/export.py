@@ -12,6 +12,20 @@ os.makedirs(tile_dir, exist_ok=True); os.makedirs(map_dir, exist_ok=True)
 def name_of(key):
     return key.replace(":", "_").replace("@", "_")
 
+DEFAULTS = dict(w=1, h=1, id="", npc="", town="", target="", spawn="", edge="", text="", name="", character="",
+                lines=[], variant=0, idx=0, sheet="", frames=0, fps=0.0, radius=0.0, type="", path=[])
+
+
+def obj_json(o):
+    d = dict(DEFAULTS)
+    d.update(o)
+    d["path"] = [v for pt in o.get("path", []) for v in pt]   # [x0, y0, x1, y1, ...]
+    if o["kind"] == "growth":   # 타일 이름으로 바꾸고 그림도 내보낸다
+        used.add(o["id"])
+        d["id"] = name_of(o["id"])
+    return d
+
+
 used = set()
 for f in (maps.naru, maps.route01, gaegyeong.build, maps.dakmok):
     m = f()
@@ -33,10 +47,7 @@ for f in (maps.naru, maps.route01, gaegyeong.build, maps.dakmok):
              ground=flat(m.ground), deco=flat(m.deco), obj=flat(m.obj), high=flat(m.high),
              road=[g for row in m.road for g in row],
              blocked=[1 if b else 0 for row in m.blocked for b in row],
-             objects=[dict(kind=o["kind"], x=o["x"], y=o["y"], w=o.get("w", 1), h=o.get("h", 1),
-                           id=o.get("id", ""), npc=o.get("npc", ""), town=o.get("town", ""),
-                           target=o.get("target", ""), spawn=o.get("spawn", ""), edge=o.get("edge", ""), text=o.get("text", ""), name=o.get("name", ""), character=o.get("character", ""), lines=o.get("lines", []), variant=o.get("variant", 0), idx=o.get("idx", 0))
-                      for o in m.objects])
+             objects=[obj_json(o) for o in m.objects])
     d["palette"] = palette
     with open(os.path.join(map_dir, m.id + ".json"), "w") as fp:
         json.dump(d, fp, ensure_ascii=False, separators=(",", ":"))

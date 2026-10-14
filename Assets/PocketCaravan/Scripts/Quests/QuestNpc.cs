@@ -48,7 +48,7 @@ namespace PocketCaravan
             var qm = GameManager.I.Quests;
             var q = qm.AvailableFrom(npcId);
             if (q == null) return false;
-            DialogueUI.Show(displayName, $"<b>[{q.title}]</b>\n{q.offerLine}",
+            DialogueUI.Show(displayName, $"[{q.title}]\n{q.offerLine}",
                 new DialogueUI.Choice("수락", () => qm.Accept(q)),
                 new DialogueUI.Choice("나중에", null));
             return true;

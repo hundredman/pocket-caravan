@@ -9,7 +9,7 @@ namespace PocketCaravan
     /// </summary>
     public abstract class Interactable : MonoBehaviour
     {
-        public enum Kind { Person, Quest, Market }
+        public enum Kind { Person, Quest, Market, Board, Danger }
 
         static readonly List<Interactable> all = new List<Interactable>();
         public static IReadOnlyList<Interactable> All => all;

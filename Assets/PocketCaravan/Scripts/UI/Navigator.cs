@@ -19,9 +19,11 @@ namespace PocketCaravan
         public static Result? Compute(GameManager gm)
         {
             var map = MapRoot.Current;
+            if (map == null) return null;
             var p = gm.Quests.Tracked;
-            if (map == null || p == null || p.Current == null) return null;
-            var t = gm.Quests.TargetOf(p.Current);
+            (string, string)? t = p != null && p.Current != null ? gm.Quests.TargetOf(p.Current) : null;
+            // 퀘스트 안내가 없으면 맡은 의뢰의 목적지 게시판으로
+            if (!t.HasValue && gm.Player.contracts.Count > 0) t = ("board", gm.Player.contracts[0].toTown);
             if (!t.HasValue) return null;
             var index = WorldIndex.Get();
             var (kind, id) = t.Value;
@@ -35,7 +37,8 @@ namespace PocketCaravan
                 foreach (var it in Interactable.All)
                 {
                     bool match = (kind == "npc" && it is QuestNpc q && q.npcId == id)
-                              || (kind == "market" && it is TownMarket m && m.town != null && m.town.id == id);
+                              || (kind == "market" && it is TownMarket m && m.town != null && m.town.id == id)
+                              || (kind == "board" && it is ContractBoard b && b.town == id);
                     if (match) return new Result { position = it.transform.position, label = it.DisplayName, target = it };
                 }
                 return null;

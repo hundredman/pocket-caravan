@@ -14,6 +14,7 @@ namespace PocketCaravan
         VisitMap,    // targetId 맵에 가기
         BuyVehicle,  // vehicle 사기
         HaveMoney,   // 돈을 count 이상 모으기
+        CompleteContract, // 배달 의뢰를 count번 성공하기 (targetId: 처음 맡을 마을 게시판)
     }
 
     [Serializable]

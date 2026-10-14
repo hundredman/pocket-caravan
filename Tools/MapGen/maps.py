@@ -34,18 +34,36 @@ def naru():
     m.road_path([(6, 13), (10, 13)], width=1)
     m.door_path(27, 5, 4, 3, 12)
     m.door_path(3, 13, 4, 3, 17); m.road_path([(4, 17), (9, 17)], width=1)
-    # 밭 (나루 위쪽 왼편, 오른쪽 언덕 아래)
-    for (px, py) in [(14, 17), (17, 17), (33, 6)]:
-        m.stamp("plot", px, py, force=True)
-        for dx in range(3):
-            m.high[py + 1][px + dx] = K("detail", 6, 2)   # 새싹 (흙더미 위에 보이게)
-    # 울타리 대신 덤불, 꽃밭
-    m.bushes([(4, 9), (5, 9), (8, 9), (9, 9), (26, 9), (27, 9), (31, 9), (2, 18), (3, 18), (7, 18)])
-    m.flowers(2, 2, 37, 20, 22)
+    # 논: 누렇게 익은 벼 (나루 위, 동쪽 언덕 아래)
+    for (px, py) in [(13, 17), (16, 17), (33, 6), (33, 9)]:
+        m.stamp("wheat", px, py, force=True)
+    m.stamp("sheaf", 19, 17, force=True); m.stamp("sheaf", 20, 17, force=True)
+    m.stamp("hay", 36, 12, force=True); m.stamp("hay", 37, 12, force=True)
+    # 집 둘레 살림: 장독대, 우물, 빨래
+    m.jars(9, 6, ("11", "01"))
+    m.jars(24, 6, ("11",))
+    m.stamp("well", 13, 8, force=True)
+    m.laundry(1, 11)
+    m.laundry(32, 16)
+    # 덤불과 꽃
+    m.bushes([(4, 9), (5, 9), (26, 9), (27, 9), (31, 9), (2, 18), (3, 18), (7, 18), (23, 3), (24, 3)])
+    m.flowers(2, 2, 37, 20, 18)
+    for (fx, fy) in [(8, 10), (11, 3), (29, 10), (35, 4), (6, 16), (24, 19), (15, 10)]:
+        if not m.reserved[fy][fx]:
+            m.anim("plant", fx, fy, frames=4, fps=2.5)
+    # 물가 갈대
+    m.reeds(21, 7, 30, 0.6)
+    m.reeds(20, 0, 6, 0.5); m.reeds(20, 31, 39, 0.5)
     # 장터 한쪽
     m.prop(K("element", 3, 0), 25, 16); m.prop(K("element", 0, 1), 26, 16); m.prop(K("element", 1, 1), 27, 16)
     m.stamp("cart", 22, 17, force=True)
     m.sign(30, 11, "→ 예성 길\n개경 남문 25리")
+    m.board(27, 12, "naru")
+    # 마을이 커지면: 2등급(장터 마을)에 노점 짐, 3등급(상업 고을)에 더 많이
+    for (gx, gy, k, lv) in [(21, 16, K("element", 3, 0), 2), (20, 16, K("element", 0, 1), 2), (28, 16, K("element", 1, 1), 2),
+                            (23, 11, K("element", 4, 0), 2), (16, 11, K("element", 3, 0), 3), (17, 11, K("element", 0, 1), 3),
+                            (26, 18, K("element", 4, 0), 3), (27, 18, K("element", 4, 0), 3)]:
+        m.growth(gx, gy, k, "naru", lv)
 
     # 사람
     m.add("npc", 21, 13, npc="naru_chief")       # 촌장: 정자나무 아래
@@ -55,8 +73,9 @@ def naru():
     m.add("spawn", 17, 14, id="S0")              # 게임 시작 자리 (마당)
 
     # 숲
-    m.forest_border(thickness=2)
-    m.scatter("roundtree", 3, area=(3, 2, 36, 19), margin=1)
+    m.forest_border(thickness=2, big=("pinebig", "roundbig", "fruitbig"))
+    m.stamp("blossom", 35, 1, force=False)
+    m.scatter("roundtree", 2, area=(3, 2, 36, 19), margin=1)
     m.finish()
     return m
 
@@ -86,12 +105,31 @@ def route01():
     # 길에서 만나는 사람
     m.talker(35, 17, "길손", "villager_fox_tall", "벽란도에서 오는 길이오. 거기는 송나라 배가 드나들어 별 물건이 다 있소.")
     m.stamp("cart", 46, 22, force=True)
-    m.talker(45, 21, "수레꾼", "villager_dog_tall", "바퀴가 돌부리에 걸렸지 뭐요. 손수레는 길 없는 풀밭에서 영 힘을 못 써.")
+    m.talker(45, 21, "수레꾼", "villager_dog_tall", "바퀴가 돌부리에 걸렸지 뭐요. 손수레는 길 없는 풀밭에서 영 힘을 못 써.",
+             "시내 건너 숲 근처에 도적이 숨어 있다더군. 짐을 싣고 지날 땐 달릴 준비를 하시오.")
 
-    m.forest_border(thickness=2)
-    m.scatter("pine", 18, area=(2, 2, 51, 31), margin=1)
-    m.scatter("tree", 14, area=(2, 2, 51, 31), margin=1)
-    m.scatter("cherry", 6, area=(2, 2, 51, 31), margin=1)
+    # 도적: 시내 동쪽 숲 그늘 (밤에 더 잦음)
+    m.bandit(36, 22, radius=6)
+    # 돌발 사건 자리 (길가)
+    for (ex, ey) in [(11, 13), (24, 17), (39, 13)]:
+        m.event(ex, ey)
+    # 길을 오가는 NPC 상인
+    m.walker([(3, 10), (9, 10), (13, 13), (22, 15), (27, 15)], idx=0)
+    m.walker([(31, 16), (36, 16), (41, 16), (42, 11), (40, 3)], idx=1)
+
+    m.forest_border(thickness=2, big=("pinebig", "roundbig", "pinebig"))
+    # 숲 덩어리와 꽃나무: 길 양쪽 경치
+    m.scatter("pinebig", 4, area=(3, 18, 50, 29), margin=1)
+    m.scatter("roundbig", 3, area=(3, 2, 50, 7), margin=1)
+    m.scatter("blossom", 3, area=(3, 2, 50, 30), margin=1)
+    m.scatter("pine", 10, area=(2, 2, 51, 31), margin=1)
+    m.scatter("tree", 8, area=(2, 2, 51, 31), margin=1)
+    m.bushes([(x, y) for x in range(4, 50, 5) for y in (11, 19)])
+    m.flowers(2, 2, 51, 31, 30)
+    m.reeds(13, 27, 27, 1.0); m.reeds(17, 31, 31, 1.0)
+    for (fx, fy) in [(8, 15), (19, 18), (33, 20), (47, 9), (25, 5)]:
+        if not m.reserved[fy][fx]:
+            m.anim("plant", fx, fy, frames=4, fps=2.5)
     m.finish()
     return m
 
@@ -109,6 +147,7 @@ def dakmok():
     m.stamp("house_plain", 5, 14)
     m.stamp("house_thatch", 15, 15)
     m.add("npc", 11, 9, npc="dakmok_chief")
+    m.board(22, 11, "dakmok")
     m.add("market", 18, 13, town="dakmok")
     m.prop(PROPS[3], 19, 14); m.prop(PROPS[1], 20, 14)
     m.link("W", 10, 3, "Gaegyeong", "E", "W")

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
   id: paper
   displayName: "\uC885\uC774"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: aa4873ba26f154c3ca7811475a944902, type: 3}
   weight: 2
   basePrice: 15
   originTown: {fileID: 11400000, guid: 9c22617e212424b55a590eb911f26529, type: 2}

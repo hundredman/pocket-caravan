@@ -1,6 +1,6 @@
 # Pocket Caravan
 
-대항해시대 이전의 상인이 되어 짐을 싣고, 길을 내고, 돈을 버는 2D 픽셀 교역 게임 (게임개발 2026-2 팀 프로젝트).
+대항해시대 이전의 상인이 되어 짐을 싣고, 길을 골라 나르고, 돈을 버는 2D 픽셀 교역 게임 (게임개발 2026-2 팀 프로젝트).
 
 ## 시작하기
 
@@ -9,23 +9,29 @@
 3. `Assets/PocketCaravan/Scenes/Goryeo/Naru.unity`(예성 나루 마을)를 열고 Play.
    데이터나 맵을 다시 만들 때는 메뉴 **Pocket Caravan > 1. 시작 세트 만들기**.
 
-조작: 방향키/WASD 이동 · Shift 달리기 · E 말 걸기 · J 퀘스트 목록
+조작: 방향키/WASD 이동 · Shift 달리기 · Space 말 걸기·확인 · Q 퀘스트 목록 · M 지도 · Esc 메뉴(저장·소리·처음부터)
 
 ## 지금 들어 있는 것 (스타팅 프로토타입)
 
 | 기능 | 위치 |
 |---|---|
-| 칸 단위 이동, 짐 무게·길 등급·달리기에 따른 속도 | `Scripts/Player/` |
-| 맵 이동 (출구 칸 → 다음 씬의 도착 자리) | `Scripts/Map/MapExit`, `SpawnPoint` |
-| 퀘스트 (! · ? 표시, 진행 표시, J 목록), 튜토리얼 4개 + 서브 1개 | `Scripts/Quests/` |
-| 씬을 넘어 유지되는 상태 (돈, 짐, 시계, 장터, 퀘스트) | `Scripts/Core/GameManager` |
-| 게임 시계 (하루 = 현실 6분, 5일마다 장날) | `Scripts/Core/GameClock` |
-| 재고 기반 시세, 사고팔기, 손수레 구입, 마을 등급 1~3 | `Scripts/Economy/` |
-| 길 등급(오솔길·길·큰길)에 따른 이동 속도. 길은 맵에 미리 칠해 둠 | `Scripts/Roads/RoadGrid` |
-| 데이터 (물건, 마을, 이동 수단, 출신, 밸런스 값) | `Data/`, `Resources/GameDatabase` |
+| 자유 이동, 짐 무게·길 등급·달리기에 따른 속도, 달리기 체력 | `Scripts/Player/` |
+| 짐 흔들림: 달리기·길 없는 곳·돌부리에서 차오르고, 가득 차면 짐이 떨어짐 (다시 줍기) | `PlayerController`, `World/DroppedCargo` |
+| 맵 이동 (가장자리에서 이어서 다음 맵으로, 길 맵은 시간이 흐름) | `Scripts/Map/` |
+| 퀘스트 (! · ? 표시, 길 안내 화살표, Q 목록), 튜토리얼 4개 + 서브 2개 | `Scripts/Quests/` |
+| 배달 의뢰 게시판 (마을마다 3개, 기한·짐 상태·보수·신용, 부분 성공) | `Scripts/Contracts/` |
+| 재고 기반 시세, 사고팔기, 손수레, 마을 등급 1~3 (커지면 노점 짐이 늘어남) | `Scripts/Economy/`, `World/TownGrowthProp` |
+| 도적 (예성 길, 밤에 잦음: 달려서 따돌리거나 통행료) | `World/Bandit`, `BanditSpot` |
+| 돌발 사건: 쓰러진 행인(신용 +1), 떠돌이 상인(싸게 팜) | `World/RoadEvent` |
+| NPC 상인: 같은 규칙으로 교역해 시세와 마을 발전을 움직임, 길에서 소문을 들려줌 | `World/NpcTraders`, `Walker` |
+| 게임 시계 (하루 = 현실 6분, 5일마다 장날), 낮·밤 빛 | `Scripts/Core/GameClock` |
+| 상태 창, 전체 지도(M), 메뉴(Esc), 자동 저장·불러오기 | `Scripts/UI/`, `Core/SaveSystem` |
+| 배경 음악·효과음 (Ninja Adventure, CC0) | `Audio/AudioManager`, `Resources/Audio` |
 | 맵 4개: 예성 나루 마을(시작) - 예성 길 - 개경(수도) - 닥나무 마을 | `Tools/MapGen` → `Maps/*.json` → `Editor/MapJsonBuilder` |
-| 땅·건물 타일: Ninja Adventure 에셋 팩 (CC0) | `Art/NinjaAdventure` |
-| 임시 캐릭터(동물), 퀘스트 표시 | `Editor/PlaceholderArt` |
+| 캐릭터 12종(16×24 동물)·물건 아이콘: 글자 그림으로 생성 | `Tools/ArtGen/chars.py`, `items.py` |
+| 땅·건물 타일, 물결·꽃 애니메이션: Ninja Adventure 에셋 팩 (CC0). UI 폰트: 갈무리 (OFL) | `Art/NinjaAdventure`, `Resources/Fonts` |
+
+저장은 시작 맵(Naru)에서 Play할 때만 불러온다. 다른 씬에서 바로 Play하면 저장을 건드리지 않는다.
 
 UI는 임시(OnGUI)다. 정식 UI는 `MarketState`, `PlayerState` 같은 데이터는 그대로 두고 화면만 바꾸면 된다.
 

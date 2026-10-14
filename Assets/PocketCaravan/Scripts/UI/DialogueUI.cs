@@ -54,7 +54,7 @@ namespace PocketCaravan
         {
             if (!open || Time.frameCount == openedFrame) return;
             if (choices.Count == 0 && (InputReader.InteractPressed() || InputReader.ConfirmPressed() || InputReader.CancelPressed())) Close();
-            else if (choices.Count > 0 && InputReader.CancelPressed()) Close();
+            else if (choices.Count > 0 && InputReader.CancelPressed()) Pick(choices[choices.Count - 1]);   // Esc = 마지막 선택지
             else if (choices.Count > 0 && (InputReader.InteractPressed() || InputReader.ConfirmPressed())) Pick(choices[0]);
         }
 
@@ -62,10 +62,11 @@ namespace PocketCaravan
         {
             if (!open) return;
             UIStyle.Begin();
+            GUI.depth = -10;   // 다른 글자들 위에
             float w = Mathf.Min(460, UIStyle.VirtualWidth - 20), h = 92;
             var r = new Rect((UIStyle.VirtualWidth - w) / 2, UIStyle.VirtualHeight - h - 26, w, h);
             GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(new Rect(r.x + 10, r.y + 6, w - 20, 16), $"<b><color=#FFE08A>{speaker}</color></b>", UIStyle.Rich);
+            GUI.Label(new Rect(r.x + 10, r.y + 6, w - 20, 16), $"<color=#FFE08A>{speaker}</color>", UIStyle.Rich);
             GUI.Label(new Rect(r.x + 10, r.y + 24, w - 20, 44), text, UIStyle.Wrap);
 
             float bx = r.xMax - 10;
@@ -77,9 +78,9 @@ namespace PocketCaravan
             for (int i = choices.Count - 1; i >= 0; i--)
             {
                 var c = choices[i];
-                float bw = 74;
-                bx -= bw;
                 string label = i == 0 ? c.label + " (Space)" : (i == choices.Count - 1 ? c.label + " (Esc)" : c.label);
+                float bw = Mathf.Max(60f, UIStyle.Button.CalcSize(new GUIContent(label)).x + 14f);
+                bx -= bw;
                 if (GUI.Button(new Rect(bx, r.yMax - 24, bw, 18), label, UIStyle.Button)) { Pick(c); return; }
                 bx -= 6;
             }

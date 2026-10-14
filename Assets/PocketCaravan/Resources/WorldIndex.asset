@@ -15,23 +15,34 @@ MonoBehaviour:
   maps:
   - mapId: Naru
     displayName: "\uC608\uC131 \uB098\uB8E8 \uB9C8\uC744"
+    coord: {x: 0, y: 0}
+    town: naru
     neighbors:
     - Route01
   - mapId: Route01
     displayName: "\uC608\uC131 \uAE38"
+    coord: {x: 1, y: 0}
+    town: 
     neighbors:
     - Naru
     - Gaegyeong
   - mapId: Gaegyeong
     displayName: "\uAC1C\uACBD"
+    coord: {x: 2, y: 0}
+    town: gaegyeong
     neighbors:
     - Route01
     - Dakmok
   - mapId: Dakmok
     displayName: "\uB2E5\uB098\uBB34 \uB9C8\uC744"
+    coord: {x: 3, y: 0}
+    town: dakmok
     neighbors:
     - Gaegyeong
   places:
+  - kind: board
+    id: naru
+    mapId: Naru
   - kind: npc
     id: naru_chief
     mapId: Naru
@@ -44,8 +55,14 @@ MonoBehaviour:
   - kind: market
     id: gaegyeong
     mapId: Gaegyeong
+  - kind: board
+    id: gaegyeong
+    mapId: Gaegyeong
   - kind: npc
     id: dakmok_chief
+    mapId: Dakmok
+  - kind: board
+    id: dakmok
     mapId: Dakmok
   - kind: market
     id: dakmok

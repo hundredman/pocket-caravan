@@ -58,6 +58,7 @@ namespace PocketCaravan.EditorTools
                 {
                     i.id = id; i.displayName = name; i.weight = weight; i.basePrice = price; i.originTown = origin;
                     i.pricePerMap = 0.5f; i.questItem = quest;
+                    i.icon = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Items/{id}.png");
                 });
             var ginseng = Item("ginseng", "인삼", 1f, 40f, gaegyeong);
             var najeon = Item("najeon", "나전칠기", 3f, 120f, gaegyeong);
@@ -95,7 +96,12 @@ namespace PocketCaravan.EditorTools
 
             var quests = BuildTutorialQuests(saltParcel, paper, wood, cart);
 
-            var db = Upsert<GameDatabase>(DbPath, d => { d.startMoney = 100; d.startVehicle = walk; d.startOrigin = origin; });
+            var db = Upsert<GameDatabase>(DbPath, d =>
+            {
+                d.startMoney = 100; d.startVehicle = walk; d.startOrigin = origin;
+                d.crateIcon = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Items/crate.png");
+                d.townLevelVolume = new[] { 0, 500, 1800, 8000 };   // 시연: 몇 번의 교역으로 등급이 오르게
+            });
             db.items = new List<ItemData> { ginseng, najeon, paper, salt, grain, wood, saltParcel };
             db.towns = new List<TownData> { naru, gaegyeong, dakmok };
             db.vehicles = new List<VehicleData> { walk, cart };
@@ -170,6 +176,16 @@ namespace PocketCaravan.EditorTools
                 q.objectives.Add(O(ObjectiveType.Talk, "개경 객주에게 보이기", Gaekju, null, 1, "어엿한 수레상이 되었구먼! 이제 자네도 한 사람 몫의 상인일세."));
                 q.rewardCredit = 2;
                 q.finishNote = "튜토리얼 완료! 이제 마을 사람들의 부탁을 들어주고, 직접 교역로를 찾아 돈을 벌어 보자.";
+            });
+
+            Q("S2_Board", q =>
+            {
+                q.id = "naru_board"; q.title = "의뢰 게시판"; q.giverNpc = NaruChief; q.requires.Add(q1);
+                q.summary = "마을 의뢰 게시판에서 배달 의뢰를 맡아 기한 안에 다른 마을 게시판에 납품한다.";
+                q.offerLine = "개경에 다녀왔다니 이제 길은 알겠구먼. 장터 옆 게시판에는 짐을 맡기려는 사람들 쪽지가 붙어 있다네. 하나 맡아 기한 안에 날라 보게. 늦거나 짐이 상하면 값을 덜 받고, 신용도 깎이니 조심하고.";
+                q.objectives.Add(O(ObjectiveType.CompleteContract, "게시판 배달 의뢰 하나 마치기", "naru", null, 1));
+                q.objectives.Add(O(ObjectiveType.Talk, "나루 마을 촌장에게 알리기", NaruChief, null, 1, "벌써 해냈나! 의뢰를 잘 해내면 신용이 쌓이고, 신용이 높으면 귀한 짐도 맡길 걸세."));
+                q.rewardMoney = 25; q.rewardCredit = 1;
             });
 
             Q("S1_Firewood", q =>

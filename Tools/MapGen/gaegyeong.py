@@ -90,6 +90,9 @@ def build():
 
     m.add("npc", 28, 26, npc="gaekju")                 # 객주: 남문에서 올라오면 바로 보이는 곳
     m.add("market", 36, 21, town="gaegyeong")          # 시전 상인
+    m.board(25, 25, "gaegyeong")                       # 객주 옆 의뢰 게시판
+    m.walker([(14, 23), (24, 23), (29, 23)], idx=2)    # 시전 거리를 오가는 NPC 상인
+    m.walker([(32, 30), (32, 37), (32, 44)], idx=3)
     m.link("S", gate_x0, 4, "Route01", "N", "S")      # 남문 (폭 4) ↔ 예성 길 북쪽
     m.link("E", 22, 3, "Dakmok", "W", "E")            # 시전 거리 동쪽 끝 (폭 3) ↔ 닥나무 마을
     m.sign(29, 38, "↑ 만월대 · ← 서문 · 시전 거리 →\n동문 밖 닥나무 마을 5리")

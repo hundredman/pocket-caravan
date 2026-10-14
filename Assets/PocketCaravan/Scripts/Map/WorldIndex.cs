@@ -14,7 +14,7 @@ namespace PocketCaravan
         [Serializable]
         public class Place
         {
-            public string kind;   // "npc" 또는 "market"
+            public string kind;   // "npc", "market", "board"
             public string id;     // npc id 또는 마을 id
             public string mapId;
         }
@@ -24,6 +24,8 @@ namespace PocketCaravan
         {
             public string mapId;
             public string displayName;
+            public Vector2Int coord;
+            public string town;   // 장터가 있는 마을 id (없으면 빈칸)
             public List<string> neighbors = new List<string>();
         }
 

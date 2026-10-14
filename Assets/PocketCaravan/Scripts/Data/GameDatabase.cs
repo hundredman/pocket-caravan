@@ -18,6 +18,9 @@ namespace PocketCaravan
         public List<VehicleData> vehicles = new List<VehicleData>();
         public List<QuestData> quests = new List<QuestData>();
 
+        [Header("그림")]
+        [Tooltip("의뢰 짐 (떨어졌을 때)")] public Sprite crateIcon;
+
         [Header("시간")]
         public float realSecondsPerDay = 360f;
 

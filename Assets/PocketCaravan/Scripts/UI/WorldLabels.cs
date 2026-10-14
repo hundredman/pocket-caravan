@@ -14,12 +14,14 @@ namespace PocketCaravan
         static readonly Color QuestColor = new Color(1f, 0.85f, 0.25f);
         static readonly Color MarketColor = new Color(0.55f, 0.95f, 0.6f);
         static readonly Color PersonColor = new Color(0.95f, 0.95f, 0.95f);
+        static readonly Color BoardColor = new Color(0.62f, 0.85f, 1f);
+        static readonly Color DangerColor = new Color(1f, 0.42f, 0.38f);
 
         void OnGUI()
         {
             var gm = GameManager.I;
             var cam = Camera.main;
-            if (gm == null || cam == null || MapRoot.Current == null) return;
+            if (gm == null || cam == null || MapRoot.Current == null || UIState.Blocking) return;
             UIStyle.Begin();
             Init();
 
@@ -32,7 +34,14 @@ namespace PocketCaravan
                 Vector2 p = ToGui(cam, it.transform.position + new Vector3(0f, 1.3f, 0f));
                 if (p.x < -50 || p.y < -20 || p.x > UIStyle.VirtualWidth + 50 || p.y > UIStyle.VirtualHeight + 20) continue;
                 string label = it.Category == Interactable.Kind.Market ? "[장터] " + it.DisplayName : it.DisplayName;
-                Color c = it.Category == Interactable.Kind.Quest ? QuestColor : it.Category == Interactable.Kind.Market ? MarketColor : PersonColor;
+                Color c = it.Category switch
+                {
+                    Interactable.Kind.Quest => QuestColor,
+                    Interactable.Kind.Market => MarketColor,
+                    Interactable.Kind.Board => BoardColor,
+                    Interactable.Kind.Danger => DangerColor,
+                    _ => PersonColor,
+                };
                 bool target = nav.HasValue && nav.Value.target == it;
                 Outlined(new Rect(p.x - 60, p.y - 8, 120, 12), label, c, nameStyle);
                 // 퀘스트 NPC는 머리 위 !·? 표시가 있으니, 나머지(장터 등)만 화살표로 짚어 준다
@@ -43,7 +52,8 @@ namespace PocketCaravan
             if (player != null && player.TalkTarget != null && !UIState.Blocking)
             {
                 Vector2 p = ToGui(cam, player.TalkTarget.transform.position + new Vector3(0f, -0.7f, 0f));
-                Outlined(new Rect(p.x - 50, p.y, 100, 12), "Space 말 걸기", Color.white, nameStyle);
+                string verb = player.TalkTarget is DroppedCargo ? "Space 줍기" : player.TalkTarget is ContractBoard ? "Space 게시판 보기" : player.TalkTarget is TownMarket ? "Space 사고팔기" : "Space 말 걸기";
+                Outlined(new Rect(p.x - 50, p.y, 100, 12), verb, Color.white, nameStyle);
             }
 
             // 3) 퀘스트 길 안내
@@ -106,7 +116,7 @@ namespace PocketCaravan
             }
             if (nameStyle == null)
             {
-                nameStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.Small, alignment = TextAnchor.MiddleCenter, fontSize = 9, clipping = TextClipping.Overflow };
+                nameStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.SmallFont, alignment = TextAnchor.MiddleCenter, fontSize = 9, clipping = TextClipping.Overflow };
                 shadowStyle = new GUIStyle(nameStyle);
                 shadowStyle.normal.textColor = new Color(0f, 0f, 0f, 0.8f);
                 guideStyle = new GUIStyle(nameStyle) { font = GUI.skin.font, fontSize = 11 };

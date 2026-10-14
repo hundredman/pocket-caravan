@@ -40,6 +40,33 @@ namespace PocketCaravan
                 if (profit > 0) Advance(ObjectiveType.Profit, null, null, profit);
             };
             GameEvents.VehicleBought += v => AdvanceVehicle(v);
+            GameEvents.ContractFinished += (c, ok) => { if (ok) Advance(ObjectiveType.CompleteContract, null, null, 1); };
+        }
+
+        // ---------- 저장 ----------
+        [System.Serializable]
+        public class Save { public string id; public int step, amount; }
+
+        public void Export(SaveData d)
+        {
+            foreach (var p in active.Values) d.quests.Add(new Save { id = p.quest.id, step = p.step, amount = p.amount });
+            foreach (var q in finished) d.finishedQuests.Add(q.id);
+            d.trackedQuest = Tracked != null ? Tracked.quest.id : null;
+        }
+
+        public void Import(SaveData d)
+        {
+            active.Clear(); finished.Clear(); Tracked = null;
+            QuestData Find(string id) => all.Find(q => q != null && q.id == id);
+            foreach (var id in d.finishedQuests) { var q = Find(id); if (q != null) finished.Add(q); }
+            foreach (var s in d.quests)
+            {
+                var q = Find(s.id);
+                if (q == null) continue;
+                var p = new Progress { quest = q, step = s.step, amount = s.amount };
+                active[q] = p;
+                if (q.id == d.trackedQuest || Tracked == null) Tracked = p;
+            }
         }
 
         // ---------- NPC ----------
@@ -85,6 +112,7 @@ namespace PocketCaravan
             Tracked = p;
             if (q.giveItem != null && q.giveCount > 0) GameManager.I.Player.cargo.Add(q.giveItem, q.giveCount);
             Notify.Show($"퀘스트 수락: {q.title}");
+            Sfx.Play("accept");
             CheckPassive(p);
         }
 
@@ -172,6 +200,7 @@ namespace PocketCaravan
             if (q.rewardMoney > 0) reward += $" 돈 +{q.rewardMoney}";
             if (q.rewardCredit > 0) reward += $" 신용 +{q.rewardCredit}";
             Notify.Show($"퀘스트 완료: {q.title}{reward}");
+            Sfx.Play("success");
             if (!string.IsNullOrEmpty(q.finishNote)) Notify.Show(q.finishNote, 6f);
         }
 
@@ -192,6 +221,9 @@ namespace PocketCaravan
                     return ("npc", o.targetId);
                 case ObjectiveType.VisitMap:
                     return ("map", o.targetId);
+                case ObjectiveType.CompleteContract:
+                    var cs = GameManager.I.Player.contracts;
+                    return cs.Count > 0 ? ("board", cs[0].toTown) : ("board", o.targetId);
                 case ObjectiveType.Buy:
                     return o.item != null && o.item.originTown != null ? ("market", o.item.originTown.id) : ((string, string)?)null;
                 case ObjectiveType.BuyVehicle:
@@ -212,6 +244,7 @@ namespace PocketCaravan
                 case ObjectiveType.Buy:
                 case ObjectiveType.Sell:
                 case ObjectiveType.Profit:
+                case ObjectiveType.CompleteContract:
                     return $"{o.text} ({p.amount}/{o.count})";
                 case ObjectiveType.Deliver:
                     return $"{o.text} ({Mathf.Min(GameManager.I.Player.cargo.Count(o.item), o.count)}/{o.count})";

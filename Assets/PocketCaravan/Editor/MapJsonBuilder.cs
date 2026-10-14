@@ -36,9 +36,11 @@ namespace PocketCaravan.EditorTools
         [Serializable]
         class MapObject
         {
-            public string kind, id, npc, town, target, spawn, edge, text, name, character;
+            public string kind, id, npc, town, target, spawn, edge, text, name, character, sheet, type;
             public string[] lines;
-            public int x, y, w = 1, h = 1, variant, idx;
+            public int x, y, w = 1, h = 1, variant, idx, frames;
+            public float fps, radius;
+            public int[] path;
         }
 
         [Serializable]
@@ -114,12 +116,13 @@ namespace PocketCaravan.EditorTools
                 string json = $"{MapDir}/{id}.json";
                 if (!File.Exists(json)) continue;
                 var f = JsonUtility.FromJson<MapFile>(File.ReadAllText(json));
-                var info = new WorldIndex.MapInfo { mapId = f.id, displayName = f.name };
+                var info = new WorldIndex.MapInfo { mapId = f.id, displayName = f.name, coord = MapCoords.TryGetValue(f.id, out var mc) ? mc : Vector2Int.zero };
                 foreach (var o in f.objects)
                 {
                     if (o.kind == "exit" && !string.IsNullOrEmpty(o.target) && !info.neighbors.Contains(o.target)) info.neighbors.Add(o.target);
                     if (o.kind == "npc") index.places.Add(new WorldIndex.Place { kind = "npc", id = o.npc, mapId = f.id });
-                    if (o.kind == "market") index.places.Add(new WorldIndex.Place { kind = "market", id = o.town, mapId = f.id });
+                    if (o.kind == "market") { index.places.Add(new WorldIndex.Place { kind = "market", id = o.town, mapId = f.id }); info.town = o.town; }
+                    if (o.kind == "board") index.places.Add(new WorldIndex.Place { kind = "board", id = o.town, mapId = f.id });
                 }
                 index.maps.Add(info);
             }
@@ -165,6 +168,7 @@ namespace PocketCaravan.EditorTools
             for (int i = 0; i < f.road.Length; i++) { var c = Cell(f, i); roads.grades[c.y * f.w + c.x] = f.road[i]; }
 
             var objects = new GameObject("Objects").transform;
+            RoadEventDirector director = null;
             Vector3 startPos = Vector3.zero;
             bool hasStart = false;
             foreach (var o in f.objects)
@@ -218,6 +222,85 @@ namespace PocketCaravan.EditorTools
                         var sg = new GameObject("이정표").AddComponent<TalkNpc>();
                         sg.transform.SetParent(objects); sg.transform.position = center;
                         sg.displayName = "이정표"; sg.lines = new[] { o.text }; sg.blocksMovement = false; // 칸은 소품 타일이 막음
+                        break;
+                    case "board":
+                        var bd = new GameObject("의뢰 게시판").AddComponent<ContractBoard>();
+                        bd.transform.SetParent(objects); bd.transform.position = center;
+                        bd.town = o.town; bd.blocksMovement = false;   // 칸은 게시판 타일이 막음
+                        break;
+                    case "anim":
+                        var an = new GameObject($"Anim {o.sheet}");
+                        an.transform.SetParent(objects); an.transform.position = center;
+                        var asr = an.AddComponent<SpriteRenderer>();
+                        asr.sortingOrder = o.sheet == "ripples" ? 1 : 4;   // 물결은 바닥 바로 위, 꽃은 소품과 같은 높이
+                        var sa = an.AddComponent<SpriteAnim>();
+                        sa.frames = SheetFrames(o.sheet, o.frames > 0 ? o.frames : 4);
+                        sa.fps = o.fps > 0 ? o.fps : 4f;
+                        if (sa.frames.Length > 0) asr.sprite = sa.frames[0];
+                        break;
+                    case "bandit":
+                        var spot = new GameObject("도적 출몰 자리").AddComponent<BanditSpot>();
+                        spot.transform.SetParent(objects); spot.transform.position = center;
+                        spot.sightRange = o.radius > 0 ? o.radius : 6f;
+                        var bgo = Character("도적", "bandit_tall", center, objects);
+                        bgo.AddComponent<PlayerMotor>().walkSpeed = 3.4f;
+                        var bandit = bgo.AddComponent<Bandit>();
+                        bandit.anim = bgo.GetComponent<CharacterAnimator>();
+                        var alert = new GameObject("Alert").AddComponent<SpriteRenderer>();
+                        alert.transform.SetParent(bgo.transform, false);
+                        alert.transform.localPosition = new Vector3(0f, 1.6f, 0f);
+                        alert.sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/NinjaAdventure/Ui/emote_alert.png");
+                        alert.sortingOrder = 25; alert.enabled = false;
+                        bandit.alert = alert;
+                        spot.prefabAnimator = bandit.anim;
+                        bgo.SetActive(false);
+                        break;
+                    case "event":
+                        if (director == null)
+                        {
+                            director = new GameObject("돌발 사건").AddComponent<RoadEventDirector>();
+                            director.transform.SetParent(objects);
+                        }
+                        foreach (var (etype, ech) in new[] { (RoadEvent.Type.FallenTraveler, "villager_rabbit_tall"), (RoadEvent.Type.Peddler, "trader_tall") })
+                        {
+                            var ego = Character(etype == RoadEvent.Type.Peddler ? "떠돌이 상인" : "쓰러진 행인", ech, center, objects);
+                            var ev = ego.AddComponent<RoadEvent>();
+                            ev.type = etype;
+                            // 눕힐 때 그림만 돌리도록 몸을 자식으로 옮긴다
+                            var body = new GameObject("Body");
+                            body.transform.SetParent(ego.transform, false);
+                            var esr = ego.GetComponent<SpriteRenderer>();
+                            var bsr = body.AddComponent<SpriteRenderer>();
+                            bsr.sprite = esr.sprite; bsr.sortingOrder = esr.sortingOrder;
+                            var eanim = ego.GetComponent<CharacterAnimator>();
+                            var banim = body.AddComponent<CharacterAnimator>();
+                            banim.frames = eanim.frames;
+                            UnityEngine.Object.DestroyImmediate(eanim);
+                            UnityEngine.Object.DestroyImmediate(esr);
+                            ev.body = body.transform;
+                            director.events.Add(ev);
+                            ego.SetActive(false);
+                        }
+                        break;
+                    case "growth":
+                        var gr = new GameObject($"마을 발전 {o.town} {o.variant}등급");
+                        gr.transform.SetParent(objects); gr.transform.position = center;
+                        var gsr = gr.AddComponent<SpriteRenderer>();
+                        gsr.sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{TilePngDir}/{o.id}.png");
+                        gsr.sortingOrder = 5;
+                        var tg = gr.AddComponent<TownGrowthProp>();
+                        tg.town = o.town; tg.minLevel = Mathf.Max(2, o.variant);
+                        break;
+                    case "walker":
+                        var pts = new List<Vector3>();
+                        if (o.path != null)
+                            for (int k = 0; k + 1 < o.path.Length; k += 2)
+                                pts.Add(grid.GetCellCenterWorld(new Vector3Int(o.path[k], f.h - 1 - o.path[k + 1], 0)));
+                        var wgo = Character("NPC 상인", "trader_tall", pts.Count > 0 ? pts[0] : center, objects);
+                        var walker = wgo.AddComponent<Walker>();
+                        walker.path = pts;
+                        walker.traderIndex = o.idx;
+                        walker.anim = wgo.GetComponent<CharacterAnimator>();
                         break;
                     case "villager":
                         var v = Villagers[(o.variant + o.idx) % Villagers.Length];
@@ -350,8 +433,21 @@ namespace PocketCaravan.EditorTools
             for (int d = 0; d < 4; d++)
                 for (int f = 0; f < 4; f++)
                     frames[d * 4 + f] = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Characters/{character}_{dirs[d]}{f}.png");
-            if (frames[0] == null) Debug.LogWarning($"캐릭터 그림 없음: {character} (Tools/ArtGen/tanuki.py 실행)");
+            if (frames[0] == null) Debug.LogWarning($"캐릭터 그림 없음: {character} (Tools/ArtGen/chars.py 실행)");
             return frames;
+        }
+
+        /// <summary>움직이는 그림 프레임 (Art/NinjaAdventure/Animated/이름_0.png, _1.png ...)</summary>
+        static Sprite[] SheetFrames(string sheet, int count)
+        {
+            var list = new List<Sprite>();
+            for (int i = 0; i < count; i++)
+            {
+                var sp = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/NinjaAdventure/Animated/{sheet}_{i}.png");
+                if (sp != null) list.Add(sp);
+            }
+            if (list.Count == 0) Debug.LogWarning($"움직이는 그림 없음: {sheet}");
+            return list.ToArray();
         }
 
         static Sprite LoadSprite(string name) => AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Placeholder/{name}.png");

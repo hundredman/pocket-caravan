@@ -119,9 +119,26 @@ STAMPS = {
     "roundtree": ("nature", 6, 8, 2, 2, 1, 1, None),
     "plot": ("field", 0, 0, 3, 3, 0, 0, None),             # 밭 (높은 흙더미)
     "boat": ("boat", 0, 0, 5, 2, 0, 0, None),
+    # 큰 나무 덩어리 (숲 가장자리를 덜 반복적으로)
+    "pinebig": ("nature", 0, 2, 4, 3, 2, 2, None),
+    "roundbig": ("nature", 4, 2, 4, 3, 2, 2, None),
+    "fruitbig": ("nature", 16, 2, 4, 3, 2, 2, None),
+    "blossom": ("nature", 0, 18, 3, 3, 2, 2, None),       # 꽃나무
+    "greenbig": ("nature", 4, 18, 3, 3, 2, 2, None),
+    "wheat": ("element", 13, 4, 3, 3, 0, 0, None),         # 누렇게 익은 논
+    "sheaf": ("element", 12, 4, 1, 2, 1, 1, None),         # 볏단
+    "rack": ("element", 11, 2, 3, 2, 1, 1, None),          # 빨랫줄 기둥
+    "well": ("element", 7, 1, 1, 2, 1, 1, None),           # 우물
+    "hay": ("nature", 9, 8, 1, 1, 0, 0, None),             # 짚더미
+    "laundry": ("element", 14, 2, 2, 2, 1, 1, None),       # 빨래
 }
+JAR = K("element", 4, 0)            # 장독
+LAUNDRY_TOP = [K("element", 14, 2), K("element", 15, 2)]
+LAUNDRY_SHADOW = [K("element", 14, 3), K("element", 15, 3)]
+REED = [K("detail", 3, 2), K("detail", 0, 2), K("detail", 2, 2)]
 PROPS = [K("element", 3, 0), K("element", 0, 1), K("element", 1, 1), K("element", 4, 0)]
 SIGN = K("element", 0, 2)          # 이정표 나무판
+BOARD = K("element", 1, 2)         # 의뢰 게시판 (종이가 붙은 판)
 BUSHES = [K("nature", 0, 10), K("nature", 1, 10), K("nature", 2, 10), K("nature", 6, 10)]
 FLOWER_DECO = [K("nature", 0, 11), K("nature", 1, 11), K("nature", 3, 11), K("nature", 6, 11), K("detail", 5, 2)]
 SPROUT = K("detail", 6, 2)
@@ -239,8 +256,14 @@ class Map:
                 if self.inside(x, y):
                     self.reserved[y][x] = True
 
-    def forest_border(self, thickness=2, density=1.0, kinds=("pine", "tree")):
-        """맵 가장자리를 나무로 두른다 (빈틈 없이 막히게)."""
+    def forest_border(self, thickness=2, density=1.0, kinds=("pine", "tree"), big=("pinebig", "roundbig")):
+        """맵 가장자리를 나무로 두른다 (빈틈 없이 막히게). 먼저 큰 나무 덩어리, 빈틈은 작은 나무로."""
+        if big:
+            for y in range(-2, self.h, 3):
+                for x in range(-2, self.w, 4):
+                    edge = x < thickness or y < thickness or x + 4 > self.w - thickness or y + 3 > self.h - thickness
+                    if edge and self.rng.random() < 0.55:
+                        self.stamp_clipped(self.rng.choice(big), x + self.rng.randint(0, 1), y)
         for y in range(-1, self.h, 2):
             for x in range(-1, self.w, 2):
                 edge = x < thickness or y < thickness or x >= self.w - thickness - 1 or y >= self.h - thickness - 1
@@ -307,6 +330,49 @@ class Map:
                 self.ground[y1][x] = None   # 계단 자리는 길로
                 self.road[y1][x] = 3
 
+    def jars(self, x, y, pattern=("110", "011")):
+        """장독대: pattern의 1 자리에 장독"""
+        for dy, row in enumerate(pattern):
+            for dx, ch in enumerate(row):
+                if ch == "1" and self.inside(x + dx, y + dy):
+                    self.prop(JAR, x + dx, y + dy)
+
+    def laundry(self, x, y):
+        """빨래 널린 줄 (2칸)"""
+        self.stamp("laundry", x, y, force=True)
+
+    def reeds(self, y, x0, x1, chance=0.5):
+        """물가 갈대: y줄에서 물 바로 위 칸"""
+        for x in range(x0, x1 + 1):
+            if self.inside(x, y) and not self.reserved[y][x] and self.rng.random() < chance:
+                self.deco[y][x] = self.rng.choice(REED)
+
+    def anim(self, sheet, x, y, frames=4, fps=4.0):
+        """움직이는 장식 (Unity에서 스프라이트 애니메이션으로)"""
+        self.objects.append(dict(kind="anim", x=x, y=y, sheet=sheet, frames=frames, fps=fps))
+        self.reserved[y][x] = True
+
+    def board(self, x, y, town):
+        """의뢰 게시판 (막힌 칸, 앞에서 Space)"""
+        self.prop(BOARD, x, y)
+        self.add("board", x, y, town=town)
+
+    def bandit(self, x, y, radius=6):
+        """도적 출몰 자리"""
+        self.add("bandit", x, y, radius=radius)
+
+    def event(self, x, y):
+        """돌발 사건이 일어날 수 있는 길가 자리"""
+        self.add("event", x, y)
+
+    def growth(self, x, y, key, town, level=2):
+        """마을 등급이 level 이상이 되면 나타나는 소품 (장터가 커지는 모습)"""
+        self.objects.append(dict(kind="growth", x=x, y=y, id=key, town=town, variant=level))
+
+    def walker(self, path, idx=0):
+        """길을 오가는 NPC 상인. path는 길 위 칸 목록"""
+        self.objects.append(dict(kind="walker", x=path[0][0], y=path[0][1], path=path, idx=idx))
+
     def sign(self, x, y, text):
         """이정표: 말을 걸면 거리(리)를 알려 준다."""
         self.prop(SIGN, x, y)
@@ -350,6 +416,11 @@ class Map:
                     self.ground[y][x] = self.rng.choice(GRASS_VARIANTS) if self.rng.random() < 0.12 else GRASS
                     if self.obj[y][x] is None and not self.reserved[y][x] and self.rng.random() < 0.06:
                         self.deco[y][x] = self.rng.choice(DECO)
+        # 물결: 사방이 물인 칸 일부에 반짝이는 물결 애니메이션
+        for y in range(1, self.h - 1):
+            for x in range(1, self.w - 1):
+                if all(self.water[y + dy][x + dx] for dx in (-1, 0, 1) for dy in (-1, 0, 1)) and self.rng.random() < 0.12:
+                    self.objects.append(dict(kind="anim", x=x, y=y, sheet="ripples", frames=4, fps=3.0 + self.rng.random()))
 
     def render(self, path, scale=1):
         img = Image.new("RGBA", (self.w * 16, self.h * 16), (0, 0, 0, 255))

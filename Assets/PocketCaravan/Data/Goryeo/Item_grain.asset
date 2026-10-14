@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
   id: grain
   displayName: "\uACE1\uC2DD"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 9dfa83fdc6ef9452f8699c51e34364ec, type: 3}
   weight: 3
   basePrice: 8
   originTown: {fileID: 0}

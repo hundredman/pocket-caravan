@@ -64,6 +64,15 @@ namespace PocketCaravan
 
         public bool CanBuy(ItemData item) => Stock(item) >= 1f;
 
+        /// <summary>NPC 상인이 팔 때 받는 값 (출신 강점 없음)</summary>
+        public int NpcSellPrice(ItemData item) => MarketMath.Buyback(MarketMath.Price(item.BasePriceAt(town), Optimal(item), Stock(item) + 1f, Demand));
+
+        public void RecordNpcSell(ItemData item, int price)
+        {
+            stock[item] = Stock(item) + 1f;
+            AddVolume(price);
+        }
+
         public void RecordBuy(ItemData item, int price)
         {
             stock[item] = Stock(item) - 1f;
@@ -82,7 +91,37 @@ namespace PocketCaravan
             while (Level < db.maxTownLevel && Level < db.townLevelVolume.Length && TradeVolume >= db.townLevelVolume[Level])
             {
                 Level++;
-                Debug.Log($"[마을 발전] {town.displayName}이(가) {LevelName}(으)로 커졌습니다.");
+                GameEvents.RaiseTownLeveled(town, Level);
+            }
+        }
+
+        // ---------- 저장 ----------
+        [System.Serializable]
+        public class Save
+        {
+            public string town;
+            public int level;
+            public float volume;
+            public List<string> items = new List<string>();
+            public List<float> stocks = new List<float>();
+        }
+
+        public Save Export()
+        {
+            var s = new Save { town = town.id, level = Level, volume = TradeVolume };
+            foreach (var kv in stock) { s.items.Add(kv.Key.id); s.stocks.Add(kv.Value); }
+            return s;
+        }
+
+        public void Import(Save s, System.Func<string, ItemData> item)
+        {
+            Level = Mathf.Clamp(s.level, 1, db.maxTownLevel);
+            TradeVolume = s.volume;
+            stock.Clear();
+            for (int i = 0; i < s.items.Count && i < s.stocks.Count; i++)
+            {
+                var it = item(s.items[i]);
+                if (it != null) stock[it] = s.stocks[i];
             }
         }
 

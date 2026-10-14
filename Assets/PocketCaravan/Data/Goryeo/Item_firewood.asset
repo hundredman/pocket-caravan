@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
   id: firewood
   displayName: "\uB554\uAC10"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e67015ceccb714a64ba57e32a3b1157d, type: 3}
   weight: 4
   basePrice: 4
   originTown: {fileID: 0}
