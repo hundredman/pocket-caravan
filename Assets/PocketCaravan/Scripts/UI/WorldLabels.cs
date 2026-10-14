@@ -29,7 +29,7 @@ namespace PocketCaravan
             // 1) 이름표
             foreach (var it in Interactable.All)
             {
-                Vector2 p = ToGui(cam, it.transform.position + new Vector3(0f, 1.55f, 0f));
+                Vector2 p = ToGui(cam, it.transform.position + new Vector3(0f, 0.75f, 0f));
                 if (p.x < -50 || p.y < -20 || p.x > UIStyle.VirtualWidth + 50 || p.y > UIStyle.VirtualHeight + 20) continue;
                 string label = it.Category == Interactable.Kind.Market ? "[장터] " + it.DisplayName : it.DisplayName;
                 Color c = it.Category == Interactable.Kind.Quest ? QuestColor : it.Category == Interactable.Kind.Market ? MarketColor : PersonColor;
@@ -42,7 +42,7 @@ namespace PocketCaravan
             // 2) 말 걸기 안내
             if (player != null && player.TalkTarget != null && !UIState.Blocking)
             {
-                Vector2 p = ToGui(cam, player.TalkTarget.transform.position + new Vector3(0f, -0.7f, 0f));
+                Vector2 p = ToGui(cam, player.TalkTarget.transform.position + new Vector3(0f, -0.6f, 0f));
                 Outlined(new Rect(p.x - 50, p.y, 100, 12), "Space 말 걸기", Color.white, nameStyle);
             }
 
@@ -56,7 +56,7 @@ namespace PocketCaravan
                 if (n.exit) DrawDown(ToGui(cam, n.position + new Vector3(0f, 0.9f, 0f)));
                 if (dist > 2.2f)
                 {
-                    Vector2 c = ToGui(cam, player.transform.position + new Vector3(0f, 0.3f, 0f));
+                    Vector2 c = ToGui(cam, player.transform.position);
                     float ang = Mathf.Atan2(-d.y, d.x) * Mathf.Rad2Deg;   // GUI는 y가 아래로
                     Vector2 dir = new Vector2(d.x, -d.y).normalized;
                     Vector2 a = c + dir * 26f;

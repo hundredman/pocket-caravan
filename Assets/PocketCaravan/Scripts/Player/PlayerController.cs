@@ -11,12 +11,11 @@ namespace PocketCaravan
     {
         public float runMultiplier = 1.6f;
         [Tooltip("짐이 가득 찼을 때 속도 배율")] public float fullLoadSpeed = 0.7f;
-        [Tooltip("그림이 붙은 자식 (걸을 때 통통 튀는 연출)")] public SpriteRenderer body;
+        [Tooltip("걷기 애니메이션 (그림이 붙은 자식)")] public CharacterAnimator anim;
 
         [Tooltip("말을 걸 수 있는 거리 (칸)")] public float talkRange = 1.8f;
 
         PlayerMotor motor;
-        float walkTime;
 
         /// <summary>지금 Space를 누르면 말을 걸 대상 (머리 위 안내 표시용)</summary>
         public Interactable TalkTarget { get; private set; }
@@ -28,7 +27,7 @@ namespace PocketCaravan
         {
             Instance = this;
             motor = GetComponent<PlayerMotor>();
-            if (body == null) body = GetComponentInChildren<SpriteRenderer>();
+            if (anim == null) anim = GetComponentInChildren<CharacterAnimator>();
         }
 
         void Update()
@@ -65,13 +64,11 @@ namespace PocketCaravan
 
         void UpdateBody()
         {
-            if (body == null) return;
-            if (motor.Facing.x != 0) body.flipX = motor.Facing.x < 0;
-            // 걸을 때 1픽셀 통통 (16 PPU 기준)
-            if (motor.IsMoving) walkTime += Time.deltaTime * (2f + motor.Velocity.magnitude);
-            else walkTime = 0f;
-            float bob = motor.IsMoving && Mathf.Repeat(walkTime, 1f) < 0.5f ? 1f / 16f : 0f;
-            body.transform.localPosition = new Vector3(0f, bob, 0f);
+            if (anim == null) return;
+            anim.facing = motor.Facing;
+            anim.walking = motor.IsMoving;
+            // 달리면 발걸음도 빨라지게
+            anim.framesPerSecond = 6f + motor.Velocity.magnitude * 1.2f;
         }
     }
 }

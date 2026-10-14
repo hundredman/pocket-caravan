@@ -35,7 +35,8 @@ namespace PocketCaravan.EditorTools
         [Serializable]
         class MapObject
         {
-            public string kind, id, npc, town, target, spawn, edge;
+            public string kind, id, npc, town, target, spawn, edge, text, name, character;
+            public string[] lines;
             public int x, y, w = 1, h = 1, variant, idx;
         }
 
@@ -43,7 +44,7 @@ namespace PocketCaravan.EditorTools
         class MapFile
         {
             public string id, name;
-            public int w, h;
+            public int w, h, hours;
             public int[] ground, deco, obj, high, road, blocked;
             public string[] palette;
             public MapObject[] objects;
@@ -56,16 +57,18 @@ namespace PocketCaravan.EditorTools
 
         static readonly Dictionary<string, NpcDef> QuestNpcs = new Dictionary<string, NpcDef>
         {
-            ["naru_chief"] = new NpcDef { name = "나루 마을 촌장", sprite = PlaceholderArt.ChiefSprite, greeting = "예성강 물길이 개경까지 닿으니, 이 작은 나루에도 온갖 짐이 오간다네." },
-            ["gaekju"] = new NpcDef { name = "개경 객주 곰돌", sprite = PlaceholderArt.GaekjuSprite, greeting = "객주는 상인들이 묵고 짐을 맡기는 곳이지. 일거리가 생기면 부르겠네." },
-            ["dakmok_chief"] = new NpcDef { name = "닥나무 마을 촌장", sprite = PlaceholderArt.ChiefSprite, greeting = "우리 마을 종이는 질기고 하얗기로 이름났다네." },
+            ["naru_chief"] = new NpcDef { name = "나루 마을 촌장", sprite = "elder", greeting = "예성강 물길이 개경까지 닿으니, 이 작은 나루에도 온갖 짐이 오간다네." },
+            ["gaekju"] = new NpcDef { name = "개경 객주 돈돌", sprite = "gaekju", greeting = "객주는 상인들이 묵고 짐을 맡기는 곳이지. 일거리가 생기면 부르겠네." },
+            ["dakmok_chief"] = new NpcDef { name = "닥나무 마을 촌장", sprite = "dakmokchief", greeting = "우리 마을 종이는 질기고 하얗기로 이름났다네." },
         };
 
         static readonly (string name, string sprite, string[] lines)[] Villagers =
         {
-            ("비단 장수", PlaceholderArt.MerchantSprite, new[] { "시전 거리에는 송나라 비단도, 아라비아 향료도 다 들어온다네.", "벽란도에 큰 배가 들어오는 날이면 값이 출렁이지." }),
-            ("짐꾼", PlaceholderArt.GaekjuSprite, new[] { "등짐으로는 하루에 몇 번 못 오가. 수레가 있어야 돈이 되지.", "남문 밖 길은 평평해서 수레가 잘 굴러가." }),
-            ("선비", PlaceholderArt.ChiefSprite, new[] { "저 위가 만월대일세. 송악산 아래 임금님이 계시지.", "개경은 고려의 서울이라 사람도 물건도 다 모인다네." }),
+            ("비단 장수", "villager_lion", new[] { "시전 거리에는 송나라 비단도, 아라비아 향료도 다 들어온다네.", "벽란도에 큰 배가 들어오는 날이면 값이 출렁이지." }),
+            ("짐꾼", "villager_pig", new[] { "등짐으로는 하루에 몇 번 못 오가. 수레가 있어야 돈이 되지.", "남문 밖 길은 평평해서 수레가 잘 굴러가." }),
+            ("선비", "villager_monkey", new[] { "저 위가 만월대일세. 송악산 아래 임금님이 계시지.", "개경은 고려의 서울이라 사람도 물건도 다 모인다네." }),
+            ("뱃사공", "villager_frog", new[] { "예성강 물길을 따라가면 벽란도 포구가 나오지. 송나라 배도 드나든다네." }),
+            ("떡 장수", "villager_gold", new[] { "장날에는 사람이 두 배로 몰려. 값도 덩달아 오르고." }),
         };
 
         [MenuItem("Pocket Caravan/2. 맵 씬 다시 만들기 (JSON → 씬)", priority = 2)]
@@ -149,6 +152,7 @@ namespace PocketCaravan.EditorTools
 
             var map = gridGo.AddComponent<MapRoot>();
             map.mapId = f.id;
+            map.travelHours = f.hours;
             map.displayName = f.name;
             map.ground = ground; map.road = null; map.blocked = blocked;
             map.region = db.towns.Count > 0 && db.towns[0] != null ? db.towns[0].region : null;
@@ -193,7 +197,7 @@ namespace PocketCaravan.EditorTools
                         qn.npcId = o.npc; qn.displayName = nd.name; qn.greeting = nd.greeting;
                         var mk = new GameObject("Quest Marker").AddComponent<SpriteRenderer>();
                         mk.transform.SetParent(qn.transform, false);
-                        mk.transform.localPosition = new Vector3(0f, 1.75f, 0f);
+                        mk.transform.localPosition = new Vector3(0f, 1.45f, 0f);
                         mk.sortingOrder = 25;
                         qn.marker = mk;
                         qn.availableSprite = LoadSprite(PlaceholderArt.MarkerAvailable);
@@ -202,11 +206,20 @@ namespace PocketCaravan.EditorTools
                         break;
                     case "market":
                         var t = db.towns.Find(x => x != null && x.id == o.town);
-                        var npc = Character($"장터 상인 ({(t != null ? t.displayName : o.town)})", PlaceholderArt.MerchantSprite, center, objects);
+                        var npc = Character($"장터 상인 ({(t != null ? t.displayName : o.town)})", "merchant", center, objects);
                         npc.AddComponent<TownMarket>().town = t;
                         break;
+                    case "talker":
+                        var tk = Character(o.name, o.character, center, objects).AddComponent<TalkNpc>();
+                        tk.displayName = o.name; tk.lines = o.lines;
+                        break;
+                    case "sign":
+                        var sg = new GameObject("이정표").AddComponent<TalkNpc>();
+                        sg.transform.SetParent(objects); sg.transform.position = center;
+                        sg.displayName = "이정표"; sg.lines = new[] { o.text }; sg.blocksMovement = false; // 칸은 소품 타일이 막음
+                        break;
                     case "villager":
-                        var v = Villagers[o.variant % Villagers.Length];
+                        var v = Villagers[(o.variant + o.idx) % Villagers.Length];
                         var vn = Character(v.name, v.sprite, center, objects).AddComponent<TalkNpc>();
                         vn.displayName = v.name;
                         vn.lines = v.lines;
@@ -220,23 +233,25 @@ namespace PocketCaravan.EditorTools
             var bodyGo = new GameObject("Body");
             bodyGo.transform.SetParent(player.transform, false);
             var sr = bodyGo.AddComponent<SpriteRenderer>();
-            sr.sprite = LoadSprite(PlaceholderArt.PlayerSprite);
             sr.sortingOrder = 11;
+            var anim = bodyGo.AddComponent<CharacterAnimator>();
+            anim.frames = LoadFrames("tanuki");
+            sr.sprite = anim.frames[0];
             player.AddComponent<PlayerMotor>();
-            player.AddComponent<PlayerController>().body = sr;
+            player.AddComponent<PlayerController>().anim = anim;
 
             // 카메라: 320×180 기준, 16 PPU 픽셀 퍼펙트
             var camGo = new GameObject("Main Camera") { tag = "MainCamera" };
             var cam = camGo.AddComponent<Camera>();
             cam.orthographic = true;
-            cam.orthographicSize = 5.625f;
+            cam.orthographicSize = 6.75f;
             cam.clearFlags = CameraClearFlags.SolidColor;
             cam.backgroundColor = new Color32(0x22, 0x2B, 0x22, 0xFF);
             camGo.transform.position = new Vector3(startPos.x, startPos.y, -10f);
             var ppc = camGo.AddComponent<PixelPerfectCamera>();
             SetInt(ppc, "m_AssetsPPU", PixelArtImporter.PPU);
-            SetInt(ppc, "m_RefResolutionX", 320);
-            SetInt(ppc, "m_RefResolutionY", 180);
+            SetInt(ppc, "m_RefResolutionX", 384);
+            SetInt(ppc, "m_RefResolutionY", 216);
             SetInt(ppc, "m_GridSnapping", 1);
             camGo.AddComponent<CameraFollow>().target = player.transform;
 
@@ -264,15 +279,29 @@ namespace PocketCaravan.EditorTools
             return tm;
         }
 
-        static GameObject Character(string name, string sprite, Vector3 pos, Transform parent)
+        /// <summary>16×16 캐릭터 (Art/Characters/이름_방향프레임.png). 아래를 보고 서 있다.</summary>
+        static GameObject Character(string name, string character, Vector3 pos, Transform parent)
         {
             var go = new GameObject(name);
             go.transform.SetParent(parent);
             go.transform.position = pos;
             var sr = go.AddComponent<SpriteRenderer>();
-            sr.sprite = LoadSprite(sprite);
             sr.sortingOrder = 10;
+            var anim = go.AddComponent<CharacterAnimator>();
+            anim.frames = LoadFrames(character);
+            sr.sprite = anim.frames[0];
             return go;
+        }
+
+        static Sprite[] LoadFrames(string character)
+        {
+            var frames = new Sprite[16];
+            string dirs = "dulr";
+            for (int d = 0; d < 4; d++)
+                for (int f = 0; f < 4; f++)
+                    frames[d * 4 + f] = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Characters/{character}_{dirs[d]}{f}.png");
+            if (frames[0] == null) Debug.LogWarning($"캐릭터 그림 없음: {character} (Tools/ArtGen/characters.py 실행)");
+            return frames;
         }
 
         static Sprite LoadSprite(string name) => AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Placeholder/{name}.png");

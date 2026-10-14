@@ -16,6 +16,7 @@ namespace PocketCaravan
         public string displayName;
         public RegionData region;
         [Tooltip("월드 지도에서의 좌표 (맵 단위)")] public Vector2Int worldCoord;
+        [Tooltip("이 맵(길)에 들어서면 흐르는 게임 시간. 짧게 걸어도 하루 여정처럼 느껴지게")] public int travelHours;
 
         [Header("레이어")]
         public Tilemap ground;

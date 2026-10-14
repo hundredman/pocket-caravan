@@ -31,20 +31,14 @@ def build():
     m.reserve(0, wall_y + 2, W - 1, H - 1)  # 성 밖은 길과 풀밭만
 
     # 만월대: 송악산 아래 궁궐
-    m.reserve(20, 1, 43, 11)
+    m.plateau(20, 0, 43, 10, opening=(gate_x0, gate_x1))   # 송악산 아래 높은 터
     m.stamp("hall", 28, 1, force=True)
     m.stamp("hall", 32, 1, force=True)
     m.stamp("house_tile", 23, 5, force=True)
     m.stamp("house_tile", 37, 5, force=True)
-    # 궁궐 담장과 궁문
-    for x in range(21, 43):
-        if gate_x0 <= x <= gate_x1:
-            continue
-        m.obj[9][x] = WALL_TOP; m.obj[10][x] = WALL_BOTTOM
-        m.blocked[9][x] = m.blocked[10][x] = True
     m.stamp("cherry", 25, 1, force=True)
     m.stamp("cherry", 38, 1, force=True)
-    m.road_rect(gate_x0, 8, gate_x1, 11, grade=3)
+    m.road_rect(gate_x0, 8, gate_x1, 11, grade=3)   # 만월대 오르는 길
 
     # 시전 거리 가게 (북쪽 줄, 남쪽 줄)
     x = 5
@@ -98,6 +92,7 @@ def build():
     m.add("market", 36, 21, town="gaegyeong")          # 시전 상인
     m.link("S", gate_x0, 4, "Route01", "N", "S")      # 남문 (폭 4) ↔ 예성 길 북쪽
     m.link("E", 22, 3, "Dakmok", "W", "E")            # 시전 거리 동쪽 끝 (폭 3) ↔ 닥나무 마을
+    m.sign(29, 38, "↑ 만월대 · ← 서문 · 시전 거리 →\n동문 밖 닥나무 마을 5리")
     villagers = [(20, 23, 0), (40, 24, 1), (31, 15, 2), (44, 22, 0), (16, 32, 1), (47, 32, 2), (25, 12, 0), (38, 13, 1)]
     for i, (vx, vy, sp) in enumerate(villagers):
         m.add("villager", vx, vy, variant=sp, idx=i)

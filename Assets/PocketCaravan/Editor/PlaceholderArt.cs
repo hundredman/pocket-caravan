@@ -34,13 +34,7 @@ namespace PocketCaravan.EditorTools
 
         public static void WriteAll(string dir)
         {
-            // 땅·건물 타일은 Ninja Adventure 에셋 팩을 쓴다 (Art/NinjaAdventure). 여기서는 캐릭터와 표시만 그린다.
-            SaveTanuki(dir, PlayerSprite);
-            SaveRabbit(dir, MerchantSprite);
-            // 객주: 푸른 옷의 곰
-            SaveAnimal(dir, GaekjuSprite, Hex("9C6B4A"), Hex("6B4630"), Hex("E8C9A0"), Ears.Round, Hex("4F6FA6"), false, false);
-            // 촌장: 갓 쓰고 흰 수염 난 늙은 개
-            SaveAnimal(dir, ChiefSprite, Hex("C9B49A"), Hex("8E7A62"), Hex("F4EDE2"), Ears.Floppy, Hex("8C7A9E"), true, true);
+            // 땅·건물·캐릭터는 Ninja Adventure 에셋 팩 기반 (Art/NinjaAdventure, Art/Characters). 여기서는 퀘스트 표시만 그린다.
             SaveMarker(dir, MarkerAvailable, '!', Hex("FFD54A"));
             SaveMarker(dir, MarkerTurnIn, '?', Hex("FFD54A"));
             SaveMarker(dir, MarkerProgress, '?', Hex("B8B8B8"));

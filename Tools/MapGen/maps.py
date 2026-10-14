@@ -32,6 +32,7 @@ def naru():
     m.add("market", 15, 13, town="naru")         # 나루 장터
     m.add("spawn", 16, 11, id="S0")   # 게임 시작 자리
     m.link("E", 8, 4, "Route01", "W", "E")      # 8~11행, 길은 9~10행
+    m.sign(28, 12, "→ 예성 길\n개경 남문 25리")
     # 숲과 나무
     m.forest_border(thickness=2)
     m.scatter("tree", 5, area=(3, 2, 33, 17), margin=1)
@@ -41,18 +42,36 @@ def naru():
 
 
 def route01():
-    """예성 길: 서쪽 나루 마을에서 들어와 시내를 건너 북쪽 개경 남문으로 올라간다."""
-    m = Map("Route01", "예성 길", 40, 30, seed=7)
-    m.water_rect(14, 0, 16, 29)                  # 시내 (남북으로 흐름)
-    m.road_path([(0, 9), (8, 9), (12, 10), (20, 10), (26, 12), (30, 14)], width=2)
-    m.bridge(14, 10, 16, 11)
-    m.road_path([(30, 14), (30, 8), (27, 4), (27, 0)], width=4, grade=2)   # 개경 남문 쪽 큰길 (폭 4)
-    m.link("W", 8, 4, "Naru", "E", "W")          # 나루 마을과 같은 8~11행, 길 9~10행
-    m.link("N", 27, 4, "Gaegyeong", "S", "N")    # 개경 남문 폭 4
+    """예성 길: 서쪽 나루 마을에서 들어와 주막에서 쉬고, 시내를 건너 북쪽 개경 남문으로 올라간다."""
+    m = Map("Route01", "예성 길", 54, 34, seed=7)
+    m.hours = 3                                   # 지나는 데 반나절쯤 걸리는 길
+    m.water_rect(28, 0, 30, 33)                   # 시내 (남북으로 흐름)
+    m.road_path([(0, 9), (9, 9), (13, 12), (22, 14), (34, 15), (42, 16)], width=2)
+    m.bridge(28, 14, 30, 16)
+    m.road_path([(42, 16), (42, 10), (39, 6), (39, 0)], width=4, grade=2)   # 개경 남문 쪽 (폭 4)
+    m.link("W", 8, 4, "Naru", "E", "W")           # 나루 마을과 같은 8~11행, 길 9~10행
+    m.link("N", 39, 4, "Gaegyeong", "S", "N")     # 개경 남문 폭 4
+
+    # 주막: 길손이 쉬어 가는 곳
+    m.stamp("house_thatch", 16, 7, force=True)
+    m.stamp("bench", 21, 10, force=True)
+    m.prop(K("element", 3, 0), 15, 10); m.prop(K("element", 1, 1), 20, 9)
+    m.talker(18, 11, "주모", "villager_gold", "먼 길 가시오? 개경 남문까지는 시내 건너 한참이오. 쉬었다 가시구려.",
+             "개경에 처음 가면 남문 앞 큰길만 따라가시오. 길 잃을 일 없소.")
+
+    # 이정표
+    m.sign(6, 12, "← 예성 나루 마을 5리\n개경 남문 20리 →")
+    m.sign(44, 19, "↑ 개경 남문 10리\n← 예성 나루 마을 15리")
+
+    # 길에서 만나는 사람
+    m.talker(35, 17, "길손", "villager_monkey", "벽란도에서 오는 길이오. 거기는 송나라 배가 드나들어 별 물건이 다 있소.")
+    m.stamp("cart", 46, 22, force=True)
+    m.talker(45, 21, "수레꾼", "villager_pig", "바퀴가 돌부리에 걸렸지 뭐요. 손수레는 길 없는 풀밭에서 영 힘을 못 써.")
+
     m.forest_border(thickness=2)
-    m.scatter("pine", 12, area=(2, 2, 37, 27), margin=1)
-    m.scatter("tree", 10, area=(2, 2, 37, 27), margin=1)
-    m.scatter("cherry", 4, area=(2, 2, 37, 27), margin=1)
+    m.scatter("pine", 18, area=(2, 2, 51, 31), margin=1)
+    m.scatter("tree", 14, area=(2, 2, 51, 31), margin=1)
+    m.scatter("cherry", 6, area=(2, 2, 51, 31), margin=1)
     m.finish()
     return m
 
@@ -73,6 +92,7 @@ def dakmok():
     m.add("market", 18, 13, town="dakmok")
     m.prop(PROPS[3], 19, 14); m.prop(PROPS[1], 20, 14)
     m.link("W", 10, 3, "Gaegyeong", "E", "W")
+    m.sign(4, 14, "← 개경 동문 5리")
     m.forest_border(thickness=2)
     m.scatter("tree", 6, area=(3, 2, 30, 18), margin=1)
     m.finish()

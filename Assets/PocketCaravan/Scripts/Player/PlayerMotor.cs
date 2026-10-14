@@ -8,11 +8,11 @@ namespace PocketCaravan
     /// </summary>
     public class PlayerMotor : MonoBehaviour
     {
-        [Tooltip("속도 배율 1일 때 초당 칸 수")] public float walkSpeed = 4.5f;
+        [Tooltip("속도 배율 1일 때 초당 칸 수")] public float walkSpeed = 3.8f;
         [Tooltip("출발할 때 가속 (칸/초²)")] public float accel = 40f;
         [Tooltip("멈출 때 감속 (칸/초²)")] public float decel = 60f;
-        [Tooltip("발밑 상자 중심 (transform 기준)")] public Vector2 feetOffset = new Vector2(0f, -0.3f);
-        public Vector2 feetSize = new Vector2(0.55f, 0.3f);
+        [Tooltip("발밑 상자 중심 (transform 기준)")] public Vector2 feetOffset = new Vector2(0f, -0.32f);
+        public Vector2 feetSize = new Vector2(0.5f, 0.25f);
         [Tooltip("모서리에 걸렸을 때 옆으로 비켜 주는 최대 거리")] public float cornerSlide = 0.4f;
 
         public Vector2 Velocity { get; private set; }

@@ -29,13 +29,13 @@ for f in (maps.naru, maps.route01, gaegyeong.build, maps.dakmok):
                     index[n] = len(palette); palette.append(n)
                 out.append(index[n])
         return out
-    d = dict(id=m.id, name=m.name, w=m.w, h=m.h,
+    d = dict(id=m.id, name=m.name, w=m.w, h=m.h, hours=m.hours,
              ground=flat(m.ground), deco=flat(m.deco), obj=flat(m.obj), high=flat(m.high),
              road=[g for row in m.road for g in row],
              blocked=[1 if b else 0 for row in m.blocked for b in row],
              objects=[dict(kind=o["kind"], x=o["x"], y=o["y"], w=o.get("w", 1), h=o.get("h", 1),
                            id=o.get("id", ""), npc=o.get("npc", ""), town=o.get("town", ""),
-                           target=o.get("target", ""), spawn=o.get("spawn", ""), edge=o.get("edge", ""), variant=o.get("variant", 0), idx=o.get("idx", 0))
+                           target=o.get("target", ""), spawn=o.get("spawn", ""), edge=o.get("edge", ""), text=o.get("text", ""), name=o.get("name", ""), character=o.get("character", ""), lines=o.get("lines", []), variant=o.get("variant", 0), idx=o.get("idx", 0))
                       for o in m.objects])
     d["palette"] = palette
     with open(os.path.join(map_dir, m.id + ".json"), "w") as fp:

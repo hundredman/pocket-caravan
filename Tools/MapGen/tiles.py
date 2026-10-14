@@ -114,9 +114,12 @@ STAMPS = {
     "tree": ("nature", 2, 0, 2, 2, 1, 1, None),
     "cherry": ("nature", 14, 0, 2, 2, 1, 1, None),
     "cart": ("element", 0, 3, 2, 2, 0, 0, None),
+    "bench": ("element", 11, 1, 3, 1, 0, 0, None),
     "boat": ("boat", 0, 0, 5, 2, 0, 0, None),
 }
 PROPS = [K("element", 3, 0), K("element", 0, 1), K("element", 1, 1), K("element", 4, 0)]
+SIGN = K("element", 0, 2)          # 이정표 나무판
+FIELD = ("field", 0, 3)            # 높은 풀밭(언덕) 3x3 조각의 왼쪽 위
 
 
 class Map:
@@ -133,6 +136,7 @@ class Map:
         self.blocked = [[False] * w for _ in range(h)]
         self.reserved = [[False] * w for _ in range(h)]  # 자동 배치(나무 등)를 막는 칸
         self.objects = []   # 스폰, 출구, NPC
+        self.hours = 0      # 이 맵을 지날 때 흐르는 게임 시간 (길 맵)
 
     def inside(self, x, y):
         return 0 <= x < self.w and 0 <= y < self.h
@@ -259,6 +263,31 @@ class Map:
             self.add("spawn", start, sy, w=length, h=1, id=my_spawn, edge=edge)
             self.reserve(start, min(y, sy), start + length - 1, max(y, sy))
 
+    def plateau(self, x0, y0, x1, y1, opening=None):
+        """높은 터(언덕): 가장자리는 막히고, opening=(xa, xb)인 아래쪽 칸으로 오르내린다."""
+        fs, fx, fy = FIELD
+        for y in range(y0, y1 + 1):
+            for x in range(x0, x1 + 1):
+                cx = 0 if x == x0 else 2 if x == x1 else 1
+                cy = 0 if y == y0 else 2 if y == y1 else 1
+                self.ground[y][x] = K(fs, fx + cx, fy + cy)
+                edge = x in (x0, x1) or y in (y0, y1)
+                if edge and not (opening and y == y1 and opening[0] <= x <= opening[1]):
+                    self.blocked[y][x] = True
+                self.reserved[y][x] = True
+        if opening:
+            for x in range(opening[0], opening[1] + 1):
+                self.ground[y1][x] = None   # 계단 자리는 길로
+                self.road[y1][x] = 3
+
+    def sign(self, x, y, text):
+        """이정표: 말을 걸면 거리(리)를 알려 준다."""
+        self.prop(SIGN, x, y)
+        self.add("sign", x, y, text=text)
+
+    def talker(self, x, y, name, character, *lines):
+        self.add("talker", x, y, name=name, character=character, lines=list(lines))
+
     def add(self, kind, x, y, **kw):
         self.objects.append(dict(kind=kind, x=x, y=y, **kw))
         self.reserve(x, y, x, y)
@@ -280,6 +309,8 @@ class Map:
             for x in range(self.w):
                 if self.ground[y][x] == PLANK:
                     continue
+                if self.ground[y][x] is not None and self.road[y][x] == 0 and not self.water[y][x]:
+                    continue  # 언덕처럼 미리 정한 바닥
                 if self.water[y][x]:
                     self.ground[y][x] = autotile(water_mask, x, y, *WATER_ORIGIN)
                     self.blocked[y][x] = True

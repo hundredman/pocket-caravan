@@ -75,9 +75,25 @@ namespace PocketCaravan
             if (I == this) SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
+        UnityEngine.Rendering.Universal.Light2D sun;
+        static readonly Color DayColor = Color.white;
+        static readonly Color DuskColor = new Color(1f, 0.78f, 0.6f);
+        static readonly Color NightColor = new Color(0.45f, 0.5f, 0.8f);
+
         void Update()
         {
             if (!UIState.Blocking) Clock.Tick(Time.deltaTime);
+            ApplyDaylight();
+        }
+
+        /// <summary>낮·밤: 맵의 전역 2D 빛 색과 밝기를 시간에 맞춘다.</summary>
+        void ApplyDaylight()
+        {
+            if (sun == null) return;
+            float d = Clock.Daylight;
+            Color c = d >= 1f ? DayColor : d > 0.5f ? Color.Lerp(DuskColor, DayColor, (d - 0.5f) * 2f) : Color.Lerp(NightColor, DuskColor, d * 2f);
+            sun.color = c;
+            sun.intensity = Mathf.Lerp(0.55f, 1f, d);
         }
 
         // ---------- 맵 이동 ----------
@@ -122,8 +138,15 @@ namespace PocketCaravan
 
             if (MapRoot.Current != null)
             {
-                Notify.Show(MapRoot.Current.displayName, 2.5f);
-                GameEvents.RaiseMapEntered(MapRoot.Current.mapId);
+                var map = MapRoot.Current;
+                if (map.travelHours > 0)
+                {
+                    Clock.Advance(map.travelHours);
+                    Notify.Show($"{map.displayName} · 걸어서 {map.travelHours}시간 길 ({Clock.Label})", 3f);
+                }
+                else Notify.Show(map.displayName, 2.5f);
+                GameEvents.RaiseMapEntered(map.mapId);
+                sun = FindAnyObjectByType<UnityEngine.Rendering.Universal.Light2D>();
             }
         }
 
