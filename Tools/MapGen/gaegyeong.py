@@ -14,11 +14,17 @@ def build():
     # 큰길 (남문 → 만월대), 시전 거리 (동서)
     m.road_rect(gate_x0, 12, gate_x1, H - 1, grade=3)
     m.road_rect(4, 22, W - 1, 24, grade=3)
-    # 골목
-    m.road_rect(12, 12, 13, 38, grade=2)
-    m.road_rect(50, 12, 51, 38, grade=2)
-    m.road_rect(12, 31, 51, 32, grade=2)
-    m.road_rect(12, 12, 51, 13, grade=2)
+    m.roughen(4, 22, W - 1, 24, grade=3, every=6)     # 시전 거리 가장자리를 덜 반듯하게
+    # 골목: 구불구불, 시전 거리에서 주택가로
+    m.road_path([(5, 13), (12, 12), (20, 13), (29, 12)], width=2, grade=2)
+    m.road_path([(34, 12), (42, 13), (51, 12), (58, 13)], width=2, grade=2)
+    m.road_path([(5, 32), (14, 31), (22, 32), (29, 31)], width=2, grade=2)
+    m.road_path([(34, 31), (44, 32), (52, 31), (58, 32)], width=2, grade=2)
+    for (x, top, bottom) in [(15, 13, 22), (47, 13, 22)]:      # 시전 거리와 이어지는 샛길
+        m.road_path([(x, top), (x + 1, (top + bottom) // 2), (x, bottom)], width=2, grade=2)
+    for (x, top, bottom) in [(17, 24, 31), (45, 24, 31)]:
+        m.road_path([(x, top), (x - 1, (top + bottom) // 2), (x, bottom)], width=2, grade=2)
+    m.road_blob(31.5, 23, 7, 3.2, grade=3, jitter=0.1)   # 남문 큰길과 시전 거리가 만나는 장터 마당
 
     # 성벽과 남문
     for x in range(W):
@@ -41,36 +47,29 @@ def build():
     m.road_rect(gate_x0, 8, gate_x1, 11, grade=3)   # 만월대 오르는 길
 
     # 시전 거리 가게 (북쪽 줄, 남쪽 줄)
-    x = 5
-    north_shops = ["shop", "store", "shop", "house_tile", "store", "shop"]
-    for i, s in enumerate(north_shops):
-        w = 3 if s == "shop" else 4
-        if x + w > gate_x0 - 1:
-            break
-        m.stamp(s, x, 18, force=True); x += w + 1
-    x = gate_x1 + 2
-    for s in ["store", "shop", "store", "shop", "house_tile", "shop"]:
-        w = 3 if s == "shop" else 4
-        if x + w > W - 3:
-            break
-        m.stamp(s, x, 18, force=True); x += w + 1
-    x = 5
-    for s in ["shop", "house_tile", "shop", "store", "shop"]:
-        w = 3 if s == "shop" else 4
-        if x + w > gate_x0 - 1:
-            break
-        m.stamp(s, x, 26, force=True); x += w + 1
-    x = gate_x1 + 2
-    for s in ["shop", "store", "shop", "house_tile", "store"]:
-        w = 3 if s == "shop" else 4
-        if x + w > W - 3:
-            break
-        m.stamp(s, x, 26, force=True); x += w + 1
+    def row(names, x, y, x_end):
+        """가게를 줄지어 놓되, 샛길·마당이 있으면 건너뛴다"""
+        for name in names:
+            w = 3 if name == "shop" else 4
+            while x + w <= x_end and not m.stamp(name, x, y + m.rng.choice([0, 0, -1]), force=True) \
+                    and not m.stamp(name, x, y, force=True):
+                x += 1
+            if x + w > x_end:
+                break
+            x += w + m.rng.choice([1, 1, 2])
+    row(["shop", "store", "shop", "house_tile", "store", "shop"], 4, 18, gate_x0 - 2)
+    row(["store", "shop", "store", "shop", "house_tile", "shop"], gate_x1 + 3, 18, W - 3)
+    row(["shop", "house_tile", "shop", "store", "shop"], 4, 26, gate_x0 - 2)
+    row(["shop", "store", "shop", "house_tile", "store"], gate_x1 + 3, 26, W - 3)
 
     # 주택가 (기와집)
-    for (hx, hy) in [(3, 14), (17, 14), (22, 14), (40, 14), (45, 14), (55, 14),
-                     (3, 34), (17, 34), (22, 34), (37, 34), (42, 34), (55, 34)]:
+    for (hx, hy) in [(3, 15), (18, 14), (23, 15), (38, 15), (42, 14), (54, 15),
+                     (4, 34), (19, 34), (24, 35), (37, 35), (41, 34), (54, 34)]:
         m.stamp("house_tile", hx, hy)
+    m.scatter("cherry", 4, area=(3, 14, W - 4, 17), margin=1)
+    m.scatter("tree", 5, area=(3, 33, W - 4, 38), margin=1)
+    m.bushes([(x, y) for x in range(4, W - 4, 4) for y in (16, 29, 36)])
+    m.flowers(3, 13, W - 4, 38, 30)
     m.stamp("house3", 56, 3); m.stamp("house3", 4, 4); m.stamp("house_tile", 14, 4); m.stamp("house_tile", 45, 4)
 
     # 장터 짐과 수레

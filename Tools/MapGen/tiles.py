@@ -186,6 +186,60 @@ class Map:
                             self.road[y][x] = max(self.road[y][x], grade)
                             self.reserved[y][x] = True
 
+    def road_blob(self, cx, cy, rx, ry, grade=1, jitter=0.15):
+        """둥근 마당·광장 (타원, 가장자리를 조금 들쭉날쭉)"""
+        for y in range(int(cy - ry) - 1, int(cy + ry) + 2):
+            for x in range(int(cx - rx) - 1, int(cx + rx) + 2):
+                if not self.inside(x, y):
+                    continue
+                d = ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2
+                if d <= 1 + self.rng.uniform(-jitter, jitter):
+                    self.road[y][x] = max(self.road[y][x], grade)
+                    self.reserved[y][x] = True
+
+    def water_blob(self, cx, cy, rx, ry, jitter=0.2):
+        """연못 (둥글고 들쭉날쭉)"""
+        for y in range(int(cy - ry) - 1, int(cy + ry) + 2):
+            for x in range(int(cx - rx) - 1, int(cx + rx) + 2):
+                if self.inside(x, y) and ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 <= 1 + self.rng.uniform(-jitter, jitter):
+                    self.water[y][x] = True
+                    self.reserved[y][x] = True
+
+    def _walk(self, n, lo, hi, start, fixed=()):
+        """천천히 흔들리는 값 (강가 굴곡). fixed 위치에서는 start로 고정"""
+        v, out = start, []
+        for i in range(n):
+            if i in fixed:
+                v = start
+            elif self.rng.random() < 0.35:
+                v = min(hi, max(lo, v + self.rng.choice([-1, 1])))
+            out.append(v)
+        return out
+
+    def river_h(self, top, bottom, x0=0, x1=None, wiggle=1, fixed=()):
+        """가로로 흐르는 강. 윗물가가 구불구불"""
+        x1 = self.w - 1 if x1 is None else x1
+        tops = self._walk(x1 - x0 + 1, top - wiggle, top + wiggle, top, {f - x0 for f in fixed})
+        for i, x in enumerate(range(x0, x1 + 1)):
+            self.water_rect(x, tops[i], x, bottom)
+
+    def river_v(self, left, right, wiggle=1, fixed_rows=()):
+        """세로로 흐르는 시내. 양쪽 물가가 함께 구불구불 (다리 줄은 고정)"""
+        offs = self._walk(self.h, -wiggle, wiggle, 0, set(fixed_rows))
+        for y in range(self.h):
+            self.water_rect(left + offs[y], y, right + offs[y], y)
+
+    def roughen(self, x0, y0, x1, y1, grade=2, every=5):
+        """곧은 큰길 가장자리에 군데군데 2칸짜리 턱을 내 덜 반듯하게"""
+        for x in range(x0, x1 + 1, every):
+            if self.rng.random() < 0.6:
+                side = self.rng.choice([y0 - 1, y1 + 1])
+                for dx in range(2):
+                    xx = x + dx + self.rng.randint(0, 2)
+                    if self.inside(xx, side) and not self.blocked[side][xx] and not self.water[side][xx]:
+                        self.road[side][xx] = max(self.road[side][xx], grade)
+                        self.reserved[side][xx] = True
+
     def water_rect(self, x0, y0, x1, y1):
         for y in range(y0, y1 + 1):
             for x in range(x0, x1 + 1):
@@ -208,10 +262,17 @@ class Map:
                     return False
         return True
 
-    def stamp(self, name, x, y, force=False):
+    def stamp(self, name, x, y, force=False, over_road=False):
+        """force: 예약 칸이어도 놓음. 그래도 막히는 칸이 길 위면 놓지 않는다 (over_road=True만 예외)."""
         s, sx, sy, w, h, block_from, high_rows, rc = STAMPS[name]
         if not force and not self.can_place(x, y, w, h):
             return False
+        if not over_road:
+            for dy in range(block_from, h):
+                for dx in range(w):
+                    xx, yy = x + dx, y + dy
+                    if self.inside(xx, yy) and (self.road[yy][xx] > 0 or self.water[yy][xx]):
+                        return False
         for dy in range(h):
             for dx in range(w):
                 key = K(s, sx + dx, sy + dy, rc)
@@ -374,7 +435,9 @@ class Map:
         self.objects.append(dict(kind="walker", x=path[0][0], y=path[0][1], path=path, idx=idx))
 
     def sign(self, x, y, text):
-        """이정표: 말을 걸면 거리(리)를 알려 준다."""
+        """이정표: 말을 걸면 거리(리)를 알려 준다. 길 위면 길가로 옮긴다."""
+        while self.inside(x, y) and (self.road[y][x] > 0 or self.water[y][x]):
+            x += 1
         self.prop(SIGN, x, y)
         self.add("sign", x, y, text=text)
 
@@ -386,7 +449,31 @@ class Map:
         self.reserve(x, y, x, y)
 
     # --- 마무리 ---
+    def smooth(self, passes=2):
+        """길·물에 파인 한 칸짜리 홈을 메운다 (이웃 8칸 중 5칸 이상이 같으면)"""
+        for _ in range(passes):
+            for layer, val in ((self.road, None), (self.water, True)):
+                add = []
+                for y in range(1, self.h - 1):
+                    for x in range(1, self.w - 1):
+                        if self.blocked[y][x] or self.obj[y][x] is not None:
+                            continue
+                        if val is None and (self.road[y][x] > 0 or self.water[y][x] or self.ground[y][x] is not None):
+                            continue
+                        if val and (self.water[y][x] or self.road[y][x] > 0 or self.ground[y][x] is not None):
+                            continue
+                        nb = [layer[y + dy][x + dx] for dy in (-1, 0, 1) for dx in (-1, 0, 1) if dx or dy]
+                        on = [v for v in nb if v]
+                        n4 = [layer[y - 1][x], layer[y + 1][x], layer[y][x - 1], layer[y][x + 1]]
+                        if len(on) >= 5 or (n4[0] and n4[1]) or (n4[2] and n4[3]):
+                            add.append((x, y, max(on) if val is None else True))
+                for x, y, v in add:
+                    layer[y][x] = v
+                    self.reserved[y][x] = True
+
     def finish(self):
+        self.smooth()
+
         def road_mask(a, b):
             if not self.inside(a, b):
                 # 맵 밖은 가장자리 칸을 그대로 이어 본다 (길이 맵 경계에서 끊겨 보이지 않게)
