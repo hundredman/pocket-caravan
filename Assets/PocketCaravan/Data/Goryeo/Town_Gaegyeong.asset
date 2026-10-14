@@ -15,19 +15,21 @@ MonoBehaviour:
   id: gaegyeong
   displayName: "\uAC1C\uACBD"
   region: {fileID: 11400000, guid: d95bb058a23aa48d8b58779d743714c0, type: 2}
-  worldCoord: {x: 0, y: 0}
-  startLevel: 1
+  worldCoord: {x: 2, y: 0}
+  startLevel: 3
   stock:
   - item: {fileID: 11400000, guid: 34ab4741f86eb44b3bae564c5daa0f12, type: 2}
     optimal: 20
   - item: {fileID: 11400000, guid: 3b1d3708de2364a25ad4a9d27b2306a1, type: 2}
     optimal: 6
   - item: {fileID: 11400000, guid: c7b553013268140eca99e3276caecd4f, type: 2}
-    optimal: 4
+    optimal: 10
+  - item: {fileID: 11400000, guid: 26670207d8df843b19235b8d81286a8d, type: 2}
+    optimal: 10
   - item: {fileID: 11400000, guid: 9b0a33b14044448d8962b7818d9d0df6, type: 2}
-    optimal: 30
+    optimal: 25
   - item: {fileID: 11400000, guid: cb00db234c4f1496797b7984a9849509, type: 2}
-    optimal: 30
-  defaultOptimal: 3
+    optimal: 25
+  defaultOptimal: 4
   vehiclesForSale:
   - {fileID: 11400000, guid: 913f67411fb2e4eb9868cba57a9545f6, type: 2}

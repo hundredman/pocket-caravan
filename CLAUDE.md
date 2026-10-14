@@ -18,9 +18,13 @@
 - 길: 맵에 미리 칠한 Road 타일의 등급만 읽는다 (`RoadGrid`). 플레이어가 길을 만드는 기능은 넣지 않는다 (MMORPG에서 맵이 망가짐)
 - 퀘스트: `QuestData`(단계 목록) + `QuestManager`(GameEvents를 듣고 진행) + `QuestNpc`(!/? 표시). 대화창 `DialogueUI`, 진행 표시 `QuestTracker`
 - 밸런스 값은 `Resources/GameDatabase.asset`
-- 에디터 메뉴 `Pocket Caravan > 1. 시작 세트 만들기`가 임시 아트·타일·데이터·씬을 만든다 (있는 것은 건드리지 않음)
+- 맵: `Tools/MapGen`(파이썬, 오토타일·스탬프)으로 설계 → `Maps/*.json` + `Art/NinjaAdventure/Tiles/*.png` → `MapJsonBuilder`가 씬 생성
+- 레이어: Ground 0, Deco 1, Objects 5, 캐릭터 10~11, Above 20(나무 윗부분), 퀘스트 표시 25. Blocked 타일맵은 그리지 않음
+- 에디터 메뉴 `1. 시작 세트 만들기`: 데이터(코드가 기준, 매번 다시 씀) + 임시 캐릭터 + 맵 씬
+- 지역 구성: 예성 나루 마을(시작) → 예성 길 → 개경(수도, 성벽·남문·시전·만월대) → 동문 밖 닥나무 마을
 
 ## 주의
 - ScriptableObject 클래스는 파일 이름과 클래스 이름이 같아야 한다 (한 파일에 하나)
 - 스크립트를 바꾼 뒤 컴파일이 끝난 것을 확인하고 메뉴를 실행할 것
 - "맵 씬 다시 만들기"는 씬에서 손으로 고친 내용을 지운다
+- 새 씬을 만든 뒤에 에셋을 불러올 것 (NewScene이 앞서 불러온 에셋을 내린다)

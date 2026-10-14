@@ -6,8 +6,8 @@
 
 1. Unity Hub에서 **6000.3.26f1 (Unity 6.3 LTS)** 를 설치한다. 팀 전원이 이 버전으로 맞춘다.
 2. 저장소를 받아 Unity Hub → Add → 이 폴더를 연다.
-3. 처음 한 번 메뉴 **Pocket Caravan > 1. 시작 세트 만들기**를 누른다 (이미 있는 에셋은 건드리지 않음).
-4. `Assets/PocketCaravan/Scenes/Goryeo/Gaegyeong.unity`를 열고 Play.
+3. `Assets/PocketCaravan/Scenes/Goryeo/Naru.unity`(예성 나루 마을)를 열고 Play.
+   데이터나 맵을 다시 만들 때는 메뉴 **Pocket Caravan > 1. 시작 세트 만들기**.
 
 조작: 방향키/WASD 이동 · Shift 달리기 · E 말 걸기 · J 퀘스트 목록
 
@@ -23,7 +23,9 @@
 | 재고 기반 시세, 사고팔기, 손수레 구입, 마을 등급 1~3 | `Scripts/Economy/` |
 | 길 등급(오솔길·길·큰길)에 따른 이동 속도. 길은 맵에 미리 칠해 둠 | `Scripts/Roads/RoadGrid` |
 | 데이터 (물건, 마을, 이동 수단, 출신, 밸런스 값) | `Data/`, `Resources/GameDatabase` |
-| 임시 픽셀 아트와 맵 3개 (개경 - 1번 길 - 닥나무 마을) | `Editor/PlaceholderArt`, `Editor/StarterBuilder` |
+| 맵 4개: 예성 나루 마을(시작) - 예성 길 - 개경(수도) - 닥나무 마을 | `Tools/MapGen` → `Maps/*.json` → `Editor/MapJsonBuilder` |
+| 땅·건물 타일: Ninja Adventure 에셋 팩 (CC0) | `Art/NinjaAdventure` |
+| 임시 캐릭터(동물), 퀘스트 표시 | `Editor/PlaceholderArt` |
 
 UI는 임시(OnGUI)다. 정식 UI는 `MarketState`, `PlayerState` 같은 데이터는 그대로 두고 화면만 바꾸면 된다.
 
@@ -45,14 +47,15 @@ Assets/PocketCaravan/
 지역마다 다른 것은 코드가 아니라 데이터로 둔다.
 
 1. `Data/<지역>/`에 Region, Town, Item 에셋을 만든다 (우클릭 > Create > Pocket Caravan).
-2. 고려 씬 하나를 복사해 타일을 다시 칠한다. 레이어는 Ground(걷는 땅), Road(길), Blocked(못 지나가는 곳).
-3. `Map` 오브젝트의 MapRoot에서 `mapId`(고유), `worldCoord`(맵 좌표)를 바꾼다. 마을 사이 거리는 이 좌표로 잰다.
-4. 출구(`MapExit`)의 `targetScene`과 `targetSpawnId`, 도착 자리(`SpawnPoint`)의 `id`를 맞춘다.
-5. 새 씬을 File > Build Profiles의 씬 목록에 넣는다.
+2. 맵은 `Tools/MapGen`의 파이썬 코드로 설계한다 (`Tools/MapGen/README.md`). `python3 export.py` → Unity 메뉴 2.
+3. 맵 좌표는 `MapJsonBuilder.MapCoords`, 마을 좌표는 `TownData.worldCoord`. 마을 사이 거리(시세)는 이 좌표로 잰다.
+4. 출구의 `target`(씬 이름)과 `spawn`, 도착 자리 `id`를 맞춘다.
+
+씬에서 손으로 칠해도 되지만, 메뉴 2를 다시 돌리면 덮어쓰니 그 맵은 JSON 쪽을 고치거나 메뉴를 돌리지 않는다.
 
 출신 강점은 `OriginData`의 숫자로 조절한다.
 
-길은 플레이어가 만들지 않는다. 맵을 만들 때 Road 레이어에 오솔길·길·큰길 타일을 칠한다.
+길은 플레이어가 만들지 않는다. 맵을 만들 때 길 등급(오솔길·길·큰길)을 정한다.
 
 ## 퀘스트 만들기
 

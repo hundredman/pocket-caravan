@@ -19,9 +19,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 34ab4741f86eb44b3bae564c5daa0f12, type: 2}
   - {fileID: 11400000, guid: 3b1d3708de2364a25ad4a9d27b2306a1, type: 2}
   - {fileID: 11400000, guid: c7b553013268140eca99e3276caecd4f, type: 2}
+  - {fileID: 11400000, guid: 26670207d8df843b19235b8d81286a8d, type: 2}
   - {fileID: 11400000, guid: 9b0a33b14044448d8962b7818d9d0df6, type: 2}
   - {fileID: 11400000, guid: cb00db234c4f1496797b7984a9849509, type: 2}
+  - {fileID: 11400000, guid: 5f9bcbf9b7a8444049e8997395807221, type: 2}
   towns:
+  - {fileID: 11400000, guid: ea80dc588efe14baeada6f1f8eeb9f6c, type: 2}
   - {fileID: 11400000, guid: c9c3e50b53fd84e47a560b486663cf0f, type: 2}
   - {fileID: 11400000, guid: 9c22617e212424b55a590eb911f26529, type: 2}
   vehicles:

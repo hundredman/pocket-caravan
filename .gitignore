@@ -45,3 +45,7 @@ crashlytics-build.properties
 # OS
 .DS_Store
 Thumbs.db
+
+# MapGen 미리보기
+Tools/MapGen/preview_*.png
+Tools/MapGen/__pycache__/

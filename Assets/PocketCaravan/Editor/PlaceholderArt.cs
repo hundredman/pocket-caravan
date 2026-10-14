@@ -34,14 +34,7 @@ namespace PocketCaravan.EditorTools
 
         public static void WriteAll(string dir)
         {
-            Save(dir, "grass", 16, 16, Grass16);
-            Save(dir, "tree", 16, 16, Tree16);
-            Save(dir, "water", 16, 16, Water16);
-            Save(dir, "roof", 16, 16, Roof16);
-            Save(dir, "wall", 16, 16, Wall16);
-            Save(dir, "road1", 16, 16, (x, y) => Road(x, y, 1));
-            Save(dir, "road2", 16, 16, (x, y) => Road(x, y, 2));
-            Save(dir, "road3", 16, 16, (x, y) => Road(x, y, 3));
+            // 땅·건물 타일은 Ninja Adventure 에셋 팩을 쓴다 (Art/NinjaAdventure). 여기서는 캐릭터와 표시만 그린다.
             SaveTanuki(dir, PlayerSprite);
             SaveRabbit(dir, MerchantSprite);
             // 객주: 푸른 옷의 곰
@@ -51,84 +44,6 @@ namespace PocketCaravan.EditorTools
             SaveMarker(dir, MarkerAvailable, '!', Hex("FFD54A"));
             SaveMarker(dir, MarkerTurnIn, '?', Hex("FFD54A"));
             SaveMarker(dir, MarkerProgress, '?', Hex("B8B8B8"));
-        }
-
-        // ---------- 타일 ----------
-
-        static Color32 Grass16(int x, int y)
-        {
-            int h = Hash(x, y);
-            if (h % 17 == 0) return GrassLight;
-            if (h % 13 == 0) return GrassDark;
-            // 작은 풀잎 무늬
-            if ((x == 3 && y == 4) || (x == 4 && y == 5) || (x == 11 && y == 10) || (x == 12 && y == 11)) return GrassDark;
-            return Grass;
-        }
-
-        static Color32 Tree16(int x, int y)
-        {
-            float dx = x - 7.5f, dy = y - 8.5f;
-            float d = Mathf.Sqrt(dx * dx + dy * dy);
-            if (y <= 3 && x >= 6 && x <= 9) return y == 0 ? Outline : Trunk;
-            if (d < 6.2f)
-            {
-                if (d > 5.3f) return Outline;
-                if (dx < -1 && dy > 1) return LeafLight;
-                if (dx > 2 && dy < -1) return LeafDark;
-                return Hash(x, y) % 11 == 0 ? LeafLight : Leaf;
-            }
-            return Grass16(x, y);
-        }
-
-        static Color32 Water16(int x, int y)
-        {
-            if ((y == 4 && x >= 2 && x <= 5) || (y == 11 && x >= 9 && x <= 12)) return WaterLight;
-            if ((y == 3 && x >= 3 && x <= 4) || (y == 10 && x >= 10 && x <= 11)) return WaterDark;
-            return Water;
-        }
-
-        static Color32 Roof16(int x, int y)
-        {
-            // 기와 줄무늬
-            if (y == 0) return Outline;
-            if (y % 4 == 0) return RoofDark;
-            if (y % 4 == 3) return RoofLight;
-            return x % 4 == 0 ? RoofDark : Roof;
-        }
-
-        static Color32 Wall16(int x, int y)
-        {
-            if (y == 0) return Outline;
-            if (y == 15) return RoofDark; // 처마 그림자
-            if (x == 0 || x == 15 || y == 1) return Wood;
-            // 창호지 문
-            if (x >= 5 && x <= 10 && y >= 2 && y <= 11)
-            {
-                if (x == 5 || x == 10 || y == 11 || x == 7 || y == 6) return Wood;
-                return Paper;
-            }
-            return Wall;
-        }
-
-        static Color32 Road(int x, int y, int grade)
-        {
-            int h = Hash(x + grade * 31, y);
-            switch (grade)
-            {
-                case 1: // 오솔길: 풀 사이로 흙이 드문드문
-                {
-                    bool dirt = (h % 3 != 0) && x > 2 && x < 13 && y > 2 && y < 13 || (h % 7 == 0);
-                    if (!dirt) return Grass16(x, y);
-                    return h % 9 == 0 ? DirtDark : Dirt;
-                }
-                case 2: // 길: 다져진 흙
-                    if (h % 15 == 0) return DirtDark;
-                    if (h % 19 == 0) return DirtLight;
-                    return Dirt;
-                default: // 큰길: 돌 포장
-                    if (x % 8 == 0 || (y % 8 == 0)) return StoneDark;
-                    return h % 13 == 0 ? StoneDark : Stone;
-            }
         }
 
         // ---------- 캐릭터 16×32 (머리가 큰 동물) ----------

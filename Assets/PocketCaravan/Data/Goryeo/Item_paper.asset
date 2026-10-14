@@ -19,3 +19,4 @@ MonoBehaviour:
   basePrice: 15
   originTown: {fileID: 11400000, guid: 9c22617e212424b55a590eb911f26529, type: 2}
   pricePerMap: 0.5
+  questItem: 0

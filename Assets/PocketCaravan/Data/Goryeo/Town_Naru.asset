@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147baa154c7bc4bf39645666676b3271, type: 3}
+  m_Name: Town_Naru
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.TownData
+  id: naru
+  displayName: "\uC608\uC131 \uB098\uB8E8 \uB9C8\uC744"
+  region: {fileID: 11400000, guid: d95bb058a23aa48d8b58779d743714c0, type: 2}
+  worldCoord: {x: 0, y: 0}
+  startLevel: 1
+  stock:
+  - item: {fileID: 11400000, guid: 26670207d8df843b19235b8d81286a8d, type: 2}
+    optimal: 30
+  - item: {fileID: 11400000, guid: 9b0a33b14044448d8962b7818d9d0df6, type: 2}
+    optimal: 20
+  - item: {fileID: 11400000, guid: cb00db234c4f1496797b7984a9849509, type: 2}
+    optimal: 20
+  - item: {fileID: 11400000, guid: 34ab4741f86eb44b3bae564c5daa0f12, type: 2}
+    optimal: 6
+  - item: {fileID: 11400000, guid: c7b553013268140eca99e3276caecd4f, type: 2}
+    optimal: 6
+  defaultOptimal: 4
+  vehiclesForSale: []

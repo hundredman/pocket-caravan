@@ -19,3 +19,4 @@ MonoBehaviour:
   basePrice: 8
   originTown: {fileID: 0}
   pricePerMap: 0.5
+  questItem: 0

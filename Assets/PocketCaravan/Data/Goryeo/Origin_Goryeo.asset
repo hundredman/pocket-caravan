@@ -16,6 +16,9 @@ MonoBehaviour:
   displayName: "\uACE0\uB824 \uAC1C\uACBD\uC0C1\uC778"
   homeRegion: {fileID: 11400000, guid: d95bb058a23aa48d8b58779d743714c0, type: 2}
   startingCredit: 0
-  footfallMultiplier: 1
+  speedMultiplier: 1
+  offroadSpeedMultiplier: 1
   ledgerStaleMultiplier: 0.5
   resaleDropMultiplier: 1
+  longHaulMinMaps: 3
+  longHaulBonus: 0
