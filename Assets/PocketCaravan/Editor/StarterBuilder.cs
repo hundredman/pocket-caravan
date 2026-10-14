@@ -24,7 +24,7 @@ namespace PocketCaravan.EditorTools
 
         // ---------- 맵 배치 ----------
         // T 나무  ~ 물  H 집(위는 지붕, 아래는 벽)  . 풀밭
-        // - 오솔길  = 길  M 장터 상인
+        // - 오솔길  = 길  M 장터 상인  K 개경 객주  C 닥나무 촌장 (퀘스트 NPC)
         // S 시작 자리  W 서쪽에서 들어온 자리  E 동쪽에서 들어온 자리
         // > 동쪽 출구  < 서쪽 출구
 
@@ -36,6 +36,19 @@ namespace PocketCaravan.EditorTools
             public string east, west;  // 이웃 맵 id
             public string[] rows;
         }
+
+        class NpcDef
+        {
+            public string id, name, sprite, greeting;
+        }
+
+        static readonly Dictionary<char, NpcDef> Npcs = new Dictionary<char, NpcDef>
+        {
+            ['K'] = new NpcDef { id = "gaekju", name = "개경 객주 곰돌", sprite = PlaceholderArt.GaekjuSprite,
+                greeting = "객주는 상인들이 묵고 짐을 맡기는 곳이지. 일거리가 생기면 부르겠네." },
+            ['C'] = new NpcDef { id = "dakmok_chief", name = "닥나무 마을 촌장", sprite = PlaceholderArt.ChiefSprite,
+                greeting = "우리 마을 종이는 질기고 하얗기로 이름났다네." },
+        };
 
         static readonly string[] TileNames = { "grass", "tree", "water", "roof", "wall", "road1", "road2", "road3" };
 
@@ -55,7 +68,7 @@ namespace PocketCaravan.EditorTools
                     "T.............-.........-......T",
                     "T..HHHH.......-...M.....-..HHH.T",
                     "T..HHHH.......-.........-..HHH.T",
-                    "T.............-...S.....-......>",
+                    "T.............-...S..K..-......>",
                     "T.............----------------E>",
                     "T.............-.........-......>",
                     "T..HHHH.......-.........-..HHH.T",
@@ -80,7 +93,7 @@ namespace PocketCaravan.EditorTools
                     "T..T...T..............~~.......T",
                     "T.........T.....T.....~~...T...T",
                     "<.....T...............~~.......>",
-                    "<W----..........T.....==......E>",
+                    "<W--------------------==------E>",
                     "<.......T.............~~.......>",
                     "T...T.........T.......~~...T...T",
                     "T.........T...........~~.......T",
@@ -104,7 +117,7 @@ namespace PocketCaravan.EditorTools
                     "T.............--------.........T",
                     "T...HHHH......-...M............T",
                     "T...HHHH......-.........HHHH...T",
-                    "<.............-.........HHHH...T",
+                    "<........C....-.........HHHH...T",
                     "<W-------------................T",
                     "<..............................T",
                     "T...T......HHHH........T.......T",
@@ -230,15 +243,104 @@ namespace PocketCaravan.EditorTools
                 EditorUtility.SetDirty(dakmok);
             }
 
+            var parcel = CreateOrLoad<ItemData>($"{DataDir}/Item_ginseng_parcel.asset", i =>
+            {
+                i.id = "ginseng_parcel"; i.displayName = "인삼 꾸러미"; i.weight = 2f; i.basePrice = 1f; i.questItem = true;
+            });
+
+            var quests = BuildTutorialQuests(parcel, paper, wood, cart);
+
             var db = CreateOrLoad<GameDatabase>(DbPath, d =>
             {
                 d.startMoney = 100; d.startVehicle = walk; d.startOrigin = origin;
             });
+            AddUnique(db.quests, quests.ToArray());
             AddUnique(db.items, ginseng, najeon, paper, grain, wood);
             AddUnique(db.towns, gaegyeong, dakmok);
             AddUnique(db.vehicles, walk, cart);
             EditorUtility.SetDirty(db);
             return db;
+        }
+
+        // ---------- 퀘스트 ----------
+
+        const string QuestDir = Root + "/Data/Goryeo/Quests";
+        const string Gaekju = "gaekju", Chief = "dakmok_chief";
+
+        static QuestObjective O(ObjectiveType type, string text, string target = null, ItemData item = null, int count = 1, string line = null, VehicleData vehicle = null) =>
+            new QuestObjective { type = type, text = text, targetId = target, item = item, count = count, completeLine = line, vehicle = vehicle };
+
+        static List<QuestData> BuildTutorialQuests(ItemData parcel, ItemData paper, ItemData wood, VehicleData cart)
+        {
+            EnsureFolder(QuestDir);
+            const string chain = "행상의 첫걸음";
+            var list = new List<QuestData>();
+
+            QuestData Q(string file, System.Action<QuestData> init)
+            {
+                var q = CreateOrLoad<QuestData>($"{QuestDir}/{file}.asset", init);
+                list.Add(q);
+                return q;
+            }
+
+            var q1 = Q("T1_FirstDelivery", q =>
+            {
+                q.id = "tutorial_1"; q.title = "첫 배달"; q.chain = chain; q.giverNpc = Gaekju;
+                q.summary = "개경 객주가 맡긴 인삼 꾸러미를 동쪽 닥나무 마을 촌장에게 전한다.";
+                q.offerLine = "자네가 새로 온 행상인가? 마침 닥나무 마을 촌장께 인삼 꾸러미를 보내야 하네. 동쪽 길을 따라가면 닿을 걸세. 짐은 내가 내줌세.";
+                q.giveItem = parcel; q.giveCount = 1;
+                q.objectives.Add(O(ObjectiveType.Deliver, "닥나무 마을 촌장에게 인삼 꾸러미 전하기", Chief, parcel, 1,
+                    "오, 개경 객주가 보낸 인삼이군. 먼 길 수고했네. 행상은 이렇게 남의 짐을 나르며 길을 익히는 법이지."));
+                q.rewardMoney = 30; q.rewardCredit = 1;
+            });
+
+            var q2 = Q("T2_BuyPaper", q =>
+            {
+                q.id = "tutorial_2"; q.title = "종이 사 오기"; q.chain = chain; q.giverNpc = Chief; q.requires.Add(q1);
+                q.summary = "닥나무 장터에서 종이를 사서 개경 객주에게 가져간다.";
+                q.offerLine = "답례로 우리 종이를 보내고 싶은데... 그래, 자네가 장터에서 직접 사 가게. 객주가 값을 넉넉히 쳐 줄 걸세. 장터 상인에게 말을 걸면 사고팔 수 있네.";
+                q.objectives.Add(O(ObjectiveType.Buy, "닥나무 장터에서 종이 사기", null, paper, 2));
+                q.objectives.Add(O(ObjectiveType.Deliver, "개경 객주에게 종이 가져가기", Gaekju, paper, 2,
+                    "닥나무 종이로군! 질이 좋아. 산 값보다 넉넉히 쳐 주겠네."));
+                q.rewardMoney = 45; q.rewardCredit = 1;
+            });
+
+            var q3 = Q("T3_Profit", q =>
+            {
+                q.id = "tutorial_3"; q.title = "차익 남기기"; q.chain = chain; q.giverNpc = Gaekju; q.requires.Add(q2);
+                q.summary = "싼 곳에서 사서 비싼 곳에 팔아 이익을 남긴다.";
+                q.offerLine = "장사란 싼 곳에서 사서 비싼 곳에 파는 것이네. 인삼은 여기 개경이 산지라 싸고, 멀리 갈수록 비싸지. 한 곳에 몰아 팔면 값이 떨어지니 그것도 잘 보게.";
+                q.objectives.Add(O(ObjectiveType.Profit, "물건을 사서 다른 마을에 팔아 이익 남기기", null, null, 20));
+                q.objectives.Add(O(ObjectiveType.Talk, "개경 객주에게 알리기", Gaekju, null, 1,
+                    "벌써 이문을 남겼다고? 자네 장사 감각이 있구먼."));
+                q.rewardMoney = 20; q.rewardCredit = 1;
+            });
+
+            var q5 = Q("T4_Handcart", q =>
+            {
+                q.id = "tutorial_4"; q.title = "손수레"; q.chain = chain; q.giverNpc = Gaekju; q.requires.Add(q3);
+                q.summary = "개경 장터에서 손수레를 산다. 등짐보다 세 배를 싣고, 길 위에서 더 빠르다.";
+                q.offerLine = "이제 등짐으로는 부족하겠지. 장터에서 손수레를 사 보게. 길 위에서는 빠르지만 풀밭에서는 느리니, 길을 잘 골라 다니게.";
+                q.objectives.Add(O(ObjectiveType.BuyVehicle, "개경 장터에서 손수레 사기", null, null, 1, null, cart));
+                q.objectives.Add(O(ObjectiveType.Talk, "개경 객주에게 보이기", Gaekju, null, 1,
+                    "어엿한 수레상이 되었구먼! 이제 자네도 한 사람 몫의 상인일세."));
+                q.rewardCredit = 2;
+                q.finishNote = "튜토리얼 완료! 이제 마을 사람들의 부탁을 들어주고, 직접 교역로를 찾아 돈을 벌어 보자.";
+            });
+
+            // 서브 퀘스트: 손수레가 있어야 할 수 있는 배달
+            Q("S1_Firewood", q =>
+            {
+                q.id = "dakmok_firewood"; q.title = "땔감이 모자라요"; q.giverNpc = Chief; q.requires.Add(q5);
+                q.summary = "닥나무 마을에 땔감 4단을 가져간다. 무거워서 손수레가 필요하다.";
+                q.offerLine = "종이를 뜨려면 닥나무를 삶아야 하는데 땔감이 모자라네. 땔감 4단만 구해 주게. 무거우니 수레가 있어야 할 걸세.";
+                q.objectives.Add(O(ObjectiveType.Deliver, "닥나무 마을 촌장에게 땔감 4단 가져가기", Chief, wood, 4,
+                    "살았네! 이걸로 한동안 종이를 뜰 수 있겠어."));
+                q.rewardMoney = 60; q.rewardCredit = 1;
+            });
+
+            foreach (var q in list) EditorUtility.SetDirty(q);
+            return list;
         }
 
         static TownData.StockEntry S(ItemData item, float optimal) => new TownData.StockEntry { item = item, optimal = optimal };
@@ -317,6 +419,20 @@ namespace PocketCaravan.EditorTools
                             road.SetTile(c, tiles["road1"]);
                             if (!exitCells.ContainsKey(ch)) exitCells[ch] = new List<Vector3Int>();
                             exitCells[ch].Add(c);
+                            break;
+                        case 'K':
+                        case 'C':
+                            var nd = Npcs[ch];
+                            var qn = Character(nd.name, nd.sprite, center, objects).AddComponent<QuestNpc>();
+                            qn.npcId = nd.id; qn.displayName = nd.name; qn.greeting = nd.greeting;
+                            var mk = new GameObject("Quest Marker").AddComponent<SpriteRenderer>();
+                            mk.transform.SetParent(qn.transform, false);
+                            mk.transform.localPosition = new Vector3(0f, 1.75f, 0f);
+                            mk.sortingOrder = 20;
+                            qn.marker = mk;
+                            qn.availableSprite = LoadSprite(PlaceholderArt.MarkerAvailable);
+                            qn.turnInSprite = LoadSprite(PlaceholderArt.MarkerTurnIn);
+                            qn.inProgressSprite = LoadSprite(PlaceholderArt.MarkerProgress);
                             break;
                         case 'M':
                             var town = db.towns.Find(t => t.id == def.townId);

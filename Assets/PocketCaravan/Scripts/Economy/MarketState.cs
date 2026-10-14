@@ -63,7 +63,6 @@ namespace PocketCaravan
         void AddVolume(int amount)
         {
             TradeVolume += amount;
-            // 추후: 3등급은 '길' 이상, 4등급은 '큰길' 이상 연결 조건
             while (Level < db.maxTownLevel && Level < db.townLevelVolume.Length && TradeVolume >= db.townLevelVolume[Level])
             {
                 Level++;

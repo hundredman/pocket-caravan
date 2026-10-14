@@ -25,6 +25,8 @@ namespace PocketCaravan
         public static bool Run() => K != null && (K.leftShiftKey.isPressed || K.rightShiftKey.isPressed);
         public static bool InteractPressed() => K != null && K.eKey.wasPressedThisFrame;
         public static bool CancelPressed() => K != null && K.escapeKey.wasPressedThisFrame;
+        public static bool ConfirmPressed() => K != null && (K.spaceKey.wasPressedThisFrame || K.enterKey.wasPressedThisFrame);
+        public static bool QuestLogPressed() => K != null && K.jKey.wasPressedThisFrame;
 #else
         public static Vector2Int Move()
         {
@@ -38,6 +40,8 @@ namespace PocketCaravan
         public static bool Run() => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         public static bool InteractPressed() => Input.GetKeyDown(KeyCode.E);
         public static bool CancelPressed() => Input.GetKeyDown(KeyCode.Escape);
+        public static bool ConfirmPressed() => Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return);
+        public static bool QuestLogPressed() => Input.GetKeyDown(KeyCode.J);
 #endif
     }
 }

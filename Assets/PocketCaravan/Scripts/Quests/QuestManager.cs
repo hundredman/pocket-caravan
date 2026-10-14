@@ -1,0 +1,192 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace PocketCaravan
+{
+    public enum QuestMarker { None, Available, InProgress, TurnIn }
+
+    /// <summary>
+    /// 퀘스트 진행 상태. GameManager가 들고 있고, GameEvents를 듣고 단계를 넘긴다.
+    /// </summary>
+    public class QuestManager
+    {
+        public class Progress
+        {
+            public QuestData quest;
+            public int step;
+            public int amount;   // 현재 단계 진행 수치
+            public bool Done => step >= quest.objectives.Count;
+            public QuestObjective Current => Done ? null : quest.objectives[step];
+        }
+
+        readonly List<QuestData> all;
+        readonly Dictionary<QuestData, Progress> active = new Dictionary<QuestData, Progress>();
+        readonly HashSet<QuestData> finished = new HashSet<QuestData>();
+
+        public IEnumerable<Progress> Active => active.Values;
+        public bool IsFinished(QuestData q) => finished.Contains(q);
+
+        public QuestManager(List<QuestData> quests)
+        {
+            all = quests ?? new List<QuestData>();
+            GameEvents.MapEntered += id => Advance(ObjectiveType.VisitMap, id, null, 1);
+            GameEvents.ItemBought += (item, town, price) => Advance(ObjectiveType.Buy, null, item, 1);
+            GameEvents.ItemSold += (item, town, price, profit) =>
+            {
+                Advance(ObjectiveType.Sell, null, item, 1);
+                if (profit > 0) Advance(ObjectiveType.Profit, null, null, profit);
+            };
+            GameEvents.VehicleBought += v => AdvanceVehicle(v);
+        }
+
+        // ---------- NPC ----------
+
+        public bool CanStart(QuestData q)
+        {
+            if (active.ContainsKey(q) || finished.Contains(q)) return false;
+            foreach (var r in q.requires) if (r != null && !finished.Contains(r)) return false;
+            return true;
+        }
+
+        public QuestData AvailableFrom(string npcId)
+        {
+            foreach (var q in all) if (q != null && q.giverNpc == npcId && CanStart(q)) return q;
+            return null;
+        }
+
+        /// <summary>이 NPC에게 말을 걸면 끝나는 단계가 있는 진행 중 퀘스트</summary>
+        public Progress WaitingAt(string npcId)
+        {
+            foreach (var p in active.Values)
+            {
+                var o = p.Current;
+                if (o != null && (o.type == ObjectiveType.Talk || o.type == ObjectiveType.Deliver) && o.targetId == npcId) return p;
+            }
+            return null;
+        }
+
+        public QuestMarker MarkerFor(string npcId)
+        {
+            var w = WaitingAt(npcId);
+            if (w != null) return w.Current.type == ObjectiveType.Deliver && !HasDeliveryItems(w.Current) ? QuestMarker.InProgress : QuestMarker.TurnIn;
+            if (AvailableFrom(npcId) != null) return QuestMarker.Available;
+            foreach (var p in active.Values) if (p.quest.giverNpc == npcId) return QuestMarker.InProgress;
+            return QuestMarker.None;
+        }
+
+        public void Accept(QuestData q)
+        {
+            if (!CanStart(q)) return;
+            var p = new Progress { quest = q };
+            active[q] = p;
+            if (q.giveItem != null && q.giveCount > 0) GameManager.I.Player.cargo.Add(q.giveItem, q.giveCount);
+            Notify.Show($"퀘스트 수락: {q.title}");
+            CheckPassive(p);
+        }
+
+        /// <summary>Talk/Deliver 단계를 이 NPC에게서 끝낸다. 끝낸 단계의 대사를 돌려준다 (실패하면 null).</summary>
+        public string TryCompleteAt(string npcId, out string failReason)
+        {
+            failReason = null;
+            var p = WaitingAt(npcId);
+            if (p == null) return null;
+            var o = p.Current;
+            if (o.type == ObjectiveType.Deliver)
+            {
+                if (!HasDeliveryItems(o))
+                {
+                    failReason = $"{o.item.displayName} {o.count}개가 필요하네. (지금 {GameManager.I.Player.cargo.Count(o.item)}개)";
+                    return null;
+                }
+                GameManager.I.Player.cargo.Remove(o.item, o.count);
+            }
+            string line = string.IsNullOrEmpty(o.completeLine) ? "고맙네." : o.completeLine;
+            NextStep(p);
+            return line;
+        }
+
+        bool HasDeliveryItems(QuestObjective o) => o.item == null || GameManager.I.Player.cargo.Count(o.item) >= o.count;
+
+        // ---------- 진행 ----------
+
+        void Advance(ObjectiveType type, string targetId, ItemData item, int amount)
+        {
+            foreach (var p in new List<Progress>(active.Values))
+            {
+                var o = p.Current;
+                if (o == null || o.type != type) continue;
+                if (!string.IsNullOrEmpty(o.targetId) && targetId != null && o.targetId != targetId) continue;
+                if (o.item != null && item != null && o.item != item) continue;
+                p.amount += amount;
+                if (p.amount >= o.count) NextStep(p);
+            }
+        }
+
+        void AdvanceVehicle(VehicleData v)
+        {
+            foreach (var p in new List<Progress>(active.Values))
+            {
+                var o = p.Current;
+                if (o != null && o.type == ObjectiveType.BuyVehicle && (o.vehicle == null || o.vehicle == v)) NextStep(p);
+            }
+        }
+
+        /// <summary>돈 모으기, 이미 가진 이동 수단처럼 상태로 판정하는 단계</summary>
+        public void Tick()
+        {
+            foreach (var p in new List<Progress>(active.Values)) CheckPassive(p);
+        }
+
+        void CheckPassive(Progress p)
+        {
+            var o = p.Current;
+            if (o == null) return;
+            var player = GameManager.I.Player;
+            if (o.type == ObjectiveType.HaveMoney && player.money >= o.count) NextStep(p);
+            else if (o.type == ObjectiveType.BuyVehicle && o.vehicle != null && player.vehicle == o.vehicle) NextStep(p);
+            else if (o.type == ObjectiveType.VisitMap && MapRoot.Current != null && MapRoot.Current.mapId == o.targetId) NextStep(p);
+        }
+
+        void NextStep(Progress p)
+        {
+            p.step++;
+            p.amount = 0;
+            if (p.Done) Finish(p);
+            else CheckPassive(p);
+        }
+
+        void Finish(Progress p)
+        {
+            var q = p.quest;
+            active.Remove(q);
+            finished.Add(q);
+            var player = GameManager.I.Player;
+            player.money += q.rewardMoney;
+            player.credit += q.rewardCredit;
+            string reward = "";
+            if (q.rewardMoney > 0) reward += $" 돈 +{q.rewardMoney}";
+            if (q.rewardCredit > 0) reward += $" 신용 +{q.rewardCredit}";
+            Notify.Show($"퀘스트 완료: {q.title}{reward}");
+            if (!string.IsNullOrEmpty(q.finishNote)) Notify.Show(q.finishNote, 6f);
+        }
+
+        public string ProgressText(Progress p)
+        {
+            var o = p.Current;
+            if (o == null) return "";
+            switch (o.type)
+            {
+                case ObjectiveType.Buy:
+                case ObjectiveType.Sell:
+                case ObjectiveType.Profit:
+                    return $"{o.text} ({p.amount}/{o.count})";
+                case ObjectiveType.Deliver:
+                    return $"{o.text} ({Mathf.Min(GameManager.I.Player.cargo.Count(o.item), o.count)}/{o.count})";
+                case ObjectiveType.HaveMoney:
+                    return $"{o.text} ({Mathf.Min(GameManager.I.Player.money, o.count)}/{o.count})";
+                default:
+                    return o.text;
+            }
+        }
+    }
+}

@@ -17,6 +17,12 @@ namespace PocketCaravan
         public static float Scale => Screen.height / VirtualHeight;
         public static float VirtualWidth => Screen.width / Scale;
 
+        static GUIStyle center, right, rich, wrap;
+        public static GUIStyle Center => center ??= new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter };
+        public static GUIStyle Right => right ??= new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleRight };
+        public static GUIStyle Rich => rich ??= new GUIStyle(GUI.skin.label) { richText = true, fontSize = 12 };
+        public static GUIStyle Wrap => wrap ??= new GUIStyle(GUI.skin.label) { wordWrap = true, richText = true };
+
         public static void Begin()
         {
             if (font == null)

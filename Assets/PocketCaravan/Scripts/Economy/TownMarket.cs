@@ -76,8 +76,8 @@ namespace PocketCaravan
                 GUILayout.BeginHorizontal();
                 GUILayout.Label($"{item.displayName} ({item.weight:0.#})", GUILayout.Width(90));
                 int buy = m.BuyPrice(item), sell = m.SellPrice(item);
-                GUILayout.Label(m.CanBuy(item) ? buy.ToString() : "-", GUILayout.Width(50));
-                GUILayout.Label(sell.ToString(), GUILayout.Width(50));
+                GUILayout.Label(m.CanBuy(item) && !item.questItem ? buy.ToString() : "-", GUILayout.Width(50));
+                GUILayout.Label(item.questItem ? "맡은 짐" : sell.ToString(), GUILayout.Width(50));
                 GUILayout.Label(Mathf.FloorToInt(m.Stock(item)).ToString(), GUILayout.Width(40));
                 GUILayout.Label(p.cargo.Count(item).ToString(), GUILayout.Width(40));
                 if (GUILayout.Button("사기", GUILayout.Width(44))) Buy(item);
@@ -125,9 +125,10 @@ namespace PocketCaravan
             if (p.money < price) { message = "돈이 모자랍니다."; return; }
             if (!p.CanCarry(item)) { message = "더 실을 수 없습니다."; return; }
             p.money -= price;
-            p.cargo.Add(item);
+            p.cargo.Add(item, 1, price);
             m.RecordBuy(item, price);
             message = $"{item.displayName}을(를) {price}에 샀습니다.";
+            GameEvents.RaiseItemBought(item, town, price);
         }
 
         void Sell(ItemData item)
@@ -135,11 +136,14 @@ namespace PocketCaravan
             var p = GameManager.I.Player;
             var m = Market;
             if (p.cargo.Count(item) <= 0) { message = "가진 것이 없습니다."; return; }
+            if (item.questItem) { message = "맡은 물건은 팔 수 없습니다."; return; }
             int price = m.SellPrice(item);
+            int profit = Mathf.RoundToInt(price - p.cargo.AverageCost(item));
             p.cargo.Remove(item);
             p.money += price;
             m.RecordSell(item, price);
-            message = $"{item.displayName}을(를) {price}에 팔았습니다.";
+            message = profit > 0 ? $"{item.displayName}을(를) {price}에 팔았습니다. (이익 {profit})" : $"{item.displayName}을(를) {price}에 팔았습니다.";
+            GameEvents.RaiseItemSold(item, town, price, profit);
         }
 
         void BuyVehicle(VehicleData v)
@@ -150,6 +154,7 @@ namespace PocketCaravan
             p.money -= v.price;
             p.vehicle = v;
             message = $"{v.displayName}을(를) 샀습니다.";
+            GameEvents.RaiseVehicleBought(v);
         }
     }
 }

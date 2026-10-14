@@ -27,6 +27,12 @@ MonoBehaviour:
   vehicles:
   - {fileID: 11400000, guid: 2605f065f1d0f40fd90f0c5955299f57, type: 2}
   - {fileID: 11400000, guid: 913f67411fb2e4eb9868cba57a9545f6, type: 2}
+  quests:
+  - {fileID: 11400000, guid: eefd3152bcc904f108dc17237dbff5e9, type: 2}
+  - {fileID: 11400000, guid: 5f1b114771f824928af105094288dc10, type: 2}
+  - {fileID: 11400000, guid: 6bae5cc8d980f47b2ada23154ca5d297, type: 2}
+  - {fileID: 11400000, guid: ab3a358175d5c454fbed185e93daa283, type: 2}
+  - {fileID: 11400000, guid: 3bd12302f8f4345af8f59a6f83d962dd, type: 2}
   realSecondsPerDay: 360
   stockRecoveryPerHour: 0.04
   marketDayDemand: 1.15
@@ -39,15 +45,6 @@ MonoBehaviour:
   - "\uC0C1\uC5C5 \uACE0\uC744"
   - "\uAD50\uC5ED \uB3C4\uC2DC"
   roads:
-    thresholds:
-    - 0
-    - 6
-    - 25
-    - 80
-    maxNaturalGrade: 2
-    neighborShare: 0.2
-    decayPerDay: 0.03
-    seededMultiplier: 3
     gradeNames:
     - "\uAE38 \uC5C6\uC74C"
     - "\uC624\uC194\uAE38"

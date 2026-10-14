@@ -9,7 +9,7 @@
 3. 처음 한 번 메뉴 **Pocket Caravan > 1. 시작 세트 만들기**를 누른다 (이미 있는 에셋은 건드리지 않음).
 4. `Assets/PocketCaravan/Scenes/Goryeo/Gaegyeong.unity`를 열고 Play.
 
-조작: 방향키/WASD 이동 · Shift 달리기 · E 말 걸기(장터)
+조작: 방향키/WASD 이동 · Shift 달리기 · E 말 걸기 · J 퀘스트 목록
 
 ## 지금 들어 있는 것 (스타팅 프로토타입)
 
@@ -17,10 +17,11 @@
 |---|---|
 | 칸 단위 이동, 짐 무게·길 등급·달리기에 따른 속도 | `Scripts/Player/` |
 | 맵 이동 (출구 칸 → 다음 씬의 도착 자리) | `Scripts/Map/MapExit`, `SpawnPoint` |
-| 씬을 넘어 유지되는 상태 (돈, 짐, 시계, 장터, 발길) | `Scripts/Core/GameManager` |
+| 퀘스트 (! · ? 표시, 진행 표시, J 목록), 튜토리얼 4개 + 서브 1개 | `Scripts/Quests/` |
+| 씬을 넘어 유지되는 상태 (돈, 짐, 시계, 장터, 퀘스트) | `Scripts/Core/GameManager` |
 | 게임 시계 (하루 = 현실 6분, 5일마다 장날) | `Scripts/Core/GameClock` |
 | 재고 기반 시세, 사고팔기, 손수레 구입, 마을 등급 1~3 | `Scripts/Economy/` |
-| 발길로 자라는 길 0→1→2단계, 하루마다 조금씩 줄어듦 | `Scripts/Roads/RoadGrid` |
+| 길 등급(오솔길·길·큰길)에 따른 이동 속도. 길은 맵에 미리 칠해 둠 | `Scripts/Roads/RoadGrid` |
 | 데이터 (물건, 마을, 이동 수단, 출신, 밸런스 값) | `Data/`, `Resources/GameDatabase` |
 | 임시 픽셀 아트와 맵 3개 (개경 - 1번 길 - 닥나무 마을) | `Editor/PlaceholderArt`, `Editor/StarterBuilder` |
 
@@ -49,7 +50,16 @@ Assets/PocketCaravan/
 4. 출구(`MapExit`)의 `targetScene`과 `targetSpawnId`, 도착 자리(`SpawnPoint`)의 `id`를 맞춘다.
 5. 새 씬을 File > Build Profiles의 씬 목록에 넣는다.
 
-출신 강점은 `OriginData`의 숫자로 조절한다 (바이킹 발길 1.5배 등).
+출신 강점은 `OriginData`의 숫자로 조절한다.
+
+길은 플레이어가 만들지 않는다. 맵을 만들 때 Road 레이어에 오솔길·길·큰길 타일을 칠한다.
+
+## 퀘스트 만들기
+
+1. 우클릭 > Create > Pocket Caravan > Quest. `giverNpc`(주는 NPC id), 선행 퀘스트, 대사, 단계, 보상을 채운다.
+2. 단계 종류: 말 걸기, 물건 전하기, 사기, 팔기, 이익 남기기, 맵 가기, 이동 수단 사기, 돈 모으기.
+3. `Resources/GameDatabase`의 quests 목록에 넣는다.
+4. 씬의 NPC에 `QuestNpc`를 붙이고 `npcId`를 맞춘다.
 
 ## 협업 규칙
 

@@ -1,14 +1,12 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace PocketCaravan
 {
     /// <summary>
-    /// 발길로 자라는 길. 칸마다 발길 값을 쌓고, 기준을 넘으면 등급이 오른다.
-    /// 한 걸음은 옆 칸에도 조금 남아서 많이 다닌 곳일수록 길이 넓어진다.
-    /// 발길은 하루마다 조금씩 줄어 덜 다닌 가장자리부터 풀밭으로 돌아간다 (GameManager.OnNewDay).
-    /// 맵에 미리 그려 둔 길 타일은 처음 들어올 때 발길 값으로 바뀐다.
+    /// 맵에 미리 깔아 둔 길의 등급을 읽는다 (0 길 없음, 1 오솔길, 2 길, 3 큰길).
+    /// 길은 맵 제작자가 Road 타일맵에 칠한다. 플레이어가 길을 만들지는 않는다 (MMORPG에서 맵이 망가지지 않게).
+    /// 등급은 이동 수단의 속도에 쓰인다.
     /// </summary>
     public class RoadGrid : MonoBehaviour
     {
@@ -17,88 +15,22 @@ namespace PocketCaravan
         public Tilemap roadTilemap;
         public RoadTileSet tiles;
 
-        Dictionary<Vector3Int, float> footfall;
-        readonly HashSet<Vector3Int> invested = new HashSet<Vector3Int>(); // 큰길 (추후: 투자 시스템)
-        RoadSettings S => GameManager.I.Db.roads;
-
-        static readonly Vector3Int[] Neighbors = { Vector3Int.up, Vector3Int.down, Vector3Int.left, Vector3Int.right };
-
         void Awake() => Current = this;
 
         void Start()
         {
-            var map = MapRoot.Current;
-            if (roadTilemap == null && map != null) roadTilemap = map.road;
-            footfall = GameManager.I.GetFootfall(map != null ? map.mapId : gameObject.scene.name, out bool fresh);
-            if (fresh) SeedFromTiles();
-            RepaintAll();
-            GameManager.I.Clock.NewDay += OnNewDay;
+            if (roadTilemap == null && MapRoot.Current != null) roadTilemap = MapRoot.Current.road;
         }
 
         void OnDestroy()
         {
-            if (GameManager.I != null) GameManager.I.Clock.NewDay -= OnNewDay;
             if (Current == this) Current = null;
         }
 
-        void OnNewDay(int day) => RepaintAll(); // 발길 감소는 GameManager가 먼저 처리
-
-        void SeedFromTiles()
+        public int GradeAt(Vector3Int c)
         {
-            if (roadTilemap == null || tiles == null) return;
-            foreach (var pos in roadTilemap.cellBounds.allPositionsWithin)
-            {
-                int g = tiles.GradeOf(roadTilemap.GetTile(pos));
-                if (g > 0) footfall[pos] = S.thresholds[g] * S.seededMultiplier;
-            }
-        }
-
-        public float FootfallAt(Vector3Int c) => footfall != null && footfall.TryGetValue(c, out var f) ? f : 0f;
-
-        public int GradeAt(Vector3Int c) => GradeFor(c, FootfallAt(c));
-
-        int GradeFor(Vector3Int c, float f)
-        {
-            int g = 0;
-            for (int i = 1; i < S.thresholds.Length; i++) if (f >= S.thresholds[i]) g = i;
-            int cap = invested.Contains(c) ? 3 : S.maxNaturalGrade;
-            return Mathf.Min(g, cap);
-        }
-
-        public void AddFootfall(Vector3Int c, float amount)
-        {
-            if (footfall == null) return;
-            Add(c, amount);
-            foreach (var n in Neighbors)
-            {
-                var nc = c + n;
-                if (MapRoot.Current != null && MapRoot.Current.IsWalkable(nc)) Add(nc, amount * S.neighborShare);
-            }
-        }
-
-        void Add(Vector3Int c, float amount)
-        {
-            int before = GradeAt(c);
-            footfall[c] = FootfallAt(c) + amount;
-            int after = GradeAt(c);
-            if (after != before) Paint(c, after);
-        }
-
-        void Paint(Vector3Int c, int grade)
-        {
-            if (roadTilemap == null || tiles == null) return;
-            roadTilemap.SetTile(c, tiles.ForGrade(grade));
-        }
-
-        public void RepaintAll()
-        {
-            if (roadTilemap == null || tiles == null || footfall == null) return;
-            roadTilemap.ClearAllTiles();
-            foreach (var kv in footfall)
-            {
-                int g = GradeFor(kv.Key, kv.Value);
-                if (g > 0) roadTilemap.SetTile(kv.Key, tiles.ForGrade(g));
-            }
+            if (roadTilemap == null || tiles == null) return 0;
+            return tiles.GradeOf(roadTilemap.GetTile(c));
         }
     }
 }

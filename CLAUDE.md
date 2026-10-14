@@ -15,7 +15,8 @@
 - 맵 하나 = 씬 하나. `MapRoot`(Grid에 붙음): Ground/Road/Blocked 타일맵. Blocked에 타일이 있으면 못 지나감
 - 출구 `MapExit` → `GameManager.TravelTo(scene, spawnId)` → 도착 씬의 `SpawnPoint(id)`
 - 시세: `MarketMath`(공식) + `MarketState`(마을별 실행 상태). 데이터는 `TownData`, `ItemData`
-- 길: `RoadGrid` 칸별 발길 값 → 등급, Road 타일맵에 다시 그림. 발길 감소는 `GameManager.OnNewDay`
+- 길: 맵에 미리 칠한 Road 타일의 등급만 읽는다 (`RoadGrid`). 플레이어가 길을 만드는 기능은 넣지 않는다 (MMORPG에서 맵이 망가짐)
+- 퀘스트: `QuestData`(단계 목록) + `QuestManager`(GameEvents를 듣고 진행) + `QuestNpc`(!/? 표시). 대화창 `DialogueUI`, 진행 표시 `QuestTracker`
 - 밸런스 값은 `Resources/GameDatabase.asset`
 - 에디터 메뉴 `Pocket Caravan > 1. 시작 세트 만들기`가 임시 아트·타일·데이터·씬을 만든다 (있는 것은 건드리지 않음)
 

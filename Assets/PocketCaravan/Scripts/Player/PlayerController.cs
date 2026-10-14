@@ -47,6 +47,7 @@ namespace PocketCaravan
             var target = mover.Cell + new Vector3Int(dir.x, dir.y, 0);
             int grade = RoadGrid.Current != null ? RoadGrid.Current.GradeAt(target) : 0;
             float s = p.vehicle != null ? p.vehicle.SpeedOn(grade) : 1f;
+            if (grade == 0 && p.origin != null) s *= p.origin.offroadSpeedMultiplier; // 길 없는 곳
             s *= Mathf.Lerp(1f, fullLoadSpeed, p.LoadRatio);
             if (InputReader.Run()) s *= runMultiplier;
             return s;
@@ -54,7 +55,6 @@ namespace PocketCaravan
 
         void OnStepped(Vector3Int cell)
         {
-            if (RoadGrid.Current != null) RoadGrid.Current.AddFootfall(cell, GameManager.I.Player.FootfallPerStep);
             var exit = MapExit.At(cell);
             if (exit != null) exit.Use();
         }

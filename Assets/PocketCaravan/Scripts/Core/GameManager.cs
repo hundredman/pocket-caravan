@@ -15,9 +15,9 @@ namespace PocketCaravan
         public GameDatabase Db { get; private set; }
         public PlayerState Player { get; private set; }
         public GameClock Clock { get; private set; }
+        public QuestManager Quests { get; private set; }
 
         readonly Dictionary<string, MarketState> markets = new Dictionary<string, MarketState>();
-        readonly Dictionary<string, Dictionary<Vector3Int, float>> footfall = new Dictionary<string, Dictionary<Vector3Int, float>>();
 
         string pendingSpawnId;
         bool firstSceneLoaded;
@@ -53,9 +53,12 @@ namespace PocketCaravan
 
             Clock = new GameClock { realSecondsPerDay = Db.realSecondsPerDay };
             Clock.NewHour += OnNewHour;
-            Clock.NewDay += OnNewDay;
+
+            Quests = new QuestManager(Db.quests);
 
             gameObject.AddComponent<DebugHUD>();
+            gameObject.AddComponent<QuestTracker>();
+            gameObject.AddComponent<DialogueUI>();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
@@ -83,12 +86,21 @@ namespace PocketCaravan
             if (id == null && !firstSceneLoaded) id = SpawnPoint.StartId;
             firstSceneLoaded = true;
             pendingSpawnId = null;
-            if (id == null) return;
+            UIState.Blocking = false;
 
-            var spawn = SpawnPoint.Find(id);
-            var player = FindAnyObjectByType<PlayerController>();
-            if (spawn != null && player != null)
-                player.transform.position = spawn.transform.position;
+            if (id != null)
+            {
+                var spawn = SpawnPoint.Find(id);
+                var player = FindAnyObjectByType<PlayerController>();
+                if (spawn != null && player != null)
+                    player.transform.position = spawn.transform.position;
+            }
+
+            if (MapRoot.Current != null)
+            {
+                Notify.Show(MapRoot.Current.displayName, 2.5f);
+                GameEvents.RaiseMapEntered(MapRoot.Current.mapId);
+            }
         }
 
         // ---------- 장터 ----------
@@ -104,20 +116,6 @@ namespace PocketCaravan
             return m;
         }
 
-        // ---------- 발길 ----------
-
-        /// <summary>맵별 발길 값. 처음 요청이면 fresh=true (맵에 그려 둔 초기 길로 채워야 함).</summary>
-        public Dictionary<Vector3Int, float> GetFootfall(string mapId, out bool fresh)
-        {
-            fresh = !footfall.TryGetValue(mapId, out var d);
-            if (fresh)
-            {
-                d = new Dictionary<Vector3Int, float>();
-                footfall[mapId] = d;
-            }
-            return d;
-        }
-
         // ---------- 시간 ----------
 
         void OnNewHour(int hour)
@@ -125,22 +123,5 @@ namespace PocketCaravan
             foreach (var m in markets.Values) m.RecoverOneHour();
         }
 
-        void OnNewDay(int day)
-        {
-            // 발길은 하루마다 조금씩 줄어든다. 덜 다닌 가장자리부터 등급이 내려간다.
-            float keep = 1f - Db.roads.decayPerDay;
-            var remove = new List<Vector3Int>();
-            foreach (var map in footfall.Values)
-            {
-                remove.Clear();
-                var keys = new List<Vector3Int>(map.Keys);
-                foreach (var k in keys)
-                {
-                    float f = map[k] * keep;
-                    if (f < 0.5f) remove.Add(k); else map[k] = f;
-                }
-                foreach (var k in remove) map.Remove(k);
-            }
-        }
     }
 }

@@ -26,6 +26,11 @@ namespace PocketCaravan.EditorTools
 
         public const string PlayerSprite = "player_tanuki_tall";
         public const string MerchantSprite = "merchant_rabbit_tall";
+        public const string GaekjuSprite = "npc_bear_tall";
+        public const string ChiefSprite = "npc_dog_tall";
+        public const string MarkerAvailable = "marker_available";
+        public const string MarkerTurnIn = "marker_turnin";
+        public const string MarkerProgress = "marker_progress";
 
         public static void WriteAll(string dir)
         {
@@ -39,6 +44,13 @@ namespace PocketCaravan.EditorTools
             Save(dir, "road3", 16, 16, (x, y) => Road(x, y, 3));
             SaveTanuki(dir, PlayerSprite);
             SaveRabbit(dir, MerchantSprite);
+            // 객주: 푸른 옷의 곰
+            SaveAnimal(dir, GaekjuSprite, Hex("9C6B4A"), Hex("6B4630"), Hex("E8C9A0"), Ears.Round, Hex("4F6FA6"), false, false);
+            // 촌장: 갓 쓰고 흰 수염 난 늙은 개
+            SaveAnimal(dir, ChiefSprite, Hex("C9B49A"), Hex("8E7A62"), Hex("F4EDE2"), Ears.Floppy, Hex("8C7A9E"), true, true);
+            SaveMarker(dir, MarkerAvailable, '!', Hex("FFD54A"));
+            SaveMarker(dir, MarkerTurnIn, '?', Hex("FFD54A"));
+            SaveMarker(dir, MarkerProgress, '?', Hex("B8B8B8"));
         }
 
         // ---------- 타일 ----------
@@ -207,6 +219,65 @@ namespace PocketCaravan.EditorTools
             c.P(4, 29, Clear); c.P(6, 29, Clear); c.P(9, 29, Clear); c.P(11, 29, Clear);
             c.Outline(Outline);
             WritePng(dir, name, 16, 32, c.px);
+        }
+
+        enum Ears { Round, Floppy }
+
+        /// <summary>NPC용 동물. 머리 색, 귀 모양, 옷 색, 갓·수염만 바꿔 여러 마을 사람을 만든다.</summary>
+        static void SaveAnimal(string dir, string name, Color32 fur, Color32 furDark, Color32 muzzle, Ears ears, Color32 cloth, bool gat, bool beard)
+        {
+            var c = new Canvas16x32();
+            c.R(5, 0, 6, 1, furDark); c.R(9, 0, 10, 1, furDark);
+            c.R(4, 2, 11, 9, cloth);
+            c.R(4, 6, 11, 6, Hex("E8D8B0"));                       // 허리띠
+            c.R(3, 5, 3, 8, cloth); c.R(12, 5, 12, 8, cloth);
+            c.P(3, 5, fur); c.P(12, 5, fur);
+            c.Round(3, 10, 12, 20, fur);
+            c.R(6, 11, 9, 13, muzzle);
+            c.R(7, 13, 8, 13, Outline);                            // 코
+            c.P(5, 15, Outline); c.P(10, 15, Outline);             // 눈
+            c.P(5, 16, Hex("FFFFFF")); c.P(10, 16, Hex("FFFFFF"));
+            if (beard) { c.R(6, 9, 9, 10, Hex("FFFFFF")); c.P(7, 8, Hex("FFFFFF")); c.P(8, 8, Hex("FFFFFF")); }
+            if (ears == Ears.Round) { c.R(3, 20, 5, 22, furDark); c.R(10, 20, 12, 22, furDark); c.P(4, 21, muzzle); c.P(11, 21, muzzle); }
+            else { c.R(2, 15, 3, 20, furDark); c.R(12, 15, 13, 20, furDark); }  // 늘어진 귀
+            if (gat) { c.R(1, 22, 14, 22, Hat); c.R(5, 23, 10, 26, Hat); c.R(5, 23, 10, 23, Hex("4A4858")); }
+            c.Outline(Outline);
+            WritePng(dir, name, 16, 32, c.px);
+        }
+
+        /// <summary>퀘스트 표시 (!, ?). 16×16, 아래쪽 기준.</summary>
+        static void SaveMarker(string dir, string name, char ch, Color32 color)
+        {
+            var px = new Color32[16 * 16];
+            for (int i = 0; i < px.Length; i++) px[i] = Clear;
+            void P(int x, int y) { if (x >= 0 && x < 16 && y >= 0 && y < 16) px[y * 16 + x] = color; }
+            if (ch == '!')
+            {
+                for (int y = 6; y <= 14; y++) { P(7, y); P(8, y); }
+                for (int y = 2; y <= 3; y++) { P(7, y); P(8, y); }
+            }
+            else
+            {
+                // ? 모양
+                for (int x = 5; x <= 10; x++) { P(x, 14); P(x, 13); }
+                for (int y = 10; y <= 12; y++) { P(10, y); P(11, y); P(4, y + 1); P(5, y + 1); }
+                for (int x = 7; x <= 9; x++) P(x, 9);
+                for (int y = 6; y <= 8; y++) { P(7, y); P(8, y); }
+                for (int y = 2; y <= 3; y++) { P(7, y); P(8, y); }
+            }
+            // 테두리
+            var copy = (Color32[])px.Clone();
+            for (int y = 0; y < 16; y++)
+            for (int x = 0; x < 16; x++)
+            {
+                if (copy[y * 16 + x].a != 0) continue;
+                for (int k = 0; k < 8; k++)
+                {
+                    int nx = x + new[] { 1, -1, 0, 0, 1, 1, -1, -1 }[k], ny = y + new[] { 0, 0, 1, -1, 1, -1, 1, -1 }[k];
+                    if (nx >= 0 && nx < 16 && ny >= 0 && ny < 16 && copy[ny * 16 + nx].a != 0) { px[y * 16 + x] = Outline; break; }
+                }
+            }
+            WritePng(dir, name, 16, 16, px);
         }
 
         // ---------- 공통 ----------

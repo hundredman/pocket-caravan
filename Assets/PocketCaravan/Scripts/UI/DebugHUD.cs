@@ -30,7 +30,7 @@ namespace PocketCaravan
             GUI.Box(new Rect(6, 6, 230, 52), "");
             GUI.Label(new Rect(12, 9, 224, 50), text);
 
-            GUI.Label(new Rect(6, UIStyle.VirtualHeight - 20, 400, 18), "방향키/WASD 이동 · Shift 달리기 · E 말 걸기");
+            GUI.Label(new Rect(6, UIStyle.VirtualHeight - 20, 400, 18), "방향키/WASD 이동 · Shift 달리기 · E 말 걸기 · J 퀘스트");
         }
     }
 }
