@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: T4_Herbs
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: tutorial_4
+  title: "\uB2E5\uB098\uBB34 \uB9C8\uC744\uB85C \uAC00\uB294 \uC57D\uC7AC"
+  chain: "\uD589\uC0C1\uC758 \uCCAB\uAC78\uC74C"
+  summary: "\uB098\uB8E8\uC5D0 \uB4E4\uC5B4\uC628 \uC57D\uC7AC \uAFB8\uB7EC\uBBF8\uB97C
+    \uB2E5\uB098\uBB34 \uB9C8\uC744 \uCD0C\uC7A5\uC5D0\uAC8C \uC804\uD55C\uB2E4.
+    \uAC1C\uACBD\uC744 \uC9C0\uB098 \uB3D9\uBB38 \uBC16\uC73C\uB85C \uAC00\uBA74
+    \uB41C\uB2E4.\n\uD301: \uAC00\uB294 \uAE38\uC5D0 \uB9C8\uC744 \uAC8C\uC2DC\uD310\uC758
+    \uBC30\uB2EC \uC758\uB8B0\uB3C4 \uD568\uAED8 \uB9E1\uC73C\uBA74 \uD55C \uBC88\uC5D0
+    \uB450 \uBAAB\uC744 \uBC88\uB2E4."
+  giverNpc: naru_chief
+  requires:
+  - {fileID: 11400000, guid: 6bae5cc8d980f47b2ada23154ca5d297, type: 2}
+  offerLine: "\uBC30\uB85C \uC57D\uC7AC\uAC00 \uB4E4\uC5B4\uC654\uB294\uB370 \uB2E5\uB098\uBB34
+    \uB9C8\uC744\uC5D0\uC11C \uAE09\uD788 \uCC3E\uB294\uB2E4\uB124. \uC885\uC774
+    \uB728\uB2E4 \uB2E4\uCE5C \uC0AC\uB78C\uC774 \uB9CE\uC544\uC11C \uB9D0\uC774\uC57C.
+    \uAC1C\uACBD\uC744 \uC9C0\uB098 \uB3D9\uBB38 \uBC16\uC774\uB2C8 \uC870\uAE08
+    \uBA40\uC9C0\uB9CC, \uC218\uACE0\uBE44\uB294 \uB109\uB109\uD788 \uC8FC\uACA0\uB124.
+    \uC7A5\uD130 \uC606 \uAC8C\uC2DC\uD310\uC5D0 \uAC19\uC740 \uCABD \uC758\uB8B0\uAC00
+    \uC788\uC73C\uBA74 \uAC19\uC774 \uB9E1\uC544 \uAC00\uAC8C."
+  giveItem: {fileID: 11400000, guid: 14e798ba726094746925b7d4055155df, type: 2}
+  giveCount: 1
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 1
+    text: "\uB2E5\uB098\uBB34 \uB9C8\uC744 \uCD0C\uC7A5\uC5D0\uAC8C \uC57D\uC7AC
+      \uAFB8\uB7EC\uBBF8 \uC804\uD558\uAE30"
+    targetId: dakmok_chief
+    item: {fileID: 11400000, guid: 14e798ba726094746925b7d4055155df, type: 2}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: "\uC57D\uC7AC\uB85C\uAD70! \uC0B4\uC558\uB124. \uC790\uB124\uCC98\uB7FC
+      \uC9D0\uC744 \uB0A0\uB77C \uC8FC\uB294 \uC0AC\uB78C\uC774 \uC788\uC5B4\uC57C
+      \uB9C8\uC744\uC774 \uB3CC\uC544\uAC00\uC9C0. \uB9C8\uC744\uB9C8\uB2E4 \uAC8C\uC2DC\uD310
+      \uC758\uB8B0\uB97C \uB9E1\uC73C\uBA74 \uAFB8\uC900\uD788 \uBC8C \uC218 \uC788\uB2E4\uB124."
+  rewardMoney: 50
+  rewardCredit: 1
+  finishNote: 

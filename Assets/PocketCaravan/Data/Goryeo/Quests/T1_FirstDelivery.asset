@@ -28,6 +28,9 @@ MonoBehaviour:
     \uB5A1 \uBC8C\uC5B4\uC9C8 \uAC78\uC138."
   giveItem: {fileID: 11400000, guid: 5f9bcbf9b7a8444049e8997395807221, type: 2}
   giveCount: 1
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
   objectives:
   - type: 5
     text: "\uAC1C\uACBD\uC5D0 \uAC00\uAE30"

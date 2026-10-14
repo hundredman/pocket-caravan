@@ -33,10 +33,10 @@ namespace PocketCaravan
         {
             all = quests ?? new List<QuestData>();
             GameEvents.MapEntered += id => Advance(ObjectiveType.VisitMap, id, null, 1);
-            GameEvents.ItemBought += (item, town, price) => Advance(ObjectiveType.Buy, null, item, 1);
+            GameEvents.ItemBought += (item, town, price) => Advance(ObjectiveType.Buy, town != null ? town.id : null, item, 1);
             GameEvents.ItemSold += (item, town, price, profit) =>
             {
-                Advance(ObjectiveType.Sell, null, item, 1);
+                Advance(ObjectiveType.Sell, town != null ? town.id : null, item, 1);
                 if (profit > 0) Advance(ObjectiveType.Profit, null, null, profit);
             };
             GameEvents.VehicleBought += v => AdvanceVehicle(v);
@@ -104,9 +104,29 @@ namespace PocketCaravan
             return QuestMarker.None;
         }
 
+        /// <summary>수락할 수 없는 까닭 (돈·짐). 없으면 null</summary>
+        public string AcceptBlocker(QuestData q)
+        {
+            var p = GameManager.I.Player;
+            if (q.offerItem != null && q.offerCount > 0)
+            {
+                if (p.money < q.offerPrice * q.offerCount) return $"{q.offerPrice * q.offerCount}냥이 있어야 넘겨줄 수 있네. 돈을 좀 더 모아 오게.";
+                if (!p.CanCarry(q.offerItem, q.offerCount)) return "짐이 꽉 찼구먼. 짐을 좀 덜고 오게.";
+            }
+            if (q.giveItem != null && q.giveCount > 0 && !p.CanCarry(q.giveItem, q.giveCount)) return "짐이 꽉 찼구먼. 짐을 좀 덜고 오게.";
+            return null;
+        }
+
         public void Accept(QuestData q)
         {
-            if (!CanStart(q)) return;
+            if (!CanStart(q) || AcceptBlocker(q) != null) return;
+            if (q.offerItem != null && q.offerCount > 0)
+            {
+                var pl = GameManager.I.Player;
+                pl.money -= q.offerPrice * q.offerCount;
+                pl.cargo.Add(q.offerItem, q.offerCount, q.offerPrice);   // 산 값으로 기록해 이익이 제대로 계산되게
+                Sfx.Play("coin");
+            }
             var p = new Progress { quest = q };
             active[q] = p;
             Tracked = p;
@@ -225,7 +245,10 @@ namespace PocketCaravan
                     var cs = GameManager.I.Player.contracts;
                     return cs.Count > 0 ? ("board", cs[0].toTown) : ("board", o.targetId);
                 case ObjectiveType.Buy:
+                    if (!string.IsNullOrEmpty(o.targetId)) return ("market", o.targetId);
                     return o.item != null && o.item.originTown != null ? ("market", o.item.originTown.id) : ((string, string)?)null;
+                case ObjectiveType.Sell:
+                    return !string.IsNullOrEmpty(o.targetId) ? ("market", o.targetId) : ((string, string)?)null;
                 case ObjectiveType.BuyVehicle:
                     foreach (var t in GameManager.I.Db.towns)
                         if (t != null && t.vehiclesForSale.Contains(o.vehicle)) return ("market", t.id);

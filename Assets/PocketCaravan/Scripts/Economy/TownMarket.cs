@@ -68,6 +68,7 @@ namespace PocketCaravan
             string growth = nextLevel > 0 ? $"   다음 등급까지 거래 {Mathf.Max(0, nextLevel - Mathf.RoundToInt(m.TradeVolume))}냥" : "";
             GUILayout.Label($"<color=#FFE08A>{town.displayName} 장터</color>  ({m.LevelName}){marketDay}", UIStyle.Rich);
             GUILayout.Label($"돈 {p.money}   짐 {p.TotalWeight:0.#}/{p.Capacity:0.#}{growth}", UIStyle.Small);
+            if (p.credit < 4) GUILayout.Label(BeginnerTip(gm), UIStyle.Small);
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("품목 (무게)", UIStyle.Small, GUILayout.Width(118));
@@ -115,6 +116,15 @@ namespace PocketCaravan
             if (GUILayout.Button("닫기 (Esc)", UIStyle.Button, GUILayout.Width(80), GUILayout.Height(18))) Close();
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
+        }
+
+        /// <summary>초보 상인용 장사 팁: 이 마을 특산과 비싸게 받는 곳</summary>
+        string BeginnerTip(GameManager gm)
+        {
+            var local = new List<string>();
+            foreach (var it in gm.Db.items) if (it != null && !it.questItem && it.originTown == town) local.Add(it.displayName);
+            string here = local.Count > 0 ? $"이 마을 특산 {Josa.Eun(string.Join("·", local))} 여기서 싸다." : "이 마을은 특산이 없어 다른 곳 물건이 비싸다.";
+            return $"<color=#ffd84a>팁</color> {here} 산지에서 멀리 가져갈수록 비싸게 팔린다. 한 곳에 몰아 팔면 값이 떨어진다.";
         }
 
         /// <summary>스프라이트 한 장을 GUI 사각형에 그린다 (아틀라스 안의 위치를 고려)</summary>

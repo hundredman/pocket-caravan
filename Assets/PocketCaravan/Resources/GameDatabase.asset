@@ -23,6 +23,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9b0a33b14044448d8962b7818d9d0df6, type: 2}
   - {fileID: 11400000, guid: cb00db234c4f1496797b7984a9849509, type: 2}
   - {fileID: 11400000, guid: 5f9bcbf9b7a8444049e8997395807221, type: 2}
+  - {fileID: 11400000, guid: 14e798ba726094746925b7d4055155df, type: 2}
+  - {fileID: 11400000, guid: 11081dff03b434c32bbd32ec0df9b346, type: 2}
   towns:
   - {fileID: 11400000, guid: ea80dc588efe14baeada6f1f8eeb9f6c, type: 2}
   - {fileID: 11400000, guid: c9c3e50b53fd84e47a560b486663cf0f, type: 2}
@@ -34,7 +36,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eefd3152bcc904f108dc17237dbff5e9, type: 2}
   - {fileID: 11400000, guid: 5f1b114771f824928af105094288dc10, type: 2}
   - {fileID: 11400000, guid: 6bae5cc8d980f47b2ada23154ca5d297, type: 2}
+  - {fileID: 11400000, guid: c84afbe362c7b481f962c331e7d87fa6, type: 2}
   - {fileID: 11400000, guid: ab3a358175d5c454fbed185e93daa283, type: 2}
+  - {fileID: 11400000, guid: 4d910f6c35763490bbcc3d2f2f1211d8, type: 2}
   - {fileID: 11400000, guid: 709f938f526f44a88b72dc69b61ff181, type: 2}
   - {fileID: 11400000, guid: 3bd12302f8f4345af8f59a6f83d962dd, type: 2}
   crateIcon: {fileID: 21300000, guid: ec46ec01583204ea6bbd211cd1094e76, type: 3}

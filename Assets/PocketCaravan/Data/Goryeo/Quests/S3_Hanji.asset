@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: S3_Hanji
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: dakmok_hanji
+  title: "\uAC1C\uACBD\uC73C\uB85C \uAC00\uB294 \uD55C\uC9C0"
+  chain: 
+  summary: "\uB2E5\uB098\uBB34 \uB9C8\uC744 \uD55C\uC9C0 \uAFB8\uB7EC\uBBF8\uB97C
+    \uAC1C\uACBD \uAC1D\uC8FC\uC5D0\uAC8C \uC804\uD55C\uB2E4."
+  giverNpc: dakmok_chief
+  requires:
+  - {fileID: 11400000, guid: c84afbe362c7b481f962c331e7d87fa6, type: 2}
+  offerLine: "\uAC1D\uC8FC\uAC00 \uC7A5\uBD80 \uC4F8 \uD55C\uC9C0\uB97C \uB610 \uC8FC\uBB38\uD588\uB2E4\uB124.
+    \uAC00\uB294 \uAE38\uC774\uBA74 \uC774 \uAFB8\uB7EC\uBBF8 \uC880 \uC804\uD574
+    \uC8FC\uAC8C. \uC218\uACE0\uBE44\uB294 \uAC1D\uC8FC\uAC00 \uC904 \uAC78\uC138."
+  giveItem: {fileID: 11400000, guid: 11081dff03b434c32bbd32ec0df9b346, type: 2}
+  giveCount: 1
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 1
+    text: "\uAC1C\uACBD \uAC1D\uC8FC\uC5D0\uAC8C \uD55C\uC9C0 \uAFB8\uB7EC\uBBF8
+      \uC804\uD558\uAE30"
+    targetId: gaekju
+    item: {fileID: 11400000, guid: 11081dff03b434c32bbd32ec0df9b346, type: 2}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: "\uB2E5\uB098\uBB34 \uB9C8\uC744 \uD55C\uC9C0\uB85C\uAD70. \uC5ED\uC2DC
+      \uBE5B\uAE54\uC774 \uC88B\uC544. \uC218\uACE0\uBE44 \uBC1B\uAC8C."
+  rewardMoney: 45
+  rewardCredit: 1
+  finishNote: 

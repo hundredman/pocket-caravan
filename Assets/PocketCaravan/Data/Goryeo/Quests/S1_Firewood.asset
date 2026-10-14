@@ -26,6 +26,9 @@ MonoBehaviour:
     \uC788\uC5B4\uC57C \uD560 \uAC78\uC138."
   giveItem: {fileID: 0}
   giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
   objectives:
   - type: 1
     text: "\uB2E5\uB098\uBB34 \uB9C8\uC744 \uCD0C\uC7A5\uC5D0\uAC8C \uB554\uAC10

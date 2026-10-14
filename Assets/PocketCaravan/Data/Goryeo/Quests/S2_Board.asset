@@ -29,6 +29,9 @@ MonoBehaviour:
     \uB35C \uBC1B\uACE0, \uC2E0\uC6A9\uB3C4 \uAE4E\uC774\uB2C8 \uC870\uC2EC\uD558\uACE0."
   giveItem: {fileID: 0}
   giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
   objectives:
   - type: 8
     text: "\uAC8C\uC2DC\uD310 \uBC30\uB2EC \uC758\uB8B0 \uD558\uB098 \uB9C8\uCE58\uAE30"

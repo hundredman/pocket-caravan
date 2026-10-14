@@ -94,7 +94,9 @@ namespace PocketCaravan.EditorTools
             Upsert<OriginData>($"{OriginDir}/Origin_Venice.asset", o => { o.id = "venice"; o.displayName = "베네치아 상인"; o.resaleDropMultiplier = 0.8f; });
             Upsert<OriginData>($"{OriginDir}/Origin_Viking.asset", o => { o.id = "viking"; o.displayName = "바이킹 교역상"; o.speedMultiplier = 1.05f; o.offroadSpeedMultiplier = 1.3f; o.startingCredit = -2; });
 
-            var quests = BuildTutorialQuests(saltParcel, paper, wood, cart);
+            var herbs = Item("herbs_parcel", "약재 꾸러미", 2f, 1f, null, quest: true);
+            var hanji = Item("hanji_parcel", "한지 꾸러미", 2f, 1f, null, quest: true);
+            var quests = BuildTutorialQuests(saltParcel, paper, wood, cart, ginseng, herbs, hanji);
 
             var db = Upsert<GameDatabase>(DbPath, d =>
             {
@@ -102,7 +104,7 @@ namespace PocketCaravan.EditorTools
                 d.crateIcon = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Items/crate.png");
                 d.townLevelVolume = new[] { 0, 500, 1800, 8000 };   // 시연: 몇 번의 교역으로 등급이 오르게
             });
-            db.items = new List<ItemData> { ginseng, najeon, paper, salt, grain, wood, saltParcel };
+            db.items = new List<ItemData> { ginseng, najeon, paper, salt, grain, wood, saltParcel, herbs, hanji };
             db.towns = new List<TownData> { naru, gaegyeong, dakmok };
             db.vehicles = new List<VehicleData> { walk, cart };
             db.quests = quests;
@@ -118,7 +120,8 @@ namespace PocketCaravan.EditorTools
         static QuestObjective O(ObjectiveType type, string text, string target = null, ItemData item = null, int count = 1, string line = null, VehicleData vehicle = null) =>
             new QuestObjective { type = type, text = text, targetId = target, item = item, count = count, completeLine = line, vehicle = vehicle };
 
-        static List<QuestData> BuildTutorialQuests(ItemData parcel, ItemData paper, ItemData wood, VehicleData cart)
+        static List<QuestData> BuildTutorialQuests(ItemData parcel, ItemData paper, ItemData wood, VehicleData cart,
+            ItemData ginsengItem, ItemData herbsItem, ItemData hanjiItem)
         {
             const string chain = "행상의 첫걸음";
             var list = new List<QuestData>();
@@ -127,6 +130,7 @@ namespace PocketCaravan.EditorTools
                 var q = Upsert<QuestData>($"{QuestDir}/{file}.asset", x =>
                 {
                     x.requires.Clear(); x.objectives.Clear(); x.giveItem = null; x.giveCount = 0;
+                    x.offerItem = null; x.offerCount = 0; x.offerPrice = 0;
                     x.rewardMoney = 0; x.rewardCredit = 0; x.finishNote = ""; x.chain = "";
                     init(x);
                 });
@@ -159,23 +163,51 @@ namespace PocketCaravan.EditorTools
 
             var q3 = Q("T3_Profit", q =>
             {
-                q.id = "tutorial_3"; q.title = "차익 남기기"; q.chain = chain; q.giverNpc = Gaekju; q.requires.Add(q2);
-                q.summary = "싼 곳에서 사서 비싼 곳에 팔아 이익을 남긴다.";
-                q.offerLine = "장사란 싼 곳에서 사서 비싼 곳에 파는 것이네. 인삼은 여기 개경이 산지라 싸고, 나루 마을 소금은 거기서 싸지. 한 곳에 몰아 팔면 값이 떨어지니 그것도 잘 보게.";
-                q.objectives.Add(O(ObjectiveType.Profit, "물건을 사서 다른 마을에 팔아 이익 남기기", null, null, 20));
-                q.objectives.Add(O(ObjectiveType.Talk, "개경 객주에게 알리기", Gaekju, null, 1, "벌써 이문을 남겼다고? 자네 장사 감각이 있구먼."));
+                q.id = "tutorial_3"; q.title = "객주가 넘겨준 인삼"; q.chain = chain; q.giverNpc = Gaekju; q.requires.Add(q2);
+                q.summary = "객주가 초보 상인에게만 싸게 넘겨준 인삼 3뿌리를 예성 나루 마을 장터에 판다.\n" +
+                            "팁: 물건은 산지(인삼·나전칠기 = 개경, 종이 = 닥나무 마을, 소금 = 나루 마을)에서 싸고, 산지에서 멀수록 비싸게 팔린다. " +
+                            "한 곳에 몰아 팔면 값이 떨어진다. 장터 창에서 '팔 때' 값이 초록이면 이익, 빨강이면 손해.";
+                q.offerLine = "종이 고맙네. 이번엔 장사를 가르쳐 주지. 인삼은 여기 개경이 산지라 싸지만, 산지에서 멀어질수록 비싸게 팔린다네. " +
+                              "초보 상인에게만 내 인삼 3뿌리를 하나에 22냥, 모두 66냥에 넘겨주겠네. 나루 마을 장터에 가져가 팔면 틀림없이 이문이 남을 걸세.";
+                q.offerItem = ginsengItem; q.offerCount = 3; q.offerPrice = 22;
+                q.objectives.Add(O(ObjectiveType.Sell, "예성 나루 마을 장터에 인삼 3뿌리 팔기", "naru", ginsengItem, 3));
+                q.objectives.Add(O(ObjectiveType.Talk, "나루 마을 촌장에게 이야기하기", NaruChief, null, 1,
+                    "개경 인삼을 여기서 팔았다고? 산 값보다 훨씬 받았겠구먼. 그게 바로 시세 차익일세. 앞으로는 장터 값을 보고 직접 골라 보게."));
                 q.rewardMoney = 20; q.rewardCredit = 1;
             });
 
-            var q4 = Q("T4_Handcart", q =>
+            var q4 = Q("T4_Herbs", q =>
             {
-                q.id = "tutorial_4"; q.title = "손수레"; q.chain = chain; q.giverNpc = Gaekju; q.requires.Add(q3);
-                q.summary = "개경 시전에서 손수레를 산다. 등짐보다 세 배를 싣고, 길 위에서 더 빠르다.";
-                q.offerLine = "이제 등짐으로는 부족하겠지. 시전 상인에게 손수레를 사 보게. 길 위에서는 빠르지만 풀밭에서는 느리니, 길을 잘 골라 다니게.";
+                q.id = "tutorial_4"; q.title = "닥나무 마을로 가는 약재"; q.chain = chain; q.giverNpc = NaruChief; q.requires.Add(q3);
+                q.summary = "나루에 들어온 약재 꾸러미를 닥나무 마을 촌장에게 전한다. 개경을 지나 동문 밖으로 가면 된다.\n" +
+                            "팁: 가는 길에 마을 게시판의 배달 의뢰도 함께 맡으면 한 번에 두 몫을 번다.";
+                q.offerLine = "배로 약재가 들어왔는데 닥나무 마을에서 급히 찾는다네. 종이 뜨다 다친 사람이 많아서 말이야. " +
+                              "개경을 지나 동문 밖이니 조금 멀지만, 수고비는 넉넉히 주겠네. 장터 옆 게시판에 같은 쪽 의뢰가 있으면 같이 맡아 가게.";
+                q.giveItem = herbsItem; q.giveCount = 1;
+                q.objectives.Add(O(ObjectiveType.Deliver, "닥나무 마을 촌장에게 약재 꾸러미 전하기", DakmokChief, herbsItem, 1,
+                    "약재로군! 살았네. 자네처럼 짐을 날라 주는 사람이 있어야 마을이 돌아가지. 마을마다 게시판 의뢰를 맡으면 꾸준히 벌 수 있다네."));
+                q.rewardMoney = 50; q.rewardCredit = 1;
+            });
+
+            var q5 = Q("T4_Handcart", q =>
+            {
+                q.id = "tutorial_5"; q.title = "손수레"; q.chain = chain; q.giverNpc = DakmokChief; q.requires.Add(q4);
+                q.summary = "개경 시전에서 손수레(150냥)를 산다. 등짐보다 세 배를 싣고, 길 위에서 더 빠르다.";
+                q.offerLine = "등짐으로는 한 번에 몇 냥 못 버네. 개경 시전 상인에게 손수레를 사 보게. 길 위에서는 빠르지만 풀밭에서는 느리니, 길을 잘 골라 다니게.";
                 q.objectives.Add(O(ObjectiveType.BuyVehicle, "개경 시전에서 손수레 사기", null, null, 1, null, cart));
                 q.objectives.Add(O(ObjectiveType.Talk, "개경 객주에게 보이기", Gaekju, null, 1, "어엿한 수레상이 되었구먼! 이제 자네도 한 사람 몫의 상인일세."));
                 q.rewardCredit = 2;
-                q.finishNote = "튜토리얼 완료! 이제 마을 사람들의 부탁을 들어주고, 직접 교역로를 찾아 돈을 벌어 보자.";
+                q.finishNote = "튜토리얼 완료! 게시판 의뢰와 마을 사람들의 부탁으로 벌고, 산지에서 사서 먼 곳에 팔아 보자.";
+            });
+
+            Q("S3_Hanji", q =>
+            {
+                q.id = "dakmok_hanji"; q.title = "개경으로 가는 한지"; q.giverNpc = DakmokChief; q.requires.Add(q4);
+                q.summary = "닥나무 마을 한지 꾸러미를 개경 객주에게 전한다.";
+                q.offerLine = "객주가 장부 쓸 한지를 또 주문했다네. 가는 길이면 이 꾸러미 좀 전해 주게. 수고비는 객주가 줄 걸세.";
+                q.giveItem = hanjiItem; q.giveCount = 1;
+                q.objectives.Add(O(ObjectiveType.Deliver, "개경 객주에게 한지 꾸러미 전하기", Gaekju, hanjiItem, 1, "닥나무 마을 한지로군. 역시 빛깔이 좋아. 수고비 받게."));
+                q.rewardMoney = 45; q.rewardCredit = 1;
             });
 
             Q("S2_Board", q =>
@@ -190,7 +222,7 @@ namespace PocketCaravan.EditorTools
 
             Q("S1_Firewood", q =>
             {
-                q.id = "dakmok_firewood"; q.title = "땔감이 모자라요"; q.giverNpc = DakmokChief; q.requires.Add(q4);
+                q.id = "dakmok_firewood"; q.title = "땔감이 모자라요"; q.giverNpc = DakmokChief; q.requires.Add(q5);
                 q.summary = "닥나무 마을에 땔감 4단을 가져간다. 무거워서 손수레가 필요하다.";
                 q.offerLine = "종이를 뜨려면 닥나무를 삶아야 하는데 땔감이 모자라네. 땔감 4단만 구해 주게. 무거우니 수레가 있어야 할 걸세.";
                 q.objectives.Add(O(ObjectiveType.Deliver, "닥나무 마을 촌장에게 땔감 4단 가져가기", DakmokChief, wood, 4, "살았네! 이걸로 한동안 종이를 뜰 수 있겠어."));

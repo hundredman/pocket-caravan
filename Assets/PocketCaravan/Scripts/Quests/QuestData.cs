@@ -48,6 +48,9 @@ namespace PocketCaravan
         [TextArea(3, 6)] public string offerLine;
         [Tooltip("수락할 때 받는 짐 (의뢰 물건)")] public ItemData giveItem;
         public int giveCount;
+        [Tooltip("수락할 때 이 값에 넘겨받는 물건 (초보자용 싼 물건). 돈이 모자라면 수락할 수 없다")] public ItemData offerItem;
+        public int offerCount;
+        public int offerPrice;
 
         [Header("진행")]
         public List<QuestObjective> objectives = new List<QuestObjective>();

@@ -49,7 +49,12 @@ namespace PocketCaravan
             var q = qm.AvailableFrom(npcId);
             if (q == null) return false;
             DialogueUI.Show(displayName, $"[{q.title}]\n{q.offerLine}",
-                new DialogueUI.Choice("수락", () => qm.Accept(q)),
+                new DialogueUI.Choice("수락", () =>
+                {
+                    string why = qm.AcceptBlocker(q);
+                    if (why != null) DialogueUI.Show(displayName, why);
+                    else qm.Accept(q);
+                }),
                 new DialogueUI.Choice("나중에", null));
             return true;
         }
