@@ -9,6 +9,10 @@
 
 ## 시작하기
 
+**실행만 해 볼 팀원:** [Windows·Mac 최신 프로토타입 받기](https://github.com/hundredman/pocket-caravan/releases/tag/goryeo-prototype-2026-10-15). 운영체제에 맞는 ZIP을 전체 압축 해제한다. Mac의 최초 실행 허용과 소스 브랜치 선택은 [팀 확인 안내](Docs/TeamPlaytest.md)를 참고한다.
+
+**개발용 최신 소스:** `codex/goryeo-2d-preview` 브랜치. 아래 Unity 버전과 씬으로 확인한다.
+
 1. Unity Hub에서 **6000.3.26f1 (Unity 6.3 LTS)** 를 설치한다. 팀 전원이 이 버전으로 맞춘다.
 2. 저장소를 받아 Unity Hub → Add → 이 폴더를 연다.
 3. `Assets/PocketCaravan/Scenes/Goryeo/Naru.unity`(예성 나루 마을)를 열고 Play.
@@ -35,6 +39,7 @@ R 재시작, Tab 전체 보기. [시험장 안내](Assets/CaravanMovementLab/REA
 | 품목별 원가·판매 손익과 방문 시세 장부(L), 방문별 판매 정산 | `Economy/TradeLedger`, `TownMarket`, `UI/TradeLedgerUI` |
 | 역사적 모티브·게임 각색·여행 힌트를 나눈 선택형 상업 백과 7개 카드 | `UI/CommerceGuideUI`, `Resources/CommerceGuide/Goryeo.json` |
 | 나루 짐꾼·닥목 종이 작업장과 작업 왕복 연출, 거리별 물가 주변음 | `World/WorkingNpc`, `Audio/MapAmbience`, `Tools/MapGen` |
+| 개경 남문·동문 물류 마당·시전 짐꾼/행상·자유 교역 방향 안내 | `Tools/MapGen/gaegyeong.py`, [프로토타입 확인](Docs/GoryeoPrototypeReview.md) |
 | 도적 (예성 길, 밤에 잦음: 달려서 따돌리거나 통행료) | `World/Bandit`, `BanditSpot` |
 | 돌발 사건: 쓰러진 행인(신용 +1), 떠돌이 상인(싸게 팜) | `World/RoadEvent` |
 | NPC 상인: 시장 가격·재고·거래액을 공유하는 단순 시뮬레이션, 길에서 소문을 들려줌. 별도 자금/적재/위험/의뢰 경쟁은 없음 | `World/NpcTraders`, `Walker` |

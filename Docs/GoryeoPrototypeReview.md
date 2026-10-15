@@ -55,3 +55,7 @@ Unity에서 `Assets/PocketCaravan/Scenes/Goryeo/Gaegyeong.unity`를 열고 Play�
 로컬 배포 ZIP: `Builds/PocketCaravan-Windows-x64-2026-10-15.zip`(47,152,754바이트). 실행 파일·데이터·Mono 런타임·조작 안내·에셋/글꼴 라이선스를 포함한 195개 파일이며 압축 CRC 검사 통과. 디버그 배포 제외 폴더는 넣지 않았다. ZIP을 **전체 압축 해제한 뒤** `PocketCaravan.exe`를 실행한다. exe만 따로 옮기지 않는다. 본편과 분리된 프리뷰 저장 정책은 Mac 빌드와 같다.
 
 결과: `Builds/Windows/build-report.json`, `output/windows-build/package-validation.json`, `preservation-after.json`. 빌드 전후 2,209개 추적 프로젝트 파일·본편 저장 해시가 동일하고, Editor 대상은 원래 StandaloneOSX로 복구했다. 게임 소스·밸런스·씬은 이번 Windows 작업에서 변경하지 않았다. ZIP은 로컬 산출물이며 GitHub 프리릴리스는 갱신하지 않았다.
+
+## GitHub 팀 공유 — 후속 요청
+
+Windows x64 ZIP과 Mac Universal ZIP을 [새 팀 검토용 릴리스](https://github.com/hundredman/pocket-caravan/releases/tag/goryeo-prototype-2026-10-15)로 공유한다. 위의 ‘로컬만 있음’은 당시 상태이며 이후 릴리스 전달 단계로 이어졌다. 두 ZIP의 압축 CRC, Mac ZIP을 다시 푼 앱의 ad-hoc 서명 무결성을 검사했다. Mac은 여전히 Developer ID 서명·공증을 받지 않았으며, 다른 컴퓨터의 실행 검증 상태도 그대로다. 자세한 받기/실행/소스 안내는 [팀 확인 안내](TeamPlaytest.md)를 따른다.

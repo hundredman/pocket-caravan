@@ -4,6 +4,7 @@
 
 | 문서 | 용도 |
 |---|---|
+| [팀원이 확인하기](TeamPlaytest.md) | 최신 Windows·Mac 릴리스, Unity 소스 브랜치·버전, 실행·피드백 방법 |
 | [고려 프로토타입 확인](GoryeoPrototypeReview.md) | 최신 개경 남문·시전/물류 동선 개선, 팀 확인 방법·수정 원본·검증/로컬 빌드 |
 | [전체 완성도 검토](HolisticDesignReview.md) | 게임성·공유 시장·협업·MMORPG 확장의 충돌, 구현 전 실험과 판단 관문. 최신 검토 우선 |
 | [지역 제작·수정·확장 설계안](RegionAuthoringPlan.md) | 맵 원본·재생성 보존·지역 데이터 경계, 고려 지리/환경 적용, 도구 비교와 단계별 구현 기준 |
