@@ -82,6 +82,15 @@ def validate():
     route = by_id["Route01"]
     check("예성 길 시내 다리 양안 연결", (33, 15) in reachable(route, (25, 15), road_only=True))
     check("지도는 남문 연결을 반영해 수도를 북쪽에 배치", positions["Gaegyeong"][1] < positions["Route01"][1])
+    capital = by_id["Gaegyeong"]
+    check("개경 남문 처마 아래 네 칸 통행 폭 보존",
+          all(capital.road[y][x] == 3 and not capital.blocked[y][x]
+              for y in range(37, 43) for x in range(30, 34)))
+    check("개경 동문 물류 마당은 시전과 길로 연결",
+          (50, 30) in reachable(capital, (36, 23), road_only=True))
+    check("개경 물류 수레는 통행로 밖에 온전하게 배치",
+          ("cart", 58, 34) in capital.stamps and
+          all(not capital.road[y][x] for y in (34, 35) for x in (58, 59)))
     return results
 
 

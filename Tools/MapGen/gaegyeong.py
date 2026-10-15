@@ -26,6 +26,15 @@ def build():
         m.road_path([(x, top), (x - 1, (top + bottom) // 2), (x, bottom)], width=2, grade=2)
     m.road_blob(31.5, 23, 7, 3.2, grade=3, jitter=0.1)   # 남문 큰길과 시전 거리가 만나는 장터 마당
 
+    # 동쪽 물류 마당: 시전과 생산 마을 사이에서 짐을 내려 분류하는 공간.
+    # 새 경제 기능이 아니라, 기존 교역로의 용도를 읽게 하는 프로토타입 배치다.
+    m.road_path([(50, 23), (50, 30), (45, 32)], width=2, grade=2)
+    layout_rng = m.rng.getstate()
+    m.road_blob(52, 31, 4.2, 1.8, grade=2, jitter=0.05)
+    m.rng.setstate(layout_rng)  # 새 마당 때문에 기존 가게·식생 난수열까지 바꾸지 않는다.
+    m.stamp("house_tile", 54, 27, force=True)
+    m.door_path(54, 27, 4, 3, 31)
+
     # 성벽과 남문
     for x in range(W):
         if gate_x0 <= x <= gate_x1:
@@ -45,6 +54,7 @@ def build():
     m.stamp("cherry", 25, 1, force=True)
     m.stamp("cherry", 38, 1, force=True)
     m.road_rect(gate_x0, 8, gate_x1, 11, grade=3)   # 만월대 오르는 길
+    m.road_path([(29, 8), (35, 8)], width=1, grade=3)  # 전각 앞에서 중앙 진입로로 합류
 
     # 시전 거리 가게 (북쪽 줄, 남쪽 줄)
     def row(names, x, y, x_end):
@@ -78,13 +88,33 @@ def build():
             m.prop(PROPS[k], px, py)
     m.stamp("cart", 46, 29)
 
-    # 남문 망루
+    # 남문: 기존의 판타지 조각상 타일 대신 성벽 기둥과 통행 가능한 기와 처마.
+    # 실존 개성 남대문의 복원이 아닌, 기존 자산을 재조합한 시각 비교안이다.
     for tx in (gate_x0 - 2, gate_x1 + 1):
         for dy in range(2):
             for dx in range(2):
                 m.high[wall_y - 1 + dy][tx + dx] = None
-                m.obj[wall_y - 1 + dy][tx + dx] = K("towers", 12 + dx, 0 + dy)
+                m.obj[wall_y - 1 + dy][tx + dx] = WALL_TOP if dy == 0 else WALL_BOTTOM
                 m.blocked[wall_y - 1 + dy][tx + dx] = True
+                m.reserved[wall_y - 1 + dy][tx + dx] = True
+    for dx, sx in enumerate((12, 13, 14, 13, 14, 15)):
+        for dy in range(2):
+            m.high[wall_y - 2 + dy][gate_x0 - 1 + dx] = K("house", sx, dy, "slate")
+            m.reserved[wall_y - 2 + dy][gate_x0 - 1 + dx] = True
+
+    # 물건과 작업자를 한 장소에 묶어 수도의 물류 동선을 보여 준다.
+    m.stamp("cart", 58, 34, force=True)
+    for px, py, prop in [(48, 28, 0), (48, 29, 1), (53, 27, 2), (58, 30, 0), (58, 31, 1)]:
+        if not m.obj[py][px] and not m.high[py][px] and not m.road[py][px]:
+            m.prop(PROPS[prop], px, py)
+    m.add("worker", 50, 25, name="시전 짐꾼", character="villager_dog_tall",
+          lines=["동문 쪽 짐은 이 마당에서 나눠 싣소. 종이는 닥나무 마을에서 들어오고, 다른 짐은 나루 길로 나가지.",
+                 "장터는 이 길 서쪽이오. 한꺼번에 많이 팔면 값이 내려가니, 몇 개를 팔지 먼저 살펴보시오."],
+          path=[(50, 25), (50, 30)])
+    m.add("worker", 38, 23, name="시전 행상", character="villager_fox_tall",
+          lines=["나루에서 소금을 가져왔소? 여기서 팔 값과 돌아갈 때 살 물건을 함께 살펴보시오.",
+                 "나는 남이 알려 준 값보다 직접 본 장부를 먼저 보오. 그 값도 다음번에는 달라질 수 있지."],
+          path=[(38, 23), (45, 23)])
     # 사람
 
     m.add("npc", 28, 26, npc="gaekju")                 # 객주: 남문에서 올라오면 바로 보이는 곳
@@ -94,7 +124,10 @@ def build():
     m.walker([(32, 30), (32, 37), (32, 44)], idx=3)
     m.link("S", gate_x0, 4, "Route01", "N", "S")      # 남문 (폭 4) ↔ 예성 길 북쪽
     m.link("E", 22, 3, "Dakmok", "W", "E")            # 시전 거리 동쪽 끝 (폭 3) ↔ 닥나무 마을
-    m.sign(29, 38, "↑ 만월대 · ← 서문 · 시전 거리 →\n동문 밖 닥나무 마을 5리")
+    m.sign(29, 36, "개경 남문 안\n↑ 시전 장터 · 객주 · 의뢰 게시판\n시전에서 동쪽으로 가면 닥나무 마을, 남문 밖은 나루 가는 길.")
+    m.sign(34, 26, "시전 갈림길\n↑ 궁성 앞마당 · → 동문과 닥나무 마을\n← 객주와 게시판 · ↓ 남문과 예성 나루")
+    m.sign(52, 25, "동문 짐 마당\n← 개경 장터 · → 닥나무 마을\n종이와 생활재를 실어 나르는 길. 적치된 짐은 통행로 밖에 두자.")
+    m.sign(34, 11, "궁성 앞마당\n↓ 시전 거리 · 남문\n높은 터에서 내려다보면 시전과 남문으로 이어지는 큰길이 보인다.")
     villagers = [(20, 23, 0), (40, 24, 1), (31, 15, 2), (44, 22, 0), (16, 32, 1), (47, 32, 2), (25, 12, 0), (38, 13, 1)]
     for i, (vx, vy, sp) in enumerate(villagers):
         m.add("villager", vx, vy, variant=sp, idx=i)
