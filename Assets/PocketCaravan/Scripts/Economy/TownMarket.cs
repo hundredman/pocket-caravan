@@ -163,7 +163,7 @@ namespace PocketCaravan
                 string origin = selected.originTown != null ? selected.originTown.displayName : "여러 마을";
                 string owned = p.cargo.Count(selected) > 0
                     ? $" · 내 원가 {p.cargo.AverageCost(selected):0.#} · 이곳 손익 {Signed(market.SellPrice(selected) - p.cargo.AverageCost(selected))}냥/개" : "";
-                Line($"{selected.displayName} · 산지 {origin}{owned}");
+                Line($"{selected.displayName} · 기준 공급지 {origin}{owned}");
                 bool any = false;
                 int shown = 0;
                 foreach (var other in gm.Db.towns)

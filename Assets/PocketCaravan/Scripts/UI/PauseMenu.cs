@@ -29,12 +29,18 @@ namespace PocketCaravan
             if (!open) return;
             UIStyle.Begin();
             GUI.depth = -10;   // 다른 글자들 위에
-            float w = 180, h = 150;
+            float w = 180, h = 174;
             var r = new Rect((UIStyle.VirtualWidth - w) / 2, (UIStyle.VirtualHeight - h) / 2, w, h);
             GUI.Box(r, "", UIStyle.Box);
             GUI.Label(new Rect(r.x, r.y + 8, w, 14), "Pocket Caravan", UIStyle.CenterRich);
             float y = r.y + 28;
             if (Button(ref y, r, "계속하기 (Esc)")) Close();
+            if (Button(ref y, r, "상업 백과"))
+            {
+                Close();
+                GameManager.I.GetComponent<CommerceGuideUI>().Open();
+                return;
+            }
             if (Button(ref y, r, "저장하기")) { GameManager.I.SaveNow(); message = "저장했다."; Sfx.Play("accept"); }
             if (Button(ref y, r, AudioManager.Muted ? "소리 켜기" : "소리 끄기")) AudioManager.ToggleMute();
             if (Button(ref y, r, confirmNew ? "정말 처음부터? (한 번 더)" : "처음부터 시작"))

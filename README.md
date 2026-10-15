@@ -13,7 +13,9 @@
 3. `Assets/PocketCaravan/Scenes/Goryeo/Naru.unity`(예성 나루 마을)를 열고 Play.
    데이터나 맵을 다시 만들 때는 메뉴 **Pocket Caravan > 1. 시작 세트 만들기**.
 
-조작: 방향키/WASD 이동 · Shift 달리기 · Space 말 걸기·확인 · Q 퀘스트 목록 · M 지도 · L 교역 장부 · Esc 메뉴(저장·소리·처음부터)
+조작: 방향키/WASD 이동 · Shift 달리기 · Space 말 걸기·확인 · Q 퀘스트 목록 · M 지도 · L 교역 장부 · Esc 메뉴(상업 백과·저장·소리·처음부터)
+
+원본 시대 배경은 대항해시대 이전, 대략 8~15세기의 상인 문화를 모은 가상 교역 세계다. 고려를 특정 연도의 복원 게임으로 한정하지 않는다. [고려 전체 디자인·고증 검토](Docs/GoryeoDesignReview.md)에서 근거·각색·미구현 요소와 완료 기준을 구분한다. 게임의 **Esc → 상업 백과**에서도 역사적 모티브와 게임 각색을 선택해서 읽을 수 있다.
 
 **시스템 바로 테스트:** Unity 메뉴 **Pocket Caravan > Tests > 이동·운반 시험장 열기** 후 Play.
 튜토리얼 없이 1/2로 등짐·손수레, 3~6으로 적재량을 바꾸며 세 지형 경로를 비교한다.
@@ -30,6 +32,7 @@ R 재시작, Tab 전체 보기. [시험장 안내](Assets/CaravanMovementLab/REA
 | 배달 의뢰 게시판 (마을마다 3개, 기한·짐 상태·보수·신용, 부분 성공) | `Scripts/Contracts/` |
 | 재고 기반 시세, 사고팔기, 손수레, 마을 등급 1~3 (커지면 노점 짐이 늘어남) | `Scripts/Economy/`, `World/TownGrowthProp` |
 | 품목별 원가·판매 손익과 방문 시세 장부(L), 방문별 판매 정산 | `Economy/TradeLedger`, `TownMarket`, `UI/TradeLedgerUI` |
+| 역사적 모티브·게임 각색·여행 힌트를 나눈 선택형 상업 백과 7개 카드 | `UI/CommerceGuideUI`, `Resources/CommerceGuide/Goryeo.json` |
 | 나루 짐꾼·닥목 종이 작업장과 작업 왕복 연출, 거리별 물가 주변음 | `World/WorkingNpc`, `Audio/MapAmbience`, `Tools/MapGen` |
 | 도적 (예성 길, 밤에 잦음: 달려서 따돌리거나 통행료) | `World/Bandit`, `BanditSpot` |
 | 돌발 사건: 쓰러진 행인(신용 +1), 떠돌이 상인(싸게 팜) | `World/RoadEvent` |

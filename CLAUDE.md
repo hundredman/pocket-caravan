@@ -5,6 +5,7 @@
 최신 요구는 `Docs/GameDesign.md`, 온라인 설계는 `Docs/MultiplayerPlan.md`, 일정·통과 기준·결정 목록은 `Docs/DeliveryPlan.md`를 먼저 확인한다. `Docs/DevelopmentReview.md`는 구현 차이와 검토 기록이다. 아래 구조 설명은 현재 로컬 2D 구현 기준이다.
 
 ## 현재 작업 범위
+- 시대는 원본 기획서 1·12·13쪽의 대항해시대 이전(대략 8~15세기) 상인 문화를 모은 가상 세계다. 918~1066년은 활동 시기 중첩 설명이며 단일 기준 연도가 아니다. 고려를 12세기 단일 복원으로 임의 변경하지 않는다. 역사·각색의 근거는 `Docs/GoryeoDesignReview.md` 확인
 - 사용자 목표: 4주 내 4개 스타팅 지역과 여러 십자 연결 구역으로 MVP 구성. 최종 세계는 여러 마을·도시와 분기 교역로가 있는 대륙으로 확장
 - 사용자 확인: 기본 시스템 구현 선행 → 4주 최종 2~4명 실제 멀티플레이. 추가 인원은 별도 검증. 단순 이동 동기화만으로 공유 교역/영속 저장 완료라고 기록하지 않는다
 - 다른 문명은 여러 중간 구역을 거쳐 도착한다. 고려 옆에 서역을 바로 배치하는 축약은 목표 여정을 검증하지 못한다
@@ -33,6 +34,7 @@
 - 출구 `MapExit` → `GameManager.TravelTo(scene, spawnId)` → 도착 씬의 `SpawnPoint(id)`
 - 시세: `MarketMath`(공식) + `MarketState`(마을별 실행 상태). 데이터는 `TownData`, `ItemData`
 - 장부: `PlayerState.ledger`의 `TradeLedger`에 방문한 장터 시세만 기록하고 저장한다. `TradeLedgerUI`(L)는 미방문지를 미확인으로 표시한다. 외지 가격은 마지막 확인값이며 원격 실시간 조회/수익 보장이 아니다. `ledgerStaleMultiplier`는 미적용
+- 백과: Esc → 상업 백과, `CommerceGuideUI` + `Resources/CommerceGuide/Goryeo.json`. 역사/게임 각색/여행 힌트/출처를 분리한다. 선택해서 읽는 고정 정보이며 발견 보상·시장 원격 조회·고려 출신 능력이 아니다. 공급 거점(`originTown`)과 역사적 재배지를 동일시하지 않는다
 - 생활 연출: `WorkingNpc`는 두 작업 지점을 오가며 짐을 들고 멈춘다. `MapAmbience`는 거리와 음소거에 따라 주변음만 조절한다. 두 기능은 생산/공유 시장 상태를 바꾸지 않는다
 - 길: 맵에 미리 칠한 Road 타일의 등급만 읽는다 (`RoadGrid`). 플레이어가 길을 만드는 기능은 넣지 않는다 (MMORPG에서 맵이 망가짐)
 - 퀘스트: `QuestData`(단계 목록) + `QuestManager`(GameEvents를 듣고 진행) + `QuestNpc`(!/? 표시). 대화창 `DialogueUI`, 진행 표시 `QuestTracker`

@@ -48,7 +48,7 @@ namespace PocketCaravan
             foreach (var item in gm.Db.items) if (item != null && !item.questItem) count++;
             float contentWidth = Mathf.Max(viewport.width - 18, 116 + gm.Db.towns.Count * 116);
             scroll = GUI.BeginScrollView(viewport, scroll, new Rect(0, 0, contentWidth, 30 + count * 30));
-            GUI.Label(new Rect(4, 2, 106, 24), "품목 / 산지", UIStyle.Small);
+            GUI.Label(new Rect(4, 2, 106, 24), "품목 / 기준 공급지", UIStyle.Small);
             for (int t = 0; t < gm.Db.towns.Count; t++)
                 if (gm.Db.towns[t] != null) GUI.Label(new Rect(116 + t * 116, 2, 110, 24), gm.Db.towns[t].displayName, UIStyle.Small);
             int row = 0;

@@ -88,6 +88,7 @@ namespace PocketCaravan
             gameObject.AddComponent<AmbientFX>();
             gameObject.AddComponent<WorldMapUI>();
             gameObject.AddComponent<TradeLedgerUI>();
+            gameObject.AddComponent<CommerceGuideUI>();
             gameObject.AddComponent<PauseMenu>();
             SceneManager.sceneLoaded += OnSceneLoaded;
 
