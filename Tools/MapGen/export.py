@@ -1,7 +1,9 @@
 """맵 JSON과 사용한 타일 PNG를 Unity 프로젝트 구조로 내보낸다."""
 import json, os, sys, shutil
 import maps, gaegyeong
+import cartography
 from tiles import tile_image
+from PIL import Image
 
 # 사용법: python3 export.py <저장소 루트>  (기본: 이 파일 기준 저장소 루트)
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file__), "..", "..")
@@ -27,8 +29,10 @@ def obj_json(o):
 
 
 used = set()
+world_maps = []
 for f in (maps.naru, maps.route01, gaegyeong.build, maps.dakmok):
     m = f()
+    world_maps.append(m)
     palette = [""]
     index = {"": 0}
     def flat(layer):
@@ -53,5 +57,13 @@ for f in (maps.naru, maps.route01, gaegyeong.build, maps.dakmok):
         json.dump(d, fp, ensure_ascii=False, separators=(",", ":"))
     m.render(os.path.join(os.path.dirname(__file__), "preview_" + m.id + ".png"))
 for k in used:
-    tile_image(k).save(os.path.join(tile_dir, name_of(k) + ".png"))
+    path = os.path.join(tile_dir, name_of(k) + ".png")
+    image = tile_image(k)
+    # Pillow 버전별 PNG 압축 차이만으로 모든 원본 타일이 변경되지 않게 한다.
+    if os.path.exists(path):
+        with Image.open(path) as old:
+            if old.size == image.size and old.convert("RGBA").tobytes() == image.tobytes():
+                continue
+    image.save(path)
+cartography.export(world_maps, OUT)
 print(len(used), "tiles")

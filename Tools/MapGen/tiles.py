@@ -1,6 +1,6 @@
 """Ninja Adventure 타일 카탈로그, 자동 타일(오토타일), 미리보기."""
 import os, random, colorsys
-from PIL import Image
+from PIL import Image, ImageDraw
 
 # 에셋 팩 위치: 환경 변수 NA_PACK, 없으면 저장소 옆 폴더 (팀 프로젝트/Ninja Adventure - Asset Pack)
 PACK = os.environ.get("NA_PACK", os.path.join(os.path.dirname(__file__), "..", "..", "..", "Ninja Adventure - Asset Pack"))
@@ -43,11 +43,37 @@ def recolor(tile, mode):
 
 def tile_image(key):
     """key = 'sheet:x:y' 또는 'sheet:x:y@recolor'"""
+    if key.startswith("wood:"):
+        _, direction, post = key.split(":")
+        t = Image.new("RGBA", (16, 16))
+        d = ImageDraw.Draw(t)
+        d.rectangle((1, 1, 3, 15), fill="#533d2f")
+        d.rectangle((1, 1, 2, 15), fill="#ad8050")
+        if post == "1":
+            d.rectangle((0, 1, 5, 6), fill="#4c372c")
+            d.rectangle((1, 1, 4, 4), fill="#d0a66c")
+            d.point((2, 2), fill="#f0cd8c")
+        if direction == "railhtop":
+            return t.transpose(Image.Transpose.ROTATE_270)
+        if direction == "railhbottom":
+            return t.transpose(Image.Transpose.ROTATE_90)
+        if direction == "railvright":
+            return t.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+        return t
     base, _, rc = key.partition("@")
     s, x, y = base.split(":")
     x, y = int(x), int(y)
     t = sheet(s).crop((x * 16, y * 16, x * 16 + 16, y * 16 + 16))
-    if rc:
+    if rc.startswith("wood"):
+        t = t.copy()
+        px = t.load()
+        for yy in range(16):
+            for xx in range(16):
+                r, g, b, a = px[xx, yy]
+                px[xx, yy] = (int(r * .67), int(g * .76), min(255, int(b * .9 + 9)), a)
+        if rc == "woodturn":
+            t = t.transpose(Image.Transpose.ROTATE_90)
+    elif rc:
         t = recolor(t.copy(), rc)
     return t
 
@@ -94,7 +120,7 @@ TOWN = K("floor", 0, 5)            # 도시 바닥 (다져진 흙)
 TOWN_VARIANTS = [K("floor", 1, 5), K("floor", 2, 5), K("floor", 3, 5), K("floor", 4, 5)]
 SAND_ORIGIN = ("floor", 0, 0)      # 도시 바닥 위 큰길
 WATER_ORIGIN = ("water", 0, 6)     # 풀밭 위 물
-PLANK = K("water", 1, 13)          # 다리·나루 판자
+PLANK = K("water", 1, 13)          # 이전 맵 호환용 판자
 DECO = [K("detail", 0, 2), K("detail", 1, 2), K("detail", 2, 2), K("detail", 3, 2), K("detail", 5, 2), K("detail", 6, 2)]
 FLOWERS = [K("detail", 5, 2), K("detail", 2, 0)]
 
@@ -159,6 +185,8 @@ class Map:
         self.blocked = [[False] * w for _ in range(h)]
         self.reserved = [[False] * w for _ in range(h)]  # 자동 배치(나무 등)를 막는 칸
         self.objects = []   # 스폰, 출구, NPC
+        self.decks = {}     # 판자 바닥을 길/물 오토타일에서 보호
+        self.stamps = []    # 배치한 묶음 기록 (조각 누락 검증용)
         self.hours = 0      # 이 맵을 지날 때 흐르는 게임 시간 (길 맵)
 
     def inside(self, x, y):
@@ -178,6 +206,9 @@ class Map:
             for i in range(steps + 1):
                 t = i / max(1, steps)
                 cx, cy = round(ax + (bx - ax) * t), round(ay + (by - ay) * t)
+                # 폭 1 대각선도 상하좌우로 연결한다. 모서리만 닿는 길을 만들지 않는다.
+                if i and cx != prev_x and cy != prev_y:
+                    self.road_rect(prev_x, cy, prev_x + width - 1, cy + width - 1, grade)
                 off = self.rng.choice([0, 0, 0, 1]) if wobble else 0
                 for dx in range(width):
                     for dy in range(width):
@@ -185,6 +216,7 @@ class Map:
                         if self.inside(x, y):
                             self.road[y][x] = max(self.road[y][x], grade)
                             self.reserved[y][x] = True
+                prev_x, prev_y = cx, cy
 
     def road_blob(self, cx, cy, rx, ry, grade=1, jitter=0.15):
         """둥근 마당·광장 (타원, 가장자리를 조금 들쭉날쭉)"""
@@ -247,13 +279,30 @@ class Map:
                     self.water[y][x] = True
                     self.reserved[y][x] = True
 
-    def bridge(self, x0, y0, x1, y1):
+    def bridge(self, x0, y0, x1, y1, dock=False):
+        """방향에 맞는 외곽 판자·난간·기둥을 갖춘 목조 다리/선착장."""
+        horizontal = not dock and (x1 - x0 >= y1 - y0)
         for y in range(y0, y1 + 1):
             for x in range(x0, x1 + 1):
                 self.water[y][x] = False
-                self.ground[y][x] = PLANK
+                # 원본 에셋의 3x3 목재 플랫폼. 세로 다리에는 판재 방향도 돌린다.
+                sx = 0 if x == x0 else 2 if x == x1 else 1
+                sy = 12 if y == y0 else 14 if y == y1 else 13
+                if horizontal:
+                    sx = 0 if y == y1 else 2 if y == y0 else 1
+                    sy = 12 if x == x0 else 14 if x == x1 else 13
+                key = K("water", sx, sy, "woodturn" if horizontal else "wood")
+                self.ground[y][x] = key
+                self.decks[(x, y)] = key
                 self.road[y][x] = max(self.road[y][x], 2)
                 self.reserved[y][x] = True
+        # 난간은 이동 가능한 칸 가장자리에만 그린다. 충돌을 추가하지 않는다.
+        edges = [(x, y) for y in range(y0, y1 + 1) for x in range(x0, x1 + 1)
+                 if (y in (y0, y1) if horizontal else x in (x0, x1))]
+        for x, y in edges:
+            end = x in (x0, x1) if horizontal else y in (y0, y1)
+            direction = ("railhtop" if y == y0 else "railhbottom") if horizontal else ("railvleft" if x == x0 else "railvright")
+            self.deco[y][x] = f"wood:{direction}:{1 if end else 0}"
 
     def can_place(self, x, y, w, h, margin=0):
         for yy in range(y - margin, y + h + margin):
@@ -265,6 +314,12 @@ class Map:
     def stamp(self, name, x, y, force=False, over_road=False):
         """force: 예약 칸이어도 놓음. 그래도 막히는 칸이 길 위면 놓지 않는다 (over_road=True만 예외)."""
         s, sx, sy, w, h, block_from, high_rows, rc = STAMPS[name]
+        if not self.inside(x, y) or not self.inside(x + w - 1, y + h - 1):
+            return False
+        # force도 이미 놓은 집/나무를 타일 단위로 덮어쓰지는 않는다.
+        if any(self.obj[y + dy][x + dx] or self.high[y + dy][x + dx]
+               for dy in range(h) for dx in range(w)):
+            return False
         if not force and not self.can_place(x, y, w, h):
             return False
         if not over_road:
@@ -284,6 +339,7 @@ class Map:
                     self.blocked[y + dy][x + dx] = True
                     self.road[y + dy][x + dx] = 0   # 집·나무 밑으로 길이 지나가지 않게
                 self.reserved[y + dy][x + dx] = True
+        self.stamps.append((name, x, y))
         return True
 
     def door_path(self, hx, hy, w, h, to_y, door_dx=1):
@@ -320,31 +376,26 @@ class Map:
     def forest_border(self, thickness=2, density=1.0, kinds=("pine", "tree"), big=("pinebig", "roundbig")):
         """맵 가장자리를 나무로 두른다 (빈틈 없이 막히게). 먼저 큰 나무 덩어리, 빈틈은 작은 나무로."""
         if big:
-            for y in range(-2, self.h, 3):
-                for x in range(-2, self.w, 4):
+            for y in range(0, self.h - 2, 3):
+                for x in range(0, self.w - 3, 4):
                     edge = x < thickness or y < thickness or x + 4 > self.w - thickness or y + 3 > self.h - thickness
                     if edge and self.rng.random() < 0.55:
                         self.stamp_clipped(self.rng.choice(big), x + self.rng.randint(0, 1), y)
-        for y in range(-1, self.h, 2):
-            for x in range(-1, self.w, 2):
+        for y in range(0, self.h - 1, 2):
+            for x in range(0, self.w - 1, 2):
                 edge = x < thickness or y < thickness or x >= self.w - thickness - 1 or y >= self.h - thickness - 1
                 if edge and self.rng.random() < density:
                     self.stamp_clipped(self.rng.choice(kinds), x, y)
 
     def stamp_clipped(self, name, x, y):
-        s, sx, sy, w, h, block_from, high_rows, rc = STAMPS[name]
-        for dy in range(h):
-            for dx in range(w):
-                xx, yy = x + dx, y + dy
-                if not self.inside(xx, yy) or self.reserved[yy][xx]:
-                    continue
-                key = K(s, sx + dx, sy + dy, rc)
-                if dy < high_rows:
-                    self.high[yy][xx] = key
-                    self.blocked[yy][xx] = True  # 가장자리는 위쪽도 막는다
-                else:
-                    self.obj[yy][xx] = key
-                    self.blocked[yy][xx] = True
+        # 나무는 한 그루 단위로 놓거나 건너뛴다. 길 옆에 수관/밑동 조각을 남기지 않는다.
+        if not self.stamp(name, x, y):
+            return False
+        _, _, _, w, h, *_ = STAMPS[name]
+        for yy in range(y, y + h):
+            for xx in range(x, x + w):
+                self.blocked[yy][xx] = True
+        return True
 
     def scatter(self, name, count, area=None, margin=1):
         x0, y0, x1, y1 = area or (0, 0, self.w - 1, self.h - 1)
@@ -478,16 +529,16 @@ class Map:
             if not self.inside(a, b):
                 # 맵 밖은 가장자리 칸을 그대로 이어 본다 (길이 맵 경계에서 끊겨 보이지 않게)
                 a = min(max(a, 0), self.w - 1); b = min(max(b, 0), self.h - 1)
-            return self.road[b][a] > 0 or self.ground[b][a] == PLANK
+            return self.road[b][a] > 0 or (a, b) in self.decks
 
         def water_mask(a, b):
             if not self.inside(a, b):
                 return True  # 맵 밖으로 이어지는 물은 가장자리 없이
-            return self.water[b][a] or self.ground[b][a] == PLANK  # 다리 밑으로 물이 이어지게
+            return self.water[b][a] or (a, b) in self.decks  # 다리 밑으로 물이 이어지게
 
         for y in range(self.h):
             for x in range(self.w):
-                if self.ground[y][x] == PLANK:
+                if (x, y) in self.decks:
                     continue
                 if self.ground[y][x] is not None and self.road[y][x] == 0 and not self.water[y][x]:
                     continue  # 언덕처럼 미리 정한 바닥

@@ -11,7 +11,7 @@ def naru():
     m = Map("Naru", "예성 나루 마을", 40, 28, seed=5)
     # 남쪽 강과 나루
     m.river_h(22, 27, wiggle=2, fixed=range(8, 15))              # 구불구불한 강가 (나루 앞은 반듯)
-    m.bridge(9, 19, 11, 24)                                      # 나루 판자
+    m.bridge(9, 19, 11, 24, dock=True)                           # 기둥·난간을 갖춘 선착장
     m.stamp("boat", 12, 23, force=True, over_road=True)
 
     # 마당과 길: 나루 → 마당 → 동쪽 예성 길
@@ -29,6 +29,7 @@ def naru():
     for name, hx, hy in houses:
         m.stamp(name, hx, hy, force=True)
     m.door_path(17, 3, 4, 3, 7)        # 촌장 댁 → 정자나무
+    m.road_path([(18, 7), (17, 7), (17, 11), (17, 13)], width=1)  # 나무를 돌아 마당까지
     m.door_path(5, 5, 4, 3, 12)
     m.road_path([(6, 12), (10, 12), (10, 14)], width=1)
     m.door_path(27, 5, 4, 3, 12)
@@ -83,23 +84,34 @@ def route01():
     """예성 길: 서쪽 나루 마을에서 들어와 주막에서 쉬고, 시내를 건너 북쪽 개경 남문으로 올라간다."""
     m = Map("Route01", "예성 길", 54, 34, seed=7)
     m.hours = 3                                   # 지나는 데 반나절쯤 걸리는 길
-    m.river_v(28, 30, wiggle=1, fixed_rows=range(12, 19))   # 구불구불한 시내 (다리 근처는 반듯)
-    m.road_path([(0, 9), (9, 9), (13, 12), (22, 14), (34, 15), (42, 16)], width=2)
-    m.bridge(28, 14, 30, 16)
-    m.road_path([(42, 16), (42, 10), (39, 6), (39, 0)], width=4, grade=2)   # 개경 남문 쪽 (폭 4)
+    m.river_v(28, 30, wiggle=1, fixed_rows=(*range(3, 7), *range(12, 19)))   # 구불구불한 시내 (다리 근처는 반듯)
+    m.road_path([(0, 9), (9, 9), (13, 12), (22, 14), (34, 15), (42, 16)], width=2, grade=3)
+    m.bridge(27, 14, 31, 16)                      # 물가까지 닿는 양쪽 교대
+    m.road_path([(42, 16), (42, 10), (39, 6), (39, 0)], width=4, grade=3)   # 개경 남문 쪽 (폭 4)
+    # 두 길은 같은 분기/합류점을 잇는다. 큰길은 수레, 짧은 숲길은 등짐에 유리하다.
+    # 별도 속도 보너스를 만들지 않고 본편 VehicleData의 노면별 속도를 그대로 사용한다.
+    m.road_path([(10, 10), (5, 5), (16, 3), (21, 2), (25, 4), (34, 4), (39, 6)], width=1, grade=1)
+    m.bridge(27, 4, 31, 5)                          # 숲길의 작은 목교. 새 문명 연결이 아님
+    for by in (4, 5):                              # 좁은 목교도 숲길과 같은 노면 등급
+        for bx in range(27, 32):
+            m.road[by][bx] = 1
     m.link("W", 8, 4, "Naru", "E", "W")           # 나루 마을과 같은 8~11행, 길 9~10행
     m.link("N", 39, 4, "Gaegyeong", "S", "N")     # 개경 남문 폭 4
 
     # 주막: 길손이 쉬어 가는 곳
     m.stamp("house_thatch", 16, 7, force=True)
+    m.door_path(16, 7, 4, 3, 13)                 # 주막 입구에서 교역로까지
     m.stamp("bench", 21, 10, force=True)
     m.prop(K("element", 3, 0), 15, 10); m.prop(K("element", 1, 1), 20, 9)
     m.talker(18, 11, "주모", "villager_tanuki_tall", "먼 길 가시오? 개경 남문까지는 시내 건너 한참이오. 쉬었다 가시구려.",
-             "개경에 처음 가면 남문 앞 큰길만 따라가시오. 길 잃을 일 없소.")
+             "짐수레라면 이 앞 큰 다리로 가시오. 넓은 길이라 바퀴가 잘 구르오.",
+             "등짐이 가벼우면 서쪽 갈림길에서 숲길로 가도 되오. 작은 다리를 건너면 남문 길에서 다시 만나오.")
 
     # 이정표
-    m.sign(6, 12, "← 예성 나루 마을 5리\n개경 남문 20리 →")
+    m.sign(8, 11, "개경 남문 가는 두 길\n↑ 숲길 · 가까운 길 / 등짐 권장\n→ 주막 큰길 · 돌아가지만 수레가 빠름")
     m.sign(45, 19, "↑ 개경 남문 10리\n← 예성 나루 마을 15리")
+    m.sign(37, 5, "← 작은 다리 · 나루 숲길\n↓ 큰 다리 · 주막 큰길\n↑ 개경 남문")
+    m.sign(25, 5, "작은 다리 숲길\n짧지만 좁고 울퉁불퉁하다.\n짐이 흔들리면 걷거나 잠시 쉬어 가자.")
 
     # 길에서 만나는 사람
     m.talker(35, 17, "길손", "villager_fox_tall", "벽란도에서 오는 길이오. 거기는 송나라 배가 드나들어 별 물건이 다 있소.")
@@ -117,6 +129,9 @@ def route01():
     m.walker([(31, 16), (36, 16), (41, 16), (42, 11), (40, 3)], idx=1)
 
     m.forest_border(thickness=2, big=("pinebig", "roundbig", "pinebig"))
+    # 숲길 주변은 나무를 군집 배치한다. 통행 예약 칸에는 묶음 전체를 놓지 않는다.
+    for tx, ty in [(13, 5), (21, 6), (33, 7), (35, 1)]:
+        m.stamp("pinebig", tx, ty)
     # 숲 덩어리와 꽃나무: 길 양쪽 경치
     m.scatter("pinebig", 4, area=(3, 18, 50, 29), margin=1)
     m.scatter("roundbig", 3, area=(3, 2, 50, 7), margin=1)
@@ -146,7 +161,7 @@ def dakmok():
     m.stamp("house_plain", 14, 3); m.door_path(14, 3, 4, 3, 8)
     m.stamp("house_thatch", 23, 3); m.door_path(23, 3, 4, 3, 9); m.road_path([(24, 9), (22, 10)], width=1)
     m.stamp("house_plain", 4, 14); m.road_path([(5, 17), (9, 17), (12, 13), (13, 12)], width=1)
-    m.stamp("house_thatch", 13, 16); m.road_path([(14, 19), (21, 19), (23, 13)], width=1)
+    m.stamp("house_thatch", 13, 16); m.road_path([(14, 19), (21, 19), (23, 13), (21, 12)], width=1)
 
     # 종이 말리는 틀과 빨래, 장독
     m.stamp("rack", 28, 9); m.stamp("rack", 28, 5)

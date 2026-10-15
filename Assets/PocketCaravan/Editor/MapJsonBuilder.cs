@@ -107,6 +107,18 @@ namespace PocketCaravan.EditorTools
         /// <summary>맵 사이 연결과 NPC·장터 위치를 Resources/WorldIndex에 적는다 (길 안내용).</summary>
         static void BuildWorldIndex()
         {
+            const string terrainPath = Root + "/Resources/WorldMap/GoryeoTerrain.png";
+            var terrainImporter = AssetImporter.GetAtPath(terrainPath) as TextureImporter;
+            if (terrainImporter != null)
+            {
+                terrainImporter.textureType = TextureImporterType.Default;
+                terrainImporter.filterMode = FilterMode.Point;
+                terrainImporter.mipmapEnabled = false;
+                terrainImporter.isReadable = true;
+                terrainImporter.textureCompression = TextureImporterCompression.Uncompressed;
+                terrainImporter.maxTextureSize = 2048;
+                terrainImporter.SaveAndReimport();
+            }
             const string indexPath = Root + "/Resources/WorldIndex.asset";
             var index = AssetDatabase.LoadAssetAtPath<WorldIndex>(indexPath);
             if (index == null) { index = ScriptableObject.CreateInstance<WorldIndex>(); AssetDatabase.CreateAsset(index, indexPath); }
@@ -350,6 +362,12 @@ namespace PocketCaravan.EditorTools
             vol.sharedProfile = PostFxProfile();
 
             EditorSceneManager.SaveScene(scene, path);
+        }
+
+        /// <summary>별도 도구에서 한 장만 생성. 본편 맵 색인·빌드 씬 목록을 다시 쓰지 않는다.</summary>
+        public static void BuildSingleMap(string json, string scenePath)
+        {
+            BuildScene(JsonUtility.FromJson<MapFile>(json), scenePath);
         }
 
         /// <summary>모든 맵이 함께 쓰는 후처리 설정. 코드가 기준이라 매번 값을 다시 쓴다.</summary>

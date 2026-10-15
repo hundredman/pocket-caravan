@@ -101,6 +101,29 @@ namespace PocketCaravan
 
         void OnApplicationQuit() => SaveNow();
 
+        /// <summary>분리된 시스템 테스트 씬 전용. 본편 저장/튜토리얼/시간 진행을 연결하지 않는다.</summary>
+        public void EnterTestSession()
+        {
+            autosave = false;
+            saveToLoad = null;
+            firstSceneLoaded = true;
+            fade = 0f;
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            Player.cargo.Clear();
+            Player.contracts.Clear();
+            Player.origin = null;
+            Player.money = Player.credit = 0;
+            Player.stamina = 1f;
+            Player.shake = 0f;
+            Drops.Clear();
+            Quests = new QuestManager(new List<QuestData>());
+            Clock.minuteOfDay = 12 * 60;
+            // HUD·대화·메뉴·NPC 시뮬레이션은 테스트 씬 자체 UI로 대체한다.
+            foreach (var component in GetComponents<MonoBehaviour>()) component.enabled = false;
+            foreach (var source in GetComponents<AudioSource>()) source.Stop();
+            UIState.Blocking = false;
+        }
+
         UnityEngine.Rendering.Universal.Light2D sun;
         static readonly Color DayColor = new Color(1f, 0.98f, 0.93f);
         static readonly Color DuskColor = new Color(1f, 0.78f, 0.6f);
@@ -150,28 +173,25 @@ namespace PocketCaravan
             UIState.Blocking = false;
 
             // 처음 연 씬이 시작 맵이면 저장을 불러온다. 다른 씬에서 바로 Play한 경우(개발 중)는 불러오지도, 덮어쓰지도 않는다.
-            if (first && saveToLoad != null)
+            if (first && scene.buildIndex != 0)
             {
-                if (scene.buildIndex == 0)
+                autosave = false;
+                saveToLoad = null;
+                Debug.Log("[저장] 시작 맵이 아닌 씬에서 Play: 저장을 불러오지 않고 자동 저장도 끕니다.");
+            }
+            else if (first && saveToLoad != null)
+            {
+                var d = saveToLoad;
+                saveToLoad = null;
+                Apply(d);
+                if (!string.IsNullOrEmpty(d.scene) && d.scene != scene.name)
                 {
-                    var d = saveToLoad;
-                    saveToLoad = null;
-                    Apply(d);
-                    if (!string.IsNullOrEmpty(d.scene) && d.scene != scene.name)
-                    {
-                        StartCoroutine(Travel(d.scene, null, 0f, new Vector2Int(d.fx, d.fy), new Vector3(d.px, d.py, 0f)));
-                        return;
-                    }
-                    pendingExact = new Vector3(d.px, d.py, 0f);
-                    pendingFacing = new Vector2Int(d.fx, d.fy);
-                    Notify.Show("이어서 한다 (Esc 메뉴에서 처음부터 시작 가능)", 4f);
+                    StartCoroutine(Travel(d.scene, null, 0f, new Vector2Int(d.fx, d.fy), new Vector3(d.px, d.py, 0f)));
+                    return;
                 }
-                else
-                {
-                    autosave = false;
-                    saveToLoad = null;
-                    Debug.Log("[저장] 시작 맵이 아닌 씬에서 Play: 저장을 불러오지 않고 자동 저장도 끕니다.");
-                }
+                pendingExact = new Vector3(d.px, d.py, 0f);
+                pendingFacing = new Vector2Int(d.fx, d.fy);
+                Notify.Show("이어서 한다 (Esc 메뉴에서 처음부터 시작 가능)", 4f);
             }
 
             string id = pendingSpawnId;

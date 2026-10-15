@@ -40,7 +40,12 @@ namespace PocketCaravan
 
     public static class SaveSystem
     {
-        static string Path => System.IO.Path.Combine(Application.persistentDataPath, "pocket_caravan_save.json");
+#if CARAVAN_PREVIEW
+        const string SaveFile = "pocket_caravan_preview_save.json";
+#else
+        const string SaveFile = "pocket_caravan_save.json";
+#endif
+        static string Path => System.IO.Path.Combine(Application.persistentDataPath, SaveFile);
 
         public static bool Exists => File.Exists(Path);
 
