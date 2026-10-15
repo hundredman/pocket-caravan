@@ -3,12 +3,13 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// 화면 오른쪽 위에 진행 중 퀘스트와 지금 할 일을 보여 준다. J로 퀘스트 목록을 연다.
+    /// 화면 오른쪽 위에 진행 중 퀘스트와 지금 할 일을 보여 준다. Q로 퀘스트 목록을 연다.
     /// GameManager가 자동으로 붙인다. 임시 UI(OnGUI)다.
     /// </summary>
     public class QuestTracker : MonoBehaviour
     {
         bool logOpen;
+        Vector2 scroll;
 
         void Update()
         {
@@ -69,6 +70,7 @@ namespace PocketCaravan
             GUI.Box(r, "", UIStyle.Box);
             GUILayout.BeginArea(new Rect(r.x + 10, r.y + 8, w - 20, h - 16));
             GUILayout.Label("퀘스트 목록   (Q 닫기)", UIStyle.Rich);
+            scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(h - 48));
             bool any = false;
             foreach (var p in qm.Active)
             {
@@ -84,6 +86,7 @@ namespace PocketCaravan
                 GUILayout.Space(6);
             }
             if (!any) GUILayout.Label("진행 중인 퀘스트가 없다.");
+            GUILayout.EndScrollView();
             GUILayout.EndArea();
         }
     }

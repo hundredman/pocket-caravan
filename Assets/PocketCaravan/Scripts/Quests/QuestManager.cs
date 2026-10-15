@@ -40,7 +40,7 @@ namespace PocketCaravan
                 if (profit > 0) Advance(ObjectiveType.Profit, null, null, profit);
             };
             GameEvents.VehicleBought += v => AdvanceVehicle(v);
-            GameEvents.ContractFinished += (c, ok) => { if (ok) Advance(ObjectiveType.CompleteContract, null, null, 1); };
+            GameEvents.ContractFinished += (c, ok) => { if (ok && c != null) Advance(ObjectiveType.CompleteContract, c.fromTown, null, 1); };
         }
 
         // ---------- 저장 ----------
@@ -167,8 +167,8 @@ namespace PocketCaravan
             {
                 var o = p.Current;
                 if (o == null || o.type != type) continue;
-                if (!string.IsNullOrEmpty(o.targetId) && targetId != null && o.targetId != targetId) continue;
-                if (o.item != null && item != null && o.item != item) continue;
+                if (!string.IsNullOrEmpty(o.targetId) && o.targetId != targetId) continue;
+                if (o.item != null && o.item != item) continue;
                 p.amount += amount;
                 if (p.amount >= o.count) NextStep(p);
             }

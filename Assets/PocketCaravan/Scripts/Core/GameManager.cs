@@ -223,7 +223,7 @@ namespace PocketCaravan
                 if (map.travelHours > 0 && !loadedFromSave)
                 {
                     Clock.Advance(map.travelHours);
-                    Notify.Show($"{map.displayName} · 걸어서 {map.travelHours}시간 길 ({Clock.Label})", 3f);
+                    Notify.Show(map.displayName, 3f);
                 }
                 else Notify.Show(map.displayName, 2.5f);
                 GameEvents.RaiseMapEntered(map.mapId);
@@ -362,7 +362,7 @@ namespace PocketCaravan
                 fx = pc != null ? pc.Motor.Facing.x : 0, fy = pc != null ? pc.Motor.Facing.y : -1,
                 money = Player.money, credit = Player.credit,
                 vehicle = Player.vehicle != null ? Player.vehicle.id : null,
-                stamina = Player.stamina,
+                stamina = Player.stamina, shake = Player.shake,
                 day = Clock.day, minute = Clock.minuteOfDay,
                 nextContractId = Contracts.nextId,
             };
@@ -385,6 +385,7 @@ namespace PocketCaravan
             Player.credit = d.credit;
             Player.vehicle = Db.vehicles.Find(v => v != null && v.id == d.vehicle) ?? Db.startVehicle;
             Player.stamina = d.stamina;
+            Player.shake = Mathf.Clamp01(d.shake);
             Player.cargo.Clear();
             for (int i = 0; i < d.cargoItems.Count; i++)
             {
@@ -403,8 +404,11 @@ namespace PocketCaravan
                 if (t != null) GetMarket(t).Import(s, ItemById);
             }
             if (d.boards.Count > 0) Contracts.boards = new List<ContractManager.Board>(d.boards);
-            Contracts.InitBoards();
             Contracts.nextId = Mathf.Max(Contracts.nextId, d.nextContractId);
+            foreach (var c in Player.contracts) Contracts.nextId = Mathf.Max(Contracts.nextId, c.id + 1);
+            foreach (var b in Contracts.boards)
+                foreach (var c in b.list) Contracts.nextId = Mathf.Max(Contracts.nextId, c.id + 1);
+            Contracts.InitBoards();
             if (d.traders.Count > 0) Traders.traders = new List<NpcTraders.Trader>(d.traders);
             Drops.Clear(); Drops.AddRange(d.drops);
             cooldowns.Clear();

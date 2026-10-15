@@ -3,6 +3,7 @@
 게임개발(2026-2) 팀 프로젝트. 2D 탑다운 픽셀 교역 게임. 4명 × 4주.
 초기 기획서: 저장소 밖 `팀 프로젝트/기획 문서/GuildAndCargo_출신상인_성장구조계획.pdf`.
 최신 요구는 `Docs/GameDesign.md`, 온라인 설계는 `Docs/MultiplayerPlan.md`, 일정·통과 기준·결정 목록은 `Docs/DeliveryPlan.md`를 먼저 확인한다. `Docs/DevelopmentReview.md`는 구현 차이와 검토 기록이다. 아래 구조 설명은 현재 로컬 2D 구현 기준이다.
+누락 추적은 `Docs/RequirementsAudit.md`의 R01~58과 A01~12를 함께 본다. 원본 요구를 미구현/보류/사용자 폐기 중 어느 것으로 분류했는지 확인하고 임의로 바꾸지 않는다.
 
 ## 현재 작업 범위
 - 시대는 원본 기획서 1·12·13쪽의 대항해시대 이전(대략 8~15세기) 상인 문화를 모은 가상 세계다. 918~1066년은 활동 시기 중첩 설명이며 단일 기준 연도가 아니다. 고려를 12세기 단일 복원으로 임의 변경하지 않는다. 역사·각색의 근거는 `Docs/GoryeoDesignReview.md` 확인
@@ -36,12 +37,12 @@
 - 장부: `PlayerState.ledger`의 `TradeLedger`에 방문한 장터 시세만 기록하고 저장한다. `TradeLedgerUI`(L)는 미방문지를 미확인으로 표시한다. 외지 가격은 마지막 확인값이며 원격 실시간 조회/수익 보장이 아니다. `ledgerStaleMultiplier`는 미적용
 - 백과: Esc → 상업 백과, `CommerceGuideUI` + `Resources/CommerceGuide/Goryeo.json`. 역사/게임 각색/여행 힌트/출처를 분리한다. 선택해서 읽는 고정 정보이며 발견 보상·시장 원격 조회·고려 출신 능력이 아니다. 공급 거점(`originTown`)과 역사적 재배지를 동일시하지 않는다
 - 생활 연출: `WorkingNpc`는 두 작업 지점을 오가며 짐을 들고 멈춘다. `MapAmbience`는 거리와 음소거에 따라 주변음만 조절한다. 두 기능은 생산/공유 시장 상태를 바꾸지 않는다
-- 길: 맵에 미리 칠한 Road 타일의 등급만 읽는다 (`RoadGrid`). 플레이어가 길을 만드는 기능은 넣지 않는다 (MMORPG에서 맵이 망가짐)
+- 길: 현재 `RoadGrid`는 미리 칠한 Road 타일만 읽는다. 원본의 발길 개척은 이번 유지보수에서 미구현이며 영구 폐기한 사용자 결정은 확인되지 않았다. 임의로 추가/삭제 확정하지 말고 `RequirementsAudit.md`와 D-13 참고
 - 퀘스트: `QuestData`(단계 목록) + `QuestManager`(GameEvents를 듣고 진행) + `QuestNpc`(!/? 표시). 대화창 `DialogueUI`, 진행 표시 `QuestTracker`
 - 배달 의뢰: `ContractManager`(마을 게시판, 3개씩, 4시간마다 보충) + `ContractBoard`(게시판 창). 성공 신용 +1, 실패 −1
 - 운반: `PlayerController`에 체력(달리기)·흔들림(가득 차면 짐이 떨어짐 → `DroppedCargo`로 다시 줍기)
 - 위험: `BanditSpot`/`Bandit`(예성 길, 밤에 잦음, 통행료 또는 가장 비싼 짐), `RoadEventDirector`/`RoadEvent`(쓰러진 행인, 떠돌이 상인)
-- NPC 상인: `NpcTraders`(시간 계산으로 사고팔아 시세·마을 거래액에 반영) + `Walker`(길을 오가는 모습, 소문)
+- NPC 상인: `NpcTraders`(시간 계산으로 사고팔아 시세·마을 거래액에 반영) + `Walker`(길을 오가는 모습, 소문). 가격/재고는 공통이지만 자금/운반 용량/실제 경로 위험/의뢰 경쟁은 미구현
 - 마을 발전: `MarketState.Level`(거래액 기준) → 알림, `TownGrowthProp`(등급이 오르면 노점 짐이 늘어남)
 - UI: `HUD`(상태·게이지), `QuestTracker`(퀘스트·의뢰), `WorldMapUI`(M), `PauseMenu`(Esc), 조사는 `Josa`
 - 저장: `SaveSystem`(persistentDataPath JSON). 맵을 넘어갈 때·끌 때 자동 저장. 시작 맵(빌드 0번)에서 Play할 때만 불러옴. 다른 씬에서 직접 Play하면 기존 파일 유무와 관계없이 자동 저장을 끔. CARAVAN_PREVIEW 빌드는 별도 preview 저장 파일 사용

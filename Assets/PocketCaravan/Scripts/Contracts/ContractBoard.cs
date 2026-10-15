@@ -75,7 +75,7 @@ namespace PocketCaravan
                 GUI.enabled = !c.dropped;
                 if (GUILayout.Button("납품", UIStyle.Button, GUILayout.Width(60), GUILayout.Height(18)))
                 {
-                    var r = Cm.Deliver(c);
+                    var r = Cm.Deliver(c, town);
                     message = r.message;
                 }
                 GUI.enabled = true;
@@ -97,7 +97,8 @@ namespace PocketCaravan
                 if (GUILayout.Button("맡기", UIStyle.Button, GUILayout.Width(60), GUILayout.Height(18)))
                 {
                     if (why != null) { message = why; Sfx.Play("cancel"); }
-                    else { Cm.Accept(town, c); message = $"{Josa.Eul(c.cargo)} 맡았다. {Cm.TownName(c.toTown)} 게시판에 가져가자."; }
+                    else if (Cm.Accept(town, c)) message = $"{Josa.Eul(c.cargo)} 맡았다. {Cm.TownName(c.toTown)} 게시판에 가져가자.";
+                    else message = "이 의뢰는 더 이상 맡을 수 없습니다. 게시판을 다시 확인해 주세요.";
                 }
                 GUILayout.EndHorizontal();
                 GUILayout.Space(2);

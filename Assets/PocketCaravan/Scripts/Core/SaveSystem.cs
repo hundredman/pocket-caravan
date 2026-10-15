@@ -17,6 +17,7 @@ namespace PocketCaravan
         public int money, credit;
         public string vehicle;
         public float stamina;
+        public float shake; // 이전 저장에는 없으므로 0으로 읽는다.
         public List<string> cargoItems = new List<string>();
         public List<int> cargoCounts = new List<int>();
         public List<float> cargoCosts = new List<float>();
