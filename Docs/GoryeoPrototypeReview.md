@@ -45,3 +45,13 @@ Unity에서 `Assets/PocketCaravan/Scenes/Goryeo/Gaegyeong.unity`를 열고 Play�
 로컬 근거: `output/goryeo-prototype/`의 `runtime-validation.json`, `preservation-before.json`, `preservation-after.json`, `capital-gate.png`, `capital-loading-yard.png`, `capital-market.png`. 빌드 결과는 위 빌드 폴더의 `build-report.json`이다. 기존 자동 검사는 소스에 있으나 이번 일회성 Editor 실행 검사·화면은 로컬 기록이다.
 
 다음 수정은 팀의 위 관찰을 바탕으로 정한다. 수도 대표 미술, 노면 소리, 주막의 실제 휴식/정보 기능, 반복 교역·실패 복구, 공유 시장과 온라인 인원 검증은 남아 있다. 이번에 새로운 서버·대규모 제작 도구·생산 체인을 추가하지 않았다.
+
+## Windows 64비트 검토 빌드 — 2026-10-15
+
+사용자 요청으로 동일 게임 소스 `3ad1d5c`의 Windows x64 Mono 빌드도 만들었다. Unity Hub로 6000.3.26f1의 Windows Build Support(Mono)를 추가했다. 첫 시도는 실행 중인 Editor가 새 후처리 모듈을 로드하지 못해 실행 파일이 없었으며, Editor 재시작 후 다시 빌드했다. 첫 시도를 성공 산출물로 배포하지 않는다.
+
+최종 빌드 성공: 오류0·경고1·약23초. 경고는 TestRunBuilder의 자동 생성 PerformanceTestRunInfo.json 갱신이다. `PocketCaravan.exe`와 `UnityPlayer.dll`의 AMD64 PE 헤더, 네 씬 데이터, 프리뷰 전용 저장 파일명이 포함된 게임 어셈블리, 필요한 런타임 폴더를 확인했다. Windows PC에서 실제 실행·입력·소리·화면은 아직 검증하지 않았다.
+
+로컬 배포 ZIP: `Builds/PocketCaravan-Windows-x64-2026-10-15.zip`(47,152,754바이트). 실행 파일·데이터·Mono 런타임·조작 안내·에셋/글꼴 라이선스를 포함한 195개 파일이며 압축 CRC 검사 통과. 디버그 배포 제외 폴더는 넣지 않았다. ZIP을 **전체 압축 해제한 뒤** `PocketCaravan.exe`를 실행한다. exe만 따로 옮기지 않는다. 본편과 분리된 프리뷰 저장 정책은 Mac 빌드와 같다.
+
+결과: `Builds/Windows/build-report.json`, `output/windows-build/package-validation.json`, `preservation-after.json`. 빌드 전후 2,209개 추적 프로젝트 파일·본편 저장 해시가 동일하고, Editor 대상은 원래 StandaloneOSX로 복구했다. 게임 소스·밸런스·씬은 이번 Windows 작업에서 변경하지 않았다. ZIP은 로컬 산출물이며 GitHub 프리릴리스는 갱신하지 않았다.
