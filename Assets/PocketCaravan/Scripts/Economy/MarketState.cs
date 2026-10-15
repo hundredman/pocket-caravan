@@ -27,6 +27,8 @@ namespace PocketCaravan
 
         public float Optimal(ItemData item) => town.OptimalFor(item) * LevelMultiplier;
 
+        public IEnumerable<ItemData> KnownItems => stock.Keys;
+
         public float Stock(ItemData item)
         {
             if (!stock.TryGetValue(item, out var s))

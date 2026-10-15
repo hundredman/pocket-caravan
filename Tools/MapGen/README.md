@@ -22,7 +22,7 @@
 
 ## 맵 고치기
 - `road_path`(굽은 길), `road_rect`(넓은 길), `water_rect`, `bridge`, `stamp`(집·나무), `add`(스폰·출구·NPC)
-- NPC 종류: `npc`(퀘스트, npc id), `market`(장터, town id), `villager`(마을 사람)
+- NPC 종류: `npc`(퀘스트, npc id), `market`(장터, town id), `villager`(마을 사람), `worker`(작업 왕복 연출)
 - 출구는 `target`(씬 이름)과 `spawn`(도착 자리 id)을 맞춘다
 
 현재 새 맵 추가는 JSON 작성만으로 끝나지 않는다. `MapJsonBuilder.MapOrder`와 `MapCoords`,
@@ -45,3 +45,11 @@
 ## 예성 길 경로 선택 (2026-10-15)
 
 `Route01`은 주막·큰 다리의 큰길(노면 3)과 북쪽 작은 목교를 지나는 숲길(노면 1)이 분기·합류한다. 길 등급과 너비로 기존 VehicleData의 차이를 활용하며 수단 속도 값은 바꾸지 않았다. `python3 validate_route_choice.py`는 두 경로의 연결과 수단별 비용 차이를 실제 이동 수단 에셋으로 검사한다. 출력 시간은 직교 그래프 계산이며 실제 조작·재미 검증과 구분한다. 전체 회귀는 `python3 validate.py`로 실행한다. Pillow가 있는 Python 환경이 필요하다.
+
+## 작업장과 주변음 (2026-10-15)
+
+`m.add("worker", x, y, name="짐꾼", character="villager_dog_tall", lines=["짧은 대사"], path=[(x, y), (x2, y2)])`로 두 작업 지점을 연결한다. 좌표는 다른 맵 객체처럼 좌상단 기준 타일 좌표이며 JSON에서는 평탄한 `[x, y, x2, y2]` 배열로 내보낸다. 작업자는 양쪽에서 쉬며 짐을 들거나 내리고, 플레이어 가까이서는 멈춘다. 통행을 막거나 실제 재고를 생산하지 않는다. 두 지점 사이 직선 전체가 통행 가능해야 하며 검증기가 왕복 구간을 검사한다.
+
+`m.add("ambience", x, y, id="river", radius=12)`는 `Resources/Audio/Sfx/river`의 반복 주변음을 배치한다. 반경은 월드 단위이며 맵은 타일 1칸이 1단위다. 플레이어와 멀어지면 음량이 줄어들고 기존 음소거를 따른다. 겹치는 영역은 과도하게 배치하지 않는다.
+
+`paper_rack`은 이 생성기에서 그리는 3×2칸 종이 건조대 스탬프다. 집·나무와 같은 묶음 배치 규칙을 사용한다. 원본을 수정한 뒤 export하고, 필요한 씬만 다시 생성한다.

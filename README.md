@@ -13,7 +13,7 @@
 3. `Assets/PocketCaravan/Scenes/Goryeo/Naru.unity`(예성 나루 마을)를 열고 Play.
    데이터나 맵을 다시 만들 때는 메뉴 **Pocket Caravan > 1. 시작 세트 만들기**.
 
-조작: 방향키/WASD 이동 · Shift 달리기 · Space 말 걸기·확인 · Q 퀘스트 목록 · M 지도 · Esc 메뉴(저장·소리·처음부터)
+조작: 방향키/WASD 이동 · Shift 달리기 · Space 말 걸기·확인 · Q 퀘스트 목록 · M 지도 · L 교역 장부 · Esc 메뉴(저장·소리·처음부터)
 
 **시스템 바로 테스트:** Unity 메뉴 **Pocket Caravan > Tests > 이동·운반 시험장 열기** 후 Play.
 튜토리얼 없이 1/2로 등짐·손수레, 3~6으로 적재량을 바꾸며 세 지형 경로를 비교한다.
@@ -29,6 +29,8 @@ R 재시작, Tab 전체 보기. [시험장 안내](Assets/CaravanMovementLab/REA
 | 퀘스트 (! · ? 표시, 길 안내 화살표, Q 목록), 튜토리얼 5개(배달 → 심부름 장보기 → 초보용 인삼으로 첫 차익 → 먼 배달 → 손수레) + 서브 3개 | `Scripts/Quests/` |
 | 배달 의뢰 게시판 (마을마다 3개, 기한·짐 상태·보수·신용, 부분 성공) | `Scripts/Contracts/` |
 | 재고 기반 시세, 사고팔기, 손수레, 마을 등급 1~3 (커지면 노점 짐이 늘어남) | `Scripts/Economy/`, `World/TownGrowthProp` |
+| 품목별 원가·판매 손익과 방문 시세 장부(L), 방문별 판매 정산 | `Economy/TradeLedger`, `TownMarket`, `UI/TradeLedgerUI` |
+| 나루 짐꾼·닥목 종이 작업장과 작업 왕복 연출, 거리별 물가 주변음 | `World/WorkingNpc`, `Audio/MapAmbience`, `Tools/MapGen` |
 | 도적 (예성 길, 밤에 잦음: 달려서 따돌리거나 통행료) | `World/Bandit`, `BanditSpot` |
 | 돌발 사건: 쓰러진 행인(신용 +1), 떠돌이 상인(싸게 팜) | `World/RoadEvent` |
 | NPC 상인: 같은 규칙으로 교역해 시세와 마을 발전을 움직임, 길에서 소문을 들려줌 | `World/NpcTraders`, `Walker` |
@@ -72,7 +74,7 @@ Assets/PocketCaravan/
 
 씬에서 손으로 칠해도 되지만, 메뉴 2를 다시 돌리면 덮어쓰니 그 맵은 JSON 쪽을 고치거나 메뉴를 돌리지 않는다.
 
-출신 강점은 `OriginData`의 숫자로 조절한다. 현재 시작 출신은 고려로 고정되며, 네 출신 에셋이 있다고 네 스타팅 지역과 선택 기능이 구현된 것은 아니다. 고려의 장부 강점은 필드만 있고 장부 기능은 미구현이다.
+출신 강점은 `OriginData`의 숫자로 조절한다. 현재 시작 출신은 고려로 고정되며, 네 출신 에셋이 있다고 네 스타팅 지역과 선택 기능이 구현된 것은 아니다. 공통 교역 장부(L)는 방문한 장터의 마지막 확인 시세를 저장한다. 고려 출신의 `ledgerStaleMultiplier` 특혜는 아직 적용하지 않는다.
 
 길은 플레이어가 만들지 않는다. 맵을 만들 때 길 등급(오솔길·길·큰길)을 정한다.
 

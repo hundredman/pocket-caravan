@@ -34,6 +34,7 @@ namespace PocketCaravan
         public int nextContractId;
         public List<NpcTraders.Trader> traders = new List<NpcTraders.Trader>();
         public List<DropRecord> drops = new List<DropRecord>();
+        public List<TradeLedger.Quote> marketQuotes = new List<TradeLedger.Quote>();
         public List<string> cooldownKeys = new List<string>();
         public List<float> cooldownUntil = new List<float>();
     }

@@ -43,6 +43,26 @@ def recolor(tile, mode):
 
 def tile_image(key):
     """key = 'sheet:x:y' 또는 'sheet:x:y@recolor'"""
+    if key.startswith("work:"):
+        # 3x2칸 종이 건조대. 기존 타일 축척·팔레트에 맞춘 목재 틀과 한지 묶음.
+        _, tx, ty = key.split(":")
+        t = Image.new("RGBA", (48, 32))
+        d = ImageDraw.Draw(t)
+        d.rectangle((4, 27, 44, 30), fill="#65544255")
+        for x in (3, 42):
+            d.rectangle((x, 1, x + 3, 29), fill="#70513b")
+            d.line((x, 2, x, 27), fill="#bb9660")
+        for y in (3, 23):
+            d.rectangle((3, y, 45, y + 2), fill="#795439")
+            d.line((4, y, 44, y), fill="#c19a63")
+        for x in (8, 20, 32):
+            d.rectangle((x, 7, x + 8, 22), fill="#c7be97")
+            d.rectangle((x, 6, x + 7, 20), fill="#eee2b6")
+            d.line((x + 1, 7, x + 6, 7), fill="#fff2cc")
+            d.point((x + 3, 12), fill="#d8ca9f")
+            d.point((x + 5, 17), fill="#d8ca9f")
+        x, y = int(tx) * 16, int(ty) * 16
+        return t.crop((x, y, x + 16, y + 16))
     if key.startswith("wood:"):
         _, direction, post = key.split(":")
         t = Image.new("RGBA", (16, 16))
@@ -153,6 +173,7 @@ STAMPS = {
     "greenbig": ("nature", 4, 18, 3, 3, 2, 2, None),
     "wheat": ("element", 13, 4, 3, 3, 0, 0, None),         # 누렇게 익은 논
     "sheaf": ("element", 12, 4, 1, 2, 1, 1, None),         # 볏단
+    "paper_rack": ("work", 0, 0, 3, 2, 1, 1, None),      # 한지 건조대
     "rack": ("element", 11, 2, 3, 2, 1, 1, None),          # 빨랫줄 기둥
     "well": ("element", 7, 1, 1, 2, 1, 1, None),           # 우물
     "hay": ("nature", 9, 8, 1, 1, 0, 0, None),             # 짚더미

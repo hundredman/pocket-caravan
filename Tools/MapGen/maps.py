@@ -34,6 +34,16 @@ def naru():
     m.road_path([(6, 12), (10, 12), (10, 14)], width=1)
     m.door_path(27, 5, 4, 3, 12)
     m.door_path(3, 13, 4, 3, 17); m.road_path([(4, 17), (9, 17)], width=1)
+    # 선착장 → 하역 마당 → 장터로 이어지는 운송 흔적. 접근로 중앙은 비워 둔다.
+    m.road_path([(10, 18), (7, 18)], width=1, grade=1)
+    m.stamp("cart", 5, 18, force=True)
+    for px, py, prop in [(7, 19, 0), (8, 19, 1), (12, 17, 0), (12, 18, 2), (13, 16, 1)]:
+        m.prop(PROPS[prop], px, py)
+    m.sign(12, 16, "나루 하역장\n이곳 소금은 개경·닥나무 마을에서 거래할 수 있다.\n돌아올 때 실을 물건도 장터에서 살펴보자.")
+    m.add("worker", 10, 20, name="나루 짐꾼", character="villager_dog_tall",
+          lines=["배에서 내린 소금은 저 위 장터로 옮기고 있소. 길을 비워 두었으니 짐수레도 지나갈 수 있소."],
+          path=[(10, 20), (10, 17)])
+    m.add("ambience", 11, 23, id="river", radius=12)
     # 논: 누렇게 익은 벼 (나루 위, 동쪽 언덕 아래)
     for (px, py) in [(13, 17), (16, 17), (33, 6), (33, 9)]:
         m.stamp("wheat", px, py, force=True)
@@ -164,7 +174,16 @@ def dakmok():
     m.stamp("house_thatch", 13, 16); m.road_path([(14, 19), (21, 19), (23, 13), (21, 12)], width=1)
 
     # 종이 말리는 틀과 빨래, 장독
-    m.stamp("rack", 28, 9); m.stamp("rack", 28, 5)
+    m.stamp("paper_rack", 28, 9); m.stamp("paper_rack", 28, 5)
+    m.road_path([(22, 11), (26, 11), (26, 8)], width=1, grade=1)
+    m.road_path([(26, 11), (26, 12)], width=1, grade=1)
+    m.prop(PROPS[0], 27, 11); m.prop(PROPS[2], 28, 12)
+    m.sign(28, 7, "종이 작업장\n닥나무 재료를 씻고 종이를 떠서 말리는 곳.\n마른 종이는 마을 장터에서 거래한다.")
+    m.add("worker", 26, 8, name="종이 일꾼", character="villager_rabbit_tall",
+          lines=["뜬 종이는 저 건조대에서 말려요. 개경에 다녀올 생각이면 종이 값을 살펴보세요.",
+                 "돌아오는 길에는 소금이나 생필품을 살펴봐요. 다만 장터 재고에 따라 값이 달라지니 장부만 믿지는 말고요."],
+          path=[(26, 8), (26, 12)])
+    m.add("ambience", 27, 16, id="river", radius=7)
     m.laundry(10, 6)
     m.jars(2, 8, ("11", "10"))
 

@@ -314,6 +314,24 @@ namespace PocketCaravan.EditorTools
                         walker.traderIndex = o.idx;
                         walker.anim = wgo.GetComponent<CharacterAnimator>();
                         break;
+                    case "worker":
+                        var workerGo = Character(o.name, o.character, center, objects);
+                        var worker = workerGo.AddComponent<WorkingNpc>();
+                        worker.displayName = o.name;
+                        worker.lines = o.lines;
+                        worker.anim = workerGo.GetComponent<CharacterAnimator>();
+                        if (o.path != null)
+                            for (int k = 0; k + 1 < o.path.Length; k += 2)
+                                worker.path.Add(grid.GetCellCenterWorld(new Vector3Int(o.path[k], f.h - 1 - o.path[k + 1], 0)));
+                        break;
+                    case "ambience":
+                        var sound = new GameObject("물가 주변음");
+                        sound.transform.SetParent(objects);
+                        sound.transform.position = center;
+                        var ambience = sound.AddComponent<MapAmbience>();
+                        ambience.clipName = o.id;
+                        ambience.radius = o.radius > 0 ? o.radius : 10f;
+                        break;
                     case "villager":
                         var v = Villagers[(o.variant + o.idx) % Villagers.Length];
                         var vn = Character(v.name, v.sprite, center, objects).AddComponent<TalkNpc>();

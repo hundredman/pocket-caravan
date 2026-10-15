@@ -87,6 +87,7 @@ namespace PocketCaravan
             gameObject.AddComponent<WorldLabels>();
             gameObject.AddComponent<AmbientFX>();
             gameObject.AddComponent<WorldMapUI>();
+            gameObject.AddComponent<TradeLedgerUI>();
             gameObject.AddComponent<PauseMenu>();
             SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -110,6 +111,7 @@ namespace PocketCaravan
             fade = 0f;
             SceneManager.sceneLoaded -= OnSceneLoaded;
             Player.cargo.Clear();
+            Player.ledger.Clear();
             Player.contracts.Clear();
             Player.origin = null;
             Player.money = Player.credit = 0;
@@ -370,12 +372,14 @@ namespace PocketCaravan
             d.boards.AddRange(Contracts.boards);
             d.traders.AddRange(Traders.traders);
             d.drops.AddRange(Drops);
+            d.marketQuotes.AddRange(Player.ledger.Export());
             foreach (var kv in cooldowns) { d.cooldownKeys.Add(kv.Key); d.cooldownUntil.Add(kv.Value); }
             SaveSystem.Write(d);
         }
 
         void Apply(SaveData d)
         {
+            Player.ledger.Import(d.marketQuotes);
             Player.money = d.money;
             Player.credit = d.credit;
             Player.vehicle = Db.vehicles.Find(v => v != null && v.id == d.vehicle) ?? Db.startVehicle;

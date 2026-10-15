@@ -32,6 +32,8 @@
 - 맵 하나 = 씬 하나. `MapRoot`(Grid에 붙음): Ground/Road/Blocked 타일맵. Blocked에 타일이 있으면 못 지나감
 - 출구 `MapExit` → `GameManager.TravelTo(scene, spawnId)` → 도착 씬의 `SpawnPoint(id)`
 - 시세: `MarketMath`(공식) + `MarketState`(마을별 실행 상태). 데이터는 `TownData`, `ItemData`
+- 장부: `PlayerState.ledger`의 `TradeLedger`에 방문한 장터 시세만 기록하고 저장한다. `TradeLedgerUI`(L)는 미방문지를 미확인으로 표시한다. 외지 가격은 마지막 확인값이며 원격 실시간 조회/수익 보장이 아니다. `ledgerStaleMultiplier`는 미적용
+- 생활 연출: `WorkingNpc`는 두 작업 지점을 오가며 짐을 들고 멈춘다. `MapAmbience`는 거리와 음소거에 따라 주변음만 조절한다. 두 기능은 생산/공유 시장 상태를 바꾸지 않는다
 - 길: 맵에 미리 칠한 Road 타일의 등급만 읽는다 (`RoadGrid`). 플레이어가 길을 만드는 기능은 넣지 않는다 (MMORPG에서 맵이 망가짐)
 - 퀘스트: `QuestData`(단계 목록) + `QuestManager`(GameEvents를 듣고 진행) + `QuestNpc`(!/? 표시). 대화창 `DialogueUI`, 진행 표시 `QuestTracker`
 - 배달 의뢰: `ContractManager`(마을 게시판, 3개씩, 4시간마다 보충) + `ContractBoard`(게시판 창). 성공 신용 +1, 실패 −1

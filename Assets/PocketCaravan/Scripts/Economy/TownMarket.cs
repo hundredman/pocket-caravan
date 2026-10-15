@@ -15,6 +15,8 @@ namespace PocketCaravan
         int openedFrame;
         Vector2 scroll;
         string message = "";
+        ItemData selected;
+        int soldThisVisit, revenueThisVisit, profitThisVisit;
 
         MarketState Market => GameManager.I.GetMarket(town);
 
@@ -27,6 +29,9 @@ namespace PocketCaravan
             open = true;
             openedFrame = Time.frameCount;
             message = "";
+            soldThisVisit = revenueThisVisit = profitThisVisit = 0;
+            if (selected == null) foreach (var item in ItemsShown(GameManager.I.Player)) { selected = item; break; }
+            Observe();
             UIState.Blocking = true;
             Sfx.Play("open");
         }
@@ -58,33 +63,34 @@ namespace PocketCaravan
             var p = gm.Player;
             var m = Market;
 
-            float w = 440, h = 300;
+            float w = Mathf.Min(548, UIStyle.VirtualWidth - 16), h = 340;
             var rect = new Rect((UIStyle.VirtualWidth - w) / 2, (UIStyle.VirtualHeight - h) / 2, w, h);
             GUI.Box(rect, "", UIStyle.Box);
-            GUILayout.BeginArea(new Rect(rect.x + 12, rect.y + 8, w - 24, h - 16));
+            GUILayout.BeginArea(new Rect(rect.x + 12, rect.y + 8, w - 24, h - 56));
 
             string marketDay = gm.Clock.IsMarketDay ? "  <color=#ffd84a>· 오늘은 장날 (값 상승)</color>" : "";
             int nextLevel = m.Level < gm.Db.maxTownLevel && m.Level < gm.Db.townLevelVolume.Length ? gm.Db.townLevelVolume[m.Level] : 0;
             string growth = nextLevel > 0 ? $"   다음 등급까지 거래 {Mathf.Max(0, nextLevel - Mathf.RoundToInt(m.TradeVolume))}냥" : "";
             GUILayout.Label($"<color=#FFE08A>{town.displayName} 장터</color>  ({m.LevelName}){marketDay}", UIStyle.Rich);
             GUILayout.Label($"돈 {p.money}   짐 {p.TotalWeight:0.#}/{p.Capacity:0.#}{growth}", UIStyle.Small);
-            if (p.credit < 4) GUILayout.Label(BeginnerTip(gm), UIStyle.Small);
+            GUILayout.Label(LocalGoods(gm), UIStyle.Small);
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label("품목 (무게)", UIStyle.Small, GUILayout.Width(118));
+            GUILayout.Label("품목 선택 / 무게", UIStyle.Small, GUILayout.Width(144));
             GUILayout.Label("살 때", UIStyle.Small, GUILayout.Width(44));
             GUILayout.Label("팔 때", UIStyle.Small, GUILayout.Width(44));
             GUILayout.Label("재고", UIStyle.Small, GUILayout.Width(34));
             GUILayout.Label("보유", UIStyle.Small, GUILayout.Width(34));
             GUILayout.EndHorizontal();
 
-            scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(156));
+            scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(94));
             foreach (var item in ItemsShown(p))
             {
                 GUILayout.BeginHorizontal(GUILayout.Height(18));
                 var iconRect = GUILayoutUtility.GetRect(16, 16, GUILayout.Width(16), GUILayout.Height(16));
                 if (item.icon != null) DrawSprite(iconRect, item.icon);
-                GUILayout.Label($"{item.displayName} ({item.weight:0.#})", GUILayout.Width(98));
+                if (GUILayout.Button((selected == item ? "▸ " : "") + $"{item.displayName} ({item.weight:0.#})",
+                    UIStyle.Button, GUILayout.Width(124), GUILayout.Height(18))) selected = item;
                 int buy = m.BuyPrice(item), sell = m.SellPrice(item);
                 float avg = p.cargo.AverageCost(item);
                 string sellText = item.questItem ? "맡은 짐" : (p.cargo.Count(item) > 0 && avg > 0 ? (sell > avg ? $"<color=#a8f0a0>{sell}</color>" : $"<color=#ff9a8a>{sell}</color>") : sell.ToString());
@@ -92,11 +98,16 @@ namespace PocketCaravan
                 GUILayout.Label(sellText, UIStyle.Rich, GUILayout.Width(44));
                 GUILayout.Label(Mathf.FloorToInt(m.Stock(item)).ToString(), GUILayout.Width(34));
                 GUILayout.Label(p.cargo.Count(item).ToString(), GUILayout.Width(34));
+                bool enabled = GUI.enabled;
+                GUI.enabled = enabled && !item.questItem && m.CanBuy(item) && p.money >= buy && p.CanCarry(item);
                 if (GUILayout.Button("사기", UIStyle.Button, GUILayout.Width(40), GUILayout.Height(16))) Buy(item);
+                GUI.enabled = enabled && !item.questItem && p.cargo.Count(item) > 0;
                 if (GUILayout.Button("팔기", UIStyle.Button, GUILayout.Width(40), GUILayout.Height(16))) Sell(item);
+                GUI.enabled = enabled;
                 GUILayout.EndHorizontal();
             }
             GUILayout.EndScrollView();
+            DrawTradeInfo(gm, m);
 
             foreach (var v in town.vehiclesForSale)
             {
@@ -110,21 +121,63 @@ namespace PocketCaravan
                 GUILayout.EndHorizontal();
             }
 
-            GUILayout.FlexibleSpace();
-            GUILayout.BeginHorizontal();
-            GUILayout.Label(message, UIStyle.Wrap);
-            if (GUILayout.Button("닫기 (Esc)", UIStyle.Button, GUILayout.Width(80), GUILayout.Height(18))) Close();
-            GUILayout.EndHorizontal();
+            if (soldThisVisit > 0)
+                GUILayout.Label($"이번 판매 {soldThisVisit}개 · 받은 돈 {revenueThisVisit}냥 · 손익 {Signed(profitThisVisit)}냥", UIStyle.Small);
             GUILayout.EndArea();
+            GUI.Label(new Rect(rect.x + 12, rect.yMax - 36, w - 118, 30), message, UIStyle.Wrap);
+            if (GUI.Button(new Rect(rect.xMax - 94, rect.yMax - 30, 82, 20), "닫기 (Esc)", UIStyle.Button)) Close();
         }
 
-        /// <summary>초보 상인용 장사 팁: 이 마을 특산과 비싸게 받는 곳</summary>
-        string BeginnerTip(GameManager gm)
+        void Observe()
+        {
+            var gm = GameManager.I;
+            gm.Player.ledger.Observe(town, Market, ItemsShown(gm.Player));
+        }
+
+        static string Signed(float value) => value.ToString("+0.#;-0.#;0");
+
+        string LocalGoods(GameManager gm)
         {
             var local = new List<string>();
-            foreach (var it in gm.Db.items) if (it != null && !it.questItem && it.originTown == town) local.Add(it.displayName);
-            string here = local.Count > 0 ? $"이 마을 특산 {Josa.Eun(string.Join("·", local))} 여기서 싸다." : "이 마을은 특산이 없어 다른 곳 물건이 비싸다.";
-            return $"<color=#ffd84a>팁</color> {here} 산지에서 멀리 가져갈수록 비싸게 팔린다. 한 곳에 몰아 팔면 값이 떨어진다.";
+            foreach (var item in gm.Db.items)
+                if (item != null && !item.questItem && item.originTown == town) local.Add(item.displayName);
+            return local.Count > 0 ? "이곳 특산: " + string.Join(" · ", local) + "  |  품목을 눌러 원가와 판매처 확인"
+                : "품목을 눌러 원가와 판매처 확인";
+        }
+
+        void DrawTradeInfo(GameManager gm, MarketState market)
+        {
+            var panel = GUILayoutUtility.GetRect(10, 62, GUILayout.ExpandWidth(true));
+            GUI.Box(panel, "", UIStyle.Box);
+            float y = panel.y + 5;
+            void Line(string text)
+            {
+                GUI.Label(new Rect(panel.x + 5, y, panel.width - 10, 12), text, UIStyle.Small);
+                y += 13;
+            }
+            if (selected == null || selected.questItem)
+                Line("교역품을 선택하면 원가와 직접 확인한 시세를 볼 수 있습니다.");
+            else
+            {
+                var p = gm.Player;
+                string origin = selected.originTown != null ? selected.originTown.displayName : "여러 마을";
+                string owned = p.cargo.Count(selected) > 0
+                    ? $" · 내 원가 {p.cargo.AverageCost(selected):0.#} · 이곳 손익 {Signed(market.SellPrice(selected) - p.cargo.AverageCost(selected))}냥/개" : "";
+                Line($"{selected.displayName} · 산지 {origin}{owned}");
+                bool any = false;
+                int shown = 0;
+                foreach (var other in gm.Db.towns)
+                {
+                    if (other == null || other == town) continue;
+                    var q = p.ledger.Find(other.id, selected.id);
+                    if (q == null) continue;
+                    any = true;
+                    Line($"{other.displayName}: 확인했던 판매가 {q.sell}냥 · 현재 구입가 대비 {Signed(q.sell - market.BuyPrice(selected))}냥/개");
+                    if (++shown == 2) break;
+                }
+                if (!any) Line("다른 장터를 방문하면 그곳에서 확인한 시세가 장부에 남습니다.");
+                Line("장부는 마지막 확인값 · 첫 1개 기준 참고 · 도착 시 시세와 다를 수 있습니다.");
+            }
         }
 
         /// <summary>스프라이트 한 장을 GUI 사각형에 그린다 (아틀라스 안의 위치를 고려)</summary>
@@ -135,15 +188,20 @@ namespace PocketCaravan
             GUI.DrawTextureWithTexCoords(r, t, new Rect(tr.x / t.width, tr.y / t.height, tr.width / t.width, tr.height / t.height));
         }
 
-        IEnumerable<ItemData> ItemsShown(PlayerState p)
+        List<ItemData> ItemsShown(PlayerState p)
         {
+            // 버튼 처리 중 화물/재고가 바뀌어도 목록 순회를 깨뜨리지 않도록 스냅샷을 만든다.
             var seen = new HashSet<ItemData>();
-            foreach (var s in town.stock) if (s.item != null && seen.Add(s.item)) yield return s.item;
-            foreach (var kv in p.cargo.Items) if (seen.Add(kv.Key)) yield return kv.Key;
+            var result = new List<ItemData>();
+            foreach (var s in town.stock) if (s.item != null && seen.Add(s.item)) result.Add(s.item);
+            foreach (var item in Market.KnownItems) if (item != null && seen.Add(item)) result.Add(item);
+            foreach (var kv in p.cargo.Items) if (seen.Add(kv.Key)) result.Add(kv.Key);
+            return result;
         }
 
         void Buy(ItemData item)
         {
+            if (item == null || item.questItem) { message = "맡은 짐은 교역할 수 없습니다."; return; }
             var p = GameManager.I.Player;
             var m = Market;
             int price = m.BuyPrice(item);
@@ -153,6 +211,8 @@ namespace PocketCaravan
             p.money -= price;
             p.cargo.Add(item, 1, price);
             m.RecordBuy(item, price);
+            selected = item;
+            Observe();
             message = $"{Josa.Eul(item.displayName)} {price}에 샀습니다.";
             Sfx.Play("coin");
             GameEvents.RaiseItemBought(item, town, price);
@@ -169,14 +229,20 @@ namespace PocketCaravan
             p.cargo.Remove(item);
             p.money += price;
             m.RecordSell(item, price);
+            selected = item;
+            Observe();
+            soldThisVisit++;
+            revenueThisVisit += price;
+            profitThisVisit += profit;
             Sfx.Play("coin");
-            message = profit > 0 ? $"{Josa.Eul(item.displayName)} {price}에 팔았습니다. (이익 {profit})" : $"{Josa.Eul(item.displayName)} {price}에 팔았습니다.";
+            message = $"{Josa.Eul(item.displayName)} {price}냥에 팔았습니다. 손익 {Signed(profit)}냥.";
             GameEvents.RaiseItemSold(item, town, price, profit);
         }
 
         void BuyVehicle(VehicleData v)
         {
             var p = GameManager.I.Player;
+            if (p.vehicle == v) { message = "이미 사용 중인 이동 수단입니다."; return; }
             if (p.money < v.price) { message = "돈이 모자랍니다."; Sfx.Play("cancel"); return; }
             if (p.TotalWeight > v.capacity) { message = "지금 짐이 너무 많습니다."; Sfx.Play("cancel"); return; }
             p.money -= v.price;

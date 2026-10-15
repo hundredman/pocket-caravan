@@ -51,7 +51,7 @@ namespace PocketCaravan
             }
 
             GUI.Label(new Rect(6, UIStyle.VirtualHeight - 16, 520, 14),
-                "WASD 이동 · Shift 달리기 · Space 말 걸기 · Q 퀘스트 · M 지도 · Esc 메뉴", UIStyle.Small);
+                "WASD 이동 · Shift 달리기 · Space 말 걸기 · Q 퀘스트 · M 지도 · L 장부 · Esc 메뉴", UIStyle.Small);
         }
 
         static void Gauge(float x, ref float y, string label, float v, Color32 c)
