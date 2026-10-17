@@ -13,7 +13,7 @@
 
 **실행만 해 볼 팀원:** [Windows·Mac 최신 프로토타입 받기](https://github.com/hundredman/pocket-caravan/releases/tag/goryeo-prototype-2026-10-15). 운영체제에 맞는 ZIP을 전체 압축 해제한다. Mac의 최초 실행 허용과 소스 브랜치 선택은 [팀 확인 안내](Docs/TeamPlaytest.md)를 참고한다.
 
-**개발용 최신 소스:** `codex/goryeo-2d-preview` 브랜치. 아래 Unity 버전과 씬으로 확인한다.
+**팀 공통 개발 기준:** `main` 브랜치. 아래 Unity 버전과 씬으로 확인한다.
 
 1. Unity Hub에서 **6000.3.26f1 (Unity 6.3 LTS)** 를 설치한다. 팀 전원이 이 버전으로 맞춘다.
 2. 저장소를 받아 Unity Hub → Add → 이 폴더를 연다.

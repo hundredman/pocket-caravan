@@ -1,6 +1,6 @@
 # 팀원이 프로토타입 확인하기
 
-2026-10-15. 게임 코드 기준 `3ad1d5c`의 고려 프로토타입이다. 최신 소스는 `codex/goryeo-2d-preview` 브랜치에서 확인한다. 저장소는 비공개이므로 접근 권한을 받은 GitHub 계정으로 로그인한다.
+2026-10-15. 게임 코드 기준 `3ad1d5c`의 고려 프로토타입이다. 실행 파일은 아래의 10월15일 버전이며, 최신 소스는 PR #1을 반영한 `main` 브랜치에서 확인한다. 저장소는 비공개이므로 접근 권한을 받은 GitHub 계정으로 로그인한다.
 
 ## 실행 파일로 확인
 
@@ -18,7 +18,7 @@ Mac 빌드는 Developer ID 서명·Apple 공증이 없는 팀 검토용이다. �
 
 ## Unity에서 확인·수정
 
-1. 저장소를 받거나 fetch하고 `codex/goryeo-2d-preview` 브랜치로 전환한다. 자신의 미커밋 작업이 있다면 전환 전에 보존한다.
+1. 저장소를 받거나 fetch하고 `main` 브랜치의 최신 내용을 확인한다. 자신의 미커밋 작업이 있다면 전환 전에 보존한다.
 2. Unity Hub에서 **6000.3.26f1 (Unity 6.3 LTS)** 로 프로젝트를 연다.
 3. 전체 교역은 `Assets/PocketCaravan/Scenes/Goryeo/Naru.unity`를 열어 Play한다. 기존 본편 저장을 이어 갈 수 있다.
 4. 최신 개경 배치만 보려면 `Assets/PocketCaravan/Scenes/Goryeo/Gaegyeong.unity`를 열어 Play한다. 비시작 씬 직접 실행은 기존 저장 불러오기/자동 저장을 끈다.

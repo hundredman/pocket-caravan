@@ -4,10 +4,10 @@
 
 ## 1. 처음 받기
 
-공통 기준 소스는 **`codex/goryeo-2d-preview`** 브랜치다. 현재 `main`과 내용이 다르므로 네 명 모두 같은 기준에서 시작한다. 이미 자기 지역 작업을 시작했다면 폴더 전체를 덮어쓰지 말고 아래 기준 변경을 먼저 비교한다.
+공통 기준 소스는 **`main`** 브랜치다. 고려 개선과 지역 통합 준비를 PR #1로 반영한 기준이다. 네 명 모두 최신 main에서 지역별 브랜치를 시작한다. 이미 자기 지역 작업을 시작했다면 폴더 전체를 덮어쓰지 말고 자기 브랜치에 최신 main을 병합해 충돌을 확인한다. 이전 `codex/goryeo-2d-preview` 브랜치는 기록과 기존 작업 연결을 위해 유지한다.
 
 ```sh
-git clone -b codex/goryeo-2d-preview https://github.com/hundredman/pocket-caravan.git
+git clone -b main https://github.com/hundredman/pocket-caravan.git
 cd pocket-caravan
 ```
 
