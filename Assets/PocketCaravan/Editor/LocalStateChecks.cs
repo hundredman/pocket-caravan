@@ -34,6 +34,12 @@ namespace PocketCaravan.EditorTools
             var a = ScriptableObject.CreateInstance<TownData>(); a.id = "test_a"; a.worldCoord = Vector2Int.zero;
             var b = ScriptableObject.CreateInstance<TownData>(); b.id = "test_b"; b.worldCoord = Vector2Int.right;
             var item = gm.Db.items.Find(i => i != null && !i.questItem && i.weight <= 2f);
+            var region = ScriptableObject.CreateInstance<RegionData>(); region.id = "test_region"; a.region = region; b.region = region;
+            var world = ScriptableObject.CreateInstance<WorldIndex>();
+            world.maps.Add(new WorldIndex.MapInfo { mapId = "test_map_a", neighbors = new List<string> { "test_map_b" } });
+            world.maps.Add(new WorldIndex.MapInfo { mapId = "test_map_b", neighbors = new List<string> { "test_map_a" } });
+            world.places.Add(new WorldIndex.Place { kind = "market", id = a.id, mapId = "test_map_a" });
+            world.places.Add(new WorldIndex.Place { kind = "market", id = b.id, mapId = "test_map_b" });
             db.towns.Add(a); db.towns.Add(b);
             Action<Contract, bool> counted = null;
             QuestData quest = null;
@@ -46,7 +52,7 @@ namespace PocketCaravan.EditorTools
                 Check("2D 씬 활성 오디오 청취점 하나", listeners == 1);
                 var p = new PlayerState { money = 0, credit = -5 };
                 var clock = new GameClock();
-                var cm = new ContractManager(db, clock, p); cm.InitBoards();
+                var cm = new ContractManager(db, clock, p, world); cm.InitBoards();
                 Check("게시판 일반 의뢰 보장", cm.Available(a.id).Exists(c => !c.Premium));
                 var c = cm.Available(a.id).Find(x => !x.Premium);
                 Check("신용 음수·빈 지갑도 일반 배달 수락", cm.CanAccept(c) == null);
@@ -89,10 +95,10 @@ namespace PocketCaravan.EditorTools
                 cm.InitBoards();
                 Check("이전 저장의 고급 의뢰만 있는 게시판 복구", cm.Available(a.id).Exists(x => !x.Premium));
                 db.towns.Remove(b);
-                var single = new ContractManager(db, new GameClock(), new PlayerState()); single.InitBoards();
+                var single = new ContractManager(db, new GameClock(), new PlayerState(), world); single.InitBoards();
                 Check("마을 하나만 있는 지역 데이터 부팅", single.Available(a.id).Count == 0);
                 db.towns.Clear();
-                new ContractManager(db, new GameClock(), new PlayerState()).InitBoards();
+                new ContractManager(db, new GameClock(), new PlayerState(), world).InitBoards();
                 Check("마을 없는 지역 데이터 부팅", true);
 
                 gm.Player.cargo.Clear(); gm.Player.contracts.Clear(); gm.Drops.Clear();
@@ -144,7 +150,7 @@ namespace PocketCaravan.EditorTools
             finally
             {
                 if (counted != null) GameEvents.ContractFinished -= counted;
-                UnityEngine.Object.Destroy(db); UnityEngine.Object.Destroy(a); UnityEngine.Object.Destroy(b);
+                UnityEngine.Object.Destroy(world); UnityEngine.Object.Destroy(region); UnityEngine.Object.Destroy(db); UnityEngine.Object.Destroy(a); UnityEngine.Object.Destroy(b);
                 if (quest != null) UnityEngine.Object.Destroy(quest);
             }
             Directory.CreateDirectory("output/comprehensive-audit");
