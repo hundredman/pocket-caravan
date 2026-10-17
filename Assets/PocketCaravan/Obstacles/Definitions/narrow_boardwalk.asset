@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696f079832fd349aba6cf0b46c87bb3f, type: 3}
+  m_Name: narrow_boardwalk
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ObstacleDefinition
+  id: narrow_boardwalk
+  displayName: "\uC881\uC740 \uBAA9\uB3C4"
+  category: "\uB178\uBA74"
+  description: "\uB4F1\uC9D0\uC740 \uD1B5\uACFC. \uC190\uC218\uB808\uB294 \uC6B0\uD68C\uD55C\uB2E4."
+  mode: 6
+  action: 0
+  width: 3
+  height: 3
+  sprite: {fileID: -2280899634524853472, guid: a958936ac7067408787548341814fb55, type: 3}
+  visuals: []
+  walkSpeed: 1
+  cartSpeed: 1
+  traction: 1
+  drift: {x: 0, y: 0}
+  staminaDrain: 0
+  visibility: 1
+  workSeconds: 0
+  money: 0
+  itemId: 
+  itemCount: 0
+  activeSeconds: 6
+  openSeconds: 5
+  threatSpeed: 2.7
+  threatRadius: 6
+  leash: 8
+  weightLimit: 12

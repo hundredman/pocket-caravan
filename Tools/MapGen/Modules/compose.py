@@ -5,6 +5,15 @@ HERE=Path(__file__).resolve().parent
 sys.path.insert(0,str(HERE))
 from catalogue import ROOT
 BASE=ROOT/'Assets/PocketCaravan/MapModules'
+sys.path.insert(0,str(ROOT/'Tools/Integration'))
+from obstacle_validation import validate_placements
+
+def check_obstacles(data):
+    if data.get('obstacles'):
+        defs=json.loads((ROOT/'Assets/PocketCaravan/Obstacles/definitions.json').read_text())['definitions']
+        errors=validate_placements(data,{d['id']:d for d in defs})
+        if errors:raise ValueError('; '.join(errors))
+
 OPPOSITE={'E':'W','W':'E','N':'S','S':'N'}
 
 
@@ -35,7 +44,9 @@ def compose(recipe):
     for layer in ['ground','deco','obj','high','road','blocked']:out[layer]=[1 if layer=='blocked' else 0]*(w*h)
     palette={'':0}
     for (cx,cy),entry in cells.items():
-        f=json.loads((ROOT/entry['jsonPath']).read_text());remap={0:0}
+        f=json.loads((ROOT/entry['jsonPath']).read_text());check_obstacles(f);remap={0:0}
+        for hazard in f.get('obstacles',[]):
+            placed=dict(hazard);placed['id']=f'c{cx}_{cy}_'+hazard['id'];placed['x']+=cx*40;placed['y']+=cy*40;out.setdefault('obstacles',[]).append(placed)
         for i,key in enumerate(f['palette'][1:],1):
             if key not in palette:palette[key]=len(out['palette']);out['palette'].append(key)
             remap[i]=palette[key]

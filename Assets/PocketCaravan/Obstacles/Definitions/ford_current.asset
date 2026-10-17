@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696f079832fd349aba6cf0b46c87bb3f, type: 3}
+  m_Name: ford_current
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ObstacleDefinition
+  id: ford_current
+  displayName: "\uC595\uC740 \uC5EC\uC6B8 \uBB3C\uC0B4"
+  category: "\uD558\uCC9C/\uAD50\uB7C9"
+  description: 
+  mode: 1
+  action: 0
+  width: 3
+  height: 3
+  sprite: {fileID: -4748633351599017014, guid: a924141c422c341f28947722356bb503, type: 3}
+  visuals: []
+  walkSpeed: 0.65
+  cartSpeed: 0.4
+  traction: 1
+  drift: {x: 0, y: -1.1}
+  staminaDrain: 0
+  visibility: 1
+  workSeconds: 0
+  money: 0
+  itemId: 
+  itemCount: 0
+  activeSeconds: 6
+  openSeconds: 5
+  threatSpeed: 2.7
+  threatRadius: 6
+  leash: 8
+  weightLimit: 12

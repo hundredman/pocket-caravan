@@ -51,6 +51,7 @@ namespace PocketCaravan.EditorTools
             public int[] ground, deco, obj, high, road, blocked;
             public string[] palette;
             public MapObject[] objects;
+            public ObstaclePlacement[] obstacles;
         }
 
         [MenuItem("Pocket Caravan/Tests/지역 통합 등록 검사")]
@@ -246,6 +247,8 @@ namespace PocketCaravan.EditorTools
             roads.width = f.w; roads.height = f.h;
             roads.grades = new int[f.w * f.h];
             for (int i = 0; i < f.road.Length; i++) { var c = Cell(f, i); roads.grades[c.y * f.w + c.x] = f.road[i]; }
+
+            if(f.obstacles!=null && f.obstacles.Length>0){var hazards=gridGo.AddComponent<ObstacleField>();hazards.library=Resources.Load<ObstacleLibrary>("Obstacles/ObstacleLibrary");hazards.placements=new List<ObstaclePlacement>(f.obstacles);}
 
             var objects = new GameObject("Objects").transform;
             RoadEventDirector director = null;

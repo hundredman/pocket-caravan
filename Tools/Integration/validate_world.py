@@ -8,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'Tools/MapGen'))
 from world_registry import load_world
+from obstacle_validation import validate_placements
 
 
 def validate(root=ROOT, require_scenes=True):
@@ -70,6 +71,12 @@ def validate(root=ROOT, require_scenes=True):
             w, h = data.get('w', 0), data.get('h', 0)
             if not check(type(w) is int and type(h) is int and w > 0 and h > 0, f'Invalid dimensions: {mid}'):
                 continue
+            if data.get('obstacles'):
+                try:
+                    defs = json.loads((root / 'Assets/PocketCaravan/Obstacles/definitions.json').read_text())['definitions']
+                    errors.extend(f'{mid}: {e}' for e in validate_placements(data, {d['id']: d for d in defs}))
+                except (OSError, ValueError, KeyError, TypeError) as exc:
+                    errors.append(f'{mid}: obstacle catalogue: {exc}')
             for layer in ('ground', 'deco', 'obj', 'high', 'road', 'blocked'):
                 values = data.get(layer)
                 if not check(isinstance(values, list) and len(values) == w*h, f'Invalid layer length: {mid}/{layer}'):

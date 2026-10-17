@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696f079832fd349aba6cf0b46c87bb3f, type: 3}
+  m_Name: fishing_net
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ObstacleDefinition
+  id: fishing_net
+  displayName: "\uAE38\uC744 \uAC00\uB85C\uB9C9\uC740 \uADF8\uBB3C"
+  category: "\uC2DC\uC124/\uACF5\uC0AC"
+  description: 
+  mode: 0
+  action: 1
+  width: 3
+  height: 3
+  sprite: {fileID: -3787186718068959810, guid: d952a2ae5dc3645b589d3d60caba1a27, type: 3}
+  visuals: []
+  walkSpeed: 1
+  cartSpeed: 1
+  traction: 1
+  drift: {x: 0, y: 0}
+  staminaDrain: 0
+  visibility: 1
+  workSeconds: 2.5
+  money: 0
+  itemId: 
+  itemCount: 0
+  activeSeconds: 6
+  openSeconds: 5
+  threatSpeed: 2.7
+  threatRadius: 6
+  leash: 8
+  weightLimit: 12

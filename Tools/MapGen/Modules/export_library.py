@@ -9,6 +9,15 @@ from catalogue import ROOT,DEST,write_sources
 from layouts import build
 from skins import SKINS,recolor
 BASE=ROOT/'Assets/PocketCaravan/MapModules'
+sys.path.insert(0,str(ROOT/'Tools/Integration'))
+from obstacle_validation import validate_placements
+
+def check_obstacles(data):
+    if data.get('obstacles'):
+        defs=json.loads((ROOT/'Assets/PocketCaravan/Obstacles/definitions.json').read_text())['definitions']
+        errors=validate_placements(data,{d['id']:d for d in defs})
+        if errors:raise ValueError('; '.join(errors))
+
 
 
 def name(k):return k.replace(':','_').replace('@','_')
@@ -27,6 +36,8 @@ def serialize(m):
     data=dict(id=m.id,name=m.name,w=m.w,h=m.h,hours=0)
     for layer in ['ground','deco','obj','high']:data[layer]=flat(getattr(m,layer))
     data.update(palette=palette,road=[v for row in m.road for v in row],blocked=[int(v) for row in m.blocked for v in row],objects=[o for o in m.objects if o['kind']=='spawn'])
+    if m.module_spec.get("obstacles"):data["obstacles"]=m.module_spec["obstacles"]
+    check_obstacles(data)
     return data
 
 

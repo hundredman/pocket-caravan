@@ -37,11 +37,13 @@ namespace PocketCaravan
         public Vector3Int WorldToCell(Vector3 p) => (grid != null ? grid : GetComponent<Grid>()).WorldToCell(p);
         public Vector3 CellCenter(Vector3Int c) => (grid != null ? grid : GetComponent<Grid>()).GetCellCenterWorld(c);
 
-        public bool IsWalkable(Vector3Int c)
+        public bool IsWalkable(Vector3Int c, PlayerMotor actor = null)
         {
             if (ground == null || !ground.HasTile(c)) return false;
             if (blocked != null && blocked.HasTile(c)) return false;
             if (Interactable.BlockerAt(c) != null) return false;
+            var obstacles=GetComponent<ObstacleField>();
+            if(obstacles!=null && obstacles.Blocks(c,actor))return false;
             return true;
         }
 

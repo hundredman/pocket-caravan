@@ -44,6 +44,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/PocketCaravan/Scenes/ModuleLab/ModuleComposition.unity
     guid: 162cde859cf174f8a9e60de13838dd14
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/ObstacleLab/ObstaclePreview.unity
+    guid: 3a17c9286642b402e9ceae7eb9f3271f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

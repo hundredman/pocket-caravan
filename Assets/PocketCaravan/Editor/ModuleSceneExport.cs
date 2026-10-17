@@ -13,7 +13,7 @@ namespace PocketCaravan.EditorTools
         [Serializable] class Data
         {
             public string id,name;public int w,h,hours;public string[] palette;
-            public int[] ground,deco,obj,high,road,blocked;public Spawn[] objects;
+            public int[] ground,deco,obj,high,road,blocked;public Spawn[] objects;public ObstaclePlacement[] obstacles;
         }
         [MenuItem("Pocket Caravan/맵 제작/편집한 구역을 JSON으로 내보내기…")]
         public static void ExportDialog()
@@ -44,6 +44,7 @@ namespace PocketCaravan.EditorTools
             }
             var f=new Data{id=id,name=map.displayName,w=w,h=h,ground=Layer(appearance.visualLayers[0]),deco=Layer(appearance.visualLayers[1]),obj=Layer(appearance.visualLayers[2]),high=Layer(appearance.visualLayers[3]),road=new int[w*h],blocked=new int[w*h]};
             f.palette=palette.ToArray();
+            var hazards=map.GetComponent<ObstacleField>();if(hazards!=null)f.obstacles=hazards.placements.ToArray();
             for(int y=0;y<h;y++)for(int x=0;x<w;x++){var cell=new Vector3Int(x,h-1-y,0);f.road[y*w+x]=road.GradeAt(cell);f.blocked[y*w+x]=map.blocked.HasTile(cell)?1:0;}
             int spawn=-1;for(int i=0;i<w*h;i++)if(f.ground[i]>0&&f.blocked[i]==0&&f.road[i]>0){spawn=i;break;}
             if(spawn<0)throw new InvalidOperationException("통행 가능한 길이 없습니다.");

@@ -87,6 +87,8 @@ namespace PocketCaravan
             }
             s *= Mathf.Lerp(1f, fullLoadSpeed, p.LoadRatio);
             if (Running) s *= runMultiplier;
+            var obstacles=MapRoot.Current!=null?MapRoot.Current.GetComponent<ObstacleField>():null;
+            if(obstacles!=null){obstacles.Effects(motor.Cell,out float multiplier,out _,out _,out _,out _);s*=multiplier;}
             return s * motor.walkSpeed;
         }
 
