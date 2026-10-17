@@ -33,6 +33,7 @@ namespace PocketCaravan
         public static bool CancelPressed() => K != null && K.escapeKey.wasPressedThisFrame;
         public static bool QuestLogPressed() => K != null && K.qKey.wasPressedThisFrame;
         public static bool MapPressed() => K != null && K.mKey.wasPressedThisFrame;
+        public static bool LedgerPressed() => K != null && K.lKey.wasPressedThisFrame;
 #else
         public static Vector2 MoveVector()
         {
@@ -51,6 +52,7 @@ namespace PocketCaravan
         public static bool CancelPressed() => Input.GetKeyDown(KeyCode.Escape);
         public static bool QuestLogPressed() => Input.GetKeyDown(KeyCode.Q);
         public static bool MapPressed() => Input.GetKeyDown(KeyCode.M);
+        public static bool LedgerPressed() => Input.GetKeyDown(KeyCode.L);
 #endif
     }
 }

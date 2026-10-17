@@ -56,3 +56,8 @@ Tools/MapGen/__pycache__/
 mono_crash.*
 /Assets/Screenshots/
 /Assets/Screenshots.meta
+
+# 로컬 검증·캡처·임시 실행 스크립트
+/output/
+**/__pycache__/
+*.pyc

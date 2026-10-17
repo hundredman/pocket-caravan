@@ -15,6 +15,7 @@ namespace PocketCaravan
         AudioSource current;
         string currentClip;
         bool danger;
+        AudioListener fallbackListener;
         readonly Dictionary<string, AudioClip> cache = new Dictionary<string, AudioClip>();
 
         public float musicVolume = 0.45f;
@@ -36,6 +37,18 @@ namespace PocketCaravan
             Muted = PlayerPrefs.GetInt("pc_muted", 0) == 1;
         }
 
+        void Start() => EnsureListener();
+
+        // 기존/생성 맵에 청취점이 없어도 2D 소리가 재생되게 한다. 씬 자체 청취점이 있으면 양보한다.
+        public void EnsureListener()
+        {
+            if (fallbackListener == null) fallbackListener = gameObject.AddComponent<AudioListener>();
+            bool other = false;
+            foreach (var listener in FindObjectsByType<AudioListener>(FindObjectsSortMode.None))
+                if (listener != fallbackListener && listener.isActiveAndEnabled) { other = true; break; }
+            fallbackListener.enabled = !other;
+        }
+
         AudioClip Clip(string path)
         {
             if (!cache.TryGetValue(path, out var c)) { c = Resources.Load<AudioClip>(path); cache[path] = c; }
@@ -45,6 +58,7 @@ namespace PocketCaravan
         public static void OnMapEntered(string mapId)
         {
             if (I == null) return;
+            I.EnsureListener();
             I.danger = false;
             I.PlayMusic(MapMusic.TryGetValue(mapId, out var m) ? m : "naru");
         }

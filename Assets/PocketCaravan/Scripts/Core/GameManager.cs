@@ -87,6 +87,8 @@ namespace PocketCaravan
             gameObject.AddComponent<WorldLabels>();
             gameObject.AddComponent<AmbientFX>();
             gameObject.AddComponent<WorldMapUI>();
+            gameObject.AddComponent<TradeLedgerUI>();
+            gameObject.AddComponent<CommerceGuideUI>();
             gameObject.AddComponent<PauseMenu>();
             SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -100,6 +102,30 @@ namespace PocketCaravan
         }
 
         void OnApplicationQuit() => SaveNow();
+
+        /// <summary>분리된 시스템 테스트 씬 전용. 본편 저장/튜토리얼/시간 진행을 연결하지 않는다.</summary>
+        public void EnterTestSession()
+        {
+            autosave = false;
+            saveToLoad = null;
+            firstSceneLoaded = true;
+            fade = 0f;
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            Player.cargo.Clear();
+            Player.ledger.Clear();
+            Player.contracts.Clear();
+            Player.origin = null;
+            Player.money = Player.credit = 0;
+            Player.stamina = 1f;
+            Player.shake = 0f;
+            Drops.Clear();
+            Quests = new QuestManager(new List<QuestData>());
+            Clock.minuteOfDay = 12 * 60;
+            // HUD·대화·메뉴·NPC 시뮬레이션은 테스트 씬 자체 UI로 대체한다.
+            foreach (var component in GetComponents<MonoBehaviour>()) component.enabled = false;
+            foreach (var source in GetComponents<AudioSource>()) source.Stop();
+            UIState.Blocking = false;
+        }
 
         UnityEngine.Rendering.Universal.Light2D sun;
         static readonly Color DayColor = new Color(1f, 0.98f, 0.93f);
@@ -150,28 +176,25 @@ namespace PocketCaravan
             UIState.Blocking = false;
 
             // 처음 연 씬이 시작 맵이면 저장을 불러온다. 다른 씬에서 바로 Play한 경우(개발 중)는 불러오지도, 덮어쓰지도 않는다.
-            if (first && saveToLoad != null)
+            if (first && scene.buildIndex != 0)
             {
-                if (scene.buildIndex == 0)
+                autosave = false;
+                saveToLoad = null;
+                Debug.Log("[저장] 시작 맵이 아닌 씬에서 Play: 저장을 불러오지 않고 자동 저장도 끕니다.");
+            }
+            else if (first && saveToLoad != null)
+            {
+                var d = saveToLoad;
+                saveToLoad = null;
+                Apply(d);
+                if (!string.IsNullOrEmpty(d.scene) && d.scene != scene.name)
                 {
-                    var d = saveToLoad;
-                    saveToLoad = null;
-                    Apply(d);
-                    if (!string.IsNullOrEmpty(d.scene) && d.scene != scene.name)
-                    {
-                        StartCoroutine(Travel(d.scene, null, 0f, new Vector2Int(d.fx, d.fy), new Vector3(d.px, d.py, 0f)));
-                        return;
-                    }
-                    pendingExact = new Vector3(d.px, d.py, 0f);
-                    pendingFacing = new Vector2Int(d.fx, d.fy);
-                    Notify.Show("이어서 한다 (Esc 메뉴에서 처음부터 시작 가능)", 4f);
+                    StartCoroutine(Travel(d.scene, null, 0f, new Vector2Int(d.fx, d.fy), new Vector3(d.px, d.py, 0f)));
+                    return;
                 }
-                else
-                {
-                    autosave = false;
-                    saveToLoad = null;
-                    Debug.Log("[저장] 시작 맵이 아닌 씬에서 Play: 저장을 불러오지 않고 자동 저장도 끕니다.");
-                }
+                pendingExact = new Vector3(d.px, d.py, 0f);
+                pendingFacing = new Vector2Int(d.fx, d.fy);
+                Notify.Show("이어서 한다 (Esc 메뉴에서 처음부터 시작 가능)", 4f);
             }
 
             string id = pendingSpawnId;
@@ -200,7 +223,7 @@ namespace PocketCaravan
                 if (map.travelHours > 0 && !loadedFromSave)
                 {
                     Clock.Advance(map.travelHours);
-                    Notify.Show($"{map.displayName} · 걸어서 {map.travelHours}시간 길 ({Clock.Label})", 3f);
+                    Notify.Show(map.displayName, 3f);
                 }
                 else Notify.Show(map.displayName, 2.5f);
                 GameEvents.RaiseMapEntered(map.mapId);
@@ -339,7 +362,7 @@ namespace PocketCaravan
                 fx = pc != null ? pc.Motor.Facing.x : 0, fy = pc != null ? pc.Motor.Facing.y : -1,
                 money = Player.money, credit = Player.credit,
                 vehicle = Player.vehicle != null ? Player.vehicle.id : null,
-                stamina = Player.stamina,
+                stamina = Player.stamina, shake = Player.shake,
                 day = Clock.day, minute = Clock.minuteOfDay,
                 nextContractId = Contracts.nextId,
             };
@@ -350,16 +373,19 @@ namespace PocketCaravan
             d.boards.AddRange(Contracts.boards);
             d.traders.AddRange(Traders.traders);
             d.drops.AddRange(Drops);
+            d.marketQuotes.AddRange(Player.ledger.Export());
             foreach (var kv in cooldowns) { d.cooldownKeys.Add(kv.Key); d.cooldownUntil.Add(kv.Value); }
             SaveSystem.Write(d);
         }
 
         void Apply(SaveData d)
         {
+            Player.ledger.Import(d.marketQuotes);
             Player.money = d.money;
             Player.credit = d.credit;
             Player.vehicle = Db.vehicles.Find(v => v != null && v.id == d.vehicle) ?? Db.startVehicle;
             Player.stamina = d.stamina;
+            Player.shake = Mathf.Clamp01(d.shake);
             Player.cargo.Clear();
             for (int i = 0; i < d.cargoItems.Count; i++)
             {
@@ -378,8 +404,11 @@ namespace PocketCaravan
                 if (t != null) GetMarket(t).Import(s, ItemById);
             }
             if (d.boards.Count > 0) Contracts.boards = new List<ContractManager.Board>(d.boards);
-            Contracts.InitBoards();
             Contracts.nextId = Mathf.Max(Contracts.nextId, d.nextContractId);
+            foreach (var c in Player.contracts) Contracts.nextId = Mathf.Max(Contracts.nextId, c.id + 1);
+            foreach (var b in Contracts.boards)
+                foreach (var c in b.list) Contracts.nextId = Mathf.Max(Contracts.nextId, c.id + 1);
+            Contracts.InitBoards();
             if (d.traders.Count > 0) Traders.traders = new List<NpcTraders.Trader>(d.traders);
             Drops.Clear(); Drops.AddRange(d.drops);
             cooldowns.Clear();

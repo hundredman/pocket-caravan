@@ -29,7 +29,7 @@ namespace PocketCaravan
                 var gm = GameManager.I;
                 var items = gm.Db.items.FindAll(i => i != null && !i.questItem && i.basePrice >= 8);
                 offer = items[Random.Range(0, items.Count)];
-                // 산지에서 먼 값의 반값쯤: 사서 마을에 팔면 남는다
+                // 기준가로 만든 제안 가격. 도착지 재고에 따라 이익이 보장되지는 않는다.
                 offerPrice = Mathf.Max(1, Mathf.RoundToInt(offer.basePrice * 1.5f * 0.6f));
                 offerLeft = Random.Range(2, 5);
             }
@@ -57,7 +57,7 @@ namespace PocketCaravan
 
             if (offerLeft <= 0) { DialogueUI.Show("떠돌이 상인", "다 팔렸소. 또 봅시다!"); return; }
             DialogueUI.Show("떠돌이 상인",
-                $"벽란도에서 떼 온 {offer.displayName}이오. 마을 장터보다 훨씬 싸게 드리지. 한 개 {offerPrice}냥, {offerLeft}개 남았소.",
+                $"벽란도에서 떼 온 {offer.displayName}이오. 한 개 {offerPrice}냥, {offerLeft}개 남았소. 장부에 적은 값과 비교해 보시오.",
                 new DialogueUI.Choice("하나 산다", () => Buy(1)),
                 new DialogueUI.Choice("모두 산다", () => Buy(offerLeft)),
                 new DialogueUI.Choice("됐소", null));

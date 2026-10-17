@@ -22,6 +22,8 @@ namespace PocketCaravan.EditorTools
         [MenuItem("Pocket Caravan/1. 시작 세트 만들기 (데이터 + 맵)", priority = 1)]
         public static void BuildAll()
         {
+            if (EditorApplication.isPlaying || !EditorUtility.DisplayDialog("고려 초기 데이터 재생성",
+                "기존 고려 데이터와 공용 GameDatabase 목록을 초기값으로 덮어씁니다.\n다른 지역을 연결한 팀 작업에서는 실행하지 마세요. 맵만 갱신하려면 메뉴 2를 사용하세요.", "초기값으로 재생성", "취소")) return;
             foreach (var d in new[] { ArtDir, DataDir, QuestDir, OriginDir, Root + "/Resources" }) EnsureFolder(d);
             PlaceholderArt.WriteAll(ArtDir);
             AssetDatabase.Refresh();
@@ -34,7 +36,7 @@ namespace PocketCaravan.EditorTools
         public static void OpenStart()
         {
             if (UnityEditor.SceneManagement.EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-                UnityEditor.SceneManagement.EditorSceneManager.OpenScene($"{Root}/Scenes/Goryeo/{MapJsonBuilder.MapOrder[0]}.unity");
+                UnityEditor.SceneManagement.EditorSceneManager.OpenScene(WorldRegistry.Load().ScenePaths[0]);
         }
 
         // ---------- 데이터 ----------
@@ -165,14 +167,14 @@ namespace PocketCaravan.EditorTools
             {
                 q.id = "tutorial_3"; q.title = "객주가 넘겨준 인삼"; q.chain = chain; q.giverNpc = Gaekju; q.requires.Add(q2);
                 q.summary = "객주가 초보 상인에게만 싸게 넘겨준 인삼 3뿌리를 예성 나루 마을 장터에 판다.\n" +
-                            "팁: 물건은 산지(인삼·나전칠기 = 개경, 종이 = 닥나무 마을, 소금 = 나루 마을)에서 싸고, 산지에서 멀수록 비싸게 팔린다. " +
-                            "한 곳에 몰아 팔면 값이 떨어진다. 장터 창에서 '팔 때' 값이 초록이면 이익, 빨강이면 손해.";
-                q.offerLine = "종이 고맙네. 이번엔 장사를 가르쳐 주지. 인삼은 여기 개경이 산지라 싸지만, 산지에서 멀어질수록 비싸게 팔린다네. " +
-                              "초보 상인에게만 내 인삼 3뿌리를 하나에 22냥, 모두 66냥에 넘겨주겠네. 나루 마을 장터에 가져가 팔면 틀림없이 이문이 남을 걸세.";
+                            "팁: 개경에는 인삼과 나전칠기가 모이고, 닥나무 마을은 종이, 나루는 소금을 공급한다. " +
+                            "먼 곳의 기준가는 높아도 실제 값은 재고에 따라 달라진다. 장부와 원가를 비교하고, 한 곳에 몰아 팔면 값이 떨어지는 것도 살펴보자.";
+                q.offerLine = "종이 고맙네. 인삼은 여러 곳에서 이 개경 장터로 모인다네. 초보 상인에게 내 인삼 3뿌리를 하나에 22냥, 모두 66냥에 넘겨주겠네. " +
+                              "나루에서 팔아 보되 먼저 원가와 판매가를 비교하게. 가는 동안 시세가 달라질 수도 있다네.";
                 q.offerItem = ginsengItem; q.offerCount = 3; q.offerPrice = 22;
                 q.objectives.Add(O(ObjectiveType.Sell, "예성 나루 마을 장터에 인삼 3뿌리 팔기", "naru", ginsengItem, 3));
                 q.objectives.Add(O(ObjectiveType.Talk, "나루 마을 촌장에게 이야기하기", NaruChief, null, 1,
-                    "개경 인삼을 여기서 팔았다고? 산 값보다 훨씬 받았겠구먼. 그게 바로 시세 차익일세. 앞으로는 장터 값을 보고 직접 골라 보게."));
+                    "개경에서 가져온 인삼을 팔았군. 받은 돈에서 매입 원가를 빼면 거래 손익이 나오네. 이익이었는지 손해였는지 살펴보고 다음 짐을 골라 보게."));
                 q.rewardMoney = 20; q.rewardCredit = 1;
             });
 

@@ -1,15 +1,58 @@
+using System;
 using UnityEngine;
 
 namespace PocketCaravan
 {
-    /// <summary>M: 전체 지도. 맵을 칸으로, 이어진 길을 선으로 보여 주고 지금 있는 곳·마을 등급·의뢰 목적지를 표시한다.</summary>
+    /// <summary>M: 실제 맵 지형을 축약한 지도. 출구 정렬로 배치하며 가격용 좌표와는 독립적이다.</summary>
     public class WorldMapUI : MonoBehaviour
     {
+        [Serializable] public class MapArea
+        {
+            public string mapId;
+            public float x, y, w, h, labelX, labelY;
+        }
+        [Serializable] public class Atlas
+        {
+            public float width, height;
+            public MapArea[] maps;
+        }
+
         bool open;
+        Texture2D terrain;
+        Texture2D paperTerrain;
+        Atlas atlas;
+        GUIStyle ink, caption, title;
+        static readonly Color Ink = new Color32(68, 57, 41, 255);
+
+        void Awake()
+        {
+            terrain = Resources.Load<Texture2D>("WorldMap/GoryeoTerrain");
+            if (terrain != null && terrain.isReadable && QualitySettings.activeColorSpace == ColorSpace.Linear)
+            {
+                // OnGUI의 색 공간에 맞춘 표시용 사본. 원본 지도 PNG는 그대로 보존한다.
+                paperTerrain = new Texture2D(terrain.width, terrain.height, TextureFormat.RGBA32, false) { filterMode = FilterMode.Point };
+                var colors = terrain.GetPixels32();
+                for (int i = 0; i < colors.Length; i++) colors[i] = UIStyle.Lin(colors[i]);
+                paperTerrain.SetPixels32(colors);
+                paperTerrain.Apply();
+            }
+            var json = Resources.Load<TextAsset>("WorldMap/GoryeoLayout");
+            if (json != null) atlas = JsonUtility.FromJson<Atlas>(json.text);
+        }
+
+        void OnDestroy()
+        {
+            if (paperTerrain != null) Destroy(paperTerrain);
+        }
 
         void Update()
         {
-            if (open && (InputReader.MapPressed() || InputReader.CancelPressed())) { open = false; UIState.Release(); return; }
+            if (open && (InputReader.MapPressed() || InputReader.CancelPressed()))
+            {
+                open = false;
+                UIState.Release();
+                return;
+            }
             if (!open && InputReader.MapPressed() && !UIState.Blocking && GameManager.I != null && !GameManager.I.IsTravelling)
             {
                 open = true;
@@ -20,57 +63,93 @@ namespace PocketCaravan
 
         void OnGUI()
         {
-            if (!open) return;
+            if (!open || GameManager.I == null) return;
             var gm = GameManager.I;
             var index = WorldIndex.Get();
-            if (gm == null || index == null) return;
             UIStyle.Begin();
             GUI.depth = -10;
-
-            float w = 460, h = 160;
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2, (UIStyle.VirtualHeight - h) / 2, w, h);
-            GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(new Rect(r.x + 12, r.y + 8, w, 14), "<color=#FFE08A>고려 · 예성강에서 개경까지</color>     (M 닫기)", UIStyle.Rich);
-
-            int minX = int.MaxValue, maxX = int.MinValue, minY = int.MaxValue, maxY = int.MinValue;
-            foreach (var m in index.maps) { minX = Mathf.Min(minX, m.coord.x); maxX = Mathf.Max(maxX, m.coord.x); minY = Mathf.Min(minY, m.coord.y); maxY = Mathf.Max(maxY, m.coord.y); }
-            if (minX > maxX) return;
-            float cellW = 96, cellH = 50;
-            float ox = r.x + (w - (maxX - minX + 1) * cellW) / 2, oy = r.y + 40;
-            Rect Box(Vector2Int c) => new Rect(ox + (c.x - minX) * cellW + 8, oy + (maxY - c.y) * (cellH + 30) + 10, cellW - 16, cellH);
-
-            // 길
-            foreach (var m in index.maps)
-                foreach (var n in m.neighbors)
-                {
-                    var o = index.Map(n);
-                    if (o == null) continue;
-                    var a = Box(m.coord); var b = Box(o.coord);
-                    var mid = new Rect(Mathf.Min(a.xMax, b.xMax) - 2, a.center.y - 2, Mathf.Abs(b.center.x - a.center.x) - cellW + 20, 4);
-                    UIStyle.Bar(mid, 1f, new Color32(0xC9, 0xA0, 0x6A, 0xFF));
-                }
-
-            string here = MapRoot.Current != null ? MapRoot.Current.mapId : "";
-            foreach (var m in index.maps)
+            GUI.color = GUI.contentColor = Color.white;
+            if (ink == null)
             {
-                var b = Box(m.coord);
-                bool isHere = m.mapId == here;
-                UIStyle.Bar(b, 1f, isHere ? new Color32(0x6E, 0x9A, 0x58, 0xFF) : new Color32(0x3A, 0x33, 0x50, 0xFF));
-                string label = $"{m.displayName}";
-                if (!string.IsNullOrEmpty(m.town))
-                {
-                    var t = gm.Db.towns.Find(x => x != null && x.id == m.town);
-                    if (t != null) label += $"\n<size=9>{gm.GetMarket(t).LevelName}</size>";
-                    foreach (var c in gm.Player.contracts)
-                        if (c.toTown == m.town) { label += "\n<color=#ffd84a><size=9>의뢰 목적지</size></color>"; break; }
-                }
-                else label += "\n<size=9>길</size>";
-                if (isHere) label += "\n<color=#ffffff><size=9>▲ 지금 여기</size></color>";
-                GUI.Label(b, label, UIStyle.CenterRich);
+                ink = new GUIStyle(UIStyle.Rich) { fontSize = 10, wordWrap = false };
+                foreach (var state in new[] { ink.normal, ink.hover, ink.active, ink.focused })
+                    state.textColor = UIStyle.Lin((Color32)Ink);
+                caption = new GUIStyle(ink) { alignment = TextAnchor.MiddleCenter, fontSize = 9 };
+                title = new GUIStyle(ink) { fontSize = 13 };
             }
 
-            GUI.Label(new Rect(r.x + 12, r.yMax - 34, w - 24, 28),
-                "길에 들어서면 시간이 흐른다. 의뢰 기한과 장날(5일마다)을 생각해 길을 고르자. 밤길에는 도적이 잦다.", UIStyle.Small);
+            float width = Mathf.Min(610, UIStyle.VirtualWidth - 16), height = 330;
+            var panel = new Rect((UIStyle.VirtualWidth - width) / 2, (UIStyle.VirtualHeight - height) / 2, width, height);
+            Paper(panel, new Color32(100, 76, 48, 255));
+            Paper(new Rect(panel.x + 3, panel.y + 3, width - 6, height - 6), new Color32(225, 211, 171, 255));
+            GUI.Label(new Rect(panel.x + 16, panel.y + 10, width - 32, 20), "고려 교역도 · 예성강에서 개경까지", title);
+            GUI.Label(new Rect(panel.xMax - 76, panel.y + 13, 65, 14), "M / Esc 닫기", ink);
+
+            if (terrain == null || atlas == null || atlas.maps == null || atlas.width <= 0 || atlas.height <= 0)
+            {
+                GUI.Label(new Rect(panel.x + 16, panel.y + 45, width - 32, 24), "지형 지도 데이터가 없습니다. MapGen export.py를 실행해 주세요.", ink);
+                return;
+            }
+            float scale = Mathf.Min((width - 24) / atlas.width, 246 / atlas.height);
+            var canvas = new Rect(panel.center.x - atlas.width * scale / 2, panel.y + 36, atlas.width * scale, atlas.height * scale);
+            var color = GUI.color;
+            GUI.color = Color.white;
+            GUI.DrawTexture(canvas, paperTerrain != null ? paperTerrain : terrain, ScaleMode.StretchToFill);
+            GUI.color = color;
+
+            Vector2 Project(float x, float y) => new Vector2(canvas.x + x * scale, canvas.y + y * scale);
+            string here = MapRoot.Current != null ? MapRoot.Current.mapId : "";
+            foreach (var area in atlas.maps)
+            {
+                var map = index != null ? index.Map(area.mapId) : null;
+                if (map == null) continue;
+                var p = Project(area.labelX, area.labelY);
+                bool destination = gm.Player.contracts.Exists(c => c.toTown == map.town && !string.IsNullOrEmpty(map.town));
+                Dot(p, 3, destination ? new Color32(170, 95, 43, 255) : Ink);
+                string label = map.displayName;
+                if (destination) label += " · 의뢰";
+                // 글자 밑만 종이색으로 밝힌다. 구역별 네모 박스는 그리지 않는다.
+                float labelWidth = Mathf.Min(116, caption.CalcSize(new GUIContent(label)).x + 8);
+                var labelRect = new Rect(Mathf.Clamp(p.x - labelWidth / 2, canvas.x, canvas.xMax - labelWidth), p.y - 22, labelWidth, 16);
+                Paper(labelRect, new Color32(224, 210, 167, 235));
+                GUI.Label(labelRect, label, caption);
+                if (area.mapId == here)
+                {
+                    var player = FindAnyObjectByType<PlayerMotor>();
+                    if (player != null && MapRoot.Current != null)
+                    {
+                        Vector3Int cell = player.Cell;
+                        var location = Project(area.x + cell.x + .5f, area.y + area.h - cell.y - .5f);
+                        Dot(location, 5, Color.white);
+                        Dot(location, 3, new Color32(189, 55, 42, 255));
+                    }
+                }
+            }
+            var legendY = panel.y + 286;
+            GUI.Label(new Rect(panel.x + 16, legendY, width - 32, 14),
+                "붉은 점: 내 위치    갈색 길: 교역로    푸른 물: 강·연못    나무: 숲    지붕: 마을    의뢰: 배달 목적지", ink);
+            string current = index != null ? index.MapName(here) : here;
+            var currentInfo = index != null ? index.Map(here) : null;
+            if (currentInfo != null && !string.IsNullOrEmpty(currentInfo.town))
+            {
+                var town = gm.Db.towns.Find(t => t != null && t.id == currentInfo.town);
+                if (town != null) current += " · " + gm.GetMarket(town).LevelName;
+            }
+            GUI.Label(new Rect(panel.x + 16, legendY + 17, width - 32, 14),
+                "현재: " + current + "    |    밤길의 도적과 의뢰 기한을 확인하며 이동하세요.", ink);
+        }
+
+        static void Dot(Vector2 point, float radius, Color color)
+        {
+            Paper(new Rect(point.x - radius, point.y - radius, radius * 2, radius * 2), color);
+        }
+
+        static void Paper(Rect rect, Color color)
+        {
+            Color old = GUI.color;
+            GUI.color = UIStyle.Lin((Color32)color);
+            GUI.DrawTexture(rect, Texture2D.whiteTexture);
+            GUI.color = old;
         }
     }
 }

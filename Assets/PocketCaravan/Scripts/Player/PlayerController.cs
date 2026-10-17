@@ -30,6 +30,17 @@ namespace PocketCaravan
         float bumpCooldown;
         /// <summary>지금 달리는 중</summary>
         public bool Running { get; private set; }
+        public bool StaminaEnabled { get; set; } = true;
+        public bool CargoShakeEnabled { get; set; } = true;
+
+        public void ResetCarryState()
+        {
+            exhausted = false;
+            bumpCooldown = 0f;
+            if (GameManager.I == null) return;
+            GameManager.I.Player.stamina = 1f;
+            GameManager.I.Player.shake = 0f;
+        }
 
         PlayerMotor motor;
 
@@ -43,6 +54,7 @@ namespace PocketCaravan
         {
             Instance = this;
             motor = GetComponent<PlayerMotor>();
+            if (GetComponent<CarryVisual>() == null) gameObject.AddComponent<CarryVisual>();
             if (anim == null) anim = GetComponentInChildren<CharacterAnimator>();
         }
 
@@ -87,7 +99,8 @@ namespace PocketCaravan
         {
             var p = GameManager.I.Player;
             // 체력
-            if (Running)
+            if (!StaminaEnabled) { p.stamina = 1f; exhausted = false; }
+            else if (Running)
             {
                 p.stamina -= staminaDrain * dt;
                 if (p.stamina <= 0f) { p.stamina = 0f; exhausted = true; Notify.Show("숨이 차서 더 달릴 수 없다."); }
@@ -99,6 +112,7 @@ namespace PocketCaravan
             }
 
             // 흔들림
+            if (!CargoShakeEnabled) { p.shake = 0f; return; }
             if (!p.HasAnyCargo) { p.shake = Mathf.Max(0f, p.shake - shakeDecay * dt); return; }
             int g = Grade;
             float rate = 0f;
