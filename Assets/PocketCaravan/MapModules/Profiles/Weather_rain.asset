@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eebde4af2f7b84ed6bb5c12bfe4466e9, type: 3}
+  m_Name: Weather_rain
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.WeatherSkin
+  id: rain
+  displayName: "\uBE44"
+  sceneTint: {r: 0.77, g: 0.84, b: 0.92, a: 1}
+  haze: {r: 0.5, g: 0.6, b: 0.7, a: 0.08}
+  particleColor: {r: 0.7, g: 0.85, b: 1, a: 0.6}
+  particleCount: 110
+  drift: {x: -3, y: -16}
+  size: {x: 0.025, y: 0.35}
+  flutter: 0
+  seed: 73
+  note: "\uC2DC\uAC01 \uD6A8\uACFC\uB9CC \uC801\uC6A9. \uB3C4\uB85C/\uCDA9\uB3CC/\uC18D\uB3C4/\uD53C\uD574/\uACF5\uC720
+    \uB0A0\uC528 \uC0C1\uD0DC\uC640 \uBCC4\uB3C4."

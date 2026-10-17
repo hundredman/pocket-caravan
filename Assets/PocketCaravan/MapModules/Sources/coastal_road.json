@@ -1,0 +1,10 @@
+{
+  "id": "coastal_road",
+  "label": "해안 절벽길",
+  "category": "해안",
+  "environment": "coast",
+  "shape": "coast",
+  "seed": 321,
+  "sea": true,
+  "rocks": 12
+}

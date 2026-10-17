@@ -1,0 +1,10 @@
+{
+  "id": "deep_forest_fork",
+  "label": "깊은 숲 갈림길",
+  "category": "숲",
+  "environment": "mistwood",
+  "shape": "fork",
+  "seed": 305,
+  "trees": "roundbig",
+  "density": 52
+}

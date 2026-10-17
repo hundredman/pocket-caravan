@@ -1,0 +1,10 @@
+{
+  "id": "reed_marsh",
+  "label": "갈대 습지 순환길",
+  "category": "습지",
+  "environment": "wetland",
+  "shape": "loop",
+  "seed": 318,
+  "ponds": "center",
+  "reeds": true
+}

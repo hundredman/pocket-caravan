@@ -1,0 +1,11 @@
+{
+  "id": "coastal_harbor",
+  "label": "해안 항구 마을",
+  "category": "마을",
+  "environment": "coast",
+  "shape": "harbor",
+  "seed": 322,
+  "sea": true,
+  "houses": 4,
+  "dock": true
+}

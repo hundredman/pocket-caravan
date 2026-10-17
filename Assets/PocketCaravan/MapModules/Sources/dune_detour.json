@@ -1,0 +1,10 @@
+{
+  "id": "dune_detour",
+  "label": "사구 우회로",
+  "category": "건조지",
+  "environment": "desert",
+  "shape": "split",
+  "seed": 328,
+  "hills": true,
+  "cacti": 28
+}

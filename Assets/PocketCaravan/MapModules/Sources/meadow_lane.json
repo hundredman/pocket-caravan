@@ -1,0 +1,9 @@
+{
+  "id": "meadow_lane",
+  "label": "초원 큰길",
+  "category": "초원/농경",
+  "environment": "meadow",
+  "shape": "straight",
+  "seed": 300,
+  "flowers": 45
+}

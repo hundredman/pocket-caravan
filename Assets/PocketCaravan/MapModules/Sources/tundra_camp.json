@@ -1,0 +1,10 @@
+{
+  "id": "tundra_camp",
+  "label": "툰드라 야영지",
+  "category": "한랭지",
+  "environment": "tundra",
+  "shape": "camp",
+  "seed": 332,
+  "houses": 2,
+  "rocks": 18
+}

@@ -1,0 +1,9 @@
+{
+  "id": "rocky_choke",
+  "label": "바위 협곡",
+  "category": "산지",
+  "environment": "canyon",
+  "shape": "choke",
+  "seed": 312,
+  "rocks": 35
+}

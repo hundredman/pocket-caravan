@@ -1,0 +1,10 @@
+{
+  "id": "volcanic_detour",
+  "label": "화산암 지대 우회로",
+  "category": "화산/유적",
+  "environment": "volcanic",
+  "shape": "split",
+  "seed": 334,
+  "ponds": "center",
+  "rocks": 35
+}

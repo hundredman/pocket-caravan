@@ -1,0 +1,580 @@
+{
+  "schemaVersion": 1,
+  "size": 40,
+  "entries": [
+    {
+      "id": "autumn_lane",
+      "label": "낙엽 숲 구불길",
+      "category": "숲",
+      "environment": "autumn",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/autumn_lane.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/autumn_lane.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/autumn_lane.png",
+      "structureHash": "26cf089c94324dc54f564a0b1b08762866d6837a2daacdb491d3612e3a4fd6ff"
+    },
+    {
+      "id": "border_checkpoint",
+      "label": "길목 관문",
+      "category": "시설/길목",
+      "environment": "alpine",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/border_checkpoint.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/border_checkpoint.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/border_checkpoint.png",
+      "structureHash": "d17590bbd4aeafb98f7c3e8a2a7aa325eb755f639ce29f788c65b64701a6a187"
+    },
+    {
+      "id": "bridge_pair",
+      "label": "두 다리 선택로",
+      "category": "하천",
+      "environment": "meadow",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/bridge_pair.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/bridge_pair.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/bridge_pair.png",
+      "structureHash": "3b3c3cfd2d70e7bbfb995d9b31637056116a4fd8ed3142620d328d959bf1e433"
+    },
+    {
+      "id": "canyon_bridge",
+      "label": "협곡 가교",
+      "category": "건조지",
+      "environment": "canyon",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/canyon_bridge.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/canyon_bridge.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/canyon_bridge.png",
+      "structureHash": "9bb3e09e00ee75c2449a5348f9f6493a35f56b300f848357643cd5599f5fac9a"
+    },
+    {
+      "id": "canyon_switchback",
+      "label": "붉은 협곡 굽잇길",
+      "category": "건조지",
+      "environment": "canyon",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/canyon_switchback.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/canyon_switchback.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/canyon_switchback.png",
+      "structureHash": "39261208c6f35ef767fb317a986a6a0ff2729f0bb7cf62b2514d314055e7b53b"
+    },
+    {
+      "id": "caravanserai",
+      "label": "대상 숙영지",
+      "category": "마을",
+      "environment": "desert",
+      "ports": [
+        "W",
+        "E",
+        "N",
+        "S"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/caravanserai.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/caravanserai.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/caravanserai.png",
+      "structureHash": "eef09529c550c4393500ce21f80dc301b5c67f430ef703e7554a4c3d4e502c3a"
+    },
+    {
+      "id": "coastal_harbor",
+      "label": "해안 항구 마을",
+      "category": "마을",
+      "environment": "coast",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/coastal_harbor.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/coastal_harbor.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/coastal_harbor.png",
+      "structureHash": "53a515f6c7f36c1cf6c1bbbc12657a1e92157a350096d1af2e3f550f70286faf"
+    },
+    {
+      "id": "coastal_road",
+      "label": "해안 절벽길",
+      "category": "해안",
+      "environment": "coast",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/coastal_road.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/coastal_road.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/coastal_road.png",
+      "structureHash": "3948acf2b29a36adfa0c5712174033d10fc2760781b0fda9d949036c46d58e5e"
+    },
+    {
+      "id": "deep_forest_fork",
+      "label": "깊은 숲 갈림길",
+      "category": "숲",
+      "environment": "mistwood",
+      "ports": [
+        "W",
+        "E",
+        "N"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/deep_forest_fork.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/deep_forest_fork.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/deep_forest_fork.png",
+      "structureHash": "81df7aa0a6eaebf099be2f7df0d715e2659f13f030059c53769c82fabda9a1b0"
+    },
+    {
+      "id": "desert_oasis",
+      "label": "사막 오아시스",
+      "category": "건조지",
+      "environment": "desert",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/desert_oasis.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/desert_oasis.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/desert_oasis.png",
+      "structureHash": "2122eb515e639734e792faa1ac6e8dbb76cc765926be3762d1453fe59afd3fc9"
+    },
+    {
+      "id": "dune_detour",
+      "label": "사구 우회로",
+      "category": "건조지",
+      "environment": "desert",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/dune_detour.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/dune_detour.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/dune_detour.png",
+      "structureHash": "d6134dee4f89baab2a6989aee4dc632a405960958761680e92c695a35e126d6b"
+    },
+    {
+      "id": "estuary",
+      "label": "하구 다리길",
+      "category": "해안",
+      "environment": "coast",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/estuary.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/estuary.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/estuary.png",
+      "structureHash": "d194daa637f491f8a4b7d6e9de48731e42cfd067497118b95bf83119ccbc37fc"
+    },
+    {
+      "id": "fishing_hamlet",
+      "label": "어촌",
+      "category": "마을",
+      "environment": "coast",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/fishing_hamlet.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/fishing_hamlet.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/fishing_hamlet.png",
+      "structureHash": "3de51796e56663906604ff43e3031e16d526cc93f5a79a0857270f9adc73cdbd"
+    },
+    {
+      "id": "flower_fork",
+      "label": "꽃밭 갈림길",
+      "category": "초원/농경",
+      "environment": "meadow",
+      "ports": [
+        "W",
+        "E",
+        "N"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/flower_fork.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/flower_fork.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/flower_fork.png",
+      "structureHash": "e04f896ee34a9fd82207a2c07470d0aafe8ea31bf0a62b9a9962f2b31458bd03"
+    },
+    {
+      "id": "forest_clearing",
+      "label": "숲속 빈터",
+      "category": "숲",
+      "environment": "mistwood",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/forest_clearing.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/forest_clearing.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/forest_clearing.png",
+      "structureHash": "c3a96c7f580e404e1d4356df7837880fc9bd959d07e4df23c674064d334b6fb0"
+    },
+    {
+      "id": "frozen_lake",
+      "label": "빙설 호수 둘레길",
+      "category": "한랭지",
+      "environment": "snow",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/frozen_lake.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/frozen_lake.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/frozen_lake.png",
+      "structureHash": "e85d36a33dd311a7f5c4f6c3cceadfa6b8a59783ec20535efcfceb4caf0932f9"
+    },
+    {
+      "id": "grassland_camp",
+      "label": "초원 야영지",
+      "category": "마을",
+      "environment": "steppe",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/grassland_camp.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/grassland_camp.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/grassland_camp.png",
+      "structureHash": "16ff302f3b6c3e1f905b55d6c6161b3ba96192765627791d28bea567443e122b"
+    },
+    {
+      "id": "hill_switchback",
+      "label": "구릉 지그재그길",
+      "category": "산지",
+      "environment": "steppe",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/hill_switchback.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/hill_switchback.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/hill_switchback.png",
+      "structureHash": "d7b0e6477a72c9e7747b343743a323a90e4d41a29d5e04900e6b80ff7270284f"
+    },
+    {
+      "id": "hill_village",
+      "label": "산록 마을",
+      "category": "마을",
+      "environment": "autumn",
+      "ports": [
+        "W",
+        "E",
+        "N",
+        "S"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/hill_village.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/hill_village.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/hill_village.png",
+      "structureHash": "371f273df430865d68d6b7746f1e4c96f2514e17b35d2fdfc21bb7bc9a736971"
+    },
+    {
+      "id": "lake_shore",
+      "label": "호숫가 곡선길",
+      "category": "호수",
+      "environment": "meadow",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/lake_shore.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/lake_shore.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/lake_shore.png",
+      "structureHash": "b744ad8f3c2f2926ee0bc1b7bcebb48e9ca700d498351b186f05880d5ef6f183"
+    },
+    {
+      "id": "lakeside_hamlet",
+      "label": "호반 마을",
+      "category": "마을",
+      "environment": "meadow",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/lakeside_hamlet.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/lakeside_hamlet.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/lakeside_hamlet.png",
+      "structureHash": "c0ec4c5bba50d1aff7d48bcbd92e61c0b5bfc69a7bece998b536b9d8826b2058"
+    },
+    {
+      "id": "logging_camp",
+      "label": "벌목 야영지",
+      "category": "마을",
+      "environment": "pine",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/logging_camp.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/logging_camp.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/logging_camp.png",
+      "structureHash": "5d4042c7958bcf5f4ecbe50303f8fc7fad9c098792ca25eebf0b7ce04771f10b"
+    },
+    {
+      "id": "market_crossroads",
+      "label": "교차 장터",
+      "category": "마을",
+      "environment": "meadow",
+      "ports": [
+        "W",
+        "E",
+        "N",
+        "S"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/market_crossroads.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/market_crossroads.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/market_crossroads.png",
+      "structureHash": "e8ea8bbfc638b8e5ffbe74749a362b5e1db6a6a4ff0d380aaa17849da8fe919c"
+    },
+    {
+      "id": "meadow_lane",
+      "label": "초원 큰길",
+      "category": "초원/농경",
+      "environment": "meadow",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/meadow_lane.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/meadow_lane.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/meadow_lane.png",
+      "structureHash": "cd0d1657aed9048db442824d1e815e0c3e5b5a06a27f690851689f26becbf0f7"
+    },
+    {
+      "id": "mountain_pass",
+      "label": "산 고개 협로",
+      "category": "산지",
+      "environment": "alpine",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/mountain_pass.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/mountain_pass.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/mountain_pass.png",
+      "structureHash": "aaf75a95b6117eb58aff1b0e5b15911e1c8f7161d4fa37cb446c13aebbcd5044"
+    },
+    {
+      "id": "orchard_hamlet",
+      "label": "과수원 마을",
+      "category": "마을",
+      "environment": "meadow",
+      "ports": [
+        "W",
+        "E",
+        "N",
+        "S"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/orchard_hamlet.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/orchard_hamlet.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/orchard_hamlet.png",
+      "structureHash": "eca471bf3fb6ec004008184098a56e812cb8a0683a0455fe1412a5df0849b566"
+    },
+    {
+      "id": "pine_corridor",
+      "label": "침엽수 숲길",
+      "category": "숲",
+      "environment": "pine",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/pine_corridor.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/pine_corridor.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/pine_corridor.png",
+      "structureHash": "81a3e60b01c494f5259eb18750a74e97c8f718034a4ba7496ec0e671e43bca75"
+    },
+    {
+      "id": "reed_marsh",
+      "label": "갈대 습지 순환길",
+      "category": "습지",
+      "environment": "wetland",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/reed_marsh.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/reed_marsh.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/reed_marsh.png",
+      "structureHash": "b2bbfd88d55271e2abc0746384b6f6d7e90e6fa2012812751a906d5c11d73776"
+    },
+    {
+      "id": "ridge_loop",
+      "label": "능선 순환길",
+      "category": "산지",
+      "environment": "alpine",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/ridge_loop.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/ridge_loop.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/ridge_loop.png",
+      "structureHash": "67a5be60b6c705250916338685c171708ed4f2d79fb4ac2558b526b462144a0a"
+    },
+    {
+      "id": "river_bends",
+      "label": "물굽이 우회길",
+      "category": "하천",
+      "environment": "wetland",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/river_bends.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/river_bends.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/river_bends.png",
+      "structureHash": "46ff596949afa1d3e9d5c3e421cf0a3853ad72dbaa44374a6f4f0f6973cc4390"
+    },
+    {
+      "id": "river_crossing",
+      "label": "하천 단일 다리",
+      "category": "하천",
+      "environment": "meadow",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/river_crossing.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/river_crossing.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/river_crossing.png",
+      "structureHash": "31e8e274e8cb37d504f03d2c6fbda0314fe95446f3fb6a9dd5123a4af58e2af2"
+    },
+    {
+      "id": "river_island",
+      "label": "하중도 쉼터",
+      "category": "하천",
+      "environment": "wetland",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/river_island.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/river_island.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/river_island.png",
+      "structureHash": "a84a85ce251c37d6b36464e06e2f926896dcec24bcc73ef68a1f7da6e39e8f95"
+    },
+    {
+      "id": "rocky_choke",
+      "label": "바위 협곡",
+      "category": "산지",
+      "environment": "canyon",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/rocky_choke.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/rocky_choke.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/rocky_choke.png",
+      "structureHash": "dbd3ccb0ad96fb5dfdc2e0ef20d58e5b6e03de7cc7c09dc9a7b3cea965800a0b"
+    },
+    {
+      "id": "ruin_courtyard",
+      "label": "유적 마당",
+      "category": "화산/유적",
+      "environment": "canyon",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/ruin_courtyard.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/ruin_courtyard.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/ruin_courtyard.png",
+      "structureHash": "9c099517bc28c89c8adff13f28c88e2f4c9bbeea041becd2ae96d61ad56c04ee"
+    },
+    {
+      "id": "snow_pass",
+      "label": "설산 고개",
+      "category": "한랭지",
+      "environment": "snow",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/snow_pass.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/snow_pass.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/snow_pass.png",
+      "structureHash": "8116c11d97347362357a34abe940428a823f2eb4918dd8a72f30f4117d95c5d1"
+    },
+    {
+      "id": "steppe_crossroads",
+      "label": "초원 교차로",
+      "category": "초원/농경",
+      "environment": "steppe",
+      "ports": [
+        "W",
+        "E",
+        "N",
+        "S"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/steppe_crossroads.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/steppe_crossroads.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/steppe_crossroads.png",
+      "structureHash": "3c700652b6b14ffdc391d0656cce53dd990658bae4d14680f0f65cd8394976ec"
+    },
+    {
+      "id": "tundra_camp",
+      "label": "툰드라 야영지",
+      "category": "한랭지",
+      "environment": "tundra",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/tundra_camp.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/tundra_camp.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/tundra_camp.png",
+      "structureHash": "ea8e1073463b0e1b2b3174634e3cd00df935f6555dad5bfb94b0756437d5843a"
+    },
+    {
+      "id": "volcanic_detour",
+      "label": "화산암 지대 우회로",
+      "category": "화산/유적",
+      "environment": "volcanic",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/volcanic_detour.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/volcanic_detour.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/volcanic_detour.png",
+      "structureHash": "5255750c99b1eabb240ba77e4f988de82e61536109fe94fa9e7e23592690fb60"
+    },
+    {
+      "id": "wetland_boardwalk",
+      "label": "습지 목도",
+      "category": "습지",
+      "environment": "wetland",
+      "ports": [
+        "W",
+        "E"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/wetland_boardwalk.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/wetland_boardwalk.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/wetland_boardwalk.png",
+      "structureHash": "f7dc520b238d9f50ec1a0c34cdecbf230814b5509c517f9525a2359c53fee1a5"
+    },
+    {
+      "id": "wheat_crossing",
+      "label": "밀밭 사거리",
+      "category": "초원/농경",
+      "environment": "meadow",
+      "ports": [
+        "W",
+        "E",
+        "N",
+        "S"
+      ],
+      "jsonPath": "Assets/PocketCaravan/MapModules/Layouts/wheat_crossing.json",
+      "sourcePath": "Assets/PocketCaravan/MapModules/Sources/wheat_crossing.json",
+      "previewPath": "Assets/PocketCaravan/MapModules/Previews/wheat_crossing.png",
+      "structureHash": "c9865ef9a191343250e54b3f667227327e11a1295884514dbedd93520559ab0b"
+    }
+  ]
+}

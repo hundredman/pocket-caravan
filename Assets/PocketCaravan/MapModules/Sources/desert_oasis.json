@@ -1,0 +1,11 @@
+{
+  "id": "desert_oasis",
+  "label": "사막 오아시스",
+  "category": "건조지",
+  "environment": "desert",
+  "shape": "loop",
+  "seed": 327,
+  "ponds": "center",
+  "houses": 2,
+  "cacti": 15
+}

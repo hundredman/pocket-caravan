@@ -1,0 +1,11 @@
+{
+  "id": "estuary",
+  "label": "하구 다리길",
+  "category": "해안",
+  "environment": "coast",
+  "shape": "straight",
+  "seed": 323,
+  "river": "vertical",
+  "bridges": "one",
+  "sea": true
+}
