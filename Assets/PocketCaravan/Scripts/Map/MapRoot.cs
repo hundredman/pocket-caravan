@@ -47,6 +47,38 @@ namespace PocketCaravan
             return true;
         }
 
+        /// <summary>지형 수정 후 저장 발밑이 막혔다면 가장 가까운 통행 가능한 길로 옮긴다.
+        /// 유효한 저장 위치는 그대로 유지하며, 경계 출구 위로 복구해 즉시 재이동하지 않는다.</summary>
+        public bool TryResolveSavedPosition(Vector3 saved, Vector2 feetOffset, out Vector3 restored)
+        {
+            restored = saved;
+            var feet = saved + (Vector3)feetOffset;
+            if (IsWalkable(WorldToCell(feet))) return true;
+            if (ground == null) return false;
+            float best = float.PositiveInfinity;
+            var bounds = ground.cellBounds;
+            var roadGrid = GetComponent<RoadGrid>();
+            // 우선 연결된 도로, 도로가 전혀 없는 제작 구역은 일반 지면을 사용한다.
+            for (int pass = 0; pass < 2; pass++)
+            {
+                for (int y = bounds.yMin; y < bounds.yMax; y++)
+                    for (int x = bounds.xMin; x < bounds.xMax; x++)
+                    {
+                        var cell = new Vector3Int(x, y, 0);
+                        if (!IsWalkable(cell) || MapExit.At(cell) != null) continue;
+                        bool onRoad = (roadGrid != null && roadGrid.GradeAt(cell) > 0) || (road != null && road.HasTile(cell));
+                        if (pass == 0 && !onRoad) continue;
+                        var center = CellCenter(cell);
+                        float distance = (center - feet).sqrMagnitude;
+                        if (distance >= best) continue;
+                        best = distance;
+                        restored = center - (Vector3)feetOffset;
+                    }
+                if (!float.IsPositiveInfinity(best)) return true;
+            }
+            return false;
+        }
+
         public Bounds WorldBounds
         {
             get

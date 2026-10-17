@@ -20,9 +20,6 @@ def naru():
     m.road_path([(25, 13), (31, 13), (35, 14), (39, 13)], width=2)
     m.link("E", 12, 4, "Route01", "W", "E")                      # 12~15행, 길 13~14행
 
-    m.road_path([(11, 0), (11, 10), (15, 13)], width=3, grade=1)
-    m.link("N", 11, 3, "goryeo_songak", "S", "N")
-
     # 정자나무와 평상
     m.stamp("bigtree", 19, 8, force=True)
     m.stamp("bench", 19, 11, force=True)
@@ -169,8 +166,8 @@ def dakmok():
     m.road_blob(18, 10.5, 5.5, 2.4, grade=1)        # 마을 마당
     m.water_blob(27, 16, 3.6, 2.6)                  # 종이 뜨는 연못
 
-    m.road_path([(21, 12), (21, 19), (33, 19)], width=3, grade=2)
-    m.link("E", 19, 3, "goryeo_jangdan", "W", "E")
+    m.road_path([(21, 12), (21, 18), (20, 21)], width=3, grade=2)
+    m.link("S", 19, 3, "goryeo_jangdan", "N", "S")
 
     # 집: 마당을 둘러싸고, 문 앞에서 마당까지 좁은 길
     m.stamp("house_thatch", 6, 3); m.door_path(6, 3, 4, 3, 9)

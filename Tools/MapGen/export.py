@@ -64,4 +64,6 @@ for k in used:
                 continue
     image.save(path)
 cartography.export(world_maps, OUT)
+# 발표 및 지역 기획용 확대 지도. 게임 내 전체 지도와 같은 실제 타일을 사용한다.
+cartography.export([m for e,m in zip(entries,world_maps) if e["mapId"] in {"Naru","Route01","Gaegyeong","Dakmok","goryeo_songak","goryeo_jangdan"}], OUT, stem="GoryeoRegional")
 print(len(used), "tiles")

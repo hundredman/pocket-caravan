@@ -42,6 +42,20 @@ def validate():
 
     positions = cartography.layout(world)
     by_id = {m.id: m for m in world}
+    # 접속 방향 변경 시 지도에서 서로 다른 구역이 포개지면 통과시키지 않는다.
+    for i, a in enumerate(world):
+        ax, ay = positions[a.id]
+        for b in world[i+1:]:
+            bx, by = positions[b.id]
+            overlap = max(ax,bx) < min(ax+a.w,bx+b.w) and max(ay,by) < min(ay+a.h,by+b.h)
+            check(a.id + " / " + b.id + " 지도 영역 겹침 없음", not overlap)
+    regional = [m for m in world if m.id in {"Naru","Route01","Gaegyeong","Dakmok","goryeo_songak","goryeo_jangdan"}]
+    rp = cartography.layout(regional)
+    check("송악 산록은 개경 북쪽", rp["goryeo_songak"][1] < rp["Gaegyeong"][1])
+    check("장단 들마을은 닥나무 마을 남쪽", rp["goryeo_jangdan"][1] > rp["Dakmok"][1])
+    rw = max(rp[m.id][0]+m.w for m in regional)-min(p[0] for p in rp.values())
+    rh = max(rp[m.id][1]+m.h for m in regional)-min(p[1] for p in rp.values())
+    check("고려 지형 지도 가로세로 비율 1.8 이하", rw/rh < 1.8)
     for m in world:
         roads = {(x, y) for y in range(m.h) for x in range(m.w) if m.road[y][x] and not m.blocked[y][x]}
         check(m.id + " 전체 통행 가능 길 연결", bool(roads) and roads <= reachable(m, next(iter(roads)), road_only=True))

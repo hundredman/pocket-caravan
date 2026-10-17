@@ -19,7 +19,6 @@ MonoBehaviour:
     town: naru
     neighbors:
     - Route01
-    - goryeo_songak
   - mapId: Route01
     displayName: "\uC608\uC131 \uAE38"
     coord: {x: 1, y: 0}
@@ -32,6 +31,7 @@ MonoBehaviour:
     coord: {x: 2, y: 0}
     town: gaegyeong
     neighbors:
+    - goryeo_songak
     - Route01
     - Dakmok
   - mapId: Dakmok
@@ -46,7 +46,7 @@ MonoBehaviour:
     coord: {x: 0, y: 1}
     town: goryeo_songak
     neighbors:
-    - Naru
+    - Gaegyeong
   - mapId: goryeo_jangdan
     displayName: "\uC7A5\uB2E8 \uB4E4\uB9C8\uC744"
     coord: {x: 4, y: 0}
