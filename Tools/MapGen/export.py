@@ -1,6 +1,6 @@
 """맵 JSON과 사용한 타일 PNG를 Unity 프로젝트 구조로 내보낸다."""
 import json, os, sys, shutil
-import maps, gaegyeong
+from world_registry import generated_maps, map_entries
 import cartography
 from tiles import tile_image
 from PIL import Image
@@ -30,8 +30,7 @@ def obj_json(o):
 
 used = set()
 world_maps = []
-for f in (maps.naru, maps.route01, gaegyeong.build, maps.dakmok):
-    m = f()
+for entry, m in zip(map_entries("goryeo"), generated_maps("goryeo")):
     world_maps.append(m)
     palette = [""]
     index = {"": 0}
@@ -53,7 +52,7 @@ for f in (maps.naru, maps.route01, gaegyeong.build, maps.dakmok):
              blocked=[1 if b else 0 for row in m.blocked for b in row],
              objects=[obj_json(o) for o in m.objects])
     d["palette"] = palette
-    with open(os.path.join(map_dir, m.id + ".json"), "w") as fp:
+    with open(os.path.join(OUT, entry["jsonPath"]), "w", encoding="utf-8") as fp:
         json.dump(d, fp, ensure_ascii=False, separators=(",", ":"))
     m.render(os.path.join(os.path.dirname(__file__), "preview_" + m.id + ".png"))
 for k in used:

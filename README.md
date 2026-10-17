@@ -5,7 +5,8 @@
 현재 본편 구현과 이번 제작 기준안은 **2D 탑다운 픽셀**이다. 3인칭 카툰은 이전 별도 실험으로 보존한다.
 **초기 4주 MVP는 기본 시스템 구현 후 2~4명 실제 멀티플레이를 검증한다. 최종 제품 목표는 MMORPG 규모의 다중 접속 교역 세계다.** 2~4명은 최종 정원이 아니며, 장기 인원·지역별 밀집도·장비·비용은 단계적 검증으로 구체화한다. 현재 온라인 기능은 미구현이다.
 네 스타팅 지역·장거리 여정·2D 품질·공유 시장·서버 저장의 기준과 계획은 [개발 문서 안내](Docs/README.md)를 참고한다.
-팀 작업 정리는 [해야 할 일](Docs/ImplementationBacklog.md) → [11월 초 마감·파트별 일정](Docs/DeliveryPlan.md) 순서로 확인한다. 담당 실명과 정확한 마감일은 결정 대기이며, 사용자 담당은 고려다.
+**팀원 개발 시작:** [공통 기준 브랜치·첫 실행·지역별 파일·통합 검사](Docs/TeamDevelopment.md)를 먼저 확인한다. 지역 담당은 은샘 고려·윤채 베네치아·은인 아라비아·기우 북유럽이며 공통 기능 담당과 정확한 마감일은 별도 확정한다.
+팀 작업 정리는 [해야 할 일](Docs/ImplementationBacklog.md) → [11월 초 마감·파트별 일정](Docs/DeliveryPlan.md) 순서로 확인한다.
 원본과 후속 요구의 누락·차이는 [전체 요구 대조표](Docs/RequirementsAudit.md)에서 추적한다. 재현 검사는 비시작 씬에서 Play 후 **Pocket Caravan > Tests > 로컬 의뢰·회수·저장 검사**로 실행한다. 이 검사는 해당 Play를 저장 없는 시험 상태로 바꾼다.
 
 ## 시작하기
@@ -17,7 +18,7 @@
 1. Unity Hub에서 **6000.3.26f1 (Unity 6.3 LTS)** 를 설치한다. 팀 전원이 이 버전으로 맞춘다.
 2. 저장소를 받아 Unity Hub → Add → 이 폴더를 연다.
 3. `Assets/PocketCaravan/Scenes/Goryeo/Naru.unity`(예성 나루 마을)를 열고 Play.
-   데이터나 맵을 다시 만들 때는 메뉴 **Pocket Caravan > 1. 시작 세트 만들기**.
+   첫 실행에 재생성은 필요 없다. 메뉴 **Pocket Caravan > 1. 시작 세트 만들기**는 기존 데이터·공용 목록을 초기화하므로 팀 작업 중 일반 실행 방법으로 사용하지 않는다.
 
 조작: 방향키/WASD 이동 · Shift 달리기 · Space 말 걸기·확인 · Q 퀘스트 목록 · M 지도 · L 교역 장부 · Esc 메뉴(상업 백과·저장·소리·처음부터)
 
@@ -68,6 +69,7 @@ Assets/PocketCaravan/
   Art/Tiles         타일 에셋 (Tile Palette에 끌어다 쓰기)
   Data/<지역>        ScriptableObject 데이터
   Resources/        GameDatabase (시작 설정, 밸런스 값)
+  World/Regions/    지역별 맵·좌표·씬·NPC 등록 JSON
   Scenes/<지역>      맵 하나 = 씬 하나
   Scripts/          게임 코드 (namespace PocketCaravan)
   Editor/           에디터 도구 (임포트 설정, 시작 세트 생성)
@@ -79,7 +81,7 @@ Assets/PocketCaravan/
 
 1. `Data/<지역>/`에 Region, Town, Item 에셋을 만든다 (우클릭 > Create > Pocket Caravan).
 2. 맵은 `Tools/MapGen`의 파이썬 코드로 설계한다 (`Tools/MapGen/README.md`). `python3 export.py` → Unity 메뉴 2.
-3. 맵 좌표는 `MapJsonBuilder.MapCoords`, 마을 좌표는 `TownData.worldCoord`. 현재 시세·의뢰 거리는 좌표의 맨해튼 거리이며 실제 연결 경로를 세지 않는다. 우회로·분기 확장 시 거리 규칙을 별도로 정해야 한다.
+3. 맵 목록·좌표·씬·지역/NPC는 `World/Regions/<region>.json`에 등록한다. `MapJsonBuilder.MapCoords`는 등록 파일을 읽는 호환 속성이다. 마을 좌표는 `TownData.worldCoord`. 현재 시세·의뢰 거리는 좌표의 맨해튼 거리이며 실제 연결 경로를 세지 않는다. 우회로·분기 확장 시 거리 규칙을 별도로 정해야 한다.
 4. 출구의 `target`(씬 이름)과 `spawn`, 도착 자리 `id`를 맞춘다.
 
 씬에서 손으로 칠해도 되지만, 메뉴 2를 다시 돌리면 덮어쓰니 그 맵은 JSON 쪽을 고치거나 메뉴를 돌리지 않는다.

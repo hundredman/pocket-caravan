@@ -25,10 +25,11 @@
 - NPC 종류: `npc`(퀘스트, npc id), `market`(장터, town id), `villager`(마을 사람), `worker`(작업 왕복 연출)
 - 출구는 `target`(씬 이름)과 `spawn`(도착 자리 id)을 맞춘다
 
-현재 새 맵 추가는 JSON 작성만으로 끝나지 않는다. `MapJsonBuilder.MapOrder`와 `MapCoords`,
-마을의 `worldCoord`, 빌드 씬 목록 및 `WorldIndex` 연결도 확인한다.
+현재 맵 목록과 생성 함수는 `Assets/PocketCaravan/World/Regions/goryeo.json`이 기준이다. Unity 빌더·WorldIndex·macOS 프리뷰 빌드도 같은 지역 등록을 읽는다. Python exporter는 고려용이며 다른 지역을 자동 생성하지 않는다. 새 지역의 JSON/씬/데이터 등록 순서는 [팀 개발 시작 안내](../../Docs/TeamDevelopment.md)를 따른다.
+
 생성기를 다시 돌리면 씬을 덮어쓰고, 시작 세트 생성은 데이터 값도 다시 쓴다.
-팀에서는 맵 원본 코드/JSON과 공용 생성기의 담당자를 정하고, 씬에서만 수정한 내용을 먼저 보존한다.
+맵 원본 코드/JSON과 공용 생성기의 담당자를 정하고, 씬에서만 수정한 내용을 먼저 보존한다.
+읽기 전용 통합 검사: 저장소 루트에서 `python Tools/Integration/validate_world.py`.
 
 ## 2D 유지보수 (2026-10-15)
 

@@ -22,6 +22,8 @@ namespace PocketCaravan.EditorTools
         [MenuItem("Pocket Caravan/1. 시작 세트 만들기 (데이터 + 맵)", priority = 1)]
         public static void BuildAll()
         {
+            if (EditorApplication.isPlaying || !EditorUtility.DisplayDialog("고려 초기 데이터 재생성",
+                "기존 고려 데이터와 공용 GameDatabase 목록을 초기값으로 덮어씁니다.\n다른 지역을 연결한 팀 작업에서는 실행하지 마세요. 맵만 갱신하려면 메뉴 2를 사용하세요.", "초기값으로 재생성", "취소")) return;
             foreach (var d in new[] { ArtDir, DataDir, QuestDir, OriginDir, Root + "/Resources" }) EnsureFolder(d);
             PlaceholderArt.WriteAll(ArtDir);
             AssetDatabase.Refresh();
@@ -34,7 +36,7 @@ namespace PocketCaravan.EditorTools
         public static void OpenStart()
         {
             if (UnityEditor.SceneManagement.EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-                UnityEditor.SceneManagement.EditorSceneManager.OpenScene($"{Root}/Scenes/Goryeo/{MapJsonBuilder.MapOrder[0]}.unity");
+                UnityEditor.SceneManagement.EditorSceneManager.OpenScene(WorldRegistry.Load().ScenePaths[0]);
         }
 
         // ---------- 데이터 ----------

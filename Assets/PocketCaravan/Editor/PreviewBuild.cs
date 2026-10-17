@@ -27,12 +27,7 @@ namespace PocketCaravan.EditorTools
             Directory.CreateDirectory(folder);
             var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
             {
-                scenes = new[] {
-                    "Assets/PocketCaravan/Scenes/Goryeo/Naru.unity",
-                    "Assets/PocketCaravan/Scenes/Goryeo/Route01.unity",
-                    "Assets/PocketCaravan/Scenes/Goryeo/Gaegyeong.unity",
-                    "Assets/PocketCaravan/Scenes/Goryeo/Dakmok.unity"
-                },
+                scenes = WorldRegistry.Load().ScenePaths,
                 locationPathName = folder + "/PocketCaravan.app",
                 target = BuildTarget.StandaloneOSX,
                 options = BuildOptions.None,

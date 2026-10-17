@@ -17,21 +17,21 @@ namespace PocketCaravan.EditorTools
     public static class MapJsonBuilder
     {
         const string Root = "Assets/PocketCaravan";
-        const string MapDir = Root + "/Maps";
         const string TilePngDir = Root + "/Art/NinjaAdventure/Tiles";
         const string TileAssetDir = Root + "/Art/NinjaAdventure/TileAssets";
-        const string SceneDir = Root + "/Scenes/Goryeo";
         const string DbPath = Root + "/Resources/GameDatabase.asset";
 
-        /// <summary>시작 맵이 맨 앞</summary>
-        public static readonly string[] MapOrder = { "Naru", "Route01", "Gaegyeong", "Dakmok" };
-
-        /// <summary>월드 지도 좌표 (맵 단위). 마을 TownData.worldCoord와 맞춘다.</summary>
-        public static readonly Dictionary<string, Vector2Int> MapCoords = new Dictionary<string, Vector2Int>
+        // Compatibility for existing tools; the registration files are the source of truth.
+        public static string[] MapOrder => WorldRegistry.Load().maps.ConvertAll(m => m.mapId).ToArray();
+        public static Dictionary<string, Vector2Int> MapCoords
         {
-            ["Naru"] = new Vector2Int(0, 0), ["Route01"] = new Vector2Int(1, 0),
-            ["Gaegyeong"] = new Vector2Int(2, 0), ["Dakmok"] = new Vector2Int(3, 0),
-        };
+            get
+            {
+                var coords = new Dictionary<string, Vector2Int>();
+                foreach (var m in WorldRegistry.Load().maps) coords.Add(m.mapId, new Vector2Int(m.worldX, m.worldY));
+                return coords;
+            }
+        }
 
         [Serializable]
         class MapObject
@@ -53,26 +53,64 @@ namespace PocketCaravan.EditorTools
             public MapObject[] objects;
         }
 
-        class NpcDef
+        [MenuItem("Pocket Caravan/Tests/지역 통합 등록 검사")]
+        public static void ValidateWorld()
         {
-            public string name, sprite, greeting;
+            var registry = WorldRegistry.Load();
+            ValidateRegisteredMaps(registry);
+            Debug.Log($"지역 통합 검사 통과: {registry.regions.Count}개 지역, {registry.maps.Count}개 맵. 씬·저장은 변경하지 않음.");
         }
 
-        static readonly Dictionary<string, NpcDef> QuestNpcs = new Dictionary<string, NpcDef>
+        static void ValidateRegisteredMaps(WorldRegistry.Snapshot registry)
         {
-            ["naru_chief"] = new NpcDef { name = "나루 마을 촌장", sprite = "elder_tall", greeting = "예성강 물길이 개경까지 닿으니, 이 작은 나루에도 온갖 짐이 오간다네." },
-            ["gaekju"] = new NpcDef { name = "개경 객주 돈돌", sprite = "gaekju_tall", greeting = "객주는 상인들이 묵고 짐을 맡기는 곳이지. 일거리가 생기면 부르겠네." },
-            ["dakmok_chief"] = new NpcDef { name = "닥나무 마을 촌장", sprite = "dakmokchief_tall", greeting = "우리 마을 종이는 질기고 하얗기로 이름났다네." },
-        };
+            var db = AssetDatabase.LoadAssetAtPath<GameDatabase>(DbPath);
+            if (db == null) throw new InvalidDataException("GameDatabase가 없습니다.");
+            UniqueIds(db.items.ConvertAll(v => v == null ? null : v.id), "상품");
+            UniqueIds(db.towns.ConvertAll(v => v == null ? null : v.id), "마을");
+            UniqueIds(db.vehicles.ConvertAll(v => v == null ? null : v.id), "운반 수단");
+            UniqueIds(db.quests.ConvertAll(v => v == null ? null : v.id), "퀘스트");
+            var npcIds = new List<string>();
+            foreach (var r in registry.regions)
+                foreach (var n in r.npcs ?? Array.Empty<WorldRegistry.NpcEntry>()) npcIds.Add(n.id);
+            UniqueIds(npcIds, "NPC");
+            var files = new Dictionary<string, MapFile>();
+            foreach (var entry in registry.maps)
+            {
+                var f = JsonUtility.FromJson<MapFile>(File.ReadAllText(entry.jsonPath));
+                if (f == null || f.id != entry.mapId || f.w <= 0 || f.h <= 0 || f.objects == null)
+                    throw new InvalidDataException($"맵 ID/크기/객체 목록 오류: {entry.mapId}");
+                foreach (var layer in new[] { f.ground, f.deco, f.obj, f.high, f.road, f.blocked })
+                    if (layer == null || layer.Length != f.w * f.h) throw new InvalidDataException($"타일 층 길이 오류: {f.id}");
+                var spawns = new List<string>();
+                foreach (var o in f.objects)
+                {
+                    if (o == null) throw new InvalidDataException($"빈 맵 객체: {f.id}");
+                    if (o.kind == "spawn") spawns.Add(o.id);
+                    if (o.kind == "npc" && !Array.Exists(entry.region.npcs ?? Array.Empty<WorldRegistry.NpcEntry>(), n => n.id == o.npc))
+                        throw new InvalidDataException($"지역 NPC 정의 누락: {f.id}/{o.npc}");
+                    if ((o.kind == "market" || o.kind == "board") && !db.towns.Exists(t => t != null && t.id == o.town))
+                        throw new InvalidDataException($"GameDatabase에 마을 미등록: {f.id}/{o.town}");
+                    if (o.kind == "villager" && (entry.region.villagers == null || entry.region.villagers.Length == 0))
+                        throw new InvalidDataException($"지역 주민 정의 누락: {f.id}");
+                }
+                UniqueIds(spawns, f.id + " 스폰");
+                if (entry.mapId == registry.startMapId && !spawns.Contains(SpawnPoint.StartId))
+                    throw new InvalidDataException("시작 맵에 S0 스폰이 없습니다.");
+                files.Add(f.id, f);
+            }
+            foreach (var f in files.Values)
+                foreach (var o in f.objects)
+                    if (o.kind == "exit" && (!files.TryGetValue(o.target ?? "", out var target)
+                        || !Array.Exists(target.objects, s => s.kind == "spawn" && s.id == o.spawn)))
+                        throw new InvalidDataException($"출구 목표 맵/스폰 없음: {f.id} → {o.target}/{o.spawn}");
+        }
 
-        static readonly (string name, string sprite, string[] lines)[] Villagers =
+        static void UniqueIds(IEnumerable<string> values, string kind)
         {
-            ("비단 장수", "villager_fox_tall", new[] { "시전 거리에는 송나라 비단도, 아라비아 향료도 다 들어온다네.", "벽란도에 큰 배가 들어오는 날이면 값이 출렁이지." }),
-            ("짐꾼", "villager_dog_tall", new[] { "등짐으로는 하루에 몇 번 못 오가. 수레가 있어야 돈이 되지.", "남문 밖 길은 평평해서 수레가 잘 굴러가." }),
-            ("선비", "villager_rabbit_tall", new[] { "저 위가 만월대일세. 송악산 아래 임금님이 계시지.", "개경은 고려의 서울이라 사람도 물건도 다 모인다네." }),
-            ("뱃사공", "villager_bear_tall", new[] { "예성강 물길을 따라가면 벽란도 포구가 나오지. 송나라 배도 드나든다네." }),
-            ("떡 장수", "villager_tanuki_tall", new[] { "장날에는 사람이 두 배로 몰려. 값도 덩달아 오르고." }),
-        };
+            var used = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var id in values)
+                if (string.IsNullOrWhiteSpace(id) || !used.Add(id)) throw new InvalidDataException($"{kind} ID 누락/중복: {id}");
+        }
 
         [MenuItem("Pocket Caravan/2. 맵 씬 다시 만들기 (JSON → 씬)", priority = 2)]
         public static void BuildAll()
@@ -80,18 +118,18 @@ namespace PocketCaravan.EditorTools
             var db = AssetDatabase.LoadAssetAtPath<GameDatabase>(DbPath);
             if (db == null) { Debug.LogError("GameDatabase가 없습니다. 메뉴 1을 먼저 실행하세요."); return; }
             EnsureFolder(TileAssetDir);
-            EnsureFolder(SceneDir);
+            if (EditorApplication.isPlaying || !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            var registry = WorldRegistry.Load();
+            ValidateRegisteredMaps(registry);
 
             BuildWorldIndex();
 
             var paths = new List<string>();
-            foreach (var id in MapOrder)
+            foreach (var entry in registry.maps)
             {
-                string json = $"{MapDir}/{id}.json";
-                if (!File.Exists(json)) { Debug.LogWarning($"{json} 없음"); continue; }
-                string scenePath = $"{SceneDir}/{id}.unity";
-                BuildScene(JsonUtility.FromJson<MapFile>(File.ReadAllText(json)), scenePath);
-                paths.Add(scenePath);
+                EnsureFolder(Path.GetDirectoryName(entry.scenePath).Replace('\\', '/'));
+                BuildScene(JsonUtility.FromJson<MapFile>(File.ReadAllText(entry.jsonPath)), entry.scenePath, entry);
+                paths.Add(entry.scenePath);
             }
 
             var list = new List<EditorBuildSettingsScene>();
@@ -123,12 +161,10 @@ namespace PocketCaravan.EditorTools
             var index = AssetDatabase.LoadAssetAtPath<WorldIndex>(indexPath);
             if (index == null) { index = ScriptableObject.CreateInstance<WorldIndex>(); AssetDatabase.CreateAsset(index, indexPath); }
             index.maps.Clear(); index.places.Clear();
-            foreach (var id in MapOrder)
+            foreach (var entry in WorldRegistry.Load().maps)
             {
-                string json = $"{MapDir}/{id}.json";
-                if (!File.Exists(json)) continue;
-                var f = JsonUtility.FromJson<MapFile>(File.ReadAllText(json));
-                var info = new WorldIndex.MapInfo { mapId = f.id, displayName = f.name, coord = MapCoords.TryGetValue(f.id, out var mc) ? mc : Vector2Int.zero };
+                var f = JsonUtility.FromJson<MapFile>(File.ReadAllText(entry.jsonPath));
+                var info = new WorldIndex.MapInfo { mapId = f.id, displayName = f.name, coord = new Vector2Int(entry.worldX, entry.worldY) };
                 foreach (var o in f.objects)
                 {
                     if (o.kind == "exit" && !string.IsNullOrEmpty(o.target) && !info.neighbors.Contains(o.target)) info.neighbors.Add(o.target);
@@ -142,7 +178,7 @@ namespace PocketCaravan.EditorTools
             AssetDatabase.SaveAssets();
         }
 
-        static void BuildScene(MapFile f, string path)
+        static void BuildScene(MapFile f, string path, WorldRegistry.MapEntry entry = null)
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             // 새 씬을 만든 뒤에 에셋을 불러온다 (앞서 불러온 에셋은 내려감)
@@ -171,8 +207,9 @@ namespace PocketCaravan.EditorTools
             map.travelHours = f.hours;
             map.displayName = f.name;
             map.ground = ground; map.road = null; map.blocked = blocked;
-            map.region = db.towns.Count > 0 && db.towns[0] != null ? db.towns[0].region : null;
-            map.worldCoord = MapCoords.TryGetValue(f.id, out var wc) ? wc : Vector2Int.zero;
+            // Independent test maps may omit registration and do not inherit a civilization.
+            map.region = entry == null ? null : AssetDatabase.LoadAssetAtPath<RegionData>(entry.region.regionAssetPath);
+            map.worldCoord = entry == null ? Vector2Int.zero : new Vector2Int(entry.worldX, entry.worldY);
 
             var roads = gridGo.AddComponent<RoadGrid>();
             roads.width = f.w; roads.height = f.h;
@@ -209,7 +246,8 @@ namespace PocketCaravan.EditorTools
                         ex.targetScene = o.target; ex.targetSpawnId = o.spawn;
                         break;
                     case "npc":
-                        if (!QuestNpcs.TryGetValue(o.npc, out var nd)) break;
+                        var nd = Array.Find(entry?.region.npcs ?? Array.Empty<WorldRegistry.NpcEntry>(), n => n.id == o.npc);
+                        if (nd == null) throw new InvalidDataException($"NPC 미등록: {f.id}/{o.npc}");
                         var qn = Character(nd.name, nd.sprite, center, objects).AddComponent<QuestNpc>();
                         qn.npcId = o.npc; qn.displayName = nd.name; qn.greeting = nd.greeting;
                         var mk = new GameObject("Quest Marker").AddComponent<SpriteRenderer>();
@@ -333,7 +371,9 @@ namespace PocketCaravan.EditorTools
                         ambience.radius = o.radius > 0 ? o.radius : 10f;
                         break;
                     case "villager":
-                        var v = Villagers[(o.variant + o.idx) % Villagers.Length];
+                        var villagers = entry?.region.villagers;
+                        if (villagers == null || villagers.Length == 0) throw new InvalidDataException($"주민 정의 없음: {f.id}");
+                        var v = villagers[(o.variant + o.idx) % villagers.Length];
                         var vn = Character(v.name, v.sprite, center, objects).AddComponent<TalkNpc>();
                         vn.displayName = v.name;
                         vn.lines = v.lines;
@@ -385,7 +425,8 @@ namespace PocketCaravan.EditorTools
         /// <summary>별도 도구에서 한 장만 생성. 본편 맵 색인·빌드 씬 목록을 다시 쓰지 않는다.</summary>
         public static void BuildSingleMap(string json, string scenePath)
         {
-            BuildScene(JsonUtility.FromJson<MapFile>(json), scenePath);
+            var map = JsonUtility.FromJson<MapFile>(json);
+            BuildScene(map, scenePath, WorldRegistry.Load().Map(map.id));
         }
 
         /// <summary>모든 맵이 함께 쓰는 후처리 설정. 코드가 기준이라 매번 값을 다시 쓴다.</summary>

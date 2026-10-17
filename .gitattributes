@@ -4,7 +4,7 @@
 *.md text
 *.json text
 
-# Unity YAML: 줄 끝을 고정하고 자동 병합하지 않음 (충돌 시 한쪽 선택)
+# Unity YAML: 줄 끝 고정. 충돌은 담당자와 참조를 합의하거나 원본에서 재생성
 *.unity text eol=lf merge=binary linguist-generated
 *.prefab text eol=lf merge=binary linguist-generated
 *.asset text eol=lf merge=binary linguist-generated

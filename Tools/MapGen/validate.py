@@ -3,7 +3,7 @@ import json
 from collections import deque
 from pathlib import Path
 import maps
-import gaegyeong
+from world_registry import generated_maps
 import cartography
 from tiles import Map, STAMPS, K
 
@@ -25,7 +25,7 @@ def reachable(m, start, road_only=False):
 
 
 def validate():
-    world = [maps.naru(), maps.route01(), gaegyeong.build(), maps.dakmok()]
+    world = generated_maps("goryeo")
     results = []
     def check(name, condition):
         assert condition, name
