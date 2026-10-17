@@ -5,7 +5,7 @@ namespace PocketCaravan
     /// <summary>
     /// 북유럽 1장 퀘스트 중 공용 퀘스트 기능만으로 안 되는 연출을 맡는다 (공용 코드는 고치지 않음).
     /// - Q3: 나루 맵의 마을 사람 "톰테 할아버지"를 정직 시험 NPC(NorthTomte)로 바꿔 끼움
-    /// - Q4: Q2를 마치고 게임 시간 8시간 뒤 까마귀 무니가 눈보라 소식을 전하고 퀘스트를 자동 수락. 사냥꾼 마을 꿀술이 바닥남
+    /// - Q4: Q2를 마치고 게임 시간 8시간 뒤 까마귀 무니가 눈보라 소식을 전하고 퀘스트를 자동 수락. 사냥꾼 마을 꿀술이 바닥남 (재고가 시간이 지나며 회복되므로 빨리 갈수록 이득)
     /// - Q6: 볼드의 싹쓸이 퀘스트 중 나루에 처음 들어가면 볼드가 모피를 쏟아부어 값이 떨어짐
     /// 북유럽 퀘스트가 GameDatabase에 없으면 아무것도 하지 않는다.
     /// </summary>
@@ -72,7 +72,7 @@ namespace PocketCaravan
             if (q2DoneAt < 0f) { q2DoneAt = gm.Clock.TotalHours; return; }
             if (gm.Clock.TotalHours - q2DoneAt < StormDelayHours) return;
 
-            Notify.Show("까마귀 무니: 까악! 사냥꾼 마을 쪽에 눈보라가 몰려와요! 큰길이 막혀서 다른 상인들은 꿀술을 못 가져간대요!", 7f);
+            Notify.Show("까마귀 무니: 까악! 사냥꾼 마을에 눈보라가 몰아쳐서 꿀술이 똑 떨어졌대요! 눈이 그치면 다른 상인들이 몰려올 거예요, 서둘러요!", 7f);
             Sfx.Play("accept");
             var hunter = Town("north_hunter");
             var mead = Item("north_mead");

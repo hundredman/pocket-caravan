@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: N4_Storm
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: north_q4_storm
+  title: "\uBB34\uB2C8\uAC00 \uBB3C\uC5B4\uC628 \uB208\uBCF4\uB77C"
+  chain: "\uBE48 \uB4F1\uC9D0\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
+  summary: "\uB208\uBCF4\uB77C\uB85C \uC0AC\uB0E5\uAFBC \uB9C8\uC744\uC5D0 \uAFC0\uC220\uC774
+    \uB04A\uACBC\uB2E4. \uC7AC\uACE0\uAC00 \uB2E4\uC2DC \uCC28\uAE30 \uC804\uC5D0
+    \uBE44\uB974\uCE74\uC5D0\uC11C \uAFC0\uC220\uC744 \uC0AC\uC11C \uC0AC\uB0E5\uAFBC
+    \uB9C8\uC744\uC5D0 3\uAC1C \uD314\uC790. \uBE68\uB9AC \uB3C4\uCC29\uD560\uC218\uB85D
+    \uAC12\uC744 \uB354 \uBC1B\uB294\uB2E4."
+  giverNpc: 
+  requires:
+  - {fileID: 11400000, guid: 4fedf6281e4284f77b4d0ceeef3e5f7e, type: 2}
+  offerLine: 
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 2
+    text: "\uBE44\uB974\uCE74 \uC7A5\uD130\uC5D0\uC11C \uAFC0\uC220 \uC0AC\uAE30"
+    targetId: north_birka
+    item: {fileID: 11400000, guid: 5bdb4599b599a4bafb2d6eba12a7a241, type: 2}
+    vehicle: {fileID: 0}
+    count: 3
+    completeLine: 
+  - type: 3
+    text: "\uC0AC\uB0E5\uAFBC \uB9C8\uC744 \uC7A5\uD130\uC5D0 \uAFC0\uC220 3\uAC1C
+      \uD314\uAE30"
+    targetId: north_hunter
+    item: {fileID: 11400000, guid: 5bdb4599b599a4bafb2d6eba12a7a241, type: 2}
+    vehicle: {fileID: 0}
+    count: 3
+    completeLine: 
+  rewardMoney: 20
+  rewardCredit: 1
+  finishNote: "\uC18C\uC2DD\uC744 \uB4E3\uC790\uB9C8\uC790 \uC6C0\uC9C1\uC5EC \uB0A8\uBCF4\uB2E4
+    \uBA3C\uC800 \uB2FF\uC558\uB2E4. \uD56D\uD574\uC640 \uC6D0\uC815\uC5D0\uC11C
+    \uC775\uD78C \uBD81\uC720\uB7FD \uC0C1\uC778\uC758 \uC774\uB3D9 \uC694\uB839\uC774
+    \uBE5B\uB0AC\uB2E4."

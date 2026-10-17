@@ -16,8 +16,18 @@ namespace PocketCaravan.EditorTools
         const string DataDir = Root + "/Data/North";
         const string DbPath = Root + "/Resources/GameDatabase.asset";
 
-        [MenuItem("Pocket Caravan/북유럽/데이터 만들기 + 테스트용 DB 등록", priority = 30)]
-        public static void BuildData()
+        [MenuItem("Pocket Caravan/북유럽/데이터 만들기 + 테스트용 DB 등록 (고려와 함께)", priority = 30)]
+        public static void BuildData() => Build(northOnly: false);
+
+        /// <summary>
+        /// 지역을 합치기 전에는 고려와 북유럽이 길로 이어져 있지 않다. 게시판 의뢰가 DB의 모든 마을을 목적지로 고르고(개경 배달 등),
+        /// 고려 튜토리얼 퀘스트도 목록에 섞이므로, 테스트할 때는 DB에 북유럽만 남긴다.
+        /// 고려로 돌아가려면 터미널에서: git restore Assets/PocketCaravan/Resources/GameDatabase.asset
+        /// </summary>
+        [MenuItem("Pocket Caravan/북유럽/데이터 만들기 + 테스트용 DB 등록 (북유럽만)", priority = 31)]
+        public static void BuildDataNorthOnly() => Build(northOnly: true);
+
+        static void Build(bool northOnly)
         {
             var db = AssetDatabase.LoadAssetAtPath<GameDatabase>(DbPath);
             if (db == null) { Debug.LogError("GameDatabase가 없습니다."); return; }
@@ -79,6 +89,13 @@ namespace PocketCaravan.EditorTools
             db.towns.InsertRange(0, new[] { birka, hunter, naru });
             db.items.AddRange(new[] { mead, fur, amber, meat, butter, hay, saltLick, meadJar });
             db.quests.AddRange(quests);
+            if (northOnly)
+            {
+                db.towns.RemoveAll(t => t == null || !t.id.StartsWith("north_"));
+                db.items.RemoveAll(i => i == null || !i.id.StartsWith("north_"));
+                db.quests.RemoveAll(q => q == null || !q.id.StartsWith("north_"));
+                Debug.Log("[북유럽] 테스트용 DB에 북유럽만 남겼습니다. 고려로 돌아가려면: git restore Assets/PocketCaravan/Resources/GameDatabase.asset");
+            }
             EditorUtility.SetDirty(db);
             AssetDatabase.SaveAssets();
             Debug.Log("[북유럽] 데이터를 만들고 GameDatabase에 덧붙였습니다. 이제 메뉴 2(맵 씬 다시 만들기)를 실행하세요. GameDatabase.asset 변경은 커밋하지 마세요.");
@@ -163,29 +180,29 @@ namespace PocketCaravan.EditorTools
                 q.rewardMoney = 50; q.rewardCredit = 1;
             });
 
-            // Q3 (자유): 깨지기 쉬운 물건 + 정직 시험 — 톰테의 꿀술 단지 (선택지는 Scripts/North/NorthTomte)
+            // Q3 (자유): 배달 + 정직 시험 — 톰테의 꿀술 단지 (선택지는 Scripts/North/NorthTomte). 주행 중 낙하·파손은 팀 결정으로 쓰지 않음
             Q("N3_Tomte", q =>
             {
                 q.id = "north_q3_tomte"; q.title = "톰테의 꿀술 단지"; q.chain = chain; q.giverNpc = Innkeeper; q.requires.Add(q2);
-                q.summary = "꿀술 단지를 피오르 나루 창고지기에게 배달한다. 깨지기 쉬우니 흔들림을 조심하자. 창고 구석에는 톰테 할아버지가 산다.";
-                q.offerLine = "나루 창고에서 우리 꿀술을 기다린단다. 질그릇 단지라 흔들리면 금이 가니 살살 다니렴. 아, 창고 구석 톰테 할아버지를 만나면 예의 바르게 굴고.";
+                q.summary = "꿀술 단지를 피오르 나루 창고지기에게 배달한다. 창고 문 앞을 지키는 톰테 할아버지는 정직한 상인을 좋아한다.";
+                q.offerLine = "나루 창고에서 우리 꿀술을 기다린단다. 창고 문 앞에는 톰테 할아버지가 지키고 계시지. 예의 바르고 정직하게 굴렴. 그분 눈에 들면 장사가 술술 풀린단다.";
                 q.giveItem = meadJar; q.giveCount = 1;
                 q.objectives.Add(O(ObjectiveType.VisitMap, "피오르 나루 마을에 가기", "north_naru"));
-                q.objectives.Add(O(ObjectiveType.Talk, "창고 구석의 톰테 할아버지와 이야기하기", Tomte));
+                q.objectives.Add(O(ObjectiveType.Talk, "창고 문 앞의 톰테 할아버지와 이야기하기", Tomte));
                 q.objectives.Add(O(ObjectiveType.Deliver, "창고지기에게 꿀술 단지 전하기", Warehouse, meadJar, 1,
-                    "단지가 멀쩡하네! 톰테 할아버지를 만났다고? 그분 눈에 들면 이 바닥에서 장사가 술술 풀린다네."));
+                    "주문한 꿀술 맞네! 톰테 할아버지를 만났다고? 그분이 들여보냈다면 믿을 만한 상인이지."));
                 q.rewardMoney = 40; q.rewardCredit = 1;
             });
 
-            // Q4 (이벤트): 출신 강점 — 무니가 물어온 눈보라 (NPC가 주지 않고 NorthQuestDirector가 자동으로 수락시킴)
+            // Q4 (이벤트): 북유럽 이동 강점(기동·회전율) — 무니가 물어온 눈보라 (NPC가 주지 않고 NorthQuestDirector가 자동으로 수락시킴)
             Q("N4_Storm", q =>
             {
                 q.id = "north_q4_storm"; q.title = "무니가 물어온 눈보라"; q.chain = chain; q.giverNpc = ""; q.requires.Add(q2);
-                q.summary = "눈보라로 사냥꾼 마을에 꿀술이 끊겼다. 비르카에서 꿀술을 사서 사냥꾼 마을에 3개 팔자. 큰길은 막혔다고 하니, 길 없는 숲으로 가로지르는 바이킹이 유리하다.";
+                q.summary = "눈보라로 사냥꾼 마을에 꿀술이 끊겼다. 재고가 다시 차기 전에 비르카에서 꿀술을 사서 사냥꾼 마을에 3개 팔자. 빨리 도착할수록 값을 더 받는다.";
                 q.objectives.Add(O(ObjectiveType.Buy, "비르카 장터에서 꿀술 사기", "north_birka", mead, 3));
                 q.objectives.Add(O(ObjectiveType.Sell, "사냥꾼 마을 장터에 꿀술 3개 팔기", "north_hunter", mead, 3));
                 q.rewardMoney = 20; q.rewardCredit = 1;
-                q.finishNote = "눈밭을 가로질러 남보다 먼저 닿았다. 북쪽 상인은 길 없는 곳에서 빠르다 (바이킹 강점).";
+                q.finishNote = "소식을 듣자마자 움직여 남보다 먼저 닿았다. 항해와 원정에서 익힌 북유럽 상인의 이동 요령이 빛났다.";
             });
 
             // Q6 (자유): 라이벌과 시세 경쟁 — 멈추지 않는 볼드 (나루 투매는 NorthQuestDirector)
