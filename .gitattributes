@@ -24,3 +24,7 @@
 *.ogg binary
 *.ttf binary
 *.otf binary
+
+# 발표 산출물은 줄 단위 병합/개행 변환 제외
+*.pdf binary
+*.pptx binary
