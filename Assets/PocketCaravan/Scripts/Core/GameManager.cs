@@ -88,6 +88,7 @@ namespace PocketCaravan
             gameObject.AddComponent<AmbientFX>();
             gameObject.AddComponent<WorldMapUI>();
             gameObject.AddComponent<TradeLedgerUI>();
+            gameObject.AddComponent<TownFacilitiesUI>();
             gameObject.AddComponent<CommerceGuideUI>();
             gameObject.AddComponent<PauseMenu>();
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -186,7 +187,8 @@ namespace PocketCaravan
             {
                 var d = saveToLoad;
                 saveToLoad = null;
-                Apply(d);
+                try { Apply(d); }
+                catch (System.Exception e) { autosave = false; Debug.LogError("기존 저장 복원 실패: 원본을 덮어쓰지 않습니다. " + e.Message); return; }
                 if (!string.IsNullOrEmpty(d.scene) && d.scene != scene.name)
                 {
                     StartCoroutine(Travel(d.scene, null, 0f, new Vector2Int(d.fx, d.fy), new Vector3(d.px, d.py, 0f)));
@@ -228,7 +230,7 @@ namespace PocketCaravan
                 else Notify.Show(map.displayName, 2.5f);
                 GameEvents.RaiseMapEntered(map.mapId);
                 sun = FindAnyObjectByType<UnityEngine.Rendering.Universal.Light2D>();
-                SpawnDrops(map.mapId);
+                // 기존 낙하물은 Apply에서 재산으로 이주하며 월드에 새로 배치하지 않는다.
                 AudioManager.OnMapEntered(map.mapId);
                 SaveNow();
             }
@@ -271,33 +273,11 @@ namespace PocketCaravan
 
         // ---------- 떨어진 짐 ----------
 
-        /// <summary>흔들림이 가득 차면 짐 하나(물건 1개 또는 의뢰 짐)를 pos에 떨어뜨린다.</summary>
+        /// <summary>이전 호출 호환용. 새 주행 낙하는 만들지 않는다.</summary>
         public void DropRandomCargo(Vector3 pos)
         {
-            var map = MapRoot.Current;
-            if (map == null) return;
-            if (!map.IsWalkable(map.WorldToCell(pos))) pos = PlayerController.Instance != null ? PlayerController.Instance.transform.position : pos;
-            var choices = new List<object>();
-            foreach (var kv in Player.cargo.Items) if (!kv.Key.questItem) choices.Add(kv.Key);
-            foreach (var c in Player.contracts) if (!c.dropped) choices.Add(c);
-            if (choices.Count == 0) return;
-            var pick = choices[Random.Range(0, choices.Count)];
-            var r = new DropRecord { mapId = map.mapId, x = pos.x, y = pos.y };
-            if (pick is ItemData item)
-            {
-                r.itemId = item.id; r.label = item.displayName; r.unitCost = Player.cargo.AverageCost(item);
-                Player.cargo.Remove(item, 1);
-            }
-            else if (pick is Contract c)
-            {
-                c.dropped = true;
-                c.condition = Mathf.Max(0f, c.condition - 0.2f);
-                r.contractId = c.id; r.label = c.cargo;
-            }
-            Drops.Add(r);
-            DroppedCargo.Spawn(r, IconFor(r));
-            Sfx.Play("drop");
-            Notify.Show($"짐이 흔들려 {Josa.Ga(r.label)} 떨어졌다! 다가가 Space로 줍자.", 4f);
+            // 이전 외부 호출과의 API 호환. 신규 주행 낙하를 생성하지 않는다.
+            Player.shake = 0f;
         }
 
         Sprite IconFor(DropRecord r)
@@ -351,9 +331,9 @@ namespace PocketCaravan
 
         // ---------- 저장 ----------
 
-        public void SaveNow()
+        public bool SaveNow()
         {
-            if (!autosave || MapRoot.Current == null) return;
+            if (!autosave || MapRoot.Current == null) return false;
             var pc = PlayerController.Instance;
             var d = new SaveData
             {
@@ -367,6 +347,7 @@ namespace PocketCaravan
                 nextContractId = Contracts.nextId,
             };
             foreach (var kv in Player.cargo.Items) { d.cargoItems.Add(kv.Key.id); d.cargoCounts.Add(kv.Value); d.cargoCosts.Add(Player.cargo.TotalCost(kv.Key)); }
+            d.storedCargo = Player.warehouse.Export();
             d.contracts.AddRange(Player.contracts);
             Quests.Export(d);
             foreach (var m in markets.Values) d.markets.Add(m.Export());
@@ -375,17 +356,18 @@ namespace PocketCaravan
             d.drops.AddRange(Drops);
             d.marketQuotes.AddRange(Player.ledger.Export());
             foreach (var kv in cooldowns) { d.cooldownKeys.Add(kv.Key); d.cooldownUntil.Add(kv.Value); }
-            SaveSystem.Write(d);
+            return SaveSystem.Write(d);
         }
 
         void Apply(SaveData d)
         {
+            Player.warehouse.Import(d.storedCargo);
             Player.ledger.Import(d.marketQuotes);
             Player.money = d.money;
             Player.credit = d.credit;
             Player.vehicle = Db.vehicles.Find(v => v != null && v.id == d.vehicle) ?? Db.startVehicle;
             Player.stamina = d.stamina;
-            Player.shake = Mathf.Clamp01(d.shake);
+            Player.shake = 0f;
             Player.cargo.Clear();
             for (int i = 0; i < d.cargoItems.Count; i++)
             {
@@ -410,7 +392,8 @@ namespace PocketCaravan
                 foreach (var c in b.list) Contracts.nextId = Mathf.Max(Contracts.nextId, c.id + 1);
             Contracts.InitBoards();
             if (d.traders.Count > 0) Traders.traders = new List<NpcTraders.Trader>(d.traders);
-            Drops.Clear(); Drops.AddRange(d.drops);
+            Drops.Clear(); if (d.drops != null) Drops.AddRange(d.drops);
+            LegacyCargoMigration.Restore(Player, Drops, ItemById);
             cooldowns.Clear();
             for (int i = 0; i < d.cooldownKeys.Count && i < d.cooldownUntil.Count; i++) cooldowns[d.cooldownKeys[i]] = d.cooldownUntil[i];
         }

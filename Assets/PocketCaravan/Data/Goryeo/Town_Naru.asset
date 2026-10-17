@@ -17,6 +17,15 @@ MonoBehaviour:
   region: {fileID: 11400000, guid: d95bb058a23aa48d8b58779d743714c0, type: 2}
   worldCoord: {x: 0, y: 0}
   startLevel: 1
+  settlementTier: 1
+  facilities:
+  - id: goryeo_naru_rest
+    displayName: "\uAE38\uC190 \uC27C\uD130"
+    kind: 0
+    minTier: 1
+    minCredit: 0
+    description: 
+    storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: 26670207d8df843b19235b8d81286a8d, type: 2}
     optimal: 30

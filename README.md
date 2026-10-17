@@ -1,10 +1,12 @@
 # Pocket Caravan
 
-> **10월17일 전체 재대조 교정:** 스타팅 지역은 수도1+수도 외 최소 마을4, 이미 발전한 지역·자유 이동·마을 등급/개인 신용별 시설 이용이 제작 범위다. 현재 고려 네 맵은 수도1+마을2+길1로 미달이다. [전체 누락 교정](Docs/FullRequirementsReview_2026-10-17.md)와 [고려 제작 명세](Docs/GoryeoRegionSpec.md)를 우선하며 이전 최소 거점/미정/검토 중단 표현을 현재 범위로 재사용하지 않는다.
+> **현재 구현 추적:** [개발 진행표](Docs/DevelopmentStatus.md)를 먼저 확인한다. 아래 검토 당시의 ‘4맵·마을2·시설/낙하 제거 미구현’은 이전 기준선이다. 이번 구현은 6맵·수도1+마을4·로컬 시설3종이며, 사용자 후속 확인에 따라 감속을 나타내는 시각적 흔들림은 유지한다. 기획/검증/미완료는 진행표에서 구분한다.
+
+> **10월17일 전체 재대조 교정:** 스타팅 지역은 수도1+수도 외 최소 마을4, 이미 발전한 지역·자유 이동·마을 등급/개인 신용별 시설 이용이 제작 범위다. 재검토 당시 고려는 수도1+마을2+길1로 미달이었으며 후속 개발로 구조를 채웠다. 최신 상태는 개발 진행표를 따른다. [전체 누락 교정](Docs/FullRequirementsReview_2026-10-17.md)와 [고려 제작 명세](Docs/GoryeoRegionSpec.md)를 우선하며 이전 최소 거점/미정/검토 중단 표현을 현재 범위로 재사용하지 않는다.
 
 대항해시대 이전의 상인이 되어 짐을 싣고, 길을 골라 나르고, 돈을 버는 2D 픽셀 교역 게임 (게임개발 2026-2 팀 프로젝트).
 
-최신 역할·운반 결정은 [10월17일 변경 요약](Docs/DesignUpdate_2026-10-17.md)을 먼저 확인한다. **주행 낙하는 제외하기로 했지만 현재 코드/기존 빌드에는 남아 있으며 제거 패치는 미적용이다.**
+최신 역할·운반 결정은 [10월17일 변경 요약](Docs/DesignUpdate_2026-10-17.md)을 먼저 확인한다. **현재 소스는 주행 낙하를 제거하고 감속에 따른 흔들림 연출을 유지한다. 이전 배포 릴리스는 새 소스와 다르므로 빌드 버전을 확인한다.**
 현재 본편 구현과 이번 제작 기준안은 **2D 탑다운 픽셀**이다. 3인칭 카툰은 이전 별도 실험으로 보존한다.
 **초기 4주 MVP는 기본 시스템 구현 후 2~4명 실제 멀티플레이를 검증한다. 최종 제품 목표는 MMORPG 규모의 다중 접속 교역 세계다.** 2~4명은 최종 정원이 아니며, 장기 인원·지역별 밀집도·장비·비용은 단계적 검증으로 구체화한다. 현재 온라인 기능은 미구현이다.
 네 스타팅 지역·장거리 여정·2D 품질·공유 시장·서버 저장의 기준과 계획은 [개발 문서 안내](Docs/README.md)를 참고한다.
@@ -36,7 +38,8 @@ R 재시작, Tab 전체 보기. [시험장 안내](Assets/CaravanMovementLab/REA
 | 기능 | 위치 |
 |---|---|
 | 자유 이동, 짐 무게·길 등급·달리기에 따른 속도, 달리기 체력 | `Scripts/Player/` |
-| 짐 흔들림: 달리기·길 없는 곳·돌부리에서 차오르고, 가득 차면 짐이 떨어짐 (다시 줍기) | `PlayerController`, `World/DroppedCargo` |
+| 노면·적재 감속과 시각 흔들림, 신규 주행 낙하 없음·구 저장 화물 복원 | `PlayerController`, `CarryVisual`, `LegacyCargoMigration` |
+| 등급/개인 신용별 쉼터·길 안내소·개경 보관소, 화물 수량/원가 저장 | `TownData`, `TownFacility`, `TownFacilitiesUI` |
 | 맵 이동 (가장자리에서 이어서 다음 맵으로, 길 맵은 시간이 흐름) | `Scripts/Map/` |
 | 퀘스트 (! · ? 표시, 길 안내 화살표, Q 목록), 튜토리얼 5개(배달 → 심부름 장보기 → 초보용 인삼으로 첫 차익 → 먼 배달 → 손수레) + 서브 3개 | `Scripts/Quests/` |
 | 배달 의뢰 게시판 (마을마다 3개, 기한·짐 상태·보수·신용, 부분 성공) | `Scripts/Contracts/` |
@@ -51,7 +54,7 @@ R 재시작, Tab 전체 보기. [시험장 안내](Assets/CaravanMovementLab/REA
 | 게임 시계 (하루 = 현실 6분, 5일마다 장날), 낮·밤 빛 | `Scripts/Core/GameClock` |
 | 상태 창, 전체 지도(M), 메뉴(Esc), 자동 저장·불러오기 | `Scripts/UI/`, `Core/SaveSystem` |
 | 배경 음악·효과음 (Ninja Adventure, CC0) | `Audio/AudioManager`, `Resources/Audio` |
-| 맵 4개: 예성 나루 마을(시작) - 예성 길 - 개경(수도) - 닥나무 마을 | `Tools/MapGen` → `Maps/*.json` → `Editor/MapJsonBuilder` |
+| 맵6개: 기존4맵 + 송악 산록·장단 들마을. 수도1+마을4+길1 | `Tools/MapGen` → `Maps/*.json` → `Editor/MapJsonBuilder` |
 | 캐릭터 12종(16×24 동물)·물건 아이콘: 글자 그림으로 생성 | `Tools/ArtGen/chars.py`, `items.py` |
 | 땅·건물 타일, 물결·꽃 애니메이션: Ninja Adventure 에셋 팩 (CC0). UI 폰트: 갈무리 (OFL) | `Art/NinjaAdventure`, `Resources/Fonts` |
 
@@ -125,7 +128,7 @@ NPC `lines` 배열의 다음 항목은 다시 말을 걸 때 나오며, 한 항�
 
 ## macOS 고려 프리뷰 빌드
 
-Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macOS/PocketCaravan.app`을 만든다. 현재 제공 빌드는 고려 본편 네 맵이며, 나루에서 시작한다. 이전 3D 실험과 이동 시험장은 본편 빌드에 포함하지 않는다.
+Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macOS/PocketCaravan.app`을 만든다. 이 메뉴는 현재 등록된 고려6맵을 포함하며 나루에서 시작한다. Windows 프리뷰 메뉴도 제공한다. 이전 릴리스의 네 맵 빌드와 구분한다. 이전 3D 실험과 이동 시험장은 본편 빌드에 포함하지 않는다.
 
 프리뷰는 `CARAVAN_PREVIEW` 빌드 정의로 `pocket_caravan_preview_save.json`에 저장해 에디터/기존 본편 저장과 분리한다. 빌드 결과는 Git 소스에 넣지 않고 GitHub 프리릴리스의 zip으로 배포한다. 플랫폼 서명·공증과 Windows 빌드는 별도 작업이다. Windows 지원 모듈을 설치한 팀원은 동일 소스에서 Windows 타깃 빌드를 준비해야 한다.
 

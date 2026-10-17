@@ -124,7 +124,9 @@ namespace PocketCaravan
             if (soldThisVisit > 0)
                 GUILayout.Label($"이번 판매 {soldThisVisit}개 · 받은 돈 {revenueThisVisit}냥 · 손익 {Signed(profitThisVisit)}냥", UIStyle.Small);
             GUILayout.EndArea();
-            GUI.Label(new Rect(rect.x + 12, rect.yMax - 36, w - 118, 30), message, UIStyle.Wrap);
+            GUI.Label(new Rect(rect.x + 12, rect.yMax - 36, w - 242, 30), message, UIStyle.Wrap);
+            if (town.facilities.Count > 0 && GUI.Button(new Rect(rect.xMax - 213, rect.yMax - 30, 110, 20), "마을 시설", UIStyle.Button))
+            { Close(); TownFacilitiesUI.Show(town); }
             if (GUI.Button(new Rect(rect.xMax - 94, rect.yMax - 30, 82, 20), "닫기 (Esc)", UIStyle.Button)) Close();
         }
 

@@ -41,7 +41,7 @@ namespace PocketCaravan
                 GameManager.I.GetComponent<CommerceGuideUI>().Open();
                 return;
             }
-            if (Button(ref y, r, "저장하기")) { GameManager.I.SaveNow(); message = "저장했다."; Sfx.Play("accept"); }
+            if (Button(ref y, r, "저장하기")) { bool saved = GameManager.I.SaveNow(); message = saved ? "저장했다." : "저장하지 못했습니다. 기존 파일은 보존됩니다."; Sfx.Play(saved ? "accept" : "cancel"); }
             if (Button(ref y, r, AudioManager.Muted ? "소리 켜기" : "소리 끄기")) AudioManager.ToggleMute();
             if (Button(ref y, r, confirmNew ? "정말 처음부터? (한 번 더)" : "처음부터 시작"))
             {

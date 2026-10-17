@@ -5,10 +5,10 @@
 *.json text
 
 # Unity YAML: 줄 끝 고정. 충돌은 담당자와 참조를 합의하거나 원본에서 재생성
-*.unity text eol=lf merge=binary linguist-generated
+*.unity text eol=lf merge=binary linguist-generated whitespace=-blank-at-eol
 *.prefab text eol=lf merge=binary linguist-generated
-*.asset text eol=lf merge=binary linguist-generated
-*.meta text eol=lf
+*.asset text eol=lf merge=binary linguist-generated whitespace=-blank-at-eol
+*.meta text eol=lf whitespace=-blank-at-eol
 *.mat text eol=lf merge=binary
 *.anim text eol=lf merge=binary
 *.controller text eol=lf merge=binary
