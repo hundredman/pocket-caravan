@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "regionId": "transit",
+  "regionAssetPath": "Assets/PocketCaravan/Data/Transit/Region_Transit.asset",
+  "maps": [
+    {
+      "mapId": "transit_pass",
+      "jsonPath": "Assets/PocketCaravan/Maps/transit_pass.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_pass.unity",
+      "worldX": 5,
+      "worldY": 0,
+      "generator": "frontier:pass_road"
+    },
+    {
+      "mapId": "transit_woodtown",
+      "jsonPath": "Assets/PocketCaravan/Maps/transit_woodtown.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_woodtown.unity",
+      "worldX": 6,
+      "worldY": 0,
+      "generator": "frontier:woodtown"
+    },
+    {
+      "mapId": "transit_wetroad",
+      "jsonPath": "Assets/PocketCaravan/Maps/transit_wetroad.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_wetroad.unity",
+      "worldX": 7,
+      "worldY": 0,
+      "generator": "frontier:wetroad"
+    },
+    {
+      "mapId": "transit_ferry",
+      "jsonPath": "Assets/PocketCaravan/Maps/transit_ferry.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_ferry.unity",
+      "worldX": 8,
+      "worldY": 0,
+      "generator": "frontier:ferry"
+    }
+  ],
+  "npcs": [],
+  "villagers": []
+}
