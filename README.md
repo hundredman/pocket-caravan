@@ -1,10 +1,10 @@
 # Pocket Caravan
 
-> **현재 구현 추적:** [개발 진행표](Docs/DevelopmentStatus.md)를 먼저 확인한다. 아래 검토 당시의 ‘4맵·마을2·시설/낙하 제거 미구현’은 이전 기준선이다. 고려는 6맵·수도1+마을4·로컬 시설3종이며, 별도 중간권 마을2+길2를 연결해 등록 본편은 총10맵이다. [중간 여정 명세](Docs/TransitPrototype.md)를 참고한다. 사용자 후속 확인에 따라 감속을 나타내는 시각적 흔들림은 유지한다. 기획/검증/미완료는 진행표에서 구분한다.
+현재 구현은 [진행표](Docs/DevelopmentStatus.md), 팀 작업 시작은 [팀 개발 안내](Docs/TeamDevelopment.md), 문서별 우선순위는 [문서 안내](Docs/README.md)를 따른다. 공개 ZIP과 main의 차이는 [빌드 현황](Docs/BuildStatus.md)에서 확인한다.
+
 
 > **제작용 환경 라이브러리:** 본편과 별도로40개 구역 원형, 환경 스킨13종, 날씨 표현8종과 편집/조합 시험장을 추가했다. [사용법](Docs/MapModuleLibrary.md).
 
-> **10월17일 전체 재대조 교정:** 스타팅 지역은 수도1+수도 외 최소 마을4, 이미 발전한 지역·자유 이동·마을 등급/개인 신용별 시설 이용이 제작 범위다. 재검토 당시 고려는 수도1+마을2+길1로 미달이었으며 후속 개발로 구조를 채웠다. 최신 상태는 개발 진행표를 따른다. [전체 누락 교정](Docs/FullRequirementsReview_2026-10-17.md)와 [고려 제작 명세](Docs/GoryeoRegionSpec.md)를 우선하며 이전 최소 거점/미정/검토 중단 표현을 현재 범위로 재사용하지 않는다.
 
 대항해시대 이전의 상인이 되어 짐을 싣고, 길을 골라 나르고, 돈을 버는 2D 픽셀 교역 게임 (게임개발 2026-2 팀 프로젝트).
 
@@ -73,8 +73,8 @@ M 지도는 실제 맵 배치를 축약한 지형 약도로 강·숲·길·건�
 
 ```
 Assets/PocketCaravan/
-  Art/Placeholder   임시 PNG. 같은 이름으로 덮어쓰면 실제 아트로 바뀜
-  Art/Tiles         타일 에셋 (Tile Palette에 끌어다 쓰기)
+  Art/Characters   캐릭터 그림·임시 미술
+  Art/NinjaAdventure/TileAssets   기본 타일 에셋
   Data/<지역>        ScriptableObject 데이터
   Resources/        GameDatabase (시작 설정, 밸런스 값)
   World/Regions/    지역별 맵·좌표·씬·NPC 등록 JSON
@@ -88,7 +88,7 @@ Assets/PocketCaravan/
 지역마다 다른 것은 코드가 아니라 데이터로 둔다.
 
 1. `Data/<지역>/`에 Region, Town, Item 에셋을 만든다 (우클릭 > Create > Pocket Caravan).
-2. 맵은 `Tools/MapGen`의 파이썬 코드로 설계한다 (`Tools/MapGen/README.md`). `python3 export.py` → Unity 메뉴 2.
+2. 맵은 `Tools/MapGen`의 파이썬 코드로 설계한다 (`Tools/MapGen/README.md`). 생성 범위는 [MapGen 안내](Tools/MapGen/README.md)를 확인한다.
 3. 맵 목록·좌표·씬·지역/NPC는 `World/Regions/<region>.json`에 등록한다. `MapJsonBuilder.MapCoords`는 등록 파일을 읽는 호환 속성이다. 마을 좌표는 `TownData.worldCoord`. 현재 시세·의뢰 거리는 좌표의 맨해튼 거리이며 실제 연결 경로를 세지 않는다. 우회로·분기 확장 시 거리 규칙을 별도로 정해야 한다.
 4. 출구의 `target`(씬 이름)과 `spawn`, 도착 자리 `id`를 맞춘다.
 
@@ -134,6 +134,6 @@ Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macO
 
 프리뷰는 `CARAVAN_PREVIEW` 빌드 정의로 `pocket_caravan_preview_save.json`에 저장해 에디터/기존 본편 저장과 분리한다. 빌드 결과는 Git 소스에 넣지 않고 GitHub 프리릴리스의 zip으로 배포한다. Mac·Windows 빌드는 로컬에서 성공했으며, 실제 Windows 실행과 Mac 서명·공증은 별도 확인이 필요하다. 현재 로컬 패키지와 이전 GitHub 릴리스는 버전이 다르다.
 
-2026-10-15 추가 개선: 예성 길의 등짐 숲길/손수레 큰길 선택, 본편 손수레·적재량 그림, 노면·흔들림 대처 안내. 수레 그림은 운반 상태의 표현이며 별도 수레 물리·충돌체를 구현한 것은 아니다.
+2026-10-15 당시 개선 기록: 예성 길의 등짐 숲길/손수레 큰길 선택, 본편 손수레·적재량 그림, 노면·흔들림 대처 안내. 수레 그림은 운반 상태의 표현이며 별도 수레 물리·충돌체를 구현한 것은 아니다.
 
 **장애물 제작/시험:** 48개 프리셋과 배치 도구·독립 시험장의 [사용법과 구현 범위](Docs/ObstacleLibrary.md).
