@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696f079832fd349aba6cf0b46c87bb3f, type: 3}
+  m_Name: loose_sand
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ObstacleDefinition
+  id: loose_sand
+  displayName: "\uD479\uC2E0\uD55C \uBAA8\uB7AB\uAE38"
+  category: "\uB178\uBA74"
+  description: 
+  mode: 1
+  action: 0
+  width: 5
+  height: 3
+  sprite: {fileID: 4360390788417139489, guid: 4a477efec171e4fcc8668f9239d26245, type: 3}
+  visuals: []
+  walkSpeed: 0.78
+  cartSpeed: 0.45
+  traction: 1
+  drift: {x: 0, y: 0}
+  staminaDrain: 0
+  visibility: 1
+  workSeconds: 0
+  money: 0
+  itemId: 
+  itemCount: 0
+  activeSeconds: 6
+  openSeconds: 5
+  threatSpeed: 2.7
+  threatRadius: 6
+  leash: 8
+  weightLimit: 12

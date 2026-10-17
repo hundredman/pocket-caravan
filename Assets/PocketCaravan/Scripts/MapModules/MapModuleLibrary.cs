@@ -24,5 +24,6 @@ namespace PocketCaravan
     {
         public string id,name;public int w,h,hours;
         public int[] ground,deco,obj,high,road,blocked;public string[] palette;
+        public ObstaclePlacement[] obstacles;
     }
 }

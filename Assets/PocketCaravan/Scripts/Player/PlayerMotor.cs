@@ -36,11 +36,14 @@ namespace PocketCaravan
                     ? new Vector2Int(input.x > 0 ? 1 : -1, 0)
                     : new Vector2Int(0, input.y > 0 ? 1 : -1);
 
+            float traction=1;Vector2 drift=Vector2.zero;
+            var obstacles=MapRoot.Current!=null?MapRoot.Current.GetComponent<ObstacleField>():null;
+            if(obstacles!=null)obstacles.Effects(Cell,out _,out traction,out drift,out _,out _);
             Vector2 target = input * speed;
             float rate = input.sqrMagnitude > 0.01f ? accel * Mathf.Max(1f, speed / walkSpeed) : decel;
-            Velocity = Vector2.MoveTowards(Velocity, target, rate * dt);
+            Velocity = Vector2.MoveTowards(Velocity, target, rate * Mathf.Clamp(traction,.05f,1) * dt);
 
-            Vector2 delta = Velocity * dt;
+            Vector2 delta = (Velocity + drift) * dt;
             MoveAxis(new Vector2(delta.x, 0f));
             MoveAxis(new Vector2(0f, delta.y));
         }
@@ -74,10 +77,10 @@ namespace PocketCaravan
             var map = MapRoot.Current;
             if (map == null) return true;
             Vector2 c = pos + feetOffset, h = feetSize * 0.5f;
-            return map.IsWalkable(map.WorldToCell(new Vector2(c.x - h.x, c.y - h.y)))
-                && map.IsWalkable(map.WorldToCell(new Vector2(c.x + h.x, c.y - h.y)))
-                && map.IsWalkable(map.WorldToCell(new Vector2(c.x - h.x, c.y + h.y)))
-                && map.IsWalkable(map.WorldToCell(new Vector2(c.x + h.x, c.y + h.y)));
+            return map.IsWalkable(map.WorldToCell(new Vector2(c.x - h.x, c.y - h.y)),this)
+                && map.IsWalkable(map.WorldToCell(new Vector2(c.x + h.x, c.y - h.y)),this)
+                && map.IsWalkable(map.WorldToCell(new Vector2(c.x - h.x, c.y + h.y)),this)
+                && map.IsWalkable(map.WorldToCell(new Vector2(c.x + h.x, c.y + h.y)),this);
         }
 
         void OnDrawGizmosSelected()

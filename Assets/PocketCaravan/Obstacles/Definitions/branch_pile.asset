@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696f079832fd349aba6cf0b46c87bb3f, type: 3}
+  m_Name: branch_pile
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ObstacleDefinition
+  id: branch_pile
+  displayName: "\uBD80\uB7EC\uC9C4 \uAC00\uC9C0 \uB354\uBBF8"
+  category: "\uC794\uD574/\uC2DD\uC0DD"
+  description: 
+  mode: 0
+  action: 1
+  width: 3
+  height: 3
+  sprite: {fileID: 4351789028826206133, guid: 6b430ce90be9e431f99cb7a7f99c7baf, type: 3}
+  visuals: []
+  walkSpeed: 1
+  cartSpeed: 1
+  traction: 1
+  drift: {x: 0, y: 0}
+  staminaDrain: 0
+  visibility: 1
+  workSeconds: 1.5
+  money: 0
+  itemId: 
+  itemCount: 0
+  activeSeconds: 6
+  openSeconds: 5
+  threatSpeed: 2.7
+  threatRadius: 6
+  leash: 8
+  weightLimit: 12

@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696f079832fd349aba6cf0b46c87bb3f, type: 3}
+  m_Name: broken_bridge
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ObstacleDefinition
+  id: broken_bridge
+  displayName: "\uB04A\uC5B4\uC9C4 \uB2E4\uB9AC"
+  category: "\uD558\uCC9C/\uAD50\uB7C9"
+  description: "\uB554\uAC102\uAC1C\uB85C \uC784\uC2DC \uBCF4\uC218\uD558\uAC70\uB098
+    \uC6B0\uD68C\uD55C\uB2E4. \uC218\uB9AC \uC7AC\uB8CC \uC0AC\uC6A9\uC740 \uBA85\uC2DC\uC801\uC73C\uB85C
+    \uC120\uD0DD\uD55C\uB2E4."
+  mode: 0
+  action: 2
+  width: 3
+  height: 3
+  sprite: {fileID: -6265054668056534801, guid: b7ffa44cb01324aba80378a58384da43, type: 3}
+  visuals: []
+  walkSpeed: 1
+  cartSpeed: 1
+  traction: 1
+  drift: {x: 0, y: 0}
+  staminaDrain: 0
+  visibility: 1
+  workSeconds: 5
+  money: 0
+  itemId: firewood
+  itemCount: 2
+  activeSeconds: 6
+  openSeconds: 5
+  threatSpeed: 2.7
+  threatRadius: 6
+  leash: 8
+  weightLimit: 12

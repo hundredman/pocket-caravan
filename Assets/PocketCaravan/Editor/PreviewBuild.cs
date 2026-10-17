@@ -29,6 +29,11 @@ namespace PocketCaravan.EditorTools
         [MenuItem("Pocket Caravan/Build/환경 원형 시험장 macOS")]
         public static void ModulesMac() => Build(BuildTarget.StandaloneOSX, "Builds/ModuleLibrary/macOS", "PocketCaravanModules.app", new[]{MapModuleWorkbench.ScenePath,"Assets/PocketCaravan/Scenes/ModuleLab/ModuleComposition.unity"});
 
+        [MenuItem("Pocket Caravan/Build/장애물 시험장 Windows")]
+        public static void ObstaclesWindows()=>Build(BuildTarget.StandaloneWindows64,"Builds/ObstacleLibrary/Windows","PocketCaravanObstacles.exe",new[]{ObstacleWorkbench.ScenePath});
+        [MenuItem("Pocket Caravan/Build/장애물 시험장 macOS")]
+        public static void ObstaclesMac()=>Build(BuildTarget.StandaloneOSX,"Builds/ObstacleLibrary/macOS","PocketCaravanObstacles.app",new[]{ObstacleWorkbench.ScenePath});
+
         static void Build(BuildTarget target, string folder, string file, string[] selectedScenes = null)
         {
             if (EditorApplication.isPlaying || UnityEngine.SceneManagement.SceneManager.GetActiveScene().isDirty)

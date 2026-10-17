@@ -11,7 +11,7 @@ namespace PocketCaravan
         public MapAppearance appearance;
         public int selected,environmentIndex,weatherIndex;
         public bool lockLayout;
-        bool visible=true;
+        public bool visible=true;
         void Start()
         {
             var gm=GameManager.I;
@@ -47,6 +47,8 @@ namespace PocketCaravan
             var roads=RoadGrid.Current;roads.width=f.w;roads.height=f.h;roads.grades=new int[f.w*f.h];
             for(int n=0;n<f.road.Length;n++)roads.grades[(f.h-1-n/f.w)*f.w+n%f.w]=f.road[n];
             map.mapId=f.id;map.displayName=entry.label;
+            var hazards=map.GetComponent<ObstacleField>();
+            if(hazards!=null || (f.obstacles!=null && f.obstacles.Length>0)){if(hazards==null)hazards=map.gameObject.AddComponent<ObstacleField>();hazards.Replace(f.obstacles);}
             environmentIndex=Mathf.Max(0,library.environments.FindIndex(s=>s.id==entry.environment));
             appearance.environment=library.environments[environmentIndex];appearance.Apply();
             var player=PlayerController.Instance;

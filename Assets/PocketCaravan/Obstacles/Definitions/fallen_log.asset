@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696f079832fd349aba6cf0b46c87bb3f, type: 3}
+  m_Name: fallen_log
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ObstacleDefinition
+  id: fallen_log
+  displayName: "\uC4F0\uB7EC\uC9C4 \uD1B5\uB098\uBB34"
+  category: "\uC794\uD574/\uC2DD\uC0DD"
+  description: "\uD1B5\uB098\uBB34\uB97C \uCE58\uC6B0\uAC70\uB098 \uC606\uAE38\uB85C
+    \uC6B0\uD68C\uD55C\uB2E4."
+  mode: 0
+  action: 1
+  width: 3
+  height: 3
+  sprite: {fileID: -5034061168752090764, guid: 89b992752fdf04c948d2ec5596d26f6f, type: 3}
+  visuals: []
+  walkSpeed: 1
+  cartSpeed: 1
+  traction: 1
+  drift: {x: 0, y: 0}
+  staminaDrain: 0
+  visibility: 1
+  workSeconds: 3
+  money: 0
+  itemId: 
+  itemCount: 0
+  activeSeconds: 6
+  openSeconds: 5
+  threatSpeed: 2.7
+  threatRadius: 6
+  leash: 8
+  weightLimit: 12

@@ -135,3 +135,5 @@ Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macO
 프리뷰는 `CARAVAN_PREVIEW` 빌드 정의로 `pocket_caravan_preview_save.json`에 저장해 에디터/기존 본편 저장과 분리한다. 빌드 결과는 Git 소스에 넣지 않고 GitHub 프리릴리스의 zip으로 배포한다. Mac·Windows 빌드는 로컬에서 성공했으며, 실제 Windows 실행과 Mac 서명·공증은 별도 확인이 필요하다. 현재 로컬 패키지와 이전 GitHub 릴리스는 버전이 다르다.
 
 2026-10-15 추가 개선: 예성 길의 등짐 숲길/손수레 큰길 선택, 본편 손수레·적재량 그림, 노면·흔들림 대처 안내. 수레 그림은 운반 상태의 표현이며 별도 수레 물리·충돌체를 구현한 것은 아니다.
+
+**장애물 제작/시험:** 48개 프리셋과 배치 도구·독립 시험장의 [사용법과 구현 범위](Docs/ObstacleLibrary.md).
