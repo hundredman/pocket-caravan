@@ -1,6 +1,6 @@
 """북유럽(눈) 지역용 타일과 맵. tiles.py는 고치지 않고, 눈 바닥·눈 길·눈 물가와 눈 나무 묶음만 더한다."""
 import tiles
-from tiles import Map, K, autotile, PLANK
+from tiles import Map, K
 
 # 눈 바닥 (TilesetFloor 아래쪽 흰 묶음). 배치는 풀밭 묶음(0,7)~(4,13)과 같고 7줄 아래에 있다
 SNOW = K("floor", 0, 19)
@@ -32,29 +32,16 @@ class SnowMap(Map):
                 self.prop(self.rng.choice(SNOW_PROPS), x, y)
 
     def finish(self):
-        self.smooth()
-
-        def road_mask(a, b):
-            if not self.inside(a, b):
-                a = min(max(a, 0), self.w - 1); b = min(max(b, 0), self.h - 1)
-            return self.road[b][a] > 0 or self.ground[b][a] == PLANK
-
-        def water_mask(a, b):
-            if not self.inside(a, b):
-                return True
-            return self.water[b][a] or self.ground[b][a] == PLANK
-
-        for y in range(self.h):
-            for x in range(self.w):
-                if self.ground[y][x] == PLANK:
-                    continue
-                if self.ground[y][x] is not None and self.road[y][x] == 0 and not self.water[y][x]:
-                    continue
-                if self.water[y][x]:
-                    self.ground[y][x] = autotile(water_mask, x, y, *SNOW_WATER_ORIGIN)
-                    self.blocked[y][x] = True
-                elif self.road[y][x] > 0:
-                    self.ground[y][x] = autotile(road_mask, x, y, *SNOW_PATH_ORIGIN)
-                else:
-                    self.ground[y][x] = self.rng.choice(SNOW_VARIANTS) if self.rng.random() < 0.12 else SNOW
+        """공용 Map.finish를 그대로 쓰되, 바닥·길·물가 타일만 눈 버전으로 바꿔 끼운다 (다리·판자 처리 등은 공용 코드를 따름)."""
+        names = ("GRASS", "GRASS_VARIANTS", "DIRT_ORIGIN", "WATER_ORIGIN", "DECO")
+        saved = {n: getattr(tiles, n) for n in names}
+        tiles.GRASS, tiles.GRASS_VARIANTS = SNOW, SNOW_VARIANTS
+        tiles.DIRT_ORIGIN, tiles.WATER_ORIGIN = SNOW_PATH_ORIGIN, SNOW_WATER_ORIGIN
+        tiles.DECO = [None]          # 풀 장식은 눈밭에 안 어울려 비워 둔다
+        try:
+            Map.finish(self)
+        finally:
+            for n, v in saved.items():
+                setattr(tiles, n, v)
         # 물결 애니메이션은 넣지 않는다 (피오르가 얼어 있음)
+        self.objects = [o for o in self.objects if not (o["kind"] == "anim" and o.get("sheet") == "ripples")]

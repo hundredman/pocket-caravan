@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -31,6 +32,8 @@ namespace PocketCaravan.EditorTools
                 });
             // 좌표는 north.json의 worldX, worldY와 같게 (경제 거리 계산에 쓰임)
             var birka = Town("Town_Birka", "north_birka", "비르카", new Vector2Int(30, 0), 1);
+            var hunter = Town("Town_Hunter", "north_hunter", "모피 사냥꾼 마을", new Vector2Int(32, 0), 1);
+            var naru = Town("Town_Naru", "north_naru", "피오르 나루 마을", new Vector2Int(31, -1), 1);
 
             ItemData Item(string id, string name, float weight, float price, TownData origin) =>
                 Upsert<ItemData>($"{DataDir}/Item_{id}.asset", i =>
@@ -39,23 +42,185 @@ namespace PocketCaravan.EditorTools
                     i.pricePerMap = 0.5f; i.questItem = false;
                     i.icon = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Items/{id}.png");
                 });
-            // 산지 마을은 그 맵이 생기면 바꾼다 (모피: 사냥꾼 마을, 호박: 호박 해안)
+            // 산지: 모피·말린 고기 = 사냥꾼 마을, 꿀술 = 비르카, 호박 = 피오르 나루 (호박 해안이 생기면 옮김)
             var mead = Item("north_mead", "꿀술", 2f, 12f, birka);
-            var fur = Item("north_fur", "모피", 2f, 30f, null);
-            var amber = Item("north_amber", "호박", 1f, 50f, null);
-            var meat = Item("north_dried_meat", "말린 고기", 2f, 8f, null);
+            var fur = Item("north_fur", "모피", 2f, 30f, hunter);
+            var amber = Item("north_amber", "호박", 1f, 50f, naru);
+            var meat = Item("north_dried_meat", "말린 고기", 2f, 8f, hunter);
 
-            birka.stock.Add(S(mead, 25)); birka.stock.Add(S(fur, 6)); birka.stock.Add(S(amber, 4)); birka.stock.Add(S(meat, 20));
-            EditorUtility.SetDirty(birka);
+            // 재고: 산지는 크게(싸게), 소비지는 작게(비싸게 팔림). 나루는 배가 모피를 실어 가서 모피 수요가 큼
+            birka.stock.AddRange(new[] { S(mead, 30), S(fur, 8), S(amber, 4), S(meat, 15) });
+            hunter.stock.AddRange(new[] { S(fur, 30), S(meat, 30), S(mead, 6), S(amber, 2) });
+            naru.stock.AddRange(new[] { S(amber, 20), S(mead, 12), S(fur, 4), S(meat, 10) });
+            // 손수레는 공용 수단(고려 데이터)을 그대로 판다 (팀 규칙: 공통 수단을 지역마다 복제하지 않음)
+            var cart = AssetDatabase.LoadAssetAtPath<VehicleData>($"{Root}/Data/Goryeo/Vehicle_Handcart.asset");
+            if (cart != null) birka.vehiclesForSale.Add(cart);
+            foreach (var t in new[] { birka, hunter, naru }) EditorUtility.SetDirty(t);
+
+            // 퀘스트용 물건 (장터에 팔 수 없음)
+            ItemData QuestItem(string id, string name, float weight) =>
+                Upsert<ItemData>($"{DataDir}/Item_{id}.asset", i =>
+                {
+                    i.id = id; i.displayName = name; i.weight = weight; i.basePrice = 1f; i.originTown = null;
+                    i.pricePerMap = 0f; i.questItem = true;
+                    i.icon = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Items/{id}.png");
+                });
+            var butter = QuestItem("north_butter_jar", "버터 단지", 1f);
+            var hay = QuestItem("north_hay", "건초 한 짐", 6f);          // 무거워서 등짐 한도를 느끼게
+            var saltLick = QuestItem("north_salt_lick", "소금 덩이", 3f);
+            var meadJar = QuestItem("north_mead_jar", "꿀술 단지", 2f);
+            var quests = BuildQuests(butter, hay, saltLick, meat, cart, meadJar, mead, fur);
 
             // 테스트용 등록 (북유럽 것만 지우고 다시 넣음, 고려 목록은 그대로)
             db.towns.RemoveAll(t => t == null || t.id.StartsWith("north_"));
             db.items.RemoveAll(i => i == null || i.id.StartsWith("north_"));
-            db.towns.Add(birka);
-            db.items.AddRange(new[] { mead, fur, amber, meat });
+            db.quests.RemoveAll(q => q == null || q.id.StartsWith("north_"));
+            // 북유럽 마을을 앞에 둔다: 손수레 길 안내가 목록에서 처음 찾은 마을(원래는 개경)을 가리키기 때문
+            db.towns.InsertRange(0, new[] { birka, hunter, naru });
+            db.items.AddRange(new[] { mead, fur, amber, meat, butter, hay, saltLick, meadJar });
+            db.quests.AddRange(quests);
             EditorUtility.SetDirty(db);
             AssetDatabase.SaveAssets();
             Debug.Log("[북유럽] 데이터를 만들고 GameDatabase에 덧붙였습니다. 이제 메뉴 2(맵 씬 다시 만들기)를 실행하세요. GameDatabase.asset 변경은 커밋하지 마세요.");
+        }
+
+        // ---------- 퀘스트 (초반 공통 시나리오 북유럽판: Q1, Q2, Q5, Q7) ----------
+
+        const string Innkeeper = "north_innkeeper", Husband = "north_husband", Wife = "north_wife", Goats = "north_goats", Har = "north_har",
+            Warehouse = "north_warehouse", Tomte = "north_tomte", Bold = "north_bold";
+
+        static QuestObjective O(ObjectiveType type, string text, string target = null, ItemData item = null, int count = 1, string line = null, VehicleData vehicle = null) =>
+            new QuestObjective { type = type, text = text, targetId = target, item = item, count = count, completeLine = line, vehicle = vehicle };
+
+        static List<QuestData> BuildQuests(ItemData butter, ItemData hay, ItemData saltLick, ItemData meat, VehicleData cart,
+            ItemData meadJar, ItemData mead, ItemData fur)
+        {
+            const string chain = "빈 등짐에서 손수레까지";
+            string dir = $"{DataDir}/Quests";
+            if (!AssetDatabase.IsValidFolder(dir)) AssetDatabase.CreateFolder(DataDir, "Quests");
+            var list = new List<QuestData>();
+            QuestData Q(string file, Action<QuestData> init)
+            {
+                var q = Upsert<QuestData>($"{dir}/{file}.asset", x =>
+                {
+                    x.requires.Clear(); x.objectives.Clear(); x.giveItem = null; x.giveCount = 0;
+                    x.offerItem = null; x.offerCount = 0; x.offerPrice = 0;
+                    x.rewardMoney = 0; x.rewardCredit = 0; x.finishNote = ""; x.chain = "";
+                    init(x);
+                });
+                list.Add(q);
+                return q;
+            }
+
+            // Q1-1 (필수): 마을 사이 배달 — 집 보는 남편의 버터 단지
+            var q1 = Q("N1_Butter", q =>
+            {
+                q.id = "north_q1_butter"; q.title = "집 보는 남편의 버터 단지"; q.chain = chain; q.giverNpc = Husband;
+                q.summary = "비르카의 남편이 만든 버터 단지를 모피 사냥꾼 마을 들판의 아내에게 전한다. 동쪽 피오르 길에서 큰길을 따라간다.";
+                q.offerLine = "오늘은 아내랑 일을 바꿨거든. 아내는 들일, 나는 집안일. 그런데 버터를 저어 놨더니 아내가 점심에 먹고 싶다지 뭐야. 사냥꾼 마을 들판에 있으니 이 단지 좀 갖다 주게.";
+                q.giveItem = butter; q.giveCount = 1;
+                q.objectives.Add(O(ObjectiveType.VisitMap, "모피 사냥꾼 마을에 가기", "north_hunter"));
+                q.objectives.Add(O(ObjectiveType.Deliver, "들판의 아내에게 버터 단지 전하기", Wife, butter, 1,
+                    "어머, 버터가 제대로 굳었네? 남편이 웬일이람. 고마워."));
+                q.rewardMoney = 20; q.rewardCredit = 1;
+            });
+
+            // Q1-2 (필수): 무거운 짐 — 아내가 보내는 건초
+            var q1b = Q("N1b_Hay", q =>
+            {
+                q.id = "north_q1_hay"; q.title = "소가 굶고 있어요"; q.chain = chain; q.giverNpc = Wife; q.requires.Add(q1);
+                q.summary = "아내가 보내는 건초 한 짐을 비르카의 남편에게 가져간다. 무거워서 등짐이 거의 찬다.";
+                q.offerLine = "그 사람, 분명 소 먹이는 걸 잊었을 거야. 이 건초 한 짐 좀 가져다줘. 무거우니까 달리면 숨이 찰 거야. Shift로 달리다 지치면 잠깐 걸어.";
+                q.giveItem = hay; q.giveCount = 1;
+                q.objectives.Add(O(ObjectiveType.Deliver, "비르카의 남편에게 건초 전하기", Husband, hay, 1,
+                    "살았다! 소가 지붕에 올라가서 풀 뜯을 뻔했어. 내일은 원래대로 내가 들일 할래."));
+                q.rewardMoney = 25; q.rewardCredit = 1;
+                q.finishNote = "부부가 웃으며 고맙다고 한다. 짐 무게와 등짐 한도를 익혔다.";
+            });
+
+            // Q2 (필수): 산지에서 사 와서 납품 — 여관 할머니의 못 수프
+            var q2 = Q("N2_NailSoup", q =>
+            {
+                q.id = "north_q2_soup"; q.title = "못 하나로 끓이는 수프"; q.chain = chain; q.giverNpc = Innkeeper; q.requires.Add(q1b);
+                q.summary = "모피 사냥꾼 마을 장터에서 말린 고기 2개를 사서 여관 할머니에게 가져간다.";
+                q.offerLine = "못 하나로도 수프는 끓일 수 있지. 그래도 고기가 조금 들어가면 손님들이 좋아한단다. 사냥꾼 마을에서 말린 고기 두 덩이만 사다 주렴. 거기가 산지라 싸게 판단다. 값은 넉넉히 쳐 주마.";
+                q.objectives.Add(O(ObjectiveType.Buy, "사냥꾼 마을 장터에서 말린 고기 2개 사기", "north_hunter", meat, 2));
+                q.objectives.Add(O(ObjectiveType.Deliver, "여관 할머니에게 말린 고기 전하기", Innkeeper, meat, 2,
+                    "옳지, 좋은 고기로구나. 봐라, 산지에서 사면 이렇게 싸고, 여기까지 오면 값이 오르지. 그게 장사란다."));
+                q.rewardMoney = 45; q.rewardCredit = 1;
+                q.finishNote = "산지에서 싸게 사서 먼 곳에 가져가면 비싸게 받는다. 이제 게시판 의뢰와 교역으로 손수레 값을 모아 보자.";
+            });
+
+            // Q5 (자유): 위험한 길 너머 배달 — 다리 밑 트롤
+            Q("N5_Troll", q =>
+            {
+                q.id = "north_q5_troll"; q.title = "다리 밑 트롤"; q.chain = chain; q.giverNpc = Innkeeper; q.requires.Add(q2);
+                q.summary = "소금 덩이를 사냥꾼 마을 목장의 염소 삼형제에게 배달한다. 피오르 길 큰길의 다리에는 트롤 패거리가 산다.";
+                q.offerLine = "사냥꾼 마을 목장의 염소 삼형제가 소금 덩이를 기다린단다. 그런데 큰길 다리 밑에 트롤 패거리가 살아. 통행료를 내든, 냅다 달리든, 숲으로 돌아가든 네가 정하렴.";
+                q.giveItem = saltLick; q.giveCount = 1;
+                q.objectives.Add(O(ObjectiveType.Deliver, "목장의 염소 맏형에게 소금 덩이 전하기", Goats, saltLick, 1,
+                    "음메! 소금이다! 트롤한테 \"뒤에 더 큰 짐꾼이 온다\"고 하면 한 번은 속는다니까. 고마워."));
+                q.rewardMoney = 50; q.rewardCredit = 1;
+            });
+
+            // Q3 (자유): 깨지기 쉬운 물건 + 정직 시험 — 톰테의 꿀술 단지 (선택지는 Scripts/North/NorthTomte)
+            Q("N3_Tomte", q =>
+            {
+                q.id = "north_q3_tomte"; q.title = "톰테의 꿀술 단지"; q.chain = chain; q.giverNpc = Innkeeper; q.requires.Add(q2);
+                q.summary = "꿀술 단지를 피오르 나루 창고지기에게 배달한다. 깨지기 쉬우니 흔들림을 조심하자. 창고 구석에는 톰테 할아버지가 산다.";
+                q.offerLine = "나루 창고에서 우리 꿀술을 기다린단다. 질그릇 단지라 흔들리면 금이 가니 살살 다니렴. 아, 창고 구석 톰테 할아버지를 만나면 예의 바르게 굴고.";
+                q.giveItem = meadJar; q.giveCount = 1;
+                q.objectives.Add(O(ObjectiveType.VisitMap, "피오르 나루 마을에 가기", "north_naru"));
+                q.objectives.Add(O(ObjectiveType.Talk, "창고 구석의 톰테 할아버지와 이야기하기", Tomte));
+                q.objectives.Add(O(ObjectiveType.Deliver, "창고지기에게 꿀술 단지 전하기", Warehouse, meadJar, 1,
+                    "단지가 멀쩡하네! 톰테 할아버지를 만났다고? 그분 눈에 들면 이 바닥에서 장사가 술술 풀린다네."));
+                q.rewardMoney = 40; q.rewardCredit = 1;
+            });
+
+            // Q4 (이벤트): 출신 강점 — 무니가 물어온 눈보라 (NPC가 주지 않고 NorthQuestDirector가 자동으로 수락시킴)
+            Q("N4_Storm", q =>
+            {
+                q.id = "north_q4_storm"; q.title = "무니가 물어온 눈보라"; q.chain = chain; q.giverNpc = ""; q.requires.Add(q2);
+                q.summary = "눈보라로 사냥꾼 마을에 꿀술이 끊겼다. 비르카에서 꿀술을 사서 사냥꾼 마을에 3개 팔자. 큰길은 막혔다고 하니, 길 없는 숲으로 가로지르는 바이킹이 유리하다.";
+                q.objectives.Add(O(ObjectiveType.Buy, "비르카 장터에서 꿀술 사기", "north_birka", mead, 3));
+                q.objectives.Add(O(ObjectiveType.Sell, "사냥꾼 마을 장터에 꿀술 3개 팔기", "north_hunter", mead, 3));
+                q.rewardMoney = 20; q.rewardCredit = 1;
+                q.finishNote = "눈밭을 가로질러 남보다 먼저 닿았다. 북쪽 상인은 길 없는 곳에서 빠르다 (바이킹 강점).";
+            });
+
+            // Q6 (자유): 라이벌과 시세 경쟁 — 멈추지 않는 볼드 (나루 투매는 NorthQuestDirector)
+            Q("N6_Bold", q =>
+            {
+                q.id = "north_q6_bold"; q.title = "멈추지 않는 볼드"; q.chain = chain; q.giverNpc = Bold; q.requires.Add(q2);
+                q.summary = "모피 5장을 사서 팔아 60냥 이상 이익을 남긴다. 볼드가 먼저 모피를 쏟아부은 장은 값이 떨어지니, 다른 마을에 나눠 팔거나 값이 회복되길 기다리자.";
+                q.offerLine = "흥, 네가 그 새로 온 행상이냐? 모피 장사로 나를 이길 수 있을 것 같아? 사냥꾼 마을 모피 다섯 장으로 이익을 내 보시지. 난 더, 더 많이 팔 거니까!";
+                q.objectives.Add(O(ObjectiveType.Buy, "사냥꾼 마을에서 모피 5장 사기", "north_hunter", fur, 5));
+                q.objectives.Add(O(ObjectiveType.Profit, "물건을 팔아 이익 60냥 남기기", null, null, 60));
+                q.objectives.Add(O(ObjectiveType.Talk, "볼드에게 이익을 보여주기", Bold, null, 1,
+                    "뭐, 뭐야? 내가 판 장을 피해서 팔았다고? …다음엔 안 진다!"));
+                q.rewardMoney = 30; q.rewardCredit = 1;
+                q.finishNote = "볼드는 이제 라이벌로 남는다. 한 장에 몰아 팔면 값이 떨어진다는 걸 배웠다.";
+            });
+
+            // Q7 (마무리): 이동 수단 구입 — 하르의 손수레
+            Q("N7_Handcart", q =>
+            {
+                q.id = "north_q7_cart"; q.title = "하르의 손수레"; q.chain = chain; q.giverNpc = Har; q.requires.Add(q2);
+                q.summary = "돈을 모아 비르카 장터에서 손수레를 사고 목수 하르에게 보여준다. 한 번에 세 배를 실을 수 있다.";
+                q.offerLine = "등짐으로는 하루에 몇 번 못 오가지. 내가 만든 손수레는 비르카 장터에서 판다네. 의뢰와 장사로 돈을 모아서 사 가게. 같은 일을 해도 버는 돈이 확 달라질 걸세.";
+                if (cart != null)
+                {
+                    q.objectives.Add(O(ObjectiveType.HaveMoney, $"손수레 값 {cart.price}냥 모으기", null, null, cart.price));
+                    q.objectives.Add(O(ObjectiveType.BuyVehicle, "비르카 장터에서 손수레 사기", null, null, 1, null, cart));
+                }
+                q.objectives.Add(O(ObjectiveType.Talk, "목수 하르에게 보여주기", Har, null, 1,
+                    "잘 굴러가지? 이제 고개 너머 다른 나라 상인들도 만나 보게. 눈이 녹는 남쪽에 큰 장이 선다더군."));
+                q.rewardMoney = 0; q.rewardCredit = 2;
+                q.finishNote = "손수레를 샀다! 1장 끝. (관문과 다른 지역 연결은 지역을 합칠 때 열린다)";
+            });
+
+            foreach (var q in list) EditorUtility.SetDirty(q);
+            return list;
         }
 
         static TownData.StockEntry S(ItemData item, float optimal) => new TownData.StockEntry { item = item, optimal = optimal };

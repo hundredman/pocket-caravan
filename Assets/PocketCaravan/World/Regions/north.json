@@ -10,6 +10,30 @@
       "worldX": 30,
       "worldY": 0,
       "generator": "north:birka"
+    },
+    {
+      "mapId": "north_fjord_road",
+      "jsonPath": "Assets/PocketCaravan/Maps/North/north_fjord_road.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/North/north_fjord_road.unity",
+      "worldX": 31,
+      "worldY": 0,
+      "generator": "north:fjord_road"
+    },
+    {
+      "mapId": "north_hunter",
+      "jsonPath": "Assets/PocketCaravan/Maps/North/north_hunter.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/North/north_hunter.unity",
+      "worldX": 32,
+      "worldY": 0,
+      "generator": "north:hunter"
+    },
+    {
+      "mapId": "north_naru",
+      "jsonPath": "Assets/PocketCaravan/Maps/North/north_naru.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/North/north_naru.unity",
+      "worldX": 31,
+      "worldY": -1,
+      "generator": "north:naru"
     }
   ],
   "npcs": [
@@ -18,6 +42,42 @@
       "name": "여관 할머니",
       "sprite": "elder_tall",
       "greeting": "어서 오렴. 못 하나로도 수프를 끓이는 집이 여기란다. 일거리는 저 게시판에 붙어 있지."
+    },
+    {
+      "id": "north_husband",
+      "name": "집 보는 남편",
+      "sprite": "villager_bear_tall",
+      "greeting": "오늘은 내가 집을 보기로 했는데… 버터는 안 굳고 소는 울고, 이게 무슨 일인지."
+    },
+    {
+      "id": "north_wife",
+      "name": "들일 하는 아내",
+      "sprite": "villager_rabbit_tall",
+      "greeting": "들일이 집안일보다 쉬울 줄 알았지? 남편은 지금쯤 진땀 빼고 있을 거야."
+    },
+    {
+      "id": "north_goats",
+      "name": "그루프 염소 맏형",
+      "sprite": "dakmokchief_tall",
+      "greeting": "음메. 우리 셋은 다리 건너 이 목장에 살아. 다리 밑 트롤만 없으면 좋으련만."
+    },
+    {
+      "id": "north_har",
+      "name": "목수 하르",
+      "sprite": "trader_tall",
+      "greeting": "형은 부자지만 나는 손재주뿐이지. 그래도 내 손수레는 눈길에서도 안 부서져."
+    },
+    {
+      "id": "north_warehouse",
+      "name": "창고지기",
+      "sprite": "villager_dog_tall",
+      "greeting": "꿀술 통은 깨지기 쉬워. 돌길에서 흔들리면 금이 가지. 창고 구석엔 작은 할아버지가 산다는 소문도 있고."
+    },
+    {
+      "id": "north_bold",
+      "name": "욕심쟁이 형 볼드",
+      "sprite": "gaekju_tall",
+      "greeting": "이 몸이 비르카에서 제일가는 부자 볼드다! 사는 것도 파는 것도 멈추는 법을 모르지."
     }
   ],
   "villagers": [

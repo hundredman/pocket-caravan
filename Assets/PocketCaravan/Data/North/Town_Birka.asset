@@ -19,12 +19,13 @@ MonoBehaviour:
   startLevel: 1
   stock:
   - item: {fileID: 11400000, guid: 5bdb4599b599a4bafb2d6eba12a7a241, type: 2}
-    optimal: 25
+    optimal: 30
   - item: {fileID: 11400000, guid: 1a2fc2ad478bf45eb8826708d861bb18, type: 2}
-    optimal: 6
+    optimal: 8
   - item: {fileID: 11400000, guid: 84e8ea6b0681441bcb997c074af766ab, type: 2}
     optimal: 4
   - item: {fileID: 11400000, guid: 97c21223f4815486bb4749fc7f944272, type: 2}
-    optimal: 20
+    optimal: 15
   defaultOptimal: 4
-  vehiclesForSale: []
+  vehiclesForSale:
+  - {fileID: 11400000, guid: 913f67411fb2e4eb9868cba57a9545f6, type: 2}

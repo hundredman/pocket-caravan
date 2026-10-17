@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: N1_Butter
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: north_q1_butter
+  title: "\uC9D1 \uBCF4\uB294 \uB0A8\uD3B8\uC758 \uBC84\uD130 \uB2E8\uC9C0"
+  chain: "\uBE48 \uB4F1\uC9D0\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
+  summary: "\uBE44\uB974\uCE74\uC758 \uB0A8\uD3B8\uC774 \uB9CC\uB4E0 \uBC84\uD130
+    \uB2E8\uC9C0\uB97C \uBAA8\uD53C \uC0AC\uB0E5\uAFBC \uB9C8\uC744 \uB4E4\uD310\uC758
+    \uC544\uB0B4\uC5D0\uAC8C \uC804\uD55C\uB2E4. \uB3D9\uCABD \uD53C\uC624\uB974
+    \uAE38\uC5D0\uC11C \uD070\uAE38\uC744 \uB530\uB77C\uAC04\uB2E4."
+  giverNpc: north_husband
+  requires: []
+  offerLine: "\uC624\uB298\uC740 \uC544\uB0B4\uB791 \uC77C\uC744 \uBC14\uAFE8\uAC70\uB4E0.
+    \uC544\uB0B4\uB294 \uB4E4\uC77C, \uB098\uB294 \uC9D1\uC548\uC77C. \uADF8\uB7F0\uB370
+    \uBC84\uD130\uB97C \uC800\uC5B4 \uB1A8\uB354\uB2C8 \uC544\uB0B4\uAC00 \uC810\uC2EC\uC5D0
+    \uBA39\uACE0 \uC2F6\uB2E4\uC9C0 \uBB50\uC57C. \uC0AC\uB0E5\uAFBC \uB9C8\uC744
+    \uB4E4\uD310\uC5D0 \uC788\uC73C\uB2C8 \uC774 \uB2E8\uC9C0 \uC880 \uAC16\uB2E4
+    \uC8FC\uAC8C."
+  giveItem: {fileID: 11400000, guid: e022931d0e6154059bc76d03c65d999b, type: 2}
+  giveCount: 1
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 5
+    text: "\uBAA8\uD53C \uC0AC\uB0E5\uAFBC \uB9C8\uC744\uC5D0 \uAC00\uAE30"
+    targetId: north_hunter
+    item: {fileID: 0}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: 
+  - type: 1
+    text: "\uB4E4\uD310\uC758 \uC544\uB0B4\uC5D0\uAC8C \uBC84\uD130 \uB2E8\uC9C0
+      \uC804\uD558\uAE30"
+    targetId: north_wife
+    item: {fileID: 11400000, guid: e022931d0e6154059bc76d03c65d999b, type: 2}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: "\uC5B4\uBA38, \uBC84\uD130\uAC00 \uC81C\uB300\uB85C \uAD73\uC5C8\uB124?
+      \uB0A8\uD3B8\uC774 \uC6EC\uC77C\uC774\uB78C. \uACE0\uB9C8\uC6CC."
+  rewardMoney: 20
+  rewardCredit: 1
+  finishNote: 
