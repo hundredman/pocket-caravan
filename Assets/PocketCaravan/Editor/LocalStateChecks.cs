@@ -124,7 +124,7 @@ namespace PocketCaravan.EditorTools
                 }
                 var roundtrip = JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(saved));
                 typeof(GameManager).GetMethod("Apply", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(gm, new object[] { roundtrip });
-                Check("저장 흔들림·체력·잔고 복원", Mathf.Approximately(gm.Player.shake, .83f) && Mathf.Approximately(gm.Player.stamina, .4f) && gm.Player.money == 42);
+                Check("이전 흔들림 폐기·체력·잔고 복원", Mathf.Approximately(gm.Player.shake, 0f) && Mathf.Approximately(gm.Player.stamina, .4f) && gm.Player.money == 42);
                 var ids = new HashSet<int>(); bool unique = true;
                 foreach (var board in gm.Contracts.boards) foreach (var offer in board.list) unique &= ids.Add(offer.id);
                 Check("불러오기 중 일반 의뢰 보충 ID 충돌 없음", unique && gm.Contracts.nextId > 6022);

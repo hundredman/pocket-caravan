@@ -34,6 +34,22 @@
       "worldX": 3,
       "worldY": 0,
       "generator": "maps:dakmok"
+    },
+    {
+      "mapId": "goryeo_songak",
+      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_songak.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_songak.unity",
+      "worldX": 0,
+      "worldY": 1,
+      "generator": "goryeo_villages:songak"
+    },
+    {
+      "mapId": "goryeo_jangdan",
+      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_jangdan.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_jangdan.unity",
+      "worldX": 4,
+      "worldY": 0,
+      "generator": "goryeo_villages:jangdan"
     }
   ],
   "npcs": [

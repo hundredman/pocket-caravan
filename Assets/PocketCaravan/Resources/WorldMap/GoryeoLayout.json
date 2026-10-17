@@ -1,5 +1,5 @@
 {
-  "width": 171,
+  "width": 211,
   "height": 104,
   "maps": [
     {
@@ -37,6 +37,24 @@
       "h": 22,
       "labelX": 143.5,
       "labelY": 37.5
+    },
+    {
+      "mapId": "goryeo_songak",
+      "x": 12,
+      "y": 26,
+      "w": 40,
+      "h": 28,
+      "labelX": 34.5,
+      "labelY": 41.5
+    },
+    {
+      "mapId": "goryeo_jangdan",
+      "x": 159,
+      "y": 24,
+      "w": 40,
+      "h": 28,
+      "labelX": 180.5,
+      "labelY": 39.5
     }
   ]
 }

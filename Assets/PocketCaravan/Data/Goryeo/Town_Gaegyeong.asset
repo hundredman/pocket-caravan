@@ -17,6 +17,33 @@ MonoBehaviour:
   region: {fileID: 11400000, guid: d95bb058a23aa48d8b58779d743714c0, type: 2}
   worldCoord: {x: 2, y: 0}
   startLevel: 3
+  settlementTier: 3
+  facilities:
+  - id: goryeo_capital_rest
+    displayName: "\uAE38\uC190 \uC27C\uD130"
+    kind: 0
+    minTier: 1
+    minCredit: 0
+    description: 
+    storageCapacity: 120
+  - id: goryeo_capital_info
+    displayName: "\uAD50\uC5ED \uAE38 \uC548\uB0B4\uC18C"
+    kind: 1
+    minTier: 2
+    minCredit: 1
+    description: "\uC11C\uB0A8\uCABD \uB098\uB8E8\uC640 \uC0B0\uB85D \uB9C8\uC744,
+      \uB3D9\uCABD \uC885\uC774 \uB9C8\uC744\uACFC \uB4E4\uB9C8\uC744\uC774 \uAC70\uB798\uCC98\uC785\uB2C8\uB2E4.
+      \uCCAB \uD55C \uAC1C\uC758 \uD310\uB9E4\uAC00\uAC00 \uC804\uB7C9 \uD310\uB9E4
+      \uC218\uC775\uC740 \uC544\uB2D9\uB2C8\uB2E4. \uC801\uC7AC\uB7C9\uACFC \uB3CC\uC544\uC62C
+      \uD654\uBB3C\uC744 \uD568\uAED8 \uBE44\uAD50\uD558\uC138\uC694."
+    storageCapacity: 120
+  - id: goryeo_capital_warehouse
+    displayName: "\uAC1D\uC8FC \uBCF4\uAD00\uC18C"
+    kind: 2
+    minTier: 3
+    minCredit: 3
+    description: 
+    storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: 34ab4741f86eb44b3bae564c5daa0f12, type: 2}
     optimal: 20

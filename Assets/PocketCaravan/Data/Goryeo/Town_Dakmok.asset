@@ -17,6 +17,26 @@ MonoBehaviour:
   region: {fileID: 11400000, guid: d95bb058a23aa48d8b58779d743714c0, type: 2}
   worldCoord: {x: 3, y: 0}
   startLevel: 1
+  settlementTier: 2
+  facilities:
+  - id: goryeo_dakmok_rest
+    displayName: "\uAE38\uC190 \uC27C\uD130"
+    kind: 0
+    minTier: 1
+    minCredit: 0
+    description: 
+    storageCapacity: 120
+  - id: goryeo_dakmok_info
+    displayName: "\uAD50\uC5ED \uAE38 \uC548\uB0B4\uC18C"
+    kind: 1
+    minTier: 2
+    minCredit: 1
+    description: "\uB3D9\uCABD \uC7A5\uB2E8 \uB4E4\uB9C8\uC744\uC740 \uACE1\uC2DD\uACFC
+      \uB554\uAC10 \uAC70\uB798\uCC98\uC785\uB2C8\uB2E4. \uAC1C\uACBD\uC5D0\uB294
+      \uB2E4\uC591\uD55C \uC0C1\uD488\uC774 \uBAA8\uC785\uB2C8\uB2E4. \uC7A5\uBD80\uB294
+      \uBC29\uBB38 \uB2F9\uC2DC \uC2DC\uC138\uC774\uBBC0\uB85C \uB3C4\uCC29\uD558\uBA74
+      \uB2E4\uC2DC \uD655\uC778\uD558\uC138\uC694."
+    storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: c7b553013268140eca99e3276caecd4f, type: 2}
     optimal: 30
