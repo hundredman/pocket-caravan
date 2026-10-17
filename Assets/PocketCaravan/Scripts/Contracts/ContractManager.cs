@@ -25,6 +25,7 @@ namespace PocketCaravan
 
         readonly GameDatabase db;
         readonly GameClock clock;
+        readonly WorldIndex world;
         readonly PlayerState player;
         public List<Board> boards = new List<Board>();
         public int nextId = 1;
@@ -37,9 +38,9 @@ namespace PocketCaravan
             ["dakmok"] = new[] { "한지 묶음", "닥나무 껍질", "붓과 먹", "종이 상자" },
         };
 
-        public ContractManager(GameDatabase db, GameClock clock, PlayerState player)
+        public ContractManager(GameDatabase db, GameClock clock, PlayerState player, WorldIndex world = null)
         {
-            this.db = db; this.clock = clock; this.player = player;
+            this.db = db; this.clock = clock; this.player = player; this.world = world != null ? world : WorldIndex.Get();
         }
 
         public void InitBoards()
@@ -48,7 +49,17 @@ namespace PocketCaravan
             {
                 if (t == null) continue;
                 var existing = BoardOf(t.id);
-                if (existing != null) { EnsureBasic(existing, t); continue; }
+                if (existing != null)
+                {
+                    // Only unaccepted offers are replaced. Cargo already entrusted to the player is preserved.
+                    int removed = existing.list.RemoveAll(c => c == null || c.fromTown != t.id || !CanOffer(t, Town(c.toTown)));
+                    for (int i = 0; i < removed; i++)
+                    {
+                        var replacement = Generate(t);
+                        if (replacement != null) existing.list.Add(replacement);
+                    }
+                    EnsureBasic(existing, t); continue;
+                }
                 var b = new Board { town = t.id, lastAdded = clock.TotalHours };
                 boards.Add(b);
                 for (int i = 0; i < BoardSize; i++)
@@ -69,7 +80,18 @@ namespace PocketCaravan
         }
 
         public Board BoardOf(string town) => boards.Find(b => b.town == town);
-        public List<Contract> Available(string town) => BoardOf(town)?.list ?? new List<Contract>();
+        public List<Contract> Available(string town) => BoardOf(town)?.list.FindAll(c =>
+            c != null && c.fromTown == town && CanOffer(Town(town), Town(c.toTown))) ?? new List<Contract>();
+
+        /// <summary>관문 해금 전 기본 규칙. 출신이 아니라 출발 마을의 지역과 실제 연결을 확인한다.</summary>
+        public bool CanOffer(TownData from, TownData to)
+        {
+            if (from == null || to == null || from == to || from.region == null || to.region == null
+                || string.IsNullOrEmpty(from.region.id) || from.region.id != to.region.id || world == null) return false;
+            string source = world.MapOf("market", from.id), target = world.MapOf("market", to.id);
+            if (string.IsNullOrEmpty(source) || string.IsNullOrEmpty(target) || world.Map(source) == null || world.Map(target) == null) return false;
+            return source == target || world.NextStep(source, target) != null;
+        }
 
         TownData Town(string id) => db.towns.Find(t => t != null && t.id == id);
 
@@ -81,7 +103,7 @@ namespace PocketCaravan
 
         Contract Generate(TownData from, bool basic = false)
         {
-            var others = db.towns.FindAll(t => t != null && t != from);
+            var others = db.towns.FindAll(t => CanOffer(from, t));
             if (others.Count == 0) return null; // 새 지역의 첫 거점만 연결된 단계에도 부팅 가능.
             var to = others[rng.Next(others.Count)];
             int dist = Mathf.Max(1, Distance(from, to));
@@ -138,6 +160,7 @@ namespace PocketCaravan
         public string CanAccept(Contract c)
         {
             if (c == null) return "의뢰가 없습니다.";
+            if (!CanOffer(Town(c.fromTown), Town(c.toTown))) return "현재 지역에서 도달 가능한 목적지의 의뢰만 맡을 수 있습니다.";
             if (player.contracts.Exists(active => active.id == c.id)) return "이미 맡은 의뢰입니다.";
             if (player.contracts.Count >= MaxActive) return $"의뢰는 한 번에 {MaxActive}개까지 맡을 수 있습니다.";
             if (c.Premium && player.credit < c.minCredit) return $"신용 {c.minCredit} 이상이어야 맡길 수 있다고 합니다.";

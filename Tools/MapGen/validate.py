@@ -3,7 +3,7 @@ import json
 from collections import deque
 from pathlib import Path
 import maps
-from world_registry import generated_maps
+from world_registry import atlas_content
 import cartography
 from tiles import Map, STAMPS, K
 
@@ -25,7 +25,7 @@ def reachable(m, start, road_only=False):
 
 
 def validate():
-    world = generated_maps("goryeo")
+    _, world = atlas_content()
     results = []
     def check(name, condition):
         assert condition, name

@@ -1,0 +1,11 @@
+{
+  "id": "frozen_lake",
+  "label": "빙설 호수 둘레길",
+  "category": "한랭지",
+  "environment": "snow",
+  "shape": "loop",
+  "seed": 333,
+  "ponds": "center",
+  "trees": "pinebig",
+  "density": 16
+}

@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696f079832fd349aba6cf0b46c87bb3f, type: 3}
+  m_Name: water_pirate
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ObstacleDefinition
+  id: water_pirate
+  displayName: "\uC218\uC801 \uC0C1\uB959 \uC704\uD611"
+  category: "\uC704\uD611"
+  description: "\uBC30\uB294 \uC815\uBC15 \uC0C1\uD0DC\uC774\uBA70 \uAC15\uBCC0 \uC811\uADFC\uC744
+    \uACAC\uC81C\uD55C\uB2E4. \uC120\uBC15 \uC804\uD22C/\uC2B9\uC120\uC740 \uC81C\uC678."
+  mode: 2
+  action: 3
+  width: 3
+  height: 3
+  sprite: {fileID: -4032481707582436298, guid: 40456f68bbcb84ed88159d6cc06264c7, type: 3}
+  visuals: []
+  walkSpeed: 0.55
+  cartSpeed: 0.45
+  traction: 1
+  drift: {x: 0, y: 0}
+  staminaDrain: 0
+  visibility: 1
+  workSeconds: 0
+  money: 15
+  itemId: 
+  itemCount: 0
+  activeSeconds: 6
+  openSeconds: 5
+  threatSpeed: 0
+  threatRadius: 5
+  leash: 8
+  weightLimit: 12

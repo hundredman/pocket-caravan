@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696f079832fd349aba6cf0b46c87bb3f, type: 3}
+  m_Name: livestock_crossing
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ObstacleDefinition
+  id: livestock_crossing
+  displayName: "\uAC00\uCD95 \uD6A1\uB2E8"
+  category: "\uC0AC\uB78C/\uAD50\uD1B5"
+  description: 
+  mode: 3
+  action: 0
+  width: 4
+  height: 3
+  sprite: {fileID: -9032679894510146780, guid: ea856e12b3e3a463289e2cefe6717c86, type: 3}
+  visuals: []
+  walkSpeed: 1
+  cartSpeed: 1
+  traction: 1
+  drift: {x: 0, y: 0}
+  staminaDrain: 0
+  visibility: 1
+  workSeconds: 0
+  money: 0
+  itemId: 
+  itemCount: 0
+  activeSeconds: 4
+  openSeconds: 7
+  threatSpeed: 2.7
+  threatRadius: 6
+  leash: 8
+  weightLimit: 12

@@ -1,0 +1,9 @@
+{
+  "id": "wheat_crossing",
+  "label": "밀밭 사거리",
+  "category": "초원/농경",
+  "environment": "meadow",
+  "shape": "cross",
+  "seed": 302,
+  "fields": true
+}

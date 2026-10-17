@@ -1,5 +1,5 @@
 {
-  "width": 171,
+  "width": 403,
   "height": 104,
   "maps": [
     {
@@ -37,6 +37,60 @@
       "h": 22,
       "labelX": 143.5,
       "labelY": 37.5
+    },
+    {
+      "mapId": "goryeo_songak",
+      "x": 12,
+      "y": 26,
+      "w": 40,
+      "h": 28,
+      "labelX": 34.5,
+      "labelY": 41.5
+    },
+    {
+      "mapId": "goryeo_jangdan",
+      "x": 159,
+      "y": 24,
+      "w": 40,
+      "h": 28,
+      "labelX": 180.5,
+      "labelY": 39.5
+    },
+    {
+      "mapId": "transit_pass",
+      "x": 199,
+      "y": 24,
+      "w": 56,
+      "h": 38,
+      "labelX": 221.5,
+      "labelY": 43.5
+    },
+    {
+      "mapId": "transit_woodtown",
+      "x": 255,
+      "y": 24,
+      "w": 40,
+      "h": 30,
+      "labelX": 276.5,
+      "labelY": 44.5
+    },
+    {
+      "mapId": "transit_wetroad",
+      "x": 295,
+      "y": 24,
+      "w": 56,
+      "h": 38,
+      "labelX": 317.5,
+      "labelY": 43.5
+    },
+    {
+      "mapId": "transit_ferry",
+      "x": 351,
+      "y": 24,
+      "w": 40,
+      "h": 32,
+      "labelX": 372.5,
+      "labelY": 44.5
     }
   ]
 }

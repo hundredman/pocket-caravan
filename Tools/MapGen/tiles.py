@@ -43,6 +43,9 @@ def recolor(tile, mode):
 
 def tile_image(key):
     """key = 'sheet:x:y' 또는 'sheet:x:y@recolor'"""
+    if key.startswith("module:"):
+        from module_art import image_for
+        return image_for(key)
     if key.startswith("work:"):
         # 3x2칸 종이 건조대. 기존 타일 축척·팔레트에 맞춘 목재 틀과 한지 묶음.
         _, tx, ty = key.split(":")
@@ -148,6 +151,9 @@ FLOWERS = [K("detail", 5, 2), K("detail", 2, 0)]
 # ---------- 여러 칸짜리 묶음 (스탬프) ----------
 # (sheet, x0, y0, w, h, 막는 줄 시작, 위층 줄 수, 색 바꾸기)
 STAMPS = {
+    "module_rock": ("module",0,0,2,2,1,1,None),
+    "module_cactus": ("module",2,0,2,3,2,2,None),
+    "module_ruin": ("module",4,0,3,3,1,1,None),
     "house_tile": ("house", 12, 0, 4, 3, 0, 0, "slate"),   # 기와집
     "house_thatch": ("house", 0, 0, 4, 3, 0, 0, None),     # 초가
     "house_plain": ("house", 4, 0, 4, 3, 0, 0, None),      # 흙벽집

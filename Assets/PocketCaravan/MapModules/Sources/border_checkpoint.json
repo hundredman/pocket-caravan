@@ -1,0 +1,10 @@
+{
+  "id": "border_checkpoint",
+  "label": "길목 관문",
+  "category": "시설/길목",
+  "environment": "alpine",
+  "shape": "choke",
+  "seed": 337,
+  "houses": 2,
+  "rocks": 18
+}

@@ -57,8 +57,9 @@ def validate():
         checks.append(vehicle + ' prefers ' + expected + ' at equal cargo 5')
     signs = [o for o in m.objects if o['kind'] == 'sign']
     assert any('등짐 권장' in o.get('text', '') for o in signs)
-    assert any('짐이 흔들리면' in o.get('text', '') for o in signs)
-    checks += ['fork sign explains vehicle choice', 'forest sign explains carry recovery']
+    assert any('노면 감속' in o.get('text', '') for o in signs)
+    assert not any('짐이 흔들리면' in o.get('text', '') for o in signs)
+    checks += ['fork sign explains vehicle choice', 'forest sign explains terrain slowdown']
     return {'checks': checks, 'routes': results, 'scope': '직교 노면 경로의 계산값. 체력·달리기·가감속·NPC·화물 낙하·잔디 자유 이동 제외. 실제 플레이 시간/재미 검증과 다름.'}
 
 

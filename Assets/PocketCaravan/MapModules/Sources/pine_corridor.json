@@ -1,0 +1,10 @@
+{
+  "id": "pine_corridor",
+  "label": "침엽수 숲길",
+  "category": "숲",
+  "environment": "pine",
+  "shape": "straight",
+  "seed": 304,
+  "trees": "pinebig",
+  "density": 44
+}

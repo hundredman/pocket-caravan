@@ -1,0 +1,481 @@
+{
+  "date": "2026-10-17",
+  "templates": 40,
+  "environments": 13,
+  "weatherPresets": 8,
+  "static": {
+    "passed": 1010,
+    "failed": [],
+    "templates": [
+      {
+        "id": "autumn_lane",
+        "roads": 178,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 36,
+        "water": 0
+      },
+      {
+        "id": "border_checkpoint",
+        "roads": 162,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 20,
+        "water": 0
+      },
+      {
+        "id": "bridge_pair",
+        "roads": 209,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 0,
+        "water": 140
+      },
+      {
+        "id": "canyon_bridge",
+        "roads": 120,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 26,
+        "water": 148
+      },
+      {
+        "id": "canyon_switchback",
+        "roads": 246,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 32,
+        "water": 0
+      },
+      {
+        "id": "caravanserai",
+        "roads": 351,
+        "ports": [
+          "W",
+          "E",
+          "N",
+          "S"
+        ],
+        "stamps": 15,
+        "water": 0
+      },
+      {
+        "id": "coastal_harbor",
+        "roads": 256,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 4,
+        "water": 356
+      },
+      {
+        "id": "coastal_road",
+        "roads": 144,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 12,
+        "water": 350
+      },
+      {
+        "id": "deep_forest_fork",
+        "roads": 182,
+        "ports": [
+          "W",
+          "E",
+          "N"
+        ],
+        "stamps": 52,
+        "water": 0
+      },
+      {
+        "id": "desert_oasis",
+        "roads": 262,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 17,
+        "water": 90
+      },
+      {
+        "id": "dune_detour",
+        "roads": 209,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 28,
+        "water": 0
+      },
+      {
+        "id": "estuary",
+        "roads": 120,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 0,
+        "water": 473
+      },
+      {
+        "id": "fishing_hamlet",
+        "roads": 247,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 3,
+        "water": 331
+      },
+      {
+        "id": "flower_fork",
+        "roads": 183,
+        "ports": [
+          "W",
+          "E",
+          "N"
+        ],
+        "stamps": 0,
+        "water": 0
+      },
+      {
+        "id": "forest_clearing",
+        "roads": 253,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 40,
+        "water": 0
+      },
+      {
+        "id": "frozen_lake",
+        "roads": 254,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 16,
+        "water": 90
+      },
+      {
+        "id": "grassland_camp",
+        "roads": 237,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 10,
+        "water": 0
+      },
+      {
+        "id": "hill_switchback",
+        "roads": 246,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 12,
+        "water": 0
+      },
+      {
+        "id": "hill_village",
+        "roads": 340,
+        "ports": [
+          "W",
+          "E",
+          "N",
+          "S"
+        ],
+        "stamps": 16,
+        "water": 0
+      },
+      {
+        "id": "lake_shore",
+        "roads": 184,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 14,
+        "water": 344
+      },
+      {
+        "id": "lakeside_hamlet",
+        "roads": 210,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 3,
+        "water": 350
+      },
+      {
+        "id": "logging_camp",
+        "roads": 238,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 30,
+        "water": 0
+      },
+      {
+        "id": "market_crossroads",
+        "roads": 310,
+        "ports": [
+          "W",
+          "E",
+          "N",
+          "S"
+        ],
+        "stamps": 9,
+        "water": 0
+      },
+      {
+        "id": "meadow_lane",
+        "roads": 120,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 0,
+        "water": 0
+      },
+      {
+        "id": "mountain_pass",
+        "roads": 141,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 32,
+        "water": 0
+      },
+      {
+        "id": "orchard_hamlet",
+        "roads": 349,
+        "ports": [
+          "W",
+          "E",
+          "N",
+          "S"
+        ],
+        "stamps": 28,
+        "water": 0
+      },
+      {
+        "id": "pine_corridor",
+        "roads": 120,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 44,
+        "water": 0
+      },
+      {
+        "id": "reed_marsh",
+        "roads": 254,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 0,
+        "water": 91
+      },
+      {
+        "id": "ridge_loop",
+        "roads": 254,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 14,
+        "water": 0
+      },
+      {
+        "id": "river_bends",
+        "roads": 177,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 16,
+        "water": 148
+      },
+      {
+        "id": "river_crossing",
+        "roads": 120,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 0,
+        "water": 148
+      },
+      {
+        "id": "river_island",
+        "roads": 124,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 1,
+        "water": 376
+      },
+      {
+        "id": "rocky_choke",
+        "roads": 142,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 35,
+        "water": 0
+      },
+      {
+        "id": "ruin_courtyard",
+        "roads": 194,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 19,
+        "water": 0
+      },
+      {
+        "id": "snow_pass",
+        "roads": 142,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 43,
+        "water": 0
+      },
+      {
+        "id": "steppe_crossroads",
+        "roads": 259,
+        "ports": [
+          "W",
+          "E",
+          "N",
+          "S"
+        ],
+        "stamps": 5,
+        "water": 0
+      },
+      {
+        "id": "tundra_camp",
+        "roads": 239,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 20,
+        "water": 0
+      },
+      {
+        "id": "volcanic_detour",
+        "roads": 209,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 35,
+        "water": 69
+      },
+      {
+        "id": "wetland_boardwalk",
+        "roads": 120,
+        "ports": [
+          "W",
+          "E"
+        ],
+        "stamps": 0,
+        "water": 453
+      },
+      {
+        "id": "wheat_crossing",
+        "roads": 259,
+        "ports": [
+          "W",
+          "E",
+          "N",
+          "S"
+        ],
+        "stamps": 4,
+        "water": 0
+      }
+    ],
+    "environments": 13,
+    "scope": "정적 통행/묶음/연결부와 스킨 투명도 검사. 날씨의 시뮬레이션 효과/본편 등록/멀티 검증 아님."
+  },
+  "unity": {
+    "passed": 8745,
+    "templates": 40,
+    "environments": 13,
+    "weather": 8,
+    "failed": ""
+  },
+  "composition": {
+    "horizontalSeam": true,
+    "verticalSeam": true,
+    "weatherPoolResize": true,
+    "saveDisabled": true
+  },
+  "integrationTests": 17,
+  "regeneration": "all source/layout/atlas/preview bytes preserved",
+  "sceneJsonRoundtrip": "visual tile + road grade + collision values verified",
+  "macStartupSmoke": "headless first-scene startup reached isolated save guard; no graphics assertion; process terminated after inspection",
+  "builds": {
+    "Windows": {
+      "result": "Succeeded",
+      "output": "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Builds/ModuleLibrary/Windows/PocketCaravanModules.exe",
+      "builtAtUtc": "2026-10-17T10:09:52.2687250Z",
+      "errors": 0,
+      "warnings": 18,
+      "bytes": 132286438,
+      "seconds": 9.082856999999999
+    },
+    "macOS": {
+      "result": "Succeeded",
+      "output": "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Builds/ModuleLibrary/macOS/PocketCaravanModules.app",
+      "builtAtUtc": "2026-10-17T10:11:07.7988070Z",
+      "errors": 0,
+      "warnings": 0,
+      "bytes": 150024228,
+      "seconds": 10.868124
+    }
+  },
+  "packages": {
+    "PocketCaravan-ModuleLibrary-Windows-x64-2026-10-17.zip": {
+      "bytes": 47760183,
+      "sha256": "fffe83e27255870eca2da12a824ed852b1deee850d071e2d6139673c1f9c2af6"
+    },
+    "PocketCaravan-ModuleLibrary-macOS-Universal-2026-10-17.zip": {
+      "bytes": 56237388,
+      "sha256": "a8873da50bb7ee163fb6092520f3f17c2ec2f5e3dd7cf970c7d726d74cb079cb"
+    }
+  },
+  "limitations": [
+    "표현 스킨; 날씨 판정/서버 공유 상태 미구현",
+    "기존 팩 기반 환경 팔레트 초안; 완전 신규 아트13세트 아님",
+    "40개 원형은 본편 월드에 자동 추가하지 않음",
+    "실제 Windows 실행/서명/공증 미검증"
+  ]
+}

@@ -50,3 +50,16 @@ def generated_maps(region_id='goryeo'):
             raise ValueError(f'Generator mapId mismatch: {entry["mapId"]}')
         result.append(world_map)
     return result
+
+
+def atlas_content():
+    """지도에 함께 표시할 제작 구역만 생성한다. 타 팀의 생성기를 자동 실행하지 않는다."""
+    settings, _ = load_world()
+    ids = settings.get('atlasRegions', ['goryeo'])
+    if not isinstance(ids, list) or not ids or len(ids) != len(set(ids)):
+        raise ValueError('atlasRegions must be a nonempty unique region list')
+    entries, maps = [], []
+    for rid in ids:
+        entries.extend(map_entries(rid))
+        maps.extend(generated_maps(rid))
+    return entries, maps

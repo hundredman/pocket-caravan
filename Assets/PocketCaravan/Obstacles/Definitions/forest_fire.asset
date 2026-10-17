@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696f079832fd349aba6cf0b46c87bb3f, type: 3}
+  m_Name: forest_fire
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ObstacleDefinition
+  id: forest_fire
+  displayName: "\uC0B0\uBD88 \uAD6C\uAC04"
+  category: "\uAE30\uC0C1/\uC790\uC5F0"
+  description: "\uD65C\uC131 \uAD6C\uAC04\uC744 \uCC28\uB2E8\uD558\uB294 \uC2DC\uD5D8.
+    \uD655\uC0B0/\uC18C\uD654 \uC2DC\uBBAC\uB808\uC774\uC158\uACFC HP \uD53C\uD574\uB294
+    \uBBF8\uAD6C\uD604."
+  mode: 3
+  action: 0
+  width: 4
+  height: 3
+  sprite: {fileID: 8334651344603559088, guid: 3e9a20a85e69640ff86adf6c88d44b89, type: 3}
+  visuals: []
+  walkSpeed: 1
+  cartSpeed: 1
+  traction: 1
+  drift: {x: 0, y: 0}
+  staminaDrain: 0
+  visibility: 1
+  workSeconds: 0
+  money: 0
+  itemId: 
+  itemCount: 0
+  activeSeconds: 10
+  openSeconds: 6
+  threatSpeed: 2.7
+  threatRadius: 6
+  leash: 8
+  weightLimit: 12

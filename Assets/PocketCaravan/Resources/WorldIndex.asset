@@ -19,6 +19,7 @@ MonoBehaviour:
     town: naru
     neighbors:
     - Route01
+    - goryeo_songak
   - mapId: Route01
     displayName: "\uC608\uC131 \uAE38"
     coord: {x: 1, y: 0}
@@ -39,6 +40,47 @@ MonoBehaviour:
     town: dakmok
     neighbors:
     - Gaegyeong
+    - goryeo_jangdan
+  - mapId: goryeo_songak
+    displayName: "\uC1A1\uC545 \uC0B0\uB85D \uB9C8\uC744"
+    coord: {x: 0, y: 1}
+    town: goryeo_songak
+    neighbors:
+    - Naru
+  - mapId: goryeo_jangdan
+    displayName: "\uC7A5\uB2E8 \uB4E4\uB9C8\uC744"
+    coord: {x: 4, y: 0}
+    town: goryeo_jangdan
+    neighbors:
+    - Dakmok
+    - transit_pass
+  - mapId: transit_pass
+    displayName: "\uC194\uBC14\uB78C \uACE0\uAC1C"
+    coord: {x: 5, y: 0}
+    town: 
+    neighbors:
+    - goryeo_jangdan
+    - transit_woodtown
+  - mapId: transit_woodtown
+    displayName: "\uC194\uC7AC \uAE38\uBAA9 \uB9C8\uC744"
+    coord: {x: 6, y: 0}
+    town: transit_woodtown
+    neighbors:
+    - transit_pass
+    - transit_wetroad
+  - mapId: transit_wetroad
+    displayName: "\uBC84\uB4E4 \uBB3C\uAC00 \uAE38"
+    coord: {x: 7, y: 0}
+    town: 
+    neighbors:
+    - transit_woodtown
+    - transit_ferry
+  - mapId: transit_ferry
+    displayName: "\uBC84\uB4E4\uB098\uB8E8 \uB9C8\uC744"
+    coord: {x: 8, y: 0}
+    town: transit_ferry
+    neighbors:
+    - transit_wetroad
   places:
   - kind: board
     id: naru
@@ -67,3 +109,27 @@ MonoBehaviour:
   - kind: market
     id: dakmok
     mapId: Dakmok
+  - kind: board
+    id: goryeo_songak
+    mapId: goryeo_songak
+  - kind: market
+    id: goryeo_songak
+    mapId: goryeo_songak
+  - kind: board
+    id: goryeo_jangdan
+    mapId: goryeo_jangdan
+  - kind: market
+    id: goryeo_jangdan
+    mapId: goryeo_jangdan
+  - kind: board
+    id: transit_woodtown
+    mapId: transit_woodtown
+  - kind: market
+    id: transit_woodtown
+    mapId: transit_woodtown
+  - kind: board
+    id: transit_ferry
+    mapId: transit_ferry
+  - kind: market
+    id: transit_ferry
+    mapId: transit_ferry

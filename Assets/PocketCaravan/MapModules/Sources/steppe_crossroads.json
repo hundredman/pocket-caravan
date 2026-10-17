@@ -1,0 +1,9 @@
+{
+  "id": "steppe_crossroads",
+  "label": "초원 교차로",
+  "category": "초원/농경",
+  "environment": "steppe",
+  "shape": "cross",
+  "seed": 325,
+  "rocks": 5
+}

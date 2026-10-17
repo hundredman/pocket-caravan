@@ -122,7 +122,7 @@ namespace CaravanMovementLab
             player.ResetCarryState();
             ResetMeasurement();
             follow.SnapNow();
-            note = "지형으로 바로 이동 · 이 구간의 속도와 흔들림을 확인하세요";
+            note = "지형으로 바로 이동 · 이 구간의 속도와 적재 감속을 확인하세요";
         }
 
         void ResetMeasurement()
@@ -173,7 +173,7 @@ namespace CaravanMovementLab
                 int main = 0;
                 for (int i = 1; i < 4; i++) if (terrainDistance[i] > terrainDistance[main]) main = i;
                 string road = new[] { "풀밭 중심", "오솔길 중심", "일반 길 중심", "큰길 중심" }[main];
-                string result = $"{p.vehicle.displayName} · {road} · 이동 {TravelDistance:0}칸 · 낙하 {DroppedCount}개";
+                string result = $"{p.vehicle.displayName} · {road} · 이동 {TravelDistance:0}칸";
                 Results.Insert(0, (fromStart ? "전체 경로: " : "구간 실험: ") + result);
                 if (Results.Count > 3) Results.RemoveAt(3);
                 note = "도착! 조건을 바꾸고 R로 다시 출발하세요";
@@ -182,11 +182,14 @@ namespace CaravanMovementLab
             if (CartSelected)
             {
                 Vector2 facing = player.Motor.Facing;
-                cartView.transform.position = pos - (Vector3)(facing * .95f) + new Vector3(0, -.1f, 0);
-                cartView.transform.rotation = Quaternion.Euler(0, 0, -Mathf.Atan2(facing.x, facing.y) * Mathf.Rad2Deg);
+                float wobble = Mathf.Sin(Time.time * 13f) * CarryVisual.SwayStrength(gradeNowForVisual(), p.LoadRatio, player.Motor.Velocity.magnitude);
+                cartView.transform.position = pos - (Vector3)(facing * .95f) + new Vector3(wobble * .08f, -.1f + Mathf.Abs(wobble) * .05f, 0);
+                cartView.transform.rotation = Quaternion.Euler(0, 0, -Mathf.Atan2(facing.x, facing.y) * Mathf.Rad2Deg + wobble * 4f);
                 for (int i = 0; i < boxes.Count; i++) boxes[i].enabled = p.LoadRatio > i / 3f;
             }
         }
+
+        int gradeNowForVisual() => RoadGrid.Current != null ? RoadGrid.Current.GradeAt(player.Motor.Cell) : 3;
 
         void OnGUI()
         {
@@ -205,9 +208,8 @@ namespace CaravanMovementLab
             if (Button("가득 (6)", 68)) SetLoad(-1);
             if (Button("처음으로 R", 85)) Restart();
             bool stamina = GUI.Toggle(new Rect(x + 10, 58, 92, 18), player.StaminaEnabled, "체력 소모");
-            bool shake = GUI.Toggle(new Rect(x + 104, 58, 92, 18), player.CargoShakeEnabled, "짐 흔들림");
-            if (stamina != player.StaminaEnabled || shake != player.CargoShakeEnabled)
-            { player.StaminaEnabled = stamina; player.CargoShakeEnabled = shake; player.ResetCarryState(); ResetMeasurement(); }
+            if (stamina != player.StaminaEnabled)
+            { player.StaminaEnabled = stamina; player.ResetCarryState(); ResetMeasurement(); }
             GUI.Label(new Rect(x + 203, 59, 48, 16), "바로 이동", UIStyle.Small);
             string[] locations = { "출발", "큰길", "오솔길", "풀밭" };
             for (int i = 0; i < locations.Length; i++)
@@ -222,13 +224,13 @@ namespace CaravanMovementLab
             GUI.Label(new Rect(x + 10, bottom + 5, width - 20, 16),
                 $"{p.vehicle.displayName} · 화물 {p.TotalWeight:0}/{p.Capacity:0}    발밑: {grades[gradeNow]}    이동 속도 {player.Motor.Velocity.magnitude:0.0}칸/s", UIStyle.Rich);
             GUI.Label(new Rect(x + 10, bottom + 22, width - 20, 14),
-                $"체력 {p.stamina:0%} · 흔들림 {p.shake:0%} · 이동 {TravelDistance:0}칸 · 낙하 {DroppedCount}개    |    WASD 이동 / Shift 달리기 / Space 짐 줍기", UIStyle.Small);
+                $"체력 {p.stamina:0%} · 이동 {TravelDistance:0}칸    |    WASD 이동 / Shift 달리기 / 짐은 주행 중 떨어지지 않음", UIStyle.Small);
             GUI.Label(new Rect(x + 10, bottom + 37, width - 20, 14), note, UIStyle.Small);
             for (int i = 0; i < Results.Count; i++)
                 GUI.Label(new Rect(x + 10, bottom + 51 + i * 11, width - 20, 12), Results[i], UIStyle.Small);
             Label(new Vector3(31, 34, 0), "큰길 · 길지만 손수레가 빠르고 안정적");
-            Label(new Vector3(32, 24, 0), "오솔길 · 중간 거리 / 완만한 흔들림");
-            Label(new Vector3(32, 12, 0), "풀밭 지름길 · 짧지만 수레는 느리고 덜컹");
+            Label(new Vector3(32, 24, 0), "오솔길 · 중간 거리 / 노면 감속 비교");
+            Label(new Vector3(32, 12, 0), "풀밭 지름길 · 짧지만 수레는 느림");
             Label(new Vector3(81, 15, 0), "도착 깃발");
             if (Overview) Label(new Vector3(8, 17, 0), "출발");
             GUI.FocusControl(null);

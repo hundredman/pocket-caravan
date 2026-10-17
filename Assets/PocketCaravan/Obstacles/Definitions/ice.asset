@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696f079832fd349aba6cf0b46c87bb3f, type: 3}
+  m_Name: ice
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ObstacleDefinition
+  id: ice
+  displayName: "\uC5BC\uC5B4\uBD99\uC740 \uB178\uBA74"
+  category: "\uB178\uBA74"
+  description: "\uAC00\uC18D/\uC81C\uB3D9\uC774 \uC57D\uD574\uC9C4\uB2E4. \uC804\uBCF5/\uD654\uBB3C
+    \uB099\uD558\uB294 \uC5C6\uB2E4."
+  mode: 1
+  action: 0
+  width: 6
+  height: 3
+  sprite: {fileID: -856085545168688419, guid: e211ef474e8d44ed094a6ccbe47bd527, type: 3}
+  visuals: []
+  walkSpeed: 0.95
+  cartSpeed: 0.85
+  traction: 0.08
+  drift: {x: 0, y: 0}
+  staminaDrain: 0
+  visibility: 1
+  workSeconds: 0
+  money: 0
+  itemId: 
+  itemCount: 0
+  activeSeconds: 6
+  openSeconds: 5
+  threatSpeed: 2.7
+  threatRadius: 6
+  leash: 8
+  weightLimit: 12

@@ -1,0 +1,11 @@
+{
+  "id": "logging_camp",
+  "label": "벌목 야영지",
+  "category": "마을",
+  "environment": "pine",
+  "shape": "camp",
+  "seed": 306,
+  "trees": "pinebig",
+  "density": 28,
+  "houses": 2
+}

@@ -1,6 +1,6 @@
 """맵 JSON과 사용한 타일 PNG를 Unity 프로젝트 구조로 내보낸다."""
 import json, os, sys, shutil
-from world_registry import generated_maps, map_entries
+from world_registry import atlas_content
 import cartography
 from tiles import tile_image
 from PIL import Image
@@ -29,9 +29,8 @@ def obj_json(o):
 
 
 used = set()
-world_maps = []
-for entry, m in zip(map_entries("goryeo"), generated_maps("goryeo")):
-    world_maps.append(m)
+entries, world_maps = atlas_content()
+for entry, m in zip(entries, world_maps):
     palette = [""]
     index = {"": 0}
     def flat(layer):

@@ -1,0 +1,11 @@
+{
+  "id": "orchard_hamlet",
+  "label": "과수원 마을",
+  "category": "마을",
+  "environment": "meadow",
+  "shape": "village",
+  "seed": 303,
+  "trees": "fruitbig",
+  "houses": 4,
+  "fields": true
+}

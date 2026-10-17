@@ -19,7 +19,7 @@ namespace PocketCaravan
         [Tooltip("달릴 때 초당 체력 감소")] public float staminaDrain = 0.2f;
         [Tooltip("쉬거나 걸을 때 초당 회복")] public float staminaRegen = 0.14f;
 
-        [Header("흔들림 (초당 차오르는 양)")]
+        [Header("이전 낙하 설정 (호환 전용·미사용)")]
         public float shakeOffroad = 0.06f;
         public float shakePath = 0.02f;
         [Tooltip("달릴 때 배율")] public float shakeRunMultiplier = 3f;
@@ -27,16 +27,14 @@ namespace PocketCaravan
         [Tooltip("손수레가 길 없는 곳을 지날 때 배율")] public float cartOffroadShake = 1.8f;
 
         bool exhausted;
-        float bumpCooldown;
         /// <summary>지금 달리는 중</summary>
         public bool Running { get; private set; }
         public bool StaminaEnabled { get; set; } = true;
-        public bool CargoShakeEnabled { get; set; } = true;
+        public bool CargoShakeEnabled { get => false; set { } } // 이전 도구 API 호환
 
         public void ResetCarryState()
         {
             exhausted = false;
-            bumpCooldown = 0f;
             if (GameManager.I == null) return;
             GameManager.I.Player.stamina = 1f;
             GameManager.I.Player.shake = 0f;
@@ -89,12 +87,14 @@ namespace PocketCaravan
             }
             s *= Mathf.Lerp(1f, fullLoadSpeed, p.LoadRatio);
             if (Running) s *= runMultiplier;
+            var obstacles=MapRoot.Current!=null?MapRoot.Current.GetComponent<ObstacleField>():null;
+            if(obstacles!=null){obstacles.Effects(motor.Cell,out float multiplier,out _,out _,out _,out _);s*=multiplier;}
             return s * motor.walkSpeed;
         }
 
         int Grade => RoadGrid.Current != null ? RoadGrid.Current.GradeAt(motor.Cell) : 0;
 
-        /// <summary>체력과 짐 흔들림. 흔들림이 가득 차면 짐 하나가 길에 떨어진다.</summary>
+        /// <summary>달리기 체력만 계산한다. 시각 흔들림은 CarryVisual, 낙하는 사용하지 않는다.</summary>
         void UpdateCarry(float dt)
         {
             var p = GameManager.I.Player;
@@ -111,36 +111,8 @@ namespace PocketCaravan
                 if (exhausted && p.stamina >= 0.35f) exhausted = false;
             }
 
-            // 흔들림
-            if (!CargoShakeEnabled) { p.shake = 0f; return; }
-            if (!p.HasAnyCargo) { p.shake = Mathf.Max(0f, p.shake - shakeDecay * dt); return; }
-            int g = Grade;
-            float rate = 0f;
-            if (motor.IsMoving)
-            {
-                rate = g == 0 ? shakeOffroad : g == 1 ? shakePath : 0f;
-                if (g == 0 && p.vehicle != null && p.vehicle.id == "handcart") rate *= cartOffroadShake;
-                if (Running) rate = rate * shakeRunMultiplier + 0.04f;
-                rate *= 0.5f + p.LoadRatio;
-            }
-            if (rate > 0f) p.shake += rate * dt;
-            else p.shake = Mathf.Max(0f, p.shake - shakeDecay * dt);
-
-            // 돌부리: 길 없는 곳을 달리면 가끔 덜컹
-            bumpCooldown -= dt;
-            if (g == 0 && Running && bumpCooldown <= 0f && Random.value < dt * 0.5f)
-            {
-                p.shake += 0.18f;
-                bumpCooldown = 1.5f;
-                Sfx.Play("bump");
-                Notify.Show("덜컹! 돌부리에 걸렸다.", 1.5f);
-            }
-
-            if (p.shake >= 1f)
-            {
-                p.shake = 0.3f;
-                GameManager.I.DropRandomCargo(transform.position - (Vector3)(Vector2)motor.Facing * 0.8f);
-            }
+            // 이전 저장/시험 도구와 필드 호환만 유지한다. 주행 낙하·정차 안정화는 사용하지 않는다.
+            p.shake = 0f;
         }
 
         void UpdateBody()

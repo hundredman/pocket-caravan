@@ -1,19 +1,16 @@
-# MapGen: 고려 시작 지역 맵 만들기
+# MapGen: 본편 지형·지도 생성
 
-> **10월17일 기획 변경:** 주행 낙하 제외·감속 중심, 출신은 정보/적재/판매/이동이다. 이 문서의 기존 흔들림·낙하 토글/검사는 현재 도구의 과거 구현 안내이며 새 요구가 아니다. 본편 코드·시험장·저장 이주 갱신은 아직 대기다. 최신 기준은 저장소 `Docs/DesignUpdate_2026-10-17.md`를 따른다.
-
-현재 생성 대상은 고려 맵 4개이며, 네 문명의 스타팅 지역 4개를 뜻하지 않는다.
-4주 MVP와 분기 교역로 확장 요구는 프로젝트 루트의 `Docs/DevelopmentReview.md`를 참고한다.
+2026-10-18 안내. 본편은 고려6맵+중간권4맵이다. exporter는 `World/settings.json`의 `atlasRegions`(goryeo·transit)를 생성하며, 다른 팀 지역을 자동 생성하지 않는다. 환경 원형40개와 장애물48종은 별도 제작 라이브러리다. [문서 안내](../../Docs/README.md).
 
 맵은 이 파이썬 코드로 설계하고, Unity는 결과 JSON을 씬으로 만든다.
 
 1. 에셋 팩(Ninja Adventure, CC0)을 저장소 옆 `팀 프로젝트/Ninja Adventure - Asset Pack`에 둔다. 다른 곳이면 `NA_PACK` 환경 변수로 경로를 준다.
-2. `pip install pillow` 후 `python3 export.py` 를 실행한다.
+2. `pip install pillow` 후 저장소 루트에서 `python3 Tools/MapGen/export.py` 를 실행한다.
    - `Assets/PocketCaravan/Maps/*.json`: 맵 데이터
    - `Assets/PocketCaravan/Art/NinjaAdventure/Tiles/*.png`: 쓴 타일만 잘라 낸 그림
    - `preview_*.png`: 맵 미리보기 (저장소에 올리지 않음)
    - `Assets/PocketCaravan/Resources/WorldMap/`: 지형 지도 PNG 및 맵 배치 JSON
-3. Unity 메뉴 `Pocket Caravan > 2. 맵 씬 다시 만들기`.
+3. Unity에서 자기 맵 선택 재생성을 우선한다. 메뉴 `Pocket Caravan > 2. 맵 씬 다시 만들기`는 등록 맵 전체를 덮어쓰므로 다른 팀 씬까지 생성하려는 경우에만 실행한다. 선택 생성 API는 [팀 안내](../../Docs/TeamDevelopment.md)를 따른다.
 
 ## 파일
 - `tiles.py`: 타일 목록, 오토타일(흙길·물 가장자리 자동 선택), 집·나무 같은 여러 칸짜리 묶음, 미리보기
@@ -27,7 +24,7 @@
 - NPC 종류: `npc`(퀘스트, npc id), `market`(장터, town id), `villager`(마을 사람), `worker`(작업 왕복 연출)
 - 출구는 `target`(씬 이름)과 `spawn`(도착 자리 id)을 맞춘다
 
-현재 맵 목록과 생성 함수는 `Assets/PocketCaravan/World/Regions/goryeo.json`이 기준이다. Unity 빌더·WorldIndex·macOS 프리뷰 빌드도 같은 지역 등록을 읽는다. Python exporter는 고려용이며 다른 지역을 자동 생성하지 않는다. 새 지역의 JSON/씬/데이터 등록 순서는 [팀 개발 시작 안내](../../Docs/TeamDevelopment.md)를 따른다.
+맵 목록·생성 함수는 `World/Regions/goryeo.json`·`transit.json`이 기준이고 생성 범위는 `World/settings.json`의 atlasRegions가 결정한다. Unity 빌더·WorldIndex·macOS 프리뷰 빌드도 같은 지역 등록을 읽는다. Python exporter는 atlasRegions에 명시하지 않은 다른 팀 지역을 자동 생성하지 않는다. 새 지역의 JSON/씬/데이터 등록 순서는 [팀 개발 시작 안내](../../Docs/TeamDevelopment.md)를 따른다.
 
 생성기를 다시 돌리면 씬을 덮어쓰고, 시작 세트 생성은 데이터 값도 다시 쓴다.
 맵 원본 코드/JSON과 공용 생성기의 담당자를 정하고, 씬에서만 수정한 내용을 먼저 보존한다.
@@ -56,3 +53,5 @@
 `m.add("ambience", x, y, id="river", radius=12)`는 `Resources/Audio/Sfx/river`의 반복 주변음을 배치한다. 반경은 월드 단위이며 맵은 타일 1칸이 1단위다. 플레이어와 멀어지면 음량이 줄어들고 기존 음소거를 따른다. 겹치는 영역은 과도하게 배치하지 않는다.
 
 `paper_rack`은 이 생성기에서 그리는 3×2칸 종이 건조대 스탬프다. 집·나무와 같은 묶음 배치 규칙을 사용한다. 원본을 수정한 뒤 export하고, 필요한 씬만 다시 생성한다.
+
+2026-10-17 개발 반영: 신규 주행 낙하/게이지/정차 안정화는 사용하지 않는다. 노면/짐/속도에 반응하는 시각 흔들림은 감속 연출로 유지한다. 현재 기준은 Docs/DevelopmentStatus.md 및 실제 시험장 UI를 따른다.

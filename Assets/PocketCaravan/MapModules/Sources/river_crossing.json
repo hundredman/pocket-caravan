@@ -1,0 +1,10 @@
+{
+  "id": "river_crossing",
+  "label": "하천 단일 다리",
+  "category": "하천",
+  "environment": "meadow",
+  "shape": "straight",
+  "seed": 313,
+  "river": "vertical",
+  "bridges": "one"
+}

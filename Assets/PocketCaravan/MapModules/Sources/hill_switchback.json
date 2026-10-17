@@ -1,0 +1,10 @@
+{
+  "id": "hill_switchback",
+  "label": "구릉 지그재그길",
+  "category": "산지",
+  "environment": "steppe",
+  "shape": "switchback",
+  "seed": 309,
+  "hills": true,
+  "rocks": 12
+}

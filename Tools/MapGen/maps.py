@@ -20,6 +20,9 @@ def naru():
     m.road_path([(25, 13), (31, 13), (35, 14), (39, 13)], width=2)
     m.link("E", 12, 4, "Route01", "W", "E")                      # 12~15행, 길 13~14행
 
+    m.road_path([(11, 0), (11, 10), (15, 13)], width=3, grade=1)
+    m.link("N", 11, 3, "goryeo_songak", "S", "N")
+
     # 정자나무와 평상
     m.stamp("bigtree", 19, 8, force=True)
     m.stamp("bench", 19, 11, force=True)
@@ -121,7 +124,7 @@ def route01():
     m.sign(8, 11, "개경 남문 가는 두 길\n↑ 숲길 · 가까운 길 / 등짐 권장\n→ 주막 큰길 · 돌아가지만 수레가 빠름")
     m.sign(45, 19, "↑ 개경 남문 10리\n← 예성 나루 마을 15리")
     m.sign(37, 5, "← 작은 다리 · 나루 숲길\n↓ 큰 다리 · 주막 큰길\n↑ 개경 남문")
-    m.sign(25, 5, "작은 다리 숲길\n짧지만 좁고 울퉁불퉁하다.\n짐이 흔들리면 걷거나 잠시 쉬어 가자.")
+    m.sign(25, 5, "작은 다리 숲길\n짧지만 좁고 울퉁불퉁하다.\n수레는 노면 감속이 크다. 큰길과 이동 시간을 비교하자.")
 
     # 길에서 만나는 사람
     m.talker(35, 17, "길손", "villager_fox_tall", "벽란도에서 오는 길이오. 거기는 송나라 배가 드나들어 별 물건이 다 있소.")
@@ -165,6 +168,9 @@ def dakmok():
     m.link("W", 10, 3, "Gaegyeong", "E", "W")
     m.road_blob(18, 10.5, 5.5, 2.4, grade=1)        # 마을 마당
     m.water_blob(27, 16, 3.6, 2.6)                  # 종이 뜨는 연못
+
+    m.road_path([(21, 12), (21, 19), (33, 19)], width=3, grade=2)
+    m.link("E", 19, 3, "goryeo_jangdan", "W", "E")
 
     # 집: 마당을 둘러싸고, 문 앞에서 마당까지 좁은 길
     m.stamp("house_thatch", 6, 3); m.door_path(6, 3, 4, 3, 9)

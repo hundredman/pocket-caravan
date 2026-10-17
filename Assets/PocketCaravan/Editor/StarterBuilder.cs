@@ -111,6 +111,7 @@ namespace PocketCaravan.EditorTools
             db.vehicles = new List<VehicleData> { walk, cart };
             db.quests = quests;
             EditorUtility.SetDirty(db);
+            GoryeoRegionUpgrade.ApplyData();
         }
 
         static TownData.StockEntry S(ItemData item, float optimal) => new TownData.StockEntry { item = item, optimal = optimal };

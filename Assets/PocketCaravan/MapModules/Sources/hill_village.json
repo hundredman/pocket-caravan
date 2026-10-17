@@ -1,0 +1,12 @@
+{
+  "id": "hill_village",
+  "label": "산록 마을",
+  "category": "마을",
+  "environment": "autumn",
+  "shape": "village",
+  "seed": 339,
+  "houses": 4,
+  "hills": true,
+  "trees": "roundbig",
+  "density": 12
+}

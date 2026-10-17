@@ -1,8 +1,14 @@
 # Pocket Caravan
 
+현재 구현은 [진행표](Docs/DevelopmentStatus.md), 팀 작업 시작은 [팀 개발 안내](Docs/TeamDevelopment.md), 문서별 우선순위는 [문서 안내](Docs/README.md)를 따른다. 공개 ZIP과 main의 차이는 [빌드 현황](Docs/BuildStatus.md)에서 확인한다.
+
+
+> **제작용 환경 라이브러리:** 본편과 별도로40개 구역 원형, 환경 스킨13종, 날씨 표현8종과 편집/조합 시험장을 추가했다. [사용법](Docs/MapModuleLibrary.md).
+
+
 대항해시대 이전의 상인이 되어 짐을 싣고, 길을 골라 나르고, 돈을 버는 2D 픽셀 교역 게임 (게임개발 2026-2 팀 프로젝트).
 
-최신 역할·운반 결정은 [10월17일 변경 요약](Docs/DesignUpdate_2026-10-17.md)을 먼저 확인한다. **주행 낙하는 제외하기로 했지만 현재 코드/기존 빌드에는 남아 있으며 제거 패치는 미적용이다.**
+최신 역할·운반 결정은 [10월17일 변경 요약](Docs/DesignUpdate_2026-10-17.md)을 먼저 확인한다. **현재 소스는 주행 낙하를 제거하고 감속에 따른 흔들림 연출을 유지한다. 이전 배포 릴리스는 새 소스와 다르므로 빌드 버전을 확인한다.**
 현재 본편 구현과 이번 제작 기준안은 **2D 탑다운 픽셀**이다. 3인칭 카툰은 이전 별도 실험으로 보존한다.
 **초기 4주 MVP는 기본 시스템 구현 후 2~4명 실제 멀티플레이를 검증한다. 최종 제품 목표는 MMORPG 규모의 다중 접속 교역 세계다.** 2~4명은 최종 정원이 아니며, 장기 인원·지역별 밀집도·장비·비용은 단계적 검증으로 구체화한다. 현재 온라인 기능은 미구현이다.
 네 스타팅 지역·장거리 여정·2D 품질·공유 시장·서버 저장의 기준과 계획은 [개발 문서 안내](Docs/README.md)를 참고한다.
@@ -34,7 +40,8 @@ R 재시작, Tab 전체 보기. [시험장 안내](Assets/CaravanMovementLab/REA
 | 기능 | 위치 |
 |---|---|
 | 자유 이동, 짐 무게·길 등급·달리기에 따른 속도, 달리기 체력 | `Scripts/Player/` |
-| 짐 흔들림: 달리기·길 없는 곳·돌부리에서 차오르고, 가득 차면 짐이 떨어짐 (다시 줍기) | `PlayerController`, `World/DroppedCargo` |
+| 노면·적재 감속과 시각 흔들림, 신규 주행 낙하 없음·구 저장 화물 복원 | `PlayerController`, `CarryVisual`, `LegacyCargoMigration` |
+| 등급/개인 신용별 쉼터·길 안내소·개경 보관소, 화물 수량/원가 저장 | `TownData`, `TownFacility`, `TownFacilitiesUI` |
 | 맵 이동 (가장자리에서 이어서 다음 맵으로, 길 맵은 시간이 흐름) | `Scripts/Map/` |
 | 퀘스트 (! · ? 표시, 길 안내 화살표, Q 목록), 튜토리얼 5개(배달 → 심부름 장보기 → 초보용 인삼으로 첫 차익 → 먼 배달 → 손수레) + 서브 3개 | `Scripts/Quests/` |
 | 배달 의뢰 게시판 (마을마다 3개, 기한·짐 상태·보수·신용, 부분 성공) | `Scripts/Contracts/` |
@@ -49,7 +56,7 @@ R 재시작, Tab 전체 보기. [시험장 안내](Assets/CaravanMovementLab/REA
 | 게임 시계 (하루 = 현실 6분, 5일마다 장날), 낮·밤 빛 | `Scripts/Core/GameClock` |
 | 상태 창, 전체 지도(M), 메뉴(Esc), 자동 저장·불러오기 | `Scripts/UI/`, `Core/SaveSystem` |
 | 배경 음악·효과음 (Ninja Adventure, CC0) | `Audio/AudioManager`, `Resources/Audio` |
-| 맵 4개: 예성 나루 마을(시작) - 예성 길 - 개경(수도) - 닥나무 마을 | `Tools/MapGen` → `Maps/*.json` → `Editor/MapJsonBuilder` |
+| 본편10맵: 고려6맵(수도1+마을4+길1), 중간권4맵(마을2+길2) | `Tools/MapGen` → `Maps/*.json` → `Editor/MapJsonBuilder` |
 | 캐릭터 12종(16×24 동물)·물건 아이콘: 글자 그림으로 생성 | `Tools/ArtGen/chars.py`, `items.py` |
 | 땅·건물 타일, 물결·꽃 애니메이션: Ninja Adventure 에셋 팩 (CC0). UI 폰트: 갈무리 (OFL) | `Art/NinjaAdventure`, `Resources/Fonts` |
 
@@ -66,8 +73,8 @@ M 지도는 실제 맵 배치를 축약한 지형 약도로 강·숲·길·건�
 
 ```
 Assets/PocketCaravan/
-  Art/Placeholder   임시 PNG. 같은 이름으로 덮어쓰면 실제 아트로 바뀜
-  Art/Tiles         타일 에셋 (Tile Palette에 끌어다 쓰기)
+  Art/Characters   캐릭터 그림·임시 미술
+  Art/NinjaAdventure/TileAssets   기본 타일 에셋
   Data/<지역>        ScriptableObject 데이터
   Resources/        GameDatabase (시작 설정, 밸런스 값)
   World/Regions/    지역별 맵·좌표·씬·NPC 등록 JSON
@@ -81,7 +88,7 @@ Assets/PocketCaravan/
 지역마다 다른 것은 코드가 아니라 데이터로 둔다.
 
 1. `Data/<지역>/`에 Region, Town, Item 에셋을 만든다 (우클릭 > Create > Pocket Caravan).
-2. 맵은 `Tools/MapGen`의 파이썬 코드로 설계한다 (`Tools/MapGen/README.md`). `python3 export.py` → Unity 메뉴 2.
+2. 맵은 `Tools/MapGen`의 파이썬 코드로 설계한다 (`Tools/MapGen/README.md`). 생성 범위는 [MapGen 안내](Tools/MapGen/README.md)를 확인한다.
 3. 맵 목록·좌표·씬·지역/NPC는 `World/Regions/<region>.json`에 등록한다. `MapJsonBuilder.MapCoords`는 등록 파일을 읽는 호환 속성이다. 마을 좌표는 `TownData.worldCoord`. 현재 시세·의뢰 거리는 좌표의 맨해튼 거리이며 실제 연결 경로를 세지 않는다. 우회로·분기 확장 시 거리 규칙을 별도로 정해야 한다.
 4. 출구의 `target`(씬 이름)과 `spawn`, 도착 자리 `id`를 맞춘다.
 
@@ -123,8 +130,10 @@ NPC `lines` 배열의 다음 항목은 다시 말을 걸 때 나오며, 한 항�
 
 ## macOS 고려 프리뷰 빌드
 
-Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macOS/PocketCaravan.app`을 만든다. 현재 제공 빌드는 고려 본편 네 맵이며, 나루에서 시작한다. 이전 3D 실험과 이동 시험장은 본편 빌드에 포함하지 않는다.
+Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macOS/PocketCaravan.app`을 만든다. 이 메뉴는 현재 등록된 고려6맵+중간권4맵을 포함하며 나루에서 시작한다. Windows 프리뷰 메뉴도 제공한다. 이전 릴리스의 네 맵 빌드와 구분한다. 이전 3D 실험과 이동 시험장은 본편 빌드에 포함하지 않는다.
 
-프리뷰는 `CARAVAN_PREVIEW` 빌드 정의로 `pocket_caravan_preview_save.json`에 저장해 에디터/기존 본편 저장과 분리한다. 빌드 결과는 Git 소스에 넣지 않고 GitHub 프리릴리스의 zip으로 배포한다. 플랫폼 서명·공증과 Windows 빌드는 별도 작업이다. Windows 지원 모듈을 설치한 팀원은 동일 소스에서 Windows 타깃 빌드를 준비해야 한다.
+프리뷰는 `CARAVAN_PREVIEW` 빌드 정의로 `pocket_caravan_preview_save.json`에 저장해 에디터/기존 본편 저장과 분리한다. 빌드 결과는 Git 소스에 넣지 않고 GitHub 프리릴리스의 zip으로 배포한다. Mac·Windows 빌드는 로컬에서 성공했으며, 실제 Windows 실행과 Mac 서명·공증은 별도 확인이 필요하다. 현재 로컬 패키지와 이전 GitHub 릴리스는 버전이 다르다.
 
-2026-10-15 추가 개선: 예성 길의 등짐 숲길/손수레 큰길 선택, 본편 손수레·적재량 그림, 노면·흔들림 대처 안내. 수레 그림은 운반 상태의 표현이며 별도 수레 물리·충돌체를 구현한 것은 아니다.
+2026-10-15 당시 개선 기록: 예성 길의 등짐 숲길/손수레 큰길 선택, 본편 손수레·적재량 그림, 노면·흔들림 대처 안내. 수레 그림은 운반 상태의 표현이며 별도 수레 물리·충돌체를 구현한 것은 아니다.
+
+**장애물 제작/시험:** 48개 프리셋과 배치 도구·독립 시험장의 [사용법과 구현 범위](Docs/ObstacleLibrary.md).

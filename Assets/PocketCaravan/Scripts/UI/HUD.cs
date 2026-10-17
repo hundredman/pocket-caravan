@@ -3,7 +3,7 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// 화면 왼쪽 위 상태 창: 맵, 돈·신용, 짐 무게, 체력, 짐 흔들림. 아래쪽에 조작 안내.
+    /// 화면 왼쪽 위 상태 창: 맵, 돈·신용, 짐 무게, 체력, 노면/감속 안내. 아래쪽에 조작 안내.
     /// GameManager가 자동으로 붙인다. 임시 UI(OnGUI)다.
     /// </summary>
     public class HUD : MonoBehaviour
@@ -30,7 +30,7 @@ namespace PocketCaravan
                 roadName = g < names.Length ? names[g] : g.ToString();
             }
 
-            var r = new Rect(6, 6, 182, p.HasAnyCargo ? 96 : 83);
+            var r = new Rect(6, 6, 182, 83);
             GUI.Box(r, "", UIStyle.Box);
             float x = r.x + 8, y = r.y + 5;
             string market = gm.Clock.IsMarketDay ? " <color=#ffd84a>장날</color>" : "";
@@ -40,13 +40,11 @@ namespace PocketCaravan
             string vehicle = p.vehicle != null ? p.vehicle.displayName : "등짐";
             Gauge(x, ref y, $"{vehicle} {p.TotalWeight:0.#}/{p.Capacity:0}", p.LoadRatio, LoadColor);
             Gauge(x, ref y, "체력", p.stamina, StaminaColor);
-            if (p.HasAnyCargo) Gauge(x, ref y, "흔들림", p.shake, p.shake > 0.7f ? ShakeHigh : ShakeLow);
             GUI.Label(new Rect(x, y - 1, 170, 12), $"발밑: {roadName}", UIStyle.Small);
             y += 12;
             if (p.HasAnyCargo)
             {
-                string advice = p.shake >= 0.7f ? "짐이 쏠린다 · 멈춰서 진정시키자"
-                    : p.shake >= 0.35f ? "걷거나 넓은 길에서 짐을 안정시키자" : "화물 안정 · 길을 골라 이동하자";
+                string advice = "거친 길·무거운 짐은 느립니다";
                 GUI.Label(new Rect(x, y - 1, 170, 12), advice, UIStyle.Small);
             }
 
