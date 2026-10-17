@@ -14,6 +14,8 @@ def layout(maps):
         m = by_id[mid]
         mx, my = positions[mid]
         for exit in (o for o in m.objects if o["kind"] == "exit"):
+            if exit["target"] not in by_id:  # 지역 확대 지도에서는 외부 연결을 생략
+                continue
             target = by_id[exit["target"]]
             spawn = next(o for o in target.objects if o["kind"] == "spawn" and o["id"] == exit["spawn"])
             edge = exit["edge"]
@@ -36,7 +38,7 @@ def layout(maps):
     return positions
 
 
-def export(maps, root):
+def export(maps, root, stem="Goryeo"):
     positions = layout(maps)
     pad, scale = 12, 4
     minx = min(p[0] for p in positions.values()) - pad
@@ -103,5 +105,5 @@ def export(maps, root):
         d.line(((px - 2, py - 5), (px + 1, py), (px + 3, py - 2)), fill="#b9ac83")
     dest = Path(root) / "Assets/PocketCaravan/Resources/WorldMap"
     dest.mkdir(parents=True, exist_ok=True)
-    im.save(dest / "GoryeoTerrain.png")
-    (dest / "GoryeoLayout.json").write_text(json.dumps(dict(width=width, height=height, maps=entries), ensure_ascii=False, indent=2))
+    im.save(dest / f"{stem}Terrain.png")
+    (dest / f"{stem}Layout.json").write_text(json.dumps(dict(width=width, height=height, maps=entries), ensure_ascii=False, indent=2))

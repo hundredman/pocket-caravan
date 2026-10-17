@@ -82,7 +82,7 @@ namespace PocketCaravan
             var panel = new Rect((UIStyle.VirtualWidth - width) / 2, (UIStyle.VirtualHeight - height) / 2, width, height);
             Paper(panel, new Color32(100, 76, 48, 255));
             Paper(new Rect(panel.x + 3, panel.y + 3, width - 6, height - 6), new Color32(225, 211, 171, 255));
-            GUI.Label(new Rect(panel.x + 16, panel.y + 10, width - 32, 20), "고려 교역도 · 예성강에서 개경까지", title);
+            GUI.Label(new Rect(panel.x + 16, panel.y + 10, width - 32, 20), "고려·중간권 교역도", title);
             GUI.Label(new Rect(panel.xMax - 76, panel.y + 13, 65, 14), "M / Esc 닫기", ink);
 
             if (terrain == null || atlas == null || atlas.maps == null || atlas.width <= 0 || atlas.height <= 0)

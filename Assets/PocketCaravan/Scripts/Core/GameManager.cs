@@ -207,7 +207,10 @@ namespace PocketCaravan
             var pc = player != null ? player.GetComponent<PlayerController>() : null;
             if (pendingExact.HasValue && pc != null)
             {
-                player.Teleport(pendingExact.Value, pendingFacing);
+                var savedPosition = pendingExact.Value;
+                if (MapRoot.Current != null && MapRoot.Current.TryResolveSavedPosition(savedPosition, player.feetOffset, out var restored))
+                    savedPosition = restored;
+                player.Teleport(savedPosition, pendingFacing);
             }
             else if (id != null && player != null)
             {

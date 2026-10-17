@@ -15,6 +15,9 @@ def build():
     m.road_rect(gate_x0, 12, gate_x1, H - 1, grade=3)
     m.road_rect(4, 22, W - 1, 24, grade=3)
     m.roughen(4, 22, W - 1, 24, grade=3, every=6)     # 시전 거리 가장자리를 덜 반듯하게
+    # 북쪽 산록 길은 궁성 서편을 돌아 마을로 이어진다.
+    m.road_path([(8, 0), (8, 9), (11, 12)], width=3, grade=1)
+    m.link("N", 8, 3, "goryeo_songak", "S", "N")
     # 골목: 구불구불, 시전 거리에서 주택가로
     m.road_path([(5, 13), (12, 12), (20, 13), (29, 12)], width=2, grade=2)
     m.road_path([(34, 12), (42, 13), (51, 12), (58, 13)], width=2, grade=2)

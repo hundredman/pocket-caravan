@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-18",
+  "unityVersion": "6000.3.26f1",
+  "maps": 10,
+  "goryeoMaps": 6,
+  "townsInGoryeo": 5,
+  "regeneratedScenes": 9,
+  "economicCoordinatesAndIDs": "unchanged",
+  "mapRegressionChecks": 205,
+  "routeChoiceChecks": 4,
+  "integrationTests": 23,
+  "staticRegisteredExits": 18,
+  "liveExitTransitions": {
+    "passed": 18,
+    "route": [
+      "Gaegyeong",
+      "goryeo_songak",
+      "Gaegyeong",
+      "Dakmok",
+      "goryeo_jangdan",
+      "transit_pass",
+      "transit_woodtown",
+      "transit_wetroad",
+      "transit_ferry",
+      "transit_wetroad",
+      "transit_woodtown",
+      "transit_pass",
+      "goryeo_jangdan",
+      "Dakmok",
+      "Gaegyeong",
+      "Route01",
+      "Naru",
+      "Route01"
+    ],
+    "checks": [
+      "arrival scene",
+      "arrival cell walkable",
+      "cargo count 2",
+      "cargo total cost 9",
+      "vehicle reference unchanged"
+    ],
+    "mode": "Play from non-start scene; normal save loading/autosave disabled"
+  },
+  "savedPositionChecks": [
+    "Jangdan scene initialized",
+    "valid exact save unchanged",
+    "blocked terrain fixture found",
+    "blocked save restored",
+    "restored feet on walkable RoadGrid road",
+    "restored location avoids automatic exit",
+    "outside map position restored",
+    "no road map falls back to walkable ground",
+    "missing ground refuses restoration"
+  ],
+  "presentation": {
+    "pages": 18,
+    "mainSlides": 14,
+    "hiddenSlides": [
+      15,
+      16,
+      17,
+      18
+    ],
+    "changedVisualSlides": [
+      8
+    ],
+    "otherSlidesPixelUnchanged": true,
+    "pdfMatchesFinalRenders": true,
+    "sha256": {
+      ".pptx": "c4fd0cc645e35db06dcc1815e75ead115704f7f637d510046ff3ba57a8277c24",
+      ".pdf": "7a078c1cf5898f6d65359ec60bd848207a40591fd7bf3452f91e1dfcb623847b"
+    }
+  },
+  "notIncluded": [
+    "new executable build or release",
+    "online multiplayer",
+    "final Korean architecture assets",
+    "historically exact peninsula or rivers"
+  ]
+}

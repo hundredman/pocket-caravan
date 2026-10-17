@@ -42,10 +42,10 @@ namespace PocketCaravan.EditorTools
             Stock(songak, "ginseng", "paper", "salt", "grain", "firewood");
             Stock(jangdan, "grain", "firewood", "salt", "paper");
             Configure(naru, 1, Rest("goryeo_naru_rest"));
-            Configure(paper, 2, Rest("goryeo_dakmok_rest"), Info("goryeo_dakmok_info", "동쪽 장단 들마을은 곡식과 땔감 거래처입니다. 개경에는 다양한 상품이 모입니다. 장부는 방문 당시 시세이므로 도착하면 다시 확인하세요."));
-            Configure(songak, 2, Rest("goryeo_songak_rest"), Info("goryeo_songak_info", "남쪽 나루에서 예성 길로 이어집니다. 가벼운 등짐은 작은 다리 숲길, 수레는 주막 큰길을 비교하세요. 약재는 집산 상품이며 이 마을이 역사적 재배지라는 뜻은 아닙니다."));
+            Configure(paper, 2, Rest("goryeo_dakmok_rest"), Info("goryeo_dakmok_info", "남쪽 장단 들마을은 곡식과 땔감 거래처입니다. 개경에는 다양한 상품이 모입니다. 장부는 방문 당시 시세이므로 도착하면 다시 확인하세요."));
+            Configure(songak, 2, Rest("goryeo_songak_rest"), Info("goryeo_songak_info", "남쪽 개경을 지나 예성 길과 나루로 이어집니다. 가벼운 등짐은 작은 다리 숲길, 수레는 주막 큰길을 비교하세요. 약재는 집산 상품이며 이 마을이 역사적 재배지라는 뜻은 아닙니다."));
             Configure(jangdan, 1, Rest("goryeo_jangdan_rest"));
-            Configure(capital, 3, Rest("goryeo_capital_rest"), Info("goryeo_capital_info", "서남쪽 나루와 산록 마을, 동쪽 종이 마을과 들마을이 거래처입니다. 첫 한 개의 판매가가 전량 판매 수익은 아닙니다. 적재량과 돌아올 화물을 함께 비교하세요."), new TownFacility { id = "goryeo_capital_warehouse", displayName = "객주 보관소", kind = FacilityKind.Warehouse, minTier = 3, minCredit = 3, storageCapacity = 120 });
+            Configure(capital, 3, Rest("goryeo_capital_rest"), Info("goryeo_capital_info", "서남쪽 나루, 북쪽 산록 마을, 동쪽 종이 마을과 남쪽 들마을이 거래처입니다. 첫 한 개의 판매가가 전량 판매 수익은 아닙니다. 적재량과 돌아올 화물을 함께 비교하세요."), new TownFacility { id = "goryeo_capital_warehouse", displayName = "객주 보관소", kind = FacilityKind.Warehouse, minTier = 3, minCredit = 3, storageCapacity = 120 });
             EditorUtility.SetDirty(db); AssetDatabase.SaveAssets();
             Debug.Log("고려 거점5곳/기본 시설 적용. 등급·신용1/3·보관120은 비교용 수치, 최종 밸런스 아님.");
         }
