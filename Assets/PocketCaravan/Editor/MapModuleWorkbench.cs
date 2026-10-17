@@ -18,9 +18,9 @@ namespace PocketCaravan.EditorTools
         [Serializable] class SourceCatalogue { public SourceEntry[] entries; }
         [Serializable] class SkinInfo { public string id,label; }
         [Serializable] class SkinIndex { public int columns,tileSize;public string[] tileNames;public SkinInfo[] environments; }
-        MapModuleLibrary library;int selected,env,weather;Vector2 scroll;string search="";
+        MapModuleLibrary library;int selected,env,weather;Vector2 scroll,pageScroll;string search="";
         [MenuItem("Pocket Caravan/맵 제작/환경 원형 라이브러리")]
-        public static void Open()=>GetWindow<MapModuleWorkbench>("맵 원형 라이브러리");
+        public static void Open(){var window=GetWindow<MapModuleWorkbench>("맵 원형 라이브러리");window.minSize=new Vector2(420,420);}
         static T Asset<T>(string path) where T:ScriptableObject
         {
             Directory.CreateDirectory(Path.GetDirectoryName(path));AssetDatabase.Refresh();
@@ -116,6 +116,7 @@ namespace PocketCaravan.EditorTools
         {
             if(library==null)library=AssetDatabase.LoadAssetAtPath<MapModuleLibrary>(LibraryPath);
             if(library==null){if(GUILayout.Button("내보낸 라이브러리 가져오기"))Import();return;}
+            pageScroll=EditorGUILayout.BeginScrollView(pageScroll);
             EditorGUILayout.HelpBox("원형 → 독립 편집 씬. 환경/날씨는 Play에서 적용됩니다. 제작 시험장은 본편 저장/세계 등록부와 분리됩니다.",MessageType.Info);
             search=EditorGUILayout.TextField("검색",search);
             scroll=EditorGUILayout.BeginScrollView(scroll,GUILayout.Height(180));
@@ -137,6 +138,7 @@ namespace PocketCaravan.EditorTools
                 string path=EditorUtility.SaveFilePanelInProject("독립 편집 씬","CustomMap","unity","원형을 복제한 뒤 Unity Tilemap에서 수정하세요.",Root+"/Scenes");
                 if(!string.IsNullOrEmpty(path))BuildPreview(selected,env,weather,path,false);
             }
+            EditorGUILayout.EndScrollView();
         }
     }
 }
