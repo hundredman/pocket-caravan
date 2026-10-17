@@ -53,6 +53,34 @@ MonoBehaviour:
     town: goryeo_jangdan
     neighbors:
     - Dakmok
+    - transit_pass
+  - mapId: transit_pass
+    displayName: "\uC194\uBC14\uB78C \uACE0\uAC1C"
+    coord: {x: 5, y: 0}
+    town: 
+    neighbors:
+    - goryeo_jangdan
+    - transit_woodtown
+  - mapId: transit_woodtown
+    displayName: "\uC194\uC7AC \uAE38\uBAA9 \uB9C8\uC744"
+    coord: {x: 6, y: 0}
+    town: transit_woodtown
+    neighbors:
+    - transit_pass
+    - transit_wetroad
+  - mapId: transit_wetroad
+    displayName: "\uBC84\uB4E4 \uBB3C\uAC00 \uAE38"
+    coord: {x: 7, y: 0}
+    town: 
+    neighbors:
+    - transit_woodtown
+    - transit_ferry
+  - mapId: transit_ferry
+    displayName: "\uBC84\uB4E4\uB098\uB8E8 \uB9C8\uC744"
+    coord: {x: 8, y: 0}
+    town: transit_ferry
+    neighbors:
+    - transit_wetroad
   places:
   - kind: board
     id: naru
@@ -93,3 +121,15 @@ MonoBehaviour:
   - kind: market
     id: goryeo_jangdan
     mapId: goryeo_jangdan
+  - kind: board
+    id: transit_woodtown
+    mapId: transit_woodtown
+  - kind: market
+    id: transit_woodtown
+    mapId: transit_woodtown
+  - kind: board
+    id: transit_ferry
+    mapId: transit_ferry
+  - kind: market
+    id: transit_ferry
+    mapId: transit_ferry

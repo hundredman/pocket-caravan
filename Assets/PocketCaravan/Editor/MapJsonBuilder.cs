@@ -142,6 +142,37 @@ namespace PocketCaravan.EditorTools
             Debug.Log($"[Pocket Caravan] 맵 {paths.Count}개를 만들었습니다. 시작: {MapOrder[0]}");
         }
 
+        /// <summary>선택한 맵만 재생성하고 공통 색인·빌드 목록을 갱신한다. 타 담당 씬의 재직렬화 방지.</summary>
+        public static void BuildSelected(params string[] mapIds)
+        {
+            if (EditorApplication.isPlaying) throw new InvalidOperationException("Play 종료 후 실행하세요.");
+            for (int i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
+                if (UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).isDirty)
+                    throw new InvalidOperationException("수정 중인 씬을 먼저 저장하세요.");
+            var registry = WorldRegistry.Load();
+            ValidateRegisteredMaps(registry);
+            var selected = new List<WorldRegistry.MapEntry>();
+            foreach (var id in mapIds)
+            {
+                var entry = registry.Map(id);
+                if (entry == null) throw new InvalidDataException("미등록 맵: " + id);
+                if (!selected.Contains(entry)) selected.Add(entry);
+            }
+            foreach (var entry in selected)
+            {
+                EnsureFolder(Path.GetDirectoryName(entry.scenePath).Replace('\\', '/'));
+                BuildScene(JsonUtility.FromJson<MapFile>(File.ReadAllText(entry.jsonPath)), entry.scenePath, entry);
+            }
+            BuildWorldIndex();
+            var list = new List<EditorBuildSettingsScene>();
+            var paths = new List<string>(registry.ScenePaths);
+            foreach (var path in paths) list.Add(new EditorBuildSettingsScene(path, true));
+            foreach (var scene in EditorBuildSettings.scenes)
+                if (!paths.Contains(scene.path) && File.Exists(scene.path)) list.Add(scene);
+            EditorBuildSettings.scenes = list.ToArray();
+            AssetDatabase.SaveAssets();
+        }
+
         /// <summary>맵 사이 연결과 NPC·장터 위치를 Resources/WorldIndex에 적는다 (길 안내용).</summary>
         static void BuildWorldIndex()
         {

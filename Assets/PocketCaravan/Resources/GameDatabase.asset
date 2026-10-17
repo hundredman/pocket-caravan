@@ -25,12 +25,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5f9bcbf9b7a8444049e8997395807221, type: 2}
   - {fileID: 11400000, guid: 14e798ba726094746925b7d4055155df, type: 2}
   - {fileID: 11400000, guid: 11081dff03b434c32bbd32ec0df9b346, type: 2}
+  - {fileID: 11400000, guid: be3a5de9ae7594a3389e4078a55c7e19, type: 2}
+  - {fileID: 11400000, guid: 432a10a42612648bcba79fd3b0f4b7a7, type: 2}
   towns:
   - {fileID: 11400000, guid: ea80dc588efe14baeada6f1f8eeb9f6c, type: 2}
   - {fileID: 11400000, guid: c9c3e50b53fd84e47a560b486663cf0f, type: 2}
   - {fileID: 11400000, guid: 9c22617e212424b55a590eb911f26529, type: 2}
   - {fileID: 11400000, guid: 306e858d6378a49df8c9d1a54d727db5, type: 2}
   - {fileID: 11400000, guid: e915b32ddc48b4851ba3a636db3e1ee8, type: 2}
+  - {fileID: 11400000, guid: a5b9acd79b3164d42ad063c423c424aa, type: 2}
+  - {fileID: 11400000, guid: b6a420a608f7c4232a2b56c2441da62e, type: 2}
   vehicles:
   - {fileID: 11400000, guid: 2605f065f1d0f40fd90f0c5955299f57, type: 2}
   - {fileID: 11400000, guid: 913f67411fb2e4eb9868cba57a9545f6, type: 2}

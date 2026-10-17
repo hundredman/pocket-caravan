@@ -1,4 +1,8 @@
 {
   "schemaVersion": 1,
-  "startMapId": "Naru"
+  "startMapId": "Naru",
+  "atlasRegions": [
+    "goryeo",
+    "transit"
+  ]
 }

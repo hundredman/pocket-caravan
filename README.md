@@ -1,6 +1,6 @@
 # Pocket Caravan
 
-> **현재 구현 추적:** [개발 진행표](Docs/DevelopmentStatus.md)를 먼저 확인한다. 아래 검토 당시의 ‘4맵·마을2·시설/낙하 제거 미구현’은 이전 기준선이다. 이번 구현은 6맵·수도1+마을4·로컬 시설3종이며, 사용자 후속 확인에 따라 감속을 나타내는 시각적 흔들림은 유지한다. 기획/검증/미완료는 진행표에서 구분한다.
+> **현재 구현 추적:** [개발 진행표](Docs/DevelopmentStatus.md)를 먼저 확인한다. 아래 검토 당시의 ‘4맵·마을2·시설/낙하 제거 미구현’은 이전 기준선이다. 고려는 6맵·수도1+마을4·로컬 시설3종이며, 별도 중간권 마을2+길2를 연결해 등록 본편은 총10맵이다. [중간 여정 명세](Docs/TransitPrototype.md)를 참고한다. 사용자 후속 확인에 따라 감속을 나타내는 시각적 흔들림은 유지한다. 기획/검증/미완료는 진행표에서 구분한다.
 
 > **10월17일 전체 재대조 교정:** 스타팅 지역은 수도1+수도 외 최소 마을4, 이미 발전한 지역·자유 이동·마을 등급/개인 신용별 시설 이용이 제작 범위다. 재검토 당시 고려는 수도1+마을2+길1로 미달이었으며 후속 개발로 구조를 채웠다. 최신 상태는 개발 진행표를 따른다. [전체 누락 교정](Docs/FullRequirementsReview_2026-10-17.md)와 [고려 제작 명세](Docs/GoryeoRegionSpec.md)를 우선하며 이전 최소 거점/미정/검토 중단 표현을 현재 범위로 재사용하지 않는다.
 
@@ -54,7 +54,7 @@ R 재시작, Tab 전체 보기. [시험장 안내](Assets/CaravanMovementLab/REA
 | 게임 시계 (하루 = 현실 6분, 5일마다 장날), 낮·밤 빛 | `Scripts/Core/GameClock` |
 | 상태 창, 전체 지도(M), 메뉴(Esc), 자동 저장·불러오기 | `Scripts/UI/`, `Core/SaveSystem` |
 | 배경 음악·효과음 (Ninja Adventure, CC0) | `Audio/AudioManager`, `Resources/Audio` |
-| 맵6개: 기존4맵 + 송악 산록·장단 들마을. 수도1+마을4+길1 | `Tools/MapGen` → `Maps/*.json` → `Editor/MapJsonBuilder` |
+| 본편10맵: 고려6맵(수도1+마을4+길1), 중간권4맵(마을2+길2) | `Tools/MapGen` → `Maps/*.json` → `Editor/MapJsonBuilder` |
 | 캐릭터 12종(16×24 동물)·물건 아이콘: 글자 그림으로 생성 | `Tools/ArtGen/chars.py`, `items.py` |
 | 땅·건물 타일, 물결·꽃 애니메이션: Ninja Adventure 에셋 팩 (CC0). UI 폰트: 갈무리 (OFL) | `Art/NinjaAdventure`, `Resources/Fonts` |
 
@@ -128,8 +128,8 @@ NPC `lines` 배열의 다음 항목은 다시 말을 걸 때 나오며, 한 항�
 
 ## macOS 고려 프리뷰 빌드
 
-Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macOS/PocketCaravan.app`을 만든다. 이 메뉴는 현재 등록된 고려6맵을 포함하며 나루에서 시작한다. Windows 프리뷰 메뉴도 제공한다. 이전 릴리스의 네 맵 빌드와 구분한다. 이전 3D 실험과 이동 시험장은 본편 빌드에 포함하지 않는다.
+Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macOS/PocketCaravan.app`을 만든다. 이 메뉴는 현재 등록된 고려6맵+중간권4맵을 포함하며 나루에서 시작한다. Windows 프리뷰 메뉴도 제공한다. 이전 릴리스의 네 맵 빌드와 구분한다. 이전 3D 실험과 이동 시험장은 본편 빌드에 포함하지 않는다.
 
-프리뷰는 `CARAVAN_PREVIEW` 빌드 정의로 `pocket_caravan_preview_save.json`에 저장해 에디터/기존 본편 저장과 분리한다. 빌드 결과는 Git 소스에 넣지 않고 GitHub 프리릴리스의 zip으로 배포한다. 플랫폼 서명·공증과 Windows 빌드는 별도 작업이다. Windows 지원 모듈을 설치한 팀원은 동일 소스에서 Windows 타깃 빌드를 준비해야 한다.
+프리뷰는 `CARAVAN_PREVIEW` 빌드 정의로 `pocket_caravan_preview_save.json`에 저장해 에디터/기존 본편 저장과 분리한다. 빌드 결과는 Git 소스에 넣지 않고 GitHub 프리릴리스의 zip으로 배포한다. Mac·Windows 빌드는 로컬에서 성공했으며, 실제 Windows 실행과 Mac 서명·공증은 별도 확인이 필요하다. 현재 로컬 패키지와 이전 GitHub 릴리스는 버전이 다르다.
 
 2026-10-15 추가 개선: 예성 길의 등짐 숲길/손수레 큰길 선택, 본편 손수레·적재량 그림, 노면·흔들림 대처 안내. 수레 그림은 운반 상태의 표현이며 별도 수레 물리·충돌체를 구현한 것은 아니다.
