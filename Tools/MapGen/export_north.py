@@ -1,11 +1,13 @@
-"""북유럽 맵 JSON과 사용한 타일 PNG를 내보낸다. 고려(export.py)와 폴더를 나눠 합칠 때 충돌이 없게 한다.
-    Maps/North/*.json, Art/North/Tiles/*.png  →  Unity 메뉴 Pocket Caravan > 북유럽 > 맵 씬 만들기"""
+"""북유럽 맵 JSON과 사용한 타일 PNG를 내보낸다 (팀 규칙: Docs/TeamDevelopment.md).
+    맵: Maps/North/<mapId>.json (World/Regions/north.json에 등록)
+    타일: 공용 Art/NinjaAdventure/Tiles (공용 빌더가 여기서 읽음. 고려와 같은 그림은 이미 있어 그대로 둔다)
+    다음: Unity 메뉴 Pocket Caravan > 2. 맵 씬 다시 만들기"""
 import json, os, sys
 import north
 from tiles import tile_image
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
-tile_dir = os.path.join(OUT, "Assets/PocketCaravan/Art/North/Tiles")
+tile_dir = os.path.join(OUT, "Assets/PocketCaravan/Art/NinjaAdventure/Tiles")
 map_dir = os.path.join(OUT, "Assets/PocketCaravan/Maps/North")
 os.makedirs(tile_dir, exist_ok=True); os.makedirs(map_dir, exist_ok=True)
 
@@ -47,6 +49,10 @@ for f in north.MAPS:
         json.dump(d, fp, ensure_ascii=False, separators=(",", ":"))
     m.render(os.path.join(os.path.dirname(os.path.abspath(__file__)), "preview_" + m.id + ".png"))
     print(m.id, m.w, m.h)
+new = 0
 for k in used:
-    tile_image(k).save(os.path.join(tile_dir, name_of(k) + ".png"))
-print(len(used), "tiles")
+    path = os.path.join(tile_dir, name_of(k) + ".png")
+    if os.path.exists(path):
+        continue          # 이미 있는 공용 타일은 덮어쓰지 않는다 (.meta GUID 유지)
+    tile_image(k).save(path); new += 1
+print(len(used), "tiles used,", new, "new")

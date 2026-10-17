@@ -15,7 +15,7 @@ MonoBehaviour:
   id: north_birka
   displayName: "\uBE44\uB974\uCE74"
   region: {fileID: 11400000, guid: 053dda2cee1b84de7bdb3dcc5c7849c8, type: 2}
-  worldCoord: {x: 0, y: 0}
+  worldCoord: {x: 30, y: 0}
   startLevel: 1
   stock:
   - item: {fileID: 11400000, guid: 5bdb4599b599a4bafb2d6eba12a7a241, type: 2}

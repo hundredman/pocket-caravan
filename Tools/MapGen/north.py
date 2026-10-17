@@ -1,5 +1,6 @@
 """북유럽 지역 맵 설계. 고려(maps.py)와 따로 두고, 합칠 때 출구만 잇는다.
-맵 id는 'North_'로 시작한다 (씬 이름이 다른 지역과 겹치지 않게)."""
+맵 id는 소문자 north_ 접두어 (팀 규칙: Docs/TeamIntegrationContract.md). 씬 이름 = 맵 id.
+등록: Assets/PocketCaravan/World/Regions/north.json"""
 import json, os, sys
 from tiles import K, PROPS
 from north_tiles import SnowMap
@@ -9,7 +10,7 @@ OUT = sys.argv[1] if len(sys.argv) > 1 else "out_north"
 
 def birka():
     """비르카: 피오르 물가의 교역 마을. 큰 회관(여관) 앞 마당을 중심으로 집 몇 채와 선착장. 북유럽 시작 마을."""
-    m = SnowMap("North_Birka", "비르카", 40, 28, seed=31)
+    m = SnowMap("north_birka", "비르카", 40, 28, seed=31)
     # 남쪽 피오르 물길과 선착장
     m.river_h(22, 27, wiggle=2, fixed=range(15, 23))
     m.bridge(18, 19, 20, 24)
@@ -19,7 +20,10 @@ def birka():
     m.road_blob(20, 12.5, 6.5, 2.6, grade=1)
     m.road_path([(19, 15), (19, 19)], width=2)
     m.road_path([(26, 13), (33, 13), (39, 13)], width=2)
-    m.link("E", 12, 4, "North_Route01", "W", "E")
+    # 동쪽 피오르 길은 아직 없음: 팀 규칙대로 가짜 출구를 만들지 않고 통으로 막아 둔다
+    m.reserve(37, 12, 39, 15)
+    for (bx, by) in [(39, 13), (39, 14), (38, 13), (38, 14)]:
+        m.prop(K("element", 3, 0), bx, by)
     m.road_path([(0, 13), (7, 13), (13, 13)], width=2)
     m.reserve(0, 12, 2, 15)
 
@@ -45,7 +49,7 @@ def birka():
     for (bx, by) in [(0, 13), (0, 14), (1, 13), (1, 14)]:
         m.prop(K("element", 3, 0), bx, by)
     m.sign(3, 11, "← 남쪽 관문\n(아직 닫혀 있음)")
-    m.sign(31, 11, "→ 피오르 길\n모피 사냥꾼 마을")
+    m.sign(31, 11, "→ 피오르 길\n(눈을 치우는 중)")
 
     # 사람
     m.add("npc", 21, 9, npc="north_innkeeper")     # 여관 할머니: 회관 앞

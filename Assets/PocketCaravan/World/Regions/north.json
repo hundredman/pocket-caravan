@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "regionId": "north",
+  "regionAssetPath": "Assets/PocketCaravan/Data/North/Region_North.asset",
+  "maps": [
+    {
+      "mapId": "north_birka",
+      "jsonPath": "Assets/PocketCaravan/Maps/North/north_birka.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/North/north_birka.unity",
+      "worldX": 30,
+      "worldY": 0,
+      "generator": "north:birka"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "north_innkeeper",
+      "name": "여관 할머니",
+      "sprite": "elder_tall",
+      "greeting": "어서 오렴. 못 하나로도 수프를 끓이는 집이 여기란다. 일거리는 저 게시판에 붙어 있지."
+    }
+  ],
+  "villagers": [
+    {
+      "name": "뱃사공",
+      "sprite": "villager_bear_tall",
+      "lines": [
+        "피오르가 꽁꽁 얼어서 배가 묶였어. 얼음이 녹을 때까지는 걸어서 다녀야지.",
+        "얼음이 녹으면 이 배로 나루 마을까지 금방이야."
+      ]
+    },
+    {
+      "name": "사냥꾼",
+      "sprite": "villager_fox_tall",
+      "lines": [
+        "숲 너머 사냥꾼 마을에 가면 모피가 싸. 여기서는 값을 두 배는 쳐주지.",
+        "길 없는 눈밭이 무섭다고? 우리 북쪽 사람들은 숲을 가로질러 다니는 게 더 빨라."
+      ]
+    }
+  ]
+}
