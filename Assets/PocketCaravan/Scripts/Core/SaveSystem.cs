@@ -17,6 +17,7 @@ namespace PocketCaravan
         public int money, credit;
         public string vehicle;
         public float stamina;
+        public float shake; // 이전 저장에는 없으므로 0으로 읽는다.
         public List<string> cargoItems = new List<string>();
         public List<int> cargoCounts = new List<int>();
         public List<float> cargoCosts = new List<float>();
@@ -34,13 +35,19 @@ namespace PocketCaravan
         public int nextContractId;
         public List<NpcTraders.Trader> traders = new List<NpcTraders.Trader>();
         public List<DropRecord> drops = new List<DropRecord>();
+        public List<TradeLedger.Quote> marketQuotes = new List<TradeLedger.Quote>();
         public List<string> cooldownKeys = new List<string>();
         public List<float> cooldownUntil = new List<float>();
     }
 
     public static class SaveSystem
     {
-        static string Path => System.IO.Path.Combine(Application.persistentDataPath, "pocket_caravan_save.json");
+#if CARAVAN_PREVIEW
+        const string SaveFile = "pocket_caravan_preview_save.json";
+#else
+        const string SaveFile = "pocket_caravan_save.json";
+#endif
+        static string Path => System.IO.Path.Combine(Application.persistentDataPath, SaveFile);
 
         public static bool Exists => File.Exists(Path);
 

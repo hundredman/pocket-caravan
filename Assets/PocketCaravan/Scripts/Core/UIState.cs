@@ -103,7 +103,9 @@ namespace PocketCaravan
         static void Plain(GUIStyleState st, Texture2D bg, Color text)
         {
             st.background = bg;
+#if UNITY_EDITOR
             st.scaledBackgrounds = new Texture2D[0];   // 레티나용 기본 배경이 우선하지 않게
+#endif
             st.textColor = text;
         }
 

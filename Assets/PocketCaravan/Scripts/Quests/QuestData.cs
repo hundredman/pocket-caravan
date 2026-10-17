@@ -26,7 +26,7 @@ namespace PocketCaravan
         public ItemData item;
         public VehicleData vehicle;
         public int count = 1;
-        [Tooltip("이 단계를 마칠 때 상대가 하는 말 (Talk, Deliver)")]
+        [Tooltip("단계 완료 대사 (Talk, Deliver). 짧은 문장 1~2개 권장. 창 높이를 넘으면 자동으로 다음 페이지로 나뉨")]
         [TextArea] public string completeLine;
     }
 
@@ -45,6 +45,7 @@ namespace PocketCaravan
         [Header("받기")]
         [Tooltip("퀘스트를 주는 NPC id")] public string giverNpc;
         public List<QuestData> requires = new List<QuestData>();
+        [Tooltip("퀘스트 제안 대사. 짧은 문장 1~2개씩 작성. 제목도 표시 공간을 쓰며, 긴 본문은 자동 분할하고 마지막 페이지에서 수락/거절")]
         [TextArea(3, 6)] public string offerLine;
         [Tooltip("수락할 때 받는 짐 (의뢰 물건)")] public ItemData giveItem;
         public int giveCount;
@@ -58,6 +59,7 @@ namespace PocketCaravan
         [Header("보상")]
         public int rewardMoney;
         public int rewardCredit;
+        [Tooltip("완료 대사. 일반 텍스트로 작성하며 긴 내용은 대화창 크기에 맞춰 자동 분할")]
         [TextArea] public string finishNote;
     }
 }

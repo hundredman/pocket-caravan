@@ -12,7 +12,7 @@ namespace PocketCaravan
         public Sprite icon;
         [Min(0.1f)] public float weight = 1f;
         [Tooltip("산지에서의 기준가")] public float basePrice = 10f;
-        [Tooltip("산지 마을. 비우면 어디서나 나는 생필품 (거리 0)")] public TownData originTown;
+        [Tooltip("가격 기준 공급 거점. 생산지 또는 집산지이며 실제 역사적 산지의 좌표가 아님. 비우면 생필품 (거리 0)")] public TownData originTown;
         [Tooltip("산지에서 맵 하나 멀어질 때마다 기준가에 더해지는 비율")] public float pricePerMap = 0.25f;
         [Tooltip("퀘스트로 맡은 물건. 장터에 팔 수 없다")] public bool questItem;
 

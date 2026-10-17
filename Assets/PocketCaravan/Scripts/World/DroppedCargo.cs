@@ -47,26 +47,32 @@ namespace PocketCaravan
         public override void Interact(PlayerController player)
         {
             var gm = GameManager.I;
+            if (gm == null || record == null || !gm.Drops.Contains(record)) return;
             var p = gm.Player;
             if (record.contractId != 0)
             {
                 var c = p.contracts.Find(x => x.id == record.contractId);
-                if (c != null)
-                {
-                    if (!p.CanCarryWeight(c.weight)) { Notify.Show("짐이 너무 많아 주울 수 없다."); return; }
-                    c.dropped = false;
-                }
+                if (c == null || !c.dropped) { RemoveUnavailable(gm); return; }
+                if (!p.CanCarryWeight(c.weight)) { Notify.Show("짐이 너무 많아 주울 수 없다."); return; }
+                c.dropped = false;
             }
             else
             {
                 var item = gm.Db.items.Find(i => i != null && i.id == record.itemId);
-                if (item == null) { Destroy(gameObject); return; }
+                if (item == null) { RemoveUnavailable(gm); return; }
                 if (!p.CanCarry(item)) { Notify.Show("짐이 너무 많아 주울 수 없다."); return; }
                 p.cargo.Add(item, 1, record.unitCost);
             }
             gm.Drops.Remove(record);
             Notify.Show($"{Josa.Eul(record.label)} 다시 실었다.");
             Sfx.Play("move");
+            Destroy(gameObject);
+        }
+
+        void RemoveUnavailable(GameManager gm)
+        {
+            gm.Drops.Remove(record);
+            Notify.Show("더 이상 회수할 수 없는 짐입니다.");
             Destroy(gameObject);
         }
     }

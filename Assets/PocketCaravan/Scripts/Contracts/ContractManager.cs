@@ -46,11 +46,26 @@ namespace PocketCaravan
         {
             foreach (var t in db.towns)
             {
-                if (t == null || BoardOf(t.id) != null) continue;
+                if (t == null) continue;
+                var existing = BoardOf(t.id);
+                if (existing != null) { EnsureBasic(existing, t); continue; }
                 var b = new Board { town = t.id, lastAdded = clock.TotalHours };
                 boards.Add(b);
-                for (int i = 0; i < BoardSize; i++) b.list.Add(Generate(t));
+                for (int i = 0; i < BoardSize; i++)
+                {
+                    var offer = Generate(t);
+                    if (offer != null) b.list.Add(offer);
+                }
+                EnsureBasic(b, t);
             }
+        }
+
+        // 신용이 낮은 상인도 다시 시작할 수 있도록 비어 있지 않은 게시판에 일반 의뢰 하나를 남긴다.
+        void EnsureBasic(Board b, TownData town)
+        {
+            if (b.list.Count == 0 || b.list.Exists(c => !c.Premium)) return;
+            var basic = Generate(town, true);
+            if (basic != null) b.list[b.list.Count - 1] = basic;
         }
 
         public Board BoardOf(string town) => boards.Find(b => b.town == town);
@@ -64,14 +79,15 @@ namespace PocketCaravan
             return Mathf.Abs(d.x) + Mathf.Abs(d.y);
         }
 
-        Contract Generate(TownData from)
+        Contract Generate(TownData from, bool basic = false)
         {
             var others = db.towns.FindAll(t => t != null && t != from);
+            if (others.Count == 0) return null; // 새 지역의 첫 거점만 연결된 단계에도 부팅 가능.
             var to = others[rng.Next(others.Count)];
             int dist = Mathf.Max(1, Distance(from, to));
             var names = CargoNames.TryGetValue(from.id, out var n) ? n : new[] { "짐 꾸러미" };
             float weight = rng.Next(2, 7);
-            bool premium = rng.NextDouble() < 0.25;
+            bool premium = !basic && rng.NextDouble() < 0.25;
             float reward = 14 + 16 * dist + weight * 3;
             reward *= 0.85f + (float)rng.NextDouble() * 0.3f;
             if (premium) reward *= 1.8f;
@@ -96,7 +112,12 @@ namespace PocketCaravan
                 if (b.list.Count < BoardSize && now - b.lastAdded >= RefillHours)
                 {
                     var t = Town(b.town);
-                    if (t != null) b.list.Add(Generate(t));
+                    if (t != null)
+                    {
+                        var offer = Generate(t);
+                        if (offer != null) b.list.Add(offer);
+                        EnsureBasic(b, t);
+                    }
                     b.lastAdded = now;
                 }
             }
@@ -116,18 +137,20 @@ namespace PocketCaravan
 
         public string CanAccept(Contract c)
         {
+            if (c == null) return "의뢰가 없습니다.";
+            if (player.contracts.Exists(active => active.id == c.id)) return "이미 맡은 의뢰입니다.";
             if (player.contracts.Count >= MaxActive) return $"의뢰는 한 번에 {MaxActive}개까지 맡을 수 있습니다.";
-            if (player.credit < c.minCredit) return $"신용 {c.minCredit} 이상이어야 맡길 수 있다고 합니다.";
+            if (c.Premium && player.credit < c.minCredit) return $"신용 {c.minCredit} 이상이어야 맡길 수 있다고 합니다.";
             if (!player.CanCarryWeight(c.weight)) return "짐이 너무 많아 더 실을 수 없습니다.";
             return null;
         }
 
         public bool Accept(string town, Contract c)
         {
-            if (CanAccept(c) != null) return false;
             var b = BoardOf(town);
-            b?.list.Remove(c);
-            if (b != null) b.lastAdded = clock.TotalHours;   // 빈자리는 시간이 지나야 채워짐
+            if (b == null || c == null || c.fromTown != town || !b.list.Contains(c) || CanAccept(c) != null) return false;
+            b.list.Remove(c);
+            b.lastAdded = clock.TotalHours;   // 빈자리는 시간이 지나야 채워짐
             float now = clock.TotalHours;
             c.acceptedAt = now;
             c.deadline = now + c.hours;
@@ -145,8 +168,14 @@ namespace PocketCaravan
         /// 납품. 기한 안·상태 90% 이상 = 성공(보수 전액, 기한의 70% 안이면 팁 15%, 신용 +1).
         /// 상태 30% 이상이고 최종 기한 안 = 부분 성공(상태만큼, 늦으면 60%). 그 밖은 실패(신용 −1).
         /// </summary>
-        public ContractResult Deliver(Contract c)
+        public ContractResult Deliver(Contract c, string atTown)
         {
+            if (c == null || !player.contracts.Contains(c))
+                return new ContractResult { message = "이미 처리했거나 맡지 않은 의뢰입니다." };
+            if (c.toTown != atTown)
+                return new ContractResult { message = "도착지 게시판에서 납품해 주세요." };
+            if (c.dropped)
+                return new ContractResult { message = "떨어뜨린 의뢰 짐을 먼저 회수해 주세요." };
             float now = clock.TotalHours;
             var r = new ContractResult();
             player.contracts.Remove(c);
@@ -182,7 +211,7 @@ namespace PocketCaravan
         /// <summary>도적에게 의뢰 짐을 빼앗김: 실패, 보수의 20%를 물어 줌</summary>
         public void Lose(Contract c)
         {
-            player.contracts.Remove(c);
+            if (c == null || !player.contracts.Remove(c)) return;
             int penalty = Mathf.Min(player.money, Mathf.RoundToInt(c.reward * 0.2f));
             player.money -= penalty;
             player.credit -= 1;

@@ -10,6 +10,7 @@ namespace PocketCaravan
         public VehicleData vehicle;
         public OriginData origin;
         public readonly Inventory cargo = new Inventory();
+        public readonly TradeLedger ledger = new TradeLedger();
         /// <summary>맡은 배달 의뢰 (짐 무게에 들어간다)</summary>
         public readonly List<Contract> contracts = new List<Contract>();
 
