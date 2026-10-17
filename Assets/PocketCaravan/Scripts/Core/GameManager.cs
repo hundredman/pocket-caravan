@@ -177,11 +177,11 @@ namespace PocketCaravan
             UIState.Blocking = false;
 
             // 처음 연 씬이 시작 맵이면 저장을 불러온다. 다른 씬에서 바로 Play한 경우(개발 중)는 불러오지도, 덮어쓰지도 않는다.
-            if (first && scene.buildIndex != 0)
+            if (first && (scene.buildIndex != 0 || (MapRoot.Current != null && MapRoot.Current.previewOnly)))
             {
                 autosave = false;
                 saveToLoad = null;
-                Debug.Log("[저장] 시작 맵이 아닌 씬에서 Play: 저장을 불러오지 않고 자동 저장도 끕니다.");
+                Debug.Log("[저장] 비시작 씬/제작 시험장: 기존 저장 적용과 자동 저장을 끕니다.");
             }
             else if (first && saveToLoad != null)
             {

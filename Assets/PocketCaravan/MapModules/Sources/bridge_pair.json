@@ -1,0 +1,10 @@
+{
+  "id": "bridge_pair",
+  "label": "두 다리 선택로",
+  "category": "하천",
+  "environment": "meadow",
+  "shape": "split",
+  "seed": 316,
+  "river": "vertical",
+  "bridges": "split"
+}

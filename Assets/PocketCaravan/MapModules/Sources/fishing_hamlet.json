@@ -1,0 +1,12 @@
+{
+  "id": "fishing_hamlet",
+  "label": "어촌",
+  "category": "마을",
+  "environment": "coast",
+  "shape": "harbor",
+  "seed": 324,
+  "sea": true,
+  "houses": 3,
+  "dock": true,
+  "boats": true
+}

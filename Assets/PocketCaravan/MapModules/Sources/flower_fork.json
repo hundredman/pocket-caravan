@@ -1,0 +1,9 @@
+{
+  "id": "flower_fork",
+  "label": "꽃밭 갈림길",
+  "category": "초원/농경",
+  "environment": "meadow",
+  "shape": "fork",
+  "seed": 301,
+  "flowers": 100
+}

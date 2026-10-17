@@ -1,0 +1,10 @@
+{
+  "id": "ridge_loop",
+  "label": "능선 순환길",
+  "category": "산지",
+  "environment": "alpine",
+  "shape": "loop",
+  "seed": 311,
+  "hills": true,
+  "rocks": 14
+}

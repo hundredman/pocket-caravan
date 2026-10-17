@@ -1,0 +1,10 @@
+{
+  "id": "lakeside_hamlet",
+  "label": "호반 마을",
+  "category": "마을",
+  "environment": "meadow",
+  "shape": "shore",
+  "seed": 320,
+  "ponds": "lake",
+  "houses": 3
+}

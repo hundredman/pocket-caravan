@@ -1,0 +1,12 @@
+{
+  "id": "mountain_pass",
+  "label": "산 고개 협로",
+  "category": "산지",
+  "environment": "alpine",
+  "shape": "choke",
+  "seed": 310,
+  "hills": true,
+  "trees": "pinebig",
+  "density": 18,
+  "rocks": 14
+}

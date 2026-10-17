@@ -1,0 +1,10 @@
+{
+  "id": "module_composed_crossroads",
+  "name": "네 구역 조합 시험",
+  "cells": [
+    {"x": 0, "y": 0, "module": "wheat_crossing"},
+    {"x": 1, "y": 0, "module": "market_crossroads"},
+    {"x": 0, "y": 1, "module": "steppe_crossroads"},
+    {"x": 1, "y": 1, "module": "orchard_hamlet"}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "wetland_boardwalk",
+  "label": "습지 목도",
+  "category": "습지",
+  "environment": "wetland",
+  "shape": "straight",
+  "seed": 317,
+  "ponds": "marsh",
+  "boardwalk": true,
+  "reeds": true
+}

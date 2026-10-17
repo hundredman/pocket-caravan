@@ -1,0 +1,11 @@
+{
+  "id": "lake_shore",
+  "label": "호숫가 곡선길",
+  "category": "호수",
+  "environment": "meadow",
+  "shape": "shore",
+  "seed": 319,
+  "ponds": "lake",
+  "trees": "roundbig",
+  "density": 14
+}

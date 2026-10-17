@@ -1,0 +1,10 @@
+{
+  "id": "ruin_courtyard",
+  "label": "유적 마당",
+  "category": "화산/유적",
+  "environment": "canyon",
+  "shape": "ruin",
+  "seed": 335,
+  "ruins": true,
+  "rocks": 15
+}

@@ -1,0 +1,10 @@
+{
+  "id": "autumn_lane",
+  "label": "낙엽 숲 구불길",
+  "category": "숲",
+  "environment": "autumn",
+  "shape": "bend",
+  "seed": 308,
+  "trees": "fruitbig",
+  "density": 36
+}

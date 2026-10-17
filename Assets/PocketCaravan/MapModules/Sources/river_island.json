@@ -1,0 +1,11 @@
+{
+  "id": "river_island",
+  "label": "하중도 쉼터",
+  "category": "하천",
+  "environment": "wetland",
+  "shape": "island",
+  "seed": 315,
+  "river": "wide",
+  "bridges": "two",
+  "houses": 1
+}

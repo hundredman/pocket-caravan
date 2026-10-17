@@ -1,0 +1,10 @@
+{
+  "id": "market_crossroads",
+  "label": "교차 장터",
+  "category": "마을",
+  "environment": "meadow",
+  "shape": "cross",
+  "seed": 338,
+  "houses": 5,
+  "fields": true
+}

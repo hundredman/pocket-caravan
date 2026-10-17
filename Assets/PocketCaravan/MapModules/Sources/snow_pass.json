@@ -1,0 +1,11 @@
+{
+  "id": "snow_pass",
+  "label": "설산 고개",
+  "category": "한랭지",
+  "environment": "snow",
+  "shape": "choke",
+  "seed": 331,
+  "trees": "pinebig",
+  "density": 25,
+  "rocks": 18
+}

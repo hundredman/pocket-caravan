@@ -1,0 +1,10 @@
+{
+  "id": "canyon_switchback",
+  "label": "붉은 협곡 굽잇길",
+  "category": "건조지",
+  "environment": "canyon",
+  "shape": "switchback",
+  "seed": 330,
+  "hills": true,
+  "rocks": 32
+}

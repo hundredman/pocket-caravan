@@ -1,0 +1,12 @@
+{
+  "id": "river_bends",
+  "label": "물굽이 우회길",
+  "category": "하천",
+  "environment": "wetland",
+  "shape": "bend",
+  "seed": 314,
+  "river": "vertical",
+  "bridges": "one",
+  "trees": "roundbig",
+  "density": 16
+}

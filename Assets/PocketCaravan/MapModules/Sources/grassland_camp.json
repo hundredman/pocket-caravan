@@ -1,0 +1,10 @@
+{
+  "id": "grassland_camp",
+  "label": "초원 야영지",
+  "category": "마을",
+  "environment": "steppe",
+  "shape": "camp",
+  "seed": 326,
+  "houses": 2,
+  "rocks": 8
+}

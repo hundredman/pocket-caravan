@@ -24,7 +24,12 @@ namespace PocketCaravan.EditorTools
         [MenuItem("Pocket Caravan/Build/Windows 고려 프리뷰")]
         public static void Windows() => Build(BuildTarget.StandaloneWindows64, "Builds/Windows", "PocketCaravan.exe");
 
-        static void Build(BuildTarget target, string folder, string file)
+        [MenuItem("Pocket Caravan/Build/환경 원형 시험장 Windows")]
+        public static void ModulesWindows() => Build(BuildTarget.StandaloneWindows64, "Builds/ModuleLibrary/Windows", "PocketCaravanModules.exe", new[]{MapModuleWorkbench.ScenePath,"Assets/PocketCaravan/Scenes/ModuleLab/ModuleComposition.unity"});
+        [MenuItem("Pocket Caravan/Build/환경 원형 시험장 macOS")]
+        public static void ModulesMac() => Build(BuildTarget.StandaloneOSX, "Builds/ModuleLibrary/macOS", "PocketCaravanModules.app", new[]{MapModuleWorkbench.ScenePath,"Assets/PocketCaravan/Scenes/ModuleLab/ModuleComposition.unity"});
+
+        static void Build(BuildTarget target, string folder, string file, string[] selectedScenes = null)
         {
             if (EditorApplication.isPlaying || UnityEngine.SceneManagement.SceneManager.GetActiveScene().isDirty)
                 throw new InvalidOperationException("Play를 종료하고 현재 씬을 저장한 뒤 빌드하세요.");
@@ -33,7 +38,7 @@ namespace PocketCaravan.EditorTools
             Directory.CreateDirectory(folder);
             var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
             {
-                scenes = WorldRegistry.Load().ScenePaths,
+                scenes = selectedScenes ?? WorldRegistry.Load().ScenePaths,
                 locationPathName = folder + "/" + file,
                 target = target,
                 options = BuildOptions.None,

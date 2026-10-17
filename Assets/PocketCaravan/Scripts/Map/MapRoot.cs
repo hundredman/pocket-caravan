@@ -18,6 +18,8 @@ namespace PocketCaravan
         [Tooltip("월드 지도에서의 좌표 (맵 단위)")] public Vector2Int worldCoord;
         [Tooltip("이 맵(길)에 들어서면 흐르는 게임 시간. 짧게 걸어도 하루 여정처럼 느껴지게")] public int travelHours;
 
+        [Tooltip("제작 시험장: 빌드 0번 씬에서도 기존 저장 적용/자동 저장을 끈다")] public bool previewOnly;
+
         [Header("레이어")]
         public Tilemap ground;
         public Tilemap road;

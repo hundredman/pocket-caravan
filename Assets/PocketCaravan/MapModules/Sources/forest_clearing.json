@@ -1,0 +1,10 @@
+{
+  "id": "forest_clearing",
+  "label": "숲속 빈터",
+  "category": "숲",
+  "environment": "mistwood",
+  "shape": "loop",
+  "seed": 307,
+  "trees": "roundbig",
+  "density": 40
+}

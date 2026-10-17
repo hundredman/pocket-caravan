@@ -1,0 +1,11 @@
+{
+  "id": "canyon_bridge",
+  "label": "협곡 가교",
+  "category": "건조지",
+  "environment": "canyon",
+  "shape": "straight",
+  "seed": 329,
+  "river": "vertical",
+  "bridges": "one",
+  "rocks": 26
+}

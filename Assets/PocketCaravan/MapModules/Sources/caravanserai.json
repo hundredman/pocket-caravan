@@ -1,0 +1,10 @@
+{
+  "id": "caravanserai",
+  "label": "대상 숙영지",
+  "category": "마을",
+  "environment": "desert",
+  "shape": "village",
+  "seed": 336,
+  "houses": 5,
+  "cacti": 10
+}
