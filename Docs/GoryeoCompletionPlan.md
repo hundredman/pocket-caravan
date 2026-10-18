@@ -87,7 +87,7 @@
 
 ## 8. 새 채팅이 필요할 때 전달할 문장
 
-> PocketCaravan 저장소의 Docs/README.md, Docs/HolisticDesignReview.md, Docs/GoryeoCompletionPlan.md를 먼저 읽어줘. 목표는 내가 담당한 기존 2D 고려 지역을 다른 지역의 제작 기준으로 완성하는 것이다. 최신 요청은 정리한 계획에 따라 고려 본편 개발을 이어가는 것이다. 수도1+수도 외 최소 마을4, 등급/신용별 시설 이용을 누락하지 말고 Docs/GoryeoRegionSpec.md와 FullRequirementsReview_2026-10-17.md를 함께 읽어줘. 초기 4주 MVP의 2~4명은 최종 정원이 아니며 최종 제품은 MMORPG 규모의 다중 접속 교역 세계를 목표로 한다. 현재 고려는 수도1+마을4+길1이고 중간권4맵은 별도다. Docs/GoryeoPlayerExperiencePlan.md에 따라 다섯 거점 역할·실제 교역/성장·순환 동선·플레이타임, 제작 과정과 권한/복구 경계를 검토하고 G1~G5 관문으로 근거를 모아줘. 기존 변경·저장·3D 실험은 보존하고 구조/수치 일괄 변경이나 새 프로토타입은 시작하지 마. 사용자 담당을 전체 서버 개발로 바꾸지 말고, 제안·구현·실제 검증 결과를 구분해줘.
+> PocketCaravan 저장소의 Docs/README.md, Docs/HolisticDesignReview.md, Docs/GoryeoCompletionPlan.md를 먼저 읽어줘. 목표는 내가 담당한 기존 2D 고려 지역을 다른 지역의 제작 기준으로 완성하는 것이다. 최신 요청은 정리한 계획에 따라 고려 본편 개발을 이어가는 것이다. 수도1+수도 외 최소 마을4, 등급/신용별 시설 이용을 누락하지 말고 Docs/GoryeoRegionSpec.md와 FullRequirementsReview_2026-10-17.md를 함께 읽어줘. 초기 4주 MVP의 2~4명은 최종 정원이 아니며 최종 제품은 MMORPG 규모의 다중 접속 교역 세계를 목표로 한다. 현재 고려는 수도1+마을4+길4이고 중간권4맵은 별도다. Docs/GoryeoPlayerExperiencePlan.md에 따라 다섯 거점 역할·실제 교역/성장·순환 동선·플레이타임, 제작 과정과 권한/복구 경계를 검토하고 G1~G5 관문으로 근거를 모아줘. 기존 변경·저장·3D 실험은 보존하고 구조/수치 일괄 변경이나 새 프로토타입은 시작하지 마. 사용자 담당을 전체 서버 개발로 바꾸지 말고, 제안·구현·실제 검증 결과를 구분해줘.
 
 
 ## 9. 예성 길 1차 적용 — 2026-10-15
