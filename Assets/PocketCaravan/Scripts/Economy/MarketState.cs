@@ -42,7 +42,7 @@ namespace PocketCaravan
         float Demand => GameManager.I != null && GameManager.I.Clock.IsMarketDay ? db.marketDayDemand : 1f;
 
         /// <summary>플레이어가 살 때 값</summary>
-        public int BuyPrice(ItemData item) => MarketMath.Price(item.BasePriceAt(town), Optimal(item), Stock(item), Demand);
+        public int BuyPrice(ItemData item) => MarketMath.Price(town.BasePriceFor(item), Optimal(item), Stock(item), Demand);
 
         static OriginData Origin => GameManager.I != null ? GameManager.I.Player.origin : null;
 
@@ -57,7 +57,7 @@ namespace PocketCaravan
         /// <summary>플레이어가 팔 때 받는 값 (한 개를 더 넣었을 때 기준)</summary>
         public int SellPrice(ItemData item)
         {
-            int p = MarketMath.Buyback(MarketMath.Price(item.BasePriceAt(town), Optimal(item), Stock(item) + SellStockDelta(item), Demand));
+            int p = MarketMath.Buyback(MarketMath.Price(town.BasePriceFor(item), Optimal(item), Stock(item) + SellStockDelta(item), Demand));
             var o = Origin;
             if (o != null && o.longHaulBonus > 0 && item.MapsFrom(town) >= o.longHaulMinMaps)
                 p = Mathf.RoundToInt(p * (1f + o.longHaulBonus));
@@ -67,7 +67,7 @@ namespace PocketCaravan
         public bool CanBuy(ItemData item) => Stock(item) >= 1f;
 
         /// <summary>NPC 상인이 팔 때 받는 값 (출신 강점 없음)</summary>
-        public int NpcSellPrice(ItemData item) => MarketMath.Buyback(MarketMath.Price(item.BasePriceAt(town), Optimal(item), Stock(item) + 1f, Demand));
+        public int NpcSellPrice(ItemData item) => MarketMath.Buyback(MarketMath.Price(town.BasePriceFor(item), Optimal(item), Stock(item) + 1f, Demand));
 
         public void RecordNpcSell(ItemData item, int price)
         {

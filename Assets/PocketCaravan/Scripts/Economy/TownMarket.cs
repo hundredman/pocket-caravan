@@ -168,11 +168,11 @@ namespace PocketCaravan
                 Line($"{selected.displayName} · 기준 공급지 {origin}{owned}");
                 bool any = false;
                 int shown = 0;
-                foreach (var other in gm.Db.towns)
+                var observed = gm.Db.towns.FindAll(other => other != null && other != town && p.ledger.Find(other.id, selected.id) != null);
+                observed.Sort((a, b) => p.ledger.Find(b.id, selected.id).sell.CompareTo(p.ledger.Find(a.id, selected.id).sell));
+                foreach (var other in observed)
                 {
-                    if (other == null || other == town) continue;
                     var q = p.ledger.Find(other.id, selected.id);
-                    if (q == null) continue;
                     any = true;
                     Line($"{other.displayName}: 확인했던 판매가 {q.sell}냥 · 현재 구입가 대비 {Signed(q.sell - market.BuyPrice(selected))}냥/개");
                     if (++shown == 2) break;

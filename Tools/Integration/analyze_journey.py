@@ -30,10 +30,12 @@ def cost(a,b,vehicle):
   c,p=heapq.heappop(q)
   if c!=dist[p]:continue
   if p in targets:
-   transitions=0;cur=p
+   transitions=0;cur=p;map_path=[p[0]]
    while cur in prev:
-    last=prev[cur];transitions+=last[0]!=cur[0];cur=last
-   return dict(seconds=round(c,1),transitions=transitions)
+    last=prev[cur];transitions+=last[0]!=cur[0]
+    if last[0]!=cur[0]:map_path.append(last[0])
+    cur=last
+   return dict(seconds=round(c,1),transitions=transitions,maps=list(reversed(map_path)))
   mid,x,y=p;m=world[mid];i=y*m['w']+x
   neighbors=[]
   for xx,yy in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
@@ -43,7 +45,7 @@ def cost(a,b,vehicle):
    nc=c+delta
    if nc<dist.get(target,float('inf')):dist[target]=nc;prev[target]=p;heapq.heappush(q,(nc,target))
  raise RuntimeError((a,b))
-pairs=[('Naru','Gaegyeong'),('Gaegyeong','Dakmok'),('Gaegyeong','goryeo_songak'),('Dakmok','goryeo_jangdan'),('Naru','goryeo_jangdan'),('goryeo_jangdan','transit_ferry')]
+pairs=[('Naru','Gaegyeong'),('Gaegyeong','Dakmok'),('Gaegyeong','goryeo_songak'),('Dakmok','goryeo_jangdan'),('goryeo_songak','Dakmok'),('Naru','goryeo_jangdan'),('goryeo_jangdan','transit_ferry')]
 results=[]
 for a,b in pairs:results.append({'from':a,'to':b,**{v:cost(a,b,v) for v in ('Walk','Handcart')}})
 goryeo=set(world)-{k for k in world if k.startswith('transit_')}

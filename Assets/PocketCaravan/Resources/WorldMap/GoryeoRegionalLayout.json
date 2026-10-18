@@ -1,6 +1,6 @@
 {
   "width": 177,
-  "height": 132,
+  "height": 158,
   "maps": [
     {
       "mapId": "Naru",
@@ -50,11 +50,38 @@
     {
       "mapId": "goryeo_jangdan",
       "x": 125,
-      "y": 74,
+      "y": 118,
       "w": 40,
       "h": 28,
       "labelX": 146.5,
-      "labelY": 89.5
+      "labelY": 133.5
+    },
+    {
+      "mapId": "goryeo_ridge",
+      "x": 98,
+      "y": 12,
+      "w": 61,
+      "h": 28,
+      "labelX": 120.5,
+      "labelY": 31.5
+    },
+    {
+      "mapId": "goryeo_descent",
+      "x": 125,
+      "y": 40,
+      "w": 34,
+      "h": 12,
+      "labelX": 147.5,
+      "labelY": 59.5
+    },
+    {
+      "mapId": "goryeo_fieldroad",
+      "x": 125,
+      "y": 74,
+      "w": 34,
+      "h": 44,
+      "labelX": 147.5,
+      "labelY": 93.5
     }
   ]
 }

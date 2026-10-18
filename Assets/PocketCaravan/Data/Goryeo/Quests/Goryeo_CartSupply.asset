@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: Goryeo_CartSupply
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: goryeo_cart_supply
+  title: "\uC218\uB808\uC5D0 \uC2E3\uB294 \uB554\uAC10"
+  chain: "\uACE0\uB824\uC758 \uAC70\uB798\uCC98 \xB7 \uC120\uD0DD"
+  summary: "\uC7A5\uB2E8\uC5D0\uC11C \uB554\uAC10 \uB124 \uB2E8\uC744 \uC0AC\uC11C
+    \uB2E5\uBAA9 \uCD0C\uC7A5\uC5D0\uAC8C \uC804\uD574 \uC8FC\uC138\uC694. \uBB34\uAC8C
+    \uC5F4\uC5EC\uC12F\uC774\uB2C8 \uC190\uC218\uB808\uC5D0 \uC2E3\uB294 \uD3B8\uC774
+    \uC88B\uC2B5\uB2C8\uB2E4. \uB3CC\uC544\uC62C \uB54C \uC885\uC774 \uAC00\uACA9\uB3C4
+    \uBE44\uAD50\uD574 \uBCF4\uC138\uC694."
+  giverNpc: goryeo_jangdan_farmer
+  requires:
+  - {fileID: 11400000, guid: 8c7853dede7794bca8c9211e5e087174, type: 2}
+  offerLine: "\uC7A5\uB2E8\uC5D0\uC11C \uB554\uAC10 \uB124 \uB2E8\uC744 \uC0AC\uC11C
+    \uB2E5\uBAA9 \uCD0C\uC7A5\uC5D0\uAC8C \uC804\uD574 \uC8FC\uC138\uC694. \uBB34\uAC8C
+    \uC5F4\uC5EC\uC12F\uC774\uB2C8 \uC190\uC218\uB808\uC5D0 \uC2E3\uB294 \uD3B8\uC774
+    \uC88B\uC2B5\uB2C8\uB2E4. \uB3CC\uC544\uC62C \uB54C \uC885\uC774 \uAC00\uACA9\uB3C4
+    \uBE44\uAD50\uD574 \uBCF4\uC138\uC694."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 2
+    text: "\uC7A5\uB2E8 \uC7A5\uD130\uC5D0\uC11C \uB554\uAC10 4\uAC1C \uAD6C\uB9E4"
+    targetId: goryeo_jangdan
+    item: {fileID: 11400000, guid: cb00db234c4f1496797b7984a9849509, type: 2}
+    vehicle: {fileID: 0}
+    count: 4
+    completeLine: 
+  - type: 1
+    text: "\uB2E5\uBAA9 \uCD0C\uC7A5\uC5D0\uAC8C \uB554\uAC10 4\uAC1C \uB0A9\uD488"
+    targetId: dakmok_chief
+    item: {fileID: 11400000, guid: cb00db234c4f1496797b7984a9849509, type: 2}
+    vehicle: {fileID: 0}
+    count: 4
+    completeLine: "\uC885\uC774\uB97C \uB728\uB824\uBA74 \uB2E5\uB098\uBB34\uB97C
+      \uC0B6\uC544\uC57C \uD558\uC9C0. \uC774 \uC9D0\uC740 \uB4F1\uC9D0 \uD55C \uBC88\uC73C\uB85C
+      \uC62E\uAE30\uAE30 \uC5B4\uB824\uC6E0\uC744 \uAC8C\uC57C."
+  rewardMoney: 20
+  rewardCredit: 1
+  finishNote: "\uD310\uB9E4 \uB300\uAE08\uC5D0\uC11C \uB9E4\uC785 \uC6D0\uAC00\uB97C
+    \uBE7C\uACE0, \uB3CC\uC544\uAC08 \uB54C \uC2E4\uC744 \uBB3C\uAC74\uB3C4 \uC0B4\uD3B4\uBCF4\uC138\uC694.
+    \uC2DC\uC138\uB294 \uAC70\uB798\uB7C9\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9D1\uB2C8\uB2E4."

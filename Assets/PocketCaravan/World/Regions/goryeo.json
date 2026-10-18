@@ -50,6 +50,30 @@
       "worldX": 4,
       "worldY": 0,
       "generator": "goryeo_villages:jangdan"
+    },
+    {
+      "mapId": "goryeo_ridge",
+      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_ridge.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_ridge.unity",
+      "worldX": 5,
+      "worldY": 1,
+      "generator": "goryeo_roads:ridge"
+    },
+    {
+      "mapId": "goryeo_descent",
+      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_descent.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_descent.unity",
+      "worldX": 6,
+      "worldY": 1,
+      "generator": "goryeo_roads:descent"
+    },
+    {
+      "mapId": "goryeo_fieldroad",
+      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_fieldroad.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_fieldroad.unity",
+      "worldX": 7,
+      "worldY": 1,
+      "generator": "goryeo_roads:fieldroad"
     }
   ],
   "npcs": [
@@ -70,6 +94,18 @@
       "name": "닥나무 마을 촌장",
       "sprite": "dakmokchief_tall",
       "greeting": "우리 마을 종이는 질기고 하얗기로 이름났다네."
+    },
+    {
+      "id": "goryeo_songak_merchant",
+      "name": "산록 약재 장수",
+      "sprite": "villager_rabbit_tall",
+      "greeting": "선별한 약재를 소량으로 거래하지요. 개경 장터와 원가를 비교해 보세요. 동쪽 산길로 닥목까지 둘러볼 수도 있어요."
+    },
+    {
+      "id": "goryeo_jangdan_farmer",
+      "name": "장단 곡물 상인",
+      "sprite": "villager_dog_tall",
+      "greeting": "곡식과 땔감은 부피가 커요. 무거운 짐은 수레와 큰길이 잘 맞지요. 닥목에서 돌아올 때 종이 값도 살펴보세요."
     }
   ],
   "villagers": [

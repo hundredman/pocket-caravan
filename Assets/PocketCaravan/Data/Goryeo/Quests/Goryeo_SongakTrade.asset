@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: Goryeo_SongakTrade
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: goryeo_songak_trade
+  title: "\uC0B0\uB85D\uC5D0\uC11C \uACE0\uB978 \uC57D\uC7AC"
+  chain: "\uACE0\uB824\uC758 \uAC70\uB798\uCC98 \xB7 \uC120\uD0DD"
+  summary: "\uC774\uACF3 \uC7A5\uD130\uC5D0\uC11C \uC778\uC0BC \uB450 \uBFCC\uB9AC\uB97C
+    \uC0AC\uC11C \uAC1C\uACBD\uC5D0 \uD314\uC544 \uBCF4\uC138\uC694. \uC801\uC740
+    \uC9D0\uC73C\uB85C \uC2DC\uC791\uD560 \uC218 \uC788\uC9C0\uB9CC, \uB9CE\uC774
+    \uC0AC\uBA74 \uB9E4\uC785\uAC00\uAC00 \uC624\uB985\uB2C8\uB2E4. \uB2E5\uBAA9\uC73C\uB85C
+    \uD5A5\uD558\uB294 \uC0B0\uB85D \uAE38\uB3C4 \uB458\uB7EC\uBCF4\uC138\uC694."
+  giverNpc: goryeo_songak_merchant
+  requires:
+  - {fileID: 11400000, guid: 5f1b114771f824928af105094288dc10, type: 2}
+  offerLine: "\uC774\uACF3 \uC7A5\uD130\uC5D0\uC11C \uC778\uC0BC \uB450 \uBFCC\uB9AC\uB97C
+    \uC0AC\uC11C \uAC1C\uACBD\uC5D0 \uD314\uC544 \uBCF4\uC138\uC694. \uC801\uC740
+    \uC9D0\uC73C\uB85C \uC2DC\uC791\uD560 \uC218 \uC788\uC9C0\uB9CC, \uB9CE\uC774
+    \uC0AC\uBA74 \uB9E4\uC785\uAC00\uAC00 \uC624\uB985\uB2C8\uB2E4. \uB2E5\uBAA9\uC73C\uB85C
+    \uD5A5\uD558\uB294 \uC0B0\uB85D \uAE38\uB3C4 \uB458\uB7EC\uBCF4\uC138\uC694."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 2
+    text: "\uC1A1\uC545 \uC7A5\uD130\uC5D0\uC11C \uC778\uC0BC 2\uAC1C \uAD6C\uB9E4"
+    targetId: goryeo_songak
+    item: {fileID: 11400000, guid: 34ab4741f86eb44b3bae564c5daa0f12, type: 2}
+    vehicle: {fileID: 0}
+    count: 2
+    completeLine: 
+  - type: 3
+    text: "\uAC1C\uACBD \uC7A5\uD130\uC5D0\uC11C \uC778\uC0BC 2\uAC1C \uD310\uB9E4"
+    targetId: gaegyeong
+    item: {fileID: 11400000, guid: 34ab4741f86eb44b3bae564c5daa0f12, type: 2}
+    vehicle: {fileID: 0}
+    count: 2
+    completeLine: 
+  rewardMoney: 10
+  rewardCredit: 1
+  finishNote: "\uD310\uB9E4 \uB300\uAE08\uC5D0\uC11C \uB9E4\uC785 \uC6D0\uAC00\uB97C
+    \uBE7C\uACE0, \uB3CC\uC544\uAC08 \uB54C \uC2E4\uC744 \uBB3C\uAC74\uB3C4 \uC0B4\uD3B4\uBCF4\uC138\uC694.
+    \uC2DC\uC138\uB294 \uAC70\uB798\uB7C9\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9D1\uB2C8\uB2E4."
