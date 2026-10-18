@@ -1,0 +1,108 @@
+{
+  "date": "2026-10-18",
+  "sourceCommit": "b489f48a12339ecbef32d8cfa2a911c357a69254",
+  "method": "python3 Tools/Integration/analyze_journey.py",
+  "observedHumanPlaytest": false,
+  "scope": "Current JSON orthogonal shortest walkable routes between market interaction cells; cargo weight 5; no running/origin bonus/acceleration/stamina/NPC/learning/trade/dialogue; .30 second transition fade only; load latency excluded. Calculation, not observed human playtime. Diagonal/free movement may be faster.",
+  "routes": [
+    {
+      "from": "Naru",
+      "to": "Gaegyeong",
+      "Walk": {
+        "seconds": 27.1,
+        "transitions": 2
+      },
+      "Handcart": {
+        "seconds": 25.8,
+        "transitions": 2
+      }
+    },
+    {
+      "from": "Gaegyeong",
+      "to": "Dakmok",
+      "Walk": {
+        "seconds": 13.3,
+        "transitions": 1
+      },
+      "Handcart": {
+        "seconds": 11.3,
+        "transitions": 1
+      }
+    },
+    {
+      "from": "Gaegyeong",
+      "to": "goryeo_songak",
+      "Walk": {
+        "seconds": 19.0,
+        "transitions": 1
+      },
+      "Handcart": {
+        "seconds": 18.4,
+        "transitions": 1
+      }
+    },
+    {
+      "from": "Dakmok",
+      "to": "goryeo_jangdan",
+      "Walk": {
+        "seconds": 6.8,
+        "transitions": 1
+      },
+      "Handcart": {
+        "seconds": 6.0,
+        "transitions": 1
+      }
+    },
+    {
+      "from": "Naru",
+      "to": "goryeo_jangdan",
+      "Walk": {
+        "seconds": 46.6,
+        "transitions": 4
+      },
+      "Handcart": {
+        "seconds": 42.7,
+        "transitions": 4
+      }
+    },
+    {
+      "from": "goryeo_jangdan",
+      "to": "transit_ferry",
+      "Walk": {
+        "seconds": 64.5,
+        "transitions": 4
+      },
+      "Handcart": {
+        "seconds": 55.7,
+        "transitions": 4
+      }
+    }
+  ],
+  "goryeoGraph": {
+    "nodes": 6,
+    "undirectedEdges": 5,
+    "independentCycles": 0,
+    "edges": [
+      [
+        "Dakmok",
+        "Gaegyeong"
+      ],
+      [
+        "Dakmok",
+        "goryeo_jangdan"
+      ],
+      [
+        "Gaegyeong",
+        "Route01"
+      ],
+      [
+        "Gaegyeong",
+        "goryeo_songak"
+      ],
+      [
+        "Naru",
+        "Route01"
+      ]
+    ]
+  }
+}
