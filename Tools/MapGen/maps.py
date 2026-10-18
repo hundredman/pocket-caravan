@@ -130,7 +130,7 @@ def route01():
              "시내 건너 숲 근처에 도적이 숨어 있다더군. 짐을 싣고 지날 땐 달릴 준비를 하시오.")
 
     # 도적: 시내 동쪽 숲 그늘 (밤에 더 잦음)
-    m.bandit(36, 22, radius=6)
+    # 도적 조우는 학습 구간 밖의 중간권 고개에 둔다.
     # 돌발 사건 자리 (길가)
     for (ex, ey) in [(11, 13), (24, 17), (39, 13)]:
         m.event(ex, ey)
@@ -167,7 +167,9 @@ def dakmok():
     m.water_blob(27, 16, 3.6, 2.6)                  # 종이 뜨는 연못
 
     m.road_path([(21, 12), (21, 18), (20, 21)], width=3, grade=2)
-    m.link("S", 19, 3, "goryeo_jangdan", "N", "S")
+    m.link("S", 19, 3, "goryeo_fieldroad", "N", "S")
+    m.link("N",19,3,"goryeo_descent","S","N")
+    m.road_path([(20,0),(20,10)],width=2,grade=1)
 
     # 집: 마당을 둘러싸고, 문 앞에서 마당까지 좁은 길
     m.stamp("house_thatch", 6, 3); m.door_path(6, 3, 4, 3, 9)

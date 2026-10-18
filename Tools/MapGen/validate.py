@@ -3,7 +3,7 @@ import json
 from collections import deque
 from pathlib import Path
 import maps
-from world_registry import atlas_content
+from world_registry import atlas_content, map_entries
 import cartography
 from tiles import Map, STAMPS, K
 
@@ -49,7 +49,7 @@ def validate():
             bx, by = positions[b.id]
             overlap = max(ax,bx) < min(ax+a.w,bx+b.w) and max(ay,by) < min(ay+a.h,by+b.h)
             check(a.id + " / " + b.id + " 지도 영역 겹침 없음", not overlap)
-    regional = [m for m in world if m.id in {"Naru","Route01","Gaegyeong","Dakmok","goryeo_songak","goryeo_jangdan"}]
+    regional = [m for m in world if m.id in {entry["mapId"] for entry in map_entries("goryeo")}]
     rp = cartography.layout(regional)
     check("송악 산록은 개경 북쪽", rp["goryeo_songak"][1] < rp["Gaegyeong"][1])
     check("장단 들마을은 닥나무 마을 남쪽", rp["goryeo_jangdan"][1] > rp["Dakmok"][1])

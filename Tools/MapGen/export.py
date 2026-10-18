@@ -1,6 +1,6 @@
 """맵 JSON과 사용한 타일 PNG를 Unity 프로젝트 구조로 내보낸다."""
 import json, os, sys, shutil
-from world_registry import atlas_content
+from world_registry import atlas_content, map_entries
 import cartography
 from tiles import tile_image
 from PIL import Image
@@ -65,5 +65,5 @@ for k in used:
     image.save(path)
 cartography.export(world_maps, OUT)
 # 발표 및 지역 기획용 확대 지도. 게임 내 전체 지도와 같은 실제 타일을 사용한다.
-cartography.export([m for e,m in zip(entries,world_maps) if e["mapId"] in {"Naru","Route01","Gaegyeong","Dakmok","goryeo_songak","goryeo_jangdan"}], OUT, stem="GoryeoRegional")
+cartography.export([m for e,m in zip(entries,world_maps) if e["mapId"] in {entry["mapId"] for entry in map_entries("goryeo")}], OUT, stem="GoryeoRegional")
 print(len(used), "tiles")

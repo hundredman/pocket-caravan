@@ -158,7 +158,7 @@ namespace PocketCaravan.EditorTools
                 q.id = "tutorial_2"; q.title = "종이 사 오기"; q.chain = chain; q.giverNpc = Gaekju; q.requires.Add(q1);
                 q.summary = "동문 밖 닥나무 마을에서 종이를 사서 개경 객주에게 가져간다.";
                 q.offerLine = "객주에 장부 쓸 종이가 떨어졌네. 동문 밖 닥나무 마을 종이가 제일이지. 그 마을 장터 상인에게 말을 걸면 사고팔 수 있네.";
-                q.objectives.Add(O(ObjectiveType.Buy, "닥나무 마을 장터에서 종이 사기", null, paper, 2));
+                q.objectives.Add(O(ObjectiveType.Buy, "닥나무 마을 장터에서 종이 사기", "dakmok", paper, 2));
                 q.objectives.Add(O(ObjectiveType.Deliver, "개경 객주에게 종이 가져가기", Gaekju, paper, 2,
                     "질기고 하얀 닥나무 종이로군! 산 값보다 넉넉히 쳐 주겠네."));
                 q.rewardMoney = 45; q.rewardCredit = 1;
@@ -194,7 +194,7 @@ namespace PocketCaravan.EditorTools
 
             var q5 = Q("T4_Handcart", q =>
             {
-                q.id = "tutorial_5"; q.title = "손수레"; q.chain = chain; q.giverNpc = DakmokChief; q.requires.Add(q4);
+                q.id = "tutorial_5"; q.title = "손수레"; q.chain = chain; q.giverNpc = DakmokChief; q.requires.Add(q2);
                 q.summary = "개경 시전에서 손수레(150냥)를 산다. 등짐보다 세 배를 싣고, 길 위에서 더 빠르다.";
                 q.offerLine = "등짐으로는 한 번에 몇 냥 못 버네. 개경 시전 상인에게 손수레를 사 보게. 길 위에서는 빠르지만 풀밭에서는 느리니, 길을 잘 골라 다니게.";
                 q.objectives.Add(O(ObjectiveType.BuyVehicle, "개경 시전에서 손수레 사기", null, null, 1, null, cart));

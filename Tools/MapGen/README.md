@@ -1,6 +1,6 @@
 # MapGen: 본편 지형·지도 생성
 
-2026-10-18 안내. 본편은 고려6맵+중간권4맵이다. exporter는 `World/settings.json`의 `atlasRegions`(goryeo·transit)를 생성하며, 다른 팀 지역을 자동 생성하지 않는다. 환경 원형40개와 장애물48종은 별도 제작 라이브러리다. [문서 안내](../../Docs/README.md).
+2026-10-18 안내. 본편은 고려9맵+중간권4맵이다. exporter는 `World/settings.json`의 `atlasRegions`(goryeo·transit)를 생성하며, 다른 팀 지역을 자동 생성하지 않는다. 환경 원형40개와 장애물48종은 별도 제작 라이브러리다. [문서 안내](../../Docs/README.md).
 
 맵은 이 파이썬 코드로 설계하고, Unity는 결과 JSON을 씬으로 만든다.
 

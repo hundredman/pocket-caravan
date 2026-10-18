@@ -12,6 +12,7 @@ namespace PocketCaravan
         {
             public ItemData item;
             [Tooltip("적정 재고. 산지는 크게, 귀한 곳은 작게")] public float optimal = 10f;
+            [Tooltip("지역 공급·수요 기준가 배율. 미설정/0은 기존 가격(1배)과 호환")] public float localPriceMultiplier = 1f;
         }
 
         public string id;
@@ -27,6 +28,20 @@ namespace PocketCaravan
         public List<StockEntry> stock = new List<StockEntry>();
         [Tooltip("목록에 없는 물건을 팔 때의 적정 재고")] public float defaultOptimal = 3f;
         public List<VehicleData> vehiclesForSale = new List<VehicleData>();
+
+        public float BasePriceFor(ItemData item)
+        {
+            float multiplier = 1f;
+            foreach (var entry in stock)
+                if (entry.item == item)
+                {
+                    float value = entry.localPriceMultiplier;
+                    if (!float.IsNaN(value) && !float.IsInfinity(value) && value > 0f)
+                        multiplier = Mathf.Clamp(value, 0.1f, 3f);
+                    break;
+                }
+            return item.BasePriceAt(this) * multiplier;
+        }
 
         public float OptimalFor(ItemData item)
         {

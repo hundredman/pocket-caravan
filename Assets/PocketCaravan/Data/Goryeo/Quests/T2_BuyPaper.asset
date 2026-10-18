@@ -33,7 +33,7 @@ MonoBehaviour:
   - type: 2
     text: "\uB2E5\uB098\uBB34 \uB9C8\uC744 \uC7A5\uD130\uC5D0\uC11C \uC885\uC774
       \uC0AC\uAE30"
-    targetId: 
+    targetId: dakmok
     item: {fileID: 11400000, guid: c7b553013268140eca99e3276caecd4f, type: 2}
     vehicle: {fileID: 0}
     count: 2
@@ -48,4 +48,8 @@ MonoBehaviour:
       \uC0B0 \uAC12\uBCF4\uB2E4 \uB109\uB109\uD788 \uCCD0 \uC8FC\uACA0\uB124."
   rewardMoney: 45
   rewardCredit: 1
-  finishNote: 
+  finishNote: "\uC774\uC81C \uB2E4\uC74C \uC7A5\uC0AC\uB294 \uC9C1\uC811 \uACE8\uB77C
+    \uBCF4\uC138\uC694. \uBD81\uCABD \uC1A1\uC545\uC740 \uC801\uC740 \uC9D0\uC758
+    \uC57D\uC7AC \uAC70\uB798, \uB0A8\uCABD \uC7A5\uB2E8\uC740 \uACE1\uC2DD\uACFC
+    \uB554\uAC10 \uAC70\uB798\uCC98\uC785\uB2C8\uB2E4. \uC190\uC218\uB808\uB97C \uBA3C\uC800
+    \uC0AC\uB3C4 \uB429\uB2C8\uB2E4."

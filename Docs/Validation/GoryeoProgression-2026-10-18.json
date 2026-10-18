@@ -1,0 +1,447 @@
+{
+  "date": "2026-10-18",
+  "codeCommit": "4234c1398b563e256bf32ad13b93082768370508",
+  "unity": "6000.3.26f1",
+  "world": {
+    "maps": 13,
+    "goryeoMaps": 9,
+    "goryeoSettlements": 5,
+    "goryeoRoads": 4,
+    "regionalCycles": 1
+  },
+  "mapChecks": 279,
+  "integrationTests": 26,
+  "registeredExits": 26,
+  "existingRouteChoiceChecks": 4,
+  "transitChecks": 6,
+  "existingRegionChecks": 25,
+  "data": {
+    "passed": [
+      "goryeo_songak -> gaegyeong/ginseng batch profitable",
+      "goryeo_songak/ginseng supply persists after stock recovery",
+      "goryeo_jangdan -> gaegyeong/grain batch profitable",
+      "goryeo_jangdan/grain supply persists after stock recovery",
+      "goryeo_jangdan -> dakmok/firewood batch profitable",
+      "goryeo_jangdan/firewood supply persists after stock recovery",
+      "dakmok -> goryeo_jangdan/paper batch profitable",
+      "dakmok/paper supply persists after stock recovery",
+      "naru/salt same-market resale has no profit",
+      "naru/grain same-market resale has no profit",
+      "naru/firewood same-market resale has no profit",
+      "naru/ginseng same-market resale has no profit",
+      "naru/paper same-market resale has no profit",
+      "gaegyeong/ginseng same-market resale has no profit",
+      "gaegyeong/najeon same-market resale has no profit",
+      "gaegyeong/paper same-market resale has no profit",
+      "gaegyeong/salt same-market resale has no profit",
+      "gaegyeong/grain same-market resale has no profit",
+      "gaegyeong/firewood same-market resale has no profit",
+      "dakmok/paper same-market resale has no profit",
+      "dakmok/ginseng same-market resale has no profit",
+      "dakmok/salt same-market resale has no profit",
+      "dakmok/najeon same-market resale has no profit",
+      "dakmok/grain same-market resale has no profit",
+      "dakmok/firewood same-market resale has no profit",
+      "goryeo_songak/ginseng same-market resale has no profit",
+      "goryeo_songak/paper same-market resale has no profit",
+      "goryeo_songak/salt same-market resale has no profit",
+      "goryeo_songak/grain same-market resale has no profit",
+      "goryeo_songak/firewood same-market resale has no profit",
+      "goryeo_jangdan/grain same-market resale has no profit",
+      "goryeo_jangdan/firewood same-market resale has no profit",
+      "goryeo_jangdan/salt same-market resale has no profit",
+      "goryeo_jangdan/paper same-market resale has no profit",
+      "transit_woodtown/transit_resin same-market resale has no profit",
+      "transit_woodtown/transit_driedfish same-market resale has no profit",
+      "transit_woodtown/firewood same-market resale has no profit",
+      "transit_woodtown/grain same-market resale has no profit",
+      "transit_woodtown/paper same-market resale has no profit",
+      "transit_woodtown/salt same-market resale has no profit",
+      "transit_ferry/transit_resin same-market resale has no profit",
+      "transit_ferry/transit_driedfish same-market resale has no profit",
+      "transit_ferry/grain same-market resale has no profit",
+      "transit_ferry/salt same-market resale has no profit",
+      "transit_ferry/paper same-market resale has no profit",
+      "transit_ferry/firewood same-market resale has no profit",
+      "zero serialized factor preserves legacy base price",
+      "invalid serialized factor preserves legacy base price",
+      "paper purchase explicitly targets Dakmok",
+      "cart available after two introductory quests",
+      "old objective indices preserved",
+      "goryeo_songak_trade uniquely registered",
+      "goryeo_jangdan_trade uniquely registered",
+      "goryeo_cart_supply uniquely registered",
+      "post-cart shipment does not force legacy tutorial completion",
+      "cart supply exceeds backpack capacity",
+      "cart supply fits handcart"
+    ],
+    "trades": [
+      "goryeo_songak -> gaegyeong / ginseng x2: cost 53, revenue 65, profit 12",
+      "goryeo_jangdan -> gaegyeong / grain x3: cost 15, revenue 31, profit 16",
+      "goryeo_jangdan -> dakmok / firewood x4: cost 8, revenue 20, profit 12",
+      "dakmok -> goryeo_jangdan / paper x2: cost 26, revenue 35, profit 9"
+    ]
+  },
+  "controlledPlayTransactions": {
+    "passed": 16,
+    "checks": [
+      "isolated non-start play session",
+      "wrong-town paper purchase does not advance tutorial",
+      "Dakmok purchases advance tutorial",
+      "introductory trade can complete",
+      "cart quest no longer requires repeated errands",
+      "actual cart purchase charges once and upgrades capacity",
+      "early cart ownership satisfies purchase goal",
+      "early cart quest completion",
+      "actual Songak trade completes with positive net money",
+      "completed optional trade cannot pay twice",
+      "actual Jangdan grain trade completes with positive net money",
+      "post-cart objective is available",
+      "backpack cannot buy four heavy bundles",
+      "cart permits same shipment in one load",
+      "actual supply delivery consumes goods and pays once",
+      "repeated delivery request cannot duplicate money"
+    ]
+  },
+  "liveExits": {
+    "result": "PASS 26 directed exits; arrival walkability; cargo2/cost9; vehicle preserved",
+    "route": [
+      "Gaegyeong",
+      "Dakmok",
+      "goryeo_descent",
+      "Dakmok",
+      "goryeo_fieldroad",
+      "goryeo_jangdan",
+      "transit_pass",
+      "transit_woodtown",
+      "transit_wetroad",
+      "transit_ferry",
+      "transit_wetroad",
+      "transit_woodtown",
+      "transit_pass",
+      "goryeo_jangdan",
+      "goryeo_fieldroad",
+      "Dakmok",
+      "Gaegyeong",
+      "goryeo_songak",
+      "goryeo_ridge",
+      "goryeo_descent",
+      "goryeo_ridge",
+      "goryeo_songak",
+      "Gaegyeong",
+      "Route01",
+      "Naru",
+      "Route01"
+    ]
+  },
+  "routeAnalysis": {
+    "scope": "Current JSON orthogonal shortest walkable routes between market interaction cells; cargo weight 5; no running/origin bonus/acceleration/stamina/NPC/learning/trade/dialogue; .30 second transition fade only; load latency excluded. Calculation, not observed human playtime. Diagonal/free movement may be faster.",
+    "routes": [
+      {
+        "from": "Naru",
+        "to": "Gaegyeong",
+        "Walk": {
+          "seconds": 27.1,
+          "transitions": 2,
+          "maps": [
+            "Naru",
+            "Route01",
+            "Gaegyeong"
+          ]
+        },
+        "Handcart": {
+          "seconds": 25.8,
+          "transitions": 2,
+          "maps": [
+            "Naru",
+            "Route01",
+            "Gaegyeong"
+          ]
+        }
+      },
+      {
+        "from": "Gaegyeong",
+        "to": "Dakmok",
+        "Walk": {
+          "seconds": 13.3,
+          "transitions": 1,
+          "maps": [
+            "Gaegyeong",
+            "Dakmok"
+          ]
+        },
+        "Handcart": {
+          "seconds": 11.3,
+          "transitions": 1,
+          "maps": [
+            "Gaegyeong",
+            "Dakmok"
+          ]
+        }
+      },
+      {
+        "from": "Gaegyeong",
+        "to": "goryeo_songak",
+        "Walk": {
+          "seconds": 19.0,
+          "transitions": 1,
+          "maps": [
+            "Gaegyeong",
+            "goryeo_songak"
+          ]
+        },
+        "Handcart": {
+          "seconds": 18.4,
+          "transitions": 1,
+          "maps": [
+            "Gaegyeong",
+            "goryeo_songak"
+          ]
+        }
+      },
+      {
+        "from": "Dakmok",
+        "to": "goryeo_jangdan",
+        "Walk": {
+          "seconds": 19.4,
+          "transitions": 2,
+          "maps": [
+            "Dakmok",
+            "goryeo_fieldroad",
+            "goryeo_jangdan"
+          ]
+        },
+        "Handcart": {
+          "seconds": 17.9,
+          "transitions": 2,
+          "maps": [
+            "Dakmok",
+            "goryeo_fieldroad",
+            "goryeo_jangdan"
+          ]
+        }
+      },
+      {
+        "from": "goryeo_songak",
+        "to": "Dakmok",
+        "Walk": {
+          "seconds": 29.0,
+          "transitions": 3,
+          "maps": [
+            "goryeo_songak",
+            "goryeo_ridge",
+            "goryeo_descent",
+            "Dakmok"
+          ]
+        },
+        "Handcart": {
+          "seconds": 30.1,
+          "transitions": 2,
+          "maps": [
+            "goryeo_songak",
+            "Gaegyeong",
+            "Dakmok"
+          ]
+        }
+      },
+      {
+        "from": "Naru",
+        "to": "goryeo_jangdan",
+        "Walk": {
+          "seconds": 59.2,
+          "transitions": 5,
+          "maps": [
+            "Naru",
+            "Route01",
+            "Gaegyeong",
+            "Dakmok",
+            "goryeo_fieldroad",
+            "goryeo_jangdan"
+          ]
+        },
+        "Handcart": {
+          "seconds": 54.6,
+          "transitions": 5,
+          "maps": [
+            "Naru",
+            "Route01",
+            "Gaegyeong",
+            "Dakmok",
+            "goryeo_fieldroad",
+            "goryeo_jangdan"
+          ]
+        }
+      },
+      {
+        "from": "goryeo_jangdan",
+        "to": "transit_ferry",
+        "Walk": {
+          "seconds": 64.5,
+          "transitions": 4,
+          "maps": [
+            "goryeo_jangdan",
+            "transit_pass",
+            "transit_woodtown",
+            "transit_wetroad",
+            "transit_ferry"
+          ]
+        },
+        "Handcart": {
+          "seconds": 55.7,
+          "transitions": 4,
+          "maps": [
+            "goryeo_jangdan",
+            "transit_pass",
+            "transit_woodtown",
+            "transit_wetroad",
+            "transit_ferry"
+          ]
+        }
+      }
+    ],
+    "goryeoGraph": {
+      "nodes": 9,
+      "undirectedEdges": 9,
+      "independentCycles": 1,
+      "edges": [
+        [
+          "Dakmok",
+          "Gaegyeong"
+        ],
+        [
+          "Dakmok",
+          "goryeo_descent"
+        ],
+        [
+          "Dakmok",
+          "goryeo_fieldroad"
+        ],
+        [
+          "Gaegyeong",
+          "Route01"
+        ],
+        [
+          "Gaegyeong",
+          "goryeo_songak"
+        ],
+        [
+          "Naru",
+          "Route01"
+        ],
+        [
+          "goryeo_descent",
+          "goryeo_ridge"
+        ],
+        [
+          "goryeo_fieldroad",
+          "goryeo_jangdan"
+        ],
+        [
+          "goryeo_ridge",
+          "goryeo_songak"
+        ]
+      ]
+    }
+  },
+  "nativeMacStartup": {
+    "engineInitialized": true,
+    "runtimeExceptions": [],
+    "processExitCode": 0,
+    "mode": "macOS headless startup only; no human gameplay or Windows execution validation",
+    "previewSaveRestored": true
+  },
+  "humanPlaytimeMeasured": false,
+  "onlineVerified": false,
+  "builds": {
+    "Windows-x64": {
+      "result": "Succeeded",
+      "builtAtUtc": "2026-10-18T06:57:33.9784020Z",
+      "errors": 0,
+      "warnings": 18,
+      "bytes": 134904513,
+      "seconds": 16.709281,
+      "fileName": "PocketCaravan-Windows-x64-Progression-2026-10-18.zip",
+      "sha256": "741dbd89f24aabbc53b7f72f251e14f1ef014498c3f5322a7687bfc64239b176",
+      "zipBytes": 48152294,
+      "published": false
+    },
+    "macOS-Universal": {
+      "result": "Succeeded",
+      "builtAtUtc": "2026-10-18T06:57:59.2975870Z",
+      "errors": 0,
+      "warnings": 0,
+      "bytes": 152648719,
+      "seconds": 19.028767,
+      "fileName": "PocketCaravan-macOS-Universal-Progression-2026-10-18.zip",
+      "sha256": "dbb548b6bd913cb93e9d12746078452434951a6bd6e7776d8f29812d04bec2c3",
+      "zipBytes": 56620193,
+      "published": false
+    }
+  },
+  "presentation": {
+    "slides": {
+      "1": {
+        "changed": false
+      },
+      "2": {
+        "changed": false
+      },
+      "3": {
+        "changed": false
+      },
+      "4": {
+        "changed": false
+      },
+      "5": {
+        "changed": false
+      },
+      "6": {
+        "changed": false
+      },
+      "7": {
+        "changed": false
+      },
+      "8": {
+        "changed": true
+      },
+      "9": {
+        "changed": false
+      },
+      "10": {
+        "changed": false
+      },
+      "11": {
+        "changed": false
+      },
+      "12": {
+        "changed": true
+      },
+      "13": {
+        "changed": false
+      },
+      "14": {
+        "changed": false
+      },
+      "15": {
+        "changed": false
+      },
+      "16": {
+        "changed": false
+      },
+      "17": {
+        "changed": false
+      },
+      "18": {
+        "changed": false
+      }
+    },
+    "hidden": [
+      15,
+      16,
+      17,
+      18
+    ],
+    "pdfPages": 18,
+    "pdfPixelsMatch": true
+  }
+}

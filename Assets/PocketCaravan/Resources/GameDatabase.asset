@@ -47,6 +47,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4d910f6c35763490bbcc3d2f2f1211d8, type: 2}
   - {fileID: 11400000, guid: 709f938f526f44a88b72dc69b61ff181, type: 2}
   - {fileID: 11400000, guid: 3bd12302f8f4345af8f59a6f83d962dd, type: 2}
+  - {fileID: 11400000, guid: 6070702873ac7443eacee97a002c37e0, type: 2}
+  - {fileID: 11400000, guid: 8c7853dede7794bca8c9211e5e087174, type: 2}
+  - {fileID: 11400000, guid: 3b2e15e0934f4436ab1ec5c7f03c349d, type: 2}
   crateIcon: {fileID: 21300000, guid: ec46ec01583204ea6bbd211cd1094e76, type: 3}
   realSecondsPerDay: 360
   stockRecoveryPerHour: 0.04

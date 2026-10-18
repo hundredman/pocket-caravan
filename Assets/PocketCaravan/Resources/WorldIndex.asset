@@ -40,20 +40,43 @@ MonoBehaviour:
     town: dakmok
     neighbors:
     - Gaegyeong
-    - goryeo_jangdan
+    - goryeo_fieldroad
+    - goryeo_descent
   - mapId: goryeo_songak
     displayName: "\uC1A1\uC545 \uC0B0\uB85D \uB9C8\uC744"
     coord: {x: 0, y: 1}
     town: goryeo_songak
     neighbors:
     - Gaegyeong
+    - goryeo_ridge
   - mapId: goryeo_jangdan
     displayName: "\uC7A5\uB2E8 \uB4E4\uB9C8\uC744"
     coord: {x: 4, y: 0}
     town: goryeo_jangdan
     neighbors:
-    - Dakmok
+    - goryeo_fieldroad
     - transit_pass
+  - mapId: goryeo_ridge
+    displayName: "\uC1A1\uC545 \uAD6C\uB989\uAE38"
+    coord: {x: 5, y: 1}
+    town: 
+    neighbors:
+    - goryeo_songak
+    - goryeo_descent
+  - mapId: goryeo_descent
+    displayName: "\uB2E5\uBAA9 \uC0B0\uAE30\uC2AD \uAE38"
+    coord: {x: 6, y: 1}
+    town: 
+    neighbors:
+    - goryeo_ridge
+    - Dakmok
+  - mapId: goryeo_fieldroad
+    displayName: "\uC7A5\uB2E8 \uB4E4\uAE38"
+    coord: {x: 7, y: 1}
+    town: 
+    neighbors:
+    - Dakmok
+    - goryeo_jangdan
   - mapId: transit_pass
     displayName: "\uC194\uBC14\uB78C \uACE0\uAC1C"
     coord: {x: 5, y: 0}
@@ -115,11 +138,17 @@ MonoBehaviour:
   - kind: market
     id: goryeo_songak
     mapId: goryeo_songak
+  - kind: npc
+    id: goryeo_songak_merchant
+    mapId: goryeo_songak
   - kind: board
     id: goryeo_jangdan
     mapId: goryeo_jangdan
   - kind: market
     id: goryeo_jangdan
+    mapId: goryeo_jangdan
+  - kind: npc
+    id: goryeo_jangdan_farmer
     mapId: goryeo_jangdan
   - kind: board
     id: transit_woodtown
