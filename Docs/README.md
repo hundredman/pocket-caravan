@@ -37,6 +37,7 @@
 | [장애물 라이브러리](ObstacleLibrary.md) | 48프리셋·배치·대응/우회·수치 원본·로컬 상태의 한계 |
 | [지역 게시판 규칙](RegionalContracts.md) | 같은 지역/연결된 목적지 제한 반영. 퀘스트 지역·장 제한은 후속 |
 | [지역 제작·확장 설계](RegionAuthoringPlan.md) | 장기 원본/Overlay·거리 분리 제안. 현 도구 사용은 위 실사용 안내 우선 |
+| [고려 성장·이동 품질](GoryeoJourneyQuality.md) | NPC 의뢰·시설/수첩 보완, 다섯 거래처 재방문·배달/매매 균형과 반복 체험 기준 |
 | [고려 경험 반영](GoryeoProgressionPatch.md) | 교역 역할·선택 의뢰·산록 순환/들길의 실제 구현과 검사·현재 한계 |
 | [고려 플레이 경험·성장·동선](GoryeoPlayerExperiencePlan.md) | 최신 경험 설계 검토. 5거점 역할·실제 이동 계산·첫 수레/세션 목표 가설·추가 마을 판단 |
 | [고려 완성 계획](GoryeoCompletionPlan.md) | 품질·이동 재미·팀 전달의 계획. 완료 상태는 진행표 |

@@ -1,12 +1,12 @@
 # 소스·빌드·발표 파일 현황
 
-확인: 2026-10-18. **날짜가 같아도 다른 시험장/본편 빌드이며, main에 반영됐다고 공개 ZIP이 갱신되는 것은 아니다.**
+확인: 2026-10-18. 여정 수첩·NPC 의뢰 선택 후속 수정은 소스/Unity 검증 단계이며 아래 Progression ZIP에는 포함되지 않는다. **날짜가 같아도 다른 시험장/본편 빌드이며, main에 반영됐다고 공개 ZIP이 갱신되는 것은 아니다.**
 
 ## 공유할 때 구분할 파일
 
 | 구분 | 내용 | 위치/배포 상태 | 포함하지 않은 것 |
 |---|---|---|---|
-| 현재 main 소스 | 고려9+중간권4맵, 제작 라이브러리, 게시판 지역/경로 제한(#7), 고려·중간권 지형 재배치 | GitHub main. Unity6000.3.26f1로 확인 | 온라인, 북유럽 Draft 콘텐츠, 새 출신 배율·퀘스트 지역/장 제한 |
+| 현재 main 소스 | 고려9+중간권4맵, 제작 라이브러리, 게시판 지역/경로 제한(#7), 고려·중간권 지형 재배치·여정 수첩/NPC 의뢰 선택 | GitHub main. Unity6000.3.26f1로 확인 | 온라인, 북유럽 Draft 콘텐츠, 새 출신 배율·퀘스트 지역/장 제한 |
 | 공개10/15 본편 프리릴리스 | 코드 `3ad1d5c` 기준 이전 고려 프로토타입 | [GitHub Release](https://github.com/hundredman/pocket-caravan/releases/tag/goryeo-prototype-2026-10-15) | 이후 마을/시설·낙하 제거·중간권·게시판 패치. 최신 main 검증용으로 쓰지 않음 |
 | 로컬10/18 Progression ZIP | 고려9+중간권4, 지역 공급/수요·선택 성장·산록 순환 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-Progression-2026-10-18.zip`. 코드4234c13, 미공개 | Windows 실제 실행·사람 플레이·온라인 미검증 |
 | 로컬10/17 고려 ZIP | 고려6맵·로컬 시설·운반 개선 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-2026-10-17.zip`. 미공개 | 중간권/후속 공용 수정은 이후 별도 빌드 |
