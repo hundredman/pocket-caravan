@@ -15,6 +15,9 @@ MonoBehaviour:
   id: dakmok
   displayName: "\uB2E5\uB098\uBB34 \uB9C8\uC744"
   region: {fileID: 11400000, guid: d95bb058a23aa48d8b58779d743714c0, type: 2}
+  journeyNote: "\uC885\uC774 \uACF5\uAE09\xB7\uB554\uAC10 \uC218\uC694\uC758 \uB9C8\uC744.
+    \uC7A5\uB2E8\uC5D0\uC11C \uB554\uAC10\uC744 \uB4E4\uC5EC\uC624\uACE0, \uB3CC\uC544\uAC08
+    \uB54C \uC885\uC774\uC758 \uD310\uB9E4\uAC00\uB97C \uBE44\uAD50\uD574 \uBCF4\uC138\uC694."
   worldCoord: {x: 3, y: 0}
   startLevel: 1
   settlementTier: 2

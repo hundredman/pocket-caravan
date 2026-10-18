@@ -15,6 +15,10 @@ MonoBehaviour:
   id: gaegyeong
   displayName: "\uAC1C\uACBD"
   region: {fileID: 11400000, guid: d95bb058a23aa48d8b58779d743714c0, type: 2}
+  journeyNote: "\uC8FC\uBCC0 \uC0DD\uC0B0\uD488\uC774 \uBAA8\uC774\uB294 \uC218\uB3C4.
+    \uACE1\uC2DD \uD310\uB9E4\uCC98\uB97C \uD655\uC778\uD558\uACE0, \uC2E0\uC6A9
+    3\uBD80\uD130 \uAC1D\uC8FC\uC5D0 \uC7AC\uACE0\uB97C \uB098\uB204\uC5B4 \uB9E1\uAE38
+    \uC218 \uC788\uC2B5\uB2C8\uB2E4."
   worldCoord: {x: 2, y: 0}
   startLevel: 3
   settlementTier: 3

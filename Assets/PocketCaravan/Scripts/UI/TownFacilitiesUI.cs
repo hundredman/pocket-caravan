@@ -12,14 +12,14 @@ namespace PocketCaravan
         bool open;
         int openedFrame;
         Vector2 scroll;
-        string message = "";
+        string message = "", detail = "";
         void Awake() => instance = this;
         public static void Show(TownData value)
         {
             if (instance == null || value == null || UIState.Blocking) return;
             instance.town = value; instance.warehouse = null;
             instance.open = true; instance.openedFrame = Time.frameCount;
-            instance.scroll = Vector2.zero; instance.message = ""; UIState.Blocking = true;
+            instance.scroll = Vector2.zero; instance.detail = ""; instance.message = "성장·주변 거래처: Q 수첩 · 방문 시세: L 장부"; UIState.Blocking = true;
         }
         void Close() { open = false; UIState.Release(); }
         void OnDisable() { if (open) Close(); if (instance == this) instance = null; }
@@ -40,8 +40,9 @@ namespace PocketCaravan
             var gm = GameManager.I;
             message = !InRange() ? "장터 가까이에서 이용하세요." : FacilityAccess.Denial(town, f, gm.Player);
             if (message != null) return;
+            detail = "";
             if (f.kind == FacilityKind.Rest) { gm.Player.stamina = 1f; message = "짐을 내려놓고 쉬었습니다. 체력이 회복됐습니다."; }
-            else if (f.kind == FacilityKind.RouteInformation) message = f.description;
+            else if (f.kind == FacilityKind.RouteInformation) { detail = f.description; message = "길 안내를 열었습니다. 본문을 내려 읽을 수 있습니다."; scroll = Vector2.zero; }
             else { warehouse = f; scroll.y = 10000; message = "이 마을에 맡긴 물건은 여기서 다시 찾을 수 있습니다."; }
             gm.SaveNow();
         }
@@ -65,6 +66,11 @@ namespace PocketCaravan
             GUILayout.Label($"{town.displayName} 시설 · 거점 {town.SettlementTier}등급 · 내 신용 {p.credit}", UIStyle.Rich);
             GUILayout.Label("마을 방문·기본 매매는 신용과 관계없이 가능합니다.", UIStyle.Small);
             scroll = GUILayout.BeginScrollView(scroll);
+            if (!string.IsNullOrEmpty(detail))
+            {
+                GUILayout.Label(detail, UIStyle.Wrap);
+                GUILayout.Space(8);
+            }
             foreach (var f in town.facilities)
             {
                 if (f == null) continue;
@@ -96,7 +102,7 @@ namespace PocketCaravan
                 }
             }
             GUILayout.EndScrollView(); GUILayout.EndArea();
-            GUI.Label(new Rect(rect.x+12, rect.yMax-79, w-24, 48), message ?? "", UIStyle.Wrap);
+            GUI.Label(new Rect(rect.x+12, rect.yMax-70, w-24, 40), message ?? "", UIStyle.Wrap);
             if (GUI.Button(new Rect(rect.xMax-96, rect.yMax-26, 82, 20), "닫기 (Esc)", UIStyle.Button)) Close();
         }
     }
