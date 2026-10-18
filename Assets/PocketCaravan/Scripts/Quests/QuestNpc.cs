@@ -34,7 +34,9 @@ namespace PocketCaravan
             }
             if (fail != null)
             {
-                DialogueUI.Show(displayName, fail);
+                DialogueUI.Show(displayName, fail,
+                    new DialogueUI.Choice("다른 의뢰", () => { if (!OfferNextIfAny()) DialogueUI.Show(displayName, greeting); }),
+                    new DialogueUI.Choice("닫기", null));
                 return;
             }
 
@@ -42,20 +44,31 @@ namespace PocketCaravan
             if (!OfferNextIfAny()) DialogueUI.Show(displayName, greeting);
         }
 
-        /// <summary>줄 퀘스트가 있으면 제안 대화를 연다.</summary>
-        bool OfferNextIfAny()
+        /// <summary>한 번에 한 의뢰를 읽고 다른 제안을 넘겨 볼 수 있다. Esc는 항상 닫기.</summary>
+        bool OfferNextIfAny() => OfferAt(0);
+
+        bool OfferAt(int index)
         {
             var qm = GameManager.I.Quests;
-            var q = qm.AvailableFrom(npcId);
-            if (q == null) return false;
-            DialogueUI.Show(displayName, $"[{q.title}]\n{q.offerLine}",
-                new DialogueUI.Choice("수락", () =>
-                {
-                    string why = qm.AcceptBlocker(q);
-                    if (why != null) DialogueUI.Show(displayName, why);
-                    else qm.Accept(q);
-                }),
-                new DialogueUI.Choice("나중에", null));
+            var offers = qm.AvailableAllFrom(npcId);
+            if (offers.Count == 0) return false;
+            index = index % offers.Count;
+            var q = offers[index];
+            string cost = q.offerItem != null && q.offerCount > 0
+                ? $"\n수락 비용: {q.offerPrice * q.offerCount}냥 ({q.offerItem.displayName} {q.offerCount}개)" : "";
+            string reward = $"\n보상: {q.rewardMoney}냥 · 신용 {q.rewardCredit}";
+            var choices = new System.Collections.Generic.List<DialogueUI.Choice>();
+            choices.Add(new DialogueUI.Choice("수락", () =>
+            {
+                string why = qm.AcceptBlocker(q);
+                if (why != null) DialogueUI.Show(displayName, why,
+                    new DialogueUI.Choice("의뢰 보기", () => OfferAt(index)),
+                    new DialogueUI.Choice("닫기", null));
+                else qm.Accept(q);
+            }));
+            if (offers.Count > 1) choices.Add(new DialogueUI.Choice("다른 의뢰", () => OfferAt(index + 1)));
+            choices.Add(new DialogueUI.Choice("나중에", null));
+            DialogueUI.Show(displayName, $"의뢰 {index + 1}/{offers.Count} · [{q.title}]\n{q.offerLine}{cost}{reward}", choices.ToArray());
             return true;
         }
 

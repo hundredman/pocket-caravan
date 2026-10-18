@@ -15,6 +15,10 @@ MonoBehaviour:
   id: goryeo_songak
   displayName: "\uC1A1\uC545 \uC0B0\uB85D \uB9C8\uC744"
   region: {fileID: 11400000, guid: d95bb058a23aa48d8b58779d743714c0, type: 2}
+  journeyNote: "\uC801\uC740 \uC9D0\uC73C\uB85C \uC57D\uC7AC\uB97C \uAC70\uB798\uD560
+    \uC218 \uC788\uB294 \uC0B0\uB85D \uC9D1\uC0B0\uC9C0. \uB2E5\uBAA9\uAE4C\uC9C0
+    \uC0B0\uB85D \uAE38\uACFC \uAC1C\uACBD \uD070\uAE38\uC744 \uC218\uB2E8\uC5D0
+    \uB9DE\uAC8C \uBE44\uAD50\uD558\uC138\uC694."
   worldCoord: {x: 0, y: 1}
   startLevel: 1
   settlementTier: 2

@@ -18,6 +18,8 @@ namespace PocketCaravan
         public string id;
         public string displayName;
         public RegionData region;
+        [Tooltip("여정 수첩에 표시하는 거래 역할·귀환 힌트. 시세/이익 보장 문구는 쓰지 않는다")]
+        [TextArea] public string journeyNote;
         [Tooltip("맵 좌표. 마을 사이 거리(거쳐 가는 맵 수)를 이 값으로 잰다")] public Vector2Int worldCoord;
         [Range(1, 4)] public int startLevel = 1;
         [Header("시설 (시장 거래량 성장과 별도)")]

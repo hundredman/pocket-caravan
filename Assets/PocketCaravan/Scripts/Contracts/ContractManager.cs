@@ -12,6 +12,7 @@ namespace PocketCaravan
     public class ContractManager
     {
         public const int BoardSize = 3;
+        public const int PremiumCredit = 3;
         public const int MaxActive = 3;
         const float RefillHours = 4f;
 
@@ -121,7 +122,7 @@ namespace PocketCaravan
                 cargo = (premium ? "귀한 " : "") + names[rng.Next(names.Length)],
                 weight = weight,
                 reward = Mathf.RoundToInt(reward),
-                minCredit = premium ? 3 : 0,
+                minCredit = premium ? PremiumCredit : 0,
                 hours = dist * 9 + 8,
             };
         }

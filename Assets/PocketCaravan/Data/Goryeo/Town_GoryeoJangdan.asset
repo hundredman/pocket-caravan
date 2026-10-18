@@ -15,6 +15,9 @@ MonoBehaviour:
   id: goryeo_jangdan
   displayName: "\uC7A5\uB2E8 \uB4E4\uB9C8\uC744"
   region: {fileID: 11400000, guid: d95bb058a23aa48d8b58779d743714c0, type: 2}
+  journeyNote: "\uACE1\uC2DD\xB7\uB554\uAC10 \uACF5\uAE09\uC758 \uB4E4\uB9C8\uC744.
+    \uC801\uC7AC \uC5EC\uC720\uB97C \uB0A8\uACA8 \uBC30\uB2EC\uC744 \uACB8\uD558\uAC70\uB098,
+    \uB2E5\uBAA9\uC5D0\uC11C \uADC0\uD658\uD488\uC744 \uACE8\uB77C \uBCF4\uC138\uC694."
   worldCoord: {x: 4, y: 0}
   startLevel: 1
   settlementTier: 1

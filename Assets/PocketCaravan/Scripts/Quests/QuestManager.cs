@@ -25,9 +25,13 @@ namespace PocketCaravan
 
         public IEnumerable<Progress> Active => active.Values;
 
-        /// <summary>길 안내를 할 퀘스트 (가장 최근에 받은 것)</summary>
+        /// <summary>수첩에서 선택한 길 안내 퀘스트. 새 수락 시 그 의뢰를 선택한다.</summary>
         public Progress Tracked { get; private set; }
         public bool IsFinished(QuestData q) => finished.Contains(q);
+        public void Track(Progress progress)
+        {
+            if (progress != null && active.TryGetValue(progress.quest, out var current) && current == progress) Tracked = progress;
+        }
 
         public QuestManager(List<QuestData> quests)
         {
@@ -80,19 +84,32 @@ namespace PocketCaravan
 
         public QuestData AvailableFrom(string npcId)
         {
+            // MarkerFor가 매 프레임 호출하므로 전체 제안 목록은 대화창을 열 때만 만든다.
             foreach (var q in all) if (q != null && q.giverNpc == npcId && CanStart(q)) return q;
             return null;
+        }
+
+        /// <summary>비용이 부족한 의뢰도 열람 가능. 열람과 수락 조건은 별도로 판정한다.</summary>
+        public List<QuestData> AvailableAllFrom(string npcId)
+        {
+            var offers = new List<QuestData>();
+            foreach (var q in all)
+                if (q != null && q.giverNpc == npcId && CanStart(q) && !offers.Contains(q)) offers.Add(q);
+            return offers;
         }
 
         /// <summary>이 NPC에게 말을 걸면 끝나는 단계가 있는 진행 중 퀘스트</summary>
         public Progress WaitingAt(string npcId)
         {
+            Progress missingCargo = null;
             foreach (var p in active.Values)
             {
                 var o = p.Current;
-                if (o != null && (o.type == ObjectiveType.Talk || o.type == ObjectiveType.Deliver) && o.targetId == npcId) return p;
+                if (o == null || (o.type != ObjectiveType.Talk && o.type != ObjectiveType.Deliver) || o.targetId != npcId) continue;
+                if (o.type == ObjectiveType.Talk || HasDeliveryItems(o)) return p;
+                if (missingCargo == null) missingCargo = p;
             }
-            return null;
+            return missingCargo;
         }
 
         public QuestMarker MarkerFor(string npcId)

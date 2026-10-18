@@ -37,6 +37,13 @@ namespace PocketCaravan.EditorTools
             Price("dakmok", "paper", .85f);
             Price("dakmok", "firewood", 1.8f);
 
+            void Note(string id, string text) { var t = Town(id); t.journeyNote = text; EditorUtility.SetDirty(t); }
+            Note("naru", "소금과 하역의 출발점. 개경으로 오갈 때 게시판 배달과 매매를 함께 비교해 보세요.");
+            Note("gaegyeong", "주변 생산품이 모이는 수도. 곡식 판매처를 확인하고, 신용 3부터 객주에 재고를 나누어 맡길 수 있습니다.");
+            Note("dakmok", "종이 공급·땔감 수요의 마을. 장단에서 땔감을 들여오고, 돌아갈 때 종이의 판매가를 비교해 보세요.");
+            Note("goryeo_songak", "적은 짐으로 약재를 거래할 수 있는 산록 집산지. 닥목까지 산록 길과 개경 큰길을 수단에 맞게 비교하세요.");
+            Note("goryeo_jangdan", "곡식·땔감 공급의 들마을. 적재 여유를 남겨 배달을 겸하거나, 닥목에서 귀환품을 골라 보세요.");
+
             var first = db.quests.Find(q => q != null && q.id == "tutorial_2");
             var cart = db.quests.Find(q => q != null && q.id == "tutorial_5");
             if (first == null || cart == null) throw new InvalidOperationException("기존 도입 퀘스트 누락");
