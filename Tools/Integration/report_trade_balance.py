@@ -22,4 +22,4 @@ def rows(source):
 
 if __name__=='__main__':
     result=list(rows(json.loads(Path(sys.argv[1]).read_text())))
-    writer=csv.DictWriter(sys.stdout,fieldnames=list(result[0]));writer.writeheader();writer.writerows(result)
+    writer=csv.DictWriter(sys.stdout,fieldnames=list(result[0]),lineterminator='\n');writer.writeheader();writer.writerows(result)

@@ -254,7 +254,7 @@
     "count": 108,
     "scope": "Normal initial stock; sequential prices; selected outward/return goods; stop nonpositive marginal trades using known destination prices (informed counterfactual). No NPC, recovery, market day, origin bonus, human/online play. Delivery=one matched ordinary weight4 offer each leg; neutral roll and fast bonus15%, not a guarantee of board availability.",
     "csv": "GoryeoEconomyScenarios-2026-10-20.csv",
-    "csvSha256": "5f64b3fa2d26d8b49db83a1916a7eede2ceb9823bd677e7c64cfcfd311d2c48d",
+    "csvSha256": "33d044019275cd84d0c4371caa1296c070c573e4a643265246eb7875523f1d60",
     "timeModel": "Per-leg actual cargo load and orthogonal shortest tile route; no running/acceleration/human input/loading/transaction walking/stock recovery/NPCs/origin bonus; calculation only."
   },
   "builds": {
