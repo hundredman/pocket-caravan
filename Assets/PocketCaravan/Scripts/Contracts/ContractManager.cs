@@ -30,7 +30,7 @@ namespace PocketCaravan
         readonly PlayerState player;
         public List<Board> boards = new List<Board>();
         public int nextId = 1;
-        readonly System.Random rng = new System.Random();
+        readonly System.Random rng;
 
         static readonly Dictionary<string, string[]> CargoNames = new Dictionary<string, string[]>
         {
@@ -39,8 +39,9 @@ namespace PocketCaravan
             ["dakmok"] = new[] { "한지 묶음", "닥나무 껍질", "붓과 먹", "종이 상자" },
         };
 
-        public ContractManager(GameDatabase db, GameClock clock, PlayerState player, WorldIndex world = null)
+        public ContractManager(GameDatabase db, GameClock clock, PlayerState player, WorldIndex world = null, int? randomSeed = null)
         {
+            rng = randomSeed.HasValue ? new System.Random(randomSeed.Value) : new System.Random();
             this.db = db; this.clock = clock; this.player = player; this.world = world != null ? world : WorldIndex.Get();
         }
 
@@ -59,6 +60,7 @@ namespace PocketCaravan
                         var replacement = Generate(t);
                         if (replacement != null) existing.list.Add(replacement);
                     }
+                    foreach (var offer in existing.list) RepriceUnaccepted(t, offer);
                     EnsureBasic(existing, t); continue;
                 }
                 var b = new Board { town = t.id, lastAdded = clock.TotalHours };
@@ -111,9 +113,11 @@ namespace PocketCaravan
             var names = CargoNames.TryGetValue(from.id, out var n) ? n : new[] { "짐 꾸러미" };
             float weight = rng.Next(2, 7);
             bool premium = !basic && rng.NextDouble() < 0.25;
-            float reward = 14 + 16 * dist + weight * 3;
-            reward *= 0.85f + (float)rng.NextDouble() * 0.3f;
-            if (premium) reward *= 1.8f;
+            var rules = DeliveryReward.Rules(from);
+            if (rules != null && premium)
+                weight = rng.Next(Mathf.Max(1, rules.premiumMinWeight), Mathf.Max(rules.premiumMinWeight, rules.premiumMaxWeight) + 1);
+            int steps = rules != null ? DeliveryReward.RouteSteps(world, from.id, to.id) : 0;
+            int reward = DeliveryReward.Quote(rules, dist, steps, weight, premium, 0.85f + (float)rng.NextDouble() * 0.3f);
             return new Contract
             {
                 id = nextId++,
@@ -121,10 +125,27 @@ namespace PocketCaravan
                 toTown = to.id,
                 cargo = (premium ? "귀한 " : "") + names[rng.Next(names.Length)],
                 weight = weight,
-                reward = Mathf.RoundToInt(reward),
+                reward = reward,
+                rewardRuleVersion = rules != null ? rules.revision : 0,
+                quotedRouteSteps = steps,
                 minCredit = premium ? PremiumCredit : 0,
                 hours = dist * 9 + 8,
             };
+        }
+
+        // 새 밸런스는 게시판에 남은 제안만 갱신. 기수락 보수·팁·무게·기한은 그대로 둔다.
+        void RepriceUnaccepted(TownData from, Contract offer)
+        {
+            var rules = DeliveryReward.Rules(from);
+            if (rules == null || offer.rewardRuleVersion == rules.revision || player.contracts.Exists(c => c.id == offer.id)) return;
+            var to = Town(offer.toTown);
+            if (to == null) return;
+            int steps = DeliveryReward.RouteSteps(world, from.id, to.id);
+            if (steps < 0) return;
+            // 구 제안의 랜덤 계수는 저장돼 있지 않다. 중간값으로 한 번 갱신해 재로드 재추첨을 막는다.
+            offer.reward = DeliveryReward.Quote(rules, Distance(from, to), steps, offer.weight, offer.Premium);
+            offer.quotedRouteSteps = steps;
+            offer.rewardRuleVersion = rules.revision;
         }
 
         public void OnHour()

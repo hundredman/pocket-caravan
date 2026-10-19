@@ -23,6 +23,8 @@ MonoBehaviour:
   giverNpc: goryeo_songak_merchant
   requires:
   - {fileID: 11400000, guid: 5f1b114771f824928af105094288dc10, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uC774\uACF3 \uC7A5\uD130\uC5D0\uC11C \uC778\uC0BC \uB450 \uBFCC\uB9AC\uB97C
     \uC0AC\uC11C \uAC1C\uACBD\uC5D0 \uD314\uC544 \uBCF4\uC138\uC694. \uC801\uC740
     \uC9D0\uC73C\uB85C \uC2DC\uC791\uD560 \uC218 \uC788\uC9C0\uB9CC, \uB9CE\uC774
@@ -50,6 +52,9 @@ MonoBehaviour:
     completeLine: 
   rewardMoney: 10
   rewardCredit: 1
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: "\uD310\uB9E4 \uB300\uAE08\uC5D0\uC11C \uB9E4\uC785 \uC6D0\uAC00\uB97C
     \uBE7C\uACE0, \uB3CC\uC544\uAC08 \uB54C \uC2E4\uC744 \uBB3C\uAC74\uB3C4 \uC0B4\uD3B4\uBCF4\uC138\uC694.
     \uC2DC\uC138\uB294 \uAC70\uB798\uB7C9\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9D1\uB2C8\uB2E4."

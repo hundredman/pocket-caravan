@@ -57,6 +57,7 @@ namespace PocketCaravan
             string cost = q.offerItem != null && q.offerCount > 0
                 ? $"\n수락 비용: {q.offerPrice * q.offerCount}냥 ({q.offerItem.displayName} {q.offerCount}개)" : "";
             string reward = $"\n보상: {q.rewardMoney}냥 · 신용 {q.rewardCredit}";
+            if (!string.IsNullOrEmpty(q.choiceGroup)) reward += "\n같은 운송 입문 의뢰와 둘 중 하나만 선택합니다.";
             var choices = new System.Collections.Generic.List<DialogueUI.Choice>();
             choices.Add(new DialogueUI.Choice("수락", () =>
             {

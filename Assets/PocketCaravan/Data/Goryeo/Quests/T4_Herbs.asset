@@ -24,6 +24,8 @@ MonoBehaviour:
   giverNpc: naru_chief
   requires:
   - {fileID: 11400000, guid: 6bae5cc8d980f47b2ada23154ca5d297, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uBC30\uB85C \uC57D\uC7AC\uAC00 \uB4E4\uC5B4\uC654\uB294\uB370 \uB2E5\uB098\uBB34
     \uB9C8\uC744\uC5D0\uC11C \uAE09\uD788 \uCC3E\uB294\uB2E4\uB124. \uC885\uC774
     \uB728\uB2E4 \uB2E4\uCE5C \uC0AC\uB78C\uC774 \uB9CE\uC544\uC11C \uB9D0\uC774\uC57C.
@@ -50,4 +52,7 @@ MonoBehaviour:
       \uC758\uB8B0\uB97C \uB9E1\uC73C\uBA74 \uAFB8\uC900\uD788 \uBC8C \uC218 \uC788\uB2E4\uB124."
   rewardMoney: 50
   rewardCredit: 1
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: 

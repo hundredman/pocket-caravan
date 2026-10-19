@@ -99,8 +99,8 @@ namespace PocketCaravan
                     if (!string.IsNullOrEmpty(p.quest.summary)) GUILayout.Label(p.quest.summary, UIStyle.Wrap);
                     GUILayout.Label("지금 할 일: " + qm.ProgressText(p), UIStyle.Wrap);
                     string reward = "";
-                    if (p.quest.rewardMoney > 0) reward += $"돈 {p.quest.rewardMoney}  ";
-                    if (p.quest.rewardCredit > 0) reward += $"신용 {p.quest.rewardCredit}";
+                    if (p.RewardMoney > 0) reward += $"돈 {p.RewardMoney}  ";
+                    if (p.RewardCredit > 0) reward += $"신용 {p.RewardCredit}";
                     if (reward != "") GUILayout.Label("보상: " + reward);
                     GUILayout.Space(6);
                 }

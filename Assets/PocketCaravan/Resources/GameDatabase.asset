@@ -50,6 +50,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6070702873ac7443eacee97a002c37e0, type: 2}
   - {fileID: 11400000, guid: 8c7853dede7794bca8c9211e5e087174, type: 2}
   - {fileID: 11400000, guid: 3b2e15e0934f4436ab1ec5c7f03c349d, type: 2}
+  - {fileID: 11400000, guid: 236a3a5e2742f4bb1a0205826135146a, type: 2}
   crateIcon: {fileID: 21300000, guid: ec46ec01583204ea6bbd211cd1094e76, type: 3}
   realSecondsPerDay: 360
   stockRecoveryPerHour: 0.04

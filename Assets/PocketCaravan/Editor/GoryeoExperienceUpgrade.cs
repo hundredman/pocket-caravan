@@ -68,7 +68,8 @@ namespace PocketCaravan.EditorTools
                 if (quest == null) { quest = ScriptableObject.CreateInstance<QuestData>(); AssetDatabase.CreateAsset(quest, path); }
                 quest.id = id; quest.title = title; quest.giverNpc = giver; quest.chain = "고려의 거래처 · 선택";
                 quest.summary = offer; quest.offerLine = offer;
-                quest.requires = new List<QuestData> { prerequisite };
+                quest.requires = prerequisite != null ? new List<QuestData> { prerequisite } : new List<QuestData>();
+                quest.requiresAny = new List<QuestData>(); quest.choiceGroup = "";
                 quest.objectives = new List<QuestObjective>(objectives);
                 quest.rewardMoney = 10; quest.rewardCredit = 1;
                 quest.finishNote = "판매 대금에서 매입 원가를 빼고, 돌아갈 때 실을 물건도 살펴보세요. 시세는 거래량에 따라 달라집니다.";
@@ -89,6 +90,29 @@ namespace PocketCaravan.EditorTools
                 new QuestObjective { type = ObjectiveType.Deliver, text = "닥목 촌장에게 땔감 4개 납품", targetId = "dakmok_chief", item = Item("firewood"), count = 4,
                     completeLine = "종이를 뜨려면 닥나무를 삶아야 하지. 이 짐은 등짐 한 번으로 옮기기 어려웠을 게야." });
             supply.rewardMoney = 20; // 실제 적재 용량이 성장 조건. 기존 손수레 퀘스트 완료를 강제하지 않는다.
+            var oldFreight = db.quests.Find(q => q != null && q.id == "dakmok_firewood");
+            if (oldFreight == null) throw new InvalidOperationException("기존 땔감 의뢰 누락");
+            supply.choiceGroup = oldFreight.choiceGroup = "goryeo_firewood_intro";
+            oldFreight.rewardMoney = 20;
+            oldFreight.hasLegacyReward = true; oldFreight.legacyRewardMoney = 60; oldFreight.legacyRewardCredit = 1;
+            oldFreight.chain = "수레 운송 · 대안 입문";
+            supply.chain = "수레 운송 · 대안 입문";
+            oldFreight.summary = "땔감4단 조달을 배우는 일회 운송 의뢰. 장단의 수레 공급 의뢰와 둘 중 하나를 선택합니다.";
+            oldFreight.offerLine = "땔감 네 단을 구해 주게. 처음 수레 장사를 익히도록 조달 보수 20냥을 주겠네. 장단에서 맡는 수레 공급 의뢰와는 둘 중 하나만 선택하면 되네.";
+            oldFreight.finishNote = "땔감 운송은 익혔습니다. 닥목에서 종이를 사서 장단에 파는 귀환 장사도 선택할 수 있습니다. 매입 자금을 남겨 두세요.";
+            supply.finishNote = oldFreight.finishNote;
+            EditorUtility.SetDirty(oldFreight);
+            var returning = Quest("Goryeo_ReturnTrade", "goryeo_return_trade", "빈 수레로 돌아가지 않기", "dakmok_chief",
+                "돌아갈 때 종이 두 묶음을 사서 장단에 팔아 보게. 종이와 배달 짐을 함께 실을지는 자네가 정하게. 물건값은 직접 내야 하니 두 마을 시세를 확인하고, 이익이 나지 않으면 다른 장사를 먼저 해도 되네.", null,
+                Trade(ObjectiveType.Buy, "닥목 장터에서 종이 2개 구매", "dakmok", "paper", 2),
+                Trade(ObjectiveType.Sell, "장단 장터에서 종이 2개 판매", "goryeo_jangdan", "paper", 2));
+            returning.requires.Clear(); returning.requiresAny = new List<QuestData> { oldFreight, supply };
+            returning.chain = "수레 운송 · 귀환 장사"; returning.rewardMoney = 6;
+            returning.finishNote = "왕복 손익을 비교해 보세요. 같은 방향 배달을 겸하면 보수를 더 받지만, 그만큼 상품을 실을 공간이 줄어듭니다. 창고는 당장 팔지 않을 일반 상품을 현지에 나누어 보관할 때 쓰세요.";
+            EditorUtility.SetDirty(returning);
+            var goryeo = Town("gaegyeong").region;
+            goryeo.deliveryRewards = new DeliveryRewardRules { enabled = true, revision = 1 };
+            EditorUtility.SetDirty(goryeo);
             EditorUtility.SetDirty(supply); EditorUtility.SetDirty(db);
             AssetDatabase.SaveAssets();
         }

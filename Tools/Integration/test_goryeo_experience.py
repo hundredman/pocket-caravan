@@ -28,7 +28,7 @@ class GoryeoExperienceContract(unittest.TestCase):
         database=(ROOT/'Assets/PocketCaravan/Resources/GameDatabase.asset').read_text()
         manifest=json.loads((ROOT/'Assets/PocketCaravan/World/Regions/goryeo.json').read_text())
         givers={o['id'] for o in manifest['npcs']}
-        for name in ['Goryeo_SongakTrade','Goryeo_JangdanTrade','Goryeo_CartSupply']:
+        for name in ['Goryeo_SongakTrade','Goryeo_JangdanTrade','Goryeo_CartSupply','Goryeo_ReturnTrade']:
             p=ROOT/f'Assets/PocketCaravan/Data/Goryeo/Quests/{name}.asset'
             text=p.read_text()
             import re
