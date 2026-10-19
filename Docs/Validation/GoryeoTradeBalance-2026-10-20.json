@@ -1,0 +1,325 @@
+{
+  "date": "2026-10-20",
+  "baseCommit": "ae67178f0fc6e52fe266fe3beca5e48ae68877c3",
+  "sourceCommit": "efb04cb560db2eeede122dcf70a197b74de387ed",
+  "unityVersion": "6000.3.26f1",
+  "scope": "Goryeo-specific delivery reward policy, new heavy premium cargo, alternative freight introductions, return trade, accepted quest reward snapshots. No map/scene/world coordinate changes; online not implemented.",
+  "checks": {
+    "balanceData": {
+      "passed": 449,
+      "seedCases": 30,
+      "seedAssertions": 300,
+      "scenarioLoadAssertions": 108,
+      "cases": [
+        "Goryeo-only reward profile enabled",
+        "capital-Dakmok one connected leg",
+        "capital-Jangdan includes field road",
+        "unknown destination cannot receive route quote",
+        "legacy quote exact d1 w2",
+        "legacy quote exact d1 w3",
+        "legacy quote exact d1 w4",
+        "legacy quote exact d1 w5",
+        "legacy quote exact d1 w6",
+        "legacy quote exact d2 w2",
+        "legacy quote exact d2 w3",
+        "legacy quote exact d2 w4",
+        "legacy quote exact d2 w5",
+        "legacy quote exact d2 w6",
+        "legacy quote exact d3 w2",
+        "legacy quote exact d3 w3",
+        "legacy quote exact d3 w4",
+        "legacy quote exact d3 w5",
+        "legacy quote exact d3 w6",
+        "legacy quote exact d4 w2",
+        "legacy quote exact d4 w3",
+        "legacy quote exact d4 w4",
+        "legacy quote exact d4 w5",
+        "legacy quote exact d4 w6",
+        "legacy quote exact d5 w2",
+        "legacy quote exact d5 w3",
+        "legacy quote exact d5 w4",
+        "legacy quote exact d5 w5",
+        "legacy quote exact d5 w6",
+        "longer route pays more for identical load",
+        "ordinary delivery positive without capital",
+        "new premium shipments use meaningful capacity",
+        "zero money negative credit can accept an ordinary offer",
+        "accepted contract untouched during profile refresh",
+        "delivery pays and increases credit",
+        "repeat delivery cannot pay twice",
+        "old unaccepted quote updates in place",
+        "reload cannot reroll quote",
+        "old accepted price/deadline preserved",
+        "new quote survives board JSON reload",
+        "old accepted payout retains original fast bonus"
+      ]
+    },
+    "play": {
+      "scope": "Normal initial stock; sequential prices; selected outward/return goods; stop nonpositive marginal trades using known destination prices (informed counterfactual). No NPC, recovery, market day, origin bonus, human/online play. Delivery=one matched ordinary weight4 offer each leg; neutral roll and fast bonus15%, not a guarantee of board availability.",
+      "passed": [
+        "both introduction alternatives initially available",
+        "return trade is locked before either freight completion",
+        "new freight acceptance captures current equal reward",
+        "new accepted reward stays twenty after reload",
+        "legacy freight promise migrates to sixty",
+        "old freight actually pays its original promise",
+        "accepting one freight hides duplicate new offer",
+        "alternative choice survives quest JSON reload",
+        "previously accepted alternatives both preserved",
+        "old freight finish unlocks same return trade",
+        "supply consumes freight and unlocks return trade",
+        "finished freight blocks duplicate introduction",
+        "return purchase only counts at Dakmok",
+        "return trade advances after two real purchases",
+        "actual return sales finish quest and yield net profit",
+        "return trade reward is one-time",
+        "real board allows recovery without capital",
+        "accepted delivery reserves actual capacity",
+        "recovery pays usable currency and frees capacity",
+        "real recovery payout cannot be duplicated"
+      ],
+      "rows": []
+    },
+    "regional": {
+      "passed": [
+        "같은 지역 연결된 마을 허용",
+        "연결되어도 관문 전 다른 지역 신규 의뢰 차단",
+        "같은 지역 단절 마을 차단",
+        "자기 마을/미등록 목적지 차단",
+        "지역 미지정 차단",
+        "출신이 달라도 현재 출발 지역 기준",
+        "신규 생성 목적지 필터",
+        "적합한 목적지 없으면 빈 게시판",
+        "일반 의뢰 보장 유지",
+        "유효한 게시판 재초기화 시 재추첨 없음",
+        "오래된 잘못된 제안 숨김/수락 차단",
+        "불러온 미수락 제안 정리",
+        "게시판 정리 시 기존 유효 제안 보존",
+        "경로 변경 후 수락 재검사",
+        "유효한 의뢰 수락",
+        "기수락 타 지역 의뢰/짐 보존",
+        "기수락 타 지역 의뢰 기존 납품 유지",
+        "기존 게시판 JSON 형식 호환"
+      ]
+    },
+    "economyRegression": {
+      "passed": [
+        "goryeo_songak -> gaegyeong/ginseng batch profitable",
+        "goryeo_songak/ginseng supply persists after stock recovery",
+        "goryeo_jangdan -> gaegyeong/grain batch profitable",
+        "goryeo_jangdan/grain supply persists after stock recovery",
+        "goryeo_jangdan -> dakmok/firewood batch profitable",
+        "goryeo_jangdan/firewood supply persists after stock recovery",
+        "dakmok -> goryeo_jangdan/paper batch profitable",
+        "dakmok/paper supply persists after stock recovery",
+        "naru/salt same-market resale has no profit",
+        "naru/grain same-market resale has no profit",
+        "naru/firewood same-market resale has no profit",
+        "naru/ginseng same-market resale has no profit",
+        "naru/paper same-market resale has no profit",
+        "gaegyeong/ginseng same-market resale has no profit",
+        "gaegyeong/najeon same-market resale has no profit",
+        "gaegyeong/paper same-market resale has no profit",
+        "gaegyeong/salt same-market resale has no profit",
+        "gaegyeong/grain same-market resale has no profit",
+        "gaegyeong/firewood same-market resale has no profit",
+        "dakmok/paper same-market resale has no profit",
+        "dakmok/ginseng same-market resale has no profit",
+        "dakmok/salt same-market resale has no profit",
+        "dakmok/najeon same-market resale has no profit",
+        "dakmok/grain same-market resale has no profit",
+        "dakmok/firewood same-market resale has no profit",
+        "goryeo_songak/ginseng same-market resale has no profit",
+        "goryeo_songak/paper same-market resale has no profit",
+        "goryeo_songak/salt same-market resale has no profit",
+        "goryeo_songak/grain same-market resale has no profit",
+        "goryeo_songak/firewood same-market resale has no profit",
+        "goryeo_jangdan/grain same-market resale has no profit",
+        "goryeo_jangdan/firewood same-market resale has no profit",
+        "goryeo_jangdan/salt same-market resale has no profit",
+        "goryeo_jangdan/paper same-market resale has no profit",
+        "transit_woodtown/transit_resin same-market resale has no profit",
+        "transit_woodtown/transit_driedfish same-market resale has no profit",
+        "transit_woodtown/firewood same-market resale has no profit",
+        "transit_woodtown/grain same-market resale has no profit",
+        "transit_woodtown/paper same-market resale has no profit",
+        "transit_woodtown/salt same-market resale has no profit",
+        "transit_ferry/transit_resin same-market resale has no profit",
+        "transit_ferry/transit_driedfish same-market resale has no profit",
+        "transit_ferry/grain same-market resale has no profit",
+        "transit_ferry/salt same-market resale has no profit",
+        "transit_ferry/paper same-market resale has no profit",
+        "transit_ferry/firewood same-market resale has no profit",
+        "zero serialized factor preserves legacy base price",
+        "invalid serialized factor preserves legacy base price",
+        "paper purchase explicitly targets Dakmok",
+        "cart available after two introductory quests",
+        "old objective indices preserved",
+        "goryeo_songak_trade uniquely registered",
+        "goryeo_jangdan_trade uniquely registered",
+        "goryeo_cart_supply uniquely registered",
+        "post-cart shipment does not force legacy tutorial completion",
+        "cart supply exceeds backpack capacity",
+        "cart supply fits handcart"
+      ],
+      "trades": [
+        "goryeo_songak -> gaegyeong / ginseng x2: cost 53, revenue 65, profit 12",
+        "goryeo_jangdan -> gaegyeong / grain x3: cost 15, revenue 31, profit 16",
+        "goryeo_jangdan -> dakmok / firewood x4: cost 8, revenue 20, profit 12",
+        "dakmok -> goryeo_jangdan / paper x2: cost 26, revenue 35, profit 9"
+      ]
+    },
+    "journeyPlayRegression": {
+      "passed": [
+        "all offers browsable despite first unaffordable",
+        "no cross NPC offers",
+        "expensive offer still blocked",
+        "blocked accept does not add cargo or deduct funds",
+        "free alternative accepted independently",
+        "accepted quest removed from offers",
+        "cannot track inactive progress",
+        "cannot forge an active tracking progress",
+        "completed free offer stays unavailable",
+        "missing cargo does not hide ready turn-in",
+        "ready turn-in completes before missing cargo",
+        "missing delivery still rejected",
+        "selected tracking survives export/import"
+      ]
+    },
+    "saveRegression": {
+      "passed": [
+        "2D 씬 활성 오디오 청취점 하나",
+        "게시판 일반 의뢰 보장",
+        "신용 음수·빈 지갑도 일반 배달 수락",
+        "다른 게시판의 의뢰 수락 거절",
+        "게시되지 않은 의뢰 수락 거절",
+        "정상 의뢰 수락",
+        "같은 의뢰 재수락 거절",
+        "잘못된 도착지 납품 거절",
+        "낙하 상태 납품 거절",
+        "실제 배달로 잔고와 신용 회복",
+        "납품 재호출 지급·신용·이벤트 중복 없음",
+        "다음 의뢰 수락",
+        "분실 재호출 배상·신용 중복 없음",
+        "만료 후 납품 보상 없음",
+        "낮은 신용의 고급 의뢰 제한 유지",
+        "일반 의뢰도 적재 한도 검사",
+        "이전 저장의 고급 의뢰만 있는 게시판 복구",
+        "마을 하나만 있는 지역 데이터 부팅",
+        "마을 없는 지역 데이터 부팅",
+        "같은 낙하물 재호출 중복 지급 없음",
+        "회수 화물의 매입 원가 보존",
+        "적재 초과 회수 시 낙하물 보존",
+        "적재 여유 후 같은 짐 회수 가능",
+        "끝난 의뢰의 남은 낙하물 정리",
+        "이전 흔들림 폐기·체력·잔고 복원",
+        "불러오기 중 일반 의뢰 보충 ID 충돌 없음",
+        "이전 저장의 누락 흔들림은 0",
+        "다른 마을 의뢰로 지정 게시판 퀘스트 진행 안 됨",
+        "실패한 의뢰로 배달 성공 퀘스트 진행 안 됨",
+        "지정 마을의 실제 성공으로 퀘스트 완료"
+      ]
+    },
+    "legacyPlayRegression": {
+      "passed": 16,
+      "checks": [
+        "isolated non-start play session",
+        "wrong-town paper purchase does not advance tutorial",
+        "Dakmok purchases advance tutorial",
+        "introductory trade can complete",
+        "cart quest no longer requires repeated errands",
+        "actual cart purchase charges once and upgrades capacity",
+        "early cart ownership satisfies purchase goal",
+        "early cart quest completion",
+        "actual Songak trade completes with positive net money",
+        "completed optional trade cannot pay twice",
+        "actual Jangdan grain trade completes with positive net money",
+        "post-cart objective is available",
+        "backpack cannot buy four heavy bundles",
+        "cart permits same shipment in one load",
+        "actual supply delivery consumes goods and pays once",
+        "repeated delivery request cannot duplicate money"
+      ]
+    },
+    "pythonIntegration": {
+      "passed": 26
+    },
+    "registeredExits": {
+      "checked": 26,
+      "errors": 0
+    },
+    "consoleErrorsAfterPlay": 0
+  },
+  "simulation": {
+    "count": 108,
+    "scope": "Normal initial stock; sequential prices; selected outward/return goods; stop nonpositive marginal trades using known destination prices (informed counterfactual). No NPC, recovery, market day, origin bonus, human/online play. Delivery=one matched ordinary weight4 offer each leg; neutral roll and fast bonus15%, not a guarantee of board availability.",
+    "csv": "GoryeoEconomyScenarios-2026-10-20.csv",
+    "csvSha256": "5f64b3fa2d26d8b49db83a1916a7eede2ceb9823bd677e7c64cfcfd311d2c48d",
+    "timeModel": "Per-leg actual cargo load and orthogonal shortest tile route; no running/acceleration/human input/loading/transaction walking/stock recovery/NPCs/origin bonus; calculation only."
+  },
+  "builds": {
+    "windows": {
+      "result": "Succeeded",
+      "output": "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Builds/Windows/PocketCaravan.exe",
+      "builtAtUtc": "2026-10-19T15:39:08.0679240Z",
+      "errors": 0,
+      "warnings": 18,
+      "bytes": 134915681,
+      "seconds": 19.719198
+    },
+    "macos": {
+      "result": "Succeeded",
+      "output": "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Builds/macOS/PocketCaravan.app",
+      "builtAtUtc": "2026-10-19T15:39:37.6763110Z",
+      "errors": 0,
+      "warnings": 0,
+      "bytes": 152659887,
+      "seconds": 22.190337
+    },
+    "macosArchitectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "macosHeadlessSmoke": {
+      "engineInitialized": true,
+      "runtimeExceptions": [],
+      "processExitCode": 0,
+      "mode": "macOS headless startup only; no human gameplay or Windows execution validation",
+      "previewSaveRestored": true
+    },
+    "packages": [
+      {
+        "file": "Builds/Packages/deliverables/PocketCaravan-Windows-x64-Economy-2026-10-20.zip",
+        "bytes": 48141917,
+        "sha256": "cf3915b506e19c3f7b6f3fa41aff4e185c1e947bccda35e4114f8dd7e5b65eaa",
+        "sourceCommit": "efb04cb560db2eeede122dcf70a197b74de387ed"
+      },
+      {
+        "file": "Builds/Packages/deliverables/PocketCaravan-macOS-Universal-Economy-2026-10-20.zip",
+        "bytes": 56625854,
+        "sha256": "2579e14baf14f2b79aab24acd457054863f16028b68dbc48803e4d517c1fb5e2",
+        "sourceCommit": "efb04cb560db2eeede122dcf70a197b74de387ed"
+      }
+    ],
+    "publishedRelease": false
+  },
+  "visualQA": [
+    {
+      "file": "output/goryeo-economy/board.png",
+      "sha256": "f67c23eda48e79b64d7aaa00566de472904069fc31637b08ba51a171366fb5d9",
+      "review": "Readable board/return-offer pages and fitting buttons verified. Runtime test money/credit, not ordinary new-player progress."
+    },
+    {
+      "file": "output/goryeo-economy/return-offer-last.png",
+      "sha256": "4cd532033dee58938fdad0ff3ad835f366d56078c8c7f07ffe77ecdb67255c8f",
+      "review": "Readable board/return-offer pages and fitting buttons verified. Runtime test money/credit, not ordinary new-player progress."
+    }
+  ],
+  "remaining": [
+    "Actual Windows machine gameplay; Mac Gatekeeper/notarization not completed.",
+    "Human first/third round-trip decision and perceived fun/session length.",
+    "Real generated board availability and market recovery/NPC competition over repeated sessions.",
+    "Shared multiplayer market/reconnect/authority/load testing.",
+    "Goryeo artwork/landmark polish; presentation not edited in this change."
+  ]
+}
