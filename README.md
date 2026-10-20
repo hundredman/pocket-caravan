@@ -141,3 +141,7 @@ Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macO
 ### 10/20 교역 수량·구매 예산 안내
 
 교역품 수량 선택과 변동 가격 총액/매매 손익, 수레 구매 후 잔금 안내를 추가했다. [패치 범위와 검증](Docs/MarketPlanningPatch.md), [현재 빌드 구분](Docs/BuildStatus.md). 서버 공유 거래·사람의 재미 검증과 구분한다.
+
+### 10/21 화물 판매처·장부 연결
+
+장터에서 L로 전체 장부를 열 수 있다. 장부의 ‘내 짐 판매처’에서 소지 화물 원가와 과거 관측 판매가·연결 구간을 비교한다. [반영 범위/검사/남은 관찰](Docs/CargoLedgerReview.md). 최신 로컬 ZIP은 Ledger-2026-10-21이며 공개10/15 릴리스와 다르다.

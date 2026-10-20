@@ -47,6 +47,12 @@ WASD/방향키 이동, Shift 달리기, Space 상호작용, Q 퀘스트, M 지�
 
 ## 10/20 교역 수량·운전자금 검토판
 
-로컬 최신 검토 ZIP은 `PocketCaravan-Windows-x64-Market-2026-10-20.zip`과 `PocketCaravan-macOS-Universal-Market-2026-10-20.zip`이다. 폴더는 `Builds/Packages/deliverables/`, 소스1064d73. Economy 패치를 포함하며 아직 GitHub Release에 올린 파일이 아니다. 일반 clone에는 ZIP이 포함되지 않는다.
+10/20 수량 패치 검토 ZIP은 `PocketCaravan-Windows-x64-Market-2026-10-20.zip`과 `PocketCaravan-macOS-Universal-Market-2026-10-20.zip`이다. 폴더는 `Builds/Packages/deliverables/`, 소스1064d73. Economy 패치를 포함하며 아직 GitHub Release에 올린 파일이 아니다. 일반 clone에는 ZIP이 포함되지 않는다.
 
 장터에서 품목을 고른 뒤 수량 +/- 또는 프리셋으로 총액·잔금/매매 손익을 확인한다. 실제 거래 수량은 자금/재고/적재 여유/보유 수량으로 제한된다. 운반 수단 탭에서 수레 구매 후 남는 자금을 확인한다. 가격이 변동하므로 장부의 과거 단가를 전체 판매 수익으로 곱하지 않는다. 의뢰 보상은 매매 손익과 별도다. 사람 플레이에서는 잔금 안내를 이해했는지와 반복 왕복 선택을 기록해 주세요. [상세](MarketPlanningPatch.md).
+
+## 10/21 화물 판매처·장부 검토판
+
+최신 로컬 파일은 `Builds/Packages/deliverables/`의 `PocketCaravan-Windows-x64-Ledger-2026-10-21.zip` / `PocketCaravan-macOS-Universal-Ledger-2026-10-21.zip`이다. 코드946dcbb, Economy/Market 개선 포함. GitHub Release에 올린 파일이 아니며 clone으로 ZIP을 받는 것은 아니다.
+
+장터에서 L을 누르면 장부로 전환한다. ‘내 짐 판매처’에서 원가와 직접 기록한 단위 판매가, 다음 경유 맵을 비교하고 ‘전체 시세’ 탭에서 기존 표를 볼 수 있다. 높은 과거 단가가 가장 좋은 여행/전량 수익을 뜻하지 않는다. 첫 왕복과 세 번째 왕복에서 본인이 고른 판매처/귀환품과 이유를 남겨 주세요. 연결 수를 시간으로 오해했거나 안내를 보고도 다음 목적지를 정하기 어려웠던 지점도 기록합니다. [범위·검증·후속](CargoLedgerReview.md).
