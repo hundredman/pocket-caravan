@@ -49,7 +49,18 @@ namespace PocketCaravan
         void Update()
         {
             if (!open || Time.frameCount == openedFrame) return;
+            if (InputReader.LedgerPressed()) { OpenLedger(); return; }
             if (InputReader.CancelPressed() || InputReader.InteractPressed()) Close();
+        }
+
+        // Close before opening the next modal; its opening-frame guard consumes the same L press.
+        bool OpenLedger()
+        {
+            var ledger=GameManager.I!=null?GameManager.I.GetComponent<TradeLedgerUI>():null;
+            if(!open || ledger==null)return false;
+            Close();
+            ledger.Open();
+            return ledger.IsOpen;
         }
 
         protected override void OnDisable()
