@@ -1,13 +1,14 @@
 # 소스·빌드·발표 파일 현황
 
-확인: 2026-10-21. 최신 Ledger ZIP은 기존 Economy/Market 개선과 화물 판매처·장터 장부 연결을 포함한다. 이전 ZIP과 구분한다. **날짜가 같아도 다른 시험장/본편 빌드이며, main에 반영됐다고 공개 ZIP이 갱신되는 것은 아니다.**
+확인: 2026-10-21. 최신 SaveGuard ZIP은 기존 Economy/Market/Ledger 개선과 저장 참조 사전 검사/실패 안내를 포함한다. 이전 ZIP과 구분한다. **날짜가 같아도 다른 시험장/본편 빌드이며, main에 반영됐다고 공개 ZIP이 갱신되는 것은 아니다.**
 
 ## 공유할 때 구분할 파일
 
 | 구분 | 내용 | 위치/배포 상태 | 포함하지 않은 것 |
 |---|---|---|---|
-| 현재 main 소스 | 고려9+중간권4맵, 제작 라이브러리, 게시판 지역/경로 제한(#7), 고려·중간권 지형 재배치·여정 수첩/NPC 의뢰 선택·고려 배달/귀환 교역·수량 거래/구매 예산·화물 판매처/장부 연결 | GitHub main. Unity6000.3.26f1로 확인 | 온라인, 북유럽 Draft 콘텐츠, 새 출신 배율·퀘스트 지역/장 제한 |
+| 현재 main 소스 | 고려9+중간권4맵, 제작 라이브러리, 게시판 지역/경로 제한(#7), 고려·중간권 지형 재배치·여정 수첩/NPC 의뢰 선택·고려 배달/귀환 교역·수량 거래/구매 예산·화물 판매처/장부 연결·저장 참조 검사/실패 안내 | GitHub main. Unity6000.3.26f1로 확인 | 온라인, 북유럽 Draft 콘텐츠, 새 출신 배율·퀘스트 지역/장 제한 |
 | 공개10/15 본편 프리릴리스 | 코드 `3ad1d5c` 기준 이전 고려 프로토타입 | [GitHub Release](https://github.com/hundredman/pocket-caravan/releases/tag/goryeo-prototype-2026-10-15) | 이후 마을/시설·낙하 제거·중간권·게시판 패치. 최신 main 검증용으로 쓰지 않음 |
+| 로컬10/21 SaveGuard ZIP | Ledger 개선 + 저장 참조 사전 검사·원본 보존/실패 안내 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-SaveGuard-2026-10-21.zip`. 코드d277308, 미공개 | Windows 실제 실행·사람 반복 재미·온라인 미검증. Mac 기존 프리뷰 초기 복원 확인 |
 | 로컬10/21 Ledger ZIP | Market 개선 + 장터 L 연결·화물 판매처/경유 비교·안내 문구 정리 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-Ledger-2026-10-21.zip`. 코드946dcbb, 미공개 | Windows 실제 실행·사람 반복 재미·온라인 미검증. Mac 초기 실행만 확인 |
 | 로컬10/20 Market ZIP | Economy 패치 + 수량별 변동 총액/원가 손익·수레 구매 후 잔금 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-Market-2026-10-20.zip`. 코드1064d73, 미공개 | Windows 실제 실행·사람 반복 재미·온라인 미검증. Mac 초기 실행만 확인 |
 | 로컬10/20 Economy ZIP | 고려9+중간권4, 수첩·고려 배달 보수·땔감 대안 입문·종이 귀환 거래·구 약속 보존 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-Economy-2026-10-20.zip`. 코드efb04cb, 미공개 | Windows 실제 실행·사람 반복 재미·온라인 미검증. Mac 초기 실행만 확인 |
@@ -41,3 +42,7 @@ Market ZIP 원본은1064d7397d5f486ff1da0d90f468a64df96fe054다. Windows/Mac 모
 ## 10/21 장부 검토 빌드
 
 Ledger ZIP 소스는946dcbb3dde6ff025fddc5d0087d2f5a6d5290ec다. Windows 성공(오류0·경고18), Mac 성공(오류0·경고0). Mac Universal/headless 초기화·예외0·기존 프리뷰 저장 복구와 ZIP 구조/해시를 확인했다. [검증 기록](Validation/CargoLedger-2026-10-21.json). 경고를 모두 무해하다고 분류한 것은 아니며 실제 Windows/다른 Mac 플레이·서명/공증은 별도다. 공개 릴리스는 여전히10/15다.
+
+## 10/21 저장 보호 검토 빌드
+
+SaveGuard ZIP 소스는d277308이다. Windows 성공(오류0·경고18), Mac 성공(오류0·경고0). Mac Universal 초기 실행·기존 호환 프리뷰의 복원 차단 없음·실행 예외0·종료0·저장 바이트 복구를 확인했다. 프로젝트/렌더 설정도 원래 값으로 복구했다. [전체 소스·검사·해시·한계](Validation/SaveCompatibility-2026-10-21.json). Ledger ZIP에는 이 후속 보호가 없으며 공개10/15 릴리스도 갱신되지 않았다.

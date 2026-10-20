@@ -86,8 +86,19 @@ namespace PocketCaravan
             for (int i = 0; i < d.cargoCounts.Count; i++)
                 if (d.cargoCounts[i] <= 0 || d.cargoCosts[i] < 0 || float.IsNaN(d.cargoCosts[i]) || float.IsInfinity(d.cargoCosts[i]))
                     throw new InvalidDataException("화물 수량/원가가 올바르지 않습니다.");
+            var ids = new HashSet<string>();
+            foreach (string id in d.cargoItems)
+                if (string.IsNullOrWhiteSpace(id) || !ids.Add(id)) throw new InvalidDataException("화물 ID가 없거나 중복됐습니다.");
+            if (d.contracts == null || d.quests == null || d.finishedQuests == null || d.markets == null || d.boards == null
+                || d.traders == null || d.cooldownKeys == null || d.cooldownUntil == null || d.cooldownKeys.Count != d.cooldownUntil.Count)
+                throw new InvalidDataException("진행 저장 목록이 없거나 맞지 않습니다.");
+            if (d.money < 0 || !Finite(d.px) || !Finite(d.py) || !Finite(d.stamina) || d.stamina < 0 || d.stamina > 1
+                || d.day < 0 || !Finite(d.minute) || d.minute < 0 || d.minute >= 1440)
+                throw new InvalidDataException("잔고·위치·체력·시각 저장값이 올바르지 않습니다.");
             new WarehouseStore().Import(d.storedCargo);
         }
+
+        static bool Finite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);
 
         public static SaveData Read()
         {

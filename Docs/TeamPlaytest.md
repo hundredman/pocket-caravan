@@ -53,6 +53,12 @@ WASD/방향키 이동, Shift 달리기, Space 상호작용, Q 퀘스트, M 지�
 
 ## 10/21 화물 판매처·장부 검토판
 
-최신 로컬 파일은 `Builds/Packages/deliverables/`의 `PocketCaravan-Windows-x64-Ledger-2026-10-21.zip` / `PocketCaravan-macOS-Universal-Ledger-2026-10-21.zip`이다. 코드946dcbb, Economy/Market 개선 포함. GitHub Release에 올린 파일이 아니며 clone으로 ZIP을 받는 것은 아니다.
+장부 검토 시점의 로컬 파일은 `Builds/Packages/deliverables/`의 `PocketCaravan-Windows-x64-Ledger-2026-10-21.zip` / `PocketCaravan-macOS-Universal-Ledger-2026-10-21.zip`이다. 코드946dcbb, Economy/Market 개선 포함. GitHub Release에 올린 파일이 아니며 clone으로 ZIP을 받는 것은 아니다.
 
 장터에서 L을 누르면 장부로 전환한다. ‘내 짐 판매처’에서 원가와 직접 기록한 단위 판매가, 다음 경유 맵을 비교하고 ‘전체 시세’ 탭에서 기존 표를 볼 수 있다. 높은 과거 단가가 가장 좋은 여행/전량 수익을 뜻하지 않는다. 첫 왕복과 세 번째 왕복에서 본인이 고른 판매처/귀환품과 이유를 남겨 주세요. 연결 수를 시간으로 오해했거나 안내를 보고도 다음 목적지를 정하기 어려웠던 지점도 기록합니다. [범위·검증·후속](CargoLedgerReview.md).
+
+## 10/21 저장 보호 검토판
+
+최신 로컬 ZIP은 `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-SaveGuard-2026-10-21.zip`이다. 코드d277308, Ledger 개선 포함. GitHub Release 업로드는 아직 하지 않았다.
+
+저장 복원 중단 안내가 뜨면 이번 세션은 저장되지 않는다. Esc 메뉴에서 원인을 확인하고 원래 파일을 보관한 상태로 누락 ID/맵·이주를 검토한다. 파일을 자동 초기화하거나 새 ID로 바꾸지 않는다. 메뉴의 ‘처음부터 시작’은 기존 진행 초기화 선택이므로 이어서 할 의도가 있다면 선택하지 않는다. 유효한 구 저장의 기수락 배달/보수/화물 원가는 유지한다. [검토/확인 범위](SaveCompatibilityReview.md).
