@@ -1,13 +1,14 @@
 # 소스·빌드·발표 파일 현황
 
-확인: 2026-10-20. 최신 Economy ZIP은 여정 수첩·NPC 의뢰 선택과 고려 경제/귀환 교역 패치를 포함한다. 이전 Progression ZIP과 구분한다. **날짜가 같아도 다른 시험장/본편 빌드이며, main에 반영됐다고 공개 ZIP이 갱신되는 것은 아니다.**
+확인: 2026-10-20. 최신 Market ZIP은 기존 Economy 개선과 교역 수량 총액/수레 예산 안내를 포함한다. 같은 날짜의 Economy ZIP과 구분한다. **날짜가 같아도 다른 시험장/본편 빌드이며, main에 반영됐다고 공개 ZIP이 갱신되는 것은 아니다.**
 
 ## 공유할 때 구분할 파일
 
 | 구분 | 내용 | 위치/배포 상태 | 포함하지 않은 것 |
 |---|---|---|---|
-| 현재 main 소스 | 고려9+중간권4맵, 제작 라이브러리, 게시판 지역/경로 제한(#7), 고려·중간권 지형 재배치·여정 수첩/NPC 의뢰 선택·고려 배달/귀환 교역 | GitHub main. Unity6000.3.26f1로 확인 | 온라인, 북유럽 Draft 콘텐츠, 새 출신 배율·퀘스트 지역/장 제한 |
+| 현재 main 소스 | 고려9+중간권4맵, 제작 라이브러리, 게시판 지역/경로 제한(#7), 고려·중간권 지형 재배치·여정 수첩/NPC 의뢰 선택·고려 배달/귀환 교역·수량 거래/구매 예산 안내 | GitHub main. Unity6000.3.26f1로 확인 | 온라인, 북유럽 Draft 콘텐츠, 새 출신 배율·퀘스트 지역/장 제한 |
 | 공개10/15 본편 프리릴리스 | 코드 `3ad1d5c` 기준 이전 고려 프로토타입 | [GitHub Release](https://github.com/hundredman/pocket-caravan/releases/tag/goryeo-prototype-2026-10-15) | 이후 마을/시설·낙하 제거·중간권·게시판 패치. 최신 main 검증용으로 쓰지 않음 |
+| 로컬10/20 Market ZIP | Economy 패치 + 수량별 변동 총액/원가 손익·수레 구매 후 잔금 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-Market-2026-10-20.zip`. 코드1064d73, 미공개 | Windows 실제 실행·사람 반복 재미·온라인 미검증. Mac 초기 실행만 확인 |
 | 로컬10/20 Economy ZIP | 고려9+중간권4, 수첩·고려 배달 보수·땔감 대안 입문·종이 귀환 거래·구 약속 보존 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-Economy-2026-10-20.zip`. 코드efb04cb, 미공개 | Windows 실제 실행·사람 반복 재미·온라인 미검증. Mac 초기 실행만 확인 |
 | 로컬10/18 Progression ZIP | 고려9+중간권4, 지역 공급/수요·선택 성장·산록 순환 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-Progression-2026-10-18.zip`. 코드4234c13, 미공개 | Windows 실제 실행·사람 플레이·온라인 미검증 |
 | 로컬10/17 고려 ZIP | 고려6맵·로컬 시설·운반 개선 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-2026-10-17.zip`. 미공개 | 중간권/후속 공용 수정은 이후 별도 빌드 |
@@ -31,3 +32,7 @@ Windows ZIP은 exe와 `_Data`/DLL 폴더를 모두 유지한다. Mac은 Intel/Ap
 Windows 성공(오류0·경고18), Mac Universal 성공(오류0·경고0). Windows 경고를 모두 무해하다고 분류한 것은 아니다. Mac 실행 파일의Intel/Apple Silicon 포함과 headless 초기화/실행 예외0/종료0을 확인하고 기존 프리뷰 저장을 바이트 기준 복구했다. 사람이 직접 조작한 플레이나 다른 Mac의 Gatekeeper 통과 검증과 다르다. 빌드가 바꾼 기존 프로젝트/렌더 설정은 작업 전 값으로 복구했다.
 
 패키지 SHA256·빌드 원본 전체 커밋·검사·제한은 [10/20 검증 기록](Validation/GoryeoTradeBalance-2026-10-20.json). ZIP 무결성·README 중복 없음·플랫폼 실행 파일 포함을 확인했다. 읽을 안내는 같은 폴더 `README-Economy-2026-10-20.txt`, 체크섬은 `SHA256-Economy-2026-10-20.txt`다. GitHub 새 Release 업로드는 하지 않았다.
+
+## 10/20 교역 수량 검토 빌드
+
+Market ZIP 원본은1064d7397d5f486ff1da0d90f468a64df96fe054다. Windows/Mac 모두 성공(각 오류0·경고18). Mac Universal 두 아키텍처와 headless 초기화/종료0/실행 예외0·기존 프리뷰 저장 바이트 복구를 확인했다. 빌드가 바꾼 프로젝트/렌더 설정을 복구했고 Editor는 정지한 Route01로 돌아갔다. [소스·검사·플랫폼별 해시/제한](Validation/MarketPlanning-2026-10-20.json). 이전 Economy ZIP에 수량 UI가 포함됐다고 안내하지 않는다. 공개 릴리스는 여전히10/15다.
