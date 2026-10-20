@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147baa154c7bc4bf39645666676b3271, type: 3}
+  m_Name: Town_Rialto
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.TownData
+  id: venice_rialto
+  displayName: "\uB9AC\uC54C\uD1A0 \uC7A5\uD130"
+  region: {fileID: 11400000, guid: 150e6d6afa385524abcf177047f2d09b, type: 2}
+  journeyNote: "\uC6B4\uD558 \uC606 \uD070 \uC7A5\uD130. \uC720\uB9AC \uACF5\uBC29\uC774
+    \uC788\uACE0 \uC190\uC218\uB808\uB97C \uD310\uB2E4."
+  worldCoord: {x: 12, y: 0}
+  startLevel: 1
+  settlementTier: 2
+  facilities:
+  - id: venice_rialto_rest
+    displayName: "\uAE38\uC190 \uC27C\uD130"
+    kind: 0
+    minTier: 1
+    minCredit: 0
+    description: 
+    storageCapacity: 120
+  stock:
+  - item: {fileID: 11400000, guid: 018a545c0e6c93f4c97c5e4224b223c9, type: 2}
+    optimal: 12
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 2eb42ca42c7322a4f8fe7f379bcb954e, type: 2}
+    optimal: 48
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 9b0a33b14044448d8962b7818d9d0df6, type: 2}
+    optimal: 24
+    localPriceMultiplier: 1
+  defaultOptimal: 3
+  vehiclesForSale:
+  - {fileID: 11400000, guid: 913f67411fb2e4eb9868cba57a9545f6, type: 2}
