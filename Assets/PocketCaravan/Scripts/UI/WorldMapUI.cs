@@ -136,7 +136,7 @@ namespace PocketCaravan
                 if (town != null) current += " · " + gm.GetMarket(town).LevelName;
             }
             GUI.Label(new Rect(panel.x + 16, legendY + 17, width - 32, 14),
-                "현재: " + current + "    |    밤길의 도적과 의뢰 기한을 확인하며 이동하세요.", ink);
+                "현재: " + current + "    |    길과 거래처를 살펴보고 돌아올 때 실을 화물도 계획해 보세요.", ink);
         }
 
         static void Dot(Vector2 point, float radius, Color color)

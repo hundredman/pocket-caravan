@@ -16,7 +16,7 @@ namespace PocketCaravan
         public readonly List<Contract> contracts = new List<Contract>();
 
         [Tooltip("달리기 체력 0~1")] public float stamina = 1f;
-        [Tooltip("짐 흔들림 0~1. 가득 차면 짐이 떨어진다")] public float shake;
+        [Tooltip("짐 흔들림 0~1. 노면·적재 감속의 시각 표현이며 주행 중 낙하는 없다")] public float shake;
 
         public float Capacity => vehicle != null ? vehicle.capacity : 10f;
 
