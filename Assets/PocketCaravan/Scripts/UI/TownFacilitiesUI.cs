@@ -19,7 +19,7 @@ namespace PocketCaravan
             if (instance == null || value == null || UIState.Blocking) return;
             instance.town = value; instance.warehouse = null;
             instance.open = true; instance.openedFrame = Time.frameCount;
-            instance.scroll = Vector2.zero; instance.detail = ""; instance.message = "성장·주변 거래처: Q 수첩 · 방문 시세: L 장부"; UIState.Blocking = true;
+            instance.scroll = Vector2.zero; instance.detail = ""; instance.message = "이 창을 닫은 뒤 Q: 성장·주변 거래처 / L: 방문 시세"; UIState.Blocking = true;
         }
         void Close() { open = false; UIState.Release(); }
         void OnDisable() { if (open) Close(); if (instance == this) instance = null; }
