@@ -1,0 +1,213 @@
+{
+  "date": "2026-10-21",
+  "sourceCommit": "d277308fca39adf8627ff806b49297e447555ef2",
+  "unity": "6000.3.26f1",
+  "scope": "Local save compatibility preflight, original-file protection, persistent failure explanation; no schema or region content change",
+  "checks": {
+    "dataAndFile": {
+      "passed": [
+        "legacy missing optional IDs remains loadable",
+        "current registered cargo vehicle quest market accepted",
+        "unknown carried cargo rejected without mutating payload",
+        "duplicate carried IDs cannot merge or overflow on load",
+        "unknown vehicle cannot silently become starting vehicle",
+        "unavailable saved map blocked before travel",
+        "unknown active quest cannot disappear",
+        "unknown completed quest cannot reset completion",
+        "negative quest step rejected",
+        "quest step beyond authored objectives rejected",
+        "duplicate active quest IDs rejected",
+        "null active progress rejected",
+        "unknown stored market cannot lose state",
+        "unknown market stock cannot disappear",
+        "mismatched market arrays rejected",
+        "unknown active delivery destination rejected",
+        "unknown board town cannot disappear",
+        "null collection rejected before any state import",
+        "invalid wallet rejected",
+        "invalid clock rejected",
+        "NaN position rejected",
+        "invalid stamina rejected",
+        "unknown warehouse and legacy drop IDs remain preserved",
+        "pending recovery payload unchanged",
+        "valid file write succeeds",
+        "valid replacement creates backup",
+        "invalid write preserves current and backup files"
+      ]
+    },
+    "actualApplyPlay": {
+      "passed": [
+        "incompatible cargo blocks actual GameManager load",
+        "rejected load preserves live cash and cargo cost",
+        "rejected load preserves quest and ledger state",
+        "failure explains cause and blocks SaveNow",
+        "missing scene rejected before attempting travel",
+        "unknown vehicle cannot replace live vehicle",
+        "late quest reference failure preserves cash and cargo",
+        "late market reference failure preserves cash and cargo",
+        "existing registered scene remains loadable",
+        "successful diagnostic apply cannot reenable saving after failure"
+      ]
+    },
+    "localRegression": {
+      "passed": [
+        "2D 씬 활성 오디오 청취점 하나",
+        "게시판 일반 의뢰 보장",
+        "신용 음수·빈 지갑도 일반 배달 수락",
+        "다른 게시판의 의뢰 수락 거절",
+        "게시되지 않은 의뢰 수락 거절",
+        "정상 의뢰 수락",
+        "같은 의뢰 재수락 거절",
+        "잘못된 도착지 납품 거절",
+        "낙하 상태 납품 거절",
+        "실제 배달로 잔고와 신용 회복",
+        "납품 재호출 지급·신용·이벤트 중복 없음",
+        "다음 의뢰 수락",
+        "분실 재호출 배상·신용 중복 없음",
+        "만료 후 납품 보상 없음",
+        "낮은 신용의 고급 의뢰 제한 유지",
+        "일반 의뢰도 적재 한도 검사",
+        "이전 저장의 고급 의뢰만 있는 게시판 복구",
+        "마을 하나만 있는 지역 데이터 부팅",
+        "마을 없는 지역 데이터 부팅",
+        "같은 낙하물 재호출 중복 지급 없음",
+        "회수 화물의 매입 원가 보존",
+        "적재 초과 회수 시 낙하물 보존",
+        "적재 여유 후 같은 짐 회수 가능",
+        "끝난 의뢰의 남은 낙하물 정리",
+        "이전 흔들림 폐기·체력·잔고 복원",
+        "불러오기 중 일반 의뢰 보충 ID 충돌 없음",
+        "이전 저장의 누락 흔들림은 0",
+        "다른 마을 의뢰로 지정 게시판 퀘스트 진행 안 됨",
+        "실패한 의뢰로 배달 성공 퀘스트 진행 안 됨",
+        "지정 마을의 실제 성공으로 퀘스트 완료"
+      ]
+    },
+    "facilityRegression": {
+      "passed": [
+        "고려 수도 포함 독립5거점",
+        "모든 고려 거점 기본 시설 보유",
+        "문턱 직전 시설 거절·재산 불변",
+        "다른 플레이어 신용은 공유 안 함",
+        "정확한 문턱에서 해금",
+        "다른 마을의 시설 참조 거절",
+        "개인 신용 충족해도 마을 등급 부족 거절",
+        "일반 상품 입고",
+        "원가를 유지한 입고/출고",
+        "빈 창고 재출고 거절",
+        "의뢰/퀘스트 물품 입고 거절",
+        "창고 한도 초과 입고 거절",
+        "적재 초과 출고 거절",
+        "저장 왕복 수량/원가/마을 보존",
+        "두 캐릭터의 창고 분리",
+        "알 수 없는 창고 ID 보존",
+        "손상 창고 거절 후 기존 화물 보존",
+        "버전1 저장의 보관함 누락 호환",
+        "기존 낙하 화물 적재초과도 복구",
+        "낙하 화물 원가 보존",
+        "이주 재호출 중복 없음·미지 ID 보존",
+        "의뢰 화물 이주·상태 보존",
+        "새 저장 파일 쓰기",
+        "원자 교체와 이전 저장 백업",
+        "미지원 미래 저장 버전 거절"
+      ]
+    }
+  },
+  "integration": {
+    "pythonUnitTests": 26,
+    "registeredExits": 26,
+    "errors": 0
+  },
+  "existingSaveReadonly": [
+    "pocket_caravan_save.json: compatible (Play, read only)",
+    "pocket_caravan_preview_save.json: compatible (Play, read only)"
+  ],
+  "acceptedPromiseFixture": "compatible=True; already accepted reward/credit gate/drop/condition/deadlines unchanged",
+  "visualQA": {
+    "fixture": "Synthetic missing-reference errors and 700-character detail; not an actual corrupted user save",
+    "screenshots": [
+      {
+        "localPath": "output/save-compatibility/pause-final.png",
+        "resolution": [
+          1920,
+          1080
+        ],
+        "sha256": "c494f69bce2c702278e688d6962e381c576486e18c305147b85c565a95fe3480"
+      },
+      {
+        "localPath": "output/save-compatibility/pause-4x3.png",
+        "resolution": [
+          1024,
+          768
+        ],
+        "sha256": "f5d005278cf1f0c50c7da9f8eb555ab0c3e266e581da1bcd75debf04123be177"
+      },
+      {
+        "localPath": "output/save-compatibility/long-4x3.png",
+        "resolution": [
+          1024,
+          768
+        ],
+        "sha256": "723cc6346f6849b31c18fbc8c186a6b7dfb0ff927857dba9255c41e1d99b8beb"
+      }
+    ]
+  },
+  "builds": {
+    "Windows": {
+      "result": "Succeeded",
+      "output": "Builds/Windows/PocketCaravan.exe",
+      "builtAtUtc": "2026-10-20T16:56:32.1752080Z",
+      "errors": 0,
+      "warnings": 18,
+      "bytes": 134930049,
+      "seconds": 15.159925
+    },
+    "macOS": {
+      "result": "Succeeded",
+      "output": "Builds/macOS/PocketCaravan.app",
+      "builtAtUtc": "2026-10-20T16:57:04.0310240Z",
+      "errors": 0,
+      "warnings": 0,
+      "bytes": 152674255,
+      "seconds": 16.697264999999998
+    }
+  },
+  "nativeSmoke": {
+    "engineInitialized": true,
+    "runtimeExceptions": [],
+    "processExitCode": 0,
+    "mode": "macOS headless startup only; no human gameplay or Windows execution validation",
+    "previewSaveRestored": true,
+    "compatiblePreviewSaveDidNotTriggerLoadBlock": true
+  },
+  "packages": [
+    {
+      "file": "PocketCaravan-Windows-x64-SaveGuard-2026-10-21.zip",
+      "bytes": 48147220,
+      "sha256": "ef4661727e45a31f5078537e6e20c645ee165ec96962d23a15a0a70c5fe40935",
+      "sourceCommit": "d277308fca39adf8627ff806b49297e447555ef2",
+      "published": false
+    },
+    {
+      "file": "PocketCaravan-macOS-Universal-SaveGuard-2026-10-21.zip",
+      "bytes": 56631192,
+      "sha256": "30d2300bcab120afa8cff2c9e2fcfe53a297e974429c46f21953dd75ef8cc7c4",
+      "sourceCommit": "d277308fca39adf8627ff806b49297e447555ef2",
+      "published": false
+    }
+  ],
+  "restored": {
+    "projectAndRenderSettings": true,
+    "scene": "Assets/PocketCaravan/Scenes/Goryeo/Route01.unity",
+    "play": false,
+    "originalGameViewSizeIndex": 7,
+    "temporarySizeRemoved": true
+  },
+  "limits": [
+    "Specified rejection paths prevent mutation; unexpected Apply exceptions do not fully roll back memory",
+    "No automatic ID migration, backup selection or total corruption validation",
+    "Existing origin-selection persistence and server saving still separate work",
+    "Windows gameplay not run; Mac headless startup only; Mac unsigned/unnotarized",
+    "Human fun/loop timing and multiplayer capacity not validated"
+  ]
+}

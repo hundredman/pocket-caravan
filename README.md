@@ -145,3 +145,7 @@ Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macO
 ### 10/21 화물 판매처·장부 연결
 
 장터에서 L로 전체 장부를 열 수 있다. 장부의 ‘내 짐 판매처’에서 소지 화물 원가와 과거 관측 판매가·연결 구간을 비교한다. [반영 범위/검사/남은 관찰](Docs/CargoLedgerReview.md). 최신 로컬 ZIP은 Ledger-2026-10-21이며 공개10/15 릴리스와 다르다.
+
+### 10/21 저장 참조·원본 보호
+
+저장된 상품/진행/이동 수단/맵 등을 적용 전에 확인하고, 복원할 수 없으면 원본을 보존하며 이번 세션 저장을 차단한다. [검사 범위와 남은 복구 과제](Docs/SaveCompatibilityReview.md). 최신 로컬 검토 ZIP은 SaveGuard-2026-10-21이며 Ledger 이전 ZIP·공개 릴리스와 구분한다.
