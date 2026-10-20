@@ -21,6 +21,8 @@ MonoBehaviour:
   giverNpc: dakmok_chief
   requires:
   - {fileID: 11400000, guid: 5f1b114771f824928af105094288dc10, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uB4F1\uC9D0\uC73C\uB85C\uB294 \uD55C \uBC88\uC5D0 \uBA87 \uB0E5 \uBABB
     \uBC84\uB124. \uAC1C\uACBD \uC2DC\uC804 \uC0C1\uC778\uC5D0\uAC8C \uC190\uC218\uB808\uB97C
     \uC0AC \uBCF4\uAC8C. \uAE38 \uC704\uC5D0\uC11C\uB294 \uBE60\uB974\uC9C0\uB9CC
@@ -49,6 +51,9 @@ MonoBehaviour:
       \uC774\uC81C \uC790\uB124\uB3C4 \uD55C \uC0AC\uB78C \uBAAB\uC758 \uC0C1\uC778\uC77C\uC138."
   rewardMoney: 0
   rewardCredit: 2
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: "\uC801\uC7AC \uACF5\uAC04\uC774 \uC138 \uBC30\uAC00 \uB410\uC2B5\uB2C8\uB2E4.
     \uC7A5\uB2E8\uC758 \uB554\uAC10\uC744 \uB2E5\uBAA9\uC73C\uB85C \uC62E\uAE30\uAC70\uB098
     \uADC0\uD658\uD488\uC744 \uB354 \uC2E4\uC5B4 \uBCF4\uC138\uC694. \uC218\uB808\uAC12

@@ -15,6 +15,9 @@ namespace PocketCaravan
         public string cargo;
         public float weight;
         public int reward;
+        // 구 저장은0. 수락한 계약은 이 값과 보수/기한을 변경하지 않는다.
+        public int rewardRuleVersion;
+        public int quotedRouteSteps;
         [Tooltip("이 신용 이상이어야 맡을 수 있음")] public int minCredit;
         [Tooltip("맡은 뒤 기한까지 걸리는 시간")] public float hours;
 

@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: Goryeo_ReturnTrade
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: goryeo_return_trade
+  title: "\uBE48 \uC218\uB808\uB85C \uB3CC\uC544\uAC00\uC9C0 \uC54A\uAE30"
+  chain: "\uC218\uB808 \uC6B4\uC1A1 \xB7 \uADC0\uD658 \uC7A5\uC0AC"
+  summary: "\uB3CC\uC544\uAC08 \uB54C \uC885\uC774 \uB450 \uBB36\uC74C\uC744 \uC0AC\uC11C
+    \uC7A5\uB2E8\uC5D0 \uD314\uC544 \uBCF4\uAC8C. \uC885\uC774\uC640 \uBC30\uB2EC
+    \uC9D0\uC744 \uD568\uAED8 \uC2E4\uC744\uC9C0\uB294 \uC790\uB124\uAC00 \uC815\uD558\uAC8C.
+    \uBB3C\uAC74\uAC12\uC740 \uC9C1\uC811 \uB0B4\uC57C \uD558\uB2C8 \uB450 \uB9C8\uC744
+    \uC2DC\uC138\uB97C \uD655\uC778\uD558\uACE0, \uC774\uC775\uC774 \uB098\uC9C0
+    \uC54A\uC73C\uBA74 \uB2E4\uB978 \uC7A5\uC0AC\uB97C \uBA3C\uC800 \uD574\uB3C4
+    \uB418\uB124."
+  giverNpc: dakmok_chief
+  requires: []
+  requiresAny:
+  - {fileID: 11400000, guid: 3bd12302f8f4345af8f59a6f83d962dd, type: 2}
+  - {fileID: 11400000, guid: 3b2e15e0934f4436ab1ec5c7f03c349d, type: 2}
+  choiceGroup: 
+  offerLine: "\uB3CC\uC544\uAC08 \uB54C \uC885\uC774 \uB450 \uBB36\uC74C\uC744 \uC0AC\uC11C
+    \uC7A5\uB2E8\uC5D0 \uD314\uC544 \uBCF4\uAC8C. \uC885\uC774\uC640 \uBC30\uB2EC
+    \uC9D0\uC744 \uD568\uAED8 \uC2E4\uC744\uC9C0\uB294 \uC790\uB124\uAC00 \uC815\uD558\uAC8C.
+    \uBB3C\uAC74\uAC12\uC740 \uC9C1\uC811 \uB0B4\uC57C \uD558\uB2C8 \uB450 \uB9C8\uC744
+    \uC2DC\uC138\uB97C \uD655\uC778\uD558\uACE0, \uC774\uC775\uC774 \uB098\uC9C0
+    \uC54A\uC73C\uBA74 \uB2E4\uB978 \uC7A5\uC0AC\uB97C \uBA3C\uC800 \uD574\uB3C4
+    \uB418\uB124."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 2
+    text: "\uB2E5\uBAA9 \uC7A5\uD130\uC5D0\uC11C \uC885\uC774 2\uAC1C \uAD6C\uB9E4"
+    targetId: dakmok
+    item: {fileID: 11400000, guid: c7b553013268140eca99e3276caecd4f, type: 2}
+    vehicle: {fileID: 0}
+    count: 2
+    completeLine: 
+  - type: 3
+    text: "\uC7A5\uB2E8 \uC7A5\uD130\uC5D0\uC11C \uC885\uC774 2\uAC1C \uD310\uB9E4"
+    targetId: goryeo_jangdan
+    item: {fileID: 11400000, guid: c7b553013268140eca99e3276caecd4f, type: 2}
+    vehicle: {fileID: 0}
+    count: 2
+    completeLine: 
+  rewardMoney: 6
+  rewardCredit: 1
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "\uC655\uBCF5 \uC190\uC775\uC744 \uBE44\uAD50\uD574 \uBCF4\uC138\uC694.
+    \uAC19\uC740 \uBC29\uD5A5 \uBC30\uB2EC\uC744 \uACB8\uD558\uBA74 \uBCF4\uC218\uB97C
+    \uB354 \uBC1B\uC9C0\uB9CC, \uADF8\uB9CC\uD07C \uC0C1\uD488\uC744 \uC2E4\uC744
+    \uACF5\uAC04\uC774 \uC904\uC5B4\uB4ED\uB2C8\uB2E4. \uCC3D\uACE0\uB294 \uB2F9\uC7A5
+    \uD314\uC9C0 \uC54A\uC744 \uC77C\uBC18 \uC0C1\uD488\uC744 \uD604\uC9C0\uC5D0
+    \uB098\uB204\uC5B4 \uBCF4\uAD00\uD560 \uB54C \uC4F0\uC138\uC694."

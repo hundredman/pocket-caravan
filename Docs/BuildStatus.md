@@ -1,13 +1,14 @@
 # 소스·빌드·발표 파일 현황
 
-확인: 2026-10-18. 여정 수첩·NPC 의뢰 선택 후속 수정은 소스/Unity 검증 단계이며 아래 Progression ZIP에는 포함되지 않는다. **날짜가 같아도 다른 시험장/본편 빌드이며, main에 반영됐다고 공개 ZIP이 갱신되는 것은 아니다.**
+확인: 2026-10-20. 최신 Economy ZIP은 여정 수첩·NPC 의뢰 선택과 고려 경제/귀환 교역 패치를 포함한다. 이전 Progression ZIP과 구분한다. **날짜가 같아도 다른 시험장/본편 빌드이며, main에 반영됐다고 공개 ZIP이 갱신되는 것은 아니다.**
 
 ## 공유할 때 구분할 파일
 
 | 구분 | 내용 | 위치/배포 상태 | 포함하지 않은 것 |
 |---|---|---|---|
-| 현재 main 소스 | 고려9+중간권4맵, 제작 라이브러리, 게시판 지역/경로 제한(#7), 고려·중간권 지형 재배치·여정 수첩/NPC 의뢰 선택 | GitHub main. Unity6000.3.26f1로 확인 | 온라인, 북유럽 Draft 콘텐츠, 새 출신 배율·퀘스트 지역/장 제한 |
+| 현재 main 소스 | 고려9+중간권4맵, 제작 라이브러리, 게시판 지역/경로 제한(#7), 고려·중간권 지형 재배치·여정 수첩/NPC 의뢰 선택·고려 배달/귀환 교역 | GitHub main. Unity6000.3.26f1로 확인 | 온라인, 북유럽 Draft 콘텐츠, 새 출신 배율·퀘스트 지역/장 제한 |
 | 공개10/15 본편 프리릴리스 | 코드 `3ad1d5c` 기준 이전 고려 프로토타입 | [GitHub Release](https://github.com/hundredman/pocket-caravan/releases/tag/goryeo-prototype-2026-10-15) | 이후 마을/시설·낙하 제거·중간권·게시판 패치. 최신 main 검증용으로 쓰지 않음 |
+| 로컬10/20 Economy ZIP | 고려9+중간권4, 수첩·고려 배달 보수·땔감 대안 입문·종이 귀환 거래·구 약속 보존 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-Economy-2026-10-20.zip`. 코드efb04cb, 미공개 | Windows 실제 실행·사람 반복 재미·온라인 미검증. Mac 초기 실행만 확인 |
 | 로컬10/18 Progression ZIP | 고려9+중간권4, 지역 공급/수요·선택 성장·산록 순환 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-Progression-2026-10-18.zip`. 코드4234c13, 미공개 | Windows 실제 실행·사람 플레이·온라인 미검증 |
 | 로컬10/17 고려 ZIP | 고려6맵·로컬 시설·운반 개선 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-2026-10-17.zip`. 미공개 | 중간권/후속 공용 수정은 이후 별도 빌드 |
 | 로컬10/17 Transit ZIP | 고려6+중간권4맵 연결 | 같은 폴더의 `PocketCaravan-*-Transit-2026-10-17.zip`. 미공개 | 10/18 게시판·지형 재배치 |
@@ -24,3 +25,9 @@ Windows ZIP은 exe와 `_Data`/DLL 폴더를 모두 유지한다. Mac은 Intel/Ap
 [고려 검사](Validation/Goryeo-2026-10-17.json), [중간권 검사](Validation/Transit-2026-10-17.json), [환경 라이브러리 검사](Validation/ModuleLibrary-2026-10-17.json), [장애물 검사/해시](Validation/Obstacles-2026-10-17.json), [게시판 소스 검사](Validation/RegionalContracts-2026-10-18.json). 로컬 `Builds/Packages/deliverables/`의 체크섬 파일도 확인한다.
 
 다음 팀 공유 빌드부터 `종류/플랫폼/파일명/소스 전체 커밋 SHA/생성 시각/포함 기능/실행 검증 환경/검사·해시/공유 URL`을 함께 남긴다. 기존 산출물 중 정확한 소스 SHA가 기록되지 않은 것은 날짜만 보고 추정하지 않는다. 현재 보유 ZIP을 최신 main 전체 빌드라고 이름만 바꾸지 않는다.
+
+## 10/20 검토 빌드 검증
+
+Windows 성공(오류0·경고18), Mac Universal 성공(오류0·경고0). Windows 경고를 모두 무해하다고 분류한 것은 아니다. Mac 실행 파일의Intel/Apple Silicon 포함과 headless 초기화/실행 예외0/종료0을 확인하고 기존 프리뷰 저장을 바이트 기준 복구했다. 사람이 직접 조작한 플레이나 다른 Mac의 Gatekeeper 통과 검증과 다르다. 빌드가 바꾼 기존 프로젝트/렌더 설정은 작업 전 값으로 복구했다.
+
+패키지 SHA256·빌드 원본 전체 커밋·검사·제한은 [10/20 검증 기록](Validation/GoryeoTradeBalance-2026-10-20.json). ZIP 무결성·README 중복 없음·플랫폼 실행 파일 포함을 확인했다. 읽을 안내는 같은 폴더 `README-Economy-2026-10-20.txt`, 체크섬은 `SHA256-Economy-2026-10-20.txt`다. GitHub 새 Release 업로드는 하지 않았다.
