@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
   id: venice_salt
   displayName: "\uC11D\uD638 \uC18C\uAE08"
-  icon: {fileID: 21300000, guid: 972f867553cc74e608af6a74343b034c, type: 3}
+  icon: {fileID: 21300000, guid: c523082c7f14c2f4d8082932ac588b89, type: 3}
   weight: 2
   basePrice: 10
   originTown: {fileID: 11400000, guid: 29f59db9378ff6343a1bc33d991356eb, type: 2}

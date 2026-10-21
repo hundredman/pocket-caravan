@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace PocketCaravan
+{
+    /// <summary>
+    /// 베네치아 한 맵 안의 구역(수도·네 마을·석호 길) 이름. 플레이어가 구역을 넘으면 HUD 지역명(MapRoot.displayName)을
+    /// 바꾸고 화면 위에 작은 이름을 잠깐 띄운다. 씬 전환·암전·카메라 이동은 하지 않는다.
+    /// 시장·의뢰·저장 규칙은 바꾸지 않는다. VeniceRegionSetup이 맵 JSON의 districts로 채워 씬에 붙인다.
+    /// </summary>
+    public class VeniceDistricts : MonoBehaviour
+    {
+        [Serializable]
+        public class District
+        {
+            public string name;
+            [Tooltip("타일 칸 범위(Unity 셀 좌표, 양끝 포함)")] public RectInt cells;
+        }
+
+        public List<District> districts = new List<District>();
+        public string defaultName = "석호 길";
+        [Min(0.5f)] public float labelSeconds = 2.2f;
+
+        string current;
+        float shownAt = -10f;
+        GUIStyle style;
+
+        void Update()
+        {
+            var player = PlayerController.Instance;
+            var map = MapRoot.Current;
+            if (player == null || map == null) return;
+            string next = NameAt(player.Motor.Cell);
+            if (next == current) return;
+            bool first = current == null;
+            current = next;
+            map.displayName = next;
+            if (!first) shownAt = Time.unscaledTime;
+        }
+
+        public string NameAt(Vector3Int cell)
+        {
+            foreach (var d in districts)
+                if (cell.x >= d.cells.xMin && cell.x <= d.cells.xMax && cell.y >= d.cells.yMin && cell.y <= d.cells.yMax)
+                    return d.name;
+            return defaultName;
+        }
+
+        void OnGUI()
+        {
+            float t = Time.unscaledTime - shownAt;
+            if (t > labelSeconds || string.IsNullOrEmpty(current)) return;
+            UIStyle.Begin();
+            if (style == null) style = new GUIStyle(UIStyle.Rich) { alignment = TextAnchor.MiddleCenter, fontSize = 12 };
+            float a = Mathf.Clamp01(Mathf.Min(t / 0.25f, (labelSeconds - t) / 0.5f));
+            var c = GUI.color;
+            GUI.color = new Color(1f, 1f, 1f, a);
+            var r = new Rect(UIStyle.VirtualWidth / 2 - 70, 10, 140, 20);
+            GUI.Box(r, "", UIStyle.Box);
+            GUI.Label(r, current, style);
+            GUI.color = c;
+        }
+    }
+}

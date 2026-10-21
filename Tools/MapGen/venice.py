@@ -1,135 +1,369 @@
-"""베네치아 최소 교역 동선 (제안 초안). 키오자 → 석호 둑길 → 리알토.
-지명은 실제 지명을 빌린 게임 각색이다. 인물·대사는 창작이며 실제 전승이 아니다.
-등록: Assets/PocketCaravan/World/Regions/venice.json. 내보내기: export_venice.py
-운하는 물 타일(통행 불가)과 다리로 표현한다. 배 이동 기능은 없다.
-다른 지역으로 가는 출구는 연결표 합의 전까지 만들지 않는다."""
-from tiles import Map, K, PROPS
+"""베네치아: 수도 1 + 마을 4가 화면 전환 없이 걸어서 이어지는 하나의 맵 (설계 제안 초안).
+기준 설계: Downloads/Venice_World_Claude_Pack (01_venice_world_plan.png, 04_route_plan.json).
+    가운데 수도(리알토) · 북서 과수원(산테라스모) · 북동 유리공방(무라노) · 남서 어촌(부라노) · 남동 교역항(키오자)
+    보행 연결: 수도↔네 마을(넓은 다리), 과수원↔유리공방·과수원↔어촌·유리공방↔교역항(외곽 둑길, 좁은 다리)
+지명은 실제 지명을 빌린 게임 각색이며 무라노·산테라스모·부라노는 제안이다. 인물·대사는 창작이다.
+실제 역사 배치와 다르다(키오자는 석호 남쪽 끝, 무라노·부라노·산테라스모는 북쪽). 실제로는 배로 다녔고 다리·둑길은 각색이다.
+건물·소품·바닥 무늬 'vg_*'는 GPT 생성 임시 아트(Tools/ArtGen/venice_atlas.png). 팀 아트 승인 전이다.
+배치 원칙: 건물 3~5채를 붙여 묶고 그 사이 골목, 좁은 골목 끝에 작은 광장. 건물은 그림이 실제로 차 있는 칸만 막는다.
+다른 문명으로 가는 출구는 연결표 합의 전까지 만들지 않는다."""
+from venice_tiles import VeniceMap
+
+W, H = 112, 84
+
+# 구역 이름 (위에 있는 것이 먼저). 어느 구역에도 들지 않는 칸은 '석호 길'.
+DISTRICTS = [
+    ("리알토", 38, 24, 73, 57),
+    ("산테라스모 과수원", 0, 6, 33, 31),
+    ("무라노 유리공방", 80, 6, 111, 31),
+    ("부라노 어촌", 0, 47, 33, 83),
+    ("키오자 교역항", 80, 47, 111, 83),
+]
+DEFAULT_DISTRICT = "석호 길"
 
 
-def chioggia():
-    """키오자: 석호 남쪽 염전 마을. 베네치아 시작 마을. 소금 산지."""
-    m = Map("venice_chioggia", "키오자", 40, 28, seed=201)
-    # 남쪽 석호와 선착장
-    m.river_h(22, 27, wiggle=1, fixed=range(13, 23))
-    # 마당과 길: 선착장 → 마당 → 동쪽 석호 둑길
-    m.road_blob(20, 13, 6.5, 2.5, grade=2)
-    m.road_path([(26, 13), (39, 13)], width=3, grade=2)
-    m.link("E", 12, 4, "venice_lagoon_road", "W", "E")
-    m.road_path([(17, 15), (17, 19)], width=2, grade=2)
-    m.bridge(16, 19, 18, 24, dock=True)
-    m.stamp("boat", 19, 23, force=True, over_road=True)
-    # 서쪽 염전: 얕은 소금물 웅덩이 (통행 불가)와 소금 자루
-    m.road_path([(14, 13), (5, 13)], width=2, grade=1)
-    m.road_path([(9, 13), (9, 16)], width=2, grade=1)
-    m.water_rect(3, 17, 7, 19)
-    m.water_rect(11, 17, 14, 19)
-    for (px, py) in [(8, 17), (8, 18)]:
-        m.prop(PROPS[2], px, py)
-    m.sign(6, 16, "키오자 염전\n볕에 말린 소금을 자루에 담아 장터로 옮긴다.")
-    # 집과 소금 창고
-    for name, hx, hy in [("house_plain", 4, 4), ("house3", 12, 3), ("store", 27, 4), ("house_plain", 33, 6)]:
-        m.stamp(name, hx, hy, force=True)
-    m.road_path([(5, 7), (5, 13)], width=1, grade=1)
-    m.road_path([(13, 6), (13, 13)], width=1, grade=1)
-    m.road_path([(28, 7), (28, 13)], width=1, grade=1)
-    m.road_path([(34, 9), (34, 13)], width=1, grade=1)
-    m.stamp("cart", 23, 17, force=True)
-    for px, py, prop in [(31, 8, 0), (32, 8, 1), (25, 17, 0)]:
-        m.prop(PROPS[prop], px, py)
-    # 사람과 시설
-    m.add("market", 22, 15, town="venice_chioggia")
-    m.board(25, 11, "venice_chioggia")
-    m.talker(11, 16, "염전 일꾼", "villager_dog_tall",
-             "여기 소금은 리알토 장터로 많이 실려 가지.",
-             "자루가 무거우니 한꺼번에 많이 지면 걸음이 느려져.")
-    m.talker(20, 20, "뱃사공", "villager_bear_tall",
-             "배를 타는 일은 아직 없어. 리알토까지는 동쪽 둑길로 걸어가게.")
-    m.sign(30, 11, "→ 석호 둑길\n리알토 장터로 이어진다.")
-    m.add("spawn", 20, 13, id="S0")   # 베네치아 씬 직접 시험용 시작 자리
-    m.add("ambience", 17, 24, id="river", radius=12)
-    m.reeds(21, 0, 13, 0.5); m.reeds(21, 22, 39, 0.5)
-    # 숲
-    m.forest_border(thickness=2, big=("roundbig", "fruitbig"))
-    m.flowers(2, 2, 37, 19, 12)
+def land(m, x0, y0, x1, y1, zone):
+    """물을 메워 땅으로 (구역 바닥 지정)"""
+    for y in range(max(0, y0), min(m.h, y1 + 1)):
+        for x in range(max(0, x0), min(m.w, x1 + 1)):
+            m.water[y][x] = False
+            m.reserved[y][x] = False
+            m.zone[y][x] = zone
+
+
+def island(m, cx, cy, rx, ry, zone, jitter=0.12):
+    """들쭉날쭉한 자연 섬"""
+    for y in range(int(cy - ry) - 1, int(cy + ry) + 2):
+        for x in range(int(cx - rx) - 1, int(cx + rx) + 2):
+            if m.inside(x, y) and ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 <= 1 + m.rng.uniform(-jitter, jitter):
+                land(m, x, y, x, y, zone)
+
+
+def water(m, x0, y0, x1, y1):
+    for y in range(y0, y1 + 1):
+        for x in range(x0, x1 + 1):
+            if m.inside(x, y):
+                m.water[y][x] = True
+
+
+def trees(m, items):
+    """나무는 물가·건물과 겹치면 건너뛴다 (군집 위치만 정하고 칸은 유연하게)."""
+    for name, x, y in items:
+        try:
+            m.building(name, x, y, high=2)
+        except ValueError:
+            pass
+
+
+def reuse(m, items):
+    """기존 에셋 재활용: 자리가 맞으면 놓고, 겹치면 건너뛴다 (억지로 넣지 않는다)."""
+    placed = []
+    for name, x, y, *high in items:
+        try:
+            m.building(name, x, y, high=high[0] if high else 0)
+            placed.append(name)
+        except ValueError:
+            pass
+    return placed
+
+
+def swap(m, new, old, x, y, high=0):
+    """새 마을 시트 건물을 우선 놓고, 자리가 맞지 않으면 기존 건물을 쓴다."""
+    try:
+        m.building(new, x, y, high=high)
+    except ValueError:
+        m.building(old, x, y, high=high)
+
+
+def put(m, items):
+    """[(묶음, x, y), ...] 막는 소품. 이미 놓인 것과 겹치면 놓지 않는다."""
+    for name, x, y in items:
+        m.stamp(name, x, y, force=True)
+
+
+def boats(m, items):
+    for name, x, y in items:
+        m.stamp(name, x, y, force=True, over_road=True)
+
+
+def capital(m):
+    """수도(리알토): 대성당·종탑이 북쪽을, 궁전이 남쪽을 막는 큰 광장. 운하 쪽 입구에 사자·성인 기둥(피아체타 각색).
+    광장 가운데 화려한 우물과 모자이크, 가장자리 비단 노점. 서쪽·남쪽 주택 골목과 안뜰, 운하 동쪽 상인회관·여관."""
+    land(m, 38, 24, 73, 58, "street")
+    water(m, 57, 24, 59, 58)                       # 남북 운하
+    m.set_zone(55, 24, 56, 58, "quay")
+    m.set_zone(60, 24, 61, 58, "quay")
+    m.bridge(55, 33, 61, 35)                       # 광장 ↔ 동쪽 상인회관
+    m.bridge(55, 48, 61, 50)
+    # ---- 광장 (x43~54, y31~42) ----
+    m.set_zone(43, 31, 54, 43, "court")
+    m.set_zone(47, 35, 50, 38, "mosaic")
+    m.building("vg_cp_cathedral", 45, 24)          # 북쪽: 대성당 (문은 광장으로)
+    m.building("vg_cp_tower", 52, 24, high=5)      # 종탑은 대성당 옆에 붙인다
+    m.building("vg_cap_narrow", 54, 25)
+    put(m, [("vg_cp_well", 48, 36)])               # 광장 중심
+    put(m, [("vg_cp_brazier", 45, 32), ("vg_cp_brazier", 52, 32)])            # 성당 앞 화로
+    put(m, [("vg_cp_lion_column", 54, 37), ("vg_cp_saint_column", 54, 41)])   # 운하 쪽 두 기둥
+    # 가장자리: 서쪽 벤치·화분, 남쪽 비단 노점 줄과 비단 탁자·태피스트리
+    put(m, [("vg_cp_bench", 43, 34), ("vg_cp_planter", 43, 37)])
+    put(m, [("vg_cp_silk_stalls", 43, 41), ("vg_cp_silk_table", 50, 42), ("vg_cp_tapestry", 52, 40)])
+    m.add("market", 46, 40, town="venice_rialto")
+    m.building("vg_cap_board", 50, 32)
+    m.add("board", 51, 34, town="venice_rialto")
+    # ---- 남쪽: 궁전과 그 서쪽 안뜰 ----
+    m.building("vg_cp_palace", 44, 44)
+    m.set_zone(38, 42, 43, 50, "court")
+    m.building("vg_cap_narrow", 38, 42)
+    put(m, [("vg_laundry", 40, 44), ("vg_well", 41, 47), ("vg_pot_plant", 38, 48), ("vg_cp_pennant", 52, 51)])
+    # ---- 서쪽 주택 골목 (북서 모서리와 y51~52 골목은 둑길 입구로 비운다) ----
+    m.building("vg_cap_ell", 38, 32)
+    m.building("vg_cap_narrow", 38, 37)
+    put(m, [("vg_flower_pot2", 41, 38), ("vg_cp_planter", 40, 40)])
+    m.building("vg_cap_residence", 38, 53)
+    m.building("vg_cap_row", 44, 54)
+    m.building("vg_cap_narrow", 49, 53)
+    m.building("vg_cap_ell", 51, 53)
+    # ---- 운하 동쪽: 상인회관, 여관, 주택 묶음 ----
+    m.building("vg_cap_inn", 62, 25)               # 북동 모서리(67~73, 24~29)는 유리공방 둑길 입구
+    m.set_zone(62, 30, 72, 35, "court")
+    put(m, [("vg_well", 66, 31), ("vg_flower_shelf", 70, 32), ("vg_cp_bench", 63, 33)])
+    m.building("vg_cap_hall", 63, 37)              # 상인회관
+    m.building("vg_cap_narrow", 69, 37)
+    m.building("vg_cap_narrow", 71, 37)
+    put(m, [("vg_px_cap_flag_red", 62, 41), ("vg_px_cap_flag_blue", 69, 42)])
+    m.building("vg_cap_row", 62, 44)
+    m.building("vg_cap_ell", 67, 44)
+    m.building("vg_cap_narrow", 62, 51)
+    m.building("vg_cap_row", 66, 52)
+    boats(m, [("vg_gondola", 57, 28), ("vg_cp_mooring", 57, 38), ("vg_cp_mooring", 59, 41), ("vg_gondola", 57, 44),
+              ("vg_gondola", 57, 54)])
+    reuse(m, [("vg_shop_sign", 61, 29), ("vg_cp_planter", 66, 35), ("vg_amphora", 72, 50)])
+    m.talker(60, 30, "여관 주인", "villager_tanuki_tall",
+             "배에서 내린 손님은 먼저 여기서 짐을 푸오.",
+             "다리 건너 광장이 장터요.")
+    m.talker(46, 33, "상인회 서기", "villager_fox_tall",
+             "의뢰는 성당 옆 게시판에 붙는다네.",
+             "네 마을로 가는 다리는 섬의 네 모서리에 있지.")
+    m.add("spawn", 49, 39, id="S0")              # 베네치아 씬 직접 시험용 시작 자리
+
+
+def links(m):
+    """수도↔네 마을 둑길(넓은 다리)과 외곽 둑길(좁은 다리)"""
+    # 수도 ↔ 과수원 (북서)
+    land(m, 22, 26, 37, 29, "street"); m.set_zone(22, 26, 32, 29, "meadow"); water(m, 33, 26, 35, 29)
+    m.road_rect(30, 27, 37, 28, grade=3)
+    m.bridge(32, 26, 36, 29)
+    # 수도 ↔ 유리공방 (북동)
+    land(m, 74, 26, 82, 29, "street"); water(m, 77, 26, 79, 29)
+    m.road_rect(74, 27, 82, 28, grade=3)
+    m.bridge(76, 26, 80, 29)
+    # 수도 ↔ 어촌 (남서)
+    land(m, 22, 50, 37, 53, "street"); m.set_zone(22, 50, 32, 53, "meadow"); water(m, 33, 50, 35, 53)
+    m.road_rect(30, 51, 37, 52, grade=3)
+    m.bridge(32, 50, 36, 53)
+    # 수도 ↔ 교역항 (남동)
+    land(m, 74, 50, 82, 53, "street"); water(m, 77, 50, 79, 53)
+    m.road_rect(74, 51, 82, 52, grade=3)
+    m.bridge(76, 50, 80, 53)
+    # 외곽: 과수원 ↔ 유리공방 (북쪽 모래톱)
+    land(m, 14, 1, 97, 4, "meadow")
+    water(m, 54, 0, 57, 5)
+    m.road_rect(14, 2, 53, 2, grade=1); m.road_rect(58, 2, 97, 2, grade=1)
+    m.deck_sprite("vg_footbridge", 53, 1)
+    # 외곽: 과수원 ↔ 어촌 (서쪽 모래톱)
+    land(m, 1, 30, 5, 48, "meadow")
+    water(m, 0, 38, 5, 40)
+    m.road_rect(3, 30, 3, 37, grade=1); m.road_rect(3, 41, 3, 48, grade=1)
+    m.bridge(2, 37, 4, 41)
+    # 외곽: 유리공방 ↔ 교역항 (동쪽 모래톱)
+    land(m, 106, 30, 110, 48, "meadow")
+    water(m, 106, 38, 111, 40)
+    m.road_rect(108, 30, 108, 37, grade=1); m.road_rect(108, 41, 108, 48, grade=1)
+    m.bridge(107, 37, 109, 41)
+    # 연결로 생활감: 과수원 쪽엔 과일 상자·나무, 유리공방 쪽엔 유리 조각 상자, 어촌 쪽엔 그물, 항구 쪽엔 화물
+    put(m, [("vg_lemon_crate", 24, 3), ("vg_gls_cullet", 86, 3), ("vg_px_cap_stone_bench", 44, 3),
+            ("vg_net_rack", 1, 42), ("vg_px_fsh_traps", 1, 44), ("vg_prt_cargo", 109, 43), ("vg_barrel", 109, 34)])
+    trees(m, [("vg_cypress", 30, 1), ("vg_olive", 64, 1), ("vg_cypress", 1, 33), ("vg_cypress", 110, 31)])
+    for cx, cy in [(38, 4), (70, 4), (4, 36), (106, 44)]:
+        m.cluster_deco(["vg_reeds", "vg_rocks", "vg_tuft"], cx, cy, 2, 2)
+
+
+def orchard(m):
+    """산테라스모 과수원(제안): 낮은 집, 포장 창고 앞 작은 수확 마당, 나무 군집 사이 굽은 흙길, 생울타리 문과 벌통."""
+    island(m, 17, 17, 15, 13, "meadow")
+    land(m, 14, 4, 20, 8, "meadow")                  # 북쪽 모래톱으로 이어짐
+    land(m, 1, 26, 8, 31, "meadow")                  # 서쪽 모래톱으로 이어짐
+    # 굽은 흙길: 수도 둑길 → 수확 마당 → 집들 → 북쪽·서쪽 모래톱
+    m.road_path([(30, 27), (26, 25), (22, 21), (17, 20)], width=2, grade=2)
+    m.road_path([(17, 20), (12, 18), (9, 14), (11, 12), (11, 6), (17, 6), (17, 4)], width=1, grade=1)   # 생울타리 문을 지난다
+    m.road_path([(12, 18), (8, 22), (5, 26), (3, 30)], width=1, grade=1)
+    m.set_zone(14, 18, 22, 21, "dirt")              # 수확 마당
+    # 집과 창고 (낮고 넓은 지붕)
+    swap(m, "vg_n_orc_shed", "vg_orc_shed", 15, 14)               # 포장 창고: 앞마당에서 과일을 고르고 싣는다
+    swap(m, "vg_n_orc_farmhouse", "vg_orc_house", 4, 11)
+    swap(m, "vg_n_orc_cottage", "vg_orc_cottage", 20, 9)
+    m.building("vg_orc_house", 24, 14)
+    # 장면 1: 수확 마당 — 건조대·압착기·과일 수레·상자
+    put(m, [("vg_px_orc_drying_rack", 21, 15), ("vg_px_orc_press", 21, 18), ("vg_orc_cart", 13, 21),
+            ("vg_lemon_crate", 23, 18)])
+    m.add("market", 19, 18, town="venice_santerasmo")
+    m.board(13, 16, "venice_santerasmo")
+    # 장면 2: 남쪽 과수 군집과 사다리 바구니
+    trees(m, [("vg_n_orc_olive", 2, 17), ("vg_n_orc_lemon", 6, 19), ("vg_n_orc_fig", 9, 23), ("vg_px_orc_lemon_tree2", 12, 22),
+              ("vg_olive", 21, 24), ("vg_tree", 25, 21)])
+    put(m, [("vg_px_orc_ladder_basket", 10, 21)])
+    # 장면 3: 생울타리 문 안쪽 정원과 벌통
+    m.building("vg_px_orc_hedge_gate", 10, 7, high=2, open_cells={(1, 2)})
+    put(m, [("vg_px_orc_beehive", 13, 8), ("vg_px_orc_beehive", 14, 10), ("vg_wall_low", 7, 9)])
+    trees(m, [("vg_cypress", 7, 6), ("vg_tree", 14, 5), ("vg_n_orc_olive", 25, 7), ("vg_n_orc_olive", 27, 21), ("vg_olive", 25, 8)])
+    for area in [(2, 17, 15, 26), (19, 20, 29, 26), (6, 5, 16, 11), (22, 6, 30, 12)]:
+        m.lush_around(*area)
+    reuse(m, [("vg_n_orc_vegbed", 22, 22), ("vg_n_orc_hay", 13, 13), ("vg_n_orc_wall", 2, 15), ("vg_n_orc_wall", 7, 16), ("vg_n_orc_wallcorner", 26, 11),
+              ("vg_house_ochre", 27, 18), ("vg_trellis", 25, 11), ("vg_flower_box", 20, 13), ("vg_pergola", 2, 21, 3)])
+    m.talker(16, 22, "과수원 일꾼", "villager_dog_tall",
+             "레몬이랑 무화과를 리알토 장터로 내가지.",
+             "북쪽 모래톱 길로 가면 유리공방이 나와.")
+
+
+def glassworks(m):
+    """무라노 유리공방(제안): 운하 선착장에서 모래 수레 → 작업대 → 가마 → 냉각 선반 → 진열대로 이어지는 작업 마당.
+    짧은 운하 건너 청록 벽 장인 주택 골목. 모서리는 물로 깎아 큰 사각 섬을 피한다."""
+    land(m, 82, 5, 106, 30, "street")
+    land(m, 88, 3, 96, 5, "street")                  # 북쪽 모래톱과 이어지는 선착장 길
+    water(m, 82, 5, 85, 8); water(m, 101, 5, 106, 7); water(m, 103, 27, 105, 30)   # 둥근 모서리와 작은 만
+    m.set_zone(82, 16, 92, 25, "dirt")              # 흙 작업 마당
+    m.set_zone(84, 15, 92, 16, "market")            # 공방·가마 앞에만 벽돌 띠
+    water(m, 94, 8, 95, 30)                         # 짧은 운하
+    m.set_zone(93, 5, 96, 30, "quay")
+    m.bridge(93, 19, 96, 21)
+    swap(m, "vg_n_gls_workshop", "vg_gls_workshop", 83, 10)
+    swap(m, "vg_n_gls_kilnshed", "vg_gls_kiln", 89, 11)
+    # 원료 반입 → 전시: 모래 수레(운하 쪽) → 작업대 → 야외 가마 → 냉각 선반 → 진열대(장터 앞)
+    put(m, [("vg_px_gls_sand_cart", 91, 17), ("vg_px_gls_craft_bench", 87, 18), ("vg_px_gls_molds", 86, 17),
+            ("vg_px_gls_cooling", 83, 22), ("vg_px_gls_bottle_rack", 87, 23), ("vg_px_gls_ornaments", 90, 23)])
+    m.building("vg_gls_furnace", 83, 18)
+    put(m, [("vg_gls_cullet", 91, 21)])
+    m.add("market", 89, 21, town="venice_murano")
+    m.board(86, 25, "venice_murano")
+    boats(m, [("vg_fishing_boat", 94, 12)])
+    # 장인 주택 골목
+    swap(m, "vg_n_gls_shop", "vg_gls_artisan", 97, 8)
+    m.building("vg_gls_narrow", 101, 9)
+    m.building("vg_gls_row", 97, 14)
+    m.building("vg_gls_artisan", 102, 14)
+    m.building("vg_gls_row", 97, 24)
+    m.building("vg_gls_narrow", 102, 21)
+    put(m, [("vg_flower_pot2", 100, 19), ("vg_pot_plant", 104, 20)])
+    reuse(m, [("vg_n_gls_sand", 91, 15), ("vg_n_gls_wood", 82, 15), ("vg_n_gls_blowbench", 84, 25), ("vg_n_gls_bowls", 99, 12),
+              ("vg_n_gls_cups", 86, 22), ("vg_stall_glass", 82, 24), ("vg_glass_workshop", 97, 19)])
+    m.talker(85, 16, "유리 장인", "villager_fox_tall",
+             "모래는 배로 들어와. 녹이고, 불고, 식혀서 진열하지.",
+             "다 식은 유리그릇은 리알토에서 값을 잘 쳐 줘.")
+
+
+def fishing(m):
+    """부라노 어촌(제안): 물가를 따라 길게 이어지는 작업 공간. 집 앞 닳은 돌길에서
+    그물 손질 → 생선 판매(잔교 옆) → 배 수리로 이어진다. 뒤쪽은 풀밭과 작은 집, 나무 그늘."""
+    island(m, 16, 61, 14, 12, "meadow")
+    land(m, 1, 46, 5, 68, "meadow")                  # 서쪽 모래톱 (과수원 쪽)
+    land(m, 4, 66, 28, 71, "worn")                   # 물가 닳은 돌길
+    water(m, 0, 72, 33, 83)                          # 남쪽 물가는 곧게
+    # 길: 수도 둑길 → 집 사이 골목 → 물가 / 서쪽 모래톱 → 물가
+    m.road_path([(30, 52), (20, 52), (20, 66)], width=2, grade=2)
+    m.road_path([(3, 48), (3, 66), (5, 66)], width=1, grade=1)
+    # 물가를 향한 집 줄 (문은 남쪽 돌길로). x19~20은 수도에서 내려오는 골목
+    swap(m, "vg_n_fsh_house", "vg_fsh_house", 4, 62)
+    m.building("vg_fsh_small", 9, 62)
+    swap(m, "vg_n_fsh_netshed", "vg_fsh_netshed", 14, 62)
+    swap(m, "vg_n_fsh_shelter", "vg_fsh_shelter", 21, 61)
+    # 뒤쪽: 작은 집과 나무 그늘, 그물 건조대
+    m.building("vg_fsh_house", 8, 52)
+    trees(m, [("vg_olive", 14, 51), ("vg_tree", 3, 56), ("vg_cypress", 26, 56)])
+    put(m, [("vg_net_rack", 14, 56), ("vg_barrel", 7, 57)])
+    m.lush_around(12, 50, 18, 58)
+    m.lush_around(2, 54, 7, 60)
+    # 장면 1: 그물 손질 (집 앞)
+    put(m, [("vg_px_fsh_net_mend", 5, 67), ("vg_px_fsh_traps", 9, 67), ("vg_fsh_rack", 11, 68)])
+    # 장면 2: 생선 판매 (잔교 옆)
+    put(m, [("vg_px_fsh_fish_stall", 15, 67), ("vg_px_fsh_catch", 11, 70)])
+    m.add("market", 14, 69, town="venice_burano")
+    m.board(13, 66, "venice_burano")
+    # 장면 3: 배 수리 (수리막 앞)
+    put(m, [("vg_px_prt_hull_cradle", 22, 66), ("vg_planks", 25, 68), ("vg_rope", 27, 67),
+            ("vg_px_fsh_fish_dry", 6, 70)])
+    # 길이가 다른 잔교와 계류 말뚝
+    m.deck_sprite("vg_fsh_jetty", 18, 72)
+    m.bridge(10, 72, 11, 77, dock=True)
+    m.deck_sprite("vg_fsh_jetty", 24, 72)
+    put(m, [("vg_px_fsh_mooring", 21, 71)])
+    boats(m, [("vg_fsh_dinghy", 12, 75), ("vg_fsh_dinghy", 20, 76), ("vg_fishing_boat", 26, 76)])
+    reuse(m, [("vg_n_fsh_boat", 29, 66), ("vg_n_fsh_boat", 1, 64), ("vg_n_fsh_netpile", 12, 67), ("vg_n_fsh_traps", 24, 70), ("vg_n_fsh_fishrack", 6, 58),
+              ("vg_n_fsh_driftwood", 28, 63), ("vg_n_fsh_anchor", 27, 69), ("vg_anchor", 27, 70), ("vg_crate_fish", 2, 69), ("vg_ladder_rope", 2, 66)])
+    m.talker(8, 69, "그물 손질하는 어부", "villager_bear_tall",
+             "그물은 집 앞에서 손보고, 바로 잔교로 내려가지.",
+             "생선은 키오자 소금으로 절여 둔다네.")
+    for cx, cy in [(3, 70), (29, 64)]:
+        m.cluster_deco(["vg_reeds", "vg_rocks", "vg_tuft"], cx, cy, 2, 3)
+
+
+def port(m):
+    """키오자 교역항: 안쪽 정박장의 배 → 승선판 → 저울 → 화물 수레 → 긴 창고 하역문.
+    관문과 상인 길드가 입구를 이루고, 가운데 사람 통로는 화물 마당과 나눈다."""
+    land(m, 82, 47, 106, 74, "street")
+    land(m, 104, 46, 110, 50, "street")              # 동쪽 모래톱과 이어짐
+    water(m, 82, 70, 86, 74)                        # 모서리를 깎아 큰 사각 섬을 피한다
+    m.set_zone(82, 65, 106, 74, "quay")             # 하역 부두
+    m.set_zone(84, 58, 92, 63, "dirt")              # 화물 작업 마당 (서쪽)
+    water(m, 95, 66, 103, 74)                       # 안쪽 정박장
+    m.building("vg_prt_gate", 83, 47)               # 수도에서 들어오는 관문
+    swap(m, "vg_n_prt_guild", "vg_prt_guild", 89, 48)
+    swap(m, "vg_n_prt_customs", "vg_prt_gate", 93, 48)
+    swap(m, "vg_n_prt_warehouse", "vg_prt_warehouse", 85, 54)
+    m.building("vg_prt_warehouse", 93, 54)
+    put(m, [("vg_px_prt_trade_flag", 99, 51), ("vg_px_prt_sailcloth", 100, 55)])
+    # 하역 흐름: 정박장 배 → 승선판 → 저울 → 화물 수레 → 창고 문 (사람은 x93~94 가운데 길)
+    boats(m, [("vg_barge_loaded", 97, 68)])
+    put(m, [("vg_px_prt_gangplank", 96, 64), ("vg_prt_crane", 100, 62), ("vg_px_prt_scale", 89, 60),
+            ("vg_px_prt_cargo_cart", 86, 59), ("vg_prt_cargo", 85, 62), ("vg_sacks_row", 89, 63)])
+    m.road_rect(82, 52, 100, 53, grade=3)           # 관문 → 창고 앞 수레 길 (바퀴 자국)
+    m.add("market", 91, 59, town="venice_chioggia")       # 석호 소금 배가 닿는 창고 앞
+    m.board(97, 52, "venice_chioggia")
+    # 바깥 부두: 길이가 다른 부두와 ㄱ자 화물 부두
+    m.deck_sprite("vg_prt_pier", 88, 74)
+    m.bridge(104, 74, 105, 79, dock=True)
+    boats(m, [("vg_barge_empty", 95, 77), ("vg_pole_striped", 102, 76)])
+    reuse(m, [("vg_n_prt_bales", 98, 59), ("vg_n_prt_spice", 101, 62), ("vg_n_prt_amphorae", 85, 64), ("vg_n_prt_bollard", 94, 66),
+              ("vg_fondaco", 100, 57), ("vg_jars", 92, 62), ("vg_anchor", 103, 64), ("vg_crate", 84, 65)])
+    m.talker(103, 61, "창고지기", "villager_dog_tall",
+             "소금 배가 들어오면 이 마당이 꽉 찬다오.",
+             "짐 사이로 다니지 말고 가운데 길로 가시게.")
+
+
+def venice_lagoon():
+    m = VeniceMap("venice_lagoon", "베네치아", W, H, seed=301, zone="sand")
+    m.hours = 0
+    m.water_rect(0, 0, W - 1, H - 1)
+    for y in range(H):
+        for x in range(W):
+            m.reserved[y][x] = False
+    capital(m)
+    links(m)
+    orchard(m)
+    glassworks(m)
+    fishing(m)
+    port(m)
+    # 지역별 바닥 무늬 (연결로는 기본 풀밭·모래)
+    for style, x0, y0, x1, y1 in [("cap", 38, 24, 73, 58), ("orc", 0, 4, 33, 31), ("gls", 80, 3, 107, 31),
+                                  ("fsh", 0, 46, 33, 83), ("prt", 80, 44, 111, 83)]:
+        m.set_style(x0, y0, x1, y1, style)
+    m.districts = DISTRICTS
+    m.default_district = DEFAULT_DISTRICT
+    m.add("ambience", 58, 40, id="river", radius=12)
+    m.pave_streets(2)
     m.finish()
     return m
 
 
-def lagoon_road():
-    """석호 둑길: 운하 두 줄기를 건너는 길. 남쪽 큰길(넓은 다리, 돌아감)과 둑 샛길(좁은 목교, 짧음)."""
-    m = Map("venice_lagoon_road", "석호 둑길", 54, 32, seed=202)
-    m.hours = 2
-    fixed = (*range(11, 17), *range(20, 27))
-    m.river_v(17, 19, wiggle=1, fixed_rows=fixed)
-    m.river_v(35, 37, wiggle=1, fixed_rows=fixed)
-    m.link("W", 12, 4, "venice_chioggia", "E", "W")
-    m.link("E", 12, 4, "venice_rialto", "W", "E")
-    m.road_path([(0, 13), (6, 13)], width=3, grade=3)
-    m.road_path([(47, 13), (53, 13)], width=3, grade=3)
-    # 둑 샛길: 짧지만 좁고 노면이 거칠다
-    m.road_path([(6, 13), (47, 13)], width=2, grade=1)
-    # 큰길: 남쪽으로 돌아가지만 넓고 고르다
-    m.road_path([(6, 13), (6, 22), (47, 22), (47, 13)], width=3, grade=3)
-    m.bridge(16, 13, 20, 14)
-    m.bridge(34, 13, 38, 14)
-    for by in (13, 14):
-        for bx in (*range(16, 21), *range(34, 39)):
-            m.road[by][bx] = 1
-    m.bridge(16, 22, 20, 24)
-    m.bridge(34, 22, 38, 24)
-    # 큰길 쉼터
-    m.stamp("house_plain", 24, 26, force=True)
-    m.stamp("bench", 29, 26, force=True)
-    m.talker(27, 25, "쉼터 주인", "villager_tanuki_tall",
-             "짐수레라면 이 큰길로 가시게. 다리가 넓어 바퀴가 잘 굴러.",
-             "등짐이 가벼우면 북쪽 둑길이 짧지.")
-    m.sign(3, 10, "석호 둑길\n곧장: 좁은 둑 샛길 / 남쪽: 넓은 큰길.\n같은 짐으로 두 길을 비교해 보자.")
-    m.sign(49, 10, "← 키오자 / → 리알토 장터")
-    m.add("ambience", 18, 18, id="river", radius=10)
-    m.add("ambience", 36, 18, id="river", radius=10)
-    m.forest_border(thickness=2, big=("roundbig", "fruitbig"))
-    m.scatter("roundtree", 6, area=(3, 3, 48, 28), margin=1)
-    m.flowers(3, 3, 48, 28, 14)
-    m.finish()
-    return m
-
-
-def rialto():
-    """리알토 장터: 큰 운하를 사이에 둔 수도 장터. 목조 다리로 건넌다. 유리 공방."""
-    m = Map("venice_rialto", "리알토 장터", 46, 32, seed=203, theme="town")
-    m.river_v(20, 24, wiggle=0)                       # 곧은 큰 운하
-    m.link("W", 12, 4, "venice_lagoon_road", "E", "W")
-    m.road_path([(0, 13), (19, 13)], width=3, grade=3)
-    m.road_path([(25, 13), (30, 13)], width=3, grade=3)
-    m.bridge(19, 13, 25, 15)                          # 리알토 목조 다리
-    m.road_rect(27, 11, 41, 17, grade=2)              # 네모난 장터 광장
-    # 서쪽 강변: 창고와 집
-    for name, hx, hy in [("house_plain", 3, 4), ("house3", 11, 4)]:
-        m.stamp(name, hx, hy, force=True)
-        m.road_path([(hx + 1, hy + 3), (hx + 1, 13)], width=2, grade=1)
-    m.road_path([(15, 15), (15, 24), (18, 24)], width=2, grade=1)
-    m.bridge(18, 23, 21, 26, dock=True)               # 운하 선착장
-    m.stamp("boat", 22, 26, force=True, over_road=True)
-    # 동쪽: 유리 공방과 상점
-    for name, hx, hy in [("store", 28, 4), ("house3", 37, 4), ("house_plain", 40, 21)]:
-        m.stamp(name, hx, hy, force=True)
-    m.road_path([(29, 7), (29, 11)], width=2, grade=1)
-    m.road_path([(38, 7), (38, 11)], width=2, grade=1)
-    for px, py, prop in [(32, 7, 0), (33, 7, 1), (26, 18, 2), (27, 18, 0)]:
-        m.prop(PROPS[prop], px, py)
-    m.stamp("cart", 42, 15, force=True)
-    # 사람과 시설
-    m.add("market", 34, 16, town="venice_rialto")
-    m.board(38, 12, "venice_rialto")
-    m.talker(31, 9, "유리 장인", "villager_fox_tall",
-             "공방에서 갓 나온 유리그릇이야. 가볍지만 값이 나가지.",
-             "키오자 사람들도 좋은 그릇을 찾더군.")
-    m.talker(17, 22, "뱃사공", "villager_bear_tall",
-             "운하는 배로 다니지만 자네는 다리로 건너게.",
-             "다리를 건너면 바로 장터 광장이야.")
-    m.sign(3, 10, "← 석호 둑길\n키오자 염전으로 돌아간다.")
-    m.sign(27, 10, "리알토 장터\n운하 건너 서쪽은 석호 둑길.")
-    m.add("ambience", 22, 20, id="river", radius=12)
-    m.forest_border(thickness=2, big=("roundbig", "fruitbig"))
-    m.finish()
-    return m
+CAMERA_POINTS = {
+    "venice_lagoon": [(49, 38), (65, 32), (34, 27), (17, 18), (90, 18), (14, 67), (92, 60)],
+}

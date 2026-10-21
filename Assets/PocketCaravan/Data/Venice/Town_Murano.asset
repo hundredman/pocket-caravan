@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147baa154c7bc4bf39645666676b3271, type: 3}
+  m_Name: Town_Murano
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.TownData
+  id: venice_murano
+  displayName: "\uBB34\uB77C\uB178"
+  region: {fileID: 11400000, guid: 150e6d6afa385524abcf177047f2d09b, type: 2}
+  journeyNote: "\uC720\uB9AC\uACF5\uBC29 \uB9C8\uC744. \uC720\uB9AC\uADF8\uB987\uC740
+    \uAC00\uBCCD\uC9C0\uB9CC \uAC12\uC774 \uB098\uAC04\uB2E4."
+  worldCoord: {x: 13, y: 0}
+  startLevel: 1
+  settlementTier: 1
+  facilities:
+  - id: venice_murano_rest
+    displayName: "\uAE38\uC190 \uC27C\uD130"
+    kind: 0
+    minTier: 1
+    minCredit: 0
+    description: 
+    storageCapacity: 120
+  stock:
+  - item: {fileID: 11400000, guid: 2eb42ca42c7322a4f8fe7f379bcb954e, type: 2}
+    optimal: 56
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 018a545c0e6c93f4c97c5e4224b223c9, type: 2}
+    optimal: 8
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 58596ccbd03895d429f2d5781358ce80, type: 2}
+    optimal: 6
+    localPriceMultiplier: 1
+  defaultOptimal: 3
+  vehiclesForSale: []

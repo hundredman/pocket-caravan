@@ -4,28 +4,12 @@
   "regionAssetPath": "Assets/PocketCaravan/Data/Venice/Region_Venice.asset",
   "maps": [
     {
-      "mapId": "venice_chioggia",
-      "jsonPath": "Assets/PocketCaravan/Maps/Venice/venice_chioggia.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Venice/venice_chioggia.unity",
-      "worldX": 10,
-      "worldY": 0,
-      "generator": "venice:chioggia"
-    },
-    {
-      "mapId": "venice_lagoon_road",
-      "jsonPath": "Assets/PocketCaravan/Maps/Venice/venice_lagoon_road.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Venice/venice_lagoon_road.unity",
-      "worldX": 11,
-      "worldY": 0,
-      "generator": "venice:lagoon_road"
-    },
-    {
-      "mapId": "venice_rialto",
-      "jsonPath": "Assets/PocketCaravan/Maps/Venice/venice_rialto.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Venice/venice_rialto.unity",
+      "mapId": "venice_lagoon",
+      "jsonPath": "Assets/PocketCaravan/Maps/Venice/venice_lagoon.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Venice/venice_lagoon.unity",
       "worldX": 12,
-      "worldY": 0,
-      "generator": "venice:rialto"
+      "worldY": 1,
+      "generator": "venice:venice_lagoon"
     }
   ],
   "npcs": [],

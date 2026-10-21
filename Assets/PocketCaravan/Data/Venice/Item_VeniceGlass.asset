@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
   id: venice_glass
   displayName: "\uC720\uB9AC\uADF8\uB987"
-  icon: {fileID: 21300000, guid: e3f80593a0c11433080c0d5a5e5e5363, type: 3}
+  icon: {fileID: 21300000, guid: d9412c8d7d23adb40927fc82203935b7, type: 3}
   weight: 1
   basePrice: 30
-  originTown: {fileID: 11400000, guid: c3da3a23399a49d42b57434cea951860, type: 2}
+  originTown: {fileID: 11400000, guid: 5209b58ecc91a2145977b14ad0a1b1ce, type: 2}
   pricePerMap: 0.5
   questItem: 0
