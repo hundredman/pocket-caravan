@@ -48,3 +48,5 @@ Unity `Pocket Caravan → 중앙 연결 → 내륙 교역 길목 열기` 후 Pla
 ![고려 시작권 상세도](Images/CentralConnection/goryeo-detail.png)
 
 ![내륙 길목의 건조 초원](Images/CentralConnection/inland.png)
+
+최종 확인: 정적 맵330개, Python 통합36개, 등록 출구30개 오류0, 실제 출구 왕복212개 통과. Windows/Mac 검토 ZIP을 새로 생성했다. 플랫폼 실행 범위와 해시는 빌드 기록을 따른다.
