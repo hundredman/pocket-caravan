@@ -12,6 +12,7 @@ namespace PocketCaravan
         public int version = 2;
         public string scene;
         public float px, py;
+        public int mapHeight; // 0: 맵 확장 전 저장. WorldIndex의 고정된 이전 높이를 사용한다.
         public int fx, fy;
 
         public int money, credit;
@@ -51,6 +52,16 @@ namespace PocketCaravan
         static string Path => System.IO.Path.Combine(Application.persistentDataPath, SaveFile);
 
         public static bool Exists => File.Exists(Path);
+
+        /// <summary>위쪽 기준 타일은 유지하고, 맵 높이 확장으로 바뀐 Unity y만 보정한다.</summary>
+        public static Vector3 PositionFor(SaveData data)
+        {
+            var info = WorldIndex.Get()?.Map(data.scene);
+            int current = info != null ? info.height : 0;
+            int saved = data.mapHeight > 0 ? data.mapHeight : (info != null ? info.legacyHeight : 0);
+            float delta = current > 0 && saved > 0 ? current - saved : 0;
+            return new Vector3(data.px, data.py + delta, 0f);
+        }
 
         public static bool LoadBlocked { get; private set; }
 

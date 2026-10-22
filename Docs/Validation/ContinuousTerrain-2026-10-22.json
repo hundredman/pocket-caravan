@@ -1,0 +1,131 @@
+{
+  "date": "2026-10-22",
+  "scope": "2D continuous terrain prototype; shared world field -> actual map JSON -> Unity scenes and atlas",
+  "maps": {
+    "total": 19,
+    "goryeo": 13,
+    "transit": 6,
+    "size": [
+      80,
+      64
+    ],
+    "settlements": {
+      "goryeoCapital": 1,
+      "goryeoVillages": 4,
+      "transitMarkets": 2
+    },
+    "directedExits": 290
+  },
+  "static": {
+    "mapChecksPassed": 1206,
+    "integrationTestsPassed": 40,
+    "registeredExitErrors": 0,
+    "atlasWaterCells": "Full and Goryeo regional hydrology mask pixels checked against exported runtime water",
+    "borderCoverage": "All globally reachable passable shared border runs have reciprocal exit coverage"
+  },
+  "actualScenes": {
+    "maps": 19,
+    "cells": 97280,
+    "passed": [
+      "Naru all ground/blocked/road cells and spawn strips match JSON",
+      "Route01 all ground/blocked/road cells and spawn strips match JSON",
+      "Gaegyeong all ground/blocked/road cells and spawn strips match JSON",
+      "Dakmok all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_songak all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_jangdan all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_ridge all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_descent all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_fieldroad all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_westcoast all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_tidalcoast all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_rivervalley all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_southcoast all ground/blocked/road cells and spawn strips match JSON",
+      "transit_pass all ground/blocked/road cells and spawn strips match JSON",
+      "transit_woodtown all ground/blocked/road cells and spawn strips match JSON",
+      "transit_wetroad all ground/blocked/road cells and spawn strips match JSON",
+      "transit_ferry all ground/blocked/road cells and spawn strips match JSON",
+      "transit_central_approach all ground/blocked/road cells and spawn strips match JSON",
+      "transit_crossroads all ground/blocked/road cells and spawn strips match JSON"
+    ]
+  },
+  "saveMigration": {
+    "mapsChecked": 19,
+    "legacyHeightSource": "15 old map heights verified against previous committed JSON; 4 new sectors use current64",
+    "legacyAndModernPositions": true,
+    "savePayloadUnchanged": true,
+    "formula": "py + currentHeight - savedHeight; mapHeight0 uses frozen legacyHeight",
+    "reproduce": "SceneTerrainChecks.CheckSavePositions()"
+  },
+  "runtimeCrossings": {
+    "status": "passed",
+    "assertions": 1136,
+    "physicalCrossings": 189,
+    "scope": "All19 sectors visited; canonical3-lane round trips and sampled grass seams; actual PlayerMotor collision ticks then exit.Use; arrival offset, walkability, cash/cargo/contract preserved; no autosave",
+    "complete": true,
+    "error": null
+  },
+  "builds": {
+    "Windows": {
+      "result": "Succeeded",
+      "output": "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Builds/Windows/PocketCaravan.exe",
+      "builtAtUtc": "2026-10-22T09:42:27.3971570Z",
+      "errors": 0,
+      "warnings": 19,
+      "bytes": 156528411,
+      "seconds": 20.847116
+    },
+    "macOS": {
+      "result": "Succeeded",
+      "output": "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Builds/macOS/PocketCaravan.app",
+      "builtAtUtc": "2026-10-22T09:43:02.0299010Z",
+      "errors": 0,
+      "warnings": 0,
+      "bytes": 174276603,
+      "seconds": 22.607428
+    }
+  },
+  "limits": [
+    "Scene transitions remain; not streaming seamless world",
+    "Other civilization integration and online unimplemented",
+    "Static travel costs exclude real human decisions, loading and trading; no human fun/playtime claim",
+    "Historical geography is compressed fiction, not a dated border/coast reconstruction"
+  ],
+  "sourceCommit": "0bb01751ac556a16e500aa96617e742a8ae4d0ae",
+  "visualReview": [
+    "actual playable coast",
+    "in-game full atlas",
+    "in-game regional atlas with readable labels/player marker"
+  ],
+  "packages": [
+    {
+      "file": "PocketCaravan-Windows-x64-Continuous-2026-10-22.zip",
+      "bytes": 49513625,
+      "sha256": "b37e4346491e5bc8bb64173c7113b3b1e7e02e734e6f07762ad17698c051ca2b",
+      "sourceCommit": "0bb01751ac556a16e500aa96617e742a8ae4d0ae",
+      "published": false
+    },
+    {
+      "file": "PocketCaravan-macOS-Universal-Continuous-2026-10-22.zip",
+      "bytes": 58005453,
+      "sha256": "3ae0defcfed1ed4b2726e8943853faa743d56a3ae1b547758d08abf9870508ed",
+      "sourceCommit": "0bb01751ac556a16e500aa96617e742a8ae4d0ae",
+      "published": false
+    }
+  ],
+  "nativeSmoke": {
+    "engineInitialized": true,
+    "runtimeExceptions": [],
+    "processExitCode": 0,
+    "mode": "macOS headless startup only; no human gameplay or Windows execution validation",
+    "previewSaveRestored": true,
+    "compatiblePreviewSaveDidNotTriggerLoadBlock": true
+  },
+  "architecture": {
+    "windows": "PE32+ x86-64",
+    "macOS": [
+      "x86_64",
+      "arm64"
+    ]
+  },
+  "projectAndRenderSettingsRestored": true
+}

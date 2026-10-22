@@ -1,13 +1,14 @@
 # 소스·빌드·발표 파일 현황
 
-확인: 2026-10-22. 최신 Peninsula ZIP은 기존 저장 보호와 고려 반도~대륙 내륙 연결/초원/지도 개선을 포함한다. 이전 ZIP과 구분한다. **날짜가 같아도 다른 시험장/본편 빌드이며, main에 반영됐다고 공개 ZIP이 갱신되는 것은 아니다.**
+확인: 2026-10-22. 최신 Continuous ZIP은 실제 연속 지형19구역·지도 일치·풀밭 경계 이동·저장 위치 보정을 포함한다. 이전 ZIP과 구분한다. **날짜가 같아도 다른 시험장/본편 빌드이며, main에 반영됐다고 공개 ZIP이 갱신되는 것은 아니다.**
 
 ## 공유할 때 구분할 파일
 
 | 구분 | 내용 | 위치/배포 상태 | 포함하지 않은 것 |
 |---|---|---|---|
-| 현재 main 소스 | 고려9+중간권6맵(15맵), 고려 반도/대륙 지도·송악 서쪽 대륙 출구·내륙 초원, 제작 라이브러리, 게시판 지역/경로 제한(#7), 고려·중간권 지형 재배치·여정 수첩/NPC 의뢰 선택·고려 배달/귀환 교역·수량 거래/구매 예산·화물 판매처/장부 연결·저장 참조 검사/실패 안내 | GitHub main. Unity6000.3.26f1로 확인 | 온라인, 북유럽 Draft 콘텐츠, 새 출신 배율·퀘스트 지역/장 제한 |
+| 현재 main 소스 | 고려13+중간권6구역(19구역), 공통 실제 지형/지도·해안/하구4구역·풀밭 경계 이동·저장 높이 보정·내륙 초원, 제작 라이브러리, 게시판 지역/경로 제한(#7), 고려·중간권 지형 재배치·여정 수첩/NPC 의뢰 선택·고려 배달/귀환 교역·수량 거래/구매 예산·화물 판매처/장부 연결·저장 참조 검사/실패 안내 | GitHub main. Unity6000.3.26f1로 확인 | 온라인, 북유럽 Draft 콘텐츠, 새 출신 배율·퀘스트 지역/장 제한 |
 | 공개10/15 본편 프리릴리스 | 코드 `3ad1d5c` 기준 이전 고려 프로토타입 | [GitHub Release](https://github.com/hundredman/pocket-caravan/releases/tag/goryeo-prototype-2026-10-15) | 이후 마을/시설·낙하 제거·중간권·게시판 패치. 최신 main 검증용으로 쓰지 않음 |
+| 로컬10/22 Continuous ZIP | 실제 해안·강·길·숲과 지도 일치,19구역 경계 연결, 구 저장 위치 보정 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-Continuous-2026-10-22.zip`. 소스0bb0175, 미공개 | Windows 실제 실행·다른 Mac·사람 체감·온라인 미검증. 씬 전환은 남아 있음 |
 | 로컬10/22 Peninsula ZIP | 고려 반도·바다·대륙 지도, 송악 북서쪽 대륙 진입, 여러 경유 지역과 건조 초원, 고려 확대 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-Peninsula-2026-10-22.zip`. 소스7ddf9df, 미공개 | Windows 실제 실행/다른 Mac·전 여정 재미·온라인 미검증. 남부 반도 배경은 미구현 |
 | 로컬10/21 SaveGuard ZIP | Ledger 개선 + 저장 참조 사전 검사·원본 보존/실패 안내 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-SaveGuard-2026-10-21.zip`. 코드d277308, 미공개 | Windows 실제 실행·사람 반복 재미·온라인 미검증. Mac 기존 프리뷰 초기 복원 확인 |
 | 로컬10/21 Ledger ZIP | Market 개선 + 장터 L 연결·화물 판매처/경유 비교·안내 문구 정리 | `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-Ledger-2026-10-21.zip`. 코드946dcbb, 미공개 | Windows 실제 실행·사람 반복 재미·온라인 미검증. Mac 초기 실행만 확인 |
@@ -51,3 +52,7 @@ SaveGuard ZIP 소스는d277308이다. Windows 성공(오류0·경고18), Mac 성
 ## 10/22 반도·대륙 검토 빌드
 
 소스7ddf9dfcbbc2bd6c0024b8f8b3e881ff35be9435. Windows 성공(오류0·경고18), Mac 성공(오류0·경고0). Mac Universal 두 아키텍처·headless 초기화/실행 예외0/종료0·기존 프리뷰 저장 바이트 복구를 확인했다. Windows는 빌드/PE x64 형식까지 확인했으며 실제 실행은 별도다. ZIP 무결성/안내문/소스/해시는 [검증 기록](Validation/CentralConnection-2026-10-22.json)을 따른다. 프로젝트/렌더 설정은 빌드 전 값으로 복구했다. 이전 중간 배치 원시 빌드는 이 ZIP으로 대체하며 공개 Release는 여전히10/15다.
+
+## 10/22 실제 연속 지형 검토 빌드
+
+소스0bb01751ac556a16e500aa96617e742a8ae4d0ae. Windows 성공(오류0·경고19), Mac 성공(오류0·경고0). Mac Universal Intel/Apple Silicon, headless 초기화/종료0·실행 예외0·호환 프리뷰 저장 복원과 원본 바이트 복구를 확인했다. Windows는 빌드/PE x64 형식까지 확인했으며 실제 실행은 미검증이다. ZIP 무결성·README·소스/해시는 [검증 기록](Validation/ContinuousTerrain-2026-10-22.json)을 따른다. 프로젝트/렌더 설정5개는 빌드 전 바이트로 복구했다. 로컬ZIP이며 공개10/15 Release는 갱신하지 않았다. Mac Developer ID 서명/공증은 미완료다.

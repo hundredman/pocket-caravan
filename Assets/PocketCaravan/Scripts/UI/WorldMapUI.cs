@@ -93,7 +93,7 @@ namespace PocketCaravan
             var panel = new Rect((UIStyle.VirtualWidth - width) / 2, (UIStyle.VirtualHeight - height) / 2, width, height);
             Paper(panel, new Color32(100, 76, 48, 255));
             Paper(new Rect(panel.x + 3, panel.y + 3, width - 6, height - 6), new Color32(225, 211, 171, 255));
-            GUI.Label(new Rect(panel.x + 16, panel.y + 10, width - 32, 20), regional ? "고려 시작권 상세도" : "고려 반도·대륙 교역도", title);
+            GUI.Label(new Rect(panel.x + 16, panel.y + 10, width - 32, 20), regional ? "고려 시작권 상세도" : "고려·내륙 지형도", title);
             GUI.Label(new Rect(panel.xMax - 76, panel.y + 13, 65, 14), "M / Esc 닫기", ink);
 
             GUI.Label(new Rect(panel.xMax - 190, panel.y + 13, 105, 14), "북 ↑   동 →", ink);
@@ -127,6 +127,14 @@ namespace PocketCaravan
             foreach(var area in atlas.maps)
                 if(index != null && index.Map(area.mapId) != null)
                 { var point=Project(area.labelX,area.labelY);markers.Add(new Rect(point.x-4,point.y-4,8,8)); }
+            var currentPlayer=FindAnyObjectByType<PlayerMotor>();
+            var currentArea=Array.Find(atlas.maps,a=>a.mapId==here);
+            if(currentPlayer!=null && currentArea!=null)
+            {
+                var cell=currentPlayer.Cell;
+                var point=Project(currentArea.x+cell.x+.5f,currentArea.y+currentArea.h-cell.y-.5f);
+                markers.Add(new Rect(point.x-6,point.y-6,12,12));
+            }
             foreach (var area in atlas.maps)
             {
                 var map = index != null ? index.Map(area.mapId) : null;
@@ -141,7 +149,7 @@ namespace PocketCaravan
                 if (destination) label += " · 의뢰";
                 // 글자 밑만 종이색으로 밝힌다. 구역별 네모 박스는 그리지 않는다.
                 float labelWidth = Mathf.Min(116, caption.CalcSize(new GUIContent(label)).x + 8);
-                var labelRect = PlaceLabel(p,labelWidth,canvas,placedLabels,markers);
+                var labelRect = PlaceLabel(p,labelWidth,new Rect(panel.x+12,canvas.y,width-24,canvas.height),placedLabels,markers);
                 placedLabels.Add(labelRect);
                 float endY=labelRect.center.y<p.y?labelRect.yMax:labelRect.y;
                 Paper(new Rect(p.x,Mathf.Min(p.y,endY),.5f,Mathf.Abs(endY-p.y)),new Color32(105,92,68,130));
@@ -162,7 +170,7 @@ namespace PocketCaravan
             }
             var legendY = panel.y + 286;
             GUI.Label(new Rect(panel.x + 16, legendY, width - 32, 14),
-                regional ? "붉은 점: 내 위치   갈색 길: 교역로   푸른 물: 하천·연못   지붕: 마을   의뢰: 배달 목적지" : "붉은 점: 내 위치   마을 상세: 고려 확대   해안 윤곽: 축약 지리   옅은 바탕: 미구현 지형", ink);
+                regional ? "붉은 점: 내 위치   갈색 길: 교역로   푸른 물: 강·바다   지붕: 마을   의뢰: 배달 목적지" : "붉은 점: 내 위치   마을 상세: 고려 확대   육지·물·길: 실제 지형   빈 바탕: 미개방", ink);
             string current = index != null ? index.MapName(here) : here;
             var currentInfo = index != null ? index.Map(here) : null;
             if (currentInfo != null && !string.IsNullOrEmpty(currentInfo.town))
@@ -177,7 +185,7 @@ namespace PocketCaravan
         // Greedy placement keeps nearby map names legible as the registered world grows.
         static Rect PlaceLabel(Vector2 point,float width,Rect canvas,List<Rect> placed,List<Rect> markers)
         {
-            var offsets=new[]{new Vector2(0,-22),new Vector2(0,4),new Vector2(-24,-22),new Vector2(24,-22),new Vector2(0,-40),new Vector2(0,22),new Vector2(-48,-22),new Vector2(48,-22),new Vector2(0,-58),new Vector2(0,40),new Vector2(0,-76),new Vector2(0,58)};
+            var offsets=new[]{new Vector2(0,-22),new Vector2(0,4),new Vector2(-24,-22),new Vector2(24,-22),new Vector2(-80,-8),new Vector2(80,-8),new Vector2(-120,-8),new Vector2(120,-8),new Vector2(0,-40),new Vector2(0,22),new Vector2(-48,-22),new Vector2(48,-22),new Vector2(0,-58),new Vector2(0,40),new Vector2(0,-76),new Vector2(0,58)};
             Rect best=default;float bestPenalty=float.MaxValue;
             foreach(var offset in offsets)
             {

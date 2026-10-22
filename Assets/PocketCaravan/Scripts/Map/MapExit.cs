@@ -13,6 +13,7 @@ namespace PocketCaravan
 
         [Tooltip("Build Settings에 들어 있는 씬 이름")] public string targetScene;
         public string targetSpawnId;
+        public string edge;
         public Vector2Int size = Vector2Int.one;
 
         void OnEnable() => All.Add(this);
@@ -40,9 +41,14 @@ namespace PocketCaravan
             GameManager.I.TravelTo(targetScene, targetSpawnId, offset, player.Facing);
         }
 
-        public static MapExit At(Vector3Int cell)
+        public bool IsLeaving(Vector2Int facing)
         {
-            foreach (var e in All) if (e.Contains(cell)) return e;
+            switch(edge) { case "E":return facing.x>0;case "W":return facing.x<0;case "N":return facing.y>0;case "S":return facing.y<0;default:return true; }
+        }
+
+        public static MapExit At(Vector3Int cell,Vector2Int facing=default)
+        {
+            foreach (var e in All) if (e.Contains(cell) && (facing==Vector2Int.zero || e.IsLeaving(facing))) return e;
             return null;
         }
 

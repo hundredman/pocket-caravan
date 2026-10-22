@@ -209,10 +209,10 @@ namespace PocketCaravan
                 if (!TryApplySave(d)) return;
                 if (!string.IsNullOrEmpty(d.scene) && d.scene != scene.name)
                 {
-                    StartCoroutine(Travel(d.scene, null, 0f, new Vector2Int(d.fx, d.fy), new Vector3(d.px, d.py, 0f)));
+                    StartCoroutine(Travel(d.scene, null, 0f, new Vector2Int(d.fx, d.fy), SaveSystem.PositionFor(d)));
                     return;
                 }
-                pendingExact = new Vector3(d.px, d.py, 0f);
+                pendingExact = SaveSystem.PositionFor(d);
                 pendingFacing = new Vector2Int(d.fx, d.fy);
                 Notify.Show("이어서 한다 (Esc 메뉴에서 처음부터 시작 가능)", 4f);
             }
@@ -359,6 +359,7 @@ namespace PocketCaravan
             var d = new SaveData
             {
                 scene = SceneManager.GetActiveScene().name,
+                mapHeight = MapRoot.Current.ground.cellBounds.size.y,
                 px = pc != null ? pc.transform.position.x : 0, py = pc != null ? pc.transform.position.y : 0,
                 fx = pc != null ? pc.Motor.Facing.x : 0, fy = pc != null ? pc.Motor.Facing.y : -1,
                 money = Player.money, credit = Player.credit,
