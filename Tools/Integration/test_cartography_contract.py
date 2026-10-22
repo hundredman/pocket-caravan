@@ -40,7 +40,7 @@ class CartographyContract(unittest.TestCase):
         return entries
 
     def test_world_atlas_matches_playable_exits(self):
-        self.assertEqual(len(self.check_atlas('Goryeo')), 13)
+        self.assertEqual(len(self.check_atlas('Goryeo')), 15)
 
     def test_goryeo_detail_has_only_connected_regional_maps(self):
         entries = self.check_atlas('GoryeoRegional')

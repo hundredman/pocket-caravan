@@ -67,7 +67,9 @@ def validate():
             for dy in range(h):
                 for dx in range(w):
                     layer = m.high if dy < high else m.obj
-                    tree_ok &= layer[y + dy][x + dx] == K(s, sx + dx, sy + dy, rc)
+                    expected = K(s, sx + dx, sy + dy, rc)
+                    if getattr(m,'visual_skin',None) and '@' not in expected: expected += '@skin_'+m.visual_skin
+                    tree_ok &= layer[y + dy][x + dx] == expected
         check(m.id + " 모든 나무 묶음 타일 보존", tree_ok)
         accessible = reachable(m, next(iter(roads)))
         for o in m.objects:

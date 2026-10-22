@@ -9,11 +9,11 @@ class TransitContract(unittest.TestCase):
     def test_intermediate_journey_and_independent_towns(self):
         region=json.loads((ROOT/'Assets/PocketCaravan/World/Regions/transit.json').read_text())
         maps={e['mapId']:json.loads((ROOT/e['jsonPath']).read_text()) for e in region['maps']}
-        self.assertEqual(len(maps),4)
+        self.assertEqual(len(maps),6)
         for mid,data in maps.items():
             self.assertTrue(mid.startswith('transit_'))
             for o in data['objects']:
-                if o['kind']=='exit':self.assertIn(o['target'],set(maps)|{'goryeo_jangdan'})
+                if o['kind']=='exit':self.assertIn(o['target'],set(maps)|{'goryeo_songak'})
         database=(ROOT/'Assets/PocketCaravan/Resources/GameDatabase.asset').read_text()
         towns={o['town'] for m in maps.values() for o in m['objects'] if o['kind']=='market'}
         self.assertEqual(towns,{'transit_woodtown','transit_ferry'})

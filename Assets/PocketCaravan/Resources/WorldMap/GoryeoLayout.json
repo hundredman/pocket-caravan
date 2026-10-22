@@ -1,123 +1,159 @@
 {
-  "width": 307,
-  "height": 168,
+  "width": 483,
+  "height": 325,
   "maps": [
     {
       "mapId": "Naru",
-      "x": 12,
-      "y": 82,
+      "x": 276,
+      "y": 131,
       "w": 40,
       "h": 28,
-      "labelX": 36.5,
-      "labelY": 97.5
+      "labelX": 300.5,
+      "labelY": 146.5
     },
     {
       "mapId": "Route01",
-      "x": 52,
-      "y": 86,
+      "x": 316,
+      "y": 135,
       "w": 54,
       "h": 34,
-      "labelX": 74.5,
-      "labelY": 105.5
+      "labelX": 338.5,
+      "labelY": 154.5
     },
     {
       "mapId": "Gaegyeong",
-      "x": 61,
-      "y": 40,
+      "x": 325,
+      "y": 89,
       "w": 64,
       "h": 46,
-      "labelX": 97.5,
-      "labelY": 61.5
+      "labelX": 361.5,
+      "labelY": 110.5
     },
     {
       "mapId": "Dakmok",
-      "x": 125,
-      "y": 52,
+      "x": 389,
+      "y": 101,
       "w": 34,
       "h": 22,
-      "labelX": 143.5,
-      "labelY": 65.5
+      "labelX": 407.5,
+      "labelY": 114.5
     },
     {
       "mapId": "goryeo_songak",
-      "x": 58,
-      "y": 12,
+      "x": 322,
+      "y": 61,
       "w": 40,
       "h": 28,
-      "labelX": 80.5,
-      "labelY": 27.5
+      "labelX": 344.5,
+      "labelY": 76.5
     },
     {
       "mapId": "goryeo_jangdan",
-      "x": 125,
-      "y": 118,
+      "x": 389,
+      "y": 167,
       "w": 40,
       "h": 28,
-      "labelX": 146.5,
-      "labelY": 133.5
+      "labelX": 410.5,
+      "labelY": 182.5
     },
     {
       "mapId": "goryeo_ridge",
-      "x": 98,
-      "y": 12,
+      "x": 362,
+      "y": 61,
       "w": 61,
       "h": 28,
-      "labelX": 120.5,
-      "labelY": 31.5
+      "labelX": 384.5,
+      "labelY": 80.5
     },
     {
       "mapId": "goryeo_descent",
-      "x": 125,
-      "y": 40,
+      "x": 389,
+      "y": 89,
       "w": 34,
       "h": 12,
-      "labelX": 147.5,
-      "labelY": 59.5
-    },
-    {
-      "mapId": "goryeo_fieldroad",
-      "x": 125,
-      "y": 74,
-      "w": 34,
-      "h": 44,
-      "labelX": 147.5,
-      "labelY": 93.5
-    },
-    {
-      "mapId": "transit_pass",
-      "x": 165,
-      "y": 118,
-      "w": 56,
-      "h": 38,
-      "labelX": 187.5,
-      "labelY": 137.5
-    },
-    {
-      "mapId": "transit_woodtown",
-      "x": 210,
-      "y": 88,
-      "w": 40,
-      "h": 30,
-      "labelX": 231.5,
+      "labelX": 411.5,
       "labelY": 108.5
     },
     {
-      "mapId": "transit_wetroad",
-      "x": 210,
-      "y": 50,
+      "mapId": "goryeo_fieldroad",
+      "x": 389,
+      "y": 123,
+      "w": 34,
+      "h": 44,
+      "labelX": 411.5,
+      "labelY": 142.5
+    },
+    {
+      "mapId": "transit_pass",
+      "x": 266,
+      "y": 56,
       "w": 56,
       "h": 38,
-      "labelX": 232.5,
-      "labelY": 69.5
+      "labelX": 288.5,
+      "labelY": 75.5
+    },
+    {
+      "mapId": "transit_woodtown",
+      "x": 226,
+      "y": 56,
+      "w": 40,
+      "h": 30,
+      "labelX": 247.5,
+      "labelY": 76.5
+    },
+    {
+      "mapId": "transit_wetroad",
+      "x": 170,
+      "y": 56,
+      "w": 56,
+      "h": 38,
+      "labelX": 192.5,
+      "labelY": 75.5
     },
     {
       "mapId": "transit_ferry",
-      "x": 255,
-      "y": 18,
+      "x": 144,
+      "y": 24,
       "w": 40,
       "h": 32,
-      "labelX": 276.5,
-      "labelY": 38.5
+      "labelX": 165.5,
+      "labelY": 44.5
+    },
+    {
+      "mapId": "transit_central_approach",
+      "x": 90,
+      "y": 24,
+      "w": 54,
+      "h": 38,
+      "labelX": 112.5,
+      "labelY": 43.5
+    },
+    {
+      "mapId": "transit_crossroads",
+      "x": 18,
+      "y": 24,
+      "w": 72,
+      "h": 56,
+      "labelX": 51.5,
+      "labelY": 54.5
     }
-  ]
+  ],
+  "annotations": [
+    {
+      "text": "고려 반도",
+      "x": 383,
+      "y": 240
+    },
+    {
+      "text": "중앙아시아 방면",
+      "x": 45,
+      "y": 12
+    },
+    {
+      "text": "대륙 내륙",
+      "x": 236,
+      "y": 26
+    }
+  ],
+  "geography": "peninsula_inland"
 }

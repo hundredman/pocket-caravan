@@ -84,6 +84,10 @@ def tile_image(key):
             return t.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
         return t
     base, _, rc = key.partition("@")
+    if rc.startswith("skin_"):
+        from Modules.skins import SKINS, recolor as skin_recolor
+        skin = next(s for s in SKINS if s[0] == rc[5:])
+        return skin_recolor(tile_image(base), base, skin)
     s, x, y = base.split(":")
     x, y = int(x), int(y)
     t = sheet(s).crop((x * 16, y * 16, x * 16 + 16, y * 16 + 16))
@@ -586,6 +590,17 @@ class Map:
             for x in range(1, self.w - 1):
                 if all(self.water[y + dy][x + dx] for dx in (-1, 0, 1) for dy in (-1, 0, 1)) and self.rng.random() < 0.12:
                     self.objects.append(dict(kind="anim", x=x, y=y, sheet="ripples", frames=4, fps=3.0 + self.rng.random()))
+
+    def apply_visual_skin(self, skin_id):
+        """Reuse the module library's visual palettes without modifying traversal data."""
+        from Modules.skins import SKINS
+        if skin_id not in {s[0] for s in SKINS}:raise ValueError(skin_id)
+        self.visual_skin = skin_id
+        for layer in (self.ground,self.deco,self.obj,self.high):
+            for row in layer:
+                for x,key in enumerate(row):
+                    if key and '@' not in key and key.split(':')[0] in ('floor','detail','nature','field','water'):
+                        row[x]=key+'@skin_'+skin_id
 
     def render(self, path, scale=1):
         img = Image.new("RGBA", (self.w * 16, self.h * 16), (0, 0, 0, 255))

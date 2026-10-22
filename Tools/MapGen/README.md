@@ -1,6 +1,6 @@
 # MapGen: 본편 지형·지도 생성
 
-2026-10-18 안내. 본편은 고려9맵+중간권4맵이다. exporter는 `World/settings.json`의 `atlasRegions`(goryeo·transit)를 생성하며, 다른 팀 지역을 자동 생성하지 않는다. 환경 원형40개와 장애물48종은 별도 제작 라이브러리다. [문서 안내](../../Docs/README.md).
+2026-10-22 안내. 본편은 고려9맵+중간권6맵이다. exporter는 `World/settings.json`의 `atlasRegions`(goryeo·transit)를 생성하며, 다른 팀 지역을 자동 생성하지 않는다. 환경 원형40개와 장애물48종은 별도 제작 라이브러리다. [문서 안내](../../Docs/README.md).
 
 맵은 이 파이썬 코드로 설계하고, Unity는 결과 JSON을 씬으로 만든다.
 
@@ -55,3 +55,5 @@
 `paper_rack`은 이 생성기에서 그리는 3×2칸 종이 건조대 스탬프다. 집·나무와 같은 묶음 배치 규칙을 사용한다. 원본을 수정한 뒤 export하고, 필요한 씬만 다시 생성한다.
 
 2026-10-17 개발 반영: 신규 주행 낙하/게이지/정차 안정화는 사용하지 않는다. 노면/짐/속도에 반응하는 시각 흔들림은 감속 연출로 유지한다. 현재 기준은 Docs/DevelopmentStatus.md 및 실제 시험장 UI를 따른다.
+
+10/22: 해안/대륙 프로필은 `World/Cartography/peninsula.json`, 실제 대륙 출구는 송악 산록 서쪽이다. `Map.apply_visual_skin`은 기존 환경 라이브러리 팔레트를 재사용하며 충돌·노면 등급을 바꾸지 않는다. 지도와 실제 구역 구분은 [현재 설계](../../Docs/CentralConnection.md)를 따른다.

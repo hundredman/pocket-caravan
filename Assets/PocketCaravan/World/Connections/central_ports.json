@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 2,
+  "mapId": "transit_crossroads",
+  "purpose": "동서남북 문명을 여러 지역으로 잇는 교역망. 고려 반도 북서부에서 대륙을 지나 중앙아시아 방면으로 이동하는 축약 지리. 경제 좌표는 방위/실제 거리가 아님.",
+  "routes": [
+    {
+      "direction": "E",
+      "region": "goryeo",
+      "status": "connected",
+      "chain": [
+        "transit_crossroads",
+        "transit_central_approach",
+        "transit_ferry",
+        "transit_wetroad",
+        "transit_woodtown",
+        "transit_pass",
+        "goryeo_songak"
+      ],
+      "localEdge": "E",
+      "localSpawn": "E",
+      "target": "transit_central_approach",
+      "targetSpawn": "W",
+      "width": 3
+    },
+    {
+      "direction": "N",
+      "region": null,
+      "status": "planned",
+      "chain": [],
+      "note": "여러 중간 맵을 거쳐 문명에 도달. 담당 지역/경계 출구는 통합 시 확정. 현재 런타임 출구 없음."
+    },
+    {
+      "direction": "W",
+      "region": null,
+      "status": "planned",
+      "chain": [],
+      "note": "여러 중간 맵을 거쳐 문명에 도달. 담당 지역/경계 출구는 통합 시 확정. 현재 런타임 출구 없음."
+    },
+    {
+      "direction": "S",
+      "region": null,
+      "status": "planned",
+      "chain": [],
+      "note": "여러 중간 맵을 거쳐 문명에 도달. 담당 지역/경계 출구는 통합 시 확정. 현재 런타임 출구 없음."
+    }
+  ]
+}
