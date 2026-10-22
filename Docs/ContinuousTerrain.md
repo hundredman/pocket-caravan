@@ -46,3 +46,5 @@
 ![게임 내 전체 지도](Images/ContinuousTerrain/world-map.png)
 
 ![게임 내 고려 확대](Images/ContinuousTerrain/regional-map.png)
+
+현재 검토 빌드: `Builds/Packages/deliverables/PocketCaravan-{Windows-x64,macOS-Universal}-Continuous-2026-10-22.zip`. 소스0bb0175이며 배포/실행 범위는 [빌드 현황](BuildStatus.md)을 따른다.
