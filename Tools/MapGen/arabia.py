@@ -1,0 +1,105 @@
+"""아라비아 맵 원본: 수도1(사나)+마을4(알 아흐사·자비드·타이즈·제다)+길5 = 10개 씬.
+
+- 2026-10-22부터 세 맵 모두 사용자 제작 아라비아 에셋으로 만든다 (arabia_art.py, arabia_ahsa/farmroad/zabid.py).
+- 실제 지리·도시 규모·거리의 재현이 아니라 게임용 압축 배치다. 지명·배치·NPC는 제안(1안)이다.
+- JSON 내보내기는 arabia_export.py가 담당한다. 공용 export.py/지형 약도(atlasRegions)는 건드리지 않는다.
+- 좌표는 좌상단 기준 타일 좌표(JSON y는 아래로 증가). Unity 셀 y는 빌더가 뒤집는다.
+"""
+from tiles import Map
+
+AHSA, FARMROAD, ZABID = 'arabia_ahsa', 'arabia_farmroad', 'arabia_zabid'
+WORKSHOP, TAIZ, PORTROAD, JEDDAH = 'arabia_workshoproad', 'arabia_taiz', 'arabia_portroad', 'arabia_jeddah'
+SHORTCUT, SANAA, HIGHROAD = 'arabia_shortcut', 'arabia_sanaa', 'arabia_highroad'
+
+# 연결표 (Docs/Arabia/02 §1·§3): (맵, 경계, 스폰 키) ↔ (맵, 경계, 스폰 키). 경계 폭은 모두 4칸.
+# 큰길은 제다·사나의 북쪽 출구와 큰길의 남쪽 두 출구로 잇는다 (출구·스폰 방향이 같아야 하므로).
+CONNECTIONS = [
+    ((AHSA, 'E', 'e_01'), (FARMROAD, 'W', 'w_01')),
+    ((FARMROAD, 'E', 'e_01'), (ZABID, 'W', 'w_01')),
+    ((ZABID, 'E', 'e_01'), (WORKSHOP, 'W', 'w_01')),
+    ((WORKSHOP, 'E', 'e_01'), (TAIZ, 'W', 'w_01')),
+    ((TAIZ, 'E', 'e_01'), (PORTROAD, 'W', 'w_01')),
+    ((PORTROAD, 'E', 'e_01'), (JEDDAH, 'W', 'w_01')),
+    ((JEDDAH, 'E', 'e_01'), (SHORTCUT, 'W', 'w_01')),
+    ((SHORTCUT, 'E', 'e_01'), (SANAA, 'W', 'w_01')),
+    ((JEDDAH, 'N', 'n_01'), (HIGHROAD, 'S', 's_01')),
+    ((HIGHROAD, 'S', 's_02'), (SANAA, 'N', 'n_01')),
+]
+SPAWN = {}
+for a, b in CONNECTIONS:
+    for m_, e_, k_ in (a, b):
+        SPAWN[(m_, k_)] = f'{m_}_spawn_{k_}'
+# 예전 키 (맵, 경계) 형식도 유지 (첫 구간 코드 호환)
+for (m_, k_), v in list(SPAWN.items()):
+    if k_.endswith('_01'):
+        SPAWN.setdefault((m_, k_[0].upper()), v)
+
+
+def links(map_id):
+    """이 맵의 출구 목록: {스폰 키: (경계, 목적 맵, 목적 스폰, 내 스폰)}"""
+    out = {}
+    for a, b in CONNECTIONS:
+        for me, other in ((a, b), (b, a)):
+            if me[0] == map_id:
+                out[me[2]] = (me[1], other[0], SPAWN[(other[0], other[2])], SPAWN[(me[0], me[2])])
+    return out
+
+
+def _ahsa():
+    import arabia_ahsa
+    return arabia_ahsa.build(FARMROAD, SPAWN[(FARMROAD, 'W')], SPAWN[(AHSA, 'E')])
+
+
+def _farmroad():
+    import arabia_farmroad
+    return arabia_farmroad.build((AHSA, SPAWN[(AHSA, 'E')], SPAWN[(FARMROAD, 'W')]),
+                                 (ZABID, SPAWN[(ZABID, 'W')], SPAWN[(FARMROAD, 'E')]))
+
+
+def _zabid():
+    import arabia_zabid
+    L = links(ZABID)
+    return arabia_zabid.build(L['w_01'][1:], L['e_01'][1:])
+
+
+def _region(module, map_id):
+    def f():
+        mod = __import__(module)
+        return mod.build(links(map_id))
+    f.__name__ = '_' + module.split('_', 1)[1]
+    return f
+
+
+# 오토타일 조각 중 프로젝트에 내보내지 않은 것 → 이미 있는 비슷한 조각 (에셋 팩 없이 생성하기 위함)
+FALLBACK = {
+    'floor:3:0': 'floor:3:1',    # 큰길: 남쪽으로만 이어진 끝 → 세로 띠
+    'floor:3:3': 'floor:1:1',    # 큰길: 외톨이 → 가운데
+    'floor:3:10': 'floor:1:8',   # 흙길: 외톨이 → 가운데
+    'water:3:7': 'water:1:7',    # 물: 세로 띠 → 가운데
+    'water:1:9': 'water:1:7',    # 물: 가로 띠 → 가운데
+    'water:3:9': 'water:1:7',    # 물: 외톨이 → 가운데
+}
+
+
+def _patched(fn):
+    def build():
+        m = fn()
+        for layer in (m.ground, m.deco, m.obj, m.high):
+            for row in layer:
+                for i, k in enumerate(row):
+                    if k in FALLBACK:
+                        row[i] = FALLBACK[k]
+        return m
+    build.__name__ = fn.__name__
+    return build
+
+
+ahsa, farmroad, zabid = _patched(_ahsa), _patched(_farmroad), _patched(_zabid)
+workshoproad = _region('arabia_workshoproad', WORKSHOP)
+taiz = _region('arabia_taiz', TAIZ)
+portroad = _region('arabia_portroad', PORTROAD)
+jeddah = _region('arabia_jeddah', JEDDAH)
+shortcut = _region('arabia_shortcut', SHORTCUT)
+sanaa = _region('arabia_sanaa', SANAA)
+highroad = _region('arabia_highroad', HIGHROAD)
+MAPS = [ahsa, farmroad, zabid, workshoproad, taiz, portroad, jeddah, shortcut, sanaa, highroad]
