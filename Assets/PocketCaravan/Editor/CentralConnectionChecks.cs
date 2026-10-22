@@ -14,7 +14,7 @@ namespace PocketCaravan.EditorTools
         [Serializable] public class Report { public List<string> passed=new List<string>(); public string error; public bool complete; }
         public static Report Current { get; private set; }
         static bool previousBackground;
-        [MenuItem("Pocket Caravan/중앙 연결/중앙 길목 열기")]
+        [MenuItem("Pocket Caravan/중앙 연결/내륙 교역 길목 열기")]
         public static void OpenCentral()
         {
             if(EditorApplication.isPlaying || SceneManager.GetActiveScene().isDirty)throw new InvalidOperationException("Play 종료 후 수정 중인 씬을 저장하세요.");
@@ -79,7 +79,7 @@ namespace PocketCaravan.EditorTools
                 SceneManager.sceneLoaded+=Freeze;Freeze(default,LoadSceneMode.Single);
                 gm.TravelTo("transit_crossroads","E");yield return Arrive("transit_crossroads");
                 Check("central has exactly one connected eastern route",MapExit.All.Count==1);
-                var route=new[]{"transit_crossroads","transit_central_approach","transit_ferry","transit_wetroad","transit_woodtown","transit_pass","goryeo_jangdan"};
+                var route=new[]{"transit_crossroads","transit_central_approach","transit_ferry","transit_wetroad","transit_woodtown","transit_pass","goryeo_songak"};
                 for(int leg=1;leg<route.Length;leg++)
                 {
                     for(int offset=0;offset<3;offset++)

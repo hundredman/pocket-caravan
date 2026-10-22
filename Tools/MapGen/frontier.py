@@ -4,10 +4,10 @@ from tiles import Map
 
 def pass_road():
     m = Map('transit_pass', '솔바람 고개', 56, 38, seed=101)
-    m.link('E',4,3,'goryeo_jangdan','W','E')
+    m.link('E',19,3,'goryeo_songak','W','E')
     m.link('W',19,3,'transit_woodtown','E','W')
     m.road_path([(0,19),(7,19)],width=3,grade=3)
-    m.road_path([(48,19),(50,19),(50,5),(55,5)],width=3,grade=3)
+    m.road_path([(48,19),(55,19)],width=3,grade=3)
     m.road_path([(7,19),(48,19)], width=2, grade=1)
     m.road_path([(7,19),(7,24),(48,24),(48,19)], width=3, grade=3)
     m.plateau(18,5,39,13)
@@ -15,7 +15,7 @@ def pass_road():
     m.road_path([(10,24),(10,34),(18,34)],width=2,grade=2)
     m.stamp('house_thatch',17,31)
     m.sign(5,17,'솔바람 고개\n곧장: 짧은 숲 오솔길 / 남쪽: 긴 수레 큰길.\n등짐과 손수레로 같은 짐을 싣고 비교해 보세요.')
-    m.sign(43,17,'동쪽: 장단 들마을·고려 / 서쪽: 솔재 길목 마을·중앙 방면\n이곳은 다른 문명 사이를 잇는 가상 중간 구역입니다.')
+    m.sign(43,17,'동쪽: 송악 산록·고려 / 서쪽: 솔재 길목 마을·중앙 방면\n이곳은 다른 문명 사이를 잇는 가상 중간 구역입니다.')
     m.talker(12,34,'길손','villager_dog_tall','수레는 남쪽 큰길로 돌아갑니다. 가볍게 걸을 때는 숲길이 짧지요.','짐이 많을수록 느려집니다. 흔들려도 화물이 떨어지지는 않아요.')
     m.sign(31,28,'남쪽 큰길\n노면은 수레에 유리하지만 고개에는 도적이 나타날 수 있습니다. 북쪽 샛길·귀환을 함께 비교하세요.')
     m.bandit(40,28,radius=5)
@@ -86,7 +86,7 @@ def ferry():
         m.stamp(house,x,y);m.road_path([(x+1,y+3),(x+1,19)],width=1,grade=1)
     m.board(25,17,'transit_ferry');m.add('market',21,20,town='transit_ferry')
     m.stamp('cart',29,22);m.stamp('well',15,14)
-    m.sign(5,17,'버들나루 마을\n서쪽: 중앙 진입로·중앙 길목 / 남쪽: 물가 길·고려\n선착장에는 승선할 수 없습니다. 중앙까지는 육로로 이동하세요.')
+    m.sign(5,17,'버들나루 마을\n서쪽: 초원 진입로·내륙 교역 길목 / 남쪽: 물가 길·고려\n선착장에는 승선할 수 없습니다. 내륙 길목까지는 육로로 이동하세요.')
     m.talker(23,15,'나루 상인','villager_tanuki_tall','이곳에서는 곡식과 소금을 구할 수 있어요. 솔재의 땔감을 싣고 오는 이도 있지요.','선착장은 둘러볼 수 있지만 배를 타는 기능은 아직 없어요.')
     m.add('ambience',24,27,id='river')
     m.forest_border(thickness=2,big=('roundbig','fruitbig'))
@@ -96,7 +96,7 @@ def ferry():
 
 def central_approach():
     """East/Goryeo to west/central; road choices within an independently editable area."""
-    m = Map('transit_central_approach', '중앙 진입로', 54, 38, seed=105)
+    m = Map('transit_central_approach', '초원 진입로', 54, 38, seed=105)
     m.link('E', 19, 3, 'transit_ferry', 'W', 'E')
     m.link('W', 19, 3, 'transit_crossroads', 'E', 'W')
     m.road_path([(0,20),(7,20),(7,24),(35,24),(35,20),(53,20)], width=3, grade=3)
@@ -108,13 +108,14 @@ def central_approach():
     m.road_path([(43,11),(43,13),(35,13)],width=2,grade=2)
     m.stamp('cart',41,15)
     m.stamp('bench',41,12)
-    m.sign(6,17,'중앙 진입로\n동쪽: 버들나루·고려 / 서쪽: 중앙 길목\n남쪽으로 굽은 큰길은 수레길, 곧장 난 오솔길은 도보 지름길입니다.')
-    m.sign(29,6,'중앙 길목 방면\n서쪽으로 가면 중앙 권역에 도착합니다. 다른 문명의 교역로는 아직 연결되지 않았습니다. 고려는 동쪽 버들나루 방향입니다.')
-    m.talker(43,15,'길손','villager_dog_tall','서쪽 길을 따라가면 중앙 길목의 쉼터가 나옵니다. 고려에서 여러 고개와 마을을 지나 여기까지 오셨군요.','짐수레는 단단한 큰길로 돌아갑니다. 가볍다면 오솔길을 살펴보세요.')
-    m.forest_border(thickness=2,big=('pinebig','roundbig'))
-    m.scatter('pinebig',12,area=(3,3,48,32),margin=1)
-    m.flowers(30,19,48,32,12)
-    m.finish(); return m
+    m.sign(6,17,'초원 진입로\n동쪽: 버들나루·고려 / 서쪽: 내륙 교역 길목\n남쪽으로 굽은 큰길은 수레길, 곧장 난 오솔길은 도보 지름길입니다.')
+    m.sign(29,6,'내륙 교역 길목 방면\n서쪽으로 가면 대륙 내륙에 도착합니다. 다른 문명의 교역로는 아직 연결되지 않았습니다. 고려는 동쪽 버들나루 방향입니다.')
+    m.talker(43,15,'길손','villager_dog_tall','서쪽 길을 따라가면 내륙 교역 길목의 쉼터가 나옵니다. 고려에서 여러 고개와 마을을 지나 여기까지 오셨군요. 나무가 줄고 마른 초원이 넓어집니다.','짐수레는 단단한 큰길로 돌아갑니다. 가볍다면 오솔길을 살펴보세요.')
+    m.forest_border(thickness=1,big=('pinebig','roundbig'))
+    m.scatter('pinebig',5,area=(3,3,48,32),margin=1)
+    m.scatter('module_rock',14,area=(3,3,48,32),margin=1)
+    m.flowers(30,19,48,32,6)
+    m.finish(); m.apply_visual_skin('steppe'); return m
 
 
 def central_crossroads():
@@ -123,7 +124,7 @@ def central_crossroads():
     The stable map id is historical; geographic direction is defined by exits/atlas,
     never inferred from economic coordinates or the internal id.
     """
-    m = Map('transit_crossroads', '중앙 길목', 72, 56, seed=106)
+    m = Map('transit_crossroads', '내륙 교역 길목', 72, 56, seed=106)
     m.atlas_label = {'x': 33, 'y': 30}
     m.link('E',19,3,'transit_central_approach','W','E')
     # An arrival bend opens onto a sheltered stopping place; no fake foreign roads.
@@ -136,11 +137,11 @@ def central_crossroads():
     m.stamp('bench',29,25)
     m.water_blob(16,42,7,5)
     for x,y in [(8,7),(12,5),(16,7),(10,10),(18,10)]:
-        m.stamp('pinebig',x,y)
-    m.sign(59,17,'중앙 길목\n동쪽: 중앙 진입로 → 버들나루 → 솔재 길목 → 장단·고려\n고려는 이곳에서 동쪽에 있습니다.')
+        m.stamp('module_rock',x,y)
+    m.sign(59,17,'내륙 교역 길목\n동쪽: 초원 진입로 → 버들나루 → 솔재 길목 → 송악 산록·고려\n고려 반도는 동남쪽에 있습니다. 동쪽 길을 거슬러 송악 산록으로 돌아가세요.')
     m.sign(39,25,'교역로 안내\n현재는 동쪽 고려 교역로만 연결되었습니다. 북·서·남 권역은 여러 중간 지역으로 이어질 예정이며 아직 이동할 수 없습니다.')
-    m.talker(34,26,'길목 안내인','villager_tanuki_tall','고려에서 고개와 물가 마을을 지나 중앙 권역에 도착하셨군요.','여기는 길손이 쉬는 작은 길목입니다. 다른 문명으로 가는 여정은 앞으로 이 주변의 여러 지역을 거쳐 이어집니다.')
-    m.forest_border(thickness=2,big=('pinebig','roundbig'))
-    m.scatter('roundbig',24,area=(3,3,66,50),margin=1)
-    m.flowers(42,35,65,48,20)
-    m.finish(); return m
+    m.talker(34,26,'길목 안내인','villager_tanuki_tall','고려 북서쪽 고개에서 출발해 강변 마을과 초원을 지나오셨군요.','여기는 길손이 쉬는 작은 길목입니다. 다른 문명으로 가는 여정은 앞으로 이 주변의 여러 지역을 거쳐 이어집니다.')
+    m.scatter('module_rock',32,area=(2,2,67,51),margin=1)
+    m.scatter('roundbig',5,area=(7,32,28,50),margin=1)
+    m.flowers(42,35,65,48,6)
+    m.finish(); m.apply_visual_skin('steppe'); return m

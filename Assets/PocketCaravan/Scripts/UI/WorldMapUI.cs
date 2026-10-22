@@ -12,13 +12,17 @@ namespace PocketCaravan
             public string mapId;
             public float x, y, w, h, labelX, labelY;
         }
+        [Serializable] public class MapAnnotation { public string text; public float x,y; }
         [Serializable] public class Atlas
         {
             public float width, height;
             public MapArea[] maps;
+            public MapAnnotation[] annotations;
         }
 
-        bool open;
+        bool open, regional;
+        Texture2D regionalTerrain, regionalPaper;
+        Atlas regionalAtlas;
         Texture2D terrain;
         Texture2D paperTerrain;
         Atlas atlas;
@@ -28,22 +32,28 @@ namespace PocketCaravan
         void Awake()
         {
             terrain = Resources.Load<Texture2D>("WorldMap/GoryeoTerrain");
-            if (terrain != null && terrain.isReadable && QualitySettings.activeColorSpace == ColorSpace.Linear)
-            {
-                // OnGUI의 색 공간에 맞춘 표시용 사본. 원본 지도 PNG는 그대로 보존한다.
-                paperTerrain = new Texture2D(terrain.width, terrain.height, TextureFormat.RGBA32, false) { filterMode = FilterMode.Point };
-                var colors = terrain.GetPixels32();
-                for (int i = 0; i < colors.Length; i++) colors[i] = UIStyle.Lin(colors[i]);
-                paperTerrain.SetPixels32(colors);
-                paperTerrain.Apply();
-            }
+            paperTerrain = PaperCopy(terrain);
+            regionalTerrain = Resources.Load<Texture2D>("WorldMap/GoryeoRegionalTerrain");
+            regionalPaper = PaperCopy(regionalTerrain);
+            var detail = Resources.Load<TextAsset>("WorldMap/GoryeoRegionalLayout");
+            if(detail != null) regionalAtlas = JsonUtility.FromJson<Atlas>(detail.text);
             var json = Resources.Load<TextAsset>("WorldMap/GoryeoLayout");
             if (json != null) atlas = JsonUtility.FromJson<Atlas>(json.text);
+        }
+
+        static Texture2D PaperCopy(Texture2D source)
+        {
+            if(source==null || !source.isReadable || QualitySettings.activeColorSpace != ColorSpace.Linear) return null;
+            var copy=new Texture2D(source.width,source.height,TextureFormat.RGBA32,false){filterMode=FilterMode.Point};
+            var colors=source.GetPixels32();
+            for(int i=0;i<colors.Length;i++) colors[i]=UIStyle.Lin(colors[i]);
+            copy.SetPixels32(colors);copy.Apply();return copy;
         }
 
         void OnDestroy()
         {
             if (paperTerrain != null) Destroy(paperTerrain);
+            if (regionalPaper != null) Destroy(regionalPaper);
         }
 
         void Update()
@@ -83,11 +93,15 @@ namespace PocketCaravan
             var panel = new Rect((UIStyle.VirtualWidth - width) / 2, (UIStyle.VirtualHeight - height) / 2, width, height);
             Paper(panel, new Color32(100, 76, 48, 255));
             Paper(new Rect(panel.x + 3, panel.y + 3, width - 6, height - 6), new Color32(225, 211, 171, 255));
-            GUI.Label(new Rect(panel.x + 16, panel.y + 10, width - 32, 20), "고려·중간권 교역도", title);
+            GUI.Label(new Rect(panel.x + 16, panel.y + 10, width - 32, 20), regional ? "고려 시작권 상세도" : "고려 반도·대륙 교역도", title);
             GUI.Label(new Rect(panel.xMax - 76, panel.y + 13, 65, 14), "M / Esc 닫기", ink);
 
             GUI.Label(new Rect(panel.xMax - 190, panel.y + 13, 105, 14), "북 ↑   동 →", ink);
 
+            if(regionalAtlas != null && GUI.Button(new Rect(panel.x+290,panel.y+10,82,20),regional?"전체 지도":"고려 확대",UIStyle.Button)) regional=!regional;
+            var atlas = regional ? regionalAtlas : this.atlas;
+            var terrain = regional ? regionalTerrain : this.terrain;
+            var paperTerrain = regional ? regionalPaper : this.paperTerrain;
             if (terrain == null || atlas == null || atlas.maps == null || atlas.width <= 0 || atlas.height <= 0)
             {
                 GUI.Label(new Rect(panel.x + 16, panel.y + 45, width - 32, 24), "지형 지도 데이터가 없습니다. MapGen export.py를 실행해 주세요.", ink);
@@ -101,8 +115,14 @@ namespace PocketCaravan
             GUI.color = color;
 
             Vector2 Project(float x, float y) => new Vector2(canvas.x + x * scale, canvas.y + y * scale);
-            string here = MapRoot.Current != null ? MapRoot.Current.mapId : "";
             var placedLabels = new List<Rect>();
+            if(atlas.annotations != null)
+                foreach(var note in atlas.annotations)
+                {
+                    var point=Project(note.x,note.y);var rect=new Rect(point.x-70,point.y-8,140,16);
+                    GUI.Label(rect,note.text,caption);placedLabels.Add(rect);
+                }
+            string here = MapRoot.Current != null ? MapRoot.Current.mapId : "";
             var markers = new List<Rect>();
             foreach(var area in atlas.maps)
                 if(index != null && index.Map(area.mapId) != null)
@@ -114,6 +134,9 @@ namespace PocketCaravan
                 var p = Project(area.labelX, area.labelY);
                 bool destination = gm.Player.contracts.Exists(c => c.toTown == map.town && !string.IsNullOrEmpty(map.town));
                 Dot(p, 3, destination ? new Color32(170, 95, 43, 255) : Ink);
+                // The continental view shows the Goryeo gate, intermediate markets and endpoint.
+                // Goryeo settlement names are available in the regional view or for the current map.
+                if(!regional && area.mapId!=here && area.mapId!="goryeo_songak" && area.mapId!="transit_crossroads" && map.town!="transit_ferry" && map.town!="transit_woodtown") continue;
                 string label = map.displayName;
                 if (destination) label += " · 의뢰";
                 // 글자 밑만 종이색으로 밝힌다. 구역별 네모 박스는 그리지 않는다.
@@ -139,7 +162,7 @@ namespace PocketCaravan
             }
             var legendY = panel.y + 286;
             GUI.Label(new Rect(panel.x + 16, legendY, width - 32, 14),
-                "붉은 점: 내 위치    갈색 길: 교역로    푸른 물: 강·연못    나무: 숲    지붕: 마을    의뢰: 배달 목적지", ink);
+                regional ? "붉은 점: 내 위치   갈색 길: 교역로   푸른 물: 하천·연못   지붕: 마을   의뢰: 배달 목적지" : "붉은 점: 내 위치   마을 상세: 고려 확대   해안 윤곽: 축약 지리   옅은 바탕: 미구현 지형", ink);
             string current = index != null ? index.MapName(here) : here;
             var currentInfo = index != null ? index.Map(here) : null;
             if (currentInfo != null && !string.IsNullOrEmpty(currentInfo.town))

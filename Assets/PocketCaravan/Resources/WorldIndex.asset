@@ -49,13 +49,13 @@ MonoBehaviour:
     neighbors:
     - Gaegyeong
     - goryeo_ridge
+    - transit_pass
   - mapId: goryeo_jangdan
     displayName: "\uC7A5\uB2E8 \uB4E4\uB9C8\uC744"
     coord: {x: 4, y: 0}
     town: goryeo_jangdan
     neighbors:
     - goryeo_fieldroad
-    - transit_pass
   - mapId: goryeo_ridge
     displayName: "\uC1A1\uC545 \uAD6C\uB989\uAE38"
     coord: {x: 5, y: 1}
@@ -82,7 +82,7 @@ MonoBehaviour:
     coord: {x: 5, y: 0}
     town: 
     neighbors:
-    - goryeo_jangdan
+    - goryeo_songak
     - transit_woodtown
   - mapId: transit_woodtown
     displayName: "\uC194\uC7AC \uAE38\uBAA9 \uB9C8\uC744"
@@ -106,14 +106,14 @@ MonoBehaviour:
     - transit_wetroad
     - transit_central_approach
   - mapId: transit_central_approach
-    displayName: "\uC911\uC559 \uC9C4\uC785\uB85C"
+    displayName: "\uCD08\uC6D0 \uC9C4\uC785\uB85C"
     coord: {x: 9, y: 0}
     town: 
     neighbors:
     - transit_ferry
     - transit_crossroads
   - mapId: transit_crossroads
-    displayName: "\uC911\uC559 \uAE38\uBAA9"
+    displayName: "\uB0B4\uB959 \uAD50\uC5ED \uAE38\uBAA9"
     coord: {x: 9, y: 1}
     town: 
     neighbors:

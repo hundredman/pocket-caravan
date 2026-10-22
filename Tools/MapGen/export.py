@@ -51,6 +51,7 @@ for entry, m in zip(entries, world_maps):
              blocked=[1 if b else 0 for row in m.blocked for b in row],
              objects=[obj_json(o) for o in m.objects])
     d["palette"] = palette
+    if getattr(m,"visual_skin",None): d["visualSkin"] = m.visual_skin
     with open(os.path.join(OUT, entry["jsonPath"]), "w", encoding="utf-8") as fp:
         json.dump(d, fp, ensure_ascii=False, separators=(",", ":"))
     m.render(os.path.join(os.path.dirname(__file__), "preview_" + m.id + ".png"))

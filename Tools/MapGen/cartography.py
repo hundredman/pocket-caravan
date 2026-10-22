@@ -3,6 +3,21 @@ import json
 import random
 from pathlib import Path
 from PIL import Image, ImageDraw
+
+GEOGRAPHY = Path(__file__).resolve().parents[2] / "Assets/PocketCaravan/World/Cartography/peninsula.json"
+
+def geographic_context(maps, positions, stem):
+    """Context coast is separate from traversable map geometry, anchored to a stable map."""
+    if stem != "Goryeo" or not GEOGRAPHY.exists():return None
+    context=json.loads(GEOGRAPHY.read_text())
+    ax,ay=positions[context["anchorMapId"]]
+    polygons=[[(ax+x,ay+y) for x,y in p["points"]] for p in context["landPolygons"]]
+    labels=[]
+    for label in context["labels"]:
+        lx,ly=positions.get(label.get("relativeToMap"), (ax,ay))
+        labels.append(dict(text=label["text"],x=lx+label["x"],y=ly+label["y"]))
+    return dict(polygons=polygons,labels=labels,palette=context["palette"],east=ax+context["visibleExtent"]["east"],south=ay+context["visibleExtent"]["south"])
+
 from tiles import STAMPS
 
 
@@ -41,10 +56,17 @@ def layout(maps):
 def export(maps, root, stem="Goryeo"):
     positions = layout(maps)
     pad, scale = 12, 4
+    context = geographic_context(maps,positions,stem)
     minx = min(p[0] for p in positions.values()) - pad
     miny = min(p[1] for p in positions.values()) - pad
     width = max(positions[m.id][0] + m.w for m in maps) - minx + pad
     height = max(positions[m.id][1] + m.h for m in maps) - miny + pad
+    if context:
+        # Mainland continues beyond the north/west viewport, so no rectangular coast is drawn there.
+        maxx=max(minx+width,context['east']+pad)
+        maxy=max(miny+height,context['south']+pad)
+        minx-=6;miny-=12
+        width,height=maxx-minx,maxy-miny
     im = Image.new("RGB", (width * scale, height * scale))
     rng = random.Random(108)
     pixels = im.load()
@@ -57,6 +79,37 @@ def export(maps, root, stem="Goryeo"):
             pixels[x, y] = (224 + noise - shade, 210 + noise - shade, 167 + noise - shade)
     d = ImageDraw.Draw(im)
     entries = []
+    if context:
+        # Sea and a contiguous land silhouette, rather than rectangular map patches.
+        # Context is cartographic only; runtime movement always uses actual maps/exits.
+        mask=Image.new('L',im.size,0);md=ImageDraw.Draw(mask)
+        coastlines=[]
+        for polygon in context['polygons']:
+            pts=[]
+            for i,p1 in enumerate(polygon):
+                p0=polygon[(i-1)%len(polygon)];p2=polygon[(i+1)%len(polygon)];p3=polygon[(i+2)%len(polygon)]
+                for step in range(8):
+                    t=step/8
+                    point=[.5*((2*p1[k])+(-p0[k]+p2[k])*t+(2*p0[k]-5*p1[k]+4*p2[k]-p3[k])*t*t+(-p0[k]+3*p1[k]-3*p2[k]+p3[k])*t*t*t) for k in (0,1)]
+                    # Do not smooth the far-off continental clipping edges into the visible shore.
+                    if max(abs(v) for p in (p0,p1,p2,p3) for v in p)>500:
+                        point=[p1[k]+(p2[k]-p1[k])*t for k in (0,1)]
+                    pts.append((int((point[0]-minx)*scale),int((point[1]-miny)*scale)))
+            md.polygon(pts,fill=255);coastlines.append(pts)
+        land=tuple(bytes.fromhex(context['palette']['land'][1:]));sea=tuple(bytes.fromhex(context['palette']['sea'][1:]))
+        maskpixels=mask.load()
+        for y in range(im.height):
+            for x in range(im.width):
+                base=land if maskpixels[x,y] else sea
+                noise=rng.choice((-2,-1,0,0,1,2))
+                pixels[x,y]=tuple(max(0,min(255,v+noise)) for v in base)
+        for pts in coastlines:
+            d.line(pts+[pts[0]],fill=context['palette']['coast'],width=2)
+        # Inland dry belt: tapered broad marks within the continental land, no map-box outline.
+        for offset in range(5):
+            cx,cy=positions['transit_crossroads']
+            cx=(cx-minx+14+offset*15)*scale;cy=(cy-miny+12+offset*4)*scale
+            d.arc((cx-18,cy-5,cx+18,cy+7),200,340,fill='#bdaf83',width=2)
     for m in maps:
         mx, my = positions[m.id]
         mx, my = mx - minx, my - miny
@@ -73,7 +126,7 @@ def export(maps, root, stem="Goryeo"):
                     d.rectangle(rect, fill="#8a6547")
                 elif m.road[y][x]:
                     d.rectangle(rect, fill="#ba9461" if m.road[y][x] < 3 else "#aa7e4d")
-                elif m.high[y][x] and m.high[y][x].startswith("nature:"):
+                elif m.high[y][x] and m.high[y][x].startswith("nature:") and (not context or 3<x<m.w-4 and 3<y<m.h-4):
                     d.rectangle(rect, fill="#a7b184")
                 elif m.obj[y][x] and m.obj[y][x].startswith("house:10:"):
                     d.rectangle(rect, fill="#766c56")
@@ -81,6 +134,7 @@ def export(maps, root, stem="Goryeo"):
             _, _, _, w, h, *_ = STAMPS[name]
             px, py = point(x + w / 2, y + h / 2)
             if name in ("pine", "tree", "cherry", "bigtree", "roundtree", "pinebig", "roundbig", "fruitbig", "blossom", "greenbig"):
+                if context and (x<=2 or y<=2 or x+w>=m.w-2 or y+h>=m.h-2):continue
                 for offset in ((-3, 1), (3, -1)) if w >= 3 else ((0, 0),):
                     tx, ty = px + offset[0], py + offset[1]
                     d.line((tx, ty, tx, ty + 4), fill="#776f4e")
@@ -106,4 +160,8 @@ def export(maps, root, stem="Goryeo"):
     dest = Path(root) / "Assets/PocketCaravan/Resources/WorldMap"
     dest.mkdir(parents=True, exist_ok=True)
     im.save(dest / f"{stem}Terrain.png")
-    (dest / f"{stem}Layout.json").write_text(json.dumps(dict(width=width, height=height, maps=entries), ensure_ascii=False, indent=2))
+    data=dict(width=width,height=height,maps=entries)
+    if context:
+        data['annotations']=[dict(text=l['text'],x=l['x']-minx,y=l['y']-miny) for l in context['labels']]
+        data['geography']='peninsula_inland'
+    (dest / f"{stem}Layout.json").write_text(json.dumps(data, ensure_ascii=False, indent=2))

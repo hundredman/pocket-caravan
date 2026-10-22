@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "mapId": "transit_crossroads",
-  "purpose": "전체 교역망의 방위 계약. 중앙 맵 자체를 십자 도로로 만들거나 문명 수도에 직결하지 않는다. 경제 worldCoord는 방위가 아니다.",
+  "purpose": "동서남북 문명을 여러 지역으로 잇는 교역망. 고려 반도 북서부에서 대륙을 지나 중앙아시아 방면으로 이동하는 축약 지리. 경제 좌표는 방위/실제 거리가 아님.",
   "routes": [
     {
       "direction": "E",
@@ -14,7 +14,7 @@
         "transit_wetroad",
         "transit_woodtown",
         "transit_pass",
-        "goryeo_jangdan"
+        "goryeo_songak"
       ],
       "localEdge": "E",
       "localSpawn": "E",

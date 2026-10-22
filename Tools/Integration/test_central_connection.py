@@ -17,8 +17,8 @@ class CentralConnection(unittest.TestCase):
                 cls.maps[entry['mapId']] = json.loads((ROOT/entry['jsonPath']).read_text())
 
     def test_goryeo_reaches_central_through_multiple_distinct_maps(self):
-        expected=['goryeo_jangdan','transit_pass','transit_woodtown','transit_wetroad','transit_ferry','transit_central_approach','transit_crossroads']
-        queue=collections.deque([['goryeo_jangdan']]);seen=set()
+        expected=['goryeo_songak','transit_pass','transit_woodtown','transit_wetroad','transit_ferry','transit_central_approach','transit_crossroads']
+        queue=collections.deque([['goryeo_songak']]);seen=set()
         while queue:
             route=queue.popleft();mid=route[-1]
             if mid in seen:continue
@@ -57,11 +57,11 @@ class CentralConnection(unittest.TestCase):
         region=json.loads((ROOT/'Assets/PocketCaravan/World/Regions/goryeo.json').read_text())
         for e in region['maps']:
             self.assertGreaterEqual(entries[e['mapId']]['x'],central['x']+central['w'])
-        self.assertEqual(next(o['edge'] for o in self.maps['goryeo_jangdan']['objects'] if o['kind']=='exit' and o['target']=='transit_pass'),'W')
+        self.assertEqual(next(o['edge'] for o in self.maps['goryeo_songak']['objects'] if o['kind']=='exit' and o['target']=='transit_pass'),'W')
 
     def test_ferry_is_no_longer_signposted_as_terminus(self):
         text=' '.join(o.get('text','') for o in self.maps['transit_ferry']['objects'])
-        self.assertIn('중앙 길목',text)
+        self.assertIn('내륙 교역 길목',text)
         self.assertNotIn('시험 여정의 끝',text)
 
     def test_approach_supports_different_vehicle_path_choices(self):
