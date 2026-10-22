@@ -23,6 +23,96 @@ MonoBehaviour:
     - Route01
     - goryeo_tidalcoast
     - goryeo_westcoast
+  - mapId: arabia_ahsa
+    displayName: "\uC54C \uC544\uD750\uC0AC"
+    height: 46
+    legacyHeight: 0
+    coord: {x: 20, y: 0}
+    town: arabia_ahsa
+    neighbors:
+    - arabia_farmroad
+  - mapId: arabia_farmroad
+    displayName: "\uB18D\uC6D0\uAE38"
+    height: 36
+    legacyHeight: 0
+    coord: {x: 21, y: 0}
+    town: 
+    neighbors:
+    - arabia_ahsa
+    - arabia_zabid
+  - mapId: arabia_zabid
+    displayName: "\uC790\uBE44\uB4DC"
+    height: 40
+    legacyHeight: 0
+    coord: {x: 22, y: 0}
+    town: arabia_zabid
+    neighbors:
+    - arabia_farmroad
+    - arabia_workshoproad
+  - mapId: arabia_workshoproad
+    displayName: "\uACF5\uBC29\uAE38"
+    height: 40
+    legacyHeight: 0
+    coord: {x: 23, y: 0}
+    town: 
+    neighbors:
+    - arabia_zabid
+    - arabia_taiz
+  - mapId: arabia_taiz
+    displayName: "\uD0C0\uC774\uC988"
+    height: 40
+    legacyHeight: 0
+    coord: {x: 24, y: 0}
+    town: arabia_taiz
+    neighbors:
+    - arabia_workshoproad
+    - arabia_portroad
+  - mapId: arabia_portroad
+    displayName: "\uD56D\uAD6C\uAE38"
+    height: 40
+    legacyHeight: 0
+    coord: {x: 25, y: 0}
+    town: 
+    neighbors:
+    - arabia_taiz
+    - arabia_jeddah
+  - mapId: arabia_jeddah
+    displayName: "\uC81C\uB2E4"
+    height: 44
+    legacyHeight: 0
+    coord: {x: 26, y: 0}
+    town: arabia_jeddah
+    neighbors:
+    - arabia_portroad
+    - arabia_shortcut
+    - arabia_highroad
+  - mapId: arabia_shortcut
+    displayName: "\uD5D8\uD55C \uC9C0\uB984\uAE38"
+    height: 36
+    legacyHeight: 0
+    coord: {x: 27, y: 0}
+    town: 
+    neighbors:
+    - arabia_jeddah
+    - arabia_sanaa
+  - mapId: arabia_sanaa
+    displayName: "\uC0AC\uB098"
+    height: 48
+    legacyHeight: 0
+    coord: {x: 28, y: 0}
+    town: arabia_sanaa
+    neighbors:
+    - arabia_shortcut
+    - arabia_highroad
+  - mapId: arabia_highroad
+    displayName: "\uC548\uC804\uD55C \uD070\uAE38"
+    height: 40
+    legacyHeight: 0
+    coord: {x: 27, y: 1}
+    town: 
+    neighbors:
+    - arabia_jeddah
+    - arabia_sanaa
   - mapId: Route01
     displayName: "\uC608\uC131 \uAE38"
     height: 64
@@ -206,6 +296,48 @@ MonoBehaviour:
   - kind: market
     id: naru
     mapId: Naru
+  - kind: market
+    id: arabia_ahsa
+    mapId: arabia_ahsa
+  - kind: board
+    id: arabia_ahsa
+    mapId: arabia_ahsa
+  - kind: npc
+    id: arabia_maryam
+    mapId: arabia_ahsa
+  - kind: npc
+    id: arabia_hindbad
+    mapId: arabia_ahsa
+  - kind: npc
+    id: arabia_hasan
+    mapId: arabia_ahsa
+  - kind: npc
+    id: arabia_kitchen_keeper
+    mapId: arabia_zabid
+  - kind: market
+    id: arabia_zabid
+    mapId: arabia_zabid
+  - kind: board
+    id: arabia_zabid
+    mapId: arabia_zabid
+  - kind: market
+    id: arabia_taiz
+    mapId: arabia_taiz
+  - kind: board
+    id: arabia_taiz
+    mapId: arabia_taiz
+  - kind: market
+    id: arabia_jeddah
+    mapId: arabia_jeddah
+  - kind: board
+    id: arabia_jeddah
+    mapId: arabia_jeddah
+  - kind: market
+    id: arabia_sanaa
+    mapId: arabia_sanaa
+  - kind: board
+    id: arabia_sanaa
+    mapId: arabia_sanaa
   - kind: npc
     id: gaekju
     mapId: Gaegyeong

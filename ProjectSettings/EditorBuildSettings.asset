@@ -74,6 +74,36 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/PocketCaravan/Scenes/ObstacleLab/ObstaclePreview.unity
     guid: 3a17c9286642b402e9ceae7eb9f3271f
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_ahsa.unity
+    guid: 56b8d7a70613d425194c896b1a10cbf1
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_farmroad.unity
+    guid: acb2f39d4b0d44628b5e77ab10818c3b
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_zabid.unity
+    guid: 5b527da250a83449d926598aef08fd54
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_workshoproad.unity
+    guid: f9562d806d78e42a18e90caa1efb46bc
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_taiz.unity
+    guid: e17efff91be634243bd3435ce137dcc2
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_portroad.unity
+    guid: a596814801f4c4c368e287e1012c1733
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_jeddah.unity
+    guid: fceb129ee6e7f4cc88b4a1ea7428ca35
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_shortcut.unity
+    guid: 87366dd1f8ce4499f8674868b89fa1ca
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_sanaa.unity
+    guid: 44db4f2b749864788ad3e7cf4190ff08
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_highroad.unity
+    guid: e4275747576f541c1a546ab317d522b9
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
