@@ -1,5 +1,7 @@
 # Pocket Caravan
 
+**팀원·다른 LLM이 이어서 작업할 때:** [인수인계 시작 문서](Docs/Handoff.md)를 먼저 읽으세요. 현재 상태·수정 원본·재현/검사·남은 일·전달용 시작 문구를 정리했습니다.
+
 현재 구현은 [진행표](Docs/DevelopmentStatus.md), 팀 작업 시작은 [팀 개발 안내](Docs/TeamDevelopment.md), 문서별 우선순위는 [문서 안내](Docs/README.md)를 따른다. 공개 ZIP과 main의 차이는 [빌드 현황](Docs/BuildStatus.md)에서 확인한다.
 
 
