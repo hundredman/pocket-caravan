@@ -30,7 +30,7 @@ namespace PocketCaravan.EditorTools
             if(Current!=null && !Current.complete)throw new InvalidOperationException("Check already running");
             foreach(var progress in gm.Quests.Active)throw new InvalidOperationException("Use a fresh non-start session without active quests");
             previousBackground=Application.runInBackground;Application.runInBackground=true;
-            Current=new Report();Directory.CreateDirectory("output/central-connection");gm.StartCoroutine(Drive(Run(gm)));
+            Current=new Report();Directory.CreateDirectory("output/continuous-terrain");gm.StartCoroutine(Drive(Run(gm)));
         }
         static IEnumerator Drive(IEnumerator run)
         {
@@ -46,7 +46,7 @@ namespace PocketCaravan.EditorTools
                 yield return next;
             }
             while(stack.Count>0)(stack.Pop() as IDisposable)?.Dispose();Current.complete=true;Application.runInBackground=previousBackground;
-            File.WriteAllText("output/central-connection/play-checks.json",JsonUtility.ToJson(Current,true));
+            File.WriteAllText("output/continuous-terrain/play-checks.json",JsonUtility.ToJson(Current,true));
         }
         static IEnumerator Run(GameManager gm)
         {
@@ -60,12 +60,19 @@ namespace PocketCaravan.EditorTools
                 while(gm.IsTravelling && Time.realtimeSinceStartup<limit)yield return null;
                 Check(target+" actual scene loaded",!gm.IsTravelling && MapRoot.Current!=null && MapRoot.Current.mapId==target);
             }
-            IEnumerator Cross(string target,int offset)
+            IEnumerator Cross(string target,int offset,bool grass=false)
             {
-                string from=MapRoot.Current.mapId;var exit=MapExit.All.Find(e=>e.targetScene==target);
+                string from=MapRoot.Current.mapId;var exit=MapExit.All.Find(e=>e.targetScene==target && (grass ? e.targetSpawnId.StartsWith("seam_") : !e.targetSpawnId.StartsWith("seam_")));
                 Check(from+" exit registered to "+target,exit!=null);
                 string spawnId=exit.targetSpawnId;var motor=PlayerController.Instance.Motor;
-                motor.Teleport(MapRoot.Current.CellCenter(MapRoot.Current.WorldToCell(exit.transform.position))+(exit.size.x>1?Vector3.right:Vector3.up)*offset,Vector2Int.up);
+                var originCell=MapRoot.Current.WorldToCell(exit.transform.position);
+                bool verticalEdge=exit.edge=="E" || exit.edge=="W";
+                Vector3 direction=exit.edge=="W"?Vector3.left:exit.edge=="E"?Vector3.right:exit.edge=="S"?Vector3.down:Vector3.up;
+                var approach=MapRoot.Current.CellCenter(originCell)+(exit.size.x>1?Vector3.right:Vector3.up)*offset-direction*1.1f;
+                if(!verticalEdge)approach.y-=motor.feetOffset.y;
+                motor.Teleport(approach,Vector2Int.up);
+                for(int step=0;step<45 && !exit.Contains(motor.Cell);step++){motor.Tick((Vector2)direction,3.8f,1f/30);yield return null;}
+                Check(from+" -> "+target+" physically walked into "+(grass?"grass":"road")+" seam",exit.Contains(motor.Cell));
                 exit.Use(motor);yield return Arrive(target);
                 var spawn=SpawnPoint.Find(spawnId);motor=PlayerController.Instance.Motor;
                 Check(from+" -> "+target+" offset "+offset+" preserved",spawn!=null && Vector3.Distance(motor.transform.position,spawn.PositionFor(offset))<.01f);
@@ -75,15 +82,17 @@ namespace PocketCaravan.EditorTools
             try
             {
                 p.money=777;p.credit=2;p.vehicle=gm.Db.vehicles.Find(v=>v.id=="handcart");p.origin=null;p.cargo.Clear();p.cargo.Add(paper,3,11);p.contracts.Clear();
-                p.contracts.Add(new Contract{id=988888,fromTown="transit_woodtown",toTown="transit_ferry",weight=4,reward=12,deadline=gm.Clock.TotalHours+100,finalDeadline=gm.Clock.TotalHours+150});
+                p.contracts.Add(new Contract{id=988888,fromTown="transit_woodtown",toTown="transit_ferry",weight=4,reward=12,deadline=gm.Clock.TotalHours+100000,finalDeadline=gm.Clock.TotalHours+150000});
                 SceneManager.sceneLoaded+=Freeze;Freeze(default,LoadSceneMode.Single);
                 gm.TravelTo("transit_crossroads","E");yield return Arrive("transit_crossroads");
-                Check("central has exactly one connected eastern route",MapExit.All.Count==1);
-                var route=new[]{"transit_crossroads","transit_central_approach","transit_ferry","transit_wetroad","transit_woodtown","transit_pass","goryeo_songak"};
+                Check("central connects only to its eastern neighboring sector",MapExit.All.TrueForAll(e=>e.targetScene=="transit_central_approach"));
+                var route=new[]{"transit_crossroads","transit_central_approach","transit_ferry","transit_wetroad","transit_woodtown","transit_pass","goryeo_songak","Gaegyeong","Route01","Naru","goryeo_tidalcoast","goryeo_rivervalley","goryeo_southcoast","goryeo_jangdan","goryeo_fieldroad","Dakmok","goryeo_descent","goryeo_ridge","goryeo_songak","transit_pass","goryeo_westcoast","Naru"};
                 for(int leg=1;leg<route.Length;leg++)
                 {
                     for(int offset=0;offset<3;offset++)
                     {yield return Cross(route[leg],offset);yield return Cross(route[leg-1],offset);}
+                    if(MapExit.All.Exists(e=>e.targetScene==route[leg] && e.targetSpawnId.StartsWith("seam_")))
+                    {yield return Cross(route[leg],0,true);yield return Cross(route[leg-1],0,true);}
                     yield return Cross(route[leg],0);
                 }
             }

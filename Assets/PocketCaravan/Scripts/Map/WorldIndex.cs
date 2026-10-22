@@ -24,6 +24,7 @@ namespace PocketCaravan
         {
             public string mapId;
             public string displayName;
+            public int height, legacyHeight;
             public Vector2Int coord;
             public string town;   // 장터가 있는 마을 id (없으면 빈칸)
             public List<string> neighbors = new List<string>();

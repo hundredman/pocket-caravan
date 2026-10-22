@@ -151,3 +151,5 @@ Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macO
 저장된 상품/진행/이동 수단/맵 등을 적용 전에 확인하고, 복원할 수 없으면 원본을 보존하며 이번 세션 저장을 차단한다. [검사 범위와 남은 복구 과제](Docs/SaveCompatibilityReview.md). 최신 로컬 검토 ZIP은 SaveGuard-2026-10-21이며 Ledger 이전 ZIP·공개 릴리스와 구분한다.
 
 10/22: 동쪽 고려 반도의 북서부 송악 산록에서 여러 중간 지역을 거쳐 중앙아시아 방면으로 연결합니다. 반도·바다·대륙 지도와 건조 초원 스킨을 반영했습니다. 십자는 전체 동서남북 교역망 구조입니다. [현재 배치·확장 계약](Docs/CentralConnection.md).
+
+10/22 최신: [실제 연속 지형](Docs/ContinuousTerrain.md)으로 교체했습니다. 고려13+내륙6구역의 해안·강·길·숲과 지도는 같은 타일에서 생성하며 풀밭 경계도 연결됩니다. [유지할 규칙](Docs/ProjectRules.md)을 먼저 확인하세요.

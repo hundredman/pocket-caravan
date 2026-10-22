@@ -68,10 +68,11 @@ def validate():
                 for dx in range(w):
                     layer = m.high if dy < high else m.obj
                     expected = K(s, sx + dx, sy + dy, rc)
+                    if hasattr(m,"tint_key"): expected=m.tint_key(expected,x+dx,y+dy)
                     if getattr(m,'visual_skin',None) and '@' not in expected: expected += '@skin_'+m.visual_skin
                     tree_ok &= layer[y + dy][x + dx] == expected
         check(m.id + " 모든 나무 묶음 타일 보존", tree_ok)
-        accessible = reachable(m, next(iter(roads)))
+        accessible = m.world_reachable if hasattr(m,"world_reachable") else reachable(m, next(iter(roads)))
         for o in m.objects:
             if o["kind"] == "spawn":
                 cells = {(o["x"] + dx, o["y"] + dy) for dx in range(o.get("w", 1)) for dy in range(o.get("h", 1))}

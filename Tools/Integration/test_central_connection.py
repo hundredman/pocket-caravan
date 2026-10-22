@@ -27,7 +27,7 @@ class CentralConnection(unittest.TestCase):
             queue.extend(route+[o['target']] for o in self.maps[mid]['objects'] if o['kind']=='exit')
         else:self.fail('Central junction unreachable')
         self.assertEqual(route,expected)
-        self.assertTrue(all(self.maps[mid]['w']<=72 for mid in expected))
+        self.assertTrue(all(self.maps[mid]['w']<=80 for mid in expected))
 
     def test_new_connections_have_reciprocal_equal_width_spawns(self):
         for mid in ['transit_ferry','transit_central_approach','transit_crossroads']:
@@ -43,7 +43,7 @@ class CentralConnection(unittest.TestCase):
         m=self.maps['transit_crossroads']
         contract=json.loads((ROOT/'Assets/PocketCaravan/World/Connections/central_ports.json').read_text())
         exits=[o for o in m['objects'] if o['kind']=='exit']
-        self.assertEqual([(e['edge'],e['target']) for e in exits],[('E','transit_central_approach')])
+        self.assertEqual({(e['edge'],e['target']) for e in exits},{('E','transit_central_approach')})
         routes={p['direction']:p for p in contract['routes']}
         self.assertEqual(set(routes),{'N','E','W','S'})
         self.assertEqual(routes['E']['region'],'goryeo')

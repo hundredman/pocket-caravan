@@ -20,7 +20,7 @@ class MapTileDependencies(unittest.TestCase):
                     tile=BASE/'TileAssets'/(name+'.asset');png=BASE/'Tiles'/(name+'.png')
                     for p in (tile,png,Path(str(tile)+'.meta'),Path(str(png)+'.meta')):
                         self.assertTrue(p.is_file(),str(p))
-                    self.assertIn(guid(Path(str(tile)+'.meta')),scene,(entry['mapId'],name))
+                    self.assertTrue(guid(Path(str(tile)+'.meta')) in scene,(entry['mapId'],name))
                     self.assertIn(guid(Path(str(png)+'.meta')),tile.read_text(),name)
 
 if __name__=='__main__':unittest.main()

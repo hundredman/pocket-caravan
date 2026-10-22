@@ -13,7 +13,7 @@ class TransitContract(unittest.TestCase):
         for mid,data in maps.items():
             self.assertTrue(mid.startswith('transit_'))
             for o in data['objects']:
-                if o['kind']=='exit':self.assertIn(o['target'],set(maps)|{'goryeo_songak'})
+                if o['kind']=='exit':self.assertIn(o['target'],set(maps)|{'goryeo_songak','goryeo_westcoast'})
         database=(ROOT/'Assets/PocketCaravan/Resources/GameDatabase.asset').read_text()
         towns={o['town'] for m in maps.values() for o in m['objects'] if o['kind']=='market'}
         self.assertEqual(towns,{'transit_woodtown','transit_ferry'})

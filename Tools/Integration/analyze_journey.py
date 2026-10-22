@@ -20,7 +20,7 @@ for mid,m in world.items():
   target=world[o['target']];sp=next(p for p in target['objects'] if p['kind']=='spawn' and p['id']==o['spawn'])
   for dy in range(o.get('h',1)):
    for dx in range(o.get('w',1)):
-    jumps[mid,o['x']+dx,o['y']+dy]=(o['target'],sp['x']+min(dx,sp.get('w',1)-1),sp['y']+min(dy,sp.get('h',1)-1))
+    jumps.setdefault((mid,o['x']+dx,o['y']+dy),[]).append((o['target'],sp['x']+min(dx,sp.get('w',1)-1),sp['y']+min(dy,sp.get('h',1)-1)))
 def cost(a,b,vehicle,cargo_weight=5):
  text=(D/f'Vehicle_{vehicle}.asset').read_text();speeds=[float(x) for x in re.findall(r'^  - ([0-9.]+)$',text.split('speedByGrade:')[1],re.M)]
  capacity=float(re.search(r'capacity: (\S+)',text)[1]);load=1-.3*min(1,max(0,cargo_weight)/capacity)
@@ -40,7 +40,7 @@ def cost(a,b,vehicle,cargo_weight=5):
   neighbors=[]
   for xx,yy in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
    if inside(m,xx,yy):neighbors.append(((mid,xx,yy),(.5/speeds[m['road'][i]]+.5/speeds[m['road'][yy*m['w']+xx]])/(3.8*load)))
-  if p in jumps:neighbors.append((jumps[p],.30))
+  for jump in jumps.get(p,[]):neighbors.append((jump,.30))
   for target,delta in neighbors:
    nc=c+delta
    if nc<dist.get(target,float('inf')):dist[target]=nc;prev[target]=p;heapq.heappush(q,(nc,target))

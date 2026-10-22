@@ -1,6 +1,6 @@
 # MapGen: 본편 지형·지도 생성
 
-2026-10-22 안내. 본편은 고려9맵+중간권6맵이다. exporter는 `World/settings.json`의 `atlasRegions`(goryeo·transit)를 생성하며, 다른 팀 지역을 자동 생성하지 않는다. 환경 원형40개와 장애물48종은 별도 제작 라이브러리다. [문서 안내](../../Docs/README.md).
+2026-10-22 안내. 본편은 고려13구역+중간권6구역이다. exporter는 `World/settings.json`의 `atlasRegions`(goryeo·transit)를 생성하며, 다른 팀 지역을 자동 생성하지 않는다. 환경 원형40개와 장애물48종은 별도 제작 라이브러리다. [문서 안내](../../Docs/README.md).
 
 맵은 이 파이썬 코드로 설계하고, Unity는 결과 JSON을 씬으로 만든다.
 
@@ -56,4 +56,4 @@
 
 2026-10-17 개발 반영: 신규 주행 낙하/게이지/정차 안정화는 사용하지 않는다. 노면/짐/속도에 반응하는 시각 흔들림은 감속 연출로 유지한다. 현재 기준은 Docs/DevelopmentStatus.md 및 실제 시험장 UI를 따른다.
 
-10/22: 해안/대륙 프로필은 `World/Cartography/peninsula.json`, 실제 대륙 출구는 송악 산록 서쪽이다. `Map.apply_visual_skin`은 기존 환경 라이브러리 팔레트를 재사용하며 충돌·노면 등급을 바꾸지 않는다. 지도와 실제 구역 구분은 [현재 설계](../../Docs/CentralConnection.md)를 따른다.
+10/22 최신: `World/Terrain/continuous.json`이 실제 지형 원본이다. `continuous.py`가 기존 마을 템플릿을 공통80×64 구역으로 확장하고 해안·강·도로·숲과 접속을 생성한다. `cartography.py`는 그 실제 셀만 축약한다. 지도 전용 `peninsula.json`은 제거했다. [제작/검사 절차](../../Docs/ContinuousTerrain.md)를 따른다.

@@ -10,9 +10,11 @@ class GoryeoExperienceContract(unittest.TestCase):
     def test_region_loop_has_different_best_routes_for_backpack_and_cart(self):
         result=subprocess.run([sys.executable,str(ROOT/'Tools/Integration/analyze_journey.py')],capture_output=True,text=True,check=True)
         data=json.loads(result.stdout)
-        self.assertEqual(data['goryeoGraph']['independentCycles'],1)
+        self.assertGreaterEqual(data['goryeoGraph']['independentCycles'],2)
         route=next(r for r in data['routes'] if r['from']=='goryeo_songak' and r['to']=='Dakmok')
-        self.assertIn('goryeo_ridge',route['Walk']['maps'])
+        self.assertNotEqual(route['Walk']['maps'],route['Handcart']['maps'])
+        self.assertIn('goryeo_descent',route['Walk']['maps'])
+        self.assertIn('Route01',route['Handcart']['maps'])
         self.assertIn('Gaegyeong',route['Handcart']['maps'])
 
     def test_intro_region_has_no_random_bandit_loss_and_frontier_is_signposted(self):

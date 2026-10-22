@@ -47,7 +47,7 @@ namespace PocketCaravan.EditorTools
         class MapFile
         {
             public string id, name;
-            public int w, h, hours;
+            public int w, h, hours, terrainX, terrainY, legacyHeight;
             public int[] ground, deco, obj, high, road, blocked;
             public string[] palette;
             public MapObject[] objects;
@@ -196,7 +196,7 @@ namespace PocketCaravan.EditorTools
             foreach (var entry in WorldRegistry.Load().maps)
             {
                 var f = JsonUtility.FromJson<MapFile>(File.ReadAllText(entry.jsonPath));
-                var info = new WorldIndex.MapInfo { mapId = f.id, displayName = f.name, coord = new Vector2Int(entry.worldX, entry.worldY) };
+                var info = new WorldIndex.MapInfo { mapId = f.id, displayName = f.name, height = f.h, legacyHeight = f.legacyHeight, coord = new Vector2Int(entry.worldX, entry.worldY) };
                 foreach (var o in f.objects)
                 {
                     if (o.kind == "exit" && !string.IsNullOrEmpty(o.target) && !info.neighbors.Contains(o.target)) info.neighbors.Add(o.target);
@@ -241,6 +241,7 @@ namespace PocketCaravan.EditorTools
             map.ground = ground; map.road = null; map.blocked = blocked;
             // Independent test maps may omit registration and do not inherit a civilization.
             map.region = entry == null ? null : AssetDatabase.LoadAssetAtPath<RegionData>(entry.region.regionAssetPath);
+            map.terrainOrigin = new Vector2Int(f.terrainX,f.terrainY);
             map.worldCoord = entry == null ? Vector2Int.zero : new Vector2Int(entry.worldX, entry.worldY);
 
             var roads = gridGo.AddComponent<RoadGrid>();
@@ -277,7 +278,7 @@ namespace PocketCaravan.EditorTools
                         var ll = new Vector3Int(o.x, f.h - 1 - (o.y + o.h - 1), 0);
                         ex.transform.position = grid.CellToWorld(ll) + new Vector3(0.01f, 0.01f, 0);
                         ex.size = new Vector2Int(o.w, o.h);
-                        ex.targetScene = o.target; ex.targetSpawnId = o.spawn;
+                        ex.targetScene = o.target; ex.targetSpawnId = o.spawn; ex.edge=o.edge;
                         break;
                     case "npc":
                         var nd = Array.Find(entry?.region.npcs ?? Array.Empty<WorldRegistry.NpcEntry>(), n => n.id == o.npc);
