@@ -24,24 +24,33 @@
     },
     {
       "direction": "N",
-      "region": null,
+      "region": "north",
       "status": "planned",
       "chain": [],
-      "note": "여러 중간 맵을 거쳐 문명에 도달. 담당 지역/경계 출구는 통합 시 확정. 현재 런타임 출구 없음."
+      "note": "프로토타입 방위 배정. 중앙 권역에서 여러 중간 맵을 거쳐 연결한다. 접속 위치/담당 원본은 통합 시 대조하며 현재 런타임 출구는 없다."
     },
     {
       "direction": "W",
-      "region": null,
+      "region": "venice",
       "status": "planned",
       "chain": [],
-      "note": "여러 중간 맵을 거쳐 문명에 도달. 담당 지역/경계 출구는 통합 시 확정. 현재 런타임 출구 없음."
+      "note": "프로토타입 방위 배정. 중앙 권역에서 여러 중간 맵을 거쳐 연결한다. 접속 위치/담당 원본은 통합 시 대조하며 현재 런타임 출구는 없다."
     },
     {
       "direction": "S",
-      "region": null,
+      "region": "arabia",
       "status": "planned",
       "chain": [],
-      "note": "여러 중간 맵을 거쳐 문명에 도달. 담당 지역/경계 출구는 통합 시 확정. 현재 런타임 출구 없음."
+      "note": "프로토타입 방위 배정. 중앙 권역에서 여러 중간 맵을 거쳐 연결한다. 접속 위치/담당 원본은 통합 시 대조하며 현재 런타임 출구는 없다."
     }
-  ]
+  ],
+  "design": {
+    "prototypeTopology": "hub_and_spoke",
+    "hubRegion": "중앙아시아 모티브의 중앙 권역",
+    "prototypeInterCivilizationTravel": "via_central_region",
+    "geography": "recognizable_real_world_motifs_with_adjusted_scale",
+    "scalePolicy": "해안·반도·산지·내륙의 상대적 형태와 환경 연속성을 살리되 문명별 거리/면적/비율은 이동 경험과 제작 범위에 맞춰 과장·축소한다.",
+    "localRoadShape": "freeform",
+    "futureTopology": "여러 경유 도시와 대안 교역로가 있는 거미줄 연결로 확장 가능"
+  }
 }
