@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PocketCaravan
@@ -99,6 +100,11 @@ namespace PocketCaravan
 
             Vector2 Project(float x, float y) => new Vector2(canvas.x + x * scale, canvas.y + y * scale);
             string here = MapRoot.Current != null ? MapRoot.Current.mapId : "";
+            var placedLabels = new List<Rect>();
+            var markers = new List<Rect>();
+            foreach(var area in atlas.maps)
+                if(index != null && index.Map(area.mapId) != null)
+                { var point=Project(area.labelX,area.labelY);markers.Add(new Rect(point.x-4,point.y-4,8,8)); }
             foreach (var area in atlas.maps)
             {
                 var map = index != null ? index.Map(area.mapId) : null;
@@ -110,7 +116,11 @@ namespace PocketCaravan
                 if (destination) label += " · 의뢰";
                 // 글자 밑만 종이색으로 밝힌다. 구역별 네모 박스는 그리지 않는다.
                 float labelWidth = Mathf.Min(116, caption.CalcSize(new GUIContent(label)).x + 8);
-                var labelRect = new Rect(Mathf.Clamp(p.x - labelWidth / 2, canvas.x, canvas.xMax - labelWidth), p.y - 22, labelWidth, 16);
+                var labelRect = PlaceLabel(p,labelWidth,canvas,placedLabels,markers);
+                placedLabels.Add(labelRect);
+                float endY=labelRect.center.y<p.y?labelRect.yMax:labelRect.y;
+                Paper(new Rect(p.x,Mathf.Min(p.y,endY),.5f,Mathf.Abs(endY-p.y)),new Color32(105,92,68,130));
+                Paper(new Rect(Mathf.Min(p.x,labelRect.center.x),endY,Mathf.Abs(p.x-labelRect.center.x),.5f),new Color32(105,92,68,130));
                 Paper(labelRect, new Color32(224, 210, 167, 235));
                 GUI.Label(labelRect, label, caption);
                 if (area.mapId == here)
@@ -137,6 +147,23 @@ namespace PocketCaravan
             }
             GUI.Label(new Rect(panel.x + 16, legendY + 17, width - 32, 14),
                 "현재: " + current + "    |    길과 거래처를 살펴보고 돌아올 때 실을 화물도 계획해 보세요.", ink);
+        }
+
+        // Greedy placement keeps nearby map names legible as the registered world grows.
+        static Rect PlaceLabel(Vector2 point,float width,Rect canvas,List<Rect> placed,List<Rect> markers)
+        {
+            var offsets=new[]{new Vector2(0,-22),new Vector2(0,4),new Vector2(-24,-22),new Vector2(24,-22),new Vector2(0,-40),new Vector2(0,22),new Vector2(-48,-22),new Vector2(48,-22),new Vector2(0,-58),new Vector2(0,40),new Vector2(0,-76),new Vector2(0,58)};
+            Rect best=default;float bestPenalty=float.MaxValue;
+            foreach(var offset in offsets)
+            {
+                var r=new Rect(Mathf.Clamp(point.x-width/2+offset.x,canvas.x,canvas.xMax-width),Mathf.Clamp(point.y+offset.y,canvas.y,canvas.yMax-16),width,16);
+                var padded=new Rect(r.x-2,r.y-1,r.width+4,r.height+2);float penalty=0;
+                foreach(var other in placed)if(padded.Overlaps(other))penalty+=1000;
+                foreach(var other in markers)if(padded.Overlaps(other))penalty+=100;
+                if(penalty<bestPenalty){best=r;bestPenalty=penalty;}
+                if(penalty==0)return r;
+            }
+            return best;
         }
 
         static void Dot(Vector2 point, float radius, Color color)

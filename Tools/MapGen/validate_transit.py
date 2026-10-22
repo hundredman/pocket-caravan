@@ -55,7 +55,15 @@ def validate():
         if mid=='transit_ferry':distance=n;break
         todo.extend((o['target'],n+1) for o in by_id[mid].objects if o['kind']=='exit')
     assert distance==4,distance
-    checks.append('Jangdan to transit terminus requires four map transitions')
+    checks.append('Jangdan to ferry still requires four map transitions')
+    todo=[('goryeo_jangdan',0)];seen=set();central=None
+    for mid,n in todo:
+        if mid in seen:continue
+        seen.add(mid)
+        if mid=='transit_crossroads':central=n;break
+        todo.extend((o['target'],n+1) for o in by_id[mid].objects if o['kind']=='exit')
+    assert central==6,central
+    checks.append('Jangdan to central crossroads requires six distinct transitions')
     return dict(checks=checks,road_costs=route_results,scope='직교 노면 경로 비용(기본속도 배수 적용 전). 잔디 자유 이동·가속·달리기·NPC 제외. 시간/재미/온라인 성능의 실측값이 아님.')
 
 

@@ -73,8 +73,9 @@ def wetroad():
 def ferry():
     m=Map('transit_ferry','버들나루 마을',40,32,seed=104)
     m.river_h(25,31,wiggle=1)
-    m.road_path([(5,19),(20,19),(31,19)],width=3,grade=2)
+    m.road_path([(5,19),(20,19),(39,20)],width=3,grade=2)
     m.link('S',4,3,'transit_wetroad','N','S')
+    m.link('E',19,3,'transit_central_approach','W','E')
     m.road_path([(5,31),(5,19)],width=3,grade=2)
     m.bridge(4,24,7,31)
     m.road_blob(21,19,7,3,grade=2)
@@ -85,9 +86,58 @@ def ferry():
         m.stamp(house,x,y);m.road_path([(x+1,y+3),(x+1,19)],width=1,grade=1)
     m.board(25,17,'transit_ferry');m.add('market',21,20,town='transit_ferry')
     m.stamp('cart',29,22);m.stamp('well',15,14)
-    m.sign(5,17,'버들나루 마을\n이번 시험 여정의 끝입니다. 남쪽 다리를 건너 돌아갈 수 있습니다.\n다른 문명과 해상 이동은 추후 연결합니다.')
+    m.sign(5,17,'버들나루 마을\n동쪽: 중앙 진입로·중앙 십자로 / 남쪽: 솔재 길목 마을\n선착장에는 승선할 수 없습니다. 중앙까지는 육로로 이동하세요.')
     m.talker(23,15,'나루 상인','villager_tanuki_tall','이곳에서는 곡식과 소금을 구할 수 있어요. 솔재의 땔감을 싣고 오는 이도 있지요.','선착장은 둘러볼 수 있지만 배를 타는 기능은 아직 없어요.')
     m.add('ambience',24,27,id='river')
     m.forest_border(thickness=2,big=('roundbig','fruitbig'))
     m.flowers(3,3,36,22,12)
     m.finish();return m
+
+
+def central_approach():
+    """Existing ferry -> central crossroads. Broad cart road and optional walking shortcut."""
+    m = Map('transit_central_approach', '중앙 진입로', 54, 38, seed=105)
+    m.link('W', 19, 3, 'transit_ferry', 'E', 'W')
+    m.link('N', 35, 3, 'transit_crossroads', 'S', 'N')
+    m.road_path([(0,20),(7,20),(7,24),(35,24),(35,0)], width=3, grade=3)
+    m.road_path([(7,20),(35,20)], width=2, grade=1)
+    m.road_blob(35,13,4,3,grade=3)
+    m.water_blob(46,30,4,3)
+    m.stamp('house_thatch',41,8)
+    m.road_path([(43,11),(43,13),(35,13)],width=2,grade=2)
+    m.stamp('cart',41,15)
+    m.stamp('bench',41,12)
+    m.sign(6,17,'중앙 진입로\n서쪽: 버들나루 / 북쪽: 중앙 십자로\n남쪽으로 굽은 큰길은 수레길, 곧장 난 오솔길은 도보 지름길입니다.')
+    m.sign(29,6,'중앙 십자로 방면\n갈림길 광장을 지나도 다른 문명으로 통하는 길은 아직 열리지 않았습니다. 고려로 돌아갈 때는 버들나루 방향을 찾으세요.')
+    m.talker(43,15,'길손','villager_dog_tall','여기서 북쪽으로 가면 네 길이 만나는 십자로가 나옵니다.','짐수레는 단단한 큰길로 돌아갑니다. 가볍다면 오솔길을 살펴보세요.')
+    m.forest_border(thickness=2,big=('pinebig','roundbig'))
+    m.scatter('pinebig',12,area=(3,3,48,32),margin=1)
+    m.flowers(30,19,48,32,12)
+    m.finish(); return m
+
+
+def central_crossroads():
+    """A reusable four-arm junction. Only the south/Goryeo arm has a live exit."""
+    m = Map('transit_crossroads', '중앙 십자로', 72, 56, seed=106)
+    m.atlas_label = {'x': 33, 'y': 30}
+    m.link('S',31,3,'transit_central_approach','N','S')
+    m.road_path([(31,55),(31,5)],width=5,grade=3)
+    m.road_path([(5,28),(66,28)],width=5,grade=3)
+    m.road_blob(32,28,7,6,grade=3)
+    # Unopened arms end before the forest boundary, with a clear roadside sign.
+    # No exit points at nonexistent scenes. Ports are documented separately for future integration.
+    m.sign(36,44,'남쪽 · 고려 방면\n중앙 진입로 → 버들나루 → 솔재 길목 마을 → 솔바람 고개 → 장단 들마을\n들고 온 화물과 돌아갈 장터를 함께 확인하세요.')
+    m.sign(35,8,'북쪽 길 · 통행 불가\n지금 이용할 수 있는 연결로는 남쪽 고려 방면입니다.')
+    m.sign(8,24,'서쪽 길 · 통행 불가\n남쪽 길로 돌아가면 버들나루 장터에 도착합니다.')
+    m.sign(61,24,'동쪽 길 · 통행 불가\n남쪽 길로 돌아가면 버들나루 장터에 도착합니다.')
+    m.stamp('house_thatch',44,15)
+    m.road_path([(46,18),(46,28)],width=2,grade=2)
+    m.stamp('cart',43,22)
+    m.stamp('well',48,21)
+    m.stamp('bench',44,19)
+    m.water_blob(17,42,6,4)
+    m.talker(45,20,'길목 안내인','villager_tanuki_tall','이곳은 여러 교역로가 만나는 중앙 십자로입니다.','지금은 남쪽 고려 방면의 통행로만 열려 있습니다. 다른 방향은 이정표에서 확인하세요.')
+    m.forest_border(thickness=2,big=('pinebig','roundbig'))
+    m.scatter('roundbig',24,area=(3,3,66,50),margin=1)
+    m.flowers(42,35,65,48,20)
+    m.finish(); return m

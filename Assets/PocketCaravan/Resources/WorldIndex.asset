@@ -104,6 +104,20 @@ MonoBehaviour:
     town: transit_ferry
     neighbors:
     - transit_wetroad
+    - transit_central_approach
+  - mapId: transit_central_approach
+    displayName: "\uC911\uC559 \uC9C4\uC785\uB85C"
+    coord: {x: 9, y: 0}
+    town: 
+    neighbors:
+    - transit_ferry
+    - transit_crossroads
+  - mapId: transit_crossroads
+    displayName: "\uC911\uC559 \uC2ED\uC790\uB85C"
+    coord: {x: 9, y: 1}
+    town: 
+    neighbors:
+    - transit_central_approach
   places:
   - kind: board
     id: naru

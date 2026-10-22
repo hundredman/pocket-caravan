@@ -25,7 +25,7 @@ namespace PocketCaravan.EditorTools
             }
             var region = Get<RegionData>("Region_Transit");
             region.id = "transit"; region.displayName = "중간 교역권";
-            region.note = "문명 사이의 긴 여정을 검증하는 가상 중간권. 실제 고려 국경·거리의 고증 아님. 임시 좌표 x5~8은 기존 고려 작업 대역 안에서만 사용.";
+            region.note = "문명 사이의 긴 여정을 검증하는 가상 중간권. 실제 고려 국경·거리의 고증 아님. 임시 좌표 x5~9은 기존 고려 작업 대역 안에서만 사용.";
             EditorUtility.SetDirty(region);
             TownData Town(string file, string id, string label, int x)
             {
@@ -34,7 +34,7 @@ namespace PocketCaravan.EditorTools
                 t.facilities = new List<TownFacility> {
                     new TownFacility { id = id + "_rest", displayName = "길손 쉼터", kind = FacilityKind.Rest, minTier = 1 },
                     new TownFacility { id = id + "_info", displayName = "길 안내", kind = FacilityKind.RouteInformation, minTier = 2, minCredit = 0,
-                        description = "고개와 물가의 샛길은 짧고, 큰길은 수레에 유리합니다. 거래 후 재고와 귀환 화물을 비교하세요. 버들나루는 현재 시험 구역의 끝입니다." }
+                        description = "고개와 물가의 샛길은 짧고, 큰길은 수레에 유리합니다. 거래 후 재고와 귀환 화물을 비교하세요. 버들나루 동쪽 중앙 진입로를 지나면 중앙 십자로입니다. 현재 중앙에서 개방된 연결로는 고려 방면뿐입니다." }
                 };
                 if (!db.towns.Contains(t)) db.towns.Add(t);
                 return t;

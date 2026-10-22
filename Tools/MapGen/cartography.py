@@ -95,7 +95,7 @@ def export(maps, root, stem="Goryeo"):
             elif name == "boat":
                 d.ellipse((px - 7, py - 3, px + 7, py + 3), fill="#9b7554", outline="#695842")
         market = next((o for o in m.objects if o["kind"] == "market"), None)
-        label = market or {"x": 22, "y": 19}
+        label = market or getattr(m, "atlas_label", {"x": 22, "y": 19})
         entries.append(dict(mapId=m.id, x=mx, y=my, w=m.w, h=m.h,
                             labelX=mx + label["x"] + .5, labelY=my + label["y"] + .5))
     # 흰 네모 구역 대신 여백에 등고선 모양의 산지 기호를 둔다.

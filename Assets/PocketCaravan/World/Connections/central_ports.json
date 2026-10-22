@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "mapId": "transit_crossroads",
+  "purpose": "Central four-arm junction; directions to foreign civilizations remain unassigned pending integration. Tile coordinates use JSON top-down y. No runtime exits for closed ports.",
+  "ports": [
+    {
+      "edge": "S",
+      "status": "open",
+      "start": 31,
+      "width": 3,
+      "target": "transit_central_approach",
+      "targetSpawn": "N",
+      "localSpawn": "S"
+    },
+    {
+      "edge": "N",
+      "status": "closed",
+      "start": 31,
+      "width": 3,
+      "target": null,
+      "futureSpawn": "transit_crossroads_spawn_n_01"
+    },
+    {
+      "edge": "E",
+      "status": "closed",
+      "start": 28,
+      "width": 3,
+      "target": null,
+      "futureSpawn": "transit_crossroads_spawn_e_01"
+    },
+    {
+      "edge": "W",
+      "status": "closed",
+      "start": 28,
+      "width": 3,
+      "target": null,
+      "futureSpawn": "transit_crossroads_spawn_w_01"
+    }
+  ]
+}
