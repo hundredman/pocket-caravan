@@ -39,23 +39,29 @@ class CentralConnection(unittest.TestCase):
                 self.assertEqual(max(e['w'],e['h']),max(spawn['w'],spawn['h']))
                 self.assertTrue(any(s['kind']=='exit' and s['target']==mid for s in target['objects']))
 
-    def test_three_future_arms_have_no_invalid_scene_exit(self):
-        m=self.maps['transit_crossroads'];ports=json.loads((ROOT/'Assets/PocketCaravan/World/Connections/central_ports.json').read_text())
+    def test_world_directions_and_no_fabricated_foreign_exits(self):
+        m=self.maps['transit_crossroads']
+        contract=json.loads((ROOT/'Assets/PocketCaravan/World/Connections/central_ports.json').read_text())
         exits=[o for o in m['objects'] if o['kind']=='exit']
-        self.assertEqual([(e['edge'],e['target']) for e in exits],[('S','transit_central_approach')])
-        self.assertEqual({p['edge'] for p in ports['ports']},{'N','E','W','S'})
-        self.assertEqual({p['edge'] for p in ports['ports'] if p['status']=='closed'},{'N','E','W'})
-        for port in ports['ports']:
-            if port['status']=='open':
-                e=next(e for e in exits if e['edge']==port['edge'])
-                self.assertEqual(e['spawn'],port['targetSpawn']);self.assertEqual(max(e['w'],e['h']),port['width'])
-            else:
-                self.assertIsNone(port['target'])
-                self.assertTrue(any(o['kind']=='sign' and {'N':'북쪽','E':'동쪽','W':'서쪽'}[port['edge']] in o['text'] and '통행 불가' in o['text'] for o in m['objects']))
+        self.assertEqual([(e['edge'],e['target']) for e in exits],[('E','transit_central_approach')])
+        routes={p['direction']:p for p in contract['routes']}
+        self.assertEqual(set(routes),{'N','E','W','S'})
+        self.assertEqual(routes['E']['region'],'goryeo')
+        self.assertEqual(routes['E']['status'],'connected')
+        for d in ['N','W','S']:
+            self.assertEqual(routes[d]['status'],'planned')
+            self.assertEqual(routes[d]['chain'],[])
+        atlas=json.loads((ROOT/'Assets/PocketCaravan/Resources/WorldMap/GoryeoLayout.json').read_text())
+        entries={e['mapId']:e for e in atlas['maps']}
+        central=entries['transit_crossroads']
+        region=json.loads((ROOT/'Assets/PocketCaravan/World/Regions/goryeo.json').read_text())
+        for e in region['maps']:
+            self.assertGreaterEqual(entries[e['mapId']]['x'],central['x']+central['w'])
+        self.assertEqual(next(o['edge'] for o in self.maps['goryeo_jangdan']['objects'] if o['kind']=='exit' and o['target']=='transit_pass'),'W')
 
     def test_ferry_is_no_longer_signposted_as_terminus(self):
         text=' '.join(o.get('text','') for o in self.maps['transit_ferry']['objects'])
-        self.assertIn('중앙 십자로',text)
+        self.assertIn('중앙 길목',text)
         self.assertNotIn('시험 여정의 끝',text)
 
     def test_approach_supports_different_vehicle_path_choices(self):

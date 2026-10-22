@@ -14,7 +14,7 @@ namespace PocketCaravan.EditorTools
         [Serializable] public class Report { public List<string> passed=new List<string>(); public string error; public bool complete; }
         public static Report Current { get; private set; }
         static bool previousBackground;
-        [MenuItem("Pocket Caravan/중앙 연결/중앙 십자로 열기")]
+        [MenuItem("Pocket Caravan/중앙 연결/중앙 길목 열기")]
         public static void OpenCentral()
         {
             if(EditorApplication.isPlaying || SceneManager.GetActiveScene().isDirty)throw new InvalidOperationException("Play 종료 후 수정 중인 씬을 저장하세요.");
@@ -77,12 +77,15 @@ namespace PocketCaravan.EditorTools
                 p.money=777;p.credit=2;p.vehicle=gm.Db.vehicles.Find(v=>v.id=="handcart");p.origin=null;p.cargo.Clear();p.cargo.Add(paper,3,11);p.contracts.Clear();
                 p.contracts.Add(new Contract{id=988888,fromTown="transit_woodtown",toTown="transit_ferry",weight=4,reward=12,deadline=gm.Clock.TotalHours+100,finalDeadline=gm.Clock.TotalHours+150});
                 SceneManager.sceneLoaded+=Freeze;Freeze(default,LoadSceneMode.Single);
-                gm.TravelTo("transit_ferry","E");yield return Arrive("transit_ferry");
-                for(int offset=0;offset<3;offset++){yield return Cross("transit_central_approach",offset);yield return Cross("transit_ferry",offset);}
-                yield return Cross("transit_central_approach",0);
-                for(int offset=0;offset<3;offset++){yield return Cross("transit_crossroads",offset);Check("central has exactly one live arm",MapExit.All.Count==1);yield return Cross("transit_central_approach",offset);}
-                yield return Cross("transit_ferry",0);
-                for(int offset=0;offset<3;offset++){yield return Cross("transit_wetroad",offset);yield return Cross("transit_ferry",offset);}
+                gm.TravelTo("transit_crossroads","E");yield return Arrive("transit_crossroads");
+                Check("central has exactly one connected eastern route",MapExit.All.Count==1);
+                var route=new[]{"transit_crossroads","transit_central_approach","transit_ferry","transit_wetroad","transit_woodtown","transit_pass","goryeo_jangdan"};
+                for(int leg=1;leg<route.Length;leg++)
+                {
+                    for(int offset=0;offset<3;offset++)
+                    {yield return Cross(route[leg],offset);yield return Cross(route[leg-1],offset);}
+                    yield return Cross(route[leg],0);
+                }
             }
             finally
             {

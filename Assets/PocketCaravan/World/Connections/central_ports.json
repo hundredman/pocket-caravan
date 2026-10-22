@@ -1,40 +1,47 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "mapId": "transit_crossroads",
-  "purpose": "Central four-arm junction; directions to foreign civilizations remain unassigned pending integration. Tile coordinates use JSON top-down y. No runtime exits for closed ports.",
-  "ports": [
+  "purpose": "전체 교역망의 방위 계약. 중앙 맵 자체를 십자 도로로 만들거나 문명 수도에 직결하지 않는다. 경제 worldCoord는 방위가 아니다.",
+  "routes": [
     {
-      "edge": "S",
-      "status": "open",
-      "start": 31,
-      "width": 3,
+      "direction": "E",
+      "region": "goryeo",
+      "status": "connected",
+      "chain": [
+        "transit_crossroads",
+        "transit_central_approach",
+        "transit_ferry",
+        "transit_wetroad",
+        "transit_woodtown",
+        "transit_pass",
+        "goryeo_jangdan"
+      ],
+      "localEdge": "E",
+      "localSpawn": "E",
       "target": "transit_central_approach",
-      "targetSpawn": "N",
-      "localSpawn": "S"
+      "targetSpawn": "W",
+      "width": 3
     },
     {
-      "edge": "N",
-      "status": "closed",
-      "start": 31,
-      "width": 3,
-      "target": null,
-      "futureSpawn": "transit_crossroads_spawn_n_01"
+      "direction": "N",
+      "region": null,
+      "status": "planned",
+      "chain": [],
+      "note": "여러 중간 맵을 거쳐 문명에 도달. 담당 지역/경계 출구는 통합 시 확정. 현재 런타임 출구 없음."
     },
     {
-      "edge": "E",
-      "status": "closed",
-      "start": 28,
-      "width": 3,
-      "target": null,
-      "futureSpawn": "transit_crossroads_spawn_e_01"
+      "direction": "W",
+      "region": null,
+      "status": "planned",
+      "chain": [],
+      "note": "여러 중간 맵을 거쳐 문명에 도달. 담당 지역/경계 출구는 통합 시 확정. 현재 런타임 출구 없음."
     },
     {
-      "edge": "W",
-      "status": "closed",
-      "start": 28,
-      "width": 3,
-      "target": null,
-      "futureSpawn": "transit_crossroads_spawn_w_01"
+      "direction": "S",
+      "region": null,
+      "status": "planned",
+      "chain": [],
+      "note": "여러 중간 맵을 거쳐 문명에 도달. 담당 지역/경계 출구는 통합 시 확정. 현재 런타임 출구 없음."
     }
   ]
 }

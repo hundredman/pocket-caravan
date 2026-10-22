@@ -113,7 +113,7 @@ MonoBehaviour:
     - transit_ferry
     - transit_crossroads
   - mapId: transit_crossroads
-    displayName: "\uC911\uC559 \uC2ED\uC790\uB85C"
+    displayName: "\uC911\uC559 \uAE38\uBAA9"
     coord: {x: 9, y: 1}
     town: 
     neighbors:

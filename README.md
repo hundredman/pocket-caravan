@@ -56,7 +56,7 @@ R 재시작, Tab 전체 보기. [시험장 안내](Assets/CaravanMovementLab/REA
 | 게임 시계 (하루 = 현실 6분, 5일마다 장날), 낮·밤 빛 | `Scripts/Core/GameClock` |
 | 상태 창, 전체 지도(M), 메뉴(Esc), 자동 저장·불러오기 | `Scripts/UI/`, `Core/SaveSystem` |
 | 배경 음악·효과음 (Ninja Adventure, CC0) | `Audio/AudioManager`, `Resources/Audio` |
-| 본편13맵: 고려9맵(수도1+마을4+길4), 중간권4맵(마을2+길2) | `Tools/MapGen` → `Maps/*.json` → `Editor/MapJsonBuilder` |
+| 본편15맵: 고려9맵(수도1+마을4+길4), 중간권6맵(마을2+길/중앙4) | `Tools/MapGen` → `Maps/*.json` → `Editor/MapJsonBuilder` |
 | 캐릭터 12종(16×24 동물)·물건 아이콘: 글자 그림으로 생성 | `Tools/ArtGen/chars.py`, `items.py` |
 | 땅·건물 타일, 물결·꽃 애니메이션: Ninja Adventure 에셋 팩 (CC0). UI 폰트: 갈무리 (OFL) | `Art/NinjaAdventure`, `Resources/Fonts` |
 
@@ -130,7 +130,7 @@ NPC `lines` 배열의 다음 항목은 다시 말을 걸 때 나오며, 한 항�
 
 ## macOS 고려 프리뷰 빌드
 
-Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macOS/PocketCaravan.app`을 만든다. 이 메뉴는 현재 등록된 고려9맵+중간권4맵을 포함하며 나루에서 시작한다. Windows 프리뷰 메뉴도 제공한다. 이전 릴리스의 네 맵 빌드와 구분한다. 이전 3D 실험과 이동 시험장은 본편 빌드에 포함하지 않는다.
+Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macOS/PocketCaravan.app`을 만든다. 이 메뉴는 현재 등록된 고려9맵+중간권6맵을 포함하며 나루에서 시작한다. Windows 프리뷰 메뉴도 제공한다. 이전 릴리스의 네 맵 빌드와 구분한다. 이전 3D 실험과 이동 시험장은 본편 빌드에 포함하지 않는다.
 
 프리뷰는 `CARAVAN_PREVIEW` 빌드 정의로 `pocket_caravan_preview_save.json`에 저장해 에디터/기존 본편 저장과 분리한다. 빌드 결과는 Git 소스에 넣지 않고 GitHub 프리릴리스의 zip으로 배포한다. Mac·Windows 빌드는 로컬에서 성공했으며, 실제 Windows 실행과 Mac 서명·공증은 별도 확인이 필요하다. 현재 로컬 패키지와 이전 GitHub 릴리스는 버전이 다르다.
 
@@ -149,3 +149,5 @@ Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macO
 ### 10/21 저장 참조·원본 보호
 
 저장된 상품/진행/이동 수단/맵 등을 적용 전에 확인하고, 복원할 수 없으면 원본을 보존하며 이번 세션 저장을 차단한다. [검사 범위와 남은 복구 과제](Docs/SaveCompatibilityReview.md). 최신 로컬 검토 ZIP은 SaveGuard-2026-10-21이며 Ledger 이전 ZIP·공개 릴리스와 구분한다.
+
+10/22: 고려를 세계 지도 동쪽에 두고 여러 중간 구역을 거쳐 중앙 길목까지 연결했습니다. 십자는 전체 동서남북 교역망의 구조이며 중앙 맵의 도로 모양을 뜻하지 않습니다. [배치·확장 계약](Docs/CentralConnection.md).

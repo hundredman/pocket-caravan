@@ -86,6 +86,8 @@ namespace PocketCaravan
             GUI.Label(new Rect(panel.x + 16, panel.y + 10, width - 32, 20), "고려·중간권 교역도", title);
             GUI.Label(new Rect(panel.xMax - 76, panel.y + 13, 65, 14), "M / Esc 닫기", ink);
 
+            GUI.Label(new Rect(panel.xMax - 190, panel.y + 13, 105, 14), "북 ↑   동 →", ink);
+
             if (terrain == null || atlas == null || atlas.maps == null || atlas.width <= 0 || atlas.height <= 0)
             {
                 GUI.Label(new Rect(panel.x + 16, panel.y + 45, width - 32, 24), "지형 지도 데이터가 없습니다. MapGen export.py를 실행해 주세요.", ink);

@@ -34,7 +34,7 @@ namespace PocketCaravan.EditorTools
                 t.facilities = new List<TownFacility> {
                     new TownFacility { id = id + "_rest", displayName = "길손 쉼터", kind = FacilityKind.Rest, minTier = 1 },
                     new TownFacility { id = id + "_info", displayName = "길 안내", kind = FacilityKind.RouteInformation, minTier = 2, minCredit = 0,
-                        description = "고개와 물가의 샛길은 짧고, 큰길은 수레에 유리합니다. 거래 후 재고와 귀환 화물을 비교하세요. 버들나루 동쪽 중앙 진입로를 지나면 중앙 십자로입니다. 현재 중앙에서 개방된 연결로는 고려 방면뿐입니다." }
+                        description = "고개와 물가의 샛길은 짧고, 큰길은 수레에 유리합니다. 거래 후 재고와 귀환 화물을 비교하세요. 버들나루 서쪽 중앙 진입로를 지나면 중앙 길목입니다. 현재 중앙에서 개방된 연결로는 고려 방면뿐입니다." }
                 };
                 if (!db.towns.Contains(t)) db.towns.Add(t);
                 return t;
