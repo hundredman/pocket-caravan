@@ -1,0 +1,87 @@
+{
+  "width": 306,
+  "height": 172,
+  "maps": [
+    {
+      "mapId": "north_birka",
+      "x": 62,
+      "y": 77,
+      "w": 72,
+      "h": 50,
+      "labelX": 98.5,
+      "labelY": 108.5
+    },
+    {
+      "mapId": "north_fjord_road",
+      "x": 134,
+      "y": 84,
+      "w": 66,
+      "h": 42,
+      "labelX": 167.5,
+      "labelY": 103.5
+    },
+    {
+      "mapId": "north_hunter",
+      "x": 200,
+      "y": 87,
+      "w": 46,
+      "h": 32,
+      "labelX": 224.5,
+      "labelY": 106.5
+    },
+    {
+      "mapId": "north_naru",
+      "x": 139,
+      "y": 126,
+      "w": 52,
+      "h": 36,
+      "labelX": 167.5,
+      "labelY": 145.5
+    },
+    {
+      "mapId": "north_laugar",
+      "x": 151,
+      "y": 48,
+      "w": 48,
+      "h": 36,
+      "labelX": 177.5,
+      "labelY": 70.5
+    },
+    {
+      "mapId": "north_herd",
+      "x": 246,
+      "y": 87,
+      "w": 50,
+      "h": 34,
+      "labelX": 271.5,
+      "labelY": 108.5
+    },
+    {
+      "mapId": "north_runehill",
+      "x": 150,
+      "y": 10,
+      "w": 52,
+      "h": 38,
+      "labelX": 176.5,
+      "labelY": 27.5
+    },
+    {
+      "mapId": "north_icecave",
+      "x": 246,
+      "y": 51,
+      "w": 48,
+      "h": 36,
+      "labelX": 270.5,
+      "labelY": 67.5
+    },
+    {
+      "mapId": "north_pass",
+      "x": 10,
+      "y": 77,
+      "w": 52,
+      "h": 36,
+      "labelX": 36.5,
+      "labelY": 93.5
+    }
+  ]
+}

@@ -16,9 +16,33 @@ MonoBehaviour:
   displayName: "\uBE44\uB974\uCE74"
   region: {fileID: 11400000, guid: 053dda2cee1b84de7bdb3dcc5c7849c8, type: 2}
   worldCoord: {x: 30, y: 0}
-  startLevel: 1
-  settlementTier: 0
-  facilities: []
+  startLevel: 3
+  settlementTier: 3
+  facilities:
+  - id: north_capital_rest
+    displayName: "\uD68C\uAD00 \uC190\uB2D8\uBC29"
+    kind: 0
+    minTier: 1
+    minCredit: 0
+    description: 
+    storageCapacity: 120
+  - id: north_capital_info
+    displayName: "\uB8EC\uB3CC \uAE38 \uC548\uB0B4\uC18C"
+    kind: 1
+    minTier: 2
+    minCredit: 1
+    description: "\uB3D9\uCABD \uD53C\uC624\uB974 \uAE38\uC5D0\uC11C \uC0AC\uB0E5\uAFBC
+      \uB9C8\uC744\xB7\uB098\uB8E8\xB7\uC628\uCC9C\uC73C\uB85C \uAC08\uB77C\uC9D1\uB2C8\uB2E4.\n\uC21C\uB85D
+      \uACE0\uC6D0\uC740 \uC0AC\uB0E5\uAFBC \uB9C8\uC744 \uB108\uBA38 \uB3D9\uCABD\uC785\uB2C8\uB2E4.\n\uBAA8\uD53C\uB294
+      \uC232\uC5D0\uC11C \uC2F8\uACE0 \uBC14\uB2F7\uAC00\uC5D0\uC11C \uBE44\uC309\uB2C8\uB2E4."
+    storageCapacity: 120
+  - id: north_capital_warehouse
+    displayName: "\uC0C1\uC778 \uAE38\uB4DC \uCC3D\uACE0"
+    kind: 2
+    minTier: 3
+    minCredit: 3
+    description: 
+    storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: 5bdb4599b599a4bafb2d6eba12a7a241, type: 2}
     optimal: 30
@@ -28,6 +52,10 @@ MonoBehaviour:
     optimal: 4
   - item: {fileID: 11400000, guid: 97c21223f4815486bb4749fc7f944272, type: 2}
     optimal: 15
+  - item: {fileID: 11400000, guid: 5bbced6f7b2b141b6897cb7a47bc713b, type: 2}
+    optimal: 4
+  - item: {fileID: 11400000, guid: 7b10b12610b4b41fbaf940255ab242b6, type: 2}
+    optimal: 5
   defaultOptimal: 4
   vehiclesForSale:
   - {fileID: 11400000, guid: 913f67411fb2e4eb9868cba57a9545f6, type: 2}

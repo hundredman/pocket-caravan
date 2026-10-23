@@ -28,5 +28,7 @@ MonoBehaviour:
     optimal: 6
   - item: {fileID: 11400000, guid: 84e8ea6b0681441bcb997c074af766ab, type: 2}
     optimal: 2
+  - item: {fileID: 11400000, guid: 7b10b12610b4b41fbaf940255ab242b6, type: 2}
+    optimal: 6
   defaultOptimal: 4
   vehiclesForSale: []

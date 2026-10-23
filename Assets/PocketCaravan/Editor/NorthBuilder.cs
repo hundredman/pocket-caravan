@@ -50,9 +50,21 @@ namespace PocketCaravan.EditorTools
                     t.stock.Clear(); t.vehiclesForSale.Clear(); t.defaultOptimal = 4f;
                 });
             // 좌표는 north.json의 worldX, worldY와 같게 (경제 거리 계산에 쓰임)
-            var birka = Town("Town_Birka", "north_birka", "비르카", new Vector2Int(30, 0), 1);
+            // 10/23: 비르카 = 북유럽 수도 (고려 개경처럼 3등급, 등급·신용별 시설)
+            var birka = Town("Town_Birka", "north_birka", "비르카", new Vector2Int(30, 0), 3);
+            birka.settlementTier = 3;
+            birka.facilities = new System.Collections.Generic.List<TownFacility>
+            {
+                new TownFacility { id = "north_capital_rest", displayName = "회관 손님방", kind = FacilityKind.Rest, minTier = 1, minCredit = 0, storageCapacity = 120f },
+                new TownFacility { id = "north_capital_info", displayName = "룬돌 길 안내소", kind = FacilityKind.RouteInformation, minTier = 2, minCredit = 1, storageCapacity = 120f,
+                    description = "동쪽 피오르 길에서 사냥꾼 마을·나루·온천으로 갈라집니다.\n순록 고원은 사냥꾼 마을 너머 동쪽입니다.\n모피는 숲에서 싸고 바닷가에서 비쌉니다." },
+                new TownFacility { id = "north_capital_warehouse", displayName = "상인 길드 창고", kind = FacilityKind.Warehouse, minTier = 3, minCredit = 3, storageCapacity = 120f },
+            };
             var hunter = Town("Town_Hunter", "north_hunter", "모피 사냥꾼 마을", new Vector2Int(32, 0), 1);
             var naru = Town("Town_Naru", "north_naru", "피오르 나루 마을", new Vector2Int(31, -1), 1);
+            // 10/23 추가: 피오르 길 북쪽 골짜기의 온천 마을, 사냥꾼 마을 동쪽의 순록 고원 마을
+            var laugar = Town("Town_Laugar", "north_laugar", "라우가르 온천 마을", new Vector2Int(31, 1), 1);
+            var herd = Town("Town_Herd", "north_herd", "순록 고원 마을", new Vector2Int(33, 0), 1);
 
             ItemData Item(string id, string name, float weight, float price, TownData origin) =>
                 Upsert<ItemData>($"{DataDir}/Item_{id}.asset", i =>
@@ -66,15 +78,20 @@ namespace PocketCaravan.EditorTools
             var fur = Item("north_fur", "모피", 2f, 30f, hunter);
             var amber = Item("north_amber", "호박", 1f, 50f, naru);
             var meat = Item("north_dried_meat", "말린 고기", 2f, 8f, hunter);
+            var herb = Item("north_herb", "온천 약초", 1f, 18f, laugar);
+            var cheese = Item("north_cheese", "순록 치즈", 2f, 14f, herd);
 
             // 재고: 산지는 크게(싸게), 소비지는 작게(비싸게 팔림). 나루는 배가 모피를 실어 가서 모피 수요가 큼
-            birka.stock.AddRange(new[] { S(mead, 30), S(fur, 8), S(amber, 4), S(meat, 15) });
-            hunter.stock.AddRange(new[] { S(fur, 30), S(meat, 30), S(mead, 6), S(amber, 2) });
-            naru.stock.AddRange(new[] { S(amber, 20), S(mead, 12), S(fur, 4), S(meat, 10) });
+            birka.stock.AddRange(new[] { S(mead, 30), S(fur, 8), S(amber, 4), S(meat, 15), S(herb, 4), S(cheese, 5) });
+            hunter.stock.AddRange(new[] { S(fur, 30), S(meat, 30), S(mead, 6), S(amber, 2), S(cheese, 6) });
+            naru.stock.AddRange(new[] { S(amber, 20), S(mead, 12), S(fur, 4), S(meat, 10), S(herb, 3), S(cheese, 6) });
+            // 온천 마을: 약초 산지, 지친 여행자가 고기·꿀술을 찾음. 순록 마을: 치즈 산지, 모피·고기도 넉넉
+            laugar.stock.AddRange(new[] { S(herb, 30), S(mead, 8), S(meat, 8), S(fur, 4), S(cheese, 5) });
+            herd.stock.AddRange(new[] { S(cheese, 30), S(fur, 14), S(meat, 20), S(herb, 4), S(mead, 5) });
             // 손수레는 공용 수단(고려 데이터)을 그대로 판다 (팀 규칙: 공통 수단을 지역마다 복제하지 않음)
             var cart = AssetDatabase.LoadAssetAtPath<VehicleData>($"{Root}/Data/Goryeo/Vehicle_Handcart.asset");
             if (cart != null) birka.vehiclesForSale.Add(cart);
-            foreach (var t in new[] { birka, hunter, naru }) EditorUtility.SetDirty(t);
+            foreach (var t in new[] { birka, hunter, naru, laugar, herd }) EditorUtility.SetDirty(t);
 
             // 퀘스트용 물건 (장터에 팔 수 없음)
             ItemData QuestItem(string id, string name, float weight) =>
@@ -95,8 +112,8 @@ namespace PocketCaravan.EditorTools
             db.items.RemoveAll(i => i == null || i.id.StartsWith("north_"));
             db.quests.RemoveAll(q => q == null || q.id.StartsWith("north_"));
             // 북유럽 마을을 앞에 둔다: 손수레 길 안내가 목록에서 처음 찾은 마을(원래는 개경)을 가리키기 때문
-            db.towns.InsertRange(0, new[] { birka, hunter, naru });
-            db.items.AddRange(new[] { mead, fur, amber, meat, butter, hay, saltLick, meadJar });
+            db.towns.InsertRange(0, new[] { birka, hunter, naru, laugar, herd });
+            db.items.AddRange(new[] { mead, fur, amber, meat, herb, cheese, butter, hay, saltLick, meadJar });
             db.quests.AddRange(quests);
             EditorUtility.SetDirty(db);
             AssetDatabase.SaveAssets();

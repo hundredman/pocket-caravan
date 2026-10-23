@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147baa154c7bc4bf39645666676b3271, type: 3}
+  m_Name: Town_Laugar
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.TownData
+  id: north_laugar
+  displayName: "\uB77C\uC6B0\uAC00\uB974 \uC628\uCC9C \uB9C8\uC744"
+  region: {fileID: 11400000, guid: 053dda2cee1b84de7bdb3dcc5c7849c8, type: 2}
+  worldCoord: {x: 31, y: 1}
+  startLevel: 1
+  settlementTier: 0
+  facilities: []
+  stock:
+  - item: {fileID: 11400000, guid: 5bbced6f7b2b141b6897cb7a47bc713b, type: 2}
+    optimal: 30
+  - item: {fileID: 11400000, guid: 5bdb4599b599a4bafb2d6eba12a7a241, type: 2}
+    optimal: 8
+  - item: {fileID: 11400000, guid: 97c21223f4815486bb4749fc7f944272, type: 2}
+    optimal: 8
+  - item: {fileID: 11400000, guid: 1a2fc2ad478bf45eb8826708d861bb18, type: 2}
+    optimal: 4
+  - item: {fileID: 11400000, guid: 7b10b12610b4b41fbaf940255ab242b6, type: 2}
+    optimal: 5
+  defaultOptimal: 4
+  vehiclesForSale: []
