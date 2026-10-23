@@ -255,6 +255,21 @@ OBJECTS = [
     ("n_prt_amphorae", "district/sheet21_port_keyed.png", (132, 760, 544, 984), 2, 1),
     ("n_prt_bollard", "district/sheet21_port_keyed.png", (672, 808, 900, 980), 1, 1),
     ("n_prt_scale", "district/sheet21_port_keyed.png", (1028, 744, 1412, 988), 2, 1),
+    # ---- 수변 팩 (Venice_Waterfront_Pack): 쉼터·관리소·화물배·정원 소품. 부두·다리 판은 늘리지 않고 타일로 조립 ----
+    ("w_shelter", "district/wf_02_harbor_life_keyed.png", (76, 116, 480, 468), 3, 3),
+    ("w_rope_rail", "district/wf_02_harbor_life_keyed.png", (580, 264, 1008, 460), 3, 1),
+    ("w_cart", "district/wf_02_harbor_life_keyed.png", (1108, 240, 1492, 476), 2, 1),
+    ("w_office", "district/wf_02_harbor_life_keyed.png", (32, 544, 460, 904), 3, 3),
+    ("w_cargo_boat", "district/wf_02_harbor_life_keyed.png", (540, 668, 1036, 872), 4, 2),
+    ("w_mooring_set", "district/wf_02_harbor_life_keyed.png", (1116, 688, 1488, 884), 2, 1),
+    ("w_vine_bench", "district/wf_03_waterfront_garden_keyed.png", (44, 120, 520, 496), 3, 3),
+    ("w_flower_box", "district/wf_03_waterfront_garden_keyed.png", (596, 240, 984, 488), 2, 1),
+    ("w_lemon_pots", "district/wf_03_waterfront_garden_keyed.png", (1088, 120, 1484, 496), 2, 2),
+    ("w_flower_cart", "district/wf_03_waterfront_garden_keyed.png", (56, 572, 480, 944), 3, 3),
+    ("w_bunting", "district/wf_03_waterfront_garden_keyed.png", (560, 620, 1032, 896), 3, 2),
+    ("w_fruit_bench", "district/wf_03_waterfront_garden_keyed.png", (1080, 696, 1500, 888), 3, 1),
+    ("w_stairs", "district/wf_01_quay_structures_keyed.png", (608, 540, 936, 896), 3, 3),
+    ("w_round_deck", "district/wf_01_quay_structures_keyed.png", (1040, 588, 1492, 912), 4, 3),
 ]
 # 지형 시트(sheet11)의 칸 하나는 2×2타일 바닥 무늬('m_*')로 쓴다. 물가는 venice_tiles.py가 색을 따서 그린다.
 GRIDS = []
@@ -401,7 +416,7 @@ def main():
         img = pixelate(cache[fname].crop(box), w * 16, h * 16, rest[0] if rest else None)
         if len(rest) > 1:
             img = recolor(img, rest[1])
-        if not name.startswith(("m_", "g_", "n_")):   # 새 마을 시트(n_)는 이미 굵은 도트라 색 정리를 하지 않는다 (포인트색 보존)          # 바닥 무늬는 그대로, 건물 12색·소품 8색으로 정리
+        if not name.startswith(("m_", "g_", "n_", "w_")):   # 새 마을 시트(n_)는 이미 굵은 도트라 색 정리를 하지 않는다 (포인트색 보존)          # 바닥 무늬는 그대로, 건물 12색·소품 8색으로 정리
             img = tidy(img, (16 if w * h >= 9 else 12) if name.startswith("n_") else (10 if w * h >= 9 else 7))   # 새 시트는 포인트색(파란 문·유리)을 살린다
         x, y, _, _ = placed[name]
         # 칸 상자 안에서 아래·가운데 정렬

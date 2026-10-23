@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uACFC\uC77C \uC0C1\uC790"
   icon: {fileID: 21300000, guid: 2cf7438ae750f6d40a9698cda3bcfdf6, type: 3}
   weight: 2
-  basePrice: 9
+  basePrice: 7
   originTown: {fileID: 11400000, guid: b03feec98a24c7c49aed079e56bef7b5, type: 2}
   pricePerMap: 0.5
   questItem: 0

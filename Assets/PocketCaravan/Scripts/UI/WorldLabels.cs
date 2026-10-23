@@ -61,10 +61,10 @@ namespace PocketCaravan
             {
                 var n = nav.Value;
                 Vector2 from = player.transform.position;
-                Vector2 d = (Vector2)n.position - from;
-                float dist = d.magnitude;
+                Vector2 d = (Vector2)n.steer - from;                 // 걸을 수 있는 길의 앞쪽을 가리킨다
+                float dist = n.walkCells >= 0 ? n.walkCells : ((Vector2)n.position - from).magnitude;
                 if (n.exit) DrawDown(ToGui(cam, n.position + new Vector3(0f, 0.9f, 0f)));
-                if (dist > 2.2f)
+                if (dist > 2.2f && d.sqrMagnitude > 0.01f)
                 {
                     Vector2 c = ToGui(cam, player.transform.position);
                     float ang = Mathf.Atan2(-d.y, d.x) * Mathf.Rad2Deg;   // GUI는 y가 아래로

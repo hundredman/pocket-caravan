@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uC808\uC778 \uC0DD\uC120"
   icon: {fileID: 21300000, guid: 15db310cf88fa384ea9954b580fe634d, type: 3}
   weight: 2
-  basePrice: 12
+  basePrice: 9
   originTown: {fileID: 11400000, guid: 37e9a21485b90d241a066c52b1ef1bbf, type: 2}
   pricePerMap: 0.5
   questItem: 0

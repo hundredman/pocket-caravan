@@ -16,10 +16,11 @@ MonoBehaviour:
   displayName: "\uBB34\uB77C\uB178"
   region: {fileID: 11400000, guid: 150e6d6afa385524abcf177047f2d09b, type: 2}
   journeyNote: "\uC720\uB9AC\uACF5\uBC29 \uB9C8\uC744. \uC720\uB9AC\uADF8\uB987\uC740
-    \uAC00\uBCCD\uC9C0\uB9CC \uAC12\uC774 \uB098\uAC04\uB2E4."
+    \uAC00\uBCCD\uACE0 \uBE44\uC2F8\uB2E4. \uD55C \uACF3\uC5D0 \uBAB0\uC544 \uD314\uBA74
+    \uAC12\uC774 \uAE08\uBC29 \uB5A8\uC5B4\uC9C4\uB2E4."
   worldCoord: {x: 13, y: 0}
   startLevel: 1
-  settlementTier: 1
+  settlementTier: 2
   facilities:
   - id: venice_murano_rest
     displayName: "\uAE38\uC190 \uC27C\uD130"
@@ -28,15 +29,27 @@ MonoBehaviour:
     minCredit: 0
     description: 
     storageCapacity: 120
+  - id: venice_murano_info
+    displayName: "\uAD50\uC5ED \uAE38 \uC548\uB0B4\uC18C"
+    kind: 1
+    minTier: 2
+    minCredit: 1
+    description: "\uC720\uB9AC\uB294 \uACFC\uC218\uC6D0\uC774 \uC870\uAE08 \uB354
+      \uCCD0 \uC8FC\uACE0, \uBA40\uB9AC \uBD80\uB77C\uB178\uC5D0\uC11C\uB294 \uAC12\uC774
+      \uD07D\uB2C8\uB2E4. \uC5EC\uB7EC \uC7A5\uD130\uC5D0 \uB098\uB220 \uD30C\uC138\uC694."
+    storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: 2eb42ca42c7322a4f8fe7f379bcb954e, type: 2}
-    optimal: 56
+    optimal: 40
     localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: 018a545c0e6c93f4c97c5e4224b223c9, type: 2}
-    optimal: 8
+    optimal: 14
     localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: 58596ccbd03895d429f2d5781358ce80, type: 2}
-    optimal: 6
-    localPriceMultiplier: 1
+    optimal: 14
+    localPriceMultiplier: 1.1
+  - item: {fileID: 11400000, guid: ada83f26ddff528418a2795d1786d676, type: 2}
+    optimal: 14
+    localPriceMultiplier: 1.1
   defaultOptimal: 3
   vehiclesForSale: []

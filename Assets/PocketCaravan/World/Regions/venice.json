@@ -12,6 +12,43 @@
       "generator": "venice:venice_lagoon"
     }
   ],
-  "npcs": [],
+  "npcs": [
+    {
+      "id": "venice_innkeeper",
+      "name": "여관 주인",
+      "sprite": "villager_tanuki_tall",
+      "greeting": "배에서 내린 손님은 먼저 여기서 짐을 푸오."
+    },
+    {
+      "id": "venice_clerk",
+      "name": "상인회 서기",
+      "sprite": "villager_fox_tall",
+      "greeting": "의뢰는 성당 옆 게시판에 붙는다네."
+    },
+    {
+      "id": "venice_gardener",
+      "name": "과수원 일꾼",
+      "sprite": "villager_dog_tall",
+      "greeting": "레몬이랑 무화과를 리알토 장터로 내가지."
+    },
+    {
+      "id": "venice_glassmaker",
+      "name": "유리 장인",
+      "sprite": "villager_fox_tall",
+      "greeting": "모래는 배로 들어와. 녹이고, 불고, 식혀서 진열하지."
+    },
+    {
+      "id": "venice_fisher",
+      "name": "부라노 어부",
+      "sprite": "villager_bear_tall",
+      "greeting": "그물은 집 앞에서 손보고, 바로 잔교로 내려가지."
+    },
+    {
+      "id": "venice_warehouse",
+      "name": "창고지기",
+      "sprite": "villager_dog_tall",
+      "greeting": "소금 배가 들어오면 이 마당이 꽉 찬다오."
+    }
+  ],
   "villagers": []
 }

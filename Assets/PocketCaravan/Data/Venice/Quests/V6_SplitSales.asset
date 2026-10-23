@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: V6_SplitSales
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: venice_q6_split
+  title: "\uB098\uB220 \uD314\uAE30"
+  chain: "\uBCA0\uB124\uCE58\uC544 1\uC7A5: \uBE48 \uC9C0\uAC8C\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
+  summary: "\uB9AC\uC54C\uD1A0\uC5D0 \uACFC\uC77C\uC774 \uB118\uCE5C\uB2E4. \uACFC\uC77C\uC744
+    \uD0A4\uC624\uC790\uC640 \uBB34\uB77C\uB178 \uB450 \uACF3\uC5D0 \uB098\uB220
+    \uD310\uB2E4."
+  giverNpc: venice_gardener
+  requires:
+  - {fileID: 11400000, guid: b44bf035df9893c488409b8b11aae5b3, type: 2}
+  offerLine: "\uB2E4\uB978 \uC0C1\uC778\uC774 \uB9AC\uC54C\uD1A0\uC5D0 \uACFC\uC77C\uC744
+    \uC794\uB729 \uD480\uC5C8\uB300.\n\uD55C \uACF3\uC5D0 \uBAB0\uC544 \uD314\uBA74
+    \uAC12\uC774 \uB5A8\uC5B4\uC9C0\uC9C0.\n\uD0A4\uC624\uC790\uC640 \uBB34\uB77C\uB178\uC5D0
+    \uC138 \uC0C1\uC790\uC529 \uB098\uB220 \uD314\uC544 \uBCF4\uAC8C."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 3
+    text: "\uD0A4\uC624\uC790 \uC7A5\uD130\uC5D0 \uACFC\uC77C 3\uC0C1\uC790 \uD314\uAE30"
+    targetId: venice_chioggia
+    item: {fileID: 11400000, guid: 58596ccbd03895d429f2d5781358ce80, type: 2}
+    vehicle: {fileID: 0}
+    count: 3
+    completeLine: 
+  - type: 3
+    text: "\uBB34\uB77C\uB178 \uC7A5\uD130\uC5D0 \uACFC\uC77C 3\uC0C1\uC790 \uD314\uAE30"
+    targetId: venice_murano
+    item: {fileID: 11400000, guid: 58596ccbd03895d429f2d5781358ce80, type: 2}
+    vehicle: {fileID: 0}
+    count: 3
+    completeLine: 
+  - type: 0
+    text: "\uACFC\uC218\uC6D0 \uC77C\uAFBC\uC5D0\uAC8C \uC54C\uB9AC\uAE30"
+    targetId: venice_gardener
+    item: {fileID: 0}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: "\uB450 \uACF3 \uB2E4 \uAC12\uC744 \uC798 \uBC1B\uC558\uAD70."
+  rewardMoney: 30
+  rewardCredit: 1
+  finishNote: "\uB098\uB220 \uD314\uBA74 \uAC12\uC774 \uB35C \uB5A8\uC5B4\uC9C0\uC9C0.
+    \uC774\uC81C \uC54C\uACA0\uC9C0?"

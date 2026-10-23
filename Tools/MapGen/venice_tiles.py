@@ -15,7 +15,8 @@ _BLOCK = {  # 이름: (막는 줄 시작, 위층 줄 수). 나머지는 전체�
     "cypress": (2, 2), "olive": (2, 2), "tree": (2, 2), "lemon_pot": (1, 1), "vine": (1, 1),
     "salt_rake": (1, 1), "lemon_tree": (1, 1), "px_cap_flag_red": (2, 2), "px_cap_flag_blue": (2, 2),
     "px_prt_trade_flag": (2, 2), "cp_lion_column": (2, 2), "cp_saint_column": (2, 2), "cp_brazier": (1, 1),
-    "cp_mooring": (1, 1), "n_orc_fig": (2, 2), "n_orc_olive": (2, 2), "n_orc_lemon": (2, 2), "n_prt_crane": (1, 1), "cp_pennant": (1, 1), "cp_tapestry": (1, 1), "px_orc_lemon_tree2": (2, 2), "px_orc_ladder_basket": (1, 1), "flower_arch": (1, 1), "reeds_tall": (1, 1),
+    "cp_mooring": (1, 1), "w_shelter": (2, 2), "w_vine_bench": (2, 2), "w_bunting": (1, 1), "w_flower_cart": (1, 1),
+    "w_office": (1, 1), "w_lemon_pots": (1, 1), "n_orc_fig": (2, 2), "n_orc_olive": (2, 2), "n_orc_lemon": (2, 2), "n_prt_crane": (1, 1), "cp_pennant": (1, 1), "cp_tapestry": (1, 1), "px_orc_lemon_tree2": (2, 2), "px_orc_ladder_basket": (1, 1), "flower_arch": (1, 1), "reeds_tall": (1, 1),
     "laundry": (1, 1), "net_rack": (1, 1), "ladder_rope": (1, 1),
 }
 with open(_ATLAS + ".json", encoding="utf-8") as _fp:
@@ -434,10 +435,4 @@ class VeniceMap(Map):
                     var = 0
                 qx, qy = (0, 0) if mat in self.NATURAL else (x % 2, y % 2)
                 self.ground[y][x] = f"vq:L:{mat}:{var}:{qx}:{qy}:{rot}:{sides}{corners}"
-        # 잔잔한 물결 애니메이션: 물가에서 떨어진 넓은 물에만 드물게
-        for y in range(2, self.h - 2):
-            for x in range(2, self.w - 2):
-                if (x, y) in self.pan or (x, y) in self.over_water:
-                    continue
-                if all(self._is_water(x + dx, y + dy) for dx in (-2, 0, 2) for dy in (-2, 0, 2)) and self.rng.random() < 0.025:
-                    self.objects.append(dict(kind="anim", x=x, y=y, sheet="ripples", frames=4, fps=2.0 + self.rng.random()))
+        # 원본 물결 애니메이션(ripples)은 원래 하늘색 물 바탕이 그림에 들어 있어 청록 물 위에서 네모로 보인다 → 쓰지 않는다

@@ -15,8 +15,9 @@ MonoBehaviour:
   id: venice_santerasmo
   displayName: "\uC0B0\uD14C\uB77C\uC2A4\uBAA8"
   region: {fileID: 11400000, guid: 150e6d6afa385524abcf177047f2d09b, type: 2}
-  journeyNote: "\uACFC\uC218\uC6D0 \uB9C8\uC744. \uACFC\uC77C\uC744 \uC0AC\uC11C
-    \uC218\uB3C4\uB098 \uC5B4\uCD0C\uC5D0 \uD310\uB2E4."
+  journeyNote: "\uACFC\uC218\uC6D0 \uB9C8\uC744. \uACFC\uC77C\uC774 \uC2F8\uB2E4.
+    \uBA40\uB9AC \uD0A4\uC624\uC790 \uD56D\uAD6C\uAC00 \uACFC\uC77C\uC744 \uADC0\uD558\uAC8C
+    \uCE5C\uB2E4."
   worldCoord: {x: 11, y: 0}
   startLevel: 1
   settlementTier: 1
@@ -30,13 +31,16 @@ MonoBehaviour:
     storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: 58596ccbd03895d429f2d5781358ce80, type: 2}
-    optimal: 56
+    optimal: 80
     localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: 2eb42ca42c7322a4f8fe7f379bcb954e, type: 2}
-    optimal: 4
-    localPriceMultiplier: 1
+    optimal: 8
+    localPriceMultiplier: 1.2
   - item: {fileID: 11400000, guid: ada83f26ddff528418a2795d1786d676, type: 2}
-    optimal: 6
+    optimal: 14
+    localPriceMultiplier: 1.15
+  - item: {fileID: 11400000, guid: 018a545c0e6c93f4c97c5e4224b223c9, type: 2}
+    optimal: 14
     localPriceMultiplier: 1
   defaultOptimal: 3
   vehiclesForSale: []

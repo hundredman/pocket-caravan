@@ -15,8 +15,8 @@ MonoBehaviour:
   id: venice_burano
   displayName: "\uBD80\uB77C\uB178"
   region: {fileID: 11400000, guid: 150e6d6afa385524abcf177047f2d09b, type: 2}
-  journeyNote: "\uC5B4\uCD0C. \uC0DD\uC120\uC744 \uC0AC\uACE0, \uD0A4\uC624\uC790
-    \uC18C\uAE08\uC744 \uD314\uAE30 \uC88B\uB2E4."
+  journeyNote: "\uC5B4\uCD0C. \uC808\uC778 \uC0DD\uC120\uC774 \uC2F8\uB2E4. \uC18C\uAE08\uC744
+    \uBE44\uC2F8\uAC8C \uC0AC \uC900\uB2E4."
   worldCoord: {x: 11, y: 2}
   startLevel: 1
   settlementTier: 1
@@ -30,13 +30,16 @@ MonoBehaviour:
     storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: ada83f26ddff528418a2795d1786d676, type: 2}
-    optimal: 56
+    optimal: 80
     localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: 018a545c0e6c93f4c97c5e4224b223c9, type: 2}
-    optimal: 6
-    localPriceMultiplier: 1
+    optimal: 14
+    localPriceMultiplier: 1.3
   - item: {fileID: 11400000, guid: 58596ccbd03895d429f2d5781358ce80, type: 2}
-    optimal: 6
+    optimal: 14
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 2eb42ca42c7322a4f8fe7f379bcb954e, type: 2}
+    optimal: 8
     localPriceMultiplier: 1
   defaultOptimal: 3
   vehiclesForSale: []
