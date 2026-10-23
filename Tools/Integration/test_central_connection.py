@@ -27,7 +27,7 @@ class CentralConnection(unittest.TestCase):
             queue.extend(route+[o['target']] for o in self.maps[mid]['objects'] if o['kind']=='exit')
         else:self.fail('Central junction unreachable')
         self.assertEqual(route,expected)
-        self.assertTrue(all(self.maps[mid]['w']<=80 for mid in expected))
+        self.assertEqual(sum(m['w']*m['h'] for mid,m in self.maps.items() if mid.startswith('transit_')),25000)
 
     def test_new_connections_have_reciprocal_equal_width_spawns(self):
         for mid in ['transit_ferry','transit_central_approach','transit_crossroads']:
@@ -67,15 +67,16 @@ class CentralConnection(unittest.TestCase):
     def test_approach_supports_different_vehicle_path_choices(self):
         m=self.maps['transit_central_approach'];w,h=m['w'],m['h']
         def cost(speeds,branch):
-            queue=[(0.,(7,20))];seen=set()
+            scale=lambda x,y:(int(x*w/80),int(y*h/64))
+            queue=[(0.,scale(7,20))];seen=set()
             while queue:
                 c,(x,y)=heapq.heappop(queue)
                 if (x,y) in seen:continue
                 seen.add((x,y))
-                if (x,y)==(35,20):return c
+                if (x,y)==scale(35,20):return c
                 for a,b in [(x-1,y),(x+1,y),(x,y-1),(x,y+1)]:
                     if not (0<=a<w and 0<=b<h) or m['blocked'][b*w+a] or not m['road'][b*w+a]:continue
-                    if 12<=a<=32 and ((b>=23)!=(branch=='main')):continue
+                    if scale(12,0)[0]<=a<=scale(32,0)[0] and ((b>=scale(0,23)[1])!=(branch=='main')):continue
                     heapq.heappush(queue,(c+.5/speeds[m['road'][y*w+x]]+.5/speeds[m['road'][b*w+a]],(a,b)))
             self.fail('unreachable branch '+branch)
         for vehicle in ['Walk','Handcart']:

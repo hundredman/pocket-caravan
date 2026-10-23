@@ -63,4 +63,6 @@ def atlas_content():
         entries.extend(map_entries(rid))
         maps.extend(generated_maps(rid))
     from continuous import build
-    return entries, build(maps)
+    from goryeo_art import apply
+    from compact import build as compact
+    return entries, apply(compact(build(maps)))

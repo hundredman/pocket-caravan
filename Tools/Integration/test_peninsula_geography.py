@@ -23,8 +23,14 @@ class PeninsulaGeography(unittest.TestCase):
         self.assertEqual(self.atlas['geography'],'continuous_tiles')
         for mid,a in self.areas.items():
             m=json.loads((ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').read_text())
-            gx,gy=self.profile['maps'][mid];w,h=self.profile['chunkSize']
-            self.assertEqual((m['terrainX'],m['terrainY']),(gx*w,gy*h))
+            gx,gy=self.profile['maps'][mid]
+            budget=json.loads((ROOT/'Assets/PocketCaravan/World/Terrain/area_budget.json').read_text())
+            widths={int(k):v for k,v in budget['columnWidths'].items()}
+            heights={int(k):v for k,v in budget['rowHeights'].items()}
+            def offset(i,sizes):return sum(sizes[j] for j in range(i)) if i>=0 else -sum(sizes[j] for j in range(i,0))
+            self.assertEqual((m['terrainX'],m['terrainY']),(offset(gx,widths),offset(gy,heights)))
+            w,h=m['w'],m['h']
+            self.assertEqual((w,h),(widths[gx],heights[gy]))
             sp=next(o for o in m['objects'] if o['kind']=='spawn' and o['id']=='S0')
             self.assertEqual(m['blocked'][sp['y']*w+sp['x']],0)
         for mid in ['goryeo_westcoast','goryeo_tidalcoast','goryeo_southcoast']:

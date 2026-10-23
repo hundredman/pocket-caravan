@@ -1,0 +1,967 @@
+fileFormatVersion: 2
+guid: e3db108da032a4c78910a7e24875eb4d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2594827292587736399
+    second: Architecture_0
+  - first:
+      213: 5678678284440637255
+    second: Architecture_1
+  - first:
+      213: -6812938362387168006
+    second: Architecture_2
+  - first:
+      213: 5624159597088392577
+    second: Architecture_3
+  - first:
+      213: -6122649557952120920
+    second: Architecture_4
+  - first:
+      213: -8411647959322040846
+    second: Architecture_5
+  - first:
+      213: -5291640117786095822
+    second: Architecture_6
+  - first:
+      213: -7254452749929052432
+    second: Architecture_7
+  - first:
+      213: 5359752728882762747
+    second: Architecture_8
+  - first:
+      213: 5092904272329991826
+    second: Architecture_9
+  - first:
+      213: -1254885843062962753
+    second: Architecture_10
+  - first:
+      213: -7736603624240998947
+    second: Architecture_11
+  - first:
+      213: -1964861642300797072
+    second: Architecture_12
+  - first:
+      213: -7647754909883221970
+    second: Architecture_13
+  - first:
+      213: 3165973682478662421
+    second: Architecture_14
+  - first:
+      213: -5895763446614097635
+    second: Architecture_15
+  - first:
+      213: 6805718229069187054
+    second: Architecture_16
+  - first:
+      213: -249188986363143041
+    second: Architecture_17
+  - first:
+      213: 3224420771524305156
+    second: Architecture_18
+  - first:
+      213: -7494195153119450958
+    second: Architecture_19
+  - first:
+      213: 6726346196643788274
+    second: Architecture_20
+  - first:
+      213: -3997711660317837448
+    second: Architecture_21
+  - first:
+      213: 6284940344522891120
+    second: Architecture_22
+  - first:
+      213: 290268673935930514
+    second: Architecture_23
+  - first:
+      213: 6091757174344245649
+    second: Architecture_24
+  - first:
+      213: 1365208211069223695
+    second: Architecture_25
+  - first:
+      213: -4491177359257257833
+    second: Architecture_26
+  - first:
+      213: -6410976792960860021
+    second: Architecture_27
+  - first:
+      213: 6300354420968474633
+    second: Architecture_28
+  - first:
+      213: -3866878388279482495
+    second: Architecture_29
+  - first:
+      213: -8307982761146940332
+    second: Architecture_30
+  - first:
+      213: 5728381750010764699
+    second: Architecture_31
+  - first:
+      213: 507781583753117135
+    second: Architecture_32
+  - first:
+      213: -2347400443394553819
+    second: Architecture_33
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 0
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Architecture_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 454
+        width: 1057
+        height: 570
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b2c1db43525dfbd0800000000000000
+      internalID: -2594827292587736399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_1
+      rect:
+        serializedVersion: 2
+        x: 849
+        y: 1015
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74f0fc110d7bece40800000000000000
+      internalID: 5678678284440637255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_2
+      rect:
+        serializedVersion: 2
+        x: 1043
+        y: 1016
+        width: 14
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af40849e7a49371a0800000000000000
+      internalID: -6812938362387168006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_3
+      rect:
+        serializedVersion: 2
+        x: 1177
+        y: 902
+        width: 211
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 185ce800b570d0e40800000000000000
+      internalID: 5624159597088392577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_4
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 1014
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a7bf0e8aaaf70ba0800000000000000
+      internalID: -6122649557952120920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_5
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 994
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f568f07fb2d34b80800000000000000
+      internalID: -8411647959322040846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_6
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 995
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23f472469515096b0800000000000000
+      internalID: -5291640117786095822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_7
+      rect:
+        serializedVersion: 2
+        x: 775
+        y: 928
+        width: 90
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f68f90e8a1035b90800000000000000
+      internalID: -7254452749929052432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_8
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 976
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf3dcf0b5baa16a40800000000000000
+      internalID: 5359752728882762747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_9
+      rect:
+        serializedVersion: 2
+        x: 1383
+        y: 990
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2966c4bc371ada640800000000000000
+      internalID: 5092904272329991826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_10
+      rect:
+        serializedVersion: 2
+        x: 1409
+        y: 920
+        width: 95
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb5c09279ffb59ee0800000000000000
+      internalID: -1254885843062962753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_11
+      rect:
+        serializedVersion: 2
+        x: 678
+        y: 938
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd59d197eff02a490800000000000000
+      internalID: -7736603624240998947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_12
+      rect:
+        serializedVersion: 2
+        x: 759
+        y: 978
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07fced12fb86bb4e0800000000000000
+      internalID: -1964861642300797072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_13
+      rect:
+        serializedVersion: 2
+        x: 1161
+        y: 946
+        width: 21
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e283923dd67bdd590800000000000000
+      internalID: -7647754909883221970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_14
+      rect:
+        serializedVersion: 2
+        x: 1081
+        y: 928
+        width: 35
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51340684a4ccfeb20800000000000000
+      internalID: 3165973682478662421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_15
+      rect:
+        serializedVersion: 2
+        x: 1113
+        y: 944
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1185d4e16a0e2ea0800000000000000
+      internalID: -5895763446614097635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_16
+      rect:
+        serializedVersion: 2
+        x: 1117
+        y: 936
+        width: 39
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee7c11dcba4c27e50800000000000000
+      internalID: 6805718229069187054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_17
+      rect:
+        serializedVersion: 2
+        x: 1153
+        y: 918
+        width: 13
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7c92e9efe3ba8cf0800000000000000
+      internalID: -249188986363143041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_18
+      rect:
+        serializedVersion: 2
+        x: 1165
+        y: 925
+        width: 25
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 401e815ab917fbc20800000000000000
+      internalID: 3224420771524305156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_19
+      rect:
+        serializedVersion: 2
+        x: 1387
+        y: 931
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b86cd4d6354ff790800000000000000
+      internalID: -7494195153119450958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_20
+      rect:
+        serializedVersion: 2
+        x: 1465
+        y: 940
+        width: 5
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f5b0476a38c85d50800000000000000
+      internalID: 6726346196643788274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_21
+      rect:
+        serializedVersion: 2
+        x: 1157
+        y: 906
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 877715cfc664588c0800000000000000
+      internalID: -3997711660317837448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_22
+      rect:
+        serializedVersion: 2
+        x: 1471
+        y: 912
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07fdecdb1f7983750800000000000000
+      internalID: 6284940344522891120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_23
+      rect:
+        serializedVersion: 2
+        x: 1057
+        y: 522
+        width: 476
+        height: 386
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 294ff5f22dd370400800000000000000
+      internalID: 290268673935930514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_24
+      rect:
+        serializedVersion: 2
+        x: 1479
+        y: 890
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 191e9b2efd44a8450800000000000000
+      internalID: 6091757174344245649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_25
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 488
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f034a3182a132f210800000000000000
+      internalID: 1365208211069223695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_26
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 488
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 798b13eacf12ca1c0800000000000000
+      internalID: -4491177359257257833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_27
+      rect:
+        serializedVersion: 2
+        x: 569
+        y: 26
+        width: 427
+        height: 491
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b808b48d292a707a0800000000000000
+      internalID: -6410976792960860021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_28
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 18
+        width: 525
+        height: 503
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90843e417fa5f6750800000000000000
+      internalID: 6300354420968474633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_29
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 466
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18767fce796165ac0800000000000000
+      internalID: -3866878388279482495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 566
+        height: 451
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45484c142bd14bc80800000000000000
+      internalID: -8307982761146940332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_31
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 338
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9dd833f9dc4f7f40800000000000000
+      internalID: 5728381750010764699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_32
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 56
+        width: 7
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcdf61bf8a00c0700800000000000000
+      internalID: 507781583753117135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Architecture_33
+      rect:
+        serializedVersion: 2
+        x: 1347
+        y: 18
+        width: 5
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5288fd9dbbb5c6fd0800000000000000
+      internalID: -2347400443394553819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable: {}
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -43,6 +43,13 @@ def recolor(tile, mode):
 
 def tile_image(key):
     """key = 'sheet:x:y' 또는 'sheet:x:y@recolor'"""
+    if key.startswith(("goryeo:", "goryeo_")):
+        from goryeo_art import image_for
+        return image_for(key)
+    if "@goryeo_" in key:
+        from goryeo_art import tone
+        base, theme = key.rsplit("@goryeo_", 1)
+        return tone(base, theme)
     if key.startswith("module:"):
         from module_art import image_for
         return image_for(key)

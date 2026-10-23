@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-23",
+  "branch": "main",
+  "baseCommit": "f5e39581bf59d797b9072e544874de533c7c2c23",
+  "sourceState": "local uncommitted changes; no push or new build",
+  "area": {
+    "goryeo": 20000,
+    "centralEast": 25000,
+    "total": 45000,
+    "basis": "all cells including sea, mountains and structures"
+  },
+  "staticMapChecks": 567,
+  "pythonIntegrationTests": 42,
+  "registeredExits": 70,
+  "unitySceneCheck": {
+    "maps": 19,
+    "cells": 45000,
+    "passed": [
+      "Naru all ground/blocked/road cells and spawn strips match JSON",
+      "Route01 all ground/blocked/road cells and spawn strips match JSON",
+      "Gaegyeong all ground/blocked/road cells and spawn strips match JSON",
+      "Dakmok all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_songak all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_jangdan all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_ridge all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_descent all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_fieldroad all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_westcoast all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_tidalcoast all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_rivervalley all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_southcoast all ground/blocked/road cells and spawn strips match JSON",
+      "transit_pass all ground/blocked/road cells and spawn strips match JSON",
+      "transit_woodtown all ground/blocked/road cells and spawn strips match JSON",
+      "transit_wetroad all ground/blocked/road cells and spawn strips match JSON",
+      "transit_ferry all ground/blocked/road cells and spawn strips match JSON",
+      "transit_central_approach all ground/blocked/road cells and spawn strips match JSON",
+      "transit_crossroads all ground/blocked/road cells and spawn strips match JSON"
+    ]
+  },
+  "savePositionPayloadChecks": 19,
+  "actualMotorCheck": {
+    "complete": true,
+    "error": "",
+    "passed": 968,
+    "crossings": 161,
+    "scope": "19-scene journey in isolated non-start Play, cart, reciprocal road/grass edge offsets and cargo/money/credit preservation. Run before final capital pond/NPC placement and worker-path simplification; full scene/static checks rerun after that polish. Edge protocol unchanged."
+  },
+  "visualReview": [
+    "Generated overview maps inspected",
+    "Unity capital play screenshot inspected at 16px tile resolution"
+  ],
+  "notVerified": [
+    "User aesthetic approval",
+    "New Windows/macOS standalone build",
+    "Multiplayer",
+    "Market-day host village and bonus rules",
+    "New minigame"
+  ],
+  "preserved": [
+    "Five Goryeo settlements and two central settlements",
+    "Market/item/quest IDs and economic coordinates",
+    "Existing player save files",
+    "Untracked earlier 3D experiments",
+    "Other team branches and regions"
+  ]
+}

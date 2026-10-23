@@ -22,7 +22,7 @@ class ContinuousTerrain(unittest.TestCase):
                 b=self.maps[tid];valid=set();covered=set()
                 for t in range(h if edge=='E' else w):
                     ps=[(w-1,t),(w-2,t),(0,t),(1,t)] if edge=='E' else [(t,h-1),(t,h-2),(t,0),(t,1)]
-                    if all(m['reachable'][y*w+x] for m,coords in ((a,ps[:2]),(b,ps[2:])) for x,y in coords):valid.add(t)
+                    if all(m['reachable'][y*m['w']+x] for m,coords in ((a,ps[:2]),(b,ps[2:])) for x,y in coords):valid.add(t)
                 for e in a['objects']:
                     if e['kind']!='exit' or e['target']!=tid:continue
                     start=e['y'] if edge=='E' else e['x'];length=e['h'] if edge=='E' else e['w']

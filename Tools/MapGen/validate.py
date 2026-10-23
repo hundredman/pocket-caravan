@@ -57,6 +57,7 @@ def validate():
     rh = max(rp[m.id][1]+m.h for m in regional)-min(p[1] for p in rp.values())
     check("고려 지형 지도 가로세로 비율 1.8 이하", rw/rh < 1.8)
     for m in world:
+        check(m.id + " 모든 칸 바닥 존재", all(k for row in m.ground for k in row))
         roads = {(x, y) for y in range(m.h) for x in range(m.w) if m.road[y][x] and not m.blocked[y][x]}
         check(m.id + " 전체 통행 가능 길 연결", bool(roads) and roads <= reachable(m, next(iter(roads)), road_only=True))
         tree_ok = True
@@ -97,17 +98,16 @@ def validate():
         check(m.id + " 다리/선착장 통행 가능", all(p in accessible and not m.water[p[1]][p[0]] for p in m.decks))
     # 물을 가로지르는 다리의 양 끝이 길과 연결되는지 확인한다.
     route = by_id["Route01"]
-    check("예성 길 시내 다리 양안 연결", (33, 15) in reachable(route, (25, 15), road_only=True))
-    check("지도는 남문 연결을 반영해 수도를 북쪽에 배치", positions["Gaegyeong"][1] < positions["Route01"][1])
+    check("예성 길 시내 다리 양안 연결", (16, 9) in reachable(route, (12, 9), road_only=True))
+    check("지도는 수도를 예성 길 북쪽에 배치", positions["Gaegyeong"][1] < positions["Route01"][1])
     capital = by_id["Gaegyeong"]
-    check("개경 남문 처마 아래 네 칸 통행 폭 보존",
+    check("개경 남쪽 큰길 세 칸 통행 폭 보존",
           all(capital.road[y][x] == 3 and not capital.blocked[y][x]
-              for y in range(37, 43) for x in range(30, 34)))
-    check("개경 동문 물류 마당은 시전과 길로 연결",
-          (50, 30) in reachable(capital, (36, 23), road_only=True))
-    check("개경 물류 수레는 통행로 밖에 온전하게 배치",
-          ("cart", 58, 34) in capital.stamps and
-          all(not capital.road[y][x] for y in (34, 35) for x in (58, 59)))
+              for y in range(30, 38) for x in range(20, 23)))
+    check("개경 궁성 앞마당과 시전 연결", (20, 10) in reachable(capital, (20, 21), road_only=True))
+    check("개경 전용 전각이 온전하게 배치", ("goryeo_royal", 15, 1) in capital.stamps)
+    check("고려 전체 면적 정확히 2만 칸", sum(m.w*m.h for m in regional)==20000)
+    check("중앙 동쪽 전체 면적 정확히 2만5천 칸", sum(m.w*m.h for m in world if m.id.startswith('transit_'))==25000)
     return results
 
 

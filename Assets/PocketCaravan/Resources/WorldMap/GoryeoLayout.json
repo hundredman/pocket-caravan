@@ -1,177 +1,177 @@
 {
-  "width": 584,
-  "height": 408,
+  "width": 552,
+  "height": 264,
   "maps": [
     {
       "mapId": "Naru",
-      "x": 332,
-      "y": 204,
-      "w": 80,
-      "h": 64,
-      "labelX": 356.5,
-      "labelY": 219.5
+      "x": 420,
+      "y": 142,
+      "w": 40,
+      "h": 40,
+      "labelX": 432.5,
+      "labelY": 151.5
     },
     {
       "mapId": "Route01",
-      "x": 412,
-      "y": 204,
-      "w": 80,
-      "h": 64,
-      "labelX": 452.5,
-      "labelY": 236.5
+      "x": 460,
+      "y": 142,
+      "w": 40,
+      "h": 40,
+      "labelX": 480.5,
+      "labelY": 162.5
     },
     {
       "mapId": "Gaegyeong",
-      "x": 412,
-      "y": 140,
-      "w": 80,
-      "h": 64,
-      "labelX": 448.5,
-      "labelY": 161.5
+      "x": 460,
+      "y": 102,
+      "w": 40,
+      "h": 40,
+      "labelX": 470.5,
+      "labelY": 120.5
     },
     {
       "mapId": "Dakmok",
-      "x": 492,
-      "y": 204,
-      "w": 80,
-      "h": 64,
-      "labelX": 510.5,
-      "labelY": 217.5
+      "x": 500,
+      "y": 142,
+      "w": 40,
+      "h": 40,
+      "labelX": 509.5,
+      "labelY": 150.5
     },
     {
       "mapId": "goryeo_songak",
-      "x": 412,
-      "y": 76,
-      "w": 80,
-      "h": 64,
-      "labelX": 434.5,
-      "labelY": 91.5
+      "x": 460,
+      "y": 62,
+      "w": 40,
+      "h": 40,
+      "labelX": 471.5,
+      "labelY": 71.5
     },
     {
       "mapId": "goryeo_jangdan",
-      "x": 492,
-      "y": 332,
-      "w": 80,
-      "h": 64,
-      "labelX": 513.5,
-      "labelY": 347.5
+      "x": 500,
+      "y": 222,
+      "w": 40,
+      "h": 30,
+      "labelX": 510.5,
+      "labelY": 229.5
     },
     {
       "mapId": "goryeo_ridge",
-      "x": 492,
-      "y": 76,
-      "w": 80,
-      "h": 64,
-      "labelX": 532.5,
-      "labelY": 108.5
+      "x": 500,
+      "y": 62,
+      "w": 40,
+      "h": 40,
+      "labelX": 520.5,
+      "labelY": 82.5
     },
     {
       "mapId": "goryeo_descent",
-      "x": 492,
-      "y": 140,
-      "w": 80,
-      "h": 64,
-      "labelX": 520.5,
-      "labelY": 172.5
+      "x": 500,
+      "y": 102,
+      "w": 40,
+      "h": 40,
+      "labelX": 514.5,
+      "labelY": 122.5
     },
     {
       "mapId": "goryeo_fieldroad",
-      "x": 492,
-      "y": 268,
-      "w": 80,
-      "h": 64,
-      "labelX": 519.5,
-      "labelY": 300.5
+      "x": 500,
+      "y": 182,
+      "w": 40,
+      "h": 40,
+      "labelX": 513.5,
+      "labelY": 202.5
     },
     {
       "mapId": "goryeo_westcoast",
-      "x": 332,
-      "y": 140,
-      "w": 80,
-      "h": 64,
-      "labelX": 377.5,
-      "labelY": 172.5
+      "x": 420,
+      "y": 102,
+      "w": 40,
+      "h": 40,
+      "labelX": 442.5,
+      "labelY": 122.5
     },
     {
       "mapId": "goryeo_tidalcoast",
-      "x": 332,
-      "y": 268,
-      "w": 80,
-      "h": 64,
-      "labelX": 410.5,
-      "labelY": 300.5
+      "x": 420,
+      "y": 182,
+      "w": 40,
+      "h": 40,
+      "labelX": 457.5,
+      "labelY": 195.5
     },
     {
       "mapId": "goryeo_rivervalley",
-      "x": 412,
-      "y": 268,
-      "w": 80,
-      "h": 64,
-      "labelX": 452.5,
-      "labelY": 300.5
+      "x": 460,
+      "y": 182,
+      "w": 40,
+      "h": 40,
+      "labelX": 480.5,
+      "labelY": 202.5
     },
     {
       "mapId": "goryeo_southcoast",
-      "x": 412,
-      "y": 332,
-      "w": 80,
-      "h": 64,
-      "labelX": 461.5,
-      "labelY": 355.5
+      "x": 460,
+      "y": 222,
+      "w": 40,
+      "h": 30,
+      "labelX": 484.5,
+      "labelY": 232.5
     },
     {
       "mapId": "transit_pass",
-      "x": 332,
-      "y": 76,
-      "w": 80,
-      "h": 64,
-      "labelX": 372.5,
-      "labelY": 108.5
+      "x": 420,
+      "y": 62,
+      "w": 40,
+      "h": 40,
+      "labelX": 440.5,
+      "labelY": 82.5
     },
     {
       "mapId": "transit_woodtown",
-      "x": 252,
-      "y": 76,
-      "w": 80,
-      "h": 64,
-      "labelX": 273.5,
-      "labelY": 96.5
+      "x": 320,
+      "y": 62,
+      "w": 100,
+      "h": 40,
+      "labelX": 346.5,
+      "labelY": 74.5
     },
     {
       "mapId": "transit_wetroad",
-      "x": 172,
-      "y": 76,
-      "w": 80,
-      "h": 64,
-      "labelX": 212.5,
-      "labelY": 96.5
+      "x": 220,
+      "y": 62,
+      "w": 100,
+      "h": 40,
+      "labelX": 270.5,
+      "labelY": 74.5
     },
     {
       "mapId": "transit_ferry",
-      "x": 172,
+      "x": 220,
       "y": 12,
-      "w": 80,
-      "h": 64,
-      "labelX": 193.5,
-      "labelY": 32.5
+      "w": 100,
+      "h": 50,
+      "labelX": 246.5,
+      "labelY": 27.5
     },
     {
       "mapId": "transit_central_approach",
-      "x": 92,
+      "x": 116,
       "y": 12,
-      "w": 80,
-      "h": 64,
-      "labelX": 129.5,
-      "labelY": 38.5
+      "w": 104,
+      "h": 50,
+      "labelX": 164.5,
+      "labelY": 32.5
     },
     {
       "mapId": "transit_crossroads",
       "x": 12,
       "y": 12,
-      "w": 80,
-      "h": 64,
-      "labelX": 45.5,
-      "labelY": 42.5
+      "w": 104,
+      "h": 50,
+      "labelX": 54.5,
+      "labelY": 35.5
     }
   ],
   "pixelsPerTile": 4,

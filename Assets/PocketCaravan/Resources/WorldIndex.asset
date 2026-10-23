@@ -15,7 +15,7 @@ MonoBehaviour:
   maps:
   - mapId: Naru
     displayName: "\uC608\uC131 \uB098\uB8E8 \uB9C8\uC744"
-    height: 64
+    height: 40
     legacyHeight: 28
     coord: {x: 0, y: 0}
     town: naru
@@ -25,7 +25,7 @@ MonoBehaviour:
     - goryeo_westcoast
   - mapId: Route01
     displayName: "\uC608\uC131 \uAE38"
-    height: 64
+    height: 40
     legacyHeight: 34
     coord: {x: 1, y: 0}
     town: 
@@ -36,7 +36,7 @@ MonoBehaviour:
     - Gaegyeong
   - mapId: Gaegyeong
     displayName: "\uAC1C\uACBD"
-    height: 64
+    height: 40
     legacyHeight: 46
     coord: {x: 2, y: 0}
     town: gaegyeong
@@ -47,7 +47,7 @@ MonoBehaviour:
     - goryeo_westcoast
   - mapId: Dakmok
     displayName: "\uB2E5\uB098\uBB34 \uB9C8\uC744"
-    height: 64
+    height: 40
     legacyHeight: 22
     coord: {x: 3, y: 0}
     town: dakmok
@@ -57,7 +57,7 @@ MonoBehaviour:
     - goryeo_descent
   - mapId: goryeo_songak
     displayName: "\uC1A1\uC545 \uC0B0\uB85D \uB9C8\uC744"
-    height: 64
+    height: 40
     legacyHeight: 28
     coord: {x: 0, y: 1}
     town: goryeo_songak
@@ -67,7 +67,7 @@ MonoBehaviour:
     - transit_pass
   - mapId: goryeo_jangdan
     displayName: "\uC7A5\uB2E8 \uB4E4\uB9C8\uC744"
-    height: 64
+    height: 30
     legacyHeight: 28
     coord: {x: 4, y: 0}
     town: goryeo_jangdan
@@ -76,7 +76,7 @@ MonoBehaviour:
     - goryeo_southcoast
   - mapId: goryeo_ridge
     displayName: "\uC1A1\uC545 \uAD6C\uB989\uAE38"
-    height: 64
+    height: 40
     legacyHeight: 28
     coord: {x: 5, y: 1}
     town: 
@@ -85,7 +85,7 @@ MonoBehaviour:
     - goryeo_descent
   - mapId: goryeo_descent
     displayName: "\uB2E5\uBAA9 \uC0B0\uAE30\uC2AD \uAE38"
-    height: 64
+    height: 40
     legacyHeight: 12
     coord: {x: 6, y: 1}
     town: 
@@ -95,7 +95,7 @@ MonoBehaviour:
     - Dakmok
   - mapId: goryeo_fieldroad
     displayName: "\uC7A5\uB2E8 \uB4E4\uAE38"
-    height: 64
+    height: 40
     legacyHeight: 44
     coord: {x: 7, y: 1}
     town: 
@@ -105,7 +105,7 @@ MonoBehaviour:
     - goryeo_rivervalley
   - mapId: goryeo_westcoast
     displayName: "\uC11C\uD574\uC548 \uB454\uB355"
-    height: 64
+    height: 40
     legacyHeight: 64
     coord: {x: 0, y: 2}
     town: 
@@ -115,7 +115,7 @@ MonoBehaviour:
     - transit_pass
   - mapId: goryeo_tidalcoast
     displayName: "\uAC2F\uBC8C \uD574\uC548\uAE38"
-    height: 64
+    height: 40
     legacyHeight: 64
     coord: {x: 1, y: 2}
     town: 
@@ -124,7 +124,7 @@ MonoBehaviour:
     - goryeo_rivervalley
   - mapId: goryeo_rivervalley
     displayName: "\uC608\uC131 \uBB3C\uAD7D\uC774"
-    height: 64
+    height: 40
     legacyHeight: 64
     coord: {x: 2, y: 2}
     town: 
@@ -135,7 +135,7 @@ MonoBehaviour:
     - goryeo_southcoast
   - mapId: goryeo_southcoast
     displayName: "\uB0A8\uCABD \uD574\uC548 \uAD6C\uB989"
-    height: 64
+    height: 30
     legacyHeight: 64
     coord: {x: 3, y: 2}
     town: 
@@ -144,7 +144,7 @@ MonoBehaviour:
     - goryeo_jangdan
   - mapId: transit_pass
     displayName: "\uC194\uBC14\uB78C \uACE0\uAC1C"
-    height: 64
+    height: 40
     legacyHeight: 38
     coord: {x: 5, y: 0}
     town: 
@@ -154,7 +154,7 @@ MonoBehaviour:
     - transit_woodtown
   - mapId: transit_woodtown
     displayName: "\uC194\uC7AC \uAE38\uBAA9 \uB9C8\uC744"
-    height: 64
+    height: 40
     legacyHeight: 30
     coord: {x: 6, y: 0}
     town: transit_woodtown
@@ -163,7 +163,7 @@ MonoBehaviour:
     - transit_wetroad
   - mapId: transit_wetroad
     displayName: "\uBC84\uB4E4 \uBB3C\uAC00 \uAE38"
-    height: 64
+    height: 40
     legacyHeight: 38
     coord: {x: 7, y: 0}
     town: 
@@ -172,7 +172,7 @@ MonoBehaviour:
     - transit_ferry
   - mapId: transit_ferry
     displayName: "\uBC84\uB4E4\uB098\uB8E8 \uB9C8\uC744"
-    height: 64
+    height: 50
     legacyHeight: 32
     coord: {x: 8, y: 0}
     town: transit_ferry
@@ -181,7 +181,7 @@ MonoBehaviour:
     - transit_central_approach
   - mapId: transit_central_approach
     displayName: "\uCD08\uC6D0 \uC9C4\uC785\uB85C"
-    height: 64
+    height: 50
     legacyHeight: 38
     coord: {x: 9, y: 0}
     town: 
@@ -190,7 +190,7 @@ MonoBehaviour:
     - transit_crossroads
   - mapId: transit_crossroads
     displayName: "\uB0B4\uB959 \uAD50\uC5ED \uAE38\uBAA9"
-    height: 64
+    height: 50
     legacyHeight: 56
     coord: {x: 9, y: 1}
     town: 
