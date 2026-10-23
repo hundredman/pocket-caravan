@@ -82,7 +82,7 @@ def validate():
                 check(m.id + " 출구 " + o["target"] + " 접근 가능", (o["x"], o["y"]) in accessible)
                 target = by_id[o["target"]]
                 check(m.id + " 출구의 도착 스폰 존재", any(s["kind"] == "spawn" and s["id"] == o["spawn"] for s in target.objects))
-            elif o["kind"] in ("npc", "market", "board", "talker", "sign", "worker"):
+            elif o["kind"] in ("npc", "market", "board", "talker", "sign", "worker", "pastime"):
                 check(m.id + " " + o["kind"] + " 상호작용 접근 가능",
                       any((o["x"] + dx, o["y"] + dy) in accessible for dx, dy in ((0, 0), (1, 0), (-1, 0), (0, 1), (0, -1))))
         for worker in (o for o in m.objects if o["kind"] == "worker"):

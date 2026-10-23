@@ -13,7 +13,11 @@ SOURCE = ROOT / 'Assets/PocketCaravan/Art/Goryeo/Source/Architecture.png'
 RECTS = {'hall': (10, 30, 578, 494), 'house': (578, 100, 1057, 488),
          'shop': (1060, 125, 1530, 490), 'thatch': (12, 577, 565, 953),
          'pavilion': (558, 510, 1001, 956), 'pine': (1001, 513, 1535, 970)}
+DETAIL_RECTS = {'wall': (48,225,498,414), 'lantern': (674,103,862,449),
+                'lotus': (1090,204,1465,405), 'paper': (44,594,505,932),
+                'harvest': (565,610,984,924), 'celadon': (1063,590,1503,935)}
 CUSTOM = {'royal': ('hall',10,7), 'manor': ('house',6,4), 'stall': ('shop',6,4), 'cottage': ('thatch',5,4), 'pavilion': ('pavilion',5,5)}
+CUSTOM.update({'wall':('wall',4,2), 'lantern':('lantern',1,2), 'lotus':('lotus',2,1), 'paper':('paper',4,3), 'harvest':('harvest',3,2), 'celadon':('celadon',3,2), 'paving':('paving',4,4)})
 for key,(asset,w,h) in CUSTOM.items():
     STAMPS['goryeo_'+key]=('goryeo_'+key,0,0,w,h,0,0,None)
 
@@ -23,13 +27,20 @@ REPLACE = {'house_tile': 'house', 'house_plain': 'house', 'house_wall': 'house',
 
 @lru_cache(None)
 def sprite(name, w, h):
-    with Image.open(SOURCE) as atlas:
-        im = atlas.crop(RECTS[name]).convert('RGBA')
+    source=SOURCE.parent/('CourtyardStone.png' if name=='paving' else 'VillageDetails.png') if name in DETAIL_RECTS or name=='paving' else SOURCE
+    with Image.open(source) as atlas:
+        im = (atlas if name=='paving' else atlas.crop(DETAIL_RECTS[name] if name in DETAIL_RECTS else RECTS[name])).convert('RGBA')
     # Pixel assets are baked at the actual engine resolution, never kept as HD overlays.
     im = im.resize((w * 16, h * 16), Image.Resampling.LANCZOS)
     # Snap alpha for crisp pixel edges; the generation's faint transparent fringe is not artwork.
     alpha = im.getchannel('A').point(lambda a: 255 if a >= 128 else 0)
-    im = im.convert('RGB').quantize(colors=28, method=Image.Quantize.MEDIANCUT).convert('RGBA')
+    # Transparent RGB must not consume the limited pixel palette.
+    from collections import Counter
+    rgb=im.convert('RGB');pixels=list(rgb.getdata());mask=list(alpha.getdata())
+    opaque=Counter(p for p,a in zip(pixels,mask) if a)
+    background=opaque.most_common(1)[0][0] if opaque else (0,0,0)
+    rgb.putdata([p if a else background for p,a in zip(pixels,mask)])
+    im = rgb.quantize(colors=12 if name=='paving' else 28, method=Image.Quantize.MEDIANCUT).convert('RGBA')
     im.putalpha(alpha)
     return im
 
@@ -79,6 +90,13 @@ def apply(maps):
         for layer in (m.ground,m.deco,m.obj,m.high):
             for y,row in enumerate(layer):
                 for x,key in enumerate(row):row[x]=tint(key,x,y)
+        if m.id=='Gaegyeong':
+            for y in range(8,30):
+                for x in range(5,35):
+                    if not m.water[y][x] and (x,y) not in m.decks:
+                        m.ground[y][x]=f'goryeo_paving:{x%4}:{y%4}'
+        for o in m.objects:
+            if o['kind']=='anim' and o.get('sheet')=='ripples':o['sheet']='goryeo_ripples'
         previous=getattr(m,'tint_key',lambda k,x,y:k)
         def expected(key,x,y,m=m,previous=previous,tint=tint):
             for name,sx,sy in m.stamps:
@@ -88,3 +106,14 @@ def apply(maps):
             return tint(previous(key,x,y),x,y)
         m.tint_key=expected
     return maps
+
+
+def export_ripples(root):
+    """Keep existing ripple timing/silhouettes, remove the old opaque cyan square."""
+    folder=Path(root)/'Assets/PocketCaravan/Art/NinjaAdventure/Animated'
+    for i in range(4):
+        with Image.open(folder/f'ripples_{i}.png') as source:
+            source=source.convert('RGBA');background=source.getpixel((0,0))
+            result=Image.new('RGBA',source.size)
+            result.putdata([(151,193,180,90) if p!=background and p[3] else (0,0,0,0) for p in source.getdata()])
+            result.save(folder/f'goryeo_ripples_{i}.png')

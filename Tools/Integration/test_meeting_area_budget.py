@@ -30,4 +30,17 @@ class MeetingAreaBudget(unittest.TestCase):
                 self.assertEqual(im.size,(16,16))
                 self.assertLessEqual(len(im.getchannel('A').getcolors()),2)
 
+    def test_goryeo_ripples_have_no_opaque_water_backplate(self):
+        from PIL import Image
+        m=json.loads((ROOT/'Assets/PocketCaravan/Maps/Dakmok.json').read_text())
+        waves=[o for o in m['objects'] if o['kind']=='anim' and 'ripples' in o['sheet']]
+        self.assertTrue(waves)
+        self.assertTrue(all(o['sheet']=='goryeo_ripples' for o in waves))
+        for i in range(4):
+            with Image.open(ROOT/f'Assets/PocketCaravan/Art/NinjaAdventure/Animated/goryeo_ripples_{i}.png') as im:
+                self.assertEqual(im.size,(16,16))
+                self.assertEqual(im.getpixel((0,0))[3],0)
+                self.assertGreater(im.getchannel('A').getextrema()[1],0)
+                self.assertLess(im.getchannel('A').getextrema()[1],255)
+
 if __name__=='__main__':unittest.main()

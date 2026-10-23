@@ -317,7 +317,7 @@ namespace PocketCaravan.EditorTools
                         var an = new GameObject($"Anim {o.sheet}");
                         an.transform.SetParent(objects); an.transform.position = center;
                         var asr = an.AddComponent<SpriteRenderer>();
-                        asr.sortingOrder = o.sheet == "ripples" ? 1 : 4;   // 물결은 바닥 바로 위, 꽃은 소품과 같은 높이
+                        asr.sortingOrder = (o.sheet == "ripples" || o.sheet == "goryeo_ripples") ? 1 : 4;   // 물결은 바닥 바로 위, 꽃은 소품과 같은 높이
                         var sa = an.AddComponent<SpriteAnim>();
                         sa.frames = SheetFrames(o.sheet, o.frames > 0 ? o.frames : 4);
                         sa.fps = o.fps > 0 ? o.fps : 4f;
@@ -396,6 +396,21 @@ namespace PocketCaravan.EditorTools
                         if (o.path != null)
                             for (int k = 0; k + 1 < o.path.Length; k += 2)
                                 worker.path.Add(grid.GetCellCenterWorld(new Vector3Int(o.path[k], f.h - 1 - o.path[k + 1], 0)));
+                        break;
+                    case "lantern":
+                        var lantern = new GameObject("고려 석등");
+                        lantern.transform.SetParent(objects); lantern.transform.position = center;
+                        var lamp = lantern.AddComponent<Light2D>();
+                        lamp.lightType = Light2D.LightType.Point;
+                        lamp.color = new Color(1f,.73f,.38f);
+                        lamp.pointLightOuterRadius = 3.2f; lamp.pointLightInnerRadius = .35f;
+                        lamp.intensity = .03f;
+                        var glow = lantern.AddComponent<GoryeoLantern>();
+                        glow.lamp = lamp; glow.phase = o.x * .7f + o.y;
+                        break;
+                    case "pastime":
+                        var fisher = Character(o.name, o.character, center, objects);
+                        fisher.AddComponent<GoryeoPastime>();
                         break;
                     case "ambience":
                         var sound = new GameObject("물가 주변음");

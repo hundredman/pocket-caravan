@@ -250,7 +250,9 @@ namespace PocketCaravan
                 }
                 else Notify.Show(map.displayName, 2.5f);
                 GameEvents.RaiseMapEntered(map.mapId);
-                sun = FindAnyObjectByType<UnityEngine.Rendering.Universal.Light2D>();
+                sun = null;
+                foreach (var light in FindObjectsByType<UnityEngine.Rendering.Universal.Light2D>(FindObjectsSortMode.None))
+                    if (light.lightType == UnityEngine.Rendering.Universal.Light2D.LightType.Global) { sun = light; break; }
                 // 기존 낙하물은 Apply에서 재산으로 이주하며 월드에 새로 배치하지 않는다.
                 AudioManager.OnMapEntered(map.mapId);
                 SaveNow();

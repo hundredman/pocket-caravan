@@ -49,6 +49,7 @@ def build(source):
         stamps=sorted(old.stamps,key=lambda s:STAMPS[s[0]][0]=='nature')
         for name,sx,sy in stamps:
             if m.id=='Gaegyeong':continue
+            if name=='module_rock' and (sx<=2 or sy<=2 or sx+2>=old.w-2 or sy+2>=old.h-2):continue
             _,_,_,sw,sh,*_=STAMPS[name];x,y=point(sx,sy)
             nature=STAMPS[name][0]=='nature'
             candidates=[(x+dx,y+dy) for dy in range(-5,6) for dx in range(-5,6)] if not nature else [(x,y)]
@@ -99,6 +100,8 @@ def build(source):
             x,y=nearest((w//2,h//2));m.add('spawn',x,y,id='S0')
         if hasattr(old,'atlas_label'):
             x,y=nearest(point(old.atlas_label['x'],old.atlas_label['y']));m.atlas_label=dict(x=x,y=y)
+        from settlement_details import add as add_details
+        add_details(m)
         result.append(m)
     by_id={m.id:m for m in result};by_grid={tuple(xy):by_id[mid] for mid,xy in profile['maps'].items()}
     # Rejoin canonical roads displaced by rounding, before computing global reachability.

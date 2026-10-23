@@ -30,6 +30,8 @@ def obj_json(o):
 
 used = set()
 entries, world_maps = atlas_content()
+from goryeo_art import export_ripples
+export_ripples(OUT)
 for entry, m in zip(entries, world_maps):
     palette = [""]
     index = {"": 0}
