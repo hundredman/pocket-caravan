@@ -17,6 +17,8 @@ MonoBehaviour:
   region: {fileID: 11400000, guid: 053dda2cee1b84de7bdb3dcc5c7849c8, type: 2}
   worldCoord: {x: 31, y: -1}
   startLevel: 1
+  settlementTier: 0
+  facilities: []
   stock:
   - item: {fileID: 11400000, guid: 84e8ea6b0681441bcb997c074af766ab, type: 2}
     optimal: 20

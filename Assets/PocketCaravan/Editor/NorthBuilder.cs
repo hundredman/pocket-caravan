@@ -16,21 +16,30 @@ namespace PocketCaravan.EditorTools
         const string DataDir = Root + "/Data/North";
         const string DbPath = Root + "/Resources/GameDatabase.asset";
 
-        [MenuItem("Pocket Caravan/북유럽/데이터 만들기 + 테스트용 DB 등록 (고려와 함께)", priority = 30)]
-        public static void BuildData() => Build(northOnly: false);
-
         /// <summary>
-        /// 지역을 합치기 전에는 고려와 북유럽이 길로 이어져 있지 않다. 게시판 의뢰가 DB의 모든 마을을 목적지로 고르고(개경 배달 등),
-        /// 고려 튜토리얼 퀘스트도 목록에 섞이므로, 테스트할 때는 DB에 북유럽만 남긴다.
-        /// 고려로 돌아가려면 터미널에서: git restore Assets/PocketCaravan/Resources/GameDatabase.asset
+        /// 테스트 준비: 북유럽 데이터를 만들어 GameDatabase 목록 끝에 덧붙이고(다른 지역은 그대로 둠),
+        /// 공용 MapJsonBuilder.BuildSelected로 북유럽 맵만 다시 만든다 (다른 담당 씬은 건드리지 않음).
+        /// GameDatabase·WorldIndex·빌드 목록 변경은 커밋하지 않는다 (통합 담당자가 반영).
         /// </summary>
-        [MenuItem("Pocket Caravan/북유럽/데이터 만들기 + 테스트용 DB 등록 (북유럽만)", priority = 31)]
-        public static void BuildDataNorthOnly() => Build(northOnly: true);
+        [MenuItem("Pocket Caravan/북유럽/테스트 준비 (데이터 등록 + 북유럽 맵만 생성)", priority = 30)]
+        public static void PrepareTest()
+        {
+            if (EditorApplication.isPlaying) { Debug.LogError("[북유럽] Play를 멈춘 뒤 실행하세요."); return; }
+            if (!BuildData()) return;
+            var ids = WorldRegistry.Load().maps.FindAll(m => m.mapId.StartsWith("north_")).ConvertAll(m => m.mapId).ToArray();
+            try { MapJsonBuilder.BuildSelected(ids); }
+            catch (Exception e) { Debug.LogError($"[북유럽] 맵 생성 실패: {e.Message}"); return; }
+            UnityEditor.SceneManagement.EditorSceneManager.OpenScene($"{Root}/Scenes/North/north_birka.unity");
+            Debug.Log($"[북유럽] 맵 {ids.Length}개를 다시 만들었습니다. north_birka에서 Play 하세요.");
+        }
 
-        static void Build(bool northOnly)
+        [MenuItem("Pocket Caravan/북유럽/데이터만 등록", priority = 31)]
+        public static void BuildDataMenu() => BuildData();
+
+        static bool BuildData()
         {
             var db = AssetDatabase.LoadAssetAtPath<GameDatabase>(DbPath);
-            if (db == null) { Debug.LogError("GameDatabase가 없습니다."); return; }
+            if (db == null) { Debug.LogError("GameDatabase가 없습니다."); return false; }
 
             var north = Upsert<RegionData>($"{DataDir}/Region_North.asset", r => { r.id = "north"; r.displayName = "북유럽"; r.note = "D구역. 한랭 지형·피오르·숲. 특산: 모피, 호박"; });
 
@@ -89,16 +98,10 @@ namespace PocketCaravan.EditorTools
             db.towns.InsertRange(0, new[] { birka, hunter, naru });
             db.items.AddRange(new[] { mead, fur, amber, meat, butter, hay, saltLick, meadJar });
             db.quests.AddRange(quests);
-            if (northOnly)
-            {
-                db.towns.RemoveAll(t => t == null || !t.id.StartsWith("north_"));
-                db.items.RemoveAll(i => i == null || !i.id.StartsWith("north_"));
-                db.quests.RemoveAll(q => q == null || !q.id.StartsWith("north_"));
-                Debug.Log("[북유럽] 테스트용 DB에 북유럽만 남겼습니다. 고려로 돌아가려면: git restore Assets/PocketCaravan/Resources/GameDatabase.asset");
-            }
             EditorUtility.SetDirty(db);
             AssetDatabase.SaveAssets();
-            Debug.Log("[북유럽] 데이터를 만들고 GameDatabase에 덧붙였습니다. 이제 메뉴 2(맵 씬 다시 만들기)를 실행하세요. GameDatabase.asset 변경은 커밋하지 마세요.");
+            Debug.Log("[북유럽] 데이터를 만들고 GameDatabase에 덧붙였습니다. GameDatabase.asset 변경은 커밋하지 마세요.");
+            return true;
         }
 
         // ---------- 퀘스트 (초반 공통 시나리오 북유럽판: Q1, Q2, Q5, Q7) ----------
@@ -194,7 +197,8 @@ namespace PocketCaravan.EditorTools
                 q.rewardMoney = 40; q.rewardCredit = 1;
             });
 
-            // Q4 (이벤트): 북유럽 이동 강점(기동·회전율) — 무니가 물어온 눈보라 (NPC가 주지 않고 NorthQuestDirector가 자동으로 수락시킴)
+            // Q4 (이벤트): 북유럽 이동 강점(기동·회전율) — 무니가 물어온 눈보라.
+            // NPC가 주지 않고, Q2를 마친 뒤 자유 구간 퀘스트(Q3·Q5·Q6)를 처음 받을 때 NorthQuestDirector가 자동 수락시킴 (저장된 퀘스트 상태만으로 판단)
             Q("N4_Storm", q =>
             {
                 q.id = "north_q4_storm"; q.title = "무니가 물어온 눈보라"; q.chain = chain; q.giverNpc = ""; q.requires.Add(q2);
@@ -205,14 +209,15 @@ namespace PocketCaravan.EditorTools
                 q.finishNote = "소식을 듣자마자 움직여 남보다 먼저 닿았다. 항해와 원정에서 익힌 북유럽 상인의 이동 요령이 빛났다.";
             });
 
-            // Q6 (자유): 라이벌과 시세 경쟁 — 멈추지 않는 볼드 (나루 투매는 NorthQuestDirector)
+            // Q6 (자유): 라이벌과 시세 경쟁 — 멈추지 않는 볼드. 모피 5장 사기를 끝낸 순간 NorthQuestDirector가 나루에 투매
+            // 판정은 공용 Sell 목표(모피 판매 수량). 이익 금액은 판정하지 않으므로 설명에도 쓰지 않는다.
             Q("N6_Bold", q =>
             {
                 q.id = "north_q6_bold"; q.title = "멈추지 않는 볼드"; q.chain = chain; q.giverNpc = Bold; q.requires.Add(q2);
-                q.summary = "모피 5장을 사서 팔아 60냥 이상 이익을 남긴다. 볼드가 먼저 모피를 쏟아부은 장은 값이 떨어지니, 다른 마을에 나눠 팔거나 값이 회복되길 기다리자.";
-                q.offerLine = "흥, 네가 그 새로 온 행상이냐? 모피 장사로 나를 이길 수 있을 것 같아? 사냥꾼 마을 모피 다섯 장으로 이익을 내 보시지. 난 더, 더 많이 팔 거니까!";
+                q.summary = "사냥꾼 마을에서 모피 5장을 사서 5장을 판다. 모피를 다 사면 볼드가 먼저 나루 장에 모피를 쏟아붓는다. 값이 떨어진 장을 피해 다른 마을에 팔거나 값이 회복되길 기다리자.";
+                q.offerLine = "흥, 네가 그 새로 온 행상이냐? 모피 장사로 나를 이길 수 있을 것 같아? 사냥꾼 마을 모피 다섯 장을 사서 팔아 보시지. 난 더, 더 많이 팔 거니까!";
                 q.objectives.Add(O(ObjectiveType.Buy, "사냥꾼 마을에서 모피 5장 사기", "north_hunter", fur, 5));
-                q.objectives.Add(O(ObjectiveType.Profit, "물건을 팔아 이익 60냥 남기기", null, null, 60));
+                q.objectives.Add(O(ObjectiveType.Sell, "모피 5장 팔기 (어느 마을이든)", null, fur, 5));
                 q.objectives.Add(O(ObjectiveType.Talk, "볼드에게 이익을 보여주기", Bold, null, 1,
                     "뭐, 뭐야? 내가 판 장을 피해서 팔았다고? …다음엔 안 진다!"));
                 q.rewardMoney = 30; q.rewardCredit = 1;
