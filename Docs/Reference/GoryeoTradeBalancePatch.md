@@ -55,7 +55,7 @@
 
 ## 재현·검증과 다음 관문
 
-Unity `Pocket Caravan > Tests > 고려 배달·교역 균형 검사`는 저장/DB를 바꾸지 않고 계산 결과를 `output/goryeo-economy/balance-data.json`에 쓴다. 이후 `Tools/Integration/report_trade_balance.py`에 이 파일을 주면 화물별 계산 이동 시간과 수익 비교 CSV를 얻는다. [108개 계산 결과](Validation/GoryeoEconomyScenarios-2026-10-20.csv)와 [검증 기록](Validation/GoryeoTradeBalance-2026-10-20.json)을 따른다.
+Unity `Pocket Caravan > Tests > 고려 배달·교역 균형 검사`는 저장/DB를 바꾸지 않고 계산 결과를 `output/goryeo-economy/balance-data.json`에 쓴다. 이후 `Tools/Integration/report_trade_balance.py`에 이 파일을 주면 화물별 계산 이동 시간과 수익 비교 CSV를 얻는다. [108개 계산 결과](../Validation/GoryeoEconomyScenarios-2026-10-20.csv)와 [검증 기록](../Validation/GoryeoTradeBalance-2026-10-20.json)을 따른다.
 
 Play 검사는 비시작 씬에서 자동 저장을 끈 격리 상태로 수행한다. 실제 매매 호출·납품·보상·그룹 선택·구 저장·재기를 확인하며 사람의 화면 조작/재미 검사와 구분한다. 새 빌드/OS별 실행 범위는 [빌드 현황](BuildStatus.md)에 기록한다.
 

@@ -81,7 +81,7 @@ D2를 정하기 전에는 새 에셋을 대량으로 만들지 않는다. 타일
 
 - 현재 동물 NPC(곰·개·여우·토끼·너구리 등)는 "플레이어는 2.5등신 동물, NPC는 사람" 기준과 다르다. C1에서 사람 NPC로 교체한다. 이번 문서 정리는 실제 에셋 교체 완료를 뜻하지 않는다.
 
-- `goryeo_art.py`: 고해상도 AI 이미지를 부드럽게 축소(LANCZOS)하고 28색으로 줄인다. 도트를 새로 찍은 것이 아니라서 캐릭터와 그림체가 다르다.
+- `goryeo_art.py`: 건축·소품 분기는 LANCZOS 축소 후 28색(돌바닥은 12색)으로 줄인다. `woodland` 계열은 최근접 축소와 18색 양자화를 쓴다. 어느 방식도 공통 팔레트나 미술 승인을 자동 보장하지 않으므로 에셋별로 판정한다.
 - `goryeo_art.py`의 `RECTS`, `DETAIL_RECTS`, `WOODLAND_COLUMNS/ROWS`: 시트를 좌표 사각형으로 잘라 쓴다.
 - `tiles.py`의 `STAMPS`: Ninja 시트에서 좌표로 사각형을 잘라 쓴다(`pinebig`, `roundbig`, `hall`, `bigtree`, `plot` 등). 원래 개체 경계와 맞는지 확인하지 않았다. `FIELD`는 언덕 조각을 밭처럼 쓴다.
 - `STAMPS`의 `"slate"` 색 바꾸기와 `goryeo_art.tone()`: 맵을 만드는 중에 색을 즉석으로 바꾼다.

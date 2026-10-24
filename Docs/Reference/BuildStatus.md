@@ -27,7 +27,7 @@ Windows ZIP은 exe와 `_Data`/DLL 폴더를 모두 유지한다. Mac은 Intel/Ap
 
 ## 근거와 앞으로 남길 배포 정보
 
-[고려 검사](Validation/Goryeo-2026-10-17.json), [중간권 검사](Validation/Transit-2026-10-17.json), [환경 라이브러리 검사](Validation/ModuleLibrary-2026-10-17.json), [장애물 검사/해시](Validation/Obstacles-2026-10-17.json), [게시판 소스 검사](Validation/RegionalContracts-2026-10-18.json). 로컬 `Builds/Packages/deliverables/`의 체크섬 파일도 확인한다.
+[고려 검사](../Validation/Goryeo-2026-10-17.json), [중간권 검사](../Validation/Transit-2026-10-17.json), [환경 라이브러리 검사](../Validation/ModuleLibrary-2026-10-17.json), [장애물 검사/해시](../Validation/Obstacles-2026-10-17.json), [게시판 소스 검사](../Validation/RegionalContracts-2026-10-18.json). 로컬 `Builds/Packages/deliverables/`의 체크섬 파일도 확인한다.
 
 다음 팀 공유 빌드부터 `종류/플랫폼/파일명/소스 전체 커밋 SHA/생성 시각/포함 기능/실행 검증 환경/검사·해시/공유 URL`을 함께 남긴다. 기존 산출물 중 정확한 소스 SHA가 기록되지 않은 것은 날짜만 보고 추정하지 않는다. 현재 보유 ZIP을 최신 main 전체 빌드라고 이름만 바꾸지 않는다.
 
@@ -35,24 +35,24 @@ Windows ZIP은 exe와 `_Data`/DLL 폴더를 모두 유지한다. Mac은 Intel/Ap
 
 Windows 성공(오류0·경고18), Mac Universal 성공(오류0·경고0). Windows 경고를 모두 무해하다고 분류한 것은 아니다. Mac 실행 파일의Intel/Apple Silicon 포함과 headless 초기화/실행 예외0/종료0을 확인하고 기존 프리뷰 저장을 바이트 기준 복구했다. 사람이 직접 조작한 플레이나 다른 Mac의 Gatekeeper 통과 검증과 다르다. 빌드가 바꾼 기존 프로젝트/렌더 설정은 작업 전 값으로 복구했다.
 
-패키지 SHA256·빌드 원본 전체 커밋·검사·제한은 [10/20 검증 기록](Validation/GoryeoTradeBalance-2026-10-20.json). ZIP 무결성·README 중복 없음·플랫폼 실행 파일 포함을 확인했다. 읽을 안내는 같은 폴더 `README-Economy-2026-10-20.txt`, 체크섬은 `SHA256-Economy-2026-10-20.txt`다. GitHub 새 Release 업로드는 하지 않았다.
+패키지 SHA256·빌드 원본 전체 커밋·검사·제한은 [10/20 검증 기록](../Validation/GoryeoTradeBalance-2026-10-20.json). ZIP 무결성·README 중복 없음·플랫폼 실행 파일 포함을 확인했다. 읽을 안내는 같은 폴더 `README-Economy-2026-10-20.txt`, 체크섬은 `SHA256-Economy-2026-10-20.txt`다. GitHub 새 Release 업로드는 하지 않았다.
 
 ## 10/20 교역 수량 검토 빌드
 
-Market ZIP 원본은1064d7397d5f486ff1da0d90f468a64df96fe054다. Windows/Mac 모두 성공(각 오류0·경고18). Mac Universal 두 아키텍처와 headless 초기화/종료0/실행 예외0·기존 프리뷰 저장 바이트 복구를 확인했다. 빌드가 바꾼 프로젝트/렌더 설정을 복구했고 Editor는 정지한 Route01로 돌아갔다. [소스·검사·플랫폼별 해시/제한](Validation/MarketPlanning-2026-10-20.json). 이전 Economy ZIP에 수량 UI가 포함됐다고 안내하지 않는다. 공개 릴리스는 여전히10/15다.
+Market ZIP 원본은1064d7397d5f486ff1da0d90f468a64df96fe054다. Windows/Mac 모두 성공(각 오류0·경고18). Mac Universal 두 아키텍처와 headless 초기화/종료0/실행 예외0·기존 프리뷰 저장 바이트 복구를 확인했다. 빌드가 바꾼 프로젝트/렌더 설정을 복구했고 Editor는 정지한 Route01로 돌아갔다. [소스·검사·플랫폼별 해시/제한](../Validation/MarketPlanning-2026-10-20.json). 이전 Economy ZIP에 수량 UI가 포함됐다고 안내하지 않는다. 공개 릴리스는 여전히10/15다.
 
 ## 10/21 장부 검토 빌드
 
-Ledger ZIP 소스는946dcbb3dde6ff025fddc5d0087d2f5a6d5290ec다. Windows 성공(오류0·경고18), Mac 성공(오류0·경고0). Mac Universal/headless 초기화·예외0·기존 프리뷰 저장 복구와 ZIP 구조/해시를 확인했다. [검증 기록](Validation/CargoLedger-2026-10-21.json). 경고를 모두 무해하다고 분류한 것은 아니며 실제 Windows/다른 Mac 플레이·서명/공증은 별도다. 공개 릴리스는 여전히10/15다.
+Ledger ZIP 소스는946dcbb3dde6ff025fddc5d0087d2f5a6d5290ec다. Windows 성공(오류0·경고18), Mac 성공(오류0·경고0). Mac Universal/headless 초기화·예외0·기존 프리뷰 저장 복구와 ZIP 구조/해시를 확인했다. [검증 기록](../Validation/CargoLedger-2026-10-21.json). 경고를 모두 무해하다고 분류한 것은 아니며 실제 Windows/다른 Mac 플레이·서명/공증은 별도다. 공개 릴리스는 여전히10/15다.
 
 ## 10/21 저장 보호 검토 빌드
 
-SaveGuard ZIP 소스는d277308이다. Windows 성공(오류0·경고18), Mac 성공(오류0·경고0). Mac Universal 초기 실행·기존 호환 프리뷰의 복원 차단 없음·실행 예외0·종료0·저장 바이트 복구를 확인했다. 프로젝트/렌더 설정도 원래 값으로 복구했다. [전체 소스·검사·해시·한계](Validation/SaveCompatibility-2026-10-21.json). Ledger ZIP에는 이 후속 보호가 없으며 공개10/15 릴리스도 갱신되지 않았다.
+SaveGuard ZIP 소스는d277308이다. Windows 성공(오류0·경고18), Mac 성공(오류0·경고0). Mac Universal 초기 실행·기존 호환 프리뷰의 복원 차단 없음·실행 예외0·종료0·저장 바이트 복구를 확인했다. 프로젝트/렌더 설정도 원래 값으로 복구했다. [전체 소스·검사·해시·한계](../Validation/SaveCompatibility-2026-10-21.json). Ledger ZIP에는 이 후속 보호가 없으며 공개10/15 릴리스도 갱신되지 않았다.
 
 ## 10/22 반도·대륙 검토 빌드
 
-소스7ddf9dfcbbc2bd6c0024b8f8b3e881ff35be9435. Windows 성공(오류0·경고18), Mac 성공(오류0·경고0). Mac Universal 두 아키텍처·headless 초기화/실행 예외0/종료0·기존 프리뷰 저장 바이트 복구를 확인했다. Windows는 빌드/PE x64 형식까지 확인했으며 실제 실행은 별도다. ZIP 무결성/안내문/소스/해시는 [검증 기록](Validation/CentralConnection-2026-10-22.json)을 따른다. 프로젝트/렌더 설정은 빌드 전 값으로 복구했다. 이전 중간 배치 원시 빌드는 이 ZIP으로 대체하며 공개 Release는 여전히10/15다.
+소스7ddf9dfcbbc2bd6c0024b8f8b3e881ff35be9435. Windows 성공(오류0·경고18), Mac 성공(오류0·경고0). Mac Universal 두 아키텍처·headless 초기화/실행 예외0/종료0·기존 프리뷰 저장 바이트 복구를 확인했다. Windows는 빌드/PE x64 형식까지 확인했으며 실제 실행은 별도다. ZIP 무결성/안내문/소스/해시는 [검증 기록](../Validation/CentralConnection-2026-10-22.json)을 따른다. 프로젝트/렌더 설정은 빌드 전 값으로 복구했다. 이전 중간 배치 원시 빌드는 이 ZIP으로 대체하며 공개 Release는 여전히10/15다.
 
 ## 10/22 실제 연속 지형 검토 빌드
 
-소스0bb01751ac556a16e500aa96617e742a8ae4d0ae. Windows 성공(오류0·경고19), Mac 성공(오류0·경고0). Mac Universal Intel/Apple Silicon, headless 초기화/종료0·실행 예외0·호환 프리뷰 저장 복원과 원본 바이트 복구를 확인했다. Windows는 빌드/PE x64 형식까지 확인했으며 실제 실행은 미검증이다. ZIP 무결성·README·소스/해시는 [검증 기록](Validation/ContinuousTerrain-2026-10-22.json)을 따른다. 프로젝트/렌더 설정5개는 빌드 전 바이트로 복구했다. 로컬ZIP이며 공개10/15 Release는 갱신하지 않았다. Mac Developer ID 서명/공증은 미완료다.
+소스0bb01751ac556a16e500aa96617e742a8ae4d0ae. Windows 성공(오류0·경고19), Mac 성공(오류0·경고0). Mac Universal Intel/Apple Silicon, headless 초기화/종료0·실행 예외0·호환 프리뷰 저장 복원과 원본 바이트 복구를 확인했다. Windows는 빌드/PE x64 형식까지 확인했으며 실제 실행은 미검증이다. ZIP 무결성·README·소스/해시는 [검증 기록](../Validation/ContinuousTerrain-2026-10-22.json)을 따른다. 프로젝트/렌더 설정5개는 빌드 전 바이트로 복구했다. 로컬ZIP이며 공개10/15 Release는 갱신하지 않았다. Mac Developer ID 서명/공증은 미완료다.

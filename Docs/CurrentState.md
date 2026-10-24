@@ -37,7 +37,7 @@
 | 이동, 달리기 체력, 짐 무게·노면에 따른 감속, 흔들림 연출 | `Scripts/Player/` (`PlayerController`, `CarryVisual`) |
 | 시세(재고 기반), 사고팔기, 수량 거래, 교역 장부(L) | `Scripts/Economy/` (`MarketMath`, `MarketState`, `TownMarket`, `TradeLedger`) |
 | 배달 의뢰 게시판(마을당 3개, 기한·신용) | `Scripts/Contracts/` |
-| 퀘스트(튜토리얼 5 + 서브 3), 대화창 | `Scripts/Quests/`, `UI/DialogueUI` |
+| 퀘스트(GameDatabase 등록 12개), 대화창 | `Scripts/Quests/`, `UI/DialogueUI` |
 | 마을 시설: 쉼터·길 안내소·개경 보관소(신용 조건) | `Economy/TownFacility`, `UI/TownFacilitiesUI` |
 | 마을 등급 성장 | `MarketState.Level`, `World/TownGrowthProp` |
 | 도적, 길 위 사건, NPC 상인 시뮬레이션 | `Scripts/World/` |
@@ -48,7 +48,8 @@
 | 지도(M), 상업 백과(Esc) | `UI/WorldMapUI`, `UI/CommerceGuideUI` |
 | 소리 | `Audio/AudioManager` |
 
-- **온라인 기능은 없다.** 네트워크 패키지와 코드가 없다.
+- **온라인 기능은 없다.** 패키지 목록에 Multiplayer Center는 있지만, 실제 이동·공유 거래를 구현하는 네트워크 패키지·게임 코드는 없다.
+- 출신은 `GameDatabase.startOrigin`으로 정해지고 저장 파일에는 출신 ID가 없다. 아라비아 적재 보너스는 미적용이며, 기존 장거리 판매 +5%와 베네치아 재고 증가 0.8 규칙이 남아 있다. `Reference/ImplementationBacklog.md` ORG-01의 미완료 사항이다.
 - 별도 실험장: 이동 시험장, 환경 원형 라이브러리 40종, 장애물 48종. 본편에는 배치하지 않았다.
 
 ## 5. 검사
