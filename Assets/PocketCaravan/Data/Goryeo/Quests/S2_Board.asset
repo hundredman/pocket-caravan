@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
   m_Name: S2_Board
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  retired: 1
   id: naru_board
   title: "\uC758\uB8B0 \uAC8C\uC2DC\uD310"
   chain: 

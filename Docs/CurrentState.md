@@ -51,7 +51,7 @@
 | 이동, 달리기 체력, 짐 무게·노면에 따른 감속, 흔들림 연출 | `Scripts/Player/` (`PlayerController`, `CarryVisual`) |
 | 시세(재고 기반), 사고팔기, 수량 거래, 교역 장부(L) | `Scripts/Economy/` (`MarketMath`, `MarketState`, `TownMarket`, `TradeLedger`) |
 | 배달 의뢰 게시판(마을당 3개, 기한·신용) | `Scripts/Contracts/` |
-| 퀘스트(GameDatabase 등록 12개), 대화창 | `Scripts/Quests/`, `UI/DialogueUI` |
+| 퀘스트(GameDatabase 등록 17개), 대화창 | `Scripts/Quests/`, `UI/DialogueUI` |
 | 마을 시설: 쉼터·길 안내소·개경 보관소(신용 조건) | `Economy/TownFacility`, `UI/TownFacilitiesUI` |
 | 마을 등급 성장 | `MarketState.Level`, `World/TownGrowthProp` |
 | 도적, 길 위 사건, NPC 상인 시뮬레이션 | `Scripts/World/` |
@@ -87,6 +87,14 @@
 - `ReputationAwards`와 `GameEvents.ReputationContributed`: 대상·크기 이름·방향·원인만 전달한다. 점수표는 전부 0이고 단계/진행점을 바꾸지 않는다. R2/D10 전 기여를 저장해 나중에 소급 지급하지 않는다.
 - 행인 돕기는 명시한 관계 대상에 기여하고 신용을 주지 않는다. 배달 기여는 발주지 한 곳만 대상으로 하며 중앙 교역권은 마을별, 고려는 문명별이다. 성공·부분 납품·실패·기한 종료·분실 경로와 중복 호출을 검사했다.
 - Unity 6000.3.26f1 에디터 로직/실제 에셋/JsonUtility 87개, .NET 평판 45개, 기존 퀘스트 진단 10개 관찰, Python 77개·출구 92개 확인. 퀘스트 진단에는 알려진 정의 변경 결함 재현도 포함된다. `Validation/R6-Validation-2026-10-24.json` 참고. 플레이·게임 빌드는 미실행이다.
+
+### Q1 고려 한 바퀴 (2026-10-24)
+
+- 새 ID `q1_naru`→`q1_jangdan`→`q1_songak`→`q1_dakmok`→`q1_gaegyeong` 5개를 등록했다. 옛 `tutorial_1`·`tutorial_2`·`naru_board`·`dakmok_hanji`는 신규 제안만 막고 진행 중이면 옛 목표대로 완료한다. 사이드 5개는 설계의 새 선행으로 연결했다.
+- 구 완료 대응은 보상 없이 기록만 추가한다. 이미 수락한 새/옛 퀘스트의 진행·보상·화물을 건드리지 않고, 뒤 단계 완료 기록이 있어도 가장 앞의 빈 단계부터 제안한다. 반복 이주·재로드에 보상을 지급하지 않는다.
+- 원본/생성기는 `Tools/QuestGen/generate_q1.py`, 시작 데이터 재생성 연계는 `Editor/Q1QuestUpgrade`다. 기존 12개 목표 블록·ID·돈/신용 보상은 R6와 같다.
+- 실제 Unity 에디터 로직으로 장단 곡식 3개 매입 15냥→송악 판매 17냥(순익 2냥), 100냥 시작 체인 완료 시 240냥을 확인했다. NPC 상인·시간 흐름·실제 이동에 따라 시세는 달라질 수 있다. 시장/배달은 메인 미수락 상태에서도 동작한다.
+- .NET 기존 진단 10관찰+Q1 34개, Unity Q1 21개·R6 회귀 87개·저장 회귀 27개, Python 77개·출구92개 확인. `Validation/Q1-Validation-2026-10-24.json`. 실제 이동/사용자 플레이·게임 빌드는 미실행이다.
 
 ## 5. 검사
 

@@ -22,7 +22,7 @@ MonoBehaviour:
     \uD5A5\uD558\uB294 \uC0B0\uB85D \uAE38\uB3C4 \uB458\uB7EC\uBCF4\uC138\uC694."
   giverNpc: goryeo_songak_merchant
   requires:
-  - {fileID: 11400000, guid: 5f1b114771f824928af105094288dc10, type: 2}
+  - {fileID: 11400000, guid: 671321731ba25b9d905da5f205300409, type: 2}
   requiresAny: []
   choiceGroup: 
   offerLine: "\uC774\uACF3 \uC7A5\uD130\uC5D0\uC11C \uC778\uC0BC \uB450 \uBFCC\uB9AC\uB97C

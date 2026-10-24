@@ -1,0 +1,227 @@
+{
+  "runtime": ".NET 10; linked production C#; Unity platform stubs",
+  "unitySerializationTested": false,
+  "productionSavesTouched": false,
+  "observations": [
+    {
+      "name": "unchanged_definition_restores_goal",
+      "observed": true,
+      "detail": "Same quest definition restores step 1 to gaekju."
+    },
+    {
+      "name": "accepted_rewards_remain_promised",
+      "observed": true,
+      "detail": "Current asset reward 50/2 does not replace accepted reward 30/1."
+    },
+    {
+      "name": "completed_quest_remains_completed",
+      "observed": true,
+      "detail": "Finished ID survives import and blocks reacceptance."
+    },
+    {
+      "name": "reordered_goal_silently_changes_meaning",
+      "observed": true,
+      "detail": "Same saved step 1 now means visit Jangdan, not talk to gaekju; validator accepts."
+    },
+    {
+      "name": "old_amount_moves_to_new_goal",
+      "observed": true,
+      "detail": "Saved amount 2 is applied to a different new objective without semantic validation."
+    },
+    {
+      "name": "equal_to_count_becomes_stuck_active",
+      "observed": true,
+      "detail": "step == objective count passes validation but remains active with no objective after Tick."
+    },
+    {
+      "name": "beyond_count_is_blocked",
+      "observed": true,
+      "detail": "step greater than new count is rejected instead of silently losing progress."
+    },
+    {
+      "name": "uncaptured_reward_uses_legacy_fields",
+      "observed": true,
+      "detail": "Old records without a captured reward use authored legacy reward fallback."
+    },
+    {
+      "name": "current_map_visit_is_already_passive",
+      "observed": true,
+      "detail": "Already standing in target map advances VisitMap on Tick; no forced reentry needed."
+    },
+    {
+      "name": "current_asset_goal_layout_roundtrips",
+      "observed": true,
+      "detail": "17 actual quest asset layouts / 31 active steps restored with unchanged goal type, target and count. Item/vehicle GUID resolution and Unity serialization are outside this probe."
+    },
+    {
+      "name": "Q1:retired offer hidden tutorial_1",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:retired offer hidden tutorial_2",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:retired offer hidden naru_board",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:retired offer hidden dakmok_hanji",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:first and only first main offered",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:salt parcel received",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:first delivery earns credit once",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:wrong buy town ignored",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:trade tutorial no extra credit",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:board must be Songak",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:board tutorial no duplicate credit",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:specialty tutorial completed",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:previsited capital advances passively",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:all five main quests complete",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:new main total quest rewards",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:legacy full exception all five mapped",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:completion migration pays no rewards",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:migration and reload idempotent",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:legacy partial prefix only first mapped",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:retired active keeps original step",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:legacy completion keeps promised credit",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:legacy later record retained across gap",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:earliest gap offered and later main blocked",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:side locked before prerequisite tutorial_3",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:side unlocked by prerequisite tutorial_3",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:side locked before prerequisite tutorial_4",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:side unlocked by prerequisite tutorial_4",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:side locked before prerequisite tutorial_5",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:side unlocked by prerequisite tutorial_5",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:side locked before prerequisite goryeo_jangdan_trade",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:side unlocked by prerequisite goryeo_jangdan_trade",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:side locked before prerequisite goryeo_songak_trade",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:side unlocked by prerequisite goryeo_songak_trade",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:mapping preserves accepted new quest promise",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    }
+  ]
+}

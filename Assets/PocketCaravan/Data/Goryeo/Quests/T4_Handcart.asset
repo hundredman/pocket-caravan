@@ -20,7 +20,7 @@ MonoBehaviour:
     \uC704\uC5D0\uC11C \uB354 \uBE60\uB974\uB2E4."
   giverNpc: dakmok_chief
   requires:
-  - {fileID: 11400000, guid: 5f1b114771f824928af105094288dc10, type: 2}
+  - {fileID: 11400000, guid: 432d591b7eb2527fa04e17c193984b57, type: 2}
   requiresAny: []
   choiceGroup: 
   offerLine: "\uB4F1\uC9D0\uC73C\uB85C\uB294 \uD55C \uBC88\uC5D0 \uBA87 \uB0E5 \uBABB

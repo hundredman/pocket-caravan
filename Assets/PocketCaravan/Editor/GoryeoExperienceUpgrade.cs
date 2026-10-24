@@ -115,6 +115,7 @@ namespace PocketCaravan.EditorTools
             EditorUtility.SetDirty(goryeo);
             EditorUtility.SetDirty(supply); EditorUtility.SetDirty(db);
             R6RewardUpgrade.Apply(db);
+            Q1QuestUpgrade.Apply(db);
             AssetDatabase.SaveAssets();
         }
     }

@@ -26,7 +26,7 @@ MonoBehaviour:
     \uD314\uBA74 \uAC12\uC774 \uB5A8\uC5B4\uC9C0\uB294 \uAC83\uB3C4 \uC0B4\uD3B4\uBCF4\uC790."
   giverNpc: gaekju
   requires:
-  - {fileID: 11400000, guid: 5f1b114771f824928af105094288dc10, type: 2}
+  - {fileID: 11400000, guid: a19a472c07075c818ebd0ddd949d2bea, type: 2}
   requiresAny: []
   choiceGroup: 
   offerLine: "\uC885\uC774 \uACE0\uB9D9\uB124. \uC778\uC0BC\uC740 \uC5EC\uB7EC \uACF3\uC5D0\uC11C

@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: Q1_naru
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: q1_naru
+  retired: 0
+  title: "첫 짐"
+  chain: "고려 한 바퀴"
+  summary: "첫 짐"
+  giverNpc: naru_chief
+  requires: []
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "자네가 행상이 되겠다는 젊은이로군. 배로 들어온 소금 꾸러미를 장단 농부에게 전해 주게. 들판 마을이라 소금이 늘 모자라지."
+  giveItem: {fileID: 11400000, guid: 5f9bcbf9b7a8444049e8997395807221, type: 2}
+  giveCount: 1
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 1
+    text: "장단 농부에게 소금 꾸러미 전하기"
+    targetId: goryeo_jangdan_farmer
+    item: {fileID: 11400000, guid: 5f9bcbf9b7a8444049e8997395807221, type: 2}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: "나루 소금이로군, 고맙네! 장단은 곡식이 남아도는 곳이라 여기선 곡식이 싸다네."
+  rewardMoney: 30
+  rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "장터 옆 게시판에는 언제든 배달 의뢰가 붙어 있습니다. 메인 이야기와 상관없이 자유롭게 맡아 보세요."

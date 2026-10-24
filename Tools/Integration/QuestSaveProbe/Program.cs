@@ -47,6 +47,7 @@ foreach(var file in Directory.GetFiles("Assets/PocketCaravan/Data/Goryeo/Quests"
  }
  actualAssets++;
 }
-Observe("current_asset_goal_layout_roundtrips",actualAssets==12 && actualSteps>0,$"{actualAssets} actual quest asset layouts / {actualSteps} active steps restored with unchanged goal type, target and count. Item/vehicle GUID resolution and Unity serialization are outside this probe.");
+Observe("current_asset_goal_layout_roundtrips",actualAssets==17 && actualSteps>0,$"{actualAssets} actual quest asset layouts / {actualSteps} active steps restored with unchanged goal type, target and count. Item/vehicle GUID resolution and Unity serialization are outside this probe.");
 GameEvents.ClearAll();
+results.AddRange(Q1Tests.Run());
 Console.WriteLine(JsonSerializer.Serialize(new {runtime=".NET 10; linked production C#; Unity platform stubs",unitySerializationTested=false,productionSavesTouched=false,observations=results},new JsonSerializerOptions{WriteIndented=true}));

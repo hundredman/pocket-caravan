@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: Q1_songak
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: q1_songak
+  retired: 0
+  title: "의뢰 게시판과 신용"
+  chain: "고려 한 바퀴"
+  summary: "의뢰 게시판과 신용"
+  giverNpc: goryeo_songak_merchant
+  requires:
+  - {fileID: 11400000, guid: 43973e5d8c4254dbb5d6a2a4ff27fb14, type: 2}
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "장사꾼은 물건만 파는 게 아니라 약속도 판다네. 게시판에서 의뢰 하나를 맡아 기한 안에 날라 보게. 약속을 지키면 신용이 쌓이고, 신용이 높으면 귀한 짐도 맡긴다네."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 8
+    text: "송악 게시판 의뢰 하나 마치기"
+    targetId: goryeo_songak
+    item: {fileID: 0}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: ""
+  - type: 0
+    text: "송악 상인에게 알리기"
+    targetId: goryeo_songak_merchant
+    item: {fileID: 0}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: "잘 해냈군. 송악은 고려의 관문이라네. 저 고개 너머가 넓은 중앙 대륙이지. 언젠가 자네도 넘어가게 될 걸세."
+  rewardMoney: 25
+  rewardCredit: 0
+  rewardReputationScope: 0
+  rewardReputationTarget: goryeo
+  rewardReputationSize: 2
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "의뢰가 늦거나 짐이 상하면 보수가 줄고 신용이 떨어집니다."

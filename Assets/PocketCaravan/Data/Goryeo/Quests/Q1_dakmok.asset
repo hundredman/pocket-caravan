@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: Q1_dakmok
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: q1_dakmok
+  retired: 0
+  title: "특산품"
+  chain: "고려 한 바퀴"
+  summary: "특산품"
+  giverNpc: dakmok_chief
+  requires:
+  - {fileID: 11400000, guid: 671321731ba25b9d905da5f205300409, type: 2}
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "닥목 종이는 고려에서 으뜸이지. 특산품은 난 곳에서 싸고 먼 곳에서 비싸다네. 종이 두 묶음을 사 오게. 수도에서 쓸 데가 있을 걸세."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 2
+    text: "닥목 장터에서 종이 2개 사기"
+    targetId: dakmok
+    item: {fileID: 11400000, guid: c7b553013268140eca99e3276caecd4f, type: 2}
+    vehicle: {fileID: 0}
+    count: 2
+    completeLine: ""
+  - type: 0
+    text: "닥목 촌장에게 보이기"
+    targetId: dakmok_chief
+    item: {fileID: 0}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: "좋은 종이를 골랐군. 마침 개경 객주가 한지를 기다린다네."
+  rewardMoney: 10
+  rewardCredit: 0
+  rewardReputationScope: 0
+  rewardReputationTarget: goryeo
+  rewardReputationSize: 2
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: ""

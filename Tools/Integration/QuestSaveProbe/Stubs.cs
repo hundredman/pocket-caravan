@@ -21,7 +21,7 @@ namespace PocketCaravan {
  public class TownData { public string id,displayName; public RegionData region; public List<VehicleData> vehiclesForSale=new(); }
  public class GameDatabase { public List<ItemData> items=new(); public List<VehicleData> vehicles=new(); public List<QuestData> quests=new(); public List<TownData> towns=new(); }
  public class Contract { public int id,reward; public string fromTown,toTown; public float weight,condition,hours,acceptedAt,deadline,finalDeadline; }
- public class Inventory { public int Count(ItemData item)=>0; public bool Remove(ItemData item,int count)=>true; public void Add(ItemData item,int count,float price=0){} }
+ public class Inventory { readonly Dictionary<ItemData,int> counts=new(); public int Count(ItemData item)=>counts.GetValueOrDefault(item); public bool Remove(ItemData item,int count){if(Count(item)<count)return false;counts[item]-=count;return true;} public void Add(ItemData item,int count,float price=0){counts[item]=Count(item)+count;} }
  public class PlayerState { public int money,credit; public VehicleData vehicle; public Inventory cargo=new(); public List<Contract> contracts=new(); public bool CanCarry(ItemData item,int count)=>true; }
  public class GameManager { public static GameManager I=new(); public PlayerState Player=new(); public GameDatabase Db=new(); }
  public class MapRoot { public static MapRoot Current; public string mapId; }

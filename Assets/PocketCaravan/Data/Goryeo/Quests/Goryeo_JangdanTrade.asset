@@ -22,7 +22,7 @@ MonoBehaviour:
     \uD560 \uC218 \uC788\uC5B4\uC694."
   giverNpc: goryeo_jangdan_farmer
   requires:
-  - {fileID: 11400000, guid: 5f1b114771f824928af105094288dc10, type: 2}
+  - {fileID: 11400000, guid: 43973e5d8c4254dbb5d6a2a4ff27fb14, type: 2}
   requiresAny: []
   choiceGroup: 
   offerLine: "\uC7A5\uB2E8 \uC7A5\uD130\uC5D0\uC11C \uACE1\uC2DD \uC138 \uAFB8\uB7EC\uBBF8\uB97C

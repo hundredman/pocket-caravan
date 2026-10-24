@@ -90,13 +90,53 @@ namespace PocketCaravan
                 active[q] = p;
                 if (q.id == d.trackedQuest || Tracked == null) Tracked = p;
             }
+            MigrateMainProgress();
+        }
+
+        static readonly string[] MainQuestIds = { "q1_naru", "q1_jangdan", "q1_songak", "q1_dakmok", "q1_gaegyeong" };
+        bool FinishedId(string id) => all.Exists(q => q != null && q.id == id && finished.Contains(q));
+        bool LegacyCondition(int step)
+        {
+            switch (step)
+            {
+                case 0: return FinishedId("tutorial_1");
+                case 1: return FinishedId("goryeo_jangdan_trade") || FinishedId("tutorial_3");
+                case 2: return FinishedId("naru_board");
+                case 3: return FinishedId("tutorial_2") || FinishedId("goryeo_return_trade");
+                case 4: return (FinishedId("tutorial_2") && FinishedId("dakmok_hanji")) || FinishedId("tutorial_5");
+                default: return false;
+            }
+        }
+        void GrantMainRecord(int index)
+        {
+            var q = all.Find(value => value != null && value.id == MainQuestIds[index]);
+            // Preserve an already accepted new quest and its promised cargo/reward too.
+            if (q != null && !active.ContainsKey(q)) finished.Add(q);
+        }
+        public void MigrateMainProgress(string completedLegacyId = null)
+        {
+            bool allOld = FinishedId("tutorial_2") && FinishedId("tutorial_5");
+            for (int i = 0; i < MainQuestIds.Length; i++)
+            {
+                if (allOld || FinishedId(MainQuestIds[i])) { GrantMainRecord(i); continue; }
+                if (!LegacyCondition(i)) break;
+                GrantMainRecord(i);
+            }
+            // A legacy quest finishing now may add a later record across a gap (design 7.6).
+            if (completedLegacyId == "tutorial_1") GrantMainRecord(0);
+            if (completedLegacyId == "goryeo_jangdan_trade" || completedLegacyId == "tutorial_3") GrantMainRecord(1);
+            if (completedLegacyId == "naru_board") GrantMainRecord(2);
+            if (completedLegacyId == "tutorial_2" || completedLegacyId == "goryeo_return_trade") GrantMainRecord(3);
+            if ((completedLegacyId == "tutorial_2" || completedLegacyId == "dakmok_hanji" || completedLegacyId == "tutorial_5") && LegacyCondition(4)) GrantMainRecord(4);
         }
 
         // ---------- NPC ----------
 
         public bool CanStart(QuestData q)
         {
-            if (q == null || active.ContainsKey(q) || finished.Contains(q)) return false;
+            if (q == null || q.retired || active.ContainsKey(q) || finished.Contains(q)) return false;
+            int mainIndex = System.Array.IndexOf(MainQuestIds, q.id);
+            for (int i = 0; i < mainIndex; i++) if (!FinishedId(MainQuestIds[i])) return false;
             foreach (var r in q.requires) if (r != null && !finished.Contains(r)) return false;
             if (q.requiresAny != null && q.requiresAny.Count > 0 && !q.requiresAny.Exists(r => r != null && finished.Contains(r))) return false;
             if (!string.IsNullOrEmpty(q.choiceGroup))
@@ -254,6 +294,7 @@ namespace PocketCaravan
             active.Remove(q);
             finished.Add(q);
             if (Tracked == p) { Tracked = null; foreach (var other in active.Values) Tracked = other; }
+            MigrateMainProgress(q.id);
             var player = GameManager.I.Player;
             player.money += p.RewardMoney;
             player.credit += p.RewardCredit;
