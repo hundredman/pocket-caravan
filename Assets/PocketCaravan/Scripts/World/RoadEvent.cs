@@ -5,13 +5,16 @@ namespace PocketCaravan
 {
     /// <summary>
     /// 돌발 사건 2종.
-    /// 쓰러진 행인: 도우면 1시간이 지나고 신용 +1.
+    /// 쓰러진 행인: 도우면 1시간이 지나고 관계 지역에 평판 기여.
     /// 떠돌이 상인: 물건 하나를 싸게 판다 (몇 개 안 됨).
     /// </summary>
     public class RoadEvent : Interactable
     {
         public enum Type { FallenTraveler, Peddler }
         public Type type;
+        public ReputationScope reputationScope;
+        public string reputationTarget = "goryeo";
+        public ReputationSize reputationSize = ReputationSize.Small;
         public Transform body;   // 쓰러진 모습은 그림을 눕혀서
 
         bool done;
@@ -44,12 +47,9 @@ namespace PocketCaravan
                 DialogueUI.Show("쓰러진 행인", "물... 물 좀 주시오. 길을 오래 걸었더니 다리가 풀렸소.",
                     new DialogueUI.Choice("돕는다 (1시간)", () =>
                     {
-                        done = true;
-                        gm.Clock.Advance(1f);
-                        gm.Player.credit += 1;
-                        if (body != null) body.localRotation = Quaternion.identity;
+                        if (!HelpTraveler()) return;
                         Sfx.Play("success");
-                        DialogueUI.Show("행인", "고맙소, 고마워! 개경 상인들에게 당신 이야기를 해 두겠소. (신용 +1)");
+                        DialogueUI.Show("행인", "고맙소, 고마워! 개경 상인들에게 당신 이야기를 해 두겠소.");
                     }),
                     new DialogueUI.Choice("지나간다", null));
                 return;
@@ -61,6 +61,17 @@ namespace PocketCaravan
                 new DialogueUI.Choice("하나 산다", () => Buy(1)),
                 new DialogueUI.Choice("모두 산다", () => Buy(offerLeft)),
                 new DialogueUI.Choice("됐소", null));
+        }
+
+        /// <summary>One contribution per event instance. No credit reward for goodwill.</summary>
+        public bool HelpTraveler()
+        {
+            if (done || type != Type.FallenTraveler) return false;
+            done = true;
+            GameManager.I.Clock.Advance(1f);
+            ReputationAwards.Emit(reputationScope, reputationTarget, reputationSize, 1, "road:fallen_traveler");
+            if (body != null) body.localRotation = Quaternion.identity;
+            return true;
         }
 
         void Buy(int n)

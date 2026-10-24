@@ -355,6 +355,9 @@ namespace PocketCaravan.EditorTools
                             var ego = Character(etype == RoadEvent.Type.Peddler ? "떠돌이 상인" : "쓰러진 행인", ech, center, objects);
                             var ev = ego.AddComponent<RoadEvent>();
                             ev.type = etype;
+                            ev.reputationScope = ReputationScope.Civilization;
+                            ev.reputationTarget = "goryeo";
+                            ev.reputationSize = ReputationSize.Small;
                             // 눕힐 때 그림만 돌리도록 몸을 자식으로 옮긴다
                             var body = new GameObject("Body");
                             body.transform.SetParent(ego.transform, false);

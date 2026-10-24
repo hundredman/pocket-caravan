@@ -112,6 +112,7 @@ namespace PocketCaravan.EditorTools
             db.quests = quests;
             EditorUtility.SetDirty(db);
             GoryeoRegionUpgrade.ApplyData();
+            R6RewardUpgrade.Apply(db);
         }
 
         static TownData.StockEntry S(ItemData item, float optimal) => new TownData.StockEntry { item = item, optimal = optimal };

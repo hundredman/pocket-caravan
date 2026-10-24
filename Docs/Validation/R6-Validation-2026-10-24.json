@@ -1,0 +1,38 @@
+{
+  "task": "R6",
+  "date": "2026-10-24",
+  "decision": "Standing.md section 2 R6 decisions, main 435a77fd",
+  "unity": {
+    "version": "6000.3.26f1",
+    "checks": 87,
+    "result": "passed",
+    "scope": "editor logic, real assets, JsonUtility; no play or production save I/O",
+    "report": "R6-Unity-2026-10-24.json",
+    "initialAttempt": "test used stale compiled town ID and failed; corrected current registered ID; second run passed"
+  },
+  "dotnet": {
+    "reputationChecks": 45,
+    "questDiagnosticObservations": 10,
+    "note": "Quest diagnostic includes reproduction of known definition-change defects; not all save issues fixed"
+  },
+  "python": {
+    "tests": 77,
+    "worldErrors": 0,
+    "registeredExits": 92
+  },
+  "deferred": [
+    "D10 nonzero reputation points and thresholds",
+    "actual human gameplay",
+    "Q1 implementation in next branch"
+  ],
+  "savePolicy": "captured and uncaptured legacy promises retained, no retroactive reputation",
+  "eventSizes": {
+    "questGoodwill": "Small",
+    "roadGoodwill": "Small",
+    "contractSuccess": "Medium positive",
+    "contractFailureOrExpiry": "Medium negative",
+    "contractLost": "Small negative",
+    "contractPartial": "VerySmall negative"
+  },
+  "gameBuild": false
+}

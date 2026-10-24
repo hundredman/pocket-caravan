@@ -63,6 +63,9 @@ namespace PocketCaravan
         [Header("보상")]
         public int rewardMoney;
         public int rewardCredit;
+        public ReputationScope rewardReputationScope;
+        public string rewardReputationTarget;
+        public ReputationSize rewardReputationSize;
         [Tooltip("보상 기록 필드가 없던 구 저장의 활성 의뢰에만 아래 이전 약속 적용")]
         public bool hasLegacyReward;
         public int legacyRewardMoney, legacyRewardCredit;

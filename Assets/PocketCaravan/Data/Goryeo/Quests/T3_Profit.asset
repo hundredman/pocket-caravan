@@ -62,8 +62,11 @@ MonoBehaviour:
       \uC190\uD574\uC600\uB294\uC9C0 \uC0B4\uD3B4\uBCF4\uACE0 \uB2E4\uC74C \uC9D0\uC744
       \uACE8\uB77C \uBCF4\uAC8C."
   rewardMoney: 20
-  rewardCredit: 1
-  hasLegacyReward: 0
-  legacyRewardMoney: 0
-  legacyRewardCredit: 0
+  rewardCredit: 0
+  rewardReputationScope: 0
+  rewardReputationTarget: goryeo
+  rewardReputationSize: 2
+  hasLegacyReward: 1
+  legacyRewardMoney: 20
+  legacyRewardCredit: 1
   finishNote: 

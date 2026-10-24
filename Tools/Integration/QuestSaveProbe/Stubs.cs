@@ -14,11 +14,11 @@ namespace UnityEngine {
  public static class JsonUtility { public static string ToJson(object o)=>throw new System.NotSupportedException("Unity serializer not tested"); public static T FromJson<T>(string s)=>throw new System.NotSupportedException("Unity serializer not tested"); }
 }
 namespace PocketCaravan {
- public class RegionData { public string id; }
+ public class RegionData { public string id,displayName; public bool townReputation; }
  public class OriginData { public string id; public RegionData homeRegion; }
  public class ItemData { public string id,displayName; public bool questItem; public TownData originTown; }
  public class VehicleData { public string id; }
- public class TownData { public string id; public List<VehicleData> vehiclesForSale=new(); }
+ public class TownData { public string id,displayName; public RegionData region; public List<VehicleData> vehiclesForSale=new(); }
  public class GameDatabase { public List<ItemData> items=new(); public List<VehicleData> vehicles=new(); public List<QuestData> quests=new(); public List<TownData> towns=new(); }
  public class Contract { public int id,reward; public string fromTown,toTown; public float weight,condition,hours,acceptedAt,deadline,finalDeadline; }
  public class Inventory { public int Count(ItemData item)=>0; public bool Remove(ItemData item,int count)=>true; public void Add(ItemData item,int count,float price=0){} }

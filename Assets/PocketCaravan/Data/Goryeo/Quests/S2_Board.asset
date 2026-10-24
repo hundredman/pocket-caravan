@@ -50,5 +50,11 @@ MonoBehaviour:
       \uC2E0\uC6A9\uC774 \uC313\uC774\uACE0, \uC2E0\uC6A9\uC774 \uB192\uC73C\uBA74
       \uADC0\uD55C \uC9D0\uB3C4 \uB9E1\uAE38 \uAC78\uC138."
   rewardMoney: 25
-  rewardCredit: 1
+  rewardCredit: 0
+  rewardReputationScope: 0
+  rewardReputationTarget: goryeo
+  rewardReputationSize: 2
   finishNote: 
+  hasLegacyReward: 1
+  legacyRewardMoney: 25
+  legacyRewardCredit: 1

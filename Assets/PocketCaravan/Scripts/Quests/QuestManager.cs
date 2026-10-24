@@ -17,6 +17,9 @@ namespace PocketCaravan
             public int amount;   // 현재 단계 진행 수치
             public bool rewardCaptured;
             public int acceptedRewardMoney, acceptedRewardCredit;
+            public ReputationScope acceptedReputationScope;
+            public string acceptedReputationTarget;
+            public ReputationSize acceptedReputationSize;
             public int RewardMoney => rewardCaptured ? acceptedRewardMoney : quest.rewardMoney;
             public int RewardCredit => rewardCaptured ? acceptedRewardCredit : quest.rewardCredit;
             public bool Done => step >= quest.objectives.Count;
@@ -58,11 +61,14 @@ namespace PocketCaravan
             public string id; public int step, amount;
             public bool rewardCaptured;
             public int acceptedRewardMoney, acceptedRewardCredit;
+            public ReputationScope acceptedReputationScope;
+            public string acceptedReputationTarget;
+            public ReputationSize acceptedReputationSize;
         }
 
         public void Export(SaveData d)
         {
-            foreach (var p in active.Values) d.quests.Add(new Save { id = p.quest.id, step = p.step, amount = p.amount, rewardCaptured = true, acceptedRewardMoney = p.RewardMoney, acceptedRewardCredit = p.RewardCredit });
+            foreach (var p in active.Values) d.quests.Add(new Save { id = p.quest.id, step = p.step, amount = p.amount, rewardCaptured = true, acceptedRewardMoney = p.RewardMoney, acceptedRewardCredit = p.RewardCredit, acceptedReputationScope = p.acceptedReputationScope, acceptedReputationTarget = p.acceptedReputationTarget, acceptedReputationSize = p.acceptedReputationSize });
             foreach (var q in finished) d.finishedQuests.Add(q.id);
             d.trackedQuest = Tracked != null ? Tracked.quest.id : null;
         }
@@ -78,7 +84,9 @@ namespace PocketCaravan
                 if (q == null) continue;
                 var p = new Progress { quest = q, step = s.step, amount = s.amount, rewardCaptured = true,
                     acceptedRewardMoney = s.rewardCaptured ? s.acceptedRewardMoney : q.hasLegacyReward ? q.legacyRewardMoney : q.rewardMoney,
-                    acceptedRewardCredit = s.rewardCaptured ? s.acceptedRewardCredit : q.hasLegacyReward ? q.legacyRewardCredit : q.rewardCredit };
+                    acceptedRewardCredit = s.rewardCaptured ? s.acceptedRewardCredit : q.hasLegacyReward ? q.legacyRewardCredit : q.rewardCredit,
+                    acceptedReputationScope = s.acceptedReputationScope, acceptedReputationTarget = s.acceptedReputationTarget,
+                    acceptedReputationSize = s.rewardCaptured ? s.acceptedReputationSize : ReputationSize.None };
                 active[q] = p;
                 if (q.id == d.trackedQuest || Tracked == null) Tracked = p;
             }
@@ -159,7 +167,8 @@ namespace PocketCaravan
                 pl.cargo.Add(q.offerItem, q.offerCount, q.offerPrice);   // 산 값으로 기록해 이익이 제대로 계산되게
                 Sfx.Play("coin");
             }
-            var p = new Progress { quest = q, rewardCaptured = true, acceptedRewardMoney = q.rewardMoney, acceptedRewardCredit = q.rewardCredit };
+            var p = new Progress { quest = q, rewardCaptured = true, acceptedRewardMoney = q.rewardMoney, acceptedRewardCredit = q.rewardCredit,
+                acceptedReputationScope = q.rewardReputationScope, acceptedReputationTarget = q.rewardReputationTarget, acceptedReputationSize = q.rewardReputationSize };
             active[q] = p;
             Tracked = p;
             if (q.giveItem != null && q.giveCount > 0) GameManager.I.Player.cargo.Add(q.giveItem, q.giveCount);
@@ -248,6 +257,7 @@ namespace PocketCaravan
             var player = GameManager.I.Player;
             player.money += p.RewardMoney;
             player.credit += p.RewardCredit;
+            ReputationAwards.Emit(p.acceptedReputationScope, p.acceptedReputationTarget, p.acceptedReputationSize, 1, "quest:" + q.id);
             string reward = "";
             if (p.RewardMoney > 0) reward += $" 돈 +{p.RewardMoney}";
             if (p.RewardCredit > 0) reward += $" 신용 +{p.RewardCredit}";

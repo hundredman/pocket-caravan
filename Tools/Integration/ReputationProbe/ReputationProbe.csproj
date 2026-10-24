@@ -8,5 +8,6 @@
     <Compile Include="../../../Assets/PocketCaravan/Scripts/Core/SaveCompatibility.cs" Link="Source/SaveCompatibility.cs" />
     <Compile Include="../../../Assets/PocketCaravan/Scripts/Core/SaveSystem.cs" Link="Source/SaveSystem.cs" />
     <Compile Include="../../../Assets/PocketCaravan/Scripts/Core/ReputationState.cs" Link="Source/ReputationState.cs" />
+    <Compile Include="../../../Assets/PocketCaravan/Scripts/Core/ReputationAwards.cs" Link="Source/ReputationAwards.cs" />
   </ItemGroup>
 </Project>

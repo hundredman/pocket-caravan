@@ -114,6 +114,7 @@ namespace PocketCaravan.EditorTools
             goryeo.deliveryRewards = new DeliveryRewardRules { enabled = true, revision = 1 };
             EditorUtility.SetDirty(goryeo);
             EditorUtility.SetDirty(supply); EditorUtility.SetDirty(db);
+            R6RewardUpgrade.Apply(db);
             AssetDatabase.SaveAssets();
         }
     }

@@ -25,6 +25,12 @@ namespace PocketCaravan
                 var quest=db.quests.Find(q=>q!=null && q.id==progress.id);
                 Require(quest!=null,"현재 데이터에 없는 진행 의뢰: "+progress.id);
                 Require(activeIds.Add(progress.id),"의뢰 진행 ID가 중복됐습니다: "+progress.id);
+                if (progress.rewardCaptured && progress.acceptedReputationSize != ReputationSize.None)
+                {
+                    Require(Enum.IsDefined(typeof(ReputationSize), progress.acceptedReputationSize)
+                        && Enum.IsDefined(typeof(ReputationScope), progress.acceptedReputationScope)
+                        && !string.IsNullOrWhiteSpace(progress.acceptedReputationTarget), "의뢰 평판 보상 기록이 올바르지 않습니다: " + progress.id);
+                }
                 Require(progress.step>=0 && progress.step<=quest.objectives.Count && progress.amount>=0,"의뢰 진행 단계가 맞지 않습니다: "+progress.id);
             }
             foreach(string id in data.finishedQuests)

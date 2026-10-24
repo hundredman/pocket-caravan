@@ -51,10 +51,13 @@ MonoBehaviour:
     count: 2
     completeLine: 
   rewardMoney: 10
-  rewardCredit: 1
-  hasLegacyReward: 0
-  legacyRewardMoney: 0
-  legacyRewardCredit: 0
+  rewardCredit: 0
+  rewardReputationScope: 0
+  rewardReputationTarget: goryeo
+  rewardReputationSize: 2
+  hasLegacyReward: 1
+  legacyRewardMoney: 10
+  legacyRewardCredit: 1
   finishNote: "\uD310\uB9E4 \uB300\uAE08\uC5D0\uC11C \uB9E4\uC785 \uC6D0\uAC00\uB97C
     \uBE7C\uACE0, \uB3CC\uC544\uAC08 \uB54C \uC2E4\uC744 \uBB3C\uAC74\uB3C4 \uC0B4\uD3B4\uBCF4\uC138\uC694.
     \uC2DC\uC138\uB294 \uAC70\uB798\uB7C9\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9D1\uB2C8\uB2E4."
