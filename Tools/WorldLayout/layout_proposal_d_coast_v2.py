@@ -134,6 +134,12 @@ for _ in range(40):
     if ((creg & (np.abs(clock - 90) <= h)) | vunion).sum() < 25_000: lo = h
     else: hi = h
 half = hi; wedge = (creg & (np.abs(clock - 90) <= half)) | vunion
+# 각도 이분법은 칸 단위로 정확히 맞지 않으므로, 넘친 칸은 마을이 아닌 칸 중 부채꼴 가장자리부터 뺀다
+_extra = int(wedge.sum()) - 25_000
+if _extra > 0:
+    _cand = np.where(wedge & ~vunion, np.abs(clock - 90), -1).ravel()
+    _drop = np.argsort(-_cand)[:_extra]
+    _w = wedge.ravel().copy(); _w[_drop] = False; wedge = _w.reshape(wedge.shape)
 outside_sector = {k: int((m & ~(np.abs(clock - 90) <= half)).sum()) for k, m in vd.items()}
 
 def partition(region, seeds, targets, iters=900):
