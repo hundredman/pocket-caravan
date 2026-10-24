@@ -65,6 +65,8 @@ static class Q1Tests
         qm=Fresh();var partial=new SaveData{finishedQuests=new(){"tutorial_1"},quests=new(){new(){id="tutorial_2",step=1,rewardCaptured=true,acceptedRewardMoney=45,acceptedRewardCredit=1}}};qm.Import(partial);
         Check("legacy partial prefix only first mapped",qm.IsFinished(Q(ids[0]))&&ids.Skip(1).All(id=>!qm.IsFinished(Q(id))));
         Check("retired active keeps original step",qm.Active.Single().quest.id=="tutorial_2"&&qm.Active.Single().step==1);
+        var oldPending=new SaveData();qm.Export(oldPending);qm.Import(oldPending);
+        Check("legacy pending eligibility survives new-format reload",qm.Active.Single().legacyMainMigrationEligible);
         GameManager.I.Player.cargo.Add(Q("tutorial_2").objectives[1].item,2);qm.TryCompleteAt("gaekju",out _);
         Check("legacy completion keeps promised credit",GameManager.I.Player.credit==1&&qm.IsFinished(Q("tutorial_2")));
         Check("legacy later record retained across gap",qm.IsFinished(Q("q1_dakmok"))&&!qm.IsFinished(Q("q1_jangdan")));
@@ -72,6 +74,19 @@ static class Q1Tests
         var sideRequirements=new Dictionary<string,string>{{"tutorial_3","q1_gaegyeong"},{"tutorial_4","q1_songak"},{"tutorial_5","q1_dakmok"},{"goryeo_jangdan_trade","q1_jangdan"},{"goryeo_songak_trade","q1_songak"}};
         foreach(var row in sideRequirements)
         { qm=Fresh();Check("side locked before prerequisite "+row.Key,!qm.CanStart(Q(row.Key)));qm.Import(new(){finishedQuests=new(){row.Value}});Check("side unlocked by prerequisite "+row.Key,qm.CanStart(Q(row.Key))); }
+        qm=Fresh();qm.Import(new(){finishedQuests=new(){"q1_naru","q1_jangdan","q1_songak","q1_dakmok"}});
+        qm.Accept(Q("tutorial_5"));GameEvents.RaiseVehicleBought(new(){id="handcart"});qm.TryCompleteAt("gaekju",out _);
+        Check("new side completion never skips capital main",!qm.IsFinished(Q("q1_gaegyeong"))&&qm.CanStart(Q("q1_gaegyeong")));
+        var modern=new SaveData();qm.Export(modern);qm.Import(modern);
+        Check("modern side record cannot become legacy on reload",!qm.IsFinished(Q("q1_gaegyeong")));
+        qm=Fresh();qm.Import(new(){q1MigrationVersion=1,legacyMainFinishedIds=new(){"tutorial_1","tutorial_2"},finishedQuests=new(){"tutorial_1","tutorial_2","q1_naru","q1_dakmok"}});
+        qm.Accept(Q("tutorial_5"));GameEvents.RaiseVehicleBought(new(){id="handcart"});qm.TryCompleteAt("gaekju",out _);
+        var mixed=new SaveData();qm.Export(mixed);qm.Import(mixed);
+        Check("new side cannot combine with old paper to trigger legacy full exception",!qm.IsFinished(Q("q1_gaegyeong"))&&!qm.IsFinished(Q("q1_jangdan")));
+        foreach(int badVersion in new[]{-1,2})
+        { bool blocked=false;try{SaveSystem.Validate(new(){q1MigrationVersion=badVersion});}catch(System.IO.InvalidDataException){blocked=true;}Check("unsupported migration version rejected "+badVersion,blocked); }
+        bool invalidHistory=false;try{SaveCompatibility.Validate(new(){q1MigrationVersion=1,legacyMainFinishedIds=new(){"tutorial_5"}},new(){quests=all},null);}catch(System.IO.InvalidDataException){invalidHistory=true;}
+        Check("contradictory legacy history rejected",invalidHistory);
         // Accepted new quests are preserved if a legacy mapping also covers them.
         qm=Fresh();qm.Accept(Q("q1_naru"));var overlap=new SaveData();qm.Export(overlap);overlap.finishedQuests.Add("tutorial_1");qm.Import(overlap);
         Check("mapping preserves accepted new quest promise",qm.Active.Single().quest.id=="q1_naru"&&!qm.IsFinished(Q("q1_naru")));

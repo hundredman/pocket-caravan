@@ -25,6 +25,10 @@
         "real Unity JSON legacy full maps without payout",
         "real Unity JSON mapped records persist without duplicates",
         "old active retired quest still finishes",
-        "legacy gap next is second and later record retained"
+        "legacy gap next is second and later record retained",
+        "new cart side does not auto-finish capital",
+        "new side cannot become legacy through real JSON reload",
+        "literal old JSON pending eligibility survives new reload",
+        "actual MapRoot already in capital advances VisitMap on accept"
     ]
 }
