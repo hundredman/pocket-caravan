@@ -29,6 +29,9 @@ def obj_json(o):
 
 
 used = set()
+# Validate complete authored silhouettes before writing any map/output.
+from goryeo_art import CUSTOM, sprite
+for asset,w,h in CUSTOM.values():sprite(asset,w,h)
 entries, world_maps = atlas_content()
 from goryeo_art import export_ripples
 export_ripples(OUT)

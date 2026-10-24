@@ -84,7 +84,7 @@ namespace PocketCaravan.EditorTools
                 p.money=777;p.credit=2;p.vehicle=gm.Db.vehicles.Find(v=>v.id=="handcart");p.origin=null;p.cargo.Clear();p.cargo.Add(paper,3,11);p.contracts.Clear();
                 p.contracts.Add(new Contract{id=988888,fromTown="transit_woodtown",toTown="transit_ferry",weight=4,reward=12,deadline=gm.Clock.TotalHours+100000,finalDeadline=gm.Clock.TotalHours+150000});
                 SceneManager.sceneLoaded+=Freeze;Freeze(default,LoadSceneMode.Single);
-                gm.TravelTo("transit_crossroads","E");yield return Arrive("transit_crossroads");
+                gm.TravelTo("transit_crossroads","S0");yield return Arrive("transit_crossroads");
                 Check("central hub stays within the central continent",MapExit.All.TrueForAll(e=>e.targetScene.StartsWith("transit_")));
                 var route=new[]{"transit_crossroads","transit_central_approach","transit_wetroad","transit_ferry","transit_crossroads","transit_ferry","transit_wetroad","transit_woodtown","transit_wetroad","transit_pass","goryeo_songak","Gaegyeong","Dakmok","goryeo_jangdan","Naru","goryeo_songak","Gaegyeong","goryeo_jangdan"};
                 for(int leg=1;leg<route.Length;leg++)

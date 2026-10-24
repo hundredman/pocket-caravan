@@ -19,6 +19,10 @@ class MeetingAreaBudget(unittest.TestCase):
             totals[region]=total
         self.assertEqual(totals,{'goryeo':20000,'transit':25000})
         self.assertEqual(sum(totals.values()),45000)
+        budget=json.loads((ROOT/'Assets/PocketCaravan/World/Terrain/area_budget.json').read_text())
+        self.assertEqual(budget['centralContinentTiles'],100000)
+        self.assertEqual(budget['centralEastTiles']+budget['centralOtherTeamsTiles'],budget['centralContinentTiles'])
+        self.assertEqual(totals['transit'],budget['centralEastTiles'])
 
     def test_capital_uses_authored_pixel_architecture(self):
         m=json.loads((ROOT/'Assets/PocketCaravan/Maps/Gaegyeong.json').read_text())
@@ -29,6 +33,24 @@ class MeetingAreaBudget(unittest.TestCase):
             with Image.open(ROOT/f'Assets/PocketCaravan/Art/NinjaAdventure/Tiles/{name}.png') as im:
                 self.assertEqual(im.size,(16,16))
                 self.assertLessEqual(len(im.getchannel('A').getcolors()),2)
+
+    def test_complete_nature_silhouettes_survive_tile_export(self):
+        import sys
+        sys.path.insert(0,str(ROOT/'Tools/MapGen'))
+        from goryeo_art import sprite, NATURE_SIZES
+        from PIL import Image
+        for i,(w,h) in enumerate(NATURE_SIZES):
+            expected=sprite('woodland'+str(i),w,h)
+            assembled=Image.new('RGBA',expected.size)
+            for y in range(h):
+                for x in range(w):
+                    path=ROOT/f'Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland{i}_{x}_{y}.png'
+                    with Image.open(path) as tile:
+                        self.assertEqual(tile.size,(16,16))
+                        assembled.paste(tile,(x*16,y*16))
+            self.assertEqual(assembled.tobytes(),expected.tobytes(),i)
+            left,top,right,bottom=assembled.getchannel('A').getbbox()
+            self.assertTrue(0<left<right<assembled.width and 0<top<bottom<assembled.height,i)
 
     def test_goryeo_ripples_have_no_opaque_water_backplate(self):
         from PIL import Image

@@ -10,16 +10,14 @@
       "chain": [
         "transit_crossroads",
         "transit_central_approach",
-        "transit_ferry",
         "transit_wetroad",
-        "transit_woodtown",
         "transit_pass",
         "goryeo_songak"
       ],
       "localEdge": "E",
-      "localSpawn": "E",
+      "localSpawn": "to_transit_central_approach",
       "target": "transit_central_approach",
-      "targetSpawn": "W",
+      "targetSpawn": "to_transit_crossroads",
       "width": 3
     },
     {
@@ -51,6 +49,8 @@
     "geography": "recognizable_real_world_motifs_with_adjusted_scale",
     "scalePolicy": "해안·반도·산지·내륙의 상대적 형태와 환경 연속성을 살리되 문명별 거리/면적/비율은 이동 경험과 제작 범위에 맞춰 과장·축소한다.",
     "localRoadShape": "freeform",
-    "futureTopology": "여러 경유 도시와 대안 교역로가 있는 거미줄 연결로 확장 가능"
+    "futureTopology": "여러 경유 도시와 대안 교역로가 있는 거미줄 연결로 확장 가능",
+    "ownedCentralTiles": 25000,
+    "wholeCentralContinentTiles": 100000
   }
 }

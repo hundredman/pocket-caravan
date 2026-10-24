@@ -4,7 +4,7 @@ Source atlas is retained; slices are deterministic build outputs at 16 pixels pe
 from functools import lru_cache
 from pathlib import Path
 import colorsys
-from PIL import Image
+from PIL import Image, ImageOps
 from tiles import STAMPS, K
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -18,6 +18,8 @@ DETAIL_RECTS = {'wall': (48,225,498,414), 'lantern': (674,103,862,449),
                 'harvest': (565,610,984,924), 'celadon': (1063,590,1503,935)}
 CUSTOM = {'royal': ('hall',10,7), 'manor': ('house',6,4), 'stall': ('shop',6,4), 'cottage': ('thatch',5,4), 'pavilion': ('pavilion',5,5)}
 CUSTOM.update({'wall':('wall',4,2), 'lantern':('lantern',1,2), 'lotus':('lotus',2,1), 'paper':('paper',4,3), 'harvest':('harvest',3,2), 'celadon':('celadon',3,2), 'paving':('paving',4,4)})
+WOODLAND_COLUMNS=(0,410,785,1150,1536)
+WOODLAND_ROWS=(0,365,727,1024)
 NATURE_SIZES=[(4,3),(3,4),(3,4),(4,3),(4,4),(4,4),(3,4),(3,4),(3,2),(2,2),(2,2),(3,2)]
 for i,(w,h) in enumerate(NATURE_SIZES):CUSTOM['woodland'+str(i)]=('woodland'+str(i),w,h)
 for key,(asset,w,h) in CUSTOM.items():
@@ -31,11 +33,16 @@ REPLACE = {'house_tile': 'house', 'house_plain': 'house', 'house_wall': 'house',
 def sprite(name, w, h):
     if name.startswith('woodland'):
         i=int(name[8:]);col,row=i%4,i//4
-        with Image.open(SOURCE.parent/'Woodland.png') as atlas:
-            im=atlas.crop((col*384,row*1024//3,(col+1)*384,(row+1)*1024//3)).convert('RGBA')
+        with Image.open(SOURCE.parent/('PineAncient.png' if i==0 else 'Woodland.png')) as atlas:
+            im=(atlas.copy() if i==0 else atlas.crop((WOODLAND_COLUMNS[col],355 if i==4 else WOODLAND_ROWS[row],WOODLAND_COLUMNS[col+1],WOODLAND_ROWS[row+1]))).convert('RGBA')
             bounds=im.getchannel('A').point(lambda a:255 if a>=128 else 0).getbbox()
-            if bounds:im=im.crop(bounds)
-        im=im.resize((w*16,h*16),Image.Resampling.NEAREST)
+            if bounds:
+                if i and (bounds[0]==0 or bounds[1]==0 or bounds[2]==im.width or bounds[3]==im.height):
+                    raise ValueError(('Woodland extraction clips silhouette',i,bounds))
+                im=im.crop(bounds)
+        # Fit the complete silhouette, preserving its proportions and a transparent margin.
+        fitted=ImageOps.contain(im,(w*16-2,h*16-2),Image.Resampling.NEAREST)
+        im=Image.new('RGBA',(w*16,h*16));im.alpha_composite(fitted,((w*16-fitted.width)//2,h*16-fitted.height-1))
         alpha=im.getchannel('A').point(lambda a:255 if a>=128 else 0)
         im=im.convert('RGB').quantize(colors=18).convert('RGBA');im.putalpha(alpha)
         return im

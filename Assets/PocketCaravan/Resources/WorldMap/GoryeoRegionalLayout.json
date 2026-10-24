@@ -51,6 +51,9 @@
   "pixelsPerTile": 4,
   "waterMask": "GoryeoRegionalWaterMask.png",
   "geography": "continuous_tiles",
-  "terrainSource": "World/Terrain/continuous.json",
+  "terrainSource": "Tools/MapGen/broad_regions.py",
+  "scope": "goryeo_20000",
+  "centralContinentTotalCells": 100000,
+  "centralEastOwnedCells": 25000,
   "annotations": []
 }

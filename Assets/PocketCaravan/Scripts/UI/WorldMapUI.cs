@@ -93,7 +93,7 @@ namespace PocketCaravan
             var panel = new Rect((UIStyle.VirtualWidth - width) / 2, (UIStyle.VirtualHeight - height) / 2, width, height);
             Paper(panel, new Color32(100, 76, 48, 255));
             Paper(new Rect(panel.x + 3, panel.y + 3, width - 6, height - 6), new Color32(225, 211, 171, 255));
-            GUI.Label(new Rect(panel.x + 16, panel.y + 10, width - 32, 20), regional ? "고려 시작권 상세도" : "고려·내륙 지형도", title);
+            GUI.Label(new Rect(panel.x + 16, panel.y + 10, width - 32, 20), regional ? "고려 시작권 상세도" : "고려·중앙 대륙 동부", title);
             GUI.Label(new Rect(panel.xMax - 76, panel.y + 13, 65, 14), "M / Esc 닫기", ink);
 
             GUI.Label(new Rect(panel.xMax - 190, panel.y + 13, 105, 14), "북 ↑   동 →", ink);
@@ -170,7 +170,7 @@ namespace PocketCaravan
             }
             var legendY = panel.y + 286;
             GUI.Label(new Rect(panel.x + 16, legendY, width - 32, 14),
-                regional ? "붉은 점: 내 위치   갈색 길: 교역로   푸른 물: 강·바다   지붕: 마을   의뢰: 배달 목적지" : "붉은 점: 내 위치   마을 상세: 고려 확대   육지·물·길: 실제 지형   빈 바탕: 미개방", ink);
+                regional ? "붉은 점: 내 위치   갈색 길: 교역로   푸른 물: 강·바다   지붕: 마을   의뢰: 배달 목적지" : "붉은 점: 내 위치   마을 상세: 고려 확대   중앙 전체 10만 칸 중 동부 2.5만 칸 표시   빈 바탕: 범위 밖", ink);
             string current = index != null ? index.MapName(here) : here;
             var currentInfo = index != null ? index.Map(here) : null;
             if (currentInfo != null && !string.IsNullOrEmpty(currentInfo.town))

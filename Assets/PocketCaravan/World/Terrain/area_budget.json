@@ -27,5 +27,8 @@
     "schedule": "undecided"
   },
   "layoutRevision": "2026-10-24 five broad settlement regions",
-  "sourceLayoutNote": "columnWidths/rowHeights are legacy template dimensions only. Final five-region placement is compiled by Tools/MapGen/broad_regions.py; central east retains legacy dimensions."
+  "sourceLayoutNote": "columnWidths/rowHeights are legacy template dimensions only. Final five-region placement is compiled by Tools/MapGen/broad_regions.py; central east retains legacy dimensions.",
+  "centralContinentTiles": 100000,
+  "centralOtherTeamsTiles": 75000,
+  "ownership": "Goryeo 20000 plus the eastern quarter (25000) of the 100000-cell central continent. Other quarters are outside this generator."
 }

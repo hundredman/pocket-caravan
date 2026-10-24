@@ -1,4 +1,4 @@
-"""A chain of independently editable maps reaches the junction; foreign arms stay unconnected."""
+"""The compact eastern quarter connects Goryeo without inventing foreign-region exits."""
 import collections
 import json
 import heapq
@@ -17,7 +17,6 @@ class CentralConnection(unittest.TestCase):
                 cls.maps[entry['mapId']] = json.loads((ROOT/entry['jsonPath']).read_text())
 
     def test_goryeo_reaches_central_through_multiple_distinct_maps(self):
-        expected=['goryeo_songak','transit_pass','transit_woodtown','transit_wetroad','transit_ferry','transit_central_approach','transit_crossroads']
         queue=collections.deque([['goryeo_songak']]);seen=set()
         while queue:
             route=queue.popleft();mid=route[-1]
@@ -26,7 +25,20 @@ class CentralConnection(unittest.TestCase):
             if mid=='transit_crossroads':break
             queue.extend(route+[o['target']] for o in self.maps[mid]['objects'] if o['kind']=='exit')
         else:self.fail('Central junction unreachable')
-        self.assertEqual(route,expected)
+        self.assertEqual(route[:2],['goryeo_songak','transit_pass'])
+        self.assertGreaterEqual(len(route),4)
+        contract=json.loads((ROOT/'Assets/PocketCaravan/World/Connections/central_ports.json').read_text())
+        chain=next(r['chain'] for r in contract['routes'] if r['direction']=='E')
+        for a,b in zip(chain,chain[1:]):
+            self.assertTrue(any(o['kind']=='exit' and o['target']==b for o in self.maps[a]['objects']),(a,b))
+        for mid in self.maps:
+            if mid.startswith('transit_'):
+                todo=[mid];connected={mid}
+                for current in todo:
+                    for o in self.maps[current]['objects']:
+                        if o['kind']=='exit' and o['target'] not in connected:
+                            connected.add(o['target']);todo.append(o['target'])
+                self.assertIn('goryeo_songak',connected)
         self.assertEqual(sum(m['w']*m['h'] for mid,m in self.maps.items() if mid.startswith('transit_')),25000)
 
     def test_new_connections_have_reciprocal_equal_width_spawns(self):
@@ -43,7 +55,7 @@ class CentralConnection(unittest.TestCase):
         m=self.maps['transit_crossroads']
         contract=json.loads((ROOT/'Assets/PocketCaravan/World/Connections/central_ports.json').read_text())
         exits=[o for o in m['objects'] if o['kind']=='exit']
-        self.assertEqual({(e['edge'],e['target']) for e in exits},{('E','transit_central_approach')})
+        self.assertEqual({(e['edge'],e['target']) for e in exits},{('E','transit_central_approach'),('S','transit_ferry'),('S','transit_wetroad')})
         routes={p['direction']:p for p in contract['routes']}
         self.assertEqual(set(routes),{'N','E','W','S'})
         self.assertEqual(routes['E']['region'],'goryeo')

@@ -33,6 +33,18 @@ class PeninsulaGeography(unittest.TestCase):
             self.assertGreater(sum(m['water']),0)
             self.assertLess(sum(m['water']),m['w']*m['h'])
 
+    def test_goryeo_is_compact_and_entirely_east_of_owned_continent(self):
+        east=[a for mid,a in self.areas.items() if not mid.startswith('transit_')]
+        central=[a for mid,a in self.areas.items() if mid.startswith('transit_')]
+        west=min(a['x'] for a in east)
+        self.assertGreaterEqual(west,max(a['x']+a['w'] for a in central))
+        width=max(a['x']+a['w'] for a in east)-west
+        height=max(a['y']+a['h'] for a in east)-min(a['y'] for a in east)
+        self.assertLessEqual(max(width,height)/min(width,height),1.8)
+        self.assertGreater(sum(a['w']*a['h'] for a in east)/(width*height),.9)
+        self.assertEqual(self.atlas['centralContinentTotalCells'],100000)
+        self.assertEqual(self.atlas['centralEastOwnedCells'],25000)
+
     def test_inland_palette_progresses_from_original_goryeo_art(self):
         for mid in ['transit_central_approach','transit_crossroads']:
             m=json.loads((ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').read_text())

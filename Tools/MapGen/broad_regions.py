@@ -56,12 +56,27 @@ def build(source):
                 if core.ground[y][x] and core.ground[y][x].startswith('field:'):m.ground[b][a]=core.ground[y][x]
                 if core.deco[y][x] and core.deco[y][x].startswith('goryeo_'):m.deco[b][a]=core.deco[y][x]
         m.stamps=[(n,x+dx,y+dy) for n,x,y in core.stamps if STAMPS[n][0]!='nature']
-        for (x,y),v in core.decks.items():m.decks[x+dx,y+dy]=v
+        for (x,y),v in core.decks.items():
+            # An old bridge only remains a bridge where the new river actually exists.
+            if mid=='Naru' or wet(gx+x+dx,gy+y+dy):m.decks[x+dx,y+dy]=v
         for o in core.objects:
             if o['kind'] in ('exit','anim') or o['kind']=='spawn' and o['id']!='S0':continue
             n=copy.deepcopy(o);n['x']+=dx;n['y']+=dy
             if 'path' in n:n['path']=[(x+dx,y+dy) for x,y in n['path']]
             m.objects.append(n);m.reserve(n['x'],n['y'],n['x'],n['y'])
+        if mid=='Naru':
+            # Keep the complete moored boat afloat after replacing the old regional river.
+            # The inlet meets the main river; roads/piers, whole buildings and residents stay intact.
+            protected={(o['x'],o['y']) for o in m.objects}
+            for name,x,y in m.stamps:
+                if name!='boat':continue
+                bw,bh=STAMPS[name][3:5];cx=x+bw/2+5;cy=y+bh/2
+                boat={(x+a,y+b) for a in range(bw) for b in range(bh)}
+                for yy in range(max(0,y-6),min(m.h,y+bh+6)):
+                    for xx in range(max(0,x-6),min(m.w,x+bw+18)):
+                        if ((xx+.5-cx)/14)**2+((yy+.5-cy)/7)**2>1:continue
+                        if (xx,yy) not in boat and (m.obj[yy][xx] or m.high[yy][xx] or m.road[yy][xx] or (xx,yy) in protected or (xx,yy) in m.decks):continue
+                        m.water[yy][xx]=m.blocked[yy][xx]=m.reserved[yy][xx]=True
         m.atlas_label={'x':dx+20,'y':dy+20}
         result.append(m)
     # Compact the owned eastern continental quarter; keep all six template dimensions/assets.
@@ -94,13 +109,56 @@ def build(source):
         a,b=by[aid],by[bid];ax,ay=a.world_origin;bx,byy=b.world_origin
         horizontal=ax+a.w==bx
         edge,other=('E','W') if horizontal else ('S','N')
+        def clear_apron(m,e,k):
+            for offset in range(3):
+                for depth in range(3):
+                    x,y=(m.w-1-depth,k+offset) if e=='E' else (depth,k+offset) if e=='W' else (k+offset,m.h-1-depth) if e=='S' else (k+offset,depth)
+                    if not m.inside(x,y) or m.obj[y][x] or m.high[y][x]:return False
+            return True
+        lo,hi=(max(ay,byy),min(ay+a.h,byy+b.h)) if horizontal else (max(ax,bx),min(ax+a.w,bx+b.w))
+        choices=sorted(range(lo+1,hi-3),key=lambda v:(abs(v-t),v))
+        t=next((v for v in choices if clear_apron(a,edge,v-(ay if horizontal else ax)) and clear_apron(b,other,v-(byy if horizontal else bx))),None)
+        if t is None:raise ValueError(('No intact-object portal apron',aid,bid))
         ta=t-ay if horizontal else t-ax;tb=t-byy if horizontal else t-bx
         sa='to_'+bid;sb='to_'+aid
         for m,e,k in ((a,edge,ta),(b,other,tb)):
             for d in range(3):
                 p=(m.w-1,k+d) if e=='E' else (0,k+d) if e=='W' else (k+d,m.h-1) if e=='S' else (k+d,0)
                 connect(m,p)
+                # The exit and its landing apron must both fit the full portal width.
+                # Carve water/terrain only: never remove part of a tree/building stamp.
+                inward=(-1,0) if e=='E' else (1,0) if e=='W' else (0,-1) if e=='S' else (0,1)
+                for depth in (1,2):
+                    q=(p[0]+inward[0]*depth,p[1]+inward[1]*depth)
+                    if m.obj[q[1]][q[0]] or m.high[q[1]][q[0]]:
+                        raise ValueError(('Portal apron intersects complete object',m.id,q))
+                    connect(m,q)
         a.link(edge,ta,3,bid,sb,sa);b.link(other,tb,3,aid,sa,sb)
+    # Old boundary mouths can become dead-end fragments after rearranging templates.
+    # Rejoin each fragment to the main road instead of leaving disconnected paved cells.
+    for m in result:
+        while True:
+            road={(x,y) for y in range(m.h) for x in range(m.w) if m.road[y][x] and not m.blocked[y][x]}
+            remaining=set(road);components=[]
+            while remaining:
+                start=min(remaining);component={start};queue=collections.deque([start]);remaining.remove(start)
+                while queue:
+                    x,y=queue.popleft()
+                    for p in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
+                        if p in remaining:remaining.remove(p);component.add(p);queue.append(p)
+                components.append(component)
+            if len(components)<=1:break
+            components.sort(key=lambda c:(-len(c),min(c)))
+            main=components[0];fragment=components[1]
+            start,end=min(((a,b) for a in sorted(fragment) for b in sorted(main)),key=lambda ab:abs(ab[0][0]-ab[1][0])+abs(ab[0][1]-ab[1][1]))
+            overhead=[(x,y) for y in range(m.h) for x in range(m.w) if (m.obj[y][x] or m.high[y][x]) and not m.blocked[y][x]]
+            for x,y in overhead:m.blocked[y][x]=True
+            try:joined=road_path(m,start,end,carve=True)
+            finally:
+                for x,y in overhead:m.blocked[y][x]=False
+            for x,y in joined:
+                if m.water[y][x]:m.decks[x,y]=K('water',1,13,'wood')
+                m.water[y][x]=m.blocked[y][x]=False;m.road[y][x]=max(2,m.road[y][x]);m.reserved[y][x]=True
     # Woodland clusters depend on the shared landscape, not rectangular perimeter rows.
     for m in result:
         if m.id not in REGIONS:continue

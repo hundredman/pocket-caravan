@@ -60,9 +60,13 @@ def validate():
         check(m.id + " 모든 칸 바닥 존재", all(k for row in m.ground for k in row))
         roads = {(x, y) for y in range(m.h) for x in range(m.w) if m.road[y][x] and not m.blocked[y][x]}
         check(m.id + " 전체 통행 가능 길 연결", bool(roads) and roads <= reachable(m, next(iter(roads)), road_only=True))
+        for name,x,y in m.stamps:
+            if m.id=='Naru' and name=='boat':
+                sw,sh=STAMPS[name][3:5]
+                check('나루 배 전체가 물 위에 있음',all(m.water[y+b][x+a] for a in range(sw) for b in range(sh)))
         tree_ok = True
         for name, x, y in m.stamps:
-            if STAMPS[name][0] != "nature":
+            if STAMPS[name][0] != "nature" and not name.startswith("goryeo_"):
                 continue
             s, sx, sy, w, h, _, high, rc = STAMPS[name]
             for dy in range(h):
@@ -72,7 +76,7 @@ def validate():
                     if hasattr(m,"tint_key"): expected=m.tint_key(expected,x+dx,y+dy)
                     if getattr(m,'visual_skin',None) and '@' not in expected: expected += '@skin_'+m.visual_skin
                     tree_ok &= layer[y + dy][x + dx] == expected
-        check(m.id + " 모든 나무 묶음 타일 보존", tree_ok)
+        check(m.id + " 모든 나무·전용 건물 묶음 타일 보존", tree_ok)
         accessible = m.world_reachable if hasattr(m,"world_reachable") else reachable(m, next(iter(roads)))
         for o in m.objects:
             if o["kind"] == "spawn":
