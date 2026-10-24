@@ -34,3 +34,4 @@
 | 2026-10-24 | Claude | D9 확정 | 5a9b991b | 사용자 지시: 해안선 v2·휜 담당 경계 승인. Direction·WorldLayout·Plan D9 반영. B1(Codex) 시작 가능. 휜 경계는 D4·D7에서 팀원과 맞춤 |
 | 2026-10-24 | Claude | D2 확정 | 03ef543c | 사용자 지시: 도트 느낌을 살리고 이것으로 통일. 모든 에셋 같은 도트 크기, 타일 16px·PPU 16, 플레이어 16×32(최대 24×32), 카메라 480×270. ArtGuide 2절·Direction 1절·Plan D2/D3/A5 반영. D3는 Claude가 시험 샘플과 함께 제안 |
 | 2026-10-24 | Claude | D3 방향·그림 승인 규칙 | 3318bc00 | 사용자 지시: 팀 공통 기준 방향 승인(ArtGuide 2-1절). 보이는 결정은 글 대신 그림으로 승인받는 규칙을 AGENTS·Direction에 추가. 실제 팔레트 값은 시험 샘플과 함께 그림으로 제안 |
+| 2026-10-24 | Claude | Aseprite 연결 계획 | 8f7f3b4b | 사용자: 정식판(dmg) 설치, MCP 설치 허용. ArtGuide 4절에 .aseprite 원본·명령줄/Lua·MCP 사용 기준. A6(Codex) 추가: 명령줄 확인, Lua 시험, MCP 후보 검토 후 Codex·Claude 데스크톱에 등록. Codex 순서 R1→A2b→A6→R6 |
