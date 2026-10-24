@@ -121,6 +121,7 @@
       "frontSHA256": "1eb22078d1284f225ede59c69ec077ea1531fc886f52984ab4577206c593d5a6"
     }
   ],
-  "scope": "160 native frames; art review pending",
-  "D3PaletteApproval": false
+  "scope": "160 approved native frames; production binding and gameplay remain pending",
+  "D3PaletteApproval": false,
+  "userApproval": "all ten characters, four directions and walking after side-hair fix approved"
 }
