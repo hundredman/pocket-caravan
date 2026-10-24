@@ -154,6 +154,11 @@
       "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
     },
     {
+      "name": "Q1:legacy pending eligibility survives new-format reload",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
       "name": "Q1:legacy completion keeps promised credit",
       "observed": true,
       "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
@@ -215,6 +220,36 @@
     },
     {
       "name": "Q1:side unlocked by prerequisite goryeo_songak_trade",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:new side completion never skips capital main",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:modern side record cannot become legacy on reload",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:new side cannot combine with old paper to trigger legacy full exception",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:unsupported migration version rejected -1",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:unsupported migration version rejected 2",
+      "observed": true,
+      "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
+    },
+    {
+      "name": "Q1:contradictory legacy history rejected",
       "observed": true,
       "detail": "Linked production QuestManager; platform stubs. See Q1 Unity report for market/contract checks."
     },

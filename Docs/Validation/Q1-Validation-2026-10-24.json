@@ -5,13 +5,13 @@
   "dependency": "codex/r6 926cd004 merged into branch created from main 435a77fd",
   "questSaveProbe": {
     "existingDiagnosticObservations": 10,
-    "newQ1Checks": 34,
+    "newQ1Checks": 41,
     "allObserved": true,
     "includesKnownDefectReproductions": true
   },
   "unity": {
     "version": "6000.3.26f1",
-    "q1Checks": 21,
+    "q1Checks": 25,
     "r6Regression": 87,
     "saveRegression": 27,
     "scope": "isolated editor actual assets/market/contract/JSON logic, not play"
@@ -36,5 +36,11 @@
     "human gameplay and actual movement",
     "camera/dialogue visual playtest",
     "public build (not run)"
-  ]
+  ],
+  "reinspectionFix": {
+    "trigger": "new tutorial_5 side completion must not be treated as an old completion record",
+    "before": "added regression failed on original Q1 implementation",
+    "after": "frozen legacy history + active eligibility persisted separately; all 51 observations passed; Unity new/reloaded side and literal pre-Q1 JSON cases passed",
+    "format": "q1MigrationVersion=1 plus legacyMainFinishedIds and active legacyMainMigrationEligible; existing save version3 retained"
+  }
 }

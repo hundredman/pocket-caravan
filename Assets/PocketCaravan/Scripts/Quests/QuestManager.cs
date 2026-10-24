@@ -16,6 +16,7 @@ namespace PocketCaravan
             public int step;
             public int amount;   // 현재 단계 진행 수치
             public bool rewardCaptured;
+            public bool legacyMainMigrationEligible;
             public int acceptedRewardMoney, acceptedRewardCredit;
             public ReputationScope acceptedReputationScope;
             public string acceptedReputationTarget;
@@ -29,6 +30,7 @@ namespace PocketCaravan
         readonly List<QuestData> all;
         readonly Dictionary<QuestData, Progress> active = new Dictionary<QuestData, Progress>();
         readonly HashSet<QuestData> finished = new HashSet<QuestData>();
+        readonly HashSet<string> legacyMainFinished = new HashSet<string>();
 
         public IEnumerable<Progress> Active => active.Values;
 
@@ -60,6 +62,7 @@ namespace PocketCaravan
         {
             public string id; public int step, amount;
             public bool rewardCaptured;
+            public bool legacyMainMigrationEligible;
             public int acceptedRewardMoney, acceptedRewardCredit;
             public ReputationScope acceptedReputationScope;
             public string acceptedReputationTarget;
@@ -68,14 +71,18 @@ namespace PocketCaravan
 
         public void Export(SaveData d)
         {
-            foreach (var p in active.Values) d.quests.Add(new Save { id = p.quest.id, step = p.step, amount = p.amount, rewardCaptured = true, acceptedRewardMoney = p.RewardMoney, acceptedRewardCredit = p.RewardCredit, acceptedReputationScope = p.acceptedReputationScope, acceptedReputationTarget = p.acceptedReputationTarget, acceptedReputationSize = p.acceptedReputationSize });
+            foreach (var p in active.Values) d.quests.Add(new Save { id = p.quest.id, step = p.step, amount = p.amount, rewardCaptured = true, legacyMainMigrationEligible = p.legacyMainMigrationEligible, acceptedRewardMoney = p.RewardMoney, acceptedRewardCredit = p.RewardCredit, acceptedReputationScope = p.acceptedReputationScope, acceptedReputationTarget = p.acceptedReputationTarget, acceptedReputationSize = p.acceptedReputationSize });
             foreach (var q in finished) d.finishedQuests.Add(q.id);
             d.trackedQuest = Tracked != null ? Tracked.quest.id : null;
+            d.q1MigrationVersion = 1;
+            d.legacyMainFinishedIds = new List<string>(legacyMainFinished);
+            d.legacyMainFinishedIds.Sort(System.StringComparer.Ordinal);
         }
 
         public void Import(SaveData d)
         {
-            active.Clear(); finished.Clear(); Tracked = null;
+            active.Clear(); finished.Clear(); legacyMainFinished.Clear(); Tracked = null;
+            legacyMainFinished.UnionWith(d.q1MigrationVersion == 0 ? d.finishedQuests : d.legacyMainFinishedIds);
             QuestData Find(string id) => all.Find(q => q != null && q.id == id);
             foreach (var id in d.finishedQuests) { var q = Find(id); if (q != null) finished.Add(q); }
             foreach (var s in d.quests)
@@ -83,6 +90,7 @@ namespace PocketCaravan
                 var q = Find(s.id);
                 if (q == null) continue;
                 var p = new Progress { quest = q, step = s.step, amount = s.amount, rewardCaptured = true,
+                    legacyMainMigrationEligible = d.q1MigrationVersion == 0 || s.legacyMainMigrationEligible,
                     acceptedRewardMoney = s.rewardCaptured ? s.acceptedRewardMoney : q.hasLegacyReward ? q.legacyRewardMoney : q.rewardMoney,
                     acceptedRewardCredit = s.rewardCaptured ? s.acceptedRewardCredit : q.hasLegacyReward ? q.legacyRewardCredit : q.rewardCredit,
                     acceptedReputationScope = s.acceptedReputationScope, acceptedReputationTarget = s.acceptedReputationTarget,
@@ -99,11 +107,11 @@ namespace PocketCaravan
         {
             switch (step)
             {
-                case 0: return FinishedId("tutorial_1");
-                case 1: return FinishedId("goryeo_jangdan_trade") || FinishedId("tutorial_3");
-                case 2: return FinishedId("naru_board");
-                case 3: return FinishedId("tutorial_2") || FinishedId("goryeo_return_trade");
-                case 4: return (FinishedId("tutorial_2") && FinishedId("dakmok_hanji")) || FinishedId("tutorial_5");
+                case 0: return legacyMainFinished.Contains("tutorial_1");
+                case 1: return legacyMainFinished.Contains("goryeo_jangdan_trade") || legacyMainFinished.Contains("tutorial_3");
+                case 2: return legacyMainFinished.Contains("naru_board");
+                case 3: return legacyMainFinished.Contains("tutorial_2") || legacyMainFinished.Contains("goryeo_return_trade");
+                case 4: return (legacyMainFinished.Contains("tutorial_2") && legacyMainFinished.Contains("dakmok_hanji")) || legacyMainFinished.Contains("tutorial_5");
                 default: return false;
             }
         }
@@ -115,7 +123,8 @@ namespace PocketCaravan
         }
         public void MigrateMainProgress(string completedLegacyId = null)
         {
-            bool allOld = FinishedId("tutorial_2") && FinishedId("tutorial_5");
+            if (completedLegacyId != null && !legacyMainFinished.Contains(completedLegacyId)) return;
+            bool allOld = legacyMainFinished.Contains("tutorial_2") && legacyMainFinished.Contains("tutorial_5");
             for (int i = 0; i < MainQuestIds.Length; i++)
             {
                 if (allOld || FinishedId(MainQuestIds[i])) { GrantMainRecord(i); continue; }
@@ -294,7 +303,11 @@ namespace PocketCaravan
             active.Remove(q);
             finished.Add(q);
             if (Tracked == p) { Tracked = null; foreach (var other in active.Values) Tracked = other; }
-            MigrateMainProgress(q.id);
+            if (p.legacyMainMigrationEligible)
+            {
+                legacyMainFinished.Add(q.id);
+                MigrateMainProgress(q.id);
+            }
             var player = GameManager.I.Player;
             player.money += p.RewardMoney;
             player.credit += p.RewardCredit;
