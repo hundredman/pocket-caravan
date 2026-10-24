@@ -53,7 +53,7 @@ def generate():
     old=C.render
     for name in ('chief','woman','trader'):
         ACTIVE=name;C.render=clean_render
-        try:image=V3.render(name, raised_arm=False) if name=='woman' else V3.render(name)
+        try:image=V3.render(name, raised_arm=False, separate_right_eye=True) if name=='woman' else V3.render(name)
         finally:C.render=old
         # The v3 painter adds props after the renderer; map their equivalent colors into the same families.
         mapping={(76,54,38):(78,55,39),(152,111,66):(154,109,76),(226,190,112):(224,186,112),

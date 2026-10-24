@@ -8,7 +8,7 @@ import chars as C
 OUT=ROOT/'ArtReview/NPC-v3';OUT.mkdir(parents=True,exist_ok=True)
 
 
-def render(name, *, raised_arm=True):
+def render(name, *, raised_arm=True, separate_right_eye=False):
     species={'chief':'elder','woman':'villager_rabbit','trader':'trader'}[name]
     over,top,hat,mask=C.SPECIES[species]
     rows=C.compose('d',0,top,hat,mask)
@@ -42,6 +42,7 @@ def render(name, *, raised_arm=True):
     elif name=='woman':
         run(8,4,11,'r');run(9,3,5,'r');run(9,10,12,'r');point(4,8,'R');point(5,9,'R');point(10,10,'r');point(3,10,'r')
         point(13,8,'r');point(14,8,'R');point(14,9,'r');point(13,9,'g')
+        if separate_right_eye:point(10,10,'Q')
         run(7,5,10,'r')
         pal.update(j=(118,80,56),J=(177,127,82),K=(226,190,146),D=(66,45,35))
         run(2,5,10,'D');run(3,4,11,'j');run(4,4,11,'J');run(5,5,10,'j');run(6,6,9,'D');point(5,3,'K');point(5,4,'K')
