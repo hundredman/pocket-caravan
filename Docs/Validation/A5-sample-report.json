@@ -1,0 +1,22 @@
+{
+  "sourceSize": [
+    192,
+    192
+  ],
+  "outputSize": [
+    16,
+    16
+  ],
+  "gridStep": 12,
+  "gridMode": "estimated",
+  "estimate": {
+    "step": 12,
+    "confidence": 1.0,
+    "reason": "Repeated aligned edges"
+  },
+  "alphaThreshold": 128,
+  "usedOpaqueColors": 4,
+  "paletteValid": true,
+  "binaryAlpha": true,
+  "approval": "pending user visual review"
+}
