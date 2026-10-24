@@ -1,0 +1,411 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "farmer": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4f4246",
+        "#5b4439",
+        "#6c4c2d",
+        "#775345",
+        "#785238",
+        "#896946",
+        "#ae946b",
+        "#af6d55",
+        "#b3834a",
+        "#cf9977",
+        "#d0b989",
+        "#e3bf78",
+        "#e49390",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9"
+      ]
+    },
+    "herbalist": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#2c2a38",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4f4246",
+        "#53774d",
+        "#5b4439",
+        "#60483a",
+        "#60607a",
+        "#775345",
+        "#7e9f6d",
+        "#af6d55",
+        "#ccc3b1",
+        "#cf9977",
+        "#e49390",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9"
+      ]
+    },
+    "dakmok_chief": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#2c2a38",
+        "#2e2120",
+        "#42302a",
+        "#4f4246",
+        "#60483a",
+        "#605852",
+        "#60607a",
+        "#6c4c2d",
+        "#775345",
+        "#7e7569",
+        "#896042",
+        "#9f9688",
+        "#ae7f55",
+        "#af6d55",
+        "#ccc3b1",
+        "#cf9977",
+        "#ddb989",
+        "#e49390",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9"
+      ]
+    },
+    "gaekju": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#2c2a38",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4e3727",
+        "#4f4246",
+        "#576b90",
+        "#5b4439",
+        "#60483a",
+        "#60607a",
+        "#775345",
+        "#7c97b5",
+        "#af6d55",
+        "#ccc3b1",
+        "#cf9977",
+        "#ddb989",
+        "#e49390",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9"
+      ]
+    },
+    "child": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4f4246",
+        "#576b90",
+        "#5b4439",
+        "#60483a",
+        "#6c4c2d",
+        "#775345",
+        "#7e9f6d",
+        "#af6d55",
+        "#b3834a",
+        "#c2778f",
+        "#cf9977",
+        "#d78a70",
+        "#e3bf78",
+        "#e49390",
+        "#e699ae",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9"
+      ]
+    },
+    "boatman": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4e3727",
+        "#4f4246",
+        "#548091",
+        "#60483a",
+        "#775345",
+        "#7ca9b8",
+        "#ae7f55",
+        "#af6d55",
+        "#ccc3b1",
+        "#cf9977",
+        "#ddb989",
+        "#e49390",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9"
+      ]
+    },
+    "bandit": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#2c2a38",
+        "#2e2120",
+        "#343040",
+        "#362e34",
+        "#392b2a",
+        "#42302a",
+        "#484256",
+        "#4e3727",
+        "#4f4246",
+        "#5b4439",
+        "#60607a",
+        "#6c4c2d",
+        "#775345",
+        "#896946",
+        "#9d75a8",
+        "#ae7f55",
+        "#b3834a",
+        "#cf9977",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "trial_c1_expand_2_farmer",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Expand-2/farmer-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Expand-2/farmer-front.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "farmer",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_c1_expand_2_farmer",
+          "image": "ArtReview/C1-Expand-2/farmer-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_c1_expand_2_herbalist",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Expand-2/herbalist-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Expand-2/herbalist-front.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "herbalist",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_c1_expand_2_herbalist",
+          "image": "ArtReview/C1-Expand-2/herbalist-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_c1_expand_2_dakmok_chief",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Expand-2/dakmok_chief-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Expand-2/dakmok_chief-front.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "dakmok_chief",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_c1_expand_2_dakmok_chief",
+          "image": "ArtReview/C1-Expand-2/dakmok_chief-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_c1_expand_2_gaekju",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Expand-2/gaekju-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Expand-2/gaekju-front.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "gaekju",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_c1_expand_2_gaekju",
+          "image": "ArtReview/C1-Expand-2/gaekju-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_c1_expand_2_child",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Expand-2/child-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Expand-2/child-front.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "child",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_c1_expand_2_child",
+          "image": "ArtReview/C1-Expand-2/child-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_c1_expand_2_boatman",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Expand-2/boatman-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Expand-2/boatman-front.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "boatman",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_c1_expand_2_boatman",
+          "image": "ArtReview/C1-Expand-2/boatman-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_c1_expand_2_bandit",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Expand-2/bandit-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Expand-2/bandit-front.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "bandit",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_c1_expand_2_bandit",
+          "image": "ArtReview/C1-Expand-2/bandit-front.png"
+        }
+      ]
+    }
+  ]
+}

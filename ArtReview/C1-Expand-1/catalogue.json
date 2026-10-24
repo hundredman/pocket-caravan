@@ -87,7 +87,8 @@
         "path": "ArtReview/C1-Expand-1/chief-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/chief-trader-front-c1-expand-1.approval.md"
       },
       "profile": "chief",
       "tiles": [
@@ -114,7 +115,8 @@
         "path": "ArtReview/C1-Expand-1/trader-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/chief-trader-front-c1-expand-1.approval.md"
       },
       "profile": "trader",
       "tiles": [

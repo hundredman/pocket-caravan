@@ -189,6 +189,6 @@
   ],
   "womanReferenceSHA256": "141e1839d36fc76561cd76258a3c32ed04e29fab261e46d6610bb0fb068d3964",
   "scope": "native front sprites only; no Unity import or gameplay test",
-  "userApproval": "pending",
+  "userApproval": "chief/trader front sprites and actual in-game scale approved; other directions/walk pending",
   "D3PaletteApproval": false
 }
