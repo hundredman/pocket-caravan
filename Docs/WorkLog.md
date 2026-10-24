@@ -36,4 +36,5 @@
 | 2026-10-24 | Claude | D3 방향·그림 승인 규칙 | 3318bc00 | 사용자 지시: 팀 공통 기준 방향 승인(ArtGuide 2-1절). 보이는 결정은 글 대신 그림으로 승인받는 규칙을 AGENTS·Direction에 추가. 실제 팔레트 값은 시험 샘플과 함께 그림으로 제안 |
 | 2026-10-24 | Claude | Aseprite 연결 계획 | 8f7f3b4b | 사용자: 정식판(dmg) 설치, MCP 설치 허용. ArtGuide 4절에 .aseprite 원본·명령줄/Lua·MCP 사용 기준. A6(Codex) 추가: 명령줄 확인, Lua 시험, MCP 후보 검토 후 Codex·Claude 데스크톱에 등록. Codex 순서 R1→A2b→A6→R6 |
 | 2026-10-24 | Codex | R1 | 14066d70 (구현, codex/r1) | 문명/중앙 마을 평판 데이터·v3 저장/구 v1-v2 이주, 시작 보정과 고향 보존, 잘못된 저장 차단. .NET 45개·Unity 평판/JSON/임시 파일 36개·기존 저장 27개 통과. D10 수치·효과·플레이 미구현/미검증, Claude 검토 대기. 최신 main 병합 후 최종 회귀 결과는 Validation/R1-Validation-2026-10-24.json |
+| 2026-10-24 | Claude | 합치기 담당 변경 | 42423d49 | 사용자 지시: Claude가 할 수 있는 일은 바로 진행. codex/r1을 테스트 후 main에 합침(빨리 감기). 앞으로 Codex 브랜치는 Claude가 확인 후 합침 |
 | 2026-10-24 | Codex | A2b | 본 커밋 (codex/a2b) | 같은 개체 최소 빈 간격(옆면/모서리 접촉 포함)·지형 세트 최소 역할 조각 검사. A2 사례 유지, 전용 32개 포함 전체 77개·출구 92개 통과. ASSET_MANIFEST.md 갱신. 실제 아트/이음매·맵 간 간격·Unity·플레이 미검증 |
