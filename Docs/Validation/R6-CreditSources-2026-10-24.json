@@ -1,0 +1,321 @@
+{
+  "task": "R6 inventory only",
+  "questCount": 12,
+  "quests": [
+    {
+      "path": "Assets/PocketCaravan/Data/Goryeo/Quests/Goryeo_CartSupply.asset",
+      "sha256": "aa94ac8c7eb3861ccc9740cf8f708298d78bc52fe3d4ed8a04071e4595b34d59",
+      "id": "goryeo_cart_supply",
+      "giverNpc": "goryeo_jangdan_farmer",
+      "rewardMoney": 20,
+      "rewardCredit": 1,
+      "hasLegacyReward": false,
+      "legacyRewardMoney": 0,
+      "legacyRewardCredit": 0,
+      "objectives": [
+        {
+          "type": "Buy",
+          "targetId": "goryeo_jangdan"
+        },
+        {
+          "type": "Deliver",
+          "targetId": "dakmok_chief"
+        }
+      ],
+      "classification": "pending Claude review"
+    },
+    {
+      "path": "Assets/PocketCaravan/Data/Goryeo/Quests/Goryeo_JangdanTrade.asset",
+      "sha256": "0f9e4e73d01a4a3830ecfc46450a4fd15d55aa8c36ef6291de295247e31a3eb8",
+      "id": "goryeo_jangdan_trade",
+      "giverNpc": "goryeo_jangdan_farmer",
+      "rewardMoney": 10,
+      "rewardCredit": 1,
+      "hasLegacyReward": false,
+      "legacyRewardMoney": 0,
+      "legacyRewardCredit": 0,
+      "objectives": [
+        {
+          "type": "Buy",
+          "targetId": "goryeo_jangdan"
+        },
+        {
+          "type": "Sell",
+          "targetId": "gaegyeong"
+        }
+      ],
+      "classification": "pending Claude review"
+    },
+    {
+      "path": "Assets/PocketCaravan/Data/Goryeo/Quests/Goryeo_ReturnTrade.asset",
+      "sha256": "ca7ca31940be71137b20490f68a47a07c1d9bdf726f6a32484981c68339eb8b2",
+      "id": "goryeo_return_trade",
+      "giverNpc": "dakmok_chief",
+      "rewardMoney": 6,
+      "rewardCredit": 1,
+      "hasLegacyReward": false,
+      "legacyRewardMoney": 0,
+      "legacyRewardCredit": 0,
+      "objectives": [
+        {
+          "type": "Buy",
+          "targetId": "dakmok"
+        },
+        {
+          "type": "Sell",
+          "targetId": "goryeo_jangdan"
+        }
+      ],
+      "classification": "pending Claude review"
+    },
+    {
+      "path": "Assets/PocketCaravan/Data/Goryeo/Quests/Goryeo_SongakTrade.asset",
+      "sha256": "259e5c054c1ad3efc4c28f1b562988fcf797decb5cdc915ffce746415ca6acd9",
+      "id": "goryeo_songak_trade",
+      "giverNpc": "goryeo_songak_merchant",
+      "rewardMoney": 10,
+      "rewardCredit": 1,
+      "hasLegacyReward": false,
+      "legacyRewardMoney": 0,
+      "legacyRewardCredit": 0,
+      "objectives": [
+        {
+          "type": "Buy",
+          "targetId": "goryeo_songak"
+        },
+        {
+          "type": "Sell",
+          "targetId": "gaegyeong"
+        }
+      ],
+      "classification": "pending Claude review"
+    },
+    {
+      "path": "Assets/PocketCaravan/Data/Goryeo/Quests/S1_Firewood.asset",
+      "sha256": "c9a3ff6707e98674c06e42f9e2f4ece2d6c585c2bf407d63720a6da279e6e76f",
+      "id": "dakmok_firewood",
+      "giverNpc": "dakmok_chief",
+      "rewardMoney": 20,
+      "rewardCredit": 1,
+      "hasLegacyReward": true,
+      "legacyRewardMoney": 60,
+      "legacyRewardCredit": 1,
+      "objectives": [
+        {
+          "type": "Deliver",
+          "targetId": "dakmok_chief"
+        }
+      ],
+      "classification": "pending Claude review"
+    },
+    {
+      "path": "Assets/PocketCaravan/Data/Goryeo/Quests/S2_Board.asset",
+      "sha256": "f37f664d1d2f05938d8bf015e5eb25ee4a44987e34186a26a769ec14c360f631",
+      "id": "naru_board",
+      "giverNpc": "naru_chief",
+      "rewardMoney": 25,
+      "rewardCredit": 1,
+      "hasLegacyReward": false,
+      "legacyRewardMoney": 0,
+      "legacyRewardCredit": 0,
+      "objectives": [
+        {
+          "type": "CompleteContract",
+          "targetId": "naru"
+        },
+        {
+          "type": "Talk",
+          "targetId": "naru_chief"
+        }
+      ],
+      "classification": "pending Claude review"
+    },
+    {
+      "path": "Assets/PocketCaravan/Data/Goryeo/Quests/S3_Hanji.asset",
+      "sha256": "9b6a162f9a67c907fc23f26f46810a27e9d8e701d1f54310511d5088325347bf",
+      "id": "dakmok_hanji",
+      "giverNpc": "dakmok_chief",
+      "rewardMoney": 45,
+      "rewardCredit": 1,
+      "hasLegacyReward": false,
+      "legacyRewardMoney": 0,
+      "legacyRewardCredit": 0,
+      "objectives": [
+        {
+          "type": "Deliver",
+          "targetId": "gaekju"
+        }
+      ],
+      "classification": "pending Claude review"
+    },
+    {
+      "path": "Assets/PocketCaravan/Data/Goryeo/Quests/T1_FirstDelivery.asset",
+      "sha256": "b3ef620f7c776a12d119d7655b7b374e83000f532ab9cda7b42e05e383de0e22",
+      "id": "tutorial_1",
+      "giverNpc": "naru_chief",
+      "rewardMoney": 30,
+      "rewardCredit": 1,
+      "hasLegacyReward": false,
+      "legacyRewardMoney": 0,
+      "legacyRewardCredit": 0,
+      "objectives": [
+        {
+          "type": "VisitMap",
+          "targetId": "Gaegyeong"
+        },
+        {
+          "type": "Deliver",
+          "targetId": "gaekju"
+        }
+      ],
+      "classification": "pending Claude review"
+    },
+    {
+      "path": "Assets/PocketCaravan/Data/Goryeo/Quests/T2_BuyPaper.asset",
+      "sha256": "da9fdeeaf6310d34ec809e6101bf2a88632ef2d3b7fccf355dbcaafc3c57a357",
+      "id": "tutorial_2",
+      "giverNpc": "gaekju",
+      "rewardMoney": 45,
+      "rewardCredit": 1,
+      "hasLegacyReward": false,
+      "legacyRewardMoney": 0,
+      "legacyRewardCredit": 0,
+      "objectives": [
+        {
+          "type": "Buy",
+          "targetId": "dakmok"
+        },
+        {
+          "type": "Deliver",
+          "targetId": "gaekju"
+        }
+      ],
+      "classification": "pending Claude review"
+    },
+    {
+      "path": "Assets/PocketCaravan/Data/Goryeo/Quests/T3_Profit.asset",
+      "sha256": "18b4d93df6a891d816dd6f7ef60a5ac7b87075854cfebae288e26d8aa41812e3",
+      "id": "tutorial_3",
+      "giverNpc": "gaekju",
+      "rewardMoney": 20,
+      "rewardCredit": 1,
+      "hasLegacyReward": false,
+      "legacyRewardMoney": 0,
+      "legacyRewardCredit": 0,
+      "objectives": [
+        {
+          "type": "Sell",
+          "targetId": "naru"
+        },
+        {
+          "type": "Talk",
+          "targetId": "naru_chief"
+        }
+      ],
+      "classification": "pending Claude review"
+    },
+    {
+      "path": "Assets/PocketCaravan/Data/Goryeo/Quests/T4_Handcart.asset",
+      "sha256": "bafa5c9dfec61bef40e025a887d32ab84f77a896a1edd5b98fe1648d772d7fa7",
+      "id": "tutorial_5",
+      "giverNpc": "dakmok_chief",
+      "rewardMoney": 0,
+      "rewardCredit": 2,
+      "hasLegacyReward": false,
+      "legacyRewardMoney": 0,
+      "legacyRewardCredit": 0,
+      "objectives": [
+        {
+          "type": "BuyVehicle",
+          "targetId": ""
+        },
+        {
+          "type": "Talk",
+          "targetId": "gaekju"
+        }
+      ],
+      "classification": "pending Claude review"
+    },
+    {
+      "path": "Assets/PocketCaravan/Data/Goryeo/Quests/T4_Herbs.asset",
+      "sha256": "8a9ae3c2bee2ae5f3df0edf3f2ea088c045dcd0c79fc7cce991446d333ccd1ec",
+      "id": "tutorial_4",
+      "giverNpc": "naru_chief",
+      "rewardMoney": 50,
+      "rewardCredit": 1,
+      "hasLegacyReward": false,
+      "legacyRewardMoney": 0,
+      "legacyRewardCredit": 0,
+      "objectives": [
+        {
+          "type": "Deliver",
+          "targetId": "dakmok_chief"
+        }
+      ],
+      "classification": "pending Claude review"
+    }
+  ],
+  "creditAssignments": [
+    {
+      "path": "Assets/PocketCaravan/Scripts/Contracts/ContractManager.cs",
+      "line": 174,
+      "source": "player.credit -= 1;"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scripts/Contracts/ContractManager.cs",
+      "line": 231,
+      "source": "r.credit = 1;"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scripts/Contracts/ContractManager.cs",
+      "line": 246,
+      "source": "r.credit = -1;"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scripts/Contracts/ContractManager.cs",
+      "line": 250,
+      "source": "player.credit += r.credit;"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scripts/Contracts/ContractManager.cs",
+      "line": 262,
+      "source": "player.credit -= 1;"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scripts/Core/GameManager.cs",
+      "line": 80,
+      "source": "credit = Db.startOrigin != null ? Db.startOrigin.startingCredit : 0,"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scripts/Core/GameManager.cs",
+      "line": 137,
+      "source": "Player.money = Player.credit = 0;"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scripts/Core/GameManager.cs",
+      "line": 371,
+      "source": "money = Player.money, credit = Player.credit,"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scripts/Core/GameManager.cs",
+      "line": 398,
+      "source": "Player.credit = d.credit;"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scripts/Quests/QuestManager.cs",
+      "line": 250,
+      "source": "player.credit += p.RewardCredit;"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scripts/World/RoadEvent.cs",
+      "line": 49,
+      "source": "gm.Player.credit += 1;"
+    }
+  ],
+  "runtimeChanged": false,
+  "limitations": [
+    "Limited Unity YAML fields; not a Unity asset deserializer",
+    "Text search can miss aliases, reflection, multiline assignments and external tooling",
+    "No classification, legacy reward conversion, reputation amount or allocation is approved"
+  ]
+}
