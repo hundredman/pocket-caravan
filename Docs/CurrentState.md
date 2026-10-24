@@ -156,11 +156,17 @@
 - 사용자 “훨씬 낫다. 이대로 하면 좋을 것 같아.”로 옆머리 보완 후 방향/걷기를 승인했다. `ArtReview/Approved/C1-Walk/`에160 PNG·Aseprite10개와 해시를 동결했고 목록160개를 approved로 변경했다.
 - 본편 역할 배정은 최신 main의 `Docs/C1-Binding.md`로 답변을 받았다. 새 역할5명 정면 승인 → 걷기 → 역할별 경로로 전체 일괄 교체/동물 보관 → 확인 순서다. 기존22참조 조사 문서는 근거로 보존하며 C1 전체는 완료하지 않았다. 상세는 `Validation/C1-Walk-2026-10-24.md`.
 
-### C1 추가 역할 정면 (2026-10-24, 새5명 승인 대기)
+### C1 추가 역할 정면 (2026-10-24, 새5명 정면 승인)
 
 - 최신 main `bd609476`을 병합해 C1-Binding을 받았다. `ArtReview/C1-Binding-Fronts/`에 porter·merchant·merchant_silk·scholar·woman_ricecake 정면 PNG/Aseprite5쌍, 승인10명과 같은 배율 비교 한 장, 소품 변형 비교, 실제 Unity Game 화면을 제출했다. 원본은 `Tools/ArtTrials/npc_binding_fronts.py`다.
 - 16×24·알파0/255·발밑·원본 재열기와 몸 유지 범위 확인. A2 기술 미리보기 오류0, Unity PPU/pivot/scale 일치·Console error0 확인. 본편/기존 ID/이름/대사/저장은 그대로다.
-- 새5명 정면 승인 단계에서 멈췄다. 걷기·역할별 일괄 교체·우물가 새 아낙 추가·실제 이동/말걸기는 아직이다. `Validation/C1-Binding-Fronts-2026-10-24.md` 참고.
+- 사용자 “그래.”로 새5명 정면을 승인했고 `ArtReview/Approved/C1-Binding-Fronts/`에 PNG/Aseprite·해시를 동결했다. 본편 적용은 이후 단계다. `Validation/C1-Binding-Fronts-2026-10-24.md` 참고.
+
+### C1 추가 역할 걷기 (2026-10-24, 새5명 방향·걷기 승인 대기)
+
+- `ArtReview/C1-Binding-Walk/`에5명×dulr×4=80프레임, Aseprite5개, 승인 정면/방향 비교·걷기 GIF·실제 Unity Game16캡처/GIF 제출. 원본은 `Tools/ArtTrials/npc_binding_walk.py`다. 기존 승인10명 출력/본편은 유지했다.
+- 16×24·알파0/255·발밑·승인색 범위·아래0/2 정면 동일·원본 재열기/태그/125ms·A2 오류0 확인. Unity CharacterAnimator 선택80/루프·정지40건·Console error0 확인. 메모리 제자리 걷기 검토이며 실제 경로 이동/말걸기는 미검증이다.
+- 새5명 방향/걷기 승인 후 역할별 경로로 전체 일괄 교체·동물 보관·새 우물가 아낙 추가·맵 이동/말걸기를 확인한다. 지금은 본편을 일부만 바꾼 상태가 아니다. 상세는 `Validation/C1-Binding-Walk-2026-10-24.md`.
 
 ## 5. 검사
 

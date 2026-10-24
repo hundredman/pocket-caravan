@@ -174,7 +174,8 @@
         "path": "ArtReview/C1-Binding-Fronts/porter-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/C1-Binding-Fronts/approval.md"
       },
       "profile": "porter",
       "tiles": [
@@ -201,7 +202,8 @@
         "path": "ArtReview/C1-Binding-Fronts/merchant-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/C1-Binding-Fronts/approval.md"
       },
       "profile": "merchant",
       "tiles": [
@@ -228,7 +230,8 @@
         "path": "ArtReview/C1-Binding-Fronts/merchant_silk-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/C1-Binding-Fronts/approval.md"
       },
       "profile": "merchant_silk",
       "tiles": [
@@ -255,7 +258,8 @@
         "path": "ArtReview/C1-Binding-Fronts/scholar-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/C1-Binding-Fronts/approval.md"
       },
       "profile": "scholar",
       "tiles": [
@@ -282,7 +286,8 @@
         "path": "ArtReview/C1-Binding-Fronts/woman_ricecake-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/C1-Binding-Fronts/approval.md"
       },
       "profile": "woman_ricecake",
       "tiles": [

@@ -1,0 +1,2324 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "porter": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4e3727",
+        "#4f4246",
+        "#60483a",
+        "#775345",
+        "#896946",
+        "#ae7f55",
+        "#ae946b",
+        "#af6d55",
+        "#ccc3b1",
+        "#cf9977",
+        "#d0b989",
+        "#ddb989",
+        "#e3bf78",
+        "#e49390",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9"
+      ]
+    },
+    "merchant": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4e3727",
+        "#4f4246",
+        "#576b90",
+        "#5b4439",
+        "#60483a",
+        "#775345",
+        "#7c97b5",
+        "#af6d55",
+        "#ccc3b1",
+        "#cf9977",
+        "#ddb989",
+        "#e49390",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9"
+      ]
+    },
+    "merchant_silk": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4e3727",
+        "#4f4246",
+        "#576b90",
+        "#5b4439",
+        "#60483a",
+        "#775345",
+        "#7c97b5",
+        "#af6d55",
+        "#c2778f",
+        "#cf9977",
+        "#ddb989",
+        "#e3bf78",
+        "#e49390",
+        "#e699ae",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9"
+      ]
+    },
+    "scholar": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#2c2a38",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4e3727",
+        "#4f4246",
+        "#576b90",
+        "#5b4439",
+        "#60483a",
+        "#60607a",
+        "#775345",
+        "#7c97b5",
+        "#896946",
+        "#af6d55",
+        "#ccc3b1",
+        "#cf9977",
+        "#e49390",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9"
+      ]
+    },
+    "woman_ricecake": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#261e21",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4e3727",
+        "#4e3b2f",
+        "#4f4246",
+        "#576b90",
+        "#5b4439",
+        "#60483a",
+        "#775345",
+        "#aa8d58",
+        "#ae7f55",
+        "#af6d55",
+        "#c2778f",
+        "#ccc3b1",
+        "#cf9977",
+        "#ddb989",
+        "#e49390",
+        "#e699ae",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9",
+        "#ffe0e6"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "trial_binding_walk_porter_d0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_d0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_d0",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_d0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_porter_d1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_d1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_d1",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_d1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_porter_d2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_d2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_d2",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_d2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_porter_d3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_d3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_d3",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_d3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_porter_u0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_u0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_u0",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_u0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_porter_u1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_u1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_u1",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_u1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_porter_u2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_u2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_u2",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_u2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_porter_u3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_u3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_u3",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_u3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_porter_l0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_l0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_l0",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_l0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_porter_l1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_l1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_l1",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_l1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_porter_l2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_l2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_l2",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_l2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_porter_l3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_l3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_l3",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_l3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_porter_r0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_r0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_r0",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_r0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_porter_r1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_r1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_r1",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_r1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_porter_r2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_r2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_r2",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_r2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_porter_r3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/porter_r3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/porter.aseprite"
+      },
+      "profile": "porter",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_porter_r3",
+          "image": "ArtReview/C1-Binding-Walk/frames/porter_r3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_d0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_d0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_d0",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_d0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_d1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_d1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_d1",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_d1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_d2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_d2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_d2",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_d2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_d3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_d3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_d3",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_d3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_u0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_u0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_u0",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_u0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_u1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_u1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_u1",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_u1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_u2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_u2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_u2",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_u2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_u3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_u3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_u3",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_u3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_l0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_l0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_l0",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_l0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_l1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_l1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_l1",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_l1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_l2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_l2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_l2",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_l2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_l3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_l3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_l3",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_l3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_r0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_r0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_r0",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_r0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_r1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_r1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_r1",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_r1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_r2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_r2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_r2",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_r2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_r3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_r3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant.aseprite"
+      },
+      "profile": "merchant",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_r3",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_r3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_d0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_d0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_d0",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_d0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_d1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_d1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_d1",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_d1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_d2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_d2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_d2",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_d2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_d3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_d3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_d3",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_d3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_u0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_u0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_u0",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_u0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_u1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_u1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_u1",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_u1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_u2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_u2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_u2",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_u2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_u3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_u3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_u3",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_u3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_l0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_l0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_l0",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_l0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_l1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_l1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_l1",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_l1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_l2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_l2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_l2",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_l2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_l3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_l3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_l3",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_l3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_r0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_r0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_r0",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_r0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_r1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_r1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_r1",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_r1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_r2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_r2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_r2",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_r2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_merchant_silk_r3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_r3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/merchant_silk.aseprite"
+      },
+      "profile": "merchant_silk",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_merchant_silk_r3",
+          "image": "ArtReview/C1-Binding-Walk/frames/merchant_silk_r3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_d0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_d0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_d0",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_d0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_d1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_d1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_d1",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_d1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_d2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_d2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_d2",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_d2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_d3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_d3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_d3",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_d3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_u0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_u0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_u0",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_u0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_u1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_u1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_u1",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_u1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_u2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_u2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_u2",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_u2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_u3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_u3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_u3",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_u3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_l0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_l0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_l0",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_l0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_l1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_l1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_l1",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_l1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_l2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_l2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_l2",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_l2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_l3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_l3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_l3",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_l3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_r0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_r0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_r0",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_r0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_r1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_r1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_r1",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_r1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_r2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_r2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_r2",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_r2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_scholar_r3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/scholar_r3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/scholar.aseprite"
+      },
+      "profile": "scholar",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_scholar_r3",
+          "image": "ArtReview/C1-Binding-Walk/frames/scholar_r3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_d0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_d0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_d0",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_d0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_d1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_d1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_d1",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_d1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_d2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_d2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_d2",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_d2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_d3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_d3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_d3",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_d3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_u0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_u0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_u0",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_u0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_u1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_u1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_u1",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_u1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_u2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_u2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_u2",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_u2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_u3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_u3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_u3",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_u3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_l0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_l0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_l0",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_l0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_l1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_l1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_l1",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_l1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_l2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_l2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_l2",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_l2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_l3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_l3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_l3",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_l3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_r0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_r0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_r0",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_r0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_r1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_r1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_r1",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_r1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_r2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_r2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_r2",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_r2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_walk_woman_ricecake_r3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_r3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Walk/woman_ricecake.aseprite"
+      },
+      "profile": "woman_ricecake",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_walk_woman_ricecake_r3",
+          "image": "ArtReview/C1-Binding-Walk/frames/woman_ricecake_r3.png"
+        }
+      ]
+    }
+  ]
+}

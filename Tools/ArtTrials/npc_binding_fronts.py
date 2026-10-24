@@ -34,7 +34,7 @@ def paint(rows,pal):
             im.putpixel((x,y),(*color,255))
     return im
 
-def render(name):
+def render(name, *, layout=False):
     if name=='woman_ricecake':
         # Keep the actual approved woman body and face. Only replace the prop regions.
         im=Image.open(ROOT/'ArtReview/Approved/woman-front-v4.png').convert('RGBA')
@@ -83,6 +83,7 @@ def render(name):
         point(3,8,'h');point(12,8,'h');run(16,6,8,'u');point(8,17,'b')
         box(0,17,4,21,'D');box(1,18,3,20,'v');point(2,18,'V');point(2,19,'u');point(4,19,'q')
     else:raise ValueError(name)
+    if layout:return rows,pal
     im=paint(rows,pal)
     if name=='merchant_silk':
         body=render('merchant')

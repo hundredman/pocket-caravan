@@ -14,3 +14,5 @@
 현재 실제 Unity의 검토 오브젝트는 메모리에만 있다. PPU16·pivot(8,6)·scale1, autosave=false·sceneDirty=false·일시정지 확인. 본편 참조나 PNG/씬/데이터를 저장하지 않았다. 새5명의 걷기·본편 교체·이동/말걸기는 아직 진행하지 않았다.
 
 다음: 정면 사용자 승인 → 새5명 걷기 → C1-Binding 역할별 경로로 전체 일괄 교체/동물 보관 → 맵 이동·말걸기/게임 화면 확인. 그다음 C2·C3 확대 → A3a → A4 → R2 계산 → B1 순서를 유지한다.
+
+후속 확인: 사용자 “그래.”로 이5명의 정면을 승인했다. `ArtReview/Approved/C1-Binding-Fronts/`에 동결했다. 다음 방향/걷기 제출은 `ArtReview/C1-Binding-Walk/`이며 별도 검토 대상이다.
