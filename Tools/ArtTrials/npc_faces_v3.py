@@ -8,7 +8,7 @@ import chars as C
 OUT=ROOT/'ArtReview/NPC-v3';OUT.mkdir(parents=True,exist_ok=True)
 
 
-def render(name):
+def render(name, *, raised_arm=True):
     species={'chief':'elder','woman':'villager_rabbit','trader':'trader'}[name]
     over,top,hat,mask=C.SPECIES[species]
     rows=C.compose('d',0,top,hat,mask)
@@ -60,7 +60,7 @@ def render(name):
     d=ImageDraw.Draw(image)
     if name=='chief':
         d.line((15,15,15,22),fill=(103,70,46));d.point((14,15),fill=(169,124,84));d.line((12,18,13,18),fill=pal['c']);d.point((14,18),fill=pal['q'])
-    elif name=='woman':
+    elif name=='woman' and raised_arm:
         # A visible raised hand supports the jar rim; keep the head outline readable.
         d.line((0,17,0,11),fill=(200,120,142));d.point((1,10),fill=pal['q']);d.point((2,9),fill=pal['q']);d.point((3,8),fill=pal['q']);d.point((4,7),fill=pal['q'])
     return image

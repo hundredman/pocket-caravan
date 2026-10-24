@@ -20,7 +20,7 @@
       ],
       "beforeColors": 36,
       "afterColors": 27,
-      "silhouetteAlphaAndBaseline": "identical",
+      "silhouetteAlphaAndBaseline": "body/face/baseline retained; 11 unwanted isolated arm pixels removed",
       "asepriteReopen": "pixel-identical",
       "binaryAlpha": true
     },
@@ -39,5 +39,6 @@
   ],
   "scope": "front native art, no Unity scene or gameplay validation",
   "userApproval": "pending",
-  "D3PaletteApproval": false
+  "D3PaletteApproval": false,
+  "womanArmFix": "11 isolated raised-arm pixels removed; remaining pixels identical"
 }
