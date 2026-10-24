@@ -74,7 +74,7 @@
         "path": "ArtReview/C2-C3/house.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested"
       },
       "profile": "trial16",
       "tiles": [
@@ -178,7 +178,7 @@
         "path": "ArtReview/C2-C3/tree.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested"
       },
       "profile": "trial16",
       "tiles": [

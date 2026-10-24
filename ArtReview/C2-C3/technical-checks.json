@@ -36,7 +36,7 @@
       "asepriteReopen": "pixel-identical"
     }
   ],
-  "review": "pending user",
+  "review": "changes_requested by user; superseded by Refine-v2",
   "gameAssetsModified": false,
   "renderParts": "only complete declared objects; no standalone reuse",
   "scene": "existing capture with full-object candidates composited, not engine replacement"
