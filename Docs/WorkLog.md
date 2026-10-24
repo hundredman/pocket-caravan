@@ -20,3 +20,4 @@
 | 2026-10-24 | Claude | 분담 재조정 | 1664fa4 | 요금제(Claude Pro, Codex Plus) 기준 재조정: B1·A5(아트 정리 도구)는 Codex, Claude는 판단·아트·설계와 단계 끝 검토만. 갈래별 동시 진행, 넘겨주기 형식(단계·파일·검사 명령), 사용량 남을 때/바닥날 때 규칙 추가 |
 | 2026-10-24 | Claude | Codex 비중 확대 | 669d858 | Codex 주간 한도 잦은 초기화 반영: A3를 A3a(Codex 자동 목록)·A3b(Claude 판정)로 나누고 R2 수치 계산을 Codex로. Codex 여유 작업 목록 추가. Claude 지금 할 일은 Q1 설계 하나 |
 | 2026-10-24 | Codex | 분담·에셋 분석 재검토 | 본 커밋 | Plan의 A3a·A3b·A5 누락과 D10/R1 모순 보완. 앞선 설명의 유지 정책·축소 방식·승인 절차·시작 단계 표현 정정. Validation/Codex-Analysis-Review-2026-10-24.md에 코드 근거와 Claude 확인 항목 기록. 코드·에셋 변경 및 화면 판정 없음 |
+| 2026-10-24 | Codex | 캐릭터 설정 명확화 | 본 커밋 | 사용자 확인: 플레이어는 2등신 동물, NPC는 사람. Direction·ArtGuide·Plan C1에 반영하고 CurrentState에 기존 동물 NPC와의 차이 기록. 사람 NPC 등신은 미정. 에셋·코드 변경 없음 |
