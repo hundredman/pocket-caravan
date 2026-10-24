@@ -22,3 +22,4 @@
 | 2026-10-24 | Codex | 분담·에셋 분석 재검토 | 본 커밋 | Plan의 A3a·A3b·A5 누락과 D10/R1 모순 보완. 앞선 설명의 유지 정책·축소 방식·승인 절차·시작 단계 표현 정정. Validation/Codex-Analysis-Review-2026-10-24.md에 코드 근거와 Claude 확인 항목 기록. 코드·에셋 변경 및 화면 판정 없음 |
 | 2026-10-24 | Codex | 캐릭터 설정 명확화 | 본 커밋 | 사용자 확인: 플레이어는 2등신 동물, NPC는 사람. Direction·ArtGuide·Plan C1에 반영하고 CurrentState에 기존 동물 NPC와의 차이 기록. 사람 NPC 등신은 미정. 에셋·코드 변경 없음 |
 | 2026-10-24 | Codex | 플레이어 등신 정정 | 본 커밋 | 사용자 정정: 플레이어는 정확히 2등신이 아닌 2~3등신 동물 캐릭터. Direction·ArtGuide·Plan C1·CurrentState 수정. 앞 기록의 2등신을 대체하며 NPC는 사람 기준 유지. 에셋·코드 변경 없음 |
+| 2026-10-24 | Codex | 플레이어 비율 확정 | 본 커밋 | 사용자 결정: 플레이어는 2.5등신 동물 캐릭터. Direction·ArtGuide·Plan C1·CurrentState 반영. 앞 기록의 2~3등신을 대체하며 NPC는 사람 기준 유지. 에셋·코드 변경 없음 |
