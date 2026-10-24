@@ -67,6 +67,7 @@ def atlas_content():
     from goryeo_art import apply
     from compact import build as compact
     from broad_regions import build as broad
-    final = apply(broad(compact(build(maps))))
+    from npc_bindings import apply as bind_characters
+    final = bind_characters(apply(broad(compact(build(maps)))))
     by_id={m.id:m for m in final}
     return entries, [by_id[e["mapId"]] for e in entries]

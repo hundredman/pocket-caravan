@@ -300,7 +300,7 @@ namespace PocketCaravan.EditorTools
                         break;
                     case "market":
                         var t = db.towns.Find(x => x != null && x.id == o.town);
-                        var npc = Character($"장터 상인 ({(t != null ? t.displayName : o.town)})", "merchant_tall", center, objects);
+                        var npc = Character($"장터 상인 ({(t != null ? t.displayName : o.town)})", NpcArtBindings.Get("market:" + o.town), center, objects);
                         npc.AddComponent<TownMarket>().town = t;
                         break;
                     case "talker":
@@ -331,7 +331,7 @@ namespace PocketCaravan.EditorTools
                         var spot = new GameObject("도적 출몰 자리").AddComponent<BanditSpot>();
                         spot.transform.SetParent(objects); spot.transform.position = center;
                         spot.sightRange = o.radius > 0 ? o.radius : 6f;
-                        var bgo = Character("도적", "bandit_tall", center, objects);
+                        var bgo = Character("도적", NpcArtBindings.Get("bandit"), center, objects);
                         bgo.AddComponent<PlayerMotor>().walkSpeed = 3.4f;
                         var bandit = bgo.AddComponent<Bandit>();
                         bandit.anim = bgo.GetComponent<CharacterAnimator>();
@@ -350,7 +350,7 @@ namespace PocketCaravan.EditorTools
                             director = new GameObject("돌발 사건").AddComponent<RoadEventDirector>();
                             director.transform.SetParent(objects);
                         }
-                        foreach (var (etype, ech) in new[] { (RoadEvent.Type.FallenTraveler, "villager_rabbit_tall"), (RoadEvent.Type.Peddler, "trader_tall") })
+                        foreach (var (etype, ech) in new[] { (RoadEvent.Type.FallenTraveler, NpcArtBindings.Get("event_fallen_traveler")), (RoadEvent.Type.Peddler, NpcArtBindings.Get("event_peddler")) })
                         {
                             var ego = Character(etype == RoadEvent.Type.Peddler ? "떠돌이 상인" : "쓰러진 행인", ech, center, objects);
                             var ev = ego.AddComponent<RoadEvent>();
@@ -388,7 +388,7 @@ namespace PocketCaravan.EditorTools
                         if (o.path != null)
                             for (int k = 0; k + 1 < o.path.Length; k += 2)
                                 pts.Add(grid.GetCellCenterWorld(new Vector3Int(o.path[k], f.h - 1 - o.path[k + 1], 0)));
-                        var wgo = Character("NPC 상인", "trader_tall", pts.Count > 0 ? pts[0] : center, objects);
+                        var wgo = Character("NPC 상인", NpcArtBindings.Get("walker"), pts.Count > 0 ? pts[0] : center, objects);
                         var walker = wgo.AddComponent<Walker>();
                         walker.path = pts;
                         walker.traderIndex = o.idx;
@@ -537,6 +537,8 @@ namespace PocketCaravan.EditorTools
         /// <summary>16×24 캐릭터 (Art/Characters/이름_방향프레임.png). 아래를 보고 서 있다.</summary>
         static GameObject Character(string name, string character, Vector3 pos, Transform parent)
         {
+            if (string.IsNullOrEmpty(character) || !character.StartsWith("NPC/", StringComparison.Ordinal))
+                throw new InvalidDataException("사람 NPC 역할 경로가 아닙니다: " + character);
             var go = new GameObject(name);
             go.transform.SetParent(parent);
             go.transform.position = pos;

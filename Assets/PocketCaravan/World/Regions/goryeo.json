@@ -48,38 +48,44 @@
     {
       "id": "naru_chief",
       "name": "나루 마을 촌장",
-      "sprite": "elder_tall",
+      "sprite": "NPC/npc_naru_chief/npc_naru_chief_tall",
       "greeting": "예성강 물길이 개경까지 닿으니, 이 작은 나루에도 온갖 짐이 오간다네."
     },
     {
       "id": "gaekju",
       "name": "개경 객주 돈돌",
-      "sprite": "gaekju_tall",
+      "sprite": "NPC/npc_gaekju/npc_gaekju_tall",
       "greeting": "객주는 상인들이 묵고 짐을 맡기는 곳이지. 일거리가 생기면 부르겠네."
     },
     {
       "id": "dakmok_chief",
       "name": "닥나무 마을 촌장",
-      "sprite": "dakmokchief_tall",
+      "sprite": "NPC/npc_dakmok_chief/npc_dakmok_chief_tall",
       "greeting": "우리 마을 종이는 질기고 하얗기로 이름났다네."
     },
     {
       "id": "goryeo_songak_merchant",
       "name": "산록 약재 장수",
-      "sprite": "villager_rabbit_tall",
+      "sprite": "NPC/npc_goryeo_songak_merchant/npc_goryeo_songak_merchant_tall",
       "greeting": "선별한 약재를 소량으로 거래하지요. 개경 장터와 원가를 비교해 보세요. 동쪽 산길로 닥목까지 둘러볼 수도 있어요."
     },
     {
       "id": "goryeo_jangdan_farmer",
       "name": "장단 곡물 상인",
-      "sprite": "villager_dog_tall",
+      "sprite": "NPC/npc_goryeo_jangdan_farmer/npc_goryeo_jangdan_farmer_tall",
       "greeting": "곡식과 땔감은 부피가 커요. 무거운 짐은 수레와 큰길이 잘 맞지요. 닥목에서 돌아올 때 종이 값도 살펴보세요."
+    },
+    {
+      "id": "naru_well_woman",
+      "name": "나루 우물가 아낙",
+      "sprite": "NPC/npc_naru_well_woman/npc_naru_well_woman_tall",
+      "greeting": "우물물은 시원하니 길 떠나기 전에 한 모금 하고 가요."
     }
   ],
   "villagers": [
     {
       "name": "비단 장수",
-      "sprite": "villager_fox_tall",
+      "sprite": "NPC/npc_resident_silk/npc_resident_silk_tall",
       "lines": [
         "시전 거리에는 송나라 비단도, 아라비아 향료도 다 들어온다네.",
         "벽란도에 큰 배가 들어오는 날이면 값이 출렁이지."
@@ -87,7 +93,7 @@
     },
     {
       "name": "짐꾼",
-      "sprite": "villager_dog_tall",
+      "sprite": "NPC/npc_resident_porter/npc_resident_porter_tall",
       "lines": [
         "등짐으로는 하루에 몇 번 못 오가. 수레가 있어야 돈이 되지.",
         "남문 밖 길은 평평해서 수레가 잘 굴러가."
@@ -95,7 +101,7 @@
     },
     {
       "name": "선비",
-      "sprite": "villager_rabbit_tall",
+      "sprite": "NPC/npc_resident_scholar/npc_resident_scholar_tall",
       "lines": [
         "저 위가 만월대일세. 송악산 아래 임금님이 계시지.",
         "개경은 고려의 서울이라 사람도 물건도 다 모인다네."
@@ -103,14 +109,14 @@
     },
     {
       "name": "뱃사공",
-      "sprite": "villager_bear_tall",
+      "sprite": "NPC/npc_resident_boatman/npc_resident_boatman_tall",
       "lines": [
         "예성강 물길을 따라가면 벽란도 포구가 나오지. 송나라 배도 드나든다네."
       ]
     },
     {
       "name": "떡 장수",
-      "sprite": "villager_tanuki_tall",
+      "sprite": "NPC/npc_resident_ricecake/npc_resident_ricecake_tall",
       "lines": [
         "장날에는 사람이 두 배로 몰려. 값도 덩달아 오르고."
       ]

@@ -14,3 +14,5 @@
 80개 크기/알파/발밑/정면승인색 범위·아래0/2 정면 동일·원본5개 재열기/태그범위/시간·A2 오류0 확인. 실제 CharacterAnimator 선택80건·반복/정지40건 일치, Console error0. `checks.json`, `unity-checks.json`, `Docs/Validation/C1-Binding-Walk-2026-10-24.md` 참고.
 
 방향·걷기 미술 승인은 대기다. 임시 Sprite/애니메이션은 실행 중 메모리에만 두었고 본편 PNG/씬/참조/저장을 바꾸지 않았다. 승인 후 C1-Binding대로 역할별 경로로 전체를 한 번에 교체하고 동물 원본을 보관한 뒤 이동·말걸기를 확인한다.
+
+후속 사용자 “좋아.”로 방향/걷기 승인. `ArtReview/Approved/C1-Binding-Walk/`에 원본·80프레임·해시를 동결했다. C1 본편 역할별 일괄교체와 검증은 `Docs/Validation/C1-Production-2026-10-24.md` 참고.

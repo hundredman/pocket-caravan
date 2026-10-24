@@ -135,6 +135,9 @@ MonoBehaviour:
     id: naru
     mapId: Naru
   - kind: npc
+    id: naru_well_woman
+    mapId: Naru
+  - kind: npc
     id: gaekju
     mapId: Gaegyeong
   - kind: market
