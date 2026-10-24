@@ -37,3 +37,4 @@
 | 2026-10-24 | Claude | Aseprite 연결 계획 | 8f7f3b4b | 사용자: 정식판(dmg) 설치, MCP 설치 허용. ArtGuide 4절에 .aseprite 원본·명령줄/Lua·MCP 사용 기준. A6(Codex) 추가: 명령줄 확인, Lua 시험, MCP 후보 검토 후 Codex·Claude 데스크톱에 등록. Codex 순서 R1→A2b→A6→R6 |
 | 2026-10-24 | Codex | R1 | 14066d70 (구현, codex/r1) | 문명/중앙 마을 평판 데이터·v3 저장/구 v1-v2 이주, 시작 보정과 고향 보존, 잘못된 저장 차단. .NET 45개·Unity 평판/JSON/임시 파일 36개·기존 저장 27개 통과. D10 수치·효과·플레이 미구현/미검증, Claude 검토 대기. 최신 main 병합 후 최종 회귀 결과는 Validation/R1-Validation-2026-10-24.json |
 | 2026-10-24 | Claude | 합치기 담당 변경 | 42423d49 | 사용자 지시: Claude가 할 수 있는 일은 바로 진행. codex/r1을 테스트 후 main에 합침(빨리 감기). 앞으로 Codex 브랜치는 Claude가 확인 후 합침 |
+| 2026-10-24 | Codex | A6 설치 전 검토 | 이 커밋 (codex/a6) | mattt/aseprite-mcp 0cd6aac4 선택: stdio 두 도구·명시적 실행·시간/출력 제한. Vollkorn 28900e75는 실행/HTTP/빌드 경로 비교 후 미선택. Lua의 임의 파일·명령·네트워크 접근은 차단되지 않음, PNG/로그는 모델에 전달 가능, 의존성 공급망 위험 남음. Tools/Aseprite/MCP_REVIEW.md 참고. 설치 전 기록, Claude 설정은 승인 전 수정 금지 |
