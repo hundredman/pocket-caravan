@@ -1,0 +1,126 @@
+{
+  "characters": [
+    {
+      "name": "chief",
+      "frames": 16,
+      "approvedFrontExact": true,
+      "paletteSubsetOfApprovedFront": true,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedSheetExact": true,
+      "tags": "dulr",
+      "durationMs": 125,
+      "frontSHA256": "575f360c135f704457a4ee2ae02e5686445ee172291a1995e55b0f83e2dc68c6"
+    },
+    {
+      "name": "woman",
+      "frames": 16,
+      "approvedFrontExact": true,
+      "paletteSubsetOfApprovedFront": true,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedSheetExact": true,
+      "tags": "dulr",
+      "durationMs": 125,
+      "frontSHA256": "10179f561cad299f0fd64030e1e9a6a7c29422cde4c93e74f3a67675d9b45be4"
+    },
+    {
+      "name": "trader",
+      "frames": 16,
+      "approvedFrontExact": true,
+      "paletteSubsetOfApprovedFront": true,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedSheetExact": true,
+      "tags": "dulr",
+      "durationMs": 125,
+      "frontSHA256": "44167351239c701a9e63c03301d2cf32fcf7639e0ad083b131318df0d35bb8ab"
+    },
+    {
+      "name": "farmer",
+      "frames": 16,
+      "approvedFrontExact": true,
+      "paletteSubsetOfApprovedFront": true,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedSheetExact": true,
+      "tags": "dulr",
+      "durationMs": 125,
+      "frontSHA256": "19edc19323b991881ec3f14fd72463c31b7319ae4f56ad6cc7def7423627f16e"
+    },
+    {
+      "name": "herbalist",
+      "frames": 16,
+      "approvedFrontExact": true,
+      "paletteSubsetOfApprovedFront": true,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedSheetExact": true,
+      "tags": "dulr",
+      "durationMs": 125,
+      "frontSHA256": "c41b37b9c2732c12c12fba8aca0dfcbf56c307d70c35e1af73dc885f5daab999"
+    },
+    {
+      "name": "dakmok_chief",
+      "frames": 16,
+      "approvedFrontExact": true,
+      "paletteSubsetOfApprovedFront": true,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedSheetExact": true,
+      "tags": "dulr",
+      "durationMs": 125,
+      "frontSHA256": "9501c5294b0313ae60a2e1c8d83d98aafb57b445579090c40e3f10dac7599121"
+    },
+    {
+      "name": "gaekju",
+      "frames": 16,
+      "approvedFrontExact": true,
+      "paletteSubsetOfApprovedFront": true,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedSheetExact": true,
+      "tags": "dulr",
+      "durationMs": 125,
+      "frontSHA256": "12e49ba1dfd57bdada0425768fd67670663f8f8f9d6fd02ab2c8e48e09e8c004"
+    },
+    {
+      "name": "child",
+      "frames": 16,
+      "approvedFrontExact": true,
+      "paletteSubsetOfApprovedFront": true,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedSheetExact": true,
+      "tags": "dulr",
+      "durationMs": 125,
+      "frontSHA256": "e0cc94d8b02709fe4927b847f92d96ea4d222645c6eb2fe3a9b07f5063403467"
+    },
+    {
+      "name": "boatman",
+      "frames": 16,
+      "approvedFrontExact": true,
+      "paletteSubsetOfApprovedFront": true,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedSheetExact": true,
+      "tags": "dulr",
+      "durationMs": 125,
+      "frontSHA256": "53dd0e80e017165e063515f4cebdde049227ffc850e533bddd9292d9cbcc5551"
+    },
+    {
+      "name": "bandit",
+      "frames": 16,
+      "approvedFrontExact": true,
+      "paletteSubsetOfApprovedFront": true,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedSheetExact": true,
+      "tags": "dulr",
+      "durationMs": 125,
+      "frontSHA256": "1eb22078d1284f225ede59c69ec077ea1531fc886f52984ab4577206c593d5a6"
+    }
+  ],
+  "scope": "160 native frames; art review pending",
+  "D3PaletteApproval": false
+}

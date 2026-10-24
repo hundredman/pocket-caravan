@@ -232,7 +232,8 @@
         "path": "ArtReview/C1-Expand-2/farmer-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/seven-fronts-c1-expand-2.approval.md"
       },
       "profile": "farmer",
       "tiles": [
@@ -259,7 +260,8 @@
         "path": "ArtReview/C1-Expand-2/herbalist-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/seven-fronts-c1-expand-2.approval.md"
       },
       "profile": "herbalist",
       "tiles": [
@@ -286,7 +288,8 @@
         "path": "ArtReview/C1-Expand-2/dakmok_chief-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/seven-fronts-c1-expand-2.approval.md"
       },
       "profile": "dakmok_chief",
       "tiles": [
@@ -313,7 +316,8 @@
         "path": "ArtReview/C1-Expand-2/gaekju-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/seven-fronts-c1-expand-2.approval.md"
       },
       "profile": "gaekju",
       "tiles": [
@@ -340,7 +344,8 @@
         "path": "ArtReview/C1-Expand-2/child-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/seven-fronts-c1-expand-2.approval.md"
       },
       "profile": "child",
       "tiles": [
@@ -367,7 +372,8 @@
         "path": "ArtReview/C1-Expand-2/boatman-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/seven-fronts-c1-expand-2.approval.md"
       },
       "profile": "boatman",
       "tiles": [
@@ -394,7 +400,8 @@
         "path": "ArtReview/C1-Expand-2/bandit-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/seven-fronts-c1-expand-2.approval.md"
       },
       "profile": "bandit",
       "tiles": [

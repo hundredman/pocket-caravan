@@ -20,7 +20,7 @@ BASE=dict(q=(237,193,157),Q=(248,219,186),S=(207,153,119),p=(228,147,144),N=(175
           j=(174,127,85),J=(221,185,137),D=(78,55,39),v=(87,107,144),V=(124,151,181),
           g=(126,159,109),G=(83,119,77),u=(241,233,216),U=(204,195,177),o=(79,66,70))
 
-def render(name):
+def render(name, *, layout=False):
     rows=[list('.'*16) for _ in range(24)];pal=dict(BASE)
     def point(x,y,ch):
         assert 0<=x<16 and 0<=y<24
@@ -92,6 +92,7 @@ def render(name):
         run(13,3,12,'h');run(14,4,11,'h');run(15,6,9,'h');run(13,5,10,'H')
         box(14,15,15,17,'D');point(14,15,'j');box(14,18,14,22,'d');point(13,18,'q')
     assert all(len(row)==16 for row in rows)
+    if layout:return rows,pal
     im=Image.new('RGBA',(16,24))
     def at(x,y):return rows[y][x] if 0<=x<16 and 0<=y<24 else '.'
     def family(ch):

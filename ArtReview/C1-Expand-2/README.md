@@ -23,3 +23,5 @@
 재현: `PYTHONDONTWRITEBYTECODE=1 python Tools/ArtTrials/npc_expand_remaining.py` (Pillow·로컬 Aseprite 필요).
 
 다음은 7명 정면 사용자 승인 후 4방향·걷기 제작/검토다. 본편 적용은 그 이후이며 동물 그림은 보관한다.
+
+2026-10-24 후속 확인: 사용자 “좋아. 이대로 가자.”로 이번7명 정면 승인. `ArtReview/Approved/seven-fronts-c1-expand-2.approval.md`와 표본으로 동결했다. 본문 제출 당시의 승인 대기는 해소됐으며 방향·걷기/본편 교체는 별도다.
