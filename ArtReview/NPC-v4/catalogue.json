@@ -152,7 +152,8 @@
         "path": "ArtReview/NPC-v4/woman-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/woman-front-v4.approval.md"
       },
       "profile": "woman",
       "tiles": [
