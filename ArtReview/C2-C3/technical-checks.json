@@ -1,0 +1,43 @@
+{
+  "task": "C2/C3 trial",
+  "objects": [
+    {
+      "name": "house",
+      "size": [
+        64,
+        48
+      ],
+      "matchingOriginalBounds": [
+        0,
+        1,
+        61,
+        47
+      ],
+      "beforeOpaqueColors": 28,
+      "afterOpaqueColors": 12,
+      "alpha": "0/255",
+      "asepriteReopen": "pixel-identical"
+    },
+    {
+      "name": "tree",
+      "size": [
+        64,
+        48
+      ],
+      "matchingOriginalBounds": [
+        8,
+        1,
+        55,
+        47
+      ],
+      "beforeOpaqueColors": 16,
+      "afterOpaqueColors": 8,
+      "alpha": "0/255",
+      "asepriteReopen": "pixel-identical"
+    }
+  ],
+  "review": "pending user",
+  "gameAssetsModified": false,
+  "renderParts": "only complete declared objects; no standalone reuse",
+  "scene": "existing capture with full-object candidates composited, not engine replacement"
+}

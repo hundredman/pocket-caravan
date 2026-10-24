@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "trial16": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "palette": [
+        "#2c1a12",
+        "#998065",
+        "#729362",
+        "#521d14",
+        "#141f2e",
+        "#090a0d",
+        "#3c362d",
+        "#ac9c89",
+        "#5d5d58",
+        "#d8c2a2",
+        "#503c2d",
+        "#813d21",
+        "#4a5662",
+        "#dbc6b9",
+        "#242c38",
+        "#2c3947",
+        "#b27a52",
+        "#0d1520",
+        "#7f625a",
+        "#6b6f73",
+        "#374352",
+        "#e48642",
+        "#835e3f",
+        "#51301e",
+        "#a06536",
+        "#7f8745",
+        "#cd914f",
+        "#394b28",
+        "#c1907b",
+        "#f6f2ec",
+        "#e8a958",
+        "#764e34",
+        "#623a23",
+        "#221a22",
+        "#ea9192",
+        "#f0eadc",
+        "#ae8d6d",
+        "#535532",
+        "#658555",
+        "#646d38",
+        "#c68542",
+        "#60483a",
+        "#ba6d36",
+        "#9c9286",
+        "#b18987",
+        "#f8c47f",
+        "#4d4645",
+        "#f0b869"
+      ],
+      "binaryAlpha": true
+    }
+  },
+  "assets": [
+    {
+      "id": "trial_house",
+      "kind": "object",
+      "purpose": "building",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C2-C3/house-after.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C2-C3/house.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "trial16",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_house_0_0",
+          "image": "ArtReview/C2-C3/render-parts/house_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_house_1_0",
+          "image": "ArtReview/C2-C3/render-parts/house_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_house_2_0",
+          "image": "ArtReview/C2-C3/render-parts/house_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_house_3_0",
+          "image": "ArtReview/C2-C3/render-parts/house_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "trial_house_0_1",
+          "image": "ArtReview/C2-C3/render-parts/house_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "trial_house_1_1",
+          "image": "ArtReview/C2-C3/render-parts/house_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "trial_house_2_1",
+          "image": "ArtReview/C2-C3/render-parts/house_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "trial_house_3_1",
+          "image": "ArtReview/C2-C3/render-parts/house_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "trial_house_0_2",
+          "image": "ArtReview/C2-C3/render-parts/house_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "trial_house_1_2",
+          "image": "ArtReview/C2-C3/render-parts/house_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "trial_house_2_2",
+          "image": "ArtReview/C2-C3/render-parts/house_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "trial_house_3_2",
+          "image": "ArtReview/C2-C3/render-parts/house_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_tree",
+      "kind": "object",
+      "purpose": "tree",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C2-C3/tree-after.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C2-C3/tree.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "trial16",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_tree_0_0",
+          "image": "ArtReview/C2-C3/render-parts/tree_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_tree_1_0",
+          "image": "ArtReview/C2-C3/render-parts/tree_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_tree_2_0",
+          "image": "ArtReview/C2-C3/render-parts/tree_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_tree_3_0",
+          "image": "ArtReview/C2-C3/render-parts/tree_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "trial_tree_0_1",
+          "image": "ArtReview/C2-C3/render-parts/tree_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "trial_tree_1_1",
+          "image": "ArtReview/C2-C3/render-parts/tree_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "trial_tree_2_1",
+          "image": "ArtReview/C2-C3/render-parts/tree_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "trial_tree_3_1",
+          "image": "ArtReview/C2-C3/render-parts/tree_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "trial_tree_0_2",
+          "image": "ArtReview/C2-C3/render-parts/tree_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "trial_tree_1_2",
+          "image": "ArtReview/C2-C3/render-parts/tree_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "trial_tree_2_2",
+          "image": "ArtReview/C2-C3/render-parts/tree_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "trial_tree_3_2",
+          "image": "ArtReview/C2-C3/render-parts/tree_3_2.png"
+        }
+      ]
+    }
+  ]
+}
