@@ -6,7 +6,7 @@ Codex와 Claude가 함께 쓰는 **유일한 시작 문서**다. `CLAUDE.md`는 
 ## 먼저 읽기 (순서대로)
 
 1. [Docs/Direction.md](Docs/Direction.md): 확정 방향. 다른 문서와 충돌하면 이 문서가 우선한다.
-2. [Docs/Plan.md](Docs/Plan.md): 작업 목록, 상태, 결정 대기 항목. **`에이전트 분담` 표에서 자기 담당(Claude 또는 Codex) 작업만 고른다.** 파일 담당도 그 표를 따른다.
+2. [Docs/Plan.md](Docs/Plan.md): 작업 목록, 상태, 결정 대기 항목. **`에이전트 분담` 표에서 자기 담당(Claude 또는 Codex) 작업만 고른다.** 파일 담당, 동시 진행, 넘겨주기 형식, 사용량 규칙도 그 문서를 따른다.
 3. [Docs/CurrentState.md](Docs/CurrentState.md): 지금 코드와 맵이 실제로 어떤지.
 4. 작업에 맞는 문서: [아트 기준](Docs/ArtGuide.md), [세계 배치](Docs/WorldLayout.md), [코드 규칙](Docs/Reference/CodeConventions.md), 그 밖의 `Docs/Reference/`.
 5. [Docs/WorkLog.md](Docs/WorkLog.md)의 마지막 몇 줄. 앞 사람이 어디까지 했는지 확인한다.
