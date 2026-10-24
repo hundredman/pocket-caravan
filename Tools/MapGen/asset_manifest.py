@@ -4,6 +4,9 @@ import re
 
 LAYERS = ('ground', 'deco', 'obj', 'high')
 STATUSES = ('draft', 'pending', 'approved', 'changes_requested')
+MODULAR_TYPES = ('water', 'coast', 'river', 'road', 'wall', 'field', 'ground_boundary', 'cliff', 'bridge')
+CORE_PIECES = {'center', 'edge', 'outer_corner', 'inner_corner'}
+LINEAR_TYPES = {'river', 'road', 'wall'}
 
 
 def integer(value, minimum=0):
@@ -153,13 +156,15 @@ def validate_catalogue(document, root):
         if not isinstance(rules, dict):
             fail('asset_rules', aid, 'rules must be an object')
         else:
-            if set(rules) - {'onTerrain', 'adjacentTo', 'forbidRoad'}:
+            if set(rules) - {'onTerrain', 'adjacentTo', 'forbidRoad', 'separateFromSame'}:
                 fail('asset_rules', aid, 'unknown placement rule fields')
             for field in ('onTerrain', 'adjacentTo'):
                 if field in rules and (not isinstance(rules[field], list) or not rules[field] or any(not isinstance(t, str) or not t for t in rules[field])):
                     fail('asset_rules', aid, field + ' must be a nonempty tag list')
             if 'forbidRoad' in rules and type(rules['forbidRoad']) is not bool:
                 fail('asset_rules', aid, 'forbidRoad must be boolean')
+            if 'separateFromSame' in rules and (not integer(rules['separateFromSame']) or asset.get('kind') != 'object'):
+                fail('asset_rules', aid, 'separateFromSame must be a nonnegative integer on a single object')
         profile = None
         if 'profile' in asset:
             profile = profiles.get(asset['profile']) if isinstance(asset['profile'], str) else None
@@ -170,9 +175,16 @@ def validate_catalogue(document, root):
             shape(asset, aid, aid, profile)
         elif asset.get('kind') == 'modular':
             pieces, required = asset.get('pieces'), asset.get('requiredPieces')
+            module_type = asset.get('moduleType')
+            if module_type not in MODULAR_TYPES:
+                fail('modular_type', aid, 'moduleType must explicitly identify the modular set')
             if not isinstance(pieces, dict) or not pieces or not isinstance(required, list) or not required or any(not isinstance(p, str) or not p for p in required):
                 fail('modular_pieces', aid, 'pieces and requiredPieces must be nonempty')
             else:
+                minimum = ({'start', 'center', 'end'} if module_type == 'bridge' else
+                           CORE_PIECES | ({'end'} if isinstance(module_type, str) and module_type in LINEAR_TYPES else set()))
+                if not minimum.issubset(required):
+                    fail('modular_minimum', aid, 'requiredPieces must include: ' + ', '.join(sorted(minimum)))
                 for part in required:
                     if part not in pieces:
                         fail('missing_piece', aid, 'required modular piece missing: ' + part)
@@ -211,7 +223,7 @@ def validate_map(data, assets, require_approval=True):
     road = data.get('road')
     terrain_ok = isinstance(terrain, list) and len(terrain) == w * h and all(isinstance(v, str) and v for v in terrain)
     road_ok = isinstance(road, list) and len(road) == w * h and all(integer(v) for v in road)
-    expected, ids = {}, set()
+    expected, ids, separated = {}, set(), {}
     for n, placement in enumerate(placements):
         where = 'assetPlacements[' + str(n) + ']'
         if not isinstance(placement, dict):
@@ -263,6 +275,17 @@ def validate_map(data, assets, require_approval=True):
                 fail('missing_road_context', where, 'road layer required for forbidRoad rule')
             elif any(road[cy * w + cx] > 0 for cx, cy in footprint):
                 fail('road_forbidden', where, 'footprint overlaps road')
+        gap = rules.get('separateFromSame', 0)
+        if gap:
+            for layer in {tile['layer'] for tile in definition['tiles']}:
+                group = separated.setdefault((aid, layer), [])
+                for px, py, pw, ph, previous in group:
+                    # Empty-cell gap between closed footprints. Corner touching has gap zero.
+                    gx = max(x - (px + pw), px - (x + sw), 0)
+                    gy = max(y - (py + ph), py - (y + sh), 0)
+                    if max(gx, gy) < gap:
+                        fail('same_asset_spacing', where, 'too close to ' + previous + ' on ' + layer)
+                group.append((x, y, sw, sh, where))
         for tile in definition['tiles']:
             slot = (tile['layer'], x + tile['dx'], y + tile['dy'])
             if slot in expected:

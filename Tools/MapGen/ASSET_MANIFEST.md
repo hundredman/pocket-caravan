@@ -76,22 +76,21 @@ CLI manifest/map 인수는 파일 경로다. 목록 안 이미지·원본·승�
 
 위 16px·색 두 개는 문법 예시이며 채택한 값이 아니다. `asset.profile`에 이 프로파일 ID를 지정하면 전체 PNG의 칸당 크기와 보이는 픽셀의 팔레트 소속도 검사한다. PPU·피벗·임포트 필터·캐릭터 프레임은 Unity 쪽 인수 조건으로 남기며 이 Python 검사가 확인했다고 쓰지 않는다.
 
-## 조립용 세트
+## 조립용 세트 (A2b 보완)
 
-`modular`는 object의 size/image/tiles 대신 다음 필드를 갖는다. 각 pieces 값은 size/image/tiles를 가진다. source/review/purpose/rules/profile은 세트가 공유한다.
+`modular`는 object의 size/image/tiles 대신 `moduleType`, `requiredPieces`, `pieces`를 갖는다. 각 pieces 값은 size/image/tiles를 가진다. source/review/purpose/rules/profile은 세트가 공유한다.
 
-```json
-{
-  "kind": "modular",
-  "requiredPieces": ["straight", "end"],
-  "pieces": {
-    "straight": {"size": [1, 1], "image": "Art/straight.png", "tiles": [{"dx": 0, "dy": 0, "layer": "ground", "tile": "straight", "image": "Export/straight.png"}]},
-    "end": {"size": [1, 1], "image": "Art/end.png", "tiles": [{"dx": 0, "dy": 0, "layer": "ground", "tile": "end", "image": "Export/end.png"}]}
-  }
-}
-```
+| moduleType | 최소 requiredPieces (pieces 안에도 실제 정의 필요) |
+|---|---|
+| water, coast, field, ground_boundary, cliff | center, edge, outer_corner, inner_corner |
+| river, road, wall | 위 네 가지 + end |
+| bridge (다리·나루) | start, center, end |
 
-각 세트의 requiredPieces는 A4 제작 인도 시 ArtGuide 3절에 맞춰 적는다. 예시 straight/end가 물·해안 등의 필수 구성 전체라는 뜻은 아니다. 선언된 조각 누락·미등록 조각 사용은 실패한다. 선언 자체가 아트 기준에 충분한지와 실제 이음매는 Claude/은샘 검토 및 시험 씬에서 확인한다.
+`moduleType` 생략·알 수 없는 종류는 실패한다. center=가운데, edge=가장자리, outer_corner=바깥 모서리, inner_corner=안쪽 모서리, start/end=시작/끝으로 ArtGuide 3절과 대응한다. 유형을 이름이나 PNG에서 추정하지 않는다.
+
+예를 들어 물 세트는 `"moduleType": "water"`, `"requiredPieces": ["center", "edge", "outer_corner", "inner_corner"]`를 선언하고, pieces에도 네 이름을 모두 정의한다. 각 정의는 단일 개체와 같은 size/image/tiles 형식이다. 최소 이름을 목록에서 빼는 방법으로 검사를 우회할 수 없다. 강·길·성벽의 end 역시 뺄 수 없다.
+
+위 목록은 최소 역할 검사다. 가장자리 4방향·각 모서리 4방향·강 폭/하구·문 등 ArtGuide의 전체 조각은 requiredPieces에 추가해 선언한다. 최소 네 이름만 있다고 A4 전체 구성이나 실제 이음매가 승인되는 것은 아니다. 세트/조각 이름과 제작 목적의 일치, 이음매는 Claude/은샘 검토와 시험 씬에서 확인한다. A2의 단순 straight/end 조립 예시는 이 보완 이후 더 이상 충분한 지형 세트가 아니다.
 
 ## 최종 맵 배치
 
@@ -114,6 +113,7 @@ CLI manifest/map 인수는 파일 경로다. 목록 안 이미지·원본·승�
 - 같은 레이어의 한 칸을 둘 이상이 소유하면 실패한다. 바닥 위의 개체처럼 서로 다른 층의 겹침은 허용한다.
 - `onTerrain`: 전체 개체 발자국의 태그가 허용 목록 중 하나여야 한다. map.terrainTags는 w*h 길이의 비어 있지 않은 문자열 배열이다.
 - `adjacentTo`: 개체 발자국 바깥 상하좌우 칸 중 최소 한 곳이 지정 태그여야 한다. 물가 전용 등 명시된 조건을 검사한다.
+- `separateFromSame`: 단일 개체끼리 같은 asset ID·같은 렌더링 층에서 최소 N칸의 빈 간격을 둔다. 0 이상 정수이며 생략/0은 제한 없음이다. 전체 발자국 사각형의 x/y 빈 간격 중 큰 값(Chebyshev 방식)을 쓴다. N=1이면 옆면·모서리 접촉 모두 거절하고 빈 한 칸부터 허용한다. 호수·연못·언덕·밭 개체에 필요한 값을 등록한다. 모여 자라는 나무 등은 규칙을 넣지 않는다. modular에는 이 규칙을 쓰지 않는다. 서로 다른 ID로 같은 개체를 우회 등록하는 의미 판단은 감사/미술 검토 범위다.
 - `forbidRoad`: 전체 발자국에서 map.road 값이 모두 0이어야 한다. 필요한 terrainTags/road 정보가 없으면 검사 생략이 아니라 실패다.
 
 한 개체를 의도와 다른 용도로 쓰면서 purpose만 거짓으로 적는 것까지 의미 추론으로 찾아내지는 않는다. 그림의 용도 정의·태그의 진실성은 원본 담당자와 검토자의 책임이고, B2 생성기는 원본 데이터에서 이를 일관되게 내보내야 한다.

@@ -123,13 +123,80 @@ class AssetManifestChecks(unittest.TestCase):
         definition = {key: base[key] for key in ('size', 'tiles', 'image')}
         for key in ('size', 'tiles', 'image'):
             self.asset.pop(key)
-        self.asset.update(kind='modular', requiredPieces=['straight', 'end'], pieces=dict(straight=definition))
+        self.asset.update(kind='modular', moduleType='wall', requiredPieces=['center', 'edge', 'outer_corner', 'inner_corner', 'end'],
+                          pieces={name: copy.deepcopy(definition) for name in ('center', 'edge', 'outer_corner', 'inner_corner', 'straight')})
         self.assertIn('missing_piece', self.codes())
         self.asset['pieces']['end'] = copy.deepcopy(definition)
         self.map['assetPlacements'][0]['piece'] = 'straight'
         self.assertEqual(self.errors(), [])
         self.map['assetPlacements'][0]['piece'] = 'missing'
         self.assertIn('unknown_piece', self.codes())
+
+    def two_objects(self, x, y=0):
+        m = copy.deepcopy(self.map)
+        m.update(w=7, h=4, road=[0]*28, terrainTags=['grass']*28)
+        for layer in ('ground', 'deco', 'obj', 'high'):
+            m[layer] = [0]*28
+        m['assetPlacements'].append(dict(id='tree_2', assetId='test_tree', purpose='tree', x=x, y=y))
+        for p in m['assetPlacements']:
+            m['obj'][p['y']*7+p['x']] = 1
+            m['high'][p['y']*7+p['x']+1] = 2
+        return m
+
+    def test_same_object_requires_requested_empty_gap(self):
+        self.asset['rules']['separateFromSame'] = 1
+        self.assertIn('same_asset_spacing', self.codes(map_data=self.two_objects(2)))
+        self.assertEqual(self.errors(map_data=self.two_objects(3)), [])
+        self.asset['rules']['separateFromSame'] = 2
+        self.assertIn('same_asset_spacing', self.codes(map_data=self.two_objects(3)))
+        self.assertEqual(self.errors(map_data=self.two_objects(4)), [])
+
+    def test_corner_contact_and_vertical_contact_are_rejected(self):
+        self.asset['rules']['separateFromSame'] = 1
+        for x, y in ((2, 1), (0, 1)):
+            with self.subTest(x=x, y=y):
+                self.assertIn('same_asset_spacing', self.codes(map_data=self.two_objects(x, y)))
+
+    def test_objects_without_separation_rule_can_cluster(self):
+        self.assertEqual(self.errors(map_data=self.two_objects(2)), [])
+        self.asset['rules']['separateFromSame'] = 0
+        self.assertEqual(self.errors(map_data=self.two_objects(2)), [])
+
+    def test_spacing_rule_is_per_asset_not_global(self):
+        self.asset['rules']['separateFromSame'] = 3
+        other = copy.deepcopy(self.asset); other['id'] = 'other_tree'
+        other['tiles'][0]['tile'] = 'other_left'; other['tiles'][1]['tile'] = 'other_right'
+        self.doc['assets'].append(other)
+        m = self.two_objects(2); m['palette'] += ['other_left', 'other_right']
+        m['assetPlacements'][1]['assetId'] = 'other_tree'; m['obj'][2] = 3; m['high'][3] = 4
+        self.assertEqual(self.errors(map_data=m), [])
+
+    def test_invalid_spacing_rule_cannot_be_ignored(self):
+        for value in (-1, True, '1', 0.5):
+            with self.subTest(value=value):
+                self.asset['rules']['separateFromSame'] = value
+                self.assertIn('asset_rules', self.codes())
+
+    def test_all_modular_types_have_minimum_piece_roles(self):
+        definition = {key: copy.deepcopy(self.asset[key]) for key in ('size', 'tiles', 'image')}
+        for key in ('size', 'tiles', 'image'):
+            self.asset.pop(key)
+        self.map['assetPlacements'][0]['piece'] = 'center'
+        for module_type in ('water', 'coast', 'river', 'road', 'wall', 'field', 'ground_boundary', 'cliff', 'bridge'):
+            with self.subTest(module_type=module_type):
+                names = ['start', 'center', 'end'] if module_type == 'bridge' else ['center', 'edge', 'outer_corner', 'inner_corner']
+                if module_type in ('river', 'road', 'wall'): names += ['end']
+                self.asset.update(kind='modular', moduleType=module_type, requiredPieces=names[:], pieces={n: copy.deepcopy(definition) for n in names})
+                self.assertEqual(self.errors(), [])
+                self.asset['requiredPieces'].remove('start' if module_type == 'bridge' else 'inner_corner')
+                self.assertIn('modular_minimum', self.codes())
+                self.asset['requiredPieces'] = names[:]
+                if 'end' in names:
+                    self.asset['requiredPieces'].remove('end')
+                    self.assertIn('modular_minimum', self.codes())
+                self.asset['requiredPieces'] = names[:]
+                self.asset['pieces'].pop('start' if module_type == 'bridge' else 'edge')
+                self.assertIn('missing_piece', self.codes())
 
     def test_duplicate_asset_and_tile_ownership(self):
         self.doc['assets'].append(copy.deepcopy(self.asset))
