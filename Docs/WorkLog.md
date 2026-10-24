@@ -18,3 +18,4 @@
 | 2026-10-24 | Claude | 에이전트 분담 | 4290439 | Plan에 Claude/Codex(gpt-6.1 sol) 작업 담당·검토자·파일 담당 표 추가, 동시 작업 시 Codex는 worktree 브랜치. AGENTS.md에 분담 표 참조 추가. 지금: Claude A3·D10 초안·Q1 설계 / Codex A2·R1·R6 |
 | 2026-10-24 | Claude | AI 아트 허용 | 4ec88df | 사용자 결정: AI 이미지 사용 가능(스타일에 맞고 녹아들면). ArtGuide 4절에 정리 과정(격자 맞추기·팔레트 고정·손질·비교 검사·등록) 추가. Direction·AGENTS 반영 |
 | 2026-10-24 | Claude | 분담 재조정 | 1664fa4 | 요금제(Claude Pro, Codex Plus) 기준 재조정: B1·A5(아트 정리 도구)는 Codex, Claude는 판단·아트·설계와 단계 끝 검토만. 갈래별 동시 진행, 넘겨주기 형식(단계·파일·검사 명령), 사용량 남을 때/바닥날 때 규칙 추가 |
+| 2026-10-24 | Claude | Codex 비중 확대 | 669d858 | Codex 주간 한도 잦은 초기화 반영: A3를 A3a(Codex 자동 목록)·A3b(Claude 판정)로 나누고 R2 수치 계산을 Codex로. Codex 여유 작업 목록 추가. Claude 지금 할 일은 Q1 설계 하나 |
