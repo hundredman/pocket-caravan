@@ -27,3 +27,6 @@
 ## 최근 검토
 
 - [문서·프로젝트 파일 재검토 (2026-10-24)](Validation/Project-Review-2026-10-24.md): 누락·불일치·Claude 크로스체크 항목과 검사 범위. 미결정 사항을 확정한 문서가 아니다.
+
+- [퀘스트 저장 호환 검증](Validation/QuestSaveCompatibility-2026-10-24.md): 코드 분리 실행의 실제 재현 결과와 Q1/B6 이주 조건.
+- [평판 회복·제재 개선 검토안](ReputationRecoveryProposal.md): 스타팅 문명별·중앙 마을별 평판 기준과 미승인 회복 제안.
