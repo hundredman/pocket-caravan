@@ -68,6 +68,13 @@
 - .NET 데이터 45개, 실제 Unity 평판·JSON·임시 파일 36개와 기존 저장 호환 27개 검사 통과. `Editor/ReputationChecks`와 `Tools/Integration/ReputationProbe/README.md` 참고. 검사 기록은 `Validation/R1-*.json`에 있다.
 - 거래·의뢰·선행 보상 연결(R2/R6), 회복(R4), UI, 출신 선택, 실제 플레이/이동은 이번 작업 범위가 아니다. Claude 검토는 대기다.
 
+### A6 Aseprite 연결 (2026-10-24, 클라이언트 확인 대기)
+
+- Mac의 Aseprite `1.3.18.6-arm64`를 절대 경로로 실행하고 Lua 기술 시험 PNG·`.aseprite` 생성, 원본 재열기/PNG 재출력을 확인했다. `Tools/Aseprite/smoke.lua` 참고. 게임 아트나 팔레트 승인 자료가 아니다.
+- 커뮤니티 MCP 두 후보의 코드를 비교한 뒤 `mattt/aseprite-mcp` 커밋 `0cd6aac4`를 저장소 밖에 고정 설치했다. 선택 이유와 Lua의 파일·명령·외부 전송 위험을 설치 전에 `Tools/Aseprite/MCP_REVIEW.md`와 WorkLog에 기록했다.
+- MCP 자체의 도구 두 개 나열, 실제 Lua 실행과 PNG 이미지 응답을 확인했다. upstream 일반 검사 37개·실제 Aseprite 검사 1개 통과. `Docs/Validation/A6-2026-10-24.json` 참고.
+- Codex 설정과 사용자 승인 후 Claude 데스크톱 설정에 등록했다. **현재 Codex 대화에는 새 도구가 아직 로드되지 않았으며 두 앱의 실제 도구 목록 확인은 대기**다. Claude 조작 검사는 다음 세션에 한다. 따라서 A6는 진행 중이다. 재연결과 확인 방법은 `Tools/Aseprite/README.md` 참고.
+
 ## 5. 검사
 
 ```sh
