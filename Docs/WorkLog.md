@@ -31,3 +31,7 @@
 | 2026-10-24 | Codex | A2 | 본 커밋 (codex/a2) | 목록/배치 형식 ASSET_MANIFEST.md·검사기·CLI 구현. 미등록/부분 배치/용도·지형·길 위반/조립 조각/원본-타일 픽셀 검사, 승인 기록 및 preview 분리. A2 26개 포함 전체 71개·등록 출구 92개 통과(Validation/A2-AssetManifest-2026-10-24.json). 본편 맵·ID·저장 변경 없음. Claude 규칙 검토·Unity·실제 플레이 미확인. R1 데이터·저장 착수 가능(D10 수치 적용 제외) |
 | 2026-10-24 | Claude | Q1 설계 | a1807000 | QuestMain1.md 작성: 새 ID 5단계(q1_naru~q1_gaegyeong, 마을마다 하나씩: 짐→시세→게시판→특산품→수도·장거리), 옛 튜토리얼 4개 은퇴(목표 미변경으로 단계 이주 회피), 사이드 5개 선행만 재배치, 옛 저장 완료 대응표, 검사 8개. 구현은 Codex(R6 후). 지금 맵에서 구현 가능. 시세 이익(② 판매처)은 Codex 확인 필요 |
 | 2026-10-24 | Claude | A2 검토 | 75c9853a | codex/a2(285dae2) 검토: A2 테스트 26개·validate_world 직접 실행 통과. 잘라 쓰기·즉석 변형·부분 배치·용도 표시는 잘 막음. 빠진 것 2개 → A2b(Codex): 같은 개체 이어 붙이기 검사, 조립 세트 최소 조각. A2 자체는 완료 인정, main 합치기 필요 |
+| 2026-10-24 | Claude | D9 확정 | 5a9b991b | 사용자 지시: 해안선 v2·휜 담당 경계 승인. Direction·WorldLayout·Plan D9 반영. B1(Codex) 시작 가능. 휜 경계는 D4·D7에서 팀원과 맞춤 |
+| 2026-10-24 | Claude | D2 확정 | 03ef543c | 사용자 지시: 도트 느낌을 살리고 이것으로 통일. 모든 에셋 같은 도트 크기, 타일 16px·PPU 16, 플레이어 16×32(최대 24×32), 카메라 480×270. ArtGuide 2절·Direction 1절·Plan D2/D3/A5 반영. D3는 Claude가 시험 샘플과 함께 제안 |
+| 2026-10-24 | Claude | D3 방향·그림 승인 규칙 | 3318bc00 | 사용자 지시: 팀 공통 기준 방향 승인(ArtGuide 2-1절). 보이는 결정은 글 대신 그림으로 승인받는 규칙을 AGENTS·Direction에 추가. 실제 팔레트 값은 시험 샘플과 함께 그림으로 제안 |
+| 2026-10-24 | Claude | Aseprite 연결 계획 | 8f7f3b4b | 사용자: 정식판(dmg) 설치, MCP 설치 허용. ArtGuide 4절에 .aseprite 원본·명령줄/Lua·MCP 사용 기준. A6(Codex) 추가: 명령줄 확인, Lua 시험, MCP 후보 검토 후 Codex·Claude 데스크톱에 등록. Codex 순서 R1→A2b→A6→R6 |
