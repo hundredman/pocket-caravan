@@ -6,7 +6,7 @@
 ## 1. 환경
 
 - Unity 6000.3.26f1 (6.3 LTS), URP 2D, Input System.
-- 코드: `Assets/PocketCaravan/Scripts/` C# 82개, 약 7,000줄. 에디터 도구: `Assets/PocketCaravan/Editor/`, 약 3,300줄.
+- 코드: `Assets/PocketCaravan/Scripts/` C# 83개, 약 7,000줄. 에디터 도구: `Assets/PocketCaravan/Editor/`, 약 3,300줄.
 - 맵 제작 흐름: `Tools/MapGen`(Python) → `Assets/PocketCaravan/Maps/*.json` → `Editor/MapJsonBuilder` → `Scenes/`. 씬만 고치면 다음 생성 때 사라진다.
 - 시작 씬: `Scenes/Goryeo/Naru.unity` (`World/settings.json`의 `startMapId`).
 
@@ -59,6 +59,14 @@
 - **온라인 기능은 없다.** 패키지 목록에 Multiplayer Center는 있지만, 실제 이동·공유 거래를 구현하는 네트워크 패키지·게임 코드는 없다.
 - 출신은 `GameDatabase.startOrigin`으로 정해지고 저장 파일에는 출신 ID가 없다. 아라비아 적재 보너스는 미적용이며, 기존 장거리 판매 +5%와 베네치아 재고 증가 0.8 규칙이 남아 있다. `Reference/ImplementationBacklog.md` ORG-01의 미완료 사항이다.
 - 별도 실험장: 이동 시험장, 환경 원형 라이브러리 40종, 장애물 48종. 본편에는 배치하지 않았다.
+
+### R1 평판 데이터·저장 (2026-10-24)
+
+- `Core/ReputationState`: 캐릭터 소유의 문명/중앙 마을별 평판. 출신 문명 우호, 미기록 대상 중립. 단계와 단계 내 진행점만 저장하고 D10 점수 경계·보상·가격 효과는 미구현이다.
+- `PlayerState.reputation`을 새 게임·독립 시험장 초기화와 `GameManager` 저장/복원에 연결했다. 새 실제 저장은 v3, 평판 블록은 schemaVersion 1. v1/v2는 현재 설정 출신으로 한 번 초기화하고, 이후 저장된 고향/평판을 유지한다. 기존 돈·신용·화물·퀘스트 ID는 바꾸지 않는다.
+- Unity가 구 JSON의 없는 inline 객체를 빈 객체로 복원하는 경우도 처리한다. 새 저장의 누락/미지원/중복/잘못된 평판은 원본을 덮어쓰지 않도록 검증한다. 유효한 미등록 미래 대상 ID는 보존한다.
+- .NET 데이터 45개, 실제 Unity 평판·JSON·임시 파일 36개와 기존 저장 호환 27개 검사 통과. `Editor/ReputationChecks`와 `Tools/Integration/ReputationProbe/README.md` 참고. 검사 기록은 `Validation/R1-*.json`에 있다.
+- 거래·의뢰·선행 보상 연결(R2/R6), 회복(R4), UI, 출신 선택, 실제 플레이/이동은 이번 작업 범위가 아니다. Claude 검토는 대기다.
 
 ## 5. 검사
 
