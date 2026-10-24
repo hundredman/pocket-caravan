@@ -1,0 +1,63 @@
+{
+  "characters": [
+    {
+      "name": "porter",
+      "size": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedExact": true,
+      "colors": 22
+    },
+    {
+      "name": "merchant",
+      "size": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedExact": true,
+      "colors": 20
+    },
+    {
+      "name": "merchant_silk",
+      "size": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedExact": true,
+      "colors": 22
+    },
+    {
+      "name": "scholar",
+      "size": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedExact": true,
+      "colors": 22
+    },
+    {
+      "name": "woman_ricecake",
+      "size": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedExact": true,
+      "colors": 26
+    }
+  ],
+  "merchantVariantBodyExactOutsideProp": true,
+  "womanVariantExactOutsideProps": true,
+  "userApproval": "pending",
+  "D3PaletteApproval": false
+}
