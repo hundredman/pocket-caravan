@@ -10,7 +10,7 @@
    - `Assets/PocketCaravan/Art/NinjaAdventure/Tiles/*.png`: 쓴 타일만 잘라 낸 그림
    - `preview_*.png`: 맵 미리보기 (저장소에 올리지 않음)
    - `Assets/PocketCaravan/Resources/WorldMap/`: 지형 지도 PNG 및 맵 배치 JSON
-3. Unity에서 자기 맵 선택 재생성을 우선한다. 메뉴 `Pocket Caravan > 2. 맵 씬 다시 만들기`는 등록 맵 전체를 덮어쓰므로 다른 팀 씬까지 생성하려는 경우에만 실행한다. 선택 생성 API는 [팀 안내](../../Docs/TeamDevelopment.md)를 따른다.
+3. Unity에서 자기 맵 선택 재생성을 우선한다. 메뉴 `Pocket Caravan > 2. 맵 씬 다시 만들기`는 등록 맵 전체를 덮어쓰므로 다른 팀 씬까지 생성하려는 경우에만 실행한다. 선택 생성 API는 [팀 안내](../../Docs/Reference/TeamDevelopment.md)를 따른다.
 
 ## 파일
 - `tiles.py`: 타일 목록, 오토타일(흙길·물 가장자리 자동 선택), 집·나무 같은 여러 칸짜리 묶음, 미리보기
@@ -24,7 +24,7 @@
 - NPC 종류: `npc`(퀘스트, npc id), `market`(장터, town id), `villager`(마을 사람), `worker`(작업 왕복 연출)
 - 출구는 `target`(씬 이름)과 `spawn`(도착 자리 id)을 맞춘다
 
-맵 목록·생성 함수는 `World/Regions/goryeo.json`·`transit.json`이 기준이고 생성 범위는 `World/settings.json`의 atlasRegions가 결정한다. Unity 빌더·WorldIndex·macOS 프리뷰 빌드도 같은 지역 등록을 읽는다. Python exporter는 atlasRegions에 명시하지 않은 다른 팀 지역을 자동 생성하지 않는다. 새 지역의 JSON/씬/데이터 등록 순서는 [팀 개발 시작 안내](../../Docs/TeamDevelopment.md)를 따른다.
+맵 목록·생성 함수는 `World/Regions/goryeo.json`·`transit.json`이 기준이고 생성 범위는 `World/settings.json`의 atlasRegions가 결정한다. Unity 빌더·WorldIndex·macOS 프리뷰 빌드도 같은 지역 등록을 읽는다. Python exporter는 atlasRegions에 명시하지 않은 다른 팀 지역을 자동 생성하지 않는다. 새 지역의 JSON/씬/데이터 등록 순서는 [팀 개발 시작 안내](../../Docs/Reference/TeamDevelopment.md)를 따른다.
 
 생성기를 다시 돌리면 씬을 덮어쓰고, 시작 세트 생성은 데이터 값도 다시 쓴다.
 맵 원본 코드/JSON과 공용 생성기의 담당자를 정하고, 씬에서만 수정한 내용을 먼저 보존한다.
@@ -56,4 +56,4 @@
 
 2026-10-17 개발 반영: 신규 주행 낙하/게이지/정차 안정화는 사용하지 않는다. 노면/짐/속도에 반응하는 시각 흔들림은 감속 연출로 유지한다. 현재 기준은 Docs/DevelopmentStatus.md 및 실제 시험장 UI를 따른다.
 
-10/22 최신: `World/Terrain/continuous.json`이 실제 지형 원본이다. `continuous.py`가 기존 마을 템플릿을 공통80×64 구역으로 확장하고 해안·강·도로·숲과 접속을 생성한다. `cartography.py`는 그 실제 셀만 축약한다. 지도 전용 `peninsula.json`은 제거했다. [제작/검사 절차](../../Docs/ContinuousTerrain.md)를 따른다.
+10/22 최신: `World/Terrain/continuous.json`이 실제 지형 원본이다. `continuous.py`가 기존 마을 템플릿을 공통80×64 구역으로 확장하고 해안·강·도로·숲과 접속을 생성한다. `cartography.py`는 그 실제 셀만 축약한다. 지도 전용 `peninsula.json`은 제거했다. [제작/검사 절차](../../Docs/Archive/ContinuousTerrain.md)를 따른다.
