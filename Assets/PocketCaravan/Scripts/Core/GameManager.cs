@@ -80,6 +80,8 @@ namespace PocketCaravan
                 credit = Db.startOrigin != null ? Db.startOrigin.startingCredit : 0,
             };
 
+            Player.reputation.Initialize(ReputationState.HomeOf(Player.origin));
+
             Clock = new GameClock { realSecondsPerDay = Db.realSecondsPerDay };
             Clock.NewHour += OnNewHour;
 
@@ -131,6 +133,7 @@ namespace PocketCaravan
             Player.ledger.Clear();
             Player.contracts.Clear();
             Player.origin = null;
+            Player.reputation.Initialize(null);
             Player.money = Player.credit = 0;
             Player.stamina = 1f;
             Player.shake = 0f;
@@ -381,12 +384,14 @@ namespace PocketCaravan
             d.drops.AddRange(Drops);
             d.marketQuotes.AddRange(Player.ledger.Export());
             foreach (var kv in cooldowns) { d.cooldownKeys.Add(kv.Key); d.cooldownUntil.Add(kv.Value); }
+            Player.reputation.ExportTo(d);
             return SaveSystem.Write(d);
         }
 
         void Apply(SaveData d)
         {
             SaveCompatibility.Validate(d, Db, Application.CanStreamedLevelBeLoaded);
+            Player.reputation.ImportFrom(d, Db.startOrigin);
             Player.warehouse.Import(d.storedCargo);
             Player.ledger.Import(d.marketQuotes);
             Player.money = d.money;

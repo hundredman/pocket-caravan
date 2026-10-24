@@ -9,7 +9,9 @@ namespace PocketCaravan
     [Serializable]
     public class SaveData
     {
+        // Keep missing-version pre-R1 JSON compatible; ReputationState.ExportTo promotes real saves to v3.
         public int version = 2;
+        public ReputationState.Save reputation;
         public int layoutVersion; // 1: five broad Goryeo regions; missing/0 is migrated read-only.
         public string scene;
         public float px, py;
@@ -45,6 +47,7 @@ namespace PocketCaravan
 
     public static class SaveSystem
     {
+        public const int CurrentVersion = 3;
 #if CARAVAN_PREVIEW
         const string SaveFile = "pocket_caravan_preview_save.json";
 #else
@@ -92,7 +95,8 @@ namespace PocketCaravan
 
         public static void Validate(SaveData d)
         {
-            if (d == null || d.version < 1 || d.version > 2) throw new InvalidDataException("지원하지 않는 저장 버전입니다.");
+            if (d == null || d.version < 1 || d.version > CurrentVersion) throw new InvalidDataException("지원하지 않는 저장 버전입니다.");
+            ReputationState.ValidateSaveBlock(d);
             if (d.cargoItems == null || d.cargoCounts == null || d.cargoCosts == null
                 || d.cargoItems.Count != d.cargoCounts.Count || d.cargoItems.Count != d.cargoCosts.Count)
                 throw new InvalidDataException("화물 저장 목록이 맞지 않습니다.");

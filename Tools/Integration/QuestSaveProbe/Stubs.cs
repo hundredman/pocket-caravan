@@ -14,6 +14,8 @@ namespace UnityEngine {
  public static class JsonUtility { public static string ToJson(object o)=>throw new System.NotSupportedException("Unity serializer not tested"); public static T FromJson<T>(string s)=>throw new System.NotSupportedException("Unity serializer not tested"); }
 }
 namespace PocketCaravan {
+ public class RegionData { public string id; }
+ public class OriginData { public string id; public RegionData homeRegion; }
  public class ItemData { public string id,displayName; public bool questItem; public TownData originTown; }
  public class VehicleData { public string id; }
  public class TownData { public string id; public List<VehicleData> vehiclesForSale=new(); }
