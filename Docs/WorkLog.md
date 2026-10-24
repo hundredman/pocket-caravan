@@ -60,3 +60,4 @@
 | 2026-10-24 | Codex | 아낙 오른쪽 눈 분리 | 이 커밋 (codex/npc-faces) | 사용자 지시: 아낙 오른쪽 눈/머리카락 분리. 화면 오른쪽 눈 위 (10,10) 머리카락1픽셀만 피부색으로 변경, 나머지 픽셀/알파·촌장/행상 파일 동일 확인. 생성 원본에 선택 옵션 추가해 v4에 적용, PNG/Aseprite·비교/게임크기 합성 갱신. 원본 재열기·A2 목록 확인, 본편 미반영·사용자 승인 대기 |
 | 2026-10-24 | Codex | 아낙 정면 스타일 확인 | 이 커밋 (codex/npc-faces) | 사용자 지시/확인: “좋다. 이런 느낌이야.” 마지막 돌출선 제거·오른쪽 눈 분리 아낙 정면을 인물 스타일 기준으로 기록. ArtReview/Approved/woman-front-v4 PNG/Aseprite·해시/확인 범위 동결, 해당 정면 목록만 approved. Direction/ArtBrief/Plan/CurrentState 반영. 타 인물/방향/걷기·D3·본편 반영의 완료를 뜻하지 않음, 이미지/런타임 변경 없음 |
 | 2026-10-24 | Claude | Codex 연속 작업 합치기 | 3656a328 | codex/npc-faces까지(R6·Q1·A5·C1·C2·C3·art-refine 포함) main 빨리 감기. Python 전체·validate_world 통과. R6·A5 완료 표시(A5 기술 샘플 확인). 다음 Codex 순서: C1 확대→C2·C3 확대→A3a→A4 연못·호수→R2 계산→B1 |
+| 2026-10-24 | Claude | C1 연결 검토 답변 | 725e0b54 | Docs/C1-Binding.md: 역할별 그림 경로, 21개 역할→승인 10명 재사용표, 새 그림 5개(porter·merchant·merchant_silk·scholar·woman_ricecake) 정면 먼저 승인 → 걷기 → 한 번에 교체. 나루 우물가 아낙 새 주민 추가 |
