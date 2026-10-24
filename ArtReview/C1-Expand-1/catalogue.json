@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "chief": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "palette": [
+        "#221b20",
+        "#2c2a38",
+        "#2e2120",
+        "#42302a",
+        "#463830",
+        "#4e3b2f",
+        "#4f4246",
+        "#60483a",
+        "#60607a",
+        "#6c4c2d",
+        "#775345",
+        "#7e7569",
+        "#7f776d",
+        "#9f9688",
+        "#ae7f55",
+        "#af6d55",
+        "#cabea9",
+        "#ccc3b1",
+        "#cf9977",
+        "#e2958c",
+        "#e6e1ea",
+        "#edc19d",
+        "#f1e9d8",
+        "#f6e6cc",
+        "#f8dbba",
+        "#fdf7e9"
+      ],
+      "binaryAlpha": true
+    },
+    "trader": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "palette": [
+        "#221b20",
+        "#261e21",
+        "#2a2021",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4c3527",
+        "#4e3727",
+        "#4e3b2f",
+        "#5c4539",
+        "#60483a",
+        "#6c4c2d",
+        "#775345",
+        "#785238",
+        "#9a6d4c",
+        "#a08b6c",
+        "#af6d55",
+        "#b3834a",
+        "#cf9977",
+        "#d78a70",
+        "#e0ba70",
+        "#e3bf78",
+        "#e7b68d",
+        "#f8dbba",
+        "#f8f0e0",
+        "#fdf7e9"
+      ],
+      "binaryAlpha": true
+    }
+  },
+  "assets": [
+    {
+      "id": "trial_chief_c1_expand_1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Expand-1/chief-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Expand-1/chief-front.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "chief",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_chief_c1_expand_1",
+          "image": "ArtReview/C1-Expand-1/chief-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_c1_expand_1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Expand-1/trader-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Expand-1/trader-front.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "trader",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_c1_expand_1",
+          "image": "ArtReview/C1-Expand-1/trader-front.png"
+        }
+      ]
+    }
+  ]
+}
