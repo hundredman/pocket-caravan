@@ -7,3 +7,5 @@ Unity 시작 데이터 재생성 경로는 `Q1QuestUpgrade.Apply`가 새 에셋�
 구 저장 대응은 `QuestManager.MigrateMainProgress`에 있다. 완료 기록만 추가하고 보상·화물·활성 진행을 변경하지 않는다. 뒤 단계의 완료 기록이 먼저 생겨도 새 메인은 가장 앞의 빈 단계부터 제안한다. 이미 수락한 새 퀘스트도 기존 약속 보존 원칙에 따라 진행 상태를 유지한다.
 
 검사: `.NET QuestSaveProbe`의 `Q1Tests.cs`는 실제 에셋의 목표·아이템/선행 참조를 읽고 새 체인, 은퇴, 선방문, 구 완료 대응, 구 활성 퀘스트, 반복 이주, 사이드 선행을 확인한다. Unity `Q1Checks.RunBatch`는 실제 시장/배달/화물·가격·JsonUtility 경로를 추가로 검사한다. 에디터 로직 검사이며 실제 이동/사용자 플레이와 구분한다.
+
+Q1 이주 원본은 `q1MigrationVersion`과 `legacyMainFinishedIds`로 저장한다. Q1 이전 저장을 처음 가져올 때만 구 완료 이력을 동결하고, 옛 활성 진행의 `legacyMainMigrationEligible`은 재저장 뒤에도 유지한다. 이후 새로 수락한 사이드는 완료 이주 원본에 추가하지 않는다. 이를 구분하지 않으면 새 손수레 사이드 완료/재로드가 수도 퀘스트를 건너뛰게 할 수 있다.

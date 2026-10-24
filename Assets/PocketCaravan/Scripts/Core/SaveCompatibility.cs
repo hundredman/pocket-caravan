@@ -18,6 +18,13 @@ namespace PocketCaravan
                 Require(db.items.Exists(i=>i!=null && i.id==id),"현재 데이터에 없는 화물: "+id);
             if(!string.IsNullOrEmpty(data.vehicle))
                 Require(db.vehicles.Exists(v=>v!=null && v.id==data.vehicle),"현재 데이터에 없는 이동 수단: "+data.vehicle);
+            if (data.q1MigrationVersion == 1)
+            {
+                var legacyIds = new HashSet<string>();
+                foreach (string id in data.legacyMainFinishedIds)
+                    Require(!string.IsNullOrEmpty(id) && legacyIds.Add(id) && data.finishedQuests.Contains(id)
+                        && db.quests.Exists(q => q != null && q.id == id), "옛 메인 완료 이주 기록이 맞지 않습니다.");
+            }
             var activeIds=new HashSet<string>();
             foreach(var progress in data.quests)
             {

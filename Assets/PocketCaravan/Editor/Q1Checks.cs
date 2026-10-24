@@ -71,6 +71,25 @@ namespace PocketCaravan.EditorTools
                 player.cargo.Add(paper,2);qm.TryCompleteAt("gaekju",out _);
                 Check("old active retired quest still finishes",qm.IsFinished(Q("tutorial_2"))&&player.credit==1);
                 Check("legacy gap next is second and later record retained",qm.IsFinished(Q("q1_dakmok"))&&qm.CanStart(Q("q1_jangdan"))&&!qm.CanStart(Q("q1_gaegyeong")));
+                player=Fresh();qm=new QuestManager(db.quests);
+                qm.Import(new SaveData{q1MigrationVersion=1,finishedQuests=new List<string>{"q1_naru","q1_jangdan","q1_songak","q1_dakmok"}});
+                qm.Accept(Q("tutorial_5"));player.vehicle=db.vehicles.Find(v=>v.id=="handcart");GameEvents.RaiseVehicleBought(player.vehicle);qm.TryCompleteAt("gaekju",out _);
+                Check("new cart side does not auto-finish capital",!qm.IsFinished(Q("q1_gaegyeong")));
+                var modern=new SaveData();qm.Export(modern);qm.Import(JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(modern)));
+                Check("new side cannot become legacy through real JSON reload",modern.q1MigrationVersion==1&&modern.legacyMainFinishedIds.Count==0&&!qm.IsFinished(Q("q1_gaegyeong")));
+                // Literal pre-Q1 JSON has neither the migration marker nor the new history/eligibility fields.
+                var literal=JsonUtility.FromJson<SaveData>("{\"version\":2,\"credit\":-7,\"quests\":[{\"id\":\"tutorial_2\",\"step\":1,\"rewardCaptured\":true,\"acceptedRewardMoney\":45,\"acceptedRewardCredit\":1}],\"finishedQuests\":[\"tutorial_1\"]}");
+                qm.Import(literal);var migratedPending=new SaveData();qm.Export(migratedPending);qm.Import(JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(migratedPending)));
+                Check("literal old JSON pending eligibility survives new reload",qm.Active.Single().legacyMainMigrationEligible&&qm.Active.Single().RewardCredit==1&&literal.credit==-7);
+                var mapObject=new GameObject("Q1 previsited capital test");mapObject.SetActive(false);var map=mapObject.AddComponent<MapRoot>();map.mapId="Gaegyeong";
+                typeof(MapRoot).GetProperty("Current").SetValue(null,map);
+                try
+                {
+                    player=Fresh();qm=new QuestManager(db.quests);qm.Import(new SaveData{q1MigrationVersion=1,finishedQuests=new List<string>{"q1_naru","q1_jangdan","q1_songak","q1_dakmok"}});qm.Accept(Q("q1_gaegyeong"));
+                    Check("actual MapRoot already in capital advances VisitMap on accept",qm.Active.Single().step==1);
+                }
+                finally{typeof(MapRoot).GetProperty("Current").SetValue(null,null);UnityEngine.Object.DestroyImmediate(mapObject);}
+
             }
             finally{GameEvents.ClearAll();typeof(GameManager).GetProperty("I").SetValue(null,null);UnityEngine.Object.DestroyImmediate(go);}
             return r;

@@ -34,6 +34,8 @@ namespace PocketCaravan
         public List<QuestManager.Save> quests = new List<QuestManager.Save>();
         public List<string> finishedQuests = new List<string>();
         public string trackedQuest;
+        public int q1MigrationVersion; // 0: before Q1, 1: frozen legacy history
+        public List<string> legacyMainFinishedIds = new List<string>();
 
         public List<MarketState.Save> markets = new List<MarketState.Save>();
         public List<ContractManager.Board> boards = new List<ContractManager.Board>();
@@ -112,6 +114,10 @@ namespace PocketCaravan
             if (d.money < 0 || !Finite(d.px) || !Finite(d.py) || !Finite(d.stamina) || d.stamina < 0 || d.stamina > 1
                 || d.day < 0 || !Finite(d.minute) || d.minute < 0 || d.minute >= 1440)
                 throw new InvalidDataException("잔고·위치·체력·시각 저장값이 올바르지 않습니다.");
+            if (d.q1MigrationVersion < 0 || d.q1MigrationVersion > 1
+                || (d.q1MigrationVersion == 1 && d.legacyMainFinishedIds == null)
+                || (d.q1MigrationVersion == 0 && d.legacyMainFinishedIds != null && d.legacyMainFinishedIds.Count > 0))
+                throw new InvalidDataException("메인 이주 기록의 버전/목록이 올바르지 않습니다.");
             new WarehouseStore().Import(d.storedCargo);
         }
 
