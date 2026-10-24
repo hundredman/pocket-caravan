@@ -622,7 +622,7 @@
         "path": "ArtReview/Refine-v2/NPC/chief-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested"
       },
       "profile": "native_chief",
       "tiles": [
@@ -649,7 +649,7 @@
         "path": "ArtReview/Refine-v2/NPC/woman-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested"
       },
       "profile": "native_woman",
       "tiles": [
@@ -676,7 +676,7 @@
         "path": "ArtReview/Refine-v2/NPC/trader-front.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested"
       },
       "profile": "native_trader",
       "tiles": [
