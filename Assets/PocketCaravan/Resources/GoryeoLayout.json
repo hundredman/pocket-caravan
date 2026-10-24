@@ -1,0 +1,83 @@
+{
+  "maps": [
+    {
+      "id": "Naru",
+      "offsetX": 12,
+      "offsetY": 10,
+      "height": 60,
+      "legacyHeight": 28,
+      "spawnX": 20.5,
+      "spawnY": 41.82
+    },
+    {
+      "id": "Gaegyeong",
+      "offsetX": 16,
+      "offsetY": 10,
+      "height": 60,
+      "legacyHeight": 46,
+      "spawnX": 36.5,
+      "spawnY": 29.82
+    },
+    {
+      "id": "Dakmok",
+      "offsetX": 5,
+      "offsetY": 17,
+      "height": 60,
+      "legacyHeight": 22,
+      "spawnX": 17.5,
+      "spawnY": 22.82
+    },
+    {
+      "id": "goryeo_songak",
+      "offsetX": 12,
+      "offsetY": 12,
+      "height": 60,
+      "legacyHeight": 28,
+      "spawnX": 34.5,
+      "spawnY": 29.82
+    },
+    {
+      "id": "goryeo_jangdan",
+      "offsetX": 25,
+      "offsetY": 15,
+      "height": 55,
+      "legacyHeight": 28,
+      "spawnX": 40.5,
+      "spawnY": 27.82
+    }
+  ],
+  "aliases": [
+    {
+      "oldId": "Route01",
+      "newId": "Naru"
+    },
+    {
+      "oldId": "goryeo_ridge",
+      "newId": "goryeo_songak"
+    },
+    {
+      "oldId": "goryeo_descent",
+      "newId": "Gaegyeong"
+    },
+    {
+      "oldId": "goryeo_fieldroad",
+      "newId": "goryeo_jangdan"
+    },
+    {
+      "oldId": "goryeo_westcoast",
+      "newId": "Naru"
+    },
+    {
+      "oldId": "goryeo_tidalcoast",
+      "newId": "Naru"
+    },
+    {
+      "oldId": "goryeo_rivervalley",
+      "newId": "Dakmok"
+    },
+    {
+      "oldId": "goryeo_southcoast",
+      "newId": "goryeo_jangdan"
+    }
+  ]
+}

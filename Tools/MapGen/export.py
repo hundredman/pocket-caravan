@@ -74,3 +74,14 @@ cartography.export(world_maps, OUT)
 # 발표 및 지역 기획용 확대 지도. 게임 내 전체 지도와 같은 실제 타일을 사용한다.
 cartography.export([m for e,m in zip(entries,world_maps) if e["mapId"] in {entry["mapId"] for entry in map_entries("goryeo")}], OUT, stem="GoryeoRegional")
 print(len(used), "tiles")
+
+# Runtime save migration shares the same layout definition as map generation.
+from broad_regions import REGIONS, ALIASES
+migration={"maps":[],"aliases":[{"oldId":a,"newId":b} for a,b in ALIASES.items()]}
+for m in world_maps:
+    if m.id not in REGIONS:continue
+    sp=next(o for o in m.objects if o['kind']=='spawn' and o['id']=='S0')
+    dx,dy=m.core_offset
+    migration['maps'].append(dict(id=m.id,offsetX=dx,offsetY=dy,height=m.h,legacyHeight=m.legacy_height,spawnX=sp['x']+.5,spawnY=m.h-1-sp['y']+.82))
+Path=__import__('pathlib').Path
+Path(OUT,'Assets/PocketCaravan/Resources/GoryeoLayout.json').write_text(json.dumps(migration,indent=2)+'\n')

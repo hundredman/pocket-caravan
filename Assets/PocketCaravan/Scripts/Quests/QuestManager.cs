@@ -199,7 +199,7 @@ namespace PocketCaravan
             {
                 var o = p.Current;
                 if (o == null || o.type != type) continue;
-                if (!string.IsNullOrEmpty(o.targetId) && o.targetId != targetId) continue;
+                if (!string.IsNullOrEmpty(o.targetId) && (type==ObjectiveType.VisitMap ? GoryeoLayout.Resolve(o.targetId)!=GoryeoLayout.Resolve(targetId) : o.targetId!=targetId)) continue;
                 if (o.item != null && o.item != item) continue;
                 p.amount += amount;
                 if (p.amount >= o.count) NextStep(p);
@@ -228,7 +228,7 @@ namespace PocketCaravan
             var player = GameManager.I.Player;
             if (o.type == ObjectiveType.HaveMoney && player.money >= o.count) NextStep(p);
             else if (o.type == ObjectiveType.BuyVehicle && o.vehicle != null && player.vehicle == o.vehicle) NextStep(p);
-            else if (o.type == ObjectiveType.VisitMap && MapRoot.Current != null && MapRoot.Current.mapId == o.targetId) NextStep(p);
+            else if (o.type == ObjectiveType.VisitMap && MapRoot.Current != null && MapRoot.Current.mapId == GoryeoLayout.Resolve(o.targetId)) NextStep(p);
         }
 
         void NextStep(Progress p)

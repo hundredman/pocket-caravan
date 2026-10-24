@@ -18,6 +18,8 @@ DETAIL_RECTS = {'wall': (48,225,498,414), 'lantern': (674,103,862,449),
                 'harvest': (565,610,984,924), 'celadon': (1063,590,1503,935)}
 CUSTOM = {'royal': ('hall',10,7), 'manor': ('house',6,4), 'stall': ('shop',6,4), 'cottage': ('thatch',5,4), 'pavilion': ('pavilion',5,5)}
 CUSTOM.update({'wall':('wall',4,2), 'lantern':('lantern',1,2), 'lotus':('lotus',2,1), 'paper':('paper',4,3), 'harvest':('harvest',3,2), 'celadon':('celadon',3,2), 'paving':('paving',4,4)})
+NATURE_SIZES=[(4,3),(3,4),(3,4),(4,3),(4,4),(4,4),(3,4),(3,4),(3,2),(2,2),(2,2),(3,2)]
+for i,(w,h) in enumerate(NATURE_SIZES):CUSTOM['woodland'+str(i)]=('woodland'+str(i),w,h)
 for key,(asset,w,h) in CUSTOM.items():
     STAMPS['goryeo_'+key]=('goryeo_'+key,0,0,w,h,0,0,None)
 
@@ -27,6 +29,16 @@ REPLACE = {'house_tile': 'house', 'house_plain': 'house', 'house_wall': 'house',
 
 @lru_cache(None)
 def sprite(name, w, h):
+    if name.startswith('woodland'):
+        i=int(name[8:]);col,row=i%4,i//4
+        with Image.open(SOURCE.parent/'Woodland.png') as atlas:
+            im=atlas.crop((col*384,row*1024//3,(col+1)*384,(row+1)*1024//3)).convert('RGBA')
+            bounds=im.getchannel('A').point(lambda a:255 if a>=128 else 0).getbbox()
+            if bounds:im=im.crop(bounds)
+        im=im.resize((w*16,h*16),Image.Resampling.NEAREST)
+        alpha=im.getchannel('A').point(lambda a:255 if a>=128 else 0)
+        im=im.convert('RGB').quantize(colors=18).convert('RGBA');im.putalpha(alpha)
+        return im
     source=SOURCE.parent/('CourtyardStone.png' if name=='paving' else 'VillageDetails.png') if name in DETAIL_RECTS or name=='paving' else SOURCE
     with Image.open(source) as atlas:
         im = (atlas if name=='paving' else atlas.crop(DETAIL_RECTS[name] if name in DETAIL_RECTS else RECTS[name])).convert('RGBA')
@@ -91,8 +103,9 @@ def apply(maps):
             for y,row in enumerate(layer):
                 for x,key in enumerate(row):row[x]=tint(key,x,y)
         if m.id=='Gaegyeong':
-            for y in range(8,30):
-                for x in range(5,35):
+            ox,oy=getattr(m,'core_offset',(0,0))
+            for y in range(8+oy,30+oy):
+                for x in range(5+ox,35+ox):
                     if not m.water[y][x] and (x,y) not in m.decks:
                         m.ground[y][x]=f'goryeo_paving:{x%4}:{y%4}'
         for o in m.objects:

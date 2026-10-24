@@ -10,6 +10,7 @@ namespace PocketCaravan
     public class SaveData
     {
         public int version = 2;
+        public int layoutVersion; // 1: five broad Goryeo regions; missing/0 is migrated read-only.
         public string scene;
         public float px, py;
         public int mapHeight; // 0: 맵 확장 전 저장. WorldIndex의 고정된 이전 높이를 사용한다.
@@ -56,7 +57,8 @@ namespace PocketCaravan
         /// <summary>위쪽 기준 타일은 유지하고, 맵 높이 확장으로 바뀐 Unity y만 보정한다.</summary>
         public static Vector3 PositionFor(SaveData data)
         {
-            var info = WorldIndex.Get()?.Map(data.scene);
+            if (GoryeoLayout.TryPosition(data, out var migrated)) return migrated;
+            var info = WorldIndex.Get()?.Map(GoryeoLayout.Resolve(data.scene));
             int current = info != null ? info.height : 0;
             int saved = data.mapHeight > 0 ? data.mapHeight : (info != null ? info.legacyHeight : 0);
             float delta = current > 0 && saved > 0 ? current - saved : 0;

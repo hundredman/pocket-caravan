@@ -51,8 +51,8 @@ def validate():
             check(a.id + " / " + b.id + " 지도 영역 겹침 없음", not overlap)
     regional = [m for m in world if m.id in {entry["mapId"] for entry in map_entries("goryeo")}]
     rp = cartography.layout(regional)
-    check("송악 산록은 개경 북쪽", rp["goryeo_songak"][1] < rp["Gaegyeong"][1])
-    check("장단 들마을은 닥나무 마을 남쪽", rp["goryeo_jangdan"][1] > rp["Dakmok"][1])
+    check("송악 산록은 나루 북쪽", rp["goryeo_songak"][1] < rp["Naru"][1])
+    check("장단 들마을은 닥나무 마을 남쪽", rp["goryeo_jangdan"][1]+by_id["goryeo_jangdan"].atlas_label["y"] > rp["Dakmok"][1]+by_id["Dakmok"].atlas_label["y"])
     rw = max(rp[m.id][0]+m.w for m in regional)-min(p[0] for p in rp.values())
     rh = max(rp[m.id][1]+m.h for m in regional)-min(p[1] for p in rp.values())
     check("고려 지형 지도 가로세로 비율 1.8 이하", rw/rh < 1.8)
@@ -96,16 +96,11 @@ def validate():
                     clear &= (x, y) in accessible and not m.blocked[y][x]
             check(m.id + " " + worker["name"] + " 작업 경로 통행 가능", clear)
         check(m.id + " 다리/선착장 통행 가능", all(p in accessible and not m.water[p[1]][p[0]] for p in m.decks))
-    # 물을 가로지르는 다리의 양 끝이 길과 연결되는지 확인한다.
-    route = by_id["Route01"]
-    check("예성 길 시내 다리 양안 연결", (16, 9) in reachable(route, (12, 9), road_only=True))
-    check("지도는 수도를 예성 길 북쪽에 배치", positions["Gaegyeong"][1] < positions["Route01"][1])
-    capital = by_id["Gaegyeong"]
-    check("개경 남쪽 큰길 세 칸 통행 폭 보존",
-          all(capital.road[y][x] == 3 and not capital.blocked[y][x]
-              for y in range(30, 38) for x in range(20, 23)))
-    check("개경 궁성 앞마당과 시전 연결", (20, 10) in reachable(capital, (20, 21), road_only=True))
-    check("개경 전용 전각이 온전하게 배치", ("goryeo_royal", 15, 1) in capital.stamps)
+    capital=by_id['Gaegyeong'];ox,oy=capital.core_offset
+    check("개경 남쪽 큰길 세 칸 통행 폭 보존", all(capital.road[y+oy][x+ox]==3 and not capital.blocked[y+oy][x+ox] for y in range(30,38) for x in range(20,23)))
+    check("개경 궁성 앞마당과 시전 연결",(20+ox,10+oy) in reachable(capital,(20+ox,21+oy),road_only=True))
+    check("개경 전용 전각이 온전하게 배치",('goryeo_royal',15+ox,1+oy) in capital.stamps)
+    check("고려는 넓은 다섯 권역",len(regional)==5 and min(m.w*m.h for m in regional)>=3000)
     check("고려 전체 면적 정확히 2만 칸", sum(m.w*m.h for m in regional)==20000)
     check("중앙 동쪽 전체 면적 정확히 2만5천 칸", sum(m.w*m.h for m in world if m.id.startswith('transit_'))==25000)
     return results

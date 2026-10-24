@@ -7,15 +7,19 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 
 class GoryeoExperienceContract(unittest.TestCase):
-    def test_region_loop_has_different_best_routes_for_backpack_and_cart(self):
+    def test_broad_regions_keep_route_loops_and_vehicle_reachability(self):
         result=subprocess.run([sys.executable,str(ROOT/'Tools/Integration/analyze_journey.py')],capture_output=True,text=True,check=True)
         data=json.loads(result.stdout)
         self.assertGreaterEqual(data['goryeoGraph']['independentCycles'],2)
         route=next(r for r in data['routes'] if r['from']=='goryeo_songak' and r['to']=='Dakmok')
-        self.assertNotEqual(route['Walk']['maps'],route['Handcart']['maps'])
-        self.assertIn('goryeo_descent',route['Walk']['maps'])
-        self.assertIn('Route01',route['Handcart']['maps'])
-        self.assertIn('Gaegyeong',route['Handcart']['maps'])
+        # Retired road scenes are now inside the five larger maps. Vehicle differences
+        # can occur within a map, so a different scene-name sequence is no longer required.
+        self.assertEqual(data['goryeoGraph']['nodes'],5)
+        for vehicle in ('Walk','Handcart'):
+            self.assertEqual(route[vehicle]['maps'][0],'goryeo_songak')
+            self.assertEqual(route[vehicle]['maps'][-1],'Dakmok')
+            self.assertGreater(route[vehicle]['seconds'],0)
+            self.assertNotIn('Route01',route[vehicle]['maps'])
 
     def test_intro_region_has_no_random_bandit_loss_and_frontier_is_signposted(self):
         region=json.loads((ROOT/'Assets/PocketCaravan/World/Regions/goryeo.json').read_text())

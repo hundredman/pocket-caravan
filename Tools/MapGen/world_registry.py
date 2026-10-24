@@ -36,7 +36,8 @@ def map_entries(region_id, root=ROOT):
 def generated_maps(region_id='goryeo'):
     """Only load explicitly registered generators from this source directory; never eval a string."""
     result = []
-    for entry in map_entries(region_id):
+    source_entries = json.loads((ROOT/'Assets/PocketCaravan/World/Terrain/legacy_goryeo_sources.json').read_text())['maps'] if region_id=='goryeo' else map_entries(region_id)
+    for entry in source_entries:
         generator = entry.get('generator', '')
         if not re.fullmatch(r'[a-z][a-z0-9_]*:[a-z][a-z0-9_]*', generator):
             raise ValueError(f'No valid Python generator for {entry["mapId"]}')
@@ -65,4 +66,7 @@ def atlas_content():
     from continuous import build
     from goryeo_art import apply
     from compact import build as compact
-    return entries, apply(compact(build(maps)))
+    from broad_regions import build as broad
+    final = apply(broad(compact(build(maps))))
+    by_id={m.id:m for m in final}
+    return entries, [by_id[e["mapId"]] for e in entries]

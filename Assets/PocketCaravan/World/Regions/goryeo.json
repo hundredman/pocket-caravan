@@ -12,14 +12,6 @@
       "generator": "maps:naru"
     },
     {
-      "mapId": "Route01",
-      "jsonPath": "Assets/PocketCaravan/Maps/Route01.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/Route01.unity",
-      "worldX": 1,
-      "worldY": 0,
-      "generator": "maps:route01"
-    },
-    {
       "mapId": "Gaegyeong",
       "jsonPath": "Assets/PocketCaravan/Maps/Gaegyeong.json",
       "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/Gaegyeong.unity",
@@ -50,62 +42,6 @@
       "worldX": 4,
       "worldY": 0,
       "generator": "goryeo_villages:jangdan"
-    },
-    {
-      "mapId": "goryeo_ridge",
-      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_ridge.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_ridge.unity",
-      "worldX": 5,
-      "worldY": 1,
-      "generator": "goryeo_roads:ridge"
-    },
-    {
-      "mapId": "goryeo_descent",
-      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_descent.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_descent.unity",
-      "worldX": 6,
-      "worldY": 1,
-      "generator": "goryeo_roads:descent"
-    },
-    {
-      "mapId": "goryeo_fieldroad",
-      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_fieldroad.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_fieldroad.unity",
-      "worldX": 7,
-      "worldY": 1,
-      "generator": "goryeo_roads:fieldroad"
-    },
-    {
-      "mapId": "goryeo_westcoast",
-      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_westcoast.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_westcoast.unity",
-      "worldX": 0,
-      "worldY": 2,
-      "generator": "landscape:westcoast"
-    },
-    {
-      "mapId": "goryeo_tidalcoast",
-      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_tidalcoast.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_tidalcoast.unity",
-      "worldX": 1,
-      "worldY": 2,
-      "generator": "landscape:tidalcoast"
-    },
-    {
-      "mapId": "goryeo_rivervalley",
-      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_rivervalley.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_rivervalley.unity",
-      "worldX": 2,
-      "worldY": 2,
-      "generator": "landscape:rivervalley"
-    },
-    {
-      "mapId": "goryeo_southcoast",
-      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_southcoast.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_southcoast.unity",
-      "worldX": 3,
-      "worldY": 2,
-      "generator": "landscape:southcoast"
     }
   ],
   "npcs": [

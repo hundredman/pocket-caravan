@@ -9,25 +9,28 @@ ROOT=Path(__file__).resolve().parents[2]
 class ContinuousTerrain(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.config=json.loads((ROOT/'Assets/PocketCaravan/World/Terrain/continuous.json').read_text())
-        cls.maps={mid:json.loads((ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').read_text()) for mid in cls.config['maps']}
+        entries=[]
+        for region in ('goryeo','transit'):
+            entries+=json.loads((ROOT/f'Assets/PocketCaravan/World/Regions/{region}.json').read_text())['maps']
+        cls.maps={e['mapId']:json.loads((ROOT/e['jsonPath']).read_text()) for e in entries}
 
     def test_open_ground_across_each_shared_border_has_reciprocal_exits(self):
-        by_pos={tuple(p):mid for mid,p in self.config['maps'].items()}
-        for (gx,gy),mid in by_pos.items():
-            a=self.maps[mid];w,h=a['w'],a['h']
-            for edge,delta in [('E',(1,0)),('S',(0,1))]:
-                tid=by_pos.get((gx+delta[0],gy+delta[1]))
-                if tid is None:continue
-                b=self.maps[tid];valid=set();covered=set()
-                for t in range(h if edge=='E' else w):
-                    ps=[(w-1,t),(w-2,t),(0,t),(1,t)] if edge=='E' else [(t,h-1),(t,h-2),(t,0),(t,1)]
+        for mid,a in self.maps.items():
+            ax,ay,w,h=a['terrainX'],a['terrainY'],a['w'],a['h']
+            for tid,b in self.maps.items():
+                bx,by=b['terrainX'],b['terrainY']
+                if ax+w==bx:edge='E';lo,hi=max(ay,by),min(ay+h,by+b['h']);ao,bo=ay,by
+                elif ay+h==by:edge='S';lo,hi=max(ax,bx),min(ax+w,bx+b['w']);ao,bo=ax,bx
+                else:continue
+                valid=set();covered=set()
+                for t in range(lo,hi):
+                    ps=[(w-1,t-ao),(w-2,t-ao),(0,t-bo),(1,t-bo)] if edge=='E' else [(t-ao,h-1),(t-ao,h-2),(t-bo,0),(t-bo,1)]
                     if all(m['reachable'][y*m['w']+x] for m,coords in ((a,ps[:2]),(b,ps[2:])) for x,y in coords):valid.add(t)
                 for e in a['objects']:
-                    if e['kind']!='exit' or e['target']!=tid:continue
+                    if e['kind']!='exit' or e['target']!=tid or e['edge']!=edge:continue
                     start=e['y'] if edge=='E' else e['x'];length=e['h'] if edge=='E' else e['w']
-                    covered.update(range(start,start+length))
-                    target=next(s for s in b['objects'] if s['kind']=='spawn' and s['id']==e['spawn'])
+                    covered.update(range(start+ao,start+ao+length))
+                    target=next(o for o in b['objects'] if o['kind']=='spawn' and o['id']==e['spawn'])
                     self.assertEqual((e['w'],e['h']),(target['w'],target['h']))
                 self.assertEqual(covered,valid,(mid,tid))
 
@@ -59,7 +62,7 @@ class ContinuousTerrain(unittest.TestCase):
     def test_settlements_and_cargo_scope_are_not_replaced_by_landscape_sectors(self):
         markets={o['town'] for m in self.maps.values() for o in m['objects'] if o['kind']=='market'}
         self.assertEqual(markets,{'naru','gaegyeong','dakmok','goryeo_songak','goryeo_jangdan','transit_woodtown','transit_ferry'})
-        for mid in ['goryeo_westcoast','goryeo_tidalcoast','goryeo_rivervalley','goryeo_southcoast']:
-            self.assertFalse(any(o['kind'] in ('market','board','bandit') for o in self.maps[mid]['objects']))
+        self.assertEqual(len([m for m in self.maps if not m.startswith('transit_')]),5)
+        self.assertNotIn('Route01',self.maps)
 
 if __name__=='__main__':unittest.main()

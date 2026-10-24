@@ -40,13 +40,13 @@ class CartographyContract(unittest.TestCase):
         return entries
 
     def test_world_atlas_matches_playable_exits(self):
-        self.assertEqual(len(self.check_atlas('Goryeo')), 19)
+        self.assertEqual(len(self.check_atlas('Goryeo')), 11)
 
     def test_goryeo_detail_has_only_connected_regional_maps(self):
         entries = self.check_atlas('GoryeoRegional')
-        self.assertEqual(set(entries), {'Naru', 'Route01', 'Gaegyeong', 'Dakmok', 'goryeo_songak', 'goryeo_jangdan', 'goryeo_ridge', 'goryeo_descent', 'goryeo_fieldroad','goryeo_westcoast','goryeo_tidalcoast','goryeo_rivervalley','goryeo_southcoast'})
-        self.assertLess(entries['goryeo_songak']['y'], entries['Gaegyeong']['y'])
-        self.assertGreater(entries['goryeo_jangdan']['y'], entries['Dakmok']['y'])
+        self.assertEqual(set(entries), {'Naru','Gaegyeong','Dakmok','goryeo_songak','goryeo_jangdan'})
+        self.assertLess(entries['goryeo_songak']['y'], entries['Naru']['y'])
+        self.assertGreater(entries['goryeo_jangdan']['y'], entries['Gaegyeong']['y'])
 
 
 if __name__ == '__main__':

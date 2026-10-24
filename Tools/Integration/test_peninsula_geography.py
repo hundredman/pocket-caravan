@@ -12,28 +12,23 @@ class PeninsulaGeography(unittest.TestCase):
 
     def test_continental_gate_is_in_northwest_starting_region(self):
         songak=self.areas['goryeo_songak'];capital=self.areas['Gaegyeong'];central=self.areas['transit_crossroads']
-        self.assertLess(songak['y'],capital['y'])
+        self.assertLess(songak['x'],capital['x'])
         self.assertLess(central['x']+central['w'],songak['x'])
         self.assertLess(central['y']+central['h']/2,capital['y']+capital['h']/2)
         jangdan=json.loads((ROOT/'Assets/PocketCaravan/Maps/goryeo_jangdan.json').read_text())
         self.assertFalse(any(o['kind']=='exit' and o['target'].startswith('transit_') for o in jangdan['objects']))
 
     def test_all_playable_maps_are_on_land_and_context_is_not_extra_maps(self):
-        self.assertEqual(len(self.areas),19)
+        self.assertEqual(len(self.areas),11)
         self.assertEqual(self.atlas['geography'],'continuous_tiles')
         for mid,a in self.areas.items():
             m=json.loads((ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').read_text())
-            gx,gy=self.profile['maps'][mid]
-            budget=json.loads((ROOT/'Assets/PocketCaravan/World/Terrain/area_budget.json').read_text())
-            widths={int(k):v for k,v in budget['columnWidths'].items()}
-            heights={int(k):v for k,v in budget['rowHeights'].items()}
-            def offset(i,sizes):return sum(sizes[j] for j in range(i)) if i>=0 else -sum(sizes[j] for j in range(i,0))
-            self.assertEqual((m['terrainX'],m['terrainY']),(offset(gx,widths),offset(gy,heights)))
             w,h=m['w'],m['h']
-            self.assertEqual((w,h),(widths[gx],heights[gy]))
+            self.assertEqual((a['w'],a['h']),(w,h))
+            if not mid.startswith('transit_'):self.assertGreaterEqual(w*h,3000)
             sp=next(o for o in m['objects'] if o['kind']=='spawn' and o['id']=='S0')
             self.assertEqual(m['blocked'][sp['y']*w+sp['x']],0)
-        for mid in ['goryeo_westcoast','goryeo_tidalcoast','goryeo_southcoast']:
+        for mid in ['Naru','Dakmok','goryeo_jangdan']:
             m=json.loads((ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').read_text())
             self.assertGreater(sum(m['water']),0)
             self.assertLess(sum(m['water']),m['w']*m['h'])

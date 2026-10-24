@@ -17,7 +17,7 @@ namespace PocketCaravan.EditorTools
             int count=0;
             foreach(var map in WorldIndex.Get().maps)
             {
-                var data=new SaveData{scene=map.mapId,px=4.25f,py=8.5f,money=777};
+                var data=new SaveData{scene=map.mapId,px=4.25f,py=8.5f,money=777,layoutVersion=1};
                 data.cargoItems.Add("paper");data.cargoCounts.Add(3);data.cargoCosts.Add(33);
                 string before=JsonUtility.ToJson(data);
                 var legacy=SaveSystem.PositionFor(data);

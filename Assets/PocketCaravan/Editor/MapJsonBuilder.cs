@@ -169,7 +169,11 @@ namespace PocketCaravan.EditorTools
             var paths = new List<string>(registry.ScenePaths);
             foreach (var path in paths) list.Add(new EditorBuildSettingsScene(path, true));
             foreach (var scene in EditorBuildSettings.scenes)
-                if (!paths.Contains(scene.path) && File.Exists(scene.path)) list.Add(scene);
+                if (!paths.Contains(scene.path) && File.Exists(scene.path))
+                {
+                    bool retired=GoryeoLayout.Resolve(Path.GetFileNameWithoutExtension(scene.path))!=Path.GetFileNameWithoutExtension(scene.path);
+                    list.Add(new EditorBuildSettingsScene(scene.path, !retired && scene.enabled));
+                }
             EditorBuildSettings.scenes = list.ToArray();
             AssetDatabase.SaveAssets();
         }
@@ -445,18 +449,18 @@ namespace PocketCaravan.EditorTools
             player.AddComponent<PlayerMotor>();
             player.AddComponent<PlayerController>().anim = anim;
 
-            // 카메라: 320×180 기준, 16 PPU 픽셀 퍼펙트
+            // Wider 480×270 view, native 16 PPU pixel art.
             var camGo = new GameObject("Main Camera") { tag = "MainCamera" };
             var cam = camGo.AddComponent<Camera>();
             cam.orthographic = true;
-            cam.orthographicSize = 6.75f;
+            cam.orthographicSize = 8.4375f;
             cam.clearFlags = CameraClearFlags.SolidColor;
             cam.backgroundColor = new Color32(0x22, 0x2B, 0x22, 0xFF);
             camGo.transform.position = new Vector3(startPos.x, startPos.y, -10f);
             var ppc = camGo.AddComponent<PixelPerfectCamera>();
             SetInt(ppc, "m_AssetsPPU", PixelArtImporter.PPU);
-            SetInt(ppc, "m_RefResolutionX", 384);
-            SetInt(ppc, "m_RefResolutionY", 216);
+            SetInt(ppc, "m_RefResolutionX", 480);
+            SetInt(ppc, "m_RefResolutionY", 270);
             SetInt(ppc, "m_GridSnapping", 1);
             camGo.AddComponent<CameraFollow>().target = player.transform;
 

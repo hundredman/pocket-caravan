@@ -36,13 +36,14 @@ namespace PocketCaravan
         static WorldIndex cached;
         public static WorldIndex Get() => cached != null ? cached : (cached = Resources.Load<WorldIndex>("WorldIndex"));
 
-        public MapInfo Map(string id) => maps.Find(m => m.mapId == id);
+        public MapInfo Map(string id) => maps.Find(m => m.mapId == GoryeoLayout.Resolve(id));
         public string MapName(string id) => Map(id)?.displayName ?? id;
         public string MapOf(string kind, string id) => places.Find(p => p.kind == kind && p.id == id)?.mapId;
 
         /// <summary>from에서 to로 갈 때 다음에 들어갈 맵 (가장 짧은 길). 없으면 null.</summary>
         public string NextStep(string from, string to)
         {
+            from=GoryeoLayout.Resolve(from);to=GoryeoLayout.Resolve(to);
             if (from == to || Map(from) == null) return null;
             var prev = new Dictionary<string, string> { [from] = null };
             var q = new Queue<string>();

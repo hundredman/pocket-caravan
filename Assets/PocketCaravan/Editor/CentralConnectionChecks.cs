@@ -85,8 +85,8 @@ namespace PocketCaravan.EditorTools
                 p.contracts.Add(new Contract{id=988888,fromTown="transit_woodtown",toTown="transit_ferry",weight=4,reward=12,deadline=gm.Clock.TotalHours+100000,finalDeadline=gm.Clock.TotalHours+150000});
                 SceneManager.sceneLoaded+=Freeze;Freeze(default,LoadSceneMode.Single);
                 gm.TravelTo("transit_crossroads","E");yield return Arrive("transit_crossroads");
-                Check("central connects only to its eastern neighboring sector",MapExit.All.TrueForAll(e=>e.targetScene=="transit_central_approach"));
-                var route=new[]{"transit_crossroads","transit_central_approach","transit_ferry","transit_wetroad","transit_woodtown","transit_pass","goryeo_songak","Gaegyeong","Route01","Naru","goryeo_tidalcoast","goryeo_rivervalley","goryeo_southcoast","goryeo_jangdan","goryeo_fieldroad","Dakmok","goryeo_descent","goryeo_ridge","goryeo_songak","transit_pass","goryeo_westcoast","Naru"};
+                Check("central hub stays within the central continent",MapExit.All.TrueForAll(e=>e.targetScene.StartsWith("transit_")));
+                var route=new[]{"transit_crossroads","transit_central_approach","transit_wetroad","transit_ferry","transit_crossroads","transit_ferry","transit_wetroad","transit_woodtown","transit_wetroad","transit_pass","goryeo_songak","Gaegyeong","Dakmok","goryeo_jangdan","Naru","goryeo_songak","Gaegyeong","goryeo_jangdan"};
                 for(int leg=1;leg<route.Length;leg++)
                 {
                     for(int offset=0;offset<3;offset++)

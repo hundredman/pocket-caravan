@@ -13,7 +13,7 @@ namespace PocketCaravan
             SaveSystem.Validate(data);
             Require(db!=null,"게임 데이터가 없습니다.");
             if(!string.IsNullOrEmpty(data.scene) && sceneAvailable!=null)
-                Require(sceneAvailable(data.scene),"현재 빌드에 없는 저장 맵: "+data.scene);
+                Require(sceneAvailable(GoryeoLayout.Resolve(data.scene)),"현재 빌드에 없는 저장 맵: "+data.scene);
             foreach(string id in data.cargoItems)
                 Require(db.items.Exists(i=>i!=null && i.id==id),"현재 데이터에 없는 화물: "+id);
             if(!string.IsNullOrEmpty(data.vehicle))

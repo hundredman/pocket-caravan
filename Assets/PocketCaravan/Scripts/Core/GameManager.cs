@@ -207,9 +207,9 @@ namespace PocketCaravan
                 var d = saveToLoad;
                 saveToLoad = null;
                 if (!TryApplySave(d)) return;
-                if (!string.IsNullOrEmpty(d.scene) && d.scene != scene.name)
+                if (!string.IsNullOrEmpty(d.scene) && GoryeoLayout.Resolve(d.scene) != scene.name)
                 {
-                    StartCoroutine(Travel(d.scene, null, 0f, new Vector2Int(d.fx, d.fy), SaveSystem.PositionFor(d)));
+                    StartCoroutine(Travel(GoryeoLayout.Resolve(d.scene), null, 0f, new Vector2Int(d.fx, d.fy), SaveSystem.PositionFor(d)));
                     return;
                 }
                 pendingExact = SaveSystem.PositionFor(d);
@@ -361,6 +361,7 @@ namespace PocketCaravan
             var d = new SaveData
             {
                 scene = SceneManager.GetActiveScene().name,
+                layoutVersion = 1,
                 mapHeight = MapRoot.Current.ground.cellBounds.size.y,
                 px = pc != null ? pc.transform.position.x : 0, py = pc != null ? pc.transform.position.y : 0,
                 fx = pc != null ? pc.Motor.Facing.x : 0, fy = pc != null ? pc.Motor.Facing.y : -1,

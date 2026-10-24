@@ -3,8 +3,29 @@
   "basis": "Full rectangular map area, including sea, mountains and structures; one cell is 16px and one Unity unit.",
   "goryeoTiles": 20000,
   "centralEastTiles": 25000,
-  "columnWidths": {"-4": 104, "-3": 104, "-2": 100, "-1": 100, "0": 40, "1": 40, "2": 40},
-  "rowHeights": {"-1": 50, "0": 40, "1": 40, "2": 40, "3": 40, "4": 30},
+  "columnWidths": {
+    "-4": 104,
+    "-3": 104,
+    "-2": 100,
+    "-1": 100,
+    "0": 40,
+    "1": 40,
+    "2": 40
+  },
+  "rowHeights": {
+    "-1": 50,
+    "0": 40,
+    "1": 40,
+    "2": 40,
+    "3": 40,
+    "4": 30
+  },
   "source": "2026-10-23 user-confirmed team meeting",
-  "marketDay": {"location": "One of the villages in the central continent", "bonus": "undecided: trading or credit", "schedule": "undecided"}
+  "marketDay": {
+    "location": "One of the villages in the central continent",
+    "bonus": "undecided: trading or credit",
+    "schedule": "undecided"
+  },
+  "layoutRevision": "2026-10-24 five broad settlement regions",
+  "sourceLayoutNote": "columnWidths/rowHeights are legacy template dimensions only. Final five-region placement is compiled by Tools/MapGen/broad_regions.py; central east retains legacy dimensions."
 }
