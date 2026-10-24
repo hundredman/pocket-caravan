@@ -81,6 +81,12 @@ def build(out):
         img0 = chars.render(grid(body, 16), pal)
         img1 = Image.new("RGBA", img0.size); img1.alpha_composite(img0, (0, -2))   # 깡충
         made[(name, 0)], made[(name, 1)] = img0, img1
+    # 10/25 순록은 더 크고 자세한 새 그림 (north_reindeer_art.py): 걷기 4프레임 + 풀 뜯기
+    import north_reindeer_art
+    rd = north_reindeer_art.frames()
+    for f, img in enumerate(rd["walk"]):
+        made[("reindeer", f)] = img
+    made[("reindeer_graze", 0)] = rd["graze"]
     for (name, f), img in made.items():
         img.save(os.path.join(out, f"north_critter_{name}_r{f}.png"))
         img.transpose(Image.FLIP_LEFT_RIGHT).save(os.path.join(out, f"north_critter_{name}_l{f}.png"))

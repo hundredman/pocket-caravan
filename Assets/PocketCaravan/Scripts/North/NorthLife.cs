@@ -23,6 +23,7 @@ namespace PocketCaravan
         {
             public Transform t; public SpriteRenderer sr; public Sprite[] frames;
             public Vector3 target; public float wait, speed, anim; public bool bird;
+            public Sprite graze; public bool grazing;   // 10/25 순록: 멈춰 있을 때 고개 숙여 풀(이끼) 뜯기
             public Rect area;
         }
 
@@ -33,7 +34,7 @@ namespace PocketCaravan
         readonly List<Vector3> fireSpots = new List<Vector3>();
         readonly List<(SpriteRenderer sr, float phase)> smokes = new List<(SpriteRenderer, float)>();
         Sprite[] smoke, flame, glint;
-        Sprite dot, print;
+        Sprite dot, print, grazeSprite;
         readonly List<(SpriteRenderer sr, float phase, float size)> flames = new List<(SpriteRenderer, float, float)>();
         readonly List<(SpriteRenderer sr, float next)> glints = new List<(SpriteRenderer, float)>();
         class Ember { public Transform t; public SpriteRenderer sr; public Vector3 home; public float age, life; public Vector2 v; }
@@ -63,7 +64,9 @@ namespace PocketCaravan
             dot = Pixel(new Color32(255, 200, 120, 255), 1, 1);
             print = Pixel(new Color32(150, 146, 170, 255), 2, 1);
             foreach (var k in new[] { "reindeer", "goat", "raven", "gull" })
-                sprites[k] = LoadFrames($"North/Critters/{k}_", 2, new Vector2(0.5f, 0.1f));
+                sprites[k] = LoadFrames($"North/Critters/{k}_", 4, new Vector2(0.5f, 0.1f));   // 순록은 4프레임, 나머지는 2프레임 (없는 프레임은 건너뜀)
+            var g = LoadFrames("North/Critters/reindeer_graze_", 1, new Vector2(0.5f, 0.1f));
+            grazeSprite = g.Length > 0 ? g[0] : null;
             crackle = gameObject.AddComponent<AudioSource>();
             crackle.clip = MakeCrackle();
             crackle.loop = true; crackle.volume = 0f; crackle.playOnAwake = false;
@@ -282,6 +285,7 @@ namespace PocketCaravan
                     var c = new Critter { t = go.transform, sr = go.AddComponent<SpriteRenderer>(), frames = frames, area = area,
                                           bird = g.kind == "raven" || g.kind == "gull" };
                     c.sr.sprite = frames[0]; c.sr.sortingOrder = 9;
+                    if (g.kind == "reindeer") c.graze = grazeSprite;
                     c.t.position = RandomIn(area);
                     c.target = c.t.position; c.wait = UnityEngine.Random.Range(0f, 3f);
                     c.speed = c.bird ? 2.2f : 0.9f;
@@ -360,11 +364,12 @@ namespace PocketCaravan
                 {
                     c.target = RandomIn(c.area); c.wait = 0f;
                 }
-                if (c.wait > 0f) { c.wait -= dt; c.sr.sprite = c.frames[0]; continue; }
+                if (c.wait > 0f) { c.wait -= dt; c.sr.sprite = c.grazing && c.graze != null ? c.graze : c.frames[0]; continue; }
                 var to = c.target - c.t.position;
                 if (to.magnitude < 0.05f)
                 {
                     c.wait = c.bird ? UnityEngine.Random.Range(0.6f, 2.5f) : UnityEngine.Random.Range(1.5f, 5f);
+                    c.grazing = c.graze != null && UnityEngine.Random.value < 0.6f;
                     c.target = RandomIn(c.area);
                     continue;
                 }

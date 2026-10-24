@@ -226,11 +226,11 @@ namespace PocketCaravan.EditorTools
             Q("N5_Troll", q =>
             {
                 q.id = "north_q5_troll"; q.title = "다리 밑 트롤"; q.chain = chain; q.giverNpc = Innkeeper; q.requires.Add(q2);
-                q.summary = "소금 덩이를 사냥꾼 마을 목장의 염소 삼형제에게 배달한다. 피오르 길 큰길의 다리에는 트롤 패거리가 산다.";
-                q.offerLine = "사냥꾼 마을 목장의 염소 삼형제가 소금 덩이를 기다린단다. 그런데 큰길 다리 밑에 트롤 패거리가 살아. 통행료를 내든, 냅다 달리든, 숲으로 돌아가든 네가 정하렴.";
+                q.summary = "소금 덩이를 사냥꾼 마을 목장의 염소지기 삼형제에게 배달한다. 피오르 길 큰길의 다리에는 트롤 패거리가 산다.";
+                q.offerLine = "사냥꾼 마을 목장의 염소지기 삼형제가 소금 덩이를 기다린단다. 그런데 큰길 다리 밑에 트롤 패거리가 살아. 통행료를 내든, 냅다 달리든, 숲으로 돌아가든 네가 정하렴.";
                 q.giveItem = saltLick; q.giveCount = 1;
-                q.objectives.Add(O(ObjectiveType.Deliver, "목장의 염소 맏형에게 소금 덩이 전하기", Goats, saltLick, 1,
-                    "음메! 소금이다! 트롤한테 \"뒤에 더 큰 짐꾼이 온다\"고 하면 한 번은 속는다니까. 고마워."));
+                q.objectives.Add(O(ObjectiveType.Deliver, "목장의 염소지기 맏형에게 소금 덩이 전하기", Goats, saltLick, 1,
+                    "오, 소금이다! 염소들이 신나겠군. 트롤한테 \"뒤에 더 큰 짐꾼이 온다\"고 하면 한 번은 속는다니까. 고마워."));
                 q.rewardMoney = 50; q.rewardCredit = 1;
             });
 

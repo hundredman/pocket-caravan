@@ -97,9 +97,9 @@
     },
     {
       "id": "north_goats",
-      "name": "그루프 염소 맏형",
+      "name": "염소지기 그루프 맏형",
       "sprite": "north_goat_tall",
-      "greeting": "음메. 우리 셋은 다리 건너 이 목장에 살아. 다리 밑 트롤만 없으면 좋으련만."
+      "greeting": "우리 삼형제는 다리 건너 이 목장에서 염소를 쳐. 다리 밑 트롤만 없으면 좋으련만."
     },
     {
       "id": "north_har",
