@@ -1,7 +1,7 @@
-"""고려 + 중앙 대륙 동쪽 배치 검토안 A의 면적 계산 (Docs/WorldLayout.md 3절).
+"""고려 + 중앙 대륙 동쪽 배치 검토안 A(대체됨)의 면적 계산.
 
 칸 단위로 계산한다. 대륙 중심 = (0,0), x 동쪽, y 남쪽.
-사용: python layout_proposal.py [출력.json]
+사용: python layout_proposal_a.py [출력.json]
 필요: numpy, opencv-python
 검토안이므로 실제 지형 생성기의 원본이 아니다. 승인되면 작업 B1에서 정식 원본으로 옮긴다.
 """

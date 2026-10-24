@@ -40,7 +40,9 @@
 | 마을 시설: 쉼터·길 안내소·개경 보관소(신용 조건) | `Economy/TownFacility`, `UI/TownFacilitiesUI` |
 | 마을 등급 성장 | `MarketState.Level`, `World/TownGrowthProp` |
 | 도적, 길 위 사건, NPC 상인 시뮬레이션 | `Scripts/World/` |
-| 게임 시계, 낮밤, 장날 | `Core/GameClock` |
+| 게임 시계, 낮밤, 장날(5일마다 **모든 마을**에서 수요 상승) | `Core/GameClock`, `Economy/MarketState` |
+| 나루 낚시(짧은 놓아주기 놀이, 보상 없음) | `World/GoryeoPastime` |
+| 길 장애물 48종(통나무·범람·산적 등). 별도 시험장에만 있고 본편에는 없음 | `Scripts/Obstacles/`, `Docs/Reference/ObstacleLibrary.md` |
 | 저장(로컬 JSON, 옛 저장 이주, 원본 보호) | `Core/SaveSystem`, `Core/GameManager` |
 | 지도(M), 상업 백과(Esc) | `UI/WorldMapUI`, `UI/CommerceGuideUI` |
 | 소리 | `Audio/AudioManager` |
