@@ -7,4 +7,4 @@
 |---|---|---|---|---|
 | 2026-10-24 | Codex/Claude | (이전 흐름) 고려 5권역 개편 | 00c908b | 방향 전환 전 상태 보존. 실제 이동 검사 920개 통과 |
 | 2026-10-24 | Claude | 방향 재정립 | e48479b | Direction·ArtGuide·WorldLayout·Plan·CurrentState 작성, 시작 문서 통합, 옛 문서를 Reference/Archive로 이동. Figma에 고려 배치 검토안 A 추가. D1 검토 대기 |
-| 2026-10-24 | Claude | 방향 추가(2차) | (아래 커밋) | 개경 중서부·마을 단위 맵·땅 전체 구현·중앙 마을/길/장터·낚시 보류를 Direction·WorldLayout·Plan에 반영. Figma에 배치안 B 추가, A는 대체됨 표시. D1(배치안 B) 검토 대기 |
+| 2026-10-24 | Claude | 방향 추가(2차) | 1cfbdce | 개경 중서부·마을 단위 맵·땅 전체 구현·중앙 마을/길/장터·낚시 보류를 Direction·WorldLayout·Plan에 반영. Figma에 배치안 B 추가, A는 대체됨 표시. D1(배치안 B) 검토 대기 |
