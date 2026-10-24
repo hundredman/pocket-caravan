@@ -10,6 +10,7 @@
 | [Plan.md](Plan.md) | 작업 목록, 상태, 결정 대기 항목 |
 | [ArtGuide.md](ArtGuide.md) | 아트 제작 기준, 조립용 에셋, 현재 에셋 진단 |
 | [WorldLayout.md](WorldLayout.md) | 면적·좌표 약속, 고려 배치 검토안 |
+| [ArtBrief.md](ArtBrief.md) | 고려 아트 개선 요청서: 사람 NPC, 건물·나무 실사감 줄이기, 깨진 연못 |
 | [QuestMain1.md](QuestMain1.md) | 메인 퀘스트 ① `고려 한 바퀴` 설계: 단계·대사·옛 퀘스트 처리·옛 저장 대응표 |
 | [Standing.md](Standing.md) | 돈·신용·평판의 뜻, 평판 오르내림, 흥정, 경매 (초안) |
 | [CurrentState.md](CurrentState.md) | 지금 실제로 구현된 것 |
