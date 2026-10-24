@@ -1,0 +1,43 @@
+{
+  "characters": [
+    {
+      "character": "chief",
+      "size": [
+        16,
+        24
+      ],
+      "beforeColors": 37,
+      "afterColors": 28,
+      "silhouetteAlphaAndBaseline": "identical",
+      "asepriteReopen": "pixel-identical",
+      "binaryAlpha": true
+    },
+    {
+      "character": "woman",
+      "size": [
+        16,
+        24
+      ],
+      "beforeColors": 36,
+      "afterColors": 27,
+      "silhouetteAlphaAndBaseline": "identical",
+      "asepriteReopen": "pixel-identical",
+      "binaryAlpha": true
+    },
+    {
+      "character": "trader",
+      "size": [
+        16,
+        24
+      ],
+      "beforeColors": 37,
+      "afterColors": 26,
+      "silhouetteAlphaAndBaseline": "identical",
+      "asepriteReopen": "pixel-identical",
+      "binaryAlpha": true
+    }
+  ],
+  "scope": "front native art, no Unity scene or gameplay validation",
+  "userApproval": "pending",
+  "D3PaletteApproval": false
+}
