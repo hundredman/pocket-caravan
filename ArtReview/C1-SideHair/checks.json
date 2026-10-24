@@ -1,0 +1,1129 @@
+{
+  "baseCommit": "a8bc528e",
+  "framesChecked": 160,
+  "changedSideFrames": 80,
+  "unchangedFrontBackFrames": 80,
+  "alphaIdenticalAll": true,
+  "frames": [
+    {
+      "name": "chief",
+      "direction": "d",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "chief",
+      "direction": "d",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "chief",
+      "direction": "d",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "chief",
+      "direction": "d",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "chief",
+      "direction": "u",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "chief",
+      "direction": "u",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "chief",
+      "direction": "u",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "chief",
+      "direction": "u",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "chief",
+      "direction": "l",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "chief",
+      "direction": "l",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "chief",
+      "direction": "l",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "chief",
+      "direction": "l",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "chief",
+      "direction": "r",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "chief",
+      "direction": "r",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "chief",
+      "direction": "r",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "chief",
+      "direction": "r",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "d",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "d",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "d",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "d",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "u",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "u",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "u",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "u",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "l",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "l",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "l",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "l",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "r",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "r",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "r",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "woman",
+      "direction": "r",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "d",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "d",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "d",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "d",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "u",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "u",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "u",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "u",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "l",
+      "frame": 0,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "l",
+      "frame": 1,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "l",
+      "frame": 2,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "l",
+      "frame": 3,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "r",
+      "frame": 0,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "r",
+      "frame": 1,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "r",
+      "frame": 2,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    },
+    {
+      "name": "trader",
+      "direction": "r",
+      "frame": 3,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "d",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "d",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "d",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "d",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "u",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "u",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "u",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "u",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "l",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "l",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "l",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "l",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "r",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "r",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "r",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "farmer",
+      "direction": "r",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "d",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "d",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "d",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "d",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "u",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "u",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "u",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "u",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "l",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "l",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "l",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "l",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "r",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "r",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "r",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "herbalist",
+      "direction": "r",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "d",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "d",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "d",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "d",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "u",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "u",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "u",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "u",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "l",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "l",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "l",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "l",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "r",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "r",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "r",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "dakmok_chief",
+      "direction": "r",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "d",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "d",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "d",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "d",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "u",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "u",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "u",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "u",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "l",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "l",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "l",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "l",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "r",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "r",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "r",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "gaekju",
+      "direction": "r",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "d",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "d",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "d",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "d",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "u",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "u",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "u",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "u",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "l",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "l",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "l",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "l",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "r",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "r",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "r",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "child",
+      "direction": "r",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "d",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "d",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "d",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "d",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "u",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "u",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "u",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "u",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "l",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "l",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "l",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "l",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "r",
+      "frame": 0,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "r",
+      "frame": 1,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "r",
+      "frame": 2,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "boatman",
+      "direction": "r",
+      "frame": 3,
+      "changedPixels": 15,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "d",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "d",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "d",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "d",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "u",
+      "frame": 0,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "u",
+      "frame": 1,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "u",
+      "frame": 2,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "u",
+      "frame": 3,
+      "changedPixels": 0,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "l",
+      "frame": 0,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "l",
+      "frame": 1,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "l",
+      "frame": 2,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "l",
+      "frame": 3,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "r",
+      "frame": 0,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "r",
+      "frame": 1,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "r",
+      "frame": 2,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    },
+    {
+      "name": "bandit",
+      "direction": "r",
+      "frame": 3,
+      "changedPixels": 14,
+      "alphaIdentical": true
+    }
+  ]
+}

@@ -56,7 +56,12 @@ def pose(name,direction):
         for x in range(6,11):rows[y][x]='Q'
     for x in range(6,11):rows[8+offset][x]='r'
     for y in range(9+offset,14+offset):rows[y][4 if y<12+offset else 5]='r'
-    rows[9+offset][5]='R';rows[10+offset][5]='r';rows[12+offset][6]='q'
+    # Cover crown, temple and nape as connected hair masses; leave skin above the eye.
+    for y,a,b in [(9,5,10),(10,4,8),(11,4,7),(12,4,6),(13,5,6)]:
+        for x in range(a,b+1):rows[y+offset][x]='r'
+    rows[9+offset][6]='R';rows[10+offset][5]='R'
+    rows[12+offset][6]='q'  # small visible ear, framed by hair rather than a bare scalp
+
     for x,y,ch in [(10,11,'w'),(11,11,'e'),(10,12,'e'),(11,12,'E'),(7,13,'p'),(12,13,'S'),(11,14,'N')]:rows[y+offset][x]=ch
     if name=='chief':
         rows[10][10]='B'
