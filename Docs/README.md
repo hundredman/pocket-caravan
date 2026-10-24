@@ -30,3 +30,5 @@
 
 - [퀘스트 저장 호환 검증](Validation/QuestSaveCompatibility-2026-10-24.md): 코드 분리 실행의 실제 재현 결과와 Q1/B6 이주 조건.
 - [평판 회복·제재 개선 검토안](ReputationRecoveryProposal.md): 스타팅 문명별·중앙 마을별 평판 기준과 미승인 회복 제안.
+
+- [WoW 참고 평판 적용 기준](Reference/WoWReputationAdaptation.md): 공식 출처, 유지·간소화할 요소, R1~R4 구현 계약과 수치 검토 경계.
