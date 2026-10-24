@@ -6,4 +6,4 @@
 | 날짜 | 에이전트 | 작업 | 커밋 | 결과 |
 |---|---|---|---|---|
 | 2026-10-24 | Codex/Claude | (이전 흐름) 고려 5권역 개편 | 00c908b | 방향 전환 전 상태 보존. 실제 이동 검사 920개 통과 |
-| 2026-10-24 | Claude | 방향 재정립 | (이 커밋) | Direction·ArtGuide·WorldLayout·Plan·CurrentState 작성, 시작 문서 통합, 옛 문서를 Reference/Archive로 이동. Figma에 고려 배치 검토안 A 추가. D1 검토 대기 |
+| 2026-10-24 | Claude | 방향 재정립 | e48479b | Direction·ArtGuide·WorldLayout·Plan·CurrentState 작성, 시작 문서 통합, 옛 문서를 Reference/Archive로 이동. Figma에 고려 배치 검토안 A 추가. D1 검토 대기 |
