@@ -1,4 +1,5 @@
-"""북유럽 교역도 (M 지도). 고려 지도(cartography.py)와 같은 종이 그림체로, 북유럽 4맵을 출구 기준으로 이어 붙인다.
+"""북유럽 교역도 (M 지도). 고려 지도(cartography.py)와 같은 종이 그림체로, 북유럽 맵을 출구 기준으로 이어 붙인다.
+10/24: 네모 맵들이 따로 붙은 느낌 대신 둥근 땅덩이 하나로 감싸고 바깥은 바다. 중앙 북쪽 구역도 북유럽식(눈 땅)으로 같이 그린다.
 공용 cartography.py·고려 지도 파일은 건드리지 않고 Resources/WorldMap/NorthTerrain.png, NorthLayout.json만 만든다."""
 import json
 import random
@@ -16,20 +17,46 @@ HOUSES = ("longhall", "woodhouse", "house3", "h_dark", "h_shed", "h_turf", "h_ro
 
 def export(maps, root):
     positions = layout(maps)
-    pad, scale = 10, 4
+    pad, scale = 34, 4      # 둥근 땅덩이와 바다가 들어갈 여백
     minx = min(p[0] for p in positions.values()) - pad
     miny = min(p[1] for p in positions.values()) - pad
     width = max(positions[m.id][0] + m.w for m in maps) - minx + pad
     height = max(positions[m.id][1] + m.h for m in maps) - miny + pad
+    # 10/24: 맵마다 네모로 붙은 느낌 대신, 모든 맵을 감싸는 둥근 땅덩이 하나 (바깥은 바다)
+    from PIL import ImageFilter
+    land_small = Image.new("L", (width, height), 0)
+    ld = ImageDraw.Draw(land_small)
+    for m in maps:
+        x0, y0 = positions[m.id][0] - minx, positions[m.id][1] - miny
+        ld.rectangle((x0, y0, x0 + m.w - 1, y0 + m.h - 1), fill=255)
+    blur = land_small.filter(ImageFilter.GaussianBlur(20))
+    land_small = blur.point(lambda v: 255 if v > 26 else 0)
+    for m in maps:   # 맵 칸은 반드시 땅
+        x0, y0 = positions[m.id][0] - minx, positions[m.id][1] - miny
+        ImageDraw.Draw(land_small).rectangle((x0, y0, x0 + m.w - 1, y0 + m.h - 1), fill=255)
+    land = land_small.resize((width * scale, height * scale), Image.BILINEAR).filter(ImageFilter.GaussianBlur(3)).point(lambda v: 255 if v > 127 else 0)
+    coast = land.filter(ImageFilter.MaxFilter(9))
     im = Image.new("RGB", (width * scale, height * scale))
     rng = random.Random(30)
-    px = im.load()
+    px = im.load(); lp = land.load(); cp = coast.load()
     for y in range(im.height):
         for x in range(im.width):
             n = rng.choice((-2, -1, 0, 0, 1, 2))
-            rim = min(x, y, im.width - 1 - x, im.height - 1 - y)
-            shade = max(0, 8 - rim) * 2
-            px[x, y] = (224 + n - shade, 210 + n - shade, 167 + n - shade)
+            if lp[x, y]:
+                px[x, y] = (230 + n, 224 + n, 207 + n)          # 눈 덮인 땅
+            elif cp[x, y]:
+                px[x, y] = (170 + n, 196 + n, 198 + n)          # 얕은 바다 (해안 띠)
+            else:
+                rim = min(x, y, im.width - 1 - x, im.height - 1 - y)
+                shade = max(0, 8 - rim) * 2
+                px[x, y] = (196 + n - shade, 208 + n - shade, 200 + n - shade)   # 먼 바다
+    edge = land.filter(ImageFilter.FIND_EDGES)
+    ep = edge.load()
+    for y in range(im.height):
+        for x in range(im.width):
+            if ep[x, y]:
+                px[x, y] = (122, 104, 78)                         # 해안선
+    self_land = land_small.load()
     d = ImageDraw.Draw(im)
     entries = []
     for m in maps:
@@ -52,8 +79,6 @@ def export(maps, root):
                     d.rectangle(r, fill="#8f9a86" if face else "#efeadc")
                 elif m.road[y][x]:
                     d.rectangle(r, fill="#ba9461")
-                else:
-                    d.rectangle(r, fill="#e6e0cf")            # 눈 덮인 땅: 종이보다 밝게
         for name, x, y in m.stamps:
             w, h = STAMPS[name][3], STAMPS[name][4]
             cx, cy = pt(x + w / 2, y + h / 2)
@@ -92,7 +117,9 @@ def export(maps, root):
                 continue
             px_, py_ = x * scale, y * scale
             r = rng.random()
-            if y > height * 0.62:                      # 아래쪽: 바다 물결
+            if not (0 <= x < width and 0 <= y < height):
+                continue
+            if not self_land[x, y]:                    # 바다: 물결
                 d.arc((px_ - 6, py_ - 3, px_, py_ + 3), 200, 340, fill="#8fb0b6")
                 d.arc((px_, py_ - 3, px_ + 6, py_ + 3), 200, 340, fill="#8fb0b6")
             elif r < 0.55:                              # 눈 덮인 산

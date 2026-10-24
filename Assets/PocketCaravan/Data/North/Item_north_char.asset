@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88a3b8eff4a614f57b369e986199d220, type: 3}
+  m_Name: Item_north_char
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
+  id: north_char
+  displayName: "\uBD81\uADF9 \uACE4\uB4E4\uB9E4\uAE30"
+  icon: {fileID: 0}
+  weight: 1
+  basePrice: 24
+  originTown: {fileID: 11400000, guid: a67e4e24778244c09ab2de2812213169, type: 2}
+  pricePerMap: 0.5
+  questItem: 0

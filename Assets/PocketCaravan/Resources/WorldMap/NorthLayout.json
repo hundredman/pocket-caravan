@@ -1,87 +1,150 @@
 {
-  "width": 306,
-  "height": 172,
+  "width": 443,
+  "height": 360,
   "maps": [
     {
       "mapId": "north_birka",
-      "x": 62,
-      "y": 77,
+      "x": 175,
+      "y": 101,
       "w": 72,
       "h": 50,
-      "labelX": 98.5,
-      "labelY": 108.5
+      "labelX": 211.5,
+      "labelY": 132.5
     },
     {
       "mapId": "north_fjord_road",
-      "x": 134,
-      "y": 84,
+      "x": 247,
+      "y": 108,
       "w": 66,
       "h": 42,
-      "labelX": 167.5,
-      "labelY": 103.5
+      "labelX": 280.5,
+      "labelY": 127.5
     },
     {
       "mapId": "north_hunter",
-      "x": 200,
-      "y": 87,
+      "x": 313,
+      "y": 111,
       "w": 46,
       "h": 32,
-      "labelX": 224.5,
-      "labelY": 106.5
+      "labelX": 337.5,
+      "labelY": 130.5
     },
     {
       "mapId": "north_naru",
-      "x": 139,
-      "y": 126,
+      "x": 252,
+      "y": 150,
       "w": 52,
       "h": 36,
-      "labelX": 167.5,
-      "labelY": 145.5
+      "labelX": 280.5,
+      "labelY": 169.5
     },
     {
       "mapId": "north_laugar",
-      "x": 151,
-      "y": 48,
+      "x": 264,
+      "y": 72,
       "w": 48,
       "h": 36,
-      "labelX": 177.5,
-      "labelY": 70.5
+      "labelX": 290.5,
+      "labelY": 94.5
     },
     {
       "mapId": "north_herd",
-      "x": 246,
-      "y": 87,
+      "x": 359,
+      "y": 111,
       "w": 50,
       "h": 34,
-      "labelX": 271.5,
-      "labelY": 108.5
+      "labelX": 384.5,
+      "labelY": 132.5
     },
     {
       "mapId": "north_runehill",
-      "x": 150,
-      "y": 10,
+      "x": 263,
+      "y": 34,
       "w": 52,
       "h": 38,
-      "labelX": 176.5,
-      "labelY": 27.5
+      "labelX": 289.5,
+      "labelY": 51.5
     },
     {
       "mapId": "north_icecave",
-      "x": 246,
-      "y": 51,
+      "x": 359,
+      "y": 75,
       "w": 48,
       "h": 36,
-      "labelX": 270.5,
-      "labelY": 67.5
+      "labelX": 383.5,
+      "labelY": 91.5
     },
     {
       "mapId": "north_pass",
-      "x": 10,
-      "y": 77,
+      "x": 123,
+      "y": 101,
       "w": 52,
-      "h": 36,
-      "labelX": 36.5,
-      "labelY": 93.5
+      "h": 50,
+      "labelX": 149.5,
+      "labelY": 124.5
+    },
+    {
+      "mapId": "north_c_thaw",
+      "x": 97,
+      "y": 151,
+      "w": 80,
+      "h": 56,
+      "labelX": 137.5,
+      "labelY": 177.5
+    },
+    {
+      "mapId": "north_c_west",
+      "x": 34,
+      "y": 151,
+      "w": 63,
+      "h": 56,
+      "labelX": 65.5,
+      "labelY": 177.5
+    },
+    {
+      "mapId": "north_c_east",
+      "x": 177,
+      "y": 151,
+      "w": 63,
+      "h": 56,
+      "labelX": 208.5,
+      "labelY": 177.5
+    },
+    {
+      "mapId": "north_c_post",
+      "x": 105,
+      "y": 207,
+      "w": 64,
+      "h": 48,
+      "labelX": 137.5,
+      "labelY": 231.5
+    },
+    {
+      "mapId": "north_c_sled",
+      "x": 45,
+      "y": 207,
+      "w": 60,
+      "h": 44,
+      "labelX": 75.5,
+      "labelY": 227.5
+    },
+    {
+      "mapId": "north_c_rune",
+      "x": 169,
+      "y": 207,
+      "w": 60,
+      "h": 44,
+      "labelX": 199.5,
+      "labelY": 227.5
+    },
+    {
+      "mapId": "north_c_gate",
+      "x": 101,
+      "y": 255,
+      "w": 72,
+      "h": 71,
+      "labelX": 137.5,
+      "labelY": 288.5
     }
   ]
 }

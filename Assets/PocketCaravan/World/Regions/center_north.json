@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "regionId": "center_north",
+  "regionAssetPath": "Assets/PocketCaravan/Data/Center/Region_CenterNorth.asset",
+  "maps": [
+    {
+      "mapId": "north_c_thaw",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_thaw.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_thaw.unity",
+      "worldX": 29,
+      "worldY": -1,
+      "generator": "north_center:thaw_road"
+    },
+    {
+      "mapId": "north_c_west",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_west.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_west.unity",
+      "worldX": 28,
+      "worldY": -1,
+      "generator": "north_center:west_fork"
+    },
+    {
+      "mapId": "north_c_east",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_east.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_east.unity",
+      "worldX": 30,
+      "worldY": -1,
+      "generator": "north_center:east_fork"
+    },
+    {
+      "mapId": "north_c_post",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_post.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_post.unity",
+      "worldX": 29,
+      "worldY": -2,
+      "generator": "north_center:trade_post"
+    },
+    {
+      "mapId": "north_c_sled",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_sled.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_sled.unity",
+      "worldX": 28,
+      "worldY": -2,
+      "generator": "north_center:sled_station"
+    },
+    {
+      "mapId": "north_c_rune",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_rune.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_rune.unity",
+      "worldX": 30,
+      "worldY": -2,
+      "generator": "north_center:rune_path"
+    },
+    {
+      "mapId": "north_c_gate",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_gate.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_gate.unity",
+      "worldX": 29,
+      "worldY": -3,
+      "generator": "north_center:north_gate"
+    }
+  ],
+  "npcs": [],
+  "villagers": []
+}

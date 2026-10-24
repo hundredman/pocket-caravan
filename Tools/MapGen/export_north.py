@@ -9,7 +9,8 @@ from tiles import tile_image
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
 tile_dir = os.path.join(OUT, "Assets/PocketCaravan/Art/NinjaAdventure/Tiles")
 map_dir = os.path.join(OUT, "Assets/PocketCaravan/Maps/North")
-os.makedirs(tile_dir, exist_ok=True); os.makedirs(map_dir, exist_ok=True)
+center_dir = os.path.join(OUT, "Assets/PocketCaravan/Maps/Center")   # 10/24 중앙 북쪽 삼각형 (World/Regions/center_north.json)
+os.makedirs(tile_dir, exist_ok=True); os.makedirs(map_dir, exist_ok=True); os.makedirs(center_dir, exist_ok=True)
 
 def name_of(key):
     return key.replace(":", "_").replace("@", "_")
@@ -45,7 +46,7 @@ for f in north.MAPS:
              blocked=[1 if b else 0 for row in m.blocked for b in row],
              objects=[obj_json(o) for o in m.objects])
     d["palette"] = palette
-    with open(os.path.join(map_dir, m.id + ".json"), "w") as fp:
+    with open(os.path.join(center_dir if m.id.startswith("north_c_") else map_dir, m.id + ".json"), "w") as fp:
         json.dump(d, fp, ensure_ascii=False, separators=(",", ":"))
     m.render(os.path.join(os.path.dirname(os.path.abspath(__file__)), "preview_" + m.id + ".png"))
     print(m.id, m.w, m.h)
@@ -127,6 +128,59 @@ for i in range(4):   # 눈 반짝임: 대부분 비어 있고 한 프레임에�
         dr.point((4, 4), fill=(255, 255, 255, 150))
     save_runtime(img, os.path.join(res_dir, f"glint_{i}.png"))
 
+def nearest_walk(m, fx, fy, water=False, avoid=()):
+    """(fx, fy)에서 가장 가까운 걷는 칸 (water=True면 물에 닿은 칸만)"""
+    best = None
+    for y in range(m.h):
+        for x in range(m.w):
+            if m.blocked[y][x] or m.water[y][x] or (x, y) in avoid:
+                continue
+            if water and not any(0 <= x + a < m.w and 0 <= y + b < m.h and m.water[y + b][x + a] for a, b in ((1, 0), (-1, 0), (0, 1), (0, -1))):
+                continue
+            d = abs(x - fx) + abs(y - fy)
+            if best is None or d < best[0]:
+                best = (d, x, y)
+    return (best[1], best[2]) if best else None
+
+
+def secret_cells(m):
+    """숨은 룬돌마다 읽는 칸 (돌 바로 아래 걷는 칸) + 번호"""
+    out = []
+    for (x, y, idx) in getattr(m, "secrets", []):
+        c = nearest_walk(m, x, y + 2)
+        out.append((c[0], c[1], idx))
+    return out
+
+
+def spot_cells(m, kind):
+    return [nearest_walk(m, x, y, water=(kind == "bath")) for (k, x, y) in getattr(m, "spots", []) if k == kind]
+
+
+def fishing_cells(m):
+    """낚시 자리마다 물에 닿은 가장 가까운 걷는 칸 (그 칸에 서서 Space)"""
+    out = []
+    for (fx, fy) in getattr(m, "fishing", []):
+        best = None
+        for y in range(m.h):
+            for x in range(m.w):
+                if m.blocked[y][x] or m.water[y][x]:
+                    continue
+                if not any(0 <= x + a < m.w and 0 <= y + b < m.h and m.water[y + b][x + a] for a, b in ((1, 0), (-1, 0), (0, 1), (0, -1))):
+                    continue
+                d = abs(x - fx) + abs(y - fy)
+                if best is None or d < best[0]:
+                    best = (d, x, y)
+        if best:
+            out.append((best[1], best[2]))
+    return out
+
+
+# 미니게임 그림 (썰매·물고기 등): Resources/North/Minigame
+import north_minigame_art
+os.makedirs(os.path.join(res_dir, "Minigame"), exist_ok=True)
+for name, img in north_minigame_art.make(OUT).items():
+    save_runtime(img, os.path.join(res_dir, "Minigame", name + ".png"))
+
 CHIMNEY = {"longhall": (2, 1), "woodhouse": (2, 0), "house3": (2, 0), "h_dark": (3, 0), "h_turf": (1, 0), "h_round": (1, 0), "h_dome": (1, 0)}
 life = []
 for f in north.MAPS:
@@ -141,8 +195,20 @@ for f in north.MAPS:
              and not m.road[y][x] and m.obj[y][x] is None and m.high[y][x] is None], 70)],
         lamps=[[x, y] for (n, x, y) in st if n in ("lamp", "lantern")],
         springs=[[x, y] for (x, y) in sorted(m._springs)][::6],
-        runes=[[x, y] for (n, x, y) in st if m.id == "north_runehill" and n in ("runestone", "snowpost")],
+        runes=[[x, y] for (n, x, y) in st if m.id in ("north_runehill", "north_c_rune") and n in ("runestone", "runestone_b", "picturestone", "snowpost")] + [[x, y] for (x, y, i) in getattr(m, "secrets", [])],
         crystals=[[x, y] for (n, x, y) in st if n.startswith(("crys_", "gem_"))],
+        fishing=[list(c) for c in fishing_cells(m)],                       # 10/24 얼음 낚시: 플레이어가 서는 물가 칸
+        fishingWater=[[x, y] for (x, y) in getattr(m, "fishing", [])],      #               찌를 던지는 물 칸
+        sledStart=list(m.sled_track[0]) if getattr(m, "sled_track", None) else [],
+        secrets=[list(c) for c in secret_cells(m)],                        # 10/24 숨은 룬돌: 읽는 칸 x, y, 번호
+        secretStones=[[x, y] for (x, y, i) in getattr(m, "secrets", [])], # 밤에 빛나는 돌 위치
+        ring=[v for c in spot_cells(m, "ring") for v in c],
+        baths=[list(c) for c in spot_cells(m, "bath")],
+        feed=[v for c in spot_cells(m, "feed") for v in c],
+        guild=[v for c in spot_cells(m, "guild") for v in c],
+        festival=[v for c in spot_cells(m, "festival") for v in c],
+        events=[[o["x"], o["y"]] for o in m.objects if o["kind"] == "event"],
+        sledTrack=[[x, y] for (x, y) in getattr(m, "sled_track", [])],     # 10/24 썰매 트랙 꼭짓점
         critters=m.life))
 with open(os.path.join(res_dir, "NorthLife.json"), "w") as fp:
     json.dump(dict(maps=life), fp, ensure_ascii=False, indent=1)

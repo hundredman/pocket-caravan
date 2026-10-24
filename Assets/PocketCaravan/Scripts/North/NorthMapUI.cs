@@ -21,11 +21,15 @@ namespace PocketCaravan
             { "north_hunter", "모피 사냥꾼 마을" }, { "north_naru", "피오르 나루 마을" },
             { "north_laugar", "라우가르 온천 마을" }, { "north_herd", "순록 고원 마을" },
             { "north_runehill", "룬돌 언덕" }, { "north_icecave", "얼음 동굴 골짜기" }, { "north_pass", "국경 고개" },
+            // 10/24 중앙 경유 구역 (북쪽 삼각형)
+            { "north_c_thaw", "눈 녹는 고갯길" }, { "north_c_west", "서쪽 눈숲 갈림길" }, { "north_c_east", "동쪽 개울 갈림길" },
+            { "north_c_post", "눈길 교역 초소" }, { "north_c_sled", "순록 썰매 정류장" }, { "north_c_rune", "룬돌 언덕 오솔길" },
+            { "north_c_gate", "북문 큰길" },
         };
         static readonly Dictionary<string, string> Towns = new Dictionary<string, string>
         {
             { "north_birka", "north_birka" }, { "north_hunter", "north_hunter" }, { "north_naru", "north_naru" },
-            { "north_laugar", "north_laugar" }, { "north_herd", "north_herd" },
+            { "north_laugar", "north_laugar" }, { "north_herd", "north_herd" }, { "north_c_post", "north_post" },
         };
         static readonly Color Ink = new Color32(68, 57, 41, 255);
 
@@ -110,11 +114,11 @@ namespace PocketCaravan
             {
                 ink = new GUIStyle(UIStyle.Rich) { fontSize = 10, wordWrap = false };
                 foreach (var s in new[] { ink.normal, ink.hover, ink.active, ink.focused }) s.textColor = UIStyle.Lin((Color32)Ink);
-                caption = new GUIStyle(ink) { alignment = TextAnchor.MiddleCenter, fontSize = 9 };
+                caption = new GUIStyle(ink) { alignment = TextAnchor.MiddleCenter, fontSize = 7 };   // 10/24: 중앙 구역이 붙어 지도가 작아져서 이름표를 작게
                 title = new GUIStyle(ink) { fontSize = 13 };
             }
 
-            float width = Mathf.Min(610, UIStyle.VirtualWidth - 16), height = 330;
+            float width = Mathf.Min(610, UIStyle.VirtualWidth - 16), height = Mathf.Min(352, UIStyle.VirtualHeight - 8);
             var panel = new Rect((UIStyle.VirtualWidth - width) / 2, (UIStyle.VirtualHeight - height) / 2, width, height);
             Fill(panel, new Color32(100, 76, 48, 255));
             Fill(new Rect(panel.x + 3, panel.y + 3, width - 6, height - 6), new Color32(225, 211, 171, 255));
@@ -126,12 +130,13 @@ namespace PocketCaravan
                 GUI.Label(new Rect(panel.x + 16, panel.y + 45, width - 32, 24), "북유럽 지도 데이터가 없습니다. Tools/MapGen/export_north.py를 실행해 주세요.", ink);
                 return;
             }
-            float scale = Mathf.Min((width - 24) / atlas.width, 246 / atlas.height);
+            float scale = Mathf.Min((width - 24) / atlas.width, (height - 84) / atlas.height);
             var canvas = new Rect(panel.center.x - atlas.width * scale / 2, panel.y + 36, atlas.width * scale, atlas.height * scale);
             GUI.DrawTexture(canvas, paper != null ? paper : terrain, ScaleMode.StretchToFill);
 
             Vector2 Project(float x, float y) => new Vector2(canvas.x + x * scale, canvas.y + y * scale);
             string here = MapRoot.Current != null ? MapRoot.Current.mapId : "";
+            var placed = new List<Rect>();   // 10/24: 이미 놓은 이름표. 겹치면 아래·오른쪽·왼쪽으로 비켜 놓는다
             foreach (var area in atlas.maps)
             {
                 var info = index != null ? index.Map(area.mapId) : null;
@@ -141,9 +146,15 @@ namespace PocketCaravan
                 bool destination = !string.IsNullOrEmpty(town) && gm.Player.contracts.Exists(c => c.toTown == town);
                 Dot(p, 3, destination ? new Color32(170, 95, 43, 255) : (Color32)Ink);
                 string label = destination ? name + " · 의뢰" : name;
-                float lw = Mathf.Min(116, caption.CalcSize(new GUIContent(label)).x + 8);
-                var lr = new Rect(Mathf.Clamp(p.x - lw / 2, canvas.x, canvas.xMax - lw), p.y - 22, lw, 16);
-                Fill(lr, new Color32(224, 210, 167, 235));
+                float lw = Mathf.Min(96, caption.CalcSize(new GUIContent(label)).x + 4);
+                Rect Spot(float x, float y) => new Rect(Mathf.Clamp(x, canvas.x, canvas.xMax - lw), Mathf.Clamp(y, canvas.y, canvas.yMax - 10), lw, 10);
+                var tries = new[] { Spot(p.x - lw / 2, p.y - 14), Spot(p.x - lw / 2, p.y + 5), Spot(p.x + 6, p.y - 5), Spot(p.x - lw - 6, p.y - 5),
+                                    Spot(p.x - lw / 2, p.y - 25), Spot(p.x - lw / 2, p.y + 16) };
+                var lr = tries[0];
+                foreach (var c in tries)
+                    if (!placed.Exists(o => o.Overlaps(c))) { lr = c; break; }
+                placed.Add(lr);
+                Fill(lr, new Color32(224, 210, 167, 190));
                 GUI.Label(lr, label, caption);
                 if (area.mapId == here)
                 {
@@ -157,7 +168,7 @@ namespace PocketCaravan
                     }
                 }
             }
-            float ly = panel.y + 286;
+            float ly = panel.yMax - 44;
             GUI.Label(new Rect(panel.x + 16, ly, width - 32, 14),
                 "붉은 점: 내 위치    갈색 길: 교역로    옅은 물: 얼어붙은 피오르    회녹색: 절벽    지붕: 마을    의뢰: 배달 목적지", ink);
             string current = Names.TryGetValue(here, out var cn) ? cn : (index != null ? index.MapName(here) : here);

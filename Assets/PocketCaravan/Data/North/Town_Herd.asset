@@ -30,5 +30,13 @@ MonoBehaviour:
     optimal: 4
   - item: {fileID: 11400000, guid: 5bdb4599b599a4bafb2d6eba12a7a241, type: 2}
     optimal: 5
+  - item: {fileID: 11400000, guid: 50275f575aa3b43f48d7278feb007ee0, type: 2}
+    optimal: 3
+  - item: {fileID: 11400000, guid: 7645750b0300140cc98872c430ca7535, type: 2}
+    optimal: 3
+  - item: {fileID: 11400000, guid: 840f65a4b800a4990ae2697928fa33a8, type: 2}
+    optimal: 1
+  - item: {fileID: 11400000, guid: fec223f6bbcd34f3081779f3a8fc48a6, type: 2}
+    optimal: 1
   defaultOptimal: 4
   vehiclesForSale: []

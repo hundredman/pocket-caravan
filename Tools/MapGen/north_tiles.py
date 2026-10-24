@@ -32,7 +32,9 @@ tiles.STAMPS.update({
     "crate": ("camp", 4, 8, 1, 1, 0, 0, None),              # 나무 상자
     "rope": ("camp", 10, 7, 2, 2, 2, 0, None),              # 감아 둔 밧줄 (안 막음)
     "lamp": ("camp", 6, 5, 1, 2, 1, 1, None),               # 등불 기둥
-    "runestone": ("element", 4, 2, 1, 1, 0, 0, None),       # 룬 새긴 돌
+    "runestone": ("northart", 0, 0, 1, 2, 1, 1, None),      # 룬 새긴 선돌 (10/24: 묘비 같던 그림 대신 north_art.py로 그림)
+    "runestone_b": ("northart", 1, 0, 1, 2, 1, 1, None),    # 뱀 띠 룬돌 (이끼)
+    "picturestone": ("northart", 2, 0, 2, 2, 1, 1, None),   # 배·태양 무늬 큰 그림돌
     "stall": ("house", 16, 16, 3, 2, 1, 1, None),           # 천 덮은 장터 좌판
     "fishbasket": ("house", 16, 13, 1, 1, 0, 0, None),      # 생선 바구니
     "barrels3": ("house", 16, 15, 3, 1, 0, 0, None),        # 통 세 개
@@ -100,6 +102,10 @@ tiles.STAMPS.update({
     "haybale_s": ("camp", 3, 3, 1, 2, 0, 0, None),          # 세워 둔 짚단
 })
 tiles.SHEETS["camp"] = "Backgrounds/Tilesets/tileset_camp.png"
+import os as _os, north_art as _art
+if not _os.path.exists(_art.PATH):
+    _art.make()
+tiles.SHEETS["northart"] = _art.PATH          # 절대 경로라 PACK과 상관없이 읽힘
 tiles.SHEETS["abandon"] = "Backgrounds/Tilesets/TilesetVillageAbandoned.png"
 
 tiles.SHEETS["relief"] = "Backgrounds/Tilesets/TilesetRelief.png"
@@ -158,6 +164,9 @@ class SnowMap(Map):
         self._late = []   # 마무리 뒤에 칠할 바닥 장식 (얼음·풀)
         self._springs = set()   # 얼지 않은 온천 물 칸
         self.life = []          # 돌아다니는 동물: (종, x0, y0, x1, y1, 마릿수) — NorthLife.json으로 내보냄
+        self.fishing = []       # 얼음 낚시 자리 (x, y): 낚시 미니게임
+        self.secrets = []       # 10/24 숨은 룬돌 (x, y, 번호 1~7): 전설 조각
+        self.spots = []         # 10/24 상호작용 자리 (종류, x, y): ring 룬돌 고리 중심, bath 온천, feed 순록 우리, guild 낚시 조합, festival 축제 장수
 
     def snow_props(self, pts):
         for (x, y) in pts:
@@ -196,6 +205,21 @@ class SnowMap(Map):
                 else:
                     k = FENCE["l"] if x == x0 else FENCE["r"]
                 self.prop(k, x, y)
+
+    def secret_rune(self, idx, x, y):
+        """숨은 룬돌 (전설 조각 idx). 길에서 떨어진 곳에 이끼 낀 룬돌을 세우고, 앞(아래) 칸에서 읽는다. 밤에 은은히 빛난다."""
+        for dx, dy in [(0, 0), (1, 0), (-1, 0), (0, 1), (0, -1), (2, 0), (-2, 0), (1, 1), (-1, 1)]:
+            X, Y = x + dx, y + dy
+            if 1 < X < self.w - 2 and 1 < Y < self.h - 4 and not any(self.reserved[Y + b][X] or self.road[Y + b][X] or self.water[Y + b][X] for b in range(3)):
+                if self.stamp("runestone_b", X, Y, force=True):
+                    self.secrets.append((X, Y, idx))
+                    self.reserve(X - 1, Y - 1, X + 1, Y + 3)
+                    return True
+        raise ValueError(f"{self.id}: 숨은 룬돌 {idx} 자리를 못 찾음 ({x},{y})")
+
+    def spot(self, kind, x, y):
+        """상호작용 자리 기록 (실제 서는 칸은 내보낼 때 가장 가까운 걷는 칸으로 맞춤)"""
+        self.spots.append((kind, x, y))
 
     def critters(self, kind, area, count):
         """마을을 돌아다니는 동물 (보이기만 함, 충돌·대화 없음). kind: reindeer, goat, raven, gull"""
@@ -593,3 +617,115 @@ def _ship(m, a, kw):
 
 _fit("icefall", _icefall)
 _fit("stone_ship", _ship)
+
+
+# ---------- 10/24 중앙 경유 구역: 눈이 녹으며 지역 특색이 스며드는 맵 ----------
+# 눈 위 풀 조각: 풀밭 묶음(0,7)을 색만 바꿔 씀 (바탕 풀→눈, 흙 덩어리→풀, 테두리 풀잎→서리 회색)
+# 풀 위 눈 조각: 눈길 묶음(0,14)을 색만 바꿔 씀 (바탕 눈→풀, 하얀 덩어리→눈 바닥색, 회색 테두리 그대로)
+_SNOWBG, _SNOWEDGE, _WHITE = (242, 234, 241), (210, 201, 201), (255, 255, 255)
+_GRASS, _GRASS_D, _DIRT, _DIRT_D = (173, 188, 58), (168, 161, 41), (211, 134, 95), (189, 121, 89)
+_PATCH_COLORS = {
+    "snowedge": {_SNOWBG: _GRASS, _WHITE: _SNOWBG},
+    "grassedge": {_GRASS: _SNOWBG, _GRASS_D: _SNOWEDGE, _DIRT: _GRASS, _DIRT_D: _GRASS_D},
+}
+_recolor_prev = tiles.recolor
+def _recolor_patch(tile, mode):
+    table = _PATCH_COLORS.get(mode)
+    if table is None:
+        return _recolor_prev(tile, mode)
+    px = tile.load()
+    for y in range(tile.size[1]):
+        for x in range(tile.size[0]):
+            r, g, b, a = px[x, y]
+            if a and (r, g, b) in table:
+                px[x, y] = table[(r, g, b)] + (a,)
+    return tile
+tiles.recolor = _recolor_patch
+
+GRASS_PATCH_ORIGIN = ("floor", 0, 7)     # @grassedge 로 씀
+SNOW_PATCH_ORIGIN = ("floor", 0, 14)     # @snowedge 로 씀
+
+# 녹는 숲: 눈 덜 덮인 전나무와 초록 나무가 섞임 / 초록 숲: 중앙 가까이
+DENSE_KINDS["thaw"] = ["snowpine_g"] * 3 + ["pine"] * 3 + ["snowround"] * 2 + ["tree"] * 2 + ["roundtree"]
+DENSE_KINDS["green"] = ["pine"] * 4 + ["tree"] * 3 + ["roundtree"] * 2 + ["snowpine_g"]
+
+
+class ThawMap(FitMap):
+    """중앙 경유 구역 맵. base='snow'면 눈밭에 풀 조각이, base='grass'면 풀밭에 눈 조각이 군데군데 남는다.
+    cover=(위쪽 비율, 아래쪽 비율): 조각이 덮는 정도. 위(북유럽 쪽)에서 아래(중앙 도시 쪽)로 갈수록 바뀐다.
+    길·물 바로 옆은 조각을 두지 않는다 (다닌 길은 눈이 녹아 있음 / 길 가장자리 그림이 어색하지 않게)."""
+
+    def __init__(self, mid, name, w, h, base="snow", cover=(0.1, 0.3), **kw):
+        super().__init__(mid, name, w, h, **kw)
+        self.base, self.cover = base, cover
+        self._force_patch, self._no_patch = set(), set()
+
+    def patch_area(self, x0, y0, x1, y1, on=True):
+        """조각을 일부러 깔거나(on) 비우는(off) 네모 칸"""
+        s = self._force_patch if on else self._no_patch
+        for y in range(y0, y1 + 1):
+            for x in range(x0, x1 + 1):
+                s.add((x, y))
+
+    def _patch_mask(self):
+        rng = self.rng
+        top, bot = self.cover
+        mask = set()
+        # 크고 작은 둥근 덩어리를 높이별 비율만큼 뿌린다
+        target = sum(top + (bot - top) * y / max(1, self.h - 1) for y in range(self.h)) * self.w
+        tries = 0
+        while len(mask) < target and tries < 4000:
+            tries += 1
+            cx, cy = rng.uniform(0, self.w), rng.uniform(0, self.h)
+            want = top + (bot - top) * cy / max(1, self.h - 1)
+            if rng.random() > want * 2.2:
+                continue
+            rx, ry = rng.uniform(2.5, 7), rng.uniform(2, 4.5)
+            for y in range(int(cy - ry) - 1, int(cy + ry) + 2):
+                for x in range(int(cx - rx) - 1, int(cx + rx) + 2):
+                    if self.inside(x, y) and ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 <= 1 + rng.uniform(-0.2, 0.15):
+                        mask.add((x, y))
+        mask |= self._force_patch
+        def bad(x, y):
+            if not self.inside(x, y) or (x, y) in self._no_patch:
+                return True
+            return any(self.inside(x + a, y + b) and (self.road[y + b][x + a] > 0 or self.water[y + b][x + a]
+                       or (x + a, y + b) in self.decks or (x + a, y + b) in self._springs)
+                       for a in (-1, 0, 1) for b in (-1, 0, 1))
+        mask = {c for c in mask if not bad(*c)}
+        # 다듬기: 한 칸짜리 구멍은 메우고, 홀로 튀어나온 칸은 지운다
+        for _ in range(3):
+            n4 = lambda x, y: sum((x + a, y + b) in mask for a, b in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+            add = {(x, y) for y in range(self.h) for x in range(self.w)
+                   if (x, y) not in mask and not bad(x, y) and n4(x, y) >= 3}
+            rem = {c for c in mask if n4(*c) <= 1}
+            mask = (mask | add) - rem
+        return mask
+
+    def finish(self):
+        if self.base == "snow":
+            SnowMap.finish(self)
+        else:
+            Map.finish(self)
+            ice = set(ICE.values())
+            for (x, y), k in self._late:      # 풀밭 맵에선 얼음 웅덩이만 (눈 풀 장식은 빼고)
+                if k in ice and self.inside(x, y) and not self.water[y][x] and self.road[y][x] == 0 and self.obj[y][x] is None:
+                    self.deco[y][x] = k
+        mask = self._patch_mask()
+        inside = lambda a, b: (a, b) in mask or (not self.inside(a, b) and (min(max(a, 0), self.w - 1), min(max(b, 0), self.h - 1)) in mask)
+        if self.base == "snow":
+            fill, origin, mode = (tiles.GRASS, tiles.GRASS_VARIANTS), GRASS_PATCH_ORIGIN, "grassedge"
+        else:
+            fill, origin, mode = (SNOW, SNOW_VARIANTS), SNOW_PATCH_ORIGIN, "snowedge"
+        centre = K(origin[0], origin[1] + 1, origin[2] + 1)
+        for (x, y) in mask:
+            k = tiles.autotile(inside, x, y, *origin)
+            if k == centre:
+                self.ground[y][x] = self.rng.choice(fill[1]) if self.rng.random() < 0.12 else fill[0]
+            else:
+                self.ground[y][x] = k + "@" + mode
+            if self.base == "grass" and self.deco[y][x] in tiles.DECO:
+                self.deco[y][x] = None          # 눈 위엔 풀 장식 없음
+            elif self.base == "snow" and self.deco[y][x] is None and self.obj[y][x] is None and self.rng.random() < 0.05:
+                self.deco[y][x] = self.rng.choice([d for d in tiles.DECO if d])   # 녹은 땅엔 풀이 조금
+        self.patches = mask

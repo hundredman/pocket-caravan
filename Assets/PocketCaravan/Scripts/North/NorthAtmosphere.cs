@@ -13,6 +13,8 @@ namespace PocketCaravan
     {
         public enum Weather { Clear, Light, Heavy, Blizzard }
         public static Weather Current { get; private set; }   // 다른 북유럽 연출이 참고 (나중에 썰매·대사 등)
+        public static bool AuroraOut { get; private set; }    // 지금 오로라가 떠 있는지 (얼음 낚시: 황금 연어가 잘 잡힘, 비르카 축제)
+        public static Weather Shown { get; private set; }     // 이 맵에서 실제로 보이는 날씨 (중앙 구역은 약해짐) — 이동 속도·길 잃은 상인이 참고
 
         WeatherOverlay overlay;
         WeatherSkin[] skins;
@@ -77,6 +79,18 @@ namespace PocketCaravan
             return r < 30 ? Weather.Clear : r < 65 ? Weather.Light : r < 90 ? Weather.Heavy : Weather.Blizzard;
         }
 
+        /// <summary>0 = 북유럽 본토, 1 = 중앙 윗줄(고갯길·갈림길), 2 = 가운데(초소·썰매·룬돌), 3 = 북문 큰길</summary>
+        static int ThawLevel(string mapId)
+        {
+            if (!mapId.StartsWith("north_c_")) return 0;
+            switch (mapId)
+            {
+                case "north_c_thaw": case "north_c_west": case "north_c_east": return 1;
+                case "north_c_gate": return 3;
+                default: return 2;
+            }
+        }
+
         static bool AuroraNight(int day)
         {
             uint h = unchecked((uint)day * 40503u + 17u); h ^= h >> 7; h = unchecked(h * 2246822519u); h ^= h >> 13;
@@ -95,6 +109,7 @@ namespace PocketCaravan
                 if (hidPetals) { if (petals != null) petals.enabled = true; hidPetals = false; }
                 if (wind.isPlaying) wind.Stop();
                 if (aurora != null) aurora.gameObject.SetActive(false);
+                AuroraOut = false;
                 inNorth = false;
                 return;
             }
@@ -108,15 +123,21 @@ namespace PocketCaravan
             float hours = gm != null ? gm.Clock.TotalHours : 0f;
             int block = Mathf.FloorToInt(hours / 4f);
             if (block != lastBlock) { lastBlock = block; Current = Roll(block); }
-            if ((int)Current != applied) { overlay.Configure(skins[(int)Current]); applied = (int)Current; }
+            // 중앙 경유 구역(north_c_)은 남쪽으로 갈수록 눈이 약하다: 윗줄은 함박눈까지, 가운데는 가랑눈까지, 북문 큰길은 거의 안 옴
+            int thaw = ThawLevel(MapRoot.Current.mapId);
+            int shown = Mathf.Min((int)Current, thaw == 0 ? 3 : thaw == 1 ? 2 : thaw == 2 ? 1 : 0);
+            Shown = thaw >= 3 && Current < Weather.Heavy ? Weather.Clear : (Weather)shown;
+            int key = thaw >= 3 && Current < Weather.Heavy ? -2 : shown;     // 북문 큰길: 함박눈 이상일 때만 가끔 눈송이
+            if (key != applied) { overlay.Configure(key == -2 ? null : skins[shown]); applied = key; }
 
-            float target = AudioManager.Muted ? 0f : WindVolume[(int)Current];
+            float target = AudioManager.Muted ? 0f : WindVolume[shown] * (thaw >= 3 ? 0.5f : 1f);
             wind.volume = Mathf.MoveTowards(wind.volume, target, Time.deltaTime * 0.2f);
             if (!wind.isPlaying) wind.Play();
 
             float night = gm != null ? 1f - gm.Clock.Daylight : 0f;
             int day = Mathf.FloorToInt(hours / 24f);
-            bool show = night > 0.05f && Current <= Weather.Light && AuroraNight(day);
+            bool show = night > 0.05f && (Weather)shown <= Weather.Light && AuroraNight(day) && thaw < 3;
+            AuroraOut = show;
             UpdateAurora(show ? night : 0f);
         }
 
