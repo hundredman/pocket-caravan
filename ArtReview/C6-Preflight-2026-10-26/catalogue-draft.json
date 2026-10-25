@@ -1,0 +1,4426 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "native16": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true
+    }
+  },
+  "assets": [
+    {
+      "id": "c6_boat_3258f818",
+      "purpose": "preserved_boat",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        5,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_boat_3258f818.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_boat_3258f818.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "boat_0_0_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/boat_0_0_goryeo_jade.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "boat_1_0_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/boat_1_0_goryeo_jade.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "boat_2_0_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/boat_2_0_goryeo_jade.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "boat_3_0_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/boat_3_0_goryeo_jade.png"
+        },
+        {
+          "dx": 4,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "boat_4_0_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/boat_4_0_goryeo_jade.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "boat_0_1_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/boat_0_1_goryeo_jade.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "boat_1_1_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/boat_1_1_goryeo_jade.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "boat_2_1_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/boat_2_1_goryeo_jade.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "boat_3_1_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/boat_3_1_goryeo_jade.png"
+        },
+        {
+          "dx": 4,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "boat_4_1_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/boat_4_1_goryeo_jade.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_house_tile_fb336ff1",
+      "purpose": "preserved_house_tile",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_house_tile_fb336ff1.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_house_tile_fb336ff1.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_house_4_3_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_house_4_3_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_house_4_3_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_house_4_3_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_house_4_3_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_house_4_3_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_house_4_3_3_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_house_4_3_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_house_4_3_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_house_4_3_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_house_4_3_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_house_4_3_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_house_4_3_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_house_4_3_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_house_4_3_3_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_house_4_3_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_house_4_3_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_house_4_3_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_house_4_3_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_house_4_3_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_house_4_3_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_house_4_3_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_house_4_3_3_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_house_4_3_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_house_thatch_a2295da0",
+      "purpose": "preserved_house_thatch",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_house_thatch_a2295da0.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_house_thatch_a2295da0.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_thatch_4_3_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_thatch_4_3_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_thatch_4_3_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_thatch_4_3_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_thatch_4_3_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_thatch_4_3_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_thatch_4_3_3_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_thatch_4_3_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_thatch_4_3_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_thatch_4_3_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_thatch_4_3_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_thatch_4_3_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_thatch_4_3_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_thatch_4_3_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_thatch_4_3_3_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_thatch_4_3_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_thatch_4_3_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_thatch_4_3_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_thatch_4_3_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_thatch_4_3_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_thatch_4_3_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_thatch_4_3_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_thatch_4_3_3_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_thatch_4_3_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_cart_f74ffdac",
+      "purpose": "preserved_cart",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        2,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_cart_f74ffdac.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_cart_f74ffdac.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "element_0_3_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_0_3_goryeo_jade.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "element_1_3_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_1_3_goryeo_jade.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_0_4_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_0_4_goryeo_jade.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_1_4_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_1_4_goryeo_jade.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_wheat_f0963301",
+      "purpose": "preserved_wheat",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        3,
+        3
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_wheat_f0963301.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_wheat_f0963301.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "element_13_4_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_13_4_goryeo_jade.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "element_14_4_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_14_4_goryeo_jade.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "element_15_4_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_15_4_goryeo_jade.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_13_5_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_13_5_goryeo_jade.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_14_5_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_14_5_goryeo_jade.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_15_5_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_15_5_goryeo_jade.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "element_13_6_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_13_6_goryeo_jade.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "element_14_6_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_14_6_goryeo_jade.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "element_15_6_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_15_6_goryeo_jade.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_sheaf_c21644db",
+      "purpose": "preserved_sheaf",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        1,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_sheaf_c21644db.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_sheaf_c21644db.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "element_12_4_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_12_4_goryeo_jade.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_12_5_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_12_5_goryeo_jade.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_well_aaa50cc1",
+      "purpose": "preserved_well",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        1,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_well_aaa50cc1.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_well_aaa50cc1.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "element_7_1_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_7_1_goryeo_jade.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_7_2_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_7_2_goryeo_jade.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_laundry_4c045117",
+      "purpose": "preserved_laundry",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        2,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_laundry_4c045117.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_laundry_4c045117.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "element_14_2_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_14_2_goryeo_jade.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "element_15_2_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_15_2_goryeo_jade.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_14_3_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_14_3_goryeo_jade.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_15_3_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_15_3_goryeo_jade.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_manor_351d5ad1",
+      "purpose": "preserved_goryeo_manor",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        6,
+        4
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_manor_351d5ad1.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_manor_351d5ad1.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_manor_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_manor_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_manor_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_manor_3_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_3_0.png"
+        },
+        {
+          "dx": 4,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_manor_4_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_4_0.png"
+        },
+        {
+          "dx": 5,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_manor_5_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_5_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_manor_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_manor_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_manor_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_manor_3_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_3_1.png"
+        },
+        {
+          "dx": 4,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_manor_4_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_4_1.png"
+        },
+        {
+          "dx": 5,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_manor_5_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_5_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_manor_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_manor_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_manor_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_manor_3_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_3_2.png"
+        },
+        {
+          "dx": 4,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_manor_4_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_4_2.png"
+        },
+        {
+          "dx": 5,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_manor_5_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_5_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_manor_0_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_manor_1_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_manor_2_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_2_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_manor_3_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_3_3.png"
+        },
+        {
+          "dx": 4,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_manor_4_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_4_3.png"
+        },
+        {
+          "dx": 5,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_manor_5_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_manor_5_3.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_celadon_54def069",
+      "purpose": "preserved_goryeo_celadon",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        3,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_celadon_54def069.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_celadon_54def069.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_celadon_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_celadon_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_celadon_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_celadon_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_celadon_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_celadon_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_celadon_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_celadon_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_celadon_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_celadon_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_celadon_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_celadon_2_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_lantern_ea98fe0c",
+      "purpose": "preserved_goryeo_lantern",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        1,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_lantern_ea98fe0c.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_lantern_ea98fe0c.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_lantern_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_lantern_0_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_lantern_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_lantern_0_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_woodland0_47258e21",
+      "purpose": "preserved_goryeo_woodland0",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland0_47258e21.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland0_47258e21.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland0_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland0_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland0_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland0_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland0_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland0_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland0_3_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland0_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland0_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland0_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland0_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland0_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland0_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland0_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland0_3_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland0_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland0_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland0_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland0_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland0_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland0_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland0_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland0_3_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland0_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_woodland9_9d822f53",
+      "purpose": "preserved_goryeo_woodland9",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        2,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland9_9d822f53.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland9_9d822f53.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_woodland9_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland9_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_woodland9_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland9_1_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland9_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland9_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland9_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland9_1_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_woodland6_ad458083",
+      "purpose": "preserved_goryeo_woodland6",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        3,
+        4
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland6_ad458083.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland6_ad458083.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland6_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland6_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland6_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland6_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland6_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland6_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland6_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland6_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland6_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland6_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland6_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland6_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland6_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland6_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland6_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland6_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland6_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland6_2_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland6_0_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland6_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland6_1_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland6_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland6_2_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland6_2_3.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_woodland4_474f9ea4",
+      "purpose": "preserved_goryeo_woodland4",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        4,
+        4
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland4_474f9ea4.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland4_474f9ea4.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland4_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland4_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland4_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland4_3_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland4_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland4_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland4_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland4_3_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland4_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland4_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland4_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland4_3_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_3_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland4_0_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland4_1_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland4_2_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_2_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland4_3_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland4_3_3.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_woodland2_96924a7c",
+      "purpose": "preserved_goryeo_woodland2",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        3,
+        4
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland2_96924a7c.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland2_96924a7c.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland2_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland2_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland2_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland2_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland2_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland2_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland2_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland2_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland2_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland2_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland2_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland2_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland2_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland2_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland2_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland2_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland2_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland2_2_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland2_0_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland2_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland2_1_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland2_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland2_2_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland2_2_3.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_woodland11_43cf5755",
+      "purpose": "preserved_goryeo_woodland11",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        3,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland11_43cf5755.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland11_43cf5755.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_woodland11_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland11_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_woodland11_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland11_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_woodland11_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland11_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland11_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland11_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland11_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland11_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland11_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland11_2_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_woodland10_8a468436",
+      "purpose": "preserved_goryeo_woodland10",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        2,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland10_8a468436.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland10_8a468436.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_woodland10_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland10_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_woodland10_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland10_1_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland10_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland10_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland10_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland10_1_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_woodland8_92384100",
+      "purpose": "preserved_goryeo_woodland8",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        3,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland8_92384100.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland8_92384100.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_woodland8_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland8_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_woodland8_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland8_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_woodland8_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland8_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland8_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland8_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland8_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland8_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland8_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland8_2_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_woodland5_d9aa0ade",
+      "purpose": "preserved_goryeo_woodland5",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        4,
+        4
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland5_d9aa0ade.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland5_d9aa0ade.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland5_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland5_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland5_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland5_3_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland5_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland5_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland5_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland5_3_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland5_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland5_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland5_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland5_3_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_3_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland5_0_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland5_1_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland5_2_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_2_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland5_3_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland5_3_3.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_woodland7_eacf8d8b",
+      "purpose": "preserved_goryeo_woodland7",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        3,
+        4
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland7_eacf8d8b.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland7_eacf8d8b.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland7_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland7_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland7_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland7_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland7_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland7_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland7_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland7_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland7_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland7_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland7_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland7_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland7_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland7_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland7_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland7_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland7_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland7_2_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland7_0_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland7_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland7_1_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland7_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland7_2_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland7_2_3.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_royal_184e9b37",
+      "purpose": "preserved_goryeo_royal",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        10,
+        7
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_royal_184e9b37.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_royal_184e9b37.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_royal_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_royal_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_royal_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_royal_3_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_3_0.png"
+        },
+        {
+          "dx": 4,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_royal_4_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_4_0.png"
+        },
+        {
+          "dx": 5,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_royal_5_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_5_0.png"
+        },
+        {
+          "dx": 6,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_royal_6_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_6_0.png"
+        },
+        {
+          "dx": 7,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_royal_7_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_7_0.png"
+        },
+        {
+          "dx": 8,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_royal_8_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_8_0.png"
+        },
+        {
+          "dx": 9,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_royal_9_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_9_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_royal_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_royal_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_royal_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_royal_3_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_3_1.png"
+        },
+        {
+          "dx": 4,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_royal_4_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_4_1.png"
+        },
+        {
+          "dx": 5,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_royal_5_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_5_1.png"
+        },
+        {
+          "dx": 6,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_royal_6_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_6_1.png"
+        },
+        {
+          "dx": 7,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_royal_7_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_7_1.png"
+        },
+        {
+          "dx": 8,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_royal_8_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_8_1.png"
+        },
+        {
+          "dx": 9,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_royal_9_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_9_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "high",
+          "tile": "goryeo_royal_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "high",
+          "tile": "goryeo_royal_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "high",
+          "tile": "goryeo_royal_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "high",
+          "tile": "goryeo_royal_3_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_3_2.png"
+        },
+        {
+          "dx": 4,
+          "dy": 2,
+          "layer": "high",
+          "tile": "goryeo_royal_4_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_4_2.png"
+        },
+        {
+          "dx": 5,
+          "dy": 2,
+          "layer": "high",
+          "tile": "goryeo_royal_5_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_5_2.png"
+        },
+        {
+          "dx": 6,
+          "dy": 2,
+          "layer": "high",
+          "tile": "goryeo_royal_6_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_6_2.png"
+        },
+        {
+          "dx": 7,
+          "dy": 2,
+          "layer": "high",
+          "tile": "goryeo_royal_7_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_7_2.png"
+        },
+        {
+          "dx": 8,
+          "dy": 2,
+          "layer": "high",
+          "tile": "goryeo_royal_8_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_8_2.png"
+        },
+        {
+          "dx": 9,
+          "dy": 2,
+          "layer": "high",
+          "tile": "goryeo_royal_9_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_9_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "high",
+          "tile": "goryeo_royal_0_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "high",
+          "tile": "goryeo_royal_1_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "high",
+          "tile": "goryeo_royal_2_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_2_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 3,
+          "layer": "high",
+          "tile": "goryeo_royal_3_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_3_3.png"
+        },
+        {
+          "dx": 4,
+          "dy": 3,
+          "layer": "high",
+          "tile": "goryeo_royal_4_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_4_3.png"
+        },
+        {
+          "dx": 5,
+          "dy": 3,
+          "layer": "high",
+          "tile": "goryeo_royal_5_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_5_3.png"
+        },
+        {
+          "dx": 6,
+          "dy": 3,
+          "layer": "high",
+          "tile": "goryeo_royal_6_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_6_3.png"
+        },
+        {
+          "dx": 7,
+          "dy": 3,
+          "layer": "high",
+          "tile": "goryeo_royal_7_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_7_3.png"
+        },
+        {
+          "dx": 8,
+          "dy": 3,
+          "layer": "high",
+          "tile": "goryeo_royal_8_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_8_3.png"
+        },
+        {
+          "dx": 9,
+          "dy": 3,
+          "layer": "high",
+          "tile": "goryeo_royal_9_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_9_3.png"
+        },
+        {
+          "dx": 0,
+          "dy": 4,
+          "layer": "high",
+          "tile": "goryeo_royal_0_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_0_4.png"
+        },
+        {
+          "dx": 1,
+          "dy": 4,
+          "layer": "high",
+          "tile": "goryeo_royal_1_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_1_4.png"
+        },
+        {
+          "dx": 2,
+          "dy": 4,
+          "layer": "high",
+          "tile": "goryeo_royal_2_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_2_4.png"
+        },
+        {
+          "dx": 3,
+          "dy": 4,
+          "layer": "high",
+          "tile": "goryeo_royal_3_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_3_4.png"
+        },
+        {
+          "dx": 4,
+          "dy": 4,
+          "layer": "high",
+          "tile": "goryeo_royal_4_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_4_4.png"
+        },
+        {
+          "dx": 5,
+          "dy": 4,
+          "layer": "high",
+          "tile": "goryeo_royal_5_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_5_4.png"
+        },
+        {
+          "dx": 6,
+          "dy": 4,
+          "layer": "high",
+          "tile": "goryeo_royal_6_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_6_4.png"
+        },
+        {
+          "dx": 7,
+          "dy": 4,
+          "layer": "high",
+          "tile": "goryeo_royal_7_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_7_4.png"
+        },
+        {
+          "dx": 8,
+          "dy": 4,
+          "layer": "high",
+          "tile": "goryeo_royal_8_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_8_4.png"
+        },
+        {
+          "dx": 9,
+          "dy": 4,
+          "layer": "high",
+          "tile": "goryeo_royal_9_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_9_4.png"
+        },
+        {
+          "dx": 0,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "goryeo_royal_0_5",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_0_5.png"
+        },
+        {
+          "dx": 1,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "goryeo_royal_1_5",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_1_5.png"
+        },
+        {
+          "dx": 2,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "goryeo_royal_2_5",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_2_5.png"
+        },
+        {
+          "dx": 3,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "goryeo_royal_3_5",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_3_5.png"
+        },
+        {
+          "dx": 4,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "goryeo_royal_4_5",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_4_5.png"
+        },
+        {
+          "dx": 5,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "goryeo_royal_5_5",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_5_5.png"
+        },
+        {
+          "dx": 6,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "goryeo_royal_6_5",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_6_5.png"
+        },
+        {
+          "dx": 7,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "goryeo_royal_7_5",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_7_5.png"
+        },
+        {
+          "dx": 8,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "goryeo_royal_8_5",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_8_5.png"
+        },
+        {
+          "dx": 9,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "goryeo_royal_9_5",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_9_5.png"
+        },
+        {
+          "dx": 0,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "goryeo_royal_0_6",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_0_6.png"
+        },
+        {
+          "dx": 1,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "goryeo_royal_1_6",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_1_6.png"
+        },
+        {
+          "dx": 2,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "goryeo_royal_2_6",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_2_6.png"
+        },
+        {
+          "dx": 3,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "goryeo_royal_3_6",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_3_6.png"
+        },
+        {
+          "dx": 4,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "goryeo_royal_4_6",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_4_6.png"
+        },
+        {
+          "dx": 5,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "goryeo_royal_5_6",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_5_6.png"
+        },
+        {
+          "dx": 6,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "goryeo_royal_6_6",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_6_6.png"
+        },
+        {
+          "dx": 7,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "goryeo_royal_7_6",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_7_6.png"
+        },
+        {
+          "dx": 8,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "goryeo_royal_8_6",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_8_6.png"
+        },
+        {
+          "dx": 9,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "goryeo_royal_9_6",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_royal_9_6.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_stall_d546437f",
+      "purpose": "preserved_goryeo_stall",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        6,
+        4
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_stall_d546437f.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_stall_d546437f.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_stall_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_stall_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_stall_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_stall_3_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_3_0.png"
+        },
+        {
+          "dx": 4,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_stall_4_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_4_0.png"
+        },
+        {
+          "dx": 5,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_stall_5_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_5_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_stall_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_stall_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_stall_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_stall_3_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_3_1.png"
+        },
+        {
+          "dx": 4,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_stall_4_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_4_1.png"
+        },
+        {
+          "dx": 5,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_stall_5_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_5_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_stall_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_stall_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_stall_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_stall_3_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_3_2.png"
+        },
+        {
+          "dx": 4,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_stall_4_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_4_2.png"
+        },
+        {
+          "dx": 5,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_stall_5_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_5_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_stall_0_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_stall_1_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_stall_2_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_2_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_stall_3_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_3_3.png"
+        },
+        {
+          "dx": 4,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_stall_4_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_4_3.png"
+        },
+        {
+          "dx": 5,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_stall_5_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_stall_5_3.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_cottage_2b961414",
+      "purpose": "preserved_goryeo_cottage",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        5,
+        4
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_cottage_2b961414.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_cottage_2b961414.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_cottage_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_cottage_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_cottage_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_cottage_3_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_3_0.png"
+        },
+        {
+          "dx": 4,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_cottage_4_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_4_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_cottage_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_cottage_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_cottage_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_cottage_3_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_3_1.png"
+        },
+        {
+          "dx": 4,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_cottage_4_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_4_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_cottage_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_cottage_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_cottage_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_cottage_3_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_3_2.png"
+        },
+        {
+          "dx": 4,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_cottage_4_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_4_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_cottage_0_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_cottage_1_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_cottage_2_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_2_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_cottage_3_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_3_3.png"
+        },
+        {
+          "dx": 4,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_cottage_4_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_cottage_4_3.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_wall_c7149fb3",
+      "purpose": "preserved_goryeo_wall",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        4,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_wall_c7149fb3.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_wall_c7149fb3.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_wall_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_wall_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_wall_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_wall_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_wall_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_wall_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_wall_3_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_wall_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_wall_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_wall_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_wall_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_wall_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_wall_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_wall_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_wall_3_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_wall_3_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_paper_rack_665314e5",
+      "purpose": "preserved_paper_rack",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        3,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_paper_rack_665314e5.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_paper_rack_665314e5.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "work_0_0_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/work_0_0_goryeo_jade.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "work_1_0_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/work_1_0_goryeo_jade.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "work_2_0_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/work_2_0_goryeo_jade.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "work_0_1_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/work_0_1_goryeo_jade.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "work_1_1_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/work_1_1_goryeo_jade.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "work_2_1_goryeo_jade",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/work_2_1_goryeo_jade.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_paper_7473141b",
+      "purpose": "preserved_goryeo_paper",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_paper_7473141b.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_paper_7473141b.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_paper_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_paper_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_paper_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_paper_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_paper_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_paper_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_paper_3_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_paper_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_paper_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_paper_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_paper_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_paper_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_paper_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_paper_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_paper_3_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_paper_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_paper_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_paper_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_paper_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_paper_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_paper_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_paper_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_paper_3_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_paper_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_pavilion_ffddfecb",
+      "purpose": "preserved_goryeo_pavilion",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        5,
+        5
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_pavilion_ffddfecb.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_pavilion_ffddfecb.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_pavilion_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_pavilion_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_pavilion_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_pavilion_3_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_3_0.png"
+        },
+        {
+          "dx": 4,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_pavilion_4_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_4_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_pavilion_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_pavilion_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_pavilion_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_pavilion_3_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_3_1.png"
+        },
+        {
+          "dx": 4,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_pavilion_4_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_4_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "high",
+          "tile": "goryeo_pavilion_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "high",
+          "tile": "goryeo_pavilion_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "high",
+          "tile": "goryeo_pavilion_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "high",
+          "tile": "goryeo_pavilion_3_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_3_2.png"
+        },
+        {
+          "dx": 4,
+          "dy": 2,
+          "layer": "high",
+          "tile": "goryeo_pavilion_4_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_4_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_pavilion_0_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_pavilion_1_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_pavilion_2_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_2_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_pavilion_3_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_3_3.png"
+        },
+        {
+          "dx": 4,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_pavilion_4_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_4_3.png"
+        },
+        {
+          "dx": 0,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "goryeo_pavilion_0_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_0_4.png"
+        },
+        {
+          "dx": 1,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "goryeo_pavilion_1_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_1_4.png"
+        },
+        {
+          "dx": 2,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "goryeo_pavilion_2_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_2_4.png"
+        },
+        {
+          "dx": 3,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "goryeo_pavilion_3_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_3_4.png"
+        },
+        {
+          "dx": 4,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "goryeo_pavilion_4_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_pavilion_4_4.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_woodland3_b58deb22",
+      "purpose": "preserved_goryeo_woodland3",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland3_b58deb22.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland3_b58deb22.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland3_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland3_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland3_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland3_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland3_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland3_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland3_3_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland3_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland3_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland3_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland3_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland3_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland3_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland3_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_woodland3_3_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland3_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland3_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland3_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland3_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland3_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland3_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland3_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland3_3_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland3_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_woodland1_8e37d320",
+      "purpose": "preserved_goryeo_woodland1",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        3,
+        4
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland1_8e37d320.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_woodland1_8e37d320.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland1_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland1_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland1_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland1_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "goryeo_woodland1_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland1_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland1_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland1_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland1_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland1_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "high",
+          "tile": "goryeo_woodland1_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland1_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland1_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland1_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland1_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland1_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "goryeo_woodland1_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland1_2_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland1_0_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland1_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland1_1_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland1_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "goryeo_woodland1_2_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_woodland1_2_3.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_wheat_16d40a37",
+      "purpose": "preserved_wheat",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        3,
+        3
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_wheat_16d40a37.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_wheat_16d40a37.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "element_13_4_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_13_4_goryeo_harvest.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "element_14_4_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_14_4_goryeo_harvest.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "element_15_4_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_15_4_goryeo_harvest.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_13_5_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_13_5_goryeo_harvest.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_14_5_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_14_5_goryeo_harvest.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_15_5_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_15_5_goryeo_harvest.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "element_13_6_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_13_6_goryeo_harvest.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "element_14_6_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_14_6_goryeo_harvest.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "element_15_6_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_15_6_goryeo_harvest.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_sheaf_5994fbae",
+      "purpose": "preserved_sheaf",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        1,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_sheaf_5994fbae.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_sheaf_5994fbae.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "element_12_4_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_12_4_goryeo_harvest.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_12_5_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_12_5_goryeo_harvest.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_cart_e1a728ea",
+      "purpose": "preserved_cart",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        2,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_cart_e1a728ea.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_cart_e1a728ea.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "element_0_3_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_0_3_goryeo_harvest.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "element_1_3_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_1_3_goryeo_harvest.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_0_4_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_0_4_goryeo_harvest.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_1_4_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_1_4_goryeo_harvest.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_well_6d90aa89",
+      "purpose": "preserved_well",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        1,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_well_6d90aa89.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_well_6d90aa89.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "element_7_1_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_7_1_goryeo_harvest.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_7_2_goryeo_harvest",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_7_2_goryeo_harvest.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_goryeo_harvest_168ed569",
+      "purpose": "preserved_goryeo_harvest",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        3,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_harvest_168ed569.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_goryeo_harvest_168ed569.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_harvest_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_harvest_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_harvest_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_harvest_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_harvest_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_harvest_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_harvest_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_harvest_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_harvest_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_harvest_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_harvest_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/goryeo_harvest_2_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_house_thatch_95eba540",
+      "purpose": "preserved_house_thatch",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_house_thatch_95eba540.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_house_thatch_95eba540.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "house_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "house_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "house_2_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "house_3_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_2_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_3_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_3_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_pinebig_a6c49380",
+      "purpose": "preserved_pinebig",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_pinebig_a6c49380.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_pinebig_a6c49380.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_0_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_1_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_2_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_3_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_3_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_0_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_1_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_2_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_2_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_3_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_3_3.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_0_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_0_4.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_1_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_1_4.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_2_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_2_4.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_3_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_3_4.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_roundbig_0c978872",
+      "purpose": "preserved_roundbig",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_roundbig_0c978872.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_roundbig_0c978872.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_4_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_4_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_5_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_5_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_6_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_6_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_7_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_7_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_4_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_4_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_5_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_5_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_6_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_6_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_7_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_7_3.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_4_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_4_4.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_5_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_5_4.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_6_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_6_4.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_7_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_7_4.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_store_499ea1ea",
+      "purpose": "preserved_store",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_store_499ea1ea.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_store_499ea1ea.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "house_19_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_19_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "house_20_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_20_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "house_21_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_21_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "house_22_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_22_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_19_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_19_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_20_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_20_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_21_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_21_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_22_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_22_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_19_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_19_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_20_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_20_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_21_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_21_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_22_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_22_2.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_house_plain_3c0cb13b",
+      "purpose": "preserved_house_plain",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_house_plain_3c0cb13b.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_house_plain_3c0cb13b.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "house_4_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_4_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "house_5_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_5_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "house_6_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_6_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "house_7_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_7_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_4_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_4_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_5_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_5_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_6_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_6_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_7_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_7_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_4_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_4_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_5_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_5_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_6_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_6_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_7_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/house_7_2.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_cart_fca7dd46",
+      "purpose": "preserved_cart",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        2,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_cart_fca7dd46.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_cart_fca7dd46.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "element_0_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "element_1_3",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_1_3.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_0_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_0_4.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_1_4",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_1_4.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_well_a3de50d0",
+      "purpose": "preserved_well",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        1,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_well_a3de50d0.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_well_a3de50d0.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "element_7_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_7_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "element_7_2",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_7_2.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_module_rock_15917f3a",
+      "purpose": "preserved_module_rock",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        2,
+        2
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_module_rock_15917f3a.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_module_rock_15917f3a.png"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "module_0_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/module_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "module_1_0",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/module_1_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "module_0_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/module_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "module_1_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/module_1_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_pinebig_0cd79e57",
+      "purpose": "preserved_pinebig",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_pinebig_0cd79e57.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_pinebig_0cd79e57.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_0_2_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_0_2_skin_steppe.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_1_2_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_1_2_skin_steppe.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_2_2_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_2_2_skin_steppe.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_3_2_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_3_2_skin_steppe.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_0_3_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_0_3_skin_steppe.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_1_3_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_1_3_skin_steppe.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_2_3_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_2_3_skin_steppe.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_3_3_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_3_3_skin_steppe.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_0_4_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_0_4_skin_steppe.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_1_4_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_1_4_skin_steppe.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_2_4_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_2_4_skin_steppe.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_3_4_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_3_4_skin_steppe.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_roundbig_b8a4adcf",
+      "purpose": "preserved_roundbig",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_roundbig_b8a4adcf.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_roundbig_b8a4adcf.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_4_2_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_4_2_skin_steppe.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_5_2_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_5_2_skin_steppe.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_6_2_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_6_2_skin_steppe.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "high",
+          "tile": "nature_7_2_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_7_2_skin_steppe.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_4_3_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_4_3_skin_steppe.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_5_3_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_5_3_skin_steppe.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_6_3_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_6_3_skin_steppe.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "high",
+          "tile": "nature_7_3_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_7_3_skin_steppe.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_4_4_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_4_4_skin_steppe.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_5_4_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_5_4_skin_steppe.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_6_4_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_6_4_skin_steppe.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "nature_7_4_skin_steppe",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/nature_7_4_skin_steppe.png"
+        }
+      ]
+    },
+    {
+      "id": "c6_bench_ac9f82d8",
+      "purpose": "preserved_bench",
+      "profile": "native16",
+      "kind": "object",
+      "size": [
+        3,
+        1
+      ],
+      "image": "ArtReview/C6-Preflight-2026-10-26/whole/c6_bench_ac9f82d8.png",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/C6-Preflight-2026-10-26/whole/c6_bench_ac9f82d8.png",
+        "license": "Ninja Adventure CC0-1.0; original attribution/source IDs in provenance.json"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "element_11_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_11_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "element_12_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_12_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "element_13_1",
+          "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_13_1.png"
+        }
+      ]
+    }
+  ]
+}

@@ -253,3 +253,9 @@ Unity 안 검사(에디터 메뉴 / MCP): `SceneTerrainChecks`, `CentralConnecti
 - Git에 넣지 않는 로컬 파일: `Builds/`, `output/`(옛 검사 결과), `Tools/MapGen/preview_*.png`.
 - Git에 올리지 않은 실험: `Assets/Caravan3DPrototype/`, `Assets/GoryeoJourneyPrototype/`, `Tools/Prototype3D/`. 보존만 한다.
 - 다른 팀 작업: 북유럽 Draft PR #2, 아라비아 PR #22. 병합하거나 고치지 않는다.
+
+### C6 사전 굽기·판단 대기 (2026-10-26)
+
+- C3a 완료 후 `Tools/ArtBake/preflight.py`로 등록11맵의634스탬프/온전한46종을 시험 PNG로 묶었다. RGBA 그대로 유지·부분개체0, 개체496/지형654키 조사, 캐릭터·효과217PNG 참조/미등록 옛 맵8개 목록. 결과는 `ArtReview/C6-Preflight-2026-10-26/`이며 본편 연결은 그대로다.
+- 바위/건조대 그림자 타일5개(알파68/85), 캐릭터 그림자(80), 고려 물결4개(90)가 현 A2의 알파0/255 규칙과 충돌한다. 기존 검사기에서 whole2개+타일5개 `image_alpha`7건 재현, 통과로 기록하지 않았다. 현재 모습 보존 결정과 검사 예외 범위는 Claude 판단 요청으로 남겼다. 팔레트/규칙 예외/그림 삭제를 임의로 정하지 않았다. `Validation/C6-Preflight-2026-10-26/README.md`.
+- C6 본편 적용/변환호출0/화면변화0/옛맵삭제는 미완료. 옛8ID는 구 저장 별칭에도 있으므로 별칭과 생성기 지형 의존을 보존해야 한다. 동물 보관본/플레이어/저장 불변.
