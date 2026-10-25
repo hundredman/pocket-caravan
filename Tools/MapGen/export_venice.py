@@ -1,6 +1,6 @@
 """베네치아 맵 JSON만 내보낸다. 공용 export.py(atlasRegions)와 지형 지도는 건드리지 않는다.
     사용: python Tools/MapGen/export_venice.py
-    - 맵: venice.json의 jsonPath
+    - 맵: venice.json·center_venice.json의 jsonPath
     - 타일: 이미 있는 공용 타일 PNG는 덮어쓰지 않는다(.meta GUID 유지).
       없는 원본 타일은 원본 팩(NA_PACK)이 있을 때만 새로 잘라 내고, 없으면 목록을 알리고 멈춘다.
       베네치아 전용 그림(ven_*)은 venice_tiles.py가 그리며, 그림이 바뀐 경우에만 다시 쓴다.
@@ -52,9 +52,14 @@ def preview(m, path, markers=True):
     img.save(path)
 
 
+REGIONS = ("venice", "center_venice")   # 베네치아 5씬 + 본토 서부 7씬 (venice_mainland.py)
+
+
 def main():
-    entries = map_entries("venice")
-    maps = generated_maps("venice")
+    entries, maps = [], []
+    for region in REGIONS:
+        entries += map_entries(region)
+        maps += generated_maps(region)
     used = set()
     for m in maps:
         for layer in (m.ground, m.deco, m.obj, m.high):
@@ -108,6 +113,8 @@ def main():
                  blocked=[1 if b else 0 for row in m.blocked for b in row],
                  objects=objects)
         d["palette"] = palette
+        if getattr(m, "obstacles", None):   # 공용 장애물 배치 (예: 습지 진흙 'mud'). MapJsonBuilder가 ObstacleField로 붙인다
+            d["obstacles"] = m.obstacles
         if getattr(m, "districts", None):   # 베네치아 구역 이름 (VeniceRegionSetup이 씬에 붙인다. 공용 빌더는 무시)
             d["districts"] = [dict(name=n, x0=a, y0=b, x1=c, y1=e) for n, a, b, c, e in m.districts]
             d["defaultDistrict"] = m.default_district

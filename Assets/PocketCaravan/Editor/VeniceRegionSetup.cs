@@ -8,7 +8,8 @@ using UnityEngine;
 namespace PocketCaravan.EditorTools
 {
     /// <summary>
-    /// 베네치아(제안 초안): 수도 1 + 마을 4가 한 맵(venice_lagoon)에서 걸어서 이어진다. 씬 전환·암전이 없다.
+    /// 베네치아(제안 초안): 수도 1 + 마을 4를 마을별 씬 다섯 개로 나눈다(합계 약 2만 칸). 씬을 넘을 때 공용 이동의 페이드가 일어난다.
+    /// 맵은 Tools/MapGen/venice.py가 석호 원본 하나를 잘라 만든다(이전 한 맵 venice_lagoon은 등록하지 않는다).
     /// 지명·상품·수치는 팀 확정 전 임시값이다. 무라노·산테라스모·부라노는 제안 지명이다.
     /// 다른 지역 에셋·DB 항목은 지우거나 바꾸지 않는다. 공용 GameDatabase에는 추가만 한다(커밋 여부는 통합 담당과 정한다).
     /// </summary>
@@ -16,15 +17,20 @@ namespace PocketCaravan.EditorTools
     {
         const string Root = "Assets/PocketCaravan";
         const string Data = Root + "/Data/Venice";
-        const string MapId = "venice_lagoon";
+        static readonly string[] MapIds = { "venice_rialto", "venice_santerasmo", "venice_murano", "venice_burano", "venice_chioggia" };
+        // 본토 서부(중앙 대륙 서쪽 1/4, 제안): Tools/MapGen/venice_mainland.py, 등록은 World/Regions/center_venice.json
+        static readonly string[] MainlandIds = { "venice_c_landing", "venice_c_vineyard", "venice_c_marsh", "venice_c_pass",
+            "venice_c_bridge", "venice_c_post", "venice_c_gate" };
 
         [MenuItem("Pocket Caravan/베네치아/데이터·맵 만들기")]
         public static void Build()
         {
             ApplyData();
-            MapJsonBuilder.BuildSelected(MapId);
-            AttachDistricts();
-            Debug.Log("[베네치아] 데이터와 맵을 만들었습니다. Scenes/Venice/venice_lagoon에서 Play하세요.");
+            var all = new List<string>(MapIds); all.AddRange(MainlandIds);
+            MapJsonBuilder.BuildSelected(all.ToArray());
+            foreach (var id in MapIds) AttachDistricts(id);
+            foreach (var id in MainlandIds) UseVeniceCatIn(id);
+            Debug.Log("[베네치아] 데이터와 맵 12개(베네치아 5 + 본토 7)를 만들었습니다. Scenes/Venice/venice_rialto에서 Play하세요.");
         }
 
         public static void ApplyData()
@@ -104,8 +110,20 @@ namespace PocketCaravan.EditorTools
             Stock(santerasmo, (fruit, 80, 1), (glass, 8, 1.2f), (fish, 14, 1.15f), (salt, 14, 1));
             Stock(burano, (fish, 80, 1), (salt, 14, 1.3f), (fruit, 14, 1), (glass, 8, 1));
 
+            // 본토 서부의 대상 숙소 (제안): 쉼터·길 안내소와 장터. 베네치아 물건을 멀리 가져와 파는 곳(좌표가 멀어 값이 높다).
+            var mainland = Get<RegionData>("Region_CenterVenice");
+            mainland.id = "center_venice"; mainland.displayName = "본토 서부";
+            mainland.note = "제안 초안. 중앙 대륙 서쪽 1/4(베네치아 담당). 키오자에서 배로 건너 동문 큰길까지. 중앙 권역 연결은 통합 후.";
+            EditorUtility.SetDirty(mainland);
+            var caravanserai = Town("Town_Caravanserai", "venice_c_caravanserai", "대상 숙소", new Vector2Int(15, 2), 2,
+                "본토 길이 모이는 숙소. 쉬고, 길 소식을 듣고, 석호 물건을 비싸게 판다.",
+                Rest("venice_c_caravanserai"),
+                Info("venice_c_caravanserai", "서쪽 직행로는 나루터로 바로 갑니다. 북쪽은 포도밭·고갯길, 남쪽은 습지·돌다리로 돌아가는 길입니다. 동문 너머 중앙 권역은 아직 길을 닦는 중입니다."));
+            caravanserai.region = mainland;
+            Stock(caravanserai, (glass, 10, 1.1f), (salt, 16, 1.2f), (fruit, 16, 1.1f), (fish, 16, 1.2f));
+
             var handcart = db.vehicles.Find(v => v != null && v.id == "handcart");
-            foreach (var t in new[] { rialto, chioggia, murano, santerasmo, burano }) t.vehiclesForSale.Clear();
+            foreach (var t in new[] { rialto, chioggia, murano, santerasmo, burano, caravanserai }) t.vehiclesForSale.Clear();
             if (handcart != null) rialto.vehiclesForSale.Add(handcart);
             BuildQuests(db, Get<QuestData>, parcel, glassCrate, saltCargo, glass, fruit, handcart);
             EditorUtility.SetDirty(db); AssetDatabase.SaveAssets();
@@ -187,9 +205,9 @@ namespace PocketCaravan.EditorTools
         [Serializable] class MapJson { public string id; public int w, h; public DistrictJson[] districts; public string defaultDistrict; }
 
         /// <summary>맵 JSON의 구역 이름을 생성된 씬에 붙인다 (JSON은 위쪽이 0, Unity 셀은 아래쪽이 0).</summary>
-        public static void AttachDistricts()
+        public static void AttachDistricts(string mapId)
         {
-            var entry = WorldRegistry.Load().Map(MapId);
+            var entry = WorldRegistry.Load().Map(mapId);
             var json = JsonUtility.FromJson<MapJson>(File.ReadAllText(entry.jsonPath));
             var scene = EditorSceneManager.OpenScene(entry.scenePath, OpenSceneMode.Single);
             var go = new GameObject("베네치아 구역 이름");
@@ -200,6 +218,16 @@ namespace PocketCaravan.EditorTools
                 int yMin = json.h - 1 - d.y1, yMax = json.h - 1 - d.y0;
                 districts.districts.Add(new VeniceDistricts.District { name = d.name, cells = new RectInt(d.x0, yMin, d.x1 - d.x0, yMax - yMin) });
             }
+            UseVeniceCat();
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+        }
+
+        /// <summary>본토 씬: 구역 이름 없이 플레이어 그림만 흰 고양이로 바꾼다.</summary>
+        static void UseVeniceCatIn(string mapId)
+        {
+            var entry = WorldRegistry.Load().Map(mapId);
+            var scene = EditorSceneManager.OpenScene(entry.scenePath, OpenSceneMode.Single);
             UseVeniceCat();
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);

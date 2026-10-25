@@ -4,12 +4,44 @@
   "regionAssetPath": "Assets/PocketCaravan/Data/Venice/Region_Venice.asset",
   "maps": [
     {
-      "mapId": "venice_lagoon",
-      "jsonPath": "Assets/PocketCaravan/Maps/Venice/venice_lagoon.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Venice/venice_lagoon.unity",
+      "mapId": "venice_rialto",
+      "jsonPath": "Assets/PocketCaravan/Maps/Venice/venice_rialto.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Venice/venice_rialto.unity",
       "worldX": 12,
       "worldY": 1,
-      "generator": "venice:venice_lagoon"
+      "generator": "venice:venice_rialto"
+    },
+    {
+      "mapId": "venice_santerasmo",
+      "jsonPath": "Assets/PocketCaravan/Maps/Venice/venice_santerasmo.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Venice/venice_santerasmo.unity",
+      "worldX": 11,
+      "worldY": 0,
+      "generator": "venice:venice_santerasmo"
+    },
+    {
+      "mapId": "venice_murano",
+      "jsonPath": "Assets/PocketCaravan/Maps/Venice/venice_murano.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Venice/venice_murano.unity",
+      "worldX": 13,
+      "worldY": 0,
+      "generator": "venice:venice_murano"
+    },
+    {
+      "mapId": "venice_burano",
+      "jsonPath": "Assets/PocketCaravan/Maps/Venice/venice_burano.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Venice/venice_burano.unity",
+      "worldX": 11,
+      "worldY": 2,
+      "generator": "venice:venice_burano"
+    },
+    {
+      "mapId": "venice_chioggia",
+      "jsonPath": "Assets/PocketCaravan/Maps/Venice/venice_chioggia.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Venice/venice_chioggia.unity",
+      "worldX": 13,
+      "worldY": 2,
+      "generator": "venice:venice_chioggia"
     }
   ],
   "npcs": [

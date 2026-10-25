@@ -8,6 +8,7 @@
 배치 원칙: 건물 3~5채를 붙여 묶고 그 사이 골목, 좁은 골목 끝에 작은 광장. 건물은 그림이 실제로 차 있는 칸만 막는다.
 다른 문명으로 가는 출구는 연결표 합의 전까지 만들지 않는다."""
 from venice_tiles import VeniceMap
+import tiles
 
 W, H = 112, 84
 
@@ -248,7 +249,7 @@ def glassworks(m):
     m.building("vg_gls_artisan", 102, 14)
     m.building("vg_gls_row", 97, 24)
     m.building("vg_gls_narrow", 102, 21)
-    put(m, [("vg_flower_pot2", 100, 19), ("vg_pot_plant", 104, 20)])
+    put(m, [("vg_flower_pot2", 100, 19)])           # x104~106은 동쪽 모래톱(키오자 방면)으로 가는 수레 길
     reuse(m, [("vg_n_gls_sand", 91, 15), ("vg_n_gls_wood", 82, 15), ("vg_n_gls_blowbench", 84, 25), ("vg_n_gls_bowls", 99, 12),
               ("vg_n_gls_cups", 86, 22), ("vg_stall_glass", 82, 24), ("vg_glass_workshop", 97, 19)])
     m.add("npc", 85, 16, npc="venice_glassmaker")   # 퀘스트 NPC (venice.json npcs)
@@ -276,9 +277,9 @@ def fishing(m):
     m.lush_around(12, 50, 18, 58)
     m.lush_around(2, 54, 7, 60)
     # 장면 1: 그물 손질 (집 앞)
-    put(m, [("vg_px_fsh_net_mend", 5, 67), ("vg_px_fsh_traps", 9, 67), ("vg_fsh_rack", 11, 68)])
-    # 장면 2: 생선 판매 (잔교 옆)
-    put(m, [("vg_px_fsh_fish_stall", 15, 67), ("vg_px_fsh_catch", 11, 70)])
+    put(m, [("vg_px_fsh_net_mend", 5, 67), ("vg_px_fsh_traps", 9, 67)])
+    # 장면 2: 생선 판매 (잔교 옆). 어부 집 앞까지 수레가 지나가도록 x11~12는 비운다.
+    put(m, [("vg_px_fsh_fish_stall", 15, 67), ("vg_px_fsh_catch", 9, 70)])
     m.add("market", 14, 69, town="venice_burano")
     m.board(13, 66, "venice_burano")
     # 장면 3: 배 수리 (수리막 앞)
@@ -364,8 +365,9 @@ def waterfront(m):
     m.bridge(66, 66, 67, 69, dock=True)
     m.bridge(82, 67, 83, 72, dock=True)
     # 어촌 쪽: 그물 수선장 (수선대·통발·생선 노점·건조대)
-    put(m, [("vg_px_fsh_net_mend", 28, 60), ("vg_n_fsh_traps", 30, 62), ("vg_n_fsh_netpile", 31, 60),
-            ("vg_px_fsh_fish_stall", 37, 60), ("vg_px_fsh_fish_dry", 37, 64), ("vg_n_fsh_anchor", 39, 63)])
+    # 수변 거리 y60~63은 수레 길(부라노 ↔ 리알토 씬 연결)로 비우고 소품은 가장자리에 둔다.
+    put(m, [("vg_px_fsh_net_mend", 28, 59), ("vg_n_fsh_netpile", 31, 59), ("vg_n_fsh_traps", 24, 57),
+            ("vg_px_fsh_fish_stall", 36, 64), ("vg_px_fsh_fish_dry", 38, 64), ("vg_n_fsh_anchor", 39, 66)])
     boats(m, [("vg_fsh_dinghy", 42, 69), ("vg_px_fsh_mooring", 38, 67)])
     # 수도 남쪽 장터: 꽃수레·벤치·노점·절제된 깃발 장식 하나
     put(m, [("vg_w_flower_cart", 43, 59), ("vg_stall_red", 47, 59), ("vg_px_cap_bread_stall", 50, 59),
@@ -427,6 +429,14 @@ def waterfront(m):
 
 
 def venice_lagoon():
+    """예전 한 맵 판 (분할 전 비교용). venice.json에는 등록하지 않는다."""
+    m = _master()
+    m.finish()
+    return m
+
+
+def _master():
+    """석호 전체 원본. 마을별 씬은 이 원본을 잘라 만든다 (아래 '마을별 씬')."""
     m = VeniceMap("venice_lagoon", "베네치아", W, H, seed=301, zone="sand")
     m.hours = 0
     m.water_rect(0, 0, W - 1, H - 1)
@@ -459,8 +469,305 @@ def venice_lagoon():
     m.default_district = DEFAULT_DISTRICT
     m.add("ambience", 58, 40, id="river", radius=12)
     m.pave_streets(2)
+    return m
+
+
+# ---------------- 마을별 씬 ----------------
+# 석호 원본(112×84)을 다리 한가운데에서 잘라 수도 1 + 마을 4 씬으로 나눈다. 씬을 넘을 때 공용 이동(페이드)이 일어난다.
+# 잘린 쪽은 잘린 줄의 지형(물·다리·둑길)을 GAP칸 늘여 붙인다. 두 씬이 같은 줄을 늘이므로 출구 폭이 저절로 맞는다.
+# 넓이: 원본 9,408칸 → 다섯 씬 합계 약 2만 칸 (팀 결정: 베네치아 2만 칸).
+GAP = 20
+CUT_W, CUT_E, CUT_Y = 35, 77, 39       # 서쪽·동쪽 세로 자름 줄(다리 가운데), 마을 사이 가로 자름 줄
+SCENES = {
+    # mapId: (이름, 원본 창 x0, y0, x1, y1, 늘이는 쪽)
+    "venice_santerasmo": ("산테라스모 과수원", 0, 0, CUT_W, CUT_Y, "ES"),
+    "venice_burano": ("부라노 어촌", 0, CUT_Y, CUT_W, H - 1, "EN"),
+    "venice_rialto": ("리알토", CUT_W, 0, CUT_E, H - 1, "WE"),
+    "venice_murano": ("무라노 유리공방", CUT_E, 0, W - 1, CUT_Y, "WS"),
+    "venice_chioggia": ("키오자 교역항", CUT_E, CUT_Y, W - 1, H - 1, "WN"),
+}
+OPPOSITE = {"E": "W", "W": "E", "N": "S", "S": "N"}
+OUTER = {"venice_santerasmo": "W", "venice_burano": "W", "venice_murano": "E", "venice_chioggia": "E"}
+OUTER_PAD = 6
+# 씬 사이 연결은 이웃마다 하나만 남긴다 (자름 줄 위 원본 시작 칸). 나머지 다리는 지우고 땅줄기는 물가에서 끝낸다.
+KEEP = {CUT_W: (1, 25, 59), CUT_E: (1, 25, 49), CUT_Y: (2, 107)}
+# 1: 북쪽 모래톱 바깥길(Q5 "수도를 지나는 길 vs 모래톱 길"), 25: 수도 다리, 59: 어촌은 남쪽 수변 다리(수레가 어부 집 앞 돌길까지 닿는 길)
+# 늘인 물길 가운데 쉼터 섬 (씬 이름, 쪽) → 소품 테마. 다리 → 섬 → 다리로 걷는다.
+ISLET_THEME = {"venice_santerasmo": "orc", "venice_burano": "fsh", "venice_murano": "gls", "venice_chioggia": "salt",
+               "venice_rialto": "cap"}
+ISLET_PROPS = {
+    # (윗줄 소품, 아랫줄 소품). 섬 크기에 맞지 않으면 건너뛴다.
+    "orc": (["vg_n_orc_lemon", "vg_lemon_crate", "vg_cypress"], ["vg_n_orc_olive", "vg_w_vine_bench"]),
+    "fsh": (["vg_net_rack", "vg_px_fsh_traps", "vg_cypress"], ["vg_olive", "vg_barrel"]),
+    "gls": (["vg_n_gls_sand", "vg_gls_cullet", "vg_cypress"], ["vg_olive", "vg_crate"]),
+    "salt": (["vg_salt_mound", "vg_salt_rake", "vg_salt_heap"], ["vg_salt_hut", "vg_salt_heap"]),
+    "cap": (["vg_cypress", "vg_cp_bench", "vg_cypress"], ["vg_stone_planter", "vg_olive"]),
+}
+
+
+def _cut_runs(src, cut, vertical):
+    """자름 줄 위 걸을 수 있는 구간 [(시작, 끝)]"""
+    n = src.h if vertical else src.w
+    cells = [_walk(src, cut, i) if vertical else _walk(src, i, cut) for i in range(n)]
+    runs, start = [], None
+    for i, ok in enumerate(cells + [False]):
+        if ok and start is None:
+            start = i
+        elif not ok and start is not None:
+            runs.append((start, i - 1)); start = None
+    return runs
+
+
+def _drop_crossings(src):
+    """남기지 않는 연결의 다리를 통째로 지운다 (양쪽 씬 모두에서 물로 끝나게)."""
+    for cut, vertical in ((CUT_W, True), (CUT_E, True), (CUT_Y, False)):
+        span = range(0, CUT_W + 1) if cut == CUT_Y else None
+        for a, b in _cut_runs(src, cut, vertical):
+            if a in KEEP[cut]:
+                continue
+            seeds = [(cut, i) if vertical else (i, cut) for i in range(a, b + 1)]
+            if cut == CUT_Y and not (seeds[0][0] in span or seeds[0][0] >= CUT_E):
+                continue
+            todo = [c for c in seeds if c in src.decks]
+            seen = set(todo)
+            while todo:
+                x, y = todo.pop()
+                src.decks.pop((x, y), None)
+                src.water[y][x] = True
+                src.ground[y][x] = None
+                src.road[y][x] = 0
+                if src.deco[y][x] and src.deco[y][x].startswith("wood:"):
+                    src.deco[y][x] = None
+                for p in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+                    if p in src.decks and p not in seen:
+                        seen.add(p); todo.append(p)
+
+
+def _owner(x, y, edge):
+    """원본 칸 (x, y)를 edge 쪽으로 늘인 씬 (자름 줄 위의 칸은 두 씬이 함께 가진다)"""
+    for mid, (_, x0, y0, x1, y1, grow) in SCENES.items():
+        if x0 <= x <= x1 and y0 <= y <= y1 and edge in grow:
+            return mid
+    return None
+
+
+def _walk(m, x, y):
+    return not m.blocked[y][x] and (not m.water[y][x] or (x, y) in m.decks or (x, y) in m.over_water)
+
+
+def _cut(src, mid):
+    name, x0, y0, x1, y1, grow = SCENES[mid]
+    gw, ge, gn, gs = (GAP if e in grow else 0 for e in "WENS")
+    # 바깥 가장자리의 모래톱 길이 맵 끝에 붙지 않게 물을 덧댄다 (자름 줄이 아니므로 늘이지 않고 물만)
+    gw += OUTER_PAD if OUTER.get(mid) == "W" else 0
+    ge += OUTER_PAD if OUTER.get(mid) == "E" else 0
+    w, h = x1 - x0 + 1 + gw + ge, y1 - y0 + 1 + gn + gs
+    m = VeniceMap(mid, name, w, h, seed=301 + len(mid), zone="sand")
+    m.hours = 0
+
+    def source(x, y):
+        return min(max(x - gw + x0, x0), x1), min(max(y - gn + y0, y0), y1)
+
+    kept = set()
+    for cut, vertical in ((CUT_W, True), (CUT_E, True), (CUT_Y, False)):
+        for a, b in _cut_runs(src, cut, vertical):
+            if a in KEEP[cut]:
+                kept.update((cut, i) if vertical else (i, cut) for i in range(a, b + 1))
+
+    for y in range(h):
+        for x in range(w):
+            sx, sy = source(x, y)
+            inside = (sx, sy) == (x - gw + x0, y - gn + y0)
+            if not inside and (sx, sy) not in kept:       # 늘인 물길: 남긴 연결만 이어지고 나머지는 물
+                m.water[y][x] = True
+                m.style[y][x] = src.style[sy][sx]
+                continue
+            m.water[y][x] = src.water[sy][sx]
+            m.zone[y][x] = src.zone[sy][sx]
+            m.style[y][x] = src.style[sy][sx]
+            m.road[y][x] = src.road[sy][sx]
+            for attr in ("pan", "over_water", "lush"):
+                if (sx, sy) in getattr(src, attr):
+                    getattr(m, attr).add((x, y))
+            if (sx, sy) in src.decks:
+                m.decks[(x, y)] = src.decks[(sx, sy)]
+                m.ground[y][x] = src.ground[sy][sx]
+            deco = src.deco[sy][sx]
+            if inside:
+                m.deco[y][x], m.obj[y][x], m.high[y][x] = deco, src.obj[sy][sx], src.high[sy][sx]
+                m.blocked[y][x] = src.blocked[sy][sx]
+                m.ground[y][x] = src.ground[sy][sx]
+            elif deco and deco.startswith("wood:"):      # 늘인 다리의 난간
+                m.deco[y][x] = deco
+    shift = lambda x, y: (x - x0 + gw, y - y0 + gn)
+    inwin = lambda x, y: x0 <= x <= x1 and y0 <= y <= y1
+    for o in src.objects:
+        if inwin(o["x"], o["y"]):
+            d = dict(o); d["x"], d["y"] = shift(o["x"], o["y"])
+            if "path" in d:
+                d["path"] = [shift(*p) for p in d["path"]]
+            m.objects.append(d)
+    m.stamps = [(n, *shift(x, y)) for n, x, y in src.stamps if inwin(x, y)]
+    m.doors = [(n, shift(*c)) for n, c in src.doors if inwin(*c)]
+    m.districts = []
+    for dn, a, b, c, e in DISTRICTS:
+        a, b, c, e = max(a, x0), max(b, y0), min(c, x1), min(e, y1)
+        if a <= c and b <= e:
+            m.districts.append((dn, *shift(a, b), *shift(c, e)))
+    m.default_district = DEFAULT_DISTRICT
+    # 잘린 쪽 가장자리의 걸을 수 있는 구간마다 이웃 씬으로 가는 출구 (원본 줄 번호로 짝을 맞춘다)
+    for edge in grow:
+        cells = [(w - 1 if edge == "E" else 0, y) for y in range(h)] if edge in "EW" else \
+                [(x, h - 1 if edge == "S" else 0) for x in range(w)]
+        run = []
+        for c in cells + [None]:
+            if c is not None and _walk(m, *c):
+                run.append(c); continue
+            if run:
+                along = 1 if edge in "EW" else 0
+                start = run[0][along]
+                ox, oy = source(*run[0])
+                cut = {"E": (CUT_E if x1 == CUT_E else CUT_W, oy), "W": (x0, oy), "N": (ox, y0), "S": (ox, y1)}[edge]
+                other = next(k for k in SCENES if k != mid and _owner(*cut, OPPOSITE[edge]) and
+                             SCENES[k][1] <= cut[0] <= SCENES[k][3] and SCENES[k][2] <= cut[1] <= SCENES[k][4]
+                             and OPPOSITE[edge] in SCENES[k][5])
+                key = oy if edge in "EW" else ox
+                m.link(edge, start, len(run), other, f"from_{mid}_{key}", f"from_{other}_{key}")
+                _islet(m, edge, start, start + len(run) - 1, ISLET_THEME[mid])
+                run = []
+    return m
+
+
+def _islet(m, edge, a, b, theme):
+    """늘인 물길 가운데 쉼터 섬. 다리 끝은 섬에 닿는 쪽만 마감 그림·난간 끝으로 바꾼다."""
+    horizontal = edge in "EW"
+    g0 = {"E": m.w - GAP, "W": 0, "S": m.h - GAP, "N": 0}[edge]
+    lo, hi = g0 + 5, g0 + 13                         # 물길 방향 섬 범위
+    side0, side1 = a - 4, b + 4                       # 가로지르는 방향 섬 범위
+    cells = []
+    for u in range(lo, hi + 1):
+        for v in range(side0, side1 + 1):
+            if (u in (lo, hi)) and (v in (side0, side1)):
+                continue                                  # 모서리는 둥글게
+            x, y = (u, v) if horizontal else (v, u)
+            if m.inside(x, y):
+                cells.append((x, y))
+    for x, y in cells:
+        on_route = a <= (y if horizontal else x) <= b
+        m.decks.pop((x, y), None)
+        m.over_water.discard((x, y))
+        m.water[y][x] = False
+        m.ground[y][x] = None
+        m.deco[y][x] = None
+        m.zone[y][x] = "meadow"
+        mid_route = a + 1 <= (y if horizontal else x) <= b - 1 if b - a >= 3 else on_route
+        m.road[y][x] = 2 if mid_route else 0         # 섬 위 흙길은 가운데만, 양옆은 풀밭
+        m.reserved[y][x] = False
+        m.lush.add((x, y))
+    # 섬에 닿는 다리 칸: 끝 그림과 난간 끝
+    ends = [((u, v) if horizontal else (v, u)) for u in (lo - 1, hi + 1) for v in range(a, b + 1)]
+    for x, y in [c for c in ends if c in m.decks]:
+        step = ((1, 0), (-1, 0)) if horizontal else ((0, 1), (0, -1))
+        for dx, dy in step:
+            nx, ny = x + dx, y + dy
+            if not m.inside(nx, ny) or m.water[ny][nx] or (nx, ny) in m.decks:
+                continue
+            if horizontal:
+                sx = 0 if y == b else 2 if y == a else 1
+                sy = 14 if dx > 0 else 12
+                m.decks[(x, y)] = m.ground[y][x] = tiles.K("water", sx, sy, "woodturn")
+                if y in (a, b):
+                    m.deco[y][x] = f"wood:{'railhtop' if y == a else 'railhbottom'}:1"
+            else:
+                sx = 0 if x == a else 2 if x == b else 1
+                sy = 14 if dy > 0 else 12
+                m.decks[(x, y)] = m.ground[y][x] = tiles.K("water", sx, sy, "wood")
+                if x in (a, b):
+                    m.deco[y][x] = f"wood:{'railvleft' if x == a else 'railvright'}:1"
+    # 소품: 길 양옆 띠에 하나씩 (자리가 맞지 않으면 건너뛴다)
+    top, bottom = ISLET_PROPS[theme]
+    for items, v in ((top, side0 + 1), (bottom, b + 2)):
+        u = lo + 1
+        for name in items:
+            s = tiles.STAMPS[name]
+            pw, ph = (s[3], s[4]) if horizontal else (s[4], s[3])
+            vv = v if items is bottom else a - 1 - (s[4] if horizontal else s[3]) + 1
+            x, y = (u, vv) if horizontal else (vv, u)
+            try:
+                m.building(name, x, y, high=s[6])
+            except (ValueError, IndexError):
+                pass
+            u += pw + 1
+    mx, my = ((lo + hi) // 2, side1 - 1) if horizontal else (side1 - 1, (lo + hi) // 2)
+    m.cluster_deco(["vg_reeds", "vg_tuft", "vg_rocks"], mx, my, 2, 3)
+
+
+def _lagoon_life(m):
+    """넓은 물에 배·말뚝·갈대 모래톱을 드문드문 (길과 다리에서 떨어진 곳만)."""
+    def clear(x0, y0, x1, y1, pad=2):
+        return all(m.inside(x, y) and m.water[y][x] and (x, y) not in m.decks and not m.obj[y][x]
+                   for y in range(y0 - pad, y1 + pad + 1) for x in range(x0 - pad, x1 + pad + 1))
+    water_cells = sum(1 for row in m.water for c in row if c)
+    for _ in range(water_cells // 260):
+        for _try in range(40):
+            x, y = m.rng.randrange(2, m.w - 6), m.rng.randrange(2, m.h - 4)
+            kind = m.rng.random()
+            if kind < 0.45 and clear(x, y, x + 3, y):
+                m.stamp(m.rng.choice(["vg_fishing_boat", "vg_fsh_dinghy", "vg_gondola"]), x, y, force=True, over_road=True)
+                break
+            if kind < 0.7 and clear(x, y, x, y + 1):
+                m.stamp(m.rng.choice(["vg_poles", "vg_pole_striped"]), x, y, force=True, over_road=True)
+                break
+            if clear(x, y, x + 3, y + 2, pad=3):        # 갈대 모래톱 (걸어서 닿지 않는 작은 땅)
+                for yy in range(y, y + 3):
+                    for xx in range(x, x + 4):
+                        if (xx - x, yy - y) not in ((0, 0), (3, 0), (0, 2), (3, 2)):
+                            m.water[yy][xx] = False; m.zone[yy][xx] = "sand"
+                m.deco_stamp("vg_reeds_tall", x + 1, y)
+                m.deco_stamp("vg_reeds", x + 2, y + 1)
+                break
+
+
+def _split_fixes(src):
+    """분할하면 북쪽 모래톱이 양 끝 마을과 끊기므로 정원 수변에서 모래톱으로 건너는 목교를 놓는다."""
+    src.bridge(40, 8, 42, 16)
+    # 무라노 → 동쪽 모래톱(키오자 방면) 입구가 한 칸이라 수레가 못 지나간다. 두 칸 더 메운다.
+    land(src, 107, 25, 108, 30, "meadow")
+    # 북쪽 모래톱 → 무라노 공방 마당도 한 칸 길뿐이라 공방 서쪽 물가를 두 칸 메운다.
+    land(src, 80, 7, 81, 15, "street")
+
+
+def _chioggia_ferry(m):
+    """키오자 동쪽 부두 → 본토 나루터 배 (venice_mainland.FERRY와 짝). 잔교 끝 3칸이 출구이고, 넘어가는 동안 물결 효과가 배 이동을 보여 준다."""
+    m.bridge(48, 50, m.w - 1, 52)
+    m.stamp("vg_barge_loaded", 52, 47, force=True, over_road=True)
+    m.stamp("vg_px_fsh_mooring", 50, 53, force=True, over_road=True)
+    m.link("E", 50, 3, "venice_c_landing", "from_venice_chioggia", "from_venice_c_landing")
+    m.talker(48, 48, "본토행 뱃사공", "villager_bear_tall",
+             "본토 나루터로 가는 배요. 잔교 끝에서 타시오.",
+             "건너편에서는 포도밭, 습지, 대상 숙소로 길이 갈라진다오.")
+
+
+SCENE_EXTRAS = {"venice_chioggia": _chioggia_ferry}
+
+
+def _scene(mid):
+    src = _master()
+    _split_fixes(src)
+    _drop_crossings(src)
+    m = _cut(src, mid)
+    if mid in SCENE_EXTRAS:
+        SCENE_EXTRAS[mid](m)
+    _lagoon_life(m)
     m.finish()
     return m
+
+
+def venice_rialto(): return _scene("venice_rialto")
+def venice_santerasmo(): return _scene("venice_santerasmo")
+def venice_murano(): return _scene("venice_murano")
+def venice_burano(): return _scene("venice_burano")
+def venice_chioggia(): return _scene("venice_chioggia")
 
 
 CAMERA_POINTS = {

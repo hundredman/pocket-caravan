@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "regionId": "center_venice",
+  "regionAssetPath": "Assets/PocketCaravan/Data/Venice/Region_CenterVenice.asset",
+  "maps": [
+    {
+      "mapId": "venice_c_landing",
+      "jsonPath": "Assets/PocketCaravan/Maps/VeniceMainland/venice_c_landing.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/VeniceMainland/venice_c_landing.unity",
+      "worldX": 14,
+      "worldY": 2,
+      "generator": "venice_mainland:venice_c_landing"
+    },
+    {
+      "mapId": "venice_c_vineyard",
+      "jsonPath": "Assets/PocketCaravan/Maps/VeniceMainland/venice_c_vineyard.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/VeniceMainland/venice_c_vineyard.unity",
+      "worldX": 14,
+      "worldY": 1,
+      "generator": "venice_mainland:venice_c_vineyard"
+    },
+    {
+      "mapId": "venice_c_marsh",
+      "jsonPath": "Assets/PocketCaravan/Maps/VeniceMainland/venice_c_marsh.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/VeniceMainland/venice_c_marsh.unity",
+      "worldX": 14,
+      "worldY": 3,
+      "generator": "venice_mainland:venice_c_marsh"
+    },
+    {
+      "mapId": "venice_c_pass",
+      "jsonPath": "Assets/PocketCaravan/Maps/VeniceMainland/venice_c_pass.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/VeniceMainland/venice_c_pass.unity",
+      "worldX": 15,
+      "worldY": 1,
+      "generator": "venice_mainland:venice_c_pass"
+    },
+    {
+      "mapId": "venice_c_bridge",
+      "jsonPath": "Assets/PocketCaravan/Maps/VeniceMainland/venice_c_bridge.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/VeniceMainland/venice_c_bridge.unity",
+      "worldX": 15,
+      "worldY": 3,
+      "generator": "venice_mainland:venice_c_bridge"
+    },
+    {
+      "mapId": "venice_c_post",
+      "jsonPath": "Assets/PocketCaravan/Maps/VeniceMainland/venice_c_post.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/VeniceMainland/venice_c_post.unity",
+      "worldX": 15,
+      "worldY": 2,
+      "generator": "venice_mainland:venice_c_post"
+    },
+    {
+      "mapId": "venice_c_gate",
+      "jsonPath": "Assets/PocketCaravan/Maps/VeniceMainland/venice_c_gate.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/VeniceMainland/venice_c_gate.unity",
+      "worldX": 16,
+      "worldY": 2,
+      "generator": "venice_mainland:venice_c_gate"
+    }
+  ],
+  "npcs": [],
+  "villagers": []
+}

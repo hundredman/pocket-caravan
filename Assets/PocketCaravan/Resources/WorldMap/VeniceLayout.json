@@ -1,0 +1,131 @@
+{
+ "width": 592,
+ "height": 342,
+ "maps": [
+  {
+   "mapId": "venice_santerasmo",
+   "x": 10,
+   "y": 52,
+   "w": 62,
+   "h": 60,
+   "labelX": 41.0,
+   "labelY": 58
+  },
+  {
+   "mapId": "venice_burano",
+   "x": 10,
+   "y": 166,
+   "w": 62,
+   "h": 65,
+   "labelX": 41.0,
+   "labelY": 172
+  },
+  {
+   "mapId": "venice_rialto",
+   "x": 86,
+   "y": 82,
+   "w": 83,
+   "h": 84,
+   "labelX": 127.5,
+   "labelY": 88
+  },
+  {
+   "mapId": "venice_murano",
+   "x": 183,
+   "y": 32,
+   "w": 61,
+   "h": 60,
+   "labelX": 213.5,
+   "labelY": 38
+  },
+  {
+   "mapId": "venice_chioggia",
+   "x": 183,
+   "y": 146,
+   "w": 61,
+   "h": 65,
+   "labelX": 213.5,
+   "labelY": 152
+  },
+  {
+   "mapId": "venice_c_landing",
+   "x": 288,
+   "y": 172,
+   "w": 80,
+   "h": 56,
+   "labelX": 328.0,
+   "labelY": 178
+  },
+  {
+   "mapId": "venice_c_vineyard",
+   "x": 296,
+   "y": 72,
+   "w": 63,
+   "h": 56,
+   "labelX": 327.5,
+   "labelY": 78
+  },
+  {
+   "mapId": "venice_c_marsh",
+   "x": 296,
+   "y": 274,
+   "w": 63,
+   "h": 56,
+   "labelX": 327.5,
+   "labelY": 280
+  },
+  {
+   "mapId": "venice_c_pass",
+   "x": 402,
+   "y": 74,
+   "w": 60,
+   "h": 44,
+   "labelX": 432.0,
+   "labelY": 80
+  },
+  {
+   "mapId": "venice_c_post",
+   "x": 402,
+   "y": 176,
+   "w": 64,
+   "h": 48,
+   "labelX": 434.0,
+   "labelY": 182
+  },
+  {
+   "mapId": "venice_c_bridge",
+   "x": 402,
+   "y": 284,
+   "w": 60,
+   "h": 44,
+   "labelX": 432.0,
+   "labelY": 290
+  },
+  {
+   "mapId": "venice_c_gate",
+   "x": 500,
+   "y": 160,
+   "w": 72,
+   "h": 71,
+   "labelX": 536.0,
+   "labelY": 166
+  }
+ ],
+ "annotations": [
+  {
+   "text": "베네치아 석호",
+   "x": 12,
+   "y": 8
+  },
+  {
+   "text": "본토 서부",
+   "x": 260,
+   "y": 8
+  },
+  {
+   "text": "→ 중앙 권역 (길 닦는 중)",
+   "x": 538,
+   "y": 200
+  }
+ ]
+}

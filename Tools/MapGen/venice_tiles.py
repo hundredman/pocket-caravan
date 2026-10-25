@@ -54,6 +54,13 @@ DIRT = (186, 152, 110)           # 흙길·작업 마당
 DIRT_DOTS = [(162, 130, 94), (200, 168, 126)]
 PATH_DOT = (190, 160, 110)
 GRASS = [(125, 143, 79), (95, 115, 64), (148, 160, 90)]
+ROCK = (178, 170, 150)           # 본토 석회암 능선 (밟을 수 없음)
+ROCK_DOTS = [(150, 142, 124), (198, 191, 172), (162, 154, 136)]
+ROCK_RIM = (206, 199, 180)
+ROCK_FACE = (118, 110, 98)       # 남쪽으로 보이는 바위 옆면
+ROCK_FACE_DARK = (92, 86, 78)
+MUDLAND = (126, 104, 80)         # 습지 진흙길
+MUD_DOTS = [(108, 89, 68), (146, 122, 92)]
 
 _img_cache = {}
 
@@ -113,6 +120,10 @@ LAND_EDGE = {   # 물가·테두리 종류: 바깥(물 쪽)부터 안쪽으로 �
     "p": [PATH_DOT],                                    # 모래길 가장자리
     "e": [DIRT_DOTS[0]],                                # 흙길 가장자리
     "g": [MEADOW_EDGE],                                 # 풀밭 가장자리 (흙길 쪽)
+    "r": [ROCK_RIM, ROCK_DOTS[0]],                      # 바위 능선 윗 테두리
+    "R": [ROCK_FACE_DARK, ROCK_FACE, ROCK_FACE, ROCK_DOTS[0]],   # 남쪽: 바위 옆면이 보인다
+    "w": [JOINT, CURB_HI],                              # 석축·성벽 윗면 테두리
+    "W": [CONTACT, CURB_FACE, CURB_FACE, JOINT, CURB],  # 남쪽: 쌓은 돌 옆면
 }
 WATER_EDGE = {"q": [CONTACT, CONTACT2], "b": [SHALLOW, SHALLOW], "d": [BANK_DARK]}
 
@@ -121,15 +132,30 @@ def _land(parts):
     _, _, mat, var, qx, qy, rot, edges = parts
     var, qx, qy, rot = int(var), int(qx), int(qy), int(rot)
     from PIL import Image
-    if mat in ("path", "sand", "dune", "meadow", "dirt"):
+    if mat == "wall":         # 쌓은 석재 윗면: 엇갈린 돌 줄눈
+        img = Image.new("RGBA", (16, 16), CURB + (255,))
+        px = img.load()
+        for y in range(16):
+            for x in range(16):
+                if y % 5 == 4 or (x + (4 if (y // 5) % 2 else 0) + var * 3) % 8 == 7:
+                    px[x, y] = JOINT + (255,)
+                elif y % 5 == 0:
+                    px[x, y] = CURB_HI + (255,)
+    elif mat in ("path", "sand", "dune", "meadow", "dirt", "rock", "mud"):
         # 칸마다 다른 점을 찍어 2×2 무늬 반복을 피한다 (모래색은 GPT 모래 표본)
         base, dots = {"path": (PATH, [PATH_DOT]), "sand": (SAND, SAND_DOTS), "dune": (SAND, SAND_DOTS),
-                      "meadow": (MEADOW, MEADOW_DOTS), "dirt": (DIRT, DIRT_DOTS)}[mat]
+                      "meadow": (MEADOW, MEADOW_DOTS), "dirt": (DIRT, DIRT_DOTS),
+                      "rock": (ROCK, ROCK_DOTS), "mud": (MUDLAND, MUD_DOTS)}[mat]
         img = Image.new("RGBA", (16, 16), base + (255,))
         rng = random.Random(var * 7 + 3)
         px = img.load()
         for _ in range(4 if mat in ("path", "dirt") else 6):
             px[rng.randrange(1, 15), rng.randrange(1, 15)] = rng.choice(dots) + (255,)
+        if mat == "rock":     # 석회암 금: 짧은 사선 두 줄
+            for _ in range(2):
+                x, y = rng.randrange(2, 12), rng.randrange(2, 12)
+                for i in range(rng.choice((3, 4))):
+                    px[x + i, y + (i // 2)] = ROCK_DOTS[0] + (255,)
         if mat == "dune" or (mat == "meadow" and var >= 6):   # 나무 밑·담장 옆·물가에만 풀 무더기
             for _ in range(3):
                 x, y = rng.randrange(1, 13), rng.randrange(2, 15)
@@ -149,7 +175,7 @@ def _land(parts):
     sides = dict(zip("NESW", edges[:4]))
     for side, kind in sides.items():
         if kind != "-":
-            kind = "Q" if kind == "q" and side == "S" else kind
+            kind = "Q" if kind == "q" and side == "S" else "R" if kind == "r" and side == "S" else "W" if kind == "w" and side == "S" else kind
             cols = LAND_EDGE[kind]
             _band(px, side, len(cols), cols)
     for corner, kind in zip(("NE", "SE", "SW", "NW"), edges[4:]):
@@ -206,7 +232,7 @@ class VeniceMap(Map):
     자연 — 'meadow' 풀밭 / 'dirt' 흙길·작업 마당 / 'sand' 모래(물가 2칸 안의 풀밭은 자동으로 모래) / 'path' 다져진 모래길
     도시 구역의 길은 포장 그대로 그리고, 길 등급(속도)만 따로 기록한다."""
     PAVED = ("street", "market", "court", "quay", "mosaic", "worn")
-    NATURAL = ("sand", "dune", "meadow", "dirt", "path")
+    NATURAL = ("sand", "dune", "meadow", "dirt", "path", "rock", "mud")
 
     def __init__(self, mid, name, w, h, seed=1, zone="street"):
         super().__init__(mid, name, w, h, seed=seed)
@@ -343,6 +369,12 @@ class VeniceMap(Map):
             return "p"
         if here == "dirt" and there in ("meadow", "sand"):
             return "e"
+        if here == "rock" and there != "rock":
+            return "r"
+        if here == "wall" and there != "wall":
+            return "w"
+        if here == "mud" and there in ("meadow", "sand", "dirt"):
+            return "e"
         return "-"
 
     def prune_unreachable(self):
@@ -407,7 +439,8 @@ class VeniceMap(Map):
                 if self.ground[y][x] is not None and self.road[y][x] == 0:
                     continue
                 mat = {"street": "slab", "court": "slab", "quay": "slab", "market": "herring", "mosaic": "mosaic", "worn": "worn",
-                       "sand": "sand", "dune": "dune", "path": "path", "meadow": "meadow", "dirt": "dirt"}[z]
+                       "sand": "sand", "dune": "dune", "path": "path", "meadow": "meadow", "dirt": "dirt",
+                       "rock": "rock", "mud": "mud", "wall": "wall"}[z]
                 bx, by = x // 2, y // 2
                 var = (bx * 7 + by * 13 + (bx * by) % 5) % 3 if mat in ("slab", "worn") else (bx + by) % 4
                 rot = 1 if z == "quay" else 0
