@@ -1,10 +1,8 @@
-"""Goryeo-only authored sprite atlas and restrained pixel palette.
-Source atlas is retained; slices are deterministic build outputs at 16 pixels per cell.
+"""Goryeo geometry/key bindings and frozen whole-sprite access.
+Original atlases are retained for provenance; map generation never extracts or tints them.
 """
 from functools import lru_cache
 from pathlib import Path
-import colorsys
-from PIL import Image, ImageOps
 from tiles import STAMPS, K
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -30,66 +28,22 @@ REPLACE = {'house_tile': 'house', 'house_plain': 'house', 'house_wall': 'house',
            'house_thatch': 'thatch', 'hall': 'hall', 'pine': 'pine', 'pinebig': 'pine'}
 
 @lru_cache(None)
-def sprite(name, w, h):
-    if name.startswith('woodland'):
-        i=int(name[8:]);col,row=i%4,i//4
-        with Image.open(SOURCE.parent/('PineAncient.png' if i==0 else 'Woodland.png')) as atlas:
-            im=(atlas.copy() if i==0 else atlas.crop((WOODLAND_COLUMNS[col],355 if i==4 else WOODLAND_ROWS[row],WOODLAND_COLUMNS[col+1],WOODLAND_ROWS[row+1]))).convert('RGBA')
-            bounds=im.getchannel('A').point(lambda a:255 if a>=128 else 0).getbbox()
-            if bounds:
-                if i and (bounds[0]==0 or bounds[1]==0 or bounds[2]==im.width or bounds[3]==im.height):
-                    raise ValueError(('Woodland extraction clips silhouette',i,bounds))
-                im=im.crop(bounds)
-        # Fit the complete silhouette, preserving its proportions and a transparent margin.
-        fitted=ImageOps.contain(im,(w*16-2,h*16-2),Image.Resampling.NEAREST)
-        im=Image.new('RGBA',(w*16,h*16));im.alpha_composite(fitted,((w*16-fitted.width)//2,h*16-fitted.height-1))
-        alpha=im.getchannel('A').point(lambda a:255 if a>=128 else 0)
-        im=im.convert('RGB').quantize(colors=18).convert('RGBA');im.putalpha(alpha)
-        return im
-    source=SOURCE.parent/('CourtyardStone.png' if name=='paving' else 'VillageDetails.png') if name in DETAIL_RECTS or name=='paving' else SOURCE
-    with Image.open(source) as atlas:
-        im = (atlas if name=='paving' else atlas.crop(DETAIL_RECTS[name] if name in DETAIL_RECTS else RECTS[name])).convert('RGBA')
-    # Pixel assets are baked at the actual engine resolution, never kept as HD overlays.
-    im = im.resize((w * 16, h * 16), Image.Resampling.LANCZOS)
-    # Snap alpha for crisp pixel edges; the generation's faint transparent fringe is not artwork.
-    alpha = im.getchannel('A').point(lambda a: 255 if a >= 128 else 0)
-    # Transparent RGB must not consume the limited pixel palette.
-    from collections import Counter
-    rgb=im.convert('RGB');pixels=list(rgb.getdata());mask=list(alpha.getdata())
-    opaque=Counter(p for p,a in zip(pixels,mask) if a)
-    background=opaque.most_common(1)[0][0] if opaque else (0,0,0)
-    rgb.putdata([p if a else background for p,a in zip(pixels,mask)])
-    im = rgb.quantize(colors=12 if name=='paving' else 28, method=Image.Quantize.MEDIANCUT).convert('RGBA')
-    im.putalpha(alpha)
-    return im
+def sprite(name,w,h):
+    from frozen_art import sprite as whole
+    return whole(name,w,h)
+
 
 @lru_cache(None)
 def image_for(key):
-    if key.startswith('goryeo_'):
-        sheet,tx,ty=key.split(':');name,sw,sh=CUSTOM[sheet[7:]]
-    else:
-        _, name, sw, sh, tx, ty = key.split(':')
-    return sprite(name, int(sw), int(sh)).crop((int(tx)*16, int(ty)*16, (int(tx)+1)*16, (int(ty)+1)*16))
+    from frozen_art import tile
+    return tile(key)
+
 
 @lru_cache(None)
-def tone(base, theme):
-    from tiles import tile_image
-    im = tile_image(base).copy()
-    result=[]
-    for r,g,b,a in im.getdata():
-        h,s,v=colorsys.rgb_to_hsv(r/255,g/255,b/255)
-        if .12 < h < .40 and s>.22:  # vegetation: remove acid yellow, keep light/dark structure
-            h = .27 if theme != 'harvest' else .115
-            s *= .50 if theme != 'harvest' else .70
-            v *= .83 if theme != 'harvest' else .94
-        elif .40 <= h <= .68 and s>.20: # water: celadon, never neon cyan
-            h=.47; s*=.60; v*=.78
-        elif h < .13 and s>.24: # roads, earth, timber: muted sandstone
-            s*=.49; v*=.88
-        r,g,b=colorsys.hsv_to_rgb(h,s,v)
-        result.append((int(r*255),int(g*255),int(b*255),a))
-    im.putdata(result)
-    return im
+def tone(base,theme):
+    # Compatibility for offline callers; live tile export does not call this function.
+    from frozen_art import tile
+    return tile(base+'@goryeo_'+theme)
 
 
 def apply(maps):
@@ -129,11 +83,11 @@ def apply(maps):
 
 
 def export_ripples(root):
-    """Keep existing ripple timing/silhouettes, remove the old opaque cyan square."""
+    """Copy preserved frames to isolated exports; no live pixel conversion."""
+    import shutil
     folder=Path(root)/'Assets/PocketCaravan/Art/NinjaAdventure/Animated'
+    folder.mkdir(parents=True,exist_ok=True)
     for i in range(4):
-        with Image.open(folder/f'ripples_{i}.png') as source:
-            source=source.convert('RGBA');background=source.getpixel((0,0))
-            result=Image.new('RGBA',source.size)
-            result.putdata([(151,193,180,90) if p!=background and p[3] else (0,0,0,0) for p in source.getdata()])
-            result.save(folder/f'goryeo_ripples_{i}.png')
+        source=ROOT/f'Assets/PocketCaravan/Art/NinjaAdventure/Animated/goryeo_ripples_{i}.png'
+        target=folder/source.name
+        if source.resolve()!=target.resolve():shutil.copyfile(source,target)

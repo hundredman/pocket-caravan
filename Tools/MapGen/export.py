@@ -30,8 +30,8 @@ def obj_json(o):
 
 used = set()
 # Validate complete authored silhouettes before writing any map/output.
-from goryeo_art import CUSTOM, sprite
-for asset,w,h in CUSTOM.values():sprite(asset,w,h)
+from frozen_art import catalogue, validate_export
+catalogue()
 entries, world_maps = atlas_content()
 from goryeo_art import export_ripples
 export_ripples(OUT)
@@ -61,6 +61,7 @@ for entry, m in zip(entries, world_maps):
     d["water"] = [int(v) for row in m.water for v in row]
     if hasattr(m,"world_origin"):d["terrainX"],d["terrainY"]=m.world_origin
     if getattr(m,"visual_skin",None): d["visualSkin"] = m.visual_skin
+    validate_export(m,d)  # Full A2 coverage; claims stay separate from legacy save/map JSON.
     with open(os.path.join(OUT, entry["jsonPath"]), "w", encoding="utf-8") as fp:
         json.dump(d, fp, ensure_ascii=False, separators=(",", ":"))
     m.render(os.path.join(os.path.dirname(__file__), "preview_" + m.id + ".png"))

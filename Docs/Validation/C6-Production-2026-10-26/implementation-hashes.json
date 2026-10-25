@@ -1,0 +1,17 @@
+{
+  "Tools/ArtBake/install_frozen.py": "91d89ed980fcdc87a6155b0014d3094db98237b9a00d163f6f09fa879bfecdd4",
+  "Tools/ArtBake/verify_frozen.py": "f0df11432c1c2269e3e9a2d77fb21f13fb25ce3574787ab5c6e15436fafcdd67",
+  "Tools/ArtBake/compare_captures.py": "f61fbaab0f39677f01e142eb6fc638b39b28f8c6470fbf6b4e51fda3468af098",
+  "Tools/ArtBake/preflight.py": "0a9ef1758965eb2996dd83f3ecc8de719ac77e292d43b886b00aefdb58596ac7",
+  "Tools/MapGen/frozen_art.py": "bab2d451e6df05a008e491932feb7a0bcd95a29e82624f7b1587b6b5391a21c4",
+  "Tools/MapGen/asset_manifest.py": "ed8ed5d611b9772ed0995380df58973396045d20e0672d669ee9624f808ae7a1",
+  "Tools/MapGen/export.py": "e369a7ed2cfe80d8fea907cbc4323508bae9e5254c9b2ca6b4b98ea1f07bce24",
+  "Tools/MapGen/tiles.py": "57970e8808c889321e2cfe1f180bf64daf0850e069cf732d0f1305d037b88f39",
+  "Tools/MapGen/goryeo_art.py": "5689d3fbac6953b3922f37268d97c4cd836d55ab8cbfa00769b9c40a3c6cd689",
+  "Tools/MapGen/module_art.py": "86a1e0238ce75cc4049c1302ae40424af427e607fa637f910b2d2c0cedc0d90e",
+  "Assets/PocketCaravan/Art/Baked/catalogue.json": "ee2af8bf6683d2960f89f616c0be0ea652daff6b20d7420d26fb42f14fc57741",
+  "Assets/PocketCaravan/Art/Baked/legacy-alpha-exceptions.json": "4d4e4035c8619985873ca6ffaff0d339e086036c269cf94d0bcdd74fc58b70dd",
+  "Assets/PocketCaravan/Art/Baked/index.json": "09f1cc7a812a972c392dc50bcd574137394b53598721f2ae008f18ae4d464ef1",
+  "Assets/PocketCaravan/Editor/C6ScreenChecks.cs": "50af9bc9ca2cdd01b4569c3507cc5d5a56e0ac342c72b370dd70e8d3a150a113",
+  "Assets/PocketCaravan/Editor/C6ProductionChecks.cs": "1f867a97e76e4c6e9bc15dd9f5e23324b2cd8c31ed11ea4276050999654d34e6"
+}

@@ -20,7 +20,10 @@ class C6Preflight(unittest.TestCase):
                     with Image.open(ROOT/tile['image']) as source:
                         self.assertEqual(whole.convert('RGBA').crop((x,y,x+16,y+16)).tobytes(),source.convert('RGBA').tobytes())
     def test_existing_alpha_conflict_is_real_and_no_other_catalogue_errors_are_hidden(self):
-        doc=json.loads((FOLDER/'catalogue-draft.json').read_text());errors,_=validate_catalogue(doc,ROOT)
+        doc=json.loads((FOLDER/'catalogue-draft.json').read_text())
+        legacy={}
+        exec((ROOT/'Docs/Validation/C6-Production-2026-10-26/LegacyA2.py.txt').read_text(),legacy)
+        errors,_=legacy['validate_catalogue'](doc,ROOT)
         self.assertEqual(len(errors),7);self.assertEqual({e['code'] for e in errors},{'image_alpha'})
         report=json.loads((FOLDER/'preflight.json').read_text())
         self.assertEqual(report['draftCatalogueErrors'],errors)

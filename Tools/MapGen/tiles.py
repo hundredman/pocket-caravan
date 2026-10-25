@@ -1,5 +1,5 @@
 """Ninja Adventure 타일 카탈로그, 자동 타일(오토타일), 미리보기."""
-import os, random, colorsys
+import os, random
 from PIL import Image, ImageDraw
 
 # 에셋 팩 위치: 환경 변수 NA_PACK, 없으면 저장소 옆 폴더 (팀 프로젝트/Ninja Adventure - Asset Pack)
@@ -15,109 +15,13 @@ SHEETS = {
     "boat": "Backgrounds/Vehicles/Boat.png",
     "towers": "Backgrounds/Tilesets/TilesetTowers.png",
 }
-_img = {}
-
-
-def sheet(name):
-    if name not in _img:
-        _img[name] = Image.open(os.path.join(PACK, SHEETS[name])).convert("RGBA")
-    return _img[name]
-
-
-def recolor(tile, mode):
-    """기와 지붕 같은 색 바꾸기. 'slate': 붉은·주황 계열을 청회색 기와로."""
-    px = tile.load()
-    w, h = tile.size
-    for y in range(h):
-        for x in range(w):
-            r, g, b, a = px[x, y]
-            if a == 0:
-                continue
-            hh, s, v = colorsys.rgb_to_hsv(r / 255, g / 255, b / 255)
-            if mode == "slate" and s > 0.35 and (hh < 0.06 or hh > 0.93):  # 붉은 기와만
-                nh, ns = 0.62, min(s * 0.35, 0.3)
-                nr, ng, nb = colorsys.hsv_to_rgb(nh, ns, v * 0.85)
-                px[x, y] = (int(nr * 255), int(ng * 255), int(nb * 255), a)
-    return tile
+def recolor(*args, **kwargs):
+    raise RuntimeError('Live recolor is retired; create and register a separate authored asset')
 
 
 def tile_image(key):
-    """key = 'sheet:x:y' 또는 'sheet:x:y@recolor'"""
-    if key.startswith('pond:'):
-        from pond_art import image_for
-        return image_for(key)
-    if key.startswith(("goryeo:", "goryeo_")):
-        from goryeo_art import image_for
-        return image_for(key)
-    if "@goryeo_" in key:
-        from goryeo_art import tone
-        base, theme = key.rsplit("@goryeo_", 1)
-        return tone(base, theme)
-    if key.startswith("module:"):
-        from module_art import image_for
-        return image_for(key)
-    if key.startswith("work:"):
-        # 3x2칸 종이 건조대. 기존 타일 축척·팔레트에 맞춘 목재 틀과 한지 묶음.
-        _, tx, ty = key.split(":")
-        t = Image.new("RGBA", (48, 32))
-        d = ImageDraw.Draw(t)
-        d.rectangle((4, 27, 44, 30), fill="#65544255")
-        for x in (3, 42):
-            d.rectangle((x, 1, x + 3, 29), fill="#70513b")
-            d.line((x, 2, x, 27), fill="#bb9660")
-        for y in (3, 23):
-            d.rectangle((3, y, 45, y + 2), fill="#795439")
-            d.line((4, y, 44, y), fill="#c19a63")
-        for x in (8, 20, 32):
-            d.rectangle((x, 7, x + 8, 22), fill="#c7be97")
-            d.rectangle((x, 6, x + 7, 20), fill="#eee2b6")
-            d.line((x + 1, 7, x + 6, 7), fill="#fff2cc")
-            d.point((x + 3, 12), fill="#d8ca9f")
-            d.point((x + 5, 17), fill="#d8ca9f")
-        x, y = int(tx) * 16, int(ty) * 16
-        return t.crop((x, y, x + 16, y + 16))
-    if key.startswith("wood:"):
-        _, direction, post = key.split(":")
-        t = Image.new("RGBA", (16, 16))
-        d = ImageDraw.Draw(t)
-        d.rectangle((1, 1, 3, 15), fill="#533d2f")
-        d.rectangle((1, 1, 2, 15), fill="#ad8050")
-        if post == "1":
-            d.rectangle((0, 1, 5, 6), fill="#4c372c")
-            d.rectangle((1, 1, 4, 4), fill="#d0a66c")
-            d.point((2, 2), fill="#f0cd8c")
-        if direction == "railhtop":
-            return t.transpose(Image.Transpose.ROTATE_270)
-        if direction == "railhbottom":
-            return t.transpose(Image.Transpose.ROTATE_90)
-        if direction == "railvright":
-            return t.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
-        return t
-    base, _, rc = key.partition("@")
-    if rc.startswith("blend_"):
-        from Modules.skins import SKINS, recolor as skin_recolor
-        _,skin_id,amount=rc.split('_')
-        original=tile_image(base)
-        return Image.blend(original,skin_recolor(original,base,next(s for s in SKINS if s[0]==skin_id)),int(amount)/100)
-    if rc.startswith("skin_"):
-        from Modules.skins import SKINS, recolor as skin_recolor
-        skin = next(s for s in SKINS if s[0] == rc[5:])
-        return skin_recolor(tile_image(base), base, skin)
-    s, x, y = base.split(":")
-    x, y = int(x), int(y)
-    t = sheet(s).crop((x * 16, y * 16, x * 16 + 16, y * 16 + 16))
-    if rc.startswith("wood"):
-        t = t.copy()
-        px = t.load()
-        for yy in range(16):
-            for xx in range(16):
-                r, g, b, a = px[xx, yy]
-                px[xx, yy] = (int(r * .67), int(g * .76), min(255, int(b * .9 + 9)), a)
-        if rc == "woodturn":
-            t = t.transpose(Image.Transpose.ROTATE_90)
-    elif rc:
-        t = recolor(t.copy(), rc)
-    return t
+    from frozen_art import tile
+    return tile(key)
 
 
 def K(s, x, y, rc=None):
@@ -619,24 +523,27 @@ class Map:
                         row[x]=key+'@skin_'+skin_id
 
     def render(self, path, scale=1):
-        img = Image.new("RGBA", (self.w * 16, self.h * 16), (0, 0, 0, 255))
+        img = Image.new("RGB", (self.w * 16, self.h * 16), (0, 0, 0))
+        def composite(image, position):
+            # The preview canvas is opaque; RGB paste is the same source-over blend without Pillow region cropping.
+            img.paste(image.convert("RGB"), position, image.getchannel("A"))
         for layer in (self.ground, self.deco, self.obj):
             for y in range(self.h):
                 for x in range(self.w):
                     if layer[y][x]:
-                        img.alpha_composite(tile_image(layer[y][x]), (x * 16, y * 16))
+                        composite(tile_image(layer[y][x]), (x * 16, y * 16))
         colors = {"spawn": (60, 140, 255, 200), "exit": (255, 140, 0, 160), "npc": (255, 230, 60, 230), "market": (255, 80, 80, 230)}
         for o in self.objects:
             c = colors.get(o["kind"], (255, 255, 255, 200))
             dot = Image.new("RGBA", (10, 10), c)
-            img.alpha_composite(dot, (o["x"] * 16 + 3, o["y"] * 16 + 3))
+            composite(dot, (o["x"] * 16 + 3, o["y"] * 16 + 3))
         for y in range(self.h):
             for x in range(self.w):
                 if self.high[y][x]:
-                    img.alpha_composite(tile_image(self.high[y][x]), (x * 16, y * 16))
+                    composite(tile_image(self.high[y][x]), (x * 16, y * 16))
         if scale != 1:
             img = img.resize((img.width * scale, img.height * scale), Image.NEAREST)
-        img.save(path)
+        img.convert("RGBA").save(path)
 
     def to_json(self):
         return dict(id=self.id, name=self.name, w=self.w, h=self.h,

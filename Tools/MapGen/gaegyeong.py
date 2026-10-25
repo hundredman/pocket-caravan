@@ -110,11 +110,11 @@ def build():
     for px, py, prop in [(48, 28, 0), (48, 29, 1), (53, 27, 2), (58, 30, 0), (58, 31, 1)]:
         if not m.obj[py][px] and not m.high[py][px] and not m.road[py][px]:
             m.prop(PROPS[prop], px, py)
-    m.add("worker", 50, 25, name="시전 짐꾼", character="villager_dog_tall",
+    m.add("worker", 50, 25, name="시전 짐꾼", character='NPC/npc_capital_porter/npc_capital_porter_tall',
           lines=["동문 쪽 짐은 이 마당에서 나눠 싣소. 종이는 닥나무 마을에서 들어오고, 다른 짐은 나루 길로 나가지.",
                  "장터는 이 길 서쪽이오. 한꺼번에 많이 팔면 값이 내려가니, 몇 개를 팔지 먼저 살펴보시오."],
           path=[(50, 25), (50, 30)])
-    m.add("worker", 38, 23, name="시전 행상", character="villager_fox_tall",
+    m.add("worker", 38, 23, name="시전 행상", character='NPC/npc_capital_peddler/npc_capital_peddler_tall',
           lines=["나루에서 소금을 가져왔소? 여기서 팔 값과 돌아갈 때 살 물건을 함께 살펴보시오.",
                  "나는 남이 알려 준 값보다 직접 본 장부를 먼저 보오. 그 값도 다음번에는 달라질 수 있지."],
           path=[(38, 23), (45, 23)])

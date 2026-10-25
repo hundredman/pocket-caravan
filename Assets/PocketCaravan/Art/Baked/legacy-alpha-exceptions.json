@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "decision": "Docs/Decisions-2026-10-25.md",
+  "files": [
+    {
+      "path": "Assets/PocketCaravan/Art/Baked/Objects/c6_module_rock_15917f3a.png",
+      "sha256": "482dcfa744c8483d7458f892c327e5f451e3543ddd9b4fb443a42a955782e75a",
+      "reason": "C6 existing appearance preserved under Decisions10"
+    },
+    {
+      "path": "Assets/PocketCaravan/Art/Baked/Objects/c6_paper_rack_665314e5.png",
+      "sha256": "b92192e4b9a0abd39d4ea80ed5d927177ecc1eefb30ad14891192fbbb23b3c9c",
+      "reason": "C6 existing appearance preserved under Decisions10"
+    },
+    {
+      "path": "Assets/PocketCaravan/Art/Characters/shadow.png",
+      "sha256": "45aa0b7bca56d5cb922fb1d54f338f834d348f8449fa62e317e9f1079ac19038",
+      "reason": "C6 existing appearance preserved under Decisions10"
+    },
+    {
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Animated/goryeo_ripples_0.png",
+      "sha256": "41b0f5349a9db4abc8dab389c486585ea4e5f3b8c1ba8c0fa4b4227822c8a6e9",
+      "reason": "C6 existing appearance preserved under Decisions10"
+    },
+    {
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Animated/goryeo_ripples_1.png",
+      "sha256": "be25413a43aa0cdeec34bace22a436f3b7de91dd4f5e53380a0556f9af7677f3",
+      "reason": "C6 existing appearance preserved under Decisions10"
+    },
+    {
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Animated/goryeo_ripples_2.png",
+      "sha256": "36c1155b12af49c466bd962c84e73823dd3a7fc04a8f2b783ba132fb3a4485d0",
+      "reason": "C6 existing appearance preserved under Decisions10"
+    },
+    {
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Animated/goryeo_ripples_3.png",
+      "sha256": "cffd49909af1f83afeb34c5867cd3567a7b06f7826e95f76b4d5de011d0c3322",
+      "reason": "C6 existing appearance preserved under Decisions10"
+    },
+    {
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/module_0_1.png",
+      "sha256": "9b151812ea18fd3fd5b5dd5ebc579edfe45cbb516845436f3629ccbf9723ffcf",
+      "reason": "C6 existing appearance preserved under Decisions10"
+    },
+    {
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/module_1_1.png",
+      "sha256": "da049d9072f7865be294693eeafdc93c1f735e5c4b35cd5a715ab4171006e93d",
+      "reason": "C6 existing appearance preserved under Decisions10"
+    },
+    {
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/work_0_1_goryeo_jade.png",
+      "sha256": "7061ac9f3a278a47393cbe130703a6b754f923af2771539b8352397cc7a486c6",
+      "reason": "C6 existing appearance preserved under Decisions10"
+    },
+    {
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/work_1_1_goryeo_jade.png",
+      "sha256": "8f0c434e97fd45ef048d18820384f763fadf8a8fce2dda3945c1e76ae118f092",
+      "reason": "C6 existing appearance preserved under Decisions10"
+    },
+    {
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/work_2_1_goryeo_jade.png",
+      "sha256": "424baef2a9206b3a136156159400c2ea6e9669514f2fd4b42874e9d2198139c2",
+      "reason": "C6 existing appearance preserved under Decisions10"
+    }
+  ]
+}

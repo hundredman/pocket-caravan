@@ -10,7 +10,8 @@ namespace PocketCaravan.EditorTools
     {
         [Serializable] class Data {public string id;public int w,h;public string[] palette;public int[] ground,deco,obj,high,blocked;}
         [Serializable] class Result {public int maps,cells,checks;public List<string> ids=new List<string>();}
-        public static void Run()
+        public static void Run()=>RunTo("Docs/Validation/C3a-Occlusion-2026-10-26/unity-production.json");
+        public static void RunTo(string output)
         {
             var result=new Result();var plan=JsonUtility.FromJson<C3OcclusionReview.Plan>(File.ReadAllText("ArtReview/C3a-2026-10-26/plan.json"));
             foreach(var area in plan.maps)
@@ -33,7 +34,7 @@ namespace PocketCaravan.EditorTools
                 var player=UnityEngine.Object.FindAnyObjectByType<PlayerMotor>();if(player.GetComponentInChildren<SpriteRenderer>().sortingOrder!=11)throw new Exception("Player layer");
                 result.maps++;result.cells+=data.w*data.h;result.ids.Add(data.id);
             }
-            AssetDatabase.SaveAssets();File.WriteAllText("Docs/Validation/C3a-Occlusion-2026-10-26/unity-production.json",JsonUtility.ToJson(result,true));Debug.Log("C3 production checks "+result.checks);
+            AssetDatabase.SaveAssets();File.WriteAllText(output,JsonUtility.ToJson(result,true));Debug.Log("Production scene checks "+result.checks);
         }
     }
 }

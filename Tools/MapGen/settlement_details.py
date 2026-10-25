@@ -64,7 +64,7 @@ def add(m):
             m.bridge(x,13,x+1,18,dock=True)
             for a,b in cells:m.blocked[b][a]=False
             connect_to_road(m,(x,13),exclude=cells)
-            m.add('pastime',x,18,id='goryeo_fishing',name='나루 낚시',character='villager_rabbit_tall')
+            m.add('pastime',x,18,id='goryeo_fishing',name='나루 낚시',character='NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall')
             break
         else:raise ValueError('Naru needs a clear pier')
     elif m.id=='Dakmok':

@@ -1,10 +1,12 @@
 """A2 asset catalogue and final compact-map validation. Does not modify inputs."""
 from pathlib import Path
 import re
+import json
+import hashlib
 
 LAYERS = ('ground', 'deco', 'obj', 'high')
 STATUSES = ('draft', 'pending', 'approved', 'changes_requested')
-MODULAR_TYPES = ('water', 'coast', 'river', 'road', 'wall', 'field', 'ground_boundary', 'cliff', 'bridge')
+MODULAR_TYPES = ('water', 'coast', 'river', 'road', 'wall', 'field', 'ground_boundary', 'cliff', 'bridge', 'surface_pattern')
 CORE_PIECES = {'center', 'edge', 'outer_corner', 'inner_corner'}
 LINEAR_TYPES = {'river', 'road', 'wall'}
 
@@ -18,6 +20,34 @@ def safe_path(root, value):
         return None
     target = (Path(root) / value).resolve()
     return target if target.is_relative_to(Path(root).resolve()) else None
+
+
+def legacy_alpha_files(root):
+    """Decisions10: existing exceptions are explicit, file-hash pinned, never inferred."""
+    registry = Path(root) / 'Assets/PocketCaravan/Art/Baked/legacy-alpha-exceptions.json'
+    if not registry.exists():
+        return {}, []
+    locked, errors = {}, []
+    try:
+        doc = json.loads(registry.read_text())
+        if not isinstance(doc, dict) or doc.get('schemaVersion') != 1 or not isinstance(doc.get('files'), list):
+            raise ValueError('invalid alpha exception registry')
+        evidence = safe_path(root, doc.get('decision'))
+        if evidence is None or not evidence.is_file():
+            raise ValueError('missing alpha exception decision')
+        for item in doc['files']:
+            if not isinstance(item, dict):
+                raise ValueError('invalid alpha exception entry')
+            path = safe_path(root, item.get('path'))
+            digest = item.get('sha256')
+            if path is None or not path.is_file() or path in locked or not isinstance(digest, str) or not re.fullmatch(r'[0-9a-f]{64}', digest):
+                raise ValueError('invalid alpha exception entry')
+            if hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+                errors.append(dict(code='frozen_alpha_hash', location=item['path'], message='existing alpha exception file changed'))
+            locked[path] = digest
+    except (OSError, ValueError, TypeError, KeyError) as exc:
+        errors.append(dict(code='alpha_registry', location=str(registry), message=str(exc)))
+    return locked, errors
 
 
 def validate_catalogue(document, root):
@@ -34,6 +64,8 @@ def validate_catalogue(document, root):
     if not isinstance(entries, list) or not entries:
         fail('catalogue_assets', 'assets', 'a nonempty asset list is required')
         return errors, assets
+    alpha_files, alpha_errors = legacy_alpha_files(root)
+    errors.extend(alpha_errors)
     profiles = document.get('profiles', {})
     if not isinstance(profiles, dict):
         fail('profiles', 'profiles', 'profiles must be an object')
@@ -56,7 +88,7 @@ def validate_catalogue(document, root):
     if errors:
         return errors, assets
 
-    def check_file(value, where, image=False, size=None, profile=None):
+    def check_file(value, where, image=False, size=None, profile=None, effect=False):
         path = safe_path(root, value)
         if path is None or not path.is_file():
             fail('asset_file', where, 'file missing or outside root: ' + str(value))
@@ -73,7 +105,7 @@ def validate_catalogue(document, root):
                 im = source.convert('RGBA')
                 if size and pixels and im.size != (size[0] * pixels[0], size[1] * pixels[1]):
                     fail('image_size', where, 'image dimensions do not match configured cell size')
-                if any(a not in (0, 255) for a in im.getchannel('A').tobytes()):
+                if not effect and path not in alpha_files and any(a not in (0, 255) for a in im.getchannel('A').tobytes()):
                     fail('image_alpha', where, 'semi-transparent pixels are not allowed')
                 palette = profile.get('palette')
                 if isinstance(palette, list) and palette and all(isinstance(c, str) and re.fullmatch(r'#[0-9a-fA-F]{6}', c) for c in palette):
@@ -85,7 +117,7 @@ def validate_catalogue(document, root):
         except (ImportError, OSError, ValueError) as exc:
             fail('image_read', where, str(exc))
 
-    def shape(value, where, owner, profile):
+    def shape(value, where, owner, profile, effect=False):
         if not isinstance(value, dict):
             fail('asset_shape', where, 'shape must be an object')
             return
@@ -93,7 +125,7 @@ def validate_catalogue(document, root):
         if not isinstance(size, list) or len(size) != 2 or not all(integer(v, 1) for v in size):
             fail('asset_size', where, 'size must be positive width and height in cells')
             return
-        full_image = check_file(value.get('image'), where + '.image', True, size, profile)
+        full_image = check_file(value.get('image'), where + '.image', True, size, profile, effect)
         cell_size = None
         if full_image is not None:
             if full_image.width % size[0] or full_image.height % size[1]:
@@ -116,11 +148,13 @@ def validate_catalogue(document, root):
             if (layer, dx, dy) in slots:
                 fail('duplicate_tile_slot', where, 'duplicate layer/cell mapping')
             slots.add((layer, dx, dy)); cells.add((dx, dy))
-            tile_image = check_file(tile.get('image'), where + '.' + key, True)
+            tile_image = check_file(tile.get('image'), where + '.' + key, True, effect=effect)
             if tile_image is not None and cell_size:
                 cw, ch = cell_size
-                crop = full_image.crop((dx * cw, dy * ch, (dx + 1) * cw, (dy + 1) * ch))
-                if tile_image.size != crop.size or tile_image.tobytes() != crop.tobytes():
+                raw = full_image.tobytes()
+                stride = full_image.width * 4
+                expected = b''.join(raw[(dy * ch + row) * stride + dx * cw * 4:(dy * ch + row) * stride + (dx + 1) * cw * 4] for row in range(ch))
+                if tile_image.size != (cw, ch) or tile_image.tobytes() != expected:
                     fail('tile_pixels', where + '.' + key, 'exported tile differs from the whole registered image')
             if key in tile_owners and tile_owners[key] != owner:
                 fail('duplicate_tile_owner', where, 'tile key reused by different asset IDs: ' + key)
@@ -171,8 +205,8 @@ def validate_catalogue(document, root):
             if not isinstance(profile, dict):
                 fail('asset_profile', aid, 'unknown profile')
                 profile = None
-        if asset.get('kind') == 'object':
-            shape(asset, aid, aid, profile)
+        if asset.get('kind') in ('object', 'effect'):
+            shape(asset, aid, aid, profile, asset['kind'] == 'effect')
         elif asset.get('kind') == 'modular':
             pieces, required = asset.get('pieces'), asset.get('requiredPieces')
             module_type = asset.get('moduleType')
@@ -181,7 +215,7 @@ def validate_catalogue(document, root):
             if not isinstance(pieces, dict) or not pieces or not isinstance(required, list) or not required or any(not isinstance(p, str) or not p for p in required):
                 fail('modular_pieces', aid, 'pieces and requiredPieces must be nonempty')
             else:
-                minimum = ({'start', 'center', 'end'} if module_type == 'bridge' else
+                minimum = ({'center'} if module_type == 'surface_pattern' else {'start', 'center', 'end'} if module_type == 'bridge' else
                            CORE_PIECES | ({'end'} if isinstance(module_type, str) and module_type in LINEAR_TYPES else set()))
                 if not minimum.issubset(required):
                     fail('modular_minimum', aid, 'requiredPieces must include: ' + ', '.join(sorted(minimum)))
@@ -191,7 +225,7 @@ def validate_catalogue(document, root):
                 for part, definition in pieces.items():
                     shape(definition, aid + '.' + part, aid, profile)
         else:
-            fail('asset_kind', aid, 'kind must be object or modular')
+            fail('asset_kind', aid, 'kind must be object, modular or effect')
     return errors, assets
 
 
@@ -291,7 +325,7 @@ def validate_map(data, assets, require_approval=True):
             if slot in expected:
                 fail('placement_overlap', where, 'two placements own the same rendered layer/cell')
             expected[slot] = tile['tile']
-    known = {tile['tile'] for asset in assets.values() for definition in ([asset] if asset['kind'] == 'object' else asset['pieces'].values()) for tile in definition['tiles']}
+    known = {tile['tile'] for asset in assets.values() for definition in ([asset] if asset['kind'] in ('object', 'effect') else asset['pieces'].values()) for tile in definition['tiles']}
     for layer in LAYERS:
         for index, value in enumerate(data[layer]):
             key = palette[value]

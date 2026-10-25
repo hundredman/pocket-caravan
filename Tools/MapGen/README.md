@@ -57,3 +57,11 @@
 2026-10-17 개발 반영: 신규 주행 낙하/게이지/정차 안정화는 사용하지 않는다. 노면/짐/속도에 반응하는 시각 흔들림은 감속 연출로 유지한다. 현재 기준은 Docs/DevelopmentStatus.md 및 실제 시험장 UI를 따른다.
 
 10/22 최신: `World/Terrain/continuous.json`이 실제 지형 원본이다. `continuous.py`가 기존 마을 템플릿을 공통80×64 구역으로 확장하고 해안·강·도로·숲과 접속을 생성한다. `cartography.py`는 그 실제 셀만 축약한다. 지도 전용 `peninsula.json`은 제거했다. [제작/검사 절차](../../Docs/Archive/ContinuousTerrain.md)를 따른다.
+
+## C6 본편 아트 경로
+
+본편은 `Art/Baked/catalogue.json`과 `index.json`의 동결 PNG만 읽는다. `frozen_art.py`가 전체 개체 배치/조립용 셀을 A2로 검사한 뒤 내보낸다. `tile_image()`의 원본 시트 추출·색 변환은 제거했다. 미등록 그림 키는 즉시 실패하므로 새 그림은 제작·검토·등록 후 연결한다. 온전한 개체를16px 렌더링 셀로 배치하는 것과 원본 에셋 일부를 다른 용도로 잘라 쓰는 것을 구분한다.
+
+`python Tools/ArtBake/verify_frozen.py`로 현재 등록11맵의 전체 생성 중 crop/recolor/tone0과 맵/그림/지도 자원 보존을 재검사한다. `install_frozen.py`는 C6 이관 당시 결과를 명시적으로 등록하는 일회성 도구이며 일반 맵 생성에서 호출하지 않는다. 미등록 원형 라이브러리/아트 시안 제작 도구는 본편 생성 경로가 아니다.
+
+옛8맵의 JSON/씬은 정리했지만, `legacy_goryeo_sources.json`의 함수 등록과 구 저장 별칭은 유지한다. 함수의 지형과 예약 칸은 current 생성기의 입력이기 때문이다. source의 시각적 역할 연결은 승인된 사람 경로로 바꾸고, 최종 맵에서 버려지는4개 객체의 옛 동물 그림만 None으로 제거했다.

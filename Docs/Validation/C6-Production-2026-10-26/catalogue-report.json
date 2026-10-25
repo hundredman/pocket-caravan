@@ -1,0 +1,16 @@
+{
+  "mode": "production",
+  "manifest": "Assets/PocketCaravan/Art/Baked/catalogue.json",
+  "maps": [],
+  "placementsChecked": false,
+  "unprofiledAssets": [],
+  "errors": [],
+  "errorCount": 0,
+  "notChecked": [
+    "visual_style",
+    "actual_user_authorization",
+    "Unity_scene",
+    "gameplay"
+  ],
+  "note": "Only explicitly configured pixel profiles and terrain rules are checked. No art standard is chosen."
+}

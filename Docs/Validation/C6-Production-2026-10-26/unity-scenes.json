@@ -1,0 +1,18 @@
+{
+    "maps": 11,
+    "cells": 45000,
+    "checks": 225044,
+    "ids": [
+        "Naru",
+        "Gaegyeong",
+        "Dakmok",
+        "goryeo_songak",
+        "goryeo_jangdan",
+        "transit_pass",
+        "transit_woodtown",
+        "transit_wetroad",
+        "transit_ferry",
+        "transit_central_approach",
+        "transit_crossroads"
+    ]
+}
