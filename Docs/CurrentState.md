@@ -175,6 +175,12 @@
 - 동물176프레임·meta/해시/A2 목록 보관, 플레이어16프레임 불변 확인. `Tools/ArtGen/npc_roles.json`이 역할 연결 원본, `install_human_npcs.py`가 승인 그림 설치 원본, `MapGen/npc_bindings.py`가 최종 맵 연결 원본이다.
 - 상세/한계는 `Validation/C1-Production-2026-10-24.md`. 실제 Game 캡처도 보존했다. 사람의 수동 플레이 완주는 별도이며 기존 저장은 쓰지 않았다.
 
+### C2·C3 확대 v2 (2026-10-25, 시안 승인 대기)
+
+- 최신 main71d56cf5에서 `codex/c2-c3-expand` 시작, 완료 C1 worktree 정리. `ArtReview/Environment-Expand-v2/`에 궁궐·초가집2크기·버드나무·숲 나무6종의 전체 PNG/Aseprite, 전후 비교·실제 Unity 캡처8장·게임크기 비교를 제출했다.
+- 기존 v2 gentle 보정을 그대로 사용해 원본 불투명 픽셀96% 이상·전체 알파/실루엣/크기/원래 색 유지. 원본10개 재열기·A2 194셀/10개체 오류0 확인. source는 `Tools/ArtTrials/environment_expand_v2.py`다.
+- 개경/나루 Play의 메모리로만7종21개체를 표시해 실제 게임에서 확인했다. 본편 Assets/·맵·씬은 저장하지 않았고 사용하지 않은 숲3종 배치/실제 이동은 미검증이다. Console error0. 사용자 승인 뒤 반영하고 A3a로 이어간다. 상세는 `Validation/C2-C3-Expand-2026-10-25.md`.
+
 ## 5. 검사
 
 ```sh

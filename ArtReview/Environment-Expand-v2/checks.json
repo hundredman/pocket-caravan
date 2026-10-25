@@ -1,0 +1,198 @@
+{
+  "method": "gentle_cleanup.lua, unchanged v2 gentle settings, at most 4% of opaque pixels",
+  "assets": [
+    {
+      "asset": "palace",
+      "title": "궁궐",
+      "legacySource": "hall",
+      "size": [
+        160,
+        112
+      ],
+      "cells": [
+        10,
+        7
+      ],
+      "opaquePixels": 12672,
+      "changedPixels": 506,
+      "retainedPercent": 96.007,
+      "alphaSilhouetteExact": true,
+      "paletteSubsetOfOriginal": true,
+      "asepriteReopenedExact": true
+    },
+    {
+      "asset": "cottage",
+      "title": "초가집",
+      "legacySource": "thatch",
+      "size": [
+        80,
+        64
+      ],
+      "cells": [
+        5,
+        4
+      ],
+      "opaquePixels": 3801,
+      "changedPixels": 152,
+      "retainedPercent": 96.001,
+      "alphaSilhouetteExact": true,
+      "paletteSubsetOfOriginal": true,
+      "asepriteReopenedExact": true
+    },
+    {
+      "asset": "willow",
+      "title": "버드나무",
+      "legacySource": "woodland5",
+      "size": [
+        64,
+        64
+      ],
+      "cells": [
+        4,
+        4
+      ],
+      "opaquePixels": 1914,
+      "changedPixels": 76,
+      "retainedPercent": 96.029,
+      "alphaSilhouetteExact": true,
+      "paletteSubsetOfOriginal": true,
+      "asepriteReopenedExact": true
+    },
+    {
+      "asset": "forest_1",
+      "title": "숲 나무 1",
+      "legacySource": "woodland1",
+      "size": [
+        48,
+        64
+      ],
+      "cells": [
+        3,
+        4
+      ],
+      "opaquePixels": 929,
+      "changedPixels": 37,
+      "retainedPercent": 96.017,
+      "alphaSilhouetteExact": true,
+      "paletteSubsetOfOriginal": true,
+      "asepriteReopenedExact": true
+    },
+    {
+      "asset": "forest_2",
+      "title": "숲 나무 2",
+      "legacySource": "woodland2",
+      "size": [
+        48,
+        64
+      ],
+      "cells": [
+        3,
+        4
+      ],
+      "opaquePixels": 936,
+      "changedPixels": 37,
+      "retainedPercent": 96.047,
+      "alphaSilhouetteExact": true,
+      "paletteSubsetOfOriginal": true,
+      "asepriteReopenedExact": true
+    },
+    {
+      "asset": "forest_3",
+      "title": "숲 나무 3",
+      "legacySource": "woodland3",
+      "size": [
+        64,
+        48
+      ],
+      "cells": [
+        4,
+        3
+      ],
+      "opaquePixels": 860,
+      "changedPixels": 34,
+      "retainedPercent": 96.047,
+      "alphaSilhouetteExact": true,
+      "paletteSubsetOfOriginal": true,
+      "asepriteReopenedExact": true
+    },
+    {
+      "asset": "forest_4",
+      "title": "숲 나무 4",
+      "legacySource": "woodland4",
+      "size": [
+        64,
+        64
+      ],
+      "cells": [
+        4,
+        4
+      ],
+      "opaquePixels": 2044,
+      "changedPixels": 81,
+      "retainedPercent": 96.037,
+      "alphaSilhouetteExact": true,
+      "paletteSubsetOfOriginal": true,
+      "asepriteReopenedExact": true
+    },
+    {
+      "asset": "forest_6",
+      "title": "숲 나무 6",
+      "legacySource": "woodland6",
+      "size": [
+        48,
+        64
+      ],
+      "cells": [
+        3,
+        4
+      ],
+      "opaquePixels": 1132,
+      "changedPixels": 45,
+      "retainedPercent": 96.025,
+      "alphaSilhouetteExact": true,
+      "paletteSubsetOfOriginal": true,
+      "asepriteReopenedExact": true
+    },
+    {
+      "asset": "forest_7",
+      "title": "숲 나무 7",
+      "legacySource": "woodland7",
+      "size": [
+        48,
+        64
+      ],
+      "cells": [
+        3,
+        4
+      ],
+      "opaquePixels": 1058,
+      "changedPixels": 42,
+      "retainedPercent": 96.03,
+      "alphaSilhouetteExact": true,
+      "paletteSubsetOfOriginal": true,
+      "asepriteReopenedExact": true
+    },
+    {
+      "asset": "cottage_small",
+      "title": "초가집(작은형)",
+      "legacySource": "thatch",
+      "size": [
+        64,
+        48
+      ],
+      "cells": [
+        4,
+        3
+      ],
+      "opaquePixels": 2284,
+      "changedPixels": 91,
+      "retainedPercent": 96.016,
+      "alphaSilhouetteExact": true,
+      "paletteSubsetOfOriginal": true,
+      "asepriteReopenedExact": true
+    }
+  ],
+  "userApproval": "pending",
+  "runtimeApplied": false,
+  "D3PaletteApproval": false
+}
