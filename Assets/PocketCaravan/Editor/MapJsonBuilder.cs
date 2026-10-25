@@ -48,6 +48,7 @@ namespace PocketCaravan.EditorTools
         {
             public string id, name;
             public int w, h, hours, terrainX, terrainY, legacyHeight;
+            public bool previewOnly;
             public int[] ground, deco, obj, high, road, blocked;
             public string[] palette;
             public MapObject[] objects;
@@ -214,13 +215,13 @@ namespace PocketCaravan.EditorTools
             AssetDatabase.SaveAssets();
         }
 
-        static void BuildScene(MapFile f, string path, WorldRegistry.MapEntry entry = null)
+        static void BuildScene(MapFile f, string path, WorldRegistry.MapEntry entry = null, string previewDirectory = null)
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             // 새 씬을 만든 뒤에 에셋을 불러온다 (앞서 불러온 에셋은 내려감)
             var db = AssetDatabase.LoadAssetAtPath<GameDatabase>(DbPath);
             var tiles = new Tile[f.palette.Length];
-            for (int i = 1; i < f.palette.Length; i++) tiles[i] = TileFor(f.palette[i]);
+            for (int i = 1; i < f.palette.Length; i++) tiles[i] = TileFor(f.palette[i], previewDirectory);
             var blocker = BlockerTile();
 
             var gridGo = new GameObject("Map");
@@ -240,6 +241,7 @@ namespace PocketCaravan.EditorTools
 
             var map = gridGo.AddComponent<MapRoot>();
             map.mapId = f.id;
+            map.previewOnly = f.previewOnly;
             map.travelHours = f.hours;
             map.displayName = f.name;
             map.ground = ground; map.road = null; map.blocked = blocked;
@@ -480,10 +482,14 @@ namespace PocketCaravan.EditorTools
         }
 
         /// <summary>별도 도구에서 한 장만 생성. 본편 맵 색인·빌드 씬 목록을 다시 쓰지 않는다.</summary>
-        public static void BuildSingleMap(string json, string scenePath)
+        public static void BuildSingleMap(string json, string scenePath, string previewDirectory = null)
         {
+            if (previewDirectory != null && (!previewDirectory.StartsWith(Root + "/Editor/B2Preview/", StringComparison.Ordinal)
+                || previewDirectory.Contains("..") || !scenePath.StartsWith(Root + "/Editor/B2Preview/", StringComparison.Ordinal)))
+                throw new InvalidDataException("B2 preview must remain in its isolated editor directory.");
+            if (previewDirectory != null) EnsureFolder(previewDirectory + "/TileAssets");
             var map = JsonUtility.FromJson<MapFile>(json);
-            BuildScene(map, scenePath, WorldRegistry.Load().Map(map.id));
+            BuildScene(map, scenePath, WorldRegistry.Load().Map(map.id), previewDirectory);
         }
 
         /// <summary>모든 맵이 함께 쓰는 후처리 설정. 코드가 기준이라 매번 값을 다시 쓴다.</summary>
@@ -588,12 +594,12 @@ namespace PocketCaravan.EditorTools
 
         static Sprite LoadSprite(string name) => AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Placeholder/{name}.png");
 
-        static Tile TileFor(string name)
+        static Tile TileFor(string name, string previewDirectory = null)
         {
-            string assetPath = $"{TileAssetDir}/{name}.asset";
+            string assetPath = $"{(previewDirectory == null ? TileAssetDir : previewDirectory + "/TileAssets")}/{name}.asset";
             var t = AssetDatabase.LoadAssetAtPath<Tile>(assetPath);
             if (t != null) return t;
-            var sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{TilePngDir}/{name}.png");
+            var sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{(previewDirectory == null ? TilePngDir : previewDirectory + "/Tiles")}/{name}.png");
             if (sprite == null) { Debug.LogWarning($"타일 그림 없음: {name}"); return null; }
             t = ScriptableObject.CreateInstance<Tile>();
             t.sprite = sprite;

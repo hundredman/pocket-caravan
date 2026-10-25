@@ -61,3 +61,7 @@ mono_crash.*
 /output/
 **/__pycache__/
 *.pyc
+
+# B2 temporary Unity review scenes; source and images live in ArtReview
+/Assets/PocketCaravan/Editor/B2Preview/
+/Assets/PocketCaravan/Editor/B2Preview.meta

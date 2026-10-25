@@ -1,0 +1,12 @@
+{
+  "maps": 13,
+  "assignedCells": 45000,
+  "sourceLandCells": 38253,
+  "nearSeaCells": 6747,
+  "rivers": 3,
+  "roads": 12,
+  "bridgeCells": 76,
+  "mountainCells": 586,
+  "inactiveExternalLinks": 3,
+  "productionChanged": false
+}

@@ -1,0 +1,182 @@
+[
+  {
+    "fromKey": "goryeo/개경",
+    "toKey": "goryeo/송악",
+    "seconds": 22.995993766013214
+  },
+  {
+    "fromKey": "goryeo/개경",
+    "toKey": "goryeo/닥목",
+    "seconds": 14.758752926496106
+  },
+  {
+    "fromKey": "goryeo/개경",
+    "toKey": "goryeo/나루",
+    "seconds": 15.710127581535525
+  },
+  {
+    "fromKey": "goryeo/개경",
+    "toKey": "goryeo/장단",
+    "seconds": 25.837833206335144
+  },
+  {
+    "fromKey": "goryeo/개경",
+    "toKey": "east/동문 마을",
+    "seconds": 36.84531402863677
+  },
+  {
+    "fromKey": "goryeo/개경",
+    "toKey": "east/북동 포구",
+    "seconds": 63.87123108385657
+  },
+  {
+    "fromKey": "goryeo/개경",
+    "toKey": "east/남동 포구",
+    "seconds": 63.67192600151955
+  },
+  {
+    "fromKey": "goryeo/개경",
+    "toKey": "east/중앙 길목 마을",
+    "seconds": 60.61207942310647
+  },
+  {
+    "fromKey": "goryeo/송악",
+    "toKey": "goryeo/닥목",
+    "seconds": 15.266366660215718
+  },
+  {
+    "fromKey": "goryeo/송악",
+    "toKey": "goryeo/나루",
+    "seconds": 28.57841572274911
+  },
+  {
+    "fromKey": "goryeo/송악",
+    "toKey": "goryeo/장단",
+    "seconds": 18.2965557722582
+  },
+  {
+    "fromKey": "goryeo/송악",
+    "toKey": "east/동문 마을",
+    "seconds": 14.067327400714657
+  },
+  {
+    "fromKey": "goryeo/송악",
+    "toKey": "east/북동 포구",
+    "seconds": 41.09324445593439
+  },
+  {
+    "fromKey": "goryeo/송악",
+    "toKey": "east/남동 포구",
+    "seconds": 40.893939373597355
+  },
+  {
+    "fromKey": "goryeo/송악",
+    "toKey": "east/중앙 길목 마을",
+    "seconds": 37.83409279518433
+  },
+  {
+    "fromKey": "goryeo/닥목",
+    "toKey": "goryeo/나루",
+    "seconds": 29.50655044237573
+  },
+  {
+    "fromKey": "goryeo/닥목",
+    "toKey": "goryeo/장단",
+    "seconds": 33.036606643000226
+  },
+  {
+    "fromKey": "goryeo/닥목",
+    "toKey": "east/동문 마을",
+    "seconds": 29.33369406093037
+  },
+  {
+    "fromKey": "goryeo/닥목",
+    "toKey": "east/북동 포구",
+    "seconds": 56.359611116150155
+  },
+  {
+    "fromKey": "goryeo/닥목",
+    "toKey": "east/남동 포구",
+    "seconds": 56.16030603381314
+  },
+  {
+    "fromKey": "goryeo/닥목",
+    "toKey": "east/중앙 길목 마을",
+    "seconds": 53.100459455400056
+  },
+  {
+    "fromKey": "goryeo/나루",
+    "toKey": "goryeo/장단",
+    "seconds": 10.436014276182206
+  },
+  {
+    "fromKey": "goryeo/나루",
+    "toKey": "east/동문 마을",
+    "seconds": 41.90142019589901
+  },
+  {
+    "fromKey": "goryeo/나루",
+    "toKey": "east/북동 포구",
+    "seconds": 68.92733725111881
+  },
+  {
+    "fromKey": "goryeo/나루",
+    "toKey": "east/남동 포구",
+    "seconds": 68.7280321687818
+  },
+  {
+    "fromKey": "goryeo/나루",
+    "toKey": "east/중앙 길목 마을",
+    "seconds": 65.66818559036871
+  },
+  {
+    "fromKey": "goryeo/장단",
+    "toKey": "east/동문 마을",
+    "seconds": 31.619560245408056
+  },
+  {
+    "fromKey": "goryeo/장단",
+    "toKey": "east/북동 포구",
+    "seconds": 58.64547730062785
+  },
+  {
+    "fromKey": "goryeo/장단",
+    "toKey": "east/남동 포구",
+    "seconds": 58.446172218290826
+  },
+  {
+    "fromKey": "goryeo/장단",
+    "toKey": "east/중앙 길목 마을",
+    "seconds": 55.38632563987775
+  },
+  {
+    "fromKey": "east/동문 마을",
+    "toKey": "east/북동 포구",
+    "seconds": 27.39807851900212
+  },
+  {
+    "fromKey": "east/동문 마을",
+    "toKey": "east/남동 포구",
+    "seconds": 27.352927762356376
+  },
+  {
+    "fromKey": "east/동문 마을",
+    "toKey": "east/중앙 길목 마을",
+    "seconds": 23.984772532560775
+  },
+  {
+    "fromKey": "east/북동 포구",
+    "toKey": "east/남동 포구",
+    "seconds": 54.75100628135858
+  },
+  {
+    "fromKey": "east/북동 포구",
+    "toKey": "east/중앙 길목 마을",
+    "seconds": 32.2393863136521
+  },
+  {
+    "fromKey": "east/남동 포구",
+    "toKey": "east/중앙 길목 마을",
+    "seconds": 31.82207409322396
+  }
+]

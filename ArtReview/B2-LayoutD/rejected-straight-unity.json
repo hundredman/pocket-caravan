@@ -1,0 +1,16 @@
+{
+    "unity": "6000.3.26f1",
+    "scenes": 13,
+    "groundCells": 45000,
+    "walkable": 36679,
+    "checks": 169626,
+    "motorTicks": 19074,
+    "walkedSegments": 1122,
+    "productionRegistered": false,
+    "screenshots": [
+        "ArtReview/B2-LayoutD/layoutD_east_북동 길-camera.png",
+        "ArtReview/B2-LayoutD/layoutD_goryeo_나루-camera.png",
+        "ArtReview/B2-LayoutD/layoutD_goryeo_닥목-camera.png",
+        "ArtReview/B2-LayoutD/current-naru-camera.png"
+    ]
+}

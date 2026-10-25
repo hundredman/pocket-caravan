@@ -18,6 +18,7 @@ namespace PocketCaravan
             public float ratio;
             public Node[] towns;
             public Edge[] roads;
+            public Edge[] walkingDistances;
         }
 
         public enum LegacyMetric { EconomicCoordinates, MapConnections }
@@ -53,6 +54,20 @@ namespace PocketCaravan
                 if (edge == null || !ids.Contains(edge.from) || !ids.Contains(edge.to) || edge.from == edge.to
                     || edge.seconds <= 0 || float.IsNaN(edge.seconds) || float.IsInfinity(edge.seconds))
                     throw new InvalidOperationException("길 구간이 올바르지 않습니다.");
+            if (settings.walkingDistances != null)
+            {
+                var pairs = new HashSet<string>();
+                foreach (var pair in settings.walkingDistances)
+                {
+                    if (pair == null || !ids.Contains(pair.from) || !ids.Contains(pair.to) || pair.from == pair.to
+                        || pair.seconds <= 0 || float.IsNaN(pair.seconds) || float.IsInfinity(pair.seconds))
+                        throw new InvalidOperationException("실제 보행 거리 표가 올바르지 않습니다.");
+                    string key = string.CompareOrdinal(pair.from, pair.to) < 0 ? pair.from + "\n" + pair.to : pair.to + "\n" + pair.from;
+                    if (!pairs.Add(key)) throw new InvalidOperationException("실제 보행 거리 쌍이 중복됐습니다.");
+                }
+                if (pairs.Count != ids.Count * (ids.Count - 1) / 2)
+                    throw new InvalidOperationException("실제 보행 거리 쌍이 누락됐습니다.");
+            }
         }
 
         public static int Between(string from, string to, Vector2Int fromCoord = default,
@@ -74,6 +89,13 @@ namespace PocketCaravan
 
         public static float WalkingSeconds(Settings config, string from, string to)
         {
+            if (config.walkingDistances != null)
+            {
+                if (from == to && Array.Exists(config.towns, n => n.id == from)) return 0;
+                foreach (var pair in config.walkingDistances)
+                    if ((pair.from == from && pair.to == to) || (pair.from == to && pair.to == from)) return pair.seconds;
+                throw new InvalidOperationException("실제 보행 거리 표에 없는 마을입니다.");
+            }
             var costs = new Dictionary<string, float>();
             foreach (var node in config.towns) costs[node.id] = float.PositiveInfinity;
             if (!costs.ContainsKey(from) || !costs.ContainsKey(to))

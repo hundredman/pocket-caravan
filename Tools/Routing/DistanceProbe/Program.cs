@@ -56,7 +56,7 @@ var restored=JsonSerializer.Deserialize<Contract>(saved,options);
 Check(restored.reward==777&&restored.deadline==38&&restored.finalDeadline==54.5f,"Old contract fields");
 File.WriteAllText(output,JsonSerializer.Serialize(new {prices,quotes,boards,oracleCases,generated,acceptedContract=saved},options));
 #if !LEGACY
-var config=JsonUtility.FromJson<TownDistance.Settings>(File.ReadAllText(Path.Combine(Resources.Folder,"TownRoutes.json")));config.mode="layoutD";
+var config=JsonUtility.FromJson<TownDistance.Settings>(File.ReadAllText(args.Length>2?args[2]:Path.Combine(Resources.Folder,"TownRoutes.json")));config.mode="layoutD";
 var routes=new List<object>();
 foreach(var a in config.towns)foreach(var b in config.towns){
  int d=TownDistance.Between(a.id,b.id,settings:config),rewardD=TownDistance.Between(a.id,b.id,world:world,legacy:TownDistance.LegacyMetric.MapConnections,settings:config);
