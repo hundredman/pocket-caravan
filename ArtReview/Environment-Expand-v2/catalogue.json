@@ -315,7 +315,8 @@
         "path": "ArtReview/Environment-Expand-v2/palace.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
       },
       "profile": "palace_native",
       "tiles": [
@@ -825,7 +826,8 @@
         "path": "ArtReview/Environment-Expand-v2/cottage.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
       },
       "profile": "cottage_native",
       "tiles": [
@@ -985,7 +987,8 @@
         "path": "ArtReview/Environment-Expand-v2/willow.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
       },
       "profile": "willow_native",
       "tiles": [
@@ -1117,7 +1120,8 @@
         "path": "ArtReview/Environment-Expand-v2/forest_1.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
       },
       "profile": "forest_1_native",
       "tiles": [
@@ -1221,7 +1225,8 @@
         "path": "ArtReview/Environment-Expand-v2/forest_2.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
       },
       "profile": "forest_2_native",
       "tiles": [
@@ -1325,7 +1330,8 @@
         "path": "ArtReview/Environment-Expand-v2/forest_3.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
       },
       "profile": "forest_3_native",
       "tiles": [
@@ -1429,7 +1435,8 @@
         "path": "ArtReview/Environment-Expand-v2/forest_4.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
       },
       "profile": "forest_4_native",
       "tiles": [
@@ -1561,7 +1568,8 @@
         "path": "ArtReview/Environment-Expand-v2/forest_6.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
       },
       "profile": "forest_6_native",
       "tiles": [
@@ -1665,7 +1673,8 @@
         "path": "ArtReview/Environment-Expand-v2/forest_7.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
       },
       "profile": "forest_7_native",
       "tiles": [
@@ -1769,7 +1778,8 @@
         "path": "ArtReview/Environment-Expand-v2/cottage_small.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
       },
       "profile": "cottage_small_native",
       "tiles": [
@@ -1859,5 +1869,6 @@
         }
       ]
     }
-  ]
+  ],
+  "decision": "not_needed_keep_current_environment_art"
 }
