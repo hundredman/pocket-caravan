@@ -27,7 +27,7 @@
         "path": "ArtReview/A4-Water-v1/water-sheet.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested"
       },
       "requiredPieces": [
         "water_00",

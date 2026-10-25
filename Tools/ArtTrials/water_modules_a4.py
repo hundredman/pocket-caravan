@@ -120,7 +120,7 @@ def generate():
     subprocess.run([ASE,'-b',str(OUT/'water-sheet.aseprite'),'--save-as',str(OUT/'water-sheet-reopened.png')],check=True)
     assert Image.open(OUT/'water-sheet-reopened.png').convert('RGBA').tobytes()==sheet.tobytes();(OUT/'water-sheet-reopened.png').unlink()
     palette=['#%02x%02x%02x'%p[:3] for p in COLORS.values()]
-    catalogue=dict(schemaVersion=1,profiles={'trial16':dict(pixelsPerCell=[16,16],binaryAlpha=True,palette=palette)},assets=[dict(id='trial_pond_lake_water',kind='modular',moduleType='water',purpose='pond_lake',profile='trial16',source=dict(kind='authored',path='ArtReview/A4-Water-v1/water-sheet.aseprite'),review=dict(status='pending'),requiredPieces=list(pieces),pieces=pieces)])
+    catalogue=dict(schemaVersion=1,profiles={'trial16':dict(pixelsPerCell=[16,16],binaryAlpha=True,palette=palette)},assets=[dict(id='trial_pond_lake_water',kind='modular',moduleType='water',purpose='pond_lake',profile='trial16',source=dict(kind='authored',path='ArtReview/A4-Water-v1/water-sheet.aseprite'),review=dict(status='changes_requested' if (OUT/'review-decision.json').exists() else 'pending'),requiredPieces=list(pieces),pieces=pieces)])
     (OUT/'catalogue.json').write_text(json.dumps(catalogue,ensure_ascii=False,indent=2)+'\n')
     (OUT/'piece-index.json').write_text(json.dumps(dict(topologyBits=['N','E','S','W','NE','SE','SW','NW'],cells=tile_records),indent=2)+'\n')
     # Fully declared preview placements: each cell is an authored module, no transforms.
@@ -132,7 +132,7 @@ def generate():
         (OUT/f'{label}-preview.json').write_text(json.dumps(data,separators=(',',':'))+'\n')
         assemble(wet,images).save(OUT/f'{label}-assembled.png')
     checks=seam_check(images);assert checks['mismatches']==0,checks
-    (OUT/'checks.json').write_text(json.dumps(dict(nativeSize=[16,16],staticModules=47,rippleFrames=4,sourceReopenedExact=True,rippleAsepriteReopenedExact=True,rippleFrameDurationMs=180,seams=checks,userApproval='pending',productionApplied=False,D3PaletteApproval=False),indent=2)+'\n')
+    (OUT/'checks.json').write_text(json.dumps(dict(nativeSize=[16,16],staticModules=47,rippleFrames=4,sourceReopenedExact=True,rippleAsepriteReopenedExact=True,rippleFrameDurationMs=180,seams=checks,userApproval='see_review-decision.json' if (OUT/'review-decision.json').exists() else 'pending',productionApplied=False,D3PaletteApproval=False),indent=2)+'\n')
     print(json.dumps(checks))
 
 if __name__=='__main__':generate()

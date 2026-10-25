@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-25",
+  "userFeedback": "작은 연못은 조금 나아졌는데 밑에 호수는 처음 버전이 더 나은데?",
+  "pond": {
+    "status": "pending",
+    "note": "개선 평가만 받음. 최종 승인 아님. 작은 연못 경계 시안은 검토 대상으로 유지"
+  },
+  "lake": {
+    "status": "changes_requested",
+    "proposalAdopted": false,
+    "note": "새 호수 시안 미채택. 기존 물 조립 타일 경로와 표현 유지. 추가 재제작 없음"
+  },
+  "productionApplied": false
+}

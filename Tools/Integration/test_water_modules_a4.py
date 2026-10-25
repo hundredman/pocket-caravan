@@ -46,7 +46,7 @@ class WaterModuleChecks(unittest.TestCase):
             self.assertEqual(im.size,(16,16))
             self.assertEqual(sheet.crop((x,y,x+w,y+h)).tobytes(),im.tobytes())
             self.assertTrue(set(im.getchannel('A').get_flattened_data())<={0,255})
-        self.assertEqual(catalogue['assets'][0]['review']['status'],'pending')
+        self.assertEqual(catalogue['assets'][0]['review']['status'],'changes_requested')
 
     def test_preview_coordinates_use_the_declared_topology_without_transforms(self):
         for label,wet in fixtures().items():

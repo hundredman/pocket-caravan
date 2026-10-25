@@ -42,6 +42,17 @@ def boards():
     player=Image.open(ROOT/'Assets/PocketCaravan/Art/Characters/tanuki_tall_d0.png').convert('RGBA');board.paste(player.resize((64,96),Image.Resampling.NEAREST),(580,100),player.resize((64,96),Image.Resampling.NEAREST));d.text((568,204),'기존 플레이어 · 같은 4배',font=font(16),fill='#332d2a')
     for yy,text in enumerate(['가장자리 4방향','바깥/안쪽 모서리 각 4방향','단독·끝·좁은 연결 조각 포함','맵 생성 중 회전/색 변환 없음','색은 시안용 · D3 미확정']):d.text((570,265+yy*38),text,font=font(20),fill='#332d2a')
     board.save(OUT/'module-sheet-review.png')
+    if (OUT/'review-decision.json').exists():
+        board=Image.new('RGB',(1000,690),'#f5f0e6');d=ImageDraw.Draw(board)
+        d.text((16,10),'피드백 반영 · 작은 연못만 검토 / 호수는 기존 표현 유지',font=font(23),fill='#332d2a')
+        for row,(title,items) in enumerate([
+            ('작은 연못 · 최종 승인 대기',[(12,'pond-before','기존'),(508,'pond-after','경계 수정 시안 · 검토 유지')]),
+            ('큰 호수 · 새 시안 미채택',[(12,'lake-after','미채택 시안'),(508,'lake-before','기존 표현 유지')])]):
+            y=48+row*314;d.text((16,y),title,font=font(19),fill='#332d2a')
+            for x,slug,label in items:
+                d.text((x,y+24),label,font=font(15),fill='#685b51');board.paste(Image.open(OUT/f'native-{slug}.png').convert('RGB'),(x,y+46))
+        board.save(OUT/'feedback-comparison.png')
+
     if all((OUT/f'game-lake-ripple-{i}.png').exists() for i in range(4)):
         sequence=[Image.open(OUT/f'game-lake-ripple-{i}.png').convert('RGB').resize((480,270),Image.Resampling.NEAREST) for i in range(4)]
         sequence[0].save(OUT/'native-lake-ripples.gif',save_all=True,append_images=sequence[1:],duration=180,loop=0,disposal=2)
