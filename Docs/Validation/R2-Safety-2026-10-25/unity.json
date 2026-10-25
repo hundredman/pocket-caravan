@@ -1,0 +1,32 @@
+{
+    "unity": "6000.3.26f1",
+    "checks": 10,
+    "liveNoHaggle": {
+        "name": "real assets: Venice/ginseng/transit_ferry, Revered, no haggle",
+        "buyBefore": 144,
+        "sellBefore": 107,
+        "buyAfter": 216,
+        "sellAfter": 145,
+        "profit": 1,
+        "stockBefore": 3.0,
+        "stockAfter": 2.799999952316284,
+        "affordable": true,
+        "carryFits": true,
+        "sameQuoteSpreadHolds": true
+    },
+    "knownFutureHaggle": {
+        "name": "synthetic fixed stock: Revered plus buy-only max haggle",
+        "buyBefore": 81,
+        "sellBefore": 63,
+        "buyAfter": 122,
+        "sellAfter": 85,
+        "profit": 4,
+        "stockBefore": 3.0,
+        "stockAfter": 3.0,
+        "affordable": true,
+        "carryFits": true,
+        "sameQuoteSpreadHolds": true
+    },
+    "runtimeApplied": false,
+    "playerSaveWritten": false
+}

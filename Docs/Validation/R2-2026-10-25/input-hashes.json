@@ -46,7 +46,7 @@
     "Assets/PocketCaravan/Data/Transit/Town_Woodtown.asset": "3331560ddb76cb609a322c0107ac6ac1f6d7c92e82866db329751c75158daf39",
     "Assets/PocketCaravan/Resources/GameDatabase.asset": "6346f9b43bcbdd68f9bad37ee78d0228ef5a77f4ed9689cc2da5a56f8b27ad9b",
     "Assets/PocketCaravan/Scripts/Data/GameDatabase.cs": "6c15bf0b8b0b12ab8e945070fc370d26b4dfbd0f2d0b807e32f2577dc82d04d2",
-    "Assets/PocketCaravan/Scripts/Data/ItemData.cs": "4c9b974df5fcb5e442ee61dc62bf91bdd5a1202e445016cebc2d53d9dbc455fd",
+    "Assets/PocketCaravan/Scripts/Data/ItemData.cs": "b5c4f1c59ce71ecb8a47fe9172c15fa1906ab9ee96c8adf23c1ec847c762cfb0",
     "Assets/PocketCaravan/Scripts/Data/OriginData.cs": "843dd8906a052c18684b4d4bf7e13c0b488723392e441439af2f660e5eafec64",
     "Assets/PocketCaravan/Scripts/Data/RegionData.cs": "a822c02c55f1503e652de48c9af77eb4d0e38bcc65337c093585b97c1e2c49f2",
     "Assets/PocketCaravan/Scripts/Data/RoadTileSet.cs": "f97130c8179b45a31fe68f41a1322d20bc5b62795690f96b6db106484689b192",
@@ -55,7 +55,10 @@
     "Assets/PocketCaravan/Scripts/Economy/MarketMath.cs": "52469319ecd9a846d907d6b79e870f460a5e3db428566d3cab8f25ec17b7970d",
     "Assets/PocketCaravan/Scripts/Economy/MarketState.cs": "29ee6239266443c75e1e3d075ea379f03e078dfc64f2f390362c0f073ed31378",
     "Assets/PocketCaravan/Scripts/Economy/TownFacility.cs": "80b80c0ddb59f5a8fc58edd00538c6a8c7ccf8c0e391f55f1bfdf1dedeb81db2",
-    "Assets/PocketCaravan/Scripts/Economy/TownMarket.cs": "a494f7ee038e409e74f30d04e7ad579443dd11d16f13fa6bff548767c61d2767"
+    "Assets/PocketCaravan/Scripts/Economy/TownMarket.cs": "a494f7ee038e409e74f30d04e7ad579443dd11d16f13fa6bff548767c61d2767",
+    "Assets/PocketCaravan/Scripts/Map/TownDistance.cs": "85f647610ed440553a82638e5bb4c12a9793da3fabd09dea7171cd1fc104a28a",
+    "Assets/PocketCaravan/Resources/TownRoutes.json": "04573dd3e2cdb991fda0f254203253e1e96da19315c038db1a5e4f20212158e4"
   },
-  "engineHostAssetsMatch": true
+  "engineHostAssetsMatch": true,
+  "regionIdentityCorrection": "RegionData interned per region ID, matching shared Unity assets; candidate calculations rerun."
 }

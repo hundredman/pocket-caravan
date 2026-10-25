@@ -8,13 +8,13 @@ LABELS={'baseline':'현재 기준선','small':'작은 보정 후보','example':'
 def summarize():
     d=json.loads((OUT/'calculations.json').read_text());s=json.loads((OUT/'source-snapshot.json').read_text())
     goods={i['id']:i for i in s['items'] if not i['questItem']};towns={t['id']:t for t in s['towns']}
-    rows=['# R2 가격·흥정 수치 계산 — Claude D10 검토용','','미확정 후보 비교다. 어떤 후보도 채택하거나 본편에 적용하지 않았다. 평판 점수·단계 경계·품목 잠금·시설·회복 수치도 정하지 않았다.','',
-          '## 계산 근거','',f'- Unity {s["unity"]} 실제 GameDatabase: 일반 상품{len(goods)}종/퀘스트 화물{len(s["items"])-len(goods)}종(제외), 마을{len(towns)}곳, 출신{len(s["origins"])}종.',
+    rows=['# R2 가격·흥정 수치 계산 — Claude D10 검토용','','초기 후보 비교를 지역 참조 오류 수정 후 다시 계산한 자료다. 본편에 적용하지 않았다. D10 승인 수치와 안전 규칙의 후속 검사는 [R2 안전 검산](../R2-Safety-2026-10-25/README.md)을 본다.','',
+          '## 계산 근거','','- 이전 도구는 마을마다 RegionData 객체를 따로 만들어 같은 문명 물건에도 베네치아의 외국 물건 보정이 적용됐다. 지역 ID별 객체 공유로 고치고 아래 집계 전체를 재실행했다. 단가 oracle만으로 이 오류를 잡을 수 없었으며 후속 검사에는 문명 동일/외국 판정을 추가했다.',f'- Unity {s["unity"]} 실제 GameDatabase: 일반 상품{len(goods)}종/퀘스트 화물{len(s["items"])-len(goods)}종(제외), 마을{len(towns)}곳, 출신{len(s["origins"])}종.',
           f'- Unity 실제 가격 공식 {d["oracleCases"]:,}건과 .NET에서 연결한 본편 MarketMath의 결과가 전부 일치했다. MarketState/ItemData/TownData/OriginData/GameDatabase도 본편 C#을 그대로 연결했다. Unity 플랫폼 속성·이벤트/플레이어는 검사 전용 대체이며 게임을 실행한 것이 아니다.',
           f'- 후보 조합 {d["cycleCases"]:,}개(같은 기준선 결과 재사용 포함), 그룹{len(d["groups"])}개, 정상 재고/일반일의 단계별 단가{len(d["quotes"]):,}행. 별도 할인 민감도9구간도 계산했다.',
           '- 재고=적정의0.25/0.5/1/2/4배, 마을1/최대3등급, 보통날/장날1.15배, 출신4종, 수량1/5/20/100개, 매입→판매/판매→매입을 비교했다. 거래 성장 켬/끔을 분리했고 성장 켬은 거래액0에서 시작했다.',
           '- 매 단위 거래마다 본편 가격/재고/거래 성장 재계산. 후보 적용 순서는 본편 단가 → 평판 비율/반올림/최소1 → 흥정 비율/반올림/최소1이다. 흥정 성공률은 정하지 않고 최대 폭의 성공 상황만 시험했다. 순서/반올림도 채택 전 검토 항목이다.',
-          '- 출신 보정: 베네치아의 타 문명 물건 판매 재고0.8배, 아라비아의 거리3 이상 판매+5%를 본편 공식 그대로 포함했다. 현재 경제 좌표의 맨해튼 거리를 유지했으므로 E1 변경 후 재계산이 필요하다.','',
+          '- 출신 보정: 베네치아의 타 문명 물건 판매 재고0.8배, 아라비아의 거리3 이상 판매+5%를 본편 공식 그대로 포함했다. E1 통합 서비스의 current 설정이므로 현재 경제 좌표의 맨해튼 거리를 유지한다. layoutD 전환은 B5다.','',
           '## 후보 수치 (채택 안 됨)','','매입은 플레이어가 사는 값이다. 음수는 할인/양수는 할증. 판매 가산은 플레이어가 파는 값에 적용한다. 흥정은 없음/매입만/매입·판매 양쪽을 별도 비교했다.','',
           '| 후보 | 단계 | 매입 보정 | 판매 가산 | 흥정 최대 폭 |','|---|---|---:|---:|---:|']
     for p in d['policies']:
@@ -49,7 +49,7 @@ def summarize():
            '4. 평판 기여 점수/반복 매매 제한/단계 필요점수·기부/속죄 수치. R6 기여 점수0과 기존 저장을 유지했다. 가격 후보 비교로 이 수치를 추정/확정하지 않는다.',
            '5. 상인 성격/거래량/성공확률·실패/재시도 제한의 실제 체감. 이 자료는 가격 상한의 비교이며 실제 이동/플레이 또는 흥정 시스템 구현이 아니다.','',
            '## 재실행과 범위','','```sh','dotnet run --project Tools/Balance/R2Probe -- Docs/Validation/R2-2026-10-25/source-snapshot.json Docs/Validation/R2-2026-10-25/calculations.json','python Tools/Balance/report_r2.py','```','',
-           'snapshot은 Tools/Balance/export_r2_snapshot.cs.txt를 읽기 전용 Unity Edit mode에서 실행해 내보냈다. 실제 에셋이 달라지면 먼저 snapshot을 다시 만든다. input-hashes.json은 이번 입력/생산 코드 해시다. `.NET`은 검사 프로그램 실행이며 Unity 게임 빌드가 아니다. 본편/ID/저장·Claude 담당 설계 문서는 수정하지 않았다. R2 수치 계산 단계만 완료, R2 런타임 구현/D10 결정은 대기다.']
+           'snapshot은 Tools/Balance/export_r2_snapshot.cs.txt를 읽기 전용 Unity Edit mode에서 실행해 내보냈다. 실제 에셋이 달라지면 먼저 snapshot을 다시 만든다. input-hashes.json은 이번 입력/생산 코드 해시다. `.NET`은 검사 프로그램 실행이며 Unity 게임 빌드가 아니다. 본편/ID/저장·Claude 담당 설계 문서는 수정하지 않았다. R2 수치 계산 단계만 완료, R2 런타임 구현은 대기다. D10 3절 수치는 수신했고 안전 검산 결과에 따른 보완 판단은 후속 자료에 있다.']
     (OUT/'README.md').write_text('\n'.join(rows)+'\n')
 
 if __name__=='__main__':summarize()
