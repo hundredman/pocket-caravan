@@ -1,0 +1,905 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "trial16": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#7fb9af",
+        "#78a099",
+        "#84675e",
+        "#97c1b4"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "trial_pond_lake_water",
+      "kind": "modular",
+      "moduleType": "water",
+      "purpose": "pond_lake",
+      "profile": "trial16",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/A4-Water-v1/water-sheet.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "requiredPieces": [
+        "water_00",
+        "water_01",
+        "water_02",
+        "water_03",
+        "water_04",
+        "water_05",
+        "water_06",
+        "water_07",
+        "water_08",
+        "water_09",
+        "water_0a",
+        "water_0b",
+        "water_0c",
+        "water_0d",
+        "water_0e",
+        "water_0f",
+        "outer_corner_sw",
+        "water_17",
+        "water_1b",
+        "water_1f",
+        "outer_corner",
+        "water_27",
+        "water_2e",
+        "water_2f",
+        "edge_w",
+        "water_3f",
+        "outer_corner_ne",
+        "water_4d",
+        "water_4e",
+        "water_4f",
+        "water_5f",
+        "edge",
+        "water_6f",
+        "inner_corner",
+        "outer_corner_se",
+        "water_8b",
+        "water_8d",
+        "water_8f",
+        "edge_s",
+        "water_9f",
+        "water_af",
+        "inner_corner_sw",
+        "edge_e",
+        "water_cf",
+        "inner_corner_se",
+        "inner_corner_ne",
+        "center",
+        "ripple_0",
+        "ripple_1",
+        "ripple_2",
+        "ripple_3"
+      ],
+      "pieces": {
+        "water_00": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_00.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_00",
+              "image": "ArtReview/A4-Water-v1/pieces/water_00.png"
+            }
+          ]
+        },
+        "water_01": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_01.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_01",
+              "image": "ArtReview/A4-Water-v1/pieces/water_01.png"
+            }
+          ]
+        },
+        "water_02": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_02.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_02",
+              "image": "ArtReview/A4-Water-v1/pieces/water_02.png"
+            }
+          ]
+        },
+        "water_03": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_03.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_03",
+              "image": "ArtReview/A4-Water-v1/pieces/water_03.png"
+            }
+          ]
+        },
+        "water_04": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_04.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_04",
+              "image": "ArtReview/A4-Water-v1/pieces/water_04.png"
+            }
+          ]
+        },
+        "water_05": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_05.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_05",
+              "image": "ArtReview/A4-Water-v1/pieces/water_05.png"
+            }
+          ]
+        },
+        "water_06": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_06.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_06",
+              "image": "ArtReview/A4-Water-v1/pieces/water_06.png"
+            }
+          ]
+        },
+        "water_07": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_07.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_07",
+              "image": "ArtReview/A4-Water-v1/pieces/water_07.png"
+            }
+          ]
+        },
+        "water_08": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_08.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_08",
+              "image": "ArtReview/A4-Water-v1/pieces/water_08.png"
+            }
+          ]
+        },
+        "water_09": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_09.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_09",
+              "image": "ArtReview/A4-Water-v1/pieces/water_09.png"
+            }
+          ]
+        },
+        "water_0a": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_0a.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_0a",
+              "image": "ArtReview/A4-Water-v1/pieces/water_0a.png"
+            }
+          ]
+        },
+        "water_0b": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_0b.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_0b",
+              "image": "ArtReview/A4-Water-v1/pieces/water_0b.png"
+            }
+          ]
+        },
+        "water_0c": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_0c.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_0c",
+              "image": "ArtReview/A4-Water-v1/pieces/water_0c.png"
+            }
+          ]
+        },
+        "water_0d": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_0d.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_0d",
+              "image": "ArtReview/A4-Water-v1/pieces/water_0d.png"
+            }
+          ]
+        },
+        "water_0e": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_0e.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_0e",
+              "image": "ArtReview/A4-Water-v1/pieces/water_0e.png"
+            }
+          ]
+        },
+        "water_0f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_0f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_0f",
+              "image": "ArtReview/A4-Water-v1/pieces/water_0f.png"
+            }
+          ]
+        },
+        "outer_corner_sw": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/outer_corner_sw.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_outer_corner_sw",
+              "image": "ArtReview/A4-Water-v1/pieces/outer_corner_sw.png"
+            }
+          ]
+        },
+        "water_17": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_17.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_17",
+              "image": "ArtReview/A4-Water-v1/pieces/water_17.png"
+            }
+          ]
+        },
+        "water_1b": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_1b.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_1b",
+              "image": "ArtReview/A4-Water-v1/pieces/water_1b.png"
+            }
+          ]
+        },
+        "water_1f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_1f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_1f",
+              "image": "ArtReview/A4-Water-v1/pieces/water_1f.png"
+            }
+          ]
+        },
+        "outer_corner": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/outer_corner.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_outer_corner",
+              "image": "ArtReview/A4-Water-v1/pieces/outer_corner.png"
+            }
+          ]
+        },
+        "water_27": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_27.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_27",
+              "image": "ArtReview/A4-Water-v1/pieces/water_27.png"
+            }
+          ]
+        },
+        "water_2e": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_2e.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_2e",
+              "image": "ArtReview/A4-Water-v1/pieces/water_2e.png"
+            }
+          ]
+        },
+        "water_2f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_2f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_2f",
+              "image": "ArtReview/A4-Water-v1/pieces/water_2f.png"
+            }
+          ]
+        },
+        "edge_w": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/edge_w.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_edge_w",
+              "image": "ArtReview/A4-Water-v1/pieces/edge_w.png"
+            }
+          ]
+        },
+        "water_3f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_3f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_3f",
+              "image": "ArtReview/A4-Water-v1/pieces/water_3f.png"
+            }
+          ]
+        },
+        "outer_corner_ne": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/outer_corner_ne.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_outer_corner_ne",
+              "image": "ArtReview/A4-Water-v1/pieces/outer_corner_ne.png"
+            }
+          ]
+        },
+        "water_4d": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_4d.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_4d",
+              "image": "ArtReview/A4-Water-v1/pieces/water_4d.png"
+            }
+          ]
+        },
+        "water_4e": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_4e.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_4e",
+              "image": "ArtReview/A4-Water-v1/pieces/water_4e.png"
+            }
+          ]
+        },
+        "water_4f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_4f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_4f",
+              "image": "ArtReview/A4-Water-v1/pieces/water_4f.png"
+            }
+          ]
+        },
+        "water_5f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_5f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_5f",
+              "image": "ArtReview/A4-Water-v1/pieces/water_5f.png"
+            }
+          ]
+        },
+        "edge": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/edge.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_edge",
+              "image": "ArtReview/A4-Water-v1/pieces/edge.png"
+            }
+          ]
+        },
+        "water_6f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_6f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_6f",
+              "image": "ArtReview/A4-Water-v1/pieces/water_6f.png"
+            }
+          ]
+        },
+        "inner_corner": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/inner_corner.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_inner_corner",
+              "image": "ArtReview/A4-Water-v1/pieces/inner_corner.png"
+            }
+          ]
+        },
+        "outer_corner_se": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/outer_corner_se.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_outer_corner_se",
+              "image": "ArtReview/A4-Water-v1/pieces/outer_corner_se.png"
+            }
+          ]
+        },
+        "water_8b": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_8b.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_8b",
+              "image": "ArtReview/A4-Water-v1/pieces/water_8b.png"
+            }
+          ]
+        },
+        "water_8d": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_8d.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_8d",
+              "image": "ArtReview/A4-Water-v1/pieces/water_8d.png"
+            }
+          ]
+        },
+        "water_8f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_8f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_8f",
+              "image": "ArtReview/A4-Water-v1/pieces/water_8f.png"
+            }
+          ]
+        },
+        "edge_s": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/edge_s.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_edge_s",
+              "image": "ArtReview/A4-Water-v1/pieces/edge_s.png"
+            }
+          ]
+        },
+        "water_9f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_9f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_9f",
+              "image": "ArtReview/A4-Water-v1/pieces/water_9f.png"
+            }
+          ]
+        },
+        "water_af": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_af.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_af",
+              "image": "ArtReview/A4-Water-v1/pieces/water_af.png"
+            }
+          ]
+        },
+        "inner_corner_sw": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/inner_corner_sw.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_inner_corner_sw",
+              "image": "ArtReview/A4-Water-v1/pieces/inner_corner_sw.png"
+            }
+          ]
+        },
+        "edge_e": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/edge_e.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_edge_e",
+              "image": "ArtReview/A4-Water-v1/pieces/edge_e.png"
+            }
+          ]
+        },
+        "water_cf": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/water_cf.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_water_cf",
+              "image": "ArtReview/A4-Water-v1/pieces/water_cf.png"
+            }
+          ]
+        },
+        "inner_corner_se": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/inner_corner_se.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_inner_corner_se",
+              "image": "ArtReview/A4-Water-v1/pieces/inner_corner_se.png"
+            }
+          ]
+        },
+        "inner_corner_ne": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/inner_corner_ne.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_inner_corner_ne",
+              "image": "ArtReview/A4-Water-v1/pieces/inner_corner_ne.png"
+            }
+          ]
+        },
+        "center": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/center.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "a4_center",
+              "image": "ArtReview/A4-Water-v1/pieces/center.png"
+            }
+          ]
+        },
+        "ripple_0": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/ripple_0.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "high",
+              "tile": "a4_ripple_0",
+              "image": "ArtReview/A4-Water-v1/pieces/ripple_0.png"
+            }
+          ]
+        },
+        "ripple_1": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/ripple_1.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "high",
+              "tile": "a4_ripple_1",
+              "image": "ArtReview/A4-Water-v1/pieces/ripple_1.png"
+            }
+          ]
+        },
+        "ripple_2": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/ripple_2.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "high",
+              "tile": "a4_ripple_2",
+              "image": "ArtReview/A4-Water-v1/pieces/ripple_2.png"
+            }
+          ]
+        },
+        "ripple_3": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/A4-Water-v1/pieces/ripple_3.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "high",
+              "tile": "a4_ripple_3",
+              "image": "ArtReview/A4-Water-v1/pieces/ripple_3.png"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

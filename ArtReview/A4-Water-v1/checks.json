@@ -1,0 +1,19 @@
+{
+  "nativeSize": [
+    16,
+    16
+  ],
+  "staticModules": 47,
+  "rippleFrames": 4,
+  "sourceReopenedExact": true,
+  "rippleAsepriteReopenedExact": true,
+  "rippleFrameDurationMs": 180,
+  "seams": {
+    "pixelPairs": 32768,
+    "mismatches": 0,
+    "first": []
+  },
+  "userApproval": "pending",
+  "productionApplied": false,
+  "D3PaletteApproval": false
+}
