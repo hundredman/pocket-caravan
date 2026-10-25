@@ -101,6 +101,10 @@ def make_report(root=ROOT):
     inputs = []
 
     def read(relative):
+        # Historical feasibility report uses frozen pre-E1 formulas after the service refactor.
+        if relative in ('Assets/PocketCaravan/Scripts/Contracts/ContractManager.cs',
+                        'Assets/PocketCaravan/Scripts/Data/ItemData.cs'):
+            relative = 'Docs/Validation/E1-2026-10-25/legacy-source/' + Path(relative).name
         path = root / relative
         inputs.append(relative)
         return path.read_text(encoding='utf-8')

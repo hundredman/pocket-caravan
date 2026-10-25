@@ -100,8 +100,7 @@ namespace PocketCaravan
 
         public static int Distance(TownData a, TownData b)
         {
-            var d = a.worldCoord - b.worldCoord;
-            return Mathf.Abs(d.x) + Mathf.Abs(d.y);
+            return TownDistance.Between(a.id, b.id, a.worldCoord, b.worldCoord);
         }
 
         Contract Generate(TownData from, bool basic = false)
