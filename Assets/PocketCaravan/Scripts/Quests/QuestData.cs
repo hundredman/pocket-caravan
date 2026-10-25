@@ -45,6 +45,10 @@ namespace PocketCaravan
         [Header("받기")]
         [Tooltip("퀘스트를 주는 NPC id")] public string giverNpc;
         public List<QuestData> requires = new List<QuestData>();
+        [Tooltip("비어 있지 않으면 이 중 하나도 완료해야 수락 가능. requires는 여전히 모두 필요")]
+        public List<QuestData> requiresAny = new List<QuestData>();
+        [Tooltip("동일 그룹의 다른 의뢰를 진행/완료했다면 신규 수락 제외. 이미 수락한 구 저장은 보존")]
+        public string choiceGroup;
         [Tooltip("퀘스트 제안 대사. 짧은 문장 1~2개씩 작성. 제목도 표시 공간을 쓰며, 긴 본문은 자동 분할하고 마지막 페이지에서 수락/거절")]
         [TextArea(3, 6)] public string offerLine;
         [Tooltip("수락할 때 받는 짐 (의뢰 물건)")] public ItemData giveItem;
@@ -59,6 +63,9 @@ namespace PocketCaravan
         [Header("보상")]
         public int rewardMoney;
         public int rewardCredit;
+        [Tooltip("보상 기록 필드가 없던 구 저장의 활성 의뢰에만 아래 이전 약속 적용")]
+        public bool hasLegacyReward;
+        public int legacyRewardMoney, legacyRewardCredit;
         [Tooltip("완료 대사. 일반 텍스트로 작성하며 긴 내용은 대화창 크기에 맞춰 자동 분할")]
         [TextArea] public string finishNote;
     }

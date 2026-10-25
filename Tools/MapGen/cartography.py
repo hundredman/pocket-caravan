@@ -3,10 +3,13 @@ import json
 import random
 from pathlib import Path
 from PIL import Image, ImageDraw
+
 from tiles import STAMPS
 
 
 def layout(maps):
+    if all(hasattr(m,'world_origin') for m in maps):
+        return {m.id:m.world_origin for m in maps}
     by_id = {m.id: m for m in maps}
     positions = {maps[0].id: (0, 0)}
     queue = [maps[0].id]
@@ -41,6 +44,7 @@ def layout(maps):
 def export(maps, root, stem="Goryeo"):
     positions = layout(maps)
     pad, scale = 12, 4
+    context = None  # Only exported, playable terrain is mapped.
     minx = min(p[0] for p in positions.values()) - pad
     miny = min(p[1] for p in positions.values()) - pad
     width = max(positions[m.id][0] + m.w for m in maps) - minx + pad
@@ -57,6 +61,7 @@ def export(maps, root, stem="Goryeo"):
             pixels[x, y] = (224 + noise - shade, 210 + noise - shade, 167 + noise - shade)
     d = ImageDraw.Draw(im)
     entries = []
+    water_mask = Image.new("L",im.size,0);water_draw=ImageDraw.Draw(water_mask)
     for m in maps:
         mx, my = positions[m.id]
         mx, my = mx - minx, my - miny
@@ -67,13 +72,16 @@ def export(maps, root, stem="Goryeo"):
             for x in range(m.w):
                 px, py = point(x, y)
                 rect = (px, py, px + scale - 1, py + scale - 1)
+                wx=getattr(m,"world_origin",(0,0))[0]+x;dry=max(0,min(1,(-wx-120)/100))
+                base=tuple(round(a+(b-a)*dry) for a,b in zip((202,208,163),(211,198,155)))
+                d.rectangle(rect,fill=base)
                 if m.water[y][x]:
-                    d.rectangle(rect, fill="#82a8ab")
+                    d.rectangle(rect, fill="#82a8ab");water_draw.rectangle(rect,fill=255)
                 elif (x, y) in m.decks:
                     d.rectangle(rect, fill="#8a6547")
                 elif m.road[y][x]:
                     d.rectangle(rect, fill="#ba9461" if m.road[y][x] < 3 else "#aa7e4d")
-                elif m.high[y][x] and m.high[y][x].startswith("nature:"):
+                elif m.high[y][x] and m.high[y][x].startswith("nature:") and (not context or 3<x<m.w-4 and 3<y<m.h-4):
                     d.rectangle(rect, fill="#a7b184")
                 elif m.obj[y][x] and m.obj[y][x].startswith("house:10:"):
                     d.rectangle(rect, fill="#766c56")
@@ -81,6 +89,7 @@ def export(maps, root, stem="Goryeo"):
             _, _, _, w, h, *_ = STAMPS[name]
             px, py = point(x + w / 2, y + h / 2)
             if name in ("pine", "tree", "cherry", "bigtree", "roundtree", "pinebig", "roundbig", "fruitbig", "blossom", "greenbig"):
+                if context and (x<=2 or y<=2 or x+w>=m.w-2 or y+h>=m.h-2):continue
                 for offset in ((-3, 1), (3, -1)) if w >= 3 else ((0, 0),):
                     tx, ty = px + offset[0], py + offset[1]
                     d.line((tx, ty, tx, ty + 4), fill="#776f4e")
@@ -89,21 +98,24 @@ def export(maps, root, stem="Goryeo"):
                 size = 5 if name != "hall" else 7
                 d.rectangle((px - size, py - 2, px + size, py + 4), fill="#c5b084", outline="#887052")
                 d.polygon(((px - size - 1, py - 2), (px, py - 6), (px + size + 1, py - 2)), fill="#687776")
+            elif name == "module_rock":
+                d.polygon(((px-3,py+2),(px-2,py-2),(px+2,py-3),(px+4,py+2)),fill="#8c907d",outline="#777d70")
             elif name == "wheat":
                 for off in (-3, 0, 3):
                     d.line((px + off, py - 4, px + off, py + 3), fill="#b7a065")
             elif name == "boat":
                 d.ellipse((px - 7, py - 3, px + 7, py + 3), fill="#9b7554", outline="#695842")
         market = next((o for o in m.objects if o["kind"] == "market"), None)
-        label = market or {"x": 22, "y": 19}
+        label = market or getattr(m, "atlas_label", {"x": 22, "y": 19})
         entries.append(dict(mapId=m.id, x=mx, y=my, w=m.w, h=m.h,
                             labelX=mx + label["x"] + .5, labelY=my + label["y"] + .5))
-    # 흰 네모 구역 대신 여백에 등고선 모양의 산지 기호를 둔다.
-    for x, y in ((30, 20), (43, 16), (48, 24), (19, 33), (115, 72), (126, 78), (137, 67)):
-        px, py = x * scale, y * scale
-        d.line(((px - 8, py + 5), (px, py - 9), (px + 8, py + 5)), fill="#aaa078", width=1)
-        d.line(((px - 2, py - 5), (px + 1, py), (px + 3, py - 2)), fill="#b9ac83")
     dest = Path(root) / "Assets/PocketCaravan/Resources/WorldMap"
     dest.mkdir(parents=True, exist_ok=True)
     im.save(dest / f"{stem}Terrain.png")
-    (dest / f"{stem}Layout.json").write_text(json.dumps(dict(width=width, height=height, maps=entries), ensure_ascii=False, indent=2))
+    water_mask.save(dest / f"{stem}WaterMask.png")
+    data=dict(width=width,height=height,maps=entries,pixelsPerTile=scale,waterMask=f"{stem}WaterMask.png")
+    if all(hasattr(m,'world_origin') for m in maps):
+        data['geography']='continuous_tiles'
+        data['terrainSource']='World/Terrain/continuous.json'
+        data['annotations']=[]
+    (dest / f"{stem}Layout.json").write_text(json.dumps(data, ensure_ascii=False, indent=2))

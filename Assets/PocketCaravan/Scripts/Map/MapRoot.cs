@@ -15,7 +15,8 @@ namespace PocketCaravan
         [Tooltip("맵 고유 이름. 발길 저장 키로 쓰므로 바꾸지 말 것")] public string mapId;
         public string displayName;
         public RegionData region;
-        [Tooltip("월드 지도에서의 좌표 (맵 단위)")] public Vector2Int worldCoord;
+        [Tooltip("가격·의뢰 계산용 논리 좌표 (실제 지형 위치와 별개)")] public Vector2Int worldCoord;
+        [Tooltip("공통 지형 원본의 타일 좌표. 가격 계산용 worldCoord와 별개")] public Vector2Int terrainOrigin;
         [Tooltip("이 맵(길)에 들어서면 흐르는 게임 시간. 짧게 걸어도 하루 여정처럼 느껴지게")] public int travelHours;
 
         [Tooltip("제작 시험장: 빌드 0번 씬에서도 기존 저장 적용/자동 저장을 끈다")] public bool previewOnly;

@@ -34,6 +34,22 @@
       "worldX": 8,
       "worldY": 0,
       "generator": "frontier:ferry"
+    },
+    {
+      "mapId": "transit_central_approach",
+      "jsonPath": "Assets/PocketCaravan/Maps/transit_central_approach.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_central_approach.unity",
+      "worldX": 9,
+      "worldY": 0,
+      "generator": "frontier:central_approach"
+    },
+    {
+      "mapId": "transit_crossroads",
+      "jsonPath": "Assets/PocketCaravan/Maps/transit_crossroads.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_crossroads.unity",
+      "worldX": 9,
+      "worldY": 1,
+      "generator": "frontier:central_crossroads"
     }
   ],
   "npcs": [],

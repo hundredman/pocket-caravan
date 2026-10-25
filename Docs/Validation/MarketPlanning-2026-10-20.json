@@ -1,0 +1,212 @@
+{
+  "date": "2026-10-20",
+  "sourceCommit": "1064d7397d5f486ff1da0d90f468a64df96fe054",
+  "unity": "6000.3.26f1",
+  "scope": "Local market quantity quote/trade and vehicle budget UI. No shared server transaction or team-region integration.",
+  "checks": {
+    "data-checks": {
+      "passed": [
+        "five-unit local quote computed",
+        "preview leaves live stock/volume/level untouched",
+        "preview crossing growth threshold emits no event",
+        "preview leaves wallet/cargo untouched",
+        "zero capital produces no purchase",
+        "contract load reserves real capacity",
+        "sell quote caps at owned cargo",
+        "sale preview preserves actual total cost basis",
+        "quote invalidates changed wallet",
+        "quote invalidates changed average cost",
+        "sell quote prevents wallet overflow",
+        "large legacy cargo sale stays bounded",
+        "nonpositive request rejected",
+        "quest cargo cannot be quoted as merchandise",
+        "invalid item cannot be quoted"
+      ]
+    },
+    "play-checks": {
+      "passed": [
+        "batch quote does not advance active quest",
+        "actual five-unit purchase fills quoted count",
+        "actual total charges stepped prices exactly",
+        "per-unit purchase events and tutorial preserved",
+        "actual sale fills quoted count and revenue",
+        "same sold-cargo quote cannot pay twice",
+        "stale price quote rejected before any transaction",
+        "changed funds reject stale displayed remainder",
+        "batch cannot displace delivery cargo",
+        "growth preview has no live side effects",
+        "actual growth still matches preview total",
+        "batch sale money and cost-basis profit agree",
+        "max wallet cannot overflow via batch sale",
+        "mid-batch price change stops before extra charge",
+        "quest reward during batch remains separate from sale total",
+        "unlisted vehicle cannot be purchased"
+      ]
+    },
+    "balance-checks": {
+      "scope": "Normal initial stock; sequential prices; selected outward/return goods; stop nonpositive marginal trades using known destination prices (informed counterfactual). No NPC, recovery, market day, origin bonus, human/online play. Delivery=one matched ordinary weight4 offer each leg; neutral roll and fast bonus15%, not a guarantee of board availability.",
+      "passed": [
+        "both introduction alternatives initially available",
+        "return trade is locked before either freight completion",
+        "new freight acceptance captures current equal reward",
+        "new accepted reward stays twenty after reload",
+        "legacy freight promise migrates to sixty",
+        "old freight actually pays its original promise",
+        "accepting one freight hides duplicate new offer",
+        "alternative choice survives quest JSON reload",
+        "previously accepted alternatives both preserved",
+        "old freight finish unlocks same return trade",
+        "supply consumes freight and unlocks return trade",
+        "finished freight blocks duplicate introduction",
+        "return purchase only counts at Dakmok",
+        "return trade advances after two real purchases",
+        "actual return sales finish quest and yield net profit",
+        "return trade reward is one-time",
+        "real board allows recovery without capital",
+        "accepted delivery reserves actual capacity",
+        "recovery pays usable currency and frees capacity",
+        "real recovery payout cannot be duplicated"
+      ],
+      "rows": []
+    },
+    "legacy-play-regression": {
+      "passed": 16,
+      "checks": [
+        "isolated non-start play session",
+        "wrong-town paper purchase does not advance tutorial",
+        "Dakmok purchases advance tutorial",
+        "introductory trade can complete",
+        "cart quest no longer requires repeated errands",
+        "actual cart purchase charges once and upgrades capacity",
+        "early cart ownership satisfies purchase goal",
+        "early cart quest completion",
+        "actual Songak trade completes with positive net money",
+        "completed optional trade cannot pay twice",
+        "actual Jangdan grain trade completes with positive net money",
+        "post-cart objective is available",
+        "backpack cannot buy four heavy bundles",
+        "cart permits same shipment in one load",
+        "actual supply delivery consumes goods and pays once",
+        "repeated delivery request cannot duplicate money"
+      ]
+    },
+    "local-state": {
+      "passed": [
+        "2D 씬 활성 오디오 청취점 하나",
+        "게시판 일반 의뢰 보장",
+        "신용 음수·빈 지갑도 일반 배달 수락",
+        "다른 게시판의 의뢰 수락 거절",
+        "게시되지 않은 의뢰 수락 거절",
+        "정상 의뢰 수락",
+        "같은 의뢰 재수락 거절",
+        "잘못된 도착지 납품 거절",
+        "낙하 상태 납품 거절",
+        "실제 배달로 잔고와 신용 회복",
+        "납품 재호출 지급·신용·이벤트 중복 없음",
+        "다음 의뢰 수락",
+        "분실 재호출 배상·신용 중복 없음",
+        "만료 후 납품 보상 없음",
+        "낮은 신용의 고급 의뢰 제한 유지",
+        "일반 의뢰도 적재 한도 검사",
+        "이전 저장의 고급 의뢰만 있는 게시판 복구",
+        "마을 하나만 있는 지역 데이터 부팅",
+        "마을 없는 지역 데이터 부팅",
+        "같은 낙하물 재호출 중복 지급 없음",
+        "회수 화물의 매입 원가 보존",
+        "적재 초과 회수 시 낙하물 보존",
+        "적재 여유 후 같은 짐 회수 가능",
+        "끝난 의뢰의 남은 낙하물 정리",
+        "이전 흔들림 폐기·체력·잔고 복원",
+        "불러오기 중 일반 의뢰 보충 ID 충돌 없음",
+        "이전 저장의 누락 흔들림은 0",
+        "다른 마을 의뢰로 지정 게시판 퀘스트 진행 안 됨",
+        "실패한 의뢰로 배달 성공 퀘스트 진행 안 됨",
+        "지정 마을의 실제 성공으로 퀘스트 완료"
+      ]
+    }
+  },
+  "otherRegression": {
+    "goryeoExperienceData": {
+      "passed": 57
+    },
+    "pythonIntegration": {
+      "passed": 26
+    }
+  },
+  "visualQA": {
+    "resolution": [
+      1920,
+      1080
+    ],
+    "reviewed": [
+      "quantity purchase and sale actions",
+      "post-sale receipt and visit total",
+      "vehicle zero cash remainder warning"
+    ],
+    "screenshots": [
+      {
+        "localPath": "output/market-preview/market-final.png",
+        "sha256": "5d668c54f29d20f722a02382d9c6a4f03786ea18d13c06c82dbf9e1e0011626d"
+      },
+      {
+        "localPath": "output/market-preview/vehicle-final.png",
+        "sha256": "0b045757aea0c9156a58662bbc2c1a0643ebc965fabeeaadbca4e61168773b49"
+      },
+      {
+        "localPath": "output/market-preview/sale-final.png",
+        "sha256": "857891999ce13bf54295826e02bc00d60c7553d8a7b0970b74aa59f35a33455c"
+      }
+    ]
+  },
+  "builds": {
+    "Windows": {
+      "result": "Succeeded",
+      "output": "Builds/Windows/PocketCaravan.exe",
+      "builtAtUtc": "2026-10-20T13:50:10.8021630Z",
+      "errors": 0,
+      "warnings": 18,
+      "bytes": 134920993,
+      "seconds": 19.385344999999997
+    },
+    "macOS": {
+      "result": "Succeeded",
+      "output": "Builds/macOS/PocketCaravan.app",
+      "builtAtUtc": "2026-10-20T13:51:19.4065090Z",
+      "errors": 0,
+      "warnings": 18,
+      "bytes": 152665199,
+      "seconds": 22.06719
+    }
+  },
+  "nativeSmoke": {
+    "engineInitialized": true,
+    "runtimeExceptions": [],
+    "processExitCode": 0,
+    "mode": "macOS headless startup only; no human gameplay or Windows execution validation",
+    "previewSaveRestored": true
+  },
+  "packages": [
+    {
+      "file": "PocketCaravan-Windows-x64-Market-2026-10-20.zip",
+      "bytes": 48143665,
+      "sha256": "3c72892b1a8b26af8eb579813a970fe13a84eafa25a742a2e40ebe0a99061119",
+      "sourceCommit": "1064d7397d5f486ff1da0d90f468a64df96fe054",
+      "published": false
+    },
+    {
+      "file": "PocketCaravan-macOS-Universal-Market-2026-10-20.zip",
+      "bytes": 56627608,
+      "sha256": "03a0d82ec47f1e4ce62e9705f6584df84f4efd5e10c709921838623a03b53105",
+      "sourceCommit": "1064d7397d5f486ff1da0d90f468a64df96fe054",
+      "published": false
+    }
+  ],
+  "settingsRestored": true,
+  "limits": [
+    "All aspect ratios not tested",
+    "Windows gameplay not run",
+    "Mac unsigned/unnotarized",
+    "18 warnings on each platform not all classified harmless",
+    "Human fun/timing, shared market and MMO capacity not validated"
+  ]
+}

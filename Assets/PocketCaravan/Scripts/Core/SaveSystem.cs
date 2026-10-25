@@ -12,6 +12,7 @@ namespace PocketCaravan
         public int version = 2;
         public string scene;
         public float px, py;
+        public int mapHeight; // 0: 맵 확장 전 저장. WorldIndex의 고정된 이전 높이를 사용한다.
         public int fx, fy;
 
         public int money, credit;
@@ -52,6 +53,16 @@ namespace PocketCaravan
 
         public static bool Exists => File.Exists(Path);
 
+        /// <summary>위쪽 기준 타일은 유지하고, 맵 높이 확장으로 바뀐 Unity y만 보정한다.</summary>
+        public static Vector3 PositionFor(SaveData data)
+        {
+            var info = WorldIndex.Get()?.Map(data.scene);
+            int current = info != null ? info.height : 0;
+            int saved = data.mapHeight > 0 ? data.mapHeight : (info != null ? info.legacyHeight : 0);
+            float delta = current > 0 && saved > 0 ? current - saved : 0;
+            return new Vector3(data.px, data.py + delta, 0f);
+        }
+
         public static bool LoadBlocked { get; private set; }
 
         public static bool Write(SaveData d)
@@ -86,8 +97,19 @@ namespace PocketCaravan
             for (int i = 0; i < d.cargoCounts.Count; i++)
                 if (d.cargoCounts[i] <= 0 || d.cargoCosts[i] < 0 || float.IsNaN(d.cargoCosts[i]) || float.IsInfinity(d.cargoCosts[i]))
                     throw new InvalidDataException("화물 수량/원가가 올바르지 않습니다.");
+            var ids = new HashSet<string>();
+            foreach (string id in d.cargoItems)
+                if (string.IsNullOrWhiteSpace(id) || !ids.Add(id)) throw new InvalidDataException("화물 ID가 없거나 중복됐습니다.");
+            if (d.contracts == null || d.quests == null || d.finishedQuests == null || d.markets == null || d.boards == null
+                || d.traders == null || d.cooldownKeys == null || d.cooldownUntil == null || d.cooldownKeys.Count != d.cooldownUntil.Count)
+                throw new InvalidDataException("진행 저장 목록이 없거나 맞지 않습니다.");
+            if (d.money < 0 || !Finite(d.px) || !Finite(d.py) || !Finite(d.stamina) || d.stamina < 0 || d.stamina > 1
+                || d.day < 0 || !Finite(d.minute) || d.minute < 0 || d.minute >= 1440)
+                throw new InvalidDataException("잔고·위치·체력·시각 저장값이 올바르지 않습니다.");
             new WarehouseStore().Import(d.storedCargo);
         }
+
+        static bool Finite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);
 
         public static SaveData Read()
         {

@@ -15,49 +15,69 @@ MonoBehaviour:
   maps:
   - mapId: Naru
     displayName: "\uC608\uC131 \uB098\uB8E8 \uB9C8\uC744"
+    height: 64
+    legacyHeight: 28
     coord: {x: 0, y: 0}
     town: naru
     neighbors:
     - Route01
+    - goryeo_tidalcoast
+    - goryeo_westcoast
   - mapId: Route01
     displayName: "\uC608\uC131 \uAE38"
+    height: 64
+    legacyHeight: 34
     coord: {x: 1, y: 0}
     town: 
     neighbors:
     - Naru
+    - Dakmok
+    - goryeo_rivervalley
     - Gaegyeong
   - mapId: Gaegyeong
     displayName: "\uAC1C\uACBD"
+    height: 64
+    legacyHeight: 46
     coord: {x: 2, y: 0}
     town: gaegyeong
     neighbors:
-    - goryeo_songak
+    - goryeo_descent
     - Route01
-    - Dakmok
+    - goryeo_songak
+    - goryeo_westcoast
   - mapId: Dakmok
     displayName: "\uB2E5\uB098\uBB34 \uB9C8\uC744"
+    height: 64
+    legacyHeight: 22
     coord: {x: 3, y: 0}
     town: dakmok
     neighbors:
-    - Gaegyeong
+    - Route01
     - goryeo_fieldroad
     - goryeo_descent
   - mapId: goryeo_songak
     displayName: "\uC1A1\uC545 \uC0B0\uB85D \uB9C8\uC744"
+    height: 64
+    legacyHeight: 28
     coord: {x: 0, y: 1}
     town: goryeo_songak
     neighbors:
-    - Gaegyeong
     - goryeo_ridge
+    - Gaegyeong
+    - transit_pass
   - mapId: goryeo_jangdan
     displayName: "\uC7A5\uB2E8 \uB4E4\uB9C8\uC744"
+    height: 64
+    legacyHeight: 28
     coord: {x: 4, y: 0}
     town: goryeo_jangdan
     neighbors:
     - goryeo_fieldroad
-    - transit_pass
+    - goryeo_southcoast
   - mapId: goryeo_ridge
     displayName: "\uC1A1\uC545 \uAD6C\uB989\uAE38"
+    height: 64
+    legacyHeight: 28
     coord: {x: 5, y: 1}
     town: 
     neighbors:
@@ -65,27 +85,77 @@ MonoBehaviour:
     - goryeo_descent
   - mapId: goryeo_descent
     displayName: "\uB2E5\uBAA9 \uC0B0\uAE30\uC2AD \uAE38"
+    height: 64
+    legacyHeight: 12
     coord: {x: 6, y: 1}
     town: 
     neighbors:
+    - Gaegyeong
     - goryeo_ridge
     - Dakmok
   - mapId: goryeo_fieldroad
     displayName: "\uC7A5\uB2E8 \uB4E4\uAE38"
+    height: 64
+    legacyHeight: 44
     coord: {x: 7, y: 1}
     town: 
     neighbors:
     - Dakmok
     - goryeo_jangdan
+    - goryeo_rivervalley
+  - mapId: goryeo_westcoast
+    displayName: "\uC11C\uD574\uC548 \uB454\uB355"
+    height: 64
+    legacyHeight: 64
+    coord: {x: 0, y: 2}
+    town: 
+    neighbors:
+    - Gaegyeong
+    - Naru
+    - transit_pass
+  - mapId: goryeo_tidalcoast
+    displayName: "\uAC2F\uBC8C \uD574\uC548\uAE38"
+    height: 64
+    legacyHeight: 64
+    coord: {x: 1, y: 2}
+    town: 
+    neighbors:
+    - Naru
+    - goryeo_rivervalley
+  - mapId: goryeo_rivervalley
+    displayName: "\uC608\uC131 \uBB3C\uAD7D\uC774"
+    height: 64
+    legacyHeight: 64
+    coord: {x: 2, y: 2}
+    town: 
+    neighbors:
+    - Route01
+    - goryeo_tidalcoast
+    - goryeo_fieldroad
+    - goryeo_southcoast
+  - mapId: goryeo_southcoast
+    displayName: "\uB0A8\uCABD \uD574\uC548 \uAD6C\uB989"
+    height: 64
+    legacyHeight: 64
+    coord: {x: 3, y: 2}
+    town: 
+    neighbors:
+    - goryeo_rivervalley
+    - goryeo_jangdan
   - mapId: transit_pass
     displayName: "\uC194\uBC14\uB78C \uACE0\uAC1C"
+    height: 64
+    legacyHeight: 38
     coord: {x: 5, y: 0}
     town: 
     neighbors:
-    - goryeo_jangdan
+    - goryeo_songak
+    - goryeo_westcoast
     - transit_woodtown
   - mapId: transit_woodtown
     displayName: "\uC194\uC7AC \uAE38\uBAA9 \uB9C8\uC744"
+    height: 64
+    legacyHeight: 30
     coord: {x: 6, y: 0}
     town: transit_woodtown
     neighbors:
@@ -93,6 +163,8 @@ MonoBehaviour:
     - transit_wetroad
   - mapId: transit_wetroad
     displayName: "\uBC84\uB4E4 \uBB3C\uAC00 \uAE38"
+    height: 64
+    legacyHeight: 38
     coord: {x: 7, y: 0}
     town: 
     neighbors:
@@ -100,10 +172,30 @@ MonoBehaviour:
     - transit_ferry
   - mapId: transit_ferry
     displayName: "\uBC84\uB4E4\uB098\uB8E8 \uB9C8\uC744"
+    height: 64
+    legacyHeight: 32
     coord: {x: 8, y: 0}
     town: transit_ferry
     neighbors:
     - transit_wetroad
+    - transit_central_approach
+  - mapId: transit_central_approach
+    displayName: "\uCD08\uC6D0 \uC9C4\uC785\uB85C"
+    height: 64
+    legacyHeight: 38
+    coord: {x: 9, y: 0}
+    town: 
+    neighbors:
+    - transit_ferry
+    - transit_crossroads
+  - mapId: transit_crossroads
+    displayName: "\uB0B4\uB959 \uAD50\uC5ED \uAE38\uBAA9"
+    height: 64
+    legacyHeight: 56
+    coord: {x: 9, y: 1}
+    town: 
+    neighbors:
+    - transit_central_approach
   places:
   - kind: board
     id: naru

@@ -1,0 +1,147 @@
+{
+  "date": "2026-10-21",
+  "sourceCommit": "946dcbb3dde6ff025fddc5d0087d2f5a6d5290ec",
+  "unity": "6000.3.26f1",
+  "scope": "Player-owned cargo observed-sale guide, market-to-ledger input transition, misleading map/facility/developer text correction; local only",
+  "checks": {
+    "data": {
+      "passed": [
+        "unobserved market does not leak prices",
+        "observed price order keeps expensive distant choice",
+        "equal price prefers confirmed nearer connection",
+        "distance follows actual registered edges",
+        "disconnected quote retained without false route",
+        "same-map market has zero transitions",
+        "missing target not treated as reachable",
+        "missing current map has no invented distance",
+        "unknown world still permits observed price comparison",
+        "duplicate database reference not repeated",
+        "guide leaves saved quotes unchanged",
+        "delivery goods excluded",
+        "empty ledger offers no phantom seller"
+      ]
+    },
+    "inputPlay": {
+      "passed": [
+        "synthetic L is received by real input reader",
+        "ledger cannot overlap blocking market",
+        "L transitions from market to ledger",
+        "same opening-frame L cannot immediately close ledger",
+        "later L closes ledger and releases movement",
+        "closing input cannot reopen ledger in same frame"
+      ]
+    },
+    "marketRegression": {
+      "passed": [
+        "batch quote does not advance active quest",
+        "actual five-unit purchase fills quoted count",
+        "actual total charges stepped prices exactly",
+        "per-unit purchase events and tutorial preserved",
+        "actual sale fills quoted count and revenue",
+        "same sold-cargo quote cannot pay twice",
+        "stale price quote rejected before any transaction",
+        "changed funds reject stale displayed remainder",
+        "batch cannot displace delivery cargo",
+        "growth preview has no live side effects",
+        "actual growth still matches preview total",
+        "batch sale money and cost-basis profit agree",
+        "max wallet cannot overflow via batch sale",
+        "mid-batch price change stops before extra charge",
+        "quest reward during batch remains separate from sale total",
+        "unlisted vehicle cannot be purchased"
+      ]
+    }
+  },
+  "integration": {
+    "pythonUnitTests": 26,
+    "registeredExits": 26,
+    "errors": 0
+  },
+  "visualQA": {
+    "testState": "Injected cargo and observed quotes in non-start session; not human gameplay",
+    "screenshots": [
+      {
+        "localPath": "output/cargo-ledger/cargo-wide.png",
+        "resolution": [
+          1920,
+          1080
+        ],
+        "sha256": "5a63baa90f849e993d2d00abba87c0263d02e4a073cfe49219b08a0f9bfac532"
+      },
+      {
+        "localPath": "output/cargo-ledger/cargo-4x3.png",
+        "resolution": [
+          1024,
+          768
+        ],
+        "sha256": "128135c91e7cb2d884e13749d8d0c0520c49900a5b23cbca33969fe51c7a8e65"
+      },
+      {
+        "localPath": "output/cargo-ledger/quotes-4x3.png",
+        "resolution": [
+          1024,
+          768
+        ],
+        "sha256": "4fb17df52f85da5b348255a9bf25fe45cd4801ccf18a728df38584882b8488b0"
+      }
+    ]
+  },
+  "builds": {
+    "Windows": {
+      "result": "Succeeded",
+      "output": "Builds/Windows/PocketCaravan.exe",
+      "builtAtUtc": "2026-10-20T15:52:04.8050650Z",
+      "errors": 0,
+      "warnings": 18,
+      "bytes": 134924241,
+      "seconds": 15.83775
+    },
+    "macOS": {
+      "result": "Succeeded",
+      "output": "Builds/macOS/PocketCaravan.app",
+      "builtAtUtc": "2026-10-20T15:52:59.7824280Z",
+      "errors": 0,
+      "warnings": 0,
+      "bytes": 152668447,
+      "seconds": 18.148913999999998
+    }
+  },
+  "nativeSmoke": {
+    "engineInitialized": true,
+    "runtimeExceptions": [],
+    "processExitCode": 0,
+    "mode": "macOS headless startup only; no human gameplay or Windows execution validation",
+    "previewSaveRestored": true
+  },
+  "packages": [
+    {
+      "file": "PocketCaravan-Windows-x64-Ledger-2026-10-21.zip",
+      "bytes": 48144985,
+      "sha256": "86107180e5a5c56550103c758bbda8edcc6632dff4957f216cd396f5338e2ab4",
+      "sourceCommit": "946dcbb3dde6ff025fddc5d0087d2f5a6d5290ec",
+      "published": false
+    },
+    {
+      "file": "PocketCaravan-macOS-Universal-Ledger-2026-10-21.zip",
+      "bytes": 56628947,
+      "sha256": "dd866860376a7239b13b232657fa13f27536b831236dc84d4f8c9fa49172eb1c",
+      "sourceCommit": "946dcbb3dde6ff025fddc5d0087d2f5a6d5290ec",
+      "published": false
+    }
+  ],
+  "restored": {
+    "projectAndRenderSettings": true,
+    "stoppedScene": "Assets/PocketCaravan/Scenes/Goryeo/Route01.unity",
+    "originalGameViewSizeIndex": 7,
+    "temporaryGameViewRemoved": true,
+    "temporaryKeyboardRemovedAndOriginalRestored": true
+  },
+  "limits": [
+    "Past first-unit quote, not current remote market or whole-load profit",
+    "Graph edges are not walking time or terrain/risk cost",
+    "Human choice/fun/repeat timing not tested",
+    "Windows gameplay not tested; macOS headless startup only",
+    "Mac unsigned/unnotarized",
+    "Server authority/concurrency and MMO load not tested"
+  ]
+}

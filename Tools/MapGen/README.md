@@ -1,6 +1,6 @@
 # MapGen: 본편 지형·지도 생성
 
-2026-10-18 안내. 본편은 고려9맵+중간권4맵이다. exporter는 `World/settings.json`의 `atlasRegions`(goryeo·transit)를 생성하며, 다른 팀 지역을 자동 생성하지 않는다. 환경 원형40개와 장애물48종은 별도 제작 라이브러리다. [문서 안내](../../Docs/README.md).
+2026-10-22 안내. 본편은 고려13구역+중간권6구역이다. exporter는 `World/settings.json`의 `atlasRegions`(goryeo·transit)를 생성하며, 다른 팀 지역을 자동 생성하지 않는다. 환경 원형40개와 장애물48종은 별도 제작 라이브러리다. [문서 안내](../../Docs/README.md).
 
 맵은 이 파이썬 코드로 설계하고, Unity는 결과 JSON을 씬으로 만든다.
 
@@ -55,3 +55,5 @@
 `paper_rack`은 이 생성기에서 그리는 3×2칸 종이 건조대 스탬프다. 집·나무와 같은 묶음 배치 규칙을 사용한다. 원본을 수정한 뒤 export하고, 필요한 씬만 다시 생성한다.
 
 2026-10-17 개발 반영: 신규 주행 낙하/게이지/정차 안정화는 사용하지 않는다. 노면/짐/속도에 반응하는 시각 흔들림은 감속 연출로 유지한다. 현재 기준은 Docs/DevelopmentStatus.md 및 실제 시험장 UI를 따른다.
+
+10/22 최신: `World/Terrain/continuous.json`이 실제 지형 원본이다. `continuous.py`가 기존 마을 템플릿을 공통80×64 구역으로 확장하고 해안·강·도로·숲과 접속을 생성한다. `cartography.py`는 그 실제 셀만 축약한다. 지도 전용 `peninsula.json`은 제거했다. [제작/검사 절차](../../Docs/ContinuousTerrain.md)를 따른다.

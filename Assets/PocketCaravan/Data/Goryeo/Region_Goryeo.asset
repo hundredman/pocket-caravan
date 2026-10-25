@@ -15,3 +15,12 @@ MonoBehaviour:
   id: goryeo
   displayName: "\uACE0\uB824"
   note: 
+  deliveryRewards:
+    enabled: 1
+    revision: 1
+    dispatchFee: 1.5
+    perWeight: 0.65
+    perWeightPerStep: 0.25
+    premiumMultiplier: 1.8
+    premiumMinWeight: 8
+    premiumMaxWeight: 12

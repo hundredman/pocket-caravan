@@ -20,6 +20,8 @@ MonoBehaviour:
   giverNpc: gaekju
   requires:
   - {fileID: 11400000, guid: eefd3152bcc904f108dc17237dbff5e9, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uAC1D\uC8FC\uC5D0 \uC7A5\uBD80 \uC4F8 \uC885\uC774\uAC00 \uB5A8\uC5B4\uC84C\uB124.
     \uB3D9\uBB38 \uBC16 \uB2E5\uB098\uBB34 \uB9C8\uC744 \uC885\uC774\uAC00 \uC81C\uC77C\uC774\uC9C0.
     \uADF8 \uB9C8\uC744 \uC7A5\uD130 \uC0C1\uC778\uC5D0\uAC8C \uB9D0\uC744 \uAC78\uBA74
@@ -48,6 +50,9 @@ MonoBehaviour:
       \uC0B0 \uAC12\uBCF4\uB2E4 \uB109\uB109\uD788 \uCCD0 \uC8FC\uACA0\uB124."
   rewardMoney: 45
   rewardCredit: 1
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: "\uC774\uC81C \uB2E4\uC74C \uC7A5\uC0AC\uB294 \uC9C1\uC811 \uACE8\uB77C
     \uBCF4\uC138\uC694. \uBD81\uCABD \uC1A1\uC545\uC740 \uC801\uC740 \uC9D0\uC758
     \uC57D\uC7AC \uAC70\uB798, \uB0A8\uCABD \uC7A5\uB2E8\uC740 \uACE1\uC2DD\uACFC

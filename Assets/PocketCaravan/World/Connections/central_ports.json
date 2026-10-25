@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 2,
+  "mapId": "transit_crossroads",
+  "purpose": "동서남북 문명을 여러 지역으로 잇는 교역망. 고려 반도 북서부에서 대륙을 지나 중앙아시아 방면으로 이동하는 축약 지리. 경제 좌표는 방위/실제 거리가 아님.",
+  "routes": [
+    {
+      "direction": "E",
+      "region": "goryeo",
+      "status": "connected",
+      "chain": [
+        "transit_crossroads",
+        "transit_central_approach",
+        "transit_ferry",
+        "transit_wetroad",
+        "transit_woodtown",
+        "transit_pass",
+        "goryeo_songak"
+      ],
+      "localEdge": "E",
+      "localSpawn": "E",
+      "target": "transit_central_approach",
+      "targetSpawn": "W",
+      "width": 3
+    },
+    {
+      "direction": "N",
+      "region": "north",
+      "status": "planned",
+      "chain": [],
+      "note": "프로토타입 방위 배정. 중앙 권역에서 여러 중간 맵을 거쳐 연결한다. 접속 위치/담당 원본은 통합 시 대조하며 현재 런타임 출구는 없다."
+    },
+    {
+      "direction": "W",
+      "region": "venice",
+      "status": "planned",
+      "chain": [],
+      "note": "프로토타입 방위 배정. 중앙 권역에서 여러 중간 맵을 거쳐 연결한다. 접속 위치/담당 원본은 통합 시 대조하며 현재 런타임 출구는 없다."
+    },
+    {
+      "direction": "S",
+      "region": "arabia",
+      "status": "planned",
+      "chain": [],
+      "note": "프로토타입 방위 배정. 중앙 권역에서 여러 중간 맵을 거쳐 연결한다. 접속 위치/담당 원본은 통합 시 대조하며 현재 런타임 출구는 없다."
+    }
+  ],
+  "design": {
+    "prototypeTopology": "hub_and_spoke",
+    "hubRegion": "중앙아시아 모티브의 중앙 권역",
+    "prototypeInterCivilizationTravel": "via_central_region",
+    "geography": "recognizable_real_world_motifs_with_adjusted_scale",
+    "scalePolicy": "해안·반도·산지·내륙의 상대적 형태와 환경 연속성을 살리되 문명별 거리/면적/비율은 이동 경험과 제작 범위에 맞춰 과장·축소한다.",
+    "localRoadShape": "freeform",
+    "futureTopology": "여러 경유 도시와 대안 교역로가 있는 거미줄 연결로 확장 가능"
+  }
+}

@@ -84,6 +84,15 @@ def tile_image(key):
             return t.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
         return t
     base, _, rc = key.partition("@")
+    if rc.startswith("blend_"):
+        from Modules.skins import SKINS, recolor as skin_recolor
+        _,skin_id,amount=rc.split('_')
+        original=tile_image(base)
+        return Image.blend(original,skin_recolor(original,base,next(s for s in SKINS if s[0]==skin_id)),int(amount)/100)
+    if rc.startswith("skin_"):
+        from Modules.skins import SKINS, recolor as skin_recolor
+        skin = next(s for s in SKINS if s[0] == rc[5:])
+        return skin_recolor(tile_image(base), base, skin)
     s, x, y = base.split(":")
     x, y = int(x), int(y)
     t = sheet(s).crop((x * 16, y * 16, x * 16 + 16, y * 16 + 16))
@@ -550,17 +559,18 @@ class Map:
                     self.reserved[y][x] = True
 
     def finish(self):
-        self.smooth()
+        if not getattr(self,"skip_smooth",False): self.smooth()
 
         def road_mask(a, b):
             if not self.inside(a, b):
+                if hasattr(self,"outside_road"):return self.outside_road(a,b)
                 # 맵 밖은 가장자리 칸을 그대로 이어 본다 (길이 맵 경계에서 끊겨 보이지 않게)
                 a = min(max(a, 0), self.w - 1); b = min(max(b, 0), self.h - 1)
             return self.road[b][a] > 0 or (a, b) in self.decks
 
         def water_mask(a, b):
             if not self.inside(a, b):
-                return True  # 맵 밖으로 이어지는 물은 가장자리 없이
+                return self.outside_water(a,b) if hasattr(self,"outside_water") else True  # 공통 월드 물가 샘플
             return self.water[b][a] or (a, b) in self.decks  # 다리 밑으로 물이 이어지게
 
         for y in range(self.h):
@@ -573,7 +583,7 @@ class Map:
                     self.ground[y][x] = autotile(water_mask, x, y, *WATER_ORIGIN)
                     self.blocked[y][x] = True
                 elif self.road[y][x] > 0:
-                    origin = SAND_ORIGIN if self.theme == "town" else DIRT_ORIGIN
+                    origin = self.road_origin(x,y) if hasattr(self,"road_origin") else SAND_ORIGIN if self.theme == "town" else DIRT_ORIGIN
                     self.ground[y][x] = autotile(road_mask, x, y, *origin)
                 elif self.theme == "town":
                     self.ground[y][x] = self.rng.choice(TOWN_VARIANTS) if self.rng.random() < 0.15 else TOWN
@@ -586,6 +596,17 @@ class Map:
             for x in range(1, self.w - 1):
                 if all(self.water[y + dy][x + dx] for dx in (-1, 0, 1) for dy in (-1, 0, 1)) and self.rng.random() < 0.12:
                     self.objects.append(dict(kind="anim", x=x, y=y, sheet="ripples", frames=4, fps=3.0 + self.rng.random()))
+
+    def apply_visual_skin(self, skin_id):
+        """Reuse the module library's visual palettes without modifying traversal data."""
+        from Modules.skins import SKINS
+        if skin_id not in {s[0] for s in SKINS}:raise ValueError(skin_id)
+        self.visual_skin = skin_id
+        for layer in (self.ground,self.deco,self.obj,self.high):
+            for row in layer:
+                for x,key in enumerate(row):
+                    if key and '@' not in key and key.split(':')[0] in ('floor','detail','nature','field','water'):
+                        row[x]=key+'@skin_'+skin_id
 
     def render(self, path, scale=1):
         img = Image.new("RGBA", (self.w * 16, self.h * 16), (0, 0, 0, 255))

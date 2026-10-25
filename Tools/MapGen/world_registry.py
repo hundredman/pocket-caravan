@@ -62,4 +62,5 @@ def atlas_content():
     for rid in ids:
         entries.extend(map_entries(rid))
         maps.extend(generated_maps(rid))
-    return entries, maps
+    from continuous import build
+    return entries, build(maps)

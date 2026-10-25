@@ -20,10 +20,10 @@ for mid,m in world.items():
   target=world[o['target']];sp=next(p for p in target['objects'] if p['kind']=='spawn' and p['id']==o['spawn'])
   for dy in range(o.get('h',1)):
    for dx in range(o.get('w',1)):
-    jumps[mid,o['x']+dx,o['y']+dy]=(o['target'],sp['x']+min(dx,sp.get('w',1)-1),sp['y']+min(dy,sp.get('h',1)-1))
-def cost(a,b,vehicle):
+    jumps.setdefault((mid,o['x']+dx,o['y']+dy),[]).append((o['target'],sp['x']+min(dx,sp.get('w',1)-1),sp['y']+min(dy,sp.get('h',1)-1)))
+def cost(a,b,vehicle,cargo_weight=5):
  text=(D/f'Vehicle_{vehicle}.asset').read_text();speeds=[float(x) for x in re.findall(r'^  - ([0-9.]+)$',text.split('speedByGrade:')[1],re.M)]
- capacity=float(re.search(r'capacity: (\S+)',text)[1]);load=1-.3*5/capacity
+ capacity=float(re.search(r'capacity: (\S+)',text)[1]);load=1-.3*min(1,max(0,cargo_weight)/capacity)
  q=[];dist={};targets=set(market_cells(b));prev={}
  for p in market_cells(a):dist[p]=0.;heapq.heappush(q,(0.,p))
  while q:
@@ -40,15 +40,16 @@ def cost(a,b,vehicle):
   neighbors=[]
   for xx,yy in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
    if inside(m,xx,yy):neighbors.append(((mid,xx,yy),(.5/speeds[m['road'][i]]+.5/speeds[m['road'][yy*m['w']+xx]])/(3.8*load)))
-  if p in jumps:neighbors.append((jumps[p],.30))
+  for jump in jumps.get(p,[]):neighbors.append((jump,.30))
   for target,delta in neighbors:
    nc=c+delta
    if nc<dist.get(target,float('inf')):dist[target]=nc;prev[target]=p;heapq.heappush(q,(nc,target))
  raise RuntimeError((a,b))
-pairs=[('Naru','Gaegyeong'),('Gaegyeong','Dakmok'),('Gaegyeong','goryeo_songak'),('Dakmok','goryeo_jangdan'),('goryeo_songak','Dakmok'),('Naru','goryeo_jangdan'),('goryeo_jangdan','transit_ferry')]
-results=[]
-for a,b in pairs:results.append({'from':a,'to':b,**{v:cost(a,b,v) for v in ('Walk','Handcart')}})
-goryeo=set(world)-{k for k in world if k.startswith('transit_')}
-edges={tuple(sorted((mid,o['target']))) for mid,m in world.items() for o in m['objects'] if o['kind']=='exit' and mid in goryeo and o['target'] in goryeo}
-report={'scope':'Current JSON orthogonal shortest walkable routes between market interaction cells; cargo weight 5; no running/origin bonus/acceleration/stamina/NPC/learning/trade/dialogue; .30 second transition fade only; load latency excluded. Calculation, not observed human playtime. Diagonal/free movement may be faster.','routes':results,'goryeoGraph':{'nodes':len(goryeo),'undirectedEdges':len(edges),'independentCycles':len(edges)-len(goryeo)+1,'edges':sorted(edges)}}
-print(json.dumps(report,ensure_ascii=False,indent=2))
+if __name__=='__main__':
+ pairs=[('Naru','Gaegyeong'),('Gaegyeong','Dakmok'),('Gaegyeong','goryeo_songak'),('Dakmok','goryeo_jangdan'),('goryeo_songak','Dakmok'),('Naru','goryeo_jangdan'),('goryeo_jangdan','transit_ferry')]
+ results=[]
+ for a,b in pairs:results.append({'from':a,'to':b,**{v:cost(a,b,v) for v in ('Walk','Handcart')}})
+ goryeo=set(world)-{k for k in world if k.startswith('transit_')}
+ edges={tuple(sorted((mid,o['target']))) for mid,m in world.items() for o in m['objects'] if o['kind']=='exit' and mid in goryeo and o['target'] in goryeo}
+ report={'scope':'Current JSON orthogonal shortest walkable routes between market interaction cells; cargo weight 5; no running/origin bonus/acceleration/stamina/NPC/learning/trade/dialogue; .30 second transition fade only; load latency excluded. Calculation, not observed human playtime. Diagonal/free movement may be faster.','routes':results,'goryeoGraph':{'nodes':len(goryeo),'undirectedEdges':len(edges),'independentCycles':len(edges)-len(goryeo)+1,'edges':sorted(edges)}}
+ print(json.dumps(report,ensure_ascii=False,indent=2))

@@ -1,5 +1,7 @@
 # Pocket Caravan
 
+**팀원·다른 LLM이 이어서 작업할 때:** [인수인계 시작 문서](Docs/Handoff.md)를 먼저 읽으세요. 현재 상태·수정 원본·재현/검사·남은 일·전달용 시작 문구를 정리했습니다.
+
 현재 구현은 [진행표](Docs/DevelopmentStatus.md), 팀 작업 시작은 [팀 개발 안내](Docs/TeamDevelopment.md), 문서별 우선순위는 [문서 안내](Docs/README.md)를 따른다. 공개 ZIP과 main의 차이는 [빌드 현황](Docs/BuildStatus.md)에서 확인한다.
 
 
@@ -56,7 +58,7 @@ R 재시작, Tab 전체 보기. [시험장 안내](Assets/CaravanMovementLab/REA
 | 게임 시계 (하루 = 현실 6분, 5일마다 장날), 낮·밤 빛 | `Scripts/Core/GameClock` |
 | 상태 창, 전체 지도(M), 메뉴(Esc), 자동 저장·불러오기 | `Scripts/UI/`, `Core/SaveSystem` |
 | 배경 음악·효과음 (Ninja Adventure, CC0) | `Audio/AudioManager`, `Resources/Audio` |
-| 본편13맵: 고려9맵(수도1+마을4+길4), 중간권4맵(마을2+길2) | `Tools/MapGen` → `Maps/*.json` → `Editor/MapJsonBuilder` |
+| 본편15맵: 고려9맵(수도1+마을4+길4), 중간권6맵(마을2+길/중앙4) | `Tools/MapGen` → `Maps/*.json` → `Editor/MapJsonBuilder` |
 | 캐릭터 12종(16×24 동물)·물건 아이콘: 글자 그림으로 생성 | `Tools/ArtGen/chars.py`, `items.py` |
 | 땅·건물 타일, 물결·꽃 애니메이션: Ninja Adventure 에셋 팩 (CC0). UI 폰트: 갈무리 (OFL) | `Art/NinjaAdventure`, `Resources/Fonts` |
 
@@ -130,10 +132,26 @@ NPC `lines` 배열의 다음 항목은 다시 말을 걸 때 나오며, 한 항�
 
 ## macOS 고려 프리뷰 빌드
 
-Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macOS/PocketCaravan.app`을 만든다. 이 메뉴는 현재 등록된 고려9맵+중간권4맵을 포함하며 나루에서 시작한다. Windows 프리뷰 메뉴도 제공한다. 이전 릴리스의 네 맵 빌드와 구분한다. 이전 3D 실험과 이동 시험장은 본편 빌드에 포함하지 않는다.
+Unity 메뉴 **Pocket Caravan > Build > macOS 고려 프리뷰**로 `Builds/macOS/PocketCaravan.app`을 만든다. 이 메뉴는 현재 등록된 고려9맵+중간권6맵을 포함하며 나루에서 시작한다. Windows 프리뷰 메뉴도 제공한다. 이전 릴리스의 네 맵 빌드와 구분한다. 이전 3D 실험과 이동 시험장은 본편 빌드에 포함하지 않는다.
 
 프리뷰는 `CARAVAN_PREVIEW` 빌드 정의로 `pocket_caravan_preview_save.json`에 저장해 에디터/기존 본편 저장과 분리한다. 빌드 결과는 Git 소스에 넣지 않고 GitHub 프리릴리스의 zip으로 배포한다. Mac·Windows 빌드는 로컬에서 성공했으며, 실제 Windows 실행과 Mac 서명·공증은 별도 확인이 필요하다. 현재 로컬 패키지와 이전 GitHub 릴리스는 버전이 다르다.
 
 2026-10-15 당시 개선 기록: 예성 길의 등짐 숲길/손수레 큰길 선택, 본편 손수레·적재량 그림, 노면·흔들림 대처 안내. 수레 그림은 운반 상태의 표현이며 별도 수레 물리·충돌체를 구현한 것은 아니다.
 
 **장애물 제작/시험:** 48개 프리셋과 배치 도구·독립 시험장의 [사용법과 구현 범위](Docs/ObstacleLibrary.md).
+
+### 10/20 교역 수량·구매 예산 안내
+
+교역품 수량 선택과 변동 가격 총액/매매 손익, 수레 구매 후 잔금 안내를 추가했다. [패치 범위와 검증](Docs/MarketPlanningPatch.md), [현재 빌드 구분](Docs/BuildStatus.md). 서버 공유 거래·사람의 재미 검증과 구분한다.
+
+### 10/21 화물 판매처·장부 연결
+
+장터에서 L로 전체 장부를 열 수 있다. 장부의 ‘내 짐 판매처’에서 소지 화물 원가와 과거 관측 판매가·연결 구간을 비교한다. [반영 범위/검사/남은 관찰](Docs/CargoLedgerReview.md). 최신 로컬 ZIP은 Ledger-2026-10-21이며 공개10/15 릴리스와 다르다.
+
+### 10/21 저장 참조·원본 보호
+
+저장된 상품/진행/이동 수단/맵 등을 적용 전에 확인하고, 복원할 수 없으면 원본을 보존하며 이번 세션 저장을 차단한다. [검사 범위와 남은 복구 과제](Docs/SaveCompatibilityReview.md). 최신 로컬 검토 ZIP은 SaveGuard-2026-10-21이며 Ledger 이전 ZIP·공개 릴리스와 구분한다.
+
+10/22: 동쪽 고려 반도의 북서부 송악 산록에서 여러 중간 지역을 거쳐 중앙아시아 방면으로 연결합니다. 반도·바다·대륙 지도와 건조 초원 스킨을 반영했습니다. 십자는 전체 동서남북 교역망 구조입니다. [현재 배치·확장 계약](Docs/CentralConnection.md).
+
+10/22 최신: [실제 연속 지형](Docs/ContinuousTerrain.md)으로 교체했습니다. 고려13+내륙6구역의 해안·강·길·숲과 지도는 같은 타일에서 생성하며 풀밭 경계도 연결됩니다. [유지할 규칙](Docs/ProjectRules.md)을 먼저 확인하세요.

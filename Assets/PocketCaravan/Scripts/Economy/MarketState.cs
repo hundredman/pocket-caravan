@@ -8,15 +8,20 @@ namespace PocketCaravan
     {
         public readonly TownData town;
         readonly GameDatabase db;
+        readonly bool publishGrowth;
+        public const int MaxBatch = 100;
         readonly Dictionary<ItemData, float> stock = new Dictionary<ItemData, float>();
 
         public int Level { get; private set; }
         public float TradeVolume { get; private set; }
 
-        public MarketState(TownData town, GameDatabase db)
+        public MarketState(TownData town, GameDatabase db) : this(town,db,true) { }
+
+        MarketState(TownData town, GameDatabase db, bool publishGrowth)
         {
             this.town = town;
             this.db = db;
+            this.publishGrowth = publishGrowth;
             Level = Mathf.Clamp(town.startLevel, 1, db.maxTownLevel);
         }
 
@@ -93,8 +98,42 @@ namespace PocketCaravan
             while (Level < db.maxTownLevel && Level < db.townLevelVolume.Length && TradeVolume >= db.townLevelVolume[Level])
             {
                 Level++;
-                GameEvents.RaiseTownLeveled(town, Level);
+                if (publishGrowth) GameEvents.RaiseTownLeveled(town, Level);
             }
+        }
+
+        /// <summary>가격·재고·시장 등급 변화를 복제 상태에서 계산한다. 화물/잔고/성장 이벤트를 변경하지 않는다.</summary>
+        public MarketEstimate Preview(ItemData item, PlayerState player, int requested, bool selling)
+        {
+            var prices=new List<int>(); string blocker=null;
+            if(item==null || item.questItem) blocker="일반 교역품을 선택하세요.";
+            else if(player==null || requested<=0) blocker="수량을 확인하세요.";
+            else if(float.IsNaN(item.weight) || float.IsInfinity(item.weight) || item.weight<=0) blocker="물품 무게를 확인하세요.";
+            else
+            {
+                var copy=new MarketState(town,db,false) { Level=Level, TradeVolume=TradeVolume };
+                foreach(var row in stock)copy.stock[row.Key]=row.Value;
+                long total=0; int limit=Mathf.Min(requested,MaxBatch);
+                for(int i=0;i<limit;i++)
+                {
+                    if(selling)
+                    {
+                        if(i>=player.cargo.Count(item)){blocker="팔 물건이 없습니다.";break;}
+                        int price=copy.SellPrice(item);
+                        if(price<=0 || total+price>int.MaxValue || (long)player.money+total+price>int.MaxValue){blocker="보유금 한도를 확인하세요.";break;}
+                        total+=price; prices.Add(price); copy.RecordSell(item,price);
+                    }
+                    else
+                    {
+                        if(!copy.CanBuy(item)){blocker="재고가 없습니다.";break;}
+                        int price=copy.BuyPrice(item);
+                        if(price<=0 || total+price>player.money){blocker="매입 자금이 부족합니다.";break;}
+                        if(!player.CanCarry(item,i+1)){blocker="남은 적재 공간이 부족합니다.";break;}
+                        total+=price; prices.Add(price); copy.RecordBuy(item,price);
+                    }
+                }
+            }
+            return new MarketEstimate(town,item,selling,prices,player!=null?player.cargo.AverageCost(item):0,blocker,player!=null?player.money:0);
         }
 
         // ---------- 저장 ----------

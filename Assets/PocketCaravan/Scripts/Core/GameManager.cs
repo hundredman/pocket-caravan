@@ -39,6 +39,21 @@ namespace PocketCaravan
         bool firstSceneLoaded;
         SaveData saveToLoad;
         bool autosave = true;
+        public string LoadIssue { get; private set; }
+
+        void BlockFailedLoad(string reason)
+        {
+            autosave = false;
+            LoadIssue = "저장 복원을 중단했습니다. " + reason + " 기존 파일은 보존되며 이번 세션은 저장되지 않습니다.";
+            Debug.LogWarning("[불러오기] " + LoadIssue);
+            Notify.Show("저장 복원 중단 · 원본 보존/저장 차단. Esc 메뉴에서 원인을 확인하세요.", 8f);
+        }
+
+        bool TryApplySave(SaveData data)
+        {
+            try { Apply(data); return true; }
+            catch (System.Exception e) { BlockFailedLoad(e.Message); return false; }
+        }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void Boot()
@@ -200,18 +215,21 @@ namespace PocketCaravan
                 saveToLoad = null;
                 Debug.Log("[저장] 비시작 씬/제작 시험장: 기존 저장 적용과 자동 저장을 끕니다.");
             }
+            else if (first && SaveSystem.LoadBlocked)
+            {
+                BlockFailedLoad("저장 형식이나 파일을 읽을 수 없습니다.");
+            }
             else if (first && saveToLoad != null)
             {
                 var d = saveToLoad;
                 saveToLoad = null;
-                try { Apply(d); }
-                catch (System.Exception e) { autosave = false; Debug.LogError("기존 저장 복원 실패: 원본을 덮어쓰지 않습니다. " + e.Message); return; }
+                if (!TryApplySave(d)) return;
                 if (!string.IsNullOrEmpty(d.scene) && d.scene != scene.name)
                 {
-                    StartCoroutine(Travel(d.scene, null, 0f, new Vector2Int(d.fx, d.fy), new Vector3(d.px, d.py, 0f)));
+                    StartCoroutine(Travel(d.scene, null, 0f, new Vector2Int(d.fx, d.fy), SaveSystem.PositionFor(d)));
                     return;
                 }
-                pendingExact = new Vector3(d.px, d.py, 0f);
+                pendingExact = SaveSystem.PositionFor(d);
                 pendingFacing = new Vector2Int(d.fx, d.fy);
                 Notify.Show("이어서 한다 (Esc 메뉴에서 처음부터 시작 가능)", 4f);
             }
@@ -363,6 +381,7 @@ namespace PocketCaravan
             var d = new SaveData
             {
                 scene = SceneManager.GetActiveScene().name,
+                mapHeight = MapRoot.Current.ground.cellBounds.size.y,
                 px = pc != null ? pc.transform.position.x : 0, py = pc != null ? pc.transform.position.y : 0,
                 fx = pc != null ? pc.Motor.Facing.x : 0, fy = pc != null ? pc.Motor.Facing.y : -1,
                 money = Player.money, credit = Player.credit,
@@ -386,6 +405,7 @@ namespace PocketCaravan
 
         void Apply(SaveData d)
         {
+            SaveCompatibility.Validate(d, Db, Application.CanStreamedLevelBeLoaded);
             Player.warehouse.Import(d.storedCargo);
             Player.ledger.Import(d.marketQuotes);
             Player.money = d.money;

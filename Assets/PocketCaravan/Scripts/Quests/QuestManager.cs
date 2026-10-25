@@ -15,6 +15,10 @@ namespace PocketCaravan
             public QuestData quest;
             public int step;
             public int amount;   // 현재 단계 진행 수치
+            public bool rewardCaptured;
+            public int acceptedRewardMoney, acceptedRewardCredit;
+            public int RewardMoney => rewardCaptured ? acceptedRewardMoney : quest.rewardMoney;
+            public int RewardCredit => rewardCaptured ? acceptedRewardCredit : quest.rewardCredit;
             public bool Done => step >= quest.objectives.Count;
             public QuestObjective Current => Done ? null : quest.objectives[step];
         }
@@ -49,11 +53,16 @@ namespace PocketCaravan
 
         // ---------- 저장 ----------
         [System.Serializable]
-        public class Save { public string id; public int step, amount; }
+        public class Save
+        {
+            public string id; public int step, amount;
+            public bool rewardCaptured;
+            public int acceptedRewardMoney, acceptedRewardCredit;
+        }
 
         public void Export(SaveData d)
         {
-            foreach (var p in active.Values) d.quests.Add(new Save { id = p.quest.id, step = p.step, amount = p.amount });
+            foreach (var p in active.Values) d.quests.Add(new Save { id = p.quest.id, step = p.step, amount = p.amount, rewardCaptured = true, acceptedRewardMoney = p.RewardMoney, acceptedRewardCredit = p.RewardCredit });
             foreach (var q in finished) d.finishedQuests.Add(q.id);
             d.trackedQuest = Tracked != null ? Tracked.quest.id : null;
         }
@@ -67,7 +76,9 @@ namespace PocketCaravan
             {
                 var q = Find(s.id);
                 if (q == null) continue;
-                var p = new Progress { quest = q, step = s.step, amount = s.amount };
+                var p = new Progress { quest = q, step = s.step, amount = s.amount, rewardCaptured = true,
+                    acceptedRewardMoney = s.rewardCaptured ? s.acceptedRewardMoney : q.hasLegacyReward ? q.legacyRewardMoney : q.rewardMoney,
+                    acceptedRewardCredit = s.rewardCaptured ? s.acceptedRewardCredit : q.hasLegacyReward ? q.legacyRewardCredit : q.rewardCredit };
                 active[q] = p;
                 if (q.id == d.trackedQuest || Tracked == null) Tracked = p;
             }
@@ -77,8 +88,12 @@ namespace PocketCaravan
 
         public bool CanStart(QuestData q)
         {
-            if (active.ContainsKey(q) || finished.Contains(q)) return false;
+            if (q == null || active.ContainsKey(q) || finished.Contains(q)) return false;
             foreach (var r in q.requires) if (r != null && !finished.Contains(r)) return false;
+            if (q.requiresAny != null && q.requiresAny.Count > 0 && !q.requiresAny.Exists(r => r != null && finished.Contains(r))) return false;
+            if (!string.IsNullOrEmpty(q.choiceGroup))
+                foreach (var other in all)
+                    if (other != null && other != q && other.choiceGroup == q.choiceGroup && (active.ContainsKey(other) || finished.Contains(other))) return false;
             return true;
         }
 
@@ -144,7 +159,7 @@ namespace PocketCaravan
                 pl.cargo.Add(q.offerItem, q.offerCount, q.offerPrice);   // 산 값으로 기록해 이익이 제대로 계산되게
                 Sfx.Play("coin");
             }
-            var p = new Progress { quest = q };
+            var p = new Progress { quest = q, rewardCaptured = true, acceptedRewardMoney = q.rewardMoney, acceptedRewardCredit = q.rewardCredit };
             active[q] = p;
             Tracked = p;
             if (q.giveItem != null && q.giveCount > 0) GameManager.I.Player.cargo.Add(q.giveItem, q.giveCount);
@@ -231,11 +246,11 @@ namespace PocketCaravan
             finished.Add(q);
             if (Tracked == p) { Tracked = null; foreach (var other in active.Values) Tracked = other; }
             var player = GameManager.I.Player;
-            player.money += q.rewardMoney;
-            player.credit += q.rewardCredit;
+            player.money += p.RewardMoney;
+            player.credit += p.RewardCredit;
             string reward = "";
-            if (q.rewardMoney > 0) reward += $" 돈 +{q.rewardMoney}";
-            if (q.rewardCredit > 0) reward += $" 신용 +{q.rewardCredit}";
+            if (p.RewardMoney > 0) reward += $" 돈 +{p.RewardMoney}";
+            if (p.RewardCredit > 0) reward += $" 신용 +{p.RewardCredit}";
             Notify.Show($"퀘스트 완료: {q.title}{reward}");
             Sfx.Play("success");
             if (!string.IsNullOrEmpty(q.finishNote)) Notify.Show(q.finishNote, 6f);
