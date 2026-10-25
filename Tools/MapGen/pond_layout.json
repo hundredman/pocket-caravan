@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "mapId": "Gaegyeong",
+  "size": [
+    70,
+    60
+  ],
+  "assetId": "goryeo_capital_pond",
+  "placements": [
+    {
+      "x": 24,
+      "y": 20,
+      "piece": "water_02"
+    },
+    {
+      "x": 25,
+      "y": 19,
+      "piece": "outer_corner_stone_1_3"
+    },
+    {
+      "x": 25,
+      "y": 20,
+      "piece": "water_3f_stone_1_0"
+    },
+    {
+      "x": 25,
+      "y": 21,
+      "piece": "outer_corner_sw_stone_1_1"
+    },
+    {
+      "x": 26,
+      "y": 19,
+      "piece": "edge_stone_2_3"
+    },
+    {
+      "x": 26,
+      "y": 20,
+      "piece": "center_stone_2_0"
+    },
+    {
+      "x": 26,
+      "y": 21,
+      "piece": "edge_s_stone_2_1"
+    },
+    {
+      "x": 27,
+      "y": 19,
+      "piece": "outer_corner_ne_stone_3_3"
+    },
+    {
+      "x": 27,
+      "y": 20,
+      "piece": "water_cf_stone_3_0"
+    },
+    {
+      "x": 27,
+      "y": 21,
+      "piece": "outer_corner_se_stone_3_1"
+    },
+    {
+      "x": 28,
+      "y": 20,
+      "piece": "water_08"
+    },
+    {
+      "x": 44,
+      "y": 20,
+      "piece": "water_02"
+    },
+    {
+      "x": 45,
+      "y": 19,
+      "piece": "outer_corner_stone_1_3"
+    },
+    {
+      "x": 45,
+      "y": 20,
+      "piece": "water_3f_stone_1_0"
+    },
+    {
+      "x": 45,
+      "y": 21,
+      "piece": "outer_corner_sw_stone_1_1"
+    },
+    {
+      "x": 46,
+      "y": 19,
+      "piece": "edge_stone_2_3"
+    },
+    {
+      "x": 46,
+      "y": 20,
+      "piece": "center_stone_2_0"
+    },
+    {
+      "x": 46,
+      "y": 21,
+      "piece": "edge_s_stone_2_1"
+    },
+    {
+      "x": 47,
+      "y": 19,
+      "piece": "outer_corner_ne_stone_3_3"
+    },
+    {
+      "x": 47,
+      "y": 20,
+      "piece": "water_cf_stone_3_0"
+    },
+    {
+      "x": 47,
+      "y": 21,
+      "piece": "outer_corner_se_stone_3_1"
+    },
+    {
+      "x": 48,
+      "y": 20,
+      "piece": "water_08"
+    }
+  ]
+}

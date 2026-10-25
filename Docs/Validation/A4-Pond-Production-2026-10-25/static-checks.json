@@ -1,0 +1,12 @@
+{
+  "sourceBefore": "570e5f7b",
+  "changedMap": "Gaegyeong",
+  "changedVisualCells": 22,
+  "otherLayersExact": true,
+  "collisionWaterRoadReachabilityObjectsAndIdsExact": true,
+  "nativeCompositeMatchesApprovedLayers": true,
+  "approvalHashesExact": true,
+  "largeLakeTilesChanged": false,
+  "coverage": "Only approved 22-cell replacement",
+  "sourceApproval": "작은 연못 좋은 것 같아. 승인할게."
+}

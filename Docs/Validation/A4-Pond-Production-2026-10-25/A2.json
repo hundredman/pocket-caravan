@@ -1,0 +1,18 @@
+{
+  "mode": "production",
+  "manifest": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/catalogue.json",
+  "maps": [
+    "Docs/Validation/A4-Pond-Production-2026-10-25/replacement-projection.json"
+  ],
+  "placementsChecked": true,
+  "unprofiledAssets": [],
+  "errors": [],
+  "errorCount": 0,
+  "notChecked": [
+    "visual_style",
+    "actual_user_authorization",
+    "Unity_scene",
+    "gameplay"
+  ],
+  "note": "Only explicitly configured pixel profiles and terrain rules are checked. No art standard is chosen."
+}

@@ -16,9 +16,25 @@ class HumanNpcBindings(unittest.TestCase):
             for sec in ['npcs','villagers']:
                 existing=[{k:v for k,v in n.items() if k!='sprite'} for n in now[sec] if n.get('id')!='naru_well_woman']
                 self.assertEqual(existing,old[sec])
-    def test_old_map_objects_and_terrain_unchanged_apart_from_character_paths(self):
+    def test_old_map_objects_and_terrain_unchanged_except_approved_pond(self):
         for mid,old in read('Tools/Integration/Fixtures/c1_legacy_identity.json')['maps'].items():
             now=read(old['jsonPath']);terrain={k:v for k,v in now.items() if k!='objects'}
+            if mid=='Gaegyeong':
+                # Preserve the C1 identity baseline while permitting only the approved A4 cells.
+                prior=read('Docs/Validation/A4-Pond-Production-2026-10-25/Gaegyeong-before.json')
+                sites={(p['x'],p['y']):p['piece'] for p in read('Tools/MapGen/pond_layout.json')['placements']}
+                old_palette={name:index for index,name in enumerate(prior['palette'])}
+                for layer in ('ground','deco','obj','high'):
+                    restored=[]
+                    for index,pi in enumerate(now[layer]):
+                        name=now['palette'][pi];cell=(index%now['w'],index//now['w'])
+                        if layer=='ground' and cell in sites:
+                            self.assertEqual(name,'pond_'+sites[cell])
+                            name=prior['palette'][prior[layer][index]]
+                        self.assertIn(name,old_palette)
+                        restored.append(old_palette[name])
+                    terrain[layer]=restored
+                terrain['palette']=prior['palette']
             self.assertEqual(digest(terrain),old['terrainSHA256'],mid)
             objects=[{k:v for k,v in o.items() if k!='character'} for o in now['objects'] if o.get('npc')!='naru_well_woman']
             self.assertEqual(objects,old['objects'],mid)

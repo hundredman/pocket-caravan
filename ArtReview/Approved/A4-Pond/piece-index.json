@@ -1,0 +1,520 @@
+{
+  "topologyBits": [
+    "N",
+    "E",
+    "S",
+    "W",
+    "NE",
+    "SE",
+    "SW",
+    "NW"
+  ],
+  "cells": [
+    {
+      "mask": 0,
+      "piece": "water_00",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 1,
+      "piece": "water_01",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 2,
+      "piece": "water_02",
+      "rect": [
+        32,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 3,
+      "piece": "water_03",
+      "rect": [
+        48,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 4,
+      "piece": "water_04",
+      "rect": [
+        64,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 5,
+      "piece": "water_05",
+      "rect": [
+        80,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 6,
+      "piece": "water_06",
+      "rect": [
+        96,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 7,
+      "piece": "water_07",
+      "rect": [
+        112,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 8,
+      "piece": "water_08",
+      "rect": [
+        0,
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 9,
+      "piece": "water_09",
+      "rect": [
+        16,
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 10,
+      "piece": "water_0a",
+      "rect": [
+        32,
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 11,
+      "piece": "water_0b",
+      "rect": [
+        48,
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 12,
+      "piece": "water_0c",
+      "rect": [
+        64,
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 13,
+      "piece": "water_0d",
+      "rect": [
+        80,
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 14,
+      "piece": "water_0e",
+      "rect": [
+        96,
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 15,
+      "piece": "water_0f",
+      "rect": [
+        112,
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 19,
+      "piece": "outer_corner_sw",
+      "rect": [
+        0,
+        32,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 23,
+      "piece": "water_17",
+      "rect": [
+        16,
+        32,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 27,
+      "piece": "water_1b",
+      "rect": [
+        32,
+        32,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 31,
+      "piece": "water_1f",
+      "rect": [
+        48,
+        32,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 38,
+      "piece": "outer_corner",
+      "rect": [
+        64,
+        32,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 39,
+      "piece": "water_27",
+      "rect": [
+        80,
+        32,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 46,
+      "piece": "water_2e",
+      "rect": [
+        96,
+        32,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 47,
+      "piece": "water_2f",
+      "rect": [
+        112,
+        32,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 55,
+      "piece": "edge_w",
+      "rect": [
+        0,
+        48,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 63,
+      "piece": "water_3f",
+      "rect": [
+        16,
+        48,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 76,
+      "piece": "outer_corner_ne",
+      "rect": [
+        32,
+        48,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 77,
+      "piece": "water_4d",
+      "rect": [
+        48,
+        48,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 78,
+      "piece": "water_4e",
+      "rect": [
+        64,
+        48,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 79,
+      "piece": "water_4f",
+      "rect": [
+        80,
+        48,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 95,
+      "piece": "water_5f",
+      "rect": [
+        96,
+        48,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 110,
+      "piece": "edge",
+      "rect": [
+        112,
+        48,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 111,
+      "piece": "water_6f",
+      "rect": [
+        0,
+        64,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 127,
+      "piece": "inner_corner",
+      "rect": [
+        16,
+        64,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 137,
+      "piece": "outer_corner_se",
+      "rect": [
+        32,
+        64,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 139,
+      "piece": "water_8b",
+      "rect": [
+        48,
+        64,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 141,
+      "piece": "water_8d",
+      "rect": [
+        64,
+        64,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 143,
+      "piece": "water_8f",
+      "rect": [
+        80,
+        64,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 155,
+      "piece": "edge_s",
+      "rect": [
+        96,
+        64,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 159,
+      "piece": "water_9f",
+      "rect": [
+        112,
+        64,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 175,
+      "piece": "water_af",
+      "rect": [
+        0,
+        80,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 191,
+      "piece": "inner_corner_sw",
+      "rect": [
+        16,
+        80,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 205,
+      "piece": "edge_e",
+      "rect": [
+        32,
+        80,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 207,
+      "piece": "water_cf",
+      "rect": [
+        48,
+        80,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 223,
+      "piece": "inner_corner_se",
+      "rect": [
+        64,
+        80,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 239,
+      "piece": "inner_corner_ne",
+      "rect": [
+        80,
+        80,
+        16,
+        16
+      ]
+    },
+    {
+      "mask": 255,
+      "piece": "center",
+      "rect": [
+        96,
+        80,
+        16,
+        16
+      ]
+    },
+    {
+      "piece": "ripple_0",
+      "rect": [
+        112,
+        80,
+        16,
+        16
+      ]
+    },
+    {
+      "piece": "ripple_1",
+      "rect": [
+        0,
+        96,
+        16,
+        16
+      ]
+    },
+    {
+      "piece": "ripple_2",
+      "rect": [
+        16,
+        96,
+        16,
+        16
+      ]
+    },
+    {
+      "piece": "ripple_3",
+      "rect": [
+        32,
+        96,
+        16,
+        16
+      ]
+    }
+  ]
+}

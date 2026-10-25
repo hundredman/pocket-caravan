@@ -43,6 +43,9 @@ def recolor(tile, mode):
 
 def tile_image(key):
     """key = 'sheet:x:y' 또는 'sheet:x:y@recolor'"""
+    if key.startswith('pond:'):
+        from pond_art import image_for
+        return image_for(key)
     if key.startswith(("goryeo:", "goryeo_")):
         from goryeo_art import image_for
         return image_for(key)

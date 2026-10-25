@@ -2,8 +2,10 @@
   "date": "2026-10-25",
   "userFeedback": "작은 연못은 조금 나아졌는데 밑에 호수는 처음 버전이 더 나은데?",
   "pond": {
-    "status": "pending",
-    "note": "개선 평가만 받음. 최종 승인 아님. 작은 연못 경계 시안은 검토 대상으로 유지"
+    "status": "approved",
+    "note": "2026-10-25 작은 연못 경계 본편 적용 승인. 큰 호수/물결 애니메이션 제외",
+    "approvalStatement": "작은 연못 좋은 것 같아. 승인할게.",
+    "evidence": "ArtReview/Approved/A4-Pond/approval.md"
   },
   "lake": {
     "status": "changes_requested",

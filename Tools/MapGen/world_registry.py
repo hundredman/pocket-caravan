@@ -68,6 +68,7 @@ def atlas_content():
     from compact import build as compact
     from broad_regions import build as broad
     from npc_bindings import apply as bind_characters
-    final = bind_characters(apply(broad(compact(build(maps)))))
+    from pond_art import apply as apply_pond
+    final = apply_pond(bind_characters(apply(broad(compact(build(maps))))))
     by_id={m.id:m for m in final}
     return entries, [by_id[e["mapId"]] for e in entries]

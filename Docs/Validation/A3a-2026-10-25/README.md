@@ -4,8 +4,8 @@
 
 ## 범위와 수량
 
-- 등록 맵 11개, 기록 스탬프 634개, 실제 사용 타일 645종.
-- 정적 후보 65곳, 현재 생성/이미지 경로에서 관찰한 변형 호출 879회.
+- 등록 맵 11개, 기록 스탬프 634개, 실제 사용 타일 654종.
+- 정적 후보 65곳, 현재 생성/이미지 경로에서 관찰한 변형 호출 875회.
 - 같은 개체의 접촉/겹침 후보 54쌍. 나무 군집 등 정상 사용도 포함한다.
 
 ## 우선 확인할 항목
@@ -15,7 +15,7 @@
 - tiles.FIELD/field_rect: 언덕 계열 조각을 밭으로 사용하는 목적 적합성. 단순 crop 검출만으로 위반이라고 확정하지 않는다.
 - 연못/호수: goryeo_lotus 및 water 키의 최종 rowRuns/스탬프 접촉과 화면을 함께 확인한다. 물 타일과 장식 개체를 같은 용도로 취급하지 않는다.
 - C3a: CUSTOM woodland의 aboveRows=0 및 고정 렌더층 점검. 이전 숲 화면은 진입불가칸 강제 배치였으며 정상 이동 가림 오류로 확정하지 않는다.
-- 현재 아트 유지와 C6의 옛 출처0 목표가 충돌하는 유지 항목은 Claude/사용자 결정이 필요하다. 이 도구는 삭제하지 않는다.
+- Decisions-2026-10-25 2절에 따라 기존 아트는 유지하고 C6에서 같은 모습으로 굽고 등록한다. 이 도구는 삭제/추가 아트 승인을 하지 않는다.
 
 ## 정적 위치 목록
 
@@ -72,18 +72,18 @@
 | `Tools/MapGen/goryeo_art.py:62` | palette_reduction | sprite | `rgb.quantize(colors=12 if name=='paving' else 28, method=Image.Quantize.MEDIANCUT)` |
 | `Tools/MapGen/goryeo_art.py:72` | crop | image_for | `sprite(name, int(sw), int(sh)).crop((int(tx)*16, int(ty)*16, (int(tx)+1)*16, (int(ty)+1)*16))` |
 | `Tools/MapGen/module_art.py:22` | crop | image_for | `t.crop((tx*16,ty*16,(tx+1)*16,(ty+1)*16))` |
-| `Tools/MapGen/tiles.py:52` | tone | tile_image | `tone(base, theme)` |
-| `Tools/MapGen/tiles.py:75` | crop | tile_image | `t.crop((x, y, x + 16, y + 16))` |
-| `Tools/MapGen/tiles.py:87` | transpose | tile_image | `t.transpose(Image.Transpose.ROTATE_270)` |
-| `Tools/MapGen/tiles.py:89` | transpose | tile_image | `t.transpose(Image.Transpose.ROTATE_90)` |
-| `Tools/MapGen/tiles.py:91` | transpose | tile_image | `t.transpose(Image.Transpose.FLIP_LEFT_RIGHT)` |
-| `Tools/MapGen/tiles.py:98` | blend | tile_image | `Image.blend(original,skin_recolor(original,base,next(s for s in SKINS if s[0]==skin_id)),int(amount)/100)` |
-| `Tools/MapGen/tiles.py:105` | crop | tile_image | `sheet(s).crop((x * 16, y * 16, x * 16 + 16, y * 16 + 16))` |
-| `Tools/MapGen/tiles.py:114` | transpose | tile_image | `t.transpose(Image.Transpose.ROTATE_90)` |
-| `Tools/MapGen/tiles.py:116` | recolor | tile_image | `recolor(t.copy(), rc)` |
-| `Tools/MapGen/tiles.py:426` | placement_helper | forest_border | `self.stamp_clipped(self.rng.choice(big), x + self.rng.randint(0, 1), y)` |
-| `Tools/MapGen/tiles.py:431` | placement_helper | forest_border | `self.stamp_clipped(self.rng.choice(kinds), x, y)` |
-| `Tools/MapGen/tiles.py:635` | resample | render | `img.resize((img.width * scale, img.height * scale), Image.NEAREST)` |
+| `Tools/MapGen/tiles.py:55` | tone | tile_image | `tone(base, theme)` |
+| `Tools/MapGen/tiles.py:78` | crop | tile_image | `t.crop((x, y, x + 16, y + 16))` |
+| `Tools/MapGen/tiles.py:90` | transpose | tile_image | `t.transpose(Image.Transpose.ROTATE_270)` |
+| `Tools/MapGen/tiles.py:92` | transpose | tile_image | `t.transpose(Image.Transpose.ROTATE_90)` |
+| `Tools/MapGen/tiles.py:94` | transpose | tile_image | `t.transpose(Image.Transpose.FLIP_LEFT_RIGHT)` |
+| `Tools/MapGen/tiles.py:101` | blend | tile_image | `Image.blend(original,skin_recolor(original,base,next(s for s in SKINS if s[0]==skin_id)),int(amount)/100)` |
+| `Tools/MapGen/tiles.py:108` | crop | tile_image | `sheet(s).crop((x * 16, y * 16, x * 16 + 16, y * 16 + 16))` |
+| `Tools/MapGen/tiles.py:117` | transpose | tile_image | `t.transpose(Image.Transpose.ROTATE_90)` |
+| `Tools/MapGen/tiles.py:119` | recolor | tile_image | `recolor(t.copy(), rc)` |
+| `Tools/MapGen/tiles.py:429` | placement_helper | forest_border | `self.stamp_clipped(self.rng.choice(big), x + self.rng.randint(0, 1), y)` |
+| `Tools/MapGen/tiles.py:434` | placement_helper | forest_border | `self.stamp_clipped(self.rng.choice(kinds), x, y)` |
+| `Tools/MapGen/tiles.py:638` | resample | render | `img.resize((img.width * scale, img.height * scale), Image.NEAREST)` |
 | `Tools/MapGen/validate.py:37` | placement_helper | validate | `probe.stamp_clipped("tree", 1, 1)` |
 | `Tools/MapGen/validate.py:39` | placement_helper | validate | `probe.stamp_clipped("tree", -1, 1)` |
 
@@ -94,8 +94,8 @@
 | 분류 | 사용 키 수 | 예시 키 | 맵·층·첫 좌표 |
 |---|---:|---|---|
 | 고려 원본 추출 | 363 | `goryeo:house:4:3:0:0` | Dakmok / obj / (7, 29) |
-| 즉석 색 변환 | 158 | `boat:0:0@goryeo_jade` | Naru / obj / (18, 26) |
-| 물 조립 타일 | 56 | `water:0:12@wood@goryeo_jade` | Naru / ground / (31, 23) |
+| 즉석 색 변환 | 156 | `boat:0:0@goryeo_jade` | Naru / obj / (18, 26) |
+| 물 조립 타일 | 54 | `water:0:12@wood@goryeo_jade` | Naru / ground / (31, 23) |
 | 연꽃 개체 | 2 | `goryeo_lotus:0:0` | Gaegyeong / deco / (25, 20) |
 | 성장 소품 | 4 | `element:0:1` | Naru / growth / (20, 16) |
 

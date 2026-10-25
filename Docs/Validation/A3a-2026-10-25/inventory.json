@@ -647,9 +647,9 @@
     },
     {
       "file": "Tools/MapGen/tiles.py",
-      "line": 52,
+      "line": 55,
       "column": 16,
-      "endLine": 52,
+      "endLine": 55,
       "operation": "tone",
       "function": "tile_image",
       "expression": "tone(base, theme)",
@@ -662,9 +662,9 @@
     },
     {
       "file": "Tools/MapGen/tiles.py",
-      "line": 75,
+      "line": 78,
       "column": 16,
-      "endLine": 75,
+      "endLine": 78,
       "operation": "crop",
       "function": "tile_image",
       "expression": "t.crop((x, y, x + 16, y + 16))",
@@ -676,9 +676,9 @@
     },
     {
       "file": "Tools/MapGen/tiles.py",
-      "line": 87,
+      "line": 90,
       "column": 20,
-      "endLine": 87,
+      "endLine": 90,
       "operation": "transpose",
       "function": "tile_image",
       "expression": "t.transpose(Image.Transpose.ROTATE_270)",
@@ -690,9 +690,9 @@
     },
     {
       "file": "Tools/MapGen/tiles.py",
-      "line": 89,
+      "line": 92,
       "column": 20,
-      "endLine": 89,
+      "endLine": 92,
       "operation": "transpose",
       "function": "tile_image",
       "expression": "t.transpose(Image.Transpose.ROTATE_90)",
@@ -704,9 +704,9 @@
     },
     {
       "file": "Tools/MapGen/tiles.py",
-      "line": 91,
+      "line": 94,
       "column": 20,
-      "endLine": 91,
+      "endLine": 94,
       "operation": "transpose",
       "function": "tile_image",
       "expression": "t.transpose(Image.Transpose.FLIP_LEFT_RIGHT)",
@@ -718,9 +718,9 @@
     },
     {
       "file": "Tools/MapGen/tiles.py",
-      "line": 98,
+      "line": 101,
       "column": 16,
-      "endLine": 98,
+      "endLine": 101,
       "operation": "blend",
       "function": "tile_image",
       "expression": "Image.blend(original,skin_recolor(original,base,next(s for s in SKINS if s[0]==skin_id)),int(amount)/100)",
@@ -734,9 +734,9 @@
     },
     {
       "file": "Tools/MapGen/tiles.py",
-      "line": 105,
+      "line": 108,
       "column": 9,
-      "endLine": 105,
+      "endLine": 108,
       "operation": "crop",
       "function": "tile_image",
       "expression": "sheet(s).crop((x * 16, y * 16, x * 16 + 16, y * 16 + 16))",
@@ -748,9 +748,9 @@
     },
     {
       "file": "Tools/MapGen/tiles.py",
-      "line": 114,
+      "line": 117,
       "column": 17,
-      "endLine": 114,
+      "endLine": 117,
       "operation": "transpose",
       "function": "tile_image",
       "expression": "t.transpose(Image.Transpose.ROTATE_90)",
@@ -762,9 +762,9 @@
     },
     {
       "file": "Tools/MapGen/tiles.py",
-      "line": 116,
+      "line": 119,
       "column": 13,
-      "endLine": 116,
+      "endLine": 119,
       "operation": "recolor",
       "function": "tile_image",
       "expression": "recolor(t.copy(), rc)",
@@ -777,9 +777,9 @@
     },
     {
       "file": "Tools/MapGen/tiles.py",
-      "line": 426,
+      "line": 429,
       "column": 25,
-      "endLine": 426,
+      "endLine": 429,
       "operation": "placement_helper",
       "function": "forest_border",
       "expression": "self.stamp_clipped(self.rng.choice(big), x + self.rng.randint(0, 1), y)",
@@ -793,9 +793,9 @@
     },
     {
       "file": "Tools/MapGen/tiles.py",
-      "line": 431,
+      "line": 434,
       "column": 21,
-      "endLine": 431,
+      "endLine": 434,
       "operation": "placement_helper",
       "function": "forest_border",
       "expression": "self.stamp_clipped(self.rng.choice(kinds), x, y)",
@@ -809,9 +809,9 @@
     },
     {
       "file": "Tools/MapGen/tiles.py",
-      "line": 635,
+      "line": 638,
       "column": 19,
-      "endLine": 635,
+      "endLine": 638,
       "operation": "resample",
       "function": "render",
       "expression": "img.resize((img.width * scale, img.height * scale), Image.NEAREST)",
@@ -136507,6 +136507,303 @@
         ]
       },
       {
+        "key": "pond:center_stone_2_0",
+        "exportImage": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_center_stone_2_0.png",
+        "size": [
+          16,
+          16
+        ],
+        "uses": [
+          {
+            "map": "Gaegyeong",
+            "layer": "ground",
+            "count": 2,
+            "rowRuns": [
+              [
+                20,
+                26,
+                26
+              ],
+              [
+                20,
+                46,
+                46
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "key": "pond:edge_s_stone_2_1",
+        "exportImage": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_edge_s_stone_2_1.png",
+        "size": [
+          16,
+          16
+        ],
+        "uses": [
+          {
+            "map": "Gaegyeong",
+            "layer": "ground",
+            "count": 2,
+            "rowRuns": [
+              [
+                21,
+                26,
+                26
+              ],
+              [
+                21,
+                46,
+                46
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "key": "pond:edge_stone_2_3",
+        "exportImage": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_edge_stone_2_3.png",
+        "size": [
+          16,
+          16
+        ],
+        "uses": [
+          {
+            "map": "Gaegyeong",
+            "layer": "ground",
+            "count": 2,
+            "rowRuns": [
+              [
+                19,
+                26,
+                26
+              ],
+              [
+                19,
+                46,
+                46
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "key": "pond:outer_corner_ne_stone_3_3",
+        "exportImage": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_outer_corner_ne_stone_3_3.png",
+        "size": [
+          16,
+          16
+        ],
+        "uses": [
+          {
+            "map": "Gaegyeong",
+            "layer": "ground",
+            "count": 2,
+            "rowRuns": [
+              [
+                19,
+                27,
+                27
+              ],
+              [
+                19,
+                47,
+                47
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "key": "pond:outer_corner_se_stone_3_1",
+        "exportImage": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_outer_corner_se_stone_3_1.png",
+        "size": [
+          16,
+          16
+        ],
+        "uses": [
+          {
+            "map": "Gaegyeong",
+            "layer": "ground",
+            "count": 2,
+            "rowRuns": [
+              [
+                21,
+                27,
+                27
+              ],
+              [
+                21,
+                47,
+                47
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "key": "pond:outer_corner_stone_1_3",
+        "exportImage": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_outer_corner_stone_1_3.png",
+        "size": [
+          16,
+          16
+        ],
+        "uses": [
+          {
+            "map": "Gaegyeong",
+            "layer": "ground",
+            "count": 2,
+            "rowRuns": [
+              [
+                19,
+                25,
+                25
+              ],
+              [
+                19,
+                45,
+                45
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "key": "pond:outer_corner_sw_stone_1_1",
+        "exportImage": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_outer_corner_sw_stone_1_1.png",
+        "size": [
+          16,
+          16
+        ],
+        "uses": [
+          {
+            "map": "Gaegyeong",
+            "layer": "ground",
+            "count": 2,
+            "rowRuns": [
+              [
+                21,
+                25,
+                25
+              ],
+              [
+                21,
+                45,
+                45
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "key": "pond:water_02",
+        "exportImage": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_02.png",
+        "size": [
+          16,
+          16
+        ],
+        "uses": [
+          {
+            "map": "Gaegyeong",
+            "layer": "ground",
+            "count": 2,
+            "rowRuns": [
+              [
+                20,
+                24,
+                24
+              ],
+              [
+                20,
+                44,
+                44
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "key": "pond:water_08",
+        "exportImage": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_08.png",
+        "size": [
+          16,
+          16
+        ],
+        "uses": [
+          {
+            "map": "Gaegyeong",
+            "layer": "ground",
+            "count": 2,
+            "rowRuns": [
+              [
+                20,
+                28,
+                28
+              ],
+              [
+                20,
+                48,
+                48
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "key": "pond:water_3f_stone_1_0",
+        "exportImage": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_3f_stone_1_0.png",
+        "size": [
+          16,
+          16
+        ],
+        "uses": [
+          {
+            "map": "Gaegyeong",
+            "layer": "ground",
+            "count": 2,
+            "rowRuns": [
+              [
+                20,
+                25,
+                25
+              ],
+              [
+                20,
+                45,
+                45
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "key": "pond:water_cf_stone_3_0",
+        "exportImage": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_cf_stone_3_0.png",
+        "size": [
+          16,
+          16
+        ],
+        "uses": [
+          {
+            "map": "Gaegyeong",
+            "layer": "ground",
+            "count": 2,
+            "rowRuns": [
+              [
+                20,
+                27,
+                27
+              ],
+              [
+                20,
+                47,
+                47
+              ]
+            ]
+          }
+        ]
+      },
+      {
         "key": "water:0:12@wood@goryeo_jade",
         "exportImage": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_0_12_wood_goryeo_jade.png",
         "size": [
@@ -136779,23 +137076,6 @@
                 57,
                 6,
                 6
-              ]
-            ]
-          },
-          {
-            "map": "Gaegyeong",
-            "layer": "ground",
-            "count": 2,
-            "rowRuns": [
-              [
-                19,
-                25,
-                25
-              ],
-              [
-                19,
-                45,
-                45
               ]
             ]
           },
@@ -138702,7 +138982,7 @@
           {
             "map": "Gaegyeong",
             "layer": "ground",
-            "count": 7,
+            "count": 5,
             "rowRuns": [
               [
                 5,
@@ -138728,16 +139008,6 @@
                 9,
                 35,
                 35
-              ],
-              [
-                21,
-                25,
-                25
-              ],
-              [
-                21,
-                45,
-                45
               ]
             ]
           },
@@ -138839,33 +139109,6 @@
                 22,
                 99,
                 99
-              ]
-            ]
-          }
-        ]
-      },
-      {
-        "key": "water:0:9@goryeo_jade",
-        "exportImage": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_0_9_goryeo_jade.png",
-        "size": [
-          16,
-          16
-        ],
-        "uses": [
-          {
-            "map": "Gaegyeong",
-            "layer": "ground",
-            "count": 2,
-            "rowRuns": [
-              [
-                20,
-                24,
-                24
-              ],
-              [
-                20,
-                44,
-                44
               ]
             ]
           }
@@ -139292,22 +139535,12 @@
           {
             "map": "Gaegyeong",
             "layer": "ground",
-            "count": 72,
+            "count": 70,
             "rowRuns": [
               [
                 0,
                 0,
                 69
-              ],
-              [
-                19,
-                26,
-                26
-              ],
-              [
-                19,
-                46,
-                46
               ]
             ]
           },
@@ -140535,7 +140768,7 @@
           {
             "map": "Gaegyeong",
             "layer": "ground",
-            "count": 448,
+            "count": 446,
             "rowRuns": [
               [
                 1,
@@ -140576,16 +140809,6 @@
                 8,
                 36,
                 66
-              ],
-              [
-                20,
-                26,
-                26
-              ],
-              [
-                20,
-                46,
-                46
               ]
             ]
           },
@@ -141698,7 +141921,7 @@
           {
             "map": "Gaegyeong",
             "layer": "ground",
-            "count": 66,
+            "count": 64,
             "rowRuns": [
               [
                 4,
@@ -141734,16 +141957,6 @@
                 9,
                 36,
                 66
-              ],
-              [
-                21,
-                26,
-                26
-              ],
-              [
-                21,
-                46,
-                46
               ]
             ]
           },
@@ -142157,23 +142370,6 @@
                 45,
                 12,
                 12
-              ]
-            ]
-          },
-          {
-            "map": "Gaegyeong",
-            "layer": "ground",
-            "count": 2,
-            "rowRuns": [
-              [
-                19,
-                27,
-                27
-              ],
-              [
-                19,
-                47,
-                47
               ]
             ]
           },
@@ -144107,22 +144303,12 @@
           {
             "map": "Gaegyeong",
             "layer": "ground",
-            "count": 3,
+            "count": 1,
             "rowRuns": [
               [
                 9,
                 67,
                 67
-              ],
-              [
-                21,
-                27,
-                27
-              ],
-              [
-                21,
-                47,
-                47
               ]
             ]
           },
@@ -144294,33 +144480,6 @@
                 18,
                 60,
                 60
-              ]
-            ]
-          }
-        ]
-      },
-      {
-        "key": "water:2:9@goryeo_jade",
-        "exportImage": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_2_9_goryeo_jade.png",
-        "size": [
-          16,
-          16
-        ],
-        "uses": [
-          {
-            "map": "Gaegyeong",
-            "layer": "ground",
-            "count": 2,
-            "rowRuns": [
-              [
-                20,
-                28,
-                28
-              ],
-              [
-                20,
-                48,
-                48
               ]
             ]
           }
@@ -144563,22 +144722,12 @@
           {
             "map": "Gaegyeong",
             "layer": "ground",
-            "count": 3,
+            "count": 1,
             "rowRuns": [
               [
                 8,
                 67,
                 67
-              ],
-              [
-                20,
-                27,
-                27
-              ],
-              [
-                20,
-                47,
-                47
               ]
             ]
           },
@@ -145064,7 +145213,7 @@
           {
             "map": "Gaegyeong",
             "layer": "ground",
-            "count": 7,
+            "count": 5,
             "rowRuns": [
               [
                 4,
@@ -145090,16 +145239,6 @@
                 8,
                 35,
                 35
-              ],
-              [
-                20,
-                25,
-                25
-              ],
-              [
-                20,
-                45,
-                45
               ]
             ]
           },
@@ -157083,7 +157222,7 @@
         "exportKey": "boat:0:0@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157102,7 +157241,7 @@
         "exportKey": "boat:0:1@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157121,7 +157260,7 @@
         "exportKey": "boat:1:0@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157140,7 +157279,7 @@
         "exportKey": "boat:1:1@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157159,7 +157298,7 @@
         "exportKey": "boat:2:0@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157178,7 +157317,7 @@
         "exportKey": "boat:2:1@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157197,7 +157336,7 @@
         "exportKey": "boat:3:0@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157216,7 +157355,7 @@
         "exportKey": "boat:3:1@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157235,7 +157374,7 @@
         "exportKey": "boat:4:0@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157254,7 +157393,7 @@
         "exportKey": "boat:4:1@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157273,7 +157412,7 @@
         "exportKey": "detail:0:2@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157292,7 +157431,7 @@
         "exportKey": "detail:0:2@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157311,7 +157450,7 @@
         "exportKey": "detail:1:2@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157330,7 +157469,7 @@
         "exportKey": "detail:1:2@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157349,7 +157488,7 @@
         "exportKey": "detail:2:2@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157368,7 +157507,7 @@
         "exportKey": "detail:2:2@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157387,7 +157526,7 @@
         "exportKey": "detail:3:2@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157406,7 +157545,7 @@
         "exportKey": "detail:3:2@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157425,7 +157564,7 @@
         "exportKey": "detail:5:2@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157444,7 +157583,7 @@
         "exportKey": "detail:5:2@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157463,7 +157602,7 @@
         "exportKey": "detail:6:2@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157482,7 +157621,7 @@
         "exportKey": "detail:6:2@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157501,7 +157640,7 @@
         "exportKey": "element:0:3@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157520,7 +157659,7 @@
         "exportKey": "element:0:3@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157539,7 +157678,7 @@
         "exportKey": "element:0:4@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157558,7 +157697,7 @@
         "exportKey": "element:0:4@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157577,7 +157716,7 @@
         "exportKey": "element:12:4@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157596,7 +157735,7 @@
         "exportKey": "element:12:4@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157615,7 +157754,7 @@
         "exportKey": "element:12:5@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157634,7 +157773,7 @@
         "exportKey": "element:12:5@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157653,7 +157792,7 @@
         "exportKey": "element:13:4@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157672,7 +157811,7 @@
         "exportKey": "element:13:4@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157691,7 +157830,7 @@
         "exportKey": "element:13:5@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157710,7 +157849,7 @@
         "exportKey": "element:13:5@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157729,7 +157868,7 @@
         "exportKey": "element:13:6@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157748,7 +157887,7 @@
         "exportKey": "element:13:6@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157767,7 +157906,7 @@
         "exportKey": "element:14:2@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157786,7 +157925,7 @@
         "exportKey": "element:14:3@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157805,7 +157944,7 @@
         "exportKey": "element:14:4@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157824,7 +157963,7 @@
         "exportKey": "element:14:4@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157843,7 +157982,7 @@
         "exportKey": "element:14:5@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157862,7 +158001,7 @@
         "exportKey": "element:14:5@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157881,7 +158020,7 @@
         "exportKey": "element:14:6@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157900,7 +158039,7 @@
         "exportKey": "element:14:6@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157919,7 +158058,7 @@
         "exportKey": "element:15:2@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157938,7 +158077,7 @@
         "exportKey": "element:15:3@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157957,7 +158096,7 @@
         "exportKey": "element:15:4@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157976,7 +158115,7 @@
         "exportKey": "element:15:4@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -157995,7 +158134,7 @@
         "exportKey": "element:15:5@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158014,7 +158153,7 @@
         "exportKey": "element:15:5@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158033,7 +158172,7 @@
         "exportKey": "element:15:6@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158052,7 +158191,7 @@
         "exportKey": "element:15:6@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158071,7 +158210,7 @@
         "exportKey": "element:1:3@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158090,7 +158229,7 @@
         "exportKey": "element:1:3@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158109,7 +158248,7 @@
         "exportKey": "element:1:4@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158128,7 +158267,7 @@
         "exportKey": "element:1:4@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158147,7 +158286,7 @@
         "exportKey": "element:7:1@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158166,7 +158305,7 @@
         "exportKey": "element:7:1@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158185,7 +158324,7 @@
         "exportKey": "element:7:2@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158204,7 +158343,7 @@
         "exportKey": "element:7:2@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158223,7 +158362,7 @@
         "exportKey": "floor:0:12@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158242,7 +158381,7 @@
         "exportKey": "floor:0:12@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158261,7 +158400,7 @@
         "exportKey": "floor:1:12@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158280,7 +158419,7 @@
         "exportKey": "floor:1:12@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158299,7 +158438,7 @@
         "exportKey": "floor:1:8@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158318,7 +158457,7 @@
         "exportKey": "floor:1:8@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158337,7 +158476,7 @@
         "exportKey": "floor:2:11@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158356,7 +158495,7 @@
         "exportKey": "floor:2:11@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158375,7 +158514,7 @@
         "exportKey": "floor:2:12@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158394,7 +158533,7 @@
         "exportKey": "floor:2:12@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158413,7 +158552,7 @@
         "exportKey": "floor:3:11@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158432,7 +158571,7 @@
         "exportKey": "floor:3:11@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158451,7 +158590,7 @@
         "exportKey": "floor:3:12@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158470,7 +158609,7 @@
         "exportKey": "floor:3:12@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158489,7 +158628,7 @@
         "exportKey": "floor:4:12@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158508,7 +158647,7 @@
         "exportKey": "floor:4:12@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158527,7 +158666,7 @@
         "exportKey": "water:0:12@wood@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158546,7 +158685,7 @@
         "exportKey": "water:0:13@wood@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158565,7 +158704,7 @@
         "exportKey": "water:0:14@wood@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158584,7 +158723,7 @@
         "exportKey": "water:0:6@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158603,7 +158742,7 @@
         "exportKey": "water:0:6@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158622,7 +158761,7 @@
         "exportKey": "water:0:7@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158641,7 +158780,7 @@
         "exportKey": "water:0:7@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158660,7 +158799,7 @@
         "exportKey": "water:0:8@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158676,29 +158815,10 @@
         "count": 1
       },
       {
-        "exportKey": "water:0:9@goryeo_jade",
-        "operation": "tone",
-        "file": "Tools/MapGen/tiles.py",
-        "line": 52,
-        "function": "tile_image",
-        "parameters": {
-          "arguments": [
-            "water:0:9",
-            "jade"
-          ]
-        },
-        "context": {
-          "key": "water:0:9@goryeo_jade",
-          "base": "water:0:9",
-          "theme": "jade"
-        },
-        "count": 1
-      },
-      {
         "exportKey": "water:1:13@wood@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158717,7 +158837,7 @@
         "exportKey": "water:1:13@wood@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158736,7 +158856,7 @@
         "exportKey": "water:1:6@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158755,7 +158875,7 @@
         "exportKey": "water:1:6@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158774,7 +158894,7 @@
         "exportKey": "water:1:7@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158793,7 +158913,7 @@
         "exportKey": "water:1:7@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158812,7 +158932,7 @@
         "exportKey": "water:1:8@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158831,7 +158951,7 @@
         "exportKey": "water:1:8@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158850,7 +158970,7 @@
         "exportKey": "water:1:9@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158869,7 +158989,7 @@
         "exportKey": "water:1:9@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158888,7 +159008,7 @@
         "exportKey": "water:2:12@wood@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158907,7 +159027,7 @@
         "exportKey": "water:2:13@wood@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158926,7 +159046,7 @@
         "exportKey": "water:2:14@wood@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158945,7 +159065,7 @@
         "exportKey": "water:2:6@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158964,7 +159084,7 @@
         "exportKey": "water:2:6@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -158983,7 +159103,7 @@
         "exportKey": "water:2:7@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159002,7 +159122,7 @@
         "exportKey": "water:2:7@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159021,7 +159141,7 @@
         "exportKey": "water:2:8@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159040,7 +159160,7 @@
         "exportKey": "water:2:8@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159056,29 +159176,10 @@
         "count": 1
       },
       {
-        "exportKey": "water:2:9@goryeo_jade",
-        "operation": "tone",
-        "file": "Tools/MapGen/tiles.py",
-        "line": 52,
-        "function": "tile_image",
-        "parameters": {
-          "arguments": [
-            "water:2:9",
-            "jade"
-          ]
-        },
-        "context": {
-          "key": "water:2:9@goryeo_jade",
-          "base": "water:2:9",
-          "theme": "jade"
-        },
-        "count": 1
-      },
-      {
         "exportKey": "water:3:6@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159097,7 +159198,7 @@
         "exportKey": "water:3:7@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159116,7 +159217,7 @@
         "exportKey": "water:5:7@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159135,7 +159236,7 @@
         "exportKey": "water:5:7@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159154,7 +159255,7 @@
         "exportKey": "water:5:8@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159173,7 +159274,7 @@
         "exportKey": "water:5:8@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159192,7 +159293,7 @@
         "exportKey": "water:6:7@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159211,7 +159312,7 @@
         "exportKey": "water:6:8@goryeo_harvest",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159230,7 +159331,7 @@
         "exportKey": "water:6:8@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159249,7 +159350,7 @@
         "exportKey": "work:0:0@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159268,7 +159369,7 @@
         "exportKey": "work:0:1@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159287,7 +159388,7 @@
         "exportKey": "work:1:0@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159306,7 +159407,7 @@
         "exportKey": "work:1:1@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159325,7 +159426,7 @@
         "exportKey": "work:2:0@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159344,7 +159445,7 @@
         "exportKey": "work:2:1@goryeo_jade",
         "operation": "tone",
         "file": "Tools/MapGen/tiles.py",
-        "line": 52,
+        "line": 55,
         "function": "tile_image",
         "parameters": {
           "arguments": [
@@ -159363,7 +159464,7 @@
         "exportKey": "work:0:0@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 75,
+        "line": 78,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159386,7 +159487,7 @@
         "exportKey": "work:0:1@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 75,
+        "line": 78,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159409,7 +159510,7 @@
         "exportKey": "work:1:0@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 75,
+        "line": 78,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159432,7 +159533,7 @@
         "exportKey": "work:1:1@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 75,
+        "line": 78,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159455,7 +159556,7 @@
         "exportKey": "work:2:0@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 75,
+        "line": 78,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159478,7 +159579,7 @@
         "exportKey": "work:2:1@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 75,
+        "line": 78,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159501,7 +159602,7 @@
         "exportKey": "boat:0:0@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159523,7 +159624,7 @@
         "exportKey": "boat:0:1@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159545,7 +159646,7 @@
         "exportKey": "boat:1:0@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159567,7 +159668,7 @@
         "exportKey": "boat:1:1@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159589,7 +159690,7 @@
         "exportKey": "boat:2:0@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159611,7 +159712,7 @@
         "exportKey": "boat:2:1@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159633,7 +159734,7 @@
         "exportKey": "boat:3:0@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159655,7 +159756,7 @@
         "exportKey": "boat:3:1@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159677,7 +159778,7 @@
         "exportKey": "boat:4:0@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159699,7 +159800,7 @@
         "exportKey": "boat:4:1@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159721,7 +159822,7 @@
         "exportKey": "detail:0:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159743,7 +159844,7 @@
         "exportKey": "detail:0:2@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159765,7 +159866,7 @@
         "exportKey": "detail:0:2@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159787,7 +159888,7 @@
         "exportKey": "detail:0:2@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159809,7 +159910,7 @@
         "exportKey": "detail:1:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159831,7 +159932,7 @@
         "exportKey": "detail:1:2@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159853,7 +159954,7 @@
         "exportKey": "detail:1:2@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159875,7 +159976,7 @@
         "exportKey": "detail:1:2@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159897,7 +159998,7 @@
         "exportKey": "detail:2:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159919,7 +160020,7 @@
         "exportKey": "detail:2:2@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159941,7 +160042,7 @@
         "exportKey": "detail:2:2@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159963,7 +160064,7 @@
         "exportKey": "detail:2:2@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -159985,7 +160086,7 @@
         "exportKey": "detail:3:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160007,7 +160108,7 @@
         "exportKey": "detail:3:2@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160029,7 +160130,7 @@
         "exportKey": "detail:3:2@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160051,7 +160152,7 @@
         "exportKey": "detail:3:2@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160073,7 +160174,7 @@
         "exportKey": "detail:5:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160095,7 +160196,7 @@
         "exportKey": "detail:5:2@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160117,7 +160218,7 @@
         "exportKey": "detail:5:2@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160139,7 +160240,7 @@
         "exportKey": "detail:5:2@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160161,7 +160262,7 @@
         "exportKey": "detail:6:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160183,7 +160284,7 @@
         "exportKey": "detail:6:2@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160205,7 +160306,7 @@
         "exportKey": "detail:6:2@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160227,7 +160328,7 @@
         "exportKey": "detail:6:2@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160249,7 +160350,7 @@
         "exportKey": "element:0:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160271,7 +160372,7 @@
         "exportKey": "element:0:3",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160293,7 +160394,7 @@
         "exportKey": "element:0:3@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160315,7 +160416,7 @@
         "exportKey": "element:0:3@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160337,7 +160438,7 @@
         "exportKey": "element:0:4",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160359,7 +160460,7 @@
         "exportKey": "element:0:4@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160381,7 +160482,7 @@
         "exportKey": "element:0:4@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160403,7 +160504,7 @@
         "exportKey": "element:11:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160425,7 +160526,7 @@
         "exportKey": "element:12:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160447,7 +160548,7 @@
         "exportKey": "element:12:4@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160469,7 +160570,7 @@
         "exportKey": "element:12:4@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160491,7 +160592,7 @@
         "exportKey": "element:12:5@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160513,7 +160614,7 @@
         "exportKey": "element:12:5@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160535,7 +160636,7 @@
         "exportKey": "element:13:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160557,7 +160658,7 @@
         "exportKey": "element:13:4@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160579,7 +160680,7 @@
         "exportKey": "element:13:4@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160601,7 +160702,7 @@
         "exportKey": "element:13:5@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160623,7 +160724,7 @@
         "exportKey": "element:13:5@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160645,7 +160746,7 @@
         "exportKey": "element:13:6@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160667,7 +160768,7 @@
         "exportKey": "element:13:6@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160689,7 +160790,7 @@
         "exportKey": "element:14:2@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160711,7 +160812,7 @@
         "exportKey": "element:14:3@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160733,7 +160834,7 @@
         "exportKey": "element:14:4@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160755,7 +160856,7 @@
         "exportKey": "element:14:4@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160777,7 +160878,7 @@
         "exportKey": "element:14:5@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160799,7 +160900,7 @@
         "exportKey": "element:14:5@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160821,7 +160922,7 @@
         "exportKey": "element:14:6@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160843,7 +160944,7 @@
         "exportKey": "element:14:6@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160865,7 +160966,7 @@
         "exportKey": "element:15:2@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160887,7 +160988,7 @@
         "exportKey": "element:15:3@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160909,7 +161010,7 @@
         "exportKey": "element:15:4@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160931,7 +161032,7 @@
         "exportKey": "element:15:4@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160953,7 +161054,7 @@
         "exportKey": "element:15:5@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160975,7 +161076,7 @@
         "exportKey": "element:15:5@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -160997,7 +161098,7 @@
         "exportKey": "element:15:6@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161019,7 +161120,7 @@
         "exportKey": "element:15:6@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161041,7 +161142,7 @@
         "exportKey": "element:1:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161063,7 +161164,7 @@
         "exportKey": "element:1:3",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161085,7 +161186,7 @@
         "exportKey": "element:1:3@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161107,7 +161208,7 @@
         "exportKey": "element:1:3@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161129,7 +161230,7 @@
         "exportKey": "element:1:4",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161151,7 +161252,7 @@
         "exportKey": "element:1:4@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161173,7 +161274,7 @@
         "exportKey": "element:1:4@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161195,7 +161296,7 @@
         "exportKey": "element:3:0",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161217,7 +161318,7 @@
         "exportKey": "element:4:0",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161239,7 +161340,7 @@
         "exportKey": "element:7:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161261,7 +161362,7 @@
         "exportKey": "element:7:1@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161283,7 +161384,7 @@
         "exportKey": "element:7:1@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161305,7 +161406,7 @@
         "exportKey": "element:7:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161327,7 +161428,7 @@
         "exportKey": "element:7:2@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161349,7 +161450,7 @@
         "exportKey": "element:7:2@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161371,7 +161472,7 @@
         "exportKey": "floor:0:12",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161393,7 +161494,7 @@
         "exportKey": "floor:0:12@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161415,7 +161516,7 @@
         "exportKey": "floor:0:12@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161437,7 +161538,7 @@
         "exportKey": "floor:0:12@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161459,7 +161560,7 @@
         "exportKey": "floor:0:7",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161481,7 +161582,7 @@
         "exportKey": "floor:0:8",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161503,7 +161604,7 @@
         "exportKey": "floor:0:9",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161525,7 +161626,7 @@
         "exportKey": "floor:1:10",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161547,7 +161648,7 @@
         "exportKey": "floor:1:12",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161569,7 +161670,7 @@
         "exportKey": "floor:1:12@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161591,7 +161692,7 @@
         "exportKey": "floor:1:12@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161613,7 +161714,7 @@
         "exportKey": "floor:1:12@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161635,7 +161736,7 @@
         "exportKey": "floor:1:7",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161657,7 +161758,7 @@
         "exportKey": "floor:1:8",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161679,7 +161780,7 @@
         "exportKey": "floor:1:8@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161701,7 +161802,7 @@
         "exportKey": "floor:1:8@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161723,7 +161824,7 @@
         "exportKey": "floor:1:9",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161745,7 +161846,7 @@
         "exportKey": "floor:2:10",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161767,7 +161868,7 @@
         "exportKey": "floor:2:11",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161789,7 +161890,7 @@
         "exportKey": "floor:2:11@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161811,7 +161912,7 @@
         "exportKey": "floor:2:11@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161833,7 +161934,7 @@
         "exportKey": "floor:2:11@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161855,7 +161956,7 @@
         "exportKey": "floor:2:12",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161877,7 +161978,7 @@
         "exportKey": "floor:2:12@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161899,7 +162000,7 @@
         "exportKey": "floor:2:12@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161921,7 +162022,7 @@
         "exportKey": "floor:2:12@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161943,7 +162044,7 @@
         "exportKey": "floor:2:7",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161965,7 +162066,7 @@
         "exportKey": "floor:2:8",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -161987,7 +162088,7 @@
         "exportKey": "floor:2:9",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162009,7 +162110,7 @@
         "exportKey": "floor:3:11",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162031,7 +162132,7 @@
         "exportKey": "floor:3:11@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162053,7 +162154,7 @@
         "exportKey": "floor:3:11@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162075,7 +162176,7 @@
         "exportKey": "floor:3:11@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162097,7 +162198,7 @@
         "exportKey": "floor:3:12",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162119,7 +162220,7 @@
         "exportKey": "floor:3:12@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162141,7 +162242,7 @@
         "exportKey": "floor:3:12@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162163,7 +162264,7 @@
         "exportKey": "floor:3:12@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162185,7 +162286,7 @@
         "exportKey": "floor:3:8",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162207,7 +162308,7 @@
         "exportKey": "floor:3:9",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162229,7 +162330,7 @@
         "exportKey": "floor:4:12",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162251,7 +162352,7 @@
         "exportKey": "floor:4:12@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162273,7 +162374,7 @@
         "exportKey": "floor:4:12@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162295,7 +162396,7 @@
         "exportKey": "floor:4:12@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162317,7 +162418,7 @@
         "exportKey": "floor:5:8",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162339,7 +162440,7 @@
         "exportKey": "floor:5:9",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162361,7 +162462,7 @@
         "exportKey": "floor:6:8",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162383,7 +162484,7 @@
         "exportKey": "floor:6:9",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162405,7 +162506,7 @@
         "exportKey": "house:0:0",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162427,7 +162528,7 @@
         "exportKey": "house:0:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162449,7 +162550,7 @@
         "exportKey": "house:0:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162471,7 +162572,7 @@
         "exportKey": "house:19:0",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162493,7 +162594,7 @@
         "exportKey": "house:19:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162515,7 +162616,7 @@
         "exportKey": "house:19:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162537,7 +162638,7 @@
         "exportKey": "house:1:0",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162559,7 +162660,7 @@
         "exportKey": "house:1:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162581,7 +162682,7 @@
         "exportKey": "house:1:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162603,7 +162704,7 @@
         "exportKey": "house:20:0",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162625,7 +162726,7 @@
         "exportKey": "house:20:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162647,7 +162748,7 @@
         "exportKey": "house:20:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162669,7 +162770,7 @@
         "exportKey": "house:21:0",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162691,7 +162792,7 @@
         "exportKey": "house:21:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162713,7 +162814,7 @@
         "exportKey": "house:21:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162735,7 +162836,7 @@
         "exportKey": "house:22:0",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162757,7 +162858,7 @@
         "exportKey": "house:22:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162779,7 +162880,7 @@
         "exportKey": "house:22:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162801,7 +162902,7 @@
         "exportKey": "house:2:0",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162823,7 +162924,7 @@
         "exportKey": "house:2:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162845,7 +162946,7 @@
         "exportKey": "house:2:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162867,7 +162968,7 @@
         "exportKey": "house:3:0",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162889,7 +162990,7 @@
         "exportKey": "house:3:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162911,7 +163012,7 @@
         "exportKey": "house:3:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162933,7 +163034,7 @@
         "exportKey": "house:4:0",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162955,7 +163056,7 @@
         "exportKey": "house:4:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162977,7 +163078,7 @@
         "exportKey": "house:4:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -162999,7 +163100,7 @@
         "exportKey": "house:5:0",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163021,7 +163122,7 @@
         "exportKey": "house:5:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163043,7 +163144,7 @@
         "exportKey": "house:5:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163065,7 +163166,7 @@
         "exportKey": "house:6:0",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163087,7 +163188,7 @@
         "exportKey": "house:6:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163109,7 +163210,7 @@
         "exportKey": "house:6:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163131,7 +163232,7 @@
         "exportKey": "house:7:0",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163153,7 +163254,7 @@
         "exportKey": "house:7:1",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163175,7 +163276,7 @@
         "exportKey": "house:7:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163197,7 +163298,7 @@
         "exportKey": "nature:0:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163219,7 +163320,7 @@
         "exportKey": "nature:0:2@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163241,7 +163342,7 @@
         "exportKey": "nature:0:3",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163263,7 +163364,7 @@
         "exportKey": "nature:0:3@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163285,7 +163386,7 @@
         "exportKey": "nature:0:4",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163307,7 +163408,7 @@
         "exportKey": "nature:0:4@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163329,7 +163430,7 @@
         "exportKey": "nature:1:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163351,7 +163452,7 @@
         "exportKey": "nature:1:2@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163373,7 +163474,7 @@
         "exportKey": "nature:1:3",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163395,7 +163496,7 @@
         "exportKey": "nature:1:3@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163417,7 +163518,7 @@
         "exportKey": "nature:1:4",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163439,7 +163540,7 @@
         "exportKey": "nature:1:4@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163461,7 +163562,7 @@
         "exportKey": "nature:2:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163483,7 +163584,7 @@
         "exportKey": "nature:2:2@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163505,7 +163606,7 @@
         "exportKey": "nature:2:3",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163527,7 +163628,7 @@
         "exportKey": "nature:2:3@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163549,7 +163650,7 @@
         "exportKey": "nature:2:4",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163571,7 +163672,7 @@
         "exportKey": "nature:2:4@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163593,7 +163694,7 @@
         "exportKey": "nature:3:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163615,7 +163716,7 @@
         "exportKey": "nature:3:2@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163637,7 +163738,7 @@
         "exportKey": "nature:3:3",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163659,7 +163760,7 @@
         "exportKey": "nature:3:3@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163681,7 +163782,7 @@
         "exportKey": "nature:3:4",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163703,7 +163804,7 @@
         "exportKey": "nature:3:4@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163725,7 +163826,7 @@
         "exportKey": "nature:4:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163747,7 +163848,7 @@
         "exportKey": "nature:4:2@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163769,7 +163870,7 @@
         "exportKey": "nature:4:3",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163791,7 +163892,7 @@
         "exportKey": "nature:4:3@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163813,7 +163914,7 @@
         "exportKey": "nature:4:4",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163835,7 +163936,7 @@
         "exportKey": "nature:4:4@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163857,7 +163958,7 @@
         "exportKey": "nature:5:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163879,7 +163980,7 @@
         "exportKey": "nature:5:2@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163901,7 +164002,7 @@
         "exportKey": "nature:5:3",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163923,7 +164024,7 @@
         "exportKey": "nature:5:3@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163945,7 +164046,7 @@
         "exportKey": "nature:5:4",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163967,7 +164068,7 @@
         "exportKey": "nature:5:4@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -163989,7 +164090,7 @@
         "exportKey": "nature:6:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164011,7 +164112,7 @@
         "exportKey": "nature:6:2@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164033,7 +164134,7 @@
         "exportKey": "nature:6:3",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164055,7 +164156,7 @@
         "exportKey": "nature:6:3@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164077,7 +164178,7 @@
         "exportKey": "nature:6:4",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164099,7 +164200,7 @@
         "exportKey": "nature:6:4@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164121,7 +164222,7 @@
         "exportKey": "nature:7:2",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164143,7 +164244,7 @@
         "exportKey": "nature:7:2@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164165,7 +164266,7 @@
         "exportKey": "nature:7:3",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164187,7 +164288,7 @@
         "exportKey": "nature:7:3@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164209,7 +164310,7 @@
         "exportKey": "nature:7:4",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164231,7 +164332,7 @@
         "exportKey": "nature:7:4@skin_steppe",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164253,7 +164354,7 @@
         "exportKey": "water:0:12@wood@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164275,7 +164376,7 @@
         "exportKey": "water:0:13@wood@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164297,7 +164398,7 @@
         "exportKey": "water:0:14@wood@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164319,7 +164420,7 @@
         "exportKey": "water:0:6",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164341,7 +164442,7 @@
         "exportKey": "water:0:6@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164363,7 +164464,7 @@
         "exportKey": "water:0:6@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164385,7 +164486,7 @@
         "exportKey": "water:0:7",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164407,7 +164508,7 @@
         "exportKey": "water:0:7@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164429,7 +164530,7 @@
         "exportKey": "water:0:7@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164451,7 +164552,7 @@
         "exportKey": "water:0:8",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164473,7 +164574,7 @@
         "exportKey": "water:0:8@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164495,29 +164596,7 @@
         "exportKey": "water:0:9",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
-        "function": "tile_image",
-        "parameters": {
-          "imageSize": [
-            448,
-            272
-          ],
-          "arguments": [
-            "(0, 144, 16, 160)"
-          ],
-          "keywords": {}
-        },
-        "context": {
-          "key": "water:0:9",
-          "base": "water:0:9"
-        },
-        "count": 1
-      },
-      {
-        "exportKey": "water:0:9@goryeo_jade",
-        "operation": "crop",
-        "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164539,7 +164618,7 @@
         "exportKey": "water:1:13@wood",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164561,7 +164640,7 @@
         "exportKey": "water:1:13@wood@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164583,7 +164662,7 @@
         "exportKey": "water:1:13@wood@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164605,7 +164684,7 @@
         "exportKey": "water:1:6",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164627,7 +164706,7 @@
         "exportKey": "water:1:6@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164649,7 +164728,7 @@
         "exportKey": "water:1:6@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164671,7 +164750,7 @@
         "exportKey": "water:1:7",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164693,7 +164772,7 @@
         "exportKey": "water:1:7@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164715,7 +164794,7 @@
         "exportKey": "water:1:7@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164737,7 +164816,7 @@
         "exportKey": "water:1:8",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164759,7 +164838,7 @@
         "exportKey": "water:1:8@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164781,7 +164860,7 @@
         "exportKey": "water:1:8@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164803,7 +164882,7 @@
         "exportKey": "water:1:9",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164825,7 +164904,7 @@
         "exportKey": "water:1:9@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164847,7 +164926,7 @@
         "exportKey": "water:1:9@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164869,7 +164948,7 @@
         "exportKey": "water:2:12@wood@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164891,7 +164970,7 @@
         "exportKey": "water:2:13@wood@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164913,7 +164992,7 @@
         "exportKey": "water:2:14@wood@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164935,7 +165014,7 @@
         "exportKey": "water:2:6",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164957,7 +165036,7 @@
         "exportKey": "water:2:6@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -164979,7 +165058,7 @@
         "exportKey": "water:2:6@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165001,7 +165080,7 @@
         "exportKey": "water:2:7",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165023,7 +165102,7 @@
         "exportKey": "water:2:7@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165045,7 +165124,7 @@
         "exportKey": "water:2:7@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165067,7 +165146,7 @@
         "exportKey": "water:2:8",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165089,7 +165168,7 @@
         "exportKey": "water:2:8@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165111,7 +165190,7 @@
         "exportKey": "water:2:8@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165133,29 +165212,7 @@
         "exportKey": "water:2:9",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
-        "function": "tile_image",
-        "parameters": {
-          "imageSize": [
-            448,
-            272
-          ],
-          "arguments": [
-            "(32, 144, 48, 160)"
-          ],
-          "keywords": {}
-        },
-        "context": {
-          "key": "water:2:9",
-          "base": "water:2:9"
-        },
-        "count": 1
-      },
-      {
-        "exportKey": "water:2:9@goryeo_jade",
-        "operation": "crop",
-        "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165177,7 +165234,7 @@
         "exportKey": "water:3:6",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165199,7 +165256,7 @@
         "exportKey": "water:3:6@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165221,7 +165278,7 @@
         "exportKey": "water:3:7@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165243,7 +165300,7 @@
         "exportKey": "water:5:7",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165265,7 +165322,7 @@
         "exportKey": "water:5:7@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165287,7 +165344,7 @@
         "exportKey": "water:5:7@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165309,7 +165366,7 @@
         "exportKey": "water:5:8",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165331,7 +165388,7 @@
         "exportKey": "water:5:8@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165353,7 +165410,7 @@
         "exportKey": "water:5:8@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165375,7 +165432,7 @@
         "exportKey": "water:6:7",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165397,7 +165454,7 @@
         "exportKey": "water:6:7@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165419,7 +165476,7 @@
         "exportKey": "water:6:8",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165441,7 +165498,7 @@
         "exportKey": "water:6:8@goryeo_harvest",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
@@ -165463,7 +165520,7 @@
         "exportKey": "water:6:8@goryeo_jade",
         "operation": "crop",
         "file": "Tools/MapGen/tiles.py",
-        "line": 105,
+        "line": 108,
         "function": "tile_image",
         "parameters": {
           "imageSize": [
