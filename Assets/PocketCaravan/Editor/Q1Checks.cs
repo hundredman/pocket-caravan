@@ -29,7 +29,7 @@ namespace PocketCaravan.EditorTools
             Check("17 quests, unique IDs",db.quests.Count==17&&db.quests.Select(q=>q.id).Distinct().Count()==17);
             var go=new GameObject("Q1 isolated tests");go.SetActive(false);var gm=go.AddComponent<GameManager>();
             typeof(GameManager).GetProperty("I").SetValue(null,gm);Set(gm,"Db",db);Set(gm,"Clock",new GameClock());
-            PlayerState Fresh(){var p=new PlayerState{money=100,vehicle=db.startVehicle,origin=db.startOrigin};Set(gm,"Player",p);GameEvents.ClearAll();return p;}
+            PlayerState Fresh(){var p=new PlayerState{money=100,vehicle=db.startVehicle,origin=db.startOrigin};p.reputation.Initialize(ReputationState.HomeOf(p.origin));Set(gm,"Player",p);GameEvents.ClearAll();return p;}
             TownMarket Market(string id){var m=go.AddComponent<TownMarket>();m.town=db.towns.Find(t=>t.id==id);return m;}
             void Trade(TownMarket m,string action,ItemData item)=>typeof(TownMarket).GetMethod(action,BindingFlags.Instance|BindingFlags.NonPublic).Invoke(m,new object[]{item});
             try

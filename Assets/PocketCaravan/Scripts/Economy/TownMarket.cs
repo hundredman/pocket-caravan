@@ -99,7 +99,8 @@ namespace PocketCaravan
             if(marketTab==1) DrawVehicles(p,m);
             else
             {
-                GUILayout.Label(LocalGoods(gm), UIStyle.Small);
+                GUILayout.Label(ReputationPricing.Progress(p,town),UIStyle.Small);
+            GUILayout.Label(LocalGoods(gm), UIStyle.Small);
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("품목 선택 / 무게", UIStyle.Small, GUILayout.Width(144));
                 GUILayout.Label("살 때", UIStyle.Small, GUILayout.Width(44));
@@ -108,7 +109,7 @@ namespace PocketCaravan
                 GUILayout.Label("보유", UIStyle.Small, GUILayout.Width(34));
                 GUILayout.EndHorizontal();
 
-                scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(56));
+                scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(42));
                 foreach (var item in ItemsShown(p))
                 {
                     GUILayout.BeginHorizontal(GUILayout.Height(18));
@@ -119,7 +120,8 @@ namespace PocketCaravan
                     int buy = m.BuyPrice(item), sell = m.SellPrice(item);
                     float avg = p.cargo.AverageCost(item);
                     string sellText = item.questItem ? "맡은 짐" : (p.cargo.Count(item) > 0 && avg > 0 ? (sell > avg ? $"<color=#a8f0a0>{sell}</color>" : $"<color=#ff9a8a>{sell}</color>") : sell.ToString());
-                    GUILayout.Label(m.CanBuy(item) && !item.questItem ? buy.ToString() : "-", GUILayout.Width(44));
+                    string denial=ReputationPricing.BuyDenial(p,town,item);
+                    GUILayout.Label(denial!=null?"신뢰 필요":m.CanBuy(item) && !item.questItem ? buy.ToString() : "-",UIStyle.Small,GUILayout.Width(44));
                     GUILayout.Label(sellText, UIStyle.Rich, GUILayout.Width(44));
                     GUILayout.Label(Mathf.FloorToInt(m.Stock(item)).ToString(), GUILayout.Width(34));
                     GUILayout.Label(p.cargo.Count(item).ToString(), GUILayout.Width(34));
@@ -269,7 +271,7 @@ namespace PocketCaravan
                     if (++shown == 1) break;
                 }
                 if (!any) Line("다른 장터를 방문하면 그곳에서 확인한 시세가 장부에 남습니다.");
-                Line("장부는 과거 첫1개 시세 · L 전체 비교 · 도착 시 변동할 수 있습니다.");
+                Line(p.tradeActivity.Restricted(town.id,selected.id,gm.Clock.TotalHours)?"최근 매입분 · 12시간 동안 되팔기 금액 제한":"장부는 과거 첫1개 시세 · L 전체 비교 · 도착 시 변동할 수 있습니다.");
             }
         }
 
@@ -297,6 +299,8 @@ namespace PocketCaravan
             if (item == null || item.questItem) { message = "맡은 짐은 교역할 수 없습니다."; return; }
             var p = GameManager.I.Player;
             var m = Market;
+            string denial=ReputationPricing.BuyDenial(p,town,item);
+            if(denial!=null){message=denial;Sfx.Play("cancel");return;}
             int price = m.BuyPrice(item);
             if (!m.CanBuy(item)) { message = "재고가 없습니다."; Sfx.Play("cancel"); return; }
             if (p.money < price) { message = "돈이 모자랍니다."; Sfx.Play("cancel"); return; }
@@ -304,6 +308,7 @@ namespace PocketCaravan
             p.money -= price;
             p.cargo.Add(item, 1, price);
             m.RecordBuy(item, price);
+            ReputationPricing.Bought(p,town,item,price,GameManager.I.Clock.TotalHours);
             selected = item;
             Observe();
             message = $"{Josa.Eul(item.displayName)} {price}에 샀습니다.";
@@ -324,6 +329,7 @@ namespace PocketCaravan
             p.cargo.Remove(item);
             p.money += price;
             m.RecordSell(item, price);
+            ReputationPricing.Sold(p,town,item,price,GameManager.I.Clock.TotalHours,GameManager.I.Clock.day);
             selected = item;
             Observe();
             soldThisVisit++;

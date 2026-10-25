@@ -36,7 +36,7 @@ namespace PocketCaravan.EditorTools
                     : q.rewardReputationSize == ReputationSize.None);
                 if (civil) Check(r, q.id + " original legacy promise", q.hasLegacyReward && q.legacyRewardCredit == (q.id == "tutorial_5" ? 2 : 1));
             }
-            foreach (ReputationSize size in Enum.GetValues(typeof(ReputationSize))) Check(r, "zero point table " + size, ReputationAwards.PointsFor(size) == 0);
+            foreach (ReputationSize size in Enum.GetValues(typeof(ReputationSize))) Check(r, "approved point table " + size, ReputationAwards.PointsFor(size) == (size==ReputationSize.None?0:size==ReputationSize.VerySmall?10:size==ReputationSize.Small?25:size==ReputationSize.Medium?75:250));
             var go = new GameObject("R6 isolated logic test"); go.SetActive(false);
             var gm = go.AddComponent<GameManager>();
             typeof(GameManager).GetProperty("I").SetValue(null, gm);
@@ -58,7 +58,7 @@ namespace PocketCaravan.EditorTools
                 var restored = JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(accepted)); qm.Import(restored);
                 qm.TryCompleteAt("r6_npc", out _);
                 Check(r, "noncontract new completion never changes credit", player.credit == 73);
-                Check(r, "new contribution uses captured target and Small size once", events.Count == 1 && events[0].targetId == "goryeo" && events[0].size == ReputationSize.Small && events[0].Points == 0);
+                Check(r, "new contribution uses captured target and Small size once", events.Count == 1 && events[0].targetId == "goryeo" && events[0].size == ReputationSize.Small && events[0].Points == 25);
                 qm.TryCompleteAt("r6_npc", out _); Check(r, "repeat completion cannot replay contribution", events.Count == 1);
                 var finished = new SaveData(); qm.Export(finished); qm.Import(finished);
                 Check(r, "reload completed reward does not replay", events.Count == 1 && !qm.CanStart(test));
@@ -101,8 +101,8 @@ namespace PocketCaravan.EditorTools
                     string target = from == central ? from.id : "goryeo";
                     Check(r, from.id + " " + kind + " one issuer-only contribution", events.Count == 1 && events[0].scope == scope && events[0].targetId == target);
                     Check(r, from.id + " " + kind + " credit retained", p.credit == -3 + (kind == "success" ? 1 : kind == "partial" ? 0 : -1));
-                    Check(r, from.id + " " + kind + " size/direction/zero points", events[0].size == (kind == "lost" ? ReputationSize.Small : kind == "partial" ? ReputationSize.VerySmall : ReputationSize.Medium)
-                        && events[0].direction == (kind == "success" ? 1 : -1) && events[0].Points == 0);
+                    Check(r, from.id + " " + kind + " size/direction/approved points", events[0].size == (kind == "lost" ? ReputationSize.Small : kind == "partial" ? ReputationSize.VerySmall : ReputationSize.Medium)
+                        && events[0].direction == (kind == "success" ? 1 : -1) && events[0].Points == events[0].direction * ReputationAwards.PointsFor(events[0].size));
                 }
                 Subscribe(); ReputationAwards.Emit(ReputationScope.Town, "central_a", ReputationSize.Small, 1, "probe");
                 Check(r, "explicit central target distinct from other town", events.Count == 1 && events[0].targetId == "central_a" && events[0].scope == ReputationScope.Town);

@@ -155,7 +155,8 @@ namespace PocketCaravan
                 Paper(new Rect(p.x,Mathf.Min(p.y,endY),.5f,Mathf.Abs(endY-p.y)),new Color32(105,92,68,130));
                 Paper(new Rect(Mathf.Min(p.x,labelRect.center.x),endY,Mathf.Abs(p.x-labelRect.center.x),.5f),new Color32(105,92,68,130));
                 Paper(labelRect, new Color32(224, 210, 167, 235));
-                GUI.Label(labelRect, label, caption);
+                var repTown=gm.Db.towns.Find(t=>t!=null&&t.id==map.town);
+                GUI.Label(labelRect,new GUIContent(label,repTown!=null?ReputationPricing.Progress(gm.Player,repTown):""),caption);
                 if (area.mapId == here)
                 {
                     var player = FindAnyObjectByType<PlayerMotor>();
@@ -176,10 +177,10 @@ namespace PocketCaravan
             if (currentInfo != null && !string.IsNullOrEmpty(currentInfo.town))
             {
                 var town = gm.Db.towns.Find(t => t != null && t.id == currentInfo.town);
-                if (town != null) current += " · " + gm.GetMarket(town).LevelName;
+                if (town != null) current += " · " + gm.GetMarket(town).LevelName+" · 평판 "+ReputationPricing.Progress(gm.Player,town);
             }
             GUI.Label(new Rect(panel.x + 16, legendY + 17, width - 32, 14),
-                "현재: " + current + "    |    길과 거래처를 살펴보고 돌아올 때 실을 화물도 계획해 보세요.", ink);
+                string.IsNullOrEmpty(GUI.tooltip)?"현재: "+current:"평판: "+GUI.tooltip, ink);
         }
 
         // Greedy placement keeps nearby map names legible as the registered world grows.

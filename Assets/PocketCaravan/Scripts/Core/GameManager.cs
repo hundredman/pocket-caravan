@@ -131,6 +131,7 @@ namespace PocketCaravan
             SceneManager.sceneLoaded -= OnSceneLoaded;
             Player.cargo.Clear();
             Player.ledger.Clear();
+            Player.tradeActivity.Clear();
             Player.contracts.Clear();
             Player.origin = null;
             Player.reputation.Initialize(null);
@@ -376,6 +377,7 @@ namespace PocketCaravan
             };
             foreach (var kv in Player.cargo.Items) { d.cargoItems.Add(kv.Key.id); d.cargoCounts.Add(kv.Value); d.cargoCosts.Add(Player.cargo.TotalCost(kv.Key)); }
             d.storedCargo = Player.warehouse.Export();
+            d.tradeActivity = Player.tradeActivity.Export();
             d.contracts.AddRange(Player.contracts);
             Quests.Export(d);
             foreach (var m in markets.Values) d.markets.Add(m.Export());
@@ -393,6 +395,7 @@ namespace PocketCaravan
             SaveCompatibility.Validate(d, Db, Application.CanStreamedLevelBeLoaded);
             Player.reputation.ImportFrom(d, Db.startOrigin);
             Player.warehouse.Import(d.storedCargo);
+            Player.tradeActivity.Import(d.tradeActivity);
             Player.ledger.Import(d.marketQuotes);
             Player.money = d.money;
             Player.credit = d.credit;

@@ -1,6 +1,6 @@
 {
   "mode": "current",
-  "ratio": 0.09992459826950922,
+  "ratio": 0.099925,
   "walkingCellsPerSecond": 3.8,
   "source": "B2 shortest walks on the complete generated road corridor, including shared junctions; production stays current",
   "towns": [
@@ -81,7 +81,7 @@
     {
       "from": "naru",
       "to": "goryeo_jangdan",
-      "seconds": 10.654021414273307,
+      "seconds": 10.654021,
       "waypoints": [
         [
           244.5,
@@ -244,7 +244,7 @@
     {
       "from": "goryeo_jangdan",
       "to": "goryeo_songak",
-      "seconds": 18.29655577225821,
+      "seconds": 18.296556,
       "waypoints": [
         [
           206.5,
@@ -495,7 +495,7 @@
     {
       "from": "goryeo_songak",
       "to": "dakmok",
-      "seconds": 15.266366660215727,
+      "seconds": 15.266367,
       "waypoints": [
         [
           183.5,
@@ -690,7 +690,7 @@
     {
       "from": "dakmok",
       "to": "gaegyeong",
-      "seconds": 14.758752926496115,
+      "seconds": 14.758753,
       "waypoints": [
         [
           226.5,
@@ -869,7 +869,7 @@
     {
       "from": "gaegyeong",
       "to": "naru",
-      "seconds": 15.710127581535527,
+      "seconds": 15.710128,
       "waypoints": [
         [
           265.5,
@@ -1084,7 +1084,7 @@
     {
       "from": "gaegyeong",
       "to": "goryeo_songak",
-      "seconds": 23.65001518028653,
+      "seconds": 23.650015,
       "waypoints": [
         [
           265.5,
@@ -1423,7 +1423,7 @@
     {
       "from": "goryeo_songak",
       "to": "transit_woodtown",
-      "seconds": 14.067327400714662,
+      "seconds": 14.067327,
       "waypoints": [
         [
           183.5,
@@ -1618,7 +1618,7 @@
     {
       "from": "transit_woodtown",
       "to": "transit_ferry",
-      "seconds": 27.834092795184336,
+      "seconds": 27.834093,
       "waypoints": [
         [
           137.5,
@@ -2009,7 +2009,7 @@
     {
       "from": "transit_woodtown",
       "to": "transit_southport",
-      "seconds": 27.570934900447494,
+      "seconds": 27.570935,
       "waypoints": [
         [
           137.5,
@@ -2396,7 +2396,7 @@
     {
       "from": "transit_woodtown",
       "to": "transit_crossroads",
-      "seconds": 24.20277967065188,
+      "seconds": 24.20278,
       "waypoints": [
         [
           137.5,
@@ -2755,7 +2755,7 @@
     {
       "from": "transit_ferry",
       "to": "transit_crossroads",
-      "seconds": 32.23938631365213,
+      "seconds": 32.239386,
       "waypoints": [
         [
           115.5,
@@ -3150,7 +3150,7 @@
     {
       "from": "transit_southport",
       "to": "transit_crossroads",
-      "seconds": 31.822074093223996,
+      "seconds": 31.822074,
       "waypoints": [
         [
           115.5,
@@ -3571,182 +3571,182 @@
     {
       "from": "gaegyeong",
       "to": "goryeo_songak",
-      "seconds": 22.995993766013214
+      "seconds": 22.995994
     },
     {
       "from": "gaegyeong",
       "to": "dakmok",
-      "seconds": 14.758752926496106
+      "seconds": 14.758753
     },
     {
       "from": "gaegyeong",
       "to": "naru",
-      "seconds": 15.710127581535525
+      "seconds": 15.710128
     },
     {
       "from": "gaegyeong",
       "to": "goryeo_jangdan",
-      "seconds": 25.837833206335144
+      "seconds": 25.837833
     },
     {
       "from": "gaegyeong",
       "to": "transit_woodtown",
-      "seconds": 36.84531402863677
+      "seconds": 36.845314
     },
     {
       "from": "gaegyeong",
       "to": "transit_ferry",
-      "seconds": 63.87123108385657
+      "seconds": 63.871231
     },
     {
       "from": "gaegyeong",
       "to": "transit_southport",
-      "seconds": 63.67192600151955
+      "seconds": 63.671926
     },
     {
       "from": "gaegyeong",
       "to": "transit_crossroads",
-      "seconds": 60.61207942310647
+      "seconds": 60.612079
     },
     {
       "from": "goryeo_songak",
       "to": "dakmok",
-      "seconds": 15.266366660215718
+      "seconds": 15.266367
     },
     {
       "from": "goryeo_songak",
       "to": "naru",
-      "seconds": 28.57841572274911
+      "seconds": 28.578416
     },
     {
       "from": "goryeo_songak",
       "to": "goryeo_jangdan",
-      "seconds": 18.2965557722582
+      "seconds": 18.296556
     },
     {
       "from": "goryeo_songak",
       "to": "transit_woodtown",
-      "seconds": 14.067327400714657
+      "seconds": 14.067327
     },
     {
       "from": "goryeo_songak",
       "to": "transit_ferry",
-      "seconds": 41.09324445593439
+      "seconds": 41.093244
     },
     {
       "from": "goryeo_songak",
       "to": "transit_southport",
-      "seconds": 40.893939373597355
+      "seconds": 40.893939
     },
     {
       "from": "goryeo_songak",
       "to": "transit_crossroads",
-      "seconds": 37.83409279518433
+      "seconds": 37.834093
     },
     {
       "from": "dakmok",
       "to": "naru",
-      "seconds": 29.50655044237573
+      "seconds": 29.50655
     },
     {
       "from": "dakmok",
       "to": "goryeo_jangdan",
-      "seconds": 33.036606643000226
+      "seconds": 33.036607
     },
     {
       "from": "dakmok",
       "to": "transit_woodtown",
-      "seconds": 29.33369406093037
+      "seconds": 29.333694
     },
     {
       "from": "dakmok",
       "to": "transit_ferry",
-      "seconds": 56.359611116150155
+      "seconds": 56.359611
     },
     {
       "from": "dakmok",
       "to": "transit_southport",
-      "seconds": 56.16030603381314
+      "seconds": 56.160306
     },
     {
       "from": "dakmok",
       "to": "transit_crossroads",
-      "seconds": 53.100459455400056
+      "seconds": 53.100459
     },
     {
       "from": "naru",
       "to": "goryeo_jangdan",
-      "seconds": 10.436014276182206
+      "seconds": 10.436014
     },
     {
       "from": "naru",
       "to": "transit_woodtown",
-      "seconds": 41.90142019589901
+      "seconds": 41.90142
     },
     {
       "from": "naru",
       "to": "transit_ferry",
-      "seconds": 68.92733725111881
+      "seconds": 68.927337
     },
     {
       "from": "naru",
       "to": "transit_southport",
-      "seconds": 68.7280321687818
+      "seconds": 68.728032
     },
     {
       "from": "naru",
       "to": "transit_crossroads",
-      "seconds": 65.66818559036871
+      "seconds": 65.668186
     },
     {
       "from": "goryeo_jangdan",
       "to": "transit_woodtown",
-      "seconds": 31.619560245408056
+      "seconds": 31.61956
     },
     {
       "from": "goryeo_jangdan",
       "to": "transit_ferry",
-      "seconds": 58.64547730062785
+      "seconds": 58.645477
     },
     {
       "from": "goryeo_jangdan",
       "to": "transit_southport",
-      "seconds": 58.446172218290826
+      "seconds": 58.446172
     },
     {
       "from": "goryeo_jangdan",
       "to": "transit_crossroads",
-      "seconds": 55.38632563987775
+      "seconds": 55.386326
     },
     {
       "from": "transit_woodtown",
       "to": "transit_ferry",
-      "seconds": 27.39807851900212
+      "seconds": 27.398079
     },
     {
       "from": "transit_woodtown",
       "to": "transit_southport",
-      "seconds": 27.352927762356376
+      "seconds": 27.352928
     },
     {
       "from": "transit_woodtown",
       "to": "transit_crossroads",
-      "seconds": 23.984772532560775
+      "seconds": 23.984773
     },
     {
       "from": "transit_ferry",
       "to": "transit_southport",
-      "seconds": 54.75100628135858
+      "seconds": 54.751006
     },
     {
       "from": "transit_ferry",
       "to": "transit_crossroads",
-      "seconds": 32.2393863136521
+      "seconds": 32.239386
     },
     {
       "from": "transit_southport",
       "to": "transit_crossroads",
-      "seconds": 31.82207409322396
+      "seconds": 31.822074
     }
   ]
 }

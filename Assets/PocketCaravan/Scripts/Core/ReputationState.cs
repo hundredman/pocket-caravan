@@ -8,7 +8,7 @@ namespace PocketCaravan
     public enum ReputationScope { Civilization = 0, Town = 1 }
     public enum ReputationStanding { Hostile = 0, Wary = 1, Neutral = 2, Friendly = 3, Trusted = 4, Respected = 5 }
 
-    /// <summary>Character-owned reputation. No balance thresholds or reward effects are chosen here.</summary>
+    /// <summary>Character-owned standing/progress with the approved six-stage D10 thresholds.</summary>
     public sealed class ReputationState
     {
         public const int FirstSaveVersion = 3;
@@ -78,6 +78,21 @@ namespace PocketCaravan
             if (standing < ReputationStanding.Hostile || standing > ReputationStanding.Respected || progress < 0)
                 throw new InvalidDataException("평판 단계 또는 진행점이 올바르지 않습니다.");
             entries[Key(scope, targetId)] = new Entry { scope = scope, targetId = targetId, standing = standing, progress = progress };
+        }
+
+        static readonly int[] Minima={-6000,-3000,0,3000,9000,21000};
+        static readonly string[] Names={"적대","경계","중립","우호","신뢰","존경"};
+        public static int Score(Entry e)=>(int)Math.Max(-6000,Math.Min(42000,(long)Minima[(int)e.standing]+e.progress));
+        public static string ProgressText(Entry e)
+        {
+            int index=(int)e.standing;string current=Names[index];
+            return index==5?current+" "+(Score(e)-21000)+"/21000 (최고)":current+" "+(Score(e)-Minima[index])+"/"+(Minima[index+1]-Minima[index])+" → "+Names[index+1];
+        }
+        public void Add(ReputationScope scope,string id,int points)
+        {
+            var e=Get(scope,id);int score=(int)Math.Max(-6000,Math.Min(42000,(long)Score(e)+points));
+            int stage=0;for(int i=1;i<Minima.Length;i++)if(score>=Minima[i])stage=i;
+            Set(scope,id,(ReputationStanding)stage,score-Minima[stage]);
         }
 
         public Save Export()

@@ -56,7 +56,7 @@ def build(source=None, walking_speed=None, actual_roads=None, actual_distances=N
         samples=[(lookup[frozenset(('goryeo/'+a,'goryeo/'+b))],sum(abs(x-y) for x,y in zip(coordinates[a],coordinates[b]))) for a,b in itertools.combinations(TOWNS,2)]
     ratio = fit_ratio(samples)
     result=dict(mode='current', ratio=ratio, walkingCellsPerSecond=speed,
-                source='B2 four-neighbor cell routes; production mode stays current' if actual_roads is not None else 'B1 schematic; regenerate from B2 actual routes before B5',
+                source='B2 generated cell routes; production mode stays current' if actual_roads is not None else 'B1 schematic; regenerate from B2 actual routes before B5',
                 towns=[dict(id=BINDINGS[t['key']], layoutKey=t['key'], position=t['position']) for t in layout.data['towns']],
                 roads=[dict(from_=BINDINGS[r['fromKey']], to=BINDINGS[r['toKey']],
                             seconds=sum(math.dist(p, q) for p, q in zip(r['waypoints'], r['waypoints'][1:])) / speed,
@@ -71,7 +71,12 @@ def build(source=None, walking_speed=None, actual_roads=None, actual_distances=N
 def serialized(data):
     # `from` is reserved in Python, but the production DTO uses it as a JSON key.
     data = dict(data, roads=[{('from' if k == 'from_' else k): v for k, v in r.items()} for r in data['roads']])
-    return json.dumps(data, ensure_ascii=False, indent=2) + '\n'
+    def fixed(value):
+        if isinstance(value,float):return round(value,6)
+        if isinstance(value,list):return [fixed(v) for v in value]
+        if isinstance(value,dict):return {k:fixed(v) for k,v in value.items()}
+        return value
+    return json.dumps(fixed(data), ensure_ascii=False, indent=2) + '\n'
 
 
 if __name__ == '__main__':

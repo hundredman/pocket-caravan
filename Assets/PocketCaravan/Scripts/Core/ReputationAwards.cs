@@ -4,7 +4,7 @@ namespace PocketCaravan
 {
     public enum ReputationSize { None = 0, VerySmall = 1, Small = 2, Medium = 3, Large = 4 }
 
-    /// <summary>Contribution intent only. Zero points until R2/D10; never replayed from saves.</summary>
+    /// <summary>Approved contribution points; captured quest rewards are not replayed from saves.</summary>
     public sealed class ReputationContribution
     {
         public readonly ReputationScope scope;
@@ -18,13 +18,16 @@ namespace PocketCaravan
 
     public static class ReputationAwards
     {
-        // Central point table intentionally unconfigured. No standing/progress mutation in R6.
+        // Approved D10 point table. Scope/target are explicit and never inferred from the active map.
         public static int PointsFor(ReputationSize size)
         {
             switch (size)
             {
-                case ReputationSize.None: case ReputationSize.VerySmall: case ReputationSize.Small:
-                case ReputationSize.Medium: case ReputationSize.Large: return 0;
+                case ReputationSize.None: return 0;
+                case ReputationSize.VerySmall: return 10;
+                case ReputationSize.Small: return 25;
+                case ReputationSize.Medium: return 75;
+                case ReputationSize.Large: return 250;
                 default: throw new ArgumentOutOfRangeException(nameof(size));
             }
         }
@@ -49,7 +52,9 @@ namespace PocketCaravan
             PointsFor(size);
             if (string.IsNullOrWhiteSpace(targetId) || (scope != ReputationScope.Civilization && scope != ReputationScope.Town)
                 || (direction != -1 && direction != 1)) throw new ArgumentException("평판 기여 대상/방향이 올바르지 않습니다.");
-            GameEvents.RaiseReputationContribution(new ReputationContribution(scope, targetId, size, direction, sourceId));
+            var contribution=new ReputationContribution(scope,targetId,size,direction,sourceId);
+            GameManager.I?.Player?.reputation.Add(scope,targetId,contribution.Points);
+            GameEvents.RaiseReputationContribution(contribution);
         }
         public static void ForTown(TownData town, ReputationSize size, int direction, string sourceId)
         {

@@ -22,7 +22,7 @@ namespace PocketCaravan {
  public class GameDatabase { public List<ItemData> items=new(); public List<VehicleData> vehicles=new(); public List<QuestData> quests=new(); public List<TownData> towns=new(); }
  public class Contract { public int id,reward; public string fromTown,toTown; public float weight,condition,hours,acceptedAt,deadline,finalDeadline; }
  public class Inventory { readonly Dictionary<ItemData,int> counts=new(); public int Count(ItemData item)=>counts.GetValueOrDefault(item); public bool Remove(ItemData item,int count){if(Count(item)<count)return false;counts[item]-=count;return true;} public void Add(ItemData item,int count,float price=0){counts[item]=Count(item)+count;} }
- public class PlayerState { public int money,credit; public VehicleData vehicle; public Inventory cargo=new(); public List<Contract> contracts=new(); public bool CanCarry(ItemData item,int count)=>true; }
+ public class PlayerState { public ReputationState reputation=new();public TradeActivity tradeActivity=new();public int money,credit; public VehicleData vehicle; public Inventory cargo=new(); public List<Contract> contracts=new(); public bool CanCarry(ItemData item,int count)=>true; }
  public class GameManager { public static GameManager I=new(); public PlayerState Player=new(); public GameDatabase Db=new(); }
  public class MapRoot { public static MapRoot Current; public string mapId; }
  public static class GoryeoLayout { public static string Resolve(string s)=>s; public static bool TryPosition(SaveData d,out UnityEngine.Vector3 v){v=default;return false;} }

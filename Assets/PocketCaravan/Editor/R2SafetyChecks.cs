@@ -27,7 +27,7 @@ namespace PocketCaravan.EditorTools
             {
                 (int buy,int sell) Quote(MarketState m,ItemData item,bool haggle)
                 {
-                    int buy=Mathf.Max(1,Mathf.RoundToInt(m.BuyPrice(item)*.9f)),sell=m.SellPrice(item);
+                    int buy=Mathf.Max(1,Mathf.RoundToInt(m.BaseBuyPrice(item)*.9f)),sell=m.BaseSellPrice(item);
                     if(haggle)buy=Mathf.Max(1,Mathf.RoundToInt(buy*.9f));
                     return(Mathf.Max(buy,sell+1),sell);
                 }

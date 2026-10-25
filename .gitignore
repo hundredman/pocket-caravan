@@ -65,3 +65,6 @@ mono_crash.*
 # B2 temporary Unity review scenes; source and images live in ArtReview
 /Assets/PocketCaravan/Editor/B2Preview/
 /Assets/PocketCaravan/Editor/B2Preview.meta
+
+/Assets/PocketCaravan/Editor/R2Preview/
+/Assets/PocketCaravan/Editor/R2Preview.meta

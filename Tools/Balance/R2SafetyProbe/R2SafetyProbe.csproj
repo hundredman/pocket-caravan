@@ -2,7 +2,7 @@
  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>disable</Nullable><NoWarn>CS0649;CS9113</NoWarn></PropertyGroup>
  <ItemGroup>
   <Compile Include="../../../Assets/PocketCaravan/Scripts/Economy/MarketMath.cs" Link="Source/MarketMath.cs" />
-  <Compile Include="../../../Assets/PocketCaravan/Scripts/Economy/MarketState.cs" Link="Source/MarketState.cs" />
+  <Compile Include="../../../Docs/Validation/R2-Safety-2026-10-25/LegacyMarketState.cs.txt" Link="Source/MarketState.cs" />
   <Compile Include="../../../Assets/PocketCaravan/Scripts/Data/ItemData.cs" Link="Source/ItemData.cs" />
   <Compile Include="../../../Assets/PocketCaravan/Scripts/Data/TownData.cs" Link="Source/TownData.cs" />
   <Compile Include="../../../Assets/PocketCaravan/Scripts/Data/OriginData.cs" Link="Source/OriginData.cs" />

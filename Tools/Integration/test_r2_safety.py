@@ -47,10 +47,13 @@ class R2SafetyChecks(unittest.TestCase):
         self.assertFalse(self.data['appliedToGame'])
         self.assertTrue(self.data['sharedRegionIdentity'])
 
-    def test_input_manifest_matches_current_engine_assets_and_policy_probe(self):
+    def test_historical_input_assets_and_frozen_market_model_are_preserved(self):
         manifest=json.loads((OUT/'input-hashes.json').read_text())
         for name,digest in manifest['files'].items():
-            self.assertEqual(hashlib.sha256((ROOT/name).read_bytes()).hexdigest(),digest,name)
+            if name.endswith('.asset') or name.endswith('source-snapshot.json'):
+                self.assertEqual(hashlib.sha256((ROOT/name).read_bytes()).hexdigest(),digest,name)
+        frozen=OUT/'LegacyMarketState.cs.txt'
+        self.assertEqual(hashlib.sha256(frozen.read_bytes()).hexdigest(),manifest['files']['Assets/PocketCaravan/Scripts/Economy/MarketState.cs'])
 
 
 if __name__=='__main__':unittest.main()

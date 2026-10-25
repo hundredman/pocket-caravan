@@ -30,12 +30,24 @@ namespace PocketCaravan
                 roadName = g < names.Length ? names[g] : g.ToString();
             }
 
-            var r = new Rect(6, 6, 182, 83);
+            var r = new Rect(6, 6, 182, 109);
             GUI.Box(r, "", UIStyle.Box);
             float x = r.x + 8, y = r.y + 5;
             string market = gm.Clock.IsMarketDay ? " <color=#ffd84a>장날</color>" : "";
             GUI.Label(new Rect(x, y - 1, 160, 16), $"{map.displayName}{market}", UIStyle.Rich); y += 13;
             GUI.Label(new Rect(x, y - 1, 160, 16), $"<color=#ffe08a>돈 {p.money}</color>   신용 {p.credit}", UIStyle.Rich); y += 15;
+
+            var marketId=WorldIndex.Get()?.Map(map.mapId)?.town;
+            var town=gm.Db.towns.Find(t=>t!=null&&t.id==marketId);
+            string rep;
+            if(town!=null)
+            {
+                string target=town.region!=null&&!town.region.townReputation?town.region.displayName:town.displayName;
+                rep="평판 "+target+"\n"+ReputationState.ProgressText(ReputationPricing.Entry(p,town));
+            }
+            else if(map.region!=null&&!map.region.townReputation)rep="평판 "+map.region.displayName+"\n"+ReputationState.ProgressText(p.reputation.Get(ReputationScope.Civilization,map.region.id));
+            else rep="마을별 평판\n지도에서 확인";
+            GUI.Label(new Rect(x,y-1,170,24),rep,UIStyle.Wrap);y+=26;
 
             string vehicle = p.vehicle != null ? p.vehicle.displayName : "등짐";
             Gauge(x, ref y, $"{vehicle} {p.TotalWeight:0.#}/{p.Capacity:0}", p.LoadRatio, LoadColor);
