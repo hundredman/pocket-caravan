@@ -267,6 +267,12 @@ namespace PocketCaravan
         {
             float r = UnityEngine.Random.value;
             float salmon = (NorthAtmosphere.AuroraOut ? 0.2f : 0.03f) + (NorthLegends.Blessed ? 0.05f : 0f);
+            if (NorthSave.Get("bait") >= 1f)            // 떠돌이 상인의 황금 미끼: 귀한 물고기가 잘 문다
+            {
+                NorthSave.Add("bait", -1f);
+                salmon += 0.15f;
+                return UnityEngine.Random.value < salmon ? 2 : 1;
+            }
             bool night = GameManager.I != null && GameManager.I.Clock.Daylight < 0.5f;
             float charr = night ? 0.35f : 0.27f;
             return r < salmon ? 2 : r < salmon + charr ? 1 : 0;

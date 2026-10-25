@@ -55,8 +55,8 @@ namespace PocketCaravan
             if (OnSled)
             {
                 if (!north) f *= 0.7f;                                   // 눈 없는 다른 나라
-                else if (map == "north_c_gate") f *= 0.8f;
-                else if (map == "north_c_post" || map == "north_c_sled" || map == "north_c_rune") f *= 0.9f;
+                else if (map == "north_c_road_sw" || map == "north_c_road_se" || map == "north_c_crossing") f *= 0.8f;      // 눈 거의 녹은 아랫줄
+                else if (map == "north_c_snowwood" || map == "north_c_creek" || map == "north_c_runeway") f *= 0.9f;
             }
             return f;
         }

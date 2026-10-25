@@ -21,15 +21,16 @@ namespace PocketCaravan
             { "north_hunter", "모피 사냥꾼 마을" }, { "north_naru", "피오르 나루 마을" },
             { "north_laugar", "라우가르 온천 마을" }, { "north_herd", "순록 고원 마을" },
             { "north_runehill", "룬돌 언덕" }, { "north_icecave", "얼음 동굴 골짜기" }, { "north_pass", "국경 고개" },
-            // 10/24 중앙 경유 구역 (북쪽 삼각형)
-            { "north_c_thaw", "눈 녹는 고갯길" }, { "north_c_west", "서쪽 눈숲 갈림길" }, { "north_c_east", "동쪽 개울 갈림길" },
-            { "north_c_post", "눈길 교역 초소" }, { "north_c_sled", "순록 썰매 정류장" }, { "north_c_rune", "룬돌 언덕 오솔길" },
-            { "north_c_gate", "북문 큰길" },
+            // 10/26 중앙 대륙 북쪽 1/4 (피자 구성: 마을 4곳 + 길 5곳)
+            { "north_c_gatetown", "북문 마을" }, { "north_c_road_nw", "눈숲 고갯길" }, { "north_c_road_ne", "개울 다리길" },
+            { "north_c_snowwood", "눈숲 마을" }, { "north_c_creek", "개울 나루 마을" }, { "north_c_runeway", "룬돌 큰길" },
+            { "north_c_road_sw", "서남 솔숲길" }, { "north_c_road_se", "동남 물가길" }, { "north_c_crossing", "북쪽 길목 마을" },
         };
         static readonly Dictionary<string, string> Towns = new Dictionary<string, string>
         {
             { "north_birka", "north_birka" }, { "north_hunter", "north_hunter" }, { "north_naru", "north_naru" },
-            { "north_laugar", "north_laugar" }, { "north_herd", "north_herd" }, { "north_c_post", "north_post" },
+            { "north_laugar", "north_laugar" }, { "north_herd", "north_herd" }, { "north_c_gatetown", "north_post" },
+            { "north_c_snowwood", "north_cwood" }, { "north_c_creek", "north_ccreek" }, { "north_c_crossing", "north_cross" },
         };
         static readonly Color Ink = new Color32(68, 57, 41, 255);
 

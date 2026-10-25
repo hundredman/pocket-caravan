@@ -252,7 +252,9 @@ namespace PocketCaravan
             if (count > 0) choices.Add(new DialogueUI.Choice($"생선 {count}마리 다 팔기 ({total}냥)", SellAllFish));
             choices.Add(new DialogueUI.Choice("오로라 꿀술 한 잔 (5냥)", DrinkMead));
             choices.Add(new DialogueUI.Choice("구경만 할게요", null));
-            DialogueUI.Show("축제 생선 장수", "오로라 축제다! 오늘 밤엔 생선을 평소의 1.6배로 사 줄게. 얼음 낚시로 잡은 거 있으면 다 가져와!", choices.ToArray());
+            string taught = NorthSocial.Teach("dance");   // 축제에선 다들 춤을 춘다
+            DialogueUI.Show("축제 생선 장수", "오로라 축제다! 오늘 밤엔 생선을 평소의 1.6배로 사 줄게. 얼음 낚시로 잡은 거 있으면 다 가져와!"
+                + (taught != null ? "\n\n(광장 사람들을 따라 춤을 배웠다! R)" : ""), choices.ToArray());
         }
 
         void SellAllFish()

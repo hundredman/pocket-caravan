@@ -51,30 +51,43 @@ namespace PocketCaravan.EditorTools
                 });
             // 좌표는 north.json의 worldX, worldY와 같게 (경제 거리 계산에 쓰임)
             // 10/23: 비르카 = 북유럽 수도 (고려 개경처럼 3등급, 등급·신용별 시설)
-            var birka = Town("Town_Birka", "north_birka", "비르카", new Vector2Int(30, 0), 3);
+            var birka = Town("Town_Birka", "north_birka", "비르카", new Vector2Int(29, 1), 3);
             birka.settlementTier = 3;
             birka.facilities = new System.Collections.Generic.List<TownFacility>
             {
                 new TownFacility { id = "north_capital_rest", displayName = "회관 손님방", kind = FacilityKind.Rest, minTier = 1, minCredit = 0, storageCapacity = 120f },
                 new TownFacility { id = "north_capital_info", displayName = "룬돌 길 안내소", kind = FacilityKind.RouteInformation, minTier = 2, minCredit = 1, storageCapacity = 120f,
-                    description = "동쪽 피오르 길에서 사냥꾼 마을·나루·온천으로 갈라집니다.\n순록 고원은 사냥꾼 마을 너머 동쪽입니다.\n모피는 숲에서 싸고 바닷가에서 비쌉니다." },
+                    description = "동쪽 피오르 길에서 피오르 나루·온천 마을, 트롤 다리 너머 순록 고원으로 갈라집니다.\n남쪽 얼음 나루길을 건너면 국경 고개, 고개 서쪽이 모피 사냥꾼 마을, 고개 아래가 중앙 대륙입니다.\n모피는 숲에서 싸고 바닷가에서 비쌉니다." },
                 new TownFacility { id = "north_capital_warehouse", displayName = "상인 길드 창고", kind = FacilityKind.Warehouse, minTier = 3, minCredit = 3, storageCapacity = 120f },
             };
-            var hunter = Town("Town_Hunter", "north_hunter", "모피 사냥꾼 마을", new Vector2Int(32, 0), 1);
-            var naru = Town("Town_Naru", "north_naru", "피오르 나루 마을", new Vector2Int(31, -1), 1);
-            // 10/23 추가: 피오르 길 북쪽 골짜기의 온천 마을, 사냥꾼 마을 동쪽의 순록 고원 마을
-            var laugar = Town("Town_Laugar", "north_laugar", "라우가르 온천 마을", new Vector2Int(31, 1), 1);
-            var herd = Town("Town_Herd", "north_herd", "순록 고원 마을", new Vector2Int(33, 0), 1);
-            // 10/24 중앙 경유 구역의 교역 초소 (좌표는 임시: 화요일 중앙 합칠 때 다시 정함)
-            var post = Town("Town_NorthPost", "north_post", "눈길 교역 초소", new Vector2Int(29, -2), 1);
-            // 초소는 북유럽 지역(2만 칸)이 아니라 중앙 북쪽 구역 소속 (World/Regions/center_north.json)
-            post.region = Upsert<RegionData>($"{Root}/Data/Center/Region_CenterNorth.asset", r => { r.id = "center_north"; r.displayName = "중앙 북쪽"; r.note = "중앙 10만 칸 중 북쪽 삼각형 (기우 담당, 2만5천 칸)"; });
-            post.facilities = new System.Collections.Generic.List<TownFacility>
+            var hunter = Town("Town_Hunter", "north_hunter", "모피 사냥꾼 마을", new Vector2Int(28, 0), 1);
+            var naru = Town("Town_Naru", "north_naru", "피오르 나루 마을", new Vector2Int(30, 0), 1);
+            // 10/23 추가: 피오르 길 북쪽 골짜기의 온천 마을, 피오르 길 동쪽 트롤 다리 너머의 순록 고원 마을 (10/26 배치 바꿈)
+            var laugar = Town("Town_Laugar", "north_laugar", "라우가르 온천 마을", new Vector2Int(30, 2), 1);
+            var herd = Town("Town_Herd", "north_herd", "순록 고원 마을", new Vector2Int(31, 1), 1);
+            // 10/26 중앙 대륙 북쪽 1/4 (피자 구성): 장터 마을 4곳. 북유럽 지역(2만 칸)이 아니라 중앙 북쪽 구역 소속 (World/Regions/center_north.json)
+            // 좌표는 center_north.json의 worldX, worldY와 같게 (화요일 중앙 합칠 때 다시 정함)
+            var centerNorth = Upsert<RegionData>($"{Root}/Data/Center/Region_CenterNorth.asset", r => { r.id = "center_north"; r.displayName = "중앙 북쪽"; r.note = "중앙 대륙 10만 칸 중 북쪽 1/4 (기우 담당, 2만5천 칸). 마을 4곳 + 길 5곳"; });
+            TownData CenterTown(string file, string id, string name, Vector2Int coord, string rest, string info, string infoText)
             {
-                new TownFacility { id = "north_post_rest", displayName = "초소 여관", kind = FacilityKind.Rest, minTier = 1, minCredit = 0, storageCapacity = 120f },
-                new TownFacility { id = "north_post_info", displayName = "초소 길 안내", kind = FacilityKind.RouteInformation, minTier = 1, minCredit = 0, storageCapacity = 120f,
-                    description = "북쪽 고갯길을 오르면 국경 고개, 그 너머가 비르카입니다.\n남쪽 북문 큰길은 중앙 도시로 이어집니다 (성문 공사 중).\n썰매 정류장은 서쪽, 룬돌 언덕은 동쪽입니다." },
-            };
+                var t = Town(file, id, name, coord, 1);
+                t.region = centerNorth;
+                t.facilities = new System.Collections.Generic.List<TownFacility>
+                {
+                    new TownFacility { id = id + "_rest", displayName = rest, kind = FacilityKind.Rest, minTier = 1, minCredit = 0, storageCapacity = 120f },
+                    new TownFacility { id = id + "_info", displayName = info, kind = FacilityKind.RouteInformation, minTier = 1, minCredit = 0, storageCapacity = 120f, description = infoText },
+                };
+                return t;
+            }
+            // 북문 마을 (id는 예전 교역 초소 north_post 그대로: 저장·소금 산지 유지)
+            var post = CenterTown("Town_NorthPost", "north_post", "북문 마을", new Vector2Int(29, -1), "북문 여관", "북문 길 안내",
+                "북쪽 고개를 오르면 국경 고개, 그 너머가 비르카입니다.\n서쪽 눈숲 고갯길은 눈숲 마을(썰매), 동쪽 개울 다리길은 개울 나루 마을(낚시·나룻배).\n남쪽 룬돌 큰길이 북쪽 길목 마을까지 가장 빠르지만 눈늑대가 나옵니다.");
+            var cwood = CenterTown("Town_NorthCWood", "north_cwood", "눈숲 마을", new Vector2Int(28, -2), "숲 마을 쉼터", "썰매꾼 길 안내",
+                "북쪽 눈숲 고갯길로 북문 마을, 남쪽 서남 솔숲길로 북쪽 길목 마을.\n솔숲길엔 산적이 숨어 있고, 바람 부는 날엔 통나무가 길을 막습니다.\n서쪽은 북서 포구(베네치아 쪽) 길을 닦는 중입니다.");
+            var ccreek = CenterTown("Town_NorthCCreek", "north_ccreek", "개울 나루 마을", new Vector2Int(30, -2), "물방앗간 쉼터", "나루 길 안내",
+                "나룻배를 타면 피오르 나루 마을까지 바로 갑니다 (12냥).\n남쪽 동남 물가길은 눈 녹은 물에 강이 넘칠 때가 있습니다.\n동쪽 다리 너머는 북동 포구(고려 쪽) 길을 닦는 중입니다.");
+            var cross = CenterTown("Town_NorthCross", "north_cross", "북쪽 길목 마을", new Vector2Int(29, -3), "길목 여관", "길목 길 안내",
+                "세 길이 모이는 곳: 룬돌 큰길(가장 빠름, 눈늑대), 서남 솔숲길(산적), 동남 물가길(강 범람).\n남쪽은 대륙 중심으로 이어집니다 (합칠 때 열림).");
 
             ItemData Item(string id, string name, float weight, float price, TownData origin) =>
                 Upsert<ItemData>($"{DataDir}/Item_{id}.asset", i =>
@@ -96,6 +109,10 @@ namespace PocketCaravan.EditorTools
             var cod = Item("north_cod", "얼음 대구", 1f, 9f, naru);
             var charr = Item("north_char", "북극 곤들매기", 1f, 24f, naru);
             var salmon = Item("north_salmon", "황금 연어", 2f, 70f, naru);
+            // 10/26 특산 공방 가공품 (NorthCraft.cs): 재료보다 가볍고 비싸다. 북쪽 산지는 안 팔고, 중앙·비르카에서 비싸게 산다
+            var stockfish = Item("north_stockfish", "말린 대구", 1f, 42f, naru);      // 얼음 대구 3 (9×3)
+            var furcoat = Item("north_furcoat", "털옷", 2f, 88f, hunter);             // 모피 2 (30×2) + 수공 5
+            var herbmead = Item("north_herbmead", "온천 약초 꿀술", 2f, 62f, laugar);  // 꿀술 2 (12×2) + 약초 1 (18)
 
             // 재고: 산지는 크게(싸게), 소비지는 작게(비싸게 팔림). 나루는 배가 모피를 실어 가서 모피 수요가 큼
             birka.stock.AddRange(new[] { S(mead, 30), S(fur, 8), S(amber, 4), S(meat, 15), S(herb, 4), S(cheese, 5) });
@@ -107,10 +124,19 @@ namespace PocketCaravan.EditorTools
             // 교역 초소 = 북쪽 물건을 남쪽으로 내보내는 수출항: 모피·호박 재고가 바닥이라 가장 비싸게 사 준다.
             // 대신 남쪽 소금이 넘친다 (초소에서만 싸게 삼). 사냥꾼 마을·나루는 소금이 귀함 → 소금↓ 모피↑ 왕복 장사
             post.stock.AddRange(new[] { S(salt, 32), S(fur, 2), S(amber, 1), S(mead, 6), S(meat, 6), S(herb, 4), S(cheese, 4) });
+            // 10/26 중앙 북쪽 마을 셋: 눈숲 = 고기·모피가 싸고 소금·꿀술이 귀함 / 개울 나루 = 생선·호박이 싸고 치즈·약초가 귀함
+            // 길목 = 대륙 중심으로 넘기는 곳이라 북쪽 물건(모피·호박·치즈·꿀술)을 비싸게 삼, 소금은 넉넉
+            cwood.stock.AddRange(new[] { S(meat, 26), S(fur, 12), S(cheese, 4), S(salt, 3), S(mead, 3), S(herb, 4), S(amber, 2) });
+            ccreek.stock.AddRange(new[] { S(amber, 8), S(salt, 4), S(mead, 6), S(cheese, 2), S(herb, 2), S(fur, 4), S(meat, 6) });
+            cross.stock.AddRange(new[] { S(salt, 14), S(fur, 2), S(amber, 1), S(cheese, 2), S(mead, 3), S(meat, 6), S(herb, 4) });
             hunter.stock.Add(S(salt, 2)); naru.stock.Add(S(salt, 3)); birka.stock.Add(S(salt, 6)); herd.stock.Add(S(salt, 3)); laugar.stock.Add(S(salt, 4));
             naru.stock.AddRange(new[] { S(cod, 14), S(charr, 4), S(salmon, 1) });
-            foreach (var t in new[] { birka, hunter, laugar, herd, post })
+            foreach (var t in new[] { birka, hunter, laugar, herd, post, cwood, cross })
                 t.stock.AddRange(new[] { S(cod, 3), S(charr, 1), S(salmon, 1) });
+            ccreek.stock.AddRange(new[] { S(cod, 16), S(charr, 6), S(salmon, 1) });
+            // 가공품: 중앙 마을·비르카 장터 목록에 올린다 (값은 산지에서 멀수록 비쌈). 산지 마을엔 두지 않는다
+            foreach (var t in new[] { birka, post, cwood, ccreek, cross })
+                t.stock.AddRange(new[] { S(stockfish, 4), S(furcoat, 4), S(herbmead, 4) });
             // 손수레는 공용 수단(고려 데이터)을 그대로 판다 (팀 규칙: 공통 수단을 지역마다 복제하지 않음)
             var cart = AssetDatabase.LoadAssetAtPath<VehicleData>($"{Root}/Data/Goryeo/Vehicle_Handcart.asset");
             if (cart != null) birka.vehiclesForSale.Add(cart);
@@ -123,7 +149,7 @@ namespace PocketCaravan.EditorTools
                 v.sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Resources/North/Minigame/cargo_v.png");
             });
             herd.vehiclesForSale.Add(sled);
-            foreach (var t in new[] { birka, hunter, naru, laugar, herd, post }) EditorUtility.SetDirty(t);
+            foreach (var t in new[] { birka, hunter, naru, laugar, herd, post, cwood, ccreek, cross }) EditorUtility.SetDirty(t);
 
             // 퀘스트용 물건 (장터에 팔 수 없음)
             ItemData QuestItem(string id, string name, float weight) =>
@@ -144,8 +170,8 @@ namespace PocketCaravan.EditorTools
             db.items.RemoveAll(i => i == null || i.id.StartsWith("north_"));
             db.quests.RemoveAll(q => q == null || q.id.StartsWith("north_"));
             // 북유럽 마을을 앞에 둔다: 손수레 길 안내가 목록에서 처음 찾은 마을(원래는 개경)을 가리키기 때문
-            db.towns.InsertRange(0, new[] { birka, hunter, naru, laugar, herd, post });
-            db.items.AddRange(new[] { mead, fur, amber, meat, herb, cheese, salt, cod, charr, salmon, butter, hay, saltLick, meadJar });
+            db.towns.InsertRange(0, new[] { birka, hunter, naru, laugar, herd, post, cwood, ccreek, cross });
+            db.items.AddRange(new[] { mead, fur, amber, meat, herb, cheese, salt, cod, charr, salmon, stockfish, furcoat, herbmead, butter, hay, saltLick, meadJar });
             db.vehicles.RemoveAll(v => v == null || v.id.StartsWith("north_"));
             db.vehicles.Add(sled);
             db.quests.AddRange(quests);
@@ -187,7 +213,7 @@ namespace PocketCaravan.EditorTools
             var q1 = Q("N1_Butter", q =>
             {
                 q.id = "north_q1_butter"; q.title = "집 보는 남편의 버터 단지"; q.chain = chain; q.giverNpc = Husband;
-                q.summary = "비르카의 남편이 만든 버터 단지를 모피 사냥꾼 마을 들판의 아내에게 전한다. 동쪽 피오르 길에서 큰길을 따라간다.";
+                q.summary = "비르카의 남편이 만든 버터 단지를 모피 사냥꾼 마을 들판의 아내에게 전한다. 남쪽 얼음 나루길을 건너 국경 고개에서 서쪽으로 간다.";
                 q.offerLine = "오늘은 아내랑 일을 바꿨거든. 아내는 들일, 나는 집안일. 그런데 버터를 저어 놨더니 아내가 점심에 먹고 싶다지 뭐야. 사냥꾼 마을 들판에 있으니 이 단지 좀 갖다 주게.";
                 q.giveItem = butter; q.giveCount = 1;
                 q.objectives.Add(O(ObjectiveType.VisitMap, "모피 사냥꾼 마을에 가기", "north_hunter"));
@@ -226,7 +252,7 @@ namespace PocketCaravan.EditorTools
             Q("N5_Troll", q =>
             {
                 q.id = "north_q5_troll"; q.title = "다리 밑 트롤"; q.chain = chain; q.giverNpc = Innkeeper; q.requires.Add(q2);
-                q.summary = "소금 덩이를 사냥꾼 마을 목장의 염소지기 삼형제에게 배달한다. 피오르 길 큰길의 다리에는 트롤 패거리가 산다.";
+                q.summary = "소금 덩이를 사냥꾼 마을 목장의 염소지기 삼형제에게 배달한다. 사냥꾼 마을은 국경 고개 서쪽에 있다.";
                 q.offerLine = "사냥꾼 마을 목장의 염소지기 삼형제가 소금 덩이를 기다린단다. 그런데 큰길 다리 밑에 트롤 패거리가 살아. 통행료를 내든, 냅다 달리든, 숲으로 돌아가든 네가 정하렴.";
                 q.giveItem = saltLick; q.giveCount = 1;
                 q.objectives.Add(O(ObjectiveType.Deliver, "목장의 염소지기 맏형에게 소금 덩이 전하기", Goats, saltLick, 1,
@@ -296,7 +322,7 @@ namespace PocketCaravan.EditorTools
             Q("N8_Sled", q =>
             {
                 q.id = "north_q8_sled"; q.title = "눈보라를 달리는 썰매"; q.chain = "북쪽의 길"; q.giverNpc = Har; q.requires.Add(q7);
-                q.summary = "하르가 순록 고원의 썰매 장인과 짐 썰매를 만든다. 깔개로 쓸 모피를 가져다주고, 순록 고원 장터에서 썰매를 사서 국경 고개 너머 눈 녹는 고갯길까지 달려 본다.";
+                q.summary = "하르가 순록 고원의 썰매 장인과 짐 썰매를 만든다. 깔개로 쓸 모피를 가져다주고, 순록 고원 장터에서 썰매를 사서 국경 고개 너머 북문 마을까지 달려 본다.";
                 q.offerLine = "손수레로는 눈길에서 바퀴가 빠지지. 고원의 썰매 장인 녀석이랑 짐 썰매를 만들기로 했네. 깔개로 쓸 모피 세 장만 가져다주겠나? 다 되면 고원 장터에 내놓겠네.";
                 q.objectives.Add(O(ObjectiveType.Deliver, "하르에게 모피 3장 가져다주기", Har, fur, 3,
                     "좋은 모피로군! 이제 고원으로 보내 썰매에 깔겠네. 값이 좀 나가니 돈을 모아 두게."));
@@ -305,7 +331,7 @@ namespace PocketCaravan.EditorTools
                     q.objectives.Add(O(ObjectiveType.HaveMoney, $"썰매 값 {sled.price}냥 모으기", null, null, sled.price));
                     q.objectives.Add(O(ObjectiveType.BuyVehicle, "순록 고원 장터에서 순록 썰매 사기", null, null, 1, null, sled));
                 }
-                q.objectives.Add(O(ObjectiveType.VisitMap, "썰매를 타고 눈 녹는 고갯길까지 달리기", "north_c_thaw"));
+                q.objectives.Add(O(ObjectiveType.VisitMap, "썰매를 타고 국경 고개 너머 북문 마을까지 달리기", "north_c_gatetown"));
                 q.objectives.Add(O(ObjectiveType.Talk, "하르에게 썰매 자랑하기", Har, null, 1,
                     "눈보라 속에서도 순록이 길을 아는 법이지. 이제 북쪽 어디든 달릴 수 있겠군!"));
                 q.rewardMoney = 60; q.rewardCredit = 2;

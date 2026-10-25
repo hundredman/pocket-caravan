@@ -24,6 +24,7 @@ namespace PocketCaravan
         bool inNorth, hidPetals;
         int lastBlock = -1;
         int applied = -1;
+        int lastForcedBlock = -1;
         AudioSource wind;
         Transform aurora;
         SpriteRenderer[] ribbons;
@@ -79,17 +80,23 @@ namespace PocketCaravan
             return r < 30 ? Weather.Clear : r < 65 ? Weather.Light : r < 90 ? Weather.Heavy : Weather.Blizzard;
         }
 
-        /// <summary>0 = 북유럽 본토, 1 = 중앙 윗줄(고갯길·갈림길), 2 = 가운데(초소·썰매·룬돌), 3 = 북문 큰길</summary>
+        /// <summary>0 = 북유럽 본토, 1 = 중앙 윗줄(북문 마을·고갯길·다리길), 2 = 가운데(눈숲·개울 나루 마을·룬돌 큰길), 3 = 아래(솔숲길·물가길·길목 마을)</summary>
         static int ThawLevel(string mapId)
         {
             if (!mapId.StartsWith("north_c_")) return 0;
             switch (mapId)
             {
-                case "north_c_thaw": case "north_c_west": case "north_c_east": return 1;
-                case "north_c_gate": return 3;
+                case "north_c_gatetown": case "north_c_road_nw": case "north_c_road_ne": return 1;
+                case "north_c_road_sw": case "north_c_road_se": case "north_c_crossing": return 3;
                 default: return 2;
             }
         }
+
+        /// <summary>그 4시간 블록의 날씨 (룬 점쟁이가 미리 봄)</summary>
+        public static Weather Peek(int block) => Roll(block);
+
+        /// <summary>그날 밤 오로라가 뜨는지 (떠돌이 상인의 오로라 병을 쓰면 그날 밤은 꼭 뜸)</summary>
+        public static bool AuroraTonight(int day) => AuroraNight(day) || Mathf.RoundToInt(NorthSave.Get("aurora_day", -1f)) == day;
 
         static bool AuroraNight(int day)
         {
@@ -122,12 +129,14 @@ namespace PocketCaravan
 
             float hours = gm != null ? gm.Clock.TotalHours : 0f;
             int block = Mathf.FloorToInt(hours / 4f);
-            if (block != lastBlock) { lastBlock = block; Current = Roll(block); }
-            // 중앙 경유 구역(north_c_)은 남쪽으로 갈수록 눈이 약하다: 윗줄은 함박눈까지, 가운데는 가랑눈까지, 북문 큰길은 거의 안 옴
+            if (block != lastBlock) { lastBlock = block; }
+            Current = Roll(block);
+            if (Mathf.RoundToInt(NorthSave.Get("calm_block", -1f)) == block && Current > Weather.Light) Current = Weather.Light;   // 날씨 기도
+            // 중앙 북쪽 1/4(north_c_)은 남쪽으로 갈수록 눈이 약하다: 윗줄은 함박눈까지, 가운데는 가랑눈까지, 아랫줄은 거의 안 옴
             int thaw = ThawLevel(MapRoot.Current.mapId);
             int shown = Mathf.Min((int)Current, thaw == 0 ? 3 : thaw == 1 ? 2 : thaw == 2 ? 1 : 0);
             Shown = thaw >= 3 && Current < Weather.Heavy ? Weather.Clear : (Weather)shown;
-            int key = thaw >= 3 && Current < Weather.Heavy ? -2 : shown;     // 북문 큰길: 함박눈 이상일 때만 가끔 눈송이
+            int key = thaw >= 3 && Current < Weather.Heavy ? -2 : shown;     // 아랫줄: 함박눈 이상일 때만 가끔 눈송이
             if (key != applied) { overlay.Configure(key == -2 ? null : skins[shown]); applied = key; }
 
             float target = AudioManager.Muted ? 0f : WindVolume[shown] * (thaw >= 3 ? 0.5f : 1f);
@@ -136,7 +145,10 @@ namespace PocketCaravan
 
             float night = gm != null ? 1f - gm.Clock.Daylight : 0f;
             int day = Mathf.FloorToInt(hours / 24f);
-            bool show = night > 0.05f && (Weather)shown <= Weather.Light && AuroraNight(day) && thaw < 3;
+            bool forced = Mathf.RoundToInt(NorthSave.Get("aurora_day", -1f)) == day;
+            if (forced && block != lastForcedBlock) { lastForcedBlock = block; }
+            if (forced && (Weather)shown > Weather.Light) { shown = 1; Shown = Weather.Light; }   // 오로라 병: 그날 밤은 하늘이 갬
+            bool show = night > 0.05f && (Weather)shown <= Weather.Light && AuroraTonight(day) && thaw < 3;
             AuroraOut = show;
             UpdateAurora(show ? night : 0f);
         }

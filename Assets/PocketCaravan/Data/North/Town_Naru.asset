@@ -15,7 +15,7 @@ MonoBehaviour:
   id: north_naru
   displayName: "\uD53C\uC624\uB974 \uB098\uB8E8 \uB9C8\uC744"
   region: {fileID: 11400000, guid: 053dda2cee1b84de7bdb3dcc5c7849c8, type: 2}
-  worldCoord: {x: 31, y: -1}
+  worldCoord: {x: 30, y: 0}
   startLevel: 1
   settlementTier: 0
   facilities: []

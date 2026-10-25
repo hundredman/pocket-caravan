@@ -143,6 +143,22 @@ def nearest_walk(m, fx, fy, water=False, avoid=()):
     return (best[1], best[2]) if best else None
 
 
+def museum_row(m):
+    """전시대 6개를 놓을 빈 줄: 전시실 자리 근처에서 걷는 칸이 가로 6칸 연속인 줄 (x0, y)"""
+    sp = [(x, y) for (k, x, y) in getattr(m, "spots", []) if k == "museum"]
+    if not sp:
+        return ()
+    fx, fy = sp[0]
+    best = None
+    for y in range(max(1, fy - 6), min(m.h - 1, fy + 2)):
+        for x in range(max(1, fx - 8), min(m.w - 7, fx + 4)):
+            if all(not m.blocked[y][x + i] and not m.water[y][x + i] and m.obj[y][x + i] is None for i in range(6)):
+                d = abs(x + 3 - fx) + abs(y - (fy - 2))
+                if best is None or d < best[0]:
+                    best = (d, x, y)
+    return (best[1], best[2]) if best else ()
+
+
 def secret_cells(m):
     """숨은 룬돌마다 읽는 칸 (돌 바로 아래 걷는 칸) + 번호"""
     out = []
@@ -195,7 +211,7 @@ for f in north.MAPS:
              and not m.road[y][x] and m.obj[y][x] is None and m.high[y][x] is None], 70)],
         lamps=[[x, y] for (n, x, y) in st if n in ("lamp", "lantern")],
         springs=[[x, y] for (x, y) in sorted(m._springs)][::6],
-        runes=[[x, y] for (n, x, y) in st if m.id in ("north_runehill", "north_c_rune") and n in ("runestone", "runestone_b", "picturestone", "snowpost")] + [[x, y] for (x, y, i) in getattr(m, "secrets", [])],
+        runes=[[x, y] for (n, x, y) in st if m.id in ("north_runehill", "north_c_runeway") and n in ("runestone", "runestone_b", "picturestone", "snowpost")] + [[x, y] for (x, y, i) in getattr(m, "secrets", [])],
         crystals=[[x, y] for (n, x, y) in st if n.startswith(("crys_", "gem_"))],
         fishing=[list(c) for c in fishing_cells(m)],                       # 10/24 얼음 낚시: 플레이어가 서는 물가 칸
         fishingWater=[[x, y] for (x, y) in getattr(m, "fishing", [])],      #               찌를 던지는 물 칸
@@ -208,6 +224,11 @@ for f in north.MAPS:
         guild=[v for c in spot_cells(m, "guild") for v in c],
         festival=[v for c in spot_cells(m, "festival") for v in c],
         events=[[o["x"], o["y"]] for o in m.objects if o["kind"] == "event"],
+        museum=[v for c in spot_cells(m, "museum") for v in c] + list(museum_row(m)),
+        fortune=[v for c in spot_cells(m, "fortune") for v in c],
+        ferry=[v for c in spot_cells(m, "ferry") for v in c],
+        craft=[v for i, k in enumerate(("craft_fish", "craft_fur", "craft_brew")) for c in spot_cells(m, k) for v in (c[0], c[1], i)],   # 10/26 공방 x, y, 종류
+        market=[v for o in m.objects if o["kind"] == "market" for v in nearest_walk(m, o["x"] + 2, o["y"] + 1, avoid={(o["x"], o["y"])})],
         sledTrack=[[x, y] for (x, y) in getattr(m, "sled_track", [])],     # 10/24 썰매 트랙 꼭짓점
         critters=m.life))
 with open(os.path.join(res_dir, "NorthLife.json"), "w") as fp:

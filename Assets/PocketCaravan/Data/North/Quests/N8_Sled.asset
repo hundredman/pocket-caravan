@@ -18,8 +18,8 @@ MonoBehaviour:
   summary: "\uD558\uB974\uAC00 \uC21C\uB85D \uACE0\uC6D0\uC758 \uC370\uB9E4 \uC7A5\uC778\uACFC
     \uC9D0 \uC370\uB9E4\uB97C \uB9CC\uB4E0\uB2E4. \uAE54\uAC1C\uB85C \uC4F8 \uBAA8\uD53C\uB97C
     \uAC00\uC838\uB2E4\uC8FC\uACE0, \uC21C\uB85D \uACE0\uC6D0 \uC7A5\uD130\uC5D0\uC11C
-    \uC370\uB9E4\uB97C \uC0AC\uC11C \uAD6D\uACBD \uACE0\uAC1C \uB108\uBA38 \uB208
-    \uB179\uB294 \uACE0\uAC2F\uAE38\uAE4C\uC9C0 \uB2EC\uB824 \uBCF8\uB2E4."
+    \uC370\uB9E4\uB97C \uC0AC\uC11C \uAD6D\uACBD \uACE0\uAC1C \uB108\uBA38 \uBD81\uBB38
+    \uB9C8\uC744\uAE4C\uC9C0 \uB2EC\uB824 \uBCF8\uB2E4."
   giverNpc: north_har
   requires:
   - {fileID: 11400000, guid: ac84adc9db6ec4c3bb27dcb61b94b8c5, type: 2}
@@ -59,9 +59,9 @@ MonoBehaviour:
     count: 1
     completeLine: 
   - type: 5
-    text: "\uC370\uB9E4\uB97C \uD0C0\uACE0 \uB208 \uB179\uB294 \uACE0\uAC2F\uAE38\uAE4C\uC9C0
-      \uB2EC\uB9AC\uAE30"
-    targetId: north_c_thaw
+    text: "\uC370\uB9E4\uB97C \uD0C0\uACE0 \uAD6D\uACBD \uACE0\uAC1C \uB108\uBA38
+      \uBD81\uBB38 \uB9C8\uC744\uAE4C\uC9C0 \uB2EC\uB9AC\uAE30"
+    targetId: north_c_gatetown
     item: {fileID: 0}
     vehicle: {fileID: 0}
     count: 1

@@ -4,60 +4,76 @@
   "regionAssetPath": "Assets/PocketCaravan/Data/Center/Region_CenterNorth.asset",
   "maps": [
     {
-      "mapId": "north_c_thaw",
-      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_thaw.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_thaw.unity",
+      "mapId": "north_c_gatetown",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_gatetown.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_gatetown.unity",
       "worldX": 29,
       "worldY": -1,
-      "generator": "north_center:thaw_road"
+      "generator": "north_center:gate_town"
     },
     {
-      "mapId": "north_c_west",
-      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_west.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_west.unity",
+      "mapId": "north_c_road_nw",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_road_nw.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_road_nw.unity",
       "worldX": 28,
       "worldY": -1,
-      "generator": "north_center:west_fork"
+      "generator": "north_center:road_nw"
     },
     {
-      "mapId": "north_c_east",
-      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_east.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_east.unity",
+      "mapId": "north_c_road_ne",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_road_ne.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_road_ne.unity",
       "worldX": 30,
       "worldY": -1,
-      "generator": "north_center:east_fork"
+      "generator": "north_center:road_ne"
     },
     {
-      "mapId": "north_c_post",
-      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_post.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_post.unity",
+      "mapId": "north_c_snowwood",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_snowwood.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_snowwood.unity",
+      "worldX": 28,
+      "worldY": -2,
+      "generator": "north_center:snow_wood"
+    },
+    {
+      "mapId": "north_c_runeway",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_runeway.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_runeway.unity",
       "worldX": 29,
       "worldY": -2,
-      "generator": "north_center:trade_post"
+      "generator": "north_center:rune_way"
     },
     {
-      "mapId": "north_c_sled",
-      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_sled.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_sled.unity",
-      "worldX": 28,
-      "worldY": -2,
-      "generator": "north_center:sled_station"
-    },
-    {
-      "mapId": "north_c_rune",
-      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_rune.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_rune.unity",
+      "mapId": "north_c_creek",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_creek.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_creek.unity",
       "worldX": 30,
       "worldY": -2,
-      "generator": "north_center:rune_path"
+      "generator": "north_center:creek_town"
     },
     {
-      "mapId": "north_c_gate",
-      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_gate.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_gate.unity",
+      "mapId": "north_c_road_sw",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_road_sw.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_road_sw.unity",
+      "worldX": 28,
+      "worldY": -3,
+      "generator": "north_center:road_sw"
+    },
+    {
+      "mapId": "north_c_crossing",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_crossing.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_crossing.unity",
       "worldX": 29,
       "worldY": -3,
-      "generator": "north_center:north_gate"
+      "generator": "north_center:crossing_town"
+    },
+    {
+      "mapId": "north_c_road_se",
+      "jsonPath": "Assets/PocketCaravan/Maps/Center/north_c_road_se.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Center/north_c_road_se.unity",
+      "worldX": 30,
+      "worldY": -3,
+      "generator": "north_center:road_se"
     }
   ],
   "npcs": [],

@@ -20,13 +20,13 @@ def birka():
     for dx in (20, 34, 48):
         m.road_path([(dx + 1, 36), (dx + 1, 39)], width=2)
         m.bridge(dx, 40, dx + 2, 49 if dx == 34 else 47, dock=True)
-    # 10/24 얼음 나루길: 가운데 부두 끝에서 언 피오르를 건너 중앙 동쪽 개울 갈림길로
-    m.link("S", 34, 3, "north_c_east", "N", "S")
+    # 10/26 얼음 나루길: 가운데 부두 끝에서 언 피오르를 건너 남쪽 국경 고개로 (고개 아래가 중앙 대륙 북문 마을)
+    m.link("S", 34, 3, "north_pass", "N", "S")
     for (bx, by) in [(23, 44), (37, 43), (51, 45), (13, 46), (58, 44)]:
         m.stamp("boat", bx, by, force=True, over_road=True)
 
     # 큰길: 서쪽 옛 관문(닫힘) ─ 도성 가운데 ─ 동쪽 피오르 길
-    m.road_path([(0, 25), (20, 25), (50, 25), (71, 25)], width=2, grade=2)
+    m.road_path([(6, 25), (20, 25), (50, 25), (71, 25)], width=2, grade=2)
     m.link("E", 24, 4, "north_fjord_road", "W", "E")
     m.reserve(0, 22, 8, 29)
     # 얄의 회관 앞 룬돌 광장
@@ -91,10 +91,9 @@ def birka():
         m.deco_stamp(k, x, y)
     m.deco_stamp("rack", 14, 39); m.deco_stamp("rack", 54, 35)
 
-    # 서쪽 관문: 국경 고개로 (고개 너머 남쪽이 중앙)
-    m.link("W", 24, 4, "north_pass", "E", "W")
-    m.sign(4, 23, "← 국경 고개\n남쪽 중앙 교역지로 가는 길")
-    m.sign(66, 23, "→ 피오르 길\n모피 사냥꾼 마을 · 피오르 나루 · 온천")
+    # 서쪽 옛 관문 (10/26 닫힘: 국경 고개는 남쪽 얼음 나루길로)
+    m.sign(8, 22, "옛 서쪽 관문 (닫힘)\n국경 고개는 남쪽 얼음 나루길로")
+    m.sign(66, 23, "→ 피오르 길\n순록 고원 마을 · 피오르 나루 · 온천")
 
     # 사람
     m.add("npc", 21, 12, npc="north_innkeeper")    # 여관 할머니: 서쪽 여관 앞 (Q2, Q5)
@@ -107,8 +106,8 @@ def birka():
     m.talker(64, 24, "성문 경비", "north_bear_sailor_tall", "동쪽 문을 나서면 피오르 길이야. 밤엔 다리 밑 트롤을 조심하게.")
     m.talker(57, 20, "훈련하는 전사", "north_p_shield_tall", "하나, 둘! 상인도 팔 힘이 있어야 짐을 지지.")
     m.talker(27, 38, "뱃사공", "north_p_fisher_tall", "피오르가 꽁꽁 얼어서 배가 묶였어. 대신 가운데 부두 끝에서 얼음 나루길로 건너갈 수 있지.",
-             "얼음을 건너면 남쪽 중앙 교역지의 동쪽 개울 갈림길이야. 국경 고개로 돌아가는 것보다 훨씬 가깝지.")
-    m.sign(37, 39, "↓ 얼음 나루길\n언 피오르 건너 중앙 교역지 (동쪽 개울 갈림길)")
+             "얼음을 건너면 국경 고개야. 고개를 내려가면 중앙 대륙 북문 마을이지.")
+    m.sign(37, 39, "↓ 얼음 나루길\n언 피오르 건너 국경 고개 · 중앙 대륙")
     m.talker(16, 12, "사냥꾼", "north_wolf_tall", "숲 너머 사냥꾼 마을에 가면 모피가 싸. 여기서는 값을 두 배는 쳐주지.",
              "길 없는 눈밭도 걸어서 가면 지름길이야. 수레를 끌 땐 큰길로 돌아가는 게 낫고.")
     m.talker(36, 19, "불 쬐는 노인", "north_p_oldman_tall", "겨울밤엔 다들 회관 앞 불가에 모여 옛 항해 이야기를 하지.",
@@ -120,6 +119,8 @@ def birka():
 
     # 가장자리 숲
     m.spot("festival", 40, 20)          # 오로라 밤 축제 장수 자리 (광장)
+    m.spot("museum", 45, 18)            # 10/25 회관 전시실 (전시대 6개를 이 자리 위쪽 빈 땅에 늘어놓음)
+    m.spot("fortune", 29, 20)           # 10/25 룬 점쟁이 (다음 날씨·오늘 밤 오로라 점)
     m.dense_border("pine")
     m.scatter("snowpine", 3, area=(3, 3, 68, 34), margin=1)
     m.scatter("snowboulder", 2, area=(3, 3, 68, 34), margin=1)
@@ -142,15 +143,15 @@ def fjord_road():
     m.water_blob(46, 12, 4.2, 2.6)
     m.road_path([(30, 19), (34, 14), (40, 9), (52, 9), (58, 13), (62, 18), (65, 18)], width=2, grade=2)
     m.bridge(43, 9, 49, 10)
-    m.link("E", 17, 4, "north_hunter", "W", "E")
+    m.link("E", 17, 4, "north_herd", "W", "E")
     # 북쪽 갈래: 절벽과 얼음 개울 사이 골짜기로 올라가면 온천 마을
     m.road_path([(40, 9), (40, 4), (41, 0)], width=2)
     m.link("N", 39, 4, "north_laugar", "S", "N")
     # 숲 지름길: 길은 없지만 나무가 비어 있는 눈밭 (갈림길에서 동쪽으로 곧장)
     m.reserve(32, 19, 61, 23)
     # 남쪽 갈래: 피오르 나루 마을
-    m.road_path([(30, 19), (31, 27), (30, 35), (30, 41)], width=2)
-    m.link("S", 29, 4, "north_naru", "N", "S")
+    m.road_path([(30, 19), (31, 27), (28, 35), (27, 41)], width=2)
+    m.link("S", 26, 4, "north_naru", "N", "S")
 
     # 서남쪽 얼어붙은 호수와 사냥꾼 야영지
     m.water_blob(12, 32, 6, 3.2)
@@ -160,7 +161,7 @@ def fjord_road():
     m.road_path([(22, 24), (25, 21)], width=1)
 
     # 갈림길 이정표와 길손
-    m.sign(27, 15, "↗ 큰길: 다리 건너 사냥꾼 마을 (↑ 골짜기: 온천 마을)\n→ 숲길: 길 없음, 가깝지만 수레는 힘듦\n↓ 피오르 나루 마을")
+    m.sign(27, 15, "↗ 큰길: 다리 건너 순록 고원 마을 (↑ 골짜기: 온천 마을)\n→ 숲길: 길 없음, 가깝지만 수레는 힘듦\n↓ 피오르 나루 마을")
     m.sign(6, 16, "← 비르카")
     m.talker(34, 24, "길손", "north_hare_tall", "다리 밑에 트롤 패거리가 산다더군. 통행료를 내거나 냅다 달려야 해.",
              "숲으로 가로질러 가면 다리를 안 건너도 돼. 대신 수레는 눈에 빠지지.")
@@ -170,7 +171,7 @@ def fjord_road():
     m.bandit(41, 12, radius=5)
     for (ex, ey) in [(14, 19), (31, 30), (57, 11)]:
         m.event(ex, ey)
-    m.walker([(2, 19), (12, 19), (22, 20), (30, 20), (31, 27), (30, 38)], idx=0)
+    m.walker([(2, 19), (12, 19), (22, 20), (30, 20), (31, 27), (28, 38)], idx=0)
     m.walker([(33, 15), (40, 10), (52, 10), (58, 14), (63, 19)], idx=1)
     m.critters("raven", (5, 10, 25, 16), 2); m.critters("raven", (34, 19, 58, 23), 2)
     m.deco_stamp("runestone", 33, 24); m.deco_stamp("snowpost", 60, 23)   # 숲길 입구·출구 표지 돌
@@ -193,10 +194,8 @@ def fjord_road():
 
 
 def hunter():
-    """모피 사냥꾼 마을: 숲속 오두막 마을. 모피·말린 고기 산지. 남서쪽 사냥꾼 야영지, 남쪽 들판(Q1 아내), 동쪽 염소 목장(Q5)."""
+    """모피 사냥꾼 마을: 숲속 오두막 마을 (10/26 국경 고개 서쪽). 모피·말린 고기 산지. 남서쪽 사냥꾼 야영지, 남쪽 들판(Q1 아내), 동쪽 염소 목장(Q5)."""
     m = FitMap("north_hunter", "모피 사냥꾼 마을", 46, 32, seed=41)
-    m.road_path([(0, 15), (8, 15), (15, 16)], width=2, grade=2)
-    m.link("W", 14, 4, "north_fjord_road", "E", "W")
     m.road_blob(23, 16, 7.5, 3, grade=1)
 
     m.stamp("h_turf", 8, 6, force=True); m.door_path(8, 6, 3, 2, 13, door_dx=1)       # 잔디 지붕 움집
@@ -224,25 +223,26 @@ def hunter():
     m.road_path([(21, 19), (21, 24)], width=1)
     m.deco_stamp("haybale", 16, 25); m.deco_stamp("haybale_s", 24, 25); m.deco_stamp("haybale_s", 26, 27)
     m.deco_stamp("scarecrow", 20, 26); m.deco_stamp("sled", 23, 29)
-    # 동쪽: 순록 고원 마을로 가는 큰길 (염소 목장 위로 지나감)
+    # 동쪽: 국경 고개로 가는 큰길 (염소 목장 위로 지나감). 10/26 고개 서쪽 마을이 됨
     m.road_path([(30, 16), (38, 15), (45, 15)], width=2, grade=2)
-    m.link("E", 14, 4, "north_herd", "W", "E")
-    m.sign(41, 13, "→ 순록 고원 마을\n썰매 장인이 산다")
+    m.link("E", 14, 4, "north_pass", "W", "E")
+    m.sign(41, 13, "→ 국경 고개\n비르카 · 중앙 대륙")
     # 동쪽 염소 목장
     m.fence(32, 18, 40, 25, gap=(35, 18)); m.reserve(33, 19, 39, 24)   # 우리 안은 숲이 먹지 않게
     m.deco_stamp("haybale", 33, 23); m.deco_stamp("haybale_s", 38, 19)
 
     m.add("market", 24, 19, town="north_hunter")
     m.board(26, 12, "north_hunter")
-    m.sign(5, 13, "← 피오르 길\n비르카 · 피오르 나루")
     m.talker(18, 12, "늙은 사냥꾼", "north_p_oldman_tall", "여우 털은 겨울에 받아야 제값이지. 여기서 사면 싸고, 바닷가에 가져가면 비싸.",
              "모피는 가볍지만 비싸서, 도둑맞으면 속이 쓰리다네.")
     m.add("npc", 36, 21, npc="north_goats")        # 염소지기 맏형: 목장 안 (Q5)
     m.add("npc", 21, 25, npc="north_wife")         # 들일 하는 아내: 건초 들판 (Q1)
     m.talker(33, 13, "염소 치는 아이", "north_p_girl_tall", "우리 염소들은 소금 덩이를 좋아해. 다리 건너 오는 상인이 가져다주곤 했는데…")
-    m.walker([(3, 16), (12, 16), (20, 16), (26, 16), (36, 16), (44, 16), (36, 15), (26, 17), (16, 17)], idx=3)
+    m.walker([(17, 16), (20, 16), (26, 16), (36, 16), (44, 16), (36, 15), (26, 17), (18, 17)], idx=3)
     m.critters("goat", (34, 19, 39, 23), 3); m.critters("raven", (16, 13, 30, 19), 2)
 
+    # 10/26 털옷 공방: 모피 2 → 털옷 1 (NorthCraft.cs). 가죽 말리는 틀 옆
+    m.spot("craft_fur", 7, 22)
     m.secret_rune(6, 28, 26)
     m.dense_border("hunt")
     m.grove(40, 28, 3, 2, "hunt")
@@ -258,6 +258,9 @@ def naru():
     m = FitMap("north_naru", "피오르 나루 마을", 52, 36, seed=43)
     m.road_path([(25, 0), (25, 8), (26, 12)], width=2)
     m.link("N", 24, 4, "north_fjord_road", "S", "N")
+    # 10/26 서쪽 바닷가 길: 국경 고개로 (비르카를 안 거치고 중앙 대륙으로)
+    m.road_path([(0, 20), (8, 20), (15, 21)], width=2)
+    m.link("W", 19, 4, "north_pass", "E", "W")
     m.road_blob(26, 15.5, 8.5, 3, grade=1)
     # 남쪽 피오르와 선착장 두 개
     m.river_h(26, 35, wiggle=2, fixed=range(10, 42))
@@ -286,7 +289,7 @@ def naru():
 
     # 광장·부두 장식: 생선 좌판, 말리는 틀, 그물·밧줄, 등불
     m.deco_stamp("fishbasket", 20, 20); m.deco_stamp("fishbasket", 33, 20)
-    m.stamp("rack", 42, 20, force=True); m.stamp("rack", 7, 20, force=True)
+    m.stamp("rack", 42, 20, force=True); m.stamp("rack", 5, 24, force=True)
     m.deco_stamp("rope", 11, 22); m.deco_stamp("rope", 40, 22)
     m.deco_stamp("crate", 18, 20); m.deco_stamp("barrel", 30, 19); m.deco_stamp("barrel_s", 31, 19); m.deco_stamp("crate_goods", 32, 19)
     m.deco_stamp("lamp", 13, 23); m.deco_stamp("lamp", 39, 23)
@@ -299,6 +302,10 @@ def naru():
     m.add("market", 28, 19, town="north_naru")
     m.board(31, 13, "north_naru")
     m.sign(22, 4, "↑ 피오르 길\n비르카 · 사냥꾼 마을")
+    # 10/26 나룻배: 서쪽 부두 끝에서 중앙 동쪽 개울 갈림길로
+    m.spot("ferry", 15, 33)
+    m.add("spawn", 15, 31, id="ferry")
+    m.sign(13, 25, "↓ 나룻배 (서쪽 부두 끝)\n중앙 대륙 개울 나루 마을 12냥")
     m.talker(17, 19, "선장", "north_bear_sailor_tall", "남쪽 바다로 나가는 배는 모피를 잔뜩 실어 가. 그래서 여기선 모피가 금값이지.",
              "부두 동쪽 낚시꾼 조합에 가 봐. 얼음 낚시로 잡은 물고기 기록을 봐 주고, 큰 놈을 잡으면 상금도 줘.")
     m.add("npc", 7, 14, npc="north_warehouse")     # 창고지기 (Q3 납품처)
@@ -309,6 +316,9 @@ def naru():
 
     m.secret_rune(5, 46, 8)
     m.spot("guild", 43, 23)             # 낚시꾼 조합 (도감·기록 보상)
+    # 10/26 대구 덕장: 얼음 대구 3 → 말린 대구 1 (NorthCraft.cs). 말리는 틀 옆
+    m.stamp("rack", 46, 18, force=True)
+    m.spot("craft_fish", 46, 22)
     m.dense_border("coast")
     m.scatter("snowpine", 3, area=(3, 2, 48, 22), margin=1)
     m.scatter("snowboulder", 2, area=(3, 2, 48, 22), margin=1)
@@ -320,7 +330,7 @@ def naru():
 def laugar():
     """라우가르 온천 마을: 눈 덮인 산 아래 김이 오르는 온천. 목욕 회관과 약초밭. 쉬어 가는 마을 (아늑함 담당).
     특산: 온천 약초. 피오르 길 북쪽 골짜기에서 올라온다."""
-    m = FitMap("north_laugar", "라우가르 온천 마을", 48, 36, seed=53)
+    m = FitMap("north_laugar", "라우가르 온천 마을", 49, 36, seed=53)   # 10/26 48→49: 동쪽 얼음 동굴 골짜기와 맞닿게
     # 남쪽 골짜기에서 들어오는 길
     m.road_path([(23, 35), (23, 27), (24, 21)], width=2)
     m.link("S", 22, 4, "north_fjord_road", "N", "S")
@@ -329,6 +339,10 @@ def laugar():
     m.road_path([(18, 15), (16, 9), (13, 4), (13, 0)], width=2)
     m.link("N", 12, 4, "north_runehill", "S", "N")
     m.sign(16, 4, "↑ 룬돌 언덕\n옛 사람들의 돌")
+    # 10/26 동쪽 산길: 얼음 동굴 골짜기로
+    m.road_path([(39, 15), (42, 14), (48, 14)], width=2)
+    m.link("E", 13, 4, "north_icecave", "W", "E")
+    m.sign(44, 11, "→ 얼음 동굴 골짜기\n순록 고원 · 피오르 길")
     # 온천 세 곳: 큰 노천탕(서쪽), 작은 탕(동쪽), 약초밭 옆 웅덩이
     m.hot_spring(9, 16, 5.2, 3.2, steam=5)
     m.hot_spring(39, 20, 4.2, 2.6, steam=3)
@@ -356,6 +370,9 @@ def laugar():
     m.flag(17, 20); m.flag(31, 20)
     m.deco_stamp("runestone", 27, 21); m.deco_stamp("logs", 27, 14)
     m.add("market", 26, 22, town="north_laugar")
+    # 10/26 양조장: 꿀술 2 + 온천 약초 1 → 온천 약초 꿀술 1 (NorthCraft.cs). 큰 술통 옆
+    m.deco_stamp("barrel", 46, 23); m.deco_stamp("barrel_s", 45, 25)
+    m.spot("craft_brew", 43, 25)
     m.board(29, 16, "north_laugar")
     m.sign(25, 31, "↓ 피오르 길\n비르카 · 사냥꾼 마을 · 나루")
     m.talker(24, 15, "목욕 회관 주인", "north_bear_granny_tall", "얼어붙은 길을 건너왔구먼. 몸부터 녹이고 가게.",
@@ -378,10 +395,10 @@ def laugar():
 
 def herd():
     """순록 고원 마을: 나무가 드문 바람 부는 고원. 순록 떼 목장, 가죽 천막, 썰매 공방. 특산: 순록 치즈.
-    사냥꾼 마을 동쪽 큰길로 온다. 나중에 순록 썰매 퀘스트의 무대."""
+    피오르 길 동쪽 트롤 다리를 건너 온다 (10/26). 나중에 순록 썰매 퀘스트의 무대."""
     m = FitMap("north_herd", "순록 고원 마을", 50, 34, seed=59)
     m.road_path([(0, 15), (10, 15), (18, 17)], width=2, grade=2)
-    m.link("W", 14, 4, "north_hunter", "E", "W")
+    m.link("W", 14, 4, "north_fjord_road", "E", "W")
     m.road_blob(24, 17.5, 7, 3, grade=1)
     # 북쪽 골짜기: 얼음 동굴로
     m.road_path([(26, 14), (25, 8), (25, 0)], width=2)
@@ -413,7 +430,7 @@ def herd():
     m.water_blob(42, 27, 4.5, 2.5)
     m.add("market", 25, 21, town="north_herd")
     m.board(27, 15, "north_herd")
-    m.sign(6, 13, "← 모피 사냥꾼 마을\n피오르 길 · 비르카")
+    m.sign(6, 13, "← 피오르 길\n비르카 · 피오르 나루")
     m.talker(32, 17, "순록 목동 할머니", "north_p_granny_tall", "순록은 눈 밑 이끼 냄새를 기가 막히게 맡지. 길을 잃으면 순록을 따라가.",
              "우리 앞에서 이끼를 주면 순록들이 좋아해. 사흘만 챙겨 주면 내가 선물을 주지.",
              "우리 치즈는 순록 젖으로 만들어. 진하고 오래 가지.")
@@ -471,11 +488,15 @@ def runehill():
 
 
 def icecave():
-    """얼음 동굴 골짜기: 순록 고원 북쪽. 바위 절벽에서 얼어붙은 폭포가 호수로 흘러내리고,
+    """얼음 동굴 골짜기: 순록 고원 북쪽, 서쪽 산길로 라우가르 온천 마을 (10/26). 바위 절벽에서 얼어붙은 폭포가 호수로 흘러내리고,
     동굴 입구 둘레에 호박빛·푸른 수정이 돋아 있다 (밤에 빛남). 광부들의 야영지."""
     m = FitMap("north_icecave", "얼음 동굴 골짜기", 48, 36, seed=67)
     m.road_path([(25, 35), (25, 28), (22, 22), (18, 17), (14, 13)], width=2)
     m.link("S", 24, 4, "north_herd", "N", "S")
+    # 10/26 서쪽 산길: 라우가르 온천 마을로
+    m.road_path([(18, 17), (8, 16), (3, 12), (0, 11)], width=2)
+    m.link("W", 10, 4, "north_laugar", "E", "W")
+    m.sign(4, 15, "← 라우가르 온천 마을\n룬돌 언덕")
     # 바위 절벽과 얼어붙은 폭포, 얼어붙은 호수
     # 폭포 양옆을 바위 무더기로 감싸 바위 틈에서 얼음이 흘러내리게
     for (bx, by) in [(26, 2), (32, 2), (22, 4), (36, 4), (24, 5), (34, 5)]:
@@ -511,18 +532,24 @@ def icecave():
 
 
 def border_pass():
-    """국경 고개: 비르카 서쪽 관문에서 남쪽 중앙 교역지로 내려가는 바위 고개와 국경 초소.
-    남쪽 출구는 중앙 경유 구역 north_c_thaw로 이어진다 (north_center.py)."""
+    """국경 고개: 비르카 남쪽 얼음 나루길에서 중앙 대륙으로 내려가는 바위 고개와 국경 초소 (10/26 서쪽 갈래: 모피 사냥꾼 마을).
+    남쪽 출구는 중앙 북쪽 1/4의 북문 마을(north_c_gatetown)로 이어진다 (north_center.py)."""
     m = FitMap("north_pass", "국경 고개", 52, 50, seed=71)   # 10/24: 36→50줄. 아래쪽에 굽이 내리막을 더해 중앙 구역이 비르카 바로 아래에 오게
-    m.road_path([(51, 25), (40, 25), (32, 22), (24, 24), (18, 29), (16, 35), (22, 40), (24, 44), (18, 47), (15, 49)], width=2, grade=2)
+    # 10/26: 위(비르카 얼음 나루길) → 굽이 내리막 → 아래(중앙 북문 마을). 서쪽 갈래는 모피 사냥꾼 마을
+    m.road_path([(13, 0), (13, 9), (17, 17), (24, 23), (18, 29), (16, 35), (22, 40), (27, 44), (32, 47), (35, 49)], width=2, grade=2)
+    m.link("N", 12, 3, "north_birka", "S", "N")
+    m.road_path([(24, 23), (32, 22), (29, 21)], width=2)
+    m.road_path([(0, 33), (8, 34), (16, 35)], width=2, grade=2)
+    m.link("W", 32, 4, "north_hunter", "E", "W")
+    m.road_path([(51, 19), (44, 20), (38, 22), (32, 22)], width=2)
+    m.link("E", 18, 4, "north_naru", "W", "E")
     # 내리막 굽이: 바위와 앙상한 나무, 쉬어 가는 돌무더기
     for (bx, by) in [(28, 38), (8, 42), (34, 46)]:
         m.stamp("rockbig", bx, by, force=True)
     m.deco_stamp("snowpost", 26, 41); m.deco_stamp("logbench", 10, 37)
-    m.link("E", 24, 4, "north_birka", "W", "E")
     # 남쪽 출구: 중앙 경유 구역(북쪽 삼각형)의 눈 녹는 고갯길로 (10/24 개통)
-    m.link("S", 14, 4, "north_c_thaw", "N", "S")
-    m.sign(19, 31, "↓ 눈 녹는 고갯길\n중앙 교역지로 가는 길")
+    m.link("S", 34, 4, "north_c_gatetown", "N", "S")
+    m.sign(19, 31, "↓ 북문 마을 · 중앙 대륙\n← 모피 사냥꾼 마을   → 피오르 나루 마을\n↑ 얼음 나루길 · 비르카")
     # 국경 초소: 판자 울타리 안에 경비 막사·창고, 깃발
     m.fence(20, 7, 37, 18, gap=(27, 18)); m.reserve(21, 8, 36, 17)
     m.road_path([(28, 19), (29, 22)], width=2)
@@ -538,8 +565,9 @@ def border_pass():
     m.talker(30, 20, "국경 경비대장", "north_wolf_viking_tall", "여기서부터 남쪽은 북유럽 땅이 아니야. 중앙 교역지로 가는 길을 닦는 중이지.",
              "길이 열리면 네 문명의 상인들이 다 모인다더군. 그때 모피 값 좀 보라고.")
     m.talker(22, 27, "남쪽에서 온 상인", "north_lynx_tall", "남쪽 큰 장터엔 비단이며 향신료며 없는 게 없어. 북쪽 호박은 거기서 금값이지.")
-    m.event(36, 24); m.event(20, 27)
-    m.walker([(48, 26), (40, 26), (32, 23), (25, 25), (20, 28)], idx=8)
+    m.event(14, 6); m.event(20, 27)
+    m.walker([(13, 2), (13, 9), (17, 17), (24, 23), (18, 29), (16, 35), (22, 40), (27, 44), (33, 48)], idx=8)
+    m.walker([(2, 33), (8, 34), (16, 35), (22, 40)], idx=4)
     m.critters("raven", (24, 20, 44, 27), 2)
     m.secret_rune(7, 33, 42)
     m.dense_border("tundra")

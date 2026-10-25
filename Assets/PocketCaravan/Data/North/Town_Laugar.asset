@@ -15,7 +15,7 @@ MonoBehaviour:
   id: north_laugar
   displayName: "\uB77C\uC6B0\uAC00\uB974 \uC628\uCC9C \uB9C8\uC744"
   region: {fileID: 11400000, guid: 053dda2cee1b84de7bdb3dcc5c7849c8, type: 2}
-  worldCoord: {x: 31, y: 1}
+  worldCoord: {x: 30, y: 2}
   startLevel: 1
   settlementTier: 0
   facilities: []

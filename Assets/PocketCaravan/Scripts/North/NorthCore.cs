@@ -162,7 +162,7 @@ namespace PocketCaravan
 
         /// <summary>장터가 있는 북유럽 마을 맵 (길 잃은 상인을 데려다줄 곳)</summary>
         public static readonly HashSet<string> TownMaps = new HashSet<string>
-            { "north_birka", "north_hunter", "north_naru", "north_laugar", "north_herd", "north_c_post" };
+            { "north_birka", "north_hunter", "north_naru", "north_laugar", "north_herd", "north_c_gatetown", "north_c_snowwood", "north_c_creek", "north_c_crossing" };
 
         public static bool Night => GameManager.I != null && GameManager.I.Clock.Daylight < 0.5f;
     }
