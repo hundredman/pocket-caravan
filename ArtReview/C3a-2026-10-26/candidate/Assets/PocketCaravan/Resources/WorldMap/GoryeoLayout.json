@@ -1,0 +1,113 @@
+{
+  "width": 444,
+  "height": 194,
+  "maps": [
+    {
+      "mapId": "Naru",
+      "x": 252,
+      "y": 122,
+      "w": 80,
+      "h": 60,
+      "labelX": 276.5,
+      "labelY": 141.5
+    },
+    {
+      "mapId": "Gaegyeong",
+      "x": 312,
+      "y": 62,
+      "w": 70,
+      "h": 60,
+      "labelX": 338.5,
+      "labelY": 90.5
+    },
+    {
+      "mapId": "Dakmok",
+      "x": 382,
+      "y": 62,
+      "w": 50,
+      "h": 60,
+      "labelX": 396.5,
+      "labelY": 87.5
+    },
+    {
+      "mapId": "goryeo_songak",
+      "x": 252,
+      "y": 62,
+      "w": 60,
+      "h": 60,
+      "labelX": 275.5,
+      "labelY": 83.5
+    },
+    {
+      "mapId": "goryeo_jangdan",
+      "x": 332,
+      "y": 122,
+      "w": 80,
+      "h": 55,
+      "labelX": 367.5,
+      "labelY": 144.5
+    },
+    {
+      "mapId": "transit_pass",
+      "x": 212,
+      "y": 62,
+      "w": 40,
+      "h": 40,
+      "labelX": 232.5,
+      "labelY": 82.5
+    },
+    {
+      "mapId": "transit_woodtown",
+      "x": 112,
+      "y": 102,
+      "w": 100,
+      "h": 40,
+      "labelX": 138.5,
+      "labelY": 114.5
+    },
+    {
+      "mapId": "transit_wetroad",
+      "x": 112,
+      "y": 62,
+      "w": 100,
+      "h": 40,
+      "labelX": 162.5,
+      "labelY": 74.5
+    },
+    {
+      "mapId": "transit_ferry",
+      "x": 12,
+      "y": 62,
+      "w": 100,
+      "h": 50,
+      "labelX": 38.5,
+      "labelY": 77.5
+    },
+    {
+      "mapId": "transit_central_approach",
+      "x": 116,
+      "y": 12,
+      "w": 104,
+      "h": 50,
+      "labelX": 164.5,
+      "labelY": 32.5
+    },
+    {
+      "mapId": "transit_crossroads",
+      "x": 12,
+      "y": 12,
+      "w": 104,
+      "h": 50,
+      "labelX": 54.5,
+      "labelY": 35.5
+    }
+  ],
+  "pixelsPerTile": 4,
+  "waterMask": "GoryeoWaterMask.png",
+  "geography": "continuous_tiles",
+  "terrainSource": "Tools/MapGen/broad_regions.py",
+  "scope": "goryeo_20000_and_central_east_25000",
+  "centralContinentTotalCells": 100000,
+  "centralEastOwnedCells": 25000,
+  "annotations": []
+}

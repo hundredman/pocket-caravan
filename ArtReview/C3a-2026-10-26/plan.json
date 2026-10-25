@@ -1,0 +1,6318 @@
+{
+  "maps": [
+    {
+      "map": "Naru",
+      "entry": {
+        "mapId": "Naru",
+        "jsonPath": "Assets/PocketCaravan/Maps/Naru.json",
+        "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/Naru.unity",
+        "worldX": 0,
+        "worldY": 0,
+        "generator": "maps:naru"
+      },
+      "w": 80,
+      "h": 60,
+      "props": [
+        {
+          "name": "house_tile",
+          "kind": "building",
+          "x": 22,
+          "y": 12,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 24,
+              "y": 11,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 21,
+              "y": 13,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "house_thatch",
+          "kind": "building",
+          "x": 14,
+          "y": 12,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 16,
+              "y": 11,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 16,
+              "y": 15,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 13,
+              "y": 13,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 18,
+              "y": 13,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "house_plain",
+          "kind": "building",
+          "x": 26,
+          "y": 12,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "east",
+              "x": 30,
+              "y": 13,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "house_thatch",
+          "kind": "building",
+          "x": 26,
+          "y": 21,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 28,
+              "y": 20,
+              "dx": 0,
+              "dy": -1
+            }
+          ]
+        },
+        {
+          "name": "goryeo_manor",
+          "kind": "building",
+          "x": 39,
+          "y": 14,
+          "w": 6,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 42,
+              "y": 18,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 38,
+              "y": 16,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 45,
+              "y": 16,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 24,
+          "y": 4,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 26,
+              "y": 3,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 26,
+              "y": 7,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 23,
+              "y": 5,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 28,
+              "y": 5,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 51,
+          "y": 11,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 52,
+              "y": 10,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 52,
+              "y": 15,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 50,
+              "y": 13,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 54,
+              "y": 13,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 58,
+          "y": 25,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 60,
+              "y": 29,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "east",
+              "x": 62,
+              "y": 27,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 69,
+          "y": 38,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 71,
+              "y": 37,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 71,
+              "y": 42,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "east",
+              "x": 73,
+              "y": 40,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 66,
+          "y": 38,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 67,
+              "y": 37,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 65,
+              "y": 40,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 21,
+          "y": 8,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 22,
+              "y": 7,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 20,
+              "y": 10,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 24,
+              "y": 10,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 55,
+          "y": 24,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 56,
+              "y": 23,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 56,
+              "y": 28,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 54,
+              "y": 26,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 74,
+          "y": 23,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 75,
+              "y": 22,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 75,
+              "y": 27,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 73,
+              "y": 25,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 77,
+              "y": 25,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 66,
+          "y": 42,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 68,
+              "y": 46,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 65,
+              "y": 44,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 70,
+              "y": 44,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 18,
+          "y": 45,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 20,
+              "y": 44,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 20,
+              "y": 48,
+              "dx": 0,
+              "dy": 1
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 50,
+          "y": 2,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 51,
+              "y": 1,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 51,
+              "y": 6,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 49,
+              "y": 4,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 53,
+              "y": 4,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 72,
+          "y": 2,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 73,
+              "y": 1,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 73,
+              "y": 6,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 71,
+              "y": 4,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 75,
+              "y": 4,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland5",
+          "kind": "tree",
+          "x": 37,
+          "y": 45,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 39,
+              "y": 44,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 36,
+              "y": 47,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 41,
+              "y": 47,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 14,
+          "y": 39,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 16,
+              "y": 38,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 16,
+              "y": 42,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 13,
+              "y": 40,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 18,
+              "y": 40,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 10,
+          "y": 4,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 11,
+              "y": 3,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 11,
+              "y": 8,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 9,
+              "y": 6,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 13,
+              "y": 6,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 26,
+          "y": 8,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 27,
+              "y": 7,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 25,
+              "y": 10,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 29,
+              "y": 10,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland7",
+          "kind": "tree",
+          "x": 21,
+          "y": 41,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 22,
+              "y": 40,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 20,
+              "y": 43,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 24,
+              "y": 43,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland5",
+          "kind": "tree",
+          "x": 9,
+          "y": 13,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 11,
+              "y": 12,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 11,
+              "y": 17,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 8,
+              "y": 15,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 13,
+              "y": 15,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 55,
+          "y": 38,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 57,
+              "y": 37,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 57,
+              "y": 42,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 54,
+              "y": 40,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 59,
+              "y": 40,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland5",
+          "kind": "tree",
+          "x": 31,
+          "y": 45,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 33,
+              "y": 44,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "east",
+              "x": 35,
+              "y": 47,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 11,
+          "y": 9,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 13,
+              "y": 8,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 13,
+              "y": 12,
+              "dx": 0,
+              "dy": 1
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland5",
+          "kind": "tree",
+          "x": 63,
+          "y": 23,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 65,
+              "y": 22,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 65,
+              "y": 27,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 62,
+              "y": 25,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 72,
+          "y": 46,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 74,
+              "y": 45,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 74,
+              "y": 50,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 71,
+              "y": 48,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 76,
+              "y": 48,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland5",
+          "kind": "tree",
+          "x": 7,
+          "y": 8,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 9,
+              "y": 7,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 9,
+              "y": 12,
+              "dx": 0,
+              "dy": 1
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 74,
+          "y": 13,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 75,
+              "y": 12,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 75,
+              "y": 17,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 73,
+              "y": 15,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 77,
+              "y": 15,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland7",
+          "kind": "tree",
+          "x": 15,
+          "y": 2,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 16,
+              "y": 1,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 16,
+              "y": 6,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 14,
+              "y": 4,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 18,
+              "y": 4,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 67,
+          "y": 12,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 68,
+              "y": 11,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 68,
+              "y": 16,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 66,
+              "y": 14,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 70,
+              "y": 14,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 56,
+          "y": 11,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 57,
+              "y": 10,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 57,
+              "y": 15,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 55,
+              "y": 13,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 59,
+              "y": 13,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "map": "Gaegyeong",
+      "entry": {
+        "mapId": "Gaegyeong",
+        "jsonPath": "Assets/PocketCaravan/Maps/Gaegyeong.json",
+        "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/Gaegyeong.unity",
+        "worldX": 2,
+        "worldY": 0,
+        "generator": "gaegyeong:build"
+      },
+      "w": 70,
+      "h": 60,
+      "props": [
+        {
+          "name": "goryeo_royal",
+          "kind": "building",
+          "x": 31,
+          "y": 11,
+          "w": 10,
+          "h": 7,
+          "beforeRows": 0,
+          "afterRows": 5,
+          "sides": [
+            {
+              "side": "north",
+              "x": 36,
+              "y": 10,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 36,
+              "y": 18,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 30,
+              "y": 14,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 41,
+              "y": 14,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_manor",
+          "kind": "building",
+          "x": 23,
+          "y": 15,
+          "w": 6,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "west",
+              "x": 22,
+              "y": 17,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 29,
+              "y": 17,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_manor",
+          "kind": "building",
+          "x": 44,
+          "y": 15,
+          "w": 6,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "west",
+              "x": 43,
+              "y": 17,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 50,
+              "y": 17,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_stall",
+          "kind": "building",
+          "x": 24,
+          "y": 24,
+          "w": 6,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 27,
+              "y": 23,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 27,
+              "y": 28,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 23,
+              "y": 26,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_stall",
+          "kind": "building",
+          "x": 43,
+          "y": 24,
+          "w": 6,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 46,
+              "y": 23,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 46,
+              "y": 28,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 42,
+              "y": 26,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 49,
+              "y": 26,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_manor",
+          "kind": "building",
+          "x": 25,
+          "y": 33,
+          "w": 6,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 28,
+              "y": 32,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 28,
+              "y": 37,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 24,
+              "y": 35,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 31,
+              "y": 35,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_manor",
+          "kind": "building",
+          "x": 43,
+          "y": 33,
+          "w": 6,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 46,
+              "y": 32,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 46,
+              "y": 37,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 42,
+              "y": 35,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 49,
+              "y": 35,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_cottage",
+          "kind": "building",
+          "x": 23,
+          "y": 41,
+          "w": 5,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 25,
+              "y": 40,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 25,
+              "y": 45,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 22,
+              "y": 43,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 28,
+              "y": 43,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_manor",
+          "kind": "building",
+          "x": 44,
+          "y": 41,
+          "w": 6,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 47,
+              "y": 40,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 47,
+              "y": 45,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 43,
+              "y": 43,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 50,
+              "y": 43,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 25,
+          "y": 54,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 27,
+              "y": 53,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 27,
+              "y": 58,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 24,
+              "y": 56,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 29,
+              "y": 56,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 64,
+          "y": 25,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 66,
+              "y": 24,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 66,
+              "y": 29,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 63,
+              "y": 27,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 68,
+              "y": 27,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 13,
+          "y": 9,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 15,
+              "y": 8,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 15,
+              "y": 12,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 12,
+              "y": 10,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 17,
+              "y": 10,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 8,
+          "y": 15,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 9,
+              "y": 19,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 7,
+              "y": 17,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 11,
+              "y": 17,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 61,
+          "y": 49,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 63,
+              "y": 48,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 63,
+              "y": 52,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 60,
+              "y": 50,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 65,
+              "y": 50,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 57,
+          "y": 22,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 58,
+              "y": 21,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 58,
+              "y": 26,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 56,
+              "y": 24,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 60,
+              "y": 24,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 17,
+          "y": 40,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 18,
+              "y": 39,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 18,
+              "y": 44,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 16,
+              "y": 42,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 20,
+              "y": 42,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 6,
+          "y": 12,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "west",
+              "x": 5,
+              "y": 13,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 26,
+          "y": 48,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 28,
+              "y": 52,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 25,
+              "y": 50,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 30,
+              "y": 50,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 4,
+          "y": 53,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 6,
+              "y": 57,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 3,
+              "y": 55,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 8,
+              "y": 55,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 54,
+          "y": 35,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 55,
+              "y": 34,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 55,
+              "y": 39,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 53,
+              "y": 37,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 57,
+              "y": 37,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 18,
+          "y": 52,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 20,
+              "y": 51,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 20,
+              "y": 56,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 17,
+              "y": 54,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 22,
+              "y": 54,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 14,
+          "y": 49,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 16,
+              "y": 48,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 16,
+              "y": 53,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 13,
+              "y": 51,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 18,
+              "y": 51,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland5",
+          "kind": "tree",
+          "x": 2,
+          "y": 5,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "west",
+              "x": 1,
+              "y": 7,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 20,
+          "y": 45,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 22,
+              "y": 44,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 22,
+              "y": 49,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "east",
+              "x": 24,
+              "y": 47,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 30,
+          "y": 51,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 31,
+              "y": 50,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 31,
+              "y": 55,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 29,
+              "y": 53,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 33,
+              "y": 53,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 15,
+          "y": 16,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 16,
+              "y": 15,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 16,
+              "y": 20,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 14,
+              "y": 18,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 18,
+              "y": 18,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 2,
+          "y": 20,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 4,
+              "y": 19,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 4,
+              "y": 23,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 1,
+              "y": 21,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 6,
+              "y": 21,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 6,
+          "y": 8,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "west",
+              "x": 5,
+              "y": 10,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 9,
+              "y": 10,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 61,
+          "y": 39,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 63,
+              "y": 38,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 60,
+              "y": 41,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 65,
+              "y": 41,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 3,
+          "y": 49,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 5,
+              "y": 48,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 2,
+              "y": 51,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 7,
+              "y": 51,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "map": "Dakmok",
+      "entry": {
+        "mapId": "Dakmok",
+        "jsonPath": "Assets/PocketCaravan/Maps/Dakmok.json",
+        "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/Dakmok.unity",
+        "worldX": 3,
+        "worldY": 0,
+        "generator": "maps:dakmok"
+      },
+      "w": 50,
+      "h": 60,
+      "props": [
+        {
+          "name": "house_thatch",
+          "kind": "building",
+          "x": 19,
+          "y": 19,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 21,
+              "y": 18,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 21,
+              "y": 22,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 18,
+              "y": 20,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 23,
+              "y": 20,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "house_plain",
+          "kind": "building",
+          "x": 7,
+          "y": 29,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 9,
+              "y": 28,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 9,
+              "y": 32,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 6,
+              "y": 30,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 11,
+              "y": 30,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "house_thatch",
+          "kind": "building",
+          "x": 10,
+          "y": 32,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 12,
+              "y": 31,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 12,
+              "y": 35,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 9,
+              "y": 33,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 14,
+              "y": 33,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_manor",
+          "kind": "building",
+          "x": 29,
+          "y": 21,
+          "w": 6,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 32,
+              "y": 20,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 32,
+              "y": 25,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "east",
+              "x": 35,
+              "y": 23,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 28,
+          "y": 42,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 29,
+              "y": 41,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 29,
+              "y": 46,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 27,
+              "y": 44,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 31,
+              "y": 44,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 21,
+          "y": 44,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 23,
+              "y": 43,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 23,
+              "y": 47,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 20,
+              "y": 45,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 25,
+              "y": 45,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland5",
+          "kind": "tree",
+          "x": 12,
+          "y": 50,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 14,
+              "y": 49,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 14,
+              "y": 54,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "east",
+              "x": 16,
+              "y": 52,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 37,
+          "y": 41,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 39,
+              "y": 40,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 39,
+              "y": 44,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 36,
+              "y": 42,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 41,
+              "y": 42,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 3,
+          "y": 45,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 5,
+              "y": 44,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 5,
+              "y": 48,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 2,
+              "y": 46,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 7,
+              "y": 46,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 2,
+          "y": 11,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 3,
+              "y": 10,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 3,
+              "y": 15,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 1,
+              "y": 13,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 5,
+              "y": 13,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 24,
+          "y": 11,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 25,
+              "y": 10,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 25,
+              "y": 15,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 23,
+              "y": 13,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 27,
+              "y": 13,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 8,
+          "y": 10,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 10,
+              "y": 9,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 10,
+              "y": 14,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 7,
+              "y": 12,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 12,
+              "y": 12,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 35,
+          "y": 27,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 37,
+              "y": 26,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 34,
+              "y": 28,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 39,
+              "y": 28,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 37,
+          "y": 52,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 38,
+              "y": 51,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 38,
+              "y": 56,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 36,
+              "y": 54,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 40,
+              "y": 54,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland5",
+          "kind": "tree",
+          "x": 3,
+          "y": 53,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 5,
+              "y": 52,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 5,
+              "y": 57,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 2,
+              "y": 55,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 28,
+          "y": 12,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 30,
+              "y": 11,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 30,
+              "y": 15,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 27,
+              "y": 13,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 32,
+              "y": 13,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland7",
+          "kind": "tree",
+          "x": 33,
+          "y": 16,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 34,
+              "y": 20,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 32,
+              "y": 18,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 36,
+              "y": 18,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 18,
+          "y": 12,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 19,
+              "y": 11,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 19,
+              "y": 16,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 17,
+              "y": 14,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 21,
+              "y": 14,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 10,
+          "y": 40,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 11,
+              "y": 39,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 11,
+              "y": 44,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 9,
+              "y": 42,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 13,
+              "y": 42,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 36,
+          "y": 30,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "south",
+              "x": 38,
+              "y": 33,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 35,
+              "y": 31,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 40,
+              "y": 31,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland5",
+          "kind": "tree",
+          "x": 40,
+          "y": 46,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 42,
+              "y": 45,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 42,
+              "y": 50,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 39,
+              "y": 48,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "map": "goryeo_songak",
+      "entry": {
+        "mapId": "goryeo_songak",
+        "jsonPath": "Assets/PocketCaravan/Maps/goryeo_songak.json",
+        "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_songak.unity",
+        "worldX": 0,
+        "worldY": 1,
+        "generator": "goryeo_villages:songak"
+      },
+      "w": 60,
+      "h": 60,
+      "props": [
+        {
+          "name": "house_thatch",
+          "kind": "building",
+          "x": 14,
+          "y": 17,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 16,
+              "y": 16,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 16,
+              "y": 20,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 13,
+              "y": 18,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 18,
+              "y": 18,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "house_plain",
+          "kind": "building",
+          "x": 20,
+          "y": 14,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 22,
+              "y": 13,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 22,
+              "y": 17,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 19,
+              "y": 15,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 24,
+              "y": 15,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "house_thatch",
+          "kind": "building",
+          "x": 26,
+          "y": 15,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 28,
+              "y": 14,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 28,
+              "y": 18,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 25,
+              "y": 16,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 30,
+              "y": 16,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "house_plain",
+          "kind": "building",
+          "x": 27,
+          "y": 23,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 29,
+              "y": 22,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 29,
+              "y": 26,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 26,
+              "y": 24,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 31,
+              "y": 24,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_pavilion",
+          "kind": "building",
+          "x": 39,
+          "y": 18,
+          "w": 5,
+          "h": 5,
+          "beforeRows": 0,
+          "afterRows": 3,
+          "sides": [
+            {
+              "side": "south",
+              "x": 41,
+              "y": 23,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 38,
+              "y": 20,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 44,
+              "y": 20,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland3",
+          "kind": "tree",
+          "x": 54,
+          "y": 10,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 56,
+              "y": 9,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 56,
+              "y": 13,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 53,
+              "y": 11,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 58,
+              "y": 11,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 5,
+          "y": 17,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 6,
+              "y": 16,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 6,
+              "y": 21,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 4,
+              "y": 19,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 8,
+              "y": 19,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland5",
+          "kind": "tree",
+          "x": 30,
+          "y": 6,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 32,
+              "y": 10,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 29,
+              "y": 8,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 34,
+          "y": 35,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 35,
+              "y": 34,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 35,
+              "y": 39,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 33,
+              "y": 37,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 37,
+              "y": 37,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 16,
+          "y": 12,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 17,
+              "y": 11,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 17,
+              "y": 16,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 15,
+              "y": 14,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 19,
+              "y": 14,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 31,
+          "y": 47,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 32,
+              "y": 51,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "east",
+              "x": 34,
+              "y": 49,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 47,
+          "y": 36,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 48,
+              "y": 35,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 48,
+              "y": 40,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "east",
+              "x": 50,
+              "y": 38,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland1",
+          "kind": "tree",
+          "x": 54,
+          "y": 14,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 55,
+              "y": 13,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 55,
+              "y": 18,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 53,
+              "y": 16,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 57,
+              "y": 16,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 27,
+          "y": 48,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 29,
+              "y": 47,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 29,
+              "y": 51,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 26,
+              "y": 49,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland1",
+          "kind": "tree",
+          "x": 32,
+          "y": 43,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 33,
+              "y": 42,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 31,
+              "y": 45,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 35,
+              "y": 45,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 36,
+          "y": 48,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "west",
+              "x": 35,
+              "y": 50,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 39,
+              "y": 50,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland3",
+          "kind": "tree",
+          "x": 22,
+          "y": 32,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 24,
+              "y": 31,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 24,
+              "y": 35,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 21,
+              "y": 33,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 40,
+          "y": 36,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 42,
+              "y": 35,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 39,
+              "y": 37,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 54,
+          "y": 40,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 55,
+              "y": 39,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 55,
+              "y": 44,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 53,
+              "y": 42,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 57,
+              "y": 42,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 37,
+          "y": 52,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 39,
+              "y": 51,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 39,
+              "y": 55,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 36,
+              "y": 53,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 41,
+              "y": 53,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland1",
+          "kind": "tree",
+          "x": 21,
+          "y": 43,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 22,
+              "y": 42,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 22,
+              "y": 47,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 20,
+              "y": 45,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 24,
+              "y": 45,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland3",
+          "kind": "tree",
+          "x": 26,
+          "y": 31,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 28,
+              "y": 30,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 28,
+              "y": 34,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "east",
+              "x": 30,
+              "y": 32,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland1",
+          "kind": "tree",
+          "x": 44,
+          "y": 35,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 45,
+              "y": 34,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 45,
+              "y": 39,
+              "dx": 0,
+              "dy": 1
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 4,
+          "y": 28,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 6,
+              "y": 27,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 6,
+              "y": 31,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 3,
+              "y": 29,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 8,
+              "y": 29,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland1",
+          "kind": "tree",
+          "x": 49,
+          "y": 10,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 50,
+              "y": 9,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 50,
+              "y": 14,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 48,
+              "y": 12,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 52,
+              "y": 12,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 49,
+          "y": 17,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 50,
+              "y": 16,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 50,
+              "y": 21,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 48,
+              "y": 19,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 52,
+              "y": 19,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 40,
+          "y": 39,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "south",
+              "x": 42,
+              "y": 42,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 39,
+              "y": 40,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 44,
+              "y": 40,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "map": "goryeo_jangdan",
+      "entry": {
+        "mapId": "goryeo_jangdan",
+        "jsonPath": "Assets/PocketCaravan/Maps/goryeo_jangdan.json",
+        "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_jangdan.unity",
+        "worldX": 4,
+        "worldY": 0,
+        "generator": "goryeo_villages:jangdan"
+      },
+      "w": 80,
+      "h": 55,
+      "props": [
+        {
+          "name": "house_thatch",
+          "kind": "building",
+          "x": 28,
+          "y": 17,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "south",
+              "x": 30,
+              "y": 20,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 27,
+              "y": 18,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "house_plain",
+          "kind": "building",
+          "x": 39,
+          "y": 17,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 41,
+              "y": 16,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 41,
+              "y": 20,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 38,
+              "y": 18,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "house_thatch",
+          "kind": "building",
+          "x": 43,
+          "y": 18,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 45,
+              "y": 17,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "east",
+              "x": 47,
+              "y": 19,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "house_plain",
+          "kind": "building",
+          "x": 40,
+          "y": 24,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "south",
+              "x": 42,
+              "y": 27,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 39,
+              "y": 25,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_cottage",
+          "kind": "building",
+          "x": 44,
+          "y": 21,
+          "w": 5,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 46,
+              "y": 25,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 43,
+              "y": 23,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 49,
+              "y": 23,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland7",
+          "kind": "tree",
+          "x": 74,
+          "y": 31,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 75,
+              "y": 30,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 75,
+              "y": 35,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "east",
+              "x": 77,
+              "y": 33,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 2,
+          "y": 42,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 3,
+              "y": 41,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 1,
+              "y": 44,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 2,
+          "y": 25,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 4,
+              "y": 24,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 4,
+              "y": 29,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 1,
+              "y": 27,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 6,
+              "y": 27,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 61,
+          "y": 24,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 62,
+              "y": 23,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 62,
+              "y": 28,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 60,
+              "y": 26,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 64,
+              "y": 26,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 32,
+          "y": 39,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 34,
+              "y": 38,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 34,
+              "y": 42,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 31,
+              "y": 40,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 36,
+              "y": 40,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 39,
+          "y": 35,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 41,
+              "y": 34,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 41,
+              "y": 38,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 38,
+              "y": 36,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 43,
+              "y": 36,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 19,
+          "y": 49,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 21,
+              "y": 48,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 21,
+              "y": 52,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 18,
+              "y": 50,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 23,
+              "y": 50,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 3,
+          "y": 3,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 4,
+              "y": 2,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 2,
+              "y": 5,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 6,
+              "y": 5,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 41,
+          "y": 3,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 43,
+              "y": 2,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 43,
+              "y": 6,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "east",
+              "x": 45,
+              "y": 4,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 7,
+          "y": 5,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 9,
+              "y": 4,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 9,
+              "y": 9,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 6,
+              "y": 7,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 11,
+              "y": 7,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland7",
+          "kind": "tree",
+          "x": 11,
+          "y": 48,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 12,
+              "y": 47,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 12,
+              "y": 52,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 10,
+              "y": 50,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland7",
+          "kind": "tree",
+          "x": 45,
+          "y": 33,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 46,
+              "y": 32,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 46,
+              "y": 37,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 44,
+              "y": 35,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 48,
+              "y": 35,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 45,
+          "y": 41,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 47,
+              "y": 40,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 47,
+              "y": 44,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 44,
+              "y": 42,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 49,
+              "y": 42,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 59,
+          "y": 38,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 60,
+              "y": 37,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 60,
+              "y": 42,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 58,
+              "y": 40,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 62,
+              "y": 40,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland7",
+          "kind": "tree",
+          "x": 56,
+          "y": 35,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 57,
+              "y": 39,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 55,
+              "y": 37,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 59,
+              "y": 37,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 15,
+          "y": 3,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 16,
+              "y": 2,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 16,
+              "y": 7,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 14,
+              "y": 5,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 18,
+              "y": 5,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland5",
+          "kind": "tree",
+          "x": 55,
+          "y": 21,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 57,
+              "y": 20,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 57,
+              "y": 25,
+              "dx": 0,
+              "dy": 1
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland5",
+          "kind": "tree",
+          "x": 46,
+          "y": 45,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 48,
+              "y": 44,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 48,
+              "y": 49,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 45,
+              "y": 47,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 30,
+          "y": 13,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 31,
+              "y": 12,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 29,
+              "y": 15,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 33,
+              "y": 15,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 60,
+          "y": 8,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 61,
+              "y": 7,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 61,
+              "y": 12,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 59,
+              "y": 10,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 63,
+              "y": 10,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 66,
+          "y": 29,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 67,
+              "y": 33,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 65,
+              "y": 31,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 69,
+              "y": 31,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 28,
+          "y": 46,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 30,
+              "y": 45,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 30,
+              "y": 49,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 27,
+              "y": 47,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 38,
+          "y": 3,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 39,
+              "y": 2,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 39,
+              "y": 7,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 37,
+              "y": 5,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland7",
+          "kind": "tree",
+          "x": 71,
+          "y": 35,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 72,
+              "y": 39,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 70,
+              "y": 37,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 74,
+              "y": 37,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland5",
+          "kind": "tree",
+          "x": 35,
+          "y": 49,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 37,
+              "y": 48,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 34,
+              "y": 51,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 39,
+              "y": 51,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland7",
+          "kind": "tree",
+          "x": 18,
+          "y": 41,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 19,
+              "y": 40,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 19,
+              "y": 45,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 17,
+              "y": 43,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 21,
+              "y": 43,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland7",
+          "kind": "tree",
+          "x": 27,
+          "y": 33,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 28,
+              "y": 32,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "west",
+              "x": 26,
+              "y": 35,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 30,
+              "y": 35,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 5,
+          "y": 42,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 6,
+              "y": 41,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 6,
+              "y": 46,
+              "dx": 0,
+              "dy": 1
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 70,
+          "y": 18,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 71,
+              "y": 17,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 71,
+              "y": 22,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 69,
+              "y": 20,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 73,
+              "y": 20,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 57,
+          "y": 32,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 59,
+              "y": 31,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 59,
+              "y": 35,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 56,
+              "y": 33,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 61,
+              "y": 33,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 17,
+          "y": 25,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 18,
+              "y": 24,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 18,
+              "y": 29,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 16,
+              "y": 27,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 20,
+              "y": 27,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 14,
+          "y": 49,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 16,
+              "y": 48,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 16,
+              "y": 52,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "east",
+              "x": 18,
+              "y": 50,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 29,
+          "y": 41,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 30,
+              "y": 40,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 30,
+              "y": 45,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 28,
+              "y": 43,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 73,
+          "y": 23,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 75,
+              "y": 22,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 75,
+              "y": 26,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 72,
+              "y": 24,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 77,
+              "y": 24,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 19,
+          "y": 11,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 21,
+              "y": 10,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 21,
+              "y": 15,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 18,
+              "y": 13,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 23,
+              "y": 13,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 8,
+          "y": 41,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 9,
+              "y": 40,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 9,
+              "y": 45,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "east",
+              "x": 11,
+              "y": 43,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 3,
+          "y": 13,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 5,
+              "y": 12,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 5,
+              "y": 17,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 2,
+              "y": 15,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland7",
+          "kind": "tree",
+          "x": 70,
+          "y": 40,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 71,
+              "y": 39,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 71,
+              "y": 44,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 69,
+              "y": 42,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 73,
+              "y": 42,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 32,
+          "y": 45,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 34,
+              "y": 44,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "east",
+              "x": 36,
+              "y": 46,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 3,
+          "y": 46,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 4,
+              "y": 50,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 2,
+              "y": 48,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 6,
+              "y": 48,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 2,
+          "y": 7,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 4,
+              "y": 11,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 1,
+              "y": 9,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 6,
+              "y": 9,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland7",
+          "kind": "tree",
+          "x": 65,
+          "y": 40,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 66,
+              "y": 39,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 66,
+              "y": 44,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 64,
+              "y": 42,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 68,
+              "y": 42,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland2",
+          "kind": "tree",
+          "x": 27,
+          "y": 37,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "south",
+              "x": 28,
+              "y": 41,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 26,
+              "y": 39,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 30,
+              "y": 39,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland4",
+          "kind": "tree",
+          "x": 9,
+          "y": 18,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 11,
+              "y": 17,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 11,
+              "y": 22,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 8,
+              "y": 20,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 13,
+              "y": 20,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland0",
+          "kind": "tree",
+          "x": 40,
+          "y": 31,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 42,
+              "y": 30,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 42,
+              "y": 34,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 39,
+              "y": 32,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 44,
+              "y": 32,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland6",
+          "kind": "tree",
+          "x": 7,
+          "y": 13,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 8,
+              "y": 12,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 8,
+              "y": 17,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "east",
+              "x": 10,
+              "y": 15,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland5",
+          "kind": "tree",
+          "x": 58,
+          "y": 14,
+          "w": 4,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 60,
+              "y": 13,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 60,
+              "y": 18,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 57,
+              "y": 16,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 62,
+              "y": 16,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "goryeo_woodland7",
+          "kind": "tree",
+          "x": 23,
+          "y": 35,
+          "w": 3,
+          "h": 4,
+          "beforeRows": 0,
+          "afterRows": 2,
+          "sides": [
+            {
+              "side": "north",
+              "x": 24,
+              "y": 34,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 24,
+              "y": 39,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 22,
+              "y": 37,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 26,
+              "y": 37,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "map": "transit_pass",
+      "entry": {
+        "mapId": "transit_pass",
+        "jsonPath": "Assets/PocketCaravan/Maps/transit_pass.json",
+        "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_pass.unity",
+        "worldX": 5,
+        "worldY": 0,
+        "generator": "frontier:pass_road"
+      },
+      "w": 40,
+      "h": 40,
+      "props": [
+        {
+          "name": "house_thatch",
+          "kind": "building",
+          "x": 8,
+          "y": 18,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 10,
+              "y": 17,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 10,
+              "y": 21,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 7,
+              "y": 19,
+              "dx": -1,
+              "dy": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "map": "transit_woodtown",
+      "entry": {
+        "mapId": "transit_woodtown",
+        "jsonPath": "Assets/PocketCaravan/Maps/transit_woodtown.json",
+        "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_woodtown.unity",
+        "worldX": 6,
+        "worldY": 0,
+        "generator": "frontier:woodtown"
+      },
+      "w": 100,
+      "h": 40,
+      "props": [
+        {
+          "name": "house_thatch",
+          "kind": "building",
+          "x": 10,
+          "y": 5,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 12,
+              "y": 4,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 12,
+              "y": 8,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 9,
+              "y": 6,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 14,
+              "y": 6,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "store",
+          "kind": "building",
+          "x": 23,
+          "y": 4,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 25,
+              "y": 3,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 25,
+              "y": 7,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 22,
+              "y": 5,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 27,
+              "y": 5,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "house_plain",
+          "kind": "building",
+          "x": 36,
+          "y": 5,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 38,
+              "y": 4,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 38,
+              "y": 8,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 35,
+              "y": 6,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 40,
+              "y": 6,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "map": "transit_wetroad",
+      "entry": {
+        "mapId": "transit_wetroad",
+        "jsonPath": "Assets/PocketCaravan/Maps/transit_wetroad.json",
+        "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_wetroad.unity",
+        "worldX": 7,
+        "worldY": 0,
+        "generator": "frontier:wetroad"
+      },
+      "w": 100,
+      "h": 40,
+      "props": []
+    },
+    {
+      "map": "transit_ferry",
+      "entry": {
+        "mapId": "transit_ferry",
+        "jsonPath": "Assets/PocketCaravan/Maps/transit_ferry.json",
+        "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_ferry.unity",
+        "worldX": 8,
+        "worldY": 0,
+        "generator": "frontier:ferry"
+      },
+      "w": 100,
+      "h": 50,
+      "props": [
+        {
+          "name": "house_thatch",
+          "kind": "building",
+          "x": 8,
+          "y": 6,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 10,
+              "y": 5,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 10,
+              "y": 9,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 7,
+              "y": 7,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 12,
+              "y": 7,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "store",
+          "kind": "building",
+          "x": 22,
+          "y": 4,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 24,
+              "y": 3,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 24,
+              "y": 7,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 21,
+              "y": 5,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 26,
+              "y": 5,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        },
+        {
+          "name": "house_plain",
+          "kind": "building",
+          "x": 36,
+          "y": 7,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 38,
+              "y": 6,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 38,
+              "y": 10,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 35,
+              "y": 8,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 40,
+              "y": 8,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "map": "transit_central_approach",
+      "entry": {
+        "mapId": "transit_central_approach",
+        "jsonPath": "Assets/PocketCaravan/Maps/transit_central_approach.json",
+        "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_central_approach.unity",
+        "worldX": 9,
+        "worldY": 0,
+        "generator": "frontier:central_approach"
+      },
+      "w": 104,
+      "h": 50,
+      "props": [
+        {
+          "name": "house_thatch",
+          "kind": "building",
+          "x": 53,
+          "y": 5,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 55,
+              "y": 4,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 55,
+              "y": 8,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 52,
+              "y": 6,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 57,
+              "y": 6,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "map": "transit_crossroads",
+      "entry": {
+        "mapId": "transit_crossroads",
+        "jsonPath": "Assets/PocketCaravan/Maps/transit_crossroads.json",
+        "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_crossroads.unity",
+        "worldX": 9,
+        "worldY": 1,
+        "generator": "frontier:central_crossroads"
+      },
+      "w": 104,
+      "h": 50,
+      "props": [
+        {
+          "name": "house_thatch",
+          "kind": "building",
+          "x": 37,
+          "y": 12,
+          "w": 4,
+          "h": 3,
+          "beforeRows": 0,
+          "afterRows": 1,
+          "sides": [
+            {
+              "side": "north",
+              "x": 39,
+              "y": 11,
+              "dx": 0,
+              "dy": -1
+            },
+            {
+              "side": "south",
+              "x": 39,
+              "y": 15,
+              "dx": 0,
+              "dy": 1
+            },
+            {
+              "side": "west",
+              "x": 36,
+              "y": 13,
+              "dx": -1,
+              "dy": 0
+            },
+            {
+              "side": "east",
+              "x": 41,
+              "y": 13,
+              "dx": 1,
+              "dy": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

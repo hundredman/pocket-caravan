@@ -3,6 +3,7 @@ import copy,hashlib,json,sys,unittest
 from pathlib import Path
 from types import SimpleNamespace
 from PIL import Image
+from occlusion_baseline import restore_before_c3
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'Tools/MapGen'))
 import pond_art
@@ -26,7 +27,7 @@ class PondProductionChecks(unittest.TestCase):
 
     def test_only_22_ground_cells_change_all_gameplay_data_and_other_layers_exact(self):
         before=json.loads((ROOT/'Docs/Validation/A4-Pond-Production-2026-10-25/Gaegyeong-before.json').read_text())
-        after=json.loads((ROOT/'Assets/PocketCaravan/Maps/Gaegyeong.json').read_text());visual={'palette','ground','deco','obj','high'}
+        after=restore_before_c3(json.loads((ROOT/'Assets/PocketCaravan/Maps/Gaegyeong.json').read_text()));visual={'palette','ground','deco','obj','high'}
         self.assertEqual({k:v for k,v in before.items() if k not in visual},{k:v for k,v in after.items() if k not in visual})
         expected={(p['x'],p['y']) for p in json.loads(pond_art.LAYOUT.read_text())['placements']};changed=set()
         for layer in ('ground','deco','obj','high'):

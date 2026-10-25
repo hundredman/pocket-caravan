@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'Tools/Audit'))
 sys.path.insert(0, str(ROOT / 'Tools/MapGen'))
 from audit_assets import scan_python, raster_runs, adjacent_rectangles, Observe
+from occlusion_baseline import restore_before_c3
 
 
 class AssetAuditChecks(unittest.TestCase):
@@ -64,7 +65,7 @@ class AssetAuditChecks(unittest.TestCase):
                 reported[key] = coords
         expected = {}
         for mid in data['registeredMaps']:
-            m = maps[mid]
+            m = restore_before_c3(maps[mid])
             for layer in ('ground', 'deco', 'obj', 'high'):
                 for index, pi in enumerate(m[layer]):
                     if pi:

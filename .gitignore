@@ -68,3 +68,6 @@ mono_crash.*
 
 /Assets/PocketCaravan/Editor/R2Preview/
 /Assets/PocketCaravan/Editor/R2Preview.meta
+
+/Assets/PocketCaravan/Editor/C3Preview/
+/Assets/PocketCaravan/Editor/C3Preview.meta

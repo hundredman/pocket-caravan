@@ -5,6 +5,7 @@ ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'Tools/MapGen'))
 from npc_bindings import roles
 from PIL import Image
+from occlusion_baseline import restore_before_c3
 
 def read(path):return json.loads((ROOT/path).read_text())
 def digest(d):return hashlib.sha256(json.dumps(d,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
@@ -18,7 +19,7 @@ class HumanNpcBindings(unittest.TestCase):
                 self.assertEqual(existing,old[sec])
     def test_old_map_objects_and_terrain_unchanged_except_approved_pond(self):
         for mid,old in read('Tools/Integration/Fixtures/c1_legacy_identity.json')['maps'].items():
-            now=read(old['jsonPath']);terrain={k:v for k,v in now.items() if k!='objects'}
+            now=restore_before_c3(read(old['jsonPath']));terrain={k:v for k,v in now.items() if k!='objects'}
             if mid=='Gaegyeong':
                 # Preserve the C1 identity baseline while permitting only the approved A4 cells.
                 prior=read('Docs/Validation/A4-Pond-Production-2026-10-25/Gaegyeong-before.json')

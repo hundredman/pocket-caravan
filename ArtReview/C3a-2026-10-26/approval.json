@@ -1,0 +1,88 @@
+{
+  "status": "approved",
+  "date": "2026-10-26",
+  "statement": "가림 수정안 승인",
+  "scope": "C3a 나무·건물 윗부분 가림 순서. 그림·충돌·길·ID 보존.",
+  "files": [
+    {
+      "file": "comparison.png",
+      "sha256": "b3996508c5cca5913e5076d1e530c009352c98662faaea39433683702899e8f1"
+    },
+    {
+      "file": "camera-comparison.png",
+      "sha256": "1c56a388100545c532f66f42c0a0e43230dda6adeaa9d1f6abeba88246f9c44a"
+    },
+    {
+      "file": "moves.json",
+      "sha256": "661e6e89dfadf9645e89df906a2988de409694908371b06fc9e0e20d0ab8c5db"
+    },
+    {
+      "file": "plan.json",
+      "sha256": "c4382110a35a062e94f85d2c5aff2bf42617c1a801684aa737ded1edb325f758"
+    },
+    {
+      "file": "screens/pose-0.json",
+      "sha256": "794fa7e8aa4185e645f3abcebb87530cce2ba832f4ea51e2be221766832d2014"
+    },
+    {
+      "file": "screens/pose-0.png",
+      "sha256": "a80f95d31fdc0b55c2a7232458a1a959ab987641d2bf704fbefabda467d0099c"
+    },
+    {
+      "file": "screens/pose-1.json",
+      "sha256": "ca9dd207130acdf2712ca4218ad264d3d723f74c6e13dae04c21b4cf16611597"
+    },
+    {
+      "file": "screens/pose-1.png",
+      "sha256": "917925983788a82da254b7d4afb4b9670d7e354d6f185e6e683465f09390e312"
+    },
+    {
+      "file": "screens/pose-2.json",
+      "sha256": "aa57032cf1614c41076cf0f2c26cc35ab9355c95988a94041d65c1ffdf9aaeb2"
+    },
+    {
+      "file": "screens/pose-2.png",
+      "sha256": "6770a2c2ae0bd190e28dc3cb9ee3fe3f48b93dfb021e0b766f9b24751764c29a"
+    },
+    {
+      "file": "screens/pose-3.json",
+      "sha256": "1e0b4c40378fa8662c8ece9952c0d41b8188ced9eb813fa6e8c70844c0bf78cd"
+    },
+    {
+      "file": "screens/pose-3.png",
+      "sha256": "26917826562dd9e4adb54c6f438a32c6835aaa8adb321798baa5ddd73b516e27"
+    },
+    {
+      "file": "screens/pose-4.json",
+      "sha256": "794fa7e8aa4185e645f3abcebb87530cce2ba832f4ea51e2be221766832d2014"
+    },
+    {
+      "file": "screens/pose-4.png",
+      "sha256": "904fd9089891e6689ce4836a445e1faa1d7f35e2a032af2e9ceb1e76470d3a81"
+    },
+    {
+      "file": "screens/pose-5.json",
+      "sha256": "ca9dd207130acdf2712ca4218ad264d3d723f74c6e13dae04c21b4cf16611597"
+    },
+    {
+      "file": "screens/pose-5.png",
+      "sha256": "917925983788a82da254b7d4afb4b9670d7e354d6f185e6e683465f09390e312"
+    },
+    {
+      "file": "screens/pose-6.json",
+      "sha256": "aa57032cf1614c41076cf0f2c26cc35ab9355c95988a94041d65c1ffdf9aaeb2"
+    },
+    {
+      "file": "screens/pose-6.png",
+      "sha256": "576d82c734b32fda34174199927e3a16eccaa02f30cd99fa45ac328a99191c37"
+    },
+    {
+      "file": "screens/pose-7.json",
+      "sha256": "1e0b4c40378fa8662c8ece9952c0d41b8188ced9eb813fa6e8c70844c0bf78cd"
+    },
+    {
+      "file": "screens/pose-7.png",
+      "sha256": "875d368707211e426a9810140d74802b0f1b164096ff5236f45fd0bb34c9f006"
+    }
+  ]
+}
