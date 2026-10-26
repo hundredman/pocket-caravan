@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-27",
+  "tool": "built-in image_gen.imagegen",
+  "requests": [
+    {
+      "output": "thatch.png",
+      "prompt": "Use case: stylized-concept. Asset: ONE newly designed Korean Goryeo thatched cottage game sprite. Reference image STYLE reference only: match ONLY the TOP Venice houses and Arabia building panels, disregard all detailed existing-art examples at the bottom. Match their convincing chunky architecture, bold dark brown single-pixel silhouette, 2-3 flat clean shades per material and upper-left light. This is an actual small pixel-art sprite concept, not a flat outline icon. New design: low warm ochre hipped straw roof with curved drooping eaves, visible thick straw eave depth and a short tied ridge; roof projects over a substantial cream earthen facade. A recessed wooden entrance left of center, one small lattice window to the right, low stone foundation and a tiny wooden threshold. Give the roof a clear top plane and front plane, a visible roof-to-wall shadow band, and structural posts; do not turn the facade into a flat fence rectangle. Korean cottage architecture, not a European house with a different roof. Cute frontal view slightly from above, no isometric camera. Logical canvas64x48 with silhouette about60wide by45high, roof upper23pixels and wall/foundation lower22pixels. Large clean pixel clusters, crisp stepped silhouette, a few well-chosen roof/wood marks; no speckles, gradients, noisy texture, excessive tiny ribs, or checkerboard roof. Whole building isolated, centered, genuinely transparent background, no scenery, text, ground, loose props, shadow or frame. Do not copy a reference building.",
+      "transparent_background": true,
+      "referenced_image_paths": [
+        "Docs/Images/team-style-reference.png"
+      ]
+    },
+    {
+      "output": "tile-house.png",
+      "prompt": "Use case: stylized-concept. ONE newly designed Korean Goryeo blue-gray tiled-roof house, small pixel-art game sprite. Match ONLY the TOP Venice and Arabia buildings of reference image, ignore bottom old detailed examples. New Korean architecture with actual volume: a broad gray-blue hipped tiled roof with a slightly curved ridge and modest upturned eaves, visible top/front roof planes, thick dark eave shadow, short wooden supporting brackets. Cream plaster and warm wooden frame, a recessed doorway on the RIGHT and one wide paired paper-lattice window on the LEFT. Low gray stone foundation and a short doorstep beneath the door. Facade must have depth under eaves, no flat fence look or identical repeated rectangular windows. Cute slightly top-down FRONT view like the Venice houses, not an isometric angle. Intended logical64x48 canvas, whole silhouette approx60wide45high, upper roof23pixels lower wall/foundation22pixels. Large flat clean colored regions with2-3shades per material, dark brown single-logical-pixel outer contour, upper-left lighting. A few clear curved tile rows and ribs, restrained charming construction detail, no excess dark outlines within facade, no noisy dithering, gradient, fine grain, blur or vector-icon look. Whole building only, genuinely transparent background, no ground, cast shadow, text, scenery or separate props. New design, do not copy reference buildings.",
+      "transparent_background": true,
+      "referenced_image_paths": [
+        "Docs/Images/team-style-reference.png"
+      ]
+    },
+    {
+      "output": "ground-source.png",
+      "prompt": "Use case: stylized-concept. Asset: a NEW purpose-designed low-resolution modular grass and earth terrain source for a cute top-down pixel game. Reference image TOP Venice/Arabia panels are color/style reference only, ignore bottom old-art strip. Output logical32x16 pixels, crisp nearest-neighbor enlarged pixels: LEFT exactly16x16 a seamless clean sage meadow grass center tile, RIGHT exactly16x16 a seamless warm muted ochre dirt center tile. No noisy texture, stippling, regularly repeating diagonal ticks, no pebbles sprinkled every tile. Each tile uses two almost-flat neighboring colors in one large subtle irregular patch, completely quiet near every edge so repeated tiles do not form a grid. Medium sage green grass and pale warm earth, low contrast, upper left light. Flat top-down material, no volume, no outside dark border or grid, no gaps, labels, shadows, gradients, antialias or transparency. All left-half green, all right-half tan, clean split at exact midpoint. This is the center-material source for a newly authored complete irregular grass/dirt boundary kit, not a scenic landscape.",
+      "transparent_background": false,
+      "referenced_image_paths": [
+        "Docs/Images/team-style-reference.png"
+      ]
+    }
+  ],
+  "notes": [
+    "Prompt dimensions are authoring intentions; generated image size was not treated as native asset resolution.",
+    "Aseprite uniformly samples complete generated silhouettes to original 64x48 canvases with feet at row46; this redesign changes visible silhouette proportions, not map footprint or engine scale.",
+    "A5 fixes explicit candidate colors and binary alpha. Aseprite retains the new architecture, removes isolated color flecks and unifies silhouette outline.",
+    "Pine is copied unchanged from the previous trial, not regenerated.",
+    "After the initial 60x34 and 60x39 whole-object fit made houses look too low next to characters, Aseprite moves each sampled roof upward without scaling and draws a taller recessed facade/foundation on the original 64x48 canvas. Final visible height is at least44 pixels with the original feet row46."
+  ]
+}
