@@ -1,5 +1,5 @@
 {
-  "status": "pending",
+  "status": "changes_requested",
   "files": {
     "before.png": {
       "size": [
@@ -29,5 +29,6 @@
       ],
       "rgbaSHA256": "81b1e8f1c06659f90ab15e3487463913ceeae083eee5c27cec9c11ed01d2a505"
     }
-  }
+  },
+  "feedback": "사용자: 그늘 위치·테두리·모양이 여전히 이상함. 비슷한 구도와 아트스타일의 외부 연못 이미지 참고 필요."
 }
