@@ -104,6 +104,7 @@ MonoBehaviour:
     neighbors:
     - arabia_highroad
     - arabia_shortcut
+    - arabia_central
   - mapId: arabia_highroad
     displayName: "\uC548\uC804\uD55C \uD070\uAE38"
     height: 32
@@ -112,6 +113,14 @@ MonoBehaviour:
     town: 
     neighbors:
     - arabia_jeddah
+    - arabia_sanaa
+  - mapId: arabia_central
+    displayName: "\uC911\uC559 \uB300\uB959 \uB0A8\uBD80"
+    height: 160
+    legacyHeight: 0
+    coord: {x: 28, y: 2}
+    town: 
+    neighbors:
     - arabia_sanaa
   - mapId: Route01
     displayName: "\uC608\uC131 \uAE38"

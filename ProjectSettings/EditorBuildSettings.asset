@@ -104,6 +104,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/PocketCaravan/Scenes/Arabia/arabia_highroad.unity
     guid: e4275747576f541c1a546ab317d522b9
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_central.unity
+    guid: 56deb4c4fa2644634bc63c81015e13bd
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

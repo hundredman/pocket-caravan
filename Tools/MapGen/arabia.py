@@ -10,9 +10,10 @@ from tiles import Map
 AHSA, FARMROAD, ZABID = 'arabia_ahsa', 'arabia_farmroad', 'arabia_zabid'
 WORKSHOP, TAIZ, PORTROAD, JEDDAH = 'arabia_workshoproad', 'arabia_taiz', 'arabia_portroad', 'arabia_jeddah'
 SHORTCUT, SANAA, HIGHROAD = 'arabia_shortcut', 'arabia_sanaa', 'arabia_highroad'
+CENTRAL = 'arabia_central'     # 중앙 대륙 남쪽 구역 (아라비아 담당)
 
 # 연결표 (Docs/Arabia/02 §1·§3): (맵, 경계, 스폰 키) ↔ (맵, 경계, 스폰 키). 경계 폭은 모두 4칸.
-# 2026-10-26: 사나 북문은 중앙 대륙(남쪽 구역)으로 나가는 관문으로 비워 둔다 (중앙 연결 전까지 출구 없음).
+# 2026-10-26: 사나 북문은 중앙 대륙 남쪽 구역(arabia_central)으로 나가는 관문.
 #   안전한 큰길: 제다 북문 → 큰길(남→동) → 사나 서문 / 험한 지름길: 제다 동문 → 지름길(서→북) → 사나 남문.
 CONNECTIONS = [
     ((AHSA, 'E', 'e_01'), (FARMROAD, 'W', 'w_01')),
@@ -25,6 +26,7 @@ CONNECTIONS = [
     ((SHORTCUT, 'N', 'n_01'), (SANAA, 'S', 's_01')),
     ((JEDDAH, 'N', 'n_01'), (HIGHROAD, 'S', 's_01')),
     ((HIGHROAD, 'E', 'e_01'), (SANAA, 'W', 'w_01')),
+    ((SANAA, 'N', 'n_01'), (CENTRAL, 'S', 's_01')),       # 사나 북문 → 중앙 대륙 남부
 ]
 SPAWN = {}
 for a, b in CONNECTIONS:
@@ -103,4 +105,5 @@ jeddah = _region('arabia_jeddah', JEDDAH)
 shortcut = _region('arabia_shortcut', SHORTCUT)
 sanaa = _region('arabia_sanaa', SANAA)
 highroad = _region('arabia_highroad', HIGHROAD)
-MAPS = [ahsa, farmroad, zabid, workshoproad, taiz, portroad, jeddah, shortcut, sanaa, highroad]
+central = _region('arabia_central', CENTRAL)
+MAPS = [ahsa, farmroad, zabid, workshoproad, taiz, portroad, jeddah, shortcut, sanaa, highroad, central]

@@ -228,7 +228,7 @@ namespace PocketCaravan.EditorTools
             yield return Shot("08_zabid_market");
             MarketClose(market);
             yield return Frames(3);
-            // 탐험 일주: 자비드 → 공방길 → 타이즈 → 항구길 → 제다 → 험한 지름길 → (남문) 사나 → (서문) 안전한 큰길 → 제다 북문
+            // 탐험 일주: 자비드 → 공방길 → 타이즈 → 항구길 → 제다 → 험한 지름길 → (남문) 사나 → (북문) 중앙 대륙 남부 → 사나 → (서문) 안전한 큰길 → 제다 북문
             {
                 var tour = new (string from, string to, string label)[]
                 {
@@ -238,6 +238,8 @@ namespace PocketCaravan.EditorTools
                     (ArabiaRegionSetup.PortroadMap, ArabiaRegionSetup.JeddahMap, "항구길 횡단 → 제다"),
                     (ArabiaRegionSetup.JeddahMap, ArabiaRegionSetup.ShortcutMap, "제다 → 험한 지름길"),
                     (ArabiaRegionSetup.ShortcutMap, ArabiaRegionSetup.SanaaMap, "험한 지름길 횡단 → 사나"),
+                    (ArabiaRegionSetup.SanaaMap, ArabiaRegionSetup.CentralMap, "사나 남문 → 북문 → 중앙 대륙 남부"),
+                    (ArabiaRegionSetup.CentralMap, ArabiaRegionSetup.SanaaMap, "중앙 대륙 남부 → 사나 북문"),
                     (ArabiaRegionSetup.SanaaMap, ArabiaRegionSetup.HighroadMap, "사나 서문 → 안전한 큰길"),
                     (ArabiaRegionSetup.HighroadMap, ArabiaRegionSetup.JeddahMap, "안전한 큰길 횡단 → 제다 북문"),
                 };
@@ -250,6 +252,19 @@ namespace PocketCaravan.EditorTools
                     Check($"탐험 일주 도착: {to}", MapRoot.Current != null && MapRoot.Current.mapId == to, $"{walked:0.0}칸 · {seconds:0.0}초");
                     yield return Frames(20);
                     yield return Shot($"{n++:00}_{to.Replace("arabia_", "")}");
+                    if (to == ArabiaRegionSetup.CentralMap)
+                    {
+                        // 중앙 대륙 남부 종단: 사나 북문 밖 → 오아시스 장터 → 한가운데 초원 (돌아갈 때 다시 종단)
+                        foreach (var (who, shot) in new[] { ("장터지기 카림", "central_market"), ("게르의 할아버지", "central_apex") })
+                        {
+                            var target = Object.FindObjectsByType<Interactable>(FindObjectsSortMode.None).FirstOrDefault(t => t.gameObject.name == who);
+                            if (!Check($"중앙 대륙 남부: {who} 있음", target != null)) break;
+                            yield return WalkTo(Beside(target), $"중앙 대륙 남부 종단 → {who}");
+                            Check($"중앙 대륙 남부 종단 도착: {who}", true, $"{walked:0.0}칸 · {seconds:0.0}초");
+                            yield return Frames(20);
+                            yield return Shot($"{n++:00}_{shot}");
+                        }
+                    }
                 }
             }
             Check("본편 저장 파일 그대로", ArabiaRegionSetup.FileHash(Path.Combine(Application.persistentDataPath, "pocket_caravan_save.json")) == SessionState.GetString("PocketCaravan.ArabiaPlaytest.MainHash", ""));

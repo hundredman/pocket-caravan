@@ -355,6 +355,7 @@ def build_all():
     shrub('drawn_bush', 'oasis', seed=32)
     shrub('drawn_oleander', 'oasis', seed=33, flowers=(236, 120, 160, 255))
     shrub('drawn_jasmine', 'palm', seed=34, flowers=(250, 248, 236, 255))
+    build_central()
 
 
 # ---------------- 동물·우물·꽃·소품 (나무와 같은 화풍) ----------------
@@ -840,6 +841,131 @@ def build_regions():
     net_rack('drawn_netRack')
     ground_texture('drawn_texRock', (184, 152, 118, 255), spots=[((160, 128, 98, 255), 90, 2), ((206, 178, 142, 255), 70, 2), ((138, 110, 86, 255), 40, 1), ((150, 140, 110, 255), 20, 3)])
     ground_texture('drawn_texGravel', (196, 168, 128, 255), seed=97, spots=[((160, 136, 104, 255), 90, 1), ((220, 200, 166, 255), 60, 1), ((140, 120, 96, 255), 30, 2)])
+
+
+
+# ---------------- 중앙 대륙 남쪽 구역 (사막 → 건초지 → 초원) ----------------
+WOOL = [(150, 142, 132, 255), (204, 198, 186, 255), (232, 228, 216, 255), (250, 248, 240, 255)]
+FELT = [(168, 156, 136, 255), (214, 204, 182, 255), (236, 228, 208, 255), (250, 246, 232, 255)]
+
+
+def tuft_colored(name, stem, tip, seed=45):
+    """풀 한 포기 (색 지정). 초원용 초록 풀."""
+    rng = random.Random(seed)
+    im = canvas(16, 16)
+    px = im.load()
+    base = 12
+    for k in range(6):
+        x = 3 + k * 2 + rng.randint(0, 1)
+        hgt = rng.randint(3, 7)
+        lean = rng.choice((-1, 0, 1))
+        for j in range(hgt):
+            xx = min(15, max(0, x + (lean if j > hgt // 2 else 0)))
+            px[xx, base - j] = stem if j < hgt - 1 else tip
+    return save(name, im)
+
+
+def sheep(name, seed=101, flip=False):
+    """작은 양 (16×14). 둥근 털 + 검은 얼굴·다리."""
+    rng = random.Random(seed)
+    w, h = 16, 14
+    im = canvas(w, h)
+    shadow(im, 8, h - 2, 6, 1.5)
+    px = im.load()
+    for lx in (4, 6, 10, 12):
+        for y in range(h - 5, h - 2):
+            px[lx, y] = OUTLINE
+    m = _mask(w, h)
+    _ell(m, 7.5, 6.5, 6, 4.2)
+    _ell(m, 4.5, 5, 3, 2.6)
+    _ell(m, 10, 4.6, 3.2, 2.8)
+    paint_mask(im, m, WOOL, rng, speck=0.08)
+    fx = 13 if not flip else 1
+    for (dx, dy) in ((0, 0), (1, 0), (0, 1), (1, 1), (0, 2), (1, 2)):
+        px[fx + dx if not flip else fx + dx, 4 + dy] = (60, 50, 46, 255)
+    px[fx + (1 if not flip else 0), 4] = (120, 100, 90, 255)
+    if flip:
+        im = im.transpose(Image.FLIP_LEFT_RIGHT)
+    return save(name, im)
+
+
+def yurt(name, seed=102, door=(176, 48, 44, 255)):
+    """초원의 둥근 천막 (게르) 48×40: 흰 펠트 벽 + 둥근 지붕 + 붉은 문."""
+    rng = random.Random(seed)
+    w, h = 48, 40
+    im = canvas(w, h)
+    shadow(im, 24, h - 3, 20, 3)
+    px = im.load()
+    wall = _mask(w, h)
+    _rect(wall, 5, 18, 42, h - 4)
+    paint_mask(im, wall, FELT, rng, light=(-0.9, -0.2), speck=0.0)
+    roof = _mask(w, h)
+    for y in range(4, 21):
+        half = int(round(19.5 * ((y - 3) / 17) ** 0.55))
+        for x in range(24 - half, 24 + half):
+            roof[y][x] = True
+    paint_mask(im, roof, FELT, rng, light=(-0.7, -0.7), speck=0.0)
+    for x in range(6, 42):                     # 벽 위아래 끈 (파랑 무늬)
+        for y in (21, h - 7):
+            if px[x, y] != OUTLINE:
+                px[x, y] = (60, 96, 170, 255) if (x // 2) % 2 else (236, 196, 80, 255)
+    for y in range(6, 20):                      # 지붕 살
+        for x0 in (16, 24, 32):
+            xx = x0 + int((x0 - 24) * (20 - y) / 30)
+            if 0 <= xx < w and px[xx, y][3] and px[xx, y] != OUTLINE:
+                px[xx, y] = FELT[0]
+    for x in range(21, 27):                     # 꼭대기 창 (토노)
+        for y in range(3, 6):
+            px[x, y] = OUTLINE if y == 3 or x in (21, 26) else (120, 84, 52, 255)
+    for x in range(19, 29):                     # 문
+        for y in range(h - 15, h - 4):
+            edge = x in (19, 28) or y == h - 15
+            px[x, y] = OUTLINE if edge else door if (x + y) % 5 else tuple(int(c * 0.8) for c in door[:3]) + (255,)
+    px[26, h - 9] = (236, 196, 80, 255)
+    return save(name, im)
+
+
+def ovoo(name, seed=103):
+    """돌무더기 서낭 (어워) 32×40: 쌓은 돌 + 장대 + 파란 천. 대륙 한가운데 표지."""
+    rng = random.Random(seed)
+    w, h = 32, 40
+    im = canvas(w, h)
+    shadow(im, 16, h - 3, 13, 2.5)
+    px = im.load()
+    for y in range(2, h - 12):                  # 장대
+        px[15, y] = OUTLINE; px[16, y] = TRUNK[1]
+    for i, c in enumerate([(52, 104, 196, 255), (236, 236, 228, 255), (220, 70, 60, 255), (240, 200, 70, 255), (70, 160, 90, 255)]):
+        for y in range(4 + i * 3, 6 + i * 3):     # 천 (바람에 날림)
+            for x in range(17, 25 - i):
+                px[x, y] = c
+    m = _mask(w, h)
+    _ell(m, 16, h - 9, 13, 6)
+    _ell(m, 16, h - 14, 9, 5)
+    _ell(m, 16, h - 18, 5, 3.5)
+    paint_mask(im, m, STONE, rng, speck=0.18)
+    for _ in range(14):                         # 돌 이음
+        x, y = rng.randrange(5, 27), rng.randrange(h - 20, h - 5)
+        if px[x, y][3] and px[x, y] != OUTLINE:
+            px[x, y] = STONE[0]
+    return save(name, im)
+
+
+def build_central():
+    ground_texture('drawn_texDry', (198, 184, 112, 255), seed=104,
+                   spots=[((176, 162, 92, 255), 110, 1), ((214, 204, 140, 255), 80, 1),
+                          ((156, 160, 84, 255), 50, 2), ((186, 150, 96, 255), 20, 1)])
+    tuft_colored('drawn_grassTuft', (78, 140, 60, 255), (138, 190, 84, 255), seed=46)
+    tuft_colored('drawn_grassTuft2', (64, 124, 58, 255), (120, 176, 76, 255), seed=47)
+    tuft_colored('drawn_dryTuft', (164, 150, 72, 255), (210, 196, 112, 255), seed=48)
+    flower('drawn_wildflowerY', (246, 214, 70, 255), bush=False, seed=105, center=(255, 248, 200, 255))
+    flower('drawn_wildflowerW', (244, 244, 236, 255), bush=False, seed=106, center=(240, 200, 80, 255))
+    flower('drawn_wildflowerB', (110, 140, 226, 255), bush=False, seed=107, center=(250, 240, 200, 255))
+    flower('drawn_wildflowerP', (226, 120, 176, 255), bush=False, seed=108, center=(255, 230, 120, 255))
+    sheep('drawn_sheep', seed=101)
+    sheep('drawn_sheep2', seed=109, flip=True)
+    yurt('drawn_yurt', seed=102)
+    yurt('drawn_yurt2', seed=110, door=(52, 96, 168, 255))
+    ovoo('drawn_ovoo')
 
 
 if __name__ == '__main__':

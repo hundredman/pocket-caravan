@@ -29,8 +29,9 @@ namespace PocketCaravan.EditorTools
         public const string AhsaMap = "arabia_ahsa", FarmroadMap = "arabia_farmroad", ZabidMap = "arabia_zabid";
         public const string WorkshopMap = "arabia_workshoproad", TaizMap = "arabia_taiz", PortroadMap = "arabia_portroad", JeddahMap = "arabia_jeddah";
         public const string ShortcutMap = "arabia_shortcut", SanaaMap = "arabia_sanaa", HighroadMap = "arabia_highroad";
-        // 수도1(사나)+마을4(알 아흐사·자비드·타이즈·제다)+길5 = 10개 씬 (Docs/Arabia/02 §1)
-        public static readonly string[] MapIds = { AhsaMap, FarmroadMap, ZabidMap, WorkshopMap, TaizMap, PortroadMap, JeddahMap, ShortcutMap, SanaaMap, HighroadMap };
+        public const string CentralMap = "arabia_central";   // 중앙 대륙 남쪽 구역 (2026-10-26 회의: 아라비아 담당)
+        // 수도1(사나)+마을4(알 아흐사·자비드·타이즈·제다)+길5 = 10개 씬 (Docs/Arabia/02 §1) + 중앙 대륙 남쪽 구역 1개
+        public static readonly string[] MapIds = { AhsaMap, FarmroadMap, ZabidMap, WorkshopMap, TaizMap, PortroadMap, JeddahMap, ShortcutMap, SanaaMap, HighroadMap, CentralMap };
         public const string AhsaTown = "arabia_ahsa", ZabidTown = "arabia_zabid";
         public const string TaizTown = "arabia_taiz", JeddahTown = "arabia_jeddah", SanaaTown = "arabia_sanaa";
         public static readonly string[] TownIds = { AhsaTown, ZabidTown, TaizTown, JeddahTown, SanaaTown };

@@ -82,6 +82,14 @@
       "worldX": 27,
       "worldY": 1,
       "generator": "arabia:highroad"
+    },
+    {
+      "mapId": "arabia_central",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_central.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_central.unity",
+      "worldX": 28,
+      "worldY": 2,
+      "generator": "arabia:central"
     }
   ],
   "npcs": [

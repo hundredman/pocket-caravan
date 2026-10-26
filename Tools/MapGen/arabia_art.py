@@ -196,13 +196,15 @@ def unplace(m, name, x, y):
 # ---------- 바닥 무늬와 경계 ----------
 TEX = {'sand': 'tile_sand', 'road': 'tile_road', 'paving': 'tile_paving', 'grass': 'tile_oasisGrass',
        'water': 'tile_water', 'zellige': 'tile_zellige', 'brick': 'tile_mudBrick', 'dune': 'tile_dune',
-       'rock': 'drawn_texRock', 'gravel': 'drawn_texGravel'}
+       'rock': 'drawn_texRock', 'gravel': 'drawn_texGravel', 'dry': 'drawn_texDry'}
 STREET = {'paving', 'zellige'}
 # 경계를 그리지 않고 이어지는 바닥 묶음
 JOIN = {'paving': {'paving', 'zellige', 'road', 'bridge'}, 'zellige': {'zellige'},
         'road': {'road', 'paving', 'zellige', 'bridge', 'gravel'},
         'gravel': {'gravel', 'road', 'paving', 'bridge'}, 'rock': {'rock'},
-        'grass': {'grass', 'water', 'bridge'}, 'water': {'water', 'bridge'}, 'brick': {'brick'}, 'dune': {'dune'}}
+        'grass': {'grass', 'water', 'bridge'}, 'water': {'water', 'bridge'}, 'brick': {'brick'}, 'dune': {'dune'},
+        'dry': {'dry', 'grass', 'water', 'bridge'}}   # 건초지: 초원 쪽 경계는 초원이 그린다
+UNDER = ('grass', 'dry', 'sand')       # 경계 바깥에 깔 바닥 후보
 
 
 def tex(kind, x, y):
@@ -264,6 +266,10 @@ def compose(kind, under, mask, x, y):
                 jag = (_noise('g', x % 4, y % 4, i, j) % 3)
                 if d < jag: px[i, j] = bp[i, j]
                 elif d < jag + 1: px[i, j] = (92, 128, 58, 255)
+            elif kind == 'dry':
+                jag = (_noise('y', x % 4, y % 4, i, j) % 3)
+                if d < jag: px[i, j] = bp[i, j]
+                elif d < jag + 1: px[i, j] = (160, 146, 78, 255)
             elif kind == 'water':
                 if d < 1: px[i, j] = bp[i, j]
                 elif d < 2: px[i, j] = (222, 196, 150, 255)         # 젖은 모래
@@ -308,7 +314,8 @@ def bridge_key(axis, edge, x, y):
 
 def ground_key(kind, under, mask, x, y):
     n = sprite(TEX[kind]).width // T
-    k = f'arabia:t{kind}{under[0]}{mask}:{x % n}:{y % n}'
+    u = 'y' if under == 'dry' else under[0]          # 예전 이름(s·g) 유지, 건초지는 y
+    k = f'arabia:t{kind}{u}{mask}:{x % n}:{y % n}'
     name = k.replace(':', '_')
     if name not in USED:
         USED[name] = compose(kind, under, mask, x, y) if mask != 255 else tex(kind, x, y)
@@ -539,9 +546,15 @@ class ArabiaMap(Map):
                     nx, ny = x + dx, y + dy
                     same = (not self.inside(nx, ny)) or self.zone[ny][nx] in join
                     mask |= same << bit
-                under = 'grass' if z == 'water' and any(
-                    self.inside(x + dx, y + dy) and self.zone[y + dy][x + dx] == 'grass'
-                    for dx, dy in ((0, -1), (1, 0), (0, 1), (-1, 0))) else 'sand'
+                near = [self.zone[y + dy][x + dx] for dx, dy in ((0, -1), (1, 0), (0, 1), (-1, 0))
+                        if self.inside(x + dx, y + dy) and self.zone[y + dy][x + dx] not in join]
+                if z == 'water':
+                    under = 'grass' if 'grass' in [self.zone[y + dy][x + dx] for dx, dy in ((0, -1), (1, 0), (0, 1), (-1, 0))
+                                                   if self.inside(x + dx, y + dy)] else 'sand'
+                elif getattr(self, 'soft_under', False):
+                    under = max(UNDER, key=lambda u: (near.count(u), u == 'sand'))
+                else:
+                    under = 'sand'
                 self.ground[y][x] = ground_key(z, under, mask, x, y)
 
 

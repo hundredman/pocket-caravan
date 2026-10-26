@@ -1,6 +1,6 @@
 """사나 — 성벽으로 둘러싼 수도 (64×48). 여러 산지 상품의 큰 소비처이자 중앙 대륙으로 나가는 관문.
 
-- 2026-10-26: 북문은 중앙 대륙(남쪽 구역)으로 나가는 관문. 중앙 맵이 붙기 전까지는 닫힌 성문과 수비대장만 둔다.
+- 2026-10-26: 북문은 중앙 대륙 남쪽 구역(arabia_central)으로 나가는 관문 (양쪽 망루·관문 앞 광장·수비대장).
 - 서문: 안전한 큰길(제다 북문)에서 들어온다. 남문: 험한 지름길(제다 동문)에서 올라온다.
 - 십자 대로가 만나는 큰 광장: 분수·장터(사나)·게시판·나디아(먼 마을 의뢰인, Q4·Q5는 다음 단계).
 - 북서: 큰 모스크·마드라사 / 북동: 궁전·도서관 / 남서: 수크(덮인 시장과 노점 거리) / 남동: 탑집 골목과 정원(부스탄).
@@ -17,9 +17,10 @@ def build(L):
 
     m.exit(L, 'w_01', WEST_Y)
     m.exit(L, 's_01', SOUTH_X)
+    m.exit(L, 'n_01', NORTH_X)
     # ---- 대로 ----
     m.paint('paving', 0, WEST_Y, 60, WEST_Y + 3, grade=3)              # 서문 → 동쪽 대로
-    m.paint('paving', NORTH_X, 3, NORTH_X + 3, H - 1, grade=3)        # 북문 앞 → 남문 대로
+    m.paint('paving', NORTH_X, 0, NORTH_X + 3, H - 1, grade=3)        # 북문 → 남문 대로
     m.paint('paving', 26, 3, 37, 6, grade=3)                           # 북문 앞 광장 (중앙 대륙 관문)
     m.paint('zellige', 29, 4, 34, 5)
     m.paint('paving', 22, 15, 42, 29, grade=3)                         # 큰 광장
@@ -30,8 +31,7 @@ def build(L):
     m.paint('paving', 50, 13, 51, 43, grade=2)
 
     # ---- 성벽 ----
-    # 북문 (중앙 대륙 관문): 닫힌 큰 성문 + 양쪽 망루. 중앙 맵이 붙으면 이 자리에 출구를 낸다.
-    m.put('wall_wallGate', NORTH_X, 0, foot=2, force=True)
+    # 북문 (중앙 대륙 관문): 양쪽 망루 사이로 열린 문
     m.maybe('wall_tower', NORTH_X - 2, 0, foot=3, force=True)
     m.maybe('wall_tower', NORTH_X + 4, 0, foot=3, force=True)
     for x in list(range(1, NORTH_X - 4, 3)) + list(range(NORTH_X + 6, W - 3, 3)):
@@ -45,7 +45,7 @@ def build(L):
         m.maybe('wall_tower', W - 2, y, foot=4, force=True)
     m.maybe('wall_tower', 0, WEST_Y - 4, foot=4, force=True)
     m.maybe('wall_tower', 0, WEST_Y + 4, foot=4, force=True)
-    A.block_rect(m, 0, 0, W - 1, 2)
+    A.block_rect(m, 0, 0, NORTH_X - 1, 2); A.block_rect(m, NORTH_X + 4, 0, W - 1, 2)
     A.block_rect(m, 0, H - 2, SOUTH_X - 1, H - 1); A.block_rect(m, SOUTH_X + 4, H - 2, W - 1, H - 1)
 
     # ---- 북문 앞 광장 ----
@@ -55,8 +55,8 @@ def build(L):
         m.maybe('drawn_pottedOrange', x, 4, foot=1, force=True)
     m.talker(NORTH_X - 1, 5, '북문 수비대장', 'arabia_npc_bedouin_tall',
              '이 문 너머가 중앙 대륙으로 가는 길이오. 사막이 끝나면 넓은 초원이 펼쳐지지.',
-             '지금은 길을 닦는 중이라 문을 닫아 두었소. 아라비아에서 장사 실력을 먼저 쌓고 오시오.')
-    m.asign(34, 4, '사나 북문 — 중앙 대륙 가는 길\n(길을 닦는 중이라 아직 닫혀 있어요)')
+             '북쪽으로 가면 오아시스 장터 마을이 있소. 아라비아에서 장사 실력을 쌓았다면 한번 가 보시오.')
+    m.asign(34, 4, '사나 북문 — 중앙 대륙 가는 길\n북쪽: 사막 → 건초지 → 한가운데 초원 · 오아시스 장터 마을')
     for y in (8, 12):
         m.maybe('drawn_datePalm2', NORTH_X - 3, y - 2)
         m.maybe('drawn_datePalm', NORTH_X + 5, y - 2)
