@@ -70,7 +70,8 @@
         "path": "ArtReview/C7-TeamStyle-20261027/Native/thatch.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/C7-Buildings-v5/approval.md"
       },
       "size": [
         4,
@@ -174,7 +175,8 @@
         "path": "ArtReview/C7-TeamStyle-20261027/Native/tile-house.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "evidence": "ArtReview/Approved/C7-Buildings-v5/approval.md"
       },
       "size": [
         4,
@@ -383,7 +385,8 @@
         "path": "Tools/ArtTrials/c7_team_finish.lua"
       },
       "review": {
-        "status": "pending"
+        "status": "pending",
+        "feedback": "사용자 선택 미확정; 이전안 선호 가능성 제시"
       },
       "requiredPieces": [
         "center",

@@ -15,7 +15,8 @@ class C7TeamStyleChecks(unittest.TestCase):
     def test_catalogue_pending_and_complete(self):
         errors,assets=validate_catalogue(json.loads((OUT/'catalogue.json').read_text()),ROOT)
         self.assertEqual(errors,[]);self.assertEqual(len(assets),4)
-        self.assertEqual({a['review']['status'] for a in assets.values()},{'pending'})
+        self.assertEqual({assets[k]['review']['status'] for k in ['c7ts_thatch','c7ts_tile_house']},{'approved'})
+        self.assertEqual({assets[k]['review']['status'] for k in ['c7ts_pine','c7ts_grass_dirt']},{'pending'})
         pieces=assets['c7ts_grass_dirt']['pieces']
         self.assertEqual(len([p for p in pieces if re.fullmatch(r'grass-\d+',p)]),47)
         self.assertTrue({f'{prefix}-{v}' for prefix in ['grass-center','dirt'] for v in [1,2,3]}<=pieces.keys())
@@ -23,6 +24,8 @@ class C7TeamStyleChecks(unittest.TestCase):
     def test_original_canvas_feet_pine_and_explicit_colors(self):
         old=ROOT/'ArtReview/C7-Trial4-20261026/Native/pine.png'
         self.assertEqual(rgba_evidence(old),rgba_evidence(OUT/'Native/pine.png'))
+        for name in ['thatch','tile-house']:
+            self.assertEqual(rgba_evidence(OUT/'Native'/(name+'.png')),rgba_evidence(ROOT/'ArtReview/Approved/C7-Buildings-v5'/(name+'.png')))
         for name in ['thatch','tile-house','pine']:
             with Image.open(OUT/'Native'/(name+'.png')) as im:
                 self.assertEqual(im.size,(64,48));self.assertEqual(im.convert('RGBA').getchannel('A').getbbox()[3],47)

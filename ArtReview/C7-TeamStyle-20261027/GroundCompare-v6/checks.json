@@ -1,0 +1,40 @@
+{
+  "type": "actual Play camera pixels; same opaque buildings/pine, only ground variant changes",
+  "objects": [
+    {
+      "object": "thatch",
+      "opaquePixelDifferences": 0
+    },
+    {
+      "object": "tile-house",
+      "opaquePixelDifferences": 0
+    },
+    {
+      "object": "pine",
+      "opaquePixelDifferences": 0
+    }
+  ],
+  "files": {
+    "ArtReview/C7-TeamStyle-20261027/GroundCompare-v6/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "ec3a82df1d394006d110798c766b4f9c981c6382a64dfbfa5215bdc7abbb684d"
+    },
+    "ArtReview/C7-TeamStyle-20261027/GroundCompare-v6/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "968e3051f6176918fcec030ed0a3ddaf5ad08be4ad4e5041656c7c538a6d8bee"
+    },
+    "ArtReview/C7-TeamStyle-20261027/GroundCompare-v6/comparison.png": {
+      "size": [
+        1000,
+        440
+      ],
+      "rgbaSHA256": "2875d94c235feedb6dae23901bfa0f394c15a2eb8a28308c2db2d7efd224569b"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "status": "pending",
+  "status": "buildings_approved_ground_undecided",
   "scope": "C7 teammate drawing style trial; production unchanged; visible house proportions require review",
   "pngIdentity": "dimensions + decoded RGBA",
   "files": {
@@ -45,5 +45,6 @@
       ],
       "rgbaSHA256": "968e3051f6176918fcec030ed0a3ddaf5ad08be4ad4e5041656c7c538a6d8bee"
     }
-  }
+  },
+  "approvalEvidence": "ArtReview/Approved/C7-Buildings-v5/approval.md"
 }

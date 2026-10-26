@@ -298,3 +298,10 @@ Unity 안 검사(에디터 메뉴 / MCP): `SceneTerrainChecks`, `CentralConnecti
 - 지형은 팀 원본에서 관찰한 짧은 풀잎/흙 무늬를 실제격자로 제작. 경계47종+흙중심/가운데변형6종, A2새4개pending/오류0. 집16색·지형6색은 시안용이며 D3 확정 아님. 공통 등록기에 출력폴더/접두사/스크립트 입력과 별도review-decisions 보존을 추가해 직전3개 수정요청을 재생성으로 지우지 않는다.
 - 실제 Unity previewOnly Play480×270 전후 새촬영/Screens-v5/종료0, 기존SearchDatabase예외1회. 같은시험장길/PPU16/Point/승인캐릭터·연못22칸. 관련Python58개(이번Aseprite57원본 실제재출력RGBA포함)·등록출구92오류0. 전체통합/실제보행/수동플레이/저장회귀/게임빌드 미실행. [검증 기록](Validation/C7-TeamStyle-2026-10-27/README.md).
 - 최종제출 `Submission-v5/` **그림 승인 대기**. 플레이어·사람NPC·작은연못은 현재 제작자 의견으로 수정불필요이며 승인본을 유지한다. B3 닥목·개경 후속은 별도브랜치에 보존한다.
+
+
+### C7 건물 두 채 승인·땅만 별도 비교 (2026-10-27)
+
+- 사용자 “일단 건물은 좋아. 땅은 아직 잘 모르겠어. 땅은 이전이 나은 것 같기도 하고”. 초가집·기와집은 승인으로 기록하고 `ArtReview/Approved/C7-Buildings-v5/`에 PNG/Aseprite 원본과 크기·RGBA 증거를 동결했다. 별도review-decisions 입력으로 A2 두건물 approved를 보존한다. 땅은 선택 미확정/pending, 나무의 본편 적용 승인으로 확대하지 않는다.
+- 동일 승인 건물·나무·인물·연못·길/카메라를 쓰고 땅만 직전낮은대비/현재밝은무늬로 바꾼 실제Unity previewOnly Play480×270을 새로 촬영했다. `ArtReview/C7-TeamStyle-20261027/GroundCompare-v6/comparison.png`. 두건물/나무의 불투명 픽셀은 양쪽 차이0을 확인했다. 기존SearchDatabase예외1회/촬영종료0. 본편은 미적용.
+- 이번엔 관련팀스타일5검사(A2 부분승인·동결RGBA·실제57Aseprite재출력 포함)를 재실행해 통과. 전체58검사·출구검사는 이 변경에서 재실행하지 않았고 실제보행/수동플레이/저장회귀/빌드도 미실행. 땅을 확정하기 위한 비교자료이며 기존안 선호 가능성을 승인으로 간주하지 않는다.
