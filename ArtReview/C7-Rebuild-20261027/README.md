@@ -1,6 +1,6 @@
 # C7 초가집·기와집·풀/흙 재제작
 
-2026-10-27 사용자 “팀 에셋처럼 형태부터 다시 제작” 지시의 수정안이다. **그림 승인 대기, 본편 미적용**.
+2026-10-27 사용자 “팀 에셋처럼 형태부터 다시 제작” 지시의 수정안이다. **사용자 수정 요청, 본편 미적용**. 후속 [팀 그림체 수정안](../C7-TeamStyle-20261027/README.md)으로 이어간다.
 
 - [이전 시안 / 수정안 / 팀 참고](Submission-v4/style-comparison.png)
 - [Unity 전후](Submission-v4/game-comparison.png), [480×270 원래 크기](Submission-v4/game-native.png), [정수3배 확대](Submission-v4/game-3x.png)

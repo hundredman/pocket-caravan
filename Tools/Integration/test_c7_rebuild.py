@@ -16,12 +16,13 @@ from asset_manifest import validate_catalogue
 
 
 class C7RebuildChecks(unittest.TestCase):
-    def test_whole_objects_and_complete_boundary_kit_are_pending(self):
+    def test_whole_objects_and_complete_boundary_kit_keep_user_feedback(self):
         doc=json.loads((OUT/'catalogue.json').read_text())
         errors,assets=validate_catalogue(doc,ROOT)
         self.assertEqual(errors,[])
         self.assertEqual(len(assets),4)
-        self.assertEqual({a['review']['status'] for a in assets.values()},{'pending'})
+        self.assertEqual(assets['c7r3_pine']['review']['status'],'pending')
+        self.assertEqual({a['review']['status'] for k,a in assets.items() if k!='c7r3_pine'},{'changes_requested'})
         self.assertEqual(len([p for p in assets['c7r3_grass_dirt']['pieces'] if p.startswith('grass-')]),47)
 
     def test_canvas_feet_and_pine_preservation(self):

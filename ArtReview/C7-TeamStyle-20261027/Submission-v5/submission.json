@@ -1,0 +1,49 @@
+{
+  "status": "pending",
+  "scope": "C7 teammate drawing style trial; production unchanged; visible house proportions require review",
+  "pngIdentity": "dimensions + decoded RGBA",
+  "files": {
+    "ArtReview/C7-TeamStyle-20261027/Submission-v5/style-comparison.png": {
+      "size": [
+        1400,
+        1070
+      ],
+      "rgbaSHA256": "6d54b30022824520338d8e55822fbfe4bf2cc36a7a2f0425fad6243ed340fcc5"
+    },
+    "ArtReview/C7-TeamStyle-20261027/Submission-v5/game-comparison.png": {
+      "size": [
+        1000,
+        700
+      ],
+      "rgbaSHA256": "30e9661fe3cbedff91256601f8d607c04223caf7221602fc33ff07eb2def5112"
+    },
+    "ArtReview/C7-TeamStyle-20261027/Submission-v5/game-native.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "968e3051f6176918fcec030ed0a3ddaf5ad08be4ad4e5041656c7c538a6d8bee"
+    },
+    "ArtReview/C7-TeamStyle-20261027/Submission-v5/game-3x.png": {
+      "size": [
+        1440,
+        810
+      ],
+      "rgbaSHA256": "77f5fb26e7a5aa0df8997cdd97630c1d8613cfeb0282562c58192fe12125fe09"
+    },
+    "ArtReview/C7-TeamStyle-20261027/Screens-v5/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "d668cc6108266509d40d6e3ea84ec5011d9532c00eca99670d96549e4049ad05"
+    },
+    "ArtReview/C7-TeamStyle-20261027/Screens-v5/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "968e3051f6176918fcec030ed0a3ddaf5ad08be4ad4e5041656c7c538a6d8bee"
+    }
+  }
+}

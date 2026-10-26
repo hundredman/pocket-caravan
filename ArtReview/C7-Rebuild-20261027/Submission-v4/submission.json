@@ -1,5 +1,5 @@
 {
-  "status": "pending",
+  "status": "changes_requested",
   "scope": "C7 rebuilt houses/ground approval pending; pine retained; production unchanged; B3 layout approval separate",
   "pngIdentity": "dimensions + decoded RGBA SHA256",
   "files": {
@@ -45,5 +45,10 @@
       ],
       "rgbaSHA256": "d668cc6108266509d40d6e3ea84ec5011d9532c00eca99670d96549e4049ad05"
     }
+  },
+  "feedback": {
+    "user": "아직도 뭔가 어색해. 특징을 더 잘 살려봐.",
+    "clarification": "특징은 베네치아·아라비아 팀 아트의 표현 방식",
+    "followup": "ArtReview/C7-TeamStyle-20261027/Submission-v5"
   }
 }
