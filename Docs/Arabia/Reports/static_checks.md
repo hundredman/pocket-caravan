@@ -1,4 +1,4 @@
-# 아라비아 정적 검사 2026-10-23 00:01:18 · Unity 6000.3.26f1
+# 아라비아 정적 검사 2026-10-26 11:28:06 · Unity 6000.3.26f1
 결과: 통과
 - [PASS] 공용 등록 검사 (MapJsonBuilder.ValidateWorld)
 - [PASS] 시작 맵은 그대로 Naru — Naru
@@ -71,11 +71,11 @@
 - [PASS] 출구 arabia_jeddah → arabia_shortcut/arabia_shortcut_spawn_w_01 — 폭 (1, 4)↔(1, 4), 역방향 있음
 - [PASS] 출구 arabia_jeddah → arabia_highroad/arabia_highroad_spawn_s_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
 - [PASS] 출구 arabia_shortcut → arabia_jeddah/arabia_jeddah_spawn_e_01 — 폭 (1, 4)↔(1, 4), 역방향 있음
-- [PASS] 출구 arabia_shortcut → arabia_sanaa/arabia_sanaa_spawn_w_01 — 폭 (1, 4)↔(1, 4), 역방향 있음
-- [PASS] 출구 arabia_sanaa → arabia_shortcut/arabia_shortcut_spawn_e_01 — 폭 (1, 4)↔(1, 4), 역방향 있음
-- [PASS] 출구 arabia_sanaa → arabia_highroad/arabia_highroad_spawn_s_02 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_shortcut → arabia_sanaa/arabia_sanaa_spawn_s_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_sanaa → arabia_highroad/arabia_highroad_spawn_e_01 — 폭 (1, 4)↔(1, 4), 역방향 있음
+- [PASS] 출구 arabia_sanaa → arabia_shortcut/arabia_shortcut_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
 - [PASS] 출구 arabia_highroad → arabia_jeddah/arabia_jeddah_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
-- [PASS] 출구 arabia_highroad → arabia_sanaa/arabia_sanaa_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_highroad → arabia_sanaa/arabia_sanaa_spawn_w_01 — 폭 (1, 4)↔(1, 4), 역방향 있음
 - [PASS] 출구 수 = 20 (양방향 10쌍: 길 5개·사나로 가는 두 길 포함, 미완성 외부 출구 없음) — 20
 - [PASS] 기존 고려·중간권 마을끼리 장터 연결 유지 (NPC 상인 필터 회귀) — 7개 마을
 - [PASS] 아라비아 ↔ 고려 장터는 미연결 (원격 거래 차단) — naru

@@ -1,14 +1,20 @@
-"""안전한 큰길 — 제다 북문과 사나 북문을 잇는 넓은 포장 대상로 (64×40).
+"""안전한 큰길 — 제다 북문과 사나 서문을 잇는 넓은 포장 대상로 (52×32).
 
-- 남쪽 두 출구: 서쪽(제다 북문), 동쪽(사나 북문). 큰길은 북쪽으로 크게 돌아가 거리는 길지만 노면이 좋고 넓다.
-- 길가: 야자 가로수·등불·이정석, 가운데 카라반사라이(대상 숙소)와 우물, 경비 망루.
-- 탐험: 큰길 안쪽의 정원 오아시스(샛길), 북쪽 언덕의 별 보는 노인.
+2026-10-26: 사나 북문이 중앙 대륙 관문이 되면서 큰길은 사나 서문으로 들어간다. 64×40 → 52×32.
+- 남서 출구(제다 북문)에서 북쪽으로 올라 언덕 아래를 동쪽으로 지나, 동쪽 출구(사나 서문)로 내려간다.
+  거리는 길지만 노면이 좋고 넓다 (짐이 무겁거나 수레가 있을 때 유리).
+- 길가: 야자 가로수·등불·이정석, 북쪽 가운데 카라반사라이(대상 숙소)와 우물, 동쪽 경비 망루.
+- 탐험: 큰길 안쪽 서편의 정원 오아시스(샛길), 동편의 대상 야영지.
+  정원과 야영지 사이는 나무 울타리로 막아 큰길 안쪽을 질러가지 못한다.
 """
 import arabia_art as A
 
-W, H = 64, 40
-SW_X, SE_X = 6, 54
-ROAD_Y = 9
+W, H = 52, 32
+SW_X = 5            # 남쪽 출구 (제다 북문) x 5~8
+EAST_Y = 22         # 동쪽 출구 (사나 서문) y 22~25
+ROAD_Y = 8          # 북쪽 가로 구간 y 8~11
+EAST_X = 44         # 동쪽 세로 구간 x 44~47
+HEDGE_X = 30
 
 
 def build(L):
@@ -16,67 +22,80 @@ def build(L):
     m.hours = 3
 
     m.exit(L, 's_01', SW_X)
-    m.exit(L, 's_02', SE_X)
-    m.paint_path('paving', [(SW_X, H - 1), (SW_X, ROAD_Y), (SE_X, ROAD_Y), (SE_X, H - 1)], width=4, grade=3)
+    m.exit(L, 'e_01', EAST_Y)
+    m.paint_path('paving', [(SW_X, H - 1), (SW_X, ROAD_Y), (EAST_X, ROAD_Y), (EAST_X, EAST_Y), (W - 1, EAST_Y)], width=4, grade=3)
+
+    m.asign(SW_X + 5, H - 6, '안전한 큰길\n넓고 평평한 포장길 · 거리는 깁니다.\n북쪽 가운데에 카라반사라이(쉼터)가 있어요.')
+    m.asign(W - 4, EAST_Y - 3, '사나 서문 →')
+
+    # ---- 북쪽 언덕 (바위) ----
+    m.paint('rock', 0, 0, 15, 4, reserve=False)
+    m.rocks(1, 1, 14, 4)
+    m.paint('rock', 36, 0, W - 1, 5, reserve=False)
+    m.rocks(37, 1, 50, 5)
 
     # ---- 카라반사라이 (큰길 가운데 북쪽) ----
-    m.paint('paving', 26, 4, 37, ROAD_Y - 1, grade=2)
-    m.put('building_caravanserai', 29, 1, foot=2, force=True)
-    m.put('drawn_well', 34, 4, foot=1, force=True)
-    m.maybe('drawn_camelRest', 24, 6, foot=1, force=True)
-    m.maybe('drawn_camel', 38, 5, foot=1, force=True)
-    m.talker(28, 7, '카라반사라이 주인', 'arabia_woman_grandma_tall',
+    m.paint('paving', 18, 5, 31, ROAD_Y - 1, grade=2)
+    m.put('building_caravanserai', 22, 2, foot=2, force=True)
+    m.put('drawn_well', 28, 3, foot=1, force=True)
+    m.maybe('drawn_camelRest', 18, 3, foot=1, force=True)
+    m.maybe('drawn_camel', 31, 4, foot=1, force=True)
+    for x in (17, 32):
+        m.maybe('drawn_cypress', x, 4)
+    m.talker(21, 6, '카라반사라이 주인', 'arabia_woman_grandma_tall',
              '큰길은 멀어도 길이 넓고 평평해서 수레도 잘 굴러가요. 쉬었다 가세요.',
-             '제다에서 오는 짐은 대부분 이 길로 사나에 가요.')
+             '제다에서 오는 짐은 대부분 이 길로 사나에 가요. 사나 북문 너머로는 중앙 대륙 길이 난다지요.')
 
     # ---- 길가 가로수·등불·이정석 ----
-    for x in range(SW_X + 6, SE_X - 1, 6):
+    for x in range(11, EAST_X - 2, 5):
+        if HEDGE_X - 2 <= x <= HEDGE_X + 1:
+            continue
         m.maybe(['drawn_datePalm', 'drawn_datePalm2', 'drawn_datePalm3'][x % 3], x, ROAD_Y + 4)
-        if x % 12 == 0:
-            m.maybe('plaza_lamp', x + 2, ROAD_Y - 2, foot=1)
-    for y in range(ROAD_Y + 6, H - 3, 7):
-        for x in (SW_X - 2, SW_X + 5, SE_X - 2, SE_X + 5):
-            m.maybe('drawn_cypress', x, y)
-    for x, y in [(SW_X + 5, ROAD_Y + 5), (SE_X - 1, ROAD_Y + 5), (30, ROAD_Y + 4)]:
+    for x in (14, 24, 36):
+        m.maybe('plaza_lamp', x, ROAD_Y - 2, foot=1)
+    for y in range(ROAD_Y + 6, H - 3, 6):
+        if abs(y - 21) > 2:
+            m.maybe('drawn_cypress', SW_X + 5, y)
+        m.maybe('drawn_cypress', EAST_X - 2, y)
+    for x, y in [(SW_X + 5, ROAD_Y + 5), (EAST_X - 2, ROAD_Y + 5), (26, ROAD_Y + 4)]:
         m.maybe('drawn_milestone', x, y, foot=1)
-    m.maybe('wall_tower', SE_X + 6, 2, foot=3)
-    m.talker(SE_X + 5, 7, '큰길 경비', 'arabia_npc_bedouin_tall', '이 큰길은 우리가 지켜. 도적 걱정 없이 다녀도 돼.')
+    m.maybe('wall_tower', EAST_X + 5, ROAD_Y + 4, foot=3)
+    m.talker(EAST_X + 5, ROAD_Y + 9, '큰길 경비', 'arabia_npc_bedouin_tall', '이 큰길은 우리가 지켜. 도적 걱정 없이 다녀도 돼. 조금만 더 가면 사나 서문이야.')
 
-    # ---- 큰길 안쪽 정원 오아시스 (샛길) ----
-    m.paint_path('road', [(20, ROAD_Y + 4), (20, 22), (28, 22)], width=2, grade=1)
-    m.ellipse('grass', 33, 25, 11, 7)
-    m.ellipse('water', 33, 26, 4.5, 2.6)
-    for x, y in [(24, 21), (41, 22), (26, 30), (40, 30), (33, 32)]:
+    # ---- 큰길 안쪽 서편: 정원 오아시스 (샛길) ----
+    m.paint_path('road', [(SW_X + 4, 21), (12, 21)], width=2, grade=1)
+    m.ellipse('grass', 20, 21.5, 8.2, 5.4)
+    m.ellipse('water', 20.5, 22, 3.6, 2.1)
+    for x, y in [(13, 18), (25, 17), (13, 24), (26, 24), (19, 26)]:
         m.maybe(['drawn_orange', 'drawn_pomegranate', 'drawn_almond', 'drawn_lemon', 'drawn_oasisTree'][x % 5], x, y, force=True)
-    for x, y in [(29, 23), (37, 23), (30, 29), (36, 29)]:
+    for x, y in [(17, 19), (23, 19), (16, 24), (24, 25)]:
         m.maybe(['drawn_roseBush', 'drawn_jasmineBush', 'drawn_oleanderBush', 'drawn_marigold'][x % 4], x, y, layer='deco', force=True)
-    m.maybe('drawn_lily', 32, 26, layer='deco', force=True)
-    m.talker(28, 27, '정원지기', 'arabia_npc_child_tall',
-             '큰길 사람들도 이 정원은 잘 몰라요. 물소리 들리죠?')
+    m.maybe('drawn_lily', 19, 22, layer='deco', force=True)
+    m.talker(15, 21, '정원지기', 'arabia_npc_child_tall', '큰길 사람들도 이 정원은 잘 몰라요. 물소리 들리죠?')
 
-    # ---- 큰길 안쪽을 가로지르지 못하게: 정원 동쪽 나무 울타리 (큰길을 따라 돌아가야 함) ----
+    # ---- 큰길 안쪽을 가로지르지 못하게: 가운데 나무 울타리 ----
     for y in range(ROAD_Y + 5, H - 1, 2):
-        A.place(m, ['drawn_oasisTree', 'drawn_olive', 'drawn_oasisTree2'][y % 3], 45, y - 1, foot=1, force=True)
-    A.block_rect(m, 45, ROAD_Y + 4, 46, H - 1)
+        A.place(m, ['drawn_oasisTree', 'drawn_olive', 'drawn_oasisTree2'][y % 3], HEDGE_X, y - 1, foot=1, force=True)
+    A.block_rect(m, HEDGE_X, ROAD_Y + 4, HEDGE_X + 1, H - 1)
 
-    # ---- 북서 언덕 ----
-    m.paint('rock', 0, 0, 20, 5, reserve=False)
-    m.rocks(1, 1, 18, 4)
-    m.paint('rock', 44, 0, W - 1, 5, reserve=False)
-    m.rocks(42, 1, 52, 4)
+    # ---- 큰길 안쪽 동편: 대상 야영지 ----
+    m.put('building_tent', 34, 18, foot=2)
+    m.maybe('drawn_camelRest', 39, 20, foot=1)
+    m.maybe('drawn_cart', 35, 22, foot=1)
+    m.maybe('prop_carpet', 38, 23, layer='deco')
+    m.add('villager', 37, 22, variant=1)
 
-    # ---- 가장자리 숲 ----
+    # ---- 가장자리 ----
     A.block_rect(m, 0, 0, W - 1, 0)
-    A.block_rect(m, 0, 0, 0, H - 1); A.block_rect(m, W - 1, 0, W - 1, H - 1)
-    A.block_rect(m, 0, H - 1, SW_X - 1, H - 1); A.block_rect(m, SW_X + 4, H - 1, SE_X - 1, H - 1); A.block_rect(m, SE_X + 4, H - 1, W - 1, H - 1)
-    m.border(None, SW_X + 6, H - 2, SE_X - 3, H - 2)
-    m.border(None, 1, ROAD_Y + 6, 2, H - 3)
-    m.border(None, W - 3, ROAD_Y + 6, W - 2, H - 3)
-    for x, y in [(14, 20), (46, 18), (12, 32), (48, 30), (16, 27), (44, 26)]:
+    A.block_rect(m, 0, 0, 0, H - 1)
+    A.block_rect(m, W - 1, 0, W - 1, EAST_Y - 1); A.block_rect(m, W - 1, EAST_Y + 4, W - 1, H - 1)
+    A.block_rect(m, 0, H - 1, SW_X - 1, H - 1); A.block_rect(m, SW_X + 4, H - 1, W - 1, H - 1)
+    m.border(None, SW_X + 6, H - 2, HEDGE_X - 2, H - 2)
+    m.border(None, HEDGE_X + 3, H - 2, W - 2, H - 2)
+    m.border(None, 1, ROAD_Y + 5, 2, H - 3)
+    for x, y in [(34, 14), (40, 15), (12, 14), (36, 27)]:
         m.maybe(['drawn_olive', 'drawn_acaciaRound', 'drawn_grove'][x % 3], x, y)
 
-    m.asign(SW_X + 4, H - 6, '안전한 큰길\n넓고 평평한 포장길 · 거리는 깁니다.\n가운데에 카라반사라이(쉼터)가 있어요.')
-    m.asign(SE_X - 2, H - 6, '사나 북문 ↓')
     m.texture(0.04)
     m.finish_arabia()
     return m

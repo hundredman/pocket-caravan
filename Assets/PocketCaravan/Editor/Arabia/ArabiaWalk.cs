@@ -228,7 +228,7 @@ namespace PocketCaravan.EditorTools
             yield return Shot("08_zabid_market");
             MarketClose(market);
             yield return Frames(3);
-            // 탐험 일주: 자비드 → 공방길 → 타이즈 → 항구길 → 제다 → 험한 지름길 → 사나 → (북문) 안전한 큰길 → 제다 북문
+            // 탐험 일주: 자비드 → 공방길 → 타이즈 → 항구길 → 제다 → 험한 지름길 → (남문) 사나 → (서문) 안전한 큰길 → 제다 북문
             {
                 var tour = new (string from, string to, string label)[]
                 {
@@ -238,7 +238,7 @@ namespace PocketCaravan.EditorTools
                     (ArabiaRegionSetup.PortroadMap, ArabiaRegionSetup.JeddahMap, "항구길 횡단 → 제다"),
                     (ArabiaRegionSetup.JeddahMap, ArabiaRegionSetup.ShortcutMap, "제다 → 험한 지름길"),
                     (ArabiaRegionSetup.ShortcutMap, ArabiaRegionSetup.SanaaMap, "험한 지름길 횡단 → 사나"),
-                    (ArabiaRegionSetup.SanaaMap, ArabiaRegionSetup.HighroadMap, "사나 북문 → 안전한 큰길"),
+                    (ArabiaRegionSetup.SanaaMap, ArabiaRegionSetup.HighroadMap, "사나 서문 → 안전한 큰길"),
                     (ArabiaRegionSetup.HighroadMap, ArabiaRegionSetup.JeddahMap, "안전한 큰길 횡단 → 제다 북문"),
                 };
                 int n = 9;

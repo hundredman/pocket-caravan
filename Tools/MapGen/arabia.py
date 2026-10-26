@@ -12,7 +12,8 @@ WORKSHOP, TAIZ, PORTROAD, JEDDAH = 'arabia_workshoproad', 'arabia_taiz', 'arabia
 SHORTCUT, SANAA, HIGHROAD = 'arabia_shortcut', 'arabia_sanaa', 'arabia_highroad'
 
 # 연결표 (Docs/Arabia/02 §1·§3): (맵, 경계, 스폰 키) ↔ (맵, 경계, 스폰 키). 경계 폭은 모두 4칸.
-# 큰길은 제다·사나의 북쪽 출구와 큰길의 남쪽 두 출구로 잇는다 (출구·스폰 방향이 같아야 하므로).
+# 2026-10-26: 사나 북문은 중앙 대륙(남쪽 구역)으로 나가는 관문으로 비워 둔다 (중앙 연결 전까지 출구 없음).
+#   안전한 큰길: 제다 북문 → 큰길(남→동) → 사나 서문 / 험한 지름길: 제다 동문 → 지름길(서→북) → 사나 남문.
 CONNECTIONS = [
     ((AHSA, 'E', 'e_01'), (FARMROAD, 'W', 'w_01')),
     ((FARMROAD, 'E', 'e_01'), (ZABID, 'W', 'w_01')),
@@ -21,9 +22,9 @@ CONNECTIONS = [
     ((TAIZ, 'E', 'e_01'), (PORTROAD, 'W', 'w_01')),
     ((PORTROAD, 'E', 'e_01'), (JEDDAH, 'W', 'w_01')),
     ((JEDDAH, 'E', 'e_01'), (SHORTCUT, 'W', 'w_01')),
-    ((SHORTCUT, 'E', 'e_01'), (SANAA, 'W', 'w_01')),
+    ((SHORTCUT, 'N', 'n_01'), (SANAA, 'S', 's_01')),
     ((JEDDAH, 'N', 'n_01'), (HIGHROAD, 'S', 's_01')),
-    ((HIGHROAD, 'S', 's_02'), (SANAA, 'N', 'n_01')),
+    ((HIGHROAD, 'E', 'e_01'), (SANAA, 'W', 'w_01')),
 ]
 SPAWN = {}
 for a, b in CONNECTIONS:

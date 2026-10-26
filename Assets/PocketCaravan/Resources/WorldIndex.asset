@@ -25,7 +25,7 @@ MonoBehaviour:
     - goryeo_westcoast
   - mapId: arabia_ahsa
     displayName: "\uC54C \uC544\uD750\uC0AC"
-    height: 46
+    height: 40
     legacyHeight: 0
     coord: {x: 20, y: 0}
     town: arabia_ahsa
@@ -33,7 +33,7 @@ MonoBehaviour:
     - arabia_farmroad
   - mapId: arabia_farmroad
     displayName: "\uB18D\uC6D0\uAE38"
-    height: 36
+    height: 28
     legacyHeight: 0
     coord: {x: 21, y: 0}
     town: 
@@ -51,7 +51,7 @@ MonoBehaviour:
     - arabia_workshoproad
   - mapId: arabia_workshoproad
     displayName: "\uACF5\uBC29\uAE38"
-    height: 40
+    height: 32
     legacyHeight: 0
     coord: {x: 23, y: 0}
     town: 
@@ -69,7 +69,7 @@ MonoBehaviour:
     - arabia_portroad
   - mapId: arabia_portroad
     displayName: "\uD56D\uAD6C\uAE38"
-    height: 40
+    height: 32
     legacyHeight: 0
     coord: {x: 25, y: 0}
     town: 
@@ -78,7 +78,7 @@ MonoBehaviour:
     - arabia_jeddah
   - mapId: arabia_jeddah
     displayName: "\uC81C\uB2E4"
-    height: 44
+    height: 40
     legacyHeight: 0
     coord: {x: 26, y: 0}
     town: arabia_jeddah
@@ -88,7 +88,7 @@ MonoBehaviour:
     - arabia_highroad
   - mapId: arabia_shortcut
     displayName: "\uD5D8\uD55C \uC9C0\uB984\uAE38"
-    height: 36
+    height: 28
     legacyHeight: 0
     coord: {x: 27, y: 0}
     town: 
@@ -102,11 +102,11 @@ MonoBehaviour:
     coord: {x: 28, y: 0}
     town: arabia_sanaa
     neighbors:
-    - arabia_shortcut
     - arabia_highroad
+    - arabia_shortcut
   - mapId: arabia_highroad
     displayName: "\uC548\uC804\uD55C \uD070\uAE38"
-    height: 40
+    height: 32
     legacyHeight: 0
     coord: {x: 27, y: 1}
     town: 
