@@ -5,7 +5,7 @@
 
 ## 1. 목표 스타일
 
-**기준은 지금 Unity에서 돌아가는 게임 아트다(2026-10-24 사용자 결정).** 현재로서는 이것이 가장 좋다. 기준표: [현재 게임 아트 기준표](Images/current-art-reference.png) — 실제 게임 화면을 원래 도트 크기로 모은 것(초가집, 기와집, 버드나무, 수레, 벚나무, 궁궐, 캐릭터 16×24, 많이 쓰인 색 48개). 새로 만드는 그림은 이 기준표 옆에 놓았을 때 튀지 않아야 한다. [Figma `아트 시안`](https://www.figma.com/design/JeXCjYTYRGtV8FCnXWWiqe/?node-id=0-1)은 모양 참고용이다.
+**목표 그림체는 팀원의 베네치아·아라비아 에셋이다(2026-10-26 사용자 지시).** 기준표: [팀 스타일 기준표](Images/team-style-reference.png), Figma 원본: [베네치아 에셋](https://www.figma.com/design/JeXCjYTYRGtV8FCnXWWiqe/?node-id=77-5) · [아라비아 에셋](https://www.figma.com/design/JeXCjYTYRGtV8FCnXWWiqe/?node-id=92-2). 지금 Unity 아트에서는 맵 배치·개체 크기와 위치·플레이어·승인된 사람 NPC를 유지하고, 건물·나무·소품·타일은 목표 그림체로 다시 그린다([ArtBrief](ArtBrief.md) 4절, C7). [현재 게임 아트 기준표](Images/current-art-reference.png)는 크기·배치 참고용이다. Figma의 다른 시안은 모양 참고용이다.
 
 아래 항목이 현재 아트와 다르면 현재 아트를 따른다.
 
