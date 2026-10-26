@@ -46,10 +46,8 @@ def birka():
     m.deco_stamp("lamp", 28, 12); m.deco_stamp("lamp", 43, 12)
     # 광장: 큰 모닥불과 룬돌 고리, 통나무 의자
     m.deco_stamp("fire", 34, 15)
-    for i, (rx, ry) in enumerate([(29, 15), (41, 15), (31, 13), (39, 13), (31, 18), (39, 18)]):
-        m.deco_stamp("runestone_b" if i % 2 else "runestone", rx, ry)
-    m.deco_stamp("logbench", 32, 18); m.deco_stamp("stump", 37, 17); m.deco_stamp("stump", 33, 13)
-    m.flag(26, 19); m.flag(45, 19)
+    # 10/27 광장 둘레 룬돌 여섯 개는 뺌 (비석처럼 보여 어색하다는 의견). 광장 모닥불·통나무 의자만 남김
+    m.deco_stamp("stump", 37, 17); m.deco_stamp("stump", 33, 13)
 
     # 서쪽 마을 구역: 집과 여관
     m.stamp("h_dark", 5, 4, force=True); m.door_path(5, 4, 4, 4, 11, door_dx=1)
@@ -70,6 +68,8 @@ def birka():
     m.deco_stamp("weaponrack", 54, 16); m.deco_stamp("weaponrack", 59, 16)
     m.deco_stamp("bigbarrel", 60, 19); m.deco_stamp("helm", 54, 19); m.deco_stamp("scarecrow", 57, 18)
     m.deco_stamp("fire", 66, 16); m.deco_stamp("firewood", 67, 19)
+    m.talker(56, 18, "훈련하는 전사", "north_p_shield_tall", "하나, 둘! 상인도 팔 힘이 있어야 짐을 지지.",
+             "허수아비가 맞기만 하니 심심하대. 자네도 한번 쳐 볼 텐가? …농담일세.")   # 10/27 훈련장 울타리 안
 
     # 남쪽 장터 거리: 길 양옆으로 좌판
     m.add("market", 36, 31, town="north_birka")
@@ -102,16 +102,9 @@ def birka():
     m.add("npc", 28, 17, npc="north_bold")         # 욕심쟁이 형 볼드: 광장 (Q6)
     m.talker(35, 11, "얄 시그리드", "north_wolf_viking_tall", "비르카에 온 걸 환영하네. 이 도성은 바다와 숲의 물건이 모두 모이는 곳이지.",
              "정직한 상인에게는 회관 문이 늘 열려 있네. 피오르 너머 마을들과 거래를 넓혀 주게.")
-    m.talker(52, 13, "상인 길드장", "north_lynx_tall", "길드 장부엔 모든 마을의 시세가 적혀 있지. 싸게 사서 먼 곳에 팔면 길드가 자네를 기억할 걸세.")
-    m.talker(64, 24, "성문 경비", "north_bear_sailor_tall", "동쪽 문을 나서면 피오르 길이야. 밤엔 다리 밑 트롤을 조심하게.")
-    m.talker(57, 20, "훈련하는 전사", "north_p_shield_tall", "하나, 둘! 상인도 팔 힘이 있어야 짐을 지지.")
-    m.talker(27, 38, "뱃사공", "north_p_fisher_tall", "피오르가 꽁꽁 얼어서 배가 묶였어. 대신 가운데 부두 끝에서 얼음 나루길로 건너갈 수 있지.",
-             "얼음을 건너면 국경 고개야. 고개를 내려가면 중앙 대륙 북문 마을이지.")
+    m.talker(52, 13, "상인 길드장", "north_lynx_tall", "길드 장부엔 모든 마을의 시세가 적혀 있지. 싸게 사서 먼 곳에 팔면 길드가 자네를 기억할 걸세.",
+             "숲 너머 사냥꾼 마을에 가면 모피가 싸. 여기서는 값을 두 배는 쳐주지. 걸어서는 눈밭 지름길, 수레는 큰길로 돌아가게.")
     m.sign(37, 39, "↓ 얼음 나루길\n언 피오르 건너 국경 고개 · 중앙 대륙")
-    m.talker(16, 12, "사냥꾼", "north_wolf_tall", "숲 너머 사냥꾼 마을에 가면 모피가 싸. 여기서는 값을 두 배는 쳐주지.",
-             "길 없는 눈밭도 걸어서 가면 지름길이야. 수레를 끌 땐 큰길로 돌아가는 게 낫고.")
-    m.talker(36, 19, "불 쬐는 노인", "north_p_oldman_tall", "겨울밤엔 다들 회관 앞 불가에 모여 옛 항해 이야기를 하지.",
-             "광장의 룬돌에 새긴 건 이 도성을 처음 연 상인들 이름이라네.")
     m.add("spawn", 37, 22, id="S0")
     m.walker([(10, 26), (22, 26), (35, 26), (50, 26), (64, 26), (50, 25), (35, 25), (20, 25)], idx=2)
     m.walker([(16, 34), (28, 34), (40, 34), (54, 34), (40, 33), (28, 33)], idx=7)
@@ -119,7 +112,7 @@ def birka():
 
     # 가장자리 숲
     m.spot("festival", 40, 20)          # 오로라 밤 축제 장수 자리 (광장)
-    m.spot("museum", 45, 18)            # 10/25 회관 전시실 (전시대 6개를 이 자리 위쪽 빈 땅에 늘어놓음)
+    m.spot("museum", 39, 10)            # 10/27 회관 전시실: 얄의 회관 정문 오른쪽 (전시대 없이 말 거는 자리만)
     m.spot("fortune", 29, 20)           # 10/25 룬 점쟁이 (다음 날씨·오늘 밤 오로라 점)
     m.dense_border("pine")
     m.scatter("snowpine", 3, area=(3, 3, 68, 34), margin=1)
@@ -156,7 +149,7 @@ def fjord_road():
     # 서남쪽 얼어붙은 호수와 사냥꾼 야영지
     m.water_blob(12, 32, 6, 3.2)
     m.fishing.append((12, 32))          # 10/24 얼음 낚시 자리 (얼어붙은 호수)
-    m.deco_stamp("tent", 18, 25); m.deco_stamp("fire", 22, 27); m.deco_stamp("logbench", 21, 25)
+    m.deco_stamp("tent", 18, 25); m.deco_stamp("fire", 22, 27)
     m.deco_stamp("logs", 17, 29); m.deco_stamp("pelt", 23, 30)
     m.road_path([(22, 24), (25, 21)], width=1)
 
@@ -166,7 +159,6 @@ def fjord_road():
     m.talker(34, 24, "길손", "north_hare_tall", "다리 밑에 트롤 패거리가 산다더군. 통행료를 내거나 냅다 달려야 해.",
              "숲으로 가로질러 가면 다리를 안 건너도 돼. 대신 수레는 눈에 빠지지.")
     m.talker(51, 12, "얼음 낚시꾼", "north_bear_sailor_tall", "개울이 얼면 물고기가 굼떠져. 오늘 저녁은 생선 수프야.")
-    m.talker(20, 28, "야영하는 사냥꾼", "north_p_herder_tall", "호수가 얼면 건너편 숲까지 곧장 갈 수 있지. 그래도 얼음 가운데는 피하게.")
     # 트롤 패거리 (도적 기능을 그대로 쓴다. 그림은 나중에 트롤로). 다리 서쪽 물가
     m.bandit(41, 12, radius=5)
     for (ex, ey) in [(14, 19), (31, 30), (57, 11)]:
@@ -197,6 +189,9 @@ def hunter():
     """모피 사냥꾼 마을: 숲속 오두막 마을 (10/26 국경 고개 서쪽). 모피·말린 고기 산지. 남서쪽 사냥꾼 야영지, 남쪽 들판(Q1 아내), 동쪽 염소 목장(Q5)."""
     m = FitMap("north_hunter", "모피 사냥꾼 마을", 46, 32, seed=41)
     m.road_blob(23, 16, 7.5, 3, grade=1)
+    # 10/26 남쪽 숲길: 바로 아래 중앙 대륙 눈숲 고갯길로 (국경 고개를 안 거치고 눈숲 마을로)
+    m.road_path([(17, 18), (14, 22), (14, 31)], width=2)
+    m.link("S", 13, 4, "north_c_road_nw", "N", "S")
 
     m.stamp("h_turf", 8, 6, force=True); m.door_path(8, 6, 3, 2, 13, door_dx=1)       # 잔디 지붕 움집
     m.stamp("h_shed", 21, 5, force=True); m.door_path(21, 5, 3, 3, 13, door_dx=1)      # 가죽 손질 헛간
@@ -205,19 +200,21 @@ def hunter():
     m.road_path([(33, 13), (29, 15)], width=1)
     m.deco_stamp("tent", 15, 5); m.deco_stamp("tent", 27, 5)
     m.deco_stamp("helm", 20, 11); m.deco_stamp("firewood", 12, 10); m.deco_stamp("firewood", 37, 9); m.deco_stamp("pot", 19, 9)
-    m.scatter_deco(north_tiles.BONES, (3, 18, 16, 29), 6)
+    m.reserve(2, 22, 12, 30)                                 # 털옷 공방 마당
+    m.scatter_deco(north_tiles.BONES, (3, 18, 16, 21), 3)
     # 가죽 말리는 틀·무기 걸이·장작
     m.stamp("rack", 4, 19, force=True); m.stamp("rack", 8, 19, force=True)
     m.deco_stamp("pelt", 12, 20); m.deco_stamp("pelt", 31, 20)
     m.deco_stamp("weaponrack", 13, 11); m.deco_stamp("weaponrack", 28, 11)
     m.deco_stamp("logs", 13, 8); m.deco_stamp("logs_birch", 37, 10); m.deco_stamp("logs", 5, 10)
-    # 남서쪽 사냥꾼 야영지
-    m.deco_stamp("tent", 3, 24); m.deco_stamp("fire", 8, 25); m.deco_stamp("spit", 11, 24)
-    m.deco_stamp("logbench", 7, 28); m.deco_stamp("stump", 10, 27); m.deco_stamp("kettle", 10, 26); m.deco_stamp("bedroll", 3, 28)
+    # 10/26 남서쪽: 털옷 공방 마당 (진열대·가죽 펴는 틀·작업대는 NorthCraft.cs가 그림)
     m.road_path([(10, 23), (16, 18)], width=1)
+    m.spot("yard_fur", 2, 22)
+    for dx in range(4):
+        m.blocked[29][3 + dx] = True                        # 진열대 받침·작업대
+
     # 광장: 가운데 고기 화덕, 깃대
     m.deco_stamp("spit", 22, 14)
-    m.flag(16, 13); m.flag(30, 13)
     m.deco_stamp("lamp", 19, 12); m.deco_stamp("lamp", 27, 12)
     # 남쪽 들판 (건초 더미)
     m.road_path([(21, 19), (21, 24)], width=1)
@@ -227,6 +224,7 @@ def hunter():
     m.road_path([(30, 16), (38, 15), (45, 15)], width=2, grade=2)
     m.link("E", 14, 4, "north_pass", "W", "E")
     m.sign(41, 13, "→ 국경 고개\n비르카 · 중앙 대륙")
+    m.sign(17, 27, "↓ 눈숲 고갯길\n눈숲 마을 · 중앙 대륙")
     # 동쪽 염소 목장
     m.fence(32, 18, 40, 25, gap=(35, 18)); m.reserve(33, 19, 39, 24)   # 우리 안은 숲이 먹지 않게
     m.deco_stamp("haybale", 33, 23); m.deco_stamp("haybale_s", 38, 19)
@@ -237,12 +235,17 @@ def hunter():
              "모피는 가볍지만 비싸서, 도둑맞으면 속이 쓰리다네.")
     m.add("npc", 36, 21, npc="north_goats")        # 염소지기 맏형: 목장 안 (Q5)
     m.add("npc", 21, 25, npc="north_wife")         # 들일 하는 아내: 건초 들판 (Q1)
-    m.talker(33, 13, "염소 치는 아이", "north_p_girl_tall", "우리 염소들은 소금 덩이를 좋아해. 다리 건너 오는 상인이 가져다주곤 했는데…")
     m.walker([(17, 16), (20, 16), (26, 16), (36, 16), (44, 16), (36, 15), (26, 17), (18, 17)], idx=3)
     m.critters("goat", (34, 19, 39, 23), 3); m.critters("raven", (16, 13, 30, 19), 2)
 
-    # 10/26 털옷 공방: 모피 2 → 털옷 1 (NorthCraft.cs). 가죽 말리는 틀 옆
-    m.spot("craft_fur", 7, 22)
+    # 10/26 털옷 공방: 모피 2 → 털옷 1 (NorthCraft.cs). 마당 가운데 장인
+    m.spot("craft_fur", 8, 25)
+    m.sign(13, 21, "털옷 공방\n모피 2 → 털옷")
+    for (k, x, y) in [("tub", 3, 23), ("pelt", 5, 23), ("pelt", 10, 25), ("lantern", 11, 23), ("firewood", 9, 28), ("bucket", 3, 27), ("weaponrack", 7, 23), ("logs", 10, 28), ("pelt", 11, 26)]:
+        m.deco_stamp(k, x, y)
+    m.fence(2, 22, 12, 30, gap=(9, 22))   # 공방 마당: 울타리
+    m.ground_patch([(x, y) for x in range(3, 12) for y in range(23, 30)])   # 다져진 흙바닥
+    m.boardwalk(3, 27, 7, 29)                                # 진열대·작업대 밑 작은 마루
     m.secret_rune(6, 28, 26)
     m.dense_border("hunt")
     m.grove(40, 28, 3, 2, "hunt")
@@ -255,13 +258,20 @@ def hunter():
 
 def naru():
     """피오르 나루 마을: 피오르 물가의 작은 항구. 배가 모이는 곳이라 모피를 비싸게 산다. 톰테 자리(Q3)."""
-    m = FitMap("north_naru", "피오르 나루 마을", 52, 36, seed=43)
+    m = FitMap("north_naru", "피오르 나루 마을", 60, 36, seed=43)   # 10/26 52→60: 동쪽에 대구 덕장 마당
     m.road_path([(25, 0), (25, 8), (26, 12)], width=2)
     m.link("N", 24, 4, "north_fjord_road", "S", "N")
     # 10/26 서쪽 바닷가 길: 국경 고개로 (비르카를 안 거치고 중앙 대륙으로)
     m.road_path([(0, 20), (8, 20), (15, 21)], width=2)
     m.link("W", 19, 4, "north_pass", "E", "W")
     m.road_blob(26, 15.5, 8.5, 3, grade=1)
+    # 10/26 로포텐 덕장 마당 (A자 틀 넷은 NorthCraft.cs가 그림, 진행에 따라 빈 틀 → 막 건 대구 → 다 마름)
+    m.reserve(48, 9, 58, 25)
+    for (hx, hy) in [(49, 14), (54, 14), (49, 21), (54, 21)]:
+        for dx in range(4):
+            m.blocked[hy][hx + dx] = True
+    m.road_path([(38, 21), (47, 21), (51, 23), (56, 23)], width=1)
+    m.spot("yard_fish", 48, 9)
     # 남쪽 피오르와 선착장 두 개
     m.river_h(26, 35, wiggle=2, fixed=range(10, 42))
     m.fishing.append((30, 28)); m.fishing.append((8, 29))   # 10/24 피오르 얼음 낚시 자리
@@ -289,12 +299,11 @@ def naru():
 
     # 광장·부두 장식: 생선 좌판, 말리는 틀, 그물·밧줄, 등불
     m.deco_stamp("fishbasket", 20, 20); m.deco_stamp("fishbasket", 33, 20)
-    m.stamp("rack", 42, 20, force=True); m.stamp("rack", 5, 24, force=True)
+    m.stamp("rack", 5, 24, force=True)
     m.deco_stamp("rope", 11, 22); m.deco_stamp("rope", 40, 22)
     m.deco_stamp("crate", 18, 20); m.deco_stamp("barrel", 30, 19); m.deco_stamp("barrel_s", 31, 19); m.deco_stamp("crate_goods", 32, 19)
     m.deco_stamp("lamp", 13, 23); m.deco_stamp("lamp", 39, 23)
-    m.deco_stamp("fire", 45, 11); m.deco_stamp("logs", 47, 9); m.deco_stamp("logbench", 44, 14)
-    m.flag(19, 12); m.flag(33, 12)
+    m.deco_stamp("fire", 45, 11); m.deco_stamp("logs", 47, 9)
     # 광장 가운데: 생선 장터 (좌판 둘, 말린 생선 틀, 통) — 사람들이 모이는 곳
     m.deco_stamp("stall", 21, 14); m.deco_stamp("stall", 29, 14); m.deco_stamp("fishbasket", 25, 15)
     m.deco_stamp("bigbarrel", 24, 17); m.deco_stamp("crate", 32, 17); m.deco_stamp("basket", 27, 17); m.deco_stamp("sack", 28, 17)
@@ -310,19 +319,26 @@ def naru():
              "부두 동쪽 낚시꾼 조합에 가 봐. 얼음 낚시로 잡은 물고기 기록을 봐 주고, 큰 놈을 잡으면 상금도 줘.")
     m.add("npc", 7, 14, npc="north_warehouse")     # 창고지기 (Q3 납품처)
     m.talker(11, 10, "톰테 할아버지", "north_owl_elder_tall", "흠흠. 예의 바른 손님은 언제나 환영이지.")   # Q3 정직 시험 (NorthQuestDirector가 바꿔 끼움)
-    m.talker(41, 19, "그물 깁는 사람", "north_fox_woman_tall", "얼음 사이로 그물을 내리면 대구가 올라와.")
     m.walker([(16, 14), (21, 13), (27, 13), (33, 14), (37, 17), (30, 21), (20, 21)], idx=4)
     m.critters("gull", (12, 20, 40, 24), 4); m.critters("raven", (18, 12, 34, 17), 1)
 
     m.secret_rune(5, 46, 8)
+    m.boardwalk(48, 15, 58, 17); m.boardwalk(48, 23, 58, 25)
+    m.ground_patch([(x, y) for x in range(48, 59) for y in range(10, 26)])   # 10/26 판자 통로 + 물가 선착장, 덕장 밑은 다져진 땅
     m.spot("guild", 43, 23)             # 낚시꾼 조합 (도감·기록 보상)
-    # 10/26 대구 덕장: 얼음 대구 3 → 말린 대구 1 (NorthCraft.cs). 말리는 틀 옆
-    m.stamp("rack", 46, 18, force=True)
-    m.spot("craft_fish", 46, 22)
+    # 10/26 대구 덕장: 얼음 대구 3 → 말린 대구 1 (NorthCraft.cs). 덕장 마당 아래 일꾼
+    m.spot("craft_fish", 53, 24)
+    m.sign(46, 18, "로포텐 덕장\n얼음 대구 3 → 말린 대구")
+    # 덕장 마당: 틀 사이 띠(위 9~10줄, 가운데 15~17줄, 아래 22~24줄)에 소금 통·생선 바구니·밧줄·상자
+    for (k, x, y) in [("rope", 50, 9), ("sack", 54, 9), ("barrel_s", 57, 9), ("lantern", 52, 10),
+                      ("crate", 48, 16), ("fishbasket", 51, 16), ("barrels3", 55, 16), ("bucket", 53, 17),
+                      ("fishbasket", 47, 23), ("crate_goods", 48, 24), ("sack", 51, 24), ("barrels3", 54, 24), ("barrel", 58, 24)]:   # 10/27 덕장 다리 앞을 비움
+        m.deco_stamp(k, x, y)
+    m.critters("gull", (48, 9, 58, 24), 4)
     m.dense_border("coast")
-    m.scatter("snowpine", 3, area=(3, 2, 48, 22), margin=1)
-    m.scatter("snowboulder", 2, area=(3, 2, 48, 22), margin=1)
-    m.snow_props([(16, 7), (44, 17), (4, 18), (47, 20), (34, 8)])
+    m.scatter("snowpine", 3, area=(3, 2, 46, 22), margin=1)
+    m.scatter("snowboulder", 2, area=(3, 2, 46, 22), margin=1)
+    m.snow_props([(16, 7), (44, 17), (4, 18), (34, 8)])
     m.finish()
     return m
 
@@ -358,21 +374,33 @@ def laugar():
     m.road_path([(5, 30), (12, 31), (22, 30)], width=1)
     # 노천탕 둘레: 등불·통나무 의자·수건 줄
     m.deco_stamp("lamp", 3, 12); m.deco_stamp("lamp", 15, 12); m.deco_stamp("lamp", 34, 18)
-    m.deco_stamp("logbench", 6, 20); m.deco_stamp("stump", 14, 19); m.deco_stamp("stump", 2, 17)
+    m.deco_stamp("stump", 14, 19); m.deco_stamp("stump", 2, 17)
     m.laundry(16, 14); m.laundry(43, 17)
-    m.deco_stamp("logbench", 36, 23); m.deco_stamp("bigbarrel", 44, 22); m.deco_stamp("cauldron", 15, 17); m.deco_stamp("bucket", 3, 19); m.deco_stamp("cauldron_snow", 42, 18)
+    m.deco_stamp("bigbarrel", 44, 22); m.deco_stamp("cauldron", 15, 17); m.deco_stamp("bucket", 3, 19); m.deco_stamp("cauldron_snow", 42, 18)
     # 약초밭과 약초 말리는 틀
     m.deco_stamp("rack", 17, 24); m.deco_stamp("rack", 17, 28)
     m.deco_stamp("basket_veg", 20, 23); m.deco_stamp("potion", 21, 23); m.deco_stamp("basket", 16, 27); m.deco_stamp("potion", 28, 22)
     m.deco_stamp("haybale_s", 22, 25)
     # 광장: 가운데 모닥불, 깃대
     m.deco_stamp("fire", 23, 17)
-    m.flag(17, 20); m.flag(31, 20)
     m.deco_stamp("runestone", 27, 21); m.deco_stamp("logs", 27, 14)
     m.add("market", 26, 22, town="north_laugar")
-    # 10/26 양조장: 꿀술 2 + 온천 약초 1 → 온천 약초 꿀술 1 (NorthCraft.cs). 큰 술통 옆
-    m.deco_stamp("barrel", 46, 23); m.deco_stamp("barrel_s", 45, 25)
-    m.spot("craft_brew", 43, 25)
+    # 10/26 꿀술 양조장 마당: 솥·발효통·꼭지 술통·벌통·약초 다발은 NorthCraft.cs가 그림
+    m.reserve(33, 26, 46, 33)
+    m.spot("yard_brew", 33, 26)
+    for (bx, by, w) in [(34, 32, 2), (38, 32, 2), (42, 31, 2), (43, 28, 3)]:
+        for dx in range(w):
+            m.blocked[by][bx + dx] = True
+    m.spot("craft_brew", 40, 28)
+    m.sign(31, 25, "꿀술 양조장\n꿀술 2 + 약초 1 → 약초 꿀술")
+    for (k, x, y) in [("crate", 33, 29), ("lantern", 38, 27), ("sack", 36, 31), ("firewood", 40, 33), ("barrels3", 44, 32),
+                      ("bigbarrel", 45, 30), ("jar_red", 41, 27), ("bucket", 33, 31)]:
+        m.deco_stamp(k, x, y)
+    m.fence(32, 25, 47, 34, gap=(38, 25))   # 양조장 마당: 울타리
+    m.boardwalk(37, 30, 46, 33)                              # 솥·꼭지 술통 밑 마루
+    m.ground_patch([(x, y) for x in range(33, 47) for y in range(26, 34)])   # 마당 흙바닥 (10/26 풀밭은 뺌)
+    for (k, x, y) in [("sack", 34, 27), ("jar_red", 45, 33), ("crate", 46, 32)]:
+        m.deco_stamp(k, x, y)
     m.board(29, 16, "north_laugar")
     m.sign(25, 31, "↓ 피오르 길\n비르카 · 사냥꾼 마을 · 나루")
     m.talker(24, 15, "목욕 회관 주인", "north_bear_granny_tall", "얼어붙은 길을 건너왔구먼. 몸부터 녹이고 가게.",
@@ -382,7 +410,7 @@ def laugar():
     m.talker(35, 21, "쉬어 가는 상인", "north_lynx_tall", "밤에 여기서 하늘을 보면 초록빛 강이 흐른다더군. 난 아직 못 봤지만.")
     m.walker([(23, 33), (23, 27), (19, 20), (24, 20), (30, 19), (24, 21)], idx=5)
     m.critters("raven", (17, 16, 31, 21), 2)
-    m.secret_rune(3, 40, 28)
+    m.secret_rune(3, 44, 9)            # 10/26 양조장 마당이 생겨 북동쪽 숲 틈으로 옮김
     for (bx, by) in [(9, 16), (39, 20), (13, 27)]:
         m.spot("bath", bx, by)          # 온천 목욕 자리
     m.dense_border("pine")
@@ -421,10 +449,10 @@ def herd():
     m.deco_stamp("fire", 23, 26)
     for (tx, ty) in [(14, 23), (29, 22), (15, 27), (30, 28)]:
         m.deco_stamp("tent", tx, ty)
-    m.deco_stamp("logbench", 20, 25); m.deco_stamp("logbench", 26, 28); m.deco_stamp("stump", 21, 28)
+    m.deco_stamp("stump", 21, 28)
     m.deco_stamp("pelt", 11, 26); m.deco_stamp("pelt", 35, 25); m.stamp("rack", 36, 20, force=True)
     # 광장
-    m.deco_stamp("spit", 23, 15); m.flag(17, 19); m.flag(31, 19)
+    m.deco_stamp("spit", 23, 15)
     m.deco_stamp("bigbarrel", 28, 12); m.deco_stamp("runestone", 18, 15)
     # 남동쪽 얼어붙은 호수
     m.water_blob(42, 27, 4.5, 2.5)
@@ -468,7 +496,7 @@ def runehill():
     m.stamp("ruinwall", 30, 30, force=True); m.stamp("ruinwall", 44, 15, force=True)
     m.deco_stamp("totem", 36, 10); m.deco_stamp("totem2", 43, 10)
     # 음유시인의 모닥불
-    m.deco_stamp("fire", 15, 20); m.deco_stamp("logbench", 14, 23); m.deco_stamp("stump", 18, 21)
+    m.deco_stamp("fire", 15, 20); m.deco_stamp("stump", 18, 21)
     m.deco_stamp("lantern", 21, 24); m.deco_stamp("lantern", 31, 24)
     m.sign(16, 32, "↓ 라우가르 온천 마을")
     m.talker(26, 23, "룬 지기 노인", "north_owl_elder_tall", "이 고리의 룬돌들은 오래된 이야기를 품고 있지. 북쪽 땅 곳곳에 흩어진 룬돌을 찾아 읽어 보게.",
@@ -516,7 +544,7 @@ def icecave():
                       ("gem_p", 19, 12), ("crys_b", 39, 15)]:
         m.deco_stamp(k, x, y)
     # 광부 야영지
-    m.deco_stamp("tent", 5, 21); m.deco_stamp("fire", 10, 22); m.deco_stamp("logbench", 9, 25)
+    m.deco_stamp("tent", 5, 21); m.deco_stamp("fire", 10, 22)
     m.deco_stamp("sack", 14, 21); m.deco_stamp("box", 15, 21); m.deco_stamp("crate", 5, 25); m.deco_stamp("lantern", 13, 18)
     m.talker(12, 20, "광부 할아범", "north_moose_tall", "동굴 깊은 곳엔 호박이 얼음에 갇혀 있지. 무너진 길만 치우면 다시 캘 수 있을 텐데.",
              "푸른 수정은 밤에 혼자 빛나. 길 잃은 사람한텐 등불 대신이야.")
@@ -546,7 +574,7 @@ def border_pass():
     # 내리막 굽이: 바위와 앙상한 나무, 쉬어 가는 돌무더기
     for (bx, by) in [(28, 38), (8, 42), (34, 46)]:
         m.stamp("rockbig", bx, by, force=True)
-    m.deco_stamp("snowpost", 26, 41); m.deco_stamp("logbench", 10, 37)
+    m.deco_stamp("snowpost", 26, 41)
     # 남쪽 출구: 중앙 경유 구역(북쪽 삼각형)의 눈 녹는 고갯길로 (10/24 개통)
     m.link("S", 34, 4, "north_c_gatetown", "N", "S")
     m.sign(19, 31, "↓ 북문 마을 · 중앙 대륙\n← 모피 사냥꾼 마을   → 피오르 나루 마을\n↑ 얼음 나루길 · 비르카")
@@ -558,7 +586,6 @@ def border_pass():
     m.deco_stamp("banner", 21, 8); m.deco_stamp("banner", 36, 8)
     m.deco_stamp("weaponrack", 27, 9); m.deco_stamp("fire", 28, 14); m.deco_stamp("bigbarrel", 34, 14)
     m.deco_stamp("lantern", 26, 15); m.deco_stamp("helm", 30, 14); m.deco_stamp("firewood", 24, 15)
-    m.flag(19, 19); m.flag(38, 19)
     # 바위 고개
     for (bx, by) in [(6, 6), (42, 5), (8, 16), (44, 13), (40, 30)]:
         m.stamp("rockbig", bx, by, force=True)
@@ -573,7 +600,7 @@ def border_pass():
     m.dense_border("tundra")
     from north_center import auto_fill
     m.fishing = getattr(m, "fishing", [])
-    auto_fill(m, ["cairn", "hunt", "lookout", "camp"], talks=[6], margin=5)
+    auto_fill(m, ["cairn", "hunt", "lookout", "camp"], margin=5)   # 10/27 길 맵은 2명까지
     m.scatter("deadtree", 6, area=(3, 3, 48, 46), margin=1)
     m.scatter("snowboulder", 4, area=(3, 3, 48, 46), margin=1)
     m.snow_props([(14, 10), (46, 20), (10, 24), (40, 40), (6, 46)])

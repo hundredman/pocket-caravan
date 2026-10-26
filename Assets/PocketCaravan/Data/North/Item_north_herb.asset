@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
   id: north_herb
   displayName: "\uC628\uCC9C \uC57D\uCD08"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 7f9e577428434ef68baa1efebfb847e0, type: 3}
   weight: 1
   basePrice: 18
   originTown: {fileID: 11400000, guid: 435032a5cf9c24220a39296eb0e76afd, type: 2}

@@ -212,6 +212,7 @@ def make(root=None):
         **(char_frames(root, "north_owl_elder", "fortune") if root else {}),     # 룬 점쟁이
         **(char_frames(root, "north_p_fisher", "ferry") if root else {}),        # 나룻배 사공
         **fair_art(),                                                             # 10/26 큰 장 좌판·깃발
+        **__import__("north_craft_art").game_sprites(),                          # 10/26 공방 마당 (덕장 틀·털옷 진열·양조장)
         **(char_frames(root, "north_p_herder", "craft_fish") if root else {}),   # 덕장 일꾼
         **(char_frames(root, "north_p_smith", "craft_fur") if root else {}),     # 털옷 장인
         **(char_frames(root, "north_p_granny", "craft_brew") if root else {}),   # 양조장 할머니

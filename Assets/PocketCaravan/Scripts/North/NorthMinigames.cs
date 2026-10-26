@@ -568,7 +568,7 @@ namespace PocketCaravan
             if (invuln <= 0f || Mathf.Repeat(invuln, 0.2f) < 0.12f) Draw("sled", sp);
             // 위쪽 정보
             for (int i = 0; i < 3; i++) Draw(i < hearts ? "heart" : "heart_empty", new Rect(field.x + 6 + i * 14, field.y - 22, 12, 11));
-            GUI.Label(new Rect(field.x + 52, field.y - 26, 170, 18), $"눈송이 {flakes}   룬 {runes}   {Mathf.Clamp01(dist / Goal) * 100f:0}%", UIStyle.Rich);
+            GUI.Label(new Rect(field.x + 52, field.y - 26, 260, 18), $"눈송이 {flakes}   룬 {runes}   {Mathf.Clamp01(dist / Goal) * 100f:0}%", UIStyle.Rich);
             GUI.Label(new Rect(field.xMax + 12, field.y, 150, 90), "← → 방향\nSpace 점프\n(통나무·바위 넘기)\nEsc 내리기", UIStyle.Small);
             if (sled == SState.Ready)
                 GUI.Label(new Rect(field.x, field.center.y - 20, field.width, 40), $"<size=18><b>{Mathf.CeilToInt(timer)}</b></size>", UIStyle.CenterRich);

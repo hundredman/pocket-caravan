@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
   id: north_mead
   displayName: "\uAFC0\uC220"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 17d14ca466a341a79efb819bb46eef81, type: 3}
   weight: 2
   basePrice: 12
   originTown: {fileID: 11400000, guid: 2c9147faaf0a843a7a9ac6e8a53c0e86, type: 2}

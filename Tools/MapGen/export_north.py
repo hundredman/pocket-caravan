@@ -159,6 +159,83 @@ def museum_row(m):
     return (best[1], best[2]) if best else ()
 
 
+def market_spots(m):
+    """10/27 장터 둘레 자리: 좌판 둘(장터 왼쪽·오른쪽, 장꾼은 좌판 오른쪽 옆)과 큰 장 날 구경꾼 넷.
+    좌판은 길이 아니고 막히지 않은 가로 2칸 + 그 위 칸(장꾼)이 빈 곳, 구경꾼은 길 옆 빈 칸. 장터 칸에서 가까운 순.
+    돌려주는 값: (stalls [x, y, ...], crowd [x, y, ...])"""
+    mk = [o for o in m.objects if o["kind"] == "market"]
+    if not mk:
+        return [], []
+    mx, my = mk[0]["x"], mk[0]["y"]
+    used = {(o["x"], o["y"]) for o in m.objects}
+    kp = keeper_spots(m)
+    used |= {(kp[i] + a, kp[i + 1] + b) for i in range(0, len(kp), 2) for a in (-1, 0, 1) for b in (-1, 0, 1)}   # 장꾼 자리와 그 둘레는 비움
+    def free(x, y):
+        return 1 <= x < m.w - 1 and 1 <= y < m.h - 1 and not m.blocked[y][x] and not m.water[y][x] and m.obj[y][x] is None and (x, y) not in used
+    stalls = []
+    for side in (-1, 1):
+        best = None
+        for y in range(my - 4, my + 6):
+            for x in range(mx + side * 3, mx + side * 11, side):
+                # 10/27 좌판 그림은 3칸 폭(x-1 ~ x+1), 장꾼은 좌판 오른쪽 옆 칸(x+2)에 선다
+                if all(free(x + a, y) and m.road[y][x + a] == 0 for a in (-1, 0, 1)) and free(x + 2, y) and free(x, y - 1):
+                    d = abs(x - (mx + side * 6)) + abs(y - (my + 2)) * 2
+                    if best is None or d < best[0]:
+                        best = (d, x, y)
+        if best:
+            stalls += [best[1], best[2]]
+            used |= {(best[1] + a, best[2]) for a in (-1, 0, 1, 2)} | {(best[1], best[2] - 1)}
+    crowd = []
+    cand = []
+    for y in range(my - 4, my + 7):
+        for x in range(mx - 9, mx + 10):
+            if free(x, y) and m.road[y][x] == 0 and any(m.inside(x + a, y + b) and m.road[y + b][x + a] > 0 for a in (-1, 0, 1) for b in (-1, 0, 1)):
+                cand.append((abs(x - mx) + abs(y - my), x, y))
+    for d, x, y in sorted(cand):
+        if len(crowd) >= 8:
+            break
+        if all(abs(x - crowd[i]) + abs(y - crowd[i + 1]) >= 3 for i in range(0, len(crowd), 2)):
+            crowd += [x, y]
+    return stalls, crowd
+
+
+def keeper_spots(m):
+    """10/27 이미 있는 장터 좌판(stall, 3x2)마다 장꾼 한 명: 좌판 오른쪽 옆 → 왼쪽 옆 → 앞 순서로 빈 칸 (길이 아닌 칸 먼저).
+    장터에서 가까운 좌판 넷까지. 수입품 좌판처럼 바로 옆에 이미 사람이 있으면 건너뜀."""
+    mk = [o for o in m.objects if o["kind"] == "market"]
+    if not mk:
+        return []
+    mx, my = mk[0]["x"], mk[0]["y"]
+    people = [(o["x"], o["y"]) for o in m.objects if o["kind"] in ("talker", "npc")]
+    used = {(o["x"], o["y"]) for o in m.objects}
+    def free(x, y):
+        return 1 <= x < m.w - 1 and 1 <= y < m.h - 1 and not m.blocked[y][x] and not m.water[y][x] and m.obj[y][x] is None and (x, y) not in used
+    out = []
+    stalls = sorted([(abs(x + 1 - mx) + abs(y - my), x, y) for (n, x, y) in m.stamps if n == "stall"])
+    for d, x, y in stalls:
+        if len(out) >= 8:
+            break
+        if any(x - 2 <= px <= x + 4 and y - 1 <= py <= y + 3 for (px, py) in people):
+            continue
+        cands = [(x + 3, y + 1), (x - 1, y + 1), (x + 1, y + 2), (x, y + 2), (x + 2, y + 2)]
+        pick = next((c for c in cands if free(*c) and m.road[c[1]][c[0]] == 0), None) or next((c for c in cands if free(*c)), None)
+        if pick:
+            out += [pick[0], pick[1]]
+            used.add(pick)
+    return out
+
+
+def inn_spots(m):
+    """10/27 여관 주인 옆에서 쉬어 가는 자리 (여관 주인·여관 할머니 바로 옆 걷는 칸)"""
+    out = []
+    for o in m.objects:
+        if (o["kind"] == "talker" and "여관" in o.get("name", "")) or (o["kind"] == "npc" and o.get("npc") == "north_innkeeper"):
+            c = nearest_walk(m, o["x"] + 1, o["y"], avoid={(o["x"], o["y"])})
+            if c:
+                out += [c[0], c[1]]
+    return out
+
+
 def secret_cells(m):
     """숨은 룬돌마다 읽는 칸 (돌 바로 아래 걷는 칸) + 번호"""
     out = []
@@ -197,7 +274,7 @@ os.makedirs(os.path.join(res_dir, "Minigame"), exist_ok=True)
 for name, img in north_minigame_art.make(OUT).items():
     save_runtime(img, os.path.join(res_dir, "Minigame", name + ".png"))
 
-CHIMNEY = {"longhall": (2, 1), "woodhouse": (2, 0), "house3": (2, 0), "h_dark": (3, 0), "h_turf": (1, 0), "h_round": (1, 0), "h_dome": (1, 0)}
+CHIMNEY = {"longhall": (2, 3), "woodhouse": (2, 0), "house3": (2, 0), "h_dark": (3, 0), "h_turf": (1, 0), "h_round": (1, 0), "h_dome": (1, 0)}
 life = []
 for f in north.MAPS:
     m = f()
@@ -227,7 +304,13 @@ for f in north.MAPS:
         museum=[v for c in spot_cells(m, "museum") for v in c] + list(museum_row(m)),
         fortune=[v for c in spot_cells(m, "fortune") for v in c],
         ferry=[v for c in spot_cells(m, "ferry") for v in c],
+        seats=[v for (k, x, y) in getattr(m, "spots", []) if k == "seat" for v in (x, y)],   # 10/27 모닥불 옆 앉는 자리
+        stalls=market_spots(m)[0],          # 10/27 장터 좌판 두 자리 (장꾼은 그 위 칸)
+        crowd=market_spots(m)[1],           # 10/27 큰 장 날 구경꾼 자리
+        inns=inn_spots(m),                  # 10/27 여관에서 쉬어 가기
+        keepers=keeper_spots(m),            # 10/27 이미 있는 좌판 옆 장꾼 자리 (최대 넷)
         craft=[v for i, k in enumerate(("craft_fish", "craft_fur", "craft_brew")) for c in spot_cells(m, k) for v in (c[0], c[1], i)],   # 10/26 공방 x, y, 종류
+        yard=[v for i, k in enumerate(("yard_fish", "yard_fur", "yard_brew")) for (kk, x, y) in getattr(m, "spots", []) if kk == k for v in (x, y, i)],   # 10/26 공방 마당 왼쪽 위 (그림 기준점)
         market=[v for o in m.objects if o["kind"] == "market" for v in nearest_walk(m, o["x"] + 2, o["y"] + 1, avoid={(o["x"], o["y"])})],
         sledTrack=[[x, y] for (x, y) in getattr(m, "sled_track", [])],     # 10/24 썰매 트랙 꼭짓점
         critters=m.life))

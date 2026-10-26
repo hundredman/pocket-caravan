@@ -147,7 +147,7 @@ namespace PocketCaravan
                 bool destination = !string.IsNullOrEmpty(town) && gm.Player.contracts.Exists(c => c.toTown == town);
                 Dot(p, 3, destination ? new Color32(170, 95, 43, 255) : (Color32)Ink);
                 string label = destination ? name + " · 의뢰" : name;
-                float lw = Mathf.Min(96, caption.CalcSize(new GUIContent(label)).x + 4);
+                float lw = Mathf.Min(150, caption.CalcSize(new GUIContent(label)).x + 4);   // 10/27 긴 마을 이름이 잘리지 않게
                 Rect Spot(float x, float y) => new Rect(Mathf.Clamp(x, canvas.x, canvas.xMax - lw), Mathf.Clamp(y, canvas.y, canvas.yMax - 10), lw, 10);
                 var tries = new[] { Spot(p.x - lw / 2, p.y - 14), Spot(p.x - lw / 2, p.y + 5), Spot(p.x + 6, p.y - 5), Spot(p.x - lw - 6, p.y - 5),
                                     Spot(p.x - lw / 2, p.y - 25), Spot(p.x - lw / 2, p.y + 16) };

@@ -21,6 +21,10 @@ namespace PocketCaravan
     {
         // ---------------- 리액션 ----------------
         public struct Reaction { public string id, name, bubble; public bool basic; }
+        // 10/27 한 줄 글씨 (좁은 칸에서 줄바꿈되며 잘리지 않게)
+        static GUIStyle oneLine;
+        static GUIStyle OneLine => oneLine ?? (oneLine = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow });
+
         public static readonly Reaction[] Reactions =
         {
             new Reaction { id = "wave", name = "인사", bubble = "안녕!", basic = true },
@@ -86,6 +90,7 @@ namespace PocketCaravan
         AudioSource sfx;
         AudioClip pop, chime, shutter;
         bool photo; int photoFrames; string photoPath; float flash;
+        Texture2D preview; float previewWait, previewT;   // 10/27 찍은 사진 미리 보기
         int lastTalkFrame = -1;
         string lastMap;
 
@@ -134,6 +139,7 @@ namespace PocketCaravan
 
         void Update()
         {
+            UpdatePreview();
             string map = NorthUtil.Map;
             if (map != lastMap) { lastMap = map; npcActs.Clear(); bubbles.Clear(); body = null; restSaved = false; }
             if (!NorthUtil.InNorth || GameManager.I == null) { if (wheelOpen) CloseWheel(); return; }
@@ -371,10 +377,10 @@ namespace PocketCaravan
                     var sp = cam.WorldToScreenPoint(b.world);
                     if (sp.z < 0f) continue;
                     float x = sp.x / scale, y = (Screen.height - sp.y) / scale;
-                    float w = Mathf.Max(30f, b.text.Length * 9f + 10f);
+                    float w = Mathf.Max(30f, OneLine.CalcSize(new GUIContent(b.text)).x + 14f);   // 10/27 글자 수가 아니라 실제 폭으로
                     var r = new Rect(x - w / 2, y - 16, w, 16);
                     GUI.Box(r, GUIContent.none, UIStyle.Box);
-                    GUI.Label(r, b.text, UIStyle.CenterRich);
+                    GUI.Label(r, b.text, OneLine);
                 }
             // 주요 인물 하트 (말 걸 수 있는 거리일 때)
             var pc = PlayerController.Instance;
@@ -385,12 +391,17 @@ namespace PocketCaravan
                 {
                     var sp = cam.WorldToScreenPoint(pc.TalkTarget.transform.position + new Vector3(0f, 2.1f, 0f));
                     int h = Hearts(Friends[fi].name);
-                    GUI.Label(new Rect(sp.x / scale - 40, (Screen.height - sp.y) / scale - 10, 80, 14),
-                        $"<color=#ff7a8a>{new string('♥', h)}</color><color=#9a8fa8>{new string('♡', 3 - h)}</color>  <size=8>G 선물</size>", UIStyle.CenterRich);
+                    // 10/27 눈밭 위에서 안 보여서 어두운 받침 + 큰 하트 (빈 하트는 회색 꽉 찬 하트로)
+                    string hearts = $"<size=12><color=#ff5a6e>{new string('♥', h)}</color><color=#6a6378>{new string('♥', 3 - h)}</color></size> <size=9><color=#ffe08a>G</color> 선물</size>";
+                    float hw = OneLine.CalcSize(new GUIContent(hearts)).x + 12f;
+                    var hr = new Rect(sp.x / scale - hw / 2f, (Screen.height - sp.y) / scale - 12, hw, 17);
+                    GUI.Box(hr, GUIContent.none, UIStyle.Box);
+                    GUI.Label(hr, hearts, OneLine);
                 }
             }
             if (wheelOpen) DrawWheel();
             if (photo) DrawPhotoFrame();
+            if (preview != null && previewT > 0f && !photo) DrawPreview();
             if (flash > 0f)
             {
                 var old = GUI.color; GUI.color = new Color(1f, 1f, 1f, flash / 0.3f);
@@ -399,9 +410,41 @@ namespace PocketCaravan
             }
         }
 
+        /// <summary>10/27 방금 찍은 사진을 오른쪽 아래에 흰 테 폴라로이드처럼 3초 보여 줌</summary>
+        void DrawPreview()
+        {
+            float a = Mathf.Clamp01(previewT / 0.4f);
+            float pw = 150f, ph = pw * preview.height / Mathf.Max(1f, preview.width);
+            var r = new Rect(UIStyle.VirtualWidth - pw - 18f, UIStyle.VirtualHeight - ph - 40f, pw, ph);
+            var old = GUI.color;
+            GUI.color = new Color(1f, 1f, 1f, a);
+            GUI.DrawTexture(new Rect(r.x - 5f, r.y - 5f, r.width + 10f, r.height + 18f), Texture2D.whiteTexture);
+            GUI.DrawTexture(r, preview);
+            GUI.Label(new Rect(r.x, r.yMax + 1f, r.width, 12f), "<color=#5a4636>사진첩에 저장됨</color>", OneLine);
+            GUI.color = old;
+        }
+
+        void UpdatePreview()
+        {
+            if (previewWait > 0f)
+            {
+                previewWait -= Time.unscaledDeltaTime;
+                if (!string.IsNullOrEmpty(photoPath) && File.Exists(photoPath))
+                {
+                    try
+                    {
+                        var tex = new Texture2D(2, 2);
+                        if (tex.LoadImage(File.ReadAllBytes(photoPath))) { if (preview != null) Destroy(preview); preview = tex; previewT = 3f; previewWait = 0f; }
+                    }
+                    catch (IOException) { }   // 아직 쓰는 중이면 다음 프레임에 다시
+                }
+            }
+            if (previewT > 0f) previewT -= Time.unscaledDeltaTime;
+        }
+
         void DrawWheel()
         {
-            float cx = UIStyle.VirtualWidth / 2f, cy = UIStyle.VirtualHeight / 2f, R = 70f;
+            float cx = UIStyle.VirtualWidth / 2f, cy = UIStyle.VirtualHeight / 2f, R = 92f;   // 10/27 칸을 넓혀도 안 겹치게
             var old = GUI.color;
             GUI.color = new Color(0f, 0f, 0.05f, 0.4f);
             GUI.DrawTexture(new Rect(0, 0, UIStyle.VirtualWidth, UIStyle.VirtualHeight), Texture2D.whiteTexture);
@@ -409,13 +452,13 @@ namespace PocketCaravan
             for (int i = 0; i < Reactions.Length; i++)
             {
                 float a = -Mathf.PI / 2f + i * Mathf.PI * 2f / Reactions.Length;
-                var r = new Rect(cx + Mathf.Cos(a) * R - 34, cy + Mathf.Sin(a) * R - 13, 68, 26);
+                var r = new Rect(cx + Mathf.Cos(a) * R - 42, cy + Mathf.Sin(a) * R - 13, 84, 26);
                 bool known = Knows(i);
                 GUI.Box(r, GUIContent.none, UIStyle.Box);
                 string label = known ? Reactions[i].name : "???";
                 if (i == wheelSel) label = $"<color=#ffde59><b>▶ {label}</b></color>";
                 else if (!known) label = $"<color=#8a8296>{label}</color>";
-                GUI.Label(r, label, UIStyle.CenterRich);
+                GUI.Label(r, label, OneLine);
             }
             GUI.Label(new Rect(cx - 80, cy - 10, 160, 20), "<b>리액션</b>", UIStyle.CenterRich);
             GUI.Label(new Rect(cx - 120, cy + R + 22, 240, 16), "← → 고르기 · Space 하기 · R/Esc 닫기", UIStyle.CenterRich);
@@ -450,7 +493,8 @@ namespace PocketCaravan
                 {
                     photo = false; flash = 0.3f;
                     if (!AudioManager.Muted) sfx.PlayOneShot(shutter, 0.7f);
-                    Notify.Show("찰칵! 사진을 저장했다: " + photoPath, 4f);
+                    previewWait = 2f; previewT = 0f;          // 10/27 저장된 사진을 잠깐 액자째 보여 줌
+                    Notify.Show("찰칵! 사진첩에 저장했다 (사진첩 폴더: " + Path.GetDirectoryName(photoPath) + ")", 5f);
                 }
             }
         }

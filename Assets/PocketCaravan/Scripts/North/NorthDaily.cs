@@ -149,24 +149,10 @@ namespace PocketCaravan
             if (guild.Length >= 2)
                 NorthSpot.Make(root, NorthUtil.Cell(map, guild[0], guild[1]), () => "낚시꾼 조합", Guild, Interactable.Kind.Board);
 
-            // 전시실: 전시대 여섯 개 + 기증 자리
+            // 전시실: 회관 문 옆 기증 자리 (10/27 전시대 여섯 개는 뺌 — 마당에 책상이 늘어선 게 어색하다는 의견)
             var mus = NorthData.Get(map, "museum");
-            if (mus.Length >= 4)
-            {
+            if (mus.Length >= 2)
                 NorthSpot.Make(root, NorthUtil.Cell(map, mus[0], mus[1]), () => $"회관 전시실 ({Donated}/{Exhibits.Length})", Museum, Interactable.Kind.Board);
-                for (int i = 0; i < Exhibits.Length; i++)
-                {
-                    var p = NorthUtil.Cell(map, mus[2] + i, mus[3]);
-                    var go = new GameObject("Exhibit " + Exhibits[i].key);
-                    go.transform.SetParent(root, false); go.transform.position = p + new Vector3(0f, -0.4f, 0f);
-                    var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = pedestal; sr.sortingOrder = 8;
-                    if (NorthSave.Has("museum:" + Exhibits[i].key) && icons.TryGetValue(Exhibits[i].icon, out var ic) && ic != null)
-                    {
-                        var g2 = new GameObject("Item"); g2.transform.SetParent(go.transform, false); g2.transform.localPosition = new Vector3(0f, 0.3f, 0f);
-                        var s2 = g2.AddComponent<SpriteRenderer>(); s2.sprite = ic; s2.sortingOrder = 9;
-                    }
-                }
-            }
             // 룬 점쟁이
             var fort = NorthData.Get(map, "fortune");
             if (fort.Length >= 2) Person(NorthUtil.Cell(map, fort[0], fort[1]), "fortune", () => "룬 점쟁이", Fortune, Interactable.Kind.Person);

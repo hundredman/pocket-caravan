@@ -19,6 +19,9 @@ tiles.STAMPS.update({
     "snowroundbig": ("nature", 8, 2, 4, 3, 2, 2, None),
     "snowboulder": ("nature", 2, 12, 2, 2, 0, 0, None),     # 눈 얹힌 큰 바위
     "longhall": ("house", 25, 7, 4, 7, 0, 0, None),         # 초가 큰 회관 (바이킹 롱하우스)
+    # 10/27 회관을 지붕(위 3줄) + 문 있는 앞면(아래 2줄)으로 이어 붙여 씀 (원래 그림은 집 두 채가 위아래로 겹쳐 보였다)
+    "longhall_roof": ("house", 25, 7, 4, 3, 0, 0, None),
+    "longhall_front": ("house", 25, 12, 4, 2, 0, 0, None),
     "woodhouse": ("house", 25, 14, 4, 5, 0, 0, None),       # 짙은 나무 박공집
     # --- 마을 꾸미기 (10/23) ---
     "fire": ("camp", 12, 5, 2, 2, 0, 0, None),              # 돌 두른 모닥불
@@ -247,6 +250,16 @@ class SnowMap(Map):
                 self.road[y][x] = max(self.road[y][x], 1)
                 self.reserved[y][x] = True
 
+    def ground_patch(self, cells, kind="dirt"):
+        """10/26 눈밭 위 바닥 조각 (공방 마당). kind: dirt 다져진 흙, grass 눈 녹은 풀밭. 걸을 수 있음, 길 아님."""
+        cells = set(cells)
+        inside = lambda a, b: (a, b) in cells
+        mode = "dirtedge" if kind == "dirt" else "grassedge"
+        for (x, y) in cells:
+            if self.inside(x, y) and (x, y) not in self.decks:
+                self.ground[y][x] = tiles.autotile(inside, x, y, "floor", 0, 7) + "@" + mode
+                self.reserved[y][x] = True
+
     def hot_spring(self, cx, cy, rx, ry, steam=4):
         """김 나는 온천 (얼지 않은 물). 가장자리는 눈이 녹은 흙빛 테두리, 물결과 김 애니메이션."""
         before = {(x, y) for y in range(self.h) for x in range(self.w) if self.water[y][x]}
@@ -455,8 +468,83 @@ class SnowMap(Map):
                     mask.add((x, y))
         self._plant_dense(mask, DENSE_KINDS[theme])
 
+    def stamp(self, name, x, y, force=False, over_road=False):
+        """10/27 "longhall"은 지붕 + 문 앞면 두 조각으로 놓는다. 바닥(문 줄)은 예전 7줄짜리와 같은 자리 (y+6).
+        기록은 "longhall" 하나로 남겨 굴뚝·지도·문 검사가 그대로 돌게 한다."""
+        if name != "longhall":
+            return Map.stamp(self, name, x, y, force, over_road)
+        if not Map.stamp(self, "longhall_roof", x, y + 2, force, over_road):
+            return False
+        if not Map.stamp(self, "longhall_front", x, y + 5, force, over_road):
+            return False
+        self.stamps = [t for t in self.stamps if t not in (("longhall_roof", x, y + 2), ("longhall_front", x, y + 5))]
+        self.stamps.append(("longhall", x, y))
+        return True
+
+    def fire_seats(self):
+        """10/27 모닥불마다 바로 옆(왼쪽·오른쪽, 안 되면 아래 두 칸)에 앉는 자리 두 개. 런타임(NorthFireSeat)이 통나무 의자를 그리고 Space로 앉는다."""
+        self._seats = set()
+        objs = {(o["x"], o["y"]) for o in self.objects}
+        def ok(x, y):
+            return (self.inside(x, y) and 1 <= x < self.w - 1 and not self.blocked[y][x] and not self.water[y][x]
+                    and self.obj[y][x] is None and (x, y) not in objs and (x, y) not in self._seats)
+        for (n, x, y) in list(self.stamps):
+            if n != "fire":
+                continue
+            got = 0
+            for (sx, sy) in [(x - 1, y + 1), (x + 2, y + 1), (x, y + 2), (x + 1, y + 2), (x - 1, y), (x + 2, y)]:
+                if got < 2 and ok(sx, sy):
+                    self._seats.add((sx, sy)); self.spots.append(("seat", sx, sy)); self.reserved[sy][sx] = True
+                    got += 1
+
+    def break_lines(self):
+        """10/27 대화창에서 한국어 낱말 가운데가 잘려 줄이 바뀌던 문제: 긴 대사는 문장마다 줄을 바꿔 둔다."""
+        import re
+        for o in self.objects:
+            if o["kind"] != "talker":
+                continue
+            o["lines"] = [re.sub(r"([.!?…~])\s+(?=\S)", "\\1\n", ln) if len(ln) > 28 and "\n" not in ln else ln for ln in o.get("lines", [])]
+
+    def settle_npcs(self):
+        """10/27 서 있는 사람(talker·npc)이 길을 막지 않게, 이름표가 맵 끝에서 잘리지 않게 자리를 고른다.
+        길 위나 맵 가장자리(좌우 4칸·위 3칸)에 서 있으면, 4칸 안에서 길 옆의 빈 땅(길 아님·안 막힘·물 아님)으로 옮긴다.
+        길 바로 옆을 먼저 고르고, 같으면 원래 자리와 가까운 곳. 맞는 자리가 없으면 그대로 둔다."""
+        taken = {(o["x"], o["y"]) for o in self.objects}
+        def bad(x, y):
+            return self.road[y][x] > 0 or x < 4 or x > self.w - 5 or y < 3
+        def free(x, y):
+            return (4 <= x <= self.w - 5 and 3 <= y <= self.h - 3 and self.road[y][x] == 0 and not self.water[y][x]
+                    and not self.blocked[y][x] and self.obj[y][x] is None and (x, y) not in taken and (x, y) not in getattr(self, "decks", {})
+                    and (x, y) not in getattr(self, "_seats", ()))
+        def by_road(x, y):
+            return any(self.inside(x + a, y + b) and self.road[y + b][x + a] > 0 for a in (-1, 0, 1) for b in (-1, 0, 1))
+        self.npc_moves = []
+        for o in self.objects:
+            if o["kind"] not in ("talker", "npc") or not bad(o["x"], o["y"]):
+                continue
+            best = None
+            for r in range(1, 5):
+                for y in range(o["y"] - r, o["y"] + r + 1):
+                    for x in range(o["x"] - r, o["x"] + r + 1):
+                        if max(abs(x - o["x"]), abs(y - o["y"])) != r or not self.inside(x, y) or not free(x, y):
+                            continue
+                        key = (0 if by_road(x, y) else 1, abs(x - o["x"]) + abs(y - o["y"]))
+                        if best is None or key < best[0]:
+                            best = (key, x, y)
+                if best is not None and best[0][0] == 0:
+                    break
+            if best is None:
+                continue
+            taken.discard((o["x"], o["y"]))
+            self.npc_moves.append((o.get("name") or o.get("npc"), (o["x"], o["y"]), (best[1], best[2])))
+            o["x"], o["y"] = best[1], best[2]
+            taken.add((o["x"], o["y"]))
+
     def finish(self):
         """공용 Map.finish를 그대로 쓰되, 바닥·길·물가 타일만 눈 버전으로 바꿔 끼운다 (다리·판자 처리 등은 공용 코드를 따름)."""
+        self.fire_seats()
+        self.break_lines()
+        self.settle_npcs()
         names = ("GRASS", "GRASS_VARIANTS", "DIRT_ORIGIN", "WATER_ORIGIN", "DECO")
         saved = {n: getattr(tiles, n) for n in names}
         tiles.GRASS, tiles.GRASS_VARIANTS = SNOW, SNOW_VARIANTS
@@ -467,6 +555,9 @@ class SnowMap(Map):
         finally:
             for n, v in saved.items():
                 setattr(tiles, n, v)
+        moved = self.npc_moves
+        self.settle_npcs()          # 마무리에서 길이 다듬어진 뒤 한 번 더 (길 가장자리 메움 등)
+        self.npc_moves = moved + self.npc_moves
         for (x, y), k in self._late:
             if self.inside(x, y) and not self.water[y][x] and self.road[y][x] == 0 and self.obj[y][x] is None:
                 self.deco[y][x] = k
@@ -627,6 +718,7 @@ _GRASS, _GRASS_D, _DIRT, _DIRT_D = (173, 188, 58), (168, 161, 41), (211, 134, 95
 _PATCH_COLORS = {
     "snowedge": {_SNOWBG: _GRASS, _WHITE: _SNOWBG},
     "grassedge": {_GRASS: _SNOWBG, _GRASS_D: _SNOWEDGE, _DIRT: _GRASS, _DIRT_D: _GRASS_D},
+    "dirtedge": {_GRASS: _SNOWBG, _GRASS_D: _SNOWEDGE},     # 10/26 눈 위 흙바닥 (공방 마당)
 }
 _recolor_prev = tiles.recolor
 def _recolor_patch(tile, mode):
@@ -706,7 +798,13 @@ class ThawMap(FitMap):
         if self.base == "snow":
             SnowMap.finish(self)
         else:
+            self.fire_seats()
+            self.break_lines()
+            self.settle_npcs()
             Map.finish(self)
+            moved = self.npc_moves
+            self.settle_npcs()
+            self.npc_moves = moved + self.npc_moves
             ice = set(ICE.values())
             for (x, y), k in self._late:      # 풀밭 맵에선 얼음 웅덩이만 (눈 풀 장식은 빼고)
                 if k in ice and self.inside(x, y) and not self.water[y][x] and self.road[y][x] == 0 and self.obj[y][x] is None:

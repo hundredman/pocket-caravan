@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
   id: north_hay
   displayName: "\uAC74\uCD08 \uD55C \uC9D0"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 77601e30e5924ad2b30e1f9e58440b94, type: 3}
   weight: 6
   basePrice: 1
   originTown: {fileID: 0}

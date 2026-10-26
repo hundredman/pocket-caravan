@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
   id: north_cheese
   displayName: "\uC21C\uB85D \uCE58\uC988"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 21b0eefbb4104411827f8e18fb7867ad, type: 3}
   weight: 2
   basePrice: 14
   originTown: {fileID: 11400000, guid: b46633472dd9547829472e413083f7e9, type: 2}

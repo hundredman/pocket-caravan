@@ -149,6 +149,25 @@ namespace PocketCaravan.EditorTools
                 v.sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Resources/North/Minigame/cargo_v.png");
             });
             herd.vehiclesForSale.Add(sled);
+            // 10/27 여정 수첩 한 줄 (고려 main의 TownData.journeyNote). 필드가 아직 없는 브랜치에서도 오류 없이 넘어가도록 이름으로 찾는다.
+            // 공용 규칙: 거래 역할·귀환 힌트만, 시세나 이익 보장 문구는 쓰지 않는다.
+            void Note(TownData t, string note)
+            {
+                var so = new SerializedObject(t);
+                var p = so.FindProperty("journeyNote");
+                if (p == null) return;
+                p.stringValue = note;
+                so.ApplyModifiedPropertiesWithoutUndo();
+            }
+            Note(birka, "북유럽 수도. 꿀술이 흔하고 남쪽 소금은 귀해요. 공방에서 만든 말린 대구·털옷·약초 꿀술도 받아 줘요.");
+            Note(hunter, "모피와 말린 고기의 마을. 소금을 찾아요. 털옷 공방에 모피 2장을 맡기면 털옷이 돼요.");
+            Note(naru, "얼음 대구와 호박의 바닷가 마을. 대구 덕장에 대구 3마리를 맡기면 말린 대구가 돼요. 나룻배로 개울 나루 마을까지 가요.");
+            Note(laugar, "온천 약초의 마을. 양조장에 꿀술 2 + 약초 1을 맡기면 약초 꿀술이 돼요. 온천에 몸을 담그면 눈길이 덜 지쳐요.");
+            Note(herd, "순록 치즈의 고원 마을. 순록 썰매를 팔아요. 길 없는 눈밭에서 썰매가 가장 빨라요.");
+            Note(post, "북쪽 물건이 남쪽으로 나가는 문. 남쪽 소금이 넘치고 모피·호박을 찾아요. 큰 장이 돌아오는 마을 중 하나예요.");
+            Note(cwood, "고기와 모피가 흔한 숲 마을. 소금·꿀술은 귀해요. 서남 솔숲길엔 산적이 숨어 있어요.");
+            Note(ccreek, "생선과 호박이 흔한 물가 마을. 치즈·약초를 찾아요. 나룻배로 피오르 나루까지 바로 가요.");
+            Note(cross, "세 길이 모이는 길목. 북쪽 물건을 대륙 중심으로 넘기는 곳이라 모피·호박·치즈를 찾아요.");
             foreach (var t in new[] { birka, hunter, naru, laugar, herd, post, cwood, ccreek, cross }) EditorUtility.SetDirty(t);
 
             // 퀘스트용 물건 (장터에 팔 수 없음)

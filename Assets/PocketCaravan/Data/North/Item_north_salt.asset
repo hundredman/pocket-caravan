@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
   id: north_salt
   displayName: "\uB0A8\uCABD \uC18C\uAE08"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 9238a676a3a242cfbace927e7ccb650e, type: 3}
   weight: 2
   basePrice: 16
   originTown: {fileID: 11400000, guid: 2fb028821cbd749259c73f6170868dd2, type: 2}

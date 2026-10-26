@@ -67,7 +67,7 @@ def discover(m, kind, x, y, trail=None, talk=None):
         d("fishbasket", x + 3, y); d("bucket", x + 3, y + 1); d("stump", x - 4, y)
         m.fishing.append((x, y))
     elif kind == "camp":       # 길손 야영지
-        d("fire", x, y); d("logbench", x - 1, y + 2); d("bedroll", x + 2, y)
+        d("fire", x, y); d("bedroll", x + 2, y)   # 10/27 긴 의자는 빼고 모닥불 옆 통나무 의자(런타임)로
     elif kind == "herd":       # 이끼 찾아 내려온 순록 무리
         d("haybale_s", x, y); m.critters("reindeer", (x - 5, y - 2, x + 5, y + 3), 3)
     elif kind == "hunt":       # 사냥꾼 덫 자리
@@ -81,7 +81,7 @@ def discover(m, kind, x, y, trail=None, talk=None):
     elif kind == "woodpile":   # 장작 쌓는 곳
         d("logs", x, y); d("logs_birch", x, y + 1); d("stumpbig", x + 2, y); d("firewood", x - 1, y)
     elif kind == "lookout":    # 눈 위 망루 표지
-        d("snowpost", x, y); m.flag(x + 1, y + 1); d("rocksmall", x - 1, y + 1)
+        d("snowpost", x, y); d("rocksmall", x - 1, y + 1)   # 10/27 깃발 뺌
     if talk is not None:
         name, who, *lines = TRAVELLERS[talk % len(TRAVELLERS)]
         m.talker(x + 1, y + 3, name, who, *lines)
@@ -192,9 +192,8 @@ def gate_town():
     m.road_path([(30, 27), (29, 36), (29, 45)], width=2, grade=2)
 
     # 국경 표석: 여기서부터 중앙 대륙
-    m.flag(26, 2); m.flag(33, 2)
     m.deco_stamp("runestone", 35, 4); m.deco_stamp("snowpost", 24, 4)
-    m.sign(36, 7, "↑ 국경 고개 · 북유럽\n↓ 룬돌 큰길 · 북쪽 길목 마을\n← 눈숲 마을   → 개울 나루 마을")
+    m.sign(27, 13, "↑ 국경 고개 · 북유럽\n↓ 룬돌 큰길 · 북쪽 길목 마을\n← 눈숲 마을   → 개울 나루 마을")
     # 여관(롱하우스)과 교역소, 마을 장식
     m.stamp("longhall", 8, 7, force=True); m.door_path(8, 7, 4, 7, 20, door_dx=1)
     m.stamp("h_dark", 41, 8, force=True); m.door_path(41, 8, 4, 4, 18, door_dx=1)
@@ -250,13 +249,18 @@ def road_nw():
     m.link("S", 46, 4, "north_c_snowwood", "N", "S")
     main = [(61, 21), (52, 21), (44, 17), (34, 19), (28, 25), (32, 33), (42, 38), (47, 45)]
     m.road_path(main, width=2, grade=2)
+    # 10/26 북쪽 숲길: 바로 위 북유럽 모피 사냥꾼 마을로
+    m.road_path([(22, 0), (22, 8), (25, 17), (28, 24)], width=2)
+    m.link("N", 21, 4, "north_hunter", "S", "N")
+    m.sign(25, 4, "↑ 모피 사냥꾼 마을 (북유럽)\n↘ 눈숲 마을   → 북문 마을")
     snow_trail(m, [(52, 22), (50, 30), (47, 40)])                  # 눈밭 지름길 (걸어서 빠름, 수레는 느림)
     wedge_forest(m, -62, 0, "pine")
     # 나무꾼 야영지
-    m.deco_stamp("tent", 38, 6); m.deco_stamp("fire", 43, 8); m.deco_stamp("logbench", 40, 11)
+    m.deco_stamp("tent", 38, 6); m.deco_stamp("fire", 43, 8)
     m.deco_stamp("logs", 46, 7); m.deco_stamp("logs_birch", 46, 9); m.deco_stamp("logs", 34, 10)
     m.deco_stamp("stumpbig", 49, 11); m.deco_stamp("stump", 37, 12); m.deco_stamp("sled", 32, 13); m.deco_stamp("firewood", 44, 12)
     m.road_path([(41, 13), (43, 17)], width=1)
+    m.stamp("h_shed", 50, 4, force=True); m.door_path(50, 4, 3, 3, 9, door_dx=1); m.road_path([(51, 9), (46, 12)], width=1)   # 나무꾼 오두막
     # 얼어붙은 웅덩이와 무너진 사냥 오두막
     m.water_blob(14, 12, 5, 3)
     m.deco_stamp("ruinhut", 21, 30); m.deco_stamp("pelt", 25, 34)
@@ -268,7 +272,7 @@ def road_nw():
     m.walker([(60, 21), (52, 21), (44, 18), (34, 19), (28, 25), (32, 33), (42, 38), (47, 44)], idx=1)
     m.event(30, 22); m.event(37, 36)                                 # 쓰러진 통나무 자리
     m.critters("raven", (14, 18, 26, 26), 2)
-    auto_fill(m, ["woodpile", "cairn", "hunt", "icehole", "camp", "lookout"], talks=[5, 6])
+    auto_fill(m, ["woodpile", "cairn", "hunt", "icehole", "camp", "lookout"], talks=[6])   # 10/27 나무꾼은 하나만
 
     m.dense_border("pine")
     m.grove(56, 38, 3, 2.5, "pine")
@@ -295,7 +299,8 @@ def road_ne():
     m.bridge(24, 16, 31, 18)                                       # 개울 건너 바닷가 낚시터로
     m.road_path([(23, 17), (16, 21)], width=2)
     m.road_path([(32, 17), (38, 12), (41, 7)], width=1)
-    m.deco_stamp("fishbasket", 42, 5); m.deco_stamp("logbench", 39, 6)
+    m.deco_stamp("fishbasket", 42, 5)
+    m.stamp("h_turf", 45, 7, force=True); m.door_path(45, 7, 3, 2, 11, door_dx=1); m.road_path([(46, 11), (40, 9)], width=1)   # 어부 움집
     m.fishing.append((41, 3))
     # 큰길: 북문 마을 → 개울 나루 마을
     m.road_path([(0, 21), (10, 21), (15, 26), (13, 35), (13, 45)], width=2, grade=2)
@@ -330,6 +335,10 @@ def snow_wood():
     m.road_blob(25, 12.5, 7, 3.5, grade=1)                         # 작은 장터 마당
     m.road_path([(25, 16), (25, 26), (25, 39)], width=2, grade=2)
     closed_exit(m, "W", 11, "← 북서 포구 (베네치아 쪽)\n(이웃 구역과 잇는 중)", road_from=(18, 13))
+    # 10/26 동쪽 샛길: 룬돌 큰길로
+    m.road_path([(29, 15), (36, 18), (44, 19), (51, 19)], width=2)
+    m.link("E", 18, 4, "north_c_runeway", "W", "E")
+    m.sign(46, 16, "→ 룬돌 큰길\n북문 마을 · 길목 마을")
     wedge_forest(m, -40, 46, "pine")
     # 장터와 집들
     m.deco_stamp("stall", 20, 9); m.deco_stamp("stall", 29, 9)
@@ -393,9 +402,13 @@ def creek_town():
     m.stamp("h_stoneB", 8, 4, force=True); m.door_path(8, 4, 2, 2, 11, door_dx=0)
     m.stamp("h_round", 30, 3, force=True); m.door_path(30, 3, 2, 3, 9, door_dx=0)
     m.stamp("woodhouse", 8, 15, force=True); m.door_path(8, 15, 3, 3, 21, door_dx=0)
-    m.road_path([(9, 11), (18, 12)], width=1); m.road_path([(9, 21), (24, 21)], width=1)
+    m.road_path([(9, 11), (18, 12)], width=1)
+    # 10/26 서쪽 샛길: 룬돌 큰길로
+    m.road_path([(0, 21), (9, 21), (24, 21), (25, 17)], width=2)
+    m.link("W", 20, 4, "north_c_runeway", "E", "W")
+    m.sign(4, 18, "← 룬돌 큰길\n북문 마을 · 길목 마을")
     # 얼음 낚시터 (개울가 둘)
-    m.deco_stamp("fishbasket", 34, 22); m.deco_stamp("bucket", 34, 23); m.deco_stamp("logbench", 33, 26); m.deco_stamp("fire", 32, 24)
+    m.deco_stamp("fishbasket", 34, 22); m.deco_stamp("bucket", 34, 23); m.deco_stamp("fire", 32, 24)
     m.fishing.append((38, 22))
     m.fishing.append((39, 31))
     m.road_path([(25, 24), (35, 24)], width=1); m.road_path([(25, 31), (36, 31)], width=1)
@@ -429,6 +442,18 @@ def rune_way():
     m.link("S", 16, 4, "north_c_crossing", "N", "S")
     main = [(17, 0), (17, 8), (14, 18), (15, 30), (20, 40), (19, 52), (15, 62), (18, 74), (17, 84), (17, 95)]
     m.road_path(main, width=3, grade=3)
+    # 10/26 양옆 샛길: 서쪽 눈숲 마을, 동쪽 개울 나루 마을
+    m.road_path([(0, 19), (8, 19), (14, 20)], width=2)
+    m.link("W", 18, 4, "north_c_snowwood", "E", "W")
+    m.road_path([(35, 21), (31, 23), (22, 24), (15, 26)], width=2)
+    m.link("E", 20, 4, "north_c_creek", "W", "E")
+    # 10/26 길손 역참: 큰길 중간의 작은 마을 (여관·마구간·우물)
+    m.stamp("longhall", 23, 76, force=True); m.door_path(23, 76, 4, 7, 85, door_dx=1)
+    m.stamp("h_turf", 28, 78, force=True); m.door_path(28, 78, 3, 2, 85, door_dx=1)
+    m.stamp("h_shed", 22, 87, force=True); m.door_path(22, 87, 3, 3, 91, door_dx=1)
+    m.road_path([(29, 85), (24, 85), (18, 86)], width=1); m.road_path([(23, 91), (18, 91)], width=1)
+    m.stamp("well", 27, 88, force=True)
+    m.deco_stamp("haybale", 29, 90); m.deco_stamp("lamp", 21, 83); m.deco_stamp("banner", 27, 75)
     # 언덕 위 룬돌 둥지 (작은 원)
     m.road_blob(26, 16, 4.5, 3, grade=1)
     m.road_path([(16, 16), (21, 16)], width=1)
@@ -441,10 +466,15 @@ def rune_way():
     m.secret_rune(1, 5, 46); m.deco_stamp("gem_b", 7, 48)
     m.patch_area(3, 45, 9, 50)
     # 길손 쉼터 (중간)
-    m.deco_stamp("tent", 25, 50); m.deco_stamp("fire", 26, 54); m.deco_stamp("logbench", 24, 56)
+    m.deco_stamp("tent", 25, 50); m.deco_stamp("fire", 26, 54)
     m.road_path([(21, 52), (24, 53)], width=1)
 
     m.sign(20, 4, "룬돌 큰길\n↓ 가장 빠른 길: 북쪽 길목 마을\n  (눈늑대 패거리 주의)")
+    m.sign(4, 16, "← 눈숲 마을")
+    m.sign(30, 26, "→ 개울 나루 마을")
+    m.sign(20, 80, "길손 역참\n쉬어 가는 곳 · 마구간")
+    m.talker(21, 88, "역참지기", "north_p_herder_tall", "큰길 한가운데라 다들 여기서 말에게 물을 먹이고 가지.",
+             "눈늑대 패거리는 이 아래쪽에 자주 나와. 짐이 무거우면 양옆 마을로 돌아가는 게 나아.")
     m.sign(19, 12, "→ 룬돌 둥지\n옛 사람들이 길을 비는 곳")
     m.talker(28, 16, "룬 읽는 노인", "north_owl_elder_tall", "이 돌들은 길 떠나는 상인을 지켜 줬지. 북쪽 땅엔 이런 돌이 일곱 개 숨어 있다네.",
              "하나는 이 길 서쪽, 나무 사이에 숨어 있지. 눈 녹은 자리를 잘 보게.")
@@ -454,7 +484,7 @@ def rune_way():
     m.bandit(17, 70, radius=5)                                       # 눈늑대 패거리 (도적 기능)
     m.event(14, 24); m.event(17, 82)                                 # 쓰러진 통나무 자리
     m.critters("raven", (22, 70, 32, 80), 2)
-    auto_fill(m, ["stones", "shrine", "crystal", "herd", "cairn", "camp"], talks=[2, 7], margin=4)
+    auto_fill(m, ["stones", "shrine", "crystal", "herd", "cairn", "camp"], margin=4)   # 10/27 역참 마을이 있어 3명까지
 
     m.dense_border("thaw")
     m.grove(28, 38, 3, 2.5, "green"); m.grove(7, 26, 3, 2.5, "thaw"); m.grove(6, 70, 3, 2.5, "green")
@@ -481,6 +511,11 @@ def road_sw():
     # 숯 굽는 가마터
     m.deco_stamp("logs", 12, 6); m.deco_stamp("logs_birch", 12, 8); m.deco_stamp("stumpbig", 15, 10); m.deco_stamp("firewood", 10, 10)
     m.road_path([(16, 8), (23, 9)], width=1)
+    # 10/26 숯쟁이 마을: 숯 가마 옆 움집 둘
+    m.stamp("h_turf", 18, 14, force=True); m.door_path(18, 14, 3, 2, 18, door_dx=1); m.road_path([(19, 18), (25, 18)], width=1)
+    m.stamp("h_shed", 16, 23, force=True); m.door_path(16, 23, 3, 3, 27, door_dx=1); m.road_path([(17, 27), (28, 26)], width=1)
+    m.deco_stamp("firewood", 16, 17); m.deco_stamp("logs_birch", 21, 13)
+    m.sign(21, 20, "숯쟁이 마을")
 
     m.sign(28, 3, "서남 솔숲길\n↘ 북쪽 길목 마을 (다져진 길, 수레 편함)\n  숲속 산적 주의")
     m.talker(18, 12, "숯쟁이", "north_p_smith_tall", "솔숲 깊은 데엔 산적이 숨어 있어. 짐이 무거우면 걸음이 느려서 쫓기기 쉬워.")
@@ -515,8 +550,12 @@ def road_se():
     m.stamp("h_stoneA", 7, 8, force=True); m.door_path(7, 8, 2, 2, 12, door_dx=0)
     m.road_path([(8, 12), (17, 10)], width=1)
     m.deco_stamp("barrel", 8, 8); m.deco_stamp("basket_veg", 2, 13)
+    # 10/26 물레방아 마을: 강가 집 둘 더
+    m.stamp("h_turf", 12, 24, force=True); m.door_path(12, 24, 3, 2, 27, door_dx=1); m.road_path([(13, 27), (17, 27)], width=1)
+    m.stamp("woodhouse", 2, 26, force=True); m.door_path(2, 26, 4, 5, 33, door_dx=1); m.road_path([(3, 33), (14, 33)], width=1)
+    m.sign(9, 22, "물레방아 마을")
     m.fishing.append((26, 12))                                     # 개울가 낚시 자리
-    m.deco_stamp("fishbasket", 23, 10); m.deco_stamp("logbench", 22, 13)
+    m.deco_stamp("fishbasket", 23, 10)
 
     m.sign(16, 3, "동남 물가길\n↓ 개울 둑 큰길: 북쪽 길목 마을 (눈 녹으면 넘침)\n↙ 숲 지름길: 넘칠 걱정 없지만 수레는 느림")
     m.talker(14, 24, "강지기", "north_p_oldman_tall", "개울이 넘치면 물이 빠질 때까지 기다리게. 급하면 서쪽 숲 지름길로 돌아가고.")
@@ -562,10 +601,9 @@ def crossing_town():
     for y in (34, 40):
         m.deco_stamp("totem", 27, y); m.deco_stamp("totem2", 33, y)
     m.deco_stamp("lamp", 27, 37); m.deco_stamp("lamp", 33, 37)
-    m.flag(26, 30); m.flag(34, 30)
     # 상단 야영지
     m.deco_stamp("tent", 8, 28); m.deco_stamp("tent", 14, 30); m.deco_stamp("fire", 12, 34)
-    m.deco_stamp("logbench", 9, 36); m.deco_stamp("bigbarrel", 18, 33); m.deco_stamp("spit", 15, 36)
+    m.deco_stamp("bigbarrel", 18, 33); m.deco_stamp("spit", 15, 36)
     m.road_path([(13, 27), (22, 22)], width=1)
 
     m.sign(33, 4, "북쪽 길목 마을\n↑ 룬돌 큰길 · 북문 마을\n← 서남 솔숲길 · 눈숲 마을\n→ 동남 물가길 · 개울 나루 마을")
@@ -573,7 +611,6 @@ def crossing_town():
              "북쪽 모피, 동쪽 비단, 남쪽 향신료, 서쪽 유리… 여기서 다 만나.")
     m.talker(34, 39, "길목 문지기", "north_wolf_viking_tall", "남쪽 길은 아직 공사 중이야. 곧 네 나라 길이 전부 대륙 중심으로 모일 거야.")
     m.talker(10, 24, "여관 주인", "north_bear_granny_tall", "먼 길 왔지? 북쪽 꿀술 한 잔 하고 가.")
-    m.talker(17, 31, "상단 아이", "north_p_boy_tall", "우리 아빠는 네 나라 말을 다 할 줄 알아!")
     m.walker([(29, 1), (29, 9), (30, 15), (25, 20), (35, 20), (30, 26), (30, 40)], idx=10)
     m.walker([(1, 11), (10, 12), (21, 17), (39, 17), (50, 12), (58, 11)], idx=11)
     # 10/26 수입품 좌판: 네 문명 상단 (화요일 통합 때 실제 물건으로 연결)
@@ -585,7 +622,7 @@ def crossing_town():
     m.talker(54, 24, "아라비아 향신료 상인", "north_p_boy_tall", "남쪽 사막을 건너온 후추랑 계피야! 아직은 맛보기만 보여 줄 수 있어.")
     # 10/26 만남의 광장: 우물·벤치·모닥불. 여기서 리액션(R)을 하면 근처 사람들이 따라 함
     m.stamp("well", 21, 31, force=True)
-    m.deco_stamp("logbench", 17, 34); m.deco_stamp("logbench", 23, 35); m.deco_stamp("lamp", 19, 30)
+    m.deco_stamp("lamp", 19, 30)
     m.sign(25, 31, "만남의 광장\n함께 장사할 사람과 여기서 만나요\n(R: 리액션)")
     m.critters("raven", (44, 36, 56, 42), 1)
     auto_fill(m, ["camp", "cargo", "shrine"], max_n=3)

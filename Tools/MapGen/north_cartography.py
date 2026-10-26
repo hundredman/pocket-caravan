@@ -170,6 +170,21 @@ def export(maps, root):
             elif r < 0.85:                              # 숲
                 for ox in (-4, 3):
                     d.polygon(((px_ + ox, py_ - 5), (px_ + ox - 3, py_ + 2), (px_ + ox + 3, py_ + 2)), fill="#8a9a78")
+    # 10/26 조각 안 맵 사이 빈 땅(걸어 들어갈 수 없는 숲)은 빽빽한 숲 기호로 채운다
+    if gpos:
+        inner = set()
+        for m in maps:
+            mx, my = positions[m.id][0] - minx, positions[m.id][1] - miny
+            for y in range(my - 1, my + m.h + 1):
+                for x in range(mx - 1, mx + m.w + 1):
+                    inner.add((x, y))
+        for yy in range(0, height, 4):
+            for xx in range((yy // 4) % 2 * 2, width, 4):
+                gx, gy = xx - gx0, yy - gy0
+                if gy < 2 or (xx, yy) in inner or not (-62 + 0.32 * gy + 2 <= gx <= 122 - 0.32 * gy - 2):
+                    continue
+                px_, py_ = xx * scale, yy * scale
+                d.polygon(((px_, py_ - 6), (px_ - 4, py_ + 3), (px_ + 4, py_ + 3)), fill="#7f9568", outline="#6b7f57")
     # 10/26 피자 조각 경계: 대각선 점선 두 줄 (이웃 조각과의 경계), 북유럽과의 국경 점선
     if gpos:
         def P(gx, gy):

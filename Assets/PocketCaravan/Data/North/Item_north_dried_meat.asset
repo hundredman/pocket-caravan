@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
   id: north_dried_meat
   displayName: "\uB9D0\uB9B0 \uACE0\uAE30"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 40d3af8411f9439d9b84a1574cf9f8b0, type: 3}
   weight: 2
   basePrice: 8
   originTown: {fileID: 11400000, guid: 64b9df746835e454b957665c23b9725d, type: 2}

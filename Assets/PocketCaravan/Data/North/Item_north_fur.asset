@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
   id: north_fur
   displayName: "\uBAA8\uD53C"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 9cd16165feb64942af27f0ec9b0b952d, type: 3}
   weight: 2
   basePrice: 30
   originTown: {fileID: 11400000, guid: 64b9df746835e454b957665c23b9725d, type: 2}
