@@ -1,0 +1,27 @@
+{
+  "readOnly": true,
+  "note": "Reference only. Team branches not modified or merged. GitHub connector returned404; repository Git fetch succeeded.",
+  "files": [
+    {
+      "ref": "origin/region/venice",
+      "commit": "5e2c3179d95cdf90d6ed1242c0a77e7ae8d638d9",
+      "source": "Tools/MapGen/venice_tiles.py",
+      "referenceFile": "ArtReview/C7-TeamStyle-20261027/GroundOrigin-v7/Reference/venice_tiles.py.txt",
+      "github": "https://github.com/hundredman/pocket-caravan/blob/5e2c3179d95cdf90d6ed1242c0a77e7ae8d638d9/Tools/MapGen/venice_tiles.py"
+    },
+    {
+      "ref": "origin/region/arabia",
+      "commit": "dc98dc6bed7ae7966e46d81eb58a95c283c2547c",
+      "source": "Tools/MapGen/arabia_art.py",
+      "referenceFile": "ArtReview/C7-TeamStyle-20261027/GroundOrigin-v7/Reference/arabia_art.py.txt",
+      "github": "https://github.com/hundredman/pocket-caravan/blob/dc98dc6bed7ae7966e46d81eb58a95c283c2547c/Tools/MapGen/arabia_art.py"
+    },
+    {
+      "ref": "origin/region/arabia",
+      "commit": "dc98dc6bed7ae7966e46d81eb58a95c283c2547c",
+      "source": "Docs/Arabia/Reports/Screens/04_farmroad.png",
+      "referenceFile": "ArtReview/C7-TeamStyle-20261027/GroundOrigin-v7/Reference/arabia-farmroad.png",
+      "github": "https://github.com/hundredman/pocket-caravan/blob/dc98dc6bed7ae7966e46d81eb58a95c283c2547c/Docs/Arabia/Reports/Screens/04_farmroad.png"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "objects": [
+    {
+      "object": "thatch",
+      "opaquePixelDifferences": 0
+    },
+    {
+      "object": "tile-house",
+      "opaquePixelDifferences": 0
+    },
+    {
+      "object": "pine",
+      "opaquePixelDifferences": 0
+    }
+  ],
+  "source": "original tiles.py autotile with world-Y conversion; 510 cells / 14 existing tiles",
+  "pngIdentity": "dimensions + decoded RGBA",
+  "files": {
+    "ArtReview/C7-TeamStyle-20261027/GroundOrigin-v7/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "69b42f4b488b859d8a6e69564792ded00f13f6031b190b28fc44d1560376d515"
+    },
+    "ArtReview/C7-TeamStyle-20261027/GroundOrigin-v7/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "968e3051f6176918fcec030ed0a3ddaf5ad08be4ad4e5041656c7c538a6d8bee"
+    },
+    "ArtReview/C7-TeamStyle-20261027/GroundOrigin-v7/comparison.png": {
+      "size": [
+        1000,
+        444
+      ],
+      "rgbaSHA256": "d32552db7a25528bc8b43a024e234d664fdc5a644de5c4e4c8dbdcc0e52a50e8"
+    }
+  }
+}

@@ -305,3 +305,11 @@ Unity 안 검사(에디터 메뉴 / MCP): `SceneTerrainChecks`, `CentralConnecti
 - 사용자 “일단 건물은 좋아. 땅은 아직 잘 모르겠어. 땅은 이전이 나은 것 같기도 하고”. 초가집·기와집은 승인으로 기록하고 `ArtReview/Approved/C7-Buildings-v5/`에 PNG/Aseprite 원본과 크기·RGBA 증거를 동결했다. 별도review-decisions 입력으로 A2 두건물 approved를 보존한다. 땅은 선택 미확정/pending, 나무의 본편 적용 승인으로 확대하지 않는다.
 - 동일 승인 건물·나무·인물·연못·길/카메라를 쓰고 땅만 직전낮은대비/현재밝은무늬로 바꾼 실제Unity previewOnly Play480×270을 새로 촬영했다. `ArtReview/C7-TeamStyle-20261027/GroundCompare-v6/comparison.png`. 두건물/나무의 불투명 픽셀은 양쪽 차이0을 확인했다. 기존SearchDatabase예외1회/촬영종료0. 본편은 미적용.
 - 이번엔 관련팀스타일5검사(A2 부분승인·동결RGBA·실제57Aseprite재출력 포함)를 재실행해 통과. 전체58검사·출구검사는 이 변경에서 재실행하지 않았고 실제보행/수동플레이/저장회귀/빌드도 미실행. 땅을 확정하기 위한 비교자료이며 기존안 선호 가능성을 승인으로 간주하지 않는다.
+
+
+### C7 처음 지형 경계 누락 정정·팀 GitHub 참고 (2026-10-27)
+
+- 사용자 지적: 처음 버전의 길 외곽 처리가 사라져 어색함, GitHub 다른 팀 작업 참고. 첫C7 비교도구가 기존안에도 풀/흙 가운데만 깔아 `tiles.Map.finish`의 변/모서리 autotile 선택을 생략한 것이 원인이다. 새47조각도 재질 마스크 위주여서 원래 접촉 명암/풀 가장자리 표현을 충분히 보존하지 못했다. 본편은 새땅으로 바꾸지 않았고 원본은 남아 있다. 앞선GroundCompare-v6의 “이전”은 처음본편이 아니라 C7중간안이었다.
+- `GroundOrigin-v7/`: 원래GRASS/DIRT_ORIGIN/autotile과 동결14타일을510칸에 그대로 사용해 승인건물과 실제Unity480×270 새 촬영. 원래경계/현재C7을 같은길·카메라로 비교, 건물2·나무 불투명픽셀차이0. 기존SearchDatabase예외1회/종료0. 새아트제작이나 본편적용은 없음.
+- GitHub최신원격읽기: region/venice5e2c3179의LAND_EDGE/_band/_corner와region/arabia dc98dc6b의compose에서 가장자리/접촉선/연석/모서리를 확인했다. 팀연결도구404 후git fetch/show로 성공. 두팀브랜치 수정/합치기/Unity실행 없음; 아라비아 저장농원길 캡처도 읽음. [조사·원인·그림](../ArtReview/C7-TeamStyle-20261027/GroundOrigin-v7/README.md).
+- 관련팀스타일5검사 재실행 통과. 전체58/출구/실제보행/수동플레이/저장회귀/빌드는 미실행. 땅 최종선택은 미확정, 이후 수정은 처음 경계표현 유지 기준이며 승인건물은 보존한다.
