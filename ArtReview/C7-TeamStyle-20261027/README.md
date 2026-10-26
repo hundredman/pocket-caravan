@@ -1,6 +1,6 @@
-# C7 팀 그림체 수정안 · 건물2개 승인 / 땅 미확정
+# C7 팀 그림체 수정안 · 건물2개 승인 / 원래 지형 유지
 
-2026-10-27 초가집·기와집 그림 승인: [동결 기록](../Approved/C7-Buildings-v5/approval.md). 땅은 미확정이다. 처음 본편의 경계 표현은 [원래 지형 재확인](GroundOrigin-v7/README.md)을 본다. 앞선 [땅만 비교](GroundCompare-v6/comparison.png)의 “이전”은 C7 중간안이었다.
+2026-10-27 초가집·기와집 그림 승인: [동결 기록](../Approved/C7-Buildings-v5/approval.md). 지형은 원래 그림 유지로 선택했다([기록](GroundOrigin-v7/decision.md)). 풀밭 연못은 [포장 맥락 비교](PondContext-v9/README.md)를 별도로 본다. 처음 본편의 경계 표현은 [원래 지형 재확인](GroundOrigin-v7/README.md)을 본다. 앞선 [땅만 비교](GroundCompare-v6/comparison.png)의 “이전”은 C7 중간안이었다.
 
 2026-10-27 사용자 정정: “특징”은 **베네치아·아라비아 팀 아트의 표현 방식**이다. Figma 원본을 읽기 전용으로 확인하고 초가집·기와집·풀/흙을 다시 만들었다. 나무·기존 승인 캐릭터·작은 연못·본편은 유지했다.
 

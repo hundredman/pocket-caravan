@@ -16,7 +16,8 @@ class C7TeamStyleChecks(unittest.TestCase):
         errors,assets=validate_catalogue(json.loads((OUT/'catalogue.json').read_text()),ROOT)
         self.assertEqual(errors,[]);self.assertEqual(len(assets),4)
         self.assertEqual({assets[k]['review']['status'] for k in ['c7ts_thatch','c7ts_tile_house']},{'approved'})
-        self.assertEqual({assets[k]['review']['status'] for k in ['c7ts_pine','c7ts_grass_dirt']},{'pending'})
+        self.assertEqual(assets['c7ts_pine']['review']['status'],'pending')
+        self.assertEqual(assets['c7ts_grass_dirt']['review']['status'],'changes_requested')
         pieces=assets['c7ts_grass_dirt']['pieces']
         self.assertEqual(len([p for p in pieces if re.fullmatch(r'grass-\d+',p)]),47)
         self.assertTrue({f'{prefix}-{v}' for prefix in ['grass-center','dirt'] for v in [1,2,3]}<=pieces.keys())

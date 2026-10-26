@@ -14,8 +14,9 @@
       "status": "pending"
     },
     "c7ts_grass_dirt": {
-      "status": "pending",
-      "feedback": "사용자 선택 미확정; 이전안 선호 가능성 제시"
+      "status": "changes_requested",
+      "feedback": "사용자가 기존 본편 지형 유지를 선택. 이 C7 땅 시안은 미채택."
     }
-  }
+  },
+  "groundSelectionEvidence": "ArtReview/C7-TeamStyle-20261027/GroundOrigin-v7/decision.md"
 }

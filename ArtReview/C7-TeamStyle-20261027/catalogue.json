@@ -385,8 +385,8 @@
         "path": "Tools/ArtTrials/c7_team_finish.lua"
       },
       "review": {
-        "status": "pending",
-        "feedback": "사용자 선택 미확정; 이전안 선호 가능성 제시"
+        "status": "changes_requested",
+        "feedback": "사용자가 기존 본편 지형 유지를 선택. 이 C7 땅 시안은 미채택."
       },
       "requiredPieces": [
         "center",
