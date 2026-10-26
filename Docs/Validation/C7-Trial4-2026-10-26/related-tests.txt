@@ -1,0 +1,59 @@
+test_alpha_threshold_boundary_and_rgb_hidden_under_transparency (test_art_prep.ArtPrepChecks) ... ok
+test_cli_roundtrip_report_and_no_source_overwrite (test_art_prep.ArtPrepChecks) ... ok
+test_flat_image_requires_manual_grid (test_art_prep.ArtPrepChecks) ... ok
+test_input_pixels_never_modified (test_art_prep.ArtPrepChecks) ... ok
+test_invalid_palettes (test_art_prep.ArtPrepChecks) ... ok
+test_invalid_step_size_and_alpha (test_art_prep.ArtPrepChecks) ... ok
+test_native_image_needs_no_fake_upscale (test_art_prep.ArtPrepChecks) ... ok
+test_nearest_whole_image_grid_roundtrip (test_art_prep.ArtPrepChecks) ... ok
+test_no_cropping_or_aspect_distortion (test_art_prep.ArtPrepChecks) ... ok
+test_palette_file_deduplicates_and_rejects_unknown_lines (test_art_prep.ArtPrepChecks) ... ok
+test_uncertain_cli_leaves_no_output (test_art_prep.ArtPrepChecks) ... ok
+test_uncertain_noise_refuses_automatic_reduction (test_art_prep.ArtPrepChecks) ... ok
+test_all_modular_types_have_minimum_piece_roles (test_asset_manifest.AssetManifestChecks) ... ok
+test_approval_requires_evidence_and_source_requires_license (test_asset_manifest.AssetManifestChecks) ... ok
+test_boundary_cannot_crop_whole_object (test_asset_manifest.AssetManifestChecks) ... ok
+test_cannot_disable_binary_alpha_rule (test_asset_manifest.AssetManifestChecks) ... ok
+test_cli_readonly_valid_failure_and_bad_json (test_asset_manifest.AssetManifestChecks) ... ok
+test_clipped_overwritten_and_swapped_cells (test_asset_manifest.AssetManifestChecks) ... ok
+test_corner_contact_and_vertical_contact_are_rejected (test_asset_manifest.AssetManifestChecks) ... ok
+test_current_production_map_is_explicitly_not_certified (test_asset_manifest.AssetManifestChecks) ... ok
+test_declared_water_adjacency_uses_external_neighbors (test_asset_manifest.AssetManifestChecks) ... ok
+test_duplicate_asset_and_tile_ownership (test_asset_manifest.AssetManifestChecks) ... ok
+test_inline_transforms_are_rejected (test_asset_manifest.AssetManifestChecks) ... ok
+test_invalid_profile_shapes_report_errors_instead_of_crashing (test_asset_manifest.AssetManifestChecks) ... ok
+test_invalid_spacing_rule_cannot_be_ignored (test_asset_manifest.AssetManifestChecks) ... ok
+test_legacy_maps_are_not_certified (test_asset_manifest.AssetManifestChecks) ... ok
+test_malformed_input_is_not_silently_accepted (test_asset_manifest.AssetManifestChecks) ... ok
+test_misspelled_rules_are_not_silently_skipped (test_asset_manifest.AssetManifestChecks) ... ok
+test_modular_set_missing_piece_and_complete_piece (test_asset_manifest.AssetManifestChecks) ... ok
+test_objects_without_separation_rule_can_cluster (test_asset_manifest.AssetManifestChecks) ... ok
+test_outside_root_paths_and_missing_files (test_asset_manifest.AssetManifestChecks) ... ok
+test_overlap_and_duplicate_instance_id (test_asset_manifest.AssetManifestChecks) ... ok
+test_partial_definition_is_rejected (test_asset_manifest.AssetManifestChecks) ... ok
+test_pixel_profile_size_palette_alpha (test_asset_manifest.AssetManifestChecks) ... ok
+test_registered_tile_without_placement_is_rejected (test_asset_manifest.AssetManifestChecks) ... ok
+test_road_and_missing_context (test_asset_manifest.AssetManifestChecks) ... ok
+test_same_object_requires_requested_empty_gap (test_asset_manifest.AssetManifestChecks) ... ok
+test_spacing_rule_is_per_asset_not_global (test_asset_manifest.AssetManifestChecks) ... ok
+test_unapproved_art_requires_explicit_preview (test_asset_manifest.AssetManifestChecks) ... ok
+test_unconfigured_profile_does_not_choose_resolution_or_colors (test_asset_manifest.AssetManifestChecks) ... ok
+test_unknown_asset_and_unknown_rendered_tile (test_asset_manifest.AssetManifestChecks) ... ok
+test_valid_split_object_roundtrip_and_no_mutation (test_asset_manifest.AssetManifestChecks) ... ok
+test_wrong_purpose_and_terrain (test_asset_manifest.AssetManifestChecks) ... ok
+test_wrong_source_tile_pixels (test_asset_manifest.AssetManifestChecks) ... ok
+test_all_aseprite_sources_reexport_identical_rgba (test_c7_trial.C7TrialChecks) ... ok
+test_capture_evidence_is_actual_native_camera_and_not_manual_play_claim (test_c7_trial.C7TrialChecks) ... /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-c7/Tools/Integration/test_c7_trial.py:56: ResourceWarning: unclosed file <_io.BufferedReader name='/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-c7/ArtReview/C7-Trial4-20261026/Screens-v2/before.png'>
+  self.assertEqual(Image.open(OUT/'Screens-v2'/(name+'.png')).size,(480,270))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-c7/Tools/Integration/test_c7_trial.py:56: ResourceWarning: unclosed file <_io.BufferedReader name='/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-c7/ArtReview/C7-Trial4-20261026/Screens-v2/trial.png'>
+  self.assertEqual(Image.open(OUT/'Screens-v2'/(name+'.png')).size,(480,270))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_catalogue_keeps_all_four_trials_pending (test_c7_trial.C7TrialChecks) ... ok
+test_original_envelope_and_feet_preserved (test_c7_trial.C7TrialChecks) ... ok
+
+----------------------------------------------------------------------
+Ran 48 tests in 0.958s
+
+OK
