@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-27",
+  "tool": "built-in image_gen.imagegen",
+  "requests": [
+    {
+      "name": "leaves",
+      "prompt": "Use case: stylized-concept. ONE tiny game decoration sprite for a calm pond, not a scene. Actual logical canvas16x16pixels, draw extremely simple crisp low resolution pixel art with large square logical pixels, enlarged nearest neighbor. Reference1 is color/subject guidance from an existing32x16water decoration, reference2 gives the teammates' flat2-3shade game drawing style. Make a NEW complete decoration, do not cut or copy fragments. Dark green1logical-pixel silhouette contour, only2-3flat green shades, upper-left light, no noise, gradients, blur, antialias, cast shadow, water background, ground, label, grid, border or extra props. Genuine transparent background. Small top-down slightly oblique view, squat floating shape, fits14logical pixels wide and10high within the16x16canvas, centered. Subject: TWO modest floating water-lily pads only, one round7x4green pad and one smaller4x3green pad, each with one tiny wedge notch. Simple broad green surfaces, just one highlight plane. NO FLOWER or pink. Keep generous empty space, sparse clean silhouette.",
+      "transparent_background": true,
+      "referenceImages": [
+        "Assets/PocketCaravan/Art/Baked/Objects/lotus_2_1.png",
+        "ArtReview/C7-TeamStyle-20261027/Reference/figma-92-31.png"
+      ]
+    },
+    {
+      "name": "flower",
+      "prompt": "Use case: stylized-concept. ONE tiny game decoration sprite for a calm pond, not a scene. Actual logical canvas16x16pixels, draw extremely simple crisp low resolution pixel art with large square logical pixels, enlarged nearest neighbor. Reference1 is color/subject guidance from an existing32x16water decoration, reference2 gives the teammates' flat2-3shade game drawing style. Make a NEW complete decoration, do not cut or copy fragments. Dark green1logical-pixel silhouette contour, only2-3flat green shades, upper-left light, no noise, gradients, blur, antialias, cast shadow, water background, ground, label, grid, border or extra props. Genuine transparent background. Small top-down slightly oblique view, squat floating shape, fits14logical pixels wide and10high within the16x16canvas, centered. Subject: ONE small pink lotus-like water blossom on ONE modest green floating pad. Blossom about5x5logical pixels, a few chunky pink petals2-3flat shades and a tiny warm yellow center. Pad about9x4logical pixels. One complete tiny object, not a dense bouquet. No second flower or stems. Pink is a small accent, most of the pond should remain empty when this16pxdecoration is placed.",
+      "transparent_background": true,
+      "referenceImages": [
+        "Assets/PocketCaravan/Art/Baked/Objects/lotus_2_1.png",
+        "ArtReview/C7-TeamStyle-20261027/Reference/figma-92-31.png"
+      ]
+    }
+  ],
+  "cleanup": "Generated transparency haze discarded at alpha224 in native seed authoring; whole objects uniformly sampled to16x16; A5 explicit8candidate colors/binary alpha; Aseprite native source export.",
+  "scope": "New standalone whole water decorations, not fragments of existing lotus. Pond/production unchanged."
+}

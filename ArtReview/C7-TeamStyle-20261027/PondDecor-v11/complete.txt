@@ -1,0 +1,1 @@
+Actual Unity Play render; same rounded80x48pond and original terrain in3variants: plain/leaves/leaves+oneflower. previewOnly true; PPU16 Point480x270; no navigation or manual-play claim.
