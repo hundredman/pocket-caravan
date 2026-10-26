@@ -167,9 +167,74 @@ def mud(m, oid, x, y, w, h):
                 m.zone[yy][xx] = "mud"
 
 
+# ---------------- 피자 조각 (2026-10-26 팀 합의) ----------------
+# 중앙 10만 칸을 X자 대각선으로 4등분한 서쪽 조각. 넓은 쪽(서) = 베네치아 바다, 뾰족한 쪽(동) = 대륙 중심.
+# 씬은 네모라서 조각 경계(대각선) 밖은 빽빽한 숲으로 막는다(북유럽 north_center.wedge_forest와 같은 방식).
+# 조각 좌표에서 각 씬의 왼쪽 위 위치. 씬 크기·연결은 사용자 계획도 그대로이고 위치만 조각 안에 맞춘다.
+ORIGIN = {
+    "venice_c_landing": (0, 110), "venice_c_vineyard": (30, 54), "venice_c_marsh": (40, 166),
+    "venice_c_pass": (93, 54), "venice_c_bridge": (103, 176), "venice_c_post": (103, 115), "venice_c_gate": (167, 105),
+}
+CENTER_Y = 138                      # 조각의 가운데 줄 (나루터 → 대상 숙소 → 동문 큰길)
+
+
+def edge_top(gx):
+    """조각 위쪽 경계(북서 대각선). 동쪽(대륙 중심)으로 갈수록 가운데로 좁아진다."""
+    return 13.3 + 0.438 * gx
+
+
+def edge_bottom(gx):
+    return 2 * CENTER_Y - edge_top(gx)
+
+
+def wedge_forest(m):
+    """조각 경계 밖(길·출구·건물·물 제외)을 숲으로 막는다."""
+    ox, oy = ORIGIN[m.id]
+    outside = set()
+    for y in range(m.h):
+        for x in range(m.w):
+            gx, gy = ox + x, oy + y
+            if (gy < edge_top(gx) or gy > edge_bottom(gx)) and not m.reserved[y][x] and not m.road[y][x] and not m.water[y][x]:
+                outside.add((x, y))
+    for x, y in outside:
+        m.blocked[y][x] = True
+        m.zone[y][x] = "meadow"
+        m.lush.add((x, y))
+    kinds = ["vg_olive", "vg_n_orc_olive", "vg_cypress", "vg_olive"]
+    for y in range(0, m.h, 2):
+        for x in range(0, m.w, 2):
+            name = kinds[(x * 7 + y * 3) % len(kinds)]
+            st = tiles.STAMPS[name]
+            tx, ty = x + (y // 2) % 2, y - 1
+            cells = [(tx + dx, ty + dy) for dy in range(st[4]) for dx in range(st[3])]
+            if all(c in outside for c in cells):
+                try:
+                    m.building(name, tx, ty, high=st[6])
+                except ValueError:
+                    pass
+
+
+def closed_port(m, edge, start, n, text):
+    """통합 전까지 막아 두는 이웃 조각 연결 자리: 길 끝을 석축으로 막고 표지판."""
+    for i in range(n):
+        for d in range(2):
+            x, y = {"N": (start + i, d), "S": (start + i, m.h - 1 - d), "W": (d, start + i), "E": (m.w - 1 - d, start + i)}[edge]
+            m.zone[y][x] = "wall"
+            m.blocked[y][x] = True
+            m.road[y][x] = 0
+            m.reserved[y][x] = True
+    sx, sy = {"N": (start + n + 1, 3), "S": (start + n + 1, m.h - 4), "W": (3, start + n + 1), "E": (m.w - 4, start + n + 1)}[edge]
+    m.sign(sx, sy, text)
+
+
 def finish(m):
+    wedge_forest(m)
+    import venice_country           # 시골 풍경: 장터 둘레 집·사이프러스 가로수·농가 (2026-10-26)
+    m.country = venice_country.dress(m)
     m.pave_streets(2)
     m.finish()
+    import venice_people            # 일하는 사람·마을 사람·길 위 상인·성장 소품 (공용 장치)
+    venice_people.populate(m)
     return m
 
 
@@ -210,10 +275,14 @@ def venice_c_landing():
                        ("vg_prt_cargo", 23, 33), ("vg_barrel", 26, 33), ("vg_barrel", 27, 34), ("vg_sack_grain", 29, 33),
                        ("vg_luggage", 32, 34), ("vg_n_prt_bollard", 17, 26), ("vg_n_prt_bollard", 17, 30), ("vg_px_prt_trade_flag", 35, 15)]:
         put(m, name, x, y)
+    m.add("market", 26, 36, town="venice_c_landing")       # 본토 나루터 장터 (하역 마당 남쪽)
     # 갈림길 이정표
-    m.sign(40, 23, "북쪽 · 포도밭 언덕, 산기슭 고갯길")
-    m.sign(40, 33, "남쪽 · 강 하구 습지길, 돌다리 나루")
-    m.sign(44, 25, "동쪽 · 대상 숙소 (중앙 직행로)")
+    # 길 고르기 (2026-10-26): 직행로는 짧고 넓지만 밤 도적, 북쪽은 좁고 거친 고갯길(수레 느림), 남쪽은 진흙 습지(느리지만 안전)
+    m.sign(40, 23, "북쪽 · 포도밭·고갯길 — 좁고 거친 길, 수레는 느림")
+    m.sign(40, 33, "남쪽 · 습지·돌다리 — 진흙길이라 느리지만 도적 없음")
+    m.sign(44, 25, "동쪽 · 대상 숙소 직행로 — 가장 빠름, 밤엔 도적 주의")
+    m.bandit(64, 28, radius=7)                               # 직행로 동쪽 끝 숲 그늘
+    m.event(47, 12)                                          # 북쪽 갈래: 쓰러진 행인·떠돌이 상인
     m.talker(35, 24, "나루터 짐꾼", "villager_dog_tall",
              "키오자 배는 서쪽 잔교에 닿는다오.",
              "북쪽은 포도밭, 남쪽은 습지, 동쪽 큰길은 대상 숙소로 바로 가지.")
@@ -258,6 +327,9 @@ def venice_c_vineyard():
     m.road_blob(36, 29, 9, 5, grade=2)                                   # 양조장 마당
     m.set_zone(27, 24, 45, 34, "dirt")
     m.road_path([(44, 26), (50, 21), (56, 17), (w - 1, 16)], width=3, grade=2)
+    # 북서 포구 자리 (서쪽 조각 ↔ 북쪽 조각, 북유럽 눈숲 마을 서쪽과 3칸 폭으로 잇는다. 통합 전에는 막아 둔다)
+    m.road_path([(29, 26), (22, 18), (14, 8), (12, 0)], width=3, grade=2)
+    closed_port(m, "N", 12, 3, "북서 포구 · 북쪽 조각(눈숲 마을) 방면 — 통합 후 연결")
     _links(m)
     # 양조장: 농가 + 압착장 + 술통·수레
     put(m, "vg_n_orc_farmhouse", 29, 20)
@@ -282,6 +354,7 @@ def venice_c_vineyard():
     grove(m, 8, 52, 4, 3)
     m.sign(23, 47, "북동쪽 · 양조장, 산기슭 고갯길")
     m.sign(56, 20, "동쪽 · 산기슭 고갯길")
+    m.add("market", 36, 27, town="venice_c_vineyard")      # 포도밭 양조장 장터 (마당 가운데)
     m.talker(35, 31, "양조장 일꾼", "villager_bear_tall",
              "올해 포도는 달다네. 통은 수레로 나루터까지 내려가지.",
              "동쪽 고갯길은 좁지만 수레도 지나간다오.")
@@ -326,6 +399,7 @@ def venice_c_marsh():
     put(m, "vg_fsh_dinghy", 40, 31, over_water=True, free=False)
     put(m, "vg_net_rack", 34, 41)
     m.sign(16, 4, "남쪽 데크 · 습지 건너 돌다리 나루")
+    m.event(12, 22)                                          # 둘째 섬 길: 길 잃은 행인
     m.talker(51, 37, "갈대 베는 사람", "villager_rabbit_tall",
              "물이 불면 섬 흙길이 진창이 된다오.",
              "데크는 미끄럽지 않으니 걱정 말게.")
@@ -379,9 +453,10 @@ def venice_c_pass():
     # 능선에서 떨어져 나온 바위·관목, 길가 쉼터
     scatter(m, ["vg_olive", "vg_cypress", "vg_n_orc_olive"], (0, 0, w - 1, h - 1), 20, margin=0)
     deco(m, (0, 0, w - 1, h - 1), 70, ("vg_rocks", "vg_rocks", "vg_tuft"))
-    put(m, "vg_px_cap_stone_bench", 25, 9)
+    put(m, "vg_px_cap_stone_bench", 18, 16)
     m.sign(12, 20, "남동쪽 · 대상 숙소")
-    m.talker(26, 9, "양치기", "villager_fox_tall",
+    m.event(30, 32)                                          # 고갯마루 떠돌이 상인
+    m.talker(21, 16, "양치기", "villager_fox_tall",
              "능선은 낮아도 바위가 날카롭지. 길로만 다니게.",
              "고개를 넘으면 대상 숙소 마당이 보일 거야.")
     return finish(m)
@@ -470,8 +545,12 @@ def venice_c_post():
     scatter(m, ["vg_olive", "vg_n_orc_olive", "vg_cypress"], (0, 0, w - 1, h - 1), 10)
     deco(m, (0, 0, w - 1, h - 1), 45)
     m.sign(28, 39, "남쪽 · 돌다리 나루")
+    m.bandit(56, 23, radius=6)                               # 동쪽 큰길 나가는 길목 (밤)
     m.sign(34, 4, "북쪽 · 산기슭 고갯길")
     return finish(m)
+
+
+_WALL = tuple(tiles.STAMPS["vh_wall_v"][1:3])      # 성벽 한 조각의 시트 칸
 
 
 # ---------------- ⑦ 동문 큰길 ----------------
@@ -484,11 +563,13 @@ def venice_c_gate():
     m.road_rect(0, 30, w - 1, 36, grade=3)
     _links(m)
     # 성벽(x44~45 세로)과 관문 탑 둘. 길(y30~36)은 탑 사이로 지난다.
-    put(m, "vg_n_prt_customs", 43, 25, free=False)
-    put(m, "vg_n_prt_customs", 43, 37, free=False)
-    put(m, "vg_banner", 42, 26, free=False)
-    put(m, "vg_banner", 46, 38, free=False)
+    # 2026-10-26: 제비꼬리 성가퀴 벽돌 성벽·망루 그림(vh_wall_v·vh_tower, 제안). 막는 칸은 wall()이 그대로 정한다.
     wall(m, [(x, y) for x in (44, 45) for y in list(range(3, 29)) + list(range(37, h - 3))])
+    put(m, "vh_tower", 43, 23, high=1, free=False)
+    put(m, "vh_tower", 43, 37, high=1, free=False)
+    for y in list(range(3, 23)) + list(range(43, h - 3)):
+        sx, sy = _WALL
+        m.obj[y][44], m.obj[y][45] = tiles.K("vhse", sx, sy), tiles.K("vhse", sx + 1, sy)
     # 검문소와 경비
     put(m, "vg_w_office", 36, 25, free=False)
     put(m, "vg_n_prt_bollard", 40, 29, free=False)

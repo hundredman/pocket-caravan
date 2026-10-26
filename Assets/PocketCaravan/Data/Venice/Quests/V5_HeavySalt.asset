@@ -22,6 +22,8 @@ MonoBehaviour:
   giverNpc: venice_warehouse
   requires:
   - {fileID: 11400000, guid: 81b4da60917126d40930f15f0e585573, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uACFC\uC218\uC6D0\uC5D0\uC11C \uC18C\uAE08\uC774 \uAE09\uD558\uB2E4\uB124.\n\uC9D0\uC774
     \uBB34\uAC70\uC6B0\uB2C8 \uAE38\uC744 \uC798 \uACE0\uB974\uAC8C.\n\uC218\uB3C4\uB97C
     \uC9C0\uB098\uB294 \uAE38\uC740 \uB113\uACE0, \uBC14\uAE65 \uBAA8\uB798\uD1B1
@@ -43,5 +45,8 @@ MonoBehaviour:
       \uACE0\uB9D9\uB124."
   rewardMoney: 60
   rewardCredit: 1
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: "\uBA3C \uAE38\uC774\uC5C8\uC9C0. \uBB34\uAC70\uC6B4 \uC9D0\uC740 \uAE38\uC744
     \uACE0\uB974\uB294 \uAC8C \uBC18\uC774\uC57C."

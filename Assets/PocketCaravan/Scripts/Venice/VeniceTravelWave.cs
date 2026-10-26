@@ -3,216 +3,163 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// 베네치아 맵(venice_*)을 떠나거나 들어올 때의 이동 효과: 둥근 물결이 위에서 화면을 덮고, 덮인 동안 플레이어 고양이가
-    /// 곤돌라를 타고 지나가며 다음 마을 이름을 띄운 뒤, 물이 아래로 빠지며 새 맵이 드러난다.
+    /// 베네치아·본토 서부 맵(venice_*)을 오갈 때의 이동 효과 (2026-10-26 개편: 짧고 귀엽게).
+    /// 내 고양이를 가운데 두고 '고양이 얼굴 모양' 구멍이 좁혀지며 화면이 닫힌다 → 덮인 동안 다음 마을 이름표와 발자국 →
+    /// 새 맵에서 같은 모양 구멍이 고양이 자리부터 넓어지며 열린다. 석호·배 이동은 청록, 본토 이동은 풀빛.
+    /// 덮인 동안에는 움직이는 연출이 없어 씬을 불러오며 화면이 잠깐 멈춰도 끊겨 보이지 않는다. 그리기 호출 몇 번뿐.
     /// 화면 표시만 하며 이동·시간·저장은 GameManager.Travel 그대로다. 다른 지역은 등록하지 않았으므로 기존 검은 페이드를 쓴다.
     /// </summary>
     public class VeniceTravelWave : TravelTransition
     {
-        public override float CoverSeconds => 0.5f;
-        public override float RevealSeconds => 0.55f;
-        public override float MinHoldSeconds => 0.9f;
+        public override float CoverSeconds => 0.32f;
+        public override float RevealSeconds => 0.38f;
+        public override float MinHoldSeconds => 0.25f;
 
-        static readonly Color Water = new Color32(58, 150, 160, 255);
-        static readonly Color WaterLight = new Color32(104, 196, 196, 255);
-        static readonly Color Foam = new Color32(236, 250, 244, 255);
-        static readonly Color Boat = new Color32(70, 40, 44, 255);
-        static readonly Color Trim = new Color32(238, 196, 96, 255);
-        static readonly Color Ink = new Color32(44, 52, 70, 255);
+        class Theme { public Color fill, rim, paper, ink; public Texture2D iris, solid; }
+        static readonly Theme Water = new Theme
+        {
+            fill = new Color32(46, 120, 132, 255), rim = new Color32(236, 250, 244, 255),
+            paper = new Color32(244, 236, 214, 255), ink = new Color32(44, 52, 70, 255)
+        };
+        static readonly Theme Land = new Theme
+        {
+            fill = new Color32(104, 140, 80, 255), rim = new Color32(240, 228, 170, 255),
+            paper = new Color32(244, 236, 214, 255), ink = new Color32(52, 60, 40, 255)
+        };
         static readonly Color Ribbon = new Color32(196, 70, 78, 255);
 
-        const float Scallop = 18f;    // 둥근 물결 하나의 폭
-        static float scale = 1f;
-        static Sprite[] catFrames;    // 떠날 때 플레이어 그림을 잡아 둔다 (씬이 바뀌는 동안에도 같은 그림)
+        const int IrisSize = 128;
         GUIStyle title;
-        float shownAt = -1f;
-        float clock;
-        int lastFrame = -1;
+        bool land;
+        Vector2 focus;        // 구멍 가운데 (화면 픽셀, 위가 0)
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        static void RegisterSelf() => Register(id => id.StartsWith("venice_") && !id.StartsWith("venice_c_"), new VeniceTravelWave());   // 석호 안과 키오자 배(본토 나루터) 이동만. 본토 안은 기본 페이드
+        static void RegisterSelf() => Register(id => id.StartsWith("venice_"), new VeniceTravelWave());
+
+        static bool Mainland(string id) => id != null && id.StartsWith("venice_c_");
+
+        public override void Begin(string fromMap, string toMap)
+        {
+            bool ferry = (fromMap == "venice_chioggia" && toMap == "venice_c_landing") || (fromMap == "venice_c_landing" && toMap == "venice_chioggia");
+            land = !ferry && (Mainland(fromMap) || Mainland(toMap));
+        }
 
         public override void Draw(float cover, bool covering, string nextName, float heldFor)
         {
-            if (Event.current.type != EventType.Repaint) return;     // 그리기 이벤트에서만 (배치·입력 이벤트에서 또 그리지 않는다)
-            var anim = PlayerController.Instance != null ? PlayerController.Instance.anim : null;
-            if (anim != null && anim.frames != null && anim.frames.Length >= 16 && anim.frames[12] != null) catFrames = anim.frames;
-
-            UIStyle.Begin();
-            // 효과 시계: 프레임마다 한 번, 최대 1/30초씩만 간다. 씬을 불러오며 멈췄던 시간만큼 배가 순간이동하지 않게.
-            if (Time.frameCount != lastFrame)
-            {
-                lastFrame = Time.frameCount;
-                clock += Mathf.Min(Time.unscaledDeltaTime, 1f / 30f);
-            }
-            float w = UIStyle.VirtualWidth, h = UIStyle.VirtualHeight, time = clock;
-            float p = Ease(cover);
-            // 물은 큰 사각형 하나 + 둥근 물결 테두리 그림 한 줄로 그린다(그리기 호출 몇 번).
-            // 가는 기둥 수백 개로 그리면 IMGUI가 느려져 프레임이 떨어진다.
-            scale = UIStyle.Scale;
+            if (Event.current.type != EventType.Repaint) return;
+            var t = land ? Land : Water;
+            if (t.iris == null) Build(t);
             GUI.matrix = Matrix4x4.identity;
-            if (edgeDown == null) BuildEdges();
-            float reach = h + 40f;
-            float edgeY = covering ? p * reach - 20f : (1f - p) * reach - 20f;
-            float sw = Screen.width, eh = Mathf.Round(EdgeH * scale);
-            var flow = new Rect(time * 14f / Scallop, 0f, w / Scallop, 1f);     // 테두리가 옆으로 흐른다
-            GUI.color = Color.white;
-            if (covering)
+            float sw = Screen.width, sh = Screen.height;
+            // 구멍은 내 고양이 머리 쪽을 따라간다 (덮는 동안·여는 동안 모두)
+            var player = PlayerController.Instance;
+            if (player != null && Camera.main != null && cover < .98f)
             {
-                float y = Mathf.Round((edgeY - EdgeTop) * scale);
-                Fill(new Rect(0, 0, sw, Mathf.Max(0f, y)));
-                GUI.DrawTextureWithTexCoords(new Rect(0, y, sw, eh), edgeDown, flow);
+                var p = Camera.main.WorldToScreenPoint(player.transform.position + new Vector3(0f, .9f, 0f));
+                focus = new Vector2(p.x, sh - p.y);
             }
+            else if (focus == Vector2.zero) focus = new Vector2(sw / 2f, sh / 2f);
+
+            // 덮인 정도 → 구멍 크기 (부드럽게 들어갔다 나온다)
+            float k = 1f - EaseInOut(Mathf.Clamp01(cover));
+            float size = Mathf.Lerp(0f, Mathf.Max(sw, sh) * 2.8f, k * k);
+            GUI.color = Color.white;
+            if (size < 2f) GUI.DrawTexture(new Rect(0, 0, sw, sh), t.solid);
             else
             {
-                float y = Mathf.Round((edgeY - (EdgeH - EdgeTop)) * scale);
-                GUI.DrawTextureWithTexCoords(new Rect(0, y, sw, eh), edgeUp, flow);
-                Fill(new Rect(0, y + eh, sw, Mathf.Max(0f, Screen.height - y - eh)));
+                var r = new Rect(Mathf.Round(focus.x - size / 2f), Mathf.Round(focus.y - size / 2f), Mathf.Round(size), Mathf.Round(size));
+                GUI.DrawTexture(r, t.iris);
+                Fill(t, new Rect(0, 0, sw, r.y));                       // 위
+                Fill(t, new Rect(0, r.yMax, sw, sh - r.yMax));          // 아래
+                Fill(t, new Rect(0, r.y, r.x, r.height));               // 왼쪽
+                Fill(t, new Rect(r.xMax, r.y, sw - r.xMax, r.height));  // 오른쪽
             }
-            Bubbles(w, h, time, covering, edgeY);
-
-            // 곤돌라·이름표는 물이 화면 가운데를 넘는 순간부터 함께 보인다 (다 덮일 때까지 기다리지 않는다)
-            float show = covering ? Mathf.Clamp01((edgeY - (h * 0.5f + 40f)) / 30f) : Mathf.Clamp01((cover - 0.5f) / 0.4f);
-            if (covering && show <= 0f) shownAt = -1f;          // 새 이동: 곤돌라를 처음 자리에서
-            if (show > 0f)
-            {
-                if (shownAt < 0f) shownAt = time;
-                Gondola(w, h, time, time - shownAt, show);
-                Card(w, h, nextName, show);
-            }
+            float show = covering ? Mathf.Clamp01((cover - .85f) / .15f) : Mathf.Clamp01((cover - .7f) / .3f);
+            if (show > 0f) Card(t, nextName, show, covering ? heldFor : 1f);
             GUI.color = Color.white;
-            GUI.matrix = Matrix4x4.identity;
         }
 
-        /// <summary>물속에서 떠오르는 작은 방울 (물에 덮인 곳에만)</summary>
-        static void Bubbles(float w, float h, float time, bool covering, float edgeY)
-        {
-            for (int i = 0; i < 22; i++)
-            {
-                float speed = 12f + 16f * Hash(i * 7 + 2);
-                float y = h - Mathf.Repeat(time * speed + h * Hash(i * 3 + 1), h + 10f);
-                float x = w * Hash(i * 11 + 4) + Mathf.Sin(time * 2f + i) * 3f;
-                if (covering ? y > edgeY - 8f : y < edgeY + 8f) continue;
-                float size = Hash(i * 5 + 3) > 0.6f ? 3f : 2f;
-                var c = Foam; c.a = 0.5f;
-                Box(x, y, size, size, c);
-            }
-        }
-
-        /// <summary>곤돌라를 탄 고양이가 화면을 천천히 가로지른다 (위아래로 살짝 흔들림).
-        /// 배 전체를 화면 픽셀 한 점(기준점)에 맞춰 그 위에 조각을 붙인다. 조각마다 따로 반올림하면 조각끼리 1픽셀씩 어긋나 떨려 보인다.</summary>
-        void Gondola(float w, float h, float time, float t, float alpha)
-        {
-            float total = MinHoldSeconds + RevealSeconds + CoverSeconds;
-            float cx = Mathf.Lerp(w * 0.5f - 45f, w * 0.5f + 45f, Mathf.Clamp01(t / total));
-            float bob = Mathf.Sin(time * 3f) * 1.5f;
-            float ox = Mathf.Round(cx * scale), oy = Mathf.Round((h * 0.5f - 6f + bob) * scale);
-            void Part(float dx, float dy, float pw, float ph, Color c)
-            {
-                c.a *= alpha;
-                GUI.color = c;
-                GUI.DrawTexture(new Rect(ox + Mathf.Round(dx * scale), oy + Mathf.Round(dy * scale),
-                    Mathf.Max(1f, Mathf.Round(pw * scale)), Mathf.Max(1f, Mathf.Round(ph * scale))), Texture2D.whiteTexture);
-            }
-            // 잔물결 자국 (배 뒤에서 깜박이며 흐른다)
-            var wake = Foam; wake.a = 0.6f;
-            for (int i = 1; i <= 3; i++) Part(-34f - i * 9f - Mathf.Repeat(time * 6f, 9f), 9f + (i % 2), 6f, 1.5f, wake);
-            // 배: 가운데 몸통 + 양 끝이 위로 휜 뱃머리
-            Part(-30f, 0f, 60f, 6f, Boat);
-            Part(-34f, -2f, 5f, 5f, Boat);
-            Part(-37f, -6f, 4f, 5f, Boat);
-            Part(29f, -2f, 5f, 5f, Boat);
-            Part(33f, -7f, 4f, 6f, Boat);
-            Part(35f, -9f, 3f, 3f, Trim);
-            Part(-28f, 1f, 56f, 1.5f, Trim);
-            // 노 (천천히 젓는다)
-            float row = Mathf.Sin(time * 3f) * 2f;
-            for (int i = 0; i < 9; i++) Part(6f + i * 1.5f + row * (i / 8f), -16f + i * 2.5f, 1.5f, 2.5f, Ink);
-            // 고양이: 오른쪽을 보고 선 그림(2배). 배 위에서는 걷지 않는다
-            if (catFrames != null && catFrames[12] != null)
-            {
-                var sprite = catFrames[12];
-                var tex = sprite.texture;
-                var tr = sprite.textureRect;
-                var uv = new Rect(tr.x / tex.width, tr.y / tex.height, tr.width / tex.width, tr.height / tex.height);
-                float sw = Mathf.Round(tr.width * 2f * scale), sh = Mathf.Round(tr.height * 2f * scale);
-                GUI.color = new Color(1f, 1f, 1f, alpha);
-                GUI.DrawTextureWithTexCoords(new Rect(ox - Mathf.Round(sw * 0.5f), oy - sh + Mathf.Round(4f * scale), sw, sh), tex, uv);
-            }
-        }
-
-        void Card(float w, float h, string name, float alpha)
+        /// <summary>가운데 이름표 + 발자국 (덮인 동안 고정 그림, 발자국만 하나씩 찍힌다)</summary>
+        void Card(Theme t, string name, float alpha, float held)
         {
             if (string.IsNullOrEmpty(name)) return;
             UIStyle.Begin();
+            float w = UIStyle.VirtualWidth, h = UIStyle.VirtualHeight;
             title ??= new GUIStyle(UIStyle.CenterRich) { fontSize = 16 };
-            float bw = Mathf.Max(110f, title.CalcSize(new GUIContent(name)).x + 36f), bh = 26f;
-            var r = new Rect(w * 0.5f - bw * 0.5f, h * 0.5f + 22f, bw, bh);
-            // 리본 꼬리 + 둥근 이름표
+            float bw = Mathf.Max(120f, title.CalcSize(new GUIContent(name)).x + 40f), bh = 28f;
+            var r = new Rect(Mathf.Round(w / 2f - bw / 2f), Mathf.Round(h / 2f - bh / 2f), Mathf.Round(bw), bh);
+            Box(new Rect(r.x - 10f, r.y + 7f, 14f, 14f), Ribbon, alpha);
+            Box(new Rect(r.xMax - 4f, r.y + 7f, 14f, 14f), Ribbon, alpha);
+            Box(new Rect(r.x + 2f, r.y, r.width - 4f, r.height), t.paper, alpha);
+            Box(new Rect(r.x, r.y + 2f, r.width, r.height - 4f), t.paper, alpha);
+            GUI.color = new Color(t.ink.r, t.ink.g, t.ink.b, alpha);
+            GUI.Label(r, name, title);
+            // 고양이 발자국 네 개가 이름표 아래로 차례로 찍힌다
+            int steps = Mathf.Clamp(Mathf.FloorToInt(held / .08f) + 1, 1, 4);
+            for (int i = 0; i < steps; i++)
+                Paw(w / 2f - 30f + i * 20f, r.yMax + 10f + (i % 2) * 6f, t.rim, alpha);
             GUI.matrix = Matrix4x4.identity;
-            var ribbon = Ribbon; ribbon.a = alpha;
-            Box(r.x - 10f, r.y + 6f, 14f, 14f, ribbon);
-            Box(r.xMax - 4f, r.y + 6f, 14f, 14f, ribbon);
-            var foam = Foam; foam.a = alpha;
-            Box(r.x + 2f, r.y, r.width - 4f, r.height, foam);
-            Box(r.x, r.y + 2f, r.width, r.height - 4f, foam);
-            var trim = Trim; trim.a = alpha;
-            Box(r.x + 6f, r.yMax - 4f, r.width - 12f, 1.5f, trim);
-            UIStyle.Begin();
-            GUI.color = new Color(Ink.r, Ink.g, Ink.b, alpha);
-            GUI.Label(new Rect(r.x, r.y - 1f, r.width, r.height), name, title);
         }
 
-        const int EdgeH = 12, EdgeTop = 2;     // 물결 테두리 그림 높이와, 그림 안에서 물 경계가 시작하는 줄
-        static Texture2D edgeDown, edgeUp, waterTex;   // 물 바닥도 같은 방식의 텍스처로 칠해 테두리와 색이 꼭 같게
-
-        /// <summary>물결 테두리 한 칸(Scallop×EdgeH, 가상 픽셀 1:1)을 만든다. 옆으로 이어 붙여 그린다.</summary>
-        static void BuildEdges()
+        static void Paw(float x, float y, Color c, float alpha)
         {
-            int sw = (int)Scallop;
-            edgeDown = NewEdge(sw); edgeUp = NewEdge(sw);
-            var clear = new Color(0f, 0f, 0f, 0f);
-            for (int x = 0; x < sw; x++)
-            {
-                float u = (x + 0.5f) / sw * 2f - 1f;
-                int front = EdgeTop + Mathf.RoundToInt(Mathf.Sqrt(Mathf.Max(0f, 1f - u * u)) * 7f) + 2;   // 위에서부터 물이 차는 깊이
-                for (int r = 0; r < EdgeH; r++)
-                {
-                    Color c = r < front - 4 ? Water : r < front - 2 ? WaterLight : r < front + 1 ? Foam : clear;
-                    edgeDown.SetPixel(x, EdgeH - 1 - r, c);   // 텍스처는 아래가 0
-                    edgeUp.SetPixel(x, r, c);                 // 위아래를 뒤집은 것: 물이 아래에 있다
-                }
-            }
-            edgeDown.Apply(); edgeUp.Apply();
-            waterTex = new Texture2D(1, 1, TextureFormat.RGBA32, false) { filterMode = FilterMode.Point, hideFlags = HideFlags.DontSave };
-            waterTex.SetPixel(0, 0, Water);
-            waterTex.Apply();
+            Box(new Rect(x, y + 3f, 6f, 5f), c, alpha);
+            Box(new Rect(x - 2f, y, 2f, 2f), c, alpha);
+            Box(new Rect(x + 1f, y - 1f, 2f, 2f), c, alpha);
+            Box(new Rect(x + 4f, y - 1f, 2f, 2f), c, alpha);
+            Box(new Rect(x + 7f, y, 2f, 2f), c, alpha);
         }
 
-        static Texture2D NewEdge(int width) => new Texture2D(width, EdgeH, TextureFormat.RGBA32, false)
-        { filterMode = FilterMode.Point, wrapMode = TextureWrapMode.Repeat, hideFlags = HideFlags.DontSave };
+        static void Box(Rect r, Color c, float alpha)
+        {
+            c.a *= alpha;
+            GUI.color = c;
+            GUI.DrawTexture(r, Texture2D.whiteTexture);
+        }
 
-        static void Fill(Rect r)
+        static void Fill(Theme t, Rect r)
         {
             if (r.width <= 0f || r.height <= 0f) return;
-            GUI.color = Color.white;
-            GUI.DrawTexture(r, waterTex);
+            GUI.DrawTexture(r, t.solid);
         }
 
-        static void Box(float x, float y, float bw, float bh, Color c)
+        /// <summary>고양이 얼굴 모양 구멍 그림: 바깥은 덮개 색, 얼굴(둥근 머리 + 두 귀)은 투명, 테두리는 밝은 선.</summary>
+        static void Build(Theme t)
         {
-            GUI.color = c;
-            GUI.DrawTexture(Px(x, y, bw, bh), Texture2D.whiteTexture);
+            int n = IrisSize;
+            t.iris = new Texture2D(n, n, TextureFormat.RGBA32, false) { filterMode = FilterMode.Point, wrapMode = TextureWrapMode.Clamp, hideFlags = HideFlags.DontSave };
+            var clear = new Color(0f, 0f, 0f, 0f);
+            for (int y = 0; y < n; y++)
+                for (int x = 0; x < n; x++)
+                {
+                    float d = Inside(x + .5f, y + .5f, n);
+                    t.iris.SetPixel(x, n - 1 - y, d > 1.5f ? clear : d > -1.5f ? t.rim : t.fill);
+                }
+            t.iris.Apply();
+            t.solid = new Texture2D(1, 1, TextureFormat.RGBA32, false) { hideFlags = HideFlags.DontSave };
+            t.solid.SetPixel(0, 0, t.fill);
+            t.solid.Apply();
         }
 
-        /// <summary>가상 좌표 사각형 → 화면 픽셀 사각형 (정수로 맞춤)</summary>
-        static Rect Px(float x, float y, float bw, float bh)
+        /// <summary>얼굴 안쪽이면 양수(경계에서 몇 픽셀 안쪽인지), 바깥이면 음수. 좌표는 위가 0.</summary>
+        static float Inside(float x, float y, int n)
         {
-            float x0 = Mathf.Round(x * scale), y0 = Mathf.Round(y * scale);
-            return new Rect(x0, y0, Mathf.Max(1f, Mathf.Round((x + bw) * scale) - x0), Mathf.Max(1f, Mathf.Round((y + bh) * scale) - y0));
+            float cx = n / 2f, cy = n * .56f, r = n * .30f;
+            float head = r - Vector2.Distance(new Vector2(x, y), new Vector2(cx, cy));
+            float ear = Mathf.Max(Ear(x, y, cx - r * .58f, cy - r * .45f, n), Ear(x, y, cx + r * .58f, cy - r * .45f, n));
+            return Mathf.Max(head, ear);
         }
 
-        static float Ease(float t) => t * t * (3f - 2f * t);
-        static float Hash(int n) => Mathf.Repeat(Mathf.Sin(n * 12.9898f) * 43758.5453f, 1f);
+        static float Ear(float x, float y, float bx, float by, int n)
+        {
+            // 귀: 아래가 넓고 위가 뾰족한 삼각형 (밑변 가운데 bx,by, 높이 n*.2)
+            float hgt = n * .27f, half = n * .14f;
+            float ty = (by - y) / hgt;                    // 0 = 밑변, 1 = 꼭대기
+            if (ty < -.3f || ty > 1f) return -99f;
+            float width = half * (1f - Mathf.Clamp01(ty));
+            return Mathf.Min(width - Mathf.Abs(x - bx), Mathf.Min((1f - ty) * hgt, (ty + .3f) * hgt));
+        }
+
+        static float EaseInOut(float v) => v * v * (3f - 2f * v);
     }
 }

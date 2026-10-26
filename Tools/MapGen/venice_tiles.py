@@ -24,7 +24,13 @@ with open(_ATLAS + ".json", encoding="utf-8") as _fp:
 for _name, (_x, _y, _w, _h) in _CELLS.items():
     _bf, _hr = _BLOCK.get(_name, (0, 0))
     tiles.STAMPS["vg_" + _name] = ("vgpt", _x, _y, _w, _h, _bf, _hr, None)
-GPT_OWN = ("ven:", "vgpt:", "vq:")   # 베네치아가 소유하는 그림 키 (내보낼 때 바뀌면 다시 씀)
+# 운하 집 시트 (Tools/ArtGen/venice_houses_art.py가 만든다, 2026-10-26 제안). 묶음 이름은 'vh_<이름>'
+_HOUSES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "ArtGen", "venice_houses")
+tiles.SHEETS.setdefault("vhse", os.path.abspath(_HOUSES + ".png"))
+with open(_HOUSES + ".json", encoding="utf-8") as _fp:
+    for _name, (_x, _y, _w, _h) in json.load(_fp).items():
+        tiles.STAMPS["vh_" + _name] = ("vhse", _x, _y, _w, _h, 0, 0, None)
+GPT_OWN = ("ven:", "vgpt:", "vq:", "vhse:")   # 베네치아가 소유하는 그림 키 (내보낼 때 바뀌면 다시 씀)
 
 # 색 (GPT 지형 시트에서 표본)
 WATER = (81, 140, 147)
@@ -65,11 +71,12 @@ MUD_DOTS = [(108, 89, 68), (146, 122, 92)]
 _img_cache = {}
 
 
-def _atlas_img():
-    if "atlas" not in _img_cache:
+def _atlas_img(sheet="vgpt"):
+    key = "atlas" if sheet == "vgpt" else "sheet:" + sheet
+    if key not in _img_cache:
         from PIL import Image
-        _img_cache["atlas"] = Image.open(tiles.SHEETS["vgpt"]).convert("RGBA")
-    return _img_cache["atlas"]
+        _img_cache[key] = Image.open(tiles.SHEETS[sheet]).convert("RGBA")
+    return _img_cache[key]
 
 
 def _macro(name, rot):
@@ -263,7 +270,7 @@ class VeniceMap(Map):
     # ---- 그림 칸별 덮인 정도 ----
     def _cell_stats(self, name):
         s, sx, sy, w, h, *_ = tiles.STAMPS[name]
-        img = _atlas_img()
+        img = _atlas_img(s)
         out = {}
         for dy in range(h):
             for dx in range(w):
@@ -292,7 +299,9 @@ class VeniceMap(Map):
                 self.high[cy][cx] = key
             else:
                 self.obj[cy][cx] = key
-                if cover >= 0.3 and (dx, dy) not in open_cells:
+                # 2026-10-26: 칸을 절반 넘게 덮을 때만 막는다. 좌우 끝 칸(처마·그림 가장자리)은 더 많이 덮어야 막는다(골목이 끊기지 않게).
+                need = 0.65 if dx in (0, w - 1) and w >= 3 else 0.5
+                if cover >= need and (dx, dy) not in open_cells:
                     self.blocked[cy][cx] = True
                     self.road[cy][cx] = 0
             self.reserved[cy][cx] = True
@@ -432,7 +441,7 @@ class VeniceMap(Map):
                         land = self.inside(nx, ny) and not self.water[ny][nx] and (nx, ny) not in self.decks
                         corners.append(("d" if kind == "pan" else "q" if self.zone[ny][nx] in self.PAVED else "b") if land and not side_open else "-")
                     edge = ''.join(sides) + ''.join(corners)
-                    var = self.rng.randrange(9) if edge == '-' * 8 else 0   # 물가 칸은 잔잔한 한 종 (타일 수 절약)
+                    var = self.rng.randrange(4) if edge == '-' * 8 else 0   # 물가 칸은 잔잔한 한 종. 탁 트인 물도 4종만 (씬 불러오기 그림 수 절약)
                     self.ground[y][x] = f"vq:W:{kind}:{var}:{edge}"
                     self.blocked[y][x] = (x, y) not in self.over_water
                     continue
@@ -445,7 +454,7 @@ class VeniceMap(Map):
                 var = (bx * 7 + by * 13 + (bx * by) % 5) % 3 if mat in ("slab", "worn") else (bx + by) % 4
                 rot = 1 if z == "quay" else 0
                 if mat in self.NATURAL:    # 칸마다 무작위 점: 무늬 묶음 위치는 쓰지 않는다
-                    var = (x * 7 + y * 13 + (x * y) % 11) % 6
+                    var = (x * 7 + y * 13 + (x * y) % 11) % 3   # 3종 (씬마다 불러오는 그림 수를 줄인다)
                     if mat == "meadow" and (x, y) in self.lush:
                         var = 6 + var % 3
                 sides = "".join(self._edge_kind(x, y, x + dx, y + dy) for _, dx, dy in N8)

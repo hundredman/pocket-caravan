@@ -18,3 +18,12 @@ MonoBehaviour:
     \uB2F4\uB2F9). \uD0A4\uC624\uC790\uC5D0\uC11C \uBC30\uB85C \uAC74\uB108 \uB3D9\uBB38
     \uD070\uAE38\uAE4C\uC9C0. \uC911\uC559 \uAD8C\uC5ED \uC5F0\uACB0\uC740 \uD1B5\uD569
     \uD6C4."
+  deliveryRewards:
+    enabled: 0
+    revision: 1
+    dispatchFee: 1.5
+    perWeight: 0.65
+    perWeightPerStep: 0.25
+    premiumMultiplier: 1.8
+    premiumMinWeight: 8
+    premiumMaxWeight: 12

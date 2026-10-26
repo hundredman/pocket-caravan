@@ -61,5 +61,30 @@
     }
   ],
   "npcs": [],
-  "villagers": []
+  "villagers": [
+    {
+      "name": "포도 따는 일꾼",
+      "sprite": "venice_vintner_tall",
+      "lines": [
+        "올해 포도는 알이 굵어.",
+        "양조장 포도주는 석호 도시에서 값이 좋지."
+      ]
+    },
+    {
+      "name": "길손",
+      "sprite": "villager_rabbit_tall",
+      "lines": [
+        "직행로는 빠르지만 밤엔 도적이 나온대.",
+        "고갯길은 좁고 거칠어서 수레가 고생이야."
+      ]
+    },
+    {
+      "name": "대상 숙소 손님",
+      "sprite": "venice_merchant_tall",
+      "lines": [
+        "습지길은 진흙이 있어 느리지만 도적은 없지.",
+        "큰 장이 서는 마을에선 팔면 덤을 얹어 준다네."
+      ]
+    }
+  ]
 }

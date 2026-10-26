@@ -20,6 +20,8 @@ MonoBehaviour:
   giverNpc: venice_glassmaker
   requires:
   - {fileID: 11400000, guid: 1620b44b5b544fd45a61d7cae7e93192, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uC774 \uC720\uB9AC \uC0C1\uC790\uB97C \uD0A4\uC624\uC790 \uCC3D\uACE0\uC5D0
     \uB9E1\uACA8 \uC8FC\uAC8C.\n\uC218\uB808\uAC00 \uD754\uB4E4\uB9AC\uB294 \uAE38\uC740
     \uCC9C\uCC9C\uD788 \uC9C0\uB098\uAC00\uACE0.\n\uBC30\uC5D0 \uC2E4\uC744 \uBB3C\uAC74\uC774\uC57C."
@@ -40,5 +42,8 @@ MonoBehaviour:
       \uC7A5\uBD80\uC5D0 \uC801\uC5B4 \uB450\uC9C0."
   rewardMoney: 40
   rewardCredit: 2
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: "\uC0C1\uC790\uB97C \uC5F4\uC5B4 \uBCF4\uB2C8 \uD558\uB098\uB3C4 \uC548
     \uAE68\uC84C\uB2E4\uB354\uAD70. \uBBFF\uC744 \uB9CC\uD55C \uC0C1\uC778\uC774\uC57C."

@@ -30,7 +30,45 @@ namespace PocketCaravan.EditorTools
             MapJsonBuilder.BuildSelected(all.ToArray());
             foreach (var id in MapIds) AttachDistricts(id);
             foreach (var id in MainlandIds) UseVeniceCatIn(id);
+            BuildTileAtlas();
             Debug.Log("[베네치아] 데이터와 맵 12개(베네치아 5 + 본토 7)를 만들었습니다. Scenes/Venice/venice_rialto에서 Play하세요.");
+        }
+
+        const string AtlasPath = Data + "/VeniceTiles.spriteatlasv2";
+
+        /// <summary>
+        /// 베네치아 전용 타일 그림(vgpt_·vq_·ven_·vhse_, NinjaAdventure/Tiles)을 아틀라스 한 장으로 묶는다 (2026-10-26).
+        /// 씬마다 수백 장의 작은 그림을 따로 불러오던 것을 큰 그림 몇 장으로 줄여 씬 전환 시간을 줄이려는 것. 다른 지역 타일은 넣지 않는다.
+        /// </summary>
+        [MenuItem("Pocket Caravan/베네치아/타일 아틀라스 다시 만들기")]
+        public static void BuildTileAtlas()
+        {
+            var sprites = new List<UnityEngine.Object>();
+            foreach (var guid in AssetDatabase.FindAssets("t:Sprite", new[] { Root + "/Art/NinjaAdventure/Tiles" }))
+            {
+                var path = AssetDatabase.GUIDToAssetPath(guid);
+                var name = Path.GetFileName(path);
+                if (!(name.StartsWith("vgpt_") || name.StartsWith("vq_") || name.StartsWith("ven_") || name.StartsWith("vhse_"))) continue;
+                var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+                if (sprite != null) sprites.Add(sprite);
+            }
+            var atlas = new UnityEditor.U2D.SpriteAtlasAsset();
+            atlas.Add(sprites.ToArray());
+            UnityEditor.U2D.SpriteAtlasAsset.Save(atlas, AtlasPath);
+            AssetDatabase.ImportAsset(AtlasPath);
+            if (AssetImporter.GetAtPath(AtlasPath) is UnityEditor.U2D.SpriteAtlasImporter importer)
+            {
+                importer.includeInBuild = true;
+                importer.packingSettings = new UnityEditor.U2D.SpriteAtlasPackingSettings { enableRotation = false, enableTightPacking = false, padding = 2, enableAlphaDilation = false };
+                importer.textureSettings = new UnityEditor.U2D.SpriteAtlasTextureSettings { filterMode = FilterMode.Point, generateMipMaps = false, sRGB = true, readable = false, anisoLevel = 0 };
+                var platform = importer.GetPlatformSettings("DefaultTexturePlatform");
+                platform.textureCompression = TextureImporterCompression.Uncompressed;
+                platform.maxTextureSize = 4096;
+                importer.SetPlatformSettings(platform);
+                importer.SaveAndReimport();
+            }
+            UnityEditor.U2D.SpriteAtlasUtility.PackAllAtlases(EditorUserBuildSettings.activeBuildTarget);
+            Debug.Log($"[베네치아] 타일 아틀라스: 그림 {sprites.Count}장 → {AtlasPath}");
         }
 
         public static void ApplyData()
@@ -120,10 +158,28 @@ namespace PocketCaravan.EditorTools
                 Rest("venice_c_caravanserai"),
                 Info("venice_c_caravanserai", "서쪽 직행로는 나루터로 바로 갑니다. 북쪽은 포도밭·고갯길, 남쪽은 습지·돌다리로 돌아가는 길입니다. 동문 너머 중앙 권역은 아직 길을 닦는 중입니다."));
             caravanserai.region = mainland;
-            Stock(caravanserai, (glass, 10, 1.1f), (salt, 16, 1.2f), (fruit, 16, 1.1f), (fish, 16, 1.2f));
+            // 본토 장터 2곳 (2026-10-26, 큰 장이 돌아가며 서는 서쪽 조각 장터: 대상 숙소·나루터·포도밭 양조장)
+            var landing = Town("Town_MainlandLanding", "venice_c_landing", "본토 나루터", new Vector2Int(14, 2), 1,
+                "키오자 배가 닿는 본토 부두. 석호 물건이 본토로 들어오는 첫 장터.", Rest("venice_c_landing"));
+            landing.region = mainland;
+            var vineyard = Town("Town_Vineyard", "venice_c_vineyard", "포도밭 양조장", new Vector2Int(14, 1), 1,
+                "언덕 양조장. 포도주가 싸다. 포도주는 석호의 도시에서 값이 좋다.", Rest("venice_c_vineyard"));
+            vineyard.region = mainland;
+            // 새 물건: 포도주(양조장 특산), 공방에서 만드는 유리 장식(무라노)·레이스 손수건(부라노)
+            var wine = Good("Item_VeniceWine", "venice_wine", "포도주", 2, 12, .45f, vineyard, "venice_wine");
+            var glassArt = Good("Item_VeniceGlassArt", "venice_glass_art", "유리 장식", 1, 70, .3f, murano, "venice_glass_art");
+            var lace = Good("Item_VeniceLace", "venice_lace", "레이스 손수건", 0.5f, 40, .3f, burano, "venice_lace");
+            Stock(caravanserai, (glass, 10, 1.1f), (salt, 16, 1.2f), (fruit, 16, 1.1f), (fish, 16, 1.2f), (wine, 16, 1f), (glassArt, 4, 1.2f), (lace, 4, 1.2f));
+            Stock(landing, (salt, 20, 1.1f), (fish, 20, 1.1f), (fruit, 16, 1f), (glass, 8, 1.1f), (wine, 20, 1f));
+            Stock(vineyard, (wine, 80, 1f), (salt, 14, 1.2f), (fish, 14, 1.2f), (fruit, 20, 1f), (glass, 6, 1.15f));
+            // 석호 쪽도 포도주를 조금 산다 (멀리서 온 물건이라 값이 높다)
+            rialto.stock.Add(new TownData.StockEntry { item = wine, optimal = 14, localPriceMultiplier = 1.15f });
+            rialto.stock.Add(new TownData.StockEntry { item = glassArt, optimal = 6, localPriceMultiplier = 1f });
+            rialto.stock.Add(new TownData.StockEntry { item = lace, optimal = 6, localPriceMultiplier = 1f });
+            chioggia.stock.Add(new TownData.StockEntry { item = wine, optimal = 12, localPriceMultiplier = 1.1f });
 
             var handcart = db.vehicles.Find(v => v != null && v.id == "handcart");
-            foreach (var t in new[] { rialto, chioggia, murano, santerasmo, burano, caravanserai }) t.vehiclesForSale.Clear();
+            foreach (var t in new[] { rialto, chioggia, murano, santerasmo, burano, caravanserai, landing, vineyard }) t.vehiclesForSale.Clear();
             if (handcart != null) rialto.vehiclesForSale.Add(handcart);
             BuildQuests(db, Get<QuestData>, parcel, glassCrate, saltCargo, glass, fruit, handcart);
             EditorUtility.SetDirty(db); AssetDatabase.SaveAssets();
@@ -133,7 +189,7 @@ namespace PocketCaravan.EditorTools
         /// <summary>
         /// 베네치아판 1장 "빈 지게에서 손수레까지" (제안 초안). 공통 Q1~Q7 틀을 기존 목표 유형만으로 만든다.
         /// 퀘스트를 주는 NPC는 베네치아 맵에만 있으므로 다른 지역에서 시작한 플레이어에게 자동으로 나타나지 않는다.
-        /// Q3의 정직 '선택'은 공용 대화 선택 기능이 없어 조심스러운 운반 배달로 대신한다(낙하 없음).
+        /// Q3의 정직 선택은 Scripts/Venice/VeniceHonesty(키오자 부두 검수원, 대화 선택지)가 맡는다(낙하 없음).
         /// </summary>
         static void BuildQuests(GameDatabase db, Func<string, QuestData> get, ItemData parcel, ItemData glassCrate, ItemData saltCargo,
             ItemData glass, ItemData fruit, VehicleData handcart)

@@ -21,6 +21,8 @@ MonoBehaviour:
   giverNpc: venice_gardener
   requires:
   - {fileID: 11400000, guid: b44bf035df9893c488409b8b11aae5b3, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uB2E4\uB978 \uC0C1\uC778\uC774 \uB9AC\uC54C\uD1A0\uC5D0 \uACFC\uC77C\uC744
     \uC794\uB729 \uD480\uC5C8\uB300.\n\uD55C \uACF3\uC5D0 \uBAB0\uC544 \uD314\uBA74
     \uAC12\uC774 \uB5A8\uC5B4\uC9C0\uC9C0.\n\uD0A4\uC624\uC790\uC640 \uBB34\uB77C\uB178\uC5D0
@@ -54,5 +56,8 @@ MonoBehaviour:
     completeLine: "\uB450 \uACF3 \uB2E4 \uAC12\uC744 \uC798 \uBC1B\uC558\uAD70."
   rewardMoney: 30
   rewardCredit: 1
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: "\uB098\uB220 \uD314\uBA74 \uAC12\uC774 \uB35C \uB5A8\uC5B4\uC9C0\uC9C0.
     \uC774\uC81C \uC54C\uACA0\uC9C0?"

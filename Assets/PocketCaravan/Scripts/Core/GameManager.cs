@@ -180,7 +180,9 @@ namespace PocketCaravan
         {
             IsTravelling = true;
             // 지역별 이동 효과(TravelTransition). 등록이 없으면 기존 검은 페이드와 시간 그대로.
-            transition = TravelTransition.For(MapRoot.Current != null ? MapRoot.Current.mapId : null, sceneName);
+            string fromMap = MapRoot.Current != null ? MapRoot.Current.mapId : null;
+            transition = TravelTransition.For(fromMap, sceneName);
+            transition?.Begin(fromMap, sceneName);
             var index = WorldIndex.Get();
             transitionName = index != null ? index.MapName(sceneName) : sceneName;
             transitionCovering = true; coveredAt = -1f;
@@ -194,7 +196,9 @@ namespace PocketCaravan
             pendingSpawnId = spawnId; pendingOffset = offset; pendingFacing = facing; pendingExact = exact;
             yield return SceneManager.LoadSceneAsync(sceneName);
             yield return null;
-            while (transition != null && Time.unscaledTime - coveredAt < transition.MinHoldSeconds) yield return null;
+            float loadedAt = Time.unscaledTime;
+            while (transition != null && (Time.unscaledTime - coveredAt < transition.MinHoldSeconds
+                   || Time.unscaledTime - loadedAt < transition.AfterLoadSeconds)) yield return null;
             transitionCovering = false;
             for (float t = 1f; t > 0f; t -= Dt() / reveal) { fade = t; yield return null; }
             fade = 0f;
@@ -341,6 +345,13 @@ namespace PocketCaravan
         public bool EventReady(string map) => Ready("event:" + map);
         public void EventHappened(string map) => cooldowns["event:" + map] = Clock.TotalHours + 8f;
         bool Ready(string key) => !cooldowns.TryGetValue(key, out var until) || Clock.TotalHours >= until;
+
+        // ---------- 지역 진행 메모 ----------
+        // 지역별 작은 진행(찾은 수집품, 하루 한 번 놀이 등)을 이미 저장되는 숫자 표에 "지역:이름" 키로 남긴다.
+        // 저장 형식은 바꾸지 않는다. 키는 지역 접두사로 구분한다 (예: "venice:lion:3").
+        public float GetMemo(string key, float fallback = 0f) => cooldowns.TryGetValue(key, out var v) ? v : fallback;
+        public bool HasMemo(string key) => cooldowns.ContainsKey(key);
+        public void SetMemo(string key, float value) => cooldowns[key] = value;
 
         /// <summary>가장 비싼 짐 (물건은 한 묶음 기준가, 의뢰는 보수)</summary>
         object MostValuable(out string name)

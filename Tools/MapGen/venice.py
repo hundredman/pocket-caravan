@@ -78,9 +78,22 @@ def swap(m, new, old, x, y, high=0):
 
 
 def put(m, items):
-    """[(묶음, x, y), ...] 막는 소품. 이미 놓인 것과 겹치면 놓지 않는다."""
+    """[(묶음, x, y), ...] 막는 소품. 이미 놓인 것과 겹치면 놓지 않는다.
+    2026-10-26: 그림이 실제로 덮은 칸만 막도록 building()으로 놓는다(투명한 가장자리가 골목을 막지 않게). 안 맞으면 예전 방식."""
     for name, x, y in items:
-        m.stamp(name, x, y, force=True)
+        try:
+            m.building(name, x, y, high=tiles.STAMPS[name][6])
+        except (ValueError, IndexError):
+            m.stamp(name, x, y, force=True)
+
+
+def row(m, x, y, parts):
+    """운하 집(vh_*)을 왼쪽부터 벽을 맞대고 줄지어 놓는다. parts: [(종류, 벽색), ...] (2026-10-26)"""
+    import tiles
+    for kind, color in parts:
+        name = f"vh_{kind}_{color}"
+        m.building(name, x, y, high=1)
+        x += tiles.STAMPS[name][3]
 
 
 def boats(m, items):
@@ -102,7 +115,7 @@ def capital(m):
     m.set_zone(47, 35, 50, 38, "mosaic")
     m.building("vg_cp_cathedral", 45, 24)          # 북쪽: 대성당 (문은 광장으로)
     m.building("vg_cp_tower", 52, 24, high=5)      # 종탑은 대성당 옆에 붙인다
-    m.building("vg_cap_narrow", 54, 25)
+    row(m, 54, 25, [("narrow_tall", "rose")])
     put(m, [("vg_cp_well", 48, 36)])               # 광장 중심
     put(m, [("vg_cp_brazier", 45, 32), ("vg_cp_brazier", 52, 32)])            # 성당 앞 화로
     put(m, [("vg_cp_lion_column", 54, 37), ("vg_cp_saint_column", 54, 41)])   # 운하 쪽 두 기둥
@@ -115,28 +128,27 @@ def capital(m):
     # ---- 남쪽: 궁전과 그 서쪽 안뜰 ----
     m.building("vg_cp_palace", 44, 44)
     m.set_zone(38, 42, 43, 50, "court")
-    m.building("vg_cap_narrow", 38, 42)
+    row(m, 38, 42, [("narrow_tall", "ochre")])
     put(m, [("vg_laundry", 40, 44), ("vg_well", 41, 47), ("vg_pot_plant", 38, 48), ("vg_cp_pennant", 52, 51)])
     # ---- 서쪽 주택 골목 (북서 모서리와 y51~52 골목은 둑길 입구로 비운다) ----
-    m.building("vg_cap_ell", 38, 32)
-    m.building("vg_cap_narrow", 38, 37)
+    row(m, 38, 32, [("narrow_tall", "salmon"), ("house_tall", "cream")])
+    row(m, 38, 37, [("narrow_tall", "brick")])
     put(m, [("vg_flower_pot2", 41, 38), ("vg_cp_planter", 40, 40)])
-    m.building("vg_cap_residence", 38, 53)
-    m.building("vg_cap_row", 44, 54)
-    m.building("vg_cap_narrow", 49, 53)
-    m.building("vg_cap_ell", 51, 53)
+    row(m, 38, 54, [("palazzo", "rose")])
+    row(m, 44, 54, [("narrow", "sky"), ("shop", "ochre")])
+    row(m, 49, 53, [("narrow_tall", "salmon"), ("narrow_tall", "cream"), ("house_tall", "brick")])
     # ---- 운하 동쪽: 상인회관, 여관, 주택 묶음 ----
     m.building("vg_cap_inn", 62, 25)               # 북동 모서리(67~73, 24~29)는 유리공방 둑길 입구
     m.set_zone(62, 30, 72, 35, "court")
     put(m, [("vg_well", 66, 31), ("vg_flower_shelf", 70, 32), ("vg_cp_bench", 63, 33)])
     m.building("vg_cap_hall", 63, 37)              # 상인회관
-    m.building("vg_cap_narrow", 69, 37)
-    m.building("vg_cap_narrow", 71, 37)
+    row(m, 69, 37, [("narrow_tall", "ochre"), ("narrow_tall", "rose")])
     put(m, [("vg_px_cap_flag_red", 62, 41), ("vg_px_cap_flag_blue", 69, 42)])
-    m.building("vg_cap_row", 62, 44)
-    m.building("vg_cap_ell", 67, 44)
-    m.building("vg_cap_narrow", 62, 51)
-    m.building("vg_cap_row", 66, 52)
+    row(m, 62, 44, [("narrow", "cream"), ("shop", "salmon")])
+    row(m, 67, 44, [("narrow_tall", "brick")])
+    row(m, 70, 44, [("house_tall", "ochre")])     # 69열은 파란 깃발 자리
+    row(m, 62, 51, [("narrow_tall", "rose")])
+    row(m, 66, 52, [("wide_shop", "cream"), ("narrow", "sage")])
     boats(m, [("vg_gondola", 57, 28), ("vg_cp_mooring", 57, 38), ("vg_cp_mooring", 59, 41), ("vg_gondola", 57, 44),
               ("vg_gondola", 57, 54)])
     reuse(m, [("vg_shop_sign", 61, 29), ("vg_cp_planter", 66, 35), ("vg_amphora", 72, 50)])
@@ -244,11 +256,11 @@ def glassworks(m):
     boats(m, [("vg_fishing_boat", 94, 12)])
     # 장인 주택 골목
     swap(m, "vg_n_gls_shop", "vg_gls_artisan", 97, 8)
-    m.building("vg_gls_narrow", 101, 9)
+    row(m, 101, 9, [("narrow_tall", "brick")])
     m.building("vg_gls_row", 97, 14)
     m.building("vg_gls_artisan", 102, 14)
     m.building("vg_gls_row", 97, 24)
-    m.building("vg_gls_narrow", 102, 21)
+    row(m, 102, 21, [("narrow_tall", "ochre")])
     put(m, [("vg_flower_pot2", 100, 19)])           # x104~106은 동쪽 모래톱(키오자 방면)으로 가는 수레 길
     reuse(m, [("vg_n_gls_sand", 91, 15), ("vg_n_gls_wood", 82, 15), ("vg_n_gls_blowbench", 84, 25), ("vg_n_gls_bowls", 99, 12),
               ("vg_n_gls_cups", 86, 22), ("vg_stall_glass", 82, 24), ("vg_glass_workshop", 97, 19)])
@@ -475,8 +487,8 @@ def _master():
 # ---------------- 마을별 씬 ----------------
 # 석호 원본(112×84)을 다리 한가운데에서 잘라 수도 1 + 마을 4 씬으로 나눈다. 씬을 넘을 때 공용 이동(페이드)이 일어난다.
 # 잘린 쪽은 잘린 줄의 지형(물·다리·둑길)을 GAP칸 늘여 붙인다. 두 씬이 같은 줄을 늘이므로 출구 폭이 저절로 맞는다.
-# 넓이: 원본 9,408칸 → 다섯 씬 합계 약 2만 칸 (팀 결정: 베네치아 2만 칸).
-GAP = 20
+# 넓이: 원본 9,408칸 → 다섯 씬 합계 19,755칸 (팀 결정: 베네치아 2만 칸 이내).
+GAP = 16          # 2026-10-26 팀 기준(베네치아 2만 칸 이내): 20→16, 합계 19,755칸
 CUT_W, CUT_E, CUT_Y = 35, 77, 39       # 서쪽·동쪽 세로 자름 줄(다리 가운데), 마을 사이 가로 자름 줄
 SCENES = {
     # mapId: (이름, 원본 창 x0, y0, x1, y1, 늘이는 쪽)
@@ -739,11 +751,13 @@ def _split_fixes(src):
 
 def _chioggia_ferry(m):
     """키오자 동쪽 부두 → 본토 나루터 배 (venice_mainland.FERRY와 짝). 잔교 끝 3칸이 출구이고, 넘어가는 동안 물결 효과가 배 이동을 보여 준다."""
-    m.bridge(48, 50, m.w - 1, 52)
-    m.stamp("vg_barge_loaded", 52, 47, force=True, over_road=True)
-    m.stamp("vg_px_fsh_mooring", 50, 53, force=True, over_road=True)
-    m.link("E", 50, 3, "venice_c_landing", "from_venice_chioggia", "from_venice_c_landing")
-    m.talker(48, 48, "본토행 뱃사공", "villager_bear_tall",
+    # 원본 좌표(동쪽 부두 끝 x105, y69)를 씬 좌표로 옮긴다 (물길 폭 GAP이 바뀌어도 같은 자리)
+    x, y = 105 - CUT_E + GAP, 69 - CUT_Y + GAP
+    m.bridge(x, y, m.w - 1, y + 2)
+    m.stamp("vg_barge_loaded", x + 4, y - 3, force=True, over_road=True)
+    m.stamp("vg_px_fsh_mooring", x + 2, y + 3, force=True, over_road=True)
+    m.link("E", y, 3, "venice_c_landing", "from_venice_chioggia", "from_venice_c_landing")
+    m.talker(x, y - 2, "본토행 뱃사공", "villager_bear_tall",
              "본토 나루터로 가는 배요. 잔교 끝에서 타시오.",
              "건너편에서는 포도밭, 습지, 대상 숙소로 길이 갈라진다오.")
 
@@ -759,7 +773,11 @@ def _scene(mid):
     if mid in SCENE_EXTRAS:
         SCENE_EXTRAS[mid](m)
     _lagoon_life(m)
+    import venice_dress             # 빈 포장 바닥에 운하 집을 줄지어 세운다 (2026-10-26)
+    venice_dress.dress(m)
     m.finish()
+    import venice_people            # 일하는 사람·마을 사람·길 위 상인·성장 소품 (공용 장치)
+    venice_people.populate(m)
     return m
 
 

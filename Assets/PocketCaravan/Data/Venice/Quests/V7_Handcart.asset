@@ -20,6 +20,8 @@ MonoBehaviour:
   giverNpc: venice_innkeeper
   requires:
   - {fileID: 11400000, guid: 489557d144e15504d913e1a16bd0e756, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uC774\uC81C \uB4F1\uC9D0\uC73C\uB85C\uB294 \uBAA8\uC790\uB77C\uACA0\uAD70.\n\uB9AC\uC54C\uD1A0
     \uC7A5\uD130\uC5D0\uC11C \uC190\uC218\uB808\uB97C \uC0AC \uBCF4\uAC8C.\n\uC18C\uAE08\uC774\uB098
     \uC0DD\uC120\uCC98\uB7FC \uBB34\uAC70\uC6B4 \uC9D0\uC744 \uD55C \uBC88\uC5D0
@@ -46,4 +48,7 @@ MonoBehaviour:
     completeLine: "\uBC14\uD034 \uC18C\uB9AC\uAC00 \uC88B\uAD70. \uCD95\uD558\uD558\uB124."
   rewardMoney: 0
   rewardCredit: 1
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: "\uC190\uC218\uB808\uB77C\uB2C8, \uC774\uC81C \uC5B4\uC5FF\uD55C \uC0C1\uC778\uC774\uC57C."

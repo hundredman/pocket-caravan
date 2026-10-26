@@ -125,6 +125,8 @@ def main():
         preview(m, os.path.join(HERE, "preview_" + m.id + ".png"), markers=False)
         preview(m, os.path.join(HERE, "preview_" + m.id + "_debug.png"))
         print(m.id, m.w, m.h)
+    import venice_life                 # 생활 연출·미니게임 자리 (Resources/Venice/VeniceLife.json)
+    venice_life.export(maps, ROOT)
     print(len(used), "tiles used")
     return 0
 

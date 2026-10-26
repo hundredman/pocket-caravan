@@ -20,6 +20,8 @@ MonoBehaviour:
   giverNpc: venice_clerk
   requires:
   - {fileID: 11400000, guid: 485a99f5a3d58ac46b6f10e83c489b4a, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uBCA0\uB124\uCE58\uC544 \uC0C1\uC778\uC740 \uD30C\uB294 \uBC95\uC744
     \uC548\uB2E4\uB124.\n\uBB3C\uAC74\uC744 \uD314\uC544 \uC774\uC775 60\uB0E5\uC744
     \uB0A8\uACA8 \uBCF4\uAC8C.\n\uC5B4\uB514\uC11C \uC0AC\uC11C \uC5B4\uB514\uC5D0
@@ -46,5 +48,8 @@ MonoBehaviour:
     completeLine: "\uC7A5\uBD80\uB97C \uBCF4\uB2C8 \uC81C\uB300\uB85C \uB0A8\uACBC\uAD70."
   rewardMoney: 40
   rewardCredit: 1
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: "\uAC12\uC774 \uC88B\uC740 \uACF3\uC744 \uACE0\uB974\uB294 \uB208\uC774
     \uC0DD\uACBC\uAD70."

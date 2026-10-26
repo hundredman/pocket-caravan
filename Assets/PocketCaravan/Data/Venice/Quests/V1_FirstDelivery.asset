@@ -19,6 +19,8 @@ MonoBehaviour:
     \uBD80\uB77C\uB178 \uC5B4\uBD80\uC5D0\uAC8C \uC804\uD55C\uB2E4."
   giverNpc: venice_innkeeper
   requires: []
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uC790\uB124\uAC00 \uC0C8\uB85C \uC628 \uD589\uC0C1\uC774\uB85C\uAD70.\n\uC774
     \uAFB8\uB7EC\uBBF8\uB97C \uBD80\uB77C\uB178 \uC5B4\uBD80\uC5D0\uAC8C \uC804\uD574
     \uC8FC\uACA0\uB098?\n\uB0A8\uC11C\uCABD \uB2E4\uB9AC\uB97C \uAC74\uB108\uBA74
@@ -39,4 +41,7 @@ MonoBehaviour:
       \uC218\uACE0\uD588\uB124."
   rewardMoney: 25
   rewardCredit: 1
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: "\uACE0\uB9D9\uB124. \uCCAB \uBC30\uB2EC \uC0AF\uC774\uC57C."

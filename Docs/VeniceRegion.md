@@ -7,13 +7,13 @@
 
 | 씬 | 크기 | worldX,Y | 이웃(출구) |
 |---|---|---|---|
-| `venice_rialto` 리알토(수도, 직접 Play 시작 S0) | 83×84 | 12,1 | 산테라스모(모래톱·다리), 부라노(남쪽 수변 다리), 무라노(모래톱·다리), 키오자(다리) |
-| `venice_santerasmo` 산테라스모 과수원 | 62×60 | 11,0 | 리알토 2, 부라노(서쪽 모래톱) |
-| `venice_burano` 부라노 어촌 | 62×65 | 11,2 | 리알토, 산테라스모 |
-| `venice_murano` 무라노 유리공방 | 61×60 | 13,0 | 리알토 2, 키오자(동쪽 모래톱) |
-| `venice_chioggia` 키오자 교역항 | 61×65 | 13,2 | 리알토, 무라노 |
+| `venice_rialto` 리알토(수도, 직접 Play 시작 S0) | 75×84 | 12,1 | 산테라스모(모래톱·다리), 부라노(남쪽 수변 다리), 무라노(모래톱·다리), 키오자(다리) |
+| `venice_santerasmo` 산테라스모 과수원 | 58×56 | 11,0 | 리알토 2, 부라노(서쪽 모래톱) |
+| `venice_burano` 부라노 어촌 | 58×61 | 11,2 | 리알토, 산테라스모 |
+| `venice_murano` 무라노 유리공방 | 57×56 | 13,0 | 리알토 2, 키오자(동쪽 모래톱) |
+| `venice_chioggia` 키오자 교역항 | 57×61 | 13,2 | 리알토, 무라노 |
 
-합계 22,347칸. 만드는 법: 석호 원본(112×84, 이전 한 맵)을 다리 한가운데(x35·x77, 마을 사이 y39)에서 자르고, 잘린 쪽을 20칸씩 늘인다. 바깥 마을 넷은 바깥쪽에 물 6칸을 덧대 모래톱 길이 맵 끝에 붙지 않게 한다. 늘인 물길 가운데에 마을 테마 쉼터 섬(소품·갈대)을, 넓은 물에 배·말뚝·갈대 모래톱을 둔다. 이웃마다 남긴 연결 외의 다리는 지운다. 시세용 마을 좌표(TownData.worldCoord)는 바꾸지 않았다. 맵 이동 시간(`hours`)은 0이다.
+합계 19,755칸(2026-10-26 팀 기준 2만 칸 이내로 물길 20→16칸). 만드는 법: 석호 원본(112×84, 이전 한 맵)을 다리 한가운데(x35·x77, 마을 사이 y39)에서 자르고, 잘린 쪽을 16칸씩 늘인다. 바깥 마을 넷은 바깥쪽에 물 6칸을 덧대 모래톱 길이 맵 끝에 붙지 않게 한다. 늘인 물길 가운데에 마을 테마 쉼터 섬(소품·갈대)을, 넓은 물에 배·말뚝·갈대 모래톱을 둔다. 이웃마다 남긴 연결 외의 다리는 지운다. 시세용 마을 좌표(TownData.worldCoord)는 바꾸지 않았다. 맵 이동 시간(`hours`)은 0이다.
 이전 한 맵 `venice_lagoon`의 JSON·씬 파일은 등록에서 빠졌지만 지우지 않았다(삭제는 확인 후).
 검증(파이썬): 다섯 씬 모두 첫 스폰에서 출구·장터·게시판·NPC에 걷기/손수레(2×2) 접근 가능. Unity 빌드·Play는 미확인.
 
@@ -85,4 +85,55 @@ Python: 등록 검사·통합 테스트·길/문/장터 접근·수레 폭 경�
 
 ## M 지도 (베네치아·본토 서부)
 
-`venice_*` 맵에서 M을 누르면 `Scripts/Venice/VeniceMapUI`가 베네치아·본토 서부 교역도를 연다. 그림·배치는 `Tools/MapGen/venice_worldmap.py`가 실제 씬 미리보기를 축약해 `Resources/WorldMap/VeniceTerrain.png`·`VeniceLayout.json`으로 만든다(맵을 바꾸면 export_venice.py 다음에 다시 실행). 공용 `WorldMapUI`에는 지역 지도가 맡은 맵에서 열지 않는 조건 한 줄만 추가했고(`RegionMapOverride`), 다른 지역의 고려·중간권 지도는 그대로다.
+`venice_*` 맵에서 M을 누르면 `Scripts/Venice/VeniceMapUI`가 베네치아·본토 서부 교역도를 연다. 그림·배치는 `Tools/MapGen/venice_worldmap.py`가 맵 생성기를 직접 불러 북유럽 교역도(`north_cartography.py`)와 같은 종이 그림체로 `Resources/WorldMap/VeniceTerrain.png`·`VeniceLayout.json`을 만든다(2026-10-26). 게임 화면에서 읽히도록 단순화했다: 섬·호수·강은 부드러운 윤곽, 길은 씬 안 실제 걷기 경로(출구→장터)를 줄인 굵은 선과 씬 사이 출구 연결(키오자 뱃길은 점선+돛배), 장소마다 큰 아이콘 하나(2배 확대), 서쪽 피자 조각(따뜻한 색)·이웃 조각(회색+숲 기호)·경계 점선·나침반. 칸 단위 나무·바위 기호는 그리지 않는다. 맵을 바꾸면 다시 실행한다. 공용 `WorldMapUI`에는 지역 지도가 맡은 맵에서 열지 않는 조건 한 줄만 추가했고(`RegionMapOverride`), 다른 지역의 고려·중간권 지도는 그대로다.
+
+## 2026-10-26 팀 결정 반영 (중앙 피자 조각·북서 포구·칸 수·큰 장)
+
+- **피자 모양**: 본토 7씬(크기·연결 그대로)을 서쪽 조각 좌표(`venice_mainland.ORIGIN`)에 놓고, 조각 경계(북서·남서 대각선, 동쪽으로 좁아짐) 밖은 숲으로 막는다(`wedge_forest`, 북유럽 `north_center.wedge_forest`와 같은 방식). M 지도에도 조각 경계를 그린다.
+- **북서 포구**: 포도밭 언덕 북쪽 가장자리 x12~14(폭 3)에 길을 내고 석축으로 막은 뒤 표지판. 통합 때 북유럽 `north_c_snowwood`(눈숲 마을) 서쪽과 양방향으로 잇는다(지금은 출구 없음).
+- **칸 수**: 베네치아 19,755칸(기준 2만 이내), 본토 서부 25,000칸.
+- **큰 장(Docs/NorthFair.md, 북유럽 브랜치)**: 같이 쓰며 "중앙 전체에서 하루 한 곳"을 따른다. 서쪽 조각의 장터 후보는 대상 숙소(`venice_c_caravanserai`). 북유럽 전용 코드(`NorthCraft.cs`)를 공용으로 옮기는 일은 통합 담당과 정한다(베네치아 브랜치에서는 공용 코드를 만들지 않았다).
+
+## 이동 효과 (2026-10-26)
+
+`Scripts/Venice/VeniceTravelWave`가 `venice_*` 맵을 오갈 때 쓴다. 고양이 얼굴 모양 원이 닫혔다 열리는 짧은 효과(닫힘 0.32초·열림 0.38초)와 지명 카드·발자국. 석호·배는 물빛, 본토 서부는 풀빛. 렉의 원인이던 타일 그림 수는 `Data/Venice/VeniceTiles.spriteatlasv2` 묶음과 변형 수 줄이기로 해결했다(이동 3.2~5.3초 → 1.5~2.6초, 2026-10-26 측정). 공용 `TravelTransition`에 빈 함수 `Begin(from, to)`와 `AfterLoadSeconds`를 더했다(기본 동작 없음).
+
+## 지역 기능 (2026-10-26, 북유럽 대비 보강, 모두 제안·임시 아트)
+
+| 기능 | 파일 (Scripts/Venice) | 내용 |
+|---|---|---|
+| 살아 있는 마을 | VeniceLife | 광장 비둘기(다가가면 날아오름), 갈매기, 곤돌라 뱃길, 굴뚝 연기, 가로등(밤 빛) |
+| 미니게임 | VeniceGlassSpot, VeniceNetSpot | 무라노 유리 불기(10냥, 타이밍 3번, 유리그릇·상금), 부라노 그물 던지기(무료, 3번, 절인 생선). 하루 한 번 |
+| 큰 장 | VeniceFair | 서쪽 조각 장터 3곳(대상 숙소·본토 나루터·포도밭 양조장) 날짜 % 3, 팔면 2할 덤(사자의 축복 2할 5푼), 좌판·깃발 줄, 알림 |
+| 본토 장터·새 물건 | VeniceRegionSetup | 장터 venice_c_landing·venice_c_vineyard, 물건 포도주(venice_wine)·유리 장식(venice_glass_art)·레이스 손수건(venice_lace) |
+| 특산 공방 | VeniceWorkshop | 무라노 장식 공방(유리그릇 2 + 15냥 → 유리 장식), 부라노 레이스 공방(25냥 → 레이스, 하루 2장) |
+| 전설·수집 | VeniceLion | 숨은 '날개 달린 사자' 문장 7개(석호 5 + 포도밭·습지), 전설 조각, 다 찾으면 300냥·신용 +2·사자의 축복 |
+| 날씨·축제 | VeniceAtmosphere | 맑음/아침 안개/비(4시간마다), 카니발 밤(날짜 % 7 == 5, 19~23시 리알토: 색종이·가면, 유리·레이스 3할 덤) |
+| 퀘스트 연출 | VeniceHonesty | Q3 동안 키오자 부두 검수원의 정직 선택(정직: 변상 10냥·신용 +2 / 거짓: 15냥·신용 −1) |
+| 소리 | VeniceSound | 낮 만돌린풍 왈츠·밤 아코디언풍 곡(새로 합성), 석호 물결, 정각 종(9·12·18시), 갈매기 |
+| 생활·어울리기 | VeniceFeed, VeniceMuseum, VeniceReactions | 비둘기 모이(1냥, 사흘 연속 선물), 상인회관 전시실(특산품 6종 기증 → 200냥·신용 +1), R 리액션 말풍선 |
+
+자리 데이터: `Tools/MapGen/venice_life.py` → `Resources/Venice/VeniceLife.json`(export_venice.py가 함께 만든다). 그림: `Tools/ArtGen/venice_life_art.py` → `Resources/Venice/Life`, 아이콘 `Art/Items/venice_wine·glass_art·lace`. 소리: `Tools/ArtGen/venice_audio.py` → `Resources/Venice/Audio`.
+진행 저장: 공용 `GameManager.GetMemo/SetMemo`(이미 저장되는 숫자 표, "venice:" 키). 저장 형식은 바뀌지 않는다.
+공용 코드 변경: GameManager 진행 메모 함수 3개 추가뿐. 판매 덤은 `GameEvents.ItemSold`를 듣기만 한다.
+검증: `Editor/VeniceFeatureCheck`(메뉴 베네치아 → 지역 기능 점검)로 Unity Play에서 생활 연출 개수·밤 등불·두 미니게임 화면과 보상·큰 장 장식과 덤·사자 문장·모이·전시실·카니발·Q3 검수원·음악 재생을 확인(2026-10-26). 미확인: 실제 키 입력으로 미니게임 성공 판정, 날씨 화면(점검 시점 맑음), NPC 친밀도(공용 NPC 대화 수정이 필요해 보류).
+
+## 고려·아라비아 대비 채우기 (2026-10-26, 제안)
+
+| 순서 | 내용 | 파일 |
+|---|---|---|
+| 1 | 일하는 주민(WorkingNpc)·마을 사람·길 위 상인(NpcTraders)을 맵마다 배치 | `Tools/MapGen/venice_people.py`, 지역 JSON villagers |
+| 2 | 도적: 본토 나루터 직행로·역참 / 길 사건: 나루터·습지·고갯길 | `venice_mainland.py` |
+| 3 | 길 고르기: 직행(빠름·밤 도적)·북쪽 고갯길(좁고 거침)·남쪽 습지(진흙·안전) 표지판 | `venice_mainland.py` |
+| 4 | 장터 성장 소품(상자·통·자루·항아리, 리알토 제외), 흔들리는 풀, 주변음 | `venice_people.py` |
+| 5 | 상업 백과 베네치아판(8장, 역사/각색/여행/출처 분리) | `Resources/CommerceGuide/Venice.json`, CommerceGuideUI가 `venice_` 맵에서 고른다 |
+| 6 | 퀘스트 자동 점검 `VeniceFeatureCheck.QuestRunAndQuit` (지역 시험 저장 칸은 아라비아 RegionTestSession 병합 뒤 재사용) | `Editor/VeniceFeatureCheck.cs` |
+| 7 | 베네치아 사람 그림 9종: 곤돌라 사공·상인·서기·유리장이·어부·레이스 아주머니·짐꾼·포도 농부·동문 경비 (팀 아트 승인 전) | `Tools/ArtGen/venice_npc_chars.py` → `Art/Characters/venice_*_tall_*` |
+
+
+## 풍경·건물 업그레이드 (2026-10-26, 제안·임시 아트)
+
+- 운하 집 49종 + 성벽·망루: `Tools/ArtGen/venice_houses_art.py` → `Tools/ArtGen/venice_houses.png/json`, 맵 생성기에서 시트 `vhse`, 묶음 `vh_<종류>_<벽색>`. 벽색 7가지(황토·연어·장밋빛·크림·벽돌·세이지·하늘), 종류 좁은 집·집·가게·넓은 집·팔라초. 뾰족 아치 창·초록 덧창·꽃 발코니·깔때기 굴뚝·빨래줄.
+- 석호 5섬: `Tools/MapGen/venice_dress.py`가 장터에서 22걸음 안 빈 포장 바닥에 집을 줄지어 세운다. 리알토의 보라 지붕 집(vg_cap_narrow·row·ell·residence)과 무라노 좁은 집은 같은 자리의 운하 집 줄로 바꿨다(상인회관·여관은 유지). 부라노는 풀밭에도 세우고, 산테라스모(과수원)는 시골로 둔다.
+- 본토 7씬: `Tools/MapGen/venice_country.py` — 나루터·양조장·대상 숙소 장터 둘레 시골 집, 큰길 사이프러스 가로수, 빈 들판 농가 묶음. 동문은 제비꼬리 성가퀴 벽돌 성벽과 망루 둘(옛 세관 건물 자리).
+- 안전장치: 집 하나마다 출구·NPC·장터·문 앞이 이어져 있는지 확인하고, 끊기거나 고립 칸이 생기면 되돌린다(`venice_dress.Guard`). 사람은 나무 윗부분 아래에 세우지 않는다.

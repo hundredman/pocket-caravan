@@ -18,3 +18,12 @@ MonoBehaviour:
     \uC2E4\uC81C \uC9C0\uBA85\uC744 \uBE4C\uB9B0 \uAC8C\uC784 \uAC01\uC0C9\uC774\uBA70
     \uC2E4\uC81C \uBC30\uCE58\uC640 \uB2E4\uB974\uB2E4. \uC88C\uD45C x10~19\uB294
     \uD300 \uD569\uC758\uC548 \uAD6C\uC5ED\uC758 \uC784\uC2DC\uAC12, y\uB294 \uBBF8\uC815."
+  deliveryRewards:
+    enabled: 0
+    revision: 1
+    dispatchFee: 1.5
+    perWeight: 0.65
+    perWeightPerStep: 0.25
+    premiumMultiplier: 1.8
+    premiumMinWeight: 8
+    premiumMaxWeight: 12
