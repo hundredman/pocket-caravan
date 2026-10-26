@@ -8,6 +8,7 @@ namespace PocketCaravan
     /// <summary>
     /// 키 입력을 한곳에서 읽는다. 키를 바꾸거나 패드를 더할 때 여기만 고친다.
     /// 이동: 방향키/WASD (8방향), 달리기: Shift, 말 걸기·확인: Space, 퀘스트 목록: Q, 지도: M, 취소·메뉴: Esc
+    /// 임시 시험용: G를 누르는 동안 4배 빠르게 (나중에 제거)
     /// </summary>
     public static class InputReader
     {
@@ -28,6 +29,8 @@ namespace PocketCaravan
         }
 
         public static bool Run() => K != null && (K.leftShiftKey.isPressed || K.rightShiftKey.isPressed);
+        /// <summary>임시 시험용: G를 누르는 동안 빠르게 이동 (PlayerController.debugFastMultiplier)</summary>
+        public static bool DebugFast() => K != null && K.gKey.isPressed;
         public static bool InteractPressed() => K != null && K.spaceKey.wasPressedThisFrame;
         public static bool ConfirmPressed() => InteractPressed();
         public static bool CancelPressed() => K != null && K.escapeKey.wasPressedThisFrame;
@@ -47,6 +50,7 @@ namespace PocketCaravan
         }
 
         public static bool Run() => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        public static bool DebugFast() => Input.GetKey(KeyCode.G);
         public static bool InteractPressed() => Input.GetKeyDown(KeyCode.Space);
         public static bool ConfirmPressed() => InteractPressed();
         public static bool CancelPressed() => Input.GetKeyDown(KeyCode.Escape);
