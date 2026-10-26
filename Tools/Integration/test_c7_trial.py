@@ -15,12 +15,13 @@ from asset_manifest import validate_catalogue
 
 
 class C7TrialChecks(unittest.TestCase):
-    def test_catalogue_keeps_all_four_trials_pending(self):
+    def test_catalogue_keeps_user_review_decisions(self):
         doc=json.loads((OUT/'catalogue.json').read_text())
         errors, assets=validate_catalogue(doc,ROOT)
         self.assertEqual(errors,[])
         self.assertEqual(len(assets),4)
-        self.assertEqual({a['review']['status'] for a in assets.values()},{'pending'})
+        self.assertEqual(assets['c7_pine']['review']['status'],'pending')
+        self.assertEqual({a['review']['status'] for k,a in assets.items() if k!='c7_pine'},{'changes_requested'})
         self.assertEqual(len([p for p in assets['c7_grass_dirt']['pieces'] if p.startswith('grass-')]),47)
 
     def test_original_envelope_and_feet_preserved(self):

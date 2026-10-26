@@ -41,7 +41,8 @@
         "path": "ArtReview/C7-Trial4-20261026/Native/thatch.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "feedback": "2026-10-27 사용자: 나무 외 나머지는 이상함. 팀 에셋처럼 형태부터 다시 제작."
       },
       "size": [
         4,
@@ -145,7 +146,8 @@
         "path": "ArtReview/C7-Trial4-20261026/Native/tile-house.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "feedback": "2026-10-27 사용자: 나무 외 나머지는 이상함. 팀 에셋처럼 형태부터 다시 제작."
       },
       "size": [
         4,
@@ -354,7 +356,8 @@
         "path": "Tools/ArtTrials/c7_finish.lua"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "feedback": "2026-10-27 사용자: 나무 외 나머지는 이상함. 팀 에셋처럼 형태부터 다시 제작."
       },
       "requiredPieces": [
         "center",

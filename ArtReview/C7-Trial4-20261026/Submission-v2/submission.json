@@ -1,5 +1,5 @@
 {
-  "status": "pending",
+  "status": "changes_requested",
   "scope": "C7 trial4 art direction only; production unchanged; B3 layout approval separate",
   "pngIdentity": "dimensions + decoded RGBA SHA256",
   "files": {
@@ -45,5 +45,11 @@
       ],
       "rgbaSHA256": "c2600946ef33d7b0590b342004602a1136f9ecbedcb9c18841cbe92d492a8369"
     }
+  },
+  "feedback": {
+    "date": "2026-10-27",
+    "user": "나무 빼고 나머지는 다 이상해.",
+    "direction": "팀 에셋처럼 형태부터 다시 제작",
+    "pine": "이번 수정에서 유지; 별도 본편 적용 승인으로 확대하지 않음"
   }
 }
