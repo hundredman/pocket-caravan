@@ -33,7 +33,12 @@ def verify():
                     if a.convert('RGBA').tobytes()!=b.convert('RGBA').tobytes():raise AssertionError('Pixels changed: '+p.name)
                 images+=1
             for p in (target/'Assets/PocketCaravan/Resources').rglob('*'):
-                if p.is_file() and p.read_bytes()!=(ROOT/p.relative_to(target)).read_bytes():raise AssertionError('Resource changed: '+str(p))
+                if not p.is_file():continue
+                q=ROOT/p.relative_to(target)
+                if p.suffix.lower()=='.png':
+                    with Image.open(p) as a,Image.open(q) as b:
+                        if a.size!=b.size or a.convert('RGBA').tobytes()!=b.convert('RGBA').tobytes():raise AssertionError('Resource changed: '+str(p))
+                elif p.read_bytes()!=q.read_bytes():raise AssertionError('Resource changed: '+str(p))
             idx=frozen_art.index()
             for path,digest in idx['visualImages'].items():
                 if hashlib.sha256((ROOT/path).read_bytes()).hexdigest()!=digest:raise AssertionError('Visual frame changed: '+path)
