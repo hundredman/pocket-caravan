@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "regionId": "venice",
+  "regionAssetPath": "Assets/PocketCaravan/Data/Venice/Region_Venice.asset",
+  "maps": [
+    {
+      "mapId": "venice_rialto",
+      "jsonPath": "Assets/PocketCaravan/Maps/Venice/venice_rialto.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Venice/venice_rialto.unity",
+      "worldX": 12,
+      "worldY": 1,
+      "generator": "venice:venice_rialto"
+    },
+    {
+      "mapId": "venice_santerasmo",
+      "jsonPath": "Assets/PocketCaravan/Maps/Venice/venice_santerasmo.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Venice/venice_santerasmo.unity",
+      "worldX": 11,
+      "worldY": 0,
+      "generator": "venice:venice_santerasmo"
+    },
+    {
+      "mapId": "venice_murano",
+      "jsonPath": "Assets/PocketCaravan/Maps/Venice/venice_murano.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Venice/venice_murano.unity",
+      "worldX": 13,
+      "worldY": 0,
+      "generator": "venice:venice_murano"
+    },
+    {
+      "mapId": "venice_burano",
+      "jsonPath": "Assets/PocketCaravan/Maps/Venice/venice_burano.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Venice/venice_burano.unity",
+      "worldX": 11,
+      "worldY": 2,
+      "generator": "venice:venice_burano"
+    },
+    {
+      "mapId": "venice_chioggia",
+      "jsonPath": "Assets/PocketCaravan/Maps/Venice/venice_chioggia.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Venice/venice_chioggia.unity",
+      "worldX": 13,
+      "worldY": 2,
+      "generator": "venice:venice_chioggia"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "venice_innkeeper",
+      "name": "여관 주인",
+      "sprite": "villager_tanuki_tall",
+      "greeting": "배에서 내린 손님은 먼저 여기서 짐을 푸오."
+    },
+    {
+      "id": "venice_clerk",
+      "name": "상인회 서기",
+      "sprite": "venice_clerk_tall",
+      "greeting": "의뢰는 성당 옆 게시판에 붙는다네."
+    },
+    {
+      "id": "venice_gardener",
+      "name": "과수원 일꾼",
+      "sprite": "villager_dog_tall",
+      "greeting": "레몬이랑 무화과를 리알토 장터로 내가지."
+    },
+    {
+      "id": "venice_glassmaker",
+      "name": "유리 장인",
+      "sprite": "venice_glassmaker_tall",
+      "greeting": "모래는 배로 들어와. 녹이고, 불고, 식혀서 진열하지."
+    },
+    {
+      "id": "venice_fisher",
+      "name": "부라노 어부",
+      "sprite": "venice_fisher_tall",
+      "greeting": "그물은 집 앞에서 손보고, 바로 잔교로 내려가지."
+    },
+    {
+      "id": "venice_warehouse",
+      "name": "창고지기",
+      "sprite": "venice_porter_tall",
+      "greeting": "소금 배가 들어오면 이 마당이 꽉 찬다오."
+    }
+  ],
+  "villagers": [
+    {
+      "name": "곤돌라 사공",
+      "sprite": "venice_gondolier_tall",
+      "lines": [
+        "노 젓는 건 힘보다 박자라오.",
+        "리알토 운하는 아침이 제일 붐비지."
+      ]
+    },
+    {
+      "name": "유리구슬 파는 아이",
+      "sprite": "villager_rabbit_tall",
+      "lines": [
+        "무라노 구슬은 불빛에 비추면 무지개가 떠요.",
+        "유리는 가벼워서 등짐으로도 멀리 팔 수 있대요."
+      ]
+    },
+    {
+      "name": "레이스 뜨는 아주머니",
+      "sprite": "venice_lace_tall",
+      "lines": [
+        "부라노에선 그물도 레이스도 손으로 뜬다우.",
+        "한 곳에 몰아 팔면 값이 금방 떨어져요."
+      ]
+    },
+    {
+      "name": "상인회 견습생",
+      "sprite": "venice_merchant_tall",
+      "lines": [
+        "장부는 하루도 거르면 안 된대요.",
+        "같은 물건도 마을마다 값이 달라요. L 장부를 보세요."
+      ]
+    },
+    {
+      "name": "뱃사람",
+      "sprite": "venice_fisher_tall",
+      "lines": [
+        "본토로 가려면 키오자 동쪽 잔교에서 배를 타게.",
+        "날개 달린 사자 문장을 본 적 있나? 길 끝 구석에 숨어 있다더군."
+      ]
+    },
+    {
+      "name": "가면 만드는 장인",
+      "sprite": "venice_glassmaker_tall",
+      "lines": [
+        "카니발이 다가오면 밤새 가면을 칠한다오.",
+        "가면 하나에 얼굴이 셋. 웃고, 울고, 모른 척하지."
+      ]
+    },
+    {
+      "name": "소금 굽는 노인",
+      "sprite": "venice_porter_tall",
+      "lines": [
+        "키오자 소금은 바람이 말린다네.",
+        "소금 한 자루가 생선 열 상자를 지킨다오."
+      ]
+    },
+    {
+      "name": "꽃 파는 처녀",
+      "sprite": "venice_lace_tall",
+      "lines": [
+        "창가에 꽃 한 송이면 집이 웃어요.",
+        "부라노 집들은 고깃배가 멀리서도 알아보게 색칠했대요."
+      ]
+    },
+    {
+      "name": "유리구슬 꿰는 할머니",
+      "sprite": "venice_lace_tall",
+      "lines": [
+        "구슬 하나 꿰는 데 숨 한 번.",
+        "무라노 구슬은 바다 건너 멀리까지 간다우."
+      ]
+    },
+    {
+      "name": "수습 뱃사공",
+      "sprite": "venice_gondolier_tall",
+      "lines": [
+        "아직은 노가 물을 튀겨요.",
+        "곤돌라 경주 최고 기록을 깨는 게 꿈이에요!"
+      ]
+    }
+  ]
+}

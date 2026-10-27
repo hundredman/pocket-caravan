@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: V1_FirstDelivery
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: venice_q1_delivery
+  title: "\uCCAB \uBC30\uB2EC"
+  chain: "\uBCA0\uB124\uCE58\uC544 1\uC7A5: \uBE48 \uC9C0\uAC8C\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
+  summary: "\uB9AC\uC54C\uD1A0 \uC5EC\uAD00 \uC8FC\uC778\uC758 \uAFB8\uB7EC\uBBF8\uB97C
+    \uBD80\uB77C\uB178 \uC5B4\uBD80\uC5D0\uAC8C \uC804\uD55C\uB2E4."
+  giverNpc: venice_innkeeper
+  requires: []
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "\uC790\uB124\uAC00 \uC0C8\uB85C \uC628 \uD589\uC0C1\uC774\uB85C\uAD70.\n\uC774
+    \uAFB8\uB7EC\uBBF8\uB97C \uBD80\uB77C\uB178 \uC5B4\uBD80\uC5D0\uAC8C \uC804\uD574
+    \uC8FC\uACA0\uB098?\n\uB0A8\uC11C\uCABD \uB2E4\uB9AC\uB97C \uAC74\uB108\uBA74
+    \uC5B4\uCD0C\uC774\uC57C."
+  giveItem: {fileID: 11400000, guid: 53ba846e304ef9244a098322ccd7d522, type: 2}
+  giveCount: 1
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 1
+    text: "\uBD80\uB77C\uB178 \uC5B4\uBD80\uC5D0\uAC8C \uAFB8\uB7EC\uBBF8 \uC804\uD558\uAE30"
+    targetId: venice_fisher
+    item: {fileID: 11400000, guid: 53ba846e304ef9244a098322ccd7d522, type: 2}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: "\uC5EC\uAD00\uC5D0\uC11C \uBCF4\uB0B8 \uADF8\uBB3C\uC2E4\uC774\uAD70.
+      \uC218\uACE0\uD588\uB124."
+  rewardMoney: 25
+  rewardCredit: 1
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "\uACE0\uB9D9\uB124. \uCCAB \uBC30\uB2EC \uC0AF\uC774\uC57C."

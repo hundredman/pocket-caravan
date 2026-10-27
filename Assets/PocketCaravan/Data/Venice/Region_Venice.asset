@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52173c030d53540968a2e67252f4c4e2, type: 3}
+  m_Name: Region_Venice
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.RegionData
+  id: venice
+  displayName: "\uBCA0\uB124\uCE58\uC544"
+  note: "\uC81C\uC548 \uCD08\uC548. \uB9AC\uC54C\uD1A0\xB7\uD0A4\uC624\uC790\xB7\uBB34\uB77C\uB178\xB7\uC0B0\uD14C\uB77C\uC2A4\uBAA8\xB7\uBD80\uB77C\uB178\uB294
+    \uC2E4\uC81C \uC9C0\uBA85\uC744 \uBE4C\uB9B0 \uAC8C\uC784 \uAC01\uC0C9\uC774\uBA70
+    \uC2E4\uC81C \uBC30\uCE58\uC640 \uB2E4\uB974\uB2E4. \uC88C\uD45C x10~19\uB294
+    \uD300 \uD569\uC758\uC548 \uAD6C\uC5ED\uC758 \uC784\uC2DC\uAC12, y\uB294 \uBBF8\uC815."
+  deliveryRewards:
+    enabled: 0
+    revision: 1
+    dispatchFee: 1.5
+    perWeight: 0.65
+    perWeightPerStep: 0.25
+    premiumMultiplier: 1.8
+    premiumMinWeight: 8
+    premiumMaxWeight: 12

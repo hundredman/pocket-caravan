@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "regionId": "center_venice",
+  "regionAssetPath": "Assets/PocketCaravan/Data/Venice/Region_CenterVenice.asset",
+  "maps": [
+    {
+      "mapId": "venice_c_landing",
+      "jsonPath": "Assets/PocketCaravan/Maps/VeniceMainland/venice_c_landing.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/VeniceMainland/venice_c_landing.unity",
+      "worldX": 14,
+      "worldY": 2,
+      "generator": "venice_mainland:venice_c_landing"
+    },
+    {
+      "mapId": "venice_c_vineyard",
+      "jsonPath": "Assets/PocketCaravan/Maps/VeniceMainland/venice_c_vineyard.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/VeniceMainland/venice_c_vineyard.unity",
+      "worldX": 14,
+      "worldY": 1,
+      "generator": "venice_mainland:venice_c_vineyard"
+    },
+    {
+      "mapId": "venice_c_marsh",
+      "jsonPath": "Assets/PocketCaravan/Maps/VeniceMainland/venice_c_marsh.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/VeniceMainland/venice_c_marsh.unity",
+      "worldX": 14,
+      "worldY": 3,
+      "generator": "venice_mainland:venice_c_marsh"
+    },
+    {
+      "mapId": "venice_c_pass",
+      "jsonPath": "Assets/PocketCaravan/Maps/VeniceMainland/venice_c_pass.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/VeniceMainland/venice_c_pass.unity",
+      "worldX": 15,
+      "worldY": 1,
+      "generator": "venice_mainland:venice_c_pass"
+    },
+    {
+      "mapId": "venice_c_bridge",
+      "jsonPath": "Assets/PocketCaravan/Maps/VeniceMainland/venice_c_bridge.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/VeniceMainland/venice_c_bridge.unity",
+      "worldX": 15,
+      "worldY": 3,
+      "generator": "venice_mainland:venice_c_bridge"
+    },
+    {
+      "mapId": "venice_c_post",
+      "jsonPath": "Assets/PocketCaravan/Maps/VeniceMainland/venice_c_post.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/VeniceMainland/venice_c_post.unity",
+      "worldX": 15,
+      "worldY": 2,
+      "generator": "venice_mainland:venice_c_post"
+    },
+    {
+      "mapId": "venice_c_gate",
+      "jsonPath": "Assets/PocketCaravan/Maps/VeniceMainland/venice_c_gate.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/VeniceMainland/venice_c_gate.unity",
+      "worldX": 16,
+      "worldY": 2,
+      "generator": "venice_mainland:venice_c_gate"
+    }
+  ],
+  "npcs": [],
+  "villagers": [
+    {
+      "name": "포도 따는 일꾼",
+      "sprite": "venice_vintner_tall",
+      "lines": [
+        "올해 포도는 알이 굵어.",
+        "양조장 포도주는 석호 도시에서 값이 좋지."
+      ]
+    },
+    {
+      "name": "길손",
+      "sprite": "villager_rabbit_tall",
+      "lines": [
+        "직행로는 빠르지만 밤엔 도적이 나온대.",
+        "고갯길은 좁고 거칠어서 수레가 고생이야."
+      ]
+    },
+    {
+      "name": "대상 숙소 손님",
+      "sprite": "venice_merchant_tall",
+      "lines": [
+        "습지길은 진흙이 있어 느리지만 도적은 없지.",
+        "큰 장이 서는 마을에선 팔면 덤을 얹어 준다네."
+      ]
+    },
+    {
+      "name": "양치기 소년",
+      "sprite": "venice_vintner_tall",
+      "lines": [
+        "양들은 습지 풀을 좋아해요.",
+        "안개 끼는 날엔 길 잃은 사람이 꼭 있어요."
+      ]
+    },
+    {
+      "name": "우편 나르는 기수",
+      "sprite": "venice_guard_tall",
+      "lines": [
+        "동문까지 하루, 나루까지 반나절.",
+        "비 오는 날엔 돌다리가 미끄럽소."
+      ]
+    },
+    {
+      "name": "포도 밟는 아이",
+      "sprite": "venice_merchant_tall",
+      "lines": [
+        "발이 보라색이 됐어요!",
+        "양조장 포도주는 석호 섬에서 값을 잘 쳐 줘요."
+      ]
+    }
+  ]
+}

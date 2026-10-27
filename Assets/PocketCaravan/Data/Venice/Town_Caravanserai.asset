@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147baa154c7bc4bf39645666676b3271, type: 3}
+  m_Name: Town_Caravanserai
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.TownData
+  id: venice_c_caravanserai
+  displayName: "\uB300\uC0C1 \uC219\uC18C"
+  region: {fileID: 11400000, guid: f38d6dee7faa94d47a2868a9e699b4c3, type: 2}
+  journeyNote: "\uBCF8\uD1A0 \uAE38\uC774 \uBAA8\uC774\uB294 \uC219\uC18C. \uC26C\uACE0,
+    \uAE38 \uC18C\uC2DD\uC744 \uB4E3\uACE0, \uC11D\uD638 \uBB3C\uAC74\uC744 \uBE44\uC2F8\uAC8C
+    \uD310\uB2E4."
+  worldCoord: {x: 15, y: 2}
+  startLevel: 1
+  settlementTier: 2
+  facilities:
+  - id: venice_c_caravanserai_rest
+    displayName: "\uAE38\uC190 \uC27C\uD130"
+    kind: 0
+    minTier: 1
+    minCredit: 0
+    description: 
+    storageCapacity: 120
+  - id: venice_c_caravanserai_info
+    displayName: "\uAD50\uC5ED \uAE38 \uC548\uB0B4\uC18C"
+    kind: 1
+    minTier: 2
+    minCredit: 1
+    description: "\uC11C\uCABD \uC9C1\uD589\uB85C\uB294 \uB098\uB8E8\uD130\uB85C
+      \uBC14\uB85C \uAC11\uB2C8\uB2E4. \uBD81\uCABD\uC740 \uD3EC\uB3C4\uBC2D\xB7\uACE0\uAC2F\uAE38,
+      \uB0A8\uCABD\uC740 \uC2B5\uC9C0\xB7\uB3CC\uB2E4\uB9AC\uB85C \uB3CC\uC544\uAC00\uB294
+      \uAE38\uC785\uB2C8\uB2E4. \uB3D9\uBB38 \uB108\uBA38 \uC911\uC559 \uAD8C\uC5ED\uC740
+      \uC544\uC9C1 \uAE38\uC744 \uB2E6\uB294 \uC911\uC785\uB2C8\uB2E4."
+    storageCapacity: 120
+  stock:
+  - item: {fileID: 11400000, guid: 2eb42ca42c7322a4f8fe7f379bcb954e, type: 2}
+    optimal: 10
+    localPriceMultiplier: 1.1
+  - item: {fileID: 11400000, guid: 018a545c0e6c93f4c97c5e4224b223c9, type: 2}
+    optimal: 16
+    localPriceMultiplier: 1.2
+  - item: {fileID: 11400000, guid: 58596ccbd03895d429f2d5781358ce80, type: 2}
+    optimal: 16
+    localPriceMultiplier: 1.1
+  - item: {fileID: 11400000, guid: ada83f26ddff528418a2795d1786d676, type: 2}
+    optimal: 16
+    localPriceMultiplier: 1.2
+  - item: {fileID: 11400000, guid: 8fcf64b0e9e02ef42a811e652539ab6c, type: 2}
+    optimal: 16
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: f0481849b4ca4134faf4c3466df7bf6e, type: 2}
+    optimal: 4
+    localPriceMultiplier: 1.2
+  - item: {fileID: 11400000, guid: 5d6f67d084c304c4085459c6ae25bdcf, type: 2}
+    optimal: 4
+    localPriceMultiplier: 1.2
+  defaultOptimal: 3
+  vehiclesForSale: []

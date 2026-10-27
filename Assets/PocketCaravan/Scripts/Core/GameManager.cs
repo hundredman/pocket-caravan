@@ -29,6 +29,10 @@ namespace PocketCaravan
         Vector2Int pendingFacing;
         Vector3? pendingExact;
         float fade;   // 0 = 보임, 1 = 검은 화면
+        TravelTransition transition;   // 이번 이동의 지역별 화면 효과 (null이면 검은 페이드)
+        string transitionName;
+        bool transitionCovering;
+        float coveredAt = -1f;
 
         /// <summary>맵을 넘어가는 중 (화면이 어두워졌다 밝아지는 동안 조작을 막음)</summary>
         public bool IsTravelling { get; private set; }
@@ -175,13 +179,30 @@ namespace PocketCaravan
         IEnumerator Travel(string sceneName, string spawnId, float offset, Vector2Int facing, Vector3? exact)
         {
             IsTravelling = true;
-            for (float t = 0; t < 1f; t += Time.unscaledDeltaTime / 0.12f) { fade = t; yield return null; }
+            // 지역별 이동 효과(TravelTransition). 등록이 없으면 기존 검은 페이드와 시간 그대로.
+            string fromMap = MapRoot.Current != null ? MapRoot.Current.mapId : null;
+            transition = TravelTransition.For(fromMap, sceneName);
+            transition?.Begin(fromMap, sceneName);
+            var index = WorldIndex.Get();
+            transitionName = index != null ? index.MapName(sceneName) : sceneName;
+            transitionCovering = true; coveredAt = -1f;
+            float cover = transition != null ? transition.CoverSeconds : 0.12f;
+            float reveal = transition != null ? transition.RevealSeconds : 0.18f;
+            // 지역 효과는 한 프레임이 길어도(씬 불러오기 직후 등) 건너뛰지 않게 프레임당 진행을 1/30초로 묶는다
+            float Dt() => transition != null ? Mathf.Min(Time.unscaledDeltaTime, 1f / 30f) : Time.unscaledDeltaTime;
+            for (float t = 0; t < 1f; t += Dt() / cover) { fade = t; yield return null; }
             fade = 1f;
+            coveredAt = Time.unscaledTime;
             pendingSpawnId = spawnId; pendingOffset = offset; pendingFacing = facing; pendingExact = exact;
             yield return SceneManager.LoadSceneAsync(sceneName);
             yield return null;
-            for (float t = 1f; t > 0f; t -= Time.unscaledDeltaTime / 0.18f) { fade = t; yield return null; }
+            float loadedAt = Time.unscaledTime;
+            while (transition != null && (Time.unscaledTime - coveredAt < transition.MinHoldSeconds
+                   || Time.unscaledTime - loadedAt < transition.AfterLoadSeconds)) yield return null;
+            transitionCovering = false;
+            for (float t = 1f; t > 0f; t -= Dt() / reveal) { fade = t; yield return null; }
             fade = 0f;
+            transition = null;
             IsTravelling = false;
         }
 
@@ -261,6 +282,11 @@ namespace PocketCaravan
         {
             if (fade <= 0f) return;
             GUI.depth = -1000;
+            if (transition != null)
+            {
+                transition.Draw(fade, transitionCovering, transitionName, coveredAt < 0f ? 0f : Time.unscaledTime - coveredAt);
+                return;
+            }
             GUI.color = new Color(0f, 0f, 0f, fade);
             GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Texture2D.whiteTexture);
             GUI.color = Color.white;
@@ -319,6 +345,13 @@ namespace PocketCaravan
         public bool EventReady(string map) => Ready("event:" + map);
         public void EventHappened(string map) => cooldowns["event:" + map] = Clock.TotalHours + 8f;
         bool Ready(string key) => !cooldowns.TryGetValue(key, out var until) || Clock.TotalHours >= until;
+
+        // ---------- 지역 진행 메모 ----------
+        // 지역별 작은 진행(찾은 수집품, 하루 한 번 놀이 등)을 이미 저장되는 숫자 표에 "지역:이름" 키로 남긴다.
+        // 저장 형식은 바꾸지 않는다. 키는 지역 접두사로 구분한다 (예: "venice:lion:3").
+        public float GetMemo(string key, float fallback = 0f) => cooldowns.TryGetValue(key, out var v) ? v : fallback;
+        public bool HasMemo(string key) => cooldowns.ContainsKey(key);
+        public void SetMemo(string key, float value) => cooldowns[key] = value;
 
         /// <summary>가장 비싼 짐 (물건은 한 묶음 기준가, 의뢰는 보수)</summary>
         object MostValuable(out string name)
