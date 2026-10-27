@@ -1,8 +1,8 @@
 {
   "statuses": {
-    "forest_round": "pending",
-    "forest_bent": "pending",
-    "forest_wide": "pending"
+    "forest_round": "approved",
+    "forest_bent": "approved",
+    "forest_wide": "approved"
   },
   "productionApplied": false,
   "files": {
@@ -55,5 +55,7 @@
       ],
       "rgbaSHA256": "acf91edb33798a0536fc58bc5fec01996bc93265b4be5bb1f7ab5234dae487fc"
     }
-  }
+  },
+  "reviewDecisions": "ArtReview/C7-Batch2-20261027/review-decisions.json",
+  "historicalCaption": "Submitted captions retained; later approval recorded per asset."
 }

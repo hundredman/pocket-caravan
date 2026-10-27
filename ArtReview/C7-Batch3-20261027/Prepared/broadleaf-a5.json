@@ -1,0 +1,18 @@
+{
+  "sourceSize": [
+    64,
+    64
+  ],
+  "outputSize": [
+    64,
+    64
+  ],
+  "gridStep": 1,
+  "gridMode": "native",
+  "estimate": null,
+  "alphaThreshold": 128,
+  "usedOpaqueColors": 7,
+  "paletteValid": true,
+  "binaryAlpha": true,
+  "approval": "pending user visual review"
+}

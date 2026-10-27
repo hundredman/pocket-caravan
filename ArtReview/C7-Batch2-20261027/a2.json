@@ -1,8 +1,8 @@
 {
   "errors": [],
   "statuses": {
-    "c7_batch2_forest_round": "pending",
-    "c7_batch2_forest_bent": "pending",
-    "c7_batch2_forest_wide": "pending"
+    "c7_batch2_forest_round": "approved",
+    "c7_batch2_forest_bent": "approved",
+    "c7_batch2_forest_wide": "approved"
   }
 }

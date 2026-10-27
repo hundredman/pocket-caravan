@@ -1,0 +1,59 @@
+{
+  "statuses": {
+    "broadleaf": "pending",
+    "light_tree": "pending",
+    "golden_tree": "pending"
+  },
+  "productionApplied": false,
+  "files": {
+    "style-comparison.png": {
+      "size": [
+        1120,
+        1150
+      ],
+      "rgbaSHA256": "22e78dba04ba4e1c300c262da7d68b2076f2744d008b9e343c77944836264e6f"
+    },
+    "game-comparison.png": {
+      "size": [
+        1000,
+        480
+      ],
+      "rgbaSHA256": "ff080f422f3b7b991ca8c54a6c8a4501dab750bb4b1b7301f2773f48c36fb8e9"
+    },
+    "Screens/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "1fb92410bdb44b88775768b4b1cd0617b079d740401c152214a57e3858df9fe8"
+    },
+    "Screens/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "6bbbb1b2bdf133024f386e3e1aa7c10fdcd9a57f026aff9b0829075f4cb14e13"
+    },
+    "Native/broadleaf.png": {
+      "size": [
+        64,
+        64
+      ],
+      "rgbaSHA256": "1258be95beaef1b2df3def580e735fe3979fed85fc570da7a86d1b338c1d8bbb"
+    },
+    "Native/light_tree.png": {
+      "size": [
+        48,
+        64
+      ],
+      "rgbaSHA256": "840a4a42ab79bd108fd2b0de8ff30ba90bba9a149df16229f21e2ffbcdc72465"
+    },
+    "Native/golden_tree.png": {
+      "size": [
+        48,
+        64
+      ],
+      "rgbaSHA256": "1ea999ee87611212033d5b5d6a7b7b2d92371f60b57f8ea705c13acc9c263fe4"
+    }
+  }
+}
