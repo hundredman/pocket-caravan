@@ -49,7 +49,30 @@ namespace PocketCaravan
 #else
         const string SaveFile = "pocket_caravan_save.json";
 #endif
-        static string Path => System.IO.Path.Combine(Application.persistentDataPath, SaveFile);
+        // 지역 시험 세션(RegionTestSession) 전용 저장 칸. null이면 본편 저장 파일을 쓴다.
+        static string slotFile;
+        public static string FileName => slotFile ?? SaveFile;
+        public static bool UsingSeparateSlot => slotFile != null;
+        public static string CurrentPath => Path;
+        static string Path => System.IO.Path.Combine(Application.persistentDataPath, FileName);
+
+        /// <summary>본편 파일과 다른 같은 폴더의 .json 이름만 허용한다. 하위 경로·본편/미리보기 파일명은 거부.</summary>
+        public static bool IsValidSlotName(string name) =>
+            !string.IsNullOrWhiteSpace(name) && name.EndsWith(".json", StringComparison.Ordinal)
+            && name.IndexOfAny(new[] { '/', '\\', ':' }) < 0 && !name.Contains("..")
+            && name != "pocket_caravan_save.json" && name != "pocket_caravan_preview_save.json";
+
+        /// <summary>이후 읽기/쓰기/삭제를 전용 파일로 돌린다. Play 시작마다 본편 파일로 초기화된다.</summary>
+        public static void UseSlot(string fileName)
+        {
+            if (!IsValidSlotName(fileName)) throw new ArgumentException("전용 저장 파일 이름이 올바르지 않습니다: " + fileName);
+            slotFile = fileName;
+            LoadBlocked = false;
+        }
+
+        // 도메인 리로드를 끈 에디터에서도 Play마다 본편 저장 칸으로 되돌린다.
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetSlot() { slotFile = null; LoadBlocked = false; }
 
         public static bool Exists => File.Exists(Path);
 

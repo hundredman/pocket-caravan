@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: Quest_ArabiaQ02Supper
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: arabia_q02_supper
+  title: "\uC5EC\uAD00\uC758 \uC800\uB141 \uC900\uBE44"
+  chain: "\uC544\uB77C\uBE44\uC544 1\uC7A5"
+  summary: "\uC790\uBE44\uB4DC \uC7A5\uD130\uC5D0\uC11C \uACE1\uBB3C \uAFB8\uB7EC\uBBF8
+    2\uAC1C\uB97C \uC9C1\uC811 \uC0AC\uC11C \uC54C \uC544\uD750\uC0AC \uC5EC\uAD00\uC758
+    \uB9C8\uB9AC\uC554\uC5D0\uAC8C \uB0A9\uD488\uD55C\uB2E4. \uBCF4\uC218\uC5D0\uC11C
+    \uC0B0 \uAC12\uC744 \uBE80 \uAC83\uC774 \uC2E4\uC81C \uC774\uC775\uC774\uB2E4."
+  giverNpc: arabia_maryam
+  requires:
+  - {fileID: 11400000, guid: 7465fbb11d2f745adb3b45069f59b84b, type: 2}
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "\uACE1\uBB3C\uC740 \uC790\uBE44\uB4DC\uC5D0\uC11C \uC0AC \uC624\uB834.
+    \uBB3C\uAC74\uAC12\uC744 \uBE7C\uB3C4 \uB124 \uBAAB\uC774 \uB0A8\uB3C4\uB85D
+    \uC904\uAC8C.\n\uC218\uB77D\uD55C \uB4A4 \uC790\uBE44\uB4DC \uC7A5\uD130\uC5D0\uC11C
+    \uC0B0 \uAC83\uB9CC \uC7A5\uBD80\uC5D0 \uB0A8\uC544. \uACE1\uBB3C \uAFB8\uB7EC\uBBF8\uB294
+    \uBCF4\uD1B5 \uAC1C\uB2F9 5\uB0E5 \uC548\uD30E\uC774\uC57C."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 2
+    text: "\uC790\uBE44\uB4DC \uC7A5\uD130\uC5D0\uC11C \uACE1\uBB3C \uAFB8\uB7EC\uBBF8
+      \uC0AC\uAE30"
+    targetId: arabia_zabid
+    item: {fileID: 11400000, guid: c8af66d8d995047beb40404ffae04de1, type: 2}
+    vehicle: {fileID: 0}
+    count: 2
+    completeLine: 
+  - type: 1
+    text: "\uC54C \uC544\uD750\uC0AC \uC5EC\uAD00\uC758 \uB9C8\uB9AC\uC554\uC5D0\uAC8C
+      \uACE1\uBB3C \uAFB8\uB7EC\uBBF8 \uC804\uD558\uAE30"
+    targetId: arabia_maryam
+    item: {fileID: 11400000, guid: c8af66d8d995047beb40404ffae04de1, type: 2}
+    vehicle: {fileID: 0}
+    count: 2
+    completeLine: "\uC774\uC81C \uD55C \uC904\uC744 \uB124 \uD798\uC73C\uB85C \uCC44\uC6E0\uAD6C\uB098.
+      \uB2E4\uC74C\uC5D0 \uBB34\uC5C7\uC744 \uB098\uB97C\uC9C0\uB294 \uB124\uAC00
+      \uACE8\uB77C \uBCF4\uB834."
+  rewardMoney: 30
+  rewardCredit: 1
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "\uC7A5\uBD80\uC5D0 \uC0B0 \uAC12\uC744 \uC801\uC5B4 \uB450\uB834.
+    \uBC1B\uC740 \uB3C8\uC774 \uC804\uBD80 \uC774\uC775\uC740 \uC544\uB2C8\uB2C8\uAE4C."
