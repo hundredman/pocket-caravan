@@ -127,6 +127,7 @@ def make():
     snow_base(img, 32, 0, 0, 31, 29)
     sled(img, 64, 0)
     icefall(img, 0, 32)
+    watermill(img, 48, 32)   # 10/27 물방앗간 (3~5, 2~4)
     img.save(PATH)
     return PATH
 
@@ -223,3 +224,80 @@ def icefall(img, ox, oy):
             if px[ox + x, oy + y][3] and px[ox + x, oy + y] in (W, L, M):
                 if y + 1 >= 64 or px[ox + x, oy + y + 1][3] == 0 or (x + 1 < 48 and px[ox + x + 1, oy + y][3] == 0) or (x > 0 and px[ox + x - 1, oy + y][3] == 0):
                     px[ox + x, oy + y] = OUTL if y > 56 else D
+
+
+def watermill(img, ox, oy):
+    """10/27 물방앗간 3x3 (48x48): 돌 기초 위 나무 판자 집 + 눈 덮인 가파른 박공 지붕, 오른쪽에 물레방아 바퀴 (아래 물길 없음).
+    문은 가운데 칸 (스탬프 기준 door_dx=1). 개울 나루 마을 (물방앗간 주인) 용."""
+    import math
+    from PIL import ImageDraw
+    px = img.load()
+    d = ImageDraw.Draw(img)
+    O = (52, 40, 36, 255)
+    WD = (98, 62, 42, 255); W = (138, 88, 56, 255); WL = (172, 116, 74, 255)        # 판자 벽
+    ST = (128, 134, 146, 255); STD = (92, 98, 112, 255); STL = (164, 170, 182, 255)  # 돌 기초
+    SN = (246, 244, 250, 255); SNS = (210, 204, 222, 255); SNO = (150, 146, 170, 255)
+    TH = (150, 112, 64, 255); THD = (112, 82, 48, 255)                                  # 지붕 처마(이엉)
+    DOOR = (44, 30, 26, 255); WIN = (250, 214, 120, 255); WINF = (98, 62, 42, 255)
+    RIM = (120, 78, 48, 255); RIML = (166, 112, 70, 255); HUB = (60, 44, 38, 255)
+    WA = (150, 202, 232, 255); WAL = (196, 230, 246, 255); WAW = (244, 252, 255, 255); WAD = (104, 160, 204, 255)
+    X = lambda x: ox + x; Y = lambda y: oy + y
+    # 바닥 그림자
+    d.line((X(2), Y(46), X(27), Y(46)), fill=SNS)
+    # 벽 (판자 세로줄)
+    d.rectangle((X(3), Y(21), X(26), Y(40)), fill=W, outline=O)
+    for x in range(5, 26, 4):
+        d.line((X(x), Y(22), X(x), Y(39)), fill=WD)
+        d.line((X(x + 1), Y(22), X(x + 1), Y(39)), fill=WL)
+    # 돌 기초
+    d.rectangle((X(2), Y(40), X(27), Y(45)), fill=ST, outline=O)
+    for i, x in enumerate(range(3, 26, 5)):
+        d.line((X(x), Y(41 + (i % 2) * 2), X(x + 3), Y(41 + (i % 2) * 2)), fill=STL)
+        d.point((X(x + 2), Y(44)), fill=STD)
+    # 문 (가운데 아래, 둥근 윗머리)
+    d.rectangle((X(16), Y(31), X(23), Y(42)), fill=DOOR, outline=O)
+    d.line((X(17), Y(30), X(22), Y(30)), fill=O)
+    d.line((X(19), Y(32), X(19), Y(41)), fill=(70, 48, 40, 255))
+    # 창 (따뜻한 불빛)
+    d.rectangle((X(6), Y(26), X(10), Y(30)), fill=WIN, outline=WINF)
+    d.line((X(8), Y(26), X(8), Y(30)), fill=WINF)
+    # 지붕: 가파른 박공, 처마는 이엉, 위는 눈
+    for y in range(2, 24):
+        half = int((y - 2) * 15 / 21) + 1
+        l, r = 14 - half, 15 + half
+        for x in range(max(l, 0), min(r, 30) + 1):
+            if y >= 20:
+                c = THD if (x + y) % 3 == 0 else TH
+            elif y >= 17 + (1 if (x // 3) % 2 else 0):
+                c = SNS
+            else:
+                c = SN if x <= 14 else (SN if (x - 14) < (y - 2) * 0.4 else SNS)
+            px[X(x), Y(y)] = c
+        if 0 <= l: px[X(l), Y(y)] = O
+        if r <= 30: px[X(r), Y(y)] = O
+    d.line((X(0), Y(24), X(30), Y(24)), fill=O)
+    # 고드름
+    for x, ln in [(3, 2), (8, 3), (13, 2), (20, 3), (26, 2)]:
+        d.line((X(x), Y(25), X(x), Y(24 + ln)), fill=WAL)
+    # 용마루 끝 장식 (바이킹 박공 X 장식)
+    d.line((X(11), Y(0), X(14), Y(3)), fill=WD); d.line((X(18), Y(0), X(15), Y(3)), fill=WD)
+    # 굴대 (벽 → 바퀴)
+    d.rectangle((X(26), Y(30), X(36), Y(32)), fill=WD, outline=O)
+    # 바퀴 (6살, 테 두 줄, 날개 10개)
+    cx, cy, R = 36.5, 31.5, 8
+    for a in range(0, 180, 60):
+        t = math.radians(a + 15)
+        dx, dy = math.cos(t) * (R - 1), math.sin(t) * (R - 1)
+        d.line((X(cx - dx), Y(cy - dy), X(cx + dx), Y(cy + dy)), fill=RIM, width=1)
+    d.ellipse((X(cx - R), Y(cy - R), X(cx + R), Y(cy + R)), outline=O)
+    d.ellipse((X(cx - R + 1), Y(cy - R + 1), X(cx + R - 1), Y(cy + R - 1)), outline=RIML)
+    d.ellipse((X(cx - R + 2), Y(cy - R + 2), X(cx + R - 2), Y(cy + R - 2)), outline=RIM)
+    for a in range(0, 360, 36):
+        t = math.radians(a)
+        bx, by = round(cx + math.cos(t) * (R + 1)), round(cy + math.sin(t) * (R + 1))
+        d.rectangle((X(bx - 1), Y(by - 1), X(bx + 1), Y(by + 1)), fill=RIML, outline=O)
+    d.ellipse((X(cx - 2), Y(cy - 2), X(cx + 2), Y(cy + 2)), fill=HUB)
+    for x in range(32, 42):                       # 바퀴 위 눈
+        if abs(x - cx) < 4: px[X(x), Y(cy - R - 2)] = SN; px[X(x), Y(cy - R - 1)] = SNS if abs(x - cx) > 2 else SN
+    # 10/27 바퀴 아래 물길은 뺌 (기우 피드백). 눈 위 그림자만
+    d.line((X(30), Y(44), X(43), Y(44)), fill=SNS)

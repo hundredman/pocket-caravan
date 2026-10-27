@@ -86,6 +86,7 @@ tiles.STAMPS.update({
     "scarecrow": ("element", 15, 0, 1, 1, 0, 0, None),
     "bedroll": ("camp", 7, 7, 2, 1, 0, 0, None),
     "sled": ("northart", 4, 0, 2, 1, 0, 0, None),           # 짐 실은 썰매 (10/27 north_art.py로 새로 그림: 원래 그림은 잘려 보였다)
+    "watermill": ("northart", 3, 2, 3, 3, 0, 0, None),     # 10/27 물방앗간 (물레방아 바퀴, north_art.py), 문은 가운데 칸
     "totem": ("house", 14, 14, 1, 2, 1, 1, None),           # 나무 조각 기둥
     "totem2": ("house", 15, 14, 1, 2, 1, 1, None),
     "table": ("house", 31, 16, 2, 1, 0, 0, None),

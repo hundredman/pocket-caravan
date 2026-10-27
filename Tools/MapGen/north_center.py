@@ -368,7 +368,7 @@ def snow_wood():
     m.talker(17, 17, "썰매꾼", "north_p_herder_tall", "저기 트랙 출발대에서 20냥 내면 언덕 썰매 한 판! 나무 피하고 눈송이 모으면 상금을 줘.",
              "통나무는 Space로 뛰어넘어. 내 최고 기록은 아직 아무도 못 깼지.",
              "짐 싣는 썰매는 순록 고원의 하르 님이 허락해야 빌려줄 수 있어.")
-    m.talker(22, 7, "숲 마을 장터지기", "north_p_smith_tall", "여긴 나무랑 고기가 넘쳐. 대신 소금이랑 꿀술은 늘 모자라지.")
+    m.talker(22, 5, "숲 마을 장터지기", "north_p_smith_tall", "여긴 나무랑 고기가 넘쳐. 대신 소금이랑 꿀술은 늘 모자라지.")   # 10/27 좌판 지붕 바로 위(22,7)에서 두 칸 위로: 이름표·외침 안 겹치게
     m.talker(37, 21, "순록 돌보는 아이", "north_p_girl_tall", "이 순록은 루돌프 아니야. 이름은 '눈송이'야!")
     m.walker([(25, 1), (25, 8), (22, 12), (28, 13), (25, 18), (25, 30), (25, 38)], idx=8)
     m.critters("raven", (38, 4, 48, 10), 1)
@@ -405,6 +405,8 @@ def creek_town():
     m.board(18, 13, "north_ccreek")
     m.stamp("h_stoneB", 8, 4, force=True); m.door_path(8, 4, 2, 2, 11, door_dx=0)
     m.stamp("h_round", 30, 3, force=True); m.door_path(30, 3, 2, 3, 9, door_dx=0)
+    # 10/27 물방앗간: 둥근 회관 오른쪽 개울가 (물레방아는 개울 쪽). 문(가운데 칸)에서 다리 길까지 샛길
+    m.stamp("watermill", 35, 4, force=True); m.door_path(35, 4, 3, 3, 11, door_dx=1)
     m.stamp("woodhouse", 8, 15, force=True); m.door_path(8, 15, 3, 3, 21, door_dx=0)
     m.road_path([(9, 11), (18, 12)], width=1)
     # 10/26 서쪽 샛길: 룬돌 큰길로
@@ -416,14 +418,17 @@ def creek_town():
     m.fishing.append((38, 22))
     m.fishing.append((39, 31))
     m.road_path([(25, 24), (35, 24)], width=1); m.road_path([(25, 31), (36, 31)], width=1)
+    # 10/27 큰길과 얼음 낚시터 사이 빈터에 상인 집 하나 + 앞마당 샛길 (기우 피드백)
+    m.stamp("h_dark", 30, 16, force=True); m.door_path(30, 16, 4, 4, 24, door_dx=1)
+    m.road_path([(26, 21), (31, 21)], width=1)
     # 나룻배: 개울 아래로 피오르까지 (피오르 나루 마을 서쪽 부두)
     m.spot("ferry", 36, 34)
     m.add("spawn", 35, 33, id="ferry")
     m.stamp("boat", 38, 35, force=True, over_road=True)
-    m.sign(33, 36, "나룻배\n피오르 나루 마을 12냥")
+    m.sign(29, 32, "나룻배\n피오르 나루 마을 12냥")   # 10/27 숲 구석(33,36)에서 나룻배 가는 가로길 바로 아래 길가로
 
     m.sign(28, 3, "개울 나루 마을\n↑ 개울 다리길 · 북문 마을\n↓ 동남 물가길 · 북쪽 길목 마을")
-    m.talker(21, 7, "물방앗간 주인", "north_p_fisher_tall", "개울 물고기는 여기서 제일 싸. 대신 치즈랑 약초는 귀해서 비싸게 사 주지.")
+    m.talker(34, 7, "물방앗간 주인", "north_p_fisher_tall", "개울 물고기는 여기서 제일 싸. 대신 치즈랑 약초는 귀해서 비싸게 사 주지.")
     m.talker(30, 27, "얼음 낚시꾼", "north_bear_sailor_tall", "얼음은 세 번은 내리쳐야 깨져. 바구니 옆이 대구가 잘 무는 자리야.")
     m.talker(13, 23, "빨래하는 아주머니", "north_fox_woman_tall", "나룻배 타면 피오르 나루까지 금방이야. 비르카를 돌아가는 것보다 훨씬 빠르지.")
     m.walker([(25, 1), (25, 8), (21, 12), (28, 13), (25, 18), (25, 30), (25, 38)], idx=9)
