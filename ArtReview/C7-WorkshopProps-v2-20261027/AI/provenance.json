@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-27",
+  "tool": "built-in imagegen",
+  "generationCounts": {
+    "harvest": 1,
+    "celadon": 1,
+    "paper_rack": 0
+  },
+  "intent": "Reduce individual merchandise size using old game proportions; not just shrink previous whole group",
+  "processing": "Complete cluster uniform nearest-neighbor; same A5 grain9/jade8 candidate palettes; Aseprite contour; unchanged48x32 canvas bottom31",
+  "bounds": {
+    "harvest": [
+      41,
+      24
+    ],
+    "celadon": [
+      39,
+      24
+    ]
+  },
+  "paperRack": "Previous Aseprite and PNG copied unchanged; size feedback only, no regeneration"
+}

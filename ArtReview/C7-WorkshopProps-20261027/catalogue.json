@@ -85,7 +85,9 @@
         "path": "ArtReview/C7-WorkshopProps-20261027/Native/paper_rack.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "pending",
+        "date": "2026-10-27",
+        "sizeFeedback": "건조대 크기는 괜찮음. 크기 수용을 기록하고 픽셀 유지; 전체 그림 승인으로 확대 해석하지 않음."
       },
       "tiles": [
         {
@@ -147,7 +149,10 @@
         "path": "ArtReview/C7-WorkshopProps-20261027/Native/harvest.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "date": "2026-10-27",
+        "userQuote": "건조대 크기는 괜찮은데 나머지 2개는 물품이 이전 버전에 비해 커보여. 최대한 작게 표현해줘. 이전 정도의 크기로.",
+        "feedback": "전체 캔버스보다 개별 물품의 덩치를 줄이고 원래 작은 물품 구성 참고"
       },
       "tiles": [
         {
@@ -209,7 +214,10 @@
         "path": "ArtReview/C7-WorkshopProps-20261027/Native/celadon.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "date": "2026-10-27",
+        "userQuote": "건조대 크기는 괜찮은데 나머지 2개는 물품이 이전 버전에 비해 커보여. 최대한 작게 표현해줘. 이전 정도의 크기로.",
+        "feedback": "전체 캔버스보다 개별 물품의 덩치를 줄이고 원래 작은 물품 구성 참고"
       },
       "tiles": [
         {

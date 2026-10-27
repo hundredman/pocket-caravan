@@ -21,3 +21,5 @@
 Aseprite 배치에서 `Tools/ArtTrials/c7_workshop_props.lua`에 root(이 폴더 절대경로) 전달 → Pillow Python `Tools/ArtTrials/c7_workshop_props.py prep` → 같은 Lua `finish=true` → Python `register` → 이 worktree Unity6000.3.26f1 `C7WorkshopPropsReview.Run`(Burst 비활성·worker2) → Python `board`.
 
 그림 판단과 본편 연결은 별도다. 큰 종이 건조대·담장·벚나무 원본 연결 등 C7 나머지는 남았으며 성문의 통행/담장 접합/가림·충돌 판단도 남아 있다. 실제 보행·수동 플레이·저장 회귀·전체 통합·게임 빌드는 실행하지 않았다.
+
+사용자 후속 의견: 건조대 크기는 수용, 픽셀 유지. 수확/청자 물품은 커 보여 changes_requested로 기록했다. 작은 물품 후속 시안은 `../C7-WorkshopProps-v2-20261027/`에 보존한다.
