@@ -230,7 +230,8 @@ def inn_spots(m):
     out = []
     for o in m.objects:
         if (o["kind"] == "talker" and "여관" in o.get("name", "")) or (o["kind"] == "npc" and o.get("npc") == "north_innkeeper"):
-            c = nearest_walk(m, o["x"] + 1, o["y"], avoid={(o["x"], o["y"])})
+            dx = 1 if o["kind"] == "talker" else 3     # 퀘스트 NPC(여관 할머니) 옆은 이름표가 겹치지 않게 세 칸 떨어진 손님방 자리
+            c = nearest_walk(m, o["x"] + dx, o["y"], avoid={(o["x"], o["y"])})
             if c:
                 out += [c[0], c[1]]
     return out

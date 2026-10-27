@@ -274,7 +274,7 @@ namespace PocketCaravan
         }
 
         bool shopOpen; string shopMap, shopSprite; int shopIdx; string shopMsg = "";
-        GUIStyle shopRich;
+        GUIStyle shopRich, priceStyle;
 
         void OpenShop(string map, int n, string sprite)
         {
@@ -335,7 +335,7 @@ namespace PocketCaravan
             if (shopRich == null) shopRich = new GUIStyle(UIStyle.Rich) { wordWrap = false, clipping = TextClipping.Overflow };
             var info = KeeperInfo(shopSprite);
             var town = MarketTown();
-            float w = 330f, h = 64f + info.items.Length * 24f + 26f;
+            float w = 400f, h = 64f + info.items.Length * 24f + 26f;   // 10/27 세 자리 값이 남은 수량 글자와 겹쳐서 넓힘
             var r = new Rect((UIStyle.VirtualWidth - w) / 2f, (UIStyle.VirtualHeight - h) / 2f, w, h);
             GUI.Box(r, GUIContent.none, UIStyle.Box);
             GUI.Label(new Rect(r.x + 12, r.y + 8, w - 24, 18), $"<b>{info.name}</b> · {info.title}   <color=#ffe08a>돈 {gm.Player.money}냥</color>", shopRich);
@@ -349,9 +349,11 @@ namespace PocketCaravan
                 int market = town != null ? gm.GetMarket(town).BuyPrice(item) : Mathf.RoundToInt(item.basePrice);
                 int price = KeeperPrice(item, town);
                 if (item.icon != null) GUI.DrawTexture(new Rect(r.x + 12, y + 2, 16, 16), item.icon.texture);
-                GUI.Label(new Rect(r.x + 34, y + 2, 120, 18), item.displayName, shopRich);
-                GUI.Label(new Rect(r.x + 150, y + 2, 90, 18), $"<color=#8a8296><size=9>장터 {market}</size></color> → <color=#ffde59><b>{price}냥</b></color>", shopRich);
-                GUI.Label(new Rect(r.x + 236, y + 3, 40, 18), left > 0 ? $"<size=9>{left}개 남음</size>" : "<size=9><color=#8a8296>다 팔림</color></size>", shopRich);
+                // 칸: 이름 | 장터 값 → 좌판 값 (오른쪽 맞춤) | 남은 수량 | 사기
+                GUI.Label(new Rect(r.x + 34, y + 2, 130, 18), item.displayName, shopRich);
+                if (priceStyle == null) priceStyle = new GUIStyle(shopRich) { alignment = TextAnchor.MiddleRight };
+                GUI.Label(new Rect(r.x + 160, y + 1, 128, 20), $"<color=#8a8296><size=9>장터 {market}</size></color> → <color=#ffde59><b>{price}냥</b></color>", priceStyle);
+                GUI.Label(new Rect(r.x + 296, y + 3, 50, 18), left > 0 ? $"<size=9>{left}개 남음</size>" : "<size=9><color=#8a8296>다 팔림</color></size>", shopRich);
                 GUI.enabled = left > 0;
                 if (GUI.Button(new Rect(r.xMax - 52, y, 40, 20), "사기", UIStyle.Button)) BuyFromKeeper(item, town);
                 GUI.enabled = true;
