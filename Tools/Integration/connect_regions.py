@@ -78,6 +78,8 @@ def main():
     for s in spec.get("signs", []):
         m = load(s["map"])
         hit = [o for o in m["objects"] if o["kind"] == "sign" and o["x"] == s["x"] and o["y"] == s["y"]]
+        if not hit and s.get("add"):   # 10/27: 담당자가 표지판을 안 둔 연결 자리에는 새로 세운다
+            m["objects"].append(blank("sign", x=s["x"], y=s["y"], text=s["text"])); continue
         if not hit: errors.append(f"{s['map']}: 표지판 ({s['x']},{s['y']}) 없음"); continue
         hit[0]["text"] = s["text"]
     if errors:
