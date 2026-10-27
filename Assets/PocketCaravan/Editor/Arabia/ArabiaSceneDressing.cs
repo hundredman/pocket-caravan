@@ -57,6 +57,11 @@ namespace PocketCaravan.EditorTools
                 talk.gameObject.AddComponent<ArabiaWanderer>();
                 EditorUtility.SetDirty(talk.gameObject);
             }
+            // 분위기 연출 (발자국·모래바람·동물): 씬마다 하나 (ArabiaAmbience, 표시 전용)
+            if (Object.FindAnyObjectByType<ArabiaAmbience>() == null)
+            {
+                new GameObject("arabia_ambience").AddComponent<ArabiaAmbience>();
+            }
             var cam = Object.FindAnyObjectByType<Camera>();
             if (cam != null) { cam.backgroundColor = new Color32(0xD9, 0xB9, 0x82, 0xFF); EditorUtility.SetDirty(cam); }   // 맵 밖 모래색
             EditorSceneManager.SaveScene(scene);
