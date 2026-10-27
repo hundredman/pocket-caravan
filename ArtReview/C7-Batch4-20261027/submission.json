@@ -1,0 +1,59 @@
+{
+  "statuses": {
+    "cart": "pending",
+    "well": "pending",
+    "stone_lantern": "pending"
+  },
+  "productionApplied": false,
+  "files": {
+    "style-comparison.png": {
+      "size": [
+        1120,
+        1150
+      ],
+      "rgbaSHA256": "b2b0953aaf2f8829e356660daf0b67731e357b172930cbed4b7a74f8567c761b"
+    },
+    "game-comparison.png": {
+      "size": [
+        1000,
+        480
+      ],
+      "rgbaSHA256": "b60313e1d17266da97d5b04314634a03fbf6862b3fbaae74848159b20f9c887e"
+    },
+    "Screens/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "6622faede813c0621448ed8414afaf716b8b5d5606d1a26a8b93203f3b2e080e"
+    },
+    "Screens/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "d726239536747bc18b02f5cd3fae16788341555c456c53c37fb9e8cd284683e7"
+    },
+    "Native/cart.png": {
+      "size": [
+        32,
+        32
+      ],
+      "rgbaSHA256": "12dd1a378226a3106932a3e65b31c6c818fc4fca0ab11d801932e503297eed8d"
+    },
+    "Native/well.png": {
+      "size": [
+        16,
+        32
+      ],
+      "rgbaSHA256": "199222043446aebeadb5fd7ed4b21b231aec26866fb688924f5ff3e15d5a6efc"
+    },
+    "Native/stone_lantern.png": {
+      "size": [
+        16,
+        32
+      ],
+      "rgbaSHA256": "49a409329edd129adb88c9b5e4cc38ce5fbfdf81f4951a4fe910791db78ed3a6"
+    }
+  }
+}

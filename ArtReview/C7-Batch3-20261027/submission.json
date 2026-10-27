@@ -1,8 +1,8 @@
 {
   "statuses": {
-    "broadleaf": "pending",
-    "light_tree": "pending",
-    "golden_tree": "pending"
+    "broadleaf": "approved",
+    "light_tree": "approved",
+    "golden_tree": "approved"
   },
   "productionApplied": false,
   "files": {
@@ -55,5 +55,7 @@
       ],
       "rgbaSHA256": "1ea999ee87611212033d5b5d6a7b7b2d92371f60b57f8ea705c13acc9c263fe4"
     }
-  }
+  },
+  "reviewDecisions": "ArtReview/C7-Batch3-20261027/review-decisions.json",
+  "historicalCaption": "Submitted captions retained; later approval is recorded separately."
 }

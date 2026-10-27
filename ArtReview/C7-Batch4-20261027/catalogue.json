@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "prop": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#b78137",
+        "#daa34a",
+        "#f0c365",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#c4a779",
+        "#e0c99b",
+        "#f4dfb5",
+        "#77746c",
+        "#a29b87",
+        "#c4bca7",
+        "#4a627a",
+        "#718da3",
+        "#794b3b",
+        "#ad624c",
+        "#d69062",
+        "#547e6a",
+        "#86a28b",
+        "#33475e"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7_batch4_cart",
+      "kind": "object",
+      "purpose": "handcart",
+      "size": [
+        2,
+        2
+      ],
+      "image": "ArtReview/C7-Batch4-20261027/Native/cart.png",
+      "profile": "prop",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-Batch4-20261027/Native/cart.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch4_cart_0_0",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_cart_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch4_cart_1_0",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_cart_1_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch4_cart_0_1",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_cart_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch4_cart_1_1",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_cart_1_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_batch4_well",
+      "kind": "object",
+      "purpose": "village_well",
+      "size": [
+        1,
+        2
+      ],
+      "image": "ArtReview/C7-Batch4-20261027/Native/well.png",
+      "profile": "prop",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-Batch4-20261027/Native/well.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch4_well_0_0",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_well_0_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch4_well_0_1",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_well_0_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_batch4_stone_lantern",
+      "kind": "object",
+      "purpose": "stone_lantern",
+      "size": [
+        1,
+        2
+      ],
+      "image": "ArtReview/C7-Batch4-20261027/Native/stone_lantern.png",
+      "profile": "prop",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-Batch4-20261027/Native/stone_lantern.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch4_stone_lantern_0_0",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_stone_lantern_0_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch4_stone_lantern_0_1",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_stone_lantern_0_1.png"
+        }
+      ]
+    }
+  ]
+}

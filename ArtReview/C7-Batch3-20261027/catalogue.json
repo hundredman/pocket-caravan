@@ -66,7 +66,18 @@
         "path": "ArtReview/C7-Batch3-20261027/Native/broadleaf.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "date": "2026-10-27",
+        "userQuote": "좋아.",
+        "scope": "묶음3 큰활엽수·밝은줄기·노란잎 세그림 승인; 다음그림/본편배치·계절기능은별도",
+        "evidence": "ArtReview/Approved/C7-Batch3-v1/README.md",
+        "rgbaEvidence": {
+          "size": [
+            64,
+            64
+          ],
+          "rgbaSHA256": "1258be95beaef1b2df3def580e735fe3979fed85fc570da7a86d1b338c1d8bbb"
+        }
       },
       "tiles": [
         {
@@ -198,7 +209,18 @@
         "path": "ArtReview/C7-Batch3-20261027/Native/light_tree.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "date": "2026-10-27",
+        "userQuote": "좋아.",
+        "scope": "묶음3 큰활엽수·밝은줄기·노란잎 세그림 승인; 다음그림/본편배치·계절기능은별도",
+        "evidence": "ArtReview/Approved/C7-Batch3-v1/README.md",
+        "rgbaEvidence": {
+          "size": [
+            48,
+            64
+          ],
+          "rgbaSHA256": "840a4a42ab79bd108fd2b0de8ff30ba90bba9a149df16229f21e2ffbcdc72465"
+        }
       },
       "tiles": [
         {
@@ -302,7 +324,18 @@
         "path": "ArtReview/C7-Batch3-20261027/Native/golden_tree.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "date": "2026-10-27",
+        "userQuote": "좋아.",
+        "scope": "묶음3 큰활엽수·밝은줄기·노란잎 세그림 승인; 다음그림/본편배치·계절기능은별도",
+        "evidence": "ArtReview/Approved/C7-Batch3-v1/README.md",
+        "rgbaEvidence": {
+          "size": [
+            48,
+            64
+          ],
+          "rgbaSHA256": "1ea999ee87611212033d5b5d6a7b7b2d92371f60b57f8ea705c13acc9c263fe4"
+        }
       },
       "tiles": [
         {
