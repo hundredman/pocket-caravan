@@ -31,7 +31,7 @@ COLORS={DEEP:(52,98,140),SHALLOW:(96,156,186),SAND:(236,222,170),ROCKCOAST:(150,
         FOREST:(52,98,56),MOUNTAIN:(128,114,96),PEAK:(184,178,170),VILLAGE:(210,190,140),VOID:(28,34,40),LAKE:(70,136,186)}
 BLOCKED={DEEP,SHALLOW,RIVER,MOUNTAIN,PEAK,ROCKCOAST,LAKE}
 # 호수(세계 좌표 중심, 대략 면적): 남쪽 쉼터 마을 북쪽(2026-10-27 은샘 제안)
-LAKES=[dict(label='남쪽 큰 호수',area=760,box=(95,22,150,72),sourceDir=-99)]   # sourceDir: 호수에서 본 상류(수원 산) 방향, 도(화면 기준, -90=북)   # 이 범위(x0,y0,x1,y1) 안에서 가장 낮은 내륙 분지를 고른다
+LAKES=[dict(label='남쪽 큰 호수',area=760,box=(95,22,150,72),sourceDir=-75,village='남쪽 호숫가 마을',villageDir=-35)]   # village: 호숫가 마을. villageDir: 그 마을에서 본 호수 방향(도)   # sourceDir: 호수에서 본 상류(수원 산) 방향, 도(화면 기준, -90=북)   # 이 범위(x0,y0,x1,y1) 안에서 가장 낮은 내륙 분지를 고른다
 # 마을 목표 면적(칸): 수도는 크게, 중앙 마을은 장터 광장·이벤트 마당·시설이 들어갈 만큼(WorldLayout 3절 약 2,060)
 VILLAGE_AREA={'goryeo/개경':1100,'goryeo/장단':700,'goryeo/나루':700,'goryeo/송악':650,'goryeo/닥목':600,
               'east/동문 마을':1400,'east/북동 포구':1400,'east/남동 포구':1400,'east/중앙 길목 마을':1500}
@@ -236,10 +236,22 @@ def build(layout):
         core=south&inner&land&far&(to_sea>14)&(d_river>6)&~np.isin(t,[MOUNTAIN,PEAK])
         core&=((xx_+X0)>=bx0+10)&((xx_+X0)<bx1-10)&((yy_+Y0)>=by0+10)&((yy_+Y0)<by1-10)
         seed=np.unravel_index(int(np.argmin(np.where(core,E,np.inf))),E.shape)
+        hv=next((h for h in VARIANT['hamlets'] if h[1]==lk.get('village')),None)
+        if hv:
+            # 호숫가 마을: 마을 자리(두 마을 사이 길 가운데) 바로 앞에 호수가 펼쳐지도록 중심을 잡는다
+            pair=next(kk for kk,v in VIA.items() if v==hv[0]);a1,b1=sorted(pair)
+            tp={tw['key']:tw['position'] for tw in layout.data['towns']}
+            hx,hy=(tp[a1][0]+tp[b1][0])/2,(tp[a1][1]+tp[b1][1])/2;hy_,hx_=idx(int(hx),int(hy))
+            dv=math.radians(lk['villageDir']);rl=math.sqrt(lk['area']/math.pi)
+            ty_,tx_=hy_+math.sin(dv)*(11+rl*1.05),hx_+math.cos(dv)*(11+rl*1.05)
+            near_=(((yy_-ty_)**2+(xx_-tx_)**2)<4.5**2)&land&inner&~river
+            seed=np.unravel_index(int(np.argmin(np.where(near_,E,np.inf))),E.shape)
+            lk['villageAnchor']=[round(hx,1),round(hy,1)]
         # 모양: 길쭉한 타원에 만·곶을 만드는 굴곡(각도에 따른 낮은 주파수 사인 합)
         # 골짜기 호수: 상류(산) → 호수 → 출구(바다) 축을 따라 길쭉하게
         sy_,sx_=np.nonzero(sea);k0=int(np.argmin((sy_-seed[0])**2+(sx_-seed[1])**2))
-        r0=math.sqrt(lk['area']/math.pi);asp=1.9;ang=math.atan2(sy_[k0]-seed[0],sx_[k0]-seed[1])+rng.uniform(-.25,.25);ang_sea=math.atan2(sy_[k0]-seed[0],sx_[k0]-seed[1])
+        r0=math.sqrt(lk['area']/math.pi);asp=(1.35 if hv else 1.9);ang=(math.radians(lk['villageDir'])+math.pi/2 if hv else math.atan2(sy_[k0]-seed[0],sx_[k0]-seed[1]))+rng.uniform(-.25,.25);   # 호숫가 마을이 긴 물가를 마주보게
+        ang_sea=math.atan2(sy_[k0]-seed[0],sx_[k0]-seed[1])
         ph=rng.uniform(0,2*math.pi,4);amp=(.16,.10,.06,.04)
         dy_=yy_-seed[0];dx_=xx_-seed[1]
         u=dx_*math.cos(ang)+dy_*math.sin(ang);v=-dx_*math.sin(ang)+dy_*math.cos(ang)
@@ -376,6 +388,7 @@ def build(layout):
     region_of=np.full((H,W),'',object)
     for i,k in enumerate(keys):region_of[mapid==i]=k.split('/')[0]
     flat=ndimage.generic_filter(elev,np.std,size=5)
+    d_lake=ndimage.distance_transform_edt(~lake) if lake.any() else np.full((H,W),99.0)
     passable=land&~np.isin(t,list(BLOCKED))
     towns=[dict(key=tw['key'],label=tw.get('label') or tw['key'].split('/')[1],position=tw['position']) for tw in layout.data['towns']]
     byk={tw['key']:tw for tw in towns}
@@ -398,6 +411,7 @@ def build(layout):
         score=4*flat+1.2*elev+.02*np.sqrt((yy-oy)**2+(xx-ox)**2)+.6*(t==FOREST)+.8*(t==MARSH)
         if key in COAST:score+=.12*np.abs(to_sea-5)          # 바다에서 5칸쯤: 포구·나루
         if key in RIVERSIDE or key.startswith('hamlet'):score+=.05*np.minimum(d_river,20)  # 물가
+        if any(lk_.get('village')==town['label'] for lk_ in LAKES):score+=.25*np.abs(d_lake-3)   # 호숫가 마을: 물가에서 3칸쯤
         score=np.where(cand,score,np.inf);s=np.unravel_index(int(np.argmin(score)),score.shape)
         target=town.get('area') or VARIANT['area'].get(key) or VILLAGE_AREA[key]
         got={s};q=[(0.0,s)];seen={s};okreg=(region_of==reg)
