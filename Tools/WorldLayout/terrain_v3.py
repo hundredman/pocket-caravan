@@ -82,6 +82,12 @@ def astar(start,goal,cost,blocked=None,eight=True):
     raise ValueError('경로 없음')
 
 
+# 검토안 선택: 중앙 마을 크기와 추가 쉼터 마을
+VARIANT={'area':{},'hamlets':[]}
+SMALL_CENTRAL={'east/동문 마을':750,'east/북동 포구':800,'east/남동 포구':800,'east/중앙 길목 마을':850}
+HAMLETS=[('east/북쪽 내륙길','북쪽 쉼터 마을',320),('east/남쪽 내륙길','남쪽 쉼터 마을',320)]
+
+
 def build(layout):
     rng=np.random.default_rng(SEED)
     owned=np.zeros((H,W),bool);land=np.zeros((H,W),bool);mapid=np.full((H,W),-1,int)
@@ -214,13 +220,18 @@ def build(layout):
     # 4) 마을 범위: 마을 칸에서 평평하고 지나갈 수 있는 땅으로 넓혀 목표 면적을 채운다
     village=np.zeros((H,W),bool);village_info=[]
     shape_n=noise((H,W),7,rng,2)
-    for town in layout.data['towns']:
+    towns=[dict(key=tw['key'],label=tw.get('label'),position=tw['position']) for tw in layout.data['towns']]
+    for mkey,label,area in VARIANT['hamlets']:
+        k=keys.index(mkey);cand=np.argwhere((mapid==k)&land&~np.isin(t,list(BLOCKED)))
+        cy,cx=cand.mean(0);c=cand[np.argmin(((cand-[cy,cx])**2).sum(1))]
+        towns.append(dict(key='hamlet/'+label,label=label,position=[float(c[1]+X0),float(c[0]+Y0)],area=area))
+    for town in towns:
         key=town['key'];x,y=town['position'];s=idx(int(math.floor(x)),int(math.floor(y)))
         if not land[s] or t[s] in BLOCKED:
             # 강·산 위면 가장 가까운 평지로
             cand=np.argwhere(land&~np.isin(t,list(BLOCKED))&(mapid==mapid[s]))
             s=tuple(cand[np.argmin(((cand-np.array(s))**2).sum(1))])
-        mine=mapid==mapid[s];target=VILLAGE_AREA[key]
+        mine=mapid==mapid[s];target=town.get('area') or VARIANT['area'].get(key) or VILLAGE_AREA[key]
         got={s};q=[(0.0,s)];seen={s}
         while q and len(got)<target:
             _,p=heapq.heappop(q);got.add(p)
@@ -238,7 +249,8 @@ def build(layout):
     # 마을 안은 평평하게: 숲·언덕을 풀밭으로(들판·해변·습지는 그대로 둔다)
     t[village&np.isin(t,[FOREST,HILL])]=GRASS
     for v in village_info:
-        v['area']=int(((mapid==keys.index(v['key']))&village).sum())
+        mk=v['key'] if v['key'] in keys else next(m for m,l,a in VARIANT['hamlets'] if 'hamlet/'+l==v['key'])
+        v['area']=int(((mapid==keys.index(mk))&village).sum())
     return dict(t=t,elev=elev,owned=owned,land=land,sea=sea,river=river,village=village,mapid=mapid,keys=keys,
                 rivers=river_info,villages=village_info)
 
@@ -292,7 +304,11 @@ def roads(layout,w):
     for r in order:
         c=cost.copy();c[road]*=.7   # 이미 난 길은 조금 싸다: 가까우면 합류해 갈림길이 생김
         via=VIA.get(frozenset((r['fromKey'],r['toKey'])))
-        if via:
+        hamlet=next((v for v in w['villages'] if v['key'].startswith('hamlet/') and via and next(m for m,l,a in VARIANT['hamlets'] if 'hamlet/'+l==v['key'])==via),None)
+        if hamlet:
+            mid=(hamlet['center'][1]-Y0,hamlet['center'][0]-X0)
+            raw=astar(centers[r['fromKey']],mid,c,blocked)+astar(mid,centers[r['toKey']],c,blocked)[1:]
+        elif via:
             # 이동 구역 맵을 지나는 길은 그 맵 가운데를 지나게(그 맵에 길이 없으면 이동 구역이 비게 됨)
             k=w['keys'].index(via);cand=np.argwhere((w['mapid']==k)&~blocked)
             cy,cx=cand.mean(0);mid=tuple(cand[np.argmin(((cand-[cy,cx])**2).sum(1))])
@@ -349,18 +365,22 @@ def render(w,path,road=None,scale=4,title=''):
 
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--roads',action='store_true');a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--roads',action='store_true')
+    ap.add_argument('--variant',choices=['current','small','small-hamlets'],default='current');a=ap.parse_args()
+    if a.variant!='current':VARIANT['area']=SMALL_CENTRAL
+    if a.variant=='small-hamlets':VARIANT['hamlets']=HAMLETS
+    sfx='' if a.variant=='current' else '-'+a.variant
     layout=WorldLayout.read();w=build(layout);OUT.mkdir(parents=True,exist_ok=True)
     # 검사: 해안선·면적 불변, 마을 칸 통행 가능
     land_before=sum(1 for c in layout.land if c in layout.owners)
     assert int(w['land'].sum())==land_before,'육지 면적이 바뀜'
     counts={NAMES[k]:int((w['t']==k).sum()) for k in range(1,15)}
-    render(w,OUT/'terrain-villages.png',title='M1 지형 v3 + 마을 범위')
+    render(w,OUT/f'terrain-villages{sfx}.png',title='M1 지형 v3 + 마을 범위'+sfx)
     report=dict(seed=SEED,landCells=land_before,classCounts=counts,rivers=w['rivers'],villages=w['villages'])
     if a.roads:
-        r=roads(layout,w);render(w,OUT/'terrain-villages-roads.png',road=r,title='M1 지형 v3 + 마을 + 길')
+        r=roads(layout,w);render(w,OUT/f'terrain-villages-roads{sfx}.png',road=r,title='M1 지형 v3 + 마을 + 길'+sfx)
         report['roads']=r['records'];report['roadCells']=int(r['road'].sum())
-    (OUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=1))
+    (OUT/f'report{sfx}.json').write_text(json.dumps(report,ensure_ascii=False,indent=1))
     print(json.dumps(report,ensure_ascii=False)[:3000])
 
 
