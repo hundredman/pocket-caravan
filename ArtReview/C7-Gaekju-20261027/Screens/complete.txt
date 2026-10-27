@@ -1,0 +1,1 @@
+Actual Unity Play render; same original terrain and staging; before/after complete gaekju candidate96x64 at same anchor; approved house and actors, same original terrain, same approved palace, same pending v13 pond; changes limited to candidate rectangle. previewOnly true; PPU16 Point480x270; no navigation or manual-play claim.

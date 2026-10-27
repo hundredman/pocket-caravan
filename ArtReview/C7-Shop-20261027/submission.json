@@ -1,5 +1,5 @@
 {
-  "status": "pending",
+  "status": "approved",
   "productionApplied": false,
   "files": {
     "shop.png": {
@@ -37,5 +37,7 @@
       ],
       "rgbaSHA256": "b06e1db29922e03068dccbfcd905d889fbd828df392ef227f0b0ed31b2ec61fb"
     }
-  }
+  },
+  "reviewDecision": "ArtReview/C7-Shop-20261027/review-decision.json",
+  "historicalCaption": "Submitted pending captions retained as history; see review-decision.json for later approval."
 }

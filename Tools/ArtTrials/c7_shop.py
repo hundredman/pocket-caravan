@@ -24,17 +24,24 @@ def register():
             tiles.append(dict(dx=x,dy=y,layer='obj',tile=key,image=str(p.relative_to(ROOT))))
             palette.append(key);obj[(y+1)*8+x+1]=len(palette)-1
     asset=dict(id='c7_market_shop',kind='object',purpose='market_shop',size=[6,4],image=str((OUT/'Native/shop.png').relative_to(ROOT)),profile='shop',source=dict(kind='ai_processed',path=str((OUT/'Native/shop.aseprite').relative_to(ROOT))),review=dict(status='pending'),tiles=tiles)
+    decision=OUT/'review-decision.json'
+    if decision.exists():
+        saved=json.loads(decision.read_text())
+        assert saved['rgbaEvidence']==rgba_evidence(OUT/'Native/shop.png'),'Approved pixels changed; create new trial instead'
+        asset['review']=saved
     doc=dict(schemaVersion=1,profiles=dict(shop=dict(pixelsPerCell=[16,16],binaryAlpha=True,palette=['#'+c for c in COLORS])),assets=[asset])
-    layout=dict(id='c7_shop_trial',assetPlacementVersion=1,w=8,h=6,palette=palette,ground=[0]*48,deco=[0]*48,obj=obj,high=[0]*48,road=[0]*48,terrainTags=['grass']*108,assetPlacements=[dict(id='shop',assetId='c7_market_shop',purpose='market_shop',x=1,y=1)])
+    layout=dict(id='c7_shop_trial',assetPlacementVersion=1,w=8,h=6,palette=palette,ground=[0]*48,deco=[0]*48,obj=obj,high=[0]*48,road=[0]*48,terrainTags=['grass']*48,assetPlacements=[dict(id='shop',assetId='c7_market_shop',purpose='market_shop',x=1,y=1)])
     errors=validate(doc,[('shop',layout)],ROOT,False);assert not errors,errors
     for name,value in [('catalogue',doc),('layout',layout),('a2',dict(errors=errors,approval=asset['review']['status'])),('pixels',rgba_evidence(OUT/'Native/shop.png'))]:(OUT/(name+'.json')).write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
     print('A2: whole shop 24 cells, preview0errors; art status '+asset['review']['status'])
 def board():
+    decision=OUT/'review-decision.json'
+    label='그림 승인' if decision.exists() and json.loads(decision.read_text())['status']=='approved' else '검토 대기'
     # Reference images are shown complete, never copied into the trial asset.
     old=ROOT/'Assets/PocketCaravan/Art/Baked/Sprites/shop_6_4.png'
     page=Image.new('RGBA',(1480,850),'#f6f0e3');d=ImageDraw.Draw(page)
     text(d,(18,12),'C7 시전 가게 · 기존 / 수정안 / 팀 그림체 참고',26)
-    for x,label in [(18,'기존 시전 가게'),(518,'새 시전 가게 · 검토 대기')]:text(d,(x,58),label,20)
+    for x,label in [(18,'기존 시전 가게'),(518,'새 시전 가게 · '+label)]:text(d,(x,58),label,20)
     sprite(page,old,(18,105),4);sprite(page,OUT/'Native/shop.png',(518,105),4)
     text(d,(1020,58),'팀 자료 전체 이미지',20)
     for y,n in [(95,'figma-78-11.png'),(395,'figma-92-32.png')]:
@@ -51,7 +58,7 @@ def board():
     page.convert('RGB').save(OUT/'style-comparison.png')
     game=Image.new('RGBA',(1000,480),'#f6f0e3');d=ImageDraw.Draw(game)
     text(d,(14,12),'Unity 실제 Play 카메라 · 시전 가게 전후',25)
-    for x,name,label in [(12,'before','기존 시전 가게'),(508,'trial','새 시전 가게 · 검토 대기')]:
+    for x,name,label in [(12,'before','기존 시전 가게'),(508,'trial','새 시전 가게 · '+label)]:
         text(d,(x,54),label,20)
         im=Image.open(OUT/'Screens'/(name+'.png')).convert('RGBA');assert im.size==(480,270)
         game.alpha_composite(im,(x,90))

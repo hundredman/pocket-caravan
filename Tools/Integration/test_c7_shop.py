@@ -8,12 +8,16 @@ from c7_shop import OUT,COLORS
 from c7_catalogue import rgba_evidence
 from asset_manifest import validate
 class ShopChecks(unittest.TestCase):
-    def test_whole24_cells_and_pending_production(self):
+    def test_whole24_cells_and_exact_approved_art(self):
         doc=json.loads((OUT/'catalogue.json').read_text());layout=json.loads((OUT/'layout.json').read_text())
         self.assertEqual(validate(doc,[('trial',layout)],ROOT,False),[])
-        self.assertTrue(validate(doc,[('trial',layout)],ROOT,True))
+        self.assertEqual(validate(doc,[('trial',layout)],ROOT,True),[])
+        self.assertEqual(doc['assets'][0]['review']['status'],'approved')
+        self.assertEqual(rgba_evidence(OUT/'Native/shop.png'),rgba_evidence(ROOT/'ArtReview/Approved/C7-Shop-v1/shop.png'))
+        self.assertEqual(json.loads((OUT/'review-decision.json').read_text())['rgbaEvidence'],rgba_evidence(OUT/'Native/shop.png'))
         result=Image.new('RGBA',(96,64));tiles=doc['assets'][0]['tiles']
         self.assertEqual(len(tiles),24)
+        self.assertEqual(len(layout['terrainTags']),layout['w']*layout['h'])
         for t in tiles:
             with Image.open(ROOT/t['image']) as im:result.alpha_composite(im.convert('RGBA'),(t['dx']*16,t['dy']*16))
         self.assertEqual(result.tobytes(),Image.open(OUT/'Native/shop.png').convert('RGBA').tobytes())

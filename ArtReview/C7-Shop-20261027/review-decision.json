@@ -1,0 +1,14 @@
+{
+  "status": "approved",
+  "date": "2026-10-27",
+  "userQuote": "그래.",
+  "scope": "C7 6×4 시전 가게 그림 한 개 승인; 다른 크기 가게/객주/본편 배치·충돌 변경은 별도",
+  "evidence": "ArtReview/Approved/C7-Shop-v1/README.md",
+  "rgbaEvidence": {
+    "size": [
+      96,
+      64
+    ],
+    "rgbaSHA256": "71450da35b1228b3f0db4a6118a92248e02dc18675a89e94df4f3b149f6b449e"
+  }
+}
