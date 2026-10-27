@@ -361,20 +361,32 @@ def partition(layout,w,road=None):
     passable=w['passable'];village=w['village'];village_info=w['villages']
     # 5) 맵 경계(v4): 마을(이동 구역은 쉼터·중간 지점)을 씨앗으로, 지형을 따라 퍼지는 거리로 땅을 나눈다.
     #    강·산을 건너는 비용을 크게 해 경계가 강·산줄기·숲 가장자리를 따르게 하고, 면적은 원래 목표에 맞춘다.
-    step_cost=np.ones((H,W));step_cost[t==LAKE]=25;step_cost[t==RIVER]=25;step_cost[np.isin(t,[MOUNTAIN,PEAK])]=20;step_cost[t==FOREST]=2.6
-    step_cost[t==MARSH]=4;step_cost[t==HILL]=2.2;step_cost[sea]=1.5
-    if road is not None:step_cost[road]=.45   # 길을 따라 빨리 퍼짐: 경계가 길 중간에서 길을 가로지르게
+    # 경계는 길과 마을 기준(2026-10-28 은샘): 지형과 상관없이 같은 거리로 퍼지되 길 위는 빨리 퍼진다.
+    # 그래서 맵은 마을과 그 마을로 이어지는 길을 중심으로 잡히고, 경계는 두 마을 사이 길의 중간에서 길을 가로지른다.
+    rinfo=road;road=road['center'] if isinstance(road,dict) else road
+    step_cost=np.ones((H,W))
+    if road is not None:step_cost[road]=.35
     targets={k:layout.maps[k]['area'] for k in keys}
     seeds={}
     for i,k in enumerate(keys):
         v=next((j for j,tw in enumerate(towns) if tw['key']==k or tw.get('hamlet')==k),None)
         if v is not None:seeds[k]=vlabel==v
         else:
-            pair=next(kk for kk,vv in VIA.items() if vv==k);a1,b1=sorted(pair)
-            ca=village_info[[tw['key'] for tw in towns].index(a1)]['center'];cb=village_info[[tw['key'] for tw in towns].index(b1)]['center']
-            my,mx=idx(int((ca[0]+cb[0])/2),int((ca[1]+cb[1])/2))
-            c=np.argwhere(passable&(region_of=='east')&~village);c=c[np.argmin(((c-[my,mx])**2).sum(1))]
-            sm=np.zeros((H,W),bool);sm[max(0,c[0]-2):c[0]+3,max(0,c[1]-2):c[1]+3]=True;seeds[k]=sm&owned
+            pair=next(kk for kk,vv in VIA.items() if vv==k)
+            sm=np.zeros((H,W),bool)
+            if isinstance(rinfo,dict):
+                # 이동 구역 맵은 그 구간 길의 가운데 부분(마을 밖)을 씨앗으로
+                for rec,path in zip(rinfo['records'],rinfo['paths']):
+                    if frozenset((rec['fromKey'],rec['toKey']))==pair:
+                        outside=[p_ for p_ in path if not village[p_]];n_=len(outside)
+                        for p_ in outside[int(n_*.3):int(n_*.7)+1]:sm[p_]=True
+            if not sm.any():
+                a1,b1=sorted(pair)
+                ca=village_info[[tw['key'] for tw in towns].index(a1)]['center'];cb=village_info[[tw['key'] for tw in towns].index(b1)]['center']
+                my,mx=idx(int((ca[0]+cb[0])/2),int((ca[1]+cb[1])/2))
+                c=np.argwhere(passable&(region_of=='east')&~village);c=c[np.argmin(((c-[my,mx])**2).sum(1))]
+                sm[max(0,c[0]-2):c[0]+3,max(0,c[1]-2):c[1]+3]=True
+            seeds[k]=sm&owned
     def geodesic(seed):
         dist=np.full((H,W),np.inf);q=[]
         for p in zip(*np.nonzero(seed)):dist[p]=0;q.append((0.0,p))
@@ -388,8 +400,6 @@ def partition(layout,w,road=None):
                 v=g+math.hypot(dy,dx)*(step_cost[p]+step_cost[n])/2
                 if v<dist[n]:dist[n]=v;heapq.heappush(q,(v,n))
         return dist
-    # 호수는 한 맵에 통째로: 호숫가 마을이 있는 맵의 씨앗에 호수를 더한다
-    if 'east/남쪽 내륙길' in seeds and w.get('lake') is not None:seeds['east/남쪽 내륙길']=seeds['east/남쪽 내륙길']|w['lake']
     D=np.stack([geodesic(seeds[k]) for k in keys])
     regmask=np.stack([region_of==k.split('/')[0] for k in keys])
     wgt=np.zeros(len(keys))
@@ -507,13 +517,13 @@ def render(w,path,road=None,scale=4,title='',tint=False):
         k_=np.clip(dep/6,0,1)[lk_,None]
         rgb[lk_]=np.array((118,178,206))*(1-k_)+np.array((52,108,160))*k_
     rgb[landish]*=shade[landish,None]
-    if road is not None:
-        rgb[road['road']&(t==RIVER)]=(150,110,70)          # 다리
-        rgb[road['road']&(t!=RIVER)]=(198,168,120)
     # 마을 범위: 옅게 덮고 테두리
     vm=w['village'];rgb[vm]=rgb[vm]*.7+np.array((255,236,170))*.3
     edge=vm&~ndimage.binary_erosion(vm)
     rgb[edge]=(255,226,110)
+    if road is not None:
+        rgb[road['road']&(t==RIVER)]=(150,110,70)          # 다리
+        rgb[road['road']&(t!=RIVER)]=(176,140,92)
     # 맵 경계
     mid=w['mapid'];b=np.zeros((H,W),bool)
     b[:,1:]|=(mid[:,1:]!=mid[:,:-1])&(mid[:,1:]>=0)&(mid[:,:-1]>=0);b[1:,:]|=(mid[1:,:]!=mid[:-1,:])&(mid[1:,:]>=0)&(mid[:-1,:]>=0)
@@ -557,7 +567,7 @@ def main():
     land_before=sum(1 for c in layout.land if c in layout.owners)
     assert int(w['land'].sum())==land_before,'육지 면적이 바뀜'
     r=roads(layout,w) if a.roads else None
-    partition(layout,w,r['center'] if r else None)
+    partition(layout,w,r)
     counts={NAMES[k]:int((w['t']==k).sum()) for k in range(1,16)}
     render(w,OUT/f'terrain-villages{sfx}.png',title='M1 지형 v3 + 마을 범위'+sfx)
     report=dict(seed=SEED,landCells=land_before,classCounts=counts,rivers=w['rivers'],villages=w['villages'],maps=w['maps'])

@@ -171,67 +171,67 @@
   {
    "key": "goryeo/송악",
    "b1Area": 3302,
-   "area": 5308
+   "area": 4272
   },
   {
    "key": "goryeo/닥목",
    "b1Area": 3402,
-   "area": 3404
+   "area": 4088
   },
   {
    "key": "goryeo/개경",
    "b1Area": 5001,
-   "area": 4059
+   "area": 3929
   },
   {
    "key": "goryeo/나루",
    "b1Area": 3997,
-   "area": 4352
+   "area": 4289
   },
   {
    "key": "goryeo/장단",
    "b1Area": 4298,
-   "area": 2877
+   "area": 3422
   },
   {
    "key": "east/동문 마을",
    "b1Area": 3200,
-   "area": 3032
+   "area": 3125
   },
   {
    "key": "east/북동 포구",
    "b1Area": 3200,
-   "area": 3262
+   "area": 3091
   },
   {
    "key": "east/남동 포구",
    "b1Area": 3200,
-   "area": 2649
+   "area": 2713
   },
   {
    "key": "east/중앙 길목 마을",
    "b1Area": 3200,
-   "area": 3571
+   "area": 3799
   },
   {
    "key": "east/북동 길",
    "b1Area": 3050,
-   "area": 3040
+   "area": 2984
   },
   {
    "key": "east/남동 길",
    "b1Area": 3051,
-   "area": 3381
+   "area": 3740
   },
   {
    "key": "east/북쪽 내륙길",
    "b1Area": 3047,
-   "area": 2795
+   "area": 2914
   },
   {
    "key": "east/남쪽 내륙길",
    "b1Area": 3052,
-   "area": 3270
+   "area": 2634
   }
  ],
  "roads": [
