@@ -281,6 +281,10 @@ def declutter(m):
     placed = list(fixed)
     taken = {(o["x"], o["y"]) for o in m.objects}
     taken |= {(x, y) for (x, y, t) in fixed}
+    # 10/27 줄무늬 좌판 그림(3칸 폭·2줄)과 그 바로 위 줄, 기존 좌판 앞 장꾼 자리 둘레에는 사람을 옮겨 놓지 않는다
+    st, _ = market_spots(m)
+    for i in range(0, len(st), 2):
+        taken |= {(st[i] + a, st[i + 1] + b) for a in (-2, -1, 0, 1, 2) for b in (-3, -2, -1, 0, 1)}
     moves = []
     for o in movers:
         me = (o["x"], o["y"], label(o))
