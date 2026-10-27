@@ -98,6 +98,15 @@ namespace PocketCaravan
         {
             string map = NorthUtil.Map;
             if (map != lastMap) { lastMap = map; Rebuild(map); }
+            onBathEdge = false;
+            var pcb = PlayerController.Instance;
+            if (bathEdge.Count > 0 && pcb != null && pcb.Motor != null && bathFade < 0f && !UIState.Blocking && pcb.TalkTarget == null)
+            {
+                var c = pcb.Motor.Cell;
+                int jy = NorthData.Height(map) - 1 - c.y;
+                onBathEdge = bathEdge.Contains(c.x * 1000 + jy);
+                if (onBathEdge && !UIState.JustClosed && InputReader.InteractPressed()) Bath();
+            }
             if (bathFade >= 0f)
             {
                 bathFade += Time.unscaledDeltaTime;
@@ -136,9 +145,10 @@ namespace PocketCaravan
             if (map == null || !map.StartsWith("north_")) return;
             root = new GameObject("North Daily").transform;
 
-            var baths = NorthData.Get(map, "baths");
-            for (int i = 0; i + 1 < baths.Length; i += 2)
-                NorthSpot.Make(root, NorthUtil.Cell(map, baths[i], baths[i + 1]), () => "온천 (몸 녹이기)", Bath);
+            // 10/27 온천 둘레 어느 칸에서나 Space로 몸 담그기 (정해진 세 자리까지 갈 필요 없게). 이름표 대신 발밑 안내
+            bathEdge.Clear();
+            var edge = NorthData.Get(map, "bathEdge");
+            for (int i = 0; i + 1 < edge.Length; i += 2) bathEdge.Add(edge[i] * 1000 + edge[i + 1]);
             var feed = NorthData.Get(map, "feed");
             if (feed.Length >= 2)
             {
@@ -523,9 +533,25 @@ namespace PocketCaravan
 
         static string W(NorthAtmosphere.Weather w) => w == NorthAtmosphere.Weather.Clear ? "맑음" : w == NorthAtmosphere.Weather.Light ? "가랑눈" : w == NorthAtmosphere.Weather.Heavy ? "함박눈" : "눈보라";
 
+        readonly HashSet<int> bathEdge = new HashSet<int>();
+        bool onBathEdge;
+        GUIStyle bathHint;
+
         void OnGUI()
         {
-            if (bathFade < 0f) return;
+            if (bathFade < 0f)
+            {
+                if (!onBathEdge || UIState.Blocking) return;
+                var pc = PlayerController.Instance; var cam = Camera.main;
+                if (pc == null || cam == null) return;
+                UIStyle.Begin();
+                if (bathHint == null) bathHint = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow };
+                var sp = cam.WorldToScreenPoint(pc.transform.position + new Vector3(0f, -0.8f, 0f));
+                float sc = UIStyle.Scale;
+                var r = new Rect(sp.x / sc - 60f, (Screen.height - sp.y) / sc, 120f, 14f);
+                GUI.Label(r, "<color=#bfeaff>Space 온천에 몸 담그기</color>", bathHint);
+                return;
+            }
             float a = Mathf.Sin(Mathf.Clamp01(bathFade / 2.6f) * Mathf.PI);
             var old = GUI.color;
             GUI.color = new Color(0.95f, 0.97f, 1f, 0.9f * a);

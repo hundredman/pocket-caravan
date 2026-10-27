@@ -346,6 +346,9 @@ for f in north.MAPS:
         secretStones=[[x, y] for (x, y, i) in getattr(m, "secrets", [])], # 밤에 빛나는 돌 위치
         ring=[v for c in spot_cells(m, "ring") for v in c],
         baths=[list(c) for c in spot_cells(m, "bath")],
+        bathEdge=[v for (x, y) in sorted({(x + a, y + b) for (x, y) in m._springs for a, b in ((1, 0), (-1, 0), (0, 1), (0, -1))
+                                          if 0 <= x + a < m.w and 0 <= y + b < m.h and (x + a, y + b) not in m._springs
+                                          and not m.blocked[y + b][x + a] and not m.water[y + b][x + a]}) for v in (x, y)],   # 10/27 온천 둘레 어디서나 몸 담그기
         feed=[v for c in spot_cells(m, "feed") for v in c],
         guild=[v for c in spot_cells(m, "guild") for v in c],
         festival=[v for c in spot_cells(m, "festival") for v in c],

@@ -358,7 +358,7 @@ def laugar():
     # 10/26 동쪽 산길: 얼음 동굴 골짜기로
     m.road_path([(39, 15), (42, 14), (48, 14)], width=2)
     m.link("E", 13, 4, "north_icecave", "W", "E")
-    m.sign(44, 11, "→ 얼음 동굴 골짜기\n순록 고원 · 피오르 길")
+    m.sign(44, 11, "→ 얼음 동굴 골짜기\n지나서 순록 고원 · 피오르 길")
     # 온천 세 곳: 큰 노천탕(서쪽), 작은 탕(동쪽), 약초밭 옆 웅덩이
     m.hot_spring(9, 16, 5.2, 3.2, steam=5)
     m.hot_spring(39, 20, 4.2, 2.6, steam=3)
@@ -378,7 +378,8 @@ def laugar():
     m.laundry(16, 14); m.laundry(43, 17)
     m.deco_stamp("bigbarrel", 44, 22); m.deco_stamp("cauldron", 15, 17); m.deco_stamp("bucket", 3, 19); m.deco_stamp("cauldron_snow", 42, 18)
     # 약초밭과 약초 말리는 틀
-    m.deco_stamp("rack", 17, 24); m.deco_stamp("rack", 17, 28)
+    # 10/27 약초 말리는 틀(철봉처럼 보임) 대신 작은 탕 옆 목욕 오두막
+    m.stamp("h_round", 17, 22, force=True); m.door_path(17, 22, 3, 4, 30, door_dx=1)
     m.deco_stamp("basket_veg", 20, 23); m.deco_stamp("potion", 21, 23); m.deco_stamp("basket", 16, 27); m.deco_stamp("potion", 28, 22)
     m.deco_stamp("haybale_s", 22, 25)
     # 광장: 가운데 모닥불, 깃대
