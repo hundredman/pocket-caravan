@@ -17,5 +17,11 @@ namespace PocketCaravan.EditorTools
                 throw new InvalidDataException("NPC 역할 연결 누락: " + target);
             return role.path;
         }
+
+        /// <summary>10/27 통합: 등록이 없으면 null (다른 지역 장터 상인용).</summary>
+        public static string TryGet(string target)
+        {
+            try { return Get(target); } catch (InvalidDataException) { return null; }
+        }
     }
 }

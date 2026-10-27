@@ -302,7 +302,11 @@ namespace PocketCaravan.EditorTools
                         break;
                     case "market":
                         var t = db.towns.Find(x => x != null && x.id == o.town);
-                        var npc = Character($"장터 상인 ({(t != null ? t.displayName : o.town)})", NpcArtBindings.Get("market:" + o.town), center, objects);
+                        // 10/27 통합: C1 역할 그림은 고려·중간권만 등록돼 있다. 다른 지역(북유럽·베네치아·아라비아) 장터 상인은 예전 공용 그림을 쓴다.
+                        string rid = entry != null && entry.region != null ? entry.region.regionId : "";
+                        string marketArt = (rid == "goryeo" || rid == "transit") ? NpcArtBindings.Get("market:" + o.town)
+                            : (NpcArtBindings.TryGet("market:" + o.town) ?? "merchant_tall");
+                        var npc = Character($"장터 상인 ({(t != null ? t.displayName : o.town)})", marketArt, center, objects);
                         npc.AddComponent<TownMarket>().town = t;
                         break;
                     case "talker":
