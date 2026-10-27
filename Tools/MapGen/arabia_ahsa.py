@@ -109,7 +109,7 @@ def build(link_target, link_spawn, my_spawn):
     for x, y in [(24, 16), (31, 16), (24, 24), (31, 23)]:
         m.maybe('tree_pottedOrange', x, y, foot=1, force=True)
     m.talker(26, 21, '우물가 아이', 'arabia_npc_child_tall', '우물물은 오아시스에서 끌어와요. 낙타도 여기서 물을 마셔요.')
-    m.asign(22, 24, '알 아흐사 중앙 광장\n북: 오아시스 · 서: 수크 · 동: 카라반사라이와 농원길 · 남: 남문')
+    m.asign(22, 24, '알 아흐사 중앙 광장\n북: 오아시스 → 빈 사막 질러가기 · 서: 수크 · 동: 나즈드 대상로 · 남: 남문')
 
     # ---- 카라반사라이(여관) · 낙타 우리 ----
     m.put('building_caravanserai', 37, 16, foot=2)
@@ -140,7 +140,7 @@ def build(link_target, link_spawn, my_spawn):
     m.put('animal_donkey', 41, 27, foot=1)
     m.put('prop_rope', 36, 28, foot=1)
     m.building('building_hammam', 47, 25, 30)
-    m.asign(51, 24, '동쪽: 농원길 → 자비드\n짐을 많이 실을수록 걸음이 느려집니다.')
+    m.asign(51, 24, '동쪽: 나즈드 대상로 → 사막 카라반사라이 → 제다\n짐을 많이 실을수록 걸음이 느려집니다.')
 
     # ---- 남서: 대추야자 과수원·건조장 ----
     m.building('house_dates', 3, 32, 35, kind='road')
@@ -159,7 +159,7 @@ def build(link_target, link_spawn, my_spawn):
 
     # ---- 남문 안쪽 ----
     m.add('npc', AVE - 1, 34, npc='arabia_hasan')
-    m.asign(AVE + 4, 32, '알 아흐사 오아시스 마을\n선대 장부의 첫 줄: "짐은 목적지까지, 약속은 사람에게까지."\n북쪽 광장 → 동쪽 큰길 → 농원길 → 자비드')
+    m.asign(AVE + 4, 32, '알 아흐사 오아시스 마을\n선대 장부의 첫 줄: "짐은 목적지까지, 약속은 사람에게까지."\n북쪽 광장 → 동쪽 큰길 → 나즈드 대상로 → 제다 → 해안길 → 자비드')
     m.maybe('plaza_lamp', AVE - 1, 31 + 1, foot=1, force=True)
 
     # ---- 큰길 등불 ----

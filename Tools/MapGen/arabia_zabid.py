@@ -15,7 +15,7 @@ def build(west, east):
     m.paint('grass', 3, 27, 52, 37, reserve=False)            # 남쪽 밭
     m.link('W', PORT, 4, *west)
     m.link('E', PORT, 4, *east)
-    m.paint('gravel', 45, PORT, W - 1, PORT + 3, grade=2)           # 동쪽 공방길로 나가는 자갈길
+    m.paint('gravel', 45, PORT, W - 1, PORT + 3, grade=2)           # 동쪽 홍해 바닷가로 나가는 자갈길
     m.paint('paving', 0, PORT, 41, PORT + 3, grade=3)          # 마을 큰길
     m.paint('paving', 3, 12, 50, 13, grade=2)                  # 북쪽 골목
     m.paint('paving', 18, 12, 19, PORT, grade=2)               # 세로 골목
@@ -75,7 +75,7 @@ def build(west, east):
     for x, y in [(31, 10), (44, 10), (31, 25), (44, 25)]:
         m.maybe('plaza_lamp', x, y, foot=1, force=True)
     m.add('villager', 34, 20, variant=2)
-    m.asign(46, 15, '동쪽 → 공방길 · 타이즈\n고원 와디를 따라 오르는 길입니다.')
+    m.asign(46, 15, '동쪽 → 홍해 바닷가 · 서쪽 → 커피 오르막 · 타이즈\n남쪽 → 해안길 · 제다 · 북쪽 → 협곡길(중앙 대륙)')
 
     # ---- 광장 동쪽 ----
     m.maybe('building_mudHouse', 46, 23, foot=2)

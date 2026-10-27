@@ -253,7 +253,9 @@ namespace PocketCaravan.EditorTools
                     (ArabiaRegionSetup.CentralEast, ArabiaRegionSetup.CentralCanyon, "고원 → 붉은 바위 협곡"),
                     (ArabiaRegionSetup.CentralCanyon, ArabiaRegionSetup.CentralBazaar, "협곡 → 장터 남동문"),
                     (ArabiaRegionSetup.CentralBazaar, ArabiaRegionSetup.CentralWest, "장터 서문 → 포도밭 언덕"),
-                    (ArabiaRegionSetup.CentralWest, ArabiaRegionSetup.CentralDunes, "포도밭 언덕 → 오아시스"),
+                    // 포도밭 언덕 남쪽 고개는 낙석·장애물 주기에 따라 막힐 수 있어, 장터로 돌아와 와디를 건너 오아시스로 간다
+                    (ArabiaRegionSetup.CentralWest, ArabiaRegionSetup.CentralBazaar, "포도밭 언덕 → 장터 서문"),
+                    (ArabiaRegionSetup.CentralBazaar, ArabiaRegionSetup.CentralDunes, "장터 → 와디 건너 오아시스"),
                     (ArabiaRegionSetup.CentralDunes, ArabiaRegionSetup.ShortcutMap, "오아시스 → 빈 사막 북쪽 모래길"),
                     (ArabiaRegionSetup.ShortcutMap, ArabiaRegionSetup.AhsaMap, "룹알할리 빈 사막 → 알 아흐사"),
                 };

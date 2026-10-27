@@ -1,4 +1,4 @@
-# 아라비아 정적 검사 2026-10-27 09:21:02 · Unity 6000.3.26f1
+# 아라비아 정적 검사 2026-10-27 09:58:45 · Unity 6000.3.26f1
 결과: 통과
 - [PASS] 공용 등록 검사 (MapJsonBuilder.ValidateWorld)
 - [PASS] 시작 맵은 그대로 Naru — Naru
@@ -69,19 +69,26 @@
 - [PASS] 출구 arabia_ahsa → arabia_shortcut/arabia_shortcut_spawn_seam_ahsa_1 — 폭 (7, 1)↔(7, 1), 역방향 있음
 - [PASS] 출구 arabia_ahsa → arabia_shortcut/arabia_shortcut_spawn_seam_ahsa_2 — 폭 (9, 1)↔(9, 1), 역방향 있음
 - [PASS] 출구 arabia_ahsa → arabia_farmroad/arabia_farmroad_spawn_seam_ahsa_0 — 폭 (1, 9)↔(1, 9), 역방향 있음
-- [PASS] 출구 arabia_ahsa → arabia_farmroad/arabia_farmroad_spawn_seam_ahsa_1 — 폭 (1, 30)↔(1, 30), 역방향 있음
-- [PASS] 출구 arabia_ahsa → arabia_farmroad/arabia_farmroad_spawn_seam_ahsa_2 — 폭 (1, 1)↔(1, 1), 역방향 있음
+- [PASS] 출구 arabia_ahsa → arabia_farmroad/arabia_farmroad_spawn_seam_ahsa_1 — 폭 (1, 9)↔(1, 9), 역방향 있음
+- [PASS] 출구 arabia_ahsa → arabia_farmroad/arabia_farmroad_spawn_seam_ahsa_2 — 폭 (1, 5)↔(1, 5), 역방향 있음
+- [PASS] 출구 arabia_ahsa → arabia_farmroad/arabia_farmroad_spawn_seam_ahsa_3 — 폭 (1, 14)↔(1, 14), 역방향 있음
+- [PASS] 출구 arabia_ahsa → arabia_farmroad/arabia_farmroad_spawn_seam_ahsa_4 — 폭 (1, 1)↔(1, 1), 역방향 있음
 - [PASS] 출구 arabia_farmroad → arabia_taiz/arabia_taiz_spawn_seam_farmroad_0 — 폭 (4, 1)↔(4, 1), 역방향 있음
-- [PASS] 출구 arabia_farmroad → arabia_taiz/arabia_taiz_spawn_seam_farmroad_1 — 폭 (21, 1)↔(21, 1), 역방향 있음
-- [PASS] 출구 arabia_farmroad → arabia_taiz/arabia_taiz_spawn_seam_farmroad_2 — 폭 (10, 1)↔(10, 1), 역방향 있음
-- [PASS] 출구 arabia_farmroad → arabia_taiz/arabia_taiz_spawn_seam_farmroad_3 — 폭 (25, 1)↔(25, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_taiz/arabia_taiz_spawn_seam_farmroad_1 — 폭 (20, 1)↔(20, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_taiz/arabia_taiz_spawn_seam_farmroad_2 — 폭 (9, 1)↔(9, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_taiz/arabia_taiz_spawn_seam_farmroad_3 — 폭 (7, 1)↔(7, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_taiz/arabia_taiz_spawn_seam_farmroad_4 — 폭 (6, 1)↔(6, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_taiz/arabia_taiz_spawn_seam_farmroad_5 — 폭 (9, 1)↔(9, 1), 역방향 있음
 - [PASS] 출구 arabia_farmroad → arabia_ahsa/arabia_ahsa_spawn_seam_farmroad_0 — 폭 (1, 9)↔(1, 9), 역방향 있음
-- [PASS] 출구 arabia_farmroad → arabia_ahsa/arabia_ahsa_spawn_seam_farmroad_1 — 폭 (1, 30)↔(1, 30), 역방향 있음
-- [PASS] 출구 arabia_farmroad → arabia_ahsa/arabia_ahsa_spawn_seam_farmroad_2 — 폭 (1, 1)↔(1, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_ahsa/arabia_ahsa_spawn_seam_farmroad_1 — 폭 (1, 9)↔(1, 9), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_ahsa/arabia_ahsa_spawn_seam_farmroad_2 — 폭 (1, 5)↔(1, 5), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_ahsa/arabia_ahsa_spawn_seam_farmroad_3 — 폭 (1, 14)↔(1, 14), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_ahsa/arabia_ahsa_spawn_seam_farmroad_4 — 폭 (1, 1)↔(1, 1), 역방향 있음
 - [PASS] 출구 arabia_farmroad → arabia_jeddah/arabia_jeddah_spawn_seam_farmroad_0 — 폭 (1, 14)↔(1, 14), 역방향 있음
-- [PASS] 출구 arabia_farmroad → arabia_jeddah/arabia_jeddah_spawn_seam_farmroad_1 — 폭 (1, 16)↔(1, 16), 역방향 있음
-- [PASS] 출구 arabia_farmroad → arabia_jeddah/arabia_jeddah_spawn_seam_farmroad_2 — 폭 (1, 1)↔(1, 1), 역방향 있음
-- [PASS] 출구 arabia_farmroad → arabia_jeddah/arabia_jeddah_spawn_seam_farmroad_3 — 폭 (1, 7)↔(1, 7), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_jeddah/arabia_jeddah_spawn_seam_farmroad_1 — 폭 (1, 6)↔(1, 6), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_jeddah/arabia_jeddah_spawn_seam_farmroad_2 — 폭 (1, 9)↔(1, 9), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_jeddah/arabia_jeddah_spawn_seam_farmroad_3 — 폭 (1, 1)↔(1, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_jeddah/arabia_jeddah_spawn_seam_farmroad_4 — 폭 (1, 7)↔(1, 7), 역방향 있음
 - [PASS] 출구 arabia_shortcut → arabia_central_dunes/arabia_central_dunes_spawn_s_02 — 폭 (4, 1)↔(4, 1), 역방향 있음
 - [PASS] 출구 arabia_shortcut → arabia_taiz/arabia_taiz_spawn_seam_shortcut_0 — 폭 (1, 3)↔(1, 3), 역방향 있음
 - [PASS] 출구 arabia_shortcut → arabia_taiz/arabia_taiz_spawn_seam_shortcut_1 — 폭 (1, 8)↔(1, 8), 역방향 있음
@@ -93,23 +100,32 @@
 - [PASS] 출구 arabia_taiz → arabia_shortcut/arabia_shortcut_spawn_seam_taiz_0 — 폭 (1, 3)↔(1, 3), 역방향 있음
 - [PASS] 출구 arabia_taiz → arabia_shortcut/arabia_shortcut_spawn_seam_taiz_1 — 폭 (1, 8)↔(1, 8), 역방향 있음
 - [PASS] 출구 arabia_taiz → arabia_shortcut/arabia_shortcut_spawn_seam_taiz_2 — 폭 (1, 29)↔(1, 29), 역방향 있음
-- [PASS] 출구 arabia_taiz → arabia_zabid/arabia_zabid_spawn_seam_taiz_0 — 폭 (1, 40)↔(1, 40), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_zabid/arabia_zabid_spawn_seam_taiz_0 — 폭 (1, 12)↔(1, 12), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_zabid/arabia_zabid_spawn_seam_taiz_1 — 폭 (1, 5)↔(1, 5), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_zabid/arabia_zabid_spawn_seam_taiz_2 — 폭 (1, 13)↔(1, 13), 역방향 있음
 - [PASS] 출구 arabia_taiz → arabia_farmroad/arabia_farmroad_spawn_seam_taiz_0 — 폭 (4, 1)↔(4, 1), 역방향 있음
-- [PASS] 출구 arabia_taiz → arabia_farmroad/arabia_farmroad_spawn_seam_taiz_1 — 폭 (21, 1)↔(21, 1), 역방향 있음
-- [PASS] 출구 arabia_taiz → arabia_farmroad/arabia_farmroad_spawn_seam_taiz_2 — 폭 (10, 1)↔(10, 1), 역방향 있음
-- [PASS] 출구 arabia_taiz → arabia_farmroad/arabia_farmroad_spawn_seam_taiz_3 — 폭 (25, 1)↔(25, 1), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_farmroad/arabia_farmroad_spawn_seam_taiz_1 — 폭 (20, 1)↔(20, 1), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_farmroad/arabia_farmroad_spawn_seam_taiz_2 — 폭 (9, 1)↔(9, 1), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_farmroad/arabia_farmroad_spawn_seam_taiz_3 — 폭 (7, 1)↔(7, 1), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_farmroad/arabia_farmroad_spawn_seam_taiz_4 — 폭 (6, 1)↔(6, 1), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_farmroad/arabia_farmroad_spawn_seam_taiz_5 — 폭 (9, 1)↔(9, 1), 역방향 있음
 - [PASS] 출구 arabia_zabid → arabia_central_canyon/arabia_central_canyon_spawn_s_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
-- [PASS] 출구 arabia_zabid → arabia_taiz/arabia_taiz_spawn_seam_zabid_0 — 폭 (1, 40)↔(1, 40), 역방향 있음
+- [PASS] 출구 arabia_zabid → arabia_taiz/arabia_taiz_spawn_seam_zabid_0 — 폭 (1, 12)↔(1, 12), 역방향 있음
+- [PASS] 출구 arabia_zabid → arabia_taiz/arabia_taiz_spawn_seam_zabid_1 — 폭 (1, 5)↔(1, 5), 역방향 있음
+- [PASS] 출구 arabia_zabid → arabia_taiz/arabia_taiz_spawn_seam_zabid_2 — 폭 (1, 13)↔(1, 13), 역방향 있음
 - [PASS] 출구 arabia_zabid → arabia_jeddah/arabia_jeddah_spawn_seam_zabid_0 — 폭 (16, 1)↔(16, 1), 역방향 있음
-- [PASS] 출구 arabia_zabid → arabia_jeddah/arabia_jeddah_spawn_seam_zabid_1 — 폭 (23, 1)↔(23, 1), 역방향 있음
-- [PASS] 출구 arabia_zabid → arabia_jeddah/arabia_jeddah_spawn_seam_zabid_2 — 폭 (15, 1)↔(15, 1), 역방향 있음
+- [PASS] 출구 arabia_zabid → arabia_jeddah/arabia_jeddah_spawn_seam_zabid_1 — 폭 (15, 1)↔(15, 1), 역방향 있음
+- [PASS] 출구 arabia_zabid → arabia_jeddah/arabia_jeddah_spawn_seam_zabid_2 — 폭 (6, 1)↔(6, 1), 역방향 있음
+- [PASS] 출구 arabia_zabid → arabia_jeddah/arabia_jeddah_spawn_seam_zabid_3 — 폭 (15, 1)↔(15, 1), 역방향 있음
 - [PASS] 출구 arabia_jeddah → arabia_zabid/arabia_zabid_spawn_seam_jeddah_0 — 폭 (16, 1)↔(16, 1), 역방향 있음
-- [PASS] 출구 arabia_jeddah → arabia_zabid/arabia_zabid_spawn_seam_jeddah_1 — 폭 (23, 1)↔(23, 1), 역방향 있음
-- [PASS] 출구 arabia_jeddah → arabia_zabid/arabia_zabid_spawn_seam_jeddah_2 — 폭 (15, 1)↔(15, 1), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_zabid/arabia_zabid_spawn_seam_jeddah_1 — 폭 (15, 1)↔(15, 1), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_zabid/arabia_zabid_spawn_seam_jeddah_2 — 폭 (6, 1)↔(6, 1), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_zabid/arabia_zabid_spawn_seam_jeddah_3 — 폭 (15, 1)↔(15, 1), 역방향 있음
 - [PASS] 출구 arabia_jeddah → arabia_farmroad/arabia_farmroad_spawn_seam_jeddah_0 — 폭 (1, 14)↔(1, 14), 역방향 있음
-- [PASS] 출구 arabia_jeddah → arabia_farmroad/arabia_farmroad_spawn_seam_jeddah_1 — 폭 (1, 16)↔(1, 16), 역방향 있음
-- [PASS] 출구 arabia_jeddah → arabia_farmroad/arabia_farmroad_spawn_seam_jeddah_2 — 폭 (1, 1)↔(1, 1), 역방향 있음
-- [PASS] 출구 arabia_jeddah → arabia_farmroad/arabia_farmroad_spawn_seam_jeddah_3 — 폭 (1, 7)↔(1, 7), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_farmroad/arabia_farmroad_spawn_seam_jeddah_1 — 폭 (1, 6)↔(1, 6), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_farmroad/arabia_farmroad_spawn_seam_jeddah_2 — 폭 (1, 9)↔(1, 9), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_farmroad/arabia_farmroad_spawn_seam_jeddah_3 — 폭 (1, 1)↔(1, 1), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_farmroad/arabia_farmroad_spawn_seam_jeddah_4 — 폭 (1, 7)↔(1, 7), 역방향 있음
 - [PASS] 출구 arabia_sanaa → arabia_central_dunes/arabia_central_dunes_spawn_s_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
 - [PASS] 출구 arabia_sanaa → arabia_taiz/arabia_taiz_spawn_seam_sanaa_0 — 폭 (4, 1)↔(4, 1), 역방향 있음
 - [PASS] 출구 arabia_central_dunes → arabia_sanaa/arabia_sanaa_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
@@ -167,7 +183,7 @@
 - [PASS] 출구 arabia_central_steppe → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_steppe_2 — 폭 (14, 1)↔(14, 1), 역방향 있음
 - [PASS] 출구 arabia_central_steppe → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_steppe_3 — 폭 (52, 1)↔(52, 1), 역방향 있음
 - [PASS] 출구 arabia_central_steppe → arabia_central_eastvale/arabia_central_eastvale_spawn_seam_steppe_0 — 폭 (3, 1)↔(3, 1), 역방향 있음
-- [PASS] 출구 짝 수 (오픈월드 이음새 포함, 양방향이라 짝수) — 102
+- [PASS] 출구 짝 수 (오픈월드 이음새 포함, 양방향이라 짝수) — 118
 - [PASS] 이어짐: arabia_ahsa ↔ arabia_farmroad
 - [PASS] 이어짐: arabia_farmroad ↔ arabia_jeddah
 - [PASS] 이어짐: arabia_jeddah ↔ arabia_zabid

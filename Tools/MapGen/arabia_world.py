@@ -160,6 +160,7 @@ def _paint_route(w, path, kind, width, grade):
                         w.paint(kind, x, y, x, y, grade=grade)
                     else:
                         w.road[y][x] = max(w.road[y][x], grade)
+    return catmull(pts)
 
 
 def _nearest_road(w, p, rect):
@@ -178,14 +179,14 @@ def zone_at(x, y):
     """세계 바닥: 고원(사나·타이즈) · 티하마 해안(자비드) · 빈 사막 · 나즈드 · 오아시스(아흐사)."""
     c = chunk_of(x, y)
     n = vnoise(x, y, 11, 'wz')
-    if c in ((1, 0), (1, 1)):
-        return 'rock' if n > 0.62 else 'gravel' if n > 0.48 else 'sand'
+    if c in ((1, 0), (1, 1)):                          # 고원: 바위 언덕과 산풀 (자갈색은 길과 헷갈려 쓰지 않음)
+        return 'rock' if n > 0.68 else 'dry' if n > 0.5 else 'sand'
     if c == (2, 1):
         return 'dry' if n > 0.42 else 'grass' if n < 0.22 else 'sand'
     if c == (0, 1):
         return 'dune' if n > 0.38 else 'sand'
     if c == (1, 2):
-        return 'gravel' if n > 0.76 else 'sand'
+        return 'sand'                                  # 나즈드: 모래 사막 (풀은 와디 둑에만)
     if c == (0, 2):
         return 'grass' if n < 0.18 else 'sand'
     if c == (2, 2):
@@ -231,20 +232,28 @@ def build_world():
     def road_in(mid, p):
         return _nearest_road(w, p, rects[mid])
     sanaa_s = end('arabia_sanaa', 'S')
+    najd_mid = (CW * 1 + 31, CH * 2 + 21)          # 나즈드 한가운데 카라반사라이 앞
+    fork = (22, CH + 27)                          # 빈 사막 갈림길 (돌탑)
+    # 길 성격 (남아라비아 향료길: 남쪽 바다·사막에서 북쪽 고원 사나를 거쳐 중앙 대륙으로 올라간다)
+    #   trunk = 사막 대상로(흙길) · coast = 홍해 해안길 · climb = 해안 → 고원 오르막 · highland = 고원 돌길
+    #   track = 빈 사막 모랫길(돌무더기로 길 표시) · canyon = 협곡길
     routes = [
-        ('road', 3, 3, end('arabia_ahsa', 'E'), (CW * 1 + 30, CH * 2 + 22), '나즈드 대상로 서쪽'),
-        ('road', 3, 3, (CW * 1 + 30, CH * 2 + 22), end('arabia_jeddah', 'W'), '나즈드 대상로 동쪽'),
-        ('road', 3, 3, end('arabia_jeddah', 'N'), road_in('arabia_zabid', (CW * 2 + 32, CH * 2)), '홍해 해안길'),
-        ('road', 3, 3, end('arabia_zabid', 'W'), end('arabia_taiz', 'E'), '자비드–타이즈'),
-        ('paving', 3, 3, road_in('arabia_taiz', (CW + 32, CH)), sanaa_s, '고원길'),
-        ('gravel', 2, 1, road_in('arabia_ahsa', (16, CH * 2)), (20, CH + 26), '빈 사막 질러가기'),
-        ('gravel', 2, 1, (20, CH + 26), end('arabia_taiz', 'W'), '빈 사막 → 타이즈'),
-        ('gravel', 2, 1, (20, CH + 26), (GATES[('arabia_shortcut', 'n_01')] + 1.5, CH), '빈 사막 북쪽 모래길'),
-        ('road', 3, 2, road_in('arabia_zabid', (CW * 2 + 32, CH)), (CW * 2 + GATES[('arabia_zabid', 'n_01')] + 1.5, CH), '자비드 북쪽 협곡길'),
+        ('road', 3, 3, end('arabia_ahsa', 'E'), najd_mid, 'trunk', '나즈드 대상로 서쪽'),
+        ('road', 3, 3, najd_mid, end('arabia_jeddah', 'W'), 'trunk', '나즈드 대상로 동쪽'),
+        ('road', 3, 3, end('arabia_jeddah', 'N'), road_in('arabia_zabid', (CW * 2 + 32, CH * 2)), 'coast', '홍해 해안길'),
+        ('road', 3, 3, end('arabia_zabid', 'W'), end('arabia_taiz', 'E'), 'climb', '자비드–타이즈 커피 오르막'),
+        ('paving', 3, 3, road_in('arabia_taiz', (CW + 32, CH)), sanaa_s, 'highland', '고원길'),
+        ('gravel', 2, 1, road_in('arabia_ahsa', (16, CH * 2)), fork, 'track', '빈 사막 질러가기'),
+        ('gravel', 2, 1, fork, end('arabia_taiz', 'W'), 'track', '빈 사막 → 타이즈'),
+        ('gravel', 2, 1, fork, (GATES[('arabia_shortcut', 'n_01')] + 1.5, CH), 'track', '빈 사막 북쪽 모래길'),
+        ('road', 3, 2, road_in('arabia_zabid', (CW * 2 + 32, CH)), (CW * 2 + GATES[('arabia_zabid', 'n_01')] + 1.5, CH), 'canyon', '자비드 북쪽 협곡길'),
     ]
-    for kind, width, grade, a, b, label in routes:
-        _paint_route(w, _astar(w, a, b), kind, width, grade)
-    # 사나 북문 앞은 성문 그대로
+    _wadi(w)                                      # 길보다 먼저: 마른 강바닥 (길은 그 위를 건넌다)
+    w.routes = []
+    for kind, width, grade, a, b, style, label in routes:
+        line = _paint_route(w, _astar(w, a, b), kind, width, grade)
+        w.routes.append((style, label, width, line))
+    w.rects, w.najd_mid, w.fork = rects, najd_mid, fork
     # ---- 야생 칸 꾸미기 ----
     _dress_wild(w)
     # ---- 가장자리: 세계 바깥(빈 칸·지도 끝)과 맞닿는 곳은 자연 지형 띠 ----
@@ -314,24 +323,7 @@ def _put(w, name, x, y, **kw):
 
 def _dress_wild(w):
     T = lambda x, y, name, spr, *lines: w.talker(x, y, name, spr, *lines)
-    # ---- 나즈드 대상로 (가운데 아래): 카라반사라이 · 이정석 · 아카시아 ----
-    bx, by = CW, 2 * CH
-    w.paint('paving', bx + 24, by + 10, bx + 36, by + 16, grade=2)
-    _put(w, 'building_caravanserai', bx + 27, by + 6, foot=2, force=True)
-    _put(w, 'drawn_well', bx + 34, by + 10, foot=1, force=True)
-    _put(w, 'drawn_camelRest', bx + 22, by + 11, foot=1)
-    _put(w, 'drawn_camel', bx + 38, by + 12, foot=1)
-    T(bx + 25, by + 14, '나즈드의 대상 숙소 주인', 'arabia_woman_grandma_tall',
-      '알 아흐사에서 제다까지 사막을 가로지르는 길이에요. 한가운데 여기서 꼭 쉬어 가요.',
-      '북쪽 빈 사막으로 가면 타이즈까지 질러갈 수 있지만, 모래가 깊고 길을 잃기 쉬워요.')
-    w.asign(bx + 20, by + 16, '나즈드 대상로\n서: 알 아흐사 · 동: 제다\n북쪽 모래 너머: 룹알할리 빈 사막')
-    for k, x in enumerate(range(bx + 4, bx + 62, 12)):
-        _put(w, 'drawn_milestone', x, by + 27 + (k % 2) * 3, foot=1)
-    for (x, y) in [(bx + 8, by + 6), (bx + 50, by + 34), (bx + 14, by + 36), (bx + 46, by + 5), (bx + 56, by + 18)]:
-        _put(w, ['drawn_acaciaRound', 'drawn_olive', 'drawn_acaciaRound'][x % 3], x, y)
-    for (x0, y0) in [(bx + 4, by + 34), (bx + 44, by + 30)]:
-        for k in range(6):
-            _put(w, ['drawn_rockWall', 'drawn_boulder', 'drawn_boulderSmall'][k % 3], x0 + (k * 5) % 14, y0 + (k * 3) % 7, foot=1)
+    _set_pieces(w)
     # ---- 룹알할리 빈 사막 (왼쪽 가운데): 거대한 모래 언덕 · 숨은 오아시스 · 옛 탑 ----
     ex, ey = 0, CH
     for (cx, cy, rx, ry) in [(14, 10, 10, 3.5), (44, 14, 12, 3.5), (30, 32, 14, 4), (10, 38, 8, 3)]:
@@ -363,11 +355,257 @@ def _dress_wild(w):
             for x in range(x0, x0 + 12):
                 if in_world(x, y0 + k * 3) and not w.reserved[y0 + k * 3][x]:
                     A.place(w, 'drawn_terrace', x, y0 + k * 3, foot=1)
-    # ---- 홍해 해안 (자비드·제다 사이): 야자 · 다우 배 ----
-    for k in range(8):
-        _put(w, ['drawn_datePalm', 'drawn_datePalm2'][k % 2], 2 * CW + 52 + (k % 3) * 3, CH + 28 + k * 5)
+    # ---- 홍해: 다우 배 ----
     for (x, y) in [(FW - 3, CH + 36), (FW - 3, 2 * CH + 12)]:
         _put(w, 'drawn_dhow', x - 2, y, layer='deco', force=True)
+    _dress_routes(w)
+
+
+# =====================================================================
+#  길 꾸미기 (2026-10-27): 길마다 성격에 맞는 길가 + 길 위 쉼터·볼거리
+#  남아라비아 향료길: 남쪽 바닷가·사막에서 거둔 유향·커피·대추야자가 북쪽 고원 사나를 지나 중앙 대륙으로 올라간다.
+# =====================================================================
+def _wadi(w):
+    """마른 강바닥(와디): 북쪽 고원(타이즈 아래)에서 남쪽 사막으로 흘러내린다. 큰길이 그 위를 건넌다.
+    바닥은 모래+자갈(길과 헷갈리지 않게 흙길 색을 쓰지 않음), 양쪽 둑은 물기가 남아 마른 풀이 자란다."""
+    w.wadi = []
+    for y in range(2 * CH, FH):
+        cx = CW + 47 + 4 * math.sin(y / 6.5) + 2 * vnoise(0, y, 9, 'wd')
+        bank = 3 + 2 * vnoise(cx, y, 5, 'wb')
+        for x in range(int(cx - bank) - 1, int(cx + bank) + 2):
+            if not in_world(x, y) or w.reserved[y][x] or w.water[y][x]:
+                continue
+            d = abs(x + 0.5 - cx)
+            if d <= 1.3:
+                w.wadi.append((x, y))                  # 강바닥 (모래 그대로, 자갈 그림)
+            elif d <= bank:
+                w.paint('dry', x, y, x, y, reserve=False)
+
+
+def _in_town(w, x, y, margin=1):
+    return any(x0 - margin <= x < x1 + margin and y0 - margin <= y < y1 + margin for (x0, y0, x1, y1) in w.rects.values())
+
+
+def _free(w, x, y, wild=True):
+    return (in_world(x, y) and not w.road[y][x] and not w.blocked[y][x] and not w.water[y][x]
+            and not w.reserved[y][x] and not w.obj[y][x] and not w.high[y][x] and not (wild and _in_town(w, x, y)))
+
+
+def _spot(w, x, y, cw=1, ch=1, r=6, below=0, town=False):
+    """(x,y) 둘레에서 cw×ch(+아래 below줄)가 모두 빈 가장 가까운 왼쪽 위 칸."""
+    best = None
+    for dy in range(-r, r + 1):
+        for dx in range(-r, r + 1):
+            d = dx * dx + dy * dy
+            if best is not None and d >= best[0]:
+                continue
+            X, Y = int(x) + dx, int(y) + dy
+            if all(_free(w, X + i, Y + j, wild=not town) for i in range(cw) for j in range(ch + below)):
+                best = (d, (X, Y))
+    return best[1] if best else None
+
+
+def _at(line, f):
+    """곡선의 f(0~1) 지점과 그 지점의 진행 방향 (단위 벡터)."""
+    i = min(len(line) - 2, max(0, int(f * (len(line) - 1))))
+    (ax, ay), (bx, by) = line[max(0, i - 3)], line[min(i + 3, len(line) - 1)]
+    d = math.hypot(bx - ax, by - ay) or 1
+    return line[i], ((bx - ax) / d, (by - ay) / d)
+
+
+def _side(p, t, k):
+    """곡선 점 p에서 진행 방향 t의 한쪽(+)/반대쪽(−)으로 k칸."""
+    return (p[0] - t[1] * k, p[1] + t[0] * k)
+
+
+def _thing(w, name, x, y, r=4, foot=1, **kw):
+    cw, ch = A.size(A.alias(name, int(x), int(y)))
+    s = _spot(w, x - cw / 2, y - ch + 1, cw, ch, r)
+    return bool(s) and A.place(w, name, s[0], s[1], foot=foot, force=True, **kw)
+
+
+def _who(w, x, y, name, spr, *lines, r=4):
+    s = _spot(w, x, y, 1, 1, r, below=1)
+    if s:
+        w.talker(s[0], s[1], name, spr, *lines)
+        w.reserved[s[1]][s[0]] = True
+    return s
+
+
+def _sign(w, x, y, text, r=6):
+    s = _spot(w, x - 1, y - 1, 2, 2, r, below=1) or _spot(w, x - 1, y - 1, 2, 2, r + 2, below=1, town=True)
+    if s:
+        w.asign(s[0], s[1], text)
+    return s
+
+
+def _set_pieces(w):
+    """길 위의 쉼터·볼거리 (먼저 자리를 잡고, 남은 길가를 _dress_routes가 채운다)."""
+    R = {label: (style, width, line) for style, label, width, line in w.routes}
+    # ---- 나즈드 한가운데 카라반사라이: 큰길 북쪽에 붙여 짓고 마당을 길과 잇는다 ----
+    mx, my = w.najd_mid
+    w.paint('paving', mx - 4, my - 3, mx + 4, my - 2, grade=2)
+    A.place(w, 'building_caravanserai', mx - 2, my - 7, foot=2, force=True)
+    _thing(w, 'drawn_well', mx + 7, my - 3)
+    _thing(w, 'plaza_trough', mx - 6, my - 2)
+    _thing(w, 'drawn_camelRest', mx - 9, my - 4)
+    _who(w, mx - 4, my - 4, '나즈드의 대상 숙소 주인', 'arabia_woman_grandma_tall',
+         '알 아흐사에서 제다까지, 사막 한가운데 쉴 곳은 여기뿐이에요. 물 한 바가지 하고 가요.',
+         '남쪽 바닷가에서 거둔 유향은 모두 이 길을 지나 북쪽 사나, 그리고 중앙 대륙으로 올라가요.')
+    # ---- 향료 대상 야영지 (아흐사 → 나즈드 사이, 길 남쪽) ----
+    st, wd, line = R['나즈드 대상로 서쪽']
+    p, t = _at(line, 0.62)
+    s = 1 if _side(p, t, 1)[1] > p[1] else -1            # 길 남쪽 (y가 큰 쪽)
+    c = _side(p, t, s * (wd / 2 + 5))
+    _thing(w, 'building_tent', c[0], c[1], r=5, foot=2)
+    for k, n in enumerate(['drawn_camel', 'drawn_camel', 'drawn_camelRest', 'drawn_cart', 'prop_saddle', 'prop_spiceSack', 'prop_frankincense']):
+        _thing(w, n, c[0] - 7 + k * 2.6, c[1] + 3 + (k % 2) * 2, r=4)
+    _who(w, c[0] + 4, c[1] - 1, '향료 대상의 우두머리', 'arabia_npc_bedouin_tall',
+         '남쪽 바닷가에서 거둔 유향을 싣고 북쪽 중앙 대륙으로 가는 길이오.',
+         '해가 지면 길가 이정석만 보고 가시오. 이정석이 끊기는 곳은 길이 아니오.')
+    # ---- 마른 와디를 건너는 곳 ----
+    st, wd, line = R['나즈드 대상로 동쪽']
+    wset = set(w.wadi)
+    cross = next((q for q in line if (int(q[0]), int(q[1])) in wset), line[len(line) // 3])
+    _sign(w, cross[0] + 4, cross[1] - 4, '마른 와디 (강바닥)\n북쪽 고원에 비가 오면 물이 불어나요.\n강바닥을 따라 남쪽으로: 유향나무 숲')
+    # 와디 아래쪽 끝: 유향나무 숲 (남아라비아 향료의 시작)
+    wx, wy = max(w.wadi, key=lambda c: c[1])
+    for k in range(6):
+        _thing(w, 'nature_frankincenseTree', wx - 9 + k * 3.4, wy - 7 - (k % 2) * 3, r=3)
+    _who(w, wx - 2, wy - 11, '유향 채집꾼', 'arabia_npc_child_tall',
+         '나무에 상처를 내면 하얀 눈물이 맺혀요. 그게 유향이에요.',
+         '이 향이 사나를 지나 중앙 대륙 장터까지 가요. 거기선 금만큼 비싸대요!')
+    # ---- 무너진 봉화 망루 (큰길 동쪽에서 남쪽으로 샛길) ----
+    p, t = _at(line, 0.62)
+    ruin = _spot(w, p[0] - 3, p[1] + 9, 8, 5, r=5)
+    if ruin:
+        rx, ry = ruin
+        _paint_route(w, _astar(w, p, (rx + 4, ry), avoid_town=True), 'gravel', 1, 1)
+        A.place(w, 'wall_tower', rx, ry + 1, foot=2, force=True)
+        A.place(w, 'wall_ruin', rx + 3, ry + 3, foot=1, force=True)
+        A.place(w, 'wall_ruin', rx + 5, ry + 2, foot=1, force=True)
+        _thing(w, 'prop_chest', rx + 6, ry + 1, r=3)
+        _who(w, rx + 3, ry, '망루 터를 살피는 학자', 'arabia_npc_scholar_tall',
+             '옛날엔 여기서 봉화를 올려 대상이 오는 걸 알렸다네. 아흐사부터 제다까지 망루가 줄지어 있었지.',
+             '상자는 비었더군. 그래도 길에서 벗어난 곳엔 늘 뭔가가 있지.')
+    # ---- 홍해 해안 어촌 (해안길 바다 쪽) ----
+    st, wd, line = R['홍해 해안길']
+    p, t = _at(line, 0.45)
+    sx, sy = FW - 11, p[1]
+    _thing(w, 'building_arish', sx, sy - 1, r=5, foot=2)
+    _thing(w, 'building_arish', sx - 1, sy + 5, r=5, foot=2)
+    _thing(w, 'drawn_netRack', sx + 3, sy + 2, r=4)
+    _who(w, sx - 3, sy + 2, '홍해 어부', 'arabia_npc_bedouin_tall',
+         '이 길은 제다에서 자비드까지 바다를 끼고 올라가요. 바닷바람이 짐을 식혀 줘서 대추야자가 덜 상하지.',
+         '배로 가면 빠르지만 바람이 안 불면 꼼짝 못 해요. 걸어가는 게 마음 편하지.')
+    p, t = _at(line, 0.15)
+    _thing(w, 'wall_tower', FW - 7, p[1], r=4, foot=2)
+    # ---- 자비드 → 타이즈: 커피 계단밭 오르막 ----
+    st, wd, line = R['자비드–타이즈 커피 오르막']
+    for f in [k / 40 for k in range(5, 36)]:
+        p, t = _at(line, f)
+        for sgn in (1, -1):
+            for k in (wd / 2 + 2, wd / 2 + 4):
+                x, y = (int(v) for v in _side(p, t, sgn * k))
+                if _free(w, x, y) and _free(w, x, y - 1):
+                    A.place(w, 'drawn_coffee', x, y - 1, foot=1)
+    p, t = _at(line, 0.5)
+    _who(w, *_side(p, t, wd / 2 + 1.2), '커피 농부', 'arabia_woman_grandma_tall',
+         '바닷가 자비드에서 고원 타이즈로 올라갈수록 커피가 맛있어져요. 안개가 나무를 키우거든요.',
+         '빨간 열매를 따서 말리면 모카 커피! 제다 항구로 내려가 바다 건너까지 팔려요.', r=6)
+    _sign(w, *_side(p, t, -(wd / 2 + 2)), '커피 오르막\n서: 고원 도시 타이즈 · 동: 해안 도시 자비드\n자비드 북쪽 협곡길 → 중앙 대륙 붉은 바위 협곡')
+    # ---- 고원길 끝: 사나 남문 앞 검문소 ----
+    st, wd, line = R['고원길']
+    p, t = _at(line, 0.8)
+    for sgn in (1, -1):
+        _thing(w, 'wall_tower', *_side(p, t, sgn * (wd / 2 + 2)), r=2, foot=2)
+    _who(w, *_side(p, t, wd / 2 + 1.2), '사나 남문 경비', 'arabia_npc_bedouin_tall',
+         '사나에 들어가는 짐은 여기서 한 번 봅니다. 성 안을 지나 북문으로 나가면 중앙 대륙이오.', r=4)
+    # ---- 빈 사막 갈림길: 돌탑 + 길 잃은 나그네 ----
+    fx, fy = w.fork
+    _thing(w, 'drawn_rockWall', fx + 4, fy + 2, r=3)
+    _sign(w, fx - 3, fy - 3, '빈 사막 갈림길\n북: 모래길 → 중앙 대륙 (사나를 거치지 않음)\n동: 타이즈 · 남: 알 아흐사\n돌무더기를 따라가세요.')
+    _thing(w, 'nature_deadwood', fx + 7, fy - 5, r=4)
+    _who(w, fx + 5, fy - 3, '길 잃은 나그네', 'arabia_npc_child_tall',
+         '돌무더기를 놓쳐서 하루를 헤맸어요… 물주머니가 거의 비었어요.',
+         '동쪽 모래 언덕 사이에 숨은 샘이 있다던데, 정말일까요?')
+    _thing(w, 'prop_waterskin', fx + 7, fy - 1, r=3)
+    # ---- 길 시작점 이정표 (방향은 지도 그대로: 북 = 사나·중앙 대륙) ----
+    st, wd, line = R['나즈드 대상로 서쪽']
+    p, t = _at(line, 0.1)
+    _sign(w, *_side(p, t, -(wd / 2 + 2)), '향료길 · 나즈드 대상로\n동: 사막 한가운데 카라반사라이 → 제다\n북: 빈 사막 질러가기 → 타이즈 (모래가 깊음)')
+    st, wd, line = R['홍해 해안길']
+    p, t = _at(line, 0.08)
+    _sign(w, *_side(p, t, wd / 2 + 2), '홍해 해안길\n북: 자비드 → 커피 오르막 → 타이즈 → 사나\n남: 제다 항구', r=9)
+    st, wd, line = R['자비드 북쪽 협곡길']
+    p, t = _at(line, 0.45)
+    _sign(w, *_side(p, t, wd / 2 + 2), '자비드 북쪽 협곡길\n북: 중앙 대륙 붉은 바위 협곡\n(사나를 거치지 않는 지름길)', r=9)
+    st, wd, line = R['고원길']
+    p, t = _at(line, 0.25)
+    _sign(w, *_side(p, t, wd / 2 + 2), '고원길\n북: 수도 사나 → 북문 → 중앙 대륙\n남: 타이즈', r=9)
+
+
+def _dress_routes(w):
+    """길 성격별 길가: 대상로 = 이정석·가프 나무 · 해안 = 둠 야자 · 오르막 = 과일나무 · 고원 = 사이프러스·돌담·등불
+    · 모랫길 = 돌무더기(길 표시) · 협곡 = 바위."""
+    every = {'trunk': 13, 'coast': 6, 'climb': 9, 'highland': 7, 'track': 8, 'canyon': 5}
+    for style, label, wd, line in w.routes:
+        L = [0]
+        for a, b in zip(line, line[1:]):
+            L.append(L[-1] + math.dist(a, b))
+        nxt, k = every[style] / 2, 0
+        for i, p in enumerate(line):
+            if L[i] < nxt:
+                continue
+            nxt += every[style]
+            k += 1
+            if _in_town(w, int(p[0]), int(p[1]), margin=2):
+                continue
+            _, t = _at(line, i / (len(line) - 1))
+            sgn = 1 if k % 2 else -1
+
+            def at(dist):
+                x, y = _side(p, t, sgn * dist)
+                return int(x), int(y)
+            if style == 'trunk':
+                x, y = at(wd / 2 + 1.2)
+                if _free(w, x, y) and _free(w, x, y - 1):
+                    A.place(w, 'drawn_milestone', x, y - 1, foot=1)
+                if k % 2 == 0:
+                    x, y = at(-(wd / 2 + 3.5))
+                    _thing(w, ['tree_ghaf', 'drawn_acaciaRound', 'tree_sidr'][k % 3], x, y, r=1)
+            elif style == 'coast':
+                x, y = at(wd / 2 + 2)
+                _thing(w, ['tree_doumPalm', 'drawn_datePalm', 'drawn_datePalm2'][k % 3], x, y, r=1)
+            elif style == 'highland':
+                x, y = at(wd / 2 + 1.5)
+                _thing(w, 'drawn_cypress' if k % 3 else 'drawn_rockWall', x, y, r=1)
+                if k % 3 == 0:
+                    x, y = at(-(wd / 2 + 1.5))
+                    _thing(w, 'prop_lantern', x, y, r=1)
+            elif style == 'climb':
+                x, y = at(wd / 2 + 6)
+                _thing(w, ['drawn_almond', 'drawn_pomegranate', 'drawn_olive'][k % 3], x, y, r=1)
+            elif style == 'track':
+                x, y = at(wd / 2 + 1)
+                if _free(w, x, y):
+                    A.place(w, 'nature_rocks', x, y, foot=1)          # 돌무더기: 모래 위 길 표시
+                if k % 5 == 0:
+                    x, y = at(-(wd / 2 + 3))
+                    _thing(w, 'nature_deadwood', x, y, r=1)
+            elif style == 'canyon':
+                for sg in (1, -1):
+                    x, y = _side(p, t, sg * (wd / 2 + 1.5))
+                    _thing(w, ['drawn_boulder', 'drawn_rockWall', 'drawn_boulderSmall'][(k + sg) % 3], x, y, r=1)
+    # 와디 둑: 위성류(타마리스크)·시드르, 강바닥 자갈
+    for j, (x, y) in enumerate(w.wadi):
+        if j % 13 == 0:
+            for dx in (-4, 4):
+                _thing(w, 'nature_tamarisk' if (j // 13) % 2 else 'tree_sidr', x + dx, y, r=1)
+        if _h('wp', x, y) < 0.55 and not w.road[y][x] and not w.deco[y][x] and not w.obj[y][x]:
+            A.place(w, 'drawn_pebbles', x, y, layer='deco')
+        elif _h('wq', x, y) < 0.06 and _free(w, x, y):
+            A.place(w, 'drawn_boulderSmall', x, y, foot=1)
 
 
 def _dress_band(w, band):
