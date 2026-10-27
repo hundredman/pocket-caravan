@@ -31,7 +31,7 @@ COLORS={DEEP:(52,98,140),SHALLOW:(96,156,186),SAND:(236,222,170),ROCKCOAST:(150,
         FOREST:(52,98,56),MOUNTAIN:(128,114,96),PEAK:(184,178,170),VILLAGE:(210,190,140),VOID:(28,34,40),LAKE:(70,136,186)}
 BLOCKED={DEEP,SHALLOW,RIVER,MOUNTAIN,PEAK,ROCKCOAST,LAKE}
 # 호수(세계 좌표 중심, 대략 면적): 남쪽 쉼터 마을 북쪽(2026-10-27 은샘 제안)
-LAKES=[dict(label='중앙 호수',area=480)]   # 위치는 지형에서 고른다(가장 낮은 분지)
+LAKES=[dict(label='남쪽 큰 호수',area=950,box=(95,22,150,72))]   # 이 범위(x0,y0,x1,y1) 안에서 가장 낮은 내륙 분지를 고른다
 # 마을 목표 면적(칸): 수도는 크게, 중앙 마을은 장터 광장·이벤트 마당·시설이 들어갈 만큼(WorldLayout 3절 약 2,060)
 VILLAGE_AREA={'goryeo/개경':1100,'goryeo/장단':700,'goryeo/나루':700,'goryeo/송악':650,'goryeo/닥목':600,
               'east/동문 마을':1400,'east/북동 포구':1400,'east/남동 포구':1400,'east/중앙 길목 마을':1500}
@@ -220,39 +220,60 @@ def build(layout):
         my,mx=idx(*ri['mouth']);yy,xx=np.ogrid[:H,:W];mouth_zone|=((yy-my)**2+(xx-mx)**2)<16**2
     t[L&mouth_zone&(d_river<=5)&(d_river>0)&(elev<.35)&(marsh_n>.45)]=MARSH
     t[river]=RIVER
-    # 호수: 중앙 동쪽에서 가장 낮은 분지를 찾아, 낮은 땅부터 물을 채우듯 넓힌다(호숫가가 등고선을 따름).
-    #       강과 떨어져 있으면 가장 낮은 물가에서 강까지 작은 개울로 흘려보낸다.
+    # 호수: 중앙 동쪽 남부에서 가장 낮은 내륙 분지를 찾아, 낮은 땅부터 물을 채우듯 넓힌다(호숫가가 등고선을 따름).
+    #       둘레 언덕에서 흘러드는 개울 하나, 가장 낮은 물가에서 바다로 빠지는 개울 하나를 만든다.
     lake=np.zeros((H,W),bool);E=ndimage.gaussian_filter(elev,3)
     east=np.zeros((H,W),bool)
     for i,k in enumerate(keys):
         if k.startswith('east/'):east|=mapid==i
     yy_,xx_=np.ogrid[:H,:W];far=np.ones((H,W),bool)
     for town in layout.data['towns']:
-        ty,tx=idx(int(town['position'][0]),int(town['position'][1]));far&=((yy_-ty)**2+(xx_-tx)**2)>24**2
+        ty,tx=idx(int(town['position'][0]),int(town['position'][1]));far&=((yy_-ty)**2+(xx_-tx)**2)>22**2
     inner=ndimage.binary_erosion(east,iterations=6)   # 담당 경계에 잘린 직선 호숫가가 생기지 않게
-    ok=inner&land&far&(to_sea>16)&(d_river>3)&~np.isin(t,[MOUNTAIN,PEAK])
     for lk in LAKES:
-        seed=np.unravel_index(int(np.argmin(np.where(ok,E,np.inf))),E.shape)
-        grow=inner&land&far&(to_sea>10)&~np.isin(t,[MOUNTAIN,PEAK])
-        got={seed};q=[(E[seed],seed)];seen={seed}
-        while q and len(got)<lk['area']:
-            _,pp=heapq.heappop(q);got.add(pp)
-            for dy,dx in ((1,0),(-1,0),(0,1),(0,-1)):
-                n=(pp[0]+dy,pp[1]+dx)
-                if n in seen or not(0<=n[0]<H and 0<=n[1]<W) or not grow[n]:continue
-                seen.add(n);heapq.heappush(q,(E[n]+.02*(marsh_n[n]-.5),n))
-        m=np.zeros((H,W),bool)
-        for pp in got:m[pp]=True
-        m=ndimage.binary_closing(ndimage.binary_opening(m),iterations=2)&grow
+        bx0,by0,bx1,by1=lk['box'];south=((xx_+X0)>=bx0)&((xx_+X0)<bx1)&((yy_+Y0)>=by0)&((yy_+Y0)<by1)
+        # 범위 안쪽(가장자리에서 10칸 이상)에서 가장 낮은 곳을 중심으로
+        core=south&inner&land&far&(to_sea>14)&(d_river>6)&~np.isin(t,[MOUNTAIN,PEAK])
+        core&=((xx_+X0)>=bx0+10)&((xx_+X0)<bx1-10)&((yy_+Y0)>=by0+10)&((yy_+Y0)<by1-10)
+        seed=np.unravel_index(int(np.argmin(np.where(core,E,np.inf))),E.shape)
+        # 모양: 길쭉한 타원에 만·곶을 만드는 굴곡(각도에 따른 낮은 주파수 사인 합)
+        r0=math.sqrt(lk['area']/math.pi);asp=1.55;ang=rng.uniform(0,math.pi)
+        ph=rng.uniform(0,2*math.pi,4);amp=(.16,.10,.06,.04)
+        dy_=yy_-seed[0];dx_=xx_-seed[1]
+        u=dx_*math.cos(ang)+dy_*math.sin(ang);v=-dx_*math.sin(ang)+dy_*math.cos(ang)
+        theta=np.arctan2(v,u);rr_=np.sqrt((u/math.sqrt(asp))**2+(v*math.sqrt(asp))**2)
+        wob=1+sum(a_*np.sin((k_+2)*theta+ph[k_]) for k_,a_ in enumerate(amp))+.18*(marsh_n-.5)
+        m=(rr_<r0*wob)&land&inner&~river
+        m=ndimage.binary_closing(ndimage.binary_opening(m),iterations=2)&land&inner&~river
+        lab,n_=ndimage.label(m)
+        if n_>1:m=lab==(1+int(np.argmax(ndimage.sum(np.ones_like(lab),lab,range(1,n_+1)))))
         lake|=m;lk['cells']=int(m.sum());lk['center']=[int(seed[1]+X0),int(seed[0]+Y0)]
-        if not (ndimage.binary_dilation(m,iterations=2)&river).any():
-            rim=ndimage.binary_dilation(m)&~m&land
-            r0=tuple(np.argwhere(rim)[np.argmin(E[rim])])
-            ry,rx=np.nonzero(river);k_=int(np.argmin((ry-r0[0])**2+(rx-r0[1])**2))
-            stream=astar(r0,(int(ry[k_]),int(rx[k_])),1+8*elev,blocked=None,eight=False)
-            for pp in stream:
-                if land[pp]:river[pp]=True
-            lk['outletCells']=len(stream)
+        cost=1+10*elev
+        # 나가는 개울: 가장 낮은 물가 → 가장 가까운 바다
+        rim=ndimage.binary_dilation(m)&~m&land
+        r0=tuple(np.argwhere(rim)[np.argmin(E[rim])])
+        sy,sx=np.nonzero(sea);k_=int(np.argmin((sy-r0[0])**2+(sx-r0[1])**2))
+        out=astar(r0,(int(sy[k_]),int(sx[k_])),cost,blocked=np.isin(t,[MOUNTAIN,PEAK]),eight=True)
+        # 들어오는 개울: 호수 반대편 둘레 언덕 → 호수
+        cy,cx=np.argwhere(m).mean(0);oy,ox=r0
+        vy,vx=cy-oy,cx-ox;L=math.hypot(vy,vx) or 1
+        ty_,tx_=int(cy+vy/L*28),int(cx+vx/L*28)
+        hill=np.argwhere(east&land&~m&~np.isin(t,[MOUNTAIN,PEAK])&(((yy_-ty_)**2+(xx_-tx_)**2)<12**2))
+        inflow=[]
+        if len(hill):
+            h0=tuple(hill[np.argmax(elev[tuple(hill.T)])])
+            mc=np.argwhere(m);m0=tuple(mc[np.argmin(((mc-np.array(h0))**2).sum(1))])
+            inflow=astar(h0,m0,cost,blocked=np.isin(t,[MOUNTAIN,PEAK]),eight=True)
+        for path,width in ((out,1.2),(inflow,.8)):
+            pts=smooth_path(path,np.zeros((H,W),bool)) if len(path)>5 else path
+            for i_,(y,x) in enumerate(pts):
+                rad=width*(.7+.5*i_/max(1,len(pts))) if path is out else width
+                rr=int(math.ceil(rad))
+                for dy in range(-rr,rr+1):
+                    for dx in range(-rr,rr+1):
+                        yy2,xx2=y+dy,x+dx
+                        if dy*dy+dx*dx<=rad*rad and 0<=yy2<H and 0<=xx2<W and land[yy2,xx2] and not m[yy2,xx2]:river[yy2,xx2]=True
+        lk['outletCells']=len(out);lk['inflowCells']=len(inflow)
     t[river]=RIVER
     d_river=ndimage.distance_transform_edt(~(river|lake))
     shore=ndimage.binary_dilation(lake,iterations=2)&land&~lake&~river

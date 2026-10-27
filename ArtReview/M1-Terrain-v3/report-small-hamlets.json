@@ -4,19 +4,19 @@
  "classCounts": {
   "깊은 바다": 4600,
   "얕은 바다": 2074,
-  "모래 해변": 780,
+  "모래 해변": 789,
   "바위 해안": 70,
-  "강": 1229,
-  "습지": 328,
-  "들판(밭)": 1656,
-  "풀밭": 20399,
-  "꽃풀밭": 1260,
-  "언덕": 2459,
-  "숲": 7252,
+  "강": 1515,
+  "습지": 397,
+  "들판(밭)": 1662,
+  "풀밭": 20076,
+  "꽃풀밭": 1137,
+  "언덕": 2471,
+  "숲": 6791,
   "산(통행 불가)": 1089,
   "봉우리(통행 불가)": 1325,
   "마을 범위": 0,
-  "호수": 479
+  "호수": 1004
  },
  "rivers": [
   {
@@ -54,7 +54,7 @@
     -11
    ],
    "moved": 5.4,
-   "area": 1095
+   "area": 1098
   },
   {
    "key": "goryeo/송악",
@@ -65,7 +65,7 @@
     -21
    ],
    "moved": 11.4,
-   "area": 641
+   "area": 644
   },
   {
    "key": "goryeo/닥목",
@@ -76,7 +76,7 @@
     -46
    ],
    "moved": 5.7,
-   "area": 597
+   "area": 596
   },
   {
    "key": "goryeo/나루",
@@ -87,7 +87,7 @@
     46
    ],
    "moved": 9.4,
-   "area": 683
+   "area": 682
   },
   {
    "key": "goryeo/장단",
@@ -98,7 +98,7 @@
     37
    ],
    "moved": 7.8,
-   "area": 696
+   "area": 699
   },
   {
    "key": "east/동문 마을",
@@ -109,7 +109,7 @@
     -5
    ],
    "moved": 5.4,
-   "area": 749
+   "area": 750
   },
   {
    "key": "east/북동 포구",
@@ -131,7 +131,7 @@
     100
    ],
    "moved": 10.8,
-   "area": 799
+   "area": 800
   },
   {
    "key": "east/중앙 길목 마을",
@@ -142,7 +142,7 @@
     4
    ],
    "moved": 5.0,
-   "area": 848
+   "area": 850
   },
   {
    "key": "hamlet/북쪽 쉼터 마을",
@@ -153,85 +153,85 @@
     -29
    ],
    "moved": 19.1,
-   "area": 309
+   "area": 306
   },
   {
    "key": "hamlet/남쪽 쉼터 마을",
    "label": "남쪽 쉼터 마을",
    "target": 320,
    "center": [
-    83,
-    49
+    86,
+    48
    ],
-   "moved": 2.2,
-   "area": 320
+   "moved": 4.1,
+   "area": 319
   }
  ],
  "maps": [
   {
    "key": "goryeo/송악",
    "b1Area": 3302,
-   "area": 5253
+   "area": 5223
   },
   {
    "key": "goryeo/닥목",
    "b1Area": 3402,
-   "area": 3423
+   "area": 3494
   },
   {
    "key": "goryeo/개경",
    "b1Area": 5001,
-   "area": 4117
+   "area": 4084
   },
   {
    "key": "goryeo/나루",
    "b1Area": 3997,
-   "area": 3975
+   "area": 3880
   },
   {
    "key": "goryeo/장단",
    "b1Area": 4298,
-   "area": 3232
+   "area": 3319
   },
   {
    "key": "east/동문 마을",
    "b1Area": 3200,
-   "area": 2737
+   "area": 3095
   },
   {
    "key": "east/북동 포구",
    "b1Area": 3200,
-   "area": 3636
+   "area": 3254
   },
   {
    "key": "east/남동 포구",
    "b1Area": 3200,
-   "area": 3160
+   "area": 3431
   },
   {
    "key": "east/중앙 길목 마을",
    "b1Area": 3200,
-   "area": 3306
+   "area": 3581
   },
   {
    "key": "east/북동 길",
    "b1Area": 3050,
-   "area": 3229
+   "area": 3132
   },
   {
    "key": "east/남동 길",
    "b1Area": 3051,
-   "area": 3537
+   "area": 3107
   },
   {
    "key": "east/북쪽 내륙길",
    "b1Area": 3047,
-   "area": 2708
+   "area": 2791
   },
   {
    "key": "east/남쪽 내륙길",
    "b1Area": 3052,
-   "area": 2687
+   "area": 2609
   }
  ],
  "roads": [
@@ -262,7 +262,7 @@
   {
    "fromKey": "goryeo/송악",
    "toKey": "goryeo/닥목",
-   "cells": 37,
+   "cells": 38,
    "bridgeCells": 0,
    "mountainPassCells": 0,
    "maps": [
@@ -310,7 +310,7 @@
   {
    "fromKey": "goryeo/개경",
    "toKey": "goryeo/송악",
-   "cells": 82,
+   "cells": 81,
    "bridgeCells": 0,
    "mountainPassCells": 0,
    "maps": [
@@ -332,13 +332,13 @@
     "east/북쪽 내륙길",
     "east/중앙 길목 마을"
    ],
-   "boundaryCrossings": 3
+   "boundaryCrossings": 2
   },
   {
    "fromKey": "east/동문 마을",
    "toKey": "east/북동 포구",
-   "cells": 110,
-   "bridgeCells": 2,
+   "cells": 114,
+   "bridgeCells": 4,
    "mountainPassCells": 0,
    "maps": [
     "east/동문 마을",
@@ -350,8 +350,8 @@
   {
    "fromKey": "east/동문 마을",
    "toKey": "east/남동 포구",
-   "cells": 150,
-   "bridgeCells": 0,
+   "cells": 115,
+   "bridgeCells": 2,
    "mountainPassCells": 0,
    "maps": [
     "east/남동 길",
@@ -363,7 +363,7 @@
   {
    "fromKey": "east/북동 포구",
    "toKey": "east/중앙 길목 마을",
-   "cells": 136,
+   "cells": 141,
    "bridgeCells": 1,
    "mountainPassCells": 0,
    "maps": [
@@ -388,5 +388,5 @@
    "boundaryCrossings": 2
   }
  ],
- "roadCells": 2344
+ "roadCells": 2417
 }
