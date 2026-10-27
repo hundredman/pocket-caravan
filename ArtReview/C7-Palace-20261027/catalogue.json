@@ -48,7 +48,18 @@
         "path": "ArtReview/C7-Palace-20261027/Native/palace.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "date": "2026-10-27",
+        "userQuote": "좋은 것 같아.",
+        "scope": "C7 궁궐 160×112 시안 한 개의 그림 승인; 나머지 건물/본편 배치·충돌 변경은 별도",
+        "evidence": "ArtReview/Approved/C7-Palace-v1/README.md",
+        "rgbaEvidence": {
+          "size": [
+            160,
+            112
+          ],
+          "rgbaSHA256": "c0b5cb54c0f50d1b70a7efd5118fe18b4f2566d82ef116d634d292ac90d1fb52"
+        }
       },
       "tiles": [
         {

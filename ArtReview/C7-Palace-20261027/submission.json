@@ -1,5 +1,5 @@
 {
-  "status": "pending",
+  "status": "approved",
   "productionApplied": false,
   "files": {
     "palace.png": {
@@ -37,5 +37,7 @@
       ],
       "rgbaSHA256": "06423f0422f39a1bfda94e59f0ef9d2ce6124876359430ca63aef04295260b8b"
     }
-  }
+  },
+  "reviewDecision": "ArtReview/C7-Palace-20261027/review-decision.json",
+  "historicalCaption": "Submitted comparison retains original pending caption; later approval is recorded separately."
 }

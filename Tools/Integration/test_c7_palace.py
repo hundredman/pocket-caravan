@@ -8,10 +8,13 @@ from c7_palace import OUT,COLORS
 from c7_catalogue import rgba_evidence
 from asset_manifest import validate
 class PalaceChecks(unittest.TestCase):
-    def test_whole70_cells_and_pending_production(self):
+    def test_whole70_cells_and_exact_approved_art(self):
         doc=json.loads((OUT/'catalogue.json').read_text());layout=json.loads((OUT/'layout.json').read_text())
         self.assertEqual(validate(doc,[('trial',layout)],ROOT,False),[])
-        self.assertTrue(validate(doc,[('trial',layout)],ROOT,True))
+        self.assertEqual(validate(doc,[('trial',layout)],ROOT,True),[])
+        self.assertEqual(doc['assets'][0]['review']['status'],'approved')
+        self.assertEqual(rgba_evidence(OUT/'Native/palace.png'),rgba_evidence(ROOT/'ArtReview/Approved/C7-Palace-v1/palace.png'))
+        self.assertEqual(json.loads((OUT/'review-decision.json').read_text())['rgbaEvidence'],rgba_evidence(OUT/'Native/palace.png'))
         result=Image.new('RGBA',(160,112));tiles=doc['assets'][0]['tiles']
         self.assertEqual(len(tiles),70)
         for t in tiles:
