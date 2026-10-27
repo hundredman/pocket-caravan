@@ -1,0 +1,18 @@
+{
+  "status": "approved",
+  "date": "2026-10-27",
+  "userQuote": "좋아. 다음에는 이미지를 여러개 만든 다음 한번에 검사받는게 낫겠어. 이제는 퀄리티가 올라와서.",
+  "scope": "객주용6×4 큰기와집 외형 후보 한 개의 그림 승인; 공용큰집 일괄교체/객주역할·기능 연결/다른 에셋은 별도",
+  "evidence": "ArtReview/Approved/C7-Gaekju-v1/README.md",
+  "rgbaEvidence": {
+    "size": [
+      96,
+      64
+    ],
+    "rgbaSHA256": "4c0bdf0565081598b3cc7e230774889df454d949147d39095404b9e66482786d"
+  },
+  "assetId": "c7_gaekju_candidate",
+  "image": "ArtReview/Approved/C7-Gaekju-v1/gaekju.png",
+  "source": "ArtReview/Approved/C7-Gaekju-v1/gaekju.aseprite",
+  "originalImage": "ArtReview/C7-Gaekju-20261027/Native/gaekju.png"
+}

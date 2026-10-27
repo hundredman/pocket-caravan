@@ -1,5 +1,5 @@
 {
-  "status": "pending",
+  "status": "approved",
   "productionApplied": false,
   "files": {
     "gaekju.png": {
@@ -37,5 +37,7 @@
       ],
       "rgbaSHA256": "70ff272e8774973f28b9844210017ea03c8ee921c373a76ae991a4a879a79d8e"
     }
-  }
+  },
+  "reviewDecision": "ArtReview/C7-Gaekju-20261027/review-decision.json",
+  "historicalCaption": "Submitted pending captions retained as history; later approval is recorded separately."
 }
