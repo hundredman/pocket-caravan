@@ -1,0 +1,298 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "nature": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#52673c",
+        "#7d9156",
+        "#a2b775",
+        "#68452d",
+        "#98653b",
+        "#bc8850"
+      ]
+    },
+    "rock": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#52673c",
+        "#7d9156",
+        "#a2b775",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#77746c",
+        "#a29b87",
+        "#c4bca7"
+      ]
+    },
+    "grass": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#52673c",
+        "#7d9156",
+        "#a2b775",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#c4a779",
+        "#e0c99b"
+      ]
+    },
+    "wood": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#52673c",
+        "#7d9156",
+        "#a2b775",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#c4a779",
+        "#e0c99b"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7_lownature_moss_rock",
+      "kind": "object",
+      "purpose": "mossy_rock",
+      "size": [
+        3,
+        2
+      ],
+      "image": "ArtReview/C7-LowNature-20261027/Native/moss_rock.png",
+      "profile": "rock",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-LowNature-20261027/Native/moss_rock.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_lownature_moss_rock_0_0",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_moss_rock_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_lownature_moss_rock_1_0",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_moss_rock_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_lownature_moss_rock_2_0",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_moss_rock_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_lownature_moss_rock_0_1",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_moss_rock_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_lownature_moss_rock_1_1",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_moss_rock_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_lownature_moss_rock_2_1",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_moss_rock_2_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_lownature_shrub",
+      "kind": "object",
+      "purpose": "low_shrub",
+      "size": [
+        2,
+        2
+      ],
+      "image": "ArtReview/C7-LowNature-20261027/Native/shrub.png",
+      "profile": "nature",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-LowNature-20261027/Native/shrub.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_lownature_shrub_0_0",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_shrub_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_lownature_shrub_1_0",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_shrub_1_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_lownature_shrub_0_1",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_shrub_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_lownature_shrub_1_1",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_shrub_1_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_lownature_tall_grass",
+      "kind": "object",
+      "purpose": "wild_grass_tuft",
+      "size": [
+        2,
+        2
+      ],
+      "image": "ArtReview/C7-LowNature-20261027/Native/tall_grass.png",
+      "profile": "grass",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-LowNature-20261027/Native/tall_grass.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_lownature_tall_grass_0_0",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_tall_grass_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_lownature_tall_grass_1_0",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_tall_grass_1_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_lownature_tall_grass_0_1",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_tall_grass_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_lownature_tall_grass_1_1",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_tall_grass_1_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_lownature_fallen_log",
+      "kind": "object",
+      "purpose": "fallen_mossy_log",
+      "size": [
+        3,
+        2
+      ],
+      "image": "ArtReview/C7-LowNature-20261027/Native/fallen_log.png",
+      "profile": "wood",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-LowNature-20261027/Native/fallen_log.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_lownature_fallen_log_0_0",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_fallen_log_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_lownature_fallen_log_1_0",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_fallen_log_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_lownature_fallen_log_2_0",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_fallen_log_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_lownature_fallen_log_0_1",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_fallen_log_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_lownature_fallen_log_1_1",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_fallen_log_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_lownature_fallen_log_2_1",
+          "image": "ArtReview/C7-LowNature-20261027/Cells/c7_lownature_fallen_log_2_1.png"
+        }
+      ]
+    }
+  ]
+}

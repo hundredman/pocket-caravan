@@ -1,8 +1,8 @@
 {
   "statuses": {
-    "paper_large": "pending",
-    "garden_wall": "pending",
-    "onggi": "pending"
+    "paper_large": "approved",
+    "garden_wall": "approved",
+    "onggi": "approved"
   },
   "productionApplied": false,
   "files": {

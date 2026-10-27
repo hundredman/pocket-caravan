@@ -1,0 +1,30 @@
+{
+  "moss_rock": {
+    "size": [
+      48,
+      32
+    ],
+    "rgbaSHA256": "70f221e2c553d291236cb3e31d327969d9c4ef53d50577e60935f6e4374a0f9d"
+  },
+  "shrub": {
+    "size": [
+      32,
+      32
+    ],
+    "rgbaSHA256": "62156107a036097c7e2c0b02461468decc32987406247335d066a62868ceb420"
+  },
+  "tall_grass": {
+    "size": [
+      32,
+      32
+    ],
+    "rgbaSHA256": "4add735b93164054a1cccb554364bbb4749ddf5eaf3437992ce9da6405d83f75"
+  },
+  "fallen_log": {
+    "size": [
+      48,
+      32
+    ],
+    "rgbaSHA256": "8d22a80576dac7d07324252649fda9207caed2512ec041f3532bd5133c353fa6"
+  }
+}
