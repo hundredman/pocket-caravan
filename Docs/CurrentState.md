@@ -346,4 +346,4 @@ Unity 안 검사(에디터 메뉴 / MCP): `SceneTerrainChecks`, `CentralConnecti
 
 - 사용자 진행 지시로 Mystic Woods 물가 구조를 참고해 새 윤곽·위쪽 둑 단면·좁은 접촉 그늘·단순 수면으로 재제작. imagegen 개념안은 참고만, 별도 네이티브80×48 Aseprite/후보7색/A5/A2검토0오류/전체15조각 고정프리셋. `ArtReview/C7-NaturalPond-20261027/` 보관. D3 결정 아님.
 - 실제Unity previewOnly Play480×270 전후·장식3장/PondNatural-v13 촬영. 연못밖차이0, 물마스크/장식/원본RGBA재출력/미승인본편거부 포함 관련20검사 통과. 기존SearchDatabase 예외1회·종료0. 보행·수동플레이·저장회귀·전체통합·빌드 미실행.
-- 현재 v13 그림 승인 대기, v12는 수정요청으로 보존. 본편/개경승인본/원래땅/승인건물/인물 미변경.
+- v13에 사용자 “훨씬 좋다” 피드백을 받았고 [제작 절차](Reference/PondArtWorkflow.md)를 정리했다. 최종 장식 선택·본편 교체 승인은 별도이며 v12는 수정요청으로 보존. 본편/개경승인본/원래땅/승인건물/인물 미변경.
