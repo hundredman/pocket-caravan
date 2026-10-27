@@ -176,6 +176,17 @@ namespace PocketCaravan
                 Notify.Show(FairNews, 4f);
             }
             BuildMarket(map, map == FairMap);
+            // 10/27 고기 꼬치 화덕 옆 꼬치 장수
+            var sp = NorthData.Get(map, "spitters");
+            for (int i = 0; i + 1 < sp.Length; i += 2)
+            {
+                var pos = NorthUtil.Cell(map, sp[i], sp[i + 1]);
+                var go = new GameObject("Spit Cook");
+                go.transform.SetParent(root, false);
+                go.transform.position = pos + new Vector3(0f, -0.4f, 0f);
+                Animate(go, "keeper_spit", 0.2f);
+                NorthSpot.Make(root, pos, () => "꼬치 장수 토르", SpitShop, Interactable.Kind.Person);
+            }
             BuildYards(map);
 
             // 공방
@@ -227,7 +238,7 @@ namespace PocketCaravan
                 for (int i = 0; i + 1 < st.Length; i += 2, n++)
                 {
                     PutAt(NorthUtil.Cell(map, st[i], st[i + 1]) + new Vector3(0f, -0.5f, 0f), "fair_stall", 9);   // 3칸 폭, 가운데 칸 기준
-                    Keeper(map, st[i] + 2, st[i + 1], keepers[n % keepers.Length], n);
+                    Keeper(map, st[i], st[i + 1] + 1, keepers[n % keepers.Length], n);   // 10/27 좌판 바로 아래 (길을 막지 않게)
                 }
             if (!fair || mk.Length < 2) return;
             int x = mk[0], y = mk[1];
@@ -389,6 +400,28 @@ namespace PocketCaravan
             go.transform.position = pos;
             var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = sp; sr.sortingOrder = order;
             return go.transform;
+        }
+
+        const int SkewerPrice = 6;
+
+        /// <summary>10/27 꼬치 장수: 따끈한 고기 꼬치 하나 (6냥) → 체력 가득 + 1시간 동안 눈보라에 덜 지침 (온천·모닥불과 같은 "warm")</summary>
+        static void SpitShop()
+        {
+            DialogueUI.Show("꼬치 장수 토르", "순록 고기를 소금 살짝 쳐서 불에 굴렸지. 하나 먹고 가!\n먹으면 몸이 확 데워져.",
+                new DialogueUI.Choice($"꼬치 하나 ({SkewerPrice}냥)", BuySkewer),
+                new DialogueUI.Choice("다음에", null));
+        }
+
+        static void BuySkewer()
+        {
+            var gm = GameManager.I;
+            if (gm == null) return;
+            if (gm.Player.money < SkewerPrice) { Notify.Show("돈이 모자라…", 2f); return; }
+            gm.Player.money -= SkewerPrice;
+            gm.Player.stamina = 1f;
+            NorthSave.Set("warm", Mathf.Max(NorthSave.Get("warm", 0f), gm.Clock.TotalHours + 1f));
+            Sfx.Play("coin");
+            Notify.Show("따끈한 꼬치! 체력이 가득 차고, 1시간 동안 눈보라에도 덜 지친다.", 3.5f);
         }
 
         static void OpenMarket()

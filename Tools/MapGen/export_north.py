@@ -171,20 +171,21 @@ def market_spots(m):
     kp = keeper_spots(m)
     used |= {(kp[i] + a, kp[i + 1] + b) for i in range(0, len(kp), 2) for a in (-1, 0, 1) for b in (-1, 0, 1)}   # 장꾼 자리와 그 둘레는 비움
     def free(x, y):
-        return 1 <= x < m.w - 1 and 1 <= y < m.h - 1 and not m.blocked[y][x] and not m.water[y][x] and m.obj[y][x] is None and (x, y) not in used
+        return 1 <= x < m.w - 1 and 1 <= y < m.h - 1 and not m.blocked[y][x] and not m.water[y][x] and m.obj[y][x] is None and m.high[y][x] is None and (x, y) not in used
     stalls = []
     for side in (-1, 1):
         best = None
         for y in range(my - 4, my + 6):
             for x in range(mx + side * 3, mx + side * 11, side):
                 # 10/27 좌판 그림은 3칸 폭(x-1 ~ x+1), 장꾼은 좌판 오른쪽 옆 칸(x+2)에 선다
-                if all(free(x + a, y) and m.road[y][x + a] == 0 for a in (-1, 0, 1)) and free(x + 2, y) and free(x, y - 1):
+                # 장꾼은 좌판 바로 아래 칸(x, y+1)에 선다: 길이 아니어야 함
+                if all(free(x + a, y) and m.road[y][x + a] == 0 for a in (-1, 0, 1)) and free(x, y + 1) and m.road[y + 1][x] == 0 and free(x, y - 1):
                     d = abs(x - (mx + side * 6)) + abs(y - (my + 2)) * 2
                     if best is None or d < best[0]:
                         best = (d, x, y)
         if best:
             stalls += [best[1], best[2]]
-            used |= {(best[1] + a, best[2]) for a in (-1, 0, 1, 2)} | {(best[1], best[2] - 1)}
+            used |= {(best[1] + a, best[2]) for a in (-1, 0, 1)} | {(best[1], best[2] - 1), (best[1], best[2] + 1)}
     crowd = []
     cand = []
     for y in range(my - 4, my + 7):
@@ -200,7 +201,7 @@ def market_spots(m):
 
 
 def keeper_spots(m):
-    """10/27 이미 있는 장터 좌판(stall, 3x2)마다 장꾼 한 명: 좌판 오른쪽 옆 → 왼쪽 옆 → 앞 순서로 빈 칸 (길이 아닌 칸 먼저).
+    """10/27 이미 있는 장터 좌판(stall, 3x2)마다 장꾼 한 명: 좌판 바로 아래(앞) → 옆 순서로 길이 아닌 빈 칸.
     장터에서 가까운 좌판 넷까지. 수입품 좌판처럼 바로 옆에 이미 사람이 있으면 건너뜀."""
     mk = [o for o in m.objects if o["kind"] == "market"]
     if not mk:
@@ -209,7 +210,7 @@ def keeper_spots(m):
     people = [(o["x"], o["y"]) for o in m.objects if o["kind"] in ("talker", "npc")]
     used = {(o["x"], o["y"]) for o in m.objects}
     def free(x, y):
-        return 1 <= x < m.w - 1 and 1 <= y < m.h - 1 and not m.blocked[y][x] and not m.water[y][x] and m.obj[y][x] is None and (x, y) not in used
+        return 1 <= x < m.w - 1 and 1 <= y < m.h - 1 and not m.blocked[y][x] and not m.water[y][x] and m.obj[y][x] is None and m.high[y][x] is None and (x, y) not in used
     out = []
     stalls = sorted([(abs(x + 1 - mx) + abs(y - my), x, y) for (n, x, y) in m.stamps if n == "stall"])
     for d, x, y in stalls:
@@ -217,11 +218,58 @@ def keeper_spots(m):
             break
         if any(x - 2 <= px <= x + 4 and y - 1 <= py <= y + 3 for (px, py) in people):
             continue
-        cands = [(x + 3, y + 1), (x - 1, y + 1), (x + 1, y + 2), (x, y + 2), (x + 2, y + 2)]
-        pick = next((c for c in cands if free(*c) and m.road[c[1]][c[0]] == 0), None) or next((c for c in cands if free(*c)), None)
+        # 10/27 좌판 바로 아래(앞) 가운데 → 아래 양옆 → 옆. 길 위에는 세우지 않는다 (길을 막지 않게)
+        cands = [(x + 1, y + 2), (x, y + 2), (x + 2, y + 2), (x - 1, y + 1), (x + 3, y + 1)]
+        pick = next((c for c in cands if free(*c) and m.road[c[1]][c[0]] == 0), None)
         if pick:
             out += [pick[0], pick[1]]
             used.add(pick)
+    return out
+
+
+def side_spots(m):
+    """10/27 장터 옆 떠돌이 상인·오늘의 특가 자리 둘: 장터에서 3~7칸, 길이 아니고, 장꾼·좌판·다른 사람과 3칸 이상 떨어진 빈 칸"""
+    mk = [o for o in m.objects if o["kind"] == "market"]
+    if not mk:
+        return []
+    mx, my = mk[0]["x"], mk[0]["y"]
+    taken = [(o["x"], o["y"]) for o in m.objects if o["kind"] in ("talker", "npc", "board", "sign", "market")]
+    kp = keeper_spots(m); st, cr = market_spots(m)
+    taken += [(kp[i], kp[i + 1]) for i in range(0, len(kp), 2)] + [(st[i] + a, st[i + 1] + b) for i in range(0, len(st), 2) for a in (-1, 0, 1) for b in (0, 1)]
+    cand = []
+    for y in range(my - 6, my + 7):
+        for x in range(mx - 8, mx + 9):
+            d = abs(x - mx) + abs(y - my)
+            if not (3 <= d <= 8) or not (1 <= x < m.w - 1 and 1 <= y < m.h - 1):
+                continue
+            if m.blocked[y][x] or m.water[y][x] or m.obj[y][x] is not None or m.high[y][x] is not None or m.road[y][x] > 0:
+                continue
+            if any(abs(x - a) + abs(y - b) < 3 or (abs(x - a) < 5 and abs(y - b) < 2) for (a, b) in taken):
+                continue                     # 이름표가 옆 사람·장터 이름표와 겹치지 않게 (같은 줄이면 5칸 이상)
+            cand.append((d, x, y))
+    out = []
+    for d, x, y in sorted(cand):
+        if len(out) >= 4:
+            break
+        if all(abs(x - out[i]) + abs(y - out[i + 1]) >= 4 and not (abs(x - out[i]) < 5 and abs(y - out[i + 1]) < 2) for i in range(0, len(out), 2)):
+            out += [x, y]
+    return out
+
+
+def spit_sellers(m):
+    """10/27 고기 꼬치 화덕(spit, 2x2) 옆 꼬치 장수 자리: 화덕 오른쪽 → 왼쪽 → 아래, 길이 아닌 빈 칸"""
+    used = {(o["x"], o["y"]) for o in m.objects}
+    out = []
+    for (n, x, y) in m.stamps:
+        if n != "spit":
+            continue
+        for (cx, cy) in [(x + 2, y + 1), (x - 1, y + 1), (x, y + 2), (x + 1, y + 2), (x + 2, y), (x - 1, y)]:
+            if not (1 <= cx < m.w - 1 and 1 <= cy < m.h - 1) or m.blocked[cy][cx] or m.water[cy][cx] or m.obj[cy][cx] is not None or m.high[cy][cx] is not None or (cx, cy) in used:
+                continue
+            # 길이 아니거나, 넓은 광장(둘레 8칸이 다 길)이면 서도 길을 막지 않는다
+            wide = sum(1 for a in (-1, 0, 1) for b in (-1, 0, 1) if m.road[cy + b][cx + a] > 0) >= 9
+            if m.road[cy][cx] == 0 or wide:
+                out += [cx, cy]; used.add((cx, cy)); break
     return out
 
 
@@ -310,6 +358,8 @@ for f in north.MAPS:
         crowd=market_spots(m)[1],           # 10/27 큰 장 날 구경꾼 자리
         inns=inn_spots(m),                  # 10/27 여관에서 쉬어 가기
         keepers=keeper_spots(m),            # 10/27 이미 있는 좌판 옆 장꾼 자리 (최대 넷)
+        sides=side_spots(m),                # 10/27 떠돌이 상인·오늘의 특가 자리 (장터 옆 빈 땅)
+        spitters=spit_sellers(m),           # 10/27 꼬치 장수 자리
         craft=[v for i, k in enumerate(("craft_fish", "craft_fur", "craft_brew")) for c in spot_cells(m, k) for v in (c[0], c[1], i)],   # 10/26 공방 x, y, 종류
         yard=[v for i, k in enumerate(("yard_fish", "yard_fur", "yard_brew")) for (kk, x, y) in getattr(m, "spots", []) if kk == k for v in (x, y, i)],   # 10/26 공방 마당 왼쪽 위 (그림 기준점)
         market=[v for o in m.objects if o["kind"] == "market" for v in nearest_walk(m, o["x"] + 2, o["y"] + 1, avoid={(o["x"], o["y"])})],

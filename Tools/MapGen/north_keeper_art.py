@@ -67,9 +67,16 @@ def saltman(raised):
     hand_item(im,["..o.o..",".oBBBo.","oWWWWWo","oWWwWWo","oWWWWWo",".ooooo."],{'W':H('f4f2ee'),'w':H('c8ccd6'),'B':H('4a6fb0')},raised)
     return im
 
+# 5 꼬치 장수 (10/27): 흰 털모자, 적갈색 머리·수염, 가죽 앞치마, 고기 꼬치
+def spitcook(raised):
+    im=nordic(base('north_p_herder'),{(220,172,130):SKIN,(180,141,106):SKIN_D,(96,64,44):(186,104,56)},beard=((186,104,56),(130,70,40)))
+    apron(im,H('8a5a34'),H('5e3a22'))
+    hand_item(im,["o......","oMoMoMo",".oMoMoM","..o...."],{'M':H('b0522e'),'o':H('3a2416')},raised)
+    return im
+
 def sprites():
     out = {}
-    for key, f in (("keeper_fish", fishmonger), ("keeper_fur", furrier), ("keeper_mead", meadwife), ("keeper_salt", saltman)):
+    for key, f in (("keeper_fish", fishmonger), ("keeper_fur", furrier), ("keeper_mead", meadwife), ("keeper_salt", saltman), ("keeper_spit", spitcook)):
         out[key + "_d0"] = f(False)
         out[key + "_d1"] = f(True)
     return out

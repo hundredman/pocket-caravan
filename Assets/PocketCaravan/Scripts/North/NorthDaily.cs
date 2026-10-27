@@ -164,8 +164,12 @@ namespace PocketCaravan
             if (market.Length >= 2)
             {
                 var mp = NorthUtil.Cell(map, market[0], market[1]);
-                if (map == WandererTown) { Person(mp + new Vector3(1.5f, 0f, 0f), "wanderer", () => "떠돌이 상인", Wanderer, Interactable.Kind.Market); Notify.Show("떠돌이 상인이 이 마을 장터에 와 있다!", 3f); }
-                if (map == DealTown) { Person(mp + new Vector3(-1.5f, 0f, 0f), "dealer", () => "오늘의 특가 좌판", Deal, Interactable.Kind.Market); }
+                // 10/27 장터 사람과 이름표가 겹치지 않게, 맵 생성기가 고른 장터 옆 빈 땅 두 곳 (없으면 예전처럼 장터 양옆)
+                var sides = NorthData.Get(map, "sides");
+                Vector3 wp = sides.Length >= 2 ? NorthUtil.Cell(map, sides[0], sides[1]) : mp + new Vector3(1.5f, 0f, 0f);
+                Vector3 dp = sides.Length >= 4 ? NorthUtil.Cell(map, sides[2], sides[3]) : mp + new Vector3(-1.5f, 0f, 0f);
+                if (map == WandererTown) { Person(wp, "wanderer", () => "떠돌이 상인", Wanderer, Interactable.Kind.Market); Notify.Show("떠돌이 상인이 이 마을 장터에 와 있다!", 3f); }
+                if (map == DealTown) { Person(map == WandererTown || sides.Length < 4 ? dp : wp, "dealer", () => "오늘의 특가 좌판", Deal, Interactable.Kind.Market); }
             }
             // 떨어진 선물: 오늘 고른 길 맵 세 곳에 두 개씩
             int idx = System.Array.IndexOf(GiftMaps, map);
