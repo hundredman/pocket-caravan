@@ -486,3 +486,11 @@ Unity 안 검사(에디터 메뉴 / MCP): `SceneTerrainChecks`, `CentralConnecti
 
 
 - 사용자 “좋다. 다음 작업 얼마나 더 남았어?”로 낮은 자연물4그림 승인·Approved/C7-LowNature-v1 원본/PNG/RGBA·범위 보존. 현재 C6 온전한 PNG47개 표에서 추가 역할/변형 검토 대상은12원본(9종류: 배·볏단 단품·빨래대·큰 소나무·둥근 나무·작은 가게·별도 바위·벤치·연꽃). 단일칸 소품/조립 지형·미확인 원본/실제 연결 검토는 이 수량 밖이며 C7 전체 잔여 확정량은 아니다. 승인 그림 본편 연결·통행/가림 확인과 B3~B6는 별도다.
+
+
+### C7 잔여 원본 일괄 제작 재개·팀 공용 파일 동결 (2026-10-27)
+
+- 최신 main6e7f48de(0ec1e0e9/62de2920 테스트 수정 포함)에서 codex/c7-remaining 브랜치로 재개했다. 기존 C7 worktree를 이어 사용한다. 사용자 지시로 팀 공용 Scripts/Core·Economy·Quests·UI, Resources/GameDatabase·WorldIndex, EditorBuildSettings, Transit 장면, World/Connections와 각meta는 수정 금지·필요하면 멈추고 보고하도록 AGENTS에 기록했다.
+- 확인된 잔여9종12원본을 한 묶음으로 검토한다. transit 전용 원본도 아트 후보만 별도 제작하며 공용 장면·실행부·데이터에 연결하지 않는다. 독립 Unity Editor 검토 카메라는 Play 진입/게임 부트/본편 씬 열기/씬 저장 없이480×270·PPU16으로 촬영하도록 분리했다. 물색 면은 배·연꽃 가독성용 검토 배경으로 본편 지형이 아니다. 실제 Play·이동 검사를 대신하지 않는다.
+
+- ArtReview/C7-RemainingBatch-20261027에 12개 후보/각 Aseprite·PNG/87렌더칸·기존/후보 비교·팀 기준표·Unity Editor 카메라3페이지 제출. 볏단은 단품 몸통을 넓게 다시 그리고 작은 가게는 벽·출입구 비례를 보강했다. 모두 승인 대기/A2 본편 차단·기존 수레/지형 유지. 관련25검사 통과(main C6 12+R2 5+신규8), 보호100파일 자체 변경/추가0·기존 승인 PNG353개 보존. Play·실제 이동/저장/충돌·전체 통합·빌드 미실행. 단일칸/조립 지형·미확인 벚나무·성문 연결/본편 적용은 별도이며 C7 전체 완료 아님. [검증](Validation/C7-RemainingBatch-2026-10-27/README.md).
