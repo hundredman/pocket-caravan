@@ -17,4 +17,4 @@ AI 초안은 구도 참고로만 썼다(`AI/provenance.json`). 최종 원본은 
 3. 이 worktree의 Unity6000.3.26f1에서 `PocketCaravan.EditorTools.C7CartRebuildReview.Run`을 실행한다(Burst 비활성/worker2). 검토용 Play 촬영 후 종료한다.
 4. 같은 Python으로 `Tools/ArtTrials/c7_cart_rebuild.py board`를 실행한다.
 
-수레 승인 대기. 우물·석등 자동 승인 없음. 본편·기존 승인본·ID·저장·충돌 미변경. 실제 보행·수동 플레이·저장 회귀·전체 통합·게임 빌드는 실행하지 않았다.
+사용자가 바퀴·손잡이 위치와 작은 크기의 조잡함을 지적해 이 시안은 changes_requested다. 후속 시안은 `../C7-CartRoof-20261027/`에 보존했다. 우물·석등 자동 승인 없음. 본편·기존 승인본·ID·저장·충돌 미변경. 실제 보행·수동 플레이·저장 회귀·전체 통합·게임 빌드는 실행하지 않았다.
