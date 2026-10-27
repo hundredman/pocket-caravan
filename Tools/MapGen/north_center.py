@@ -396,8 +396,10 @@ def creek_town():
     m.river_v(38, 41, wiggle=1, fixed_rows=range(9, 16))
     m.road_path([(31, 13), (37, 12)], width=2)
     m.bridge(37, 11, 42, 13)
-    # 10/27 통합: 고려 쪽 내륙 교역 길목과 잇는 안은 region_links.json "pending" (고려 담당 확인 후 m.link로 바꿈)
-    closed_exit(m, "E", 11, "→ 북동 포구 (고려 쪽)\n(이웃 구역과 잇는 중)", road_from=(43, 12))
+    # 10/27 통합: 다리 건너 동쪽 → 고려 쪽 내륙 교역 길목 서쪽 위 (World/Connections/region_links.json)
+    m.road_path([(43, 12), (51, 12)], width=2)
+    m.link("E", 11, 4, "transit_crossroads", "link_north_c_creek", "link_transit_crossroads")
+    m.sign(48, 10, "→ 내륙 교역 길목 (고려 쪽)\n버들나루 · 송악 산록")
     wedge_forest(m, 48, 46, "coast")
     # 장터와 집들
     m.deco_stamp("stall", 19, 9); m.deco_stamp("stall", 16, 16)   # 10/27 오른쪽 좌판(군나르)은 게시판 아래로 두 줄 띄워 옮김 (가로등·사람과 안 겹치게)
