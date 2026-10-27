@@ -337,7 +337,7 @@ namespace PocketCaravan.EditorTools
                         var spot = new GameObject("도적 출몰 자리").AddComponent<BanditSpot>();
                         spot.transform.SetParent(objects); spot.transform.position = center;
                         spot.sightRange = o.radius > 0 ? o.radius : 6f;
-                        var bgo = Character("도적", NpcArtBindings.Get("bandit"), center, objects);
+                        var bgo = Character("도적", RoleArt(entry, "bandit", "bandit_tall"), center, objects);
                         bgo.AddComponent<PlayerMotor>().walkSpeed = 3.4f;
                         var bandit = bgo.AddComponent<Bandit>();
                         bandit.anim = bgo.GetComponent<CharacterAnimator>();
@@ -356,7 +356,7 @@ namespace PocketCaravan.EditorTools
                             director = new GameObject("돌발 사건").AddComponent<RoadEventDirector>();
                             director.transform.SetParent(objects);
                         }
-                        foreach (var (etype, ech) in new[] { (RoadEvent.Type.FallenTraveler, NpcArtBindings.Get("event_fallen_traveler")), (RoadEvent.Type.Peddler, NpcArtBindings.Get("event_peddler")) })
+                        foreach (var (etype, ech) in new[] { (RoadEvent.Type.FallenTraveler, RoleArt(entry, "event_fallen_traveler", "villager_rabbit_tall")), (RoadEvent.Type.Peddler, RoleArt(entry, "event_peddler", "trader_tall")) })
                         {
                             var ego = Character(etype == RoadEvent.Type.Peddler ? "떠돌이 상인" : "쓰러진 행인", ech, center, objects);
                             var ev = ego.AddComponent<RoadEvent>();
@@ -394,7 +394,7 @@ namespace PocketCaravan.EditorTools
                         if (o.path != null)
                             for (int k = 0; k + 1 < o.path.Length; k += 2)
                                 pts.Add(grid.GetCellCenterWorld(new Vector3Int(o.path[k], f.h - 1 - o.path[k + 1], 0)));
-                        var wgo = Character("NPC 상인", NpcArtBindings.Get("walker"), pts.Count > 0 ? pts[0] : center, objects);
+                        var wgo = Character("NPC 상인", RoleArt(entry, "walker", "trader_tall"), pts.Count > 0 ? pts[0] : center, objects);
                         var walker = wgo.AddComponent<Walker>();
                         walker.path = pts;
                         walker.traderIndex = o.idx;
@@ -542,6 +542,13 @@ namespace PocketCaravan.EditorTools
             var tm = go.AddComponent<Tilemap>();
             if (renderer) go.AddComponent<TilemapRenderer>().sortingOrder = order;
             return tm;
+        }
+
+        /// <summary>10/27 통합: 고려·중간권은 C1 역할 그림(npc_roles.json), 다른 지역은 merge 전 공용 그림을 그대로 쓴다 (지역 분위기 유지).</summary>
+        static string RoleArt(WorldRegistry.MapEntry entry, string role, string legacy)
+        {
+            string rid = entry != null && entry.region != null ? entry.region.regionId : "goryeo";
+            return rid == "goryeo" || rid == "transit" ? NpcArtBindings.Get(role) : legacy;
         }
 
         /// <summary>16×24 캐릭터 (Art/Characters/이름_방향프레임.png). 아래를 보고 서 있다.</summary>
