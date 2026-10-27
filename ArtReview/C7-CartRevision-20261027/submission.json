@@ -1,5 +1,5 @@
 {
-  "status": "pending",
+  "status": "changes_requested",
   "productionApplied": false,
   "files": {
     "Native/cart.png": {
@@ -30,5 +30,6 @@
       ],
       "rgbaSHA256": "b2f812d63ddbdd161e821487343077facd8f9e2158f723d45ce7c6207a866520"
     }
-  }
+  },
+  "replacementTrial": "ArtReview/C7-CartRebuild-20261027"
 }

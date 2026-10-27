@@ -48,7 +48,10 @@
         "path": "ArtReview/C7-CartRevision-20261027/Native/cart.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "date": "2026-10-27",
+        "userQuote": "\uc77c\ub2e8 \uc218\ub808\uc774\ubbf8\uc9c0 \uc6d0\ubcf8\uc774 \uc81c\ub300\ub85c \ub9cc\ub4e4\uc5b4\uc9c0\uc9c0 \uc54a\uc740 \uac83 \uac19\uace0, \ub2e4\ub978 \ubb38\uc81c\ub85c \uc774\ud6c4 \ud53d\uc140\ud654 \ud588\uc744 \ub54c \uc9c1\uad00\uc131\uc774 \ub5a8\uc5b4\uc838. \uc218\ub808\uc778\uc9c0 \ubaa8\ub974\uaca0\uc5b4.",
+        "feedback": "\uc6d0\ubcf8 \uad6c\uc870\uc640 \uc2e4\uc81c32px \uc778\uc9c0\uc131 \ubaa8\ub450 \uc7ac\uc81c\uc791 \ud544\uc694"
       },
       "tiles": [
         {

@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "prop": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#daa34a",
+        "#f0c365",
+        "#77746c"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7_cartbuild_cart",
+      "kind": "object",
+      "purpose": "handcart",
+      "size": [
+        2,
+        2
+      ],
+      "profile": "prop",
+      "image": "ArtReview/C7-CartRebuild-20261027/Native/cart.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C7-CartRebuild-20261027/Native/cart.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_cartbuild_0_0",
+          "image": "ArtReview/C7-CartRebuild-20261027/Cells/c7_cartbuild_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_cartbuild_1_0",
+          "image": "ArtReview/C7-CartRebuild-20261027/Cells/c7_cartbuild_1_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_cartbuild_0_1",
+          "image": "ArtReview/C7-CartRebuild-20261027/Cells/c7_cartbuild_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_cartbuild_1_1",
+          "image": "ArtReview/C7-CartRebuild-20261027/Cells/c7_cartbuild_1_1.png"
+        }
+      ]
+    }
+  ]
+}
