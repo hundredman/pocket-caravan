@@ -7,7 +7,7 @@
       "mapId": "north_birka",
       "jsonPath": "Assets/PocketCaravan/Maps/North/north_birka.json",
       "scenePath": "Assets/PocketCaravan/Scenes/North/north_birka.unity",
-      "worldX": 29,
+      "worldX": 33,
       "worldY": 1,
       "generator": "north:birka"
     },
@@ -15,7 +15,7 @@
       "mapId": "north_fjord_road",
       "jsonPath": "Assets/PocketCaravan/Maps/North/north_fjord_road.json",
       "scenePath": "Assets/PocketCaravan/Scenes/North/north_fjord_road.unity",
-      "worldX": 30,
+      "worldX": 34,
       "worldY": 1,
       "generator": "north:fjord_road"
     },
@@ -23,7 +23,7 @@
       "mapId": "north_hunter",
       "jsonPath": "Assets/PocketCaravan/Maps/North/north_hunter.json",
       "scenePath": "Assets/PocketCaravan/Scenes/North/north_hunter.unity",
-      "worldX": 28,
+      "worldX": 32,
       "worldY": 0,
       "generator": "north:hunter"
     },
@@ -31,7 +31,7 @@
       "mapId": "north_naru",
       "jsonPath": "Assets/PocketCaravan/Maps/North/north_naru.json",
       "scenePath": "Assets/PocketCaravan/Scenes/North/north_naru.unity",
-      "worldX": 30,
+      "worldX": 34,
       "worldY": 0,
       "generator": "north:naru"
     },
@@ -39,7 +39,7 @@
       "mapId": "north_laugar",
       "jsonPath": "Assets/PocketCaravan/Maps/North/north_laugar.json",
       "scenePath": "Assets/PocketCaravan/Scenes/North/north_laugar.unity",
-      "worldX": 30,
+      "worldX": 34,
       "worldY": 2,
       "generator": "north:laugar"
     },
@@ -47,7 +47,7 @@
       "mapId": "north_herd",
       "jsonPath": "Assets/PocketCaravan/Maps/North/north_herd.json",
       "scenePath": "Assets/PocketCaravan/Scenes/North/north_herd.unity",
-      "worldX": 31,
+      "worldX": 35,
       "worldY": 1,
       "generator": "north:herd"
     },
@@ -55,7 +55,7 @@
       "mapId": "north_runehill",
       "jsonPath": "Assets/PocketCaravan/Maps/North/north_runehill.json",
       "scenePath": "Assets/PocketCaravan/Scenes/North/north_runehill.unity",
-      "worldX": 30,
+      "worldX": 34,
       "worldY": 3,
       "generator": "north:runehill"
     },
@@ -63,7 +63,7 @@
       "mapId": "north_icecave",
       "jsonPath": "Assets/PocketCaravan/Maps/North/north_icecave.json",
       "scenePath": "Assets/PocketCaravan/Scenes/North/north_icecave.unity",
-      "worldX": 31,
+      "worldX": 35,
       "worldY": 2,
       "generator": "north:icecave"
     },
@@ -71,7 +71,7 @@
       "mapId": "north_pass",
       "jsonPath": "Assets/PocketCaravan/Maps/North/north_pass.json",
       "scenePath": "Assets/PocketCaravan/Scenes/North/north_pass.unity",
-      "worldX": 29,
+      "worldX": 33,
       "worldY": 0,
       "generator": "north:border_pass"
     }
