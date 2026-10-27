@@ -279,40 +279,30 @@ def build(layout):
         t[hillring&(forest_n>.42)]=FOREST;t[hillring&(forest_n<=.42)]=HILL
         elev=np.where(ringz,np.maximum(elev,np.quantile(elev[land],.82)*bump+elev*(1-bump)),elev)
         lk['hillCells']=int(hillring.sum())
-        # 수원지: 출구 반대편에 작은 산줄기(능선 + 봉우리 + 산자락 숲)를 세우고,
-        # 그 산 높은 곳에서 시작한 개울 2줄기가 골짜기를 따라 내려와 호수로 든다.
+        # 수원지: 출구 반대편에 작은 산 하나(봉우리 + 산자락 숲)를 두고,
+        # 그 산 높은 비탈에서 시작한 개울 1줄기가 호수로 든다.
         R_l=math.sqrt(m.sum()/math.pi);back=ang_out+math.pi
-        rng_=None
-        for dist_ in (R_l+26,R_l+22,R_l+18):
+        ctr_=None
+        for dist_ in (R_l+21,R_l+19,R_l+23,R_l+17):
             mcx,mcy=cx+math.cos(back)*dist_,cy+math.sin(back)*dist_
-            px_,py_=-math.sin(back),math.cos(back)      # 능선 방향: 호수 쪽과 수직
-            # 활처럼 휜 능선(호수를 감싸는 쪽으로 휨) + 불규칙한 흔들림
-            pts_=[(mcy+py_*s_*15-math.sin(back)*(s_*s_)*6+math.sin(s_*3.3+1)*2.2,
-                   mcx+px_*s_*15-math.cos(back)*(s_*s_)*6+math.cos(s_*2.7)*2.2) for s_ in np.linspace(-1,1,11)]
-            if all(0<=int(y)<H and 0<=int(x)<W and east[int(y),int(x)] and land[int(y),int(x)] and far[int(y),int(x)] for y,x in pts_):
-                rng_=pts_;break
+            iy,ix=int(round(mcy)),int(round(mcx))
+            if 0<=iy<H and 0<=ix<W and east[iy,ix] and land[iy,ix] and far[iy,ix] and not m[iy,ix]:
+                ctr_=(mcy,mcx);break
         inflow=[]
-        if rng_:
-            ridge2=np.zeros((H,W),bool)
-            for (y0_,x0_),(y1_,x1_) in zip(rng_,rng_[1:]):
-                n_=int(max(abs(y1_-y0_),abs(x1_-x0_))*2)+1
-                for i_ in range(n_+1):
-                    ridge2[int(round(y0_+(y1_-y0_)*i_/n_)),int(round(x0_+(x1_-x0_)*i_/n_))]=True
-            dr=ndimage.distance_transform_edt(~ridge2)
+        if ctr_:
+            mcy,mcx=ctr_
             wob_=noise((H,W),5,rng,3)                          # 산 가장자리를 들쭉날쭉하게
-            dr_=dr*(1+.55*(wob_-.5))
-            prof=np.exp(-(dr_/4.5)**2)+.45*np.exp(-(dr_/10)**2)     # 높은 산 덩어리 + 넓은 산자락
-            zone=(dr_<13)&east&land&~m&~river
+            dr_=np.hypot(yy_-mcy,(xx_-mcx)*.85)*(1+.45*(wob_-.5))
+            prof=np.exp(-(dr_/4.5)**2)+.45*np.exp(-(dr_/9)**2)
+            zone=(dr_<11)&east&land&~m&~river
             elev=np.where(zone,np.maximum(elev,.55+.45*prof),elev)
-            t[zone&(dr_<11)&(forest_n>.33)]=FOREST;t[zone&(dr_<11)&(forest_n<=.33)]=HILL
-            t[zone&(dr_<4.6)]=MOUNTAIN;t[zone&(dr_<2.2)]=PEAK
-            lk['sourceRange']=[[round(x+X0,1),round(y+Y0,1)] for y,x in (rng_[0],rng_[-1])]
-            # 개울: 능선 양쪽 끝 가까운 산자락(산 바로 바깥, 가장 높은 곳)에서 호수로
-            lakeward=((yy_-mcy)*(cy-mcy)+(xx_-mcx)*(cx-mcx))>0       # 산의 호수 쪽 비탈
-            for end_ in (rng_[2],rng_[-3]):
-                ey,ex=int(end_[0]),int(end_[1])
-                cand_=np.argwhere(zone&lakeward&~np.isin(t,[MOUNTAIN,PEAK])&(dr_<7)&(((yy_-ey)**2+(xx_-ex)**2)<8**2))
-                if not len(cand_):continue
+            t[zone&(dr_<9.5)&(forest_n>.33)]=FOREST;t[zone&(dr_<9.5)&(forest_n<=.33)]=HILL
+            t[zone&(dr_<5.2)]=MOUNTAIN;t[zone&(dr_<2.4)]=PEAK
+            lk['sourceMountain']=[round(mcx+X0,1),round(mcy+Y0,1)]
+            # 개울 1줄기: 산의 호수 쪽 비탈, 산 바로 바깥의 가장 높은 곳에서 시작
+            lakeward=((yy_-mcy)*(cy-mcy)+(xx_-mcx)*(cx-mcx))>0
+            cand_=np.argwhere(zone&lakeward&~np.isin(t,[MOUNTAIN,PEAK])&(dr_<7.5))
+            if len(cand_):
                 h0=tuple(cand_[np.argmax(elev[tuple(cand_.T)])])
                 mc=np.argwhere(m);m0=tuple(mc[np.argmin(((mc-np.array(h0))**2).sum(1))])
                 seg=astar(h0,m0,1+12*elev,blocked=np.isin(t,[MOUNTAIN,PEAK]),eight=True)
