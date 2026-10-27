@@ -547,8 +547,11 @@ namespace PocketCaravan.EditorTools
         /// <summary>16×24 캐릭터 (Art/Characters/이름_방향프레임.png). 아래를 보고 서 있다.</summary>
         static GameObject Character(string name, string character, Vector3 pos, Transform parent)
         {
-            if (string.IsNullOrEmpty(character) || !character.StartsWith("NPC/", StringComparison.Ordinal))
-                throw new InvalidDataException("사람 NPC 역할 경로가 아닙니다: " + character);
+            // 10/27 통합: 고려·중간권 맵은 C1 역할 경로(NPC/…)만 쓴다 (Python 내보내기·테스트가 보장).
+            // 다른 지역(북유럽·베네치아·아라비아)은 기존 캐릭터 이름(Art/Characters/이름_d0.png)을 쓰므로, 그림이 실제로 있으면 허용한다.
+            if (string.IsNullOrEmpty(character) || (!character.StartsWith("NPC/", StringComparison.Ordinal)
+                && AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Characters/{character}_d0.png") == null))
+                throw new InvalidDataException("사람 NPC 역할 경로가 아니고 그림도 없습니다: " + character);
             var go = new GameObject(name);
             go.transform.SetParent(parent);
             go.transform.position = pos;
