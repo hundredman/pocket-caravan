@@ -1034,8 +1034,9 @@ def grand_arcade(name, seed=401):
     return save(name, im)
 
 
-def ferris_wheel(name, seed=402):
-    """관람차 (128×144 = 8×9칸): 금빛 테, 바퀴살, 색색 곤돌라 8개, A자 받침, 매표소."""
+def ferris_wheel(name, seed=402, wheel=False):
+    """관람차 (128×144 = 8×9칸): A자 받침·매표소. wheel=True면 금빛 테·바퀴살·곤돌라까지 (미리보기용).
+    게임에서는 바퀴를 ArabiaAmbience가 따로 그려 천천히 돌린다 (2026-10-27)."""
     rng = random.Random(seed)
     w, h = 128, 144
     im = canvas(w, h)
@@ -1049,19 +1050,22 @@ def ferris_wheel(name, seed=402):
             y = cy + 70 * u + 6
             for d in (-1, 0, 1):
                 px[int(x) + d, int(y)] = OUTLINE if d != 0 else (190, 60, 70, 255)
-    for k in range(16):                                  # 바퀴살
+    if not wheel:
+        _ellipse_px(px, w, h, cx, cy, 5, 5, GOLD[2], shade=lambda x, y: GOLD[3] if x < cx else GOLD[1])   # 축
+    for k in (range(16) if wheel else ()):              # 바퀴살
         a = k / 16 * 6.2832
         for t in range(4, R):
             px[int(cx + math.cos(a) * t), int(cy + math.sin(a) * t)] = (230, 220, 200, 255) if t % 6 else GOLD[2]
-    for k in range(720):                                 # 테 두 겹 + 전구
+    for k in (range(720) if wheel else ()):            # 테 두 겹 + 전구
         a = k / 720 * 6.2832
         for rr, c in ((R, OUTLINE), (R - 1, GOLD[2]), (R - 2, GOLD[3]), (R - 3, OUTLINE), (R - 8, GOLD[1])):
             px[int(cx + math.cos(a) * rr), int(cy + math.sin(a) * rr)] = c
-    for k in range(32):
+    for k in (range(32) if wheel else ()):
         a = k / 32 * 6.2832
         px[int(cx + math.cos(a) * (R - 1)), int(cy + math.sin(a) * (R - 1))] = FESTIVE[k % len(FESTIVE)]
-    _ellipse_px(px, w, h, cx, cy, 6, 6, GOLD[2], shade=lambda x, y: GOLD[3] if x < cx else GOLD[1])
-    for k in range(8):                                   # 곤돌라 (늘 아래로 매달림)
+    if wheel:
+        _ellipse_px(px, w, h, cx, cy, 6, 6, GOLD[2], shade=lambda x, y: GOLD[3] if x < cx else GOLD[1])
+    for k in (range(8) if wheel else ()):               # 곤돌라 (늘 아래로 매달림)
         a = k / 8 * 6.2832 + 0.2
         gx, gy = int(cx + math.cos(a) * R), int(cy + math.sin(a) * R)
         c = FESTIVE[k % len(FESTIVE)]

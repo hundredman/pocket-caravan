@@ -285,6 +285,29 @@ namespace PocketCaravan.EditorTools
                         double until = EditorApplication.timeSinceStartup + 1.3;
                         while (EditorApplication.timeSinceStartup < until) yield return Frames(1);
                         yield return Shot($"{n++:00}_bazaar_festival");
+                        // 밤 장면: 시계를 잠시 밤 9시 반으로 돌려 불빛·분수·관람차를 찍고 되돌린다
+                        var amb = ArabiaAmbience.Current;
+                        var marks = Object.FindObjectsByType<ArabiaFxMarker>(FindObjectsSortMode.None);
+                        var fountain = marks.FirstOrDefault(m => m.kind == "fountain");
+                        var ferris = marks.FirstOrDefault(m => m.kind == "ferris");
+                        var motor = PlayerController.Instance.Motor;
+                        var back = motor.transform.position;
+                        float minute = GM.Clock.minuteOfDay;
+                        GM.Clock.minuteOfDay = 21.5f * 60f;
+                        foreach (var (mk, off, shot) in new[] { (fountain, new Vector3(6f, -7.5f, 0f), "bazaar_night_fountain"), (ferris, new Vector3(4f, 1.5f, 0f), "bazaar_night_ferris") })
+                        {
+                            if (!Check($"대광장 연출 자리: {shot}", mk != null)) continue;
+                            motor.Teleport(mk.transform.position + off, Vector2Int.down);
+                            double wait = EditorApplication.timeSinceStartup + 2.5;
+                            while (EditorApplication.timeSinceStartup < wait) yield return Frames(1);
+                            Check($"밤 불빛 켜짐 ({shot})", amb != null && amb.LitCount > 0, amb != null ? $"{amb.LitCount}개 · 관람차 {(amb.FerrisTurning ? "돎" : "없음")}" : "연출 없음");
+                            yield return Shot($"{n++:00}_{shot}");
+                        }
+                        GM.Clock.minuteOfDay = minute;
+                        motor.Teleport(back, Vector2Int.down);
+                        yield return Frames(10);
+                        var guards = Object.FindObjectsByType<ArabiaPatrol>(FindObjectsSortMode.None);
+                        Check("대광장 순찰 경비병", guards.Length >= 2 && guards.All(g => g.path.Count > 4), $"{guards.Length}명");
                     }
                     if (to == ArabiaRegionSetup.ShortcutMap)
                     {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.Tilemaps;
 
 namespace PocketCaravan
@@ -10,6 +11,7 @@ namespace PocketCaravan
     /// - 가끔 모래바람: 화면이 모래빛으로 흐려지고 모래 줄기가 휩쓸고 지나가며, 사막에선 회전초가 굴러간다. 바람 소리.
     /// - 가끔 회오리 모래기둥(사막).
     /// - 만국 장터 대광장: 밤엔 불꽃놀이, 낮엔 색종이 꽃가루.
+    /// - 밤 불빛: 등불·가로등·창문·천막·노점에 따뜻한 불빛(Light2D)이 켜지고 깜빡인다. 관람차는 천천히 돌고, 분수엔 물이 떨어진다.
     /// - 동물: 독수리(가까이 가면 날아올라 도망) · 하늘을 맴도는 독수리(땅에 그림자) · 도마뱀(가까이 가면 쏜살같이 숨음)
     ///   · 쇠똥구리 · 마을 비둘기 떼(가까이 가면 한꺼번에 날아감) · 골목 고양이 · 밤의 날쥐(저보아) · 해안 갈매기.
     /// 그림은 코드로 그린 작은 픽셀 그림이라 에셋이 필요 없다. 공용 코드는 바꾸지 않는다.
@@ -67,6 +69,7 @@ namespace PocketCaravan
             UpdateDevil(dt);
             UpdateCritters(dt);
             UpdateFireworks(dt);
+            UpdateLights(dt);
         }
 
         // ---------------------------------------------------------------- 공용 도움
@@ -324,6 +327,164 @@ namespace PocketCaravan
             if (devilTime > life) devilOn = false;
         }
 
+        // ---------------------------------------------------------------- 밤 불빛 · 관람차 · 분수 (2026-10-27)
+        class Glow { public ArabiaFxMarker m; public Light2D light; public float phase; }
+        readonly List<Glow> glows = new List<Glow>();
+        bool markersRead;
+        Transform ferris, ferrisWheel, ferrisBulbs; SpriteRenderer bulbsSr;
+        readonly List<Transform> gondolas = new List<Transform>();
+        Vector3 ferrisCenter, fountainTop;
+        bool hasFountain;
+        class Drop { public SpriteRenderer sr; public float u, speed; public int arc, side; }
+        readonly List<Drop> drops = new List<Drop>();
+        readonly List<SpriteRenderer> glints = new List<SpriteRenderer>();
+        static int[] allLayers;
+
+        void ReadMarkers()
+        {
+            markersRead = true;
+            foreach (var m in Object.FindObjectsByType<ArabiaFxMarker>(FindObjectsSortMode.None))
+            {
+                if (m.kind == "light") glows.Add(new Glow { m = m, phase = Random.value * 10f });
+                else if (m.kind == "ferris") BuildFerris(m.transform.position);
+                else if (m.kind == "fountain") { hasFountain = true; fountainTop = m.transform.position; }
+            }
+        }
+
+        static Color ColorOf(string n, float t)
+        {
+            switch (n)
+            {
+                case "amber": return new Color(1f, .64f, .32f);
+                case "gold": return new Color(1f, .84f, .46f);
+                case "white": return new Color(1f, .94f, .84f);
+                case "violet": return new Color(.76f, .56f, 1f);
+                case "pink": return new Color(1f, .56f, .76f);
+                case "aqua": return new Color(.56f, .86f, 1f);
+                case "fire": return new Color(1f, .56f, .26f);
+                case "festive": return Color.HSVToRGB(Mathf.Repeat(t * 0.05f, 1f), .45f, 1f);
+                default: return new Color(1f, .8f, .5f);
+            }
+        }
+
+        /// <summary>해 질 녘부터 불이 켜진다 (0 = 낮, 1 = 한밤)</summary>
+        float Night => Mathf.Clamp01((0.8f - Daylight) / 0.65f);
+
+        void UpdateLights(float dt)
+        {
+            if (!markersRead) ReadMarkers();
+            float night = Night, t = Time.time;
+            var view = View(6f);
+            if (allLayers == null)
+            {
+                var ls = SortingLayer.layers;
+                allLayers = new int[ls.Length];
+                for (int i = 0; i < ls.Length; i++) allLayers[i] = ls[i].id;
+            }
+            foreach (var g in glows)
+            {
+                if (g.m == null) continue;
+                var p = g.m.transform.position;
+                bool on = night > 0.02f && view.Contains(p);
+                if (on && g.light == null)
+                {
+                    var go = new GameObject("night_light");
+                    go.transform.SetParent(root, false);
+                    go.transform.position = p;
+                    var l = go.AddComponent<Light2D>();
+                    l.lightType = Light2D.LightType.Point;
+                    l.pointLightOuterRadius = g.m.radius;
+                    l.pointLightInnerRadius = g.m.radius * 0.15f;
+                    l.falloffIntensity = 0.65f;
+                    l.shadowsEnabled = false;
+                    l.targetSortingLayers = allLayers;
+                    g.light = l;
+                }
+                if (g.light == null) continue;
+                g.light.enabled = on;
+                if (!on) continue;
+                float f = g.m.flicker ? 0.82f + 0.18f * Mathf.PerlinNoise(t * 3f, g.phase) : 1f;
+                g.light.intensity = night * 0.9f * f;
+                g.light.color = ColorOf(g.m.colorName, t + g.phase);
+            }
+            UpdateFerris(dt, night);
+            UpdateFountain(dt, night);
+        }
+
+        // 관람차: 바퀴(테·바퀴살·전구)를 천천히 돌리고, 곤돌라 8개는 늘 아래로 매달린 채 따라 돈다
+        const float WheelR = 52f / 16f;
+
+        void BuildFerris(Vector3 topLeft)
+        {
+            ferrisCenter = topLeft + new Vector3(64f / 16f, -60f / 16f, 0f);
+            ferris = new GameObject("ferris_wheel_fx").transform;
+            ferris.SetParent(root, false);
+            ferris.position = ferrisCenter;
+            var wheel = MakeSr("wheel", Art.Wheel, 18);
+            ferrisWheel = wheel.transform; ferrisWheel.SetParent(ferris, false); ferrisWheel.localPosition = Vector3.zero;
+            bulbsSr = MakeSr("bulbs", Art.WheelBulbs, 18);
+            ferrisBulbs = bulbsSr.transform; ferrisBulbs.SetParent(ferris, false); ferrisBulbs.localPosition = Vector3.zero;
+            for (int k = 0; k < 8; k++)
+            {
+                var g = MakeSr("gondola", Art.Gondola(k), 19);
+                g.transform.SetParent(ferris, false);
+                gondolas.Add(g.transform);
+            }
+            var hub = MakeSr("hub", Art.Hub, 19);
+            hub.transform.SetParent(ferris, false); hub.transform.localPosition = Vector3.zero;
+        }
+
+        void UpdateFerris(float dt, float night)
+        {
+            if (ferris == null) return;
+            float rot = -Time.time * 7.2f;                                         // 50초에 한 바퀴
+            ferrisWheel.localRotation = Quaternion.Euler(0, 0, rot);
+            ferrisBulbs.localRotation = ferrisWheel.localRotation;
+            for (int k = 0; k < gondolas.Count; k++)
+            {
+                float a = (rot + k * 45f) * Mathf.Deg2Rad;
+                gondolas[k].localPosition = new Vector3(Mathf.Cos(a) * WheelR, Mathf.Sin(a) * WheelR, 0);
+                gondolas[k].localRotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 1.3f + k) * 3f);   // 살짝 흔들림
+            }
+            // 전구: 낮엔 은은하게, 밤엔 번갈아 반짝인다
+            float blink = (int)(Time.time * 2f) % 2 == 0 ? 1f : 0.55f;
+            bulbsSr.color = new Color(1, 1, 1, Mathf.Lerp(0.6f, blink, night));
+        }
+
+        // 분수: 위 그릇 → 둘째 그릇 → 큰 수반으로 떨어지는 물방울 + 수면 반짝임
+        Vector3 FountainPx(float px, float py) => fountainTop + new Vector3(px / 16f, -py / 16f, 0f);
+
+        void UpdateFountain(float dt, float night)
+        {
+            if (!hasFountain) return;
+            if (!View(4f).Contains(fountainTop)) return;
+            while (drops.Count < 40)
+            {
+                var d = new Drop { sr = MakeSr("drop", Art.Grain, 21), u = Random.value, speed = Random.Range(1.1f, 1.6f), arc = drops.Count % 2, side = (drops.Count / 2) % 2 == 0 ? -1 : 1 };
+                drops.Add(d);
+            }
+            while (glints.Count < 16) glints.Add(MakeSr("glint", Art.Grain, 21));
+            const float cx = 64f;
+            foreach (var d in drops)
+            {
+                d.u += dt * d.speed;
+                if (d.u > 1f) { d.u -= 1f; d.speed = Random.Range(1.1f, 1.6f); }
+                float u = d.u, px, py;
+                if (d.arc == 0) { px = cx + d.side * (11 + 13 * u); py = 20 + 21 * u * u; }
+                else { px = cx + d.side * (25 + 24 * u); py = 42 + 31 * u * u; }
+                d.sr.transform.position = FountainPx(px, py);
+                d.sr.transform.localScale = Vector3.one * (u > 0.9f ? 2f : 1.2f);               // 떨어질 때 물보라
+                d.sr.color = new Color(0.82f, 0.95f, 1f, u > 0.9f ? (1f - u) * 6f : 0.9f);
+            }
+            for (int i = 0; i < glints.Count; i++)
+            {
+                float a = i * 2.39f, r = 0.25f + (i % 4) * 0.22f;
+                glints[i].transform.position = FountainPx(cx + Mathf.Cos(a) * 50f * r * 1.6f, 74f + Mathf.Sin(a) * 8f * r * 1.4f);
+                float tw = Mathf.Max(0f, Mathf.Sin(Time.time * 3.1f + i * 1.7f));
+                glints[i].color = new Color(1f, 1f, 1f, tw * tw * (0.6f + 0.4f * night));
+            }
+        }
+
         // ---------------------------------------------------------------- 대광장: 밤 불꽃놀이 · 낮 꽃가루
         class Spark { public SpriteRenderer sr; public Vector2 p, v; public float life, max; public Color c; public bool rocket; public float burstAt; }
         readonly List<Spark> sparks = new List<Spark>();
@@ -569,6 +730,8 @@ namespace PocketCaravan
         }
 
         public int CritterCount => critters.Count;
+        public int LitCount { get { int n = 0; foreach (var g in glows) if (g.light != null && g.light.enabled) n++; return n; } }
+        public bool FerrisTurning => ferris != null;
         public bool Gusting => gustLevel > 0.05f;
 
         /// <summary>한 마리 움직임. true를 돌려주면 사라진다.</summary>
@@ -867,6 +1030,69 @@ namespace PocketCaravan
             public static Sprite Grain => Make("grain", new[] { "K" }, P('K', C(255, 255, 255)), Mid);
             public static Sprite Streak => Make("streak", new[] { "KKKKKK" }, P('K', C(255, 255, 255)), Mid);
             public static Sprite White => Make("white", new[] { "KKKKKKKK", "KKKKKKKK", "KKKKKKKK", "KKKKKKKK", "KKKKKKKK", "KKKKKKKK", "KKKKKKKK", "KKKKKKKK" }, P('K', C(255, 255, 255)), Mid);
+
+            // ---------------- 관람차 바퀴 (테·바퀴살 / 전구 / 곤돌라 / 축) ----------------
+            static Sprite Disc(string key, System.Func<int, int, Color32> f, int size)
+            {
+                if (cache.TryGetValue(key, out var s) && s != null) return s;
+                var t = new Texture2D(size, size, TextureFormat.RGBA32, false) { filterMode = FilterMode.Point, wrapMode = TextureWrapMode.Clamp };
+                var px = new Color32[size * size];
+                for (int y = 0; y < size; y++)
+                    for (int x = 0; x < size; x++) px[y * size + x] = f(x, y);
+                t.SetPixels32(px); t.Apply();
+                s = Sprite.Create(t, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), 16f);
+                s.name = "arabia_fx_" + key;
+                cache[key] = s;
+                return s;
+            }
+
+            static readonly Color32 Clear = new Color32(0, 0, 0, 0), Out = new Color32(52, 40, 28, 255);
+            static readonly Color32 Gold1 = new Color32(200, 150, 44, 255), Gold2 = new Color32(236, 196, 80, 255), Gold3 = new Color32(252, 230, 150, 255);
+            static readonly Color32[] Fest = { new Color32(212, 58, 66, 255), new Color32(240, 196, 70, 255), new Color32(54, 150, 160, 255),
+                                               new Color32(230, 120, 160, 255), new Color32(96, 170, 80, 255), new Color32(120, 90, 190, 255) };
+
+            public static Sprite Wheel => Disc("wheel", (x, y) =>
+            {
+                float dx = x + .5f - 56f, dy = y + .5f - 56f, r = Mathf.Sqrt(dx * dx + dy * dy);
+                if (r > 53f) return Clear;
+                if (r > 52f) return Out;
+                if (r > 50.5f) return Gold2;
+                if (r > 49.5f) return Gold3;
+                if (r > 48.5f) return Out;
+                if (r > 44f && r < 45f) return Gold1;                                   // 안쪽 테
+                float ang = Mathf.Atan2(dy, dx) * 16f / (2f * Mathf.PI);
+                float near = Mathf.Abs(ang - Mathf.Round(ang)) * r * 2f * Mathf.PI / 16f;  // 가장 가까운 바퀴살까지 거리(px)
+                if (near < 0.6f && r > 5f) return ((int)r % 6 == 0) ? Gold2 : new Color32(232, 222, 202, 255);
+                return Clear;
+            }, 112);
+
+            public static Sprite WheelBulbs => Disc("wheel_bulbs", (x, y) =>
+            {
+                float dx = x + .5f - 56f, dy = y + .5f - 56f, r = Mathf.Sqrt(dx * dx + dy * dy);
+                if (r < 49.6f || r > 51.4f) return Clear;
+                float a = Mathf.Repeat(Mathf.Atan2(dy, dx) / (2f * Mathf.PI), 1f) * 32f;
+                if (Mathf.Abs(a - Mathf.Round(a)) * r * 2f * Mathf.PI / 32f > 1.1f) return Clear;
+                return Fest[(int)Mathf.Round(a) % Fest.Length];
+            }, 112);
+
+            public static Sprite Hub => Disc("wheel_hub", (x, y) =>
+            {
+                float dx = x + .5f - 6f, dy = y + .5f - 6f, r = Mathf.Sqrt(dx * dx + dy * dy);
+                return r > 5.5f ? Clear : r > 4.5f ? Out : (dx < 0 && dy > 0) ? Gold3 : Gold2;
+            }, 12);
+
+            /// <summary>곤돌라 (13×14, 위 가운데가 매달리는 점): 지붕 · 창 · 몸통</summary>
+            public static Sprite Gondola(int k)
+            {
+                string key = "gondola_" + k;
+                if (cache.TryGetValue(key, out var s) && s != null) return s;
+                var rows = new[] {
+                    "......K......", "......K......", ".....KKK.....", "....KCCCK....", "...KCCCCCK...", "..KCCCCCCCK..",
+                    ".KKKKKKKKKKK.", ".KCWWWWWWWCK.", ".KCWWWWWWWCK.", ".KCWWWWWWWCK.", ".KCCCCCCCCCK.", ".KCCCCCCCCCK.", ".KKKKKKKKKKK.", "............." };
+                var c = Fest[k % Fest.Length];
+                return Make(key, rows, P('K', Out, 'C', c, 'W', new Color32(190, 226, 242, 255)), new Vector2(0.5f, 1f));
+            }
+
             public static Sprite Shadow => Make("shadow", new[] { "..KKKK..", ".KKKKKK.", "KKKKKKKK", ".KKKKKK.", "..KKKK.." }, P('K', C(255, 255, 255)), Mid);
 
             static AudioClip wind;

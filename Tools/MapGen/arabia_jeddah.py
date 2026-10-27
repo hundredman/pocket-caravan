@@ -96,6 +96,8 @@ def build(L):
     m.border(None, W - 3, 3, W - 2, EAST_Y - 2)
     for x, y in [(6, 16), (19, 14), (50, 23), (14, 25), (41, 23)]:
         m.maybe(['drawn_datePalm', 'drawn_datePalm2'][x % 2], x, y - 2)
+    m.patrol('제다 항구 경비병', [(3, 13), (27, 13), (27, 3), (27, 13), (45, 19)], '배에서 내린 짐은 세금 장부부터 확인하시오.',
+             '밤바다에 등불 단 다우 배가 들어오는 걸 보면 꽤 근사하다오.')
     m.texture(0.035)
     m.finish_arabia()
     return m

@@ -106,6 +106,7 @@ def build(west, east):
     for x in (8, 30, 44):
         m.maybe('prop_qulla', x, 30, foot=1)
 
+    m.patrol('자비드 수로 경비병', [(3, 19), (40, 19)], '수로 물은 마을 모두의 것이오. 낙타 물 먹이는 건 우물에서 하시오.')
     m.texture()          # 모래 바닥 마른 풀·자갈 (무작위 장식 대신, 막지 않음)
 
     m.finish_arabia()

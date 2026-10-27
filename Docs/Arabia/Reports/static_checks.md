@@ -1,4 +1,4 @@
-# 아라비아 정적 검사 2026-10-27 18:38:02 · Unity 6000.3.26f1
+# 아라비아 정적 검사 2026-10-27 19:05:52 · Unity 6000.3.26f1
 결과: 통과
 - [PASS] 공용 등록 검사 (MapJsonBuilder.ValidateWorld)
 - [PASS] 시작 맵은 그대로 Naru — Naru

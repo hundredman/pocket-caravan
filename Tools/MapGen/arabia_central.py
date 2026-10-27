@@ -186,6 +186,11 @@ class Piece:
             lx, ly = self.lc(x, y)
             self.m.talker(lx, ly, name, sprite, *lines)
 
+    def patrol(self, name, waypoints, *lines):
+        x, y = waypoints[0]
+        if self.has(x, y) and all(self.has(px, py) for px, py in waypoints):
+            self.m.patrol(name, [self.lc(px, py) for px, py in waypoints], *lines)
+
     def villager(self, x, y, variant=0):
         if self.has(x, y) and tri_e(x, y) >= 2:
             lx, ly = self.lc(x, y)
@@ -705,6 +710,13 @@ def bazaar(P):
     # ---- 길가 나무 ----
     for (x, y) in [(138, 104), (146, 99), (179, 92), (170, 108), (150, 108)]:
         put(['drawn_oasisTree', 'drawn_olive', 'drawn_cypress'][x % 3], x, y)
+    # ---- 경비병 순찰: 광장 둘레 · 초원 대로 → 축제 거리 → 야시장 ----
+    P.patrol('대광장 경비병', [(143, 82), (150, 73), (160, 71), (170, 73), (177, 82), (170, 91), (160, 93), (150, 91)],
+             '대광장은 우리가 지키오. 장날엔 소매치기가 늘어나니 짐 단단히 챙기시오.',
+             '밤에 불꽃이 오르면 다들 하늘만 보지. 그때가 제일 바쁘다오.')
+    P.patrol('장터 경비대장', [(159, 60), (159, 70), (176, 71), (195, 71), (176, 72), (176, 86), (200, 87), (177, 87)],
+             '초원 대로부터 야시장까지가 내 순찰길이오. 길 잃은 상인은 등불 탑으로 데려다 주지.',
+             '조합 회관에서 수상한 장부가 돌면 알려 주시오.')
     P.m.bazaar_missing = miss
 
 

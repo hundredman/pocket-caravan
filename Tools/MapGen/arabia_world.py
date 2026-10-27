@@ -102,7 +102,7 @@ def _blit(w, t, ox, oy):
             continue
         if o['kind'] == 'spawn' and str(o.get('id', '')).startswith('tmp'):
             continue
-        o['x'] += ox; o['y'] += oy
+        A.shift_obj(o, ox, oy)
         w.objects.append(o)
     return ends
 
@@ -633,7 +633,7 @@ def _cut(w, mid, links):
             X, Y = x + ox, y + oy
             for layer in ('ground', 'deco', 'obj', 'high', 'road', 'blocked', 'water', 'zone', 'reserved'):
                 getattr(m, layer)[y][x] = getattr(w, layer)[Y][X]
-    m.objects = [dict(o, x=o['x'] - ox, y=o['y'] - oy) for o in w.objects
+    m.objects = [A.shift_obj(dict(o), -ox, -oy) for o in w.objects
                  if ox <= o['x'] < ox + CW and oy <= o['y'] < oy + CH]
     m.obstacles = [dict(o, x=o['x'] - ox, y=o['y'] - oy) for o in w.obstacles
                    if ox <= o['x'] < ox + CW and oy <= o['y'] < oy + CH]

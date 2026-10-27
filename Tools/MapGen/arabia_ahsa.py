@@ -166,6 +166,7 @@ def build(link_target, link_spawn, my_spawn):
     for x in (40, 48):
         m.maybe('plaza_lamp', x, EXIT_Y - 2, foot=1)
 
+    m.patrol('알 아흐사 순찰병', [(6, 21), (50, 21), (27, 21), (27, 35)], '오아시스 마을은 조용하지만, 대상이 몰리는 날엔 우리도 바쁘다오.')
     m.texture()          # 모래 바닥 마른 풀·자갈 (막지 않음)
     m.finish_arabia()
     return m

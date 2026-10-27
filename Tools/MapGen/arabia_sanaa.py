@@ -122,6 +122,10 @@ def build(L):
         m.maybe('drawn_datePalm', SOUTH_X + 4, y - 2)
     for x, y in [(6, 17), (46, 25), (17, 25), (57, 17)]:
         m.maybe(['drawn_datePalm', 'drawn_datePalm2'][x % 2], x, y - 2)
+    # 경비병 순찰 (2026-10-27)
+    m.patrol('사나 북문 경비병', [(27, 5), (36, 5)], '북문 너머는 중앙 대륙이오. 지나가는 짐은 모두 내 눈을 거친다오.')
+    m.patrol('사나 순찰대', [(31, 8), (31, 20), (55, 21), (31, 22), (31, 38)], '수도의 큰길은 밤낮없이 우리가 돈다오.',
+             '밤이 되면 등불이 켜지는 큰 광장을 꼭 보고 가시오.')
     m.texture(0.03)
     m.finish_arabia()
     return m

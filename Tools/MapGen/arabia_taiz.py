@@ -110,6 +110,7 @@ def build(L):
     m.rocks(44, 34, 52, 38)
     for x, y in [(18, 27), (38, 27), (24, 6), (6, 18)]:
         m.maybe(['drawn_olive', 'drawn_acaciaRound'][x % 2], x, y)
+    m.patrol('타이즈 고원 경비병', [(3, 17), (19, 17), (19, 23), (50, 23)], '고원 안개가 끼면 길을 잃기 쉽소. 등불을 따라 걸으시오.')
     m.texture(0.04)
     m.finish_arabia()
     return m

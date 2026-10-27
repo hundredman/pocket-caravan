@@ -105,6 +105,43 @@ TREE_ALIAS = {
     'nature_rocks': 'drawn_rocks',
 }
 PALM_VARIANTS = ['drawn_datePalm', 'drawn_datePalm2', 'drawn_datePalm3']
+# 밤 불빛 (2026-10-27): 그림 이름 → [(그림 왼쪽 위에서 x, y칸, 반지름 칸, 색 이름, 깜빡임 0/1)]
+LIGHTS = {
+    'plaza_lamp': [(0.5, 0.4, 3.2, 'warm', 0)], 'prop_lantern': [(1.0, 0.9, 2.6, 'amber', 1)],
+    'drawn_lanternTower': [(1.5, 2.3, 6.0, 'gold', 0), (1.5, 5.5, 3.0, 'warm', 0)],
+    'drawn_grandArcade': [(6.0, 4.5, 6.5, 'white', 0), (2.2, 5.5, 3.2, 'warm', 0), (9.8, 5.5, 3.2, 'warm', 0)],
+    'drawn_guildHall': [(4.0, 4.2, 4.5, 'warm', 0)], 'drawn_shopJewel': [(2.0, 4.0, 3.4, 'violet', 0)],
+    'drawn_shopOutfitter': [(2.0, 4.0, 3.4, 'amber', 0)], 'drawn_booth': [(1.5, 1.6, 2.6, 'pink', 0)],
+    'drawn_booth2': [(1.5, 1.6, 2.6, 'pink', 0)], 'drawn_stage': [(2.0, 1.6, 4.0, 'pink', 0)],
+    'drawn_grandFountain': [(4.0, 4.2, 4.5, 'aqua', 0)], 'drawn_ferrisWheel': [(4.0, 3.75, 4.5, 'gold', 0)],
+    'civic_palace': [(4.0, 4.5, 4.5, 'gold', 0)], 'house_courtyardManor': [(3.0, 4.0, 3.5, 'warm', 0)],
+    'house_windTowerHouse': [(2.0, 4.0, 3.0, 'amber', 0)], 'building_caravanserai': [(2.5, 3.2, 4.0, 'amber', 1)],
+    'wall_tower': [(1.0, 2.0, 2.6, 'fire', 1)], 'wall_wallGate': [(2.0, 2.5, 3.0, 'fire', 1)],
+}
+FX_SPOTS = {'drawn_grandFountain': 'fountain', 'drawn_ferrisWheel': 'ferris'}
+
+
+def shift_obj(o, dx, dy):
+    """맵 물체를 옮긴다 (칸 좌표 · 실수 좌표 · 순찰 경로 모두)."""
+    o['x'] += dx; o['y'] += dy
+    if 'fx' in o:
+        o['fx'] = round(o['fx'] + dx, 2); o['fy'] = round(o['fy'] + dy, 2)
+    for k in ('path', 'waypoints'):
+        if k in o:
+            o[k] = [(px + dx, py + dy) for (px, py) in o[k]]
+    return o
+
+
+def light_spots(name):
+    if name in LIGHTS:
+        return LIGHTS[name]
+    for pre, (r, col) in (('drawn_pavilion', (3.0, 'warm')), ('drawn_tentStripe', (2.2, 'amber')), ('stall_', (2.4, 'amber')),
+                          ('house_', (2.6, 'warm')), ('mosque_', (4.2, 'gold')), ('civic_', (4.2, 'warm'))):
+        if name.startswith(pre):
+            w, h = size(name)
+            flick = 1 if pre in ('drawn_tentStripe', 'stall_') else 0
+            return [(w / 2, h - 1.0, r, col, flick)]
+    return []
 # 가장자리 숲 (고려 맵처럼 둥근 나무를 빽빽하게): 위·아래 띠는 숲 덩어리와 야자, 옆 띠는 둥근 나무 기둥
 EDGE_TOP = ['drawn_grove', 'drawn_oliveGrove', 'drawn_datePalm', 'drawn_datePalm3', 'drawn_oasisTree', 'drawn_datePalm2', 'drawn_olive']
 EDGE_SIDE = ['drawn_oasisTree', 'drawn_oasisTree2', 'drawn_olive', 'drawn_acaciaRound', 'drawn_oasisTree']
@@ -411,6 +448,12 @@ class ArabiaMap(Map):
         block_rect(self, x, y + 1, x + 1, y + 1)
         self.add('sign', x, y + 1, text=text)
 
+    def patrol(self, name, waypoints, *lines, character='arabia_npc_guard_tall'):
+        """순찰 경비병: 경유 칸을 따라 걷는다 (마무리 때 실제 걸을 수 있는 칸으로 경로를 잇는다)."""
+        x, y = waypoints[0]
+        self.objects.append(dict(kind='arabia_guard', name=name, character=character, lines=list(lines),
+                                 x=x, y=y, waypoints=[tuple(p) for p in waypoints]))
+
     def exit(self, L, key, start):
         """연결표(arabia.links)의 출구 하나를 4칸 폭으로 만든다."""
         edge, target, tspawn, myspawn = L[key]
@@ -529,6 +572,58 @@ class ArabiaMap(Map):
             else:
                 self.warnings.append(f'{self.id}: {name}@({x},{y})가 사람/표지 칸 {hit[:2]}을 가림')
 
+    def lights_and_fx(self):
+        """밤 불빛 자리(arabia_light)와 움직이는 연출 자리(arabia_fx)를 그림 배치에서 뽑는다. 좌표는 칸 단위 실수(왼쪽 위 기준)."""
+        self.objects = [o for o in self.objects if o['kind'] not in ('arabia_light', 'arabia_fx')]
+        for name, x, y in self.stamps:
+            if name not in _paths:
+                continue
+            for (dx, dy, r, col, fl) in light_spots(name):
+                fx, fy = x + dx, y + dy
+                if self.inside(int(fx), int(fy)):
+                    self.objects.append(dict(kind='arabia_light', x=int(fx), y=int(fy), fx=round(fx, 2), fy=round(fy, 2),
+                                             radius=r, id=col, variant=fl))
+            if name in FX_SPOTS:
+                self.objects.append(dict(kind='arabia_fx', id=FX_SPOTS[name], x=x, y=y, fx=float(x), fy=float(y)))
+
+    def resolve_patrols(self):
+        """경비병 경유 칸 사이를 실제로 걸을 수 있는 칸(막힘·물·사람 칸 제외)으로 잇는다. 마지막엔 처음으로 돌아온다."""
+        from collections import deque
+        occ = {(o['x'] + dx, o['y'] + dy) for o in self.objects if o['kind'] in self.PEOPLE + ('exit',)
+               for dx in range(o.get('w', 1)) for dy in range(o.get('h', 1))}
+        ok = lambda x, y: self.inside(x, y) and not self.blocked[y][x] and not self.water[y][x] and (x, y) not in occ
+        for o in [o for o in self.objects if o['kind'] == 'arabia_guard' and 'waypoints' in o]:
+            def snap(p):
+                for r in range(0, 5):
+                    for dy in range(-r, r + 1):
+                        for dx in range(-r, r + 1):
+                            if max(abs(dx), abs(dy)) == r and ok(p[0] + dx, p[1] + dy):
+                                return (p[0] + dx, p[1] + dy)
+                return p
+            pts = [snap(tuple(p)) for p in o.pop('waypoints')]
+            pts.append(pts[0])
+            path = [pts[0]]
+            for a, b in zip(pts, pts[1:]):
+                prev = {a: None}
+                q = deque([a])
+                while q:
+                    c = q.popleft()
+                    if c == b:
+                        break
+                    for n in ((c[0] + 1, c[1]), (c[0] - 1, c[1]), (c[0], c[1] + 1), (c[0], c[1] - 1)):
+                        if n not in prev and ok(*n):
+                            prev[n] = c
+                            q.append(n)
+                if b not in prev:
+                    self.warnings.append(f'{self.id}: 경비병 {o["name"]} 순찰 경로 끊김 {a}→{b}')
+                    break
+                seg, c = [], b
+                while c != a:
+                    seg.append(c); c = prev[c]
+                path += seg[::-1]
+            o['path'] = path[:-1] if len(path) > 1 and path[-1] == path[0] else path
+            o['x'], o['y'] = path[0]
+
     def finish_arabia(self):
         for plant, x, y in self.pending_plants:
             if self.inside(x, y) and self.inside(x, y + 1) and self.road[y][x] == 0:
@@ -566,6 +661,8 @@ class ArabiaMap(Map):
                 else:
                     under = 'sand'
                 self.ground[y][x] = ground_key(z, under, mask, x, y)
+        self.lights_and_fx()
+        self.resolve_patrols()
 
 
 def export_tiles():
