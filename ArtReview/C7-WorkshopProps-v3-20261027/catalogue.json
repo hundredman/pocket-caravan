@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "prop": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#b78137",
+        "#daa34a",
+        "#f0c365",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#c4a779",
+        "#e0c99b",
+        "#f4dfb5",
+        "#77746c",
+        "#a29b87",
+        "#c4bca7",
+        "#4a627a",
+        "#718da3",
+        "#a5b9c3",
+        "#794b3b",
+        "#ad624c",
+        "#d69062",
+        "#547e6a",
+        "#86a28b",
+        "#33475e",
+        "#304d47"
+      ]
+    },
+    "grain": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#b78137",
+        "#daa34a",
+        "#f0c365",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#e0c99b",
+        "#f4dfb5"
+      ]
+    },
+    "jade": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#304d47",
+        "#547e6a",
+        "#86a28b",
+        "#b6cfac",
+        "#68452d",
+        "#98653b",
+        "#bc8850"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7_workshopv3_paper_rack",
+      "kind": "object",
+      "purpose": "paper_drying_rack",
+      "size": [
+        3,
+        2
+      ],
+      "image": "ArtReview/C7-WorkshopProps-v3-20261027/Native/paper_rack.png",
+      "profile": "prop",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-WorkshopProps-v3-20261027/Native/paper_rack.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshopv3_paper_rack_0_0",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_paper_rack_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshopv3_paper_rack_1_0",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_paper_rack_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshopv3_paper_rack_2_0",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_paper_rack_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshopv3_paper_rack_0_1",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_paper_rack_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshopv3_paper_rack_1_1",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_paper_rack_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshopv3_paper_rack_2_1",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_paper_rack_2_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_workshopv3_harvest",
+      "kind": "object",
+      "purpose": "harvest_goods",
+      "size": [
+        3,
+        2
+      ],
+      "image": "ArtReview/C7-WorkshopProps-v3-20261027/Native/harvest.png",
+      "profile": "grain",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C7-WorkshopProps-v3-20261027/Native/harvest.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshopv3_harvest_0_0",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_harvest_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshopv3_harvest_1_0",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_harvest_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshopv3_harvest_2_0",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_harvest_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshopv3_harvest_0_1",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_harvest_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshopv3_harvest_1_1",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_harvest_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshopv3_harvest_2_1",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_harvest_2_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_workshopv3_celadon",
+      "kind": "object",
+      "purpose": "celadon_display",
+      "size": [
+        3,
+        2
+      ],
+      "image": "ArtReview/C7-WorkshopProps-v3-20261027/Native/celadon.png",
+      "profile": "jade",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C7-WorkshopProps-v3-20261027/Native/celadon.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshopv3_celadon_0_0",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_celadon_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshopv3_celadon_1_0",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_celadon_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshopv3_celadon_2_0",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_celadon_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshopv3_celadon_0_1",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_celadon_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshopv3_celadon_1_1",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_celadon_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshopv3_celadon_2_1",
+          "image": "ArtReview/C7-WorkshopProps-v3-20261027/Cells/c7_workshopv3_celadon_2_1.png"
+        }
+      ]
+    }
+  ]
+}
