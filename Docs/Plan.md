@@ -52,7 +52,7 @@ Codex와 Claude가 아래 [에이전트 분담](#에이전트-분담)에 따라 
 | R4 마이너스 평판·회복 | Codex | Claude | |
 | R6 신용 재정리 | Codex | Claude(재분류가 [돈·신용·평판](Standing.md) 2절과 맞는지) | |
 | D-1 실제 플레이 확인 | Claude + 은샘 | — | `Docs/Validation/` 기록 |
-| D-2 팀 공유(push·PR·빌드) | 은샘 | — | |
+| D-2 팀 공유(push·PR·빌드) | 은샘 지시 → Claude | — | |
 | 결정 항목(D*) 검토안 준비 | Claude | 은샘 | Figma·문서 |
 
 **파일 담당** (동시에 고치지 않기 위해)
@@ -199,7 +199,7 @@ Codex와 Claude가 아래 [에이전트 분담](#에이전트-분담)에 따라 
 | ID | 작업 | 선행 | 완료 기준 | 상태 |
 |---|---|---|---|---|
 | D-1 | 실제 플레이 확인: 메인 퀘스트(나루 → 장단 → 송악 → 닥목 → 개경) → 동문 마을 → 중앙 마을, 장터에 여러 명이 모였을 때의 공간 체감, 길 위 사건 | B5, C1, E3, Q1 | 화면 캡처와 관찰 기록을 `Docs/Validation/`에 남김 | 대기 |
-| D-2 | 팀 공유: push, PR, 빌드 | D-1 | 은샘에게 알리고 진행. 공개 빌드 목록에서 시험 씬(SampleScene, ModulePreview, ModuleComposition, ObstaclePreview)을 뺄지 확인 | 대기 |
+| D-2 | 팀 공유: push, PR, 빌드 | D-1 | 은샘이 지시하면 Claude가 진행(2026-10-27 `region/goryeo` 첫 push 완료, 기우가 팀 합치기). 공개 빌드 목록에서 시험 씬(SampleScene, ModulePreview, ModuleComposition, ObstaclePreview)을 뺄지 확인 | 대기 |
 
 ## F. 나중에 (A~E와 D-1이 끝난 뒤)
 
