@@ -100,7 +100,18 @@
         "path": "ArtReview/C7-CartRoof-v2-20261027/Native/tile-house.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "approved",
+        "date": "2026-10-27",
+        "userQuote": "\uc88b\uc544. \ub2e4\uc74c \uc791\uc5c5\uc740?",
+        "scope": "\ucd5c\uc2e0 \ube44\uad50\ud310\uc758 \uae30\uc874 \uac8c\uc784 \uc218\ub808 \uc720\uc9c0\uc640 \uccad\ud68c\uc0c9 \uc6a9\ub9c8\ub8e8 \uae30\uc640\uc9d1 \uadf8\ub9bc. \ubcf8\ud3b8 \uc5f0\uacb0\u00b7\ub2e4\ub978 \uc18c\ud488 \uc2b9\uc778 \uc544\ub2d8.",
+        "rgbaEvidence": {
+          "size": [
+            64,
+            48
+          ],
+          "rgbaSHA256": "206eb57b001ced8f866ee895c972f3120a3d97c72d802f848ccdcd6efb3385b1"
+        },
+        "evidence": "ArtReview/Approved/C7-Buildings-v6/approval.json"
       },
       "tiles": [
         {

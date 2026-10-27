@@ -2,7 +2,7 @@
   "productionApplied": false,
   "statuses": {
     "c7_cr_cart": "changes_requested",
-    "c7_cr_tile_house": "pending"
+    "c7_cr_tile_house": "approved"
   },
   "files": {
     "Native/cart.png": {

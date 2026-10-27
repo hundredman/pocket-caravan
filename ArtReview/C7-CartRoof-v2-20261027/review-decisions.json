@@ -4,5 +4,19 @@
     "date": "2026-10-27",
     "userQuote": "수레는 이것보다 더 처음 버전을 말한거야.",
     "feedback": "C7 이전 기존 게임 수레로 복원; 첫 C7 소품 시안 선택 해석 정정"
+  },
+  "c7_cr_tile_house": {
+    "status": "approved",
+    "date": "2026-10-27",
+    "userQuote": "좋아. 다음 작업은?",
+    "scope": "최신 비교판의 기존 게임 수레 유지와 청회색 용마루 기와집 그림. 본편 연결·다른 소품 승인 아님.",
+    "rgbaEvidence": {
+      "size": [
+        64,
+        48
+      ],
+      "rgbaSHA256": "206eb57b001ced8f866ee895c972f3120a3d97c72d802f848ccdcd6efb3385b1"
+    },
+    "evidence": "ArtReview/Approved/C7-Buildings-v6/approval.json"
   }
 }
