@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: V8_WineRoad
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: venice_q8_wine
+  retired: 0
   title: "\uD3EC\uB3C4\uC8FC \uAE38"
   chain: "\uBCA0\uB124\uCE58\uC544 2\uC7A5: \uC11D\uD638\uB97C \uB118\uC5B4"
   summary: "\uBCF8\uD1A0 \uD3EC\uB3C4\uBC2D \uC591\uC870\uC7A5\uC5D0\uC11C \uD3EC\uB3C4\uC8FC
@@ -64,6 +65,9 @@ MonoBehaviour:
       \uC801\uC5B4 \uB450\uC9C0."
   rewardMoney: 80
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

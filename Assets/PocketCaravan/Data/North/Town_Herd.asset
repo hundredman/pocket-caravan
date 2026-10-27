@@ -15,6 +15,9 @@ MonoBehaviour:
   id: north_herd
   displayName: "\uC21C\uB85D \uACE0\uC6D0 \uB9C8\uC744"
   region: {fileID: 11400000, guid: 053dda2cee1b84de7bdb3dcc5c7849c8, type: 2}
+  journeyNote: "\uC21C\uB85D \uCE58\uC988\uC758 \uACE0\uC6D0 \uB9C8\uC744. \uC21C\uB85D
+    \uC370\uB9E4\uB97C \uD314\uC544\uC694. \uAE38 \uC5C6\uB294 \uB208\uBC2D\uC5D0\uC11C
+    \uC370\uB9E4\uAC00 \uAC00\uC7A5 \uBE68\uB77C\uC694."
   worldCoord: {x: 31, y: 1}
   startLevel: 1
   settlementTier: 0
@@ -22,22 +25,31 @@ MonoBehaviour:
   stock:
   - item: {fileID: 11400000, guid: 7b10b12610b4b41fbaf940255ab242b6, type: 2}
     optimal: 30
+    localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: 1a2fc2ad478bf45eb8826708d861bb18, type: 2}
     optimal: 14
+    localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: 97c21223f4815486bb4749fc7f944272, type: 2}
     optimal: 20
+    localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: 5bbced6f7b2b141b6897cb7a47bc713b, type: 2}
     optimal: 4
+    localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: 5bdb4599b599a4bafb2d6eba12a7a241, type: 2}
     optimal: 5
+    localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: 50275f575aa3b43f48d7278feb007ee0, type: 2}
     optimal: 3
+    localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: 7645750b0300140cc98872c430ca7535, type: 2}
     optimal: 3
+    localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: 840f65a4b800a4990ae2697928fa33a8, type: 2}
     optimal: 1
+    localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: fec223f6bbcd34f3081779f3a8fc48a6, type: 2}
     optimal: 1
+    localPriceMultiplier: 1
   defaultOptimal: 4
   vehiclesForSale:
   - {fileID: 11400000, guid: fe513768e4d8d4b289301536cf9f0a44, type: 2}

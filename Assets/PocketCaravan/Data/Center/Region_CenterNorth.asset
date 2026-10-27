@@ -14,5 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.RegionData
   id: center_north
   displayName: "\uC911\uC559 \uBD81\uCABD"
+  townReputation: 0
   note: "\uC911\uC559 \uB300\uB959 10\uB9CC \uCE78 \uC911 \uBD81\uCABD 1/4 (\uAE30\uC6B0
     \uB2F4\uB2F9, 2\uB9CC5\uCC9C \uCE78). \uB9C8\uC744 4\uACF3 + \uAE38 5\uACF3"
+  deliveryRewards:
+    enabled: 0
+    revision: 1
+    dispatchFee: 1.5
+    perWeight: 0.65
+    perWeightPerStep: 0.25
+    premiumMultiplier: 1.8
+    premiumMinWeight: 8
+    premiumMaxWeight: 12

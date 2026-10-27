@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: V10_GlassOrder
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: venice_q10_glassart
+  retired: 0
   title: "\uC720\uB9AC \uC7A5\uC2DD \uC8FC\uBB38"
   chain: "\uBCA0\uB124\uCE58\uC544 2\uC7A5: \uC11D\uD638\uB97C \uB118\uC5B4"
   summary: "\uBB34\uB77C\uB178 \uC7A5\uC2DD \uACF5\uBC29\uC5D0\uC11C \uC720\uB9AC
@@ -44,6 +45,9 @@ MonoBehaviour:
       \uC88B\uC544\uD558\uACA0\uC5B4."
   rewardMoney: 110
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

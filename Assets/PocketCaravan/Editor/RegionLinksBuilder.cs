@@ -36,6 +36,7 @@ namespace PocketCaravan.EditorTools
             if (!Step("북유럽 씬", () => MapJsonBuilder.BuildSelected(
                 WorldRegistry.Load().maps.FindAll(m => m.mapId.StartsWith("north_")).ConvertAll(m => m.mapId).ToArray()))) return;
             if (!Step("연결된 고려 맵 씬", BuildLinkedOthers)) return;
+            if (!Step("주인공 그림 연결", PlayerArtBinder.BindAll)) return;
             AssetDatabase.SaveAssets();
             Debug.Log("[통합] 전체 준비 끝. Tests > 지역 통합 등록 검사 → north_c_crossing에서 Play로 연결을 걸어서 확인하세요.");
         }

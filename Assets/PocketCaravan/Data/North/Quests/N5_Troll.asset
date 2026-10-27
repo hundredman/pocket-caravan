@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: N5_Troll
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: north_q5_troll
+  retired: 0
   title: "\uB2E4\uB9AC \uBC11 \uD2B8\uB864"
   chain: "\uBE48 \uB4F1\uC9D0\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
   summary: "\uC18C\uAE08 \uB369\uC774\uB97C \uC0AC\uB0E5\uAFBC \uB9C8\uC744 \uBAA9\uC7A5\uC758
@@ -22,6 +23,8 @@ MonoBehaviour:
   giverNpc: north_innkeeper
   requires:
   - {fileID: 11400000, guid: 4fedf6281e4284f77b4d0ceeef3e5f7e, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uC0AC\uB0E5\uAFBC \uB9C8\uC744 \uBAA9\uC7A5\uC758 \uC5FC\uC18C\uC9C0\uAE30
     \uC0BC\uD615\uC81C\uAC00 \uC18C\uAE08 \uB369\uC774\uB97C \uAE30\uB2E4\uB9B0\uB2E8\uB2E4.
     \uADF8\uB7F0\uB370 \uD070\uAE38 \uB2E4\uB9AC \uBC11\uC5D0 \uD2B8\uB864 \uD328\uAC70\uB9AC\uAC00
@@ -45,4 +48,10 @@ MonoBehaviour:
       \uD558\uBA74 \uD55C \uBC88\uC740 \uC18D\uB294\uB2E4\uB2C8\uAE4C. \uACE0\uB9C8\uC6CC."
   rewardMoney: 50
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: 

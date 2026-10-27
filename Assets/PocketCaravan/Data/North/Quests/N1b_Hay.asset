@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: N1b_Hay
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: north_q1_hay
+  retired: 0
   title: "\uC18C\uAC00 \uAD76\uACE0 \uC788\uC5B4\uC694"
   chain: "\uBE48 \uB4F1\uC9D0\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
   summary: "\uC544\uB0B4\uAC00 \uBCF4\uB0B4\uB294 \uAC74\uCD08 \uD55C \uC9D0\uC744
@@ -21,6 +22,8 @@ MonoBehaviour:
   giverNpc: north_wife
   requires:
   - {fileID: 11400000, guid: 66ddcb8333bbc4f85b89b4f54ee5793c, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uADF8 \uC0AC\uB78C, \uBD84\uBA85 \uC18C \uBA39\uC774\uB294 \uAC78
     \uC78A\uC5C8\uC744 \uAC70\uC57C. \uC774 \uAC74\uCD08 \uD55C \uC9D0 \uC880 \uAC00\uC838\uB2E4\uC918.
     \uBB34\uAC70\uC6B0\uB2C8\uAE4C \uB2EC\uB9AC\uBA74 \uC228\uC774 \uCC30 \uAC70\uC57C.
@@ -42,5 +45,11 @@ MonoBehaviour:
       \uB0B4\uAC00 \uB4E4\uC77C \uD560\uB798."
   rewardMoney: 25
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: "\uBD80\uBD80\uAC00 \uC6C3\uC73C\uBA70 \uACE0\uB9D9\uB2E4\uACE0 \uD55C\uB2E4.
     \uC9D0 \uBB34\uAC8C\uC640 \uB4F1\uC9D0 \uD55C\uB3C4\uB97C \uC775\uD614\uB2E4."

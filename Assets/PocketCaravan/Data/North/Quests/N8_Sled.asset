@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: N8_Sled
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: north_q8_sled
+  retired: 0
   title: "\uB208\uBCF4\uB77C\uB97C \uB2EC\uB9AC\uB294 \uC370\uB9E4"
   chain: "\uBD81\uCABD\uC758 \uAE38"
   summary: "\uD558\uB974\uAC00 \uC21C\uB85D \uACE0\uC6D0\uC758 \uC370\uB9E4 \uC7A5\uC778\uACFC
@@ -23,6 +24,8 @@ MonoBehaviour:
   giverNpc: north_har
   requires:
   - {fileID: 11400000, guid: ac84adc9db6ec4c3bb27dcb61b94b8c5, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uC190\uC218\uB808\uB85C\uB294 \uB208\uAE38\uC5D0\uC11C \uBC14\uD034\uAC00
     \uBE60\uC9C0\uC9C0. \uACE0\uC6D0\uC758 \uC370\uB9E4 \uC7A5\uC778 \uB140\uC11D\uC774\uB791
     \uC9D0 \uC370\uB9E4\uB97C \uB9CC\uB4E4\uAE30\uB85C \uD588\uB124. \uAE54\uAC1C\uB85C
@@ -77,6 +80,12 @@ MonoBehaviour:
       \uB2EC\uB9B4 \uC218 \uC788\uACA0\uAD70!"
   rewardMoney: 60
   rewardCredit: 2
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: "\uC21C\uB85D \uC370\uB9E4\uB97C \uC5BB\uC5C8\uB2E4! \uB208\uBC2D\uC5D0\uC11C
     \uBE60\uB974\uACE0 \uC9D0\uC744 40\uAE4C\uC9C0 \uC2E3\uB294\uB2E4. \uB208\uBCF4\uB77C\uC5D0\uB3C4
     \uAC77\uAE30\uBCF4\uB2E4 \uB35C \uB290\uB824\uC9C4\uB2E4."

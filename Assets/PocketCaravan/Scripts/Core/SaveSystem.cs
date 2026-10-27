@@ -20,6 +20,7 @@ namespace PocketCaravan
         public int fx, fy;
 
         public int money, credit;
+        public string origin; // 출신 id (viking·venice·arabia·goryeo). 없으면 기본 출신
         public string vehicle;
         public float stamina;
         public float shake; // 이전 저장에는 없으므로 0으로 읽는다.

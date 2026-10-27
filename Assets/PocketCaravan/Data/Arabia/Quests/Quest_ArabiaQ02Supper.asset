@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Quest_ArabiaQ02Supper
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: arabia_q02_supper
+  retired: 0
   title: "\uC5EC\uAD00\uC758 \uC800\uB141 \uC900\uBE44"
   chain: "\uC544\uB77C\uBE44\uC544 1\uC7A5"
   summary: "\uC790\uBE44\uB4DC \uC7A5\uD130\uC5D0\uC11C \uACE1\uBB3C \uAFB8\uB7EC\uBBF8
@@ -55,6 +56,9 @@ MonoBehaviour:
       \uACE8\uB77C \uBCF4\uB834."
   rewardMoney: 30
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

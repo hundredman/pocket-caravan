@@ -16,6 +16,23 @@ MonoBehaviour:
   displayName: "\uC544\uB77C\uBE44\uC544 \uB300\uC0C1"
   homeRegion: {fileID: 0}
   startingCredit: 0
+  playerFrames:
+  - {fileID: 21300000, guid: 342bf406825374abc8e7a0bd4b8ca8e4, type: 3}
+  - {fileID: 21300000, guid: e6f5b1d6aaff6462a8b17a169d55f931, type: 3}
+  - {fileID: 21300000, guid: 3949aef91a8f04f26859d3be1b7bffb9, type: 3}
+  - {fileID: 21300000, guid: bd9196f5d3c1944f0ab72629feeedd02, type: 3}
+  - {fileID: 21300000, guid: 8dd9b70792d954f71aea4b87c732a70f, type: 3}
+  - {fileID: 21300000, guid: d2b0175799961469a864d75fe1ef7c74, type: 3}
+  - {fileID: 21300000, guid: ca7fe2d3f707c4c9182281a388cec3ed, type: 3}
+  - {fileID: 21300000, guid: 769b2d30b66a9446195dc4eb2feac8b3, type: 3}
+  - {fileID: 21300000, guid: b950b65c7b6f647399f1c9667aec77e3, type: 3}
+  - {fileID: 21300000, guid: 80717cd6123c6464b8e10a2dc4140f47, type: 3}
+  - {fileID: 21300000, guid: 89a342de28a6842c0a47120e6c2a4373, type: 3}
+  - {fileID: 21300000, guid: 19c709648e205416aaca310160ac78bf, type: 3}
+  - {fileID: 21300000, guid: 47344f397ff324fe69110cd9b1705dc8, type: 3}
+  - {fileID: 21300000, guid: 71fe50b33f37a4d1b9a5443e2326d30b, type: 3}
+  - {fileID: 21300000, guid: 011719aaffb7b4da4ab7e392c64983d8, type: 3}
+  - {fileID: 21300000, guid: a8651c17a5eff4f19967037c5caef951, type: 3}
   speedMultiplier: 1
   offroadSpeedMultiplier: 1
   ledgerStaleMultiplier: 1

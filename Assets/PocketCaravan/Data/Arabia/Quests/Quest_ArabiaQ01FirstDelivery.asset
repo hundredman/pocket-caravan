@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Quest_ArabiaQ01FirstDelivery
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: arabia_q01_first_delivery
+  retired: 0
   title: "\uD78C\uB4DC\uBC14\uB4DC\uC758 \uBC18\uCABD \uC9D0"
   chain: "\uC544\uB77C\uBE44\uC544 1\uC7A5"
   summary: "\uCD08\uBCF4 \uC9D0\uAFBC \uD78C\uB4DC\uBC14\uB4DC\uC5D0\uAC8C\uC11C
@@ -44,6 +45,9 @@ MonoBehaviour:
       \uC7A5\uBD80\uC5D0 \uC801\uC5B4 \uB458\uAC8C."
   rewardMoney: 20
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

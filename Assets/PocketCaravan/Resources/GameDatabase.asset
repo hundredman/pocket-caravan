@@ -32,7 +32,43 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7e687e69952804baabafe42d927ff6e9, type: 2}
   - {fileID: 11400000, guid: 35a7e3db33a56468183a9b53947724c8, type: 2}
   - {fileID: 11400000, guid: 96610d66c3d64410a98a84e4cf5d03ee, type: 2}
+  - {fileID: 11400000, guid: 018a545c0e6c93f4c97c5e4224b223c9, type: 2}
+  - {fileID: 11400000, guid: 2eb42ca42c7322a4f8fe7f379bcb954e, type: 2}
+  - {fileID: 11400000, guid: 58596ccbd03895d429f2d5781358ce80, type: 2}
+  - {fileID: 11400000, guid: ada83f26ddff528418a2795d1786d676, type: 2}
+  - {fileID: 11400000, guid: 53ba846e304ef9244a098322ccd7d522, type: 2}
+  - {fileID: 11400000, guid: 33c1e2f1c10b45247964b7f14f96dc5a, type: 2}
+  - {fileID: 11400000, guid: abeb73ca568915045b5cbaf854b18ad9, type: 2}
+  - {fileID: 11400000, guid: 8fcf64b0e9e02ef42a811e652539ab6c, type: 2}
+  - {fileID: 11400000, guid: f0481849b4ca4134faf4c3466df7bf6e, type: 2}
+  - {fileID: 11400000, guid: 5d6f67d084c304c4085459c6ae25bdcf, type: 2}
+  - {fileID: 11400000, guid: 5bdb4599b599a4bafb2d6eba12a7a241, type: 2}
+  - {fileID: 11400000, guid: 1a2fc2ad478bf45eb8826708d861bb18, type: 2}
+  - {fileID: 11400000, guid: 84e8ea6b0681441bcb997c074af766ab, type: 2}
+  - {fileID: 11400000, guid: 97c21223f4815486bb4749fc7f944272, type: 2}
+  - {fileID: 11400000, guid: 5bbced6f7b2b141b6897cb7a47bc713b, type: 2}
+  - {fileID: 11400000, guid: 7b10b12610b4b41fbaf940255ab242b6, type: 2}
+  - {fileID: 11400000, guid: 50275f575aa3b43f48d7278feb007ee0, type: 2}
+  - {fileID: 11400000, guid: 7645750b0300140cc98872c430ca7535, type: 2}
+  - {fileID: 11400000, guid: 840f65a4b800a4990ae2697928fa33a8, type: 2}
+  - {fileID: 11400000, guid: fec223f6bbcd34f3081779f3a8fc48a6, type: 2}
+  - {fileID: 11400000, guid: 0a76bedd5de954bbf95126de12d3bcc9, type: 2}
+  - {fileID: 11400000, guid: 3809c24bcba7c4d5597c08ba74fd633d, type: 2}
+  - {fileID: 11400000, guid: 41be696c8633c49c1b90d85a3e7d7080, type: 2}
+  - {fileID: 11400000, guid: e022931d0e6154059bc76d03c65d999b, type: 2}
+  - {fileID: 11400000, guid: 7fb2a0e2baffd4bb1bcf58b51046ae33, type: 2}
+  - {fileID: 11400000, guid: fb409b5bec7704f309b5d5d0c52a8fda, type: 2}
+  - {fileID: 11400000, guid: d1a72c6d5727143acb6b447b3e240481, type: 2}
   towns:
+  - {fileID: 11400000, guid: 2c9147faaf0a843a7a9ac6e8a53c0e86, type: 2}
+  - {fileID: 11400000, guid: 64b9df746835e454b957665c23b9725d, type: 2}
+  - {fileID: 11400000, guid: a67e4e24778244c09ab2de2812213169, type: 2}
+  - {fileID: 11400000, guid: 435032a5cf9c24220a39296eb0e76afd, type: 2}
+  - {fileID: 11400000, guid: b46633472dd9547829472e413083f7e9, type: 2}
+  - {fileID: 11400000, guid: 2fb028821cbd749259c73f6170868dd2, type: 2}
+  - {fileID: 11400000, guid: eb4d55ba9971f4421a1cf80e79644000, type: 2}
+  - {fileID: 11400000, guid: e21912ee1a10540058d2236e1fdb2694, type: 2}
+  - {fileID: 11400000, guid: f436e7b1554504e589166838117f3fad, type: 2}
   - {fileID: 11400000, guid: ea80dc588efe14baeada6f1f8eeb9f6c, type: 2}
   - {fileID: 11400000, guid: c9c3e50b53fd84e47a560b486663cf0f, type: 2}
   - {fileID: 11400000, guid: 9c22617e212424b55a590eb911f26529, type: 2}
@@ -45,9 +81,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 287da3c71ddec4e8d984098397ae94f6, type: 2}
   - {fileID: 11400000, guid: f818d1d5cb77245f7ae6a206b7685bc7, type: 2}
   - {fileID: 11400000, guid: d5b6573b388d94b518b74530886a92f1, type: 2}
+  - {fileID: 11400000, guid: c3da3a23399a49d42b57434cea951860, type: 2}
+  - {fileID: 11400000, guid: 29f59db9378ff6343a1bc33d991356eb, type: 2}
+  - {fileID: 11400000, guid: 5209b58ecc91a2145977b14ad0a1b1ce, type: 2}
+  - {fileID: 11400000, guid: b03feec98a24c7c49aed079e56bef7b5, type: 2}
+  - {fileID: 11400000, guid: 37e9a21485b90d241a066c52b1ef1bbf, type: 2}
+  - {fileID: 11400000, guid: 1fdcf4f6b43c1684eb370beae378659a, type: 2}
+  - {fileID: 11400000, guid: 386b7d0238d9b8e4e81f5ee03e8e64f1, type: 2}
+  - {fileID: 11400000, guid: 5df684bc3ea1ccf49bf354c1733c8772, type: 2}
   vehicles:
   - {fileID: 11400000, guid: 2605f065f1d0f40fd90f0c5955299f57, type: 2}
   - {fileID: 11400000, guid: 913f67411fb2e4eb9868cba57a9545f6, type: 2}
+  - {fileID: 11400000, guid: fe513768e4d8d4b289301536cf9f0a44, type: 2}
   quests:
   - {fileID: 11400000, guid: eefd3152bcc904f108dc17237dbff5e9, type: 2}
   - {fileID: 11400000, guid: 5f1b114771f824928af105094288dc10, type: 2}
@@ -68,6 +113,26 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 671321731ba25b9d905da5f205300409, type: 2}
   - {fileID: 11400000, guid: 432d591b7eb2527fa04e17c193984b57, type: 2}
   - {fileID: 11400000, guid: a19a472c07075c818ebd0ddd949d2bea, type: 2}
+  - {fileID: 11400000, guid: c632cf5289fbc5d418a1c48c0c18b243, type: 2}
+  - {fileID: 11400000, guid: 1620b44b5b544fd45a61d7cae7e93192, type: 2}
+  - {fileID: 11400000, guid: 485a99f5a3d58ac46b6f10e83c489b4a, type: 2}
+  - {fileID: 11400000, guid: 81b4da60917126d40930f15f0e585573, type: 2}
+  - {fileID: 11400000, guid: b44bf035df9893c488409b8b11aae5b3, type: 2}
+  - {fileID: 11400000, guid: 489557d144e15504d913e1a16bd0e756, type: 2}
+  - {fileID: 11400000, guid: c8fa8ac88026b7d46b0bd19b6dc187d3, type: 2}
+  - {fileID: 11400000, guid: a752290b89514674186178014bc1c14b, type: 2}
+  - {fileID: 11400000, guid: 4443be5e23f4229448fcf98b01738bf1, type: 2}
+  - {fileID: 11400000, guid: 625f38d024b78b745929d7f74d13f434, type: 2}
+  - {fileID: 11400000, guid: 48506aa89ad7cb142963df6169a9dd8d, type: 2}
+  - {fileID: 11400000, guid: 66ddcb8333bbc4f85b89b4f54ee5793c, type: 2}
+  - {fileID: 11400000, guid: e51ed96a5d306464aab8f7c64a94cb2d, type: 2}
+  - {fileID: 11400000, guid: 4fedf6281e4284f77b4d0ceeef3e5f7e, type: 2}
+  - {fileID: 11400000, guid: 8ad32f2cc4c004055875feb672c2e4b0, type: 2}
+  - {fileID: 11400000, guid: 16f175c322e394a03b9fb9f2824c9fa2, type: 2}
+  - {fileID: 11400000, guid: e380b95482547433fb63f8fdb2d0f8fc, type: 2}
+  - {fileID: 11400000, guid: 8975b53118aeb40af8f3cf6f20727b16, type: 2}
+  - {fileID: 11400000, guid: ac84adc9db6ec4c3bb27dcb61b94b8c5, type: 2}
+  - {fileID: 11400000, guid: c6212538a71f342f8b8970621b3ce762, type: 2}
   crateIcon: {fileID: 21300000, guid: ec46ec01583204ea6bbd211cd1094e76, type: 3}
   realSecondsPerDay: 360
   stockRecoveryPerHour: 0.04

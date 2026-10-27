@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: V3_GlassCrate
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: venice_q3_crate
+  retired: 0
   title: "\uAE68\uC9C0\uAE30 \uC26C\uC6B4 \uC9D0"
   chain: "\uBCA0\uB124\uCE58\uC544 1\uC7A5: \uBE48 \uC9C0\uAC8C\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
   summary: "\uC720\uB9AC \uC0C1\uC790\uB97C \uD0A4\uC624\uC790 \uD56D\uAD6C \uCC3D\uACE0\uC9C0\uAE30\uC5D0\uAC8C
@@ -42,6 +43,9 @@ MonoBehaviour:
       \uC7A5\uBD80\uC5D0 \uC801\uC5B4 \uB450\uC9C0."
   rewardMoney: 40
   rewardCredit: 2
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

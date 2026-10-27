@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: N3_Tomte
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: north_q3_tomte
+  retired: 0
   title: "\uD1B0\uD14C\uC758 \uAFC0\uC220 \uB2E8\uC9C0"
   chain: "\uBE48 \uB4F1\uC9D0\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
   summary: "\uAFC0\uC220 \uB2E8\uC9C0\uB97C \uD53C\uC624\uB974 \uB098\uB8E8 \uCC3D\uACE0\uC9C0\uAE30\uC5D0\uAC8C
@@ -22,6 +23,8 @@ MonoBehaviour:
   giverNpc: north_innkeeper
   requires:
   - {fileID: 11400000, guid: 4fedf6281e4284f77b4d0ceeef3e5f7e, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uB098\uB8E8 \uCC3D\uACE0\uC5D0\uC11C \uC6B0\uB9AC \uAFC0\uC220\uC744
     \uAE30\uB2E4\uB9B0\uB2E8\uB2E4. \uCC3D\uACE0 \uBB38 \uC55E\uC5D0\uB294 \uD1B0\uD14C
     \uD560\uC544\uBC84\uC9C0\uAC00 \uC9C0\uD0A4\uACE0 \uACC4\uC2DC\uC9C0. \uC608\uC758
@@ -59,4 +62,10 @@ MonoBehaviour:
       \uBBFF\uC744 \uB9CC\uD55C \uC0C1\uC778\uC774\uC9C0."
   rewardMoney: 40
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: 

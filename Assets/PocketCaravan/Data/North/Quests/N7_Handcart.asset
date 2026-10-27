@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: N7_Handcart
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: north_q7_cart
+  retired: 0
   title: "\uD558\uB974\uC758 \uC190\uC218\uB808"
   chain: "\uBE48 \uB4F1\uC9D0\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
   summary: "\uB3C8\uC744 \uBAA8\uC544 \uBE44\uB974\uCE74 \uC7A5\uD130\uC5D0\uC11C
@@ -21,6 +22,8 @@ MonoBehaviour:
   giverNpc: north_har
   requires:
   - {fileID: 11400000, guid: 4fedf6281e4284f77b4d0ceeef3e5f7e, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uB4F1\uC9D0\uC73C\uB85C\uB294 \uD558\uB8E8\uC5D0 \uBA87 \uBC88 \uBABB
     \uC624\uAC00\uC9C0. \uB0B4\uAC00 \uB9CC\uB4E0 \uC190\uC218\uB808\uB294 \uBE44\uB974\uCE74
     \uC7A5\uD130\uC5D0\uC11C \uD310\uB2E4\uB124. \uC758\uB8B0\uC640 \uC7A5\uC0AC\uB85C
@@ -57,6 +60,12 @@ MonoBehaviour:
       \uB208\uC774 \uB179\uB294 \uB0A8\uCABD\uC5D0 \uD070 \uC7A5\uC774 \uC120\uB2E4\uB354\uAD70."
   rewardMoney: 0
   rewardCredit: 2
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: "\uC190\uC218\uB808\uB97C \uC0C0\uB2E4! 1\uC7A5 \uB05D. (\uAD00\uBB38\uACFC
     \uB2E4\uB978 \uC9C0\uC5ED \uC5F0\uACB0\uC740 \uC9C0\uC5ED\uC744 \uD569\uCE60
     \uB54C \uC5F4\uB9B0\uB2E4)"

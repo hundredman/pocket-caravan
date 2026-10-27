@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: N4_Storm
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: north_q4_storm
+  retired: 0
   title: "\uBB34\uB2C8\uAC00 \uBB3C\uC5B4\uC628 \uB208\uBCF4\uB77C"
   chain: "\uBE48 \uB4F1\uC9D0\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
   summary: "\uB208\uBCF4\uB77C\uB85C \uC0AC\uB0E5\uAFBC \uB9C8\uC744\uC5D0 \uAFC0\uC220\uC774
@@ -23,6 +24,8 @@ MonoBehaviour:
   giverNpc: 
   requires:
   - {fileID: 11400000, guid: 4fedf6281e4284f77b4d0ceeef3e5f7e, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: 
   giveItem: {fileID: 0}
   giveCount: 0
@@ -47,6 +50,12 @@ MonoBehaviour:
     completeLine: 
   rewardMoney: 20
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: "\uC18C\uC2DD\uC744 \uB4E3\uC790\uB9C8\uC790 \uC6C0\uC9C1\uC5EC \uB0A8\uBCF4\uB2E4
     \uBA3C\uC800 \uB2FF\uC558\uB2E4. \uD56D\uD574\uC640 \uC6D0\uC815\uC5D0\uC11C
     \uC775\uD78C \uBD81\uC720\uB7FD \uC0C1\uC778\uC758 \uC774\uB3D9 \uC694\uB839\uC774

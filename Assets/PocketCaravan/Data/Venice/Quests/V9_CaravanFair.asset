@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: V9_CaravanFair
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: venice_q9_fair
+  retired: 0
   title: "\uB300\uC0C1 \uC219\uC18C\uC758 \uD070 \uC7A5"
   chain: "\uBCA0\uB124\uCE58\uC544 2\uC7A5: \uC11D\uD638\uB97C \uB118\uC5B4"
   summary: "\uBCF8\uD1A0 \uB300\uC0C1 \uC219\uC18C \uC7A5\uD130\uC5D0\uC11C \uBB3C\uAC74
@@ -56,6 +57,9 @@ MonoBehaviour:
       \uC774\uB984\uC774 \uB3CC\uACA0\uAD70."
   rewardMoney: 90
   rewardCredit: 2
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

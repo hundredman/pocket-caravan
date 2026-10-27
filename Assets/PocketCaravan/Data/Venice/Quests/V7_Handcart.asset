@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: V7_Handcart
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: venice_q7_handcart
+  retired: 0
   title: "\uC190\uC218\uB808"
   chain: "\uBCA0\uB124\uCE58\uC544 1\uC7A5: \uBE48 \uC9C0\uAC8C\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
   summary: "\uB9AC\uC54C\uD1A0 \uC7A5\uD130\uC5D0\uC11C \uC190\uC218\uB808\uB97C
@@ -48,6 +49,9 @@ MonoBehaviour:
     completeLine: "\uBC14\uD034 \uC18C\uB9AC\uAC00 \uC88B\uAD70. \uCD95\uD558\uD558\uB124."
   rewardMoney: 0
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

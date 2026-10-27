@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: V4_SellerPride
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: venice_q4_sell
+  retired: 0
   title: "\uD30C\uB294 \uC19C\uC528"
   chain: "\uBCA0\uB124\uCE58\uC544 1\uC7A5: \uBE48 \uC9C0\uAC8C\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
   summary: "\uBB3C\uAC74\uC744 \uD314\uC544 \uC774\uC775 60\uB0E5\uC744 \uB0A8\uAE34
@@ -48,6 +49,9 @@ MonoBehaviour:
     completeLine: "\uC7A5\uBD80\uB97C \uBCF4\uB2C8 \uC81C\uB300\uB85C \uB0A8\uACBC\uAD70."
   rewardMoney: 40
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

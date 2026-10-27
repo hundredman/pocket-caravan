@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6113fb60e7fc945608a6c4e31d48cbd4, type: 3}
+  m_Name: StartChoices
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.StartChoices
+  choices:
+  - region: "\uBD81\uC720\uB7FD"
+    origin: {fileID: 11400000, guid: 95705474567144e318cacfe1ee205836, type: 2}
+    animal: "\uC21C\uB85D"
+    strength: "\uC774\uB3D9\uC774 \uBE60\uB984 (\uAE38 \uC5C6\uB294 \uACF3\uC740
+      \uB354 \uBE60\uB984)"
+    startScene: north_birka
+    startTown: "\uBE44\uB974\uCE74"
+    startSpawn: S0
+    preview: StartScreen/start_north
+  - region: "\uBCA0\uB124\uCE58\uC544"
+    origin: {fileID: 11400000, guid: 24994a5ed25904090a8d7dd72646f12a, type: 2}
+    animal: "\uD770 \uACE0\uC591\uC774"
+    strength: "\uB2E4\uB978 \uC9C0\uC5ED \uBB3C\uAC74\uC744 \uD314\uC544\uB3C4 \uAC12\uC774
+      \uB35C \uB5A8\uC5B4\uC9D0"
+    startScene: venice_rialto
+    startTown: "\uB9AC\uC54C\uD1A0"
+    startSpawn: S0
+    preview: StartScreen/start_venice
+  - region: "\uACE0\uB824"
+    origin: {fileID: 11400000, guid: baa3df4a3e3ea42e999ffb10319d746e, type: 2}
+    animal: "\uB108\uAD6C\uB9AC"
+    strength: "\uC7A5\uBD80\uAC00 \uB450 \uBC30 \uC624\uB798 \uAC10"
+    startScene: Naru
+    startTown: "\uC608\uC131 \uB098\uB8E8"
+    startSpawn: S0
+    preview: StartScreen/start_goryeo
+  - region: "\uC544\uB77C\uBE44\uC544"
+    origin: {fileID: 11400000, guid: 2d07d3c710574423e87eaa2655025233, type: 2}
+    animal: "\uC0AC\uB9C9\uC5EC\uC6B0"
+    strength: "\uBA40\uB9AC \uAC00\uC838\uAC00 \uD314\uBA74 +5%"
+    startScene: arabia_ahsa
+    startTown: "\uC54C \uC544\uD750\uC0AC"
+    startSpawn: S0
+    preview: StartScreen/start_arabia

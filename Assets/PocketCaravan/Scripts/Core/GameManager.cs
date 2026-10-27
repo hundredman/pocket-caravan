@@ -37,6 +37,7 @@ namespace PocketCaravan
         /// <summary>맵을 넘어가는 중 (화면이 어두워졌다 밝아지는 동안 조작을 막음)</summary>
         public bool IsTravelling { get; private set; }
         bool firstSceneLoaded;
+        bool skipStartScreen;   // 시작 화면에서 이어하기/새로 시작을 고른 뒤
         SaveData saveToLoad;
         bool autosave = true;
         RegionTestSession regionSession;
@@ -226,12 +227,21 @@ namespace PocketCaravan
             // 지역 시험 세션: 그 지역 씬에서 Play를 시작하면 본편 저장 대신 전용 파일을 읽고 쓴다.
             bool startedRegionSession = first && TryBeginRegionSession();
 
+            // 게임을 켜서 첫 씬(빌드 0번)이 열리면 시작 화면에서 이어하기/새로 시작·문명을 고를 때까지 붙잡아 둔다.
+            if (first && !startedRegionSession && !skipStartScreen && scene.buildIndex == 0 && !SaveSystem.LoadBlocked
+                && (MapRoot.Current == null || !MapRoot.Current.previewOnly) && StartScreen.Available)
+            {
+                StartScreen.Open(saveToLoad != null);
+                return;
+            }
+
             // 처음 연 씬이 시작 맵이면 저장을 불러온다. 다른 씬에서 바로 Play한 경우(개발 중)는 불러오지도, 덮어쓰지도 않는다.
             if (first && !startedRegionSession && (scene.buildIndex != 0 || (MapRoot.Current != null && MapRoot.Current.previewOnly)))
             {
                 autosave = false;
                 saveToLoad = null;
                 Debug.Log("[저장] 비시작 씬/제작 시험장: 기존 저장 적용과 자동 저장을 끕니다.");
+                ApplyDevOrigin();
             }
             else if (first && SaveSystem.LoadBlocked)
             {
@@ -292,6 +302,51 @@ namespace PocketCaravan
                 AudioManager.OnMapEntered(map.mapId);
                 SaveNow();
             }
+        }
+
+        /// <summary>개발 중 지역 씬을 바로 Play하면 시작 화면을 거치지 않으므로, 그 맵 지역의 출신(주인공 그림 포함)을 넣는다.
+        /// 맵 id 앞부분(north_·venice_·arabia_)이 시작 화면 문명의 출발 씬과 같으면 그 출신. 아니면 기본 출신 그대로.</summary>
+        void ApplyDevOrigin()
+        {
+            var all = StartChoices.Get();
+            var map = MapRoot.Current;
+            if (all == null || map == null || string.IsNullOrEmpty(map.mapId)) return;
+            int cut = map.mapId.IndexOf('_');
+            if (cut <= 0) return;
+            string prefix = map.mapId.Substring(0, cut + 1);
+            foreach (var c in all.choices)
+            {
+                if (c.origin == null || string.IsNullOrEmpty(c.startScene) || !c.startScene.StartsWith(prefix)) continue;
+                if (Player.origin == c.origin) return;
+                Player.origin = c.origin;
+                Player.credit = c.origin.startingCredit;
+                Player.reputation.Initialize(ReputationState.HomeOf(Player.origin));
+                Debug.Log($"[개발 시작] {map.mapId}에서 바로 Play: 출신을 {c.origin.displayName}(으)로 맞춤");
+                return;
+            }
+        }
+
+        /// <summary>시작 화면 "이어하기": 붙잡아 둔 첫 씬 처리를 그대로 이어간다 (저장 불러오기 포함).</summary>
+        public void ContinueFromStartScreen()
+        {
+            skipStartScreen = true;
+            firstSceneLoaded = false;
+            UIState.Blocking = false;
+            OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+        }
+
+        /// <summary>시작 화면 "새로 시작": 고른 출신으로 처음 상태를 맞추고 그 문명의 출발 마을로 간다.
+        /// 시작 돈은 네 문명 모두 같다(Db.startMoney). 지난 저장은 출발 마을에 도착하면서 덮어쓴다.</summary>
+        public void BeginNewGame(StartChoices.Choice choice)
+        {
+            skipStartScreen = true;
+            saveToLoad = null;
+            Player.origin = choice.origin;
+            Player.credit = choice.origin != null ? choice.origin.startingCredit : 0;
+            Player.money = Db.startMoney;
+            Player.reputation.Initialize(ReputationState.HomeOf(Player.origin));
+            UIState.Blocking = false;
+            StartCoroutine(Travel(choice.startScene, string.IsNullOrEmpty(choice.startSpawn) ? SpawnPoint.StartId : choice.startSpawn, 0f, default, null));
         }
 
         /// <summary>Resources/RegionSessions/{지역 id}가 있는 지역 씬에서 시작하면 전용 저장·시작값으로 바꾼다.
@@ -423,7 +478,8 @@ namespace PocketCaravan
 
         public bool SaveNow()
         {
-            if (!autosave || MapRoot.Current == null) return false;
+            // 시작 화면에서 고르는 중에는 저장하지 않는다 (지난 저장을 덮지 않게)
+            if (!autosave || MapRoot.Current == null || StartScreen.IsOpen) return false;
             var pc = PlayerController.Instance;
             var d = new SaveData
             {
@@ -433,6 +489,7 @@ namespace PocketCaravan
                 px = pc != null ? pc.transform.position.x : 0, py = pc != null ? pc.transform.position.y : 0,
                 fx = pc != null ? pc.Motor.Facing.x : 0, fy = pc != null ? pc.Motor.Facing.y : -1,
                 money = Player.money, credit = Player.credit,
+                origin = Player.origin != null ? Player.origin.id : null,
                 vehicle = Player.vehicle != null ? Player.vehicle.id : null,
                 stamina = Player.stamina, shake = Player.shake,
                 day = Clock.day, minute = Clock.minuteOfDay,
@@ -462,6 +519,9 @@ namespace PocketCaravan
             Player.ledger.Import(d.marketQuotes);
             Player.money = d.money;
             Player.credit = d.credit;
+            // 출신은 시작 화면이 생기면서 저장에 들어감. 옛 저장(값 없음)은 기본 출신 그대로.
+            var savedOrigin = StartChoices.FindOrigin(d.origin);
+            if (savedOrigin != null) Player.origin = savedOrigin;
             Player.vehicle = Db.vehicles.Find(v => v != null && v.id == d.vehicle) ?? Db.startVehicle;
             Player.stamina = d.stamina;
             Player.shake = 0f;

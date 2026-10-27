@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: V11_EastGate
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: venice_q11_gate
+  retired: 0
   title: "\uB3D9\uBB38 \uB108\uBA38"
   chain: "\uBCA0\uB124\uCE58\uC544 2\uC7A5: \uC11D\uD638\uB97C \uB118\uC5B4"
   summary: "\uBCF8\uD1A0 \uB3D9\uCABD \uB05D \uB3D9\uBB38 \uD070\uAE38\uAE4C\uC9C0
@@ -49,6 +50,9 @@ MonoBehaviour:
       \uC6B0\uB9AC \uC12C \uC0C1\uC778\uB4E4 \uC19C\uC528\uC9C0."
   rewardMoney: 50
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

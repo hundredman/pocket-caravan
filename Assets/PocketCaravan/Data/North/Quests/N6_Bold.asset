@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: N6_Bold
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: north_q6_bold
+  retired: 0
   title: "\uBA48\uCD94\uC9C0 \uC54A\uB294 \uBCFC\uB4DC"
   chain: "\uBE48 \uB4F1\uC9D0\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
   summary: "\uC0AC\uB0E5\uAFBC \uB9C8\uC744\uC5D0\uC11C \uBAA8\uD53C 5\uC7A5\uC744
@@ -24,6 +25,8 @@ MonoBehaviour:
   giverNpc: north_bold
   requires:
   - {fileID: 11400000, guid: 4fedf6281e4284f77b4d0ceeef3e5f7e, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uD765, \uB124\uAC00 \uADF8 \uC0C8\uB85C \uC628 \uD589\uC0C1\uC774\uB0D0?
     \uBAA8\uD53C \uC7A5\uC0AC\uB85C \uB098\uB97C \uC774\uAE38 \uC218 \uC788\uC744
     \uAC83 \uAC19\uC544? \uC0AC\uB0E5\uAFBC \uB9C8\uC744 \uBAA8\uD53C \uB2E4\uC12F
@@ -59,6 +62,12 @@ MonoBehaviour:
       \uD314\uC558\uB2E4\uACE0? \u2026\uB2E4\uC74C\uC5D4 \uC548 \uC9C4\uB2E4!"
   rewardMoney: 30
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: "\uBCFC\uB4DC\uB294 \uC774\uC81C \uB77C\uC774\uBC8C\uB85C \uB0A8\uB294\uB2E4.
     \uD55C \uC7A5\uC5D0 \uBAB0\uC544 \uD314\uBA74 \uAC12\uC774 \uB5A8\uC5B4\uC9C4\uB2E4\uB294
     \uAC78 \uBC30\uC6E0\uB2E4."

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: V2_BuyGlass
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: venice_q2_glass
+  retired: 0
   title: "\uC720\uB9AC\uADF8\uB987 \uC0AC \uC624\uAE30"
   chain: "\uBCA0\uB124\uCE58\uC544 1\uC7A5: \uBE48 \uC9C0\uAC8C\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
   summary: "\uBB34\uB77C\uB178\uC5D0\uC11C \uC720\uB9AC\uADF8\uB987 2\uAC1C\uB97C
@@ -50,6 +51,9 @@ MonoBehaviour:
     completeLine: "\uD760\uC9D1 \uD558\uB098 \uC5C6\uAD70. \uAC12\uC744 \uCCD0 \uC8FC\uC9C0."
   rewardMoney: 70
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

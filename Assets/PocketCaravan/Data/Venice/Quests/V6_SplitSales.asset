@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: V6_SplitSales
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: venice_q6_split
+  retired: 0
   title: "\uB098\uB220 \uD314\uAE30"
   chain: "\uBCA0\uB124\uCE58\uC544 1\uC7A5: \uBE48 \uC9C0\uAC8C\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
   summary: "\uB9AC\uC54C\uD1A0\uC5D0 \uACFC\uC77C\uC774 \uB118\uCE5C\uB2E4. \uACFC\uC77C\uC744
@@ -56,6 +57,9 @@ MonoBehaviour:
     completeLine: "\uB450 \uACF3 \uB2E4 \uAC12\uC744 \uC798 \uBC1B\uC558\uAD70."
   rewardMoney: 30
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: V1_FirstDelivery
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: venice_q1_delivery
+  retired: 0
   title: "\uCCAB \uBC30\uB2EC"
   chain: "\uBCA0\uB124\uCE58\uC544 1\uC7A5: \uBE48 \uC9C0\uAC8C\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
   summary: "\uB9AC\uC54C\uD1A0 \uC5EC\uAD00 \uC8FC\uC778\uC758 \uAFB8\uB7EC\uBBF8\uB97C
@@ -41,6 +42,9 @@ MonoBehaviour:
       \uC218\uACE0\uD588\uB124."
   rewardMoney: 25
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

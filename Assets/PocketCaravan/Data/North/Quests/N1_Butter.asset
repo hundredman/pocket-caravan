@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: N1_Butter
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: north_q1_butter
+  retired: 0
   title: "\uC9D1 \uBCF4\uB294 \uB0A8\uD3B8\uC758 \uBC84\uD130 \uB2E8\uC9C0"
   chain: "\uBE48 \uB4F1\uC9D0\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
   summary: "\uBE44\uB974\uCE74\uC758 \uB0A8\uD3B8\uC774 \uB9CC\uB4E0 \uBC84\uD130
@@ -21,6 +22,8 @@ MonoBehaviour:
     \uAC74\uB108 \uAD6D\uACBD \uACE0\uAC1C\uC5D0\uC11C \uC11C\uCABD\uC73C\uB85C \uAC04\uB2E4."
   giverNpc: north_husband
   requires: []
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uC624\uB298\uC740 \uC544\uB0B4\uB791 \uC77C\uC744 \uBC14\uAFE8\uAC70\uB4E0.
     \uC544\uB0B4\uB294 \uB4E4\uC77C, \uB098\uB294 \uC9D1\uC548\uC77C. \uADF8\uB7F0\uB370
     \uBC84\uD130\uB97C \uC800\uC5B4 \uB1A8\uB354\uB2C8 \uC544\uB0B4\uAC00 \uC810\uC2EC\uC5D0
@@ -51,4 +54,10 @@ MonoBehaviour:
       \uB0A8\uD3B8\uC774 \uC6EC\uC77C\uC774\uB78C. \uACE0\uB9C8\uC6CC."
   rewardMoney: 20
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: 

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: N2_NailSoup
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: north_q2_soup
+  retired: 0
   title: "\uBABB \uD558\uB098\uB85C \uB053\uC774\uB294 \uC218\uD504"
   chain: "\uBE48 \uB4F1\uC9D0\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
   summary: "\uBAA8\uD53C \uC0AC\uB0E5\uAFBC \uB9C8\uC744 \uC7A5\uD130\uC5D0\uC11C
@@ -21,6 +22,8 @@ MonoBehaviour:
   giverNpc: north_innkeeper
   requires:
   - {fileID: 11400000, guid: e51ed96a5d306464aab8f7c64a94cb2d, type: 2}
+  requiresAny: []
+  choiceGroup: 
   offerLine: "\uBABB \uD558\uB098\uB85C\uB3C4 \uC218\uD504\uB294 \uB053\uC77C \uC218
     \uC788\uC9C0. \uADF8\uB798\uB3C4 \uACE0\uAE30\uAC00 \uC870\uAE08 \uB4E4\uC5B4\uAC00\uBA74
     \uC190\uB2D8\uB4E4\uC774 \uC88B\uC544\uD55C\uB2E8\uB2E4. \uC0AC\uB0E5\uAFBC \uB9C8\uC744\uC5D0\uC11C
@@ -53,6 +56,12 @@ MonoBehaviour:
       \uC624\uBA74 \uAC12\uC774 \uC624\uB974\uC9C0. \uADF8\uAC8C \uC7A5\uC0AC\uB780\uB2E4."
   rewardMoney: 45
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
   finishNote: "\uC0B0\uC9C0\uC5D0\uC11C \uC2F8\uAC8C \uC0AC\uC11C \uBA3C \uACF3\uC5D0
     \uAC00\uC838\uAC00\uBA74 \uBE44\uC2F8\uAC8C \uBC1B\uB294\uB2E4. \uC774\uC81C
     \uAC8C\uC2DC\uD310 \uC758\uB8B0\uC640 \uAD50\uC5ED\uC73C\uB85C \uC190\uC218\uB808

@@ -23,6 +23,305 @@ MonoBehaviour:
     - goryeo_songak
     - goryeo_jangdan
     - Gaegyeong
+  - mapId: arabia_ahsa
+    displayName: "\uC54C \uC544\uD750\uC0AC"
+    height: 44
+    legacyHeight: 0
+    coord: {x: 20, y: 0}
+    town: arabia_ahsa
+    neighbors:
+    - arabia_shortcut
+    - arabia_farmroad
+  - mapId: arabia_farmroad
+    displayName: "\uB098\uC988\uB4DC \uB300\uC0C1\uB85C"
+    height: 44
+    legacyHeight: 0
+    coord: {x: 21, y: 0}
+    town: 
+    neighbors:
+    - arabia_taiz
+    - arabia_ahsa
+    - arabia_jeddah
+  - mapId: arabia_zabid
+    displayName: "\uC790\uBE44\uB4DC"
+    height: 44
+    legacyHeight: 0
+    coord: {x: 22, y: 0}
+    town: arabia_zabid
+    neighbors:
+    - arabia_central_canyon
+    - arabia_taiz
+    - arabia_jeddah
+  - mapId: arabia_taiz
+    displayName: "\uD0C0\uC774\uC988"
+    height: 44
+    legacyHeight: 0
+    coord: {x: 24, y: 0}
+    town: arabia_taiz
+    neighbors:
+    - arabia_sanaa
+    - arabia_shortcut
+    - arabia_zabid
+    - arabia_farmroad
+  - mapId: arabia_jeddah
+    displayName: "\uC81C\uB2E4"
+    height: 44
+    legacyHeight: 0
+    coord: {x: 26, y: 0}
+    town: arabia_jeddah
+    neighbors:
+    - arabia_zabid
+    - arabia_farmroad
+  - mapId: arabia_shortcut
+    displayName: "\uB8F9\uC54C\uD560\uB9AC \uBE48 \uC0AC\uB9C9"
+    height: 44
+    legacyHeight: 0
+    coord: {x: 27, y: 0}
+    town: 
+    neighbors:
+    - arabia_central_dunes
+    - arabia_taiz
+    - arabia_ahsa
+  - mapId: arabia_sanaa
+    displayName: "\uC0AC\uB098"
+    height: 44
+    legacyHeight: 0
+    coord: {x: 28, y: 0}
+    town: arabia_sanaa
+    neighbors:
+    - arabia_central_dunes
+    - arabia_taiz
+  - mapId: arabia_central_dunes
+    displayName: "\uBAA8\uB798\uBC14\uB78C \uC624\uC544\uC2DC\uC2A4"
+    height: 48
+    legacyHeight: 0
+    coord: {x: 28, y: 2}
+    town: 
+    neighbors:
+    - arabia_sanaa
+    - arabia_shortcut
+    - arabia_central_canyon
+    - arabia_central_westvale
+    - arabia_central_bazaar
+  - mapId: arabia_central_canyon
+    displayName: "\uBD89\uC740 \uBC14\uC704 \uD611\uACE1"
+    height: 48
+    legacyHeight: 0
+    coord: {x: 29, y: 2}
+    town: 
+    neighbors:
+    - arabia_zabid
+    - arabia_central_dunes
+    - arabia_central_bazaar
+    - arabia_central_eastvale
+  - mapId: arabia_central_westvale
+    displayName: "\uC11C\uCABD \uD3EC\uB3C4\uBC2D \uC5B8\uB355"
+    height: 56
+    legacyHeight: 0
+    coord: {x: 27, y: 3}
+    town: 
+    neighbors:
+    - arabia_central_dunes
+    - arabia_central_bazaar
+    - arabia_central_steppe
+    - venice_c_bridge
+  - mapId: arabia_central_bazaar
+    displayName: "\uB9CC\uAD6D \uC7A5\uD130"
+    height: 56
+    legacyHeight: 0
+    coord: {x: 28, y: 3}
+    town: 
+    neighbors:
+    - arabia_central_westvale
+    - arabia_central_dunes
+    - arabia_central_canyon
+    - arabia_central_eastvale
+    - arabia_central_steppe
+  - mapId: arabia_central_eastvale
+    displayName: "\uB3D9\uCABD \uC18C\uB098\uBB34 \uACE0\uC6D0"
+    height: 56
+    legacyHeight: 0
+    coord: {x: 29, y: 3}
+    town: 
+    neighbors:
+    - arabia_central_bazaar
+    - arabia_central_canyon
+    - arabia_central_steppe
+    - transit_crossroads
+  - mapId: arabia_central_steppe
+    displayName: "\uD55C\uAC00\uC6B4\uB370 \uCD08\uC6D0"
+    height: 56
+    legacyHeight: 0
+    coord: {x: 28, y: 4}
+    town: 
+    neighbors:
+    - arabia_central_westvale
+    - arabia_central_bazaar
+    - arabia_central_eastvale
+    - north_c_crossing
+    - venice_c_gate
+    - transit_crossroads
+  - mapId: north_c_gatetown
+    displayName: "\uBD81\uBB38 \uB9C8\uC744"
+    height: 46
+    legacyHeight: 0
+    coord: {x: 29, y: -1}
+    town: north_post
+    neighbors:
+    - north_pass
+    - north_c_road_nw
+    - north_c_road_ne
+    - north_c_runeway
+  - mapId: north_c_road_nw
+    displayName: "\uB208\uC232 \uACE0\uAC2F\uAE38"
+    height: 46
+    legacyHeight: 0
+    coord: {x: 28, y: -1}
+    town: 
+    neighbors:
+    - north_c_gatetown
+    - north_c_snowwood
+    - north_hunter
+  - mapId: north_c_road_ne
+    displayName: "\uAC1C\uC6B8 \uB2E4\uB9AC\uAE38"
+    height: 46
+    legacyHeight: 0
+    coord: {x: 30, y: -1}
+    town: 
+    neighbors:
+    - north_c_gatetown
+    - north_c_creek
+  - mapId: north_c_snowwood
+    displayName: "\uB208\uC232 \uB9C8\uC744"
+    height: 40
+    legacyHeight: 0
+    coord: {x: 28, y: -2}
+    town: north_cwood
+    neighbors:
+    - north_c_road_nw
+    - north_c_road_sw
+    - venice_c_vineyard
+    - north_c_runeway
+  - mapId: north_c_runeway
+    displayName: "\uB8EC\uB3CC \uD070\uAE38"
+    height: 96
+    legacyHeight: 0
+    coord: {x: 29, y: -2}
+    town: 
+    neighbors:
+    - north_c_gatetown
+    - north_c_crossing
+    - north_c_snowwood
+    - north_c_creek
+  - mapId: north_c_creek
+    displayName: "\uAC1C\uC6B8 \uB098\uB8E8 \uB9C8\uC744"
+    height: 40
+    legacyHeight: 0
+    coord: {x: 30, y: -2}
+    town: north_ccreek
+    neighbors:
+    - north_c_road_ne
+    - north_c_road_se
+    - transit_crossroads
+    - north_c_runeway
+  - mapId: north_c_road_sw
+    displayName: "\uC11C\uB0A8 \uC194\uC232\uAE38"
+    height: 77
+    legacyHeight: 0
+    coord: {x: 28, y: -3}
+    town: 
+    neighbors:
+    - north_c_snowwood
+    - north_c_crossing
+  - mapId: north_c_crossing
+    displayName: "\uBD81\uCABD \uAE38\uBAA9 \uB9C8\uC744"
+    height: 46
+    legacyHeight: 0
+    coord: {x: 29, y: -3}
+    town: north_cross
+    neighbors:
+    - north_c_runeway
+    - north_c_road_sw
+    - north_c_road_se
+    - arabia_central_steppe
+  - mapId: north_c_road_se
+    displayName: "\uB3D9\uB0A8 \uBB3C\uAC00\uAE38"
+    height: 77
+    legacyHeight: 0
+    coord: {x: 30, y: -3}
+    town: 
+    neighbors:
+    - north_c_creek
+    - north_c_crossing
+  - mapId: venice_c_landing
+    displayName: "\uBCF8\uD1A0 \uB098\uB8E8\uD130"
+    height: 56
+    legacyHeight: 0
+    coord: {x: 14, y: 2}
+    town: venice_c_landing
+    neighbors:
+    - venice_chioggia
+    - venice_c_vineyard
+    - venice_c_marsh
+    - venice_c_post
+  - mapId: venice_c_vineyard
+    displayName: "\uD3EC\uB3C4\uBC2D \uC5B8\uB355"
+    height: 56
+    legacyHeight: 0
+    coord: {x: 14, y: 1}
+    town: venice_c_vineyard
+    neighbors:
+    - venice_c_landing
+    - venice_c_pass
+    - north_c_snowwood
+  - mapId: venice_c_marsh
+    displayName: "\uAC15 \uD558\uAD6C \uC2B5\uC9C0\uAE38"
+    height: 56
+    legacyHeight: 0
+    coord: {x: 14, y: 3}
+    town: 
+    neighbors:
+    - venice_c_landing
+    - venice_c_bridge
+  - mapId: venice_c_pass
+    displayName: "\uC0B0\uAE30\uC2AD \uACE0\uAC2F\uAE38"
+    height: 44
+    legacyHeight: 0
+    coord: {x: 15, y: 1}
+    town: 
+    neighbors:
+    - venice_c_vineyard
+    - venice_c_post
+  - mapId: venice_c_bridge
+    displayName: "\uB3CC\uB2E4\uB9AC \uB098\uB8E8"
+    height: 44
+    legacyHeight: 0
+    coord: {x: 15, y: 3}
+    town: 
+    neighbors:
+    - venice_c_marsh
+    - venice_c_post
+    - arabia_central_westvale
+  - mapId: venice_c_post
+    displayName: "\uB300\uC0C1 \uC219\uC18C"
+    height: 48
+    legacyHeight: 0
+    coord: {x: 15, y: 2}
+    town: venice_c_caravanserai
+    neighbors:
+    - venice_c_pass
+    - venice_c_bridge
+    - venice_c_landing
+    - venice_c_gate
+  - mapId: venice_c_gate
+    displayName: "\uB3D9\uBB38 \uD070\uAE38"
+    height: 71
+    legacyHeight: 0
+    coord: {x: 16, y: 2}
+    town: 
+    neighbors:
+    - venice_c_post
+    - arabia_central_steppe
   - mapId: Gaegyeong
     displayName: "\uAC1C\uACBD"
     height: 60
@@ -63,6 +362,91 @@ MonoBehaviour:
     - Gaegyeong
     - Naru
     - Dakmok
+  - mapId: north_birka
+    displayName: "\uBE44\uB974\uCE74"
+    height: 50
+    legacyHeight: 0
+    coord: {x: 33, y: 1}
+    town: north_birka
+    neighbors:
+    - north_pass
+    - north_fjord_road
+  - mapId: north_fjord_road
+    displayName: "\uD53C\uC624\uB974 \uAE38"
+    height: 42
+    legacyHeight: 0
+    coord: {x: 34, y: 1}
+    town: 
+    neighbors:
+    - north_birka
+    - north_herd
+    - north_laugar
+    - north_naru
+  - mapId: north_hunter
+    displayName: "\uBAA8\uD53C \uC0AC\uB0E5\uAFBC \uB9C8\uC744"
+    height: 32
+    legacyHeight: 0
+    coord: {x: 32, y: 0}
+    town: north_hunter
+    neighbors:
+    - north_c_road_nw
+    - north_pass
+  - mapId: north_naru
+    displayName: "\uD53C\uC624\uB974 \uB098\uB8E8 \uB9C8\uC744"
+    height: 36
+    legacyHeight: 0
+    coord: {x: 34, y: 0}
+    town: north_naru
+    neighbors:
+    - north_fjord_road
+    - north_pass
+  - mapId: north_laugar
+    displayName: "\uB77C\uC6B0\uAC00\uB974 \uC628\uCC9C \uB9C8\uC744"
+    height: 36
+    legacyHeight: 0
+    coord: {x: 34, y: 2}
+    town: north_laugar
+    neighbors:
+    - north_fjord_road
+    - north_runehill
+    - north_icecave
+  - mapId: north_herd
+    displayName: "\uC21C\uB85D \uACE0\uC6D0 \uB9C8\uC744"
+    height: 34
+    legacyHeight: 0
+    coord: {x: 35, y: 1}
+    town: north_herd
+    neighbors:
+    - north_fjord_road
+    - north_icecave
+  - mapId: north_runehill
+    displayName: "\uB8EC\uB3CC \uC5B8\uB355"
+    height: 38
+    legacyHeight: 0
+    coord: {x: 34, y: 3}
+    town: 
+    neighbors:
+    - north_laugar
+  - mapId: north_icecave
+    displayName: "\uC5BC\uC74C \uB3D9\uAD74 \uACE8\uC9DC\uAE30"
+    height: 36
+    legacyHeight: 0
+    coord: {x: 35, y: 2}
+    town: 
+    neighbors:
+    - north_herd
+    - north_laugar
+  - mapId: north_pass
+    displayName: "\uAD6D\uACBD \uACE0\uAC1C"
+    height: 50
+    legacyHeight: 0
+    coord: {x: 33, y: 0}
+    town: 
+    neighbors:
+    - north_birka
+    - north_hunter
+    - north_naru
+    - north_c_gatetown
   - mapId: transit_pass
     displayName: "\uC194\uBC14\uB78C \uACE0\uAC1C"
     height: 40
@@ -124,6 +508,57 @@ MonoBehaviour:
     - transit_central_approach
     - transit_ferry
     - transit_wetroad
+    - north_c_creek
+    - arabia_central_eastvale
+    - arabia_central_steppe
+  - mapId: venice_rialto
+    displayName: "\uB9AC\uC54C\uD1A0"
+    height: 84
+    legacyHeight: 0
+    coord: {x: 12, y: 1}
+    town: venice_rialto
+    neighbors:
+    - venice_santerasmo
+    - venice_burano
+    - venice_murano
+    - venice_chioggia
+  - mapId: venice_santerasmo
+    displayName: "\uC0B0\uD14C\uB77C\uC2A4\uBAA8 \uACFC\uC218\uC6D0"
+    height: 56
+    legacyHeight: 0
+    coord: {x: 11, y: 0}
+    town: venice_santerasmo
+    neighbors:
+    - venice_rialto
+    - venice_burano
+  - mapId: venice_murano
+    displayName: "\uBB34\uB77C\uB178 \uC720\uB9AC\uACF5\uBC29"
+    height: 56
+    legacyHeight: 0
+    coord: {x: 13, y: 0}
+    town: venice_murano
+    neighbors:
+    - venice_rialto
+    - venice_chioggia
+  - mapId: venice_burano
+    displayName: "\uBD80\uB77C\uB178 \uC5B4\uCD0C"
+    height: 61
+    legacyHeight: 0
+    coord: {x: 11, y: 2}
+    town: venice_burano
+    neighbors:
+    - venice_rialto
+    - venice_santerasmo
+  - mapId: venice_chioggia
+    displayName: "\uD0A4\uC624\uC790 \uAD50\uC5ED\uD56D"
+    height: 61
+    legacyHeight: 0
+    coord: {x: 13, y: 2}
+    town: venice_chioggia
+    neighbors:
+    - venice_rialto
+    - venice_murano
+    - venice_c_landing
   places:
   - kind: board
     id: naru
@@ -137,6 +572,84 @@ MonoBehaviour:
   - kind: npc
     id: naru_well_woman
     mapId: Naru
+  - kind: market
+    id: arabia_ahsa
+    mapId: arabia_ahsa
+  - kind: board
+    id: arabia_ahsa
+    mapId: arabia_ahsa
+  - kind: npc
+    id: arabia_maryam
+    mapId: arabia_ahsa
+  - kind: npc
+    id: arabia_hindbad
+    mapId: arabia_ahsa
+  - kind: npc
+    id: arabia_hasan
+    mapId: arabia_ahsa
+  - kind: npc
+    id: arabia_kitchen_keeper
+    mapId: arabia_zabid
+  - kind: market
+    id: arabia_zabid
+    mapId: arabia_zabid
+  - kind: board
+    id: arabia_zabid
+    mapId: arabia_zabid
+  - kind: market
+    id: arabia_taiz
+    mapId: arabia_taiz
+  - kind: board
+    id: arabia_taiz
+    mapId: arabia_taiz
+  - kind: market
+    id: arabia_jeddah
+    mapId: arabia_jeddah
+  - kind: board
+    id: arabia_jeddah
+    mapId: arabia_jeddah
+  - kind: market
+    id: arabia_sanaa
+    mapId: arabia_sanaa
+  - kind: board
+    id: arabia_sanaa
+    mapId: arabia_sanaa
+  - kind: market
+    id: north_post
+    mapId: north_c_gatetown
+  - kind: board
+    id: north_post
+    mapId: north_c_gatetown
+  - kind: market
+    id: north_cwood
+    mapId: north_c_snowwood
+  - kind: board
+    id: north_cwood
+    mapId: north_c_snowwood
+  - kind: market
+    id: north_ccreek
+    mapId: north_c_creek
+  - kind: board
+    id: north_ccreek
+    mapId: north_c_creek
+  - kind: market
+    id: north_cross
+    mapId: north_c_crossing
+  - kind: board
+    id: north_cross
+    mapId: north_c_crossing
+  - kind: market
+    id: venice_c_landing
+    mapId: venice_c_landing
+  - kind: market
+    id: venice_c_vineyard
+    mapId: venice_c_vineyard
+  - kind: market
+    id: venice_c_caravanserai
+    mapId: venice_c_post
+  - kind: board
+    id: venice_c_caravanserai
+    mapId: venice_c_post
   - kind: npc
     id: gaekju
     mapId: Gaegyeong
@@ -173,6 +686,57 @@ MonoBehaviour:
   - kind: npc
     id: goryeo_jangdan_farmer
     mapId: goryeo_jangdan
+  - kind: market
+    id: north_birka
+    mapId: north_birka
+  - kind: board
+    id: north_birka
+    mapId: north_birka
+  - kind: npc
+    id: north_innkeeper
+    mapId: north_birka
+  - kind: npc
+    id: north_husband
+    mapId: north_birka
+  - kind: npc
+    id: north_har
+    mapId: north_birka
+  - kind: npc
+    id: north_bold
+    mapId: north_birka
+  - kind: market
+    id: north_hunter
+    mapId: north_hunter
+  - kind: board
+    id: north_hunter
+    mapId: north_hunter
+  - kind: npc
+    id: north_goats
+    mapId: north_hunter
+  - kind: npc
+    id: north_wife
+    mapId: north_hunter
+  - kind: market
+    id: north_naru
+    mapId: north_naru
+  - kind: board
+    id: north_naru
+    mapId: north_naru
+  - kind: npc
+    id: north_warehouse
+    mapId: north_naru
+  - kind: market
+    id: north_laugar
+    mapId: north_laugar
+  - kind: board
+    id: north_laugar
+    mapId: north_laugar
+  - kind: market
+    id: north_herd
+    mapId: north_herd
+  - kind: board
+    id: north_herd
+    mapId: north_herd
   - kind: board
     id: transit_woodtown
     mapId: transit_woodtown
@@ -185,3 +749,51 @@ MonoBehaviour:
   - kind: market
     id: transit_ferry
     mapId: transit_ferry
+  - kind: market
+    id: venice_rialto
+    mapId: venice_rialto
+  - kind: board
+    id: venice_rialto
+    mapId: venice_rialto
+  - kind: npc
+    id: venice_innkeeper
+    mapId: venice_rialto
+  - kind: npc
+    id: venice_clerk
+    mapId: venice_rialto
+  - kind: market
+    id: venice_santerasmo
+    mapId: venice_santerasmo
+  - kind: board
+    id: venice_santerasmo
+    mapId: venice_santerasmo
+  - kind: npc
+    id: venice_gardener
+    mapId: venice_santerasmo
+  - kind: market
+    id: venice_murano
+    mapId: venice_murano
+  - kind: board
+    id: venice_murano
+    mapId: venice_murano
+  - kind: npc
+    id: venice_glassmaker
+    mapId: venice_murano
+  - kind: market
+    id: venice_burano
+    mapId: venice_burano
+  - kind: board
+    id: venice_burano
+    mapId: venice_burano
+  - kind: npc
+    id: venice_fisher
+    mapId: venice_burano
+  - kind: market
+    id: venice_chioggia
+    mapId: venice_chioggia
+  - kind: board
+    id: venice_chioggia
+    mapId: venice_chioggia
+  - kind: npc
+    id: venice_warehouse
+    mapId: venice_chioggia

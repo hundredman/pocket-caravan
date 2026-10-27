@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: V5_HeavySalt
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: venice_q5_salt
+  retired: 0
   title: "\uBA3C \uAE38\uC758 \uC18C\uAE08 \uC9D0"
   chain: "\uBCA0\uB124\uCE58\uC544 1\uC7A5: \uBE48 \uC9C0\uAC8C\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
   summary: "\uBB34\uAC70\uC6B4 \uC18C\uAE08 \uC790\uB8E8 \uC9D0\uC744 \uC0B0\uD14C\uB77C\uC2A4\uBAA8
@@ -45,6 +46,9 @@ MonoBehaviour:
       \uACE0\uB9D9\uB124."
   rewardMoney: 60
   rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0
