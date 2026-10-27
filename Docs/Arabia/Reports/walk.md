@@ -1,4 +1,4 @@
-# 아라비아 자동 보행·화면 캡처 시험 2026-10-27 17:01:23 · Unity 6000.3.26f1
+# 아라비아 자동 보행·화면 캡처 시험 2026-10-27 18:38:31 · Unity 6000.3.26f1
 본편 저장 파일: /Users/euninjun/Library/Application Support/DefaultCompany/PocketCaravan/pocket_caravan_save.json (시작 해시 E5BB55D861DC)
 기존 아라비아 시험 저장을 .manual-backup으로 보관 후 새 시험 시작
 
@@ -73,32 +73,32 @@
 - [PASS] 걸어서 도착: 고원 → 장터 동문 — 0.9칸 · 0.3초 · 평균 속도 3.80칸/초 · 짐 0/10
 - [PASS] 탐험 일주 도착: arabia_central_bazaar — 0.9칸 · 0.3초
   (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/19_central_bazaar.png
-- [PASS] 걸어갈 경로 찾기: 장터 남동문 → 붉은 바위 협곡 — 52칸
-- [PASS] 걸어서 도착: 장터 남동문 → 붉은 바위 협곡 — 52.1칸 · 13.7초 · 평균 속도 3.84칸/초 · 짐 0/10
-- [PASS] 탐험 일주 도착: arabia_central_canyon — 52.1칸 · 13.7초
+- [PASS] 걸어갈 경로 찾기: 장터 남동문 → 붉은 바위 협곡 — 53칸
+- [PASS] 걸어서 도착: 장터 남동문 → 붉은 바위 협곡 — 53.2칸 · 14.0초 · 평균 속도 3.87칸/초 · 짐 0/10
+- [PASS] 탐험 일주 도착: arabia_central_canyon — 53.2칸 · 14.0초
   (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/20_central_canyon.png
 - [PASS] 걸어갈 경로 찾기: 협곡 → 장터 남동문 — 1칸
 - [PASS] 걸어서 도착: 협곡 → 장터 남동문 — 1.2칸 · 0.4초 · 평균 속도 3.80칸/초 · 짐 0/10
 - [PASS] 탐험 일주 도착: arabia_central_bazaar — 1.2칸 · 0.4초
   (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/21_central_bazaar.png
 - [PASS] 걸어갈 경로 찾기: 장터 서문 → 포도밭 언덕 — 95칸
-- [PASS] 걸어서 도착: 장터 서문 → 포도밭 언덕 — 95.0칸 · 24.9초 · 평균 속도 3.84칸/초 · 짐 0/10
-- [PASS] 탐험 일주 도착: arabia_central_westvale — 95.0칸 · 24.9초
+- [PASS] 걸어서 도착: 장터 서문 → 포도밭 언덕 — 95.2칸 · 25.0초 · 평균 속도 3.83칸/초 · 짐 0/10
+- [PASS] 탐험 일주 도착: arabia_central_westvale — 95.2칸 · 25.0초
   (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/22_central_westvale.png
 - [PASS] 걸어갈 경로 찾기: 포도밭 언덕 → 장터 서문 — 1칸
 - [PASS] 걸어서 도착: 포도밭 언덕 → 장터 서문 — 0.9칸 · 0.3초 · 평균 속도 3.80칸/초 · 짐 0/10
 - [PASS] 탐험 일주 도착: arabia_central_bazaar — 0.9칸 · 0.3초
   (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/23_central_bazaar.png
-- [PASS] 걸어갈 경로 찾기: 장터 → 와디 건너 오아시스 — 19칸
-- [PASS] 걸어서 도착: 장터 → 와디 건너 오아시스 — 19.0칸 · 5.1초 · 평균 속도 3.80칸/초 · 짐 0/10
-- [PASS] 탐험 일주 도착: arabia_central_dunes — 19.0칸 · 5.1초
+- [PASS] 걸어갈 경로 찾기: 장터 → 와디 건너 오아시스 — 20칸
+- [PASS] 걸어서 도착: 장터 → 와디 건너 오아시스 — 19.9칸 · 5.3초 · 평균 속도 3.80칸/초 · 짐 0/10
+- [PASS] 탐험 일주 도착: arabia_central_dunes — 19.9칸 · 5.3초
   (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/24_central_dunes.png
 - [PASS] 걸어갈 경로 찾기: 오아시스 → 빈 사막 북쪽 모래길 — 73칸
 - [PASS] 걸어서 도착: 오아시스 → 빈 사막 북쪽 모래길 — 73.4칸 · 19.4초 · 평균 속도 3.83칸/초 · 짐 0/10
 - [PASS] 탐험 일주 도착: arabia_shortcut — 73.4칸 · 19.4초
   (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/25_shortcut.png
 - [PASS] 빈 사막 분위기 연출 있음
-- [PASS] 모래바람·동물 연출 동작 — 동물 6마리
+- [PASS] 모래바람·동물 연출 동작 — 동물 7마리
   (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/26_desert_fx.png
 - [PASS] 걸어갈 경로 찾기: 룹알할리 빈 사막 → 알 아흐사 — 42칸
 - [PASS] 걸어서 도착: 룹알할리 빈 사막 → 알 아흐사 — 41.6칸 · 10.6초 · 평균 속도 3.92칸/초 · 짐 0/10

@@ -1,4 +1,4 @@
-# 아라비아 정적 검사 2026-10-27 16:49:00 · Unity 6000.3.26f1
+# 아라비아 정적 검사 2026-10-27 18:38:02 · Unity 6000.3.26f1
 결과: 통과
 - [PASS] 공용 등록 검사 (MapJsonBuilder.ValidateWorld)
 - [PASS] 시작 맵은 그대로 Naru — Naru
@@ -141,7 +141,8 @@
 - [PASS] 출구 arabia_central_canyon → arabia_central_dunes/arabia_central_dunes_spawn_seam_canyon_0 — 폭 (1, 19)↔(1, 19), 역방향 있음
 - [PASS] 출구 arabia_central_canyon → arabia_central_dunes/arabia_central_dunes_spawn_seam_canyon_1 — 폭 (1, 18)↔(1, 18), 역방향 있음
 - [PASS] 출구 arabia_central_canyon → arabia_central_dunes/arabia_central_dunes_spawn_seam_canyon_2 — 폭 (1, 1)↔(1, 1), 역방향 있음
-- [PASS] 출구 arabia_central_canyon → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_canyon_0 — 폭 (40, 1)↔(40, 1), 역방향 있음
+- [PASS] 출구 arabia_central_canyon → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_canyon_0 — 폭 (2, 1)↔(2, 1), 역방향 있음
+- [PASS] 출구 arabia_central_canyon → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_canyon_1 — 폭 (37, 1)↔(37, 1), 역방향 있음
 - [PASS] 출구 arabia_central_canyon → arabia_central_eastvale/arabia_central_eastvale_spawn_seam_canyon_0 — 폭 (16, 1)↔(16, 1), 역방향 있음
 - [PASS] 출구 arabia_central_canyon → arabia_central_eastvale/arabia_central_eastvale_spawn_seam_canyon_1 — 폭 (32, 1)↔(32, 1), 역방향 있음
 - [PASS] 출구 arabia_central_westvale → arabia_central_dunes/arabia_central_dunes_spawn_seam_west_0 — 폭 (8, 1)↔(8, 1), 역방향 있음
@@ -157,7 +158,8 @@
 - [PASS] 출구 arabia_central_bazaar → arabia_central_westvale/arabia_central_westvale_spawn_seam_bazaar_3 — 폭 (1, 21)↔(1, 21), 역방향 있음
 - [PASS] 출구 arabia_central_bazaar → arabia_central_dunes/arabia_central_dunes_spawn_seam_bazaar_0 — 폭 (16, 1)↔(16, 1), 역방향 있음
 - [PASS] 출구 arabia_central_bazaar → arabia_central_dunes/arabia_central_dunes_spawn_seam_bazaar_1 — 폭 (38, 1)↔(38, 1), 역방향 있음
-- [PASS] 출구 arabia_central_bazaar → arabia_central_canyon/arabia_central_canyon_spawn_seam_bazaar_0 — 폭 (40, 1)↔(40, 1), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_canyon/arabia_central_canyon_spawn_seam_bazaar_0 — 폭 (2, 1)↔(2, 1), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_canyon/arabia_central_canyon_spawn_seam_bazaar_1 — 폭 (37, 1)↔(37, 1), 역방향 있음
 - [PASS] 출구 arabia_central_bazaar → arabia_central_eastvale/arabia_central_eastvale_spawn_seam_bazaar_0 — 폭 (1, 1)↔(1, 1), 역방향 있음
 - [PASS] 출구 arabia_central_bazaar → arabia_central_eastvale/arabia_central_eastvale_spawn_seam_bazaar_1 — 폭 (1, 16)↔(1, 16), 역방향 있음
 - [PASS] 출구 arabia_central_bazaar → arabia_central_eastvale/arabia_central_eastvale_spawn_seam_bazaar_2 — 폭 (1, 4)↔(1, 4), 역방향 있음
@@ -181,7 +183,7 @@
 - [PASS] 출구 arabia_central_steppe → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_steppe_2 — 폭 (14, 1)↔(14, 1), 역방향 있음
 - [PASS] 출구 arabia_central_steppe → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_steppe_3 — 폭 (52, 1)↔(52, 1), 역방향 있음
 - [PASS] 출구 arabia_central_steppe → arabia_central_eastvale/arabia_central_eastvale_spawn_seam_steppe_0 — 폭 (3, 1)↔(3, 1), 역방향 있음
-- [PASS] 출구 짝 수 (오픈월드 이음새 포함, 양방향이라 짝수) — 116
+- [PASS] 출구 짝 수 (오픈월드 이음새 포함, 양방향이라 짝수) — 118
 - [PASS] 이어짐: arabia_ahsa ↔ arabia_farmroad
 - [PASS] 이어짐: arabia_farmroad ↔ arabia_jeddah
 - [PASS] 이어짐: arabia_jeddah ↔ arabia_zabid

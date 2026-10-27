@@ -558,6 +558,7 @@ def build_world():
     tex_cobble('drawn_texCobble')
     tex_boards('drawn_texBoards')
     build_plaza()
+    build_landmarks()
 
 
 # =====================================================================
@@ -919,3 +920,252 @@ def build_plaza():
     booth('drawn_booth', (230, 120, 160, 255), (246, 238, 220, 255), seed=307)
     booth('drawn_booth2', (96, 170, 80, 255), (240, 196, 70, 255), seed=317)
     tex_plaza('drawn_texPlaza')
+
+
+# =====================================================================
+#  대광장 큰 건물 (2026-10-27 저녁): 만국 백화점 · 관람차 · 상인 조합 회관 · 큰 상점 둘
+# =====================================================================
+IRON = (60, 64, 80, 255)
+GLASS = [(96, 150, 190, 255), (136, 190, 220, 255), (190, 226, 242, 255), (236, 248, 252, 255)]
+
+
+def _glass_pane(px, x0, y0, x1, y1, rng):
+    """쇠 창살 유리: 대각선 반사광."""
+    for y in range(y0, y1 + 1):
+        for x in range(x0, x1 + 1):
+            if (x - x0) % 6 == 0 or (y - y0) % 6 == 0 or x == x1 or y == y1:
+                px[x, y] = IRON
+            else:
+                k = 3 if (x + y) % 13 in (0, 1) else 2 if (x + y) % 13 in (2, 3) else 1
+                px[x, y] = GLASS[k]
+
+
+def _goods(px, x0, y0, x1, y1, seed):
+    """진열창 안 색색 물건."""
+    rng = random.Random(seed)
+    for y in range(y0, y1 + 1):
+        for x in range(x0, x1 + 1):
+            px[x, y] = (250, 236, 200, 255)
+    x = x0 + 1
+    while x < x1 - 2:
+        c = FESTIVE[rng.randrange(len(FESTIVE))]
+        hgt = rng.randint(3, max(3, y1 - y0 - 1))
+        wdt = rng.randint(2, 4)
+        for yy in range(y1 - hgt, y1):
+            for xx in range(x, min(x1 - 1, x + wdt)):
+                px[xx, yy] = OUTLINE if yy == y1 - hgt or xx == x else c
+        x += wdt + 1
+    for xx in range(x0, x1 + 1):
+        px[xx, y1] = WOOD[1]
+
+
+def _banner(px, x, y0, y1, c):
+    for y in range(y0, y1 + 1):
+        px[x, y] = OUTLINE
+    for y in range(y0 + 1, y0 + 9):
+        for xx in range(x + 1, x + 6):
+            tip = y >= y0 + 6 and abs(xx - (x + 3)) < (y - (y0 + 5))
+            if not tip:
+                px[xx, y] = OUTLINE if xx in (x + 1, x + 5) or y == y0 + 1 else c
+
+
+def grand_arcade(name, seed=401):
+    """만국 백화점 (192×112 = 12×7칸): 2층 석조 정면, 가운데 유리 아치 현관과 유리 둥근 지붕, 양 날개 진열창·차양·깃발."""
+    rng = random.Random(seed)
+    w, h = 192, 112
+    im = canvas(w, h)
+    shadow(im, 96, h - 3, 94, 3)
+    px = im.load()
+    stone, stone2 = (236, 222, 196, 255), (214, 196, 166, 255)
+    # 몸통 (양 날개)
+    for y in range(36, h - 4):
+        for x in range(4, 188):
+            px[x, y] = OUTLINE if x in (4, 187) or y == h - 5 else (stone if (y // 8) % 2 else stone2) if (x + (y // 8) * 5) % 24 else stone2
+    for x in range(2, 190):                              # 층 띠 + 지붕 난간
+        for y in (34, 35, 66, 67):
+            px[x, y] = OUTLINE if y in (34, 67) else GOLD[2]
+        if x % 6 < 3:
+            for y in range(28, 34):
+                px[x, y] = OUTLINE if y == 28 or x % 6 == 0 else stone
+    # 2층 창 (아치)
+    for x in range(12, 180, 16):
+        if 70 <= x <= 118:
+            continue
+        _arch_window(px, x, 42, 10, 18, (250, 214, 120, 255))
+    # 1층 진열창 + 차양
+    for i, x in enumerate((10, 38, 132, 160)):
+        if 66 <= x <= 120:
+            continue
+        _goods(px, x, 78, x + 22, 98, seed + i)
+        for yy in range(77, 100):
+            px[x - 1, yy] = OUTLINE; px[x + 23, yy] = OUTLINE
+        _awning(px, x - 2, x + 24, 70, 5, FESTIVE[i % 4], (246, 238, 220, 255))
+    # 가운데 현관: 높은 유리 아치 + 유리 둥근 지붕
+    cx = 96
+    for y in range(4, 36):                               # 유리 반구 지붕
+        r = (32 ** 2 - (36 - y) ** 2) ** 0.5 if 36 - y < 32 else 0
+        for x in range(int(cx - r), int(cx + r) + 1):
+            edge = x in (int(cx - r), int(cx + r))
+            if edge:
+                px[x, y] = OUTLINE
+            elif (x - cx) % 8 == 0 or y % 7 == 0:
+                px[x, y] = IRON
+            else:
+                px[x, y] = GLASS[3] if (x - cx + y) % 17 < 3 else GLASS[2] if x < cx else GLASS[1]
+    for y in range(0, 6):                                # 꼭대기 깃발
+        px[cx, y] = OUTLINE
+    for y in range(0, 4):
+        for x in range(cx + 1, cx + 9 - y):
+            px[x, y] = FESTIVE[0]
+    for y in range(36, h - 4):                           # 현관 기둥 + 유리 아치
+        for x in range(64, 128):
+            px[x, y] = OUTLINE if x in (64, 127) else MARBLE[3] if x < 72 or x > 119 else px[x, y]
+    _arch_window(px, 74, 40, 44, 64, GLASS[2], frame=IRON)
+    _glass_pane(px, 78, 62, 113, 100, rng)
+    for x in range(86, 106):                             # 열린 문
+        for y in range(84, h - 5):
+            px[x, y] = OUTLINE if x in (86, 105) or y == 84 else (120, 84, 50, 255) if y > 86 else GOLD[2]
+    for x in range(70, 122):                             # 금 간판 띠
+        px[x, 36] = OUTLINE; px[x, 37] = GOLD[2]; px[x, 38] = GOLD[3] if x % 4 else GOLD[1]; px[x, 39] = OUTLINE
+    for k, x in enumerate((8, 40, 150, 182)):            # 지붕 깃발
+        _banner(px, x, 14, 30, FESTIVE[(k + 2) % len(FESTIVE)])
+    for x in range(60, 132):                             # 계단
+        px[x, h - 4] = MARBLE[2]; px[x, h - 3] = OUTLINE
+    return save(name, im)
+
+
+def ferris_wheel(name, seed=402):
+    """관람차 (128×144 = 8×9칸): 금빛 테, 바퀴살, 색색 곤돌라 8개, A자 받침, 매표소."""
+    rng = random.Random(seed)
+    w, h = 128, 144
+    im = canvas(w, h)
+    shadow(im, 64, h - 4, 56, 4)
+    px = im.load()
+    cx, cy, R = 64, 60, 52
+    for side in (-1, 1):                                 # A자 받침
+        for t in range(0, 80):
+            u = t / 79
+            x = cx + side * (4 + 34 * u)
+            y = cy + 70 * u + 6
+            for d in (-1, 0, 1):
+                px[int(x) + d, int(y)] = OUTLINE if d != 0 else (190, 60, 70, 255)
+    for k in range(16):                                  # 바퀴살
+        a = k / 16 * 6.2832
+        for t in range(4, R):
+            px[int(cx + math.cos(a) * t), int(cy + math.sin(a) * t)] = (230, 220, 200, 255) if t % 6 else GOLD[2]
+    for k in range(720):                                 # 테 두 겹 + 전구
+        a = k / 720 * 6.2832
+        for rr, c in ((R, OUTLINE), (R - 1, GOLD[2]), (R - 2, GOLD[3]), (R - 3, OUTLINE), (R - 8, GOLD[1])):
+            px[int(cx + math.cos(a) * rr), int(cy + math.sin(a) * rr)] = c
+    for k in range(32):
+        a = k / 32 * 6.2832
+        px[int(cx + math.cos(a) * (R - 1)), int(cy + math.sin(a) * (R - 1))] = FESTIVE[k % len(FESTIVE)]
+    _ellipse_px(px, w, h, cx, cy, 6, 6, GOLD[2], shade=lambda x, y: GOLD[3] if x < cx else GOLD[1])
+    for k in range(8):                                   # 곤돌라 (늘 아래로 매달림)
+        a = k / 8 * 6.2832 + 0.2
+        gx, gy = int(cx + math.cos(a) * R), int(cy + math.sin(a) * R)
+        c = FESTIVE[k % len(FESTIVE)]
+        for y in range(gy, gy + 3):
+            px[gx, y] = OUTLINE
+        for y in range(gy + 3, gy + 13):
+            for x in range(gx - 6, gx + 7):
+                if 0 <= x < w and 0 <= y < h:
+                    top = y < gy + 6
+                    if top and abs(x - gx) > (y - gy - 2) * 2:
+                        continue
+                    edge = abs(x - gx) == 6 or y == gy + 12 or (top and abs(x - gx) >= (y - gy - 2) * 2 - 1)
+                    win = gy + 6 <= y <= gy + 8 and abs(x - gx) <= 4
+                    px[x, y] = OUTLINE if edge else (GLASS[2] if win else c)
+    for y in range(h - 22, h - 4):                       # 매표소 + 승강장
+        for x in range(36, 92):
+            px[x, y] = OUTLINE if y in (h - 22, h - 5) or x in (36, 91) else (WOOD[2] if y > h - 12 else (246, 238, 220, 255))
+    _awning(px, 34, 93, h - 26, 4, FESTIVE[0], (246, 238, 220, 255))
+    for x in range(56, 72):
+        for y in range(h - 18, h - 12):
+            px[x, y] = OUTLINE if x in (56, 71) or y in (h - 18, h - 13) else (60, 46, 52, 255)
+    return save(name, im)
+
+
+def guild_hall(name, seed=403):
+    """상인 조합 회관 (128×96 = 8×6칸): 대리석 기둥 여섯, 금 동전 문장의 박공, 넓은 계단, 양쪽 깃발."""
+    rng = random.Random(seed)
+    w, h = 128, 96
+    im = canvas(w, h)
+    shadow(im, 64, h - 3, 62, 3)
+    px = im.load()
+    for y in range(36, h - 8):                           # 안쪽 벽 (그늘)
+        for x in range(10, 118):
+            px[x, y] = OUTLINE if x in (10, 117) else (176, 150, 120, 255) if (x + y) % 9 else (160, 134, 106, 255)
+    for i, x in enumerate(range(14, 114, 19)):           # 기둥
+        for y in range(36, h - 8):
+            for xx in range(x, x + 9):
+                px[xx, y] = OUTLINE if xx in (x, x + 8) else MARBLE[3] if xx < x + 3 else MARBLE[2] if xx < x + 6 else MARBLE[1]
+        for xx in range(x - 1, x + 10):
+            px[xx, 36] = OUTLINE; px[xx, 37] = MARBLE[3]; px[xx, 38] = OUTLINE
+    _door(px, 56, 58, 16, 30, (120, 76, 44, 255))
+    for y in range(6, 34):                               # 박공
+        half = (y - 6) * 2.3
+        for x in range(int(64 - half), int(64 + half) + 1):
+            if 0 <= x < w:
+                edge = x in (int(64 - half), int(64 + half)) or y == 33
+                px[x, y] = OUTLINE if edge else MARBLE[3] if y < 31 else GOLD[2]
+    _ellipse_px(px, w, h, 64, 23, 7, 7, GOLD[2], shade=lambda x, y: GOLD[3] if (x - 64) ** 2 + (y - 23) ** 2 < 12 else GOLD[2])   # 금 동전 문장
+    for y in range(20, 27):
+        px[64, y] = GOLD[0]
+    for x in range(4, 124):                              # 처마 + 계단
+        px[x, 34] = OUTLINE; px[x, 35] = GOLD[2]
+    for k, y in enumerate((h - 8, h - 6, h - 4)):
+        for x in range(6 - k * 2, 122 + k * 2):
+            px[x, y] = OUTLINE if x in (6 - k * 2, 121 + k * 2) else MARBLE[2 - (k % 2)]
+            px[x, y + 1] = MARBLE[1]
+    for k, x in enumerate((2, 120)):
+        _banner(px, x, 2, 40, (40, 70, 140, 255) if k == 0 else (150, 40, 60, 255))
+    return save(name, im)
+
+
+def big_shop(name, wall, roof, awn, icon, seed=404):
+    """큰 상점 (96×80 = 6×5칸): 2층, 넓은 진열창, 큰 차양, 매단 간판(보석·나침반 그림), 지붕 깃발."""
+    rng = random.Random(seed)
+    w, h = 96, 80
+    im = canvas(w, h)
+    shadow(im, 48, h - 2, 46, 2.5)
+    px = im.load()
+    _shade_wall(px, 6, 26, 89, h - 4, wall, rng)
+    for x in range(6, 90):
+        px[x, 26] = OUTLINE; px[x, h - 4] = OUTLINE
+    for y in range(26, h - 3):
+        px[6, y] = OUTLINE; px[89, y] = OUTLINE
+    for y in range(8, 27):                               # 지붕 (사다리꼴 기와)
+        inset = (26 - y) // 2
+        for x in range(4 + inset, 92 - inset):
+            edge = x in (4 + inset, 91 - inset) or y == 8
+            px[x, y] = OUTLINE if edge else roof[3 if (x // 4 + y // 3) % 5 == 0 else 2 if x < 48 else 1]
+    for x in (16, 44, 72):                               # 2층 창
+        _arch_window(px, x, 30, 8, 12, (250, 214, 120, 255))
+    _goods(px, 12, 52, 54, 72, seed)
+    for y in range(51, 74):
+        px[11, y] = OUTLINE; px[55, y] = OUTLINE
+    for x in range(11, 56):
+        px[x, 51] = OUTLINE; px[x, 73] = OUTLINE
+    _door(px, 64, 50, 14, 26, (110, 70, 44, 255))
+    _awning(px, 8, 88, 44, 5, awn[0], awn[1])
+    for y in range(36, 52):                              # 매단 간판
+        px[86, y] = OUTLINE
+    for y in range(40, 54):
+        for x in range(76, 86):
+            px[x, y] = OUTLINE if x in (76, 85) or y in (40, 53) else (246, 238, 220, 255)
+    ic = {'gem': [(80, 44, 160, 255), (150, 110, 230, 255)], 'compass': [(196, 60, 60, 255), (60, 60, 70, 255)]}[icon]
+    for dy in range(-4, 5):
+        for dx in range(-3 + abs(dy) // 2, 4 - abs(dy) // 2):
+            px[80 + dx, 46 + dy] = ic[0] if dx < 0 or dy < 0 else ic[1]
+    for k, x in enumerate((10, 82)):
+        _banner(px, x, 0, 16, FESTIVE[(seed + k) % len(FESTIVE)])
+    return save(name, im)
+
+
+def build_landmarks():
+    grand_arcade('drawn_grandArcade')
+    ferris_wheel('drawn_ferrisWheel')
+    guild_hall('drawn_guildHall')
+    big_shop('drawn_shopJewel', (196, 176, 214, 255), SLATE, ((120, 90, 190, 255), (240, 196, 70, 255)), 'gem', seed=404)
+    big_shop('drawn_shopOutfitter', (212, 196, 160, 255), TERRACOTTA, ((70, 130, 80, 255), (246, 238, 220, 255)), 'compass', seed=405)
