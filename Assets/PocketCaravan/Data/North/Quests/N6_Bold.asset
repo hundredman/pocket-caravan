@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: N6_Bold
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: north_q6_bold
+  title: "\uBA48\uCD94\uC9C0 \uC54A\uB294 \uBCFC\uB4DC"
+  chain: "\uBE48 \uB4F1\uC9D0\uC5D0\uC11C \uC190\uC218\uB808\uAE4C\uC9C0"
+  summary: "\uC0AC\uB0E5\uAFBC \uB9C8\uC744\uC5D0\uC11C \uBAA8\uD53C 5\uC7A5\uC744
+    \uC0AC\uC11C 5\uC7A5\uC744 \uD310\uB2E4. \uBAA8\uD53C\uB97C \uB2E4 \uC0AC\uBA74
+    \uBCFC\uB4DC\uAC00 \uBA3C\uC800 \uB098\uB8E8 \uC7A5\uC5D0 \uBAA8\uD53C\uB97C
+    \uC3DF\uC544\uBD93\uB294\uB2E4. \uAC12\uC774 \uB5A8\uC5B4\uC9C4 \uC7A5\uC744
+    \uD53C\uD574 \uB2E4\uB978 \uB9C8\uC744\uC5D0 \uD314\uAC70\uB098 \uAC12\uC774
+    \uD68C\uBCF5\uB418\uAE38 \uAE30\uB2E4\uB9AC\uC790."
+  giverNpc: north_bold
+  requires:
+  - {fileID: 11400000, guid: 4fedf6281e4284f77b4d0ceeef3e5f7e, type: 2}
+  offerLine: "\uD765, \uB124\uAC00 \uADF8 \uC0C8\uB85C \uC628 \uD589\uC0C1\uC774\uB0D0?
+    \uBAA8\uD53C \uC7A5\uC0AC\uB85C \uB098\uB97C \uC774\uAE38 \uC218 \uC788\uC744
+    \uAC83 \uAC19\uC544? \uC0AC\uB0E5\uAFBC \uB9C8\uC744 \uBAA8\uD53C \uB2E4\uC12F
+    \uC7A5\uC744 \uC0AC\uC11C \uD314\uC544 \uBCF4\uC2DC\uC9C0. \uB09C \uB354, \uB354
+    \uB9CE\uC774 \uD314 \uAC70\uB2C8\uAE4C!"
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 2
+    text: "\uC0AC\uB0E5\uAFBC \uB9C8\uC744\uC5D0\uC11C \uBAA8\uD53C 5\uC7A5 \uC0AC\uAE30"
+    targetId: north_hunter
+    item: {fileID: 11400000, guid: 1a2fc2ad478bf45eb8826708d861bb18, type: 2}
+    vehicle: {fileID: 0}
+    count: 5
+    completeLine: 
+  - type: 3
+    text: "\uBAA8\uD53C 5\uC7A5 \uD314\uAE30 (\uC5B4\uB290 \uB9C8\uC744\uC774\uB4E0)"
+    targetId: 
+    item: {fileID: 11400000, guid: 1a2fc2ad478bf45eb8826708d861bb18, type: 2}
+    vehicle: {fileID: 0}
+    count: 5
+    completeLine: 
+  - type: 0
+    text: "\uBCFC\uB4DC\uC5D0\uAC8C \uC774\uC775\uC744 \uBCF4\uC5EC\uC8FC\uAE30"
+    targetId: north_bold
+    item: {fileID: 0}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: "\uBB50, \uBB50\uC57C? \uB0B4\uAC00 \uD310 \uC7A5\uC744 \uD53C\uD574\uC11C
+      \uD314\uC558\uB2E4\uACE0? \u2026\uB2E4\uC74C\uC5D4 \uC548 \uC9C4\uB2E4!"
+  rewardMoney: 30
+  rewardCredit: 1
+  finishNote: "\uBCFC\uB4DC\uB294 \uC774\uC81C \uB77C\uC774\uBC8C\uB85C \uB0A8\uB294\uB2E4.
+    \uD55C \uC7A5\uC5D0 \uBAB0\uC544 \uD314\uBA74 \uAC12\uC774 \uB5A8\uC5B4\uC9C4\uB2E4\uB294
+    \uAC78 \uBC30\uC6E0\uB2E4."
