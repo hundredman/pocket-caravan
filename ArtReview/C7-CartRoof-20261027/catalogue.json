@@ -44,7 +44,10 @@
         "path": "ArtReview/C7-CartRoof-20261027/Native/cart.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "date": "2026-10-27",
+        "feedback": "\uccab \uc18c\ud488 \ubb36\uc74c\uc758 \uc218\ub808\ub85c \ubcf5\uc6d0",
+        "userQuote": "\uc218\ub808\ub294 \ubc14\uafb8\uc9c0 \uc54a\uc740 \ucc98\uc74c \ubc84\uc804\uc774 \ub354 \ub098\uc558\uc5b4. \uadf8\ub9ac\uace0 \uae30\uc640\uc9d1\uc758 \uc717 \ubd80\ubd84\uc774 \ud770\ub370 \ub2e4\ub978 \uae30\uc640 \uc9c0\ubd95\ub4e4\ucc98\ub7fc \uc218\uc815\ud574\uc918."
       },
       "tiles": [
         {
@@ -92,7 +95,10 @@
         "path": "ArtReview/C7-CartRoof-20261027/Native/tile-house.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "date": "2026-10-27",
+        "feedback": "\ud770 \uc717\ubd80\ubd84\uc744 \ub2e4\ub978 \uae30\uc640 \uc9c0\ubd95\uacfc \uac19\uc740 \uccad\ud68c\uc0c9\uc73c\ub85c \uc218\uc815",
+        "userQuote": "\uc218\ub808\ub294 \ubc14\uafb8\uc9c0 \uc54a\uc740 \ucc98\uc74c \ubc84\uc804\uc774 \ub354 \ub098\uc558\uc5b4. \uadf8\ub9ac\uace0 \uae30\uc640\uc9d1\uc758 \uc717 \ubd80\ubd84\uc774 \ud770\ub370 \ub2e4\ub978 \uae30\uc640 \uc9c0\ubd95\ub4e4\ucc98\ub7fc \uc218\uc815\ud574\uc918."
       },
       "tiles": [
         {
