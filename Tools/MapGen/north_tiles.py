@@ -2,6 +2,18 @@
 import tiles
 from tiles import Map, K
 
+# 10/27 통합: 공용 tile_image(고려 C6, 등록된 PNG만)를 감싼다. 등록 안 된 북유럽 타일은 예전 방식으로 에셋 팩에서 읽는다 (north_legacy_tiles.py)
+if not getattr(tiles.tile_image, "_north_fallback", False):
+    _frozen_tile_image = tiles.tile_image
+    def _tile_image(key):
+        try:
+            return _frozen_tile_image(key)
+        except (ValueError, FileNotFoundError, KeyError):
+            import north_legacy_tiles
+            return north_legacy_tiles.tile_image(key)
+    _tile_image._north_fallback = True
+    tiles.tile_image = _tile_image
+
 # 눈 바닥 (TilesetFloor 아래쪽 흰 묶음). 배치는 풀밭 묶음(0,7)~(4,13)과 같고 7줄 아래에 있다
 SNOW = K("floor", 0, 19)
 SNOW_VARIANTS = [K("floor", 1, 19), K("floor", 2, 19), K("floor", 3, 19), K("floor", 4, 19)]

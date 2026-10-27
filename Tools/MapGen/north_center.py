@@ -396,6 +396,7 @@ def creek_town():
     m.river_v(38, 41, wiggle=1, fixed_rows=range(9, 16))
     m.road_path([(31, 13), (37, 12)], width=2)
     m.bridge(37, 11, 42, 13)
+    # 10/27 통합: 고려 쪽 내륙 교역 길목과 잇는 안은 region_links.json "pending" (고려 담당 확인 후 m.link로 바꿈)
     closed_exit(m, "E", 11, "→ 북동 포구 (고려 쪽)\n(이웃 구역과 잇는 중)", road_from=(43, 12))
     wedge_forest(m, 48, 46, "coast")
     # 장터와 집들
@@ -594,7 +595,9 @@ def crossing_town():
     m.road_path([(59, 11), (50, 12), (39, 17)], width=3, grade=3)      # 동남 물가길에서 비스듬히
     m.road_blob(30, 19.5, 10, 5, grade=1)                         # 큰 장터 광장 (10명 넘게 모여도 넉넉)
     m.road_path([(30, 25), (30, 34), (30, 45)], width=3, grade=3)
-    closed_exit(m, "S", 29, "↓ 대륙 중심\n(합칠 때 열림)")
+    # 10/27 통합: 남쪽 → 대륙 한가운데 초원 (아라비아 중앙, 만국 장터 쪽) (World/Connections/region_links.json)
+    m.link("S", 29, 4, "arabia_central_steppe", "link_north_c_crossing", "link_arabia_central_steppe")
+    m.sign(34, 42, "↓ 대륙 중심 · 한가운데 초원\n만국 장터 · 베네치아 · 고려 쪽")
     # 장터: 네 문명 좌판
     m.deco_stamp("stall", 22, 15); m.deco_stamp("stall", 35, 15); m.deco_stamp("stall", 22, 22); m.deco_stamp("stall", 35, 22)
     m.deco_stamp("crate_goods", 26, 16); m.deco_stamp("pelt", 33, 17); m.deco_stamp("jar_red", 26, 23); m.deco_stamp("sack_big", 39, 21)
@@ -618,7 +621,7 @@ def crossing_town():
     m.sign(33, 4, "북쪽 길목 마을\n↑ 룬돌 큰길 · 북문 마을\n← 서남 솔숲길 · 눈숲 마을\n→ 동남 물가길 · 개울 나루 마을")
     m.talker(30, 11, "상단 우두머리", "north_p_trader_tall", "네 나라 상단이 다 이 장터에서 하룻밤 묵고 대륙 중심으로 내려가지.",
              "북쪽 모피, 동쪽 비단, 남쪽 향신료, 서쪽 유리… 여기서 다 만나.")
-    m.talker(34, 39, "길목 문지기", "north_wolf_viking_tall", "남쪽 길은 아직 공사 중이야. 곧 네 나라 길이 전부 대륙 중심으로 모일 거야.")
+    m.talker(34, 39, "길목 문지기", "north_wolf_viking_tall", "남쪽으로 내려가면 대륙 한가운데 초원이야. 네 나라 상단이 다 거기 만국 장터로 모여.")   # 10/27 통합: 남쪽 길 열림
     m.talker(10, 24, "여관 주인", "north_bear_granny_tall", "먼 길 왔지? 북쪽 꿀술 한 잔 하고 가.")
     m.walker([(29, 1), (29, 9), (30, 15), (25, 20), (35, 20), (30, 26), (30, 40)], idx=10)
     m.walker([(1, 11), (10, 12), (21, 17), (39, 17), (50, 12), (58, 11)], idx=11)

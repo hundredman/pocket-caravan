@@ -84,8 +84,9 @@ def validate():
                 check(m.id + " 스폰 " + o["id"] + " 통행 가능", cells <= accessible)
             elif o["kind"] == "exit":
                 check(m.id + " 출구 " + o["target"] + " 접근 가능", (o["x"], o["y"]) in accessible)
-                target = by_id[o["target"]]
-                check(m.id + " 출구의 도착 스폰 존재", any(s["kind"] == "spawn" and s["id"] == o["spawn"] for s in target.objects))
+                target = by_id.get(o["target"])   # 10/27 통합: 다른 지역 맵으로 가는 출구는 Tools/Integration/validate_world.py가 검사
+                if target is not None:
+                    check(m.id + " 출구의 도착 스폰 존재", any(s["kind"] == "spawn" and s["id"] == o["spawn"] for s in target.objects))
             elif o["kind"] in ("npc", "market", "board", "talker", "sign", "worker", "pastime"):
                 check(m.id + " " + o["kind"] + " 상호작용 접근 가능",
                       any((o["x"] + dx, o["y"] + dy) in accessible for dx, dy in ((0, 0), (1, 0), (-1, 0), (0, 1), (0, -1))))

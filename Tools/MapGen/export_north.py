@@ -4,7 +4,7 @@
     다음: Unity 메뉴 Pocket Caravan > 2. 맵 씬 다시 만들기"""
 import json, os, sys
 import north
-from tiles import tile_image
+from tiles import tile_image   # north_tiles가 감싼 것 (등록 안 된 타일은 에셋 팩에서)
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
 tile_dir = os.path.join(OUT, "Assets/PocketCaravan/Art/NinjaAdventure/Tiles")
