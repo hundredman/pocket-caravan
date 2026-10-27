@@ -338,7 +338,10 @@ def snow_wood():
     m.road_path([(25, 0), (25, 8)], width=2, grade=2)
     m.road_blob(25, 12.5, 7, 3.5, grade=1)                         # 작은 장터 마당
     m.road_path([(25, 16), (25, 26), (25, 39)], width=2, grade=2)
-    closed_exit(m, "W", 11, "← 북서 포구 (베네치아 쪽)\n(이웃 구역과 잇는 중)", road_from=(18, 13))
+    # 10/27 통합 ①: 서쪽 → 베네치아 포도밭 북쪽 성문 길 (World/Connections/region_links.json)
+    m.road_path([(18, 13), (0, 12)], width=2)
+    m.link("W", 11, 4, "venice_c_vineyard", "link_north_c_snowwood", "link_venice_c_vineyard")
+    m.sign(3, 10, "← 북서 포구 (베네치아 쪽)\n포도밭 성문 길")
     # 10/26 동쪽 샛길: 룬돌 큰길로
     m.road_path([(29, 15), (36, 18), (44, 19), (51, 19)], width=2)
     m.link("E", 18, 4, "north_c_runeway", "W", "E")

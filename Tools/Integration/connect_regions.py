@@ -19,6 +19,13 @@ def registry():
     return reg
 
 
+def place_explicit(me):
+    """10/27 확정안: 각 팀이 길 끝에 준비한 자리(맵 안쪽일 수 있음). 들어올 때 서는 칸은 출구를 안쪽으로 두께만큼 옮긴 자리."""
+    ex = dict(x=me["x"], y=me["y"], w=me["w"], h=me["h"])
+    dx, dy = {"N": (0, me["h"]), "S": (0, -me["h"]), "W": (me["w"], 0), "E": (-me["w"], 0)}[me["edge"]]
+    return ex, dict(x=me["x"] + dx, y=me["y"] + dy, w=me["w"], h=me["h"])
+
+
 def place(m, edge, start, n):
     """출구 칸(가장자리)과 들어올 때 서는 칸(한 칸 안쪽)."""
     W, H = m["w"], m["h"]
@@ -39,7 +46,7 @@ def blank(kind, **kw):
 def main():
     spec = json.load(open(os.path.join(A, "World", "Connections", "region_links.json"), encoding="utf-8"))
     reg = registry(); n = spec.get("width", 4)
-    maps, errors = {}, []
+    maps, errors, cleaned = {}, [], set()
     def load(mid):
         if mid not in maps:
             maps[mid] = json.load(open(reg[mid], encoding="utf-8"))
@@ -55,9 +62,11 @@ def main():
                      and any(o["kind"] == "spawn" and o["id"] == "link_" + oid for o in m["objects"])
                 if not ok: errors.append(f"{mid}: {me['by']}에 {oid} 연결이 없음 (생성기 다시 실행)")
                 continue
-            m["objects"] = [o for o in m["objects"] if not (o["kind"] == "exit" and o["target"] == oid and o["spawn"].startswith("link_"))
-                            and not (o["kind"] == "spawn" and o["id"] == "link_" + oid)]
-            ex, sp = place(m, me["edge"], me["start"], n)
+            if mid not in cleaned:   # 예전 연결(다른 자리)도 같이 지운다
+                m["objects"] = [o for o in m["objects"] if not (o["kind"] == "exit" and str(o.get("spawn", "")).startswith("link_"))
+                                and not (o["kind"] == "spawn" and str(o.get("id", "")).startswith("link_"))]
+                cleaned.add(mid)
+            ex, sp = place_explicit(me) if "x" in me else place(m, me["edge"], me["start"], n)
             W = m["w"]
             for c in (ex, sp):
                 for dy in range(c["h"]):

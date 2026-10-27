@@ -28,6 +28,7 @@ def validate(root=ROOT, require_scenes=True):
     except (OSError, ValueError, TypeError) as exc:
         return [f'Registry: {exc}'], []
     maps, coords, paths, region_ids, npc_ids = {}, set(), set(), set(), set()
+    map_region = {}   # 10/27 통합: 지역 사이 출구는 방향(가로/세로)이 달라도 폭만 같으면 됨 (X자 4등분 대각선 경계)
     for region in regions:
         rid = region.get('regionId')
         if not check(isinstance(rid, str) and rid and rid.casefold() not in region_ids, f'Region ID missing/duplicate: {rid}'):
@@ -67,6 +68,7 @@ def validate(root=ROOT, require_scenes=True):
             except (OSError, ValueError) as exc:
                 errors.append(f'{mid}: {exc}'); continue
             maps[mid] = data
+            map_region[mid] = rid
             check(data.get('id') == mid, f'JSON mapId mismatch: {mid}')
             w, h = data.get('w', 0), data.get('h', 0)
             if not check(type(w) is int and type(h) is int and w > 0 and h > 0, f'Invalid dimensions: {mid}'):
@@ -108,7 +110,10 @@ def validate(root=ROOT, require_scenes=True):
                 continue
             dest = next((s for s in target.get('objects', []) if s.get('kind') == 'spawn' and s.get('id') == obj.get('spawn')), None)
             if check(dest is not None, f'Unknown destination spawn: {mid} -> {obj.get("target")}/{obj.get("spawn")}'):
-                check((obj.get('w', 1), obj.get('h', 1)) == (dest.get('w', 1), dest.get('h', 1)), f'Port width/axis mismatch: {mid} -> {obj.get("target")}')
+                same = (obj.get('w', 1), obj.get('h', 1)) == (dest.get('w', 1), dest.get('h', 1))
+                if not same and map_region.get(mid) != map_region.get(obj.get('target')):
+                    same = sorted((obj.get('w', 1), obj.get('h', 1))) == sorted((dest.get('w', 1), dest.get('h', 1)))
+                check(same, f'Port width/axis mismatch: {mid} -> {obj.get("target")}')
             if not obj.get('oneWay', False):
                 check(any(e.get('kind') == 'exit' and e.get('target') == mid for e in target.get('objects', [])), f'Missing return exit: {mid} -> {obj.get("target")}')
             connections.append(dict(source=mid, target=obj.get('target'), spawn=obj.get('spawn')))
