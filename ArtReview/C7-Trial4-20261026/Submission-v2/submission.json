@@ -1,0 +1,55 @@
+{
+  "status": "changes_requested",
+  "scope": "C7 trial4 art direction only; production unchanged; B3 layout approval separate",
+  "pngIdentity": "dimensions + decoded RGBA SHA256",
+  "files": {
+    "ArtReview/C7-Trial4-20261026/Submission-v2/style-comparison.png": {
+      "size": [
+        1400,
+        1010
+      ],
+      "rgbaSHA256": "56dff870dc0255cbc010d977a1281065e6f337311e10c5258756000cb6c6dade"
+    },
+    "ArtReview/C7-Trial4-20261026/Submission-v2/game-comparison.png": {
+      "size": [
+        1000,
+        698
+      ],
+      "rgbaSHA256": "7d7a10eb535214b94ed5a7a30ad4007308f981c82ed0ec448064cffff7a8910c"
+    },
+    "ArtReview/C7-Trial4-20261026/Submission-v2/game-native.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "c2600946ef33d7b0590b342004602a1136f9ecbedcb9c18841cbe92d492a8369"
+    },
+    "ArtReview/C7-Trial4-20261026/Submission-v2/game-3x.png": {
+      "size": [
+        1440,
+        810
+      ],
+      "rgbaSHA256": "f1183ae2a3e7dcc441115dddbfc79bdd88bd9e4ce602611283ba0ad2d0266c15"
+    },
+    "ArtReview/C7-Trial4-20261026/Screens-v2/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "4b45a3d60b5c2b9dd1543895ac84772700acb11ef2cd5cbdf53028bff6de95c4"
+    },
+    "ArtReview/C7-Trial4-20261026/Screens-v2/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "c2600946ef33d7b0590b342004602a1136f9ecbedcb9c18841cbe92d492a8369"
+    }
+  },
+  "feedback": {
+    "date": "2026-10-27",
+    "user": "나무 빼고 나머지는 다 이상해.",
+    "direction": "팀 에셋처럼 형태부터 다시 제작",
+    "pine": "이번 수정에서 유지; 별도 본편 적용 승인으로 확대하지 않음"
+  }
+}

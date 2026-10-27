@@ -1,0 +1,121 @@
+{
+    "complete": true,
+    "error": "",
+    "maps": [
+        {
+            "map": "Naru",
+            "characters": 5,
+            "interactions": 5,
+            "motorTicks": 352,
+            "workerTicks": 0,
+            "note": ""
+        },
+        {
+            "map": "Gaegyeong",
+            "characters": 11,
+            "interactions": 11,
+            "motorTicks": 3894,
+            "workerTicks": 30,
+            "note": ""
+        },
+        {
+            "map": "Dakmok",
+            "characters": 2,
+            "interactions": 2,
+            "motorTicks": 363,
+            "workerTicks": 0,
+            "note": ""
+        },
+        {
+            "map": "goryeo_songak",
+            "characters": 1,
+            "interactions": 1,
+            "motorTicks": 365,
+            "workerTicks": 0,
+            "note": ""
+        },
+        {
+            "map": "goryeo_jangdan",
+            "characters": 1,
+            "interactions": 1,
+            "motorTicks": 182,
+            "workerTicks": 0,
+            "note": ""
+        },
+        {
+            "map": "transit_pass",
+            "characters": 1,
+            "interactions": 1,
+            "motorTicks": 301,
+            "workerTicks": 0,
+            "note": ""
+        },
+        {
+            "map": "transit_woodtown",
+            "characters": 1,
+            "interactions": 1,
+            "motorTicks": 420,
+            "workerTicks": 0,
+            "note": ""
+        },
+        {
+            "map": "transit_wetroad",
+            "characters": 0,
+            "interactions": 0,
+            "motorTicks": 38,
+            "workerTicks": 0,
+            "note": "No speaking NPC in existing map; motor movement verified only"
+        },
+        {
+            "map": "transit_ferry",
+            "characters": 1,
+            "interactions": 1,
+            "motorTicks": 496,
+            "workerTicks": 0,
+            "note": ""
+        },
+        {
+            "map": "transit_central_approach",
+            "characters": 1,
+            "interactions": 1,
+            "motorTicks": 234,
+            "workerTicks": 0,
+            "note": ""
+        },
+        {
+            "map": "transit_crossroads",
+            "characters": 1,
+            "interactions": 1,
+            "motorTicks": 183,
+            "workerTicks": 0,
+            "note": ""
+        }
+    ],
+    "conversations": [
+        "Naru:나루 마을 촌장",
+        "Naru:나루 우물가 아낙",
+        "Naru:나루 짐꾼",
+        "Naru:농부",
+        "Naru:뱃사공",
+        "Gaegyeong:개경 객주 돈돌",
+        "Gaegyeong:떡 장수",
+        "Gaegyeong:뱃사공",
+        "Gaegyeong:뱃사공",
+        "Gaegyeong:비단 장수",
+        "Gaegyeong:비단 장수",
+        "Gaegyeong:선비",
+        "Gaegyeong:선비",
+        "Gaegyeong:시전 짐꾼",
+        "Gaegyeong:시전 행상",
+        "Gaegyeong:짐꾼",
+        "Dakmok:닥나무 마을 촌장",
+        "Dakmok:종이 일꾼",
+        "goryeo_songak:산록 약재 장수",
+        "goryeo_jangdan:장단 곡물 상인",
+        "transit_pass:길손",
+        "transit_woodtown:땔감 장수",
+        "transit_ferry:나루 상인",
+        "transit_central_approach:길손",
+        "transit_crossroads:길목 안내인"
+    ]
+}

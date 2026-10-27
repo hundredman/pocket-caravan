@@ -1,0 +1,584 @@
+{
+  "sourceSheetsSha256": {
+    "TilesetWater.png": "927e1fa1e793bb0398fdaad40cea22792c20f66703cdba80fb9462df7cbc275c",
+    "TilesetRelief.png": "9f4156d97efe449e161ec9065edd48f296e977cfd77f7e60474f2ddaae34c2e9",
+    "TilesetFloor.png": "e111065065edf806e7e893330086e68efc8755175d92f14d087b42d40a331e16"
+  },
+  "tiles": [
+    {
+      "tile": "b2_bridge_center",
+      "nativeLayers": [
+        [
+          "Water",
+          1,
+          13
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": null
+    },
+    {
+      "tile": "b2_bridge_end",
+      "nativeLayers": [
+        [
+          "Water",
+          2,
+          13
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": null
+    },
+    {
+      "tile": "b2_bridge_start",
+      "nativeLayers": [
+        [
+          "Water",
+          0,
+          13
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": null
+    },
+    {
+      "tile": "b2_cliff_center",
+      "nativeLayers": [
+        [
+          "frozen_floor_0_12_goryeo_jade",
+          0,
+          0
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": null
+    },
+    {
+      "tile": "b2_cliff_edge",
+      "nativeLayers": [
+        [
+          "frozen_floor_0_12_goryeo_jade",
+          0,
+          0
+        ],
+        [
+          "Relief",
+          5,
+          1
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": null
+    },
+    {
+      "tile": "b2_cliff_inner_corner",
+      "nativeLayers": [
+        [
+          "frozen_floor_0_12_goryeo_jade",
+          0,
+          0
+        ],
+        [
+          "Relief",
+          9,
+          1
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": null
+    },
+    {
+      "tile": "b2_cliff_outer_corner",
+      "nativeLayers": [
+        [
+          "frozen_floor_0_12_goryeo_jade",
+          0,
+          0
+        ],
+        [
+          "Relief",
+          4,
+          1
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": null
+    },
+    {
+      "tile": "floor_0_10",
+      "nativeLayers": [
+        [
+          "Floor",
+          0,
+          10
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_0_10_goryeo_jade.png"
+    },
+    {
+      "tile": "floor_0_12",
+      "nativeLayers": [
+        [
+          "Floor",
+          0,
+          12
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_0_12_goryeo_jade.png"
+    },
+    {
+      "tile": "floor_0_7",
+      "nativeLayers": [
+        [
+          "Floor",
+          0,
+          7
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_0_7_goryeo_jade.png"
+    },
+    {
+      "tile": "floor_0_8",
+      "nativeLayers": [
+        [
+          "Floor",
+          0,
+          8
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_0_8_goryeo_jade.png"
+    },
+    {
+      "tile": "floor_0_9",
+      "nativeLayers": [
+        [
+          "Floor",
+          0,
+          9
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_0_9_goryeo_jade.png"
+    },
+    {
+      "tile": "floor_1_7",
+      "nativeLayers": [
+        [
+          "Floor",
+          1,
+          7
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_1_7_goryeo_jade.png"
+    },
+    {
+      "tile": "floor_1_8",
+      "nativeLayers": [
+        [
+          "Floor",
+          1,
+          8
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_1_8_goryeo_jade.png"
+    },
+    {
+      "tile": "floor_1_9",
+      "nativeLayers": [
+        [
+          "Floor",
+          1,
+          9
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_1_9_goryeo_jade.png"
+    },
+    {
+      "tile": "floor_2_7",
+      "nativeLayers": [
+        [
+          "Floor",
+          2,
+          7
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_2_7_goryeo_jade.png"
+    },
+    {
+      "tile": "floor_2_8",
+      "nativeLayers": [
+        [
+          "Floor",
+          2,
+          8
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_2_8_goryeo_jade.png"
+    },
+    {
+      "tile": "floor_2_9",
+      "nativeLayers": [
+        [
+          "Floor",
+          2,
+          9
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_2_9_goryeo_jade.png"
+    },
+    {
+      "tile": "floor_3_7",
+      "nativeLayers": [
+        [
+          "Floor",
+          3,
+          7
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_3_7_goryeo_jade.png"
+    },
+    {
+      "tile": "floor_3_9",
+      "nativeLayers": [
+        [
+          "Floor",
+          3,
+          9
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": null
+    },
+    {
+      "tile": "floor_5_8",
+      "nativeLayers": [
+        [
+          "Floor",
+          5,
+          8
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_5_8_goryeo_jade.png"
+    },
+    {
+      "tile": "floor_5_9",
+      "nativeLayers": [
+        [
+          "Floor",
+          5,
+          9
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_5_9_goryeo_jade.png"
+    },
+    {
+      "tile": "floor_6_8",
+      "nativeLayers": [
+        [
+          "Floor",
+          6,
+          8
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_6_8_goryeo_jade.png"
+    },
+    {
+      "tile": "floor_6_9",
+      "nativeLayers": [
+        [
+          "Floor",
+          6,
+          9
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_6_9_goryeo_jade.png"
+    },
+    {
+      "tile": "water_0_6",
+      "nativeLayers": [
+        [
+          "Water",
+          0,
+          6
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_0_6_goryeo_jade.png"
+    },
+    {
+      "tile": "water_0_7",
+      "nativeLayers": [
+        [
+          "Water",
+          0,
+          7
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_0_7_goryeo_jade.png"
+    },
+    {
+      "tile": "water_0_8",
+      "nativeLayers": [
+        [
+          "Water",
+          0,
+          8
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_0_8_goryeo_jade.png"
+    },
+    {
+      "tile": "water_0_9",
+      "nativeLayers": [
+        [
+          "Water",
+          0,
+          9
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_0_9_goryeo_jade.png"
+    },
+    {
+      "tile": "water_1_6",
+      "nativeLayers": [
+        [
+          "Water",
+          1,
+          6
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_1_6_goryeo_jade.png"
+    },
+    {
+      "tile": "water_1_7",
+      "nativeLayers": [
+        [
+          "Water",
+          1,
+          7
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_1_7_goryeo_jade.png"
+    },
+    {
+      "tile": "water_1_8",
+      "nativeLayers": [
+        [
+          "Water",
+          1,
+          8
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_1_8_goryeo_jade.png"
+    },
+    {
+      "tile": "water_2_6",
+      "nativeLayers": [
+        [
+          "Water",
+          2,
+          6
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_2_6_goryeo_jade.png"
+    },
+    {
+      "tile": "water_2_7",
+      "nativeLayers": [
+        [
+          "Water",
+          2,
+          7
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_2_7_goryeo_jade.png"
+    },
+    {
+      "tile": "water_2_8",
+      "nativeLayers": [
+        [
+          "Water",
+          2,
+          8
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_2_8_goryeo_jade.png"
+    },
+    {
+      "tile": "water_3_6",
+      "nativeLayers": [
+        [
+          "Water",
+          3,
+          6
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_3_6_goryeo_jade.png"
+    },
+    {
+      "tile": "water_3_8",
+      "nativeLayers": [
+        [
+          "Water",
+          3,
+          8
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_3_8_goryeo_jade.png"
+    },
+    {
+      "tile": "water_5_7",
+      "nativeLayers": [
+        [
+          "Water",
+          5,
+          7
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_5_7_goryeo_jade.png"
+    },
+    {
+      "tile": "water_5_8",
+      "nativeLayers": [
+        [
+          "Water",
+          5,
+          8
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_5_8_goryeo_jade.png"
+    },
+    {
+      "tile": "water_6_7",
+      "nativeLayers": [
+        [
+          "Water",
+          6,
+          7
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_6_7_goryeo_jade.png"
+    },
+    {
+      "tile": "water_6_8",
+      "nativeLayers": [
+        [
+          "Water",
+          6,
+          8
+        ]
+      ],
+      "pixels": 16,
+      "scaled": false,
+      "recolored": false,
+      "frozenProductionPng": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_6_8_goryeo_jade.png"
+    }
+  ]
+}

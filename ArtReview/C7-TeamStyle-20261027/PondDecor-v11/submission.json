@@ -1,0 +1,52 @@
+{
+  "status": "pending",
+  "variants": [
+    "plain",
+    "leaves",
+    "lotus"
+  ],
+  "addedDecorationPixelBounds": [
+    [
+      337,
+      214,
+      351,
+      220
+    ],
+    [
+      353,
+      212,
+      367,
+      220
+    ]
+  ],
+  "files": {
+    "ArtReview/C7-TeamStyle-20261027/PondDecor-v11/comparison.png": {
+      "size": [
+        1488,
+        752
+      ],
+      "rgbaSHA256": "bb9481a29ab840fc344713268b4b82be9e87edab0a9025233fae43edf2c9148c"
+    },
+    "ArtReview/C7-TeamStyle-20261027/PondDecor-v11/plain.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "19df2af82028e06e7c1a838214e82eef3ab42c3ba1f040d7bd9d566831dbbce2"
+    },
+    "ArtReview/C7-TeamStyle-20261027/PondDecor-v11/lotus.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "d28e16d435e5447afd2adf14a231ca5a2f5fe44d2eb9a78e339fffa8c2584d3b"
+    },
+    "ArtReview/C7-TeamStyle-20261027/PondDecor-v11/leaves.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "38779eba126ab8f4806736fbf3b29db517460ff45a8dc24c24891ca4248cbdda"
+    }
+  }
+}

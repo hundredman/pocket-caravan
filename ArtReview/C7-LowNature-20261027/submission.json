@@ -1,0 +1,67 @@
+{
+  "statuses": {
+    "moss_rock": "approved",
+    "shrub": "approved",
+    "tall_grass": "approved",
+    "fallen_log": "approved"
+  },
+  "productionApplied": false,
+  "files": {
+    "style-comparison.png": {
+      "size": [
+        1120,
+        1420
+      ],
+      "rgbaSHA256": "73ba8d260417de2b6f719c5893cd6e0d5e758ada27d91127251e4df03b70eff8"
+    },
+    "game-comparison.png": {
+      "size": [
+        1000,
+        480
+      ],
+      "rgbaSHA256": "d53624ad02312c6191df3d374d262961391969534c12e0934878ac12e18395aa"
+    },
+    "Screens/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "1305c3b711f55b0c9d560a1925f64032661170aab91710ead25592c16c73e444"
+    },
+    "Screens/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "85e82f65bf0f266161979627eea85a978b69bb7d3219a463b28771d17a0b402b"
+    },
+    "Native/moss_rock.png": {
+      "size": [
+        48,
+        32
+      ],
+      "rgbaSHA256": "70f221e2c553d291236cb3e31d327969d9c4ef53d50577e60935f6e4374a0f9d"
+    },
+    "Native/shrub.png": {
+      "size": [
+        32,
+        32
+      ],
+      "rgbaSHA256": "62156107a036097c7e2c0b02461468decc32987406247335d066a62868ceb420"
+    },
+    "Native/tall_grass.png": {
+      "size": [
+        32,
+        32
+      ],
+      "rgbaSHA256": "4add735b93164054a1cccb554364bbb4749ddf5eaf3437992ce9da6405d83f75"
+    },
+    "Native/fallen_log.png": {
+      "size": [
+        48,
+        32
+      ],
+      "rgbaSHA256": "8d22a80576dac7d07324252649fda9207caed2512ec041f3532bd5133c353fa6"
+    }
+  }
+}

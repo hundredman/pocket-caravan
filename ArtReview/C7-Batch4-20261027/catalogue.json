@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "prop": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#b78137",
+        "#daa34a",
+        "#f0c365",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#c4a779",
+        "#e0c99b",
+        "#f4dfb5",
+        "#77746c",
+        "#a29b87",
+        "#c4bca7",
+        "#4a627a",
+        "#718da3",
+        "#794b3b",
+        "#ad624c",
+        "#d69062",
+        "#547e6a",
+        "#86a28b",
+        "#33475e"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7_batch4_cart",
+      "kind": "object",
+      "purpose": "handcart",
+      "size": [
+        2,
+        2
+      ],
+      "image": "ArtReview/C7-Batch4-20261027/Native/cart.png",
+      "profile": "prop",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-Batch4-20261027/Native/cart.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "date": "2026-10-27",
+        "userQuote": "수레 이미지만 살짝 수정해줘. 뭔가 틀어진 비율같아.",
+        "feedback": "바퀴·적재함·손잡이 비례와 투시 소폭 수정. 우물/석등 픽셀 유지."
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch4_cart_0_0",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_cart_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch4_cart_1_0",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_cart_1_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch4_cart_0_1",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_cart_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch4_cart_1_1",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_cart_1_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_batch4_well",
+      "kind": "object",
+      "purpose": "village_well",
+      "size": [
+        1,
+        2
+      ],
+      "image": "ArtReview/C7-Batch4-20261027/Native/well.png",
+      "profile": "prop",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-Batch4-20261027/Native/well.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "date": "2026-10-27",
+        "userQuote": "좋아. 계속 진행해.",
+        "scope": "well 그림 승인. 성문 통행 폭/담장 접합/가림·충돌/본편 연결과 다른 소품은 별도.",
+        "evidence": "ArtReview/Approved/C7-GateProps-v1/approval.json",
+        "rgbaEvidence": {
+          "size": [
+            16,
+            32
+          ],
+          "rgbaSHA256": "199222043446aebeadb5fd7ed4b21b231aec26866fb688924f5ff3e15d5a6efc"
+        }
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch4_well_0_0",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_well_0_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch4_well_0_1",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_well_0_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_batch4_stone_lantern",
+      "kind": "object",
+      "purpose": "stone_lantern",
+      "size": [
+        1,
+        2
+      ],
+      "image": "ArtReview/C7-Batch4-20261027/Native/stone_lantern.png",
+      "profile": "prop",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-Batch4-20261027/Native/stone_lantern.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "date": "2026-10-27",
+        "userQuote": "좋아. 계속 진행해.",
+        "scope": "stone_lantern 그림 승인. 성문 통행 폭/담장 접합/가림·충돌/본편 연결과 다른 소품은 별도.",
+        "evidence": "ArtReview/Approved/C7-GateProps-v1/approval.json",
+        "rgbaEvidence": {
+          "size": [
+            16,
+            32
+          ],
+          "rgbaSHA256": "49a409329edd129adb88c9b5e4cc38ce5fbfdf81f4951a4fe910791db78ed3a6"
+        }
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch4_stone_lantern_0_0",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_stone_lantern_0_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch4_stone_lantern_0_1",
+          "image": "ArtReview/C7-Batch4-20261027/Cells/c7_batch4_stone_lantern_0_1.png"
+        }
+      ]
+    }
+  ]
+}

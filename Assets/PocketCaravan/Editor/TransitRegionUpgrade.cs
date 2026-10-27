@@ -24,6 +24,7 @@ namespace PocketCaravan.EditorTools
                 return asset;
             }
             var region = Get<RegionData>("Region_Transit");
+            region.townReputation = true;
             region.id = "transit"; region.displayName = "중간 교역권";
             region.note = "문명 사이의 긴 여정을 검증하는 가상 중간권. 실제 고려 국경·거리의 고증 아님. 임시 좌표 x5~9은 기존 고려 작업 대역 안에서만 사용.";
             EditorUtility.SetDirty(region);

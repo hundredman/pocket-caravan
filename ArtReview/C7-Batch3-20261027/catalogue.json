@@ -1,0 +1,428 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "nature": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#52673c",
+        "#7d9156",
+        "#a2b775",
+        "#68452d",
+        "#98653b",
+        "#bc8850"
+      ]
+    },
+    "light": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#52673c",
+        "#7d9156",
+        "#a2b775",
+        "#77746c",
+        "#a29b87",
+        "#e0c99b"
+      ]
+    },
+    "golden": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#b78137",
+        "#daa34a",
+        "#f0c365",
+        "#68452d",
+        "#98653b",
+        "#bc8850"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7_batch3_broadleaf",
+      "kind": "object",
+      "purpose": "broadleaf_tree",
+      "size": [
+        4,
+        4
+      ],
+      "image": "ArtReview/C7-Batch3-20261027/Native/broadleaf.png",
+      "profile": "nature",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-Batch3-20261027/Native/broadleaf.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "date": "2026-10-27",
+        "userQuote": "좋아.",
+        "scope": "묶음3 큰활엽수·밝은줄기·노란잎 세그림 승인; 다음그림/본편배치·계절기능은별도",
+        "evidence": "ArtReview/Approved/C7-Batch3-v1/README.md",
+        "rgbaEvidence": {
+          "size": [
+            64,
+            64
+          ],
+          "rgbaSHA256": "1258be95beaef1b2df3def580e735fe3979fed85fc570da7a86d1b338c1d8bbb"
+        }
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_0_0",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_1_0",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_2_0",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_3_0",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_0_1",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_1_1",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_2_1",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_3_1",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_0_2",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_1_2",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_2_2",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_3_2",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_3_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_0_3",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_1_3",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_2_3",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_2_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch3_broadleaf_3_3",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_broadleaf_3_3.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_batch3_light_tree",
+      "kind": "object",
+      "purpose": "light_barked_tree",
+      "size": [
+        3,
+        4
+      ],
+      "image": "ArtReview/C7-Batch3-20261027/Native/light_tree.png",
+      "profile": "light",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-Batch3-20261027/Native/light_tree.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "date": "2026-10-27",
+        "userQuote": "좋아.",
+        "scope": "묶음3 큰활엽수·밝은줄기·노란잎 세그림 승인; 다음그림/본편배치·계절기능은별도",
+        "evidence": "ArtReview/Approved/C7-Batch3-v1/README.md",
+        "rgbaEvidence": {
+          "size": [
+            48,
+            64
+          ],
+          "rgbaSHA256": "840a4a42ab79bd108fd2b0de8ff30ba90bba9a149df16229f21e2ffbcdc72465"
+        }
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch3_light_tree_0_0",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_light_tree_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch3_light_tree_1_0",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_light_tree_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch3_light_tree_2_0",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_light_tree_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch3_light_tree_0_1",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_light_tree_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch3_light_tree_1_1",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_light_tree_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch3_light_tree_2_1",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_light_tree_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch3_light_tree_0_2",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_light_tree_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch3_light_tree_1_2",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_light_tree_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch3_light_tree_2_2",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_light_tree_2_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch3_light_tree_0_3",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_light_tree_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch3_light_tree_1_3",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_light_tree_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch3_light_tree_2_3",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_light_tree_2_3.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_batch3_golden_tree",
+      "kind": "object",
+      "purpose": "golden_leaf_tree",
+      "size": [
+        3,
+        4
+      ],
+      "image": "ArtReview/C7-Batch3-20261027/Native/golden_tree.png",
+      "profile": "golden",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-Batch3-20261027/Native/golden_tree.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "date": "2026-10-27",
+        "userQuote": "좋아.",
+        "scope": "묶음3 큰활엽수·밝은줄기·노란잎 세그림 승인; 다음그림/본편배치·계절기능은별도",
+        "evidence": "ArtReview/Approved/C7-Batch3-v1/README.md",
+        "rgbaEvidence": {
+          "size": [
+            48,
+            64
+          ],
+          "rgbaSHA256": "1ea999ee87611212033d5b5d6a7b7b2d92371f60b57f8ea705c13acc9c263fe4"
+        }
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch3_golden_tree_0_0",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_golden_tree_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch3_golden_tree_1_0",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_golden_tree_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch3_golden_tree_2_0",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_golden_tree_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch3_golden_tree_0_1",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_golden_tree_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch3_golden_tree_1_1",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_golden_tree_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch3_golden_tree_2_1",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_golden_tree_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch3_golden_tree_0_2",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_golden_tree_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch3_golden_tree_1_2",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_golden_tree_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch3_golden_tree_2_2",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_golden_tree_2_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch3_golden_tree_0_3",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_golden_tree_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch3_golden_tree_1_3",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_golden_tree_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch3_golden_tree_2_3",
+          "image": "ArtReview/C7-Batch3-20261027/Cells/c7_batch3_golden_tree_2_3.png"
+        }
+      ]
+    }
+  ]
+}

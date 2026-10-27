@@ -12,25 +12,38 @@ class PeninsulaGeography(unittest.TestCase):
 
     def test_continental_gate_is_in_northwest_starting_region(self):
         songak=self.areas['goryeo_songak'];capital=self.areas['Gaegyeong'];central=self.areas['transit_crossroads']
-        self.assertLess(songak['y'],capital['y'])
+        self.assertLess(songak['x'],capital['x'])
         self.assertLess(central['x']+central['w'],songak['x'])
         self.assertLess(central['y']+central['h']/2,capital['y']+capital['h']/2)
         jangdan=json.loads((ROOT/'Assets/PocketCaravan/Maps/goryeo_jangdan.json').read_text())
         self.assertFalse(any(o['kind']=='exit' and o['target'].startswith('transit_') for o in jangdan['objects']))
 
     def test_all_playable_maps_are_on_land_and_context_is_not_extra_maps(self):
-        self.assertEqual(len(self.areas),19)
+        self.assertEqual(len(self.areas),11)
         self.assertEqual(self.atlas['geography'],'continuous_tiles')
         for mid,a in self.areas.items():
             m=json.loads((ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').read_text())
-            gx,gy=self.profile['maps'][mid];w,h=self.profile['chunkSize']
-            self.assertEqual((m['terrainX'],m['terrainY']),(gx*w,gy*h))
+            w,h=m['w'],m['h']
+            self.assertEqual((a['w'],a['h']),(w,h))
+            if not mid.startswith('transit_'):self.assertGreaterEqual(w*h,3000)
             sp=next(o for o in m['objects'] if o['kind']=='spawn' and o['id']=='S0')
             self.assertEqual(m['blocked'][sp['y']*w+sp['x']],0)
-        for mid in ['goryeo_westcoast','goryeo_tidalcoast','goryeo_southcoast']:
+        for mid in ['Naru','Dakmok','goryeo_jangdan']:
             m=json.loads((ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').read_text())
             self.assertGreater(sum(m['water']),0)
             self.assertLess(sum(m['water']),m['w']*m['h'])
+
+    def test_goryeo_is_compact_and_entirely_east_of_owned_continent(self):
+        east=[a for mid,a in self.areas.items() if not mid.startswith('transit_')]
+        central=[a for mid,a in self.areas.items() if mid.startswith('transit_')]
+        west=min(a['x'] for a in east)
+        self.assertGreaterEqual(west,max(a['x']+a['w'] for a in central))
+        width=max(a['x']+a['w'] for a in east)-west
+        height=max(a['y']+a['h'] for a in east)-min(a['y'] for a in east)
+        self.assertLessEqual(max(width,height)/min(width,height),1.8)
+        self.assertGreater(sum(a['w']*a['h'] for a in east)/(width*height),.9)
+        self.assertEqual(self.atlas['centralContinentTotalCells'],100000)
+        self.assertEqual(self.atlas['centralEastOwnedCells'],25000)
 
     def test_inland_palette_progresses_from_original_goryeo_art(self):
         for mid in ['transit_central_approach','transit_crossroads']:

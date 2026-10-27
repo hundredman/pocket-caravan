@@ -104,7 +104,7 @@ namespace PocketCaravan
             foreach (var s in from.stock)
             {
                 if (s.item == null || s.item.questItem || mf.Stock(s.item) < 3f) continue;
-                int buy = mf.BuyPrice(s.item);
+                int buy = mf.BaseBuyPrice(s.item);
                 foreach (var to in db.towns)
                 {
                     if (to == null || to == from || !Connected(from, to)) continue;
@@ -122,7 +122,7 @@ namespace PocketCaravan
             int n = 0; float paid = 0;
             for (int i = 0; i < 4 && mf.Stock(best) >= 2f; i++)
             {
-                int price = mf.BuyPrice(best);
+                int price = mf.BaseBuyPrice(best);
                 mf.RecordBuy(best, price);
                 paid += price; n++;
             }

@@ -1,0 +1,29 @@
+{
+  "staticTests": 12,
+  "captureTests": 1,
+  "totalPassed": 13,
+  "initialUnityRun": {
+    "executeMethodFound": false,
+    "stoppedOwnedProcessExit": 143,
+    "reason": "C7Batch1ReviewReview class name duplicated"
+  },
+  "finalUnityRun": {
+    "exitCode": 0,
+    "method": "PocketCaravan.EditorTools.C7Batch1Review.Run",
+    "playCamera": [
+      480,
+      270
+    ],
+    "compilerErrorsInLog": 0,
+    "searchDatabaseExceptionsInLog": 0,
+    "manualPlay": false,
+    "walking": false
+  },
+  "pngEquality": "dimensions and decoded RGBA",
+  "productionApplied": false,
+  "userReview": {
+    "cottage": "pending",
+    "pavilion": "pending",
+    "willow": "pending"
+  }
+}

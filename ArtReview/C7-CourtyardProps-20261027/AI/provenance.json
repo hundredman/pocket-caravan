@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-27",
+  "tool": "built-in imagegen",
+  "generationCounts": {
+    "paper_large": 2,
+    "garden_wall": 2,
+    "onggi": 1
+  },
+  "history": "AI/*-v1.png retain initial too-flat rack/wall; currentAI files are taller proportion edits",
+  "references": {
+    "form": [
+      "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_paper_7473141b.png",
+      "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_wall_c7149fb3.png",
+      "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_4_0.png"
+    ],
+    "style": [
+      "ArtReview/C7-WorkshopProps-v4-20261027/Native/paper_rack.png",
+      "ArtReview/Approved/C7-Buildings-v6/tile-house.png",
+      "ArtReview/Approved/C7-Shop-v1/shop.png",
+      "Docs/Images/team-style-reference.png"
+    ]
+  },
+  "processing": "complete object uniform nearest-neighbor, explicit A5 candidate palettes, native Aseprite contour; no runtime scale/recolor",
+  "nativeBounds": {
+    "paper_large": [
+      62,
+      38
+    ],
+    "garden_wall": [
+      62,
+      28
+    ],
+    "onggi": [
+      11,
+      12
+    ]
+  },
+  "candidatePalettes": {
+    "prop": 23,
+    "pot": 5
+  },
+  "nativeCleanup": "Onggi mouth center darkened at native scale to retain open-mouth readability; no size or palette change"
+}

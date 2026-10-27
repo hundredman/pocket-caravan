@@ -1,0 +1,61 @@
+{
+  "statuses": {
+    "forest_round": "approved",
+    "forest_bent": "approved",
+    "forest_wide": "approved"
+  },
+  "productionApplied": false,
+  "files": {
+    "style-comparison.png": {
+      "size": [
+        1120,
+        1150
+      ],
+      "rgbaSHA256": "d933297a41063d38d58c82c19e08134f7d80ec710894fecc061499dead18c97d"
+    },
+    "game-comparison.png": {
+      "size": [
+        1000,
+        480
+      ],
+      "rgbaSHA256": "e6c7cfddbe2c4a1f0fbf6e710f533dc658209273af0c34d6cd8db9a31f3ae70c"
+    },
+    "Screens/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "046e8df1b7a286d615048181b546dcf3b0124eecf242b02ffa65203bf8830aee"
+    },
+    "Screens/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "952fbad3dcd1ea77c4266ec524d41a3dc122480dd0b1cb9d10e6c312181e2090"
+    },
+    "Native/forest_round.png": {
+      "size": [
+        48,
+        64
+      ],
+      "rgbaSHA256": "3fcde8969af6fb18b062724b43611da467a7f6dc34cf9897eb102747b640cdbf"
+    },
+    "Native/forest_bent.png": {
+      "size": [
+        48,
+        64
+      ],
+      "rgbaSHA256": "750680527614eab01a7036ffa2229191c07c6329b60904ef77c099319d951ce5"
+    },
+    "Native/forest_wide.png": {
+      "size": [
+        64,
+        48
+      ],
+      "rgbaSHA256": "acf91edb33798a0536fc58bc5fec01996bc93265b4be5bb1f7ab5234dae487fc"
+    }
+  },
+  "reviewDecisions": "ArtReview/C7-Batch2-20261027/review-decisions.json",
+  "historicalCaption": "Submitted captions retained; later approval recorded per asset."
+}

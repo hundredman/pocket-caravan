@@ -1,0 +1,265 @@
+{
+  "date": "2026-10-25",
+  "statement": "작은 연못 좋은 것 같아. 승인할게.",
+  "scope": "개경 작은 연못22칸/11개 조합과 기존 돌마당/연꽃만 승인. 47조각은 원본 이력 보존이며 다른 배치/큰 호수/물결 애니메이션은 승인 범위 밖이다.",
+  "approvedPlacementCount": 22,
+  "approvedPieceNames": [
+    "center",
+    "edge",
+    "edge_s",
+    "outer_corner",
+    "outer_corner_ne",
+    "outer_corner_se",
+    "outer_corner_sw",
+    "water_02",
+    "water_08",
+    "water_3f",
+    "water_cf"
+  ],
+  "files": [
+    {
+      "file": "water-sheet.aseprite",
+      "sha256": "6adc471161d4452ac5f572fbead4f27c9aa185c49f10175e2f43f12a6866a3df"
+    },
+    {
+      "file": "water-sheet.png",
+      "sha256": "e479e6e7387b937928efe16c50865afd46d4fa765402d54ba0ebcf263a94a579"
+    },
+    {
+      "file": "piece-index.json",
+      "sha256": "3b159b2b45f6f2ff8866070d4c46558e8892e401e9cfb47abaf5c2fe13746f9e"
+    },
+    {
+      "file": "unity-pond-placement.csv",
+      "sha256": "a4b6019dce8f05109ce4afa865f35df40ce52b7afe2d85bc1e95c272af284ac1"
+    },
+    {
+      "file": "pieces/water_00.png",
+      "sha256": "955ed43f4fafcd13e303da37b614946f5cc7a4db1ea8f49fb38ccac3fe858072"
+    },
+    {
+      "file": "pieces/water_01.png",
+      "sha256": "6b744c16790f51c409a2e84ad052e4b64314cfde8c4405ee02bb79e51501cf91"
+    },
+    {
+      "file": "pieces/water_02.png",
+      "sha256": "6e9442dccc0183e67cb3c6a68c5aadc1cd329391f3a9234191723ca0ffc31d79"
+    },
+    {
+      "file": "pieces/water_03.png",
+      "sha256": "fe9a2f3daaa6d9b6dfe7f357de8ab97d6c0dad3419b18a4c0a0fd9187165caac"
+    },
+    {
+      "file": "pieces/water_04.png",
+      "sha256": "81ba9e5dc09fce7576806c44ac54db6b0d5607a72b14b77f4162a3d4b8ae38a1"
+    },
+    {
+      "file": "pieces/water_05.png",
+      "sha256": "47a40fe1a81de6b57eaa429466b0c6d4abe372cf9125ce268a941f854221f0f6"
+    },
+    {
+      "file": "pieces/water_06.png",
+      "sha256": "8677d9f2539db2d2c092dd969ad69e35613043773f118e7a8723f760f9ded521"
+    },
+    {
+      "file": "pieces/water_07.png",
+      "sha256": "0e8f69b9026db4bd24dd017d2bb78d094e70284e20dc0cc333a166d33ebbf34f"
+    },
+    {
+      "file": "pieces/water_08.png",
+      "sha256": "1b918afbea0a492eb37dd24f2eed36bce3a75e13126d3273640f50832652eb08"
+    },
+    {
+      "file": "pieces/water_09.png",
+      "sha256": "798a2e8bbfab5ca4695b5b3032d88f9bb2cc7aa71d93f6235f9ca4273cff21f3"
+    },
+    {
+      "file": "pieces/water_0a.png",
+      "sha256": "f2c821da20a9941d6f3f9c2f50f85cfec41501c2178a1b32f7c0d2fc58dcc831"
+    },
+    {
+      "file": "pieces/water_0b.png",
+      "sha256": "4d0de9922469948f4ef26f890788e96c14bd4ebedd6a5e14c89ee83176fb2a0f"
+    },
+    {
+      "file": "pieces/water_0c.png",
+      "sha256": "1de48f3efc3d42bb6464a07f42df41e74ab6dc315b715f13cbd9e98f2d9f1580"
+    },
+    {
+      "file": "pieces/water_0d.png",
+      "sha256": "83725f08680264bfd35113e62e4c0967ab9f456567cf4321cf4a3f24346dec8e"
+    },
+    {
+      "file": "pieces/water_0e.png",
+      "sha256": "339284807792ad35f6e5d4db446238e1bbe483ec75501af6f6f3abed4a74d409"
+    },
+    {
+      "file": "pieces/water_0f.png",
+      "sha256": "dcfadc429cc9a2a7b8c9df90baa675b211f1f82cdf401019a671bc2de6fb4a60"
+    },
+    {
+      "file": "pieces/outer_corner_sw.png",
+      "sha256": "6d5911599f4ce76390a359fefbc482e7f29bb179bbf64d5af6ec62ed0b39e815"
+    },
+    {
+      "file": "pieces/water_17.png",
+      "sha256": "3a47019926d78c0ea4ffa174f9063633a3e9f1c39f5c9d080a391592a78b7119"
+    },
+    {
+      "file": "pieces/water_1b.png",
+      "sha256": "e53cf81beb9b5cf692c8a88ab6bb8dd3cd72896cf16dc11e4b32ea0518ffd6a4"
+    },
+    {
+      "file": "pieces/water_1f.png",
+      "sha256": "e3b9f8c7fb7d2a4ec7c48ac7c0e1880a0e4278c84adb9445b4e2deab12fab5fa"
+    },
+    {
+      "file": "pieces/outer_corner.png",
+      "sha256": "6bb49d5a2617d298003f10cc40e8020f2da030c7fda350a1f700eec6d074ce03"
+    },
+    {
+      "file": "pieces/water_27.png",
+      "sha256": "f72f30310990bcdee470d7660bc5512541afe242f3257afabb7ccfe7513aa76a"
+    },
+    {
+      "file": "pieces/water_2e.png",
+      "sha256": "1b98dece20fc98a511126775a974c70a50523601d25d18e0a3eb76c7a8d9fe8f"
+    },
+    {
+      "file": "pieces/water_2f.png",
+      "sha256": "a276db7922a013df9ee326cd4df2f397fcc4e1b34af9e2b9eed32384523e76d6"
+    },
+    {
+      "file": "pieces/edge_w.png",
+      "sha256": "898d8a9f518f19936b033c70615bde16ed69139f9e2e10b7d702fd7d19618d76"
+    },
+    {
+      "file": "pieces/water_3f.png",
+      "sha256": "8476688a085cfb662ea97b7fb83ea9ba4665f4a69c473bfc24668b3eb671207f"
+    },
+    {
+      "file": "pieces/outer_corner_ne.png",
+      "sha256": "5ddd97036575e40d35f99b08cf393b9d83c27d9f3d2a5c5f81209ea8b425d76b"
+    },
+    {
+      "file": "pieces/water_4d.png",
+      "sha256": "6c7d9c0a94e0666fdba235e6848ae50564eb837f0a87733725252f91217f6e99"
+    },
+    {
+      "file": "pieces/water_4e.png",
+      "sha256": "c46daf382cd002f0b9ac13d3a708885066a8892d1bb4cd532ef64bff1d3ea5a8"
+    },
+    {
+      "file": "pieces/water_4f.png",
+      "sha256": "655a54043b312671483d3ec459b827b59feed1564b734fe2655dcf6484232d0c"
+    },
+    {
+      "file": "pieces/water_5f.png",
+      "sha256": "c346af445046f0d4892767263fb0170033a76b6410f8b584da11364bc0f95ffb"
+    },
+    {
+      "file": "pieces/edge.png",
+      "sha256": "c2ffc88bfe1d65e0326fa1cff4a602d104adcea7a1f4f10eaa16bcc9382e4dda"
+    },
+    {
+      "file": "pieces/water_6f.png",
+      "sha256": "6af06004a5feec0a59c45de8fd81cc092333bd9b88dedb4466b9bdf7623b8edc"
+    },
+    {
+      "file": "pieces/inner_corner.png",
+      "sha256": "7e1c9f47f6673a37254b162e63a8e580e0d2641250afa9ead3ea9fccabab0c24"
+    },
+    {
+      "file": "pieces/outer_corner_se.png",
+      "sha256": "347cacc3efd740fdb7f2a605313ad9187522934e08ebe717c4e6dea313a7a92a"
+    },
+    {
+      "file": "pieces/water_8b.png",
+      "sha256": "3602b0d51d068a57869cca703d27f64a6bebb776e1f0c0de3fe2521f2545c13c"
+    },
+    {
+      "file": "pieces/water_8d.png",
+      "sha256": "089d3bb4f93573fe365d07306462398c0c32ba1aecc135a20a572acb418579bf"
+    },
+    {
+      "file": "pieces/water_8f.png",
+      "sha256": "71d4791b70f637e5641303e04ec76a6be7139dc032008f2f08bb66caaafaa1d5"
+    },
+    {
+      "file": "pieces/edge_s.png",
+      "sha256": "e14f4155c3d754ef1a42472ef66a177615cbbb0bc947acf191b2f228353b1859"
+    },
+    {
+      "file": "pieces/water_9f.png",
+      "sha256": "04109afa2aaa60268f12140d242077961a731d58052ce70afd5f98f6c519a5ec"
+    },
+    {
+      "file": "pieces/water_af.png",
+      "sha256": "c224c647237e2eb075b38c442841a1dd7693c07aae60b6a8da56099b0f984e93"
+    },
+    {
+      "file": "pieces/inner_corner_sw.png",
+      "sha256": "5809e52afd420b48310f0f0ba3ad90f699e3788556eaef91befc1955dc165d66"
+    },
+    {
+      "file": "pieces/edge_e.png",
+      "sha256": "89bf27aec8aebbb3f6ff8d613f5b7768f1221d5c3bb6f5086af38df3d2335a48"
+    },
+    {
+      "file": "pieces/water_cf.png",
+      "sha256": "84c6a627b111950d8af00b83db27da25e6853aa6993e9bba27507c6cb4dc5449"
+    },
+    {
+      "file": "pieces/inner_corner_se.png",
+      "sha256": "22bed3974129a244ffea2f5ab1b77eaecc1a30a6955f1397a447183fa665f19a"
+    },
+    {
+      "file": "pieces/inner_corner_ne.png",
+      "sha256": "85281f9323b960d61134c93deeec067ad862ff7f01c3edf7f841d70eec98d52f"
+    },
+    {
+      "file": "pieces/center.png",
+      "sha256": "4726d5e23128e0924cb28f46e0e66d0d754b6e1682504f2c78a3ed21b19b4d77"
+    },
+    {
+      "file": "paving/goryeo_paving_0_0.png",
+      "sha256": "eefeeaaf0ffd41ebc3b0cf2c6de2b54bda69498caed2f3b65262c909ece6e8ef"
+    },
+    {
+      "file": "paving/goryeo_paving_1_0.png",
+      "sha256": "fb3fec27ed1d8b5fe76c15f0433998f8ed7d7bbfd90461836c5619fc56f8acbd"
+    },
+    {
+      "file": "paving/goryeo_paving_1_1.png",
+      "sha256": "de82c36f3a342de4f9d7ca31910d123475665eb1f1992cfab342cd73a9ffcade"
+    },
+    {
+      "file": "paving/goryeo_paving_1_3.png",
+      "sha256": "e0f1dd93d09642dc9a8be21686db61accba270b24f7b6e6e3412a3497b98cbe1"
+    },
+    {
+      "file": "paving/goryeo_paving_2_0.png",
+      "sha256": "422d6df3486694d885bc96f96b1205995ed74257dddabbf107f77b4d13314ded"
+    },
+    {
+      "file": "paving/goryeo_paving_2_1.png",
+      "sha256": "821c25b39745e1f22a3bdc631f19c973d27dbb3d9d7f0731aba18582500fe854"
+    },
+    {
+      "file": "paving/goryeo_paving_2_3.png",
+      "sha256": "4d65aff71d388eb5d5daada938c6807269477fece1630716ba32a516f7a8ca16"
+    },
+    {
+      "file": "paving/goryeo_paving_3_0.png",
+      "sha256": "35b10332e0174a89ac81dc15aa9fb11e3c6a92a9a13cd91a5eaf3ede4fe99b23"
+    },
+    {
+      "file": "paving/goryeo_paving_3_1.png",
+      "sha256": "136a3d38c487d3a2d053408711005c21455a898549d421cb9acddca67fe04ccf"
+    },
+    {
+      "file": "paving/goryeo_paving_3_3.png",
+      "sha256": "294ce6802995844671181a02fae4a8c049eba1140d307c81fd73198c0c6d9776"
+    }
+  ]
+}

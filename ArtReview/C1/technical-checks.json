@@ -1,0 +1,17 @@
+{
+  "task": "C1 trial",
+  "frames": 48,
+  "size": [
+    16,
+    24
+  ],
+  "directions": "dulr",
+  "walkFramesPerDirection": 4,
+  "palette": "existing candidate48, no D3 approval",
+  "binaryAlpha": true,
+  "bottomBaseline": 24,
+  "asepriteReopenEquality": 3,
+  "review": "changes_requested by user; superseded by Refine-v2",
+  "gameAssetsModified": false,
+  "gameSceneImages": "480x270 actual screenshot with candidates composited; not engine screenshot after replacement"
+}

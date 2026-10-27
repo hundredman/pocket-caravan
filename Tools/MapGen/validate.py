@@ -51,17 +51,22 @@ def validate():
             check(a.id + " / " + b.id + " 지도 영역 겹침 없음", not overlap)
     regional = [m for m in world if m.id in {entry["mapId"] for entry in map_entries("goryeo")}]
     rp = cartography.layout(regional)
-    check("송악 산록은 개경 북쪽", rp["goryeo_songak"][1] < rp["Gaegyeong"][1])
-    check("장단 들마을은 닥나무 마을 남쪽", rp["goryeo_jangdan"][1] > rp["Dakmok"][1])
+    check("송악 산록은 나루 북쪽", rp["goryeo_songak"][1] < rp["Naru"][1])
+    check("장단 들마을은 닥나무 마을 남쪽", rp["goryeo_jangdan"][1]+by_id["goryeo_jangdan"].atlas_label["y"] > rp["Dakmok"][1]+by_id["Dakmok"].atlas_label["y"])
     rw = max(rp[m.id][0]+m.w for m in regional)-min(p[0] for p in rp.values())
     rh = max(rp[m.id][1]+m.h for m in regional)-min(p[1] for p in rp.values())
     check("고려 지형 지도 가로세로 비율 1.8 이하", rw/rh < 1.8)
     for m in world:
+        check(m.id + " 모든 칸 바닥 존재", all(k for row in m.ground for k in row))
         roads = {(x, y) for y in range(m.h) for x in range(m.w) if m.road[y][x] and not m.blocked[y][x]}
         check(m.id + " 전체 통행 가능 길 연결", bool(roads) and roads <= reachable(m, next(iter(roads)), road_only=True))
+        for name,x,y in m.stamps:
+            if m.id=='Naru' and name=='boat':
+                sw,sh=STAMPS[name][3:5]
+                check('나루 배 전체가 물 위에 있음',all(m.water[y+b][x+a] for a in range(sw) for b in range(sh)))
         tree_ok = True
         for name, x, y in m.stamps:
-            if STAMPS[name][0] != "nature":
+            if STAMPS[name][0] != "nature" and not name.startswith("goryeo_"):
                 continue
             s, sx, sy, w, h, _, high, rc = STAMPS[name]
             for dy in range(h):
@@ -71,7 +76,7 @@ def validate():
                     if hasattr(m,"tint_key"): expected=m.tint_key(expected,x+dx,y+dy)
                     if getattr(m,'visual_skin',None) and '@' not in expected: expected += '@skin_'+m.visual_skin
                     tree_ok &= layer[y + dy][x + dx] == expected
-        check(m.id + " 모든 나무 묶음 타일 보존", tree_ok)
+        check(m.id + " 모든 나무·전용 건물 묶음 타일 보존", tree_ok)
         accessible = m.world_reachable if hasattr(m,"world_reachable") else reachable(m, next(iter(roads)))
         for o in m.objects:
             if o["kind"] == "spawn":
@@ -81,7 +86,7 @@ def validate():
                 check(m.id + " 출구 " + o["target"] + " 접근 가능", (o["x"], o["y"]) in accessible)
                 target = by_id[o["target"]]
                 check(m.id + " 출구의 도착 스폰 존재", any(s["kind"] == "spawn" and s["id"] == o["spawn"] for s in target.objects))
-            elif o["kind"] in ("npc", "market", "board", "talker", "sign", "worker"):
+            elif o["kind"] in ("npc", "market", "board", "talker", "sign", "worker", "pastime"):
                 check(m.id + " " + o["kind"] + " 상호작용 접근 가능",
                       any((o["x"] + dx, o["y"] + dy) in accessible for dx, dy in ((0, 0), (1, 0), (-1, 0), (0, 1), (0, -1))))
         for worker in (o for o in m.objects if o["kind"] == "worker"):
@@ -95,19 +100,13 @@ def validate():
                     clear &= (x, y) in accessible and not m.blocked[y][x]
             check(m.id + " " + worker["name"] + " 작업 경로 통행 가능", clear)
         check(m.id + " 다리/선착장 통행 가능", all(p in accessible and not m.water[p[1]][p[0]] for p in m.decks))
-    # 물을 가로지르는 다리의 양 끝이 길과 연결되는지 확인한다.
-    route = by_id["Route01"]
-    check("예성 길 시내 다리 양안 연결", (33, 15) in reachable(route, (25, 15), road_only=True))
-    check("지도는 남문 연결을 반영해 수도를 북쪽에 배치", positions["Gaegyeong"][1] < positions["Route01"][1])
-    capital = by_id["Gaegyeong"]
-    check("개경 남문 처마 아래 네 칸 통행 폭 보존",
-          all(capital.road[y][x] == 3 and not capital.blocked[y][x]
-              for y in range(37, 43) for x in range(30, 34)))
-    check("개경 동문 물류 마당은 시전과 길로 연결",
-          (50, 30) in reachable(capital, (36, 23), road_only=True))
-    check("개경 물류 수레는 통행로 밖에 온전하게 배치",
-          ("cart", 58, 34) in capital.stamps and
-          all(not capital.road[y][x] for y in (34, 35) for x in (58, 59)))
+    capital=by_id['Gaegyeong'];ox,oy=capital.core_offset
+    check("개경 남쪽 큰길 세 칸 통행 폭 보존", all(capital.road[y+oy][x+ox]==3 and not capital.blocked[y+oy][x+ox] for y in range(30,38) for x in range(20,23)))
+    check("개경 궁성 앞마당과 시전 연결",(20+ox,10+oy) in reachable(capital,(20+ox,21+oy),road_only=True))
+    check("개경 전용 전각이 온전하게 배치",('goryeo_royal',15+ox,1+oy) in capital.stamps)
+    check("고려는 넓은 다섯 권역",len(regional)==5 and min(m.w*m.h for m in regional)>=3000)
+    check("고려 전체 면적 정확히 2만 칸", sum(m.w*m.h for m in regional)==20000)
+    check("중앙 동쪽 전체 면적 정확히 2만5천 칸", sum(m.w*m.h for m in world if m.id.startswith('transit_'))==25000)
     return results
 
 

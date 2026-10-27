@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-27",
+  "tool": "built-in imagegen",
+  "images": {
+    "paper_rack": {
+      "source": "AI/paper_rack.png",
+      "generationCount": 1,
+      "role": "one complete native48x32 candidate"
+    },
+    "harvest": {
+      "source": "AI/harvest.png",
+      "generationCount": 1,
+      "role": "one complete native48x32 candidate"
+    },
+    "celadon": {
+      "source": "AI/celadon.png",
+      "generationCount": 1,
+      "role": "one complete native48x32 candidate"
+    }
+  },
+  "references": {
+    "shapeOnly": [
+      "Assets/PocketCaravan/Art/Baked/Objects/c6_paper_rack_665314e5.png",
+      "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_harvest_168ed569.png",
+      "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_celadon_54def069.png"
+    ],
+    "style": [
+      "Docs/Images/team-style-reference.png",
+      "ArtReview/Approved/C7-Shop-v1/shop.png"
+    ]
+  },
+  "processing": "whole object uniform nearest-neighbor; A5 explicit candidate palettes; native Aseprite exterior contour; no production mutation",
+  "candidatePaletteCounts": {
+    "prop": 23,
+    "grain": 9,
+    "jade": 8
+  }
+}

@@ -16,7 +16,11 @@ namespace PocketCaravan
             public int step;
             public int amount;   // 현재 단계 진행 수치
             public bool rewardCaptured;
+            public bool legacyMainMigrationEligible;
             public int acceptedRewardMoney, acceptedRewardCredit;
+            public ReputationScope acceptedReputationScope;
+            public string acceptedReputationTarget;
+            public ReputationSize acceptedReputationSize;
             public int RewardMoney => rewardCaptured ? acceptedRewardMoney : quest.rewardMoney;
             public int RewardCredit => rewardCaptured ? acceptedRewardCredit : quest.rewardCredit;
             public bool Done => step >= quest.objectives.Count;
@@ -26,6 +30,7 @@ namespace PocketCaravan
         readonly List<QuestData> all;
         readonly Dictionary<QuestData, Progress> active = new Dictionary<QuestData, Progress>();
         readonly HashSet<QuestData> finished = new HashSet<QuestData>();
+        readonly HashSet<string> legacyMainFinished = new HashSet<string>();
 
         public IEnumerable<Progress> Active => active.Values;
 
@@ -57,19 +62,27 @@ namespace PocketCaravan
         {
             public string id; public int step, amount;
             public bool rewardCaptured;
+            public bool legacyMainMigrationEligible;
             public int acceptedRewardMoney, acceptedRewardCredit;
+            public ReputationScope acceptedReputationScope;
+            public string acceptedReputationTarget;
+            public ReputationSize acceptedReputationSize;
         }
 
         public void Export(SaveData d)
         {
-            foreach (var p in active.Values) d.quests.Add(new Save { id = p.quest.id, step = p.step, amount = p.amount, rewardCaptured = true, acceptedRewardMoney = p.RewardMoney, acceptedRewardCredit = p.RewardCredit });
+            foreach (var p in active.Values) d.quests.Add(new Save { id = p.quest.id, step = p.step, amount = p.amount, rewardCaptured = true, legacyMainMigrationEligible = p.legacyMainMigrationEligible, acceptedRewardMoney = p.RewardMoney, acceptedRewardCredit = p.RewardCredit, acceptedReputationScope = p.acceptedReputationScope, acceptedReputationTarget = p.acceptedReputationTarget, acceptedReputationSize = p.acceptedReputationSize });
             foreach (var q in finished) d.finishedQuests.Add(q.id);
             d.trackedQuest = Tracked != null ? Tracked.quest.id : null;
+            d.q1MigrationVersion = 1;
+            d.legacyMainFinishedIds = new List<string>(legacyMainFinished);
+            d.legacyMainFinishedIds.Sort(System.StringComparer.Ordinal);
         }
 
         public void Import(SaveData d)
         {
-            active.Clear(); finished.Clear(); Tracked = null;
+            active.Clear(); finished.Clear(); legacyMainFinished.Clear(); Tracked = null;
+            legacyMainFinished.UnionWith(d.q1MigrationVersion == 0 ? d.finishedQuests : d.legacyMainFinishedIds);
             QuestData Find(string id) => all.Find(q => q != null && q.id == id);
             foreach (var id in d.finishedQuests) { var q = Find(id); if (q != null) finished.Add(q); }
             foreach (var s in d.quests)
@@ -77,18 +90,62 @@ namespace PocketCaravan
                 var q = Find(s.id);
                 if (q == null) continue;
                 var p = new Progress { quest = q, step = s.step, amount = s.amount, rewardCaptured = true,
+                    legacyMainMigrationEligible = d.q1MigrationVersion == 0 || s.legacyMainMigrationEligible,
                     acceptedRewardMoney = s.rewardCaptured ? s.acceptedRewardMoney : q.hasLegacyReward ? q.legacyRewardMoney : q.rewardMoney,
-                    acceptedRewardCredit = s.rewardCaptured ? s.acceptedRewardCredit : q.hasLegacyReward ? q.legacyRewardCredit : q.rewardCredit };
+                    acceptedRewardCredit = s.rewardCaptured ? s.acceptedRewardCredit : q.hasLegacyReward ? q.legacyRewardCredit : q.rewardCredit,
+                    acceptedReputationScope = s.acceptedReputationScope, acceptedReputationTarget = s.acceptedReputationTarget,
+                    acceptedReputationSize = s.rewardCaptured ? s.acceptedReputationSize : ReputationSize.None };
                 active[q] = p;
                 if (q.id == d.trackedQuest || Tracked == null) Tracked = p;
             }
+            MigrateMainProgress();
+        }
+
+        static readonly string[] MainQuestIds = { "q1_naru", "q1_jangdan", "q1_songak", "q1_dakmok", "q1_gaegyeong" };
+        bool FinishedId(string id) => all.Exists(q => q != null && q.id == id && finished.Contains(q));
+        bool LegacyCondition(int step)
+        {
+            switch (step)
+            {
+                case 0: return legacyMainFinished.Contains("tutorial_1");
+                case 1: return legacyMainFinished.Contains("goryeo_jangdan_trade") || legacyMainFinished.Contains("tutorial_3");
+                case 2: return legacyMainFinished.Contains("naru_board");
+                case 3: return legacyMainFinished.Contains("tutorial_2") || legacyMainFinished.Contains("goryeo_return_trade");
+                case 4: return (legacyMainFinished.Contains("tutorial_2") && legacyMainFinished.Contains("dakmok_hanji")) || legacyMainFinished.Contains("tutorial_5");
+                default: return false;
+            }
+        }
+        void GrantMainRecord(int index)
+        {
+            var q = all.Find(value => value != null && value.id == MainQuestIds[index]);
+            // Preserve an already accepted new quest and its promised cargo/reward too.
+            if (q != null && !active.ContainsKey(q)) finished.Add(q);
+        }
+        public void MigrateMainProgress(string completedLegacyId = null)
+        {
+            if (completedLegacyId != null && !legacyMainFinished.Contains(completedLegacyId)) return;
+            bool allOld = legacyMainFinished.Contains("tutorial_2") && legacyMainFinished.Contains("tutorial_5");
+            for (int i = 0; i < MainQuestIds.Length; i++)
+            {
+                if (allOld || FinishedId(MainQuestIds[i])) { GrantMainRecord(i); continue; }
+                if (!LegacyCondition(i)) break;
+                GrantMainRecord(i);
+            }
+            // A legacy quest finishing now may add a later record across a gap (design 7.6).
+            if (completedLegacyId == "tutorial_1") GrantMainRecord(0);
+            if (completedLegacyId == "goryeo_jangdan_trade" || completedLegacyId == "tutorial_3") GrantMainRecord(1);
+            if (completedLegacyId == "naru_board") GrantMainRecord(2);
+            if (completedLegacyId == "tutorial_2" || completedLegacyId == "goryeo_return_trade") GrantMainRecord(3);
+            if ((completedLegacyId == "tutorial_2" || completedLegacyId == "dakmok_hanji" || completedLegacyId == "tutorial_5") && LegacyCondition(4)) GrantMainRecord(4);
         }
 
         // ---------- NPC ----------
 
         public bool CanStart(QuestData q)
         {
-            if (q == null || active.ContainsKey(q) || finished.Contains(q)) return false;
+            if (q == null || q.retired || active.ContainsKey(q) || finished.Contains(q)) return false;
+            int mainIndex = System.Array.IndexOf(MainQuestIds, q.id);
+            for (int i = 0; i < mainIndex; i++) if (!FinishedId(MainQuestIds[i])) return false;
             foreach (var r in q.requires) if (r != null && !finished.Contains(r)) return false;
             if (q.requiresAny != null && q.requiresAny.Count > 0 && !q.requiresAny.Exists(r => r != null && finished.Contains(r))) return false;
             if (!string.IsNullOrEmpty(q.choiceGroup))
@@ -159,7 +216,8 @@ namespace PocketCaravan
                 pl.cargo.Add(q.offerItem, q.offerCount, q.offerPrice);   // 산 값으로 기록해 이익이 제대로 계산되게
                 Sfx.Play("coin");
             }
-            var p = new Progress { quest = q, rewardCaptured = true, acceptedRewardMoney = q.rewardMoney, acceptedRewardCredit = q.rewardCredit };
+            var p = new Progress { quest = q, rewardCaptured = true, acceptedRewardMoney = q.rewardMoney, acceptedRewardCredit = q.rewardCredit,
+                acceptedReputationScope = q.rewardReputationScope, acceptedReputationTarget = q.rewardReputationTarget, acceptedReputationSize = q.rewardReputationSize };
             active[q] = p;
             Tracked = p;
             if (q.giveItem != null && q.giveCount > 0) GameManager.I.Player.cargo.Add(q.giveItem, q.giveCount);
@@ -199,7 +257,7 @@ namespace PocketCaravan
             {
                 var o = p.Current;
                 if (o == null || o.type != type) continue;
-                if (!string.IsNullOrEmpty(o.targetId) && o.targetId != targetId) continue;
+                if (!string.IsNullOrEmpty(o.targetId) && (type==ObjectiveType.VisitMap ? GoryeoLayout.Resolve(o.targetId)!=GoryeoLayout.Resolve(targetId) : o.targetId!=targetId)) continue;
                 if (o.item != null && o.item != item) continue;
                 p.amount += amount;
                 if (p.amount >= o.count) NextStep(p);
@@ -228,7 +286,7 @@ namespace PocketCaravan
             var player = GameManager.I.Player;
             if (o.type == ObjectiveType.HaveMoney && player.money >= o.count) NextStep(p);
             else if (o.type == ObjectiveType.BuyVehicle && o.vehicle != null && player.vehicle == o.vehicle) NextStep(p);
-            else if (o.type == ObjectiveType.VisitMap && MapRoot.Current != null && MapRoot.Current.mapId == o.targetId) NextStep(p);
+            else if (o.type == ObjectiveType.VisitMap && MapRoot.Current != null && MapRoot.Current.mapId == GoryeoLayout.Resolve(o.targetId)) NextStep(p);
         }
 
         void NextStep(Progress p)
@@ -245,9 +303,15 @@ namespace PocketCaravan
             active.Remove(q);
             finished.Add(q);
             if (Tracked == p) { Tracked = null; foreach (var other in active.Values) Tracked = other; }
+            if (p.legacyMainMigrationEligible)
+            {
+                legacyMainFinished.Add(q.id);
+                MigrateMainProgress(q.id);
+            }
             var player = GameManager.I.Player;
             player.money += p.RewardMoney;
             player.credit += p.RewardCredit;
+            ReputationAwards.Emit(p.acceptedReputationScope, p.acceptedReputationTarget, p.acceptedReputationSize, 1, "quest:" + q.id);
             string reward = "";
             if (p.RewardMoney > 0) reward += $" 돈 +{p.RewardMoney}";
             if (p.RewardCredit > 0) reward += $" 신용 +{p.RewardCredit}";

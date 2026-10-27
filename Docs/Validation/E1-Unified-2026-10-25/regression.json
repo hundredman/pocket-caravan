@@ -1,0 +1,12 @@
+{
+  "baselineCurrentBytesIdentical": true,
+  "baselineSha256": "c7ea8f5ff59efff05a38c2aaf8537e42bc473d11c6b820fd8979c2bbdbf64b6e",
+  "currentSha256": "c7ea8f5ff59efff05a38c2aaf8537e42bc473d11c6b820fd8979c2bbdbf64b6e",
+  "basePriceRows": 77,
+  "oracleCases": 1680,
+  "rewardCases": 6468,
+  "seededOffers": 2100,
+  "acceptedTermsPreserved": true,
+  "unchangedSnapshotAssetInputs": 44,
+  "platform": "net10.0 with production C# and platform stubs; separate Unity results when available"
+}

@@ -1,0 +1,40 @@
+{
+  "characters": [
+    {
+      "name": "chief",
+      "size": [
+        16,
+        24
+      ],
+      "bottomBaseline": 24,
+      "binaryAlpha": true,
+      "opaqueColors": 37,
+      "asepriteRoundtrip": "pixel identical"
+    },
+    {
+      "name": "woman",
+      "size": [
+        16,
+        24
+      ],
+      "bottomBaseline": 24,
+      "binaryAlpha": true,
+      "opaqueColors": 36,
+      "asepriteRoundtrip": "pixel identical"
+    },
+    {
+      "name": "trader",
+      "size": [
+        16,
+        24
+      ],
+      "bottomBaseline": 24,
+      "binaryAlpha": true,
+      "opaqueColors": 37,
+      "asepriteRoundtrip": "pixel identical"
+    }
+  ],
+  "scope": "front-only native art; no actual movement/Unity import/user approval",
+  "environment": "no building/tree art changes",
+  "runtimeAssetsChanged": false
+}

@@ -1,0 +1,23 @@
+{
+  "tool": "built-in imagegen",
+  "mode": "one independent generation per asset, submitted together",
+  "referenceRoles": {
+    "Docs/Images/team-style-reference.png": "target upper Venice/Arabia style; not direct asset source",
+    "ArtReview/Approved/C7-Buildings-v5/thatch.png": "approved cottage family",
+    "ArtReview/Approved/C7-Buildings-v5/tile-house.png": "approved roof and building camera",
+    "ArtReview/C7-TeamStyle-20261027/Native/pine.png": "retained pine density/style reference",
+    "Assets/PocketCaravan/Art/Baked/Sprites/thatch_5_4.png": "old large cottage shape only",
+    "Assets/PocketCaravan/Art/Baked/Sprites/pavilion_5_5.png": "old pavilion architecture only",
+    "Assets/PocketCaravan/Art/Baked/Sprites/woodland5_4_4.png": "willow species and proportions only"
+  },
+  "subjects": {
+    "cottage": "one single-storey thick golden thatched house, central door, two windows, sparse ties",
+    "pavilion": "one open timber pavilion, single blue hipped roof, open entrance and steps",
+    "willow": "one drooping willow, three broad foliage tones and exposed curved trunk"
+  },
+  "pipeline": "complete object uniform nearest native sampling in Aseprite, A5 candidate colors, separate native one-pixel contour",
+  "sourceAlphaThreshold": 224,
+  "approval": "pending independently",
+  "sharedPaletteApproved": false,
+  "productionApplied": false
+}

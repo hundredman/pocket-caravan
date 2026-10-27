@@ -1,0 +1,763 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "native16": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true
+    }
+  },
+  "assets": [
+    {
+      "id": "b2_grass",
+      "purpose": "ground_cover",
+      "profile": "native16",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/B2-LayoutD/provenance.json",
+        "license": "CC0-1.0; LICENSE.txt beside this catalogue"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "rules": {},
+      "kind": "object",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/B2-LayoutD/Tiles/floor_0_12.png",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "ground",
+          "tile": "floor_0_12",
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_0_12.png"
+        }
+      ]
+    },
+    {
+      "id": "b2_water",
+      "purpose": "coast_river_water",
+      "profile": "native16",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/B2-LayoutD/provenance.json",
+        "license": "CC0-1.0; LICENSE.txt beside this catalogue"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "rules": {},
+      "kind": "modular",
+      "moduleType": "water",
+      "pieces": {
+        "outer_corner": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_0_6.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_0_6",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_0_6.png"
+            }
+          ]
+        },
+        "water_0_7": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_0_7.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_0_7",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_0_7.png"
+            }
+          ]
+        },
+        "water_0_8": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_0_8.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_0_8",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_0_8.png"
+            }
+          ]
+        },
+        "water_0_9": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_0_9.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_0_9",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_0_9.png"
+            }
+          ]
+        },
+        "edge": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_1_6.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_1_6",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_1_6.png"
+            }
+          ]
+        },
+        "center": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_1_7.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_1_7",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_1_7.png"
+            }
+          ]
+        },
+        "water_1_8": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_1_8.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_1_8",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_1_8.png"
+            }
+          ]
+        },
+        "water_2_6": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_2_6.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_2_6",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_2_6.png"
+            }
+          ]
+        },
+        "water_2_7": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_2_7.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_2_7",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_2_7.png"
+            }
+          ]
+        },
+        "water_2_8": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_2_8.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_2_8",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_2_8.png"
+            }
+          ]
+        },
+        "water_3_6": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_3_6.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_3_6",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_3_6.png"
+            }
+          ]
+        },
+        "water_3_8": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_3_8.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_3_8",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_3_8.png"
+            }
+          ]
+        },
+        "inner_corner": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_5_7.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_5_7",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_5_7.png"
+            }
+          ]
+        },
+        "water_5_8": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_5_8.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_5_8",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_5_8.png"
+            }
+          ]
+        },
+        "water_6_7": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_6_7.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_6_7",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_6_7.png"
+            }
+          ]
+        },
+        "water_6_8": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/water_6_8.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "water_6_8",
+              "image": "ArtReview/B2-LayoutD/Tiles/water_6_8.png"
+            }
+          ]
+        }
+      },
+      "requiredPieces": [
+        "center",
+        "edge",
+        "outer_corner",
+        "inner_corner"
+      ]
+    },
+    {
+      "id": "b2_road",
+      "purpose": "walking_roads",
+      "profile": "native16",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/B2-LayoutD/provenance.json",
+        "license": "CC0-1.0; LICENSE.txt beside this catalogue"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "rules": {},
+      "kind": "modular",
+      "moduleType": "road",
+      "pieces": {
+        "floor_0_10": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_0_10.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_0_10",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_0_10.png"
+            }
+          ]
+        },
+        "outer_corner": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_0_7.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_0_7",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_0_7.png"
+            }
+          ]
+        },
+        "floor_0_8": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_0_8.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_0_8",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_0_8.png"
+            }
+          ]
+        },
+        "floor_0_9": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_0_9.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_0_9",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_0_9.png"
+            }
+          ]
+        },
+        "edge": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_1_7.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_1_7",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_1_7.png"
+            }
+          ]
+        },
+        "center": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_1_8.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_1_8",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_1_8.png"
+            }
+          ]
+        },
+        "floor_1_9": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_1_9.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_1_9",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_1_9.png"
+            }
+          ]
+        },
+        "floor_2_7": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_2_7.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_2_7",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_2_7.png"
+            }
+          ]
+        },
+        "floor_2_8": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_2_8.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_2_8",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_2_8.png"
+            }
+          ]
+        },
+        "floor_2_9": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_2_9.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_2_9",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_2_9.png"
+            }
+          ]
+        },
+        "end": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_3_7.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_3_7",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_3_7.png"
+            }
+          ]
+        },
+        "floor_3_9": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_3_9.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_3_9",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_3_9.png"
+            }
+          ]
+        },
+        "inner_corner": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_5_8.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_5_8",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_5_8.png"
+            }
+          ]
+        },
+        "floor_5_9": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_5_9.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_5_9",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_5_9.png"
+            }
+          ]
+        },
+        "floor_6_8": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_6_8.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_6_8",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_6_8.png"
+            }
+          ]
+        },
+        "floor_6_9": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/floor_6_9.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "floor_6_9",
+              "image": "ArtReview/B2-LayoutD/Tiles/floor_6_9.png"
+            }
+          ]
+        }
+      },
+      "requiredPieces": [
+        "center",
+        "edge",
+        "outer_corner",
+        "inner_corner",
+        "end"
+      ]
+    },
+    {
+      "id": "b2_cliff",
+      "purpose": "mountain_cliffs",
+      "profile": "native16",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/B2-LayoutD/provenance.json",
+        "license": "CC0-1.0; LICENSE.txt beside this catalogue"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "rules": {},
+      "kind": "modular",
+      "moduleType": "cliff",
+      "pieces": {
+        "center": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/b2_cliff_center.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "b2_cliff_center",
+              "image": "ArtReview/B2-LayoutD/Tiles/b2_cliff_center.png"
+            }
+          ]
+        },
+        "edge": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/b2_cliff_edge.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "b2_cliff_edge",
+              "image": "ArtReview/B2-LayoutD/Tiles/b2_cliff_edge.png"
+            }
+          ]
+        },
+        "inner_corner": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/b2_cliff_inner_corner.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "b2_cliff_inner_corner",
+              "image": "ArtReview/B2-LayoutD/Tiles/b2_cliff_inner_corner.png"
+            }
+          ]
+        },
+        "outer_corner": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/b2_cliff_outer_corner.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "b2_cliff_outer_corner",
+              "image": "ArtReview/B2-LayoutD/Tiles/b2_cliff_outer_corner.png"
+            }
+          ]
+        }
+      },
+      "requiredPieces": [
+        "center",
+        "edge",
+        "outer_corner",
+        "inner_corner"
+      ]
+    },
+    {
+      "id": "b2_bridge",
+      "purpose": "river_bridge",
+      "profile": "native16",
+      "source": {
+        "kind": "external",
+        "path": "ArtReview/B2-LayoutD/provenance.json",
+        "license": "CC0-1.0; LICENSE.txt beside this catalogue"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "rules": {},
+      "kind": "modular",
+      "moduleType": "bridge",
+      "pieces": {
+        "center": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/b2_bridge_center.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "b2_bridge_center",
+              "image": "ArtReview/B2-LayoutD/Tiles/b2_bridge_center.png"
+            }
+          ]
+        },
+        "end": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/b2_bridge_end.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "b2_bridge_end",
+              "image": "ArtReview/B2-LayoutD/Tiles/b2_bridge_end.png"
+            }
+          ]
+        },
+        "start": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/B2-LayoutD/Tiles/b2_bridge_start.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "b2_bridge_start",
+              "image": "ArtReview/B2-LayoutD/Tiles/b2_bridge_start.png"
+            }
+          ]
+        }
+      },
+      "requiredPieces": [
+        "start",
+        "center",
+        "end"
+      ]
+    }
+  ]
+}

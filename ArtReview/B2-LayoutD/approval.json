@@ -1,0 +1,21 @@
+{
+  "status": "approved_direction_only",
+  "statement": "이번 길 방향 승인",
+  "date": "2026-10-25",
+  "scope": "B2 terrain and natural-road direction; no production map replacement; buildings/NPC layout is B3/B4; runtime switch is B5",
+  "priorFeedback": "개인적으로 인위적인 느낌의 직선 길이 아닌 뭔가 자연스럽게 사람들이 오가면서 만들어진 길이었으면 좋겠어.",
+  "images": [
+    {
+      "path": "natural-roads-comparison-world.png",
+      "sha256": "574ffa7de9948027a092019fe107d05531f53618f9148fa7b5847646f1a54448"
+    },
+    {
+      "path": "natural-roads-comparison-native.png",
+      "sha256": "82b6f4838b9206a6b9b2658378f5c284c05ffc3ed155d4313124374c6a91521f"
+    },
+    {
+      "path": "natural-road-camera.png",
+      "sha256": "fe135e1048a45b0a3ebc51a4e27689e1f3afb46d03e27e1f4639f868628579b3"
+    }
+  ]
+}

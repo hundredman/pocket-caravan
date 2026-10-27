@@ -1,0 +1,9 @@
+test_actual_play_only_shop_changed (test_c7_shop.ShopChecks) ... ok
+test_canvas_foot_colors_and_single_pixel_outer_contour (test_c7_shop.ShopChecks) ... ok
+test_editable_native_reexports_rgba (test_c7_shop.ShopChecks) ... ok
+test_whole24_cells_and_exact_approved_art (test_c7_shop.ShopChecks) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.259s
+
+OK

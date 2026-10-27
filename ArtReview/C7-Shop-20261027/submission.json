@@ -1,0 +1,43 @@
+{
+  "status": "approved",
+  "productionApplied": false,
+  "files": {
+    "shop.png": {
+      "size": [
+        96,
+        64
+      ],
+      "rgbaSHA256": "71450da35b1228b3f0db4a6118a92248e02dc18675a89e94df4f3b149f6b449e"
+    },
+    "before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "ee979239cbffd12d711f302a49c8e2d32d8c230ad9934203911a66924956fcf7"
+    },
+    "trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "190621ecb517151e048e71d414baa7d586bb1b8710fadaff4760a5ca76bc9a7e"
+    },
+    "style-comparison.png": {
+      "size": [
+        1480,
+        850
+      ],
+      "rgbaSHA256": "9c03171b15f3ca91a9c029ac811b4390c403bb3a1e39d3da8e02405609d6129c"
+    },
+    "game-comparison.png": {
+      "size": [
+        1000,
+        480
+      ],
+      "rgbaSHA256": "b06e1db29922e03068dccbfcd905d889fbd828df392ef227f0b0ed31b2ec61fb"
+    }
+  },
+  "reviewDecision": "ArtReview/C7-Shop-20261027/review-decision.json",
+  "historicalCaption": "Submitted pending captions retained as history; see review-decision.json for later approval."
+}

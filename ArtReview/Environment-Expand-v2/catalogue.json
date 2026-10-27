@@ -1,0 +1,1874 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "palace_native": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#0f1722",
+        "#131f2e",
+        "#13242e",
+        "#181e27",
+        "#182335",
+        "#182337",
+        "#182529",
+        "#182539",
+        "#1b2029",
+        "#1c3038",
+        "#1d293b",
+        "#263d40",
+        "#28323f",
+        "#2d1e17",
+        "#32414f",
+        "#3e4c5a",
+        "#403b32",
+        "#43585b",
+        "#52606d",
+        "#542214",
+        "#57412e",
+        "#61615d",
+        "#73787e",
+        "#88401f",
+        "#88623f",
+        "#9b8264",
+        "#ae9a81",
+        "#d4c0a5"
+      ]
+    },
+    "cottage_native": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2a1a14",
+        "#3e2111",
+        "#472a18",
+        "#4d382a",
+        "#5c351b",
+        "#67391c",
+        "#6b4223",
+        "#765235",
+        "#7c4824",
+        "#8a542a",
+        "#8f5f33",
+        "#8f7251",
+        "#aa6c2d",
+        "#b37637",
+        "#bc8041",
+        "#ce8b3d",
+        "#d89a4d",
+        "#dea762",
+        "#eaaa52",
+        "#f2b358",
+        "#f3c077",
+        "#f6ba5d",
+        "#f7bd63",
+        "#f8c986",
+        "#f9c064",
+        "#f9c066",
+        "#fac062",
+        "#fac065"
+      ]
+    },
+    "willow_native": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#000000",
+        "#2c2d20",
+        "#384228",
+        "#384c28",
+        "#41552c",
+        "#45592c",
+        "#464d2d",
+        "#485c2d",
+        "#4d5b2c",
+        "#4e622f",
+        "#596732",
+        "#5a5e35",
+        "#5e6e34",
+        "#657334",
+        "#6c7638",
+        "#75813c",
+        "#879045",
+        "#9ea558"
+      ]
+    },
+    "forest_1_native": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#161511",
+        "#19261d",
+        "#223426",
+        "#273b2a",
+        "#283f2d",
+        "#29271e",
+        "#2c4531",
+        "#304b32",
+        "#333e29",
+        "#343528",
+        "#364a2d",
+        "#375435",
+        "#433e2f",
+        "#4c4931",
+        "#4d5e3b",
+        "#505637",
+        "#74744e"
+      ]
+    },
+    "forest_2_native": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#1d2a1d",
+        "#1f1d17",
+        "#233723",
+        "#2b4026",
+        "#2e4629",
+        "#333023",
+        "#334b2b",
+        "#36512d",
+        "#383a29",
+        "#384329",
+        "#3c512b",
+        "#3e592d",
+        "#494431",
+        "#4c5c30",
+        "#514f34",
+        "#556736",
+        "#6f7e44"
+      ]
+    },
+    "forest_3_native": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#000000",
+        "#1e1b16",
+        "#25291c",
+        "#273221",
+        "#2b3926",
+        "#2b3e29",
+        "#2f442a",
+        "#324a2c",
+        "#373c29",
+        "#38522f",
+        "#3a3329",
+        "#3e3a2e",
+        "#44482c",
+        "#473d30",
+        "#534a37",
+        "#535338",
+        "#575f3d",
+        "#7f7a58"
+      ]
+    },
+    "forest_4_native": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#000000",
+        "#181d17",
+        "#1e291c",
+        "#1e321f",
+        "#273a22",
+        "#2b3323",
+        "#2c4326",
+        "#344625",
+        "#384f28",
+        "#43412c",
+        "#47532a",
+        "#485d2a",
+        "#536529",
+        "#5e682c",
+        "#5e702d",
+        "#67732c",
+        "#707e30",
+        "#89943d"
+      ]
+    },
+    "forest_6_native": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#000000",
+        "#394026",
+        "#435527",
+        "#454f2a",
+        "#49562b",
+        "#4a5a29",
+        "#4d5e29",
+        "#54642b",
+        "#575d36",
+        "#5c692d",
+        "#5e6538",
+        "#606f2e",
+        "#657131",
+        "#6d7a32",
+        "#706f4d",
+        "#7d7f4f",
+        "#898d50",
+        "#bbb591"
+      ]
+    },
+    "forest_7_native": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#000000",
+        "#2f2c1e",
+        "#444324",
+        "#474a1e",
+        "#544c24",
+        "#54511e",
+        "#55561d",
+        "#5f5218",
+        "#665815",
+        "#665e17",
+        "#746012",
+        "#766a18",
+        "#846e12",
+        "#887414",
+        "#887917",
+        "#947c13",
+        "#9c8618",
+        "#ad9825"
+      ]
+    },
+    "cottage_small_native": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2d1a11",
+        "#402515",
+        "#4d2e1b",
+        "#513928",
+        "#68381b",
+        "#6b3e20",
+        "#704424",
+        "#715138",
+        "#7b4722",
+        "#885428",
+        "#8b6038",
+        "#8f7152",
+        "#a96c2d",
+        "#b37635",
+        "#c08340",
+        "#cf8c3d",
+        "#d4974c",
+        "#dea55e",
+        "#eeae53",
+        "#f1bc6e",
+        "#f4b65a",
+        "#f5b961",
+        "#f7bc5d",
+        "#f7bc5f",
+        "#f7bc61",
+        "#f7be66",
+        "#f9bc5f",
+        "#fac77c"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "trial_env_palace",
+      "kind": "object",
+      "purpose": "building",
+      "size": [
+        10,
+        7
+      ],
+      "image": "ArtReview/Environment-Expand-v2/palace.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/Environment-Expand-v2/palace.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
+      },
+      "profile": "palace_native",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "palace_0_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "palace_1_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "palace_2_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "palace_3_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_3_0.png"
+        },
+        {
+          "dx": 4,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "palace_4_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_4_0.png"
+        },
+        {
+          "dx": 5,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "palace_5_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_5_0.png"
+        },
+        {
+          "dx": 6,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "palace_6_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_6_0.png"
+        },
+        {
+          "dx": 7,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "palace_7_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_7_0.png"
+        },
+        {
+          "dx": 8,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "palace_8_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_8_0.png"
+        },
+        {
+          "dx": 9,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "palace_9_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_9_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "palace_0_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "palace_1_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "palace_2_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "palace_3_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_3_1.png"
+        },
+        {
+          "dx": 4,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "palace_4_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_4_1.png"
+        },
+        {
+          "dx": 5,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "palace_5_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_5_1.png"
+        },
+        {
+          "dx": 6,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "palace_6_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_6_1.png"
+        },
+        {
+          "dx": 7,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "palace_7_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_7_1.png"
+        },
+        {
+          "dx": 8,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "palace_8_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_8_1.png"
+        },
+        {
+          "dx": 9,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "palace_9_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_9_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "palace_0_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "palace_1_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "palace_2_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "palace_3_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_3_2.png"
+        },
+        {
+          "dx": 4,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "palace_4_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_4_2.png"
+        },
+        {
+          "dx": 5,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "palace_5_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_5_2.png"
+        },
+        {
+          "dx": 6,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "palace_6_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_6_2.png"
+        },
+        {
+          "dx": 7,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "palace_7_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_7_2.png"
+        },
+        {
+          "dx": 8,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "palace_8_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_8_2.png"
+        },
+        {
+          "dx": 9,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "palace_9_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_9_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "palace_0_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "palace_1_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "palace_2_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_2_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "palace_3_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_3_3.png"
+        },
+        {
+          "dx": 4,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "palace_4_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_4_3.png"
+        },
+        {
+          "dx": 5,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "palace_5_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_5_3.png"
+        },
+        {
+          "dx": 6,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "palace_6_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_6_3.png"
+        },
+        {
+          "dx": 7,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "palace_7_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_7_3.png"
+        },
+        {
+          "dx": 8,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "palace_8_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_8_3.png"
+        },
+        {
+          "dx": 9,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "palace_9_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_9_3.png"
+        },
+        {
+          "dx": 0,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "palace_0_4",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_0_4.png"
+        },
+        {
+          "dx": 1,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "palace_1_4",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_1_4.png"
+        },
+        {
+          "dx": 2,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "palace_2_4",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_2_4.png"
+        },
+        {
+          "dx": 3,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "palace_3_4",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_3_4.png"
+        },
+        {
+          "dx": 4,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "palace_4_4",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_4_4.png"
+        },
+        {
+          "dx": 5,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "palace_5_4",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_5_4.png"
+        },
+        {
+          "dx": 6,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "palace_6_4",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_6_4.png"
+        },
+        {
+          "dx": 7,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "palace_7_4",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_7_4.png"
+        },
+        {
+          "dx": 8,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "palace_8_4",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_8_4.png"
+        },
+        {
+          "dx": 9,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "palace_9_4",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_9_4.png"
+        },
+        {
+          "dx": 0,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "palace_0_5",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_0_5.png"
+        },
+        {
+          "dx": 1,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "palace_1_5",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_1_5.png"
+        },
+        {
+          "dx": 2,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "palace_2_5",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_2_5.png"
+        },
+        {
+          "dx": 3,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "palace_3_5",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_3_5.png"
+        },
+        {
+          "dx": 4,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "palace_4_5",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_4_5.png"
+        },
+        {
+          "dx": 5,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "palace_5_5",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_5_5.png"
+        },
+        {
+          "dx": 6,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "palace_6_5",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_6_5.png"
+        },
+        {
+          "dx": 7,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "palace_7_5",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_7_5.png"
+        },
+        {
+          "dx": 8,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "palace_8_5",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_8_5.png"
+        },
+        {
+          "dx": 9,
+          "dy": 5,
+          "layer": "obj",
+          "tile": "palace_9_5",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_9_5.png"
+        },
+        {
+          "dx": 0,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "palace_0_6",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_0_6.png"
+        },
+        {
+          "dx": 1,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "palace_1_6",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_1_6.png"
+        },
+        {
+          "dx": 2,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "palace_2_6",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_2_6.png"
+        },
+        {
+          "dx": 3,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "palace_3_6",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_3_6.png"
+        },
+        {
+          "dx": 4,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "palace_4_6",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_4_6.png"
+        },
+        {
+          "dx": 5,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "palace_5_6",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_5_6.png"
+        },
+        {
+          "dx": 6,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "palace_6_6",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_6_6.png"
+        },
+        {
+          "dx": 7,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "palace_7_6",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_7_6.png"
+        },
+        {
+          "dx": 8,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "palace_8_6",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_8_6.png"
+        },
+        {
+          "dx": 9,
+          "dy": 6,
+          "layer": "obj",
+          "tile": "palace_9_6",
+          "image": "ArtReview/Environment-Expand-v2/tiles/palace_9_6.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_env_cottage",
+      "kind": "object",
+      "purpose": "building",
+      "size": [
+        5,
+        4
+      ],
+      "image": "ArtReview/Environment-Expand-v2/cottage.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/Environment-Expand-v2/cottage.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
+      },
+      "profile": "cottage_native",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "cottage_0_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "cottage_1_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "cottage_2_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "cottage_3_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_3_0.png"
+        },
+        {
+          "dx": 4,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "cottage_4_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_4_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "cottage_0_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "cottage_1_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "cottage_2_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "cottage_3_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_3_1.png"
+        },
+        {
+          "dx": 4,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "cottage_4_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_4_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "cottage_0_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "cottage_1_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "cottage_2_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "cottage_3_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_3_2.png"
+        },
+        {
+          "dx": 4,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "cottage_4_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_4_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "cottage_0_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "cottage_1_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "cottage_2_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_2_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "cottage_3_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_3_3.png"
+        },
+        {
+          "dx": 4,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "cottage_4_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_4_3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_env_willow",
+      "kind": "object",
+      "purpose": "tree",
+      "size": [
+        4,
+        4
+      ],
+      "image": "ArtReview/Environment-Expand-v2/willow.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/Environment-Expand-v2/willow.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
+      },
+      "profile": "willow_native",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "willow_0_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "willow_1_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "willow_2_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "willow_3_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "willow_0_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "willow_1_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "willow_2_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "willow_3_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "willow_0_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "willow_1_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "willow_2_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "willow_3_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_3_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "willow_0_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "willow_1_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "willow_2_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_2_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "willow_3_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/willow_3_3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_env_forest_1",
+      "kind": "object",
+      "purpose": "tree",
+      "size": [
+        3,
+        4
+      ],
+      "image": "ArtReview/Environment-Expand-v2/forest_1.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/Environment-Expand-v2/forest_1.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
+      },
+      "profile": "forest_1_native",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_1_0_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_1_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_1_1_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_1_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_1_2_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_1_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_1_0_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_1_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_1_1_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_1_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_1_2_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_1_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_1_0_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_1_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_1_1_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_1_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_1_2_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_1_2_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_1_0_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_1_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_1_1_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_1_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_1_2_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_1_2_3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_env_forest_2",
+      "kind": "object",
+      "purpose": "tree",
+      "size": [
+        3,
+        4
+      ],
+      "image": "ArtReview/Environment-Expand-v2/forest_2.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/Environment-Expand-v2/forest_2.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
+      },
+      "profile": "forest_2_native",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_2_0_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_2_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_2_1_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_2_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_2_2_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_2_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_2_0_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_2_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_2_1_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_2_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_2_2_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_2_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_2_0_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_2_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_2_1_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_2_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_2_2_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_2_2_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_2_0_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_2_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_2_1_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_2_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_2_2_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_2_2_3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_env_forest_3",
+      "kind": "object",
+      "purpose": "tree",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/Environment-Expand-v2/forest_3.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/Environment-Expand-v2/forest_3.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
+      },
+      "profile": "forest_3_native",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_3_0_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_3_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_3_1_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_3_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_3_2_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_3_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_3_3_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_3_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_3_0_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_3_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_3_1_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_3_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_3_2_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_3_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_3_3_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_3_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_3_0_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_3_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_3_1_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_3_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_3_2_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_3_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_3_3_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_3_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_env_forest_4",
+      "kind": "object",
+      "purpose": "tree",
+      "size": [
+        4,
+        4
+      ],
+      "image": "ArtReview/Environment-Expand-v2/forest_4.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/Environment-Expand-v2/forest_4.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
+      },
+      "profile": "forest_4_native",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_4_0_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_4_1_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_4_2_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_4_3_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_4_0_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_4_1_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_4_2_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_4_3_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_4_0_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_4_1_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_4_2_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_4_3_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_3_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_4_0_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_4_1_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_4_2_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_2_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_4_3_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_4_3_3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_env_forest_6",
+      "kind": "object",
+      "purpose": "tree",
+      "size": [
+        3,
+        4
+      ],
+      "image": "ArtReview/Environment-Expand-v2/forest_6.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/Environment-Expand-v2/forest_6.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
+      },
+      "profile": "forest_6_native",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_6_0_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_6_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_6_1_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_6_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_6_2_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_6_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_6_0_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_6_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_6_1_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_6_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_6_2_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_6_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_6_0_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_6_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_6_1_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_6_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_6_2_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_6_2_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_6_0_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_6_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_6_1_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_6_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_6_2_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_6_2_3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_env_forest_7",
+      "kind": "object",
+      "purpose": "tree",
+      "size": [
+        3,
+        4
+      ],
+      "image": "ArtReview/Environment-Expand-v2/forest_7.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/Environment-Expand-v2/forest_7.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
+      },
+      "profile": "forest_7_native",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_7_0_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_7_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_7_1_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_7_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "forest_7_2_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_7_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_7_0_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_7_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_7_1_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_7_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "forest_7_2_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_7_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_7_0_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_7_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_7_1_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_7_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "forest_7_2_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_7_2_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_7_0_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_7_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_7_1_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_7_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "forest_7_2_3",
+          "image": "ArtReview/Environment-Expand-v2/tiles/forest_7_2_3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_env_cottage_small",
+      "kind": "object",
+      "purpose": "building",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/Environment-Expand-v2/cottage_small.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/Environment-Expand-v2/cottage_small.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "evidence": "Docs/Validation/Environment-Decision-2026-10-25.md"
+      },
+      "profile": "cottage_small_native",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "cottage_small_0_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_small_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "cottage_small_1_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_small_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "cottage_small_2_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_small_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "cottage_small_3_0",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_small_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "cottage_small_0_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_small_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "cottage_small_1_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_small_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "cottage_small_2_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_small_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "cottage_small_3_1",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_small_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "cottage_small_0_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_small_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "cottage_small_1_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_small_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "cottage_small_2_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_small_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "cottage_small_3_2",
+          "image": "ArtReview/Environment-Expand-v2/tiles/cottage_small_3_2.png"
+        }
+      ]
+    }
+  ],
+  "decision": "not_needed_keep_current_environment_art"
+}

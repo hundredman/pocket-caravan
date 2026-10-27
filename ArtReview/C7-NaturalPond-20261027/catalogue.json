@@ -1,0 +1,370 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "native16": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#4f694c",
+        "#6a8b56",
+        "#ad9277",
+        "#8d775f",
+        "#7eafb3",
+        "#56858e",
+        "#a4cac6"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7_natural_pond",
+      "kind": "modular",
+      "moduleType": "water",
+      "purpose": "small_grass_pond",
+      "profile": "native16",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C7-NaturalPond-20261027/pond.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "rules": {
+        "onTerrain": [
+          "grass"
+        ],
+        "forbidRoad": true
+      },
+      "requiredPieces": [
+        "oval_0_0",
+        "oval_1_0",
+        "oval_2_0",
+        "oval_3_0",
+        "oval_4_0",
+        "oval_0_1",
+        "oval_1_1",
+        "oval_2_1",
+        "oval_3_1",
+        "oval_4_1",
+        "oval_0_2",
+        "oval_1_2",
+        "oval_2_2",
+        "oval_3_2",
+        "oval_4_2",
+        "center",
+        "edge",
+        "outer_corner",
+        "inner_corner"
+      ],
+      "pieces": {
+        "oval_0_0": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_0_0.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_0_0",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_0_0.png"
+            }
+          ]
+        },
+        "oval_1_0": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_1_0.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_1_0",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_1_0.png"
+            }
+          ]
+        },
+        "oval_2_0": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_2_0.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_2_0",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_2_0.png"
+            }
+          ]
+        },
+        "oval_3_0": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_3_0.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_3_0",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_3_0.png"
+            }
+          ]
+        },
+        "oval_4_0": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_4_0.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_4_0",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_4_0.png"
+            }
+          ]
+        },
+        "oval_0_1": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_0_1.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_0_1",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_0_1.png"
+            }
+          ]
+        },
+        "oval_1_1": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_1_1.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_1_1",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_1_1.png"
+            }
+          ]
+        },
+        "oval_2_1": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_2_1.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_2_1",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_2_1.png"
+            }
+          ]
+        },
+        "oval_3_1": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_3_1.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_3_1",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_3_1.png"
+            }
+          ]
+        },
+        "oval_4_1": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_4_1.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_4_1",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_4_1.png"
+            }
+          ]
+        },
+        "oval_0_2": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_0_2.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_0_2",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_0_2.png"
+            }
+          ]
+        },
+        "oval_1_2": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_1_2.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_1_2",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_1_2.png"
+            }
+          ]
+        },
+        "oval_2_2": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_2_2.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_2_2",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_2_2.png"
+            }
+          ]
+        },
+        "oval_3_2": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_3_2.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_3_2",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_3_2.png"
+            }
+          ]
+        },
+        "oval_4_2": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_4_2.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_4_2",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_4_2.png"
+            }
+          ]
+        },
+        "center": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_2_1.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_2_1",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_2_1.png"
+            }
+          ]
+        },
+        "edge": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_2_0.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_2_0",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_2_0.png"
+            }
+          ]
+        },
+        "outer_corner": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_0_0.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_oval_0_0",
+              "image": "ArtReview/C7-NaturalPond-20261027/pieces/oval_0_0.png"
+            }
+          ]
+        },
+        "inner_corner": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-NaturalPond-20261027/inner-corner.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "deco",
+              "tile": "c7_natural_inner_corner",
+              "image": "ArtReview/C7-NaturalPond-20261027/inner-corner.png"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

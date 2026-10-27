@@ -1,0 +1,204 @@
+[
+  {
+    "source": "Assets/PocketCaravan/World/Regions/goryeo.json",
+    "kind": "npcs",
+    "identity": "naru_chief",
+    "name": "나루 마을 촌장",
+    "sprite": "elder_tall"
+  },
+  {
+    "source": "Assets/PocketCaravan/World/Regions/goryeo.json",
+    "kind": "npcs",
+    "identity": "gaekju",
+    "name": "개경 객주 돈돌",
+    "sprite": "gaekju_tall"
+  },
+  {
+    "source": "Assets/PocketCaravan/World/Regions/goryeo.json",
+    "kind": "npcs",
+    "identity": "dakmok_chief",
+    "name": "닥나무 마을 촌장",
+    "sprite": "dakmokchief_tall"
+  },
+  {
+    "source": "Assets/PocketCaravan/World/Regions/goryeo.json",
+    "kind": "npcs",
+    "identity": "goryeo_songak_merchant",
+    "name": "산록 약재 장수",
+    "sprite": "villager_rabbit_tall"
+  },
+  {
+    "source": "Assets/PocketCaravan/World/Regions/goryeo.json",
+    "kind": "npcs",
+    "identity": "goryeo_jangdan_farmer",
+    "name": "장단 곡물 상인",
+    "sprite": "villager_dog_tall"
+  },
+  {
+    "source": "Assets/PocketCaravan/World/Regions/goryeo.json",
+    "kind": "villagers",
+    "identity": "0",
+    "name": "비단 장수",
+    "sprite": "villager_fox_tall"
+  },
+  {
+    "source": "Assets/PocketCaravan/World/Regions/goryeo.json",
+    "kind": "villagers",
+    "identity": "1",
+    "name": "짐꾼",
+    "sprite": "villager_dog_tall"
+  },
+  {
+    "source": "Assets/PocketCaravan/World/Regions/goryeo.json",
+    "kind": "villagers",
+    "identity": "2",
+    "name": "선비",
+    "sprite": "villager_rabbit_tall"
+  },
+  {
+    "source": "Assets/PocketCaravan/World/Regions/goryeo.json",
+    "kind": "villagers",
+    "identity": "3",
+    "name": "뱃사공",
+    "sprite": "villager_bear_tall"
+  },
+  {
+    "source": "Assets/PocketCaravan/World/Regions/goryeo.json",
+    "kind": "villagers",
+    "identity": "4",
+    "name": "떡 장수",
+    "sprite": "villager_tanuki_tall"
+  },
+  {
+    "source": "Assets/PocketCaravan/Maps/Naru.json",
+    "kind": "worker",
+    "identity": "나루 짐꾼",
+    "name": "나루 짐꾼",
+    "sprite": "villager_dog_tall",
+    "position": [
+      17,
+      22
+    ]
+  },
+  {
+    "source": "Assets/PocketCaravan/Maps/Naru.json",
+    "kind": "talker",
+    "identity": "뱃사공",
+    "name": "뱃사공",
+    "sprite": "villager_bear_tall",
+    "position": [
+      18,
+      22
+    ]
+  },
+  {
+    "source": "Assets/PocketCaravan/Maps/Naru.json",
+    "kind": "talker",
+    "identity": "농부",
+    "name": "농부",
+    "sprite": "villager_rabbit_tall",
+    "position": [
+      21,
+      20
+    ]
+  },
+  {
+    "source": "Assets/PocketCaravan/Maps/Naru.json",
+    "kind": "pastime",
+    "identity": "goryeo_fishing",
+    "name": "나루 낚시",
+    "sprite": "villager_rabbit_tall",
+    "position": [
+      31,
+      28
+    ]
+  },
+  {
+    "source": "Assets/PocketCaravan/Maps/Gaegyeong.json",
+    "kind": "worker",
+    "identity": "시전 짐꾼",
+    "name": "시전 짐꾼",
+    "sprite": "villager_dog_tall",
+    "position": [
+      38,
+      25
+    ]
+  },
+  {
+    "source": "Assets/PocketCaravan/Maps/Gaegyeong.json",
+    "kind": "worker",
+    "identity": "시전 행상",
+    "name": "시전 행상",
+    "sprite": "villager_fox_tall",
+    "position": [
+      35,
+      23
+    ]
+  },
+  {
+    "source": "Assets/PocketCaravan/Maps/Dakmok.json",
+    "kind": "worker",
+    "identity": "종이 일꾼",
+    "name": "종이 일꾼",
+    "sprite": "villager_rabbit_tall",
+    "position": [
+      18,
+      22
+    ]
+  },
+  {
+    "source": "Assets/PocketCaravan/Maps/transit_pass.json",
+    "kind": "talker",
+    "identity": "길손",
+    "name": "길손",
+    "sprite": "villager_dog_tall",
+    "position": [
+      6,
+      21
+    ]
+  },
+  {
+    "source": "Assets/PocketCaravan/Maps/transit_woodtown.json",
+    "kind": "talker",
+    "identity": "땔감 장수",
+    "name": "땔감 장수",
+    "sprite": "villager_bear_tall",
+    "position": [
+      28,
+      9
+    ]
+  },
+  {
+    "source": "Assets/PocketCaravan/Maps/transit_ferry.json",
+    "kind": "talker",
+    "identity": "나루 상인",
+    "name": "나루 상인",
+    "sprite": "villager_tanuki_tall",
+    "position": [
+      28,
+      12
+    ]
+  },
+  {
+    "source": "Assets/PocketCaravan/Maps/transit_central_approach.json",
+    "kind": "talker",
+    "identity": "길손",
+    "name": "길손",
+    "sprite": "villager_dog_tall",
+    "position": [
+      55,
+      11
+    ]
+  },
+  {
+    "source": "Assets/PocketCaravan/Maps/transit_crossroads.json",
+    "kind": "talker",
+    "identity": "길목 안내인",
+    "name": "길목 안내인",
+    "sprite": "villager_tanuki_tall",
+    "position": [
+      44,
+      20
+    ]
+  }
+]

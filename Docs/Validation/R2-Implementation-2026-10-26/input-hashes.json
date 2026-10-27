@@ -1,0 +1,19 @@
+{
+  "Assets/PocketCaravan/Scripts/Core/GameManager.cs": "3db49e827bc7d7c8a24f0b939b52c70b86973c5bc56ea029bc2e4a2078a4ebc5",
+  "Assets/PocketCaravan/Scripts/Core/PlayerState.cs": "1bec6a45e811f45fa414b4d1689f5c57501e566a80e2de6ad2612627ce56f79b",
+  "Assets/PocketCaravan/Scripts/Core/ReputationAwards.cs": "c71a2cd259621f5f3d166d1a0d98f14ec39dca71b064df8f87551867b22b898d",
+  "Assets/PocketCaravan/Scripts/Core/ReputationState.cs": "adccafe9c8c440d35649566c8663551b4c80161a326477d09addb22c26fcf620",
+  "Assets/PocketCaravan/Scripts/Core/SaveCompatibility.cs": "b76b42157ca13f57494ab8376c4ec7c2d0397ed16612fff7d1b02ba68668669d",
+  "Assets/PocketCaravan/Scripts/Core/SaveSystem.cs": "c7b15b353a3a41df355872b4f8250101312b5ea81883513ae11e238c8683d0d9",
+  "Assets/PocketCaravan/Scripts/Economy/CargoSaleGuide.cs": "4c7b47d0513b77cbf776dc1000ec6524a7c18288379d28447d1647dbde367f2e",
+  "Assets/PocketCaravan/Scripts/Economy/MarketEstimate.cs": "c582448d633f637b686dccd5f5e39f1ca92eef70815f7a42ec3e865f7a23eb2d",
+  "Assets/PocketCaravan/Scripts/Economy/MarketMath.cs": "52469319ecd9a846d907d6b79e870f460a5e3db428566d3cab8f25ec17b7970d",
+  "Assets/PocketCaravan/Scripts/Economy/MarketState.cs": "0ab365cc764d39584a13fe66b3d6c655a5791f77d7af7ca9430b479d99dc8ed2",
+  "Assets/PocketCaravan/Scripts/Economy/ReputationPricing.cs": "61429a4146c6771ab230a930a71b863f93d5fa6123220ee380cadf9aa7d10768",
+  "Assets/PocketCaravan/Scripts/Economy/TownFacility.cs": "80b80c0ddb59f5a8fc58edd00538c6a8c7ccf8c0e391f55f1bfdf1dedeb81db2",
+  "Assets/PocketCaravan/Scripts/Economy/TownMarket.cs": "4c625c53fa534f42e4e68189c59a244cdbca02748899457a1cb22dc88ea4e6a4",
+  "Assets/PocketCaravan/Scripts/Economy/TradeActivity.cs": "170c5a160c3d2cbb469c583316d49663aac8afdc22c7272ad880a00cef50167a",
+  "Assets/PocketCaravan/Scripts/Economy/TradeLedger.cs": "07cf04397fd0a6e58bc2540a42af6998325a9568bc94a905ea1002d877a53861",
+  "Tools/Balance/R2RuntimeProbe/Program.cs": "b5f15c750e7986fa2862dcd919dcb8af2f00b660cc8b2311c52fbf7b85373b84",
+  "Tools/Balance/R2RuntimeProbe/Stubs.cs": "c5e81a8dc540ceda569a1ed2b9804d93f289dad201b1e594cd1a71a2bea3726e"
+}

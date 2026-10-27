@@ -1,0 +1,89 @@
+{
+  "maps": [
+    {
+      "map": "Naru",
+      "cells": 4800,
+      "placements": 5000,
+      "mapSHA256": "db83eb27b2f4741e13514b8a1b6ae6f29d9fe069c983840515d15262454e2c4d",
+      "a2Errors": 0
+    },
+    {
+      "map": "Gaegyeong",
+      "cells": 4200,
+      "placements": 4423,
+      "mapSHA256": "eb9556d76d1983bcb949e06410a03f55983212e91b4b1b741f0104fe3a37b793",
+      "a2Errors": 0
+    },
+    {
+      "map": "Dakmok",
+      "cells": 3000,
+      "placements": 3140,
+      "mapSHA256": "95e37eb676b2215c775f53043f512c2e129660d1500b3d684dd91b8cb2b76092",
+      "a2Errors": 0
+    },
+    {
+      "map": "goryeo_songak",
+      "cells": 3600,
+      "placements": 3786,
+      "mapSHA256": "976ccebe346b827be4fd0b4658a0c4dcb6718e59b1b3fb91c2ca53617aa26d99",
+      "a2Errors": 0
+    },
+    {
+      "map": "goryeo_jangdan",
+      "cells": 4400,
+      "placements": 4656,
+      "mapSHA256": "5a1fe2a709c48a42e281597fb170965647a6b758c58226815007666780d3668d",
+      "a2Errors": 0
+    },
+    {
+      "map": "transit_pass",
+      "cells": 1600,
+      "placements": 1684,
+      "mapSHA256": "b1913f881d1458b2296668fd8da8ff8067d3877b7641eb21d1ed54d2df875615",
+      "a2Errors": 0
+    },
+    {
+      "map": "transit_woodtown",
+      "cells": 4000,
+      "placements": 4234,
+      "mapSHA256": "4a568299e6cd93fe4eb8cb81e64d5e55b35733e9377915266644235896bd506f",
+      "a2Errors": 0
+    },
+    {
+      "map": "transit_wetroad",
+      "cells": 4000,
+      "placements": 4196,
+      "mapSHA256": "c3403ecd0f4bd6480f3d54ec50f20eb52cbf1bfaec7258e9a8c9d312114d7c11",
+      "a2Errors": 0
+    },
+    {
+      "map": "transit_ferry",
+      "cells": 5000,
+      "placements": 5272,
+      "mapSHA256": "33454cf9b12e8f8fd64518925ab5cd0a43a565a3a5de42f1059dfdbe6a50c638",
+      "a2Errors": 0
+    },
+    {
+      "map": "transit_central_approach",
+      "cells": 5200,
+      "placements": 5516,
+      "mapSHA256": "e4ee279013904c2c092da3fc7b54bfdfc5ae5db16fc7f71720c6efe7c14e836c",
+      "a2Errors": 0
+    },
+    {
+      "map": "transit_crossroads",
+      "cells": 5200,
+      "placements": 5516,
+      "mapSHA256": "edb5843e28b341940d640c73dc8ae7f0feb4ebfffd876f633af9bfb2f9823a13",
+      "a2Errors": 0
+    }
+  ],
+  "renderTileImages": 654,
+  "cropCalls": 0,
+  "recolorCalls": 0,
+  "toneCalls": 0,
+  "catalogueAssets": 669,
+  "frozenTileKeys": 663,
+  "visualFrames": 579,
+  "resourcesByteIdentical": true
+}

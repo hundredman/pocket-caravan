@@ -1,0 +1,1063 @@
+{
+  "schemaVersion": 1,
+  "status": "보관(꾸미기 후보)",
+  "runtimeUse": false,
+  "assets": [
+    {
+      "file": "elder_tall_d0.png",
+      "sha256": "45a575a64e2a10c9215198c804c4fd130f0c38ca8ab33c77dfbbd5d73a26e1e4",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "elder_tall_d1.png",
+      "sha256": "acae1c9ac1a39f583b555d21fbecffc7ed5f13f98a2333488bc242a9973b0b8d",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "elder_tall_d2.png",
+      "sha256": "45a575a64e2a10c9215198c804c4fd130f0c38ca8ab33c77dfbbd5d73a26e1e4",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "elder_tall_d3.png",
+      "sha256": "62e9d8e04411f79d33d5e7c7875ec5de191ce392c698b22d5bb51abc1f7581b6",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "elder_tall_u0.png",
+      "sha256": "f6a126621d41f55c4caade3ec6ee6b5ad096cfecbd5c453ec4a49bcf11852fbe",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "elder_tall_u1.png",
+      "sha256": "67cc947a40fdb2678f20c9aa8a5d96f5fc91ba21328f77524ce8d2fafd012b36",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "elder_tall_u2.png",
+      "sha256": "f6a126621d41f55c4caade3ec6ee6b5ad096cfecbd5c453ec4a49bcf11852fbe",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "elder_tall_u3.png",
+      "sha256": "1a04c8300d587bc26a0f9e8c1d09d37bc995b6bf61887409c8e9129d6e062668",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "elder_tall_l0.png",
+      "sha256": "051db13d7262156793084dd7ab45797e396cf24682ee9e3ba2553c0ee3a7e213",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "elder_tall_l1.png",
+      "sha256": "f7b746a129059a976a1ce1495df2811726014d97e5e575d29c4a0cec95154541",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "elder_tall_l2.png",
+      "sha256": "051db13d7262156793084dd7ab45797e396cf24682ee9e3ba2553c0ee3a7e213",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "elder_tall_l3.png",
+      "sha256": "59efac45a638516c79f302aaa2bac87a6be3caded5f7ed394ebad63e46fdbd83",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "elder_tall_r0.png",
+      "sha256": "d4b8cf437becd50b875d74b98a49481dda36ff3846d6ae9ebf8ec461c0664566",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "elder_tall_r1.png",
+      "sha256": "3c0a6f4a0990dd1cb4b865eb9fd6d97dfe5c49a722d032f989191b5af5b20fb3",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "elder_tall_r2.png",
+      "sha256": "d4b8cf437becd50b875d74b98a49481dda36ff3846d6ae9ebf8ec461c0664566",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "elder_tall_r3.png",
+      "sha256": "94dd49d04d8f0dd241a9a9b1d8d7ba33b5085a37ae3f6a7b68259298986d3386",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_d0.png",
+      "sha256": "b997c8c3e7b07b491357aaa80f98c83af3e2befc63b8ad1fbc09b66a97c7841a",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_d1.png",
+      "sha256": "93fea19bea7fbaa8188536bfb80c20bb484724d6314489dad571e6020f41edab",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_d2.png",
+      "sha256": "b997c8c3e7b07b491357aaa80f98c83af3e2befc63b8ad1fbc09b66a97c7841a",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_d3.png",
+      "sha256": "6e1ee5a3ed97f3e8299b53fc0ae4ee5e65b011f4540e9d96127b16229b8c3cf2",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_u0.png",
+      "sha256": "855c1ac8d11c6df0aee4e7a8e33fef0ea4418a2e8b15f90c9ea43ef165be0af3",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_u1.png",
+      "sha256": "08e384c1852b2d61fdd59f8961a02352e0247050fece831e08808a8b6a6f5d44",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_u2.png",
+      "sha256": "855c1ac8d11c6df0aee4e7a8e33fef0ea4418a2e8b15f90c9ea43ef165be0af3",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_u3.png",
+      "sha256": "93ffc95aa31751bf9efadeab7c7ce749e7f9bf38fbbf336032494dae615d2b66",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_l0.png",
+      "sha256": "e0e852f1de5607368cedaadb7a96be245b456a91c95bd9f60305c6b2db13ab35",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_l1.png",
+      "sha256": "3c805f918942b6dfe0c3bc46044a395935948acd552f645b469e7629a4218b5f",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_l2.png",
+      "sha256": "e0e852f1de5607368cedaadb7a96be245b456a91c95bd9f60305c6b2db13ab35",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_l3.png",
+      "sha256": "569db26f4c363fcda04351a51157f98daf0215c353a257774cc121fc9861152a",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_r0.png",
+      "sha256": "304b8a83a101c7ce6058bc8f10cb6f0e7041b394f04d9c93ac4effe129c182b7",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_r1.png",
+      "sha256": "37b7fe14950bfe3515fb0a5f4d7537d5c6a50c678f90694f31f82132f9fe9105",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_r2.png",
+      "sha256": "304b8a83a101c7ce6058bc8f10cb6f0e7041b394f04d9c93ac4effe129c182b7",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "gaekju_tall_r3.png",
+      "sha256": "9561cd8ad299db37ed203e8a328194a26102ba53ea9c448f455e0a0bd4d7b60d",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_d0.png",
+      "sha256": "40bafd963bbe621eadde3840c1ef04a8db20abf813e0c5074d3dbde5b0dad33c",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_d1.png",
+      "sha256": "fed526c3a041d4b6d4edd0919d038d851e37d337e76ff733c4f704cfea7c4976",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_d2.png",
+      "sha256": "40bafd963bbe621eadde3840c1ef04a8db20abf813e0c5074d3dbde5b0dad33c",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_d3.png",
+      "sha256": "2d73d36b19ff7f9ec9200b8d09bd36d8ef26b8eccd0e87d07318dcc0f4f434d9",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_u0.png",
+      "sha256": "d4c5996cfcfa1f3a780fbc81faf25e5e780b2e09a23ab250ff12a59ed9a8110a",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_u1.png",
+      "sha256": "c55d675399545eabb4b023d13bd46c7d478b7c1408bf07c1c15571bd5eb895a3",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_u2.png",
+      "sha256": "d4c5996cfcfa1f3a780fbc81faf25e5e780b2e09a23ab250ff12a59ed9a8110a",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_u3.png",
+      "sha256": "520fd219285584ed4a5df6613258344907838c37cd5d70298cc02c2a16be74cf",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_l0.png",
+      "sha256": "b509f518b2f3cf9f68487a34100648ffaa434a70419ae8c1273528e3d9e9adbe",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_l1.png",
+      "sha256": "a1e8b0b787aa13cbda0b4d725950fcbbe738047f3676325169c08ca68a6ff2e0",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_l2.png",
+      "sha256": "b509f518b2f3cf9f68487a34100648ffaa434a70419ae8c1273528e3d9e9adbe",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_l3.png",
+      "sha256": "ea9e021e79c06004345d48a477f3edc8a2f82bf396a023e8052aaeb3c81b442d",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_r0.png",
+      "sha256": "7765d13c799dcd654698963955eda788d9332e527e871341f01c307a0d63fbaf",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_r1.png",
+      "sha256": "2d50aee18dddfeb0c86bcf97f945b851539096206b3b43fae284ac6efd9d028a",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_r2.png",
+      "sha256": "7765d13c799dcd654698963955eda788d9332e527e871341f01c307a0d63fbaf",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "merchant_tall_r3.png",
+      "sha256": "e148f07e0569fe6556b8e0c991c786ce88bdb0ac79913b91ddae342abff06a70",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_d0.png",
+      "sha256": "a3634ab0042523bdafd214531741a7cf47a6d43a79e1e1363c445ffd4e01e0be",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_d1.png",
+      "sha256": "99a3ed0f614565f3e77d2f4a4241c30ae79ac87e249642d677d70facc5195c49",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_d2.png",
+      "sha256": "a3634ab0042523bdafd214531741a7cf47a6d43a79e1e1363c445ffd4e01e0be",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_d3.png",
+      "sha256": "9536f6cacc4f59250027acbcad3420db2b945365669ea901d712c502f4f27d9a",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_u0.png",
+      "sha256": "2fb194a64a49a6e97600094ba93a45a95d5ffb0466ec02c80bbaf2e130d920eb",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_u1.png",
+      "sha256": "ba615e3c3cc9daf68dc783e3d9e2d54d62b346a095855d1223dc1345874dc5c8",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_u2.png",
+      "sha256": "2fb194a64a49a6e97600094ba93a45a95d5ffb0466ec02c80bbaf2e130d920eb",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_u3.png",
+      "sha256": "aabd21f4621bed2f5c48ad7e1dd3d4040b137260db1dad61f3b3e2307a2bd7e7",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_l0.png",
+      "sha256": "87cace4a27a94086ae661e497c7e8c901df22ae6a530894e80dc9b99c7c47b23",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_l1.png",
+      "sha256": "7c499b9363dc7804aea22fa7f9182559701a127b381488bec97baf5bcc737043",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_l2.png",
+      "sha256": "87cace4a27a94086ae661e497c7e8c901df22ae6a530894e80dc9b99c7c47b23",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_l3.png",
+      "sha256": "ade7bb2785307f53123eb59a79ecf61e761c7bbdd223aaa0eadcd5cc9f6ea557",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_r0.png",
+      "sha256": "edfb0f7da257e89b2459712f703ac2bea0b1b1490178b7c899c74813a6726203",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_r1.png",
+      "sha256": "6d178a6269a279eda14d1f0c414aa3d1981167bb058ec901b6e8743556d68382",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_r2.png",
+      "sha256": "edfb0f7da257e89b2459712f703ac2bea0b1b1490178b7c899c74813a6726203",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "dakmokchief_tall_r3.png",
+      "sha256": "e820dc3c1851fcffd5528a6e660ffd15ab7d1390f8bc01dde10c0acee7255d6e",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_d0.png",
+      "sha256": "e25da670140f92d0cec176599718cd30229c5a8e8db954ec9b53c76fde840e54",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_d1.png",
+      "sha256": "918ff44b579495e7ab363d0df9ec25c435086dcd760e16c301535d5e605a3241",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_d2.png",
+      "sha256": "e25da670140f92d0cec176599718cd30229c5a8e8db954ec9b53c76fde840e54",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_d3.png",
+      "sha256": "0227de4dd39376f6e769e3a1db714edb9fa187c20e9e7abdf403ebdca3982784",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_u0.png",
+      "sha256": "69970f12ee44d13414b8da3f2cc79e5870de2e5ab2cccb0781bc569467da2667",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_u1.png",
+      "sha256": "7ed393d84df5903140f20749162db0c1d12f94836c265cc6575e0b725bc4a496",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_u2.png",
+      "sha256": "69970f12ee44d13414b8da3f2cc79e5870de2e5ab2cccb0781bc569467da2667",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_u3.png",
+      "sha256": "01f3551c91e5c3ce235314062154c3f814244ca9e76870b976255c38fa37ac25",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_l0.png",
+      "sha256": "088504aeb65038daa19d636f10a3100f13040ee34c033727b8a56a60c027586e",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_l1.png",
+      "sha256": "08098ede963ea2c5efedb0e78d9724caeae0b647762abce207382a6bb138365b",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_l2.png",
+      "sha256": "088504aeb65038daa19d636f10a3100f13040ee34c033727b8a56a60c027586e",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_l3.png",
+      "sha256": "02e2bf0ade56d36238bb2fa47e562016b3a19e3125062558ce96df7d6a958af5",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_r0.png",
+      "sha256": "eb6213cce2fde161dd498e74cdca108728a597198d7cd03a41c145390f286754",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_r1.png",
+      "sha256": "457e1f6aa945cdae628f1f3856123158c8b81e454596248d39d1905ae51518fb",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_r2.png",
+      "sha256": "eb6213cce2fde161dd498e74cdca108728a597198d7cd03a41c145390f286754",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_bear_tall_r3.png",
+      "sha256": "8aef3db9dcf5e9f4e789d457e1fc03acf07da3768393e5f7288f441161c113d5",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_d0.png",
+      "sha256": "557783917264e0c36988d84d0d0da6994455a1288385d8668714f262b03cc13e",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_d1.png",
+      "sha256": "2ef616eb6b3250397fc47eecaa0c22e72520c25e938696c667c62671e8a9adf2",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_d2.png",
+      "sha256": "557783917264e0c36988d84d0d0da6994455a1288385d8668714f262b03cc13e",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_d3.png",
+      "sha256": "9c9975d54a5d2f4aabc1febf1906b1762c7debb67b04610120bceb67836acb4f",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_u0.png",
+      "sha256": "b9c60ba2eb2d5dc24508da113675c4146120f7a99bcac446f79b01748b0cefc7",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_u1.png",
+      "sha256": "8ca1ba2271078980dc6bda4489fe59d8016161e9d356dbd636dbbad3b0359688",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_u2.png",
+      "sha256": "b9c60ba2eb2d5dc24508da113675c4146120f7a99bcac446f79b01748b0cefc7",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_u3.png",
+      "sha256": "c86058653e58885820ef172a50ba5d0ab6d595821a5cc542a20f14fb40da0b44",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_l0.png",
+      "sha256": "8af3cf29a39b5447bba00b68e19e5605be28d2a582c27e8fc667d4f0d2790db1",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_l1.png",
+      "sha256": "56e32e53900554ae6950a63886a9db17312c496761a84ef6c0f412a43ea967b5",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_l2.png",
+      "sha256": "8af3cf29a39b5447bba00b68e19e5605be28d2a582c27e8fc667d4f0d2790db1",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_l3.png",
+      "sha256": "b43a41b87df4c1b258e942bb860010c925fd905a0eda534ab01be2becab18ca7",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_r0.png",
+      "sha256": "00ed7ef5e2ccecad1cc46f85a2c9d6df180f589ddb278b65d3ac939e207a37a5",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_r1.png",
+      "sha256": "da2bdf0dbc05207cc26f4b3714701456a8162bd81956e7300411af0db616e21d",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_r2.png",
+      "sha256": "00ed7ef5e2ccecad1cc46f85a2c9d6df180f589ddb278b65d3ac939e207a37a5",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_rabbit_tall_r3.png",
+      "sha256": "e86d39d49a85c18878ef4dd77663d74186b5c66997ffadde6be3abdb11df1584",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_d0.png",
+      "sha256": "3b8ea06e7e1fe1ff495cc3f46d07dff89dbf508a4e9fe6ecbe55417b453b862f",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_d1.png",
+      "sha256": "c8478f00511dabeb557495e5e8f42c7d48e995440e4615864d8b4e6eee586a18",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_d2.png",
+      "sha256": "3b8ea06e7e1fe1ff495cc3f46d07dff89dbf508a4e9fe6ecbe55417b453b862f",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_d3.png",
+      "sha256": "e4c0e842bab44dfc94ddc221e27f2a8dd67e5f558bfa1bba41e6b075bacfbe19",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_u0.png",
+      "sha256": "2767efd99cb8997bdfc1ed65d71b4fd1e3fb955c02be91ba7613f6122e14ff5b",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_u1.png",
+      "sha256": "f541111142468a7743c1b79f51f50ce459ee407e881808133dd3e47c62482b38",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_u2.png",
+      "sha256": "2767efd99cb8997bdfc1ed65d71b4fd1e3fb955c02be91ba7613f6122e14ff5b",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_u3.png",
+      "sha256": "0480849a187cd1a36479c1c2a56dc877e271b73fd2d9033812216f4e9db8ed7e",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_l0.png",
+      "sha256": "b79be2504285e72997aa133f3542e487749212dc421c7defa3fc4eb9ef0aaf78",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_l1.png",
+      "sha256": "f722de24e4290fd3bdf1d12c9a2b5348982958b3f89d59e41950959cb751e53f",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_l2.png",
+      "sha256": "b79be2504285e72997aa133f3542e487749212dc421c7defa3fc4eb9ef0aaf78",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_l3.png",
+      "sha256": "3f83965a6ae5c271908c7ef29ace73b655baa341bef6153b602dfb12ee4eb3b9",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_r0.png",
+      "sha256": "b1d8f26dd98b7fc48fed7218619c7f537e4a72eed0fefde178002f7c04e89067",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_r1.png",
+      "sha256": "abe719d1e30b3b13914d3c0899b5e824448c76f8ef55653c69676205e3cf53e2",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_r2.png",
+      "sha256": "b1d8f26dd98b7fc48fed7218619c7f537e4a72eed0fefde178002f7c04e89067",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_fox_tall_r3.png",
+      "sha256": "b4b2ef6fe41359abf7f944e0ddbcc86189b7a00d2e7af53395ba9b098f94693b",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_d0.png",
+      "sha256": "7f773eefb999f294eaa9e73381fc4982b1099d1ff71d777b661d8841762997bd",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_d1.png",
+      "sha256": "4c58fbf3cd94d54d43d1618cf3b1d3e35c2dc58ee3c44f3f750157eecf984ff6",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_d2.png",
+      "sha256": "7f773eefb999f294eaa9e73381fc4982b1099d1ff71d777b661d8841762997bd",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_d3.png",
+      "sha256": "c511d323c3967d84af550d0b830c50a665d0b572fec861a25f5093b9e94dc361",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_u0.png",
+      "sha256": "f8f76517ccc0acd36ab8cf2daf8756d002f600912841c305a547fe0f0cb07445",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_u1.png",
+      "sha256": "163a3b669bd7f336660802bb5c2583ec6af0904f15ca23b206566012d1b5425a",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_u2.png",
+      "sha256": "f8f76517ccc0acd36ab8cf2daf8756d002f600912841c305a547fe0f0cb07445",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_u3.png",
+      "sha256": "53a981092aba1d1643b6d587b63ae40f47b5b8355509650efd3012066e8d05b8",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_l0.png",
+      "sha256": "3d5fd20a043ef3c6cfb78a09d0080ed7a103e07b3a9421b5f72ffe5dbb0e7f7d",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_l1.png",
+      "sha256": "f9a26a6c2c5a363c690f22700deaf8743c87bfb4d43d0bc013983cbb82c3d35d",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_l2.png",
+      "sha256": "3d5fd20a043ef3c6cfb78a09d0080ed7a103e07b3a9421b5f72ffe5dbb0e7f7d",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_l3.png",
+      "sha256": "3bb4f68fd0e5b72eca6a74482569e837339abc3fdabb47f8cdee64509c782bc3",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_r0.png",
+      "sha256": "24a67286d98ce2bf9f1fe2f7f8f5bfcf08d548083304e06766102d467b354bf7",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_r1.png",
+      "sha256": "88e0b0f25093c116a809e55ac6a199e4d3ceb1afdd72c4b4019a40dd9d143645",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_r2.png",
+      "sha256": "24a67286d98ce2bf9f1fe2f7f8f5bfcf08d548083304e06766102d467b354bf7",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_dog_tall_r3.png",
+      "sha256": "073fcdc86daefa4375d9acf3f246ccee0556806cfc6f6d49ec37f4f1f1d01f22",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_d0.png",
+      "sha256": "7d25604eda05d0f93374857a0df0970df49728f4af2c53cdb7f506ef9f19848f",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_d1.png",
+      "sha256": "e9097bfc441712ed1f99f1327c2e2870e5306e6cc1126599096593c510c4362a",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_d2.png",
+      "sha256": "7d25604eda05d0f93374857a0df0970df49728f4af2c53cdb7f506ef9f19848f",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_d3.png",
+      "sha256": "8fcb9fe6a7b481a9e3ad3998e4a46f4174c0bab1c68b982e7d74598324a512a3",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_u0.png",
+      "sha256": "0780e9a07329b4683912343b0637ea56094a3167e9d99db12643de9ae1ae6c5e",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_u1.png",
+      "sha256": "572630928acef8d7296240dfd9508957da5a60edcd7208fecd26e14009877253",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_u2.png",
+      "sha256": "0780e9a07329b4683912343b0637ea56094a3167e9d99db12643de9ae1ae6c5e",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_u3.png",
+      "sha256": "11260f5f634bc0d36efa727fac3a4fa6cc3d4984573faa4426c80c9e9841675f",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_l0.png",
+      "sha256": "fad749022ce1d9859e874eb74c156789a6aaa0055dba75e7a7e0a80acf8da047",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_l1.png",
+      "sha256": "5c6aa85269891c899278831fb2e0a10c9fd868c83903afc2b538d5e11302f7d5",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_l2.png",
+      "sha256": "fad749022ce1d9859e874eb74c156789a6aaa0055dba75e7a7e0a80acf8da047",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_l3.png",
+      "sha256": "35e7f8033105c541dfdee0601e19c4d4fb1d1ed04d474aa39cb6468d24ed462c",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_r0.png",
+      "sha256": "8c1a2187574e2a28042d5890a17f0846b6d4472931e61cc995af73b129b82adf",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_r1.png",
+      "sha256": "dd39a4abe467c06a74a119c0949a4d17e00dbd34cdaf815948583edeab5dd8ef",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_r2.png",
+      "sha256": "8c1a2187574e2a28042d5890a17f0846b6d4472931e61cc995af73b129b82adf",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "villager_tanuki_tall_r3.png",
+      "sha256": "6d771cccafefac43052c969cdb61767ba517b3907d16fb21f3e0c0ef119a642f",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_d0.png",
+      "sha256": "36d9769aede0a44d10e43a387a5afae473ee3dee7272b7f43062d02d141a8edd",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_d1.png",
+      "sha256": "407c93c789d510a6cc6eb25df1fb32ff94cccb0ce74746d3f0a766bb57e1658f",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_d2.png",
+      "sha256": "36d9769aede0a44d10e43a387a5afae473ee3dee7272b7f43062d02d141a8edd",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_d3.png",
+      "sha256": "563702ea7c9412e5b8fd47e50d9bb76c52f00a705aac97fbe7b4208804747313",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_u0.png",
+      "sha256": "ea1407c9acfc413a8645e058423364c8d388722195b5598b2480f783e4d9510b",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_u1.png",
+      "sha256": "bbb1ada87d07f2dc58056e16bb3b6737f2cdfa01364bf7c9ee6a770567fccc33",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_u2.png",
+      "sha256": "ea1407c9acfc413a8645e058423364c8d388722195b5598b2480f783e4d9510b",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_u3.png",
+      "sha256": "ad00b34c3e25b16f188ff05d4037f0e8debfcae5b27b2d0c1b92a17a2ef899a9",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_l0.png",
+      "sha256": "e62beda45700c35dad530a0aa333d0250d79c295cd9f2baf78a0f10665d2c1bb",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_l1.png",
+      "sha256": "e39eec7a8d98d560c6158e6a9cb6cb6da1d3fb407b48fdf35292b21990615aff",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_l2.png",
+      "sha256": "e62beda45700c35dad530a0aa333d0250d79c295cd9f2baf78a0f10665d2c1bb",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_l3.png",
+      "sha256": "acc6ae7e4663f841b0cc18b106d245278da137e1b1c862b5e1e32c8ed4f0f077",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_r0.png",
+      "sha256": "034e9c651869a08bff965897ef88806d740031966624653429b9b33f72ed79e0",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_r1.png",
+      "sha256": "1b73b9430d23939367bcea95b70e0e81613f6f64dc53335cc471f2993f4d9e77",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_r2.png",
+      "sha256": "034e9c651869a08bff965897ef88806d740031966624653429b9b33f72ed79e0",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "bandit_tall_r3.png",
+      "sha256": "233d7e8e184c275d1f65eea36651a0a9d142277b4c99907784a872324ec4e468",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_d0.png",
+      "sha256": "7ae20dfdea2fd9cacc8aa91d6993055e9a6bfe3acec217cb6f6e5a613456cc3a",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_d1.png",
+      "sha256": "27a111645ccd923cb97b26875e532915209a8d09d6471ee68dbcee84bb63e367",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_d2.png",
+      "sha256": "7ae20dfdea2fd9cacc8aa91d6993055e9a6bfe3acec217cb6f6e5a613456cc3a",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_d3.png",
+      "sha256": "8dd7862e7b348dfbedbfe9223c7055cb8287b41e2ab34b5f87f45d843c67caa1",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_u0.png",
+      "sha256": "29b424447269898c37a928def519289963c9b388f1d49de86833194b592b1c5c",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_u1.png",
+      "sha256": "62811dbc511175c0dc62baa607467cdb5feac81f09cd93f32979e59d14c02fe1",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_u2.png",
+      "sha256": "29b424447269898c37a928def519289963c9b388f1d49de86833194b592b1c5c",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_u3.png",
+      "sha256": "d64818770a831bd628ebc5d5ef7d2e3e86f1872daecdc917c203cc2b1096f896",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_l0.png",
+      "sha256": "125c0798093336b91241e7c556535ae7e979fae19afe6864dc400c23afb988d3",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_l1.png",
+      "sha256": "dc39248ad5eee88ac7bc61459f17b4b72352f38b0e6bcc63c4b8fe5151eeacbd",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_l2.png",
+      "sha256": "125c0798093336b91241e7c556535ae7e979fae19afe6864dc400c23afb988d3",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_l3.png",
+      "sha256": "c5baee2499aae29a6eb5de57e3168f0fab3e4992900f5713bbc8a3f5d8488424",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_r0.png",
+      "sha256": "7b943a36d586637e9b0817aacd4bc12ae26d831801fb0cd19b1c2d685b52ccb6",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_r1.png",
+      "sha256": "ed1e72a51d6131f787b28cb60ee95b433f4a702005cf821d9c9d85a301c17c1f",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_r2.png",
+      "sha256": "7b943a36d586637e9b0817aacd4bc12ae26d831801fb0cd19b1c2d685b52ccb6",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    },
+    {
+      "file": "trader_tall_r3.png",
+      "sha256": "a7ceb93f7b11a646c92762e7098dec05489d93a1cdae4701a0ba9d6a2f7b8f12",
+      "usageState": "보관(꾸미기 후보)",
+      "source": "Tools/ArtGen/chars.py"
+    }
+  ]
+}

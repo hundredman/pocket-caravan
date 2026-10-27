@@ -1,0 +1,26 @@
+{
+  "tool": "built-in imagegen",
+  "referenceRoles": {
+    "Docs/Images/team-style-reference.png": "target Venice/Arabia style, upper board",
+    "ArtReview/C7-TeamStyle-20261027/Native/tile-house.png": "approved style and roof color",
+    "ArtReview/Environment-Expand-v2/palace-before.png": "prior palace architecture and proportions"
+  },
+  "iterations": [
+    {
+      "image": "first-wide-study.png",
+      "result": "too low/wide; not selected"
+    },
+    {
+      "image": "palace.png",
+      "result": "architecturally taller single storey; selected trial seed"
+    }
+  ],
+  "pipeline": "whole opaque-bounds uniform nearest native sampling in Aseprite; A5 explicit candidate colors; separate native outer contour layer",
+  "nativeCanvas": [
+    160,
+    112
+  ],
+  "sourceOpacityThreshold": 224,
+  "sharedPaletteApproved": false,
+  "productionApplied": false
+}

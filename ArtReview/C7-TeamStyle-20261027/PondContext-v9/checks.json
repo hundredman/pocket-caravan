@@ -1,0 +1,168 @@
+{
+  "status": "pending user approval for natural-ground context",
+  "waterOpaquePixelsCompared": 1928,
+  "waterOpaquePixelDifferences": 0,
+  "pondCells": [
+    {
+      "x": 20,
+      "y": 3,
+      "piece": "water_02",
+      "originalImage": "ArtReview/Approved/A4-Pond/pieces/water_02.png",
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "1d4e2789714f2282295029a20df90b5b91c9330dcba608b10f539f0bef89259c"
+    },
+    {
+      "x": 21,
+      "y": 4,
+      "piece": "outer_corner",
+      "originalImage": "ArtReview/Approved/A4-Pond/pieces/outer_corner.png",
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "e7bd3f099b962092a57b846371789e667a2e8cd8448b554193aa806ddf3a75b6"
+    },
+    {
+      "x": 21,
+      "y": 3,
+      "piece": "water_3f",
+      "originalImage": "ArtReview/Approved/A4-Pond/pieces/water_3f.png",
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "9c512578338bc321c2b30628452723dbc58fad9c24f1b74df2db9174dae38688"
+    },
+    {
+      "x": 21,
+      "y": 2,
+      "piece": "outer_corner_sw",
+      "originalImage": "ArtReview/Approved/A4-Pond/pieces/outer_corner_sw.png",
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "47b5330211c2e861491269dfde7ec9caf629896c8b041c29f50f95d46bf046a3"
+    },
+    {
+      "x": 22,
+      "y": 4,
+      "piece": "edge",
+      "originalImage": "ArtReview/Approved/A4-Pond/pieces/edge.png",
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "a4edb70f619c34e6131f9bb29fb1b76a00a81e729fc7a2988e81b913a3a676f2"
+    },
+    {
+      "x": 22,
+      "y": 3,
+      "piece": "center",
+      "originalImage": "ArtReview/Approved/A4-Pond/pieces/center.png",
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "bb2e7426254bd6a042174d6aea9cc1ac29ee9afd701bdd251ca6f760a52e3f9f"
+    },
+    {
+      "x": 22,
+      "y": 2,
+      "piece": "edge_s",
+      "originalImage": "ArtReview/Approved/A4-Pond/pieces/edge_s.png",
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "9a373c5e6d98aa1f036f09d6421a3dcb4b5f585601d78273feb57454aeae4ddb"
+    },
+    {
+      "x": 23,
+      "y": 4,
+      "piece": "outer_corner_ne",
+      "originalImage": "ArtReview/Approved/A4-Pond/pieces/outer_corner_ne.png",
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "c7c529ae58a39e9268f91745a9445f3b299fc4ac967e76f048c8a122000a7239"
+    },
+    {
+      "x": 23,
+      "y": 3,
+      "piece": "water_cf",
+      "originalImage": "ArtReview/Approved/A4-Pond/pieces/water_cf.png",
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "8775cf1836079e56714230325933cfced0b573daced9d9840d5b87d7cc64beff"
+    },
+    {
+      "x": 23,
+      "y": 2,
+      "piece": "outer_corner_se",
+      "originalImage": "ArtReview/Approved/A4-Pond/pieces/outer_corner_se.png",
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "38ed02431be6a8d2271257281d8bc3fc921191db188d5a2a4f11533c0fc95050"
+    },
+    {
+      "x": 24,
+      "y": 3,
+      "piece": "water_08",
+      "originalImage": "ArtReview/Approved/A4-Pond/pieces/water_08.png",
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "e01acee6c4ca950c8bc7f2946ce59dcd834eb7e0c4b39c98c9501dd975d1a4e9"
+    }
+  ],
+  "otherObjects": [
+    {
+      "name": "thatch",
+      "opaquePixelDifferences": 0
+    },
+    {
+      "name": "tile-house",
+      "opaquePixelDifferences": 0
+    },
+    {
+      "name": "pine",
+      "opaquePixelDifferences": 0
+    }
+  ],
+  "change": "omit Gaegyeong paving underlay; original ground and all water art unchanged",
+  "placement": "complete first 11-cell pond; both variants shifted2cells south off the road",
+  "originalApprovalScope": "Gaegyeong22cells/11combinations with paving and lotus, preserved",
+  "files": {
+    "ArtReview/C7-TeamStyle-20261027/PondContext-v9/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "545f6b63fcd7ed79047f82225f39c1da2466d601e44e02854cbc1391e79f9bad"
+    },
+    "ArtReview/C7-TeamStyle-20261027/PondContext-v9/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "88d20cefb8180e53a0c5de5a7982f359f66e6440f941360829e84ab7c9463935"
+    },
+    "ArtReview/C7-TeamStyle-20261027/PondContext-v9/comparison.png": {
+      "size": [
+        1000,
+        770
+      ],
+      "rgbaSHA256": "a6dc249b4bc8846a414dbbdf9ab92411a6185ccd963a36f8f01eabf5aed09de1"
+    }
+  }
+}

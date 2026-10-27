@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-26",
+  "statement": "R2 화면 승인",
+  "scope": "R2 HUD, rare-purchase notice and map reputation display",
+  "images": [
+    {
+      "file": "hud-comparison.png",
+      "sha256": "a29ac51c5ea5583aa6f05deb272efb2ee3e72a7397af35362bf005cedac6a55a"
+    },
+    {
+      "file": "market-lock-half.png",
+      "sha256": "5f6305f62a046d56b85f78559dcb46028737b2f81b969f41d23bb0cff01026dd"
+    },
+    {
+      "file": "map-half.png",
+      "sha256": "fc3bd55b11275282e24dde2b610d87411fed5d9170c58ffd0ebf297df8233cef"
+    }
+  ]
+}

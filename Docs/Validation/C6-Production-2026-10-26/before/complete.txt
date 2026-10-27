@@ -1,0 +1,1 @@
+Actual previewOnly Play camera, 480x270; authoring poses frozen before Start; no persistent saves.

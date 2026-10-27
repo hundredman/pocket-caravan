@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "candidate": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#b78137",
+        "#daa34a",
+        "#f0c365",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#c4a779",
+        "#e0c99b",
+        "#f4dfb5",
+        "#77746c",
+        "#a29b87",
+        "#c4bca7",
+        "#4a627a",
+        "#718da3",
+        "#a5b9c3",
+        "#33475e"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7_cr_cart",
+      "kind": "object",
+      "purpose": "handcart",
+      "size": [
+        2,
+        2
+      ],
+      "profile": "candidate",
+      "image": "ArtReview/C7-CartRoof-20261027/Native/cart.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-CartRoof-20261027/Native/cart.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "date": "2026-10-27",
+        "feedback": "\uccab \uc18c\ud488 \ubb36\uc74c\uc758 \uc218\ub808\ub85c \ubcf5\uc6d0",
+        "userQuote": "\uc218\ub808\ub294 \ubc14\uafb8\uc9c0 \uc54a\uc740 \ucc98\uc74c \ubc84\uc804\uc774 \ub354 \ub098\uc558\uc5b4. \uadf8\ub9ac\uace0 \uae30\uc640\uc9d1\uc758 \uc717 \ubd80\ubd84\uc774 \ud770\ub370 \ub2e4\ub978 \uae30\uc640 \uc9c0\ubd95\ub4e4\ucc98\ub7fc \uc218\uc815\ud574\uc918."
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_cr_cart_0_0",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_cart_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_cr_cart_1_0",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_cart_1_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_cr_cart_0_1",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_cart_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_cr_cart_1_1",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_cart_1_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_cr_tile_house",
+      "kind": "object",
+      "purpose": "house",
+      "size": [
+        4,
+        3
+      ],
+      "profile": "candidate",
+      "image": "ArtReview/C7-CartRoof-20261027/Native/tile-house.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C7-CartRoof-20261027/Native/tile-house.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "date": "2026-10-27",
+        "feedback": "\ud770 \uc717\ubd80\ubd84\uc744 \ub2e4\ub978 \uae30\uc640 \uc9c0\ubd95\uacfc \uac19\uc740 \uccad\ud68c\uc0c9\uc73c\ub85c \uc218\uc815",
+        "userQuote": "\uc218\ub808\ub294 \ubc14\uafb8\uc9c0 \uc54a\uc740 \ucc98\uc74c \ubc84\uc804\uc774 \ub354 \ub098\uc558\uc5b4. \uadf8\ub9ac\uace0 \uae30\uc640\uc9d1\uc758 \uc717 \ubd80\ubd84\uc774 \ud770\ub370 \ub2e4\ub978 \uae30\uc640 \uc9c0\ubd95\ub4e4\ucc98\ub7fc \uc218\uc815\ud574\uc918."
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_cr_tile_house_0_0",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_tile_house_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_cr_tile_house_1_0",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_tile_house_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_cr_tile_house_2_0",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_tile_house_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_cr_tile_house_3_0",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_tile_house_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_cr_tile_house_0_1",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_tile_house_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_cr_tile_house_1_1",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_tile_house_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_cr_tile_house_2_1",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_tile_house_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_cr_tile_house_3_1",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_tile_house_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_cr_tile_house_0_2",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_tile_house_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_cr_tile_house_1_2",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_tile_house_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_cr_tile_house_2_2",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_tile_house_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_cr_tile_house_3_2",
+          "image": "ArtReview/C7-CartRoof-20261027/Cells/c7_cr_tile_house_3_2.png"
+        }
+      ]
+    }
+  ]
+}

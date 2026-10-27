@@ -1,0 +1,30 @@
+{
+  "errors": [],
+  "approval": "pending",
+  "decorationOpaquePixels": 120,
+  "pondOpaquePixels": 2164,
+  "coverageFraction": 0.05545286506469501,
+  "pondImage": {
+    "size": [
+      80,
+      48
+    ],
+    "rgbaSHA256": "f9b0808cbab2eb4daa2934cf6d64938427553518d31421a31baace4226f4a7b3"
+  },
+  "objects": {
+    "leaves": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "1d47e5e4c3c1809cec8fce43daf676645e4083d0e023e53ac1425d992f58a0b4"
+    },
+    "flower": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "d2fe9abcda55ef0bb67a918a2628cf8c6ba1cbaa9ef020e48467143a1507e014"
+    }
+  }
+}

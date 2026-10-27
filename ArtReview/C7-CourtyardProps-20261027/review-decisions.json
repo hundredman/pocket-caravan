@@ -1,0 +1,44 @@
+{
+  "c7_courtyard_paper_large": {
+    "status": "approved",
+    "date": "2026-10-27",
+    "userQuote": "좋아. 계속 진행해.",
+    "scope": "paper_large 그림 한 개 승인. 본편 배치/도시성벽/반복조립/성문 통행·담장 접합·가림/다른 그림은 별도.",
+    "evidence": "ArtReview/Approved/C7-CourtyardProps-v1/approval.json",
+    "rgbaEvidence": {
+      "size": [
+        64,
+        48
+      ],
+      "rgbaSHA256": "df33eb932589eeb33553b7fa83c093cd60ca19437eebc5b8502e23f02b7ae280"
+    }
+  },
+  "c7_courtyard_garden_wall": {
+    "status": "approved",
+    "date": "2026-10-27",
+    "userQuote": "좋아. 계속 진행해.",
+    "scope": "garden_wall 그림 한 개 승인. 본편 배치/도시성벽/반복조립/성문 통행·담장 접합·가림/다른 그림은 별도.",
+    "evidence": "ArtReview/Approved/C7-CourtyardProps-v1/approval.json",
+    "rgbaEvidence": {
+      "size": [
+        64,
+        32
+      ],
+      "rgbaSHA256": "463bd45d26e6f78c16d8b7e8e384b6e19398edc3c69b0716de708cd3542da406"
+    }
+  },
+  "c7_courtyard_onggi": {
+    "status": "approved",
+    "date": "2026-10-27",
+    "userQuote": "좋아. 계속 진행해.",
+    "scope": "onggi 그림 한 개 승인. 본편 배치/도시성벽/반복조립/성문 통행·담장 접합·가림/다른 그림은 별도.",
+    "evidence": "ArtReview/Approved/C7-CourtyardProps-v1/approval.json",
+    "rgbaEvidence": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "61ce095c3b0c5382e729cf884e8b14dae4399e774e692a8a7a16124cc651dc03"
+    }
+  }
+}

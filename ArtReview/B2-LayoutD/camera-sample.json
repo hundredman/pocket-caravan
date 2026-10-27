@@ -1,0 +1,9 @@
+{
+  "globalCell": [
+    93,
+    -5
+  ],
+  "terrainX": 1,
+  "terrainY": -127,
+  "purpose": "static same-scale road comparison; not runtime scene layout"
+}

@@ -20,7 +20,7 @@ MonoBehaviour:
     \uC704\uC5D0\uC11C \uB354 \uBE60\uB974\uB2E4."
   giverNpc: dakmok_chief
   requires:
-  - {fileID: 11400000, guid: 5f1b114771f824928af105094288dc10, type: 2}
+  - {fileID: 11400000, guid: 432d591b7eb2527fa04e17c193984b57, type: 2}
   requiresAny: []
   choiceGroup: 
   offerLine: "\uB4F1\uC9D0\uC73C\uB85C\uB294 \uD55C \uBC88\uC5D0 \uBA87 \uB0E5 \uBABB
@@ -50,10 +50,13 @@ MonoBehaviour:
     completeLine: "\uC5B4\uC5FF\uD55C \uC218\uB808\uC0C1\uC774 \uB418\uC5C8\uAD6C\uBA3C!
       \uC774\uC81C \uC790\uB124\uB3C4 \uD55C \uC0AC\uB78C \uBAAB\uC758 \uC0C1\uC778\uC77C\uC138."
   rewardMoney: 0
-  rewardCredit: 2
-  hasLegacyReward: 0
+  rewardCredit: 0
+  rewardReputationScope: 0
+  rewardReputationTarget: goryeo
+  rewardReputationSize: 2
+  hasLegacyReward: 1
   legacyRewardMoney: 0
-  legacyRewardCredit: 0
+  legacyRewardCredit: 2
   finishNote: "\uC801\uC7AC \uACF5\uAC04\uC774 \uC138 \uBC30\uAC00 \uB410\uC2B5\uB2C8\uB2E4.
     \uC7A5\uB2E8\uC758 \uB554\uAC10\uC744 \uB2E5\uBAA9\uC73C\uB85C \uC62E\uAE30\uAC70\uB098
     \uADC0\uD658\uD488\uC744 \uB354 \uC2E4\uC5B4 \uBCF4\uC138\uC694. \uC218\uB808\uAC12

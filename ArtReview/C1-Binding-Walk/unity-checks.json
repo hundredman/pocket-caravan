@@ -1,0 +1,117 @@
+{
+  "frameSelectionChecks": [
+    {
+      "direction": "d",
+      "frame": 0,
+      "characters": 5,
+      "allMatched": true
+    },
+    {
+      "direction": "d",
+      "frame": 1,
+      "characters": 5,
+      "allMatched": true
+    },
+    {
+      "direction": "d",
+      "frame": 2,
+      "characters": 5,
+      "allMatched": true
+    },
+    {
+      "direction": "d",
+      "frame": 3,
+      "characters": 5,
+      "allMatched": true
+    },
+    {
+      "direction": "u",
+      "frame": 0,
+      "characters": 5,
+      "allMatched": true
+    },
+    {
+      "direction": "u",
+      "frame": 1,
+      "characters": 5,
+      "allMatched": true
+    },
+    {
+      "direction": "u",
+      "frame": 2,
+      "characters": 5,
+      "allMatched": true
+    },
+    {
+      "direction": "u",
+      "frame": 3,
+      "characters": 5,
+      "allMatched": true
+    },
+    {
+      "direction": "l",
+      "frame": 0,
+      "characters": 5,
+      "allMatched": true
+    },
+    {
+      "direction": "l",
+      "frame": 1,
+      "characters": 5,
+      "allMatched": true
+    },
+    {
+      "direction": "l",
+      "frame": 2,
+      "characters": 5,
+      "allMatched": true
+    },
+    {
+      "direction": "l",
+      "frame": 3,
+      "characters": 5,
+      "allMatched": true
+    },
+    {
+      "direction": "r",
+      "frame": 0,
+      "characters": 5,
+      "allMatched": true
+    },
+    {
+      "direction": "r",
+      "frame": 1,
+      "characters": 5,
+      "allMatched": true
+    },
+    {
+      "direction": "r",
+      "frame": 2,
+      "characters": 5,
+      "allMatched": true
+    },
+    {
+      "direction": "r",
+      "frame": 3,
+      "characters": 5,
+      "allMatched": true
+    }
+  ],
+  "frameSelectionTotal": 80,
+  "loopAndIdleChecks": 40,
+  "allMatched": true,
+  "scene": "goryeo_jangdan",
+  "ppu": 16,
+  "pivot": [
+    8,
+    6
+  ],
+  "scale": [
+    1,
+    1,
+    1
+  ],
+  "autosave": false,
+  "sceneDirty": false,
+  "scope": "in-place walk selection only; no production replacement or gameplay test"
+}

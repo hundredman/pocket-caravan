@@ -1,0 +1,52 @@
+{
+  "mode": "technical_preview",
+  "manifest": "ArtReview/C6-Preflight-2026-10-26/catalogue-draft.json",
+  "maps": [],
+  "placementsChecked": false,
+  "unprofiledAssets": [],
+  "errors": [
+    {
+      "code": "image_alpha",
+      "location": "c6_paper_rack_665314e5.image",
+      "message": "semi-transparent pixels are not allowed"
+    },
+    {
+      "code": "image_alpha",
+      "location": "c6_paper_rack_665314e5.work_0_1_goryeo_jade",
+      "message": "semi-transparent pixels are not allowed"
+    },
+    {
+      "code": "image_alpha",
+      "location": "c6_paper_rack_665314e5.work_1_1_goryeo_jade",
+      "message": "semi-transparent pixels are not allowed"
+    },
+    {
+      "code": "image_alpha",
+      "location": "c6_paper_rack_665314e5.work_2_1_goryeo_jade",
+      "message": "semi-transparent pixels are not allowed"
+    },
+    {
+      "code": "image_alpha",
+      "location": "c6_module_rock_15917f3a.image",
+      "message": "semi-transparent pixels are not allowed"
+    },
+    {
+      "code": "image_alpha",
+      "location": "c6_module_rock_15917f3a.module_0_1",
+      "message": "semi-transparent pixels are not allowed"
+    },
+    {
+      "code": "image_alpha",
+      "location": "c6_module_rock_15917f3a.module_1_1",
+      "message": "semi-transparent pixels are not allowed"
+    }
+  ],
+  "errorCount": 7,
+  "notChecked": [
+    "visual_style",
+    "actual_user_authorization",
+    "Unity_scene",
+    "gameplay"
+  ],
+  "note": "Only explicitly configured pixel profiles and terrain rules are checked. No art standard is chosen."
+}

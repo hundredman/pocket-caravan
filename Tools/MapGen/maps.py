@@ -40,7 +40,7 @@ def naru():
     for px, py, prop in [(7, 19, 0), (8, 19, 1), (12, 17, 0), (12, 18, 2), (13, 16, 1)]:
         m.prop(PROPS[prop], px, py)
     m.sign(12, 16, "나루 하역장\n이곳 소금은 개경·닥나무 마을에서 거래할 수 있다.\n돌아올 때 실을 물건도 장터에서 살펴보자.")
-    m.add("worker", 10, 20, name="나루 짐꾼", character="villager_dog_tall",
+    m.add("worker", 10, 20, name="나루 짐꾼", character='NPC/npc_naru_porter/npc_naru_porter_tall',
           lines=["배에서 내린 소금은 저 위 장터로 옮기고 있소. 길을 비워 두었으니 짐수레도 지나갈 수 있소."],
           path=[(10, 20), (10, 17)])
     m.add("ambience", 11, 23, id="river", radius=12)
@@ -78,8 +78,8 @@ def naru():
     # 사람
     m.add("npc", 21, 13, npc="naru_chief")       # 촌장: 정자나무 아래
     m.add("market", 24, 15, town="naru")         # 나루 장터
-    m.talker(12, 20, "뱃사공", "villager_bear_tall", "예성강 물길을 따라 내려가면 벽란도 포구가 나와. 송나라 배도 드나들지.")
-    m.talker(19, 20, "농부", "villager_rabbit_tall", "올해는 볕이 좋아 곡식이 잘 여물었어. 장날에 개경에 내다 팔 참이야.")
+    m.talker(12, 20, "뱃사공", 'NPC/npc_naru_boatman/npc_naru_boatman_tall', "예성강 물길을 따라 내려가면 벽란도 포구가 나와. 송나라 배도 드나들지.")
+    m.talker(19, 20, "농부", 'NPC/npc_naru_farmer/npc_naru_farmer_tall', "올해는 볕이 좋아 곡식이 잘 여물었어. 장날에 개경에 내다 팔 참이야.")
     m.add("spawn", 17, 14, id="S0")              # 게임 시작 자리 (마당)
 
     # 숲
@@ -113,7 +113,7 @@ def route01():
     m.door_path(16, 7, 4, 3, 13)                 # 주막 입구에서 교역로까지
     m.stamp("bench", 21, 10, force=True)
     m.prop(K("element", 3, 0), 15, 10); m.prop(K("element", 1, 1), 20, 9)
-    m.talker(18, 11, "주모", "villager_tanuki_tall", "먼 길 가시오? 개경 남문까지는 시내 건너 한참이오. 쉬었다 가시구려.",
+    m.talker(18, 11, "주모", None, "먼 길 가시오? 개경 남문까지는 시내 건너 한참이오. 쉬었다 가시구려.",
              "짐수레라면 이 앞 큰 다리로 가시오. 넓은 길이라 바퀴가 잘 구르오.",
              "등짐이 가벼우면 서쪽 갈림길에서 숲길로 가도 되오. 작은 다리를 건너면 남문 길에서 다시 만나오.")
 
@@ -124,9 +124,9 @@ def route01():
     m.sign(25, 5, "작은 다리 숲길\n짧지만 좁고 울퉁불퉁하다.\n수레는 노면 감속이 크다. 큰길과 이동 시간을 비교하자.")
 
     # 길에서 만나는 사람
-    m.talker(35, 17, "길손", "villager_fox_tall", "벽란도에서 오는 길이오. 거기는 송나라 배가 드나들어 별 물건이 다 있소.")
+    m.talker(35, 17, "길손", None, "벽란도에서 오는 길이오. 거기는 송나라 배가 드나들어 별 물건이 다 있소.")
     m.stamp("cart", 46, 22, force=True)
-    m.talker(45, 21, "수레꾼", "villager_dog_tall", "바퀴가 돌부리에 걸렸지 뭐요. 손수레는 길 없는 풀밭에서 영 힘을 못 써.",
+    m.talker(45, 21, "수레꾼", None, "바퀴가 돌부리에 걸렸지 뭐요. 손수레는 길 없는 풀밭에서 영 힘을 못 써.",
              "시내 건너 숲 근처에 도적이 숨어 있다더군. 짐을 싣고 지날 땐 달릴 준비를 하시오.")
 
     # 도적: 시내 동쪽 숲 그늘 (밤에 더 잦음)
@@ -184,7 +184,7 @@ def dakmok():
     m.road_path([(26, 11), (26, 12)], width=1, grade=1)
     m.prop(PROPS[0], 27, 11); m.prop(PROPS[2], 28, 12)
     m.sign(28, 7, "종이 작업장\n닥나무 재료를 씻고 종이를 떠서 말리는 곳.\n마른 종이는 마을 장터에서 거래한다.")
-    m.add("worker", 26, 8, name="종이 일꾼", character="villager_rabbit_tall",
+    m.add("worker", 26, 8, name="종이 일꾼", character='NPC/npc_paper_worker/npc_paper_worker_tall',
           lines=["뜬 종이는 저 건조대에서 말려요. 개경에 다녀올 생각이면 종이 값을 살펴보세요.",
                  "돌아오는 길에는 소금이나 생필품을 살펴봐요. 다만 장터 재고에 따라 값이 달라지니 장부만 믿지는 말고요."],
           path=[(26, 8), (26, 12)])

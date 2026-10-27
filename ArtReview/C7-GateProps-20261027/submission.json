@@ -1,0 +1,59 @@
+{
+  "statuses": {
+    "gate": "approved",
+    "well": "approved",
+    "stone_lantern": "approved"
+  },
+  "productionApplied": false,
+  "files": {
+    "style-comparison.png": {
+      "size": [
+        1120,
+        1150
+      ],
+      "rgbaSHA256": "d2b258b694dcf72d6e451c4075d4f26911231e4bad38d428d5d289b468415482"
+    },
+    "game-comparison.png": {
+      "size": [
+        1000,
+        480
+      ],
+      "rgbaSHA256": "50dbbe24157cace1eb4b97e2472f1eb2b0d06dd32f53d9aabea2fb539ed3fe2b"
+    },
+    "Screens/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "d9a49e4d8265f8f3e2cf6c5203838815ab3d6a795890a240a1f53f091588e7f8"
+    },
+    "Screens/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "600fd6e16996ae39a0422c6535ad53c0810b6463c6495b567dc0c43426ff5704"
+    },
+    "Native/gate.png": {
+      "size": [
+        96,
+        80
+      ],
+      "rgbaSHA256": "274138d508605fbea87a2cd26149fb26a8aa254dd188f3a481934a2dee2cc67f"
+    },
+    "Native/well.png": {
+      "size": [
+        16,
+        32
+      ],
+      "rgbaSHA256": "199222043446aebeadb5fd7ed4b21b231aec26866fb688924f5ff3e15d5a6efc"
+    },
+    "Native/stone_lantern.png": {
+      "size": [
+        16,
+        32
+      ],
+      "rgbaSHA256": "49a409329edd129adb88c9b5e4cc38ce5fbfdf81f4951a4fe910791db78ed3a6"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "status": "changes_requested",
+  "files": {
+    "before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "19df2af82028e06e7c1a838214e82eef3ab42c3ba1f040d7bd9d566831dbbce2"
+    },
+    "trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "7a37eb612d8656fc8c191c42d9c1136ebde0067761a01b14df51f0dbc69d8006"
+    },
+    "comparison.png": {
+      "size": [
+        1488,
+        752
+      ],
+      "rgbaSHA256": "6e27d8044cc4026717bbfeb3f7c12e48459ff4a536043505b59a7d1097a06a2b"
+    },
+    "decorated.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "81b1e8f1c06659f90ab15e3487463913ceeae083eee5c27cec9c11ed01d2a505"
+    }
+  },
+  "feedback": "사용자: 그늘 위치·테두리·모양이 여전히 이상함. 비슷한 구도와 아트스타일의 외부 연못 이미지 참고 필요."
+}

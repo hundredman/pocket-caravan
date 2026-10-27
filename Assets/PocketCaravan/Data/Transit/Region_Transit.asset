@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52173c030d53540968a2e67252f4c4e2, type: 3}
   m_Name: Region_Transit
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.RegionData
+  townReputation: 1
   id: transit
   displayName: "\uC911\uAC04 \uAD50\uC5ED\uAD8C"
   note: "\uBB38\uBA85 \uC0AC\uC774\uC758 \uAE34 \uC5EC\uC815\uC744 \uAC80\uC99D\uD558\uB294

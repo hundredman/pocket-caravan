@@ -1,0 +1,194 @@
+{
+  "characters": [
+    {
+      "character": "chief",
+      "size": [
+        16,
+        24
+      ],
+      "changedPixels": 37,
+      "coordinates": [
+        {
+          "x": 6,
+          "y": 10
+        },
+        {
+          "x": 10,
+          "y": 10
+        },
+        {
+          "x": 5,
+          "y": 16
+        },
+        {
+          "x": 6,
+          "y": 16
+        },
+        {
+          "x": 9,
+          "y": 16
+        },
+        {
+          "x": 10,
+          "y": 16
+        },
+        {
+          "x": 4,
+          "y": 17
+        },
+        {
+          "x": 5,
+          "y": 17
+        },
+        {
+          "x": 6,
+          "y": 17
+        },
+        {
+          "x": 9,
+          "y": 17
+        },
+        {
+          "x": 10,
+          "y": 17
+        },
+        {
+          "x": 11,
+          "y": 17
+        },
+        {
+          "x": 3,
+          "y": 18
+        },
+        {
+          "x": 4,
+          "y": 18
+        },
+        {
+          "x": 5,
+          "y": 18
+        },
+        {
+          "x": 6,
+          "y": 18
+        },
+        {
+          "x": 7,
+          "y": 18
+        },
+        {
+          "x": 8,
+          "y": 18
+        },
+        {
+          "x": 9,
+          "y": 18
+        },
+        {
+          "x": 10,
+          "y": 18
+        },
+        {
+          "x": 11,
+          "y": 18
+        },
+        {
+          "x": 4,
+          "y": 19
+        },
+        {
+          "x": 5,
+          "y": 19
+        },
+        {
+          "x": 6,
+          "y": 19
+        },
+        {
+          "x": 7,
+          "y": 19
+        },
+        {
+          "x": 8,
+          "y": 19
+        },
+        {
+          "x": 9,
+          "y": 19
+        },
+        {
+          "x": 10,
+          "y": 19
+        },
+        {
+          "x": 11,
+          "y": 19
+        },
+        {
+          "x": 4,
+          "y": 20
+        },
+        {
+          "x": 5,
+          "y": 20
+        },
+        {
+          "x": 6,
+          "y": 20
+        },
+        {
+          "x": 7,
+          "y": 20
+        },
+        {
+          "x": 8,
+          "y": 20
+        },
+        {
+          "x": 9,
+          "y": 20
+        },
+        {
+          "x": 10,
+          "y": 20
+        },
+        {
+          "x": 11,
+          "y": 20
+        }
+      ],
+      "alphaSilhouetteBaselinePreserved": true,
+      "binaryAlpha": true,
+      "asepriteReopenedPixelEqual": true
+    },
+    {
+      "character": "trader",
+      "size": [
+        16,
+        24
+      ],
+      "changedPixels": 3,
+      "coordinates": [
+        {
+          "x": 6,
+          "y": 14
+        },
+        {
+          "x": 9,
+          "y": 14
+        },
+        {
+          "x": 7,
+          "y": 15
+        }
+      ],
+      "alphaSilhouetteBaselinePreserved": true,
+      "binaryAlpha": true,
+      "asepriteReopenedPixelEqual": true
+    }
+  ],
+  "womanReferenceSHA256": "141e1839d36fc76561cd76258a3c32ed04e29fab261e46d6610bb0fb068d3964",
+  "scope": "native front sprites only; no Unity import or gameplay test",
+  "userApproval": "chief/trader front sprites and actual in-game scale approved; other directions/walk pending",
+  "D3PaletteApproval": false
+}

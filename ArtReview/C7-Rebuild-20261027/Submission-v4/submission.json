@@ -1,0 +1,54 @@
+{
+  "status": "changes_requested",
+  "scope": "C7 rebuilt houses/ground approval pending; pine retained; production unchanged; B3 layout approval separate",
+  "pngIdentity": "dimensions + decoded RGBA SHA256",
+  "files": {
+    "ArtReview/C7-Rebuild-20261027/Submission-v4/style-comparison.png": {
+      "size": [
+        1400,
+        1010
+      ],
+      "rgbaSHA256": "885f249375b94264e2b68d921f7f082a92d10536d6c8a06893c7a5a83cab1821"
+    },
+    "ArtReview/C7-Rebuild-20261027/Submission-v4/game-comparison.png": {
+      "size": [
+        1000,
+        698
+      ],
+      "rgbaSHA256": "cc249ff29e7db4dfa7c54ce4dae306bb03f24bec6a0189edaddf662c1f9bf053"
+    },
+    "ArtReview/C7-Rebuild-20261027/Submission-v4/game-native.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "d668cc6108266509d40d6e3ea84ec5011d9532c00eca99670d96549e4049ad05"
+    },
+    "ArtReview/C7-Rebuild-20261027/Submission-v4/game-3x.png": {
+      "size": [
+        1440,
+        810
+      ],
+      "rgbaSHA256": "b86f3044585e79b3983fb6602ac15dc7803fda4bbcdb953be6992e71da2624f4"
+    },
+    "ArtReview/C7-Rebuild-20261027/Screens-v4/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "39375efd95040f873e24d2c52c3947380c72d544db0278ebbfd7c5871b2a81ed"
+    },
+    "ArtReview/C7-Rebuild-20261027/Screens-v4/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "d668cc6108266509d40d6e3ea84ec5011d9532c00eca99670d96549e4049ad05"
+    }
+  },
+  "feedback": {
+    "user": "아직도 뭔가 어색해. 특징을 더 잘 살려봐.",
+    "clarification": "특징은 베네치아·아라비아 팀 아트의 표현 방식",
+    "followup": "ArtReview/C7-TeamStyle-20261027/Submission-v5"
+  }
+}

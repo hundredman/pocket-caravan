@@ -1,0 +1,36 @@
+{
+  "ppu": 16,
+  "filter": "Point",
+  "gameCaptureSize": [
+    1920,
+    1080
+  ],
+  "reviewPanelSize": [
+    480,
+    270
+  ],
+  "gaegyeong": {
+    "cells": 334,
+    "wholeObjects": 19,
+    "types": [
+      "palace",
+      "cottage",
+      "willow",
+      "forest_2",
+      "forest_4",
+      "forest_6"
+    ]
+  },
+  "naru": {
+    "cells": 24,
+    "wholeObjects": 2,
+    "types": [
+      "cottage_small"
+    ]
+  },
+  "autosave": false,
+  "sceneDirty": false,
+  "consoleErrors": 0,
+  "assetsSaved": false,
+  "artApproval": "pending"
+}

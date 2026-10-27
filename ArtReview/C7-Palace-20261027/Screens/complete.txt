@@ -1,0 +1,1 @@
+Actual Unity Play render; same original terrain and staging; before/after complete palace 160x112 at same anchor; approved house and actors, same original terrain, same pending v13 pond; changes limited to palace rectangle. previewOnly true; PPU16 Point480x270; no navigation or manual-play claim.

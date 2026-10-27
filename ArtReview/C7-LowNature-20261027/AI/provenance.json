@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-27",
+  "tool": "built-in imagegen",
+  "generationCounts": {
+    "moss_rock": 1,
+    "shrub": 1,
+    "tall_grass": 1,
+    "fallen_log": 1
+  },
+  "references": {
+    "shapeOnly": "Current frozen goryeo_woodland8/9/10/11 whole objects; exact paths in source-usage.json",
+    "style": [
+      "ArtReview/Approved/C7-Batch1-v1/willow.png",
+      "Docs/Images/team-style-reference.png"
+    ]
+  },
+  "processing": "Complete object uniform nearest-neighbor; A5 existing green/wood7 colors plus explicit gray/seedhead variants; Aseprite native exterior contour; no runtime mutation",
+  "palettes": {
+    "nature": 7,
+    "rock": 10,
+    "grass": 9,
+    "wood": 9
+  },
+  "gameplayChanged": false
+}

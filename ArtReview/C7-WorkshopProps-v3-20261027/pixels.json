@@ -1,0 +1,23 @@
+{
+  "paper_rack": {
+    "size": [
+      48,
+      32
+    ],
+    "rgbaSHA256": "9aaaa1c570893417540bcbdc2ba9c24099715ffc10ad4b587a1b189972fa94dc"
+  },
+  "harvest": {
+    "size": [
+      48,
+      32
+    ],
+    "rgbaSHA256": "7b9951e810a90828d978e15a1f200090c0ce5020013f4c1bf7a48b513e77c92b"
+  },
+  "celadon": {
+    "size": [
+      48,
+      32
+    ],
+    "rgbaSHA256": "d2ffd56783f7abb16b43277ff90961d77dea4569215d8277b80311264c00232a"
+  }
+}

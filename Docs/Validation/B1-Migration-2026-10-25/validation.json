@@ -1,0 +1,207 @@
+{
+  "maps": 13,
+  "towns": 9,
+  "roads": 12,
+  "assignedCells": 45000,
+  "landCells": 38253,
+  "nearSeaCells": 6747,
+  "regions": {
+    "goryeo": 20000,
+    "east": 25000
+  },
+  "mapsByArea": {
+    "송악": 3302,
+    "닥목": 3402,
+    "개경": 5001,
+    "나루": 3997,
+    "장단": 4298,
+    "동문 마을": 3200,
+    "북동 포구": 3200,
+    "남동 포구": 3200,
+    "중앙 길목 마을": 3200,
+    "북동 길": 3050,
+    "남동 길": 3051,
+    "북쪽 내륙길": 3047,
+    "남쪽 내륙길": 3052
+  },
+  "sharedBoundaries": [
+    {
+      "maps": [
+        "east/남동 길",
+        "east/남동 포구"
+      ],
+      "edges": 63
+    },
+    {
+      "maps": [
+        "east/남동 길",
+        "east/남쪽 내륙길"
+      ],
+      "edges": 43
+    },
+    {
+      "maps": [
+        "east/남동 길",
+        "east/동문 마을"
+      ],
+      "edges": 70
+    },
+    {
+      "maps": [
+        "east/남동 길",
+        "east/북동 길"
+      ],
+      "edges": 30
+    },
+    {
+      "maps": [
+        "east/남동 길",
+        "goryeo/장단"
+      ],
+      "edges": 61
+    },
+    {
+      "maps": [
+        "east/남동 포구",
+        "east/남쪽 내륙길"
+      ],
+      "edges": 46
+    },
+    {
+      "maps": [
+        "east/남쪽 내륙길",
+        "east/동문 마을"
+      ],
+      "edges": 20
+    },
+    {
+      "maps": [
+        "east/남쪽 내륙길",
+        "east/북동 길"
+      ],
+      "edges": 13
+    },
+    {
+      "maps": [
+        "east/남쪽 내륙길",
+        "east/북쪽 내륙길"
+      ],
+      "edges": 26
+    },
+    {
+      "maps": [
+        "east/남쪽 내륙길",
+        "east/중앙 길목 마을"
+      ],
+      "edges": 110
+    },
+    {
+      "maps": [
+        "east/동문 마을",
+        "east/북동 길"
+      ],
+      "edges": 125
+    },
+    {
+      "maps": [
+        "east/동문 마을",
+        "goryeo/송악"
+      ],
+      "edges": 55
+    },
+    {
+      "maps": [
+        "east/북동 길",
+        "east/북동 포구"
+      ],
+      "edges": 90
+    },
+    {
+      "maps": [
+        "east/북동 길",
+        "east/북쪽 내륙길"
+      ],
+      "edges": 81
+    },
+    {
+      "maps": [
+        "east/북동 길",
+        "goryeo/송악"
+      ],
+      "edges": 81
+    },
+    {
+      "maps": [
+        "east/북동 길",
+        "goryeo/장단"
+      ],
+      "edges": 9
+    },
+    {
+      "maps": [
+        "east/북동 포구",
+        "east/북쪽 내륙길"
+      ],
+      "edges": 33
+    },
+    {
+      "maps": [
+        "east/북쪽 내륙길",
+        "east/중앙 길목 마을"
+      ],
+      "edges": 146
+    },
+    {
+      "maps": [
+        "goryeo/개경",
+        "goryeo/나루"
+      ],
+      "edges": 75
+    },
+    {
+      "maps": [
+        "goryeo/개경",
+        "goryeo/닥목"
+      ],
+      "edges": 113
+    },
+    {
+      "maps": [
+        "goryeo/개경",
+        "goryeo/송악"
+      ],
+      "edges": 35
+    },
+    {
+      "maps": [
+        "goryeo/개경",
+        "goryeo/장단"
+      ],
+      "edges": 24
+    },
+    {
+      "maps": [
+        "goryeo/나루",
+        "goryeo/장단"
+      ],
+      "edges": 108
+    },
+    {
+      "maps": [
+        "goryeo/닥목",
+        "goryeo/송악"
+      ],
+      "edges": 73
+    },
+    {
+      "maps": [
+        "goryeo/송악",
+        "goryeo/장단"
+      ],
+      "edges": 47
+    }
+  ],
+  "externalRuntimeAgreements": "pending D4/D7",
+  "economicDistancePolicy": "not chosen",
+  "playableRoadsRiversScenes": "not generated"
+}

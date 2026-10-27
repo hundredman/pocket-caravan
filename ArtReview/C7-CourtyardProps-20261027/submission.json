@@ -1,0 +1,59 @@
+{
+  "statuses": {
+    "paper_large": "approved",
+    "garden_wall": "approved",
+    "onggi": "approved"
+  },
+  "productionApplied": false,
+  "files": {
+    "style-comparison.png": {
+      "size": [
+        1120,
+        1150
+      ],
+      "rgbaSHA256": "90434ec2b126f82c0598399bbf8923d848b1dd44241c1fe80a3063137e7946ad"
+    },
+    "game-comparison.png": {
+      "size": [
+        1000,
+        480
+      ],
+      "rgbaSHA256": "2cc815e292e40fcd78e4eb91340a8e122121bdb67350ef6d061ffba22f09e130"
+    },
+    "Screens/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "3b5a9f25e7ec32a368171479327f4832511d216c8646b88b31a6411cf496edf3"
+    },
+    "Screens/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "8cbde533fad968f41c8769094421eba3c74bcac2fb8af945825f8e963fabc50f"
+    },
+    "Native/paper_large.png": {
+      "size": [
+        64,
+        48
+      ],
+      "rgbaSHA256": "df33eb932589eeb33553b7fa83c093cd60ca19437eebc5b8502e23f02b7ae280"
+    },
+    "Native/garden_wall.png": {
+      "size": [
+        64,
+        32
+      ],
+      "rgbaSHA256": "463bd45d26e6f78c16d8b7e8e384b6e19398edc3c69b0716de708cd3542da406"
+    },
+    "Native/onggi.png": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "61ce095c3b0c5382e729cf884e8b14dae4399e774e692a8a7a16124cc651dc03"
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-23",
+  "baseCommit": "25f62ff",
+  "area": {
+    "goryeo": 20000,
+    "centralEast": 25000,
+    "total": 45000
+  },
+  "staticMapChecks": 568,
+  "pythonIntegrationTests": 43,
+  "registeredExits": 70,
+  "unitySceneCheck": {
+    "maps": 19,
+    "cells": 45000,
+    "passed": [
+      "Naru all ground/blocked/road cells and spawn strips match JSON",
+      "Route01 all ground/blocked/road cells and spawn strips match JSON",
+      "Gaegyeong all ground/blocked/road cells and spawn strips match JSON",
+      "Dakmok all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_songak all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_jangdan all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_ridge all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_descent all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_fieldroad all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_westcoast all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_tidalcoast all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_rivervalley all ground/blocked/road cells and spawn strips match JSON",
+      "goryeo_southcoast all ground/blocked/road cells and spawn strips match JSON",
+      "transit_pass all ground/blocked/road cells and spawn strips match JSON",
+      "transit_woodtown all ground/blocked/road cells and spawn strips match JSON",
+      "transit_wetroad all ground/blocked/road cells and spawn strips match JSON",
+      "transit_ferry all ground/blocked/road cells and spawn strips match JSON",
+      "transit_central_approach all ground/blocked/road cells and spawn strips match JSON",
+      "transit_crossroads all ground/blocked/road cells and spawn strips match JSON"
+    ]
+  },
+  "savePositionPayloadChecks": 19,
+  "actualMotorCheck": {
+    "complete": true,
+    "error": "",
+    "checks": 968,
+    "crossings": 161,
+    "scope": "Final geometry; later transparent ripple art-only fix rebuilt and scene-checked. No movement geometry changed afterwards."
+  },
+  "fishing": {
+    "threeSuccessfulAttempts": true,
+    "attemptCap": true,
+    "closeReleasesUI": true,
+    "economyPayloadUnchanged": true,
+    "actualMotorWalkedPier": true,
+    "method": "Actual Play with public Interact/Cast/Strike/Close and controlled timing; screenshot inspected. Physical keyboard events not injected."
+  },
+  "lighting": {
+    "globalNightIntensity": 0.55,
+    "pointNightIntensityRange": [
+      0.69,
+      0.74
+    ],
+    "scope": "Actual Play day/night screenshots and live values; global-light selection explicit."
+  },
+  "rippleFix": {
+    "dakmokAnimatedInstances": 28,
+    "framesPerInstance": 4,
+    "finalScreenshotInspected": true
+  },
+  "notVerified": [
+    "User art/mini-game enjoyment approval",
+    "Standalone Windows/macOS builds",
+    "Online synchronization",
+    "Market day host/schedule/bonus rules"
+  ],
+  "delivery": "Local files/checkpoint only; no remote push"
+}

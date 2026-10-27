@@ -1,0 +1,17 @@
+{
+    "maps": 11,
+    "cells": 45000,
+    "passed": [
+        "Naru all ground/blocked/road cells and spawn strips match JSON",
+        "Gaegyeong all ground/blocked/road cells and spawn strips match JSON",
+        "Dakmok all ground/blocked/road cells and spawn strips match JSON",
+        "goryeo_songak all ground/blocked/road cells and spawn strips match JSON",
+        "goryeo_jangdan all ground/blocked/road cells and spawn strips match JSON",
+        "transit_pass all ground/blocked/road cells and spawn strips match JSON",
+        "transit_woodtown all ground/blocked/road cells and spawn strips match JSON",
+        "transit_wetroad all ground/blocked/road cells and spawn strips match JSON",
+        "transit_ferry all ground/blocked/road cells and spawn strips match JSON",
+        "transit_central_approach all ground/blocked/road cells and spawn strips match JSON",
+        "transit_crossroads all ground/blocked/road cells and spawn strips match JSON"
+    ]
+}

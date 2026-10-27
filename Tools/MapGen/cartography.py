@@ -88,13 +88,13 @@ def export(maps, root, stem="Goryeo"):
         for name, x, y in m.stamps:
             _, _, _, w, h, *_ = STAMPS[name]
             px, py = point(x + w / 2, y + h / 2)
-            if name in ("pine", "tree", "cherry", "bigtree", "roundtree", "pinebig", "roundbig", "fruitbig", "blossom", "greenbig"):
+            if name.startswith("goryeo_woodland") and int(name[15:])<=7 or name in ("pine", "tree", "cherry", "bigtree", "roundtree", "pinebig", "roundbig", "fruitbig", "blossom", "greenbig"):
                 if context and (x<=2 or y<=2 or x+w>=m.w-2 or y+h>=m.h-2):continue
                 for offset in ((-3, 1), (3, -1)) if w >= 3 else ((0, 0),):
                     tx, ty = px + offset[0], py + offset[1]
                     d.line((tx, ty, tx, ty + 4), fill="#776f4e")
                     d.polygon(((tx, ty - 5), (tx - 4, ty + 2), (tx + 4, ty + 2)), fill="#6f855f", outline="#627854")
-            elif name.startswith("house") or name in ("shop", "store", "hall"):
+            elif name.startswith("house") or name in ("shop", "store", "hall", "goryeo_royal", "goryeo_manor", "goryeo_stall", "goryeo_cottage", "goryeo_pavilion"):
                 size = 5 if name != "hall" else 7
                 d.rectangle((px - size, py - 2, px + size, py + 4), fill="#c5b084", outline="#887052")
                 d.polygon(((px - size - 1, py - 2), (px, py - 6), (px + size + 1, py - 2)), fill="#687776")
@@ -116,6 +116,9 @@ def export(maps, root, stem="Goryeo"):
     data=dict(width=width,height=height,maps=entries,pixelsPerTile=scale,waterMask=f"{stem}WaterMask.png")
     if all(hasattr(m,'world_origin') for m in maps):
         data['geography']='continuous_tiles'
-        data['terrainSource']='World/Terrain/continuous.json'
+        data['terrainSource']='Tools/MapGen/broad_regions.py'
+        data['scope']='goryeo_20000_and_central_east_25000' if stem=='Goryeo' else 'goryeo_20000'
+        data['centralContinentTotalCells']=100000
+        data['centralEastOwnedCells']=25000
         data['annotations']=[]
     (dest / f"{stem}Layout.json").write_text(json.dumps(data, ensure_ascii=False, indent=2))

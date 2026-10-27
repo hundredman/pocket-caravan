@@ -1,0 +1,13 @@
+test_actual_play_latest_pixels_and_only_three_areas (test_c7_workshop_props_v4.WorkshopPropsV4Checks) ... ok
+test_context_approvals_preserved (test_c7_workshop_props_v4.WorkshopPropsV4Checks) ... ok
+test_foreground_basket_and_sack_core_preserved (test_c7_workshop_props_v4.WorkshopPropsV4Checks) ... ok
+test_native_sizes_feet_palette_and_contours (test_c7_workshop_props_v4.WorkshopPropsV4Checks) ... ok
+test_three_editable_sources_reexport_rgba (test_c7_workshop_props_v4.WorkshopPropsV4Checks) ... ok
+test_three_whole_objects_and_independent_pending (test_c7_workshop_props_v4.WorkshopPropsV4Checks) ... ok
+test_touchup_is_local_and_rest_pixels_unchanged (test_c7_workshop_props_v4.WorkshopPropsV4Checks) ... ok
+test_vase_rim_neck_shoulders_share_vertical_axis (test_c7_workshop_props_v4.WorkshopPropsV4Checks) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.247s
+
+OK

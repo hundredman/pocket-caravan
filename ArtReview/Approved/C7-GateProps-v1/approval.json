@@ -1,0 +1,47 @@
+[
+  {
+    "name": "gate",
+    "status": "approved",
+    "date": "2026-10-27",
+    "userQuote": "좋아. 계속 진행해.",
+    "scope": "gate 그림 승인. 성문 통행 폭/담장 접합/가림·충돌/본편 연결과 다른 소품은 별도.",
+    "evidence": "ArtReview/Approved/C7-GateProps-v1/approval.json",
+    "rgbaEvidence": {
+      "size": [
+        96,
+        80
+      ],
+      "rgbaSHA256": "274138d508605fbea87a2cd26149fb26a8aa254dd188f3a481934a2dee2cc67f"
+    }
+  },
+  {
+    "name": "well",
+    "status": "approved",
+    "date": "2026-10-27",
+    "userQuote": "좋아. 계속 진행해.",
+    "scope": "well 그림 승인. 성문 통행 폭/담장 접합/가림·충돌/본편 연결과 다른 소품은 별도.",
+    "evidence": "ArtReview/Approved/C7-GateProps-v1/approval.json",
+    "rgbaEvidence": {
+      "size": [
+        16,
+        32
+      ],
+      "rgbaSHA256": "199222043446aebeadb5fd7ed4b21b231aec26866fb688924f5ff3e15d5a6efc"
+    }
+  },
+  {
+    "name": "stone_lantern",
+    "status": "approved",
+    "date": "2026-10-27",
+    "userQuote": "좋아. 계속 진행해.",
+    "scope": "stone_lantern 그림 승인. 성문 통행 폭/담장 접합/가림·충돌/본편 연결과 다른 소품은 별도.",
+    "evidence": "ArtReview/Approved/C7-GateProps-v1/approval.json",
+    "rgbaEvidence": {
+      "size": [
+        16,
+        32
+      ],
+      "rgbaSHA256": "49a409329edd129adb88c9b5e4cc38ce5fbfdf81f4951a4fe910791db78ed3a6"
+    }
+  }
+]

@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen.imagegen",
+  "referenceRole": "style only; upper Venice/Arabia panels",
+  "referenceImage": "Docs/Images/team-style-reference.png",
+  "sourceOfTruth": "Native PNGs and Aseprite source after A5/native authoring, not AI canvas size requests",
+  "notes": [
+    "Image generation did not satisfy exact requested pixel dimensions. Whole-object alpha bounds were translated uniformly to a native seed, A5 fixed palette/alpha, and Aseprite redrew the houses within their original envelopes.",
+    "Pine prompt initially requested 32x32, but the selected production comparison object is the 64x48 mature pine. Native pine uses that existing canvas and footline; prompt dimensions did not change production size.",
+    "19 trial colors are a pending visual proposal, not D3 shared-palette approval."
+  ],
+  "requests": [
+    {
+      "output": "ArtReview/C7-Trial4-20261026/AI/thatch.png",
+      "transparent_background": true,
+      "referenced_image_paths": [
+        "Docs/Images/team-style-reference.png"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: ONE complete pixel-art game sprite, a Goryeo Korean thatched cottage, new art for a cute top-down trading game. Image 1 is STYLE REFERENCE ONLY: match ONLY the upper Venice and Arabia asset panels; ignore the detailed dark current-art examples in the bottom third. Do not copy any reference object. Subject: squat Korean ochre thatched hipped roof, small white plaster and warm wooden facade, one centered door and two tiny windows. Same slightly top-down frontal perspective as upper Venice houses. Production canvas exactly 1024x768 representing a logical 64x48 pixel canvas enlarged nearest-neighbor by16; EVERY pixel cluster should align to that logical grid. Entire house fully visible within 60x46 logical pixels, bottom centered; no ground tile, no scenery, no text, no border, no cast shadow. Truly transparent background. Dark brown 1-logical-pixel continuous outside outline. Large simple shapes, bright clean flat colors, two or three shades per material, light upper left. Warm straw gold roof, pale cream walls, warm dark brown wood. A few strong roof divisions only; no fine grain, no noise, no stippling, no gradients, no antialias, no realistic texture. Preserve Korean thatch silhouette rather than Mediterranean shape."
+    },
+    {
+      "output": "ArtReview/C7-Trial4-20261026/AI/tile-house.png",
+      "transparent_background": true,
+      "referenced_image_paths": [
+        "Docs/Images/team-style-reference.png"
+      ],
+      "prompt": "Use case: stylized-concept. Create ONE complete game sprite: small Korean Goryeo tiled-roof house. Image reference is style only: match the UPPER Venice/Arabia panels, ignore the bottom dark detailed old art. Do not copy reference buildings. Cute squat Korean hanok, broad gently curved blue-gray tiled hipped roof with subtly upturned eaves, white plaster and warm timber facade, centered wooden door and small windows. Frontal slightly top-down view like Venice sprites. Low resolution pixel art, logical64x48canvas, entire silhouette fits within61x46pixels bottom centered. Render sharp enlarged nearest-neighbor pixels, continuous dark brown ONE logical pixel outer contour. Bright clean flat colors, only2-3 shades per material, upper-left light. Few big roof divisions, no tiny texture or stripes, no grain, no gradients, no antialiasing. Entire house only, transparent background, no ground, no shadows, no text. Preserve Korean silhouette."
+    },
+    {
+      "output": "ArtReview/C7-Trial4-20261026/AI/pine.png",
+      "transparent_background": true,
+      "referenced_image_paths": [
+        "Docs/Images/team-style-reference.png"
+      ],
+      "prompt": "Use case: stylized-concept. ONE complete low-resolution pixel-art Korean pine tree sprite for a cute Goryeo top-down game. Reference image STYLE ONLY: upper Arabia olive tree and cypress panels are target; ignore bottom detailed old art. New pine silhouette: three broad asymmetrical rounded layered evergreen needle clouds, a gently bent warm brown trunk visible below, not a Christmas triangle and not willow. Logical canvas32x32pixels, complete tree fits31x31 bottom centered. Sharp nearest-neighbor enlarged pixels, dark chocolate one-logical-pixel continuous outline, bright clean medium green foliage only3 flat shades with upper-left light, trunk2 brown shades. Simple large masses like reference olive tree, no detailed needles, no fine speckles, no grain, no gradient or blur, no antialias. Transparent background, no ground or separate shadow, no text."
+    },
+    {
+      "output": "ArtReview/C7-Trial4-20261026/AI/ground-source.png",
+      "transparent_background": false,
+      "referenced_image_paths": [
+        "Docs/Images/team-style-reference.png"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: flat seamless grass and earth ground TILESET source for cute pixel-art trading game. Reference upper Venice/Arabia panels give bright flat pixel style, not bottom noisy game art. Output a logical32x16pixel image enlarged with crisp nearest neighbor: LEFT HALF one seamless16x16 tile of muted bright meadow grass green, RIGHT HALF one seamless16x16 tile of warm ochre sandy dirt. Tiles have very large almost flat color regions, each only2 shades, grass just3 sparse tiny angular tufts, dirt just3 small flat pebbles. Same scale of pixel marks as houses and trees in reference. Top-down flat surface, no perspective, no outside border, no outline around tile squares, no gap or margin, no text or grid, no shadow or gradient, no noise, no antialiasing. Entire left half green and entire right half tan, clean sharp vertical split at image center. This source is for authoring a modular grass/earth boundary kit later."
+    }
+  ]
+}

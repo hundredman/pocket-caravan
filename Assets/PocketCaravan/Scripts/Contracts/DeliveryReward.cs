@@ -25,25 +25,9 @@ namespace PocketCaravan
             return r != null && r.enabled ? r : null;
         }
 
-        /// <summary>등록된 최단 연결 구간 수. 실측 초/가격용 좌표/플레이어가 우회한 거리가 아니다.</summary>
-        public static int RouteSteps(WorldIndex world, string fromTown, string toTown)
-        {
-            if (world == null) return -1;
-            string from = world.MapOf("market", fromTown), to = world.MapOf("market", toTown);
-            if (string.IsNullOrEmpty(from) || string.IsNullOrEmpty(to) || world.Map(from) == null || world.Map(to) == null) return -1;
-            var queue = new Queue<string>(); var seen = new Dictionary<string, int> { [from] = 0 };
-            queue.Enqueue(from);
-            while (queue.Count > 0)
-            {
-                string id = queue.Dequeue();
-                if (id == to) return seen[id];
-                var map = world.Map(id);
-                if (map == null) continue;
-                foreach (string neighbor in map.neighbors)
-                    if (!seen.ContainsKey(neighbor)) { seen[neighbor] = seen[id] + 1; queue.Enqueue(neighbor); }
-            }
-            return -1;
-        }
+        /// <summary>current는 기존 연결 수, layoutD는 가격·기한과 같은 환산 거리.</summary>
+        public static int RouteSteps(WorldIndex world, string fromTown, string toTown) =>
+            TownDistance.Between(fromTown, toTown, world: world, legacy: TownDistance.LegacyMetric.MapConnections);
 
         public static int Quote(DeliveryRewardRules rules, int economicDistance, int routeSteps, float weight, bool premium, float variation = 1f)
         {

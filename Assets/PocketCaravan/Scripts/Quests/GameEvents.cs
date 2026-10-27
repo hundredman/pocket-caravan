@@ -9,6 +9,7 @@ namespace PocketCaravan
     /// </summary>
     public static class GameEvents
     {
+        public static event Action<ReputationContribution> ReputationContributed;
         public static event Action<string> MapEntered;                          // mapId
         public static event Action<ItemData, TownData, int> ItemBought;          // 물건, 마을, 값
         public static event Action<ItemData, TownData, int, int> ItemSold;       // 물건, 마을, 값, 이익
@@ -26,11 +27,12 @@ namespace PocketCaravan
         public static void ClearAll()
         {
             MapEntered = null; ItemBought = null; ItemSold = null; VehicleBought = null;
-            ContractFinished = null; TownLeveled = null;
+            ContractFinished = null; TownLeveled = null; ReputationContributed = null;
             UIState.Blocking = false;
             Notify.Clear();
         }
 
+        public static void RaiseReputationContribution(ReputationContribution value) => ReputationContributed?.Invoke(value);
         public static void RaiseMapEntered(string mapId) => MapEntered?.Invoke(mapId);
         public static void RaiseItemBought(ItemData item, TownData town, int price) => ItemBought?.Invoke(item, town, price);
         public static void RaiseItemSold(ItemData item, TownData town, int price, int profit) => ItemSold?.Invoke(item, town, price, profit);

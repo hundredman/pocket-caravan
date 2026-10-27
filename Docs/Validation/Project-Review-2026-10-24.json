@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-24",
+  "sourceCommit": "2acfeeaa",
+  "scope": "local file and static review; no Unity/play/network run",
+  "tests": {
+    "integration": {
+      "passed": 45,
+      "errors": 0,
+      "command": "/tmp/pocket-caravan-codex-review-20261024/bin/python -m unittest discover -s Tools/Integration -p test_*.py"
+    },
+    "world": {
+      "errors": 0,
+      "registeredExitsChecked": 92,
+      "command": "python3 Tools/Integration/validate_world.py"
+    }
+  },
+  "documentLinks": {
+    "filesScanned": 33,
+    "fixed": 20,
+    "remainingBroken": []
+  }
+}

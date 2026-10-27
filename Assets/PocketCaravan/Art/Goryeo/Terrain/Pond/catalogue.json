@@ -1,0 +1,1227 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "pond_native": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#787566",
+        "#78a099",
+        "#7fb9af",
+        "#84675e",
+        "#898577",
+        "#908c7d",
+        "#989384",
+        "#9c9889",
+        "#a09a8a",
+        "#a49f8f",
+        "#a9a18f",
+        "#aaa393",
+        "#aea694",
+        "#b2a996",
+        "#b9ae9b"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "goryeo_capital_pond",
+      "kind": "modular",
+      "moduleType": "water",
+      "purpose": "capital_pond",
+      "profile": "pond_native",
+      "requiredPieces": [
+        "water_00",
+        "water_01",
+        "water_02",
+        "water_03",
+        "water_04",
+        "water_05",
+        "water_06",
+        "water_07",
+        "water_08",
+        "water_09",
+        "water_0a",
+        "water_0b",
+        "water_0c",
+        "water_0d",
+        "water_0e",
+        "water_0f",
+        "outer_corner_sw",
+        "water_17",
+        "water_1b",
+        "water_1f",
+        "outer_corner",
+        "water_27",
+        "water_2e",
+        "water_2f",
+        "edge_w",
+        "water_3f",
+        "outer_corner_ne",
+        "water_4d",
+        "water_4e",
+        "water_4f",
+        "water_5f",
+        "edge",
+        "water_6f",
+        "inner_corner",
+        "outer_corner_se",
+        "water_8b",
+        "water_8d",
+        "water_8f",
+        "edge_s",
+        "water_9f",
+        "water_af",
+        "inner_corner_sw",
+        "edge_e",
+        "water_cf",
+        "inner_corner_se",
+        "inner_corner_ne",
+        "center",
+        "outer_corner_stone_1_3",
+        "water_3f_stone_1_0",
+        "outer_corner_sw_stone_1_1",
+        "edge_stone_2_3",
+        "center_stone_2_0",
+        "edge_s_stone_2_1",
+        "outer_corner_ne_stone_3_3",
+        "water_cf_stone_3_0",
+        "outer_corner_se_stone_3_1"
+      ],
+      "pieces": {
+        "water_00": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_00.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_00",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_00.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_00",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_01": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_01.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_01",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_01.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_01",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_02": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_02.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_02",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_02.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_02",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_03": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_03.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_03",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_03.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_03",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_04": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_04.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_04",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_04.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_04",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_05": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_05.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_05",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_05.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_05",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_06": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_06.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_06",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_06.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_06",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_07": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_07.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_07",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_07.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_07",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_08": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_08.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_08",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_08.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_08",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_09": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_09.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_09",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_09.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_09",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_0a": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_0a.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_0a",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_0a.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_0a",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_0b": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_0b.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_0b",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_0b.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_0b",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_0c": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_0c.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_0c",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_0c.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_0c",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_0d": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_0d.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_0d",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_0d.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_0d",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_0e": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_0e.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_0e",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_0e.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_0e",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_0f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_0f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_0f",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_0f.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_0f",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "outer_corner_sw": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/outer_corner_sw.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_outer_corner_sw",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_outer_corner_sw.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "outer_corner_sw",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_17": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_17.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_17",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_17.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_17",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_1b": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_1b.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_1b",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_1b.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_1b",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_1f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_1f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_1f",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_1f.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_1f",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "outer_corner": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/outer_corner.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_outer_corner",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_outer_corner.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "outer_corner",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_27": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_27.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_27",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_27.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_27",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_2e": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_2e.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_2e",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_2e.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_2e",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_2f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_2f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_2f",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_2f.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_2f",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "edge_w": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/edge_w.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_edge_w",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_edge_w.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "edge_w",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_3f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_3f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_3f",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_3f.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_3f",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "outer_corner_ne": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/outer_corner_ne.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_outer_corner_ne",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_outer_corner_ne.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "outer_corner_ne",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_4d": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_4d.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_4d",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_4d.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_4d",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_4e": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_4e.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_4e",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_4e.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_4e",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_4f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_4f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_4f",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_4f.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_4f",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_5f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_5f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_5f",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_5f.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_5f",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "edge": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/edge.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_edge",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_edge.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "edge",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_6f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_6f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_6f",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_6f.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_6f",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "inner_corner": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/inner_corner.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_inner_corner",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_inner_corner.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "inner_corner",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "outer_corner_se": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/outer_corner_se.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_outer_corner_se",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_outer_corner_se.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "outer_corner_se",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_8b": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_8b.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_8b",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_8b.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_8b",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_8d": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_8d.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_8d",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_8d.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_8d",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_8f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_8f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_8f",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_8f.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_8f",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "edge_s": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/edge_s.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_edge_s",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_edge_s.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "edge_s",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_9f": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_9f.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_9f",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_9f.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_9f",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_af": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_af.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_af",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_af.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_af",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "inner_corner_sw": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/inner_corner_sw.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_inner_corner_sw",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_inner_corner_sw.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "inner_corner_sw",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "edge_e": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/edge_e.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_edge_e",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_edge_e.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "edge_e",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "water_cf": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_cf.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_cf",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_cf.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_cf",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "inner_corner_se": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/inner_corner_se.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_inner_corner_se",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_inner_corner_se.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "inner_corner_se",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "inner_corner_ne": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/inner_corner_ne.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_inner_corner_ne",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_inner_corner_ne.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "inner_corner_ne",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "center": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/center.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_center",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_center.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "center",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_0_0.png"
+          }
+        },
+        "outer_corner_stone_1_3": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/outer_corner_stone_1_3.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_outer_corner_stone_1_3",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_outer_corner_stone_1_3.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "outer_corner",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_1_3.png"
+          }
+        },
+        "water_3f_stone_1_0": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_3f_stone_1_0.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_3f_stone_1_0",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_3f_stone_1_0.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_3f",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_1_0.png"
+          }
+        },
+        "outer_corner_sw_stone_1_1": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/outer_corner_sw_stone_1_1.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_outer_corner_sw_stone_1_1",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_outer_corner_sw_stone_1_1.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "outer_corner_sw",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_1_1.png"
+          }
+        },
+        "edge_stone_2_3": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/edge_stone_2_3.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_edge_stone_2_3",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_edge_stone_2_3.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "edge",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_2_3.png"
+          }
+        },
+        "center_stone_2_0": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/center_stone_2_0.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_center_stone_2_0",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_center_stone_2_0.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "center",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_2_0.png"
+          }
+        },
+        "edge_s_stone_2_1": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/edge_s_stone_2_1.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_edge_s_stone_2_1",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_edge_s_stone_2_1.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "edge_s",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_2_1.png"
+          }
+        },
+        "outer_corner_ne_stone_3_3": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/outer_corner_ne_stone_3_3.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_outer_corner_ne_stone_3_3",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_outer_corner_ne_stone_3_3.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "outer_corner_ne",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_3_3.png"
+          }
+        },
+        "water_cf_stone_3_0": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/water_cf_stone_3_0.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_water_cf_stone_3_0",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_water_cf_stone_3_0.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "water_cf",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_3_0.png"
+          }
+        },
+        "outer_corner_se_stone_3_1": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pieces/outer_corner_se_stone_3_1.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "pond_outer_corner_se_stone_3_1",
+              "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/pond_outer_corner_se_stone_3_1.png"
+            }
+          ],
+          "composition": {
+            "waterPiece": "outer_corner_se",
+            "paving": "ArtReview/Approved/A4-Pond/paving/goryeo_paving_3_1.png"
+          }
+        }
+      },
+      "source": {
+        "kind": "authored",
+        "path": "Assets/PocketCaravan/Art/Goryeo/Terrain/Pond/pond-modules.aseprite",
+        "note": "Approved authored water composited once with existing AI-processed courtyard paving; no runtime crop/recolor"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/A4-Pond/approval.md"
+      }
+    }
+  ]
+}

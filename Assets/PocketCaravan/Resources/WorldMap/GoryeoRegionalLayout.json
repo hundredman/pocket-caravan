@@ -1,128 +1,59 @@
 {
-  "width": 264,
-  "height": 344,
+  "width": 204,
+  "height": 144,
   "maps": [
     {
       "mapId": "Naru",
       "x": 12,
-      "y": 140,
+      "y": 72,
       "w": 80,
-      "h": 64,
+      "h": 60,
       "labelX": 36.5,
-      "labelY": 155.5
-    },
-    {
-      "mapId": "Route01",
-      "x": 92,
-      "y": 140,
-      "w": 80,
-      "h": 64,
-      "labelX": 132.5,
-      "labelY": 172.5
+      "labelY": 91.5
     },
     {
       "mapId": "Gaegyeong",
-      "x": 92,
-      "y": 76,
-      "w": 80,
-      "h": 64,
-      "labelX": 128.5,
-      "labelY": 97.5
+      "x": 72,
+      "y": 12,
+      "w": 70,
+      "h": 60,
+      "labelX": 98.5,
+      "labelY": 40.5
     },
     {
       "mapId": "Dakmok",
-      "x": 172,
-      "y": 140,
-      "w": 80,
-      "h": 64,
-      "labelX": 190.5,
-      "labelY": 153.5
+      "x": 142,
+      "y": 12,
+      "w": 50,
+      "h": 60,
+      "labelX": 156.5,
+      "labelY": 37.5
     },
     {
       "mapId": "goryeo_songak",
-      "x": 92,
+      "x": 12,
       "y": 12,
-      "w": 80,
-      "h": 64,
-      "labelX": 114.5,
-      "labelY": 27.5
+      "w": 60,
+      "h": 60,
+      "labelX": 35.5,
+      "labelY": 33.5
     },
     {
       "mapId": "goryeo_jangdan",
-      "x": 172,
-      "y": 268,
-      "w": 80,
-      "h": 64,
-      "labelX": 193.5,
-      "labelY": 283.5
-    },
-    {
-      "mapId": "goryeo_ridge",
-      "x": 172,
-      "y": 12,
-      "w": 80,
-      "h": 64,
-      "labelX": 212.5,
-      "labelY": 44.5
-    },
-    {
-      "mapId": "goryeo_descent",
-      "x": 172,
-      "y": 76,
-      "w": 80,
-      "h": 64,
-      "labelX": 200.5,
-      "labelY": 108.5
-    },
-    {
-      "mapId": "goryeo_fieldroad",
-      "x": 172,
-      "y": 204,
-      "w": 80,
-      "h": 64,
-      "labelX": 199.5,
-      "labelY": 236.5
-    },
-    {
-      "mapId": "goryeo_westcoast",
-      "x": 12,
-      "y": 76,
-      "w": 80,
-      "h": 64,
-      "labelX": 57.5,
-      "labelY": 108.5
-    },
-    {
-      "mapId": "goryeo_tidalcoast",
-      "x": 12,
-      "y": 204,
-      "w": 80,
-      "h": 64,
-      "labelX": 90.5,
-      "labelY": 236.5
-    },
-    {
-      "mapId": "goryeo_rivervalley",
       "x": 92,
-      "y": 204,
+      "y": 72,
       "w": 80,
-      "h": 64,
-      "labelX": 132.5,
-      "labelY": 236.5
-    },
-    {
-      "mapId": "goryeo_southcoast",
-      "x": 92,
-      "y": 268,
-      "w": 80,
-      "h": 64,
-      "labelX": 141.5,
-      "labelY": 291.5
+      "h": 55,
+      "labelX": 127.5,
+      "labelY": 94.5
     }
   ],
   "pixelsPerTile": 4,
   "waterMask": "GoryeoRegionalWaterMask.png",
   "geography": "continuous_tiles",
-  "terrainSource": "World/Terrain/continuous.json",
+  "terrainSource": "Tools/MapGen/broad_regions.py",
+  "scope": "goryeo_20000",
+  "centralContinentTotalCells": 100000,
+  "centralEastOwnedCells": 25000,
   "annotations": []
 }

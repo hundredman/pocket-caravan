@@ -29,7 +29,12 @@ def obj_json(o):
 
 
 used = set()
+# Validate complete authored silhouettes before writing any map/output.
+from frozen_art import catalogue, validate_export
+catalogue()
 entries, world_maps = atlas_content()
+from goryeo_art import export_ripples
+export_ripples(OUT)
 for entry, m in zip(entries, world_maps):
     palette = [""]
     index = {"": 0}
@@ -56,6 +61,7 @@ for entry, m in zip(entries, world_maps):
     d["water"] = [int(v) for row in m.water for v in row]
     if hasattr(m,"world_origin"):d["terrainX"],d["terrainY"]=m.world_origin
     if getattr(m,"visual_skin",None): d["visualSkin"] = m.visual_skin
+    validate_export(m,d)  # Full A2 coverage; claims stay separate from legacy save/map JSON.
     with open(os.path.join(OUT, entry["jsonPath"]), "w", encoding="utf-8") as fp:
         json.dump(d, fp, ensure_ascii=False, separators=(",", ":"))
     m.render(os.path.join(os.path.dirname(__file__), "preview_" + m.id + ".png"))
@@ -72,3 +78,14 @@ cartography.export(world_maps, OUT)
 # 발표 및 지역 기획용 확대 지도. 게임 내 전체 지도와 같은 실제 타일을 사용한다.
 cartography.export([m for e,m in zip(entries,world_maps) if e["mapId"] in {entry["mapId"] for entry in map_entries("goryeo")}], OUT, stem="GoryeoRegional")
 print(len(used), "tiles")
+
+# Runtime save migration shares the same layout definition as map generation.
+from broad_regions import REGIONS, ALIASES
+migration={"maps":[],"aliases":[{"oldId":a,"newId":b} for a,b in ALIASES.items()]}
+for m in world_maps:
+    if m.id not in REGIONS:continue
+    sp=next(o for o in m.objects if o['kind']=='spawn' and o['id']=='S0')
+    dx,dy=m.core_offset
+    migration['maps'].append(dict(id=m.id,offsetX=dx,offsetY=dy,height=m.h,legacyHeight=m.legacy_height,spawnX=sp['x']+.5,spawnY=m.h-1-sp['y']+.82))
+Path=__import__('pathlib').Path
+Path(OUT,'Assets/PocketCaravan/Resources/GoryeoLayout.json').write_text(json.dumps(migration,indent=2)+'\n')

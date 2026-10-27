@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "prop": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#daa34a",
+        "#f0c365",
+        "#77746c"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7_cartbuild_cart",
+      "kind": "object",
+      "purpose": "handcart",
+      "size": [
+        2,
+        2
+      ],
+      "profile": "prop",
+      "image": "ArtReview/C7-CartRebuild-20261027/Native/cart.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C7-CartRebuild-20261027/Native/cart.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "date": "2026-10-27",
+        "userQuote": "\uc904\uc774\ub2c8\uae4c \ub9e4\uc6b0 \uc870\uc7a1\ud574\ubcf4\uc5ec. \ubc14\ud034\ub098 \uc190\uc7a1\uc774\uac00 \uc11c\ub85c \uc774\uc0c1\ud55c\ub370 \uc704\uce58\ud574\uc788\uace0.",
+        "feedback": "\ubc14\ud034\u00b7\ucc28\ucd95\u00b7\uc190\uc7a1\uc774 \uc5f0\uacb0 \uad6c\uc870\uc640 \uc2e4\uc81c \ud06c\uae30 \uc778\uc9c0\uc131 \uc218\uc815 \ud544\uc694"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_cartbuild_0_0",
+          "image": "ArtReview/C7-CartRebuild-20261027/Cells/c7_cartbuild_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_cartbuild_1_0",
+          "image": "ArtReview/C7-CartRebuild-20261027/Cells/c7_cartbuild_1_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_cartbuild_0_1",
+          "image": "ArtReview/C7-CartRebuild-20261027/Cells/c7_cartbuild_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_cartbuild_1_1",
+          "image": "ArtReview/C7-CartRebuild-20261027/Cells/c7_cartbuild_1_1.png"
+        }
+      ]
+    }
+  ]
+}

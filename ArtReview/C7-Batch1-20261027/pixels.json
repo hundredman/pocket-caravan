@@ -1,0 +1,23 @@
+{
+  "cottage": {
+    "size": [
+      80,
+      64
+    ],
+    "rgbaSHA256": "f05a3fd855584201b97dfd04bc7667671f317369194304a71ec612cc5a210515"
+  },
+  "pavilion": {
+    "size": [
+      80,
+      80
+    ],
+    "rgbaSHA256": "6a228844efaa3acabf9ad7a88dabd566fc0a18be0394da5a1efe903ddd3b8bd2"
+  },
+  "willow": {
+    "size": [
+      64,
+      64
+    ],
+    "rgbaSHA256": "177efe4e87c42123f6320a3a294422a92f78574c8592baf61df90d4e36abbf2b"
+  }
+}

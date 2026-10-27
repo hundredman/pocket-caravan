@@ -91,6 +91,8 @@ namespace PocketCaravan
                 credit = Db.startOrigin != null ? Db.startOrigin.startingCredit : 0,
             };
 
+            Player.reputation.Initialize(ReputationState.HomeOf(Player.origin));
+
             Clock = new GameClock { realSecondsPerDay = Db.realSecondsPerDay };
             Clock.NewHour += OnNewHour;
 
@@ -140,8 +142,10 @@ namespace PocketCaravan
             SceneManager.sceneLoaded -= OnSceneLoaded;
             Player.cargo.Clear();
             Player.ledger.Clear();
+            Player.tradeActivity.Clear();
             Player.contracts.Clear();
             Player.origin = null;
+            Player.reputation.Initialize(null);
             Player.money = Player.credit = 0;
             Player.stamina = 1f;
             Player.shake = 0f;
@@ -238,9 +242,9 @@ namespace PocketCaravan
                 var d = saveToLoad;
                 saveToLoad = null;
                 if (!TryApplySave(d)) return;
-                if (!string.IsNullOrEmpty(d.scene) && d.scene != scene.name)
+                if (!string.IsNullOrEmpty(d.scene) && GoryeoLayout.Resolve(d.scene) != scene.name)
                 {
-                    StartCoroutine(Travel(d.scene, null, 0f, new Vector2Int(d.fx, d.fy), SaveSystem.PositionFor(d)));
+                    StartCoroutine(Travel(GoryeoLayout.Resolve(d.scene), null, 0f, new Vector2Int(d.fx, d.fy), SaveSystem.PositionFor(d)));
                     return;
                 }
                 pendingExact = SaveSystem.PositionFor(d);
@@ -281,7 +285,9 @@ namespace PocketCaravan
                 }
                 else Notify.Show(map.displayName, 2.5f);
                 GameEvents.RaiseMapEntered(map.mapId);
-                sun = FindAnyObjectByType<UnityEngine.Rendering.Universal.Light2D>();
+                sun = null;
+                foreach (var light in FindObjectsByType<UnityEngine.Rendering.Universal.Light2D>(FindObjectsSortMode.None))
+                    if (light.lightType == UnityEngine.Rendering.Universal.Light2D.LightType.Global) { sun = light; break; }
                 // 기존 낙하물은 Apply에서 재산으로 이주하며 월드에 새로 배치하지 않는다.
                 AudioManager.OnMapEntered(map.mapId);
                 SaveNow();
@@ -422,6 +428,7 @@ namespace PocketCaravan
             var d = new SaveData
             {
                 scene = SceneManager.GetActiveScene().name,
+                layoutVersion = 1,
                 mapHeight = MapRoot.Current.ground.cellBounds.size.y,
                 px = pc != null ? pc.transform.position.x : 0, py = pc != null ? pc.transform.position.y : 0,
                 fx = pc != null ? pc.Motor.Facing.x : 0, fy = pc != null ? pc.Motor.Facing.y : -1,
@@ -433,6 +440,7 @@ namespace PocketCaravan
             };
             foreach (var kv in Player.cargo.Items) { d.cargoItems.Add(kv.Key.id); d.cargoCounts.Add(kv.Value); d.cargoCosts.Add(Player.cargo.TotalCost(kv.Key)); }
             d.storedCargo = Player.warehouse.Export();
+            d.tradeActivity = Player.tradeActivity.Export();
             d.contracts.AddRange(Player.contracts);
             Quests.Export(d);
             foreach (var m in markets.Values) d.markets.Add(m.Export());
@@ -441,13 +449,16 @@ namespace PocketCaravan
             d.drops.AddRange(Drops);
             d.marketQuotes.AddRange(Player.ledger.Export());
             foreach (var kv in cooldowns) { d.cooldownKeys.Add(kv.Key); d.cooldownUntil.Add(kv.Value); }
+            Player.reputation.ExportTo(d);
             return SaveSystem.Write(d);
         }
 
         void Apply(SaveData d)
         {
             SaveCompatibility.Validate(d, Db, Application.CanStreamedLevelBeLoaded);
+            Player.reputation.ImportFrom(d, Db.startOrigin);
             Player.warehouse.Import(d.storedCargo);
+            Player.tradeActivity.Import(d.tradeActivity);
             Player.ledger.Import(d.marketQuotes);
             Player.money = d.money;
             Player.credit = d.credit;

@@ -1,0 +1,649 @@
+{
+  "schemaVersion": 1,
+  "mode": "analysis_only_no_runtime_changes",
+  "basis": "B1 schematic polylines; uniform walking speed; no events, acceleration or fade overhead",
+  "walkingCellsPerSecond": 3.8,
+  "leastSquaresRatio": 0.10534879494264461,
+  "deadlineFormula": "9 * max(1, distance) + 8",
+  "feasibleContinuous": false,
+  "feasibleNearestRounding": false,
+  "ratioIntersection": {
+    "allowedRatioContinuous": [
+      0.34918191458129366,
+      0.03833248898969692
+    ],
+    "allowedRatioNearestSuperset": [
+      0.3480769085224921,
+      0.04836342068793536
+    ]
+  },
+  "goryeoPairs": [
+    {
+      "from": "나루",
+      "to": "장단",
+      "legacyDistance": 4,
+      "seconds": 10.055249039233052,
+      "path": [
+        "goryeo/나루",
+        "goryeo/장단"
+      ],
+      "calibratedDistance": 1.0593083691313872,
+      "oldHours": 44,
+      "continuousHours": 17.533775322182485,
+      "continuousDeltaPercent": -60.15051063140344,
+      "nearestHours": 17,
+      "nearestDeltaPercent": -61.36363636363637,
+      "allowedRatioContinuous": [
+        0.34918191458129366,
+        0.4464224477558313
+      ],
+      "allowedRatioNearestSuperset": [
+        0.3480769085224921,
+        0.4475274538146327
+      ]
+    },
+    {
+      "from": "나루",
+      "to": "송악",
+      "legacyDistance": 1,
+      "seconds": 26.965063593356575,
+      "path": [
+        "goryeo/나루",
+        "goryeo/장단",
+        "goryeo/송악"
+      ],
+      "calibratedDistance": 2.8407369551118933,
+      "oldHours": 17,
+      "continuousHours": 33.56663259600704,
+      "continuousDeltaPercent": 97.450779976512,
+      "nearestHours": 35,
+      "nearestDeltaPercent": 105.88235294117645,
+      "allowedRatioContinuous": [
+        0,
+        0.04408997163210093
+      ],
+      "allowedRatioNearestSuperset": [
+        0,
+        0.05562753430218341
+      ]
+    },
+    {
+      "from": "나루",
+      "to": "닥목",
+      "legacyDistance": 3,
+      "seconds": 28.661328725108724,
+      "path": [
+        "goryeo/나루",
+        "goryeo/개경",
+        "goryeo/닥목"
+      ],
+      "calibratedDistance": 3.0194364426452087,
+      "oldHours": 35,
+      "continuousHours": 35.17492798380688,
+      "continuousDeltaPercent": 0.49979423944823687,
+      "nearestHours": 35,
+      "nearestDeltaPercent": 0.0,
+      "allowedRatioContinuous": [
+        0.0911022352157613,
+        0.11823907123747744
+      ],
+      "allowedRatioNearestSuperset": [
+        0.08722554435551615,
+        0.1221157620977226
+      ]
+    },
+    {
+      "from": "나루",
+      "to": "개경",
+      "legacyDistance": 2,
+      "seconds": 14.514297087513343,
+      "path": [
+        "goryeo/나루",
+        "goryeo/개경"
+      ],
+      "calibratedDistance": 1.5290637076090672,
+      "oldHours": 26,
+      "continuousHours": 21.761573368481606,
+      "continuousDeltaPercent": -16.30164089045536,
+      "nearestHours": 26,
+      "nearestDeltaPercent": 0.0,
+      "allowedRatioContinuous": [
+        0.11789142118244093,
+        0.15769891404923916
+      ],
+      "allowedRatioNearestSuperset": [
+        0.10334637571188003,
+        0.17224395951980004
+      ]
+    },
+    {
+      "from": "장단",
+      "to": "송악",
+      "legacyDistance": 5,
+      "seconds": 16.90981455412352,
+      "path": [
+        "goryeo/장단",
+        "goryeo/송악"
+      ],
+      "calibratedDistance": 1.7814285859805064,
+      "oldHours": 53,
+      "continuousHours": 24.032857273824558,
+      "continuousDeltaPercent": -54.65498627580272,
+      "nearestHours": 26,
+      "nearestDeltaPercent": -50.943396226415096,
+      "allowedRatioContinuous": [
+        0.2608609986225689,
+        0.33051154233539587
+      ],
+      "allowedRatioNearestSuperset": [
+        0.2661176434310841,
+        0.3252548975268806
+      ]
+    },
+    {
+      "from": "장단",
+      "to": "닥목",
+      "legacyDistance": 1,
+      "seconds": 31.01517590492078,
+      "path": [
+        "goryeo/장단",
+        "goryeo/송악",
+        "goryeo/닥목"
+      ],
+      "calibratedDistance": 3.2674114065175512,
+      "oldHours": 17,
+      "continuousHours": 37.40670265865796,
+      "continuousDeltaPercent": 120.03942740387039,
+      "nearestHours": 35,
+      "nearestDeltaPercent": 105.88235294117645,
+      "allowedRatioContinuous": [
+        0,
+        0.03833248898969692
+      ],
+      "allowedRatioNearestSuperset": [
+        0,
+        0.04836342068793536
+      ]
+    },
+    {
+      "from": "장단",
+      "to": "개경",
+      "legacyDistance": 2,
+      "seconds": 24.569546126746395,
+      "path": [
+        "goryeo/장단",
+        "goryeo/나루",
+        "goryeo/개경"
+      ],
+      "calibratedDistance": 2.588372076740454,
+      "oldHours": 26,
+      "continuousHours": 31.29534869066409,
+      "continuousDeltaPercent": 20.36672573332341,
+      "nearestHours": 35,
+      "nearestDeltaPercent": 34.61538461538463,
+      "allowedRatioContinuous": [
+        0.06964357836665108,
+        0.0931595918411047
+      ],
+      "allowedRatioNearestSuperset": [
+        0.061051188827908415,
+        0.10175198137984735
+      ]
+    },
+    {
+      "from": "송악",
+      "to": "닥목",
+      "legacyDistance": 4,
+      "seconds": 14.10536135079726,
+      "path": [
+        "goryeo/송악",
+        "goryeo/닥목"
+      ],
+      "calibratedDistance": 1.4859828205370451,
+      "oldHours": 44,
+      "continuousHours": 21.373845384833405,
+      "continuousDeltaPercent": -51.42307867083318,
+      "nearestHours": 17,
+      "nearestDeltaPercent": -61.36363636363637,
+      "allowedRatioContinuous": [
+        0.24892032354156293,
+        0.31823990731263113
+      ],
+      "allowedRatioNearestSuperset": [
+        0.24813260099870987,
+        0.31902762985548416
+      ]
+    },
+    {
+      "from": "송악",
+      "to": "개경",
+      "legacyDistance": 3,
+      "seconds": 21.619025682674604,
+      "path": [
+        "goryeo/송악",
+        "goryeo/개경"
+      ],
+      "calibratedDistance": 2.2775383035038543,
+      "oldHours": 35,
+      "continuousHours": 28.497844731534688,
+      "continuousDeltaPercent": -18.577586481329465,
+      "nearestHours": 26,
+      "nearestDeltaPercent": -25.71428571428571,
+      "allowedRatioContinuous": [
+        0.12077838980521886,
+        0.15675493144932662
+      ],
+      "allowedRatioNearestSuperset": [
+        0.11563888385606061,
+        0.16189443739848486
+      ]
+    },
+    {
+      "from": "닥목",
+      "to": "개경",
+      "legacyDistance": 1,
+      "seconds": 14.147031637595383,
+      "path": [
+        "goryeo/닥목",
+        "goryeo/개경"
+      ],
+      "calibratedDistance": 1.4903727350361418,
+      "oldHours": 17,
+      "continuousHours": 21.413354615325275,
+      "continuousDeltaPercent": 25.960909501913388,
+      "nearestHours": 17,
+      "nearestDeltaPercent": 0.0,
+      "allowedRatioContinuous": [
+        0,
+        0.08403804553101066
+      ],
+      "allowedRatioNearestSuperset": [
+        0,
+        0.10602930978211624
+      ]
+    }
+  ],
+  "internalRoutes": [
+    {
+      "from": "east/남동 포구",
+      "to": "east/동문 마을",
+      "seconds": 25.596661074674273,
+      "path": [
+        "east/남동 포구",
+        "east/동문 마을"
+      ]
+    },
+    {
+      "from": "east/남동 포구",
+      "to": "east/북동 포구",
+      "seconds": 51.193322149348546,
+      "path": [
+        "east/남동 포구",
+        "east/동문 마을",
+        "east/북동 포구"
+      ]
+    },
+    {
+      "from": "east/남동 포구",
+      "to": "east/중앙 길목 마을",
+      "seconds": 30.107988927025946,
+      "path": [
+        "east/남동 포구",
+        "east/중앙 길목 마을"
+      ]
+    },
+    {
+      "from": "east/남동 포구",
+      "to": "goryeo/개경",
+      "seconds": 60.16572927110278,
+      "path": [
+        "east/남동 포구",
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/개경"
+      ]
+    },
+    {
+      "from": "east/남동 포구",
+      "to": "goryeo/나루",
+      "seconds": 65.51176718178475,
+      "path": [
+        "east/남동 포구",
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/장단",
+        "goryeo/나루"
+      ]
+    },
+    {
+      "from": "east/남동 포구",
+      "to": "goryeo/닥목",
+      "seconds": 52.65206493922543,
+      "path": [
+        "east/남동 포구",
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/닥목"
+      ]
+    },
+    {
+      "from": "east/남동 포구",
+      "to": "goryeo/송악",
+      "seconds": 38.54670358842817,
+      "path": [
+        "east/남동 포구",
+        "east/동문 마을",
+        "goryeo/송악"
+      ]
+    },
+    {
+      "from": "east/남동 포구",
+      "to": "goryeo/장단",
+      "seconds": 55.456518142551694,
+      "path": [
+        "east/남동 포구",
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/장단"
+      ]
+    },
+    {
+      "from": "east/동문 마을",
+      "to": "east/북동 포구",
+      "seconds": 25.596661074674273,
+      "path": [
+        "east/동문 마을",
+        "east/북동 포구"
+      ]
+    },
+    {
+      "from": "east/동문 마을",
+      "to": "east/중앙 길목 마을",
+      "seconds": 22.736842105263158,
+      "path": [
+        "east/동문 마을",
+        "east/중앙 길목 마을"
+      ]
+    },
+    {
+      "from": "east/동문 마을",
+      "to": "goryeo/개경",
+      "seconds": 34.5690681964285,
+      "path": [
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/개경"
+      ]
+    },
+    {
+      "from": "east/동문 마을",
+      "to": "goryeo/나루",
+      "seconds": 39.91510610711047,
+      "path": [
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/장단",
+        "goryeo/나루"
+      ]
+    },
+    {
+      "from": "east/동문 마을",
+      "to": "goryeo/닥목",
+      "seconds": 27.055403864551156,
+      "path": [
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/닥목"
+      ]
+    },
+    {
+      "from": "east/동문 마을",
+      "to": "goryeo/송악",
+      "seconds": 12.950042513753896,
+      "path": [
+        "east/동문 마을",
+        "goryeo/송악"
+      ]
+    },
+    {
+      "from": "east/동문 마을",
+      "to": "goryeo/장단",
+      "seconds": 29.859857067877417,
+      "path": [
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/장단"
+      ]
+    },
+    {
+      "from": "east/북동 포구",
+      "to": "east/중앙 길목 마을",
+      "seconds": 30.107988927025946,
+      "path": [
+        "east/북동 포구",
+        "east/중앙 길목 마을"
+      ]
+    },
+    {
+      "from": "east/북동 포구",
+      "to": "goryeo/개경",
+      "seconds": 60.16572927110278,
+      "path": [
+        "east/북동 포구",
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/개경"
+      ]
+    },
+    {
+      "from": "east/북동 포구",
+      "to": "goryeo/나루",
+      "seconds": 65.51176718178475,
+      "path": [
+        "east/북동 포구",
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/장단",
+        "goryeo/나루"
+      ]
+    },
+    {
+      "from": "east/북동 포구",
+      "to": "goryeo/닥목",
+      "seconds": 52.65206493922543,
+      "path": [
+        "east/북동 포구",
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/닥목"
+      ]
+    },
+    {
+      "from": "east/북동 포구",
+      "to": "goryeo/송악",
+      "seconds": 38.54670358842817,
+      "path": [
+        "east/북동 포구",
+        "east/동문 마을",
+        "goryeo/송악"
+      ]
+    },
+    {
+      "from": "east/북동 포구",
+      "to": "goryeo/장단",
+      "seconds": 55.456518142551694,
+      "path": [
+        "east/북동 포구",
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/장단"
+      ]
+    },
+    {
+      "from": "east/중앙 길목 마을",
+      "to": "goryeo/개경",
+      "seconds": 57.305910301691654,
+      "path": [
+        "east/중앙 길목 마을",
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/개경"
+      ]
+    },
+    {
+      "from": "east/중앙 길목 마을",
+      "to": "goryeo/나루",
+      "seconds": 62.651948212373625,
+      "path": [
+        "east/중앙 길목 마을",
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/장단",
+        "goryeo/나루"
+      ]
+    },
+    {
+      "from": "east/중앙 길목 마을",
+      "to": "goryeo/닥목",
+      "seconds": 49.79224596981431,
+      "path": [
+        "east/중앙 길목 마을",
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/닥목"
+      ]
+    },
+    {
+      "from": "east/중앙 길목 마을",
+      "to": "goryeo/송악",
+      "seconds": 35.68688461901705,
+      "path": [
+        "east/중앙 길목 마을",
+        "east/동문 마을",
+        "goryeo/송악"
+      ]
+    },
+    {
+      "from": "east/중앙 길목 마을",
+      "to": "goryeo/장단",
+      "seconds": 52.59669917314057,
+      "path": [
+        "east/중앙 길목 마을",
+        "east/동문 마을",
+        "goryeo/송악",
+        "goryeo/장단"
+      ]
+    },
+    {
+      "from": "goryeo/개경",
+      "to": "goryeo/나루",
+      "seconds": 14.514297087513343,
+      "path": [
+        "goryeo/개경",
+        "goryeo/나루"
+      ]
+    },
+    {
+      "from": "goryeo/개경",
+      "to": "goryeo/닥목",
+      "seconds": 14.147031637595383,
+      "path": [
+        "goryeo/개경",
+        "goryeo/닥목"
+      ]
+    },
+    {
+      "from": "goryeo/개경",
+      "to": "goryeo/송악",
+      "seconds": 21.619025682674604,
+      "path": [
+        "goryeo/개경",
+        "goryeo/송악"
+      ]
+    },
+    {
+      "from": "goryeo/개경",
+      "to": "goryeo/장단",
+      "seconds": 24.569546126746395,
+      "path": [
+        "goryeo/개경",
+        "goryeo/나루",
+        "goryeo/장단"
+      ]
+    },
+    {
+      "from": "goryeo/나루",
+      "to": "goryeo/닥목",
+      "seconds": 28.661328725108724,
+      "path": [
+        "goryeo/나루",
+        "goryeo/개경",
+        "goryeo/닥목"
+      ]
+    },
+    {
+      "from": "goryeo/나루",
+      "to": "goryeo/송악",
+      "seconds": 26.965063593356575,
+      "path": [
+        "goryeo/나루",
+        "goryeo/장단",
+        "goryeo/송악"
+      ]
+    },
+    {
+      "from": "goryeo/나루",
+      "to": "goryeo/장단",
+      "seconds": 10.055249039233052,
+      "path": [
+        "goryeo/나루",
+        "goryeo/장단"
+      ]
+    },
+    {
+      "from": "goryeo/닥목",
+      "to": "goryeo/송악",
+      "seconds": 14.10536135079726,
+      "path": [
+        "goryeo/닥목",
+        "goryeo/송악"
+      ]
+    },
+    {
+      "from": "goryeo/닥목",
+      "to": "goryeo/장단",
+      "seconds": 31.01517590492078,
+      "path": [
+        "goryeo/닥목",
+        "goryeo/송악",
+        "goryeo/장단"
+      ]
+    },
+    {
+      "from": "goryeo/송악",
+      "to": "goryeo/장단",
+      "seconds": 16.90981455412352,
+      "path": [
+        "goryeo/송악",
+        "goryeo/장단"
+      ]
+    }
+  ],
+  "inputsSha256": {
+    "Assets/PocketCaravan/Data/Goryeo/Town_Dakmok.asset": "f662361d6763cb49afe3eabeff7033931cdc1d9e1852ac5f8a32c2a8427351b0",
+    "Assets/PocketCaravan/Data/Goryeo/Town_Gaegyeong.asset": "db90b83ce599e6b04600f81187d5e2e7298d610b6401832cf9bdf2c9c749d9ff",
+    "Assets/PocketCaravan/Data/Goryeo/Town_GoryeoJangdan.asset": "d44f641469a74286f969e0f25b5486128f893a1b0da443b511f6f0b06fecf1ca",
+    "Assets/PocketCaravan/Data/Goryeo/Town_GoryeoSongak.asset": "a6ac5d3cdd7df7c04dab2eb07b9ed4ac7f3b0fc6095af744e883079c6b690db1",
+    "Assets/PocketCaravan/Data/Goryeo/Town_Naru.asset": "f70788e9e6faffe803daaf81afc042e7257ba6b8ca3494a43cbc39f18b054798",
+    "Assets/PocketCaravan/Scripts/Player/PlayerMotor.cs": "a989297bd4403cc3794b08a2257f126076ee5b999dadc0af976860249e221f18",
+    "Docs/Validation/E1-2026-10-25/legacy-source/ContractManager.cs": "87b1b2254886d417756920137c8c385c2c193150e338b45372b425ced8bee87a",
+    "Docs/Validation/E1-2026-10-25/legacy-source/ItemData.cs": "4c9b974df5fcb5e442ee61dc62bf91bdd5a1202e445016cebc2d53d9dbc455fd",
+    "Tools/WorldLayout/world-layout.json": "a4b0348bd24769e170271e20e67bd0c923ca7b911c43d7eb788cb7e7a3ea9339"
+  },
+  "limitations": [
+    "Fractional vs integer runtime distance is not selected; both alternatives fail.",
+    "No production pricing/reward/deadline change; full economic acceptance not completed.",
+    "No Unity execution, physical pathfinding, save regression or human play in this check.",
+    "B2 must recalculate from traversable road lengths after the design conflict is resolved."
+  ]
+}

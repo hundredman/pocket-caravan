@@ -1,0 +1,172 @@
+{
+  "status": "removed_after_user_visible_list",
+  "files": [
+    {
+      "path": "Assets/PocketCaravan/Maps/Route01.json",
+      "sha256": "7499ea2452262f210545c1a5c834e37922e948b2c4f5637f9911a10a6c2569c8",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/Route01.json.meta",
+      "sha256": "551939e2da638ccb9d93dd724dfa54657c05155243d3558d0b99ee5d72cbbcd5",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/Route01.unity",
+      "sha256": "8024ee5c9d01ff4a73d6f83e1988748ef67d3810b7caabaf859bd299c9c86f40",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/Route01.unity.meta",
+      "sha256": "78e1172251e74f356b4be6e937c281896e9c8a700d8e2bea63b12eb718538d99",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_descent.json",
+      "sha256": "ee63b153028f525d366b980ec1a4d36a7eff9ec66e38ec81925fe3ed9fa206e4",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_descent.json.meta",
+      "sha256": "228ce3bea139bd3adbd286e509e21d685c1e5a6ab070d0928f7baa2322dc021a",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_descent.unity",
+      "sha256": "c0482631fc188966b037eefa4f34abe43e26af2b931e782f0ecce78fb4f4b962",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_descent.unity.meta",
+      "sha256": "632248c234a8b2f7e5a325bffc341617fae296dfe2bc145296ad47d5216ee672",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_fieldroad.json",
+      "sha256": "019bc41b4cc82dcf59cba161ca716a507093a49a4f7899c2a71f0ad4de58b1f2",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_fieldroad.json.meta",
+      "sha256": "4fe77a5b76acce04b9ed3329104779c0bdc14c8c2d6114484eef61a3374c2a56",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_fieldroad.unity",
+      "sha256": "0f616530f9978a6e333ae4c9e4a472f0888408283bacdfb86b5493f65e4f2700",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_fieldroad.unity.meta",
+      "sha256": "555c844d0ffb6ec642918a2e01a15cea8a4bef02b548f09cb40eb0613a647234",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_ridge.json",
+      "sha256": "3b43d1a36e5a6d88118bd12b8af6e1e1e5d0323b2af4920a35bf1e482661c4fd",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_ridge.json.meta",
+      "sha256": "b5eb82e912daa1480336af50b672d16f401f615ceabe2dedbff25fa845cd4736",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_ridge.unity",
+      "sha256": "15b39785661135d3da7bf3bff2d3be9685aeefa06b07277ac7ee372fe26d3677",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_ridge.unity.meta",
+      "sha256": "69574b1121810670bb2267675f49a891be3b21c1752efd3a94db0e662e14c175",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_rivervalley.json",
+      "sha256": "3d8f556676ca828870118c822339e3a10f4e14a75337aa663e19bba3b328172f",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_rivervalley.json.meta",
+      "sha256": "8afbeb1d5dfcdef33dddae6a3b9deb738629f44fb951d7d2672a2498aa38798c",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_rivervalley.unity",
+      "sha256": "b9cbbacdb6b998232642f786c4ca12b51c8e1f7adcb87f3e0df7fd32349fb218",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_rivervalley.unity.meta",
+      "sha256": "da0f6e5cf32b553f65624803c53d5ab173e32b7cb3e39948fdb2c6a5e291648c",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_southcoast.json",
+      "sha256": "58e75a49afa5e35e8e2ca3e09e0b127a9a4dd878caf945f88d22862b3a8d92a4",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_southcoast.json.meta",
+      "sha256": "49f18d59c7fcd3b45114ceed07469df0e6d1108a94a253a4893583bf106c295b",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_southcoast.unity",
+      "sha256": "5015a2fa85c6cb5d5d5360ed1ddb06ba0ae979495e94fb8e662747a56738b463",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_southcoast.unity.meta",
+      "sha256": "c508fa8380bb0b884201a4a20e332202aa2bb4e51c4bc04b301e2a5268d5c131",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_tidalcoast.json",
+      "sha256": "7fa8ca7ab3ae9c3a988f5643262b9aad40180dc630b10965922062bbfc03b4a0",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_tidalcoast.json.meta",
+      "sha256": "ad0dbb0558ef4d203e751368a6c6455c5e27767665d72b1ce8a1797112f13e48",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_tidalcoast.unity",
+      "sha256": "3d4dab6f8c40ac7c27a36b9f7c0167daaaf158bc81861898fd2fff640c53c153",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_tidalcoast.unity.meta",
+      "sha256": "4e41f60d4c2a1493175a946eee3d1c633565431b8982adfefa5b214a53234764",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_westcoast.json",
+      "sha256": "ed9253796d69cebf5568408ea5b44fe8322e3e4a27087a5715733181ba15a8b2",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_westcoast.json.meta",
+      "sha256": "84fb6250e89a8e2f0ce8b1c916bccb0847c29611f2a722a449fcdb9d8595d024",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_westcoast.unity",
+      "sha256": "bc273e49bfb1a9fc9ac25920eb9156fcf8e18c7e7d5353ed167eb428a8e8ff33",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_westcoast.unity.meta",
+      "sha256": "a9a5c5966c14881a457f6ed7189f044c9d111fdd1b452cc31cafc660862d377c",
+      "reason": "미등록 옛 생성물; 구 저장 별칭은 별도 유지"
+    }
+  ],
+  "codeChanges": [
+    "Tools/MapGen/tiles.py: old source sheet crop/recolor replaced with frozen loader",
+    "Tools/MapGen/goryeo_art.py: sprite extraction/tone/ripple conversion replaced with frozen reads",
+    "Tools/MapGen/module_art.py: runtime drawing/crop replaced with frozen read",
+    "maps.py, gaegyeong.py, frontier.py, goryeo_roads.py, settlement_details.py: obsolete animal NPC strings replaced by existing approved role paths"
+  ],
+  "removedCount": 32
+}

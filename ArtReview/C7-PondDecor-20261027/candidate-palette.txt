@@ -1,0 +1,9 @@
+// Candidate colors only; not D3 approval
+#2d4536
+#3e6345
+#65874b
+#96b55f
+#9c536e
+#d88da4
+#f3bfcb
+#edc878

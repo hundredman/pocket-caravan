@@ -1,0 +1,268 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "prop": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#b78137",
+        "#daa34a",
+        "#f0c365",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#c4a779",
+        "#e0c99b",
+        "#f4dfb5",
+        "#77746c",
+        "#a29b87",
+        "#c4bca7",
+        "#4a627a",
+        "#718da3",
+        "#a5b9c3",
+        "#794b3b",
+        "#ad624c",
+        "#d69062",
+        "#547e6a",
+        "#86a28b",
+        "#33475e",
+        "#304d47"
+      ]
+    },
+    "grain": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#b78137",
+        "#daa34a",
+        "#f0c365",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#e0c99b",
+        "#f4dfb5"
+      ]
+    },
+    "jade": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#304d47",
+        "#547e6a",
+        "#86a28b",
+        "#b6cfac",
+        "#68452d",
+        "#98653b",
+        "#bc8850"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7_workshop_paper_rack",
+      "kind": "object",
+      "purpose": "paper_drying_rack",
+      "size": [
+        3,
+        2
+      ],
+      "image": "ArtReview/C7-WorkshopProps-20261027/Native/paper_rack.png",
+      "profile": "prop",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-WorkshopProps-20261027/Native/paper_rack.aseprite"
+      },
+      "review": {
+        "status": "pending",
+        "date": "2026-10-27",
+        "sizeFeedback": "건조대 크기는 괜찮음. 크기 수용을 기록하고 픽셀 유지; 전체 그림 승인으로 확대 해석하지 않음."
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshop_paper_rack_0_0",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_paper_rack_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshop_paper_rack_1_0",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_paper_rack_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshop_paper_rack_2_0",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_paper_rack_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshop_paper_rack_0_1",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_paper_rack_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshop_paper_rack_1_1",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_paper_rack_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshop_paper_rack_2_1",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_paper_rack_2_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_workshop_harvest",
+      "kind": "object",
+      "purpose": "harvest_goods",
+      "size": [
+        3,
+        2
+      ],
+      "image": "ArtReview/C7-WorkshopProps-20261027/Native/harvest.png",
+      "profile": "grain",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-WorkshopProps-20261027/Native/harvest.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "date": "2026-10-27",
+        "userQuote": "건조대 크기는 괜찮은데 나머지 2개는 물품이 이전 버전에 비해 커보여. 최대한 작게 표현해줘. 이전 정도의 크기로.",
+        "feedback": "전체 캔버스보다 개별 물품의 덩치를 줄이고 원래 작은 물품 구성 참고"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshop_harvest_0_0",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_harvest_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshop_harvest_1_0",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_harvest_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshop_harvest_2_0",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_harvest_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshop_harvest_0_1",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_harvest_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshop_harvest_1_1",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_harvest_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshop_harvest_2_1",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_harvest_2_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_workshop_celadon",
+      "kind": "object",
+      "purpose": "celadon_display",
+      "size": [
+        3,
+        2
+      ],
+      "image": "ArtReview/C7-WorkshopProps-20261027/Native/celadon.png",
+      "profile": "jade",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-WorkshopProps-20261027/Native/celadon.aseprite"
+      },
+      "review": {
+        "status": "changes_requested",
+        "date": "2026-10-27",
+        "userQuote": "건조대 크기는 괜찮은데 나머지 2개는 물품이 이전 버전에 비해 커보여. 최대한 작게 표현해줘. 이전 정도의 크기로.",
+        "feedback": "전체 캔버스보다 개별 물품의 덩치를 줄이고 원래 작은 물품 구성 참고"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshop_celadon_0_0",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_celadon_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshop_celadon_1_0",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_celadon_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_workshop_celadon_2_0",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_celadon_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshop_celadon_0_1",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_celadon_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshop_celadon_1_1",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_celadon_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_workshop_celadon_2_1",
+          "image": "ArtReview/C7-WorkshopProps-20261027/Cells/c7_workshop_celadon_2_1.png"
+        }
+      ]
+    }
+  ]
+}

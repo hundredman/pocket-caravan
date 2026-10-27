@@ -9,7 +9,11 @@ namespace PocketCaravan
     [Serializable]
     public class SaveData
     {
+        // Keep missing-version pre-R1 JSON compatible; ReputationState.ExportTo promotes real saves to v3.
         public int version = 2;
+        public ReputationState.Save reputation;
+        public TradeActivity.Save tradeActivity;
+        public int layoutVersion; // 1: five broad Goryeo regions; missing/0 is migrated read-only.
         public string scene;
         public float px, py;
         public int mapHeight; // 0: 맵 확장 전 저장. WorldIndex의 고정된 이전 높이를 사용한다.
@@ -31,6 +35,8 @@ namespace PocketCaravan
         public List<QuestManager.Save> quests = new List<QuestManager.Save>();
         public List<string> finishedQuests = new List<string>();
         public string trackedQuest;
+        public int q1MigrationVersion; // 0: before Q1, 1: frozen legacy history
+        public List<string> legacyMainFinishedIds = new List<string>();
 
         public List<MarketState.Save> markets = new List<MarketState.Save>();
         public List<ContractManager.Board> boards = new List<ContractManager.Board>();
@@ -44,6 +50,7 @@ namespace PocketCaravan
 
     public static class SaveSystem
     {
+        public const int CurrentVersion = 3;
 #if CARAVAN_PREVIEW
         const string SaveFile = "pocket_caravan_preview_save.json";
 #else
@@ -79,7 +86,8 @@ namespace PocketCaravan
         /// <summary>위쪽 기준 타일은 유지하고, 맵 높이 확장으로 바뀐 Unity y만 보정한다.</summary>
         public static Vector3 PositionFor(SaveData data)
         {
-            var info = WorldIndex.Get()?.Map(data.scene);
+            if (GoryeoLayout.TryPosition(data, out var migrated)) return migrated;
+            var info = WorldIndex.Get()?.Map(GoryeoLayout.Resolve(data.scene));
             int current = info != null ? info.height : 0;
             int saved = data.mapHeight > 0 ? data.mapHeight : (info != null ? info.legacyHeight : 0);
             float delta = current > 0 && saved > 0 ? current - saved : 0;
@@ -113,7 +121,9 @@ namespace PocketCaravan
 
         public static void Validate(SaveData d)
         {
-            if (d == null || d.version < 1 || d.version > 2) throw new InvalidDataException("지원하지 않는 저장 버전입니다.");
+            TradeActivity.Validate(d?.tradeActivity);
+            if (d == null || d.version < 1 || d.version > CurrentVersion) throw new InvalidDataException("지원하지 않는 저장 버전입니다.");
+            ReputationState.ValidateSaveBlock(d);
             if (d.cargoItems == null || d.cargoCounts == null || d.cargoCosts == null
                 || d.cargoItems.Count != d.cargoCounts.Count || d.cargoItems.Count != d.cargoCosts.Count)
                 throw new InvalidDataException("화물 저장 목록이 맞지 않습니다.");
@@ -129,6 +139,10 @@ namespace PocketCaravan
             if (d.money < 0 || !Finite(d.px) || !Finite(d.py) || !Finite(d.stamina) || d.stamina < 0 || d.stamina > 1
                 || d.day < 0 || !Finite(d.minute) || d.minute < 0 || d.minute >= 1440)
                 throw new InvalidDataException("잔고·위치·체력·시각 저장값이 올바르지 않습니다.");
+            if (d.q1MigrationVersion < 0 || d.q1MigrationVersion > 1
+                || (d.q1MigrationVersion == 1 && d.legacyMainFinishedIds == null)
+                || (d.q1MigrationVersion == 0 && d.legacyMainFinishedIds != null && d.legacyMainFinishedIds.Count > 0))
+                throw new InvalidDataException("메인 이주 기록의 버전/목록이 올바르지 않습니다.");
             new WarehouseStore().Import(d.storedCargo);
         }
 

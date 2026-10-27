@@ -1,0 +1,18 @@
+{
+  "tool": "built-in imagegen",
+  "referenceRoles": {
+    "Docs/Images/team-style-reference.png": "upper Venice/Arabia target style",
+    "ArtReview/Approved/C7-Buildings-v5/tile-house.png": "approved game camera, roof and flat colors",
+    "Assets/PocketCaravan/Art/Baked/Sprites/house_6_4.png": "existing shared large house architecture only"
+  },
+  "brief": "single-storey Goryeo lodging exterior candidate, central double door, two side window bays, raised veranda, slate roof; no new game facility",
+  "wholeNativeSampling": true,
+  "sourceOpacityThreshold": 224,
+  "nativeCanvas": [
+    96,
+    64
+  ],
+  "candidateColors": 21,
+  "sharedPaletteApproved": false,
+  "productionApplied": false
+}

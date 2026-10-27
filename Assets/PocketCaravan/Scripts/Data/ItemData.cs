@@ -20,8 +20,7 @@ namespace PocketCaravan
         public int MapsFrom(TownData town)
         {
             if (originTown == null || town == null) return 0;
-            var d = originTown.worldCoord - town.worldCoord;
-            return Mathf.Abs(d.x) + Mathf.Abs(d.y);
+            return TownDistance.Between(originTown.id, town.id, originTown.worldCoord, town.worldCoord);
         }
 
         /// <summary>기준가 = 산지 기준가 × (1 + 맵당 비율 × 산지에서 거쳐 가는 맵 수)</summary>

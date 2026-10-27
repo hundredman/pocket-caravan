@@ -1,0 +1,30 @@
+// MCP execute_code method body. Run only in paused Gaegyeong Play mode.
+// Memory-only: no AssetDatabase.CreateAsset, scene save or saved-game write.
+if (!Application.isPlaying || !UnityEditor.EditorApplication.isPaused) throw new System.InvalidOperationException("Paused Play mode required");
+var map=PocketCaravan.MapRoot.Current;
+if(map.mapId!="Gaegyeong") throw new System.InvalidOperationException("Gaegyeong required");
+var gm=PocketCaravan.GameManager.I;
+var autosave=gm.GetType().GetField("autosave",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance);
+if((bool)autosave.GetValue(gm)) throw new System.InvalidOperationException("Disable autosave before preview");
+var review="/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-a4/ArtReview/A4-Water-v1/";
+if(GameObject.Find("A4 water proposal")!=null) throw new System.InvalidOperationException("Already installed in this Play session");
+var go=new GameObject("A4 water proposal");go.transform.SetParent(map.transform,false);
+var tm=go.AddComponent<UnityEngine.Tilemaps.Tilemap>();var renderer=go.AddComponent<UnityEngine.Tilemaps.TilemapRenderer>();
+renderer.sortingOrder=1;renderer.sharedMaterial=map.ground.GetComponent<UnityEngine.Tilemaps.TilemapRenderer>().sharedMaterial;
+var deco=map.transform.Find("Deco");if(deco!=null)deco.GetComponent<UnityEngine.Tilemaps.TilemapRenderer>().sortingOrder=2;
+int count=0;var masks=new System.Collections.Generic.Dictionary<string,UnityEngine.Tilemaps.Tile>();
+foreach(var line in System.IO.File.ReadAllLines(review+"unity-pond-placement.csv")) {
+ if(string.IsNullOrWhiteSpace(line))continue;var v=line.Split(',');var cell=new Vector3Int(int.Parse(v[0]),int.Parse(v[1]),0);
+ if(!map.blocked.HasTile(cell))throw new System.InvalidOperationException("Water cell must already be blocked: "+cell);
+ var land=UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Tilemaps.TileBase>("Assets/PocketCaravan/Art/NinjaAdventure/TileAssets/"+v[3]+".asset");
+ if(land==null)throw new System.InvalidOperationException("Missing underlying paving "+v[3]);map.ground.SetTile(cell,land);
+ UnityEngine.Tilemaps.Tile tile;
+ if(!masks.TryGetValue(v[2],out tile)) {
+  var tex=new Texture2D(2,2,TextureFormat.RGBA32,false);tex.LoadImage(System.IO.File.ReadAllBytes(review+"pieces/"+v[2]+".png"));tex.filterMode=FilterMode.Point;tex.wrapMode=TextureWrapMode.Clamp;
+  var sprite=Sprite.Create(tex,new Rect(0,0,16,16),new Vector2(.5f,.5f),16,0,SpriteMeshType.FullRect);
+  tile=ScriptableObject.CreateInstance<UnityEngine.Tilemaps.Tile>();tile.sprite=sprite;tile.colliderType=UnityEngine.Tilemaps.Tile.ColliderType.None;masks.Add(v[2],tile);
+ }
+ tm.SetTile(cell,tile);count++;
+}
+UnityEditor.EditorApplication.Step();
+return new { cells=count,moduleKinds=masks.Count,ppu=16,filter="Point",autosave=autosave.GetValue(gm),sceneDirty=UnityEngine.SceneManagement.SceneManager.GetActiveScene().isDirty,productionWritten=false };

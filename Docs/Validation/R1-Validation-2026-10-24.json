@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-24",
+  "task": "R1",
+  "branch": "codex/r1",
+  "mergedMain": "daf4625b989259451029eabebb06f72840f91ca7",
+  "results": {
+    "reputation_dotnet": {
+      "command": [
+        "dotnet",
+        "run",
+        "--project",
+        "Tools/Integration/ReputationProbe/ReputationProbe.csproj",
+        "--verbosity",
+        "quiet"
+      ],
+      "returnCode": 0,
+      "stdout": "{\n  \"environment\": \"Production C# linked into .NET 10; platform stubs; System.Text.Json DTO roundtrip\",\n  \"unityJsonTested\": false,\n  \"productionSavesTouched\": false,\n  \"passed\": [\n    \"new home civilization starts friendly\",\n    \"other civilization starts neutral: arabia\",\n    \"other civilization starts neutral: venice\",\n    \"other civilization starts neutral: viking\",\n    \"central village starts neutral\",\n    \"central villages independent\",\n    \"same ID in town and civilization are distinct\",\n    \"export promotes to save version 3\",\n    \"existing cash credit cargo unchanged\",\n    \"home baseline survives configured origin change\",\n    \"town value and progress survives DTO JSON roundtrip\",\n    \"loading does not regrant friendly after home reputation drops\",\n    \"legacy initializes home once: v1\",\n    \"legacy migration does not mutate payload: v1\",\n    \"second load preserves migrated values: v1\",\n    \"legacy initializes home once: v2\",\n    \"legacy migration does not mutate payload: v2\",\n    \"second load preserves migrated values: v2\",\n    \"Unity-style absent inline legacy block is accepted\",\n    \"test or no-origin session stays neutral\",\n    \"unintegrated origin keeps its existing ID\",\n    \"standing roundtrip: Hostile\",\n    \"standing roundtrip: Wary\",\n    \"standing roundtrip: Neutral\",\n    \"standing roundtrip: Friendly\",\n    \"standing roundtrip: Trusted\",\n    \"standing roundtrip: Respected\",\n    \"unknown future town retained without balancing clamp\",\n    \"returned entry cannot mutate state\",\n    \"export does not alias live records\",\n    \"import does not alias incoming records\",\n    \"future reputation schema rejected without mutation\",\n    \"null entries rejected without mutation\",\n    \"null row rejected without mutation\",\n    \"duplicate target rejected without mutation\",\n    \"negative progress rejected without mutation\",\n    \"invalid standing rejected without mutation\",\n    \"invalid scope rejected without mutation\",\n    \"blank target rejected without mutation\",\n    \"missing home record rejected without mutation\",\n    \"inconsistent save header rejected: v3\",\n    \"inconsistent save header rejected: v4\",\n    \"inconsistent save header rejected: v3\",\n    \"inconsistent save header rejected: v2\",\n    \"new game resets previous town changes\"\n  ]\n}\n",
+      "stderr": "",
+      "checkCount": 45
+    },
+    "quest_regression": {
+      "command": [
+        "dotnet",
+        "run",
+        "--project",
+        "Tools/Integration/QuestSaveProbe/QuestSaveProbe.csproj",
+        "--verbosity",
+        "quiet"
+      ],
+      "returnCode": 0,
+      "stdout": "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-r1/Tools/Integration/QuestSaveProbe/Stubs.cs(6,93): warning CS9113: ‘text’ 매개 변수를 읽지 않았습니다. [/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-r1/Tools/Integration/QuestSaveProbe/QuestSaveProbe.csproj]\n/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-r1/Tools/Integration/QuestSaveProbe/Stubs.cs(5,94): warning CS9113: ‘text’ 매개 변수를 읽지 않았습니다. [/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-r1/Tools/Integration/QuestSaveProbe/QuestSaveProbe.csproj]\n/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-r1/Tools/Integration/QuestSaveProbe/Stubs.cs(8,136): warning CS9113: ‘type’ 매개 변수를 읽지 않았습니다. [/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-r1/Tools/Integration/QuestSaveProbe/QuestSaveProbe.csproj]\n/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-r1/Tools/Integration/QuestSaveProbe/Stubs.cs(10,30): warning CS9113: ‘a’ 매개 변수를 읽지 않았습니다. [/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-r1/Tools/Integration/QuestSaveProbe/QuestSaveProbe.csproj]\n/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-r1/Tools/Integration/QuestSaveProbe/Stubs.cs(10,38): warning CS9113: ‘b’ 매개 변수를 읽지 않았습니다. [/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-r1/Tools/Integration/QuestSaveProbe/QuestSaveProbe.csproj]\n/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-r1/Tools/Integration/QuestSaveProbe/Stubs.cs(10,46): warning CS9113: ‘c’ 매개 변수를 읽지 않았습니다. [/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-r1/Tools/Integration/QuestSaveProbe/QuestSaveProbe.csproj]\n{\n  \"runtime\": \".NET 10; linked production C#; Unity platform stubs\",\n  \"unitySerializationTested\": false,\n  \"productionSavesTouched\": false,\n  \"observations\": [\n    {\n      \"name\": \"unchanged_definition_restores_goal\",\n      \"observed\": true,\n      \"detail\": \"Same quest definition restores step 1 to gaekju.\"\n    },\n    {\n      \"name\": \"accepted_rewards_remain_promised\",\n      \"observed\": true,\n      \"detail\": \"Current asset reward 50/2 does not replace accepted reward 30/1.\"\n    },\n    {\n      \"name\": \"completed_quest_remains_completed\",\n      \"observed\": true,\n      \"detail\": \"Finished ID survives import and blocks reacceptance.\"\n    },\n    {\n      \"name\": \"reordered_goal_silently_changes_meaning\",\n      \"observed\": true,\n      \"detail\": \"Same saved step 1 now means visit Jangdan, not talk to gaekju; validator accepts.\"\n    },\n    {\n      \"name\": \"old_amount_moves_to_new_goal\",\n      \"observed\": true,\n      \"detail\": \"Saved amount 2 is applied to a different new objective without semantic validation.\"\n    },\n    {\n      \"name\": \"equal_to_count_becomes_stuck_active\",\n      \"observed\": true,\n      \"detail\": \"step == objective count passes validation but remains active with no objective after Tick.\"\n    },\n    {\n      \"name\": \"beyond_count_is_blocked\",\n      \"observed\": true,\n      \"detail\": \"step greater than new count is rejected instead of silently losing progress.\"\n    },\n    {\n      \"name\": \"uncaptured_reward_uses_legacy_fields\",\n      \"observed\": true,\n      \"detail\": \"Old records without a captured reward use authored legacy reward fallback.\"\n    },\n    {\n      \"name\": \"current_map_visit_is_already_passive\",\n      \"observed\": true,\n      \"detail\": \"Already standing in target map advances VisitMap on Tick; no forced reentry needed.\"\n    },\n    {\n      \"name\": \"current_asset_goal_layout_roundtrips\",\n      \"observed\": true,\n      \"detail\": \"12 actual quest asset layouts / 21 active steps restored with unchanged goal type, target and count. Item/vehicle GUID resolution and Unity serialization are outside this probe.\"\n    }\n  ]\n}\n",
+      "stderr": "",
+      "observationCount": 10
+    },
+    "python_integration": {
+      "command": [
+        "/tmp/pocket-caravan-codex-review-20261024/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Tools/Integration",
+        "-p",
+        "test_*.py"
+      ],
+      "returnCode": 0,
+      "stdout": "",
+      "stderr": ".......................................................................\n----------------------------------------------------------------------\nRan 71 tests in 2.654s\n\nOK\n"
+    },
+    "world": {
+      "command": [
+        "python3",
+        "Tools/Integration/validate_world.py"
+      ],
+      "returnCode": 0,
+      "stdout": "0 errors; 92 registered exits checked. Scenes and saves unchanged.\n",
+      "stderr": ""
+    }
+  },
+  "unityReport": "R1-Unity-2026-10-24.json",
+  "unityScope": "Actual Unity 6000.3.26f1 compilation/data/JsonUtility/temp file plus existing save regression; not gameplay",
+  "notVerified": [
+    "Claude review",
+    "actual movement and gameplay",
+    "network persistence"
+  ],
+  "notImplemented": [
+    "D10 numeric thresholds and reward rates",
+    "R2/R6 event awards and price effects",
+    "R4 recovery",
+    "UI and origin selection"
+  ]
+}

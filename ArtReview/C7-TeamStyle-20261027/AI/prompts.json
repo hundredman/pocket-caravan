@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-27",
+  "tool": "built-in image_gen.imagegen",
+  "requests": [
+    {
+      "name": "thatch",
+      "prompt": "Use case: stylized-concept. Asset: ONE small Korean game building, designed in the SAME DRAWING LANGUAGE as the three reference images of our teammates' Venice and Arabia assets. These references define STYLE and proportions, not cultural content. Look closely: very bold readable single dark outside contour; broad bright flat colored planes; only TWO or THREE crisp color values per material; almost no interior linework; deliberate sparse chunky markings instead of texture. Do not copy a reference building. Strict logical64x48 low-resolution sprite, overall visible silhouette roughly60wide x44high (width:height about1.36), NOT a short wide house. Single canvas, whole house centered bottom, real transparent background. Match the slightly top-down front view of the Venice cottages, with a small simple darker right side plane. Render as sharp enlarged square pixels. Dark chocolate one-logical-pixel outside contour. No smooth gradient, grain, speckle, dithering, detailed realistic roof, dense roof ribs, all-over grid, glossy edge highlighting, thin illustration linework, or fussy realistic texture. The facade must have one big quiet wall plane and very few big structural accents, no decorative pattern all over. Do not output an SVG-like geometric wireframe icon. No ground, cast shadow, separate loose props, labels or text. Subject: squat Korean Goryeo thatched cottage. Roof is ONE rounded ochre-gold hipped mass with2 flat shades and ONE short simple tied ridge, four deliberate straw bundle marks MAXIMUM, not lines covering every square. Rounded hanging eave edge and a single broad darker under-eave band. Cream plaster front with two broad warm brown posts. Left recessed wood door with one simple center division; right small dark window with one crossbar only. Low warm gray foundation with2 or3large stone groups. House silhouette and roof/body proportions should feel as full and substantial as reference1 Venice cottages; keep generous wall height. Cultural identity through roof outline and posts, not added fine detail.",
+      "transparent_background": true,
+      "references": [
+        "figma-78-11.png",
+        "figma-92-31.png",
+        "figma-92-32.png"
+      ]
+    },
+    {
+      "name": "tile-house",
+      "prompt": "Use case: stylized-concept. Asset: ONE small Korean game building, designed in the SAME DRAWING LANGUAGE as the three reference images of our teammates' Venice and Arabia assets. These references define STYLE and proportions, not cultural content. Look closely: very bold readable single dark outside contour; broad bright flat colored planes; only TWO or THREE crisp color values per material; almost no interior linework; deliberate sparse chunky markings instead of texture. Do not copy a reference building. Strict logical64x48 low-resolution sprite, overall visible silhouette roughly60wide x44high (width:height about1.36), NOT a short wide house. Single canvas, whole house centered bottom, real transparent background. Match the slightly top-down front view of the Venice cottages, with a small simple darker right side plane. Render as sharp enlarged square pixels. Dark chocolate one-logical-pixel outside contour. No smooth gradient, grain, speckle, dithering, detailed realistic roof, dense roof ribs, all-over grid, glossy edge highlighting, thin illustration linework, or fussy realistic texture. The facade must have one big quiet wall plane and very few big structural accents, no decorative pattern all over. Do not output an SVG-like geometric wireframe icon. No ground, cast shadow, separate loose props, labels or text. Subject: Korean Goryeo tile-roof cottage. Roof is ONE broad blue-gray hipped mass with gently lifted tips,2flat shades and a single simple lighter ridge. Indicate tiled roof with just4 or5big stepped slab marks on a quiet roof surface, NEVER a grid or many black vertical ribs. A single dark eave band creates volume. Cream warm facade with one broad darker right side plane, wood door on right, one paired dark window on left with at most2crossbars. Low gray foundation in3large stone groups. Use strong clear shapes like reference1 Venice roofs and reference2 Arabia walls; do not increase historical ornamental detail.",
+      "transparent_background": true,
+      "references": [
+        "figma-78-11.png",
+        "figma-92-31.png",
+        "figma-92-32.png"
+      ]
+    },
+    {
+      "name": "ground-source",
+      "prompt": "Use case: stylized-concept. ONE purpose-designed ground material source atlas for a small low-resolution pixel game. Two supplied reference images are our teammates' actual Arabia road and grass tiles. Match their bright, clean flat base color plus sparse deliberate 2-3pixel blade and pebble shapes; not blurry mottled camouflage and not fine photographic noise. Atlas is logical32x16 enlarged nearest-neighbor, two equal16x16tiles edge to edge: LEFT a clean warm green grass tile with3 short simple vertical stepped grass blades each2pixels wide2-3high, brighter top/darker base, scattered deliberately with empty quiet space; RIGHT a clean warm sandy dirt tile with3 tiny angular pebble marks each2-3pixels in flat light and darker earth colors. Use3flat colors per material, large empty base regions, no gradients, no fine stippling, no grid, no border, no shadow, no text or gap. Sharp square pixel clusters at the same native pixel scale as reference, completely top-down and opaque. These are source materials for a new complete modular grass-dirt boundary kit, not a landscape. Keep near-edge pixels mostly plain so repeated tiles join. Do not copy the exact reference tile pattern.",
+      "transparent_background": false,
+      "references": [
+        "figma-92-102.png",
+        "figma-92-107.png"
+      ]
+    }
+  ],
+  "notes": [
+    "Whole new AI architecture retained through uniform native sampling/A5/Aseprite contour cleanup; no facade repaint or roof extraction.",
+    "64x48 canvases and feet remain; visible silhouette heights are39 and37 pixels under the new designs.",
+    "Candidate palettes do not decide D3. Existing pine PNG and Aseprite sources copied unchanged."
+  ]
+}

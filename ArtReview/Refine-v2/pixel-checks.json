@@ -1,0 +1,54 @@
+[
+  {
+    "asset": "house",
+    "strength": "micro",
+    "changedPixels": 47,
+    "opaquePixels": 2350,
+    "preservedPercent": 98.0,
+    "alphaAndSilhouette": "identical",
+    "palette": "original colors only",
+    "dimensions": [
+      64,
+      48
+    ]
+  },
+  {
+    "asset": "house",
+    "strength": "gentle",
+    "changedPixels": 94,
+    "opaquePixels": 2350,
+    "preservedPercent": 96.0,
+    "alphaAndSilhouette": "identical",
+    "palette": "original colors only",
+    "dimensions": [
+      64,
+      48
+    ]
+  },
+  {
+    "asset": "tree",
+    "strength": "micro",
+    "changedPixels": 2,
+    "opaquePixels": 912,
+    "preservedPercent": 99.78,
+    "alphaAndSilhouette": "identical",
+    "palette": "original colors only",
+    "dimensions": [
+      64,
+      48
+    ]
+  },
+  {
+    "asset": "tree",
+    "strength": "gentle",
+    "changedPixels": 25,
+    "opaquePixels": 912,
+    "preservedPercent": 97.26,
+    "alphaAndSilhouette": "identical",
+    "palette": "original colors only",
+    "dimensions": [
+      64,
+      48
+    ]
+  }
+]

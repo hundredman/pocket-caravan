@@ -1,0 +1,33 @@
+{
+  "status": "pending",
+  "scope": "fixed oval grass pond only; original Gaegyeong pond/production preserved",
+  "changedCameraPixelBounds": [
+    325,
+    193,
+    395,
+    235
+  ],
+  "files": {
+    "ArtReview/C7-TeamStyle-20261027/PondShape-v10/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "88d20cefb8180e53a0c5de5a7982f359f66e6440f941360829e84ab7c9463935"
+    },
+    "ArtReview/C7-TeamStyle-20261027/PondShape-v10/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "19df2af82028e06e7c1a838214e82eef3ab42c3ba1f040d7bd9d566831dbbce2"
+    },
+    "ArtReview/C7-TeamStyle-20261027/PondShape-v10/comparison.png": {
+      "size": [
+        1000,
+        770
+      ],
+      "rgbaSHA256": "cbd55b8d5c9bb0b4fe288d500f43b423f465d34ef83e39a244a7dcb59fee19db"
+    }
+  }
+}

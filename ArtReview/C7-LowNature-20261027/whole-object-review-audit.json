@@ -1,0 +1,1303 @@
+{
+  "scope": "Only complete PNG objects in current C6 catalogue. Single-cell props, modular terrain, characters, legacy/unbound cherry and new gate are outside this inventory; this is NOT a complete C7 finish checklist.",
+  "productionChanged": false,
+  "records": [
+    {
+      "assetId": "c6_boat_3258f818",
+      "size": [
+        5,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_boat_3258f818.png",
+      "usage": [
+        {
+          "map": "Naru.json",
+          "renderCells": 10
+        }
+      ],
+      "status": "remaining_variant_or_role_review",
+      "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+    },
+    {
+      "assetId": "c6_house_tile_fb336ff1",
+      "size": [
+        4,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_house_tile_fb336ff1.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 12
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 24
+        },
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 24
+        },
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 24
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Buildings-v6/tile-house.png",
+      "candidateRGBA": {
+        "size": [
+          64,
+          48
+        ],
+        "rgbaSHA256": "206eb57b001ced8f866ee895c972f3120a3d97c72d802f848ccdcd6efb3385b1"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_house_thatch_a2295da0",
+      "size": [
+        4,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_house_thatch_a2295da0.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 24
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 24
+        },
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 24
+        },
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 24
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Buildings-v5/thatch.png",
+      "candidateRGBA": {
+        "size": [
+          64,
+          48
+        ],
+        "rgbaSHA256": "78f9b55e28f17e4b4aad235dda27ba196bfb6ec930d8fb2a7a8890c57f26e81b"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_cart_f74ffdac",
+      "size": [
+        2,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_cart_f74ffdac.png",
+      "usage": [
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 4
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 8
+        }
+      ],
+      "status": "retain_original",
+      "note": "User selected existing game cart. No generated cart replacement."
+    },
+    {
+      "assetId": "c6_wheat_f0963301",
+      "size": [
+        3,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_wheat_f0963301.png",
+      "usage": [
+        {
+          "map": "Naru.json",
+          "renderCells": 27
+        }
+      ],
+      "status": "terrain_retained",
+      "note": "Original terrain direction retained; field layout review is separate."
+    },
+    {
+      "assetId": "c6_sheaf_c21644db",
+      "size": [
+        1,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_sheaf_c21644db.png",
+      "usage": [
+        {
+          "map": "Naru.json",
+          "renderCells": 4
+        }
+      ],
+      "status": "remaining_variant_or_role_review",
+      "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+    },
+    {
+      "assetId": "c6_well_aaa50cc1",
+      "size": [
+        1,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_well_aaa50cc1.png",
+      "usage": [
+        {
+          "map": "Naru.json",
+          "renderCells": 2
+        },
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 2
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-GateProps-v1/well.png",
+      "candidateRGBA": {
+        "size": [
+          16,
+          32
+        ],
+        "rgbaSHA256": "199222043446aebeadb5fd7ed4b21b231aec26866fb688924f5ff3e15d5a6efc"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_laundry_4c045117",
+      "size": [
+        2,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_laundry_4c045117.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 4
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 4
+        }
+      ],
+      "status": "remaining_variant_or_role_review",
+      "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+    },
+    {
+      "assetId": "c6_goryeo_manor_351d5ad1",
+      "size": [
+        6,
+        4
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_manor_351d5ad1.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 24
+        },
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 120
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 24
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Gaekju-v1/gaekju.png",
+      "candidateRGBA": {
+        "size": [
+          96,
+          64
+        ],
+        "rgbaSHA256": "4c0bdf0565081598b3cc7e230774889df454d949147d39095404b9e66482786d"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_celadon_54def069",
+      "size": [
+        3,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_celadon_54def069.png",
+      "usage": [
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 6
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 6
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-WorkshopProps-v4/celadon.png",
+      "candidateRGBA": {
+        "size": [
+          48,
+          32
+        ],
+        "rgbaSHA256": "4b1452cf5b1da56c4090e7d6b05f5d7bd3d2ae914b657cf25b7180de5c17c62b"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_lantern_ea98fe0c",
+      "size": [
+        1,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_lantern_ea98fe0c.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 2
+        },
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 8
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 2
+        },
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 2
+        },
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 4
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-GateProps-v1/stone_lantern.png",
+      "candidateRGBA": {
+        "size": [
+          16,
+          32
+        ],
+        "rgbaSHA256": "49a409329edd129adb88c9b5e4cc38ce5fbfdf81f4951a4fe910791db78ed3a6"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_woodland0_47258e21",
+      "size": [
+        4,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland0_47258e21.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 72
+        },
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 48
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 48
+        },
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 132
+        },
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 60
+        }
+      ],
+      "status": "earlier_pine_direction_record",
+      "note": "Pine retained by earlier user direction; formal source/approval consolidation required before binding."
+    },
+    {
+      "assetId": "c6_goryeo_woodland9_9d822f53",
+      "size": [
+        2,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland9_9d822f53.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 52
+        },
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 104
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 64
+        },
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 72
+        },
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 72
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-LowNature-v1/shrub.png",
+      "candidateRGBA": {
+        "size": [
+          32,
+          32
+        ],
+        "rgbaSHA256": "62156107a036097c7e2c0b02461468decc32987406247335d066a62868ceb420"
+      },
+      "nativeSizeMatches": true
+    },
+    {
+      "assetId": "c6_goryeo_woodland6_ad458083",
+      "size": [
+        3,
+        4
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland6_ad458083.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 12
+        },
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 48
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 108
+        },
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 84
+        },
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 60
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Batch3-v1/light_tree.png",
+      "candidateRGBA": {
+        "size": [
+          48,
+          64
+        ],
+        "rgbaSHA256": "840a4a42ab79bd108fd2b0de8ff30ba90bba9a149df16229f21e2ffbcdc72465"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_woodland4_474f9ea4",
+      "size": [
+        4,
+        4
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland4_474f9ea4.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 16
+        },
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 144
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 80
+        },
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 96
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Batch3-v1/broadleaf.png",
+      "candidateRGBA": {
+        "size": [
+          64,
+          64
+        ],
+        "rgbaSHA256": "1258be95beaef1b2df3def580e735fe3979fed85fc570da7a86d1b338c1d8bbb"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_woodland2_96924a7c",
+      "size": [
+        3,
+        4
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland2_96924a7c.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 60
+        },
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 36
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 36
+        },
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 120
+        },
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 36
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Batch2-v1/forest_bent.png",
+      "candidateRGBA": {
+        "size": [
+          48,
+          64
+        ],
+        "rgbaSHA256": "750680527614eab01a7036ffa2229191c07c6329b60904ef77c099319d951ce5"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_woodland11_43cf5755",
+      "size": [
+        3,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland11_43cf5755.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 36
+        },
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 48
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 60
+        },
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 48
+        },
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 18
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-LowNature-v1/fallen_log.png",
+      "candidateRGBA": {
+        "size": [
+          48,
+          32
+        ],
+        "rgbaSHA256": "8d22a80576dac7d07324252649fda9207caed2512ec041f3532bd5133c353fa6"
+      },
+      "nativeSizeMatches": true
+    },
+    {
+      "assetId": "c6_goryeo_woodland10_8a468436",
+      "size": [
+        2,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland10_8a468436.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 28
+        },
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 16
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 32
+        },
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 12
+        },
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 44
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-LowNature-v1/tall_grass.png",
+      "candidateRGBA": {
+        "size": [
+          32,
+          32
+        ],
+        "rgbaSHA256": "4add735b93164054a1cccb554364bbb4749ddf5eaf3437992ce9da6405d83f75"
+      },
+      "nativeSizeMatches": true
+    },
+    {
+      "assetId": "c6_goryeo_woodland8_92384100",
+      "size": [
+        3,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland8_92384100.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 12
+        },
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 36
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 30
+        },
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 42
+        },
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 18
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-LowNature-v1/moss_rock.png",
+      "candidateRGBA": {
+        "size": [
+          48,
+          32
+        ],
+        "rgbaSHA256": "70f221e2c553d291236cb3e31d327969d9c4ef53d50577e60935f6e4374a0f9d"
+      },
+      "nativeSizeMatches": true
+    },
+    {
+      "assetId": "c6_goryeo_woodland5_d9aa0ade",
+      "size": [
+        4,
+        4
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland5_d9aa0ade.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 48
+        },
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 16
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 80
+        },
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 64
+        },
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 16
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Batch1-v1/willow.png",
+      "candidateRGBA": {
+        "size": [
+          64,
+          64
+        ],
+        "rgbaSHA256": "177efe4e87c42123f6320a3a294422a92f78574c8592baf61df90d4e36abbf2b"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_woodland7_eacf8d8b",
+      "size": [
+        3,
+        4
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland7_eacf8d8b.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 12
+        },
+        {
+          "map": "Naru.json",
+          "renderCells": 24
+        },
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 120
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Batch3-v1/golden_tree.png",
+      "candidateRGBA": {
+        "size": [
+          48,
+          64
+        ],
+        "rgbaSHA256": "1ea999ee87611212033d5b5d6a7b7b2d92371f60b57f8ea705c13acc9c263fe4"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_royal_184e9b37",
+      "size": [
+        10,
+        7
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_royal_184e9b37.png",
+      "usage": [
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 70
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Palace-v1/palace.png",
+      "candidateRGBA": {
+        "size": [
+          160,
+          112
+        ],
+        "rgbaSHA256": "c0b5cb54c0f50d1b70a7efd5118fe18b4f2566d82ef116d634d292ac90d1fb52"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_stall_d546437f",
+      "size": [
+        6,
+        4
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_stall_d546437f.png",
+      "usage": [
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 48
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Shop-v1/shop.png",
+      "candidateRGBA": {
+        "size": [
+          96,
+          64
+        ],
+        "rgbaSHA256": "71450da35b1228b3f0db4a6118a92248e02dc18675a89e94df4f3b149f6b449e"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_cottage_2b961414",
+      "size": [
+        5,
+        4
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_cottage_2b961414.png",
+      "usage": [
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 20
+        },
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 20
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Batch1-v1/cottage.png",
+      "candidateRGBA": {
+        "size": [
+          80,
+          64
+        ],
+        "rgbaSHA256": "f05a3fd855584201b97dfd04bc7667671f317369194304a71ec612cc5a210515"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_wall_c7149fb3",
+      "size": [
+        4,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_wall_c7149fb3.png",
+      "usage": [
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 16
+        },
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 8
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-CourtyardProps-v1/garden_wall.png",
+      "candidateRGBA": {
+        "size": [
+          64,
+          32
+        ],
+        "rgbaSHA256": "463bd45d26e6f78c16d8b7e8e384b6e19398edc3c69b0716de708cd3542da406"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_paper_rack_665314e5",
+      "size": [
+        3,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_paper_rack_665314e5.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 12
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-WorkshopProps-v4/paper_rack.png",
+      "candidateRGBA": {
+        "size": [
+          48,
+          32
+        ],
+        "rgbaSHA256": "9aaaa1c570893417540bcbdc2ba9c24099715ffc10ad4b587a1b189972fa94dc"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_paper_7473141b",
+      "size": [
+        4,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_paper_7473141b.png",
+      "usage": [
+        {
+          "map": "Dakmok.json",
+          "renderCells": 24
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-CourtyardProps-v1/paper_large.png",
+      "candidateRGBA": {
+        "size": [
+          64,
+          48
+        ],
+        "rgbaSHA256": "df33eb932589eeb33553b7fa83c093cd60ca19437eebc5b8502e23f02b7ae280"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_pavilion_ffddfecb",
+      "size": [
+        5,
+        5
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_pavilion_ffddfecb.png",
+      "usage": [
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 25
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Batch1-v1/pavilion.png",
+      "candidateRGBA": {
+        "size": [
+          80,
+          80
+        ],
+        "rgbaSHA256": "6a228844efaa3acabf9ad7a88dabd566fc0a18be0394da5a1efe903ddd3b8bd2"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_woodland3_b58deb22",
+      "size": [
+        4,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland3_b58deb22.png",
+      "usage": [
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 36
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Batch2-v1/forest_wide.png",
+      "candidateRGBA": {
+        "size": [
+          64,
+          48
+        ],
+        "rgbaSHA256": "acf91edb33798a0536fc58bc5fec01996bc93265b4be5bb1f7ab5234dae487fc"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_woodland1_8e37d320",
+      "size": [
+        3,
+        4
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland1_8e37d320.png",
+      "usage": [
+        {
+          "map": "goryeo_songak.json",
+          "renderCells": 60
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Batch2-v1/forest_round.png",
+      "candidateRGBA": {
+        "size": [
+          48,
+          64
+        ],
+        "rgbaSHA256": "3fcde8969af6fb18b062724b43611da467a7f6dc34cf9897eb102747b640cdbf"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_wheat_16d40a37",
+      "size": [
+        3,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_wheat_16d40a37.png",
+      "usage": [
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 36
+        }
+      ],
+      "status": "terrain_retained",
+      "note": "Original terrain direction retained; field layout review is separate."
+    },
+    {
+      "assetId": "c6_sheaf_5994fbae",
+      "size": [
+        1,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_sheaf_5994fbae.png",
+      "usage": [
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 2
+        }
+      ],
+      "status": "remaining_variant_or_role_review",
+      "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+    },
+    {
+      "assetId": "c6_cart_e1a728ea",
+      "size": [
+        2,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_cart_e1a728ea.png",
+      "usage": [
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 4
+        }
+      ],
+      "status": "retain_original",
+      "note": "User selected existing game cart. No generated cart replacement."
+    },
+    {
+      "assetId": "c6_well_6d90aa89",
+      "size": [
+        1,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_well_6d90aa89.png",
+      "usage": [
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 2
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-GateProps-v1/well.png",
+      "candidateRGBA": {
+        "size": [
+          16,
+          32
+        ],
+        "rgbaSHA256": "199222043446aebeadb5fd7ed4b21b231aec26866fb688924f5ff3e15d5a6efc"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_goryeo_harvest_168ed569",
+      "size": [
+        3,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_harvest_168ed569.png",
+      "usage": [
+        {
+          "map": "goryeo_jangdan.json",
+          "renderCells": 12
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-WorkshopProps-v4/harvest.png",
+      "candidateRGBA": {
+        "size": [
+          48,
+          32
+        ],
+        "rgbaSHA256": "4cb58ce9658ba5350223f0f89e41010ff8e62ebf66c1be0023c1f99fa3a17759"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_house_thatch_95eba540",
+      "size": [
+        4,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_house_thatch_95eba540.png",
+      "usage": [
+        {
+          "map": "transit_central_approach.json",
+          "renderCells": 12
+        },
+        {
+          "map": "transit_crossroads.json",
+          "renderCells": 12
+        },
+        {
+          "map": "transit_ferry.json",
+          "renderCells": 12
+        },
+        {
+          "map": "transit_pass.json",
+          "renderCells": 12
+        },
+        {
+          "map": "transit_woodtown.json",
+          "renderCells": 12
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Buildings-v5/thatch.png",
+      "candidateRGBA": {
+        "size": [
+          64,
+          48
+        ],
+        "rgbaSHA256": "78f9b55e28f17e4b4aad235dda27ba196bfb6ec930d8fb2a7a8890c57f26e81b"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_pinebig_a6c49380",
+      "size": [
+        4,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_pinebig_a6c49380.png",
+      "usage": [
+        {
+          "map": "transit_ferry.json",
+          "renderCells": 228
+        },
+        {
+          "map": "transit_pass.json",
+          "renderCells": 300
+        },
+        {
+          "map": "transit_wetroad.json",
+          "renderCells": 180
+        },
+        {
+          "map": "transit_woodtown.json",
+          "renderCells": 240
+        }
+      ],
+      "status": "remaining_variant_or_role_review",
+      "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+    },
+    {
+      "assetId": "c6_roundbig_0c978872",
+      "size": [
+        4,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_roundbig_0c978872.png",
+      "usage": [
+        {
+          "map": "transit_ferry.json",
+          "renderCells": 180
+        },
+        {
+          "map": "transit_pass.json",
+          "renderCells": 48
+        },
+        {
+          "map": "transit_wetroad.json",
+          "renderCells": 216
+        },
+        {
+          "map": "transit_woodtown.json",
+          "renderCells": 120
+        }
+      ],
+      "status": "remaining_variant_or_role_review",
+      "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+    },
+    {
+      "assetId": "c6_store_499ea1ea",
+      "size": [
+        4,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_store_499ea1ea.png",
+      "usage": [
+        {
+          "map": "transit_ferry.json",
+          "renderCells": 12
+        },
+        {
+          "map": "transit_woodtown.json",
+          "renderCells": 12
+        }
+      ],
+      "status": "remaining_variant_or_role_review",
+      "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+    },
+    {
+      "assetId": "c6_house_plain_3c0cb13b",
+      "size": [
+        4,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_house_plain_3c0cb13b.png",
+      "usage": [
+        {
+          "map": "transit_ferry.json",
+          "renderCells": 12
+        },
+        {
+          "map": "transit_woodtown.json",
+          "renderCells": 12
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-Buildings-v6/tile-house.png",
+      "candidateRGBA": {
+        "size": [
+          64,
+          48
+        ],
+        "rgbaSHA256": "206eb57b001ced8f866ee895c972f3120a3d97c72d802f848ccdcd6efb3385b1"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_cart_fca7dd46",
+      "size": [
+        2,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_cart_fca7dd46.png",
+      "usage": [
+        {
+          "map": "transit_central_approach.json",
+          "renderCells": 4
+        },
+        {
+          "map": "transit_woodtown.json",
+          "renderCells": 4
+        }
+      ],
+      "status": "retain_original",
+      "note": "User selected existing game cart. No generated cart replacement."
+    },
+    {
+      "assetId": "c6_well_a3de50d0",
+      "size": [
+        1,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_well_a3de50d0.png",
+      "usage": [
+        {
+          "map": "transit_crossroads.json",
+          "renderCells": 2
+        },
+        {
+          "map": "transit_ferry.json",
+          "renderCells": 2
+        },
+        {
+          "map": "transit_woodtown.json",
+          "renderCells": 2
+        }
+      ],
+      "status": "approved_visual_candidate_binding_not_done",
+      "candidate": "ArtReview/Approved/C7-GateProps-v1/well.png",
+      "candidateRGBA": {
+        "size": [
+          16,
+          32
+        ],
+        "rgbaSHA256": "199222043446aebeadb5fd7ed4b21b231aec26866fb688924f5ff3e15d5a6efc"
+      },
+      "nativeSizeMatches": true,
+      "note": "Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement."
+    },
+    {
+      "assetId": "c6_module_rock_15917f3a",
+      "size": [
+        2,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_module_rock_15917f3a.png",
+      "usage": [
+        {
+          "map": "transit_central_approach.json",
+          "renderCells": 124
+        },
+        {
+          "map": "transit_crossroads.json",
+          "renderCells": 236
+        }
+      ],
+      "status": "remaining_variant_or_role_review",
+      "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+    },
+    {
+      "assetId": "c6_pinebig_0cd79e57",
+      "size": [
+        4,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_pinebig_0cd79e57.png",
+      "usage": [
+        {
+          "map": "transit_central_approach.json",
+          "renderCells": 96
+        }
+      ],
+      "status": "remaining_variant_or_role_review",
+      "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+    },
+    {
+      "assetId": "c6_roundbig_b8a4adcf",
+      "size": [
+        4,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_roundbig_b8a4adcf.png",
+      "usage": [
+        {
+          "map": "transit_central_approach.json",
+          "renderCells": 48
+        },
+        {
+          "map": "transit_crossroads.json",
+          "renderCells": 60
+        }
+      ],
+      "status": "remaining_variant_or_role_review",
+      "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+    },
+    {
+      "assetId": "c6_bench_ac9f82d8",
+      "size": [
+        3,
+        1
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_bench_ac9f82d8.png",
+      "usage": [
+        {
+          "map": "transit_crossroads.json",
+          "renderCells": 3
+        }
+      ],
+      "status": "remaining_variant_or_role_review",
+      "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+    },
+    {
+      "assetId": "c6_lotus",
+      "size": [
+        2,
+        1
+      ],
+      "image": "Assets/PocketCaravan/Art/Baked/Objects/lotus_2_1.png",
+      "usage": [
+        {
+          "map": "Gaegyeong.json",
+          "renderCells": 4
+        }
+      ],
+      "status": "remaining_variant_or_role_review",
+      "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+    }
+  ]
+}

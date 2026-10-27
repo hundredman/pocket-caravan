@@ -1,0 +1,8 @@
+// Candidate only; not D3 approval
+#2e241d
+#b78137
+#daa34a
+#f0c365
+#68452d
+#98653b
+#bc8850

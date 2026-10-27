@@ -1,0 +1,693 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "house_original": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "palette": [
+        "#111c2e",
+        "#1a263a",
+        "#242a39",
+        "#243145",
+        "#291915",
+        "#293447",
+        "#2c394e",
+        "#323f55",
+        "#3e1e0e",
+        "#40424c",
+        "#404a5d",
+        "#465368",
+        "#475974",
+        "#4a2714",
+        "#4b5970",
+        "#4b5971",
+        "#4f2f1d",
+        "#5a616e",
+        "#613319",
+        "#693f24",
+        "#7c4624",
+        "#7c5944",
+        "#7d5336",
+        "#87664c",
+        "#9d7d5f",
+        "#a76935",
+        "#b3926f",
+        "#dbbc96"
+      ],
+      "binaryAlpha": true
+    },
+    "tree_original": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "palette": [
+        "#000000",
+        "#1c2c28",
+        "#1d1716",
+        "#25342d",
+        "#304134",
+        "#351b16",
+        "#384d3a",
+        "#472e23",
+        "#49211a",
+        "#516848",
+        "#57523b",
+        "#6b3222",
+        "#7b8555",
+        "#7d724d",
+        "#994e32",
+        "#acaa75"
+      ],
+      "binaryAlpha": true
+    },
+    "native_chief": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "palette": [
+        "#16131b",
+        "#1d1516",
+        "#221a22",
+        "#24222d",
+        "#271c1c",
+        "#272430",
+        "#2c2a38",
+        "#383233",
+        "#3a2b26",
+        "#3a3434",
+        "#42302a",
+        "#45404c",
+        "#4e3b2f",
+        "#563839",
+        "#574a45",
+        "#5c402a",
+        "#60483a",
+        "#60607a",
+        "#6e6878",
+        "#7a726c",
+        "#7f776d",
+        "#966caa",
+        "#968c84",
+        "#a67854",
+        "#b9b6c3",
+        "#beb8d0",
+        "#cbb198",
+        "#d6ccba",
+        "#e2deee",
+        "#f0eadc",
+        "#f2a096",
+        "#f6e6cc",
+        "#f8d8ba",
+        "#ffffff"
+      ],
+      "binaryAlpha": true
+    },
+    "native_woman": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "palette": [
+        "#191317",
+        "#1d1516",
+        "#221a22",
+        "#271c1c",
+        "#2a2224",
+        "#342a2c",
+        "#42302a",
+        "#425076",
+        "#482c36",
+        "#543741",
+        "#563839",
+        "#574a45",
+        "#575355",
+        "#58312f",
+        "#5c70a0",
+        "#765038",
+        "#8e7a6c",
+        "#96544a",
+        "#c17f90",
+        "#c4aa84",
+        "#c8788e",
+        "#c9c6c1",
+        "#cbb198",
+        "#e2ceac",
+        "#ec9cb0",
+        "#f2a096",
+        "#f8d8ba",
+        "#fae6a0",
+        "#ffe0e6",
+        "#ffffff"
+      ],
+      "binaryAlpha": true
+    },
+    "native_trader": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "palette": [
+        "#191317",
+        "#1d1516",
+        "#221a22",
+        "#271c1c",
+        "#2a2224",
+        "#2e1f1b",
+        "#342a2c",
+        "#382620",
+        "#3a2b26",
+        "#3d2c1e",
+        "#42302a",
+        "#462f25",
+        "#473c33",
+        "#4e3b2f",
+        "#50422e",
+        "#563839",
+        "#563a2e",
+        "#574a45",
+        "#583c2d",
+        "#60483a",
+        "#765038",
+        "#7a553b",
+        "#886234",
+        "#96544a",
+        "#966848",
+        "#a07840",
+        "#a08b6c",
+        "#a67840",
+        "#cbb198",
+        "#e2be74",
+        "#e2ceac",
+        "#ecc45c",
+        "#f2a096",
+        "#f8d8ba",
+        "#f8f0e0",
+        "#ffffff"
+      ],
+      "binaryAlpha": true
+    }
+  },
+  "assets": [
+    {
+      "id": "trial_house_micro",
+      "kind": "object",
+      "purpose": "building",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/Refine-v2/house-micro.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/Refine-v2/house-micro.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "house_original",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "house_micro_0_0",
+          "image": "ArtReview/Refine-v2/render-parts/house_micro_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "house_micro_1_0",
+          "image": "ArtReview/Refine-v2/render-parts/house_micro_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "house_micro_2_0",
+          "image": "ArtReview/Refine-v2/render-parts/house_micro_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "house_micro_3_0",
+          "image": "ArtReview/Refine-v2/render-parts/house_micro_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_micro_0_1",
+          "image": "ArtReview/Refine-v2/render-parts/house_micro_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_micro_1_1",
+          "image": "ArtReview/Refine-v2/render-parts/house_micro_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_micro_2_1",
+          "image": "ArtReview/Refine-v2/render-parts/house_micro_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_micro_3_1",
+          "image": "ArtReview/Refine-v2/render-parts/house_micro_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_micro_0_2",
+          "image": "ArtReview/Refine-v2/render-parts/house_micro_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_micro_1_2",
+          "image": "ArtReview/Refine-v2/render-parts/house_micro_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_micro_2_2",
+          "image": "ArtReview/Refine-v2/render-parts/house_micro_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_micro_3_2",
+          "image": "ArtReview/Refine-v2/render-parts/house_micro_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_house_gentle",
+      "kind": "object",
+      "purpose": "building",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/Refine-v2/house-gentle.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/Refine-v2/house-gentle.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "house_original",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "house_gentle_0_0",
+          "image": "ArtReview/Refine-v2/render-parts/house_gentle_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "house_gentle_1_0",
+          "image": "ArtReview/Refine-v2/render-parts/house_gentle_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "house_gentle_2_0",
+          "image": "ArtReview/Refine-v2/render-parts/house_gentle_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "house_gentle_3_0",
+          "image": "ArtReview/Refine-v2/render-parts/house_gentle_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_gentle_0_1",
+          "image": "ArtReview/Refine-v2/render-parts/house_gentle_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_gentle_1_1",
+          "image": "ArtReview/Refine-v2/render-parts/house_gentle_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_gentle_2_1",
+          "image": "ArtReview/Refine-v2/render-parts/house_gentle_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "house_gentle_3_1",
+          "image": "ArtReview/Refine-v2/render-parts/house_gentle_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_gentle_0_2",
+          "image": "ArtReview/Refine-v2/render-parts/house_gentle_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_gentle_1_2",
+          "image": "ArtReview/Refine-v2/render-parts/house_gentle_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_gentle_2_2",
+          "image": "ArtReview/Refine-v2/render-parts/house_gentle_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "house_gentle_3_2",
+          "image": "ArtReview/Refine-v2/render-parts/house_gentle_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_tree_micro",
+      "kind": "object",
+      "purpose": "tree",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/Refine-v2/tree-micro.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/Refine-v2/tree-micro.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "tree_original",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "tree_micro_0_0",
+          "image": "ArtReview/Refine-v2/render-parts/tree_micro_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "tree_micro_1_0",
+          "image": "ArtReview/Refine-v2/render-parts/tree_micro_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "tree_micro_2_0",
+          "image": "ArtReview/Refine-v2/render-parts/tree_micro_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "tree_micro_3_0",
+          "image": "ArtReview/Refine-v2/render-parts/tree_micro_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "tree_micro_0_1",
+          "image": "ArtReview/Refine-v2/render-parts/tree_micro_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "tree_micro_1_1",
+          "image": "ArtReview/Refine-v2/render-parts/tree_micro_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "tree_micro_2_1",
+          "image": "ArtReview/Refine-v2/render-parts/tree_micro_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "tree_micro_3_1",
+          "image": "ArtReview/Refine-v2/render-parts/tree_micro_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "tree_micro_0_2",
+          "image": "ArtReview/Refine-v2/render-parts/tree_micro_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "tree_micro_1_2",
+          "image": "ArtReview/Refine-v2/render-parts/tree_micro_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "tree_micro_2_2",
+          "image": "ArtReview/Refine-v2/render-parts/tree_micro_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "tree_micro_3_2",
+          "image": "ArtReview/Refine-v2/render-parts/tree_micro_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_tree_gentle",
+      "kind": "object",
+      "purpose": "tree",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/Refine-v2/tree-gentle.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/Refine-v2/tree-gentle.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "tree_original",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "tree_gentle_0_0",
+          "image": "ArtReview/Refine-v2/render-parts/tree_gentle_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "tree_gentle_1_0",
+          "image": "ArtReview/Refine-v2/render-parts/tree_gentle_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "tree_gentle_2_0",
+          "image": "ArtReview/Refine-v2/render-parts/tree_gentle_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "tree_gentle_3_0",
+          "image": "ArtReview/Refine-v2/render-parts/tree_gentle_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "tree_gentle_0_1",
+          "image": "ArtReview/Refine-v2/render-parts/tree_gentle_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "tree_gentle_1_1",
+          "image": "ArtReview/Refine-v2/render-parts/tree_gentle_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "tree_gentle_2_1",
+          "image": "ArtReview/Refine-v2/render-parts/tree_gentle_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "tree_gentle_3_1",
+          "image": "ArtReview/Refine-v2/render-parts/tree_gentle_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "tree_gentle_0_2",
+          "image": "ArtReview/Refine-v2/render-parts/tree_gentle_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "tree_gentle_1_2",
+          "image": "ArtReview/Refine-v2/render-parts/tree_gentle_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "tree_gentle_2_2",
+          "image": "ArtReview/Refine-v2/render-parts/tree_gentle_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "tree_gentle_3_2",
+          "image": "ArtReview/Refine-v2/render-parts/tree_gentle_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_chief_front_v2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/Refine-v2/NPC/chief-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/Refine-v2/NPC/chief-front.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "native_chief",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_chief_front_v2",
+          "image": "ArtReview/Refine-v2/NPC/chief-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_front_v2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/Refine-v2/NPC/woman-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/Refine-v2/NPC/woman-front.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "native_woman",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_front_v2",
+          "image": "ArtReview/Refine-v2/NPC/woman-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_front_v2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/Refine-v2/NPC/trader-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/Refine-v2/NPC/trader-front.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "native_trader",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_front_v2",
+          "image": "ArtReview/Refine-v2/NPC/trader-front.png"
+        }
+      ]
+    }
+  ]
+}

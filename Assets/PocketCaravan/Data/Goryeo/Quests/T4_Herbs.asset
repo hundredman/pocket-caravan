@@ -23,7 +23,7 @@ MonoBehaviour:
     \uB450 \uBAAB\uC744 \uBC88\uB2E4."
   giverNpc: naru_chief
   requires:
-  - {fileID: 11400000, guid: 6bae5cc8d980f47b2ada23154ca5d297, type: 2}
+  - {fileID: 11400000, guid: 671321731ba25b9d905da5f205300409, type: 2}
   requiresAny: []
   choiceGroup: 
   offerLine: "\uBC30\uB85C \uC57D\uC7AC\uAC00 \uB4E4\uC5B4\uC654\uB294\uB370 \uB2E5\uB098\uBB34

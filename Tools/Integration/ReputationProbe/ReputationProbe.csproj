@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>disable</Nullable><NoWarn>CS0649;CS9113</NoWarn></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../../Assets/PocketCaravan/Scripts/Economy/TradeActivity.cs" Link="Source/TradeActivity.cs" />
+    <Compile Include="../QuestSaveProbe/Stubs.cs" Link="PlatformStubs.cs" />
+    <Compile Include="../../../Assets/PocketCaravan/Scripts/Quests/QuestManager.cs" Link="Source/QuestManager.cs" />
+    <Compile Include="../../../Assets/PocketCaravan/Scripts/Quests/QuestData.cs" Link="Source/QuestData.cs" />
+    <Compile Include="../../../Assets/PocketCaravan/Scripts/Quests/GameEvents.cs" Link="Source/GameEvents.cs" />
+    <Compile Include="../../../Assets/PocketCaravan/Scripts/Core/SaveCompatibility.cs" Link="Source/SaveCompatibility.cs" />
+    <Compile Include="../../../Assets/PocketCaravan/Scripts/Core/SaveSystem.cs" Link="Source/SaveSystem.cs" />
+    <Compile Include="../../../Assets/PocketCaravan/Scripts/Core/ReputationState.cs" Link="Source/ReputationState.cs" />
+    <Compile Include="../../../Assets/PocketCaravan/Scripts/Core/ReputationAwards.cs" Link="Source/ReputationAwards.cs" />
+  </ItemGroup>
+</Project>

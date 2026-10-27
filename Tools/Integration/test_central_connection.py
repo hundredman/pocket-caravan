@@ -1,4 +1,4 @@
-"""A chain of independently editable maps reaches the junction; foreign arms stay unconnected."""
+"""The compact eastern quarter connects Goryeo without inventing foreign-region exits."""
 import collections
 import json
 import heapq
@@ -17,7 +17,6 @@ class CentralConnection(unittest.TestCase):
                 cls.maps[entry['mapId']] = json.loads((ROOT/entry['jsonPath']).read_text())
 
     def test_goryeo_reaches_central_through_multiple_distinct_maps(self):
-        expected=['goryeo_songak','transit_pass','transit_woodtown','transit_wetroad','transit_ferry','transit_central_approach','transit_crossroads']
         queue=collections.deque([['goryeo_songak']]);seen=set()
         while queue:
             route=queue.popleft();mid=route[-1]
@@ -26,8 +25,21 @@ class CentralConnection(unittest.TestCase):
             if mid=='transit_crossroads':break
             queue.extend(route+[o['target']] for o in self.maps[mid]['objects'] if o['kind']=='exit')
         else:self.fail('Central junction unreachable')
-        self.assertEqual(route,expected)
-        self.assertTrue(all(self.maps[mid]['w']<=80 for mid in expected))
+        self.assertEqual(route[:2],['goryeo_songak','transit_pass'])
+        self.assertGreaterEqual(len(route),4)
+        contract=json.loads((ROOT/'Assets/PocketCaravan/World/Connections/central_ports.json').read_text())
+        chain=next(r['chain'] for r in contract['routes'] if r['direction']=='E')
+        for a,b in zip(chain,chain[1:]):
+            self.assertTrue(any(o['kind']=='exit' and o['target']==b for o in self.maps[a]['objects']),(a,b))
+        for mid in self.maps:
+            if mid.startswith('transit_'):
+                todo=[mid];connected={mid}
+                for current in todo:
+                    for o in self.maps[current]['objects']:
+                        if o['kind']=='exit' and o['target'] not in connected:
+                            connected.add(o['target']);todo.append(o['target'])
+                self.assertIn('goryeo_songak',connected)
+        self.assertEqual(sum(m['w']*m['h'] for mid,m in self.maps.items() if mid.startswith('transit_')),25000)
 
     def test_new_connections_have_reciprocal_equal_width_spawns(self):
         for mid in ['transit_ferry','transit_central_approach','transit_crossroads']:
@@ -43,7 +55,7 @@ class CentralConnection(unittest.TestCase):
         m=self.maps['transit_crossroads']
         contract=json.loads((ROOT/'Assets/PocketCaravan/World/Connections/central_ports.json').read_text())
         exits=[o for o in m['objects'] if o['kind']=='exit']
-        self.assertEqual({(e['edge'],e['target']) for e in exits},{('E','transit_central_approach')})
+        self.assertEqual({(e['edge'],e['target']) for e in exits},{('E','transit_central_approach'),('S','transit_ferry'),('S','transit_wetroad')})
         routes={p['direction']:p for p in contract['routes']}
         self.assertEqual(set(routes),{'N','E','W','S'})
         self.assertEqual(routes['E']['region'],'goryeo')
@@ -67,15 +79,16 @@ class CentralConnection(unittest.TestCase):
     def test_approach_supports_different_vehicle_path_choices(self):
         m=self.maps['transit_central_approach'];w,h=m['w'],m['h']
         def cost(speeds,branch):
-            queue=[(0.,(7,20))];seen=set()
+            scale=lambda x,y:(int(x*w/80),int(y*h/64))
+            queue=[(0.,scale(7,20))];seen=set()
             while queue:
                 c,(x,y)=heapq.heappop(queue)
                 if (x,y) in seen:continue
                 seen.add((x,y))
-                if (x,y)==(35,20):return c
+                if (x,y)==scale(35,20):return c
                 for a,b in [(x-1,y),(x+1,y),(x,y-1),(x,y+1)]:
                     if not (0<=a<w and 0<=b<h) or m['blocked'][b*w+a] or not m['road'][b*w+a]:continue
-                    if 12<=a<=32 and ((b>=23)!=(branch=='main')):continue
+                    if scale(12,0)[0]<=a<=scale(32,0)[0] and ((b>=scale(0,23)[1])!=(branch=='main')):continue
                     heapq.heappush(queue,(c+.5/speeds[m['road'][y*w+x]]+.5/speeds[m['road'][b*w+a]],(a,b)))
             self.fail('unreachable branch '+branch)
         for vehicle in ['Walk','Handcart']:
