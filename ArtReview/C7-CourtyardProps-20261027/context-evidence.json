@@ -1,0 +1,51 @@
+{
+  "ArtReview/Approved/C7-WorkshopProps-v4/paper_rack.png": {
+    "size": [
+      48,
+      32
+    ],
+    "rgbaSHA256": "9aaaa1c570893417540bcbdc2ba9c24099715ffc10ad4b587a1b189972fa94dc"
+  },
+  "ArtReview/Approved/C7-WorkshopProps-v4/harvest.png": {
+    "size": [
+      48,
+      32
+    ],
+    "rgbaSHA256": "4cb58ce9658ba5350223f0f89e41010ff8e62ebf66c1be0023c1f99fa3a17759"
+  },
+  "ArtReview/Approved/C7-WorkshopProps-v4/celadon.png": {
+    "size": [
+      48,
+      32
+    ],
+    "rgbaSHA256": "4b1452cf5b1da56c4090e7d6b05f5d7bd3d2ae914b657cf25b7180de5c17c62b"
+  },
+  "ArtReview/Approved/C7-GateProps-v1/gate.png": {
+    "size": [
+      96,
+      80
+    ],
+    "rgbaSHA256": "274138d508605fbea87a2cd26149fb26a8aa254dd188f3a481934a2dee2cc67f"
+  },
+  "ArtReview/Approved/C7-Buildings-v6/tile-house.png": {
+    "size": [
+      64,
+      48
+    ],
+    "rgbaSHA256": "206eb57b001ced8f866ee895c972f3120a3d97c72d802f848ccdcd6efb3385b1"
+  },
+  "ArtReview/Approved/C7-Gaekju-v1/gaekju.png": {
+    "size": [
+      96,
+      64
+    ],
+    "rgbaSHA256": "4c0bdf0565081598b3cc7e230774889df454d949147d39095404b9e66482786d"
+  },
+  "Assets/PocketCaravan/Art/Baked/Objects/c6_cart_e1a728ea.png": {
+    "size": [
+      32,
+      32
+    ],
+    "rgbaSHA256": "c2df672b0c83cf957f64116c98e773416ecd6337f42d9ad449c4494e7c212365"
+  }
+}

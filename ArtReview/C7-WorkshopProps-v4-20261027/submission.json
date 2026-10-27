@@ -1,8 +1,8 @@
 {
   "statuses": {
-    "paper_rack": "pending",
-    "harvest": "pending",
-    "celadon": "pending"
+    "paper_rack": "approved",
+    "harvest": "approved",
+    "celadon": "approved"
   },
   "productionApplied": false,
   "files": {

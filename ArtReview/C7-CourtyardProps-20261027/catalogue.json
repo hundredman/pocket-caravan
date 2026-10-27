@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "prop": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#b78137",
+        "#daa34a",
+        "#f0c365",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#c4a779",
+        "#e0c99b",
+        "#f4dfb5",
+        "#77746c",
+        "#a29b87",
+        "#c4bca7",
+        "#4a627a",
+        "#718da3",
+        "#a5b9c3",
+        "#794b3b",
+        "#ad624c",
+        "#d69062",
+        "#547e6a",
+        "#86a28b",
+        "#33475e",
+        "#304d47"
+      ]
+    },
+    "pot": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#daa34a"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7_courtyard_paper_large",
+      "kind": "object",
+      "purpose": "large_paper_drying_rack",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C7-CourtyardProps-20261027/Native/paper_large.png",
+      "profile": "prop",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-CourtyardProps-20261027/Native/paper_large.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_courtyard_paper_large_0_0",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_paper_large_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_courtyard_paper_large_1_0",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_paper_large_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_courtyard_paper_large_2_0",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_paper_large_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_courtyard_paper_large_3_0",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_paper_large_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_courtyard_paper_large_0_1",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_paper_large_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_courtyard_paper_large_1_1",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_paper_large_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_courtyard_paper_large_2_1",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_paper_large_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_courtyard_paper_large_3_1",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_paper_large_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_courtyard_paper_large_0_2",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_paper_large_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_courtyard_paper_large_1_2",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_paper_large_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_courtyard_paper_large_2_2",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_paper_large_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_courtyard_paper_large_3_2",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_paper_large_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_courtyard_garden_wall",
+      "kind": "object",
+      "purpose": "finite_garden_wall",
+      "size": [
+        4,
+        2
+      ],
+      "image": "ArtReview/C7-CourtyardProps-20261027/Native/garden_wall.png",
+      "profile": "prop",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-CourtyardProps-20261027/Native/garden_wall.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_courtyard_garden_wall_0_0",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_garden_wall_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_courtyard_garden_wall_1_0",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_garden_wall_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_courtyard_garden_wall_2_0",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_garden_wall_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_courtyard_garden_wall_3_0",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_garden_wall_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_courtyard_garden_wall_0_1",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_garden_wall_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_courtyard_garden_wall_1_1",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_garden_wall_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_courtyard_garden_wall_2_1",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_garden_wall_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_courtyard_garden_wall_3_1",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_garden_wall_3_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_courtyard_onggi",
+      "kind": "object",
+      "purpose": "small_open_onggi",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C7-CourtyardProps-20261027/Native/onggi.png",
+      "profile": "pot",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-CourtyardProps-20261027/Native/onggi.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_courtyard_onggi_0_0",
+          "image": "ArtReview/C7-CourtyardProps-20261027/Cells/c7_courtyard_onggi_0_0.png"
+        }
+      ]
+    }
+  ]
+}

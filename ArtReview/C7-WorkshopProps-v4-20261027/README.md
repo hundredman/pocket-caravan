@@ -8,7 +8,7 @@
 
 48×32 캔버스와 발밑31 유지. 최종 볏단 묶음 가시 윤곽40×24/청자39×24. 직전 대비 수확363픽셀(x3~34/y7~28), 청자39픽셀(x9~18/y8~21·연결 외곽선 포함)이 바뀌었다. 비교 영역 밖 동일성 검사. 기존 후보색 유지·D3 변경 없음. 본편/승인본/수레/ID·저장·충돌 미변경.
 
-[원래 게임/직전/수정3열 비교·실제1배](style-comparison.png), [최신 Unity Play 전후](game-comparison.png). 시험장 아트 검토이며 실제 마을 배치·보행 검사가 아니다. 형태와 직립 체감은 사용자 그림 확인 대기다.
+[원래 게임/직전/수정3열 비교·실제1배](style-comparison.png), [최신 Unity Play 전후](game-comparison.png). 시험장 아트 검토이며 실제 마을 배치·보행 검사가 아니다. 사용자 “좋아. 다음 작업으로”로 최신 세 그림 승인. `../Approved/C7-WorkshopProps-v4/`에 원본/RGBA·범위 보존. 본편 연결·다른 소품 자동 승인 아님.
 
 재현: Aseprite 배치에서 `Tools/ArtTrials/c7_workshop_props_v4.lua`에 root(이 폴더), base(저장소)의 절대경로와 seed=true 전달 → Pillow Python `Tools/ArtTrials/c7_workshop_props_v4.py prep` → 같은 Lua에서 seed 없이 최종 편집 원본 출력 → Python `register` → 이 worktree Unity6000.3.26f1 `C7WorkshopPropsV4Review.Run`(Burst 비활성·worker2) → Python `board`. 건조대는 v3/Native에서 그대로 복사한다.
 

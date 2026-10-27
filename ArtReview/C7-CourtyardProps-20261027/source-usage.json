@@ -1,0 +1,46 @@
+[
+  {
+    "assetId": "c6_goryeo_paper_7473141b",
+    "purpose": "preserved_goryeo_paper",
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_paper_7473141b.png",
+    "size": [
+      4,
+      3
+    ],
+    "usage": [
+      {
+        "map": "Dakmok.json",
+        "referencedRenderCells": 24
+      }
+    ]
+  },
+  {
+    "assetId": "c6_goryeo_wall_c7149fb3",
+    "purpose": "preserved_goryeo_wall",
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_wall_c7149fb3.png",
+    "size": [
+      4,
+      2
+    ],
+    "usage": [
+      {
+        "map": "goryeo_songak.json",
+        "referencedRenderCells": 8
+      },
+      {
+        "map": "Gaegyeong.json",
+        "referencedRenderCells": 16
+      }
+    ]
+  },
+  {
+    "assetId": "c6_single_element_4_0",
+    "purpose": "preserved_single_element_4_0",
+    "image": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_4_0.png",
+    "size": [
+      1,
+      1
+    ],
+    "usage": []
+  }
+]
