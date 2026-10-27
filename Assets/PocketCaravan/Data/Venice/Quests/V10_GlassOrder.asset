@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: V10_GlassOrder
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: venice_q10_glassart
+  title: "\uC720\uB9AC \uC7A5\uC2DD \uC8FC\uBB38"
+  chain: "\uBCA0\uB124\uCE58\uC544 2\uC7A5: \uC11D\uD638\uB97C \uB118\uC5B4"
+  summary: "\uBB34\uB77C\uB178 \uC7A5\uC2DD \uACF5\uBC29\uC5D0\uC11C \uC720\uB9AC
+    \uC7A5\uC2DD\uC744 \uB9CC\uB4E4\uC5B4 \uC0C1\uC778\uD68C \uC11C\uAE30\uC5D0\uAC8C
+    \uB0A9\uD488\uD55C\uB2E4."
+  giverNpc: venice_glassmaker
+  requires:
+  - {fileID: 11400000, guid: 4443be5e23f4229448fcf98b01738bf1, type: 2}
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "\uB3D9\uBB38 \uB108\uBA38 \uC190\uB2D8\uC774 \uC720\uB9AC \uC7A5\uC2DD\uC744
+    \uC8FC\uBB38\uD588\uC5B4.\n\uC7A5\uC2DD \uACF5\uBC29\uC5D0 \uC720\uB9AC\uADF8\uB987
+    \uB458\uC744 \uB9E1\uAE30\uBA74 \uB9CC\uB4E4\uC5B4 \uC8FC\uC9C0.\n\uB2E4 \uB418\uBA74
+    \uC0C1\uC778\uD68C \uC11C\uAE30\uC5D0\uAC8C \uAC00\uC838\uAC00."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 1
+    text: "\uC0C1\uC778\uD68C \uC11C\uAE30\uC5D0\uAC8C \uC720\uB9AC \uC7A5\uC2DD
+      \uB0A9\uD488"
+    targetId: venice_clerk
+    item: {fileID: 11400000, guid: f0481849b4ca4134faf4c3466df7bf6e, type: 2}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: "\uBE5B\uC774 \uACF1\uAD70. \uC8FC\uBB38\uD55C \uC190\uB2D8\uC774
+      \uC88B\uC544\uD558\uACA0\uC5B4."
+  rewardMoney: 110
+  rewardCredit: 1
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "\uC774 \uC7A5\uC2DD\uC774 \uB300\uC0C1 \uC9D0\uC5D0 \uC2E4\uB824 \uBA40\uB9AC
+    \uAC00\uACA0\uAD70."

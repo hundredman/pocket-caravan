@@ -254,6 +254,29 @@ def fx(kind):
     return im
 
 
+def inn_bed():
+    """여관 침대 16×14: 나무 틀, 흰 이불, 붉은 담요, 베개"""
+    im = Image.new("RGBA", (16, 14), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.rectangle((1, 2, 14, 12), fill=(132, 86, 56, 255), outline=INK)
+    d.rectangle((2, 3, 13, 10), fill=(244, 240, 230, 255))
+    d.rectangle((3, 3, 12, 5), fill=(255, 255, 255, 255), outline=(200, 196, 190, 255))
+    d.rectangle((2, 7, 13, 10), fill=(186, 58, 64, 255))
+    d.line((2, 7, 13, 7), fill=(226, 120, 110, 255))
+    d.line((1, 13, 2, 13), fill=INK); d.line((13, 13, 14, 13), fill=INK)
+    return im
+
+
+def puddle():
+    """아쿠아 알타 물 한 칸 16×16 (흰색, 게임에서 물빛으로 물들인다): 고른 물 + 잔물결 두 줄"""
+    im = Image.new("RGBA", (16, 16), (255, 255, 255, 150))
+    d = ImageDraw.Draw(im)
+    for y, x0, x1 in ((4, 2, 7), (11, 8, 14)):
+        d.line((x0, y, x1, y), fill=(255, 255, 255, 230))
+    d.point((12, 3), fill=(255, 255, 255, 230)); d.point((3, 13), fill=(255, 255, 255, 230))
+    return im
+
+
 def seed_sack():
     """모이 주머니 8×8"""
     im = Image.new("RGBA", (8, 8), (0, 0, 0, 0))
@@ -275,6 +298,8 @@ def main():
     for k in ("heart", "note", "z", "star", "dust"):
         save("fx_" + k, fx(k))
     save("seed_sack", seed_sack())
+    save("inn_bed", inn_bed())
+    save("puddle", puddle())
     save("confetti", confetti())
     save("mask", mask())
     save("fair_stall", fair_stall())

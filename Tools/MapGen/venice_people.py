@@ -7,36 +7,48 @@
 from collections import deque
 import tiles
 
-# 맵: [(이름, 그림, 대사...), ...] 일하는 사람 / 주민 수 / 길 위 상인 수(trader 번호) / 성장 소품 / 흔들리는 풀 수
+# 맵: [(이름, 그림, 대사...), ...] 일하는 사람 / 주민(지역 villagers 번호 목록) / 길 위 상인(trader 번호) / 성장 소품 / 흔들리는 풀 수
 SPECS = {
     "venice_rialto": dict(
         workers=[("운하 짐꾼", "venice_porter_tall", "배에서 내린 짐은 이 물가에서 나눠 싣소.", "장터는 광장 남쪽이오. 많이 팔면 값이 내려가니 나눠 파시오."),
-                 ("시장 일꾼", "venice_merchant_tall", "아침마다 네 마을 물건이 이 광장에 모인다네.", "비단 노점 옆이 제일 붐비지.")],
-        villagers=2, walkers=[1], growth=True),
+                 ("시장 일꾼", "venice_merchant_tall", "아침마다 네 마을 물건이 이 광장에 모인다네.", "비단 노점 옆이 제일 붐비지."),
+                 ("곤돌라 수리공", "venice_gondolier_tall", "곤돌라 바닥은 해마다 새로 칠해야 해.", "경주용 곤돌라는 더 가볍게 깎지."), ("빵 나르는 소년", "venice_vintner_tall", "갓 구운 빵이요! 광장 끝까지 배달!", "카니발 밤엔 빵이 두 배로 팔려요.")],
+        villagers=[0, 3, 5, 9], walkers=[1, 5], growth=True),
     "venice_murano": dict(
-        workers=[("모래 나르는 조수", "venice_glassmaker_tall", "유리는 모래와 재로 만든다오. 하루에 몇 수레씩 들어오지.", "가마 불은 밤에도 꺼뜨리지 않는다네.")],
-        villagers=1, walkers=[], growth=True),
+        workers=[("모래 나르는 조수", "venice_glassmaker_tall", "유리는 모래와 재로 만든다오. 하루에 몇 수레씩 들어오지.", "가마 불은 밤에도 꺼뜨리지 않는다네."),
+                 ("땔감 나르는 조수", "venice_porter_tall", "가마는 하루에 장작 한 산을 먹어.", "무라노 불은 꺼지면 큰일 나.")],
+        villagers=[1, 8], walkers=[6], growth=True),
     "venice_burano": dict(
-        workers=[("그물 나르는 어부", "venice_fisher_tall", "새벽에 나간 배가 들어오면 그물을 말려야 해.", "소금이 있어야 생선을 절이지. 키오자 소금이 제일이야.")],
-        villagers=1, walkers=[], growth=True),
+        workers=[("그물 나르는 어부", "venice_fisher_tall", "새벽에 나간 배가 들어오면 그물을 말려야 해.", "소금이 있어야 생선을 절이지. 키오자 소금이 제일이야."),
+                 ("그물 너는 아낙", "venice_lace_tall", "볕 좋은 날 그물을 말려야 썩지 않아.", "레이스랑 그물은 손이 같은 일을 해.")],
+        villagers=[2, 7], walkers=[7], growth=True),
     "venice_chioggia": dict(
-        workers=[("소금 짐꾼", "venice_porter_tall", "소금 자루는 무겁지만 어디서든 팔린다오.", "본토행 배는 동쪽 잔교에서 떠나지.")],
-        villagers=1, walkers=[2], growth=True),
+        workers=[("소금 짐꾼", "venice_porter_tall", "소금 자루는 무겁지만 어디서든 팔린다오.", "본토행 배는 동쪽 잔교에서 떠나지."),
+                 ("저울 보는 서기", "venice_clerk_tall", "소금은 무게로 값을 매기지.", "본토 배가 들어오는 날은 저울이 쉬지 않아.")],
+        villagers=[4, 6], walkers=[2, 8], growth=True),
     "venice_santerasmo": dict(
-        workers=[("과일 나르는 일꾼", "villager_rabbit_tall", "레몬은 따자마자 상자에 담아야 무르지 않아.", "멀리 키오자 항구가 과일을 귀하게 쳐 준대.")],
-        villagers=1, walkers=[], growth=True, plants=6),
+        workers=[("과일 나르는 일꾼", "villager_rabbit_tall", "레몬은 따자마자 상자에 담아야 무르지 않아.", "멀리 키오자 항구가 과일을 귀하게 쳐 준대."),
+                 ("벌통 돌보는 사람", "venice_vintner_tall", "레몬꽃 꿀이 제일 향긋해.", "벌이 많으면 과일도 많이 열리지.")],
+        villagers=[], walkers=[9], growth=True, plants=6),
     "venice_c_landing": dict(
-        workers=[("하역 인부", "venice_porter_tall", "키오자 배가 들어오면 이 마당이 꽉 차지.", "직행로는 빠르지만 밤엔 도적이 나온다더군.")],
-        villagers=1, walkers=[3], growth=True),
+        workers=[("하역 인부", "venice_porter_tall", "키오자 배가 들어오면 이 마당이 꽉 차지.", "직행로는 빠르지만 밤엔 도적이 나온다더군."),
+                 ("밧줄 감는 뱃사람", "venice_fisher_tall", "키오자 배는 하루 두 번 들어오지.", "밧줄 잘못 감으면 짐이 물에 빠져.")],
+        villagers=[1, 4], walkers=[3, 10], growth=True),
     "venice_c_vineyard": dict(
-        workers=[("술통 굴리는 일꾼", "venice_vintner_tall", "통은 굴려야지, 들면 허리 나가.", "고갯길은 좁아서 수레가 고생이야.")],
-        villagers=1, walkers=[], growth=True, plants=8),
+        workers=[("술통 굴리는 일꾼", "venice_vintner_tall", "통은 굴려야지, 들면 허리 나가.", "고갯길은 좁아서 수레가 고생이야."),
+                 ("포도 바구니 나르는 아낙", "venice_lace_tall", "바구니가 차면 양조장으로!", "올해는 비가 적어 포도가 달아.")],
+        villagers=[0, 5], walkers=[11], growth=True, plants=8),
     "venice_c_post": dict(
-        workers=[("마구간지기", "villager_fox_tall", "말도 쉬어야 멀리 가지.", "동문 너머 길은 아직 닦는 중이래.")],
-        villagers=2, walkers=[0], growth=True),
+        workers=[("마구간지기", "villager_fox_tall", "말도 쉬어야 멀리 가지.", "동문 너머 길은 아직 닦는 중이래."),
+                 ("물 긷는 하인", "venice_porter_tall", "대상 손님들 말에게 물을 줘야 해.", "우물물이 시원해. 한 바가지 줄까?")],
+        villagers=[2], walkers=[0, 12], growth=True),
     "venice_c_gate": dict(workers=[("동문 경비", "venice_guard_tall", "동문 너머 중앙 대륙 길은 아직 닦는 중이오.", "짐 검사는 없소. 도적만 조심하시오.")],
-                          villagers=1, walkers=[], growth=False),
-    "venice_c_bridge": dict(workers=[], villagers=1, walkers=[], growth=False),
+                          villagers=[], walkers=[13, 14], growth=False),
+    "venice_c_bridge": dict(workers=[], villagers=[], walkers=[15], growth=False),
+    "venice_c_marsh": dict(workers=[("갈대 묶는 일꾼", "venice_porter_tall", "갈대는 지붕도 되고 바구니도 되지.", "진흙길은 느려도 도적은 없어.")],
+                           villagers=[3], walkers=[16], growth=False),
+    "venice_c_pass": dict(workers=[("돌 나르는 인부", "venice_porter_tall", "고갯길 돌을 하나씩 다지는 중이오.", "좁은 길이라 수레는 천천히 끄시오.")],
+                          villagers=[], walkers=[17], growth=False),
 }
 GROWTH_PROPS = (("vg_crate", 2), ("vg_barrel", 2), ("vg_sack_grain", 3), ("vg_amphora", 3))
 
@@ -118,11 +130,12 @@ def populate(m):
                 break
     # 마을 사람: 장터에서 3~16걸음, 서로 4칸 넘게 떨어진 칸 (맵 가장자리 3칸 안은 피한다)
     placed = 0
+    who = spec.get("villagers", [])            # 지역 villagers 번호. 맵마다 다른 사람이 서게 (같은 이름이 여러 섬에 겹치지 않게)
     for d, c in near:
-        if placed >= spec.get("villagers", 0):
+        if placed >= len(who):
             break
         if 3 <= d <= 16 and c not in taken and _clear(m, *c) and m.road[c[1]][c[0]] < 3 and 3 <= c[0] < m.w - 3 and 3 <= c[1] < m.h - 3:
-            m.add("villager", c[0], c[1], variant=rng.randrange(8), idx=placed)
+            m.add("villager", c[0], c[1], variant=0, idx=who[placed])
             claim([c], pad=3)
             placed += 1
     # 길 위 상인: 곧은 길(등급 2 이상) 8칸을 오간다

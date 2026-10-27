@@ -255,6 +255,44 @@ namespace PocketCaravan.EditorTools
                 "이제 등짐으로는 모자라겠군.\n리알토 장터에서 손수레를 사 보게.\n소금이나 생선처럼 무거운 짐을 한 번에 나를 수 있지.",
                 0, 1, "손수레라니, 이제 어엿한 상인이야.",
                 buyCart, O(ObjectiveType.Talk, "여관 주인에게 보여 주기", "venice_innkeeper", null, 1, "바퀴 소리가 좋군. 축하하네."));
+
+            // 2장 "석호를 넘어" (2026-10-27, 제안): 본토 서부의 포도주·대상 숙소 큰 장·특산 공방·동문으로 이어진다.
+            const string chain2 = "베네치아 2장: 석호를 넘어";
+            ItemData Item(string id) => db.items.Find(i => i != null && i.id == id);
+            QuestData Q2(string file, string id, string title, string giver, QuestData req, string summary, string offer,
+                int money, int credit, string finish, params QuestObjective[] steps)
+            {
+                var q = Q(file, id, title, giver, req, summary, offer, money, credit, finish, steps);
+                q.chain = chain2;
+                return q;
+            }
+            var q7 = db.quests.Find(x => x != null && x.id == "venice_q7_handcart");
+            var q8 = Q2("V8_WineRoad", "venice_q8_wine", "포도주 길", "venice_warehouse", q7,
+                "본토 포도밭 양조장에서 포도주 3병을 사서 리알토 장터에 판다.",
+                "본토 배가 들어오면 포도주 얘기뿐이야.\n키오자 잔교에서 배를 타고 포도밭에 가 보게.\n세 병을 사서 리알토에 팔아 보게.",
+                80, 1, "석호 밖에서 사 온 물건이 섬에서 값을 받는군.",
+                O(ObjectiveType.VisitMap, "본토 나루터에 가기", "venice_c_landing"),
+                O(ObjectiveType.Buy, "포도밭 양조장에서 포도주 3병 사기", "venice_c_vineyard", Item("venice_wine"), 3),
+                O(ObjectiveType.Sell, "리알토 장터에 포도주 3병 팔기", "venice_rialto", Item("venice_wine"), 3),
+                O(ObjectiveType.Talk, "창고지기에게 알리기", "venice_warehouse", null, 1, "포도주 배가 늘겠군. 장부에 적어 두지."));
+            var q9 = Q2("V9_CaravanFair", "venice_q9_fair", "대상 숙소의 큰 장", "venice_clerk", q8,
+                "본토 대상 숙소 장터에서 물건 4개를 판다. 큰 장이 서는 날이면 덤을 받는다.",
+                "본토 서쪽에 대상 숙소가 있네.\n날마다 세 마을 중 한 곳에 큰 장이 서지.\n숙소 장터에서 물건 넷을 팔아 보게.",
+                90, 2, "큰 장 날을 맞추면 덤이 붙지. 장사는 날짜도 보는 거야.",
+                O(ObjectiveType.VisitMap, "대상 숙소에 가기", "venice_c_post"),
+                O(ObjectiveType.Sell, "대상 숙소 장터에 물건 4개 팔기", "venice_c_caravanserai", null, 4),
+                O(ObjectiveType.Talk, "상인회 서기에게 알리기", "venice_clerk", null, 1, "본토 상인들 사이에도 자네 이름이 돌겠군."));
+            var q10 = Q2("V10_GlassOrder", "venice_q10_glassart", "유리 장식 주문", "venice_glassmaker", q9,
+                "무라노 장식 공방에서 유리 장식을 만들어 상인회 서기에게 납품한다.",
+                "동문 너머 손님이 유리 장식을 주문했어.\n장식 공방에 유리그릇 둘을 맡기면 만들어 주지.\n다 되면 상인회 서기에게 가져가.",
+                110, 1, "이 장식이 대상 짐에 실려 멀리 가겠군.",
+                O(ObjectiveType.Deliver, "상인회 서기에게 유리 장식 납품", "venice_clerk", Item("venice_glass_art"), 1, "빛이 곱군. 주문한 손님이 좋아하겠어."));
+            Q2("V11_EastGate", "venice_q11_gate", "동문 너머", "venice_innkeeper", q10,
+                "본토 동쪽 끝 동문 큰길까지 가 본 뒤 여관 주인에게 이야기한다.",
+                "석호 상인이 본토 끝을 모르면 쓰나.\n동쪽 끝 동문 큰길까지 가 보게.\n중앙 대륙으로 가는 길이 거기서 시작되지.",
+                50, 1, "중앙 대륙 길이 열리면 자네가 제일 먼저 가겠군.",
+                O(ObjectiveType.VisitMap, "동문 큰길에 가기", "venice_c_gate"),
+                O(ObjectiveType.Talk, "여관 주인에게 이야기하기", "venice_innkeeper", null, 1, "성벽에 사자 깃발이 걸렸다고? 우리 섬 상인들 솜씨지."));
         }
 
         [Serializable] class DistrictJson { public string name; public int x0, y0, x1, y1; }

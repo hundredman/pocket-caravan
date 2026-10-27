@@ -2,6 +2,7 @@
     - village   : 장터 둘레에 크림·황토색 시골 집(vh_*)을 몇 채 (나루터·양조장·대상 숙소)
     - avenue    : 큰길(등급 3) 양쪽에 사이프러스 가로수를 줄지어
     - farmsteads: 빈 들판에 농가 한 채 + 채소밭·건초·수레·벌통 묶음
+    - road_events: 큰길 옆 길 사건 자리 (공용 RoadEventDirector가 쓰러진 행인·떠돌이 상인 중 고른다)
     모든 배치는 venice_dress.Guard로 길이 끊기지 않을 때만 남긴다. 사람·출구 둘레는 비운다."""
 import tiles
 import venice_dress
@@ -12,6 +13,8 @@ VILLAGE = {   # 맵: (벽색, 종류 비율, 남길 빈 땅 비율, 마을 반�
     "venice_c_vineyard": (["ochre", "cream", "salmon"], dict(house=3, wide=2), .88, 13),
     "venice_c_post": (["cream", "ochre", "salmon", "brick", "sage"], dict(house=3, narrow=2, wide=2, shop=2, wide_shop=1), .8, 18),
 }
+EVENTS = {"venice_c_landing": 2, "venice_c_vineyard": 1, "venice_c_marsh": 2, "venice_c_pass": 2, "venice_c_bridge": 2,
+          "venice_c_post": 1, "venice_c_gate": 2}     # 길 사건 자리 (쓰러진 행인·떠돌이 상인, 공용 RoadEventDirector가 고른다)
 FARMS = {"venice_c_landing": 2, "venice_c_post": 2, "venice_c_gate": 3, "venice_c_bridge": 2, "venice_c_pass": 1}
 
 
@@ -70,6 +73,27 @@ def farmsteads(m, guard, keep, n):
     return done
 
 
+def road_events(m, n):
+    """큰길(등급 2 이상) 바로 옆 걸을 수 있는 칸에 길 사건 자리를 n개. 출구·사람·다른 사건과 떨어지게."""
+    if n <= 0:
+        return 0
+    rng = m.rng
+    others = [(o["x"], o["y"]) for o in m.objects if o["kind"] in ("exit", "spawn", "event", "bandit", "market", "npc", "talker", "worker", "villager", "sign")]
+    cand = [(x, y) for y in range(3, m.h - 3) for x in range(3, m.w - 3)
+            if not m.blocked[y][x] and not m.water[y][x] and not m.road[y][x] and m.obj[y][x] is None
+            and any(m.road[y + dy][x + dx] >= 2 for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))]
+    rng.shuffle(cand)
+    placed = 0
+    for c in cand:
+        if placed >= n:
+            break
+        if all(abs(c[0] - o[0]) + abs(c[1] - o[1]) >= 9 for o in others):
+            m.event(*c)
+            others.append(c)
+            placed += 1
+    return placed
+
+
 def dress(m):
     out = {}
     if m.id in VILLAGE:
@@ -79,4 +103,5 @@ def dress(m):
     guard = Guard(m)
     out["avenue"] = avenue(m, guard, keep)
     out["farms"] = farmsteads(m, guard, keep, FARMS.get(m.id, 0))
+    out["events"] = road_events(m, EVENTS.get(m.id, 0))
     return out

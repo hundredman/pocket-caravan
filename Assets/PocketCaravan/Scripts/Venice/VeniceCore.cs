@@ -27,6 +27,8 @@ namespace PocketCaravan
             public string id;
             public int h;
             public int[] pigeons, lamps, smoke, gondolas, glass, net, workshop_glass, workshop_lace, market, lion, inspector, museum, feed;
+            public int[] seats, wander, dock, flood, spawns, lost;     // 2026-10-27 벤치 앞·떠돌이 상인·곤돌라 나루·물 차오름·도착 자리
+            public string[] spawn_ids;
             public bool gulls;
         }
         [System.Serializable] class File { public MapLife[] maps; }

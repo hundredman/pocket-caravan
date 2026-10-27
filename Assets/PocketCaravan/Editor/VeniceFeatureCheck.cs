@@ -116,8 +116,8 @@ namespace PocketCaravan.EditorTools
 
         // ---------- R 리액션 동작 6가지: 주민 옆으로 옮겨 차례로 누르고 동작 한가운데에서 찍는다 ----------
         const string KeyReact = "VeniceFeatureCheck.react";
-        static readonly float[] ReactShotAt = { .3f, .95f, .7f, 1.0f, 1.0f, 2.0f };
-        static readonly string[] ReactNames = { "hop", "spin", "stretch", "dance", "love", "nap" };
+        static readonly float[] ReactShotAt = { .4f, .3f, .4f, .95f, .7f, 1.0f, 1.0f, 2.0f, .5f, 1.0f };
+        static readonly string[] ReactNames = { "bow", "hop", "clap", "spin", "stretch", "dance", "love", "nap", "row", "mask" };
 
         [MenuItem("Pocket Caravan/베네치아/리액션 동작 점검")]
         public static void ReactionRun()
@@ -147,7 +147,7 @@ namespace PocketCaravan.EditorTools
             }
             int i = (step - 1) / 2;
             if (i >= ReactNames.Length) { step = 99; waitUntil = now; Step(gm, now); return; }
-            if ((step - 1) % 2 == 0) { VeniceReactions.TestPress(); step++; waitUntil = now + ReactShotAt[i]; }
+            if ((step - 1) % 2 == 0) { VeniceReactions.TestPlay(ReactNames[i]); step++; waitUntil = now + ReactShotAt[i]; }
             else
             {
                 var body = player.anim.transform;
@@ -157,7 +157,195 @@ namespace PocketCaravan.EditorTools
             }
         }
 
-        // ---------- 베네치아 1장 Q1~Q7 자동 완주 ----------
+        // ---------- 2026-10-27 플레이 점검 로봇: 실제 키 입력으로 마을별 목록을 차례로 (VeniceTourBot) ----------
+        const string KeyTour = "VeniceFeatureCheck.tour";
+        [MenuItem("Pocket Caravan/베네치아/플레이 점검 로봇")]
+        public static void TourRun() { SessionState.SetBool(KeyTour, true); Begin(false); }
+        public static void TourRunAndQuit() { SessionState.SetBool(KeyTour, true); Begin(true); }
+
+        static void TourStep(GameManager gm, float now)
+        {
+            if (step == 0) { VeniceTourBot.OutDir = OutDir; gm.gameObject.AddComponent<VeniceTourBot>(); step = 1; return; }
+            if (!VeniceTourBot.Done) return;
+            report.Append(VeniceTourBot.Report.ToString());
+            var bot = gm.GetComponent<VeniceTourBot>();
+            if (bot != null) UnityEngine.Object.Destroy(bot);
+            step = 99; waitUntil = now; Step(gm, now);
+        }
+
+        // ---------- 2026-10-27 생활 기능: 떠돌이 상인·친밀도·여관·벤치·곤돌라 경주·나루·아쿠아 알타·순례자·카니발·시간대 음악 ----------
+        const string KeyLife = "VeniceFeatureCheck.life";
+
+        [MenuItem("Pocket Caravan/베네치아/생활 기능 점검")]
+        public static void LifeRun() { SessionState.SetBool(KeyLife, true); Begin(false); }
+        public static void LifeRunAndQuit() { SessionState.SetBool(KeyLife, true); Begin(true); }
+
+        static void CloseDialogue() { var d = UnityEngine.Object.FindAnyObjectByType<DialogueUI>(); if (d != null) Call(d, "Close"); UIState.Release(); }
+        static void SetClock(GameManager gm, int day, int hour) { gm.Clock.day = day; gm.Clock.minuteOfDay = hour * 60 + 5; }
+        static string FirstSpawn(string map) { var d = VeniceData.Get(map); return d != null && d.spawn_ids != null && d.spawn_ids.Length > 0 ? d.spawn_ids[0] : "S0"; }
+        static void Near(PlayerController p, Component c, Vector3 off) => p.Motor.Teleport(c.transform.position + off, Vector2Int.down);
+        static int lifeMoney, lifeCredit;
+
+        static void LifeStep(GameManager gm, float now)
+        {
+            var p = PlayerController.Instance;
+            switch (step)
+            {
+                case 0:
+                    report.AppendLine("[생활 기능 점검]");
+                    gm.Player.money = 3000;
+                    SetClock(gm, 5, 9);                     // 5일째: 떠돌이 상인이 리알토에
+                    gm.TravelTo("venice_rialto", "S0");
+                    step = 1; waitUntil = now + 3f; break;
+                case 1:
+                {
+                    var mer = UnityEngine.Object.FindAnyObjectByType<VeniceMerchant>();
+                    report.AppendLine($"떠돌이 상인: 오늘 {VeniceDaily.MerchantMap}, 여기 {(mer != null ? "있음" : "없음")}, 특가 {VeniceDaily.DealItem}");
+                    var deal = VeniceUtil.Item(VeniceDaily.DealItem);
+                    if (deal != null)
+                    {
+                        int m0 = gm.Player.money, c0 = gm.Player.cargo.Count(deal);
+                        VeniceMerchant.BuyDeal(deal); VeniceMerchant.BuyDeal(deal);
+                        report.AppendLine($"   특가 2개: 짐 {c0}→{gm.Player.cargo.Count(deal)}, 돈 {m0}→{gm.Player.money} (기준가 {deal.basePrice}, 특가 {VeniceMerchant.DealPrice(deal)})");
+                    }
+                    if (mer != null) { Near(p, mer, new Vector3(0, -1.5f, 0)); mer.Interact(p); }
+                    step = 2; waitUntil = now + 1.2f; break;
+                }
+                case 2:
+                {
+                    Shot("life_1_merchant");
+                    CloseDialogue();
+                    var wine = VeniceUtil.Item("venice_wine");
+                    gm.Player.cargo.Add(wine, 4);
+                    int m0 = gm.Player.money;
+                    for (int i = 0; i < 4; i++) VeniceSocial.TestGift("여관 주인", wine);
+                    report.AppendLine($"친밀도: 여관 주인 점수 {VeniceSocial.Points("여관 주인")} 하트 {VeniceSocial.Hearts("여관 주인")}, 춤 배움 {VeniceSave.Has("react:dance")}, 돈 {m0}→{gm.Player.money}, 기념품 {VeniceSave.Has("keepsake:여관 주인")}");
+                    var social = gm.GetComponent<VeniceSocial>();
+                    typeof(VeniceSocial).GetField("book", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(social, true);
+                    UIState.Blocking = true;
+                    step = 3; waitUntil = now + 1f; break;
+                }
+                case 3:
+                {
+                    Shot("life_2_friend_book");
+                    var social = gm.GetComponent<VeniceSocial>();
+                    typeof(VeniceSocial).GetField("book", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(social, false);
+                    UIState.Release();
+                    var inn = UnityEngine.Object.FindAnyObjectByType<VeniceInn>();
+                    report.AppendLine($"여관 침대: {(inn != null ? "있음" : "없음")}, 시계 {gm.Clock.Label}");
+                    if (inn != null) { Near(p, inn, new Vector3(0, -1f, 0)); inn.Sleep(); }
+                    step = 4; waitUntil = now + 1.0f; break;
+                }
+                case 4:
+                    Shot("life_3_inn_sleep");
+                    step = 5; waitUntil = now + 2.5f; break;
+                case 5:
+                {
+                    report.AppendLine($"   잔 뒤: 시계 {gm.Clock.Label}, 푹 쉼 {VeniceDaily.Rested}, 달리기 소모 {p.staminaDrain:0.00}");
+                    var seats = UnityEngine.Object.FindObjectsByType<VeniceSeat>(FindObjectsSortMode.None);
+                    report.AppendLine($"벤치 자리 {seats.Length}개");
+                    if (seats.Length > 0) { p.Motor.Teleport(seats[0].transform.position, Vector2Int.down); seats[0].Interact(p); }
+                    step = 6; waitUntil = now + 4.8f; break;
+                }
+                case 6:
+                    Shot("life_4_bench");
+                    report.AppendLine($"   앉기: 앉음 {VeniceSeat.IsSitting}, 한숨 돌림 {VeniceSeat.Breather}");
+                    step = 61; waitUntil = now + .5f; break;   // 찍힌 뒤에 일어나 경주 시작 (같은 프레임이면 경주 화면이 찍힌다)
+                case 61:
+                    foreach (var s in UnityEngine.Object.FindObjectsByType<VeniceSeat>(FindObjectsSortMode.None)) if (VeniceSeat.IsSitting) s.Interact(p);
+                    VeniceRace.TestBegin();
+                    step = 7; waitUntil = now + 4f; break;
+                case 7:
+                    Shot("life_5_race");
+                    report.AppendLine($"곤돌라 경주 4초: {VeniceRace.TestState}");
+                    VeniceRace.TestStop();
+                    step = 8; waitUntil = now + 1f; break;
+                case 8:
+                {
+                    Shot("life_6_race_result");
+                    VeniceRace.TestClose();
+                    report.AppendLine($"   끝: 최고 기록 {VeniceRace.Best}");
+                    var tr = UnityEngine.Object.FindAnyObjectByType<VeniceTraghetto>();
+                    report.AppendLine($"곤돌라 나루(리알토): {(tr != null ? "있음" : "없음")}");
+                    lifeMoney = gm.Player.money;
+                    SetClock(gm, 7, 8);                     // 7일째 아침: 아쿠아 알타
+                    VeniceTraghetto.Go("venice_murano");
+                    step = 9; waitUntil = now + 3f; break;
+                }
+                case 9:
+                {
+                    report.AppendLine($"   곤돌라로 이동: 도착 {VeniceUtil.Map}, 뱃삯 {lifeMoney - gm.Player.money}냥");
+                    Shot("life_7_murano_by_gondola");
+                    var ev = gm.GetComponent<VeniceEvents>();
+                    var data = VeniceData.Get(VeniceUtil.Map);
+                    report.AppendLine($"아쿠아 알타: 지금 {VeniceEvents.AcquaAlta}, 물 칸 {(ev != null ? ev.PuddleCount : 0)}");
+                    if (data != null && data.flood != null && data.flood.Length >= 2)
+                    {
+                        var pts = VeniceData.Points(data.flood);
+                        var c = pts[pts.Count / 2];
+                        p.Motor.Teleport(VeniceUtil.Cell(c.x, c.y), Vector2Int.down);
+                    }
+                    step = 10; waitUntil = now + .8f; break;
+                }
+                case 10:
+                    report.AppendLine($"   물 찬 칸 걸음 속도 {p.Motor.walkSpeed:0.00}");
+                    Shot("life_8_acqua_alta");
+                    for (int d = 1; d < 60; d++)            // 길 잃은 순례자: 맑지 않은 시각을 찾는다
+                    {
+                        bool found = false;
+                        for (int h = 6; h < 20; h++) { SetClock(gm, d, h); if (VeniceEvents.LostWeather && !VeniceEvents.AcquaAlta) { found = true; break; } }
+                        if (found) break;
+                    }
+                    report.AppendLine($"순례자 시험 날씨: {VeniceAtmosphere.Now} ({gm.Clock.Label})");
+                    gm.TravelTo("venice_c_bridge", FirstSpawn("venice_c_bridge"));
+                    step = 11; waitUntil = now + 3f; break;
+                case 11:
+                {
+                    var lost = UnityEngine.Object.FindAnyObjectByType<VeniceLostTraveler>();
+                    report.AppendLine($"   돌다리에 순례자: {(lost != null ? "있음" : "없음")}");
+                    if (lost != null) { Near(p, lost, new Vector3(1f, 0, 0)); Shot("life_9_pilgrim"); gm.GetComponent<VeniceEvents>().StartFollow(lost); }
+                    lifeMoney = gm.Player.money; lifeCredit = gm.Player.credit;
+                    step = 12; waitUntil = now + 1f; break;
+                }
+                case 12:
+                    report.AppendLine($"   동행 중 {VeniceEvents.Following}");
+                    gm.TravelTo("venice_c_post", FirstSpawn("venice_c_post"));
+                    step = 13; waitUntil = now + 3f; break;
+                case 13:
+                    report.AppendLine($"   대상 숙소 도착: 동행 {VeniceEvents.Following}, 돈 +{gm.Player.money - lifeMoney}, 신용 +{gm.Player.credit - lifeCredit}");
+                    SetClock(gm, 12, 20);                   // 12일째 밤 8시: 카니발
+                    gm.TravelTo("venice_rialto", "S0");
+                    step = 14; waitUntil = now + 3.5f; break;
+                case 14:
+                {
+                    var seller = UnityEngine.Object.FindAnyObjectByType<VeniceMaskSeller>();
+                    report.AppendLine($"카니발: {VeniceAtmosphere.CarnivalNight}, 가면 장수 {(seller != null ? "있음" : "없음")}");
+                    if (seller != null) { Near(p, seller, new Vector3(1f, 0, 0)); seller.Interact(p); }
+                    report.AppendLine($"   가면 춤 배움 {VeniceSave.Has("react:mask")}");
+                    step = 15; waitUntil = now + 1.5f; break;
+                }
+                case 15:
+                    Shot("life_10_carnival");
+                    step = 71; waitUntil = now + .5f; break;
+                case 71:
+                    CloseDialogue();
+                    SetClock(gm, 13, 7);
+                    step = 16; waitUntil = now + 2.5f; break;
+                case 16: case 17: case 18: case 19:
+                {
+                    var snd = gm.GetComponent<VeniceSound>();
+                    var music = typeof(VeniceSound).GetField("music", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(snd) as AudioSource;
+                    report.AppendLine($"음악 {gm.Clock.Hour}시: {(music != null && music.clip != null ? music.clip.name : "없음")}");
+                    int[] next = { 12, 18, 23 };
+                    if (step < 19) SetClock(gm, 13, next[step - 16]);
+                    step = step < 19 ? step + 1 : 80; waitUntil = now + 2.5f; break;
+                }
+                default:
+                    step = 99; waitUntil = now; Step(gm, now); break;
+            }
+        }
+
+        // ---------- 베네치아 퀘스트(1장 Q1~Q7, 2장 Q8~Q11) 자동 완주 ----------
         const string KeyQuest = "VeniceFeatureCheck.quest";
 
         public static void QuestRunAndQuit()
@@ -173,13 +361,17 @@ namespace PocketCaravan.EditorTools
             var index = WorldIndex.Get();
             var chain = gm.Db.quests.FindAll(q => q != null && q.id != null && q.id.StartsWith("venice_q"));
             chain.Sort((a, b) => string.CompareOrdinal(a.id, b.id));
-            report.AppendLine($"베네치아 1장 퀘스트 {chain.Count}개");
+            report.AppendLine($"베네치아 퀘스트 {chain.Count}개");
             gm.Player.money = 5000;
-            foreach (var q in chain)
+            // 앞 퀘스트가 끝나야 다음을 받으므로, 더 받을 수 있는 게 없을 때까지 여러 번 돈다 (id 글자 순서와 상관없이)
+            var left = new List<QuestData>(chain);
+            for (int round = 0; round < chain.Count && left.Count > 0; round++)
+            foreach (var q in left.ToArray())
             {
                 int money0 = gm.Player.money, credit0 = gm.Player.credit;
                 string blocker = gm.Quests.AcceptBlocker(q);
-                if (!gm.Quests.CanStart(q) || blocker != null) { report.AppendLine($"  {q.id}: 수락 불가 ({blocker ?? "앞 퀘스트 미완료"})"); continue; }
+                if (!gm.Quests.CanStart(q) || blocker != null) continue;
+                left.Remove(q);
                 gm.Quests.Accept(q);
                 var notes = new List<string>();
                 for (int guard = 0; guard < 20 && !gm.Quests.IsFinished(q); guard++)
@@ -212,6 +404,9 @@ namespace PocketCaravan.EditorTools
                             gm.Player.vehicle = o.vehicle;
                             GameEvents.RaiseVehicleBought(o.vehicle);
                             break;
+                        case ObjectiveType.VisitMap:
+                            GameEvents.RaiseMapEntered(o.targetId);
+                            break;
                         default:
                             gm.Quests.Tick();
                             break;
@@ -220,6 +415,7 @@ namespace PocketCaravan.EditorTools
                 bool done = gm.Quests.IsFinished(q);
                 report.AppendLine($"  {q.id} '{q.title}': {(done ? "완료" : "미완료")}, 보상 돈 {gm.Player.money - money0:+0;-0;0} 신용 {gm.Player.credit - credit0:+0;-0;0} | {string.Join(" → ", notes)}");
             }
+            foreach (var q in left) report.AppendLine($"  {q.id}: 수락 불가 ({gm.Quests.AcceptBlocker(q) ?? "앞 퀘스트 미완료"})");
         }
 
         static void Begin(bool quit)
@@ -268,6 +464,8 @@ namespace PocketCaravan.EditorTools
                 if (SessionState.GetBool(KeyQuest, false) && step < 99) { QuestStep(gm); step = 99; waitUntil = now + 1f; }
                 else if (SessionState.GetBool(KeyWalk, false) && step < 99) WalkStep(gm, now);
                 else if (SessionState.GetBool(KeyReact, false) && step < 99) ReactStep(gm, now);
+                else if (SessionState.GetBool(KeyLife, false) && step < 99) LifeStep(gm, now);
+                else if (SessionState.GetBool(KeyTour, false) && step < 99) TourStep(gm, now);
                 else Step(gm, now);
             }
             catch (Exception e) { report.AppendLine($"단계 {step} 오류: {e.Message}"); step = 99; waitUntil = now; }
@@ -407,6 +605,8 @@ namespace PocketCaravan.EditorTools
             SessionState.SetBool(KeyWalk, false);
             SessionState.SetBool(KeyQuest, false);
             SessionState.SetBool(KeyReact, false);
+            SessionState.SetBool(KeyLife, false);
+            SessionState.SetBool(KeyTour, false);
             Debug.Log("[지역 기능 점검] 끝. 결과: " + Path.GetFullPath(OutDir));
             if (quit) EditorApplication.Exit(0);
         }

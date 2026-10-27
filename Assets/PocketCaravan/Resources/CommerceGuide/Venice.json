@@ -8,7 +8,10 @@
       "adaptation": "대항해시대 이전 상인 문화를 한 대륙에 모은 가상 세계입니다. 고양이 상인, 다섯 섬의 배치와 거리, 섬 사이 다리·둑길은 게임에 맞게 줄이고 바꾼 설정입니다. 실제로는 섬 사이를 주로 배로 다녔습니다.",
       "travel": "리알토를 가운데 두고 과수원·유리공방·어촌·교역항이 이어집니다. 본토로 가는 공식 길은 키오자 동쪽 잔교의 배입니다.",
       "sources": [
-        { "title": "Wikipedia · Republic of Venice", "url": "https://en.wikipedia.org/wiki/Republic_of_Venice" }
+        {
+          "title": "Wikipedia · Republic of Venice",
+          "url": "https://en.wikipedia.org/wiki/Republic_of_Venice"
+        }
       ]
     },
     {
@@ -18,7 +21,10 @@
       "adaptation": "게임의 리알토는 수도 역할을 하는 광장 도시입니다. 성당·종탑·궁전이 한 광장에 모인 모습은 여러 명소를 합친 각색입니다.",
       "travel": "네 마을의 물건이 모이는 큰 장터라 많이 팔아도 값이 덜 떨어집니다. 손수레는 여기서 살 수 있습니다.",
       "sources": [
-        { "title": "Wikipedia · Rialto", "url": "https://en.wikipedia.org/wiki/Rialto" }
+        {
+          "title": "Wikipedia · Rialto",
+          "url": "https://en.wikipedia.org/wiki/Rialto"
+        }
       ]
     },
     {
@@ -28,7 +34,10 @@
       "adaptation": "유리 불기 미니게임과 장식 공방은 게임 놀이로 만든 것입니다. 실제 기술이나 공방 운영을 재현하지 않습니다.",
       "travel": "유리그릇은 가볍고 비쌉니다. 한 장터에 몰아 팔면 값이 금방 떨어지니 나눠 파세요. 유리그릇 둘을 장식 공방에 맡기면 유리 장식이 됩니다.",
       "sources": [
-        { "title": "Wikipedia · Murano", "url": "https://en.wikipedia.org/wiki/Murano" }
+        {
+          "title": "Wikipedia · Murano",
+          "url": "https://en.wikipedia.org/wiki/Murano"
+        }
       ]
     },
     {
@@ -38,7 +47,10 @@
       "adaptation": "레이스 공방과 그물 던지기 미니게임은 시대를 넘나든 각색입니다. 부라노 섬의 위치와 크기도 게임에 맞게 바꿨습니다.",
       "travel": "절인 생선이 쌉니다. 소금은 생선을 절이는 부라노에서 값이 좋습니다. 레이스 손수건은 아주 가벼워 먼 장터에 팔기 좋습니다.",
       "sources": [
-        { "title": "Wikipedia · Burano", "url": "https://en.wikipedia.org/wiki/Burano" }
+        {
+          "title": "Wikipedia · Burano",
+          "url": "https://en.wikipedia.org/wiki/Burano"
+        }
       ]
     },
     {
@@ -48,7 +60,10 @@
       "adaptation": "게임에서는 키오자를 리알토 남동쪽에 두었고, 본토로 가는 배가 떠나는 교역항으로 만들었습니다. 실제 배치와 다릅니다.",
       "travel": "석호 소금이 쌉니다. 무겁지만 어디서든 팔립니다. 동쪽 잔교 끝에서 본토 나루터로 가는 배를 탈 수 있습니다.",
       "sources": [
-        { "title": "Wikipedia · Chioggia", "url": "https://en.wikipedia.org/wiki/Chioggia" }
+        {
+          "title": "Wikipedia · Chioggia",
+          "url": "https://en.wikipedia.org/wiki/Chioggia"
+        }
       ]
     },
     {
@@ -58,7 +73,10 @@
       "adaptation": "레몬·무화과 과수원과 압착기, 벌통은 게임 분위기를 위한 각색입니다.",
       "travel": "과일 상자가 쌉니다. 멀리 키오자 항구가 과일을 귀하게 쳐 줍니다. 서쪽 모래톱 다리로 부라노 어촌과 바로 이어집니다.",
       "sources": [
-        { "title": "Wikipedia · Sant'Erasmo", "url": "https://en.wikipedia.org/wiki/Sant%27Erasmo" }
+        {
+          "title": "Wikipedia · Sant'Erasmo",
+          "url": "https://en.wikipedia.org/wiki/Sant%27Erasmo"
+        }
       ]
     },
     {
@@ -68,8 +86,14 @@
       "adaptation": "숨은 사자 문장 일곱 개와 전설, 카니발 밤의 덤은 게임에서 지어낸 이야기와 놀이입니다.",
       "travel": "길 끝 구석에서 이끼 낀 사자 문장을 찾아보세요. 일곱 개를 다 읽으면 큰 장 덤이 늘어납니다. 7일마다 밤 7시~11시 리알토에서 카니발이 열립니다.",
       "sources": [
-        { "title": "Wikipedia · Lion of Saint Mark", "url": "https://en.wikipedia.org/wiki/Lion_of_Saint_Mark" },
-        { "title": "Wikipedia · Carnival of Venice", "url": "https://en.wikipedia.org/wiki/Carnival_of_Venice" }
+        {
+          "title": "Wikipedia · Lion of Saint Mark",
+          "url": "https://en.wikipedia.org/wiki/Lion_of_Saint_Mark"
+        },
+        {
+          "title": "Wikipedia · Carnival of Venice",
+          "url": "https://en.wikipedia.org/wiki/Carnival_of_Venice"
+        }
       ]
     },
     {
@@ -79,7 +103,27 @@
       "adaptation": "본토 서부는 중앙 대륙의 서쪽 조각을 게임에 맞게 만든 가상의 땅입니다. 포도밭·습지·고갯길·돌다리·동문은 실제 장소를 그대로 옮긴 것이 아닙니다.",
       "travel": "나루터에서 세 갈래로 나뉩니다. 직행로는 빠르지만 밤에 도적이 나옵니다. 북쪽 고갯길은 좁고 거칠어 수레가 느리고, 남쪽 습지는 진흙이 있지만 안전합니다. 대상 숙소·나루터·양조장에 날마다 돌아가며 큰 장이 섭니다.",
       "sources": [
-        { "title": "Wikipedia · Caravanserai", "url": "https://en.wikipedia.org/wiki/Caravanserai" }
+        {
+          "title": "Wikipedia · Caravanserai",
+          "url": "https://en.wikipedia.org/wiki/Caravanserai"
+        }
+      ]
+    },
+    {
+      "id": "venice_life",
+      "title": "석호의 하루",
+      "history": "석호의 물은 계절과 바람에 따라 높아지기도 해서, 베네치아에서는 물이 길로 넘치는 '아쿠아 알타'가 오래전부터 알려져 있습니다. 섬 사이는 곤돌라 같은 작은 배로 오갔습니다.",
+      "adaptation": "아쿠아 알타 날짜, 곤돌라 나루와 뱃삯, 곤돌라 경주, 떠돌이 상인, 친구·선물·동작 배우기는 게임 놀이로 만든 것입니다.",
+      "travel": "곤돌라 나루에서 6냥이면 다른 섬으로 바로 건너갑니다(짐이 7할 넘으면 못 탑니다). 리알토 나루에선 곤돌라 경주를 합니다. 떠돌이 상인은 날마다 다른 장터에서 특가를 팝니다. 닷새마다 아침에 물이 차면 물가 길이 느려집니다. R 동작 · G 선물 · F 친구 수첩 · P 사진.",
+      "sources": [
+        {
+          "title": "Wikipedia · Acqua alta",
+          "url": "https://en.wikipedia.org/wiki/Acqua_alta"
+        },
+        {
+          "title": "Wikipedia · Gondola",
+          "url": "https://en.wikipedia.org/wiki/Gondola"
+        }
       ]
     }
   ]

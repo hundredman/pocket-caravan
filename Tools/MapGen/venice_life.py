@@ -119,7 +119,61 @@ def life(m):
         if ends:
             ends.sort(key=lambda c: (-c[1], c[0]))
             d["net"] = list(ends[0])
+    d.update(daily(m, taken))
     return d
+
+
+def daily(m, taken):
+    """2026-10-27 생활 자리: 앉는 벤치 앞 칸, 떠돌이 상인 자리, 곤돌라 나루, 물 차오르는 칸, 도착 자리 id"""
+    from collections import deque
+    out = {}
+    seats = []
+    for n, x, y in m.stamps:
+        if "bench" in n:
+            w, h = tiles.STAMPS[n][3], tiles.STAMPS[n][4]
+            c = (x + w // 2, y + h)
+            if _walk(m, *c) and c not in taken:
+                seats.append(c)
+    out["seats"] = _spaced(seats, 3, 8)
+    market = next((o for o in m.objects if o["kind"] == "market"), None)
+    if market:
+        busy = {(o["x"] + dx, o["y"] + dy) for o in m.objects for dx in (-2, -1, 0, 1, 2) for dy in (-2, -1, 0, 1, 2)
+                if o["kind"] not in ("anim", "growth", "ambience")}
+        start = next(((market["x"] + dx, market["y"] + dy) for dx in (-1, 0, 1) for dy in (-1, 0, 1, 2) if _walk(m, market["x"] + dx, market["y"] + dy)), None)
+        dist, q = ({start: 0}, deque([start])) if start else ({}, deque())
+        while q:
+            c = q.popleft()
+            for p in ((c[0] + 1, c[1]), (c[0] - 1, c[1]), (c[0], c[1] + 1), (c[0], c[1] - 1)):
+                if p not in dist and _walk(m, *p) and dist[c] < 12:
+                    dist[p] = dist[c] + 1; q.append(p)
+        def open_cell(c):
+            return c not in busy and c not in m.decks and not m.water[c[1]][c[0]] and all(_walk(m, c[0] + dx, c[1] + dy) for dx in (-1, 0, 1) for dy in (0, 1))
+        wander = sorted((d, c) for c, d in dist.items() if 4 <= d <= 9 and open_cell(c))
+        out["wander"] = list(wander[0][1]) if wander else []
+        # 곤돌라 나루: 장터에서 걸어서 닿는, 바로 옆(아래·좌우)이 물인 물가 칸
+        def water_next(c):
+            return any(m.inside(c[0] + dx, c[1] + dy) and m.water[c[1] + dy][c[0] + dx] and (c[0] + dx, c[1] + dy) not in m.decks
+                       and (c[0] + dx, c[1] + dy) not in m.over_water for dx, dy in ((0, 1), (1, 0), (-1, 0)))
+        docks = sorted((d, c) for c, d in dist.items() if 3 <= d and c not in busy and water_next(c) and not m.water[c[1]][c[0]])
+        out["dock"] = list(docks[0][1]) if docks and not m.id.startswith("venice_c_") else []
+    if not m.id.startswith("venice_c_"):
+        flood = [(x, y) for y in range(m.h) for x in range(m.w)
+                 if _walk(m, x, y) and not m.water[y][x] and (x, y) not in m.decks
+                 and any(m.inside(x + dx, y + dy) and m.water[y + dy][x + dx] and (x + dx, y + dy) not in m.decks
+                         for dx in (-2, -1, 0, 1, 2) for dy in (-2, -1, 0, 1, 2))]
+        out["flood"] = flood
+    # 길 잃은 순례자 자리 (장터 없는 본토 길 맵): 맵 가운데에 가까운, 큰길 바로 옆 풀밭 칸
+    if m.id.startswith("venice_c_") and not market:
+        cx, cy = m.w // 2, m.h // 2
+        cand = [(x, y) for y in range(2, m.h - 2) for x in range(2, m.w - 2)
+                if _walk(m, x, y) and not m.road[y][x] and (x, y) not in taken
+                and any(m.inside(x + dx, y + dy) and m.road[y + dy][x + dx] >= 2 for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))]
+        cand.sort(key=lambda c: abs(c[0] - cx) + abs(c[1] - cy))
+        out["lost"] = list(cand[0]) if cand else []
+    spawns = [o for o in m.objects if o["kind"] == "spawn" and o.get("id")]
+    out["spawn_ids"] = [o["id"] for o in spawns]
+    out["spawns"] = [(o["x"], o["y"]) for o in spawns]
+    return out
 
 
 LION_MAPS = ("venice_rialto", "venice_santerasmo", "venice_murano", "venice_burano", "venice_chioggia", "venice_c_vineyard", "venice_c_marsh")
@@ -171,7 +225,9 @@ def export(maps, root):
                         glass=d.get("glass", []), net=d.get("net", []),
                         workshop_glass=d.get("workshop_glass") or [], workshop_lace=d.get("workshop_lace") or [],
                         market=_market(m), lion=d.get("lion") or [], inspector=d.get("inspector") or [],
-                        museum=d.get("museum") or [], feed=d.get("feed") or []))
+                        museum=d.get("museum") or [], feed=d.get("feed") or [],
+                        seats=_flat(d.get("seats", [])), wander=d.get("wander") or [], dock=d.get("dock") or [],
+                        flood=_flat(d.get("flood", [])), lost=d.get("lost") or [], spawn_ids=d.get("spawn_ids", []), spawns=_flat(d.get("spawns", []))))
     data = {"maps": out}
     path = os.path.join(root, OUT_REL)
     os.makedirs(os.path.dirname(path), exist_ok=True)

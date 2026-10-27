@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: V9_CaravanFair
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: venice_q9_fair
+  title: "\uB300\uC0C1 \uC219\uC18C\uC758 \uD070 \uC7A5"
+  chain: "\uBCA0\uB124\uCE58\uC544 2\uC7A5: \uC11D\uD638\uB97C \uB118\uC5B4"
+  summary: "\uBCF8\uD1A0 \uB300\uC0C1 \uC219\uC18C \uC7A5\uD130\uC5D0\uC11C \uBB3C\uAC74
+    4\uAC1C\uB97C \uD310\uB2E4. \uD070 \uC7A5\uC774 \uC11C\uB294 \uB0A0\uC774\uBA74
+    \uB364\uC744 \uBC1B\uB294\uB2E4."
+  giverNpc: venice_clerk
+  requires:
+  - {fileID: 11400000, guid: a752290b89514674186178014bc1c14b, type: 2}
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "\uBCF8\uD1A0 \uC11C\uCABD\uC5D0 \uB300\uC0C1 \uC219\uC18C\uAC00 \uC788\uB124.\n\uB0A0\uB9C8\uB2E4
+    \uC138 \uB9C8\uC744 \uC911 \uD55C \uACF3\uC5D0 \uD070 \uC7A5\uC774 \uC11C\uC9C0.\n\uC219\uC18C
+    \uC7A5\uD130\uC5D0\uC11C \uBB3C\uAC74 \uB137\uC744 \uD314\uC544 \uBCF4\uAC8C."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 5
+    text: "\uB300\uC0C1 \uC219\uC18C\uC5D0 \uAC00\uAE30"
+    targetId: venice_c_post
+    item: {fileID: 0}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: 
+  - type: 3
+    text: "\uB300\uC0C1 \uC219\uC18C \uC7A5\uD130\uC5D0 \uBB3C\uAC74 4\uAC1C \uD314\uAE30"
+    targetId: venice_c_caravanserai
+    item: {fileID: 0}
+    vehicle: {fileID: 0}
+    count: 4
+    completeLine: 
+  - type: 0
+    text: "\uC0C1\uC778\uD68C \uC11C\uAE30\uC5D0\uAC8C \uC54C\uB9AC\uAE30"
+    targetId: venice_clerk
+    item: {fileID: 0}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: "\uBCF8\uD1A0 \uC0C1\uC778\uB4E4 \uC0AC\uC774\uC5D0\uB3C4 \uC790\uB124
+      \uC774\uB984\uC774 \uB3CC\uACA0\uAD70."
+  rewardMoney: 90
+  rewardCredit: 2
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "\uD070 \uC7A5 \uB0A0\uC744 \uB9DE\uCD94\uBA74 \uB364\uC774 \uBD99\uC9C0.
+    \uC7A5\uC0AC\uB294 \uB0A0\uC9DC\uB3C4 \uBCF4\uB294 \uAC70\uC57C."
