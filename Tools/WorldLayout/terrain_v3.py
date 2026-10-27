@@ -315,12 +315,12 @@ def build(layout):
                 n=(p[0]+dy,p[1]+dx)
                 if n in seen or not(0<=n[0]<H and 0<=n[1]<W):continue
                 seen.add(n)
-                if not okreg[n] or not land[n] or t[n] in (PEAK,MOUNTAIN,ROCKCOAST,RIVER) or village[n]:continue
+                if not okreg[n] or not land[n] or t[n] in (PEAK,MOUNTAIN,ROCKCOAST,RIVER,LAKE) or village[n]:continue
                 d=math.hypot(n[0]-s[0],n[1]-s[1])
                 heapq.heappush(q,(d*(1+.35*(shape_n[n]-.5))+5*max(0,elev[n]-.5)+2*flat[n],n))
         m=np.zeros((H,W),bool)
         for p in got:m[p]=True
-        m=ndimage.binary_closing(ndimage.binary_opening(m,iterations=1),iterations=2)&land&~river&~np.isin(t,[PEAK,MOUNTAIN])
+        m=ndimage.binary_closing(ndimage.binary_opening(m,iterations=1),iterations=2)&land&~river&~np.isin(t,[PEAK,MOUNTAIN,LAKE])
         village|=m;vlabel[m]=vi
         village_info.append(dict(key=key,label=town['label'],target=target,center=[int(s[1]+X0),int(s[0]+Y0)],
                                  moved=round(math.hypot(s[0]-oy,s[1]-ox),1)))
