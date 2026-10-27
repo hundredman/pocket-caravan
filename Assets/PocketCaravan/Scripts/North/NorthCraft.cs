@@ -402,9 +402,9 @@ namespace PocketCaravan
             return go.transform;
         }
 
-        const int SkewerPrice = 6;
+        const int SkewerPrice = 3;   // 10/27 1시간 효과라 3냥
 
-        /// <summary>10/27 꼬치 장수: 따끈한 고기 꼬치 하나 (6냥) → 체력 가득 + 1시간 동안 눈보라에 덜 지침 (온천·모닥불과 같은 "warm")</summary>
+        /// <summary>10/27 꼬치 장수: 따끈한 고기 꼬치 하나 (3냥) → 체력 가득 + 1시간 동안 눈보라에 덜 지침 (온천·모닥불과 같은 "warm")</summary>
         static void SpitShop()
         {
             DialogueUI.Show("꼬치 장수 토르", "순록 고기를 소금 살짝 쳐서 불에 굴렸지. 하나 먹고 가!\n먹으면 몸이 확 데워져.",
