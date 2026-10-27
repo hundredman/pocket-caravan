@@ -202,11 +202,15 @@ namespace PocketCaravan.EditorTools
             string from = MapRoot.Current.mapId;
             var exit = MapExit.All.FirstOrDefault(e => e.targetScene == target);
             if (!Check($"{from}에 {target} 출구 있음", exit != null)) yield break;
+            if (expectSpawn == null) expectSpawn = exit.targetSpawnId;   // 오픈월드 이음새: 고른 출구의 짝 스폰
             var map = MapRoot.Current;
             var origin = map.WorldToCell(exit.transform.position);
             var cell = origin + (exit.size.y > 1 ? new Vector3Int(0, exit.size.y / 2, 0) : new Vector3Int(exit.size.x / 2, 0, 0));
             var motor = PlayerController.Instance.Motor;
             var facing = cell.x >= map.WorldToCell(motor.Feet).x ? Vector2Int.right : Vector2Int.left;
+            // 오픈월드: 남북 경계 출구도 있으므로 출구가 받아 주는 방향(나가는 쪽)을 바라본다
+            foreach (var f in new[] { Vector2Int.up, Vector2Int.down, Vector2Int.right, Vector2Int.left })
+                if (exit.IsLeaving(f)) { facing = f; break; }
             float hours = GM.Clock.TotalHours;
             motor.Teleport(map.CellCenter(cell) - (Vector3)motor.feetOffset, facing);   // 출구 칸 위 → PlayerController가 실제 출구 처리
             yield return Wait(() => Ready(target), 20, $"{from} → {target} 이동");
@@ -316,8 +320,9 @@ namespace PocketCaravan.EditorTools
             MarketClose(market);
             Check("맡긴 짐은 장터에 팔 수 없음", P.cargo.Count(delivery) == 2 && sellMsg.Contains("팔 수 없"), sellMsg);
 
-            yield return TravelVia(ArabiaRegionSetup.FarmroadMap, "arabia_farmroad_spawn_w_01");
-            yield return TravelVia(ArabiaRegionSetup.ZabidMap, "arabia_zabid_spawn_w_01");
+            yield return TravelVia(ArabiaRegionSetup.FarmroadMap, null);   // 나즈드 대상로
+            yield return TravelVia(ArabiaRegionSetup.JeddahMap, null);
+            yield return TravelVia(ArabiaRegionSetup.ZabidMap, null);
 
             var keeper = Npc("arabia_kitchen_keeper");
             Check("부엌 담당 표식 = 완료 가능(?)", qm.MarkerFor("arabia_kitchen_keeper") == QuestMarker.TurnIn);
@@ -366,8 +371,9 @@ namespace PocketCaravan.EditorTools
                 P.money.ToString() == saved[0] && P.credit.ToString() == saved[1] && qm.IsFinished(q1), $"돈 {P.money}, 신용 {P.credit}");
             Check("이어 불러오기도 전용 저장 파일 사용", GM.ActiveRegionSession != null && SaveSystem.FileName == ArabiaRegionSetup.SaveFileName);
 
-            yield return TravelVia(ArabiaRegionSetup.FarmroadMap, "arabia_farmroad_spawn_e_01");
-            yield return TravelVia(ArabiaRegionSetup.AhsaMap, "arabia_ahsa_spawn_e_01");
+            yield return TravelVia(ArabiaRegionSetup.JeddahMap, null);
+            yield return TravelVia(ArabiaRegionSetup.FarmroadMap, null);
+            yield return TravelVia(ArabiaRegionSetup.AhsaMap, null);
             Check("마리암 표식 = 받을 의뢰(!)", qm.MarkerFor("arabia_maryam") == QuestMarker.Available);
             yield return Approach(Npc("arabia_maryam"));
             int moneyAccept = P.money;
@@ -389,8 +395,9 @@ namespace PocketCaravan.EditorTools
             MarketClose(ahsaMarket);
             Log($"  (참고) 알 아흐사 곡물 1개 매입/재판매: {m0}→{P.money}냥 · {soldBack}");
 
-            yield return TravelVia(ArabiaRegionSetup.FarmroadMap, "arabia_farmroad_spawn_w_01");
-            yield return TravelVia(ArabiaRegionSetup.ZabidMap, "arabia_zabid_spawn_w_01");
+            yield return TravelVia(ArabiaRegionSetup.FarmroadMap, null);   // 나즈드 대상로
+            yield return TravelVia(ArabiaRegionSetup.JeddahMap, null);
+            yield return TravelVia(ArabiaRegionSetup.ZabidMap, null);
             var market = Market();
             Check("자비드 장터 = 자비드 마을", market != null && market.town != null && market.town.id == ArabiaRegionSetup.ZabidTown);
             yield return Approach(market);
@@ -414,8 +421,9 @@ namespace PocketCaravan.EditorTools
             int cost = before - P.money;
             Check("자비드에서 곡물 2개 구매 → Q2 납품 단계로", P.cargo.Count(grain) == 2 && prog.step == 1, $"{b1} / {b2} · 구매비 {cost}냥");
 
-            yield return TravelVia(ArabiaRegionSetup.FarmroadMap, "arabia_farmroad_spawn_e_01");
-            yield return TravelVia(ArabiaRegionSetup.AhsaMap, "arabia_ahsa_spawn_e_01");
+            yield return TravelVia(ArabiaRegionSetup.JeddahMap, null);
+            yield return TravelVia(ArabiaRegionSetup.FarmroadMap, null);
+            yield return TravelVia(ArabiaRegionSetup.AhsaMap, null);
             Check("마리암 표식 = 완료 가능(?)", qm.MarkerFor("arabia_maryam") == QuestMarker.TurnIn);
             yield return Approach(Npc("arabia_maryam"));
             int money0 = P.money, credit0 = P.credit;

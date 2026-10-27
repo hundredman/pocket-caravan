@@ -33,23 +33,11 @@ PIECES = {
     'arabia_central_steppe': (104, 0, 112, 56, '한가운데 초원'),
 }
 # 출구: (조각, 키) → 틀 좌표 시작 (남북 경계는 x, 동서 경계는 y). 폭 4칸.
-EXITS = {
+EXITS = {   # 2026-10-27 오픈월드: 조각 사이는 이음새(seam)로 자동 연결. 여기엔 아라비아 지역과 맞닿는 문만.
     ('arabia_central_dunes', 's_01'): 158, ('arabia_central_dunes', 's_02'): 100,
-    ('arabia_central_dunes', 'e_01'): 125, ('arabia_central_dunes', 'e_02'): 145,
-    ('arabia_central_dunes', 'n_01'): 84, ('arabia_central_dunes', 'n_02'): 140,
-    ('arabia_central_canyon', 'w_01'): 125, ('arabia_central_canyon', 'w_02'): 145,
-    ('arabia_central_canyon', 'n_01'): 186, ('arabia_central_canyon', 'n_02'): 236,
-    ('arabia_central_westvale', 's_01'): 84, ('arabia_central_westvale', 'e_01'): 79,
-    ('arabia_central_westvale', 'n_01'): 108,
-    ('arabia_central_bazaar', 's_01'): 140, ('arabia_central_bazaar', 's_02'): 186,
-    ('arabia_central_bazaar', 'w_01'): 79, ('arabia_central_bazaar', 'e_01'): 86,
-    ('arabia_central_bazaar', 'n_01'): 158,
-    ('arabia_central_eastvale', 's_01'): 236, ('arabia_central_eastvale', 'w_01'): 86,
-    ('arabia_central_eastvale', 'n_01'): 209,
-    ('arabia_central_steppe', 's_01'): 108, ('arabia_central_steppe', 's_02'): 158,
-    ('arabia_central_steppe', 's_03'): 209,
+    ('arabia_central_canyon', 's_01'): 214,     # 자비드 북쪽 협곡길 (2026-10-27 오픈월드 지역)
 }
-OUTER_EXITS = {('arabia_central_dunes', 's_01'), ('arabia_central_dunes', 's_02')}   # 아라비아 지역과 맞닿는 출구
+OUTER_EXITS = set(EXITS)   # 아라비아 지역과 맞닿는 출구
 
 
 def tri_e(x, y):
@@ -78,8 +66,8 @@ def climate(x, y):
 
 def zone_of(x, y):
     t = climate(x, y)
-    if y >= 112 and x >= 168:
-        return 'red'                                  # 붉은 바위 협곡
+    if y >= 100 + 16 * vnoise(x, 0, 13, 'rt') + 4 * vnoise(x, y, 5, 'rt2') and x >= 176 + 22 * (vnoise(x, y, 14, 'rb') - 0.5) + 6 * (vnoise(x, y, 4, 'rb2') - 0.5):
+        return 'red'                                  # 붉은 바위 협곡 (사막과 들쭉날쭉하게 섞임)
     return 'sand' if t > 0.70 else 'dry' if t > 0.36 else 'grass'
 
 
@@ -253,6 +241,7 @@ def geometry(P):
     P.curve('gravel', [(168, 126.5), (178, 125), (184, 119), (187.5, 113), (187.5, 111)], 4, 3)
     P.curve('gravel', [(178, 125), (196, 129), (212, 126), (226, 120), (237.5, 114), (237.5, 111)], 3, 2)
     P.curve('gravel', [(168, 146.5), (180, 150), (196, 148), (206, 139), (212, 127)], 2, 1)    # 좁은 협곡 아랫길
+    P.curve('road', [(215.5, 159), (214, 152), (209, 145), (206, 139)], 3, 2)                  # 자비드 북쪽 협곡길 → 아랫길
     P.curve('gravel', [(226, 120), (244, 128), (258, 134), (266, 136)], 2, 1)                # 협곡 마을 터
     P.ellipse('brick', 265, 135, 8, 3.2)
     P.curve('gravel', [(210, 129), (204, 136), (199, 141)], 1, 1)                             # 아치 전망대 샛길
@@ -348,7 +337,7 @@ def walls(P):
                 bnd = 2 + (2 if y < 24 else 4) * vnoise(x, y, 11, 'bd')
             if P.mid == 'arabia_central_bazaar':        # 장터는 마을이라 가장자리 띠를 얇게
                 cut = 1 + 2 * vnoise(x, y, 7, 'ct')
-            edge_d = min(lx, ly, m.w - 1 - lx, m.h - 1 - ly)
+            edge_d = FH - 1 - y                         # 오픈월드: 조각 사이는 열고, 아라비아 지역과 맞닿는 밑변만 띠
             if (e < bnd or edge_d < cut) and ((x, y) not in P.roads or e < 2):
                 wall.add((lx, ly))
     for (lx, ly) in wall:
@@ -735,6 +724,91 @@ def build_piece(mid, L):
                 m.road[ly][lx] = 0
             m.blocked[ly][lx] = False
     return m
+
+
+# =====================================================================
+#  5. 오픈월드 이음새: 조각 경계에서 양쪽 다 걸을 수 있는 곳은 모두 출구로 (팀 고려 continuous 방식)
+# =====================================================================
+_CACHE = {}
+SHORT = {'arabia_central_dunes': 'dunes', 'arabia_central_canyon': 'canyon', 'arabia_central_westvale': 'west',
+         'arabia_central_bazaar': 'bazaar', 'arabia_central_eastvale': 'east', 'arabia_central_steppe': 'steppe'}
+BLOCKING = {'npc', 'market', 'talker', 'villager', 'sign', 'board', 'exit', 'spawn'}
+
+
+def _walk_grid(m):
+    occ = {(o['x'] + dx, o['y'] + dy) for o in m.objects if o['kind'] in BLOCKING
+           for dx in range(o.get('w', 1)) for dy in range(o.get('h', 1))}
+    return lambda x, y: (0 <= x < m.w and 0 <= y < m.h and m.ground[y][x] and not m.blocked[y][x]
+                         and not m.water[y][x] and (x, y) not in occ)
+
+
+def _main_area(m, walk):
+    """맵에서 가장 큰 걸을 수 있는 덩어리 (이음새가 갇힌 구석으로 이어지지 않게)."""
+    from collections import deque
+    seen, best = set(), set()
+    for y in range(m.h):
+        for x in range(m.w):
+            if (x, y) in seen or not walk(x, y):
+                continue
+            comp, q = {(x, y)}, deque([(x, y)])
+            seen.add((x, y))
+            while q:
+                cx, cy = q.popleft()
+                for nx, ny in ((cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)):
+                    if (nx, ny) not in seen and walk(nx, ny):
+                        seen.add((nx, ny)); comp.add((nx, ny)); q.append((nx, ny))
+            if len(comp) > len(best):
+                best = comp
+    return best
+
+
+def add_seams(maps):
+    info = {}
+    for mid, m in maps.items():
+        walk = _walk_grid(m)
+        info[mid] = (walk, _main_area(m, walk))
+    count = 0
+    ids = list(maps)
+    for ai in ids:
+        for bi in ids:
+            ax, ay, aw, ah, _ = PIECES[ai]
+            bx, by, bw, bh, _ = PIECES[bi]
+            if ax + aw == bx and max(ay, by) < min(ay + ah, by + bh):          # A 동쪽 = B 서쪽
+                edge, other, span = 'E', 'W', range(max(ay, by), min(ay + ah, by + bh))
+                cells = lambda t: (((aw - 1, t - ay), (aw - 2, t - ay)), ((0, t - by), (1, t - by)))
+                start = lambda t, o: t - o
+                oa, ob = ay, by
+            elif ay + ah == by and max(ax, bx) < min(ax + aw, bx + bw):        # A 남쪽 = B 북쪽
+                edge, other, span = 'S', 'N', range(max(ax, bx), min(ax + aw, bx + bw))
+                cells = lambda t: (((t - ax, ah - 1), (t - ax, ah - 2)), ((t - bx, 0), (t - bx, 1)))
+                oa, ob = ax, bx
+            else:
+                continue
+            (wa, ma), (wb, mb) = info[ai], info[bi]
+            ok = [t for t in span if all(c in ma for c in cells(t)[0]) and all(c in mb for c in cells(t)[1])]
+            runs, cur = [], []
+            for t in ok:
+                if cur and t != cur[-1] + 1:
+                    runs.append(cur); cur = []
+                cur.append(t)
+            if cur:
+                runs.append(cur)
+            for i, run in enumerate(runs):
+                sa = f'{ai}_spawn_seam_{SHORT[bi]}_{i}'
+                sb = f'{bi}_spawn_seam_{SHORT[ai]}_{i}'
+                maps[ai].link(edge, run[0] - oa, len(run), bi, sb, sa)
+                maps[bi].link(other, run[0] - ob, len(run), ai, sa, sb)
+                count += 1
+    return count
+
+
+def get_piece(mid, links):
+    """6조각을 한 번에 짓고 이음새를 이은 뒤 하나를 돌려준다 (같은 실행 안에서는 다시 짓지 않음)."""
+    if not _CACHE:
+        maps = {m_: build_piece(m_, links(m_)) for m_ in PIECES}
+        _CACHE['seams'] = add_seams(maps)
+        _CACHE.update(maps)
+    return _CACHE[mid]
 
 
 def area_report():

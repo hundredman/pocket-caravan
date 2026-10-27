@@ -134,7 +134,14 @@ namespace PocketCaravan.EditorTools
                         if (!exit.targetScene.StartsWith("arabia_")) Check($"출구 {id}가 아라비아 밖으로 연결되지 않음", false, exit.targetScene);
                         pairs++;
                     }
-                Check("출구 수 = 46 (양방향 23쌍: 아라비아 10쌍 + 사나 북문·큰길 옛길·중앙 남부 6개 씬 사이 13쌍, 미완성 외부 출구 없음)", pairs == 46, pairs.ToString());
+                // 오픈월드 이음새: 출구 수는 지형에 따라 달라진다. 모든 출구가 위에서 짝·폭·역방향을 통과했으면 된다.
+                Check("출구 짝 수 (오픈월드 이음새 포함, 양방향이라 짝수)", pairs > 0 && pairs % 2 == 0, pairs.ToString());
+                var linked = scenes.Keys.SelectMany(id => In<MapExit>(id).Select(e => (id, e.targetScene))).ToList();
+                foreach (var (a, b) in new[] { (ArabiaRegionSetup.AhsaMap, ArabiaRegionSetup.FarmroadMap), (ArabiaRegionSetup.FarmroadMap, ArabiaRegionSetup.JeddahMap),
+                    (ArabiaRegionSetup.JeddahMap, ArabiaRegionSetup.ZabidMap), (ArabiaRegionSetup.ZabidMap, ArabiaRegionSetup.TaizMap), (ArabiaRegionSetup.TaizMap, ArabiaRegionSetup.SanaaMap),
+                    (ArabiaRegionSetup.AhsaMap, ArabiaRegionSetup.ShortcutMap), (ArabiaRegionSetup.SanaaMap, ArabiaRegionSetup.CentralDunes),
+                    (ArabiaRegionSetup.ShortcutMap, ArabiaRegionSetup.CentralDunes), (ArabiaRegionSetup.ZabidMap, ArabiaRegionSetup.CentralCanyon) })
+                    Check($"이어짐: {a} ↔ {b}", linked.Contains((a, b)) && linked.Contains((b, a)));
             }
             finally
             {

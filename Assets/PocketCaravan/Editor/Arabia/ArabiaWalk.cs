@@ -115,6 +115,12 @@ namespace PocketCaravan.EditorTools
             }
             if (exit)
             {
+                // 오픈월드 이음새는 경계를 따라 길게 이어져, 경계를 따라 걷다 출구 칸에 서면 나가는 쪽을 보고 있지 않을 수 있다.
+                // 실제 플레이어처럼 나가는 쪽으로 한 걸음 민다.
+                var here = MapExit.At(map.WorldToCell(motor.Feet));
+                if (here != null)
+                    foreach (var f in new[] { Vector2Int.up, Vector2Int.down, Vector2Int.right, Vector2Int.left })
+                        if (here.IsLeaving(f)) { for (int k = 0; k < 3; k++) motor.Tick((Vector2)f, pc.CurrentSpeed(), 0.01f); break; }
                 pc.enabled = true;   // 출구 칸에 선 뒤 실제 PlayerController가 출구를 처리한다
                 Debug.Log($"[아라비아 걷기] {label}: 멈춘 칸 {map.WorldToCell(motor.Feet)} · 경로 {i}/{path.Count} · 마지막 목표 {(path.Count > 0 ? path[path.Count - 1].ToString() : "-")} · 출구 칸 {string.Join(" ", goals)}");
                 yield return Wait(() => GM.IsTravelling || MapRoot.Current != map, 10, $"{label} 출구 판정");
@@ -198,11 +204,14 @@ namespace PocketCaravan.EditorTools
             }
 
             yield return WalkTo(ExitCells(ArabiaRegionSetup.FarmroadMap), "힌드바드 → 알 아흐사 동쪽 출구", exit: true);
-            yield return Wait(() => Ready(ArabiaRegionSetup.FarmroadMap), 20, "농원길 도착");
+            yield return Wait(() => Ready(ArabiaRegionSetup.FarmroadMap), 20, "나즈드 대상로 도착");
             yield return Frames(20);
             yield return Shot("04_farmroad");
-            yield return WalkTo(ExitCells(ArabiaRegionSetup.ZabidMap), "농원길 서쪽 → 동쪽 출구 (의뢰품 적재)", exit: true);
-            Log($"  농원길 횡단: {walked:0.0}칸 · {seconds:0.0}초 (짐 4/10)");
+            yield return WalkTo(ExitCells(ArabiaRegionSetup.JeddahMap), "나즈드 대상로 서쪽 → 동쪽 (의뢰품 적재)", exit: true);
+            Log($"  나즈드 대상로 횡단: {walked:0.0}칸 · {seconds:0.0}초 (짐 4/10)");
+            yield return Wait(() => Ready(ArabiaRegionSetup.JeddahMap), 20, "제다 도착");
+            yield return Frames(20);
+            yield return WalkTo(ExitCells(ArabiaRegionSetup.ZabidMap), "제다 → 홍해 해안길 → 자비드", exit: true);
             yield return Wait(() => Ready(ArabiaRegionSetup.ZabidMap), 20, "자비드 도착");
             yield return Frames(20);
             yield return Shot("05_zabid_arrive");
@@ -229,16 +238,13 @@ namespace PocketCaravan.EditorTools
             yield return Shot("08_zabid_market");
             MarketClose(market);
             yield return Frames(3);
-            // 탐험 일주: 자비드 → 공방길 → 타이즈 → 항구길 → 제다 → 험한 지름길 → (남문) 사나 → (북문) 중앙 남부 6개 씬 한 바퀴 → 사나 → (서문) 안전한 큰길 → 제다 북문
+            // 탐험 일주 (2026-10-27 오픈월드): 자비드 → 타이즈 → 고원길 → 사나 → (북문) 중앙 남부 6조각 한 바퀴
+            //   → 오아시스 → 빈 사막 북쪽 모래길 → 룹알할리 빈 사막 → 알 아흐사
             {
                 var tour = new (string from, string to, string label)[]
                 {
-                    (ArabiaRegionSetup.ZabidMap, ArabiaRegionSetup.WorkshopMap, "자비드 → 공방길"),
-                    (ArabiaRegionSetup.WorkshopMap, ArabiaRegionSetup.TaizMap, "공방길 횡단 → 타이즈"),
-                    (ArabiaRegionSetup.TaizMap, ArabiaRegionSetup.PortroadMap, "타이즈 → 항구길"),
-                    (ArabiaRegionSetup.PortroadMap, ArabiaRegionSetup.JeddahMap, "항구길 횡단 → 제다"),
-                    (ArabiaRegionSetup.JeddahMap, ArabiaRegionSetup.ShortcutMap, "제다 → 험한 지름길"),
-                    (ArabiaRegionSetup.ShortcutMap, ArabiaRegionSetup.SanaaMap, "험한 지름길 횡단 → 사나"),
+                    (ArabiaRegionSetup.ZabidMap, ArabiaRegionSetup.TaizMap, "자비드 → 타이즈"),
+                    (ArabiaRegionSetup.TaizMap, ArabiaRegionSetup.SanaaMap, "타이즈 → 고원길 → 사나 남문"),
                     (ArabiaRegionSetup.SanaaMap, ArabiaRegionSetup.CentralDunes, "사나 남문 → 북문 → 모래바람 오아시스"),
                     (ArabiaRegionSetup.CentralDunes, ArabiaRegionSetup.CentralBazaar, "오아시스 → 와디 건너 만국 장터"),
                     (ArabiaRegionSetup.CentralBazaar, ArabiaRegionSetup.CentralSteppe, "장터 북문 → 한가운데 초원"),
@@ -248,9 +254,8 @@ namespace PocketCaravan.EditorTools
                     (ArabiaRegionSetup.CentralCanyon, ArabiaRegionSetup.CentralBazaar, "협곡 → 장터 남동문"),
                     (ArabiaRegionSetup.CentralBazaar, ArabiaRegionSetup.CentralWest, "장터 서문 → 포도밭 언덕"),
                     (ArabiaRegionSetup.CentralWest, ArabiaRegionSetup.CentralDunes, "포도밭 언덕 → 오아시스"),
-                    (ArabiaRegionSetup.CentralDunes, ArabiaRegionSetup.SanaaMap, "오아시스 → 사나 북문"),
-                    (ArabiaRegionSetup.SanaaMap, ArabiaRegionSetup.HighroadMap, "사나 서문 → 안전한 큰길"),
-                    (ArabiaRegionSetup.HighroadMap, ArabiaRegionSetup.JeddahMap, "안전한 큰길 횡단 → 제다 북문"),
+                    (ArabiaRegionSetup.CentralDunes, ArabiaRegionSetup.ShortcutMap, "오아시스 → 빈 사막 북쪽 모래길"),
+                    (ArabiaRegionSetup.ShortcutMap, ArabiaRegionSetup.AhsaMap, "룹알할리 빈 사막 → 알 아흐사"),
                 };
                 int n = 9;
                 foreach (var (from, to, label) in tour)

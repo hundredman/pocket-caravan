@@ -33,8 +33,10 @@ namespace PocketCaravan.EditorTools
         public const string CentralDunes = "arabia_central_dunes", CentralCanyon = "arabia_central_canyon";
         public const string CentralWest = "arabia_central_westvale", CentralBazaar = "arabia_central_bazaar";
         public const string CentralEast = "arabia_central_eastvale", CentralSteppe = "arabia_central_steppe";
-        // 수도1(사나)+마을4(알 아흐사·자비드·타이즈·제다)+길5 = 10개 씬 (Docs/Arabia/02 §1) + 중앙 대륙 남쪽 구역 6개
-        public static readonly string[] MapIds = { AhsaMap, FarmroadMap, ZabidMap, WorkshopMap, TaizMap, PortroadMap, JeddahMap, ShortcutMap, SanaaMap, HighroadMap,
+        // 2026-10-27 오픈월드: 아라비아 지역 = 지형 하나를 7조각으로 자른 연속 지도 (마을 5 + 나즈드 대상로·룹알할리 빈 사막)
+        //   + 중앙 대륙 남쪽 구역 6조각. 조각 사이는 걸을 수 있는 경계 전부가 출구(이음새)다.
+        //   옛 길 맵(공방길·항구길·안전한 큰길)은 연속 지형에 흡수되어 목록에서 빠졌다 (상수는 옛 기록용으로 남김).
+        public static readonly string[] MapIds = { AhsaMap, FarmroadMap, ShortcutMap, TaizMap, ZabidMap, JeddahMap, SanaaMap,
             CentralDunes, CentralCanyon, CentralWest, CentralBazaar, CentralEast, CentralSteppe };
         public const string AhsaTown = "arabia_ahsa", ZabidTown = "arabia_zabid";
         public const string TaizTown = "arabia_taiz", JeddahTown = "arabia_jeddah", SanaaTown = "arabia_sanaa";

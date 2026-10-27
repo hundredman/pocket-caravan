@@ -1,4 +1,4 @@
-"""아라비아 맵 원본: 수도1(사나)+마을4(알 아흐사·자비드·타이즈·제다)+길5 = 10개 씬.
+"""아라비아 맵 원본: 지역 7조각(마을 5 + 야생 2, 연속 지형) + 중앙 남쪽 6조각 = 13개 씬.
 
 - 2026-10-22부터 세 맵 모두 사용자 제작 아라비아 에셋으로 만든다 (arabia_art.py, arabia_ahsa/farmroad/zabid.py).
 - 실제 지리·도시 규모·거리의 재현이 아니라 게임용 압축 배치다. 지명·배치·NPC는 제안(1안)이다.
@@ -16,33 +16,14 @@ C_WEST, C_BAZAAR, C_EAST = 'arabia_central_westvale', 'arabia_central_bazaar', '
 C_STEPPE = 'arabia_central_steppe'
 CENTRAL_MAPS = [C_DUNES, C_CANYON, C_WEST, C_BAZAAR, C_EAST, C_STEPPE]
 
-# 연결표 (Docs/Arabia/02 §1·§3): (맵, 경계, 스폰 키) ↔ (맵, 경계, 스폰 키). 경계 폭은 모두 4칸.
-# 2026-10-26: 사나 북문은 중앙 대륙 남쪽 구역(arabia_central)으로 나가는 관문.
-#   안전한 큰길: 제다 북문 → 큰길(남→동) → 사나 서문 / 험한 지름길: 제다 동문 → 지름길(서→북) → 사나 남문.
+# 연결표: (맵, 경계, 스폰 키) ↔ (맵, 경계, 스폰 키). 경계 폭은 모두 4칸.
+# 2026-10-27 오픈월드: 아라비아 지역은 지형 하나를 7조각으로 자른 연속 지도 (arabia_world.py).
+#   조각 사이는 걸을 수 있는 경계 전부가 이음새(seam)로 자동 연결되므로 여기엔 중앙 대륙으로 가는 문만 둔다.
 CONNECTIONS = [
-    ((AHSA, 'E', 'e_01'), (FARMROAD, 'W', 'w_01')),
-    ((FARMROAD, 'E', 'e_01'), (ZABID, 'W', 'w_01')),
-    ((ZABID, 'E', 'e_01'), (WORKSHOP, 'W', 'w_01')),
-    ((WORKSHOP, 'E', 'e_01'), (TAIZ, 'W', 'w_01')),
-    ((TAIZ, 'E', 'e_01'), (PORTROAD, 'W', 'w_01')),
-    ((PORTROAD, 'E', 'e_01'), (JEDDAH, 'W', 'w_01')),
-    ((JEDDAH, 'E', 'e_01'), (SHORTCUT, 'W', 'w_01')),
-    ((SHORTCUT, 'N', 'n_01'), (SANAA, 'S', 's_01')),
-    ((JEDDAH, 'N', 'n_01'), (HIGHROAD, 'S', 's_01')),
-    ((HIGHROAD, 'E', 'e_01'), (SANAA, 'W', 'w_01')),
-    ((SANAA, 'N', 'n_01'), (C_DUNES, 'S', 's_01')),          # 사나 북문 → 중앙 대륙 남부
-    ((HIGHROAD, 'N', 'n_01'), (C_DUNES, 'S', 's_02')),       # 큰길 옛길 (낙석을 치우면 열리는 지름길)
-    ((C_DUNES, 'E', 'e_01'), (C_CANYON, 'W', 'w_01')),       # 와디 길
-    ((C_DUNES, 'E', 'e_02'), (C_CANYON, 'W', 'w_02')),       # 좁은 틈 → 협곡 아랫길
-    ((C_DUNES, 'N', 'n_01'), (C_WEST, 'S', 's_01')),
-    ((C_DUNES, 'N', 'n_02'), (C_BAZAAR, 'S', 's_01')),       # 큰 대상로 → 장터 남문
-    ((C_CANYON, 'N', 'n_01'), (C_BAZAAR, 'S', 's_02')),
-    ((C_CANYON, 'N', 'n_02'), (C_EAST, 'S', 's_01')),
-    ((C_WEST, 'E', 'e_01'), (C_BAZAAR, 'W', 'w_01')),
-    ((C_EAST, 'W', 'w_01'), (C_BAZAAR, 'E', 'e_01')),
-    ((C_BAZAAR, 'N', 'n_01'), (C_STEPPE, 'S', 's_02')),      # 장터 북문 → 한가운데 초원
-    ((C_WEST, 'N', 'n_01'), (C_STEPPE, 'S', 's_01')),        # 숨은 고갯길 (가시덤불)
-    ((C_EAST, 'N', 'n_01'), (C_STEPPE, 'S', 's_03')),        # 숨은 고갯길 (바위)
+    ((SANAA, 'N', 'n_01'), (C_DUNES, 'S', 's_01')),          # 사나 북문 → 중앙 대륙 남부 (큰 문)
+    ((SHORTCUT, 'N', 'n_01'), (C_DUNES, 'S', 's_02')),       # 빈 사막 북쪽 모래길 → 모래바람 오아시스
+    ((ZABID, 'N', 'n_01'), (C_CANYON, 'S', 's_01')),         # 자비드 북쪽 협곡길 → 붉은 바위 협곡
+    # 중앙 남쪽 구역 6조각 사이도 오픈월드 이음새로 자동 연결 (arabia_central.add_seams)
 ]
 SPAWN = {}
 for a, b in CONNECTIONS:
@@ -64,28 +45,14 @@ def links(map_id):
     return out
 
 
-def _ahsa():
-    import arabia_ahsa
-    return arabia_ahsa.build(FARMROAD, SPAWN[(FARMROAD, 'W')], SPAWN[(AHSA, 'E')])
+REGION_MAPS = [AHSA, FARMROAD, SHORTCUT, TAIZ, ZABID, JEDDAH, SANAA]   # 옛 길 맵 3개(공방길·항구길·큰길)는 연속 지형에 흡수
 
 
-def _farmroad():
-    import arabia_farmroad
-    return arabia_farmroad.build((AHSA, SPAWN[(AHSA, 'E')], SPAWN[(FARMROAD, 'W')]),
-                                 (ZABID, SPAWN[(ZABID, 'W')], SPAWN[(FARMROAD, 'E')]))
-
-
-def _zabid():
-    import arabia_zabid
-    L = links(ZABID)
-    return arabia_zabid.build(L['w_01'][1:], L['e_01'][1:])
-
-
-def _region(module, map_id):
+def _chunk(map_id):
     def f():
-        mod = __import__(module)
-        return mod.build(links(map_id))
-    f.__name__ = '_' + module.split('_', 1)[1]
+        import arabia_world
+        return _patched(lambda: arabia_world.get_chunk(map_id, links))()
+    f.__name__ = '_' + map_id.split('_', 1)[1]
     return f
 
 
@@ -113,20 +80,14 @@ def _patched(fn):
     return build
 
 
-ahsa, farmroad, zabid = _patched(_ahsa), _patched(_farmroad), _patched(_zabid)
-workshoproad = _region('arabia_workshoproad', WORKSHOP)
-taiz = _region('arabia_taiz', TAIZ)
-portroad = _region('arabia_portroad', PORTROAD)
-jeddah = _region('arabia_jeddah', JEDDAH)
-shortcut = _region('arabia_shortcut', SHORTCUT)
-sanaa = _region('arabia_sanaa', SANAA)
-highroad = _region('arabia_highroad', HIGHROAD)
+ahsa, farmroad, shortcut = _chunk(AHSA), _chunk(FARMROAD), _chunk(SHORTCUT)
+taiz, zabid, jeddah, sanaa = _chunk(TAIZ), _chunk(ZABID), _chunk(JEDDAH), _chunk(SANAA)
 
 
 def _central(map_id):
     def f():
         import arabia_central
-        return _patched(lambda: arabia_central.build_piece(map_id, links(map_id)))()
+        return _patched(lambda: arabia_central.get_piece(map_id, links))()
     f.__name__ = '_' + map_id.split('_', 2)[2]
     return f
 
@@ -134,5 +95,5 @@ def _central(map_id):
 central_dunes, central_canyon = _central(C_DUNES), _central(C_CANYON)
 central_westvale, central_bazaar, central_eastvale = _central(C_WEST), _central(C_BAZAAR), _central(C_EAST)
 central_steppe = _central(C_STEPPE)
-MAPS = [ahsa, farmroad, zabid, workshoproad, taiz, portroad, jeddah, shortcut, sanaa, highroad,
+MAPS = [ahsa, farmroad, shortcut, taiz, zabid, jeddah, sanaa,
         central_dunes, central_canyon, central_westvale, central_bazaar, central_eastvale, central_steppe]

@@ -25,96 +25,72 @@ MonoBehaviour:
     - goryeo_westcoast
   - mapId: arabia_ahsa
     displayName: "\uC54C \uC544\uD750\uC0AC"
-    height: 40
+    height: 44
     legacyHeight: 0
     coord: {x: 20, y: 0}
     town: arabia_ahsa
     neighbors:
+    - arabia_shortcut
     - arabia_farmroad
   - mapId: arabia_farmroad
-    displayName: "\uB18D\uC6D0\uAE38"
-    height: 28
+    displayName: "\uB098\uC988\uB4DC \uB300\uC0C1\uB85C"
+    height: 44
     legacyHeight: 0
     coord: {x: 21, y: 0}
     town: 
     neighbors:
+    - arabia_taiz
     - arabia_ahsa
-    - arabia_zabid
+    - arabia_jeddah
   - mapId: arabia_zabid
     displayName: "\uC790\uBE44\uB4DC"
-    height: 40
+    height: 44
     legacyHeight: 0
     coord: {x: 22, y: 0}
     town: arabia_zabid
     neighbors:
-    - arabia_farmroad
-    - arabia_workshoproad
-  - mapId: arabia_workshoproad
-    displayName: "\uACF5\uBC29\uAE38"
-    height: 32
-    legacyHeight: 0
-    coord: {x: 23, y: 0}
-    town: 
-    neighbors:
-    - arabia_zabid
+    - arabia_central_canyon
     - arabia_taiz
+    - arabia_jeddah
   - mapId: arabia_taiz
     displayName: "\uD0C0\uC774\uC988"
-    height: 40
+    height: 44
     legacyHeight: 0
     coord: {x: 24, y: 0}
     town: arabia_taiz
     neighbors:
-    - arabia_workshoproad
-    - arabia_portroad
-  - mapId: arabia_portroad
-    displayName: "\uD56D\uAD6C\uAE38"
-    height: 32
-    legacyHeight: 0
-    coord: {x: 25, y: 0}
-    town: 
-    neighbors:
-    - arabia_taiz
-    - arabia_jeddah
+    - arabia_sanaa
+    - arabia_shortcut
+    - arabia_zabid
+    - arabia_farmroad
   - mapId: arabia_jeddah
     displayName: "\uC81C\uB2E4"
-    height: 40
+    height: 44
     legacyHeight: 0
     coord: {x: 26, y: 0}
     town: arabia_jeddah
     neighbors:
-    - arabia_portroad
-    - arabia_shortcut
-    - arabia_highroad
+    - arabia_zabid
+    - arabia_farmroad
   - mapId: arabia_shortcut
-    displayName: "\uD5D8\uD55C \uC9C0\uB984\uAE38"
-    height: 28
+    displayName: "\uB8F9\uC54C\uD560\uB9AC \uBE48 \uC0AC\uB9C9"
+    height: 44
     legacyHeight: 0
     coord: {x: 27, y: 0}
     town: 
     neighbors:
-    - arabia_jeddah
-    - arabia_sanaa
+    - arabia_central_dunes
+    - arabia_taiz
+    - arabia_ahsa
   - mapId: arabia_sanaa
     displayName: "\uC0AC\uB098"
-    height: 48
+    height: 44
     legacyHeight: 0
     coord: {x: 28, y: 0}
     town: arabia_sanaa
     neighbors:
-    - arabia_highroad
-    - arabia_shortcut
     - arabia_central_dunes
-  - mapId: arabia_highroad
-    displayName: "\uC548\uC804\uD55C \uD070\uAE38"
-    height: 32
-    legacyHeight: 0
-    coord: {x: 27, y: 1}
-    town: 
-    neighbors:
-    - arabia_jeddah
-    - arabia_sanaa
-    - arabia_central_dunes
+    - arabia_taiz
   - mapId: arabia_central_dunes
     displayName: "\uBAA8\uB798\uBC14\uB78C \uC624\uC544\uC2DC\uC2A4"
     height: 48
@@ -123,7 +99,7 @@ MonoBehaviour:
     town: 
     neighbors:
     - arabia_sanaa
-    - arabia_highroad
+    - arabia_shortcut
     - arabia_central_canyon
     - arabia_central_westvale
     - arabia_central_bazaar
@@ -134,6 +110,7 @@ MonoBehaviour:
     coord: {x: 29, y: 2}
     town: 
     neighbors:
+    - arabia_zabid
     - arabia_central_dunes
     - arabia_central_bazaar
     - arabia_central_eastvale
@@ -154,9 +131,9 @@ MonoBehaviour:
     coord: {x: 28, y: 3}
     town: 
     neighbors:
+    - arabia_central_westvale
     - arabia_central_dunes
     - arabia_central_canyon
-    - arabia_central_westvale
     - arabia_central_eastvale
     - arabia_central_steppe
   - mapId: arabia_central_eastvale
@@ -166,8 +143,8 @@ MonoBehaviour:
     coord: {x: 29, y: 3}
     town: 
     neighbors:
-    - arabia_central_canyon
     - arabia_central_bazaar
+    - arabia_central_canyon
     - arabia_central_steppe
   - mapId: arabia_central_steppe
     displayName: "\uD55C\uAC00\uC6B4\uB370 \uCD08\uC6D0"

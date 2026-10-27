@@ -28,28 +28,12 @@
       "generator": "arabia:zabid"
     },
     {
-      "mapId": "arabia_workshoproad",
-      "jsonPath": "Assets/PocketCaravan/Maps/arabia_workshoproad.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_workshoproad.unity",
-      "worldX": 23,
-      "worldY": 0,
-      "generator": "arabia:workshoproad"
-    },
-    {
       "mapId": "arabia_taiz",
       "jsonPath": "Assets/PocketCaravan/Maps/arabia_taiz.json",
       "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_taiz.unity",
       "worldX": 24,
       "worldY": 0,
       "generator": "arabia:taiz"
-    },
-    {
-      "mapId": "arabia_portroad",
-      "jsonPath": "Assets/PocketCaravan/Maps/arabia_portroad.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_portroad.unity",
-      "worldX": 25,
-      "worldY": 0,
-      "generator": "arabia:portroad"
     },
     {
       "mapId": "arabia_jeddah",
@@ -74,14 +58,6 @@
       "worldX": 28,
       "worldY": 0,
       "generator": "arabia:sanaa"
-    },
-    {
-      "mapId": "arabia_highroad",
-      "jsonPath": "Assets/PocketCaravan/Maps/arabia_highroad.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_highroad.unity",
-      "worldX": 27,
-      "worldY": 1,
-      "generator": "arabia:highroad"
     },
     {
       "mapId": "arabia_central_dunes",
