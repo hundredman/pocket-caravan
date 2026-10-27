@@ -237,7 +237,9 @@ def build(layout):
         core&=((xx_+X0)>=bx0+10)&((xx_+X0)<bx1-10)&((yy_+Y0)>=by0+10)&((yy_+Y0)<by1-10)
         seed=np.unravel_index(int(np.argmin(np.where(core,E,np.inf))),E.shape)
         # 모양: 길쭉한 타원에 만·곶을 만드는 굴곡(각도에 따른 낮은 주파수 사인 합)
-        r0=math.sqrt(lk['area']/math.pi);asp=1.55;ang=rng.uniform(0,math.pi)
+        # 골짜기 호수: 상류(산) → 호수 → 출구(바다) 축을 따라 길쭉하게
+        sy_,sx_=np.nonzero(sea);k0=int(np.argmin((sy_-seed[0])**2+(sx_-seed[1])**2))
+        r0=math.sqrt(lk['area']/math.pi);asp=1.9;ang=math.atan2(sy_[k0]-seed[0],sx_[k0]-seed[1])+rng.uniform(-.25,.25)
         ph=rng.uniform(0,2*math.pi,4);amp=(.16,.10,.06,.04)
         dy_=yy_-seed[0];dx_=xx_-seed[1]
         u=dx_*math.cos(ang)+dy_*math.sin(ang);v=-dx_*math.sin(ang)+dy_*math.cos(ang)
@@ -285,39 +287,47 @@ def build(layout):
         t[hillring&(forest_n>.42)]=FOREST;t[hillring&(forest_n<=.42)]=HILL
         elev=np.where(ringz,np.maximum(elev,np.quantile(elev[land],.82)*bump+elev*(1-bump)),elev)
         lk['hillCells']=int(hillring.sum())
-        # 수원지: 출구 반대편에 작은 산 하나(봉우리 + 산자락 숲)를 두고,
-        # 그 산 높은 비탈에서 시작한 개울 1줄기가 호수로 든다.
+        # 수원지: 출구 반대편 상류 쪽, 호수에서 떨어진 곳에 작은 산 덩어리 하나를 두고
+        # 그 산 비탈에서 시작한 강 1줄기가 낮은 골짜기를 따라 굽이쳐 호수 상류 끝으로 든다.
         R_l=math.sqrt(m.sum()/math.pi);back=ang_out+math.pi
-        ctr_=None
-        for dist_ in (R_l+21,R_l+19,R_l+23,R_l+17):
-            mcx,mcy=cx+math.cos(back)*dist_,cy+math.sin(back)*dist_
-            iy,ix=int(round(mcy)),int(round(mcx))
-            if 0<=iy<H and 0<=ix<W and east[iy,ix] and land[iy,ix] and far[iy,ix] and not m[iy,ix]:
-                ctr_=(mcy,mcx);break
+        best_=None
+        for dist_ in np.arange(R_l+38,R_l+20,-2):
+            for da in np.radians([0,15,-15,30,-30,45,-45]):
+                mcx,mcy=cx+math.cos(back+da)*dist_,cy+math.sin(back+da)*dist_
+                iy,ix=int(round(mcy)),int(round(mcx))
+                if not(0<=iy<H and 0<=ix<W):continue
+                yl,yh,xl,xh=max(0,iy-9),min(H,iy+10),max(0,ix-9),min(W,ix+10)
+                if east[yl:yh,xl:xh].all() and land[yl:yh,xl:xh].all() and far[iy,ix] and to_sea[iy,ix]>14 and not river[yl:yh,xl:xh].any():
+                    best_=(mcy,mcx);break
+            if best_:break
         inflow=[]
-        if ctr_:
-            mcy,mcx=ctr_
-            # 둥근 원뿔이 되지 않게: 한쪽으로 조금 길쭉하고(능선 방향은 무작위), 좌표를 비틀어 산자락이 불규칙하게 퍼진다
+        if best_:
+            mcy,mcx=best_
             wob_=noise((H,W),5,rng,3);wy2=noise((H,W),9,rng,3)-.5;wx2=noise((H,W),9,rng,3)-.5
-            a_m=rng.uniform(0,math.pi);du=(xx_-mcx)+6*wx2;dv=(yy_-mcy)+6*wy2
+            a_m=back+math.pi/2+rng.uniform(-.4,.4)     # 산 덩어리는 골짜기와 엇갈리게 조금 길쭉
+            du=(xx_-mcx)+6*wx2;dv=(yy_-mcy)+6*wy2
             pu=du*math.cos(a_m)+dv*math.sin(a_m);pv=-du*math.sin(a_m)+dv*math.cos(a_m)
-            dr_=np.hypot(pu/1.45,pv*1.1)*(1+.35*(wob_-.5))
-            prof=np.exp(-(dr_/4.5)**2)+.45*np.exp(-(dr_/9)**2)
-            zone=(dr_<11)&east&land&~m&~river
-            # 산자락 높이도 노이즈로 흔들어 동심원 무늬가 보이지 않게
+            dr_=np.hypot(pu/1.35,pv)*(1+.35*(wob_-.5))
+            prof=np.exp(-(dr_/6)**2)+.5*np.exp(-(dr_/12)**2)
+            zone=(dr_<14)&east&land&~m&~river
             elev=np.where(zone,np.maximum(elev,.55+.45*prof*(.8+.4*wob_)),elev)
-            t[zone&(dr_<9.5)&(forest_n>.33)]=FOREST;t[zone&(dr_<9.5)&(forest_n<=.33)]=HILL
-            t[zone&(dr_<5.2)]=MOUNTAIN;t[zone&(dr_<2.4)]=PEAK
+            t[zone&(dr_<12.5)&(forest_n>.30)]=FOREST;t[zone&(dr_<12.5)&(forest_n<=.30)]=HILL
+            t[zone&(dr_<7.4)]=MOUNTAIN;t[zone&(dr_<3.8)]=PEAK
             lk['sourceMountain']=[round(mcx+X0,1),round(mcy+Y0,1)]
-            # 개울 1줄기: 산의 호수 쪽 비탈, 산 바로 바깥의 가장 높은 곳에서 시작
+            # 강 1줄기: 산의 호수 쪽 비탈 높은 곳 → 호수의 상류 끝(출구 반대쪽 물가)
             lakeward=((yy_-mcy)*(cy-mcy)+(xx_-mcx)*(cx-mcx))>0
-            cand_=np.argwhere(zone&lakeward&~np.isin(t,[MOUNTAIN,PEAK])&(dr_<7.5))
+            cand_=np.argwhere(zone&lakeward&~np.isin(t,[MOUNTAIN,PEAK])&(dr_<9.5))
             if len(cand_):
                 h0=tuple(cand_[np.argmax(elev[tuple(cand_.T)])])
-                mc=np.argwhere(m);m0=tuple(mc[np.argmin(((mc-np.array(h0))**2).sum(1))])
-                seg=astar(h0,m0,1+12*elev,blocked=np.isin(t,[MOUNTAIN,PEAK]),eight=True)
+                mc=np.argwhere(m);far_end=np.cos(np.arctan2(mc[:,0]-cy,mc[:,1]-cx)-back)*np.hypot(mc[:,0]-cy,mc[:,1]-cx)
+                tip=mc[far_end>np.quantile(far_end,.9)]
+                m0=tuple(tip[np.argmin(((tip-np.array(h0))**2).sum(1))])
+                seg=astar(h0,m0,1+14*elev,blocked=np.isin(t,[MOUNTAIN,PEAK]),eight=True)
                 inflow.append(seg)
-                yy3,xx3=m0;t[(((yy_-yy3)**2+(xx_-xx3)**2)<3.5**2)&land&~m&(marsh_n>.35)]=MARSH
+                yy3,xx3=m0;t[(((yy_-yy3)**2+(xx_-xx3)**2)<4**2)&land&~m&(marsh_n>.4)]=MARSH
+                # 강 골짜기: 강을 따라 땅을 조금 낮춘다
+                vm=np.zeros((H,W),bool);vm[tuple(np.array(seg).T)]=True
+                elev=elev-.10*np.exp(-(ndimage.distance_transform_edt(~vm)/4)**2)*~zone
         def meander(path,amp_=2.6,lam_=13):
             # A* 길을 따라가며 옆으로 흔들어 굽이치게(땅 위에서만)
             if len(path)<8:return path
@@ -329,10 +339,10 @@ def build(layout):
                 q=(int(round(y-tx/L_*o)),int(round(x+ty/L_*o)))
                 out_.append(q if 0<=q[0]<H and 0<=q[1]<W and (land[q] or sea[q]) and not m[q] else (y,x))
             return smooth_path(out_,np.zeros((H,W),bool))
-        for path,width in [(out,1.2)]+[(q_,.8) for q_ in inflow]:
+        for path,width in [(out,1.3)]+[(q_,1.0) for q_ in inflow]:
             pts=meander(path)
             for i_,(y,x) in enumerate(pts):
-                rad=width*(.7+.5*i_/max(1,len(pts))) if path is out else width
+                rad=width*(.7+.5*i_/max(1,len(pts))) if path is out else .75+.7*(i_/max(1,len(pts)))
                 rr=int(math.ceil(rad))
                 for dy in range(-rr,rr+1):
                     for dx in range(-rr,rr+1):
@@ -342,7 +352,7 @@ def build(layout):
     t[river]=RIVER
     d_river=ndimage.distance_transform_edt(~(river|lake))
     shore=ndimage.binary_dilation(lake,iterations=2)&land&~lake&~river
-    t[shore&(marsh_n>.55)]=MARSH;t[shore&(marsh_n<.25)]=SAND
+    t[shore&(marsh_n<.22)]=SAND   # 호숫가 모래톱 몇 곳(습지는 강 하구에만)
     t[lake]=LAKE
 
     # 4) 마을 자리와 범위(v4): 승인 위치 가까이에서 마을이 들어서기 좋은 땅을 고르고, 둥글고 자연스러운 모양으로 넓힌다
