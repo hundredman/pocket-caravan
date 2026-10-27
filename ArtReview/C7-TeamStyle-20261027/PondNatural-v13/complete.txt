@@ -1,0 +1,1 @@
+Actual Unity Play render; same original terrain and staging; previous rejected depth rings / new irregular terrain cut with flat water / same new water with optional decorations. previewOnly true; PPU16 Point480x270; no navigation or manual-play claim.
