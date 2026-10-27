@@ -49,7 +49,7 @@ namespace PocketCaravan.EditorTools
         }
         static void Changed(PlayModeStateChange state)
         {
-            if(state==PlayModeStateChange.EnteredPlayMode){Loaded(SceneManager.GetActiveScene(),LoadSceneMode.Single);Time.timeScale=0;frames=0;}
+            if(state==PlayModeStateChange.EnteredPlayMode&&SessionState.GetString(Key,"")!=""){Loaded(SceneManager.GetActiveScene(),LoadSceneMode.Single);Time.timeScale=0;frames=0;}   // 10/27 통합: 검토 실행 중일 때만 (일반 Play 시간 정지 방지)
             if(state==PlayModeStateChange.EnteredEditMode&&SessionState.GetBool(Key+"done",false))
             {SessionState.SetBool(Key+"done",false);SessionState.EraseString(Key);EditorApplication.Exit(0);}
         }
