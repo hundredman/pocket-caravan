@@ -146,9 +146,11 @@ namespace PocketCaravan
             if (sitting < 0) return;
             UIStyle.Begin();
             if (hint == null) hint = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow };
-            var r = new Rect(UIStyle.VirtualWidth / 2f - 110f, UIStyle.VirtualHeight - 60f, 220f, 18f);
+            string t = "<color=#ffcf7a>모닥불을 쬐는 중</color>   방향키·Space: 일어나기";
+            float w = hint.CalcSize(new GUIContent(t)).x + 24f;   // 10/27 글자 길이에 맞춰 상자 폭
+            var r = new Rect(UIStyle.VirtualWidth / 2f - w / 2f, UIStyle.VirtualHeight - 60f, w, 18f);
             GUI.Box(r, GUIContent.none, UIStyle.Box);
-            GUI.Label(r, "<color=#ffcf7a>모닥불을 쬐는 중</color>  방향키·Space: 일어나기", hint);
+            GUI.Label(r, t, hint);
         }
 
         static bool StandPressed()
