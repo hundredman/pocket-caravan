@@ -31,7 +31,7 @@ COLORS={DEEP:(52,98,140),SHALLOW:(96,156,186),SAND:(236,222,170),ROCKCOAST:(150,
         FOREST:(52,98,56),MOUNTAIN:(128,114,96),PEAK:(184,178,170),VILLAGE:(210,190,140),VOID:(28,34,40),LAKE:(70,136,186)}
 BLOCKED={DEEP,SHALLOW,RIVER,MOUNTAIN,PEAK,ROCKCOAST,LAKE}
 # 호수(세계 좌표 중심, 대략 면적): 남쪽 쉼터 마을 북쪽(2026-10-27 은샘 제안)
-LAKES=[dict(label='남쪽 호수',center=(82,32),area=170)]
+LAKES=[dict(label='중앙 호수',area=480)]   # 위치는 지형에서 고른다(가장 낮은 분지)
 # 마을 목표 면적(칸): 수도는 크게, 중앙 마을은 장터 광장·이벤트 마당·시설이 들어갈 만큼(WorldLayout 3절 약 2,060)
 VILLAGE_AREA={'goryeo/개경':1100,'goryeo/장단':700,'goryeo/나루':700,'goryeo/송악':650,'goryeo/닥목':600,
               'east/동문 마을':1400,'east/북동 포구':1400,'east/남동 포구':1400,'east/중앙 길목 마을':1500}
@@ -220,15 +220,41 @@ def build(layout):
         my,mx=idx(*ri['mouth']);yy,xx=np.ogrid[:H,:W];mouth_zone|=((yy-my)**2+(xx-mx)**2)<16**2
     t[L&mouth_zone&(d_river<=5)&(d_river>0)&(elev<.35)&(marsh_n>.45)]=MARSH
     t[river]=RIVER
-    # 호수: 노이즈로 가장자리를 흔든 둥근 물, 둘레는 습지·모래 조금
-    lake=np.zeros((H,W),bool);lake_n=noise((H,W),5,rng,2)
+    # 호수: 중앙 동쪽에서 가장 낮은 분지를 찾아, 낮은 땅부터 물을 채우듯 넓힌다(호숫가가 등고선을 따름).
+    #       강과 떨어져 있으면 가장 낮은 물가에서 강까지 작은 개울로 흘려보낸다.
+    lake=np.zeros((H,W),bool);E=ndimage.gaussian_filter(elev,3)
+    east=np.zeros((H,W),bool)
+    for i,k in enumerate(keys):
+        if k.startswith('east/'):east|=mapid==i
+    yy_,xx_=np.ogrid[:H,:W];far=np.ones((H,W),bool)
+    for town in layout.data['towns']:
+        ty,tx=idx(int(town['position'][0]),int(town['position'][1]));far&=((yy_-ty)**2+(xx_-tx)**2)>24**2
+    inner=ndimage.binary_erosion(east,iterations=6)   # 담당 경계에 잘린 직선 호숫가가 생기지 않게
+    ok=inner&land&far&(to_sea>16)&(d_river>3)&~np.isin(t,[MOUNTAIN,PEAK])
     for lk in LAKES:
-        cy,cx=idx(*lk['center']);rad=math.sqrt(lk['area']/math.pi)
-        yy_,xx_=np.ogrid[:H,:W];dd=np.sqrt((yy_-cy)**2+(xx_-cx)**2)
-        m=(dd<rad*(1+.45*(lake_n-.5)))&land
-        lab,n=ndimage.label(m)
-        if n:m=lab==(1+int(np.argmax(ndimage.sum(np.ones_like(lab),lab,range(1,n+1)))))
-        lake|=m;lk['cells']=int(m.sum())
+        seed=np.unravel_index(int(np.argmin(np.where(ok,E,np.inf))),E.shape)
+        grow=inner&land&far&(to_sea>10)&~np.isin(t,[MOUNTAIN,PEAK])
+        got={seed};q=[(E[seed],seed)];seen={seed}
+        while q and len(got)<lk['area']:
+            _,pp=heapq.heappop(q);got.add(pp)
+            for dy,dx in ((1,0),(-1,0),(0,1),(0,-1)):
+                n=(pp[0]+dy,pp[1]+dx)
+                if n in seen or not(0<=n[0]<H and 0<=n[1]<W) or not grow[n]:continue
+                seen.add(n);heapq.heappush(q,(E[n]+.02*(marsh_n[n]-.5),n))
+        m=np.zeros((H,W),bool)
+        for pp in got:m[pp]=True
+        m=ndimage.binary_closing(ndimage.binary_opening(m),iterations=2)&grow
+        lake|=m;lk['cells']=int(m.sum());lk['center']=[int(seed[1]+X0),int(seed[0]+Y0)]
+        if not (ndimage.binary_dilation(m,iterations=2)&river).any():
+            rim=ndimage.binary_dilation(m)&~m&land
+            r0=tuple(np.argwhere(rim)[np.argmin(E[rim])])
+            ry,rx=np.nonzero(river);k_=int(np.argmin((ry-r0[0])**2+(rx-r0[1])**2))
+            stream=astar(r0,(int(ry[k_]),int(rx[k_])),1+8*elev,blocked=None,eight=False)
+            for pp in stream:
+                if land[pp]:river[pp]=True
+            lk['outletCells']=len(stream)
+    t[river]=RIVER
+    d_river=ndimage.distance_transform_edt(~(river|lake))
     shore=ndimage.binary_dilation(lake,iterations=2)&land&~lake&~river
     t[shore&(marsh_n>.55)]=MARSH;t[shore&(marsh_n<.25)]=SAND
     t[lake]=LAKE
