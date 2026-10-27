@@ -243,16 +243,22 @@ def build(layout):
         u=dx_*math.cos(ang)+dy_*math.sin(ang);v=-dx_*math.sin(ang)+dy_*math.cos(ang)
         # 좌표를 노이즈로 비틀어(도메인 워핑) 만·곶이 여러 크기로 생기게 하고, 낮은 땅일수록 물이 더 들어오게
         wy=noise((H,W),11,rng,3)-.5;wx=noise((H,W),11,rng,3)-.5;frac=noise((H,W),6,rng,4)-.5
-        u=u+9*wx;v=v+9*wy
+        u=u+13*wx;v=v+13*wy
         theta=np.arctan2(v,u);rr_=np.sqrt((u/math.sqrt(asp))**2+(v*math.sqrt(asp))**2)
         wob=1+sum(a_*np.sin((k_+2)*theta+ph[k_]) for k_,a_ in enumerate(amp))
         En=(E-E[seed])/(np.ptp(E[land])+1e-9)
         field=rr_/(r0*wob)+1.6*En+.32*frac
         # 목표 면적이 되도록 문턱값을 찾는다
         cand_=land&inner&~river
-        vals=np.sort(field[cand_&(np.sqrt(dy_**2+dx_**2)<r0*2.4)])
+        # 원형 잘림(직선 호숫가)이 생기지 않게 거리 제한은 넉넉히 두고, 먼 곳은 부드럽게 불리하게
+        dist_=np.sqrt(dy_**2+dx_**2);field=field+np.clip((dist_-r0*1.8)/(r0*.8),0,None)**2
+        reach=cand_&(dist_<r0*3.4)
+        vals=np.sort(field[reach])
         thr=vals[min(len(vals)-1,lk['area'])]
-        m=(field<thr)&cand_&(np.sqrt(dy_**2+dx_**2)<r0*2.4)
+        m=(field<thr)&reach
+        # 물가를 둥글게 다듬는다(계단·직선 모서리 제거)
+        shore_n=noise((H,W),7,rng,3)-.5   # 물가에 작은 만·곶
+        m=((ndimage.gaussian_filter(m.astype(float),2.2)+.55*shore_n)>.5)&cand_
         m=ndimage.binary_closing(ndimage.binary_opening(m),iterations=1)&cand_
         lab,n_=ndimage.label(m)
         if n_>1:m=lab==(1+int(np.argmax(ndimage.sum(np.ones_like(lab),lab,range(1,n_+1)))))
@@ -291,11 +297,15 @@ def build(layout):
         inflow=[]
         if ctr_:
             mcy,mcx=ctr_
-            wob_=noise((H,W),5,rng,3)                          # 산 가장자리를 들쭉날쭉하게
-            dr_=np.hypot(yy_-mcy,(xx_-mcx)*.85)*(1+.45*(wob_-.5))
+            # 둥근 원뿔이 되지 않게: 한쪽으로 조금 길쭉하고(능선 방향은 무작위), 좌표를 비틀어 산자락이 불규칙하게 퍼진다
+            wob_=noise((H,W),5,rng,3);wy2=noise((H,W),9,rng,3)-.5;wx2=noise((H,W),9,rng,3)-.5
+            a_m=rng.uniform(0,math.pi);du=(xx_-mcx)+6*wx2;dv=(yy_-mcy)+6*wy2
+            pu=du*math.cos(a_m)+dv*math.sin(a_m);pv=-du*math.sin(a_m)+dv*math.cos(a_m)
+            dr_=np.hypot(pu/1.45,pv*1.1)*(1+.35*(wob_-.5))
             prof=np.exp(-(dr_/4.5)**2)+.45*np.exp(-(dr_/9)**2)
             zone=(dr_<11)&east&land&~m&~river
-            elev=np.where(zone,np.maximum(elev,.55+.45*prof),elev)
+            # 산자락 높이도 노이즈로 흔들어 동심원 무늬가 보이지 않게
+            elev=np.where(zone,np.maximum(elev,.55+.45*prof*(.8+.4*wob_)),elev)
             t[zone&(dr_<9.5)&(forest_n>.33)]=FOREST;t[zone&(dr_<9.5)&(forest_n<=.33)]=HILL
             t[zone&(dr_<5.2)]=MOUNTAIN;t[zone&(dr_<2.4)]=PEAK
             lk['sourceMountain']=[round(mcx+X0,1),round(mcy+Y0,1)]

@@ -4,19 +4,19 @@
  "classCounts": {
   "깊은 바다": 4600,
   "얕은 바다": 2074,
-  "모래 해변": 786,
+  "모래 해변": 785,
   "바위 해안": 70,
-  "강": 1551,
-  "습지": 398,
+  "강": 1559,
+  "습지": 392,
   "들판(밭)": 1662,
-  "풀밭": 19318,
-  "꽃풀밭": 1106,
-  "언덕": 2833,
-  "숲": 7146,
-  "산(통행 불가)": 1164,
-  "봉우리(통행 불가)": 1344,
+  "풀밭": 19252,
+  "꽃풀밭": 1114,
+  "언덕": 2881,
+  "숲": 7134,
+  "산(통행 불가)": 1179,
+  "봉우리(통행 불가)": 1360,
   "마을 범위": 0,
-  "호수": 948
+  "호수": 938
  },
  "rivers": [
   {
@@ -54,7 +54,7 @@
     -11
    ],
    "moved": 5.4,
-   "area": 1097
+   "area": 1098
   },
   {
    "key": "goryeo/송악",
@@ -65,7 +65,7 @@
     -21
    ],
    "moved": 11.4,
-   "area": 640
+   "area": 639
   },
   {
    "key": "goryeo/닥목",
@@ -76,7 +76,7 @@
     -46
    ],
    "moved": 5.7,
-   "area": 593
+   "area": 594
   },
   {
    "key": "goryeo/나루",
@@ -87,7 +87,7 @@
     46
    ],
    "moved": 9.4,
-   "area": 677
+   "area": 681
   },
   {
    "key": "goryeo/장단",
@@ -98,7 +98,7 @@
     37
    ],
    "moved": 7.8,
-   "area": 700
+   "area": 699
   },
   {
    "key": "east/동문 마을",
@@ -109,7 +109,7 @@
     -5
    ],
    "moved": 5.4,
-   "area": 749
+   "area": 750
   },
   {
    "key": "east/북동 포구",
@@ -131,7 +131,7 @@
     100
    ],
    "moved": 10.8,
-   "area": 799
+   "area": 797
   },
   {
    "key": "east/중앙 길목 마을",
@@ -153,7 +153,7 @@
     -29
    ],
    "moved": 19.1,
-   "area": 303
+   "area": 309
   },
   {
    "key": "hamlet/남쪽 호숫가 마을",
@@ -164,74 +164,74 @@
     51
    ],
    "moved": 4.5,
-   "area": 317
+   "area": 319
   }
  ],
  "maps": [
   {
    "key": "goryeo/송악",
    "b1Area": 3302,
-   "area": 4335
+   "area": 4266
   },
   {
    "key": "goryeo/닥목",
    "b1Area": 3402,
-   "area": 4008
+   "area": 4011
   },
   {
    "key": "goryeo/개경",
    "b1Area": 5001,
-   "area": 3923
+   "area": 3911
   },
   {
    "key": "goryeo/나루",
    "b1Area": 3997,
-   "area": 3774
+   "area": 3961
   },
   {
    "key": "goryeo/장단",
    "b1Area": 4298,
-   "area": 3960
+   "area": 3851
   },
   {
    "key": "east/동문 마을",
    "b1Area": 3200,
-   "area": 3438
+   "area": 3388
   },
   {
    "key": "east/북동 포구",
    "b1Area": 3200,
-   "area": 3260
+   "area": 3255
   },
   {
    "key": "east/남동 포구",
    "b1Area": 3200,
-   "area": 2911
+   "area": 3046
   },
   {
    "key": "east/중앙 길목 마을",
    "b1Area": 3200,
-   "area": 3885
+   "area": 3781
   },
   {
    "key": "east/북동 길",
    "b1Area": 3050,
-   "area": 2709
+   "area": 2616
   },
   {
    "key": "east/남동 길",
    "b1Area": 3051,
-   "area": 3326
+   "area": 3310
   },
   {
    "key": "east/북쪽 내륙길",
    "b1Area": 3047,
-   "area": 2840
+   "area": 2964
   },
   {
    "key": "east/남쪽 내륙길",
    "b1Area": 3052,
-   "area": 2631
+   "area": 2640
   }
  ],
  "lakes": [
@@ -244,19 +244,19 @@
     150,
     72
    ],
-   "cells": 948,
+   "cells": 938,
    "center": [
     110,
     52
    ],
-   "hillCells": 823,
+   "hillCells": 824,
    "sourceMountain": [
-    145.7,
-    41.1
+    145.8,
+    42.8
    ],
    "outletCells": 48,
    "inflowCells": [
-    11
+    14
    ]
   }
  ],
@@ -300,7 +300,7 @@
   {
    "fromKey": "goryeo/닥목",
    "toKey": "goryeo/개경",
-   "cells": 49,
+   "cells": 48,
    "bridgeCells": 0,
    "mountainPassCells": 0,
    "maps": [
@@ -324,7 +324,7 @@
   {
    "fromKey": "goryeo/장단",
    "toKey": "goryeo/송악",
-   "cells": 86,
+   "cells": 88,
    "bridgeCells": 0,
    "mountainPassCells": 0,
    "maps": [
@@ -336,7 +336,7 @@
   {
    "fromKey": "goryeo/개경",
    "toKey": "goryeo/송악",
-   "cells": 85,
+   "cells": 84,
    "bridgeCells": 0,
    "mountainPassCells": 0,
    "maps": [
@@ -358,7 +358,7 @@
     "east/북쪽 내륙길",
     "east/중앙 길목 마을"
    ],
-   "boundaryCrossings": 4
+   "boundaryCrossings": 2
   },
   {
    "fromKey": "east/동문 마을",
@@ -376,7 +376,7 @@
   {
    "fromKey": "east/동문 마을",
    "toKey": "east/남동 포구",
-   "cells": 128,
+   "cells": 123,
    "bridgeCells": 2,
    "mountainPassCells": 0,
    "maps": [
@@ -403,7 +403,7 @@
   {
    "fromKey": "east/남동 포구",
    "toKey": "east/중앙 길목 마을",
-   "cells": 173,
+   "cells": 171,
    "bridgeCells": 0,
    "mountainPassCells": 0,
    "maps": [
@@ -414,5 +414,5 @@
    "boundaryCrossings": 2
   }
  ],
- "roadCells": 2465
+ "roadCells": 2394
 }
