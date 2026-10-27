@@ -1,0 +1,59 @@
+{
+  "statuses": {
+    "paper_rack": "pending",
+    "harvest": "pending",
+    "celadon": "pending"
+  },
+  "productionApplied": false,
+  "files": {
+    "style-comparison.png": {
+      "size": [
+        1120,
+        1000
+      ],
+      "rgbaSHA256": "f894a648cc10722a8c597964d93e86615e3b927eb43f9193c2e6ef304dba1e25"
+    },
+    "game-comparison.png": {
+      "size": [
+        1000,
+        480
+      ],
+      "rgbaSHA256": "ee525ab94d57a648ec14b2776ddcbfa1ba55179c7b4af16746960d69db1c75e4"
+    },
+    "Screens/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "b8caa268873ccb11a7ee3a70731419d11c360513e108bb4fdcdaccd0cc522926"
+    },
+    "Screens/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "4415788683ef6b55b382b584a88172c37719fb8d30261d4219556aacb23209fd"
+    },
+    "Native/paper_rack.png": {
+      "size": [
+        48,
+        32
+      ],
+      "rgbaSHA256": "9aaaa1c570893417540bcbdc2ba9c24099715ffc10ad4b587a1b189972fa94dc"
+    },
+    "Native/harvest.png": {
+      "size": [
+        48,
+        32
+      ],
+      "rgbaSHA256": "4cb58ce9658ba5350223f0f89e41010ff8e62ebf66c1be0023c1f99fa3a17759"
+    },
+    "Native/celadon.png": {
+      "size": [
+        48,
+        32
+      ],
+      "rgbaSHA256": "4b1452cf5b1da56c4090e7d6b05f5d7bd3d2ae914b657cf25b7180de5c17c62b"
+    }
+  }
+}

@@ -147,7 +147,10 @@
         "path": "ArtReview/C7-WorkshopProps-v3-20261027/Native/harvest.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "date": "2026-10-27",
+        "userQuote": "볏단은 왜 더 홀쭉해진거야. 수정해줘. 그리고 긴 청자의 주둥이가 살짝 한쪽으로 기울여져 있는 것처럼 보여서 똑바로 세워줘.",
+        "feedback": "볏단은 짧고 풍성한 형태; 청자 입구/목/어깨 중심 수직 정렬"
       },
       "tiles": [
         {
@@ -209,7 +212,10 @@
         "path": "ArtReview/C7-WorkshopProps-v3-20261027/Native/celadon.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "date": "2026-10-27",
+        "userQuote": "볏단은 왜 더 홀쭉해진거야. 수정해줘. 그리고 긴 청자의 주둥이가 살짝 한쪽으로 기울여져 있는 것처럼 보여서 똑바로 세워줘.",
+        "feedback": "볏단은 짧고 풍성한 형태; 청자 입구/목/어깨 중심 수직 정렬"
       },
       "tiles": [
         {

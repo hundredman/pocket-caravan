@@ -2,7 +2,7 @@
   "errors": [],
   "statuses": {
     "c7_workshopv3_paper_rack": "pending",
-    "c7_workshopv3_harvest": "pending",
-    "c7_workshopv3_celadon": "pending"
+    "c7_workshopv3_harvest": "changes_requested",
+    "c7_workshopv3_celadon": "changes_requested"
   }
 }

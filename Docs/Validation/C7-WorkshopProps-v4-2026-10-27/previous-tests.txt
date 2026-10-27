@@ -1,0 +1,11 @@
+test_actual_play_latest_pixels_and_only_three_areas (test_c7_workshop_props_v3.WorkshopPropsV3Checks) ... ok
+test_context_approvals_preserved (test_c7_workshop_props_v3.WorkshopPropsV3Checks) ... ok
+test_native_sizes_feet_palette_and_contours (test_c7_workshop_props_v3.WorkshopPropsV3Checks) ... ok
+test_three_editable_sources_reexport_rgba (test_c7_workshop_props_v3.WorkshopPropsV3Checks) ... ok
+test_three_whole_objects_and_independent_pending (test_c7_workshop_props_v3.WorkshopPropsV3Checks) ... ok
+test_touchup_is_local_and_rest_pixels_unchanged (test_c7_workshop_props_v3.WorkshopPropsV3Checks) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.220s
+
+OK
