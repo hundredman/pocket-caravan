@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "regionId": "arabia",
+  "regionAssetPath": "Assets/PocketCaravan/Data/Arabia/Region_Arabia.asset",
+  "maps": [
+    {
+      "mapId": "arabia_ahsa",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_ahsa.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_ahsa.unity",
+      "worldX": 20,
+      "worldY": 0,
+      "generator": "arabia:ahsa"
+    },
+    {
+      "mapId": "arabia_farmroad",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_farmroad.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_farmroad.unity",
+      "worldX": 21,
+      "worldY": 0,
+      "generator": "arabia:farmroad"
+    },
+    {
+      "mapId": "arabia_zabid",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_zabid.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_zabid.unity",
+      "worldX": 22,
+      "worldY": 0,
+      "generator": "arabia:zabid"
+    },
+    {
+      "mapId": "arabia_taiz",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_taiz.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_taiz.unity",
+      "worldX": 24,
+      "worldY": 0,
+      "generator": "arabia:taiz"
+    },
+    {
+      "mapId": "arabia_jeddah",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_jeddah.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_jeddah.unity",
+      "worldX": 26,
+      "worldY": 0,
+      "generator": "arabia:jeddah"
+    },
+    {
+      "mapId": "arabia_shortcut",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_shortcut.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_shortcut.unity",
+      "worldX": 27,
+      "worldY": 0,
+      "generator": "arabia:shortcut"
+    },
+    {
+      "mapId": "arabia_sanaa",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_sanaa.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_sanaa.unity",
+      "worldX": 28,
+      "worldY": 0,
+      "generator": "arabia:sanaa"
+    },
+    {
+      "mapId": "arabia_central_dunes",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_central_dunes.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_central_dunes.unity",
+      "worldX": 28,
+      "worldY": 2,
+      "generator": "arabia:central_dunes"
+    },
+    {
+      "mapId": "arabia_central_canyon",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_central_canyon.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_central_canyon.unity",
+      "worldX": 29,
+      "worldY": 2,
+      "generator": "arabia:central_canyon"
+    },
+    {
+      "mapId": "arabia_central_westvale",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_central_westvale.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_central_westvale.unity",
+      "worldX": 27,
+      "worldY": 3,
+      "generator": "arabia:central_westvale"
+    },
+    {
+      "mapId": "arabia_central_bazaar",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_central_bazaar.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_central_bazaar.unity",
+      "worldX": 28,
+      "worldY": 3,
+      "generator": "arabia:central_bazaar"
+    },
+    {
+      "mapId": "arabia_central_eastvale",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_central_eastvale.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_central_eastvale.unity",
+      "worldX": 29,
+      "worldY": 3,
+      "generator": "arabia:central_eastvale"
+    },
+    {
+      "mapId": "arabia_central_steppe",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_central_steppe.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_central_steppe.unity",
+      "worldX": 28,
+      "worldY": 4,
+      "generator": "arabia:central_steppe"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "arabia_hasan",
+      "name": "길잡이 하산",
+      "sprite": "arabia_npc_scholar_tall",
+      "greeting": "매듭은 튼튼하네. 이제 어디로 갈지 정하면 되겠어. 동쪽 큰길로 가면 농원길, 그 끝이 자비드야. 짐이 무거울수록 걸음이 느려지니 실을 양을 골라 봐. (Space 대화 · Q 수첩 · L 장부 · Shift 달리기)"
+    },
+    {
+      "id": "arabia_maryam",
+      "name": "여관 주인 마리암",
+      "sprite": "arabia_woman_grandma_tall",
+      "greeting": "그 가방, 낯이 익구나. 옆 장터에 가져다줄 것이 있으면 힌드바드가 먼저 나눠 맡길 거야. 첫 배달을 마치고 오면 나도 부탁할 일이 있단다."
+    },
+    {
+      "id": "arabia_hindbad",
+      "name": "짐꾼 힌드바드",
+      "sprite": "arabia_npc_sailor_tall",
+      "greeting": "휴, 바구니가 이렇게 많을 줄은 몰랐어. 다음에도 일손이 필요하면 부를게."
+    },
+    {
+      "id": "arabia_kitchen_keeper",
+      "name": "공동 부엌 담당",
+      "sprite": "arabia_woman_baker_tall",
+      "greeting": "자비드 공동 부엌이야. 오늘 저녁도 여러 집이 함께 먹지. 곡물은 큰길 남쪽 장터에서 살 수 있어."
+    }
+  ],
+  "villagers": [
+    {
+      "name": "대추야자 농부",
+      "sprite": "arabia_npc_weaver_tall",
+      "lines": [
+        "오아시스 물길 덕분에 대추야자가 잘 익어.",
+        "같은 물건도 멀리 가져갈수록 값이 오르지만, 한꺼번에 많이 팔면 금방 떨어져."
+      ]
+    },
+    {
+      "name": "바구니 든 주민",
+      "sprite": "arabia_woman_girl_tall",
+      "lines": [
+        "게시판에는 선금 없이 맡는 배달 의뢰도 붙어.",
+        "돈이 모자라면 배달부터 해서 밑천을 모으는 상인도 많아."
+      ]
+    },
+    {
+      "name": "곡물 장수",
+      "sprite": "arabia_woman_bedouinWoman_tall",
+      "lines": [
+        "자비드 곡물은 알 아흐사 여관에서 늘 찾아.",
+        "산 값은 장부에 남겨 둬. 받은 돈이 전부 이익은 아니니까."
+      ]
+    }
+  ]
+}

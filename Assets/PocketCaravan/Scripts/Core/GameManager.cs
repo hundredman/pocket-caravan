@@ -35,6 +35,13 @@ namespace PocketCaravan
         bool firstSceneLoaded;
         SaveData saveToLoad;
         bool autosave = true;
+        RegionTestSession regionSession;
+
+        /// <summary>지역 시험 세션 중이면 그 설정 (전용 저장 파일 사용). 본편이면 null.</summary>
+        public RegionTestSession ActiveRegionSession => regionSession;
+        /// <summary>현재 자동 저장 여부 (시험 도구 확인용)</summary>
+        public bool AutosaveEnabled => autosave;
+
         public string LoadIssue { get; private set; }
 
         void BlockFailedLoad(string reason)
@@ -191,8 +198,11 @@ namespace PocketCaravan
             firstSceneLoaded = true;
             UIState.Blocking = false;
 
+            // 지역 시험 세션: 그 지역 씬에서 Play를 시작하면 본편 저장 대신 전용 파일을 읽고 쓴다.
+            bool startedRegionSession = first && TryBeginRegionSession();
+
             // 처음 연 씬이 시작 맵이면 저장을 불러온다. 다른 씬에서 바로 Play한 경우(개발 중)는 불러오지도, 덮어쓰지도 않는다.
-            if (first && (scene.buildIndex != 0 || (MapRoot.Current != null && MapRoot.Current.previewOnly)))
+            if (first && !startedRegionSession && (scene.buildIndex != 0 || (MapRoot.Current != null && MapRoot.Current.previewOnly)))
             {
                 autosave = false;
                 saveToLoad = null;
@@ -255,6 +265,26 @@ namespace PocketCaravan
                 AudioManager.OnMapEntered(map.mapId);
                 SaveNow();
             }
+        }
+
+        /// <summary>Resources/RegionSessions/{지역 id}가 있는 지역 씬에서 시작하면 전용 저장·시작값으로 바꾼다.
+        /// 본편 저장 파일은 읽지도 쓰지도 지우지도 않는다. 제작 시험장(previewOnly)은 제외.</summary>
+        bool TryBeginRegionSession()
+        {
+            var map = MapRoot.Current;
+            if (map == null || map.previewOnly) return false;
+            var session = RegionTestSession.For(map.region);
+            if (session == null) return false;
+            regionSession = session;
+            SaveSystem.UseSlot(session.saveFileName);
+            autosave = true;
+            Player.money = session.startMoney;
+            if (session.startOrigin != null) { Player.origin = session.startOrigin; Player.credit = session.startOrigin.startingCredit; }
+            if (session.startVehicle != null) Player.vehicle = session.startVehicle;
+            saveToLoad = SaveSystem.Read();
+            Debug.Log($"[저장] {session.regionId} 시험 세션: 본편 저장 대신 전용 파일 {SaveSystem.FileName} 사용"
+                + (saveToLoad != null ? " (이어서 하기)" : " (새로 시작)"));
+            return true;
         }
 
         void OnGUI()
@@ -424,6 +454,8 @@ namespace PocketCaravan
         /// <summary>저장을 지우고 처음부터</summary>
         public static void NewGame()
         {
+            // 지역 시험 세션이면 전용 파일만 지우고 그 지역 시작 씬으로 돌아간다.
+            string restart = I != null && I.regionSession != null ? I.regionSession.startScene : null;
             SaveSystem.Delete();
             var old = I;
             I = null;
@@ -431,7 +463,8 @@ namespace PocketCaravan
             GameEvents.ClearAll();
             UIState.Blocking = false;
             Boot();
-            SceneManager.LoadScene(0);
+            if (!string.IsNullOrEmpty(restart)) SceneManager.LoadScene(restart);
+            else SceneManager.LoadScene(0);
         }
     }
 }

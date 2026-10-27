@@ -1,0 +1,21 @@
+attempt to write a readonly database
+attempt to write a readonly database
+Unity Editor version:    6000.3.26f1 (de8167e7440c)
+Branch:                  6000.3/staging
+Build type:              Release
+Batch mode:              YES
+macOS version:           Version 26.6.2 (Build 25G83)
+Darwin version:          25.6.0
+Architecture:            arm64
+Running under Rosetta:   NO
+Available memory:        18432 MB
+Date:                    2026-10-20T10:55:21Z
+VBCSCompilerServerWatchdog: watching VBCSCompiler (PID 89926)
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Channel LicenseClient-euninjun doesn't exist
+Launching external process: /Applications/Unity/Hub/Editor/6000.3.26f1/Unity.app/Contents/Helpers/UnityLicensingClient.app/Contents/MacOS/Unity.Licensing.Client
+[Licensing::Module] Successfully launched the LicensingClient (PId: 89928)
+2026-10-20 19:55:21.940 Unity[89923:2991642] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-10-20 19:55:22.048 Unity[89923:2991642] Error received in message reply handler: Connection invalid
+2026-10-20 19:55:22.048 Unity[89923:2991644] Connection Invalid error for service com.apple.hiservices-xpcservice.
+CSSM_ModuleLoad(): One or more parameters passed to a function were not valid.
