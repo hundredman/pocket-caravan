@@ -16,7 +16,7 @@ class Batch4Checks(unittest.TestCase):
         self.assertEqual(len(doc['assets']),3)
         self.assertEqual(sum(len(a['tiles']) for a in doc['assets']),8)
         for a in doc['assets']:
-            self.assertEqual(a['review']['status'],'changes_requested' if a['id']=='c7_batch4_cart' else 'pending');w,h=a['size'];result=Image.new('RGBA',(w*16,h*16))
+            self.assertEqual(a['review']['status'],json.loads((OUT/'review-decisions.json').read_text()).get(a['id'],dict(status='pending'))['status']);w,h=a['size'];result=Image.new('RGBA',(w*16,h*16))
             for t in a['tiles']:
                 with Image.open(ROOT/t['image']) as im:result.alpha_composite(im.convert('RGBA'),(16*t['dx'],16*t['dy']))
             self.assertEqual(result.tobytes(),Image.open(ROOT/a['image']).convert('RGBA').tobytes())

@@ -1,8 +1,8 @@
 {
   "errors": [],
   "statuses": {
-    "c7_gateprops_gate": "pending",
-    "c7_gateprops_well": "pending",
-    "c7_gateprops_stone_lantern": "pending"
+    "c7_gateprops_gate": "approved",
+    "c7_gateprops_well": "approved",
+    "c7_gateprops_stone_lantern": "approved"
   }
 }

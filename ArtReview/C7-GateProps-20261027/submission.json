@@ -1,8 +1,8 @@
 {
   "statuses": {
-    "gate": "pending",
-    "well": "pending",
-    "stone_lantern": "pending"
+    "gate": "approved",
+    "well": "approved",
+    "stone_lantern": "approved"
   },
   "productionApplied": false,
   "files": {

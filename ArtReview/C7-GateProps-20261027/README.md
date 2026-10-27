@@ -4,7 +4,7 @@
 
 - **성문:** 기존 개경 생성기는 담장 사이 x30~33을 비운 입구이며, 독립 성문 에셋이 없다(`Tools/MapGen/gaegyeong.py` 40~49줄). 이번에는 새 시각 후보를 만들었다.96×80 캔버스/실제 윤곽94×62/하단80은 시험 크기이며 본편 배치·충돌 계약이 아니다.
 - **우물·석등:** `ArtReview/C7-Batch4-20261027/Native/`의 PNG/Aseprite를 그대로 복사했다. 새 생성·형태 변경 없이 개별 그림 확인을 다시 요청한다.16×32/하단32 유지.
-- 세 그림은 각각 pending. 본편·기존 승인 원본·수레·ID·저장·충돌은 변경하지 않았다. 상품/UI/중앙 대륙 사건 소품 작업을 이 묶음에 포함하지 않았다.
+- 사용자 “좋아. 계속 진행해.”로 세 그림 각각 approved. 원본/RGBA·범위는 `../Approved/C7-GateProps-v1/`에 보존했다. 본편·기존 승인 원본·수레·ID·저장·충돌은 변경하지 않았다. 상품/UI/중앙 대륙 사건 소품 작업을 이 묶음에 포함하지 않았다.
 
 ## 제작
 
@@ -22,4 +22,4 @@
 
 Aseprite 배치에서 `Tools/ArtTrials/c7_gate_props.lua`에 root(이 폴더 절대경로) 전달 → Pillow Python `Tools/ArtTrials/c7_gate_props.py prep` → 같은 Lua `finish=true` → Python `register` → 이 worktree Unity6000.3.26f1 `C7GatePropsReview.Run`(Burst 비활성/worker2) → Python `board`.
 
-5검사 통과: A2 검토0오류·미승인 본편 거부/전체 개체 재조합·각 누락 거부/크기·하단·색·알파·외곽선/Aseprite 실제 재출력RGBA/우물석등 기존 제출 픽셀과 승인 원본 보존/실제 Play 변경 세 영역만·최신 불투명 원본/화면RGB 오차≤1. Unity 종료0·로그C# 오류0/SearchDatabase 예외0. 실제 통행·보행·수동 플레이·저장 회귀·전체 통합·게임 빌드는 실행하지 않았다. 그림 승인은 사용자 검토 대기다.
+5검사 통과: A2 검토0오류·미승인 본편 거부/전체 개체 재조합·각 누락 거부/크기·하단·색·알파·외곽선/Aseprite 실제 재출력RGBA/우물석등 기존 제출 픽셀과 승인 원본 보존/실제 Play 변경 세 영역만·최신 불투명 원본/화면RGB 오차≤1. Unity 종료0·로그C# 오류0/SearchDatabase 예외0. 실제 통행·보행·수동 플레이·저장 회귀·전체 통합·게임 빌드는 실행하지 않았다. 그림 승인은 완료했고 성문 본편 연결 판단은 남아 있다.

@@ -1,8 +1,8 @@
 {
   "statuses": {
     "cart": "changes_requested",
-    "well": "pending",
-    "stone_lantern": "pending"
+    "well": "approved",
+    "stone_lantern": "approved"
   },
   "productionApplied": false,
   "files": {
