@@ -31,7 +31,7 @@ COLORS={DEEP:(52,98,140),SHALLOW:(96,156,186),SAND:(236,222,170),ROCKCOAST:(150,
         FOREST:(52,98,56),MOUNTAIN:(128,114,96),PEAK:(184,178,170),VILLAGE:(210,190,140),VOID:(28,34,40),LAKE:(70,136,186)}
 BLOCKED={DEEP,SHALLOW,RIVER,MOUNTAIN,PEAK,ROCKCOAST,LAKE}
 # 호수(세계 좌표 중심, 대략 면적): 남쪽 쉼터 마을 북쪽(2026-10-27 은샘 제안)
-LAKES=[dict(label='남쪽 큰 호수',area=950,box=(95,22,150,72))]   # 이 범위(x0,y0,x1,y1) 안에서 가장 낮은 내륙 분지를 고른다
+LAKES=[dict(label='남쪽 큰 호수',area=760,box=(95,22,150,72),sourceDir=-99)]   # sourceDir: 호수에서 본 상류(수원 산) 방향, 도(화면 기준, -90=북)   # 이 범위(x0,y0,x1,y1) 안에서 가장 낮은 내륙 분지를 고른다
 # 마을 목표 면적(칸): 수도는 크게, 중앙 마을은 장터 광장·이벤트 마당·시설이 들어갈 만큼(WorldLayout 3절 약 2,060)
 VILLAGE_AREA={'goryeo/개경':1100,'goryeo/장단':700,'goryeo/나루':700,'goryeo/송악':650,'goryeo/닥목':600,
               'east/동문 마을':1400,'east/북동 포구':1400,'east/남동 포구':1400,'east/중앙 길목 마을':1500}
@@ -239,7 +239,7 @@ def build(layout):
         # 모양: 길쭉한 타원에 만·곶을 만드는 굴곡(각도에 따른 낮은 주파수 사인 합)
         # 골짜기 호수: 상류(산) → 호수 → 출구(바다) 축을 따라 길쭉하게
         sy_,sx_=np.nonzero(sea);k0=int(np.argmin((sy_-seed[0])**2+(sx_-seed[1])**2))
-        r0=math.sqrt(lk['area']/math.pi);asp=1.9;ang=math.atan2(sy_[k0]-seed[0],sx_[k0]-seed[1])+rng.uniform(-.25,.25)
+        r0=math.sqrt(lk['area']/math.pi);asp=1.9;ang=math.atan2(sy_[k0]-seed[0],sx_[k0]-seed[1])+rng.uniform(-.25,.25);ang_sea=math.atan2(sy_[k0]-seed[0],sx_[k0]-seed[1])
         ph=rng.uniform(0,2*math.pi,4);amp=(.16,.10,.06,.04)
         dy_=yy_-seed[0];dx_=xx_-seed[1]
         u=dx_*math.cos(ang)+dy_*math.sin(ang);v=-dx_*math.sin(ang)+dy_*math.cos(ang)
@@ -290,7 +290,7 @@ def build(layout):
         lk['hillCells']=int(hillring.sum())
         # 수원지: 출구 반대편 상류 쪽, 호수에서 떨어진 곳에 작은 산 덩어리 하나를 두고
         # 그 산 비탈에서 시작한 강 1줄기가 낮은 골짜기를 따라 굽이쳐 호수 상류 끝으로 든다.
-        R_l=math.sqrt(m.sum()/math.pi);back=ang_out+math.pi
+        R_l=math.sqrt(m.sum()/math.pi);back=math.radians(lk['sourceDir'])   # 상류 방향은 설계값으로 고정(호수 크기·모양이 바뀌어도 산 위치 유지)
         best_=None
         for dist_ in np.arange(R_l+38,R_l+20,-2):
             for da in np.radians([0,15,-15,30,-30,45,-45]):
@@ -550,7 +550,7 @@ def roads(layout,w):
         m=t==k;cost[m]=v;blocked[m]=False
     cost=cost*(1+1.1*wig**2+.25*fine)+6*slope
     d_wat=ndimage.distance_transform_edt(~np.isin(t,[RIVER,LAKE]))
-    cost+=np.where((d_wat>0)&(d_wat<=4),3.0*(5-d_wat)/4,0)   # 물가 4칸 안은 조금 비싸다: 강·호숫가를 바짝 따라가지 않음
+    cost+=np.where((d_wat>0)&(d_wat<=6),3.5*(7-d_wat)/6,0)   # 물가 4칸 안은 조금 비싸다: 강·호숫가를 바짝 따라가지 않음
     centers={v['key']:(v['center'][1]-Y0,v['center'][0]-X0) for v in w['villages']}
     road=np.zeros((H,W),bool);records=[];paths=[]
     order=sorted(layout.data['roads'],key=lambda r:math.dist(layout.towns[r['fromKey']]['position'],layout.towns[r['toKey']]['position']))

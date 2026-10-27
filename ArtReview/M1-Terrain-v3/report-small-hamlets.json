@@ -4,19 +4,19 @@
  "classCounts": {
   "깊은 바다": 4600,
   "얕은 바다": 2074,
-  "모래 해변": 791,
+  "모래 해변": 790,
   "바위 해안": 70,
-  "강": 1562,
-  "습지": 296,
+  "강": 1611,
+  "습지": 286,
   "들판(밭)": 1662,
-  "풀밭": 19686,
-  "꽃풀밭": 1174,
-  "언덕": 2436,
-  "숲": 7139,
-  "산(통행 불가)": 1211,
-  "봉우리(통행 불가)": 1357,
+  "풀밭": 19758,
+  "꽃풀밭": 1191,
+  "언덕": 2508,
+  "숲": 7135,
+  "산(통행 불가)": 1208,
+  "봉우리(통행 불가)": 1359,
   "마을 범위": 0,
-  "호수": 942
+  "호수": 748
  },
  "rivers": [
   {
@@ -131,7 +131,7 @@
     100
    ],
    "moved": 10.8,
-   "area": 797
+   "area": 798
   },
   {
    "key": "east/중앙 길목 마을",
@@ -161,10 +161,10 @@
    "target": 320,
    "center": [
     92,
-    44
+    42
    ],
-   "moved": 10.4,
-   "area": 318
+   "moved": 11.2,
+   "area": 313
   }
  ],
  "maps": [
@@ -186,17 +186,17 @@
   {
    "key": "goryeo/나루",
    "b1Area": 3997,
-   "area": 3938
+   "area": 3947
   },
   {
    "key": "goryeo/장단",
    "b1Area": 4298,
-   "area": 3749
+   "area": 3740
   },
   {
    "key": "east/동문 마을",
    "b1Area": 3200,
-   "area": 3132
+   "area": 3073
   },
   {
    "key": "east/북동 포구",
@@ -206,57 +206,58 @@
   {
    "key": "east/남동 포구",
    "b1Area": 3200,
-   "area": 2896
+   "area": 3089
   },
   {
    "key": "east/중앙 길목 마을",
    "b1Area": 3200,
-   "area": 3832
+   "area": 3808
   },
   {
    "key": "east/북동 길",
    "b1Area": 3050,
-   "area": 2797
+   "area": 2777
   },
   {
    "key": "east/남동 길",
    "b1Area": 3051,
-   "area": 3542
+   "area": 3416
   },
   {
    "key": "east/북쪽 내륙길",
    "b1Area": 3047,
-   "area": 2921
+   "area": 2952
   },
   {
    "key": "east/남쪽 내륙길",
    "b1Area": 3052,
-   "area": 2782
+   "area": 2787
   }
  ],
  "lakes": [
   {
    "label": "남쪽 큰 호수",
-   "area": 950,
+   "area": 760,
    "box": [
     95,
     22,
     150,
     72
    ],
-   "cells": 942,
+   "sourceDir": -99,
+   "cells": 748,
    "center": [
     110,
     52
    ],
-   "hillCells": 923,
+   "hillCells": 804,
    "sourceMountain": [
-    101.5,
-    -0.4
+    102.3,
+    0.4
    ],
-   "outletCells": 24,
+   "outletCells": 32,
    "inflowCells": [
-    30
+    31
    ]
   }
  ],
@@ -264,7 +265,7 @@
   {
    "fromKey": "goryeo/나루",
    "toKey": "goryeo/장단",
-   "cells": 80,
+   "cells": 82,
    "bridgeCells": 0,
    "mountainPassCells": 0,
    "maps": [
@@ -300,7 +301,7 @@
   {
    "fromKey": "goryeo/닥목",
    "toKey": "goryeo/개경",
-   "cells": 99,
+   "cells": 101,
    "bridgeCells": 0,
    "mountainPassCells": 0,
    "maps": [
@@ -324,7 +325,7 @@
   {
    "fromKey": "goryeo/장단",
    "toKey": "goryeo/송악",
-   "cells": 90,
+   "cells": 92,
    "bridgeCells": 0,
    "mountainPassCells": 0,
    "maps": [
@@ -376,7 +377,7 @@
   {
    "fromKey": "east/동문 마을",
    "toKey": "east/남동 포구",
-   "cells": 115,
+   "cells": 119,
    "bridgeCells": 2,
    "mountainPassCells": 0,
    "maps": [
@@ -403,7 +404,7 @@
   {
    "fromKey": "east/남동 포구",
    "toKey": "east/중앙 길목 마을",
-   "cells": 169,
+   "cells": 181,
    "bridgeCells": 0,
    "mountainPassCells": 0,
    "maps": [
@@ -414,5 +415,5 @@
    "boundaryCrossings": 2
   }
  ],
- "roadCells": 2630
+ "roadCells": 2655
 }
