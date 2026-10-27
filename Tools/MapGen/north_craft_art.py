@@ -472,6 +472,44 @@ def fire_seat():
     d.line((2,9,13,9),fill=(0,0,0,60))
     return im
 
+def ferry_boat(stroke):
+    """10/27 나룻배 노 젓기: 위에서 본 작은 배 (뱃머리가 위). stroke 0 = 노를 옆으로 편 채, 1 = 노를 뒤로 당긴 순간"""
+    W,Hh=30,34
+    im=img(W,Hh); d=ImageDraw.Draw(im)
+    cx=15
+    # 노 (배 아래에 먼저)
+    oar=(150,104,66,255); blade=(196,150,96,255)
+    if stroke==0:
+        d.line((cx-6,17,1,15),fill=O,width=3); d.line((cx-6,17,1,15),fill=oar,width=1); d.rectangle((0,13,3,17),fill=blade,outline=O)
+        d.line((cx+6,17,28,15),fill=O,width=3); d.line((cx+6,17,28,15),fill=oar,width=1); d.rectangle((26,13,29,17),fill=blade,outline=O)
+    else:
+        d.line((cx-6,16,2,23),fill=O,width=3); d.line((cx-6,16,2,23),fill=oar,width=1); d.rectangle((0,22,3,27),fill=blade,outline=O)
+        d.line((cx+6,16,27,23),fill=O,width=3); d.line((cx+6,16,27,23),fill=oar,width=1); d.rectangle((26,22,29,27),fill=blade,outline=O)
+    # 배 몸통: 뱃머리 뾰족
+    hull=[(cx,1),(cx+6,8),(cx+7,22),(cx+5,31),(cx-5,31),(cx-7,22),(cx-6,8)]
+    d.polygon(hull,fill=WM,outline=O)
+    inner=[(cx,5),(cx+4,10),(cx+5,22),(cx+3,28),(cx-3,28),(cx-5,22),(cx-4,10)]
+    d.polygon(inner,fill=WD)
+    for y in (12,20,26): d.line((cx-4,y,cx+4,y),fill=WL)          # 가로 앉을 판
+    d.line((cx,3,cx,6),fill=WH)
+    # 노 젓는 사람 (가운데): 파란 옷, 갈색 털모자, 작은 뿔
+    d.ellipse((cx-4,14,cx+4,21),fill=(60,96,156,255),outline=O)
+    d.ellipse((cx-3,11,cx+3,16),fill=(150,104,66,255),outline=O)
+    px(im,cx-3,10,(214,190,140,255)); px(im,cx+3,10,(214,190,140,255)); px(im,cx-4,9,(214,190,140,255)); px(im,cx+4,9,(214,190,140,255))
+    # 짐 꾸러미 (뒤쪽)
+    d.rectangle((cx-3,23,cx+3,27),fill=(214,190,140,255),outline=O); d.line((cx,23,cx,27),fill=(150,104,66,255))
+    return im
+
+def ferry_ice(big):
+    """떠내려오는 얼음 덩어리 (위에서 본 모양)"""
+    W,Hh=(30,18) if big else (18,13)
+    im=img(W,Hh); d=ImageDraw.Draw(im)
+    pts=[(3,4),(W*0.4,0),(W-4,2),(W-1,Hh*0.55),(W-6,Hh-1),(W*0.35,Hh-2),(0,Hh*0.6)]
+    d.polygon([(int(x),int(y)) for x,y in pts],fill=(226,240,248,255),outline=(96,128,156,255))
+    d.polygon([(int(x),int(y)) for x,y in [(4,5),(W*0.4,2),(W*0.6,4),(W*0.3,Hh*0.5)]],fill=(255,255,255,255))
+    d.line((W*0.55,Hh*0.6,W-6,Hh*0.5),fill=(170,200,220,255))
+    return im
+
 def game_sprites():
     out={}
     for st in ("empty","fresh","dried"): out["yard_hjell_"+st]=hjell_a3(st)
@@ -481,5 +519,7 @@ def game_sprites():
     out["yard_vat"]=vat(); out["yard_herbs"]=herbs(); out["yard_skeps"]=skep_b()
     out["yard_tap_idle"]=tapbarrel2(0,False); out["yard_tap0"]=tapbarrel2(0,True); out["yard_tap1"]=tapbarrel2(1,True)
     out["fire_seat"]=fire_seat()
+    out["ferry_boat_0"]=ferry_boat(0); out["ferry_boat_1"]=ferry_boat(1)   # 10/27 나룻배 노 젓기
+    out["ferry_ice_0"]=ferry_ice(True); out["ferry_ice_1"]=ferry_ice(False)
     out.update(__import__("north_keeper_art").sprites())   # 10/27 장터 장꾼
     return out

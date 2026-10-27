@@ -416,7 +416,7 @@ namespace PocketCaravan
             if (shoutWho < 0 || shoutWho >= shouters.Count || shouters[shoutWho] == null || UIState.Blocking) return;
             var cam = Camera.main;
             if (cam == null) return;
-            var sp = cam.WorldToScreenPoint(shouters[shoutWho].position + new Vector3(0f, 1.6f, 0f));
+            var sp = cam.WorldToScreenPoint(shouters[shoutWho].position + new Vector3(0f, 2.4f, 0f));   // 10/27 이름표보다 위에 (가리지 않게)
             if (sp.z < 0f) return;
             UIStyle.Begin();
             if (shoutStyle == null) shoutStyle = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow };

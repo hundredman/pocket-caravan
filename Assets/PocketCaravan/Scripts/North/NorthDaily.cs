@@ -378,11 +378,12 @@ namespace PocketCaravan
             string talk = toNaru
                 ? "피오르를 따라 내려가면 금방 나루 마을이야. 비르카를 돌아가는 것보다 훨씬 빠르지. 짐도 같이 실어 줄게."
                 : "남쪽 개울 나루 마을까지 태워 줄까? 중앙 대륙으로 가는 지름길이야. 짐도 같이 실어 줄게.";
+            talk += "\n노는 네가 저어 봐! Space로 젓고 ←→로 얼음을 피해. 빨리 닿으면 3냥 돌려줄게.";
             DialogueUI.Show("나룻배 사공", talk,
                 new DialogueUI.Choice($"{where}로 ({FerryFare}냥)", () => Buy(FerryFare, () =>
                 {
-                    Notify.Show("배가 얼음 사이 물길을 따라 미끄러져 간다…", 2f);
-                    GameManager.I.TravelTo(dest, "ferry", 0f, toNaru ? Vector2Int.right : Vector2Int.left);
+                    // 10/27 노 젓기 미니게임 (NorthFerryGame): 끝나거나 Esc로 건너뛰면 건너편에 도착
+                    NorthFerryGame.Begin(dest, toNaru ? Vector2Int.right : Vector2Int.left);
                 })),
                 new DialogueUI.Choice("다음에", null));
         }

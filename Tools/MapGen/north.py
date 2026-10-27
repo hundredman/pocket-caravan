@@ -309,8 +309,8 @@ def naru():
     m.deco_stamp("bigbarrel", 24, 17); m.deco_stamp("crate", 32, 17); m.deco_stamp("basket", 27, 17); m.deco_stamp("sack", 28, 17)
 
     m.add("market", 28, 19, town="north_naru")
-    m.board(31, 13, "north_naru")
-    m.sign(22, 4, "↑ 피오르 길\n비르카 · 사냥꾼 마을")
+    m.board(35, 16, "north_naru")      # 10/27 좌판·장꾼 뒤에 가려져서 장터 오른쪽 큰길가로
+    m.sign(24, 6, "↑ 피오르 길\n비르카 · 사냥꾼 마을")
     # 10/26 나룻배: 서쪽 부두 끝에서 중앙 동쪽 개울 갈림길로
     m.spot("ferry", 15, 33)
     m.add("spawn", 15, 31, id="ferry")
@@ -331,8 +331,8 @@ def naru():
     m.sign(46, 18, "로포텐 덕장\n얼음 대구 3 → 말린 대구")
     # 덕장 마당: 틀 사이 띠(위 9~10줄, 가운데 15~17줄, 아래 22~24줄)에 소금 통·생선 바구니·밧줄·상자
     for (k, x, y) in [("rope", 50, 9), ("sack", 54, 9), ("barrel_s", 57, 9), ("lantern", 52, 10),
-                      ("crate", 48, 16), ("fishbasket", 51, 16), ("barrels3", 55, 16), ("bucket", 53, 17),
-                      ("fishbasket", 47, 23), ("crate_goods", 48, 24), ("sack", 51, 24), ("barrels3", 54, 24), ("barrel", 58, 24)]:   # 10/27 덕장 다리 앞을 비움
+                      ("crate", 48, 16), ("fishbasket", 51, 16), ("logs", 55, 16), ("bucket", 53, 17),
+                      ("fishbasket", 47, 23), ("crate_goods", 48, 24), ("sack", 51, 24), ("logs", 54, 24), ("barrel", 58, 24)]:   # 10/27 덕장 다리 앞을 비움
         m.deco_stamp(k, x, y)
     m.critters("gull", (48, 9, 58, 24), 4)
     m.dense_border("coast")
@@ -393,7 +393,7 @@ def laugar():
             m.blocked[by][bx + dx] = True
     m.spot("craft_brew", 40, 28)
     m.sign(31, 25, "꿀술 양조장\n꿀술 2 + 약초 1 → 약초 꿀술")
-    for (k, x, y) in [("crate", 33, 29), ("lantern", 38, 27), ("sack", 36, 31), ("firewood", 40, 33), ("barrels3", 44, 32),
+    for (k, x, y) in [("crate", 33, 29), ("lantern", 38, 27), ("sack", 36, 31), ("firewood", 40, 33), ("logs", 44, 32),
                       ("bigbarrel", 45, 30), ("jar_red", 41, 27), ("bucket", 33, 31)]:
         m.deco_stamp(k, x, y)
     m.fence(32, 25, 47, 34, gap=(38, 25))   # 양조장 마당: 울타리
