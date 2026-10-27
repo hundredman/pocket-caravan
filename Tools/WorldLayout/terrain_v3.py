@@ -89,7 +89,7 @@ VIA={frozenset(('east/동문 마을','east/북동 포구')):'east/북동 길',fr
 # 검토안 선택: 중앙 마을 크기와 추가 쉼터 마을
 VARIANT={'area':{},'hamlets':[]}
 SMALL_CENTRAL={'east/동문 마을':750,'east/북동 포구':800,'east/남동 포구':800,'east/중앙 길목 마을':850}
-HAMLETS=[('east/북쪽 내륙길','북쪽 쉼터 마을',320),('east/남쪽 내륙길','남쪽 쉼터 마을',320)]
+HAMLETS=[('east/북쪽 내륙길','북쪽 쉼터 마을',320),('east/남쪽 내륙길','남쪽 호숫가 마을',320)]
 
 
 def build(layout):
@@ -241,12 +241,25 @@ def build(layout):
         ph=rng.uniform(0,2*math.pi,4);amp=(.16,.10,.06,.04)
         dy_=yy_-seed[0];dx_=xx_-seed[1]
         u=dx_*math.cos(ang)+dy_*math.sin(ang);v=-dx_*math.sin(ang)+dy_*math.cos(ang)
+        # 좌표를 노이즈로 비틀어(도메인 워핑) 만·곶이 여러 크기로 생기게 하고, 낮은 땅일수록 물이 더 들어오게
+        wy=noise((H,W),11,rng,3)-.5;wx=noise((H,W),11,rng,3)-.5;frac=noise((H,W),6,rng,4)-.5
+        u=u+9*wx;v=v+9*wy
         theta=np.arctan2(v,u);rr_=np.sqrt((u/math.sqrt(asp))**2+(v*math.sqrt(asp))**2)
-        wob=1+sum(a_*np.sin((k_+2)*theta+ph[k_]) for k_,a_ in enumerate(amp))+.18*(marsh_n-.5)
-        m=(rr_<r0*wob)&land&inner&~river
-        m=ndimage.binary_closing(ndimage.binary_opening(m),iterations=2)&land&inner&~river
+        wob=1+sum(a_*np.sin((k_+2)*theta+ph[k_]) for k_,a_ in enumerate(amp))
+        En=(E-E[seed])/(np.ptp(E[land])+1e-9)
+        field=rr_/(r0*wob)+1.6*En+.32*frac
+        # 목표 면적이 되도록 문턱값을 찾는다
+        cand_=land&inner&~river
+        vals=np.sort(field[cand_&(np.sqrt(dy_**2+dx_**2)<r0*2.4)])
+        thr=vals[min(len(vals)-1,lk['area'])]
+        m=(field<thr)&cand_&(np.sqrt(dy_**2+dx_**2)<r0*2.4)
+        m=ndimage.binary_closing(ndimage.binary_opening(m),iterations=1)&cand_
         lab,n_=ndimage.label(m)
         if n_>1:m=lab==(1+int(np.argmax(ndimage.sum(np.ones_like(lab),lab,range(1,n_+1)))))
+        # 호수 안의 땅: 작은 것은 메우고 큰 것(작은 섬)은 남긴다
+        holes=ndimage.binary_fill_holes(m)&~m;hl,hn=ndimage.label(holes)
+        for j in range(1,hn+1):
+            if (hl==j).sum()<10:m|=hl==j
         lake|=m;lk['cells']=int(m.sum());lk['center']=[int(seed[1]+X0),int(seed[0]+Y0)]
         cost=1+10*elev
         # 나가는 개울: 가장 낮은 물가 → 가장 가까운 바다
@@ -264,8 +277,19 @@ def build(layout):
             h0=tuple(hill[np.argmax(elev[tuple(hill.T)])])
             mc=np.argwhere(m);m0=tuple(mc[np.argmin(((mc-np.array(h0))**2).sum(1))])
             inflow=astar(h0,m0,cost,blocked=np.isin(t,[MOUNTAIN,PEAK]),eight=True)
+        def meander(path,amp_=2.6,lam_=13):
+            # A* 길을 따라가며 옆으로 흔들어 굽이치게(땅 위에서만)
+            if len(path)<8:return path
+            out_=[];n=len(path);phs=rng.uniform(0,6.28)
+            for i_,(y,x) in enumerate(path):
+                a0=path[max(0,i_-3)];a1=path[min(n-1,i_+3)];ty,tx=a1[0]-a0[0],a1[1]-a0[1];L_=math.hypot(ty,tx) or 1
+                env=math.sin(math.pi*i_/(n-1))
+                o=env*amp_*math.sin(2*math.pi*i_/lam_+phs)
+                q=(int(round(y-tx/L_*o)),int(round(x+ty/L_*o)))
+                out_.append(q if 0<=q[0]<H and 0<=q[1]<W and (land[q] or sea[q]) and not m[q] else (y,x))
+            return smooth_path(out_,np.zeros((H,W),bool))
         for path,width in ((out,1.2),(inflow,.8)):
-            pts=smooth_path(path,np.zeros((H,W),bool)) if len(path)>5 else path
+            pts=meander(path)
             for i_,(y,x) in enumerate(pts):
                 rad=width*(.7+.5*i_/max(1,len(pts))) if path is out else width
                 rr=int(math.ceil(rad))
@@ -329,7 +353,7 @@ def build(layout):
     for v,tw in zip(village_info,towns):
         v['area']=int((vlabel==towns.index(tw)).sum())
     return dict(t=t,elev=elev,owned=owned,land=land,sea=sea,river=river,village=village,mapid=mapid,keys=keys,
-                rivers=river_info,villages=village_info,maps=[],towns=towns,vlabel=vlabel,region_of=region_of,passable=passable)
+                rivers=river_info,villages=village_info,maps=[],towns=towns,lake=lake,lakes=LAKES,vlabel=vlabel,region_of=region_of,passable=passable)
 
 
 def partition(layout,w,road=None):
@@ -364,6 +388,8 @@ def partition(layout,w,road=None):
                 v=g+math.hypot(dy,dx)*(step_cost[p]+step_cost[n])/2
                 if v<dist[n]:dist[n]=v;heapq.heappush(q,(v,n))
         return dist
+    # 호수는 한 맵에 통째로: 호숫가 마을이 있는 맵의 씨앗에 호수를 더한다
+    if 'east/남쪽 내륙길' in seeds and w.get('lake') is not None:seeds['east/남쪽 내륙길']=seeds['east/남쪽 내륙길']|w['lake']
     D=np.stack([geodesic(seeds[k]) for k in keys])
     regmask=np.stack([region_of==k.split('/')[0] for k in keys])
     wgt=np.zeros(len(keys))
@@ -476,6 +502,10 @@ def render(w,path,road=None,scale=4,title='',tint=False):
     gy,gx=np.gradient(ndimage.gaussian_filter(elev,1.2))
     shade=np.clip(1+(-gx-gy)*6,0.72,1.22)
     landish=w['land']&(t!=RIVER)&(t!=LAKE)
+    if w.get('lake') is not None and w['lake'].any():   # 호수 깊이: 물가는 밝고 가운데는 짙게
+        dep=ndimage.distance_transform_edt(w['lake']);lk_=w['lake']
+        k_=np.clip(dep/6,0,1)[lk_,None]
+        rgb[lk_]=np.array((118,178,206))*(1-k_)+np.array((52,108,160))*k_
     rgb[landish]*=shade[landish,None]
     if road is not None:
         rgb[road['road']&(t==RIVER)]=(150,110,70)          # 다리
