@@ -1,0 +1,14 @@
+{
+  "stage": "M1",
+  "approvedBy": "은샘",
+  "date": "2026-10-28",
+  "note": "M1 지형 승인(\"좋다. 이렇게 가자.\"). 길은 M2에서 다시 확인.",
+  "command": "python Tools/WorldLayout/terrain_v3.py --roads --variant small-hamlets",
+  "files": {
+    "terrain-villages-small-hamlets.png": "6a60d3aa132a51c60589b7d2911ff900176347b9524eaf31e9da13ac3dd47104",
+    "terrain-villages-roads-small-hamlets.png": "51b04984733832732b20fe6d444d4d47e6f32d11df8680ceb57ec0e776f3d66d",
+    "maps-small-hamlets.png": "9b6dc6dc0d389a20eb1709ceff17677500aacd7db16a6dfff276c344bc338d90",
+    "lake-zoom.png": "d2cc0657868966dcbd919351d8679ffd3cb286b7bef4f2e46b7dcde5d2cadba6",
+    "report-small-hamlets.json": "f8f6d84eda8c996dfbfd116db5594fa7de4b1b3116af1501dcd0b1bb3953c8b9"
+  }
+}
