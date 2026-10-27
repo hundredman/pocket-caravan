@@ -85,13 +85,13 @@ tiles.STAMPS.update({
     "helm": ("element", 0, 1, 1, 1, 0, 0, None),            # 뿔 투구 장식
     "scarecrow": ("element", 15, 0, 1, 1, 0, 0, None),
     "bedroll": ("camp", 7, 7, 2, 1, 0, 0, None),
-    "sled": ("element", 4, 4, 2, 1, 0, 0, None),            # 짐 실은 썰매
+    "sled": ("northart", 4, 0, 2, 1, 0, 0, None),           # 짐 실은 썰매 (10/27 north_art.py로 새로 그림: 원래 그림은 잘려 보였다)
     "totem": ("house", 14, 14, 1, 2, 1, 1, None),           # 나무 조각 기둥
     "totem2": ("house", 15, 14, 1, 2, 1, 1, None),
     "table": ("house", 31, 16, 2, 1, 0, 0, None),
     "lantern": ("element", 6, 3, 1, 2, 1, 1, None),
     # --- 10/23 새 장소용 (잘림 확인함) ---
-    "ruinhall": ("abandon", 16, 5, 4, 6, 0, 0, None),       # 이끼 덮인 옛 회관 (룬돌 언덕)
+    "ruinhall": ("abandon", 16, 5, 4, 5, 0, 0, None),       # 이끼 덮인 옛 회관 (룬돌 언덕) — 10/27 맨 아랫줄은 옆 그림 조각이라 뺌
     "ruinhut": ("abandon", 0, 0, 4, 3, 0, 0, None),         # 무너진 돌집
     "ruinwall": ("abandon", 16, 3, 4, 2, 0, 0, None),       # 무너진 돌담
     "pit": ("nature", 7, 13, 1, 1, 0, 0, None),             # 땅속으로 난 구멍 (얼음 동굴 아래층 입구)
@@ -275,6 +275,13 @@ class SnowMap(Map):
         for y in range(y0, y1 + 1):
             ry = 0 if y == y0 else 2 if y == y1 else 1
             self.prop(K("relief", 7, ry), x, y)
+
+    def icefall3(self, x, y0, y1):
+        """10/27 얼어붙은 폭포 3칸 폭 (north_art.py 그림): 위 턱 + 고드름, 가운데 얼음 줄기 두 장 번갈아, 아래 물보라 더미. 막힌 칸."""
+        for y in range(y0, y1 + 1):
+            ry = 2 if y == y0 else 5 if y == y1 else 3 + (y - y0 - 1) % 2
+            for dx in range(3):
+                self.prop(K("northart", dx, ry), x + dx, y)
 
     def stone_ship(self, cx, cy, half, beam=3):
         """배 모양 돌무덤 (바이킹 무덤 돌 배치): 뾰족한 타원 둘레에 돌을 세운다. 양 끝은 눈 얹힌 높은 돌."""

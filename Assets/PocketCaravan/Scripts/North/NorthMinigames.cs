@@ -22,7 +22,7 @@ namespace PocketCaravan
 
         static NorthMinigames instance;
 
-        class Spots { public int h; public int[] fishing, water, sled; }
+        class Spots { public int h; public int[] fishing, water, sled, edge; }
         readonly Dictionary<string, Spots> spots = new Dictionary<string, Spots>();
         readonly Dictionary<string, float> refreezeAt = new Dictionary<string, float>();
         readonly Dictionary<string, Texture2D> tex = new Dictionary<string, Texture2D>();
@@ -72,14 +72,63 @@ namespace PocketCaravan
             if (map != lastMap) { lastMap = map; Rebuild(map); }
             if (fishing != FState.None) UpdateFishing(Time.unscaledDeltaTime);
             if (sled != SState.None) UpdateSled(Time.unscaledDeltaTime);
+            UpdateEdge(map);
+        }
+
+        // 10/27 호수 둘레 어디서나 얼음 낚시: 둘레 칸(NorthLife "fishEdge")에 서면 발밑에 낚시 자리를 하나 띄운다.
+        // 가까이에 다른 사람·자리(고정 낚시 자리 포함)가 있으면 그쪽 말 걸기를 가로채지 않게 띄우지 않는다.
+        // 얼음 구멍 쿨다운은 가장 가까운 고정 낚시 자리와 같이 쓴다 (한 칸 옮겨서 바로 다시 낚는 것 막기).
+        readonly HashSet<int> edgeSet = new HashSet<int>();
+        NorthFishingSpot edgeSpot;
+
+        void UpdateEdge(string map)
+        {
+            if (edgeSpot == null || map == null || !spots.TryGetValue(map, out var s)) return;
+            bool on = false;
+            var pc = PlayerController.Instance;
+            if (pc != null && pc.Motor != null && fishing == FState.None && sled == SState.None && !UIState.Blocking && MapRoot.Current != null)
+            {
+                var c = pc.Motor.Cell;
+                int jy = s.h - 1 - c.y;
+                if (edgeSet.Contains(c.x * 1000 + jy))
+                {
+                    Vector2 p = pc.transform.position;
+                    bool nearOther = false;
+                    foreach (var it in Interactable.All)
+                        if (it != edgeSpot && ((Vector2)it.transform.position - p).magnitude < 1.6f) { nearOther = true; break; }
+                    if (!nearOther)
+                    {
+                        on = true;
+                        edgeSpot.transform.position = MapRoot.Current.CellCenter(c);
+                        int best = -1, bd = int.MaxValue;
+                        for (int i = 0; i + 1 < s.fishing.Length; i += 2)
+                        {
+                            int d = Mathf.Abs(s.fishing[i] - c.x) + Mathf.Abs(s.fishing[i + 1] - jy);
+                            if (d < bd) { bd = d; best = i; }
+                        }
+                        edgeSpot.key = best >= 0 ? $"{map}:{s.fishing[best]}:{s.fishing[best + 1]}" : $"{map}:edge";
+                    }
+                }
+            }
+            if (edgeSpot.gameObject.activeSelf != on) edgeSpot.gameObject.SetActive(on);
         }
 
         void Rebuild(string map)
         {
             if (root != null) Destroy(root.gameObject);
             root = null;
+            edgeSpot = null; edgeSet.Clear();
             if (map == null || !spots.TryGetValue(map, out var s)) return;
             root = new GameObject("North Minigame Spots").transform;
+            if (s.edge != null && s.edge.Length >= 2)
+            {
+                for (int i = 0; i + 1 < s.edge.Length; i += 2) edgeSet.Add(s.edge[i] * 1000 + s.edge[i + 1]);
+                var eg = new GameObject("Ice Fishing (lake edge)");
+                eg.transform.SetParent(root, false);
+                eg.SetActive(false);
+                edgeSpot = eg.AddComponent<NorthFishingSpot>();
+                edgeSpot.blocksMovement = false;
+            }
             for (int i = 0; i + 1 < s.fishing.Length; i += 2)
             {
                 var go = new GameObject("Ice Fishing");
@@ -109,7 +158,7 @@ namespace PocketCaravan
                 string id = text.Substring(q1 + 1, q2 - q1 - 1);
                 int next = text.IndexOf("\"mapId\"", q2, StringComparison.Ordinal);
                 string block = next < 0 ? text.Substring(i) : text.Substring(i, next - i);
-                var s = new Spots { h = Int(block, "\"h\""), fishing = Ints(block, "fishing"), water = Ints(block, "fishingWater"), sled = Ints(block, "sledStart") };
+                var s = new Spots { h = Int(block, "\"h\""), fishing = Ints(block, "fishing"), water = Ints(block, "fishingWater"), sled = Ints(block, "sledStart"), edge = Ints(block, "fishEdge") };
                 if (s.fishing.Length > 0 || s.sled.Length > 0) spots[id] = s;
                 at = q2;
             }

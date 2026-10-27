@@ -1,5 +1,6 @@
 """10/27 북유럽 맵의 런타임 자리 계산 (장꾼·좌판·떠돌이 상인·꼬치 장수·여관·낚시 등)과 이름표 겹침 정리.
 export_north.py에서 옮겨 옴: 맵 JSON을 쓰기 전에 이름표 정리(declutter)를 하려면 먼저 정의돼 있어야 해서."""
+import tiles
 
 
 def _half(label):
@@ -83,6 +84,7 @@ def market_spots(m):
     used = {(o["x"], o["y"]) for o in m.objects}
     kp = keeper_spots(m)
     used |= {(kp[i] + a, kp[i + 1] + b) for i in range(0, len(kp), 2) for a in (-1, 0, 1) for b in (-1, 0, 1)}   # 장꾼 자리와 그 둘레는 비움
+    used |= {(x + a, y + b) for (n, x, y) in m.stamps if n == "stall" for a in range(-1, 4) for b in range(-1, 3)}   # 10/27 원래 좌판(3x2) 둘레엔 줄무늬 좌판을 붙이지 않음
     def free(x, y):
         return 1 <= x < m.w - 1 and 1 <= y < m.h - 1 and not m.blocked[y][x] and not m.water[y][x] and m.obj[y][x] is None and m.high[y][x] is None and (x, y) not in used and not in_yard(m, x, y)
     stalls = []
@@ -122,13 +124,14 @@ def keeper_spots(m):
     장터에서 가까운 좌판 넷까지. 수입품 좌판처럼 바로 옆에 이미 사람이 있으면 건너뜀."""
     mk = [o for o in m.objects if o["kind"] == "market"]
     if not mk:
+        m._keeper_stalls = []
         return []
     mx, my = mk[0]["x"], mk[0]["y"]
     people = [(o["x"], o["y"]) for o in m.objects if o["kind"] in ("talker", "npc")]
     used = {(o["x"], o["y"]) for o in m.objects}
     def free(x, y):
         return 1 <= x < m.w - 1 and 1 <= y < m.h - 1 and not m.blocked[y][x] and not m.water[y][x] and m.obj[y][x] is None and m.high[y][x] is None and (x, y) not in used
-    out = []
+    out, pairs = [], []
     stalls = sorted([(abs(x + 1 - mx) + abs(y - my), x, y) for (n, x, y) in m.stamps if n == "stall"])
     for d, x, y in stalls:
         if len(out) >= 8:
@@ -142,7 +145,20 @@ def keeper_spots(m):
         if pick:
             out += [pick[0], pick[1]]
             used.add(pick)
+            pairs += [x + 1, y + 1]          # 이 장꾼이 맡은 좌판 (가운데 칸, 아랫줄)
+    m._keeper_stalls = pairs
     return out
+
+
+def keeper_stalls(m):
+    """10/27 keeper_spots와 같은 순서로, 장꾼마다 맡은 좌판 [가운데 x, 아랫줄 y, ...] (장꾼 그림은 그 계산대 뒤에 선다)"""
+    keeper_spots(m)
+    return m._keeper_stalls
+
+
+def stall_art(m):
+    """10/27 맵에 놓인 좌판(stall 3x2) 자리 [가운데 x, 아랫줄 y, ...]: 타일 대신 새 좌판 그림을 런타임에 그린다"""
+    return [v for (n, x, y) in m.stamps if n == "stall" for v in (x + 1, y + 1)]
 
 
 def side_spots(m):
@@ -240,6 +256,31 @@ def fishing_cells(m):
 
 
 
+def fish_edge(m):
+    """10/27 얼음 낚시: 낚시 자리가 있는 갇힌 호수·웅덩이의 둘레 걷는 칸 전부 [x, y, ...] — 둘레 어디서나 Space로 낚시"""
+    body = set()
+    for (fx, fy) in getattr(m, "fishing", []):
+        if not (m.inside(fx, fy) and m.water[fy][fx]) or (fx, fy) in body:
+            continue
+        lake, stack = set(), [(fx, fy)]
+        while stack:
+            x, y = stack.pop()
+            if (x, y) in lake or not m.inside(x, y) or not m.water[y][x]:
+                continue
+            lake.add((x, y))
+            stack += [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]
+        # 바다·개울처럼 맵 밖으로 이어진 물은 뺀다 (부두·나룻배 앞에서 말 걸기를 가로채지 않게): 갇힌 호수·웅덩이만
+        if not any(x in (0, m.w - 1) or y in (0, m.h - 1) for (x, y) in lake):
+            body |= lake
+    out = set()
+    for (x, y) in body:
+        for a, b in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            cx, cy = x + a, y + b
+            if 1 <= cx < m.w - 1 and 1 <= cy < m.h - 1 and not m.water[cy][cx] and not m.blocked[cy][cx]:
+                out.add((cx, cy))
+    return [v for c in sorted(out) for v in c]
+
+
 # ---------- 10/27 이름표 겹침 정리 ----------
 # 게임에서 사람·표지판·자리 이름표는 머리 위 한 줄로 가운데 맞춰 그려진다. 글자 수로 폭을 어림해서
 # 같은 줄(위아래 1칸 안)에 폭이 겹치면 "겹침"으로 본다. 마을 사람(talker)과 이정표(sign)만 옮긴다
@@ -321,9 +362,83 @@ def declutter(m):
     return m
 
 
+TREES = {"snowpine", "snowpine_g", "snowround", "deadtree", "snowpinebig", "snowpinebig_g", "snowroundbig", "deadtreebig"}
+SMALL = ["sack", "basket", "crate", "firewood", "barrel_s"]   # 나무 뺀 자리에 놓는 1칸 소품
+
+
+def _stall_zones(m):
+    """좌판·장꾼·꼬치 장수 둘레 (이 안에 나무가 있으면 뺀다)"""
+    st, _ = market_spots(m)
+    z = [(st[i] - 3, st[i + 1] - 3, st[i] + 3, st[i + 1] + 2) for i in range(0, len(st), 2)]          # 줄무늬 좌판(3칸) + 장꾼
+    z += [(x - 2, y - 2, x + 4, y + 3) for (n, x, y) in m.stamps if n == "stall"]                       # 원래 있던 좌판 3x2
+    kp = keeper_spots(m) + spit_sellers(m)
+    z += [(kp[i] - 2, kp[i + 1] - 2, kp[i] + 2, kp[i + 1] + 1) for i in range(0, len(kp), 2)]
+    return z
+
+
+def _snapshot(m):
+    return (market_spots(m), keeper_spots(m), side_spots(m), spit_sellers(m))
+
+
+def _unstamp(m, name, x, y):
+    w, h = tiles.STAMPS[name][3], tiles.STAMPS[name][4]
+    for dy in range(h):
+        for dx in range(w):
+            if m.inside(x + dx, y + dy):
+                m.obj[y + dy][x + dx] = None; m.high[y + dy][x + dx] = None; m.blocked[y + dy][x + dx] = False
+    m.stamps.remove((name, x, y))
+
+
+def clear_stall_trees(m):
+    """10/27 좌판 옆에 나무가 붙어 있으면 별로라 뺀다 (모든 장터 마을). 맵 가장자리 숲(바깥 3칸)은 그대로.
+    뺀 나무 밑동 자리에 1칸 소품(자루·바구니·상자·장작·작은 통)을 놓는다 — 단 좌판·장꾼 자리가 바뀌면 소품은 안 놓음."""
+    if not any(o["kind"] == "market" for o in m.objects):
+        return m
+    removed = []
+    for _ in range(4):
+        zones = _stall_zones(m)
+        hit = []
+        for (n, x, y) in list(m.stamps):
+            if n not in TREES:
+                continue
+            w, h = tiles.STAMPS[n][3], tiles.STAMPS[n][4]
+            if x < 3 or y < 3 or x + w > m.w - 3 or y + h > m.h - 3:
+                continue
+            if any(x <= x1 and x + w - 1 >= x0 and y <= y1 and y + h - 1 >= y0 for (x0, y0, x1, y1) in zones):
+                hit.append((n, x, y))
+        if not hit:
+            break
+        for t in hit:
+            _unstamp(m, *t); removed.append(t)
+    m.removed_trees = removed
+    base = _snapshot(m)
+    for i, (n, x, y) in enumerate(removed):
+        before = _reach_count(m)
+        h = tiles.STAMPS[n][4]
+        cx, cy = x, y + h - 1
+        if m.road[cy][cx] > 0 or m.obj[cy][cx] is not None or m.blocked[cy][cx]:
+            continue
+        (st, cr), kp, sd, sp = base
+        ppl = [(st[j], st[j + 1] + 1) for j in range(0, len(st), 2)] + [(st[j] + a, st[j + 1]) for j in range(0, len(st), 2) for a in (-1, 0, 1)]
+        ppl += [(v[j], v[j + 1]) for v in (kp, sd, sp) for j in range(0, len(v), 2)] + [(o["x"], o["y"]) for o in m.objects if o["kind"] in ("talker", "npc")]
+        if any(abs(cx - a) <= 1 and abs(cy - b) <= 1 for (a, b) in ppl):
+            continue                      # 사람·좌판 바로 옆엔 소품을 두지 않는다 (붙어 보여 답답함)
+        name = SMALL[(x * 7 + y * 3) % len(SMALL)]
+        if m.deco_stamp(name, cx, cy):
+            if _snapshot(m) != base or _reach_count(m) < before - 1:
+                _unstamp(m, name, cx, cy)
+    return m
+
+
+def _reach_count(m):
+    from validate import reachable
+    mk = [o for o in m.objects if o["kind"] == "market"][0]
+    return len(reachable(m, (mk["x"], mk["y"])))
+
+
 def build(f):
     """맵을 만들고 이름표 겹침을 정리한다 (JSON·지도·생활 정보 모두 같은 결과를 쓰도록 여기서만 만든다)."""
-    return declutter(f())
+    return clear_stall_trees(declutter(f()))
 
 
 def label_report(m):

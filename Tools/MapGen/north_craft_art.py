@@ -522,4 +522,5 @@ def game_sprites():
     out["ferry_boat_0"]=ferry_boat(0); out["ferry_boat_1"]=ferry_boat(1)   # 10/27 나룻배 노 젓기
     out["ferry_ice_0"]=ferry_ice(True); out["ferry_ice_1"]=ferry_ice(False)
     out.update(__import__("north_keeper_art").sprites())   # 10/27 장터 장꾼
+    out.update(__import__("north_stall_art").sprites())    # 10/27 새 좌판 4종 (+ 계산대 앞판)
     return out

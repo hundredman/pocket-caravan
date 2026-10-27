@@ -163,7 +163,7 @@ namespace PocketCaravan
             // 공용 이벤트는 새 게임에서 비워질 수 있어 맵마다 다시 건다 (두 번 걸리지 않게 먼저 뺌)
             GameEvents.ItemSold -= OnSold; GameEvents.ItemSold += OnSold;
             if (root != null) Destroy(root.gameObject);
-            root = null; idlers.Clear(); yard.Clear(); shouters.Clear(); shoutWho = -1;
+            root = null; idlers.Clear(); yard.Clear(); shouters.Clear(); stallLabels.Clear(); shoutWho = -1;
             if (shopOpen) CloseShop();
             if (map == null || !map.StartsWith("north_") || GameManager.I == null) return;
             root = new GameObject("North Craft").transform;
@@ -215,9 +215,23 @@ namespace PocketCaravan
 
         // 10/27 장터: 모든 북유럽·중앙 북쪽 장터 마을에 좌판 둘 + 장꾼 둘 (말 걸면 그 마을 장터가 열림).
         // 큰 장 날에는 깃발 줄과 구경꾼 넷이 더 오고, 장꾼들이 더 자주 외친다.
-        static readonly string[] Shouts = { "싱싱한 얼음 대구 있어요!", "털옷 보고 가요~", "꿀술 한 잔 맛보고 가!", "모피 사요, 모피!", "소금 좋은 거 들어왔어!", "골라 골라~", "Hei hei! 어서 와요!", "Takk! 또 와요~" };
+        // 10/27 장꾼마다 자기 물건만 외친다 (모피 장꾼이 소금 얘기를 하지 않게)
+        static string[] ShoutsFor(string sprite)
+        {
+            switch (sprite)
+            {
+                case "keeper_fish": return new[] { "싱싱한 얼음 대구 있어요!", "새벽에 건진 거야~", "Hei hei! 생선 보고 가요!" };
+                case "keeper_fur": return new[] { "모피 사요, 모피!", "털옷 보고 가요~", "따뜻한 가죽 있어요!" };
+                case "keeper_mead": return new[] { "꿀술 한 잔 맛보고 가!", "달콤한 꿀술 있어요~", "Skål! 한 모금 해요!" };
+                default: return new[] { "소금 좋은 거 들어왔어!", "고원 치즈도 있다네~", "Takk! 또 와요~" };
+            }
+        }
         static readonly string[] FairShouts = { "큰 장 날엔 덤이 있어요!", "오늘만 이 값!", "북쪽 물건 다 모였어요~", "어서 와요, 큰 장이야!" };
-        readonly List<Transform> shouters = new List<Transform>();
+        // 외치는 사람: 말풍선 자리(월드)와 외칠 말. 장꾼은 좌판 지붕 위 이름표 바로 위, 구경꾼은 머리 위
+        readonly List<(Vector3 at, string[] lines, bool keeper)> shouters = new List<(Vector3, string[], bool)>();
+        // 10/27 장꾼 이름표: 좌판 지붕 위에 직접 그린다 (머리 위에 그리면 좌판 지붕·물건을 가려서)
+        readonly List<(Vector3 at, string text)> stallLabels = new List<(Vector3, string)>();
+        GUIStyle stallLabelStyle, stallShadowStyle;
         int shoutWho = -1; string shoutText; float shoutT, shoutNext;
         bool fairHere;
         GUIStyle shoutStyle;
@@ -229,16 +243,31 @@ namespace PocketCaravan
             var mk = NorthData.Get(map, "market");
             var keepers = KeepersFor(map);
             int n = 0;
-            // 10/27 이미 있는 좌판(맵에 그려진 천 덮은 좌판) 옆에 장꾼을 세운다 (최대 넷)
+            // 10/27 맵에 놓인 좌판은 타일 대신 새 좌판 그림 (stallArt). 장꾼이 맡은 좌판은 그 장꾼 물건, 나머지는 돌아가며
             var kp = NorthData.Get(map, "keepers");
+            var ks = NorthData.Get(map, "keeperStall");
+            var art = NorthData.Get(map, "stallArt");
+            var kinds = new Dictionary<int, string>();
+            for (int i = 0, k = 0; i + 1 < kp.Length && i + 1 < ks.Length; i += 2, k++) kinds[ks[i] * 1000 + ks[i + 1]] = keepers[k % keepers.Length];
+            for (int i = 0, j = 0; i + 1 < art.Length; i += 2)
+            {
+                if (kinds.ContainsKey(art[i] * 1000 + art[i + 1])) continue;
+                Stall(map, art[i], art[i + 1], keepers[(j++ + 1) % keepers.Length], false);
+            }
+            // 이미 있는 좌판마다 장꾼 (최대 넷): 그림은 계산대 뒤, 말 거는 자리는 계산대 앞 칸
             for (int i = 0; i + 1 < kp.Length; i += 2, n++)
-                Keeper(map, kp[i], kp[i + 1], keepers[n % keepers.Length], n);
-            // 좌판이 없는 마을(사냥꾼·라우가르·순록 고원)이나 큰 장 날에는 줄무늬 좌판 둘 + 장꾼을 더 세운다
+            {
+                string who = keepers[n % keepers.Length];
+                if (i + 1 < ks.Length) Stall(map, ks[i], ks[i + 1], who, true);
+                Keeper(map, kp[i], kp[i + 1], who, n, i + 1 < ks.Length ? ks[i] : kp[i], i + 1 < ks.Length ? ks[i + 1] : kp[i + 1] - 1);
+            }
+            // 좌판이 없는 마을(사냥꾼·라우가르·순록 고원)이나 큰 장 날에는 좌판 둘 + 장꾼을 더 세운다
             if (kp.Length < 2 || fair)
                 for (int i = 0; i + 1 < st.Length; i += 2, n++)
                 {
-                    PutAt(NorthUtil.Cell(map, st[i], st[i + 1]) + new Vector3(0f, -0.5f, 0f), "fair_stall", 9);   // 3칸 폭, 가운데 칸 기준
-                    Keeper(map, st[i], st[i + 1] + 1, keepers[n % keepers.Length], n);   // 10/27 좌판 바로 아래 (길을 막지 않게)
+                    string who = keepers[n % keepers.Length];
+                    Stall(map, st[i], st[i + 1], who, true);
+                    Keeper(map, st[i], st[i + 1] + 1, who, n, st[i], st[i + 1]);   // 말 거는 자리는 좌판 바로 앞 칸 (길을 막지 않게)
                 }
             if (!fair || mk.Length < 2) return;
             int x = mk[0], y = mk[1];
@@ -252,20 +281,33 @@ namespace PocketCaravan
                 go.transform.position = NorthUtil.Cell(map, cr[i], cr[i + 1]);
                 Animate(go, crowd[c], c * 0.45f);
                 var sr = go.GetComponent<SpriteRenderer>(); if (sr != null) sr.flipX = c >= 2;
-                shouters.Add(go.transform);
+                shouters.Add((go.transform.position + new Vector3(0f, 1.9f, 0f), FairShouts, false));
             }
         }
 
-        void Keeper(string map, int x, int y, string sprite, int n)
+        /// <summary>10/27 새 좌판 그림 (48x48, 아랫줄 가운데 칸 기준). withKeeper면 계산대 앞판을 한 장 더 그려 장꾼 몸 아래를 가린다</summary>
+        void Stall(string map, int cx, int by, string keeperSprite, bool withKeeper)
+        {
+            string kind = keeperSprite.Replace("keeper_", "");
+            var bottom = NorthUtil.Cell(map, cx, by) + new Vector3(0f, -0.5f, 0f);
+            PutAt(bottom, "stall_" + kind, 9);
+            if (withKeeper) PutAt(bottom, "stall_" + kind + "_front", 11);
+        }
+
+        /// <summary>장꾼: 그림은 좌판(sx, sy) 계산대 뒤, 말 거는 자리는 (x, y), 이름표·외침은 좌판 지붕 위</summary>
+        void Keeper(string map, int x, int y, string sprite, int n, int sx, int sy)
         {
             var pos = NorthUtil.Cell(map, x, y);
+            var bottom = NorthUtil.Cell(map, sx, sy) + new Vector3(0f, -0.5f, 0f);
             var go = new GameObject("Market Keeper");
             go.transform.SetParent(root, false);
-            go.transform.position = pos + new Vector3(0f, -0.4f, 0f);
+            go.transform.position = bottom + new Vector3(0f, 0.65f, 0f);    // 머리·몸 위쪽만 계산대 위로 보이게
             Animate(go, sprite, n * 0.35f);
-            shouters.Add(go.transform);
             var info = KeeperInfo(sprite);
-            NorthSpot.Make(root, pos, () => $"{info.name} ({info.title})", () => OpenShop(map, n, sprite), Interactable.Kind.Market);
+            var top = bottom + new Vector3(0f, 3.15f, 0f);                    // 지붕 꼭대기 바로 위
+            stallLabels.Add((top, $"{info.name} ({info.title})"));
+            shouters.Add((top, ShoutsFor(sprite), true));
+            NorthSpot.Make(root, pos, () => "", () => OpenShop(map, n, sprite), Interactable.Kind.Market);   // 이름표는 지붕 위에 따로 그림
         }
 
         // ---------------- 장꾼 좌판 (10/27) ----------------
@@ -438,7 +480,7 @@ namespace PocketCaravan
             if (Time.time < shoutNext) return;
             shoutNext = Time.time + (fairHere ? Random.Range(2f, 3.5f) : Random.Range(4.5f, 7f));
             shoutWho = Random.Range(0, shouters.Count);
-            var pool = fairHere && Random.value < 0.5f ? FairShouts : Shouts;
+            var pool = fairHere && Random.value < 0.4f ? FairShouts : shouters[shoutWho].lines;
             shoutText = pool[Random.Range(0, pool.Length)];
             shoutT = Time.time + 2.2f;
         }
@@ -446,17 +488,37 @@ namespace PocketCaravan
         void OnGUI()
         {
             if (shopOpen) { UIStyle.Begin(); DrawShop(); return; }
-            if (shoutWho < 0 || shoutWho >= shouters.Count || shouters[shoutWho] == null || UIState.Blocking) return;
+            if (UIState.Blocking) return;
             var cam = Camera.main;
             if (cam == null) return;
-            var sp = cam.WorldToScreenPoint(shouters[shoutWho].position + new Vector3(0f, 2.4f, 0f));   // 10/27 이름표보다 위에 (가리지 않게)
-            if (sp.z < 0f) return;
             UIStyle.Begin();
+            float sc = UIStyle.Scale;
+            // 10/27 장꾼 이름표: 좌판 지붕 위 (다른 이름표처럼 그림자 넣은 초록 글씨)
+            if (stallLabelStyle == null)
+            {
+                stallLabelStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.SmallFont, alignment = TextAnchor.MiddleCenter, fontSize = 9, clipping = TextClipping.Overflow, wordWrap = false };
+                stallLabelStyle.normal.textColor = new Color(0.55f, 0.95f, 0.6f);
+                stallShadowStyle = new GUIStyle(stallLabelStyle);
+                stallShadowStyle.normal.textColor = new Color(0f, 0f, 0f, 0.75f);
+            }
+            foreach (var l in stallLabels)
+            {
+                var lp = cam.WorldToScreenPoint(l.at);
+                if (lp.z < 0f) continue;
+                float lx = lp.x / sc, ly = (Screen.height - lp.y) / sc;
+                GUI.Label(new Rect(lx - 79f, ly - 7f, 160f, 12f), l.text, stallShadowStyle);
+                GUI.Label(new Rect(lx - 80f, ly - 8f, 160f, 12f), l.text, stallLabelStyle);
+            }
+            if (shoutWho < 0 || shoutWho >= shouters.Count) return;
+            var sh = shouters[shoutWho];
+            var sp = cam.WorldToScreenPoint(sh.at);
+            if (sp.z < 0f) return;
             if (shoutStyle == null) shoutStyle = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow };
-            float sc = UIStyle.Scale, x = sp.x / sc, y = (Screen.height - sp.y) / sc;
+            float x = sp.x / sc, y = (Screen.height - sp.y) / sc;
             string t = $"<color=#3a2a1e>{shoutText}</color>";
             float w = shoutStyle.CalcSize(new GUIContent(t)).x + 12f;
-            var r = new Rect(x - w / 2f, y - 16f, w, 16f);
+            // 장꾼은 이름표 바로 위 한 줄, 구경꾼은 머리 위
+            var r = sh.keeper ? new Rect(x - w / 2f, y - 26f, w, 16f) : new Rect(x - w / 2f, y - 16f, w, 16f);
             var old = GUI.color;
             GUI.color = new Color(1f, 0.98f, 0.9f, 0.95f); GUI.DrawTexture(r, Texture2D.whiteTexture);
             GUI.color = old;

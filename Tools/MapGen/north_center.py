@@ -60,6 +60,10 @@ def discover(m, kind, x, y, trail=None, talk=None):
     d = m.deco_stamp
     if kind == "cairn":        # 돌무더기 길잡이
         d("rock", x, y); d("runestone_b", x + 2, y - 1); d("rocksmall", x - 1, y + 1); d("rocksmall", x + 3, y + 1)
+    elif kind == "hut":        # 10/27 외딴 흙집 한 채 (개울 나루: 돌무더기·룬돌 대신)
+        # 오솔길(x열)을 막지 않게 한 칸 오른쪽에 짓고, 문 앞 길을 오솔길 끝에 잇는다
+        if m.stamp("h_turf", x + 1, y - 1, force=True):
+            m.door_path(x + 1, y - 1, 3, 2, y + 2, door_dx=1); m.road_path([(x, y + 2), (x + 2, y + 2)], width=1)
     elif kind == "cargo":      # 버려진 짐 (돌발 사건 자리)
         d("sled", x, y); d("crate", x + 2, y); d("sack", x + 2, y + 1); d("barrel_s", x - 1, y); m.event(x + 1, y + 2)
     elif kind == "icehole":    # 얼음 낚시 구멍 (낚시 미니게임 자리)
@@ -395,7 +399,7 @@ def creek_town():
     closed_exit(m, "E", 11, "→ 북동 포구 (고려 쪽)\n(이웃 구역과 잇는 중)", road_from=(43, 12))
     wedge_forest(m, 48, 46, "coast")
     # 장터와 집들
-    m.deco_stamp("stall", 19, 9); m.deco_stamp("stall", 28, 9)
+    m.deco_stamp("stall", 19, 9); m.deco_stamp("stall", 16, 16)   # 10/27 오른쪽 좌판(군나르)은 게시판 아래로 두 줄 띄워 옮김 (가로등·사람과 안 겹치게)
     m.deco_stamp("fishbasket", 22, 10); m.deco_stamp("barrel_s", 27, 11); m.deco_stamp("lamp", 17, 8); m.deco_stamp("lamp", 31, 8)
     m.add("market", 24, 13, town="north_ccreek")
     m.board(18, 13, "north_ccreek")
@@ -408,7 +412,7 @@ def creek_town():
     m.link("W", 20, 4, "north_c_runeway", "E", "W")
     m.sign(4, 18, "← 룬돌 큰길\n북문 마을 · 길목 마을")
     # 얼음 낚시터 (개울가 둘)
-    m.deco_stamp("fishbasket", 34, 22); m.deco_stamp("bucket", 34, 23); m.deco_stamp("fire", 32, 24)
+    m.deco_stamp("fishbasket", 34, 22); m.deco_stamp("bucket", 34, 23)   # 10/27 모닥불은 서쪽 얼음 낚시터 옆으로 옮김
     m.fishing.append((38, 22))
     m.fishing.append((39, 31))
     m.road_path([(25, 24), (35, 24)], width=1); m.road_path([(25, 31), (36, 31)], width=1)
@@ -424,7 +428,8 @@ def creek_town():
     m.talker(13, 23, "빨래하는 아주머니", "north_fox_woman_tall", "나룻배 타면 피오르 나루까지 금방이야. 비르카를 돌아가는 것보다 훨씬 빠르지.")
     m.walker([(25, 1), (25, 8), (21, 12), (28, 13), (25, 18), (25, 30), (25, 38)], idx=9)
     m.critters("gull", (30, 30, 48, 38), 2)
-    auto_fill(m, ["icehole", "cairn", "camp"], max_n=3)
+    auto_fill(m, ["icehole", "hut", "camp"], max_n=3)   # 10/27 빨래터 아래 돌무더기·룬돌 → 흙집
+    m.deco_stamp("fire", 14, 30)        # 10/27 빨래하는 아주머니 아래 얼음 낚시터 오른쪽 넓은 빈터에 모닥불 (의자 둘 자리 넉넉히)
 
     m.dense_border("coast")
     m.grove(4, 34, 3, 2, "thaw")
@@ -460,7 +465,6 @@ def rune_way():
     for i, (rx, ry) in enumerate([(22, 14), (26, 12), (30, 14), (30, 18), (26, 20), (22, 18)]):
         m.deco_stamp("runestone_b" if i % 2 else "runestone", rx, ry)
     m.deco_stamp("picturestone", 25, 15)       # 가운데: 배·태양 무늬 큰 그림돌
-    m.deco_stamp("ruinwall", 6, 8); m.deco_stamp("ruinwall", 24, 66)
     m.deco_stamp("crys_b", 28, 26); m.deco_stamp("crys_p", 29, 27)
     # 숨은 룬돌: 서쪽 숲 틈 (길 없이 나무 사이로 들어가야 함)
     m.secret_rune(1, 5, 46); m.deco_stamp("gem_b", 7, 48)

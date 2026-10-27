@@ -63,7 +63,7 @@ def snow_base(img, ox, oy, x0, x1, y):
 
 
 def make():
-    img = Image.new("RGBA", (64, 32), (0, 0, 0, 0))
+    img = Image.new("RGBA", (96, 96), (0, 0, 0, 0))
     px = img.load()
     # 룬돌 A: 끝이 비스듬히 뾰족한 선돌 (아래로 갈수록 넓음)
     A = {1: (7, 8), 2: (6, 9), 3: (5, 10), 4: (4, 11)}
@@ -125,9 +125,101 @@ def make():
     for x, y in [(12, 4), (13, 4), (14, 4), (15, 4), (16, 4), (17, 4), (18, 4), (9, 5), (10, 5), (11, 5), (12, 5), (13, 5), (14, 5), (20, 5), (21, 5), (22, 5)]:
         px[32 + x, y] = SNOW
     snow_base(img, 32, 0, 0, 31, 29)
+    sled(img, 64, 0)
+    icefall(img, 0, 32)
     img.save(PATH)
     return PATH
 
 
+def sled(img, ox, oy):
+    """10/27 짐 실은 나무 썰매 2x1 (32x16): 앞이 말려 올라간 썰매 날 둘, 판자 바닥, 끈으로 묶은 모피 짐 + 눈.
+    (원래 element 시트 그림은 상자 두 개를 붙인 것 같아 잘려 보였다)"""
+    from PIL import ImageDraw
+    d = ImageDraw.Draw(img)
+    O = (52, 40, 36, 255); W = (176, 116, 68, 255); WD = (124, 80, 48, 255); WL = (206, 150, 96, 255)
+    RUN = (82, 74, 84, 255); RUNL = (150, 146, 160, 255); FUR = (150, 108, 72, 255); FURD = (110, 78, 54, 255)
+    FURL = (236, 226, 210, 255); ROPE = (208, 72, 56, 255); SH = (200, 194, 214, 255)
+    X = lambda x: ox + x; Y = lambda y: oy + y
+    d.line((X(4), Y(15), X(29), Y(15)), fill=SH)                                  # 그림자
+    for ry in (12, 14):                                                           # 썰매 날 두 줄 (앞이 말림)
+        d.line((X(3), Y(ry), X(27), Y(ry)), fill=RUN)
+        d.line((X(4), Y(ry), X(25), Y(ry)), fill=RUNL if ry == 12 else RUN)
+        d.line((X(27), Y(ry), X(29), Y(ry - 2)), fill=RUN); d.line((X(29), Y(ry - 2), X(29), Y(ry - 4)), fill=RUN)
+        d.point((X(28), Y(ry - 4)), fill=RUN)
+    for sx in (6, 13, 20):                                                        # 버팀대
+        d.line((X(sx), Y(10), X(sx), Y(14)), fill=WD)
+    d.rectangle((X(3), Y(8), X(26), Y(10)), fill=W, outline=O)                    # 판자 바닥
+    d.line((X(4), Y(8), X(25), Y(8)), fill=WL)
+    for px_ in (9, 15, 21):
+        d.point((X(px_), Y(9)), fill=WD)
+    d.ellipse((X(5), Y(1), X(16), Y(9)), fill=FUR, outline=O)                     # 둥글게 만 모피 짐
+    d.ellipse((X(13), Y(2), X(24), Y(9)), fill=FURD, outline=O)
+    d.line((X(7), Y(3), X(12), Y(2)), fill=FURL); d.line((X(15), Y(4), X(19), Y(3)), fill=FUR)
+    d.line((X(11), Y(1), X(11), Y(9)), fill=ROPE); d.line((X(19), Y(2), X(19), Y(9)), fill=ROPE)  # 묶은 끈
+    for x, y in [(7, 1), (8, 1), (9, 1), (6, 2), (15, 2), (16, 2), (17, 2), (18, 2)]:   # 짐 위 눈
+        img.putpixel((X(x), Y(y)), (246, 244, 250, 255))
+
+
 if __name__ == "__main__":
     print(make())
+
+
+
+def icefall(img, ox, oy):
+    """10/27 얼어붙은 폭포 3칸 폭: (0~2, 2) 눈 덮인 턱 + 고드름, (0~2, 3)/(0~2, 4) 번갈아 쓰는 얼음 기둥 (세로로 이어짐),
+    (0~2, 5) 아래 끝: 얼음 물보라 더미. 세로 줄무늬(흘러내리다 언 물줄기) + 흰 반짝임 + 들쭉날쭉한 가장자리.
+    (원래 relief 타일은 납작한 하늘색 띠라 폭포 느낌이 안 났다)"""
+    import math
+    px = img.load()
+    OUTL = (58, 92, 132, 255); D = (104, 160, 204, 255); M = (150, 202, 232, 255); L = (196, 230, 246, 255); W = (244, 252, 255, 255)
+    SN = (246, 244, 250, 255); SNS = (204, 200, 220, 255)
+    def edges(gy):          # gy: 기둥 안 전체 y (위 0부터). 32px마다 반복 → 가운데 두 장이 이음매 없이 이어짐
+        t = 2 * math.pi * gy / 32
+        return 4 + round(2 * math.sin(t) + math.sin(2 * t)), 43 - round(2 * math.sin(t + 1.3) + math.sin(2 * t + 0.5))
+    def shade(x, gy):
+        band = (x * 5 // 7)
+        k = (band * 37 + (gy // 32) * 0) % 9
+        c = M if k < 4 else L if k < 7 else D
+        # 흰 물줄기 반짝임: 몇 줄만, 위아래로 끊기며 흐름
+        if x in (11, 12, 23, 31, 32, 38) and (gy + x * 3) % 32 < 18:
+            c = W
+        if x in (7, 19, 27, 41) and (gy + x * 5) % 32 < 22:
+            c = D
+        return c
+    def column(y0, y1, gy0):
+        for y in range(y0, y1):
+            gy = gy0 + (y - y0)
+            l, r = edges(gy)
+            for x in range(l, r + 1):
+                px[ox + x, oy + y] = OUTL if x in (l, r) else (L if x == l + 1 else D if x == r - 1 else shade(x, gy))
+    # (2) 위: 눈 덮인 턱 + 고드름
+    column(4, 16, 4)
+    for x in range(1, 47):
+        d = min(x - 1, 46 - x)
+        top = 1 if d > 6 else 2 if d > 2 else 3
+        bot = 8 + (1 if (x // 4) % 3 == 0 else 0)          # 아래가 살짝 물결진 눈 턱
+        for y in range(top, bot):
+            px[ox + x, oy + y] = SN if y < bot - 2 else SNS
+        px[ox + x, oy + top - 1] = OUTL
+        px[ox + x, oy + bot] = OUTL if x in (1, 46) else px[ox + x, oy + bot]
+    for y in range(3, 9):
+        px[ox, oy + y] = OUTL; px[ox + 47, oy + y] = OUTL
+    for (x, ln) in [(6, 5), (9, 3), (15, 6), (21, 4), (28, 6), (34, 3), (39, 5)]:   # 고드름
+        for y in range(9, 9 + ln):
+            px[ox + x, oy + y] = W if y < 9 + ln - 1 else L
+            if y < 9 + ln - 2: px[ox + x + 1, oy + y] = L
+    # (3)(4) 가운데 기둥 두 장 (gy 16~47 → 다음 장으로 이어짐)
+    column(16, 48, 16)
+    # (5) 아래: 기둥 끝 + 얼음 물보라 더미
+    column(48, 56, 48)
+    blobs = [(10, 57, 9, 5), (24, 55, 12, 7), (38, 57, 9, 5), (17, 59, 7, 4), (31, 59, 7, 4)]
+    for (cx, cy, rx, ry) in blobs:
+        for y in range(cy - ry, cy + ry + 1):
+            for x in range(cx - rx, cx + rx + 1):
+                if 0 <= x < 48 and 48 <= y < 64 and ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 <= 1:
+                    px[ox + x, oy + y] = W if y < cy - ry / 3 else L if y < cy + ry / 3 else M
+    for x in range(48):                      # 더미 테두리
+        for y in range(48, 64):
+            if px[ox + x, oy + y][3] and px[ox + x, oy + y] in (W, L, M):
+                if y + 1 >= 64 or px[ox + x, oy + y + 1][3] == 0 or (x + 1 < 48 and px[ox + x + 1, oy + y][3] == 0) or (x > 0 and px[ox + x - 1, oy + y][3] == 0):
+                    px[ox + x, oy + y] = OUTL if y > 56 else D

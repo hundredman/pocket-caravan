@@ -21,6 +21,11 @@ namespace PocketCaravan
         static Dictionary<string, Dictionary<string, int[]>> maps;
         static Dictionary<string, int> heights;
 
+        /// <summary>10/27 이 프로젝트는 플레이 들어갈 때 도메인 리로드를 끔(Enter Play Mode Options) → static 캐시가 이전 플레이의
+        /// NorthLife.json을 계속 들고 있어서, 맵을 다시 만들어도 불 쬐기·좌판 자리가 옛 위치에 남았다. 플레이 시작마다 비운다.</summary>
+        [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetCache() { maps = null; heights = null; blocks.Clear(); }
+
         static void Load()
         {
             if (maps != null) return;

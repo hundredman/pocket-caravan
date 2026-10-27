@@ -454,7 +454,7 @@ def herd():
     m.deco_stamp("pelt", 11, 26); m.deco_stamp("pelt", 35, 25); m.stamp("rack", 36, 20, force=True)
     # 광장
     m.deco_stamp("spit", 23, 15)
-    m.deco_stamp("bigbarrel", 28, 12); m.deco_stamp("runestone", 18, 15)
+    m.deco_stamp("bigbarrel", 28, 12)   # 10/27 광장 왼쪽 룬돌은 뺌
     # 남동쪽 얼어붙은 호수
     m.water_blob(42, 27, 4.5, 2.5)
     m.add("market", 25, 21, town="north_herd")
@@ -485,7 +485,7 @@ def runehill():
     m.link("S", 13, 4, "north_laugar", "N", "S")
     m.road_blob(26, 17, 9, 4.2, grade=1)                       # 순례자들이 다진 언덕 꼭대기
     # 큰 룬돌 고리: 가운데 높은 돌, 둘레 여덟 개
-    m.deco_stamp("snowpost", 26, 14)
+    m.deco_stamp("fire", 25, 15)       # 10/27 고리 가운데 모닥불 (가운데 돌기둥 대신)
     for i, (rx, ry) in enumerate([(20, 17), (32, 17), (22, 14), (30, 14), (22, 20), (30, 20), (26, 12), (26, 21)]):
         m.deco_stamp("runestone_b" if i % 2 else "runestone", rx, ry)
     # 배 모양 돌무덤 둘
@@ -494,7 +494,6 @@ def runehill():
     # 이끼 낀 옛 회관과 무너진 돌집·돌담
     m.stamp("ruinhall", 38, 4, force=True)
     m.stamp("ruinhut", 5, 24, force=True)
-    m.stamp("ruinwall", 30, 30, force=True); m.stamp("ruinwall", 44, 15, force=True)
     m.deco_stamp("totem", 36, 10); m.deco_stamp("totem2", 43, 10)
     # 음유시인의 모닥불
     m.deco_stamp("fire", 15, 20); m.deco_stamp("stump", 18, 21)
@@ -503,10 +502,10 @@ def runehill():
     m.talker(26, 23, "룬 지기 노인", "north_owl_elder_tall", "이 고리의 룬돌들은 오래된 이야기를 품고 있지. 북쪽 땅 곳곳에 흩어진 룬돌을 찾아 읽어 보게.",
              "숨은 룬돌은 일곱 개라네. 밤이면 은은히 빛나지. 일곱 조각을 다 읽고 별빛 아래 이 고리 한가운데에 서 보게.",
              "밤이 되면 돌에 새긴 글자가 푸르게 빛난다네. 조상들이 아직 길을 지켜보는 게야.")
-    m.talker(17, 22, "음유시인", "north_p_bard_tall", "♪ 얼음 바다를 건넌 상인들, 별을 따라 길을 냈네… ♪",
+    m.talker(17, 22, "음유시인", "north_p_bard_tall", "♪ 얼음 바다를 건넌 상인들, 별을 따라 길을 냈네…",
              "옛 회관에 살던 사람들은 배를 땅에 묻었대. 저기 돌로 둘러싼 배 모양이 그 무덤이야.")
     m.critters("raven", (19, 13, 33, 21), 4)
-    m.spot("ring", 26, 16)              # 룬돌 고리 중심: 일곱 조각을 모으면 밤에 깨어남
+    m.spot("ring", 26, 18)              # 룬돌 고리 중심: 일곱 조각을 모으면 밤에 깨어남
     m.dense_border("mixed")
     m.grove(8, 32, 5, 3, "pine"); m.grove(46, 33, 4, 2.5, "mixed")
     m.scatter("deadtree", 4, area=(3, 3, 48, 34), margin=1)
@@ -530,7 +529,7 @@ def icecave():
     # 폭포 양옆을 바위 무더기로 감싸 바위 틈에서 얼음이 흘러내리게
     for (bx, by) in [(26, 2), (32, 2), (22, 4), (36, 4), (24, 5), (34, 5)]:
         m.stamp("rockbig", bx, by, force=True)
-    m.icefall(30, 2, 9); m.icefall(31, 2, 9)
+    m.icefall3(29, 2, 9)   # 10/27 3칸 폭 새 그림 (north_art.py)
     m.water_blob(30, 13, 7, 4)
     m.fishing.append((30, 16))          # 10/24 얼음 낚시 자리 (얼어붙은 호수)
     # 동굴 입구: 바위로 둘러싼 깊은 구멍

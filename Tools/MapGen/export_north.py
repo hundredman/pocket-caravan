@@ -42,8 +42,12 @@ for f in north.MAPS:
                     index[n] = len(palette); palette.append(n)
                 out.append(index[n])
         return out
+    # 10/27 좌판(stall) 타일은 빼고 런타임에 새 좌판 그림을 그린다 (NorthCraft.cs, NorthLife "stallArt"). 막힘은 그대로
+    _sc = {(x + dx, y + dy) for (n, x, y) in m.stamps if n == "stall" for dx in range(3) for dy in range(2)}
+    _obj = [[None if (x, y) in _sc else k for x, k in enumerate(row)] for y, row in enumerate(m.obj)]
+    _high = [[None if (x, y) in _sc else k for x, k in enumerate(row)] for y, row in enumerate(m.high)]
     d = dict(id=m.id, name=m.name, w=m.w, h=m.h, hours=m.hours,
-             ground=flat(m.ground), deco=flat(m.deco), obj=flat(m.obj), high=flat(m.high),
+             ground=flat(m.ground), deco=flat(m.deco), obj=flat(_obj), high=flat(_high),
              road=[g for row in m.road for g in row],
              blocked=[1 if b else 0 for row in m.blocked for b in row],
              objects=[obj_json(o) for o in m.objects])
@@ -153,6 +157,7 @@ for f in north.MAPS:
         crystals=[[x, y] for (n, x, y) in st if n.startswith(("crys_", "gem_"))],
         fishing=[list(c) for c in fishing_cells(m)],                       # 10/24 얼음 낚시: 플레이어가 서는 물가 칸
         fishingWater=[[x, y] for (x, y) in getattr(m, "fishing", [])],      #               찌를 던지는 물 칸
+        fishEdge=fish_edge(m),                                             # 10/27 낚시 물 둘레 어디서나
         sledStart=list(m.sled_track[0]) if getattr(m, "sled_track", None) else [],
         secrets=[list(c) for c in secret_cells(m)],                        # 10/24 숨은 룬돌: 읽는 칸 x, y, 번호
         secretStones=[[x, y] for (x, y, i) in getattr(m, "secrets", [])], # 밤에 빛나는 돌 위치
@@ -173,6 +178,8 @@ for f in north.MAPS:
         crowd=market_spots(m)[1],           # 10/27 큰 장 날 구경꾼 자리
         inns=inn_spots(m),                  # 10/27 여관에서 쉬어 가기
         keepers=keeper_spots(m),            # 10/27 이미 있는 좌판 옆 장꾼 자리 (최대 넷)
+        keeperStall=keeper_stalls(m),       # 10/27 장꾼마다 맡은 좌판 (가운데 x, 아랫줄 y) — 장꾼 그림은 계산대 뒤
+        stallArt=stall_art(m),              # 10/27 좌판 타일 대신 새 좌판 그림을 그릴 자리
         sides=side_spots(m),                # 10/27 떠돌이 상인·오늘의 특가 자리 (장터 옆 빈 땅)
         spitters=spit_sellers(m),           # 10/27 꼬치 장수 자리
         craft=[v for i, k in enumerate(("craft_fish", "craft_fur", "craft_brew")) for c in spot_cells(m, k) for v in (c[0], c[1], i)],   # 10/26 공방 x, y, 종류
