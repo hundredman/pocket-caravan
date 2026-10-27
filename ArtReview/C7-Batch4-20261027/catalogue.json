@@ -48,7 +48,10 @@
         "path": "ArtReview/C7-Batch4-20261027/Native/cart.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "date": "2026-10-27",
+        "userQuote": "수레 이미지만 살짝 수정해줘. 뭔가 틀어진 비율같아.",
+        "feedback": "바퀴·적재함·손잡이 비례와 투시 소폭 수정. 우물/석등 픽셀 유지."
       },
       "tiles": [
         {

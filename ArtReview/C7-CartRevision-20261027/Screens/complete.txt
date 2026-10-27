@@ -1,0 +1,1 @@
+Actual Unity Play render; same original terrain and staging; previous trial cart / corrected cart at same anchor; same well, stone lantern, approved houses and actors, original terrain and pending pond; difference limited to cart rectangle. previewOnly true; PPU16 Point480x270; no navigation or manual-play claim.

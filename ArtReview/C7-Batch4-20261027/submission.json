@@ -1,6 +1,6 @@
 {
   "statuses": {
-    "cart": "pending",
+    "cart": "changes_requested",
     "well": "pending",
     "stone_lantern": "pending"
   },
@@ -55,5 +55,7 @@
       ],
       "rgbaSHA256": "49a409329edd129adb88c9b5e4cc38ce5fbfdf81f4951a4fe910791db78ed3a6"
     }
-  }
+  },
+  "reviewDecisions": "ArtReview/C7-Batch4-20261027/review-decisions.json",
+  "replacementTrial": "ArtReview/C7-CartRevision-20261027"
 }

@@ -1,0 +1,34 @@
+{
+  "status": "pending",
+  "productionApplied": false,
+  "files": {
+    "Native/cart.png": {
+      "size": [
+        32,
+        32
+      ],
+      "rgbaSHA256": "ad7c2478e2a4b53f92e30edecd5894f2e96fbae2c17109b24bf3ba1d60819801"
+    },
+    "Screens/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "d726239536747bc18b02f5cd3fae16788341555c456c53c37fb9e8cd284683e7"
+    },
+    "Screens/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "dc9fe8f419395210b6b8fc74aab808b336d29a662c5230a5f7ccd67d22e79a75"
+    },
+    "comparison.png": {
+      "size": [
+        1000,
+        960
+      ],
+      "rgbaSHA256": "b2f812d63ddbdd161e821487343077facd8f9e2158f723d45ce7c6207a866520"
+    }
+  }
+}
