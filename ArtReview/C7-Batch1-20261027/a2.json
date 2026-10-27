@@ -1,8 +1,8 @@
 {
   "errors": [],
   "statuses": {
-    "c7_batch1_cottage": "pending",
-    "c7_batch1_pavilion": "pending",
-    "c7_batch1_willow": "pending"
+    "c7_batch1_cottage": "approved",
+    "c7_batch1_pavilion": "approved",
+    "c7_batch1_willow": "approved"
   }
 }

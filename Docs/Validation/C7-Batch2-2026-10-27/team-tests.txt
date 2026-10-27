@@ -1,0 +1,10 @@
+test_actual_figma_reference_evidence (test_c7_team_style.C7TeamStyleChecks) ... ok
+test_actual_play_capture_and_stored_native_pixels (test_c7_team_style.C7TeamStyleChecks) ... ok
+test_aseprite57_sources_reexport_identical_rgba (test_c7_team_style.C7TeamStyleChecks) ... ok
+test_catalogue_pending_and_complete (test_c7_team_style.C7TeamStyleChecks) ... ok
+test_original_canvas_feet_pine_and_explicit_colors (test_c7_team_style.C7TeamStyleChecks) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.150s
+
+OK

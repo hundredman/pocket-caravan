@@ -1,0 +1,15 @@
+{
+  "tool": "built-in imagegen",
+  "mode": "three independent whole-tree generations in one review batch",
+  "referenceRoles": {
+    "Docs/Images/team-style-reference.png": "Venice/Arabia drawing style, particularly olive tree",
+    "ArtReview/C7-Batch1-20261027/Native/willow.png": "approved foliage colors and pixel density",
+    "woodland1_3_4.png": "existing round forest tree footprint/trunk direction",
+    "woodland2_3_4.png": "existing bent forest tree footprint/trunk direction",
+    "woodland3_4_3.png": "existing wide forest tree footprint/trunk direction"
+  },
+  "colors": "same 7 nature candidates as approved willow; not D3 shared palette",
+  "wholeNativeSampling": true,
+  "sourceAlphaThreshold": 224,
+  "productionApplied": false
+}

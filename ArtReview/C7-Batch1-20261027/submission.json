@@ -1,8 +1,8 @@
 {
   "statuses": {
-    "cottage": "pending",
-    "pavilion": "pending",
-    "willow": "pending"
+    "cottage": "approved",
+    "pavilion": "approved",
+    "willow": "approved"
   },
   "productionApplied": false,
   "files": {
@@ -55,5 +55,7 @@
       ],
       "rgbaSHA256": "177efe4e87c42123f6320a3a294422a92f78574c8592baf61df90d4e36abbf2b"
     }
-  }
+  },
+  "reviewDecisions": "ArtReview/C7-Batch1-20261027/review-decisions.json",
+  "historicalCaption": "Submitted pending captions remain historical; later approval is recorded per asset."
 }

@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-27",
+  "userQuote": "좋다.",
+  "assets": [
+    {
+      "id": "c7_batch1_cottage",
+      "image": "ArtReview/Approved/C7-Batch1-v1/cottage.png",
+      "source": "ArtReview/Approved/C7-Batch1-v1/cottage.aseprite",
+      "status": "approved",
+      "date": "2026-10-27",
+      "userQuote": "좋다.",
+      "scope": "묶음1의 큰 초가집·정자·버드나무 세 그림 승인; 본편 연결·다른 그림은 별도",
+      "evidence": "ArtReview/Approved/C7-Batch1-v1/README.md",
+      "rgbaEvidence": {
+        "size": [
+          80,
+          64
+        ],
+        "rgbaSHA256": "f05a3fd855584201b97dfd04bc7667671f317369194304a71ec612cc5a210515"
+      }
+    },
+    {
+      "id": "c7_batch1_pavilion",
+      "image": "ArtReview/Approved/C7-Batch1-v1/pavilion.png",
+      "source": "ArtReview/Approved/C7-Batch1-v1/pavilion.aseprite",
+      "status": "approved",
+      "date": "2026-10-27",
+      "userQuote": "좋다.",
+      "scope": "묶음1의 큰 초가집·정자·버드나무 세 그림 승인; 본편 연결·다른 그림은 별도",
+      "evidence": "ArtReview/Approved/C7-Batch1-v1/README.md",
+      "rgbaEvidence": {
+        "size": [
+          80,
+          80
+        ],
+        "rgbaSHA256": "6a228844efaa3acabf9ad7a88dabd566fc0a18be0394da5a1efe903ddd3b8bd2"
+      }
+    },
+    {
+      "id": "c7_batch1_willow",
+      "image": "ArtReview/Approved/C7-Batch1-v1/willow.png",
+      "source": "ArtReview/Approved/C7-Batch1-v1/willow.aseprite",
+      "status": "approved",
+      "date": "2026-10-27",
+      "userQuote": "좋다.",
+      "scope": "묶음1의 큰 초가집·정자·버드나무 세 그림 승인; 본편 연결·다른 그림은 별도",
+      "evidence": "ArtReview/Approved/C7-Batch1-v1/README.md",
+      "rgbaEvidence": {
+        "size": [
+          64,
+          64
+        ],
+        "rgbaSHA256": "177efe4e87c42123f6320a3a294422a92f78574c8592baf61df90d4e36abbf2b"
+      }
+    }
+  ]
+}
