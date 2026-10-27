@@ -327,7 +327,15 @@ def build(layout):
                 yy3,xx3=m0;t[(((yy_-yy3)**2+(xx_-xx3)**2)<4**2)&land&~m&(marsh_n>.4)]=MARSH
                 # 강 골짜기: 강을 따라 땅을 조금 낮춘다
                 vm=np.zeros((H,W),bool);vm[tuple(np.array(seg).T)]=True
-                elev=elev-.10*np.exp(-(ndimage.distance_transform_edt(~vm)/4)**2)*~zone
+                dv_,(iy_,ix_)=ndimage.distance_transform_edt(~vm,return_indices=True)
+                elev=elev-.10*np.exp(-(dv_/4)**2)*~zone
+                # 골짜기 양쪽 산등성이: 산에서 호수 쪽으로 뻗은 숲 언덕 두 줄기 사이로 강이 흐른다
+                order=np.full((H,W),-1.0);order[tuple(np.array(seg).T)]=np.arange(len(seg))/max(1,len(seg)-1)
+                frac_=order[iy_,ix_]
+                spur=(dv_>2.5)&(dv_<9+3*wob_)&(frac_<.72-.25*wob_)&land&~m&~river&east&~np.isin(t,[MOUNTAIN,PEAK])
+                bump_=np.exp(-((dv_-5.5)/2.8)**2)*(1-frac_)
+                elev=np.where(spur,np.maximum(elev,.5+.3*bump_),elev)
+                t[spur&(forest_n>.28)]=FOREST;t[spur&(forest_n<=.28)]=HILL
         def meander(path,amp_=2.6,lam_=13):
             # A* 길을 따라가며 옆으로 흔들어 굽이치게(땅 위에서만)
             if len(path)<8:return path
@@ -342,7 +350,7 @@ def build(layout):
         for path,width in [(out,1.3)]+[(q_,1.0) for q_ in inflow]:
             pts=meander(path)
             for i_,(y,x) in enumerate(pts):
-                rad=width*(.7+.5*i_/max(1,len(pts))) if path is out else .75+.7*(i_/max(1,len(pts)))
+                rad=width*(.7+.5*i_/max(1,len(pts))) if path is out else .8+1.0*(i_/max(1,len(pts)))
                 rr=int(math.ceil(rad))
                 for dy in range(-rr,rr+1):
                     for dx in range(-rr,rr+1):
@@ -572,8 +580,8 @@ def render(w,path,road=None,scale=4,title='',tint=False):
     landish=w['land']&(t!=RIVER)&(t!=LAKE)
     if w.get('lake') is not None and w['lake'].any():   # 호수 깊이: 물가는 밝고 가운데는 짙게
         dep=ndimage.distance_transform_edt(w['lake']);lk_=w['lake']
-        k_=np.clip(dep/6,0,1)[lk_,None]
-        rgb[lk_]=np.array((118,178,206))*(1-k_)+np.array((52,108,160))*k_
+        rgb[lk_]=COLORS[RIVER]                       # 바다처럼 두 단계: 물가(강과 같은 색) / 깊은 곳
+        rgb[lk_&(dep>3.5)]=(64,120,164)
     rgb[landish]*=shade[landish,None]
     # 마을 범위: 옅게 덮고 테두리
     vm=w['village'];rgb[vm]=rgb[vm]*.7+np.array((255,236,170))*.3
