@@ -24,12 +24,14 @@ SEED=7
 X0,Y0,W,H=0,-130,300,260   # 배열 좌표: ix=x-X0, iy=y-Y0
 
 # 지형 종류
-VOID,DEEP,SHALLOW,SAND,ROCKCOAST,RIVER,MARSH,FIELD,GRASS,MEADOW,HILL,FOREST,MOUNTAIN,PEAK,VILLAGE=range(15)
-NAMES=['밖','깊은 바다','얕은 바다','모래 해변','바위 해안','강','습지','들판(밭)','풀밭','꽃풀밭','언덕','숲','산(통행 불가)','봉우리(통행 불가)','마을 범위']
+VOID,DEEP,SHALLOW,SAND,ROCKCOAST,RIVER,MARSH,FIELD,GRASS,MEADOW,HILL,FOREST,MOUNTAIN,PEAK,VILLAGE,LAKE=range(16)
+NAMES=['밖','깊은 바다','얕은 바다','모래 해변','바위 해안','강','습지','들판(밭)','풀밭','꽃풀밭','언덕','숲','산(통행 불가)','봉우리(통행 불가)','마을 범위','호수']
 COLORS={DEEP:(52,98,140),SHALLOW:(96,156,186),SAND:(236,222,170),ROCKCOAST:(150,142,128),RIVER:(84,146,196),
         MARSH:(96,128,96),FIELD:(204,176,84),GRASS:(118,164,88),MEADOW:(142,182,98),HILL:(134,150,86),
-        FOREST:(52,98,56),MOUNTAIN:(128,114,96),PEAK:(184,178,170),VILLAGE:(210,190,140),VOID:(28,34,40)}
-BLOCKED={DEEP,SHALLOW,RIVER,MOUNTAIN,PEAK,ROCKCOAST}
+        FOREST:(52,98,56),MOUNTAIN:(128,114,96),PEAK:(184,178,170),VILLAGE:(210,190,140),VOID:(28,34,40),LAKE:(70,136,186)}
+BLOCKED={DEEP,SHALLOW,RIVER,MOUNTAIN,PEAK,ROCKCOAST,LAKE}
+# 호수(세계 좌표 중심, 대략 면적): 남쪽 쉼터 마을 북쪽(2026-10-27 은샘 제안)
+LAKES=[dict(label='남쪽 호수',center=(82,32),area=170)]
 # 마을 목표 면적(칸): 수도는 크게, 중앙 마을은 장터 광장·이벤트 마당·시설이 들어갈 만큼(WorldLayout 3절 약 2,060)
 VILLAGE_AREA={'goryeo/개경':1100,'goryeo/장단':700,'goryeo/나루':700,'goryeo/송악':650,'goryeo/닥목':600,
               'east/동문 마을':1400,'east/북동 포구':1400,'east/남동 포구':1400,'east/중앙 길목 마을':1500}
@@ -218,6 +220,18 @@ def build(layout):
         my,mx=idx(*ri['mouth']);yy,xx=np.ogrid[:H,:W];mouth_zone|=((yy-my)**2+(xx-mx)**2)<16**2
     t[L&mouth_zone&(d_river<=5)&(d_river>0)&(elev<.35)&(marsh_n>.45)]=MARSH
     t[river]=RIVER
+    # 호수: 노이즈로 가장자리를 흔든 둥근 물, 둘레는 습지·모래 조금
+    lake=np.zeros((H,W),bool);lake_n=noise((H,W),5,rng,2)
+    for lk in LAKES:
+        cy,cx=idx(*lk['center']);rad=math.sqrt(lk['area']/math.pi)
+        yy_,xx_=np.ogrid[:H,:W];dd=np.sqrt((yy_-cy)**2+(xx_-cx)**2)
+        m=(dd<rad*(1+.45*(lake_n-.5)))&land
+        lab,n=ndimage.label(m)
+        if n:m=lab==(1+int(np.argmax(ndimage.sum(np.ones_like(lab),lab,range(1,n+1)))))
+        lake|=m;lk['cells']=int(m.sum())
+    shore=ndimage.binary_dilation(lake,iterations=2)&land&~lake&~river
+    t[shore&(marsh_n>.55)]=MARSH;t[shore&(marsh_n<.25)]=SAND
+    t[lake]=LAKE
 
     # 4) 마을 자리와 범위(v4): 승인 위치 가까이에서 마을이 들어서기 좋은 땅을 고르고, 둥글고 자연스러운 모양으로 넓힌다
     region_of=np.full((H,W),'',object)
@@ -276,7 +290,7 @@ def partition(layout,w,road=None):
     passable=w['passable'];village=w['village'];village_info=w['villages']
     # 5) 맵 경계(v4): 마을(이동 구역은 쉼터·중간 지점)을 씨앗으로, 지형을 따라 퍼지는 거리로 땅을 나눈다.
     #    강·산을 건너는 비용을 크게 해 경계가 강·산줄기·숲 가장자리를 따르게 하고, 면적은 원래 목표에 맞춘다.
-    step_cost=np.ones((H,W));step_cost[t==RIVER]=25;step_cost[np.isin(t,[MOUNTAIN,PEAK])]=20;step_cost[t==FOREST]=2.6
+    step_cost=np.ones((H,W));step_cost[t==LAKE]=25;step_cost[t==RIVER]=25;step_cost[np.isin(t,[MOUNTAIN,PEAK])]=20;step_cost[t==FOREST]=2.6
     step_cost[t==MARSH]=4;step_cost[t==HILL]=2.2;step_cost[sea]=1.5
     if road is not None:step_cost[road]=.45   # 길을 따라 빨리 퍼짐: 경계가 길 중간에서 길을 가로지르게
     targets={k:layout.maps[k]['area'] for k in keys}
@@ -414,7 +428,7 @@ def render(w,path,road=None,scale=4,title='',tint=False):
     # 언덕 그림자(북서쪽 빛)
     gy,gx=np.gradient(ndimage.gaussian_filter(elev,1.2))
     shade=np.clip(1+(-gx-gy)*6,0.72,1.22)
-    landish=w['land']&(t!=RIVER)
+    landish=w['land']&(t!=RIVER)&(t!=LAKE)
     rgb[landish]*=shade[landish,None]
     if road is not None:
         rgb[road['road']&(t==RIVER)]=(150,110,70)          # 다리
@@ -445,7 +459,7 @@ def render(w,path,road=None,scale=4,title='',tint=False):
         cx,cy=(v['center'][0]-X0-x0)*scale,(v['center'][1]-Y0-y0)*scale
         d.text((cx-len(v['label'])*7,cy-8),v['label'],font=f,fill=(30,24,20),stroke_width=2,stroke_fill=(255,250,230))
     # 범례
-    items=[SHALLOW,SAND,ROCKCOAST,RIVER,MARSH,FIELD,GRASS,MEADOW,HILL,FOREST,MOUNTAIN,PEAK]
+    items=[SHALLOW,SAND,ROCKCOAST,RIVER,LAKE,MARSH,FIELD,GRASS,MEADOW,HILL,FOREST,MOUNTAIN,PEAK]
     lx,ly=8,img.height-16*len(items)-30
     d.rectangle((lx-4,ly-24,lx+150,img.height-6),fill=(250,248,240))
     d.text((lx,ly-20),title,font=fs,fill=(30,30,30))
@@ -467,7 +481,7 @@ def main():
     assert int(w['land'].sum())==land_before,'육지 면적이 바뀜'
     r=roads(layout,w) if a.roads else None
     partition(layout,w,r['center'] if r else None)
-    counts={NAMES[k]:int((w['t']==k).sum()) for k in range(1,15)}
+    counts={NAMES[k]:int((w['t']==k).sum()) for k in range(1,16)}
     render(w,OUT/f'terrain-villages{sfx}.png',title='M1 지형 v3 + 마을 범위'+sfx)
     report=dict(seed=SEED,landCells=land_before,classCounts=counts,rivers=w['rivers'],villages=w['villages'],maps=w['maps'])
     if r:
