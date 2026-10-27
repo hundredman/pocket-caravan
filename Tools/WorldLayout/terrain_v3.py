@@ -82,6 +82,8 @@ def astar(start,goal,cost,blocked=None,eight=True):
     raise ValueError('경로 없음')
 
 
+VIA={frozenset(('east/동문 마을','east/북동 포구')):'east/북동 길',frozenset(('east/동문 마을','east/남동 포구')):'east/남동 길',
+     frozenset(('east/북동 포구','east/중앙 길목 마을')):'east/북쪽 내륙길',frozenset(('east/남동 포구','east/중앙 길목 마을')):'east/남쪽 내륙길'}
 # 검토안 선택: 중앙 마을 크기와 추가 쉼터 마을
 VARIANT={'area':{},'hamlets':[]}
 SMALL_CENTRAL={'east/동문 마을':750,'east/북동 포구':800,'east/남동 포구':800,'east/중앙 길목 마을':850}
@@ -217,46 +219,123 @@ def build(layout):
     t[L&mouth_zone&(d_river<=5)&(d_river>0)&(elev<.35)&(marsh_n>.45)]=MARSH
     t[river]=RIVER
 
-    # 4) 마을 범위: 마을 칸에서 평평하고 지나갈 수 있는 땅으로 넓혀 목표 면적을 채운다
-    village=np.zeros((H,W),bool);village_info=[]
-    shape_n=noise((H,W),7,rng,2)
-    towns=[dict(key=tw['key'],label=tw.get('label'),position=tw['position']) for tw in layout.data['towns']]
+    # 4) 마을 자리와 범위(v4): 승인 위치 가까이에서 마을이 들어서기 좋은 땅을 고르고, 둥글고 자연스러운 모양으로 넓힌다
+    region_of=np.full((H,W),'',object)
+    for i,k in enumerate(keys):region_of[mapid==i]=k.split('/')[0]
+    flat=ndimage.generic_filter(elev,np.std,size=5)
+    passable=land&~np.isin(t,list(BLOCKED))
+    towns=[dict(key=tw['key'],label=tw.get('label') or tw['key'].split('/')[1],position=tw['position']) for tw in layout.data['towns']]
+    byk={tw['key']:tw for tw in towns}
     for mkey,label,area in VARIANT['hamlets']:
-        k=keys.index(mkey);cand=np.argwhere((mapid==k)&land&~np.isin(t,list(BLOCKED)))
-        cy,cx=cand.mean(0);c=cand[np.argmin(((cand-[cy,cx])**2).sum(1))]
-        towns.append(dict(key='hamlet/'+label,label=label,position=[float(c[1]+X0),float(c[0]+Y0)],area=area))
-    for town in towns:
-        key=town['key'];x,y=town['position'];s=idx(int(math.floor(x)),int(math.floor(y)))
-        if not land[s] or t[s] in BLOCKED:
-            # 강·산 위면 가장 가까운 평지로
-            cand=np.argwhere(land&~np.isin(t,list(BLOCKED))&(mapid==mapid[s]))
-            s=tuple(cand[np.argmin(((cand-np.array(s))**2).sum(1))])
-        mine=mapid==mapid[s];target=town.get('area') or VARIANT['area'].get(key) or VILLAGE_AREA[key]
-        got={s};q=[(0.0,s)];seen={s}
+        pair=next(kk for kk,v in VIA.items() if v==mkey);a1,b1=sorted(pair)
+        pa,pb=byk[a1]['position'],byk[b1]['position']
+        towns.append(dict(key='hamlet/'+label,label=label,position=[(pa[0]+pb[0])/2,(pa[1]+pb[1])/2],area=area,hamlet=mkey))
+    COAST={'east/북동 포구','east/남동 포구','goryeo/나루','goryeo/개경'}
+    RIVERSIDE={'goryeo/개경','goryeo/장단','goryeo/나루'}
+    yy,xx=np.ogrid[:H,:W]
+    village=np.zeros((H,W),bool);village_info=[];vlabel=np.full((H,W),-1,int)
+    shape_n=noise((H,W),9,rng,2)
+    for vi,town in enumerate(towns):
+        key=town['key'];x,y=town['position'];oy,ox=idx(int(math.floor(x)),int(math.floor(y)))
+        reg='east' if key.startswith(('east','hamlet')) else 'goryeo'
+        R=20 if key in COAST or key.startswith('hamlet') else 12
+        near=((yy-oy)**2+(xx-ox)**2)<=R*R
+        cand=passable&near&(region_of==reg)&~village
+        if key.startswith('hamlet'):cand&=(mapid==keys.index(town['hamlet']))
+        score=4*flat+1.2*elev+.02*np.sqrt((yy-oy)**2+(xx-ox)**2)+.6*(t==FOREST)+.8*(t==MARSH)
+        if key in COAST:score+=.12*np.abs(to_sea-5)          # 바다에서 5칸쯤: 포구·나루
+        if key in RIVERSIDE or key.startswith('hamlet'):score+=.05*np.minimum(d_river,20)  # 물가
+        score=np.where(cand,score,np.inf);s=np.unravel_index(int(np.argmin(score)),score.shape)
+        target=town.get('area') or VARIANT['area'].get(key) or VILLAGE_AREA[key]
+        got={s};q=[(0.0,s)];seen={s};okreg=(region_of==reg)
         while q and len(got)<target:
             _,p=heapq.heappop(q);got.add(p)
-            for dy,dx in ((1,0),(-1,0),(0,1),(0,-1)):
+            for dy,dx in ((1,0),(-1,0),(0,1),(0,-1),(1,1),(1,-1),(-1,1),(-1,-1)):
                 n=(p[0]+dy,p[1]+dx)
                 if n in seen or not(0<=n[0]<H and 0<=n[1]<W):continue
                 seen.add(n)
-                if not mine[n] or not land[n] or t[n] in (PEAK,MOUNTAIN,ROCKCOAST):continue
-                if t[n]==RIVER:continue  # 강은 마을을 지나가도 강으로 둔다(다리는 길 단계)
+                if not okreg[n] or not land[n] or t[n] in (PEAK,MOUNTAIN,ROCKCOAST,RIVER) or village[n]:continue
                 d=math.hypot(n[0]-s[0],n[1]-s[1])
-                heapq.heappush(q,(d*(1+.55*(shape_n[n]-.5))+6*max(0,elev[n]-.45),n))
-        for p in got:village[p]=True
-        village_info.append(dict(key=key,label=town.get('label') or key.split('/')[1],area=len(got),target=target,center=[int(s[1]+X0),int(s[0]+Y0)]))
-    village=ndimage.binary_closing(village,iterations=2)&land&~river&(t!=PEAK)&(t!=MOUNTAIN)
-    # 마을 안은 평평하게: 숲·언덕을 풀밭으로(들판·해변·습지는 그대로 둔다)
+                heapq.heappush(q,(d*(1+.35*(shape_n[n]-.5))+5*max(0,elev[n]-.5)+2*flat[n],n))
+        m=np.zeros((H,W),bool)
+        for p in got:m[p]=True
+        m=ndimage.binary_closing(ndimage.binary_opening(m,iterations=1),iterations=2)&land&~river&~np.isin(t,[PEAK,MOUNTAIN])
+        village|=m;vlabel[m]=vi
+        village_info.append(dict(key=key,label=town['label'],target=target,center=[int(s[1]+X0),int(s[0]+Y0)],
+                                 moved=round(math.hypot(s[0]-oy,s[1]-ox),1)))
     t[village&np.isin(t,[FOREST,HILL])]=GRASS
-    for v in village_info:
-        mk=v['key'] if v['key'] in keys else next(m for m,l,a in VARIANT['hamlets'] if 'hamlet/'+l==v['key'])
-        v['area']=int(((mapid==keys.index(mk))&village).sum())
+
+    for v,tw in zip(village_info,towns):
+        v['area']=int((vlabel==towns.index(tw)).sum())
     return dict(t=t,elev=elev,owned=owned,land=land,sea=sea,river=river,village=village,mapid=mapid,keys=keys,
-                rivers=river_info,villages=village_info)
+                rivers=river_info,villages=village_info,maps=[],towns=towns,vlabel=vlabel,region_of=region_of,passable=passable)
 
 
-VIA={frozenset(('east/동문 마을','east/북동 포구')):'east/북동 길',frozenset(('east/동문 마을','east/남동 포구')):'east/남동 길',
-     frozenset(('east/북동 포구','east/중앙 길목 마을')):'east/북쪽 내륙길',frozenset(('east/남동 포구','east/중앙 길목 마을')):'east/남쪽 내륙길'}
+def partition(layout,w,road=None):
+    t=w['t'];sea=w['sea'];owned=w['owned'];keys=w['keys'];towns=w['towns'];vlabel=w['vlabel'];region_of=w['region_of']
+    passable=w['passable'];village=w['village'];village_info=w['villages']
+    # 5) 맵 경계(v4): 마을(이동 구역은 쉼터·중간 지점)을 씨앗으로, 지형을 따라 퍼지는 거리로 땅을 나눈다.
+    #    강·산을 건너는 비용을 크게 해 경계가 강·산줄기·숲 가장자리를 따르게 하고, 면적은 원래 목표에 맞춘다.
+    step_cost=np.ones((H,W));step_cost[t==RIVER]=25;step_cost[np.isin(t,[MOUNTAIN,PEAK])]=20;step_cost[t==FOREST]=2.6
+    step_cost[t==MARSH]=4;step_cost[t==HILL]=2.2;step_cost[sea]=1.5
+    if road is not None:step_cost[road]=.45   # 길을 따라 빨리 퍼짐: 경계가 길 중간에서 길을 가로지르게
+    targets={k:layout.maps[k]['area'] for k in keys}
+    seeds={}
+    for i,k in enumerate(keys):
+        v=next((j for j,tw in enumerate(towns) if tw['key']==k or tw.get('hamlet')==k),None)
+        if v is not None:seeds[k]=vlabel==v
+        else:
+            pair=next(kk for kk,vv in VIA.items() if vv==k);a1,b1=sorted(pair)
+            ca=village_info[[tw['key'] for tw in towns].index(a1)]['center'];cb=village_info[[tw['key'] for tw in towns].index(b1)]['center']
+            my,mx=idx(int((ca[0]+cb[0])/2),int((ca[1]+cb[1])/2))
+            c=np.argwhere(passable&(region_of=='east')&~village);c=c[np.argmin(((c-[my,mx])**2).sum(1))]
+            sm=np.zeros((H,W),bool);sm[max(0,c[0]-2):c[0]+3,max(0,c[1]-2):c[1]+3]=True;seeds[k]=sm&owned
+    def geodesic(seed):
+        dist=np.full((H,W),np.inf);q=[]
+        for p in zip(*np.nonzero(seed)):dist[p]=0;q.append((0.0,p))
+        heapq.heapify(q)
+        while q:
+            g,p=heapq.heappop(q)
+            if g!=dist[p]:continue
+            for dy,dx in ((1,0),(-1,0),(0,1),(0,-1),(1,1),(1,-1),(-1,1),(-1,-1)):
+                n=(p[0]+dy,p[1]+dx)
+                if not(0<=n[0]<H and 0<=n[1]<W) or not owned[n]:continue
+                v=g+math.hypot(dy,dx)*(step_cost[p]+step_cost[n])/2
+                if v<dist[n]:dist[n]=v;heapq.heappush(q,(v,n))
+        return dist
+    D=np.stack([geodesic(seeds[k]) for k in keys])
+    regmask=np.stack([region_of==k.split('/')[0] for k in keys])
+    wgt=np.zeros(len(keys))
+    for it in range(250):
+        score=np.where(regmask,D+wgt[:,None,None],np.inf);new=np.argmin(score,0);new[~owned]=-1
+        areas=np.array([(new==i).sum() for i in range(len(keys))])
+        # 면적은 자연 경계를 우선하고, 너무 작거나 큰 맵만 고친다(2,600~5,400칸)
+        lo,hi=2600,5400
+        err=np.where(areas<lo,(areas-lo)/lo,np.where(areas>hi,(areas-hi)/hi,0))
+        if not np.any(err):break
+        wgt+=err*(40/(1+it*.04))
+    # 경계 다듬기: 같은 지역 안에서 주변 다수 맵으로(톱니 제거)
+    for _ in range(3):
+        cnt=np.stack([ndimage.uniform_filter((new==i).astype(float),size=5) for i in range(len(keys))])
+        cnt=np.where(regmask,cnt,-1);sm=np.argmax(cnt,0);sm[~owned]=-1;new=sm
+    # 마을은 반드시 자기 맵 안에
+    for i,k in enumerate(keys):new[seeds[k]]=i
+    # 작은 떨어진 조각은 둘러싼 맵으로
+    for i in range(len(keys)):
+        lab,n=ndimage.label(new==i)
+        if n>1:
+            sizes=ndimage.sum(np.ones_like(lab),lab,range(1,n+1));keep=int(np.argmax(sizes))+1
+            for j in range(1,n+1):
+                if j==keep:continue
+                comp=lab==j;ring=ndimage.binary_dilation(comp)&~comp&(new>=0)&(new!=i)
+                if ring.any():new[comp]=np.bincount(new[ring]).argmax()
+    map_report=[dict(key=k,b1Area=targets[k],area=int((new==i).sum())) for i,k in enumerate(keys)]
+    mapid=new
+    if road is not None:pass
+    w['mapid']=mapid;w['maps']=map_report
+    return w
+
+
 ROAD_COST={GRASS:1.0,MEADOW:1.0,VILLAGE:.7,FIELD:1.25,SAND:1.7,HILL:2.6,FOREST:3.4,MARSH:5.0,RIVER:22.0,MOUNTAIN:14.0}
 
 
@@ -299,7 +378,7 @@ def roads(layout,w):
         m=t==k;cost[m]=v;blocked[m]=False
     cost=cost*(1+1.1*wig**2+.25*fine)+6*slope
     centers={v['key']:(v['center'][1]-Y0,v['center'][0]-X0) for v in w['villages']}
-    road=np.zeros((H,W),bool);records=[]
+    road=np.zeros((H,W),bool);records=[];paths=[]
     order=sorted(layout.data['roads'],key=lambda r:math.dist(layout.towns[r['fromKey']]['position'],layout.towns[r['toKey']]['position']))
     for r in order:
         c=cost.copy();c[road]*=.7   # 이미 난 길은 조금 싸다: 가까우면 합류해 갈림길이 생김
@@ -316,6 +395,7 @@ def roads(layout,w):
         else:raw=astar(centers[r['fromKey']],centers[r['toKey']],c,blocked)
         path=smooth_path(raw,blocked,t==RIVER)
         for p in path:road[p]=True
+        paths.append(path)
         bridges=sum(1 for p in path if t[p]==RIVER);passes=sum(1 for p in path if t[p]==MOUNTAIN)
         maps_on=sorted({w['keys'][w['mapid'][p]] for p in path if w['mapid'][p]>=0})
         records.append(dict(fromKey=r['fromKey'],toKey=r['toKey'],cells=len(path),bridgeCells=bridges,mountainPassCells=passes,maps=maps_on))
@@ -324,10 +404,10 @@ def roads(layout,w):
     # 강 위로는 실제로 건너는 곳(다리)만 넓힌다. 강가를 따라가는 길이 물 위로 번지지 않게
     river=t==RIVER;crossing=ndimage.binary_dilation(road&river,structure=cross,iterations=2)
     wide&=~river|crossing
-    return dict(road=wide,center=road,records=records)
+    return dict(road=wide,center=road,records=records,paths=paths)
 
 
-def render(w,path,road=None,scale=4,title=''):
+def render(w,path,road=None,scale=4,title='',tint=False):
     t=w['t'];elev=w['elev']
     rgb=np.zeros((H,W,3),float)
     for k,c in COLORS.items():rgb[t==k]=c
@@ -346,10 +426,21 @@ def render(w,path,road=None,scale=4,title=''):
     # 맵 경계
     mid=w['mapid'];b=np.zeros((H,W),bool)
     b[:,1:]|=(mid[:,1:]!=mid[:,:-1])&(mid[:,1:]>=0)&(mid[:,:-1]>=0);b[1:,:]|=(mid[1:,:]!=mid[:-1,:])&(mid[1:,:]>=0)&(mid[:-1,:]>=0)
-    rgb[b]=rgb[b]*.45
+    if tint:
+        pal=[(255,120,120),(120,200,255),(255,210,90),(150,255,150),(220,140,255),(255,160,60),(90,230,210),(255,120,200),(170,170,255),(200,255,90),(255,255,140),(140,200,140),(230,180,140)]
+        for i in range(len(w['keys'])):
+            m=w['mapid']==i;rgb[m]=rgb[m]*.62+np.array(pal[i%len(pal)])*.38
+    b=ndimage.binary_dilation(b)&w['owned'] if tint else b
+    rgb[b]=(20,20,24) if tint else rgb[b]*.45
     ys,xs=np.nonzero(w["owned"]);y0,y1,x0,x1=max(0,ys.min()-3),min(H,ys.max()+4),max(0,xs.min()-3),min(W,xs.max()+4)
     img=Image.fromarray(np.clip(rgb[y0:y1,x0:x1],0,255).astype(np.uint8)).resize(((x1-x0)*scale,(y1-y0)*scale),Image.NEAREST)
     d=ImageDraw.Draw(img);f=ImageFont.truetype(str(FONT),14);fs=ImageFont.truetype(str(FONT),11)
+    if tint:
+        for i,k in enumerate(w['keys']):
+            ys_,xs_=np.nonzero(w['mapid']==i);cy,cx=(ys_.mean()-y0)*scale,(xs_.mean()-x0)*scale
+            lab=k.split('/')[1]+f" {len(ys_):,}칸"
+            if any(v['key']==k for v in w['villages']):cy+=22
+            d.text((cx-len(lab)*6,cy),lab,font=ImageFont.truetype(str(FONT),12),fill=(20,20,20),stroke_width=2,stroke_fill=(255,255,255))
     for v in w['villages']:
         cx,cy=(v['center'][0]-X0-x0)*scale,(v['center'][1]-Y0-y0)*scale
         d.text((cx-len(v['label'])*7,cy-8),v['label'],font=f,fill=(30,24,20),stroke_width=2,stroke_fill=(255,250,230))
@@ -374,11 +465,17 @@ def main():
     # 검사: 해안선·면적 불변, 마을 칸 통행 가능
     land_before=sum(1 for c in layout.land if c in layout.owners)
     assert int(w['land'].sum())==land_before,'육지 면적이 바뀜'
+    r=roads(layout,w) if a.roads else None
+    partition(layout,w,r['center'] if r else None)
     counts={NAMES[k]:int((w['t']==k).sum()) for k in range(1,15)}
     render(w,OUT/f'terrain-villages{sfx}.png',title='M1 지형 v3 + 마을 범위'+sfx)
-    report=dict(seed=SEED,landCells=land_before,classCounts=counts,rivers=w['rivers'],villages=w['villages'])
-    if a.roads:
-        r=roads(layout,w);render(w,OUT/f'terrain-villages-roads{sfx}.png',road=r,title='M1 지형 v3 + 마을 + 길'+sfx)
+    report=dict(seed=SEED,landCells=land_before,classCounts=counts,rivers=w['rivers'],villages=w['villages'],maps=w['maps'])
+    if r:
+        render(w,OUT/f'terrain-villages-roads{sfx}.png',road=r,title='M1 지형 v3 + 마을 + 길'+sfx)
+        render(w,OUT/f'maps{sfx}.png',road=r,title='맵 경계(색=맵)'+sfx,tint=True)
+        # 길이 맵 경계를 몇 번 넘는지(적을수록 좋음)
+        for rec,path in zip(r['records'],r['paths']):
+            ids=[int(w['mapid'][p]) for p in path];rec['boundaryCrossings']=sum(1 for a_,b_ in zip(ids,ids[1:]) if a_!=b_)
         report['roads']=r['records'];report['roadCells']=int(r['road'].sum())
     (OUT/f'report{sfx}.json').write_text(json.dumps(report,ensure_ascii=False,indent=1))
     print(json.dumps(report,ensure_ascii=False)[:3000])
