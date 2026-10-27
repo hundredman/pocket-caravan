@@ -13,7 +13,7 @@ class CartRoofV2Checks(unittest.TestCase):
         self.assertEqual(validate(doc,[('trial',layout)],ROOT,False),[])
         self.assertTrue(validate(doc,[('trial',layout)],ROOT,True))
         for a,d in zip(doc['assets'],DEFS):
-            self.assertEqual(a['review']['status'],'pending')
+            self.assertEqual(a['review']['status'],json.loads((OUT/'review-decisions.json').read_text()).get(a['id'],dict(status='pending'))['status'])
             target=Image.open(ROOT/a['image']).convert('RGBA');self.assertEqual(target.size,tuple(d['size']))
             actual=Image.new('RGBA',target.size)
             for t in a['tiles']:

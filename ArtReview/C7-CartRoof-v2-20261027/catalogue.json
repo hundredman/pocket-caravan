@@ -49,7 +49,10 @@
         "path": "ArtReview/C7-CartRoof-v2-20261027/Native/cart.aseprite"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "date": "2026-10-27",
+        "userQuote": "\uc218\ub808\ub294 \uc774\uac83\ubcf4\ub2e4 \ub354 \ucc98\uc74c \ubc84\uc804\uc744 \ub9d0\ud55c\uac70\uc57c.",
+        "feedback": "C7 \uc774\uc804 \uae30\uc874 \uac8c\uc784 \uc218\ub808\ub85c \ubcf5\uc6d0; \uccab C7 \uc18c\ud488 \uc2dc\uc548 \uc120\ud0dd \ud574\uc11d \uc815\uc815"
       },
       "tiles": [
         {
