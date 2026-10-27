@@ -39,7 +39,7 @@ namespace PocketCaravan.EditorTools
         [MenuItem("Pocket Caravan/북유럽/데이터만 등록", priority = 31)]
         public static void BuildDataMenu() => BuildData();
 
-        static bool BuildData()
+        public static bool BuildData()   // 10/27 통합 메뉴(RegionLinksBuilder)에서도 부름
         {
             var db = AssetDatabase.LoadAssetAtPath<GameDatabase>(DbPath);
             if (db == null) { Debug.LogError("GameDatabase가 없습니다."); return false; }
