@@ -139,11 +139,17 @@ namespace PocketCaravan.EditorTools
         static HashSet<Vector3Int> ExitCells(string targetScene)
         {
             // 오픈월드 이음새는 한 경계에 여러 개일 수 있다: 가장 넓은 이음새(큰길·고개)를 고른다 (좁은 틈은 장애물 뒤 구석일 수 있음)
-            var exit = MapExit.All.Where(e => e.targetScene == targetScene).OrderByDescending(e => e.size.x * e.size.y).First();
-            var o = MapRoot.Current.WorldToCell(exit.transform.position);
-            var set = new HashSet<Vector3Int>();
-            for (int x = 0; x < exit.size.x; x++) for (int y = 0; y < exit.size.y; y++) set.Add(o + new Vector3Int(x, y, 0));
-            return set;
+            // 지금 자리에서 실제로 걸어갈 수 있는 이음새 중 가장 넓은 것 (장애물이 막고 있는 고개는 건너뛴다)
+            HashSet<Vector3Int> first = null;
+            foreach (var exit in MapExit.All.Where(e => e.targetScene == targetScene).OrderByDescending(e => e.size.x * e.size.y))
+            {
+                var o = MapRoot.Current.WorldToCell(exit.transform.position);
+                var set = new HashSet<Vector3Int>();
+                for (int x = 0; x < exit.size.x; x++) for (int y = 0; y < exit.size.y; y++) set.Add(o + new Vector3Int(x, y, 0));
+                if (first == null) first = set;
+                if (PathTo(set) != null) return set;
+            }
+            return first;
         }
 
         static void Face(Interactable target)
@@ -251,7 +257,9 @@ namespace PocketCaravan.EditorTools
                     (ArabiaRegionSetup.CentralBazaar, ArabiaRegionSetup.CentralSteppe, "장터 북문 → 한가운데 초원"),
                     (ArabiaRegionSetup.CentralSteppe, ArabiaRegionSetup.CentralBazaar, "초원 → 장터 북문"),
                     (ArabiaRegionSetup.CentralBazaar, ArabiaRegionSetup.CentralEast, "장터 동문 → 소나무 고원"),
-                    (ArabiaRegionSetup.CentralEast, ArabiaRegionSetup.CentralCanyon, "고원 → 붉은 바위 협곡"),
+                    // 소나무 고원 남쪽 고개는 장애물 주기에 따라 막힐 수 있어, 장터로 돌아와 남동쪽으로 협곡에 간다
+                    (ArabiaRegionSetup.CentralEast, ArabiaRegionSetup.CentralBazaar, "고원 → 장터 동문"),
+                    (ArabiaRegionSetup.CentralBazaar, ArabiaRegionSetup.CentralCanyon, "장터 남동문 → 붉은 바위 협곡"),
                     (ArabiaRegionSetup.CentralCanyon, ArabiaRegionSetup.CentralBazaar, "협곡 → 장터 남동문"),
                     (ArabiaRegionSetup.CentralBazaar, ArabiaRegionSetup.CentralWest, "장터 서문 → 포도밭 언덕"),
                     // 포도밭 언덕 남쪽 고개는 낙석·장애물 주기에 따라 막힐 수 있어, 장터로 돌아와 와디를 건너 오아시스로 간다
@@ -269,6 +277,15 @@ namespace PocketCaravan.EditorTools
                     Check($"탐험 일주 도착: {to}", MapRoot.Current != null && MapRoot.Current.mapId == to, $"{walked:0.0}칸 · {seconds:0.0}초");
                     yield return Frames(20);
                     yield return Shot($"{n++:00}_{to.Replace("arabia_", "")}");
+                    if (to == ArabiaRegionSetup.CentralBazaar && from == ArabiaRegionSetup.CentralDunes && ArabiaAmbience.Current != null)
+                    {
+                        // 대광장 축제 연출: 불꽃 셋을 쏘고 터질 때 찍는다 (낮이면 꽃가루도 함께)
+                        var feet = PlayerController.Instance.Motor.Feet;
+                        for (int f = -1; f <= 1; f++) ArabiaAmbience.Current.LaunchFirework(feet + new Vector2(f * 4f, -5f));
+                        double until = EditorApplication.timeSinceStartup + 1.3;
+                        while (EditorApplication.timeSinceStartup < until) yield return Frames(1);
+                        yield return Shot($"{n++:00}_bazaar_festival");
+                    }
                     if (to == ArabiaRegionSetup.ShortcutMap)
                     {
                         // 분위기 연출: 빈 사막에서 모래바람·모래기둥·독수리·도마뱀을 한꺼번에 불러 화면을 찍는다

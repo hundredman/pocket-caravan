@@ -1,4 +1,4 @@
-# 아라비아 자동 보행·화면 캡처 시험 2026-10-27 10:41:12 · Unity 6000.3.26f1
+# 아라비아 자동 보행·화면 캡처 시험 2026-10-27 17:01:23 · Unity 6000.3.26f1
 본편 저장 파일: /Users/euninjun/Library/Application Support/DefaultCompany/PocketCaravan/pocket_caravan_save.json (시작 해시 E5BB55D861DC)
 기존 아라비아 시험 저장을 .manual-backup으로 보관 후 새 시험 시작
 
@@ -6,7 +6,7 @@
 - [PASS] 아라비아 시험 세션·전용 저장
   (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/01_ahsa_start.png
 - [PASS] 마을 사람 거닐기 (12초) — 8/8명 이동 · 걷는 방향 4가지
-- [PASS] NPC 4방향 그림 (앞·뒤·옆이 서로 다름) — 향수 장수
+- [PASS] NPC 4방향 그림 (앞·뒤·옆이 서로 다름) — 바구니 든 주민
 - [PASS] 걸어갈 경로 찾기: S0 → 힌드바드 — 19칸
 - [PASS] 걸어서 도착: S0 → 힌드바드 — 19.2칸 · 5.1초 · 평균 속도 3.91칸/초 · 짐 0/10
 - [PASS] 힌드바드가 Space 대화 대상
@@ -46,59 +46,64 @@
 - [PASS] 걸어서 도착: 오아시스 → 와디 건너 만국 장터 — 46.2칸 · 11.9초 · 평균 속도 3.90칸/초 · 짐 0/10
 - [PASS] 탐험 일주 도착: arabia_central_bazaar — 46.2칸 · 11.9초
   (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/12_central_bazaar.png
+  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/13_bazaar_festival.png
 - [PASS] 중앙 대륙 남부: 장터지기 카림 있음
-- [PASS] 걸어갈 경로 찾기: 중앙 대륙 남부 → 장터지기 카림 — 24칸
-- [PASS] 걸어서 도착: 중앙 대륙 남부 → 장터지기 카림 — 24.1칸 · 6.0초 · 평균 속도 4.07칸/초 · 짐 0/10
-- [PASS] 중앙 대륙 남부 도착: 장터지기 카림 — 24.1칸 · 6.0초
-  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/13_central_market.png
-- [PASS] 걸어갈 경로 찾기: 장터 북문 → 한가운데 초원 — 36칸
-- [PASS] 걸어서 도착: 장터 북문 → 한가운데 초원 — 37.9칸 · 10.4초 · 평균 속도 4.18칸/초 · 짐 0/10
-- [PASS] 탐험 일주 도착: arabia_central_steppe — 37.9칸 · 10.4초
-  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/14_central_steppe.png
+- [PASS] 걸어갈 경로 찾기: 중앙 대륙 남부 → 장터지기 카림 — 23칸
+- [PASS] 걸어서 도착: 중앙 대륙 남부 → 장터지기 카림 — 23.1칸 · 5.8초 · 평균 속도 4.08칸/초 · 짐 0/10
+- [PASS] 중앙 대륙 남부 도착: 장터지기 카림 — 23.1칸 · 5.8초
+  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/14_central_market.png
+- [PASS] 걸어갈 경로 찾기: 장터 북문 → 한가운데 초원 — 39칸
+- [PASS] 걸어서 도착: 장터 북문 → 한가운데 초원 — 39.0칸 · 9.7초 · 평균 속도 4.04칸/초 · 짐 0/10
+- [PASS] 탐험 일주 도착: arabia_central_steppe — 39.0칸 · 9.7초
+  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/15_central_steppe.png
 - [PASS] 중앙 대륙 남부: 게르의 할아버지 있음
-- [PASS] 걸어갈 경로 찾기: 중앙 대륙 남부 → 게르의 할아버지 — 60칸
-- [PASS] 걸어서 도착: 중앙 대륙 남부 → 게르의 할아버지 — 60.2칸 · 15.7초 · 평균 속도 3.89칸/초 · 짐 0/10
-- [PASS] 중앙 대륙 남부 도착: 게르의 할아버지 — 60.2칸 · 15.7초
-  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/15_central_apex.png
+- [PASS] 걸어갈 경로 찾기: 중앙 대륙 남부 → 게르의 할아버지 — 63칸
+- [PASS] 걸어서 도착: 중앙 대륙 남부 → 게르의 할아버지 — 63.2칸 · 16.5초 · 평균 속도 3.89칸/초 · 짐 0/10
+- [PASS] 중앙 대륙 남부 도착: 게르의 할아버지 — 63.2칸 · 16.5초
+  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/16_central_apex.png
 - [PASS] 걸어갈 경로 찾기: 초원 → 장터 북문 — 49칸
 - [PASS] 걸어서 도착: 초원 → 장터 북문 — 49.0칸 · 12.5초 · 평균 속도 3.95칸/초 · 짐 0/10
 - [PASS] 탐험 일주 도착: arabia_central_bazaar — 49.0칸 · 12.5초
-  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/16_central_bazaar.png
-- [PASS] 걸어갈 경로 찾기: 장터 동문 → 소나무 고원 — 63칸
-- [PASS] 걸어서 도착: 장터 동문 → 소나무 고원 — 63.2칸 · 16.7초 · 평균 속도 3.82칸/초 · 짐 0/10
-- [PASS] 탐험 일주 도착: arabia_central_eastvale — 63.2칸 · 16.7초
-  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/17_central_eastvale.png
-- [PASS] 걸어갈 경로 찾기: 고원 → 붉은 바위 협곡 — 44칸
-- [PASS] 걸어서 도착: 고원 → 붉은 바위 협곡 — 44.0칸 · 11.4초 · 평균 속도 3.87칸/초 · 짐 0/10
-- [PASS] 탐험 일주 도착: arabia_central_canyon — 44.0칸 · 11.4초
-  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/18_central_canyon.png
-- [PASS] 걸어갈 경로 찾기: 협곡 → 장터 남동문 — 21칸
-- [PASS] 걸어서 도착: 협곡 → 장터 남동문 — 20.7칸 · 5.6초 · 평균 속도 3.80칸/초 · 짐 0/10
-- [PASS] 탐험 일주 도착: arabia_central_bazaar — 20.7칸 · 5.6초
+  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/17_central_bazaar.png
+- [PASS] 걸어갈 경로 찾기: 장터 동문 → 소나무 고원 — 41칸
+- [PASS] 걸어서 도착: 장터 동문 → 소나무 고원 — 41.2칸 · 11.0초 · 평균 속도 3.80칸/초 · 짐 0/10
+- [PASS] 탐험 일주 도착: arabia_central_eastvale — 41.2칸 · 11.0초
+  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/18_central_eastvale.png
+- [PASS] 걸어갈 경로 찾기: 고원 → 장터 동문 — 1칸
+- [PASS] 걸어서 도착: 고원 → 장터 동문 — 0.9칸 · 0.3초 · 평균 속도 3.80칸/초 · 짐 0/10
+- [PASS] 탐험 일주 도착: arabia_central_bazaar — 0.9칸 · 0.3초
   (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/19_central_bazaar.png
-- [PASS] 걸어갈 경로 찾기: 장터 서문 → 포도밭 언덕 — 96칸
-- [PASS] 걸어서 도착: 장터 서문 → 포도밭 언덕 — 96.0칸 · 25.1초 · 평균 속도 3.84칸/초 · 짐 0/10
-- [PASS] 탐험 일주 도착: arabia_central_westvale — 96.0칸 · 25.1초
-  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/20_central_westvale.png
+- [PASS] 걸어갈 경로 찾기: 장터 남동문 → 붉은 바위 협곡 — 52칸
+- [PASS] 걸어서 도착: 장터 남동문 → 붉은 바위 협곡 — 52.1칸 · 13.7초 · 평균 속도 3.84칸/초 · 짐 0/10
+- [PASS] 탐험 일주 도착: arabia_central_canyon — 52.1칸 · 13.7초
+  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/20_central_canyon.png
+- [PASS] 걸어갈 경로 찾기: 협곡 → 장터 남동문 — 1칸
+- [PASS] 걸어서 도착: 협곡 → 장터 남동문 — 1.2칸 · 0.4초 · 평균 속도 3.80칸/초 · 짐 0/10
+- [PASS] 탐험 일주 도착: arabia_central_bazaar — 1.2칸 · 0.4초
+  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/21_central_bazaar.png
+- [PASS] 걸어갈 경로 찾기: 장터 서문 → 포도밭 언덕 — 95칸
+- [PASS] 걸어서 도착: 장터 서문 → 포도밭 언덕 — 95.0칸 · 24.9초 · 평균 속도 3.84칸/초 · 짐 0/10
+- [PASS] 탐험 일주 도착: arabia_central_westvale — 95.0칸 · 24.9초
+  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/22_central_westvale.png
 - [PASS] 걸어갈 경로 찾기: 포도밭 언덕 → 장터 서문 — 1칸
 - [PASS] 걸어서 도착: 포도밭 언덕 → 장터 서문 — 0.9칸 · 0.3초 · 평균 속도 3.80칸/초 · 짐 0/10
 - [PASS] 탐험 일주 도착: arabia_central_bazaar — 0.9칸 · 0.3초
-  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/21_central_bazaar.png
+  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/23_central_bazaar.png
 - [PASS] 걸어갈 경로 찾기: 장터 → 와디 건너 오아시스 — 19칸
 - [PASS] 걸어서 도착: 장터 → 와디 건너 오아시스 — 19.0칸 · 5.1초 · 평균 속도 3.80칸/초 · 짐 0/10
 - [PASS] 탐험 일주 도착: arabia_central_dunes — 19.0칸 · 5.1초
-  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/22_central_dunes.png
+  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/24_central_dunes.png
 - [PASS] 걸어갈 경로 찾기: 오아시스 → 빈 사막 북쪽 모래길 — 73칸
 - [PASS] 걸어서 도착: 오아시스 → 빈 사막 북쪽 모래길 — 73.4칸 · 19.4초 · 평균 속도 3.83칸/초 · 짐 0/10
 - [PASS] 탐험 일주 도착: arabia_shortcut — 73.4칸 · 19.4초
-  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/23_shortcut.png
+  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/25_shortcut.png
 - [PASS] 빈 사막 분위기 연출 있음
-- [PASS] 모래바람·동물 연출 동작 — 동물 10마리
-  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/24_desert_fx.png
+- [PASS] 모래바람·동물 연출 동작 — 동물 6마리
+  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/26_desert_fx.png
 - [PASS] 걸어갈 경로 찾기: 룹알할리 빈 사막 → 알 아흐사 — 42칸
 - [PASS] 걸어서 도착: 룹알할리 빈 사막 → 알 아흐사 — 41.6칸 · 10.6초 · 평균 속도 3.92칸/초 · 짐 0/10
 - [PASS] 탐험 일주 도착: arabia_ahsa — 41.6칸 · 10.6초
-  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/25_ahsa.png
+  (화면) /Users/euninjun/Documents/ChatGPT/게임개발 수업/development/pocket-caravan-team/Docs/Arabia/Reports/Screens/27_ahsa.png
 - [PASS] 본편 저장 파일 그대로
 - [PASS] 본편 저장 파일 변경 없음 (시험 전후 해시) — E5BB55D861DC → E5BB55D861DC
 이전 아라비아 시험 저장을 복원

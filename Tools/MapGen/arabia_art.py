@@ -197,7 +197,7 @@ def unplace(m, name, x, y):
 TEX = {'sand': 'tile_sand', 'road': 'tile_road', 'paving': 'tile_paving', 'grass': 'tile_oasisGrass',
        'water': 'tile_water', 'zellige': 'tile_zellige', 'brick': 'tile_mudBrick', 'dune': 'tile_dune',
        'rock': 'drawn_texRock', 'gravel': 'drawn_texGravel', 'dry': 'drawn_texDry',
-       'red': 'drawn_texRed', 'cobble': 'drawn_texCobble', 'boards': 'drawn_texBoards'}
+       'red': 'drawn_texRed', 'cobble': 'drawn_texCobble', 'boards': 'drawn_texBoards', 'plaza': 'drawn_texPlaza'}
 STREET = {'paving', 'zellige'}
 # 경계를 그리지 않고 이어지는 바닥 묶음
 JOIN = {'paving': {'paving', 'zellige', 'road', 'bridge'}, 'zellige': {'zellige'},
@@ -205,7 +205,8 @@ JOIN = {'paving': {'paving', 'zellige', 'road', 'bridge'}, 'zellige': {'zellige'
         'gravel': {'gravel', 'road', 'paving', 'bridge'}, 'rock': {'rock'},
         'grass': {'grass', 'water', 'bridge'}, 'water': {'water', 'bridge'}, 'brick': {'brick'}, 'dune': {'dune'},
         'dry': {'dry', 'grass', 'water', 'bridge'},   # 건초지: 초원 쪽 경계는 초원이 그린다
-        'red': {'red'}, 'cobble': {'cobble', 'boards', 'bridge', 'zellige'}, 'boards': {'boards', 'bridge'}}
+        'red': {'red'}, 'cobble': {'cobble', 'boards', 'bridge', 'zellige', 'plaza'}, 'boards': {'boards', 'bridge'},
+        'plaza': {'plaza', 'cobble', 'bridge'}}
 UNDER = ('grass', 'dry', 'sand', 'red')       # 경계 바깥에 깔 바닥 후보
 
 
@@ -260,9 +261,10 @@ def compose(kind, under, mask, x, y):
                 elif d < 1.5: px[i, j] = (104, 74, 46, 255)          # 연석 바깥 윤곽
                 elif d < 3.5: px[i, j] = (222, 190, 136, 255) if (i + j) % 5 else (204, 168, 116, 255)  # 사암 연석
                 elif d < 4.5: px[i, j] = (170, 140, 100, 255)        # 연석 안쪽 그늘
-            elif kind in ('cobble', 'boards'):
+            elif kind in ('cobble', 'boards', 'plaza'):
                 if d < 0.5: px[i, j] = bp[i, j]
-                elif d < 1.5: px[i, j] = (64, 58, 56, 255) if kind == 'cobble' else (70, 46, 30, 255)
+                elif d < 1.5: px[i, j] = (64, 58, 56, 255) if kind == 'cobble' else (70, 46, 30, 255) if kind == 'boards' else (120, 84, 58, 255)
+                elif d < 2.5 and kind == 'plaza': px[i, j] = (236, 196, 80, 255)
                 elif d < 2.5 and kind == 'cobble': px[i, j] = (118, 114, 120, 255)
             elif kind in ('road', 'gravel', 'rock', 'dune', 'brick', 'red'):
                 jag = (_noise(x % 4, y % 4, i, j) % 3)

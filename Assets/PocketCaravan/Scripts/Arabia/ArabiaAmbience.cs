@@ -9,6 +9,7 @@ namespace PocketCaravan
     /// - 모래·모래 언덕을 걸으면 발자국이 남고 천천히 지워진다. 달리면 발밑에 모래 먼지.
     /// - 가끔 모래바람: 화면이 모래빛으로 흐려지고 모래 줄기가 휩쓸고 지나가며, 사막에선 회전초가 굴러간다. 바람 소리.
     /// - 가끔 회오리 모래기둥(사막).
+    /// - 만국 장터 대광장: 밤엔 불꽃놀이, 낮엔 색종이 꽃가루.
     /// - 동물: 독수리(가까이 가면 날아올라 도망) · 하늘을 맴도는 독수리(땅에 그림자) · 도마뱀(가까이 가면 쏜살같이 숨음)
     ///   · 쇠똥구리 · 마을 비둘기 떼(가까이 가면 한꺼번에 날아감) · 골목 고양이 · 밤의 날쥐(저보아) · 해안 갈매기.
     /// 그림은 코드로 그린 작은 픽셀 그림이라 에셋이 필요 없다. 공용 코드는 바꾸지 않는다.
@@ -19,7 +20,7 @@ namespace PocketCaravan
         public static ArabiaAmbience Current { get; private set; }
 
         // 맵 성격
-        bool desert, town, coast, green, canyon;
+        bool desert, town, coast, green, canyon, festive;
         // 정렬 순서: 바닥 0 · 장식 1 · 발자국 2 · 소품 5 · 동물 8 · 그림자 9 · 사람 10 · 나무 위 20 · 나는 새 24 · 모래 줄기 37~39
         const int OrderPrint = 2, OrderCritter = 8, OrderFlying = 24, OrderDevil = 21, OrderHaze = 37, OrderStreak = 38;
 
@@ -39,6 +40,7 @@ namespace PocketCaravan
             coast = id == "arabia_jeddah" || id == "arabia_zabid";
             green = id == "arabia_central_steppe" || id == "arabia_central_westvale" || id == "arabia_central_eastvale";
             town = !desert && !canyon && !green;
+            festive = id == "arabia_central_bazaar";          // 만국 장터 대광장: 밤 불꽃놀이 · 낮 꽃가루
             root = new GameObject("arabia_ambience_fx").transform;
             root.SetParent(transform, false);
             nextGust = Time.time + (desert ? Random.Range(8f, 20f) : Random.Range(30f, 70f));
@@ -64,6 +66,7 @@ namespace PocketCaravan
             UpdateGust(dt);
             UpdateDevil(dt);
             UpdateCritters(dt);
+            UpdateFireworks(dt);
         }
 
         // ---------------------------------------------------------------- 공용 도움
@@ -319,6 +322,99 @@ namespace PocketCaravan
                 b.color = new Color(0.90f, 0.78f, 0.55f, 0.75f * fade * (1f - hgt / 3.4f));
             }
             if (devilTime > life) devilOn = false;
+        }
+
+        // ---------------------------------------------------------------- 대광장: 밤 불꽃놀이 · 낮 꽃가루
+        class Spark { public SpriteRenderer sr; public Vector2 p, v; public float life, max; public Color c; public bool rocket; public float burstAt; }
+        readonly List<Spark> sparks = new List<Spark>();
+        float nextFirework, nextConfetti;
+        static readonly Color[] FireColors = { new Color(1f, .35f, .35f), new Color(1f, .85f, .3f), new Color(.4f, .9f, 1f), new Color(1f, .5f, .9f), new Color(.6f, 1f, .5f), new Color(.8f, .6f, 1f) };
+
+        Spark NewSpark()
+        {
+            foreach (var s in sparks) if (s.life <= 0f) { s.sr.gameObject.SetActive(true); return s; }
+            var n = new Spark { sr = MakeSr("spark", Art.Grain, OrderFlying + 2) };
+            sparks.Add(n);
+            return n;
+        }
+
+        /// <summary>불꽃 하나 쏘기: 꼬리를 끌며 올라가 터진다 (발표·시험용으로도 부른다)</summary>
+        public void LaunchFirework(Vector2 from)
+        {
+            var s = NewSpark();
+            s.rocket = true; s.p = from; s.v = new Vector2(Random.Range(-0.6f, 0.6f), Random.Range(7f, 9f));
+            s.max = s.life = Random.Range(0.8f, 1.1f); s.c = new Color(1f, .9f, .7f); s.burstAt = 0f;
+            s.sr.transform.localScale = Vector3.one * 1.5f;
+        }
+
+        void Burst(Vector2 at)
+        {
+            var c = FireColors[Random.Range(0, FireColors.Length)];
+            var c2 = FireColors[Random.Range(0, FireColors.Length)];
+            int n = Random.Range(26, 38);
+            float speed = Random.Range(3.2f, 4.6f);
+            for (int i = 0; i < n; i++)
+            {
+                var s = NewSpark();
+                float a = i / (float)n * Mathf.PI * 2f + Random.Range(-0.05f, 0.05f);
+                s.rocket = false; s.p = at; s.v = new Vector2(Mathf.Cos(a), Mathf.Sin(a)) * speed * Random.Range(0.85f, 1.05f);
+                s.max = s.life = Random.Range(1.2f, 1.7f); s.c = i % 3 == 0 ? c2 : c; s.burstAt = 0f;
+                s.sr.transform.localScale = Vector3.one * 1.5f;
+            }
+        }
+
+        void UpdateFireworks(float dt)
+        {
+            if (!festive) return;
+            var v = View(-1f);
+            bool night = Daylight < 0.45f;
+            if (night && Time.time >= nextFirework)
+            {
+                nextFirework = Time.time + Random.Range(1.2f, 4f);
+                int salvo = Random.value < 0.25f ? 3 : 1;
+                for (int i = 0; i < salvo; i++) LaunchFirework(new Vector2(Random.Range(v.xMin + 2, v.xMax - 2), v.yMin + Random.Range(0f, 3f)));
+            }
+            if (!night && Time.time >= nextConfetti)
+            {
+                nextConfetti = Time.time + Random.Range(0.08f, 0.25f);                  // 낮엔 색종이 꽃가루가 흩날린다
+                var s = NewSpark();
+                s.rocket = false; s.p = new Vector2(Random.Range(v.xMin, v.xMax), v.yMax + 0.5f);
+                s.v = new Vector2(Random.Range(-0.4f, 0.6f), Random.Range(-1.2f, -0.7f));
+                s.max = s.life = Random.Range(5f, 8f); s.c = FireColors[Random.Range(0, FireColors.Length)];
+                s.sr.transform.localScale = new Vector3(2f, 1f, 1f);
+                s.burstAt = -1f;
+            }
+            for (int i = 0, count = sparks.Count; i < count; i++)                    // 도중에 불꽃이 늘어나도 안전하게 (새 것은 다음 프레임부터)
+            {
+                var s = sparks[i];
+                if (s.life <= 0f) continue;
+                s.life -= dt;
+                if (s.rocket)
+                {
+                    s.v.y -= 4f * dt;
+                    s.p += s.v * dt;
+                    var tail = NewSpark();                                            // 올라가는 꼬리
+                    tail.rocket = false; tail.p = s.p; tail.v = Random.insideUnitCircle * 0.2f; tail.max = tail.life = 0.35f; tail.c = new Color(1f, .8f, .5f); tail.burstAt = 0f;
+                    tail.sr.transform.localScale = Vector3.one;
+                    if (s.life <= 0f) Burst(s.p);
+                }
+                else if (s.burstAt < 0f)                                              // 꽃가루: 팔랑팔랑
+                {
+                    s.p += (s.v + new Vector2(Mathf.Sin(Time.time * 3f + s.max * 7f) * 0.6f, 0)) * dt;
+                    s.sr.transform.localScale = new Vector3(Mathf.Abs(Mathf.Sin(Time.time * 6f + s.max * 9f)) * 2f + 0.4f, 1f, 1f);
+                }
+                else
+                {
+                    s.v *= 1f - 1.6f * dt; s.v.y -= 1.6f * dt;                         // 불꽃: 퍼지며 천천히 떨어진다
+                    s.p += s.v * dt;
+                }
+                var col = s.c;
+                col.a = s.burstAt < 0f && !s.rocket ? 0.9f * Mathf.Clamp01(s.life / 1.5f) : Mathf.Clamp01(s.life / (s.max * 0.5f));
+                if (!s.rocket && s.burstAt >= 0f && s.life < s.max * 0.4f && Random.value < 0.3f) col.a *= 0.3f;   // 반짝임
+                s.sr.color = col;
+                s.sr.transform.position = s.p;
+                if (s.life <= 0f) { s.sr.gameObject.SetActive(false); s.burstAt = 0f; }
+            }
         }
 
         // ---------------------------------------------------------------- 동물
