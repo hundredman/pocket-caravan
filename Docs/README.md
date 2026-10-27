@@ -1,6 +1,6 @@
 # 문서 안내
 
-정리: 2026-10-24. 에이전트와 팀원은 저장소 루트의 [AGENTS.md](../AGENTS.md)부터 읽는다.
+정리: 2026-10-24. 고려·중앙 대륙 동쪽(은샘 담당) 문서 목록이다. 에이전트 작업 안내는 [Goryeo/AgentGuide.md](Goryeo/AgentGuide.md), 팀 공용 안내는 루트 [AGENTS.md](../AGENTS.md).
 
 ## 지금 기준 문서
 

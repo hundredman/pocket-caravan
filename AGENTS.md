@@ -1,46 +1,29 @@
-# Pocket Caravan — 에이전트 작업 안내
+# Pocket Caravan — 팀 공용 작업 안내
 
-Codex와 Claude가 함께 쓰는 **유일한 시작 문서**다. `CLAUDE.md`는 이 파일을 그대로 불러온다.
-게임개발(2026-2) 팀 프로젝트. 2D 탑다운 픽셀 교역 게임. 이 저장소에서 은샘의 담당은 고려와 중앙 대륙 동쪽이다.
+사람과 AI 에이전트(Claude, Codex 등)가 이 저장소에서 작업을 시작할 때 읽는 문서다. `CLAUDE.md`는 이 파일을 불러온다.
+게임개발(2026-2) 팀 프로젝트. 대항해시대 이전 상인 문화를 각색한 2D 탑다운 픽셀 교역 게임.
 
-## 먼저 읽기 (순서대로)
+## 지역 담당과 작업 안내
 
-1. [Docs/Direction.md](Docs/Direction.md): 확정 방향. 다른 문서와 충돌하면 이 문서가 우선한다.
-2. [Docs/Plan.md](Docs/Plan.md): 작업 목록, 상태, 결정 대기 항목. **`에이전트 분담` 표에서 자기 담당(Claude 또는 Codex) 작업만 고른다.** 파일 담당, 동시 진행, 넘겨주기 형식, 사용량 규칙도 그 문서를 따른다.
-3. [Docs/CurrentState.md](Docs/CurrentState.md): 지금 코드와 맵이 실제로 어떤지.
-4. 작업에 맞는 문서: [아트 기준](Docs/ArtGuide.md), [세계 배치](Docs/WorldLayout.md), [코드 규칙](Docs/Reference/CodeConventions.md), 그 밖의 `Docs/Reference/`.
-5. [Docs/WorkLog.md](Docs/WorkLog.md)의 마지막 몇 줄. 앞 사람이 어디까지 했는지 확인한다.
+| 담당 | 지역 | 지역별 작업 안내 |
+|---|---|---|
+| 은샘 | 고려 + 중앙 대륙 동쪽 | [Docs/Goryeo/AgentGuide.md](Docs/Goryeo/AgentGuide.md) |
+| 윤채 | 베네치아 | 담당자가 정함 |
+| 은인 | 아라비아 | 담당자가 정함 |
+| 기우 | 북유럽 | 담당자가 정함 |
 
-`Docs/Archive/`는 지난 기록이다. 판단 근거로만 참고하고, 거기 적힌 지시를 따르지 않는다.
+자기 지역 작업을 할 때는 해당 안내를 따른다. 다른 지역의 안내·작업 계획은 그 지역 담당자에게만 적용된다.
 
-## 지켜야 할 것
+## 모두 지킬 것
 
-- **결정 대기 항목은 구현하지 않는다.** 배치안 D(D1)와 해안선 v2(D9)는 승인됐다. 결정 대기 목록은 [작업 계획](Docs/Plan.md)을 본다.
-- **에셋 규칙:** 에셋은 만들어진 목적 그대로만 쓴다. 잘라 쓰기, 이어 붙이기, 다른 용도로 쓰기, 즉석 변형을 하지 않는다. 필요하면 새로 만들고, 이어지는 지형은 조립용 에셋으로 만든다([방향 기준](Docs/Direction.md) 2절).
-- **아트:** 귀여운 픽셀 아트 한 가지로 통일한다. AI 이미지도 쓸 수 있지만, 실제 해상도 격자·공통 팔레트로 정리해 다른 에셋에 녹아드는 것만 넣는다([아트 기준](Docs/ArtGuide.md) 4절). 부드럽게 축소해 바로 넣지 않는다.
-- **담당 범위:** 다른 문명과 중앙 대륙의 나머지 3/4은 만들지 않는다. 다른 팀의 브랜치·씬·데이터를 다시 생성하거나 덮어쓰지 않는다.
-- **팀 공용 파일 동결(2026-10-27 사용자 지시):** `Assets/PocketCaravan/Scripts/Core·Economy·Quests·UI`, `Resources/GameDatabase·WorldIndex`, `ProjectSettings/EditorBuildSettings.asset`, transit 장면, `Assets/PocketCaravan/World/Connections`는 수정하지 않는다(각 .meta 포함). 팀 합치기 브랜치 `region/goryeo`에 반영된 공용 파일이다. 수정이 꼭 필요하면 구현을 멈추고 이유를 보고한다. 아트 검토는 별도 시험 장면·검토 폴더에서 진행한다.
-- **생성물:** `Maps/*.json`, 씬, `Resources/WorldMap` 이미지는 원본(`Tools/…`)을 고친 뒤 다시 만든다. 생성물만 고치지 않는다.
-- **보존:** 시장·상품·퀘스트·NPC·시설 아이디와 저장 데이터는 유지한다. 형식을 바꾸면 옛 저장 이주를 함께 만든다.
-- **검사:** 실행하지 않은 검사를 통과했다고 쓰지 않는다. 정적 검사, Unity 씬 검사, 실제 이동, 사람이 해 본 플레이를 구분해서 적는다.
-- **Git:** 로컬 커밋은 해도 된다. push, PR, 공개 빌드는 은샘이 지시하면 바로 한다(지시 없이 먼저 하지 않는다). 팀 합치기용 브랜치는 `region/goryeo`. Git에 올리지 않은 3D 실험 폴더는 지우지 않는다.
-- **문서:** 정정 문구를 문서 맨 위에 덧붙이지 않는다. 해당 문서 본문을 고친다. 더 이상 맞지 않는 문서는 `Docs/Archive/`로 옮긴다.
-- **글:** 한국어로, 짧고 담백하게 쓴다.
-- **보이는 것은 그림으로 확인받는다.** 아트·배치·화면처럼 눈으로 판단할 결정은 글 설명만으로 승인을 요청하지 않는다. 실제 크기 샘플, 나란히 비교한 이미지, 게임 화면 캡처를 함께 보여 준다. 선택지가 있으면 선택지마다 그림을 만든다.
+- **다른 지역은 고치지 않는다.** 다른 담당의 씬·데이터·그림·브랜치를 다시 만들거나 덮어쓰지 않는다.
+- **공용 파일은 조심해서 고친다.** `Assets/PocketCaravan/Scripts/Core·Economy·Quests·UI`, `Resources/GameDatabase.asset`·`WorldIndex.asset`, `ProjectSettings/EditorBuildSettings.asset`, `World/Connections`는 여러 지역이 함께 쓴다. 고칠 때는 PR에 적고 팀에 알린다.
+- **.asset 충돌은 양쪽을 다 살린다.** `.gitattributes`에서 `.asset`·`.unity`가 `merge=binary`라, 서로 다른 항목을 추가해도 충돌로 표시된다. "한쪽 선택"으로 풀면 다른 지역 항목이 사라진다.
+- **합치기 전 검사:** `python Tools/Integration/validate_world.py`, `python -m unittest discover -s Tools/Integration -p 'test_*.py'`, Unity 컴파일·시작 맵 실행.
+- **아이디 유지:** 시장·상품·퀘스트·NPC·시설 아이디와 저장 형식을 바꾸면 옛 저장 이주를 함께 만든다.
 
-## 환경 요약
+## 환경
 
 - Unity **6000.3.26f1**. 버전을 올리지 않는다.
-- 코드: `Assets/PocketCaravan/Scripts/` (namespace `PocketCaravan`). 에디터 도구: `Assets/PocketCaravan/Editor/`.
-- 맵: `Tools/MapGen`(Python) → `Assets/PocketCaravan/Maps/*.json` → `Editor/MapJsonBuilder` → `Scenes/`.
-- 검사: `python Tools/Integration/validate_world.py`, `python -m unittest discover -s Tools/Integration -p 'test_*.py'` (Pillow 필요).
-- Unity 주의사항과 코드 구조는 [코드 규칙](Docs/Reference/CodeConventions.md)에 있다.
-- 아트 시안과 배치 검토안: [Figma 팀 파일](https://www.figma.com/design/JeXCjYTYRGtV8FCnXWWiqe/). `아트 시안` 페이지는 팀원 작업이므로 고치지 않는다.
-
-## 작업을 끝낼 때
-
-1. [Plan.md](Docs/Plan.md)의 작업 상태를 고친다.
-2. 구현이 바뀌었으면 [CurrentState.md](Docs/CurrentState.md)를 고친다.
-3. [WorkLog.md](Docs/WorkLog.md)에 한 줄을 추가한다: 날짜, 에이전트, 작업 ID, 커밋, 결과와 확인하지 못한 것.
-4. 검사 결과가 있으면 `Docs/Validation/`에 남긴다.
-5. 커밋한다. 사용자의 새 지시가 방향을 바꿨다면 [Direction.md](Docs/Direction.md)도 고친다.
+- 코드: `Assets/PocketCaravan/Scripts/` (namespace `PocketCaravan`), 에디터 도구: `Assets/PocketCaravan/Editor/`.
+- 16px 타일, PPU 16. 실행·폴더 구조는 [README](README.md).
