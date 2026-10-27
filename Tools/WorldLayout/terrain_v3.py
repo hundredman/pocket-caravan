@@ -249,7 +249,8 @@ def build(layout):
         theta=np.arctan2(v,u);rr_=np.sqrt((u/math.sqrt(asp))**2+(v*math.sqrt(asp))**2)
         wob=1+sum(a_*np.sin((k_+2)*theta+ph[k_]) for k_,a_ in enumerate(amp))
         En=(E-E[seed])/(np.ptp(E[land])+1e-9)
-        field=rr_/(r0*wob)+1.6*En+.32*frac
+        bay=noise((H,W),14,rng,2)-.5          # 큰 만·곶(호숫가가 크게 들고 남)
+        field=rr_/(r0*wob)+1.6*En+.32*frac+1.1*bay
         # 목표 면적이 되도록 문턱값을 찾는다
         cand_=land&inner&~river
         # 원형 잘림(직선 호숫가)이 생기지 않게 거리 제한은 넉넉히 두고, 먼 곳은 부드럽게 불리하게
@@ -260,7 +261,7 @@ def build(layout):
         m=(field<thr)&reach
         # 물가를 둥글게 다듬는다(계단·직선 모서리 제거)
         shore_n=noise((H,W),7,rng,3)-.5   # 물가에 작은 만·곶
-        m=((ndimage.gaussian_filter(m.astype(float),2.2)+.55*shore_n)>.5)&cand_
+        m=((ndimage.gaussian_filter(m.astype(float),1.7)+.45*shore_n)>.5)&cand_
         m=ndimage.binary_closing(ndimage.binary_opening(m),iterations=1)&cand_
         lab,n_=ndimage.label(m)
         if n_>1:m=lab==(1+int(np.argmax(ndimage.sum(np.ones_like(lab),lab,range(1,n_+1)))))
@@ -304,25 +305,33 @@ def build(layout):
         if best_:
             mcy,mcx=best_
             wob_=noise((H,W),5,rng,3);wy2=noise((H,W),9,rng,3)-.5;wx2=noise((H,W),9,rng,3)-.5
-            a_m=back+math.pi/2+rng.uniform(-.4,.4)     # 산 덩어리는 골짜기와 엇갈리게 조금 길쭉
-            du=(xx_-mcx)+6*wx2;dv=(yy_-mcy)+6*wy2
-            pu=du*math.cos(a_m)+dv*math.sin(a_m);pv=-du*math.sin(a_m)+dv*math.cos(a_m)
-            dr_=np.hypot(pu/1.35,pv)*(1+.35*(wob_-.5))
-            prof=np.exp(-(dr_/6)**2)+.5*np.exp(-(dr_/12)**2)
-            zone=(dr_<14)&east&land&~m&~river
-            elev=np.where(zone,np.maximum(elev,.55+.45*prof*(.8+.4*wob_)),elev)
-            t[zone&(dr_<12.5)&(forest_n>.30)]=FOREST;t[zone&(dr_<12.5)&(forest_n<=.30)]=HILL
-            t[zone&(dr_<7.4)]=MOUNTAIN;t[zone&(dr_<3.8)]=PEAK
+            du=(xx_-mcx)+7*wx2;dv=(yy_-mcy)+7*wy2
+            # 낮은 산지: 둘레로 번지는 언덕·숲 덩어리. 가장자리를 비틀어 주변 언덕과 이어지게
+            dr_=np.hypot(du,dv)*(1+.5*(wob_-.5))
+            upl=np.exp(-(dr_/11)**2)
+            # 산지 위의 작은 봉우리 2~3개(한 덩어리로 붙어 있는 작은 산)
+            pk=np.zeros((H,W))
+            for j_ in range(3):
+                aa=back+math.pi/2*(j_-1)+rng.uniform(-.5,.5);dd=0 if j_==1 else rng.uniform(4.5,7)
+                py0,px0=mcy+math.sin(aa)*dd,mcx+math.cos(aa)*dd;rad_=(5.8 if j_==1 else 4.3)
+                pk=np.maximum(pk,np.exp(-(np.hypot(yy_-py0+3*wy2,xx_-px0+3*wx2)/rad_)**2)*(1 if j_==1 else .82))
+                if j_==1:pk_main=np.exp(-(np.hypot(yy_-py0+3*wy2,xx_-px0+3*wx2)/rad_)**2)
+            zone=(dr_<17)&east&land&~m&~river
+            elev=np.where(zone,np.maximum(elev,.5+.22*upl*(.7+.6*wob_)+.28*pk),elev)
+            t[zone&(upl>.22)&(forest_n>.30)]=FOREST;t[zone&(upl>.22)&(forest_n<=.30)]=HILL
+            mtn=ndimage.binary_fill_holes(ndimage.binary_closing(pk>.36,iterations=2))   # 봉우리들이 한 덩어리로 붙게
+            t[zone&mtn]=MOUNTAIN;t[zone&(pk_main>.72)]=PEAK
+            dr_=np.where(mtn,0,dr_)   # 아래 개울 시작점 계산용(산 바로 바깥)
             lk['sourceMountain']=[round(mcx+X0,1),round(mcy+Y0,1)]
             # 강 1줄기: 산의 호수 쪽 비탈 높은 곳 → 호수의 상류 끝(출구 반대쪽 물가)
             lakeward=((yy_-mcy)*(cy-mcy)+(xx_-mcx)*(cx-mcx))>0
-            cand_=np.argwhere(zone&lakeward&~np.isin(t,[MOUNTAIN,PEAK])&(dr_<9.5))
+            cand_=np.argwhere(zone&lakeward&~np.isin(t,[MOUNTAIN,PEAK])&ndimage.binary_dilation(np.isin(t,[MOUNTAIN]),iterations=2))
             if len(cand_):
                 h0=tuple(cand_[np.argmax(elev[tuple(cand_.T)])])
                 mc=np.argwhere(m);far_end=np.cos(np.arctan2(mc[:,0]-cy,mc[:,1]-cx)-back)*np.hypot(mc[:,0]-cy,mc[:,1]-cx)
                 tip=mc[far_end>np.quantile(far_end,.9)]
                 m0=tuple(tip[np.argmin(((tip-np.array(h0))**2).sum(1))])
-                seg=astar(h0,m0,1+14*elev,blocked=np.isin(t,[MOUNTAIN,PEAK]),eight=True)
+                seg=astar(h0,m0,1+14*elev+4*noise((H,W),10,rng,2),blocked=np.isin(t,[MOUNTAIN,PEAK]),eight=True)
                 inflow.append(seg)
                 yy3,xx3=m0;t[(((yy_-yy3)**2+(xx_-xx3)**2)<4**2)&land&~m&(marsh_n>.4)]=MARSH
                 # 강 골짜기: 강을 따라 땅을 조금 낮춘다
@@ -348,7 +357,7 @@ def build(layout):
                 out_.append(q if 0<=q[0]<H and 0<=q[1]<W and (land[q] or sea[q]) and not m[q] else (y,x))
             return smooth_path(out_,np.zeros((H,W),bool))
         for path,width in [(out,1.3)]+[(q_,1.0) for q_ in inflow]:
-            pts=meander(path)
+            pts=meander(path) if path is out else meander(path,4.2,22)
             for i_,(y,x) in enumerate(pts):
                 rad=width*(.7+.5*i_/max(1,len(pts))) if path is out else .8+1.0*(i_/max(1,len(pts)))
                 rr=int(math.ceil(rad))
@@ -540,6 +549,8 @@ def roads(layout,w):
     for k,v in ROAD_COST.items():
         m=t==k;cost[m]=v;blocked[m]=False
     cost=cost*(1+1.1*wig**2+.25*fine)+6*slope
+    d_wat=ndimage.distance_transform_edt(~np.isin(t,[RIVER,LAKE]))
+    cost+=np.where((d_wat>0)&(d_wat<=4),3.0*(5-d_wat)/4,0)   # 물가 4칸 안은 조금 비싸다: 강·호숫가를 바짝 따라가지 않음
     centers={v['key']:(v['center'][1]-Y0,v['center'][0]-X0) for v in w['villages']}
     road=np.zeros((H,W),bool);records=[];paths=[]
     order=sorted(layout.data['roads'],key=lambda r:math.dist(layout.towns[r['fromKey']]['position'],layout.towns[r['toKey']]['position']))
