@@ -1,0 +1,30 @@
+{
+  "ArtReview/Approved/C7-Buildings-v6/tile-house.png": {
+    "size": [
+      64,
+      48
+    ],
+    "rgbaSHA256": "206eb57b001ced8f866ee895c972f3120a3d97c72d802f848ccdcd6efb3385b1"
+  },
+  "ArtReview/Approved/C7-Gaekju-v1/gaekju.png": {
+    "size": [
+      96,
+      64
+    ],
+    "rgbaSHA256": "4c0bdf0565081598b3cc7e230774889df454d949147d39095404b9e66482786d"
+  },
+  "ArtReview/Approved/C7-Shop-v1/shop.png": {
+    "size": [
+      96,
+      64
+    ],
+    "rgbaSHA256": "71450da35b1228b3f0db4a6118a92248e02dc18675a89e94df4f3b149f6b449e"
+  },
+  "Assets/PocketCaravan/Art/Baked/Objects/c6_cart_e1a728ea.png": {
+    "size": [
+      32,
+      32
+    ],
+    "rgbaSHA256": "c2df672b0c83cf957f64116c98e773416ecd6337f42d9ad449c4494e7c212365"
+  }
+}

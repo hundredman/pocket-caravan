@@ -1,0 +1,336 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "prop": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#b78137",
+        "#daa34a",
+        "#f0c365",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#c4a779",
+        "#e0c99b",
+        "#f4dfb5",
+        "#77746c",
+        "#a29b87",
+        "#c4bca7",
+        "#4a627a",
+        "#718da3",
+        "#a5b9c3",
+        "#794b3b",
+        "#ad624c",
+        "#d69062",
+        "#547e6a",
+        "#86a28b",
+        "#33475e"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7_gateprops_gate",
+      "kind": "object",
+      "purpose": "city_gatehouse",
+      "size": [
+        6,
+        5
+      ],
+      "image": "ArtReview/C7-GateProps-20261027/Native/gate.png",
+      "profile": "prop",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-GateProps-20261027/Native/gate.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_0_0",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_1_0",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_2_0",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_3_0",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_3_0.png"
+        },
+        {
+          "dx": 4,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_4_0",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_4_0.png"
+        },
+        {
+          "dx": 5,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_5_0",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_5_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_0_1",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_1_1",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_2_1",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_3_1",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_3_1.png"
+        },
+        {
+          "dx": 4,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_4_1",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_4_1.png"
+        },
+        {
+          "dx": 5,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_5_1",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_5_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_0_2",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_1_2",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_2_2",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_3_2",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_3_2.png"
+        },
+        {
+          "dx": 4,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_4_2",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_4_2.png"
+        },
+        {
+          "dx": 5,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_5_2",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_5_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_0_3",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_1_3",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_2_3",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_2_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_3_3",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_3_3.png"
+        },
+        {
+          "dx": 4,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_4_3",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_4_3.png"
+        },
+        {
+          "dx": 5,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_5_3",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_5_3.png"
+        },
+        {
+          "dx": 0,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_0_4",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_0_4.png"
+        },
+        {
+          "dx": 1,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_1_4",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_1_4.png"
+        },
+        {
+          "dx": 2,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_2_4",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_2_4.png"
+        },
+        {
+          "dx": 3,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_3_4",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_3_4.png"
+        },
+        {
+          "dx": 4,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_4_4",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_4_4.png"
+        },
+        {
+          "dx": 5,
+          "dy": 4,
+          "layer": "obj",
+          "tile": "c7_gateprops_gate_5_4",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_gate_5_4.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_gateprops_well",
+      "kind": "object",
+      "purpose": "village_well",
+      "size": [
+        1,
+        2
+      ],
+      "image": "ArtReview/C7-GateProps-20261027/Native/well.png",
+      "profile": "prop",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-GateProps-20261027/Native/well.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_gateprops_well_0_0",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_well_0_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_gateprops_well_0_1",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_well_0_1.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_gateprops_stone_lantern",
+      "kind": "object",
+      "purpose": "stone_lantern",
+      "size": [
+        1,
+        2
+      ],
+      "image": "ArtReview/C7-GateProps-20261027/Native/stone_lantern.png",
+      "profile": "prop",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-GateProps-20261027/Native/stone_lantern.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_gateprops_stone_lantern_0_0",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_stone_lantern_0_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_gateprops_stone_lantern_0_1",
+          "image": "ArtReview/C7-GateProps-20261027/Cells/c7_gateprops_stone_lantern_0_1.png"
+        }
+      ]
+    }
+  ]
+}
