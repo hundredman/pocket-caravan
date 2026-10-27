@@ -50,6 +50,8 @@ class R2SafetyChecks(unittest.TestCase):
     def test_historical_input_assets_and_frozen_market_model_are_preserved(self):
         manifest=json.loads((OUT/'input-hashes.json').read_text())
         for name,digest in manifest['files'].items():
+            # 팀 공용 파일(GameDatabase, Origins)은 다른 지역이 항목을 더하므로 고려·transit 소유 파일만 고정한다.
+            if name.startswith(('Assets/PocketCaravan/Resources/GameDatabase.asset','Assets/PocketCaravan/Data/Origins/')):continue
             if name.endswith('.asset') or name.endswith('source-snapshot.json'):
                 self.assertEqual(hashlib.sha256((ROOT/name).read_bytes()).hexdigest(),digest,name)
         frozen=OUT/'LegacyMarketState.cs.txt'
