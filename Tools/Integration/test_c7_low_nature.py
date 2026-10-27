@@ -8,15 +8,16 @@ from c7_low_nature import OUT,DEFS,PALETTES
 from c7_catalogue import rgba_evidence
 from asset_manifest import validate
 class LowNatureChecks(unittest.TestCase):
-    def test_three_whole_objects_and_independent_pending(self):
+    def test_four_whole_objects_and_review_gate(self):
         doc=json.loads((OUT/'catalogue.json').read_text());layout=json.loads((OUT/'layout.json').read_text())
         self.assertEqual(validate(doc,[('batch',layout)],ROOT,False),[])
-        self.assertTrue(validate(doc,[('batch',layout)],ROOT,True))
+        self.assertEqual(validate(doc,[('batch',layout)],ROOT,True),[])
+        pending=json.loads(json.dumps(doc));pending['assets'][0]['review']=dict(status='pending');self.assertTrue(validate(pending,[('pending',layout)],ROOT,True))
         self.assertEqual(len(layout['terrainTags']),layout['w']*layout['h'])
         self.assertEqual(len(doc['assets']),4)
         self.assertEqual(sum(len(a['tiles']) for a in doc['assets']),20)
         for a in doc['assets']:
-            self.assertEqual(a['review']['status'],'pending');w,h=a['size'];result=Image.new('RGBA',(w*16,h*16))
+            self.assertEqual(a['review']['status'],'approved');w,h=a['size'];result=Image.new('RGBA',(w*16,h*16))
             for t in a['tiles']:
                 with Image.open(ROOT/t['image']) as im:result.alpha_composite(im.convert('RGBA'),(16*t['dx'],16*t['dy']))
             self.assertEqual(result.tobytes(),Image.open(ROOT/a['image']).convert('RGBA').tobytes())

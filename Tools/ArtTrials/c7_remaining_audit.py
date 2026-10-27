@@ -42,7 +42,12 @@ def build():
             approval=candidate.parent/'approval.json'
             recorded=bool(evidence and approval.exists() and evidence['rgbaSHA256'] in approval.read_text())
             r.update(status='approved_visual_candidate_binding_not_done' if recorded else 'candidate_record_needs_check',candidate=str(candidate.relative_to(ROOT)),candidateRGBA=evidence,nativeSizeMatches=bool(evidence and evidence['size']==[16*v for v in a['size']]),note='Potential same-purpose visual. Per-ID aliases, dimensions, foot anchor, placement and collision still need explicit binding review; this report does not approve a replacement.')
-        elif family in PENDING:r.update(status='current_trial_pending',candidate='ArtReview/C7-LowNature-20261027/Native/'+PENDING[family]+'.png')
+        elif family in PENDING:
+            candidate=ROOT/'ArtReview/Approved/C7-LowNature-v1'/(PENDING[family]+'.png')
+            evidence=rgba_evidence(candidate) if candidate.exists() else None
+            approval=candidate.parent/'approval.json'
+            recorded=bool(evidence and approval.exists() and evidence['rgbaSHA256'] in approval.read_text())
+            r.update(status='approved_visual_candidate_binding_not_done' if recorded else 'current_trial_pending',candidate=str(candidate.relative_to(ROOT)) if recorded else 'ArtReview/C7-LowNature-20261027/Native/'+PENDING[family]+'.png',candidateRGBA=evidence,nativeSizeMatches=bool(evidence and evidence['size']==[16*v for v in a['size']]))
         elif family=='cart':r.update(status='retain_original',note='User selected existing game cart. No generated cart replacement.')
         elif family=='wheat':r.update(status='terrain_retained',note='Original terrain direction retained; field layout review is separate.')
         elif family=='goryeo_woodland0':r.update(status='earlier_pine_direction_record',note='Pine retained by earlier user direction; formal source/approval consolidation required before binding.')

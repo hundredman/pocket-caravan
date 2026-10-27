@@ -1,9 +1,9 @@
 {
   "statuses": {
-    "moss_rock": "pending",
-    "shrub": "pending",
-    "tall_grass": "pending",
-    "fallen_log": "pending"
+    "moss_rock": "approved",
+    "shrub": "approved",
+    "tall_grass": "approved",
+    "fallen_log": "approved"
   },
   "productionApplied": false,
   "files": {

@@ -1,9 +1,9 @@
 {
   "errors": [],
   "statuses": {
-    "c7_lownature_moss_rock": "pending",
-    "c7_lownature_shrub": "pending",
-    "c7_lownature_tall_grass": "pending",
-    "c7_lownature_fallen_log": "pending"
+    "c7_lownature_moss_rock": "approved",
+    "c7_lownature_shrub": "approved",
+    "c7_lownature_tall_grass": "approved",
+    "c7_lownature_fallen_log": "approved"
   }
 }
