@@ -23,6 +23,13 @@ def build(L):
 
     m.exit(L, 's_01', SW_X)
     m.exit(L, 'e_01', EAST_Y)
+    # 북쪽 옛길 (2026-10-26): 바위 언덕 사이로 중앙 대륙 남부(모래바람 오아시스)에 바로 닿는 지름길.
+    # 낙석(팀 장애물 시스템)을 치워야 지난다. 큰길 자체는 언제나 열려 있다.
+    TRAIL_X = 11
+    m.exit(L, 'n_01', TRAIL_X)
+    m.paint('gravel', TRAIL_X, 0, TRAIL_X + 3, ROAD_Y - 1, grade=1)
+    m.obstacles = [dict(id='arabia_highroad_rockslide', definitionId='rockslide', x=TRAIL_X, y=3, width=4, height=3,
+                        enabled=True, phaseOffset=0.0)]
     m.paint_path('paving', [(SW_X, H - 1), (SW_X, ROAD_Y), (EAST_X, ROAD_Y), (EAST_X, EAST_Y), (W - 1, EAST_Y)], width=4, grade=3)
 
     m.asign(SW_X + 5, H - 6, '안전한 큰길\n넓고 평평한 포장길 · 거리는 깁니다.\n북쪽 가운데에 카라반사라이(쉼터)가 있어요.')
@@ -30,7 +37,10 @@ def build(L):
 
     # ---- 북쪽 언덕 (바위) ----
     m.paint('rock', 0, 0, 15, 4, reserve=False)
+    m.paint('gravel', TRAIL_X, 0, TRAIL_X + 3, ROAD_Y - 1, grade=1)   # 옛길은 바위 언덕 위에 다시
     m.rocks(1, 1, 14, 4)
+    A.block_rect(m, 0, 0, TRAIL_X - 1, ROAD_Y - 1); A.block_rect(m, TRAIL_X + 4, 0, 17, ROAD_Y - 1)   # 옛길만 지나게
+    m.asign(TRAIL_X + 4, 5, '북쪽 옛길 → 중앙 대륙 남부 (모래바람 오아시스)\n낙석을 치우면 사나를 거치지 않고 갈 수 있어요.')
     m.paint('rock', 36, 0, W - 1, 5, reserve=False)
     m.rocks(37, 1, 50, 5)
 
@@ -86,7 +96,7 @@ def build(L):
     m.add('villager', 37, 22, variant=1)
 
     # ---- 가장자리 ----
-    A.block_rect(m, 0, 0, W - 1, 0)
+    A.block_rect(m, 0, 0, TRAIL_X - 1, 0); A.block_rect(m, TRAIL_X + 4, 0, W - 1, 0)
     A.block_rect(m, 0, 0, 0, H - 1)
     A.block_rect(m, W - 1, 0, W - 1, EAST_Y - 1); A.block_rect(m, W - 1, EAST_Y + 4, W - 1, H - 1)
     A.block_rect(m, 0, H - 1, SW_X - 1, H - 1); A.block_rect(m, SW_X + 4, H - 1, W - 1, H - 1)

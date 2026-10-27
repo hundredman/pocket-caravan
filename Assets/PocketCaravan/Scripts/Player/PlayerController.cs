@@ -10,7 +10,8 @@ namespace PocketCaravan
     public class PlayerController : MonoBehaviour
     {
         public float runMultiplier = 1.6f;
-        [Tooltip("임시 시험용: G를 누르는 동안 속도 배율 (나중에 제거)")] public float debugFastMultiplier = 4f;
+        /// <summary>임시 시험용: G를 누르는 동안 속도 배율 (나중에 제거). 씬마다 저장된 값이 달라지지 않게 코드 상수로 둔다.</summary>
+        public const float DebugFastMultiplier = 6f;
         [Tooltip("짐이 가득 찼을 때 속도 배율")] public float fullLoadSpeed = 0.7f;
         [Tooltip("걷기 애니메이션 (그림이 붙은 자식)")] public CharacterAnimator anim;
 
@@ -88,7 +89,7 @@ namespace PocketCaravan
             }
             s *= Mathf.Lerp(1f, fullLoadSpeed, p.LoadRatio);
             if (Running) s *= runMultiplier;
-            if (InputReader.DebugFast()) s *= debugFastMultiplier;   // 임시 시험용 (G)
+            if (InputReader.DebugFast()) s *= DebugFastMultiplier;   // 임시 시험용 (G, 6배)
             var obstacles=MapRoot.Current!=null?MapRoot.Current.GetComponent<ObstacleField>():null;
             if(obstacles!=null){obstacles.Effects(motor.Cell,out float multiplier,out _,out _,out _,out _);s*=multiplier;}
             return s * motor.walkSpeed;

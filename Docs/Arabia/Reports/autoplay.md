@@ -1,4 +1,4 @@
-# 아라비아 자동 플레이 시험 2026-10-26 12:18:48 · Unity 6000.3.26f1
+# 아라비아 자동 플레이 시험 2026-10-26 18:41:31 · Unity 6000.3.26f1
 본편 저장 파일: /Users/euninjun/Library/Application Support/DefaultCompany/PocketCaravan/pocket_caravan_save.json (시작 해시 E5BB55D861DC)
 기존 아라비아 시험 저장을 .manual-backup으로 보관 후 새 시험 시작
 
@@ -88,7 +88,7 @@
 - [PASS] Q2 완료: 곡물 2개 제거, 보수 +30, 신용 +1 — 돈 108→138, 신용 1→2
 - [PASS] Q2 실제 이익 = 보수 − 구매비 > 0 — 30 − 10 = 20냥
 - [PASS] 다시 말 걸어도 Q2 보수 중복 없음
-- [PASS] 선지출 없는 재기 통로: 알 아흐사 게시판 배달 의뢰 (아라비아 안 목적지만) — 3건 → arabia_jeddah, arabia_taiz, arabia_sanaa
+- [PASS] 선지출 없는 재기 통로: 알 아흐사 게시판 배달 의뢰 (아라비아 안 목적지만) — 3건 → arabia_sanaa, arabia_zabid
 - [PASS] 저장하기 (전용 파일)
 - [PASS] 전용 저장에 Q2 완료 기록
 - [PASS] 본편 저장 파일 그대로 (Play 중)

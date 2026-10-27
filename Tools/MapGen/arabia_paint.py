@@ -966,6 +966,8 @@ def build_central():
     yurt('drawn_yurt', seed=102)
     yurt('drawn_yurt2', seed=110, door=(52, 96, 168, 255))
     ovoo('drawn_ovoo')
+    import arabia_paint_world
+    arabia_paint_world.build_world()
 
 
 if __name__ == '__main__':

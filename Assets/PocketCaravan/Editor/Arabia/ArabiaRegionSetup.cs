@@ -29,9 +29,13 @@ namespace PocketCaravan.EditorTools
         public const string AhsaMap = "arabia_ahsa", FarmroadMap = "arabia_farmroad", ZabidMap = "arabia_zabid";
         public const string WorkshopMap = "arabia_workshoproad", TaizMap = "arabia_taiz", PortroadMap = "arabia_portroad", JeddahMap = "arabia_jeddah";
         public const string ShortcutMap = "arabia_shortcut", SanaaMap = "arabia_sanaa", HighroadMap = "arabia_highroad";
-        public const string CentralMap = "arabia_central";   // 중앙 대륙 남쪽 구역 (2026-10-26 회의: 아라비아 담당)
-        // 수도1(사나)+마을4(알 아흐사·자비드·타이즈·제다)+길5 = 10개 씬 (Docs/Arabia/02 §1) + 중앙 대륙 남쪽 구역 1개
-        public static readonly string[] MapIds = { AhsaMap, FarmroadMap, ZabidMap, WorkshopMap, TaizMap, PortroadMap, JeddahMap, ShortcutMap, SanaaMap, HighroadMap, CentralMap };
+        // 중앙 대륙 남쪽 구역 (2026-10-26 회의: 아라비아 담당) — 같은 틀 320×160을 6조각으로 나눈 탐험형 씬
+        public const string CentralDunes = "arabia_central_dunes", CentralCanyon = "arabia_central_canyon";
+        public const string CentralWest = "arabia_central_westvale", CentralBazaar = "arabia_central_bazaar";
+        public const string CentralEast = "arabia_central_eastvale", CentralSteppe = "arabia_central_steppe";
+        // 수도1(사나)+마을4(알 아흐사·자비드·타이즈·제다)+길5 = 10개 씬 (Docs/Arabia/02 §1) + 중앙 대륙 남쪽 구역 6개
+        public static readonly string[] MapIds = { AhsaMap, FarmroadMap, ZabidMap, WorkshopMap, TaizMap, PortroadMap, JeddahMap, ShortcutMap, SanaaMap, HighroadMap,
+            CentralDunes, CentralCanyon, CentralWest, CentralBazaar, CentralEast, CentralSteppe };
         public const string AhsaTown = "arabia_ahsa", ZabidTown = "arabia_zabid";
         public const string TaizTown = "arabia_taiz", JeddahTown = "arabia_jeddah", SanaaTown = "arabia_sanaa";
         public static readonly string[] TownIds = { AhsaTown, ZabidTown, TaizTown, JeddahTown, SanaaTown };

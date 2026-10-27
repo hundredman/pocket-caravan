@@ -134,7 +134,7 @@ namespace PocketCaravan.EditorTools
                         if (!exit.targetScene.StartsWith("arabia_")) Check($"출구 {id}가 아라비아 밖으로 연결되지 않음", false, exit.targetScene);
                         pairs++;
                     }
-                Check("출구 수 = 22 (양방향 11쌍: 길 5개·사나로 가는 두 길·사나 북문↔중앙 대륙 남부, 미완성 외부 출구 없음)", pairs == 22, pairs.ToString());
+                Check("출구 수 = 46 (양방향 23쌍: 아라비아 10쌍 + 사나 북문·큰길 옛길·중앙 남부 6개 씬 사이 13쌍, 미완성 외부 출구 없음)", pairs == 46, pairs.ToString());
             }
             finally
             {

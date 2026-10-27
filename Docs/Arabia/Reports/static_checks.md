@@ -1,4 +1,4 @@
-# 아라비아 정적 검사 2026-10-26 12:18:43 · Unity 6000.3.26f1
+# 아라비아 정적 검사 2026-10-26 18:41:22 · Unity 6000.3.26f1
 결과: 통과
 - [PASS] 공용 등록 검사 (MapJsonBuilder.ValidateWorld)
 - [PASS] 시작 맵은 그대로 Naru — Naru
@@ -29,7 +29,12 @@
 - [PASS] arabia_shortcut 씬 존재·빌드 목록 포함
 - [PASS] arabia_sanaa 씬 존재·빌드 목록 포함
 - [PASS] arabia_highroad 씬 존재·빌드 목록 포함
-- [PASS] arabia_central 씬 존재·빌드 목록 포함
+- [PASS] arabia_central_dunes 씬 존재·빌드 목록 포함
+- [PASS] arabia_central_canyon 씬 존재·빌드 목록 포함
+- [PASS] arabia_central_westvale 씬 존재·빌드 목록 포함
+- [PASS] arabia_central_bazaar 씬 존재·빌드 목록 포함
+- [PASS] arabia_central_eastvale 씬 존재·빌드 목록 포함
+- [PASS] arabia_central_steppe 씬 존재·빌드 목록 포함
 - [PASS] arabia_ahsa MapRoot·지역·좌표
 - [PASS] arabia_ahsa GameManager 중복 배치 없음
 - [PASS] arabia_farmroad MapRoot·지역·좌표
@@ -50,8 +55,18 @@
 - [PASS] arabia_sanaa GameManager 중복 배치 없음
 - [PASS] arabia_highroad MapRoot·지역·좌표
 - [PASS] arabia_highroad GameManager 중복 배치 없음
-- [PASS] arabia_central MapRoot·지역·좌표
-- [PASS] arabia_central GameManager 중복 배치 없음
+- [PASS] arabia_central_dunes MapRoot·지역·좌표
+- [PASS] arabia_central_dunes GameManager 중복 배치 없음
+- [PASS] arabia_central_canyon MapRoot·지역·좌표
+- [PASS] arabia_central_canyon GameManager 중복 배치 없음
+- [PASS] arabia_central_westvale MapRoot·지역·좌표
+- [PASS] arabia_central_westvale GameManager 중복 배치 없음
+- [PASS] arabia_central_bazaar MapRoot·지역·좌표
+- [PASS] arabia_central_bazaar GameManager 중복 배치 없음
+- [PASS] arabia_central_eastvale MapRoot·지역·좌표
+- [PASS] arabia_central_eastvale GameManager 중복 배치 없음
+- [PASS] arabia_central_steppe MapRoot·지역·좌표
+- [PASS] arabia_central_steppe GameManager 중복 배치 없음
 - [PASS] NPC 배치: 하산·마리암·힌드바드 = 알 아흐사, 부엌 담당 = 자비드 — arabia_ahsa:arabia_maryam, arabia_ahsa:arabia_hindbad, arabia_ahsa:arabia_hasan, arabia_zabid:arabia_kitchen_keeper
 - [PASS] 장터·게시판: 알 아흐사 (장터 1곳, 마을 데이터 연결)
 - [PASS] 장터·게시판: 자비드 (장터 1곳, 마을 데이터 연결)
@@ -77,11 +92,35 @@
 - [PASS] 출구 arabia_shortcut → arabia_sanaa/arabia_sanaa_spawn_s_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
 - [PASS] 출구 arabia_sanaa → arabia_highroad/arabia_highroad_spawn_e_01 — 폭 (1, 4)↔(1, 4), 역방향 있음
 - [PASS] 출구 arabia_sanaa → arabia_shortcut/arabia_shortcut_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
-- [PASS] 출구 arabia_sanaa → arabia_central/arabia_central_spawn_s_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_sanaa → arabia_central_dunes/arabia_central_dunes_spawn_s_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
 - [PASS] 출구 arabia_highroad → arabia_jeddah/arabia_jeddah_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
 - [PASS] 출구 arabia_highroad → arabia_sanaa/arabia_sanaa_spawn_w_01 — 폭 (1, 4)↔(1, 4), 역방향 있음
-- [PASS] 출구 arabia_central → arabia_sanaa/arabia_sanaa_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
-- [PASS] 출구 수 = 22 (양방향 11쌍: 길 5개·사나로 가는 두 길·사나 북문↔중앙 대륙 남부, 미완성 외부 출구 없음) — 22
+- [PASS] 출구 arabia_highroad → arabia_central_dunes/arabia_central_dunes_spawn_s_02 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_dunes → arabia_sanaa/arabia_sanaa_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_dunes → arabia_highroad/arabia_highroad_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_dunes → arabia_central_canyon/arabia_central_canyon_spawn_w_01 — 폭 (1, 4)↔(1, 4), 역방향 있음
+- [PASS] 출구 arabia_central_dunes → arabia_central_canyon/arabia_central_canyon_spawn_w_02 — 폭 (1, 4)↔(1, 4), 역방향 있음
+- [PASS] 출구 arabia_central_dunes → arabia_central_westvale/arabia_central_westvale_spawn_s_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_dunes → arabia_central_bazaar/arabia_central_bazaar_spawn_s_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_canyon → arabia_central_dunes/arabia_central_dunes_spawn_e_01 — 폭 (1, 4)↔(1, 4), 역방향 있음
+- [PASS] 출구 arabia_central_canyon → arabia_central_dunes/arabia_central_dunes_spawn_e_02 — 폭 (1, 4)↔(1, 4), 역방향 있음
+- [PASS] 출구 arabia_central_canyon → arabia_central_bazaar/arabia_central_bazaar_spawn_s_02 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_canyon → arabia_central_eastvale/arabia_central_eastvale_spawn_s_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_westvale → arabia_central_dunes/arabia_central_dunes_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_westvale → arabia_central_bazaar/arabia_central_bazaar_spawn_w_01 — 폭 (1, 4)↔(1, 4), 역방향 있음
+- [PASS] 출구 arabia_central_westvale → arabia_central_steppe/arabia_central_steppe_spawn_s_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_dunes/arabia_central_dunes_spawn_n_02 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_canyon/arabia_central_canyon_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_westvale/arabia_central_westvale_spawn_e_01 — 폭 (1, 4)↔(1, 4), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_eastvale/arabia_central_eastvale_spawn_w_01 — 폭 (1, 4)↔(1, 4), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_steppe/arabia_central_steppe_spawn_s_02 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_eastvale → arabia_central_canyon/arabia_central_canyon_spawn_n_02 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_eastvale → arabia_central_bazaar/arabia_central_bazaar_spawn_e_01 — 폭 (1, 4)↔(1, 4), 역방향 있음
+- [PASS] 출구 arabia_central_eastvale → arabia_central_steppe/arabia_central_steppe_spawn_s_03 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_steppe → arabia_central_westvale/arabia_central_westvale_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_steppe → arabia_central_bazaar/arabia_central_bazaar_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_steppe → arabia_central_eastvale/arabia_central_eastvale_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 수 = 46 (양방향 23쌍: 아라비아 10쌍 + 사나 북문·큰길 옛길·중앙 남부 6개 씬 사이 13쌍, 미완성 외부 출구 없음) — 46
 - [PASS] 기존 고려·중간권 마을끼리 장터 연결 유지 (NPC 상인 필터 회귀) — 7개 마을
 - [PASS] 아라비아 ↔ 고려 장터는 미연결 (원격 거래 차단) — naru
 - [PASS] 아라비아 5개 거점 장터 서로 연결 — 모두 연결

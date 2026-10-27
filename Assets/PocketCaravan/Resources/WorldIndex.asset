@@ -104,7 +104,7 @@ MonoBehaviour:
     neighbors:
     - arabia_highroad
     - arabia_shortcut
-    - arabia_central
+    - arabia_central_dunes
   - mapId: arabia_highroad
     displayName: "\uC548\uC804\uD55C \uD070\uAE38"
     height: 32
@@ -114,14 +114,71 @@ MonoBehaviour:
     neighbors:
     - arabia_jeddah
     - arabia_sanaa
-  - mapId: arabia_central
-    displayName: "\uC911\uC559 \uB300\uB959 \uB0A8\uBD80"
-    height: 160
+    - arabia_central_dunes
+  - mapId: arabia_central_dunes
+    displayName: "\uBAA8\uB798\uBC14\uB78C \uC624\uC544\uC2DC\uC2A4"
+    height: 48
     legacyHeight: 0
     coord: {x: 28, y: 2}
     town: 
     neighbors:
     - arabia_sanaa
+    - arabia_highroad
+    - arabia_central_canyon
+    - arabia_central_westvale
+    - arabia_central_bazaar
+  - mapId: arabia_central_canyon
+    displayName: "\uBD89\uC740 \uBC14\uC704 \uD611\uACE1"
+    height: 48
+    legacyHeight: 0
+    coord: {x: 29, y: 2}
+    town: 
+    neighbors:
+    - arabia_central_dunes
+    - arabia_central_bazaar
+    - arabia_central_eastvale
+  - mapId: arabia_central_westvale
+    displayName: "\uC11C\uCABD \uD3EC\uB3C4\uBC2D \uC5B8\uB355"
+    height: 56
+    legacyHeight: 0
+    coord: {x: 27, y: 3}
+    town: 
+    neighbors:
+    - arabia_central_dunes
+    - arabia_central_bazaar
+    - arabia_central_steppe
+  - mapId: arabia_central_bazaar
+    displayName: "\uB9CC\uAD6D \uC7A5\uD130"
+    height: 56
+    legacyHeight: 0
+    coord: {x: 28, y: 3}
+    town: 
+    neighbors:
+    - arabia_central_dunes
+    - arabia_central_canyon
+    - arabia_central_westvale
+    - arabia_central_eastvale
+    - arabia_central_steppe
+  - mapId: arabia_central_eastvale
+    displayName: "\uB3D9\uCABD \uC18C\uB098\uBB34 \uACE0\uC6D0"
+    height: 56
+    legacyHeight: 0
+    coord: {x: 29, y: 3}
+    town: 
+    neighbors:
+    - arabia_central_canyon
+    - arabia_central_bazaar
+    - arabia_central_steppe
+  - mapId: arabia_central_steppe
+    displayName: "\uD55C\uAC00\uC6B4\uB370 \uCD08\uC6D0"
+    height: 56
+    legacyHeight: 0
+    coord: {x: 28, y: 4}
+    town: 
+    neighbors:
+    - arabia_central_westvale
+    - arabia_central_bazaar
+    - arabia_central_eastvale
   - mapId: Route01
     displayName: "\uC608\uC131 \uAE38"
     height: 64

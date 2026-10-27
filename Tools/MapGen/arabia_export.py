@@ -58,6 +58,8 @@ def to_json(m):
              blocked=[1 if b else 0 for row in m.blocked for b in row],
              objects=[obj_json(o) for o in m.objects])
     d["palette"] = palette
+    if getattr(m, 'obstacles', None):
+        d["obstacles"] = m.obstacles          # 팀 장애물 시스템 배치 (MapJsonBuilder → ObstacleField)
     return d
 
 

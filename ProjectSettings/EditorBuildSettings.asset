@@ -75,6 +75,9 @@ EditorBuildSettings:
     path: Assets/PocketCaravan/Scenes/ObstacleLab/ObstaclePreview.unity
     guid: 3a17c9286642b402e9ceae7eb9f3271f
   - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_central.unity
+    guid: 56deb4c4fa2644634bc63c81015e13bd
+  - enabled: 1
     path: Assets/PocketCaravan/Scenes/Arabia/arabia_ahsa.unity
     guid: 56b8d7a70613d425194c896b1a10cbf1
   - enabled: 1
@@ -105,8 +108,23 @@ EditorBuildSettings:
     path: Assets/PocketCaravan/Scenes/Arabia/arabia_highroad.unity
     guid: e4275747576f541c1a546ab317d522b9
   - enabled: 1
-    path: Assets/PocketCaravan/Scenes/Arabia/arabia_central.unity
-    guid: 56deb4c4fa2644634bc63c81015e13bd
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_central_dunes.unity
+    guid: 087341563a2fd4762836d065a1f3aac7
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_central_canyon.unity
+    guid: 1ef7fe31010cb4619b5f3c49e58ffd8a
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_central_westvale.unity
+    guid: e3f83fa62bb3848e1b037714810d308f
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_central_bazaar.unity
+    guid: f1acf3d4fe5fb4918af8a7ed43a6cffd
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_central_eastvale.unity
+    guid: 87b4f114a2e744d9488a1a758566a239
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Arabia/arabia_central_steppe.unity
+    guid: 35413f9dfb07b41bd99f2c13ce3d68be
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

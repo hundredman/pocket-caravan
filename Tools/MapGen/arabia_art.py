@@ -196,15 +196,17 @@ def unplace(m, name, x, y):
 # ---------- 바닥 무늬와 경계 ----------
 TEX = {'sand': 'tile_sand', 'road': 'tile_road', 'paving': 'tile_paving', 'grass': 'tile_oasisGrass',
        'water': 'tile_water', 'zellige': 'tile_zellige', 'brick': 'tile_mudBrick', 'dune': 'tile_dune',
-       'rock': 'drawn_texRock', 'gravel': 'drawn_texGravel', 'dry': 'drawn_texDry'}
+       'rock': 'drawn_texRock', 'gravel': 'drawn_texGravel', 'dry': 'drawn_texDry',
+       'red': 'drawn_texRed', 'cobble': 'drawn_texCobble', 'boards': 'drawn_texBoards'}
 STREET = {'paving', 'zellige'}
 # 경계를 그리지 않고 이어지는 바닥 묶음
 JOIN = {'paving': {'paving', 'zellige', 'road', 'bridge'}, 'zellige': {'zellige'},
         'road': {'road', 'paving', 'zellige', 'bridge', 'gravel'},
         'gravel': {'gravel', 'road', 'paving', 'bridge'}, 'rock': {'rock'},
         'grass': {'grass', 'water', 'bridge'}, 'water': {'water', 'bridge'}, 'brick': {'brick'}, 'dune': {'dune'},
-        'dry': {'dry', 'grass', 'water', 'bridge'}}   # 건초지: 초원 쪽 경계는 초원이 그린다
-UNDER = ('grass', 'dry', 'sand')       # 경계 바깥에 깔 바닥 후보
+        'dry': {'dry', 'grass', 'water', 'bridge'},   # 건초지: 초원 쪽 경계는 초원이 그린다
+        'red': {'red'}, 'cobble': {'cobble', 'boards', 'bridge', 'zellige'}, 'boards': {'boards', 'bridge'}}
+UNDER = ('grass', 'dry', 'sand', 'red')       # 경계 바깥에 깔 바닥 후보
 
 
 def tex(kind, x, y):
@@ -258,7 +260,11 @@ def compose(kind, under, mask, x, y):
                 elif d < 1.5: px[i, j] = (104, 74, 46, 255)          # 연석 바깥 윤곽
                 elif d < 3.5: px[i, j] = (222, 190, 136, 255) if (i + j) % 5 else (204, 168, 116, 255)  # 사암 연석
                 elif d < 4.5: px[i, j] = (170, 140, 100, 255)        # 연석 안쪽 그늘
-            elif kind in ('road', 'gravel', 'rock', 'dune', 'brick'):
+            elif kind in ('cobble', 'boards'):
+                if d < 0.5: px[i, j] = bp[i, j]
+                elif d < 1.5: px[i, j] = (64, 58, 56, 255) if kind == 'cobble' else (70, 46, 30, 255)
+                elif d < 2.5 and kind == 'cobble': px[i, j] = (118, 114, 120, 255)
+            elif kind in ('road', 'gravel', 'rock', 'dune', 'brick', 'red'):
                 jag = (_noise(x % 4, y % 4, i, j) % 3)
                 if d < jag: px[i, j] = bp[i, j]
                 elif d < jag + 1: px[i, j] = (176, 140, 96, 255)
@@ -314,7 +320,7 @@ def bridge_key(axis, edge, x, y):
 
 def ground_key(kind, under, mask, x, y):
     n = sprite(TEX[kind]).width // T
-    u = 'y' if under == 'dry' else under[0]          # 예전 이름(s·g) 유지, 건초지는 y
+    u = {'dry': 'y', 'red': 'r'}.get(under, under[0])   # 예전 이름(s·g) 유지, 건초지 y, 붉은 바위 r
     k = f'arabia:t{kind}{u}{mask}:{x % n}:{y % n}'
     name = k.replace(':', '_')
     if name not in USED:
@@ -504,6 +510,8 @@ class ArabiaMap(Map):
         for name, x, y in list(self.stamps):
             if name in ('prop_signpost', 'plaza_board'):
                 continue          # 이정표·게시판 그림은 그 표지 자신
+            if name not in _paths:
+                continue          # 공용 닌자 타일 스탬프 (소나무·기와집 등): 아라비아 그림이 아님
             cw, ch, parts = cells(name)
             hit = []
             for (cx, cy) in parts:

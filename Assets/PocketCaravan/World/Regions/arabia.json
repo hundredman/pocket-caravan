@@ -84,12 +84,52 @@
       "generator": "arabia:highroad"
     },
     {
-      "mapId": "arabia_central",
-      "jsonPath": "Assets/PocketCaravan/Maps/arabia_central.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_central.unity",
+      "mapId": "arabia_central_dunes",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_central_dunes.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_central_dunes.unity",
       "worldX": 28,
       "worldY": 2,
-      "generator": "arabia:central"
+      "generator": "arabia:central_dunes"
+    },
+    {
+      "mapId": "arabia_central_canyon",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_central_canyon.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_central_canyon.unity",
+      "worldX": 29,
+      "worldY": 2,
+      "generator": "arabia:central_canyon"
+    },
+    {
+      "mapId": "arabia_central_westvale",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_central_westvale.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_central_westvale.unity",
+      "worldX": 27,
+      "worldY": 3,
+      "generator": "arabia:central_westvale"
+    },
+    {
+      "mapId": "arabia_central_bazaar",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_central_bazaar.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_central_bazaar.unity",
+      "worldX": 28,
+      "worldY": 3,
+      "generator": "arabia:central_bazaar"
+    },
+    {
+      "mapId": "arabia_central_eastvale",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_central_eastvale.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_central_eastvale.unity",
+      "worldX": 29,
+      "worldY": 3,
+      "generator": "arabia:central_eastvale"
+    },
+    {
+      "mapId": "arabia_central_steppe",
+      "jsonPath": "Assets/PocketCaravan/Maps/arabia_central_steppe.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Arabia/arabia_central_steppe.unity",
+      "worldX": 28,
+      "worldY": 4,
+      "generator": "arabia:central_steppe"
     }
   ],
   "npcs": [
