@@ -25,6 +25,9 @@ namespace PocketCaravan.EditorTools
         public static void PrepareTest()
         {
             if (EditorApplication.isPlaying) { Debug.LogError("[북유럽] Play를 멈춘 뒤 실행하세요."); return; }
+            // 10/27 맵 생성기가 바꾼 NorthLife.json·그림을 유니티가 아직 안 읽었을 수 있어 먼저 새로 읽게 한다
+            AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+            AssetDatabase.ImportAsset($"{Root}/Resources/North/NorthLife.json", ImportAssetOptions.ForceUpdate);
             if (!BuildData()) return;
             var ids = WorldRegistry.Load().maps.FindAll(m => m.mapId.StartsWith("north_")).ConvertAll(m => m.mapId).ToArray();
             try { MapJsonBuilder.BuildSelected(ids); }
