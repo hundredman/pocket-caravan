@@ -267,16 +267,31 @@ def build(layout):
         r0=tuple(np.argwhere(rim)[np.argmin(E[rim])])
         sy,sx=np.nonzero(sea);k_=int(np.argmin((sy-r0[0])**2+(sx-r0[1])**2))
         out=astar(r0,(int(sy[k_]),int(sx[k_])),cost,blocked=np.isin(t,[MOUNTAIN,PEAK]),eight=True)
-        # 들어오는 개울: 호수 반대편 둘레 언덕 → 호수
+        # 호수가 성립하는 지형: 큰 호수는 둘레가 높은 분지여야 물이 고인다. 출구(바다 쪽) 한 곳만 낮게 두고
+        # 나머지 둘레에 언덕·숲을 세워 집수 지역을 만들고, 그 언덕에서 개울 둘이 흘러든다.
         cy,cx=np.argwhere(m).mean(0);oy,ox=r0
-        vy,vx=cy-oy,cx-ox;L=math.hypot(vy,vx) or 1
-        ty_,tx_=int(cy+vy/L*28),int(cx+vx/L*28)
-        hill=np.argwhere(east&land&~m&~np.isin(t,[MOUNTAIN,PEAK])&(((yy_-ty_)**2+(xx_-tx_)**2)<12**2))
+        dl=ndimage.distance_transform_edt(~m)
+        ang_out=math.atan2(oy-cy,ox-cx);ang=np.arctan2(yy_-cy,xx_-cx)
+        gap=np.abs((ang-ang_out+np.pi)%(2*np.pi)-np.pi)<math.radians(38)   # 출구 쪽은 열어 둔다
+        ringz=(dl>=3)&(dl<=16)&~gap&east&land&~river&far
+        bump=np.exp(-((dl-8)/4.5)**2)*(.7+.6*forest_n)
+        hillring=ringz&(bump>.55)
+        t[hillring&(forest_n>.42)]=FOREST;t[hillring&(forest_n<=.42)]=HILL
+        elev=np.where(ringz,np.maximum(elev,np.quantile(elev[land],.82)*bump+elev*(1-bump)),elev)
+        lk['hillCells']=int(hillring.sum())
+        # 들어오는 개울 2개: 출구 반대편 ±55° 방향의 언덕 → 호수
         inflow=[]
-        if len(hill):
+        for side in (-1,1):
+            a_=ang_out+math.pi+side*math.radians(55)
+            hy,hx=int(cy+math.sin(a_)*(math.sqrt(m.sum()/math.pi)+12)),int(cx+math.cos(a_)*(math.sqrt(m.sum()/math.pi)+12))
+            hill=np.argwhere(east&land&~m&~river&~np.isin(t,[MOUNTAIN,PEAK])&(((yy_-hy)**2+(xx_-hx)**2)<6**2))
+            if not len(hill):continue
             h0=tuple(hill[np.argmax(elev[tuple(hill.T)])])
             mc=np.argwhere(m);m0=tuple(mc[np.argmin(((mc-np.array(h0))**2).sum(1))])
-            inflow=astar(h0,m0,cost,blocked=np.isin(t,[MOUNTAIN,PEAK]),eight=True)
+            seg=astar(h0,m0,1+10*elev,blocked=np.isin(t,[MOUNTAIN,PEAK]),eight=True)
+            inflow.append(seg)
+            # 개울이 들어오는 곳에 작은 습지(삼각주)
+            yy3,xx3=m0;t[(((yy_-yy3)**2+(xx_-xx3)**2)<3.5**2)&land&~m&(marsh_n>.35)]=MARSH
         def meander(path,amp_=2.6,lam_=13):
             # A* 길을 따라가며 옆으로 흔들어 굽이치게(땅 위에서만)
             if len(path)<8:return path
@@ -288,7 +303,7 @@ def build(layout):
                 q=(int(round(y-tx/L_*o)),int(round(x+ty/L_*o)))
                 out_.append(q if 0<=q[0]<H and 0<=q[1]<W and (land[q] or sea[q]) and not m[q] else (y,x))
             return smooth_path(out_,np.zeros((H,W),bool))
-        for path,width in ((out,1.2),(inflow,.8)):
+        for path,width in [(out,1.2)]+[(q_,.8) for q_ in inflow]:
             pts=meander(path)
             for i_,(y,x) in enumerate(pts):
                 rad=width*(.7+.5*i_/max(1,len(pts))) if path is out else width
@@ -297,7 +312,7 @@ def build(layout):
                     for dx in range(-rr,rr+1):
                         yy2,xx2=y+dy,x+dx
                         if dy*dy+dx*dx<=rad*rad and 0<=yy2<H and 0<=xx2<W and land[yy2,xx2] and not m[yy2,xx2]:river[yy2,xx2]=True
-        lk['outletCells']=len(out);lk['inflowCells']=len(inflow)
+        lk['outletCells']=len(out);lk['inflowCells']=[len(q_) for q_ in inflow]
     t[river]=RIVER
     d_river=ndimage.distance_transform_edt(~(river|lake))
     shore=ndimage.binary_dilation(lake,iterations=2)&land&~lake&~river
@@ -415,6 +430,13 @@ def partition(layout,w,road=None):
     for _ in range(3):
         cnt=np.stack([ndimage.uniform_filter((new==i).astype(float),size=5) for i in range(len(keys))])
         cnt=np.where(regmask,cnt,-1);sm=np.argmax(cnt,0);sm[~owned]=-1;new=sm
+    # 마을 둘레 여유: 마을 범위에서 10칸 안은 그 마을 맵(경계가 마을에 바짝 붙지 않게)
+    MARGIN=10;best=np.full((H,W),np.inf);own=np.full((H,W),-1)
+    for i,k in enumerate(keys):
+        if not any(tw['key']==k or tw.get('hamlet')==k for tw in towns):continue
+        dd=ndimage.distance_transform_edt(~seeds[k])
+        z=(dd<=MARGIN)&regmask[i]&owned&(dd<best);best[z]=dd[z];own[z]=i
+    new[own>=0]=own[own>=0]
     # 마을은 반드시 자기 맵 안에
     for i,k in enumerate(keys):new[seeds[k]]=i
     # 작은 떨어진 조각은 둘러싼 맵으로
@@ -570,7 +592,7 @@ def main():
     partition(layout,w,r)
     counts={NAMES[k]:int((w['t']==k).sum()) for k in range(1,16)}
     render(w,OUT/f'terrain-villages{sfx}.png',title='M1 지형 v3 + 마을 범위'+sfx)
-    report=dict(seed=SEED,landCells=land_before,classCounts=counts,rivers=w['rivers'],villages=w['villages'],maps=w['maps'])
+    report=dict(seed=SEED,landCells=land_before,classCounts=counts,rivers=w['rivers'],villages=w['villages'],maps=w['maps'],lakes=[{k:v for k,v in l.items()} for l in w['lakes']])
     if r:
         render(w,OUT/f'terrain-villages-roads{sfx}.png',road=r,title='M1 지형 v3 + 마을 + 길'+sfx)
         render(w,OUT/f'maps{sfx}.png',road=r,title='맵 경계(색=맵)'+sfx,tint=True)
