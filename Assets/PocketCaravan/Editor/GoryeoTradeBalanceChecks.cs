@@ -37,9 +37,11 @@ namespace PocketCaravan.EditorTools
             TownData Town(string id) => db.towns.Find(t => t != null && t.id == id);
             var rules = DeliveryReward.Rules(Town("gaegyeong"));
             Check(r, "Goryeo-only reward profile enabled", rules != null && rules.revision == 1 && DeliveryReward.Rules(Town("transit_ferry")) == null);
-            Check(r, "capital-Dakmok one connected leg", DeliveryReward.RouteSteps(world,"gaegyeong","dakmok")==1);
-            Check(r, "capital-Jangdan includes field road", DeliveryReward.RouteSteps(world,"gaegyeong","goryeo_jangdan")==3);
-            Check(r, "unknown destination cannot receive route quote", DeliveryReward.RouteSteps(world,"gaegyeong","unknown")==-1);
+            // M4(2026-10-28) layoutD: 배달 보수 거리 = 새 맵 실제 보행 초 × 환산 비율(TownRoutes.json). 이웃 수가 아니다.
+            Check(r, "capital-Dakmok layoutD distance 2", DeliveryReward.RouteSteps(world,"gaegyeong","dakmok")==2);
+            Check(r, "capital-Jangdan layoutD distance 4 (longer than Dakmok)", DeliveryReward.RouteSteps(world,"gaegyeong","goryeo_jangdan")==4);
+            bool unknownRejected=false; try { DeliveryReward.RouteSteps(world,"gaegyeong","unknown"); } catch (InvalidOperationException) { unknownRejected=true; }
+            Check(r, "unknown destination cannot receive route quote", unknownRejected);
             for (int distance = 1; distance <= 5; distance++)
                 for (int weight = 2; weight <= 6; weight++)
                     Check(r, "legacy quote exact d"+distance+" w"+weight,
