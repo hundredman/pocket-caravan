@@ -32,6 +32,8 @@
 
 ## 3. 아트 (새 방향과 다름 — [아트 기준](ArtGuide.md) 5절)
 
+- 새 식생 ArtReview/RipeRice-v1: 땅에 심는 익은 벼 포기32×32/11색·PNG/Aseprite, 기존 풀 비교와 Unity480×270 단독/24포기 식재 검토. 그림 승인 대기·본편 미적용.
+
 - 2026-10-28 건물·배 리뉴얼: 건물9종(지붕 윗면+앞면)과 배1종(낮은 각도·선체 옆면)을 전체 묶음으로 제작했다. ArtReview/BuildingShip-Renewal에 원화10개·Aseprite/PNG·전체 전후 비교·Unity480×270 전후6장·검사/프롬프트가 있다. 사용자 “좋다. 모두 승인할게.”로10종 전체를 승인했고 ArtReview/Approved/BuildingShip-Renewal-v1에 PNG/Aseprite와 크기·RGBA 지문을 동결했다. 본편/A2 연결은 아직 하지 않았다. [검토 묶음](../ArtReview/BuildingShip-Renewal/README.md).
 
 - 그림 출처 세 가지가 섞여 있다: Ninja Adventure 팩 타일, AI 시트를 줄여 만든 고려 건물·자연, 코드로 그린 16×24 캐릭터.
