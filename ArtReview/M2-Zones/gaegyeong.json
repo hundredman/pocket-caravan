@@ -1,0 +1,354 @@
+{
+ "village": "goryeo/개경",
+ "map": "Gaegyeong",
+ "items": [
+  {
+   "name": "장터 광장",
+   "kind": "plaza",
+   "asset": null,
+   "w": 14,
+   "h": 8,
+   "id": "market:gaegyeong",
+   "memo": "",
+   "x": 250,
+   "y": 0
+  },
+  {
+   "name": "궁성",
+   "kind": "lot",
+   "asset": "palace",
+   "w": 10,
+   "h": 7,
+   "id": "",
+   "memo": "수도 궁궐",
+   "door": [
+    262,
+    -4
+   ],
+   "laneLen": 1,
+   "x": 257,
+   "y": -11
+  },
+  {
+   "name": "객주",
+   "kind": "lot",
+   "asset": "gaekju",
+   "w": 6,
+   "h": 4,
+   "id": "npc:gaekju",
+   "memo": "",
+   "door": [
+    259,
+    13
+   ],
+   "laneLen": 2,
+   "x": 256,
+   "y": 9
+  },
+  {
+   "name": "시전 1",
+   "kind": "lot",
+   "asset": "shop",
+   "w": 6,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    249,
+    -1
+   ],
+   "laneLen": 7,
+   "x": 246,
+   "y": -5
+  },
+  {
+   "name": "시전 2",
+   "kind": "lot",
+   "asset": "shop",
+   "w": 6,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    270,
+    6
+   ],
+   "laneLen": 4,
+   "x": 267,
+   "y": 2
+  },
+  {
+   "name": "이벤트 마당",
+   "kind": "yard",
+   "asset": null,
+   "w": 10,
+   "h": 6,
+   "id": "",
+   "memo": "",
+   "x": 267,
+   "y": 7
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "asset": "tile-house",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    254,
+    -9
+   ],
+   "laneLen": 2,
+   "x": 252,
+   "y": -12
+  },
+  {
+   "name": "집 2",
+   "kind": "lot",
+   "asset": "tile-house",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    250,
+    -13
+   ],
+   "laneLen": 2,
+   "x": 248,
+   "y": -16
+  },
+  {
+   "name": "집 3",
+   "kind": "lot",
+   "asset": "tile-house",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    270,
+    1
+   ],
+   "laneLen": 4,
+   "x": 268,
+   "y": -2
+  },
+  {
+   "name": "집 4",
+   "kind": "lot",
+   "asset": "tile-house",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    246,
+    -6
+   ],
+   "laneLen": 5,
+   "x": 244,
+   "y": -9
+  },
+  {
+   "name": "집 5",
+   "kind": "lot",
+   "asset": "thatch",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    267,
+    17
+   ],
+   "laneLen": 6,
+   "x": 265,
+   "y": 14
+  },
+  {
+   "name": "집 6",
+   "kind": "lot",
+   "asset": "thatch",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    248,
+    -17
+   ],
+   "laneLen": 3,
+   "x": 246,
+   "y": -20
+  },
+  {
+   "name": "청자 공방",
+   "kind": "spot",
+   "asset": "celadon",
+   "w": 3,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 252,
+   "y": 9
+  },
+  {
+   "name": "게시판",
+   "kind": "spot",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "board:gaegyeong",
+   "memo": "",
+   "x": 255,
+   "y": -2
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "asset": "well",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 255,
+   "y": -8
+  },
+  {
+   "name": "석등 1",
+   "kind": "lantern",
+   "asset": "stone_lantern",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 262,
+   "y": 9
+  },
+  {
+   "name": "석등 2",
+   "kind": "lantern",
+   "asset": "stone_lantern",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 253,
+   "y": -4
+  },
+  {
+   "name": "석등 3",
+   "kind": "lantern",
+   "asset": "stone_lantern",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 267,
+   "y": -1
+  },
+  {
+   "name": "석등 4",
+   "kind": "lantern",
+   "asset": "stone_lantern",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 257,
+   "y": 14
+  },
+  {
+   "name": "객주 주인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "gaekju",
+   "memo": "",
+   "x": 260,
+   "y": 13
+  },
+  {
+   "name": "시전 짐꾼",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "worker",
+   "x": 248,
+   "y": -1
+  },
+  {
+   "name": "시전 행상",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "worker",
+   "x": 273,
+   "y": 5
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 268,
+   "y": -10
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 276,
+   "y": -3
+  },
+  {
+   "name": "성장 자리 3",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 273,
+   "y": 14
+  },
+  {
+   "name": "성장 자리 4",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 281,
+   "y": 4
+  },
+  {
+   "name": "성장 자리 5",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 281,
+   "y": 12
+  }
+ ],
+ "laneCells": 36
+}

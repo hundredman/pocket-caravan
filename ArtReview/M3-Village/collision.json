@@ -1,0 +1,911 @@
+[
+ {
+  "village": "goryeo/개경",
+  "name": "궁성",
+  "asset": "palace",
+  "x": 257,
+  "y": -10,
+  "w": 10,
+  "h": 6
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "객주",
+  "asset": "gaekju",
+  "x": 256,
+  "y": 10,
+  "w": 6,
+  "h": 3
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "시전 1",
+  "asset": "shop",
+  "x": 246,
+  "y": -4,
+  "w": 6,
+  "h": 3
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "시전 2",
+  "asset": "shop",
+  "x": 267,
+  "y": 3,
+  "w": 6,
+  "h": 3
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "집 1",
+  "asset": "tile-house",
+  "x": 252,
+  "y": -11,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "집 2",
+  "asset": "tile-house",
+  "x": 248,
+  "y": -15,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "집 3",
+  "asset": "tile-house",
+  "x": 268,
+  "y": -1,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "집 4",
+  "asset": "tile-house",
+  "x": 244,
+  "y": -8,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "집 5",
+  "asset": "thatch",
+  "x": 265,
+  "y": 15,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "집 6",
+  "asset": "thatch",
+  "x": 246,
+  "y": -19,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "청자 공방",
+  "asset": "celadon",
+  "x": 252,
+  "y": 10,
+  "w": 3,
+  "h": 1
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "우물",
+  "asset": "well",
+  "x": 255,
+  "y": -7,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "석등 1",
+  "asset": "stone_lantern",
+  "x": 262,
+  "y": 10,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "석등 2",
+  "asset": "stone_lantern",
+  "x": 253,
+  "y": -3,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "석등 3",
+  "asset": "stone_lantern",
+  "x": 267,
+  "y": 0,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "석등 4",
+  "asset": "stone_lantern",
+  "x": 257,
+  "y": 15,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "goryeo/송악",
+  "name": "상점",
+  "asset": "shop",
+  "x": 187,
+  "y": -23,
+  "w": 6,
+  "h": 3
+ },
+ {
+  "village": "goryeo/송악",
+  "name": "정자",
+  "asset": "pavilion",
+  "x": 191,
+  "y": -29,
+  "w": 5,
+  "h": 4
+ },
+ {
+  "village": "goryeo/송악",
+  "name": "집 1",
+  "asset": "thatch",
+  "x": 184,
+  "y": -7,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/송악",
+  "name": "집 2",
+  "asset": "tile-house",
+  "x": 197,
+  "y": -19,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/송악",
+  "name": "집 3",
+  "asset": "thatch",
+  "x": 205,
+  "y": -25,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/송악",
+  "name": "집 4",
+  "asset": "tile-house",
+  "x": 207,
+  "y": -21,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/송악",
+  "name": "우물",
+  "asset": "well",
+  "x": 202,
+  "y": -18,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "goryeo/송악",
+  "name": "석등 1",
+  "asset": "stone_lantern",
+  "x": 191,
+  "y": -8,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "goryeo/송악",
+  "name": "석등 2",
+  "asset": "stone_lantern",
+  "x": 196,
+  "y": -18,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "goryeo/닥목",
+  "name": "촌장 집",
+  "asset": "cottage",
+  "x": 220,
+  "y": -44,
+  "w": 5,
+  "h": 3
+ },
+ {
+  "village": "goryeo/닥목",
+  "name": "한지 작업장",
+  "asset": "paper_large",
+  "x": 230,
+  "y": -43,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/닥목",
+  "name": "집 1",
+  "asset": "thatch",
+  "x": 215,
+  "y": -43,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/닥목",
+  "name": "집 2",
+  "asset": "thatch",
+  "x": 225,
+  "y": -32,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/닥목",
+  "name": "집 3",
+  "asset": "thatch",
+  "x": 233,
+  "y": -51,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/닥목",
+  "name": "한지 건조대 1",
+  "asset": "paper_rack",
+  "x": 240,
+  "y": -38,
+  "w": 3,
+  "h": 1
+ },
+ {
+  "village": "goryeo/닥목",
+  "name": "한지 건조대 2",
+  "asset": "paper_rack",
+  "x": 234,
+  "y": -33,
+  "w": 3,
+  "h": 1
+ },
+ {
+  "village": "goryeo/닥목",
+  "name": "우물",
+  "asset": "well",
+  "x": 229,
+  "y": -39,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "goryeo/닥목",
+  "name": "석등 1",
+  "asset": "stone_lantern",
+  "x": 221,
+  "y": -40,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "goryeo/장단",
+  "name": "곳간",
+  "asset": "small_store",
+  "x": 196,
+  "y": 38,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/장단",
+  "name": "집 1",
+  "asset": "thatch",
+  "x": 200,
+  "y": 32,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/장단",
+  "name": "집 2",
+  "asset": "thatch",
+  "x": 213,
+  "y": 49,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/장단",
+  "name": "집 3",
+  "asset": "thatch",
+  "x": 205,
+  "y": 50,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/장단",
+  "name": "집 4",
+  "asset": "thatch",
+  "x": 211,
+  "y": 45,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/장단",
+  "name": "집 5",
+  "asset": "cottage",
+  "x": 218,
+  "y": 52,
+  "w": 5,
+  "h": 3
+ },
+ {
+  "village": "goryeo/장단",
+  "name": "수확 더미",
+  "asset": "harvest",
+  "x": 194,
+  "y": 35,
+  "w": 3,
+  "h": 1
+ },
+ {
+  "village": "goryeo/장단",
+  "name": "우물",
+  "asset": "well",
+  "x": 212,
+  "y": 48,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "goryeo/장단",
+  "name": "석등 1",
+  "asset": "stone_lantern",
+  "x": 200,
+  "y": 39,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "east/동문 마을",
+  "name": "상점",
+  "asset": "shop",
+  "x": 128,
+  "y": -7,
+  "w": 6,
+  "h": 3
+ },
+ {
+  "village": "east/동문 마을",
+  "name": "곳간",
+  "asset": "small_store",
+  "x": 137,
+  "y": -8,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/동문 마을",
+  "name": "집 1",
+  "asset": "thatch",
+  "x": 142,
+  "y": -8,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/동문 마을",
+  "name": "집 2",
+  "asset": "cottage",
+  "x": 137,
+  "y": -13,
+  "w": 5,
+  "h": 3
+ },
+ {
+  "village": "east/동문 마을",
+  "name": "집 3",
+  "asset": "thatch",
+  "x": 142,
+  "y": 2,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/동문 마을",
+  "name": "집 4",
+  "asset": "tile-house",
+  "x": 136,
+  "y": -20,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/동문 마을",
+  "name": "우물",
+  "asset": "well",
+  "x": 143,
+  "y": -11,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "east/동문 마을",
+  "name": "석등 1",
+  "asset": "stone_lantern",
+  "x": 141,
+  "y": -7,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "east/동문 마을",
+  "name": "석등 2",
+  "asset": "stone_lantern",
+  "x": 146,
+  "y": 3,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "east/북동 포구",
+  "name": "상점",
+  "asset": "shop",
+  "x": 118,
+  "y": -107,
+  "w": 6,
+  "h": 3
+ },
+ {
+  "village": "east/북동 포구",
+  "name": "창고",
+  "asset": "small_store",
+  "x": 126,
+  "y": -103,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/북동 포구",
+  "name": "빨래터",
+  "asset": "laundry",
+  "x": 125,
+  "y": -106,
+  "w": 2,
+  "h": 1
+ },
+ {
+  "village": "east/북동 포구",
+  "name": "집 1",
+  "asset": "thatch",
+  "x": 119,
+  "y": -94,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/북동 포구",
+  "name": "집 2",
+  "asset": "tile-house",
+  "x": 129,
+  "y": -92,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/북동 포구",
+  "name": "집 3",
+  "asset": "thatch",
+  "x": 122,
+  "y": -90,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/북동 포구",
+  "name": "집 4",
+  "asset": "cottage",
+  "x": 123,
+  "y": -86,
+  "w": 5,
+  "h": 3
+ },
+ {
+  "village": "east/북동 포구",
+  "name": "우물",
+  "asset": "well",
+  "x": 121,
+  "y": -86,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "east/북동 포구",
+  "name": "석등 1",
+  "asset": "stone_lantern",
+  "x": 128,
+  "y": -93,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "east/북동 포구",
+  "name": "석등 2",
+  "asset": "stone_lantern",
+  "x": 128,
+  "y": -85,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "east/남동 포구",
+  "name": "상점",
+  "asset": "shop",
+  "x": 109,
+  "y": 95,
+  "w": 6,
+  "h": 3
+ },
+ {
+  "village": "east/남동 포구",
+  "name": "창고",
+  "asset": "small_store",
+  "x": 123,
+  "y": 103,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/남동 포구",
+  "name": "빨래터",
+  "asset": "laundry",
+  "x": 128,
+  "y": 100,
+  "w": 2,
+  "h": 1
+ },
+ {
+  "village": "east/남동 포구",
+  "name": "집 1",
+  "asset": "thatch",
+  "x": 123,
+  "y": 86,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/남동 포구",
+  "name": "집 2",
+  "asset": "tile-house",
+  "x": 115,
+  "y": 86,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/남동 포구",
+  "name": "집 3",
+  "asset": "thatch",
+  "x": 130,
+  "y": 93,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/남동 포구",
+  "name": "집 4",
+  "asset": "cottage",
+  "x": 130,
+  "y": 88,
+  "w": 5,
+  "h": 3
+ },
+ {
+  "village": "east/남동 포구",
+  "name": "우물",
+  "asset": "well",
+  "x": 130,
+  "y": 85,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "east/남동 포구",
+  "name": "석등 1",
+  "asset": "stone_lantern",
+  "x": 122,
+  "y": 102,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "east/남동 포구",
+  "name": "석등 2",
+  "asset": "stone_lantern",
+  "x": 111,
+  "y": 92,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "east/중앙 길목 마을",
+  "name": "객주",
+  "asset": "gaekju",
+  "x": 46,
+  "y": 10,
+  "w": 6,
+  "h": 3
+ },
+ {
+  "village": "east/중앙 길목 마을",
+  "name": "상점",
+  "asset": "shop",
+  "x": 46,
+  "y": -3,
+  "w": 6,
+  "h": 3
+ },
+ {
+  "village": "east/중앙 길목 마을",
+  "name": "집 1",
+  "asset": "thatch",
+  "x": 53,
+  "y": -3,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/중앙 길목 마을",
+  "name": "집 2",
+  "asset": "tile-house",
+  "x": 48,
+  "y": 15,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/중앙 길목 마을",
+  "name": "집 3",
+  "asset": "thatch",
+  "x": 57,
+  "y": -7,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/중앙 길목 마을",
+  "name": "집 4",
+  "asset": "tile-house",
+  "x": 55,
+  "y": 11,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "east/중앙 길목 마을",
+  "name": "집 5",
+  "asset": "cottage",
+  "x": 55,
+  "y": 15,
+  "w": 5,
+  "h": 3
+ },
+ {
+  "village": "east/중앙 길목 마을",
+  "name": "우물",
+  "asset": "well",
+  "x": 60,
+  "y": 11,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "east/중앙 길목 마을",
+  "name": "석등 1",
+  "asset": "stone_lantern",
+  "x": 58,
+  "y": 2,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "east/중앙 길목 마을",
+  "name": "석등 2",
+  "asset": "stone_lantern",
+  "x": 51,
+  "y": 18,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "hamlet/북쪽 쉼터 마을",
+  "name": "쉼터 주막",
+  "asset": "small_store",
+  "x": 85,
+  "y": -32,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "hamlet/북쪽 쉼터 마을",
+  "name": "집 1",
+  "asset": "thatch",
+  "x": 71,
+  "y": -27,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "hamlet/북쪽 쉼터 마을",
+  "name": "평상",
+  "asset": "bench",
+  "x": 79,
+  "y": -40,
+  "w": 3,
+  "h": 1
+ },
+ {
+  "village": "hamlet/북쪽 쉼터 마을",
+  "name": "우물",
+  "asset": "well",
+  "x": 71,
+  "y": -23,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "hamlet/북쪽 쉼터 마을",
+  "name": "석등 1",
+  "asset": "stone_lantern",
+  "x": 88,
+  "y": -35,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "hamlet/남쪽 호숫가 마을",
+  "name": "쉼터 주막",
+  "asset": "small_store",
+  "x": 76,
+  "y": 45,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "hamlet/남쪽 호숫가 마을",
+  "name": "빨래터",
+  "asset": "laundry",
+  "x": 90,
+  "y": 51,
+  "w": 2,
+  "h": 1
+ },
+ {
+  "village": "hamlet/남쪽 호숫가 마을",
+  "name": "집 1",
+  "asset": "thatch",
+  "x": 81,
+  "y": 51,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "hamlet/남쪽 호숫가 마을",
+  "name": "집 2",
+  "asset": "thatch",
+  "x": 81,
+  "y": 55,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "hamlet/남쪽 호숫가 마을",
+  "name": "우물",
+  "asset": "well",
+  "x": 79,
+  "y": 54,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "hamlet/남쪽 호숫가 마을",
+  "name": "석등 1",
+  "asset": "stone_lantern",
+  "x": 85,
+  "y": 57,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "goryeo/나루",
+  "name": "촌장 집",
+  "asset": "cottage",
+  "x": 243,
+  "y": 48,
+  "w": 5,
+  "h": 3
+ },
+ {
+  "village": "goryeo/나루",
+  "name": "집 1",
+  "asset": "thatch",
+  "x": 225,
+  "y": 52,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/나루",
+  "name": "집 2",
+  "asset": "thatch",
+  "x": 232,
+  "y": 63,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/나루",
+  "name": "집 3",
+  "asset": "tile-house",
+  "x": 237,
+  "y": 63,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/나루",
+  "name": "집 4",
+  "asset": "tile-house",
+  "x": 250,
+  "y": 60,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/나루",
+  "name": "집 5",
+  "asset": "thatch",
+  "x": 251,
+  "y": 65,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/나루",
+  "name": "우물",
+  "asset": "well",
+  "x": 245,
+  "y": 62,
+  "w": 1,
+  "h": 1
+ },
+ {
+  "village": "goryeo/나루",
+  "name": "석등 1",
+  "asset": "stone_lantern",
+  "x": 236,
+  "y": 58,
+  "w": 1,
+  "h": 1
+ }
+]

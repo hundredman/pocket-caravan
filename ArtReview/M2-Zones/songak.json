@@ -1,0 +1,224 @@
+{
+ "village": "goryeo/송악",
+ "map": "goryeo_songak",
+ "items": [
+  {
+   "name": "장터 광장",
+   "kind": "plaza",
+   "asset": null,
+   "w": 7,
+   "h": 10,
+   "id": "market:goryeo_songak",
+   "memo": "",
+   "x": 193,
+   "y": -16
+  },
+  {
+   "name": "상점",
+   "kind": "lot",
+   "asset": "shop",
+   "w": 6,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    190,
+    -20
+   ],
+   "laneLen": 2,
+   "x": 187,
+   "y": -24
+  },
+  {
+   "name": "정자",
+   "kind": "lot",
+   "asset": "pavilion",
+   "w": 5,
+   "h": 5,
+   "id": "",
+   "memo": "산록 쉼터",
+   "door": [
+    193,
+    -25
+   ],
+   "laneLen": 3,
+   "x": 191,
+   "y": -30
+  },
+  {
+   "name": "이벤트 마당",
+   "kind": "yard",
+   "asset": null,
+   "w": 6,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "x": 199,
+   "y": -34
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "asset": "thatch",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    186,
+    -5
+   ],
+   "laneLen": 2,
+   "x": 184,
+   "y": -8
+  },
+  {
+   "name": "집 2",
+   "kind": "lot",
+   "asset": "tile-house",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    199,
+    -17
+   ],
+   "laneLen": 6,
+   "x": 197,
+   "y": -20
+  },
+  {
+   "name": "집 3",
+   "kind": "lot",
+   "asset": "thatch",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    207,
+    -23
+   ],
+   "laneLen": 9,
+   "x": 205,
+   "y": -26
+  },
+  {
+   "name": "집 4",
+   "kind": "lot",
+   "asset": "tile-house",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    209,
+    -19
+   ],
+   "laneLen": 13,
+   "x": 207,
+   "y": -22
+  },
+  {
+   "name": "게시판",
+   "kind": "spot",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "board:goryeo_songak",
+   "memo": "",
+   "x": 191,
+   "y": -11
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "asset": "well",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 202,
+   "y": -19
+  },
+  {
+   "name": "석등 1",
+   "kind": "lantern",
+   "asset": "stone_lantern",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 191,
+   "y": -9
+  },
+  {
+   "name": "석등 2",
+   "kind": "lantern",
+   "asset": "stone_lantern",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 196,
+   "y": -19
+  },
+  {
+   "name": "송악 상인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "goryeo_songak_merchant",
+   "memo": "",
+   "x": 191,
+   "y": -20
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 203,
+   "y": -11
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 210,
+   "y": -15
+  },
+  {
+   "name": "성장 자리 3",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 185,
+   "y": -16
+  },
+  {
+   "name": "성장 자리 4",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 197,
+   "y": -27
+  }
+ ],
+ "laneCells": 35
+}

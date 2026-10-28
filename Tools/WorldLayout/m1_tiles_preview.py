@@ -72,6 +72,14 @@ C7={'willow':'ArtReview/Approved/C7-Batch1-v1/willow.png','forest_bent':'ArtRevi
     'moss_rock':'ArtReview/Approved/C7-LowNature-v1/moss_rock.png','shrub':'ArtReview/Approved/C7-LowNature-v1/shrub.png',
     'tall_grass':'ArtReview/Approved/C7-LowNature-v1/tall_grass.png','harvest':'ArtReview/Approved/C7-WorkshopProps-v4/harvest.png',
     **{n:f'ArtReview/C7-RemainingBatch-20261027/Native/{n}.png' for n in ('pine_west','pine_east','round_west','round_east','small_rock','lotus','sheaf_jangdan','sheaf_naru')}}
+# M3 마을 건물·소품(승인된 C7). 기와집은 v6이 v5를 대신한다.
+C7B={'cottage':'C7-Batch1-v1','pavilion':'C7-Batch1-v1','thatch':'C7-Buildings-v5','tile-house':'C7-Buildings-v6',
+     'garden_wall':'C7-CourtyardProps-v1','onggi':'C7-CourtyardProps-v1','paper_large':'C7-CourtyardProps-v1',
+     'gaekju':'C7-Gaekju-v1','gate':'C7-GateProps-v1','stone_lantern':'C7-GateProps-v1','well':'C7-GateProps-v1',
+     'palace':'C7-Palace-v1','shop':'C7-Shop-v1','celadon':'C7-WorkshopProps-v4','harvest':'C7-WorkshopProps-v4','paper_rack':'C7-WorkshopProps-v4'}
+def c7b(name):
+    p=ROOT/'ArtReview/Approved'/C7B[name]/f'{name}.png' if name in C7B else ROOT/f'ArtReview/C7-RemainingBatch-20261027/Native/{name}.png'
+    return Image.open(p).convert('RGBA')
 def sprite(name):
     nm=name.split(':')[0]
     if nm in C7:
@@ -245,7 +253,9 @@ def _paste(dst,im,x,y):
     dst.alpha_composite(im.crop((sx,sy,im.width,im.height)),(x+sx,y+sy))
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--no',default='');a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--no',default='');ap.add_argument('--zones',action='store_true',help='M3: M2 구역도의 건물·광장을 그린다(ArtReview/M3-Village)');a=ap.parse_args()
+    global OUT
+    if a.zones:OUT=ROOT/'ArtReview/M3-Village'
     asked=set(filter(None,a.no.split(',')));off=asked|{'field'}   # 들판(논)은 2026-10-28 은샘 지시로 뺌
     v.VARIANT['area']=v.SMALL_CENTRAL;v.VARIANT['hamlets']=v.HAMLETS
     layout=WorldLayout.read();w=v.build(layout);r=v.roads(layout,w);v.partition(layout,w,r)
@@ -369,6 +379,8 @@ def main():
     lab,n_=ndimage.label(road,structure=np.ones((3,3)))
     for i_,sl in enumerate(ndimage.find_objects(lab),1):
         if (lab[sl]==i_).sum()<12:road[sl][lab[sl]==i_]=False
+    Z=None
+    if a.zones:Z=zones_masks(own,water,road,H,W);road=Z['road']
     land=own&~water
     rep=dict(waterAdded=int((water&~water0).sum()),roadAdded=int((road&~road0).sum()),bridgeCells=int(bridge.sum()))
     img=Image.new('RGBA',(W*T,H*T),(28,34,40,255))
@@ -416,11 +428,18 @@ def main():
         need=[n&e&~ne,n&w_&~nw,s_&e&~se,s_&w_&~sw];miss=sum(x_.astype(int) for x_ in need);four=n&s_&w_&e
         return int((mask&own&((miss>1)|((miss==1)&~four))).sum())
     rep['seamCells']=dict(water=seams(water),road=seams(road))
+    if os.environ.get('SEAMDBG'):
+        p_=np.pad(road,1,mode='edge');n,s_,w_,e=p_[:-2,1:-1],p_[2:,1:-1],p_[1:-1,:-2],p_[1:-1,2:];ne,nw,se,sw=p_[:-2,2:],p_[:-2,:-2],p_[2:,2:],p_[2:,:-2]
+        miss=sum(x_.astype(int) for x_ in [n&e&~ne,n&w_&~nw,s_&e&~se,s_&w_&~sw]);four=n&s_&w_&e
+        print('SEAM',[(int(x+v.X0),int(y+v.Y0)) for y,x in np.argwhere(road&own&((miss>1)|((miss==1)&~four)))])
     # ---------- 개체 심기 ----------
     near_road=ndimage.binary_dilation(road,iterations=1);near_water=ndimage.binary_dilation(water,iterations=1)
     village=w['village']
     free=land&~near_road&~near_water
-    occ=ndimage.binary_dilation(bridge_mask,iterations=1).copy()   # 줄기·덮인 칸. 다리 밑·둘레엔 풀포기·꽃·나무를 두지 않음(다리 위에 풀이 그려지지 않게)
+    occ=ndimage.binary_dilation(bridge_mask,iterations=1).copy()
+    if Z is not None:
+        free&=~Z['reserve'];occ|=Z['reserve']
+        objs_z=Z['objs']   # 줄기·덮인 칸. 다리 밑·둘레엔 풀포기·꽃·나무를 두지 않음(다리 위에 풀이 그려지지 않게)
     objs=[]
     def place(name,y,x,margin=0):
         nm,sw,sh=name.split(':');sw,sh=int(sw),int(sh)
@@ -443,7 +462,7 @@ def main():
     counts={}
     for kind,ks,mask_ in (('mountain',MOUNT_BLOCK,cls(v.MOUNTAIN,v.PEAK)&land),('forest',FOREST_BLOCK,cls(v.FOREST)&land)):
         if kind in off:continue
-        fm=clean(mask_&~near_road&~near_water&~occ,12)
+        fm=clean(mask_&~near_road&~near_water&~occ&(~Z['canopy'] if Z is not None else True),12)
         blk,lat,bg=forest_block(ks,seed=3 if kind=='forest' else 5)
         # 바탕(숲 그늘): 아래 2칸까지 숲인 칸만. 숲 맨 아래 줄은 풀밭 위에 밑동이 보인다(시작 부분).
         below=np.zeros_like(fm);below[:-2]=fm[1:-1]&fm[2:]
@@ -483,6 +502,7 @@ def main():
         taken=np.zeros((H,W),bool)
         for fm_ in FMASK.values():taken|=fm_
         sm&=land&~road&~ndimage.binary_dilation(road,iterations=1)&~village&~taken
+        if Z is not None:sm&=~Z['canopy']
         blk,lat,bg=forest_block(FOREST_BLOCK,seed=9,sparse=True);n=0
         for y,x in np.argwhere(sm):
             k=lat.get((y%P,x%P))
@@ -545,14 +565,16 @@ def main():
             if rng.random()<.035:img.alpha_composite(tile(TUFTS[rng.integers(4)]),(x*T,y*T));n+=1
         counts['tufts']=n
         counts['loneTrees']=scatter(cls(v.GRASS,v.MEADOW)&free&~occ,TREES_LONE,.004,margin=2)
+    if Z is not None:objs+=objs_z
     for y,x0,y0,name in sorted(objs):
+        if name.startswith('c7:'):img.alpha_composite(c7b(name[3:]),(x0*T,y0*T));continue
         if name=='oldsheaf':
             img.alpha_composite(tile('element:12:4'),(x0*T,(y-1)*T));img.alpha_composite(tile('element:12:5'),(x0*T,y*T));continue
         im=sprite(name);img.alpha_composite(im,(x0*T,(y-(im.height//T)+1)*T))
     rep['objects']=counts;rep['reviewBakedPieces']=BAKED_FOR_REVIEW
     OUT.mkdir(parents=True,exist_ok=True)
     sfx=('-no-'+'-'.join(sorted(asked))) if asked else ''
-    for k,(b,lat,bg,ks) in BLOCKS.items():
+    for k,(b,lat,bg,ks) in (BLOCKS.items() if Z is None else []):
         b.save(OUT/f'block-{k}.png')
         piece_sheet(k,lat,bg).save(OUT/f'pieces-{k}.png')
     # 타일로 나누면 몇 종류가 되는지(숲이 걸친 칸을 16px로 잘라 같은 그림끼리 묶음)
@@ -564,11 +586,109 @@ def main():
     img.resize((W*T//4,H*T//4),Image.BOX).convert('RGB').save(OUT/f'world{sfx}.png')
     # 게임 크기 화면(480×270 = 30×17칸) — 세계 좌표(칸) 중심
     cams=dict(lake=(88,46),source=(114,-6),songak=(186,-26),dakmok=(236,-62),naru=(258,40),jangdan=(214,28),wetroad=(140,-70),forest=(100,-40))
-    for k,(cx,cy) in cams.items():
+    for k,(cx,cy) in (cams.items() if Z is None else []):
         iy,ix=v.idx(cx,cy);x0=(ix-15)*T;y0=(iy-8)*T
         img.crop((x0,y0,x0+480,y0+272)).resize((960,544),Image.NEAREST).convert('RGB').save(OUT/f'cam-{k}{sfx}.png')
+    if Z is not None:
+        rep['village']=zones_check(Z,road,water,land,own,H,W)
+        zones_images(img,Z,H,W)
+    if not asked and Z is None:np.savez_compressed(OUT/'masks.npz',water=water,road=road,land=land,own=own,village=w['village'],vlabel=w['vlabel'],mapid=w['mapid'],
+        trees=occ,terrain=t,elev=w['elev'],bridges=np.array([[cy,cx,deg,L] for cy,cx,deg,L in spans]),keys=np.array(w['keys']),towns=np.array([tw['key'] for tw in w['towns']]))
     (OUT/f'report{sfx}.json').write_text(json.dumps(rep,ensure_ascii=False,indent=1))
     print(json.dumps({k:v_ for k,v_ in rep.items() if k!='pieces'},ensure_ascii=False))
+
+# ---------- M3: M2 구역도 → 건물·광장 ----------
+ZDIR=ROOT/'ArtReview/M2-Zones'
+def zones_masks(own,water,road,H,W):
+    zs=json.loads((ZDIR/'zones.json').read_text())['villages']
+    lot=np.zeros((H,W),bool);flat=np.zeros((H,W),bool);lane=np.zeros((H,W),bool);spot=np.zeros((H,W),bool)
+    coll=np.zeros((H,W),bool);objs=[];items=[]
+    for key,vz in zs.items():
+        ln=np.load(ZDIR/f"{vz['slug']}-lanes.npy");lane|=ln
+        for r in vz['items']:
+            if r.get('missing'):continue
+            iy,ix=v.idx(r['x'],r['y']);sl=(slice(iy,iy+r['h']),slice(ix,ix+r['w']))
+            r=dict(r,village=key,iy=iy,ix=ix);items.append(r)
+            k=r['kind']
+            if k=='lot':lot[sl]=True
+            elif k in('plaza','yard','shore'):flat[sl]=True
+            elif k in('spot','lantern','npc','start','growth'):spot[sl]=True
+            a=r.get('asset')
+            if a:
+                objs.append((iy+r['h']-1,ix,iy,'c7:'+a))
+                # 충돌: 건물은 지붕 맨 윗줄을 뺀 아래(뒤로 지나가면 지붕에 가림), 1~2칸 소품은 밑동 1줄. 배는 물 위라 충돌 없음
+                if k=='lot':coll[iy+1:iy+r['h'],ix:ix+r['w']]=True
+                elif k!='moor':coll[iy+r['h']-1,ix:ix+r['w']]=True
+    # 골목은 2칸 폭(조립 흙길 2×2 규칙). 건물 자리는 비운다
+    lane2=lane.copy();lane2[:,1:]|=lane[:,:-1];lane2[1:,:]|=lane[:-1,:];lane2[1:,1:]|=lane[:-1,:-1]   # 2×2 붓
+    lane2&=~lot&~coll
+    ok=own&~water&~lot&~coll
+    road2=road|((flat|lane2)&ok)
+    def seamcells(m):
+        p_=np.pad(m,1,mode='edge');n,s_,w_,e=p_[:-2,1:-1],p_[2:,1:-1],p_[1:-1,:-2],p_[1:-1,2:];ne,nw,se,sw=p_[:-2,2:],p_[:-2,:-2],p_[2:,2:],p_[2:,:-2]
+        miss=sum(x_.astype(int) for x_ in [n&e&~ne,n&w_&~nw,s_&e&~se,s_&w_&~sw]);four=n&s_&w_&e
+        return m&own&((miss>1)|((miss==1)&~four))
+    ban=np.zeros_like(ok)
+    for _ in range(8):
+        okb=ok&~ban;road2&=okb|road
+        road2=fill_diagonals(tileready(road2,okb),okb)
+        sc=seamcells(road2)
+        if not sc.any():break
+        ban|=sc&~road;road2&=~(sc&~road)   # 건물 모서리에 막혀 조각이 안 맞는 새 흙길 칸은 금지하고 다시 맞춘다
+    reserve=ndimage.binary_dilation(lot|flat|spot|coll,iterations=1)|lane2
+    # 나무 그림은 밑동에서 위로 3칸까지 올라가므로, 예약 칸 아래 3칸·옆 2칸에는 나무 밑동을 두지 않는다
+    canopy=reserve.copy()
+    for dy in(1,2,3):canopy[dy:,:]|=reserve[:-dy,:]
+    canopy=ndimage.binary_dilation(canopy,structure=np.ones((1,5)))
+    return dict(road=road2,lot=lot,flat=flat,lane=lane2,spot=spot,coll=coll,reserve=reserve,canopy=canopy,objs=objs,items=items,zones=zs)
+
+def zones_check(Z,road,water,land,own,H,W):
+    """정적 검사: 문·기능 자리가 막히지 않고 길에서 걸어서 닿는지(충돌 칸·물 제외)."""
+    walk=land&~Z['coll']
+    lab,_=ndimage.label(walk)
+    roadlab=set(np.unique(lab[road&walk]))-{0}
+    res={}
+    for r in Z['items']:
+        k=r['kind'];pts=[]
+        if k=='lot':
+            dy,dx=v.idx(*r['door']) if 'door' in r else (r['iy']+r['h'],r['ix']+r['w']//2);pts=[(dy,dx)]
+        elif k in('npc','start','growth','plaza','yard','shore'):pts=[(r['iy'],r['ix'])]
+        elif k=='spot' and not r.get('asset'):pts=[(r['iy'],r['ix'])]
+        elif k in('spot','lantern') and r.get('asset'):pts=[(r['iy']+r['h'],r['ix'])]   # 앞 칸
+        bad=[p for p in pts if not(0<=p[0]<H and 0<=p[1]<W) or not walk[p] or lab[p] not in roadlab]
+        if bad:res.setdefault(r['village'],[]).append(r['name'])
+    out=dict(blocked=res,collisionCells=int(Z['coll'].sum()),lotCells=int(Z['lot'].sum()),plazaYardCells=int(Z['flat'].sum()),laneCells=int((Z['lane']&~Z['flat']).sum()))
+    coll=[]
+    for r in Z['items']:
+        if r.get('asset') and r['kind']!='moor':
+            hh=r['h']-1 if r['kind']=='lot' else 1
+            coll.append(dict(village=r['village'],name=r['name'],asset=r['asset'],x=r['x'],y=r['y']+r['h']-hh,w=r['w'],h=hh))
+    (OUT).mkdir(parents=True,exist_ok=True)
+    (OUT/'collision.json').write_text(json.dumps(coll,ensure_ascii=False,indent=1))
+    return out
+
+ZCOL={'plaza':(255,214,90),'yard':(255,170,60),'lot':(240,110,90),'shore':(90,190,255),'spot':(255,255,255),'moor':(60,120,255),
+      'npc':(255,120,220),'lantern':(255,250,170),'growth':(150,240,140),'start':(120,255,255)}
+def zones_images(img,Z,H,W):
+    font=str(ROOT/'Assets/PocketCaravan/Resources/Fonts/Galmuri11.ttf');fs=ImageFont.truetype(font,12);fb=ImageFont.truetype(font,18)
+    for key,vz in Z['zones'].items():
+        its=[r for r in Z['items'] if r['village']==key]
+        ys=[r['iy'] for r in its]+[r['iy']+r['h'] for r in its];xs=[r['ix'] for r in its]+[r['ix']+r['w'] for r in its]
+        y0,y1,x0,x1=min(ys)-5,max(ys)+5,min(xs)-6,max(xs)+6
+        c=img.crop((x0*T,y0*T,x1*T,y1*T)).convert('RGBA');c.convert('RGB').save(OUT/f"{vz['slug']}.png")
+        # 표시판: 기능 자리 점(NPC·게시판·시작·성장)과 이름
+        ov=c.copy();dr=ImageDraw.Draw(ov)
+        for r in its:
+            bx=[(r['ix']-x0)*T,(r['iy']-y0)*T,(r['ix']-x0+r['w'])*T-1,(r['iy']-y0+r['h'])*T-1]
+            if r['kind'] in('npc','spot','start','growth') and not r.get('asset'):
+                dr.rectangle(bx,outline=ZCOL[r['kind']],width=2)
+            if r['kind'] in('npc','spot','start','growth','lantern'):lab=r['name'].replace('성장 자리 ','성')
+            else:lab=r['name']
+            dr.text((bx[0]+1,bx[1]-13 if r['kind'] in('npc','spot','start','growth','lantern') else bx[1]+2),lab,fill='white',font=fs,stroke_width=2,stroke_fill='black')
+        ov.convert('RGB').save(OUT/f"{vz['slug']}-labels.png")
+        # 게임 크기 화면(480×272) — 광장 중심, 2배
+        pz=next((r for r in its if r['kind']=='plaza'),its[0]);cy,cx=pz['iy']+pz['h']//2,pz['ix']+pz['w']//2
+        img.crop(((cx-15)*T,(cy-8)*T,(cx+15)*T,(cy+9)*T)).resize((960,544),Image.NEAREST).convert('RGB').save(OUT/f"cam-{vz['slug']}.png")
 
 def gameart(name):
     d=ROOT/'Assets/PocketCaravan/Art/NinjaAdventure/Tiles'

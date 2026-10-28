@@ -1,0 +1,312 @@
+{
+ "village": "goryeo/나루",
+ "map": "Naru",
+ "items": [
+  {
+   "name": "장터 광장",
+   "kind": "plaza",
+   "asset": null,
+   "w": 12,
+   "h": 6,
+   "id": "market:naru",
+   "memo": "강과 길 사이 넓은 터",
+   "x": 230,
+   "y": 50
+  },
+  {
+   "name": "게시판",
+   "kind": "spot",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "board:naru",
+   "memo": "광장 동쪽, 길가",
+   "x": 243,
+   "y": 54
+  },
+  {
+   "name": "촌장 집",
+   "kind": "lot",
+   "asset": "cottage",
+   "w": 5,
+   "h": 4,
+   "id": "npc:naru_chief",
+   "memo": "다리 어귀",
+   "door": [
+    245,
+    51
+   ],
+   "laneLen": 2,
+   "x": 243,
+   "y": 47
+  },
+  {
+   "name": "나루터",
+   "kind": "shore",
+   "asset": null,
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "나룻배 정박. 뱃사공·짐꾼",
+   "x": 251,
+   "y": 54
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "asset": "thatch",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    227,
+    54
+   ],
+   "laneLen": 5,
+   "x": 225,
+   "y": 51
+  },
+  {
+   "name": "집 2",
+   "kind": "lot",
+   "asset": "thatch",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    234,
+    65
+   ],
+   "laneLen": 6,
+   "x": 232,
+   "y": 62
+  },
+  {
+   "name": "집 3",
+   "kind": "lot",
+   "asset": "tile-house",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    239,
+    65
+   ],
+   "laneLen": 7,
+   "x": 237,
+   "y": 62
+  },
+  {
+   "name": "집 4",
+   "kind": "lot",
+   "asset": "tile-house",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    252,
+    62
+   ],
+   "laneLen": 13,
+   "x": 250,
+   "y": 59
+  },
+  {
+   "name": "집 5",
+   "kind": "lot",
+   "asset": "thatch",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    253,
+    67
+   ],
+   "laneLen": 19,
+   "x": 251,
+   "y": 64
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "asset": "well",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "naru_well_woman",
+   "x": 245,
+   "y": 61
+  },
+  {
+   "name": "이벤트 마당",
+   "kind": "yard",
+   "asset": null,
+   "w": 8,
+   "h": 5,
+   "id": "",
+   "memo": "모임·행사",
+   "x": 242,
+   "y": 65
+  },
+  {
+   "name": "낚시터",
+   "kind": "shore",
+   "asset": null,
+   "w": 2,
+   "h": 1,
+   "id": "pastime:goryeo_fishing",
+   "memo": "",
+   "x": 256,
+   "y": 63
+  },
+  {
+   "name": "시작 위치",
+   "kind": "start",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "튜토리얼 시작(길 위)",
+   "x": 239,
+   "y": 59
+  },
+  {
+   "name": "촌장",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "naru_chief",
+   "memo": "촌장 집 문 앞",
+   "x": 245,
+   "y": 52
+  },
+  {
+   "name": "우물가 아낙",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "naru_well_woman",
+   "memo": "",
+   "x": 247,
+   "y": 62
+  },
+  {
+   "name": "뱃사공",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 249,
+   "y": 55
+  },
+  {
+   "name": "나루 짐꾼",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "worker",
+   "x": 248,
+   "y": 57
+  },
+  {
+   "name": "농부",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 228,
+   "y": 57
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 225,
+   "y": 48
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 246,
+   "y": 58
+  },
+  {
+   "name": "성장 자리 3",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 232,
+   "y": 58
+  },
+  {
+   "name": "성장 자리 4",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 256,
+   "y": 60
+  },
+  {
+   "name": "성장 자리 5",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 251,
+   "y": 69
+  },
+  {
+   "name": "석등 1",
+   "kind": "lantern",
+   "asset": "stone_lantern",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 236,
+   "y": 57
+  },
+  {
+   "name": "나룻배",
+   "kind": "moor",
+   "asset": "boat",
+   "w": 5,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 255,
+   "y": 54
+  }
+ ],
+ "laneCells": 48
+}
