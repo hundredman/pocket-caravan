@@ -16,7 +16,7 @@ def market_cells(mid):
 jumps={}
 for mid,m in world.items():
  for o in m['objects']:
-  if o['kind']!='exit':continue
+  if o['kind']!='exit' or o['target'] not in world:continue   # 다른 문명 연결(통합 브랜치)은 고려·중간권 밖
   target=world[o['target']];sp=next(p for p in target['objects'] if p['kind']=='spawn' and p['id']==o['spawn'])
   for dy in range(o.get('h',1)):
    for dx in range(o.get('w',1)):
