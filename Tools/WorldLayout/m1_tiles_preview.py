@@ -611,7 +611,7 @@ def zones_masks(own,water,road,H,W):
             r=dict(r,village=key,iy=iy,ix=ix);items.append(r)
             k=r['kind']
             if k=='lot':lot[sl]=True
-            elif k in('plaza','yard','shore'):flat[sl]=True
+            elif k in('plaza','yard') or (k=='shore' and not r.get('asset') and r['name']!='낚시터'):flat[sl]=True   # 선착장만 흙. 빨래터·낚시터는 풀밭 물가   # 낚시터는 풀밭 물가 그대로
             elif k in('spot','lantern','npc','start','growth'):spot[sl]=True
             a=r.get('asset')
             if a:
@@ -622,25 +622,123 @@ def zones_masks(own,water,road,H,W):
     # 골목은 2칸 폭(조립 흙길 2×2 규칙). 건물 자리는 비운다
     lane2=lane.copy();lane2[:,1:]|=lane[:,:-1];lane2[1:,:]|=lane[:-1,:];lane2[1:,1:]|=lane[:-1,:-1]   # 2×2 붓
     lane2&=~lot&~coll
-    ok=own&~water&~lot&~coll
+    ok=own&~water&~lot   # 우물·석등 같은 작은 소품은 흙길 위에 서도 된다(밑에 풀 1칸이 남지 않게)
     road2=road|((flat|lane2)&ok)
+    doors=np.zeros((H,W),bool)
+    for r in items:
+        if r['kind']=='lot':
+            dy,dx=r['iy']+r['h'],r['ix']+r['w']//2
+            if 0<=dy<H:doors[dy,dx]=True
+    zone=ndimage.binary_dilation(lot|flat|lane2|spot,iterations=8)&own   # 정리는 마을 둘레에서만(마을 밖 큰길은 M1 그대로)
+    doors_n=ndimage.binary_dilation(doors,iterations=1)
     def seamcells(m):
         p_=np.pad(m,1,mode='edge');n,s_,w_,e=p_[:-2,1:-1],p_[2:,1:-1],p_[1:-1,:-2],p_[1:-1,2:];ne,nw,se,sw=p_[:-2,2:],p_[:-2,:-2],p_[2:,2:],p_[2:,:-2]
         miss=sum(x_.astype(int) for x_ in [n&e&~ne,n&w_&~nw,s_&e&~se,s_&w_&~sw]);four=n&s_&w_&e
         return m&own&((miss>1)|((miss==1)&~four))
     ban=np.zeros_like(ok)
-    for _ in range(8):
-        okb=ok&~ban;road2&=okb|road
-        road2=fill_diagonals(tileready(road2,okb),okb)
-        sc=seamcells(road2)
-        if not sc.any():break
-        ban|=sc&~road;road2&=~(sc&~road)   # 건물 모서리에 막혀 조각이 안 맞는 새 흙길 칸은 금지하고 다시 맞춘다
+    for _round in range(4):
+        road2=tidy_dirt(road2,road,ok&~ban,flat,lot,doors,water,own,zone)
+        for _ in range(8):
+            okb=ok&~ban;road2&=okb|road
+            road2=fill_diagonals(tileready(road2,okb),okb)
+            sc=seamcells(road2)
+            if not sc.any():break
+            ban|=sc&~road;road2&=~(sc&~road)   # 건물 모서리·물가에 막혀 조각이 안 맞는 새 흙길 칸은 금지하고 다시 맞춘다
+        # 광장·마당·문 골목이 모두 큰길과 이어졌으면 끝. 아니면 금지 칸을 피해 다시 잇는다
+        lab,n=ndimage.label(road2,structure=np.ones((3,3)))
+        main=set(np.unique(lab[road&road2]))-{0}
+        lost=[j for j in range(1,n+1) if j not in main and (flat[lab==j].any() or doors_n[lab==j].any())]
+        if not lost:break
+    road2=drop_fragments(road2,road,flat,doors)
+    if os.environ.get('DIRTDBG'):np.savez_compressed('/tmp/dirt.npz',own=own,water=water,road=road,road2=road2,lot=lot,coll=coll,spot=spot,flat=flat,lane=lane2,ok=ok)
     reserve=ndimage.binary_dilation(lot|flat|spot|coll,iterations=1)|lane2
     # 나무 그림은 밑동에서 위로 3칸까지 올라가므로, 예약 칸 아래 3칸·옆 2칸에는 나무 밑동을 두지 않는다
     canopy=reserve.copy()
     for dy in(1,2,3):canopy[dy:,:]|=reserve[:-dy,:]
     canopy=ndimage.binary_dilation(canopy,structure=np.ones((1,5)))
     return dict(road=road2,lot=lot,flat=flat,lane=lane2,spot=spot,coll=coll,reserve=reserve,canopy=canopy,objs=objs,items=items,zones=zs)
+
+def _bfs_path(start_mask,goal_mask,walk):
+    """start_mask에서 goal_mask까지 walk 위 가장 짧은 4방향 길(칸 목록). 없으면 None"""
+    from collections import deque
+    H,W=walk.shape;prev={};q=deque()
+    for y,x in np.argwhere(start_mask):prev[(y,x)]=None;q.append((y,x))
+    while q:
+        c=q.popleft()
+        if goal_mask[c] and not start_mask[c]:
+            out=[]
+            while c is not None:out.append(c);c=prev[c]
+            return out
+        for oy,ox in((1,0),(-1,0),(0,1),(0,-1)):
+            n=(c[0]+oy,c[1]+ox)
+            if 0<=n[0]<H and 0<=n[1]<W and n not in prev and walk[n]:prev[n]=c;q.append(n)
+    return None
+
+def drop_fragments(dirt,road,flat,doors):
+    """큰길(M1)과 이어지지 않은 작은 흙길 조각을 지운다(광장·마당·문 골목은 이미 이어 붙였으므로 남는 것은 찌꺼기)."""
+    lab,n=ndimage.label(dirt,structure=np.ones((3,3)))
+    keep=set(np.unique(lab[road&dirt]))-{0}
+    for j in range(1,n+1):
+        if j in keep:continue
+        m=lab==j
+        if m.sum()<30 and not flat[m].any():dirt=dirt&~m
+    return dirt
+
+def tidy_dirt(dirt,road,ok,flat,objs,doors,water,own,zone):
+    """마을 흙길 다듬기(은샘 2026-10-28): 끊어진 곳은 잇고, 쓸모없는 조각·막다른 돌기는 풀밭으로,
+    흙길에 갇힌 풀밭 섬·좁은 틈은 흙길로 메운다."""
+    from skimage.morphology import skeletonize
+    H,W=dirt.shape;near_obj=ndimage.binary_dilation(objs,iterations=1)
+    ok2=blocks2(ok)   # 2×2 흙길 덩어리가 들어가는 칸
+    def brush(cells):
+        m=np.zeros((H,W),bool)
+        for y,x in cells:
+            for dy in(0,-1):
+                for dx in(0,-1):
+                    if y+dy>=0 and x+dx>=0 and ok[y+dy:y+dy+2,x+dx:x+dx+2].all() and ok[y+dy:y+dy+2,x+dx:x+dx+2].size==4:
+                        m[y+dy:y+dy+2,x+dx:x+dx+2]=True;break
+                else:continue
+                break
+        return m
+    for _ in range(2):
+        # 1) 큰길과 끊어진 흙길 덩어리(광장·마당·골목)는 가장 가까운 큰길까지 2칸 폭으로 잇는다
+        lab,n=ndimage.label(dirt,structure=np.ones((3,3)))
+        main=np.isin(lab,list(set(np.unique(lab[road]))-{0}))
+        for j in range(1,n+1):
+            m=lab==j
+            if main[m].any():continue
+            if not (flat[m].any() or ndimage.binary_dilation(doors,iterations=1)[m].any()):continue
+            path=_bfs_path(m,main,ok2|main)
+            if path and len(path)<=45:dirt|=brush(path);main|=brush(path)|m
+        # 2) 흙길에 갇힌 풀밭(물건 없음, 60칸 이하)과 거의 갇힌 풀밭(둘레 85% 이상 흙길, 40칸 이하)은 흙길로
+        g=own&~water&~dirt&zone;gl,gn=ndimage.label(g)
+        for j in range(1,gn+1):
+            m=gl==j;z=int(m.sum())
+            if z>60 or near_obj[m].any():continue
+            ring=ndimage.binary_dilation(m)&~m;frac=dirt[ring].mean()
+            if (frac>=.999 and z<=60) or (frac>=.85 and z<=40):dirt|=m&ok
+        # 3) 흙길 사이 1~2칸 좁은 풀밭 틈·홈은 흙길로(넓은 풀밭은 그대로)(물건 둘레는 그대로)
+        cl=ndimage.binary_closing(dirt,structure=np.ones((3,3)),iterations=1)
+        dirt|=cl&ok&~near_obj&zone&~dirt
+        # 4) 막다른 돌기: 뼈대 끝에서 갈림길까지 8칸 이하이고, 끝이 문·광장·물가·담당 경계 가까이가 아니면 풀밭으로
+        sk=skeletonize(dirt)
+        nb=sum(np.roll(np.roll(sk,dy,0),dx,1) for dy in(-1,0,1) for dx in(-1,0,1) if dy or dx)
+        purpose=ndimage.binary_dilation(doors|flat|water|~own,iterations=2)
+        junction=sk&(nb>=3);rm=np.zeros((H,W),bool)
+        for ey,ex in np.argwhere(sk&(nb==1)&zone&~purpose):
+            br=[(ey,ex)];seen={(ey,ex)};c=(ey,ex)
+            while len(br)<=9:
+                nx=[(c[0]+dy,c[1]+dx) for dy in(-1,0,1) for dx in(-1,0,1) if (dy or dx) and 0<=c[0]+dy<H and 0<=c[1]+dx<W and sk[c[0]+dy,c[1]+dx] and (c[0]+dy,c[1]+dx) not in seen]
+                if not nx or junction[c]:break
+                c=nx[0];seen.add(c);br.append(c)
+            if len(br)<=8 and junction[c]:
+                for y,x in br[:-2]:rm[y,x]=True
+        if rm.any():
+            # 돌기 뼈대에 가장 가까운 흙길 칸만 지운다(큰길 M1 칸은 남김)
+            keep=sk&~rm;_,(iy,ix)=ndimage.distance_transform_edt(~(keep|rm),return_indices=True)
+            own_rm=rm[iy,ix]&dirt&~road&~flat
+            dirt&=~own_rm
+    return dirt
 
 def zones_check(Z,road,water,land,own,H,W):
     """정적 검사: 문·기능 자리가 막히지 않고 길에서 걸어서 닿는지(충돌 칸·물 제외)."""
