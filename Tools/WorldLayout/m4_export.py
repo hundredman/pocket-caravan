@@ -76,7 +76,7 @@ def main():
         data=dict(id=mid,name=oj.get('name') or NAMES.get(mid,key.split('/')[1]),w=w,h=h,hours=oj.get('hours',0),
                   ground=layers['ground'],deco=layers['deco'],obj=layers['obj'],high=layers['high'],road=road,blocked=blocked,
                   objects=[],legacyHeight=h,palette=pal,reachable=reach,water=water,
-                  terrainX=int(x0+v.X0),terrainY=int(y0+v.Y0))
+                  terrainX=int(x0+v.X0),terrainY=int(y0+v.Y0),previewOnly=True)   # 미리보기: 저장 보호(④ 본편 전환 때 뺀다)
         (PREV/'Maps'/f'{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
         # JSON만으로 다시 그려 원래 그림과 비교
         img=Image.new('RGBA',(w*T,h*T),(28,34,40,255))
