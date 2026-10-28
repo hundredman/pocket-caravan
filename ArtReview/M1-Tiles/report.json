@@ -1,42 +1,57 @@
 {
  "waterAdded": 148,
- "roadAdded": 241,
- "bridgeCells": 84,
+ "roadAdded": 281,
+ "bridgeCells": 78,
  "bridges": [
   {
    "x": 128,
    "y": -60,
    "w": 3,
    "h": 5,
-   "horizontal": false
+   "roadDir": "세로",
+   "bridgeDir": "세로",
+   "length": 5,
+   "riverWidth": 4
   },
   {
-   "x": 79,
+   "x": 77,
    "y": -32,
    "w": 3,
    "h": 4,
-   "horizontal": false
+   "roadDir": "세로",
+   "bridgeDir": "세로",
+   "length": 4,
+   "riverWidth": 5
   },
   {
-   "x": 198,
-   "y": -27,
-   "w": 6,
+   "x": 197,
+   "y": -29,
+   "w": 5,
    "h": 3,
-   "horizontal": true
+   "roadDir": "가로",
+   "bridgeDir": "가로",
+   "length": 5,
+   "riverWidth": 5
   },
   {
    "x": 250,
    "y": 39,
    "w": 3,
    "h": 7,
-   "horizontal": false
+   "roadDir": "세로",
+   "bridgeDir": "세로",
+   "length": 7,
+   "riverWidth": 12
   },
   {
-   "x": 134,
+   "x": 133,
    "y": 72,
    "w": 3,
-   "h": 6,
-   "horizontal": false
+   "h": 5,
+   "roadDir": "세로",
+   "bridgeDir": "세로",
+   "length": 5,
+   "riverWidth": 4
   }
  ],
  "pieces": {
@@ -45,12 +60,12 @@
   "water:0:8": 208,
   "water:1:8": 201,
   "water:6:7": 209,
-  "floor:0:7": 162,
-  "floor:2:7": 143,
-  "floor:0:8": 286,
-  "floor:5:9": 146,
-  "floor:1:8": 616,
-  "floor:2:8": 295,
+  "floor:0:7": 156,
+  "floor:2:7": 144,
+  "floor:0:8": 296,
+  "floor:5:9": 147,
+  "floor:1:8": 640,
+  "floor:2:8": 302,
   "floor:0:9": 149,
   "floor:6:8": 152,
   "water:5:7": 133,
@@ -59,10 +74,10 @@
   "water:1:6": 193,
   "water:6:8": 185,
   "floor:1:7": 190,
-  "floor:6:9": 164,
-  "floor:5:8": 161,
-  "floor:2:9": 158,
-  "floor:1:9": 187,
+  "floor:6:9": 159,
+  "floor:5:8": 156,
+  "floor:2:9": 155,
+  "floor:1:9": 188,
   "water:2:7": 182,
   "water:2:6": 164,
   "water:5:8": 165
@@ -70,26 +85,26 @@
  "unmatched": {},
  "seamCells": {
   "water": 4,
-  "road": 5
+  "road": 1
  },
  "objects": {
   "mountain": {
-   "cells": 2502,
-   "trees": 1251
+   "cells": 2495,
+   "trees": 1249
   },
   "forest": {
-   "cells": 5894,
-   "trees": 2950
+   "cells": 5893,
+   "trees": 2945
   },
   "hill": 52,
-  "marsh": 31,
-  "lotus": 17,
+  "marsh": 32,
+  "lotus": 14,
   "field": {
-   "cells": 739,
-   "sheaves": 76
+   "plots": 22,
+   "sheaves": 7
   },
-  "flowers": 102,
-  "tufts": 740,
+  "flowers": 101,
+  "tufts": 756,
   "loneTrees": 45
  },
  "reviewBakedPieces": {
@@ -106,11 +121,11 @@
  "forestUniqueTiles": {
   "mountain": {
    "cells": 3699,
-   "unique": 547
+   "unique": 533
   },
   "forest": {
-   "cells": 11470,
-   "unique": 1306
+   "cells": 11438,
+   "unique": 1297
   }
  }
 }

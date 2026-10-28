@@ -168,7 +168,7 @@ REEDS='tall_grass:2:2';LOTUS='lotus:2:1';SHEAF='harvest:3:2'
 
 P=6   # 숲 합성 블록 크기(칸). 이 블록이 반복되는 '숲 타일'
 FOREST_BLOCK=['forest_round:3:4','forest_bent:3:4','broadleaf:4:4','round_west:4:3','round_east:4:3','forest_wide:4:3','light_tree:3:4']
-MOUNT_BLOCK=['pine_west:4:3','pine_east:4:3','pine_west:4:3','pine_east:4:3','forest_bent:3:4','moss_rock:3:2']
+MOUNT_BLOCK=['pine_west:4:3','pine_east:4:3','pine_west:4:3','pine_east:4:3','forest_bent:3:4']
 BLOCKS={};FMASK={}
 
 def clean(m,minsize):
@@ -259,22 +259,38 @@ def main():
         rest=tileready(own&~water&~road,own&~water)
         if not (own&~water&~road&~rest).any():break
         road|=own&~water&~road&~rest
-    # 다리: 지금 게임의 목조 다리(3칸 폭 판자 + 양옆 난간)를 강을 가장 짧게 건너는 방향으로 놓는다.
-    decks=[];deck=np.zeros_like(bridge)
+    # 다리: 지금 게임의 목조 다리(3칸 폭 판자 + 양옆 난간). 방향은 길이 오는 방향(가로/세로)을 따른다.
+    # 그 방향으로 강을 건너는 자리 중 가장 짧은 곳에 놓고, 그래도 강폭(가장 짧은 건너기)보다 4칸 넘게 길면 강에 수직으로 놓는다.
+    decks=[];deck=np.zeros_like(bridge);brep=[]
     lab,n_=ndimage.label(ndimage.binary_dilation(bridge,iterations=1)&water)
+    def span(cy,cx,dy,dx):
+        k=0
+        while inside(cy+dy*(k+1),cx+dx*(k+1)) and water[cy+dy*(k+1),cx+dx*(k+1)]:k+=1
+        return k
     for i_ in range(1,n_+1):
-        cy,cx=[int(round(c)) for c in np.argwhere(lab==i_).mean(0)]
-        if not water[cy,cx]:
-            cc=np.argwhere(lab==i_);cy,cx=cc[np.argmin(((cc-[cy,cx])**2).sum(1))]
-        def span(dy,dx):
-            k=0
-            while inside(cy+dy*(k+1),cx+dx*(k+1)) and water[cy+dy*(k+1),cx+dx*(k+1)]:k+=1
-            return k
-        l,r_,u,d=span(0,-1),span(0,1),span(-1,0),span(1,0)
-        if l+r_<=u+d:x0,x1,y0,y1,hz=cx-l-1,cx+r_+1,cy-1,cy+1,True
-        else:x0,x1,y0,y1,hz=cx-1,cx+1,cy-u-1,cy+d+1,False
-        if max(x1-x0,y1-y0)>16 or not all(inside(yy,xx) and own[yy,xx] for yy in(y0,y1) for xx in(x0,x1)):continue
+        cc=np.argwhere(lab==i_);cy,cx=cc.mean(0)
+        rp=np.argwhere(road0&(((np.arange(H)[:,None]-cy)**2+(np.arange(W)[None,:]-cx)**2)<8**2))
+        if len(rp)<3:continue
+        cov=np.cov((rp-rp.mean(0)).T);ev,evec=np.linalg.eigh(cov);dyx=evec[:,1]
+        road_hz=abs(dyx[1])>=abs(dyx[0])
+        def best(hz):
+            out=None
+            for y,x in cc:
+                if not water[y,x]:continue
+                if hz:a_,b_=span(y,x,0,-1),span(y,x,0,1)
+                else:a_,b_=span(y,x,-1,0),span(y,x,1,0)
+                L=a_+b_+1
+                if out is None or L<out[0]:out=(L,y,x,a_,b_)
+            return out
+        along,perp=best(road_hz),best(not road_hz)
+        if along is None:continue
+        hz=road_hz;L,y,x,a_,b_=along
+        if perp and L>perp[0]+4:hz=not road_hz;L,y,x,a_,b_=perp
+        if hz:x0,x1,y0,y1=x-a_-1,x+b_+1,y-1,y+1
+        else:x0,x1,y0,y1=x-1,x+1,y-a_-1,y+b_+1
+        if max(x1-x0,y1-y0)>18 or not all(inside(yy,xx) and own[yy,xx] for yy in(y0,y1) for xx in(x0,x1)):continue
         decks.append((x0,y0,x1,y1,hz));deck[y0:y1+1,x0:x1+1]=True
+        brep.append(dict(roadDir='가로' if road_hz else '세로',bridgeDir='가로' if hz else '세로',length=int(max(x1-x0,y1-y0)+1),riverWidth=int(perp[0]) if perp else None))
     # 물 위의 길은 다리 판자 말고는 없앤다. 다리 양 끝에서 길까지 곧게 잇는다.
     for x0,y0,x1,y1,hz in decks:
         ends=[((y0,y1),(x0-1,-1)),((y0,y1),(x1+1,1))] if hz else [((x0,x1),(y0-1,-1)),((x0,x1),(y1+1,1))]
@@ -286,6 +302,98 @@ def main():
                 if any(road[q] for q in cells) and k>0:break
                 for q in cells:road[q]=True
     road&=~water
+    # 다리를 옮기면 옛 길 끝이 강가에 남는다: 다리 근처가 아닌 물가 2칸 안의 길은 지우고,
+    # 다리 끝에서 같은 기슭의 가장 가까운 길까지 3칸 폭으로 ㄱ자로 잇는다.
+    near_deck=ndimage.binary_dilation(deck,iterations=3)
+    road&=~(ndimage.binary_dilation(water,iterations=2)&~near_deck)
+    bank,_=ndimage.label(own&~water)
+    for x0,y0,x1,y1,hz in decks:
+        ends=[((y0+y1)//2,x0-1),((y0+y1)//2,x1+1)] if hz else [(y0-1,(x0+x1)//2),(y1+1,(x0+x1)//2)]
+        for ey,ex in ends:
+            if not inside(ey,ex) or water[ey,ex]:continue
+            cand=np.argwhere(road&~deck&(bank==bank[ey,ex])&~near_deck)
+            if not len(cand):continue
+            ty,tx=cand[np.argmin(((cand-[ey,ex])**2).sum(1))]
+            if abs(ty-ey)+abs(tx-ex)>30:continue
+            # 다리 방향으로 먼저 나간 뒤 꺾는다
+            path=[]
+            y,x=ey,ex
+            if hz:
+                while x!=tx:path.append((y,x));x+=1 if tx>x else -1
+                while y!=ty:path.append((y,x));y+=1 if ty>y else -1
+            else:
+                while y!=ty:path.append((y,x));y+=1 if ty>y else -1
+                while x!=tx:path.append((y,x));x+=1 if tx>x else -1
+            for y,x in path:
+                for dy in(-1,0,1):
+                    for dx in(-1,0,1):
+                        if inside(y+dy,x+dx) and not water[y+dy,x+dx] and own[y+dy,x+dx]:road[y+dy,x+dx]=True
+    road&=~water
+    # 다리를 옮기며 끊긴 길 조각을 같은 기슭의 가장 가까운 길에 ㄱ자로 다시 잇는다
+    def lpath(a,b,first_x):
+        (y,x),(ty,tx)=a,b;out=[]
+        order=('x','y') if first_x else ('y','x')
+        for ax in order:
+            if ax=='x':
+                while x!=tx:out.append((y,x));x+=1 if tx>x else -1
+            else:
+                while y!=ty:out.append((y,x));y+=1 if ty>y else -1
+        return out+[(ty,tx)]
+    for _ in range(3):
+        lab,nc=ndimage.label(road|deck,structure=np.ones((3,3)))
+        if nc<2:break
+        sizes=ndimage.sum(np.ones_like(lab),lab,range(1,nc+1));joined=False
+        for ci in np.argsort(sizes)+1:
+            om=(lab>0)&(lab!=ci)
+            if not om.any():continue
+            # 가장 가까운 두 칸(같은 기슭): 다른 길까지의 거리 지도
+            dt,(iy_,ix_)=ndimage.distance_transform_edt(~om,return_indices=True)
+            me=(lab==ci)&(dt<=14)
+            ok=[(dt[y,x],(y,x),(iy_[y,x],ix_[y,x])) for y,x in np.argwhere(me) if bank[y,x]==bank[iy_[y,x],ix_[y,x]]]
+            if not ok:continue
+            best=min(ok)
+            for fx in(True,False):
+                pth=lpath(best[1],best[2],fx)
+                if not any(water[q] for q in pth):break
+            else:continue
+            for y,x in pth:
+                for dy in(-1,0,1):
+                    for dx in(-1,0,1):
+                        if inside(y+dy,x+dx) and not water[y+dy,x+dx] and own[y+dy,x+dx]:road[y+dy,x+dx]=True
+            joined=True
+        if not joined:break
+    # 원래 길이 강을 건너던 곳: 강 앞뒤의 길 끝을 옮긴 다리의 같은 기슭 끝에 잇는다(남은 막다른 길 없애기)
+    def paint(pth):
+        for y,x in pth:
+            for dy in(-1,0,1):
+                for dx in(-1,0,1):
+                    if inside(y+dy,x+dx) and not water[y+dy,x+dx] and own[y+dy,x+dx]:road[y+dy,x+dx]=True
+    for path in r['paths']:
+        wet=[i for i,q in enumerate(path) if water[q]]
+        if not wet:continue
+        runs=[];st=wet[0];pv=wet[0]
+        for i in wet[1:]:
+            if i!=pv+1:runs.append((st,pv));st=i
+            pv=i
+        runs.append((st,pv))
+        for i0,i1 in runs:
+            mid=path[(i0+i1)//2]
+            dk=min(decks,key=lambda d:abs((d[1]+d[3])/2-mid[0])+abs((d[0]+d[2])/2-mid[1]),default=None)
+            if dk is None:continue
+            x0,y0,x1,y1,hz=dk
+            if abs((y0+y1)/2-mid[0])+abs((x0+x1)/2-mid[1])>16:continue
+            ends=[((y0+y1)//2,x0-1),((y0+y1)//2,x1+1)] if hz else [(y0-1,(x0+x1)//2),(y1+1,(x0+x1)//2)]
+            for j in(max(0,i0-3),min(len(path)-1,i1+3)):
+                a=path[j]
+                if water[a]:continue
+                same=[e for e in ends if inside(*e) and not water[e] and bank[e]==bank[a]]
+                if not same:continue
+                e=min(same,key=lambda e:abs(e[0]-a[0])+abs(e[1]-a[1]))
+                for fx in(hz,not hz):
+                    pth=lpath(e,a,fx)
+                    if not any(water[q] for q in pth):paint(pth);break
+    road&=~water
+    road=fill_diagonals(tileready(road,own&~water),own&~water)
     bridge=deck
     # 외톨이 길 조각(4칸 미만 덩어리) 제거
     lab,n_=ndimage.label(road&~bridge)
@@ -326,7 +434,7 @@ def main():
                 img.alpha_composite(gameart(nm),(x*T,y*T))
                 if hz and y in(y0,y1):img.alpha_composite(gameart(f"wood_rail{'htop' if y==y0 else 'hbottom'}_{1 if x in(x0,x1) else 0}"),(x*T,y*T))
                 if not hz and x in(x0,x1):img.alpha_composite(gameart(f"wood_rail{'vleft' if x==x0 else 'vright'}_{1 if y in(y0,y1) else 0}"),(x*T,y*T))
-    rep['bridges']=[dict(x=x0+v.X0,y=y0+v.Y0,w=x1-x0+1,h=y1-y0+1,horizontal=hz) for x0,y0,x1,y1,hz in decks]
+    rep['bridges']=[dict(x=int(x0+v.X0),y=int(y0+v.Y0),w=int(x1-x0+1),h=int(y1-y0+1),**br) for (x0,y0,x1,y1,hz),br in zip(decks,brep)]
     rep['pieces']=dict(pieces);rep['unmatched']=dict(bad)
     def seams(mask):
         p=np.pad(mask,1,mode='edge');n,s_,w_,e=p[:-2,1:-1],p[2:,1:-1],p[1:-1,:-2],p[1:-1,2:]
@@ -390,19 +498,35 @@ def main():
                 objs.append((y,x,y,LOTUS));occ[y,x:x+2]=True;n+=1
         counts['lotus']=n
     if 'field' not in off:
-        # 논: 기존 볏짚 바닥 3×3 조각(element 13~15, 4~6)을 9칸 조립으로 이어 붙인 넓은 들판 + 승인 볏단을 줄지어
-        fm=clean(np.isin(t,[v.FIELD])&land&~near_road&~near_water&~village&~occ,9)
-        fm=fill_diagonals(tileready(fm,fm),fm)
-        n=0
-        for y,x in np.argwhere(fm):
-            rel=autorel(mk(fm,y,x,False),y,x)
-            rel=(1,1) if rel is None or rel[0]>2 else rel
-            img.alpha_composite(tile(f'element:{13+rel[0]}:{4+rel[1]}'),(x*T,y*T));n+=1
-        inner=ndimage.binary_erosion(fm,iterations=1)
-        sh_=0
-        for y,x in np.argwhere(inner):
-            if x%2==0 and y%3==1 and inner[y-1,x]:objs.append((y,x,y-1,'sheaf_jangdan:1:2'));sh_+=1
-        occ|=ndimage.binary_dilation(fm,iterations=1);counts['field']=dict(cells=n,sheaves=sh_)
+        # 논: 사람이 만든 구획처럼 같은 크기 직사각형을 줄 맞춰 놓는다(사이 1칸 둑).
+        # 한 구획 = 기존 볏짚 바닥 3×3 조각(element 13~15, 4~6)을 가장자리·모서리·가운데로 나눠 늘린 직사각형.
+        fm=np.isin(t,[v.FIELD])&land&~near_road&~village&~occ&~ndimage.binary_dilation(water,iterations=0) if False else np.isin(t,[v.FIELD])&land&~near_road&~near_water&~village&~occ
+        fm=ndimage.binary_closing(fm,iterations=2)&land&~near_road&~near_water&~village&~occ   # 들판 안 작은 틈 메움
+        PW,PH=6,4;n=0;sh_=0
+        lab,nc=ndimage.label(fm)
+        for ci,sl in enumerate(ndimage.find_objects(lab),1):
+            comp=lab==ci
+            # 구획 줄의 시작점을 들판마다 골라 구획이 가장 많이 들어가게(줄은 반듯하게 유지)
+            best=[];bsz=(PW,PH)
+            for pw,ph in((6,4),(4,6),(5,3),(3,5)):   # 들판 모양에 맞는 구획 크기·방향(한 들판 안에서는 모두 같게)
+                for oy in range(ph+1):
+                    for ox in range(pw+1):
+                        got=[]
+                        for y in range(sl[0].start+oy,sl[0].stop-ph+1,ph+1):
+                            for x in range(sl[1].start+ox,sl[1].stop-pw+1,pw+1):
+                                if comp[y:y+ph,x:x+pw].all():got.append((y,x))
+                        if len(got)*pw*ph>len(best)*bsz[0]*bsz[1]:best=got;bsz=(pw,ph)
+            PW,PH=bsz
+            for y,x in best:
+                for dy in range(PH):
+                    for dx in range(PW):
+                        ex=13 if dx==0 else 15 if dx==PW-1 else 14
+                        ey=4 if dy==0 else 6 if dy==PH-1 else 5
+                        img.alpha_composite(tile(f'element:{ex}:{ey}'),((x+dx)*T,(y+dy)*T))
+                occ[y:y+PH,x:x+PW]=True;n+=1
+                if rng.random()<.35 and x+PW<W and not occ[y+PH-2:y+PH,x+PW].any():
+                    objs.append((y+PH-1,x+PW,y+PH-2,'oldsheaf'));sh_+=1
+        counts['field']=dict(plots=n,sheaves=sh_)
     if 'meadow' not in off:
         mm=np.isin(t,[v.MEADOW])&free&~occ;n=0
         for y,x in np.argwhere(mm):
@@ -415,6 +539,8 @@ def main():
         counts['tufts']=n
         counts['loneTrees']=scatter(cls(v.GRASS,v.MEADOW)&free&~occ,TREES_LONE,.004,margin=2)
     for y,x0,y0,name in sorted(objs):
+        if name=='oldsheaf':
+            img.alpha_composite(tile('element:12:4'),(x0*T,(y-1)*T));img.alpha_composite(tile('element:12:5'),(x0*T,y*T));continue
         im=sprite(name);img.alpha_composite(im,(x0*T,(y-(im.height//T)+1)*T))
     rep['objects']=counts;rep['reviewBakedPieces']=BAKED_FOR_REVIEW
     OUT.mkdir(parents=True,exist_ok=True)
