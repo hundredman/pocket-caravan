@@ -173,6 +173,12 @@ FOREST_BLOCK=['forest_round:3:4','forest_bent:3:4','broadleaf:4:4','round_west:4
 MOUNT_BLOCK=['pine_west:4:3','pine_east:4:3','pine_west:4:3','pine_east:4:3','forest_bent:3:4']
 BLOCKS={};FMASK={}
 
+def noise_field(H,W,scale,seed=21):
+    from scipy import ndimage as nd
+    r=np.random.default_rng(seed);g=r.random((H//scale+2,W//scale+2))
+    z=nd.zoom(g,(H/g.shape[0]*1.02,W/g.shape[1]*1.02),order=3)[:H,:W]
+    return (z-z.min())/(z.max()-z.min()+1e-9)
+
 def clean(m,minsize):
     m=ndimage.binary_closing(ndimage.binary_opening(m),iterations=1)&m|ndimage.binary_opening(m)
     lab,n=ndimage.label(m)
@@ -182,7 +188,7 @@ def clean(m,minsize):
             if sz<minsize:m[lab==i]=False
     return m
 
-def forest_block(kinds,seed):
+def forest_block(kinds,seed,sparse=False):
     """승인된 나무 그림을 빽빽하게 겹쳐 P×P칸 반복 블록을 만든다(가장자리가 이어지도록 감아 그림).
     lat: 블록 안 나무 자리(밑동 칸) → 나무 이름. 같은 자리를 숲 가장자리에서 통째로 다시 그려 경계를 자연스럽게."""
     r=np.random.default_rng(seed);lat={}
@@ -190,6 +196,7 @@ def forest_block(kinds,seed):
     for gy in range(0,P,2):
         for gx in range(0,P,2):
             for oy,ox in((0,0),(1,1)):
+                if sparse and (oy,ox)==(1,1) and r.random()<.65:continue   # 성긴 숲: 엇갈린 줄 나무를 많이 뺌
                 lat[((gy+oy)%P,(gx+ox)%P)]=kinds[int(r.integers(len(kinds)))]
     ims={k:sprite(k) for k in set(lat.values())}
     # 바탕: 나무 그림의 가장 어두운 잎 색(그림 사이 틈을 숲 그늘처럼)
@@ -453,6 +460,39 @@ def main():
             objs.append((y,x0,y0,k));n+=1
         occ|=ndimage.binary_dilation(fm,iterations=1);counts[kind]=dict(cells=int(fm.sum()),trees=n)
         BLOCKS[kind]=(blk,lat,bg,ks)
+    if 'source' not in off:
+        # 강의 수원지(강 줄기마다 가장 높은 곳)를 조금 성긴 숲으로 덮는다: 강이 숲 속에서 시작하는 것처럼
+        rv=(t==v.RIVER)&water0;lab,nr=ndimage.label(rv,structure=np.ones((3,3)))
+        srcs=[];near_lake=ndimage.binary_dilation(w['lake'],iterations=3)
+        # 호수로 드는 강: 수원 산 둘레(산·봉우리 가까이)에서 시작
+        inflow_mask=ndimage.binary_dilation(np.isin(t,[v.MOUNTAIN,v.PEAK]),iterations=12)
+        for i_ in range(1,nr+1):
+            cc=np.argwhere(lab==i_)
+            if len(cc)<6:continue
+            if w['lake'][ndimage.binary_dilation(lab==i_,iterations=3)].any():
+                # 호수에서 나가는 강은 호수 쪽이 아니라 바다 쪽으로 흐르므로 수원지가 없다. 호수로 드는 강은 호수 반대 끝이 수원지.
+                far=np.hypot(*(cc-np.argwhere(w['lake']).mean(0)).T)
+                top=tuple(cc[int(np.argmax(far))])
+                if not inflow_mask[top]:continue
+            else:
+                top=tuple(cc[int(np.argmax(w['elev'][tuple(cc.T)]))])
+            srcs.append(top)
+        yy2,xx2=np.mgrid[:H,:W];sn=noise_field(H,W,5)
+        sm=np.zeros((H,W),bool)
+        for sy,sx in srcs:sm|=np.hypot(yy2-sy,xx2-sx)<8+3*(sn-.5)
+        taken=np.zeros((H,W),bool)
+        for fm_ in FMASK.values():taken|=fm_
+        sm&=land&~road&~ndimage.binary_dilation(road,iterations=1)&~village&~taken
+        blk,lat,bg=forest_block(FOREST_BLOCK,seed=9,sparse=True);n=0
+        for y,x in np.argwhere(sm):
+            k=lat.get((y%P,x%P))
+            if k is None:continue
+            nm,sw,sh=k.split(':');sw,sh=int(sw),int(sh);x0=x-sw//2;y0=y-sh+1
+            if x0<0 or y0<0 or x0+sw>W:continue
+            objs.append((y,x0,y0,k));n+=1
+        occ|=ndimage.binary_dilation(sm,iterations=1)
+        counts['source']=dict(sources=[[int(sx+v.X0),int(sy+v.Y0)] for sy,sx in srcs],trees=n)
+        BLOCKS['source']=(blk,lat,bg,FOREST_BLOCK);FMASK['source']=sm
     if 'hill' not in off:counts['hill']=scatter(cls(v.HILL)&free,TREES_HILL,.025,margin=1)
     if 'marsh' not in off:
         mm=np.isin(t,[v.MARSH])&own&land&~near_road
