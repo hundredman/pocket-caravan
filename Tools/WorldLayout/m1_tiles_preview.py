@@ -259,6 +259,12 @@ def main():
     asked=set(filter(None,a.no.split(',')));off=asked|{'field'}   # 들판(논)은 2026-10-28 은샘 지시로 뺌
     v.VARIANT['area']=v.SMALL_CENTRAL;v.VARIANT['hamlets']=v.HAMLETS
     layout=WorldLayout.read();w=v.build(layout);r=v.roads(layout,w);v.partition(layout,w,r)
+    # 다른 문명 연결 자리(m4_links): 대각선 경계를 곧게 깎는다. 깎은 담당 범위(own_n·mapid_n)는 층을 내보낼 때만 쓴다.
+    # 나무·풀포기 같은 무작위 배치는 연결 자리가 없던 때와 같은 마스크로 정하고(다른 맵 그림이 바뀌지 않게),
+    # 연결 자리·새 흙길과 겹친 것만 뺀다.
+    LINKS=[];own_n=w['owned'];mapid_n=w['mapid']
+    if a.zones:
+        import m4_links;own_n=w['owned'].copy();mapid_n=w['mapid'].copy();LINKS=m4_links.notch(own_n,mapid_n,w['keys'])
     t=w['t'];own=w['owned'];H,W=t.shape;rng=np.random.default_rng(11)
     def inside(y,x):return 0<=y<H and 0<=x<W
     water0=np.isin(t,[v.DEEP,v.SHALLOW,v.RIVER,v.LAKE])&own
@@ -379,8 +385,13 @@ def main():
     lab,n_=ndimage.label(road,structure=np.ones((3,3)))
     for i_,sl in enumerate(ndimage.find_objects(lab),1):
         if (lab[sl]==i_).sum()<12:road[sl][lab[sl]==i_]=False
-    Z=None
-    if a.zones:Z=zones_masks(own,water,road,H,W);road=Z['road']
+    Z=None;ZR=None;linkban=np.zeros((H,W),bool)
+    if a.zones:
+        Z=zones_masks(own,water,road,H,W,LINKS)
+        ZR=zones_masks(own,water,road,H,W) if LINKS else Z
+        road=Z['road']
+        linkban=ndimage.binary_dilation((Z['road']^ZR['road'])|(Z['reserve']&~ZR['reserve'])|(own&~own_n),iterations=1)
+    roadR=ZR['road'] if ZR is not None else road   # 무작위 배치용(연결 자리 전)
     land=own&~water
     rep=dict(waterAdded=int((water&~water0).sum()),roadAdded=int((road&~road0).sum()),bridgeCells=int(bridge.sum()))
     img=Image.new('RGBA',(W*T,H*T),(28,34,40,255))
@@ -454,12 +465,12 @@ def main():
         miss=sum(x_.astype(int) for x_ in [n&e&~ne,n&w_&~nw,s_&e&~se,s_&w_&~sw]);four=n&s_&w_&e
         print('SEAM',[(int(x+v.X0),int(y+v.Y0)) for y,x in np.argwhere(road&own&((miss>1)|((miss==1)&~four)))])
     # ---------- 개체 심기 ----------
-    near_road=ndimage.binary_dilation(road,iterations=1);near_water=ndimage.binary_dilation(water,iterations=1)
+    near_road=ndimage.binary_dilation(roadR,iterations=1);near_water=ndimage.binary_dilation(water,iterations=1)
     village=w['village']
     free=land&~near_road&~near_water
     occ=ndimage.binary_dilation(bridge_mask,iterations=1).copy()
     if Z is not None:
-        free&=~Z['reserve'];occ|=Z['reserve']
+        free&=~ZR['reserve'];occ|=ZR['reserve']
         objs_z=Z['objs']   # 줄기·덮인 칸. 다리 밑·둘레엔 풀포기·꽃·나무를 두지 않음(다리 위에 풀이 그려지지 않게)
     objs=[]
     def place(name,y,x,margin=0):
@@ -470,7 +481,8 @@ def main():
         foot=(slice(y-min(sh-1,1),y+1),slice(x0,x0+sw))   # 아래 두 줄
         if not free[foot].all() or occ[ys,xs].any():return False
         occ[max(0,y0-margin):y+1+margin,max(0,x0-margin):x0+sw+margin]=True
-        objs.append((y,x0,y0,name));return True
+        if not linkban[ys,xs].any():objs.append((y,x0,y0,name))
+        return True
     def scatter(mask,kinds,density,margin=0,weights=None):
         cand=np.argwhere(mask);rng.shuffle(cand);n=0
         target=int(len(cand)*density)
@@ -483,12 +495,12 @@ def main():
     counts={}
     for kind,ks,mask_ in (('mountain',MOUNT_BLOCK,cls(v.MOUNTAIN,v.PEAK)&land),('forest',FOREST_BLOCK,cls(v.FOREST)&land)):
         if kind in off:continue
-        fm=clean(mask_&~near_road&~near_water&~occ&(~Z['canopy'] if Z is not None else True),12)
+        fm=clean(mask_&~near_road&~near_water&~occ&(~ZR['canopy'] if Z is not None else True),12)
         blk,lat,bg=forest_block(ks,seed=3 if kind=='forest' else 5)
         # 바탕(숲 그늘): 아래 2칸까지 숲인 칸만. 숲 맨 아래 줄은 풀밭 위에 밑동이 보인다(시작 부분).
         below=np.zeros_like(fm);below[:-2]=fm[1:-1]&fm[2:]
         under=ndimage.binary_erosion(fm,iterations=1)&below
-        for y,x in np.argwhere(under):
+        for y,x in np.argwhere(under&~linkban):
             img.paste(bg,(x*T,y*T,(x+1)*T,(y+1)*T))
             if LAY:
                 gimg.paste(bg,(x*T,y*T,(x+1)*T,(y+1)*T))
@@ -501,6 +513,7 @@ def main():
             if k is None:continue
             nm,sw,sh=k.split(':');sw,sh=int(sw),int(sh);x0=x-sw//2;y0=y-sh+1
             if x0<0 or y0<0 or x0+sw>W:continue
+            if linkban[max(0,y0):y+1,x0:x0+sw].any():continue
             objs.append((y,x0,y0,k));n+=1
         occ|=ndimage.binary_dilation(fm,iterations=1);counts[kind]=dict(cells=int(fm.sum()),trees=n)
         BLOCKS[kind]=(blk,lat,bg,ks)
@@ -526,14 +539,15 @@ def main():
         for sy,sx in srcs:sm|=np.hypot(yy2-sy,xx2-sx)<8+3*(sn-.5)
         taken=np.zeros((H,W),bool)
         for fm_ in FMASK.values():taken|=fm_
-        sm&=land&~road&~ndimage.binary_dilation(road,iterations=1)&~village&~taken
-        if Z is not None:sm&=~Z['canopy']
+        sm&=land&~roadR&~ndimage.binary_dilation(roadR,iterations=1)&~village&~taken
+        if Z is not None:sm&=~ZR['canopy']
         blk,lat,bg=forest_block(FOREST_BLOCK,seed=9,sparse=True);n=0
         for y,x in np.argwhere(sm):
             k=lat.get((y%P,x%P))
             if k is None:continue
             nm,sw,sh=k.split(':');sw,sh=int(sw),int(sh);x0=x-sw//2;y0=y-sh+1
             if x0<0 or y0<0 or x0+sw>W:continue
+            if linkban[max(0,y0):y+1,x0:x0+sw].any():continue
             objs.append((y,x0,y0,k));n+=1
         occ|=ndimage.binary_dilation(sm,iterations=1)
         counts['source']=dict(sources=[[int(sx+v.X0),int(sy+v.Y0)] for sy,sx in srcs],trees=n)
@@ -583,19 +597,26 @@ def main():
         mm=np.isin(t,[v.MEADOW])&free&~occ;n=0
         for y,x in np.argwhere(mm):
             if rng.random()<.10:
-                fk=FLOWERS[rng.integers(2)];tt=tile(fk);img.alpha_composite(tt,(x*T,y*T));n+=1
+                fk=FLOWERS[rng.integers(2)];tt=tile(fk)
+                if linkban[y,x]:continue
+                img.alpha_composite(tt,(x*T,y*T));n+=1
                 if LAY:dimg.alpha_composite(tt,(x*T,y*T));part('deco',y,x,'tile:'+fk)
         counts['flowers']=n
     if 'grass' not in off:
-        gm=land&~road&~occ;n=0
+        gm=land&~roadR&~occ;n=0
         for y,x in np.argwhere(gm):
             if rng.random()<.035:
-                fk=TUFTS[rng.integers(4)];tt=tile(fk);img.alpha_composite(tt,(x*T,y*T));n+=1
+                fk=TUFTS[rng.integers(4)];tt=tile(fk)
+                if linkban[y,x]:continue
+                img.alpha_composite(tt,(x*T,y*T));n+=1
                 if LAY:dimg.alpha_composite(tt,(x*T,y*T));part('deco',y,x,'tile:'+fk)
         counts['tufts']=n
         counts['loneTrees']=scatter(cls(v.GRASS,v.MEADOW)&free&~occ,TREES_LONE,.004,margin=2)
     if Z is not None:objs+=objs_z
-    if LAY:export_layers(LAY,img,gimg,dimg,deck,objs,water,road,road0,Z,FMASK,own,w,H,W,PARTS,BRIDGES)
+    if LAY:Path(LAY).mkdir(parents=True,exist_ok=True);(Path(LAY)/'links.json').write_text(json.dumps([dict(id=l['id'],other=l['other'],edge=l['edge'],cells=[[int(y),int(x)] for y,x in l['cells']]) for l in LINKS],ensure_ascii=False))
+    if LAY:
+        w=dict(w,mapid=mapid_n)
+        export_layers(LAY,img,gimg,dimg,deck,objs,water,road,road0,Z,FMASK,own_n,w,H,W,PARTS,BRIDGES)
     for y,x0,y0,name in sorted(objs):
         if name.startswith('c7:'):img.alpha_composite(c7b(name[3:]),(x0*T,y0*T));continue
         if name=='oldsheaf':
@@ -629,7 +650,7 @@ def main():
 
 # ---------- M3: M2 구역도 → 건물·광장 ----------
 ZDIR=ROOT/'ArtReview/M2-Zones'
-def zones_masks(own,water,road,H,W):
+def zones_masks(own,water,road,H,W,links=()):
     zs=json.loads((ZDIR/'zones.json').read_text())['villages']
     lot=np.zeros((H,W),bool);flat=np.zeros((H,W),bool);lane=np.zeros((H,W),bool);spot=np.zeros((H,W),bool)
     coll=np.zeros((H,W),bool);resv=np.zeros((H,W),bool);grass_keep=np.zeros((H,W),bool);objs=[];items=[]
@@ -662,6 +683,20 @@ def zones_masks(own,water,road,H,W):
     # 골목은 2칸 폭(조립 흙길 2×2 규칙). 건물 자리는 비운다
     lane2=lane.copy();lane2[:,1:]|=lane[:,:-1];lane2[1:,:]|=lane[:-1,:];lane2[1:,1:]|=lane[:-1,:-1]   # 2×2 붓
     lane2&=~lot&~coll
+    # 다른 문명 연결 자리(m4_links): 출구 줄 앞 2칸은 흙길 마당, 거기서 마을 흙길까지 2칸 폭 흙길
+    for L_ in links:
+        dy_,dx_={'N':(1,0),'W':(0,1)}[L_['edge']]
+        for y_,x_ in L_['cells']:
+            for k_ in range(2):flat[y_+dy_*k_,x_+dx_*k_]=True
+        net=road|lane2
+        for r in items:
+            if r['kind'] in('plaza','yard'):net[r['iy']:r['iy']+r['h'],r['ix']:r['ix']+r['w']]=True
+        walk_=own&~water&~lot&~coll
+        cy,cx=L_['cells'][len(L_['cells'])//2];cy+=dy_*1;cx+=dx_*1
+        gy,gx=np.argwhere(net&walk_)[int(np.argmin(((np.argwhere(net&walk_)-[cy,cx])**2).sum(1)))]
+        cost=np.where(walk_,1.0,50.0)
+        path=v.astar((int(cy),int(cx)),(int(gy),int(gx)),cost,blocked=~walk_)
+        for y_,x_ in path:lane2[y_:y_+2,x_:x_+2]|=walk_[y_:y_+2,x_:x_+2]
     road=road&~grass_keep
     ok=own&~water&~lot&~resv&~grass_keep   # 우물·석등 같은 작은 소품은 흙길 위에 서도 된다(밑에 풀 1칸이 남지 않게)
     road2=road|((flat|lane2)&ok)

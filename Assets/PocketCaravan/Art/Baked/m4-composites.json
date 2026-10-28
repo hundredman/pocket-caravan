@@ -192,11 +192,6 @@
 "sha256": "6a228844efaa3acabf9ad7a88dabd566fc0a18be0394da5a1efe903ddd3b8bd2",
 "approval": "ArtReview/Approved/C7-Batch1-v1/approval.json"
 },
-"sprite:willow:4:4": {
-"path": "ArtReview/Approved/C7-Batch1-v1/willow.png",
-"sha256": "177efe4e87c42123f6320a3a294422a92f78574c8592baf61df90d4e36abbf2b",
-"approval": "ArtReview/Approved/C7-Batch1-v1/approval.json"
-},
 "sprite:c7:palace": {
 "path": "ArtReview/Approved/C7-Palace-v1/palace.png",
 "sha256": "c0b5cb54c0f50d1b70a7efd5118fe18b4f2566d82ef116d634d292ac90d1fb52",
@@ -216,6 +211,11 @@
 "path": "ArtReview/C7-RemainingBatch-20261027/Native/lotus.png",
 "sha256": "5d5a64d5398bffc7047d8b822cca2208398d5cbfc0f9869d0197817c1e6fdd18",
 "approval": "Docs/Plan.md 새 맵 디자인 기준: C7 잔여 12종을 새 맵에 쓴다(은샘 2026-10-28 M2)"
+},
+"sprite:willow:4:4": {
+"path": "ArtReview/Approved/C7-Batch1-v1/willow.png",
+"sha256": "177efe4e87c42123f6320a3a294422a92f78574c8592baf61df90d4e36abbf2b",
+"approval": "ArtReview/Approved/C7-Batch1-v1/approval.json"
 },
 "sprite:c7:harvest": {
 "path": "ArtReview/Approved/C7-WorkshopProps-v4/harvest.png",

@@ -26,6 +26,7 @@
    "market": 1,
    "npc": 2,
    "pastime": 1,
+   "sign": 1,
    "spawn": 45,
    "talker": 2,
    "worker": 1
@@ -57,6 +58,7 @@
    "lantern": 1,
    "market": 1,
    "npc": 1,
+   "sign": 1,
    "spawn": 90
   },
   "moved": [],
@@ -86,6 +88,7 @@
    "lantern": 2,
    "market": 1,
    "npc": 1,
+   "sign": 1,
    "spawn": 45
   },
   "moved": [],
@@ -116,6 +119,7 @@
    "lantern": 1,
    "market": 1,
    "npc": 1,
+   "sign": 1,
    "spawn": 17,
    "worker": 1
   },
@@ -215,15 +219,15 @@
  },
  "transit_crossroads": {
   "key": "east/중앙 길목 마을",
-  "w": 93,
+  "w": 92,
   "h": 80,
-  "cells": 3830,
-  "walkable": 3603,
-  "reachable": 3603,
-  "palette": 428,
+  "cells": 3823,
+  "walkable": 3602,
+  "reachable": 3602,
+  "palette": 413,
   "pixelDiff": 0,
   "terrain": [
-   1,
+   2,
    -34
   ],
   "villages": [
@@ -309,6 +313,7 @@
   "objects": {
    "bandit": 1,
    "exit": 63,
+   "sign": 1,
    "spawn": 63,
    "talker": 1
   },
@@ -373,6 +378,38 @@
   "moved": [],
   "missing": []
  },
+ "links": [
+  {
+   "id": "⑪",
+   "other": "north_c_road_se",
+   "map": "transit_crossroads",
+   "edge": "N",
+   "x": 26,
+   "y": 9,
+   "w": 4,
+   "h": 1
+  },
+  {
+   "id": "⑧",
+   "other": "arabia_central_steppe",
+   "map": "transit_crossroads",
+   "edge": "W",
+   "x": 0,
+   "y": 32,
+   "w": 1,
+   "h": 3
+  },
+  {
+   "id": "④",
+   "other": "arabia_central_eastvale",
+   "map": "transit_crossroads",
+   "edge": "W",
+   "x": 12,
+   "y": 45,
+   "w": 1,
+   "h": 2
+  }
+ ],
  "_tiles": {
   "certifyErrors": 0,
   "newTiles": 1294,

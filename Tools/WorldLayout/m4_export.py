@@ -161,6 +161,14 @@ def main():
                       villages=[z['slug'] for z in vz],exits=sum(o['kind']=='exit' for o in objects),spawns=sum(o['kind']=='spawn' for o in objects),
                       objects={k_:sum(o['kind']==k_ for o in objects) for k_ in sorted({o['kind'] for o in objects})},moved=orep['moved'],missing=orep['missing'])
         print(mid,rep[mid])
+    # 다른 문명 연결 자리(m4_links): region_links.json 고려 쪽에 쓸 맵 안 좌표(출구 칸 줄)
+    if (L/'links.json').exists():
+        import m4_links
+        b=next(b for b in atlas if b['mapId']==MAPID[m4_links.MAP]);rep['links']=[]
+        for l in json.loads((L/'links.json').read_text()):
+            ys_=[c[0]-b['box'][1] for c in l['cells']];xs_=[c[1]-b['box'][0] for c in l['cells']]
+            rep['links'].append(dict(id=l['id'],other=l['other'],map=b['mapId'],edge=l['edge'],x=min(xs_),y=min(ys_),w=max(xs_)-min(xs_)+1,h=max(ys_)-min(ys_)+1))
+        print('links',rep['links'])
     for n,im in newt.items():im.save(PREV/'Tiles'/f'{n}.png')
     # 미리보기 빌더는 미리보기 폴더의 Tiles만 읽으므로, 다시 쓴 기존 타일도 복사해 둔다(본편 전환 때는 기존 위치를 그대로 씀)
     import shutil

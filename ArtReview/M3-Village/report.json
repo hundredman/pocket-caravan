@@ -1,6 +1,6 @@
 {
  "waterAdded": 148,
- "roadAdded": 2232,
+ "roadAdded": 2468,
  "bridgeCells": 195,
  "bridges": [
   {
@@ -40,19 +40,19 @@
   "water:0:8": 208,
   "water:1:8": 201,
   "water:6:7": 209,
-  "floor:0:7": 161,
-  "floor:1:7": 384,
-  "floor:2:7": 145,
-  "floor:6:9": 158,
-  "floor:5:8": 152,
-  "floor:2:9": 155,
-  "floor:0:8": 371,
-  "floor:1:9": 380,
-  "floor:2:8": 387,
-  "floor:5:9": 142,
-  "floor:1:8": 2004,
-  "floor:0:9": 155,
-  "floor:6:8": 152,
+  "floor:0:7": 170,
+  "floor:1:7": 406,
+  "floor:2:7": 163,
+  "floor:6:9": 170,
+  "floor:5:8": 163,
+  "floor:2:9": 164,
+  "floor:0:8": 393,
+  "floor:1:9": 405,
+  "floor:2:8": 410,
+  "floor:5:9": 160,
+  "floor:1:8": 2043,
+  "floor:0:9": 167,
+  "floor:6:8": 168,
   "water:5:7": 133,
   "water:2:8": 132,
   "water:0:6": 184,
@@ -101,7 +101,7 @@
   "marsh": 29,
   "lotus": 17,
   "flowers": 83,
-  "tufts": 633,
+  "tufts": 620,
   "loneTrees": 45
  },
  "reviewBakedPieces": {
@@ -133,7 +133,7 @@
   "blocked": {},
   "collisionCells": 758,
   "lotCells": 991,
-  "plazaYardCells": 1243,
-  "laneCells": 565
+  "plazaYardCells": 1261,
+  "laneCells": 724
  }
 }
