@@ -322,25 +322,37 @@ def main():
     lab,n_=ndimage.label(road&~bridge)
     for i_,sl in enumerate(ndimage.find_objects(lab),1):
         if (lab[sl]==i_).sum()<4:road[sl][lab[sl]==i_]=False
-    # 마지막 확인: 다리 끝마다 5칸 안의 가장 가까운 길까지 3칸 폭으로 곧게 잇는다(반올림 때문에 생기는 틈 메움)
+    # 다리 진입로 다듬기: 다리 끝 둘레(반지름 5칸)의 길을 걷어 내고, 다리 방향 그대로 3칸 곧게 나온 뒤
+    # 바깥쪽 길(5~14칸, 다리 앞쪽)로 3칸 폭 곧은 길로 잇는다. 다리 밑 기슭 칸도 길로 둔다.
+    def stroke(p0,p1):
+        n=int(max(abs(p1[0]-p0[0]),abs(p1[1]-p0[1]))*2)+1
+        for i in range(n+1):
+            yy=p0[0]+(p1[0]-p0[0])*i/n;xx=p0[1]+(p1[1]-p0[1])*i/n
+            for dy in(-1,0,1):
+                for dx in(-1,0,1):
+                    q=(int(round(yy+dy)),int(round(xx+dx)))
+                    if inside(*q) and own[q] and not water[q]:road[q]=True
+    yy_,xx_=np.mgrid[:H,:W]
     for cy,cx,deg,L in spans:
-        uy,ux=math.sin(math.radians(deg)),math.cos(math.radians(deg));half=(int(math.ceil(L))+1)/2
+        uy,ux=math.sin(math.radians(deg)),math.cos(math.radians(deg));half=(int(math.ceil(L))+2)/2
         for sg in(1,-1):
             ey,ex=cy+sg*uy*(half-.5),cx+sg*ux*(half-.5)
-            cand=np.argwhere(road)
-            d2=((cand-[ey,ex])**2).sum(1);j=int(np.argmin(d2))
-            if d2[j]>5**2:continue
-            ty,tx=cand[j];n=int(max(abs(ty-ey),abs(tx-ex))*2)+1
-            for i in range(n+1):
-                yy,xx=int(round(ey+(ty-ey)*i/n)),int(round(ex+(tx-ex)*i/n))
-                for dy in(-1,0,1):
-                    for dx in(-1,0,1):
-                        if inside(yy+dy,xx+dx) and own[yy+dy,xx+dx] and not water[yy+dy,xx+dx]:road[yy+dy,xx+dx]=True
-        # 다리 밑 기슭 칸도 길로(다리 끝 아래로 길이 들어가 틈이 안 보이게)
+            dd=np.hypot(yy_-ey,xx_-ex)
+            # 바깥 길: 다리 앞쪽(다리 방향과 같은 쪽)에서 5~14칸
+            ahead=((yy_-ey)*sg*uy+(xx_-ex)*sg*ux)>0
+            cand=np.argwhere(road&(dd>=5)&(dd<=14)&ahead&~water)
+            if not len(cand):continue
+            # 다리 축에 가까우면서 가까운 길
+            perp_=np.abs((cand[:,0]-ey)*ux-(cand[:,1]-ex)*uy)
+            sc=np.hypot(cand[:,0]-ey,cand[:,1]-ex)+1.5*perp_
+            ty,tx=cand[int(np.argmin(sc))]
+            road[(dd<5)&~water]=False
+            a_=(ey+sg*uy*3,ex+sg*ux*3)
+            stroke((ey,ex),a_);stroke(a_,(ty,tx))
         for k in np.arange(-half,half+.01,.5):
             for wv in(-1,0,1):
-                yy,xx=int(round(cy+uy*k-ux*wv)),int(round(cx+ux*k+uy*wv))
-                if inside(yy,xx) and own[yy,xx] and not water[yy,xx]:road[yy,xx]=True
+                q=(int(round(cy+uy*k-ux*wv)),int(round(cx+ux*k+uy*wv)))
+                if inside(*q) and own[q] and not water[q]:road[q]=True
     road=fill_diagonals(tileready(road,own&~water),own&~water)
     land=own&~water
     rep=dict(waterAdded=int((water&~water0).sum()),roadAdded=int((road&~road0).sum()),bridgeCells=int(bridge.sum()))

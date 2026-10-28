@@ -1,6 +1,6 @@
 {
  "waterAdded": 148,
- "roadAdded": 180,
+ "roadAdded": 214,
  "bridgeCells": 195,
  "bridges": [
   {
@@ -40,24 +40,24 @@
   "water:0:8": 208,
   "water:1:8": 201,
   "water:6:7": 209,
-  "floor:0:7": 163,
-  "floor:2:7": 148,
-  "floor:0:8": 273,
-  "floor:5:9": 146,
-  "floor:1:8": 575,
-  "floor:2:8": 283,
-  "floor:0:9": 156,
-  "floor:6:8": 154,
+  "floor:0:7": 162,
+  "floor:2:7": 149,
+  "floor:0:8": 276,
+  "floor:5:9": 147,
+  "floor:1:8": 593,
+  "floor:2:8": 280,
+  "floor:0:9": 154,
+  "floor:6:8": 152,
   "water:5:7": 133,
   "water:2:8": 132,
   "water:0:6": 184,
   "water:1:6": 193,
   "water:6:8": 185,
-  "floor:1:7": 180,
-  "floor:6:9": 161,
-  "floor:5:8": 159,
-  "floor:2:9": 161,
-  "floor:1:9": 174,
+  "floor:1:7": 178,
+  "floor:6:9": 160,
+  "floor:5:8": 161,
+  "floor:2:9": 163,
+  "floor:1:9": 172,
   "water:2:7": 182,
   "water:2:6": 164,
   "water:5:8": 165
@@ -73,8 +73,8 @@
    "trees": 1253
   },
   "forest": {
-   "cells": 5934,
-   "trees": 2969
+   "cells": 5915,
+   "trees": 2959
   },
   "hill": 52,
   "marsh": 32,
@@ -97,11 +97,11 @@
  "forestUniqueTiles": {
   "mountain": {
    "cells": 3702,
-   "unique": 517
+   "unique": 520
   },
   "forest": {
-   "cells": 11522,
-   "unique": 1309
+   "cells": 11454,
+   "unique": 1292
   }
  }
 }
