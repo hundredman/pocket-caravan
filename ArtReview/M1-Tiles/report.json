@@ -76,11 +76,32 @@
    "cells": 5915,
    "trees": 2959
   },
+  "source": {
+   "sources": [
+    [
+     66,
+     -48
+    ],
+    [
+     226,
+     -62
+    ],
+    [
+     191,
+     -48
+    ],
+    [
+     117,
+     -9
+    ]
+   ],
+   "trees": 54
+  },
   "hill": 52,
   "marsh": 32,
   "lotus": 17,
   "flowers": 102,
-  "tufts": 771,
+  "tufts": 769,
   "loneTrees": 45
  },
  "reviewBakedPieces": {
@@ -97,11 +118,15 @@
  "forestUniqueTiles": {
   "mountain": {
    "cells": 3702,
-   "unique": 517
+   "unique": 666
   },
   "forest": {
    "cells": 11454,
-   "unique": 1296
+   "unique": 1363
+  },
+  "source": {
+   "cells": 761,
+   "unique": 476
   }
  }
 }
