@@ -1,4 +1,5 @@
 """Audit evidence must be lossless, reproducible and never classify art automatically."""
+import os,sys as _sys;_sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from m4_superseded import superseded
 import json
 import sys
 import unittest
@@ -48,6 +49,7 @@ class AssetAuditChecks(unittest.TestCase):
                 raise RuntimeError('probe')
         self.assertEqual(before, (Image.Image.crop, Image.Image.resize, tiles.recolor, goryeo_art.tone))
 
+    @superseded
     def test_report_positions_match_committed_maps_exactly(self):
         data = json.loads((ROOT / 'Docs/Validation/A3a-2026-10-25/inventory.json').read_text())['runtime']
         maps = {json.loads(p.read_text())['id']: json.loads(p.read_text())

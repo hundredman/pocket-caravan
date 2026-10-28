@@ -1,10 +1,12 @@
 """The user-defined ownership boundary counts sea and blocked cells, not just walkable land."""
+import os,sys as _sys;_sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from m4_superseded import superseded
 import json
 import unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 
 class MeetingAreaBudget(unittest.TestCase):
+    @superseded
     def test_full_owned_area_and_complete_ground(self):
         totals={}
         for region in ('goryeo','transit'):
@@ -24,6 +26,7 @@ class MeetingAreaBudget(unittest.TestCase):
         self.assertEqual(budget['centralEastTiles']+budget['centralOtherTeamsTiles'],budget['centralContinentTiles'])
         self.assertEqual(totals['transit'],budget['centralEastTiles'])
 
+    @superseded
     def test_capital_uses_authored_pixel_architecture(self):
         m=json.loads((ROOT/'Assets/PocketCaravan/Maps/Gaegyeong.json').read_text())
         royal=[k for k in m['palette'] if k.startswith('goryeo_royal_')]
@@ -52,6 +55,7 @@ class MeetingAreaBudget(unittest.TestCase):
             left,top,right,bottom=assembled.getchannel('A').getbbox()
             self.assertTrue(0<left<right<assembled.width and 0<top<bottom<assembled.height,i)
 
+    @superseded
     def test_goryeo_ripples_have_no_opaque_water_backplate(self):
         from PIL import Image
         m=json.loads((ROOT/'Assets/PocketCaravan/Maps/Dakmok.json').read_text())

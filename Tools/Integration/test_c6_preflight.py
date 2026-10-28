@@ -1,4 +1,5 @@
 """C6 feasibility evidence is pixel exact and does not silently weaken A2."""
+import os,sys as _sys;_sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from m4_superseded import superseded
 import hashlib,json,sys,unittest
 from pathlib import Path
 from PIL import Image
@@ -31,6 +32,7 @@ class C6Preflight(unittest.TestCase):
         self.assertEqual(len(report['semiTransparentTerrainTiles']),5)
         self.assertEqual(sum(bool(v['nonBinaryAlpha']) for v in report['visualObjects']),5)
         self.assertFalse(report['productionChanged'])
+    @superseded
     def test_production_inputs_and_old_save_aliases_stay_intact(self):
         inputs=json.loads((FOLDER/'input-hashes.json').read_text())
         for path,expected in inputs.items():self.assertEqual(hashlib.sha256((ROOT/path).read_bytes()).hexdigest(),expected,path)

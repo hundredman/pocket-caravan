@@ -40,8 +40,8 @@ namespace PocketCaravan.EditorTools
             // M4(2026-10-28) layoutD: 배달 보수 거리 = 새 맵 실제 보행 초 × 환산 비율(TownRoutes.json). 이웃 수가 아니다.
             Check(r, "capital-Dakmok layoutD distance 2", DeliveryReward.RouteSteps(world,"gaegyeong","dakmok")==2);
             Check(r, "capital-Jangdan layoutD distance 4 (longer than Dakmok)", DeliveryReward.RouteSteps(world,"gaegyeong","goryeo_jangdan")==4);
-            bool unknownRejected=false; try { DeliveryReward.RouteSteps(world,"gaegyeong","unknown"); } catch (InvalidOperationException) { unknownRejected=true; }
-            Check(r, "unknown destination cannot receive route quote", unknownRejected);
+            // 표에 없는 마을(다른 지역 포함)은 예전 방식으로 계산: 등록 안 된 마을은 경로 없음(-1)
+            Check(r, "unknown destination cannot receive route quote", DeliveryReward.RouteSteps(world,"gaegyeong","unknown")<1);
             for (int distance = 1; distance <= 5; distance++)
                 for (int weight = 2; weight <= 6; weight++)
                     Check(r, "legacy quote exact d"+distance+" w"+weight,

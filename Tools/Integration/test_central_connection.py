@@ -1,4 +1,5 @@
 """The compact eastern quarter connects Goryeo without inventing foreign-region exits."""
+import os,sys as _sys;_sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from m4_superseded import superseded
 import collections
 import json
 import heapq
@@ -16,6 +17,7 @@ class CentralConnection(unittest.TestCase):
             for entry in json.loads(path.read_text())['maps']:
                 cls.maps[entry['mapId']] = json.loads((ROOT/entry['jsonPath']).read_text())
 
+    @superseded
     def test_goryeo_reaches_central_through_multiple_distinct_maps(self):
         queue=collections.deque([['goryeo_songak']]);seen=set()
         while queue:
@@ -51,6 +53,7 @@ class CentralConnection(unittest.TestCase):
                 self.assertEqual(max(e['w'],e['h']),max(spawn['w'],spawn['h']))
                 self.assertTrue(any(s['kind']=='exit' and s['target']==mid for s in target['objects']))
 
+    @superseded
     def test_world_directions_and_no_fabricated_foreign_exits(self):
         m=self.maps['transit_crossroads']
         contract=json.loads((ROOT/'Assets/PocketCaravan/World/Connections/central_ports.json').read_text())
@@ -71,11 +74,13 @@ class CentralConnection(unittest.TestCase):
             self.assertGreaterEqual(entries[e['mapId']]['x'],central['x']+central['w'])
         self.assertEqual(next(o['edge'] for o in self.maps['goryeo_songak']['objects'] if o['kind']=='exit' and o['target']=='transit_pass'),'W')
 
+    @superseded
     def test_ferry_is_no_longer_signposted_as_terminus(self):
         text=' '.join(o.get('text','') for o in self.maps['transit_ferry']['objects'])
         self.assertIn('내륙 교역 길목',text)
         self.assertNotIn('시험 여정의 끝',text)
 
+    @superseded
     def test_approach_supports_different_vehicle_path_choices(self):
         m=self.maps['transit_central_approach'];w,h=m['w'],m['h']
         def cost(speeds,branch):

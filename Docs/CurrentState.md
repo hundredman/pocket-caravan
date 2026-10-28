@@ -21,10 +21,12 @@
 
 - 원본: `Tools/WorldLayout/` (위 1절 흐름). 검토 그림 `ArtReview/M1-Tiles`·`M2-Zones`·`M3-Village`·`M4-Maps`.
 - 이웃 맵과는 걸을 수 있는 경계 전체가 출구로 이어진다(출구 874개). 출구는 서서 경계 쪽을 보면 바로 쓰이므로 도착 자리는 출구와 겹치지 않는다.
-- 시장·게시판은 기존 7곳(나루·장단·송악·닥목·개경·동문·북동 포구). 남동 포구·중앙 길목 마을·쉼터 마을 2곳의 시장·NPC는 아직 없다(E2·M5). 옛 이정표는 옮기지 않았다.
+- 시장·게시판은 기존 7곳(나루·장단·송악·닥목·개경·동문·북동 포구). 남동 포구·중앙 길목 마을·쉼터 마을 2곳의 시장·NPC는 아직 없다(E2·M5). 방향과 상관없는 옛 이정표 5개와 남동 길 도적 경고만 옮겼다(방향 안내는 M5).
 - 겹친 칸 그림 1,294개는 `Tools/WorldLayout/m4_certify.py`로 승인 원본에서 다시 그려 같은지 확인한다(A2 확장).
 - 옛 저장(`layoutVersion` 1 이하): 같은 맵(옛 ID는 별칭으로)의 도착 자리에서 다시 시작하고, 떨어진 짐은 그 옆으로 옮긴다(`Resources/GoryeoLayout.json`, `GoryeoLayout.cs`). 새 저장은 `layoutVersion` 2.
-- 마을 사이 거리(`Resources/TownRoutes.json`)는 `layoutD`: 새 맵 실제 보행 초 × 0.1304.
+- 마을 사이 거리(`Resources/TownRoutes.json`)는 `layoutD`: 새 맵 실제 보행 초 × 0.1304. 표에 없는 마을(다른 지역)과의 거리는 예전 방식(`TownDistance.cs`).
+- 다른 문명 연결 자리: 중앙 길목 마을 서쪽 끝을 곧게 깎은 출구 줄 3곳(⑪ 북유럽 4칸, ⑧ 아라비아 초원 3칸, ④ 아라비아 고원 2칸)과 흙길(`Tools/WorldLayout/m4_links.py`). 맵 안 좌표는 `ArtReview/M4-Maps/report.json`의 `links`. 출구 객체는 통합 브랜치에서 `connect_regions.py`가 넣는다(통합 브랜치 `region_links.json` 고려 쪽 값 갱신 필요, 카톡 알림 뒤).
+- 옛 11맵을 고정하던 Python 검사 15개 모듈의 해당 검사는 `Tools/Integration/m4_superseded.py`로 건너뛴다(대신 `test_m4_production`).
 - 마지막 실제 이동 검사(Unity Play, 2026-10-28): 이웃 맵 18쌍 모두 양방향 출구 이동(49번 이동, 실패 0), 옛 저장 불러오기·새 저장 왕복. 사람이 직접 걸어 본 플레이는 아직 없다.
 
 ## 3. 아트 (새 방향과 다름 — [아트 기준](ArtGuide.md) 5절)

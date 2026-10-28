@@ -1,4 +1,5 @@
 """Approved E1 configuration preserves production and all future internal endpoints."""
+import os,sys as _sys;_sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from m4_superseded import superseded
 import json
 from pathlib import Path
 import sys
@@ -11,6 +12,7 @@ from check_distance_calibration import graph_from_roads, shortest_path
 
 
 class DistanceServiceSourceChecks(unittest.TestCase):
+    @superseded
     def test_generated_routes_match_the_single_source_and_production_stays_current(self):
         actual=(ROOT/'Assets/PocketCaravan/Resources/TownRoutes.json').read_text()
         self.assertEqual(actual,serialized(build()))

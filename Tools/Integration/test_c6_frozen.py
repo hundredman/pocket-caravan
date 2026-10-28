@@ -1,4 +1,5 @@
 """Decisions10 alpha exceptions, complete baked placement coverage and unchanged production export."""
+import os,sys as _sys;_sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from m4_superseded import superseded
 import copy,hashlib,json,sys,tempfile,unittest
 from pathlib import Path
 from PIL import Image
@@ -48,6 +49,7 @@ class AlphaPolicy(unittest.TestCase):
         self.asset['kind']='modular';self.asset['moduleType']='surface_pattern';self.asset['requiredPieces']=['variant'];self.asset['pieces']={'variant':{k:self.asset[k]for k in ('size','image','tiles')}}
         self.assertIn('modular_minimum',self.codes())
 
+@superseded
 class FrozenProduction(unittest.TestCase):
     @classmethod
     def setUpClass(cls):cls.report=verify()

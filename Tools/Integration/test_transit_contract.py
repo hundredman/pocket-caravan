@@ -1,4 +1,5 @@
 """공용 등록부에 실수로 외국 수도를 직결하거나 별도 데이터 참조를 누락하는 회귀 방지."""
+import os,sys as _sys;_sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from m4_superseded import superseded
 import json
 import re
 import unittest
@@ -6,6 +7,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 
 class TransitContract(unittest.TestCase):
+    @superseded
     def test_intermediate_journey_and_independent_towns(self):
         region=json.loads((ROOT/'Assets/PocketCaravan/World/Regions/transit.json').read_text())
         maps={e['mapId']:json.loads((ROOT/e['jsonPath']).read_text()) for e in region['maps']}

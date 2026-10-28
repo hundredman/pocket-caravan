@@ -1,4 +1,5 @@
 """C3a isolated proposal preserves gameplay and all actor-free tile composites."""
+import os,sys as _sys;_sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from m4_superseded import superseded
 import json,sys,unittest
 from pathlib import Path
 from PIL import Image
@@ -8,6 +9,7 @@ from occlusion import desired_rows
 from occlusion_baseline import restore_before_c3
 FOLDER=ROOT/'ArtReview/C3a-2026-10-26'
 
+@superseded
 class OcclusionProposal(unittest.TestCase):
     def test_production_is_exact_approved_proposal_and_legacy_normalizer_is_strict(self):
         import copy

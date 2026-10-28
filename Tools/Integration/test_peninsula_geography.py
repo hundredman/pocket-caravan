@@ -1,4 +1,5 @@
 """Geographic direction, playable/coastal context separation, and inland visual progression."""
+import os,sys as _sys;_sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from m4_superseded import superseded
 import json
 import unittest
 from pathlib import Path
@@ -10,6 +11,7 @@ class PeninsulaGeography(unittest.TestCase):
         self.areas={a['mapId']:a for a in self.atlas['maps']}
         self.profile=json.loads((ROOT/'Assets/PocketCaravan/World/Terrain/continuous.json').read_text())
 
+    @superseded
     def test_continental_gate_is_in_northwest_starting_region(self):
         songak=self.areas['goryeo_songak'];capital=self.areas['Gaegyeong'];central=self.areas['transit_crossroads']
         self.assertLess(songak['x'],capital['x'])
@@ -18,6 +20,7 @@ class PeninsulaGeography(unittest.TestCase):
         jangdan=json.loads((ROOT/'Assets/PocketCaravan/Maps/goryeo_jangdan.json').read_text())
         self.assertFalse(any(o['kind']=='exit' and o['target'].startswith('transit_') for o in jangdan['objects']))
 
+    @superseded
     def test_all_playable_maps_are_on_land_and_context_is_not_extra_maps(self):
         self.assertEqual(len(self.areas),11)
         self.assertEqual(self.atlas['geography'],'continuous_tiles')
@@ -33,6 +36,7 @@ class PeninsulaGeography(unittest.TestCase):
             self.assertGreater(sum(m['water']),0)
             self.assertLess(sum(m['water']),m['w']*m['h'])
 
+    @superseded
     def test_goryeo_is_compact_and_entirely_east_of_owned_continent(self):
         east=[a for mid,a in self.areas.items() if not mid.startswith('transit_')]
         central=[a for mid,a in self.areas.items() if mid.startswith('transit_')]
@@ -45,6 +49,7 @@ class PeninsulaGeography(unittest.TestCase):
         self.assertEqual(self.atlas['centralContinentTotalCells'],100000)
         self.assertEqual(self.atlas['centralEastOwnedCells'],25000)
 
+    @superseded
     def test_inland_palette_progresses_from_original_goryeo_art(self):
         for mid in ['transit_central_approach','transit_crossroads']:
             m=json.loads((ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').read_text())

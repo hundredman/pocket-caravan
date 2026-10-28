@@ -1,4 +1,5 @@
 """Approved pond appearance and unchanged gameplay topology/large water bodies."""
+import os,sys as _sys;_sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from m4_superseded import superseded
 import copy,hashlib,json,sys,unittest
 from pathlib import Path
 from types import SimpleNamespace
@@ -25,6 +26,7 @@ class PondProductionChecks(unittest.TestCase):
             self.assertEqual(actual.size,(16,16));self.assertEqual(actual.tobytes(),expected.tobytes())
             self.assertEqual(actual.tobytes(),Image.open(ROOT/piece['tiles'][0]['image']).convert('RGBA').tobytes())
 
+    @superseded
     def test_only_22_ground_cells_change_all_gameplay_data_and_other_layers_exact(self):
         before=json.loads((ROOT/'Docs/Validation/A4-Pond-Production-2026-10-25/Gaegyeong-before.json').read_text())
         after=restore_before_c3(json.loads((ROOT/'Assets/PocketCaravan/Maps/Gaegyeong.json').read_text()));visual={'palette','ground','deco','obj','high'}

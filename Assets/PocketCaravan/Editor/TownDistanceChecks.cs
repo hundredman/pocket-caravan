@@ -33,17 +33,18 @@ namespace PocketCaravan.EditorTools
                     var delta = a.worldCoord - b.worldCoord;
                     Check(ContractManager.Distance(a, b) == Mathf.Abs(delta.x) + Mathf.Abs(delta.y), "current distance");
                 }
+                // R2 가격 기준표는 current 거리로 만든 것이라 current에서 확인(가격의 거리 항이 layoutD에선 달라짐)
+                var source = JsonUtility.FromJson<Snapshot>(File.ReadAllText("Docs/Validation/R2-2026-10-25/source-snapshot.json"));
+                foreach (var row in source.oracle)
+                {
+                    var town = db.towns.Find(t => t.id == row.town); var item = db.items.Find(i => i.id == row.item);
+                    float opt = town.OptimalFor(item) * (1f + .5f * (row.level - 1));
+                    Check(MarketMath.Price(town.BasePriceFor(item), opt, opt * row.ratio, row.demand) == row.buy, "buy oracle");
+                    Check(MarketMath.Buyback(MarketMath.Price(town.BasePriceFor(item), opt, opt * row.ratio + 1, row.demand)) == row.sell, "sell oracle");
+                    report.prices++;
+                }
             }
             finally { cache.SetValue(null, null); }
-            var source = JsonUtility.FromJson<Snapshot>(File.ReadAllText("Docs/Validation/R2-2026-10-25/source-snapshot.json"));
-            foreach (var row in source.oracle)
-            {
-                var town = db.towns.Find(t => t.id == row.town); var item = db.items.Find(i => i.id == row.item);
-                float opt = town.OptimalFor(item) * (1f + .5f * (row.level - 1));
-                Check(MarketMath.Price(town.BasePriceFor(item), opt, opt * row.ratio, row.demand) == row.buy, "buy oracle");
-                Check(MarketMath.Buyback(MarketMath.Price(town.BasePriceFor(item), opt, opt * row.ratio + 1, row.demand)) == row.sell, "sell oracle");
-                report.prices++;
-            }
             var active = new Contract { id = 9000, fromTown = "naru", toTown = "gaegyeong", reward = 777,
                 hours = 33, acceptedAt = 5, deadline = 38, finalDeadline = 54.5f, condition = .8f };
             var saved = new SaveData(); saved.contracts.Add(active);

@@ -1,4 +1,5 @@
 """Runtime geography, full scene-border walking, and atlas water footprint must agree."""
+import os,sys as _sys;_sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from m4_superseded import superseded
 import collections
 import json
 import unittest
@@ -14,6 +15,7 @@ class ContinuousTerrain(unittest.TestCase):
             entries+=json.loads((ROOT/f'Assets/PocketCaravan/World/Regions/{region}.json').read_text())['maps']
         cls.maps={e['mapId']:json.loads((ROOT/e['jsonPath']).read_text()) for e in entries}
 
+    @superseded
     def test_open_ground_across_each_shared_border_has_reciprocal_exits(self):
         for mid,a in self.maps.items():
             ax,ay,w,h=a['terrainX'],a['terrainY'],a['w'],a['h']
@@ -34,6 +36,7 @@ class ContinuousTerrain(unittest.TestCase):
                     self.assertEqual((e['w'],e['h']),(target['w'],target['h']))
                 self.assertEqual(covered,valid,(mid,tid))
 
+    @superseded
     def test_reachability_snapshot_matches_world_blocking_geometry(self):
         ground={(m['terrainX']+x,m['terrainY']+y) for m in self.maps.values() for y in range(m['h']) for x in range(m['w']) if not m['blocked'][y*m['w']+x]}
         m=self.maps['Naru'];sp=next(o for o in m['objects'] if o['kind']=='spawn' and o['id']=='S0')
@@ -46,6 +49,7 @@ class ContinuousTerrain(unittest.TestCase):
             for y in range(m['h']):
                 for x in range(m['w']):self.assertEqual(bool(m['reachable'][y*m['w']+x]),(m['terrainX']+x,m['terrainY']+y) in seen,(m['id'],x,y))
 
+    @superseded
     def test_atlas_hydrology_pixels_equal_all_runtime_water_cells(self):
         base=ROOT/'Assets/PocketCaravan/Resources/WorldMap'
         for stem in ['Goryeo','GoryeoRegional']:
