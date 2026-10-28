@@ -103,6 +103,10 @@ def main():
                       palette=len(pal),pixelDiff=diff,terrain=[int(x0+v.X0),int(y0+v.Y0)])
         print(mid,rep[mid])
     for n,im in newt.items():im.save(PREV/'Tiles'/f'{n}.png')
+    # 미리보기 빌더는 미리보기 폴더의 Tiles만 읽으므로, 다시 쓴 기존 타일도 복사해 둔다(본편 전환 때는 기존 위치를 그대로 씀)
+    import shutil
+    for n in set(names.values()):
+        if not n.startswith('m4_'):shutil.copyfile(TILES/f'{n}.png',PREV/'Tiles'/f'{n}.png')
     rep['_tiles']=dict(newTiles=len(newt),reusedExisting=len([n for n in names.values() if not n.startswith('m4_')]))
     (REVIEW/'report.json').write_text(json.dumps(rep,ensure_ascii=False,indent=1))
     print(rep['_tiles'])
