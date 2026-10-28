@@ -72,7 +72,6 @@ MonoBehaviour:
     - goryeo_jangdan
     - transit_southport
     - transit_woodtown
-    - transit_south_inland
   - mapId: transit_woodtown
     displayName: "\uC194\uC7AC \uAE38\uBAA9 \uB9C8\uC744"
     height: 69
@@ -82,9 +81,8 @@ MonoBehaviour:
     neighbors:
     - transit_wetroad
     - goryeo_songak
-    - transit_pass
     - transit_south_inland
-    - transit_central_approach
+    - transit_pass
   - mapId: transit_wetroad
     displayName: "\uBC84\uB4E4 \uBB3C\uAC00 \uAE38"
     height: 64
@@ -113,7 +111,6 @@ MonoBehaviour:
     - transit_crossroads
     - transit_wetroad
     - transit_south_inland
-    - transit_woodtown
   - mapId: transit_crossroads
     displayName: "\uB0B4\uB959 \uAD50\uC5ED \uAE38\uBAA9"
     height: 80
@@ -143,7 +140,6 @@ MonoBehaviour:
     - transit_central_approach
     - transit_woodtown
     - transit_crossroads
-    - transit_pass
   places:
   - kind: market
     id: naru
