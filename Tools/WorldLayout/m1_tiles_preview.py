@@ -169,7 +169,7 @@ REEDS='tall_grass:2:2';LOTUS='lotus:2:1';SHEAF='harvest:3:2'
 P=6   # 숲 합성 블록 크기(칸). 이 블록이 반복되는 '숲 타일'
 FOREST_BLOCK=['forest_round:3:4','forest_bent:3:4','broadleaf:4:4','round_west:4:3','round_east:4:3','forest_wide:4:3','light_tree:3:4']
 MOUNT_BLOCK=['pine_west:4:3','pine_east:4:3','pine_west:4:3','pine_east:4:3','forest_bent:3:4','moss_rock:3:2']
-BLOCKS={}
+BLOCKS={};FMASK={}
 
 def clean(m,minsize):
     m=ndimage.binary_closing(ndimage.binary_opening(m),iterations=1)&m|ndimage.binary_opening(m)
@@ -196,12 +196,39 @@ def forest_block(kinds,seed):
     dark=[c for c,_ in C.Counter(px).most_common(40) if sum(c[:3])<240 and c[1]>c[0]]
     bg=dark[0] if dark else (40,70,50,255)
     blk=Image.new('RGBA',(P*T,P*T),bg)
-    for (y,x),k in sorted(lat.items()):
+    inst=sorted((y+oy,x+ox,k) for (y,x),k in lat.items() for oy in(-P,0,P) for ox in(-P,0,P))   # 감아 그린 것까지 밑동 줄 순서로
+    for y,x,k in inst:
         im=ims[k];sw,sh=im.width//T,im.height//T
-        for oy in(-P,0,P):
-            for ox in(-P,0,P):
-                blk.alpha_composite(im,((x-sw//2+ox)*T,(y-sh+1+oy)*T)) if (x-sw//2+ox)*T>=0 and (y-sh+1+oy)*T>=0 else _paste(blk,im,(x-sw//2+ox)*T,(y-sh+1+oy)*T)
-    return blk,lat
+        _paste(blk,im,(x-sw//2)*T,(y-sh+1)*T)
+    return blk,lat,bg
+
+def piece_sheet(kind,lat,bg):
+    """숲 타일 조각: 네모난 숲을 그려 가장자리별로 나눠 보여 준다.
+    위 가장자리(풀밭 위로 나온 나뭇잎), 이어지는 안쪽(P×P 반복), 아래 시작 부분(풀밭 위 밑동), 왼쪽·오른쪽 가장자리."""
+    m0,mx=4,3;Wc,Hc=3*P+2*mx,3*P+m0+2
+    im=Image.new('RGBA',(Wc*T,Hc*T))
+    for y in range(Hc):
+        for x in range(Wc):im.alpha_composite(tile('floor:0:12'),(x*T,y*T))
+    y0,y1,x0,x1=m0,m0+3*P-1,mx,mx+3*P-1
+    for y in range(y0,y1-1):
+        for x in range(x0+1,x1):im.paste(bg,(x*T,y*T,(x+1)*T,(y+1)*T))
+    inst=[]
+    for y in range(y0,y1+1):
+        for x in range(x0,x1+1):
+            k=lat.get(((y-y0)%P,(x-x0)%P))
+            if k:inst.append((y,x,k))
+    for y,x,k in sorted(inst):
+        s_=sprite(k);sw,sh=s_.width//T,s_.height//T;_paste(im,s_,(x-sw//2)*T,(y-sh+1)*T)
+    Z=2;big=Image.new('RGBA',(im.width*Z+300,im.height*Z),(30,34,40,255));big.paste(im.resize((im.width*Z,im.height*Z),Image.NEAREST),(0,0))
+    d=ImageDraw.Draw(big);f=ImageFont.truetype(str(v.FONT),22)
+    def band(r0,r1,c,label):
+        d.rectangle([2,r0*T*Z,im.width*Z-3,r1*T*Z],outline=c,width=3);d.text((im.width*Z+10,(r0*T*Z+r1*T*Z)//2-12),label,fill=c,font=f)
+    band(y0-3,y0,(255,230,80,255),'위 가장자리')
+    band(y0,y0+P,(120,220,140,255),'이어지는 부분')
+    band(y1-2,y1+1,(255,140,90,255),'아래 시작 부분')
+    for xx in(x0-2,x0+2,x1-1,x1+3):d.line([(xx*T*Z,y0*T*Z),(xx*T*Z,(y1-2)*T*Z)],fill=(120,200,255,255),width=2)
+    d.text((im.width*Z+10,(y0+P+3)*T*Z),'파란 선: 왼쪽·',fill=(120,200,255,255),font=f);d.text((im.width*Z+10,(y0+P+3)*T*Z+28),'오른쪽 가장자리',fill=(120,200,255,255),font=f)
+    return big
 
 def _paste(dst,im,x,y):
     sx,sy=max(0,-x),max(0,-y)
@@ -335,20 +362,22 @@ def main():
     for kind,ks,mask_ in (('mountain',MOUNT_BLOCK,cls(v.MOUNTAIN,v.PEAK)&land),('forest',FOREST_BLOCK,cls(v.FOREST)&land)):
         if kind in off:continue
         fm=clean(mask_&~near_road&~near_water&~occ,12)
-        blk,lat=forest_block(ks,seed=3 if kind=='forest' else 5)
-        inner=ndimage.binary_erosion(fm,iterations=1)
-        dist=ndimage.distance_transform_edt(fm)
-        for y,x in np.argwhere(inner):
-            img.alpha_composite(blk.crop(((x%P)*T,(y%P)*T,(x%P+1)*T,(y%P+1)*T)),(x*T,y*T))
+        blk,lat,bg=forest_block(ks,seed=3 if kind=='forest' else 5)
+        # 바탕(숲 그늘): 아래 2칸까지 숲인 칸만. 숲 맨 아래 줄은 풀밭 위에 밑동이 보인다(시작 부분).
+        below=np.zeros_like(fm);below[:-2]=fm[1:-1]&fm[2:]
+        under=ndimage.binary_erosion(fm,iterations=1)&below
+        for y,x in np.argwhere(under):img.paste(bg,(x*T,y*T,(x+1)*T,(y+1)*T))
+        FMASK[kind]=fm
+        # 나무는 모두 통째로, 밑동 줄 순서대로(뒤 나무 위에 앞 나무). 블록과 같은 자리라 안쪽은 숲 타일과 같은 그림이 된다.
         n=0
-        for y,x in np.argwhere(fm&(dist<=4)):
+        for y,x in np.argwhere(fm):
             k=lat.get((y%P,x%P))
             if k is None:continue
             nm,sw,sh=k.split(':');sw,sh=int(sw),int(sh);x0=x-sw//2;y0=y-sh+1
             if x0<0 or y0<0 or x0+sw>W:continue
             objs.append((y,x0,y0,k));n+=1
-        occ|=ndimage.binary_dilation(fm,iterations=1);counts[kind]=dict(cells=int(fm.sum()),edgeTrees=n)
-        BLOCKS[kind]=blk
+        occ|=ndimage.binary_dilation(fm,iterations=1);counts[kind]=dict(cells=int(fm.sum()),trees=n)
+        BLOCKS[kind]=(blk,lat,bg,ks)
     if 'hill' not in off:counts['hill']=scatter(cls(v.HILL)&free,TREES_HILL,.025,margin=1)
     if 'marsh' not in off:
         mm=np.isin(t,[v.MARSH])&own&land&~near_road
@@ -390,12 +419,14 @@ def main():
     rep['objects']=counts;rep['reviewBakedPieces']=BAKED_FOR_REVIEW
     OUT.mkdir(parents=True,exist_ok=True)
     sfx=('-no-'+'-'.join(sorted(off))) if off else ''
-    for k,b in BLOCKS.items():
-        b.save(OUT/f'block-{k}.png')   # 새 합성 '숲 타일' 원본(P×P칸, 승인 대기)
-        t2=Image.new('RGBA',(b.width*2,b.height*2))
-        for oy in(0,1):
-            for ox in(0,1):t2.paste(b,(ox*b.width,oy*b.height))
-        t2.resize((t2.width*3,t2.height*3),Image.NEAREST).save(OUT/f'block-{k}-tiled.png')
+    for k,(b,lat,bg,ks) in BLOCKS.items():
+        b.save(OUT/f'block-{k}.png')
+        piece_sheet(k,lat,bg).save(OUT/f'pieces-{k}.png')
+    # 타일로 나누면 몇 종류가 되는지(숲이 걸친 칸을 16px로 잘라 같은 그림끼리 묶음)
+    for k,fm in FMASK.items():
+        area=ndimage.binary_dilation(fm,iterations=3)&own;uniq=set()
+        for y,x in np.argwhere(area):uniq.add(img.crop((x*T,y*T,(x+1)*T,(y+1)*T)).tobytes())
+        rep.setdefault('forestUniqueTiles',{})[k]=dict(cells=int(area.sum()),unique=len(uniq))
     img.convert('RGB').save(OUT/f'world-full{sfx}.png')
     img.resize((W*T//4,H*T//4),Image.BOX).convert('RGB').save(OUT/f'world{sfx}.png')
     # 게임 크기 화면(480×270 = 30×17칸) — 세계 좌표(칸) 중심
