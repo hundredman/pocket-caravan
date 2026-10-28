@@ -26,8 +26,8 @@ namespace PocketCaravan.EditorTools
             var r = new Report { unityVersion = Application.unityVersion };
             var db = Resources.Load<GameDatabase>("GameDatabase");
             var civilian = new HashSet<string> { "tutorial_3", "tutorial_5", "naru_board", "goryeo_jangdan_trade", "goryeo_songak_trade", "goryeo_return_trade" };
-            Check(r, "all 12 existing quests retained", db.quests.Count(q => !q.id.StartsWith("q1_")) == 12);
-            foreach (var q in db.quests.Where(q => !q.id.StartsWith("q1_")))
+            Check(r, "all 12 existing quests retained", db.quests.Count(q => q != null && !q.id.StartsWith("q1_") && UnityEditor.AssetDatabase.GetAssetPath(q).Contains("/Data/Goryeo/")) == 12);   // 통합 브랜치의 다른 지역 퀘스트는 세지 않음
+            foreach (var q in db.quests.Where(q => q != null && !q.id.StartsWith("q1_") && UnityEditor.AssetDatabase.GetAssetPath(q).Contains("/Data/Goryeo/")))   // 고려 퀘스트 규칙만
             {
                 bool civil = civilian.Contains(q.id);
                 Check(r, q.id + " new credit classification", q.rewardCredit == (civil ? 0 : 1));
