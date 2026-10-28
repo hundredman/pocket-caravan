@@ -153,6 +153,12 @@ EditorBuildSettings:
     path: Assets/PocketCaravan/Scenes/Transit/transit_crossroads.unity
     guid: 46b098a2573534c898663575ea95f7de
   - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Transit/transit_southport.unity
+    guid: 460ee819ebd314a51836f4bcaf221f18
+  - enabled: 1
+    path: Assets/PocketCaravan/Scenes/Transit/transit_south_inland.unity
+    guid: af967ee5cdaa144b4af9b79394e00a73
+  - enabled: 1
     path: Assets/PocketCaravan/Scenes/Venice/venice_rialto.unity
     guid: db17a8fc66f79be469fc4cb252d2c560
   - enabled: 1

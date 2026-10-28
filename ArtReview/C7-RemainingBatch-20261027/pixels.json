@@ -1,0 +1,86 @@
+{
+  "boat": {
+    "size": [
+      80,
+      32
+    ],
+    "rgbaSHA256": "eb4c9a3972d95dda26232e63487054c35f0cf80d26bf66601c98d5b17648be6d"
+  },
+  "sheaf_naru": {
+    "size": [
+      16,
+      32
+    ],
+    "rgbaSHA256": "bd828717623917faab1e760160f6abfe067bc8bc488702738c1333ac6b389fd2"
+  },
+  "laundry": {
+    "size": [
+      32,
+      32
+    ],
+    "rgbaSHA256": "ece2c97b304c771abed86142d8d9f391938d1e7d82530e70ed5d1598de8ac834"
+  },
+  "sheaf_jangdan": {
+    "size": [
+      16,
+      32
+    ],
+    "rgbaSHA256": "952b0a13a0735197e104268ce58090dcfa94ebdcdefe07f429f540bc3ed4f7f3"
+  },
+  "pine_west": {
+    "size": [
+      64,
+      48
+    ],
+    "rgbaSHA256": "2963950c856ea72fe7ca4acbb147e8a12571c9eb18d1c740dab7565ced051fc8"
+  },
+  "round_west": {
+    "size": [
+      64,
+      48
+    ],
+    "rgbaSHA256": "57db143f00840b2d4ce6a5c3b2964aa5fed92a07afb0a97412c098b7ab606e27"
+  },
+  "small_store": {
+    "size": [
+      64,
+      48
+    ],
+    "rgbaSHA256": "5a8b8344715f2e2eeb0aae2481c059aa3e01be806c6d4957dbd0cc5f35e243bb"
+  },
+  "small_rock": {
+    "size": [
+      32,
+      32
+    ],
+    "rgbaSHA256": "f463d116e2bb2a40b63f1a944c987a3fced35cefa644e363608907f650d7ecb8"
+  },
+  "pine_east": {
+    "size": [
+      64,
+      48
+    ],
+    "rgbaSHA256": "788070a07e6bf90efa2061b8f9c3986c310d0b51c800cdea6ee81ebbcfb80c95"
+  },
+  "round_east": {
+    "size": [
+      64,
+      48
+    ],
+    "rgbaSHA256": "0df4dbb212b6ccbc07cb3bd38657f3ec4ce233b8ca6ed98924f09f52e140360f"
+  },
+  "bench": {
+    "size": [
+      48,
+      16
+    ],
+    "rgbaSHA256": "60626778ac9c2a694e7e4fc655f75949bb3fd7b00179f11fd3301c024b441b3a"
+  },
+  "lotus": {
+    "size": [
+      32,
+      16
+    ],
+    "rgbaSHA256": "5d5a64d5398bffc7047d8b822cca2208398d5cbfc0f9869d0197817c1e6fdd18"
+  }
+}

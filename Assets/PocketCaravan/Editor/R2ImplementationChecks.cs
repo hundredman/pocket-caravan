@@ -22,6 +22,7 @@ namespace PocketCaravan.EditorTools
             var p=new PlayerState{money=10000,origin=AssetDatabase.LoadAssetAtPath<OriginData>("Assets/PocketCaravan/Data/Origins/Origin_Venice.asset"),vehicle=source.startVehicle};
             var clock=new GameClock();void Set(string name,object value)=>typeof(GameManager).GetProperty(name).SetValue(gm,value);
             Set("Player",p);Set("Clock",clock);Set("Db",db);
+            var distance=TownDistanceFixture.Current();   // R2 기준값은 current 거리 기준(M4 뒤 본편은 layoutD)
             try
             {
                 var ferry=db.towns.Find(t=>t.id=="transit_ferry");var naru=db.towns.Find(t=>t.id=="naru");var ginseng=db.items.Find(i=>i.id=="ginseng");var najeon=db.items.Find(i=>i.id=="najeon");
@@ -86,7 +87,7 @@ namespace PocketCaravan.EditorTools
                 File.WriteAllText("Docs/Validation/R2-Implementation-2026-10-26/unity.json",JsonUtility.ToJson(r,true));
                 Debug.Log("R2 implementation checks passed: "+r.passed.Count);
             }
-            finally {GameEvents.ClearAll();typeof(GameManager).GetProperty("I").SetValue(null,null);UnityEngine.Object.DestroyImmediate(go);UnityEngine.Object.DestroyImmediate(db);}
+            finally {distance.Dispose();GameEvents.ClearAll();typeof(GameManager).GetProperty("I").SetValue(null,null);UnityEngine.Object.DestroyImmediate(go);UnityEngine.Object.DestroyImmediate(db);}
             const string output="Docs/Validation/R2-Implementation-2026-10-26/";
             File.WriteAllText(output+"q1.json",JsonUtility.ToJson(Q1Checks.Run(),true));
             File.WriteAllText(output+"r6.json",JsonUtility.ToJson(R6Checks.Run(),true));

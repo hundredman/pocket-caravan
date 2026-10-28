@@ -484,7 +484,7 @@ namespace PocketCaravan
             var d = new SaveData
             {
                 scene = SceneManager.GetActiveScene().name,
-                layoutVersion = 1,
+                layoutVersion = GoryeoLayout.Current,
                 mapHeight = MapRoot.Current.ground.cellBounds.size.y,
                 px = pc != null ? pc.transform.position.x : 0, py = pc != null ? pc.transform.position.y : 0,
                 fx = pc != null ? pc.Motor.Facing.x : 0, fy = pc != null ? pc.Motor.Facing.y : -1,
@@ -549,6 +549,7 @@ namespace PocketCaravan
                 foreach (var c in b.list) Contracts.nextId = Mathf.Max(Contracts.nextId, c.id + 1);
             Contracts.InitBoards();
             if (d.traders.Count > 0) Traders.traders = new List<NpcTraders.Trader>(d.traders);
+            GoryeoLayout.MigrateDrops(d);   // 옛 배치 저장의 떨어진 짐 → 새 맵 도착 자리 옆
             Drops.Clear(); if (d.drops != null) Drops.AddRange(d.drops);
             LegacyCargoMigration.Restore(Player, Drops, ItemById);
             cooldowns.Clear();

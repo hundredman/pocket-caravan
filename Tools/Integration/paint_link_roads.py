@@ -11,7 +11,7 @@ TILES = os.path.join(ROOT, "Assets/PocketCaravan/Art/NinjaAdventure/Tiles")
 PAINTS = [
     ("Assets/PocketCaravan/Maps/VeniceMainland/venice_c_pass.json", [(26, 27, 59, 28)], 1),   # ⑨ 큰길 모퉁이 → 동쪽 끝 (서남 솔숲길)
     ("Assets/PocketCaravan/Maps/VeniceMainland/venice_c_gate.json", [(31, 0, 32, 29)], 1, "vq_L_g_orc_dirt"),   # ⑩ 동문 돌길에서 갈라지는 흙 샛길 → 북쪽 끝 (서남 솔숲길)
-    ("Assets/PocketCaravan/Maps/transit_crossroads.json", [(33, 0, 34, 15)], 1),             # ⑪ 교역 길목 서쪽 길 → 북쪽 끝 (동남 물가길)
+    # ⑪ 교역 길목 쪽 흙길은 고려 생성기(Tools/WorldLayout/m4_links.py)가 그린다 (10/28)
 ]
 
 

@@ -48,6 +48,7 @@ class AlphaPolicy(unittest.TestCase):
         self.asset['kind']='modular';self.asset['moduleType']='surface_pattern';self.asset['requiredPieces']=['variant'];self.asset['pieces']={'variant':{k:self.asset[k]for k in ('size','image','tiles')}}
         self.assertIn('modular_minimum',self.codes())
 
+@unittest.skip('C6 고정 내보내기(옛 MapGen 생성기, 11맵·45,000칸) 검사. M4에서 옛 생성기는 본편에서 은퇴했고 새 맵 그림은 m4_certify가 확인')
 class FrozenProduction(unittest.TestCase):
     @classmethod
     def setUpClass(cls):cls.report=verify()

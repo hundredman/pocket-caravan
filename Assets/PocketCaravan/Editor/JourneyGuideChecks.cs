@@ -17,12 +17,12 @@ namespace PocketCaravan.EditorTools
             var report = new Report();
             var db = Resources.Load<GameDatabase>("GameDatabase");
             var region = db.towns.Find(t => t.id == "gaegyeong").region;
-            var towns = JourneyGuide.Destinations(db, region, WorldIndex.Get(), "Route01");
+            var towns = JourneyGuide.Destinations(db, region, WorldIndex.Get(), "transit_pass");   // M4: 옛 Route01 대신 고려와 이어진 남동 길
             Check(report, "five connected regional destinations", towns.Count == 5);
             Check(report, "no foreign regional destination", towns.TrueForAll(t => t.region.id == region.id));
             Check(report, "all five authored with return trade hints", towns.TrueForAll(t => !string.IsNullOrWhiteSpace(t.journeyNote)));
             Check(report, "unknown map offers no false destination", JourneyGuide.Destinations(db, region, WorldIndex.Get(), "missing").Count == 0);
-            Check(report, "missing region offers no destination", JourneyGuide.Destinations(db, null, WorldIndex.Get(), "Route01").Count == 0);
+            Check(report, "missing region offers no destination", JourneyGuide.Destinations(db, null, WorldIndex.Get(), "transit_pass").Count == 0);
             var p = new PlayerState();
             Check(report, "credit zero previews info at one", JourneyGuide.NextUnlock(towns, p).Contains("다음 신용 1"));
             p.credit = 1;

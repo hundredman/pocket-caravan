@@ -21,21 +21,30 @@ namespace PocketCaravan.EditorTools
             void Check(bool ok, string name) { if (!ok) throw new Exception(name); report.checks++; }
             var db = Resources.Load<GameDatabase>("GameDatabase"); var world = WorldIndex.Get();
             var config = JsonUtility.FromJson<TownDistance.Settings>(Resources.Load<TextAsset>("TownRoutes").text);
-            Check(config.mode == "current", "production mode");
-            foreach (var a in db.towns) foreach (var b in db.towns)
+            Check(config.mode == "layoutD", "production mode");   // M4(2026-10-28): 새 맵 실제 보행 거리
+            var cache = typeof(TownDistance).GetField("cached", BindingFlags.Static | BindingFlags.NonPublic);
+            try
             {
-                var delta = a.worldCoord - b.worldCoord;
-                Check(ContractManager.Distance(a, b) == Mathf.Abs(delta.x) + Mathf.Abs(delta.y), "current distance");
+                // 옛 방식(current)도 그대로 계산되는지: 마을 좌표 맨해튼 거리
+                var current = JsonUtility.FromJson<TownDistance.Settings>(Resources.Load<TextAsset>("TownRoutes").text);
+                current.mode = "current"; cache.SetValue(null, current);
+                foreach (var a in db.towns) foreach (var b in db.towns)
+                {
+                    var delta = a.worldCoord - b.worldCoord;
+                    Check(ContractManager.Distance(a, b) == Mathf.Abs(delta.x) + Mathf.Abs(delta.y), "current distance");
+                }
+                // R2 가격 기준표는 current 거리로 만든 것이라 current에서 확인(가격의 거리 항이 layoutD에선 달라짐)
+                var source = JsonUtility.FromJson<Snapshot>(File.ReadAllText("Docs/Validation/R2-2026-10-25/source-snapshot.json"));
+                foreach (var row in source.oracle)
+                {
+                    var town = db.towns.Find(t => t.id == row.town); var item = db.items.Find(i => i.id == row.item);
+                    float opt = town.OptimalFor(item) * (1f + .5f * (row.level - 1));
+                    Check(MarketMath.Price(town.BasePriceFor(item), opt, opt * row.ratio, row.demand) == row.buy, "buy oracle");
+                    Check(MarketMath.Buyback(MarketMath.Price(town.BasePriceFor(item), opt, opt * row.ratio + 1, row.demand)) == row.sell, "sell oracle");
+                    report.prices++;
+                }
             }
-            var source = JsonUtility.FromJson<Snapshot>(File.ReadAllText("Docs/Validation/R2-2026-10-25/source-snapshot.json"));
-            foreach (var row in source.oracle)
-            {
-                var town = db.towns.Find(t => t.id == row.town); var item = db.items.Find(i => i.id == row.item);
-                float opt = town.OptimalFor(item) * (1f + .5f * (row.level - 1));
-                Check(MarketMath.Price(town.BasePriceFor(item), opt, opt * row.ratio, row.demand) == row.buy, "buy oracle");
-                Check(MarketMath.Buyback(MarketMath.Price(town.BasePriceFor(item), opt, opt * row.ratio + 1, row.demand)) == row.sell, "sell oracle");
-                report.prices++;
-            }
+            finally { cache.SetValue(null, null); }
             var active = new Contract { id = 9000, fromTown = "naru", toTown = "gaegyeong", reward = 777,
                 hours = 33, acceptedAt = 5, deadline = 38, finalDeadline = 54.5f, condition = .8f };
             var saved = new SaveData(); saved.contracts.Add(active);
@@ -46,7 +55,6 @@ namespace PocketCaravan.EditorTools
             var cm = new ContractManager(db, new GameClock(), player, world, 43);
             cm.boards.Add(new ContractManager.Board { town = "naru", list = new List<Contract> { restored.contracts[0] } });
             cm.InitBoards(); Check(json == JsonUtility.ToJson(restored), "accepted contract current untouched");
-            var cache = typeof(TownDistance).GetField("cached", BindingFlags.Static | BindingFlags.NonPublic);
             try
             {
                 config.mode = "layoutD"; cache.SetValue(null, config);

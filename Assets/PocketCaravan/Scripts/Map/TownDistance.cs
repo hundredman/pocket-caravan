@@ -76,7 +76,9 @@ namespace PocketCaravan
         {
             var config = settings ?? Configuration;
             if (settings != null) Validate(config);
-            if (config.mode == "layoutD")
+            // layoutD 표는 고려·중앙 동쪽 마을만 있다. 다른 지역 마을(통합 브랜치의 베네치아·아라비아·북유럽)이나
+            // 그 마을과의 쌍은 예전 방식 그대로 계산한다(M4 2026-10-28: 표에 없는 마을에서 예외가 나지 않게).
+            if (config.mode == "layoutD" && Covers(config, from) && Covers(config, to))
             {
                 float seconds = WalkingSeconds(config, from, to);
                 // Self-distance remains zero, like both legacy metrics; distinct towns clamp to one.
@@ -86,6 +88,9 @@ namespace PocketCaravan
             var d = fromCoord - toCoord;
             return Mathf.Abs(d.x) + Mathf.Abs(d.y);
         }
+
+        static bool Covers(Settings config, string town) =>
+            config.towns != null && Array.Exists(config.towns, n => n.id == town);
 
         public static float WalkingSeconds(Settings config, string from, string to)
         {

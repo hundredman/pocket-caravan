@@ -11,14 +11,12 @@
         "transit_crossroads",
         "transit_central_approach",
         "transit_wetroad",
-        "transit_pass",
+        "transit_woodtown",
         "goryeo_songak"
       ],
       "localEdge": "E",
-      "localSpawn": "to_transit_central_approach",
       "target": "transit_central_approach",
-      "targetSpawn": "to_transit_crossroads",
-      "width": 3
+      "note": "M4(2026-10-28): 새 맵은 걸을 수 있는 경계 전체가 출입구라 출구 폭·스폰 이름은 고정하지 않는다"
     },
     {
       "direction": "N",

@@ -1,0 +1,10 @@
+test_counterexample_can_restore_stock_exactly_with_future_haggle (test_r2_safety.R2SafetyChecks) ... ok
+test_grid_covers_approved_stages_and_original_stress_dimensions (test_r2_safety.R2SafetyChecks) ... ok
+test_historical_input_assets_and_frozen_market_model_are_preserved (test_r2_safety.R2SafetyChecks) ... ok
+test_no_haggle_real_asset_counterexample_matches_unity (test_r2_safety.R2SafetyChecks) ... ok
+test_simultaneous_spread_holds_even_when_actual_cycles_profit (test_r2_safety.R2SafetyChecks) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.005s
+
+OK

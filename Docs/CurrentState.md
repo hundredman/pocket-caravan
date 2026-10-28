@@ -1,27 +1,34 @@
 # 현재 상태
 
-기준: 2026-10-24, 로컬 `main`. 코드와 파일을 직접 확인해 적었다. 계획이 아니라 **지금 있는 것**만 적는다.
+기준: 2026-10-28(맵), 2026-10-24(그 밖), `region/goryeo`. 코드와 파일을 직접 확인해 적었다. 계획이 아니라 **지금 있는 것**만 적는다.
 구현이 바뀌면 이 문서를 고친다. 오래된 상세 기록은 `Archive/DevelopmentStatus.md`에 있다.
 
 ## 1. 환경
 
 - Unity 6000.3.26f1 (6.3 LTS), URP 2D, Input System.
 - 코드: `Assets/PocketCaravan/Scripts/` C# 83개, 약 7,000줄. 에디터 도구: `Assets/PocketCaravan/Editor/`, 약 3,300줄.
-- 맵 제작 흐름: `Tools/MapGen`(Python) → `Assets/PocketCaravan/Maps/*.json` → `Editor/MapJsonBuilder` → `Scenes/`. 씬만 고치면 다음 생성 때 사라진다.
+- 맵 제작 흐름(M4, 2026-10-28): `Tools/WorldLayout`(terrain_v3 지형 → m2_zones 마을 구역 → m1_tiles_preview --zones 그림 → m4_export --production) → `Assets/PocketCaravan/Maps/*.json`·칸 그림·`Art/Baked/m4-composites.json` → `Editor/MapJsonBuilder.BuildSelected` → `Scenes/`. 지역 등록은 `m4_register.py`, 거리는 `Tools/Routing/m4_routes.py`. 옛 `Tools/MapGen` 생성기는 본편에서 은퇴했다(옛 맵 재현용으로만 남음). 씬만 고치면 다음 생성 때 사라진다.
 - 시작 씬: `Scenes/Goryeo/Naru.unity` (`World/settings.json`의 `startMapId`).
 
-## 2. 맵 (새 방향과 다름 — [세계 배치](WorldLayout.md) 5절)
+## 2. 맵 (M4 새 배치, 2026-10-28)
 
-등록된 본편 맵은 11개, 45,000칸이다.
+등록된 본편 맵은 13개다(고려 5, 중앙 동쪽 8). 맵 하나 = 그 구역을 감싸는 직사각형이고, 구역 밖 칸은 이웃 맵 그림이 보이되 막혀 있다.
 
-| 지역 | 맵 | 크기 |
-|---|---|---|
-| 고려 | 송악 60×60, 개경 70×60, 나루 80×60, 장단 80×55, 닥목 50×60 | 20,000칸 |
-| 중앙 동쪽 | transit_pass, woodtown, wetroad, ferry, central_approach, crossroads | 25,000칸 |
+| 지역 | 맵 |
+|---|---|
+| 고려 | 송악 74×84, 개경 72×76, 나루 88×84, 장단 61×98, 닥목 93×80 |
+| 중앙 동쪽 | transit_woodtown(동문 마을), transit_ferry(북동 포구), transit_southport(남동 포구, 새), transit_crossroads(중앙 길목 마을), transit_wetroad(북동 길), transit_pass(남동 길), transit_central_approach(북쪽 내륙길, 북쪽 쉼터 마을 포함), transit_south_inland(남쪽 내륙길, 남쪽 호숫가 마을 포함, 새) |
 
-- 지형 원본: `Tools/MapGen/broad_regions.py`. 마을 배치는 `maps.py`, `gaegyeong.py`, `goryeo_villages.py`.
-- 옛 고려 씬 8개(Route01, goryeo_descent 등)는 폴더에 남아 있지만 등록에서 빠졌다. 옛 저장 위치는 `Resources/GoryeoLayout.json`으로 새 맵에 옮긴다.
-- 마지막 실제 이동 검사: 920개 항목 통과 (`Validation/BroadGoryeo-Motor-2026-10-24.json`).
+- 원본: `Tools/WorldLayout/` (위 1절 흐름). 검토 그림 `ArtReview/M1-Tiles`·`M2-Zones`·`M3-Village`·`M4-Maps`.
+- 이웃 맵과는 걸을 수 있는 경계 전체가 출구로 이어진다(출구 1,176개, 걸어서 닿는 경계에 보이지 않는 벽 없음). 출구는 서서 경계 쪽을 보면 바로 쓰이므로 도착 자리는 출구와 겹치지 않는다.
+- 시장·게시판은 기존 7곳(나루·장단·송악·닥목·개경·동문·북동 포구). 남동 포구·중앙 길목 마을·쉼터 마을 2곳의 시장·NPC는 아직 없다(E2·M5). 방향과 상관없는 옛 이정표 5개와 남동 길 도적 경고만 옮겼다(방향 안내는 M5).
+- 겹친 칸 그림 1,294개는 `Tools/WorldLayout/m4_certify.py`로 승인 원본에서 다시 그려 같은지 확인한다(A2 확장).
+- 옛 저장(`layoutVersion` 1 이하): 같은 맵(옛 ID는 별칭으로)의 도착 자리에서 다시 시작하고, 떨어진 짐은 그 옆으로 옮긴다(`Resources/GoryeoLayout.json`, `GoryeoLayout.cs`). 새 저장은 `layoutVersion` 2.
+- 마을 사이 거리(`Resources/TownRoutes.json`)는 `layoutD`: 새 맵 실제 보행 초 × 0.1304. 표에 없는 마을(다른 지역)과의 거리는 예전 방식(`TownDistance.cs`).
+- 다른 문명 연결 자리: 중앙 길목 마을 서쪽 끝을 곧게 깎은 출구 줄 3곳(⑪ 북유럽 4칸, ⑧ 아라비아 초원 3칸, ④ 아라비아 고원 2칸)과 흙길(`Tools/WorldLayout/m4_links.py`). 맵 안 좌표는 `ArtReview/M4-Maps/report.json`의 `links`. 출구 객체는 통합 브랜치에서 `connect_regions.py`가 넣는다(통합 브랜치 `region_links.json` 고려 쪽 값 갱신 필요, 카톡 알림 뒤).
+- 옛 맵 물결 움직임은 새 맵 넓은 물 위에 다시 놓았다(317개, 중앙 길목 마을은 넓은 물이 없어 0).
+- 옛 11맵 검사는 새 맵 기준으로 다시 썼다. 옛 고정본(A3a·C3a·C6·옛 연못·옛 맵 객체)만 보는 검사와 옛 내륙 초원 단계·옛 갈림길 검사는 이유를 적어 건너뛴다.
+- 마지막 실제 이동 검사(Unity Play, 2026-10-28): 이웃 맵 18쌍 모두 양방향 출구 이동(49번 이동, 실패 0), 옛 저장 불러오기·새 저장 왕복. 출구 보강 뒤 13맵 출구 130곳을 밟아 이동(실패 0, `Docs/Validation/M4-Unity-exits-2026-10-28.txt`). 사람이 직접 걸어 본 플레이는 아직 없다.
 
 ## 3. 아트 (새 방향과 다름 — [아트 기준](ArtGuide.md) 5절)
 
@@ -486,3 +493,11 @@ Unity 안 검사(에디터 메뉴 / MCP): `SceneTerrainChecks`, `CentralConnecti
 
 
 - 사용자 “좋다. 다음 작업 얼마나 더 남았어?”로 낮은 자연물4그림 승인·Approved/C7-LowNature-v1 원본/PNG/RGBA·범위 보존. 현재 C6 온전한 PNG47개 표에서 추가 역할/변형 검토 대상은12원본(9종류: 배·볏단 단품·빨래대·큰 소나무·둥근 나무·작은 가게·별도 바위·벤치·연꽃). 단일칸 소품/조립 지형·미확인 원본/실제 연결 검토는 이 수량 밖이며 C7 전체 잔여 확정량은 아니다. 승인 그림 본편 연결·통행/가림 확인과 B3~B6는 별도다.
+
+
+### C7 잔여 원본 일괄 제작 재개·팀 공용 파일 동결 (2026-10-27)
+
+- 최신 main6e7f48de(0ec1e0e9/62de2920 테스트 수정 포함)에서 codex/c7-remaining 브랜치로 재개했다. 기존 C7 worktree를 이어 사용한다. 사용자 지시로 팀 공용 Scripts/Core·Economy·Quests·UI, Resources/GameDatabase·WorldIndex, EditorBuildSettings, Transit 장면, World/Connections와 각meta는 수정 금지·필요하면 멈추고 보고하도록 AGENTS에 기록했다.
+- 확인된 잔여9종12원본을 한 묶음으로 검토한다. transit 전용 원본도 아트 후보만 별도 제작하며 공용 장면·실행부·데이터에 연결하지 않는다. 독립 Unity Editor 검토 카메라는 Play 진입/게임 부트/본편 씬 열기/씬 저장 없이480×270·PPU16으로 촬영하도록 분리했다. 물색 면은 배·연꽃 가독성용 검토 배경으로 본편 지형이 아니다. 실제 Play·이동 검사를 대신하지 않는다.
+
+- ArtReview/C7-RemainingBatch-20261027에 12개 후보/각 Aseprite·PNG/87렌더칸·기존/후보 비교·팀 기준표·Unity Editor 카메라3페이지 제출. 볏단은 단품 몸통을 넓게 다시 그리고 작은 가게는 벽·출입구 비례를 보강했다. 모두 승인 대기/A2 본편 차단·기존 수레/지형 유지. 관련25검사 통과(main C6 12+R2 5+신규8), 보호100파일 자체 변경/추가0·기존 승인 PNG353개 보존. Play·실제 이동/저장/충돌·전체 통합·빌드 미실행. 단일칸/조립 지형·미확인 벚나무·성문 연결/본편 적용은 별도이며 C7 전체 완료 아님. [검증](Validation/C7-RemainingBatch-2026-10-27/README.md).

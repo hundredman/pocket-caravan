@@ -2,48 +2,146 @@
   "maps": [
     {
       "id": "Naru",
-      "offsetX": 12,
-      "offsetY": 10,
-      "height": 60,
-      "legacyHeight": 28,
-      "spawnX": 20.5,
-      "spawnY": 41.82
+      "offsetX": 0,
+      "offsetY": 0,
+      "height": 84,
+      "legacyHeight": 84,
+      "spawnX": 37.5,
+      "spawnY": 51.82,
+      "dropX": 38.5,
+      "dropY": 51.82
     },
     {
       "id": "Gaegyeong",
-      "offsetX": 16,
-      "offsetY": 10,
-      "height": 60,
-      "legacyHeight": 46,
-      "spawnX": 36.5,
-      "spawnY": 29.82
+      "offsetX": 0,
+      "offsetY": 0,
+      "height": 76,
+      "legacyHeight": 76,
+      "spawnX": 35.5,
+      "spawnY": 29.82,
+      "dropX": 36.5,
+      "dropY": 29.82
     },
     {
       "id": "Dakmok",
-      "offsetX": 5,
-      "offsetY": 17,
-      "height": 60,
-      "legacyHeight": 22,
-      "spawnX": 17.5,
-      "spawnY": 22.82
+      "offsetX": 0,
+      "offsetY": 0,
+      "height": 80,
+      "legacyHeight": 80,
+      "spawnX": 34.5,
+      "spawnY": 36.82,
+      "dropX": 35.5,
+      "dropY": 36.82
     },
     {
       "id": "goryeo_songak",
-      "offsetX": 12,
-      "offsetY": 12,
-      "height": 60,
-      "legacyHeight": 28,
-      "spawnX": 34.5,
-      "spawnY": 29.82
+      "offsetX": 0,
+      "offsetY": 0,
+      "height": 84,
+      "legacyHeight": 84,
+      "spawnX": 43.5,
+      "spawnY": 28.82,
+      "dropX": 44.5,
+      "dropY": 28.82
     },
     {
       "id": "goryeo_jangdan",
-      "offsetX": 25,
-      "offsetY": 15,
+      "offsetX": 0,
+      "offsetY": 0,
+      "height": 98,
+      "legacyHeight": 98,
+      "spawnX": 28.5,
+      "spawnY": 61.82,
+      "dropX": 29.5,
+      "dropY": 61.82
+    },
+    {
+      "id": "transit_pass",
+      "offsetX": 0,
+      "offsetY": 0,
+      "height": 68,
+      "legacyHeight": 68,
+      "spawnX": 29.5,
+      "spawnY": 36.82,
+      "dropX": 30.5,
+      "dropY": 36.82
+    },
+    {
+      "id": "transit_woodtown",
+      "offsetX": 0,
+      "offsetY": 0,
+      "height": 69,
+      "legacyHeight": 69,
+      "spawnX": 39.5,
+      "spawnY": 38.82,
+      "dropX": 40.5,
+      "dropY": 38.82
+    },
+    {
+      "id": "transit_wetroad",
+      "offsetX": 0,
+      "offsetY": 0,
+      "height": 64,
+      "legacyHeight": 64,
+      "spawnX": 42.5,
+      "spawnY": 31.82,
+      "dropX": 43.5,
+      "dropY": 31.82
+    },
+    {
+      "id": "transit_ferry",
+      "offsetX": 0,
+      "offsetY": 0,
       "height": 55,
-      "legacyHeight": 28,
-      "spawnX": 40.5,
-      "spawnY": 27.82
+      "legacyHeight": 55,
+      "spawnX": 34.5,
+      "spawnY": 28.82,
+      "dropX": 35.5,
+      "dropY": 28.82
+    },
+    {
+      "id": "transit_central_approach",
+      "offsetX": 0,
+      "offsetY": 0,
+      "height": 87,
+      "legacyHeight": 87,
+      "spawnX": 47.5,
+      "spawnY": 40.82,
+      "dropX": 48.5,
+      "dropY": 40.82
+    },
+    {
+      "id": "transit_crossroads",
+      "offsetX": 0,
+      "offsetY": 0,
+      "height": 80,
+      "legacyHeight": 80,
+      "spawnX": 41.5,
+      "spawnY": 42.82,
+      "dropX": 42.5,
+      "dropY": 42.82
+    },
+    {
+      "id": "transit_southport",
+      "offsetX": 0,
+      "offsetY": 0,
+      "height": 68,
+      "legacyHeight": 68,
+      "spawnX": 38.5,
+      "spawnY": 34.82,
+      "dropX": 39.5,
+      "dropY": 34.82
+    },
+    {
+      "id": "transit_south_inland",
+      "offsetX": 0,
+      "offsetY": 0,
+      "height": 73,
+      "legacyHeight": 73,
+      "spawnX": 31.5,
+      "spawnY": 33.82,
+      "dropX": 32.5,
+      "dropY": 33.82
     }
   ],
   "aliases": [

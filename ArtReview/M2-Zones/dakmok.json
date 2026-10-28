@@ -1,0 +1,220 @@
+{
+ "village": "goryeo/닥목",
+ "map": "Dakmok",
+ "items": [
+  {
+   "name": "장터 광장",
+   "kind": "plaza",
+   "asset": null,
+   "w": 10,
+   "h": 6,
+   "id": "market:dakmok",
+   "memo": "",
+   "x": 221,
+   "y": -52
+  },
+  {
+   "name": "촌장 집",
+   "kind": "lot",
+   "asset": "cottage",
+   "w": 5,
+   "h": 4,
+   "id": "npc:dakmok_chief",
+   "memo": "",
+   "door": [
+    222,
+    -41
+   ],
+   "laneLen": 1,
+   "x": 220,
+   "y": -45
+  },
+  {
+   "name": "한지 작업장",
+   "kind": "lot",
+   "asset": "paper_large",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    232,
+    -41
+   ],
+   "laneLen": 5,
+   "x": 230,
+   "y": -44
+  },
+  {
+   "name": "이벤트 마당",
+   "kind": "yard",
+   "asset": null,
+   "w": 8,
+   "h": 5,
+   "id": "",
+   "memo": "",
+   "x": 231,
+   "y": -40
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "asset": "thatch",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    217,
+    -41
+   ],
+   "laneLen": 6,
+   "x": 215,
+   "y": -44
+  },
+  {
+   "name": "집 2",
+   "kind": "lot",
+   "asset": "thatch",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    227,
+    -30
+   ],
+   "laneLen": 5,
+   "x": 225,
+   "y": -33
+  },
+  {
+   "name": "집 3",
+   "kind": "lot",
+   "missing": true,
+   "memo": ""
+  },
+  {
+   "name": "한지 건조대 1",
+   "kind": "spot",
+   "asset": "paper_rack",
+   "w": 3,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 240,
+   "y": -39
+  },
+  {
+   "name": "한지 건조대 2",
+   "kind": "spot",
+   "asset": "paper_rack",
+   "w": 3,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 234,
+   "y": -34
+  },
+  {
+   "name": "게시판",
+   "kind": "spot",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "board:dakmok",
+   "memo": "",
+   "x": 226,
+   "y": -45
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "asset": "well",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 220,
+   "y": -39
+  },
+  {
+   "name": "석등 1",
+   "kind": "lantern",
+   "asset": "stone_lantern",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 229,
+   "y": -42
+  },
+  {
+   "name": "닥목 촌장",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "dakmok_chief",
+   "memo": "",
+   "x": 225,
+   "y": -43
+  },
+  {
+   "name": "종이 일꾼",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "worker",
+   "x": 234,
+   "y": -42
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 234,
+   "y": -51
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 241,
+   "y": -47
+  },
+  {
+   "name": "성장 자리 3",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 230,
+   "y": -59
+  },
+  {
+   "name": "성장 자리 4",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 237,
+   "y": -57
+  }
+ ],
+ "laneCells": 17
+}

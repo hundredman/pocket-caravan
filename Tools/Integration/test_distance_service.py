@@ -12,12 +12,20 @@ from check_distance_calibration import graph_from_roads, shortest_path
 
 class DistanceServiceSourceChecks(unittest.TestCase):
     def test_generated_routes_match_the_single_source_and_production_stays_current(self):
-        actual=(ROOT/'Assets/PocketCaravan/Resources/TownRoutes.json').read_text()
-        self.assertEqual(actual,serialized(build()))
-        data=json.loads(actual)
-        self.assertEqual(data['mode'],'current')
-        self.assertEqual(len(data['towns']),9)
-        self.assertEqual(len(data['roads']),12)
+        # M4(2026-10-28): 본편은 layoutD(Tools/Routing/m4_routes.py, 새 맵 실제 보행). 예전 current 원본(export_routes)은 그대로 만들어지고,
+        # 본편의 바깥 연결(externalLinks)은 그 원본과 같다.
+        legacy=build()
+        self.assertEqual(legacy['mode'],'current')
+        data=json.loads((ROOT/'Assets/PocketCaravan/Resources/TownRoutes.json').read_text())
+        self.assertEqual(data['mode'],'layoutD')
+        report=json.loads((ROOT/'Docs/Validation/M4-E1-2026-10-28.json').read_text())
+        self.assertEqual(round(data['ratio'],6),round(report['ratio'],6))
+        ids=[t['id'] for t in data['towns']]
+        self.assertEqual(len(ids),9);self.assertEqual(len(set(ids)),9)
+        pairs={tuple(sorted((p['from'],p['to']))) for p in data['walkingDistances']}
+        self.assertEqual(len(pairs),36);self.assertEqual(len(data['walkingDistances']),36)
+        self.assertTrue(all(p['seconds']>0 and p['from'] in ids and p['to'] in ids for p in data['walkingDistances']))
+        self.assertEqual(data['externalLinks'],legacy['externalLinks'])
         self.assertTrue(all(not x['active'] and x['runtimeBinding'] is None for x in data['externalLinks']))
         self.assertEqual(len(data['externalLinks']),3)
         self.assertEqual(BINDINGS['east/동문 마을'],'transit_woodtown')

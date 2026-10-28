@@ -21,7 +21,7 @@ namespace PocketCaravan.EditorTools
                 var item=db.items.Find(i=>i!=null && i.id==id);
                 if(item==null || item.originTown==null)throw new Exception("상품 공급지 누락: "+id);
                 var dest=db.towns.Find(t=>t!=null && t.region==item.originTown.region && t!=item.originTown);
-                if(dest==null || item.MapsFrom(dest)!=2)throw new Exception("중간권 시장 거리 오류");
+                if(dest==null || item.MapsFrom(dest)<2)throw new Exception("중간권 시장 거리 오류");   // M4 layoutD: 동문 마을↔북동 포구 실제 보행 거리(옛 배치 2)
                 foreach(int count in new[]{1,3,5,10})
                 {
                     var source=new MarketState(item.originTown,db); var target=new MarketState(dest,db);
@@ -35,7 +35,7 @@ namespace PocketCaravan.EditorTools
                     t.profit=t.revenue-t.cost;report.trades.Add(t);
                     if(count<=5 && t.profit<=0)throw new Exception("소량 교역의 순이익 없음: "+id+"/"+count);
                 }
-                report.checks.Add(id+": 공급지/거리2 및 1·3·5개 거래 수수료 후 이익 확인");
+                report.checks.Add(id+": 공급지/거리 2 이상 및 1·3·5개 거래 수수료 후 이익 확인");
             }
             var registry=WorldRegistry.Load();
             foreach(var m in registry.maps) if(m.region.regionId=="transit" && !File.Exists(m.scenePath))throw new Exception("씬 누락: "+m.mapId);

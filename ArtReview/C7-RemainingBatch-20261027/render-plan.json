@@ -1,0 +1,100 @@
+{
+  "assets": [
+    {
+      "name": "boat",
+      "page": 0,
+      "x": 2,
+      "y": 7,
+      "before": "Assets/PocketCaravan/Art/Baked/Objects/c6_boat_3258f818.png",
+      "after": "ArtReview/C7-RemainingBatch-20261027/Native/boat.png"
+    },
+    {
+      "name": "sheaf_naru",
+      "page": 0,
+      "x": 11,
+      "y": 8,
+      "before": "Assets/PocketCaravan/Art/Baked/Objects/c6_sheaf_c21644db.png",
+      "after": "ArtReview/C7-RemainingBatch-20261027/Native/sheaf_naru.png"
+    },
+    {
+      "name": "laundry",
+      "page": 0,
+      "x": 18,
+      "y": 8,
+      "before": "Assets/PocketCaravan/Art/Baked/Objects/c6_laundry_4c045117.png",
+      "after": "ArtReview/C7-RemainingBatch-20261027/Native/laundry.png"
+    },
+    {
+      "name": "sheaf_jangdan",
+      "page": 0,
+      "x": 26,
+      "y": 8,
+      "before": "Assets/PocketCaravan/Art/Baked/Objects/c6_sheaf_5994fbae.png",
+      "after": "ArtReview/C7-RemainingBatch-20261027/Native/sheaf_jangdan.png"
+    },
+    {
+      "name": "pine_west",
+      "page": 1,
+      "x": 1,
+      "y": 8,
+      "before": "Assets/PocketCaravan/Art/Baked/Objects/c6_pinebig_a6c49380.png",
+      "after": "ArtReview/C7-RemainingBatch-20261027/Native/pine_west.png"
+    },
+    {
+      "name": "round_west",
+      "page": 1,
+      "x": 8,
+      "y": 8,
+      "before": "Assets/PocketCaravan/Art/Baked/Objects/c6_roundbig_0c978872.png",
+      "after": "ArtReview/C7-RemainingBatch-20261027/Native/round_west.png"
+    },
+    {
+      "name": "small_store",
+      "page": 1,
+      "x": 16,
+      "y": 8,
+      "before": "Assets/PocketCaravan/Art/Baked/Objects/c6_store_499ea1ea.png",
+      "after": "ArtReview/C7-RemainingBatch-20261027/Native/small_store.png"
+    },
+    {
+      "name": "small_rock",
+      "page": 1,
+      "x": 25,
+      "y": 8,
+      "before": "Assets/PocketCaravan/Art/Baked/Objects/c6_module_rock_15917f3a.png",
+      "after": "ArtReview/C7-RemainingBatch-20261027/Native/small_rock.png"
+    },
+    {
+      "name": "pine_east",
+      "page": 2,
+      "x": 1,
+      "y": 8,
+      "before": "Assets/PocketCaravan/Art/Baked/Objects/c6_pinebig_0cd79e57.png",
+      "after": "ArtReview/C7-RemainingBatch-20261027/Native/pine_east.png"
+    },
+    {
+      "name": "round_east",
+      "page": 2,
+      "x": 8,
+      "y": 8,
+      "before": "Assets/PocketCaravan/Art/Baked/Objects/c6_roundbig_b8a4adcf.png",
+      "after": "ArtReview/C7-RemainingBatch-20261027/Native/round_east.png"
+    },
+    {
+      "name": "bench",
+      "page": 2,
+      "x": 17,
+      "y": 8,
+      "before": "Assets/PocketCaravan/Art/Baked/Objects/c6_bench_ac9f82d8.png",
+      "after": "ArtReview/C7-RemainingBatch-20261027/Native/bench.png"
+    },
+    {
+      "name": "lotus",
+      "page": 2,
+      "x": 25,
+      "y": 8,
+      "before": "Assets/PocketCaravan/Art/Baked/Objects/lotus_2_1.png",
+      "after": "ArtReview/C7-RemainingBatch-20261027/Native/lotus.png"
+    }
+  ]
+}
