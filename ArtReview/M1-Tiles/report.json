@@ -36,14 +36,14 @@
   "road": 2
  },
  "objects": {
-  "mountain": 245,
+  "mountain": 225,
   "forest": 459,
   "hill": 52,
   "marsh": 32,
-  "lotus": 17,
-  "paddy": 30,
-  "flowers": 86,
-  "tufts": 926,
+  "lotus": 16,
+  "paddy": 29,
+  "flowers": 103,
+  "tufts": 911,
   "loneTrees": 46
  },
  "reviewBakedPieces": {
