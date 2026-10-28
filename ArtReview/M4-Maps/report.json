@@ -15,18 +15,18 @@
   "villages": [
    "naru"
   ],
-  "exits": 55,
-  "spawns": 56,
+  "exits": 44,
+  "spawns": 45,
   "objects": {
    "ambience": 1,
    "board": 1,
-   "exit": 55,
+   "exit": 44,
    "growth": 8,
    "lantern": 1,
    "market": 1,
    "npc": 2,
    "pastime": 1,
-   "spawn": 56,
+   "spawn": 45,
    "talker": 2,
    "worker": 1
   },
@@ -49,15 +49,15 @@
   "villages": [
    "jangdan"
   ],
-  "exits": 111,
-  "spawns": 111,
+  "exits": 90,
+  "spawns": 90,
   "objects": {
    "board": 1,
-   "exit": 111,
+   "exit": 90,
    "lantern": 1,
    "market": 1,
    "npc": 1,
-   "spawn": 111
+   "spawn": 90
   },
   "moved": [],
   "missing": []
@@ -78,15 +78,15 @@
   "villages": [
    "songak"
   ],
-  "exits": 49,
-  "spawns": 49,
+  "exits": 45,
+  "spawns": 45,
   "objects": {
    "board": 1,
-   "exit": 49,
+   "exit": 45,
    "lantern": 2,
    "market": 1,
    "npc": 1,
-   "spawn": 49
+   "spawn": 45
   },
   "moved": [],
   "missing": []
@@ -107,16 +107,16 @@
   "villages": [
    "dakmok"
   ],
-  "exits": 16,
-  "spawns": 16,
+  "exits": 17,
+  "spawns": 17,
   "objects": {
    "ambience": 1,
    "board": 1,
-   "exit": 16,
+   "exit": 17,
    "lantern": 1,
    "market": 1,
    "npc": 1,
-   "spawn": 16,
+   "spawn": 17,
    "worker": 1
   },
   "moved": [],
@@ -138,15 +138,15 @@
   "villages": [
    "gaegyeong"
   ],
-  "exits": 50,
-  "spawns": 50,
+  "exits": 41,
+  "spawns": 41,
   "objects": {
    "board": 1,
-   "exit": 50,
+   "exit": 41,
    "lantern": 4,
    "market": 1,
    "npc": 1,
-   "spawn": 50,
+   "spawn": 41,
    "villager": 8,
    "walker": 2,
    "worker": 2
@@ -170,14 +170,14 @@
   "villages": [
    "woodtown"
   ],
-  "exits": 86,
-  "spawns": 86,
+  "exits": 83,
+  "spawns": 83,
   "objects": {
    "board": 1,
-   "exit": 86,
+   "exit": 83,
    "lantern": 2,
    "market": 1,
-   "spawn": 86,
+   "spawn": 83,
    "talker": 1
   },
   "moved": [],
@@ -199,15 +199,15 @@
   "villages": [
    "ferry"
   ],
-  "exits": 35,
-  "spawns": 35,
+  "exits": 23,
+  "spawns": 23,
   "objects": {
    "ambience": 1,
    "board": 1,
-   "exit": 35,
+   "exit": 23,
    "lantern": 2,
    "market": 1,
-   "spawn": 35,
+   "spawn": 23,
    "talker": 1
   },
   "moved": [],
@@ -229,12 +229,12 @@
   "villages": [
    "crossroads"
   ],
-  "exits": 125,
-  "spawns": 125,
+  "exits": 128,
+  "spawns": 128,
   "objects": {
-   "exit": 125,
+   "exit": 128,
    "lantern": 2,
-   "spawn": 125,
+   "spawn": 128,
    "talker": 1
   },
   "moved": [],
@@ -256,12 +256,12 @@
   "villages": [
    "southport"
   ],
-  "exits": 61,
-  "spawns": 61,
+  "exits": 56,
+  "spawns": 56,
   "objects": {
-   "exit": 61,
+   "exit": 56,
    "lantern": 2,
-   "spawn": 61
+   "spawn": 56
   },
   "moved": [],
   "missing": []
@@ -280,12 +280,12 @@
    -82
   ],
   "villages": [],
-  "exits": 82,
-  "spawns": 82,
+  "exits": 72,
+  "spawns": 72,
   "objects": {
    "ambience": 1,
-   "exit": 82,
-   "spawn": 82
+   "exit": 72,
+   "spawn": 72
   },
   "moved": [],
   "missing": []
@@ -304,12 +304,12 @@
    13
   ],
   "villages": [],
-  "exits": 78,
-  "spawns": 78,
+  "exits": 63,
+  "spawns": 63,
   "objects": {
    "bandit": 1,
-   "exit": 78,
-   "spawn": 78,
+   "exit": 63,
+   "spawn": 63,
    "talker": 1
   },
   "moved": [
@@ -334,12 +334,12 @@
   "villages": [
    "rest_north"
   ],
-  "exits": 92,
-  "spawns": 92,
+  "exits": 95,
+  "spawns": 95,
   "objects": {
-   "exit": 92,
+   "exit": 95,
    "lantern": 1,
-   "spawn": 92,
+   "spawn": 95,
    "talker": 1
   },
   "moved": [
@@ -363,12 +363,12 @@
   "villages": [
    "rest_lake"
   ],
-  "exits": 118,
-  "spawns": 118,
+  "exits": 117,
+  "spawns": 117,
   "objects": {
-   "exit": 118,
+   "exit": 117,
    "lantern": 1,
-   "spawn": 118
+   "spawn": 117
   },
   "moved": [],
   "missing": []

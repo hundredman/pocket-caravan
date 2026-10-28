@@ -20,20 +20,23 @@ def O(kind,x,y,**k):
 DIRS={'N':(-1,0),'S':(1,0),'W':(0,-1),'E':(0,1)};OPP={'N':'S','S':'N','W':'E','E':'W'}
 
 def seams(mapid,walk,mids,ox=0,oy=0):
-    """경계 출입구. 반환: {mapId:[객체...]}"""
+    """경계 출입구. 반환: {mapId:[객체...]}
+    출구는 서 있기만 해도(경계 쪽을 보면) 바로 쓰이므로, 도착 자리는 어느 출구 칸과도 겹치지 않게 경계에서 2~6칸 안쪽으로 잡는다.
+    (계단 모양 경계나 세 맵이 만나는 모서리에서 도착하자마자 다른 출구로 넘어가는 것을 막음. M4 ⑦ Unity 왕복에서 발견)"""
     H,W=mapid.shape;out={m:[] for m in mids if m};count={}
     def ok(y,x):return 0<=y<H and 0<=x<W
+    runs_all=[]
     for dname,(dy,dx) in DIRS.items():
         pairs={}
         for y in range(H):
             for x in range(W):
                 a=mapid[y,x]
                 if a<0 or not walk[y,x]:continue
-                ny,nx=y+dy,x+dx;py,px=y-dy,x-dx;fy,fx=ny+dy,nx+dx
-                if not(ok(ny,nx) and ok(py,px) and ok(fy,fx)):continue
+                ny,nx=y+dy,x+dx
+                if not ok(ny,nx):continue
                 b=mapid[ny,nx]
                 if b<0 or b==a or a>b:continue   # 경계 하나는 번호가 작은 쪽에서 한 번만
-                if not(walk[ny,nx] and walk[py,px] and mapid[py,px]==a and walk[fy,fx] and mapid[fy,fx]==b):continue
+                if not walk[ny,nx]:continue
                 pairs.setdefault((a,b),[]).append((y,x))
         for (a,b),cells in pairs.items():
             cells.sort(key=(lambda c:(c[0],c[1])) if dname in'NS' else (lambda c:(c[1],c[0])))
@@ -43,16 +46,30 @@ def seams(mapid,walk,mids,ox=0,oy=0):
                 if (dname in'NS' and c[0]==p[0] and c[1]==p[1]+1) or (dname in'WE' and c[1]==p[1] and c[0]==p[0]+1):cur.append(c)
                 else:runs.append(cur);cur=[c]
             runs.append(cur)
-            for run in runs:
-                A,B=mids[a],mids[b]
-                ka=count.get((A,B),0);count[(A,B)]=ka+1;kb=count.get((B,A),0);count[(B,A)]=kb+1
-                n=len(run);(y0,x0)=run[0];y0+=oy;x0+=ox;horiz=dname in'NS';w_,h_=(n,1) if horiz else (1,n)
-                # A 쪽 출구(경계 바로 안쪽) → B의 도착 자리(경계에서 한 칸 더 안)
-                out[A].append(dict(kind='exit',world=(x0,y0),w=w_,h=h_,target=B,spawn=f'seam_{A}_{ka}',edge=dname))
-                out[B].append(dict(kind='spawn',world=(x0+2*dx,y0+2*dy),w=w_,h=h_,id=f'seam_{A}_{ka}',edge=dname))
-                # B 쪽 출구 → A의 도착 자리
-                out[B].append(dict(kind='exit',world=(x0+dx,y0+dy),w=w_,h=h_,target=A,spawn=f'seam_{B}_{kb}',edge=OPP[dname]))
-                out[A].append(dict(kind='spawn',world=(x0-dx,y0-dy),w=w_,h=h_,id=f'seam_{B}_{kb}',edge=OPP[dname]))
+            for run in runs:runs_all.append((dname,a,b,run))
+    # 모든 출구 칸(맵별): A 쪽은 경계 안쪽 칸, B 쪽은 그 건너편 칸
+    exitcells=set()
+    for dname,a,b,run in runs_all:
+        dy,dx=DIRS[dname]
+        for y,x in run:exitcells.add((y,x));exitcells.add((y+dy,x+dx))
+    def arrival(cells,m,dy,dx,start):
+        """경계 칸 목록에서 (dy,dx) 방향으로 start칸부터 들어가며, 줄 전체가 걸을 수 있고 같은 맵이며 출구가 아닌 첫 깊이"""
+        for k in range(start,start+5):
+            pts=[(y+dy*k,x+dx*k) for y,x in cells]
+            if all(ok(*p_) and walk[p_] and mapid[p_]==m and p_ not in exitcells for p_ in pts):return pts
+        return None
+    for dname,a,b,run in runs_all:
+        dy,dx=DIRS[dname];A,B=mids[a],mids[b]
+        inB=arrival(run,b,dy,dx,2)            # B 안쪽(경계 건너편 칸에서 한 칸 더부터)
+        inA=arrival(run,a,-dy,-dx,1)          # A 안쪽
+        if inB is None or inA is None:continue
+        ka=count.get((A,B),0);count[(A,B)]=ka+1;kb=count.get((B,A),0);count[(B,A)]=kb+1
+        n=len(run);horiz=dname in'NS';w_,h_=(n,1) if horiz else (1,n)
+        (y0,x0)=run[0];W0=lambda p_:(p_[1]+ox,p_[0]+oy)
+        out[A].append(dict(kind='exit',world=(x0+ox,y0+oy),w=w_,h=h_,target=B,spawn=f'seam_{A}_{ka}',edge=dname))
+        out[B].append(dict(kind='spawn',world=W0(inB[0]),w=w_,h=h_,id=f'seam_{A}_{ka}',edge=dname))
+        out[B].append(dict(kind='exit',world=(x0+dx+ox,y0+dy+oy),w=w_,h=h_,target=A,spawn=f'seam_{B}_{kb}',edge=OPP[dname]))
+        out[A].append(dict(kind='spawn',world=W0(inA[0]),w=w_,h=h_,id=f'seam_{B}_{kb}',edge=OPP[dname]))
     return out
 
 def build(mid,key,box,walk_local,grade_local,water_local,inside,zones,old,seam_list):

@@ -44,6 +44,13 @@ class Registration(unittest.TestCase):
             with contextlib.redirect_stdout(out):code=m4_reach.main()
         finally:sys.argv=argv
         self.assertEqual(code,0,out.getvalue())
+    def test_arrival_spots_never_stand_on_an_exit(self):
+        # 출구는 서서 경계 쪽을 보기만 해도 쓰인다. 도착 자리가 출구 위면 도착하자마자 다른 맵으로 넘어간다.
+        for mid in MAPS:
+            d=load(mid);ex={(o['x']+i,o['y']+j) for o in d['objects'] if o['kind']=='exit' for i in range(o['w']) for j in range(o['h'])}
+            for o in d['objects']:
+                if o['kind']=='spawn':
+                    self.assertFalse(any((o['x']+i,o['y']+j) in ex for i in range(o['w']) for j in range(o['h'])),(mid,o['id']))
     def test_old_ids_kept(self):
         towns={o['town'] for mid in MAPS for o in load(mid)['objects'] if o['kind']=='market'}
         npcs={o['npc'] for mid in MAPS for o in load(mid)['objects'] if o['kind']=='npc'}
