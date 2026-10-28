@@ -15,19 +15,20 @@
   "villages": [
    "naru"
   ],
-  "exits": 44,
-  "spawns": 45,
+  "exits": 68,
+  "spawns": 69,
   "objects": {
    "ambience": 1,
+   "anim": 96,
    "board": 1,
-   "exit": 44,
+   "exit": 68,
    "growth": 8,
    "lantern": 1,
    "market": 1,
    "npc": 2,
    "pastime": 1,
    "sign": 1,
-   "spawn": 45,
+   "spawn": 69,
    "talker": 2,
    "worker": 1
   },
@@ -50,16 +51,17 @@
   "villages": [
    "jangdan"
   ],
-  "exits": 90,
-  "spawns": 90,
+  "exits": 151,
+  "spawns": 151,
   "objects": {
+   "anim": 20,
    "board": 1,
-   "exit": 90,
+   "exit": 151,
    "lantern": 1,
    "market": 1,
    "npc": 1,
    "sign": 1,
-   "spawn": 90
+   "spawn": 151
   },
   "moved": [],
   "missing": []
@@ -80,16 +82,17 @@
   "villages": [
    "songak"
   ],
-  "exits": 45,
-  "spawns": 45,
+  "exits": 66,
+  "spawns": 66,
   "objects": {
+   "anim": 59,
    "board": 1,
-   "exit": 45,
+   "exit": 66,
    "lantern": 2,
    "market": 1,
    "npc": 1,
    "sign": 1,
-   "spawn": 45
+   "spawn": 66
   },
   "moved": [],
   "missing": []
@@ -110,17 +113,18 @@
   "villages": [
    "dakmok"
   ],
-  "exits": 17,
-  "spawns": 17,
+  "exits": 22,
+  "spawns": 22,
   "objects": {
    "ambience": 1,
+   "anim": 60,
    "board": 1,
-   "exit": 17,
+   "exit": 22,
    "lantern": 1,
    "market": 1,
    "npc": 1,
    "sign": 1,
-   "spawn": 17,
+   "spawn": 22,
    "worker": 1
   },
   "moved": [],
@@ -142,15 +146,16 @@
   "villages": [
    "gaegyeong"
   ],
-  "exits": 41,
-  "spawns": 41,
+  "exits": 60,
+  "spawns": 60,
   "objects": {
+   "anim": 48,
    "board": 1,
-   "exit": 41,
+   "exit": 60,
    "lantern": 4,
    "market": 1,
    "npc": 1,
-   "spawn": 41,
+   "spawn": 60,
    "villager": 8,
    "walker": 2,
    "worker": 2
@@ -174,14 +179,14 @@
   "villages": [
    "woodtown"
   ],
-  "exits": 83,
-  "spawns": 83,
+  "exits": 99,
+  "spawns": 99,
   "objects": {
    "board": 1,
-   "exit": 83,
+   "exit": 99,
    "lantern": 2,
    "market": 1,
-   "spawn": 83,
+   "spawn": 99,
    "talker": 1
   },
   "moved": [],
@@ -203,15 +208,16 @@
   "villages": [
    "ferry"
   ],
-  "exits": 23,
-  "spawns": 23,
+  "exits": 47,
+  "spawns": 47,
   "objects": {
    "ambience": 1,
+   "anim": 20,
    "board": 1,
-   "exit": 23,
+   "exit": 47,
    "lantern": 2,
    "market": 1,
-   "spawn": 23,
+   "spawn": 47,
    "talker": 1
   },
   "moved": [],
@@ -233,16 +239,18 @@
   "villages": [
    "crossroads"
   ],
-  "exits": 128,
-  "spawns": 128,
+  "exits": 134,
+  "spawns": 134,
   "objects": {
-   "exit": 128,
+   "exit": 134,
    "lantern": 2,
-   "spawn": 128,
+   "spawn": 134,
    "talker": 1
   },
   "moved": [],
-  "missing": []
+  "missing": [
+   "anim 7"
+  ]
  },
  "transit_southport": {
   "key": "east/남동 포구",
@@ -260,12 +268,12 @@
   "villages": [
    "southport"
   ],
-  "exits": 56,
-  "spawns": 56,
+  "exits": 70,
+  "spawns": 70,
   "objects": {
-   "exit": 56,
+   "exit": 70,
    "lantern": 2,
-   "spawn": 56
+   "spawn": 70
   },
   "moved": [],
   "missing": []
@@ -284,12 +292,13 @@
    -82
   ],
   "villages": [],
-  "exits": 72,
-  "spawns": 72,
+  "exits": 106,
+  "spawns": 106,
   "objects": {
    "ambience": 1,
-   "exit": 72,
-   "spawn": 72
+   "anim": 11,
+   "exit": 106,
+   "spawn": 106
   },
   "moved": [],
   "missing": []
@@ -308,13 +317,13 @@
    13
   ],
   "villages": [],
-  "exits": 63,
-  "spawns": 63,
+  "exits": 108,
+  "spawns": 108,
   "objects": {
    "bandit": 1,
-   "exit": 63,
+   "exit": 108,
    "sign": 1,
-   "spawn": 63,
+   "spawn": 108,
    "talker": 1
   },
   "moved": [
@@ -339,12 +348,13 @@
   "villages": [
    "rest_north"
   ],
-  "exits": 95,
-  "spawns": 95,
+  "exits": 104,
+  "spawns": 104,
   "objects": {
-   "exit": 95,
+   "anim": 3,
+   "exit": 104,
    "lantern": 1,
-   "spawn": 95,
+   "spawn": 104,
    "talker": 1
   },
   "moved": [
@@ -368,12 +378,12 @@
   "villages": [
    "rest_lake"
   ],
-  "exits": 117,
-  "spawns": 117,
+  "exits": 141,
+  "spawns": 141,
   "objects": {
-   "exit": 117,
+   "exit": 141,
    "lantern": 1,
-   "spawn": 117
+   "spawn": 141
   },
   "moved": [],
   "missing": []

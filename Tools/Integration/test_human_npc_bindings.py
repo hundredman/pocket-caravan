@@ -1,5 +1,4 @@
 """C1: real production identities, complete approved frames and animal preservation."""
-import os,sys as _sys;_sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from m4_superseded import superseded
 import hashlib,json,sys,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
@@ -18,7 +17,7 @@ class HumanNpcBindings(unittest.TestCase):
             for sec in ['npcs','villagers']:
                 existing=[{k:v for k,v in n.items() if k!='sprite'} for n in now[sec] if n.get('id')!='naru_well_woman']
                 self.assertEqual(existing,old[sec])
-    @superseded
+    @unittest.skip('옛 11맵의 객체·지형이 그대로인지 보는 고정 검사. M4에서 옛 객체는 새 맵으로 옮김(test_m4_production test_old_ids_kept)')
     def test_old_map_objects_and_terrain_unchanged_except_approved_pond(self):
         for mid,old in read('Tools/Integration/Fixtures/c1_legacy_identity.json')['maps'].items():
             now=restore_before_c3(read(old['jsonPath']));terrain={k:v for k,v in now.items() if k!='objects'}

@@ -1,5 +1,4 @@
 """Audit evidence must be lossless, reproducible and never classify art automatically."""
-import os,sys as _sys;_sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from m4_superseded import superseded
 import json
 import sys
 import unittest
@@ -49,7 +48,7 @@ class AssetAuditChecks(unittest.TestCase):
                 raise RuntimeError('probe')
         self.assertEqual(before, (Image.Image.crop, Image.Image.resize, tiles.recolor, goryeo_art.tone))
 
-    @superseded
+    @unittest.skip('A3a 감사 보고서(2026-10-25)는 옛 11맵의 칸 위치 기록이다. M4 새 맵의 그림은 m4_certify(test_m4_production)가 승인 원본에서 다시 그려 확인')
     def test_report_positions_match_committed_maps_exactly(self):
         data = json.loads((ROOT / 'Docs/Validation/A3a-2026-10-25/inventory.json').read_text())['runtime']
         maps = {json.loads(p.read_text())['id']: json.loads(p.read_text())

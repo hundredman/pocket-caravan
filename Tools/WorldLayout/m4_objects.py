@@ -58,11 +58,29 @@ def seams(mapid,walk,mids,ox=0,oy=0):
             pts=[(y+dy*k,x+dx*k) for y,x in cells]
             if all(ok(*p_) and walk[p_] and mapid[p_]==m and p_ not in exitcells for p_ in pts):return pts
         return None
+    def nearest(cell,m):
+        """곧게 들어갈 자리가 없을 때(좁은 틈·계단 모서리): cell에서 걸어서 6칸 안의 같은 맵·출구 아닌 칸"""
+        from collections import deque
+        q=deque([(cell,0)]);seen={cell}
+        while q:
+            p_,d=q.popleft()
+            if d and p_ not in exitcells:return [p_]
+            if d>=6:continue
+            for oy,ox in((1,0),(-1,0),(0,1),(0,-1)):
+                n=(p_[0]+oy,p_[1]+ox)
+                if n not in seen and ok(*n) and walk[n] and mapid[n]==m:seen.add(n);q.append((n,d+1))
+        return None
+    pieces=[]
     for dname,a,b,run in runs_all:
+        dy,dx=DIRS[dname]
+        inB=arrival(run,b,dy,dx,2);inA=arrival(run,a,-dy,-dx,1)
+        if inB is not None and inA is not None:pieces.append((dname,a,b,run,inB,inA));continue
+        # 줄 전체로는 도착 자리가 없으면 칸마다 따로(예전에는 건너뛰어 걸을 수 있는 경계가 막혀 있었다. M4 검사 갱신에서 발견)
+        for c in run:
+            iB=arrival([c],b,dy,dx,2) or nearest((c[0]+dy,c[1]+dx),b);iA=arrival([c],a,-dy,-dx,1) or nearest(c,a)
+            if iB is not None and iA is not None:pieces.append((dname,a,b,[c],iB,iA))
+    for dname,a,b,run,inB,inA in pieces:
         dy,dx=DIRS[dname];A,B=mids[a],mids[b]
-        inB=arrival(run,b,dy,dx,2)            # B 안쪽(경계 건너편 칸에서 한 칸 더부터)
-        inA=arrival(run,a,-dy,-dx,1)          # A 안쪽
-        if inB is None or inA is None:continue
         ka=count.get((A,B),0);count[(A,B)]=ka+1;kb=count.get((B,A),0);count[(B,A)]=kb+1
         n=len(run);horiz=dname in'NS';w_,h_=(n,1) if horiz else (1,n)
         (y0,x0)=run[0];W0=lambda p_:(p_[1]+ox,p_[0]+oy)
@@ -176,6 +194,20 @@ def build(mid,key,box,walk_local,grade_local,water_local,inside,zones,old,seam_l
         else:ry,rx=h//2,w//2
         j=int(np.argmin((wy-ry)**2+(wx-rx)**2))
         objs.append(O('ambience',wx[j],wy[j],id=o['id'],radius=o['radius']));report['placed'].append('ambience')
+    # 물결 움직임(옛 맵의 anim): 같은 수를 이 맵의 넓은 물(뭍에서 2칸 이상) 위에 고르게(서로 4칸 이상). 그림·속도는 옛 것 그대로
+    rip=oldk.get('anim',[])
+    if rip:
+        chosen=[]
+        for margin,gap in((2,4),(1,3)):   # 넓은 물이 모자라면 물가에서 1칸까지
+            open_w=water_local&inside&~ndimage.binary_dilation(~water_local,iterations=margin)
+            cand=sorted(map(tuple,np.argwhere(open_w)),key=lambda c:((c[1]*73856093)^(c[0]*19349663))%1000003)
+            for c in cand:
+                if len(chosen)>=len(rip):break
+                if all(abs(c[0]-d[0])+abs(c[1]-d[1])>=gap for d in chosen):chosen.append(c)
+        for o,(yy,xx) in zip(rip,chosen):
+            objs.append(O('anim',xx,yy,sheet=o['sheet'],frames=o['frames'],fps=o['fps']))
+        report['placed'].append(f'anim:{len(chosen)}/{len(rip)}')
+        if len(chosen)<len(rip):report['missing'].append(f'anim {len(rip)-len(chosen)}')
     # 낚시(pastime)는 위에서. 도적: 길 가운데(위치는 E3·M5에서 다시)
     for o in oldk.get('bandit',[]):
         X,Y=road_mid();put('bandit',X,Y,'bandit',radius=o['radius'])

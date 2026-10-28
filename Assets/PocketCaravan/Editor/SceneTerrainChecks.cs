@@ -22,8 +22,10 @@ namespace PocketCaravan.EditorTools
                 string before=JsonUtility.ToJson(data);
                 var legacy=SaveSystem.PositionFor(data);
                 int previous=map.legacyHeight>0?map.legacyHeight:map.height;
-                if(Mathf.Abs(legacy.y-(8.5f+map.height-previous))>.001f || before!=JsonUtility.ToJson(data))throw new Exception(map.mapId+" legacy save position/payload mismatch");
-                data.mapHeight=map.height;
+                var moved=GoryeoLayout.Find(map.mapId);   // M4 새 맵: 옛 배치 저장은 그 맵 도착 자리에서 다시 시작
+                bool ok=moved!=null ? legacy==new Vector3(moved.spawnX,moved.spawnY,0) : Mathf.Abs(legacy.y-(8.5f+map.height-previous))<=.001f;
+                if(!ok || before!=JsonUtility.ToJson(data))throw new Exception(map.mapId+" legacy save position/payload mismatch");
+                data.mapHeight=map.height;data.layoutVersion=GoryeoLayout.Current;
                 if(SaveSystem.PositionFor(data).y!=8.5f)throw new Exception(map.mapId+" modern save position mismatch");
                 count++;
             }
@@ -45,7 +47,8 @@ namespace PocketCaravan.EditorTools
                     for(int y=0;y<f.h;y++)for(int x=0;x<f.w;x++)
                     {
                         int i=y*f.w+x;var cell=new Vector3Int(x,f.h-1-y,0);var tile=root.ground.GetTile(cell);
-                        if(tile==null || tile.name!=f.palette[f.ground[i]] || root.blocked.HasTile(cell)!=(f.blocked[i]!=0) || road.GradeAt(cell)!=f.road[i])throw new Exception(f.id+" scene/terrain mismatch at "+x+","+y);
+                        string want=f.palette[f.ground[i]];   // M4: 담당 밖 칸은 바닥 그림 없음('')
+                        if((want==""?tile!=null:(tile==null || tile.name!=want)) || root.blocked.HasTile(cell)!=(f.blocked[i]!=0) || road.GradeAt(cell)!=f.road[i])throw new Exception(f.id+" scene/terrain mismatch at "+x+","+y);
                         report.cells++;
                     }
                     foreach(var sp in UnityEngine.Object.FindObjectsByType<SpawnPoint>(FindObjectsSortMode.None))

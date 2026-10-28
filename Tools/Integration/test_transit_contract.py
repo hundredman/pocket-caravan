@@ -1,5 +1,4 @@
 """공용 등록부에 실수로 외국 수도를 직결하거나 별도 데이터 참조를 누락하는 회귀 방지."""
-import os,sys as _sys;_sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from m4_superseded import superseded
 import json
 import re
 import unittest
@@ -7,15 +6,16 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 
 class TransitContract(unittest.TestCase):
-    @superseded
     def test_intermediate_journey_and_independent_towns(self):
+        # M4(2026-10-28): 중앙 동쪽 8맵(남동 포구·남쪽 내륙길 추가). 출구는 중앙 동쪽·고려 맵으로만
         region=json.loads((ROOT/'Assets/PocketCaravan/World/Regions/transit.json').read_text())
+        goryeo={e['mapId'] for e in json.loads((ROOT/'Assets/PocketCaravan/World/Regions/goryeo.json').read_text())['maps']}
         maps={e['mapId']:json.loads((ROOT/e['jsonPath']).read_text()) for e in region['maps']}
-        self.assertEqual(len(maps),6)
+        self.assertEqual(len(maps),8)
         for mid,data in maps.items():
             self.assertTrue(mid.startswith('transit_'))
             for o in data['objects']:
-                if o['kind']=='exit':self.assertIn(o['target'],set(maps)|{'goryeo_songak','goryeo_westcoast'})
+                if o['kind']=='exit':self.assertIn(o['target'],set(maps)|goryeo)
         database=(ROOT/'Assets/PocketCaravan/Resources/GameDatabase.asset').read_text()
         towns={o['town'] for m in maps.values() for o in m['objects'] if o['kind']=='market'}
         self.assertEqual(towns,{'transit_woodtown','transit_ferry'})

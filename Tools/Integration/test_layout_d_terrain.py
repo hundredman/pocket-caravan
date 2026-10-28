@@ -1,5 +1,4 @@
 """B2 isolation, conserved ownership, hydrology and connected walkable geometry."""
-import os,sys as _sys;_sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)));from m4_superseded import superseded
 import copy
 import json
 from pathlib import Path
@@ -68,10 +67,9 @@ class LayoutDTerrainChecks(unittest.TestCase):
         errors=validate_assets(catalogue,[(sample['id'],sample)],ROOT,True)
         self.assertTrue(any(e['code']=='approval_required' for e in errors))
 
-    @superseded
     def test_actual_route_export_is_reproducible_and_production_mode_stays_current(self):
         self.assertEqual((OUT/'layoutD-routes.json').read_text(),serialized(build(actual_roads=self.t['roadRecords'],actual_distances=walking_routes(self.t,3.8))))
-        self.assertEqual(json.loads((ROOT/'Assets/PocketCaravan/Resources/TownRoutes.json').read_text())['mode'],'current')
+        self.assertEqual(json.loads((ROOT/'Assets/PocketCaravan/Resources/TownRoutes.json').read_text())['mode'],'layoutD')   # M4(2026-10-28) 본편 전환
         broken=copy.deepcopy(self.t['roadRecords']);broken[0]['cells'][1][0]+=10
         with self.assertRaises(ValueError):build(actual_roads=broken)
 

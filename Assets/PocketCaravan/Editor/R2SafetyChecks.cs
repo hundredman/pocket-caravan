@@ -23,6 +23,7 @@ namespace PocketCaravan.EditorTools
             void Set(string key,object value)=>typeof(GameManager).GetProperty(key).SetValue(gm,value);
             Set("Player",player);Set("Clock",new GameClock());Set("Db",db);
             var syntheticTown=ScriptableObject.CreateInstance<TownData>();var syntheticItem=ScriptableObject.CreateInstance<ItemData>();
+            var distance=TownDistanceFixture.Current();   // R2 기준값은 current 거리 기준(M4 뒤 본편은 layoutD)
             try
             {
                 (int buy,int sell) Quote(MarketState m,ItemData item,bool haggle)
@@ -56,7 +57,7 @@ namespace PocketCaravan.EditorTools
                 File.WriteAllText("Docs/Validation/R2-Safety-2026-10-25/unity.json",JsonUtility.ToJson(report,true));
                 Debug.Log("R2 safety counterexamples reproduced: "+report.checks+" checks");
             }
-            finally {GameEvents.ClearAll();typeof(GameManager).GetProperty("I").SetValue(null,null);UnityEngine.Object.DestroyImmediate(go);UnityEngine.Object.DestroyImmediate(db);UnityEngine.Object.DestroyImmediate(syntheticTown);UnityEngine.Object.DestroyImmediate(syntheticItem);}
+            finally {distance.Dispose();GameEvents.ClearAll();typeof(GameManager).GetProperty("I").SetValue(null,null);UnityEngine.Object.DestroyImmediate(go);UnityEngine.Object.DestroyImmediate(db);UnityEngine.Object.DestroyImmediate(syntheticTown);UnityEngine.Object.DestroyImmediate(syntheticItem);}
         }
     }
 }

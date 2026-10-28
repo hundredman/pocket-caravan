@@ -113,7 +113,7 @@ def main():
         inside_=mm[y0:y1,x0:x1]
         vz=[z for z in zones.values() if any(it.get('kind')=='plaza' and not it.get('missing') and inside_[v.idx(it['x'],it['y'])[0]-y0,v.idx(it['x'],it['y'])[1]-x0] for it in z['items'] if 'x' in it and y0<=v.idx(it['x'],it['y'])[0]<y1 and x0<=v.idx(it['x'],it['y'])[1]<x1)]
         objects,orep=m4_objects.build(mid,key,(int(x0+v.X0),int(y0+v.Y0)),walk,np.array(road).reshape(h,w),np.array(water,bool).reshape(h,w),inside_,
-                                      vz,[o for o in oldobj if o['mapId']==mid and o['kind'] not in('spawn','exit','anim','sign')],seam.get(mid,[]),
+                                      vz,[o for o in oldobj if o['mapId']==mid and o['kind'] not in('spawn','exit','sign')],seam.get(mid,[]),
                                       [o for o in oldobj if o['mapId']==mid and o['kind']=='sign'])
         old=ROOT/f'Assets/PocketCaravan/Maps/{mid}.json'
         oj=json.loads(old.read_text()) if old.exists() else {}

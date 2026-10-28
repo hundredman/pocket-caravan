@@ -57,6 +57,17 @@ class Registration(unittest.TestCase):
         self.assertEqual(towns,{'naru','goryeo_jangdan','goryeo_songak','dakmok','gaegyeong','transit_woodtown','transit_ferry'})
         self.assertEqual(npcs,{'naru_chief','naru_well_woman','gaekju','dakmok_chief','goryeo_songak_merchant','goryeo_jangdan_farmer'})
 
+class WaterLife(unittest.TestCase):
+    def test_old_ripples_are_kept_on_open_water(self):
+        # 옛 맵의 물결 움직임(324개)을 새 맵 물 위에 다시 놓는다. 중앙 길목 마을은 넓은 물이 없어 0(옛 7개)
+        n=0
+        for mid in MAPS:
+            d=load(mid)
+            for o in d['objects']:
+                if o['kind']=='anim':
+                    self.assertTrue(d['water'][o['y']*d['w']+o['x']],(mid,o['x'],o['y']));n+=1
+        self.assertGreaterEqual(n,317)
+
 class Distances(unittest.TestCase):
     def test_layoutD_has_all_pairs_and_keeps_averages(self):
         d=json.loads((ROOT/'Assets/PocketCaravan/Resources/TownRoutes.json').read_text())
