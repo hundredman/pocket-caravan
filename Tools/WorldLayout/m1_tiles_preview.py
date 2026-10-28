@@ -610,7 +610,11 @@ def zones_masks(own,water,road,H,W):
             iy,ix=v.idx(r['x'],r['y']);sl=(slice(iy,iy+r['h']),slice(ix,ix+r['w']))
             r=dict(r,village=key,iy=iy,ix=ix);items.append(r)
             k=r['kind']
-            if k=='lot':lot[sl]=True
+            if k=='lot':
+                lot[sl]=True
+                if r.get('asset') in('palace','gate'):
+                    # 계단·대문이 그림 가운데(두 칸 사이)에 있어, 문 앞 흙길을 가운데 두 칸에 맞춘다(은샘 2026-10-28, 개경 궁궐)
+                    cx=ix+r['w']//2;flat[iy+r['h']:iy+r['h']+2,cx-2:cx+1]=True
             elif k in('plaza','yard','harbor') or (k=='shore' and not r.get('asset') and r['name']!='낚시터'):flat[sl]=True
             elif k=='reserve':spot[sl]=True;resv[sl]=True   # 나중에 쓸 빈 땅: 풀밭 그대로, 나무만 두지 않음   # 선착장만 흙. 빨래터·낚시터는 풀밭 물가   # 낚시터는 풀밭 물가 그대로
             elif k in('spot','lantern','npc','start','growth'):spot[sl]=True

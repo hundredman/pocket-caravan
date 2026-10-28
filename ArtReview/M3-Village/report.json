@@ -1,6 +1,6 @@
 {
  "waterAdded": 148,
- "roadAdded": 2230,
+ "roadAdded": 2232,
  "bridgeCells": 195,
  "bridges": [
   {
@@ -50,7 +50,7 @@
   "floor:1:9": 380,
   "floor:2:8": 385,
   "floor:5:9": 142,
-  "floor:1:8": 2013,
+  "floor:1:8": 2015,
   "floor:0:9": 155,
   "floor:6:8": 152,
   "water:5:7": 133,
@@ -133,7 +133,7 @@
   "blocked": {},
   "collisionCells": 758,
   "lotCells": 991,
-  "plazaYardCells": 1235,
-  "laneCells": 569
+  "plazaYardCells": 1241,
+  "laneCells": 567
  }
 }
