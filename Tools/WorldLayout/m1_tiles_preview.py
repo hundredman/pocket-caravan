@@ -602,7 +602,7 @@ ZDIR=ROOT/'ArtReview/M2-Zones'
 def zones_masks(own,water,road,H,W):
     zs=json.loads((ZDIR/'zones.json').read_text())['villages']
     lot=np.zeros((H,W),bool);flat=np.zeros((H,W),bool);lane=np.zeros((H,W),bool);spot=np.zeros((H,W),bool)
-    coll=np.zeros((H,W),bool);objs=[];items=[]
+    coll=np.zeros((H,W),bool);resv=np.zeros((H,W),bool);objs=[];items=[]
     for key,vz in zs.items():
         ln=np.load(ZDIR/f"{vz['slug']}-lanes.npy");lane|=ln
         for r in vz['items']:
@@ -611,7 +611,8 @@ def zones_masks(own,water,road,H,W):
             r=dict(r,village=key,iy=iy,ix=ix);items.append(r)
             k=r['kind']
             if k=='lot':lot[sl]=True
-            elif k in('plaza','yard') or (k=='shore' and not r.get('asset') and r['name']!='낚시터'):flat[sl]=True   # 선착장만 흙. 빨래터·낚시터는 풀밭 물가   # 낚시터는 풀밭 물가 그대로
+            elif k in('plaza','yard','harbor') or (k=='shore' and not r.get('asset') and r['name']!='낚시터'):flat[sl]=True
+            elif k=='reserve':spot[sl]=True;resv[sl]=True   # 나중에 쓸 빈 땅: 풀밭 그대로, 나무만 두지 않음   # 선착장만 흙. 빨래터·낚시터는 풀밭 물가   # 낚시터는 풀밭 물가 그대로
             elif k in('spot','lantern','npc','start','growth'):spot[sl]=True
             a=r.get('asset')
             if a:
@@ -622,7 +623,7 @@ def zones_masks(own,water,road,H,W):
     # 골목은 2칸 폭(조립 흙길 2×2 규칙). 건물 자리는 비운다
     lane2=lane.copy();lane2[:,1:]|=lane[:,:-1];lane2[1:,:]|=lane[:-1,:];lane2[1:,1:]|=lane[:-1,:-1]   # 2×2 붓
     lane2&=~lot&~coll
-    ok=own&~water&~lot   # 우물·석등 같은 작은 소품은 흙길 위에 서도 된다(밑에 풀 1칸이 남지 않게)
+    ok=own&~water&~lot&~resv   # 우물·석등 같은 작은 소품은 흙길 위에 서도 된다(밑에 풀 1칸이 남지 않게)
     road2=road|((flat|lane2)&ok)
     doors=np.zeros((H,W),bool)
     for r in items:
@@ -637,7 +638,7 @@ def zones_masks(own,water,road,H,W):
         return m&own&((miss>1)|((miss==1)&~four))
     ban=np.zeros_like(ok)
     for _round in range(4):
-        road2=tidy_dirt(road2,road,ok&~ban,flat,lot,doors,water,own,zone)
+        road2=tidy_dirt(road2,road,ok&~ban,flat,lot|resv,doors,water,own,zone)
         for _ in range(8):
             okb=ok&~ban;road2&=okb|road
             road2=fill_diagonals(tileready(road2,okb),okb)
@@ -750,7 +751,7 @@ def zones_check(Z,road,water,land,own,H,W):
         k=r['kind'];pts=[]
         if k=='lot':
             dy,dx=v.idx(*r['door']) if 'door' in r else (r['iy']+r['h'],r['ix']+r['w']//2);pts=[(dy,dx)]
-        elif k in('npc','start','growth','plaza','yard','shore'):pts=[(r['iy'],r['ix'])]
+        elif k in('npc','start','growth','plaza','yard','shore','harbor','reserve'):pts=[(r['iy'],r['ix'])]
         elif k=='spot' and not r.get('asset'):pts=[(r['iy'],r['ix'])]
         elif k in('spot','lantern') and r.get('asset'):pts=[(r['iy']+r['h'],r['ix'])]   # 앞 칸
         bad=[p for p in pts if not(0<=p[0]<H and 0<=p[1]<W) or not walk[p] or lab[p] not in roadlab]
@@ -765,7 +766,7 @@ def zones_check(Z,road,water,land,own,H,W):
     (OUT/'collision.json').write_text(json.dumps(coll,ensure_ascii=False,indent=1))
     return out
 
-ZCOL={'plaza':(255,214,90),'yard':(255,170,60),'lot':(240,110,90),'shore':(90,190,255),'spot':(255,255,255),'moor':(60,120,255),
+ZCOL={'harbor':(40,200,220),'reserve':(200,200,255),'plaza':(255,214,90),'yard':(255,170,60),'lot':(240,110,90),'shore':(90,190,255),'spot':(255,255,255),'moor':(60,120,255),
       'npc':(255,120,220),'lantern':(255,250,170),'growth':(150,240,140),'start':(120,255,255)}
 def zones_images(img,Z,H,W):
     font=str(ROOT/'Assets/PocketCaravan/Resources/Fonts/Galmuri11.ttf');fs=ImageFont.truetype(font,12);fb=ImageFont.truetype(font,18)
@@ -778,7 +779,7 @@ def zones_images(img,Z,H,W):
         ov=c.copy();dr=ImageDraw.Draw(ov)
         for r in its:
             bx=[(r['ix']-x0)*T,(r['iy']-y0)*T,(r['ix']-x0+r['w'])*T-1,(r['iy']-y0+r['h'])*T-1]
-            if r['kind'] in('npc','spot','start','growth') and not r.get('asset'):
+            if r['kind'] in('npc','spot','start','growth','reserve') and not r.get('asset'):
                 dr.rectangle(bx,outline=ZCOL[r['kind']],width=2)
             if r['kind'] in('npc','spot','start','growth','lantern'):lab=r['name'].replace('성장 자리 ','성')
             else:lab=r['name']
