@@ -413,7 +413,7 @@ def main():
     near_road=ndimage.binary_dilation(road,iterations=1);near_water=ndimage.binary_dilation(water,iterations=1)
     village=w['village']
     free=land&~near_road&~near_water
-    occ=np.zeros((H,W),bool)   # 줄기·덮인 칸
+    occ=ndimage.binary_dilation(bridge_mask,iterations=1).copy()   # 줄기·덮인 칸. 다리 밑·둘레엔 풀포기·꽃·나무를 두지 않음(다리 위에 풀이 그려지지 않게)
     objs=[]
     def place(name,y,x,margin=0):
         nm,sw,sh=name.split(':');sw,sh=int(sw),int(sh)

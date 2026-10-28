@@ -80,7 +80,7 @@
   "marsh": 32,
   "lotus": 17,
   "flowers": 102,
-  "tufts": 772,
+  "tufts": 771,
   "loneTrees": 45
  },
  "reviewBakedPieces": {
@@ -97,7 +97,7 @@
  "forestUniqueTiles": {
   "mountain": {
    "cells": 3702,
-   "unique": 518
+   "unique": 517
   },
   "forest": {
    "cells": 11454,
