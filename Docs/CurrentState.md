@@ -33,7 +33,7 @@
 ## 3. 아트 (새 방향과 다름 — [아트 기준](ArtGuide.md) 5절)
 
 - 새 식생 ArtReview/RipeRice-v3: 아래 줄기는 곧게 세우고 위 이삭만 숙인 벼. 기존 초가 지붕 금색3개·폭22px를 유지한32×32/7색·PNG/Aseprite. 포기/논 전후와 Unity9모듈 검토, 그림 승인 대기·본편 미적용.
-- ArtReview/RiceField-Tiles-v3: 수정한 v3 벼 포기를16px 간격/행별4px 엇갈림/밑동 뒤→앞으로 겹친 논 블록9종. 반복 중앙은96×96(논리6×6칸), 외곽은 이삭 돌출 여백 포함. 직사각형 논 최소2×2블록부터 조립, 다섯 크기에서 포기 직접 배치와RGBA일치·Unity9모듈 연결 렌더의 논 영역차이0. 기존 벼/숲/본편은 그대로며 그림 승인 대기.
+- ArtReview/RiceField-Tiles-v4: 벼 그림v3는 그대로 두고 식재 간격16→14px(+31%)로 좁혔다. 반복 중앙112×112(논리7×7칸)·가장자리/모서리9종, 직사각형 최소14×14칸. 5크기 직접식재RGBA일치·Unity9모듈 연결 렌더 논 영역차이0. 그림 승인 대기·본편 미적용.
 
 - 2026-10-28 건물·배 리뉴얼: 건물9종(지붕 윗면+앞면)과 배1종(낮은 각도·선체 옆면)을 전체 묶음으로 제작했다. ArtReview/BuildingShip-Renewal에 원화10개·Aseprite/PNG·전체 전후 비교·Unity480×270 전후6장·검사/프롬프트가 있다. 사용자 “좋다. 모두 승인할게.”로10종 전체를 승인했고 ArtReview/Approved/BuildingShip-Renewal-v1에 PNG/Aseprite와 크기·RGBA 지문을 동결했다. 본편/A2 연결은 아직 하지 않았다. [검토 묶음](../ArtReview/BuildingShip-Renewal/README.md).
 
