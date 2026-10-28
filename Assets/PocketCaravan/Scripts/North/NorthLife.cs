@@ -380,24 +380,63 @@ namespace PocketCaravan
             }
         }
 
-        /// <summary>모닥불 타닥 소리 (파일 없이 코드로 만든 2초 반복음)</summary>
+        /// <summary>모닥불 소리 (파일 없이 코드로 만든 약 3.8초 반복음). 10/28 팀 의견 "노이즈 같다" → 조용하고 따뜻한 안(B):
+        /// 낮게 웅웅거리는 불길이 천천히 숨 쉬듯 커졌다 작아지고, 그 위에 짧은 타닥이 드문드문 2~4개씩, 2.5초쯤마다 '탁'.</summary>
         static AudioClip MakeCrackle()
         {
-            const int rate = 22050; int n = rate * 2;
-            var data = new float[n];
-            var rng = new System.Random(7);
-            float low = 0f;
+            const int rate = 22050; const float T = 4f;
+            int n = (int)(rate * T);
+            var d = new float[n];
+            var rng = new System.Random(2);
+            float U() => (float)rng.NextDouble();
+            float Gauss() { float u1 = 1f - U(), u2 = U(); return Mathf.Sqrt(-2f * Mathf.Log(u1)) * Mathf.Sin(2f * Mathf.PI * u2); }
+
+            // 1) 불길: 흰 소음을 두 번 낮게 걸러 웅웅, 천천히 숨 쉬듯
+            var w = new float[n];
+            for (int i = 0; i < n; i++) w[i] = Gauss();
+            float s1 = 0f, s2 = 0f, peak = 1e-6f;
             for (int i = 0; i < n; i++)
             {
-                low += ((float)rng.NextDouble() * 2f - 1f - low) * 0.02f;   // 낮게 웅웅거리는 불길
-                data[i] = low * 0.5f;
+                s1 += (w[i] - s1) * 0.012f; s2 += (s1 - s2) * 0.018f;
+                d[i] = s2; peak = Mathf.Max(peak, Mathf.Abs(s2));
             }
-            for (int k = 0; k < 40; k++)   // 탁, 탁 튀는 소리
+            for (int i = 0; i < n; i++)
             {
-                int at = rng.Next(n - 400); float amp = 0.3f + (float)rng.NextDouble() * 0.5f;
-                for (int j = 0; j < 300; j++) data[at + j] += amp * ((float)rng.NextDouble() * 2f - 1f) * Mathf.Exp(-j / 40f);
+                float t = i / (float)rate;
+                float breath = 0.7f + 0.3f * Mathf.Sin(2f * Mathf.PI * 0.23f * t + 1f) * Mathf.Sin(2f * Mathf.PI * 0.09f * t + 2f);
+                d[i] = d[i] / peak * 0.16f * breath;
             }
-            var clip = AudioClip.Create("north_crackle", n, 1, rate, false);
+            // 2) 타닥: 짧고 높은 틱이 드문드문 2~4개씩 몰려서 (초당 약 4번)
+            for (float tt = 0f; ; )
+            {
+                tt += -Mathf.Log(1f - U()) / 4f;
+                if (tt >= T - 0.05f) break;
+                int baseAt = (int)(tt * rate), k = 1 + rng.Next(4);
+                for (int j = 0; j < k; j++)
+                {
+                    int at = baseAt + (int)(U() * 0.03f * rate);
+                    float tau = 5f + U() * 9f; int L = (int)(tau * 8f);
+                    if (at + L >= n) continue;
+                    float amp = 0.06f * Mathf.Exp(Gauss() * 0.6f), prev = Gauss();
+                    for (int m = 0; m < L; m++) { float g = Gauss(); d[at + m] += amp * (g - prev) * Mathf.Exp(-m / tau); prev = g; }
+                }
+            }
+            // 3) 탁: 나무가 튀는 조금 큰 소리 (2.5초쯤마다)
+            for (float tt = 0.2f + U() * 0.6f; tt < T - 0.1f; tt += 2.5f * (0.6f + U() * 0.8f))
+            {
+                int at = (int)(tt * rate), L = (int)(rate * 0.015f);
+                float f = 1200f + U() * 800f, amp = 0.25f * (0.7f + U() * 0.3f);
+                for (int m = 0; m < L && at + m < n; m++)
+                    d[at + m] += amp * (Mathf.Sin(2f * Mathf.PI * f * m / rate) * 0.6f + Gauss() * 0.6f) * Mathf.Exp(-m / (rate * 0.003f));
+            }
+            // 반복 이음매: 끝 0.25초를 앞에 겹쳐 녹이고 잘라냄
+            int fade = (int)(rate * 0.25f), len = n - fade;
+            for (int i = 0; i < fade; i++) { float x = i / (float)(fade - 1); d[i] = d[i] * x + d[len + i] * (1f - x); }
+            float mx = 1e-6f;
+            for (int i = 0; i < len; i++) mx = Mathf.Max(mx, Mathf.Abs(d[i]));
+            var data = new float[len];
+            for (int i = 0; i < len; i++) data[i] = Mathf.Clamp(d[i] / mx * 0.8f, -1f, 1f);
+            var clip = AudioClip.Create("north_crackle", len, 1, rate, false);
             clip.SetData(data, 0);
             return clip;
         }

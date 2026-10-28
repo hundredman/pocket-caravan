@@ -156,7 +156,7 @@ namespace PocketCaravan
             }
             if (choices.Count == 0)
             {
-                GUI.Label(new Rect(bx - 120, r.yMax - 20, 120, 16), "Space 계속", UIStyle.Right);
+                GUI.Label(new Rect(bx - 120, r.yMax - 20, 120, 16), "계속 (Space)", UIStyle.Right);
                 return;
             }
             for (int i = choices.Count - 1; i >= 0; i--)

@@ -19,7 +19,7 @@ MonoBehaviour:
     \uAFC0\uC220 2 + \uC57D\uCD08 1\uC744 \uB9E1\uAE30\uBA74 \uC57D\uCD08 \uAFC0\uC220\uC774
     \uB3FC\uC694. \uC628\uCC9C\uC5D0 \uBAB8\uC744 \uB2F4\uADF8\uBA74 \uB208\uAE38\uC774
     \uB35C \uC9C0\uCCD0\uC694."
-  worldCoord: {x: 30, y: 2}
+  worldCoord: {x: 29, y: 2}
   startLevel: 1
   settlementTier: 0
   facilities: []

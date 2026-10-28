@@ -34,6 +34,7 @@ namespace PocketCaravan
                 Vector2 p = ToGui(cam, it.transform.position + new Vector3(0f, 1.0f, 0f));
                 if (p.x < -50 || p.y < -20 || p.x > UIStyle.VirtualWidth + 50 || p.y > UIStyle.VirtualHeight + 20) continue;
                 string label = it.DisplayName;
+                if (string.IsNullOrEmpty(label)) continue;   // 이름 없는 자리(같은 모닥불의 두 번째 의자 등)는 이름표를 띄우지 않는다
                 Color c = it.Category switch
                 {
                     Interactable.Kind.Quest => QuestColor,
@@ -52,8 +53,9 @@ namespace PocketCaravan
             if (player != null && player.TalkTarget != null && !UIState.Blocking)
             {
                 Vector2 p = ToGui(cam, player.TalkTarget.transform.position + new Vector3(0f, -0.7f, 0f));
-                string verb = player.TalkTarget is DroppedCargo ? "Space 줍기" : player.TalkTarget is ContractBoard ? "Space 게시판 보기" : player.TalkTarget is TownMarket ? "Space 사고팔기" : "Space 말 걸기";
-                Outlined(new Rect(p.x - 50, p.y, 100, 12), verb, Color.white, nameStyle);
+                string verb = !string.IsNullOrEmpty(player.TalkTarget.ActionVerb) ? player.TalkTarget.ActionVerb + " (Space)"
+                    : player.TalkTarget is DroppedCargo ? "줍기 (Space)" : player.TalkTarget is ContractBoard ? "게시판 보기 (Space)" : player.TalkTarget is TownMarket ? "사고팔기 (Space)" : "말 걸기 (Space)";
+                Outlined(new Rect(p.x - 70, p.y, 140, 12), verb, Color.white, nameStyle);
             }
 
             // 3) 퀘스트 길 안내

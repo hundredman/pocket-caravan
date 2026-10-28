@@ -61,7 +61,8 @@ namespace PocketCaravan
             UIStyle.Begin();
             if (style == null) style = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow };
             float w = Mathf.Min(UIStyle.VirtualWidth - 20f, style.CalcSize(new GUIContent(text)).x + 20f);
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2f, UIStyle.VirtualHeight - 38f, w, 18f);   // 아래쪽 조작 안내 바로 위
+            GUI.depth = -5;   // 10/28 머리 위 이름표보다 앞에
+            var r = new Rect((UIStyle.VirtualWidth - w) / 2f, UIStyle.VirtualHeight - 64f, w, 18f);   // 10/28 조작 안내·목표 줄과 겹치지 않게 더 위로
             GUI.Box(r, GUIContent.none, UIStyle.Box);
             GUI.Label(r, text, style);
         }

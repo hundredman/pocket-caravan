@@ -387,7 +387,7 @@ def snow_wood():
 
 def creek_town():
     """개울 나루 마을: 큰 개울가의 물방앗간 마을. 얼음 낚시터 두 곳, 피오르 나루 마을로 가는 나룻배 (NorthDaily.cs).
-    생선이 싸고 치즈·약초가 귀하다. 동쪽은 북동 포구(고려) 쪽 (합칠 때 연다)."""
+    생선이 싸고 치즈·약초가 귀하다. 10/28 고려 쪽은 남쪽 동남 물가길 아래로 간다 (동쪽 다리길 ②는 뺌)."""
     m = ThawMap("north_c_creek", "개울 나루 마을", 52, 40, base="snow", cover=(0.25, 0.35), seed=213)
     m.hours = 1
     m.link("N", 24, 4, "north_c_road_ne", "S", "N")
@@ -395,14 +395,9 @@ def creek_town():
     m.road_path([(25, 0), (25, 8)], width=2, grade=2)
     m.road_blob(24, 12.5, 7, 3.5, grade=1)
     m.road_path([(25, 16), (25, 26), (25, 39)], width=2, grade=2)
-    # 큰 개울 (동쪽), 다리 건너 북동 포구 쪽 길
+    # 큰 개울 (동쪽). 10/28 동쪽 다리길(②)은 빼고, 고려 쪽은 남쪽 동남 물가길 아래로
     m.river_v(38, 41, wiggle=1, fixed_rows=range(9, 16))
-    m.road_path([(31, 13), (37, 12)], width=2)
-    m.bridge(37, 11, 42, 13)
-    # 10/27 통합: 다리 건너 동쪽 → 고려 쪽 내륙 교역 길목 서쪽 위 (World/Connections/region_links.json)
-    m.road_path([(43, 12), (51, 12)], width=2)
-    m.link("E", 11, 4, "transit_crossroads", "link_north_c_creek", "link_transit_crossroads")
-    m.sign(48, 10, "→ 내륙 교역 길목 (고려 쪽)\n버들나루 · 송악 산록")
+    m.sign(31, 18, "고려 쪽 (내륙 교역 길목)\n↓ 남쪽 동남 물가길 아래로")
     wedge_forest(m, 48, 46, "coast")
     # 장터와 집들
     m.deco_stamp("stall", 19, 9); m.deco_stamp("stall", 16, 16)   # 10/27 오른쪽 좌판(군나르)은 게시판 아래로 두 줄 띄워 옮김 (가로등·사람과 안 겹치게)
@@ -519,6 +514,14 @@ def road_sw():
     m.link("E", 66, 4, "north_c_crossing", "W", "E")
     main = [(25, 0), (24, 10), (27, 22), (29, 36), (31, 50), (34, 60), (39, 67)]
     m.road_path(main, width=3, grade=3)
+    # 10/28 통합: 가운데 갈림길에서 서쪽 숲길로 베네치아 본토 산기슭 고갯길 (북↔서 두 번째 길, ⑨)
+    m.road_path([(29, 40), (20, 41), (10, 40), (0, 40)], width=2, grade=2)
+    m.link("W", 39, 3, "venice_c_pass", "link_north_c_road_sw", "link_venice_c_pass")
+    m.sign(25, 38, "← 산기슭 고갯길 · 베네치아 본토\n↘ 북쪽 길목 마을")
+    # 10/28 통합: 아래쪽 갈림길에서 남쪽 숲길로 베네치아 본토 동문 큰길 (⑩)
+    m.road_path([(33, 57), (29, 66), (27, 76)], width=2, grade=2)
+    m.link("S", 26, 4, "venice_c_gate", "link_north_c_road_sw", "link_venice_c_gate")
+    m.sign(30, 63, "↓ 동문 큰길 (베네치아 본토)\n→ 북쪽 길목 마을")
     wedge_forest(m, -40, 86, "green")
     # 숲속 산적 은신처 (무너진 오두막과 모닥불)
     m.deco_stamp("ruinhut", 31, 9); m.deco_stamp("fire", 33, 15); m.deco_stamp("crate", 30, 16); m.deco_stamp("sack", 35, 16)
@@ -532,7 +535,7 @@ def road_sw():
     m.deco_stamp("firewood", 16, 17); m.deco_stamp("logs_birch", 21, 13)
     m.sign(21, 20, "숯쟁이 마을")
 
-    m.sign(28, 3, "서남 솔숲길\n↘ 북쪽 길목 마을 (다져진 길, 수레 편함)\n  숲속 산적 주의")
+    m.sign(28, 3, "서남 솔숲길\n↘ 북쪽 길목 마을 (다져진 길, 수레 편함)\n← 가운데 갈림길: 베네치아 본토\n  숲속 산적 주의")
     m.talker(18, 12, "숯쟁이", "north_p_smith_tall", "솔숲 깊은 데엔 산적이 숨어 있어. 짐이 무거우면 걸음이 느려서 쫓기기 쉬워.")
     m.talker(34, 46, "순록 치는 소녀", "north_p_girl_tall", "순록들이 눈 녹은 자리의 이끼를 찾아 내려왔어.")
     m.walker([(25, 2), (24, 11), (27, 23), (29, 37), (31, 51), (34, 61), (38, 67)], idx=4)
@@ -560,6 +563,9 @@ def road_se():
     main = [(13, 0), (18, 8), (21, 18), (16, 30), (11, 42), (6, 55), (0, 67)]
     m.road_path(main, width=3, grade=3)                            # 개울 둑을 따라 내려가는 큰길
     snow_trail(m, [(13, 3), (8, 20), (5, 40), (3, 55)])            # 개울에서 먼 숲 지름길 (넘칠 걱정 없지만 수레는 느림)
+    # 10/28 통합: 큰길 아래쪽에서 남쪽으로 고려 쪽 내륙 교역 길목 (⑪, 예전 개울 나루 동쪽 다리길 ② 대신)
+    m.road_path([(9, 48), (14, 62), (16, 76)], width=2, grade=2)
+    m.link("S", 15, 4, "transit_crossroads", "link_north_c_road_se", "link_transit_crossroads")
     wedge_forest(m, 60, 86, "green")
     # 물레방아 돌집과 빨래터
     m.stamp("h_stoneA", 7, 8, force=True); m.door_path(7, 8, 2, 2, 12, door_dx=0)
@@ -572,7 +578,8 @@ def road_se():
     m.fishing.append((26, 12))                                     # 개울가 낚시 자리
     m.deco_stamp("fishbasket", 23, 10)
 
-    m.sign(16, 3, "동남 물가길\n↓ 개울 둑 큰길: 북쪽 길목 마을 (눈 녹으면 넘침)\n↙ 숲 지름길: 넘칠 걱정 없지만 수레는 느림")
+    m.sign(16, 3, "동남 물가길\n↓ 개울 둑 큰길: 북쪽 길목 마을 (눈 녹으면 넘침)\n↙ 숲 지름길: 넘칠 걱정 없지만 수레는 느림\n↓ 아래쪽 갈림길: 고려 쪽 내륙 교역 길목")
+    m.sign(17, 60, "↓ 내륙 교역 길목 (고려 쪽)\n← 북쪽 길목 마을")
     m.talker(14, 24, "강지기", "north_p_oldman_tall", "개울이 넘치면 물이 빠질 때까지 기다리게. 급하면 서쪽 숲 지름길로 돌아가고.")
     m.talker(9, 15, "물레방아 할머니", "north_p_granny_tall", "젊었을 땐 북쪽에서 살았지. 이젠 눈 대신 물소리가 좋아.")
     m.walker([(13, 2), (18, 9), (21, 19), (16, 31), (11, 43), (6, 56), (1, 67)], idx=5)

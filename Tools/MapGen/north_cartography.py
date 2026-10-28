@@ -15,8 +15,24 @@ ROCKS = ("rock", "rockbig", "snowboulder")
 HOUSES = ("longhall", "woodhouse", "house3", "h_dark", "h_shed", "h_turf", "h_round", "h_dome", "h_stoneA", "h_stoneB", "ruinhall", "ruinhut", "tent")
 
 
+# 10/28 순록 고원 ↔ 라우가르 온천·모피 사냥꾼 산길은 칸이 맞닿지 않는 위치라 출구를 맞춰 이어 붙일 수 없다. 배치 계산에서만 뺀다 (게임 안 출구는 그대로)
+DIAGONAL = {("north_herd", "north_laugar"), ("north_laugar", "north_herd"),
+            ("north_herd", "north_hunter"), ("north_hunter", "north_herd")}   # 순록 고원 ↔ 모피 사냥꾼: 국경 고개 줄만큼 떨어져 있음
+
+
+def _layout(maps):
+    saved = {m.id: m.objects for m in maps}
+    for m in maps:
+        m.objects = [o for o in m.objects if not (o["kind"] == "exit" and (m.id, o["target"]) in DIAGONAL)]
+    try:
+        return layout(maps)
+    finally:
+        for m in maps:
+            m.objects = saved[m.id]
+
+
 def export(maps, root):
-    positions = layout(maps)
+    positions = _layout(maps)
     pad, scale = 34, 4      # 둥근 땅덩이와 바다가 들어갈 여백
     minx = min(p[0] for p in positions.values()) - pad
     miny = min(p[1] for p in positions.values()) - pad

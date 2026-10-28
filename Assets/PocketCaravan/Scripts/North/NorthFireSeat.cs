@@ -73,7 +73,11 @@ namespace PocketCaravan
                     var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = sprite; sr.sortingOrder = 8;
                 }
                 int k = i;
-                NorthSpot.Make(root, pos, () => "불 쬐기", () => Sit(k), Interactable.Kind.Board);
+                // 10/28 한 모닥불의 의자 두 개에 이름표가 겹치지 않게 이름은 가까운 불마다 하나만, 다가가면 "불 쬐기 (Space)"
+                bool first = true;
+                for (int q = 0; q < i; q++) if ((NearestFire(seats[q]) - NearestFire(pos)).sqrMagnitude < 0.01f) first = false;
+                var spot = NorthSpot.Make(root, pos, first ? (System.Func<string>)(() => "불 쬐기") : () => "", () => Sit(k), Interactable.Kind.Board);
+                spot.verb = "불 쬐기";
             }
         }
 

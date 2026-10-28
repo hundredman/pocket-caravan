@@ -21,20 +21,54 @@
       }
     },
     {
-      "id": "②",
-      "note": "북↔동: 개울 나루 동쪽 다리 ↔ 고려 내륙 교역 길목 서쪽 위 (고려 쪽 길은 은샘 확인)",
+      "id": "⑨",
+      "note": "북↔서 (10/28): 서남 솔숲길 가운데 갈림길 서쪽 숲길 ↔ 베네치아 산기슭 고갯길 동쪽 끝 (고갯길 쪽 길은 Tools/Integration/paint_link_roads.py가 그림)",
       "a": {
-        "map": "north_c_creek",
+        "map": "north_c_road_sw",
+        "edge": "W",
+        "by": "north_center.py"
+      },
+      "b": {
+        "map": "venice_c_pass",
         "edge": "E",
+        "x": 59,
+        "y": 26,
+        "w": 1,
+        "h": 3
+      }
+    },
+    {
+      "id": "⑩",
+      "note": "북↔서 (10/28): 서남 솔숲길 아래쪽 갈림길 남쪽 숲길 ↔ 베네치아 동문 큰길 북쪽 (동문 쪽 길은 paint_link_roads.py)",
+      "a": {
+        "map": "north_c_road_sw",
+        "edge": "S",
+        "by": "north_center.py"
+      },
+      "b": {
+        "map": "venice_c_gate",
+        "edge": "N",
+        "x": 30,
+        "y": 0,
+        "w": 4,
+        "h": 1
+      }
+    },
+    {
+      "id": "⑪",
+      "note": "북↔동 (10/28): 동남 물가길 남쪽 ↔ 고려 내륙 교역 길목 북쪽 (② 개울 나루 동쪽 다리길 대신. 교역 길목 쪽 길은 paint_link_roads.py, 고려 쪽은 은샘 확인)",
+      "a": {
+        "map": "north_c_road_se",
+        "edge": "S",
         "by": "north_center.py"
       },
       "b": {
         "map": "transit_crossroads",
-        "edge": "W",
-        "x": 30,
-        "y": 16,
-        "w": 1,
-        "h": 4
+        "edge": "N",
+        "x": 32,
+        "y": 0,
+        "w": 4,
+        "h": 1
       }
     },
     {
@@ -177,7 +211,28 @@
       "map": "transit_crossroads",
       "x": 50,
       "y": 21,
-      "text": "교역로 안내\n동쪽: 고려 교역로 · 서쪽 위: 북유럽 쪽 개울 나루 · 서쪽 가운데: 대륙 한가운데 초원 · 서쪽 아래: 대륙 남쪽(소나무 고원)"
+      "text": "교역로 안내\n동쪽: 고려 교역로 · 북쪽: 북유럽 쪽 동남 물가길 · 서쪽 가운데: 대륙 한가운데 초원 · 서쪽 아래: 대륙 남쪽(소나무 고원)"
+    },
+    {
+      "map": "venice_c_pass",
+      "x": 55,
+      "y": 24,
+      "add": true,
+      "text": "→ 북쪽 조각 (서남 솔숲길)\n북유럽 쪽 중앙 · 북쪽 길목 마을"
+    },
+    {
+      "map": "venice_c_gate",
+      "x": 35,
+      "y": 3,
+      "add": true,
+      "text": "↑ 북쪽 조각 (서남 솔숲길)\n북유럽 쪽 중앙"
+    },
+    {
+      "map": "transit_crossroads",
+      "x": 36,
+      "y": 3,
+      "add": true,
+      "text": "↑ 북쪽 조각 (동남 물가길)\n북유럽 쪽 중앙 · 개울 나루"
     }
   ]
 }

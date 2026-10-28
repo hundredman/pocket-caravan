@@ -21,6 +21,10 @@ namespace PocketCaravan
         int marketTab, quantityMode, customQuantity = 1;
         int RequestedCount => quantityMode==0?1:quantityMode==1?5:quantityMode==2?MarketState.MaxBatch:Mathf.Clamp(customQuantity,1,MarketState.MaxBatch);
         Vector2 vehicleScroll;
+        // 10/28 품목 목록: 한 줄 높이와 보이는 칸 높이 (방향키로 고를 때 스크롤 맞추기)
+        const float RowH = 18f, ListH = 128f;   // 보이는 줄 약 7개 (예전 42 = 2줄). 아래 빈자리까지 씀
+        float lastMoveY;
+        static GUIStyle rowButton;
 
         MarketState Market => GameManager.I.GetMarket(town);
 
@@ -50,7 +54,21 @@ namespace PocketCaravan
         {
             if (!open || Time.frameCount == openedFrame) return;
             if (InputReader.LedgerPressed()) { OpenLedger(); return; }
-            if (InputReader.CancelPressed() || InputReader.InteractPressed()) Close();
+            if (InputReader.CancelPressed() || InputReader.InteractPressed()) { Close(); return; }
+            // 10/28 ↑↓(W/S)로 품목 고르기. 고른 줄이 목록 칸 안에 보이게 스크롤을 맞춘다
+            float my = InputReader.MoveVector().y;
+            int step = Mathf.Abs(my) > 0.5f && Mathf.Abs(lastMoveY) <= 0.5f ? (my > 0 ? -1 : 1) : 0;
+            lastMoveY = my;
+            if (step == 0 || marketTab != 0 || GameManager.I == null) return;
+            var items = ItemsShown(GameManager.I.Player);
+            if (items.Count == 0) return;
+            int i = Mathf.Clamp(items.IndexOf(selected) + step, 0, items.Count - 1);
+            if (items[i] == selected) return;
+            selected = items[i];
+            Sfx.Play("move");
+            float top = i * RowH, bottom = top + RowH;
+            if (top < scroll.y) scroll.y = top;
+            else if (bottom > scroll.y + ListH) scroll.y = bottom - ListH;
         }
 
         // Close before opening the next modal; its opening-frame guard consumes the same L press.
@@ -86,8 +104,8 @@ namespace PocketCaravan
             string marketDay = gm.Clock.IsMarketDay ? "  <color=#ffd84a>· 오늘은 장날 (값 상승)</color>" : "";
             int nextLevel = m.Level < gm.Db.maxTownLevel && m.Level < gm.Db.townLevelVolume.Length ? gm.Db.townLevelVolume[m.Level] : 0;
             string growth = nextLevel > 0 ? $"   다음 등급까지 거래 {Mathf.Max(0, nextLevel - Mathf.RoundToInt(m.TradeVolume))}냥" : "";
-            GUILayout.Label($"<color=#FFE08A>{town.displayName} 장터</color>  ({m.LevelName}){marketDay}", UIStyle.Rich);
-            GUILayout.Label($"돈 {p.money}   짐 {p.TotalWeight:0.#}/{p.Capacity:0.#}{growth}", UIStyle.Small);
+            // 10/28 제목과 돈·짐을 한 줄로 (품목 목록을 넓히려고)
+            GUILayout.Label($"<color=#FFE08A>{town.displayName} 장터</color>  ({m.LevelName}){marketDay}   <size=9>돈 {p.money} · 짐 {p.TotalWeight:0.#}/{p.Capacity:0.#}{growth}</size>", UIStyle.Rich);
             if(town.vehiclesForSale.Count>0)
             {
                 GUILayout.BeginHorizontal();
@@ -99,24 +117,25 @@ namespace PocketCaravan
             if(marketTab==1) DrawVehicles(p,m);
             else
             {
-                GUILayout.Label(ReputationPricing.Progress(p,town),UIStyle.Small);
-            GUILayout.Label(LocalGoods(gm), UIStyle.Small);
+                // 10/28 평판과 기준 공급품을 한 줄로 (목록 칸을 넓히려고)
+                GUILayout.Label(ReputationPricing.Progress(p,town) + "   · " + LocalGoods(gm), UIStyle.Small);
                 GUILayout.BeginHorizontal();
-                GUILayout.Label("품목 선택 / 무게", UIStyle.Small, GUILayout.Width(144));
+                GUILayout.Label("품목 선택 / 무게  <color=#9a93ad>↑↓</color>", new GUIStyle(UIStyle.Small) { richText = true }, GUILayout.Width(144));
                 GUILayout.Label("살 때", UIStyle.Small, GUILayout.Width(44));
                 GUILayout.Label("팔 때", UIStyle.Small, GUILayout.Width(44));
                 GUILayout.Label("재고", UIStyle.Small, GUILayout.Width(34));
                 GUILayout.Label("보유", UIStyle.Small, GUILayout.Width(34));
                 GUILayout.EndHorizontal();
 
-                scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(42));
+                scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(ListH));
+                rowButton ??= new GUIStyle(UIStyle.Button) { margin = new RectOffset(2, 2, 1, 1) };
                 foreach (var item in ItemsShown(p))
                 {
-                    GUILayout.BeginHorizontal(GUILayout.Height(18));
+                    GUILayout.BeginHorizontal(GUILayout.Height(RowH));
                     var iconRect = GUILayoutUtility.GetRect(16, 16, GUILayout.Width(16), GUILayout.Height(16));
                     if (item.icon != null) DrawSprite(iconRect, item.icon);
                     if (GUILayout.Button((selected == item ? "▸ " : "") + $"{item.displayName} ({item.weight:0.#})",
-                        UIStyle.Button, GUILayout.Width(124), GUILayout.Height(18))) selected = item;
+                        rowButton, GUILayout.Width(124), GUILayout.Height(RowH - 2))) selected = item;
                     int buy = m.BuyPrice(item), sell = m.SellPrice(item);
                     float avg = p.cargo.AverageCost(item);
                     string sellText = item.questItem ? "맡은 짐" : (p.cargo.Count(item) > 0 && avg > 0 ? (sell > avg ? $"<color=#a8f0a0>{sell}</color>" : $"<color=#ff9a8a>{sell}</color>") : sell.ToString());
@@ -242,37 +261,31 @@ namespace PocketCaravan
 
         void DrawTradeInfo(GameManager gm, MarketState market)
         {
-            var panel = GUILayoutUtility.GetRect(10, 50, GUILayout.ExpandWidth(true));
+            // 10/28 한 줄로 줄임 (품목 목록을 넓히려고): 품목 · 기준가 지역 · 내 원가·손익 · 다른 곳 최고 확인가 · 되팔기 제한
+            var panel = GUILayoutUtility.GetRect(10, 20, GUILayout.ExpandWidth(true));
             GUI.Box(panel, "", UIStyle.Box);
-            float y = panel.y + 5;
-            void Line(string text)
-            {
-                GUI.Label(new Rect(panel.x + 5, y, panel.width - 10, 12), text, UIStyle.Small);
-                y += 13;
-            }
+            string text;
             if (selected == null || selected.questItem)
-                Line("교역품을 선택하면 원가와 직접 확인한 시세를 볼 수 있습니다.");
+                text = "교역품을 고르면 원가와 직접 확인한 시세가 보입니다 · L 장부";
             else
             {
                 var p = gm.Player;
                 string origin = selected.originTown != null ? selected.originTown.displayName : "여러 마을";
-                string owned = p.cargo.Count(selected) > 0
-                    ? $" · 내 원가 {p.cargo.AverageCost(selected):0.#} · 이곳 손익 {Signed(market.SellPrice(selected) - p.cargo.AverageCost(selected))}냥/개" : "";
-                Line($"{selected.displayName} · 기준가 지역 {origin}{owned}");
-                bool any = false;
-                int shown = 0;
-                var observed = gm.Db.towns.FindAll(other => other != null && other != town && p.ledger.Find(other.id, selected.id) != null);
-                observed.Sort((a, b) => p.ledger.Find(b.id, selected.id).sell.CompareTo(p.ledger.Find(a.id, selected.id).sell));
-                foreach (var other in observed)
+                text = $"{selected.displayName} · 기준 {origin}";
+                if (p.cargo.Count(selected) > 0)
+                    text += $" · 내 원가 {p.cargo.AverageCost(selected):0.#} · 이곳 손익 {Signed(market.SellPrice(selected) - p.cargo.AverageCost(selected))}";
+                TownData best = null; int bestSell = int.MinValue;
+                foreach (var other in gm.Db.towns)
                 {
+                    if (other == null || other == town) continue;
                     var q = p.ledger.Find(other.id, selected.id);
-                    any = true;
-                    Line($"{other.displayName}: 확인했던 판매가 {q.sell}냥 · 현재 구입가 대비 {Signed(q.sell - market.BuyPrice(selected))}냥/개");
-                    if (++shown == 1) break;
+                    if (q != null && q.sell > bestSell) { bestSell = q.sell; best = other; }
                 }
-                if (!any) Line("다른 장터를 방문하면 그곳에서 확인한 시세가 장부에 남습니다.");
-                Line(p.tradeActivity.Restricted(town.id,selected.id,gm.Clock.TotalHours)?"최근 매입분 · 12시간 동안 되팔기 금액 제한":"장부는 과거 첫1개 시세 · L 전체 비교 · 도착 시 변동할 수 있습니다.");
+                text += best != null ? $" · 최고 확인 {best.displayName} {bestSell}냥({Signed(bestSell - market.BuyPrice(selected))})" : " · 다른 장터 시세는 가 보면 장부에";
+                if (p.tradeActivity.Restricted(town.id, selected.id, gm.Clock.TotalHours)) text += " · <color=#ff9a8a>12시간 되팔기 제한</color>";
             }
+            var st = new GUIStyle(UIStyle.Small) { richText = true, wordWrap = false, clipping = TextClipping.Clip, alignment = TextAnchor.MiddleLeft };
+            GUI.Label(new Rect(panel.x + 5, panel.y + 1, panel.width - 10, panel.height - 2), text, st);   // 10/28 글자 아래가 잘리던 것: 칸 높이 전체를 씀
         }
 
         /// <summary>스프라이트 한 장을 GUI 사각형에 그린다 (아틀라스 안의 위치를 고려)</summary>

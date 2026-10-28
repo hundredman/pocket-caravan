@@ -178,7 +178,9 @@ namespace PocketCaravan
         public Func<string> label;
         public Action action;
         public Kind kind = Kind.Board;
+        public string verb;          // 10/28 가까이 갔을 때 "불 쬐기 (Space)"처럼 보일 동사 (비우면 공용 기본)
         public override string DisplayName => label != null ? label() : "";
+        public override string ActionVerb => verb;
         public override Kind Category => kind;
         public override void Interact(PlayerController player) => action?.Invoke();
 

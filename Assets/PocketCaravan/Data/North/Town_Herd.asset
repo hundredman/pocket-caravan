@@ -18,7 +18,7 @@ MonoBehaviour:
   journeyNote: "\uC21C\uB85D \uCE58\uC988\uC758 \uACE0\uC6D0 \uB9C8\uC744. \uC21C\uB85D
     \uC370\uB9E4\uB97C \uD314\uC544\uC694. \uAE38 \uC5C6\uB294 \uB208\uBC2D\uC5D0\uC11C
     \uC370\uB9E4\uAC00 \uAC00\uC7A5 \uBE68\uB77C\uC694."
-  worldCoord: {x: 31, y: 1}
+  worldCoord: {x: 28, y: 1}
   startLevel: 1
   settlementTier: 0
   facilities: []

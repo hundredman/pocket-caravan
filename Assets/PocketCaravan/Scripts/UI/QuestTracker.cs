@@ -38,8 +38,30 @@ namespace PocketCaravan
             if (logOpen) DrawLog(gm.Quests); else DrawTracker(gm.Quests);
         }
 
+        static GUIStyle compactStyle;
+
+        /// <summary>10/28 평소엔 할 일 한 줄 (테두리 글씨). Tab(HUD.Expanded)으로 펼치면 아래 자세히</summary>
+        void DrawCompact(QuestManager qm)
+        {
+            var gm = GameManager.I;
+            string line = null;
+            if (qm.Tracked != null)
+                line = $"<color=#ffd84a>▸</color> {qm.Tracked.quest.title}  <color=#d8d2e6>· {qm.ProgressText(qm.Tracked)}</color>";
+            else if (gm.Player.contracts.Count > 0)
+            {
+                var c = gm.Player.contracts[0];
+                line = $"<color=#9fd8ff>■</color> {c.cargo} → {gm.Contracts.TownName(c.toTown)}  <color=#d8d2e6>· {gm.Contracts.TimeLeftText(c)}</color>"
+                     + (gm.Player.contracts.Count > 1 ? $" 외 {gm.Player.contracts.Count - 1}건" : "");
+            }
+            if (line == null) return;
+            compactStyle ??= new GUIStyle(UIStyle.Rich) { wordWrap = false, clipping = TextClipping.Clip, alignment = TextAnchor.UpperRight };
+            float w = Mathf.Min(300, UIStyle.VirtualWidth * 0.45f);
+            UIStyle.Outlined(new Rect(UIStyle.VirtualWidth - w - 8, 8, w, 16), line, compactStyle);
+        }
+
         void DrawTracker(QuestManager qm)
         {
+            if (!HUD.Expanded) { DrawCompact(qm); return; }
             float w = 200, x = UIStyle.VirtualWidth - w - 6, y = 6;
             bool any = false;
             foreach (var p in qm.Active)
@@ -50,11 +72,11 @@ namespace PocketCaravan
                 var titleStyle = new GUIStyle(UIStyle.Rich) { wordWrap = true };
                 string title = mark + p.quest.title;
                 float titleHeight = titleStyle.CalcHeight(new GUIContent(title), w);
-                GUI.Label(new Rect(x, y, w, titleHeight), title, titleStyle);
+                UIStyle.Outlined(new Rect(x, y, w, titleHeight), title, titleStyle);
                 y += titleHeight;
                 string goal = "· " + qm.ProgressText(p);
                 float goalHeight = UIStyle.Wrap.CalcHeight(new GUIContent(goal), w - 6);
-                GUI.Label(new Rect(x + 6, y, w - 6, goalHeight), goal, UIStyle.Wrap);
+                UIStyle.Outlined(new Rect(x + 6, y, w - 6, goalHeight), goal, UIStyle.Wrap);
                 y += goalHeight + 4;
             }
             var gm = GameManager.I;
@@ -62,13 +84,13 @@ namespace PocketCaravan
             {
                 any = true;
                 string state = c.dropped ? "<color=#ff8a7a>떨어뜨림!</color>" : $"상태 {Mathf.RoundToInt(c.condition * 100)}%";
-                GUI.Label(new Rect(x, y, w, 14), $"<color=#9fd8ff>■</color> {c.cargo} → {gm.Contracts.TownName(c.toTown)}", UIStyle.Rich);
+                UIStyle.Outlined(new Rect(x, y, w, 14), $"<color=#9fd8ff>■</color> {c.cargo} → {gm.Contracts.TownName(c.toTown)}", UIStyle.Rich);
                 y += 13;
-                GUI.Label(new Rect(x + 6, y, w - 6, 14), $"· {gm.Contracts.TimeLeftText(c)} · {state} · 보수 {c.reward}", UIStyle.Small);
+                UIStyle.Outlined(new Rect(x + 6, y, w - 6, 14), $"· {gm.Contracts.TimeLeftText(c)} · {state} · 보수 {c.reward}", UIStyle.Small);
                 y += 14;
             }
             string hint = any ? "Q 여정 수첩 · 안내할 의뢰 선택" : "자유 교역 · ! 의뢰 · 게시판 배달\nQ 수첩에서 성장·주변 거래처 보기";
-            GUI.Label(new Rect(x, y, w, 42), hint, UIStyle.Wrap);
+            UIStyle.Outlined(new Rect(x, y, w, 42), hint, UIStyle.Wrap);
         }
 
         void DrawLog(QuestManager qm)

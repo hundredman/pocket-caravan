@@ -222,7 +222,6 @@ MonoBehaviour:
     neighbors:
     - north_c_road_ne
     - north_c_road_se
-    - transit_crossroads
     - north_c_runeway
   - mapId: north_c_road_sw
     displayName: "\uC11C\uB0A8 \uC194\uC232\uAE38"
@@ -233,6 +232,8 @@ MonoBehaviour:
     neighbors:
     - north_c_snowwood
     - north_c_crossing
+    - venice_c_pass
+    - venice_c_gate
   - mapId: north_c_crossing
     displayName: "\uBD81\uCABD \uAE38\uBAA9 \uB9C8\uC744"
     height: 46
@@ -253,6 +254,7 @@ MonoBehaviour:
     neighbors:
     - north_c_creek
     - north_c_crossing
+    - transit_crossroads
   - mapId: venice_c_landing
     displayName: "\uBCF8\uD1A0 \uB098\uB8E8\uD130"
     height: 56
@@ -292,6 +294,7 @@ MonoBehaviour:
     neighbors:
     - venice_c_vineyard
     - venice_c_post
+    - north_c_road_sw
   - mapId: venice_c_bridge
     displayName: "\uB3CC\uB2E4\uB9AC \uB098\uB8E8"
     height: 44
@@ -321,6 +324,7 @@ MonoBehaviour:
     town: 
     neighbors:
     - venice_c_post
+    - north_c_road_sw
     - arabia_central_steppe
   - mapId: Gaegyeong
     displayName: "\uAC1C\uACBD"
@@ -371,6 +375,8 @@ MonoBehaviour:
     neighbors:
     - north_pass
     - north_fjord_road
+    - north_herd
+    - north_laugar
   - mapId: north_fjord_road
     displayName: "\uD53C\uC624\uB974 \uAE38"
     height: 42
@@ -379,8 +385,7 @@ MonoBehaviour:
     town: 
     neighbors:
     - north_birka
-    - north_herd
-    - north_laugar
+    - north_icecave
     - north_naru
   - mapId: north_hunter
     displayName: "\uBAA8\uD53C \uC0AC\uB0E5\uAFBC \uB9C8\uC744"
@@ -389,6 +394,7 @@ MonoBehaviour:
     coord: {x: 32, y: 0}
     town: north_hunter
     neighbors:
+    - north_herd
     - north_c_road_nw
     - north_pass
   - mapId: north_naru
@@ -404,26 +410,28 @@ MonoBehaviour:
     displayName: "\uB77C\uC6B0\uAC00\uB974 \uC628\uCC9C \uB9C8\uC744"
     height: 36
     legacyHeight: 0
-    coord: {x: 34, y: 2}
+    coord: {x: 33, y: 2}
     town: north_laugar
     neighbors:
-    - north_fjord_road
+    - north_birka
     - north_runehill
+    - north_herd
     - north_icecave
   - mapId: north_herd
     displayName: "\uC21C\uB85D \uACE0\uC6D0 \uB9C8\uC744"
     height: 34
     legacyHeight: 0
-    coord: {x: 35, y: 1}
+    coord: {x: 32, y: 1}
     town: north_herd
     neighbors:
-    - north_fjord_road
-    - north_icecave
+    - north_birka
+    - north_laugar
+    - north_hunter
   - mapId: north_runehill
     displayName: "\uB8EC\uB3CC \uC5B8\uB355"
     height: 38
     legacyHeight: 0
-    coord: {x: 34, y: 3}
+    coord: {x: 33, y: 3}
     town: 
     neighbors:
     - north_laugar
@@ -431,10 +439,10 @@ MonoBehaviour:
     displayName: "\uC5BC\uC74C \uB3D9\uAD74 \uACE8\uC9DC\uAE30"
     height: 36
     legacyHeight: 0
-    coord: {x: 35, y: 2}
+    coord: {x: 34, y: 2}
     town: 
     neighbors:
-    - north_herd
+    - north_fjord_road
     - north_laugar
   - mapId: north_pass
     displayName: "\uAD6D\uACBD \uACE0\uAC1C"
@@ -508,7 +516,7 @@ MonoBehaviour:
     - transit_central_approach
     - transit_ferry
     - transit_wetroad
-    - north_c_creek
+    - north_c_road_se
     - arabia_central_eastvale
     - arabia_central_steppe
   - mapId: venice_rialto

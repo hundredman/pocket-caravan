@@ -60,14 +60,14 @@ namespace PocketCaravan.EditorTools
             {
                 new TownFacility { id = "north_capital_rest", displayName = "회관 손님방", kind = FacilityKind.Rest, minTier = 1, minCredit = 0, storageCapacity = 120f },
                 new TownFacility { id = "north_capital_info", displayName = "룬돌 길 안내소", kind = FacilityKind.RouteInformation, minTier = 2, minCredit = 1, storageCapacity = 120f,
-                    description = "동쪽 피오르 길에서 피오르 나루·온천 마을, 트롤 다리 너머 순록 고원으로 갈라집니다.\n남쪽 얼음 나루길을 건너면 국경 고개, 고개 서쪽이 모피 사냥꾼 마을, 고개 아래가 중앙 대륙입니다.\n모피는 숲에서 싸고 바닷가에서 비쌉니다." },
+                    description = "북쪽 산길로 온천 마을(그 위 룬돌 언덕), 서쪽 옛 관문 너머 순록 고원, 동쪽 피오르 길에서 피오르 나루·트롤 다리 너머 얼음 동굴 골짜기로 갈라집니다.\n남쪽 얼음 나루길을 건너면 국경 고개, 고개 서쪽이 모피 사냥꾼 마을, 고개 아래가 중앙 대륙입니다.\n모피는 숲에서 싸고 바닷가에서 비쌉니다." },
                 new TownFacility { id = "north_capital_warehouse", displayName = "상인 길드 창고", kind = FacilityKind.Warehouse, minTier = 3, minCredit = 3, storageCapacity = 120f },
             };
             var hunter = Town("Town_Hunter", "north_hunter", "모피 사냥꾼 마을", new Vector2Int(28, 0), 1);
             var naru = Town("Town_Naru", "north_naru", "피오르 나루 마을", new Vector2Int(30, 0), 1);
-            // 10/23 추가: 피오르 길 북쪽 골짜기의 온천 마을, 피오르 길 동쪽 트롤 다리 너머의 순록 고원 마을 (10/26 배치 바꿈)
-            var laugar = Town("Town_Laugar", "north_laugar", "라우가르 온천 마을", new Vector2Int(30, 2), 1);
-            var herd = Town("Town_Herd", "north_herd", "순록 고원 마을", new Vector2Int(31, 1), 1);
+            // 10/23 추가: 온천 마을, 순록 고원 마을 (10/28 배치 바꿈: 온천은 비르카 북쪽, 순록 고원은 비르카 서쪽)
+            var laugar = Town("Town_Laugar", "north_laugar", "라우가르 온천 마을", new Vector2Int(29, 2), 1);
+            var herd = Town("Town_Herd", "north_herd", "순록 고원 마을", new Vector2Int(28, 1), 1);
             // 10/26 중앙 대륙 북쪽 1/4 (피자 구성): 장터 마을 4곳. 북유럽 지역(2만 칸)이 아니라 중앙 북쪽 구역 소속 (World/Regions/center_north.json)
             // 좌표는 center_north.json의 worldX, worldY와 같게 (화요일 중앙 합칠 때 다시 정함)
             var centerNorth = Upsert<RegionData>($"{Root}/Data/Center/Region_CenterNorth.asset", r => { r.id = "center_north"; r.displayName = "중앙 북쪽"; r.note = "중앙 대륙 10만 칸 중 북쪽 1/4 (기우 담당, 2만5천 칸). 마을 4곳 + 길 5곳"; });

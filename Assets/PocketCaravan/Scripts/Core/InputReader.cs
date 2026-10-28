@@ -7,7 +7,7 @@ namespace PocketCaravan
 {
     /// <summary>
     /// 키 입력을 한곳에서 읽는다. 키를 바꾸거나 패드를 더할 때 여기만 고친다.
-    /// 이동: 방향키/WASD (8방향), 달리기: Shift, 말 걸기·확인: Space, 퀘스트 목록: Q, 지도: M, 취소·메뉴: Esc
+    /// 이동: 방향키/WASD (8방향), 달리기: Shift, 말 걸기·확인: Space, 상태창 펼치기: Tab, 퀘스트 목록: Q, 지도: M, 취소·메뉴: Esc
     /// 임시 시험용: G를 누르는 동안 6배 빠르게 (나중에 제거)
     /// </summary>
     public static class InputReader
@@ -37,6 +37,8 @@ namespace PocketCaravan
         public static bool QuestLogPressed() => K != null && K.qKey.wasPressedThisFrame;
         public static bool MapPressed() => K != null && K.mKey.wasPressedThisFrame;
         public static bool LedgerPressed() => K != null && K.lKey.wasPressedThisFrame;
+        /// <summary>상태창·할 일 펼치기 (5초 뒤 다시 한 줄)</summary>
+        public static bool StatusPressed() => K != null && K.tabKey.wasPressedThisFrame;
 #else
         public static Vector2 MoveVector()
         {
@@ -57,6 +59,7 @@ namespace PocketCaravan
         public static bool QuestLogPressed() => Input.GetKeyDown(KeyCode.Q);
         public static bool MapPressed() => Input.GetKeyDown(KeyCode.M);
         public static bool LedgerPressed() => Input.GetKeyDown(KeyCode.L);
+        public static bool StatusPressed() => Input.GetKeyDown(KeyCode.Tab);
 #endif
     }
 }

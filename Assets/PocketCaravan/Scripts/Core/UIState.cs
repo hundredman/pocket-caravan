@@ -59,6 +59,22 @@ namespace PocketCaravan
             GUI.matrix = Matrix4x4.Scale(new Vector3(Scale, Scale, 1f));
         }
     
+        static GUIStyle outlineStyle;
+        static readonly System.Text.RegularExpressions.Regex ColorTag = new System.Text.RegularExpressions.Regex("</?color[^>]*>");
+        static readonly Vector2[] OutlineOffsets = { new Vector2(1, 0), new Vector2(-1, 0), new Vector2(0, 1), new Vector2(0, -1), new Vector2(1, 1) };
+
+        /// <summary>어두운 테두리를 두른 글씨 (밝은 눈밭·모래 위에서도 읽히게). 색 태그는 테두리에서만 뺀다.</summary>
+        public static void Outlined(Rect r, string text, GUIStyle style)
+        {
+            outlineStyle ??= new GUIStyle(style);
+            outlineStyle.font = style.font; outlineStyle.fontSize = style.fontSize; outlineStyle.alignment = style.alignment;
+            outlineStyle.wordWrap = style.wordWrap; outlineStyle.clipping = style.clipping; outlineStyle.richText = true;
+            outlineStyle.normal.textColor = new Color(0.07f, 0.05f, 0.1f, 0.85f);
+            string plain = ColorTag.Replace(text, "");
+            foreach (var o in OutlineOffsets) GUI.Label(new Rect(r.x + o.x, r.y + o.y, r.width, r.height), plain, outlineStyle);
+            GUI.Label(r, text, style);
+        }
+
         /// <summary>게이지 막대 (바탕 어둡게, 채운 만큼 색)</summary>
         public static void Bar(Rect r, float value, Color32 fill)
         {
