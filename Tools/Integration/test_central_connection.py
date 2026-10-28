@@ -55,7 +55,7 @@ class CentralConnection(unittest.TestCase):
         # M4(2026-10-28): 중앙 길목 마을은 북쪽 내륙길·남쪽 내륙길하고만 이어진다. 다른 문명 출구는 통합 브랜치(connect_regions.py)가 넣는다
         m=self.maps['transit_crossroads']
         contract=json.loads((ROOT/'Assets/PocketCaravan/World/Connections/central_ports.json').read_text())
-        exits=[o for o in m['objects'] if o['kind']=='exit']
+        exits=[o for o in m['objects'] if o['kind']=='exit' and not o['spawn'].startswith('link_')]   # link_: 통합 브랜치의 다른 문명 연결
         self.assertEqual({e['target'] for e in exits},{'transit_central_approach','transit_south_inland'})
         self.assertTrue(all(o['target'] in self.maps for mm in self.maps.values() for o in mm['objects'] if o['kind']=='exit'))
         routes={p['direction']:p for p in contract['routes']}

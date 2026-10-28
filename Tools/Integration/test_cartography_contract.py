@@ -29,7 +29,7 @@ class CartographyContract(unittest.TestCase):
         for mid in entries:
             a = maps[mid]
             for exit in a['objects']:
-                if exit['kind'] != 'exit' or exit['target'] not in maps:
+                if exit['kind'] != 'exit' or exit['target'] not in entries:   # 이 지도 밖(다른 문명 연결)은 보지 않음
                     continue
                 b = maps[exit['target']]
                 self.assertTrue(any(o['kind'] == 'spawn' and o['id'] == exit['spawn'] for o in b['objects']), (mid, exit['spawn']))
