@@ -1,0 +1,235 @@
+{
+ "village": "east/동문 마을",
+ "map": "transit_woodtown",
+ "items": [
+  {
+   "name": "장터 광장",
+   "kind": "plaza",
+   "asset": null,
+   "w": 12,
+   "h": 7,
+   "id": "market:transit_woodtown",
+   "memo": "",
+   "x": 129,
+   "y": -3
+  },
+  {
+   "name": "상점",
+   "kind": "lot",
+   "asset": "shop",
+   "w": 6,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    131,
+    -4
+   ],
+   "laneLen": 4,
+   "x": 128,
+   "y": -8
+  },
+  {
+   "name": "곳간",
+   "kind": "lot",
+   "asset": "small_store",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    139,
+    -6
+   ],
+   "laneLen": 0,
+   "x": 137,
+   "y": -9
+  },
+  {
+   "name": "이벤트 마당",
+   "kind": "yard",
+   "asset": null,
+   "w": 8,
+   "h": 5,
+   "id": "",
+   "memo": "",
+   "x": 126,
+   "y": -14
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "asset": "thatch",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    144,
+    -6
+   ],
+   "laneLen": 0,
+   "x": 142,
+   "y": -9
+  },
+  {
+   "name": "집 2",
+   "kind": "lot",
+   "asset": "cottage",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    139,
+    -10
+   ],
+   "laneLen": 3,
+   "x": 137,
+   "y": -14
+  },
+  {
+   "name": "집 3",
+   "kind": "lot",
+   "asset": "thatch",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    144,
+    4
+   ],
+   "laneLen": 5,
+   "x": 142,
+   "y": 1
+  },
+  {
+   "name": "집 4",
+   "kind": "lot",
+   "asset": "tile-house",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    138,
+    -18
+   ],
+   "laneLen": 2,
+   "x": 136,
+   "y": -21
+  },
+  {
+   "name": "게시판",
+   "kind": "spot",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "board:transit_woodtown",
+   "memo": "",
+   "x": 142,
+   "y": -2
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "asset": "well",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 143,
+   "y": -12
+  },
+  {
+   "name": "석등 1",
+   "kind": "lantern",
+   "asset": "stone_lantern",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 141,
+   "y": -8
+  },
+  {
+   "name": "석등 2",
+   "kind": "lantern",
+   "asset": "stone_lantern",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 146,
+   "y": 2
+  },
+  {
+   "name": "길목 상인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "새 NPC ID는 M4",
+   "x": 127,
+   "y": -4
+  },
+  {
+   "name": "주민",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 141,
+   "y": -10
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 135,
+   "y": 5
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 127,
+   "y": 5
+  },
+  {
+   "name": "성장 자리 3",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 142,
+   "y": 9
+  },
+  {
+   "name": "성장 자리 4",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 120,
+   "y": 0
+  }
+ ],
+ "laneCells": 14
+}

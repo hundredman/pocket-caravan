@@ -1,0 +1,248 @@
+{
+ "villages": {
+  "goryeo/개경": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 27,
+   "laneCells": 36
+  },
+  "goryeo/송악": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 17,
+   "laneCells": 35
+  },
+  "goryeo/닥목": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 18,
+   "laneCells": 74
+  },
+  "goryeo/장단": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 17,
+   "laneCells": 24
+  },
+  "east/동문 마을": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 18,
+   "laneCells": 14
+  },
+  "east/북동 포구": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 21,
+   "laneCells": 20
+  },
+  "east/남동 포구": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 21,
+   "laneCells": 30
+  },
+  "east/중앙 길목 마을": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 19,
+   "laneCells": 29
+  },
+  "hamlet/북쪽 쉼터 마을": {
+   "missing": [
+    "집 2"
+   ],
+   "laneBlocked": [],
+   "n": 12,
+   "laneCells": 12
+  },
+  "hamlet/남쪽 호숫가 마을": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 15,
+   "laneCells": 11
+  },
+  "goryeo/나루": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 25,
+   "laneCells": 48
+  }
+ },
+ "roads": {
+  "allVillagesOneNetwork": true,
+  "components": {
+   "goryeo/개경": [
+    1
+   ],
+   "goryeo/송악": [
+    1
+   ],
+   "goryeo/닥목": [
+    1
+   ],
+   "goryeo/나루": [
+    1
+   ],
+   "goryeo/장단": [
+    1
+   ],
+   "east/동문 마을": [
+    1
+   ],
+   "east/북동 포구": [
+    1
+   ],
+   "east/남동 포구": [
+    1
+   ],
+   "east/중앙 길목 마을": [
+    1
+   ],
+   "hamlet/북쪽 쉼터 마을": [
+    1
+   ],
+   "hamlet/남쪽 호숫가 마을": [
+    1
+   ]
+  },
+  "gates": [
+   {
+    "maps": [
+     "east/북동 길",
+     "east/북동 포구"
+    ],
+    "x": 130,
+    "y": -74
+   },
+   {
+    "maps": [
+     "east/북동 길",
+     "east/북쪽 내륙길"
+    ],
+    "x": 103,
+    "y": -49
+   },
+   {
+    "maps": [
+     "east/북동 길",
+     "east/북쪽 내륙길"
+    ],
+    "x": 106,
+    "y": -25
+   },
+   {
+    "maps": [
+     "goryeo/닥목",
+     "goryeo/송악"
+    ],
+    "x": 214,
+    "y": -33
+   },
+   {
+    "maps": [
+     "east/동문 마을",
+     "east/북동 길"
+    ],
+    "x": 134,
+    "y": -31
+   },
+   {
+    "maps": [
+     "east/동문 마을",
+     "east/북동 길"
+    ],
+    "x": 122,
+    "y": -26
+   },
+   {
+    "maps": [
+     "goryeo/개경",
+     "goryeo/닥목"
+    ],
+    "x": 238,
+    "y": -25
+   },
+   {
+    "maps": [
+     "east/북쪽 내륙길",
+     "east/중앙 길목 마을"
+    ],
+    "x": 65,
+    "y": -18
+   },
+   {
+    "maps": [
+     "east/북쪽 내륙길",
+     "east/중앙 길목 마을"
+    ],
+    "x": 76,
+    "y": -9
+   },
+   {
+    "maps": [
+     "east/동문 마을",
+     "goryeo/송악"
+    ],
+    "x": 157,
+    "y": -5
+   },
+   {
+    "maps": [
+     "east/남동 길",
+     "east/동문 마을"
+    ],
+    "x": 151,
+    "y": 14
+   },
+   {
+    "maps": [
+     "goryeo/개경",
+     "goryeo/나루"
+    ],
+    "x": 249,
+    "y": 28
+   },
+   {
+    "maps": [
+     "east/남쪽 내륙길",
+     "east/중앙 길목 마을"
+    ],
+    "x": 62,
+    "y": 36
+   },
+   {
+    "maps": [
+     "goryeo/나루",
+     "goryeo/장단"
+    ],
+    "x": 222,
+    "y": 59
+   },
+   {
+    "maps": [
+     "east/남동 길",
+     "east/남동 포구"
+    ],
+    "x": 138,
+    "y": 70
+   },
+   {
+    "maps": [
+     "east/남동 포구",
+     "east/남쪽 내륙길"
+    ],
+    "x": 97,
+    "y": 74
+   },
+   {
+    "maps": [
+     "goryeo/송악",
+     "goryeo/장단"
+    ],
+    "x": 191,
+    "y": 11
+   }
+  ]
+ }
+}
