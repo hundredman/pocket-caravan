@@ -57,8 +57,8 @@
   "village": "goryeo/개경",
   "name": "집 3",
   "asset": "tile-house",
-  "x": 268,
-  "y": -1,
+  "x": 271,
+  "y": -4,
   "w": 4,
   "h": 2
  },
@@ -66,15 +66,6 @@
   "village": "goryeo/개경",
   "name": "집 4",
   "asset": "tile-house",
-  "x": 244,
-  "y": -8,
-  "w": 4,
-  "h": 2
- },
- {
-  "village": "goryeo/개경",
-  "name": "집 5",
-  "asset": "thatch",
   "x": 265,
   "y": 15,
   "w": 4,
@@ -82,10 +73,19 @@
  },
  {
   "village": "goryeo/개경",
-  "name": "집 6",
+  "name": "집 5",
   "asset": "thatch",
   "x": 246,
-  "y": -19,
+  "y": -20,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/개경",
+  "name": "집 6",
+  "asset": "thatch",
+  "x": 253,
+  "y": -16,
   "w": 4,
   "h": 2
  },
@@ -262,15 +262,6 @@
  },
  {
   "village": "goryeo/닥목",
-  "name": "집 3",
-  "asset": "thatch",
-  "x": 233,
-  "y": -51,
-  "w": 4,
-  "h": 2
- },
- {
-  "village": "goryeo/닥목",
   "name": "한지 건조대 1",
   "asset": "paper_rack",
   "x": 240,
@@ -291,8 +282,8 @@
   "village": "goryeo/닥목",
   "name": "우물",
   "asset": "well",
-  "x": 229,
-  "y": -39,
+  "x": 220,
+  "y": -38,
   "w": 1,
   "h": 1
  },
@@ -300,8 +291,8 @@
   "village": "goryeo/닥목",
   "name": "석등 1",
   "asset": "stone_lantern",
-  "x": 221,
-  "y": -40,
+  "x": 229,
+  "y": -41,
   "w": 1,
   "h": 1
  },
@@ -346,7 +337,7 @@
   "name": "집 4",
   "asset": "thatch",
   "x": 211,
-  "y": 45,
+  "y": 44,
   "w": 4,
   "h": 2
  },
@@ -372,8 +363,8 @@
   "village": "goryeo/장단",
   "name": "우물",
   "asset": "well",
-  "x": 212,
-  "y": 48,
+  "x": 211,
+  "y": 47,
   "w": 1,
   "h": 1
  },
@@ -418,7 +409,7 @@
   "name": "집 2",
   "asset": "cottage",
   "x": 137,
-  "y": -13,
+  "y": -14,
   "w": 5,
   "h": 3
  },
@@ -616,7 +607,7 @@
   "name": "집 4",
   "asset": "cottage",
   "x": 130,
-  "y": 88,
+  "y": 87,
   "w": 5,
   "h": 3
  },
@@ -624,8 +615,8 @@
   "village": "east/남동 포구",
   "name": "우물",
   "asset": "well",
-  "x": 130,
-  "y": 85,
+  "x": 121,
+  "y": 87,
   "w": 1,
   "h": 1
  },

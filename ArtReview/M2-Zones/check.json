@@ -4,7 +4,7 @@
    "missing": [],
    "laneBlocked": [],
    "n": 27,
-   "laneCells": 36
+   "laneCells": 40
   },
   "goryeo/송악": {
    "missing": [],
@@ -13,16 +13,18 @@
    "laneCells": 35
   },
   "goryeo/닥목": {
-   "missing": [],
+   "missing": [
+    "집 3"
+   ],
    "laneBlocked": [],
    "n": 18,
-   "laneCells": 74
+   "laneCells": 17
   },
   "goryeo/장단": {
    "missing": [],
    "laneBlocked": [],
    "n": 17,
-   "laneCells": 24
+   "laneCells": 17
   },
   "east/동문 마을": {
    "missing": [],

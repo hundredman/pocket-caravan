@@ -1,6 +1,6 @@
 {
  "waterAdded": 148,
- "roadAdded": 2040,
+ "roadAdded": 2169,
  "bridgeCells": 195,
  "bridges": [
   {
@@ -40,19 +40,19 @@
   "water:0:8": 208,
   "water:1:8": 201,
   "water:6:7": 209,
-  "floor:0:7": 183,
-  "floor:1:7": 385,
-  "floor:2:7": 185,
-  "floor:0:9": 182,
-  "floor:1:9": 395,
-  "floor:2:9": 176,
-  "floor:6:9": 174,
-  "floor:1:8": 1570,
-  "floor:2:8": 397,
-  "floor:0:8": 393,
-  "floor:5:9": 176,
-  "floor:6:8": 173,
-  "floor:5:8": 167,
+  "floor:0:7": 160,
+  "floor:1:7": 383,
+  "floor:2:7": 146,
+  "floor:6:9": 156,
+  "floor:5:8": 153,
+  "floor:2:9": 157,
+  "floor:0:8": 356,
+  "floor:1:9": 379,
+  "floor:2:8": 366,
+  "floor:5:9": 142,
+  "floor:1:8": 1990,
+  "floor:0:9": 153,
+  "floor:6:8": 149,
   "water:5:7": 133,
   "water:2:8": 132,
   "water:0:6": 184,
@@ -69,12 +69,12 @@
  },
  "objects": {
   "mountain": {
-   "cells": 2357,
-   "trees": 1179
+   "cells": 2427,
+   "trees": 1213
   },
   "forest": {
-   "cells": 5464,
-   "trees": 2731
+   "cells": 5499,
+   "trees": 2751
   },
   "source": {
    "sources": [
@@ -95,45 +95,45 @@
      -9
     ]
    ],
-   "trees": 55
+   "trees": 56
   },
   "hill": 52,
   "marsh": 29,
   "lotus": 17,
-  "flowers": 85,
-  "tufts": 644,
+  "flowers": 83,
+  "tufts": 640,
   "loneTrees": 45
  },
  "reviewBakedPieces": {
   "floor:2:7": "2e47a5819c8bc66ccf308f119aa656669047e976025fb93eb8b39d6961a51878",
-  "floor:0:9": "a74a864c56988bc67e253a28a3016ea3ca8db35d75f993c488ea0e56b6f265b8",
-  "floor:1:9": "82a0d997dd8e7073dbcc84af92d099ba3a389b51cac1809bb85662024c7d0b69",
-  "floor:2:9": "9c5a65480d3bccb4aa4985647bc74758fe21ce824e997729f51676c539c78536",
   "floor:6:9": "0641ce638b1636b041817b746b942e6e99b7d97a0fff68ecceceff502f4f2e80",
-  "floor:2:8": "0ee99d16e0d0c19f304b7f357a26e7e14e508a638ac2e8b5ea514684a3db1f7e",
+  "floor:2:9": "9c5a65480d3bccb4aa4985647bc74758fe21ce824e997729f51676c539c78536",
   "floor:0:8": "fa81bcc4f25d0e87605100b4ba2fc7855c7bfa249143f0881c797b38fad1ce36",
+  "floor:1:9": "82a0d997dd8e7073dbcc84af92d099ba3a389b51cac1809bb85662024c7d0b69",
+  "floor:2:8": "0ee99d16e0d0c19f304b7f357a26e7e14e508a638ac2e8b5ea514684a3db1f7e",
   "floor:5:9": "61ba576c4e80a4a40b526c8bd43325df3607dda33ee3fe7c3a325adb5dc04bf2",
+  "floor:0:9": "a74a864c56988bc67e253a28a3016ea3ca8db35d75f993c488ea0e56b6f265b8",
   "floor:6:8": "4dc96d92df3c02bdd9281bbb68d8c3127927ca5fcc2790a54227ed9908d7d040"
  },
  "forestUniqueTiles": {
   "mountain": {
-   "cells": 3560,
-   "unique": 677
+   "cells": 3632,
+   "unique": 689
   },
   "forest": {
-   "cells": 10672,
-   "unique": 1317
+   "cells": 10719,
+   "unique": 1315
   },
   "source": {
-   "cells": 703,
-   "unique": 446
+   "cells": 766,
+   "unique": 463
   }
  },
  "village": {
   "blocked": {},
-  "collisionCells": 758,
-  "lotCells": 991,
-  "plazaYardCells": 1251,
-  "laneCells": 631
+  "collisionCells": 750,
+  "lotCells": 979,
+  "plazaYardCells": 1237,
+  "laneCells": 545
  }
 }

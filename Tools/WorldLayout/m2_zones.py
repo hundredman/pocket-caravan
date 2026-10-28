@@ -186,7 +186,7 @@ class Planner:
     def miss(s,it):s.out.append(dict(name=it['name'],kind=it['kind'],missing=True,memo=it.get('memo','')))
     def place_rect(s,it):
         w,h,k=it['w'],it['h'],it['kind'];a=it.get('anchor','center')
-        ay,ax=s.anchor_pt(a);best=None;pz=s.named.get('장터 광장')
+        ay,ax=s.anchor_pt(a);best=None;pz=s.named.get('장터 광장');cands=[]
         ys,xs=np.nonzero(s.vm);Y0,Y1,X0,X1=ys.min()-3,ys.max()+3,xs.min()-3,xs.max()+3
         open_=s.land&~s.road
         for y0 in range(Y0,Y1-h+2):
@@ -197,7 +197,7 @@ class Planner:
                     if not (s.land&~s.road)[y0-1:y0+h+1,x0-1:x0+w+1].any():continue
                     if s.soft[y0-1:y0+h+1,x0-1:x0+w+1].any():continue
                     sc=math.hypot(y0+h/2-ay,x0+w/2-ax)
-                    if best is None or sc<best[0]:best=(sc,y0,x0)
+                    cands.append((sc,y0,x0))
                     continue
                 if k=='shore':
                     if not s.shore[y0:y0+h,x0:x0+w].any():continue
@@ -219,9 +219,49 @@ class Planner:
                     sc=(.3*sc+1.2*dr) if it['name'].startswith('집 ') else sc+.6*dr
                 if a not in('center','away','water') and k!='moor' and s.wet((int(cy),int(cx)),(int(ay),int(ax))):sc+=30
                 if k=='yard' and s.droad[y0-1:y0+h+1,x0-1:x0+w+1].min()>6:continue
-                if best is None or sc<best[0]:best=(sc,y0,x0)
-        if best is None:return s.miss(it)
-        return s.put(it,best[1],best[2])
+                cands.append((sc,y0,x0))
+        cands.sort()
+        for sc,y0,x0 in cands[:3000]:
+            if k=='lot' and s.lane_len(y0+h,x0+w//2,(y0,x0,w,h))>24:continue
+            if k=='shore' and s.lane_len(y0+h-1,x0,(0,0,0,0),start_rect=(y0,x0,w,h))>24:continue
+            if k=='shore' and it.get('asset') and not s.keeps_paths((y0,x0,w,h)):continue
+            return s.put(it,y0,x0)
+        return s.miss(it)
+    def keeps_paths(s,rect):
+        """물가 소품(빨래터 등)을 놓아도 둘레 건물 문·나루터에서 길로 가는 골목이 막히지 않는지"""
+        y0,x0,w,h=rect
+        for r in s.out:
+            if r.get('missing') or abs(r['iy']-y0)>12 or abs(r['ix']-x0)>12:continue
+            if r['kind']=='lot' and s.lane_len(r['door'][0],r['door'][1],rect)>24:return False
+            if r['kind']=='shore' and not r.get('asset'):
+                s.lot[y0:y0+h,x0:x0+w]=True
+                try:
+                    if s.lane_len(0,0,(0,0,0,0),start_rect=(r['iy'],r['ix'],r['w'],r['h']))>24:return False
+                finally:s.lot[y0:y0+h,x0:x0+w]=False
+        return True
+    def lane_len(s,dy,dx,newlot,start_rect=None):
+        """문 앞(또는 자리)에서 길까지 2칸 폭 골목으로 가는 길이. 못 가면 999"""
+        walk=s.land&~s.lot
+        if newlot[2]:walk=walk.copy();walk[newlot[0]:newlot[0]+newlot[3],newlot[1]:newlot[1]+newlot[2]]=False
+        # 2칸 폭: 칸이 들어가는 2×2 걷기 덩어리가 있어야
+        a=walk[:-1,:-1]&walk[1:,:-1]&walk[:-1,1:]&walk[1:,1:];w2=np.zeros_like(walk)
+        w2[:-1,:-1]|=a;w2[1:,:-1]|=a;w2[:-1,1:]|=a;w2[1:,1:]|=a
+        q=deque();seen=set()
+        if start_rect:
+            y0,x0,w,h=start_rect
+            for yy in range(y0,y0+h):
+                for xx in range(x0,x0+w):q.append(((yy,xx),0));seen.add((yy,xx))
+        else:
+            if not(0<=dy<s.H) or not w2[dy,dx]:return 999
+            q.append(((dy,dx),0));seen.add((dy,dx))
+        while q:
+            c,dd=q.popleft()
+            if s.road[c]:return dd
+            if dd>30:return 999
+            for oy,ox in((1,0),(-1,0),(0,1),(0,-1)):
+                n=(c[0]+oy,c[1]+ox)
+                if 0<=n[0]<s.H and 0<=n[1]<s.W and n not in seen and (w2[n] or s.road[n]):seen.add(n);q.append((n,dd+1))
+        return 999
     def place_spot(s,it):
         k=it['kind'];a=it.get('anchor','plaza');w,h=it['w'],it['h']
         ref=s.named.get(a) or (s.named.get('장터 광장') if a=='plaza' else None)
