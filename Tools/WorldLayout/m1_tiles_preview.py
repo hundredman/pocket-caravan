@@ -166,12 +166,55 @@ TREES_HILL=['shrub:2:2','shrub:2:2','small_rock:2:2','forest_round:3:4','light_t
 TREES_LONE=['broadleaf:4:4','willow:4:4','light_tree:3:4','golden_tree:3:4','shrub:2:2','forest_round:3:4']
 REEDS='tall_grass:2:2';LOTUS='lotus:2:1';SHEAF='harvest:3:2'
 
+P=6   # 숲 합성 블록 크기(칸). 이 블록이 반복되는 '숲 타일'
+FOREST_BLOCK=['forest_round:3:4','forest_bent:3:4','broadleaf:4:4','round_west:4:3','round_east:4:3','forest_wide:4:3','light_tree:3:4']
+MOUNT_BLOCK=['pine_west:4:3','pine_east:4:3','pine_west:4:3','pine_east:4:3','forest_bent:3:4','moss_rock:3:2']
+BLOCKS={}
+
+def clean(m,minsize):
+    m=ndimage.binary_closing(ndimage.binary_opening(m),iterations=1)&m|ndimage.binary_opening(m)
+    lab,n=ndimage.label(m)
+    if n:
+        sizes=ndimage.sum(np.ones_like(lab),lab,range(1,n+1))
+        for i,sz in enumerate(sizes,1):
+            if sz<minsize:m[lab==i]=False
+    return m
+
+def forest_block(kinds,seed):
+    """승인된 나무 그림을 빽빽하게 겹쳐 P×P칸 반복 블록을 만든다(가장자리가 이어지도록 감아 그림).
+    lat: 블록 안 나무 자리(밑동 칸) → 나무 이름. 같은 자리를 숲 가장자리에서 통째로 다시 그려 경계를 자연스럽게."""
+    r=np.random.default_rng(seed);lat={}
+    # 2칸마다 한 그루 + 엇갈린 줄에 한 그루 더(틈이 보이지 않을 만큼 빽빽하게)
+    for gy in range(0,P,2):
+        for gx in range(0,P,2):
+            for oy,ox in((0,0),(1,1)):
+                lat[((gy+oy)%P,(gx+ox)%P)]=kinds[int(r.integers(len(kinds)))]
+    ims={k:sprite(k) for k in set(lat.values())}
+    # 바탕: 나무 그림의 가장 어두운 잎 색(그림 사이 틈을 숲 그늘처럼)
+    px=[p for k in ims for p in ims[k].getdata() if p[3]==255]
+    import collections as C
+    dark=[c for c,_ in C.Counter(px).most_common(40) if sum(c[:3])<240 and c[1]>c[0]]
+    bg=dark[0] if dark else (40,70,50,255)
+    blk=Image.new('RGBA',(P*T,P*T),bg)
+    for (y,x),k in sorted(lat.items()):
+        im=ims[k];sw,sh=im.width//T,im.height//T
+        for oy in(-P,0,P):
+            for ox in(-P,0,P):
+                blk.alpha_composite(im,((x-sw//2+ox)*T,(y-sh+1+oy)*T)) if (x-sw//2+ox)*T>=0 and (y-sh+1+oy)*T>=0 else _paste(blk,im,(x-sw//2+ox)*T,(y-sh+1+oy)*T)
+    return blk,lat
+
+def _paste(dst,im,x,y):
+    sx,sy=max(0,-x),max(0,-y)
+    if sx>=im.width or sy>=im.height:return
+    dst.alpha_composite(im.crop((sx,sy,im.width,im.height)),(x+sx,y+sy))
+
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--no',default='');a=ap.parse_args()
     off=set(filter(None,a.no.split(',')))
     v.VARIANT['area']=v.SMALL_CENTRAL;v.VARIANT['hamlets']=v.HAMLETS
     layout=WorldLayout.read();w=v.build(layout);r=v.roads(layout,w);v.partition(layout,w,r)
     t=w['t'];own=w['owned'];H,W=t.shape;rng=np.random.default_rng(11)
+    def inside(y,x):return 0<=y<H and 0<=x<W
     water0=np.isin(t,[v.DEEP,v.SHALLOW,v.RIVER,v.LAKE])&own
     road0=r['road']&own
     # 물: 2×2 규칙(가는 개울은 2칸으로 넓힘). 길은 물 위에서 다리로.
@@ -189,19 +232,40 @@ def main():
         rest=tileready(own&~water&~road,own&~water)
         if not (own&~water&~road&~rest).any():break
         road|=own&~water&~road&~rest
-    # 다리: 길이 물을 건너는 덩어리마다 네모 반듯하게(물 칸만 판자)
+    # 다리: 지금 게임의 목조 다리(3칸 폭 판자 + 양옆 난간)를 강을 가장 짧게 건너는 방향으로 놓는다.
+    decks=[];deck=np.zeros_like(bridge)
     lab,n_=ndimage.label(ndimage.binary_dilation(bridge,iterations=1)&water)
-    bridge=np.zeros_like(bridge)
-    for sl in ndimage.find_objects(lab):
-        bridge[sl]|=water[sl]
-    road|=bridge
+    for i_ in range(1,n_+1):
+        cy,cx=[int(round(c)) for c in np.argwhere(lab==i_).mean(0)]
+        if not water[cy,cx]:
+            cc=np.argwhere(lab==i_);cy,cx=cc[np.argmin(((cc-[cy,cx])**2).sum(1))]
+        def span(dy,dx):
+            k=0
+            while inside(cy+dy*(k+1),cx+dx*(k+1)) and water[cy+dy*(k+1),cx+dx*(k+1)]:k+=1
+            return k
+        l,r_,u,d=span(0,-1),span(0,1),span(-1,0),span(1,0)
+        if l+r_<=u+d:x0,x1,y0,y1,hz=cx-l-1,cx+r_+1,cy-1,cy+1,True
+        else:x0,x1,y0,y1,hz=cx-1,cx+1,cy-u-1,cy+d+1,False
+        if max(x1-x0,y1-y0)>16 or not all(inside(yy,xx) and own[yy,xx] for yy in(y0,y1) for xx in(x0,x1)):continue
+        decks.append((x0,y0,x1,y1,hz));deck[y0:y1+1,x0:x1+1]=True
+    # 물 위의 길은 다리 판자 말고는 없앤다. 다리 양 끝에서 길까지 곧게 잇는다.
+    for x0,y0,x1,y1,hz in decks:
+        ends=[((y0,y1),(x0-1,-1)),((y0,y1),(x1+1,1))] if hz else [((x0,x1),(y0-1,-1)),((x0,x1),(y1+1,1))]
+        for (a0,a1),(start,step) in ends:
+            for k in range(10):
+                c=start+step*k
+                cells=[(yy,c) for yy in range(a0,a1+1)] if hz else [(c,xx) for xx in range(a0,a1+1)]
+                if any(not inside(*q) or water[q] for q in cells):break
+                if any(road[q] for q in cells) and k>0:break
+                for q in cells:road[q]=True
+    road&=~water
+    bridge=deck
     # 외톨이 길 조각(4칸 미만 덩어리) 제거
     lab,n_=ndimage.label(road&~bridge)
     for i_,sl in enumerate(ndimage.find_objects(lab),1):
         if (lab[sl]==i_).sum()<4:road[sl][lab[sl]==i_]=False
     land=own&~water
     rep=dict(waterAdded=int((water&~water0).sum()),roadAdded=int((road&~road0).sum()),bridgeCells=int(bridge.sum()))
-    def inside(y,x):return 0<=y<H and 0<=x<W
     img=Image.new('RGBA',(W*T,H*T),(28,34,40,255))
     pieces=collections.Counter();bad=collections.Counter()
     def mk(mask,y,x,center):
@@ -220,14 +284,22 @@ def main():
                 if rel is None:bad['water']+=1;rel=(1,1)
                 key=f'water:{rel[0]}:{rel[1]+6}'
                 img.alpha_composite(tile(key),(x*T,y*T));pieces[key]+=1
-                if bridge[y,x]:img.alpha_composite(_plank(),(x*T,y*T))
             elif road[y,x]:
-                rel=autorel(mk(road,y,x,True),y,x)
+                rel=autorel(mk(road|deck,y,x,True),y,x)
                 if rel is None:bad['road']+=1;img.alpha_composite(tile(g),(x*T,y*T));continue
                 key=f'floor:{rel[0]}:{rel[1]+7}'
                 img.alpha_composite(tile(key),(x*T,y*T));pieces[key]+=1
             else:
                 img.alpha_composite(tile(g),(x*T,y*T))
+    for x0,y0,x1,y1,hz in decks:
+        for y in range(y0,y1+1):
+            for x in range(x0,x1+1):
+                if hz:sx=0 if y==y1 else 2 if y==y0 else 1;sy=12 if x==x0 else 14 if x==x1 else 13;nm=f'water_{sx}_{sy}_woodturn'
+                else:sx=0 if x==x0 else 2 if x==x1 else 1;sy=12 if y==y0 else 14 if y==y1 else 13;nm=f'water_{sx}_{sy}_wood'
+                img.alpha_composite(gameart(nm),(x*T,y*T))
+                if hz and y in(y0,y1):img.alpha_composite(gameart(f"wood_rail{'htop' if y==y0 else 'hbottom'}_{1 if x in(x0,x1) else 0}"),(x*T,y*T))
+                if not hz and x in(x0,x1):img.alpha_composite(gameart(f"wood_rail{'vleft' if x==x0 else 'vright'}_{1 if y in(y0,y1) else 0}"),(x*T,y*T))
+    rep['bridges']=[dict(x=x0+v.X0,y=y0+v.Y0,w=x1-x0+1,h=y1-y0+1,horizontal=hz) for x0,y0,x1,y1,hz in decks]
     rep['pieces']=dict(pieces);rep['unmatched']=dict(bad)
     def seams(mask):
         p=np.pad(mask,1,mode='edge');n,s_,w_,e=p[:-2,1:-1],p[2:,1:-1],p[1:-1,:-2],p[1:-1,2:]
@@ -260,8 +332,23 @@ def main():
         return n
     cls=lambda *ks:np.isin(t,ks)&own&~village
     counts={}
-    if 'mountain' not in off:counts['mountain']=scatter(cls(v.MOUNTAIN,v.PEAK)&free,TREES_MOUNT,.16)
-    if 'forest' not in off:counts['forest']=scatter(cls(v.FOREST)&free,TREES_FOREST,.07)
+    for kind,ks,mask_ in (('mountain',MOUNT_BLOCK,cls(v.MOUNTAIN,v.PEAK)&land),('forest',FOREST_BLOCK,cls(v.FOREST)&land)):
+        if kind in off:continue
+        fm=clean(mask_&~near_road&~near_water&~occ,12)
+        blk,lat=forest_block(ks,seed=3 if kind=='forest' else 5)
+        inner=ndimage.binary_erosion(fm,iterations=1)
+        dist=ndimage.distance_transform_edt(fm)
+        for y,x in np.argwhere(inner):
+            img.alpha_composite(blk.crop(((x%P)*T,(y%P)*T,(x%P+1)*T,(y%P+1)*T)),(x*T,y*T))
+        n=0
+        for y,x in np.argwhere(fm&(dist<=4)):
+            k=lat.get((y%P,x%P))
+            if k is None:continue
+            nm,sw,sh=k.split(':');sw,sh=int(sw),int(sh);x0=x-sw//2;y0=y-sh+1
+            if x0<0 or y0<0 or x0+sw>W:continue
+            objs.append((y,x0,y0,k));n+=1
+        occ|=ndimage.binary_dilation(fm,iterations=1);counts[kind]=dict(cells=int(fm.sum()),edgeTrees=n)
+        BLOCKS[kind]=blk
     if 'hill' not in off:counts['hill']=scatter(cls(v.HILL)&free,TREES_HILL,.025,margin=1)
     if 'marsh' not in off:
         mm=np.isin(t,[v.MARSH])&own&land&~near_road
@@ -274,16 +361,19 @@ def main():
                 objs.append((y,x,y,LOTUS));occ[y,x:x+2]=True;n+=1
         counts['lotus']=n
     if 'field' not in off:
-        # 논: 3×3 통짜 조각을 들판에 바둑판으로(사이 1칸 둑)
-        fm=np.isin(t,[v.FIELD])&land&~near_road&~village&~occ;n=0
-        for y in range(0,H-3,4):
-            for x in range(0,W-3,4):
-                sq=(slice(y,y+3),slice(x,x+3))
-                if fm[sq].all() and not occ[sq].any():
-                    for dy in range(3):
-                        for dx in range(3):img.alpha_composite(tile(f'element:{13+dx}:{4+dy}'),((x+dx)*T,(y+dy)*T))
-                    occ[sq]=True;n+=1
-        counts['paddy']=n
+        # 논: 기존 볏짚 바닥 3×3 조각(element 13~15, 4~6)을 9칸 조립으로 이어 붙인 넓은 들판 + 승인 볏단을 줄지어
+        fm=clean(np.isin(t,[v.FIELD])&land&~near_road&~near_water&~village&~occ,9)
+        fm=fill_diagonals(tileready(fm,fm),fm)
+        n=0
+        for y,x in np.argwhere(fm):
+            rel=autorel(mk(fm,y,x,False),y,x)
+            rel=(1,1) if rel is None or rel[0]>2 else rel
+            img.alpha_composite(tile(f'element:{13+rel[0]}:{4+rel[1]}'),(x*T,y*T));n+=1
+        inner=ndimage.binary_erosion(fm,iterations=1)
+        sh_=0
+        for y,x in np.argwhere(inner):
+            if x%2==0 and y%3==1 and inner[y-1,x]:objs.append((y,x,y-1,'sheaf_jangdan:1:2'));sh_+=1
+        occ|=ndimage.binary_dilation(fm,iterations=1);counts['field']=dict(cells=n,sheaves=sh_)
     if 'meadow' not in off:
         mm=np.isin(t,[v.MEADOW])&free&~occ;n=0
         for y,x in np.argwhere(mm):
@@ -300,6 +390,12 @@ def main():
     rep['objects']=counts;rep['reviewBakedPieces']=BAKED_FOR_REVIEW
     OUT.mkdir(parents=True,exist_ok=True)
     sfx=('-no-'+'-'.join(sorted(off))) if off else ''
+    for k,b in BLOCKS.items():
+        b.save(OUT/f'block-{k}.png')   # 새 합성 '숲 타일' 원본(P×P칸, 승인 대기)
+        t2=Image.new('RGBA',(b.width*2,b.height*2))
+        for oy in(0,1):
+            for ox in(0,1):t2.paste(b,(ox*b.width,oy*b.height))
+        t2.resize((t2.width*3,t2.height*3),Image.NEAREST).save(OUT/f'block-{k}-tiled.png')
     img.convert('RGB').save(OUT/f'world-full{sfx}.png')
     img.resize((W*T//4,H*T//4),Image.BOX).convert('RGB').save(OUT/f'world{sfx}.png')
     # 게임 크기 화면(480×270 = 30×17칸) — 세계 좌표(칸) 중심
@@ -309,6 +405,11 @@ def main():
         img.crop((x0,y0,x0+480,y0+272)).resize((960,544),Image.NEAREST).convert('RGB').save(OUT/f'cam-{k}{sfx}.png')
     (OUT/f'report{sfx}.json').write_text(json.dumps(rep,ensure_ascii=False,indent=1))
     print(json.dumps({k:v_ for k,v_ in rep.items() if k!='pieces'},ensure_ascii=False))
+
+def gameart(name):
+    d=ROOT/'Assets/PocketCaravan/Art/NinjaAdventure/Tiles'
+    p=d/(name+'_'+SKIN+'.png')
+    return Image.open(p if p.exists() else d/(name+'.png')).convert('RGBA')
 
 _pl=None
 def _plank():
