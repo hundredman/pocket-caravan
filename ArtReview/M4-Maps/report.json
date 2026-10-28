@@ -11,7 +11,27 @@
   "terrain": [
    202,
    27
-  ]
+  ],
+  "villages": [
+   "naru"
+  ],
+  "exits": 55,
+  "spawns": 56,
+  "objects": {
+   "ambience": 1,
+   "board": 1,
+   "exit": 55,
+   "growth": 8,
+   "lantern": 1,
+   "market": 1,
+   "npc": 2,
+   "pastime": 1,
+   "spawn": 56,
+   "talker": 2,
+   "worker": 1
+  },
+  "moved": [],
+  "missing": []
  },
  "goryeo_jangdan": {
   "key": "goryeo/장단",
@@ -25,7 +45,22 @@
   "terrain": [
    174,
    7
-  ]
+  ],
+  "villages": [
+   "jangdan"
+  ],
+  "exits": 111,
+  "spawns": 111,
+  "objects": {
+   "board": 1,
+   "exit": 111,
+   "lantern": 1,
+   "market": 1,
+   "npc": 1,
+   "spawn": 111
+  },
+  "moved": [],
+  "missing": []
  },
  "goryeo_songak": {
   "key": "goryeo/송악",
@@ -39,7 +74,22 @@
   "terrain": [
    153,
    -69
-  ]
+  ],
+  "villages": [
+   "songak"
+  ],
+  "exits": 49,
+  "spawns": 49,
+  "objects": {
+   "board": 1,
+   "exit": 49,
+   "lantern": 2,
+   "market": 1,
+   "npc": 1,
+   "spawn": 49
+  },
+  "moved": [],
+  "missing": []
  },
  "Dakmok": {
   "key": "goryeo/닥목",
@@ -53,7 +103,24 @@
   "terrain": [
    192,
    -93
-  ]
+  ],
+  "villages": [
+   "dakmok"
+  ],
+  "exits": 16,
+  "spawns": 16,
+  "objects": {
+   "ambience": 1,
+   "board": 1,
+   "exit": 16,
+   "lantern": 1,
+   "market": 1,
+   "npc": 1,
+   "spawn": 16,
+   "worker": 1
+  },
+  "moved": [],
+  "missing": []
  },
  "Gaegyeong": {
   "key": "goryeo/개경",
@@ -67,7 +134,25 @@
   "terrain": [
    222,
    -44
-  ]
+  ],
+  "villages": [
+   "gaegyeong"
+  ],
+  "exits": 50,
+  "spawns": 50,
+  "objects": {
+   "board": 1,
+   "exit": 50,
+   "lantern": 4,
+   "market": 1,
+   "npc": 1,
+   "spawn": 50,
+   "villager": 8,
+   "walker": 2,
+   "worker": 2
+  },
+  "moved": [],
+  "missing": []
  },
  "transit_woodtown": {
   "key": "east/동문 마을",
@@ -81,7 +166,22 @@
   "terrain": [
    96,
    -31
-  ]
+  ],
+  "villages": [
+   "woodtown"
+  ],
+  "exits": 86,
+  "spawns": 86,
+  "objects": {
+   "board": 1,
+   "exit": 86,
+   "lantern": 2,
+   "market": 1,
+   "spawn": 86,
+   "talker": 1
+  },
+  "moved": [],
+  "missing": []
  },
  "transit_ferry": {
   "key": "east/북동 포구",
@@ -95,7 +195,23 @@
   "terrain": [
    83,
    -127
-  ]
+  ],
+  "villages": [
+   "ferry"
+  ],
+  "exits": 35,
+  "spawns": 35,
+  "objects": {
+   "ambience": 1,
+   "board": 1,
+   "exit": 35,
+   "lantern": 2,
+   "market": 1,
+   "spawn": 35,
+   "talker": 1
+  },
+  "moved": [],
+  "missing": []
  },
  "transit_crossroads": {
   "key": "east/중앙 길목 마을",
@@ -109,7 +225,20 @@
   "terrain": [
    1,
    -34
-  ]
+  ],
+  "villages": [
+   "crossroads"
+  ],
+  "exits": 125,
+  "spawns": 125,
+  "objects": {
+   "exit": 125,
+   "lantern": 2,
+   "spawn": 125,
+   "talker": 1
+  },
+  "moved": [],
+  "missing": []
  },
  "transit_southport": {
   "key": "east/남동 포구",
@@ -123,7 +252,19 @@
   "terrain": [
    82,
    59
-  ]
+  ],
+  "villages": [
+   "southport"
+  ],
+  "exits": 61,
+  "spawns": 61,
+  "objects": {
+   "exit": 61,
+   "lantern": 2,
+   "spawn": 61
+  },
+  "moved": [],
+  "missing": []
  },
  "transit_wetroad": {
   "key": "east/북동 길",
@@ -137,7 +278,17 @@
   "terrain": [
    86,
    -82
-  ]
+  ],
+  "villages": [],
+  "exits": 82,
+  "spawns": 82,
+  "objects": {
+   "ambience": 1,
+   "exit": 82,
+   "spawn": 82
+  },
+  "moved": [],
+  "missing": []
  },
  "transit_pass": {
   "key": "east/남동 길",
@@ -151,7 +302,21 @@
   "terrain": [
    121,
    13
-  ]
+  ],
+  "villages": [],
+  "exits": 78,
+  "spawns": 78,
+  "objects": {
+   "bandit": 1,
+   "exit": 78,
+   "spawn": 78,
+   "talker": 1
+  },
+  "moved": [
+   "길손(길 가운데)",
+   "bandit"
+  ],
+  "missing": []
  },
  "transit_central_approach": {
   "key": "east/북쪽 내륙길",
@@ -165,7 +330,22 @@
   "terrain": [
    40,
    -74
-  ]
+  ],
+  "villages": [
+   "rest_north"
+  ],
+  "exits": 92,
+  "spawns": 92,
+  "objects": {
+   "exit": 92,
+   "lantern": 1,
+   "spawn": 92,
+   "talker": 1
+  },
+  "moved": [
+   "길손(길 가운데)"
+  ],
+  "missing": []
  },
  "transit_south_inland": {
   "key": "east/남쪽 내륙길",
@@ -179,7 +359,19 @@
   "terrain": [
    54,
    13
-  ]
+  ],
+  "villages": [
+   "rest_lake"
+  ],
+  "exits": 118,
+  "spawns": 118,
+  "objects": {
+   "exit": 118,
+   "lantern": 1,
+   "spawn": 118
+  },
+  "moved": [],
+  "missing": []
  },
  "_tiles": {
   "newTiles": 1294,

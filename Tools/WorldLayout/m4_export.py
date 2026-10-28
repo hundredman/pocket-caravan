@@ -50,6 +50,13 @@ def main():
         if n.startswith('m4_') and n not in newt:newt[n]=Image.fromarray(a_)
         names[hh]=n;return n
     rep={}
+    # ③ 맵 객체: 경계 출입구는 모든 맵을 함께 보고 만든다
+    import m4_objects
+    mids=[MAPID.get(k,'') for k in keys]
+    gwalk=(~m['blocked'])&m['own']&(m['mapid']>=0)
+    seam=m4_objects.seams(m['mapid'],gwalk,mids,v.X0,v.Y0)   # 세계 좌표로
+    zones=json.loads((ROOT/'ArtReview/M2-Zones/zones.json').read_text())['villages']
+    oldobj=json.loads((ROOT/'ArtReview/M0/old-objects.json').read_text())
     for key,mid in MAPID.items():
         mm=m['mapid']==keys.index(key);ys,xs=np.nonzero(mm)
         y0,y1,x0,x1=ys.min(),ys.max()+1,xs.min(),xs.max()+1;w,h=int(x1-x0),int(y1-y0)
@@ -71,11 +78,15 @@ def main():
         lab,_=ndimage.label(walk);g=np.array(road).reshape(h,w)>0
         ok=set(np.unique(lab[g&walk]))-{0}
         reach=np.isin(lab,list(ok)).astype(int).ravel().tolist()
+        inside_=mm[y0:y1,x0:x1]
+        vz=[z for z in zones.values() if any(it.get('kind')=='plaza' and not it.get('missing') and inside_[v.idx(it['x'],it['y'])[0]-y0,v.idx(it['x'],it['y'])[1]-x0] for it in z['items'] if 'x' in it and y0<=v.idx(it['x'],it['y'])[0]<y1 and x0<=v.idx(it['x'],it['y'])[1]<x1)]
+        objects,orep=m4_objects.build(mid,key,(int(x0+v.X0),int(y0+v.Y0)),walk,np.array(road).reshape(h,w),np.array(water,bool).reshape(h,w),inside_,
+                                      vz,[o for o in oldobj if o['mapId']==mid and o['kind'] not in('spawn','exit','anim','sign')],seam.get(mid,[]))
         old=ROOT/f'Assets/PocketCaravan/Maps/{mid}.json'
         oj=json.loads(old.read_text()) if old.exists() else {}
         data=dict(id=mid,name=oj.get('name') or NAMES.get(mid,key.split('/')[1]),w=w,h=h,hours=oj.get('hours',0),
                   ground=layers['ground'],deco=layers['deco'],obj=layers['obj'],high=layers['high'],road=road,blocked=blocked,
-                  objects=[],legacyHeight=h,palette=pal,reachable=reach,water=water,
+                  objects=objects,legacyHeight=h,palette=pal,reachable=reach,water=water,
                   terrainX=int(x0+v.X0),terrainY=int(y0+v.Y0),previewOnly=True)   # 미리보기: 저장 보호(④ 본편 전환 때 뺀다)
         (PREV/'Maps'/f'{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
         # JSON만으로 다시 그려 원래 그림과 비교
@@ -98,9 +109,21 @@ def main():
         for yy,xx in np.argwhere(bl&mm[y0:y1,x0:x1]):ov[yy*T:(yy+1)*T,xx*T:(xx+1)*T]=(255,40,40,60)
         for yy,xx in np.argwhere(~mm[y0:y1,x0:x1]):ov[yy*T:(yy+1)*T,xx*T:(xx+1)*T]=(0,0,0,150)
         img.convert('RGB').save(REVIEW/f'{mid}.png')
+        # 객체 표시판: 주황 출구, 하늘 도착 자리, 분홍 NPC·주민, 노랑 시장·게시판, 흰 S0
+        ob=img.copy();from PIL import ImageDraw;dr=ImageDraw.Draw(ob)
+        COL={'exit':(255,140,0),'spawn':(80,200,255),'market':(255,220,60),'board':(255,220,60),'npc':(255,80,200),'talker':(255,120,220),
+             'worker':(255,120,220),'villager':(255,160,230),'pastime':(255,120,220),'walker':(255,160,230),'bandit':(255,0,0)}
+        for o in objects:
+            c_=COL.get(o['kind'])
+            if not c_:continue
+            if o.get('id')=='S0':c_=(255,255,255)
+            dr.rectangle([o['x']*T,o['y']*T,(o['x']+o['w'])*T-1,(o['y']+o['h'])*T-1],outline=c_,width=3 if o['kind'] in('exit','spawn') else 4)
+        ob.resize((w*T//2,h*T//2),Image.BOX).convert('RGB').save(REVIEW/f'{mid}-objects.png')
         rv.alpha_composite(Image.fromarray(ov));rv.resize((w*T//2,h*T//2),Image.BOX).convert('RGB').save(REVIEW/f'{mid}-blocked.png')
         rep[mid]=dict(key=key,w=w,h=h,cells=int(mm.sum()),walkable=int(walk[mm[y0:y1,x0:x1]].sum()),reachable=int(sum(reach)),
-                      palette=len(pal),pixelDiff=diff,terrain=[int(x0+v.X0),int(y0+v.Y0)])
+                      palette=len(pal),pixelDiff=diff,terrain=[int(x0+v.X0),int(y0+v.Y0)],
+                      villages=[z['slug'] for z in vz],exits=sum(o['kind']=='exit' for o in objects),spawns=sum(o['kind']=='spawn' for o in objects),
+                      objects={k_:sum(o['kind']==k_ for o in objects) for k_ in sorted({o['kind'] for o in objects})},moved=orep['moved'],missing=orep['missing'])
         print(mid,rep[mid])
     for n,im in newt.items():im.save(PREV/'Tiles'/f'{n}.png')
     # 미리보기 빌더는 미리보기 폴더의 Tiles만 읽으므로, 다시 쓴 기존 타일도 복사해 둔다(본편 전환 때는 기존 위치를 그대로 씀)
