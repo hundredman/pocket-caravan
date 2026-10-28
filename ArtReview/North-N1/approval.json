@@ -9,10 +9,10 @@
   "고려 북동 포구 출구: 개울 다리길, 해안 쪽"
  ],
  "files": {
-  "maps.png": "853e06e846053dd4",
-  "n1_grid.npz": "357d51fda33a3016",
-  "report.json": "02686d103d9340bd",
-  "terrain-villages-roads.png": "3d070b38c66d5144"
+  "maps.png": "9309452bac771eee",
+  "n1_grid.npz": "389b7e2f26027696",
+  "report.json": "548cdafc791305b5",
+  "terrain-villages-roads.png": "0a71a3a7ba76d797"
  },
  "revisions": [
   {
@@ -22,6 +22,13 @@
     "북쪽 개울이 개울 나루 마을 옆(43,-112)을 지나게",
     "동남 물가길에 작은 연못과 흘러드는 개울",
     "개울 나루 마을 범위를 개울에서 4칸쯤으로"
+   ]
+  },
+  {
+   "date": "2026-10-29",
+   "by": "user (N3 중 결정)",
+   "changes": [
+    "폭 2칸 이하 띠는 옆 맵으로(라우가르 맵 북동 1칸 띠 정리)"
    ]
   }
  ]

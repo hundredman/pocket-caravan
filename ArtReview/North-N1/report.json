@@ -413,113 +413,113 @@
    "key": "north_birka",
    "name": "비르카 (수도)",
    "n0Target": 3800,
-   "area": 3230,
-   "land": 2761
+   "area": 3225,
+   "land": 2752
   },
   {
    "key": "north_herd",
    "name": "순록 고원 마을",
    "n0Target": 2700,
-   "area": 3080,
-   "land": 2073
+   "area": 3079,
+   "land": 2075
   },
   {
    "key": "north_hunter",
    "name": "모피 사냥꾼 마을",
    "n0Target": 2600,
-   "area": 2219,
-   "land": 1312
+   "area": 2213,
+   "land": 1306
   },
   {
    "key": "north_naru",
    "name": "피오르 나루 마을",
    "n0Target": 2800,
-   "area": 2380,
-   "land": 1433
+   "area": 2368,
+   "land": 1429
   },
   {
    "key": "north_laugar",
    "name": "라우가르 온천 마을",
    "n0Target": 2800,
-   "area": 2800,
-   "land": 2753
+   "area": 2750,
+   "land": 2750
   },
   {
    "key": "north_icecave",
    "name": "얼음 동굴 골짜기",
    "n0Target": 2700,
-   "area": 3183,
-   "land": 2090
+   "area": 3244,
+   "land": 2099
   },
   {
    "key": "north_runehill",
    "name": "룬돌 언덕",
    "n0Target": 2600,
-   "area": 3108,
-   "land": 1910
+   "area": 3115,
+   "land": 1916
   },
   {
    "key": "north_c_gatetown",
    "name": "북문 마을",
    "n0Target": 3200,
-   "area": 2925,
-   "land": 2520
+   "area": 2934,
+   "land": 2526
   },
   {
    "key": "north_c_snowwood",
    "name": "눈숲 마을",
    "n0Target": 3200,
-   "area": 3786,
-   "land": 3571
+   "area": 3794,
+   "land": 3578
   },
   {
    "key": "north_c_creek",
    "name": "개울 나루 마을",
    "n0Target": 3200,
-   "area": 3195,
-   "land": 3195
+   "area": 3197,
+   "land": 3197
   },
   {
    "key": "north_c_crossing",
    "name": "북쪽 길목 마을",
    "n0Target": 3200,
-   "area": 3498,
-   "land": 3498
+   "area": 3497,
+   "land": 3497
   },
   {
    "key": "north_c_road_nw",
    "name": "눈숲 고갯길",
    "n0Target": 2440,
-   "area": 2469,
+   "area": 2468,
    "land": 1585
   },
   {
    "key": "north_c_road_ne",
    "name": "개울 다리길",
    "n0Target": 2440,
-   "area": 2803,
-   "land": 1879
+   "area": 2804,
+   "land": 1882
   },
   {
    "key": "north_c_runeway",
    "name": "룬돌 큰길",
    "n0Target": 2440,
-   "area": 2077,
-   "land": 2077
+   "area": 2074,
+   "land": 2074
   },
   {
    "key": "north_c_road_sw",
    "name": "서남 솔숲길",
    "n0Target": 2440,
-   "area": 2173,
-   "land": 2173
+   "area": 2168,
+   "land": 2168
   },
   {
    "key": "north_c_road_se",
    "name": "동남 물가길",
    "n0Target": 2440,
-   "area": 2074,
-   "land": 2074
+   "area": 2070,
+   "land": 2070
   }
  ]
 }

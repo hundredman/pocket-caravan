@@ -416,6 +416,14 @@ def post(new):
         cnt = np.where(rm, cnt, -1); sm = np.argmax(cnt, 0); sm[~owned] = -1; new = sm
     for i, k in enumerate(KEYS):
         new[seedmask[k]] = i
+    # 폭 2칸 이하 띠는 옆 맵으로(2026-10-29: 라우가르 맵 1칸 띠). 씨앗 칸은 그대로
+    for _ in range(3):
+        for i in range(len(KEYS)):
+            mi = new == i
+            thin = mi & ~ndimage.binary_opening(mi, structure=np.ones((3, 3))) & ~seedmask[KEYS[i]]
+            for y, x in np.argwhere(thin):
+                nb = new[max(0, y - 1):y + 2, max(0, x - 1):x + 2].ravel(); nb = nb[(nb >= 0) & (nb != i)]
+                if len(nb): new[y, x] = np.bincount(nb).argmax()
     for i in range(len(KEYS)):
         lab, n = ndimage.label(new == i, structure=np.ones((3, 3)))
         if n > 1:

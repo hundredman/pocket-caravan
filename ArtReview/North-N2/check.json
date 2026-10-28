@@ -4,7 +4,7 @@
    "missing": [],
    "laneBlocked": [],
    "n": 38,
-   "laneCells": 33,
+   "laneCells": 14,
    "merged": [
     "north_pass"
    ]
@@ -13,14 +13,14 @@
    "missing": [],
    "laneBlocked": [],
    "n": 20,
-   "laneCells": 26,
+   "laneCells": 15,
    "merged": []
   },
   "north_hunter": {
    "missing": [],
    "laneBlocked": [],
-   "n": 20,
-   "laneCells": 19,
+   "n": 19,
+   "laneCells": 9,
    "merged": []
   },
   "north_naru": {
@@ -29,7 +29,7 @@
    ],
    "laneBlocked": [],
    "n": 33,
-   "laneCells": 26,
+   "laneCells": 18,
    "merged": [
     "north_fjord_road"
    ]
@@ -38,49 +38,49 @@
    "missing": [],
    "laneBlocked": [],
    "n": 22,
-   "laneCells": 20,
+   "laneCells": 13,
    "merged": []
   },
   "north_icecave": {
    "missing": [],
    "laneBlocked": [],
    "n": 14,
-   "laneCells": 19,
+   "laneCells": 7,
    "merged": []
   },
   "north_runehill": {
    "missing": [],
    "laneBlocked": [],
    "n": 15,
-   "laneCells": 3,
+   "laneCells": 2,
    "merged": []
   },
   "north_c_gatetown": {
    "missing": [],
    "laneBlocked": [],
    "n": 24,
-   "laneCells": 36,
+   "laneCells": 19,
    "merged": []
   },
   "north_c_snowwood": {
    "missing": [],
    "laneBlocked": [],
    "n": 20,
-   "laneCells": 22,
+   "laneCells": 12,
    "merged": []
   },
   "north_c_creek": {
    "missing": [],
    "laneBlocked": [],
    "n": 21,
-   "laneCells": 18,
+   "laneCells": 16,
    "merged": []
   },
   "north_c_crossing": {
    "missing": [],
    "laneBlocked": [],
    "n": 27,
-   "laneCells": 11,
+   "laneCells": 7,
    "merged": []
   },
   "north_c_road_nw": {
@@ -101,7 +101,7 @@
    "missing": [],
    "laneBlocked": [],
    "n": 12,
-   "laneCells": 3,
+   "laneCells": 2,
    "merged": []
   },
   "north_c_road_sw": {
@@ -115,7 +115,7 @@
    "missing": [],
    "laneBlocked": [],
    "n": 11,
-   "laneCells": 2,
+   "laneCells": 1,
    "merged": []
   }
  },

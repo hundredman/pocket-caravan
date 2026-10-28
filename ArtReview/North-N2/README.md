@@ -62,3 +62,5 @@ python3 Tools/MapGen/northworld/n2_zones.py ArtReview/North-N1 ArtReview/North-N
 **남은 점**
 - 피오르 고갯길가 낚시터는 물가가 없어서 못 잡았어. 얼음 낚시꾼은 쉼터 옆에 서.
 - 출입구: 고려처럼 걸을 수 있는 맵 경계 칸을 전부 열어 (2026-10-29 결정, N4에서 고려 `m4_objects.seams` 방식으로). 길이 경계를 넘는 자리는 18곳이야.
+
+- 2026-10-29 N3: 건물 칸 크기를 실제 그림 크기로 바꿔 다시 잡음. 항목마다 `art`(그림 이름)가 붙음.

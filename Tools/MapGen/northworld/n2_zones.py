@@ -37,9 +37,15 @@ NAME = {'north_birka': '비르카', 'north_herd': '순록 고원 마을', 'north
         'north_c_road_se': '동남 물가길'}
 
 # 북유럽 건물·소품 칸 크기(초안). 그림은 N3에서 정함
-ASSET = {'hall': (10, 6), 'longhouse': (7, 4), 'turf': (5, 4), 'hut': (4, 3), 'store': (4, 3), 'shop': (6, 4), 'bathhouse': (7, 5),
-         'brewery': (5, 4), 'smithy': (5, 4), 'mill': (5, 4), 'kiln': (3, 3), 'tent': (3, 3), 'rack': (3, 2), 'boat': (5, 2),
-         'well': (1, 2), 'brazier': (1, 2), 'runestone': (1, 2), 'woodpile': (2, 1), 'laundry': (2, 2), 'fire': (1, 1)}
+# 북유럽 건물·소품 칸 크기 = N3에서 고른 실제 그림 크기(2026-10-29). ART: 그림 이름(north_tiles STAMPS, Minigame 그림, N3 새 그림)
+ASSET = {'hall': (8, 6), 'longhouse': (4, 5), 'turf': (3, 2), 'hut': (3, 3), 'store': (3, 3), 'shop': (4, 4), 'bathhouse': (3, 4),
+         'brewery': (3, 3), 'smithy': (4, 4), 'mill': (3, 3), 'kiln': (3, 3), 'tent': (3, 3), 'rack': (4, 3), 'boat': (5, 2),
+         'well': (1, 2), 'brazier': (1, 2), 'runestone': (1, 2), 'woodpile': (2, 1), 'laundry': (2, 2), 'fire': (2, 2), 'furyard': (4, 3)}
+ART = {'hall': 'new:jarlhall_A', 'longhouse': 'woodhouse', 'turf': 'h_turf', 'hut': 'h_shed', 'store': 'h_shed', 'shop': 'h_dark',
+       'bathhouse': 'h_round', 'brewery': 'h_dome', 'smithy': 'new:smithy_A', 'mill': 'watermill', 'kiln': 'new:kiln_A',
+       'tent': 'Minigame:stall_fur', 'rack': 'Minigame:yard_hjell_fresh', 'furyard': 'Minigame:yard_fur_work', 'boat': 'boat',
+       'well': 'well', 'brazier': 'lantern', 'runestone': 'runestone', 'woodpile': 'logs', 'laundry': 'laundry', 'fire': 'fire',
+       'cliff': 'new:cave_A'}
 KIND_COL = {'moor': (60, 120, 255), 'harbor': (40, 200, 220), 'plaza': (255, 214, 90), 'yard': (255, 170, 60), 'rest': (255, 140, 40),
             'lot': (240, 110, 90), 'shore': (90, 190, 255), 'spot': (255, 255, 255), 'npc': (255, 120, 220), 'lantern': (255, 250, 170),
             'growth': (150, 240, 140), 'cliff': (190, 230, 255), 'gather': (120, 255, 120), 'event': (255, 60, 60), 'bandit': (60, 0, 0)}
@@ -77,7 +83,7 @@ VILLAGES = {
     [N('순록 목동 할머니', '순록 우리', memo='talker'), N('썰매 장인', '썰매 공방', memo='talker'), N('불가의 아이', '모닥불', memo='talker')]),
  'north_hunter': village('north_hunter', (12, 7), (8, 5), ['hut', 'turf', 'hut'],
     [L('털옷 공방', 'shop', 'plaza', memo='모피 2 → 털옷'), L('사냥꾼 오두막', 'hut', 'plaza'),
-     P('가죽 건조대 1', 'rack', '털옷 공방'), P('가죽 건조대 2', 'rack', '털옷 공방')],
+     P('털옷 작업 마당', 'furyard', '털옷 공방')],
     [N('늙은 사냥꾼', '사냥꾼 오두막', memo='talker'), N('north_goats', 'houses', id='north_goats'), N('north_wife', 'houses', id='north_wife')]),
  'north_naru': village('north_naru', (12, 7), (8, 5), ['turf', 'hut', 'turf', 'longhouse'],
     [dict(name='항구 부두', kind='harbor', w=3, h=8, anchor='sea', memo='피오르 선착장'), P('배 1', 'boat', '항구 부두', kind='moor'),
@@ -91,7 +97,7 @@ VILLAGES = {
     [N('목욕 회관 주인', '목욕 회관', memo='talker'), N('약초꾼', '약초꾼 오두막', memo='talker'), N('쉬어 가는 상인', 'plaza', memo='talker')]),
  'north_icecave': village('north_icecave', None, None, ['hut', 'hut'],
     [dict(name='광부 캠프 마당', kind='plaza', w=8, h=5, anchor='center', memo='시장 없음(지금과 같음)'),
-     dict(name='동굴 입구', kind='cliff', w=5, h=3, anchor='away', memo='아래층은 ... (지금 표지 그대로)'),
+     dict(name='동굴 입구', kind='cliff', w=5, h=3, asset='cliff', anchor='away', memo='아래층은 ... (지금 표지 그대로)'),
      L('광부 오두막', 'hut', 'plaza'), L('장비 창고', 'store', 'plaza'),
      dict(name='얼음 낚시 구멍', kind='shore', w=2, h=1, anchor='water')],
     [N('광부 할아범', '광부 오두막', memo='talker'), N('얼음 낚시꾼', '얼음 낚시 구멍', memo='talker')], lanterns=2, growth=2, market=False),
@@ -190,6 +196,7 @@ class Planner:
     def put(s, it, iy, ix):
         r = dict(name=it['name'], kind=it['kind'], asset=it.get('asset'), iy=int(iy), ix=int(ix), w=it['w'], h=it['h'], id=it.get('id', ''), memo=it.get('memo', ''))
         if it.get('gtype'): r['gather'] = it['gtype']
+        if it.get('asset') in ART: r['art'] = ART[it['asset']]
         sl = (slice(iy, iy + it['h']), slice(ix, ix + it['w']))
         if it['kind'] in ('lot', 'plaza', 'yard', 'harbor', 'rest', 'cliff'): s.hard[sl] = True
         if it['kind'] == 'lot': s.lot[sl] = True
