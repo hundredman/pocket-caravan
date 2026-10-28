@@ -9,3 +9,5 @@
 - 수정본으로 [논 블록9종](../RiceField-Tiles-v2/README.md)을 다시 만들었다. 이전v1과 승인된 건물 원본은 변경하지 않았다.
 
 검사:32×32/이진알파/색수·승인 초가집 그림에 금색3개 실제 존재·포기 폭 감소·Aseprite 재출력 디코딩RGBA 일치. [검사기록](validation.json). 본편/A2/충돌/실제 플레이는 미검사다.
+
+사용자 후속 요청(아래 줄기를 곧게)으로 [v3 벼](../RipeRice-v3/README.md)와 [v3 논](../RiceField-Tiles-v3/README.md)을 검토한다. 이v2는 이전 비교용이다.

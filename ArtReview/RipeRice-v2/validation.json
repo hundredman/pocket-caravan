@@ -35,5 +35,7 @@
   "asepriteRoundtripRGBA": true,
   "rgbaSha256": "be6dc7fa87ac0dc2ca85949eefb635036f49138c76659cf55c861ca1b6014bea",
   "mode": "built-in imagegen edit + native Aseprite",
-  "productionApplied": false
+  "productionApplied": false,
+  "reviewStatus": "changes_requested",
+  "successor": "ArtReview/RipeRice-v3"
 }
