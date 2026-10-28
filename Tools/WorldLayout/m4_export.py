@@ -10,7 +10,7 @@
   Assets/PocketCaravan/Editor/B2Preview/M4/Tiles/m4_*.png
   ArtReview/M4-Maps/<mapId>.png(JSON에서 다시 그린 그림), report.json
 """
-import argparse,hashlib,json,sys
+import argparse,hashlib,json,shutil,sys
 from pathlib import Path
 import numpy as np
 from PIL import Image
@@ -34,8 +34,36 @@ def existing_tiles():
         h.setdefault(hashlib.sha256(im.tobytes()).hexdigest(),p.stem)
     return h
 
+def world_map(m,lay,atlas,keys):
+    """게임 지도(M 키): 실제 맵 그림을 칸당 4px로 줄인 지형 그림과 맵 자리. 전체(고려+중앙 동쪽)와 고려 확대 두 가지."""
+    WM=ROOT/'Assets/PocketCaravan/Resources/WorldMap';PPT=4
+    full=Image.alpha_composite(Image.alpha_composite(Image.alpha_composite(lay['ground'],lay['deco']),lay['obj']),lay['high'])
+    own=m['own']
+    for stem,sel,scope in(('Goryeo',lambda a_:True,'goryeo_20000_and_central_east_25000'),('GoryeoRegional',lambda a_:a_['mapId'] in('Naru','goryeo_jangdan','goryeo_songak','Dakmok','Gaegyeong'),'goryeo_20000')):
+        A=[a_ for a_ in atlas if sel(a_)]
+        x0=min(b['box'][0] for b in A);y0=min(b['box'][1] for b in A);x1=max(b['box'][0]+b['box'][2] for b in A);y1=max(b['box'][1]+b['box'][3] for b in A)
+        mask=np.zeros(own.shape,bool)
+        for b in A:mask|=m['mapid']==keys.index(next(k for k,v_ in MAPID.items() if v_==b['mapId']))
+        crop=full.crop((x0*T,y0*T,x1*T,y1*T));bg=Image.new('RGBA',crop.size,(225,211,171,255))   # 맵 밖은 종이색
+        ms=Image.fromarray((np.kron(mask[y0:y1,x0:x1],np.ones((T,T),bool))*255).astype(np.uint8))
+        bg.paste(crop,(0,0),ms);small=bg.resize(((x1-x0)*PPT,(y1-y0)*PPT),Image.BOX).convert('RGB')
+        small.save(WM/f'{stem}Terrain.png')
+        wmask=Image.fromarray(((m['water'][y0:y1,x0:x1]&mask[y0:y1,x0:x1])*255).astype(np.uint8)).resize(((x1-x0)*PPT,(y1-y0)*PPT),Image.NEAREST)
+        wmask.save(WM/f'{stem}WaterMask.png')
+        maps=[]
+        for b in A:
+            bx,by,bw,bh=b['box'];pz=next((it for z in b['vz'] for it in z['items'] if it.get('kind')=='plaza' and not it.get('missing')),None)
+            if pz:iy,ix=v.idx(pz['x']+pz['w']/2,pz['y']+pz['h']/2);lx,ly=ix-x0,iy-y0
+            else:mm=m['mapid']==keys.index(next(k for k,v_ in MAPID.items() if v_==b['mapId']));ys,xs=np.nonzero(mm);lx,ly=xs.mean()-x0,ys.mean()-y0
+            maps.append(dict(mapId=b['mapId'],x=bx-x0,y=by-y0,w=bw,h=bh,labelX=round(float(lx),1),labelY=round(float(ly),1)))
+        lay_=dict(width=x1-x0,height=y1-y0,maps=maps,pixelsPerTile=PPT,waterMask=f'{stem}WaterMask.png',geography='continuous_tiles',
+                  terrainSource='Tools/WorldLayout/m4_export.py',scope=scope,centralContinentTotalCells=100000,centralEastOwnedCells=25000,annotations=[])
+        (WM/f'{stem}Layout.json').write_text(json.dumps(lay_,ensure_ascii=False,separators=(',',':')))
+
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('layers');a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('layers')
+    ap.add_argument('--production',action='store_true',help='④ 본편: Maps/·Art 타일·인증 기록·지도(Resources/WorldMap)에 쓴다')
+    a=ap.parse_args()
     L=Path(a.layers);m=np.load(L/'masks.npz');keys=[str(k) for k in m['keys']]
     lay={k:Image.open(L/f'{k}.png').convert('RGBA') for k in('ground','deco','obj','high')}
     arr={k:np.array(im) for k,im in lay.items()}
@@ -53,7 +81,7 @@ def main():
             comp[n]=dict(sha256=hashlib.sha256(Image.fromarray(a_).convert('RGBA').tobytes()).hexdigest(),layer=layer,
                          base=[28,34,40,255] if layer=='ground' else None,parts=PARTS['parts'].get(f'{layer}:{y}:{x}',[]))
         names[hh]=n;return n
-    rep={}
+    rep={};atlas=[]
     # ③ 맵 객체: 경계 출입구는 모든 맵을 함께 보고 만든다
     import m4_objects
     mids=[MAPID.get(k,'') for k in keys]
@@ -91,8 +119,11 @@ def main():
         data=dict(id=mid,name=oj.get('name') or NAMES.get(mid,key.split('/')[1]),w=w,h=h,hours=oj.get('hours',0),
                   ground=layers['ground'],deco=layers['deco'],obj=layers['obj'],high=layers['high'],road=road,blocked=blocked,
                   objects=objects,legacyHeight=h,palette=pal,reachable=reach,water=water,
-                  terrainX=int(x0+v.X0),terrainY=int(y0+v.Y0),previewOnly=True)   # 미리보기: 저장 보호(④ 본편 전환 때 뺀다)
+                  terrainX=int(x0+v.X0),terrainY=int(y0+v.Y0))
+        if not a.production:data['previewOnly']=True   # 미리보기: 저장 보호
         (PREV/'Maps'/f'{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
+        if a.production:(ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
+        atlas.append(dict(mapId=mid,box=(int(x0),int(y0),w,h),vz=vz))
         # JSON만으로 다시 그려 원래 그림과 비교
         img=Image.new('RGBA',(w*T,h*T),(28,34,40,255))
         cache={}
@@ -140,6 +171,12 @@ def main():
           for sid,p_ in PARTS['sources'].items() if any(sid==q[0] for c in comp.values() for q in c['parts'])}
     (PREV/'m4-composites.json').write_text(json.dumps(dict(schemaVersion=1,rule='m4_certify.py',sources=srcs,tiles=comp),ensure_ascii=False,indent=0))
     errs,info=m4_certify.verify(PREV/'m4-composites.json',PREV/'Tiles')
+    if a.production and not errs:
+        for n,im in newt.items():
+            q=TILES/f'{n}.png'
+            if not q.exists() or Image.open(q).convert('RGBA').tobytes()!=im.convert('RGBA').tobytes():im.save(q)
+        shutil.copyfile(PREV/'m4-composites.json',m4_certify.MANIFEST)
+        world_map(m,lay,atlas,keys)
     print('인증:',len(errs),'errors',info,errs[:5])
     rep['_tiles']=dict(certifyErrors=len(errs),newTiles=len(newt),reusedExisting=len([n for n in names.values() if not n.startswith('m4_')]))
     (REVIEW/'report.json').write_text(json.dumps(rep,ensure_ascii=False,indent=1))

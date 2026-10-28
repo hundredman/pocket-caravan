@@ -374,6 +374,7 @@
   "missing": []
  },
  "_tiles": {
+  "certifyErrors": 0,
   "newTiles": 1294,
   "reusedExisting": 33
  }

@@ -9,7 +9,7 @@
       "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/Naru.unity",
       "worldX": 0,
       "worldY": 0,
-      "generator": "maps:naru"
+      "generator": "worldlayout:m4_export"
     },
     {
       "mapId": "Gaegyeong",
@@ -17,7 +17,7 @@
       "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/Gaegyeong.unity",
       "worldX": 2,
       "worldY": 0,
-      "generator": "gaegyeong:build"
+      "generator": "worldlayout:m4_export"
     },
     {
       "mapId": "Dakmok",
@@ -25,7 +25,7 @@
       "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/Dakmok.unity",
       "worldX": 3,
       "worldY": 0,
-      "generator": "maps:dakmok"
+      "generator": "worldlayout:m4_export"
     },
     {
       "mapId": "goryeo_songak",
@@ -33,7 +33,7 @@
       "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_songak.unity",
       "worldX": 0,
       "worldY": 1,
-      "generator": "goryeo_villages:songak"
+      "generator": "worldlayout:m4_export"
     },
     {
       "mapId": "goryeo_jangdan",
@@ -41,7 +41,7 @@
       "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_jangdan.unity",
       "worldX": 4,
       "worldY": 0,
-      "generator": "goryeo_villages:jangdan"
+      "generator": "worldlayout:m4_export"
     }
   ],
   "npcs": [

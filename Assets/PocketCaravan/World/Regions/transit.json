@@ -9,7 +9,7 @@
       "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_pass.unity",
       "worldX": 5,
       "worldY": 0,
-      "generator": "frontier:pass_road"
+      "generator": "worldlayout:m4_export"
     },
     {
       "mapId": "transit_woodtown",
@@ -17,7 +17,7 @@
       "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_woodtown.unity",
       "worldX": 6,
       "worldY": 0,
-      "generator": "frontier:woodtown"
+      "generator": "worldlayout:m4_export"
     },
     {
       "mapId": "transit_wetroad",
@@ -25,7 +25,7 @@
       "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_wetroad.unity",
       "worldX": 7,
       "worldY": 0,
-      "generator": "frontier:wetroad"
+      "generator": "worldlayout:m4_export"
     },
     {
       "mapId": "transit_ferry",
@@ -33,7 +33,7 @@
       "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_ferry.unity",
       "worldX": 8,
       "worldY": 0,
-      "generator": "frontier:ferry"
+      "generator": "worldlayout:m4_export"
     },
     {
       "mapId": "transit_central_approach",
@@ -41,7 +41,7 @@
       "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_central_approach.unity",
       "worldX": 9,
       "worldY": 0,
-      "generator": "frontier:central_approach"
+      "generator": "worldlayout:m4_export"
     },
     {
       "mapId": "transit_crossroads",
@@ -49,7 +49,23 @@
       "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_crossroads.unity",
       "worldX": 9,
       "worldY": 1,
-      "generator": "frontier:central_crossroads"
+      "generator": "worldlayout:m4_export"
+    },
+    {
+      "mapId": "transit_southport",
+      "jsonPath": "Assets/PocketCaravan/Maps/transit_southport.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_southport.unity",
+      "worldX": 8,
+      "worldY": 1,
+      "generator": "worldlayout:m4_export"
+    },
+    {
+      "mapId": "transit_south_inland",
+      "jsonPath": "Assets/PocketCaravan/Maps/transit_south_inland.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Transit/transit_south_inland.unity",
+      "worldX": 10,
+      "worldY": 0,
+      "generator": "worldlayout:m4_export"
     }
   ],
   "npcs": [],
