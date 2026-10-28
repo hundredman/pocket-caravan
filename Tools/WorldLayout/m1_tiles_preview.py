@@ -683,6 +683,11 @@ def drop_fragments(dirt,road,flat,doors):
         if j in keep:continue
         m=lab==j
         if m.sum()<30 and not flat[m].any():dirt=dirt&~m
+    # 모서리로만 닿은 작은 조각(상하좌우로 이어지지 않음)도 끊긴 것으로 보고 지운다(은샘 2026-10-28, 개경 항구)
+    lab,n=ndimage.label(dirt);sz=ndimage.sum(np.ones_like(lab),lab,range(1,n+1))
+    for j,z in enumerate(sz,1):
+        m=lab==j
+        if z<12 and not flat[m].any() and not doors[m].any():dirt=dirt&~m
     return dirt
 
 def tidy_dirt(dirt,road,ok,flat,objs,doors,water,own,zone):
