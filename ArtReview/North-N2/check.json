@@ -66,7 +66,7 @@
    "missing": [],
    "laneBlocked": [],
    "n": 20,
-   "laneCells": 12,
+   "laneCells": 8,
    "merged": []
   },
   "north_c_creek": {
@@ -108,14 +108,14 @@
    "missing": [],
    "laneBlocked": [],
    "n": 13,
-   "laneCells": 8,
+   "laneCells": 4,
    "merged": []
   },
   "north_c_road_se": {
    "missing": [],
    "laneBlocked": [],
    "n": 11,
-   "laneCells": 1,
+   "laneCells": 5,
    "merged": []
   }
  },
@@ -189,8 +189,8 @@
     "north_c_road_nw",
     "north_c_snowwood"
    ],
-   "x": -66,
-   "y": -129
+   "x": -62,
+   "y": -126
   },
   {
    "maps": [
@@ -221,7 +221,7 @@
     "north_c_crossing",
     "north_c_road_sw"
    ],
-   "x": -24,
+   "x": -23,
    "y": -63
   },
   {
@@ -266,6 +266,6 @@
   }
  ],
  "gateCount": 18,
- "roadNetworks": 2,
+ "roadNetworks": 3,
  "oldContentLost": []
 }

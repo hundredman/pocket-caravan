@@ -406,6 +406,33 @@
     -8
    ],
    "cells": 46
+  },
+  {
+   "map": "north_c_snowwood",
+   "label": "① 베네치아 (venice_c_vineyard)",
+   "at": [
+    -101,
+    -94
+   ],
+   "cells": 58
+  },
+  {
+   "map": "north_c_road_sw",
+   "label": "⑩ 베네치아 (venice_c_gate)",
+   "at": [
+    -49,
+    -46
+   ],
+   "cells": 35
+  },
+  {
+   "map": "north_c_road_se",
+   "label": "⑪ 고려 교역 길목 (transit_crossroads)",
+   "at": [
+    42,
+    -40
+   ],
+   "cells": 34
   }
  ],
  "maps": [
@@ -462,36 +489,36 @@
    "key": "north_c_gatetown",
    "name": "북문 마을",
    "n0Target": 3200,
-   "area": 2934,
-   "land": 2526
+   "area": 2976,
+   "land": 2568
   },
   {
    "key": "north_c_snowwood",
    "name": "눈숲 마을",
    "n0Target": 3200,
-   "area": 3794,
-   "land": 3578
+   "area": 3845,
+   "land": 3592
   },
   {
    "key": "north_c_creek",
    "name": "개울 나루 마을",
    "n0Target": 3200,
-   "area": 3197,
-   "land": 3197
+   "area": 3269,
+   "land": 3269
   },
   {
    "key": "north_c_crossing",
    "name": "북쪽 길목 마을",
    "n0Target": 3200,
-   "area": 3497,
-   "land": 3497
+   "area": 3294,
+   "land": 3294
   },
   {
    "key": "north_c_road_nw",
    "name": "눈숲 고갯길",
    "n0Target": 2440,
-   "area": 2468,
-   "land": 1585
+   "area": 2586,
+   "land": 1740
   },
   {
    "key": "north_c_road_ne",
@@ -504,22 +531,22 @@
    "key": "north_c_runeway",
    "name": "룬돌 큰길",
    "n0Target": 2440,
-   "area": 2074,
-   "land": 2074
+   "area": 2073,
+   "land": 2073
   },
   {
    "key": "north_c_road_sw",
    "name": "서남 솔숲길",
    "n0Target": 2440,
-   "area": 2168,
-   "land": 2168
+   "area": 2088,
+   "land": 2088
   },
   {
    "key": "north_c_road_se",
    "name": "동남 물가길",
    "n0Target": 2440,
-   "area": 2070,
-   "land": 2070
+   "area": 2071,
+   "land": 2071
   }
  ]
 }

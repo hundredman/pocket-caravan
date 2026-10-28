@@ -9,10 +9,10 @@
   "고려 북동 포구 출구: 개울 다리길, 해안 쪽"
  ],
  "files": {
-  "maps.png": "9309452bac771eee",
-  "n1_grid.npz": "389b7e2f26027696",
-  "report.json": "548cdafc791305b5",
-  "terrain-villages-roads.png": "0a71a3a7ba76d797"
+  "maps.png": "6116981ac20b8ead",
+  "n1_grid.npz": "e0eb39653c84cac9",
+  "report.json": "a26268239de40dae",
+  "terrain-villages-roads.png": "1f077ff697f0c794"
  },
  "revisions": [
   {
@@ -29,6 +29,14 @@
    "by": "user (N3 중 결정)",
    "changes": [
     "폭 2칸 이하 띠는 옆 맵으로(라우가르 맵 북동 1칸 띠 정리)"
+   ]
+  },
+  {
+   "date": "2026-10-29",
+   "by": "user (N4 전 결정)",
+   "changes": [
+    "빠졌던 연결 출구 길 추가: ① 눈숲 마을 서쪽, ⑩ 서남 솔숲길 남쪽, ⑪ 동남 물가길 남쪽",
+    "고려 북동 포구 연결은 둘 다 두고 은샘 확인 뒤 연결"
    ]
   }
  ]

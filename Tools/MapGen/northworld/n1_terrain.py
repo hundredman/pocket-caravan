@@ -49,12 +49,16 @@ ROADS = [  # (출발, 도착, 지나는 이동 구간 맵)
     ('north_c_gatetown', 'north_c_snowwood', 'north_c_road_nw'), ('north_c_gatetown', 'north_c_creek', 'north_c_road_ne'),
     ('north_c_gatetown', 'north_c_crossing', 'north_c_runeway'), ('north_c_snowwood', 'north_c_crossing', 'north_c_road_sw'),
     ('north_c_creek', 'north_c_crossing', 'north_c_road_se')]
+ANY_EDGE = {'north_c_road_se'}   # ⑪: 동남 쪽 경계와 고려 땅 사이에 다른 지역 띠가 있음
 COAST_EXIT = {'north_c_road_ne'}   # 고려 출구는 해안 쪽으로(2026-10-28 결정)
 PASSES = {('north_naru', 'north_icecave'), ('north_c_gatetown', 'north_c_snowwood')}   # 산을 깎은 눈 덮인 고개(2026-10-28 결정)
 EXITS = [  # 다른 지역으로 나가는 자리: (맵, 바깥 지역, 바라는 세계 좌표, 이름)
     ('north_c_road_sw', 'other', (-80, -72), '⑨ 베네치아 (venice_c_pass)'),
     ('north_c_road_ne', 'east', (70, -150), '고려 북동 포구'),
-    ('north_c_crossing', 'other', (0, -12), '⑤ 한가운데 초원')]
+    ('north_c_crossing', 'other', (0, -12), '⑤ 한가운데 초원'),
+    ('north_c_snowwood', 'other', (-95, -100), '① 베네치아 (venice_c_vineyard)'),       # 2026-10-29 빠졌던 연결
+    ('north_c_road_sw', 'other', (-48, -46), '⑩ 베네치아 (venice_c_gate)'),
+    ('north_c_road_se', 'east', (42, -40), '⑪ 고려 교역 길목 (transit_crossroads)')]
 
 
 def noise(shape, scale, rng, octaves=4):
@@ -337,6 +341,7 @@ for a, b, via in order:
 exits = []; exit_paths = {}
 for mkey, other, (ex, ey), label in EXITS:
     outside = (east if other == 'east' else (central_land & ~owned & ~east))
+    if mkey in ANY_EDGE: outside = central_land & ~owned   # 맵끼리 순간 이동이라 맞닿지 않아도 됨: 그 방향 담당 경계면 됨
     rim = land & (region == REGION[mkey]) & ndimage.binary_dilation(outside, iterations=1) & passable & ~village
     if mkey in COAST_EXIT:   # 해안 쪽 경계 끝(바다에서 3~6칸)으로
         rim2 = rim & (to_sea >= 3) & (to_sea <= 6)
