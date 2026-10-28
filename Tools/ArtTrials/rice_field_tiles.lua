@@ -1,8 +1,8 @@
 -- Author intended modular canopy blocks from WHOLE plant instances.
 -- Internal render boundaries partition the resulting field, not plant objects.
 local project=app.params.project
-local root=project.."/ArtReview/RiceField-Tiles-v1"
-local source=app.open(project.."/ArtReview/RipeRice-v1/rice-ripe.png")
+local root=project.."/ArtReview/RiceField-Tiles-"..(app.params.revision or "v1")
+local source=app.open(project.."/"..(app.params.plant or "ArtReview/RipeRice-v1/rice-ripe.png"))
 local plant=source.cels[1].image
 local function field(cells,pitch)
  local im=Image(cells*16+32,cells*16+48,ColorMode.RGB)

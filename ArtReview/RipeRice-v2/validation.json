@@ -1,0 +1,39 @@
+{
+  "status": "pending",
+  "size": [
+    32,
+    32
+  ],
+  "opaqueBBox": [
+    5,
+    8,
+    27,
+    31
+  ],
+  "previousWidth": 26,
+  "newWidth": 22,
+  "colors": 5,
+  "binaryAlpha": true,
+  "goldRGB": [
+    [
+      183,
+      124,
+      62
+    ],
+    [
+      226,
+      172,
+      82
+    ],
+    [
+      247,
+      209,
+      123
+    ]
+  ],
+  "goldColorsMatchApprovedThatch": true,
+  "asepriteRoundtripRGBA": true,
+  "rgbaSha256": "be6dc7fa87ac0dc2ca85949eefb635036f49138c76659cf55c861ca1b6014bea",
+  "mode": "built-in imagegen edit + native Aseprite",
+  "productionApplied": false
+}

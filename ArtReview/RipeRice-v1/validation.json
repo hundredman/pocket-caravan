@@ -33,5 +33,7 @@
     "wind animation",
     "build"
   ],
-  "asepriteRoundtripRGBA": true
+  "asepriteRoundtripRGBA": true,
+  "reviewStatus": "changes_requested",
+  "successor": "ArtReview/RipeRice-v2"
 }

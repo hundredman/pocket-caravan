@@ -1,14 +1,16 @@
 """Assemble intended canopy modules and compare with whole-plant reference fields."""
 from pathlib import Path
 import json,hashlib
+import argparse
 from PIL import Image,ImageDraw,ImageFont
 
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'ArtReview/RiceField-Tiles-v1'
+PLANT='ArtReview/RipeRice-v1/rice-ripe.png'
 NAMES=[['north-west','north','north-east'],['west','center','east'],['south-west','south','south-east']]
 
 def direct(nx,ny):
-    p=Image.open(ROOT/'ArtReview/RipeRice-v1/rice-ripe.png').convert('RGBA')
+    p=Image.open(ROOT/PLANT).convert('RGBA')
     out=Image.new('RGBA',(nx*96+32,ny*96+48))
     count=0
     for row in range(ny*6):
@@ -30,7 +32,7 @@ def assembled(nx,ny):
     return out
 
 def run():
-    original=Image.open(ROOT/'ArtReview/RipeRice-v1/rice-ripe.png').convert('RGBA')
+    original=Image.open(ROOT/PLANT).convert('RGBA')
     original_colors=set(original.getdata())
     ground=Image.open(ROOT/'Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_0_12_goryeo_jade.png').convert('RGBA')
     background=ground.getpixel((0,0))
@@ -63,7 +65,7 @@ def run():
                                logicalOffsetPixels=[-16 if x==0 else 0,-32 if y==0 else 0],rgbaSha256=hashlib.sha256(im.tobytes()).hexdigest()))
     atlas.save(OUT/'module-sheet.png')
     (OUT/'catalogue.json').write_text(json.dumps(dict(status='pending',purpose='ripe_rice_field_canopy',pixelsPerCell=16,
-        logicalBlockCells=[6,6],minimumBlocks=[2,2],pieces=pieces,sourcePlant='ArtReview/RipeRice-v1/rice-ripe.png',
+        logicalBlockCells=[6,6],minimumBlocks=[2,2],pieces=pieces,sourcePlant=PLANT,
         assembly='native modules with outer overhang; repeat center and correct edge/corner roles',productionApplied=False),ensure_ascii=False,indent=2)+'\n')
     report=dict(tiledAssemblies=checks,pieces=9,colorsUnchanged=True,wholePlantsPreserved=True,
         originalPlantRGBA=hashlib.sha256(original.tobytes()).hexdigest(),approval='pending',productionApplied=False)
@@ -79,4 +81,10 @@ def run():
     (OUT/'checks.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
     print('PASS: 9 modules; 5 whole-plant versus module assemblies exactly match decoded RGBA')
 
-if __name__=='__main__':run()
+if __name__=='__main__':
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--revision',default='v1')
+    parser.add_argument('--plant',default=PLANT)
+    args=parser.parse_args()
+    OUT=ROOT/('ArtReview/RiceField-Tiles-'+args.revision);PLANT=args.plant
+    run()
