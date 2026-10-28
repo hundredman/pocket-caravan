@@ -26,7 +26,8 @@ namespace PocketCaravan.EditorTools
             var db=Resources.Load<GameDatabase>("GameDatabase");
             QuestData Q(string id)=>db.quests.Find(q=>q.id==id);
             var ids=new[]{"q1_naru","q1_jangdan","q1_songak","q1_dakmok","q1_gaegyeong"};
-            Check("17 quests, unique IDs",db.quests.Count==17&&db.quests.Select(q=>q.id).Distinct().Count()==17);
+            var mine=db.quests.Where(q=>q!=null&&UnityEditor.AssetDatabase.GetAssetPath(q).Contains("/Data/Goryeo/")).ToList();   // 통합 브랜치에는 다른 지역 퀘스트도 있다
+            Check("17 quests, unique IDs",mine.Count==17&&db.quests.Select(q=>q.id).Distinct().Count()==db.quests.Count);
             var go=new GameObject("Q1 isolated tests");go.SetActive(false);var gm=go.AddComponent<GameManager>();
             typeof(GameManager).GetProperty("I").SetValue(null,gm);Set(gm,"Db",db);Set(gm,"Clock",new GameClock());
             PlayerState Fresh(){var p=new PlayerState{money=100,vehicle=db.startVehicle,origin=db.startOrigin};p.reputation.Initialize(ReputationState.HomeOf(p.origin));Set(gm,"Player",p);GameEvents.ClearAll();return p;}
