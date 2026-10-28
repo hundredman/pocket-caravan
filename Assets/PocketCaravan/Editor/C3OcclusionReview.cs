@@ -62,7 +62,7 @@ namespace PocketCaravan.EditorTools
         }
         static void Changed(PlayModeStateChange change)
         {
-            if(change==PlayModeStateChange.EnteredPlayMode){frames=0;Time.timeScale=0;}
+            if(change==PlayModeStateChange.EnteredPlayMode&&SessionState.GetString(Key,"")!=""){frames=0;Time.timeScale=0;}   // 10/27 통합: 검토 실행 중일 때만 시간 정지 (일반 Play가 멈춰 움직이지 못하던 문제)
             if(change==PlayModeStateChange.EnteredEditMode&&SessionState.GetString(Key,"")=="stop")
             {SessionState.EraseString(Key);File.WriteAllText(Root+"review-complete.txt","Production PlayerMotor.Tick over reachable routes in previewOnly Play. No persistent saves.\n");EditorApplication.Exit(0);}
         }
