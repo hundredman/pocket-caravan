@@ -1,6 +1,15 @@
 [
  {
   "village": "goryeo/개경",
+  "name": "항구 창고",
+  "asset": "small_store",
+  "x": 273,
+  "y": 8,
+  "w": 4,
+  "h": 2
+ },
+ {
+  "village": "goryeo/개경",
   "name": "궁성",
   "asset": "palace",
   "x": 257,
@@ -39,8 +48,8 @@
   "village": "goryeo/개경",
   "name": "집 1",
   "asset": "tile-house",
-  "x": 252,
-  "y": -11,
+  "x": 267,
+  "y": 8,
   "w": 4,
   "h": 2
  },
@@ -48,8 +57,8 @@
   "village": "goryeo/개경",
   "name": "집 2",
   "asset": "tile-house",
-  "x": 248,
-  "y": -15,
+  "x": 266,
+  "y": 13,
   "w": 4,
   "h": 2
  },
@@ -66,8 +75,8 @@
   "village": "goryeo/개경",
   "name": "집 4",
   "asset": "tile-house",
-  "x": 265,
-  "y": 15,
+  "x": 263,
+  "y": 17,
   "w": 4,
   "h": 2
  },
@@ -84,8 +93,8 @@
   "village": "goryeo/개경",
   "name": "집 6",
   "asset": "thatch",
-  "x": 253,
-  "y": -16,
+  "x": 248,
+  "y": -24,
   "w": 4,
   "h": 2
  },
@@ -102,8 +111,8 @@
   "village": "goryeo/개경",
   "name": "우물",
   "asset": "well",
-  "x": 255,
-  "y": -7,
+  "x": 267,
+  "y": 0,
   "w": 1,
   "h": 1
  },
@@ -129,8 +138,8 @@
   "village": "goryeo/개경",
   "name": "석등 3",
   "asset": "stone_lantern",
-  "x": 267,
-  "y": 0,
+  "x": 257,
+  "y": 15,
   "w": 1,
   "h": 1
  },
@@ -138,8 +147,8 @@
   "village": "goryeo/개경",
   "name": "석등 4",
   "asset": "stone_lantern",
-  "x": 257,
-  "y": 15,
+  "x": 270,
+  "y": -2,
   "w": 1,
   "h": 1
  },

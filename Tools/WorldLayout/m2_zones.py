@@ -24,7 +24,7 @@ ASSET={'cottage':(5,4),'thatch':(4,3),'tile-house':(4,3),'small_store':(4,3),'sh
        'palace':(10,7),'gate':(6,5),'pavilion':(5,5),'paper_large':(4,3),'paper_rack':(3,2),'celadon':(3,2),
        'harvest':(3,2),'boat':(5,2),'well':(1,2),'stone_lantern':(1,2),'bench':(3,1),'onggi':(1,1),'laundry':(2,2),
        'willow':(4,4),'garden_wall':(4,2)}
-KIND_COL={'moor':(60,120,255),'plaza':(255,214,90),'yard':(255,170,60),'lot':(240,110,90),'shore':(90,190,255),'spot':(255,255,255),
+KIND_COL={'moor':(60,120,255),'harbor':(40,200,220),'reserve':(200,200,255),'plaza':(255,214,90),'yard':(255,170,60),'lot':(240,110,90),'shore':(90,190,255),'spot':(255,255,255),
           'npc':(255,120,220),'lantern':(255,250,170),'growth':(150,240,140),'start':(120,255,255)}
 
 def L(name,asset,anchor='plaza',**k):
@@ -49,8 +49,14 @@ VILLAGES={
  'goryeo/개경':('gaegyeong','Gaegyeong',village('gaegyeong',(14,8),(10,6),
     ['tile-house','tile-house','tile-house','tile-house','thatch','thatch'],
     [L('궁성','palace','center',memo='수도 궁궐'),L('객주','gaekju','plaza',id='npc:gaekju'),
-     L('시전 1','shop','plaza'),L('시전 2','shop','plaza'),P('청자 공방','celadon','plaza')],
-    [N('객주 주인','객주',id='gaekju'),N('시전 짐꾼','시전 1',memo='worker'),N('시전 행상','시전 2',memo='worker')],
+     L('시전 1','shop','plaza'),L('시전 2','shop','plaza'),P('청자 공방','celadon','plaza'),
+     # 항구(은샘 2026-10-28: 해상 무역은 나중에 추가. 자리를 먼저 잡아 둔다)
+     dict(name='항구 부두',kind='harbor',w=3,h=8,anchor='sea',memo='바다 쪽 선착장. 해상 무역 배가 닿는 곳'),
+     P('배 1','boat','항구 부두',kind='moor'),P('배 2','boat','항구 부두',kind='moor'),
+     L('항구 창고','small_store','항구 부두',memo='뱃짐 창고'),
+     dict(name='해상 무역 자리',kind='reserve',w=8,h=5,anchor='항구 부두',memo='나중에 무역관·선적장을 둘 빈 땅(지금은 풀밭)')],
+    [N('객주 주인','객주',id='gaekju'),N('시전 짐꾼','시전 1',memo='worker'),N('시전 행상','시전 2',memo='worker'),
+     N('항구 짐꾼','항구 부두',memo='worker, 새 NPC ID는 M4')],
     lanterns=4,growth=5)),
  'goryeo/송악':('songak','goryeo_songak',village('goryeo_songak',(12,7),(8,5),
     ['thatch','tile-house','thatch','tile-house'],
@@ -144,6 +150,9 @@ class Planner:
         s.land=s.mapm&~s.water&~s.bridge
         s.free0=s.vm&s.land&~s.road
         s.shore=s.land&ndimage.binary_dilation(s.water,iterations=1)&~s.road
+        s.sea=np.isin(d['terrain'],[v.DEEP,v.SHALLOW])&s.water
+        s.seashore=s.land&ndimage.binary_dilation(s.sea,iterations=1)&~s.road
+        s.dsea=ndimage.distance_transform_edt(~s.sea)
         s.hard=np.zeros_like(s.vm);s.lot=np.zeros_like(s.vm);s.soft=np.zeros_like(s.vm);s.door=np.zeros_like(s.vm)
         s.droad=ndimage.distance_transform_edt(~(s.road&s.mapm))
         ys,xs=np.nonzero(s.vm);s.cen=(ys.mean(),xs.mean())
@@ -170,7 +179,7 @@ class Planner:
         r=dict(name=it['name'],kind=it['kind'],asset=it.get('asset'),iy=int(iy),ix=int(ix),w=it['w'],h=it['h'],
                id=it.get('id',''),memo=it.get('memo',''))
         sl=(slice(iy,iy+it['h']),slice(ix,ix+it['w']))
-        if it['kind'] in('lot','plaza','yard'):s.hard[sl]=True
+        if it['kind'] in('lot','plaza','yard','harbor','reserve'):s.hard[sl]=True
         if it['kind']=='lot':s.lot[sl]=True
         else:s.soft[sl]=True
         if it['kind']=='lot':
@@ -199,7 +208,12 @@ class Planner:
                     sc=math.hypot(y0+h/2-ay,x0+w/2-ax)
                     cands.append((sc,y0,x0))
                     continue
-                if k=='shore':
+                if k=='harbor':
+                    # 바다에 닿는 땅, 마을 범위 가까이. 긴 변이 바닷가를 따라가게 바다 쪽 칸 수를 많이
+                    if s.seashore[y0:y0+h,x0:x0+w].sum()<max(w,h)-1:continue
+                    if not s.vm[max(0,y0-2):y0+h+2,max(0,x0-2):x0+w+2].any():continue
+                    if not s.rect_ok(y0,x0,w,h,need=open_):continue
+                elif k=='shore':
                     if not s.shore[y0:y0+h,x0:x0+w].any():continue
                     if not s.vm[max(0,y0-3):y0+h+3,max(0,x0-3):x0+w+3].any():continue
                     if not s.rect_ok(y0,x0,w,h,need=open_):continue
@@ -207,6 +221,8 @@ class Planner:
                 cy,cx=y0+h/2,x0+w/2
                 if a=='away' and pz:
                     dp=math.hypot(cy-pz['iy']-pz['h']/2,cx-pz['ix']-pz['w']/2);sc=abs(dp-13)+.3*math.hypot(cy-s.cen[0],cx-s.cen[1])
+                elif a=='sea':
+                    sc=.5*math.hypot(cy-pz['iy']-pz['h']/2,cx-pz['ix']-pz['w']/2) if pz else 0
                 elif a=='water':sc=s.dwater[y0:y0+h,x0:x0+w].min()*2+.4*math.hypot(cy-s.cen[0],cx-s.cen[1])
                 else:sc=math.hypot(cy-ay,cx-ax)
                 if k=='plaza' and s.droad[y0-1:y0+h+1,x0-1:x0+w+1].min()>1.5:continue
@@ -223,7 +239,7 @@ class Planner:
         cands.sort()
         for sc,y0,x0 in cands[:3000]:
             if k=='lot' and s.lane_len(y0+h,x0+w//2,(y0,x0,w,h))>24:continue
-            if k=='shore' and s.lane_len(y0+h-1,x0,(0,0,0,0),start_rect=(y0,x0,w,h))>24:continue
+            if k in('shore','harbor') and s.lane_len(y0+h-1,x0,(0,0,0,0),start_rect=(y0,x0,w,h))>24:continue
             if k=='shore' and it.get('asset') and not s.keeps_paths((y0,x0,w,h)):continue
             return s.put(it,y0,x0)
         return s.miss(it)
@@ -343,10 +359,19 @@ def plan(d,key,items):
                 if it['kind']==k:
                     if k=='lot' or it['kind']==k:pass
         # 순서: 광장 → 마을별 특별 건물(목록 순) → 물가 → 마당 → 집
-        rects=[i for i in items if i['kind'] in('plaza','lot','yard','shore','moor')]
-        first=[i for i in rects if not i['name'].startswith('집 ')];houses=[i for i in rects if i['name'].startswith('집 ')]
+        rects=[i for i in items if i['kind'] in('plaza','lot','yard','shore','moor','harbor','reserve')]
+        # 광장 → 항구(바닷가를 먼저 잡음) → 마을별 건물 → 마당 → 집
+        pri={'plaza':0,'harbor':1,'moor':2,'reserve':3}
+        first=sorted([i for i in rects if not i['name'].startswith('집 ')],key=lambda i:pri.get(i['kind'],5) if i['kind']!='lot' or i.get('anchor')!='항구 부두' else 2)
+        houses=[i for i in rects if i['name'].startswith('집 ')]
         for it in first+houses:
-            if it['kind'] in('plaza','yard'):
+            if it['kind'] in('harbor',):
+                w,h=it['w'],it['h']
+                for ww,hh in((w,h),(h,w),(w,h-2),(h-2,w),(w+1,h-3),(h-3,w+1)):
+                    if p.place_rect(dict(it,w=ww,h=hh)) is not None:break
+                    p.out.pop()
+                else:p.miss(it)
+            elif it['kind'] in('plaza','yard','reserve'):
                 w,h=it['w'],it['h'];tried=[]
                 for ww,hh in((w,h),(h,w),(w-2,h-1),(w-2,h),(h,w-2),(w-4,h-1),(w-4,h-2)):
                     it2=dict(it,w=ww,h=hh)
