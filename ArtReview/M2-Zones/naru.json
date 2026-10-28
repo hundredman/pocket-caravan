@@ -1,0 +1,235 @@
+{
+ "map": "goryeo/나루",
+ "items": [
+  {
+   "name": "장터 광장",
+   "kind": "open",
+   "x": 230,
+   "y": 50,
+   "w": 12,
+   "h": 6,
+   "memo": "market naru — 강과 길 사이 넓은 터",
+   "valid": true
+  },
+  {
+   "name": "게시판",
+   "kind": "spot",
+   "x": 243,
+   "y": 54,
+   "w": 1,
+   "h": 1,
+   "memo": "board naru — 광장 동쪽, 길가",
+   "valid": true
+  },
+  {
+   "name": "촌장 집",
+   "kind": "lot",
+   "x": 243,
+   "y": 47,
+   "w": 5,
+   "h": 4,
+   "memo": "npc naru_chief — 다리 어귀",
+   "valid": true
+  },
+  {
+   "name": "나루터",
+   "kind": "shore",
+   "x": 251,
+   "y": 54,
+   "w": 3,
+   "h": 3,
+   "memo": "나룻배 정박. 뱃사공·짐꾼",
+   "valid": true
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "x": 225,
+   "y": 51,
+   "w": 4,
+   "h": 3,
+   "memo": "",
+   "valid": true
+  },
+  {
+   "name": "집 2",
+   "kind": "lot",
+   "x": 232,
+   "y": 62,
+   "w": 4,
+   "h": 3,
+   "memo": "",
+   "valid": true
+  },
+  {
+   "name": "집 3",
+   "kind": "lot",
+   "x": 237,
+   "y": 62,
+   "w": 4,
+   "h": 3,
+   "memo": "",
+   "valid": true
+  },
+  {
+   "name": "집 4",
+   "kind": "lot",
+   "x": 250,
+   "y": 59,
+   "w": 4,
+   "h": 3,
+   "memo": "",
+   "valid": true
+  },
+  {
+   "name": "집 5",
+   "kind": "lot",
+   "x": 251,
+   "y": 64,
+   "w": 4,
+   "h": 3,
+   "memo": "",
+   "valid": true
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "x": 245,
+   "y": 61,
+   "w": 1,
+   "h": 2,
+   "memo": "naru_well_woman",
+   "valid": true
+  },
+  {
+   "name": "이벤트 마당",
+   "kind": "open",
+   "x": 242,
+   "y": 65,
+   "w": 8,
+   "h": 5,
+   "memo": "모임·행사",
+   "valid": true
+  },
+  {
+   "name": "낚시터",
+   "kind": "shore",
+   "x": 256,
+   "y": 63,
+   "w": 2,
+   "h": 1,
+   "memo": "pastime goryeo_fishing",
+   "valid": true
+  },
+  {
+   "name": "시작 위치",
+   "kind": "spot",
+   "x": 239,
+   "y": 59,
+   "w": 1,
+   "h": 1,
+   "memo": "튜토리얼 시작(길 위)",
+   "valid": true
+  },
+  {
+   "name": "촌장",
+   "kind": "npc",
+   "x": 245,
+   "y": 52,
+   "w": 1,
+   "h": 1,
+   "memo": "naru_chief: 촌장 집 문 앞",
+   "valid": true
+  },
+  {
+   "name": "우물가 아낙",
+   "kind": "npc",
+   "x": 247,
+   "y": 62,
+   "w": 1,
+   "h": 1,
+   "memo": "naru_well_woman",
+   "valid": true
+  },
+  {
+   "name": "뱃사공",
+   "kind": "npc",
+   "x": 249,
+   "y": 55,
+   "w": 1,
+   "h": 1,
+   "memo": "talker",
+   "valid": true
+  },
+  {
+   "name": "나루 짐꾼",
+   "kind": "npc",
+   "x": 248,
+   "y": 57,
+   "w": 1,
+   "h": 1,
+   "memo": "worker",
+   "valid": true
+  },
+  {
+   "name": "농부",
+   "kind": "npc",
+   "x": 228,
+   "y": 57,
+   "w": 1,
+   "h": 1,
+   "memo": "talker — 마을 서쪽 입구",
+   "valid": true
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "x": 225,
+   "y": 48,
+   "w": 1,
+   "h": 1,
+   "memo": "마을 성장 소품",
+   "valid": true
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "x": 246,
+   "y": 58,
+   "w": 1,
+   "h": 1,
+   "memo": "",
+   "valid": true
+  },
+  {
+   "name": "성장 자리 3",
+   "kind": "growth",
+   "x": 232,
+   "y": 58,
+   "w": 1,
+   "h": 1,
+   "memo": "",
+   "valid": true
+  },
+  {
+   "name": "성장 자리 4",
+   "kind": "growth",
+   "x": 256,
+   "y": 60,
+   "w": 1,
+   "h": 1,
+   "memo": "",
+   "valid": true
+  },
+  {
+   "name": "성장 자리 5",
+   "kind": "growth",
+   "x": 251,
+   "y": 69,
+   "w": 1,
+   "h": 1,
+   "memo": "",
+   "valid": true
+  }
+ ]
+}
