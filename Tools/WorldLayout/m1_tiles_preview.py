@@ -616,7 +616,10 @@ def zones_masks(own,water,road,H,W):
                     # 계단·대문이 그림 가운데(두 칸 사이)에 있어, 문 앞 흙길을 가운데 두 칸에 맞춘다(은샘 2026-10-28, 개경 궁궐)
                     cx=ix+r['w']//2;flat[iy+r['h']:iy+r['h']+2,cx-2:cx+2]=True
                     # 건물 바로 아래 줄은 입구 양옆을 같은 너비의 풀밭으로 둔다(은샘 2026-10-28)
-                    grass_keep[iy+r['h'],ix:ix+r['w']]=True;grass_keep[iy+r['h'],cx-2:cx+2]=False
+                    # 양옆 풀밭은 바깥 가장자리가 아래로 한 칸씩 비스듬히 줄어든다(직각으로 깎지 않음)
+                    dy0=iy+r['h']
+                    grass_keep[dy0,ix:cx-2]=True;grass_keep[dy0,cx+2:ix+r['w']]=True
+                    grass_keep[dy0+1,ix+1:cx-2]=True;grass_keep[dy0+1,cx+2:ix+r['w']-1]=True
             elif k in('plaza','yard','harbor') or (k=='shore' and not r.get('asset') and r['name']!='낚시터'):flat[sl]=True
             elif k=='reserve':spot[sl]=True;resv[sl]=True   # 나중에 쓸 빈 땅: 풀밭 그대로, 나무만 두지 않음   # 선착장만 흙. 빨래터·낚시터는 풀밭 물가   # 낚시터는 풀밭 물가 그대로
             elif k in('spot','lantern','npc','start','growth'):spot[sl]=True
