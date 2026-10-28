@@ -384,6 +384,10 @@ def main():
     land=own&~water
     rep=dict(waterAdded=int((water&~water0).sum()),roadAdded=int((road&~road0).sum()),bridgeCells=int(bridge.sum()))
     img=Image.new('RGBA',(W*T,H*T),(28,34,40,255))
+    LAY=os.environ.get('M4_LAYERS')   # M4: 게임 층(바닥·장식·아래 개체·위 개체)으로 따로 그린다
+    PARTS={}   # M4 인증: (층, y, x) → [(원본, dx, dy)] 원본 그림을 칸 왼쪽 위 기준 어디에 통째로 놓았는지(그린 순서)
+    def part(layer,y,x,src,dx=0,dy=0):
+        if LAY:PARTS.setdefault((layer,int(y),int(x)),[]).append((src,int(dx),int(dy)))
     pieces=collections.Counter();bad=collections.Counter()
     def mk(mask,y,x,center):
         def m(dy,dx):
@@ -400,15 +404,14 @@ def main():
                 rel=autorel(mk(water,y,x,True),y,x)
                 if rel is None:bad['water']+=1;rel=(1,1)
                 key=f'water:{rel[0]}:{rel[1]+6}'
-                img.alpha_composite(tile(key),(x*T,y*T));pieces[key]+=1
+                img.alpha_composite(tile(key),(x*T,y*T));pieces[key]+=1;part('ground',y,x,'tile:'+key)
             elif road[y,x]:
                 rel=autorel(mk(road,y,x,True),y,x)
-                if rel is None:bad['road']+=1;img.alpha_composite(tile(g),(x*T,y*T));continue
+                if rel is None:bad['road']+=1;img.alpha_composite(tile(g),(x*T,y*T));part('ground',y,x,'tile:'+g);continue
                 key=f'floor:{rel[0]}:{rel[1]+7}'
-                img.alpha_composite(tile(key),(x*T,y*T));pieces[key]+=1
+                img.alpha_composite(tile(key),(x*T,y*T));pieces[key]+=1;part('ground',y,x,'tile:'+key)
             else:
-                img.alpha_composite(tile(g),(x*T,y*T))
-    LAY=os.environ.get('M4_LAYERS')   # M4: 게임 층(바닥·장식·아래 개체·위 개체)으로 따로 그린다
+                img.alpha_composite(tile(g),(x*T,y*T));part('ground',y,x,'tile:'+g)
     if LAY:
         gimg=img.copy();dimg=Image.new('RGBA',img.size,(0,0,0,0))
         deck=np.zeros((H,W),bool)
@@ -422,17 +425,22 @@ def main():
                 im.alpha_composite(gameart(f'water_{x}_{sy}_wood'),(x*T,y*T))
                 if x in(0,2):im.alpha_composite(gameart(f"wood_rail{'vleft' if x==0 else 'vright'}_{1 if y in(0,n_-1) else 0}"),(x*T,y*T))
         rot=im.rotate(90-deg,resample=Image.NEAREST,expand=True)   # 세로 그림(아래 방향=90°)을 길 각도로
+        BRIDGES.append(rot)
         bx_,by_=int(round((cx+.5)*T-rot.width/2)),int(round((cy+.5)*T-rot.height/2))
         img.alpha_composite(rot,(bx_,by_))
         if LAY:
             dimg.alpha_composite(rot,(bx_,by_))
+            bi=len(BRIDGES)-1;ra_=np.array(rot)[:,:,3]
+            for cyy in range(by_//T,(by_+rot.height-1)//T+1):
+                for cxx in range(bx_//T,(bx_+rot.width-1)//T+1):
+                    sub=ra_[max(0,cyy*T-by_):max(0,(cyy+1)*T-by_),max(0,cxx*T-bx_):max(0,(cxx+1)*T-bx_)]
+                    if sub.size and sub.max()>0:part('deco',cyy,cxx,f'bridge:{bi}',bx_-cxx*T,by_-cyy*T)
             # 다리 판자가 칸의 절반 이상 덮으면 걸을 수 있는 칸
             al=np.zeros((H*T,W*T),np.uint8);ra=np.array(rot)[:,:,3]
             y0_,x0_=max(0,by_),max(0,bx_);y1_,x1_=min(H*T,by_+ra.shape[0]),min(W*T,bx_+ra.shape[1])
             al[y0_:y1_,x0_:x1_]=ra[y0_-by_:y1_-by_,x0_-bx_:x1_-bx_]
             cov=(al>0).reshape(H,T,W,T).mean(axis=(1,3))
             deck|=cov>=.5
-        BRIDGES.append(rot)
     rep['bridges']=[dict(x=round(cx+v.X0,1),y=round(cy+v.Y0,1),angle=round((deg+360)%180,1),length=int(math.ceil(L))+2) for cy,cx,deg,L in spans]
     rep['pieces']=dict(pieces);rep['unmatched']=dict(bad)
     def seams(mask):
@@ -482,7 +490,9 @@ def main():
         under=ndimage.binary_erosion(fm,iterations=1)&below
         for y,x in np.argwhere(under):
             img.paste(bg,(x*T,y*T,(x+1)*T,(y+1)*T))
-            if LAY:gimg.paste(bg,(x*T,y*T,(x+1)*T,(y+1)*T))
+            if LAY:
+                gimg.paste(bg,(x*T,y*T,(x+1)*T,(y+1)*T))
+                PARTS[('ground',int(y),int(x))]=[('fill:%02x%02x%02x%02x'%tuple(bg),0,0)]   # 숲 그늘: 칸 전체를 한 색으로(바닥 조각을 덮음)
         FMASK[kind]=fm
         # 나무는 모두 통째로, 밑동 줄 순서대로(뒤 나무 위에 앞 나무). 블록과 같은 자리라 안쪽은 숲 타일과 같은 그림이 된다.
         n=0
@@ -573,19 +583,19 @@ def main():
         mm=np.isin(t,[v.MEADOW])&free&~occ;n=0
         for y,x in np.argwhere(mm):
             if rng.random()<.10:
-                tt=tile(FLOWERS[rng.integers(2)]);img.alpha_composite(tt,(x*T,y*T));n+=1
-                if LAY:dimg.alpha_composite(tt,(x*T,y*T))
+                fk=FLOWERS[rng.integers(2)];tt=tile(fk);img.alpha_composite(tt,(x*T,y*T));n+=1
+                if LAY:dimg.alpha_composite(tt,(x*T,y*T));part('deco',y,x,'tile:'+fk)
         counts['flowers']=n
     if 'grass' not in off:
         gm=land&~road&~occ;n=0
         for y,x in np.argwhere(gm):
             if rng.random()<.035:
-                tt=tile(TUFTS[rng.integers(4)]);img.alpha_composite(tt,(x*T,y*T));n+=1
-                if LAY:dimg.alpha_composite(tt,(x*T,y*T))
+                fk=TUFTS[rng.integers(4)];tt=tile(fk);img.alpha_composite(tt,(x*T,y*T));n+=1
+                if LAY:dimg.alpha_composite(tt,(x*T,y*T));part('deco',y,x,'tile:'+fk)
         counts['tufts']=n
         counts['loneTrees']=scatter(cls(v.GRASS,v.MEADOW)&free&~occ,TREES_LONE,.004,margin=2)
     if Z is not None:objs+=objs_z
-    if LAY:export_layers(LAY,img,gimg,dimg,deck,objs,water,road,road0,Z,FMASK,own,w,H,W)
+    if LAY:export_layers(LAY,img,gimg,dimg,deck,objs,water,road,road0,Z,FMASK,own,w,H,W,PARTS,BRIDGES)
     for y,x0,y0,name in sorted(objs):
         if name.startswith('c7:'):img.alpha_composite(c7b(name[3:]),(x0*T,y0*T));continue
         if name=='oldsheaf':
@@ -828,7 +838,7 @@ def _sprite_img(name):
     if name.startswith('c7:'):return c7b(name[3:])
     return sprite(name)
 
-def export_layers(out,img,gimg,dimg,deck,objs,water,road,road0,Z,FMASK,own,w,H,W):
+def export_layers(out,img,gimg,dimg,deck,objs,water,road,road0,Z,FMASK,own,w,H,W,PARTS,BRIDGES):
     """M4: 게임 맵 층으로 나눠 저장한다(검토용).
     - 막힘: 물(다리 판자 아래 제외), 숲·산·수원지 숲 칸, 건물·소품 충돌, 나무·덤불·바위 밑동
     - 개체 그림은 칸마다 나눈다: 막힌 칸이거나 밑동 줄이 그 칸보다 위·같은 줄이면 '아래 개체'(플레이어 아래),
@@ -857,12 +867,41 @@ def export_layers(out,img,gimg,dimg,deck,objs,water,road,road0,Z,FMASK,own,w,H,W
                 if not(0<=cy<H and 0<=cx<W):continue
                 piece=im.crop((c_*T,r_*T,(c_+1)*T,(r_+1)*T))
                 if piece.getbbox() is None:continue
-                (oimg if (blocked[cy,cx] or y<=cy) else himg).alpha_composite(piece,(cx*T,cy*T))
+                lay_='obj' if (blocked[cy,cx] or y<=cy) else 'high'
+                (oimg if lay_=='obj' else himg).alpha_composite(piece,(cx*T,cy*T))
+                PARTS.setdefault((lay_,cy,cx),[]).append(('sprite:'+name,-c_*T,-r_*T))
     for nm_,im_ in(('ground',gimg),('deco',dimg),('obj',oimg),('high',himg),('composite',img)):im_.save(out/f'{nm_}.png')
     grade=np.zeros((H,W),np.uint8)
     if Z is not None:grade[Z['road']]=1
     grade[road0&road]=2;grade[deck]=2
     np.savez_compressed(out/'masks.npz',blocked=blocked,water=water&~deck,grade=grade,own=own,mapid=w['mapid'],keys=np.array(w['keys']),deck=deck)
+    # 인증 기록: 칸별 원본 목록 + 원본 그림 경로(새로 만든 원본은 여기서 굽는다)
+    srcs={}
+    def src_path(sid):
+        kind,_,nm=sid.partition(':')
+        if kind=='tile':
+            fk=nm+'@'+SKIN
+            if fk in INDEX['tiles']:return INDEX['tiles'][fk]['path']
+            p_=f'Assets/PocketCaravan/Art/NinjaAdventure/Tiles/{nm.replace(":","_")}_{SKIN}.png'
+            if (ROOT/p_).exists():
+                if Image.open(ROOT/p_).convert('RGBA').tobytes()!=tile(nm).tobytes():raise ValueError('기존 타일과 그림이 다름: '+p_)
+                return p_   # 이미 게임에 있는 jade 흙길 조각(같은 그림)
+            tile(nm).save(ROOT/p_);return p_
+        if kind=='sprite':
+            if nm.startswith('c7:'):
+                a_=nm[3:];return str((ROOT/'ArtReview/Approved'/C7B[a_]/f'{a_}.png').relative_to(ROOT)) if a_ in C7B else f'ArtReview/C7-RemainingBatch-20261027/Native/{a_}.png'
+            n0=nm.split(':')[0]
+            return C7[n0] if n0 in C7 else INDEX['sprites'][nm]
+        d_=ROOT/'Assets/PocketCaravan/Art/Baked/Objects/M4';d_.mkdir(parents=True,exist_ok=True)
+        if kind=='bridge':
+            p_=d_/f'bridge_{nm}.png';BRIDGES[int(nm)].save(p_);return str(p_.relative_to(ROOT))
+        if kind=='fill':
+            p_=d_/f'shade_{nm}.png';Image.new('RGBA',(T,T),tuple(int(nm[i:i+2],16) for i in(0,2,4,6))).save(p_);return str(p_.relative_to(ROOT))
+        raise ValueError(sid)
+    for v_ in PARTS.values():
+        for sid,_,_ in v_:
+            if sid not in srcs:srcs[sid]=src_path(sid)
+    (out/'parts.json').write_text(json.dumps(dict(sources=srcs,parts={f'{l}:{y}:{x}':v_ for (l,y,x),v_ in PARTS.items()}),ensure_ascii=False))
     print('M4 층 저장:',out)
 
 def gameart(name):

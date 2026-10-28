@@ -40,6 +40,7 @@ def main():
     lay={k:Image.open(L/f'{k}.png').convert('RGBA') for k in('ground','deco','obj','high')}
     arr={k:np.array(im) for k,im in lay.items()}
     known=existing_tiles();newt={};names={}
+    PARTS=json.loads((L/'parts.json').read_text());comp={}
     (PREV/'Maps').mkdir(parents=True,exist_ok=True);(PREV/'Tiles').mkdir(parents=True,exist_ok=True);REVIEW.mkdir(parents=True,exist_ok=True)
     def cell_name(layer,y,x):
         a_=arr[layer][y*T:(y+1)*T,x*T:(x+1)*T]
@@ -47,7 +48,10 @@ def main():
         b=a_.tobytes();hh=hashlib.sha256(b).hexdigest()
         if hh in names:return names[hh]
         n=known.get(hh) or 'm4_'+hh[:12]
-        if n.startswith('m4_') and n not in newt:newt[n]=Image.fromarray(a_)
+        if n.startswith('m4_') and n not in newt:
+            newt[n]=Image.fromarray(a_)
+            comp[n]=dict(sha256=hashlib.sha256(Image.fromarray(a_).convert('RGBA').tobytes()).hexdigest(),layer=layer,
+                         base=[28,34,40,255] if layer=='ground' else None,parts=PARTS['parts'].get(f'{layer}:{y}:{x}',[]))
         names[hh]=n;return n
     rep={}
     # ③ 맵 객체: 경계 출입구는 모든 맵을 함께 보고 만든다
@@ -130,7 +134,14 @@ def main():
     import shutil
     for n in set(names.values()):
         if not n.startswith('m4_'):shutil.copyfile(TILES/f'{n}.png',PREV/'Tiles'/f'{n}.png')
-    rep['_tiles']=dict(newTiles=len(newt),reusedExisting=len([n for n in names.values() if not n.startswith('m4_')]))
+    # 겹친 칸 인증 기록(A2 확장): 미리보기 폴더에 두고 ④에서 본편 위치로 옮긴다
+    import m4_certify
+    srcs={sid:dict(path=p_,sha256=m4_certify.rgba_sha(Image.open(ROOT/p_)),approval=m4_certify.approval_for(sid,p_))
+          for sid,p_ in PARTS['sources'].items() if any(sid==q[0] for c in comp.values() for q in c['parts'])}
+    (PREV/'m4-composites.json').write_text(json.dumps(dict(schemaVersion=1,rule='m4_certify.py',sources=srcs,tiles=comp),ensure_ascii=False,indent=0))
+    errs,info=m4_certify.verify(PREV/'m4-composites.json',PREV/'Tiles')
+    print('인증:',len(errs),'errors',info,errs[:5])
+    rep['_tiles']=dict(certifyErrors=len(errs),newTiles=len(newt),reusedExisting=len([n for n in names.values() if not n.startswith('m4_')]))
     (REVIEW/'report.json').write_text(json.dumps(rep,ensure_ascii=False,indent=1))
     print(rep['_tiles'])
 
