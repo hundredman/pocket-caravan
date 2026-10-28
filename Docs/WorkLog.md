@@ -187,3 +187,5 @@
 | 2026-10-28 | Claude | M4 검사 최신화 | (region/goryeo) | 은샘 지시("검사를 최신화해야 하지 않나, 오류난 건?"). 건너뛰던 옛 맵 검사를 새 맵 기준으로 다시 씀(지도·출구, 경계 출구, 도달, 지도 물, 담당 칸, 대륙 관문, 중앙 경로, 거리, 궁궐 그림, 물결). 옛 고정본 검사 6개 등은 이유를 적고 건너뜀. Unity 실패 2개 수정: GoryeoExperience(손수레 선행 = q1_dakmok), JourneyGuide(Route01 → transit_pass). 함께 고친 Unity 검사: SceneTerrain(옛 저장 도착 자리·담당 밖 칸), R2 가격 기준값(current 거리). 검사가 찾은 문제 고침: 걸어서 닿는 경계 240칸에 출구가 없던 것(출구 874→1,176), 옛 물결 324개가 빠져 있던 것(317개 다시 놓음). Python 310개 통과(42 건너뜀, Pillow만), validate_world 오류 0, Unity Edit 검사 18개 통과, Unity Play 출구 130곳 이동 실패 0. 저장 파일 그대로 |
 
 | 2026-10-28 | Codex | 건물·배 리뉴얼 시점 구분 | 이 커밋 | 사용자 정정 반영: 건물은 지붕 윗면+앞면, 배는 내려다보는 각도를 낮춰 선체 옆면이 충분히 보이게. Plan의 묶인 항목을 분리하고 Direction/ArtGuide에 기록. 문서만 수정, 그림 제작/본편 교체/Unity 검사는 미실행. |
+
+| 2026-10-28 | Codex | 건물·배 전체 시점 리뉴얼 시안 | 이 커밋 (codex/building-ship-renewal) | 사용자 전체 작업 후 컨펌 지시대로 건물9+배1 내장 imagegen 원화/NEAREST native/30색 Aseprite·PNG 제작, 전체 전후·Unity Edit480×270 전후6장 제출. 크기/이진알파/색수·ASE10RGBA재출력 일치·Unity 실행/콘솔오류0·본편씬dirty불변·촬영후원래씬복귀. 원본/본편/A2/저장 미변경·그림승인대기, 실제플레이/가림충돌/전체회귀/빌드 미실행. 보고전 main/origin main 최신확인·로컬커밋만. |

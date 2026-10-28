@@ -1,0 +1,85 @@
+{
+  "scope": "buildings and boat only; batch confirmation after whole set; no production replacement",
+  "assets": [
+    {
+      "name": "cottage",
+      "original": "ArtReview/Approved/C7-Batch1-v1/cottage.png",
+      "width": 80,
+      "height": 64,
+      "subject": "a larger rural cottage with straw thatch, simple timber frame and plaster walls",
+      "status": "pending"
+    },
+    {
+      "name": "pavilion",
+      "original": "ArtReview/Approved/C7-Batch1-v1/pavilion.png",
+      "width": 80,
+      "height": 80,
+      "subject": "an open-sided Korean pavilion with a blue gray tiled hip roof, four wooden columns, railings and stone steps",
+      "status": "pending"
+    },
+    {
+      "name": "thatch",
+      "original": "ArtReview/Approved/C7-Buildings-v5/thatch.png",
+      "width": 64,
+      "height": 48,
+      "subject": "a small humble straw thatched hut with cream plaster walls and a simple wooden door",
+      "status": "pending"
+    },
+    {
+      "name": "tile-house",
+      "original": "ArtReview/Approved/C7-Buildings-v6/tile-house.png",
+      "width": 64,
+      "height": 48,
+      "subject": "a small Korean tiled-roof home with cream plaster and timber, upturned blue gray tiled eaves",
+      "status": "pending"
+    },
+    {
+      "name": "gaekju",
+      "original": "ArtReview/Approved/C7-Gaekju-v1/gaekju.png",
+      "width": 96,
+      "height": 64,
+      "subject": "a broad merchant guesthouse with blue gray roof, cream plaster and dark wood frame, central doorway and stone step",
+      "status": "pending"
+    },
+    {
+      "name": "gate",
+      "original": "ArtReview/Approved/C7-GateProps-v1/gate.png",
+      "width": 96,
+      "height": 80,
+      "subject": "a Korean ceremonial gateway with broad blue gray tiled roof, two stout wooden posts, open passage and stone footings",
+      "status": "pending"
+    },
+    {
+      "name": "palace",
+      "original": "ArtReview/Approved/C7-Palace-v1/palace.png",
+      "width": 160,
+      "height": 112,
+      "subject": "a grand single Korean palace hall, broad tiled roof with elegant upturned corners, modest red brown columns, green lattice windows and raised stone stairs",
+      "status": "pending"
+    },
+    {
+      "name": "shop",
+      "original": "ArtReview/Approved/C7-Shop-v1/shop.png",
+      "width": 96,
+      "height": 64,
+      "subject": "a small Korean market shop with blue gray roof and one open merchandise counter, keep shelves and goods sparse and readable",
+      "status": "pending"
+    },
+    {
+      "name": "small_store",
+      "original": "ArtReview/C7-RemainingBatch-20261027/Native/small_store.png",
+      "width": 64,
+      "height": 48,
+      "subject": "a small storage warehouse with simple blue gray tiled roof, timber and plaster walls, broad closed wooden storage doors",
+      "status": "pending"
+    },
+    {
+      "name": "boat",
+      "original": "ArtReview/C7-RemainingBatch-20261027/Native/boat.png",
+      "width": 80,
+      "height": 32,
+      "subject": "a small open wooden Korean river ferry, pointed bow to the right, flat stern left, no sail or tall cabin, clear brown hull side, a few transverse benches",
+      "status": "pending"
+    }
+  ]
+}
