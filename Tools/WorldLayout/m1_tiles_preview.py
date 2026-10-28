@@ -237,7 +237,7 @@ def _paste(dst,im,x,y):
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--no',default='');a=ap.parse_args()
-    off=set(filter(None,a.no.split(',')))
+    asked=set(filter(None,a.no.split(',')));off=asked|{'field'}   # 들판(논)은 2026-10-28 은샘 지시로 뺌
     v.VARIANT['area']=v.SMALL_CENTRAL;v.VARIANT['hamlets']=v.HAMLETS
     layout=WorldLayout.read();w=v.build(layout);r=v.roads(layout,w);v.partition(layout,w,r)
     t=w['t'];own=w['owned'];H,W=t.shape;rng=np.random.default_rng(11)
@@ -544,7 +544,7 @@ def main():
         im=sprite(name);img.alpha_composite(im,(x0*T,(y-(im.height//T)+1)*T))
     rep['objects']=counts;rep['reviewBakedPieces']=BAKED_FOR_REVIEW
     OUT.mkdir(parents=True,exist_ok=True)
-    sfx=('-no-'+'-'.join(sorted(off))) if off else ''
+    sfx=('-no-'+'-'.join(sorted(asked))) if asked else ''
     for k,(b,lat,bg,ks) in BLOCKS.items():
         b.save(OUT/f'block-{k}.png')
         piece_sheet(k,lat,bg).save(OUT/f'pieces-{k}.png')
