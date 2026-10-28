@@ -1,0 +1,60 @@
+{
+ "waterAdded": 148,
+ "roadAdded": 191,
+ "bridgeCells": 89,
+ "pieces": {
+  "water:0:7": 340,
+  "water:1:7": 6883,
+  "water:0:8": 208,
+  "water:1:8": 201,
+  "water:6:7": 209,
+  "floor:0:7": 163,
+  "floor:2:7": 141,
+  "floor:0:8": 279,
+  "floor:5:9": 145,
+  "floor:1:8": 575,
+  "floor:2:8": 288,
+  "floor:0:9": 147,
+  "floor:6:8": 150,
+  "water:5:7": 133,
+  "water:2:8": 132,
+  "water:0:6": 184,
+  "water:1:6": 193,
+  "water:6:8": 185,
+  "floor:1:7": 172,
+  "floor:6:9": 165,
+  "floor:5:8": 164,
+  "floor:2:9": 158,
+  "floor:1:9": 172,
+  "water:2:7": 182,
+  "water:2:6": 164,
+  "water:5:8": 165
+ },
+ "unmatched": {},
+ "seamCells": {
+  "water": 4,
+  "road": 2
+ },
+ "objects": {
+  "mountain": 245,
+  "forest": 459,
+  "hill": 52,
+  "marsh": 32,
+  "lotus": 17,
+  "paddy": 30,
+  "flowers": 86,
+  "tufts": 926,
+  "loneTrees": 46
+ },
+ "reviewBakedPieces": {
+  "floor:2:7": "2e47a5819c8bc66ccf308f119aa656669047e976025fb93eb8b39d6961a51878",
+  "floor:0:8": "fa81bcc4f25d0e87605100b4ba2fc7855c7bfa249143f0881c797b38fad1ce36",
+  "floor:5:9": "61ba576c4e80a4a40b526c8bd43325df3607dda33ee3fe7c3a325adb5dc04bf2",
+  "floor:2:8": "0ee99d16e0d0c19f304b7f357a26e7e14e508a638ac2e8b5ea514684a3db1f7e",
+  "floor:0:9": "a74a864c56988bc67e253a28a3016ea3ca8db35d75f993c488ea0e56b6f265b8",
+  "floor:6:8": "4dc96d92df3c02bdd9281bbb68d8c3127927ca5fcc2790a54227ed9908d7d040",
+  "floor:6:9": "0641ce638b1636b041817b746b942e6e99b7d97a0fff68ecceceff502f4f2e80",
+  "floor:2:9": "9c5a65480d3bccb4aa4985647bc74758fe21ce824e997729f51676c539c78536",
+  "floor:1:9": "82a0d997dd8e7073dbcc84af92d099ba3a389b51cac1809bb85662024c7d0b69"
+ }
+}
