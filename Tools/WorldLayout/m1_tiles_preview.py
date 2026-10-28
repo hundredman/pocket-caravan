@@ -567,6 +567,8 @@ def main():
     for k,(cx,cy) in cams.items():
         iy,ix=v.idx(cx,cy);x0=(ix-15)*T;y0=(iy-8)*T
         img.crop((x0,y0,x0+480,y0+272)).resize((960,544),Image.NEAREST).convert('RGB').save(OUT/f'cam-{k}{sfx}.png')
+    if not asked:np.savez_compressed(OUT/'masks.npz',water=water,road=road,land=land,own=own,village=w['village'],vlabel=w['vlabel'],mapid=w['mapid'],
+        trees=occ,terrain=t,elev=w['elev'],bridges=np.array([[cy,cx,deg,L] for cy,cx,deg,L in spans]),keys=np.array(w['keys']),towns=np.array([tw['key'] for tw in w['towns']]))
     (OUT/f'report{sfx}.json').write_text(json.dumps(rep,ensure_ascii=False,indent=1))
     print(json.dumps({k:v_ for k,v_ in rep.items() if k!='pieces'},ensure_ascii=False))
 
