@@ -166,6 +166,8 @@ TREES_HILL=['shrub:2:2','shrub:2:2','small_rock:2:2','forest_round:3:4','light_t
 TREES_LONE=['broadleaf:4:4','willow:4:4','light_tree:3:4','golden_tree:3:4','shrub:2:2','forest_round:3:4']
 REEDS='tall_grass:2:2';LOTUS='lotus:2:1';SHEAF='harvest:3:2'
 
+# 다리별 진입로 조정(세계 좌표 중심 → 걷어 낼 반지름, 이을 길 최대 거리, 곧게 나오는 길이). 은샘 지시로 나루 다리(2번)만.
+APPROACH={(252,42,-1):(11,22,9),(252,42,1):(7,16,5)}   # 끝: +1 = 다리 방향 앞쪽, -1 = 뒤쪽
 P=6   # 숲 합성 블록 크기(칸). 이 블록이 반복되는 '숲 타일'
 FOREST_BLOCK=['forest_round:3:4','forest_bent:3:4','broadleaf:4:4','round_west:4:3','round_east:4:3','forest_wide:4:3','light_tree:3:4']
 MOUNT_BLOCK=['pine_west:4:3','pine_east:4:3','pine_west:4:3','pine_east:4:3','forest_bent:3:4']
@@ -340,20 +342,26 @@ def main():
             dd=np.hypot(yy_-ey,xx_-ex)
             # 바깥 길: 다리 앞쪽(다리 방향과 같은 쪽)에서 5~14칸
             ahead=((yy_-ey)*sg*uy+(xx_-ex)*sg*ux)>0
-            cand=np.argwhere(road&(dd>=5)&(dd<=14)&ahead&~water)
+            R0,R1,A=APPROACH.get((int(round(cx+v.X0)),int(round(cy+v.Y0)),sg),(5,14,3))
+            cand=np.argwhere(road&(dd>=R0)&(dd<=R1)&ahead&~water)
             if not len(cand):continue
             # 다리 축에 가까우면서 가까운 길
             perp_=np.abs((cand[:,0]-ey)*ux-(cand[:,1]-ex)*uy)
             sc=np.hypot(cand[:,0]-ey,cand[:,1]-ex)+1.5*perp_
             ty,tx=cand[int(np.argmin(sc))]
-            road[(dd<5)&~water]=False
-            a_=(ey+sg*uy*3,ex+sg*ux*3)
+            road[(dd<R0)&ahead&~water]=False   # 이 끝 앞쪽만 걷어 냄(반대쪽 끝 진입로는 그대로)
+            road[(dd<3)&~ahead&~water]=False   # 다리 끝 옆으로 남은 길 돌기도 걷어 냄
+            a_=(ey+sg*uy*A,ex+sg*ux*A)
             stroke((ey,ex),a_);stroke(a_,(ty,tx))
         for k in np.arange(-half,half+.01,.5):
-            for wv in(-1,0,1):
+            for wv in(0,):   # 다리 밑은 가운데 줄만(기울어진 다리 옆으로 길이 삐져나오지 않게)
                 q=(int(round(cy+uy*k-ux*wv)),int(round(cx+ux*k+uy*wv)))
                 if inside(*q) and own[q] and not water[q]:road[q]=True
     road=fill_diagonals(tileready(road,own&~water),own&~water)
+    # 진입로를 고치며 떨어져 나온 작은 길 조각(12칸 미만) 제거
+    lab,n_=ndimage.label(road,structure=np.ones((3,3)))
+    for i_,sl in enumerate(ndimage.find_objects(lab),1):
+        if (lab[sl]==i_).sum()<12:road[sl][lab[sl]==i_]=False
     land=own&~water
     rep=dict(waterAdded=int((water&~water0).sum()),roadAdded=int((road&~road0).sum()),bridgeCells=int(bridge.sum()))
     img=Image.new('RGBA',(W*T,H*T),(28,34,40,255))
