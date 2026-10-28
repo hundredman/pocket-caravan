@@ -602,7 +602,7 @@ ZDIR=ROOT/'ArtReview/M2-Zones'
 def zones_masks(own,water,road,H,W):
     zs=json.loads((ZDIR/'zones.json').read_text())['villages']
     lot=np.zeros((H,W),bool);flat=np.zeros((H,W),bool);lane=np.zeros((H,W),bool);spot=np.zeros((H,W),bool)
-    coll=np.zeros((H,W),bool);resv=np.zeros((H,W),bool);objs=[];items=[]
+    coll=np.zeros((H,W),bool);resv=np.zeros((H,W),bool);grass_keep=np.zeros((H,W),bool);objs=[];items=[]
     for key,vz in zs.items():
         ln=np.load(ZDIR/f"{vz['slug']}-lanes.npy");lane|=ln
         for r in vz['items']:
@@ -614,7 +614,9 @@ def zones_masks(own,water,road,H,W):
                 lot[sl]=True
                 if r.get('asset') in('palace','gate'):
                     # 계단·대문이 그림 가운데(두 칸 사이)에 있어, 문 앞 흙길을 가운데 두 칸에 맞춘다(은샘 2026-10-28, 개경 궁궐)
-                    cx=ix+r['w']//2;flat[iy+r['h']:iy+r['h']+2,cx-2:cx+1]=True
+                    cx=ix+r['w']//2;flat[iy+r['h']:iy+r['h']+2,cx-2:cx+2]=True
+                    # 건물 바로 아래 줄은 입구 양옆을 같은 너비의 풀밭으로 둔다(은샘 2026-10-28)
+                    grass_keep[iy+r['h'],ix:ix+r['w']]=True;grass_keep[iy+r['h'],cx-2:cx+2]=False
             elif k in('plaza','yard','harbor') or (k=='shore' and not r.get('asset') and r['name']!='낚시터'):flat[sl]=True
             elif k=='reserve':spot[sl]=True;resv[sl]=True   # 나중에 쓸 빈 땅: 풀밭 그대로, 나무만 두지 않음   # 선착장만 흙. 빨래터·낚시터는 풀밭 물가   # 낚시터는 풀밭 물가 그대로
             elif k in('spot','lantern','npc','start','growth'):spot[sl]=True
@@ -627,7 +629,8 @@ def zones_masks(own,water,road,H,W):
     # 골목은 2칸 폭(조립 흙길 2×2 규칙). 건물 자리는 비운다
     lane2=lane.copy();lane2[:,1:]|=lane[:,:-1];lane2[1:,:]|=lane[:-1,:];lane2[1:,1:]|=lane[:-1,:-1]   # 2×2 붓
     lane2&=~lot&~coll
-    ok=own&~water&~lot&~resv   # 우물·석등 같은 작은 소품은 흙길 위에 서도 된다(밑에 풀 1칸이 남지 않게)
+    road=road&~grass_keep
+    ok=own&~water&~lot&~resv&~grass_keep   # 우물·석등 같은 작은 소품은 흙길 위에 서도 된다(밑에 풀 1칸이 남지 않게)
     road2=road|((flat|lane2)&ok)
     doors=np.zeros((H,W),bool)
     for r in items:
