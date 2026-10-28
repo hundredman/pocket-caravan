@@ -26,17 +26,17 @@ def layout(revision):
         assert (ROOT/path).exists(),path
         placements.append(dict(path=path,x=x,y=y,order=order))
     folder='Assets/PocketCaravan/Art/NinjaAdventure/Tiles'
-    # Existing soil beneath crops, grass bunds between four complete plots.
+    # Grass revision removes only the soil beds; paths and whole crops stay fixed.
     def dirt(x,y):
-        return (x in (14,15) or y==8 or
-                ((2<=x<=11 or 18<=x<=27) and (1<=y<=6 or 10<=y<=15)))
+        return (x in (14,15) or y==8 or (revision!='grass' and
+                ((2<=x<=11 or 18<=x<=27) and (1<=y<=6 or 10<=y<=15))))
     for y in range(17):
         for x in range(30):
             put(f'{folder}/floor_0_12_goryeo_jade.png',x*16,y*16)
             if dirt(x,y):
                 key=autotile(dirt,x,y,'floor',0,7);_,tx,ty=key.split(':')
                 put(f'{folder}/floor_{tx}_{ty}_goryeo_jade.png',x*16,y*16,1)
-    name='small-plot' if revision=='after' else 'previous-small-plot'
+    name='previous-small-plot' if revision=='before' else 'small-plot'
     for x,y in [(16,-8),(272,-8),(16,136),(272,136)]:
         put(f'ArtReview/RiceField-v5/{name}.png',x,y,4)
     put('Assets/PocketCaravan/Art/Characters/tanuki_tall_d0.png',232,116,8)
@@ -56,15 +56,23 @@ def boards():
         im=rgba(path).resize((960,540),Image.Resampling.NEAREST)
         d.text((16+i*976,12),label,font=font,fill='white');board.paste(im,(16+i*976,50))
     board.save(OUT/'comparison.png')
+    grass=OUT/'unity-grass-480x270.png'
+    if grass.exists():
+        board=Image.new('RGB',(1952,606),(36,42,34));d=ImageDraw.Draw(board)
+        for i,(path,label) in enumerate([(OUT/'unity-after-480x270.png','이전: 벼 아래 흙 바닥'),(grass,'수정: 초원 위 벼 · 구획 사이 길 유지')]):
+            im=rgba(path).resize((960,540),Image.Resampling.NEAREST)
+            d.text((16+i*976,12),label,font=font,fill='white');board.paste(im,(16+i*976,50))
+        board.save(OUT/'grass-comparison.png')
 def main():
     checks=[]
     for nx,ny in [(2,2),(3,3),(5,2),(2,5),(4,3)]:
         expected=rgba(OUT/'Reference'/f'{nx*64}x{ny*64}.png');actual=assemble(nx,ny)
         assert actual.size==expected.size and actual.tobytes()==expected.tobytes(),(nx,ny)
         checks.append(dict(blocks=[nx,ny],decodedRGBAEqual=True))
-    for name in ('before','after'):
+    for name in ('before','after','grass'):
         placements=layout(name)
         (OUT/f'placements-{name}.json').write_text(json.dumps(placements,ensure_ascii=False,indent=2)+'\n')
+        (OUT/f'placements-{name}.tsv').write_text(''.join('\t'.join(str(p[k]) for k in ('path','x','y','order'))+'\n' for p in placements))
         expected=render(placements);expected.save(OUT/f'preview-{name}.png')
         capture=OUT/f'unity-{name}-480x270.png'
         if capture.exists():
@@ -85,11 +93,11 @@ def main():
     report=dict(status='pending_visual_approval',productionApplied=False,modules=9,logicalBlockCells=[4,4],
                 rectangularAssembly=checks,canopy=signature(OUT/'canopy.png'),
                 foregroundPlant=signature(ROOT/'ArtReview/RipeRice-v3/rice-ripe.png'),
-                unityCaptures=[n for n in ('before','after') if (OUT/f'unity-{n}-480x270.png').exists()],
+                unityCaptures=[n for n in ('before','after','grass') if (OUT/f'unity-{n}-480x270.png').exists()],
                 asepriteRoundTrips=dict(count=len(sources),decodedRGBAEqual=True),
                 playTest=False)
-    if len(report['unityCaptures'])==2:
-        report['unity']=dict(mode='Edit',size=[480,270],captures=2,wholeFrameRGBADifferences=0)
+    if report['unityCaptures']:
+        report['unity']=dict(mode='Edit',size=[480,270],captures=len(report['unityCaptures']),wholeFrameRGBADifferences=0)
     (OUT/'checks.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
     boards();print('PASS: 5 RGBA module assemblies, binary alpha, 6-color canopy; preview compositions ready')
 if __name__=='__main__':main()

@@ -59,7 +59,8 @@
   },
   "unityCaptures": [
     "before",
-    "after"
+    "after",
+    "grass"
   ],
   "asepriteRoundTrips": {
     "count": 18,
@@ -72,7 +73,7 @@
       480,
       270
     ],
-    "captures": 2,
+    "captures": 3,
     "wholeFrameRGBADifferences": 0
   }
 }
