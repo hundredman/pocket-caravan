@@ -1,31 +1,68 @@
 {
  "waterAdded": 148,
- "roadAdded": 191,
- "bridgeCells": 89,
+ "roadAdded": 241,
+ "bridgeCells": 84,
+ "bridges": [
+  {
+   "x": 128,
+   "y": -60,
+   "w": 3,
+   "h": 5,
+   "horizontal": false
+  },
+  {
+   "x": 79,
+   "y": -32,
+   "w": 3,
+   "h": 4,
+   "horizontal": false
+  },
+  {
+   "x": 198,
+   "y": -27,
+   "w": 6,
+   "h": 3,
+   "horizontal": true
+  },
+  {
+   "x": 250,
+   "y": 39,
+   "w": 3,
+   "h": 7,
+   "horizontal": false
+  },
+  {
+   "x": 134,
+   "y": 72,
+   "w": 3,
+   "h": 6,
+   "horizontal": false
+  }
+ ],
  "pieces": {
   "water:0:7": 340,
   "water:1:7": 6883,
   "water:0:8": 208,
   "water:1:8": 201,
   "water:6:7": 209,
-  "floor:0:7": 163,
-  "floor:2:7": 141,
-  "floor:0:8": 279,
-  "floor:5:9": 145,
-  "floor:1:8": 575,
-  "floor:2:8": 288,
-  "floor:0:9": 147,
-  "floor:6:8": 150,
+  "floor:0:7": 162,
+  "floor:2:7": 143,
+  "floor:0:8": 286,
+  "floor:5:9": 146,
+  "floor:1:8": 616,
+  "floor:2:8": 295,
+  "floor:0:9": 149,
+  "floor:6:8": 152,
   "water:5:7": 133,
   "water:2:8": 132,
   "water:0:6": 184,
   "water:1:6": 193,
   "water:6:8": 185,
-  "floor:1:7": 172,
-  "floor:6:9": 165,
-  "floor:5:8": 164,
+  "floor:1:7": 190,
+  "floor:6:9": 164,
+  "floor:5:8": 161,
   "floor:2:9": 158,
-  "floor:1:9": 172,
+  "floor:1:9": 187,
   "water:2:7": 182,
   "water:2:6": 164,
   "water:5:8": 165
@@ -33,18 +70,27 @@
  "unmatched": {},
  "seamCells": {
   "water": 4,
-  "road": 2
+  "road": 5
  },
  "objects": {
-  "mountain": 225,
-  "forest": 459,
+  "mountain": {
+   "cells": 2502,
+   "edgeTrees": 765
+  },
+  "forest": {
+   "cells": 5894,
+   "edgeTrees": 2403
+  },
   "hill": 52,
-  "marsh": 32,
-  "lotus": 16,
-  "paddy": 29,
-  "flowers": 103,
-  "tufts": 911,
-  "loneTrees": 46
+  "marsh": 31,
+  "lotus": 17,
+  "field": {
+   "cells": 739,
+   "sheaves": 76
+  },
+  "flowers": 102,
+  "tufts": 740,
+  "loneTrees": 45
  },
  "reviewBakedPieces": {
   "floor:2:7": "2e47a5819c8bc66ccf308f119aa656669047e976025fb93eb8b39d6961a51878",
