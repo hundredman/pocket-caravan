@@ -193,3 +193,5 @@
 | 2026-10-28 | Codex | 건물·배10종 전체 승인 동결 | 이 커밋 (codex/building-ship-renewal) | 사용자 “좋다. 모두 승인할게.” 반영. Approved/BuildingShip-Renewal-v1에 PNG/Aseprite10쌍과 승인문구·크기·디코딩RGBA지문 동결, 작업본/승인본10쌍 동일 확인. Plan/ArtBrief/CurrentState 승인 상태 갱신. 본편/A2/기능/저장 미변경, 이번 Unity/플레이/빌드 미실행. 최신main확인·로컬커밋만. |
 
 | 2026-10-28 | Codex | 새 식생·땅에 심는 익은 벼 | 이 커밋 (codex/building-ship-renewal) | 내장 imagegen 원화→Aseprite native32×32/11색·이진알파, 한 밑동에서 자라며 숙인 황금 이삭. 기존 풀8배 비교·Unity Edit480×270 단독/반복24포기 촬영, 원래씬복귀/본편쓰기0. 정적크기/색수/알파·ASE재출력RGBA일치 확인. 그림승인대기·본편/A2/상품/저장 미변경, 플레이/충돌/애니메이션/빌드 미실행. 최신main확인·로컬커밋만. |
+
+| 2026-10-29 | Codex | 익은 벼 포기 겹침·논 타일화 시험 | 이 커밋 (codex/building-ship-renewal) | 숲 방식으로 whole32px 벼를16px간격/행4px엇갈림으로 합성, 논리6×6칸 중앙+가장자리/외곽모서리9모듈(Aseprite/PNG). 5크기 조립이 직접 전체포기배치와RGBA일치·원본색/알파/그림 보존, Unity Edit9모듈480×270 논 영역RGBA차이0·본편쓰기0/원래씬복귀. 직사각형 최소12×12칸 시험으로 그림승인대기. 본편/A2/숲/원본벼/저장 미변경·플레이/충돌가림/바람/빌드 미실행. 최신main확인·로컬커밋만. |
