@@ -1,0 +1,78 @@
+{
+  "status": "pending_visual_approval",
+  "productionApplied": false,
+  "modules": 9,
+  "logicalBlockCells": [
+    4,
+    4
+  ],
+  "rectangularAssembly": [
+    {
+      "blocks": [
+        2,
+        2
+      ],
+      "decodedRGBAEqual": true
+    },
+    {
+      "blocks": [
+        3,
+        3
+      ],
+      "decodedRGBAEqual": true
+    },
+    {
+      "blocks": [
+        5,
+        2
+      ],
+      "decodedRGBAEqual": true
+    },
+    {
+      "blocks": [
+        2,
+        5
+      ],
+      "decodedRGBAEqual": true
+    },
+    {
+      "blocks": [
+        4,
+        3
+      ],
+      "decodedRGBAEqual": true
+    }
+  ],
+  "canopy": {
+    "size": [
+      64,
+      48
+    ],
+    "rgbaSha256": "7c04f1541b8dc746cb3d1c038b60ba877527b8d29b15789918be1cd860b1c7e8"
+  },
+  "foregroundPlant": {
+    "size": [
+      32,
+      32
+    ],
+    "rgbaSha256": "3d1672a088df4b64f83c5688e0315e9087b0220d61233048714a11e6ccc1bdef"
+  },
+  "unityCaptures": [
+    "before",
+    "after"
+  ],
+  "asepriteRoundTrips": {
+    "count": 18,
+    "decodedRGBAEqual": true
+  },
+  "playTest": false,
+  "unity": {
+    "mode": "Edit",
+    "size": [
+      480,
+      270
+    ],
+    "captures": 2,
+    "wholeFrameRGBADifferences": 0
+  }
+}
