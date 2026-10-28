@@ -1,0 +1,164 @@
+{
+ "map": "north_c_road_sw",
+ "name": "서남 솔숲길",
+ "kind": "travel",
+ "items": [
+  {
+   "name": "숯쟁이 터",
+   "kind": "rest",
+   "asset": null,
+   "w": 7,
+   "h": 5,
+   "id": "",
+   "memo": "쉼터 마당",
+   "x": -55,
+   "y": -79
+  },
+  {
+   "name": "숯가마",
+   "kind": "lot",
+   "asset": "kiln",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    -50,
+    -70
+   ],
+   "laneLen": 8,
+   "x": -51,
+   "y": -73
+  },
+  {
+   "name": "숯쟁이 오두막",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    -43,
+    -74
+   ],
+   "laneLen": 0,
+   "x": -45,
+   "y": -77
+  },
+  {
+   "name": "모닥불",
+   "kind": "spot",
+   "asset": "fire",
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -53,
+   "y": -73
+  },
+  {
+   "name": "땔감",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "wood",
+   "gather": "wood",
+   "x": -70,
+   "y": -77
+  },
+  {
+   "name": "땔감 2",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "wood",
+   "gather": "wood",
+   "x": -34,
+   "y": -69
+  },
+  {
+   "name": "사냥터",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "hunt",
+   "gather": "hunt",
+   "x": -83,
+   "y": -80
+  },
+  {
+   "name": "숯쟁이",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -49,
+   "y": -70
+  },
+  {
+   "name": "순록 치는 소녀",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -55,
+   "y": -73
+  },
+  {
+   "name": "떠돌이 음유시인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -48,
+   "y": -73
+  },
+  {
+   "name": "이벤트 1",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -47,
+   "y": -79
+  },
+  {
+   "name": "이벤트 2",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -77,
+   "y": -77
+  },
+  {
+   "name": "도적",
+   "kind": "bandit",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -24,
+   "y": -62
+  }
+ ],
+ "laneCells": 8
+}

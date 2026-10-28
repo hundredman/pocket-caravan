@@ -1,0 +1,137 @@
+{
+ "map": "north_c_road_se",
+ "name": "동남 물가길",
+ "kind": "travel",
+ "items": [
+  {
+   "name": "물레방아 쉼터",
+   "kind": "rest",
+   "asset": null,
+   "w": 7,
+   "h": 5,
+   "id": "",
+   "memo": "쉼터 마당",
+   "x": 27,
+   "y": -72
+  },
+  {
+   "name": "물레방아",
+   "kind": "lot",
+   "asset": "mill",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    38,
+    -73
+   ],
+   "laneLen": 2,
+   "x": 36,
+   "y": -77
+  },
+  {
+   "name": "모닥불",
+   "kind": "spot",
+   "asset": "fire",
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 30,
+   "y": -66
+  },
+  {
+   "name": "낚시터",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "fish",
+   "gather": "fish",
+   "x": 40,
+   "y": -66
+  },
+  {
+   "name": "약초",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "herb",
+   "gather": "herb",
+   "x": 31,
+   "y": -77
+  },
+  {
+   "name": "땔감",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "wood",
+   "gather": "wood",
+   "x": 27,
+   "y": -54
+  },
+  {
+   "name": "강지기",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 27,
+   "y": -66
+  },
+  {
+   "name": "물레방아 할머니",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 38,
+   "y": -72
+  },
+  {
+   "name": "남쪽 행상",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 28,
+   "y": -74
+  },
+  {
+   "name": "이벤트 1",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 35,
+   "y": -72
+  },
+  {
+   "name": "이벤트 2",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 21,
+   "y": -60
+  }
+ ],
+ "laneCells": 2
+}

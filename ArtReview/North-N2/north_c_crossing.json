@@ -1,0 +1,350 @@
+{
+ "map": "north_c_crossing",
+ "name": "북쪽 길목 마을",
+ "kind": "town",
+ "items": [
+  {
+   "name": "장터 광장",
+   "kind": "plaza",
+   "asset": null,
+   "w": 14,
+   "h": 8,
+   "id": "market:north_cross",
+   "memo": "",
+   "x": -7,
+   "y": -56
+  },
+  {
+   "name": "여관",
+   "kind": "lot",
+   "asset": "longhouse",
+   "w": 7,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    0,
+    -43
+   ],
+   "laneLen": 7,
+   "x": -3,
+   "y": -47
+  },
+  {
+   "name": "상단 본부",
+   "kind": "lot",
+   "asset": "shop",
+   "w": 6,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    -4,
+    -59
+   ],
+   "laneLen": 0,
+   "x": -7,
+   "y": -63
+  },
+  {
+   "name": "고려 좌판",
+   "kind": "lot",
+   "asset": "tent",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "수입품 좌판",
+   "door": [
+    3,
+    -59
+   ],
+   "laneLen": 0,
+   "x": 2,
+   "y": -62
+  },
+  {
+   "name": "베네치아 좌판",
+   "kind": "lot",
+   "asset": "tent",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    6,
+    -44
+   ],
+   "laneLen": 1,
+   "x": 5,
+   "y": -47
+  },
+  {
+   "name": "아라비아 좌판",
+   "kind": "lot",
+   "asset": "tent",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    7,
+    -59
+   ],
+   "laneLen": 0,
+   "x": 6,
+   "y": -62
+  },
+  {
+   "name": "이벤트 마당",
+   "kind": "yard",
+   "asset": null,
+   "w": 8,
+   "h": 5,
+   "id": "",
+   "memo": "",
+   "x": 9,
+   "y": -56
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    -14,
+    -64
+   ],
+   "laneLen": 0,
+   "x": -16,
+   "y": -68
+  },
+  {
+   "name": "집 2",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    12,
+    -59
+   ],
+   "laneLen": 0,
+   "x": 10,
+   "y": -62
+  },
+  {
+   "name": "집 3",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    17,
+    -61
+   ],
+   "laneLen": 0,
+   "x": 15,
+   "y": -65
+  },
+  {
+   "name": "집 4",
+   "kind": "lot",
+   "asset": "longhouse",
+   "w": 7,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    -3,
+    -65
+   ],
+   "laneLen": 3,
+   "x": -6,
+   "y": -69
+  },
+  {
+   "name": "게시판",
+   "kind": "spot",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "board:north_cross",
+   "memo": "",
+   "x": 4,
+   "y": -45
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "asset": "well",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 4,
+   "y": -65
+  },
+  {
+   "name": "횃불 1",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 2,
+   "y": -43
+  },
+  {
+   "name": "횃불 2",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 5,
+   "y": -61
+  },
+  {
+   "name": "횃불 3",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -9,
+   "y": -57
+  },
+  {
+   "name": "횃불 4",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -8,
+   "y": -62
+  },
+  {
+   "name": "상단 우두머리",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -3,
+   "y": -64
+  },
+  {
+   "name": "길목 문지기",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -6,
+   "y": -46
+  },
+  {
+   "name": "여관 주인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -1,
+   "y": -43
+  },
+  {
+   "name": "고려 상단 행수",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 6,
+   "y": -63
+  },
+  {
+   "name": "베네치아 유리 상인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 8,
+   "y": -46
+  },
+  {
+   "name": "아라비아 향신료 상인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 9,
+   "y": -60
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 1,
+   "y": -73
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -13,
+   "y": -50
+  },
+  {
+   "name": "성장 자리 3",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 9,
+   "y": -71
+  },
+  {
+   "name": "성장 자리 4",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -16,
+   "y": -60
+  }
+ ],
+ "laneCells": 11
+}

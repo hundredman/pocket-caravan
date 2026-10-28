@@ -1,0 +1,253 @@
+{
+ "map": "north_hunter",
+ "name": "모피 사냥꾼 마을",
+ "kind": "town",
+ "items": [
+  {
+   "name": "장터 광장",
+   "kind": "plaza",
+   "asset": null,
+   "w": 12,
+   "h": 7,
+   "id": "market:north_hunter",
+   "memo": "",
+   "x": -36,
+   "y": -233
+  },
+  {
+   "name": "털옷 공방",
+   "kind": "lot",
+   "asset": "shop",
+   "w": 6,
+   "h": 4,
+   "id": "",
+   "memo": "모피 2 → 털옷",
+   "door": [
+    -29,
+    -218
+   ],
+   "laneLen": 7,
+   "x": -32,
+   "y": -222
+  },
+  {
+   "name": "사냥꾼 오두막",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    -30,
+    -234
+   ],
+   "laneLen": 6,
+   "x": -32,
+   "y": -237
+  },
+  {
+   "name": "이벤트 마당",
+   "kind": "yard",
+   "asset": null,
+   "w": 6,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "x": -46,
+   "y": -236
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    -19,
+    -221
+   ],
+   "laneLen": 0,
+   "x": -21,
+   "y": -224
+  },
+  {
+   "name": "집 2",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    -21,
+    -226
+   ],
+   "laneLen": 5,
+   "x": -23,
+   "y": -230
+  },
+  {
+   "name": "집 3",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    -45,
+    -228
+   ],
+   "laneLen": 1,
+   "x": -47,
+   "y": -231
+  },
+  {
+   "name": "가죽 건조대 1",
+   "kind": "spot",
+   "asset": "rack",
+   "w": 3,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -29,
+   "y": -217
+  },
+  {
+   "name": "가죽 건조대 2",
+   "kind": "spot",
+   "asset": "rack",
+   "w": 3,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -25,
+   "y": -219
+  },
+  {
+   "name": "게시판",
+   "kind": "spot",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "board:north_hunter",
+   "memo": "",
+   "x": -33,
+   "y": -235
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "asset": "well",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -24,
+   "y": -225
+  },
+  {
+   "name": "횃불 1",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -38,
+   "y": -231
+  },
+  {
+   "name": "횃불 2",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -22,
+   "y": -225
+  },
+  {
+   "name": "늙은 사냥꾼",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -28,
+   "y": -235
+  },
+  {
+   "name": "north_goats",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "north_goats",
+   "memo": "",
+   "x": -29,
+   "y": -223
+  },
+  {
+   "name": "north_wife",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "north_wife",
+   "memo": "",
+   "x": -34,
+   "y": -223
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -45,
+   "y": -223
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -39,
+   "y": -239
+  },
+  {
+   "name": "성장 자리 3",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -34,
+   "y": -242
+  },
+  {
+   "name": "성장 자리 4",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -41,
+   "y": -227
+  }
+ ],
+ "laneCells": 19
+}

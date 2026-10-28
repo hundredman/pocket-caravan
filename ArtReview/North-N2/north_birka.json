@@ -1,0 +1,488 @@
+{
+ "map": "north_birka",
+ "name": "비르카",
+ "kind": "town",
+ "items": [
+  {
+   "name": "장터 광장",
+   "kind": "plaza",
+   "asset": null,
+   "w": 14,
+   "h": 8,
+   "id": "market:north_birka",
+   "memo": "",
+   "x": 2,
+   "y": -218
+  },
+  {
+   "name": "얄의 장원",
+   "kind": "lot",
+   "asset": "hall",
+   "w": 10,
+   "h": 6,
+   "id": "",
+   "memo": "수도의 큰 집. 얄 시그리드",
+   "door": [
+    -3,
+    -222
+   ],
+   "laneLen": 1,
+   "x": -8,
+   "y": -228
+  },
+  {
+   "name": "여관",
+   "kind": "lot",
+   "asset": "longhouse",
+   "w": 7,
+   "h": 4,
+   "id": "npc:north_innkeeper",
+   "memo": "",
+   "door": [
+    11,
+    -221
+   ],
+   "laneLen": 0,
+   "x": 8,
+   "y": -225
+  },
+  {
+   "name": "상인 길드",
+   "kind": "lot",
+   "asset": "shop",
+   "w": 6,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    -4,
+    -211
+   ],
+   "laneLen": 2,
+   "x": -7,
+   "y": -215
+  },
+  {
+   "name": "대장간",
+   "kind": "lot",
+   "asset": "smithy",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    8,
+    -227
+   ],
+   "laneLen": 3,
+   "x": 6,
+   "y": -231
+  },
+  {
+   "name": "훈련장",
+   "kind": "yard",
+   "asset": null,
+   "w": 8,
+   "h": 5,
+   "id": "",
+   "memo": "훈련하는 전사",
+   "x": -5,
+   "y": -234
+  },
+  {
+   "name": "이벤트 마당",
+   "kind": "yard",
+   "asset": null,
+   "w": 6,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "x": 12,
+   "y": -230
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    -12,
+    -221
+   ],
+   "laneLen": 0,
+   "x": -14,
+   "y": -225
+  },
+  {
+   "name": "집 2",
+   "kind": "lot",
+   "asset": "longhouse",
+   "w": 7,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    3,
+    -205
+   ],
+   "laneLen": 7,
+   "x": 0,
+   "y": -209
+  },
+  {
+   "name": "집 3",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    -8,
+    -206
+   ],
+   "laneLen": 2,
+   "x": -10,
+   "y": -210
+  },
+  {
+   "name": "집 4",
+   "kind": "lot",
+   "asset": "longhouse",
+   "w": 7,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    0,
+    -236
+   ],
+   "laneLen": 4,
+   "x": -3,
+   "y": -240
+  },
+  {
+   "name": "집 5",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    9,
+    -235
+   ],
+   "laneLen": 4,
+   "x": 7,
+   "y": -239
+  },
+  {
+   "name": "집 6",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    -11,
+    -214
+   ],
+   "laneLen": 8,
+   "x": -13,
+   "y": -218
+  },
+  {
+   "name": "게시판",
+   "kind": "spot",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "board:north_birka",
+   "memo": "",
+   "x": 5,
+   "y": -220
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "asset": "well",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -3,
+   "y": -218
+  },
+  {
+   "name": "횃불 1",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 7,
+   "y": -224
+  },
+  {
+   "name": "횃불 2",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 15,
+   "y": -223
+  },
+  {
+   "name": "횃불 3",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -4,
+   "y": -210
+  },
+  {
+   "name": "횃불 4",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 2,
+   "y": -225
+  },
+  {
+   "name": "얄 시그리드",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -2,
+   "y": -222
+  },
+  {
+   "name": "여관 주인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "north_innkeeper",
+   "memo": "",
+   "x": 17,
+   "y": -222
+  },
+  {
+   "name": "상인 길드장",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -6,
+   "y": -211
+  },
+  {
+   "name": "훈련하는 전사",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 2,
+   "y": -236
+  },
+  {
+   "name": "north_husband",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "north_husband",
+   "memo": "",
+   "x": -5,
+   "y": -218
+  },
+  {
+   "name": "north_har",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "north_har",
+   "memo": "",
+   "x": 17,
+   "y": -217
+  },
+  {
+   "name": "north_bold",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "north_bold",
+   "memo": "",
+   "x": 9,
+   "y": -227
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 8,
+   "y": -209
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 13,
+   "y": -237
+  },
+  {
+   "name": "성장 자리 3",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 14,
+   "y": -209
+  },
+  {
+   "name": "성장 자리 4",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 19,
+   "y": -227
+  },
+  {
+   "name": "성장 자리 5",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 16,
+   "y": -232
+  },
+  {
+   "name": "국경 초소",
+   "kind": "rest",
+   "asset": null,
+   "w": 6,
+   "h": 4,
+   "id": "",
+   "memo": "north_pass에서 옮김",
+   "from": "north_pass",
+   "x": -12,
+   "y": -193
+  },
+  {
+   "name": "초소",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    -8,
+    -194
+   ],
+   "laneLen": 2,
+   "from": "north_pass",
+   "x": -10,
+   "y": -197
+  },
+  {
+   "name": "모닥불",
+   "kind": "spot",
+   "asset": "fire",
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "from": "north_pass",
+   "x": -9,
+   "y": -188
+  },
+  {
+   "name": "국경 경비대장",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "from": "north_pass",
+   "x": -3,
+   "y": -194
+  },
+  {
+   "name": "남쪽에서 온 상인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "from": "north_pass",
+   "x": -11,
+   "y": -195
+  },
+  {
+   "name": "옮긴 이벤트 1",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "from": "north_pass",
+   "x": -4,
+   "y": -193
+  },
+  {
+   "name": "옮긴 이벤트 2",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "from": "north_pass",
+   "x": -15,
+   "y": -221
+  }
+ ],
+ "laneCells": 33
+}

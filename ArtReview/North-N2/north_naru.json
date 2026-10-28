@@ -1,0 +1,405 @@
+{
+ "map": "north_naru",
+ "name": "피오르 나루 마을",
+ "kind": "town",
+ "items": [
+  {
+   "name": "장터 광장",
+   "kind": "plaza",
+   "asset": null,
+   "w": 12,
+   "h": 7,
+   "id": "market:north_naru",
+   "memo": "",
+   "x": 29,
+   "y": -234
+  },
+  {
+   "name": "항구 부두",
+   "kind": "harbor",
+   "asset": null,
+   "w": 4,
+   "h": 5,
+   "id": "",
+   "memo": "피오르 선착장",
+   "x": 51,
+   "y": -234
+  },
+  {
+   "name": "배 1",
+   "kind": "moor",
+   "asset": "boat",
+   "w": 5,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 52,
+   "y": -228
+  },
+  {
+   "name": "배 2",
+   "kind": "moor",
+   "asset": "boat",
+   "w": 5,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 46,
+   "y": -228
+  },
+  {
+   "name": "창고",
+   "kind": "lot",
+   "asset": "store",
+   "w": 4,
+   "h": 3,
+   "id": "npc:north_warehouse",
+   "memo": "",
+   "door": [
+    48,
+    -231
+   ],
+   "laneLen": 7,
+   "x": 46,
+   "y": -234
+  },
+  {
+   "name": "선장 집",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    50,
+    -235
+   ],
+   "laneLen": 8,
+   "x": 48,
+   "y": -239
+  },
+  {
+   "name": "이벤트 마당",
+   "kind": "yard",
+   "asset": null,
+   "w": 8,
+   "h": 5,
+   "id": "",
+   "memo": "",
+   "x": 23,
+   "y": -226
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    38,
+    -235
+   ],
+   "laneLen": 3,
+   "x": 36,
+   "y": -239
+  },
+  {
+   "name": "집 2",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    34,
+    -222
+   ],
+   "laneLen": 0,
+   "x": 32,
+   "y": -225
+  },
+  {
+   "name": "집 3",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    46,
+    -240
+   ],
+   "laneLen": 3,
+   "x": 44,
+   "y": -244
+  },
+  {
+   "name": "집 4",
+   "kind": "lot",
+   "asset": "longhouse",
+   "w": 7,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    36,
+    -241
+   ],
+   "laneLen": 5,
+   "x": 33,
+   "y": -245
+  },
+  {
+   "name": "대구 덕장 1",
+   "kind": "spot",
+   "asset": "rack",
+   "w": 3,
+   "h": 2,
+   "id": "",
+   "memo": "로포텐 덕장: 얼음 대구",
+   "x": 32,
+   "y": -237
+  },
+  {
+   "name": "대구 덕장 2",
+   "kind": "spot",
+   "asset": "rack",
+   "w": 3,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 28,
+   "y": -237
+  },
+  {
+   "name": "게시판",
+   "kind": "spot",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "board:north_naru",
+   "memo": "",
+   "x": 37,
+   "y": -226
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "asset": "well",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 44,
+   "y": -236
+  },
+  {
+   "name": "횃불 1",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 44,
+   "y": -231
+  },
+  {
+   "name": "횃불 2",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 35,
+   "y": -219
+  },
+  {
+   "name": "선장",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 49,
+   "y": -231
+  },
+  {
+   "name": "창고지기",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "north_warehouse",
+   "memo": "",
+   "x": 47,
+   "y": -231
+  },
+  {
+   "name": "톰테 할아버지",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 44,
+   "y": -238
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 27,
+   "y": -218
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 30,
+   "y": -213
+  },
+  {
+   "name": "성장 자리 3",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 24,
+   "y": -232
+  },
+  {
+   "name": "성장 자리 4",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 53,
+   "y": -240
+  },
+  {
+   "name": "피오르 고갯길 쉼터",
+   "kind": "rest",
+   "asset": null,
+   "w": 6,
+   "h": 4,
+   "id": "",
+   "memo": "north_fjord_road에서 옮김",
+   "from": "north_fjord_road",
+   "x": 41,
+   "y": -250
+  },
+  {
+   "name": "모닥불",
+   "kind": "spot",
+   "asset": "fire",
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "from": "north_fjord_road",
+   "x": 48,
+   "y": -248
+  },
+  {
+   "name": "낚시터",
+   "kind": "gather",
+   "missing": true,
+   "memo": "fish",
+   "from": "north_fjord_road"
+  },
+  {
+   "name": "길손",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "from": "north_fjord_road",
+   "x": 42,
+   "y": -252
+  },
+  {
+   "name": "얼음 낚시꾼",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker (피오르 길에서 옮김)",
+   "from": "north_fjord_road",
+   "x": 39,
+   "y": -249
+  },
+  {
+   "name": "옮긴 이벤트 1",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "from": "north_fjord_road",
+   "x": 34,
+   "y": -254
+  },
+  {
+   "name": "옮긴 이벤트 2",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "from": "north_fjord_road",
+   "x": 39,
+   "y": -223
+  },
+  {
+   "name": "옮긴 이벤트 3",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "from": "north_fjord_road",
+   "x": 21,
+   "y": -219
+  },
+  {
+   "name": "도적",
+   "kind": "bandit",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "from": "north_fjord_road",
+   "x": 21,
+   "y": -219
+  }
+ ],
+ "laneCells": 26
+}

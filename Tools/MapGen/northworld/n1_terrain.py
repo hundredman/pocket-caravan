@@ -176,11 +176,13 @@ cold = np.clip((-120 - (yy + Y0)) / 220, 0, 1)
 
 # ---------- 2) 강 ----------
 river = np.zeros((H, W), bool); river_info = []
-def run_river(label, src_xy, mouth_xy):
+def run_river(label, src_xy, mouth_xy, via=None):
     s = idx(*src_xy); my, mx = idx(*mouth_xy)
     sy, sx = np.nonzero(sea); k = int(np.argmin((sy - my) ** 2 + (sx - mx) ** 2)); g = (int(sy[k]), int(sx[k]))
     cost = 1 + 14 * np.clip(elev, 0, None) ** 2 + 3 * noise((H, W), 10, rng, 2)
-    raw = astar(s, g, cost, blocked=~owned)
+    if via:   # 꼭 지나갈 자리(마을 옆)
+        v = idx(*via); raw = astar(s, v, cost, blocked=~owned) + astar(v, g, cost, blocked=~owned)[1:]
+    else: raw = astar(s, g, cost, blocked=~owned)
     path = smooth_path(raw, ~owned)
     out = []
     for p in path:
@@ -194,7 +196,7 @@ def run_river(label, src_xy, mouth_xy):
                 if dy * dy + dx * dx <= rad * rad and 0 <= y + dy < H and 0 <= x + dx < W and land[y + dy, x + dx]: river[y + dy, x + dx] = True
     river_info.append(dict(label=label, cells=n, source=list(map(round, wxy(out[0]))), mouth=list(map(round, wxy(out[-1])))))
 run_river('얼음강 (빙하 → 피오르 나루 앞바다)', P(0.52, -0.20), P(0.62, 0.95))
-run_river('북쪽 개울 (북문 동쪽 언덕 → 북동 바다)', (16, -128), (100, -140))
+run_river('북쪽 개울 (북문 동쪽 언덕 → 개울 나루 마을 옆 → 북동 바다)', (16, -128), (100, -140), via=(43, -112))   # 2026-10-29: 개울 나루 마을 옆을 지나게
 d_river = ndimage.distance_transform_edt(~river)
 elev = elev - .2 * np.exp(-(d_river / 6) ** 2)
 elev = (elev - elev[land].min()) / (elev[land].max() - elev[land].min())
@@ -243,7 +245,23 @@ rr = np.sqrt(((yy - cy) / 1.25) ** 2 + ((xx - cx) / .85) ** 2) + 3 * sw
 spring = (rr < 5.9) & L & ~river
 t[spring] = SPRING
 t[ndimage.binary_dilation(spring, iterations=2) & ~spring & L & ~river & (bog_n > .55)] = BOG
-lake = spring.copy()
+# 동남 물가길 연못(2026-10-29): 길가 작은 호수와 흘러드는 개울. 다른 무작위 값이 바뀌지 않게 따로 뽑는다
+rngp = np.random.default_rng(SEED + 7)
+pond = np.zeros((H, W), bool)
+py0, px0 = idx(46, -70)
+wp = noise((H, W), 6, rngp, 3) - .5
+rp = np.sqrt(((yy - py0) / .9) ** 2 + ((xx - px0) / 1.3) ** 2) + 3.5 * wp
+pond = (rp < 6.2) & L & cen & ~river
+lp, npd = ndimage.label(pond)
+if npd > 1: pond = lp == (1 + int(np.argmax(ndimage.sum(pond, lp, range(1, npd + 1)))))
+t[pond] = LAKE
+src = idx(56, -84)
+seg = astar(src, tuple(np.argwhere(pond)[np.argmin(((np.argwhere(pond) - src) ** 2).sum(1))]), 1 + 10 * elev + 3 * noise((H, W), 8, rngp, 2), blocked=~(L & cen))
+for (y_, x_) in seg[:-1]:
+    if not pond[y_, x_]: t[y_, x_] = RIVER; river[y_, x_] = True
+t[ndimage.binary_dilation(pond, iterations=2) & ~pond & L & ~river & (bog_n > .5)] = BOG
+lake = spring | pond
+river_info.append(dict(label='동남 물가길 연못 개울', cells=len(seg), pondCells=int(pond.sum())))
 
 # ---------- 4) 마을 범위 ----------
 flat = ndimage.generic_filter(elev, np.std, size=5)
@@ -259,7 +277,7 @@ for vi, (key, target) in enumerate(TOWNS.items()):
     score = 4 * flat + 1.2 * elev + .02 * np.sqrt((yy - oy) ** 2 + (xx - ox) ** 2) + .6 * (t == FOREST) + .8 * (t == BOG) + .5 * (t == SNOW)
     if key in COASTAL: score = score + .12 * np.abs(to_sea - 5)
     if key == 'north_laugar': score = score + .1 * np.abs(ndimage.distance_transform_edt(~spring) - 6)
-    if key == 'north_c_creek': score = score + .05 * np.minimum(d_river, 20)
+    if key == 'north_c_creek': score = score + .25 * np.abs(np.minimum(ndimage.distance_transform_edt(~river), 30) - 4)   # 개울에서 4칸쯤
     score = np.where(cand, score, np.inf); s = np.unravel_index(int(np.argmin(score)), score.shape)
     got = {s}; pq = [(0.0, s)]; seen = {s}; okreg = region == reg
     while pq and len(got) < target:

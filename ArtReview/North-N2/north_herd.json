@@ -1,0 +1,253 @@
+{
+ "map": "north_herd",
+ "name": "순록 고원 마을",
+ "kind": "town",
+ "items": [
+  {
+   "name": "장터 광장",
+   "kind": "plaza",
+   "asset": null,
+   "w": 12,
+   "h": 7,
+   "id": "market:north_herd",
+   "memo": "",
+   "x": -54,
+   "y": -270
+  },
+  {
+   "name": "순록 우리",
+   "kind": "yard",
+   "asset": null,
+   "w": 9,
+   "h": 6,
+   "id": "",
+   "memo": "순록 치는 울타리",
+   "x": -44,
+   "y": -279
+  },
+  {
+   "name": "썰매 공방",
+   "kind": "lot",
+   "asset": "smithy",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    -48,
+    -271
+   ],
+   "laneLen": 10,
+   "x": -50,
+   "y": -275
+  },
+  {
+   "name": "이벤트 마당",
+   "kind": "yard",
+   "asset": null,
+   "w": 8,
+   "h": 5,
+   "id": "",
+   "memo": "",
+   "x": -43,
+   "y": -260
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    -33,
+    -263
+   ],
+   "laneLen": 2,
+   "x": -35,
+   "y": -267
+  },
+  {
+   "name": "집 2",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    -27,
+    -261
+   ],
+   "laneLen": 6,
+   "x": -29,
+   "y": -265
+  },
+  {
+   "name": "집 3",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    -32,
+    -276
+   ],
+   "laneLen": 1,
+   "x": -34,
+   "y": -279
+  },
+  {
+   "name": "집 4",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    -29,
+    -268
+   ],
+   "laneLen": 7,
+   "x": -31,
+   "y": -272
+  },
+  {
+   "name": "모닥불",
+   "kind": "spot",
+   "asset": "fire",
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -48,
+   "y": -262
+  },
+  {
+   "name": "게시판",
+   "kind": "spot",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "board:north_herd",
+   "memo": "",
+   "x": -41,
+   "y": -265
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "asset": "well",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -33,
+   "y": -270
+  },
+  {
+   "name": "횃불 1",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -41,
+   "y": -270
+  },
+  {
+   "name": "횃불 2",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -39,
+   "y": -263
+  },
+  {
+   "name": "순록 목동 할머니",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -44,
+   "y": -272
+  },
+  {
+   "name": "썰매 장인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -51,
+   "y": -272
+  },
+  {
+   "name": "불가의 아이",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -49,
+   "y": -260
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -33,
+   "y": -257
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -40,
+   "y": -254
+  },
+  {
+   "name": "성장 자리 3",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -46,
+   "y": -255
+  },
+  {
+   "name": "성장 자리 4",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -37,
+   "y": -272
+  }
+ ],
+ "laneCells": 26
+}

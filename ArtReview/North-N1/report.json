@@ -5,17 +5,17 @@
   "얕은 바다": 2635,
   "자갈 해변": 662,
   "바위 해안": 292,
-  "강": 407,
-  "늪": 112,
-  "밭": 170,
-  "풀밭": 14065,
+  "강": 491,
+  "늪": 140,
+  "밭": 576,
+  "풀밭": 13642,
   "툰드라": 7255,
-  "언덕": 2871,
-  "침엽수림": 6544,
+  "언덕": 2734,
+  "침엽수림": 6447,
   "눈밭": 1422,
   "산(통행 불가)": 2017,
   "빙하·만년설(통행 불가)": 973,
-  "호수": 0,
+  "호수": 139,
   "온천": 114
  },
  "rivers": [
@@ -32,8 +32,8 @@
    ]
   },
   {
-   "label": "북쪽 개울 (북문 동쪽 언덕 → 북동 바다)",
-   "cells": 90,
+   "label": "북쪽 개울 (북문 동쪽 언덕 → 개울 나루 마을 옆 → 북동 바다)",
+   "cells": 122,
    "source": [
     16,
     -128
@@ -42,6 +42,11 @@
     88,
     -145
    ]
+  },
+  {
+   "label": "동남 물가길 연못 개울",
+   "cells": 11,
+   "pondCells": 139
   }
  ],
  "springCells": 114,
@@ -149,12 +154,12 @@
    "key": "north_c_creek",
    "label": "개울 나루 마을",
    "target": 800,
-   "area": 799,
+   "area": 798,
    "center": [
-    52,
-    -106
+    49,
+    -110
    ],
-   "moved": 2.0
+   "moved": 3.6
   },
   {
    "key": "north_c_crossing",
@@ -287,10 +292,10 @@
    "fromKey": "north_c_gatetown",
    "toKey": "north_c_snowwood",
    "via": "north_c_road_nw",
-   "cells": 144,
+   "cells": 146,
    "bridgeCells": 0,
    "mountainPassCells": 0,
-   "snowCells": 6,
+   "snowCells": 8,
    "passCarvedCells": 16,
    "boundaryCrossings": 2,
    "maps": [
@@ -303,7 +308,7 @@
    "fromKey": "north_c_gatetown",
    "toKey": "north_c_creek",
    "via": "north_c_road_ne",
-   "cells": 101,
+   "cells": 87,
    "bridgeCells": 2,
    "mountainPassCells": 0,
    "snowCells": 0,
@@ -333,7 +338,7 @@
    "fromKey": "north_c_creek",
    "toKey": "north_c_crossing",
    "via": "north_c_road_se",
-   "cells": 102,
+   "cells": 111,
    "bridgeCells": 0,
    "mountainPassCells": 0,
    "snowCells": 0,
@@ -391,7 +396,7 @@
     105,
     -127
    ],
-   "cells": 62
+   "cells": 92
   },
   {
    "map": "north_c_crossing",
@@ -457,64 +462,64 @@
    "key": "north_c_gatetown",
    "name": "북문 마을",
    "n0Target": 3200,
-   "area": 2847,
-   "land": 2537
+   "area": 2925,
+   "land": 2520
   },
   {
    "key": "north_c_snowwood",
    "name": "눈숲 마을",
    "n0Target": 3200,
-   "area": 3823,
-   "land": 3608
+   "area": 3786,
+   "land": 3571
   },
   {
    "key": "north_c_creek",
    "name": "개울 나루 마을",
    "n0Target": 3200,
-   "area": 3094,
-   "land": 3094
+   "area": 3195,
+   "land": 3195
   },
   {
    "key": "north_c_crossing",
    "name": "북쪽 길목 마을",
    "n0Target": 3200,
-   "area": 3521,
-   "land": 3521
+   "area": 3498,
+   "land": 3498
   },
   {
    "key": "north_c_road_nw",
    "name": "눈숲 고갯길",
    "n0Target": 2440,
-   "area": 2470,
-   "land": 1586
+   "area": 2469,
+   "land": 1585
   },
   {
    "key": "north_c_road_ne",
    "name": "개울 다리길",
    "n0Target": 2440,
-   "area": 2923,
-   "land": 1904
+   "area": 2803,
+   "land": 1879
   },
   {
    "key": "north_c_runeway",
    "name": "룬돌 큰길",
    "n0Target": 2440,
-   "area": 2075,
-   "land": 2075
+   "area": 2077,
+   "land": 2077
   },
   {
    "key": "north_c_road_sw",
    "name": "서남 솔숲길",
    "n0Target": 2440,
-   "area": 2172,
-   "land": 2172
+   "area": 2173,
+   "land": 2173
   },
   {
    "key": "north_c_road_se",
    "name": "동남 물가길",
    "n0Target": 2440,
-   "area": 2075,
-   "land": 2075
+   "area": 2074,
+   "land": 2074
   }
  ]
 }

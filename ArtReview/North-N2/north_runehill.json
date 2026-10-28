@@ -1,0 +1,183 @@
+{
+ "map": "north_runehill",
+ "name": "룬돌 언덕",
+ "kind": "town",
+ "items": [
+  {
+   "name": "룬돌 원",
+   "kind": "plaza",
+   "asset": null,
+   "w": 9,
+   "h": 9,
+   "id": "",
+   "memo": "옛 사람들의 룬돌. 시장 없음(지금과 같음)",
+   "x": -1,
+   "y": -327
+  },
+  {
+   "name": "룬 지기 오두막",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    -4,
+    -324
+   ],
+   "laneLen": 1,
+   "x": -6,
+   "y": -327
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    1,
+    -310
+   ],
+   "laneLen": 2,
+   "x": -1,
+   "y": -313
+  },
+  {
+   "name": "룬석 1",
+   "kind": "spot",
+   "asset": "runestone",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 9,
+   "y": -323
+  },
+  {
+   "name": "룬석 2",
+   "kind": "spot",
+   "asset": "runestone",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 2,
+   "y": -317
+  },
+  {
+   "name": "룬석 3",
+   "kind": "spot",
+   "asset": "runestone",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 2,
+   "y": -330
+  },
+  {
+   "name": "룬석 4",
+   "kind": "spot",
+   "asset": "runestone",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -5,
+   "y": -324
+  },
+  {
+   "name": "룬석 5",
+   "kind": "spot",
+   "asset": "runestone",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 8,
+   "y": -317
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "asset": "well",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 4,
+   "y": -312
+  },
+  {
+   "name": "횃불 1",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -2,
+   "y": -317
+  },
+  {
+   "name": "횃불 2",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -6,
+   "y": -321
+  },
+  {
+   "name": "룬 지기 노인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -3,
+   "y": -328
+  },
+  {
+   "name": "음유시인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 9,
+   "y": -325
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -10,
+   "y": -314
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -14,
+   "y": -323
+  }
+ ],
+ "laneCells": 3
+}

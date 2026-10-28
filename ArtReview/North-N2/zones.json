@@ -1,0 +1,3904 @@
+{
+ "north_birka": {
+  "name": "비르카",
+  "kind": "town",
+  "items": [
+   {
+    "name": "장터 광장",
+    "kind": "plaza",
+    "asset": null,
+    "w": 14,
+    "h": 8,
+    "id": "market:north_birka",
+    "memo": "",
+    "x": 2,
+    "y": -218
+   },
+   {
+    "name": "얄의 장원",
+    "kind": "lot",
+    "asset": "hall",
+    "w": 10,
+    "h": 6,
+    "id": "",
+    "memo": "수도의 큰 집. 얄 시그리드",
+    "door": [
+     -3,
+     -222
+    ],
+    "laneLen": 1,
+    "x": -8,
+    "y": -228
+   },
+   {
+    "name": "여관",
+    "kind": "lot",
+    "asset": "longhouse",
+    "w": 7,
+    "h": 4,
+    "id": "npc:north_innkeeper",
+    "memo": "",
+    "door": [
+     11,
+     -221
+    ],
+    "laneLen": 0,
+    "x": 8,
+    "y": -225
+   },
+   {
+    "name": "상인 길드",
+    "kind": "lot",
+    "asset": "shop",
+    "w": 6,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -4,
+     -211
+    ],
+    "laneLen": 2,
+    "x": -7,
+    "y": -215
+   },
+   {
+    "name": "대장간",
+    "kind": "lot",
+    "asset": "smithy",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     8,
+     -227
+    ],
+    "laneLen": 3,
+    "x": 6,
+    "y": -231
+   },
+   {
+    "name": "훈련장",
+    "kind": "yard",
+    "asset": null,
+    "w": 8,
+    "h": 5,
+    "id": "",
+    "memo": "훈련하는 전사",
+    "x": -5,
+    "y": -234
+   },
+   {
+    "name": "이벤트 마당",
+    "kind": "yard",
+    "asset": null,
+    "w": 6,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "x": 12,
+    "y": -230
+   },
+   {
+    "name": "집 1",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -12,
+     -221
+    ],
+    "laneLen": 0,
+    "x": -14,
+    "y": -225
+   },
+   {
+    "name": "집 2",
+    "kind": "lot",
+    "asset": "longhouse",
+    "w": 7,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     3,
+     -205
+    ],
+    "laneLen": 7,
+    "x": 0,
+    "y": -209
+   },
+   {
+    "name": "집 3",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -8,
+     -206
+    ],
+    "laneLen": 2,
+    "x": -10,
+    "y": -210
+   },
+   {
+    "name": "집 4",
+    "kind": "lot",
+    "asset": "longhouse",
+    "w": 7,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     0,
+     -236
+    ],
+    "laneLen": 4,
+    "x": -3,
+    "y": -240
+   },
+   {
+    "name": "집 5",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     9,
+     -235
+    ],
+    "laneLen": 4,
+    "x": 7,
+    "y": -239
+   },
+   {
+    "name": "집 6",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -11,
+     -214
+    ],
+    "laneLen": 8,
+    "x": -13,
+    "y": -218
+   },
+   {
+    "name": "게시판",
+    "kind": "spot",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "board:north_birka",
+    "memo": "",
+    "x": 5,
+    "y": -220
+   },
+   {
+    "name": "우물",
+    "kind": "spot",
+    "asset": "well",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -3,
+    "y": -218
+   },
+   {
+    "name": "횃불 1",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 7,
+    "y": -224
+   },
+   {
+    "name": "횃불 2",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 15,
+    "y": -223
+   },
+   {
+    "name": "횃불 3",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -4,
+    "y": -210
+   },
+   {
+    "name": "횃불 4",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 2,
+    "y": -225
+   },
+   {
+    "name": "얄 시그리드",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -2,
+    "y": -222
+   },
+   {
+    "name": "여관 주인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "north_innkeeper",
+    "memo": "",
+    "x": 17,
+    "y": -222
+   },
+   {
+    "name": "상인 길드장",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -6,
+    "y": -211
+   },
+   {
+    "name": "훈련하는 전사",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 2,
+    "y": -236
+   },
+   {
+    "name": "north_husband",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "north_husband",
+    "memo": "",
+    "x": -5,
+    "y": -218
+   },
+   {
+    "name": "north_har",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "north_har",
+    "memo": "",
+    "x": 17,
+    "y": -217
+   },
+   {
+    "name": "north_bold",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "north_bold",
+    "memo": "",
+    "x": 9,
+    "y": -227
+   },
+   {
+    "name": "성장 자리 1",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 8,
+    "y": -209
+   },
+   {
+    "name": "성장 자리 2",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 13,
+    "y": -237
+   },
+   {
+    "name": "성장 자리 3",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 14,
+    "y": -209
+   },
+   {
+    "name": "성장 자리 4",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 19,
+    "y": -227
+   },
+   {
+    "name": "성장 자리 5",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 16,
+    "y": -232
+   },
+   {
+    "name": "국경 초소",
+    "kind": "rest",
+    "asset": null,
+    "w": 6,
+    "h": 4,
+    "id": "",
+    "memo": "north_pass에서 옮김",
+    "from": "north_pass",
+    "x": -12,
+    "y": -193
+   },
+   {
+    "name": "초소",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     -8,
+     -194
+    ],
+    "laneLen": 2,
+    "from": "north_pass",
+    "x": -10,
+    "y": -197
+   },
+   {
+    "name": "모닥불",
+    "kind": "spot",
+    "asset": "fire",
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "from": "north_pass",
+    "x": -9,
+    "y": -188
+   },
+   {
+    "name": "국경 경비대장",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "from": "north_pass",
+    "x": -3,
+    "y": -194
+   },
+   {
+    "name": "남쪽에서 온 상인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "from": "north_pass",
+    "x": -11,
+    "y": -195
+   },
+   {
+    "name": "옮긴 이벤트 1",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "from": "north_pass",
+    "x": -4,
+    "y": -193
+   },
+   {
+    "name": "옮긴 이벤트 2",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "from": "north_pass",
+    "x": -15,
+    "y": -221
+   }
+  ]
+ },
+ "north_herd": {
+  "name": "순록 고원 마을",
+  "kind": "town",
+  "items": [
+   {
+    "name": "장터 광장",
+    "kind": "plaza",
+    "asset": null,
+    "w": 12,
+    "h": 7,
+    "id": "market:north_herd",
+    "memo": "",
+    "x": -54,
+    "y": -270
+   },
+   {
+    "name": "순록 우리",
+    "kind": "yard",
+    "asset": null,
+    "w": 9,
+    "h": 6,
+    "id": "",
+    "memo": "순록 치는 울타리",
+    "x": -44,
+    "y": -279
+   },
+   {
+    "name": "썰매 공방",
+    "kind": "lot",
+    "asset": "smithy",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -48,
+     -271
+    ],
+    "laneLen": 10,
+    "x": -50,
+    "y": -275
+   },
+   {
+    "name": "이벤트 마당",
+    "kind": "yard",
+    "asset": null,
+    "w": 8,
+    "h": 5,
+    "id": "",
+    "memo": "",
+    "x": -43,
+    "y": -260
+   },
+   {
+    "name": "집 1",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -33,
+     -263
+    ],
+    "laneLen": 2,
+    "x": -35,
+    "y": -267
+   },
+   {
+    "name": "집 2",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -27,
+     -261
+    ],
+    "laneLen": 6,
+    "x": -29,
+    "y": -265
+   },
+   {
+    "name": "집 3",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     -32,
+     -276
+    ],
+    "laneLen": 1,
+    "x": -34,
+    "y": -279
+   },
+   {
+    "name": "집 4",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -29,
+     -268
+    ],
+    "laneLen": 7,
+    "x": -31,
+    "y": -272
+   },
+   {
+    "name": "모닥불",
+    "kind": "spot",
+    "asset": "fire",
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -48,
+    "y": -262
+   },
+   {
+    "name": "게시판",
+    "kind": "spot",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "board:north_herd",
+    "memo": "",
+    "x": -41,
+    "y": -265
+   },
+   {
+    "name": "우물",
+    "kind": "spot",
+    "asset": "well",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -33,
+    "y": -270
+   },
+   {
+    "name": "횃불 1",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -41,
+    "y": -270
+   },
+   {
+    "name": "횃불 2",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -39,
+    "y": -263
+   },
+   {
+    "name": "순록 목동 할머니",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -44,
+    "y": -272
+   },
+   {
+    "name": "썰매 장인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -51,
+    "y": -272
+   },
+   {
+    "name": "불가의 아이",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -49,
+    "y": -260
+   },
+   {
+    "name": "성장 자리 1",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -33,
+    "y": -257
+   },
+   {
+    "name": "성장 자리 2",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -40,
+    "y": -254
+   },
+   {
+    "name": "성장 자리 3",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -46,
+    "y": -255
+   },
+   {
+    "name": "성장 자리 4",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -37,
+    "y": -272
+   }
+  ]
+ },
+ "north_hunter": {
+  "name": "모피 사냥꾼 마을",
+  "kind": "town",
+  "items": [
+   {
+    "name": "장터 광장",
+    "kind": "plaza",
+    "asset": null,
+    "w": 12,
+    "h": 7,
+    "id": "market:north_hunter",
+    "memo": "",
+    "x": -36,
+    "y": -233
+   },
+   {
+    "name": "털옷 공방",
+    "kind": "lot",
+    "asset": "shop",
+    "w": 6,
+    "h": 4,
+    "id": "",
+    "memo": "모피 2 → 털옷",
+    "door": [
+     -29,
+     -218
+    ],
+    "laneLen": 7,
+    "x": -32,
+    "y": -222
+   },
+   {
+    "name": "사냥꾼 오두막",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     -30,
+     -234
+    ],
+    "laneLen": 6,
+    "x": -32,
+    "y": -237
+   },
+   {
+    "name": "이벤트 마당",
+    "kind": "yard",
+    "asset": null,
+    "w": 6,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "x": -46,
+    "y": -236
+   },
+   {
+    "name": "집 1",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     -19,
+     -221
+    ],
+    "laneLen": 0,
+    "x": -21,
+    "y": -224
+   },
+   {
+    "name": "집 2",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -21,
+     -226
+    ],
+    "laneLen": 5,
+    "x": -23,
+    "y": -230
+   },
+   {
+    "name": "집 3",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     -45,
+     -228
+    ],
+    "laneLen": 1,
+    "x": -47,
+    "y": -231
+   },
+   {
+    "name": "가죽 건조대 1",
+    "kind": "spot",
+    "asset": "rack",
+    "w": 3,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -29,
+    "y": -217
+   },
+   {
+    "name": "가죽 건조대 2",
+    "kind": "spot",
+    "asset": "rack",
+    "w": 3,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -25,
+    "y": -219
+   },
+   {
+    "name": "게시판",
+    "kind": "spot",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "board:north_hunter",
+    "memo": "",
+    "x": -33,
+    "y": -235
+   },
+   {
+    "name": "우물",
+    "kind": "spot",
+    "asset": "well",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -24,
+    "y": -225
+   },
+   {
+    "name": "횃불 1",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -38,
+    "y": -231
+   },
+   {
+    "name": "횃불 2",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -22,
+    "y": -225
+   },
+   {
+    "name": "늙은 사냥꾼",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -28,
+    "y": -235
+   },
+   {
+    "name": "north_goats",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "north_goats",
+    "memo": "",
+    "x": -29,
+    "y": -223
+   },
+   {
+    "name": "north_wife",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "north_wife",
+    "memo": "",
+    "x": -34,
+    "y": -223
+   },
+   {
+    "name": "성장 자리 1",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -45,
+    "y": -223
+   },
+   {
+    "name": "성장 자리 2",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -39,
+    "y": -239
+   },
+   {
+    "name": "성장 자리 3",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -34,
+    "y": -242
+   },
+   {
+    "name": "성장 자리 4",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -41,
+    "y": -227
+   }
+  ]
+ },
+ "north_naru": {
+  "name": "피오르 나루 마을",
+  "kind": "town",
+  "items": [
+   {
+    "name": "장터 광장",
+    "kind": "plaza",
+    "asset": null,
+    "w": 12,
+    "h": 7,
+    "id": "market:north_naru",
+    "memo": "",
+    "x": 29,
+    "y": -234
+   },
+   {
+    "name": "항구 부두",
+    "kind": "harbor",
+    "asset": null,
+    "w": 4,
+    "h": 5,
+    "id": "",
+    "memo": "피오르 선착장",
+    "x": 51,
+    "y": -234
+   },
+   {
+    "name": "배 1",
+    "kind": "moor",
+    "asset": "boat",
+    "w": 5,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 52,
+    "y": -228
+   },
+   {
+    "name": "배 2",
+    "kind": "moor",
+    "asset": "boat",
+    "w": 5,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 46,
+    "y": -228
+   },
+   {
+    "name": "창고",
+    "kind": "lot",
+    "asset": "store",
+    "w": 4,
+    "h": 3,
+    "id": "npc:north_warehouse",
+    "memo": "",
+    "door": [
+     48,
+     -231
+    ],
+    "laneLen": 7,
+    "x": 46,
+    "y": -234
+   },
+   {
+    "name": "선장 집",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     50,
+     -235
+    ],
+    "laneLen": 8,
+    "x": 48,
+    "y": -239
+   },
+   {
+    "name": "이벤트 마당",
+    "kind": "yard",
+    "asset": null,
+    "w": 8,
+    "h": 5,
+    "id": "",
+    "memo": "",
+    "x": 23,
+    "y": -226
+   },
+   {
+    "name": "집 1",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     38,
+     -235
+    ],
+    "laneLen": 3,
+    "x": 36,
+    "y": -239
+   },
+   {
+    "name": "집 2",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     34,
+     -222
+    ],
+    "laneLen": 0,
+    "x": 32,
+    "y": -225
+   },
+   {
+    "name": "집 3",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     46,
+     -240
+    ],
+    "laneLen": 3,
+    "x": 44,
+    "y": -244
+   },
+   {
+    "name": "집 4",
+    "kind": "lot",
+    "asset": "longhouse",
+    "w": 7,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     36,
+     -241
+    ],
+    "laneLen": 5,
+    "x": 33,
+    "y": -245
+   },
+   {
+    "name": "대구 덕장 1",
+    "kind": "spot",
+    "asset": "rack",
+    "w": 3,
+    "h": 2,
+    "id": "",
+    "memo": "로포텐 덕장: 얼음 대구",
+    "x": 32,
+    "y": -237
+   },
+   {
+    "name": "대구 덕장 2",
+    "kind": "spot",
+    "asset": "rack",
+    "w": 3,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 28,
+    "y": -237
+   },
+   {
+    "name": "게시판",
+    "kind": "spot",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "board:north_naru",
+    "memo": "",
+    "x": 37,
+    "y": -226
+   },
+   {
+    "name": "우물",
+    "kind": "spot",
+    "asset": "well",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 44,
+    "y": -236
+   },
+   {
+    "name": "횃불 1",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 44,
+    "y": -231
+   },
+   {
+    "name": "횃불 2",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 35,
+    "y": -219
+   },
+   {
+    "name": "선장",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 49,
+    "y": -231
+   },
+   {
+    "name": "창고지기",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "north_warehouse",
+    "memo": "",
+    "x": 47,
+    "y": -231
+   },
+   {
+    "name": "톰테 할아버지",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 44,
+    "y": -238
+   },
+   {
+    "name": "성장 자리 1",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 27,
+    "y": -218
+   },
+   {
+    "name": "성장 자리 2",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 30,
+    "y": -213
+   },
+   {
+    "name": "성장 자리 3",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 24,
+    "y": -232
+   },
+   {
+    "name": "성장 자리 4",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 53,
+    "y": -240
+   },
+   {
+    "name": "피오르 고갯길 쉼터",
+    "kind": "rest",
+    "asset": null,
+    "w": 6,
+    "h": 4,
+    "id": "",
+    "memo": "north_fjord_road에서 옮김",
+    "from": "north_fjord_road",
+    "x": 41,
+    "y": -250
+   },
+   {
+    "name": "모닥불",
+    "kind": "spot",
+    "asset": "fire",
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "from": "north_fjord_road",
+    "x": 48,
+    "y": -248
+   },
+   {
+    "name": "낚시터",
+    "kind": "gather",
+    "missing": true,
+    "memo": "fish",
+    "from": "north_fjord_road"
+   },
+   {
+    "name": "길손",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "from": "north_fjord_road",
+    "x": 42,
+    "y": -252
+   },
+   {
+    "name": "얼음 낚시꾼",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker (피오르 길에서 옮김)",
+    "from": "north_fjord_road",
+    "x": 39,
+    "y": -249
+   },
+   {
+    "name": "옮긴 이벤트 1",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "from": "north_fjord_road",
+    "x": 34,
+    "y": -254
+   },
+   {
+    "name": "옮긴 이벤트 2",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "from": "north_fjord_road",
+    "x": 39,
+    "y": -223
+   },
+   {
+    "name": "옮긴 이벤트 3",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "from": "north_fjord_road",
+    "x": 21,
+    "y": -219
+   },
+   {
+    "name": "도적",
+    "kind": "bandit",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "from": "north_fjord_road",
+    "x": 21,
+    "y": -219
+   }
+  ]
+ },
+ "north_laugar": {
+  "name": "라우가르 온천 마을",
+  "kind": "town",
+  "items": [
+   {
+    "name": "목욕 회관",
+    "kind": "lot",
+    "asset": "bathhouse",
+    "w": 7,
+    "h": 5,
+    "id": "",
+    "memo": "온천 호숫가",
+    "door": [
+     9,
+     -271
+    ],
+    "laneLen": 4,
+    "x": 6,
+    "y": -276
+   },
+   {
+    "name": "장터 광장",
+    "kind": "plaza",
+    "asset": null,
+    "w": 10,
+    "h": 6,
+    "id": "market:north_laugar",
+    "memo": "",
+    "x": 6,
+    "y": -270
+   },
+   {
+    "name": "온천 김 1",
+    "kind": "shore",
+    "asset": null,
+    "w": 2,
+    "h": 1,
+    "id": "",
+    "memo": "김 오르는 물가(anim)",
+    "x": 6,
+    "y": -278
+   },
+   {
+    "name": "온천 김 2",
+    "kind": "shore",
+    "asset": null,
+    "w": 2,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 5,
+    "y": -279
+   },
+   {
+    "name": "꿀술 양조장",
+    "kind": "lot",
+    "asset": "brewery",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "꿀술 2 ...",
+    "door": [
+     1,
+     -258
+    ],
+    "laneLen": 3,
+    "x": -1,
+    "y": -262
+   },
+   {
+    "name": "이벤트 마당",
+    "kind": "yard",
+    "asset": null,
+    "w": 5,
+    "h": 8,
+    "id": "",
+    "memo": "",
+    "x": 1,
+    "y": -287
+   },
+   {
+    "name": "집 1",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -5,
+     -274
+    ],
+    "laneLen": 0,
+    "x": -7,
+    "y": -278
+   },
+   {
+    "name": "집 2",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     9,
+     -255
+    ],
+    "laneLen": 3,
+    "x": 7,
+    "y": -259
+   },
+   {
+    "name": "집 3",
+    "kind": "lot",
+    "asset": "longhouse",
+    "w": 7,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -9,
+     -279
+    ],
+    "laneLen": 3,
+    "x": -12,
+    "y": -283
+   },
+   {
+    "name": "집 4",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     2,
+     -254
+    ],
+    "laneLen": 2,
+    "x": 0,
+    "y": -257
+   },
+   {
+    "name": "게시판",
+    "kind": "spot",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "board:north_laugar",
+    "memo": "",
+    "x": 7,
+    "y": -260
+   },
+   {
+    "name": "우물",
+    "kind": "spot",
+    "asset": "well",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -1,
+    "y": -267
+   },
+   {
+    "name": "횃불 1",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 2,
+    "y": -270
+   },
+   {
+    "name": "횃불 2",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 5,
+    "y": -275
+   },
+   {
+    "name": "목욕 회관 주인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 13,
+    "y": -272
+   },
+   {
+    "name": "약초꾼",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 10,
+    "y": -260
+   },
+   {
+    "name": "쉬어 가는 상인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 15,
+    "y": -272
+   },
+   {
+    "name": "성장 자리 1",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -9,
+    "y": -270
+   },
+   {
+    "name": "성장 자리 2",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -1,
+    "y": -276
+   },
+   {
+    "name": "성장 자리 3",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -7,
+    "y": -264
+   },
+   {
+    "name": "성장 자리 4",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -5,
+    "y": -284
+   },
+   {
+    "name": "약초꾼 오두막",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     -3,
+     -265
+    ],
+    "laneLen": 5,
+    "x": -5,
+    "y": -268
+   }
+  ]
+ },
+ "north_icecave": {
+  "name": "얼음 동굴 골짜기",
+  "kind": "town",
+  "items": [
+   {
+    "name": "광부 캠프 마당",
+    "kind": "plaza",
+    "asset": null,
+    "w": 8,
+    "h": 5,
+    "id": "",
+    "memo": "시장 없음(지금과 같음)",
+    "x": 37,
+    "y": -276
+   },
+   {
+    "name": "동굴 입구",
+    "kind": "cliff",
+    "asset": null,
+    "w": 3,
+    "h": 5,
+    "id": "",
+    "memo": "아래층은 ... (지금 표지 그대로)",
+    "x": 31,
+    "y": -286
+   },
+   {
+    "name": "광부 오두막",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     39,
+     -267
+    ],
+    "laneLen": 1,
+    "x": 37,
+    "y": -270
+   },
+   {
+    "name": "장비 창고",
+    "kind": "lot",
+    "asset": "store",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     44,
+     -277
+    ],
+    "laneLen": 6,
+    "x": 42,
+    "y": -280
+   },
+   {
+    "name": "얼음 낚시 구멍",
+    "kind": "shore",
+    "asset": null,
+    "w": 2,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 48,
+    "y": -277
+   },
+   {
+    "name": "집 1",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     47,
+     -266
+    ],
+    "laneLen": 6,
+    "x": 45,
+    "y": -269
+   },
+   {
+    "name": "집 2",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     51,
+     -270
+    ],
+    "laneLen": 6,
+    "x": 49,
+    "y": -273
+   },
+   {
+    "name": "우물",
+    "kind": "spot",
+    "asset": "well",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 50,
+    "y": -269
+   },
+   {
+    "name": "횃불 1",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 41,
+    "y": -270
+   },
+   {
+    "name": "횃불 2",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 46,
+    "y": -276
+   },
+   {
+    "name": "광부 할아범",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 42,
+    "y": -266
+   },
+   {
+    "name": "얼음 낚시꾼",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 50,
+    "y": -274
+   },
+   {
+    "name": "성장 자리 1",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 49,
+    "y": -261
+   },
+   {
+    "name": "성장 자리 2",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 57,
+    "y": -265
+   }
+  ]
+ },
+ "north_runehill": {
+  "name": "룬돌 언덕",
+  "kind": "town",
+  "items": [
+   {
+    "name": "룬돌 원",
+    "kind": "plaza",
+    "asset": null,
+    "w": 9,
+    "h": 9,
+    "id": "",
+    "memo": "옛 사람들의 룬돌. 시장 없음(지금과 같음)",
+    "x": -1,
+    "y": -327
+   },
+   {
+    "name": "룬 지기 오두막",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     -4,
+     -324
+    ],
+    "laneLen": 1,
+    "x": -6,
+    "y": -327
+   },
+   {
+    "name": "집 1",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     1,
+     -310
+    ],
+    "laneLen": 2,
+    "x": -1,
+    "y": -313
+   },
+   {
+    "name": "룬석 1",
+    "kind": "spot",
+    "asset": "runestone",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 9,
+    "y": -323
+   },
+   {
+    "name": "룬석 2",
+    "kind": "spot",
+    "asset": "runestone",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 2,
+    "y": -317
+   },
+   {
+    "name": "룬석 3",
+    "kind": "spot",
+    "asset": "runestone",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 2,
+    "y": -330
+   },
+   {
+    "name": "룬석 4",
+    "kind": "spot",
+    "asset": "runestone",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -5,
+    "y": -324
+   },
+   {
+    "name": "룬석 5",
+    "kind": "spot",
+    "asset": "runestone",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 8,
+    "y": -317
+   },
+   {
+    "name": "우물",
+    "kind": "spot",
+    "asset": "well",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 4,
+    "y": -312
+   },
+   {
+    "name": "횃불 1",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -2,
+    "y": -317
+   },
+   {
+    "name": "횃불 2",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -6,
+    "y": -321
+   },
+   {
+    "name": "룬 지기 노인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -3,
+    "y": -328
+   },
+   {
+    "name": "음유시인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 9,
+    "y": -325
+   },
+   {
+    "name": "성장 자리 1",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -10,
+    "y": -314
+   },
+   {
+    "name": "성장 자리 2",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -14,
+    "y": -323
+   }
+  ]
+ },
+ "north_c_gatetown": {
+  "name": "북문 마을",
+  "kind": "town",
+  "items": [
+   {
+    "name": "장터 광장",
+    "kind": "plaza",
+    "asset": null,
+    "w": 12,
+    "h": 7,
+    "id": "market:north_post",
+    "memo": "",
+    "x": -13,
+    "y": -149
+   },
+   {
+    "name": "여관",
+    "kind": "lot",
+    "asset": "longhouse",
+    "w": 7,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -10,
+     -150
+    ],
+    "laneLen": 8,
+    "x": -13,
+    "y": -154
+   },
+   {
+    "name": "천막 좌판 1",
+    "kind": "lot",
+    "asset": "tent",
+    "w": 3,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     -9,
+     -138
+    ],
+    "laneLen": 10,
+    "x": -10,
+    "y": -141
+   },
+   {
+    "name": "천막 좌판 2",
+    "kind": "lot",
+    "asset": "tent",
+    "w": 3,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     3,
+     -144
+    ],
+    "laneLen": 2,
+    "x": 2,
+    "y": -147
+   },
+   {
+    "name": "이벤트 마당",
+    "kind": "yard",
+    "asset": null,
+    "w": 8,
+    "h": 5,
+    "id": "",
+    "memo": "",
+    "x": -1,
+    "y": -159
+   },
+   {
+    "name": "집 1",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -8,
+     -158
+    ],
+    "laneLen": 0,
+    "x": -10,
+    "y": -162
+   },
+   {
+    "name": "집 2",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     -13,
+     -158
+    ],
+    "laneLen": 0,
+    "x": -15,
+    "y": -161
+   },
+   {
+    "name": "집 3",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -4,
+     -132
+    ],
+    "laneLen": 3,
+    "x": -6,
+    "y": -136
+   },
+   {
+    "name": "집 4",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     4,
+     -139
+    ],
+    "laneLen": 5,
+    "x": 2,
+    "y": -143
+   },
+   {
+    "name": "국경 표석",
+    "kind": "spot",
+    "asset": "runestone",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -12,
+    "y": -141
+   },
+   {
+    "name": "게시판",
+    "kind": "spot",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "board:north_post",
+    "memo": "",
+    "x": -5,
+    "y": -151
+   },
+   {
+    "name": "우물",
+    "kind": "spot",
+    "asset": "well",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 2,
+    "y": -150
+   },
+   {
+    "name": "횃불 1",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 2,
+    "y": -139
+   },
+   {
+    "name": "횃불 2",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -5,
+    "y": -158
+   },
+   {
+    "name": "북문 마을 촌장",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -3,
+    "y": -137
+   },
+   {
+    "name": "국경 표석 지기",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -8,
+    "y": -138
+   },
+   {
+    "name": "여관 주인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -6,
+    "y": -153
+   },
+   {
+    "name": "남쪽에서 온 향신료 상인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -6,
+    "y": -137
+   },
+   {
+    "name": "천막 상인 아이",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 4,
+    "y": -144
+   },
+   {
+    "name": "성장 자리 1",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 9,
+    "y": -154
+   },
+   {
+    "name": "성장 자리 2",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 12,
+    "y": -146
+   },
+   {
+    "name": "성장 자리 3",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 7,
+    "y": -162
+   },
+   {
+    "name": "성장 자리 4",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 10,
+    "y": -139
+   },
+   {
+    "name": "촌장 집",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     8,
+     -147
+    ],
+    "laneLen": 8,
+    "x": 6,
+    "y": -151
+   }
+  ]
+ },
+ "north_c_snowwood": {
+  "name": "눈숲 마을",
+  "kind": "town",
+  "items": [
+   {
+    "name": "장터 광장",
+    "kind": "plaza",
+    "asset": null,
+    "w": 12,
+    "h": 7,
+    "id": "market:north_cwood",
+    "memo": "",
+    "x": -65,
+    "y": -112
+   },
+   {
+    "name": "썰매 창고",
+    "kind": "lot",
+    "asset": "store",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     -55,
+     -101
+    ],
+    "laneLen": 12,
+    "x": -57,
+    "y": -104
+   },
+   {
+    "name": "나무꾼 집",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -59,
+     -113
+    ],
+    "laneLen": 6,
+    "x": -61,
+    "y": -117
+   },
+   {
+    "name": "이벤트 마당",
+    "kind": "yard",
+    "asset": null,
+    "w": 8,
+    "h": 5,
+    "id": "",
+    "memo": "",
+    "x": -50,
+    "y": -111
+   },
+   {
+    "name": "집 1",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     -50,
+     -116
+    ],
+    "laneLen": 2,
+    "x": -52,
+    "y": -119
+   },
+   {
+    "name": "집 2",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -53,
+     -120
+    ],
+    "laneLen": 2,
+    "x": -55,
+    "y": -124
+   },
+   {
+    "name": "집 3",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     -55,
+     -97
+    ],
+    "laneLen": 2,
+    "x": -57,
+    "y": -100
+   },
+   {
+    "name": "장작더미 1",
+    "kind": "spot",
+    "asset": "woodpile",
+    "w": 2,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -60,
+    "y": -104
+   },
+   {
+    "name": "장작더미 2",
+    "kind": "spot",
+    "asset": "woodpile",
+    "w": 2,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -55,
+    "y": -114
+   },
+   {
+    "name": "게시판",
+    "kind": "spot",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "board:north_cwood",
+    "memo": "",
+    "x": -56,
+    "y": -116
+   },
+   {
+    "name": "우물",
+    "kind": "spot",
+    "asset": "well",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -50,
+    "y": -114
+   },
+   {
+    "name": "횃불 1",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -50,
+    "y": -105
+   },
+   {
+    "name": "횃불 2",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -59,
+    "y": -120
+   },
+   {
+    "name": "썰매꾼",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -54,
+    "y": -101
+   },
+   {
+    "name": "숲 마을 장터지기",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -65,
+    "y": -104
+   },
+   {
+    "name": "순록 돌보는 아이",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -48,
+    "y": -113
+   },
+   {
+    "name": "성장 자리 1",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -42,
+    "y": -106
+   },
+   {
+    "name": "성장 자리 2",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -46,
+    "y": -98
+   },
+   {
+    "name": "성장 자리 3",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -40,
+    "y": -114
+   },
+   {
+    "name": "성장 자리 4",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -53,
+    "y": -93
+   }
+  ]
+ },
+ "north_c_creek": {
+  "name": "개울 나루 마을",
+  "kind": "town",
+  "items": [
+   {
+    "name": "장터 광장",
+    "kind": "plaza",
+    "asset": null,
+    "w": 12,
+    "h": 7,
+    "id": "market:north_ccreek",
+    "memo": "",
+    "x": 52,
+    "y": -111
+   },
+   {
+    "name": "나룻배",
+    "kind": "moor",
+    "asset": "boat",
+    "w": 5,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 39,
+    "y": -112
+   },
+   {
+    "name": "물방앗간",
+    "kind": "lot",
+    "asset": "mill",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     52,
+     -112
+    ],
+    "laneLen": 3,
+    "x": 50,
+    "y": -116
+   },
+   {
+    "name": "나루터",
+    "kind": "shore",
+    "asset": null,
+    "w": 3,
+    "h": 2,
+    "id": "",
+    "memo": "나룻배",
+    "x": 45,
+    "y": -111
+   },
+   {
+    "name": "빨래터",
+    "kind": "shore",
+    "asset": "laundry",
+    "w": 2,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 43,
+    "y": -110
+   },
+   {
+    "name": "이벤트 마당",
+    "kind": "yard",
+    "asset": null,
+    "w": 8,
+    "h": 5,
+    "id": "",
+    "memo": "",
+    "x": 41,
+    "y": -108
+   },
+   {
+    "name": "집 1",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     54,
+     -99
+    ],
+    "laneLen": 5,
+    "x": 52,
+    "y": -103
+   },
+   {
+    "name": "집 2",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     45,
+     -99
+    ],
+    "laneLen": 1,
+    "x": 43,
+    "y": -102
+   },
+   {
+    "name": "집 3",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     40,
+     -94
+    ],
+    "laneLen": 2,
+    "x": 38,
+    "y": -98
+   },
+   {
+    "name": "집 4",
+    "kind": "lot",
+    "asset": "longhouse",
+    "w": 7,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     52,
+     -94
+    ],
+    "laneLen": 7,
+    "x": 49,
+    "y": -98
+   },
+   {
+    "name": "게시판",
+    "kind": "spot",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "board:north_ccreek",
+    "memo": "",
+    "x": 50,
+    "y": -112
+   },
+   {
+    "name": "우물",
+    "kind": "spot",
+    "asset": "well",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 47,
+    "y": -96
+   },
+   {
+    "name": "횃불 1",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 49,
+    "y": -115
+   },
+   {
+    "name": "횃불 2",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 47,
+    "y": -102
+   },
+   {
+    "name": "물방앗간 주인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 55,
+    "y": -113
+   },
+   {
+    "name": "얼음 낚시꾼",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 39,
+    "y": -109
+   },
+   {
+    "name": "빨래하는 아주머니",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 39,
+    "y": -107
+   },
+   {
+    "name": "성장 자리 1",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 60,
+    "y": -103
+   },
+   {
+    "name": "성장 자리 2",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 63,
+    "y": -113
+   },
+   {
+    "name": "성장 자리 3",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 57,
+    "y": -95
+   },
+   {
+    "name": "성장 자리 4",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 57,
+    "y": -121
+   }
+  ]
+ },
+ "north_c_crossing": {
+  "name": "북쪽 길목 마을",
+  "kind": "town",
+  "items": [
+   {
+    "name": "장터 광장",
+    "kind": "plaza",
+    "asset": null,
+    "w": 14,
+    "h": 8,
+    "id": "market:north_cross",
+    "memo": "",
+    "x": -7,
+    "y": -56
+   },
+   {
+    "name": "여관",
+    "kind": "lot",
+    "asset": "longhouse",
+    "w": 7,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     0,
+     -43
+    ],
+    "laneLen": 7,
+    "x": -3,
+    "y": -47
+   },
+   {
+    "name": "상단 본부",
+    "kind": "lot",
+    "asset": "shop",
+    "w": 6,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -4,
+     -59
+    ],
+    "laneLen": 0,
+    "x": -7,
+    "y": -63
+   },
+   {
+    "name": "고려 좌판",
+    "kind": "lot",
+    "asset": "tent",
+    "w": 3,
+    "h": 3,
+    "id": "",
+    "memo": "수입품 좌판",
+    "door": [
+     3,
+     -59
+    ],
+    "laneLen": 0,
+    "x": 2,
+    "y": -62
+   },
+   {
+    "name": "베네치아 좌판",
+    "kind": "lot",
+    "asset": "tent",
+    "w": 3,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     6,
+     -44
+    ],
+    "laneLen": 1,
+    "x": 5,
+    "y": -47
+   },
+   {
+    "name": "아라비아 좌판",
+    "kind": "lot",
+    "asset": "tent",
+    "w": 3,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     7,
+     -59
+    ],
+    "laneLen": 0,
+    "x": 6,
+    "y": -62
+   },
+   {
+    "name": "이벤트 마당",
+    "kind": "yard",
+    "asset": null,
+    "w": 8,
+    "h": 5,
+    "id": "",
+    "memo": "",
+    "x": 9,
+    "y": -56
+   },
+   {
+    "name": "집 1",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -14,
+     -64
+    ],
+    "laneLen": 0,
+    "x": -16,
+    "y": -68
+   },
+   {
+    "name": "집 2",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     12,
+     -59
+    ],
+    "laneLen": 0,
+    "x": 10,
+    "y": -62
+   },
+   {
+    "name": "집 3",
+    "kind": "lot",
+    "asset": "turf",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     17,
+     -61
+    ],
+    "laneLen": 0,
+    "x": 15,
+    "y": -65
+   },
+   {
+    "name": "집 4",
+    "kind": "lot",
+    "asset": "longhouse",
+    "w": 7,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     -3,
+     -65
+    ],
+    "laneLen": 3,
+    "x": -6,
+    "y": -69
+   },
+   {
+    "name": "게시판",
+    "kind": "spot",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "board:north_cross",
+    "memo": "",
+    "x": 4,
+    "y": -45
+   },
+   {
+    "name": "우물",
+    "kind": "spot",
+    "asset": "well",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 4,
+    "y": -65
+   },
+   {
+    "name": "횃불 1",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 2,
+    "y": -43
+   },
+   {
+    "name": "횃불 2",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": 5,
+    "y": -61
+   },
+   {
+    "name": "횃불 3",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -9,
+    "y": -57
+   },
+   {
+    "name": "횃불 4",
+    "kind": "lantern",
+    "asset": "brazier",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "",
+    "x": -8,
+    "y": -62
+   },
+   {
+    "name": "상단 우두머리",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -3,
+    "y": -64
+   },
+   {
+    "name": "길목 문지기",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -6,
+    "y": -46
+   },
+   {
+    "name": "여관 주인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -1,
+    "y": -43
+   },
+   {
+    "name": "고려 상단 행수",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 6,
+    "y": -63
+   },
+   {
+    "name": "베네치아 유리 상인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 8,
+    "y": -46
+   },
+   {
+    "name": "아라비아 향신료 상인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 9,
+    "y": -60
+   },
+   {
+    "name": "성장 자리 1",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 1,
+    "y": -73
+   },
+   {
+    "name": "성장 자리 2",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -13,
+    "y": -50
+   },
+   {
+    "name": "성장 자리 3",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 9,
+    "y": -71
+   },
+   {
+    "name": "성장 자리 4",
+    "kind": "growth",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -16,
+    "y": -60
+   }
+  ]
+ },
+ "north_c_road_nw": {
+  "name": "눈숲 고갯길",
+  "kind": "travel",
+  "items": [
+   {
+    "name": "고갯마루 쉼터",
+    "kind": "rest",
+    "asset": null,
+    "w": 7,
+    "h": 5,
+    "id": "",
+    "memo": "쉼터 마당",
+    "x": -60,
+    "y": -151
+   },
+   {
+    "name": "나무꾼 오두막",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     -63,
+     -146
+    ],
+    "laneLen": 0,
+    "x": -65,
+    "y": -149
+   },
+   {
+    "name": "모닥불",
+    "kind": "spot",
+    "asset": "fire",
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -57,
+    "y": -145
+   },
+   {
+    "name": "땔감",
+    "kind": "gather",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "wood",
+    "gather": "wood",
+    "x": -61,
+    "y": -148
+   },
+   {
+    "name": "땔감 2",
+    "kind": "gather",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "wood",
+    "gather": "wood",
+    "x": -48,
+    "y": -154
+   },
+   {
+    "name": "약초",
+    "kind": "gather",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "herb",
+    "gather": "herb",
+    "x": -64,
+    "y": -134
+   },
+   {
+    "name": "나무꾼",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -64,
+    "y": -146
+   },
+   {
+    "name": "길 지키는 노인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -59,
+    "y": -153
+   },
+   {
+    "name": "이벤트 1",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -60,
+    "y": -143
+   },
+   {
+    "name": "이벤트 2",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -34,
+    "y": -158
+   }
+  ]
+ },
+ "north_c_road_ne": {
+  "name": "개울 다리길",
+  "kind": "travel",
+  "items": [
+   {
+    "name": "다리목 쉼터",
+    "kind": "rest",
+    "asset": null,
+    "w": 7,
+    "h": 5,
+    "id": "",
+    "memo": "쉼터 마당",
+    "x": 58,
+    "y": -151
+   },
+   {
+    "name": "모닥불",
+    "kind": "spot",
+    "asset": "fire",
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 61,
+    "y": -145
+   },
+   {
+    "name": "낚시터",
+    "kind": "gather",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "fish",
+    "gather": "fish",
+    "x": 62,
+    "y": -157
+   },
+   {
+    "name": "땔감",
+    "kind": "gather",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "wood",
+    "gather": "wood",
+    "x": 46,
+    "y": -148
+   },
+   {
+    "name": "약초",
+    "kind": "gather",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "herb",
+    "gather": "herb",
+    "x": 73,
+    "y": -148
+   },
+   {
+    "name": "다리지기",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 81,
+    "y": -148
+   },
+   {
+    "name": "길손 음유시인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 58,
+    "y": -145
+   },
+   {
+    "name": "얼음 낚시꾼",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 64,
+    "y": -156
+   },
+   {
+    "name": "이벤트 1",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 65,
+    "y": -155
+   },
+   {
+    "name": "이벤트 2",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 37,
+    "y": -144
+   },
+   {
+    "name": "이벤트 3",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 89,
+    "y": -137
+   }
+  ]
+ },
+ "north_c_runeway": {
+  "name": "룬돌 큰길",
+  "kind": "travel",
+  "items": [
+   {
+    "name": "길손 역참",
+    "kind": "rest",
+    "asset": null,
+    "w": 7,
+    "h": 5,
+    "id": "",
+    "memo": "쉼터 마당",
+    "x": -2,
+    "y": -106
+   },
+   {
+    "name": "역참",
+    "kind": "lot",
+    "asset": "longhouse",
+    "w": 7,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     5,
+     -96
+    ],
+    "laneLen": 3,
+    "x": 2,
+    "y": -100
+   },
+   {
+    "name": "룬돌 둥지",
+    "kind": "spot",
+    "asset": "runestone",
+    "w": 1,
+    "h": 2,
+    "id": "",
+    "memo": "옛 사람의 룬돌",
+    "x": 0,
+    "y": -100
+   },
+   {
+    "name": "모닥불",
+    "kind": "spot",
+    "asset": "fire",
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 1,
+    "y": -108
+   },
+   {
+    "name": "약초",
+    "kind": "gather",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "herb",
+    "gather": "herb",
+    "x": 1,
+    "y": -111
+   },
+   {
+    "name": "사냥터",
+    "kind": "gather",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "hunt",
+    "gather": "hunt",
+    "x": -5,
+    "y": -98
+   },
+   {
+    "name": "역참지기",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 6,
+    "y": -96
+   },
+   {
+    "name": "룬 읽는 노인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -2,
+    "y": -96
+   },
+   {
+    "name": "길손 행상",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -1,
+    "y": -108
+   },
+   {
+    "name": "이벤트 1",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -2,
+    "y": -114
+   },
+   {
+    "name": "이벤트 2",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 9,
+    "y": -86
+   },
+   {
+    "name": "도적",
+    "kind": "bandit",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 1,
+    "y": -128
+   }
+  ]
+ },
+ "north_c_road_sw": {
+  "name": "서남 솔숲길",
+  "kind": "travel",
+  "items": [
+   {
+    "name": "숯쟁이 터",
+    "kind": "rest",
+    "asset": null,
+    "w": 7,
+    "h": 5,
+    "id": "",
+    "memo": "쉼터 마당",
+    "x": -55,
+    "y": -79
+   },
+   {
+    "name": "숯가마",
+    "kind": "lot",
+    "asset": "kiln",
+    "w": 3,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     -50,
+     -70
+    ],
+    "laneLen": 8,
+    "x": -51,
+    "y": -73
+   },
+   {
+    "name": "숯쟁이 오두막",
+    "kind": "lot",
+    "asset": "hut",
+    "w": 4,
+    "h": 3,
+    "id": "",
+    "memo": "",
+    "door": [
+     -43,
+     -74
+    ],
+    "laneLen": 0,
+    "x": -45,
+    "y": -77
+   },
+   {
+    "name": "모닥불",
+    "kind": "spot",
+    "asset": "fire",
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -53,
+    "y": -73
+   },
+   {
+    "name": "땔감",
+    "kind": "gather",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "wood",
+    "gather": "wood",
+    "x": -70,
+    "y": -77
+   },
+   {
+    "name": "땔감 2",
+    "kind": "gather",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "wood",
+    "gather": "wood",
+    "x": -34,
+    "y": -69
+   },
+   {
+    "name": "사냥터",
+    "kind": "gather",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "hunt",
+    "gather": "hunt",
+    "x": -83,
+    "y": -80
+   },
+   {
+    "name": "숯쟁이",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -49,
+    "y": -70
+   },
+   {
+    "name": "순록 치는 소녀",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -55,
+    "y": -73
+   },
+   {
+    "name": "떠돌이 음유시인",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": -48,
+    "y": -73
+   },
+   {
+    "name": "이벤트 1",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -47,
+    "y": -79
+   },
+   {
+    "name": "이벤트 2",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -77,
+    "y": -77
+   },
+   {
+    "name": "도적",
+    "kind": "bandit",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": -24,
+    "y": -62
+   }
+  ]
+ },
+ "north_c_road_se": {
+  "name": "동남 물가길",
+  "kind": "travel",
+  "items": [
+   {
+    "name": "물레방아 쉼터",
+    "kind": "rest",
+    "asset": null,
+    "w": 7,
+    "h": 5,
+    "id": "",
+    "memo": "쉼터 마당",
+    "x": 27,
+    "y": -72
+   },
+   {
+    "name": "물레방아",
+    "kind": "lot",
+    "asset": "mill",
+    "w": 5,
+    "h": 4,
+    "id": "",
+    "memo": "",
+    "door": [
+     38,
+     -73
+    ],
+    "laneLen": 2,
+    "x": 36,
+    "y": -77
+   },
+   {
+    "name": "모닥불",
+    "kind": "spot",
+    "asset": "fire",
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 30,
+    "y": -66
+   },
+   {
+    "name": "낚시터",
+    "kind": "gather",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "fish",
+    "gather": "fish",
+    "x": 40,
+    "y": -66
+   },
+   {
+    "name": "약초",
+    "kind": "gather",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "herb",
+    "gather": "herb",
+    "x": 31,
+    "y": -77
+   },
+   {
+    "name": "땔감",
+    "kind": "gather",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "wood",
+    "gather": "wood",
+    "x": 27,
+    "y": -54
+   },
+   {
+    "name": "강지기",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 27,
+    "y": -66
+   },
+   {
+    "name": "물레방아 할머니",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 38,
+    "y": -72
+   },
+   {
+    "name": "남쪽 행상",
+    "kind": "npc",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "talker",
+    "x": 28,
+    "y": -74
+   },
+   {
+    "name": "이벤트 1",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 35,
+    "y": -72
+   },
+   {
+    "name": "이벤트 2",
+    "kind": "event",
+    "asset": null,
+    "w": 1,
+    "h": 1,
+    "id": "",
+    "memo": "",
+    "x": 21,
+    "y": -60
+   }
+  ]
+ }
+}

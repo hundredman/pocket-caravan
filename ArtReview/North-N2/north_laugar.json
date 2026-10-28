@@ -1,0 +1,285 @@
+{
+ "map": "north_laugar",
+ "name": "라우가르 온천 마을",
+ "kind": "town",
+ "items": [
+  {
+   "name": "목욕 회관",
+   "kind": "lot",
+   "asset": "bathhouse",
+   "w": 7,
+   "h": 5,
+   "id": "",
+   "memo": "온천 호숫가",
+   "door": [
+    9,
+    -271
+   ],
+   "laneLen": 4,
+   "x": 6,
+   "y": -276
+  },
+  {
+   "name": "장터 광장",
+   "kind": "plaza",
+   "asset": null,
+   "w": 10,
+   "h": 6,
+   "id": "market:north_laugar",
+   "memo": "",
+   "x": 6,
+   "y": -270
+  },
+  {
+   "name": "온천 김 1",
+   "kind": "shore",
+   "asset": null,
+   "w": 2,
+   "h": 1,
+   "id": "",
+   "memo": "김 오르는 물가(anim)",
+   "x": 6,
+   "y": -278
+  },
+  {
+   "name": "온천 김 2",
+   "kind": "shore",
+   "asset": null,
+   "w": 2,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 5,
+   "y": -279
+  },
+  {
+   "name": "꿀술 양조장",
+   "kind": "lot",
+   "asset": "brewery",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "꿀술 2 ...",
+   "door": [
+    1,
+    -258
+   ],
+   "laneLen": 3,
+   "x": -1,
+   "y": -262
+  },
+  {
+   "name": "이벤트 마당",
+   "kind": "yard",
+   "asset": null,
+   "w": 5,
+   "h": 8,
+   "id": "",
+   "memo": "",
+   "x": 1,
+   "y": -287
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    -5,
+    -274
+   ],
+   "laneLen": 0,
+   "x": -7,
+   "y": -278
+  },
+  {
+   "name": "집 2",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 5,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    9,
+    -255
+   ],
+   "laneLen": 3,
+   "x": 7,
+   "y": -259
+  },
+  {
+   "name": "집 3",
+   "kind": "lot",
+   "asset": "longhouse",
+   "w": 7,
+   "h": 4,
+   "id": "",
+   "memo": "",
+   "door": [
+    -9,
+    -279
+   ],
+   "laneLen": 3,
+   "x": -12,
+   "y": -283
+  },
+  {
+   "name": "집 4",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    2,
+    -254
+   ],
+   "laneLen": 2,
+   "x": 0,
+   "y": -257
+  },
+  {
+   "name": "게시판",
+   "kind": "spot",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "board:north_laugar",
+   "memo": "",
+   "x": 7,
+   "y": -260
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "asset": "well",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": -1,
+   "y": -267
+  },
+  {
+   "name": "횃불 1",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 2,
+   "y": -270
+  },
+  {
+   "name": "횃불 2",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "x": 5,
+   "y": -275
+  },
+  {
+   "name": "목욕 회관 주인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 13,
+   "y": -272
+  },
+  {
+   "name": "약초꾼",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 10,
+   "y": -260
+  },
+  {
+   "name": "쉬어 가는 상인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 15,
+   "y": -272
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -9,
+   "y": -270
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -1,
+   "y": -276
+  },
+  {
+   "name": "성장 자리 3",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -7,
+   "y": -264
+  },
+  {
+   "name": "성장 자리 4",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -5,
+   "y": -284
+  },
+  {
+   "name": "약초꾼 오두막",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 4,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "door": [
+    -3,
+    -265
+   ],
+   "laneLen": 5,
+   "x": -5,
+   "y": -268
+  }
+ ],
+ "laneCells": 20
+}
