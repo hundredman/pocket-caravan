@@ -72,7 +72,7 @@ def seams(mapid,walk,mids,ox=0,oy=0):
         out[A].append(dict(kind='spawn',world=W0(inA[0]),w=w_,h=h_,id=f'seam_{B}_{kb}',edge=OPP[dname]))
     return out
 
-def build(mid,key,box,walk_local,grade_local,water_local,inside,zones,old,seam_list):
+def build(mid,key,box,walk_local,grade_local,water_local,inside,zones,old,seam_list,old_signs=()):
     """한 맵의 객체 목록. box=(x0,y0) 세계 좌표 왼쪽 위, *_local은 맵 직사각형 배열."""
     X0,Y0=box;h,w=walk_local.shape;objs=[];report=dict(placed=[],moved=[],missing=[])
     def L(X,Y):return X-X0,Y-Y0
@@ -179,4 +179,12 @@ def build(mid,key,box,walk_local,grade_local,water_local,inside,zones,old,seam_l
     # 낚시(pastime)는 위에서. 도적: 길 가운데(위치는 E3·M5에서 다시)
     for o in oldk.get('bandit',[]):
         X,Y=road_mid();put('bandit',X,Y,'bandit',radius=o['radius'])
+        # 도적 경고 이정표(옛 남동 길 이정표의 뜻을 새 배치에 맞게): 도적 자리 가까운 길 위
+        put('sign',X+3,Y,'sign:bandit',text='솔바람 고개\n고개 큰길에는 도적이 나타날 수 있습니다.\n짐을 싣고 지날 때는 조심하세요.')
+    # 방향과 상관없는 옛 이정표만 옮긴다(방향 안내 이정표는 옛 배치 기준이라 M5에서 새로 쓴다). 옛 이정표처럼 그림 없이 길 위 대화 자리.
+    SIGNSPOT={'나루 하역장':'나루터','종이 작업장':'한지 작업장','약재 집산 마당':'장터 광장','장단 들마을':'장터 광장'}
+    for o in old_signs:
+        title=o['text'].split('\n')[0]
+        sp=items.get(SIGNSPOT.get(title,''))
+        if sp:put('sign',sp['x']+sp['w'],sp['y']+sp['h'],'sign:'+title,text=o['text'])
     return objs,report

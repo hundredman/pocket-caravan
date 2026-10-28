@@ -1,27 +1,31 @@
 # 현재 상태
 
-기준: 2026-10-24, 로컬 `main`. 코드와 파일을 직접 확인해 적었다. 계획이 아니라 **지금 있는 것**만 적는다.
+기준: 2026-10-28(맵), 2026-10-24(그 밖), `region/goryeo`. 코드와 파일을 직접 확인해 적었다. 계획이 아니라 **지금 있는 것**만 적는다.
 구현이 바뀌면 이 문서를 고친다. 오래된 상세 기록은 `Archive/DevelopmentStatus.md`에 있다.
 
 ## 1. 환경
 
 - Unity 6000.3.26f1 (6.3 LTS), URP 2D, Input System.
 - 코드: `Assets/PocketCaravan/Scripts/` C# 83개, 약 7,000줄. 에디터 도구: `Assets/PocketCaravan/Editor/`, 약 3,300줄.
-- 맵 제작 흐름: `Tools/MapGen`(Python) → `Assets/PocketCaravan/Maps/*.json` → `Editor/MapJsonBuilder` → `Scenes/`. 씬만 고치면 다음 생성 때 사라진다.
+- 맵 제작 흐름(M4, 2026-10-28): `Tools/WorldLayout`(terrain_v3 지형 → m2_zones 마을 구역 → m1_tiles_preview --zones 그림 → m4_export --production) → `Assets/PocketCaravan/Maps/*.json`·칸 그림·`Art/Baked/m4-composites.json` → `Editor/MapJsonBuilder.BuildSelected` → `Scenes/`. 지역 등록은 `m4_register.py`, 거리는 `Tools/Routing/m4_routes.py`. 옛 `Tools/MapGen` 생성기는 본편에서 은퇴했다(옛 맵 재현용으로만 남음). 씬만 고치면 다음 생성 때 사라진다.
 - 시작 씬: `Scenes/Goryeo/Naru.unity` (`World/settings.json`의 `startMapId`).
 
-## 2. 맵 (새 방향과 다름 — [세계 배치](WorldLayout.md) 5절)
+## 2. 맵 (M4 새 배치, 2026-10-28)
 
-등록된 본편 맵은 11개, 45,000칸이다.
+등록된 본편 맵은 13개다(고려 5, 중앙 동쪽 8). 맵 하나 = 그 구역을 감싸는 직사각형이고, 구역 밖 칸은 이웃 맵 그림이 보이되 막혀 있다.
 
-| 지역 | 맵 | 크기 |
-|---|---|---|
-| 고려 | 송악 60×60, 개경 70×60, 나루 80×60, 장단 80×55, 닥목 50×60 | 20,000칸 |
-| 중앙 동쪽 | transit_pass, woodtown, wetroad, ferry, central_approach, crossroads | 25,000칸 |
+| 지역 | 맵 |
+|---|---|
+| 고려 | 송악 74×84, 개경 72×76, 나루 88×84, 장단 61×98, 닥목 93×80 |
+| 중앙 동쪽 | transit_woodtown(동문 마을), transit_ferry(북동 포구), transit_southport(남동 포구, 새), transit_crossroads(중앙 길목 마을), transit_wetroad(북동 길), transit_pass(남동 길), transit_central_approach(북쪽 내륙길, 북쪽 쉼터 마을 포함), transit_south_inland(남쪽 내륙길, 남쪽 호숫가 마을 포함, 새) |
 
-- 지형 원본: `Tools/MapGen/broad_regions.py`. 마을 배치는 `maps.py`, `gaegyeong.py`, `goryeo_villages.py`.
-- 옛 고려 씬 8개(Route01, goryeo_descent 등)는 폴더에 남아 있지만 등록에서 빠졌다. 옛 저장 위치는 `Resources/GoryeoLayout.json`으로 새 맵에 옮긴다.
-- 마지막 실제 이동 검사: 920개 항목 통과 (`Validation/BroadGoryeo-Motor-2026-10-24.json`).
+- 원본: `Tools/WorldLayout/` (위 1절 흐름). 검토 그림 `ArtReview/M1-Tiles`·`M2-Zones`·`M3-Village`·`M4-Maps`.
+- 이웃 맵과는 걸을 수 있는 경계 전체가 출구로 이어진다(출구 874개). 출구는 서서 경계 쪽을 보면 바로 쓰이므로 도착 자리는 출구와 겹치지 않는다.
+- 시장·게시판은 기존 7곳(나루·장단·송악·닥목·개경·동문·북동 포구). 남동 포구·중앙 길목 마을·쉼터 마을 2곳의 시장·NPC는 아직 없다(E2·M5). 옛 이정표는 옮기지 않았다.
+- 겹친 칸 그림 1,294개는 `Tools/WorldLayout/m4_certify.py`로 승인 원본에서 다시 그려 같은지 확인한다(A2 확장).
+- 옛 저장(`layoutVersion` 1 이하): 같은 맵(옛 ID는 별칭으로)의 도착 자리에서 다시 시작하고, 떨어진 짐은 그 옆으로 옮긴다(`Resources/GoryeoLayout.json`, `GoryeoLayout.cs`). 새 저장은 `layoutVersion` 2.
+- 마을 사이 거리(`Resources/TownRoutes.json`)는 `layoutD`: 새 맵 실제 보행 초 × 0.1304.
+- 마지막 실제 이동 검사(Unity Play, 2026-10-28): 이웃 맵 18쌍 모두 양방향 출구 이동(49번 이동, 실패 0), 옛 저장 불러오기·새 저장 왕복. 사람이 직접 걸어 본 플레이는 아직 없다.
 
 ## 3. 아트 (새 방향과 다름 — [아트 기준](ArtGuide.md) 5절)
 
