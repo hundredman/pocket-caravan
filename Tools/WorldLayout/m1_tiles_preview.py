@@ -64,9 +64,21 @@ def tile(key):
         BAKED_FOR_REVIEW[key]=hashlib.sha256(im.tobytes()).hexdigest()
     _cache[key]=im;return im
 
+# 승인된 C7 그림(팀 그림체로 다시 그린 것). 이름:폭:높이(칸)
+C7={'willow':'ArtReview/Approved/C7-Batch1-v1/willow.png','forest_bent':'ArtReview/Approved/C7-Batch2-v1/forest_bent.png',
+    'forest_round':'ArtReview/Approved/C7-Batch2-v1/forest_round.png','forest_wide':'ArtReview/Approved/C7-Batch2-v1/forest_wide.png',
+    'broadleaf':'ArtReview/Approved/C7-Batch3-v1/broadleaf.png','golden_tree':'ArtReview/Approved/C7-Batch3-v1/golden_tree.png',
+    'light_tree':'ArtReview/Approved/C7-Batch3-v1/light_tree.png','fallen_log':'ArtReview/Approved/C7-LowNature-v1/fallen_log.png',
+    'moss_rock':'ArtReview/Approved/C7-LowNature-v1/moss_rock.png','shrub':'ArtReview/Approved/C7-LowNature-v1/shrub.png',
+    'tall_grass':'ArtReview/Approved/C7-LowNature-v1/tall_grass.png','harvest':'ArtReview/Approved/C7-WorkshopProps-v4/harvest.png',
+    **{n:f'ArtReview/C7-RemainingBatch-20261027/Native/{n}.png' for n in ('pine_west','pine_east','round_west','round_east','small_rock','lotus','sheaf_jangdan','sheaf_naru')}}
 def sprite(name):
-    path=INDEX['sprites'][name]
-    return Image.open(ROOT/path).convert('RGBA')
+    nm=name.split(':')[0]
+    if nm in C7:
+        im=Image.open(ROOT/C7[nm]).convert('RGBA')
+        assert im.size==(int(name.split(':')[1])*T,int(name.split(':')[2])*T),name
+        return im
+    return Image.open(ROOT/INDEX['sprites'][name]).convert('RGBA')
 
 GRASS=['floor:0:12']*14+['floor:1:12','floor:2:12','floor:3:12','floor:4:12','floor:2:11','floor:3:11']
 TUFTS=['detail:0:2','detail:1:2','detail:2:2','detail:3:2']
@@ -148,11 +160,11 @@ def tileready(mask,allowed):
 
 # ---------- 개체 ----------
 # 이름: (스프라이트, 줄기 칸 폭)  줄기 = 그림 맨 아랫줄 가운데
-TREES_FOREST=['woodland4:4:4','woodland2:3:4','woodland6:3:4','woodland1:3:4','pine:2:2','woodland9:2:2','woodland7:3:4']
-TREES_MOUNT=['woodland1:3:4','pine:4:3','woodland0:4:3','woodland3:4:3','pine:2:2','woodland8:3:2','woodland8:3:2']
-TREES_HILL=['woodland9:2:2','pine:2:2','woodland6:3:4','woodland8:3:2','woodland2:3:4']
-TREES_LONE=['woodland4:4:4','woodland5:4:4','woodland6:3:4','pine:2:2','woodland9:2:2']
-REEDS='woodland10:2:2';LOTUS='lotus:2:1';SHEAF='harvest:3:2'
+TREES_FOREST=['forest_round:3:4','forest_bent:3:4','forest_wide:4:3','broadleaf:4:4','light_tree:3:4','round_west:4:3','round_east:4:3','golden_tree:3:4','fallen_log:3:2','shrub:2:2']
+TREES_MOUNT=['pine_west:4:3','pine_east:4:3','pine_west:4:3','pine_east:4:3','forest_bent:3:4','moss_rock:3:2','small_rock:2:2']
+TREES_HILL=['shrub:2:2','shrub:2:2','small_rock:2:2','forest_round:3:4','light_tree:3:4']
+TREES_LONE=['broadleaf:4:4','willow:4:4','light_tree:3:4','golden_tree:3:4','shrub:2:2','forest_round:3:4']
+REEDS='tall_grass:2:2';LOTUS='lotus:2:1';SHEAF='harvest:3:2'
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--no',default='');a=ap.parse_args()
