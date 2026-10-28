@@ -1,0 +1,330 @@
+{
+ "ratio": 0.13037770729688886,
+ "pairs": 21,
+ "avgDeadlineChange": 0.0,
+ "avgDefaultRewardChange": 0.0,
+ "maxWalkShareOfDeadline": 0.054,
+ "rows": [
+  {
+   "pair": [
+    "naru",
+    "goryeo_jangdan"
+   ],
+   "seconds": 9.928,
+   "oldDistance": 4,
+   "newDistance": 1,
+   "oldHours": 44,
+   "newHours": 17,
+   "walkHours": 0.66,
+   "walkShareOfDeadline": 0.039,
+   "oldDefaultReward": 90,
+   "newDefaultReward": 42
+  },
+  {
+   "pair": [
+    "naru",
+    "goryeo_songak"
+   ],
+   "seconds": 23.27,
+   "oldDistance": 1,
+   "newDistance": 3,
+   "oldHours": 17,
+   "newHours": 35,
+   "walkHours": 1.55,
+   "walkShareOfDeadline": 0.044,
+   "oldDefaultReward": 42,
+   "newDefaultReward": 74
+  },
+  {
+   "pair": [
+    "naru",
+    "dakmok"
+   ],
+   "seconds": 32.898,
+   "oldDistance": 3,
+   "newDistance": 4,
+   "oldHours": 35,
+   "newHours": 44,
+   "walkHours": 2.19,
+   "walkShareOfDeadline": 0.05,
+   "oldDefaultReward": 74,
+   "newDefaultReward": 90
+  },
+  {
+   "pair": [
+    "naru",
+    "gaegyeong"
+   ],
+   "seconds": 17.143,
+   "oldDistance": 2,
+   "newDistance": 2,
+   "oldHours": 26,
+   "newHours": 26,
+   "walkHours": 1.14,
+   "walkShareOfDeadline": 0.044,
+   "oldDefaultReward": 58,
+   "newDefaultReward": 58
+  },
+  {
+   "pair": [
+    "naru",
+    "transit_woodtown"
+   ],
+   "seconds": 32.356,
+   "oldDistance": 6,
+   "newDistance": 4,
+   "oldHours": 62,
+   "newHours": 44,
+   "walkHours": 2.16,
+   "walkShareOfDeadline": 0.049,
+   "oldDefaultReward": 122,
+   "newDefaultReward": 90
+  },
+  {
+   "pair": [
+    "naru",
+    "transit_ferry"
+   ],
+   "seconds": 57.088,
+   "oldDistance": 8,
+   "newDistance": 7,
+   "oldHours": 80,
+   "newHours": 71,
+   "walkHours": 3.81,
+   "walkShareOfDeadline": 0.054,
+   "oldDefaultReward": 154,
+   "newDefaultReward": 138
+  },
+  {
+   "pair": [
+    "goryeo_jangdan",
+    "goryeo_songak"
+   ],
+   "seconds": 15.654,
+   "oldDistance": 5,
+   "newDistance": 2,
+   "oldHours": 53,
+   "newHours": 26,
+   "walkHours": 1.04,
+   "walkShareOfDeadline": 0.04,
+   "oldDefaultReward": 106,
+   "newDefaultReward": 58
+  },
+  {
+   "pair": [
+    "goryeo_jangdan",
+    "dakmok"
+   ],
+   "seconds": 28.578,
+   "oldDistance": 1,
+   "newDistance": 4,
+   "oldHours": 17,
+   "newHours": 44,
+   "walkHours": 1.91,
+   "walkShareOfDeadline": 0.043,
+   "oldDefaultReward": 42,
+   "newDefaultReward": 90
+  },
+  {
+   "pair": [
+    "goryeo_jangdan",
+    "gaegyeong"
+   ],
+   "seconds": 26.853,
+   "oldDistance": 2,
+   "newDistance": 4,
+   "oldHours": 26,
+   "newHours": 44,
+   "walkHours": 1.79,
+   "walkShareOfDeadline": 0.041,
+   "oldDefaultReward": 58,
+   "newDefaultReward": 90
+  },
+  {
+   "pair": [
+    "goryeo_jangdan",
+    "transit_woodtown"
+   ],
+   "seconds": 22.582,
+   "oldDistance": 2,
+   "newDistance": 3,
+   "oldHours": 26,
+   "newHours": 35,
+   "walkHours": 1.51,
+   "walkShareOfDeadline": 0.043,
+   "oldDefaultReward": 58,
+   "newDefaultReward": 74
+  },
+  {
+   "pair": [
+    "goryeo_jangdan",
+    "transit_ferry"
+   ],
+   "seconds": 49.164,
+   "oldDistance": 4,
+   "newDistance": 6,
+   "oldHours": 44,
+   "newHours": 62,
+   "walkHours": 3.28,
+   "walkShareOfDeadline": 0.053,
+   "oldDefaultReward": 90,
+   "newDefaultReward": 122
+  },
+  {
+   "pair": [
+    "goryeo_songak",
+    "dakmok"
+   ],
+   "seconds": 13.578,
+   "oldDistance": 4,
+   "newDistance": 2,
+   "oldHours": 44,
+   "newHours": 26,
+   "walkHours": 0.91,
+   "walkShareOfDeadline": 0.035,
+   "oldDefaultReward": 90,
+   "newDefaultReward": 58
+  },
+  {
+   "pair": [
+    "goryeo_songak",
+    "gaegyeong"
+   ],
+   "seconds": 23.135,
+   "oldDistance": 3,
+   "newDistance": 3,
+   "oldHours": 35,
+   "newHours": 35,
+   "walkHours": 1.54,
+   "walkShareOfDeadline": 0.044,
+   "oldDefaultReward": 74,
+   "newDefaultReward": 74
+  },
+  {
+   "pair": [
+    "goryeo_songak",
+    "transit_woodtown"
+   ],
+   "seconds": 17.47,
+   "oldDistance": 7,
+   "newDistance": 2,
+   "oldHours": 71,
+   "newHours": 26,
+   "walkHours": 1.16,
+   "walkShareOfDeadline": 0.045,
+   "oldDefaultReward": 138,
+   "newDefaultReward": 58
+  },
+  {
+   "pair": [
+    "goryeo_songak",
+    "transit_ferry"
+   ],
+   "seconds": 37.582,
+   "oldDistance": 9,
+   "newDistance": 5,
+   "oldHours": 89,
+   "newHours": 53,
+   "walkHours": 2.51,
+   "walkShareOfDeadline": 0.047,
+   "oldDefaultReward": 170,
+   "newDefaultReward": 106
+  },
+  {
+   "pair": [
+    "dakmok",
+    "gaegyeong"
+   ],
+   "seconds": 17.063,
+   "oldDistance": 1,
+   "newDistance": 2,
+   "oldHours": 17,
+   "newHours": 26,
+   "walkHours": 1.14,
+   "walkShareOfDeadline": 0.044,
+   "oldDefaultReward": 42,
+   "newDefaultReward": 58
+  },
+  {
+   "pair": [
+    "dakmok",
+    "transit_woodtown"
+   ],
+   "seconds": 29.905,
+   "oldDistance": 3,
+   "newDistance": 4,
+   "oldHours": 35,
+   "newHours": 44,
+   "walkHours": 1.99,
+   "walkShareOfDeadline": 0.045,
+   "oldDefaultReward": 74,
+   "newDefaultReward": 90
+  },
+  {
+   "pair": [
+    "dakmok",
+    "transit_ferry"
+   ],
+   "seconds": 50.017,
+   "oldDistance": 5,
+   "newDistance": 7,
+   "oldHours": 53,
+   "newHours": 71,
+   "walkHours": 3.33,
+   "walkShareOfDeadline": 0.047,
+   "oldDefaultReward": 106,
+   "newDefaultReward": 138
+  },
+  {
+   "pair": [
+    "gaegyeong",
+    "transit_woodtown"
+   ],
+   "seconds": 39.461,
+   "oldDistance": 4,
+   "newDistance": 5,
+   "oldHours": 44,
+   "newHours": 53,
+   "walkHours": 2.63,
+   "walkShareOfDeadline": 0.05,
+   "oldDefaultReward": 90,
+   "newDefaultReward": 106
+  },
+  {
+   "pair": [
+    "gaegyeong",
+    "transit_ferry"
+   ],
+   "seconds": 59.574,
+   "oldDistance": 6,
+   "newDistance": 8,
+   "oldHours": 62,
+   "newHours": 80,
+   "walkHours": 3.97,
+   "walkShareOfDeadline": 0.05,
+   "oldDefaultReward": 122,
+   "newDefaultReward": 154
+  },
+  {
+   "pair": [
+    "transit_woodtown",
+    "transit_ferry"
+   ],
+   "seconds": 28.278,
+   "oldDistance": 2,
+   "newDistance": 4,
+   "oldHours": 26,
+   "newHours": 44,
+   "walkHours": 1.89,
+   "walkShareOfDeadline": 0.043,
+   "oldDefaultReward": 58,
+   "newDefaultReward": 90
+  }
+ ],
+ "note": "배달 보수(고려 규칙)는 layoutD에서 연결 수 대신 같은 환산 거리를 쓴다. Q1② 이익은 Unity 검사(⑦)에서 확인.",
+ "pass": {
+  "deadline15": true,
+  "reward15": true,
+  "arrive70": true
+ }
+}
