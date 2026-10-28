@@ -1,57 +1,37 @@
 {
  "waterAdded": 148,
- "roadAdded": 281,
- "bridgeCells": 78,
+ "roadAdded": 180,
+ "bridgeCells": 195,
  "bridges": [
   {
-   "x": 128,
-   "y": -60,
-   "w": 3,
-   "h": 5,
-   "roadDir": "세로",
-   "bridgeDir": "세로",
-   "length": 5,
-   "riverWidth": 4
+   "x": 200.5,
+   "y": -25.5,
+   "angle": 142.1,
+   "length": 7
   },
   {
-   "x": 77,
-   "y": -32,
-   "w": 3,
-   "h": 4,
-   "roadDir": "세로",
-   "bridgeDir": "세로",
-   "length": 4,
-   "riverWidth": 5
+   "x": 251.5,
+   "y": 42.0,
+   "angle": 77.5,
+   "length": 9
   },
   {
-   "x": 197,
-   "y": -29,
-   "w": 5,
-   "h": 3,
-   "roadDir": "가로",
-   "bridgeDir": "가로",
-   "length": 5,
-   "riverWidth": 5
+   "x": 129.0,
+   "y": -58.0,
+   "angle": 90.0,
+   "length": 6
   },
   {
-   "x": 250,
-   "y": 39,
-   "w": 3,
-   "h": 7,
-   "roadDir": "세로",
-   "bridgeDir": "세로",
-   "length": 7,
-   "riverWidth": 12
+   "x": 135.0,
+   "y": 74.5,
+   "angle": 131.6,
+   "length": 6
   },
   {
-   "x": 133,
-   "y": 72,
-   "w": 3,
-   "h": 5,
-   "roadDir": "세로",
-   "bridgeDir": "세로",
-   "length": 5,
-   "riverWidth": 4
+   "x": 80.0,
+   "y": -30.5,
+   "angle": 127.9,
+   "length": 6
   }
  ],
  "pieces": {
@@ -60,24 +40,24 @@
   "water:0:8": 208,
   "water:1:8": 201,
   "water:6:7": 209,
-  "floor:0:7": 156,
-  "floor:2:7": 144,
-  "floor:0:8": 296,
-  "floor:5:9": 147,
-  "floor:1:8": 640,
-  "floor:2:8": 302,
-  "floor:0:9": 149,
-  "floor:6:8": 152,
+  "floor:0:7": 163,
+  "floor:2:7": 148,
+  "floor:0:8": 273,
+  "floor:5:9": 146,
+  "floor:1:8": 575,
+  "floor:2:8": 283,
+  "floor:0:9": 156,
+  "floor:6:8": 154,
   "water:5:7": 133,
   "water:2:8": 132,
   "water:0:6": 184,
   "water:1:6": 193,
   "water:6:8": 185,
-  "floor:1:7": 190,
-  "floor:6:9": 159,
-  "floor:5:8": 156,
-  "floor:2:9": 155,
-  "floor:1:9": 188,
+  "floor:1:7": 180,
+  "floor:6:9": 161,
+  "floor:5:8": 159,
+  "floor:2:9": 161,
+  "floor:1:9": 174,
   "water:2:7": 182,
   "water:2:6": 164,
   "water:5:8": 165
@@ -85,22 +65,22 @@
  "unmatched": {},
  "seamCells": {
   "water": 4,
-  "road": 1
+  "road": 0
  },
  "objects": {
   "mountain": {
-   "cells": 2495,
-   "trees": 1249
+   "cells": 2505,
+   "trees": 1253
   },
   "forest": {
-   "cells": 5893,
-   "trees": 2945
+   "cells": 5934,
+   "trees": 2969
   },
   "hill": 52,
   "marsh": 32,
-  "lotus": 14,
+  "lotus": 17,
   "flowers": 102,
-  "tufts": 771,
+  "tufts": 772,
   "loneTrees": 45
  },
  "reviewBakedPieces": {
@@ -116,12 +96,12 @@
  },
  "forestUniqueTiles": {
   "mountain": {
-   "cells": 3699,
-   "unique": 536
+   "cells": 3702,
+   "unique": 517
   },
   "forest": {
-   "cells": 11438,
-   "unique": 1312
+   "cells": 11522,
+   "unique": 1309
   }
  }
 }
