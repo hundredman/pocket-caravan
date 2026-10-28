@@ -28,7 +28,14 @@ def run():
         checks.append(dict(name=name,size=list(new.size),colors=colours,binaryAlpha=True,originalBBox=old.getbbox(),newBBox=new.getbbox(),
                            originalRGBA=hashlib.sha256(old.tobytes()).hexdigest(),newRGBA=hashlib.sha256(new.tobytes()).hexdigest()))
     board.save(OUT/'comparison.png')
-    (OUT/'native-checks.json').write_text(json.dumps(dict(assets=checks,review='pending',productionReplaced=False,mode='built-in imagegen + native Aseprite NEAREST and existing C7 draft colors'),ensure_ascii=False,indent=2)+'\n')
+    freeze=ROOT/'ArtReview/Approved/BuildingShip-Renewal-v1/approval.json'
+    status='pending'
+    if freeze.exists():
+        approval=json.loads(freeze.read_text())
+        hashes={a['name']:a['rgbaSha256']for a in approval['assets']}
+        if approval['status']=='approved'and len(hashes)==len(checks)and all(hashes.get(a['name'])==a['newRGBA']for a in checks):
+            status='approved'
+    (OUT/'native-checks.json').write_text(json.dumps(dict(assets=checks,review=status,productionReplaced=False,mode='built-in imagegen + native Aseprite NEAREST and existing C7 draft colors'),ensure_ascii=False,indent=2)+'\n')
     if (OUT/'Unity/page-0-before.png').exists():
         gallery=Image.new('RGB',(984,924),'#20262c');d=ImageDraw.Draw(gallery)
         groups=['주거·곳간','정자·객주·시전','궁궐·성문·배']
@@ -37,6 +44,6 @@ def run():
             for j,version in enumerate(('before','after')):
                 gallery.paste(Image.open(OUT/f'Unity/page-{page}-{version}.png'),(8+j*488,y+32))
         gallery.save(OUT/'Unity/comparison.png')
-    print('Native checks: 10 objects, same native canvases, binary alpha, <=30 draft colors. Approval pending.')
+    print('Native checks: 10 objects, same native canvases, binary alpha, <=30 draft colors. Approval: '+status)
 
 if __name__=='__main__':run()

@@ -231,7 +231,7 @@
       "newRGBA": "ed1b03e5bc33ec8101a3cd0ac4dc257866338f1a37bf36fabd281b2318fe9e2d"
     }
   ],
-  "review": "pending",
+  "review": "approved",
   "productionReplaced": false,
   "mode": "built-in imagegen + native Aseprite NEAREST and existing C7 draft colors",
   "asepriteRoundtripRGBA": 10,
@@ -252,5 +252,7 @@
     "gameplay",
     "collision and occlusion regression",
     "player build"
-  ]
+  ],
+  "approvalEvidence": "ArtReview/Approved/BuildingShip-Renewal-v1/approval.json",
+  "approvalFreezeRGBA": 10
 }

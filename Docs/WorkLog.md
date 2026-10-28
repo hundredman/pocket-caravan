@@ -189,3 +189,5 @@
 | 2026-10-28 | Codex | 건물·배 리뉴얼 시점 구분 | 이 커밋 | 사용자 정정 반영: 건물은 지붕 윗면+앞면, 배는 내려다보는 각도를 낮춰 선체 옆면이 충분히 보이게. Plan의 묶인 항목을 분리하고 Direction/ArtGuide에 기록. 문서만 수정, 그림 제작/본편 교체/Unity 검사는 미실행. |
 
 | 2026-10-28 | Codex | 건물·배 전체 시점 리뉴얼 시안 | 이 커밋 (codex/building-ship-renewal) | 사용자 전체 작업 후 컨펌 지시대로 건물9+배1 내장 imagegen 원화/NEAREST native/30색 Aseprite·PNG 제작, 전체 전후·Unity Edit480×270 전후6장 제출. 크기/이진알파/색수·ASE10RGBA재출력 일치·Unity 실행/콘솔오류0·본편씬dirty불변·촬영후원래씬복귀. 원본/본편/A2/저장 미변경·그림승인대기, 실제플레이/가림충돌/전체회귀/빌드 미실행. 보고전 main/origin main 최신확인·로컬커밋만. |
+
+| 2026-10-28 | Codex | 건물·배10종 전체 승인 동결 | 이 커밋 (codex/building-ship-renewal) | 사용자 “좋다. 모두 승인할게.” 반영. Approved/BuildingShip-Renewal-v1에 PNG/Aseprite10쌍과 승인문구·크기·디코딩RGBA지문 동결, 작업본/승인본10쌍 동일 확인. Plan/ArtBrief/CurrentState 승인 상태 갱신. 본편/A2/기능/저장 미변경, 이번 Unity/플레이/빌드 미실행. 최신main확인·로컬커밋만. |

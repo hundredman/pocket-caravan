@@ -32,7 +32,7 @@
 
 ## 3. 아트 (새 방향과 다름 — [아트 기준](ArtGuide.md) 5절)
 
-- 2026-10-28 건물·배 리뉴얼: 건물9종(지붕 윗면+앞면)과 배1종(낮은 각도·선체 옆면)을 전체 묶음으로 제작했다. ArtReview/BuildingShip-Renewal에 원화10개·Aseprite/PNG·전체 전후 비교·Unity480×270 전후6장·검사/프롬프트가 있다. 사용자 일괄 승인 대기이며 본편/A2 연결은 아직 하지 않았다. [검토 묶음](../ArtReview/BuildingShip-Renewal/README.md).
+- 2026-10-28 건물·배 리뉴얼: 건물9종(지붕 윗면+앞면)과 배1종(낮은 각도·선체 옆면)을 전체 묶음으로 제작했다. ArtReview/BuildingShip-Renewal에 원화10개·Aseprite/PNG·전체 전후 비교·Unity480×270 전후6장·검사/프롬프트가 있다. 사용자 “좋다. 모두 승인할게.”로10종 전체를 승인했고 ArtReview/Approved/BuildingShip-Renewal-v1에 PNG/Aseprite와 크기·RGBA 지문을 동결했다. 본편/A2 연결은 아직 하지 않았다. [검토 묶음](../ArtReview/BuildingShip-Renewal/README.md).
 
 - 그림 출처 세 가지가 섞여 있다: Ninja Adventure 팩 타일, AI 시트를 줄여 만든 고려 건물·자연, 코드로 그린 16×24 캐릭터.
 - 16px 타일, PPU 16, Point 필터. 카메라 기준 480×270.

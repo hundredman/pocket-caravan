@@ -7,7 +7,10 @@
       "width": 80,
       "height": 64,
       "subject": "a larger rural cottage with straw thatch, simple timber frame and plaster walls",
-      "status": "pending"
+      "status": "approved",
+      "approvedImage": "ArtReview/Approved/BuildingShip-Renewal-v1/cottage.png",
+      "approvedSource": "ArtReview/Approved/BuildingShip-Renewal-v1/cottage.aseprite",
+      "approval": "ArtReview/Approved/BuildingShip-Renewal-v1/approval.json"
     },
     {
       "name": "pavilion",
@@ -15,7 +18,10 @@
       "width": 80,
       "height": 80,
       "subject": "an open-sided Korean pavilion with a blue gray tiled hip roof, four wooden columns, railings and stone steps",
-      "status": "pending"
+      "status": "approved",
+      "approvedImage": "ArtReview/Approved/BuildingShip-Renewal-v1/pavilion.png",
+      "approvedSource": "ArtReview/Approved/BuildingShip-Renewal-v1/pavilion.aseprite",
+      "approval": "ArtReview/Approved/BuildingShip-Renewal-v1/approval.json"
     },
     {
       "name": "thatch",
@@ -23,7 +29,10 @@
       "width": 64,
       "height": 48,
       "subject": "a small humble straw thatched hut with cream plaster walls and a simple wooden door",
-      "status": "pending"
+      "status": "approved",
+      "approvedImage": "ArtReview/Approved/BuildingShip-Renewal-v1/thatch.png",
+      "approvedSource": "ArtReview/Approved/BuildingShip-Renewal-v1/thatch.aseprite",
+      "approval": "ArtReview/Approved/BuildingShip-Renewal-v1/approval.json"
     },
     {
       "name": "tile-house",
@@ -31,7 +40,10 @@
       "width": 64,
       "height": 48,
       "subject": "a small Korean tiled-roof home with cream plaster and timber, upturned blue gray tiled eaves",
-      "status": "pending"
+      "status": "approved",
+      "approvedImage": "ArtReview/Approved/BuildingShip-Renewal-v1/tile-house.png",
+      "approvedSource": "ArtReview/Approved/BuildingShip-Renewal-v1/tile-house.aseprite",
+      "approval": "ArtReview/Approved/BuildingShip-Renewal-v1/approval.json"
     },
     {
       "name": "gaekju",
@@ -39,7 +51,10 @@
       "width": 96,
       "height": 64,
       "subject": "a broad merchant guesthouse with blue gray roof, cream plaster and dark wood frame, central doorway and stone step",
-      "status": "pending"
+      "status": "approved",
+      "approvedImage": "ArtReview/Approved/BuildingShip-Renewal-v1/gaekju.png",
+      "approvedSource": "ArtReview/Approved/BuildingShip-Renewal-v1/gaekju.aseprite",
+      "approval": "ArtReview/Approved/BuildingShip-Renewal-v1/approval.json"
     },
     {
       "name": "gate",
@@ -47,7 +62,10 @@
       "width": 96,
       "height": 80,
       "subject": "a Korean ceremonial gateway with broad blue gray tiled roof, two stout wooden posts, open passage and stone footings",
-      "status": "pending"
+      "status": "approved",
+      "approvedImage": "ArtReview/Approved/BuildingShip-Renewal-v1/gate.png",
+      "approvedSource": "ArtReview/Approved/BuildingShip-Renewal-v1/gate.aseprite",
+      "approval": "ArtReview/Approved/BuildingShip-Renewal-v1/approval.json"
     },
     {
       "name": "palace",
@@ -55,7 +73,10 @@
       "width": 160,
       "height": 112,
       "subject": "a grand single Korean palace hall, broad tiled roof with elegant upturned corners, modest red brown columns, green lattice windows and raised stone stairs",
-      "status": "pending"
+      "status": "approved",
+      "approvedImage": "ArtReview/Approved/BuildingShip-Renewal-v1/palace.png",
+      "approvedSource": "ArtReview/Approved/BuildingShip-Renewal-v1/palace.aseprite",
+      "approval": "ArtReview/Approved/BuildingShip-Renewal-v1/approval.json"
     },
     {
       "name": "shop",
@@ -63,7 +84,10 @@
       "width": 96,
       "height": 64,
       "subject": "a small Korean market shop with blue gray roof and one open merchandise counter, keep shelves and goods sparse and readable",
-      "status": "pending"
+      "status": "approved",
+      "approvedImage": "ArtReview/Approved/BuildingShip-Renewal-v1/shop.png",
+      "approvedSource": "ArtReview/Approved/BuildingShip-Renewal-v1/shop.aseprite",
+      "approval": "ArtReview/Approved/BuildingShip-Renewal-v1/approval.json"
     },
     {
       "name": "small_store",
@@ -71,7 +95,10 @@
       "width": 64,
       "height": 48,
       "subject": "a small storage warehouse with simple blue gray tiled roof, timber and plaster walls, broad closed wooden storage doors",
-      "status": "pending"
+      "status": "approved",
+      "approvedImage": "ArtReview/Approved/BuildingShip-Renewal-v1/small_store.png",
+      "approvedSource": "ArtReview/Approved/BuildingShip-Renewal-v1/small_store.aseprite",
+      "approval": "ArtReview/Approved/BuildingShip-Renewal-v1/approval.json"
     },
     {
       "name": "boat",
@@ -79,7 +106,10 @@
       "width": 80,
       "height": 32,
       "subject": "a small open wooden Korean river ferry, pointed bow to the right, flat stern left, no sail or tall cabin, clear brown hull side, a few transverse benches",
-      "status": "pending"
+      "status": "approved",
+      "approvedImage": "ArtReview/Approved/BuildingShip-Renewal-v1/boat.png",
+      "approvedSource": "ArtReview/Approved/BuildingShip-Renewal-v1/boat.aseprite",
+      "approval": "ArtReview/Approved/BuildingShip-Renewal-v1/approval.json"
     }
   ]
 }
