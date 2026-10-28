@@ -1,0 +1,188 @@
+{
+ "Naru": {
+  "key": "goryeo/나루",
+  "w": 88,
+  "h": 84,
+  "cells": 3947,
+  "walkable": 1631,
+  "reachable": 1591,
+  "palette": 301,
+  "pixelDiff": 0,
+  "terrain": [
+   202,
+   27
+  ]
+ },
+ "goryeo_jangdan": {
+  "key": "goryeo/장단",
+  "w": 61,
+  "h": 98,
+  "cells": 3740,
+  "walkable": 2619,
+  "reachable": 1991,
+  "palette": 329,
+  "pixelDiff": 0,
+  "terrain": [
+   174,
+   7
+  ]
+ },
+ "goryeo_songak": {
+  "key": "goryeo/송악",
+  "w": 74,
+  "h": 84,
+  "cells": 4221,
+  "walkable": 2153,
+  "reachable": 2132,
+  "palette": 690,
+  "pixelDiff": 0,
+  "terrain": [
+   153,
+   -69
+  ]
+ },
+ "Dakmok": {
+  "key": "goryeo/닥목",
+  "w": 93,
+  "h": 80,
+  "cells": 4133,
+  "walkable": 1212,
+  "reachable": 591,
+  "palette": 628,
+  "pixelDiff": 0,
+  "terrain": [
+   192,
+   -93
+  ]
+ },
+ "Gaegyeong": {
+  "key": "goryeo/개경",
+  "w": 72,
+  "h": 76,
+  "cells": 3959,
+  "walkable": 2422,
+  "reachable": 1963,
+  "palette": 453,
+  "pixelDiff": 0,
+  "terrain": [
+   222,
+   -44
+  ]
+ },
+ "transit_woodtown": {
+  "key": "east/동문 마을",
+  "w": 87,
+  "h": 69,
+  "cells": 3016,
+  "walkable": 1774,
+  "reachable": 1661,
+  "palette": 651,
+  "pixelDiff": 0,
+  "terrain": [
+   96,
+   -31
+  ]
+ },
+ "transit_ferry": {
+  "key": "east/북동 포구",
+  "w": 80,
+  "h": 55,
+  "cells": 3101,
+  "walkable": 1920,
+  "reachable": 1913,
+  "palette": 382,
+  "pixelDiff": 0,
+  "terrain": [
+   83,
+   -127
+  ]
+ },
+ "transit_crossroads": {
+  "key": "east/중앙 길목 마을",
+  "w": 93,
+  "h": 80,
+  "cells": 3830,
+  "walkable": 3603,
+  "reachable": 3603,
+  "palette": 428,
+  "pixelDiff": 0,
+  "terrain": [
+   1,
+   -34
+  ]
+ },
+ "transit_southport": {
+  "key": "east/남동 포구",
+  "w": 86,
+  "h": 68,
+  "cells": 3335,
+  "walkable": 2024,
+  "reachable": 2021,
+  "palette": 440,
+  "pixelDiff": 0,
+  "terrain": [
+   82,
+   59
+  ]
+ },
+ "transit_wetroad": {
+  "key": "east/북동 길",
+  "w": 78,
+  "h": 64,
+  "cells": 2883,
+  "walkable": 1524,
+  "reachable": 1462,
+  "palette": 482,
+  "pixelDiff": 0,
+  "terrain": [
+   86,
+   -82
+  ]
+ },
+ "transit_pass": {
+  "key": "east/남동 길",
+  "w": 65,
+  "h": 68,
+  "cells": 3077,
+  "walkable": 2451,
+  "reachable": 2446,
+  "palette": 385,
+  "pixelDiff": 0,
+  "terrain": [
+   121,
+   13
+  ]
+ },
+ "transit_central_approach": {
+  "key": "east/북쪽 내륙길",
+  "w": 71,
+  "h": 87,
+  "cells": 3095,
+  "walkable": 1724,
+  "reachable": 1701,
+  "palette": 644,
+  "pixelDiff": 0,
+  "terrain": [
+   40,
+   -74
+  ]
+ },
+ "transit_south_inland": {
+  "key": "east/남쪽 내륙길",
+  "w": 67,
+  "h": 73,
+  "cells": 2663,
+  "walkable": 1668,
+  "reachable": 1543,
+  "palette": 401,
+  "pixelDiff": 0,
+  "terrain": [
+   54,
+   13
+  ]
+ },
+ "_tiles": {
+  "newTiles": 1294,
+  "reusedExisting": 33
+ }
+}
