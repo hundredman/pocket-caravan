@@ -75,11 +75,11 @@
  "objects": {
   "mountain": {
    "cells": 2502,
-   "edgeTrees": 765
+   "trees": 1251
   },
   "forest": {
    "cells": 5894,
-   "edgeTrees": 2403
+   "trees": 2950
   },
   "hill": 52,
   "marsh": 31,
@@ -102,5 +102,15 @@
   "floor:6:9": "0641ce638b1636b041817b746b942e6e99b7d97a0fff68ecceceff502f4f2e80",
   "floor:2:9": "9c5a65480d3bccb4aa4985647bc74758fe21ce824e997729f51676c539c78536",
   "floor:1:9": "82a0d997dd8e7073dbcc84af92d099ba3a389b51cac1809bb85662024c7d0b69"
+ },
+ "forestUniqueTiles": {
+  "mountain": {
+   "cells": 3699,
+   "unique": 547
+  },
+  "forest": {
+   "cells": 11470,
+   "unique": 1306
+  }
  }
 }
