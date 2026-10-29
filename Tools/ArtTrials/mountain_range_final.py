@@ -22,7 +22,7 @@ add('branch-w-e-s',384,256,[('W',0,'ew'),('E',0,'ew'),('S',96,'ns')])
 add('branch-n-s-w',256,384,[('N',64,'ns'),('S',64,'ns'),('W',96,'ew')])
 add('branch-n-s-e',256,384,[('N',0,'ns'),('S',0,'ns'),('E',96,'ew')])
 add('mountain-pass',256,256,[('W',0,'ew'),('E',0,'ew')])
-add('stream-valley',256,256,[('W',0,'ew'),('E',0,'ew'),('N',96,'water'),('S',96,'water')])
+add('stream-valley',256,272,[('W',16,'ew'),('E',16,'ew'),('N',96,'water'),('S',96,'water')])
 add('spring-waterfall',256,256,[('W',0,'ew'),('E',0,'ew'),('S',96,'water')])
 add('river-straight',64,64,[('N',0,'water'),('S',0,'water')])
 add('river-outlet',64,64,[('N',0,'water'),('S',0,'water-ground')])
@@ -40,8 +40,8 @@ def main_fixture():
     raw=[('west-cap',-64,384),('mountain-pass',64,384),('body-a',320,384),
          ('branch-w-e-n',512,320),('branch-n-s-e',608,-64),('north-cap',608,-192),
          ('bend-south',864,32),('east-cap',1056,96),('spring-waterfall',896,384),
-         ('east-cap',1152,384),('stream-valley',896,640),('west-cap',768,640),
-         ('east-cap',1152,640),('river-straight',992,896),('river-outlet',992,960)]
+         ('east-cap',1152,384),('stream-valley',896,640),('west-cap',768,656),
+         ('east-cap',1152,656),('river-straight',992,912),('river-outlet',992,976)]
     return dict(size=[1440,1472],items=[(n,x+offset[0],y+offset[1]) for n,x,y in raw])
 def branch_fixture(name):
     xy=(128,192);items=[(name,*xy)];w,h=A[name]['size']
@@ -64,7 +64,7 @@ def ground(width,height):
     for y in range(water.shape[0]):
         for x in range(water.shape[1]):
             px,py=x*16+8,y*16+8
-            water[y,x]=(54<=y<=84 and x in (69,70)) or ((px-1120)/96)**2+((py-1344)/64)**2<=1
+            water[y,x]=(54<=y<=85 and x in (69,70)) or ((px-1120)/96)**2+((py-1360)/64)**2<=1
         if 0<=y<water.shape[0]:
             cx=17 if 36<=y<=51 else 17+int(round(1.5*np.sin(y/9)))
             roads[y,cx:cx+2]=True
@@ -170,6 +170,29 @@ def main():
                 actual=combined.crop(box);assert actual.size==template.size and actual.tobytes()==template.tobytes(),(an,bn,side)
                 joins.append(dict(first=an,side=side,second=bn,template=p['template'],decodedRGBAEqual=True))
     passage=image('mountain-pass');assert not np.array(passage.getchannel('A'))[:,104:152].any()
+    # Regression: passage clearance must not trim the two original inner walls.
+    pass_source=np.array(rgba(OUT/'mountain-pass-source-master.png'))
+    pass_actual=np.array(passage)
+    for source_x,target_x,width in [(64,40,64),(144,152,64)]:
+        original=pass_source[:,source_x:source_x+width]
+        actual=pass_actual[:,target_x:target_x+width]
+        mask=original[:,:,3]>0
+        assert np.array_equal(original[mask],actual[mask]),'Pass inner wall was cut'
+    wall_master=np.array(rgba(OUT/'mountain-pass-whole-walls-master.png'))
+    assert (wall_master[:,:,3]>0).sum()==(pass_source[:,:,3]>0).sum(),'Whole wall source pixels lost'
+    rock_image=rgba(ROOT/'ArtReview/Approved/C7-LowNature-v1/moss_rock.png')
+    rock_colors=set(zip(*[iter(rock_image.tobytes())]*4))-{(0,0,0,0)}
+    original=np.array(rgba(OUT/'stream-valley-source-master.png').crop((64,0,320,256)))[:,40:216]
+    actual=np.array(image('stream-valley'))[16:272,40:216]
+    mask=np.zeros(original.shape[:2],bool)
+    for c in rock_colors:mask|=(original==c).all(2)
+    assert np.array_equal(original[mask],actual[mask]),'Valley bank rocks overwritten'
+    head=water_mask(image('stream-valley'))[:40]
+    widths=[]
+    for row in head:
+        xs=np.flatnonzero(row);assert len(xs)>0,'Missing inlet water'
+        widths.append(int(xs[-1]-xs[0]+1))
+    assert max(widths)-min(widths)<=16,'Abrupt inlet widening'
     for name in ('spring-waterfall','stream-valley'):
         m=water_mask(image(name));lab,_=ndimage.label(m,structure=np.ones((3,3)))
         end=set(lab[-1]);end.discard(0)
@@ -184,10 +207,10 @@ def main():
             # Actual alpha clearance through the authored pass, no gameplay claim.
             assert not np.array(foreground.getchannel('A'))[608:864,272:304].any()
             labels,_=ndimage.label(water_mask(full),structure=np.ones((3,3)))
-            head=labels[640:708,1096:1144];lake=labels[1312:1376,1088:1152]
+            head=labels[640:708,1096:1144];lake=labels[1328:1392,1088:1152]
             ids=set(head.ravel())&set(lake.ravel());ids.discard(0);assert ids,'Source does not reach lake in decoded pixels'
             outlet=image('river-outlet');joined=Image.new('RGBA',(64,16))
-            joined.alpha_composite(outlet.crop((0,56,64,64)),(0,0));joined.alpha_composite(ground_only.crop((1088,1248,1152,1256)),(0,8))
+            joined.alpha_composite(outlet.crop((0,56,64,64)),(0,0));joined.alpha_composite(ground_only.crop((1088,1264,1152,1272)),(0,8))
             assert joined.tobytes()==TEMPLATES['water-ground'].tobytes(),'Ground river transition changed'
             main_ground=ground_only
     (OUT/'views.tsv').write_text(''.join('\t'.join(str(v) for v in (name,world,x,y,w,h))+'\n' for name,world,x,y,w,h,_ in VIEWS))
@@ -195,7 +218,7 @@ def main():
     for name,world,x,y,w,h,label in VIEWS:
         expected=worlds[world].crop((x,y,x+w,y+h));expected.save(OUT/f'preview-{name}.png')
         capture=OUT/f'unity-{name}-{w}x{h}.png'
-        if capture.exists():
+        if capture.exists() and '--prepare' not in sys.argv:
             actual=rgba(capture);assert actual.size==expected.size and actual.tobytes()==expected.tobytes(),name
             captures.append(name);views[name]=actual
         else:views[name]=expected
@@ -213,14 +236,31 @@ def main():
         d.text((x+12,y+38),str(im.width)+' x '+str(im.height),font=font,fill='white')
         sheet.paste(im,(x+12,y+72),im)
     sheet.save(OUT/'all-assets-sheet.png')
+    corrections=OUT/'Corrections-v2';before=corrections/'Before'
+    if (before/'pass.png').exists() and 'pass' in captures and 'valley' in captures:
+        comparison=Image.new('RGB',(992,636),(36,42,34));d=ImageDraw.Draw(comparison)
+        for row,(name,label) in enumerate([('pass','고개 암벽'),('valley','계곡 상류 연결')]):
+            for col,(im,title) in enumerate([(rgba(before/f'{name}.png'),label+' · 수정 전'),(views[name],label+' · 수정 후')]):
+                x=16+col*496;y=12+row*318
+                d.text((x,y),title,font=font,fill='white');comparison.paste(im,(x,y+30))
+        comparison.save(corrections/'unity-before-after.png')
     catalogue=dict(status='pending_final_visual_approval',productionApplied=False,assets=A,newAssets=NEW,
         package='Package/',frozenApprovedAssets=['west-cap','body-a','body-b','east-cap','bend-north','bend-south'],
         finalReviewAssets=list(A),pixelSize=16,previewOnly=True)
     (OUT/'catalogue.json').write_text(json.dumps(catalogue,ensure_ascii=False,indent=2)+'\n')
     (package/'catalogue.json').write_text(json.dumps(dict(catalogue,assets={n:dict(a,path=n+'.png',source=n+'.aseprite') for n,a in A.items()}),ensure_ascii=False,indent=2)+'\n')
+    changed=[]
+    baseline=OUT/'Corrections-v2/Before/checks.json'
+    if baseline.exists():
+        previous={a['name']:a['rgbaSha256'] for a in json.loads(baseline.read_text())['assets']}
+        changed=[a['name'] for a in assets if a['rgbaSha256']!=previous[a['name']]]
+        assert set(changed)=={'mountain-pass','stream-valley'},changed
     report=dict(status='pending_final_visual_approval',productionApplied=False,assets=assets,compatiblePortPairs=joins,
         preservedEarlierSprites=frozen,passClearancePixels=48,roadCoreClearancePixels=32,
         sourceWaterfallValleyRiverLakeConnectedInRGBA=True,existingGroundRiverPortRGBAEqual=True,
+        corrections=dict(passInnerWallPixelsPreserved=True,wholeWallMasterPixelCountPreserved=True,
+                         valleyRockBankPixelsPreserved=True,valleyLeadInPixels=16,inletWidthRange=[min(widths),max(widths)],
+                         changedAssetImages=changed),
         unity=dict(mode='Edit',captures=captures,wholeFrameRGBADifferences=0 if captures else None),
         runtimeGameplay=False,waterfallAnimation=False,productionMapsUnchanged=True)
     (OUT/'checks.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')

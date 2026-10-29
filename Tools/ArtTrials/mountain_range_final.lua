@@ -132,19 +132,67 @@ for _,spec in ipairs(specs)do
  if f then
   f:close();waterPalette(false)
   local source=native(name,sw,sh,sw-8,sh-8);save(source,out..'/'..name..'-source-master')
-  local im=region(source,sx,sy,w,h);save(im,out..'/'..name..'-before-ports')
-  for _,p in ipairs(ports)do join(im,p[1],p[2],(p[1]=='W'or p[1]=='E')and ewPort or nsPort)end
+  local im=region(source,sx,sy,w,h)
   if name=='mountain-pass'then
-   -- Authored open passage, as requested from the start; preserve a full 48px gap.
-   for y=0,h-1 do for x=104,151 do im:drawPixel(x,y,0)end end
+   -- Move both complete, disconnected walls outward in an authored source master.
+   -- Do not erase a rectangular corridor through their inner silhouettes.
+   local walls=Image(320,256,ColorMode.RGB)
+   for y=0,255 do for x=0,255 do
+    local c=im:getPixel(x,y)
+    if pc.rgbaA(c)>0 then
+     local dx=x<128 and 8 or 40
+     walls:drawPixel(x+dx,y,c)
+    end
+   end end
+   save(walls,out..'/mountain-pass-whole-walls-master')
+   im=region(walls,32,0,256,256)
   end
+  save(im,out..'/'..name..'-before-ports')
+  for _,p in ipairs(ports)do join(im,p[1],p[2],(p[1]=='W'or p[1]=='E')and ewPort or nsPort)end
   save(im,out..'/Native/'..name)
  else error('Required source missing: '..name)end
 end
-local function streamJoin(im,side)
+local rockColors={};for _,c in ipairs(rockPalette)do rockColors[c]=true end
+local function streamJoin(im,side,preserveRocks)
  local localStream=region(im,96,0,64,im.height)
  join(localStream,side,0,waterPort)
- for y=0,im.height-1 do for x=0,63 do im:drawPixel(x+96,y,localStream:getPixel(x,y))end end
+ for y=0,im.height-1 do for x=0,63 do
+  if not(preserveRocks and rockColors[im:getPixel(x+96,y)])then
+   im:drawPixel(x+96,y,localStream:getPixel(x,y))
+  end
+ end end
+end
+local waterColors={}
+for _,h in ipairs({'7fb9af','78a099','ffffff'})do
+ waterColors[pc.rgba(tonumber(h:sub(1,2),16),tonumber(h:sub(3,4),16),tonumber(h:sub(5,6),16),255)]=true
+end
+local function waterSpan(im,y,x0,x1)
+ local lo,hi=x1+1,-1
+ for x=x0,x1 do if waterColors[im:getPixel(x,y)]then lo=math.min(lo,x);hi=math.max(hi,x)end end
+ return lo,hi
+end
+local function valleyHead(im)
+ -- A 16px lead-in lets the existing bank tiles widen into the original creek.
+ -- Only open ground/water is authored; every original rock pixel stays intact.
+ local finish
+ for y=16,80 do local a,b=waterSpan(im,y,80,175);if b-a>=12 then finish=y+10;break end end
+ assert(finish,'No original valley water entrance')
+ local endLeft,endRight=waterSpan(im,finish,80,175)
+ local original=Image(im);local grass=waterPort:getPixel(0,0)
+ for y=0,finish-1 do
+  local row=(y+8)%16;local a,b=waterSpan(waterPort,row,0,63)
+  local t=math.max(0,math.min(1,(y-7)/math.max(1,finish-8)))
+  t=t*t*(3-2*t)
+  local left=(96+a)*(1-t)+endLeft*t;local right=(96+b)*(1-t)+endRight*t
+  for x=80,175 do
+   if not rockColors[original:getPixel(x,y)]then
+    local sx=math.floor(a+(x-left)*(b-a)/math.max(1,right-left)+.5)
+    local c=(sx>=0 and sx<64)and waterPort:getPixel(sx,row)or grass
+    im:drawPixel(x,y,c)
+   end
+  end
+ end
+ print('Valley lead-in ends at original water row '..finish)
 end
 for _,name in ipairs({'stream-valley','spring-waterfall'})do
  local f=io.open(out..'/AI/'..name..'.png','rb')
@@ -153,12 +201,13 @@ for _,name in ipairs({'stream-valley','spring-waterfall'})do
   local im
   if name=='stream-valley'then
    local source=native(name,384,256,376,248);save(source,out..'/'..name..'-source-master')
-   im=region(source,64,0,256,256)
+   im=Image(256,272,ColorMode.RGB);im:drawImage(region(source,64,0,256,256),Point(0,16))
   else im=native(name,256,256,248,248)end
   save(im,out..'/'..name..'-before-ports')
-  join(im,'W',0,ewPort);join(im,'E',0,ewPort)
-  if name=='stream-valley'then streamJoin(im,'N')end
-  streamJoin(im,'S');save(im,out..'/Native/'..name)
+  local ridgeOffset=name=='stream-valley'and 16 or 0
+  join(im,'W',ridgeOffset,ewPort);join(im,'E',ridgeOffset,ewPort)
+  if name=='stream-valley'then valleyHead(im)end
+  streamJoin(im,'S',name=='stream-valley');save(im,out..'/Native/'..name)
  else error('Required source missing: '..name)end
 end
 ewSource:close();nsSource:close();print('Mountain final native authoring complete for available sources')

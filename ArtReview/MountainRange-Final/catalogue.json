@@ -384,19 +384,19 @@
       "path": "ArtReview/MountainRange-Final/Native/stream-valley.png",
       "size": [
         256,
-        256
+        272
       ],
       "ports": {
         "W": {
           "side": "W",
           "x": 0,
-          "y": 0,
+          "y": 16,
           "template": "ew"
         },
         "E": {
           "side": "E",
           "x": 256,
-          "y": 0,
+          "y": 16,
           "template": "ew"
         },
         "N": {
@@ -408,7 +408,7 @@
         "S": {
           "side": "S",
           "x": 96,
-          "y": 256,
+          "y": 272,
           "template": "water"
         }
       }

@@ -178,7 +178,7 @@
         256,
         256
       ],
-      "rgbaSha256": "91d45a591893ca34a628495448a62fd5feab596dad50543a26b9ed66b4b12058",
+      "rgbaSha256": "c720b84fd9c0e2f10815d790b1f47a0d7c4d249a0d15f3feb9e4ef1aab40987e",
       "asepriteRGBAEqual": true,
       "packagePixelsEqual": true
     },
@@ -186,9 +186,9 @@
       "name": "stream-valley",
       "size": [
         256,
-        256
+        272
       ],
-      "rgbaSha256": "216df771c4bd8f6926c7bcbfb831b9dcfacbf43fe64d512a0843cba4dd24a3c3",
+      "rgbaSha256": "62bec20978f63b8491f18b44db55e3df561e8d8f6173c75220d9b3caa728eac7",
       "asepriteRGBAEqual": true,
       "packagePixelsEqual": true
     },
@@ -1819,6 +1819,20 @@
   "roadCoreClearancePixels": 32,
   "sourceWaterfallValleyRiverLakeConnectedInRGBA": true,
   "existingGroundRiverPortRGBAEqual": true,
+  "corrections": {
+    "passInnerWallPixelsPreserved": true,
+    "wholeWallMasterPixelCountPreserved": true,
+    "valleyRockBankPixelsPreserved": true,
+    "valleyLeadInPixels": 16,
+    "inletWidthRange": [
+      15,
+      25
+    ],
+    "changedAssetImages": [
+      "mountain-pass",
+      "stream-valley"
+    ]
+  },
   "unity": {
     "mode": "Edit",
     "captures": [
