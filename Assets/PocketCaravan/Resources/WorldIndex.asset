@@ -167,8 +167,8 @@ MonoBehaviour:
     coord: {x: 29, y: -1}
     town: north_post
     neighbors:
-    - north_c_road_ne
     - north_birka
+    - north_c_road_ne
     - north_c_runeway
     - north_c_road_nw
   - mapId: north_c_road_nw
@@ -187,8 +187,8 @@ MonoBehaviour:
     coord: {x: 30, y: -1}
     town: 
     neighbors:
-    - north_c_gatetown
     - north_c_creek
+    - north_c_gatetown
   - mapId: north_c_snowwood
     displayName: "\uB208\uC232 \uB9C8\uC744"
     height: 65
@@ -229,8 +229,8 @@ MonoBehaviour:
     coord: {x: 28, y: -3}
     town: 
     neighbors:
-    - north_c_crossing
     - north_c_snowwood
+    - north_c_crossing
     - venice_c_pass
     - venice_c_gate
   - mapId: north_c_crossing
@@ -410,8 +410,8 @@ MonoBehaviour:
     - north_herd
     - north_hunter
     - north_birka
-    - north_icecave
     - north_naru
+    - north_icecave
   - mapId: north_herd
     displayName: "\uC21C\uB85D \uACE0\uC6D0 \uB9C8\uC744"
     height: 91

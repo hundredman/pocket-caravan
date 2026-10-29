@@ -212,6 +212,7 @@ namespace PocketCaravan
             while (transition != null && (Time.unscaledTime - coveredAt < transition.MinHoldSeconds
                    || Time.unscaledTime - loadedAt < transition.AfterLoadSeconds)) yield return null;
             transitionCovering = false;
+            { var cam = FindAnyObjectByType<CameraFollow>(); if (cam != null) cam.SnapNow(); }   // 2026-10-29: 걷히기 전에 카메라를 한 번 더 붙인다
             for (float t = 1f; t > 0f; t -= Dt() / reveal) { fade = t; yield return null; }
             fade = 0f;
             transition = null;

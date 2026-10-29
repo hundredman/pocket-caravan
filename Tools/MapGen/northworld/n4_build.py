@@ -145,6 +145,200 @@ WATER_T = np.isin(T_, [DEEP, SHALLOW, RIVER, LAKE, SPRING])
 WALK = ~np.isin(T_, [DEEP, SHALLOW, RIVER, LAKE, SPRING, MOUNTAIN, PEAK, FOREST]) | (ROADW)
 SEAMS = seams(MID, WALK & (MID >= 0), KEYS)
 
+# ── 2026-10-29(사용자): 어디서 맵이 바뀌는지 안 보임(길 없는 눈밭에서도 넘어감) ──
+#   경계 출입구는 길이 지나는 자리만 남기고, 그 길은 경계 앞뒤로 곧게 잇는다. 나머지 경계는 build()에서 눈 나무 울타리 + 길가 이정표.
+EXIT_STUB = 4      # 경계 앞뒤로 곧게 뻗는 길 길이(칸)
+EXIT_GAP = 1       # 길 양옆 여유 칸(울타리 틈 = 길 폭 + 2*EXIT_GAP)
+FALLBACK_MAXLEN = 30  # 이보다 긴 경계는 '골짜기 통로'가 아니라 트인 눈밭: 길 건널목이 하나라도 있으면 새 길 안 냄
+FALLBACK_DIST = 15 # 통로 가운데에서 이만큼 안에 길 건널목이 없으면 통로 가운데에 새 길
+CORRIDOR_PAD = 1   # 통로 양옆 여유 칸(출구 폭 4 + 2 = 6칸 트인 눈밭, 가운데 2칸 다진 길). 포켓몬 길처럼 나무 벽 사이 넓은 통로
+EXIT_OUT = 60      # 2026-10-29(사용자: 길 중간에서 넘어감): 출구는 경계선이 아니라 그려 둔 길 끝(내 맵 가장자리 또는 옆 맵 땅이 끝나는 곳, 최대 이 값)에 둔다. 도착 자리는 같은 세계 칸
+BOX = {}           # 맵별 그리는 상자(전역 배열 칸): y0, y1, x0, x1
+for _k in KEYS:
+    _ys, _xs = np.nonzero(MID == KEYS.index(_k)); BOX[_k] = (_ys.min() - 3, _ys.max() + 4, _xs.min() - 3, _xs.max() + 4)
+def _dir(edge): return {'N': (-1, 0), 'S': (1, 0), 'W': (0, -1), 'E': (0, 1)}[edge]
+def restrict_seams(se, roadw):
+    """길(roadw)이 지나는 출입구만 남긴다. 맵 쌍에 길이 하나도 안 지나면 가장 긴 출입구 하나를 남긴다(길은 stub으로 그음).
+    반환: (남긴 seams, 맵 쌍별 기록 {(A,B): dict(cells=[(y,x)...], edge, fallback)})"""
+    H, W = roadw.shape
+    def rd(c): return 0 <= c[0] < H and 0 <= c[1] < W and bool(roadw[c[0], c[1]])
+    def cells_of(o):
+        cy, cx = o['cell']; return [(cy + b, cx + a) for b in range(o['h']) for a in range(o['w'])]
+    exits = [(mk, o) for mk, objs in se.items() for o in objs if o['kind'] == 'exit']
+    spawns = {(mk, o['id']): o for mk, objs in se.items() for o in objs if o['kind'] == 'spawn'}
+    # 양쪽 맵이 같은 결정을 하도록, 조각 기준 키 = 양쪽 칸 합집합
+    def canon(o):
+        dy, dx = _dir(o['edge']); cs = cells_of(o); return frozenset(cs) | frozenset((y + dy, x + dx) for y, x in cs)
+    decide = {}; best = {}
+    for mk, o in exits:
+        dy, dx = _dir(o['edge']); cs = cells_of(o)
+        px, py = (0, 1) if dy else (1, 0)
+        def through(c):   # 경계에 '닿는' 길: 경계 칸이 길이고 내 쪽으로 2칸 이상 이어짐(상대 쪽은 없어도 stub이 잇는다). 경계를 따라 나란히 가는 길은 아님
+            y, x = c
+            if not rd((y, x)): return False
+            back1 = any(rd((y - dy + py * s_, x - dx + px * s_)) for s_ in (-1, 0, 1))
+            back2 = any(rd((y - 2 * dy + py * s_, x - 2 * dx + px * s_)) for s_ in (-1, 0, 1))
+            return back1 and back2
+        idx = [i for i, c in enumerate(cs) if through(c)]
+        if len(idx) > 5: idx = []   # 경계에 길 칸이 6개 넘게 나란히 → 광장·나란한 길이지 건널목이 아님
+        k = canon(o)
+        if idx: decide[k] = (max(0, min(idx) - EXIT_GAP), min(len(cs) - 1, max(idx) + EXIT_GAP), False)
+        pair = tuple(sorted((mk, o['target'])))
+        if pair not in best or (len(cs), min(k)) > best[pair][0]: best[pair] = ((len(cs), min(k)), k, len(cs))
+    # 2026-10-29(사용자: 원래 이어지던 골짜기가 막힘): 맵 쌍의 경계 조각을 통로(8칸 안 묶음)로 묶고,
+    #   통로 가운데서 FALLBACK_DIST칸 안에 길 건널목이 없으면 통로 가운데 조각을 대체 건널목으로(길은 exit_stubs가 새로 긋고 가까운 길에 잇는다)
+    pieces = {}
+    for mk, o in exits: pieces.setdefault(tuple(sorted((mk, o['target']))), {})[canon(o)] = o
+    for pair, pcs in pieces.items():
+        ks = list(pcs); rest = list(ks)
+        while rest:
+            grp = [rest.pop()]; j_ = 0
+            while j_ < len(grp):
+                a_ = grp[j_]; j_ += 1
+                near_ = [k2 for k2 in rest if min(abs(c1[0] - c2[0]) + abs(c1[1] - c2[1]) for c1 in a_ for c2 in k2) <= 8]
+                for k2 in near_: rest.remove(k2); grp.append(k2)
+            allc = [c for k_ in grp for c in k_]
+            cy_, cx_ = sum(c[0] for c in allc) / len(allc), sum(c[1] for c in allc) / len(allc)
+            if any(k_ in decide and min(abs(c[0] - cy_) + abs(c[1] - cx_) for c in k_) <= FALLBACK_DIST for k_ in grp): continue
+            has_any = any(k_ in decide for k_ in pcs)
+            seam_len = len({c for k_ in grp for c in k_}) // 2
+            if os.environ.get('DBG_SEAM'): print('통로', pair, '길이', seam_len, '길있음', has_any)
+            if has_any and (seam_len > FALLBACK_MAXLEN or seam_len < 4): continue   # 넓게 트인 눈밭 경계는 통로가 아니고(길 건널목 하나로 충분), 1~3칸 틈도 통로가 아님
+            k_best = min(grp, key=lambda k_: min(abs(c[0] - cy_) + abs(c[1] - cx_) for c in k_))
+            n_ = len(cells_of(pcs[k_best])); decide[k_best] = (0, n_ - 1, True)
+    out = {mk: [] for mk in se}; rec = {}; cand = []
+    for mk, o in exits:
+        d = decide.get(canon(o))
+        if d is None: continue
+        i0, i1, fb = d; horiz = o['edge'] in 'NS'; cy, cx = o['cell']
+        dy, dx = _dir(o['edge'])
+        seam = dict(o, cell=(cy, cx + i0) if horiz else (cy + i0, cx), w=(i1 - i0 + 1) if horiz else 1, h=1 if horiz else (i1 - i0 + 1))
+        if (seam['w'] if horiz else seam['h']) == 1:   # 1칸 출구는 2칸으로(곧은 길이 2칸 폭이라 반쪽이 막혀 보이던 문제)
+            if horiz: seam['w'] = 2
+            else: seam['h'] = 2
+        # 2026-10-29(사용자: 길이 숲에 막혀 보임): 출구는 내 맵 상자의 맨 가장자리까지 — 길이 화면 끝까지 끊김 없이 이어지고 거기서 넘어간다.
+        #   땅 주인(옆 맵·셋째 맵)은 가리지 않고 물만 피한다(물 앞에서 멈춤)
+        by0, by1, bx0, bx1 = BOX[mk]; scs = cells_of(seam); k_out = 0
+        for j in range(1, EXIT_OUT + 1):
+            pts = [(y + dy * j, x + dx * j) for y, x in scs]
+            if all(by0 <= y < by1 and bx0 <= x < bx1 and T_[y, x] not in (DEEP, SHALLOW, RIVER, LAKE, SPRING) for y, x in pts): k_out = j
+            else: break
+        # 길이 그 방향으로 얼마나 이어지는지(경계 너머 연속 길 칸 수): 계단식 경계에서 '길 방향' 조각을 고르는 기준
+        run_ = 0
+        for j in range(1, EXIT_OUT + 1):
+            if any(rd((y + dy * j, x + dx * j)) for y, x in scs): run_ = j
+            else: break
+        o2 = dict(seam, cell=(seam['cell'][0] + dy * k_out, seam['cell'][1] + dx * k_out), out=k_out, run=run_)
+        cand.append((mk, o, seam, o2, fb))
+    # 비스듬한(계단식) 경계는 한 건널목에 N·E처럼 방향이 섞인 조각이 생긴다. 건널목(가까운 조각 묶음)마다 길 끝이 가장 먼 방향만 남긴다
+    #   — 나머지 방향 조각은 경계선에서 바로 넘어가 버려서(길 중간) 뺀다
+    groups = {}
+    for i_, (mk, o, seam, o2, fb) in enumerate(cand): groups.setdefault((mk, o['target']), []).append(i_)
+    keep_idx = set(); pre = {}
+    for key_, ids in groups.items():
+        rest = list(ids)
+        while rest:
+            grp = [rest.pop()]; j_ = 0
+            while j_ < len(grp):
+                a_ = cand[grp[j_]][2]['cell']; j_ += 1
+                near_ = [i_ for i_ in rest if abs(cand[i_][2]['cell'][0] - a_[0]) <= 6 and abs(cand[i_][2]['cell'][1] - a_[1]) <= 6]
+                for i_ in near_: rest.remove(i_); grp.append(i_)
+            by_edge = {}
+            for i_ in grp: by_edge.setdefault(cand[i_][1]['edge'], []).append(i_)
+            best_e = max(by_edge, key=lambda e: (max(cand[i_][3]['run'] for i_ in by_edge[e]), max(cand[i_][3]['out'] for i_ in by_edge[e]), len(by_edge[e])))
+            kmax = max(cand[i_][3]['out'] for i_ in by_edge[best_e])
+            chosen = [i_ for i_ in by_edge[best_e] if cand[i_][3]['out'] >= kmax - 1]   # 같은 건널목에서 길 끝까지 못 나간 조각(경계에 남은 것)은 뺀다 → 길 중간 전환 방지
+            pre.setdefault(key_, []).append((best_e, kmax, chosen))
+    for key_, lst in pre.items():
+        good = [t for t in lst if t[1] >= 3]   # 옆 맵 땅으로 3칸도 못 나가는 건널목(경계의 작은 홈)은 다른 건널목이 있으면 버린다
+        for best_e, kmax, chosen in (good if good else [max(lst, key=lambda t: t[1])]):
+            keep_idx |= set(chosen)
+            cr = dict(cells=[], seam=[], edge=best_e, fallback=False, k=0, spawn_objs=[])   # 건널목 하나 = 묶음 하나
+            for i_ in chosen:
+                mk, o, seam, o2, fb = cand[i_]
+                out[mk].append(o2)
+                sp = spawns.get((o['target'], o['spawn']))
+                if sp is not None:   # 도착 자리(임시) = 출구와 같은 세계 칸. 아래서 상대 맵 출구 복도 들머리로 옮긴다
+                    sp2 = dict(sp, cell=o2['cell'], w=o2['w'], h=o2['h']); out[o['target']].append(sp2); cr['spawn_objs'].append(sp2)
+                cr['cells'] += cells_of(o2); cr['seam'] += cells_of(seam); cr['fallback'] |= fb; cr['k'] = max(cr['k'], o2['out'])
+            r = rec.setdefault(key_, dict(cells=[], seam=[], edges=[], fallback=False, k=0, crossings=[]))
+            r['cells'] += cr['cells']; r['seam'] += cr['seam']; r['edges'].append(best_e); r['fallback'] |= cr['fallback']; r['k'] = max(r['k'], cr['k']); r['crossings'].append(cr)
+    # 2026-10-29(사용자: 새 맵에서 안쪽에서 시작함): 도착 자리 = 상대 맵의 '같은 건널목' 출구 복도 들머리(그 맵 가장자리 출구 칸에서 안쪽 2칸).
+    #   A 오른쪽 끝에서 나가면 B 왼쪽 끝 숲길 입구에 선다. 도착 facing은 안쪽이라 B 출구(바깥을 볼 때만 발동)에 다시 걸리지 않는다
+    for (A, B), r in rec.items():
+        for cr in r['crossings']:
+            cr2 = next((c2 for c2 in rec.get((B, A), {}).get('crossings', []) if any(abs(a[0] - b[0]) + abs(a[1] - b[1]) <= 1 for a in cr['seam'] for b in c2['seam'])), None)
+            if cr2 is None or not cr['spawn_objs']: continue
+            dy2, dx2 = _dir(cr2['edge'])
+            ys = sorted({c[0] for c in cr2['cells']}); xs = sorted({c[1] for c in cr2['cells']}); ex2 = set(cr2['cells'])
+            for sp in cr['spawn_objs']:   # 크기는 자기 출구 그대로(런타임이 폭·축을 맞춰 봄), 자리만 옮긴다. 계단식 출구 칸과 겹치지 않을 때까지 안쪽으로
+                for inward in range(2, max(2, cr2['k']) + 1):
+                    cell = (ys[0] - dy2 * inward, xs[0] - dx2 * inward)
+                    cells_ = {(cell[0] + b, cell[1] + a) for a in range(sp['w']) for b in range(sp['h'])}
+                    if not (cells_ & ex2): break
+                sp['cell'] = cell
+    return out, rec
+def exit_stubs(rec, roadw, terrain, mapid, keys):
+    """맵 쌍마다 출입구 가운데를 지나 경계 앞뒤로 곧은 2칸 폭 길을 긋는다(물 칸은 건너뜀). 전역 roadw를 바꾼다. 반환: 그은 칸 수
+    대체 건널목(원래 길이 없던 통로)은 곧은 길 양 끝에서 같은 맵 안 가장 가까운 길까지 길을 이어 붙인다"""
+    H, W = roadw.shape; n = 0; done = set()
+    BAD = (DEEP, SHALLOW, RIVER, LAKE, SPRING, VOID, MOUNTAIN, PEAK)
+    VILG = VIL
+    def connect(y, x, mid_, limit=90):
+        """(y,x)가 속한 길 덩어리가 마을에 닿지 않고 작으면, mid_ 땅 안을 넓이 우선으로 걸어 덩어리 밖 가장 가까운 길 칸까지 2칸 폭 길을 긋는다"""
+        if not (0 <= y < H and 0 <= x < W) or not roadw[y, x]: return 0
+        comp = {(y, x)}; q = deque([(y, x)])
+        while q and len(comp) < 200:
+            cy_, cx_ = q.popleft()
+            if VILG[cy_, cx_]: return 0   # 마을까지 이어진 길
+            for oy, ox in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                n_ = (cy_ + oy, cx_ + ox)
+                if n_ not in comp and 0 <= n_[0] < H and 0 <= n_[1] < W and roadw[n_] and mapid[n_] == mid_: comp.add(n_); q.append(n_)
+        if len(comp) >= 200: return 0   # 큰 길 그물
+        q = deque(comp); prev = {c: None for c in comp}
+        while q:
+            cy_, cx_ = q.popleft()
+            if roadw[cy_, cx_] and (cy_, cx_) not in comp:
+                path = []; c = (cy_, cx_)
+                while c is not None: path.append(c); c = prev[c]
+                cnt = 0
+                for (py_, px_) in path:
+                    for (ay, ax) in ((py_, px_), (py_, px_ + 1), (py_ + 1, px_)):
+                        if 0 <= ay < H and 0 <= ax < W and mapid[ay, ax] == mid_ and terrain[ay, ax] not in BAD and not roadw[ay, ax]: roadw[ay, ax] = True; cnt += 1
+                return cnt
+            if len(prev) > limit * limit: break
+            for oy, ox in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                ny, nx = cy_ + oy, cx_ + ox
+                if (ny, nx) in prev or not (0 <= ny < H and 0 <= nx < W) or mapid[ny, nx] != mid_ or terrain[ny, nx] in BAD or abs(ny - y) + abs(nx - x) > limit: continue
+                prev[(ny, nx)] = (cy_, cx_); q.append((ny, nx))
+        return 0
+    for (A, B), r in rec.items():
+        if (B, A) in done: continue
+        done.add((A, B)); ab = {keys.index(A), keys.index(B)}
+        for cr in r['crossings']:
+            dy, dx = _dir(cr['edge']); perp = (0, 1) if dy else (1, 0)
+            # 곧은 길은 경계 칸(건널목 폭) 가운데 2칸을 그대로 앞뒤로 늘인다(가운데값 반올림으로 옆 맵 땅에 치우치던 문제)
+            sc = sorted(set(cr['seam']), key=lambda c: (c[1], c[0]) if dy else (c[0], c[1]))
+            mid0 = max(0, (len(sc) - 2) // 2); lane = sc[mid0:mid0 + 2] or sc[:1]
+            cy, cx = lane[0]
+            kB = 0   # 상대 쪽 같은 건널목(경계 칸이 맞닿은 것)의 k
+            for cr2 in rec.get((B, A), {}).get('crossings', []):
+                if any(abs(c1[0] - c2[0]) + abs(c1[1] - c2[1]) <= 1 for c1 in cr['seam'] for c2 in cr2['seam']): kB = max(kB, cr2['k'])
+            back = max(EXIT_STUB, kB + 1); fwd = max(EXIT_STUB, cr['k'] + 1)   # 양쪽 출구(길 끝)까지 + 1칸
+            for k in range(-back, fwd + 1):
+                for (ly, lx) in lane:
+                    y, x = ly + dy * k, lx + dx * k
+                    if 0 <= y < H and 0 <= x < W and mapid[y, x] in ab and terrain[y, x] not in (DEEP, SHALLOW, RIVER, LAKE, SPRING, VOID) and not roadw[y, x]:   # 두 맵 땅에만(세 맵 모서리에서 옆 맵 경계를 따라 길이 생기던 문제)
+                        roadw[y, x] = True; n += 1
+            for k, mid_ in ((-back, keys.index(A)), (fwd, keys.index(B))):   # 건널목 길이 각 맵의 길 그물(마을)에 닿는지 확인, 아니면 잇는다
+                for k2 in range(abs(k), 0, -1):
+                    y, x = cy + dy * k2 * (1 if k > 0 else -1), cx + dx * k2 * (1 if k > 0 else -1)
+                    if 0 <= y < H and 0 <= x < W and mapid[y, x] == mid_ and roadw[y, x]: n += connect(y, x, mid_); break
+    return n
+SEAMS, SEAM_REC = restrict_seams(SEAMS, ROADW)
+ROADW = ROADW.copy(); STUBS = exit_stubs(SEAM_REC, ROADW, T_, MID, KEYS)   # 새 길(stub·연결)은 그린 뒤 출입구를 다시 고르지 않는다(새 길이 경계를 따라가며 엉뚱한 건널목을 만들던 문제)
+_SE0, _REC0 = SEAMS, SEAM_REC
+
 # ── 2026-10-29 정리: 생활 소품, 갈 수 없는 자리 길 내기, 이름표 겹침 ──
 DRESS = ['barrel', 'crate', 'firewood', 'sack', 'bucket', 'box', 'barrel_s', 'crate_goods', 'basket', 'logs', 'logs_birch']
 NEED_REACH = {'stall', 'spit', 'fire', 'well', 'picturestone', 'runestone', 'table', 'cauldron', 'cauldron_snow', 'tent', 'weaponrack', 'pelt', 'rack'}
@@ -416,8 +610,18 @@ def build(key):
     for it in Z[key]['items']:
         if 'x' in it and not it.get('missing'):
             x_, y_ = it['x'] - X0 - x0, it['y'] - Y0 - y0; no_widen[max(0, y_ - 1):max(0, y_ + it['h'] + 1), max(0, x_ - 1):max(0, x_ + it['w'] + 1)] = True
+    def corridor(s_):
+        """출입구 객체의 칸 + (출구면) 경계까지 되돌아오는 복도 칸. 맵 칸 좌표 (x, y)"""
+        cy_, cx_ = s_['cell']; sx_, sy_ = cx_ - x0, cy_ - y0
+        cells_ = {(sx_ + a, sy_ + b) for a in range(s_['w']) for b in range(s_['h'])}
+        if s_['kind'] == 'exit':
+            dy_, dx_ = _dir(s_['edge']); px_, py_ = (0, 1) if dy_ else (1, 0)
+            cells_ |= {(x_ - dx_ * j, y_ - dy_ * j) for (x_, y_) in list(cells_) for j in range(0, s_.get('out', 0) + 1)}
+            cells_ |= {(x_ + px_ * k_, y_ + py_ * k_) for (x_, y_) in list(cells_) for k_ in (-CORRIDOR_PAD, CORRIDOR_PAD)}   # 양옆 여유 → 넓게 트인 통로
+        return cells_
     for s_ in SEAMS.get(key, []):
-        cy_, cx_ = s_['cell']; sx_, sy_ = cx_ - x0, cy_ - y0; no_widen[max(0, sy_):max(0, sy_ + s_['h']), max(0, sx_):max(0, sx_ + s_['w'])] = True
+        for (cx_, cy_) in corridor(s_):
+            if 0 <= cy_ < Hd and 0 <= cx_ < Wd: no_widen[cy_, cx_] = True
     wet = np.isin(sub, [DEEP, SHALLOW, RIVER, LAKE])
     def in2(yy, xx):
         return any(all(0 <= yy + b + j < Hd and 0 <= xx + a + i < Wd and wet[yy + b + j, xx + a + i] for i in (0, 1) for j in (0, 1)) for a in (-1, 0) for b in (-1, 0))
@@ -455,6 +659,44 @@ def build(key):
         m.bridge(min(cx), min(cy), max(cx), max(cy))
     # 2) 맵 밖 칸: 그림은 그대로 두고 막는다(경계 출입구로만 넘어감)
     for yy, xx in zip(*np.nonzero(~mine)): m.blocked[yy][xx] = True; m.reserved[yy][xx] = True
+    # 2026-10-29(사용자): 출구는 길 끝 — 경계~출구 복도(담당 밖)는 처음부터 열어 두고(길), 갈 수 있는지 검사도 복도까지 본다(mine2)
+    mine2 = mine.copy()
+    for s_ in SEAMS.get(key, []):
+        for (cx_, cy_) in corridor(s_):
+            if not m.inside(cx_, cy_) or m.water[cy_][cx_]: continue
+            mine2[cy_, cx_] = True
+            if not mine[cy_, cx_]: m.blocked[cy_][cx_] = False; m.reserved[cy_][cx_] = True   # 통로 바닥은 눈밭(가운데 다진 길은 ROADW/stub가 그린다)
+    # 2026-10-29(사용자: 숲에 막힌 길): 담당 밖(울타리가 될 곳)에 닿고 끝나는 길 꼬리는 지운다. 복도·마을·광장은 두고, 꼬리 10칸까지
+    corr_all = set()
+    for s_ in SEAMS.get(key, []): corr_all |= corridor(s_)
+    def roadcell(x_, y_): return m.inside(x_, y_) and m.road[y_][x_] > 0 and not m.water[y_][x_]
+    def wide(x_, y_): return sum(1 for a in (-1, 0, 1) for b in (-1, 0, 1) if roadcell(x_ + a, y_ + b)) >= 8
+    def near_vil(x_, y_): return any(0 <= y_ + b < Hd and 0 <= x_ + a < Wd and VIL[y_ + b + y0, x_ + a + x0] for a in (-2, -1, 0, 1, 2) for b in (-2, -1, 0, 1, 2))
+    tails = set()
+    for y in range(Hd):
+        for x in range(Wd):
+            if not roadcell(x, y) or not mine[y, x] or (x, y) in corr_all or near_vil(x, y) or wide(x, y): continue
+            if not any(m.inside(x + a, y + b) and not mine2[y + b, x + a] for a, b in ((1, 0), (-1, 0), (0, 1), (0, -1))): continue
+            dq_ = deque([((x, y), 0)]); seen_ = {(x, y)}
+            while dq_:
+                c, d0 = dq_.popleft(); tails.add(c)
+                if d0 >= 10: continue
+                for a, b in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                    n_ = (c[0] + a, c[1] + b)
+                    if n_ in seen_ or not roadcell(*n_) or not mine[n_[1], n_[0]] or n_ in corr_all or near_vil(*n_) or wide(*n_): continue
+                    seen_.add(n_); dq_.append((n_, d0 + 1))
+    for (x, y) in tails: m.road[y][x] = 0; road[y, x] = False; m.reserved[y][x] = False
+    m._tails = len(tails)
+    for s_ in SEAMS.get(key, []):   # 출구 너머(맵 가장자리까지)의 길은 지워서 길이 출구에서 끝나 보이게. 울타리가 덮는다
+        if s_['kind'] != 'exit': continue
+        dy_, dx_ = _dir(s_['edge']); px_, py_ = (0, 1) if dy_ else (1, 0); cy_, cx_ = s_['cell']; sx_, sy_ = cx_ - x0, cy_ - y0
+        for a in range(-2, s_['w'] + 2) if dy_ else (0,):
+            for b in range(-2, s_['h'] + 2) if dx_ else (0,):
+                for j in range(1, 40):
+                    x_, y_ = sx_ + a + dx_ * j, sy_ + b + dy_ * j
+                    if not m.inside(x_, y_): break
+                    if mine[y_, x_]: continue
+                    m.road[y_][x_] = 0; road[y_, x_] = False; m.reserved[y_][x_] = True
     # 3) 자리 (광장·마당·쉼터 = 다진 길 바닥, 부두 = 판자)
     items = [it for it in Z[key]['items'] if not it.get('missing') and 'x' in it]
     items = [dict(it) for it in items] + [dict(e) for e in EXTRA_ITEMS.get(key, [])]
@@ -545,8 +787,8 @@ def build(key):
         x, y = L(it['y'], it['x']); taken[max(0, y - 1):y + it['h'] + 1, max(0, x - 1):x + it['w'] + 1] = True
     # 2026-10-29(갇힘): 경계 출입구·도착 칸과 둘레 1칸에는 소품·나무를 두지 않는다(도착하자마자 천막 속에 갇히던 문제)
     for s in SEAMS.get(key, []):
-        cy, cx = s['cell']; sx, sy = cx - x0, cy - y0
-        taken[max(0, sy - 1):max(0, sy + s['h'] + 1), max(0, sx - 1):max(0, sx + s['w'] + 1)] = True
+        for (cx, cy) in corridor(s):
+            taken[max(0, cy - 1):cy + 2, max(0, cx - 1):cx + 2] = True
     # 2026-10-29: 옛 소품은 숲·산·다른 지역 땅에 놓지 않고, N2 자리(사람·게시판·집) 둘레 1칸도 비운다
     n5.EXTRA_BLOCK[key] = (np.isin(sub, [FOREST, MOUNTAIN, PEAK, VOID]) | taken).copy()
     n5.HARD_BLOCK[key] = (np.isin(sub, [VOID]) | taken).copy()
@@ -592,6 +834,15 @@ def build(key):
     pending.append(({(xx, yy) for yy, xx in zip(*np.nonzero(sub == VOID))}, nt.DENSE_KINDS['pine' if north else 'mixed'], False))   # 다른 지역 땅: 숲 벽
     # 담당 밖 북유럽 땅의 숲·산도 그림으로(막힌 칸)
     pending.append(({(xx, yy) for yy, xx in zip(*np.nonzero(np.isin(sub, [FOREST, MOUNTAIN, PEAK]) & ~mine & ~road))}, nt.DENSE_KINDS['pine' if north else 'mixed'], False))
+    # 2026-10-29(사용자): 경계 울타리 — 담당 밖(옆 북유럽 맵 땅) 전부 눈 나무 숲. 출입구 길 틈은 비운다
+    near = ~mine   # 담당 밖 전부(둘레 3칸 + 비스듬한 경계의 모서리). 3칸 띠만 심으면 듬성해서 벽으로 안 보였다
+    gap = set()
+    for s_ in SEAMS.get(key, []):   # 출입구 통로 칸만 비움(나무 벽이 통로 바로 옆에 붙어 포켓몬 길처럼 보이게)
+        gap |= corridor(s_)
+    fence = {(xx, yy) for yy, xx in zip(*np.nonzero(near & ~mine & (sub != VOID) & ~wet)) if (xx, yy) not in gap}   # 옆 맵 길·광장도 덮는다(복도 틈만 남김)
+    for (xx, yy) in fence: m.road[yy][xx] = 0
+    pending.append((fence, nt.DENSE_KINDS['pine' if north else 'mixed'], False)); report['fence'] = len(fence)
+    pending = [(mask - gap if not cl else mask, kinds, cl) for (mask, kinds, cl) in pending]   # 못 비우는 숲(담당 밖 숲·다른 지역 벽)도 출입구 복도는 비워 둔다
     # 산·빙하: 절벽 대신 바위·눈 바위·눈 나무 덩어리
     mtn_cells = {(xx, yy) for yy, xx in zip(*np.nonzero(mtn & mine)) if not keep[yy, xx] and not taken[yy, xx] and m.obj[yy][xx] is None and m.high[yy][xx] is None
                  and not m.water[yy][xx] and m.road[yy][xx] == 0 and not m.reserved[yy][xx]}
@@ -648,22 +899,21 @@ def build(key):
     for s in SEAMS.get(key, []):
         cy, cx = s['cell']; ex, ey = cx - x0, cy - y0
         cells = {(ex + a, ey + b) for a in range(s['w']) for b in range(s['h'])}
-        m._edge_targets.append((f"{s['kind']}→{s.get('target') or s.get('id')}", {c for c in cells if 0 <= c[0] < Wd and 0 <= c[1] < Hd and mine[c[1], c[0]]}))
+        m._edge_targets.append((f"{s['kind']}→{s.get('target') or s.get('id')}", {c for c in cells if 0 <= c[0] < Wd and 0 <= c[1] < Hd and mine2[c[1], c[0]]}))
     for e in N1R['exits']:
         if e['map'] == key: ex, ey = L(e['at'][1], e['at'][0]); m._edge_targets.append(('지역출구 ' + e['label'], {(ex + a, ey + b) for a in (-2, -1, 0, 1, 2) for b in (-2, -1, 0, 1, 2)}))
     targets = reach_targets(m, items, L, P5)
     # 2026-10-29(사용자: 눈숲 고갯길로 가면 갇힘): 경계 출입구·도착 자리도 길과 이어지게
     for s in SEAMS.get(key, []):
-        cy, cx = s['cell']; sx, sy = cx - x0, cy - y0
-        targets.append(('경계 ' + s.get('target', s.get('id', '')), {(sx + a, sy + b) for a in range(s['w']) for b in range(s['h'])}))
-    report['opened'] = open_paths(m, mine, pending, targets)
+        targets.append(('경계 ' + s.get('target', s.get('id', '')), corridor(s)))
+    report['opened'] = open_paths(m, mine2, pending, targets)
     for (mask, kinds, _) in pending:
         real_plant({c for c in mask if m.inside(*c)}, kinds)
     plan = set().union(*[p[0] for p in pending])
     props = [(x, y) for (x, y) in opens if open_(x, y) and (x, y) not in plan and far_road(x, y, 2)]
     m.snow_props(rn.sample(props, min(len(props), len(opens) // 70)))
     # 2026-10-29(갇힘): 눈 더미(1칸 소품)가 좁은 목을 막아 주머니 땅이 생기면, 막은 눈 더미만 치운다
-    report['unplug'] = unplug_props(m, mine, targets)
+    report['unplug'] = unplug_props(m, mine2, targets)
     tuft_ok = [(x, y) for (x, y) in opens if open_(x, y) and (x, y) not in plan]
     m._late.extend(((x, y), rn.choice(nt.TUFTS)) for (x, y) in rn.sample(tuft_ok, min(len(tuft_ok), len(opens) // 18)))
     # 7) 바닥 조각: 밭·자갈은 흙, 늪은 녹은 풀
@@ -693,6 +943,9 @@ def build(key):
     for e in N1R['exits']:
         if e['map'] != key: continue
         x, y = L(e['at'][1], e['at'][0]); report.setdefault('regionExits', []).append(dict(label=e['label'], x=x, y=y))
+    report['signs'] = []
+    report['tails'] = m._tails
+    report['roads'] = dress_roads(m, key, mine, mine2, x0, y0, random.Random(7000 + i))
     m.box = (x0, y0); m.mine = mine
     # 런타임이 그리는 미니게임 그림(덕장·천막 좌판 등) 자리: 좌판 찾을 때 피함
     m._mg_rects = [(L(it['y'], it['x'])[0], L(it['y'], it['x'])[1], it['w'], it['h']) for it in items if (it.get('art') or '').startswith('Minigame:')]
@@ -735,6 +988,15 @@ def build(key):
     for yy, xx in zip(*np.nonzero(~mine)):
         m.blocked[yy][xx] = True
     m.objects = [o for o in m.objects if o['kind'] in ('exit', 'spawn') or mine[min(Hd - 1, o['y']), min(Wd - 1, o['x'])]]
+    # 2026-10-29(사용자): 출구는 길 끝 — 경계~출구 복도(담당 밖)를 열고 길을 깐다
+    report['corridorStuck'] = []
+    for s in SEAMS.get(key, []):
+        if s['kind'] != 'exit': continue
+        for (cx, cy) in corridor(s):
+            if not m.inside(cx, cy): report['corridorStuck'].append((s['target'], cx, cy, '맵 밖')); continue
+            if m.water[cy][cx]: report['corridorStuck'].append((s['target'], cx, cy, '물')); continue
+            m.blocked[cy][cx] = False; m.obj[cy][cx] = m.high[cy][cx] = None
+            if m.ground[cy][cx] is None or str(m.ground[cy][cx]).startswith(('relief', 'water')): m.ground[cy][cx] = nt.SNOW
     # 다른 지역 출구: region_links.json에서 북유럽 쪽("by")은 이 생성기가 만든다. 폭은 상대 쪽과 같게, 방향은 links의 edge
     for lk in LINKS:
         if lk['a']['map'] != key: continue
@@ -757,6 +1019,7 @@ def build(key):
         m.objects.append(dict(kind='spawn', id='link_' + b['map'], edge=edge, **spawn))
         report.setdefault('links', []).append((lk['id'], b['map'], ex_))
     report['n5after'] = n5.after_finish(m, key, mine, None, NAMES, report['anchor'], rng_seed=i)
+    report['boards'] = rewrite_boards(m, report['roads'].get('gate_pos', {}))
     # 2026-10-29(갇힘): 출입구·도착 칸 위에 남은 1칸 소품(눈 더미·작은 돌 등)은 치운다. 건물·나무(위층 있는 것)는 보고만
     report['edgeClear'] = []; report['edgeStuck'] = []
     for o in m.objects:
@@ -769,8 +1032,177 @@ def build(key):
                     report['edgeClear'].append((m.obj[cy][cx], cx, cy)); m.obj[cy][cx] = None; m.blocked[cy][cx] = False
                 else: report['edgeStuck'].append((o['kind'], cx, cy, m.obj[cy][cx], m.high[cy][cx]))
     report['moved'] = tidy_people(m, mine)
-    report['unreach'] = final_check(m, mine)
+    report['unreach'] = final_check(m, mine2)
     return m, report
+
+
+# ── 2026-10-29(사용자): 길 안내 — 어느 길로 가면 어디인지 보이게 ──
+#   마을 어귀 이정표(이 길은 ○○ 가는 길), 마을 밖 갈림길 이정표(방향 화살표), 길가 돌기둥(눈밭에서 길 윤곽), 출구 양옆 등불
+POST_GAP = 6   # 돌기둥 간격(칸)
+ARROW = {(-1, 0): '↑', (1, 0): '↓', (0, -1): '←', (0, 1): '→'}
+def dress_roads(m, key, mine, mine2, x0, y0, rng):
+    Wd, Hd = m.w, m.h; rep = dict(gate=[], fork=[], posts=0, lamps=0)
+    def vil(x, y): return bool(VIL[y + y0, x + x0])
+    roadc = {(x, y) for y in range(Hd) for x in range(Wd) if m.road[y][x] > 0 and mine2[y, x] and not m.blocked[y][x]}
+    def nb4(c): return [(c[0] + a, c[1] + b) for a, b in ((1, 0), (-1, 0), (0, 1), (0, -1))]
+    # 1) 출구에서 길을 따라 거슬러: 길 칸마다 가장 가까운 출구(=이 길의 목적지)
+    srcs = {}
+    for (A, B), r in SEAM_REC.items():
+        if A != key: continue
+        for (gy, gx) in r['seam'] + r['cells']:
+            c = (gx - x0, gy - y0)
+            if c in roadc: srcs[c] = B
+    for o in m.objects:
+        if o['kind'] == 'exit' and str(o.get('spawn', '')).startswith('link_'):
+            for a in range(o.get('w', 1)):
+                for b in range(o.get('h', 1)):
+                    if (o['x'] + a, o['y'] + b) in roadc: srcs[(o['x'] + a, o['y'] + b)] = o['target']
+    label = dict(srcs); dq = deque(srcs)
+    while dq:
+        c = dq.popleft()
+        for n in nb4(c):
+            if n in roadc and n not in label: label[n] = label[c]; dq.append(n)
+    def name_of(b): return NAMES.get(b, b)
+    zone_ = {(o['x'] + a, o['y'] + b) for o in m.objects if o['kind'] in ('exit', 'spawn') for a in range(-2, o.get('w', 1) + 2) for b in range(-2, o.get('h', 1) + 2)}
+    def free_prop(x, y, h=1):   # 길 옆 빈 칸(위로 h칸짜리 소품용)
+        return all(m.inside(x, y - j) and mine[y - j, x] and not m.blocked[y - j][x] and not m.water[y - j][x] and m.road[y - j][x] == 0
+                   and m.obj[y - j][x] is None and m.high[y - j][x] is None and not m.reserved[y - j][x] and (x, y - j) not in zone_ for j in range(h)) \
+               and m.inside(x, y + 1) and not (m.blocked[y + 1][x] and m.high[y + 1][x] is None and m.obj[y + 1][x] is not None and False)
+    def beside_road(x, y): return any(n in roadc for n in nb4((x, y)))
+    def clusters_(cells, d=4):
+        rest = list(cells); out = []
+        while rest:
+            grp = [rest.pop()]; k = 0
+            while k < len(grp):
+                a = grp[k]; k += 1
+                near_ = [c for c in rest if abs(c[0] - a[0]) <= d and abs(c[1] - a[1]) <= d]
+                for c in near_: rest.remove(c); grp.append(c)
+            out.append(grp)
+        return out
+    def place_sign(cx, cy, text):
+        for r_ in range(1, 6):
+            for yy in range(cy - r_, cy + r_ + 1):
+                for xx in range(cx - r_, cx + r_ + 1):
+                    if max(abs(xx - cx), abs(yy - cy)) != r_ or not free_prop(xx, yy) or not beside_road(xx, yy): continue
+                    if any(o['kind'] == 'sign' and abs(o['x'] - xx) <= 5 and abs(o['y'] - yy) <= 5 for o in m.objects): return None
+                    if any(o['kind'] == 'sign' and o.get('text') == text and abs(o['x'] - xx) <= 25 and abs(o['y'] - yy) <= 25 for o in m.objects): return None   # 같은 글 이정표가 가까이 있으면 생략
+                    m.prop(tiles.SIGN, xx, yy); m.add('sign', xx, yy, text=text, _new=True); return (xx, yy)
+        return None
+    # 2) 마을 어귀: 마을 안 길 칸 옆에 마을 밖 길 칸 → 그 길의 목적지
+    gate = [c for c in roadc if vil(*c) and any(n in roadc and not vil(*n) for n in nb4(c))]
+    gate_pos = {}
+    def reach_dests(grp):   # 이 어귀에서 마을 밖 길만 따라가 닿는 출구들
+        seen = set(grp); dq = deque(grp); found = set()
+        while dq:
+            c = dq.popleft()
+            if c in srcs: found.add(srcs[c])
+            for n in nb4(c):
+                if n in roadc and n not in seen and not vil(*n): seen.add(n); dq.append(n)
+        return sorted(found, key=name_of)
+    for grp in clusters_(gate):
+        dests = reach_dests(grp)
+        if not dests: continue
+        for b in dests: gate_pos.setdefault(b, []).extend(grp)
+        cx, cy = round(sum(c[0] for c in grp) / len(grp)), round(sum(c[1] for c in grp) / len(grp))
+        pos = place_sign(cx, cy, ' · '.join(name_of(b) for b in dests) + ' 가는 길')
+        if pos: rep['gate'].append((dests, pos))
+    rep['gate_pos'] = gate_pos
+    # 2c) 마을 어귀 이정표가 없는 목적지(마을 없는 길 맵 등)는 출구 복도 들머리(경계 안쪽 2~4칸) 길가에 이정표
+    for (A, B), r in SEAM_REC.items():
+        if A != key: continue
+        for cr in r['crossings']:
+            grp = [(gx - x0, gy - y0) for (gy, gx) in cr['seam']]; dy, dx = _dir(cr['edge'])
+            cx, cy = round(sum(c[0] for c in grp) / len(grp)), round(sum(c[1] for c in grp) / len(grp))
+            pos = place_sign(cx - dx * 3, cy - dy * 3, name_of(B) + ' 가는 길')
+            if pos: rep.setdefault('exitsign', []).append((B, pos))
+    # 3) 마을 밖 갈림길: 반지름 3 고리 위 길 칸이 3덩어리 이상(곧은 길 2, 광장 1)
+    forks = []
+    for (x, y) in roadc:
+        if vil(x, y) or (x, y) in zone_: continue
+        for R_ in (3, 4, 5):   # 길이 넓으면 작은 고리는 길 안에 잠겨서 못 가른다
+            ring = [(x + a, y + b) for a in range(-R_, R_ + 1) for b in range(-R_, R_ + 1) if max(abs(a), abs(b)) == R_ and (x + a, y + b) in roadc]
+            if len(ring) < 3: continue
+            rs = set(ring); comps = []
+            while rs:
+                st = [rs.pop()]; comp = set(st)
+                while st:
+                    c = st.pop()
+                    for a in range(-1, 2):
+                        for b in range(-1, 2):
+                            n = (c[0] + a, c[1] + b)
+                            if n in rs: rs.remove(n); comp.add(n); st.append(n)
+                comps.append(comp)
+            if len(comps) >= 3: forks.append(((x, y), comps, R_)); break
+    rep['forkcells'] = len(forks); rep['forkfail'] = []
+    for grp in clusters_([f[0] for f in forks], d=4):
+        cx, cy = round(sum(c[0] for c in grp) / len(grp)), round(sum(c[1] for c in grp) / len(grp))
+        def parts_of(f0):   # 갈림 칸 하나에서: 가지마다 갈림목을 빼고 길을 따라가 닿는 출구·마을(가장 가까운 가지에만 적는다)
+            comps, R_ = f0[1], f0[2]; fx, fy = f0[0]; br = []
+            for comp in comps:
+                seen_ = set(comp); dq_ = deque((c, 0) for c in comp); found = {}
+                while dq_:
+                    c, d0 = dq_.popleft()
+                    if c in srcs and srcs[c] not in found: found[srcs[c]] = d0
+                    if vil(*c) and key not in found: found[key] = d0
+                    for n in nb4(c):
+                        if n in roadc and n not in seen_ and max(abs(n[0] - fx), abs(n[1] - fy)) > R_: seen_.add(n); dq_.append((n, d0 + 1))
+                mx, my = sum(c[0] for c in comp) / len(comp) - fx, sum(c[1] for c in comp) / len(comp) - fy
+                d_ = (0, 1 if mx > 0 else -1) if abs(mx) > abs(my) else (1 if my > 0 else -1, 0)
+                br.append((ARROW[d_], found))
+            best_br = {}
+            for i_, (_, found) in enumerate(br):
+                for b_, d0 in found.items():
+                    if b_ not in best_br or d0 < best_br[b_][0]: best_br[b_] = (d0, i_)
+            parts = []
+            for i_, (arrow, found) in enumerate(br):
+                mine_ = sorted((b_ for b_, (d0, j_) in best_br.items() if j_ == i_), key=name_of)
+                if mine_: parts.append((arrow, ' · '.join(name_of(b_) for b_ in mine_[:2])))
+            return parts
+        gs = set(grp)
+        cands = sorted((f for f in forks if f[0] in gs), key=lambda f: abs(f[0][0] - cx) + abs(f[0][1] - cy))[:10]
+        best_f, parts = None, []
+        for f in cands:   # 가지 목적지가 가장 많이 갈리는 칸이 진짜 갈림목
+            p_ = parts_of(f)
+            if len(p_) > len(parts): best_f, parts = f, p_
+        if len(parts) < 2: rep.setdefault('forkskip', []).append((cx, cy, parts)); continue
+        cx, cy = best_f[0]
+        pos = place_sign(cx, cy, '  '.join(a + ' ' + n for a, n in parts))
+        if pos: rep['fork'].append((parts, pos))
+        else: rep['forkfail'].append((cx, cy, parts))
+    # 4) 길가 돌기둥: 마을 밖 길 옆, POST_GAP 간격, 양옆 번갈아
+    posts = []
+    for (x, y) in sorted(roadc, key=lambda c: (c[1] // 3, c[0])):
+        if vil(x, y) or (x, y) in zone_: continue
+        if any(abs(px - x) <= POST_GAP and abs(py - y) <= POST_GAP for px, py in posts): continue
+        cands = [n for n in nb4((x, y)) if n not in roadc and free_prop(n[0], n[1], 2) and not vil(*n)]
+        if not cands: continue
+        nx, ny = rng.choice(cands)
+        if m.stamp('snowpost', nx, ny - 1): posts.append((nx, ny)); rep['posts'] += 1
+    # 5) 출구 문: 경계 칸 양옆 등불
+    for (A, B), r in SEAM_REC.items():
+        if A != key: continue
+        for cr in r['crossings']:
+            grp = [(gx - x0, gy - y0) for (gy, gx) in cr['seam']]; dy, dx = _dir(cr['edge'])
+            if dy: xs_ = [c[0] for c in grp]; y_ = grp[0][1]; spots = [(min(xs_) - 1, y_), (max(xs_) + 1, y_)]
+            else: ys_ = [c[1] for c in grp]; x_ = grp[0][0]; spots = [(x_, min(ys_) - 1), (x_, max(ys_) + 1)]
+            for (lx, ly) in spots:
+                if m.inside(lx, ly) and m.inside(lx, ly - 1) and not m.water[ly][lx] and m.road[ly][lx] == 0 and m.obj[ly][lx] is None and m.high[ly][lx] is None and m.obj[ly - 1][lx] is None and m.high[ly - 1][lx] is None:
+                    if m.stamp('lantern', lx, ly - 1, force=True): rep['lamps'] += 1
+    return rep
+
+def rewrite_boards(m, gate_pos):
+    """옛 마을 안내판(화살표 글)을 새 배치 기준으로: 목적지마다 마을 어귀 쪽 방향 화살표. n5가 옛 이정표를 옮긴 뒤에 부른다"""
+    n = 0
+    for o in m.objects:
+        if o['kind'] != 'sign' or o.get('_new') or not any(ch in (o.get('text') or '') for ch in '↑↓←→'): continue
+        lines = [ln for ln in o['text'].split('\n') if not any(ch in ln for ch in '↑↓←→')]
+        for b, cells in sorted(gate_pos.items(), key=lambda kv: NAMES.get(kv[0], kv[0])):
+            mx = sum(c[0] for c in cells) / len(cells) - o['x']; my = sum(c[1] for c in cells) / len(cells) - o['y']
+            d_ = (0, 1 if mx > 0 else -1) if abs(mx) > abs(my) else (1 if my > 0 else -1, 0)
+            lines.append(f"{ARROW[d_]} {NAMES.get(b, b)}")
+        if len(lines) <= 1 and not gate_pos: continue
+        o['text'] = '\n'.join(lines); n += 1
+    return n
 
 def export(m):
     # 이 컴퓨터에 없는(에셋 팩에서만 만들 수 있는) 타일은 가까운 그림으로 바꾼다
@@ -949,5 +1381,5 @@ if __name__ == '__main__':
         built.append(m)
         n5r = rep.get('n5', {})
         print(key, m.w, m.h, '옮김', len(n5r.get('placed', [])), '못옮김', n5r.get('dropped'), '낚시', n5r.get('fishing'), '동물', n5r.get('critters'), rep.get('n5after'), 'missing', len(miss))
-        print('   소품', len(rep.get('dressed', [])), '길냄', len(rep.get('opened', {}).get('opened', [])), '옮긴사람', len(rep.get('moved', [])), '숲속', rep.get('n5', {}).get('in_forest'), '채움', rep.get('filled'), '못감', len(rep.get('unreach', [])), sorted({(u[0], str(u[1])[:24]) for u in rep.get('unreach', [])})[:8], '막힘', rep.get('opened', {}).get('stuck'), '경계치움', len(rep.get('edgeClear', [])), '경계남음', rep.get('edgeStuck'), '건물밂', rep.get('lotShift'))
+        print('   소품', len(rep.get('dressed', [])), '길냄', len(rep.get('opened', {}).get('opened', [])), '옮긴사람', len(rep.get('moved', [])), '숲속', rep.get('n5', {}).get('in_forest'), '채움', rep.get('filled'), '못감', len(rep.get('unreach', [])), sorted({(u[0], str(u[1])[:24]) for u in rep.get('unreach', [])})[:8], '막힘', rep.get('opened', {}).get('stuck'), '이정표', len(rep.get('signs', [])), rep.get('signMissing'), '길안내', {k_: (len(v_) if isinstance(v_, (list, dict)) else v_) for k_, v_ in rep.get('roads', {}).items()}, '안내판', rep.get('boards'), '꼬리', rep.get('tails'), '경계치움', len(rep.get('edgeClear', [])), '경계남음', rep.get('edgeStuck'), '건물밂', rep.get('lotShift'))
     if len(built) == len(KEYS): world_outputs(built)
