@@ -1,5 +1,5 @@
 {
-  "status": "pending_final_visual_approval",
+  "status": "approved",
   "productionApplied": false,
   "assets": [
     {
@@ -1850,5 +1850,6 @@
   },
   "runtimeGameplay": false,
   "waterfallAnimation": false,
-  "productionMapsUnchanged": true
+  "productionMapsUnchanged": true,
+  "visualApprovalRecord": "ArtReview/Approved/MountainRange-Final-v2/approval.json"
 }

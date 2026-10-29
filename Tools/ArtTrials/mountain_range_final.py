@@ -244,7 +244,14 @@ def main():
                 x=16+col*496;y=12+row*318
                 d.text((x,y),title,font=font,fill='white');comparison.paste(im,(x,y+30))
         comparison.save(corrections/'unity-before-after.png')
-    catalogue=dict(status='pending_final_visual_approval',productionApplied=False,assets=A,newAssets=NEW,
+    approval_path=ROOT/'ArtReview/Approved/MountainRange-Final-v2/approval.json'
+    approved=False
+    if approval_path.exists():
+        frozen_assets=json.loads(approval_path.read_text())['assets']
+        approved={a['name']:(a['size'],a['rgbaSha256']) for a in assets}=={a['name']:(a['size'],a['rgbaSha256']) for a in frozen_assets}
+    status='approved' if approved else 'pending_final_visual_approval'
+    approval_record=str(approval_path.relative_to(ROOT)) if approved else None
+    catalogue=dict(status=status,visualApprovalRecord=approval_record,productionApplied=False,assets=A,newAssets=NEW,
         package='Package/',frozenApprovedAssets=['west-cap','body-a','body-b','east-cap','bend-north','bend-south'],
         finalReviewAssets=list(A),pixelSize=16,previewOnly=True)
     (OUT/'catalogue.json').write_text(json.dumps(catalogue,ensure_ascii=False,indent=2)+'\n')
@@ -255,7 +262,7 @@ def main():
         previous={a['name']:a['rgbaSha256'] for a in json.loads(baseline.read_text())['assets']}
         changed=[a['name'] for a in assets if a['rgbaSha256']!=previous[a['name']]]
         assert set(changed)=={'mountain-pass','stream-valley'},changed
-    report=dict(status='pending_final_visual_approval',productionApplied=False,assets=assets,compatiblePortPairs=joins,
+    report=dict(status=status,visualApprovalRecord=approval_record,productionApplied=False,assets=assets,compatiblePortPairs=joins,
         preservedEarlierSprites=frozen,passClearancePixels=48,roadCoreClearancePixels=32,
         sourceWaterfallValleyRiverLakeConnectedInRGBA=True,existingGroundRiverPortRGBAEqual=True,
         corrections=dict(passInnerWallPixelsPreserved=True,wholeWallMasterPixelCountPreserved=True,

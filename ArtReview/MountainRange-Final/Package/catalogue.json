@@ -1,5 +1,5 @@
 {
-  "status": "pending_final_visual_approval",
+  "status": "approved",
   "productionApplied": false,
   "assets": {
     "west-cap": {
@@ -550,5 +550,6 @@
     "river-outlet"
   ],
   "pixelSize": 16,
-  "previewOnly": true
+  "previewOnly": true,
+  "visualApprovalRecord": "ArtReview/Approved/MountainRange-Final-v2/approval.json"
 }

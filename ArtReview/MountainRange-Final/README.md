@@ -1,6 +1,8 @@
 # 산맥 에셋 — 최종 검토 묶음
 
-**제작·정적 검사·Unity 검토 촬영 완료 / 고개·계곡 수정 v2 그림 검토 대기 / 본편 미적용**.
+**고개·계곡 수정 v2 포함 산맥22종 최종 그림 승인 (2026-10-29 “좋다.”) / 본편 미적용**.
+
+[승인본](../Approved/MountainRange-Final-v2/README.md)에 PNG/Aseprite22쌍·접속단면4종·검토판·픽셀지문을 동결했다. 승인 범위는 제출한 그림과 조립 표현이며 런타임 통합 검증은 별도다.
 
 사용자 후속 지적의 고개 절단선과 계곡 상류 접속을 수정했다. [수정 전후와 원인](Corrections-v2/README.md), [Unity 전후 비교](Corrections-v2/unity-before-after.png). 이 페이지의 전체 그림/Package는 수정본이다.
 
@@ -96,4 +98,4 @@ python Tools/ArtTrials/mountain_range_final.py --prepare
 
 `--prepare`는 새 배치와 참조를 만들고 기존 캡처를 통과한 것으로 취급하지 않는다. `unity-review.cs.txt`를 Unity execute_code에서 실행한 뒤 `python Tools/ArtTrials/mountain_range_final.py`로 실제 새 캡처를 비교한다. `views.tsv`와 배치JSON/TSV는 Python이 생성한다. 생성물만 손으로 고치지 않는다. 기존 캡처와 다른 새 원본을 만들면 참조만 바꿔 통과 처리하지 말고 Unity도 다시 촬영한다.
 
-다음 단계는 **이 최종 묶음의 사용자 그림 검토**다. 승인 전 본편에는 넣지 않는다.
+최종 그림 승인을 기록했다. 후속 작업은 본편 A2 등록·배치 적용과 실제 보행/충돌/가림 검증이며 이번 승인 기록에서는 본편을 변경하지 않았다.
