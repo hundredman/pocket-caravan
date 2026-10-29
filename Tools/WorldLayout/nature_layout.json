@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "status": "review",
+  "description": "승인 자연 그림의 실제 맵 배치 검토. 좌표는 세계 타일 왼쪽 위, 변형 없음.",
+  "clearings": [
+    {
+      "id": "songak-ridge",
+      "x": 172,
+      "y": -43,
+      "w": 20,
+      "h": 13
+    },
+    {
+      "id": "source-ridge",
+      "x": 100,
+      "y": -26,
+      "w": 32,
+      "h": 16
+    },
+    {
+      "id": "source-outlet",
+      "x": 114,
+      "y": -10,
+      "w": 4,
+      "h": 4
+    }
+  ],
+  "placements": [
+    {
+      "id": "songak-west",
+      "asset": "west-cap",
+      "x": 172,
+      "y": -43,
+      "role": "rock"
+    },
+    {
+      "id": "songak-body",
+      "asset": "body-b",
+      "x": 180,
+      "y": -43,
+      "role": "rock"
+    },
+    {
+      "id": "songak-east",
+      "asset": "east-cap",
+      "x": 184,
+      "y": -43,
+      "role": "rock"
+    },
+    {
+      "id": "source-west",
+      "asset": "west-cap",
+      "x": 100,
+      "y": -26,
+      "role": "rock"
+    },
+    {
+      "id": "source-spring",
+      "asset": "spring-waterfall",
+      "x": 108,
+      "y": -26,
+      "role": "water-rock"
+    },
+    {
+      "id": "source-east",
+      "asset": "east-cap",
+      "x": 124,
+      "y": -26,
+      "role": "rock"
+    },
+    {
+      "id": "source-outlet",
+      "asset": "river-outlet",
+      "x": 114,
+      "y": -10,
+      "role": "water-rock"
+    },
+    {
+      "id": "jangdan-rice-north",
+      "asset": "small-plot",
+      "x": 211,
+      "y": 16,
+      "role": "rice"
+    },
+    {
+      "id": "jangdan-rice-south",
+      "asset": "small-plot",
+      "x": 217,
+      "y": 29,
+      "role": "rice"
+    }
+  ],
+  "connections": [
+    {
+      "a": "songak-west",
+      "portA": "E",
+      "b": "songak-body",
+      "portB": "W"
+    },
+    {
+      "a": "songak-body",
+      "portA": "E",
+      "b": "songak-east",
+      "portB": "W"
+    },
+    {
+      "a": "source-west",
+      "portA": "E",
+      "b": "source-spring",
+      "portB": "W"
+    },
+    {
+      "a": "source-spring",
+      "portA": "E",
+      "b": "source-east",
+      "portB": "W"
+    },
+    {
+      "a": "source-spring",
+      "portA": "S",
+      "b": "source-outlet",
+      "portB": "N"
+    }
+  ],
+  "sourceDecision": "사용자 2026-10-29: 큰 폭포를 유지하고 주변 출입구·도착 위치 조정. 기존 맵/스폰 ID 유지."
+}

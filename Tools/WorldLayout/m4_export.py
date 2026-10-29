@@ -61,9 +61,25 @@ def world_map(m,lay,atlas,keys):
         (WM/f'{stem}Layout.json').write_text(json.dumps(lay_,ensure_ascii=False,separators=(',',':')))
 
 def main():
+    global PREV,REVIEW
     ap=argparse.ArgumentParser();ap.add_argument('layers')
     ap.add_argument('--production',action='store_true',help='④ 본편: Maps/·Art 타일·인증 기록·지도(Resources/WorldMap)에 쓴다')
+    ap.add_argument('--preview-root',type=Path)
+    ap.add_argument('--review-root',type=Path)
     a=ap.parse_args()
+    if a.preview_root:
+        if a.production or not a.preview_root.resolve().is_relative_to((ROOT/'Assets/PocketCaravan/Editor/B2Preview').resolve()):raise ValueError('Isolated preview path required')
+        PREV=a.preview_root
+    if a.review_root:
+        if a.production or not a.review_root.resolve().is_relative_to((ROOT/'ArtReview').resolve()):raise ValueError('Isolated review path required')
+        REVIEW=a.review_root
+    if a.production and (a.layers and (Path(a.layers)/'nature.json').exists()):
+        import m4_nature
+        nature_record=json.loads((Path(a.layers)/'nature.json').read_text())
+        source=ROOT/nature_record['sourceLayout']
+        if source.resolve()!=m4_nature.LIVE.resolve():raise ValueError('Production requires the approved live nature snapshot')
+        m4_nature.load_layout(source,production=True)
+        if hashlib.sha256(source.read_bytes()).hexdigest()!=nature_record.get('layoutSha256'):raise ValueError('Nature source changed after generation')
     L=Path(a.layers);m=np.load(L/'masks.npz');keys=[str(k) for k in m['keys']]
     lay={k:Image.open(L/f'{k}.png').convert('RGBA') for k in('ground','deco','obj','high')}
     arr={k:np.array(im) for k,im in lay.items()}
@@ -87,6 +103,13 @@ def main():
     mids=[MAPID.get(k,'') for k in keys]
     gwalk=(~m['blocked'])&m['own']&(m['mapid']>=0)
     seam=m4_objects.seams(m['mapid'],gwalk,mids,v.X0,v.Y0)   # 세계 좌표로
+    nature_objects=None
+    if (L/'nature.json').exists():
+        import m4_nature
+        nature_objects,nature_added,relocations=m4_nature.preserve_objects(seam,gwalk,(v.X0,v.Y0))
+        REVIEW.mkdir(parents=True,exist_ok=True)
+        (REVIEW/'nature-exits.json').write_text(json.dumps(dict(addedBoundaryCells=nature_added,relocations=relocations),ensure_ascii=False,indent=2)+'\n')
+        print('기존 기능/출구/도착자리 보존, 새 경계 칸:',nature_added)
     zones=json.loads((ROOT/'ArtReview/M2-Zones/zones.json').read_text())['villages']
     oldobj=json.loads((ROOT/'ArtReview/M0/old-objects.json').read_text())
     for key,mid in MAPID.items():
@@ -115,6 +138,7 @@ def main():
         objects,orep=m4_objects.build(mid,key,(int(x0+v.X0),int(y0+v.Y0)),walk,np.array(road).reshape(h,w),np.array(water,bool).reshape(h,w),inside_,
                                       vz,[o for o in oldobj if o['mapId']==mid and o['kind'] not in('spawn','exit','sign')],seam.get(mid,[]),
                                       [o for o in oldobj if o['mapId']==mid and o['kind']=='sign'])
+        if nature_objects is not None:objects=nature_objects[mid]
         old=ROOT/f'Assets/PocketCaravan/Maps/{mid}.json'
         oj=json.loads(old.read_text()) if old.exists() else {}
         data=dict(id=mid,name=oj.get('name') or NAMES.get(mid,key.split('/')[1]),w=w,h=h,hours=oj.get('hours',0),
@@ -122,6 +146,13 @@ def main():
                   objects=objects,legacyHeight=h,palette=pal,reachable=reach,water=water,
                   terrainX=int(x0+v.X0),terrainY=int(y0+v.Y0))
         if not a.production:data['previewOnly']=True   # 미리보기: 저장 보호
+        if (L/'nature.json').exists():
+            crops=[]
+            for p_ in json.loads((L/'nature.json').read_text())['placements']:
+                if p_['role']!='rice':continue
+                cx,cy=p_['x']-(x0+v.X0),p_['y']-(y0+v.Y0);cw,ch=p_['size']
+                if 0<=cx and 0<=cy and cx+cw<=w and cy+ch<=h:crops.append(dict(x=int(cx),y=int(cy),w=cw,h=ch))
+            if crops:data['natureCrops']=crops
         (PREV/'Maps'/f'{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
         if a.production:(ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
         atlas.append(dict(mapId=mid,box=(int(x0),int(y0),w,h),vz=vz))

@@ -1,0 +1,42 @@
+// execute_code body: actual Unity scene/camera renders; Edit mode, no saves or asset writes.
+if(UnityEditor.EditorApplication.isPlaying)throw new System.Exception("Stop Play first");
+var setup=UnityEditor.SceneManagement.EditorSceneManager.GetSceneManagerSetup();
+for(int i=0;i<UnityEngine.SceneManagement.SceneManager.sceneCount;i++)if(UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).isDirty)throw new System.Exception("Unsaved scene");
+string output="ArtReview/NatureBinding-20261029/Unity";
+var previous=PocketCaravan.MapRoot.Current;
+string previousId=previous==null?null:previous.mapId;
+var measurements=new System.Collections.Generic.List<object>();
+try{
+ foreach(string row in System.IO.File.ReadAllLines("Docs/Validation/Forest-Performance-2026-10-29/all-scenes.tsv")){
+  var fields=row.Split('\t');string id=fields[0];
+  for(int pass=0;pass<2;pass++){
+   var scene=UnityEditor.SceneManagement.EditorSceneManager.OpenScene(pass==0?fields[1]:PocketCaravan.EditorTools.NatureIntegrationReview.Root+"/Scenes/"+id+".unity",UnityEditor.SceneManagement.OpenSceneMode.Single);
+   PocketCaravan.MapRoot map=null;UnityEngine.Camera cam=null;int objects=0,renderers=0,crops=0;
+   foreach(var go in scene.GetRootGameObjects()){
+    objects+=go.GetComponentsInChildren<UnityEngine.Transform>(true).Length;renderers+=go.GetComponentsInChildren<UnityEngine.Renderer>(true).Length;
+    crops+=go.GetComponentsInChildren<PocketCaravan.CropDepth>(true).Length;
+    if(map==null)map=go.GetComponentInChildren<PocketCaravan.MapRoot>(true);
+    foreach(var c in go.GetComponentsInChildren<UnityEngine.Camera>(true)){c.enabled=false;if(cam==null)cam=c;}
+   }
+   if(map==null||cam==null)throw new System.Exception("No map/camera: "+id);
+   typeof(PocketCaravan.MapRoot).GetMethod("Awake",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance).Invoke(map,null);
+   foreach(var b in cam.GetComponents<UnityEngine.Behaviour>())if(b.GetType().Name=="PixelPerfectCamera")b.enabled=false;
+   var area=map.ground.cellBounds;cam.orthographic=true;cam.aspect=480f/270;cam.orthographicSize=UnityEngine.Mathf.Max(area.size.y/2f,area.size.x/(2*cam.aspect))+.5f;
+   cam.transform.position=new UnityEngine.Vector3(area.center.x,area.center.y,-10);
+   var rt=UnityEngine.RenderTexture.GetTemporary(480,270,24,UnityEngine.RenderTextureFormat.ARGB32);var active=UnityEngine.RenderTexture.active;
+   var image=new UnityEngine.Texture2D(480,270,UnityEngine.TextureFormat.RGBA32,false);
+   try{
+    UnityEngine.Rendering.RenderPipeline.SubmitRenderRequest(cam,new UnityEngine.Rendering.Universal.UniversalRenderPipeline.SingleCameraRequest{destination=rt});
+    UnityEngine.RenderTexture.active=rt;image.ReadPixels(new UnityEngine.Rect(0,0,480,270),0,0);image.Apply();
+    System.IO.File.WriteAllBytes(output+"/overview-"+id+(pass==0?"-before":"-after")+".png",image.EncodeToPNG());
+   }finally{UnityEngine.RenderTexture.active=active;UnityEngine.RenderTexture.ReleaseTemporary(rt);UnityEngine.Object.DestroyImmediate(image);}
+   measurements.Add(new {map=id,pass,objects,renderers,crops});
+  }
+ }
+}finally{
+ UnityEditor.SceneManagement.EditorSceneManager.RestoreSceneManagerSetup(setup);
+ PocketCaravan.MapRoot restored=null;
+ foreach(var candidate in UnityEngine.Object.FindObjectsByType<PocketCaravan.MapRoot>(UnityEngine.FindObjectsSortMode.None))if(candidate.mapId==previousId){restored=candidate;break;}
+ typeof(PocketCaravan.MapRoot).GetProperty("Current").GetSetMethod(true).Invoke(null,new object[]{restored});
+}
+return measurements;

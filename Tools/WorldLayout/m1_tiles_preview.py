@@ -256,6 +256,7 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('--no',default='');ap.add_argument('--zones',action='store_true',help='M3: M2 구역도의 건물·광장을 그린다(ArtReview/M3-Village)');a=ap.parse_args()
     global OUT
     if a.zones:OUT=ROOT/'ArtReview/M3-Village'
+    if os.environ.get('M4_REVIEW_ROOT'):OUT=Path(os.environ['M4_REVIEW_ROOT'])
     asked=set(filter(None,a.no.split(',')));off=asked|{'field'}   # 들판(논)은 2026-10-28 은샘 지시로 뺌
     v.VARIANT['area']=v.SMALL_CENTRAL;v.VARIANT['hamlets']=v.HAMLETS
     layout=WorldLayout.read();w=v.build(layout);r=v.roads(layout,w);v.partition(layout,w,r)
@@ -929,14 +930,25 @@ def export_layers(out,img,gimg,dimg,deck,objs,water,road,road0,Z,FMASK,own,w,H,W
             return C7[n0] if n0 in C7 else INDEX['sprites'][nm]
         d_=ROOT/'Assets/PocketCaravan/Art/Baked/Objects/M4';d_.mkdir(parents=True,exist_ok=True)
         if kind=='bridge':
-            p_=d_/f'bridge_{nm}.png';BRIDGES[int(nm)].save(p_);return str(p_.relative_to(ROOT))
+            p_=d_/f'bridge_{nm}.png';im_=BRIDGES[int(nm)]
+            if not p_.exists() or Image.open(p_).convert('RGBA').tobytes()!=im_.convert('RGBA').tobytes():im_.save(p_)
+            return str(p_.relative_to(ROOT))
         if kind=='fill':
-            p_=d_/f'shade_{nm}.png';Image.new('RGBA',(T,T),tuple(int(nm[i:i+2],16) for i in(0,2,4,6))).save(p_);return str(p_.relative_to(ROOT))
+            p_=d_/f'shade_{nm}.png';im_=Image.new('RGBA',(T,T),tuple(int(nm[i:i+2],16) for i in(0,2,4,6)))
+            if not p_.exists() or Image.open(p_).convert('RGBA').tobytes()!=im_.tobytes():im_.save(p_)
+            return str(p_.relative_to(ROOT))
         raise ValueError(sid)
     for v_ in PARTS.values():
         for sid,_,_ in v_:
             if sid not in srcs:srcs[sid]=src_path(sid)
     (out/'parts.json').write_text(json.dumps(dict(sources=srcs,parts={f'{l}:{y}:{x}':v_ for (l,y,x),v_ in PARTS.items()}),ensure_ascii=False))
+    if os.environ.get('M4_NATURE')=='review':
+        import m4_nature
+        print('승인 자연 배치 검토:',m4_nature.apply_layers(out,FMASK))
+    else:
+        import m4_nature
+        if m4_nature.LIVE.exists():
+            print('승인 자연 배치 본편:',m4_nature.apply_layers(out,FMASK,production=True,path=m4_nature.LIVE))
     print('M4 층 저장:',out)
 
 def gameart(name):

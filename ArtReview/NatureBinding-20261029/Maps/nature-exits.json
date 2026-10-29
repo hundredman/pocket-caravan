@@ -1,0 +1,155 @@
+{
+  "addedBoundaryCells": 15,
+  "relocations": [
+    {
+      "map": "transit_woodtown",
+      "target": "transit_wetroad",
+      "spawnId": "seam_transit_woodtown_14",
+      "old": {
+        "exit": [
+          120,
+          -23
+        ],
+        "arrival": [
+          120,
+          -25
+        ]
+      },
+      "new": {
+        "exit": [
+          121,
+          -24
+        ],
+        "arrival": [
+          121,
+          -26
+        ]
+      }
+    },
+    {
+      "map": "transit_woodtown",
+      "target": "transit_wetroad",
+      "spawnId": "seam_transit_woodtown_15",
+      "old": {
+        "exit": [
+          121,
+          -24
+        ],
+        "arrival": [
+          119,
+          -24
+        ]
+      },
+      "new": {
+        "exit": [
+          121,
+          -24
+        ],
+        "arrival": [
+          121,
+          -26
+        ]
+      }
+    },
+    {
+      "map": "transit_wetroad",
+      "target": "transit_woodtown",
+      "spawnId": "seam_transit_wetroad_13",
+      "old": {
+        "exit": [
+          121,
+          -25
+        ],
+        "arrival": [
+          121,
+          -23
+        ]
+      },
+      "new": {
+        "exit": [
+          121,
+          -25
+        ],
+        "arrival": [
+          122,
+          -24
+        ]
+      }
+    },
+    {
+      "map": "transit_wetroad",
+      "target": "transit_woodtown",
+      "spawnId": "seam_transit_wetroad_14",
+      "old": {
+        "exit": [
+          120,
+          -24
+        ],
+        "arrival": [
+          120,
+          -22
+        ]
+      },
+      "new": {
+        "exit": [
+          121,
+          -25
+        ],
+        "arrival": [
+          122,
+          -24
+        ]
+      }
+    },
+    {
+      "map": "transit_wetroad",
+      "target": "transit_central_approach",
+      "spawnId": "seam_transit_wetroad_15",
+      "old": {
+        "exit": [
+          107,
+          -24
+        ],
+        "arrival": [
+          107,
+          -19
+        ]
+      },
+      "new": {
+        "exit": [
+          107,
+          -24
+        ],
+        "arrival": [
+          107,
+          -22
+        ]
+      }
+    },
+    {
+      "map": "transit_wetroad",
+      "target": "transit_woodtown",
+      "spawnId": "seam_transit_wetroad_15",
+      "old": {
+        "exit": [
+          120,
+          -24
+        ],
+        "arrival": [
+          122,
+          -24
+        ]
+      },
+      "new": {
+        "exit": [
+          121,
+          -25
+        ],
+        "arrival": [
+          124,
+          -25
+        ]
+      }
+    }
+  ]
+}

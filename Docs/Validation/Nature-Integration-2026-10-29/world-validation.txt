@@ -1,0 +1,1 @@
+0 errors; 1398 registered exits checked. Scenes and saves unchanged.

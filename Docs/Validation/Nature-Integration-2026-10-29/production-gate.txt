@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/Tools/WorldLayout/m4_export.py", line 225, in <module>
+    if __name__=='__main__':main()
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/Tools/WorldLayout/m4_export.py", line 80, in main
+    if source.resolve()!=m4_nature.LIVE.resolve():raise ValueError('Production requires the approved live nature snapshot')
+ValueError: Production requires the approved live nature snapshot

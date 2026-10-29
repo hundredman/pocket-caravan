@@ -1,0 +1,14 @@
+string[] g={"Naru","Gaegyeong","Dakmok","goryeo_songak","goryeo_jangdan"};
+string[] c={"transit_woodtown","transit_ferry","transit_southport","transit_crossroads","transit_wetroad","transit_pass","transit_central_approach","transit_south_inland"};
+var all=new System.Collections.Generic.List<string>(g);all.AddRange(c);int crossings=0,local=0;
+foreach(var from in all)foreach(var to in all){
+ var fx=new PocketCaravan.GoryeoTravelTransition();fx.Begin(from,to);bool expected=System.Array.IndexOf(g,from)>=0!= (System.Array.IndexOf(g,to)>=0);
+ if(PocketCaravan.GoryeoTravelTransition.IsRegionalCrossing(from,to)!=expected)throw new System.Exception("Classification mismatch");
+ if(expected){crossings++;if(fx.MinHoldSeconds<.5f)throw new System.Exception("Unreadable regional card");}
+ else {local++;if(fx.MinHoldSeconds!=0||fx.CoverSeconds+fx.RevealSeconds>.3f)throw new System.Exception("Local travel too long");}
+}
+var before=PocketCaravan.TravelTransition.For("north_naru","transit_pass");
+typeof(PocketCaravan.GoryeoTravelTransition).GetMethod("RegisterOnce",System.Reflection.BindingFlags.Static|System.Reflection.BindingFlags.NonPublic).Invoke(null,null);
+if(PocketCaravan.TravelTransition.For("north_naru","transit_pass")!=before)throw new System.Exception("Foreign transition changed");
+if(!(PocketCaravan.TravelTransition.For("Naru","transit_pass") is PocketCaravan.GoryeoTravelTransition))throw new System.Exception("Transition not registered");
+return new {crossings,local,foreignPolicyPreserved=true,korea=PocketCaravan.GoryeoTravelTransition.RegionOf("Assets/PocketCaravan/Scenes/Goryeo/Naru.unity"),central=PocketCaravan.GoryeoTravelTransition.RegionOf("transit_pass")};
