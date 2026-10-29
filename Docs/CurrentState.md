@@ -32,7 +32,9 @@
 
 ## 3. 아트 (새 방향과 다름 — [아트 기준](ArtGuide.md) 5절)
 
-- ArtReview/MountainRange-S1: 승인 암반을 참조해 새로 만든 동서 능선 조립4종(west-cap128/body-a192/body-b64/east-cap128, 높이192px). 새 조립원본에서 내보내며 승인 원본 미변경. 448/768px 길이·Unity Edit480×270 비교4장, 8연결단면/마스터재조립/ASE4개/Unity4장RGBA일치. S1 그림승인대기·본편 미적용. 굽힘/안팎모서리/갈림/실제고도/고개/계곡/수원폭포는 아직 없다.
+- ArtReview/MountainRange-S2: S2a 완만한 북쪽/남쪽 굽힘192×256 2종, S1 단면을64px 평면 이동하며 연결. 내장 imagegen 새 조립원화→Aseprite 정리, 동결 S1 끝/중앙으로448px/704px 조립·Unity Edit480×270 비교5장. 16연결/ASE2개/Unity5장RGBA일치·S1픽셀불변. S2a 그림승인대기·본편 미적용. 독립안팎모서리/직각전환(S2b)/갈림/고개/계곡/실제고도는 미구현.
+
+- ArtReview/MountainRange-S1: 승인 암반을 참조해 새로 만든 동서 능선 조립4종(west-cap128/body-a192/body-b64/east-cap128, 높이192px). 새 조립원본에서 내보내며 승인 원본 미변경. 448/768px 길이·Unity Edit480×270 비교4장, 8연결단면/마스터재조립/ASE4개/Unity4장RGBA일치. S1 다음단계진행승인(2026-10-29 “계속 진행해.”)·Approved/MountainRange-S1 동결·본편 미적용. 굽힘/안팎모서리/갈림/실제고도/고개/계곡/수원폭포는 아직 없다.
 
 - ArtReview/RockMountain-v1: 돌산192×160·낮은 암벽256×112·산자락128×80의 온전한 시안3종 PNG/Aseprite. 기존 이끼바위7색·단색초원·기존숲/길/캐릭터를 쓴 Unity Edit480×270 검토4장. ASE3개/Unity4장 RGBA 일치. 3종 그림승인(2026-10-29)·Approved/RockMountain-v1 동결·본편 미적용, 자유 산맥 연결 타일/경사/수원·폭포 연결은 아직 없다.
 
