@@ -1,7 +1,6 @@
 """Whole-source nature integration: approval gate, ports, masks and current-map safety."""
 import copy,json,sys,tempfile,unittest
 from pathlib import Path
-import numpy as np
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
 import m4_nature,m4_certify

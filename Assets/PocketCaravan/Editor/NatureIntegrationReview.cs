@@ -12,7 +12,7 @@ namespace PocketCaravan.EditorTools
     public static class NatureIntegrationReview
     {
         public const string Root = "Assets/PocketCaravan/Editor/B2Preview/A7";
-        public const string Output = "ArtReview/NatureBinding-20261029/Unity";
+        public static string Output => SessionState.GetString("Codex.NatureIntegrationReview.Output", "ArtReview/NatureBinding-20261029/Unity");
         const string Active = "Codex.NatureIntegrationReview";
         const string BuildBackupKey = "Codex.NatureIntegrationReview.BuildBackup";
         [Serializable] class SceneEntry { public string path; public bool enabled; }
@@ -40,6 +40,8 @@ namespace PocketCaravan.EditorTools
                 Result = new Report();
                 NaturePlayReviewRunner.Record = Check; NaturePlayReviewRunner.Complete = Finish;
                 NaturePlayReviewRunner.ReviewRoot = Root; NaturePlayReviewRunner.Output = Output;
+                NaturePlayReviewRunner.ChangesPath = Path.GetFullPath(Output + "/../Maps/nature-exits.json");
+                NaturePlayReviewRunner.ProductionOnly = SessionState.GetBool("Codex.NatureIntegrationReview.Production", false);
                 var go = new GameObject("Nature integration review (temporary)");
                 UnityEngine.Object.DontDestroyOnLoad(go); go.AddComponent<NaturePlayReviewRunner>();
             };
@@ -93,11 +95,12 @@ namespace PocketCaravan.EditorTools
         }
 
         public static void Run() => BeginReview(true);
+        public static void RunProduction() => BeginReview(true, true);
 
         [MenuItem("Pocket Caravan/Review/자연 배치 수동 검토 (저장 안 함)")]
         public static void OpenManual() => BeginReview(false);
 
-        static void BeginReview(bool automatic)
+        static void BeginReview(bool automatic, bool production = false)
         {
             if (EditorApplication.isPlaying) throw new InvalidOperationException("Stop Play first");
             SetGameSize();
@@ -106,11 +109,12 @@ namespace PocketCaravan.EditorTools
             var backup = new SceneBackup { scenes = Array.ConvertAll(scenes, s => new SceneEntry { path = s.path, enabled = s.enabled }) };
             SessionState.SetString(BuildBackupKey, JsonUtility.ToJson(backup));
             File.Copy("ProjectSettings/EditorBuildSettings.asset", Output + "/EditorBuildSettings.before", true);
-            EditorBuildSettings.scenes = Array.ConvertAll(scenes, s =>
+            if (!production) EditorBuildSettings.scenes = Array.ConvertAll(scenes, s =>
             {
                 string candidate = Root + "/Scenes/" + Path.GetFileName(s.path);
                 return new EditorBuildSettingsScene(File.Exists(candidate) ? candidate : s.path, s.enabled);
             });
+            SessionState.SetBool("Codex.NatureIntegrationReview.Production", production);
             SessionState.SetBool(Active, automatic);
             EditorSceneManager.OpenScene(Root + "/Scenes/goryeo_songak.unity");
             EditorApplication.isPlaying = true;

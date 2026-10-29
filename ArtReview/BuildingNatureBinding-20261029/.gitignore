@@ -1,0 +1,7 @@
+*Layers/
+*Base/
+Maps/*.png
+BuildingMaps/*.png
+before-gameplay.json
+forest-trial.png
+**/EditorBuildSettings.before

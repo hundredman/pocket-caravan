@@ -6,7 +6,7 @@
   "cells": 3947,
   "walkable": 1631,
   "reachable": 1591,
-  "palette": 301,
+  "palette": 298,
   "pixelDiff": 0,
   "terrain": [
    202,
@@ -42,7 +42,7 @@
   "cells": 3740,
   "walkable": 2619,
   "reachable": 1991,
-  "palette": 329,
+  "palette": 326,
   "pixelDiff": 0,
   "terrain": [
    174,
@@ -73,7 +73,7 @@
   "cells": 4221,
   "walkable": 2153,
   "reachable": 2132,
-  "palette": 690,
+  "palette": 689,
   "pixelDiff": 0,
   "terrain": [
    153,
@@ -104,7 +104,7 @@
   "cells": 4133,
   "walkable": 1212,
   "reachable": 591,
-  "palette": 628,
+  "palette": 627,
   "pixelDiff": 0,
   "terrain": [
    192,
@@ -137,7 +137,7 @@
   "cells": 3959,
   "walkable": 2422,
   "reachable": 1963,
-  "palette": 453,
+  "palette": 450,
   "pixelDiff": 0,
   "terrain": [
    222,
@@ -170,7 +170,7 @@
   "cells": 3016,
   "walkable": 1774,
   "reachable": 1661,
-  "palette": 651,
+  "palette": 648,
   "pixelDiff": 0,
   "terrain": [
    96,
@@ -199,7 +199,7 @@
   "cells": 3101,
   "walkable": 1920,
   "reachable": 1913,
-  "palette": 382,
+  "palette": 379,
   "pixelDiff": 0,
   "terrain": [
    83,
@@ -230,7 +230,7 @@
   "cells": 3823,
   "walkable": 3602,
   "reachable": 3602,
-  "palette": 413,
+  "palette": 410,
   "pixelDiff": 0,
   "terrain": [
    2,
@@ -239,18 +239,17 @@
   "villages": [
    "crossroads"
   ],
-  "exits": 134,
-  "spawns": 134,
+  "exits": 137,
+  "spawns": 137,
   "objects": {
-   "exit": 134,
+   "exit": 137,
    "lantern": 2,
-   "spawn": 134,
+   "sign": 2,
+   "spawn": 137,
    "talker": 1
   },
   "moved": [],
-  "missing": [
-   "anim 7"
-  ]
+  "missing": []
  },
  "transit_southport": {
   "key": "east/남동 포구",
@@ -259,7 +258,7 @@
   "cells": 3335,
   "walkable": 2024,
   "reachable": 2021,
-  "palette": 440,
+  "palette": 437,
   "pixelDiff": 0,
   "terrain": [
    82,
@@ -326,10 +325,7 @@
    "spawn": 108,
    "talker": 1
   },
-  "moved": [
-   "길손(길 가운데)",
-   "bandit"
-  ],
+  "moved": [],
   "missing": []
  },
  "transit_central_approach": {
@@ -357,9 +353,7 @@
    "spawn": 104,
    "talker": 1
   },
-  "moved": [
-   "길손(길 가운데)"
-  ],
+  "moved": [],
   "missing": []
  },
  "transit_south_inland": {
@@ -369,7 +363,7 @@
   "cells": 2663,
   "walkable": 1668,
   "reachable": 1543,
-  "palette": 401,
+  "palette": 398,
   "pixelDiff": 0,
   "terrain": [
    54,
@@ -422,7 +416,7 @@
  ],
  "_tiles": {
   "certifyErrors": 0,
-  "newTiles": 1294,
+  "newTiles": 1290,
   "reusedExisting": 33
  }
 }

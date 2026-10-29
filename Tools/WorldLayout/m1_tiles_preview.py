@@ -77,9 +77,13 @@ C7B={'cottage':'C7-Batch1-v1','pavilion':'C7-Batch1-v1','thatch':'C7-Buildings-v
      'garden_wall':'C7-CourtyardProps-v1','onggi':'C7-CourtyardProps-v1','paper_large':'C7-CourtyardProps-v1',
      'gaekju':'C7-Gaekju-v1','gate':'C7-GateProps-v1','stone_lantern':'C7-GateProps-v1','well':'C7-GateProps-v1',
      'palace':'C7-Palace-v1','shop':'C7-Shop-v1','celadon':'C7-WorkshopProps-v4','harvest':'C7-WorkshopProps-v4','paper_rack':'C7-WorkshopProps-v4'}
+import building_bindings
+def c7b_path(name):
+    if name in building_bindings.ASSETS:return building_bindings.path(name)
+    return ROOT/'ArtReview/Approved'/C7B[name]/f'{name}.png' if name in C7B else ROOT/f'ArtReview/C7-RemainingBatch-20261027/Native/{name}.png'
 def c7b(name):
-    p=ROOT/'ArtReview/Approved'/C7B[name]/f'{name}.png' if name in C7B else ROOT/f'ArtReview/C7-RemainingBatch-20261027/Native/{name}.png'
-    return Image.open(p).convert('RGBA')
+    if name in building_bindings.ASSETS:return building_bindings.image(name)
+    return Image.open(c7b_path(name)).convert('RGBA')
 def sprite(name):
     nm=name.split(':')[0]
     if nm in C7:
@@ -925,7 +929,7 @@ def export_layers(out,img,gimg,dimg,deck,objs,water,road,road0,Z,FMASK,own,w,H,W
             tile(nm).save(ROOT/p_);return p_
         if kind=='sprite':
             if nm.startswith('c7:'):
-                a_=nm[3:];return str((ROOT/'ArtReview/Approved'/C7B[a_]/f'{a_}.png').relative_to(ROOT)) if a_ in C7B else f'ArtReview/C7-RemainingBatch-20261027/Native/{a_}.png'
+                return str(c7b_path(nm[3:]).relative_to(ROOT))
             n0=nm.split(':')[0]
             return C7[n0] if n0 in C7 else INDEX['sprites'][nm]
         d_=ROOT/'Assets/PocketCaravan/Art/Baked/Objects/M4';d_.mkdir(parents=True,exist_ok=True)

@@ -5,9 +5,7 @@ rotation or color conversion. The source PNG is composed at its native size.
 """
 from pathlib import Path
 import hashlib,json
-import numpy as np
 from PIL import Image
-from scipy import ndimage
 ROOT=Path(__file__).resolve().parents[2]
 T=16
 LAYOUT=Path(__file__).with_name('nature_layout.json')
@@ -114,6 +112,8 @@ def load_layout(path=LAYOUT,production=False):
     return config,assets
 
 def apply_layers(folder,forest_masks,origin=(0,-130),production=False,path=LAYOUT):
+    import numpy as np
+    from scipy import ndimage
     folder=Path(folder);config,assets=load_layout(path,production=production)
     record=json.loads((folder/'parts.json').read_text());parts=record['parts'];sources=record['sources'];cache={}
     with np.load(folder/'masks.npz') as z:masks={k:z[k].copy() for k in z.files}
@@ -122,7 +122,15 @@ def apply_layers(folder,forest_masks,origin=(0,-130),production=False,path=LAYOU
         if not z.get('enabled',True):continue
         x,y=z['x']-ox,z['y']-oy
         if x<0 or y<0 or x+z['w']>w or y+z['h']>h:raise ValueError('Clearing outside world')
-        clear[y:y+z['h'],x:x+z['w']]=True
+        if z.get('contour'):
+            shape=np.zeros_like(clear)
+            for p in config['placements']:
+                if not p.get('enabled',True) or p['role']=='rice':continue
+                a=assets[p['asset']]['image'];px,py=p['x']-ox,p['y']-oy
+                alpha=np.array(a.getchannel('A')).reshape(a.height//T,T,a.width//T,T).max((1,3))>0
+                shape[py:py+alpha.shape[0],px:px+alpha.shape[1]]|=alpha
+            clear[y:y+z['h'],x:x+z['w']]|=ndimage.binary_dilation(shape,iterations=1)[y:y+z['h'],x:x+z['w']]
+        else:clear[y:y+z['h'],x:x+z['w']]=True
     # Identify original instances by source+world anchor, then remove each whole instance.
     instances={}
     for key,items in parts.items():
@@ -136,13 +144,13 @@ def apply_layers(folder,forest_masks,origin=(0,-130),production=False,path=LAYOU
     for k,im in instances.items():
         sid,px,py=k;x,y=px//T,py//T;sw,sh=im.width//T,im.height//T
         xa,ya,xb,yb=max(0,x),max(0,y),min(w,x+sw),min(h,y+sh)
-        if xa<xb and ya<yb and clear[ya:yb,xa:xb].any():
+        alpha=np.array(im.getchannel('A')).reshape(sh,T,sw,T).max((1,3))>0
+        if xa<xb and ya<yb and (clear[ya:yb,xa:xb]&alpha[ya-y:yb-y,xa-x:xb-x]).any():
             removed.add(k)
             shadow_candidates[ya:yb,xa:xb]=True
             foot=y+sh-1
             if 0<=foot<h:removed_trunks[foot,max(0,x+(sw-1)//2):min(w,x+sw//2+1)]=True
         elif xa<xb and ya<yb:
-            alpha=np.array(im.getchannel('A')).reshape(sh,T,sw,T).max((1,3))>0
             canopy[ya:yb,xa:xb]|=alpha[ya-y:yb-y,xa-x:xb-x]
     canopy_interior=ndimage.binary_erosion(canopy,iterations=1)
     for key,items in list(parts.items()):

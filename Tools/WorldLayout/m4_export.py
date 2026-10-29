@@ -66,6 +66,7 @@ def main():
     ap.add_argument('--production',action='store_true',help='④ 본편: Maps/·Art 타일·인증 기록·지도(Resources/WorldMap)에 쓴다')
     ap.add_argument('--preview-root',type=Path)
     ap.add_argument('--review-root',type=Path)
+    ap.add_argument('--preserve-objects',action='store_true',help='Art-only regeneration: retain current function/exit/spawn IDs and positions')
     a=ap.parse_args()
     if a.preview_root:
         if a.production or not a.preview_root.resolve().is_relative_to((ROOT/'Assets/PocketCaravan/Editor/B2Preview').resolve()):raise ValueError('Isolated preview path required')
@@ -104,11 +105,12 @@ def main():
     gwalk=(~m['blocked'])&m['own']&(m['mapid']>=0)
     seam=m4_objects.seams(m['mapid'],gwalk,mids,v.X0,v.Y0)   # 세계 좌표로
     nature_objects=None
-    if (L/'nature.json').exists():
+    if (L/'nature.json').exists() or a.preserve_objects:
         import m4_nature
         nature_objects,nature_added,relocations=m4_nature.preserve_objects(seam,gwalk,(v.X0,v.Y0))
         REVIEW.mkdir(parents=True,exist_ok=True)
-        (REVIEW/'nature-exits.json').write_text(json.dumps(dict(addedBoundaryCells=nature_added,relocations=relocations),ensure_ascii=False,indent=2)+'\n')
+        change_name='nature-exits.json' if (L/'nature.json').exists() else 'object-preservation.json'
+        (REVIEW/change_name).write_text(json.dumps(dict(addedBoundaryCells=nature_added,relocations=relocations),ensure_ascii=False,indent=2)+'\n')
         print('기존 기능/출구/도착자리 보존, 새 경계 칸:',nature_added)
     zones=json.loads((ROOT/'ArtReview/M2-Zones/zones.json').read_text())['villages']
     oldobj=json.loads((ROOT/'ArtReview/M0/old-objects.json').read_text())
@@ -138,7 +140,9 @@ def main():
         objects,orep=m4_objects.build(mid,key,(int(x0+v.X0),int(y0+v.Y0)),walk,np.array(road).reshape(h,w),np.array(water,bool).reshape(h,w),inside_,
                                       vz,[o for o in oldobj if o['mapId']==mid and o['kind'] not in('spawn','exit','sign')],seam.get(mid,[]),
                                       [o for o in oldobj if o['mapId']==mid and o['kind']=='sign'])
-        if nature_objects is not None:objects=nature_objects[mid]
+        if nature_objects is not None:
+            objects=nature_objects[mid]
+            orep=dict(moved=[],missing=[]) # Generic placement suggestions were not applied.
         old=ROOT/f'Assets/PocketCaravan/Maps/{mid}.json'
         oj=json.loads(old.read_text()) if old.exists() else {}
         data=dict(id=mid,name=oj.get('name') or NAMES.get(mid,key.split('/')[1]),w=w,h=h,hours=oj.get('hours',0),

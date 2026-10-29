@@ -8,21 +8,24 @@
       "x": 172,
       "y": -43,
       "w": 20,
-      "h": 13
+      "h": 13,
+      "contour": true
     },
     {
       "id": "source-ridge",
       "x": 100,
       "y": -26,
       "w": 32,
-      "h": 16
+      "h": 16,
+      "contour": true
     },
     {
       "id": "source-outlet",
       "x": 114,
       "y": -10,
       "w": 4,
-      "h": 4
+      "h": 4,
+      "contour": true
     }
   ],
   "placements": [

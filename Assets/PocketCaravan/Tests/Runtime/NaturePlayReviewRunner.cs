@@ -13,8 +13,11 @@ namespace PocketCaravan.EditorTools
     {
         public static Action<bool,string,string> Record;
         public static Action<Exception> Complete;
-        public static string ReviewRoot, Output;
-        [Serializable] class Map { public string id; public int w,h; public int[] blocked; }
+        public static string ReviewRoot, Output, ChangesPath;
+        public static bool ProductionOnly;
+        [Serializable] class ArtPoint { public string asset,map; public float x,y; }
+        [Serializable] class ArtPoints { public ArtPoint[] points; }
+        [Serializable] class Map { public string id; public int w,h; public int[] blocked,ground; }
         [Serializable] class Endpoint { public int[] exit, arrival; }
         [Serializable] class Relocation { public string map,target,spawnId; public Endpoint @new; }
         [Serializable] class Changes { public Relocation[] relocations; }
@@ -86,6 +89,7 @@ namespace PocketCaravan.EditorTools
         {
             for (int i = 0; i < 20; i++) yield return null;
             Check(MapRoot.Current.previewOnly, "start in previewOnly"); Freeze();
+            if(ProductionOnly){yield return ProductionRun();yield break;}
             string[] ids = { "goryeo_songak", "goryeo_jangdan", "Naru", "Gaegyeong", "Dakmok", "transit_woodtown", "transit_ferry", "transit_crossroads", "transit_southport", "transit_wetroad", "transit_pass", "transit_central_approach", "transit_south_inland" };
             foreach (string id in ids)
             {
@@ -146,7 +150,16 @@ namespace PocketCaravan.EditorTools
                     Pose(121,-13);yield return Capture("source-lower");
                 }
             }
-            var changes = JsonUtility.FromJson<Changes>(File.ReadAllText("ArtReview/NatureBinding-20261029/Maps/nature-exits.json"));
+            string artPoints=Output+"/../asset-views.json";
+            if(File.Exists(artPoints))foreach(var point in JsonUtility.FromJson<ArtPoints>(File.ReadAllText(artPoints)).points)
+            {
+                if(MapRoot.Current.mapId!=point.map)
+                {
+                    yield return EditorSceneManager.LoadSceneAsyncInPlayMode(ReviewRoot+"/Scenes/"+point.map+".unity",new LoadSceneParameters(LoadSceneMode.Single));yield return null;
+                }
+                Freeze();Pose(point.x,point.y);yield return Capture("asset-"+point.asset);
+            }
+            var changes = JsonUtility.FromJson<Changes>(File.ReadAllText(ChangesPath));
             foreach (var change in changes.relocations)
             {
                 if (MapRoot.Current.mapId != change.map)
@@ -208,6 +221,48 @@ namespace PocketCaravan.EditorTools
             Check(applied && GameManager.I.Player.money==1234 && GameManager.I.Player.credit==21,"isolated save read/apply preserves money and credit");
             Check(loaded.scene==state.scene && loaded.layoutVersion==GoryeoLayout.Current && loaded.quests.Count==state.quests.Count && loaded.finishedQuests.Count==state.finishedQuests.Count,"isolated save preserves map and quest data");
             Check(!GameManager.I.AutosaveEnabled,"isolated save test cannot overwrite production save");
+        }
+
+        string ProductionScene(string id)
+        {
+            foreach(var entry in UnityEditor.EditorBuildSettings.scenes)
+                if(Path.GetFileNameWithoutExtension(entry.path)==id)return entry.path;
+            throw new InvalidOperationException("No production scene: "+id);
+        }
+        IEnumerator LoadProduction(string id)
+        {
+            if(SceneManager.GetActiveScene().path!=ProductionScene(id))
+            {
+                yield return EditorSceneManager.LoadSceneAsyncInPlayMode(ProductionScene(id),new LoadSceneParameters(LoadSceneMode.Single));yield return null;
+            }
+            Freeze();
+            Check(MapRoot.Current.mapId==id&&!MapRoot.Current.previewOnly,"production map loaded",id);
+        }
+        IEnumerator ProductionRun()
+        {
+            foreach(string id in new[]{"Naru","Gaegyeong","Dakmok","goryeo_songak","goryeo_jangdan","transit_woodtown","transit_ferry","transit_crossroads","transit_southport","transit_wetroad","transit_pass","transit_central_approach","transit_south_inland"})
+            {
+                yield return LoadProduction(id);
+                var data=JsonUtility.FromJson<Map>(File.ReadAllText("Assets/PocketCaravan/Maps/"+id+".json"));int mismatch=0,missing=0;
+                for(int y=0;y<data.h;y++)for(int x=0;x<data.w;x++)
+                {
+                    var p=new Vector3Int(x,data.h-y-1,0);int i=y*data.w+x;
+                    if(MapRoot.Current.blocked.HasTile(p)!=(data.blocked[i]!=0))mismatch++;
+                    if(MapRoot.Current.ground.HasTile(p)!=(data.ground[i]!=0))missing++;
+                }
+                Check(mismatch==0&&missing==0,"production ground/barriers match generated map",id);
+            }
+            var views=JsonUtility.FromJson<ArtPoints>(File.ReadAllText(Output+"/../asset-views.json"));
+            foreach(var point in views.points)
+            {
+                yield return LoadProduction(point.map);Pose(point.x,point.y);yield return Capture("asset-"+point.asset);
+            }
+            foreach(var id in new[]{"Naru","goryeo_songak","transit_woodtown"})
+            {
+                GameManager.I.TravelTo(id,"S0");float start=Time.realtimeSinceStartup;
+                while(GameManager.I.IsTravelling){if(Time.realtimeSinceStartup-start>60)throw new TimeoutException(id);yield return null;}
+                Check(MapRoot.Current.mapId==id&&!MapRoot.Current.previewOnly,"production real travel",id);Freeze();
+            }
         }
     }
 }
