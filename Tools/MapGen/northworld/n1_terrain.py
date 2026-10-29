@@ -48,7 +48,8 @@ ROADS = [  # (출발, 도착, 지나는 이동 구간 맵)
     ('north_birka', 'north_c_gatetown', None),                       # 국경 고개(목)를 지나는 길
     ('north_c_gatetown', 'north_c_snowwood', 'north_c_road_nw'), ('north_c_gatetown', 'north_c_creek', 'north_c_road_ne'),
     ('north_c_gatetown', 'north_c_crossing', 'north_c_runeway'), ('north_c_snowwood', 'north_c_crossing', 'north_c_road_sw'),
-    ('north_c_creek', 'north_c_crossing', 'north_c_road_se')]
+    ('north_c_creek', 'north_c_crossing', 'north_c_road_se'),
+    ('north_c_snowwood', 'north_c_creek', 'north_c_runeway')]   # 2026-10-29: 룬돌 큰길에서 서쪽 눈숲·동쪽 개울 나루로 가는 길(사용자 요청)
 ANY_EDGE = {'north_c_road_se'}   # ⑪: 동남 쪽 경계와 고려 땅 사이에 다른 지역 띠가 있음
 COAST_EXIT = {'north_c_road_ne'}   # 고려 출구는 해안 쪽으로(2026-10-28 결정)
 PASSES = {('north_naru', 'north_icecave'), ('north_c_gatetown', 'north_c_snowwood')}   # 산을 깎은 눈 덮인 고개(2026-10-28 결정)

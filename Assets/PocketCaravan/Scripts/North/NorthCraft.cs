@@ -163,14 +163,14 @@ namespace PocketCaravan
             // 공용 이벤트는 새 게임에서 비워질 수 있어 맵마다 다시 건다 (두 번 걸리지 않게 먼저 뺌)
             GameEvents.ItemSold -= OnSold; GameEvents.ItemSold += OnSold;
             if (root != null) Destroy(root.gameObject);
-            root = null; idlers.Clear(); yard.Clear(); shouters.Clear(); stallLabels.Clear(); shoutWho = -1;
+            root = null; idlers.Clear(); yard.Clear(); shouters.Clear(); stallLabels.Clear(); sideLabels.Clear(); shoutWho = -1;
             if (shopOpen) CloseShop();
             if (map == null || !map.StartsWith("north_") || GameManager.I == null) return;
             root = new GameObject("North Craft").transform;
 
             // 큰 장 알림: 중앙·국경 고개에 들어서면 하루 한 번, 큰 장 마을에서는 들어설 때마다
             if (map == FairMap) Notify.Show($"큰 장이 섰다! 오늘 {FairName} 장터에서 팔면 {Mathf.RoundToInt(FairBonus * 10)}할을 더 받는다.", 4f);
-            else if ((map.StartsWith("north_c_") || map == "north_pass") && Mathf.RoundToInt(NorthSave.Get("fairnote", -1f)) != Today)
+            else if (map.StartsWith("north_c_") && Mathf.RoundToInt(NorthSave.Get("fairnote", -1f)) != Today)
             {
                 NorthSave.Set("fairnote", Today);
                 Notify.Show(FairNews, 4f);
@@ -196,7 +196,9 @@ namespace PocketCaravan
                 int k = c[i + 2];
                 if (k < 0 || k >= Recipes.Length) continue;
                 var pos = NorthUtil.Cell(map, c[i], c[i + 1]);
-                var s = NorthSpot.Make(root, pos, () => ShopLabel(k), () => Workshop(k), Interactable.Kind.Person);
+                // 10/29(기우): 긴 이름표가 머리 위에서 일꾼을 가려서, 공용 이름표는 비우고 일꾼 왼쪽에 오른쪽 맞춤으로 그린다(OnGUI sideLabels)
+                var s = NorthSpot.Make(root, pos, () => "", () => Workshop(k), Interactable.Kind.Person);
+                sideLabels.Add((pos + new Vector3(-0.7f, 0.75f, 0f), () => ShopLabel(k)));
                 Animate(s.gameObject, Prefix[k], 0f);
             }
         }
@@ -231,6 +233,9 @@ namespace PocketCaravan
         readonly List<(Vector3 at, string[] lines, bool keeper)> shouters = new List<(Vector3, string[], bool)>();
         // 10/27 장꾼 이름표: 좌판 지붕 위에 직접 그린다 (머리 위에 그리면 좌판 지붕·물건을 가려서)
         readonly List<(Vector3 at, string text)> stallLabels = new List<(Vector3, string)>();
+        // 10/29 공방 일꾼 이름표: 일꾼 왼쪽 (끝이 일꾼 바로 왼쪽에 오게 오른쪽 맞춤)
+        readonly List<(Vector3 at, System.Func<string> text)> sideLabels = new List<(Vector3, System.Func<string>)>();
+        GUIStyle sideLabelStyle, sideShadowStyle;
         GUIStyle stallLabelStyle, stallShadowStyle;
         int shoutWho = -1; string shoutText; float shoutT, shoutNext;
         bool fairHere;
@@ -507,6 +512,22 @@ namespace PocketCaravan
                 float lx = lp.x / sc, ly = (Screen.height - lp.y) / sc;
                 GUI.Label(new Rect(lx - 79f, ly - 7f, 160f, 12f), l.text, stallShadowStyle);
                 GUI.Label(new Rect(lx - 80f, ly - 8f, 160f, 12f), l.text, stallLabelStyle);
+            }
+            if (sideLabelStyle == null)
+            {
+                sideLabelStyle = new GUIStyle(stallLabelStyle) { alignment = TextAnchor.MiddleRight };
+                sideLabelStyle.normal.textColor = new Color(0.95f, 0.95f, 0.95f);
+                sideShadowStyle = new GUIStyle(sideLabelStyle);
+                sideShadowStyle.normal.textColor = new Color(0f, 0f, 0f, 0.75f);
+            }
+            foreach (var l in sideLabels)
+            {
+                var lp = cam.WorldToScreenPoint(l.at);
+                if (lp.z < 0f) continue;
+                float lx = lp.x / sc, ly = (Screen.height - lp.y) / sc;
+                string sideText = l.text();
+                GUI.Label(new Rect(lx - 199f, ly - 7f, 200f, 12f), sideText, sideShadowStyle);
+                GUI.Label(new Rect(lx - 200f, ly - 8f, 200f, 12f), sideText, sideLabelStyle);
             }
             if (shoutWho < 0 || shoutWho >= shouters.Count) return;
             var sh = shouters[shoutWho];

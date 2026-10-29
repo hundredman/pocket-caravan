@@ -1,168 +1,150 @@
 {
-  "width": 270,
-  "height": 430,
-  "maps": [
-    {
-      "mapId": "north_birka",
-      "x": 84,
-      "y": 108,
-      "w": 72,
-      "h": 50,
-      "labelX": 120.5,
-      "labelY": 139.5
-    },
-    {
-      "mapId": "north_fjord_road",
-      "x": 156,
-      "y": 115,
-      "w": 66,
-      "h": 42,
-      "labelX": 189.5,
-      "labelY": 134.5
-    },
-    {
-      "mapId": "north_hunter",
-      "x": 60,
-      "y": 176,
-      "w": 46,
-      "h": 32,
-      "labelX": 84.5,
-      "labelY": 195.5
-    },
-    {
-      "mapId": "north_naru",
-      "x": 158,
-      "y": 157,
-      "w": 60,
-      "h": 36,
-      "labelX": 186.5,
-      "labelY": 176.5
-    },
-    {
-      "mapId": "north_laugar",
-      "x": 107,
-      "y": 72,
-      "w": 49,
-      "h": 36,
-      "labelX": 133.5,
-      "labelY": 94.5
-    },
-    {
-      "mapId": "north_herd",
-      "x": 34,
-      "y": 117,
-      "w": 50,
-      "h": 34,
-      "labelX": 59.5,
-      "labelY": 138.5
-    },
-    {
-      "mapId": "north_runehill",
-      "x": 106,
-      "y": 34,
-      "w": 52,
-      "h": 38,
-      "labelX": 132.5,
-      "labelY": 51.5
-    },
-    {
-      "mapId": "north_icecave",
-      "x": 156,
-      "y": 79,
-      "w": 48,
-      "h": 36,
-      "labelX": 180.5,
-      "labelY": 95.5
-    },
-    {
-      "mapId": "north_pass",
-      "x": 106,
-      "y": 158,
-      "w": 52,
-      "h": 50,
-      "labelX": 132.5,
-      "labelY": 181.5
-    },
-    {
-      "mapId": "north_c_gatetown",
-      "x": 114,
-      "y": 208,
-      "w": 60,
-      "h": 46,
-      "labelX": 144.5,
-      "labelY": 230.5
-    },
-    {
-      "mapId": "north_c_road_nw",
-      "x": 52,
-      "y": 208,
-      "w": 62,
-      "h": 46,
-      "labelX": 83.5,
-      "labelY": 229.5
-    },
-    {
-      "mapId": "north_c_road_ne",
-      "x": 174,
-      "y": 208,
-      "w": 62,
-      "h": 46,
-      "labelX": 205.5,
-      "labelY": 229.5
-    },
-    {
-      "mapId": "north_c_snowwood",
-      "x": 74,
-      "y": 254,
-      "w": 52,
-      "h": 40,
-      "labelX": 99.5,
-      "labelY": 267.5
-    },
-    {
-      "mapId": "north_c_creek",
-      "x": 162,
-      "y": 254,
-      "w": 52,
-      "h": 40,
-      "labelX": 186.5,
-      "labelY": 267.5
-    },
-    {
-      "mapId": "north_c_runeway",
-      "x": 126,
-      "y": 254,
-      "w": 36,
-      "h": 96,
-      "labelX": 144.5,
-      "labelY": 300.5
-    },
-    {
-      "mapId": "north_c_road_sw",
-      "x": 74,
-      "y": 294,
-      "w": 40,
-      "h": 77,
-      "labelX": 94.5,
-      "labelY": 330.5
-    },
-    {
-      "mapId": "north_c_road_se",
-      "x": 174,
-      "y": 294,
-      "w": 40,
-      "h": 77,
-      "labelX": 194.5,
-      "labelY": 330.5
-    },
-    {
-      "mapId": "north_c_crossing",
-      "x": 114,
-      "y": 350,
-      "w": 60,
-      "h": 46,
-      "labelX": 144.5,
-      "labelY": 370.5
-    }
-  ]
+ "width": 263,
+ "height": 370,
+ "maps": [
+  {
+   "mapId": "north_birka",
+   "x": 105,
+   "y": 106,
+   "w": 62,
+   "h": 95,
+   "labelX": 135.5584496124031,
+   "labelY": 157.17705426356588
+  },
+  {
+   "mapId": "north_herd",
+   "x": 61,
+   "y": 32,
+   "w": 56,
+   "h": 91,
+   "labelX": 88.51899967521922,
+   "labelY": 80.04222150048717
+  },
+  {
+   "mapId": "north_hunter",
+   "x": 67,
+   "y": 94,
+   "w": 59,
+   "h": 78,
+   "labelX": 99.67781292363307,
+   "labelY": 133.96023497514688
+  },
+  {
+   "mapId": "north_naru",
+   "x": 148,
+   "y": 90,
+   "w": 64,
+   "h": 85,
+   "labelX": 173.39695945945945,
+   "labelY": 131.98648648648648
+  },
+  {
+   "mapId": "north_laugar",
+   "x": 104,
+   "y": 40,
+   "w": 70,
+   "h": 79,
+   "labelX": 138.15454545454546,
+   "labelY": 79.76727272727273
+  },
+  {
+   "mapId": "north_icecave",
+   "x": 157,
+   "y": 22,
+   "w": 60,
+   "h": 99,
+   "labelX": 187.33939580764488,
+   "labelY": 76.71763255240444
+  },
+  {
+   "mapId": "north_runehill",
+   "x": 86,
+   "y": 0,
+   "w": 96,
+   "h": 66,
+   "labelX": 133.62664526484753,
+   "labelY": 33.126484751203854
+  },
+  {
+   "mapId": "north_c_gatetown",
+   "x": 96,
+   "y": 186,
+   "w": 81,
+   "h": 61,
+   "labelX": 132.34183160013419,
+   "labelY": 215.7819523649782
+  },
+  {
+   "mapId": "north_c_snowwood",
+   "x": 0,
+   "y": 224,
+   "w": 113,
+   "h": 65,
+   "labelX": 61.141666666666666,
+   "labelY": 256.3299479166667
+  },
+  {
+   "mapId": "north_c_creek",
+   "x": 149,
+   "y": 224,
+   "w": 79,
+   "h": 79,
+   "labelX": 191.3011093502377,
+   "labelY": 260.80063391442155
+  },
+  {
+   "mapId": "north_c_crossing",
+   "x": 100,
+   "y": 276,
+   "w": 63,
+   "h": 94,
+   "labelX": 130.46786856644374,
+   "labelY": 320.6612387321896
+  },
+  {
+   "mapId": "north_c_road_nw",
+   "x": 20,
+   "y": 188,
+   "w": 86,
+   "h": 58,
+   "labelX": 67.9233776387803,
+   "labelY": 219.06802189210322
+  },
+  {
+   "mapId": "north_c_road_ne",
+   "x": 157,
+   "y": 190,
+   "w": 106,
+   "h": 63,
+   "labelX": 200.99928673323822,
+   "labelY": 221.31062767475035
+  },
+  {
+   "mapId": "north_c_runeway",
+   "x": 101,
+   "y": 235,
+   "w": 62,
+   "h": 58,
+   "labelX": 132.91622532498798,
+   "labelY": 260.9455946076071
+  },
+  {
+   "mapId": "north_c_road_sw",
+   "x": 44,
+   "y": 275,
+   "w": 71,
+   "h": 66,
+   "labelX": 85.36533845415266,
+   "labelY": 298.8799807969275
+  },
+  {
+   "mapId": "north_c_road_se",
+   "x": 148,
+   "y": 269,
+   "w": 61,
+   "h": 76,
+   "labelX": 171.33929434509426,
+   "labelY": 303.6147897535041
+  }
+ ]
 }

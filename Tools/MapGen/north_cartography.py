@@ -31,6 +31,27 @@ def _layout(maps):
             m.objects = saved[m.id]
 
 
+def real_terrain(im, maps, positions, minx, miny, scale):
+    """맵마다 바닥·장식·물건·위층 타일을 16px로 그린 뒤 지도 배율(칸당 scale px)로 줄여 붙인다. 지도 위 이름표·내 위치는 NorthMapUI가 그린다."""
+    import tiles
+    cache = {}
+    def tile(k):
+        if k not in cache:
+            cache[k] = tiles.tile_image(k).convert("RGBA")
+        return cache[k]
+    for m in maps:
+        big = Image.new("RGBA", (m.w * 16, m.h * 16), (0, 0, 0, 0))
+        for layer in (m.ground, m.deco, m.obj, m.high):
+            for y in range(m.h):
+                for x in range(m.w):
+                    k = layer[y][x]
+                    if k:
+                        big.alpha_composite(tile(k), (x * 16, y * 16))
+        small = big.resize((m.w * scale, m.h * scale), Image.LANCZOS)
+        x0, y0 = (positions[m.id][0] - minx) * scale, (positions[m.id][1] - miny) * scale
+        im.paste(small.convert("RGB"), (x0, y0), small.getchannel("A"))
+
+
 def export(maps, root):
     positions = _layout(maps)
     pad, scale = 34, 4      # 둥근 땅덩이와 바다가 들어갈 여백
@@ -221,6 +242,8 @@ def export(maps, root):
     d.polygon(((cx_, cy_ + 16), (cx_ - 4, cy_), (cx_ + 4, cy_)), fill="#c5b084")
     d.line((cx_ - 14, cy_, cx_ + 14, cy_), fill="#887052")
     d.text((cx_ - 3, cy_ - 30), "N", fill="#5a4630")
+    # 10/28 고려 M지도처럼 실제 땅: 종이 바탕(바다·땅·국경) 위에 각 맵의 실제 타일 그림을 줄여서 그 자리에 붙인다
+    real_terrain(im, maps, positions, minx, miny, scale)
     dest = Path(root) / "Assets/PocketCaravan/Resources/WorldMap"
     dest.mkdir(parents=True, exist_ok=True)
     png = dest / "NorthTerrain.png"

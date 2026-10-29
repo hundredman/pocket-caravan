@@ -32,7 +32,7 @@ namespace PocketCaravan
         bool wasOpen; int lastPage = -1; float babbleLeft, nextSyl;
         bool built;
 
-        static readonly HashSet<string> Coast = new HashSet<string> { "north_birka", "north_naru", "north_fjord_road", "north_c_road_ne", "north_c_creek" };
+        static readonly HashSet<string> Coast = new HashSet<string> { "north_birka", "north_naru", "north_c_road_ne", "north_c_creek" };
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Boot()

@@ -45,7 +45,7 @@ namespace PocketCaravan
         static readonly string[] Towns = { "north_birka", "north_hunter", "north_naru", "north_laugar", "north_herd", "north_c_gatetown", "north_c_snowwood", "north_c_creek", "north_c_crossing" };
         static readonly string[] TownNames = { "비르카", "모피 사냥꾼 마을", "피오르 나루 마을", "라우가르 온천 마을", "순록 고원 마을", "북문 마을", "눈숲 마을", "개울 나루 마을", "북쪽 길목 마을" };
         static readonly string[] DealItems = { "north_mead", "north_fur", "north_amber", "north_dried_meat", "north_herb", "north_cheese", "north_salt" };
-        static readonly string[] GiftMaps = { "north_fjord_road", "north_pass", "north_runehill", "north_icecave", "north_c_road_nw", "north_c_road_ne", "north_c_runeway", "north_c_road_sw", "north_c_road_se" };
+        static readonly string[] GiftMaps = { "north_runehill", "north_icecave", "north_c_road_nw", "north_c_road_ne", "north_c_runeway", "north_c_road_sw", "north_c_road_se" };
 
         // 이끼 먹이 연출
         class Grazer { public SpriteRenderer sr; public Vector3 home, spot; public float t; }

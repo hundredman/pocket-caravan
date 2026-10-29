@@ -17,10 +17,10 @@ namespace PocketCaravan
         // WorldIndex에 아직 북유럽 맵이 없을 때(DB·목록을 다시 만들기 전) 쓰는 이름
         static readonly Dictionary<string, string> Names = new Dictionary<string, string>
         {
-            { "north_birka", "비르카" }, { "north_fjord_road", "피오르 길" },
+            { "north_birka", "비르카" },
             { "north_hunter", "모피 사냥꾼 마을" }, { "north_naru", "피오르 나루 마을" },
             { "north_laugar", "라우가르 온천 마을" }, { "north_herd", "순록 고원 마을" },
-            { "north_runehill", "룬돌 언덕" }, { "north_icecave", "얼음 동굴 골짜기" }, { "north_pass", "국경 고개" },
+            { "north_runehill", "룬돌 언덕" }, { "north_icecave", "얼음 동굴 골짜기" },
             // 10/26 중앙 대륙 북쪽 1/4 (피자 구성: 마을 4곳 + 길 5곳)
             { "north_c_gatetown", "북문 마을" }, { "north_c_road_nw", "눈숲 고갯길" }, { "north_c_road_ne", "개울 다리길" },
             { "north_c_snowwood", "눈숲 마을" }, { "north_c_creek", "개울 나루 마을" }, { "north_c_runeway", "룬돌 큰길" },

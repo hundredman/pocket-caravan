@@ -377,6 +377,21 @@
     "north_c_gatetown",
     "north_c_runeway"
    ]
+  },
+  {
+   "fromKey": "north_c_snowwood",
+   "toKey": "north_c_creek",
+   "via": "north_c_runeway",
+   "cells": 163,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "snowCells": 0,
+   "boundaryCrossings": 2,
+   "maps": [
+    "north_c_creek",
+    "north_c_runeway",
+    "north_c_snowwood"
+   ]
   }
  ],
  "exits": [
@@ -489,36 +504,36 @@
    "key": "north_c_gatetown",
    "name": "북문 마을",
    "n0Target": 3200,
-   "area": 2976,
-   "land": 2568
+   "area": 2981,
+   "land": 2573
   },
   {
    "key": "north_c_snowwood",
    "name": "눈숲 마을",
    "n0Target": 3200,
-   "area": 3845,
-   "land": 3592
+   "area": 3840,
+   "land": 3587
   },
   {
    "key": "north_c_creek",
    "name": "개울 나루 마을",
    "n0Target": 3200,
-   "area": 3269,
-   "land": 3269
+   "area": 3155,
+   "land": 3155
   },
   {
    "key": "north_c_crossing",
    "name": "북쪽 길목 마을",
    "n0Target": 3200,
-   "area": 3294,
-   "land": 3294
+   "area": 3439,
+   "land": 3439
   },
   {
    "key": "north_c_road_nw",
    "name": "눈숲 고갯길",
    "n0Target": 2440,
-   "area": 2586,
-   "land": 1740
+   "area": 2558,
+   "land": 1712
   },
   {
    "key": "north_c_road_ne",
@@ -531,22 +546,22 @@
    "key": "north_c_runeway",
    "name": "룬돌 큰길",
    "n0Target": 2440,
-   "area": 2073,
-   "land": 2073
+   "area": 2077,
+   "land": 2077
   },
   {
    "key": "north_c_road_sw",
    "name": "서남 솔숲길",
    "n0Target": 2440,
-   "area": 2088,
-   "land": 2088
+   "area": 2083,
+   "land": 2083
   },
   {
    "key": "north_c_road_se",
    "name": "동남 물가길",
    "n0Target": 2440,
-   "area": 2071,
-   "land": 2071
+   "area": 2069,
+   "land": 2069
   }
  ]
 }
