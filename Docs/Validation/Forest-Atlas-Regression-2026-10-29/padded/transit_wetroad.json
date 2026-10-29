@@ -1,0 +1,112 @@
+{
+  "map": "transit_wetroad",
+  "sourceScene": "Assets/PocketCaravan/Scenes/Transit/transit_wetroad.unity",
+  "scope": "Edit mode, original scene materials/lights/SpriteRenderers; temporary atlas clones; no gameplay loop",
+  "tileCount": 481,
+  "atlasSize": "512x512",
+  "sourceTileRGBAIdentical": true,
+  "tilePropertiesCompared": 481,
+  "baselineControlDifferentPixels": 0,
+  "frames": [
+    {
+      "index": 0,
+      "camera": "(39.0000, 32.0000, 32.5000)",
+      "differentPixels": 195
+    },
+    {
+      "index": 1,
+      "camera": "(15.0000, 8.4375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 2,
+      "camera": "(45.0000, 8.4375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 3,
+      "camera": "(75.0000, 8.4375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 4,
+      "camera": "(15.0000, 25.3125, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 5,
+      "camera": "(45.0000, 25.3125, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 6,
+      "camera": "(75.0000, 25.3125, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 7,
+      "camera": "(15.0000, 42.1875, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 8,
+      "camera": "(45.0000, 42.1875, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 9,
+      "camera": "(75.0000, 42.1875, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 10,
+      "camera": "(15.0000, 59.0625, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 11,
+      "camera": "(45.0000, 59.0625, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 12,
+      "camera": "(75.0000, 59.0625, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 13,
+      "camera": "(39.1730, 32.2810, 4.2188)",
+      "differentPixels": 0
+    },
+    {
+      "index": 14,
+      "camera": "(39.1730, 32.2810, 16.8750)",
+      "differentPixels": 0
+    }
+  ],
+  "totalDifferentPixels": 195,
+  "cellChecks": 5280,
+  "cellsIdentical": true,
+  "cellsBefore": "79-D6-8A-E8-55-B4-83-43-F0-7F-A1-49-B4-BC-C5-A4-22-C3-1F-20-A8-43-1E-18-63-6E-01-E4-41-FF-19-F8",
+  "cellsAfter": "79-D6-8A-E8-55-B4-83-43-F0-7F-A1-49-B4-BC-C5-A4-22-C3-1F-20-A8-43-1E-18-63-6E-01-E4-41-FF-19-F8",
+  "motorStarts": 16,
+  "motorTicksPerMode": 11520,
+  "motorTrajectoryIdentical": true,
+  "walkBefore": "2A-F8-81-31-EA-B2-CF-EB-05-B1-F0-5F-CE-D2-8B-F2-2A-77-A5-49-0B-D2-51-6A-9A-BB-A3-44-B6-55-72-EE",
+  "walkAfter": "2A-F8-81-31-EA-B2-CF-EB-05-B1-F0-5F-CE-D2-8B-F2-2A-77-A5-49-0B-D2-51-6A-9A-BB-A3-44-B6-55-72-EE",
+  "movementStatistics": [
+    {
+      "moved": 8586,
+      "stopped": 2934
+    },
+    {
+      "moved": 8586,
+      "stopped": 2934
+    }
+  ],
+  "gameplayComponentsAndSortingIdentical": true,
+  "gameBefore": "A2-BE-3F-86-11-50-B1-89-2E-D7-51-EF-63-97-A5-FE-70-76-26-4D-F1-48-E4-BF-EB-99-A2-4E-02-82-93-20",
+  "gameAfter": "A2-BE-3F-86-11-50-B1-89-2E-D7-51-EF-63-97-A5-FE-70-76-26-4D-F1-48-E4-BF-EB-99-A2-4E-02-82-93-20",
+  "logs": [],
+  "productionWrites": 0
+}

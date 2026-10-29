@@ -1,0 +1,19 @@
+{
+  "maps": 13,
+  "frames": 244,
+  "differentOverviewMaps": {
+    "transit_central_approach": 70,
+    "transit_ferry": 104,
+    "transit_wetroad": 195
+  },
+  "nonOverviewDifferences": 0,
+  "cellChecksPerMode": 80641,
+  "motorTicksPerMode": 149760,
+  "allCellsIdentical": true,
+  "allTrajectoriesIdentical": true,
+  "allGameplayAndSortingIdentical": true,
+  "allBaselineControlsIdentical": true,
+  "mainRunWarningsAndErrors": 0,
+  "saveFilesUnchanged": true,
+  "saveFileCount": 21
+}
