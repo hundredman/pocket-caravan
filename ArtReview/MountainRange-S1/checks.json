@@ -1,0 +1,107 @@
+{
+  "status": "pending_visual_approval",
+  "stage": 1,
+  "productionApplied": false,
+  "purpose": "west-east straight modular ridge",
+  "assets": [
+    {
+      "name": "west-cap",
+      "size": [
+        128,
+        192
+      ],
+      "rgbaSha256": "df2a2d48d5a08b8ff819190c3336cb372c7f0b26d7b465bce7bd3d17681891c4",
+      "asepriteRGBAEqual": true
+    },
+    {
+      "name": "body-a",
+      "size": [
+        192,
+        192
+      ],
+      "rgbaSha256": "024b633f31d6c0990b403587f7861dcf44730fc7c96b4dbfc9651638a3366e5d",
+      "asepriteRGBAEqual": true
+    },
+    {
+      "name": "body-b",
+      "size": [
+        64,
+        192
+      ],
+      "rgbaSha256": "73606e91c4a2c998d0ca70b4ca7228e0ecf6088094bff22b5d461a837756748b",
+      "asepriteRGBAEqual": true
+    },
+    {
+      "name": "east-cap",
+      "size": [
+        128,
+        192
+      ],
+      "rgbaSha256": "8b0a9a6eb9af0be208cd58acd51d14e6bbef24952d15fbd82765d3b6480b0bd5",
+      "asepriteRGBAEqual": true
+    }
+  ],
+  "junctions": [
+    {
+      "left": "west-cap",
+      "right": "body-a",
+      "decodedRGBAMatchesPort": true
+    },
+    {
+      "left": "west-cap",
+      "right": "body-b",
+      "decodedRGBAMatchesPort": true
+    },
+    {
+      "left": "body-a",
+      "right": "body-a",
+      "decodedRGBAMatchesPort": true
+    },
+    {
+      "left": "body-a",
+      "right": "body-b",
+      "decodedRGBAMatchesPort": true
+    },
+    {
+      "left": "body-b",
+      "right": "body-a",
+      "decodedRGBAMatchesPort": true
+    },
+    {
+      "left": "body-b",
+      "right": "body-b",
+      "decodedRGBAMatchesPort": true
+    },
+    {
+      "left": "body-a",
+      "right": "east-cap",
+      "decodedRGBAMatchesPort": true
+    },
+    {
+      "left": "body-b",
+      "right": "east-cap",
+      "decodedRGBAMatchesPort": true
+    }
+  ],
+  "solidPortCoreRows": [
+    94,
+    161
+  ],
+  "masterDecodedRGBAEqualsAssembly": true,
+  "shortWidth": 448,
+  "longWidth": 768,
+  "unity": {
+    "mode": "Edit",
+    "captures": [
+      "reference",
+      "short",
+      "long-west",
+      "long-east"
+    ],
+    "wholeFrameRGBADifferences": 0
+  },
+  "turns": false,
+  "branches": false,
+  "valleys": false,
+  "playTest": false
+}
