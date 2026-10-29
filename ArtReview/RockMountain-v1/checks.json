@@ -1,0 +1,67 @@
+{
+  "status": "pending_visual_approval",
+  "productionApplied": false,
+  "source": "built-in imagegen, Aseprite native cleanup",
+  "wholeObjects": true,
+  "assets": [
+    {
+      "name": "mountain",
+      "size": [
+        192,
+        160
+      ],
+      "occupied": [
+        8,
+        29,
+        184,
+        155
+      ],
+      "rgbaSha256": "3e739c26a812c8d8a785663fe010c0cea076a8e1845ae0718fb6d42b9b79d468",
+      "asepriteRGBAEqual": true
+    },
+    {
+      "name": "ridge",
+      "size": [
+        256,
+        112
+      ],
+      "occupied": [
+        6,
+        49,
+        250,
+        107
+      ],
+      "rgbaSha256": "8170016c6eb7af8ad95fe975c72f97e3e35e3579cbde4b2c16b34a2d7cb4ddbd",
+      "asepriteRGBAEqual": true
+    },
+    {
+      "name": "foothill",
+      "size": [
+        128,
+        80
+      ],
+      "occupied": [
+        6,
+        30,
+        122,
+        75
+      ],
+      "rgbaSha256": "d8ddcd5156e48d0229f81df720203fbad4cde9c6d692bc7c72a900e428ee886d",
+      "asepriteRGBAEqual": true
+    }
+  ],
+  "originalRockPalette": true,
+  "binaryAlpha": true,
+  "unity": {
+    "mode": "Edit",
+    "captures": [
+      "reference",
+      "mountain",
+      "ridge",
+      "forest"
+    ],
+    "wholeFrameRGBADifferences": 0
+  },
+  "modularConnectionsImplemented": false,
+  "playTest": false
+}
