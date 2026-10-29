@@ -24,7 +24,7 @@ namespace PocketCaravan
         public int index;
         SpriteRenderer glow;
 
-        public override string DisplayName => "이끼 낀 사자 문장";
+        public override string DisplayName => VeniceLabels.Place(this, "이끼 낀 사자 문장");   // 가까이 가야 이름표가 뜬다
         public override Kind Category => Kind.Quest;
 
         public static int Found

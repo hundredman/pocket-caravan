@@ -8,14 +8,14 @@ from collections import deque
 
 # 마을: (벽색들, 종류 비율, 남길 빈 바닥 비율)
 THEMES = {
-    "venice_rialto": (["ochre", "salmon", "rose", "cream", "brick"], dict(narrow=2, house=3, shop=3, wide=2, wide_shop=2, palazzo=2), .5),
-    "venice_murano": (["brick", "ochre", "salmon", "cream"], dict(narrow=2, house=3, shop=2, wide=2, wide_shop=1), .5),
-    "venice_burano": (["rose", "sky", "sage", "ochre", "salmon", "brick"], dict(narrow=3, house=3, shop=1, wide=1), .5),
-    "venice_chioggia": (["cream", "ochre", "brick", "salmon"], dict(narrow=2, house=3, shop=2, wide=2, wide_shop=2), .55),
+    "venice_rialto": (["ochre", "salmon", "rose", "cream", "brick"], dict(narrow=2, house=3, shop=3, wide=2, wide_shop=2, palazzo=2), 1.0),   # 2026-10-29: 리알토는 빈 바닥을 집으로 채우지 않는다
+    "venice_murano": (["brick", "ochre", "salmon", "cream"], dict(narrow=2, house=3, shop=2, wide=2, wide_shop=1), .78),
+    "venice_burano": (["rose", "sky", "sage", "ochre", "salmon", "brick"], dict(narrow=3, house=3, shop=1, wide=1), .82),
+    "venice_chioggia": (["cream", "ochre", "brick", "salmon"], dict(narrow=2, house=3, shop=2, wide=2, wide_shop=2), .78),
     "venice_santerasmo": (["cream", "ochre", "sage"], dict(house=2, wide=1), .75),
 }
-KEEP_PAD = {"spawn": 2, "exit": 3, "market": 2, "npc": 2, "board": 2, "talker": 2, "sign": 1, "worker": 2,
-            "villager": 2, "walker": 1, "event": 2, "bandit": 2}
+KEEP_PAD = {"spawn": 2, "exit": 3, "market": 3, "npc": 3, "board": 3, "talker": 3, "sign": 1, "worker": 3,
+            "villager": 3, "walker": 1, "event": 2, "bandit": 2}      # 2026-10-29: 사람·장터 둘레를 넓게 비워 붐비지 않게
 
 
 def _walk(m, x, y):

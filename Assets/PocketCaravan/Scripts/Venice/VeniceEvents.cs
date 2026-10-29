@@ -28,6 +28,10 @@ namespace PocketCaravan
 
         Transform root;
         System.Collections.Generic.HashSet<Vector3Int> floodCells = new System.Collections.Generic.HashSet<Vector3Int>();
+        static VeniceEvents inst;
+
+        /// <summary>이 칸이 아쿠아 알타 때 물이 차는 칸인가 (걷기 연출 VeniceStride가 쓴다)</summary>
+        public static bool IsFlooded(Vector3Int cell) => inst != null && inst.floodCells.Contains(cell);
         SpriteRenderer follower;
         VeniceMaskSeller seller;
         float baseWalk = -1f;
@@ -45,7 +49,7 @@ namespace PocketCaravan
                 GameManager.I.gameObject.AddComponent<VeniceEvents>();
         }
 
-        void OnEnable() { SceneManager.sceneLoaded += OnLoaded; Build(); }
+        void OnEnable() { inst = this; SceneManager.sceneLoaded += OnLoaded; Build(); }
         void OnDisable() { SceneManager.sceneLoaded -= OnLoaded; ShowFlood(false); if (root != null) Destroy(root.gameObject); }
         void OnLoaded(Scene s, LoadSceneMode m) => Build();
 

@@ -9,7 +9,7 @@ namespace PocketCaravan
     /// </summary>
     public class VeniceInn : Interactable
     {
-        public override string DisplayName => "여관에서 쉬기";
+        public override string DisplayName => VeniceLabels.Place(this, "여관에서 쉬기");   // 가까이 가야 이름표가 뜬다
         public override Kind Category => Kind.Market;
         const int Price = 15;
 

@@ -118,25 +118,29 @@ def populate(m):
                 for dy in range(-pad, pad + 1):
                     taken.add((x + dx, y + dy))
 
-    # 일하는 사람: 장터에서 2~12걸음 안, 가로나 세로로 5칸 곧게 걸을 수 있는 곳을 오간다
+    # 2026-10-29 붐빔 완화: 장터·게시판·말 거는 사람 둘레 5칸은 다른 사람을 세우지 않는다 (이름표가 겹쳐 어지럽지 않게)
+    for o in list(m.objects):
+        if o["kind"] in ("market", "board", "npc", "talker"):
+            claim([(o["x"], o["y"])], pad=5)
+    # 일하는 사람: 장터에서 5~20걸음, 가로나 세로로 5칸 곧게 걸을 수 있는 곳을 오간다. 둘레 3칸은 비운다
     for name, ch, *lines in spec.get("workers", []):
         for d, c in near:
-            if not 2 <= d <= 12:
+            if not 5 <= d <= 20 or c in taken:
                 continue
             path = _run(m, c, 5, taken, True) or _run(m, c, 5, taken, False)
             if path:
                 m.add("worker", c[0], c[1], name=name, character=ch, lines=list(lines), path=[path[0], path[-1]])
-                claim(path)
+                claim(path, pad=3)
                 break
-    # 마을 사람: 장터에서 3~16걸음, 서로 4칸 넘게 떨어진 칸 (맵 가장자리 3칸 안은 피한다)
+    # 마을 사람: 장터에서 6~24걸음, 서로 6칸 넘게 떨어진 칸 (맵 가장자리 3칸 안은 피한다)
     placed = 0
     who = spec.get("villagers", [])            # 지역 villagers 번호. 맵마다 다른 사람이 서게 (같은 이름이 여러 섬에 겹치지 않게)
     for d, c in near:
         if placed >= len(who):
             break
-        if 3 <= d <= 16 and c not in taken and _clear(m, *c) and m.road[c[1]][c[0]] < 3 and 3 <= c[0] < m.w - 3 and 3 <= c[1] < m.h - 3:
+        if 6 <= d <= 24 and c not in taken and _clear(m, *c) and m.road[c[1]][c[0]] < 3 and 3 <= c[0] < m.w - 3 and 3 <= c[1] < m.h - 3:
             m.add("villager", c[0], c[1], variant=0, idx=who[placed])
-            claim([c], pad=3)
+            claim([c], pad=5)
             placed += 1
     # 길 위 상인: 곧은 길(등급 2 이상) 8칸을 오간다
     for idx in spec.get("walkers", []):
@@ -153,7 +157,7 @@ def populate(m):
                 break
         if best:
             m.walker([best[0], best[len(best) // 2], best[-1]], idx=idx)
-            claim(best, pad=0)
+            claim(best, pad=2)
     # 장터가 커지면 늘어나는 짐 소품 (장터 옆, 사람이 지나가도 막지 않는다)
     if spec.get("growth"):
         market = next((o for o in m.objects if o["kind"] == "market"), None)
