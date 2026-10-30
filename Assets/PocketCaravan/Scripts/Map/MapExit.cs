@@ -21,6 +21,17 @@ namespace PocketCaravan
 
         Vector3Int Origin => MapRoot.Current.WorldToCell(transform.position);
 
+        public Rect WorldRect
+        {
+            get
+            {
+                var map = MapRoot.Current;
+                var a = map.ground.CellToWorld(Origin);
+                var b = map.ground.CellToWorld(Origin + new Vector3Int(size.x,size.y,0));
+                return Rect.MinMaxRect(a.x,a.y,b.x,b.y);
+            }
+        }
+
         public bool Contains(Vector3Int cell)
         {
             if (MapRoot.Current == null) return false;
@@ -39,6 +50,37 @@ namespace PocketCaravan
             Vector3 first = MapRoot.Current.CellCenter(Origin);
             float offset = size.x > 1 ? player.transform.position.x - first.x : player.transform.position.y - first.y;
             GameManager.I.TravelTo(targetScene, targetSpawnId, offset, player.Facing);
+        }
+
+        /// <summary>담당 지역은 출구 칸 진입이 아니라 발밑 상자가 실제 경계에 닿을 때 이동한다.</summary>
+        public bool TryGetBoundaryContact(PlayerMotor player, Vector2 input, out Vector3 contact)
+        {
+            contact=player!=null?player.transform.position:Vector3.zero;
+            var map=MapRoot.Current;
+            if(player==null||map==null||!Contains(player.Cell))return false;
+            if(GoryeoTravelTransition.RegionOf(map.mapId)==null||GoryeoTravelTransition.RegionOf(targetScene)==null)return true;
+            Vector2 direction;
+            switch(edge){case "E":direction=Vector2.right;break;case "W":direction=Vector2.left;break;case "N":direction=Vector2.up;break;case "S":direction=Vector2.down;break;default:return false;}
+            if(Vector2.Dot(input,direction)<=.01f)return false;
+            Rect rect=WorldRect;Vector2 half=player.feetSize*.5f,feet=player.Feet;
+            float gap=direction.x>0?rect.xMax-feet.x-half.x:direction.x<0?feet.x-half.x-rect.xMin:direction.y>0?rect.yMax-feet.y-half.y:feet.y-half.y-rect.yMin;
+            float attempted=Mathf.Max(0,Vector2.Dot(player.AttemptedDelta,direction));
+            const float epsilon=.0001f;
+            if(gap>attempted+epsilon)return false;
+            contact=player.transform.position+(Vector3)(direction*Mathf.Max(0,gap-epsilon));return true;
+        }
+
+        public bool TryUseAtBoundary(PlayerMotor player, Vector2 input)
+        {
+            Vector3 contact;if(!TryGetBoundaryContact(player,input,out contact))return false;
+            bool framed=GoryeoTravelTransition.RegionOf(MapRoot.Current.mapId)!=null&&GoryeoTravelTransition.RegionOf(targetScene)!=null;
+            if(framed)
+            {
+                player.Teleport(contact,player.Facing);
+                var camera=Camera.main!=null?Camera.main.GetComponent<CameraFollow>():null;
+                if(camera!=null)camera.FrameExit(this);
+            }
+            Use(player);return true;
         }
 
         public bool IsLeaving(Vector2Int facing)

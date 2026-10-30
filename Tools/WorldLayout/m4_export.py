@@ -108,6 +108,19 @@ def main():
             comp[n]=dict(sha256=hashlib.sha256(Image.fromarray(a_).convert('RGBA').tobytes()).hexdigest(),layer=layer,
                          base=[28,34,40,255] if layer=='ground' else None,parts=PARTS['parts'].get(f'{layer}:{y}:{x}',[]))
         names[hh]=n;return n
+    backdrop_cache={}
+    def backdrop_name(y,x):
+        if (y,x) in backdrop_cache:return backdrop_cache[y,x]
+        image=lay['ground'].crop((x*T,y*T,(x+1)*T,(y+1)*T))
+        for layer in ('deco','obj','high'):image=Image.alpha_composite(image,lay[layer].crop((x*T,y*T,(x+1)*T,(y+1)*T)))
+        hh=hashlib.sha256(image.tobytes()).hexdigest()
+        if hh not in names:
+            name=known.get(hh)or'm4_'+hh[:12];names[hh]=name
+            if name.startswith('m4_')and name not in newt:
+                newt[name]=image
+                parts=[part for layer in ('ground','deco','obj','high')for part in PARTS['parts'].get(f'{layer}:{y}:{x}',[])]
+                comp[name]=dict(sha256=hh,layer='cameraBackdrop',base=[28,34,40,255],parts=parts)
+        backdrop_cache[y,x]=names[hh];return names[hh]
     rep={};atlas=[]
     # ③ 맵 객체: 경계 출입구는 모든 맵을 함께 보고 만든다
     import m4_objects
@@ -168,6 +181,14 @@ def main():
                 owner=m['mapid'][int(p_['y']-v.Y0):int(p_['y']-v.Y0+ch),int(p_['x']-v.X0):int(p_['x']-v.X0+cw)]
                 if 0<=cx and 0<=cy and cx+cw<=w and cy+ch<=h and (owner==keys.index(key)).all():crops.append(dict(x=int(cx),y=int(cy),w=cw,h=ch))
             if crops:data['natureCrops']=crops
+        # Camera context stays outside the playable rectangle and never changes collisions/IDs.
+        import camera_backdrop
+        backdrop=[]
+        for dx,dy in camera_backdrop.exterior_cells(objects,w,h,set(MAPID.values())):
+            xx,yy=x0+dx,y0+dy
+            if 0<=xx<m['own'].shape[1]and 0<=yy<m['own'].shape[0]and m['own'][yy,xx]:
+                backdrop.append(dict(x=dx,y=dy,tile=P(backdrop_name(yy,xx))))
+        if backdrop:data['cameraBackdrop']=backdrop
         (PREV/'Maps'/f'{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
         if a.production:(ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
         atlas.append(dict(mapId=mid,box=(int(x0),int(y0),w,h),vz=vz))
