@@ -1,0 +1,41 @@
+{
+  "status": "approved_for_next_stage",
+  "statement": "계속 진행해.",
+  "date": "2026-10-29",
+  "scope": "제출한 S1 직선 능선을 기준으로 다음 굽힘 단계 진행. 본편 적용은 별도.",
+  "assets": [
+    {
+      "name": "west-cap",
+      "size": [
+        128,
+        192
+      ],
+      "rgbaSha256": "df2a2d48d5a08b8ff819190c3336cb372c7f0b26d7b465bce7bd3d17681891c4"
+    },
+    {
+      "name": "body-a",
+      "size": [
+        192,
+        192
+      ],
+      "rgbaSha256": "024b633f31d6c0990b403587f7861dcf44730fc7c96b4dbfc9651638a3366e5d"
+    },
+    {
+      "name": "body-b",
+      "size": [
+        64,
+        192
+      ],
+      "rgbaSha256": "73606e91c4a2c998d0ca70b4ca7228e0ecf6088094bff22b5d461a837756748b"
+    },
+    {
+      "name": "east-cap",
+      "size": [
+        128,
+        192
+      ],
+      "rgbaSha256": "8b0a9a6eb9af0be208cd58acd51d14e6bbef24952d15fbd82765d3b6480b0bd5"
+    }
+  ],
+  "productionApplied": false
+}

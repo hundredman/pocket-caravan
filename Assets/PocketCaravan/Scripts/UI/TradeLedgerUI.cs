@@ -41,7 +41,7 @@ namespace PocketCaravan
             if (!IsOpen || gm == null) return;
             UIStyle.Begin();
             GUI.depth = -10;
-            float width = Mathf.Min(550, UIStyle.VirtualWidth - 16), height = 310;
+            float width = Mathf.Min(550, UIStyle.VirtualWidth - 16), height = UIStyle.WindowHeight(310);
             var r = new Rect((UIStyle.VirtualWidth - width) / 2, (UIStyle.VirtualHeight - height) / 2, width, height);
             GUI.Box(r, "", UIStyle.Box);
             GUI.Label(new Rect(r.x + 12, r.y + 10, width - 110, 18), "교역 장부 · 직접 확인한 시세", UIStyle.Rich);

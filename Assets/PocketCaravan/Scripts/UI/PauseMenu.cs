@@ -34,7 +34,7 @@ namespace PocketCaravan
             var statusStyle = new GUIStyle(UIStyle.Wrap) { richText = false };
             float w = Mathf.Min(360, UIStyle.VirtualWidth - 16);
             float issueHeight = string.IsNullOrEmpty(issue) ? 0 : statusStyle.CalcHeight(new GUIContent(issue), w-50)+8;
-            float h = Mathf.Min(344, 192+issueHeight);
+            float h = UIStyle.WindowHeight(Mathf.Min(344, 192+issueHeight));
             var r = new Rect((UIStyle.VirtualWidth - w) / 2, (UIStyle.VirtualHeight - h) / 2, w, h);
             GUI.Box(r, "", UIStyle.Box);
             GUI.Label(new Rect(r.x, r.y + 8, w, 14), "Pocket Caravan", UIStyle.CenterRich);

@@ -1,0 +1,11 @@
+...............s.............................................sssss.s................................................................................................../Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/Tools/Integration/test_c7_trial.py:57: ResourceWarning: unclosed file <_io.BufferedReader name='/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/ArtReview/C7-Trial4-20261026/Screens-v2/before.png'>
+  self.assertEqual(Image.open(OUT/'Screens-v2'/(name+'.png')).size,(480,270))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/Tools/Integration/test_c7_trial.py:57: ResourceWarning: unclosed file <_io.BufferedReader name='/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/ArtReview/C7-Trial4-20261026/Screens-v2/trial.png'>
+  self.assertEqual(Image.open(OUT/'Screens-v2'/(name+'.png')).size,(480,270))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.............................s............................s..........................................sssss...s...s...........................................
+----------------------------------------------------------------------
+Ran 323 tests in 26.897s
+
+OK (skipped=16)

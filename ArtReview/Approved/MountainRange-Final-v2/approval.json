@@ -1,0 +1,286 @@
+{
+  "status": "approved",
+  "date": "2026-10-29",
+  "approvedBy": "user",
+  "statement": "좋다.",
+  "scope": "고개/계곡 v2 수정이 반영된 산맥 최종22종의 그림·형태·크기·제출 조립 표현. 본편 적용·보행·충돌 등 런타임 검증은 별도.",
+  "productionApplied": false,
+  "assets": [
+    {
+      "name": "west-cap",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/west-cap.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/west-cap.aseprite",
+      "size": [
+        128,
+        192
+      ],
+      "rgbaSha256": "df2a2d48d5a08b8ff819190c3336cb372c7f0b26d7b465bce7bd3d17681891c4",
+      "sourceSha256": "f17d394db698d5975e3b5f1d4fee6bb411f4ed82d56359b2dfeca69adda4d8c0"
+    },
+    {
+      "name": "body-a",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/body-a.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/body-a.aseprite",
+      "size": [
+        192,
+        192
+      ],
+      "rgbaSha256": "024b633f31d6c0990b403587f7861dcf44730fc7c96b4dbfc9651638a3366e5d",
+      "sourceSha256": "7e7fbd93b1cff00ed7a7552232ffeb7c18db2939998476e2928f24ea348c191c"
+    },
+    {
+      "name": "body-b",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/body-b.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/body-b.aseprite",
+      "size": [
+        64,
+        192
+      ],
+      "rgbaSha256": "73606e91c4a2c998d0ca70b4ca7228e0ecf6088094bff22b5d461a837756748b",
+      "sourceSha256": "b77a3b2271e8705647f46bf3e140acc6079ba6c94228d51dc5b3027a07ab0d40"
+    },
+    {
+      "name": "east-cap",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/east-cap.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/east-cap.aseprite",
+      "size": [
+        128,
+        192
+      ],
+      "rgbaSha256": "8b0a9a6eb9af0be208cd58acd51d14e6bbef24952d15fbd82765d3b6480b0bd5",
+      "sourceSha256": "7e4f781942a1e51d52d919d9b1b072148aec58e3b56c00e9f953373b67ff0478"
+    },
+    {
+      "name": "bend-north",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/bend-north.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/bend-north.aseprite",
+      "size": [
+        192,
+        256
+      ],
+      "rgbaSha256": "6e8088b57efc82a0aa87c9770f1152ff84393174c8376dfd9c7d9f3adc005392",
+      "sourceSha256": "8148149132cd92ddd8b7590f2d08197c066c25799caa5cb70f88766b5bde6d9d"
+    },
+    {
+      "name": "bend-south",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/bend-south.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/bend-south.aseprite",
+      "size": [
+        192,
+        256
+      ],
+      "rgbaSha256": "f882565e2a4dfc3ec6e0dba9f2f11f6f1c9b7ba5670ba8a2313d558e40fda086",
+      "sourceSha256": "6cc3e68cdc1a1faee9d9bb5b5f431400666d0ddb18c30248a2802b112dc134b9"
+    },
+    {
+      "name": "north-cap",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/north-cap.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/north-cap.aseprite",
+      "size": [
+        192,
+        128
+      ],
+      "rgbaSha256": "d925bc7d3b4165749c5e995c55609524e55c0a598504f3e60fd2b0745d921dc2",
+      "sourceSha256": "2cdad0e73f9d42c74a98424e7b481513c31425739a2cf216549f4289f3a45983"
+    },
+    {
+      "name": "north-south-body",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/north-south-body.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/north-south-body.aseprite",
+      "size": [
+        192,
+        192
+      ],
+      "rgbaSha256": "dd1eb5ef48a13ac7512dca8478d9d196fcb1217b2b9a459d3c4eace7f4e2679f",
+      "sourceSha256": "a3902fe921d11137cf43000eb7f76fe4983bcf7ad3d6a653a8ebe436959c215d"
+    },
+    {
+      "name": "south-cap",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/south-cap.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/south-cap.aseprite",
+      "size": [
+        192,
+        128
+      ],
+      "rgbaSha256": "0bf60989985010b51c5479bd3458484569b1c927d1b4106bd469f63e1b84efb8",
+      "sourceSha256": "380ed11effef551b3aa4e50d5c40fbe0f98c5a99e6b9385d7b21bc78b1fe07a1"
+    },
+    {
+      "name": "turn-w-n",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/turn-w-n.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/turn-w-n.aseprite",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "6f2b821d97b25cb6ef665294156fa2812d59cbc271d2b3963749ff1681c3dcde",
+      "sourceSha256": "2bcd9b2454f22cc8e72757c736dd96938364212daf01e1b86e4cad19ceb8d372"
+    },
+    {
+      "name": "turn-w-s",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/turn-w-s.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/turn-w-s.aseprite",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "17d117df625934061e2df491ebb426b62cf87d7fb13cd739baf7bb355f6138c0",
+      "sourceSha256": "35dd22ee1e10eea04a8e5f21bff99293184890c4559100d871d9bf6b0581ce0f"
+    },
+    {
+      "name": "turn-e-n",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/turn-e-n.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/turn-e-n.aseprite",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "4ddd7512bab33caa767a28066e064d897051e1aa77eaa0458161f618f20b7bdc",
+      "sourceSha256": "8c98932bc96b456db71fca301d6e06d7e71bfab12eca29f0fa9ee4aa4cf2fa98"
+    },
+    {
+      "name": "turn-e-s",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/turn-e-s.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/turn-e-s.aseprite",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "8100dfc9bf6264dcf4b8927fa5c64a49e95630e17fc1f5eba231a5a4892cf3dc",
+      "sourceSha256": "bfda7463d41fcf338e038fd00d57f3d877d5eac8b509364686ee3af07fb316a1"
+    },
+    {
+      "name": "branch-w-e-n",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/branch-w-e-n.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/branch-w-e-n.aseprite",
+      "size": [
+        384,
+        256
+      ],
+      "rgbaSha256": "ec38a04fabda7b9b8cb53f5f68351a67dd44829da06c11c41e0960889ae9730c",
+      "sourceSha256": "0ffad18e655b1504e7c62b71083ec3e08d6acfe94fec74afe3e4baf80a8f6d0d"
+    },
+    {
+      "name": "branch-w-e-s",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/branch-w-e-s.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/branch-w-e-s.aseprite",
+      "size": [
+        384,
+        256
+      ],
+      "rgbaSha256": "bf553650c2ac27341aba1e218dc51e01b1302279b3dbba99ce8233970862a06b",
+      "sourceSha256": "0f3aa11907754cb34c65f48c8a6b9e08eba5a4eaef39ffd3a6e44b7e06e4171b"
+    },
+    {
+      "name": "branch-n-s-w",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/branch-n-s-w.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/branch-n-s-w.aseprite",
+      "size": [
+        256,
+        384
+      ],
+      "rgbaSha256": "5b7a45194edc32076af567c6d30400907a97740c3efd075392d68c5ca717e2f0",
+      "sourceSha256": "018f278fd6aa2bf9a2a961cee03963b873fba5b4f35cd04eb05948bf266445de"
+    },
+    {
+      "name": "branch-n-s-e",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/branch-n-s-e.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/branch-n-s-e.aseprite",
+      "size": [
+        256,
+        384
+      ],
+      "rgbaSha256": "74bd37dbad5bff7a8df1f9ca6df89cfe17a1df2176320cebbe5ab50d11ded909",
+      "sourceSha256": "2665ce5f60ace23d7ef55e5f449396c924c3a1f69cbefef52fb52fb3acabf722"
+    },
+    {
+      "name": "mountain-pass",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/mountain-pass.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/mountain-pass.aseprite",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "c720b84fd9c0e2f10815d790b1f47a0d7c4d249a0d15f3feb9e4ef1aab40987e",
+      "sourceSha256": "2ded35e2c78f9641f939c6c176cc5ffc4ce0e878d055f57fbdad42d2c4606df9"
+    },
+    {
+      "name": "stream-valley",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/stream-valley.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/stream-valley.aseprite",
+      "size": [
+        256,
+        272
+      ],
+      "rgbaSha256": "62bec20978f63b8491f18b44db55e3df561e8d8f6173c75220d9b3caa728eac7",
+      "sourceSha256": "540a27cd10d4447bedfb294d98456ae618972e7ca45717d33abda21d1e2a96a8"
+    },
+    {
+      "name": "spring-waterfall",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/spring-waterfall.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/spring-waterfall.aseprite",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "01a0649ccdb49f23fe0f535dba353c1248263068eefdf05691d2ab9b3f2ea872",
+      "sourceSha256": "98f2ae788aecae341f4f1c6d0b41ff01bf0fb8116d9bb6892973be1338000ab3"
+    },
+    {
+      "name": "river-straight",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/river-straight.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/river-straight.aseprite",
+      "size": [
+        64,
+        64
+      ],
+      "rgbaSha256": "33c982e6f423e4b5984f12e45b13f3d973772d2eeb38029f132afb2b0bc3198b",
+      "sourceSha256": "3f8051022db6b9b674363f73e29a14f46f964ecccbc7ed4e0f473516dbf8281b"
+    },
+    {
+      "name": "river-outlet",
+      "png": "ArtReview/Approved/MountainRange-Final-v2/river-outlet.png",
+      "source": "ArtReview/Approved/MountainRange-Final-v2/river-outlet.aseprite",
+      "size": [
+        64,
+        64
+      ],
+      "rgbaSha256": "16827b0674f381918655cfa59b87b63a44fb10ed3075ae62003c196e152c7c0c",
+      "sourceSha256": "e94760ec710a7d6fe30a72fd6e09dfe3ec62a733836276d03a7b08703ea43c69"
+    }
+  ],
+  "templates": [
+    {
+      "name": "ew",
+      "size": [
+        16,
+        192
+      ],
+      "rgbaSha256": "110eeb37e1be434292f573a36d2668b0cbb76ff498bb3a856b0abd7a4b25cbe0"
+    },
+    {
+      "name": "ns",
+      "size": [
+        192,
+        16
+      ],
+      "rgbaSha256": "6715656a73cbd900f58d0e2335cf46024dbf79adb88e7a96bca5479eb3fc66cd"
+    },
+    {
+      "name": "water",
+      "size": [
+        64,
+        16
+      ],
+      "rgbaSha256": "7c9fe98d619f25259bdb1bd6ca9fdaf48f19657da1e53e7b22f6bc09c776a756"
+    },
+    {
+      "name": "water-ground",
+      "size": [
+        64,
+        16
+      ],
+      "rgbaSha256": "91f7de1cc735688547ea4ca0bb30febad43b1c9325703822fb9e1b7c30a7c912"
+    }
+  ]
+}

@@ -44,6 +44,9 @@ namespace PocketCaravan.EditorTools
         }
 
         [Serializable]
+        class CropPatch { public int x, y, w, h; }
+
+        [Serializable]
         class MapFile
         {
             public string id, name;
@@ -53,6 +56,7 @@ namespace PocketCaravan.EditorTools
             public string[] palette;
             public MapObject[] objects;
             public ObstaclePlacement[] obstacles;
+            public CropPatch[] natureCrops;
         }
 
         [MenuItem("Pocket Caravan/Tests/지역 통합 등록 검사")]
@@ -249,6 +253,12 @@ namespace PocketCaravan.EditorTools
             map.region = entry == null ? null : AssetDatabase.LoadAssetAtPath<RegionData>(entry.region.regionAssetPath);
             map.terrainOrigin = new Vector2Int(f.terrainX,f.terrainY);
             map.worldCoord = entry == null ? Vector2Int.zero : new Vector2Int(entry.worldX, entry.worldY);
+
+            if (f.natureCrops != null && f.natureCrops.Length > 0)
+            {
+                var depth = gridGo.AddComponent<CropDepth>(); depth.lower = obj; depth.upper = high;
+                depth.patches = Array.ConvertAll(f.natureCrops, p => new RectInt(p.x, f.h - p.y - p.h, p.w, p.h));
+            }
 
             var roads = gridGo.AddComponent<RoadGrid>();
             roads.width = f.w; roads.height = f.h;

@@ -1,0 +1,59 @@
+{
+  "points": [
+    {
+      "asset": "west",
+      "map": "transit_central_approach",
+      "x": 66,
+      "y": -52
+    },
+    {
+      "asset": "capital",
+      "map": "Dakmok",
+      "x": 229,
+      "y": -64
+    },
+    {
+      "asset": "goryeo",
+      "map": "goryeo_songak",
+      "x": 187,
+      "y": -52
+    },
+    {
+      "asset": "lake",
+      "map": "transit_woodtown",
+      "x": 116,
+      "y": -18,
+      "focus": true
+    },
+    {
+      "asset": "granary-north",
+      "map": "goryeo_jangdan",
+      "x": 217,
+      "y": 20
+    },
+    {
+      "asset": "granary-south",
+      "map": "goryeo_jangdan",
+      "x": 198,
+      "y": 66
+    },
+    {
+      "asset": "capital-fields",
+      "map": "Gaegyeong",
+      "x": 240,
+      "y": 24
+    },
+    {
+      "asset": "songak-fields",
+      "map": "goryeo_songak",
+      "x": 172,
+      "y": -12
+    },
+    {
+      "asset": "naru-fields",
+      "map": "Naru",
+      "x": 242,
+      "y": 36
+    }
+  ]
+}

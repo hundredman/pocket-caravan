@@ -1,0 +1,713 @@
+{
+  "scope": "13 production Goryeo/east maps; primary active Unity source hashes compared",
+  "maps": [
+    {
+      "mapId": "goryeo_songak",
+      "size": [
+        74,
+        84
+      ],
+      "scene": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_songak.unity",
+      "layerCells": {
+        "ground": 6133,
+        "deco": 105,
+        "obj": 2353,
+        "high": 453
+      },
+      "distinctTileImages": 689,
+      "forestCells": 2558,
+      "overlappingTreeContributions": 9524,
+      "maxTreePartsBakedIntoOneCell": 7,
+      "densestWindow": {
+        "topLeft": [
+          8,
+          22
+        ],
+        "size": [
+          30,
+          17
+        ],
+        "forestCells": 502,
+        "tileCells": {
+          "ground": 510,
+          "deco": 1,
+          "obj": 489,
+          "high": 26
+        },
+        "uniqueTileImages": 153,
+        "cameraWorld": [
+          23.0,
+          53.5
+        ]
+      }
+    },
+    {
+      "mapId": "transit_central_approach",
+      "size": [
+        71,
+        87
+      ],
+      "scene": "Assets/PocketCaravan/Scenes/Transit/transit_central_approach.unity",
+      "layerCells": {
+        "ground": 5290,
+        "deco": 118,
+        "obj": 1930,
+        "high": 442
+      },
+      "distinctTileImages": 643,
+      "forestCells": 2133,
+      "overlappingTreeContributions": 7568,
+      "maxTreePartsBakedIntoOneCell": 7,
+      "densestWindow": {
+        "topLeft": [
+          41,
+          0
+        ],
+        "size": [
+          30,
+          17
+        ],
+        "forestCells": 490,
+        "tileCells": {
+          "ground": 503,
+          "deco": 1,
+          "obj": 463,
+          "high": 39
+        },
+        "uniqueTileImages": 175,
+        "cameraWorld": [
+          56.0,
+          78.5
+        ]
+      }
+    },
+    {
+      "mapId": "transit_wetroad",
+      "size": [
+        78,
+        64
+      ],
+      "scene": "Assets/PocketCaravan/Scenes/Transit/transit_wetroad.unity",
+      "layerCells": {
+        "ground": 4977,
+        "deco": 97,
+        "obj": 1291,
+        "high": 479
+      },
+      "distinctTileImages": 481,
+      "forestCells": 1631,
+      "overlappingTreeContributions": 5551,
+      "maxTreePartsBakedIntoOneCell": 7,
+      "densestWindow": {
+        "topLeft": [
+          0,
+          7
+        ],
+        "size": [
+          30,
+          17
+        ],
+        "forestCells": 486,
+        "tileCells": {
+          "ground": 510,
+          "deco": 1,
+          "obj": 450,
+          "high": 52
+        },
+        "uniqueTileImages": 180,
+        "cameraWorld": [
+          15.0,
+          48.5
+        ]
+      }
+    },
+    {
+      "mapId": "Dakmok",
+      "size": [
+        93,
+        80
+      ],
+      "scene": "Assets/PocketCaravan/Scenes/Goryeo/Dakmok.unity",
+      "layerCells": {
+        "ground": 6183,
+        "deco": 72,
+        "obj": 2191,
+        "high": 410
+      },
+      "distinctTileImages": 627,
+      "forestCells": 2327,
+      "overlappingTreeContributions": 8387,
+      "maxTreePartsBakedIntoOneCell": 7,
+      "densestWindow": {
+        "topLeft": [
+          42,
+          17
+        ],
+        "size": [
+          30,
+          17
+        ],
+        "forestCells": 474,
+        "tileCells": {
+          "ground": 510,
+          "deco": 0,
+          "obj": 457,
+          "high": 23
+        },
+        "uniqueTileImages": 112,
+        "cameraWorld": [
+          57.0,
+          54.5
+        ]
+      }
+    },
+    {
+      "mapId": "transit_woodtown",
+      "size": [
+        87,
+        69
+      ],
+      "scene": "Assets/PocketCaravan/Scenes/Transit/transit_woodtown.unity",
+      "layerCells": {
+        "ground": 6003,
+        "deco": 83,
+        "obj": 2026,
+        "high": 543
+      },
+      "distinctTileImages": 650,
+      "forestCells": 2352,
+      "overlappingTreeContributions": 8317,
+      "maxTreePartsBakedIntoOneCell": 7,
+      "densestWindow": {
+        "topLeft": [
+          0,
+          12
+        ],
+        "size": [
+          30,
+          17
+        ],
+        "forestCells": 429,
+        "tileCells": {
+          "ground": 510,
+          "deco": 2,
+          "obj": 391,
+          "high": 48
+        },
+        "uniqueTileImages": 214,
+        "cameraWorld": [
+          15.0,
+          48.5
+        ]
+      }
+    },
+    {
+      "mapId": "transit_ferry",
+      "size": [
+        80,
+        55
+      ],
+      "scene": "Assets/PocketCaravan/Scenes/Transit/transit_ferry.unity",
+      "layerCells": {
+        "ground": 3423,
+        "deco": 70,
+        "obj": 664,
+        "high": 258
+      },
+      "distinctTileImages": 381,
+      "forestCells": 741,
+      "overlappingTreeContributions": 2750,
+      "maxTreePartsBakedIntoOneCell": 7,
+      "densestWindow": {
+        "topLeft": [
+          0,
+          18
+        ],
+        "size": [
+          30,
+          17
+        ],
+        "forestCells": 357,
+        "tileCells": {
+          "ground": 498,
+          "deco": 4,
+          "obj": 313,
+          "high": 54
+        },
+        "uniqueTileImages": 133,
+        "cameraWorld": [
+          15.0,
+          28.5
+        ]
+      }
+    },
+    {
+      "mapId": "Gaegyeong",
+      "size": [
+        72,
+        76
+      ],
+      "scene": "Assets/PocketCaravan/Scenes/Goryeo/Gaegyeong.unity",
+      "layerCells": {
+        "ground": 5156,
+        "deco": 60,
+        "obj": 1096,
+        "high": 249
+      },
+      "distinctTileImages": 452,
+      "forestCells": 945,
+      "overlappingTreeContributions": 3708,
+      "maxTreePartsBakedIntoOneCell": 7,
+      "densestWindow": {
+        "topLeft": [
+          0,
+          25
+        ],
+        "size": [
+          30,
+          17
+        ],
+        "forestCells": 349,
+        "tileCells": {
+          "ground": 510,
+          "deco": 4,
+          "obj": 352,
+          "high": 24
+        },
+        "uniqueTileImages": 118,
+        "cameraWorld": [
+          15.0,
+          42.5
+        ]
+      }
+    },
+    {
+      "mapId": "transit_southport",
+      "size": [
+        86,
+        68
+      ],
+      "scene": "Assets/PocketCaravan/Scenes/Transit/transit_southport.unity",
+      "layerCells": {
+        "ground": 4438,
+        "deco": 109,
+        "obj": 839,
+        "high": 245
+      },
+      "distinctTileImages": 439,
+      "forestCells": 934,
+      "overlappingTreeContributions": 3178,
+      "maxTreePartsBakedIntoOneCell": 7,
+      "densestWindow": {
+        "topLeft": [
+          0,
+          32
+        ],
+        "size": [
+          30,
+          17
+        ],
+        "forestCells": 334,
+        "tileCells": {
+          "ground": 493,
+          "deco": 5,
+          "obj": 308,
+          "high": 48
+        },
+        "uniqueTileImages": 151,
+        "cameraWorld": [
+          15.0,
+          27.5
+        ]
+      }
+    },
+    {
+      "mapId": "transit_pass",
+      "size": [
+        65,
+        68
+      ],
+      "scene": "Assets/PocketCaravan/Scenes/Transit/transit_pass.unity",
+      "layerCells": {
+        "ground": 4389,
+        "deco": 140,
+        "obj": 872,
+        "high": 305
+      },
+      "distinctTileImages": 384,
+      "forestCells": 1129,
+      "overlappingTreeContributions": 3732,
+      "maxTreePartsBakedIntoOneCell": 7,
+      "densestWindow": {
+        "topLeft": [
+          0,
+          0
+        ],
+        "size": [
+          30,
+          17
+        ],
+        "forestCells": 324,
+        "tileCells": {
+          "ground": 510,
+          "deco": 11,
+          "obj": 277,
+          "high": 58
+        },
+        "uniqueTileImages": 146,
+        "cameraWorld": [
+          15.0,
+          59.5
+        ]
+      }
+    },
+    {
+      "mapId": "goryeo_jangdan",
+      "size": [
+        61,
+        98
+      ],
+      "scene": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_jangdan.unity",
+      "layerCells": {
+        "ground": 5619,
+        "deco": 115,
+        "obj": 739,
+        "high": 263
+      },
+      "distinctTileImages": 328,
+      "forestCells": 847,
+      "overlappingTreeContributions": 2887,
+      "maxTreePartsBakedIntoOneCell": 7,
+      "densestWindow": {
+        "topLeft": [
+          8,
+          38
+        ],
+        "size": [
+          30,
+          17
+        ],
+        "forestCells": 287,
+        "tileCells": {
+          "ground": 510,
+          "deco": 8,
+          "obj": 246,
+          "high": 69
+        },
+        "uniqueTileImages": 179,
+        "cameraWorld": [
+          23.0,
+          51.5
+        ]
+      }
+    },
+    {
+      "mapId": "transit_south_inland",
+      "size": [
+        67,
+        73
+      ],
+      "scene": "Assets/PocketCaravan/Scenes/Transit/transit_south_inland.unity",
+      "layerCells": {
+        "ground": 4088,
+        "deco": 74,
+        "obj": 632,
+        "high": 330
+      },
+      "distinctTileImages": 400,
+      "forestCells": 782,
+      "overlappingTreeContributions": 2118,
+      "maxTreePartsBakedIntoOneCell": 7,
+      "densestWindow": {
+        "topLeft": [
+          37,
+          38
+        ],
+        "size": [
+          30,
+          17
+        ],
+        "forestCells": 221,
+        "tileCells": {
+          "ground": 510,
+          "deco": 2,
+          "obj": 166,
+          "high": 71
+        },
+        "uniqueTileImages": 176,
+        "cameraWorld": [
+          52.0,
+          26.5
+        ]
+      }
+    },
+    {
+      "mapId": "Naru",
+      "size": [
+        88,
+        84
+      ],
+      "scene": "Assets/PocketCaravan/Scenes/Goryeo/Naru.unity",
+      "layerCells": {
+        "ground": 5390,
+        "deco": 126,
+        "obj": 357,
+        "high": 142
+      },
+      "distinctTileImages": 300,
+      "forestCells": 313,
+      "overlappingTreeContributions": 1020,
+      "maxTreePartsBakedIntoOneCell": 7,
+      "densestWindow": {
+        "topLeft": [
+          0,
+          39
+        ],
+        "size": [
+          30,
+          17
+        ],
+        "forestCells": 211,
+        "tileCells": {
+          "ground": 510,
+          "deco": 14,
+          "obj": 164,
+          "high": 58
+        },
+        "uniqueTileImages": 148,
+        "cameraWorld": [
+          15.0,
+          36.5
+        ]
+      }
+    },
+    {
+      "mapId": "transit_crossroads",
+      "size": [
+        92,
+        80
+      ],
+      "scene": "Assets/PocketCaravan/Scenes/Transit/transit_crossroads.unity",
+      "layerCells": {
+        "ground": 5629,
+        "deco": 156,
+        "obj": 433,
+        "high": 342
+      },
+      "distinctTileImages": 412,
+      "forestCells": 527,
+      "overlappingTreeContributions": 1162,
+      "maxTreePartsBakedIntoOneCell": 7,
+      "densestWindow": {
+        "topLeft": [
+          55,
+          53
+        ],
+        "size": [
+          30,
+          17
+        ],
+        "forestCells": 190,
+        "tileCells": {
+          "ground": 510,
+          "deco": 8,
+          "obj": 124,
+          "high": 85
+        },
+        "uniqueTileImages": 165,
+        "cameraWorld": [
+          70.0,
+          18.5
+        ]
+      }
+    }
+  ],
+  "uniqueTileImagesAcrossMaps": 1327,
+  "imageDimensions": {
+    "(16, 16)": 1327
+  },
+  "rawRGBAImageBytes": 1358848,
+  "bakedCompositeImages": 1294,
+  "forestCompositeImages": 886,
+  "globalSpriteAtlases": [
+    "Assets/PocketCaravan/Data/Venice/VeniceTiles.spriteatlasv2"
+  ],
+  "activeSourceMatches": true,
+  "sourceHashes": [
+    {
+      "path": "Assets/PocketCaravan/Maps/Naru.json",
+      "worktreeSha256": "6fadda5200030d7ed1a2a17a0087ba08cbacee1e5fffee25419abef94be10201",
+      "activeSha256": "6fadda5200030d7ed1a2a17a0087ba08cbacee1e5fffee25419abef94be10201",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/Naru.unity",
+      "worktreeSha256": "e5836553babcad285fd929b56ed7355884f3154bd2a9037af0b8e643852f00c6",
+      "activeSha256": "e5836553babcad285fd929b56ed7355884f3154bd2a9037af0b8e643852f00c6",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_jangdan.json",
+      "worktreeSha256": "fa512b46d45367c9b53c4bbb4fb4bdbb51f09b3d8b296aa27de45e38fddbc33f",
+      "activeSha256": "fa512b46d45367c9b53c4bbb4fb4bdbb51f09b3d8b296aa27de45e38fddbc33f",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_jangdan.unity",
+      "worktreeSha256": "e5c23baa4a4eb5a5e56a197f9e764a4a987529fb8f235c4cc55c82342fcccfcc",
+      "activeSha256": "e5c23baa4a4eb5a5e56a197f9e764a4a987529fb8f235c4cc55c82342fcccfcc",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/goryeo_songak.json",
+      "worktreeSha256": "85d65ed631a0a92a1a4dc6f9da07f276f999a6b20c6a1e939bf2fd9f171eff27",
+      "activeSha256": "85d65ed631a0a92a1a4dc6f9da07f276f999a6b20c6a1e939bf2fd9f171eff27",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_songak.unity",
+      "worktreeSha256": "fde254c6b7d16b4c91e3758105db098b314a6711a8bd0807f048c400d2c72dc6",
+      "activeSha256": "fde254c6b7d16b4c91e3758105db098b314a6711a8bd0807f048c400d2c72dc6",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/Dakmok.json",
+      "worktreeSha256": "ffd3c06843530eb6bdab5987f79ac454b9e5539f1b1495b10bbb72769d31c74c",
+      "activeSha256": "ffd3c06843530eb6bdab5987f79ac454b9e5539f1b1495b10bbb72769d31c74c",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/Dakmok.unity",
+      "worktreeSha256": "8208e86875af43b18415dad90e3de7da7e4298e85ebd7572ccbfb8c8af8c2918",
+      "activeSha256": "8208e86875af43b18415dad90e3de7da7e4298e85ebd7572ccbfb8c8af8c2918",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/Gaegyeong.json",
+      "worktreeSha256": "3582f8c45ce356985e6e6c44727b6cbba4df86b1aac5a470fc122529e91da8c6",
+      "activeSha256": "3582f8c45ce356985e6e6c44727b6cbba4df86b1aac5a470fc122529e91da8c6",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Goryeo/Gaegyeong.unity",
+      "worktreeSha256": "125f9c79e856a33eb02ac3715a06c2c58c4e1be178ed4a3449a6b86afee24cb6",
+      "activeSha256": "125f9c79e856a33eb02ac3715a06c2c58c4e1be178ed4a3449a6b86afee24cb6",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/transit_woodtown.json",
+      "worktreeSha256": "dca97ac183f4c2d11bfd88da70717c0ce73ee1ec354fb83d7fdf9b3f5cb64db1",
+      "activeSha256": "dca97ac183f4c2d11bfd88da70717c0ce73ee1ec354fb83d7fdf9b3f5cb64db1",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Transit/transit_woodtown.unity",
+      "worktreeSha256": "2ac0277c96f48a9dc09fdedbbc465508278dae327842065ded8e2eb1c5ddc28c",
+      "activeSha256": "2ac0277c96f48a9dc09fdedbbc465508278dae327842065ded8e2eb1c5ddc28c",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/transit_ferry.json",
+      "worktreeSha256": "e11e83bd1ec5f1eb67979a1d8d3107b800f463e8cc4035fc2537e52296693984",
+      "activeSha256": "e11e83bd1ec5f1eb67979a1d8d3107b800f463e8cc4035fc2537e52296693984",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Transit/transit_ferry.unity",
+      "worktreeSha256": "e151436e266011145913ce108ea42536b3272c7df848302f8956e5d91fb2d088",
+      "activeSha256": "e151436e266011145913ce108ea42536b3272c7df848302f8956e5d91fb2d088",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/transit_crossroads.json",
+      "worktreeSha256": "2d8840c6ca9b487be8f24cee984da733241aee9b3bdbc25016b9364786d13f6e",
+      "activeSha256": "2d8840c6ca9b487be8f24cee984da733241aee9b3bdbc25016b9364786d13f6e",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Transit/transit_crossroads.unity",
+      "worktreeSha256": "2a4a682bf951cc7de8a89c2f8f398ea0efd19586269027397b4b9f1d610ad5bc",
+      "activeSha256": "2a4a682bf951cc7de8a89c2f8f398ea0efd19586269027397b4b9f1d610ad5bc",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/transit_southport.json",
+      "worktreeSha256": "8b9df4285d88189cfd71dafcd3677d145e1cd95d9a1a567648eed5ee3737edd4",
+      "activeSha256": "8b9df4285d88189cfd71dafcd3677d145e1cd95d9a1a567648eed5ee3737edd4",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Transit/transit_southport.unity",
+      "worktreeSha256": "edb0cbd2b5da7c0e2721808c23a46d4aebc7c23522708572f27b38e311b55cba",
+      "activeSha256": "edb0cbd2b5da7c0e2721808c23a46d4aebc7c23522708572f27b38e311b55cba",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/transit_wetroad.json",
+      "worktreeSha256": "83c464ba5afe83525be1cb314d97f72d34b38f648a3bc9d1eb1ca3e74860fdf9",
+      "activeSha256": "83c464ba5afe83525be1cb314d97f72d34b38f648a3bc9d1eb1ca3e74860fdf9",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Transit/transit_wetroad.unity",
+      "worktreeSha256": "ea8b707dc18beb839eb92ad5b8520338f2ff4ef6bf56c7980bae949772a975ea",
+      "activeSha256": "ea8b707dc18beb839eb92ad5b8520338f2ff4ef6bf56c7980bae949772a975ea",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/transit_pass.json",
+      "worktreeSha256": "be3fb0e913364369bab1f9844ce09e05028074f6b72209fcfa64b5f4d381d55d",
+      "activeSha256": "be3fb0e913364369bab1f9844ce09e05028074f6b72209fcfa64b5f4d381d55d",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Transit/transit_pass.unity",
+      "worktreeSha256": "8c9a6a1eb98ce91920ee8de33736a89624564b13bcb59285b3d3339a7580df0a",
+      "activeSha256": "8c9a6a1eb98ce91920ee8de33736a89624564b13bcb59285b3d3339a7580df0a",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/transit_central_approach.json",
+      "worktreeSha256": "0629f584e2ab2e0b63d950a423d97d66e615da53ae14c9f1e69176830d1d4abb",
+      "activeSha256": "0629f584e2ab2e0b63d950a423d97d66e615da53ae14c9f1e69176830d1d4abb",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Transit/transit_central_approach.unity",
+      "worktreeSha256": "a3e5bf90ebb53b48635916dc314e5024dc4b41b0f2e934b0992230170944ecec",
+      "activeSha256": "a3e5bf90ebb53b48635916dc314e5024dc4b41b0f2e934b0992230170944ecec",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Maps/transit_south_inland.json",
+      "worktreeSha256": "fab8baedeb73c13e1827133b3312fd53db9351e6c32981e1f20ae43ac7298f37",
+      "activeSha256": "fab8baedeb73c13e1827133b3312fd53db9351e6c32981e1f20ae43ac7298f37",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Scenes/Transit/transit_south_inland.unity",
+      "worktreeSha256": "9afd5748d8e13b74bbe59c821ef01cff0974a25a546d1715870d073a4558734d",
+      "activeSha256": "9afd5748d8e13b74bbe59c821ef01cff0974a25a546d1715870d073a4558734d",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Editor/MapJsonBuilder.cs",
+      "worktreeSha256": "a40e2d7d0dcb6f2d96e7964a3b85e2a80a945dad8433271ac016ad1e78ed5495",
+      "activeSha256": "a40e2d7d0dcb6f2d96e7964a3b85e2a80a945dad8433271ac016ad1e78ed5495",
+      "identical": true
+    },
+    {
+      "path": "Tools/WorldLayout/m4_export.py",
+      "worktreeSha256": "125871c359aa2892b8d70ece13821d4328db0e14cd46ceecb805a4fa1eed57e4",
+      "activeSha256": "125871c359aa2892b8d70ece13821d4328db0e14cd46ceecb805a4fa1eed57e4",
+      "identical": true
+    },
+    {
+      "path": "Assets/PocketCaravan/Art/Baked/m4-composites.json",
+      "worktreeSha256": "5a08d0e2bea22bf286efbee0a0c182d019eb634c2d4ec0aedefe4057f5beecd5",
+      "activeSha256": "5a08d0e2bea22bf286efbee0a0c182d019eb634c2d4ec0aedefe4057f5beecd5",
+      "identical": true
+    }
+  ],
+  "notes": "Contribution counts are source parts already baked per cell, not runtime tree objects. RawRGBA bytes exclude Unity/driver object overhead."
+}

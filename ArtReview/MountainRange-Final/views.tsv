@@ -1,0 +1,9 @@
+branches-n	main	560	528	480	270
+branches-e	main	624	208	480	270
+branch-s	branch-w-e-s	80	176	480	270
+branch-w	branch-n-s-w	48	288	480	270
+pass	main	64	576	480	270
+spring	main	880	608	480	270
+valley	main	880	864	480	270
+river	main	880	1184	480	270
+overview	main	0	0	1440	1472

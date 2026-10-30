@@ -34,9 +34,10 @@ def existing_tiles():
         h.setdefault(hashlib.sha256(im.tobytes()).hexdigest(),p.stem)
     return h
 
-def world_map(m,lay,atlas,keys):
+def world_map(m,lay,atlas,keys,destination=None):
     """게임 지도(M 키): 실제 맵 그림을 칸당 4px로 줄인 지형 그림과 맵 자리. 전체(고려+중앙 동쪽)와 고려 확대 두 가지."""
-    WM=ROOT/'Assets/PocketCaravan/Resources/WorldMap';PPT=4
+    WM=Path(destination or ROOT/'Assets/PocketCaravan/Resources/WorldMap');WM.mkdir(parents=True,exist_ok=True);PPT=4
+    labels=json.loads(Path(__file__).with_name('map_labels.json').read_text())
     full=Image.alpha_composite(Image.alpha_composite(Image.alpha_composite(lay['ground'],lay['deco']),lay['obj']),lay['high'])
     own=m['own']
     for stem,sel,scope in(('Goryeo',lambda a_:True,'goryeo_20000_and_central_east_25000'),('GoryeoRegional',lambda a_:a_['mapId'] in('Naru','goryeo_jangdan','goryeo_songak','Dakmok','Gaegyeong'),'goryeo_20000')):
@@ -50,20 +51,46 @@ def world_map(m,lay,atlas,keys):
         small.save(WM/f'{stem}Terrain.png')
         wmask=Image.fromarray(((m['water'][y0:y1,x0:x1]&mask[y0:y1,x0:x1])*255).astype(np.uint8)).resize(((x1-x0)*PPT,(y1-y0)*PPT),Image.NEAREST)
         wmask.save(WM/f'{stem}WaterMask.png')
-        maps=[]
+        maps=[];settlements=[]
         for b in A:
             bx,by,bw,bh=b['box'];pz=next((it for z in b['vz'] for it in z['items'] if it.get('kind')=='plaza' and not it.get('missing')),None)
             if pz:iy,ix=v.idx(pz['x']+pz['w']/2,pz['y']+pz['h']/2);lx,ly=ix-x0,iy-y0
             else:mm=m['mapid']==keys.index(next(k for k,v_ in MAPID.items() if v_==b['mapId']));ys,xs=np.nonzero(mm);lx,ly=xs.mean()-x0,ys.mean()-y0
-            maps.append(dict(mapId=b['mapId'],x=bx-x0,y=by-y0,w=bw,h=bh,labelX=round(float(lx),1),labelY=round(float(ly),1)))
+            if b['mapId'] in labels['hamlets']:
+                settlements.append(dict(text=labels['hamlets'][b['mapId']],x=round(float(lx),1),y=round(float(ly),1)))
+                rows,cols=np.nonzero((m['mapid']==keys.index(next(k for k,v_ in MAPID.items() if v_==b['mapId'])))&(m['grade']>0))
+                if len(rows):
+                    distance=(cols-x0-lx)**2+(rows-y0-ly)**2;valid=distance>=64
+                    score=(cols-(bx+bw/2))**2+(rows-(by+bh/2))**2
+                    if valid.any():score=np.where(valid,score,np.inf)
+                    j=int(np.argmin(score));lx,ly=cols[j]-x0,rows[j]-y0
+            maps.append(dict(mapId=b['mapId'],name=labels['maps'][b['mapId']],x=bx-x0,y=by-y0,w=bw,h=bh,labelX=round(float(lx),1),labelY=round(float(ly),1)))
         lay_=dict(width=x1-x0,height=y1-y0,maps=maps,pixelsPerTile=PPT,waterMask=f'{stem}WaterMask.png',geography='continuous_tiles',
-                  terrainSource='Tools/WorldLayout/m4_export.py',scope=scope,centralContinentTotalCells=100000,centralEastOwnedCells=25000,annotations=[])
+                  terrainSource='Tools/WorldLayout/m4_export.py',scope=scope,centralContinentTotalCells=100000,centralEastOwnedCells=25000,annotations=[],settlements=settlements)
         (WM/f'{stem}Layout.json').write_text(json.dumps(lay_,ensure_ascii=False,separators=(',',':')))
 
 def main():
+    global PREV,REVIEW
     ap=argparse.ArgumentParser();ap.add_argument('layers')
     ap.add_argument('--production',action='store_true',help='④ 본편: Maps/·Art 타일·인증 기록·지도(Resources/WorldMap)에 쓴다')
+    ap.add_argument('--preview-root',type=Path)
+    ap.add_argument('--review-root',type=Path)
+    ap.add_argument('--world-map-preview',action='store_true')
+    ap.add_argument('--preserve-objects',action='store_true',help='Art-only regeneration: retain current function/exit/spawn IDs and positions')
     a=ap.parse_args()
+    if a.preview_root:
+        if a.production or not a.preview_root.resolve().is_relative_to((ROOT/'Assets/PocketCaravan/Editor/B2Preview').resolve()):raise ValueError('Isolated preview path required')
+        PREV=a.preview_root
+    if a.review_root:
+        if a.production or not a.review_root.resolve().is_relative_to((ROOT/'ArtReview').resolve()):raise ValueError('Isolated review path required')
+        REVIEW=a.review_root
+    if a.production and (a.layers and (Path(a.layers)/'nature.json').exists()):
+        import m4_nature
+        nature_record=json.loads((Path(a.layers)/'nature.json').read_text())
+        source=ROOT/nature_record['sourceLayout']
+        if source.resolve()!=m4_nature.LIVE.resolve():raise ValueError('Production requires the approved live nature snapshot')
+        m4_nature.load_layout(source,production=True)
+        if hashlib.sha256(source.read_bytes()).hexdigest()!=nature_record.get('layoutSha256'):raise ValueError('Nature source changed after generation')
     L=Path(a.layers);m=np.load(L/'masks.npz');keys=[str(k) for k in m['keys']]
     lay={k:Image.open(L/f'{k}.png').convert('RGBA') for k in('ground','deco','obj','high')}
     arr={k:np.array(im) for k,im in lay.items()}
@@ -87,6 +114,14 @@ def main():
     mids=[MAPID.get(k,'') for k in keys]
     gwalk=(~m['blocked'])&m['own']&(m['mapid']>=0)
     seam=m4_objects.seams(m['mapid'],gwalk,mids,v.X0,v.Y0)   # 세계 좌표로
+    nature_objects=None
+    if (L/'nature.json').exists() or a.preserve_objects:
+        import m4_nature
+        nature_objects,nature_added,relocations=m4_nature.preserve_objects(seam,gwalk,(v.X0,v.Y0))
+        REVIEW.mkdir(parents=True,exist_ok=True)
+        change_name='nature-exits.json' if (L/'nature.json').exists() else 'object-preservation.json'
+        (REVIEW/change_name).write_text(json.dumps(dict(addedBoundaryCells=nature_added,relocations=relocations),ensure_ascii=False,indent=2)+'\n')
+        print('기존 기능/출구/도착자리 보존, 새 경계 칸:',nature_added)
     zones=json.loads((ROOT/'ArtReview/M2-Zones/zones.json').read_text())['villages']
     oldobj=json.loads((ROOT/'ArtReview/M0/old-objects.json').read_text())
     for key,mid in MAPID.items():
@@ -115,6 +150,9 @@ def main():
         objects,orep=m4_objects.build(mid,key,(int(x0+v.X0),int(y0+v.Y0)),walk,np.array(road).reshape(h,w),np.array(water,bool).reshape(h,w),inside_,
                                       vz,[o for o in oldobj if o['mapId']==mid and o['kind'] not in('spawn','exit','sign')],seam.get(mid,[]),
                                       [o for o in oldobj if o['mapId']==mid and o['kind']=='sign'])
+        if nature_objects is not None:
+            objects=nature_objects[mid]
+            orep=dict(moved=[],missing=[]) # Generic placement suggestions were not applied.
         old=ROOT/f'Assets/PocketCaravan/Maps/{mid}.json'
         oj=json.loads(old.read_text()) if old.exists() else {}
         data=dict(id=mid,name=oj.get('name') or NAMES.get(mid,key.split('/')[1]),w=w,h=h,hours=oj.get('hours',0),
@@ -122,6 +160,14 @@ def main():
                   objects=objects,legacyHeight=h,palette=pal,reachable=reach,water=water,
                   terrainX=int(x0+v.X0),terrainY=int(y0+v.Y0))
         if not a.production:data['previewOnly']=True   # 미리보기: 저장 보호
+        if (L/'nature.json').exists():
+            crops=[]
+            for p_ in json.loads((L/'nature.json').read_text())['placements']:
+                if p_['role']!='rice':continue
+                cx,cy=p_['x']-(x0+v.X0),p_['y']-(y0+v.Y0);cw,ch=p_['size']
+                owner=m['mapid'][int(p_['y']-v.Y0):int(p_['y']-v.Y0+ch),int(p_['x']-v.X0):int(p_['x']-v.X0+cw)]
+                if 0<=cx and 0<=cy and cx+cw<=w and cy+ch<=h and (owner==keys.index(key)).all():crops.append(dict(x=int(cx),y=int(cy),w=cw,h=ch))
+            if crops:data['natureCrops']=crops
         (PREV/'Maps'/f'{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
         if a.production:(ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
         atlas.append(dict(mapId=mid,box=(int(x0),int(y0),w,h),vz=vz))
@@ -186,6 +232,8 @@ def main():
             if not q.exists() or Image.open(q).convert('RGBA').tobytes()!=im.convert('RGBA').tobytes():im.save(q)
         shutil.copyfile(PREV/'m4-composites.json',m4_certify.MANIFEST)
         world_map(m,lay,atlas,keys)
+    elif a.world_map_preview and not errs:
+        world_map(m,lay,atlas,keys,PREV/'WorldMap')
     print('인증:',len(errs),'errors',info,errs[:5])
     rep['_tiles']=dict(certifyErrors=len(errs),newTiles=len(newt),reusedExisting=len([n for n in names.values() if not n.startswith('m4_')]))
     (REVIEW/'report.json').write_text(json.dumps(rep,ensure_ascii=False,indent=1))

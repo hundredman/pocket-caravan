@@ -59,7 +59,7 @@ namespace PocketCaravan
             if (!open || GameManager.I == null) return;
             UIStyle.Begin(); GUI.depth = -12;
             var gm = GameManager.I; var p = gm.Player;
-            float w = Mathf.Min(530, UIStyle.VirtualWidth - 16), h = 326;
+            float w = Mathf.Min(530, UIStyle.VirtualWidth - 16), h = UIStyle.WindowHeight(326);
             var rect = new Rect((UIStyle.VirtualWidth-w)/2, (UIStyle.VirtualHeight-h)/2, w, h);
             GUI.Box(rect, "", UIStyle.Box);
             GUILayout.BeginArea(new Rect(rect.x+12, rect.y+8, w-24, h-94));

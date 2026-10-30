@@ -1,0 +1,39 @@
+{
+  "status": "pending",
+  "purpose": "growing_ripe_rice_plant",
+  "size": [
+    32,
+    32
+  ],
+  "opaqueBBox": [
+    3,
+    6,
+    29,
+    31
+  ],
+  "colors": 11,
+  "binaryAlpha": true,
+  "rgbaSha256": "1d27e47009bc989f7587bef60c4d5f2ea11d8553b2d9570ec93f112da5be75ed",
+  "mode": "built-in imagegen and native Aseprite cleanup",
+  "unity": {
+    "mode": "Edit review only",
+    "size": [
+      480,
+      270
+    ],
+    "clumps": 25,
+    "productionWrites": 0,
+    "originalSceneRestored": true
+  },
+  "productionApplied": false,
+  "notRun": [
+    "A2 production binding",
+    "gameplay",
+    "collision",
+    "wind animation",
+    "build"
+  ],
+  "asepriteRoundtripRGBA": true,
+  "reviewStatus": "changes_requested",
+  "successor": "ArtReview/RipeRice-v2"
+}

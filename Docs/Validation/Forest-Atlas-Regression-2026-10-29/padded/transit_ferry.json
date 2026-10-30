@@ -1,0 +1,112 @@
+{
+  "map": "transit_ferry",
+  "sourceScene": "Assets/PocketCaravan/Scenes/Transit/transit_ferry.unity",
+  "scope": "Edit mode, original scene materials/lights/SpriteRenderers; temporary atlas clones; no gameplay loop",
+  "tileCount": 381,
+  "atlasSize": "512x512",
+  "sourceTileRGBAIdentical": true,
+  "tilePropertiesCompared": 381,
+  "baselineControlDifferentPixels": 0,
+  "frames": [
+    {
+      "index": 0,
+      "camera": "(40.0000, 27.5000, 28.0000)",
+      "differentPixels": 104
+    },
+    {
+      "index": 1,
+      "camera": "(15.0000, 8.4375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 2,
+      "camera": "(45.0000, 8.4375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 3,
+      "camera": "(75.0000, 8.4375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 4,
+      "camera": "(15.0000, 25.3125, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 5,
+      "camera": "(45.0000, 25.3125, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 6,
+      "camera": "(75.0000, 25.3125, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 7,
+      "camera": "(15.0000, 42.1875, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 8,
+      "camera": "(45.0000, 42.1875, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 9,
+      "camera": "(75.0000, 42.1875, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 10,
+      "camera": "(15.0000, 59.0625, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 11,
+      "camera": "(45.0000, 59.0625, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 12,
+      "camera": "(75.0000, 59.0625, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 13,
+      "camera": "(40.1730, 27.7810, 4.2188)",
+      "differentPixels": 0
+    },
+    {
+      "index": 14,
+      "camera": "(40.1730, 27.7810, 16.8750)",
+      "differentPixels": 0
+    }
+  ],
+  "totalDifferentPixels": 104,
+  "cellChecks": 4674,
+  "cellsIdentical": true,
+  "cellsBefore": "DA-4C-FD-C1-42-7B-09-59-7E-80-AB-FA-A8-F6-C6-7E-51-C1-57-E3-68-4B-52-6F-BA-B9-E5-BB-45-23-6C-A6",
+  "cellsAfter": "DA-4C-FD-C1-42-7B-09-59-7E-80-AB-FA-A8-F6-C6-7E-51-C1-57-E3-68-4B-52-6F-BA-B9-E5-BB-45-23-6C-A6",
+  "motorStarts": 16,
+  "motorTicksPerMode": 11520,
+  "motorTrajectoryIdentical": true,
+  "walkBefore": "58-AF-87-2A-E8-5D-25-6A-17-65-33-DB-42-60-ED-A8-0B-EB-4B-42-F5-54-1A-B7-E6-C8-EC-E7-1F-29-26-61",
+  "walkAfter": "58-AF-87-2A-E8-5D-25-6A-17-65-33-DB-42-60-ED-A8-0B-EB-4B-42-F5-54-1A-B7-E6-C8-EC-E7-1F-29-26-61",
+  "movementStatistics": [
+    {
+      "moved": 8652,
+      "stopped": 2868
+    },
+    {
+      "moved": 8652,
+      "stopped": 2868
+    }
+  ],
+  "gameplayComponentsAndSortingIdentical": true,
+  "gameBefore": "E5-C8-52-B3-BB-10-EA-87-D2-67-D1-EE-96-AA-43-DF-2E-7C-18-65-0E-2E-CA-39-49-0F-83-5B-13-96-36-5A",
+  "gameAfter": "E5-C8-52-B3-BB-10-EA-87-D2-67-D1-EE-96-AA-43-DF-2E-7C-18-65-0E-2E-CA-39-49-0F-83-5B-13-96-36-5A",
+  "logs": [],
+  "productionWrites": 0
+}

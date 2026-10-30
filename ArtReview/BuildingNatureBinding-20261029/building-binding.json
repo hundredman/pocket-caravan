@@ -1,0 +1,26 @@
+{
+  "mappedAssets": 10,
+  "placedKinds": 9,
+  "buildingInstances": 62,
+  "boatInstances": 6,
+  "unplaced": [
+    "gate"
+  ],
+  "gameplayDifferences": [],
+  "gameplaySHA256": {
+    "goryeo_songak": "bf4732f67b1599ec49d8e8745ce9ebd5fd1ac85b68c30becedfd83c5c981dd3a",
+    "transit_central_approach": "d280773269aca719d93b86a3b6b8a40b7855c5bfa1e0edde2c119693ee831f88",
+    "transit_wetroad": "6995574124f4bd9a85bd5683ed4f1e6c54150e4492ecfc1808dc1de1996aa7b8",
+    "Dakmok": "0c458049df46025d9be17f5166c96e95fd3817875684c3aae9afba3ad53eef4d",
+    "transit_woodtown": "878bf463ca28a53d0e58831d08ed75b7af00471b5eed93ac0df5d00dcc8947c7",
+    "transit_ferry": "f380bcf30c1bb4388d3c2daea5a71d5f2957dcf9458a4801e4d92850e534aeaa",
+    "Gaegyeong": "71657176e6acf1e135d6ed5a32cddae55955fa993df2762ec43872ba1c3c8241",
+    "transit_southport": "66c669de9d9b1ed4b0d78128577aff03f8fe2ce2bdd3881afd09f5b2ca738edd",
+    "transit_pass": "4d38c75f463c91d2c794e4d8c97cba07ae60888a855c83788f5442a16b01cf9a",
+    "goryeo_jangdan": "c09e5d7c5d74e2196e137708c20b0b764497045332dbd146e80c7b091bf5d00b",
+    "transit_south_inland": "4324681288d392725b2a6866d4139d941d25cc96a19f6fa3c0595456957d6b6b",
+    "Naru": "dbb698ad3673812e30daf9473d6b9ecdfbd74ca9ba5e66c641af51fd85a54773",
+    "transit_crossroads": "c19edee55d801838fc643ed87cf95acd2ed563e5d64736b188ac13dc440b01f2"
+  },
+  "originalCommit": "4d5e205e5"
+}

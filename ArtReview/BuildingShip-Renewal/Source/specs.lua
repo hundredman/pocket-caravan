@@ -1,0 +1,1 @@
+return {{name="cottage",w=80,h=64},{name="pavilion",w=80,h=80},{name="thatch",w=64,h=48},{name="tile-house",w=64,h=48},{name="gaekju",w=96,h=64},{name="gate",w=96,h=80},{name="palace",w=160,h=112},{name="shop",w=96,h=64},{name="small_store",w=64,h=48},{name="boat",w=80,h=32}}
