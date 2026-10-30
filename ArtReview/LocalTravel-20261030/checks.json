@@ -1,0 +1,2756 @@
+{
+    "complete": true,
+    "error": "",
+    "checks": [
+        {
+            "passed": true,
+            "test": "safe preview startup",
+            "detail": ""
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Naru -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Naru -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Naru -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Naru -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Naru -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Naru -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Naru -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Naru -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Naru -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Naru -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Naru -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Naru -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Naru -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Naru -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Naru -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Naru -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Naru -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Naru -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Naru -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Naru -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Naru -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Naru -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Naru -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Naru -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Naru -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Naru -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Naru -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Naru -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Naru -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Naru -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Naru -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Naru -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Naru -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Naru -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Naru -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Naru -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Naru -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Naru -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Naru -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Gaegyeong -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Gaegyeong -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Gaegyeong -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Gaegyeong -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Gaegyeong -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Gaegyeong -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Gaegyeong -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Gaegyeong -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Gaegyeong -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Gaegyeong -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Gaegyeong -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Gaegyeong -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Gaegyeong -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Gaegyeong -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Gaegyeong -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Gaegyeong -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Gaegyeong -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Gaegyeong -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Gaegyeong -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Gaegyeong -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Gaegyeong -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Gaegyeong -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Gaegyeong -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Gaegyeong -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Gaegyeong -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Gaegyeong -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Gaegyeong -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Gaegyeong -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Gaegyeong -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Gaegyeong -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Gaegyeong -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Gaegyeong -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Gaegyeong -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Gaegyeong -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Gaegyeong -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Gaegyeong -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Gaegyeong -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Gaegyeong -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Gaegyeong -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Dakmok -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Dakmok -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Dakmok -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Dakmok -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Dakmok -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Dakmok -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Dakmok -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Dakmok -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Dakmok -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Dakmok -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Dakmok -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Dakmok -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Dakmok -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Dakmok -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Dakmok -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Dakmok -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Dakmok -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Dakmok -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Dakmok -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Dakmok -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Dakmok -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Dakmok -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Dakmok -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Dakmok -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Dakmok -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Dakmok -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Dakmok -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Dakmok -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Dakmok -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Dakmok -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Dakmok -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Dakmok -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Dakmok -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Dakmok -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Dakmok -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Dakmok -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "Dakmok -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "Dakmok -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "Dakmok -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_songak -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_songak -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_songak -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_songak -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_songak -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_songak -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_songak -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_songak -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_songak -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_songak -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_songak -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_songak -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_songak -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_songak -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_songak -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_songak -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_songak -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_songak -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_songak -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_songak -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_songak -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_songak -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_songak -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_songak -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_songak -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_songak -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_songak -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_songak -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_songak -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_songak -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_songak -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_songak -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_songak -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_songak -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_songak -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_songak -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_songak -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_songak -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_songak -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_jangdan -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_jangdan -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_jangdan -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_jangdan -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_jangdan -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_jangdan -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_jangdan -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_jangdan -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_jangdan -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_jangdan -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_jangdan -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_jangdan -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_jangdan -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_jangdan -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_jangdan -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_jangdan -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_jangdan -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_jangdan -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_jangdan -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_jangdan -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_jangdan -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_jangdan -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_jangdan -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_jangdan -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_jangdan -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_jangdan -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_jangdan -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_jangdan -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_jangdan -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_jangdan -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_jangdan -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_jangdan -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_jangdan -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_jangdan -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_jangdan -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_jangdan -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "goryeo_jangdan -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "goryeo_jangdan -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "goryeo_jangdan -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_woodtown -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_woodtown -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_woodtown -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_woodtown -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_woodtown -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_woodtown -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_woodtown -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_woodtown -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_woodtown -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_woodtown -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_woodtown -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_woodtown -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_woodtown -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_woodtown -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_woodtown -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_woodtown -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_woodtown -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_woodtown -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_woodtown -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_woodtown -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_woodtown -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_woodtown -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_woodtown -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_woodtown -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_woodtown -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_woodtown -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_woodtown -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_woodtown -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_woodtown -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_woodtown -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_woodtown -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_woodtown -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_woodtown -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_woodtown -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_woodtown -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_woodtown -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_woodtown -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_woodtown -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_woodtown -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_ferry -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_ferry -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_ferry -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_ferry -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_ferry -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_ferry -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_ferry -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_ferry -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_ferry -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_ferry -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_ferry -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_ferry -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_ferry -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_ferry -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_ferry -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_ferry -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_ferry -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_ferry -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_ferry -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_ferry -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_ferry -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_ferry -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_ferry -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_ferry -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_ferry -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_ferry -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_ferry -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_ferry -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_ferry -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_ferry -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_ferry -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_ferry -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_ferry -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_ferry -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_ferry -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_ferry -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_ferry -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_ferry -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_ferry -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_crossroads -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_crossroads -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_crossroads -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_crossroads -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_crossroads -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_crossroads -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_crossroads -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_crossroads -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_crossroads -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_crossroads -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_crossroads -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_crossroads -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_crossroads -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_crossroads -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_crossroads -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_crossroads -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_crossroads -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_crossroads -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_crossroads -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_crossroads -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_crossroads -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_crossroads -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_crossroads -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_crossroads -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_crossroads -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_crossroads -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_crossroads -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_crossroads -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_crossroads -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_crossroads -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_crossroads -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_crossroads -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_crossroads -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_crossroads -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_crossroads -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_crossroads -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_crossroads -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_crossroads -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_crossroads -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_southport -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_southport -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_southport -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_southport -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_southport -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_southport -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_southport -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_southport -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_southport -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_southport -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_southport -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_southport -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_southport -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_southport -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_southport -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_southport -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_southport -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_southport -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_southport -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_southport -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_southport -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_southport -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_southport -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_southport -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_southport -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_southport -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_southport -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_southport -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_southport -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_southport -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_southport -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_southport -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_southport -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_southport -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_southport -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_southport -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_southport -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_southport -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_southport -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_wetroad -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_wetroad -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_wetroad -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_wetroad -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_wetroad -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_wetroad -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_wetroad -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_wetroad -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_wetroad -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_wetroad -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_wetroad -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_wetroad -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_wetroad -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_wetroad -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_wetroad -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_wetroad -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_wetroad -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_wetroad -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_wetroad -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_wetroad -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_wetroad -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_wetroad -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_wetroad -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_wetroad -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_wetroad -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_wetroad -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_wetroad -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_wetroad -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_wetroad -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_wetroad -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_wetroad -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_wetroad -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_wetroad -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_wetroad -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_wetroad -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_wetroad -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_wetroad -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_wetroad -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_wetroad -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_pass -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_pass -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_pass -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_pass -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_pass -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_pass -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_pass -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_pass -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_pass -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_pass -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_pass -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_pass -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_pass -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_pass -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_pass -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_pass -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_pass -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_pass -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_pass -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_pass -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_pass -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_pass -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_pass -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_pass -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_pass -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_pass -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_pass -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_pass -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_pass -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_pass -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_pass -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_pass -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_pass -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_pass -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_pass -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_pass -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_pass -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_pass -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_pass -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_central_approach -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_central_approach -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_central_approach -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_central_approach -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_central_approach -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_central_approach -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_central_approach -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_central_approach -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_central_approach -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_central_approach -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_central_approach -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_central_approach -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_central_approach -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_central_approach -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_central_approach -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_central_approach -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_central_approach -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_central_approach -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_central_approach -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_central_approach -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_central_approach -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_central_approach -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_central_approach -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_central_approach -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_central_approach -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_central_approach -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_central_approach -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_central_approach -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_central_approach -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_central_approach -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_central_approach -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_central_approach -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_central_approach -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_central_approach -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_central_approach -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_central_approach -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_central_approach -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_central_approach -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_central_approach -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_south_inland -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_south_inland -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_south_inland -> Naru"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_south_inland -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_south_inland -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_south_inland -> Gaegyeong"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_south_inland -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_south_inland -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_south_inland -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_south_inland -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_south_inland -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_south_inland -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_south_inland -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_south_inland -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_south_inland -> goryeo_jangdan"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_south_inland -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_south_inland -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_south_inland -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_south_inland -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_south_inland -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_south_inland -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_south_inland -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_south_inland -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_south_inland -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_south_inland -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_south_inland -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_south_inland -> transit_southport"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_south_inland -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_south_inland -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_south_inland -> transit_wetroad"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_south_inland -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_south_inland -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_south_inland -> transit_pass"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_south_inland -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_south_inland -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_south_inland -> transit_central_approach"
+        },
+        {
+            "passed": true,
+            "test": "regional policy registered",
+            "detail": "transit_south_inland -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "arrival notice only across regions",
+            "detail": "transit_south_inland -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "regional-only visual timing",
+            "detail": "transit_south_inland -> transit_south_inland"
+        },
+        {
+            "passed": true,
+            "test": "foreign policies unchanged",
+            "detail": ""
+        },
+        {
+            "passed": true,
+            "test": "same-region travel never covers the screen",
+            "detail": "goryeo_jangdan -> goryeo_songak 0"
+        },
+        {
+            "passed": true,
+            "test": "same-region travel never covers the screen",
+            "detail": "goryeo_jangdan -> goryeo_songak 0"
+        },
+        {
+            "passed": true,
+            "test": "same-region travel never covers the screen",
+            "detail": "goryeo_jangdan -> goryeo_songak 0"
+        },
+        {
+            "passed": true,
+            "test": "same-region travel never covers the screen",
+            "detail": "goryeo_jangdan -> goryeo_songak 0"
+        },
+        {
+            "passed": true,
+            "test": "actual travel reaches destination",
+            "detail": "goryeo_jangdan -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "autosave remains disabled",
+            "detail": ""
+        },
+        {
+            "passed": true,
+            "test": "cover occurs only at regional crossings",
+            "detail": "goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "actual scene-load frames sampled",
+            "detail": "goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "no automatic location overlay on local arrival",
+            "detail": "goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "same-region travel never covers the screen",
+            "detail": "goryeo_songak -> Dakmok 0"
+        },
+        {
+            "passed": true,
+            "test": "same-region travel never covers the screen",
+            "detail": "goryeo_songak -> Dakmok 0"
+        },
+        {
+            "passed": true,
+            "test": "same-region travel never covers the screen",
+            "detail": "goryeo_songak -> Dakmok 0"
+        },
+        {
+            "passed": true,
+            "test": "actual travel reaches destination",
+            "detail": "goryeo_songak -> Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "autosave remains disabled",
+            "detail": ""
+        },
+        {
+            "passed": true,
+            "test": "cover occurs only at regional crossings",
+            "detail": "Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "actual scene-load frames sampled",
+            "detail": "Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "no automatic location overlay on local arrival",
+            "detail": "Dakmok"
+        },
+        {
+            "passed": true,
+            "test": "actual travel reaches destination",
+            "detail": "Dakmok -> transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "autosave remains disabled",
+            "detail": ""
+        },
+        {
+            "passed": true,
+            "test": "cover occurs only at regional crossings",
+            "detail": "transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "actual scene-load frames sampled",
+            "detail": "transit_woodtown"
+        },
+        {
+            "passed": true,
+            "test": "same-region travel never covers the screen",
+            "detail": "transit_woodtown -> transit_ferry 0"
+        },
+        {
+            "passed": true,
+            "test": "same-region travel never covers the screen",
+            "detail": "transit_woodtown -> transit_ferry 0"
+        },
+        {
+            "passed": true,
+            "test": "same-region travel never covers the screen",
+            "detail": "transit_woodtown -> transit_ferry 0"
+        },
+        {
+            "passed": true,
+            "test": "actual travel reaches destination",
+            "detail": "transit_woodtown -> transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "autosave remains disabled",
+            "detail": ""
+        },
+        {
+            "passed": true,
+            "test": "cover occurs only at regional crossings",
+            "detail": "transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "actual scene-load frames sampled",
+            "detail": "transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "no automatic location overlay on local arrival",
+            "detail": "transit_ferry"
+        },
+        {
+            "passed": true,
+            "test": "same-region travel never covers the screen",
+            "detail": "transit_ferry -> transit_crossroads 0"
+        },
+        {
+            "passed": true,
+            "test": "same-region travel never covers the screen",
+            "detail": "transit_ferry -> transit_crossroads 0"
+        },
+        {
+            "passed": true,
+            "test": "same-region travel never covers the screen",
+            "detail": "transit_ferry -> transit_crossroads 0"
+        },
+        {
+            "passed": true,
+            "test": "actual travel reaches destination",
+            "detail": "transit_ferry -> transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "autosave remains disabled",
+            "detail": ""
+        },
+        {
+            "passed": true,
+            "test": "cover occurs only at regional crossings",
+            "detail": "transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "actual scene-load frames sampled",
+            "detail": "transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "no automatic location overlay on local arrival",
+            "detail": "transit_crossroads"
+        },
+        {
+            "passed": true,
+            "test": "actual travel reaches destination",
+            "detail": "transit_crossroads -> goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "autosave remains disabled",
+            "detail": ""
+        },
+        {
+            "passed": true,
+            "test": "cover occurs only at regional crossings",
+            "detail": "goryeo_songak"
+        },
+        {
+            "passed": true,
+            "test": "actual scene-load frames sampled",
+            "detail": "goryeo_songak"
+        }
+    ]
+}
