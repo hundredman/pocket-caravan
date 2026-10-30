@@ -25,13 +25,28 @@ def design():
  OUT.mkdir(exist_ok=True);(PREV/'Whole').mkdir(parents=True,exist_ok=True)
  z=json.loads((ROOT/'ArtReview/M2-Zones/zones.json').read_text())['villages']
  maps={p.stem:json.loads(p.read_text())for p in (ROOT/'Assets/PocketCaravan/Maps').glob('*.json')}
- # Full source field clearings may remove vegetation, but never roads, buildings, water,
- # existing features, mountain overlays, exits or arrival cells.
+ # User: only open land or at most three isolated trees; preserve major forests.
+ # Never clear roads, buildings, water, functional locations or mountain overlays.
  base=ROOT/'ArtReview/BuildingNatureBinding-20261029/BuildingLayers'
  m=np.load(base/'masks.npz');H,W=m['own'].shape
- d=json.loads((HERE/'nature_live.json').read_text());d['status']='review';d['description']='User: additional Goryeo rice, village dressing review; live unchanged.'
+ d=json.loads((HERE/'nature_live.json').read_text());d['status']='review';d['description']='User: restore forest-clearing paddy sites; additional rice only on open/sparse land, live unchanged.'
  hard=np.zeros((H,W),bool)
- parts=json.loads((base/'parts.json').read_text())['parts']
+ ledger=json.loads((base/'parts.json').read_text());parts=ledger['parts']
+ tree_instances={}
+ for key,items in parts.items():
+  _,y,x=key.split(':');x,y=int(x),int(y)
+  for sid,dx,dy in items:
+   if not sid.startswith('sprite:')or not sid.split(':')[1].startswith(('forest_','pine_','round_','broadleaf','golden_tree','light_tree','willow')):continue
+   instance=(sid,x*16+dx,y*16+dy)
+   if instance not in tree_instances:
+    im=Image.open(ROOT/ledger['sources'][sid]).convert('RGBA');tree_instances[instance]=np.array(im.getchannel('A'))>0
+ def trees_at(x,y):
+  hits=[]
+  for (sid,px,py),alpha in tree_instances.items():
+   x0,y0=max(x*16,px),max(y*16,py);x1,y1=min((x+12)*16,px+alpha.shape[1]),min((y+8)*16,py+alpha.shape[0])
+   if x0<x1 and y0<y1 and alpha[y0-py:y1-py,x0-px:x1-px].any():hits.append(sid)
+  return hits
+
  for key,items in parts.items():
   layer,y,x=key.split(':')
   if layer in ('obj','high') and any(a[0].startswith('sprite:c7:')for a in items):hard[int(y),int(x)]=True
@@ -58,6 +73,10 @@ def design():
     view=np.s_[y:y+8,x:x+12]
     if not allowed[view].all() or not (m['mapid'][view]==ki).all() or occupied[view].any():continue
     if water_distance[view].min()<1.5 or road_distance[y+4,x+6]>18:continue
+    # Dense forest barriers must stay intact; count whole tree instances, including canopies.
+    if m['blocked'][view].mean()>.10:continue
+    tree_hits=trees_at(x,y)
+    if len(tree_hits)>3 or sum(':forest_'in sid for sid in tree_hits)>1:continue
     score=(x+6-cx)**2+(y-126-cy)**2+water_distance[y+4,x+6]*3
     candidates.append((score,x,y))
   count=0
@@ -65,7 +84,7 @@ def design():
    if count>=quota:break
    if occupied[max(0,y-1):y+9,max(0,x-1):x+13].any():continue
    ident='village-fill-rice-'+str(len(added)+1);p=dict(id=ident,asset='small-plot',role='rice',x=x,y=y-130)
-   d['placements'].append(p);d['clearings'].append(dict(id=ident,x=x,y=y-130,w=12,h=8));occupied[y:y+8,x:x+12]=True;added.append(dict(p,map=key));count+=1
+   d['placements'].append(p);d['clearings'].append(dict(id=ident,x=x,y=y-130,w=12,h=8));occupied[y:y+8,x:x+12]=True;added.append(dict(p,map=key,removedTrees=len(trees_at(x,y)),forestBarrierFraction=float(m['blocked'][y:y+8,x:x+12].mean())));count+=1
  write(HERE/'nature_village_review.json',d)
  entries=[];missing=[];gaps=[];assets=[]
  for name,p in ASSETS.items():
@@ -135,7 +154,7 @@ def design():
      group['props'].append(dict(asset='sign',x=x,y=y,w=1,h=1));protected.add((x,y));break
    else:gaps.append(dict(village=mid,feature='이정표',reason='no safe adjacent visual position'))
   if group['props']:entries.append(dict(mapId=mid,village=mid,spaces=[group]))
- inputs={mid:dict(metadata={k:md[k]for k in ['id','name','w','h','terrainX','terrainY','worldX','worldY','travelHours']if k in md},kinds=sorted({o['kind']for o in md['objects']}),objectSignatures=[hashlib.sha256(json.dumps(o,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()for o in md['objects']])for mid,md in maps.items()if mid in own_ids}
+ inputs={mid:dict(metadata={k:md[k]for k in ['id','name','w','h','terrainX','terrainY','worldX','worldY','travelHours']if k in md},kinds=sorted({o['kind']for o in md['objects']}),visibleLayersSha256=hashlib.sha256(json.dumps({layer:[md['palette'][i]for i in md[layer]]for layer in ['ground','deco','obj','high']},sort_keys=True,separators=(',',':')).encode()).hexdigest(),objectSignatures=[hashlib.sha256(json.dumps(o,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()for o in md['objects']])for mid,md in maps.items()if mid in own_ids}
  result=dict(inputMaps=inputs,status='review',assets=assets,maps=entries,addedRice=added,missingSlots=missing,unplacedProps=gaps,policy='Everyday event-yard props are a separate runtime root; SetEvent replaces and restores them. No automatic event invented.')
  write(OUT/'manifest.json',result)
  print('Added rice',[(p['map'],p['x'],p['y'])for p in added]);print('Props',sum(len(s['props'])for e in entries for s in e['spaces']),'unplaced',len(gaps),'unplaced houses',len(missing))

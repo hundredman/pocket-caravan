@@ -52,7 +52,7 @@ namespace PocketCaravan
             GameManager.I.TravelTo(targetScene, targetSpawnId, offset, player.Facing);
         }
 
-        /// <summary>담당 지역은 출구 칸 진입이 아니라 발밑 상자가 실제 경계에 닿을 때 이동한다.</summary>
+        /// <summary>발 중심이 출구 바깥 면까지 도달한 뒤 이동한다.</summary>
         public bool TryGetBoundaryContact(PlayerMotor player, Vector2 input, out Vector3 contact)
         {
             contact=player!=null?player.transform.position:Vector3.zero;
@@ -62,12 +62,28 @@ namespace PocketCaravan
             Vector2 direction;
             switch(edge){case "E":direction=Vector2.right;break;case "W":direction=Vector2.left;break;case "N":direction=Vector2.up;break;case "S":direction=Vector2.down;break;default:return false;}
             if(Vector2.Dot(input,direction)<=.01f)return false;
-            Rect rect=WorldRect;Vector2 half=player.feetSize*.5f,feet=player.Feet;
-            float gap=direction.x>0?rect.xMax-feet.x-half.x:direction.x<0?feet.x-half.x-rect.xMin:direction.y>0?rect.yMax-feet.y-half.y:feet.y-half.y-rect.yMin;
+            Rect rect=WorldRect;Vector2 feet=player.Feet;
+            float gap=direction.x>0?rect.xMax-feet.x:direction.x<0?feet.x-rect.xMin:direction.y>0?rect.yMax-feet.y:feet.y-rect.yMin;
             float attempted=Mathf.Max(0,Vector2.Dot(player.AttemptedDelta,direction));
             const float epsilon=.0001f;
             if(gap>attempted+epsilon)return false;
             contact=player.transform.position+(Vector3)(direction*Mathf.Max(0,gap-epsilon));return true;
+        }
+
+        /// <summary>출구 칸 안에서 발 중심은 유지하고, 경계 밖으로 걸친 발 상자만 안쪽에 투영한다.
+        /// 옆 벽·다른 충돌은 그대로 검사한다. 다른 문명은 기존 충돌을 유지한다.</summary>
+        public bool TryProjectFootprint(Vector2 center, ref Vector2 a, ref Vector2 b, ref Vector2 c, ref Vector2 d)
+        {
+            if(MapRoot.Current==null||GoryeoTravelTransition.RegionOf(MapRoot.Current.mapId)==null||GoryeoTravelTransition.RegionOf(targetScene)==null)return false;
+            Rect rect=WorldRect;if(!rect.Contains(center))return false;
+            a=ProjectSample(a,rect);b=ProjectSample(b,rect);c=ProjectSample(c,rect);d=ProjectSample(d,rect);return true;
+        }
+
+        Vector2 ProjectSample(Vector2 sample, Rect rect)
+        {
+            const float inset=.0001f;
+            switch(edge){case "E":sample.x=Mathf.Min(sample.x,rect.xMax-inset);break;case "W":sample.x=Mathf.Max(sample.x,rect.xMin+inset);break;case "N":sample.y=Mathf.Min(sample.y,rect.yMax-inset);break;case "S":sample.y=Mathf.Max(sample.y,rect.yMin+inset);break;}
+            return sample;
         }
 
         public bool TryUseAtBoundary(PlayerMotor player, Vector2 input)

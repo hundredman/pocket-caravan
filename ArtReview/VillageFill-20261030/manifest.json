@@ -16,6 +16,7 @@
         "spawn",
         "talker"
       ],
+      "visibleLayersSha256": "e0bb928df7e1e8864db67ad207f639763a208c8f3f15e83bc916e40132d2a7a6",
       "objectSignatures": [
         "1db85b87ded3bf0136ec86695c66ab2de8a0ba83153928dce42402624c6c8ef3",
         "09218d220c936620c920d77d5de285098aac65ee2c82e2f032fdf9ab3cc57edd",
@@ -256,6 +257,7 @@
         "lantern",
         "spawn"
       ],
+      "visibleLayersSha256": "a1e4e3e632493ecc8041877c32eea84c38997c85dd71e7211166d817fe561df8",
       "objectSignatures": [
         "633271efee4395b03d96afe2df998ba03b83d19f107ad8d810624c274bf2edd6",
         "ba311a5d01e4ed9ab270923cc50290016c45709de2c54c779350ec9421c0deaa",
@@ -559,6 +561,7 @@
         "spawn",
         "talker"
       ],
+      "visibleLayersSha256": "1b25e19fb7a88e37d460d8b44c37dc5e880151ce4375433a297911069c8dcfb1",
       "objectSignatures": [
         "72e7154c2982432b454c4a3b30b43919437c977c6ab6e2b37c895ef1237829f7",
         "b25019dfbde6e9822586f07a3ce727554058987a7275146a1fa771321b90c35b",
@@ -792,6 +795,7 @@
         "spawn",
         "talker"
       ],
+      "visibleLayersSha256": "c7689b068acbe04cb83e16c0380e524b4220bc528b574b5032a3d833cc2c9e7e",
       "objectSignatures": [
         "dbb12b18e6bcab6105c7cbf9182d73ce6eb4a6e644bc160a16ce2da401b06c07",
         "5ea183594613719e94363c7158bc264ddad4388df566151b668ae305f6c06fec",
@@ -929,6 +933,7 @@
         "lantern",
         "spawn"
       ],
+      "visibleLayersSha256": "1b7677644c6ad50723e56e0a915a75177d13e50b18c64774fbb9d81fdd2a6113",
       "objectSignatures": [
         "c4c83674ddbd91953a8e7d8173e98d4ed25bb39da0f8ea32ff3df88337e6f48b",
         "49dc46235af3d4a572e7df444c30a7787d9c98128db3492f1f337cc6d488bd21",
@@ -1089,6 +1094,7 @@
         "exit",
         "spawn"
       ],
+      "visibleLayersSha256": "27dd58fca70c5ddd181cadfe1acb628cfd86d26bb7323014ef915e0517666d5b",
       "objectSignatures": [
         "8e505d38b14766a04168375535de1bf9f595eb29e2c17ee963a7824044ffb18f",
         "3846c51db4a6c62f60a73ea86c63c221cc0ece47467b0495bbe31fe85c3a822e",
@@ -1337,6 +1343,7 @@
         "sign",
         "spawn"
       ],
+      "visibleLayersSha256": "070d7b1832c1d0ec4a5134d381cb4007eb8bf95c7673f5c68f00a38c422a0244",
       "objectSignatures": [
         "27682c3921a937b8071c44aad243e66d6fb9b0cc53ca832565c0edf1154a3629",
         "2824648f12b6dfc876792cb73d6ca0a728b9769a880d933cd478b1b704f6ed86",
@@ -1556,6 +1563,7 @@
         "sign",
         "spawn"
       ],
+      "visibleLayersSha256": "b968b9188ce530af847e5180336a5a2a0e6a2e7224f5c4dcb66dc4555e02b0de",
       "objectSignatures": [
         "515667bb19d452660f5b93452d2e25ef749354e6fa6da6c1d566654171a29a64",
         "5ddda870a3b0ca2028d4ae1e90e8001b8049deed31b8c9586e6f8832467a2824",
@@ -1902,6 +1910,7 @@
         "spawn",
         "talker"
       ],
+      "visibleLayersSha256": "db6e4e41436105bcc1bcba8cd35a14c1b3dc69643abae0718ca6047f6afb4981",
       "objectSignatures": [
         "31aaffd17aa2f8180b7002e0f04e557cf997b873db3bae0f83c20b091ba1dc79",
         "2be3a6b0c346d0143e4b844e115bf38ccc249377dc0f3cda10266049f809ea67",
@@ -2200,6 +2209,7 @@
         "spawn",
         "talker"
       ],
+      "visibleLayersSha256": "ccfd283649d828bff4f94be581eb468b6b09f0f436269156b77c942e309deb86",
       "objectSignatures": [
         "3c97dae66e15ca1756f7ceb9eb844bc98d6288cabdc86c79a43d746f5d4abbd2",
         "717c718950a7ff2ea8d88baa95c39072db7791e39fcfab484954a7871294cbaf",
@@ -2446,6 +2456,7 @@
         "talker",
         "worker"
       ],
+      "visibleLayersSha256": "35e1c84f698bf14454db58d3ded73841819dfd4e8976b9e70dc57150b1d51f76",
       "objectSignatures": [
         "62d64c2656666ad720773a4694fc967bc4449bdad4f3cc33c57f5f95cb47bdaf",
         "d2f5498231636fef08edbc6f748741fb4d03c3fc106d6d8be330e1c931821e7f",
@@ -2722,6 +2733,7 @@
         "spawn",
         "worker"
       ],
+      "visibleLayersSha256": "e86d404481846bd187570c90741b682b488ccf590830a2077fe779bff8ab694c",
       "objectSignatures": [
         "b3887b0528c8ebc1ed35207247a9346f524943619225f43ef19aa210e2ce91e4",
         "fa8e3301d83e9bd9676feb536acda1f0110105f28f93aca12258464275db8c1d",
@@ -2857,6 +2869,7 @@
         "walker",
         "worker"
       ],
+      "visibleLayersSha256": "cd6b8d193510a78b19ee55fa7775bf98b98a2b03f43d19135d229be395965bd1",
       "objectSignatures": [
         "c6e06e01e2b3e25e5b19584b30b0e1a1e6db63bcc148ff72b52e8af7e59f8836",
         "59adfb07a5ae4b79d3a527fcd40943d9e81e98d01930f132eb6a796fe01f2e3b",
@@ -3795,25 +3808,11 @@
       "id": "village-fill-rice-1",
       "asset": "small-plot",
       "role": "rice",
-      "x": 193,
-      "y": 48,
-      "map": "goryeo/장단"
-    },
-    {
-      "id": "village-fill-rice-2",
-      "asset": "small-plot",
-      "role": "rice",
       "x": 240,
       "y": 8,
-      "map": "goryeo/개경"
-    },
-    {
-      "id": "village-fill-rice-3",
-      "asset": "small-plot",
-      "role": "rice",
-      "x": 174,
-      "y": -5,
-      "map": "goryeo/송악"
+      "map": "goryeo/개경",
+      "removedTrees": 0,
+      "forestBarrierFraction": 0.0
     }
   ],
   "missingSlots": [

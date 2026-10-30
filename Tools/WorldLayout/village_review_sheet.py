@@ -16,6 +16,6 @@ for i,row in enumerate(shots[:11]):
 board.save(OUT/'all-settlements.png')
 rice=Image.new('RGB',(1280,3*396),(29,37,40));dr=ImageDraw.Draw(rice)
 for i,row in enumerate(shots[11:]):
- dr.text((12,i*396+5),['장단 · 기존','개경 · 기존','송악 · 기존'][i],font=F,fill='white');dr.text((652,i*396+5),'논 추가 검토',font=F,fill='white');paste(rice,D/f"{row['slug']}-before.png",0,i*396+36);paste(rice,D/f"{row['slug']}-after.png",640,i*396+36)
+ dr.text((12,i*396+5),['장단 · 기존','개경 · 기존','송악 · 기존'][i],font=F,fill='white');dr.text((652,i*396+5),('숲 복원' if i!=1 else '빈터 논 유지'),font=F,fill='white');paste(rice,D/f"{row['slug']}-before.png",0,i*396+36);paste(rice,D/f"{row['slug']}-after.png",640,i*396+36)
 rice.save(OUT/'rice-comparison.png')
 print('11 settlement sheet, 14 paired photos, 3 rice comparisons assembled from actual PNGs')

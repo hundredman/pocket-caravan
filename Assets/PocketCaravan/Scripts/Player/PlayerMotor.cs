@@ -80,10 +80,17 @@ namespace PocketCaravan
             var map = MapRoot.Current;
             if (map == null) return true;
             Vector2 c = pos + feetOffset, h = feetSize * 0.5f;
-            return map.IsWalkable(map.WorldToCell(new Vector2(c.x - h.x, c.y - h.y)),this)
-                && map.IsWalkable(map.WorldToCell(new Vector2(c.x + h.x, c.y - h.y)),this)
-                && map.IsWalkable(map.WorldToCell(new Vector2(c.x - h.x, c.y + h.y)),this)
-                && map.IsWalkable(map.WorldToCell(new Vector2(c.x + h.x, c.y + h.y)),this);
+            Vector2 a=new Vector2(c.x-h.x,c.y-h.y),b=new Vector2(c.x+h.x,c.y-h.y);
+            Vector2 e=new Vector2(c.x-h.x,c.y+h.y),f=new Vector2(c.x+h.x,c.y+h.y);
+            if(FreeSamples(map,a,b,e,f))return true;
+            var exit=MapExit.At(map.WorldToCell(c),Facing);
+            return exit!=null&&exit.TryProjectFootprint(c,ref a,ref b,ref e,ref f)&&FreeSamples(map,a,b,e,f);
+        }
+
+        bool FreeSamples(MapRoot map,Vector2 a,Vector2 b,Vector2 c,Vector2 d)
+        {
+            return map.IsWalkable(map.WorldToCell(a),this)&&map.IsWalkable(map.WorldToCell(b),this)
+                &&map.IsWalkable(map.WorldToCell(c),this)&&map.IsWalkable(map.WorldToCell(d),this);
         }
 
         void OnDrawGizmosSelected()

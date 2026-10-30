@@ -13,7 +13,7 @@ namespace PocketCaravan.EditorTools
         Vector2 Direction(MapExit e){switch(e.edge){case "E":return Vector2.right;case "W":return Vector2.left;case "N":return Vector2.up;default:return Vector2.down;}}
         Vector2Int Facing(Vector2 d)=>new Vector2Int((int)d.x,(int)d.y);
         Vector2 Center(MapExit e){Rect r=e.WorldRect;return new Vector2(r.xMin+.5f,r.yMin+.5f);}
-        Vector2 Contact(MapExit e){Rect r=e.WorldRect;Vector2 p=Center(e),h=Motor.feetSize*.5f;switch(e.edge){case "E":p.x=r.xMax-h.x-.00005f;break;case "W":p.x=r.xMin+h.x+.00005f;break;case "N":p.y=r.yMax-h.y-.00005f;break;case "S":p.y=r.yMin+h.y+.00005f;break;}return p;}
+        Vector2 Contact(MapExit e){Rect r=e.WorldRect;Vector2 p=Center(e),h=Motor.feetSize*.5f;switch(e.edge){case "E":p.x=r.xMax-.00005f;break;case "W":p.x=r.xMin+.00005f;break;case "N":p.y=r.yMax-.00005f;break;case "S":p.y=r.yMin+.00005f;break;}return p;}
         void Pose(Vector2 feet,Vector2 direction){Motor.Teleport((Vector3)(feet-Motor.feetOffset),Facing(direction));FindFirstObjectByType<CameraFollow>().SnapNow();}
         IEnumerator Capture(string name){yield return null;yield return new WaitForEndOfFrame();var im=ScreenCapture.CaptureScreenshotAsTexture();File.WriteAllBytes(Output+"/"+name+".png",im.EncodeToPNG());Destroy(im);}
         bool FreeFeet(Vector2 feet){var m=MapRoot.Current;var h=Motor.feetSize*.5f;return m.IsWalkable(m.WorldToCell(feet-h))&&m.IsWalkable(m.WorldToCell(feet+h))&&m.IsWalkable(m.WorldToCell(feet+new Vector2(h.x,-h.y)))&&m.IsWalkable(m.WorldToCell(feet+new Vector2(-h.x,h.y)));}
@@ -27,7 +27,7 @@ namespace PocketCaravan.EditorTools
                 foreach(var e in MapExit.All)
                 {
                     if(e.targetScene!="transit_woodtown"||e.edge!="W")continue;
-                    bool clear=true;for(float n=0;n<=distance;n+=.1f)clear&=FreeFeet(Contact(e)-Direction(e)*n);
+                    bool clear=true;for(float n=.35f;n<=distance;n+=.1f)clear&=FreeFeet(Contact(e)-Direction(e)*n);
                     if(clear){chosen=e;length=distance;break;}
                 }
                 if(chosen!=null)break;
@@ -68,6 +68,8 @@ namespace PocketCaravan.EditorTools
                     if(!Known(exit))continue;Vector2 direction=Direction(exit);Vector3 result;
                     Pose(Center(exit),direction);Check(!exit.TryGetBoundaryContact(Motor,Vector2.zero,out result),"standing never changes own map",id+" "+exit.edge);
                     Check(!exit.TryGetBoundaryContact(Motor,direction,out result),"exit cell center is not the edge",id+" "+exit.edge);
+                    Vector2 oldContact=Contact(exit)-new Vector2(direction.x*Motor.feetSize.x*.5f,direction.y*Motor.feetSize.y*.5f);
+                    Pose(oldContact,direction);Check(!exit.TryGetBoundaryContact(Motor,direction,out result),"old leading-foot contact no longer travels",id+" "+exit.edge);
                     Pose(Contact(exit),direction);Check(!exit.TryGetBoundaryContact(Motor,-direction,out result),"turning inward does not travel",id);
                     Check(exit.TryGetBoundaryContact(Motor,direction,out result),"outer feet reach boundary",id+" "+exit.edge);
                     Motor.Teleport(result,Facing(direction));follow.SnapNow();

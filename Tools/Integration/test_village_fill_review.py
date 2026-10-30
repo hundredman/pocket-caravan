@@ -26,6 +26,16 @@ class VillageFillReview(unittest.TestCase):
    yard=next((s for s in m['spaces']if s['id']=='event-yard'),None)
    if yard:self.assertGreaterEqual(len(yard['props']),2,m['village'])
    else:self.assertEqual([s['id']for s in m['spaces']],['signs'])
+ def test_added_rice_never_replaces_a_major_forest(self):
+  for p in self.manifest['addedRice']:
+   self.assertLessEqual(p['removedTrees'],3,p)
+   self.assertLessEqual(p['forestBarrierFraction'],.10,p)
+ def test_forest_maps_are_restored_to_the_input_art(self):
+  if not(PREV/'Maps/Naru.json').exists():self.skipTest('Preview maps not generated')
+  for mid in ['goryeo_jangdan','goryeo_songak']:
+   d=json.loads((PREV/f'Maps/{mid}.json').read_text())
+   layers={layer:[d['palette'][i]for i in d[layer]]for layer in ['ground','deco','obj','high']}
+   self.assertEqual(hashlib.sha256(json.dumps(layers,sort_keys=True,separators=(',',':')).encode()).hexdigest(),self.manifest['inputMaps'][mid]['visibleLayersSha256'],mid)
  def test_original_map_shape_and_function_objects_preserved(self):
   if not(PREV/'Maps/Naru.json').exists():self.skipTest('Preview maps not generated')
   digest=lambda o:hashlib.sha256(json.dumps(o,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
