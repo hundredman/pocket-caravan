@@ -151,7 +151,7 @@ EXIT_STUB = 4      # 경계 앞뒤로 곧게 뻗는 길 길이(칸)
 EXIT_GAP = 1       # 길 양옆 여유 칸(울타리 틈 = 길 폭 + 2*EXIT_GAP)
 FALLBACK_MAXLEN = 30  # 이보다 긴 경계는 '골짜기 통로'가 아니라 트인 눈밭: 길 건널목이 하나라도 있으면 새 길 안 냄
 FALLBACK_DIST = 15 # 통로 가운데에서 이만큼 안에 길 건널목이 없으면 통로 가운데에 새 길
-REGION_NAMES = {'venice_c_vineyard': '포도밭 언덕', 'venice_c_pass': '산기슭 고갯길', 'venice_c_gate': '동문 큰길', 'arabia_central_steppe': '한가운데 초원', 'transit_crossroads': '내륙 교역 길목'}
+REGION_NAMES = {'venice_c_vineyard': '포도밭 언덕', 'venice_c_pass': '산기슭 고갯길', 'venice_c_gate': '동문 큰길', 'arabia_central_steppe': '한가운데 초원', 'transit_crossroads': '고려 내륙 교역 길목'}
 REGION_LOOK = {'venice': ('grass', ['crate_berry', 'barrel', 'crate_berry', 'barrel_s', 'stump']),   # 포도 상자·술통(낱개만)
                'arabia': ('dirt', ['rock', 'rocksmall', 'crate_goods', 'deadtree', 'rocksmall']),
                'transit': ('dirt', ['crate_goods', 'barrel', 'crate', 'barrel_s', 'rocksmall'])}
@@ -1853,6 +1853,8 @@ def build(key):
             for b_ in range(2):
                 if m.inside(st[1] + a_, st[2] + b_): m.obj[st[2] + b_][st[1] + a_] = m.high[st[2] + b_][st[1] + a_] = None; m.blocked[st[2] + b_][st[1] + a_] = False
         m.stamps.remove(st); report['stallFix']['stallsRemoved'].append((int(st[1]), int(st[2])))
+    from n6_fix import ux_fixes as _ux   # 2026-10-30 유저테스트 반영
+    report['ux'] = _ux(m, key, mine)
     _mf = mine2.copy()   # (10/30) 다른 지역 길(담당 밖)도 걷는 땅으로 보고 검사
     for (cx, cy) in reg_walk: _mf[cy, cx] = True
     report['unreach'] = final_check(m, _mf)
@@ -2224,13 +2226,23 @@ def world_outputs(maps):
     maxx = max(m.box[0] + m.w for m in maps); maxy = max(m.box[1] + m.h for m in maps)
     W, H = maxx - minx, maxy - miny
     img = Image.new('RGBA', (W * S, H * S), (0, 0, 0, 0)); lay = []
+    own_all = np.zeros((H, W), bool); owner = np.full((H, W), -1, int)
+    for i_, m in enumerate(maps):
+        ox_, oy_ = int(m.box[0] - minx), int(m.box[1] - miny); own_all[oy_:oy_ + m.h, ox_:ox_ + m.w] |= m.mine
+        owner[oy_:oy_ + m.h, ox_:ox_ + m.w][m.mine] = i_
+    def between(wx, wy, r=6):   # 북유럽 맵 두 곳 사이 틈(다른 지역으로 나가는 복도는 그리지 않음)
+        o_ = owner[max(0, wy - r):wy + r + 1, max(0, wx - r):wx + r + 1]
+        return len(set(o_[o_ >= 0].tolist())) >= 2
     for m in maps:
         big = Image.new('RGBA', (m.w * 16, m.h * 16), (0, 0, 0, 0))
+        ox_, oy_ = int(m.box[0] - minx), int(m.box[1] - miny)
+        # 2026-10-30(유저테스트: 라우가르~피오르 나루 사이가 지도에서 얼음으로 끊겨 보임): 어느 맵 땅도 아닌 출구 복도 길도 그린다
+        corr = lambda x, y: (m.road[y][x] > 0 and not m.water[y][x] and not m.blocked[y][x] and not own_all[oy_ + y, ox_ + x] and between(ox_ + x, oy_ + y))
         for layer in (m.ground, m.deco, m.obj, m.high):
             for y in range(m.h):
                 for x in range(m.w):
                     k = layer[y][x]
-                    if k and m.mine[y, x]:
+                    if k and (m.mine[y, x] or corr(x, y)):
                         try: big.alpha_composite(_tile_from_dir(k), (x * 16, y * 16))
                         except Exception: pass
         small = big.resize((m.w * S, m.h * S), Image.BOX)   # 담당 칸만 그려서 겹치는 둘레가 옆 맵을 덮지 않음
