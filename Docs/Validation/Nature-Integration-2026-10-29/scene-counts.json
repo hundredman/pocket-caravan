@@ -1,0 +1,184 @@
+[
+  {
+    "map": "goryeo_songak",
+    "pass": 0,
+    "objects": 213,
+    "renderers": 70,
+    "crops": 0
+  },
+  {
+    "map": "goryeo_songak",
+    "pass": 1,
+    "objects": 213,
+    "renderers": 70,
+    "crops": 0
+  },
+  {
+    "map": "transit_central_approach",
+    "pass": 0,
+    "objects": 227,
+    "renderers": 11,
+    "crops": 0
+  },
+  {
+    "map": "transit_central_approach",
+    "pass": 1,
+    "objects": 242,
+    "renderers": 11,
+    "crops": 0
+  },
+  {
+    "map": "transit_wetroad",
+    "pass": 0,
+    "objects": 237,
+    "renderers": 17,
+    "crops": 0
+  },
+  {
+    "map": "transit_wetroad",
+    "pass": 1,
+    "objects": 240,
+    "renderers": 17,
+    "crops": 0
+  },
+  {
+    "map": "Dakmok",
+    "pass": 0,
+    "objects": 128,
+    "renderers": 73,
+    "crops": 0
+  },
+  {
+    "map": "Dakmok",
+    "pass": 1,
+    "objects": 128,
+    "renderers": 73,
+    "crops": 0
+  },
+  {
+    "map": "transit_woodtown",
+    "pass": 0,
+    "objects": 218,
+    "renderers": 10,
+    "crops": 0
+  },
+  {
+    "map": "transit_woodtown",
+    "pass": 1,
+    "objects": 230,
+    "renderers": 10,
+    "crops": 0
+  },
+  {
+    "map": "transit_ferry",
+    "pass": 0,
+    "objects": 135,
+    "renderers": 30,
+    "crops": 0
+  },
+  {
+    "map": "transit_ferry",
+    "pass": 1,
+    "objects": 135,
+    "renderers": 30,
+    "crops": 0
+  },
+  {
+    "map": "Gaegyeong",
+    "pass": 0,
+    "objects": 215,
+    "renderers": 83,
+    "crops": 0
+  },
+  {
+    "map": "Gaegyeong",
+    "pass": 1,
+    "objects": 215,
+    "renderers": 83,
+    "crops": 0
+  },
+  {
+    "map": "transit_southport",
+    "pass": 0,
+    "objects": 155,
+    "renderers": 6,
+    "crops": 0
+  },
+  {
+    "map": "transit_southport",
+    "pass": 1,
+    "objects": 155,
+    "renderers": 6,
+    "crops": 0
+  },
+  {
+    "map": "transit_pass",
+    "pass": 0,
+    "objects": 236,
+    "renderers": 11,
+    "crops": 0
+  },
+  {
+    "map": "transit_pass",
+    "pass": 1,
+    "objects": 236,
+    "renderers": 11,
+    "crops": 0
+  },
+  {
+    "map": "goryeo_jangdan",
+    "pass": 0,
+    "objects": 343,
+    "renderers": 31,
+    "crops": 0
+  },
+  {
+    "map": "goryeo_jangdan",
+    "pass": 1,
+    "objects": 343,
+    "renderers": 31,
+    "crops": 1
+  },
+  {
+    "map": "transit_south_inland",
+    "pass": 0,
+    "objects": 296,
+    "renderers": 6,
+    "crops": 0
+  },
+  {
+    "map": "transit_south_inland",
+    "pass": 1,
+    "objects": 296,
+    "renderers": 6,
+    "crops": 0
+  },
+  {
+    "map": "Naru",
+    "pass": 0,
+    "objects": 274,
+    "renderers": 126,
+    "crops": 0
+  },
+  {
+    "map": "Naru",
+    "pass": 1,
+    "objects": 274,
+    "renderers": 126,
+    "crops": 1
+  },
+  {
+    "map": "transit_crossroads",
+    "pass": 0,
+    "objects": 293,
+    "renderers": 8,
+    "crops": 0
+  },
+  {
+    "map": "transit_crossroads",
+    "pass": 1,
+    "objects": 293,
+    "renderers": 8,
+    "crops": 0
+  }
+]

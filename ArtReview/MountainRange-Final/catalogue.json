@@ -1,0 +1,533 @@
+{
+  "status": "approved",
+  "productionApplied": false,
+  "assets": {
+    "west-cap": {
+      "path": "ArtReview/Approved/MountainRange-S1/west-cap.png",
+      "size": [
+        128,
+        192
+      ],
+      "ports": {
+        "E": {
+          "side": "E",
+          "x": 128,
+          "y": 0,
+          "template": "ew"
+        }
+      }
+    },
+    "body-a": {
+      "path": "ArtReview/Approved/MountainRange-S1/body-a.png",
+      "size": [
+        192,
+        192
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 192,
+          "y": 0,
+          "template": "ew"
+        }
+      }
+    },
+    "body-b": {
+      "path": "ArtReview/Approved/MountainRange-S1/body-b.png",
+      "size": [
+        64,
+        192
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 64,
+          "y": 0,
+          "template": "ew"
+        }
+      }
+    },
+    "east-cap": {
+      "path": "ArtReview/Approved/MountainRange-S1/east-cap.png",
+      "size": [
+        128,
+        192
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        }
+      }
+    },
+    "bend-north": {
+      "path": "ArtReview/Approved/MountainRange-S2a/bend-north.png",
+      "size": [
+        192,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 64,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 192,
+          "y": 0,
+          "template": "ew"
+        }
+      }
+    },
+    "bend-south": {
+      "path": "ArtReview/Approved/MountainRange-S2a/bend-south.png",
+      "size": [
+        192,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 192,
+          "y": 64,
+          "template": "ew"
+        }
+      }
+    },
+    "north-cap": {
+      "path": "ArtReview/MountainRange-S2b/Native/north-cap.png",
+      "size": [
+        192,
+        128
+      ],
+      "ports": {
+        "S": {
+          "side": "S",
+          "x": 0,
+          "y": 128,
+          "template": "ns"
+        }
+      }
+    },
+    "north-south-body": {
+      "path": "ArtReview/MountainRange-S2b/Native/north-south-body.png",
+      "size": [
+        192,
+        192
+      ],
+      "ports": {
+        "N": {
+          "side": "N",
+          "x": 0,
+          "y": 0,
+          "template": "ns"
+        },
+        "S": {
+          "side": "S",
+          "x": 0,
+          "y": 192,
+          "template": "ns"
+        }
+      }
+    },
+    "south-cap": {
+      "path": "ArtReview/MountainRange-S2b/Native/south-cap.png",
+      "size": [
+        192,
+        128
+      ],
+      "ports": {
+        "N": {
+          "side": "N",
+          "x": 0,
+          "y": 0,
+          "template": "ns"
+        }
+      }
+    },
+    "turn-w-n": {
+      "path": "ArtReview/MountainRange-S2b/Native/turn-w-n.png",
+      "size": [
+        256,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 64,
+          "template": "ew"
+        },
+        "N": {
+          "side": "N",
+          "x": 64,
+          "y": 0,
+          "template": "ns"
+        }
+      }
+    },
+    "turn-w-s": {
+      "path": "ArtReview/MountainRange-S2b/Native/turn-w-s.png",
+      "size": [
+        256,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        },
+        "S": {
+          "side": "S",
+          "x": 64,
+          "y": 256,
+          "template": "ns"
+        }
+      }
+    },
+    "turn-e-n": {
+      "path": "ArtReview/MountainRange-S2b/Native/turn-e-n.png",
+      "size": [
+        256,
+        256
+      ],
+      "ports": {
+        "E": {
+          "side": "E",
+          "x": 256,
+          "y": 64,
+          "template": "ew"
+        },
+        "N": {
+          "side": "N",
+          "x": 0,
+          "y": 0,
+          "template": "ns"
+        }
+      }
+    },
+    "turn-e-s": {
+      "path": "ArtReview/MountainRange-S2b/Native/turn-e-s.png",
+      "size": [
+        256,
+        256
+      ],
+      "ports": {
+        "E": {
+          "side": "E",
+          "x": 256,
+          "y": 0,
+          "template": "ew"
+        },
+        "S": {
+          "side": "S",
+          "x": 0,
+          "y": 256,
+          "template": "ns"
+        }
+      }
+    },
+    "branch-w-e-n": {
+      "path": "ArtReview/MountainRange-Final/Native/branch-w-e-n.png",
+      "size": [
+        384,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 64,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 384,
+          "y": 64,
+          "template": "ew"
+        },
+        "N": {
+          "side": "N",
+          "x": 96,
+          "y": 0,
+          "template": "ns"
+        }
+      }
+    },
+    "branch-w-e-s": {
+      "path": "ArtReview/MountainRange-Final/Native/branch-w-e-s.png",
+      "size": [
+        384,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 384,
+          "y": 0,
+          "template": "ew"
+        },
+        "S": {
+          "side": "S",
+          "x": 96,
+          "y": 256,
+          "template": "ns"
+        }
+      }
+    },
+    "branch-n-s-w": {
+      "path": "ArtReview/MountainRange-Final/Native/branch-n-s-w.png",
+      "size": [
+        256,
+        384
+      ],
+      "ports": {
+        "N": {
+          "side": "N",
+          "x": 64,
+          "y": 0,
+          "template": "ns"
+        },
+        "S": {
+          "side": "S",
+          "x": 64,
+          "y": 384,
+          "template": "ns"
+        },
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 96,
+          "template": "ew"
+        }
+      }
+    },
+    "branch-n-s-e": {
+      "path": "ArtReview/MountainRange-Final/Native/branch-n-s-e.png",
+      "size": [
+        256,
+        384
+      ],
+      "ports": {
+        "N": {
+          "side": "N",
+          "x": 0,
+          "y": 0,
+          "template": "ns"
+        },
+        "S": {
+          "side": "S",
+          "x": 0,
+          "y": 384,
+          "template": "ns"
+        },
+        "E": {
+          "side": "E",
+          "x": 256,
+          "y": 96,
+          "template": "ew"
+        }
+      }
+    },
+    "mountain-pass": {
+      "path": "ArtReview/MountainRange-Final/Native/mountain-pass.png",
+      "size": [
+        256,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 256,
+          "y": 0,
+          "template": "ew"
+        }
+      }
+    },
+    "stream-valley": {
+      "path": "ArtReview/MountainRange-Final/Native/stream-valley.png",
+      "size": [
+        256,
+        272
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 16,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 256,
+          "y": 16,
+          "template": "ew"
+        },
+        "N": {
+          "side": "N",
+          "x": 96,
+          "y": 0,
+          "template": "water"
+        },
+        "S": {
+          "side": "S",
+          "x": 96,
+          "y": 272,
+          "template": "water"
+        }
+      }
+    },
+    "spring-waterfall": {
+      "path": "ArtReview/MountainRange-Final/Native/spring-waterfall.png",
+      "size": [
+        256,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 256,
+          "y": 0,
+          "template": "ew"
+        },
+        "S": {
+          "side": "S",
+          "x": 96,
+          "y": 256,
+          "template": "water"
+        }
+      }
+    },
+    "river-straight": {
+      "path": "ArtReview/MountainRange-Final/Native/river-straight.png",
+      "size": [
+        64,
+        64
+      ],
+      "ports": {
+        "N": {
+          "side": "N",
+          "x": 0,
+          "y": 0,
+          "template": "water"
+        },
+        "S": {
+          "side": "S",
+          "x": 0,
+          "y": 64,
+          "template": "water"
+        }
+      }
+    },
+    "river-outlet": {
+      "path": "ArtReview/MountainRange-Final/Native/river-outlet.png",
+      "size": [
+        64,
+        64
+      ],
+      "ports": {
+        "N": {
+          "side": "N",
+          "x": 0,
+          "y": 0,
+          "template": "water"
+        },
+        "S": {
+          "side": "S",
+          "x": 0,
+          "y": 64,
+          "template": "water-ground"
+        }
+      }
+    }
+  },
+  "newAssets": [
+    "branch-w-e-n",
+    "branch-w-e-s",
+    "branch-n-s-w",
+    "branch-n-s-e",
+    "mountain-pass",
+    "stream-valley",
+    "spring-waterfall",
+    "river-straight",
+    "river-outlet"
+  ],
+  "package": "Package/",
+  "frozenApprovedAssets": [
+    "west-cap",
+    "body-a",
+    "body-b",
+    "east-cap",
+    "bend-north",
+    "bend-south"
+  ],
+  "finalReviewAssets": [
+    "west-cap",
+    "body-a",
+    "body-b",
+    "east-cap",
+    "bend-north",
+    "bend-south",
+    "north-cap",
+    "north-south-body",
+    "south-cap",
+    "turn-w-n",
+    "turn-w-s",
+    "turn-e-n",
+    "turn-e-s",
+    "branch-w-e-n",
+    "branch-w-e-s",
+    "branch-n-s-w",
+    "branch-n-s-e",
+    "mountain-pass",
+    "stream-valley",
+    "spring-waterfall",
+    "river-straight",
+    "river-outlet"
+  ],
+  "pixelSize": 16,
+  "previewOnly": true,
+  "visualApprovalRecord": "ArtReview/Approved/MountainRange-Final-v2/approval.json"
+}

@@ -54,7 +54,7 @@ namespace PocketCaravan
                      + (gm.Player.contracts.Count > 1 ? $" 외 {gm.Player.contracts.Count - 1}건" : "");
             }
             if (line == null) return;
-            compactStyle ??= new GUIStyle(UIStyle.Rich) { wordWrap = false, clipping = TextClipping.Clip, alignment = TextAnchor.UpperRight };
+            if(compactStyle==null||compactStyle.font!=UIStyle.RegularFont)compactStyle = new GUIStyle(UIStyle.Rich) { wordWrap = false, clipping = TextClipping.Clip, alignment = TextAnchor.UpperRight };
             float w = Mathf.Min(300, UIStyle.VirtualWidth * 0.45f);
             UIStyle.Outlined(new Rect(UIStyle.VirtualWidth - w - 8, 8, w, 16), line, compactStyle);
         }

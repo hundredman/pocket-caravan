@@ -1,0 +1,1855 @@
+{
+  "status": "approved",
+  "productionApplied": false,
+  "assets": [
+    {
+      "name": "west-cap",
+      "size": [
+        128,
+        192
+      ],
+      "rgbaSha256": "df2a2d48d5a08b8ff819190c3336cb372c7f0b26d7b465bce7bd3d17681891c4",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "body-a",
+      "size": [
+        192,
+        192
+      ],
+      "rgbaSha256": "024b633f31d6c0990b403587f7861dcf44730fc7c96b4dbfc9651638a3366e5d",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "body-b",
+      "size": [
+        64,
+        192
+      ],
+      "rgbaSha256": "73606e91c4a2c998d0ca70b4ca7228e0ecf6088094bff22b5d461a837756748b",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "east-cap",
+      "size": [
+        128,
+        192
+      ],
+      "rgbaSha256": "8b0a9a6eb9af0be208cd58acd51d14e6bbef24952d15fbd82765d3b6480b0bd5",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "bend-north",
+      "size": [
+        192,
+        256
+      ],
+      "rgbaSha256": "6e8088b57efc82a0aa87c9770f1152ff84393174c8376dfd9c7d9f3adc005392",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "bend-south",
+      "size": [
+        192,
+        256
+      ],
+      "rgbaSha256": "f882565e2a4dfc3ec6e0dba9f2f11f6f1c9b7ba5670ba8a2313d558e40fda086",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "north-cap",
+      "size": [
+        192,
+        128
+      ],
+      "rgbaSha256": "d925bc7d3b4165749c5e995c55609524e55c0a598504f3e60fd2b0745d921dc2",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "north-south-body",
+      "size": [
+        192,
+        192
+      ],
+      "rgbaSha256": "dd1eb5ef48a13ac7512dca8478d9d196fcb1217b2b9a459d3c4eace7f4e2679f",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "south-cap",
+      "size": [
+        192,
+        128
+      ],
+      "rgbaSha256": "0bf60989985010b51c5479bd3458484569b1c927d1b4106bd469f63e1b84efb8",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "turn-w-n",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "6f2b821d97b25cb6ef665294156fa2812d59cbc271d2b3963749ff1681c3dcde",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "turn-w-s",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "17d117df625934061e2df491ebb426b62cf87d7fb13cd739baf7bb355f6138c0",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "turn-e-n",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "4ddd7512bab33caa767a28066e064d897051e1aa77eaa0458161f618f20b7bdc",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "turn-e-s",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "8100dfc9bf6264dcf4b8927fa5c64a49e95630e17fc1f5eba231a5a4892cf3dc",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "branch-w-e-n",
+      "size": [
+        384,
+        256
+      ],
+      "rgbaSha256": "ec38a04fabda7b9b8cb53f5f68351a67dd44829da06c11c41e0960889ae9730c",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "branch-w-e-s",
+      "size": [
+        384,
+        256
+      ],
+      "rgbaSha256": "bf553650c2ac27341aba1e218dc51e01b1302279b3dbba99ce8233970862a06b",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "branch-n-s-w",
+      "size": [
+        256,
+        384
+      ],
+      "rgbaSha256": "5b7a45194edc32076af567c6d30400907a97740c3efd075392d68c5ca717e2f0",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "branch-n-s-e",
+      "size": [
+        256,
+        384
+      ],
+      "rgbaSha256": "74bd37dbad5bff7a8df1f9ca6df89cfe17a1df2176320cebbe5ab50d11ded909",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "mountain-pass",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "c720b84fd9c0e2f10815d790b1f47a0d7c4d249a0d15f3feb9e4ef1aab40987e",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "stream-valley",
+      "size": [
+        256,
+        272
+      ],
+      "rgbaSha256": "62bec20978f63b8491f18b44db55e3df561e8d8f6173c75220d9b3caa728eac7",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "spring-waterfall",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "01a0649ccdb49f23fe0f535dba353c1248263068eefdf05691d2ab9b3f2ea872",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "river-straight",
+      "size": [
+        64,
+        64
+      ],
+      "rgbaSha256": "33c982e6f423e4b5984f12e45b13f3d973772d2eeb38029f132afb2b0bc3198b",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    },
+    {
+      "name": "river-outlet",
+      "size": [
+        64,
+        64
+      ],
+      "rgbaSha256": "16827b0674f381918655cfa59b87b63a44fb10ed3075ae62003c196e152c7c0c",
+      "asepriteRGBAEqual": true,
+      "packagePixelsEqual": true
+    }
+  ],
+  "compatiblePortPairs": [
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "body-a",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "body-b",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "east-cap",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "bend-north",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "bend-south",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "turn-w-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "turn-w-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "branch-w-e-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "branch-w-e-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "branch-n-s-w",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "mountain-pass",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "stream-valley",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "spring-waterfall",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "body-a",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "body-b",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "east-cap",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "bend-north",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "bend-south",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "turn-w-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "turn-w-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "branch-w-e-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "branch-w-e-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "branch-n-s-w",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "mountain-pass",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "stream-valley",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "spring-waterfall",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "body-a",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "body-b",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "east-cap",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "bend-north",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "bend-south",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "turn-w-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "turn-w-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "branch-w-e-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "branch-w-e-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "branch-n-s-w",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "mountain-pass",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "stream-valley",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "spring-waterfall",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "body-a",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "body-b",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "east-cap",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "bend-north",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "bend-south",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "turn-w-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "turn-w-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "branch-w-e-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "branch-w-e-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "branch-n-s-w",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "mountain-pass",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "stream-valley",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "spring-waterfall",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "body-a",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "body-b",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "east-cap",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "bend-north",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "bend-south",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "turn-w-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "turn-w-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "branch-w-e-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "branch-w-e-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "branch-n-s-w",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "mountain-pass",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "stream-valley",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "spring-waterfall",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-cap",
+      "side": "S",
+      "second": "north-south-body",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-cap",
+      "side": "S",
+      "second": "south-cap",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-cap",
+      "side": "S",
+      "second": "turn-w-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-cap",
+      "side": "S",
+      "second": "turn-e-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-cap",
+      "side": "S",
+      "second": "branch-w-e-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-cap",
+      "side": "S",
+      "second": "branch-n-s-w",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-cap",
+      "side": "S",
+      "second": "branch-n-s-e",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-south-body",
+      "side": "S",
+      "second": "north-south-body",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-south-body",
+      "side": "S",
+      "second": "south-cap",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-south-body",
+      "side": "S",
+      "second": "turn-w-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-south-body",
+      "side": "S",
+      "second": "turn-e-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-south-body",
+      "side": "S",
+      "second": "branch-w-e-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-south-body",
+      "side": "S",
+      "second": "branch-n-s-w",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-south-body",
+      "side": "S",
+      "second": "branch-n-s-e",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-w-s",
+      "side": "S",
+      "second": "north-south-body",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-w-s",
+      "side": "S",
+      "second": "south-cap",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-w-s",
+      "side": "S",
+      "second": "turn-w-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-w-s",
+      "side": "S",
+      "second": "turn-e-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-w-s",
+      "side": "S",
+      "second": "branch-w-e-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-w-s",
+      "side": "S",
+      "second": "branch-n-s-w",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-w-s",
+      "side": "S",
+      "second": "branch-n-s-e",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "body-a",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "body-b",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "east-cap",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "bend-north",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "bend-south",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "turn-w-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "turn-w-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "branch-w-e-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "branch-w-e-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "branch-n-s-w",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "mountain-pass",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "stream-valley",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "spring-waterfall",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "body-a",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "body-b",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "east-cap",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "bend-north",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "bend-south",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "turn-w-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "turn-w-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "branch-w-e-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "branch-w-e-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "branch-n-s-w",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "mountain-pass",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "stream-valley",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "spring-waterfall",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "S",
+      "second": "north-south-body",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "S",
+      "second": "south-cap",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "S",
+      "second": "turn-w-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "S",
+      "second": "turn-e-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "S",
+      "second": "branch-w-e-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "S",
+      "second": "branch-n-s-w",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "S",
+      "second": "branch-n-s-e",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-n",
+      "side": "E",
+      "second": "body-a",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-n",
+      "side": "E",
+      "second": "body-b",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-n",
+      "side": "E",
+      "second": "east-cap",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-n",
+      "side": "E",
+      "second": "bend-north",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-n",
+      "side": "E",
+      "second": "bend-south",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-n",
+      "side": "E",
+      "second": "turn-w-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-n",
+      "side": "E",
+      "second": "turn-w-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-n",
+      "side": "E",
+      "second": "branch-w-e-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-n",
+      "side": "E",
+      "second": "branch-w-e-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-n",
+      "side": "E",
+      "second": "branch-n-s-w",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-n",
+      "side": "E",
+      "second": "mountain-pass",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-n",
+      "side": "E",
+      "second": "stream-valley",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-n",
+      "side": "E",
+      "second": "spring-waterfall",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "E",
+      "second": "body-a",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "E",
+      "second": "body-b",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "E",
+      "second": "east-cap",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "E",
+      "second": "bend-north",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "E",
+      "second": "bend-south",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "E",
+      "second": "turn-w-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "E",
+      "second": "turn-w-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "E",
+      "second": "branch-w-e-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "E",
+      "second": "branch-w-e-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "E",
+      "second": "branch-n-s-w",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "E",
+      "second": "mountain-pass",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "E",
+      "second": "stream-valley",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "E",
+      "second": "spring-waterfall",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "S",
+      "second": "north-south-body",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "S",
+      "second": "south-cap",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "S",
+      "second": "turn-w-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "S",
+      "second": "turn-e-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "S",
+      "second": "branch-w-e-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "S",
+      "second": "branch-n-s-w",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-w-e-s",
+      "side": "S",
+      "second": "branch-n-s-e",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-w",
+      "side": "S",
+      "second": "north-south-body",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-w",
+      "side": "S",
+      "second": "south-cap",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-w",
+      "side": "S",
+      "second": "turn-w-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-w",
+      "side": "S",
+      "second": "turn-e-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-w",
+      "side": "S",
+      "second": "branch-w-e-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-w",
+      "side": "S",
+      "second": "branch-n-s-w",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-w",
+      "side": "S",
+      "second": "branch-n-s-e",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "S",
+      "second": "north-south-body",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "S",
+      "second": "south-cap",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "S",
+      "second": "turn-w-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "S",
+      "second": "turn-e-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "S",
+      "second": "branch-w-e-n",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "S",
+      "second": "branch-n-s-w",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "S",
+      "second": "branch-n-s-e",
+      "template": "ns",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "E",
+      "second": "body-a",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "E",
+      "second": "body-b",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "E",
+      "second": "east-cap",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "E",
+      "second": "bend-north",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "E",
+      "second": "bend-south",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "E",
+      "second": "turn-w-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "E",
+      "second": "turn-w-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "E",
+      "second": "branch-w-e-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "E",
+      "second": "branch-w-e-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "E",
+      "second": "branch-n-s-w",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "E",
+      "second": "mountain-pass",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "E",
+      "second": "stream-valley",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "branch-n-s-e",
+      "side": "E",
+      "second": "spring-waterfall",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "mountain-pass",
+      "side": "E",
+      "second": "body-a",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "mountain-pass",
+      "side": "E",
+      "second": "body-b",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "mountain-pass",
+      "side": "E",
+      "second": "east-cap",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "mountain-pass",
+      "side": "E",
+      "second": "bend-north",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "mountain-pass",
+      "side": "E",
+      "second": "bend-south",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "mountain-pass",
+      "side": "E",
+      "second": "turn-w-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "mountain-pass",
+      "side": "E",
+      "second": "turn-w-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "mountain-pass",
+      "side": "E",
+      "second": "branch-w-e-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "mountain-pass",
+      "side": "E",
+      "second": "branch-w-e-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "mountain-pass",
+      "side": "E",
+      "second": "branch-n-s-w",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "mountain-pass",
+      "side": "E",
+      "second": "mountain-pass",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "mountain-pass",
+      "side": "E",
+      "second": "stream-valley",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "mountain-pass",
+      "side": "E",
+      "second": "spring-waterfall",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "E",
+      "second": "body-a",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "E",
+      "second": "body-b",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "E",
+      "second": "east-cap",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "E",
+      "second": "bend-north",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "E",
+      "second": "bend-south",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "E",
+      "second": "turn-w-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "E",
+      "second": "turn-w-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "E",
+      "second": "branch-w-e-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "E",
+      "second": "branch-w-e-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "E",
+      "second": "branch-n-s-w",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "E",
+      "second": "mountain-pass",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "E",
+      "second": "stream-valley",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "E",
+      "second": "spring-waterfall",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "S",
+      "second": "stream-valley",
+      "template": "water",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "S",
+      "second": "river-straight",
+      "template": "water",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "stream-valley",
+      "side": "S",
+      "second": "river-outlet",
+      "template": "water",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "E",
+      "second": "body-a",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "E",
+      "second": "body-b",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "E",
+      "second": "east-cap",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "E",
+      "second": "bend-north",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "E",
+      "second": "bend-south",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "E",
+      "second": "turn-w-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "E",
+      "second": "turn-w-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "E",
+      "second": "branch-w-e-n",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "E",
+      "second": "branch-w-e-s",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "E",
+      "second": "branch-n-s-w",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "E",
+      "second": "mountain-pass",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "E",
+      "second": "stream-valley",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "E",
+      "second": "spring-waterfall",
+      "template": "ew",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "S",
+      "second": "stream-valley",
+      "template": "water",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "S",
+      "second": "river-straight",
+      "template": "water",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "spring-waterfall",
+      "side": "S",
+      "second": "river-outlet",
+      "template": "water",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "river-straight",
+      "side": "S",
+      "second": "stream-valley",
+      "template": "water",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "river-straight",
+      "side": "S",
+      "second": "river-straight",
+      "template": "water",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "river-straight",
+      "side": "S",
+      "second": "river-outlet",
+      "template": "water",
+      "decodedRGBAEqual": true
+    }
+  ],
+  "preservedEarlierSprites": 13,
+  "passClearancePixels": 48,
+  "roadCoreClearancePixels": 32,
+  "sourceWaterfallValleyRiverLakeConnectedInRGBA": true,
+  "existingGroundRiverPortRGBAEqual": true,
+  "corrections": {
+    "passInnerWallPixelsPreserved": true,
+    "wholeWallMasterPixelCountPreserved": true,
+    "valleyRockBankPixelsPreserved": true,
+    "valleyLeadInPixels": 16,
+    "inletWidthRange": [
+      15,
+      25
+    ],
+    "changedAssetImages": [
+      "mountain-pass",
+      "stream-valley"
+    ]
+  },
+  "unity": {
+    "mode": "Edit",
+    "captures": [
+      "branches-n",
+      "branches-e",
+      "branch-s",
+      "branch-w",
+      "pass",
+      "spring",
+      "valley",
+      "river",
+      "overview"
+    ],
+    "wholeFrameRGBADifferences": 0
+  },
+  "runtimeGameplay": false,
+  "waterfallAnimation": false,
+  "productionMapsUnchanged": true,
+  "visualApprovalRecord": "ArtReview/Approved/MountainRange-Final-v2/approval.json"
+}

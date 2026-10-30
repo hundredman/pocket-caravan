@@ -1,0 +1,126 @@
+{
+  "map": "Naru",
+  "sourceScene": "Assets/PocketCaravan/Scenes/Goryeo/Naru.unity",
+  "scope": "Edit mode, original scene materials/lights/SpriteRenderers; temporary atlas clones; no gameplay loop",
+  "tileCount": 300,
+  "atlasSize": "512x256",
+  "sourceTileRGBAIdentical": true,
+  "tilePropertiesCompared": 300,
+  "frames": [
+    {
+      "index": 0,
+      "camera": "(44.0000, 42.0000, 42.5000)",
+      "differentPixels": 0
+    },
+    {
+      "index": 1,
+      "camera": "(15.0000, 8.4375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 2,
+      "camera": "(45.0000, 8.4375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 3,
+      "camera": "(75.0000, 8.4375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 4,
+      "camera": "(15.0000, 25.3125, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 5,
+      "camera": "(45.0000, 25.3125, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 6,
+      "camera": "(75.0000, 25.3125, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 7,
+      "camera": "(15.0000, 42.1875, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 8,
+      "camera": "(45.0000, 42.1875, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 9,
+      "camera": "(75.0000, 42.1875, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 10,
+      "camera": "(15.0000, 59.0625, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 11,
+      "camera": "(45.0000, 59.0625, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 12,
+      "camera": "(75.0000, 59.0625, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 13,
+      "camera": "(15.0000, 75.9375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 14,
+      "camera": "(45.0000, 75.9375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 15,
+      "camera": "(75.0000, 75.9375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 16,
+      "camera": "(44.1730, 42.2810, 4.2188)",
+      "differentPixels": 0
+    },
+    {
+      "index": 17,
+      "camera": "(44.1730, 42.2810, 16.8750)",
+      "differentPixels": 0
+    }
+  ],
+  "totalDifferentPixels": 0,
+  "cellChecks": 7740,
+  "cellsIdentical": true,
+  "cellsBefore": "5F-6B-10-F2-10-53-DF-1A-22-50-AF-3B-2C-8E-C9-9B-F0-59-03-A5-9D-BA-93-27-B6-D9-F8-D9-53-6B-59-0B",
+  "cellsAfter": "5F-6B-10-F2-10-53-DF-1A-22-50-AF-3B-2C-8E-C9-9B-F0-59-03-A5-9D-BA-93-27-B6-D9-F8-D9-53-6B-59-0B",
+  "motorStarts": 16,
+  "motorTicksPerMode": 11520,
+  "motorTrajectoryIdentical": true,
+  "walkBefore": "15-F5-01-38-66-FE-A1-E6-E4-72-BB-FE-14-50-D0-01-A3-F9-FE-D8-5C-A5-65-17-B5-10-34-A9-CF-AC-02-F4",
+  "walkAfter": "15-F5-01-38-66-FE-A1-E6-E4-72-BB-FE-14-50-D0-01-A3-F9-FE-D8-5C-A5-65-17-B5-10-34-A9-CF-AC-02-F4",
+  "movementStatistics": [
+    {
+      "moved": 8605,
+      "stopped": 2915
+    },
+    {
+      "moved": 8605,
+      "stopped": 2915
+    }
+  ],
+  "gameplayComponentsAndSortingIdentical": true,
+  "gameBefore": "C6-02-D5-EB-0A-AF-05-69-4C-BB-3D-FA-52-CC-73-01-CA-BD-D3-16-50-27-94-69-C7-03-89-12-F8-1A-CB-50",
+  "gameAfter": "C6-02-D5-EB-0A-AF-05-69-4C-BB-3D-FA-52-CC-73-01-CA-BD-D3-16-50-27-94-69-C7-03-89-12-F8-1A-CB-50",
+  "logs": [],
+  "productionWrites": 0
+}

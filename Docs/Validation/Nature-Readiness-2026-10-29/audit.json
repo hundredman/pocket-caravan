@@ -1,0 +1,606 @@
+{
+  "scope": "Read-only registration/composition/ports and conservative footprint feasibility; no production placement or Unity gameplay",
+  "assets": [
+    {
+      "family": "mountain",
+      "name": "west-cap",
+      "sizePixels": [
+        128,
+        192
+      ],
+      "renderFootprintCells": [
+        8,
+        12
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "body-a",
+      "sizePixels": [
+        192,
+        192
+      ],
+      "renderFootprintCells": [
+        12,
+        12
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "body-b",
+      "sizePixels": [
+        64,
+        192
+      ],
+      "renderFootprintCells": [
+        4,
+        12
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "east-cap",
+      "sizePixels": [
+        128,
+        192
+      ],
+      "renderFootprintCells": [
+        8,
+        12
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "bend-north",
+      "sizePixels": [
+        192,
+        256
+      ],
+      "renderFootprintCells": [
+        12,
+        16
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "bend-south",
+      "sizePixels": [
+        192,
+        256
+      ],
+      "renderFootprintCells": [
+        12,
+        16
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "north-cap",
+      "sizePixels": [
+        192,
+        128
+      ],
+      "renderFootprintCells": [
+        12,
+        8
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "north-south-body",
+      "sizePixels": [
+        192,
+        192
+      ],
+      "renderFootprintCells": [
+        12,
+        12
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "south-cap",
+      "sizePixels": [
+        192,
+        128
+      ],
+      "renderFootprintCells": [
+        12,
+        8
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "turn-w-n",
+      "sizePixels": [
+        256,
+        256
+      ],
+      "renderFootprintCells": [
+        16,
+        16
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "turn-w-s",
+      "sizePixels": [
+        256,
+        256
+      ],
+      "renderFootprintCells": [
+        16,
+        16
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "turn-e-n",
+      "sizePixels": [
+        256,
+        256
+      ],
+      "renderFootprintCells": [
+        16,
+        16
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "turn-e-s",
+      "sizePixels": [
+        256,
+        256
+      ],
+      "renderFootprintCells": [
+        16,
+        16
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "branch-w-e-n",
+      "sizePixels": [
+        384,
+        256
+      ],
+      "renderFootprintCells": [
+        24,
+        16
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "branch-w-e-s",
+      "sizePixels": [
+        384,
+        256
+      ],
+      "renderFootprintCells": [
+        24,
+        16
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "branch-n-s-w",
+      "sizePixels": [
+        256,
+        384
+      ],
+      "renderFootprintCells": [
+        16,
+        24
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "branch-n-s-e",
+      "sizePixels": [
+        256,
+        384
+      ],
+      "renderFootprintCells": [
+        16,
+        24
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "mountain-pass",
+      "sizePixels": [
+        256,
+        256
+      ],
+      "renderFootprintCells": [
+        16,
+        16
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "stream-valley",
+      "sizePixels": [
+        256,
+        272
+      ],
+      "renderFootprintCells": [
+        16,
+        17
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "spring-waterfall",
+      "sizePixels": [
+        256,
+        256
+      ],
+      "renderFootprintCells": [
+        16,
+        16
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "river-straight",
+      "sizePixels": [
+        64,
+        64
+      ],
+      "renderFootprintCells": [
+        4,
+        4
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "mountain",
+      "name": "river-outlet",
+      "sizePixels": [
+        64,
+        64
+      ],
+      "renderFootprintCells": [
+        4,
+        4
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "rice",
+      "name": "canopy",
+      "sizePixels": [
+        64,
+        48
+      ],
+      "renderFootprintCells": [
+        4,
+        3
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "rice",
+      "name": "small-plot",
+      "sizePixels": [
+        192,
+        128
+      ],
+      "renderFootprintCells": [
+        12,
+        8
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "rice",
+      "name": "rice-ripe",
+      "sizePixels": [
+        32,
+        32
+      ],
+      "renderFootprintCells": [
+        2,
+        2
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": true,
+      "currentProductionSourceIds": [],
+      "currentCertifiedCompositeUses": 0
+    },
+    {
+      "family": "forest",
+      "name": "forest_round",
+      "sizePixels": [
+        48,
+        64
+      ],
+      "renderFootprintCells": [
+        3,
+        4
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": false,
+      "currentProductionSourceIds": [
+        "sprite:forest_round:3:4"
+      ],
+      "currentCertifiedCompositeUses": 166
+    },
+    {
+      "family": "forest",
+      "name": "forest_bent",
+      "sizePixels": [
+        48,
+        64
+      ],
+      "renderFootprintCells": [
+        3,
+        4
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": false,
+      "currentProductionSourceIds": [
+        "sprite:forest_bent:3:4"
+      ],
+      "currentCertifiedCompositeUses": 367
+    },
+    {
+      "family": "forest",
+      "name": "forest_wide",
+      "sizePixels": [
+        64,
+        48
+      ],
+      "renderFootprintCells": [
+        4,
+        3
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": false,
+      "currentProductionSourceIds": [
+        "sprite:forest_wide:4:3"
+      ],
+      "currentCertifiedCompositeUses": 297
+    },
+    {
+      "family": "forest",
+      "name": "broadleaf",
+      "sizePixels": [
+        64,
+        64
+      ],
+      "renderFootprintCells": [
+        4,
+        4
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": false,
+      "currentProductionSourceIds": [
+        "sprite:broadleaf:4:4"
+      ],
+      "currentCertifiedCompositeUses": 154
+    },
+    {
+      "family": "forest",
+      "name": "light_tree",
+      "sizePixels": [
+        48,
+        64
+      ],
+      "renderFootprintCells": [
+        3,
+        4
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": false,
+      "currentProductionSourceIds": [
+        "sprite:light_tree:3:4"
+      ],
+      "currentCertifiedCompositeUses": 201
+    },
+    {
+      "family": "forest",
+      "name": "golden_tree",
+      "sizePixels": [
+        48,
+        64
+      ],
+      "renderFootprintCells": [
+        3,
+        4
+      ],
+      "approvalRGBAUnchanged": true,
+      "asepriteExists": true,
+      "asepriteFrozenHashChecked": false,
+      "currentProductionSourceIds": [
+        "sprite:golden_tree:3:4"
+      ],
+      "currentCertifiedCompositeUses": 10
+    }
+  ],
+  "productionCertificate": {
+    "sources": 44,
+    "tiles": 1294
+  },
+  "dryRun": {
+    "registeredWholeAssets": 31,
+    "renderCells": 4668,
+    "a2Errors": 0,
+    "m4ComposeErrors": 0,
+    "distinctNewSourceCellImagesUpperBound": 2611,
+    "rawRGBAUpperBoundBytes": 2673664,
+    "note": "Source-cell upper bound only; map overlaps, actual placements, Unity overhead and atlas not measured. No production catalogue written."
+  },
+  "mountainCompatiblePortPairs": 227,
+  "mountainWholeVisibleCellFitsInExistingMountainZone": {
+    "west-cap": 1216,
+    "body-a": 542,
+    "body-b": 1234,
+    "east-cap": 953,
+    "bend-north": 581,
+    "bend-south": 391,
+    "north-cap": 1032,
+    "north-south-body": 376,
+    "south-cap": 926,
+    "turn-w-n": 97,
+    "turn-w-s": 54,
+    "turn-e-n": 31,
+    "turn-e-s": 216,
+    "branch-w-e-n": 3,
+    "branch-w-e-s": 0,
+    "branch-n-s-w": 20,
+    "branch-n-s-e": 30,
+    "mountain-pass": 145,
+    "stream-valley": 69,
+    "spring-waterfall": 171,
+    "river-straight": 1679,
+    "river-outlet": 1679
+  },
+  "mountainFitScope": "M1 mountain/peak only, village removed; current 13-map roads/water/function objects excluded. Counts overlap; not a connected placement or capacity proof. Water pieces need actual water route validation separately.",
+  "jangdanUnoccupied12x8RectangleCandidates": 51,
+  "mapInputSha256": {
+    "Naru": "6fadda5200030d7ed1a2a17a0087ba08cbacee1e5fffee25419abef94be10201",
+    "goryeo_jangdan": "fa512b46d45367c9b53c4bbb4fb4bdbb51f09b3d8b296aa27de45e38fddbc33f",
+    "goryeo_songak": "85d65ed631a0a92a1a4dc6f9da07f276f999a6b20c6a1e939bf2fd9f171eff27",
+    "Dakmok": "ffd3c06843530eb6bdab5987f79ac454b9e5539f1b1495b10bbb72769d31c74c",
+    "Gaegyeong": "3582f8c45ce356985e6e6c44727b6cbba4df86b1aac5a470fc122529e91da8c6",
+    "transit_woodtown": "dca97ac183f4c2d11bfd88da70717c0ce73ee1ec354fb83d7fdf9b3f5cb64db1",
+    "transit_ferry": "e11e83bd1ec5f1eb67979a1d8d3107b800f463e8cc4035fc2537e52296693984",
+    "transit_crossroads": "2d8840c6ca9b487be8f24cee984da733241aee9b3bdbc25016b9364786d13f6e",
+    "transit_southport": "8b9df4285d88189cfd71dafcd3677d145e1cd95d9a1a567648eed5ee3737edd4",
+    "transit_wetroad": "83c464ba5afe83525be1cb314d97f72d34b38f648a3bc9d1eb1ca3e74860fdf9",
+    "transit_pass": "be3fb0e913364369bab1f9844ce09e05028074f6b72209fcfa64b5f4d381d55d",
+    "transit_central_approach": "0629f584e2ab2e0b63d950a423d97d66e615da53ae14c9f1e69176830d1d4abb",
+    "transit_south_inland": "fab8baedeb73c13e1827133b3312fd53db9351e6c32981e1f20ae43ac7298f37"
+  },
+  "warnings": [
+    "Mountain port compatibility is not global geography/height/walkability validation.",
+    "Rice logical 8x4 field has 12x8 rendering footprint including canopy margins.",
+    "Current cliff modular minimum is not a ridge port schema; dry run registers each whole role as object only.",
+    "Rice location, crossing/collision and new layout still require an explicit preview decision."
+  ],
+  "productionWrites": 0
+}

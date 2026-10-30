@@ -1,0 +1,20 @@
+{
+  "maps": 13,
+  "frames": 244,
+  "differentOverviewMaps": {
+    "transit_central_approach": 70,
+    "transit_ferry": 475,
+    "transit_south_inland": 331,
+    "transit_wetroad": 195,
+    "transit_woodtown": 3826
+  },
+  "nonOverviewDifferences": 0,
+  "cellChecksPerMode": 80641,
+  "motorTicksPerMode": 149760,
+  "allCellsIdentical": true,
+  "allTrajectoriesIdentical": true,
+  "allGameplayAndSortingIdentical": true,
+  "mainRunWarningsAndErrors": 0,
+  "saveFilesUnchanged": true,
+  "saveFileCount": 21
+}

@@ -1,0 +1,122 @@
+{
+  "status": "approved",
+  "date": "2026-10-28",
+  "approvedBy": "user",
+  "statement": "좋다. 모두 승인할게.",
+  "scope": "제출한 건물9종과 배1종 전체의 그림·시점·게임 크기 배치",
+  "assets": [
+    {
+      "name": "cottage",
+      "png": "ArtReview/Approved/BuildingShip-Renewal-v1/cottage.png",
+      "source": "ArtReview/Approved/BuildingShip-Renewal-v1/cottage.aseprite",
+      "size": [
+        80,
+        64
+      ],
+      "rgbaSha256": "e628f1dd18ff43e9ef801b3783c4cd77030144a6347fe31549fb7df754a01cf0",
+      "sourceSha256": "06f9321645474caddca7d7a1cf0a0b961b1fd09e4db7f0acd253109fe403267e"
+    },
+    {
+      "name": "pavilion",
+      "png": "ArtReview/Approved/BuildingShip-Renewal-v1/pavilion.png",
+      "source": "ArtReview/Approved/BuildingShip-Renewal-v1/pavilion.aseprite",
+      "size": [
+        80,
+        80
+      ],
+      "rgbaSha256": "ccfdcf5e7428391d18ba4532eb90c68d75c53004bab47135ab7a3b241430f1cb",
+      "sourceSha256": "e47b7e3737c611a3bfaa291e5abd360dda9768c69f8baec70dcbe9779c2960fe"
+    },
+    {
+      "name": "thatch",
+      "png": "ArtReview/Approved/BuildingShip-Renewal-v1/thatch.png",
+      "source": "ArtReview/Approved/BuildingShip-Renewal-v1/thatch.aseprite",
+      "size": [
+        64,
+        48
+      ],
+      "rgbaSha256": "fd068c3b5f9e7d41ef0e1816145b21c5dd42e666ac79b4a9cd682f017b0d9528",
+      "sourceSha256": "bd66f3773d107db24b6df4d26cbbe4774129d51396decf1496d007b0771b8c34"
+    },
+    {
+      "name": "tile-house",
+      "png": "ArtReview/Approved/BuildingShip-Renewal-v1/tile-house.png",
+      "source": "ArtReview/Approved/BuildingShip-Renewal-v1/tile-house.aseprite",
+      "size": [
+        64,
+        48
+      ],
+      "rgbaSha256": "03e1939a96d1e3e6a62d4a451af1e4695bc40b36ef68365dc03fc657e6d47683",
+      "sourceSha256": "c12264c4779a710f81e76f3df0bc2412202828d0fb9ec198183f0f3843abfaf4"
+    },
+    {
+      "name": "gaekju",
+      "png": "ArtReview/Approved/BuildingShip-Renewal-v1/gaekju.png",
+      "source": "ArtReview/Approved/BuildingShip-Renewal-v1/gaekju.aseprite",
+      "size": [
+        96,
+        64
+      ],
+      "rgbaSha256": "1191cecd8f3f3e0d31954d4e7f885ecb1de3efaad471ef0b13c63f10c2251a7b",
+      "sourceSha256": "75113d867a701ce47f78352b64ed86ada6bac1e554c6aaf73f2a0865b5d0f38a"
+    },
+    {
+      "name": "gate",
+      "png": "ArtReview/Approved/BuildingShip-Renewal-v1/gate.png",
+      "source": "ArtReview/Approved/BuildingShip-Renewal-v1/gate.aseprite",
+      "size": [
+        96,
+        80
+      ],
+      "rgbaSha256": "bb74d9afe42c3e8d2a3aad3f26458c93645a8f8c8c5e59d19c168e93759b1fd4",
+      "sourceSha256": "593765e699150b27054d3f51a749bac402fdc93037afe57d85cfceeb41a0c4cc"
+    },
+    {
+      "name": "palace",
+      "png": "ArtReview/Approved/BuildingShip-Renewal-v1/palace.png",
+      "source": "ArtReview/Approved/BuildingShip-Renewal-v1/palace.aseprite",
+      "size": [
+        160,
+        112
+      ],
+      "rgbaSha256": "4ad78b479f104716cbd28bcb78a77f05d9d9a557f9a334353cde9565dab7f201",
+      "sourceSha256": "8a7f134aa6b78ee6caed15bee44dbbb81effee98e7ba8afea8cf296baaccd523"
+    },
+    {
+      "name": "shop",
+      "png": "ArtReview/Approved/BuildingShip-Renewal-v1/shop.png",
+      "source": "ArtReview/Approved/BuildingShip-Renewal-v1/shop.aseprite",
+      "size": [
+        96,
+        64
+      ],
+      "rgbaSha256": "edcf75a60357b569d2dfc753fdf003cd88d3199f040a34122c33fec88f32fbe6",
+      "sourceSha256": "36d83d81d5c9da5ffde7475c7ac9d4b4441c03719ae55259416a79caa426865b"
+    },
+    {
+      "name": "small_store",
+      "png": "ArtReview/Approved/BuildingShip-Renewal-v1/small_store.png",
+      "source": "ArtReview/Approved/BuildingShip-Renewal-v1/small_store.aseprite",
+      "size": [
+        64,
+        48
+      ],
+      "rgbaSha256": "025a6dd9d2e0abc54ba760bcea9cc889c8b74576915e9398a618aae70f3e1d72",
+      "sourceSha256": "93f8e3982c7de53141034265fe3bdd661b7a9a67f3bb6c674a7109aa8f24ba62"
+    },
+    {
+      "name": "boat",
+      "png": "ArtReview/Approved/BuildingShip-Renewal-v1/boat.png",
+      "source": "ArtReview/Approved/BuildingShip-Renewal-v1/boat.aseprite",
+      "size": [
+        80,
+        32
+      ],
+      "rgbaSha256": "ed1b03e5bc33ec8101a3cd0ac4dc257866338f1a37bf36fabd281b2318fe9e2d",
+      "sourceSha256": "f058b312ffd2d3236ea80d5a52170701b6d1810c3480aa9d6fad4abcb7cdf224"
+    }
+  ],
+  "comparison": "ArtReview/BuildingShip-Renewal/comparison.png",
+  "unityComparison": "ArtReview/BuildingShip-Renewal/Unity/comparison.png",
+  "productionApplied": false
+}

@@ -1,0 +1,801 @@
+{
+    "playCompleted": true,
+    "error": "",
+    "checks": [
+        {
+            "test": "start in previewOnly",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "production ground/barriers match generated map",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "production paddies connected",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "production blocked save position repaired",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "production ground/barriers match generated map",
+            "detail": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "production paddies connected",
+            "detail": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "production blocked save position repaired",
+            "detail": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "production ground/barriers match generated map",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "production blocked save position repaired",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "production ground/barriers match generated map",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "production paddies connected",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "production blocked save position repaired",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "production ground/barriers match generated map",
+            "detail": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "production paddies connected",
+            "detail": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "production blocked save position repaired",
+            "detail": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "production ground/barriers match generated map",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "production blocked save position repaired",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "production ground/barriers match generated map",
+            "detail": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "production blocked save position repaired",
+            "detail": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_crossroads",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "transit_crossroads",
+            "passed": true
+        },
+        {
+            "test": "production ground/barriers match generated map",
+            "detail": "transit_crossroads",
+            "passed": true
+        },
+        {
+            "test": "production blocked save position repaired",
+            "detail": "transit_crossroads",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_southport",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "transit_southport",
+            "passed": true
+        },
+        {
+            "test": "production ground/barriers match generated map",
+            "detail": "transit_southport",
+            "passed": true
+        },
+        {
+            "test": "production blocked save position repaired",
+            "detail": "transit_southport",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "production ground/barriers match generated map",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "production blocked save position repaired",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_pass",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "transit_pass",
+            "passed": true
+        },
+        {
+            "test": "production ground/barriers match generated map",
+            "detail": "transit_pass",
+            "passed": true
+        },
+        {
+            "test": "production blocked save position repaired",
+            "detail": "transit_pass",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "production ground/barriers match generated map",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "production blocked save position repaired",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_south_inland",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "transit_south_inland",
+            "passed": true
+        },
+        {
+            "test": "production ground/barriers match generated map",
+            "detail": "transit_south_inland",
+            "passed": true
+        },
+        {
+            "test": "production blocked save position repaired",
+            "detail": "transit_south_inland",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "isolated old-position save written",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "old-position save preserves progress",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "new mountain repairs old safe saved feet",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "original save remains protected",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "isolated old-position save written",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "old-position save preserves progress",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "new mountain repairs old safe saved feet",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "original save remains protected",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "isolated old-position save written",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "old-position save preserves progress",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "new mountain repairs old safe saved feet",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "original save remains protected",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "isolated old-position save written",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "old-position save preserves progress",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "new mountain repairs old safe saved feet",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "original save remains protected",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "isolated old-position save written",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "old-position save preserves progress",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "new mountain repairs old safe saved feet",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "original save remains protected",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "66,-52",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-west 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "229,-64",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-capital 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "187,-52",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-goryeo 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "116,-18",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-lake 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "217,20",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-granary-north 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "198,66",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-granary-south 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "240,24",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-capital-fields 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "172,-12",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-songak-fields 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "production map loaded",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "242,36",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-naru-fields 480x270",
+            "passed": true
+        },
+        {
+            "test": "production real travel",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "regional UI scale after real travel",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "travel-ui-Naru 480x270",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "travel-market-Naru 480x270",
+            "passed": true
+        },
+        {
+            "test": "production real travel",
+            "detail": "venice_rialto",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "venice_rialto",
+            "passed": true
+        },
+        {
+            "test": "regional UI scale after real travel",
+            "detail": "venice_rialto",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "travel-ui-venice_rialto 480x270",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "travel-market-venice_rialto 480x270",
+            "passed": true
+        },
+        {
+            "test": "production real travel",
+            "detail": "arabia_ahsa",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "arabia_ahsa",
+            "passed": true
+        },
+        {
+            "test": "regional UI scale after real travel",
+            "detail": "arabia_ahsa",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "travel-ui-arabia_ahsa 480x270",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "travel-market-arabia_ahsa 480x270",
+            "passed": true
+        },
+        {
+            "test": "production real travel",
+            "detail": "north_birka",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "north_birka",
+            "passed": true
+        },
+        {
+            "test": "regional UI scale after real travel",
+            "detail": "north_birka",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "travel-ui-north_birka 480x270",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "travel-market-north_birka 480x270",
+            "passed": true
+        },
+        {
+            "test": "production real travel",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "regional UI scale after real travel",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "travel-ui-goryeo_songak 480x270",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "travel-market-goryeo_songak 480x270",
+            "passed": true
+        },
+        {
+            "test": "production real travel",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "regional UI scale after real travel",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "travel-ui-transit_woodtown 480x270",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "travel-market-transit_woodtown 480x270",
+            "passed": true
+        }
+    ]
+}

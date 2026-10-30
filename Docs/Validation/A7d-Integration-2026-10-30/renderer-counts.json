@@ -1,0 +1,171 @@
+[
+  {
+    "map": "transit_central_approach",
+    "before": {
+      "gameObjects": 227,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 7
+    },
+    "after": {
+      "gameObjects": 237,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 7
+    }
+  },
+  {
+    "map": "transit_south_inland",
+    "before": {
+      "gameObjects": 296,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 2
+    },
+    "after": {
+      "gameObjects": 296,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 2
+    }
+  },
+  {
+    "map": "transit_woodtown",
+    "before": {
+      "gameObjects": 218,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 6
+    },
+    "after": {
+      "gameObjects": 226,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 6
+    }
+  },
+  {
+    "map": "transit_ferry",
+    "before": {
+      "gameObjects": 135,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 26
+    },
+    "after": {
+      "gameObjects": 135,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 26
+    }
+  },
+  {
+    "map": "transit_southport",
+    "before": {
+      "gameObjects": 155,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 2
+    },
+    "after": {
+      "gameObjects": 155,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 2
+    }
+  },
+  {
+    "map": "transit_wetroad",
+    "before": {
+      "gameObjects": 237,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 13
+    },
+    "after": {
+      "gameObjects": 239,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 13
+    }
+  },
+  {
+    "map": "goryeo_songak",
+    "before": {
+      "gameObjects": 213,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 66
+    },
+    "after": {
+      "gameObjects": 213,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 66
+    }
+  },
+  {
+    "map": "goryeo_jangdan",
+    "before": {
+      "gameObjects": 343,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 27
+    },
+    "after": {
+      "gameObjects": 343,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 27
+    }
+  },
+  {
+    "map": "transit_crossroads",
+    "before": {
+      "gameObjects": 293,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 4
+    },
+    "after": {
+      "gameObjects": 293,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 4
+    }
+  },
+  {
+    "map": "transit_pass",
+    "before": {
+      "gameObjects": 236,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 7
+    },
+    "after": {
+      "gameObjects": 236,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 7
+    }
+  },
+  {
+    "map": "Naru",
+    "before": {
+      "gameObjects": 274,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 122
+    },
+    "after": {
+      "gameObjects": 274,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 122
+    }
+  },
+  {
+    "map": "Dakmok",
+    "before": {
+      "gameObjects": 128,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 69
+    },
+    "after": {
+      "gameObjects": 128,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 69
+    }
+  },
+  {
+    "map": "Gaegyeong",
+    "before": {
+      "gameObjects": 215,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 79
+    },
+    "after": {
+      "gameObjects": 215,
+      "tilemapRenderers": 4,
+      "spriteRenderers": 79
+    }
+  }
+]

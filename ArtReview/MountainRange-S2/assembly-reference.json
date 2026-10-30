@@ -1,0 +1,26 @@
+[
+  {
+    "name": "west-cap",
+    "path": "ArtReview/Approved/MountainRange-S1/west-cap.png",
+    "x": 0,
+    "y": 0,
+    "leftAnchor": 0,
+    "rightAnchor": 0
+  },
+  {
+    "name": "body-a",
+    "path": "ArtReview/Approved/MountainRange-S1/body-a.png",
+    "x": 128,
+    "y": 0,
+    "leftAnchor": 0,
+    "rightAnchor": 0
+  },
+  {
+    "name": "east-cap",
+    "path": "ArtReview/Approved/MountainRange-S1/east-cap.png",
+    "x": 320,
+    "y": 0,
+    "leftAnchor": 0,
+    "rightAnchor": 0
+  }
+]

@@ -1,0 +1,118 @@
+// Read-only scene audit + in-memory atlas experiment. Edit mode only, no save/build.
+string root="/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship";
+string output=root+"/Docs/Validation/Forest-Performance-2026-10-29";
+if(UnityEditor.EditorApplication.isPlaying)throw new System.Exception("Edit mode required");
+var original=UnityEngine.SceneManagement.SceneManager.GetActiveScene();bool dirty=original.isDirty;
+var inventory=new System.Collections.Generic.List<object>();
+foreach(string line in System.IO.File.ReadAllLines(output+"/all-scenes.tsv")){
+ var a=line.Split('\t');var timer=System.Diagnostics.Stopwatch.StartNew();
+ var scene=UnityEditor.SceneManagement.EditorSceneManager.OpenPreviewScene(a[1]);timer.Stop();
+ try{
+  var tms=new System.Collections.Generic.List<object>();int sprites=0,colliders=0,objects=0;
+  var tex=new System.Collections.Generic.HashSet<UnityEngine.Texture2D>();
+  foreach(var go in scene.GetRootGameObjects()){
+   objects+=go.GetComponentsInChildren<UnityEngine.Transform>(true).Length;
+   sprites+=go.GetComponentsInChildren<UnityEngine.SpriteRenderer>(true).Length;
+   colliders+=go.GetComponentsInChildren<UnityEngine.Collider2D>(true).Length;
+   foreach(var tm in go.GetComponentsInChildren<UnityEngine.Tilemaps.Tilemap>(true)){
+    var r=tm.GetComponent<UnityEngine.Tilemaps.TilemapRenderer>();int count=0;var unique=new System.Collections.Generic.HashSet<UnityEngine.Tilemaps.TileBase>();
+    foreach(var t in tm.GetTilesBlock(tm.cellBounds))if(t!=null){count++;unique.Add(t);var tile=t as UnityEngine.Tilemaps.Tile;if(r!=null&&tile!=null&&tile.sprite!=null)tex.Add(tile.sprite.texture);}
+    tms.Add(new {name=tm.name,occupiedCells=count,tileAssets=unique.Count,renderer=r!=null,mode=r==null?"none":r.mode.ToString(),chunk=r==null?"none":r.chunkSize.ToString()});
+   }
+  }
+  long bytes=0;foreach(var t in tex)bytes+=UnityEngine.Profiling.Profiler.GetRuntimeMemorySizeLong(t);
+  inventory.Add(new {map=a[0],previewOpenMilliseconds=timer.Elapsed.TotalMilliseconds,gameObjects=objects,spriteRenderers=sprites,collider2Ds=colliders,tilemaps=tms,uniqueTileTextures=tex.Count,tileTextureRuntimeMemoryBytes=bytes});
+ }finally{UnityEditor.SceneManagement.EditorSceneManager.ClosePreviewScene(scene);}
+}
+var results=new System.Collections.Generic.List<object>();
+foreach(string line in System.IO.File.ReadAllLines(output+"/cases.tsv")){
+ var a=line.Split('\t');string mid=a[0];var scene=UnityEditor.SceneManagement.EditorSceneManager.OpenPreviewScene(a[1]);
+ var created=new System.Collections.Generic.List<UnityEngine.Object>();
+ var previous=UnityEngine.RenderTexture.active;
+ try{
+  var maps=new System.Collections.Generic.List<UnityEngine.Tilemaps.Tilemap>();
+  var arrays=new System.Collections.Generic.Dictionary<UnityEngine.Tilemaps.Tilemap,UnityEngine.Tilemaps.TileBase[]>();
+  var bounds=new System.Collections.Generic.Dictionary<UnityEngine.Tilemaps.Tilemap,UnityEngine.BoundsInt>();
+  var unique=new System.Collections.Generic.HashSet<UnityEngine.Tilemaps.Tile>();UnityEngine.Camera cam=null;
+  foreach(var go in scene.GetRootGameObjects()){
+   foreach(var camera in go.GetComponentsInChildren<UnityEngine.Camera>(true)){camera.enabled=false;if(cam==null)cam=camera;}
+   foreach(var r in go.GetComponentsInChildren<UnityEngine.SpriteRenderer>(true))r.enabled=false;
+   foreach(var tm in go.GetComponentsInChildren<UnityEngine.Tilemaps.Tilemap>(true)){
+    if(tm.GetComponent<UnityEngine.Tilemaps.TilemapRenderer>()==null)continue;
+    maps.Add(tm);bounds[tm]=tm.cellBounds;var tiles=tm.GetTilesBlock(tm.cellBounds);arrays[tm]=tiles;
+    foreach(var t in tiles){var tile=t as UnityEngine.Tilemaps.Tile;if(tile!=null&&tile.sprite!=null)unique.Add(tile);}
+   }
+  }
+  // Preview lights conflict with the original scene's global light. Isolate tile rendering.
+  foreach(var go in scene.GetRootGameObjects())foreach(var light in go.GetComponentsInChildren<UnityEngine.Rendering.Universal.Light2D>(true))light.enabled=false;
+  var shader=UnityEngine.Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default");if(shader==null)throw new System.Exception("Verified unlit shader unavailable");
+  var material=new UnityEngine.Material(shader);created.Add(material);
+  foreach(var tm in maps)tm.GetComponent<UnityEngine.Tilemaps.TilemapRenderer>().sharedMaterial=material;
+  if(cam==null)throw new System.Exception("No camera");
+  foreach(var component in cam.GetComponents<UnityEngine.Behaviour>())if(component.GetType().Name=="PixelPerfectCamera")component.enabled=false;
+  cam.scene=scene;cam.orthographic=true;cam.orthographicSize=270f/32;cam.aspect=480f/270;cam.enabled=false;
+  cam.transform.position=new UnityEngine.Vector3(float.Parse(a[2],System.Globalization.CultureInfo.InvariantCulture),float.Parse(a[3],System.Globalization.CultureInfo.InvariantCulture),-10);
+  UnityEngine.Rendering.Universal.UniversalAdditionalCameraData extra=cam.GetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();if(extra!=null)extra.renderPostProcessing=false;
+  var rt=new UnityEngine.RenderTexture(480,270,24,UnityEngine.RenderTextureFormat.ARGB32);rt.Create();created.Add(rt);
+  var pixels=new UnityEngine.Texture2D(480,270,UnityEngine.TextureFormat.RGBA32,false);created.Add(pixels);
+  System.Action render=()=>{
+   UnityEngine.Rendering.RenderPipeline.SubmitRenderRequest(cam,new UnityEngine.Rendering.Universal.UniversalRenderPipeline.SingleCameraRequest{destination=rt});
+   UnityEngine.RenderTexture.active=rt;pixels.ReadPixels(new UnityEngine.Rect(0,0,480,270),0,0);pixels.Apply();
+  };
+  var baseline=new System.Collections.Generic.List<double>();var packed=new System.Collections.Generic.List<double>();
+  var stats=new System.Collections.Generic.List<object>();
+  for(int i=0;i<3;i++)render();
+  render();byte[] before=pixels.GetRawTextureData();byte[] beforeCopy=(byte[])before.Clone();
+  System.IO.File.WriteAllBytes(output+"/"+mid+"-baseline.png",pixels.EncodeToPNG());
+  for(int i=0;i<20;i++){
+   int calls=UnityEditor.UnityStats.drawCalls;var watch=System.Diagnostics.Stopwatch.StartNew();render();watch.Stop();
+   baseline.Add(watch.Elapsed.TotalMilliseconds);if(i<3)stats.Add(new {mode="baseline",beforeDrawCalls=calls,afterDrawCalls=UnityEditor.UnityStats.drawCalls,batches=UnityEditor.UnityStats.batches});
+  }
+  var originals=new System.Collections.Generic.List<UnityEngine.Tilemaps.TilemapRenderer>();
+  foreach(var tm in maps)if(tm.name=="Objects"||tm.name=="Above"){var r=tm.GetComponent<UnityEngine.Tilemaps.TilemapRenderer>();originals.Add(r);r.enabled=false;}
+  for(int i=0;i<2;i++)render();var noObjects=new System.Collections.Generic.List<double>();for(int i=0;i<20;i++){var watch=System.Diagnostics.Stopwatch.StartNew();render();watch.Stop();noObjects.Add(watch.Elapsed.TotalMilliseconds);}
+  foreach(var r in originals)r.enabled=true;
+  var list=new System.Collections.Generic.List<UnityEngine.Tilemaps.Tile>(unique);list.Sort((x,y)=>string.Compare(UnityEditor.AssetDatabase.GetAssetPath(x.sprite),UnityEditor.AssetDatabase.GetAssetPath(y.sprite),System.StringComparison.Ordinal));
+  var input=new UnityEngine.Texture2D[list.Count];long originalBytes=0;var oldTextures=new System.Collections.Generic.HashSet<UnityEngine.Texture2D>();int originallyPacked=0;
+  for(int i=0;i<list.Count;i++){
+   var s=list[i].sprite;if(s.packed)originallyPacked++;oldTextures.Add(s.texture);
+   string path=UnityEditor.AssetDatabase.GetAssetPath(s);
+   input[i]=new UnityEngine.Texture2D(2,2,UnityEngine.TextureFormat.RGBA32,false);created.Add(input[i]);
+   UnityEngine.ImageConversion.LoadImage(input[i],System.IO.File.ReadAllBytes(path));input[i].filterMode=UnityEngine.FilterMode.Point;
+   if(input[i].width!=16||input[i].height!=16||s.rect.width!=16||s.rect.height!=16)throw new System.Exception("Not an unscaled 16px tile: "+path);
+  }
+  foreach(var t in oldTextures)originalBytes+=UnityEngine.Profiling.Profiler.GetRuntimeMemorySizeLong(t);
+  var atlas=new UnityEngine.Texture2D(1024,1024,UnityEngine.TextureFormat.RGBA32,false,false);created.Add(atlas);
+  var rects=atlas.PackTextures(input,2,2048,false);atlas.filterMode=UnityEngine.FilterMode.Point;atlas.wrapMode=UnityEngine.TextureWrapMode.Clamp;
+  var replacement=new System.Collections.Generic.Dictionary<UnityEngine.Tilemaps.TileBase,UnityEngine.Tilemaps.TileBase>();
+  for(int i=0;i<list.Count;i++){
+   int x=UnityEngine.Mathf.RoundToInt(rects[i].x*atlas.width),y=UnityEngine.Mathf.RoundToInt(rects[i].y*atlas.height);
+   int w=UnityEngine.Mathf.RoundToInt(rects[i].width*atlas.width),h=UnityEngine.Mathf.RoundToInt(rects[i].height*atlas.height);
+   if(w!=16||h!=16)throw new System.Exception("Atlas scaled a tile");
+   var source=input[i].GetPixels32();var actual=atlas.GetPixels(x,y,w,h);for(int j=0;j<source.Length;j++){UnityEngine.Color32 c=actual[j];if(!source[j].Equals(c))throw new System.Exception("Atlas pixels changed");}
+   var old=list[i].sprite;var sprite=UnityEngine.Sprite.Create(atlas,new UnityEngine.Rect(x,y,w,h),new UnityEngine.Vector2(old.pivot.x/16,old.pivot.y/16),old.pixelsPerUnit,0,UnityEngine.SpriteMeshType.FullRect);created.Add(sprite);
+   var tile=UnityEngine.Object.Instantiate(list[i]);created.Add(tile);tile.sprite=sprite;replacement[list[i]]=tile;
+  }
+  atlas.Apply(false,true);
+  foreach(var tm in maps){var originalTiles=arrays[tm];var values=new UnityEngine.Tilemaps.TileBase[originalTiles.Length];for(int i=0;i<values.Length;i++){UnityEngine.Tilemaps.TileBase r;values[i]=originalTiles[i]!=null&&replacement.TryGetValue(originalTiles[i],out r)?r:originalTiles[i];}tm.SetTilesBlock(bounds[tm],values);tm.RefreshAllTiles();}
+  for(int i=0;i<3;i++)render();render();var after=pixels.GetRawTextureData();int differences=0;for(int i=0;i<after.Length;i++)if(after[i]!=beforeCopy[i])differences++;
+  System.IO.File.WriteAllBytes(output+"/"+mid+"-atlas-trial.png",pixels.EncodeToPNG());
+  for(int i=0;i<20;i++){
+   int calls=UnityEditor.UnityStats.drawCalls;var watch=System.Diagnostics.Stopwatch.StartNew();render();watch.Stop();packed.Add(watch.Elapsed.TotalMilliseconds);
+   if(i<3)stats.Add(new {mode="atlas",beforeDrawCalls=calls,afterDrawCalls=UnityEditor.UnityStats.drawCalls,batches=UnityEditor.UnityStats.batches});
+  }
+  foreach(var tm in maps){tm.SetTilesBlock(bounds[tm],arrays[tm]);tm.RefreshAllTiles();}
+  for(int i=0;i<3;i++)render();
+  var repeat=new System.Collections.Generic.List<double>();
+  for(int i=0;i<20;i++){var watch=System.Diagnostics.Stopwatch.StartNew();render();watch.Stop();repeat.Add(watch.Elapsed.TotalMilliseconds);}
+  results.Add(new {baselineRepeatRenderAndReadbackMs=repeat,map=mid,sampleCount=20,cameraWorld=cam.transform.position.ToString(),renderSize="480x270",baselineTileTextures=oldTextures.Count,originallyPackedSprites=originallyPacked,
+   originalTileTextureMemoryBytes=originalBytes,atlasSize=atlas.width+"x"+atlas.height,atlasRuntimeMemoryBytes=UnityEngine.Profiling.Profiler.GetRuntimeMemorySizeLong(atlas),
+   baselineRenderAndReadbackMs=baseline,objectsAboveHiddenRenderAndReadbackMs=noObjects,atlasRenderAndReadbackMs=packed,rgbaByteDifferences=differences,statistics=stats});
+ }finally{
+  UnityEngine.RenderTexture.active=previous;UnityEditor.SceneManagement.EditorSceneManager.ClosePreviewScene(scene);
+  for(int i=created.Count-1;i>=0;i--){var rt=created[i] as UnityEngine.RenderTexture;if(rt!=null)rt.Release();if(created[i]!=null)UnityEngine.Object.DestroyImmediate(created[i]);}
+ }
+}
+if(original.isDirty!=dirty||UnityEngine.SceneManagement.SceneManager.GetActiveScene().path!=original.path)throw new System.Exception("Original scene changed");
+return new {scope="Edit-mode actual production scenes; tile rendering only; no gameplay/FPS assertion",hardware=new {cpu=UnityEngine.SystemInfo.processorType,gpu=UnityEngine.SystemInfo.graphicsDeviceName,memoryMB=UnityEngine.SystemInfo.systemMemorySize},
+ inventory=inventory,cases=results,productionWrites=0,originalSceneRestored=true,saveDataUntouched=true};

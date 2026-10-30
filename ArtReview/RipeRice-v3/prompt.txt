@@ -1,0 +1,7 @@
+Use case: precise-object-edit
+Image1 is the edit target: the golden ripe rice game sprite. Image2 is the approved thatch roof COLOR reference only.
+Change ONLY the plant structure: LOWER STEMS MUST BE STRAIGHT AND UPRIGHT. The bottom45-50% of the plant height must show4-6 clean slender nearly parallel vertical stems growing from a narrow shared ground base. These lower stems do NOT curve, sag, fold outward, loop back, or form a bulb/bundle.
+ONLY THE TOP grain heads bend under their weight: in the upper half, stems transition into short arched golden rice panicles whose heavy tips droop down. All drooping grain-head tips finish above the middle/lower-stem boundary, leaving the upright lower stems clearly readable. No giant upside-down-U loops from the base.
+Keep the compact22-pixel-wide clump silhouette, warm bright roof-gold color (#b77c3e,#e2ac52,#f7d17b), existing game pixel-art style and bottom-center planted anchor. A few slender olive leaves may rise beside the straight stems but do not hide their straight lower portions.
+The plant remains rooted in the ground, NOT cut or tied. No string, knot, binding, pot, exposed roots, base mound, soil tile or background.
+One COMPLETE single clump, native32x32 logical canvas, about22x27 occupied pixels, enlarged crisp pixel blocks, economical broad clusters2-3 shades per material, genuine transparency. No labels, props, scenery or second plant. Do not draw the building from image2.

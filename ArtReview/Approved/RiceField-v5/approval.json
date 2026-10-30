@@ -1,0 +1,37 @@
+{
+  "status": "approved",
+  "date": "2026-10-29",
+  "approvedBy": "user",
+  "statement": "훨씬 낫네.",
+  "scope": "제출한 초원 위 완성 논 구획의 벼 표현·밀도·앞줄 줄기·배치. 본편 적용과 다른 모듈 조합은 별도.",
+  "assets": [
+    {
+      "name": "canopy",
+      "size": [
+        64,
+        48
+      ],
+      "rgbaSha256": "7c04f1541b8dc746cb3d1c038b60ba877527b8d29b15789918be1cd860b1c7e8",
+      "sourceSha256": "d734c841051769033c32d13d5259bad9e41bf1b9bd4044b45320969b19c88fed"
+    },
+    {
+      "name": "small-plot",
+      "size": [
+        192,
+        128
+      ],
+      "rgbaSha256": "fdc0d6a89c031077a47529e81634b6dcbd08fc1f3ee512884fc1134481f26776",
+      "sourceSha256": "c36fce5acf8a177853f4f74fc9a4fc50c9b2b21d89dc20cc08f7d8f044c539af"
+    },
+    {
+      "name": "rice-ripe",
+      "size": [
+        32,
+        32
+      ],
+      "rgbaSha256": "3d1672a088df4b64f83c5688e0315e9087b0220d61233048714a11e6ccc1bdef",
+      "sourceSha256": "c9c1ef80e744a8fbe8ab45c5f25d4ba165275588a75b4b9d70c2758c4cf7ca12"
+    }
+  ],
+  "productionApplied": false
+}
