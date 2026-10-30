@@ -108,4 +108,40 @@ namespace PocketCaravan
             return text;
         }
     }
+
+    /// <summary>
+    /// 2026-10-30 새 게임(일시정지 메뉴)에서도 베네치아 기능이 다시 붙게 한다.
+    /// 공용 GameManager.NewGame은 GameManager를 새로 만드는데, 각 베네치아 부품의 Attach(AfterSceneLoad)는 실행 첫 번에만 돈다.
+    /// 씬이 열릴 때마다 Attach를 다시 불러 빠진 부품만 붙인다(각 Attach가 GetComponent로 이미 있으면 건너뛴다).
+    /// </summary>
+    static class VeniceBoot
+    {
+        static readonly System.Type[] Parts =
+        {
+            typeof(VeniceAtmosphere), typeof(VeniceDaily), typeof(VeniceEvents), typeof(VeniceFair), typeof(VeniceLife),
+            typeof(VeniceMapUI), typeof(VeniceMenu), typeof(VeniceQuestDirector), typeof(VeniceRace), typeof(VeniceReactions),
+            typeof(VeniceSocial), typeof(VeniceSound), typeof(VeniceStride), typeof(VeniceActivityHints),
+        };
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics()   // 도메인 리로드를 끈 설정에서 지난 실행 값이 남지 않게
+        {
+            VeniceTravelWave.ByBoat = false;
+            VeniceLabels.ShowAll = false;
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        static void Hook()
+        {
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnLoaded;
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnLoaded;
+        }
+
+        static void OnLoaded(UnityEngine.SceneManagement.Scene s, UnityEngine.SceneManagement.LoadSceneMode m)
+        {
+            if (GameManager.I == null || GameManager.I.GetComponent<VeniceReactions>() != null) return;
+            foreach (var t in Parts)
+                t.GetMethod("Attach", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)?.Invoke(null, null);
+        }
+    }
 }

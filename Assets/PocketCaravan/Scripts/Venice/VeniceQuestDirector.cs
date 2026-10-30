@@ -84,9 +84,9 @@ namespace PocketCaravan
                 Sfx.Play("success", .6f);
                 Notify.Show("광장 악사가 포도주 노래를 켜기 시작했다♪", 4f);
             }
+            // 10-30 공용 QuestManager가 먼저 세므로, 넷째를 팔면 파는 단계(2번째)가 끝나 알리기 단계(3번째)로 넘어가 있다
             var q9 = Active(Q9);
-            if (q9 != null && town.id == "venice_c_caravanserai" && q9.Current != null && q9.Current.type == ObjectiveType.Sell
-                && q9.amount >= 3 && Once("qd_q9_sold"))
+            if (q9 != null && town.id == "venice_c_caravanserai" && q9.step == 2 && Once("qd_q9_sold"))
             {
                 Burst("confetti", player, 18, 2.2f);
                 Sfx.Play("levelup", .5f);
@@ -100,8 +100,9 @@ namespace PocketCaravan
             if (mapId == "venice_c_post" && Active(Q9) != null) Bunting();
             if (mapId == "venice_c_gate")
             {
-                bool first = Active(Q11) != null && Once("qd_q11_flag");
-                if (first || Finished(Q11) || VeniceSave.Get("qd_q11_flag") > 0f) Flag(first);
+                bool seen = VeniceSave.Get("qd_q11_flag") > 0f;
+                bool first = Active(Q11) != null && !seen;
+                if (first || seen || Finished(Q11)) Flag(first);
             }
         }
 
@@ -187,18 +188,25 @@ namespace PocketCaravan
             l.transform.SetParent(flag, false); l.transform.localPosition = new Vector3(0f, .65f, 0f);
             if (first)
             {
+                VeniceSave.Set("qd_q11_flag", 1f);              // 10-30 깃발을 다 세운 뒤에 표시 (그림을 못 찾으면 다음에 다시)
                 flagRaise = Time.time;
                 Sfx.Play("levelup", .6f);
                 Notify.Show("동문 성벽에 날개 달린 사자 깃발이 올라갔다!", 4.5f);
             }
         }
 
+        static Sprite white;
+
         static SpriteRenderer Box(Transform parent, Vector2 px, Color c, Vector3 at, int order)
         {
-            var t = new Texture2D(1, 1) { filterMode = FilterMode.Point };
-            t.SetPixel(0, 0, c); t.Apply();
+            if (white == null)                                   // 10-30 흰 칸 하나를 같이 쓰고 색은 SpriteRenderer.color로
+            {
+                var t = new Texture2D(1, 1) { filterMode = FilterMode.Point };
+                t.SetPixel(0, 0, Color.white); t.Apply();
+                white = Sprite.Create(t, new Rect(0, 0, 1, 1), new Vector2(.5f, .5f), 1f);
+            }
             var r = new GameObject("칸").AddComponent<SpriteRenderer>();
-            r.sprite = Sprite.Create(t, new Rect(0, 0, 1, 1), new Vector2(.5f, .5f), 1f);
+            r.sprite = white; r.color = c;
             r.transform.SetParent(parent, false);
             r.transform.localPosition = at;
             r.transform.localScale = new Vector3(px.x / 16f, px.y / 16f, 1f);

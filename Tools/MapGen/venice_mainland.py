@@ -388,9 +388,7 @@ def venice_c_marsh():
     m.road_path([(30, 35), (30, 38), (37, 38)], width=3, grade=2)
     m.road_path([(46, 38), (52, 34), (56, 30), (w - 1, 30)], width=3, grade=2)
     _links(m)
-    # 범람 진흙: 가운데 섬과 남쪽 섬 길 일부만 느려진다 (데크와 다른 구간은 그대로)
-    mud(m, "marsh_mud_a", 25, 20, 5, 3)
-    mud(m, "marsh_mud_b", 32, 38, 5, 3)
+    # 2026-10-30 진흙 장애물(공용 ObstacleField 창)은 재미가 없다는 의견으로 뺐다. mud()는 남겨 둔다.
     # 갈대·나무·작은 소품
     for x0, y0, x1, y1 in islands:
         deco(m, (x0, y0, x1, y1), 14, ("vg_reeds", "vg_reeds_tall", "vg_tuft"))

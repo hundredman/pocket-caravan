@@ -77,7 +77,12 @@ namespace PocketCaravan
             var gm = GameManager.I;
             bool here = VeniceUtil.InVenice && gm != null;
             if (common == null) common = FindAnyObjectByType<AudioManager>();
-            if (here && common != null && savedVolume < 0f) { savedVolume = common.musicVolume; common.musicVolume = 0f; }
+            // 10-30 북유럽에서 바로 넘어오면 북유럽이 끈 0을 저장할 수 있어서, 0보다 클 때만 저장하고 계속 0으로 누른다
+            if (here && common != null)
+            {
+                if (savedVolume < 0f && common.musicVolume > 0f) savedVolume = common.musicVolume;
+                common.musicVolume = 0f;
+            }
             if (!here && common != null && savedVolume >= 0f) { common.musicVolume = savedVolume; savedVolume = -1f; }
 
             float vol = AudioManager.Muted || !here ? 0f : .4f;

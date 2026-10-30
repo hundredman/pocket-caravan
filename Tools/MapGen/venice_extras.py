@@ -231,6 +231,90 @@ def busy_cells(m, pad):
     return out
 
 
+CROWD_KINDS = ("worker", "villager", "walker")
+CROWD_GAP = 4          # 2026-10-30 사람끼리(가로·세로 중 큰 값) 이만큼은 떨어뜨린다
+MARKET_GAP = 6         # 장터에서 이만큼 안쪽은 장터 상인만
+
+
+def cells_of(o):
+    p = o.get("path") or []
+    pts = [(p[i], p[i + 1]) for i in range(0, len(p) - 1, 2)] or [(o["x"], o["y"])]
+    out = set()
+    for (x0, y0), (x1, y1) in zip(pts, pts[1:] or pts):
+        for t in range(max(abs(x1 - x0), abs(y1 - y0)) + 1):
+            k = max(abs(x1 - x0), abs(y1 - y0)) or 1
+            out.add((x0 + round((x1 - x0) * t / k), y0 + round((y1 - y0) * t / k)))
+    return out
+
+
+def spread_people(m):
+    """장터·다른 사람에 붙어 선 일꾼·주민·걷는 사람을 장터에서 6~16걸음 떨어진 빈 길가로 옮긴다 (걷는 길은 같은 모양으로 함께 옮긴다)"""
+    objs = m.d["objects"]
+    market = next((o for o in objs if o["kind"] == "market"), None)
+    hub = (market["x"], market["y"]) if market else m.hub()
+    people = [o for o in objs if o["kind"] in PEOPLE_KINDS and o["kind"] != "sign"]
+    life = set(life_spots(m.d["id"]))
+
+    def crowded(o, cells):
+        for c in cells:
+            if market and max(abs(c[0] - hub[0]), abs(c[1] - hub[1])) < MARKET_GAP:
+                return True
+            for q in people:
+                if q is o:
+                    continue
+                if any(max(abs(c[0] - a[0]), abs(c[1] - a[1])) < CROWD_GAP for a in cells_of(q)):
+                    return True
+            if any(max(abs(c[0] - a[0]), abs(c[1] - a[1])) < 3 for a in life):
+                return True
+        return False
+
+    dist = m.dist([hub] + m.spawns())
+    exits = [o for o in objs if o["kind"] in ("exit", "spawn")]
+    moved = 0
+    rng = random.Random("spread:" + m.d["id"])
+    for o in [o for o in people if o["kind"] in CROWD_KINDS]:
+        if not crowded(o, cells_of(o)):
+            continue
+        cand = [c for c, dd in dist.items() if 6 <= dd <= 16]
+        rng.shuffle(cand)
+        for c in cand:
+            dx, dy = c[0] - o["x"], c[1] - o["y"]
+            new = {(x + dx, y + dy) for x, y in cells_of(o)}
+            if not all(m.walk(*p) and m.ground_ok(*p) and m.d["road"][m.i(*p)] < 3 for p in new):
+                continue
+            if any(abs(p[0] - e["x"]) <= e.get("w", 1) + 3 and abs(p[1] - e["y"]) <= e.get("h", 1) + 3 for p in new for e in exits):
+                continue
+            if crowded(o, new):
+                continue
+            o["x"] += dx; o["y"] += dy
+            if o.get("path"):
+                o["path"] = [v + (dx if i % 2 == 0 else dy) for i, v in enumerate(o["path"])]
+            moved += 1
+            break
+    return moved
+
+
+def spread_merchant(m, life):
+    """떠돌이 상인 자리(VeniceLife "wander")가 장터·사람 곁이면 장터에서 7~14걸음 떨어진 길가로"""
+    entry = life.get(m.d["id"])
+    if not entry or not entry.get("wander"):
+        return False
+    hub = m.hub()
+    people = [c for o in m.d["objects"] if o["kind"] in PEOPLE_KINDS for c in cells_of(o)]
+    def ok(c):
+        return (max(abs(c[0] - hub[0]), abs(c[1] - hub[1])) >= 7
+                and all(max(abs(c[0] - p[0]), abs(c[1] - p[1])) >= CROWD_GAP for p in people))
+    cur = tuple(entry["wander"][:2])
+    if ok(cur):
+        return False
+    dist = m.dist([hub])
+    cand = sorted((dd, c) for c, dd in dist.items() if 7 <= dd <= 14 and ok(c) and m.ground_ok(*c) and near_road(m, *c))
+    if not cand:
+        return False
+    entry["wander"] = [cand[0][1][0], cand[0][1][1]]
+    return True
+
+
 def place_talkers(m, people):
     rng = random.Random(m.d["id"])
     dist = m.dist([m.hub()] + m.spawns())
@@ -265,6 +349,34 @@ def map_names():
     return out
 
 
+SIGN_GAP = 8     # 2026-10-30 이정표·게시판끼리 이만큼(걸음 수, 가로+세로) 떨어뜨린다
+
+
+def too_close(m, c, blocked):
+    """이미 있는 이정표·게시판이나 이번에 세운 이정표와 SIGN_GAP보다 가까운가"""
+    near = [(o["x"], o["y"]) for o in m.d["objects"] if o["kind"] in ("sign", "board")] + list(blocked)
+    return any(abs(c[0] - p[0]) + abs(c[1] - p[1]) < SIGN_GAP for p in near)
+
+
+def merge_close_signs(m):
+    """원래 맵에 있던 이정표끼리 너무 붙어 있으면 한 개로 합친다 (글은 줄을 바꿔 잇고 남은 칸은 비운다)"""
+    signs = [o for o in m.d["objects"] if o["kind"] == "sign" and o.get("type") != "vx"]
+    gone = 0
+    for a in signs:
+        for b in signs:
+            if a is b or a.get("_gone") or b.get("_gone"):
+                continue
+            if abs(a["x"] - b["x"]) + abs(a["y"] - b["y"]) < 4:
+                a["text"] = a["text"] + "\n" + b["text"]
+                b["_gone"] = True
+                i = m.i(b["x"], b["y"])
+                if m.d["palette"][m.d["obj"][i]] == SIGN_TILE:
+                    m.d["obj"][i] = 0; m.d["blocked"][i] = 0
+                gone += 1
+    m.d["objects"] = [o for o in m.d["objects"] if not o.get("_gone")]
+    return gone
+
+
 def place_sign(m, start, text, blocked):
     """start에서 맵 안쪽(장터 쪽)으로 4~7걸음 들어온 길 칸 옆에 이정표를 세운다"""
     dist = m.dist([m.hub()])
@@ -283,7 +395,7 @@ def place_sign(m, start, text, blocked):
             for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, 1), (1, -1), (-1, -1)):
                 s = (step[0] + dx, step[1] + dy)
                 if (m.inside(*s) and m.walk(*s) and s not in path and s not in busy and s not in blocked and m.ground_ok(*s)
-                        and m.d["road"][m.i(*s)] <= max_road and m.connected(blocked | {s})):
+                        and m.d["road"][m.i(*s)] <= max_road and not too_close(m, s, blocked) and m.connected(blocked | {s})):
                     return s
     return None
 
@@ -302,6 +414,9 @@ def place_signs(m, names):
             continue
         if any(abs(p[0] - ex[0]) + abs(p[1] - ex[1]) < 10 for p in existing):   # 이미 이정표가 있는 출구
             done.append((o["target"], ex)); continue
+        tname = names.get(o["target"], o["target"])
+        if any(tname in so["text"] for so in m.d["objects"] if so["kind"] == "sign" and so.get("type") != "vx"):
+            done.append((o["target"], ex)); continue                          # 원래 이정표가 이미 그 방향을 알려 준다
         text = f"{ARROW.get(o['edge'], '→')} {names.get(o['target'], o['target'])}"
         s = place_sign(m, ex, text, blocked)
         if s:
@@ -317,7 +432,7 @@ def place_signs(m, names):
         busy = busy_cells(m, 1)
         dist = m.dist([(market["x"], market["y"] + 1), (market["x"], market["y"] - 1), (market["x"] + 1, market["y"]), (market["x"] - 1, market["y"])])
         spot = next((c for max_road in (0, 2) for c, dd in sorted(dist.items(), key=lambda kv: kv[1])
-                     if 3 <= dd <= 10 and c not in busy and c not in blocked and m.ground_ok(*c)
+                     if 3 <= dd <= 10 and c not in busy and c not in blocked and m.ground_ok(*c) and not too_close(m, c, blocked)
                      and m.d["road"][m.i(*c)] <= max_road and m.connected(blocked | {c})), None)
         if spot:
             add_sign(m, spot, text, tile); blocked.add(spot); added += 1
@@ -334,17 +449,33 @@ def add_sign(m, c, text, tile):
 def main():
     names = map_names()
     total_t = total_s = 0
+    life_path = os.path.join(ROOT, "Assets/PocketCaravan/Resources/Venice/VeniceLife.json")
+    with open(life_path, encoding="utf-8") as fp:
+        life_doc = json.load(fp)
+    life = {e["id"]: e for e in life_doc["maps"]}
+    life_changed = False
     for mid in TALKERS:
         path = next(iter(glob.glob(os.path.join(MAPS, "Venice*", mid + ".json"))), None)
         if not path:
             print("없음", mid); continue
         m = Map(path)
+        merged = merge_close_signs(m)
+        if merged:
+            print(f"{mid}: 붙어 있던 이정표 {merged}개 합침")
+        moved = spread_people(m)
+        if moved:
+            print(f"{mid}: 붙어 있던 사람 {moved}명 옮김")
+        if spread_merchant(m, life):
+            print(f"{mid}: 떠돌이 상인 자리 옮김 {life[mid]['wander']}"); life_changed = True
         s = place_signs(m, names)
         t = place_talkers(m, TALKERS[mid])
         m.save()
         total_t += t; total_s += s
         print(f"{mid}: 사람 +{t}/{len(TALKERS[mid])}, 이정표 +{s}")
     print("합계 사람", total_t, "이정표", total_s)
+    if life_changed:
+        with open(life_path, "w", encoding="utf-8", newline="\n") as fp:
+            json.dump(life_doc, fp, ensure_ascii=False, separators=(",", ":"))
 
 
 if __name__ == "__main__":

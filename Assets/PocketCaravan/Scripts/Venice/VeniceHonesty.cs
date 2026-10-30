@@ -62,7 +62,9 @@ namespace PocketCaravan
                     Sfx.Play("coin");
                     DialogueUI.Show("부두 검수원", "…그렇게 적지. 15냥은 자네 몫이야.");
                     Notify.Show("뒷맛이 개운치 않다. 신용 −1", 4f);
-                }));
+                }),
+                // 10-30 공용 대화창은 Esc를 마지막 고르기로 받는다. 마지막을 '나중에'로 두어 Esc가 거짓말이 되지 않게
+                new DialogueUI.Choice("잠깐 생각해 보겠소", null));
         }
     }
 }
