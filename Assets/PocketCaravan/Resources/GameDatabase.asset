@@ -59,6 +59,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7fb2a0e2baffd4bb1bcf58b51046ae33, type: 2}
   - {fileID: 11400000, guid: fb409b5bec7704f309b5d5d0c52a8fda, type: 2}
   - {fileID: 11400000, guid: d1a72c6d5727143acb6b447b3e240481, type: 2}
+  - {fileID: 11400000, guid: c68bcc6f465544aacb714f9d90a4ad45, type: 2}
+  - {fileID: 11400000, guid: 708a9b54371a348d9a085c78dc8f3170, type: 2}
   towns:
   - {fileID: 11400000, guid: 2c9147faaf0a843a7a9ac6e8a53c0e86, type: 2}
   - {fileID: 11400000, guid: 64b9df746835e454b957665c23b9725d, type: 2}

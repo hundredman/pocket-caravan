@@ -574,9 +574,10 @@ namespace PocketCaravan
         {
             var r = Recipes[k];
             int n = Batches(k);
-            if (n <= 0) return $"{r.shop} ({r.inputText} → {r.productName})";
+            // 10/30(기우): 재료·만드는 것 같은 긴 설명은 이름표에 적지 않는다 — 말 걸면 일꾼이 알려 줌. 이름과 진행 상태만 짧게
+            if (n <= 0) return r.shop;
             float left = ReadyAt(k) - Now;
-            return left <= 0f ? $"{r.shop} ({r.productName} {n}개 다 됐음!)" : $"{r.shop} (남은 {Mathf.CeilToInt(left)}시간)";
+            return left <= 0f ? $"{r.shop} (다 됐음!)" : $"{r.shop} ({Mathf.CeilToInt(left)}시간)";
         }
 
         void Workshop(int k)
@@ -604,6 +605,16 @@ namespace PocketCaravan
                 can = Mathf.Min(can, it != null ? gm.Player.cargo.Count(it) / r.counts[i] : 0);
             }
             if (r.fee > 0) can = Mathf.Min(can, gm.Player.money / r.fee);
+            // 10/30 라우가르 꿀벌 오두막(NorthBees.cs)에서 받은 벌꿀 단지: 양조장에서 꿀술 2 대신 쓸 수 있다
+            var honey = r.key == "brew" ? gm.ItemById(NorthBees.HoneyId) : null;
+            var herb = r.key == "brew" ? gm.ItemById("north_herb") : null;
+            bool honeyOk = honey != null && herb != null && gm.Player.cargo.Count(honey) >= 1 && gm.Player.cargo.Count(herb) >= 1;
+            if (can <= 0 && honeyOk)
+            {
+                DialogueUI.Show(r.worker, "오, 그 벌꿀 단지! 그거면 꿀술 두 병 몫이야. 약초 하나랑 같이 맡기면 약초 꿀술을 빚어 주지.\n" + $"{r.hours:0}시간 뒤에 찾아가.",
+                    new DialogueUI.Choice("벌꿀 단지 1 + 온천 약초 1 맡기기", () => BeginHoney(k)), new DialogueUI.Choice("다음에", null));
+                return;
+            }
             if (can <= 0)
             {
                 DialogueUI.Show(r.worker, r.hello + $"\n\n{r.inputText}개를 가져오면 {r.productName} 하나를 만들어 줄게." + (r.fee > 0 ? $" 수공은 {r.fee}냥." : "") + $" {r.hours:0}시간 걸려.");
@@ -612,6 +623,7 @@ namespace PocketCaravan
             var choices = new List<DialogueUI.Choice>();
             choices.Add(new DialogueUI.Choice($"1번 맡기기 ({r.inputText}{(r.fee > 0 ? $", {r.fee}냥" : "")})", () => Begin(k, 1)));
             if (can > 1) choices.Add(new DialogueUI.Choice($"{can}번 맡기기 ({r.productName} {can}개{(r.fee > 0 ? $", {r.fee * can}냥" : "")})", () => Begin(k, can)));
+            if (honeyOk) choices.Add(new DialogueUI.Choice("벌꿀 단지 1 + 온천 약초 1 맡기기", () => BeginHoney(k)));
             choices.Add(new DialogueUI.Choice("다음에", null));
             DialogueUI.Show(r.worker, r.hello + $"\n{r.hours:0}시간 뒤에 찾아가.", choices.ToArray());
         }
@@ -638,6 +650,22 @@ namespace PocketCaravan
             NorthSave.Set("craft:" + r.key + ":t", Now + r.hours);
             NorthSave.Set("craft:" + r.key + ":c", cost);           // 한 개당 원가 (장부 손익용)
             Notify.Show($"{r.shop}에 맡겼다. {r.hours:0}시간 뒤에 {r.productName} {times}개를 찾아갈 수 있다.", 3f);
+            if (!AudioManager.Muted) sfx.PlayOneShot(coin, 0.4f);
+        }
+
+        /// <summary>10/30 양조장: 벌꿀 단지 1 + 약초 1 → 약초 꿀술 1 (꿀술 2 대신)</summary>
+        void BeginHoney(int k)
+        {
+            var gm = GameManager.I;
+            var r = Recipes[k];
+            var honey = gm.ItemById(NorthBees.HoneyId); var herb = gm.ItemById("north_herb");
+            if (honey == null || herb == null || gm.Player.cargo.Count(honey) < 1 || gm.Player.cargo.Count(herb) < 1) { Notify.Show("재료가 모자라…", 2f); return; }
+            float cost = gm.Player.cargo.AverageCost(honey) + gm.Player.cargo.AverageCost(herb);
+            gm.Player.cargo.Remove(honey, 1); gm.Player.cargo.Remove(herb, 1);
+            NorthSave.Set("craft:" + r.key + ":n", 1);
+            NorthSave.Set("craft:" + r.key + ":t", Now + r.hours);
+            NorthSave.Set("craft:" + r.key + ":c", cost);
+            Notify.Show($"{r.shop}에 맡겼다. {r.hours:0}시간 뒤에 {r.productName} 1개를 찾아갈 수 있다.", 3f);
             if (!AudioManager.Muted) sfx.PlayOneShot(coin, 0.4f);
         }
 

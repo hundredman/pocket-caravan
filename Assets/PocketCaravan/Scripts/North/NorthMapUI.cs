@@ -11,7 +11,7 @@ namespace PocketCaravan
     /// </summary>
     public class NorthMapUI : MonoBehaviour
     {
-        [Serializable] public class Area { public string mapId; public float x, y, w, h, labelX, labelY; }
+        [Serializable] public class Area { public string mapId; public float x, y, w, h, labelX, labelY; public string[] own; public string[] @out; [NonSerialized] public Dictionary<int, Vector2Int> anchor; }
         [Serializable] public class Atlas { public float width, height; public Area[] maps; }
 
         // WorldIndex에 아직 북유럽 맵이 없을 때(DB·목록을 다시 만들기 전) 쓰는 이름
@@ -162,8 +162,8 @@ namespace PocketCaravan
                     var player = FindAnyObjectByType<PlayerMotor>();
                     if (player != null)
                     {
-                        var cell = player.Cell;
-                        var at = Project(area.x + cell.x + .5f, area.y + area.h - cell.y - .5f);
+                        var cell = OwnCell(area, player.Cell.x, (int)area.h - 1 - player.Cell.y);
+                        var at = Project(area.x + cell.x + .5f, area.y + cell.y + .5f);
                         Dot(at, 5, Color.white);
                         Dot(at, 3, new Color32(189, 55, 42, 255));
                     }
@@ -180,6 +180,42 @@ namespace PocketCaravan
             }
             GUI.Label(new Rect(panel.x + 16, ly + 17, width - 32, 14),
                 "현재: " + current + "    |    다리 밑 트롤과 의뢰 기한을 확인하며 이동하세요.", ink);
+        }
+
+        // 2026-10-30: 맵 가장자리 출구 복도는 옆 맵 땅 위에 있어서, 그대로 찍으면 붉은 점이 옆 마을에 가 있다.
+        // 이 맵 땅(own, 위에서부터 줄) 밖이면 가장 가까운 내 땅 칸에 찍는다. (x, 위에서부터 y)
+        static Vector2Int OwnCell(Area area, int x, int y)
+        {
+            var own = area.own;
+            if (own == null || own.Length == 0) return new Vector2Int(x, y);
+            bool Mine(int cx, int cy) => cy >= 0 && cy < own.Length && cx >= 0 && cx < own[cy].Length && own[cy][cx] == '1';
+            if (Mine(x, y)) return new Vector2Int(x, y);
+            if (area.anchor == null)   // 출구 복도 칸 → 걸어서 가장 가까운 내 땅 칸(생성기가 미리 계산)
+            {
+                area.anchor = new Dictionary<int, Vector2Int>();
+                if (area.@out != null)
+                    foreach (var s in area.@out)
+                    {
+                        var p = s.Split(',');
+                        if (p.Length == 4 && int.TryParse(p[0], out int ox) && int.TryParse(p[1], out int oy) && int.TryParse(p[2], out int ax) && int.TryParse(p[3], out int ay))
+                            area.anchor[oy * 10000 + ox] = new Vector2Int(ax, ay);
+                    }
+            }
+            if (area.anchor.TryGetValue(y * 10000 + x, out var a)) return a;
+            int max = own.Length + own[0].Length;
+            for (int r = 1; r < max; r++)
+            {
+                Vector2Int best = default; int bd = int.MaxValue;
+                for (int dy = -r; dy <= r; dy++)
+                    for (int dx = -r; dx <= r; dx++)
+                    {
+                        if (Mathf.Max(Mathf.Abs(dx), Mathf.Abs(dy)) != r || !Mine(x + dx, y + dy)) continue;
+                        int d = dx * dx + dy * dy;
+                        if (d < bd) { bd = d; best = new Vector2Int(x + dx, y + dy); }
+                    }
+                if (bd != int.MaxValue) return best;
+            }
+            return new Vector2Int(x, y);
         }
 
         static void Dot(Vector2 p, float r, Color c) => Fill(new Rect(p.x - r, p.y - r, r * 2, r * 2), c);
