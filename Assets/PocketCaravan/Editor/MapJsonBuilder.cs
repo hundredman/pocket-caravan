@@ -59,7 +59,6 @@ namespace PocketCaravan.EditorTools
             public ObstaclePlacement[] obstacles;
             public CropPatch[] natureCrops;
             public BackdropCell[] cameraBackdrop;
-            public int[] viewOwnership;
         }
 
         [MenuItem("Pocket Caravan/Tests/지역 통합 등록 검사")]
@@ -228,16 +227,7 @@ namespace PocketCaravan.EditorTools
             // 새 씬을 만든 뒤에 에셋을 불러온다 (앞서 불러온 에셋은 내려감)
             var db = AssetDatabase.LoadAssetAtPath<GameDatabase>(DbPath);
             var tiles = new Tile[f.palette.Length];
-            HashSet<int> visibleTiles = null;
-            if(f.viewOwnership!=null&&f.viewOwnership.Length==f.w*f.h)
-            {
-                visibleTiles=new HashSet<int>();
-                foreach(var layer in new[]{f.ground,f.deco,f.obj,f.high})
-                    if(layer!=null)for(int i=0;i<layer.Length;i++)
-                        if(MapViewBoundary.InVisibleBand(f.viewOwnership,f.w,f.h,i%f.w,i/f.w))visibleTiles.Add(layer[i]);
-            }
-            for (int i = 1; i < f.palette.Length; i++)
-                if(visibleTiles==null||visibleTiles.Contains(i))tiles[i] = TileFor(f.palette[i], previewDirectory);
+            for (int i = 1; i < f.palette.Length; i++) tiles[i] = TileFor(f.palette[i], previewDirectory);
             var blocker = BlockerTile();
 
             var gridGo = new GameObject("Map");
@@ -247,7 +237,7 @@ namespace PocketCaravan.EditorTools
             var obj = Layer(gridGo, "Objects", 5);
             var high = Layer(gridGo, "Above", 20);   // 나무 윗부분: 플레이어 위로 그림
             var blocked = Layer(gridGo, "Blocked", 0, renderer: false);
-            if(f.viewOwnership==null&&f.cameraBackdrop!=null&&f.cameraBackdrop.Length>0)
+            if(f.cameraBackdrop!=null&&f.cameraBackdrop.Length>0)
             {
                 var backdrop=Layer(gridGo,"CameraBackdrop",-10);
                 foreach(var cell in f.cameraBackdrop)
@@ -271,11 +261,6 @@ namespace PocketCaravan.EditorTools
             map.region = entry == null ? null : AssetDatabase.LoadAssetAtPath<RegionData>(entry.region.regionAssetPath);
             map.terrainOrigin = new Vector2Int(f.terrainX,f.terrainY);
             map.worldCoord = entry == null ? Vector2Int.zero : new Vector2Int(entry.worldX, entry.worldY);
-            if(f.viewOwnership!=null&&f.viewOwnership.Length==f.w*f.h)
-            {
-                var view=gridGo.AddComponent<MapViewBoundary>();view.width=f.w;view.height=f.h;view.ownership=f.viewOwnership;
-                view.boundaryShader=Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default");
-            }
 
             if (f.natureCrops != null && f.natureCrops.Length > 0)
             {
@@ -565,8 +550,7 @@ namespace PocketCaravan.EditorTools
         {
             if (layer == null) return;
             for (int i = 0; i < layer.Length; i++)
-                if (layer[i] > 0 && tiles[layer[i]] != null
-                    && MapViewBoundary.InVisibleBand(f.viewOwnership,f.w,f.h,i%f.w,i/f.w)) tm.SetTile(Cell(f, i), tiles[layer[i]]);
+                if (layer[i] > 0 && tiles[layer[i]] != null) tm.SetTile(Cell(f, i), tiles[layer[i]]);
         }
 
         static Tilemap Layer(GameObject grid, string name, int order, bool renderer = true)

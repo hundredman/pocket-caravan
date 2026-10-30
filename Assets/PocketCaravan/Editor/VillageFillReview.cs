@@ -11,11 +11,11 @@ namespace PocketCaravan.EditorTools
         [Serializable] public class Map {public string mapId,village;public Space[] spaces;}
         [Serializable] public class Manifest {public Asset[] assets;public Map[] maps;}
         [Serializable] public class Header {public int h;}
-        [MenuItem("Pocket Caravan/Review/맵 경계 검토 (이웃 최소 표시)")]
-        public static void OpenIsolatedManual()
+        [MenuItem("Pocket Caravan/Review/마을 공터 검토 (저장 안 함)")]
+        public static void OpenVillageManual()
         {
             SessionState.SetString("Codex.NatureIntegrationReview.Root",Root);
-            SessionState.SetString("Codex.NatureIntegrationReview.Output","ArtReview/MapIsolation-20261030/Manual");
+            SessionState.SetString("Codex.NatureIntegrationReview.Output","ArtReview/VillageFill-20261030/Manual");
             Directory.CreateDirectory(NatureIntegrationReview.Output);
             NatureIntegrationReview.OpenManual();
         }

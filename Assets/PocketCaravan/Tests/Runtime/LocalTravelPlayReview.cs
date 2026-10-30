@@ -7,7 +7,7 @@ namespace PocketCaravan.EditorTools
         const string Out="ArtReview/MapIsolation-20261030/Travel";
         [Serializable] public class Row{public bool passed;public string test,detail;}
         [Serializable] public class Report{public bool complete;public string error;public List<Row> checks=new List<Row>();}
-        public bool RequirePreviewBoundary;readonly Report report=new Report();
+        public bool RequirePreviewMaps;readonly Report report=new Report();
         void Check(bool ok,string test,string detail=""){report.checks.Add(new Row{passed=ok,test=test,detail=detail});if(!ok)throw new Exception(test+" "+detail);}
         void OnEnable(){SceneManager.sceneLoaded+=Isolate;}
         void OnDisable(){SceneManager.sceneLoaded-=Isolate;}
@@ -23,7 +23,7 @@ namespace PocketCaravan.EditorTools
             foreach(string target in new[]{"goryeo_songak","Dakmok","transit_woodtown","transit_ferry","transit_crossroads","goryeo_songak"}){
                 string from=MapRoot.Current.mapId;bool cross=GoryeoTravelTransition.IsRegionalCrossing(from,target);var gm=GameManager.I;Notify.Clear();gm.TravelTo(target,"S0");bool sawCover=false;float began=Time.realtimeSinceStartup;int samples=0;
                 while(gm.IsTravelling){float fade=(float)typeof(GameManager).GetField("fade",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(gm);if(fade>=.999f&&!sawCover){sawCover=true;yield return Capture((cross?"regional-":"short-fade-")+target);}samples++;if(Time.realtimeSinceStartup-began>45)throw new Exception("Travel timeout");yield return null;}
-                Check(MapRoot.Current.mapId==target,"actual travel reaches destination",from+" -> "+target);Check(!gm.AutosaveEnabled,"autosave remains disabled");if(RequirePreviewBoundary)Check(MapRoot.Current.previewOnly&&MapRoot.Current.GetComponent<MapViewBoundary>()!=null,"travel stays in isolated preview maps",target);Check(sawCover,"map load is hidden by a transition",target);Check(samples>0,"actual scene-load frames sampled",target);if(!cross){bool location=false;var entries=(IEnumerable)typeof(Notify).GetField("entries",BindingFlags.Static|BindingFlags.NonPublic).GetValue(null);foreach(var entry in entries)if((string)entry.GetType().GetField("key").GetValue(entry)=="location")location=true;Check(!location,"no automatic location overlay on local arrival",target);}if(!cross)yield return Capture("local-"+target);
+                Check(MapRoot.Current.mapId==target,"actual travel reaches destination",from+" -> "+target);Check(!gm.AutosaveEnabled,"autosave remains disabled");if(RequirePreviewMaps)Check(MapRoot.Current.previewOnly,"travel stays in candidate preview maps",target);Check(sawCover,"map load is hidden by a transition",target);Check(samples>0,"actual scene-load frames sampled",target);if(!cross){bool location=false;var entries=(IEnumerable)typeof(Notify).GetField("entries",BindingFlags.Static|BindingFlags.NonPublic).GetValue(null);foreach(var entry in entries)if((string)entry.GetType().GetField("key").GetValue(entry)=="location")location=true;Check(!location,"no automatic location overlay on local arrival",target);}if(!cross)yield return Capture("local-"+target);
             }
         }
     }
