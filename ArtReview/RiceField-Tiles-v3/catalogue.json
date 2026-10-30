@@ -1,0 +1,171 @@
+{
+  "status": "pending",
+  "purpose": "ripe_rice_field_canopy",
+  "pixelsPerCell": 16,
+  "logicalBlockCells": [
+    6,
+    6
+  ],
+  "minimumBlocks": [
+    2,
+    2
+  ],
+  "pieces": [
+    {
+      "name": "north-west",
+      "image": "Native/north-west.png",
+      "size": [
+        112,
+        128
+      ],
+      "logicalSize": [
+        6,
+        6
+      ],
+      "logicalOffsetPixels": [
+        -16,
+        -32
+      ],
+      "rgbaSha256": "1330308951676113140ea37bd6ba39016994ce514476313469ee33a726507d39"
+    },
+    {
+      "name": "north",
+      "image": "Native/north.png",
+      "size": [
+        96,
+        128
+      ],
+      "logicalSize": [
+        6,
+        6
+      ],
+      "logicalOffsetPixels": [
+        0,
+        -32
+      ],
+      "rgbaSha256": "aa827ae287d68758e1018bfa845d89dd26399a111f561c044e13345dd68a99f8"
+    },
+    {
+      "name": "north-east",
+      "image": "Native/north-east.png",
+      "size": [
+        112,
+        128
+      ],
+      "logicalSize": [
+        6,
+        6
+      ],
+      "logicalOffsetPixels": [
+        0,
+        -32
+      ],
+      "rgbaSha256": "8054fe7682b6db00bdd47ee3d8e4952353ca5873cde98817401f738a732f2ddf"
+    },
+    {
+      "name": "west",
+      "image": "Native/west.png",
+      "size": [
+        112,
+        96
+      ],
+      "logicalSize": [
+        6,
+        6
+      ],
+      "logicalOffsetPixels": [
+        -16,
+        0
+      ],
+      "rgbaSha256": "7713e37e5631dce24915cb79fd50e25dbfb2d4fd9a8616d7ad374abfe71f6c4e"
+    },
+    {
+      "name": "center",
+      "image": "Native/center.png",
+      "size": [
+        96,
+        96
+      ],
+      "logicalSize": [
+        6,
+        6
+      ],
+      "logicalOffsetPixels": [
+        0,
+        0
+      ],
+      "rgbaSha256": "2d3746db539c3db7873cd95303591093126c5894c6ceb1c03a0946b20154922b"
+    },
+    {
+      "name": "east",
+      "image": "Native/east.png",
+      "size": [
+        112,
+        96
+      ],
+      "logicalSize": [
+        6,
+        6
+      ],
+      "logicalOffsetPixels": [
+        0,
+        0
+      ],
+      "rgbaSha256": "65bb49553a7736f44f06fec91b098b7408493fc76dbc10cf6e09d1eaae997769"
+    },
+    {
+      "name": "south-west",
+      "image": "Native/south-west.png",
+      "size": [
+        112,
+        112
+      ],
+      "logicalSize": [
+        6,
+        6
+      ],
+      "logicalOffsetPixels": [
+        -16,
+        0
+      ],
+      "rgbaSha256": "c26914a30dd93ec17b37c043db81a7895498443802c3edfeb7e52af0e6750388"
+    },
+    {
+      "name": "south",
+      "image": "Native/south.png",
+      "size": [
+        96,
+        112
+      ],
+      "logicalSize": [
+        6,
+        6
+      ],
+      "logicalOffsetPixels": [
+        0,
+        0
+      ],
+      "rgbaSha256": "e2f915fe52f39e9d8cb612c2fd83c65bebde2fbf290c3f4ed9e696a59e9748e6"
+    },
+    {
+      "name": "south-east",
+      "image": "Native/south-east.png",
+      "size": [
+        112,
+        112
+      ],
+      "logicalSize": [
+        6,
+        6
+      ],
+      "logicalOffsetPixels": [
+        0,
+        0
+      ],
+      "rgbaSha256": "12383e17a252566cc676686aaa273928d0147b85531b59409110cf5f6a0ca929"
+    }
+  ],
+  "sourcePlant": "ArtReview/RipeRice-v3/rice-ripe.png",
+  "assembly": "native modules with outer overhang; repeat center and correct edge/corner roles",
+  "productionApplied": false
+}

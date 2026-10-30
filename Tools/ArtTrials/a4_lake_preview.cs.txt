@@ -1,0 +1,21 @@
+// MCP execute_code method body; memory-only Play-mode assembly board, not a main map.
+if(!Application.isPlaying || !UnityEditor.EditorApplication.isPaused)throw new System.InvalidOperationException("Paused Play mode required");
+var root="/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-a4/ArtReview/A4-Water-v1/";
+var holder=new GameObject("A4 lake assembly trial");holder.transform.position=new Vector3(200,200,0);holder.AddComponent<Grid>();
+var groundGo=new GameObject("Trial grass");groundGo.transform.SetParent(holder.transform,false);var ground=groundGo.AddComponent<UnityEngine.Tilemaps.Tilemap>();groundGo.AddComponent<UnityEngine.Tilemaps.TilemapRenderer>().sortingOrder=0;
+var grass=UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Tilemaps.TileBase>("Assets/PocketCaravan/Art/NinjaAdventure/TileAssets/floor_0_12_goryeo_jade.asset");
+for(int y=0;y<17;y++)for(int x=0;x<30;x++)ground.SetTile(new Vector3Int(x,y,0),grass);
+var waterGo=new GameObject("Trial water");waterGo.transform.SetParent(holder.transform,false);var water=waterGo.AddComponent<UnityEngine.Tilemaps.Tilemap>();waterGo.AddComponent<UnityEngine.Tilemaps.TilemapRenderer>().sortingOrder=1;
+var images=new System.Collections.Generic.Dictionary<string,UnityEngine.Tilemaps.Tile>();int cells=0;
+foreach(var line in System.IO.File.ReadAllLines(root+"unity-lake-placement.csv")){
+ if(string.IsNullOrWhiteSpace(line))continue;var v=line.Split(',');var key=v[3];UnityEngine.Tilemaps.Tile tile;
+ if(!images.TryGetValue(key,out tile)){
+ var tex=new Texture2D(2,2,TextureFormat.RGBA32,false);tex.LoadImage(System.IO.File.ReadAllBytes(root+"reference-tiles/"+key));tex.filterMode=FilterMode.Point;
+ tile=ScriptableObject.CreateInstance<UnityEngine.Tilemaps.Tile>();tile.sprite=Sprite.Create(tex,new Rect(0,0,16,16),new Vector2(.5f,.5f),16,0,SpriteMeshType.FullRect);tile.colliderType=UnityEngine.Tilemaps.Tile.ColliderType.None;images.Add(key,tile);}
+ water.SetTile(new Vector3Int(int.Parse(v[0]),int.Parse(v[1]),0),tile);cells++;
+}
+var actor=new GameObject("Size reference only (not a moving player)");actor.transform.SetParent(holder.transform,false);actor.transform.localPosition=new Vector3(3.5f,1.82f,0);var actorRenderer=actor.AddComponent<SpriteRenderer>();actorRenderer.sortingOrder=11;
+var actorTexture=UnityEditor.AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/PocketCaravan/Art/Characters/tanuki_tall_d0.png");actorRenderer.sprite=Sprite.Create(actorTexture,new Rect(0,0,16,24),new Vector2(.5f,.25f),16,0,SpriteMeshType.FullRect);
+Camera.main.GetComponent<PocketCaravan.CameraFollow>().enabled=false;Camera.main.transform.position=new Vector3(215,208.5f,-10);
+var hud=UnityEngine.Object.FindAnyObjectByType<PocketCaravan.HUD>();if(hud!=null)hud.enabled=false;
+UnityEditor.EditorApplication.Step();return new {cells=cells,trialOnly=true,actorIsSizeReference=true,actorDryCell="(3,15), not in trial water mask",ppu=16};

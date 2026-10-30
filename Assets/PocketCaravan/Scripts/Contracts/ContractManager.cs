@@ -100,8 +100,7 @@ namespace PocketCaravan
 
         public static int Distance(TownData a, TownData b)
         {
-            var d = a.worldCoord - b.worldCoord;
-            return Mathf.Abs(d.x) + Mathf.Abs(d.y);
+            return TownDistance.Between(a.id, b.id, a.worldCoord, b.worldCoord);
         }
 
         Contract Generate(TownData from, bool basic = false)
@@ -174,6 +173,7 @@ namespace PocketCaravan
                     player.credit -= 1;
                     Notify.Show($"의뢰 실패: {c.cargo} (기한 지남) · 신용 −1", 5f);
                     Sfx.Play("fail");
+                    ReputationAwards.ForTown(Town(c.fromTown), ReputationSize.Medium, -1, "contract:expired");
                     GameEvents.RaiseContractFinished(c, false);
                 }
             }
@@ -249,6 +249,8 @@ namespace PocketCaravan
             player.money += r.paid;
             player.credit += r.credit;
             Sfx.Play(r.success ? "success" : "fail");
+            ReputationAwards.ForTown(Town(c.fromTown), r.credit == 0 ? ReputationSize.VerySmall : ReputationSize.Medium,
+                r.credit > 0 ? 1 : -1, r.credit > 0 ? "contract:success" : r.success ? "contract:partial" : "contract:failed");
             GameEvents.RaiseContractFinished(c, r.success);
             return r;
         }
@@ -261,6 +263,7 @@ namespace PocketCaravan
             player.money -= penalty;
             player.credit -= 1;
             Notify.Show($"의뢰 짐을 빼앗겼다: {c.cargo} · 배상 {penalty} · 신용 −1", 5f);
+            ReputationAwards.ForTown(Town(c.fromTown), ReputationSize.Small, -1, "contract:lost");
             GameEvents.RaiseContractFinished(c, false);
         }
 

@@ -1,0 +1,204 @@
+{
+  "seed": 28,
+  "coordinate": "center (0,0), x east, y south (Docs/WorldLayout.md)",
+  "wedgeHalfAngle": 47.11,
+  "northMainland": {
+    "land": 14332,
+    "nearSea": 5668,
+    "total": 20000
+  },
+  "centralNorth": {
+    "land": 22572,
+    "nearSea": 2428,
+    "total": 25000
+  },
+  "maps": [
+    {
+      "key": "north_birka",
+      "name": "비르카 (수도)",
+      "kind": "main",
+      "area": 3773,
+      "land": 3709,
+      "seed": [
+        4.0,
+        -227.2
+      ]
+    },
+    {
+      "key": "north_herd",
+      "name": "순록 고원 마을",
+      "kind": "main",
+      "area": 2701,
+      "land": 1781,
+      "seed": [
+        -34.9,
+        -260.9
+      ]
+    },
+    {
+      "key": "north_hunter",
+      "name": "모피 사냥꾼 마을",
+      "kind": "main",
+      "area": 2599,
+      "land": 1378,
+      "seed": [
+        -30.5,
+        -220.1
+      ]
+    },
+    {
+      "key": "north_naru",
+      "name": "피오르 나루 마을",
+      "kind": "main",
+      "area": 2800,
+      "land": 1502,
+      "seed": [
+        40.4,
+        -222.9
+      ]
+    },
+    {
+      "key": "north_laugar",
+      "name": "라우가르 온천 마을",
+      "kind": "main",
+      "area": 2828,
+      "land": 2828,
+      "seed": [
+        4.0,
+        -271.7
+      ]
+    },
+    {
+      "key": "north_icecave",
+      "name": "얼음 동굴 골짜기",
+      "kind": "main",
+      "area": 2699,
+      "land": 1810,
+      "seed": [
+        41.7,
+        -268.1
+      ]
+    },
+    {
+      "key": "north_runehill",
+      "name": "룬돌 언덕",
+      "kind": "main",
+      "area": 2600,
+      "land": 1324,
+      "seed": [
+        4.0,
+        -316.1
+      ]
+    },
+    {
+      "key": "north_c_gatetown",
+      "name": "북문 마을",
+      "kind": "town",
+      "area": 3179,
+      "land": 2837,
+      "seed": [
+        0,
+        -150
+      ]
+    },
+    {
+      "key": "north_c_snowwood",
+      "name": "눈숲 마을",
+      "kind": "town",
+      "area": 3200,
+      "land": 2894,
+      "seed": [
+        -52,
+        -108
+      ]
+    },
+    {
+      "key": "north_c_creek",
+      "name": "개울 나루 마을",
+      "kind": "town",
+      "area": 3192,
+      "land": 2962,
+      "seed": [
+        52,
+        -108
+      ]
+    },
+    {
+      "key": "north_c_crossing",
+      "name": "북쪽 길목 마을",
+      "kind": "town",
+      "area": 3202,
+      "land": 3202,
+      "seed": [
+        0,
+        -58
+      ]
+    },
+    {
+      "key": "north_c_road_nw",
+      "name": "눈숲 고갯길",
+      "kind": "road",
+      "area": 2459,
+      "land": 1688,
+      "seed": [
+        -40,
+        -150
+      ]
+    },
+    {
+      "key": "north_c_road_ne",
+      "name": "개울 다리길",
+      "kind": "road",
+      "area": 2450,
+      "land": 1671,
+      "seed": [
+        42,
+        -148
+      ]
+    },
+    {
+      "key": "north_c_runeway",
+      "name": "룬돌 큰길",
+      "kind": "road",
+      "area": 2440,
+      "land": 2440,
+      "seed": [
+        0,
+        -104
+      ]
+    },
+    {
+      "key": "north_c_road_sw",
+      "name": "서남 솔숲길",
+      "kind": "road",
+      "area": 2440,
+      "land": 2440,
+      "seed": [
+        -36,
+        -74
+      ]
+    },
+    {
+      "key": "north_c_road_se",
+      "name": "동남 물가길",
+      "kind": "road",
+      "area": 2438,
+      "land": 2438,
+      "seed": [
+        36,
+        -74
+      ]
+    }
+  ],
+  "decisions": {
+    "mainlandMaps": 7,
+    "centralNorthMaps": 9,
+    "neck": "narrow (border pass)",
+    "retiredMaps": [
+      "피오르 길",
+      "국경 고개 → 비르카/피오르 나루 (세이브 위치 이전)"
+    ],
+    "goryeoNortheastPort": "개울 다리길과 연결",
+    "approvedDate": "2026-10-28 (N0 구조 결정; 지형은 N1)"
+  }
+}

@@ -1,0 +1,190 @@
+{
+ "map": "north_icecave",
+ "name": "얼음 동굴 골짜기",
+ "kind": "town",
+ "items": [
+  {
+   "name": "광부 캠프 마당",
+   "kind": "plaza",
+   "asset": null,
+   "w": 8,
+   "h": 5,
+   "id": "",
+   "memo": "시장 없음(지금과 같음)",
+   "x": 37,
+   "y": -276
+  },
+  {
+   "name": "동굴 입구",
+   "kind": "cliff",
+   "asset": "cliff",
+   "w": 3,
+   "h": 5,
+   "id": "",
+   "memo": "아래층은 ... (지금 표지 그대로)",
+   "art": "new:cave_A",
+   "x": 31,
+   "y": -286
+  },
+  {
+   "name": "광부 오두막",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "art": "h_shed",
+   "door": [
+    39,
+    -267
+   ],
+   "laneLen": 1,
+   "x": 38,
+   "y": -270
+  },
+  {
+   "name": "장비 창고",
+   "kind": "lot",
+   "asset": "store",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "art": "h_shed",
+   "door": [
+    47,
+    -275
+   ],
+   "laneLen": 1,
+   "x": 46,
+   "y": -278
+  },
+  {
+   "name": "얼음 낚시 구멍",
+   "kind": "shore",
+   "asset": null,
+   "w": 2,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 50,
+   "y": -274
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "art": "h_shed",
+   "door": [
+    35,
+    -265
+   ],
+   "laneLen": 0,
+   "x": 34,
+   "y": -268
+  },
+  {
+   "name": "집 2",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "art": "h_shed",
+   "door": [
+    46,
+    -266
+   ],
+   "laneLen": 5,
+   "x": 45,
+   "y": -269
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "asset": "well",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "well",
+   "x": 42,
+   "y": -266
+  },
+  {
+   "name": "횃불 1",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "lantern",
+   "x": 41,
+   "y": -270
+  },
+  {
+   "name": "횃불 2",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "lantern",
+   "x": 46,
+   "y": -275
+  },
+  {
+   "name": "광부 할아범",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 38,
+   "y": -267
+  },
+  {
+   "name": "얼음 낚시꾼",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 49,
+   "y": -272
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 49,
+   "y": -262
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 56,
+   "y": -268
+  }
+ ],
+ "laneCells": 7
+}

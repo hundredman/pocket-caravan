@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "regionId": "goryeo",
+  "regionAssetPath": "Assets/PocketCaravan/Data/Goryeo/Region_Goryeo.asset",
+  "maps": [
+    {
+      "mapId": "Naru",
+      "jsonPath": "Assets/PocketCaravan/Maps/Naru.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/Naru.unity",
+      "worldX": 0,
+      "worldY": 0,
+      "generator": "maps:naru"
+    },
+    {
+      "mapId": "Route01",
+      "jsonPath": "Assets/PocketCaravan/Maps/Route01.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/Route01.unity",
+      "worldX": 1,
+      "worldY": 0,
+      "generator": "maps:route01"
+    },
+    {
+      "mapId": "Gaegyeong",
+      "jsonPath": "Assets/PocketCaravan/Maps/Gaegyeong.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/Gaegyeong.unity",
+      "worldX": 2,
+      "worldY": 0,
+      "generator": "gaegyeong:build"
+    },
+    {
+      "mapId": "Dakmok",
+      "jsonPath": "Assets/PocketCaravan/Maps/Dakmok.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/Dakmok.unity",
+      "worldX": 3,
+      "worldY": 0,
+      "generator": "maps:dakmok"
+    },
+    {
+      "mapId": "goryeo_songak",
+      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_songak.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_songak.unity",
+      "worldX": 0,
+      "worldY": 1,
+      "generator": "goryeo_villages:songak"
+    },
+    {
+      "mapId": "goryeo_jangdan",
+      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_jangdan.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_jangdan.unity",
+      "worldX": 4,
+      "worldY": 0,
+      "generator": "goryeo_villages:jangdan"
+    },
+    {
+      "mapId": "goryeo_ridge",
+      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_ridge.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_ridge.unity",
+      "worldX": 5,
+      "worldY": 1,
+      "generator": "goryeo_roads:ridge"
+    },
+    {
+      "mapId": "goryeo_descent",
+      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_descent.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_descent.unity",
+      "worldX": 6,
+      "worldY": 1,
+      "generator": "goryeo_roads:descent"
+    },
+    {
+      "mapId": "goryeo_fieldroad",
+      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_fieldroad.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_fieldroad.unity",
+      "worldX": 7,
+      "worldY": 1,
+      "generator": "goryeo_roads:fieldroad"
+    },
+    {
+      "mapId": "goryeo_westcoast",
+      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_westcoast.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_westcoast.unity",
+      "worldX": 0,
+      "worldY": 2,
+      "generator": "landscape:westcoast"
+    },
+    {
+      "mapId": "goryeo_tidalcoast",
+      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_tidalcoast.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_tidalcoast.unity",
+      "worldX": 1,
+      "worldY": 2,
+      "generator": "landscape:tidalcoast"
+    },
+    {
+      "mapId": "goryeo_rivervalley",
+      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_rivervalley.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_rivervalley.unity",
+      "worldX": 2,
+      "worldY": 2,
+      "generator": "landscape:rivervalley"
+    },
+    {
+      "mapId": "goryeo_southcoast",
+      "jsonPath": "Assets/PocketCaravan/Maps/goryeo_southcoast.json",
+      "scenePath": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_southcoast.unity",
+      "worldX": 3,
+      "worldY": 2,
+      "generator": "landscape:southcoast"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "naru_chief",
+      "name": "나루 마을 촌장",
+      "sprite": "elder_tall",
+      "greeting": "예성강 물길이 개경까지 닿으니, 이 작은 나루에도 온갖 짐이 오간다네."
+    },
+    {
+      "id": "gaekju",
+      "name": "개경 객주 돈돌",
+      "sprite": "gaekju_tall",
+      "greeting": "객주는 상인들이 묵고 짐을 맡기는 곳이지. 일거리가 생기면 부르겠네."
+    },
+    {
+      "id": "dakmok_chief",
+      "name": "닥나무 마을 촌장",
+      "sprite": "dakmokchief_tall",
+      "greeting": "우리 마을 종이는 질기고 하얗기로 이름났다네."
+    },
+    {
+      "id": "goryeo_songak_merchant",
+      "name": "산록 약재 장수",
+      "sprite": "villager_rabbit_tall",
+      "greeting": "선별한 약재를 소량으로 거래하지요. 개경 장터와 원가를 비교해 보세요. 동쪽 산길로 닥목까지 둘러볼 수도 있어요."
+    },
+    {
+      "id": "goryeo_jangdan_farmer",
+      "name": "장단 곡물 상인",
+      "sprite": "villager_dog_tall",
+      "greeting": "곡식과 땔감은 부피가 커요. 무거운 짐은 수레와 큰길이 잘 맞지요. 닥목에서 돌아올 때 종이 값도 살펴보세요."
+    }
+  ],
+  "villagers": [
+    {
+      "name": "비단 장수",
+      "sprite": "villager_fox_tall",
+      "lines": [
+        "시전 거리에는 송나라 비단도, 아라비아 향료도 다 들어온다네.",
+        "벽란도에 큰 배가 들어오는 날이면 값이 출렁이지."
+      ]
+    },
+    {
+      "name": "짐꾼",
+      "sprite": "villager_dog_tall",
+      "lines": [
+        "등짐으로는 하루에 몇 번 못 오가. 수레가 있어야 돈이 되지.",
+        "남문 밖 길은 평평해서 수레가 잘 굴러가."
+      ]
+    },
+    {
+      "name": "선비",
+      "sprite": "villager_rabbit_tall",
+      "lines": [
+        "저 위가 만월대일세. 송악산 아래 임금님이 계시지.",
+        "개경은 고려의 서울이라 사람도 물건도 다 모인다네."
+      ]
+    },
+    {
+      "name": "뱃사공",
+      "sprite": "villager_bear_tall",
+      "lines": [
+        "예성강 물길을 따라가면 벽란도 포구가 나오지. 송나라 배도 드나든다네."
+      ]
+    },
+    {
+      "name": "떡 장수",
+      "sprite": "villager_tanuki_tall",
+      "lines": [
+        "장날에는 사람이 두 배로 몰려. 값도 덩달아 오르고."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "tiledAssemblies": [
+    {
+      "blocks": [
+        2,
+        2
+      ],
+      "logicalCells": [
+        12,
+        12
+      ],
+      "plants": 144,
+      "rgbaEqualsWholePlantAssembly": true
+    },
+    {
+      "blocks": [
+        3,
+        3
+      ],
+      "logicalCells": [
+        18,
+        18
+      ],
+      "plants": 324,
+      "rgbaEqualsWholePlantAssembly": true
+    },
+    {
+      "blocks": [
+        5,
+        2
+      ],
+      "logicalCells": [
+        30,
+        12
+      ],
+      "plants": 360,
+      "rgbaEqualsWholePlantAssembly": true
+    },
+    {
+      "blocks": [
+        2,
+        5
+      ],
+      "logicalCells": [
+        12,
+        30
+      ],
+      "plants": 360,
+      "rgbaEqualsWholePlantAssembly": true
+    },
+    {
+      "blocks": [
+        4,
+        3
+      ],
+      "logicalCells": [
+        24,
+        18
+      ],
+      "plants": 432,
+      "rgbaEqualsWholePlantAssembly": true
+    }
+  ],
+  "pieces": 9,
+  "colorsUnchanged": true,
+  "wholePlantsPreserved": true,
+  "originalPlantRGBA": "3d1672a088df4b64f83c5688e0315e9087b0220d61233048714a11e6ccc1bdef",
+  "approval": "pending",
+  "productionApplied": false,
+  "unity": {
+    "mode": "Edit",
+    "renderSize": [
+      480,
+      270
+    ],
+    "modules": 9,
+    "fieldRGBADifferences": 0,
+    "productionWrites": 0,
+    "originalSceneRestored": true
+  }
+}

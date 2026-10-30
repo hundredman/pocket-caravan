@@ -1,0 +1,20 @@
+// C7 trial-only color proposal; not a D3 shared-palette decision
+#34271f
+#a56b3f
+#cc9256
+#70452f
+#f1dfad
+#d5bd89
+#e5b355
+#ffda7c
+#bf873d
+#6f8d9e
+#a0b6bd
+#496777
+#65874b
+#96b55f
+#3e6345
+#8ba865
+#789653
+#cfaa70
+#b38c58

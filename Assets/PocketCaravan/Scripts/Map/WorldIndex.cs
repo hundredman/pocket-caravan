@@ -36,13 +36,23 @@ namespace PocketCaravan
         static WorldIndex cached;
         public static WorldIndex Get() => cached != null ? cached : (cached = Resources.Load<WorldIndex>("WorldIndex"));
 
-        public MapInfo Map(string id) => maps.Find(m => m.mapId == id);
+        public MapInfo Map(string id) => maps.Find(m => m.mapId == GoryeoLayout.Resolve(id));
         public string MapName(string id) => Map(id)?.displayName ?? id;
         public string MapOf(string kind, string id) => places.Find(p => p.kind == kind && p.id == id)?.mapId;
+
+        /// <summary>두 마을의 장터가 출구로 이어져 있는지. 장터 위치를 모르는 마을은 기존 동작 호환을 위해 true.
+        /// 접속부가 없는 다른 지역(예: 아라비아 첫 구간)과의 원격 교역·시세 소문을 막는 데 쓴다.</summary>
+        public bool MarketsConnected(string townA, string townB)
+        {
+            string a = MapOf("market", townA), b = MapOf("market", townB);
+            if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b) || Map(a) == null || Map(b) == null) return true;
+            return a == b || NextStep(a, b) != null;
+        }
 
         /// <summary>from에서 to로 갈 때 다음에 들어갈 맵 (가장 짧은 길). 없으면 null.</summary>
         public string NextStep(string from, string to)
         {
+            from=GoryeoLayout.Resolve(from);to=GoryeoLayout.Resolve(to);
             if (from == to || Map(from) == null) return null;
             var prev = new Dictionary<string, string> { [from] = null };
             var q = new Queue<string>();

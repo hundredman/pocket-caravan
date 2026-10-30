@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-27",
+  "userQuote": "지형은 원래가 더 낫네. 만약에 연못을 넣으려면 중간에 연못은 수정해야겠다. 아마도 연못 주변이 벽돌 맵(개경) 전용 연못인 것 같은데.",
+  "decision": "기존 본편 풀/흙/길 가장자리·명암·모서리 표현 유지",
+  "scope": "GroundOrigin-v7에서 같은 승인 건물로 확인한 원래 지형 선택",
+  "pond": "풀밭 배치 맥락 별도 검토; 기존 개경 승인본 보존",
+  "files": {
+    "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_0_12_goryeo_jade.png": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "470462954f12a050e8b42591faf1919591b9371005734f464b996d736ce237e5"
+    },
+    "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_0_7_goryeo_jade.png": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "5d53d828026b57c2404b58f235a93649033a3c10abfec33b367488994b9bc418"
+    },
+    "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_0_8_goryeo_jade.png": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "fa81bcc4f25d0e87605100b4ba2fc7855c7bfa249143f0881c797b38fad1ce36"
+    },
+    "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_0_9_goryeo_jade.png": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "a74a864c56988bc67e253a28a3016ea3ca8db35d75f993c488ea0e56b6f265b8"
+    },
+    "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_1_7_goryeo_jade.png": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "7ba2e31d0729ebde48b6d50c704bcd8ed18d14c0eb8358105464ad128aed0725"
+    },
+    "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_1_8_goryeo_jade.png": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "95af3ded62701a482c2aaf4977d0496ec6a1e1916bac0e89b8baf6195a04e830"
+    },
+    "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_1_9_goryeo_jade.png": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "82a0d997dd8e7073dbcc84af92d099ba3a389b51cac1809bb85662024c7d0b69"
+    },
+    "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_2_7_goryeo_jade.png": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "2e47a5819c8bc66ccf308f119aa656669047e976025fb93eb8b39d6961a51878"
+    },
+    "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_2_8_goryeo_jade.png": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "0ee99d16e0d0c19f304b7f357a26e7e14e508a638ac2e8b5ea514684a3db1f7e"
+    },
+    "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_2_9_goryeo_jade.png": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "9c5a65480d3bccb4aa4985647bc74758fe21ce824e997729f51676c539c78536"
+    },
+    "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_5_8_goryeo_jade.png": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "c77697f01ed6581e5b2a8026ca3184d85b0606ed1bd3d4ad187a4cfbadd56f9d"
+    },
+    "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_5_9_goryeo_jade.png": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "61ba576c4e80a4a40b526c8bd43325df3607dda33ee3fe7c3a325adb5dc04bf2"
+    },
+    "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_6_8_goryeo_jade.png": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "4dc96d92df3c02bdd9281bbb68d8c3127927ca5fcc2790a54227ed9908d7d040"
+    },
+    "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_6_9_goryeo_jade.png": {
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSHA256": "0641ce638b1636b041817b746b942e6e99b7d97a0fff68ecceceff502f4f2e80"
+    }
+  }
+}

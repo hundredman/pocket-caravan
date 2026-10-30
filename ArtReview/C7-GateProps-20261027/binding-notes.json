@@ -1,0 +1,22 @@
+{
+  "gate": {
+    "status": "visual_trial_only",
+    "existingIndependentAsset": null,
+    "existingOpeningCells": [
+      30,
+      33
+    ],
+    "existingSource": "Tools/MapGen/gaegyeong.py",
+    "candidateCanvas": [
+      96,
+      80
+    ],
+    "notes": "Candidate visual size only. Interior visible opening does not define collision or replace existing four-cell road. Before production binding, confirm portal clear width, foot anchors, wall joins and actor occlusion. No route, collision, map or world area changed."
+  },
+  "remaining": [
+    "성문 그림 승인 후 통행폭·담장 접합/가림 연결 검토",
+    "장독/청자·곡물/수확 소품·종이 건조대 등 원본별 묶음 검토",
+    "벚나무 원본/사용처 연결 확인",
+    "승인 그림의 B3~B5 연결 및 실제 마을 화면 승인"
+  ]
+}

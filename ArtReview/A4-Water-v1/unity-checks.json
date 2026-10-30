@@ -1,0 +1,94 @@
+{
+  "project": "PocketCaravan-codex-c2-c3-expand (A4와 본편 Assets 동일)",
+  "unity": "6000.3.26f1",
+  "mode": "paused Play, memory only",
+  "productionApplied": false,
+  "sceneSaved": false,
+  "autosave": false,
+  "sceneDirtyBeforeStop": false,
+  "playStopped": true,
+  "consoleErrors": 0,
+  "pond": {
+    "map": "Gaegyeong",
+    "waterCells": 22,
+    "moduleKinds": 11,
+    "existingWaterMaskAndLotusPreserved": true,
+    "playerFeetJsonCell": [
+      35,
+      24
+    ],
+    "sourceBlocked": 0,
+    "sourceReachable": 1,
+    "unityWalkable": true,
+    "actualMotorMovementTested": false
+  },
+  "lake": {
+    "type": "isolated assembly board, not production map/world layout",
+    "waterCells": 164,
+    "moduleKinds": 13,
+    "actorIsSizeReferenceOnly": true,
+    "rippleRenderers": 5,
+    "rippleFrameSelections": 4,
+    "actualAnimatorIntegrationTested": false
+  },
+  "ppu": 16,
+  "filter": "Point",
+  "captures": [
+    {
+      "file": "game-lake-after.png",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "game-lake-before.png",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "game-lake-ripple-0.png",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "game-lake-ripple-1.png",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "game-lake-ripple-2.png",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "game-lake-ripple-3.png",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "game-pond-after.png",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "game-pond-before.png",
+      "size": [
+        1920,
+        1080
+      ]
+    }
+  ]
+}

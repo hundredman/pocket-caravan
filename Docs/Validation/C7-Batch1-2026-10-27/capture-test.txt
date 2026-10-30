@@ -1,0 +1,6 @@
+test_actual_play_latest_pixels_and_only_three_areas (test_c7_batch1.Batch1Checks) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.009s
+
+OK

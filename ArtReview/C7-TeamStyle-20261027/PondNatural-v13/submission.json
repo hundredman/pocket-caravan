@@ -1,0 +1,33 @@
+{
+  "status": "pending",
+  "files": {
+    "before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "7a37eb612d8656fc8c191c42d9c1136ebde0067761a01b14df51f0dbc69d8006"
+    },
+    "trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "91ceda34f64afe3fe143e8530593863354c5b70a3939c6643921adfe29e64963"
+    },
+    "comparison.png": {
+      "size": [
+        1488,
+        752
+      ],
+      "rgbaSHA256": "03e4afa76b9527688986f77894010ad59e589a7aa5b384f1fbb021dc185a0950"
+    },
+    "decorated.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "f71f0a74413b3ebb9391085020620c98f66d8da9b242322431425c4ee74e44bd"
+    }
+  }
+}

@@ -54,7 +54,7 @@ def fieldroad():
     for x,y in [(3,4),(7,4),(11,4),(3,12),(7,12),(29,4),(3,31),(7,31),(3,37),(7,37),(29,30)]:m.stamp('wheat',x,y)
     m.stamp('cart',28,36)
     m.stamp('sheaf',10,35)
-    m.add('worker',10,16,name='들판 일꾼',character='villager_dog_tall',path=[(10,16),(14,16)],lines=['마을 장터로 보낼 곡식을 묶고 있어요.','장터에서 값을 확인하고 돌아올 물건도 골라 보세요.'])
+    m.add('worker',10,16,name='들판 일꾼',character=None,path=[(10,16),(14,16)],lines=['마을 장터로 보낼 곡식을 묶고 있어요.','장터에서 값을 확인하고 돌아올 물건도 골라 보세요.'])
     m.add('ambience',14,22,id='river',radius=8)
     m.forest_border(thickness=1,big=('roundbig','fruitbig'))
     m.flowers(2,2,30,40,10)

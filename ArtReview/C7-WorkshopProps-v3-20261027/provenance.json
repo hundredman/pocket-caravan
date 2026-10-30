@@ -1,0 +1,11 @@
+{
+  "kind": "authored",
+  "generationCount": 0,
+  "base": "ArtReview/C7-WorkshopProps-v2-20261027/Native/",
+  "processing": "Native Aseprite local pixel edits on whole48x32 sources; no resampling, palette change, generation, runtime mutation",
+  "scope": {
+    "harvest": "bundle body patches only; heads, sack center and basket retained",
+    "celadon": "vase mouth/neck only",
+    "paperRack": "unchanged PNG/Aseprite copy"
+  }
+}

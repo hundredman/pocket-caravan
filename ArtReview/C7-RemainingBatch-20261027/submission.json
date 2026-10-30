@@ -1,0 +1,118 @@
+{
+  "statuses": {
+    "c7_remaining_boat": "pending",
+    "c7_remaining_sheaf_naru": "pending",
+    "c7_remaining_laundry": "pending",
+    "c7_remaining_sheaf_jangdan": "pending",
+    "c7_remaining_pine_west": "pending",
+    "c7_remaining_round_west": "pending",
+    "c7_remaining_small_store": "pending",
+    "c7_remaining_small_rock": "pending",
+    "c7_remaining_pine_east": "pending",
+    "c7_remaining_round_east": "pending",
+    "c7_remaining_bench": "pending",
+    "c7_remaining_lotus": "pending"
+  },
+  "productionApplied": false,
+  "playModeRun": false,
+  "files": {
+    "style-all.png": {
+      "size": [
+        1680,
+        1620
+      ],
+      "rgbaSHA256": "21628076c09ff5d761a7560baec2e76399909d80970e57b7165211a7d031d76e"
+    },
+    "camera-all.png": {
+      "size": [
+        1000,
+        1190
+      ],
+      "rgbaSHA256": "b7fa1895f4faf5d4093c0e8bdd64f9ba7e827ca40ea58cd09d33575c40409877"
+    },
+    "Native/boat.png": {
+      "size": [
+        80,
+        32
+      ],
+      "rgbaSHA256": "eb4c9a3972d95dda26232e63487054c35f0cf80d26bf66601c98d5b17648be6d"
+    },
+    "Native/sheaf_naru.png": {
+      "size": [
+        16,
+        32
+      ],
+      "rgbaSHA256": "bd828717623917faab1e760160f6abfe067bc8bc488702738c1333ac6b389fd2"
+    },
+    "Native/laundry.png": {
+      "size": [
+        32,
+        32
+      ],
+      "rgbaSHA256": "ece2c97b304c771abed86142d8d9f391938d1e7d82530e70ed5d1598de8ac834"
+    },
+    "Native/sheaf_jangdan.png": {
+      "size": [
+        16,
+        32
+      ],
+      "rgbaSHA256": "952b0a13a0735197e104268ce58090dcfa94ebdcdefe07f429f540bc3ed4f7f3"
+    },
+    "Native/pine_west.png": {
+      "size": [
+        64,
+        48
+      ],
+      "rgbaSHA256": "2963950c856ea72fe7ca4acbb147e8a12571c9eb18d1c740dab7565ced051fc8"
+    },
+    "Native/round_west.png": {
+      "size": [
+        64,
+        48
+      ],
+      "rgbaSHA256": "57db143f00840b2d4ce6a5c3b2964aa5fed92a07afb0a97412c098b7ab606e27"
+    },
+    "Native/small_store.png": {
+      "size": [
+        64,
+        48
+      ],
+      "rgbaSHA256": "5a8b8344715f2e2eeb0aae2481c059aa3e01be806c6d4957dbd0cc5f35e243bb"
+    },
+    "Native/small_rock.png": {
+      "size": [
+        32,
+        32
+      ],
+      "rgbaSHA256": "f463d116e2bb2a40b63f1a944c987a3fced35cefa644e363608907f650d7ecb8"
+    },
+    "Native/pine_east.png": {
+      "size": [
+        64,
+        48
+      ],
+      "rgbaSHA256": "788070a07e6bf90efa2061b8f9c3986c310d0b51c800cdea6ee81ebbcfb80c95"
+    },
+    "Native/round_east.png": {
+      "size": [
+        64,
+        48
+      ],
+      "rgbaSHA256": "0df4dbb212b6ccbc07cb3bd38657f3ec4ce233b8ca6ed98924f09f52e140360f"
+    },
+    "Native/bench.png": {
+      "size": [
+        48,
+        16
+      ],
+      "rgbaSHA256": "60626778ac9c2a694e7e4fc655f75949bb3fd7b00179f11fd3301c024b441b3a"
+    },
+    "Native/lotus.png": {
+      "size": [
+        32,
+        16
+      ],
+      "rgbaSHA256": "5d5a64d5398bffc7047d8b822cca2208398d5cbfc0f9869d0197817c1e6fdd18"
+    }
+  }
+}

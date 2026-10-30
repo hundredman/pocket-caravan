@@ -1,0 +1,23 @@
+{
+  "woodland1_3_4": {
+    "size": [
+      48,
+      64
+    ],
+    "rgbaSHA256": "004d97fef8c8d90f96ed4472d1a759e0ba74c5768fe3aba8735c05190be1514c"
+  },
+  "woodland2_3_4": {
+    "size": [
+      48,
+      64
+    ],
+    "rgbaSHA256": "2cb4add6d954960f679ea3c9cce2d3dcc0b52b5fe87ea3a4d9e7b4a560d86b87"
+  },
+  "woodland3_4_3": {
+    "size": [
+      64,
+      48
+    ],
+    "rgbaSHA256": "575132cbfe5e5f573b613918fdb8ac1e329bc795c8fac370c891796d57318ea6"
+  }
+}

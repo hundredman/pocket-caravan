@@ -1,0 +1,1470 @@
+{
+  "status": "decision_required_before_production_change",
+  "registeredMaps": [
+    "Dakmok",
+    "Gaegyeong",
+    "Naru",
+    "goryeo_jangdan",
+    "goryeo_songak",
+    "transit_central_approach",
+    "transit_crossroads",
+    "transit_ferry",
+    "transit_pass",
+    "transit_wetroad",
+    "transit_woodtown"
+  ],
+  "stampPlacements": 634,
+  "wholeObjects": 46,
+  "wholeObjectTileKeys": 496,
+  "allTerrainAndGrowthTileKeys": 654,
+  "remainingTerrainTileKeys": 158,
+  "partialObjectCount": 0,
+  "draftCatalogueErrors": [
+    {
+      "code": "image_alpha",
+      "location": "c6_paper_rack_665314e5.image",
+      "message": "semi-transparent pixels are not allowed"
+    },
+    {
+      "code": "image_alpha",
+      "location": "c6_paper_rack_665314e5.work_0_1_goryeo_jade",
+      "message": "semi-transparent pixels are not allowed"
+    },
+    {
+      "code": "image_alpha",
+      "location": "c6_paper_rack_665314e5.work_1_1_goryeo_jade",
+      "message": "semi-transparent pixels are not allowed"
+    },
+    {
+      "code": "image_alpha",
+      "location": "c6_paper_rack_665314e5.work_2_1_goryeo_jade",
+      "message": "semi-transparent pixels are not allowed"
+    },
+    {
+      "code": "image_alpha",
+      "location": "c6_module_rock_15917f3a.image",
+      "message": "semi-transparent pixels are not allowed"
+    },
+    {
+      "code": "image_alpha",
+      "location": "c6_module_rock_15917f3a.module_0_1",
+      "message": "semi-transparent pixels are not allowed"
+    },
+    {
+      "code": "image_alpha",
+      "location": "c6_module_rock_15917f3a.module_1_1",
+      "message": "semi-transparent pixels are not allowed"
+    }
+  ],
+  "semiTransparentTerrainTiles": [
+    {
+      "key": "module:0:1",
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/module_0_1.png",
+      "sha256": "9b151812ea18fd3fd5b5dd5ebc579edfe45cbb516845436f3629ccbf9723ffcf",
+      "alpha": {
+        "68": 40
+      }
+    },
+    {
+      "key": "module:1:1",
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/module_1_1.png",
+      "sha256": "da049d9072f7865be294693eeafdc93c1f735e5c4b35cd5a715ab4171006e93d",
+      "alpha": {
+        "68": 35
+      }
+    },
+    {
+      "key": "work:0:1@goryeo_jade",
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/work_0_1_goryeo_jade.png",
+      "sha256": "7061ac9f3a278a47393cbe130703a6b754f923af2771539b8352397cc7a486c6",
+      "alpha": {
+        "85": 39
+      }
+    },
+    {
+      "key": "work:1:1@goryeo_jade",
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/work_1_1_goryeo_jade.png",
+      "sha256": "8f0c434e97fd45ef048d18820384f763fadf8a8fce2dda3945c1e76ae118f092",
+      "alpha": {
+        "85": 64
+      }
+    },
+    {
+      "key": "work:2:1@goryeo_jade",
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/work_2_1_goryeo_jade.png",
+      "sha256": "424baef2a9206b3a136156159400c2ea6e9669514f2fd4b42874e9d2198139c2",
+      "alpha": {
+        "85": 43
+      }
+    }
+  ],
+  "visualObjects": [
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_d0.png",
+      "sha256": "d57f66a863a194c675ec6b2a405ed114161a33021c6bda6d7b816359550cd402",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_d1.png",
+      "sha256": "31582a85a8dc5bd0f48b9a46fd47e1ee63ac9e2bec5f02f63e9464dc6ce63d67",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_d2.png",
+      "sha256": "d57f66a863a194c675ec6b2a405ed114161a33021c6bda6d7b816359550cd402",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_d3.png",
+      "sha256": "64114878a6178429c2c40720b324c829766bf649af8526aae72169a71df8d08b",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_l0.png",
+      "sha256": "7235db1d1f0fffd4a16e06394485f7b2380706d642b74bb51af24c7dfd2d939f",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_l1.png",
+      "sha256": "0c8572f0f120ac17855d4f47b9b02a5788243278c57c9d21c7403ed5a44374f6",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_l2.png",
+      "sha256": "7235db1d1f0fffd4a16e06394485f7b2380706d642b74bb51af24c7dfd2d939f",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_l3.png",
+      "sha256": "e81b44f3729b3f7119dcfcd975b37e2ed64c9ebecd4542123bb0bc88d16af10f",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_r0.png",
+      "sha256": "9e55ae454a1b477e342dba25ff08838454993aefc24392df25e63219f3804b5b",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_r1.png",
+      "sha256": "957d28361b189455425d394a2519ced3c01b494a7dc3ac11e201f2cdd0b310c7",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_r2.png",
+      "sha256": "9e55ae454a1b477e342dba25ff08838454993aefc24392df25e63219f3804b5b",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_r3.png",
+      "sha256": "e60c872a3a1753926a15970207012afed86237de370b228007e5118a37c9e011",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_u0.png",
+      "sha256": "678bb603a5c21052d382dc01046f3973102bc111b8932f94c8acf19c176cba1c",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_u1.png",
+      "sha256": "e04f8bbca4c75ad638a1f7199f2027129b6d8c61e3c81cd0c09e924f81347a91",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_u2.png",
+      "sha256": "678bb603a5c21052d382dc01046f3973102bc111b8932f94c8acf19c176cba1c",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_peddler/npc_capital_peddler_tall_u3.png",
+      "sha256": "2464fae0b2da50c2dae04a1bd144a86647273e0b471ad8ef71157b1c1111cfb0",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_d0.png",
+      "sha256": "ba10ef30b94c1412abe6ad66d831d5c22fed340aa069044e72b43b36772f00c8",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_d1.png",
+      "sha256": "671a67e4e3dcf093b8c0f03b047c1e92b98abcd1e1931451e0eb9c8a1ef48f72",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_d2.png",
+      "sha256": "ba10ef30b94c1412abe6ad66d831d5c22fed340aa069044e72b43b36772f00c8",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_d3.png",
+      "sha256": "a102262b5ae1a572342a4625b2678cd77ed27d4de3ae05746e72de6dce03f5b9",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_l0.png",
+      "sha256": "0238a987c8b19d111c39053278ff7fe93df1fc610018ef59de77fa2d38baf610",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_l1.png",
+      "sha256": "f2d8245aad5224d60a7f02e79011d05c28c253ce588901609dd2eb551720ae0b",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_l2.png",
+      "sha256": "0238a987c8b19d111c39053278ff7fe93df1fc610018ef59de77fa2d38baf610",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_l3.png",
+      "sha256": "5e8aa1a6e2cf6082fb256be1b28aedda8e51a447d7171f9d3c020a85c0547d9a",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_r0.png",
+      "sha256": "71062096d522ea1002081500fe90c85aa9f8402a23bfe6f99096dd75488c79f4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_r1.png",
+      "sha256": "658806fca06d48fae8913d83c8b403c72584c6ee1d7be51608df15c7d628f8a1",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_r2.png",
+      "sha256": "71062096d522ea1002081500fe90c85aa9f8402a23bfe6f99096dd75488c79f4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_r3.png",
+      "sha256": "fb982c10da7aec369e18685f9cee078fad4d6b08555a4f38975db55b40b38315",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_u0.png",
+      "sha256": "1ae9cbf241aa19b12e646692fcda487552c8d5c7f369b88837e4b0d927c52f58",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_u1.png",
+      "sha256": "85e91a32baf819ca3c335c2cd626f7f1b432d7b7e0bfe0e728475ad3c5b5fbe4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_u2.png",
+      "sha256": "1ae9cbf241aa19b12e646692fcda487552c8d5c7f369b88837e4b0d927c52f58",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_capital_porter/npc_capital_porter_tall_u3.png",
+      "sha256": "555bfcb3e2bb1ff0b127d6da97ecde03dab1df4f58f2ed4b1859fab867c20730",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_d0.png",
+      "sha256": "ccf972615bbae99b1739d009d2237edd5efad7f987186ef36b2335d1f8a5cb54",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_d1.png",
+      "sha256": "a96fb1cbe362379314c755818a41190b180971ea78320a41101f63d8a49c4713",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_d2.png",
+      "sha256": "ccf972615bbae99b1739d009d2237edd5efad7f987186ef36b2335d1f8a5cb54",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_d3.png",
+      "sha256": "fdbee2fc6c3285c226c750b056c5c448c8fb686d62ee591c9095be0cfec96b9c",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_l0.png",
+      "sha256": "cd397bfbbb009ca8a1f13b83643e89cb1ef6a0c933b783a01388183bba593565",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_l1.png",
+      "sha256": "328f2c16fc4373f7b948d9de679c4316cea9e0d622644303be96fd679b2c005f",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_l2.png",
+      "sha256": "cd397bfbbb009ca8a1f13b83643e89cb1ef6a0c933b783a01388183bba593565",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_l3.png",
+      "sha256": "66bec25ca519e553cf31d83be8149483422aa4731154735c37ffebb4787c9ab8",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_r0.png",
+      "sha256": "1c9d4c3847705a5528686f370542a324921c215dd8675e87b72bd44f5b850a7e",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_r1.png",
+      "sha256": "3c81e06cf95b51e892461ac213dbe9ec7701795529c912e30c3a3c7f8402f657",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_r2.png",
+      "sha256": "1c9d4c3847705a5528686f370542a324921c215dd8675e87b72bd44f5b850a7e",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_r3.png",
+      "sha256": "7c99df54a98e69506fbc024d8ac3a31db8fd094f2bf8857cdbeefdd0ee0a1a59",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_u0.png",
+      "sha256": "1de98bac81da2a840d8109f61cbe6f2b3c6ef1785e68bad017963e87370167dd",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_u1.png",
+      "sha256": "3c9a7366f053af6e3850a1b42d3e3df2f5987ae0c90c0b77eb415b41000bffda",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_u2.png",
+      "sha256": "1de98bac81da2a840d8109f61cbe6f2b3c6ef1785e68bad017963e87370167dd",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_crossroads_guide/npc_crossroads_guide_tall_u3.png",
+      "sha256": "897d3aacb65a3a2a2a83d0ae41936552ee6c40d1409cd1ac5f76880e9309d332",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_d0.png",
+      "sha256": "6831bcb12452688e050a4d67bd597801069057c531d485aeecc19d32cc228ccb",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_d1.png",
+      "sha256": "8dae8c23cf35f6984ebab3069ded45677a2fa3f52681c519bfaec92d02943675",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_d2.png",
+      "sha256": "6831bcb12452688e050a4d67bd597801069057c531d485aeecc19d32cc228ccb",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_d3.png",
+      "sha256": "9139d5081f63b88f061cf911573d43ea22f4f197b06e0b0ab96213cad29dd884",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_l0.png",
+      "sha256": "a47a5a75dbce3cd8825bf585a1d8b8c9ba6d1e2c0e8de840e3f5a1dd6c359e4c",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_l1.png",
+      "sha256": "4bf3abb571059e27fcbb523b40a7f50bc3ad525c9ad032a0c5b56252992f3e24",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_l2.png",
+      "sha256": "a47a5a75dbce3cd8825bf585a1d8b8c9ba6d1e2c0e8de840e3f5a1dd6c359e4c",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_l3.png",
+      "sha256": "dbafc24d22be6150039a70620f95acfbc849021a0d0856d180a4568b14200753",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_r0.png",
+      "sha256": "bde7dd3036eb3206418128683f113cdac76a1f2d5ed49ff5d3d5698e002683e4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_r1.png",
+      "sha256": "79ff905d291422283da3ee60df7ba370376cb7cac0b7aee6c7d45a6668f0ca1a",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_r2.png",
+      "sha256": "bde7dd3036eb3206418128683f113cdac76a1f2d5ed49ff5d3d5698e002683e4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_r3.png",
+      "sha256": "1dd9def230bdfbf52be41d1caaafb03924480ef860888e8afd334c59987c5413",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_u0.png",
+      "sha256": "a12345c87f2f33d9b85fe1bc482befa28c77817382d028c09a88f8aa6959c7a7",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_u1.png",
+      "sha256": "29c6b51d220b1b6306a24133d406ac70a0ea325b40582e5e544150402ba08880",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_u2.png",
+      "sha256": "a12345c87f2f33d9b85fe1bc482befa28c77817382d028c09a88f8aa6959c7a7",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_ferry_merchant/npc_ferry_merchant_tall_u3.png",
+      "sha256": "70e5a241faab1c707c00a02a793b00e6dfe4d338614849055f01987fe581cc5f",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_d0.png",
+      "sha256": "86146f196f0e7e5fd6bd260c86ef4622904d5c4be6981e00b15f543f67222932",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_d1.png",
+      "sha256": "273d382ad74ad0d3d16f61f909ef2c4979f4b66f68a81623bf816039a59ce351",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_d2.png",
+      "sha256": "86146f196f0e7e5fd6bd260c86ef4622904d5c4be6981e00b15f543f67222932",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_d3.png",
+      "sha256": "3e20b45ef18db5e43239dd85e9bc5e022a8bae517a8b66e71b65512f53ca0c33",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_l0.png",
+      "sha256": "3666d6469a3f74a97c6669cecd0d5e2c66633e269a09b8a26db18aebec4098fa",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_l1.png",
+      "sha256": "39aa19ce55a376cbecb3232d4d7ef28d1c842aa2a7cd6db8e9aafea6b3d1c872",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_l2.png",
+      "sha256": "3666d6469a3f74a97c6669cecd0d5e2c66633e269a09b8a26db18aebec4098fa",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_l3.png",
+      "sha256": "438ef3f013b48566d2cbc9d780dd2aa516ff6cffb5b7953a9365e96fb14e43ca",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_r0.png",
+      "sha256": "b7352ab098c4723570ff85f1adb1d565fbf2a0e27302697c47ed342c2e8ec1e0",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_r1.png",
+      "sha256": "951d14242d2bec5bd06e8ead4de4fde3340843add379d7cc9db1742a76626c06",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_r2.png",
+      "sha256": "b7352ab098c4723570ff85f1adb1d565fbf2a0e27302697c47ed342c2e8ec1e0",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_r3.png",
+      "sha256": "2b124dcbecfe9f45beee8da2413812397c94efd8926709a6d3f03aef7654c31a",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_u0.png",
+      "sha256": "1aa90054bc47b89b3295a6b71a3028b1667c42418f9ec0c8bffb9461f18f6f88",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_u1.png",
+      "sha256": "e36236766373dda651ac4edeaebb853b1609aef088216d8d67cc4847db01486d",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_u2.png",
+      "sha256": "1aa90054bc47b89b3295a6b71a3028b1667c42418f9ec0c8bffb9461f18f6f88",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_boatman/npc_naru_boatman_tall_u3.png",
+      "sha256": "ddb19d7c2e3a9579c196d01a9a5369b146455d6297ed3749c45c14aa2a0134fd",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_d0.png",
+      "sha256": "2d1b26502c9e4b31347c24b014adb9176b32c4bb8784016b4e751b363678810e",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_d1.png",
+      "sha256": "50cf64576208713a355290ee0fab8ecae9d2ba3b309f15e7fc3923cb791bc088",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_d2.png",
+      "sha256": "2d1b26502c9e4b31347c24b014adb9176b32c4bb8784016b4e751b363678810e",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_d3.png",
+      "sha256": "af4bc39dd1f7ef7885d5b30fcc3bacec02900b023411bc2a9495ce3fefecf77d",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_l0.png",
+      "sha256": "f0b1e23e45ee9088413a559ba6b8931523f7667e475b12901fc7010945519df4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_l1.png",
+      "sha256": "90a1674ecf44583ca9b07ccd05b8992ca5f4ad4ac765925bb928b143ffefc6ff",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_l2.png",
+      "sha256": "f0b1e23e45ee9088413a559ba6b8931523f7667e475b12901fc7010945519df4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_l3.png",
+      "sha256": "ced44cae402b6db5914d6fe7111e06313602be4166fc5e1cbbecf5e49d765f47",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_r0.png",
+      "sha256": "ea08d6f484b40624e4726fe7458d1f1f6ba4142462321c01ef218f9cd4d9fa38",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_r1.png",
+      "sha256": "a2efa2a4893f5fc61edd0fb37fb138193da23817cbb009ebb33043556d6c52ad",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_r2.png",
+      "sha256": "ea08d6f484b40624e4726fe7458d1f1f6ba4142462321c01ef218f9cd4d9fa38",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_r3.png",
+      "sha256": "8c1e653c412457f5c9195359061ba2767f5200727efae68de473137b196f2646",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_u0.png",
+      "sha256": "9b85f9a89ee7dc998f53c91bcc148ac270e9cbe890bd4a20a264b0600c38802d",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_u1.png",
+      "sha256": "520cdc26555c767e7286ea022e0678e9bd169cc3b418f4bebc6ee5297a159966",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_u2.png",
+      "sha256": "9b85f9a89ee7dc998f53c91bcc148ac270e9cbe890bd4a20a264b0600c38802d",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_farmer/npc_naru_farmer_tall_u3.png",
+      "sha256": "26caedc73317f0d61f0af0b7433f4d5318da796c2d29e2ac334a7d81e9c35ae1",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_d0.png",
+      "sha256": "bb685320326bad155338ec7fbc1e755e05d620bee0deb8ddbe4e5e40ccfa853a",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_d1.png",
+      "sha256": "a89d28a7b554625c948d6eae0014327cf65c6c014d1e9af5351ce4fd8b003a49",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_d2.png",
+      "sha256": "bb685320326bad155338ec7fbc1e755e05d620bee0deb8ddbe4e5e40ccfa853a",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_d3.png",
+      "sha256": "018a0cfd275ac9d34b3dbcf7c300aef76282ec1da15d419c7ecf305af0b07963",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_l0.png",
+      "sha256": "95090733034208b702e52eaee8392779ba07cff25cbb7452156cba078a853271",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_l1.png",
+      "sha256": "130ed1b61c33f84ca48df069ac8103a2c45c2ae4dbdf23ce06505fd58f9f23bd",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_l2.png",
+      "sha256": "95090733034208b702e52eaee8392779ba07cff25cbb7452156cba078a853271",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_l3.png",
+      "sha256": "df7302cfd0d49f43a7491586d4143e6162b7ef9108e7a3578102cda2ed49213f",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_r0.png",
+      "sha256": "d365b485a70f04f79f8cae2133a1918a6869974a585c1094bd65c61897475e0d",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_r1.png",
+      "sha256": "af2cb6c4ea13afad95a3d2bbdd1d6023186b7c0ca33900513da154cd0474da74",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_r2.png",
+      "sha256": "d365b485a70f04f79f8cae2133a1918a6869974a585c1094bd65c61897475e0d",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_r3.png",
+      "sha256": "8dfb7a1467b67e4cdb9eacaca3f974c19634c59d51acb8511dbd596094a28868",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_u0.png",
+      "sha256": "a9961b76bb73cff7e8617ac73d3c8d86951aaad19c30edc3374ca914866d280a",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_u1.png",
+      "sha256": "9ec45d0b8aa9fbabb98561a14e74800c293c62098e3a1d0401324832dd00bfee",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_u2.png",
+      "sha256": "a9961b76bb73cff7e8617ac73d3c8d86951aaad19c30edc3374ca914866d280a",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall_u3.png",
+      "sha256": "ddfa6dc24cbe4827834d51957d648c4f8f77d537b7d0751505637d5304d6916d",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_d0.png",
+      "sha256": "ba10ef30b94c1412abe6ad66d831d5c22fed340aa069044e72b43b36772f00c8",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_d1.png",
+      "sha256": "671a67e4e3dcf093b8c0f03b047c1e92b98abcd1e1931451e0eb9c8a1ef48f72",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_d2.png",
+      "sha256": "ba10ef30b94c1412abe6ad66d831d5c22fed340aa069044e72b43b36772f00c8",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_d3.png",
+      "sha256": "a102262b5ae1a572342a4625b2678cd77ed27d4de3ae05746e72de6dce03f5b9",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_l0.png",
+      "sha256": "0238a987c8b19d111c39053278ff7fe93df1fc610018ef59de77fa2d38baf610",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_l1.png",
+      "sha256": "f2d8245aad5224d60a7f02e79011d05c28c253ce588901609dd2eb551720ae0b",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_l2.png",
+      "sha256": "0238a987c8b19d111c39053278ff7fe93df1fc610018ef59de77fa2d38baf610",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_l3.png",
+      "sha256": "5e8aa1a6e2cf6082fb256be1b28aedda8e51a447d7171f9d3c020a85c0547d9a",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_r0.png",
+      "sha256": "71062096d522ea1002081500fe90c85aa9f8402a23bfe6f99096dd75488c79f4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_r1.png",
+      "sha256": "658806fca06d48fae8913d83c8b403c72584c6ee1d7be51608df15c7d628f8a1",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_r2.png",
+      "sha256": "71062096d522ea1002081500fe90c85aa9f8402a23bfe6f99096dd75488c79f4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_r3.png",
+      "sha256": "fb982c10da7aec369e18685f9cee078fad4d6b08555a4f38975db55b40b38315",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_u0.png",
+      "sha256": "1ae9cbf241aa19b12e646692fcda487552c8d5c7f369b88837e4b0d927c52f58",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_u1.png",
+      "sha256": "85e91a32baf819ca3c335c2cd626f7f1b432d7b7e0bfe0e728475ad3c5b5fbe4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_u2.png",
+      "sha256": "1ae9cbf241aa19b12e646692fcda487552c8d5c7f369b88837e4b0d927c52f58",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_naru_porter/npc_naru_porter_tall_u3.png",
+      "sha256": "555bfcb3e2bb1ff0b127d6da97ecde03dab1df4f58f2ed4b1859fab867c20730",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_d0.png",
+      "sha256": "ba10ef30b94c1412abe6ad66d831d5c22fed340aa069044e72b43b36772f00c8",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_d1.png",
+      "sha256": "671a67e4e3dcf093b8c0f03b047c1e92b98abcd1e1931451e0eb9c8a1ef48f72",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_d2.png",
+      "sha256": "ba10ef30b94c1412abe6ad66d831d5c22fed340aa069044e72b43b36772f00c8",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_d3.png",
+      "sha256": "a102262b5ae1a572342a4625b2678cd77ed27d4de3ae05746e72de6dce03f5b9",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_l0.png",
+      "sha256": "0238a987c8b19d111c39053278ff7fe93df1fc610018ef59de77fa2d38baf610",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_l1.png",
+      "sha256": "f2d8245aad5224d60a7f02e79011d05c28c253ce588901609dd2eb551720ae0b",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_l2.png",
+      "sha256": "0238a987c8b19d111c39053278ff7fe93df1fc610018ef59de77fa2d38baf610",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_l3.png",
+      "sha256": "5e8aa1a6e2cf6082fb256be1b28aedda8e51a447d7171f9d3c020a85c0547d9a",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_r0.png",
+      "sha256": "71062096d522ea1002081500fe90c85aa9f8402a23bfe6f99096dd75488c79f4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_r1.png",
+      "sha256": "658806fca06d48fae8913d83c8b403c72584c6ee1d7be51608df15c7d628f8a1",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_r2.png",
+      "sha256": "71062096d522ea1002081500fe90c85aa9f8402a23bfe6f99096dd75488c79f4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_r3.png",
+      "sha256": "fb982c10da7aec369e18685f9cee078fad4d6b08555a4f38975db55b40b38315",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_u0.png",
+      "sha256": "1ae9cbf241aa19b12e646692fcda487552c8d5c7f369b88837e4b0d927c52f58",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_u1.png",
+      "sha256": "85e91a32baf819ca3c335c2cd626f7f1b432d7b7e0bfe0e728475ad3c5b5fbe4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_u2.png",
+      "sha256": "1ae9cbf241aa19b12e646692fcda487552c8d5c7f369b88837e4b0d927c52f58",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_paper_worker/npc_paper_worker_tall_u3.png",
+      "sha256": "555bfcb3e2bb1ff0b127d6da97ecde03dab1df4f58f2ed4b1859fab867c20730",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_d0.png",
+      "sha256": "d57f66a863a194c675ec6b2a405ed114161a33021c6bda6d7b816359550cd402",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_d1.png",
+      "sha256": "31582a85a8dc5bd0f48b9a46fd47e1ee63ac9e2bec5f02f63e9464dc6ce63d67",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_d2.png",
+      "sha256": "d57f66a863a194c675ec6b2a405ed114161a33021c6bda6d7b816359550cd402",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_d3.png",
+      "sha256": "64114878a6178429c2c40720b324c829766bf649af8526aae72169a71df8d08b",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_l0.png",
+      "sha256": "7235db1d1f0fffd4a16e06394485f7b2380706d642b74bb51af24c7dfd2d939f",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_l1.png",
+      "sha256": "0c8572f0f120ac17855d4f47b9b02a5788243278c57c9d21c7403ed5a44374f6",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_l2.png",
+      "sha256": "7235db1d1f0fffd4a16e06394485f7b2380706d642b74bb51af24c7dfd2d939f",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_l3.png",
+      "sha256": "e81b44f3729b3f7119dcfcd975b37e2ed64c9ebecd4542123bb0bc88d16af10f",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_r0.png",
+      "sha256": "9e55ae454a1b477e342dba25ff08838454993aefc24392df25e63219f3804b5b",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_r1.png",
+      "sha256": "957d28361b189455425d394a2519ced3c01b494a7dc3ac11e201f2cdd0b310c7",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_r2.png",
+      "sha256": "9e55ae454a1b477e342dba25ff08838454993aefc24392df25e63219f3804b5b",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_r3.png",
+      "sha256": "e60c872a3a1753926a15970207012afed86237de370b228007e5118a37c9e011",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_u0.png",
+      "sha256": "678bb603a5c21052d382dc01046f3973102bc111b8932f94c8acf19c176cba1c",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_u1.png",
+      "sha256": "e04f8bbca4c75ad638a1f7199f2027129b6d8c61e3c81cd0c09e924f81347a91",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_u2.png",
+      "sha256": "678bb603a5c21052d382dc01046f3973102bc111b8932f94c8acf19c176cba1c",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall_u3.png",
+      "sha256": "2464fae0b2da50c2dae04a1bd144a86647273e0b471ad8ef71157b1c1111cfb0",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_d0.png",
+      "sha256": "d57f66a863a194c675ec6b2a405ed114161a33021c6bda6d7b816359550cd402",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_d1.png",
+      "sha256": "31582a85a8dc5bd0f48b9a46fd47e1ee63ac9e2bec5f02f63e9464dc6ce63d67",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_d2.png",
+      "sha256": "d57f66a863a194c675ec6b2a405ed114161a33021c6bda6d7b816359550cd402",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_d3.png",
+      "sha256": "64114878a6178429c2c40720b324c829766bf649af8526aae72169a71df8d08b",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_l0.png",
+      "sha256": "7235db1d1f0fffd4a16e06394485f7b2380706d642b74bb51af24c7dfd2d939f",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_l1.png",
+      "sha256": "0c8572f0f120ac17855d4f47b9b02a5788243278c57c9d21c7403ed5a44374f6",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_l2.png",
+      "sha256": "7235db1d1f0fffd4a16e06394485f7b2380706d642b74bb51af24c7dfd2d939f",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_l3.png",
+      "sha256": "e81b44f3729b3f7119dcfcd975b37e2ed64c9ebecd4542123bb0bc88d16af10f",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_r0.png",
+      "sha256": "9e55ae454a1b477e342dba25ff08838454993aefc24392df25e63219f3804b5b",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_r1.png",
+      "sha256": "957d28361b189455425d394a2519ced3c01b494a7dc3ac11e201f2cdd0b310c7",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_r2.png",
+      "sha256": "9e55ae454a1b477e342dba25ff08838454993aefc24392df25e63219f3804b5b",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_r3.png",
+      "sha256": "e60c872a3a1753926a15970207012afed86237de370b228007e5118a37c9e011",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_u0.png",
+      "sha256": "678bb603a5c21052d382dc01046f3973102bc111b8932f94c8acf19c176cba1c",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_u1.png",
+      "sha256": "e04f8bbca4c75ad638a1f7199f2027129b6d8c61e3c81cd0c09e924f81347a91",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_u2.png",
+      "sha256": "678bb603a5c21052d382dc01046f3973102bc111b8932f94c8acf19c176cba1c",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall_u3.png",
+      "sha256": "2464fae0b2da50c2dae04a1bd144a86647273e0b471ad8ef71157b1c1111cfb0",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_d0.png",
+      "sha256": "ba10ef30b94c1412abe6ad66d831d5c22fed340aa069044e72b43b36772f00c8",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_d1.png",
+      "sha256": "671a67e4e3dcf093b8c0f03b047c1e92b98abcd1e1931451e0eb9c8a1ef48f72",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_d2.png",
+      "sha256": "ba10ef30b94c1412abe6ad66d831d5c22fed340aa069044e72b43b36772f00c8",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_d3.png",
+      "sha256": "a102262b5ae1a572342a4625b2678cd77ed27d4de3ae05746e72de6dce03f5b9",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_l0.png",
+      "sha256": "0238a987c8b19d111c39053278ff7fe93df1fc610018ef59de77fa2d38baf610",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_l1.png",
+      "sha256": "f2d8245aad5224d60a7f02e79011d05c28c253ce588901609dd2eb551720ae0b",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_l2.png",
+      "sha256": "0238a987c8b19d111c39053278ff7fe93df1fc610018ef59de77fa2d38baf610",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_l3.png",
+      "sha256": "5e8aa1a6e2cf6082fb256be1b28aedda8e51a447d7171f9d3c020a85c0547d9a",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_r0.png",
+      "sha256": "71062096d522ea1002081500fe90c85aa9f8402a23bfe6f99096dd75488c79f4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_r1.png",
+      "sha256": "658806fca06d48fae8913d83c8b403c72584c6ee1d7be51608df15c7d628f8a1",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_r2.png",
+      "sha256": "71062096d522ea1002081500fe90c85aa9f8402a23bfe6f99096dd75488c79f4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_r3.png",
+      "sha256": "fb982c10da7aec369e18685f9cee078fad4d6b08555a4f38975db55b40b38315",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_u0.png",
+      "sha256": "1ae9cbf241aa19b12e646692fcda487552c8d5c7f369b88837e4b0d927c52f58",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_u1.png",
+      "sha256": "85e91a32baf819ca3c335c2cd626f7f1b432d7b7e0bfe0e728475ad3c5b5fbe4",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_u2.png",
+      "sha256": "1ae9cbf241aa19b12e646692fcda487552c8d5c7f369b88837e4b0d927c52f58",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "npc_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/NPC/npc_wood_seller/npc_wood_seller_tall_u3.png",
+      "sha256": "555bfcb3e2bb1ff0b127d6da97ecde03dab1df4f58f2ed4b1859fab867c20730",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "character_shadow",
+      "path": "Assets/PocketCaravan/Art/Characters/shadow.png",
+      "sha256": "45aa0b7bca56d5cb922fb1d54f338f834d348f8449fa62e317e9f1079ac19038",
+      "nonBinaryAlpha": {
+        "80": 48
+      }
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_d0.png",
+      "sha256": "aa202c8dfccda2ff9e1babb8dc14a3e4db22e06f294fb48b8ef8a31e6d3332f9",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_d1.png",
+      "sha256": "6c39475ef4c8bbd9d78494a2ec8f683a07b3f7e51250df856c1235a19bacf179",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_d2.png",
+      "sha256": "aa202c8dfccda2ff9e1babb8dc14a3e4db22e06f294fb48b8ef8a31e6d3332f9",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_d3.png",
+      "sha256": "4ab87e3110b43ed0ebd5a60f2b707417c550563ef9d4f3f96fdeb09f24ac300e",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_l0.png",
+      "sha256": "a81c07655dc7cd1536a66c63996494023114d4fedae72ee4347fa7f57d24cad8",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_l1.png",
+      "sha256": "8f1ee5282574d1776d601c96954c0f8f70dadadbea7804380a1b1479923af5a2",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_l2.png",
+      "sha256": "a81c07655dc7cd1536a66c63996494023114d4fedae72ee4347fa7f57d24cad8",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_l3.png",
+      "sha256": "41dd551c08c59c39fbaff91317384da26da7ecf83c9b56940de48fecc5b7a9f3",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_r0.png",
+      "sha256": "9e2cb652218b2a8386a3d58eb7f59eb4a7c64b9bea887291c8cc3a93beafbb4c",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_r1.png",
+      "sha256": "cbb7baee5a7f307f3701239ac45c9ad45c7fabaaf3cb08dfd210805eb4a97a83",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_r2.png",
+      "sha256": "9e2cb652218b2a8386a3d58eb7f59eb4a7c64b9bea887291c8cc3a93beafbb4c",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_r3.png",
+      "sha256": "f157707b3a588155a47e494de109c3237d5855f8a7563da400ffac88e41060b9",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_u0.png",
+      "sha256": "c87228ae63df82b3939af5e150e8c444fa6db696e2c958b6d7c28b344fb2bc47",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_u1.png",
+      "sha256": "9f6b83d87b19f0422f35a9049825b95c438c4a9147f9e18d8f16eafd9d64d457",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_u2.png",
+      "sha256": "c87228ae63df82b3939af5e150e8c444fa6db696e2c958b6d7c28b344fb2bc47",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "player_frame",
+      "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_u3.png",
+      "sha256": "56876c30563b91eab43bdc6010592776b6193d9cf62a86fcf35ab1bcf089c0b0",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "animation_frame",
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Animated/goryeo_ripples_0.png",
+      "sha256": "41b0f5349a9db4abc8dab389c486585ea4e5f3b8c1ba8c0fa4b4227822c8a6e9",
+      "nonBinaryAlpha": {
+        "90": 104
+      }
+    },
+    {
+      "kind": "animation_frame",
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Animated/goryeo_ripples_1.png",
+      "sha256": "be25413a43aa0cdeec34bace22a436f3b7de91dd4f5e53380a0556f9af7677f3",
+      "nonBinaryAlpha": {
+        "90": 102
+      }
+    },
+    {
+      "kind": "animation_frame",
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Animated/goryeo_ripples_2.png",
+      "sha256": "36c1155b12af49c466bd962c84e73823dd3a7fc04a8f2b783ba132fb3a4485d0",
+      "nonBinaryAlpha": {
+        "90": 102
+      }
+    },
+    {
+      "kind": "animation_frame",
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Animated/goryeo_ripples_3.png",
+      "sha256": "cffd49909af1f83afeb34c5867cd3567a7b06f7826e95f76b4d5de011d0c3322",
+      "nonBinaryAlpha": {
+        "90": 103
+      }
+    },
+    {
+      "kind": "animation_frame",
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Animated/ripples_0.png",
+      "sha256": "4b509c3289690366a58fea61c0333410147b49f2ad1c39ff60650b916c48e61f",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "animation_frame",
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Animated/ripples_1.png",
+      "sha256": "8d95a9ebed337e2d4a16cfec3af6152d09cb6953860fe4e51ad1a2ab04dfb284",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "animation_frame",
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Animated/ripples_2.png",
+      "sha256": "c67910255b213b39c4b5809b0a7aca64b7f678738a94ddbae95b5af9964e5497",
+      "nonBinaryAlpha": {}
+    },
+    {
+      "kind": "animation_frame",
+      "path": "Assets/PocketCaravan/Art/NinjaAdventure/Animated/ripples_3.png",
+      "sha256": "bf493f116cc919a62473704bdafcece5a5d0ac404e4120ec164ed0902523ccbc",
+      "nonBinaryAlpha": {}
+    }
+  ],
+  "unusedMaps": [
+    {
+      "map": "Route01",
+      "json": "Assets/PocketCaravan/Maps/Route01.json",
+      "animalReferences": [
+        "villager_tanuki_tall",
+        "villager_fox_tall",
+        "villager_dog_tall"
+      ]
+    },
+    {
+      "map": "goryeo_descent",
+      "json": "Assets/PocketCaravan/Maps/goryeo_descent.json",
+      "animalReferences": []
+    },
+    {
+      "map": "goryeo_fieldroad",
+      "json": "Assets/PocketCaravan/Maps/goryeo_fieldroad.json",
+      "animalReferences": [
+        "villager_dog_tall"
+      ]
+    },
+    {
+      "map": "goryeo_ridge",
+      "json": "Assets/PocketCaravan/Maps/goryeo_ridge.json",
+      "animalReferences": []
+    },
+    {
+      "map": "goryeo_rivervalley",
+      "json": "Assets/PocketCaravan/Maps/goryeo_rivervalley.json",
+      "animalReferences": []
+    },
+    {
+      "map": "goryeo_southcoast",
+      "json": "Assets/PocketCaravan/Maps/goryeo_southcoast.json",
+      "animalReferences": []
+    },
+    {
+      "map": "goryeo_tidalcoast",
+      "json": "Assets/PocketCaravan/Maps/goryeo_tidalcoast.json",
+      "animalReferences": []
+    },
+    {
+      "map": "goryeo_westcoast",
+      "json": "Assets/PocketCaravan/Maps/goryeo_westcoast.json",
+      "animalReferences": []
+    }
+  ],
+  "productionChanged": false,
+  "notChecked": [
+    "full A2 map placement certification",
+    "live frozen-loader generation",
+    "Unity post-bake screenshot equality",
+    "unused map/save alias removal safety"
+  ]
+}

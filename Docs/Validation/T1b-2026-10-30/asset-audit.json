@@ -1,0 +1,124 @@
+{
+  "status": "review",
+  "functionalVisuals": [
+    {
+      "village": "goryeo/개경",
+      "kind": "board",
+      "functionCount": 1,
+      "previewVisualCount": 1
+    },
+    {
+      "village": "goryeo/송악",
+      "kind": "board",
+      "functionCount": 1,
+      "previewVisualCount": 1
+    },
+    {
+      "village": "goryeo/송악",
+      "kind": "sign",
+      "functionCount": 1,
+      "previewVisualCount": 1
+    },
+    {
+      "village": "goryeo/닥목",
+      "kind": "board",
+      "functionCount": 1,
+      "previewVisualCount": 1
+    },
+    {
+      "village": "goryeo/닥목",
+      "kind": "sign",
+      "functionCount": 1,
+      "previewVisualCount": 1
+    },
+    {
+      "village": "goryeo/장단",
+      "kind": "board",
+      "functionCount": 1,
+      "previewVisualCount": 1
+    },
+    {
+      "village": "goryeo/장단",
+      "kind": "sign",
+      "functionCount": 1,
+      "previewVisualCount": 1
+    },
+    {
+      "village": "east/동문 마을",
+      "kind": "board",
+      "functionCount": 1,
+      "previewVisualCount": 1
+    },
+    {
+      "village": "east/북동 포구",
+      "kind": "board",
+      "functionCount": 1,
+      "previewVisualCount": 1
+    },
+    {
+      "village": "east/중앙 길목 마을",
+      "kind": "sign",
+      "functionCount": 2,
+      "previewVisualCount": 2
+    },
+    {
+      "village": "goryeo/나루",
+      "kind": "board",
+      "functionCount": 1,
+      "previewVisualCount": 1
+    },
+    {
+      "village": "goryeo/나루",
+      "kind": "sign",
+      "functionCount": 1,
+      "previewVisualCount": 1
+    },
+    {
+      "village": "transit_pass",
+      "kind": "sign",
+      "functionCount": 1,
+      "previewVisualCount": 1
+    }
+  ],
+  "pendingFunctions": [
+    {
+      "village": "east/남동 포구",
+      "reason": "쉼터 두 곳은 기능 결정 대기; 남동 포구·중앙 길목 마을은 E2 기능 연결 예정. 기능을 추가하지 않고 평상시 소품만 배치."
+    },
+    {
+      "village": "east/중앙 길목 마을",
+      "reason": "쉼터 두 곳은 기능 결정 대기; 남동 포구·중앙 길목 마을은 E2 기능 연결 예정. 기능을 추가하지 않고 평상시 소품만 배치."
+    },
+    {
+      "village": "hamlet/북쪽 쉼터 마을",
+      "reason": "쉼터 두 곳은 기능 결정 대기; 남동 포구·중앙 길목 마을은 E2 기능 연결 예정. 기능을 추가하지 않고 평상시 소품만 배치."
+    },
+    {
+      "village": "hamlet/남쪽 호숫가 마을",
+      "reason": "쉼터 두 곳은 기능 결정 대기; 남동 포구·중앙 길목 마을은 E2 기능 연결 예정. 기능을 추가하지 않고 평상시 소품만 배치."
+    }
+  ],
+  "unplacedHouses": [
+    {
+      "village": "goryeo/닥목",
+      "feature": "집 3",
+      "reason": "M2 placement failed; not a missing texture",
+      "resolved": false
+    },
+    {
+      "village": "hamlet/북쪽 쉼터 마을",
+      "feature": "집 2",
+      "reason": "M2 placement failed; not a missing texture",
+      "resolved": false
+    }
+  ],
+  "props": 59,
+  "riceLive": 8,
+  "riceReview": 11,
+  "notes": [
+    "NPC·시작 위치는 런타임 캐릭터·스폰으로 표현한다.",
+    "성장 소품은 장터 레벨에 따라 나타나는 조건부 표현이다.",
+    "부두·물가는 바닥 지형/별도 배로 표현한다.",
+    "집 2채는 이미지 파일 누락이 아니라 M2 배치 실패 항목이다."
+  ]
+}

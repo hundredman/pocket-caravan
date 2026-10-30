@@ -1,0 +1,10 @@
+{
+  "tool": "built-in imagegen",
+  "intent": "small proportion/perspective correction to current trial cart only",
+  "editTarget": "ArtReview/C7-Batch4-20261027/AI/cart.png",
+  "styleReference": "ArtReview/Approved/C7-Shop-v1/shop.png",
+  "brief": "slightly smaller wheel, axle under bed, two parallel rigid shafts, coherent bed perspective; same orientation/colors/whole32x32canvas",
+  "otherAssetsEdited": false,
+  "productionApplied": false,
+  "nativeCleanup": "Aseprite editable layer: clear collapsed lower wheel pixels, redraw closed8x8rim/spokes/hub under bed, then contour. A5 pre-cleanup reference retained hidden."
+}

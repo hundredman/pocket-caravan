@@ -1,0 +1,67 @@
+[
+  {
+    "map": "Naru",
+    "beforeRenderers": 4,
+    "afterRenderers": 5
+  },
+  {
+    "map": "Gaegyeong",
+    "beforeRenderers": 4,
+    "afterRenderers": 5
+  },
+  {
+    "map": "Dakmok",
+    "beforeRenderers": 4,
+    "afterRenderers": 5
+  },
+  {
+    "map": "goryeo_songak",
+    "beforeRenderers": 4,
+    "afterRenderers": 5
+  },
+  {
+    "map": "goryeo_jangdan",
+    "beforeRenderers": 4,
+    "afterRenderers": 5
+  },
+  {
+    "map": "transit_pass",
+    "beforeRenderers": 4,
+    "afterRenderers": 5
+  },
+  {
+    "map": "transit_woodtown",
+    "beforeRenderers": 4,
+    "afterRenderers": 5
+  },
+  {
+    "map": "transit_wetroad",
+    "beforeRenderers": 4,
+    "afterRenderers": 5
+  },
+  {
+    "map": "transit_ferry",
+    "beforeRenderers": 4,
+    "afterRenderers": 5
+  },
+  {
+    "map": "transit_central_approach",
+    "beforeRenderers": 4,
+    "afterRenderers": 5
+  },
+  {
+    "map": "transit_crossroads",
+    "beforeRenderers": 4,
+    "afterRenderers": 4
+  },
+  {
+    "map": "transit_southport",
+    "beforeRenderers": 4,
+    "afterRenderers": 4
+  },
+  {
+    "map": "transit_south_inland",
+    "beforeRenderers": 4,
+    "afterRenderers": 5
+  }
+]

@@ -51,7 +51,7 @@ namespace PocketCaravan.EditorTools
             var q2 = db.quests.Find(q => q.id == "tutorial_2");
             var cart = db.quests.Find(q => q.id == "tutorial_5");
             Check("paper purchase explicitly targets Dakmok", q2.objectives[0].targetId == "dakmok");
-            Check("cart available after two introductory quests", cart.requires.Count == 1 && cart.requires[0] == q2);
+            Check("cart available after Q1 Dakmok step (QuestMain1)", cart.requires.Count == 1 && cart.requires[0] != null && cart.requires[0].id == "q1_dakmok");
             Check("old objective indices preserved", q2.objectives.Count == 2 && cart.objectives.Count == 2);
             foreach (var id in new[] { "goryeo_songak_trade", "goryeo_jangdan_trade", "goryeo_cart_supply" })
                 Check(id + " uniquely registered", db.quests.FindAll(q => q != null && q.id == id).Count == 1);

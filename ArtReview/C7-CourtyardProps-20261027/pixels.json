@@ -1,0 +1,23 @@
+{
+  "paper_large": {
+    "size": [
+      64,
+      48
+    ],
+    "rgbaSHA256": "df33eb932589eeb33553b7fa83c093cd60ca19437eebc5b8502e23f02b7ae280"
+  },
+  "garden_wall": {
+    "size": [
+      64,
+      32
+    ],
+    "rgbaSHA256": "463bd45d26e6f78c16d8b7e8e384b6e19398edc3c69b0716de708cd3542da406"
+  },
+  "onggi": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "61ce095c3b0c5382e729cf884e8b14dae4399e774e692a8a7a16124cc651dc03"
+  }
+}

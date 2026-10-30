@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: Q1_jangdan
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: q1_jangdan
+  retired: 0
+  title: "싼 곳에서 사서 비싼 곳에 팔기"
+  chain: "고려 한 바퀴"
+  summary: "싼 곳에서 사서 비싼 곳에 팔기"
+  giverNpc: goryeo_jangdan_farmer
+  requires:
+  - {fileID: 11400000, guid: 56de64177e8c5101bd17c63c04fe4c2b, type: 2}
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "곡식은 여기서 사고, 산골 송악에 가서 팔아 보게. 같은 곡식도 마을마다 값이 다르다네. 사기 전에 두 마을 값을 견줘 보는 게 장사의 시작이지."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 2
+    text: "장단 장터에서 곡식 3개 사기"
+    targetId: goryeo_jangdan
+    item: {fileID: 11400000, guid: 9b0a33b14044448d8962b7818d9d0df6, type: 2}
+    vehicle: {fileID: 0}
+    count: 3
+    completeLine: ""
+  - type: 3
+    text: "송악 장터에서 곡식 3개 팔기"
+    targetId: goryeo_songak
+    item: {fileID: 11400000, guid: 9b0a33b14044448d8962b7818d9d0df6, type: 2}
+    vehicle: {fileID: 0}
+    count: 3
+    completeLine: ""
+  rewardMoney: 15
+  rewardCredit: 0
+  rewardReputationScope: 0
+  rewardReputationTarget: goryeo
+  rewardReputationSize: 2
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "판 값에서 산 값을 빼면 남은 돈이 이익입니다. 많이 팔수록 그 마을 값은 내려갑니다."

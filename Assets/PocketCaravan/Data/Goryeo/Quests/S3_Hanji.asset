@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
   m_Name: S3_Hanji
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  retired: 1
   id: dakmok_hanji
   title: "\uAC1C\uACBD\uC73C\uB85C \uAC00\uB294 \uD55C\uC9C0"
   chain: 

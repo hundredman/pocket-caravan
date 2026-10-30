@@ -1,0 +1,7 @@
+{
+  "tool": "built-in imagegen",
+  "role": "independent concept, not directly resized into game",
+  "native": "separately authored Aseprite native 80x48 source",
+  "brief": "cute top-down terrain hole, irregular broad lobes, flat water, far-bank earth face only, narrow contact shadow, no nested oval rings, no props",
+  "referenceObservation": "Mystic Woods and PixiVan structural notes in previous revision References.md"
+}

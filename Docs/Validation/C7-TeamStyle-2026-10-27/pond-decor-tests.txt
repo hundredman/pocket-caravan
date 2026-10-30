@@ -1,0 +1,17 @@
+test_a2_water_only_whole_objects_pending (test_c7_pond_decor.C7PondDecorChecks) ... ok
+test_aseprite_sources_reexport_same_rgba (test_c7_pond_decor.C7PondDecorChecks) ... ok
+test_play_variants_only_change_decorations (test_c7_pond_decor.C7PondDecorChecks) ... ok
+test_all15_modules_reassemble_full_oval (test_c7_round_pond.C7RoundPondChecks) ... ok
+test_editable_native_roundtrip_and_existing_colors (test_c7_round_pond.C7RoundPondChecks) ... ok
+test_play_comparison_changes_only_pond_rectangle (test_c7_round_pond.C7RoundPondChecks) ... ok
+test_preview_valid_and_unapproved_production_rejected (test_c7_round_pond.C7RoundPondChecks) ... ok
+test_actual_figma_reference_evidence (test_c7_team_style.C7TeamStyleChecks) ... ok
+test_actual_play_capture_and_stored_native_pixels (test_c7_team_style.C7TeamStyleChecks) ... ok
+test_aseprite57_sources_reexport_identical_rgba (test_c7_team_style.C7TeamStyleChecks) ... ok
+test_catalogue_pending_and_complete (test_c7_team_style.C7TeamStyleChecks) ... ok
+test_original_canvas_feet_pine_and_explicit_colors (test_c7_team_style.C7TeamStyleChecks) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.362s
+
+OK

@@ -1,0 +1,44 @@
+{
+  "productionApplied": false,
+  "statuses": {
+    "c7_cr_cart": "changes_requested",
+    "c7_cr_tile_house": "changes_requested"
+  },
+  "files": {
+    "Native/cart.png": {
+      "size": [
+        32,
+        32
+      ],
+      "rgbaSHA256": "f53da3b92ae0494115651dd02c0dc6068f030a32de145257cbdf3c2d1b1dcdaf"
+    },
+    "Native/tile-house.png": {
+      "size": [
+        64,
+        48
+      ],
+      "rgbaSHA256": "04980edac43bb4d0ae5e0f5bfac8131306fd2d2900ca2295620d14f027e1f75d"
+    },
+    "Screens/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "67bef2d7f3a9ba9b5aafed02177b82624c91afb4f0e5f145bbcac3c4cde6ad28"
+    },
+    "Screens/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "8e239d29001159ae671ed5e8a3e1ba08294fc914bb45d29448de0d763dc00d96"
+    },
+    "comparison.png": {
+      "size": [
+        1120,
+        1040
+      ],
+      "rgbaSHA256": "32487a66a36ef8c74d0caa7db0f9da08e6fc66794baa20b7becf6063ff114bb3"
+    }
+  }
+}

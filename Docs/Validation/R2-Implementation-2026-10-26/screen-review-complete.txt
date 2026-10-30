@@ -1,0 +1,1 @@
+PreviewOnly Play; HUD/market/map screenshots; stopped without persistent player writes.

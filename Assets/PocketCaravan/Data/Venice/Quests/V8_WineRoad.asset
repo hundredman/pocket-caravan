@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: V8_WineRoad
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: venice_q8_wine
+  retired: 0
+  title: "\uD3EC\uB3C4\uC8FC \uAE38"
+  chain: "\uBCA0\uB124\uCE58\uC544 2\uC7A5: \uC11D\uD638\uB97C \uB118\uC5B4"
+  summary: "\uBCF8\uD1A0 \uD3EC\uB3C4\uBC2D \uC591\uC870\uC7A5\uC5D0\uC11C \uD3EC\uB3C4\uC8FC
+    3\uBCD1\uC744 \uC0AC\uC11C \uB9AC\uC54C\uD1A0 \uC7A5\uD130\uC5D0 \uD310\uB2E4."
+  giverNpc: venice_warehouse
+  requires:
+  - {fileID: 11400000, guid: c8fa8ac88026b7d46b0bd19b6dc187d3, type: 2}
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "\uBCF8\uD1A0 \uBC30\uAC00 \uB4E4\uC5B4\uC624\uBA74 \uD3EC\uB3C4\uC8FC
+    \uC598\uAE30\uBFD0\uC774\uC57C.\n\uD0A4\uC624\uC790 \uC794\uAD50\uC5D0\uC11C
+    \uBC30\uB97C \uD0C0\uACE0 \uD3EC\uB3C4\uBC2D\uC5D0 \uAC00 \uBCF4\uAC8C.\n\uC138
+    \uBCD1\uC744 \uC0AC\uC11C \uB9AC\uC54C\uD1A0\uC5D0 \uD314\uC544 \uBCF4\uAC8C."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 5
+    text: "\uBCF8\uD1A0 \uB098\uB8E8\uD130\uC5D0 \uAC00\uAE30"
+    targetId: venice_c_landing
+    item: {fileID: 0}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: 
+  - type: 2
+    text: "\uD3EC\uB3C4\uBC2D \uC591\uC870\uC7A5\uC5D0\uC11C \uD3EC\uB3C4\uC8FC 3\uBCD1
+      \uC0AC\uAE30"
+    targetId: venice_c_vineyard
+    item: {fileID: 11400000, guid: 8fcf64b0e9e02ef42a811e652539ab6c, type: 2}
+    vehicle: {fileID: 0}
+    count: 3
+    completeLine: 
+  - type: 3
+    text: "\uB9AC\uC54C\uD1A0 \uC7A5\uD130\uC5D0 \uD3EC\uB3C4\uC8FC 3\uBCD1 \uD314\uAE30"
+    targetId: venice_rialto
+    item: {fileID: 11400000, guid: 8fcf64b0e9e02ef42a811e652539ab6c, type: 2}
+    vehicle: {fileID: 0}
+    count: 3
+    completeLine: 
+  - type: 0
+    text: "\uCC3D\uACE0\uC9C0\uAE30\uC5D0\uAC8C \uC54C\uB9AC\uAE30"
+    targetId: venice_warehouse
+    item: {fileID: 0}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: "\uD3EC\uB3C4\uC8FC \uBC30\uAC00 \uB298\uACA0\uAD70. \uC7A5\uBD80\uC5D0
+      \uC801\uC5B4 \uB450\uC9C0."
+  rewardMoney: 80
+  rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "\uC11D\uD638 \uBC16\uC5D0\uC11C \uC0AC \uC628 \uBB3C\uAC74\uC774 \uC12C\uC5D0\uC11C
+    \uAC12\uC744 \uBC1B\uB294\uAD70."

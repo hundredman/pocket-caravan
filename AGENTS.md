@@ -1,12 +1,29 @@
-# Pocket Caravan 작업 기준
+# Pocket Caravan — 팀 공용 작업 안내
 
-후속 작업 전 `Docs/Handoff.md`, `Docs/ProjectRules.md`, `Docs/DevelopmentStatus.md`, 해당 기능 명세를 읽는다. 사용자의 최신 명시 지시를 우선한다. 과거 검토/제안을 현재 확정 사항으로 취급하지 않는다.
+사람과 AI 에이전트(Claude, Codex 등)가 이 저장소에서 작업을 시작할 때 읽는 문서다. `CLAUDE.md`는 이 파일을 불러온다.
+게임개발(2026-2) 팀 프로젝트. 대항해시대 이전 상인 문화를 각색한 2D 탑다운 픽셀 교역 게임.
 
-- 현재 본편 개선은 2D 탑다운 프로토타입이다. 다른 시점 실험은 보존한다.
-- 고려는 동쪽 반도, 북유럽 북쪽, 베네치아 서쪽, 아라비아 남쪽. 여러 경유 구역이 중앙 권역으로 모인다. 문자 그대로 한 장의 십자 도로를 만들지 않는다.
-- 실제 지형/출구/지도는 일치해야 한다. 현재 원본은 `Assets/PocketCaravan/World/Terrain/continuous.json`과 `Tools/MapGen/continuous.py`다. 지도에만 지형을 덧그리지 않는다.
-- 고려 수도1+수도 외 최소4마을, 등급별 시설, NPC 의뢰·교역을 보존한다. 시장/상품/퀘스트ID와 경제 좌표는 지리 재배치 때문에 바꾸지 않는다.
-- 다른 팀 브랜치/지역 씬·데이터를 임의 재생성하지 않는다. 등록 범위를 확인하고 선택 생성한다. 씬에서만 한 수정은 재생성 전 보존한다.
-- 변경 시 실제 씬/이동을 검사하고 현재 문서와 검증 기록을 갱신한다. 온라인/실행/재미 검증은 정적 검사로 대체해 완료라고 쓰지 않는다.
+## 지역 담당과 작업 안내
 
-- 작업 종료 시 `Docs/Handoff.md`의 전달 항목을 따른다. 구현/검증/미확인/다음 행동을 구분해 관련 원본 문서를 갱신한다. 로컬 output·빌드·미추적 실험물이 다른 사람에게 전달됐다고 가정하지 않는다.
+| 담당 | 지역 | 지역별 작업 안내 |
+|---|---|---|
+| 은샘 | 고려 + 중앙 대륙 동쪽 | [Docs/Goryeo/AgentGuide.md](Docs/Goryeo/AgentGuide.md) |
+| 윤채 | 베네치아 | 담당자가 정함 |
+| 은인 | 아라비아 | 담당자가 정함 |
+| 기우 | 북유럽 | 담당자가 정함 |
+
+자기 지역 작업을 할 때는 해당 안내를 따른다. 다른 지역의 안내·작업 계획은 그 지역 담당자에게만 적용된다.
+
+## 모두 지킬 것
+
+- **다른 지역은 고치지 않는다.** 다른 담당의 씬·데이터·그림·브랜치를 다시 만들거나 덮어쓰지 않는다.
+- **공용 파일은 조심해서 고친다.** `Assets/PocketCaravan/Scripts/Core·Economy·Quests·UI`, `Resources/GameDatabase.asset`·`WorldIndex.asset`, `ProjectSettings/EditorBuildSettings.asset`, `World/Connections`는 여러 지역이 함께 쓴다. 고칠 때는 PR에 적고 팀에 알린다.
+- **.asset 충돌은 양쪽을 다 살린다.** `.gitattributes`에서 `.asset`·`.unity`가 `merge=binary`라, 서로 다른 항목을 추가해도 충돌로 표시된다. "한쪽 선택"으로 풀면 다른 지역 항목이 사라진다.
+- **합치기 전 검사:** `python Tools/Integration/validate_world.py`, `python -m unittest discover -s Tools/Integration -p 'test_*.py'`, Unity 컴파일·시작 맵 실행.
+- **아이디 유지:** 시장·상품·퀘스트·NPC·시설 아이디와 저장 형식을 바꾸면 옛 저장 이주를 함께 만든다.
+
+## 환경
+
+- Unity **6000.3.26f1**. 버전을 올리지 않는다.
+- 코드: `Assets/PocketCaravan/Scripts/` (namespace `PocketCaravan`), 에디터 도구: `Assets/PocketCaravan/Editor/`.
+- 16px 타일, PPU 16. 실행·폴더 구조는 [README](README.md).

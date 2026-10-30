@@ -10,6 +10,8 @@ namespace PocketCaravan
     public class PlayerController : MonoBehaviour
     {
         public float runMultiplier = 1.6f;
+        /// <summary>임시 시험용: G를 누르는 동안 속도 배율 (나중에 제거). 씬마다 저장된 값이 달라지지 않게 코드 상수로 둔다.</summary>
+        public const float DebugFastMultiplier = 6f;
         [Tooltip("짐이 가득 찼을 때 속도 배율")] public float fullLoadSpeed = 0.7f;
         [Tooltip("걷기 애니메이션 (그림이 붙은 자식)")] public CharacterAnimator anim;
 
@@ -60,6 +62,9 @@ namespace PocketCaravan
         {
             if (GameManager.I == null) return;
             bool locked = UIState.Blocking || GameManager.I.IsTravelling;
+            // 2026-10-29: 맵 이동 중에는 감속조차 하지 않고 그 자리에 멈춘다(페이드 중에 몇 칸 더 걸어가 보이던 문제)
+            //   PlayerMotor는 거리 보정 검사(E1)의 입력 파일이라 건드리지 않고, 제자리 Teleport로 속도만 0으로 만든다
+            if (GameManager.I.IsTravelling) { motor.Teleport(transform.position, Vector2Int.zero); TalkTarget = null; UpdateBody(); return; }
             Vector2 input = locked ? Vector2.zero : InputReader.MoveVector();
             Running = !locked && !exhausted && InputReader.Run() && input.sqrMagnitude > 0.01f;
             motor.Tick(input, CurrentSpeed(), Time.deltaTime);
@@ -70,7 +75,7 @@ namespace PocketCaravan
             {
                 if (InputReader.InteractPressed() && !UIState.JustClosed && TalkTarget != null) TalkTarget.Interact(this);
                 var exit = MapExit.At(motor.Cell,motor.Facing);
-                if (exit != null) exit.Use(motor);
+                if (exit != null) exit.TryUseAtBoundary(motor, input);
             }
             UpdateBody();
         }
@@ -87,6 +92,7 @@ namespace PocketCaravan
             }
             s *= Mathf.Lerp(1f, fullLoadSpeed, p.LoadRatio);
             if (Running) s *= runMultiplier;
+            if (InputReader.DebugFast()) s *= DebugFastMultiplier;   // 임시 시험용 (G, 6배)
             var obstacles=MapRoot.Current!=null?MapRoot.Current.GetComponent<ObstacleField>():null;
             if(obstacles!=null){obstacles.Effects(motor.Cell,out float multiplier,out _,out _,out _,out _);s*=multiplier;}
             return s * motor.walkSpeed;

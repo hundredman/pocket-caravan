@@ -19,6 +19,8 @@ namespace PocketCaravan
         public Vector3Int Cell => MapRoot.Current != null ? MapRoot.Current.WorldToCell(transform.position) : Vector3Int.zero;
         public abstract string DisplayName { get; }
         public virtual Kind Category => Kind.Person;
+        /// <summary>가까이 갔을 때 안내 "○○ (Space)"의 ○○. 비우면 종류에 따라 말 걸기·사고팔기 등</summary>
+        public virtual string ActionVerb => null;
 
         protected virtual void OnEnable() => all.Add(this);
         protected virtual void OnDisable() => all.Remove(this);

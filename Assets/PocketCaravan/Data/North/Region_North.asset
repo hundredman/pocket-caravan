@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52173c030d53540968a2e67252f4c4e2, type: 3}
+  m_Name: Region_North
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.RegionData
+  id: north
+  displayName: "\uBD81\uC720\uB7FD"
+  townReputation: 0
+  note: "D\uAD6C\uC5ED. \uD55C\uB7AD \uC9C0\uD615\xB7\uD53C\uC624\uB974\xB7\uC232.
+    \uD2B9\uC0B0: \uBAA8\uD53C, \uD638\uBC15"
+  deliveryRewards:
+    enabled: 0
+    revision: 1
+    dispatchFee: 1.5
+    perWeight: 0.65
+    perWeightPerStep: 0.25
+    premiumMultiplier: 1.8
+    premiumMinWeight: 8
+    premiumMaxWeight: 12

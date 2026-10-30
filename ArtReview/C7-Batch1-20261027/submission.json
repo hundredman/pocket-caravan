@@ -1,0 +1,61 @@
+{
+  "statuses": {
+    "cottage": "approved",
+    "pavilion": "approved",
+    "willow": "approved"
+  },
+  "productionApplied": false,
+  "files": {
+    "style-comparison.png": {
+      "size": [
+        1120,
+        1150
+      ],
+      "rgbaSHA256": "79d82253fbb681a2509d915682aac4426d00ab74f55a1af4975fa13b5abd0e6e"
+    },
+    "game-comparison.png": {
+      "size": [
+        1000,
+        480
+      ],
+      "rgbaSHA256": "cf92e78e6c1f875ea80bc2c645656ec05d59443e03bfabc1cedf9707e3518956"
+    },
+    "Screens/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "4033d6be98c7014c5b113bde7f94c4627b763f1c0446e29bee756d40037cf0ff"
+    },
+    "Screens/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "205b27d4f74a3ded701c16fddbcbfd2cc5d2c976b237c0e580883cb499604cc4"
+    },
+    "Native/cottage.png": {
+      "size": [
+        80,
+        64
+      ],
+      "rgbaSHA256": "f05a3fd855584201b97dfd04bc7667671f317369194304a71ec612cc5a210515"
+    },
+    "Native/pavilion.png": {
+      "size": [
+        80,
+        80
+      ],
+      "rgbaSHA256": "6a228844efaa3acabf9ad7a88dabd566fc0a18be0394da5a1efe903ddd3b8bd2"
+    },
+    "Native/willow.png": {
+      "size": [
+        64,
+        64
+      ],
+      "rgbaSHA256": "177efe4e87c42123f6320a3a294422a92f78574c8592baf61df90d4e36abbf2b"
+    }
+  },
+  "reviewDecisions": "ArtReview/C7-Batch1-20261027/review-decisions.json",
+  "historicalCaption": "Submitted pending captions remain historical; later approval is recorded per asset."
+}

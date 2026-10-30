@@ -1,0 +1,130 @@
+[
+ {
+  "key": "north_birka",
+  "name": "비르카 (수도)",
+  "x": 4.0,
+  "y": -227.23345014572143,
+  "area": 3800,
+  "kind": "main"
+ },
+ {
+  "key": "north_herd",
+  "name": "순록 고원 마을",
+  "x": -34.93223048400879,
+  "y": -260.91692795753477,
+  "area": 2700,
+  "kind": "main"
+ },
+ {
+  "key": "north_hunter",
+  "name": "모피 사냥꾼 마을",
+  "x": -30.536656074523933,
+  "y": -220.06675273895263,
+  "area": 2600,
+  "kind": "main"
+ },
+ {
+  "key": "north_naru",
+  "name": "피오르 나루 마을",
+  "x": 40.42047367858886,
+  "y": -222.93343170166014,
+  "area": 2800,
+  "kind": "main"
+ },
+ {
+  "key": "north_laugar",
+  "name": "라우가르 온천 마을",
+  "x": 4.0,
+  "y": -271.666974067688,
+  "area": 2800,
+  "kind": "main"
+ },
+ {
+  "key": "north_icecave",
+  "name": "얼음 동굴 골짜기",
+  "x": 41.67635208129883,
+  "y": -268.0836253643036,
+  "area": 2700,
+  "kind": "main"
+ },
+ {
+  "key": "north_runehill",
+  "name": "룬돌 언덕",
+  "x": 4.0,
+  "y": -316.1004979896545,
+  "area": 2600,
+  "kind": "main"
+ },
+ {
+  "key": "north_c_gatetown",
+  "name": "북문 마을",
+  "x": 0,
+  "y": -150,
+  "area": 3200,
+  "kind": "town"
+ },
+ {
+  "key": "north_c_snowwood",
+  "name": "눈숲 마을",
+  "x": -52,
+  "y": -108,
+  "area": 3200,
+  "kind": "town"
+ },
+ {
+  "key": "north_c_creek",
+  "name": "개울 나루 마을",
+  "x": 52,
+  "y": -108,
+  "area": 3200,
+  "kind": "town"
+ },
+ {
+  "key": "north_c_crossing",
+  "name": "북쪽 길목 마을",
+  "x": 0,
+  "y": -58,
+  "area": 3200,
+  "kind": "town"
+ },
+ {
+  "key": "north_c_road_nw",
+  "name": "눈숲 고갯길",
+  "x": -40,
+  "y": -150,
+  "area": 2440,
+  "kind": "road"
+ },
+ {
+  "key": "north_c_road_ne",
+  "name": "개울 다리길",
+  "x": 42,
+  "y": -148,
+  "area": 2440,
+  "kind": "road"
+ },
+ {
+  "key": "north_c_runeway",
+  "name": "룬돌 큰길",
+  "x": 0,
+  "y": -104,
+  "area": 2440,
+  "kind": "road"
+ },
+ {
+  "key": "north_c_road_sw",
+  "name": "서남 솔숲길",
+  "x": -36,
+  "y": -74,
+  "area": 2440,
+  "kind": "road"
+ },
+ {
+  "key": "north_c_road_se",
+  "name": "동남 물가길",
+  "x": 36,
+  "y": -74,
+  "area": 2440,
+  "kind": "road"
+ }
+]

@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-27",
+  "userQuote": "일단 건물은 좋아. 땅은 아직 잘 모르겠어. 땅은 이전이 나은 것 같기도 하고",
+  "reviews": {
+    "c7ts_thatch": {
+      "status": "approved",
+      "evidence": "ArtReview/Approved/C7-Buildings-v5/approval.md"
+    },
+    "c7ts_tile_house": {
+      "status": "approved",
+      "evidence": "ArtReview/Approved/C7-Buildings-v5/approval.md"
+    },
+    "c7ts_pine": {
+      "status": "pending"
+    },
+    "c7ts_grass_dirt": {
+      "status": "changes_requested",
+      "feedback": "사용자가 기존 본편 지형 유지를 선택. 이 C7 땅 시안은 미채택."
+    }
+  },
+  "groundSelectionEvidence": "ArtReview/C7-TeamStyle-20261027/GroundOrigin-v7/decision.md"
+}

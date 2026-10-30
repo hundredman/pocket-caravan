@@ -1,0 +1,118 @@
+{
+  "revision": "side hair coverage",
+  "frameSelectionChecks": [
+    {
+      "direction": "d",
+      "frame": 0,
+      "characters": 10,
+      "allMatched": true
+    },
+    {
+      "direction": "d",
+      "frame": 1,
+      "characters": 10,
+      "allMatched": true
+    },
+    {
+      "direction": "d",
+      "frame": 2,
+      "characters": 10,
+      "allMatched": true
+    },
+    {
+      "direction": "d",
+      "frame": 3,
+      "characters": 10,
+      "allMatched": true
+    },
+    {
+      "direction": "u",
+      "frame": 0,
+      "characters": 10,
+      "allMatched": true
+    },
+    {
+      "direction": "u",
+      "frame": 1,
+      "characters": 10,
+      "allMatched": true
+    },
+    {
+      "direction": "u",
+      "frame": 2,
+      "characters": 10,
+      "allMatched": true
+    },
+    {
+      "direction": "u",
+      "frame": 3,
+      "characters": 10,
+      "allMatched": true
+    },
+    {
+      "direction": "l",
+      "frame": 0,
+      "characters": 10,
+      "allMatched": true
+    },
+    {
+      "direction": "l",
+      "frame": 1,
+      "characters": 10,
+      "allMatched": true
+    },
+    {
+      "direction": "l",
+      "frame": 2,
+      "characters": 10,
+      "allMatched": true
+    },
+    {
+      "direction": "l",
+      "frame": 3,
+      "characters": 10,
+      "allMatched": true
+    },
+    {
+      "direction": "r",
+      "frame": 0,
+      "characters": 10,
+      "allMatched": true
+    },
+    {
+      "direction": "r",
+      "frame": 1,
+      "characters": 10,
+      "allMatched": true
+    },
+    {
+      "direction": "r",
+      "frame": 2,
+      "characters": 10,
+      "allMatched": true
+    },
+    {
+      "direction": "r",
+      "frame": 3,
+      "characters": 10,
+      "allMatched": true
+    }
+  ],
+  "frameSelectionTotal": 160,
+  "loopAndIdleChecks": 80,
+  "allMatched": true,
+  "scene": "goryeo_jangdan",
+  "ppu": 16,
+  "pivot": [
+    8,
+    6
+  ],
+  "scale": [
+    1,
+    1,
+    1
+  ],
+  "autosave": false,
+  "sceneDirty": false,
+  "scope": "runtime CharacterAnimator selection and in-place walking; no navigation/gameplay test"
+}

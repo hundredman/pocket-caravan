@@ -1,0 +1,43 @@
+{
+  "status": "approved",
+  "productionApplied": false,
+  "files": {
+    "palace.png": {
+      "size": [
+        160,
+        112
+      ],
+      "rgbaSHA256": "c0b5cb54c0f50d1b70a7efd5118fe18b4f2566d82ef116d634d292ac90d1fb52"
+    },
+    "before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "9e620d9d655a81be9dec73e61548a40ba2c371efe087ade899ccad6e520b1795"
+    },
+    "trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "c652ea3f2842183c70fa67f3d61de8b20cbcba69e17a2d4bfcb434ac36a59840"
+    },
+    "style-comparison.png": {
+      "size": [
+        1480,
+        850
+      ],
+      "rgbaSHA256": "97effa31135b68d5da50e679f17ccd32f7b78a06198c028ff039536b5aa1091b"
+    },
+    "game-comparison.png": {
+      "size": [
+        1000,
+        480
+      ],
+      "rgbaSHA256": "06423f0422f39a1bfda94e59f0ef9d2ce6124876359430ca63aef04295260b8b"
+    }
+  },
+  "reviewDecision": "ArtReview/C7-Palace-20261027/review-decision.json",
+  "historicalCaption": "Submitted comparison retains original pending caption; later approval is recorded separately."
+}

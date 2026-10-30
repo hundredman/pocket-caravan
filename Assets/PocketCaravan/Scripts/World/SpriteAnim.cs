@@ -21,6 +21,7 @@ namespace PocketCaravan
         {
             if (frames == null || frames.Length == 0) return;
             t += Time.deltaTime;
+            if (!sr.isVisible) return; // Preserve phase; skip invisible sprite assignments.
             sr.sprite = frames[(int)(t * fps) % frames.Length];
         }
     }

@@ -1,0 +1,12 @@
+{
+  "changedPixels": 1,
+  "coordinate": [
+    10,
+    10
+  ],
+  "change": "hanging hair pixel above screen-right eye changed to skin highlight",
+  "alphaAndOtherPixels": "identical",
+  "otherCharacters": "byte-identical",
+  "asepriteRoundtrip": "pixel-identical",
+  "runtimeAssetsChanged": false
+}

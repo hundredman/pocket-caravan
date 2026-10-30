@@ -34,6 +34,7 @@ namespace PocketCaravan
                 Vector2 p = ToGui(cam, it.transform.position + new Vector3(0f, 1.0f, 0f));
                 if (p.x < -50 || p.y < -20 || p.x > UIStyle.VirtualWidth + 50 || p.y > UIStyle.VirtualHeight + 20) continue;
                 string label = it.DisplayName;
+                if (string.IsNullOrEmpty(label)) continue;   // 이름 없는 자리(같은 모닥불의 두 번째 의자 등)는 이름표를 띄우지 않는다
                 Color c = it.Category switch
                 {
                     Interactable.Kind.Quest => QuestColor,
@@ -52,8 +53,9 @@ namespace PocketCaravan
             if (player != null && player.TalkTarget != null && !UIState.Blocking)
             {
                 Vector2 p = ToGui(cam, player.TalkTarget.transform.position + new Vector3(0f, -0.7f, 0f));
-                string verb = player.TalkTarget is DroppedCargo ? "Space 줍기" : player.TalkTarget is ContractBoard ? "Space 게시판 보기" : player.TalkTarget is TownMarket ? "Space 사고팔기" : "Space 말 걸기";
-                Outlined(new Rect(p.x - 50, p.y, 100, 12), verb, Color.white, nameStyle);
+                string verb = !string.IsNullOrEmpty(player.TalkTarget.ActionVerb) ? player.TalkTarget.ActionVerb + " (Space)"
+                    : player.TalkTarget is DroppedCargo ? "줍기 (Space)" : player.TalkTarget is ContractBoard ? "게시판 보기 (Space)" : player.TalkTarget is TownMarket ? "사고팔기 (Space)" : "말 걸기 (Space)";
+                Outlined(new Rect(p.x - 70, p.y, 140, 12), verb, Color.white, nameStyle);
             }
 
             // 3) 퀘스트 길 안내
@@ -61,10 +63,10 @@ namespace PocketCaravan
             {
                 var n = nav.Value;
                 Vector2 from = player.transform.position;
-                Vector2 d = (Vector2)n.position - from;
-                float dist = d.magnitude;
+                Vector2 d = (Vector2)n.steer - from;                 // 걸을 수 있는 길의 앞쪽을 가리킨다
+                float dist = n.walkCells >= 0 ? n.walkCells : ((Vector2)n.position - from).magnitude;
                 if (n.exit) DrawDown(ToGui(cam, n.position + new Vector3(0f, 0.9f, 0f)));
-                if (dist > 2.2f)
+                if (dist > 2.2f && d.sqrMagnitude > 0.01f)
                 {
                     Vector2 c = ToGui(cam, player.transform.position);
                     float ang = Mathf.Atan2(-d.y, d.x) * Mathf.Rad2Deg;   // GUI는 y가 아래로
@@ -114,12 +116,12 @@ namespace PocketCaravan
                 arrowTex = Triangle(12, 12, true);
                 downTex = Triangle(10, 8, false);
             }
-            if (nameStyle == null)
+            if (nameStyle == null || nameStyle.font != UIStyle.SmallFont)
             {
-                nameStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.SmallFont, alignment = TextAnchor.MiddleCenter, fontSize = 9, clipping = TextClipping.Overflow };
+                nameStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.SmallFont, alignment = TextAnchor.MiddleCenter, fontSize = UIStyle.SmallSize, clipping = TextClipping.Overflow };
                 shadowStyle = new GUIStyle(nameStyle);
                 shadowStyle.normal.textColor = new Color(0f, 0f, 0f, 0.8f);
-                guideStyle = new GUIStyle(nameStyle) { font = GUI.skin.font, fontSize = 11 };
+                guideStyle = new GUIStyle(nameStyle) { font = GUI.skin.font, fontSize = UIStyle.BodySize };
             }
         }
 

@@ -1,0 +1,7335 @@
+{
+  "schemaVersion": 1,
+  "appliedToGame": false,
+  "sharedRegionIdentity": true,
+  "currentDistanceMode": "current",
+  "oracleCases": 1680,
+  "cycleCases": 1290240,
+  "checks": 52016823,
+  "safetySpreadViolations": 0,
+  "knownCounterexample": {
+    "Valid": true,
+    "Profit": 4,
+    "Buys": 81,
+    "Sells": 85,
+    "FinalLevel": 1,
+    "FinalStock": 3,
+    "Trace": [
+      {
+        "selling": false,
+        "stock": 3,
+        "level": 1,
+        "volume": 0,
+        "buyQuote": 81,
+        "sellQuote": 63
+      },
+      {
+        "selling": true,
+        "stock": 2,
+        "level": 1,
+        "volume": 81,
+        "buyQuote": 122,
+        "sellQuote": 85
+      }
+    ]
+  },
+  "singleCurrent": {
+    "town": "transit_ferry",
+    "item": "ginseng",
+    "origin": "venice",
+    "stage": 5,
+    "haggle": "none",
+    "growth": false,
+    "order": "buy_then_sell",
+    "startLevel": 1,
+    "stockRatio": 1,
+    "marketDay": false,
+    "quantity": 1,
+    "initialStock": 3,
+    "result": {
+      "Valid": true,
+      "Profit": 1,
+      "Buys": 144,
+      "Sells": 145,
+      "FinalLevel": 1,
+      "FinalStock": 2.8,
+      "Trace": [
+        {
+          "selling": false,
+          "stock": 3,
+          "level": 1,
+          "volume": 0,
+          "buyQuote": 144,
+          "sellQuote": 107
+        },
+        {
+          "selling": true,
+          "stock": 2,
+          "level": 1,
+          "volume": 144,
+          "buyQuote": 216,
+          "sellQuote": 145
+        }
+      ]
+    }
+  },
+  "singleFuture": {
+    "town": "dakmok",
+    "item": "salt",
+    "origin": "arabia",
+    "stage": 3,
+    "haggle": "both",
+    "growth": false,
+    "order": "buy_then_sell",
+    "startLevel": 1,
+    "stockRatio": 0.5,
+    "marketDay": true,
+    "quantity": 1,
+    "initialStock": 4,
+    "result": {
+      "Valid": true,
+      "Profit": 1,
+      "Buys": 53,
+      "Sells": 54,
+      "FinalLevel": 1,
+      "FinalStock": 4,
+      "Trace": [
+        {
+          "selling": false,
+          "stock": 4,
+          "level": 1,
+          "volume": 0,
+          "buyQuote": 53,
+          "sellQuote": 43
+        },
+        {
+          "selling": true,
+          "stock": 3,
+          "level": 1,
+          "volume": 53,
+          "buyQuote": 55,
+          "sellQuote": 54
+        }
+      ]
+    }
+  },
+  "groups": [
+    {
+      "stage": 0,
+      "haggle": "none",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 0,
+      "haggle": "buy_only",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 0,
+      "haggle": "both",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 1,
+      "haggle": "none",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 1,
+      "haggle": "buy_only",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 1,
+      "haggle": "both",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 2,
+      "haggle": "none",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 2,
+      "haggle": "buy_only",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 8,
+      "maxProfit": 22,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 2,
+        "haggle": "buy_only",
+        "growth": false,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 22,
+          "Buys": 2329,
+          "Sells": 2351,
+          "FinalLevel": 1,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 268,
+              "sellQuote": 234
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 268,
+              "buyQuote": 321,
+              "sellQuote": 243
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 589,
+              "buyQuote": 402,
+              "sellQuote": 293
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 1,
+              "volume": 991,
+              "buyQuote": 535,
+              "sellQuote": 370
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 1,
+              "volume": 1526,
+              "buyQuote": 803,
+              "sellQuote": 502
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 1,
+              "volume": 2329,
+              "buyQuote": 1071,
+              "sellQuote": 782
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 1,
+              "volume": 3111,
+              "buyQuote": 892,
+              "sellQuote": 541
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 1,
+              "volume": 3652,
+              "buyQuote": 618,
+              "sellQuote": 413
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 1,
+              "volume": 4065,
+              "buyQuote": 472,
+              "sellQuote": 334
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 1,
+              "volume": 4399,
+              "buyQuote": 382,
+              "sellQuote": 281
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 2,
+      "haggle": "both",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 10,
+      "maxProfit": 91,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 2,
+        "haggle": "both",
+        "growth": false,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 91,
+          "Buys": 2329,
+          "Sells": 2420,
+          "FinalLevel": 1,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 268,
+              "sellQuote": 241
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 268,
+              "buyQuote": 321,
+              "sellQuote": 250
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 589,
+              "buyQuote": 402,
+              "sellQuote": 302
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 1,
+              "volume": 991,
+              "buyQuote": 535,
+              "sellQuote": 381
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 1,
+              "volume": 1526,
+              "buyQuote": 803,
+              "sellQuote": 517
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 1,
+              "volume": 2329,
+              "buyQuote": 1071,
+              "sellQuote": 805
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 1,
+              "volume": 3134,
+              "buyQuote": 892,
+              "sellQuote": 557
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 1,
+              "volume": 3691,
+              "buyQuote": 618,
+              "sellQuote": 425
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 1,
+              "volume": 4116,
+              "buyQuote": 472,
+              "sellQuote": 344
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 1,
+              "volume": 4460,
+              "buyQuote": 382,
+              "sellQuote": 289
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 3,
+      "haggle": "none",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 8,
+      "maxProfit": 22,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 3,
+        "haggle": "none",
+        "growth": false,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 22,
+          "Buys": 2329,
+          "Sells": 2351,
+          "FinalLevel": 1,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 268,
+              "sellQuote": 234
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 268,
+              "buyQuote": 321,
+              "sellQuote": 243
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 589,
+              "buyQuote": 402,
+              "sellQuote": 293
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 1,
+              "volume": 991,
+              "buyQuote": 535,
+              "sellQuote": 370
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 1,
+              "volume": 1526,
+              "buyQuote": 803,
+              "sellQuote": 502
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 1,
+              "volume": 2329,
+              "buyQuote": 1071,
+              "sellQuote": 782
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 1,
+              "volume": 3111,
+              "buyQuote": 892,
+              "sellQuote": 541
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 1,
+              "volume": 3652,
+              "buyQuote": 618,
+              "sellQuote": 413
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 1,
+              "volume": 4065,
+              "buyQuote": 472,
+              "sellQuote": 334
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 1,
+              "volume": 4399,
+              "buyQuote": 382,
+              "sellQuote": 281
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 3,
+      "haggle": "buy_only",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 23,
+      "maxProfit": 138,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 3,
+        "haggle": "buy_only",
+        "growth": false,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 138,
+          "Buys": 2213,
+          "Sells": 2351,
+          "FinalLevel": 1,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 255,
+              "sellQuote": 234
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 255,
+              "buyQuote": 305,
+              "sellQuote": 243
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 560,
+              "buyQuote": 382,
+              "sellQuote": 293
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 1,
+              "volume": 942,
+              "buyQuote": 508,
+              "sellQuote": 370
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 1,
+              "volume": 1450,
+              "buyQuote": 763,
+              "sellQuote": 502
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 1,
+              "volume": 2213,
+              "buyQuote": 1017,
+              "sellQuote": 782
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 1,
+              "volume": 2995,
+              "buyQuote": 847,
+              "sellQuote": 541
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 1,
+              "volume": 3536,
+              "buyQuote": 587,
+              "sellQuote": 413
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 1,
+              "volume": 3949,
+              "buyQuote": 448,
+              "sellQuote": 334
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 1,
+              "volume": 4283,
+              "buyQuote": 363,
+              "sellQuote": 281
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 3,
+      "haggle": "both",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 289,
+      "maxProfit": 256,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 3,
+        "haggle": "both",
+        "growth": false,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 256,
+          "Buys": 2213,
+          "Sells": 2469,
+          "FinalLevel": 1,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 255,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 255,
+              "buyQuote": 305,
+              "sellQuote": 255
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 560,
+              "buyQuote": 382,
+              "sellQuote": 308
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 1,
+              "volume": 942,
+              "buyQuote": 508,
+              "sellQuote": 388
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 1,
+              "volume": 1450,
+              "buyQuote": 763,
+              "sellQuote": 527
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 1,
+              "volume": 2213,
+              "buyQuote": 1017,
+              "sellQuote": 821
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 1,
+              "volume": 3034,
+              "buyQuote": 847,
+              "sellQuote": 568
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 1,
+              "volume": 3602,
+              "buyQuote": 587,
+              "sellQuote": 434
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 1,
+              "volume": 4036,
+              "buyQuote": 448,
+              "sellQuote": 351
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 1,
+              "volume": 4387,
+              "buyQuote": 363,
+              "sellQuote": 295
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 4,
+      "haggle": "none",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 10,
+      "maxProfit": 95,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 4,
+        "haggle": "none",
+        "growth": false,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 95,
+          "Buys": 2256,
+          "Sells": 2351,
+          "FinalLevel": 1,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 259,
+              "sellQuote": 234
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 259,
+              "buyQuote": 311,
+              "sellQuote": 243
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 570,
+              "buyQuote": 389,
+              "sellQuote": 293
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 1,
+              "volume": 959,
+              "buyQuote": 519,
+              "sellQuote": 370
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 1,
+              "volume": 1478,
+              "buyQuote": 778,
+              "sellQuote": 502
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 1,
+              "volume": 2256,
+              "buyQuote": 1038,
+              "sellQuote": 782
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 1,
+              "volume": 3038,
+              "buyQuote": 865,
+              "sellQuote": 541
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 1,
+              "volume": 3579,
+              "buyQuote": 599,
+              "sellQuote": 413
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 1,
+              "volume": 3992,
+              "buyQuote": 458,
+              "sellQuote": 334
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 1,
+              "volume": 4326,
+              "buyQuote": 370,
+              "sellQuote": 281
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 4,
+      "haggle": "buy_only",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 366,
+      "maxProfit": 276,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 4,
+        "haggle": "buy_only",
+        "growth": false,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 276,
+          "Buys": 2075,
+          "Sells": 2351,
+          "FinalLevel": 1,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 238,
+              "sellQuote": 234
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 238,
+              "buyQuote": 286,
+              "sellQuote": 243
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 524,
+              "buyQuote": 358,
+              "sellQuote": 293
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 1,
+              "volume": 882,
+              "buyQuote": 477,
+              "sellQuote": 370
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 1,
+              "volume": 1359,
+              "buyQuote": 716,
+              "sellQuote": 502
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 1,
+              "volume": 2075,
+              "buyQuote": 955,
+              "sellQuote": 782
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 1,
+              "volume": 2857,
+              "buyQuote": 796,
+              "sellQuote": 541
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 1,
+              "volume": 3398,
+              "buyQuote": 551,
+              "sellQuote": 413
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 1,
+              "volume": 3811,
+              "buyQuote": 421,
+              "sellQuote": 334
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 1,
+              "volume": 4145,
+              "buyQuote": 340,
+              "sellQuote": 281
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 4,
+      "haggle": "both",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 2101,
+      "maxProfit": 516,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 4,
+        "haggle": "both",
+        "growth": false,
+        "order": "buy_then_sell",
+        "startLevel": 3,
+        "stockRatio": 1,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 516,
+          "Buys": 3734,
+          "Sells": 4250,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 3,
+              "volume": 0,
+              "buyQuote": 477,
+              "sellQuote": 446
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 3,
+              "volume": 477,
+              "buyQuote": 572,
+              "sellQuote": 524
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 3,
+              "volume": 1049,
+              "buyQuote": 716,
+              "sellQuote": 633
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 3,
+              "volume": 1765,
+              "buyQuote": 955,
+              "sellQuote": 800
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 3,
+              "volume": 2720,
+              "buyQuote": 1014,
+              "sellQuote": 1013
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 3734,
+              "buyQuote": 1014,
+              "sellQuote": 1013
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 4747,
+              "buyQuote": 1014,
+              "sellQuote": 1013
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 5760,
+              "buyQuote": 955,
+              "sellQuote": 893
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 6653,
+              "buyQuote": 843,
+              "sellQuote": 724
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 7377,
+              "buyQuote": 683,
+              "sellQuote": 607
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 5,
+      "haggle": "none",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 63,
+      "maxProfit": 190,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 5,
+        "haggle": "none",
+        "growth": false,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 190,
+          "Buys": 2161,
+          "Sells": 2351,
+          "FinalLevel": 1,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 248,
+              "sellQuote": 234
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 248,
+              "buyQuote": 298,
+              "sellQuote": 243
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 546,
+              "buyQuote": 373,
+              "sellQuote": 293
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 1,
+              "volume": 919,
+              "buyQuote": 497,
+              "sellQuote": 370
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 1,
+              "volume": 1416,
+              "buyQuote": 745,
+              "sellQuote": 502
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 1,
+              "volume": 2161,
+              "buyQuote": 994,
+              "sellQuote": 782
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 1,
+              "volume": 2943,
+              "buyQuote": 828,
+              "sellQuote": 541
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 1,
+              "volume": 3484,
+              "buyQuote": 573,
+              "sellQuote": 413
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 1,
+              "volume": 3897,
+              "buyQuote": 438,
+              "sellQuote": 334
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 1,
+              "volume": 4231,
+              "buyQuote": 355,
+              "sellQuote": 281
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 5,
+      "haggle": "buy_only",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 1956,
+      "maxProfit": 448,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 5,
+        "haggle": "buy_only",
+        "growth": false,
+        "order": "buy_then_sell",
+        "startLevel": 3,
+        "stockRatio": 1,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 448,
+          "Buys": 3487,
+          "Sells": 3935,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 3,
+              "volume": 0,
+              "buyQuote": 447,
+              "sellQuote": 413
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 3,
+              "volume": 447,
+              "buyQuote": 536,
+              "sellQuote": 485
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 3,
+              "volume": 983,
+              "buyQuote": 670,
+              "sellQuote": 586
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 3,
+              "volume": 1653,
+              "buyQuote": 895,
+              "sellQuote": 741
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 3,
+              "volume": 2548,
+              "buyQuote": 939,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 3487,
+              "buyQuote": 939,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 4425,
+              "buyQuote": 939,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 5363,
+              "buyQuote": 895,
+              "sellQuote": 827
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 6190,
+              "buyQuote": 789,
+              "sellQuote": 670
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 6860,
+              "buyQuote": 639,
+              "sellQuote": 562
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 5,
+      "haggle": "both",
+      "order": "buy_then_sell",
+      "growth": false,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 2252,
+      "maxProfit": 740,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 5,
+        "haggle": "both",
+        "growth": false,
+        "order": "buy_then_sell",
+        "startLevel": 3,
+        "stockRatio": 1,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 740,
+          "Buys": 3589,
+          "Sells": 4329,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 3,
+              "volume": 0,
+              "buyQuote": 455,
+              "sellQuote": 454
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 3,
+              "volume": 455,
+              "buyQuote": 536,
+              "sellQuote": 534
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 3,
+              "volume": 991,
+              "buyQuote": 670,
+              "sellQuote": 645
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 3,
+              "volume": 1661,
+              "buyQuote": 895,
+              "sellQuote": 815
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 3,
+              "volume": 2556,
+              "buyQuote": 1033,
+              "sellQuote": 1032
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 3589,
+              "buyQuote": 1033,
+              "sellQuote": 1032
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 4621,
+              "buyQuote": 1033,
+              "sellQuote": 1032
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 5653,
+              "buyQuote": 911,
+              "sellQuote": 910
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 6563,
+              "buyQuote": 789,
+              "sellQuote": 737
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 7300,
+              "buyQuote": 639,
+              "sellQuote": 618
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 0,
+      "haggle": "none",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 0,
+      "haggle": "buy_only",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 0,
+      "haggle": "both",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 1,
+      "haggle": "none",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 1,
+      "haggle": "buy_only",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 1,
+      "haggle": "both",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 2,
+      "haggle": "none",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 2,
+      "haggle": "buy_only",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 2,
+      "haggle": "both",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 3,
+      "haggle": "none",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 3,
+      "haggle": "buy_only",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 3,
+      "haggle": "both",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 309,
+      "maxProfit": 73,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "arabia",
+        "stage": 3,
+        "haggle": "both",
+        "growth": false,
+        "order": "sell_then_buy",
+        "startLevel": 3,
+        "stockRatio": 0.25,
+        "marketDay": true,
+        "quantity": 20,
+        "initialStock": 1.5,
+        "result": {
+          "Valid": true,
+          "Profit": 73,
+          "Buys": 7827,
+          "Sells": 7900,
+          "FinalLevel": 3,
+          "FinalStock": 1.5,
+          "Trace": [
+            {
+              "selling": true,
+              "stock": 1.5,
+              "level": 3,
+              "volume": 0,
+              "buyQuote": 1035,
+              "sellQuote": 1034
+            },
+            {
+              "selling": true,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 1034,
+              "buyQuote": 1017,
+              "sellQuote": 886
+            },
+            {
+              "selling": true,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 1920,
+              "buyQuote": 872,
+              "sellQuote": 689
+            },
+            {
+              "selling": true,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 2609,
+              "buyQuote": 678,
+              "sellQuote": 564
+            },
+            {
+              "selling": true,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 3173,
+              "buyQuote": 555,
+              "sellQuote": 478
+            },
+            {
+              "selling": true,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 3651,
+              "buyQuote": 470,
+              "sellQuote": 414
+            },
+            {
+              "selling": true,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 4065,
+              "buyQuote": 408,
+              "sellQuote": 365
+            },
+            {
+              "selling": true,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 4430,
+              "buyQuote": 359,
+              "sellQuote": 327
+            },
+            {
+              "selling": true,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 4757,
+              "buyQuote": 322,
+              "sellQuote": 294
+            },
+            {
+              "selling": true,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 5051,
+              "buyQuote": 291,
+              "sellQuote": 269
+            },
+            {
+              "selling": true,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 5320,
+              "buyQuote": 265,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 5578,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 5836,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 6094,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 6352,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 6610,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 6868,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 7126,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 7384,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 7642,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 21.5,
+              "level": 3,
+              "volume": 7900,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 8159,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 8418,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 8677,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 8936,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 9195,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 9454,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 9713,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 9972,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 10231,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 10490,
+              "buyQuote": 265,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 10755,
+              "buyQuote": 291,
+              "sellQuote": 269
+            },
+            {
+              "selling": false,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 11046,
+              "buyQuote": 322,
+              "sellQuote": 294
+            },
+            {
+              "selling": false,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 11368,
+              "buyQuote": 359,
+              "sellQuote": 327
+            },
+            {
+              "selling": false,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 11727,
+              "buyQuote": 408,
+              "sellQuote": 365
+            },
+            {
+              "selling": false,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 12135,
+              "buyQuote": 470,
+              "sellQuote": 414
+            },
+            {
+              "selling": false,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 12605,
+              "buyQuote": 555,
+              "sellQuote": 478
+            },
+            {
+              "selling": false,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 13160,
+              "buyQuote": 678,
+              "sellQuote": 564
+            },
+            {
+              "selling": false,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 13838,
+              "buyQuote": 872,
+              "sellQuote": 689
+            },
+            {
+              "selling": false,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 14710,
+              "buyQuote": 1017,
+              "sellQuote": 886
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 4,
+      "haggle": "none",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 4,
+      "haggle": "buy_only",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 458,
+      "maxProfit": 141,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "arabia",
+        "stage": 4,
+        "haggle": "buy_only",
+        "growth": false,
+        "order": "sell_then_buy",
+        "startLevel": 3,
+        "stockRatio": 0.25,
+        "marketDay": true,
+        "quantity": 20,
+        "initialStock": 1.5,
+        "result": {
+          "Valid": true,
+          "Profit": 141,
+          "Buys": 7385,
+          "Sells": 7526,
+          "FinalLevel": 3,
+          "FinalStock": 1.5,
+          "Trace": [
+            {
+              "selling": true,
+              "stock": 1.5,
+              "level": 3,
+              "volume": 0,
+              "buyQuote": 986,
+              "sellQuote": 985
+            },
+            {
+              "selling": true,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 985,
+              "buyQuote": 955,
+              "sellQuote": 844
+            },
+            {
+              "selling": true,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 1829,
+              "buyQuote": 818,
+              "sellQuote": 656
+            },
+            {
+              "selling": true,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 2485,
+              "buyQuote": 637,
+              "sellQuote": 537
+            },
+            {
+              "selling": true,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 3022,
+              "buyQuote": 521,
+              "sellQuote": 455
+            },
+            {
+              "selling": true,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 3477,
+              "buyQuote": 441,
+              "sellQuote": 394
+            },
+            {
+              "selling": true,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 3871,
+              "buyQuote": 382,
+              "sellQuote": 348
+            },
+            {
+              "selling": true,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 4219,
+              "buyQuote": 338,
+              "sellQuote": 311
+            },
+            {
+              "selling": true,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 4530,
+              "buyQuote": 302,
+              "sellQuote": 280
+            },
+            {
+              "selling": true,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 4810,
+              "buyQuote": 272,
+              "sellQuote": 256
+            },
+            {
+              "selling": true,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 5066,
+              "buyQuote": 249,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 5312,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 5558,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 5804,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 6050,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 6296,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 6542,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 6788,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 7034,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 7280,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 21.5,
+              "level": 3,
+              "volume": 7526,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 7773,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 8020,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 8267,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 8514,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 8761,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 9008,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 9255,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 9502,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 9749,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 9996,
+              "buyQuote": 249,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 10245,
+              "buyQuote": 272,
+              "sellQuote": 256
+            },
+            {
+              "selling": false,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 10517,
+              "buyQuote": 302,
+              "sellQuote": 280
+            },
+            {
+              "selling": false,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 10819,
+              "buyQuote": 338,
+              "sellQuote": 311
+            },
+            {
+              "selling": false,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 11157,
+              "buyQuote": 382,
+              "sellQuote": 348
+            },
+            {
+              "selling": false,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 11539,
+              "buyQuote": 441,
+              "sellQuote": 394
+            },
+            {
+              "selling": false,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 11980,
+              "buyQuote": 521,
+              "sellQuote": 455
+            },
+            {
+              "selling": false,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 12501,
+              "buyQuote": 637,
+              "sellQuote": 537
+            },
+            {
+              "selling": false,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 13138,
+              "buyQuote": 818,
+              "sellQuote": 656
+            },
+            {
+              "selling": false,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 13956,
+              "buyQuote": 955,
+              "sellQuote": 844
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 4,
+      "haggle": "both",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 3528,
+      "maxProfit": 522,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "arabia",
+        "stage": 4,
+        "haggle": "both",
+        "growth": false,
+        "order": "sell_then_buy",
+        "startLevel": 3,
+        "stockRatio": 0.25,
+        "marketDay": true,
+        "quantity": 20,
+        "initialStock": 1.5,
+        "result": {
+          "Valid": true,
+          "Profit": 522,
+          "Buys": 7609,
+          "Sells": 8131,
+          "FinalLevel": 3,
+          "FinalStock": 1.5,
+          "Trace": [
+            {
+              "selling": true,
+              "stock": 1.5,
+              "level": 3,
+              "volume": 0,
+              "buyQuote": 1065,
+              "sellQuote": 1064
+            },
+            {
+              "selling": true,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 1064,
+              "buyQuote": 955,
+              "sellQuote": 912
+            },
+            {
+              "selling": true,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 1976,
+              "buyQuote": 818,
+              "sellQuote": 708
+            },
+            {
+              "selling": true,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 2684,
+              "buyQuote": 637,
+              "sellQuote": 580
+            },
+            {
+              "selling": true,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 3264,
+              "buyQuote": 521,
+              "sellQuote": 491
+            },
+            {
+              "selling": true,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 3755,
+              "buyQuote": 441,
+              "sellQuote": 426
+            },
+            {
+              "selling": true,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 4181,
+              "buyQuote": 382,
+              "sellQuote": 376
+            },
+            {
+              "selling": true,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 4557,
+              "buyQuote": 338,
+              "sellQuote": 336
+            },
+            {
+              "selling": true,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 4893,
+              "buyQuote": 303,
+              "sellQuote": 302
+            },
+            {
+              "selling": true,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 5195,
+              "buyQuote": 277,
+              "sellQuote": 276
+            },
+            {
+              "selling": true,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 5471,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 5737,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 6003,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 6269,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 6535,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 6801,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 7067,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 7333,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 7599,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 7865,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 21.5,
+              "level": 3,
+              "volume": 8131,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 8398,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 8665,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 8932,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 9199,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 9466,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 9733,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 10000,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 10267,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 10534,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 10801,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 11068,
+              "buyQuote": 277,
+              "sellQuote": 276
+            },
+            {
+              "selling": false,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 11345,
+              "buyQuote": 303,
+              "sellQuote": 302
+            },
+            {
+              "selling": false,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 11648,
+              "buyQuote": 338,
+              "sellQuote": 336
+            },
+            {
+              "selling": false,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 11986,
+              "buyQuote": 382,
+              "sellQuote": 376
+            },
+            {
+              "selling": false,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 12368,
+              "buyQuote": 441,
+              "sellQuote": 426
+            },
+            {
+              "selling": false,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 12809,
+              "buyQuote": 521,
+              "sellQuote": 491
+            },
+            {
+              "selling": false,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 13330,
+              "buyQuote": 637,
+              "sellQuote": 580
+            },
+            {
+              "selling": false,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 13967,
+              "buyQuote": 818,
+              "sellQuote": 708
+            },
+            {
+              "selling": false,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 14785,
+              "buyQuote": 955,
+              "sellQuote": 912
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 5,
+      "haggle": "none",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 5,
+      "haggle": "buy_only",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 3203,
+      "maxProfit": 437,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "arabia",
+        "stage": 5,
+        "haggle": "buy_only",
+        "growth": false,
+        "order": "sell_then_buy",
+        "startLevel": 3,
+        "stockRatio": 0.25,
+        "marketDay": true,
+        "quantity": 20,
+        "initialStock": 1.5,
+        "result": {
+          "Valid": true,
+          "Profit": 437,
+          "Buys": 7089,
+          "Sells": 7526,
+          "FinalLevel": 3,
+          "FinalStock": 1.5,
+          "Trace": [
+            {
+              "selling": true,
+              "stock": 1.5,
+              "level": 3,
+              "volume": 0,
+              "buyQuote": 986,
+              "sellQuote": 985
+            },
+            {
+              "selling": true,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 985,
+              "buyQuote": 895,
+              "sellQuote": 844
+            },
+            {
+              "selling": true,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 1829,
+              "buyQuote": 766,
+              "sellQuote": 656
+            },
+            {
+              "selling": true,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 2485,
+              "buyQuote": 596,
+              "sellQuote": 537
+            },
+            {
+              "selling": true,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 3022,
+              "buyQuote": 488,
+              "sellQuote": 455
+            },
+            {
+              "selling": true,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 3477,
+              "buyQuote": 413,
+              "sellQuote": 394
+            },
+            {
+              "selling": true,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 3871,
+              "buyQuote": 358,
+              "sellQuote": 348
+            },
+            {
+              "selling": true,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 4219,
+              "buyQuote": 316,
+              "sellQuote": 311
+            },
+            {
+              "selling": true,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 4530,
+              "buyQuote": 283,
+              "sellQuote": 280
+            },
+            {
+              "selling": true,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 4810,
+              "buyQuote": 257,
+              "sellQuote": 256
+            },
+            {
+              "selling": true,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 5066,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 5312,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 5558,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 5804,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 6050,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 6296,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 6542,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 6788,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 7034,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 7280,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 21.5,
+              "level": 3,
+              "volume": 7526,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 7773,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 8020,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 8267,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 8514,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 8761,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 9008,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 9255,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 9502,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 9749,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 9996,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 10243,
+              "buyQuote": 257,
+              "sellQuote": 256
+            },
+            {
+              "selling": false,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 10500,
+              "buyQuote": 283,
+              "sellQuote": 280
+            },
+            {
+              "selling": false,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 10783,
+              "buyQuote": 316,
+              "sellQuote": 311
+            },
+            {
+              "selling": false,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 11099,
+              "buyQuote": 358,
+              "sellQuote": 348
+            },
+            {
+              "selling": false,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 11457,
+              "buyQuote": 413,
+              "sellQuote": 394
+            },
+            {
+              "selling": false,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 11870,
+              "buyQuote": 488,
+              "sellQuote": 455
+            },
+            {
+              "selling": false,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 12358,
+              "buyQuote": 596,
+              "sellQuote": 537
+            },
+            {
+              "selling": false,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 12954,
+              "buyQuote": 766,
+              "sellQuote": 656
+            },
+            {
+              "selling": false,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 13720,
+              "buyQuote": 895,
+              "sellQuote": 844
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 5,
+      "haggle": "both",
+      "order": "sell_then_buy",
+      "growth": false,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 3994,
+      "maxProfit": 746,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "arabia",
+        "stage": 5,
+        "haggle": "both",
+        "growth": false,
+        "order": "sell_then_buy",
+        "startLevel": 3,
+        "stockRatio": 0.25,
+        "marketDay": true,
+        "quantity": 20,
+        "initialStock": 1.5,
+        "result": {
+          "Valid": true,
+          "Profit": 746,
+          "Buys": 7537,
+          "Sells": 8283,
+          "FinalLevel": 3,
+          "FinalStock": 1.5,
+          "Trace": [
+            {
+              "selling": true,
+              "stock": 1.5,
+              "level": 3,
+              "volume": 0,
+              "buyQuote": 1085,
+              "sellQuote": 1084
+            },
+            {
+              "selling": true,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 1084,
+              "buyQuote": 929,
+              "sellQuote": 928
+            },
+            {
+              "selling": true,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 2012,
+              "buyQuote": 766,
+              "sellQuote": 722
+            },
+            {
+              "selling": true,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 2734,
+              "buyQuote": 596,
+              "sellQuote": 591
+            },
+            {
+              "selling": true,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 3325,
+              "buyQuote": 501,
+              "sellQuote": 500
+            },
+            {
+              "selling": true,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 3825,
+              "buyQuote": 434,
+              "sellQuote": 433
+            },
+            {
+              "selling": true,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 4258,
+              "buyQuote": 384,
+              "sellQuote": 383
+            },
+            {
+              "selling": true,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 4641,
+              "buyQuote": 343,
+              "sellQuote": 342
+            },
+            {
+              "selling": true,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 4983,
+              "buyQuote": 309,
+              "sellQuote": 308
+            },
+            {
+              "selling": true,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 5291,
+              "buyQuote": 283,
+              "sellQuote": 282
+            },
+            {
+              "selling": true,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 5573,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 5844,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 6115,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 6386,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 6657,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 6928,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 7199,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 7470,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 7741,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 8012,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 21.5,
+              "level": 3,
+              "volume": 8283,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 8555,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 8827,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 9099,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 9371,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 9643,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 9915,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 10187,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 10459,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 10731,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 11003,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 11275,
+              "buyQuote": 283,
+              "sellQuote": 282
+            },
+            {
+              "selling": false,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 11558,
+              "buyQuote": 309,
+              "sellQuote": 308
+            },
+            {
+              "selling": false,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 11867,
+              "buyQuote": 343,
+              "sellQuote": 342
+            },
+            {
+              "selling": false,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 12210,
+              "buyQuote": 384,
+              "sellQuote": 383
+            },
+            {
+              "selling": false,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 12594,
+              "buyQuote": 434,
+              "sellQuote": 433
+            },
+            {
+              "selling": false,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 13028,
+              "buyQuote": 501,
+              "sellQuote": 500
+            },
+            {
+              "selling": false,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 13529,
+              "buyQuote": 596,
+              "sellQuote": 591
+            },
+            {
+              "selling": false,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 14125,
+              "buyQuote": 766,
+              "sellQuote": 722
+            },
+            {
+              "selling": false,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 14891,
+              "buyQuote": 929,
+              "sellQuote": 928
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 0,
+      "haggle": "none",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 111,
+      "maxProfit": 352,
+      "worst": {
+        "town": "transit_woodtown",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 0,
+        "haggle": "none",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": false,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 352,
+          "Buys": 2214,
+          "Sells": 2566,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 207,
+              "sellQuote": 153
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 207,
+              "buyQuote": 248,
+              "sellQuote": 158
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 455,
+              "buyQuote": 310,
+              "sellQuote": 191
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 765,
+              "buyQuote": 621,
+              "sellQuote": 362
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 2,
+              "volume": 1386,
+              "buyQuote": 828,
+              "sellQuote": 492
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 2214,
+              "buyQuote": 828,
+              "sellQuote": 612
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 2826,
+              "buyQuote": 828,
+              "sellQuote": 612
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 3438,
+              "buyQuote": 828,
+              "sellQuote": 539
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 3977,
+              "buyQuote": 730,
+              "sellQuote": 436
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 4413,
+              "buyQuote": 591,
+              "sellQuote": 367
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 0,
+      "haggle": "buy_only",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 111,
+      "maxProfit": 352,
+      "worst": {
+        "town": "transit_woodtown",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 0,
+        "haggle": "buy_only",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": false,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 352,
+          "Buys": 2214,
+          "Sells": 2566,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 207,
+              "sellQuote": 153
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 207,
+              "buyQuote": 248,
+              "sellQuote": 158
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 455,
+              "buyQuote": 310,
+              "sellQuote": 191
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 765,
+              "buyQuote": 621,
+              "sellQuote": 362
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 2,
+              "volume": 1386,
+              "buyQuote": 828,
+              "sellQuote": 492
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 2214,
+              "buyQuote": 828,
+              "sellQuote": 612
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 2826,
+              "buyQuote": 828,
+              "sellQuote": 612
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 3438,
+              "buyQuote": 828,
+              "sellQuote": 539
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 3977,
+              "buyQuote": 730,
+              "sellQuote": 436
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 4413,
+              "buyQuote": 591,
+              "sellQuote": 367
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 0,
+      "haggle": "both",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 111,
+      "maxProfit": 352,
+      "worst": {
+        "town": "transit_woodtown",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 0,
+        "haggle": "both",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": false,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 352,
+          "Buys": 2214,
+          "Sells": 2566,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 207,
+              "sellQuote": 153
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 207,
+              "buyQuote": 248,
+              "sellQuote": 158
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 455,
+              "buyQuote": 310,
+              "sellQuote": 191
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 765,
+              "buyQuote": 621,
+              "sellQuote": 362
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 2,
+              "volume": 1386,
+              "buyQuote": 828,
+              "sellQuote": 492
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 2214,
+              "buyQuote": 828,
+              "sellQuote": 612
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 2826,
+              "buyQuote": 828,
+              "sellQuote": 612
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 3438,
+              "buyQuote": 828,
+              "sellQuote": 539
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 3977,
+              "buyQuote": 730,
+              "sellQuote": 436
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 4413,
+              "buyQuote": 591,
+              "sellQuote": 367
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 1,
+      "haggle": "none",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 200,
+      "maxProfit": 583,
+      "worst": {
+        "town": "transit_woodtown",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 1,
+        "haggle": "none",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 583,
+          "Buys": 2368,
+          "Sells": 2951,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 221,
+              "sellQuote": 175
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 221,
+              "buyQuote": 265,
+              "sellQuote": 181
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 486,
+              "buyQuote": 332,
+              "sellQuote": 220
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 818,
+              "buyQuote": 664,
+              "sellQuote": 416
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 2,
+              "volume": 1482,
+              "buyQuote": 886,
+              "sellQuote": 565
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 2368,
+              "buyQuote": 886,
+              "sellQuote": 703
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 3071,
+              "buyQuote": 886,
+              "sellQuote": 703
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 3774,
+              "buyQuote": 886,
+              "sellQuote": 621
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 4395,
+              "buyQuote": 782,
+              "sellQuote": 502
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 4897,
+              "buyQuote": 632,
+              "sellQuote": 422
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 1,
+      "haggle": "buy_only",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 200,
+      "maxProfit": 583,
+      "worst": {
+        "town": "transit_woodtown",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 1,
+        "haggle": "buy_only",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 583,
+          "Buys": 2368,
+          "Sells": 2951,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 221,
+              "sellQuote": 175
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 221,
+              "buyQuote": 265,
+              "sellQuote": 181
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 486,
+              "buyQuote": 332,
+              "sellQuote": 220
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 818,
+              "buyQuote": 664,
+              "sellQuote": 416
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 2,
+              "volume": 1482,
+              "buyQuote": 886,
+              "sellQuote": 565
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 2368,
+              "buyQuote": 886,
+              "sellQuote": 703
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 3071,
+              "buyQuote": 886,
+              "sellQuote": 703
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 3774,
+              "buyQuote": 886,
+              "sellQuote": 621
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 4395,
+              "buyQuote": 782,
+              "sellQuote": 502
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 4897,
+              "buyQuote": 632,
+              "sellQuote": 422
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 1,
+      "haggle": "both",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 200,
+      "maxProfit": 583,
+      "worst": {
+        "town": "transit_woodtown",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 1,
+        "haggle": "both",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 583,
+          "Buys": 2368,
+          "Sells": 2951,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 221,
+              "sellQuote": 175
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 221,
+              "buyQuote": 265,
+              "sellQuote": 181
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 486,
+              "buyQuote": 332,
+              "sellQuote": 220
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 818,
+              "buyQuote": 664,
+              "sellQuote": 416
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 2,
+              "volume": 1482,
+              "buyQuote": 886,
+              "sellQuote": 565
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 2368,
+              "buyQuote": 886,
+              "sellQuote": 703
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 3071,
+              "buyQuote": 886,
+              "sellQuote": 703
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 3774,
+              "buyQuote": 886,
+              "sellQuote": 621
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 4395,
+              "buyQuote": 782,
+              "sellQuote": 502
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 4897,
+              "buyQuote": 632,
+              "sellQuote": 422
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 2,
+      "haggle": "none",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 298,
+      "maxProfit": 775,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 2,
+        "haggle": "none",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 775,
+          "Buys": 3160,
+          "Sells": 3935,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 276,
+              "sellQuote": 234
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 276,
+              "buyQuote": 331,
+              "sellQuote": 243
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 2,
+              "volume": 607,
+              "buyQuote": 621,
+              "sellQuote": 439
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 1228,
+              "buyQuote": 828,
+              "sellQuote": 555
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 3,
+              "volume": 2056,
+              "buyQuote": 1104,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 3160,
+              "buyQuote": 1104,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 4098,
+              "buyQuote": 1104,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 5036,
+              "buyQuote": 1104,
+              "sellQuote": 827
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 5863,
+              "buyQuote": 974,
+              "sellQuote": 670
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 6533,
+              "buyQuote": 789,
+              "sellQuote": 562
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 2,
+      "haggle": "buy_only",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 314,
+      "maxProfit": 870,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 2,
+        "haggle": "buy_only",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 870,
+          "Buys": 3065,
+          "Sells": 3935,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 268,
+              "sellQuote": 234
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 268,
+              "buyQuote": 321,
+              "sellQuote": 243
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 2,
+              "volume": 589,
+              "buyQuote": 602,
+              "sellQuote": 439
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 1191,
+              "buyQuote": 803,
+              "sellQuote": 555
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 3,
+              "volume": 1994,
+              "buyQuote": 1071,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 3065,
+              "buyQuote": 1071,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 4003,
+              "buyQuote": 1071,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 4941,
+              "buyQuote": 1071,
+              "sellQuote": 827
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 5768,
+              "buyQuote": 945,
+              "sellQuote": 670
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 6438,
+              "buyQuote": 765,
+              "sellQuote": 562
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 2,
+      "haggle": "both",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 330,
+      "maxProfit": 988,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 2,
+        "haggle": "both",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 988,
+          "Buys": 3065,
+          "Sells": 4053,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 268,
+              "sellQuote": 241
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 268,
+              "buyQuote": 321,
+              "sellQuote": 250
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 2,
+              "volume": 589,
+              "buyQuote": 602,
+              "sellQuote": 452
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 1191,
+              "buyQuote": 803,
+              "sellQuote": 572
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 3,
+              "volume": 1994,
+              "buyQuote": 1071,
+              "sellQuote": 966
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 3065,
+              "buyQuote": 1071,
+              "sellQuote": 966
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 4031,
+              "buyQuote": 1071,
+              "sellQuote": 966
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 4997,
+              "buyQuote": 1071,
+              "sellQuote": 852
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 5849,
+              "buyQuote": 945,
+              "sellQuote": 690
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 6539,
+              "buyQuote": 765,
+              "sellQuote": 579
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 3,
+      "haggle": "none",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 314,
+      "maxProfit": 870,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 3,
+        "haggle": "none",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 870,
+          "Buys": 3065,
+          "Sells": 3935,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 268,
+              "sellQuote": 234
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 268,
+              "buyQuote": 321,
+              "sellQuote": 243
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 2,
+              "volume": 589,
+              "buyQuote": 602,
+              "sellQuote": 439
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 1191,
+              "buyQuote": 803,
+              "sellQuote": 555
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 3,
+              "volume": 1994,
+              "buyQuote": 1071,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 3065,
+              "buyQuote": 1071,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 4003,
+              "buyQuote": 1071,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 4941,
+              "buyQuote": 1071,
+              "sellQuote": 827
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 5768,
+              "buyQuote": 945,
+              "sellQuote": 670
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 6438,
+              "buyQuote": 765,
+              "sellQuote": 562
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 3,
+      "haggle": "buy_only",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 349,
+      "maxProfit": 1058,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 3,
+        "haggle": "buy_only",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": false,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 1058,
+          "Buys": 2365,
+          "Sells": 3423,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 221,
+              "sellQuote": 204
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 221,
+              "buyQuote": 265,
+              "sellQuote": 210
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 486,
+              "buyQuote": 332,
+              "sellQuote": 255
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 818,
+              "buyQuote": 663,
+              "sellQuote": 482
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 2,
+              "volume": 1481,
+              "buyQuote": 884,
+              "sellQuote": 655
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 2365,
+              "buyQuote": 884,
+              "sellQuote": 816
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 3181,
+              "buyQuote": 884,
+              "sellQuote": 816
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 3997,
+              "buyQuote": 884,
+              "sellQuote": 719
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 4716,
+              "buyQuote": 781,
+              "sellQuote": 583
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 5299,
+              "buyQuote": 632,
+              "sellQuote": 489
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 3,
+      "haggle": "both",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 612,
+      "maxProfit": 1229,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 3,
+        "haggle": "both",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": false,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 1229,
+          "Buys": 2365,
+          "Sells": 3594,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 221,
+              "sellQuote": 214
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 221,
+              "buyQuote": 265,
+              "sellQuote": 220
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 486,
+              "buyQuote": 332,
+              "sellQuote": 268
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 818,
+              "buyQuote": 663,
+              "sellQuote": 506
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 2,
+              "volume": 1481,
+              "buyQuote": 884,
+              "sellQuote": 688
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 2365,
+              "buyQuote": 884,
+              "sellQuote": 857
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 3222,
+              "buyQuote": 884,
+              "sellQuote": 857
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 4079,
+              "buyQuote": 884,
+              "sellQuote": 755
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 4834,
+              "buyQuote": 781,
+              "sellQuote": 612
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 5446,
+              "buyQuote": 632,
+              "sellQuote": 513
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 4,
+      "haggle": "none",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 330,
+      "maxProfit": 1009,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 4,
+        "haggle": "none",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": false,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 1009,
+          "Buys": 2414,
+          "Sells": 3423,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 226,
+              "sellQuote": 204
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 226,
+              "buyQuote": 271,
+              "sellQuote": 210
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 497,
+              "buyQuote": 338,
+              "sellQuote": 255
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 835,
+              "buyQuote": 677,
+              "sellQuote": 482
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 2,
+              "volume": 1512,
+              "buyQuote": 902,
+              "sellQuote": 655
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 2414,
+              "buyQuote": 902,
+              "sellQuote": 816
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 3230,
+              "buyQuote": 902,
+              "sellQuote": 816
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 4046,
+              "buyQuote": 902,
+              "sellQuote": 719
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 4765,
+              "buyQuote": 796,
+              "sellQuote": 583
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 5348,
+              "buyQuote": 645,
+              "sellQuote": 489
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 4,
+      "haggle": "buy_only",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 686,
+      "maxProfit": 1203,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 4,
+        "haggle": "buy_only",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 1203,
+          "Buys": 2732,
+          "Sells": 3935,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 238,
+              "sellQuote": 234
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 238,
+              "buyQuote": 286,
+              "sellQuote": 243
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 2,
+              "volume": 524,
+              "buyQuote": 537,
+              "sellQuote": 439
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 1061,
+              "buyQuote": 716,
+              "sellQuote": 555
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 2,
+              "volume": 1777,
+              "buyQuote": 955,
+              "sellQuote": 753
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 2732,
+              "buyQuote": 955,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 3670,
+              "buyQuote": 955,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 4608,
+              "buyQuote": 955,
+              "sellQuote": 827
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 5435,
+              "buyQuote": 843,
+              "sellQuote": 670
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 6105,
+              "buyQuote": 683,
+              "sellQuote": 562
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 4,
+      "haggle": "both",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 2275,
+      "maxProfit": 1502,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 4,
+        "haggle": "both",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 1502,
+          "Buys": 2748,
+          "Sells": 4250,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 254,
+              "sellQuote": 253
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 254,
+              "buyQuote": 286,
+              "sellQuote": 262
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 2,
+              "volume": 540,
+              "buyQuote": 537,
+              "sellQuote": 474
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 1077,
+              "buyQuote": 716,
+              "sellQuote": 599
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 2,
+              "volume": 1793,
+              "buyQuote": 955,
+              "sellQuote": 813
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 2748,
+              "buyQuote": 1014,
+              "sellQuote": 1013
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 3761,
+              "buyQuote": 1014,
+              "sellQuote": 1013
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 4774,
+              "buyQuote": 955,
+              "sellQuote": 893
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 5667,
+              "buyQuote": 843,
+              "sellQuote": 724
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 6391,
+              "buyQuote": 683,
+              "sellQuote": 607
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 5,
+      "haggle": "none",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 405,
+      "maxProfit": 1112,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 5,
+        "haggle": "none",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": false,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 1112,
+          "Buys": 2311,
+          "Sells": 3423,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 216,
+              "sellQuote": 204
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 216,
+              "buyQuote": 259,
+              "sellQuote": 210
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 1,
+              "volume": 475,
+              "buyQuote": 324,
+              "sellQuote": 255
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 799,
+              "buyQuote": 648,
+              "sellQuote": 482
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 2,
+              "volume": 1447,
+              "buyQuote": 864,
+              "sellQuote": 655
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 2311,
+              "buyQuote": 864,
+              "sellQuote": 816
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 3127,
+              "buyQuote": 864,
+              "sellQuote": 816
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 3943,
+              "buyQuote": 864,
+              "sellQuote": 719
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 4662,
+              "buyQuote": 762,
+              "sellQuote": 583
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 5245,
+              "buyQuote": 617,
+              "sellQuote": 489
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 5,
+      "haggle": "buy_only",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 2132,
+      "maxProfit": 1364,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 5,
+        "haggle": "buy_only",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 1364,
+          "Buys": 2571,
+          "Sells": 3935,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 235,
+              "sellQuote": 234
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 235,
+              "buyQuote": 268,
+              "sellQuote": 243
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 2,
+              "volume": 503,
+              "buyQuote": 503,
+              "sellQuote": 439
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 1006,
+              "buyQuote": 670,
+              "sellQuote": 555
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 2,
+              "volume": 1676,
+              "buyQuote": 895,
+              "sellQuote": 753
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 2571,
+              "buyQuote": 939,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 3509,
+              "buyQuote": 939,
+              "sellQuote": 938
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 4447,
+              "buyQuote": 895,
+              "sellQuote": 827
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 5274,
+              "buyQuote": 789,
+              "sellQuote": 670
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 5944,
+              "buyQuote": 639,
+              "sellQuote": 562
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 5,
+      "haggle": "both",
+      "order": "buy_then_sell",
+      "growth": true,
+      "valid": 10344,
+      "ineligible": 7576,
+      "profitable": 2403,
+      "maxProfit": 1735,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "venice",
+        "stage": 5,
+        "haggle": "both",
+        "growth": true,
+        "order": "buy_then_sell",
+        "startLevel": 1,
+        "stockRatio": 2,
+        "marketDay": true,
+        "quantity": 5,
+        "initialStock": 6,
+        "result": {
+          "Valid": true,
+          "Profit": 1735,
+          "Buys": 2594,
+          "Sells": 4329,
+          "FinalLevel": 3,
+          "FinalStock": 5,
+          "Trace": [
+            {
+              "selling": false,
+              "stock": 6,
+              "level": 1,
+              "volume": 0,
+              "buyQuote": 258,
+              "sellQuote": 257
+            },
+            {
+              "selling": false,
+              "stock": 5,
+              "level": 1,
+              "volume": 258,
+              "buyQuote": 268,
+              "sellQuote": 267
+            },
+            {
+              "selling": false,
+              "stock": 4,
+              "level": 2,
+              "volume": 526,
+              "buyQuote": 503,
+              "sellQuote": 483
+            },
+            {
+              "selling": false,
+              "stock": 3,
+              "level": 2,
+              "volume": 1029,
+              "buyQuote": 670,
+              "sellQuote": 610
+            },
+            {
+              "selling": false,
+              "stock": 2,
+              "level": 2,
+              "volume": 1699,
+              "buyQuote": 895,
+              "sellQuote": 828
+            },
+            {
+              "selling": true,
+              "stock": 1,
+              "level": 3,
+              "volume": 2594,
+              "buyQuote": 1033,
+              "sellQuote": 1032
+            },
+            {
+              "selling": true,
+              "stock": 1.8,
+              "level": 3,
+              "volume": 3626,
+              "buyQuote": 1033,
+              "sellQuote": 1032
+            },
+            {
+              "selling": true,
+              "stock": 2.6,
+              "level": 3,
+              "volume": 4658,
+              "buyQuote": 911,
+              "sellQuote": 910
+            },
+            {
+              "selling": true,
+              "stock": 3.3999999,
+              "level": 3,
+              "volume": 5568,
+              "buyQuote": 789,
+              "sellQuote": 737
+            },
+            {
+              "selling": true,
+              "stock": 4.2,
+              "level": 3,
+              "volume": 6305,
+              "buyQuote": 639,
+              "sellQuote": 618
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 0,
+      "haggle": "none",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 0,
+      "haggle": "buy_only",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 0,
+      "haggle": "both",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 1,
+      "haggle": "none",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 1,
+      "haggle": "buy_only",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 1,
+      "haggle": "both",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 2,
+      "haggle": "none",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 2,
+      "haggle": "buy_only",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 2,
+      "haggle": "both",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 3,
+      "haggle": "none",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 3,
+      "haggle": "buy_only",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 3,
+      "haggle": "both",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 246,
+      "maxProfit": 73,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "arabia",
+        "stage": 3,
+        "haggle": "both",
+        "growth": true,
+        "order": "sell_then_buy",
+        "startLevel": 3,
+        "stockRatio": 0.25,
+        "marketDay": true,
+        "quantity": 20,
+        "initialStock": 1.5,
+        "result": {
+          "Valid": true,
+          "Profit": 73,
+          "Buys": 7827,
+          "Sells": 7900,
+          "FinalLevel": 3,
+          "FinalStock": 1.5,
+          "Trace": [
+            {
+              "selling": true,
+              "stock": 1.5,
+              "level": 3,
+              "volume": 0,
+              "buyQuote": 1035,
+              "sellQuote": 1034
+            },
+            {
+              "selling": true,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 1034,
+              "buyQuote": 1017,
+              "sellQuote": 886
+            },
+            {
+              "selling": true,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 1920,
+              "buyQuote": 872,
+              "sellQuote": 689
+            },
+            {
+              "selling": true,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 2609,
+              "buyQuote": 678,
+              "sellQuote": 564
+            },
+            {
+              "selling": true,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 3173,
+              "buyQuote": 555,
+              "sellQuote": 478
+            },
+            {
+              "selling": true,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 3651,
+              "buyQuote": 470,
+              "sellQuote": 414
+            },
+            {
+              "selling": true,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 4065,
+              "buyQuote": 408,
+              "sellQuote": 365
+            },
+            {
+              "selling": true,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 4430,
+              "buyQuote": 359,
+              "sellQuote": 327
+            },
+            {
+              "selling": true,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 4757,
+              "buyQuote": 322,
+              "sellQuote": 294
+            },
+            {
+              "selling": true,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 5051,
+              "buyQuote": 291,
+              "sellQuote": 269
+            },
+            {
+              "selling": true,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 5320,
+              "buyQuote": 265,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 5578,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 5836,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 6094,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 6352,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 6610,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 6868,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 7126,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 7384,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": true,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 7642,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 21.5,
+              "level": 3,
+              "volume": 7900,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 8159,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 8418,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 8677,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 8936,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 9195,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 9454,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 9713,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 9972,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 10231,
+              "buyQuote": 259,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 10490,
+              "buyQuote": 265,
+              "sellQuote": 258
+            },
+            {
+              "selling": false,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 10755,
+              "buyQuote": 291,
+              "sellQuote": 269
+            },
+            {
+              "selling": false,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 11046,
+              "buyQuote": 322,
+              "sellQuote": 294
+            },
+            {
+              "selling": false,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 11368,
+              "buyQuote": 359,
+              "sellQuote": 327
+            },
+            {
+              "selling": false,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 11727,
+              "buyQuote": 408,
+              "sellQuote": 365
+            },
+            {
+              "selling": false,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 12135,
+              "buyQuote": 470,
+              "sellQuote": 414
+            },
+            {
+              "selling": false,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 12605,
+              "buyQuote": 555,
+              "sellQuote": 478
+            },
+            {
+              "selling": false,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 13160,
+              "buyQuote": 678,
+              "sellQuote": 564
+            },
+            {
+              "selling": false,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 13838,
+              "buyQuote": 872,
+              "sellQuote": 689
+            },
+            {
+              "selling": false,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 14710,
+              "buyQuote": 1017,
+              "sellQuote": 886
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 4,
+      "haggle": "none",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 4,
+      "haggle": "buy_only",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 371,
+      "maxProfit": 141,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "arabia",
+        "stage": 4,
+        "haggle": "buy_only",
+        "growth": true,
+        "order": "sell_then_buy",
+        "startLevel": 3,
+        "stockRatio": 0.25,
+        "marketDay": true,
+        "quantity": 20,
+        "initialStock": 1.5,
+        "result": {
+          "Valid": true,
+          "Profit": 141,
+          "Buys": 7385,
+          "Sells": 7526,
+          "FinalLevel": 3,
+          "FinalStock": 1.5,
+          "Trace": [
+            {
+              "selling": true,
+              "stock": 1.5,
+              "level": 3,
+              "volume": 0,
+              "buyQuote": 986,
+              "sellQuote": 985
+            },
+            {
+              "selling": true,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 985,
+              "buyQuote": 955,
+              "sellQuote": 844
+            },
+            {
+              "selling": true,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 1829,
+              "buyQuote": 818,
+              "sellQuote": 656
+            },
+            {
+              "selling": true,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 2485,
+              "buyQuote": 637,
+              "sellQuote": 537
+            },
+            {
+              "selling": true,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 3022,
+              "buyQuote": 521,
+              "sellQuote": 455
+            },
+            {
+              "selling": true,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 3477,
+              "buyQuote": 441,
+              "sellQuote": 394
+            },
+            {
+              "selling": true,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 3871,
+              "buyQuote": 382,
+              "sellQuote": 348
+            },
+            {
+              "selling": true,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 4219,
+              "buyQuote": 338,
+              "sellQuote": 311
+            },
+            {
+              "selling": true,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 4530,
+              "buyQuote": 302,
+              "sellQuote": 280
+            },
+            {
+              "selling": true,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 4810,
+              "buyQuote": 272,
+              "sellQuote": 256
+            },
+            {
+              "selling": true,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 5066,
+              "buyQuote": 249,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 5312,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 5558,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 5804,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 6050,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 6296,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 6542,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 6788,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 7034,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 7280,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 21.5,
+              "level": 3,
+              "volume": 7526,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 7773,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 8020,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 8267,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 8514,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 8761,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 9008,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 9255,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 9502,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 9749,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 9996,
+              "buyQuote": 249,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 10245,
+              "buyQuote": 272,
+              "sellQuote": 256
+            },
+            {
+              "selling": false,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 10517,
+              "buyQuote": 302,
+              "sellQuote": 280
+            },
+            {
+              "selling": false,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 10819,
+              "buyQuote": 338,
+              "sellQuote": 311
+            },
+            {
+              "selling": false,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 11157,
+              "buyQuote": 382,
+              "sellQuote": 348
+            },
+            {
+              "selling": false,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 11539,
+              "buyQuote": 441,
+              "sellQuote": 394
+            },
+            {
+              "selling": false,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 11980,
+              "buyQuote": 521,
+              "sellQuote": 455
+            },
+            {
+              "selling": false,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 12501,
+              "buyQuote": 637,
+              "sellQuote": 537
+            },
+            {
+              "selling": false,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 13138,
+              "buyQuote": 818,
+              "sellQuote": 656
+            },
+            {
+              "selling": false,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 13956,
+              "buyQuote": 955,
+              "sellQuote": 844
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 4,
+      "haggle": "both",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 2802,
+      "maxProfit": 522,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "arabia",
+        "stage": 4,
+        "haggle": "both",
+        "growth": true,
+        "order": "sell_then_buy",
+        "startLevel": 3,
+        "stockRatio": 0.25,
+        "marketDay": true,
+        "quantity": 20,
+        "initialStock": 1.5,
+        "result": {
+          "Valid": true,
+          "Profit": 522,
+          "Buys": 7609,
+          "Sells": 8131,
+          "FinalLevel": 3,
+          "FinalStock": 1.5,
+          "Trace": [
+            {
+              "selling": true,
+              "stock": 1.5,
+              "level": 3,
+              "volume": 0,
+              "buyQuote": 1065,
+              "sellQuote": 1064
+            },
+            {
+              "selling": true,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 1064,
+              "buyQuote": 955,
+              "sellQuote": 912
+            },
+            {
+              "selling": true,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 1976,
+              "buyQuote": 818,
+              "sellQuote": 708
+            },
+            {
+              "selling": true,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 2684,
+              "buyQuote": 637,
+              "sellQuote": 580
+            },
+            {
+              "selling": true,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 3264,
+              "buyQuote": 521,
+              "sellQuote": 491
+            },
+            {
+              "selling": true,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 3755,
+              "buyQuote": 441,
+              "sellQuote": 426
+            },
+            {
+              "selling": true,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 4181,
+              "buyQuote": 382,
+              "sellQuote": 376
+            },
+            {
+              "selling": true,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 4557,
+              "buyQuote": 338,
+              "sellQuote": 336
+            },
+            {
+              "selling": true,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 4893,
+              "buyQuote": 303,
+              "sellQuote": 302
+            },
+            {
+              "selling": true,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 5195,
+              "buyQuote": 277,
+              "sellQuote": 276
+            },
+            {
+              "selling": true,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 5471,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 5737,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 6003,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 6269,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 6535,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 6801,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 7067,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 7333,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 7599,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": true,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 7865,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 21.5,
+              "level": 3,
+              "volume": 8131,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 8398,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 8665,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 8932,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 9199,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 9466,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 9733,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 10000,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 10267,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 10534,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 10801,
+              "buyQuote": 267,
+              "sellQuote": 266
+            },
+            {
+              "selling": false,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 11068,
+              "buyQuote": 277,
+              "sellQuote": 276
+            },
+            {
+              "selling": false,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 11345,
+              "buyQuote": 303,
+              "sellQuote": 302
+            },
+            {
+              "selling": false,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 11648,
+              "buyQuote": 338,
+              "sellQuote": 336
+            },
+            {
+              "selling": false,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 11986,
+              "buyQuote": 382,
+              "sellQuote": 376
+            },
+            {
+              "selling": false,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 12368,
+              "buyQuote": 441,
+              "sellQuote": 426
+            },
+            {
+              "selling": false,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 12809,
+              "buyQuote": 521,
+              "sellQuote": 491
+            },
+            {
+              "selling": false,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 13330,
+              "buyQuote": 637,
+              "sellQuote": 580
+            },
+            {
+              "selling": false,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 13967,
+              "buyQuote": 818,
+              "sellQuote": 708
+            },
+            {
+              "selling": false,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 14785,
+              "buyQuote": 955,
+              "sellQuote": 912
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 5,
+      "haggle": "none",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 0,
+      "maxProfit": 0,
+      "worst": null
+    },
+    {
+      "stage": 5,
+      "haggle": "buy_only",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 2573,
+      "maxProfit": 437,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "arabia",
+        "stage": 5,
+        "haggle": "buy_only",
+        "growth": true,
+        "order": "sell_then_buy",
+        "startLevel": 3,
+        "stockRatio": 0.25,
+        "marketDay": true,
+        "quantity": 20,
+        "initialStock": 1.5,
+        "result": {
+          "Valid": true,
+          "Profit": 437,
+          "Buys": 7089,
+          "Sells": 7526,
+          "FinalLevel": 3,
+          "FinalStock": 1.5,
+          "Trace": [
+            {
+              "selling": true,
+              "stock": 1.5,
+              "level": 3,
+              "volume": 0,
+              "buyQuote": 986,
+              "sellQuote": 985
+            },
+            {
+              "selling": true,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 985,
+              "buyQuote": 895,
+              "sellQuote": 844
+            },
+            {
+              "selling": true,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 1829,
+              "buyQuote": 766,
+              "sellQuote": 656
+            },
+            {
+              "selling": true,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 2485,
+              "buyQuote": 596,
+              "sellQuote": 537
+            },
+            {
+              "selling": true,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 3022,
+              "buyQuote": 488,
+              "sellQuote": 455
+            },
+            {
+              "selling": true,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 3477,
+              "buyQuote": 413,
+              "sellQuote": 394
+            },
+            {
+              "selling": true,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 3871,
+              "buyQuote": 358,
+              "sellQuote": 348
+            },
+            {
+              "selling": true,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 4219,
+              "buyQuote": 316,
+              "sellQuote": 311
+            },
+            {
+              "selling": true,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 4530,
+              "buyQuote": 283,
+              "sellQuote": 280
+            },
+            {
+              "selling": true,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 4810,
+              "buyQuote": 257,
+              "sellQuote": 256
+            },
+            {
+              "selling": true,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 5066,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 5312,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 5558,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 5804,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 6050,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 6296,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 6542,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 6788,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 7034,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": true,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 7280,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 21.5,
+              "level": 3,
+              "volume": 7526,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 7773,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 8020,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 8267,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 8514,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 8761,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 9008,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 9255,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 9502,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 9749,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 9996,
+              "buyQuote": 247,
+              "sellQuote": 246
+            },
+            {
+              "selling": false,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 10243,
+              "buyQuote": 257,
+              "sellQuote": 256
+            },
+            {
+              "selling": false,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 10500,
+              "buyQuote": 283,
+              "sellQuote": 280
+            },
+            {
+              "selling": false,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 10783,
+              "buyQuote": 316,
+              "sellQuote": 311
+            },
+            {
+              "selling": false,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 11099,
+              "buyQuote": 358,
+              "sellQuote": 348
+            },
+            {
+              "selling": false,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 11457,
+              "buyQuote": 413,
+              "sellQuote": 394
+            },
+            {
+              "selling": false,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 11870,
+              "buyQuote": 488,
+              "sellQuote": 455
+            },
+            {
+              "selling": false,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 12358,
+              "buyQuote": 596,
+              "sellQuote": 537
+            },
+            {
+              "selling": false,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 12954,
+              "buyQuote": 766,
+              "sellQuote": 656
+            },
+            {
+              "selling": false,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 13720,
+              "buyQuote": 895,
+              "sellQuote": 844
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stage": 5,
+      "haggle": "both",
+      "order": "sell_then_buy",
+      "growth": true,
+      "valid": 17478,
+      "ineligible": 442,
+      "profitable": 3093,
+      "maxProfit": 746,
+      "worst": {
+        "town": "transit_ferry",
+        "item": "najeon",
+        "origin": "arabia",
+        "stage": 5,
+        "haggle": "both",
+        "growth": true,
+        "order": "sell_then_buy",
+        "startLevel": 3,
+        "stockRatio": 0.25,
+        "marketDay": true,
+        "quantity": 20,
+        "initialStock": 1.5,
+        "result": {
+          "Valid": true,
+          "Profit": 746,
+          "Buys": 7537,
+          "Sells": 8283,
+          "FinalLevel": 3,
+          "FinalStock": 1.5,
+          "Trace": [
+            {
+              "selling": true,
+              "stock": 1.5,
+              "level": 3,
+              "volume": 0,
+              "buyQuote": 1085,
+              "sellQuote": 1084
+            },
+            {
+              "selling": true,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 1084,
+              "buyQuote": 929,
+              "sellQuote": 928
+            },
+            {
+              "selling": true,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 2012,
+              "buyQuote": 766,
+              "sellQuote": 722
+            },
+            {
+              "selling": true,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 2734,
+              "buyQuote": 596,
+              "sellQuote": 591
+            },
+            {
+              "selling": true,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 3325,
+              "buyQuote": 501,
+              "sellQuote": 500
+            },
+            {
+              "selling": true,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 3825,
+              "buyQuote": 434,
+              "sellQuote": 433
+            },
+            {
+              "selling": true,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 4258,
+              "buyQuote": 384,
+              "sellQuote": 383
+            },
+            {
+              "selling": true,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 4641,
+              "buyQuote": 343,
+              "sellQuote": 342
+            },
+            {
+              "selling": true,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 4983,
+              "buyQuote": 309,
+              "sellQuote": 308
+            },
+            {
+              "selling": true,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 5291,
+              "buyQuote": 283,
+              "sellQuote": 282
+            },
+            {
+              "selling": true,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 5573,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 5844,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 6115,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 6386,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 6657,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 6928,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 7199,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 7470,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 7741,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": true,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 8012,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 21.5,
+              "level": 3,
+              "volume": 8283,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 20.5,
+              "level": 3,
+              "volume": 8555,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 19.5,
+              "level": 3,
+              "volume": 8827,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 18.5,
+              "level": 3,
+              "volume": 9099,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 17.5,
+              "level": 3,
+              "volume": 9371,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 16.5,
+              "level": 3,
+              "volume": 9643,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 15.5,
+              "level": 3,
+              "volume": 9915,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 14.5,
+              "level": 3,
+              "volume": 10187,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 13.5,
+              "level": 3,
+              "volume": 10459,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 12.5,
+              "level": 3,
+              "volume": 10731,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 11.5,
+              "level": 3,
+              "volume": 11003,
+              "buyQuote": 272,
+              "sellQuote": 271
+            },
+            {
+              "selling": false,
+              "stock": 10.5,
+              "level": 3,
+              "volume": 11275,
+              "buyQuote": 283,
+              "sellQuote": 282
+            },
+            {
+              "selling": false,
+              "stock": 9.5,
+              "level": 3,
+              "volume": 11558,
+              "buyQuote": 309,
+              "sellQuote": 308
+            },
+            {
+              "selling": false,
+              "stock": 8.5,
+              "level": 3,
+              "volume": 11867,
+              "buyQuote": 343,
+              "sellQuote": 342
+            },
+            {
+              "selling": false,
+              "stock": 7.5,
+              "level": 3,
+              "volume": 12210,
+              "buyQuote": 384,
+              "sellQuote": 383
+            },
+            {
+              "selling": false,
+              "stock": 6.5,
+              "level": 3,
+              "volume": 12594,
+              "buyQuote": 434,
+              "sellQuote": 433
+            },
+            {
+              "selling": false,
+              "stock": 5.5,
+              "level": 3,
+              "volume": 13028,
+              "buyQuote": 501,
+              "sellQuote": 500
+            },
+            {
+              "selling": false,
+              "stock": 4.5,
+              "level": 3,
+              "volume": 13529,
+              "buyQuote": 596,
+              "sellQuote": 591
+            },
+            {
+              "selling": false,
+              "stock": 3.5,
+              "level": 3,
+              "volume": 14125,
+              "buyQuote": 766,
+              "sellQuote": 722
+            },
+            {
+              "selling": false,
+              "stock": 2.5,
+              "level": 3,
+              "volume": 14891,
+              "buyQuote": 929,
+              "sellQuote": 928
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Approved coefficients simulated with linked production MarketState; quote wrapper only, not runtime integration",
+    "Price floor compares simultaneous buy/sell quotes; positive cycles obey it at every transaction",
+    "Growth-off/volume0 and growth-on/volume0; levels1/max; stock ratios .25/.5/1/2/4; normal/market day; quantities1/5/20/100; both orders",
+    "No time passage/restock/NPC traders/cash/capacity constraints/haggle success probability; one-unit actual-data witnesses are recorded separately",
+    "Positive finite cycles alone do not establish indefinitely repeatable arbitrage",
+    "Old R2 candidate probe used separate RegionData objects per town, which misclassified domestic Venice sales; its profit counts are not reused"
+  ]
+}

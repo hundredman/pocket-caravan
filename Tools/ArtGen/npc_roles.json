@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "roles": [
+    {
+      "target": "npc:naru_chief",
+      "key": "npc_naru_chief",
+      "art": "chief",
+      "path": "NPC/npc_naru_chief/npc_naru_chief_tall"
+    },
+    {
+      "target": "npc:gaekju",
+      "key": "npc_gaekju",
+      "art": "gaekju",
+      "path": "NPC/npc_gaekju/npc_gaekju_tall"
+    },
+    {
+      "target": "npc:dakmok_chief",
+      "key": "npc_dakmok_chief",
+      "art": "dakmok_chief",
+      "path": "NPC/npc_dakmok_chief/npc_dakmok_chief_tall"
+    },
+    {
+      "target": "npc:goryeo_songak_merchant",
+      "key": "npc_goryeo_songak_merchant",
+      "art": "herbalist",
+      "path": "NPC/npc_goryeo_songak_merchant/npc_goryeo_songak_merchant_tall"
+    },
+    {
+      "target": "npc:goryeo_jangdan_farmer",
+      "key": "npc_goryeo_jangdan_farmer",
+      "art": "farmer",
+      "path": "NPC/npc_goryeo_jangdan_farmer/npc_goryeo_jangdan_farmer_tall"
+    },
+    {
+      "target": "npc:naru_well_woman",
+      "key": "npc_naru_well_woman",
+      "art": "woman",
+      "path": "NPC/npc_naru_well_woman/npc_naru_well_woman_tall"
+    },
+    {
+      "target": "villager:비단 장수",
+      "key": "npc_resident_silk",
+      "art": "merchant_silk",
+      "path": "NPC/npc_resident_silk/npc_resident_silk_tall"
+    },
+    {
+      "target": "villager:짐꾼",
+      "key": "npc_resident_porter",
+      "art": "porter",
+      "path": "NPC/npc_resident_porter/npc_resident_porter_tall"
+    },
+    {
+      "target": "villager:선비",
+      "key": "npc_resident_scholar",
+      "art": "scholar",
+      "path": "NPC/npc_resident_scholar/npc_resident_scholar_tall"
+    },
+    {
+      "target": "villager:뱃사공",
+      "key": "npc_resident_boatman",
+      "art": "boatman",
+      "path": "NPC/npc_resident_boatman/npc_resident_boatman_tall"
+    },
+    {
+      "target": "villager:떡 장수",
+      "key": "npc_resident_ricecake",
+      "art": "woman_ricecake",
+      "path": "NPC/npc_resident_ricecake/npc_resident_ricecake_tall"
+    },
+    {
+      "target": "map:Naru:worker:나루 짐꾼",
+      "key": "npc_naru_porter",
+      "art": "porter",
+      "path": "NPC/npc_naru_porter/npc_naru_porter_tall"
+    },
+    {
+      "target": "map:Naru:talker:뱃사공",
+      "key": "npc_naru_boatman",
+      "art": "boatman",
+      "path": "NPC/npc_naru_boatman/npc_naru_boatman_tall"
+    },
+    {
+      "target": "map:Naru:talker:농부",
+      "key": "npc_naru_farmer",
+      "art": "farmer",
+      "path": "NPC/npc_naru_farmer/npc_naru_farmer_tall"
+    },
+    {
+      "target": "map:Naru:pastime:나루 낚시",
+      "key": "npc_naru_fishing_child",
+      "art": "child",
+      "path": "NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall"
+    },
+    {
+      "target": "map:Gaegyeong:worker:시전 짐꾼",
+      "key": "npc_capital_porter",
+      "art": "porter",
+      "path": "NPC/npc_capital_porter/npc_capital_porter_tall"
+    },
+    {
+      "target": "map:Gaegyeong:worker:시전 행상",
+      "key": "npc_capital_peddler",
+      "art": "trader",
+      "path": "NPC/npc_capital_peddler/npc_capital_peddler_tall"
+    },
+    {
+      "target": "map:Dakmok:worker:종이 일꾼",
+      "key": "npc_paper_worker",
+      "art": "porter",
+      "path": "NPC/npc_paper_worker/npc_paper_worker_tall"
+    },
+    {
+      "target": "map:transit_pass:talker:길손",
+      "key": "npc_transit_pass_traveler",
+      "art": "trader",
+      "path": "NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall"
+    },
+    {
+      "target": "map:transit_woodtown:talker:땔감 장수",
+      "key": "npc_wood_seller",
+      "art": "porter",
+      "path": "NPC/npc_wood_seller/npc_wood_seller_tall"
+    },
+    {
+      "target": "map:transit_ferry:talker:나루 상인",
+      "key": "npc_ferry_merchant",
+      "art": "merchant",
+      "path": "NPC/npc_ferry_merchant/npc_ferry_merchant_tall"
+    },
+    {
+      "target": "map:transit_central_approach:talker:길손",
+      "key": "npc_transit_central_approach_traveler",
+      "art": "trader",
+      "path": "NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall"
+    },
+    {
+      "target": "map:transit_crossroads:talker:길목 안내인",
+      "key": "npc_crossroads_guide",
+      "art": "scholar",
+      "path": "NPC/npc_crossroads_guide/npc_crossroads_guide_tall"
+    },
+    {
+      "target": "market:naru",
+      "key": "npc_market_naru",
+      "art": "merchant",
+      "path": "NPC/npc_market_naru/npc_market_naru_tall"
+    },
+    {
+      "target": "market:gaegyeong",
+      "key": "npc_market_gaegyeong",
+      "art": "merchant",
+      "path": "NPC/npc_market_gaegyeong/npc_market_gaegyeong_tall"
+    },
+    {
+      "target": "market:dakmok",
+      "key": "npc_market_dakmok",
+      "art": "merchant",
+      "path": "NPC/npc_market_dakmok/npc_market_dakmok_tall"
+    },
+    {
+      "target": "market:goryeo_songak",
+      "key": "npc_market_goryeo_songak",
+      "art": "merchant",
+      "path": "NPC/npc_market_goryeo_songak/npc_market_goryeo_songak_tall"
+    },
+    {
+      "target": "market:goryeo_jangdan",
+      "key": "npc_market_goryeo_jangdan",
+      "art": "merchant",
+      "path": "NPC/npc_market_goryeo_jangdan/npc_market_goryeo_jangdan_tall"
+    },
+    {
+      "target": "market:transit_woodtown",
+      "key": "npc_market_transit_woodtown",
+      "art": "merchant",
+      "path": "NPC/npc_market_transit_woodtown/npc_market_transit_woodtown_tall"
+    },
+    {
+      "target": "market:transit_ferry",
+      "key": "npc_market_transit_ferry",
+      "art": "merchant",
+      "path": "NPC/npc_market_transit_ferry/npc_market_transit_ferry_tall"
+    },
+    {
+      "target": "bandit",
+      "key": "npc_bandit",
+      "art": "bandit",
+      "path": "NPC/npc_bandit/npc_bandit_tall"
+    },
+    {
+      "target": "walker",
+      "key": "npc_walker",
+      "art": "trader",
+      "path": "NPC/npc_walker/npc_walker_tall"
+    },
+    {
+      "target": "event_fallen_traveler",
+      "key": "npc_event_fallen_traveler",
+      "art": "porter",
+      "path": "NPC/npc_event_fallen_traveler/npc_event_fallen_traveler_tall"
+    },
+    {
+      "target": "event_peddler",
+      "key": "npc_event_peddler",
+      "art": "trader",
+      "path": "NPC/npc_event_peddler/npc_event_peddler_tall"
+    }
+  ]
+}

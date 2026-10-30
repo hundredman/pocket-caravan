@@ -1,0 +1,398 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "building": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#b78137",
+        "#daa34a",
+        "#f0c365",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#c4a779",
+        "#e0c99b",
+        "#f4dfb5",
+        "#77746c",
+        "#a29b87",
+        "#c4bca7",
+        "#4a627a",
+        "#718da3",
+        "#794b3b",
+        "#ad624c",
+        "#d69062",
+        "#547e6a",
+        "#86a28b",
+        "#33475e"
+      ]
+    },
+    "nature": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#52673c",
+        "#7d9156",
+        "#a2b775",
+        "#68452d",
+        "#98653b",
+        "#bc8850"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7_batch2_forest_round",
+      "kind": "object",
+      "purpose": "forest_round_tree",
+      "size": [
+        3,
+        4
+      ],
+      "image": "ArtReview/C7-Batch2-20261027/Native/forest_round.png",
+      "profile": "nature",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-Batch2-20261027/Native/forest_round.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "date": "2026-10-27",
+        "userQuote": "좋아.",
+        "scope": "묶음2 둥근형·기울어진형·넓은형 숲나무 세 그림 승인; 본편배치/다른그림은별도",
+        "evidence": "ArtReview/Approved/C7-Batch2-v1/README.md",
+        "rgbaEvidence": {
+          "size": [
+            48,
+            64
+          ],
+          "rgbaSHA256": "3fcde8969af6fb18b062724b43611da467a7f6dc34cf9897eb102747b640cdbf"
+        }
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_round_0_0",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_round_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_round_1_0",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_round_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_round_2_0",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_round_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_round_0_1",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_round_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_round_1_1",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_round_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_round_2_1",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_round_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_round_0_2",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_round_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_round_1_2",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_round_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_round_2_2",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_round_2_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_round_0_3",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_round_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_round_1_3",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_round_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_round_2_3",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_round_2_3.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_batch2_forest_bent",
+      "kind": "object",
+      "purpose": "forest_bent_tree",
+      "size": [
+        3,
+        4
+      ],
+      "image": "ArtReview/C7-Batch2-20261027/Native/forest_bent.png",
+      "profile": "nature",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-Batch2-20261027/Native/forest_bent.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "date": "2026-10-27",
+        "userQuote": "좋아.",
+        "scope": "묶음2 둥근형·기울어진형·넓은형 숲나무 세 그림 승인; 본편배치/다른그림은별도",
+        "evidence": "ArtReview/Approved/C7-Batch2-v1/README.md",
+        "rgbaEvidence": {
+          "size": [
+            48,
+            64
+          ],
+          "rgbaSHA256": "750680527614eab01a7036ffa2229191c07c6329b60904ef77c099319d951ce5"
+        }
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_bent_0_0",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_bent_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_bent_1_0",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_bent_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_bent_2_0",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_bent_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_bent_0_1",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_bent_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_bent_1_1",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_bent_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_bent_2_1",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_bent_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_bent_0_2",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_bent_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_bent_1_2",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_bent_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_bent_2_2",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_bent_2_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_bent_0_3",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_bent_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_bent_1_3",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_bent_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_bent_2_3",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_bent_2_3.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_batch2_forest_wide",
+      "kind": "object",
+      "purpose": "forest_wide_tree",
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C7-Batch2-20261027/Native/forest_wide.png",
+      "profile": "nature",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-Batch2-20261027/Native/forest_wide.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "date": "2026-10-27",
+        "userQuote": "좋아.",
+        "scope": "묶음2 둥근형·기울어진형·넓은형 숲나무 세 그림 승인; 본편배치/다른그림은별도",
+        "evidence": "ArtReview/Approved/C7-Batch2-v1/README.md",
+        "rgbaEvidence": {
+          "size": [
+            64,
+            48
+          ],
+          "rgbaSHA256": "acf91edb33798a0536fc58bc5fec01996bc93265b4be5bb1f7ab5234dae487fc"
+        }
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_wide_0_0",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_wide_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_wide_1_0",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_wide_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_wide_2_0",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_wide_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_wide_3_0",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_wide_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_wide_0_1",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_wide_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_wide_1_1",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_wide_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_wide_2_1",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_wide_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_wide_3_1",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_wide_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_wide_0_2",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_wide_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_wide_1_2",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_wide_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_wide_2_2",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_wide_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_batch2_forest_wide_3_2",
+          "image": "ArtReview/C7-Batch2-20261027/Cells/c7_batch2_forest_wide_3_2.png"
+        }
+      ]
+    }
+  ]
+}

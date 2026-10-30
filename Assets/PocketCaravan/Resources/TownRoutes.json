@@ -1,0 +1,476 @@
+{
+  "mode": "layoutD",
+  "ratio": 0.130378,
+  "walkingCellsPerSecond": 3.8,
+  "source": "M4 새 맵 13개의 실제 보행(Tools/Routing/m4_routes.py): 걸을 수 있는 칸 위 8방향 최단 거리",
+  "towns": [
+    {
+      "id": "naru",
+      "mapId": "Naru",
+      "position": [
+        236,
+        52
+      ]
+    },
+    {
+      "id": "goryeo_jangdan",
+      "mapId": "goryeo_jangdan",
+      "position": [
+        202,
+        43
+      ]
+    },
+    {
+      "id": "goryeo_songak",
+      "mapId": "goryeo_songak",
+      "position": [
+        196,
+        -14
+      ]
+    },
+    {
+      "id": "dakmok",
+      "mapId": "Dakmok",
+      "position": [
+        226,
+        -50
+      ]
+    },
+    {
+      "id": "gaegyeong",
+      "mapId": "Gaegyeong",
+      "position": [
+        257,
+        2
+      ]
+    },
+    {
+      "id": "transit_woodtown",
+      "mapId": "transit_woodtown",
+      "position": [
+        135,
+        -1
+      ]
+    },
+    {
+      "id": "transit_ferry",
+      "mapId": "transit_ferry",
+      "position": [
+        117,
+        -101
+      ]
+    },
+    {
+      "id": "transit_southport",
+      "mapId": "transit_southport",
+      "position": [
+        115,
+        102
+      ]
+    },
+    {
+      "id": "transit_crossroads",
+      "mapId": "transit_crossroads",
+      "position": [
+        46,
+        4
+      ]
+    }
+  ],
+  "roads": [
+    {
+      "from": "naru",
+      "to": "goryeo_jangdan",
+      "seconds": 9.928401,
+      "waypoints": [
+        [
+          236.5,
+          52.5
+        ],
+        [
+          202.5,
+          43.5
+        ]
+      ]
+    },
+    {
+      "from": "goryeo_jangdan",
+      "to": "goryeo_songak",
+      "seconds": 15.654021,
+      "waypoints": [
+        [
+          202.5,
+          43.5
+        ],
+        [
+          196.5,
+          -13.5
+        ]
+      ]
+    },
+    {
+      "from": "goryeo_songak",
+      "to": "dakmok",
+      "seconds": 13.578416,
+      "waypoints": [
+        [
+          196.5,
+          -13.5
+        ],
+        [
+          226.5,
+          -49.5
+        ]
+      ]
+    },
+    {
+      "from": "dakmok",
+      "to": "gaegyeong",
+      "seconds": 17.063321,
+      "waypoints": [
+        [
+          226.5,
+          -49.5
+        ],
+        [
+          257.5,
+          2.5
+        ]
+      ]
+    },
+    {
+      "from": "gaegyeong",
+      "to": "naru",
+      "seconds": 17.142667,
+      "waypoints": [
+        [
+          257.5,
+          2.5
+        ],
+        [
+          236.5,
+          52.5
+        ]
+      ]
+    },
+    {
+      "from": "gaegyeong",
+      "to": "goryeo_songak",
+      "seconds": 23.134655,
+      "waypoints": [
+        [
+          257.5,
+          2.5
+        ],
+        [
+          196.5,
+          -13.5
+        ]
+      ]
+    },
+    {
+      "from": "goryeo_songak",
+      "to": "transit_woodtown",
+      "seconds": 17.469678,
+      "waypoints": [
+        [
+          196.5,
+          -13.5
+        ],
+        [
+          135.5,
+          -0.5
+        ]
+      ]
+    },
+    {
+      "from": "transit_woodtown",
+      "to": "transit_ferry",
+      "seconds": 28.277854,
+      "waypoints": [
+        [
+          135.5,
+          -0.5
+        ],
+        [
+          117.5,
+          -100.5
+        ]
+      ]
+    },
+    {
+      "from": "transit_woodtown",
+      "to": "transit_southport",
+      "seconds": 31.465406,
+      "waypoints": [
+        [
+          135.5,
+          -0.5
+        ],
+        [
+          115.5,
+          102.5
+        ]
+      ]
+    },
+    {
+      "from": "transit_woodtown",
+      "to": "transit_crossroads",
+      "seconds": 30.431476,
+      "waypoints": [
+        [
+          135.5,
+          -0.5
+        ],
+        [
+          46.5,
+          4.5
+        ]
+      ]
+    },
+    {
+      "from": "transit_ferry",
+      "to": "transit_crossroads",
+      "seconds": 40.145079,
+      "waypoints": [
+        [
+          117.5,
+          -100.5
+        ],
+        [
+          46.5,
+          4.5
+        ]
+      ]
+    },
+    {
+      "from": "transit_southport",
+      "to": "transit_crossroads",
+      "seconds": 33.464874,
+      "waypoints": [
+        [
+          115.5,
+          102.5
+        ],
+        [
+          46.5,
+          4.5
+        ]
+      ]
+    }
+  ],
+  "walkingDistances": [
+    {
+      "from": "dakmok",
+      "to": "gaegyeong",
+      "seconds": 17.063321
+    },
+    {
+      "from": "dakmok",
+      "to": "goryeo_jangdan",
+      "seconds": 28.578416
+    },
+    {
+      "from": "dakmok",
+      "to": "goryeo_songak",
+      "seconds": 13.578416
+    },
+    {
+      "from": "dakmok",
+      "to": "naru",
+      "seconds": 32.897946
+    },
+    {
+      "from": "dakmok",
+      "to": "transit_crossroads",
+      "seconds": 57.577352
+    },
+    {
+      "from": "dakmok",
+      "to": "transit_ferry",
+      "seconds": 50.017373
+    },
+    {
+      "from": "dakmok",
+      "to": "transit_southport",
+      "seconds": 52.870168
+    },
+    {
+      "from": "dakmok",
+      "to": "transit_woodtown",
+      "seconds": 29.905161
+    },
+    {
+      "from": "gaegyeong",
+      "to": "goryeo_jangdan",
+      "seconds": 26.853061
+    },
+    {
+      "from": "gaegyeong",
+      "to": "goryeo_songak",
+      "seconds": 23.134655
+    },
+    {
+      "from": "gaegyeong",
+      "to": "naru",
+      "seconds": 17.142667
+    },
+    {
+      "from": "gaegyeong",
+      "to": "transit_crossroads",
+      "seconds": 67.133592
+    },
+    {
+      "from": "gaegyeong",
+      "to": "transit_ferry",
+      "seconds": 59.573612
+    },
+    {
+      "from": "gaegyeong",
+      "to": "transit_southport",
+      "seconds": 57.130383
+    },
+    {
+      "from": "gaegyeong",
+      "to": "transit_woodtown",
+      "seconds": 39.4614
+    },
+    {
+      "from": "goryeo_jangdan",
+      "to": "goryeo_songak",
+      "seconds": 15.654021
+    },
+    {
+      "from": "goryeo_jangdan",
+      "to": "naru",
+      "seconds": 9.928401
+    },
+    {
+      "from": "goryeo_jangdan",
+      "to": "transit_crossroads",
+      "seconds": 52.088441
+    },
+    {
+      "from": "goryeo_jangdan",
+      "to": "transit_ferry",
+      "seconds": 49.164046
+    },
+    {
+      "from": "goryeo_jangdan",
+      "to": "transit_southport",
+      "seconds": 33.292018
+    },
+    {
+      "from": "goryeo_jangdan",
+      "to": "transit_woodtown",
+      "seconds": 22.58189
+    },
+    {
+      "from": "goryeo_songak",
+      "to": "naru",
+      "seconds": 23.270107
+    },
+    {
+      "from": "goryeo_songak",
+      "to": "transit_crossroads",
+      "seconds": 45.14187
+    },
+    {
+      "from": "goryeo_songak",
+      "to": "transit_ferry",
+      "seconds": 37.58189
+    },
+    {
+      "from": "goryeo_songak",
+      "to": "transit_southport",
+      "seconds": 39.509759
+    },
+    {
+      "from": "goryeo_songak",
+      "to": "transit_woodtown",
+      "seconds": 17.469678
+    },
+    {
+      "from": "naru",
+      "to": "transit_crossroads",
+      "seconds": 61.862687
+    },
+    {
+      "from": "naru",
+      "to": "transit_ferry",
+      "seconds": 57.088441
+    },
+    {
+      "from": "naru",
+      "to": "transit_southport",
+      "seconds": 39.987715
+    },
+    {
+      "from": "naru",
+      "to": "transit_woodtown",
+      "seconds": 32.356137
+    },
+    {
+      "from": "transit_crossroads",
+      "to": "transit_ferry",
+      "seconds": 40.145079
+    },
+    {
+      "from": "transit_crossroads",
+      "to": "transit_southport",
+      "seconds": 33.464874
+    },
+    {
+      "from": "transit_crossroads",
+      "to": "transit_woodtown",
+      "seconds": 30.431476
+    },
+    {
+      "from": "transit_ferry",
+      "to": "transit_southport",
+      "seconds": 59.74326
+    },
+    {
+      "from": "transit_ferry",
+      "to": "transit_woodtown",
+      "seconds": 28.277854
+    },
+    {
+      "from": "transit_southport",
+      "to": "transit_woodtown",
+      "seconds": 31.465406
+    }
+  ],
+  "externalLinks": [
+    {
+      "fromKey": "east/중앙 길목 마을",
+      "target": [
+        -15,
+        0
+      ],
+      "agreement": "D4/D7 pending",
+      "runtimeBinding": null,
+      "active": false
+    },
+    {
+      "fromKey": "east/북동 포구",
+      "target": [
+        70,
+        -150
+      ],
+      "agreement": "D4/D7 pending",
+      "runtimeBinding": null,
+      "active": false
+    },
+    {
+      "fromKey": "east/남동 포구",
+      "target": [
+        70,
+        150
+      ],
+      "agreement": "D4/D7 pending",
+      "runtimeBinding": null,
+      "active": false
+    }
+  ]
+}

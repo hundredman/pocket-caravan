@@ -1,0 +1,1329 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "house": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#4a627a",
+        "#68452d",
+        "#718da3",
+        "#77746c",
+        "#98653b",
+        "#a29b87",
+        "#a5b9c3",
+        "#b78137",
+        "#bc8850",
+        "#c4a779",
+        "#c4bca7",
+        "#daa34a",
+        "#e0c99b",
+        "#f0c365",
+        "#f4dfb5"
+      ]
+    },
+    "ground": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#6d8b3a",
+        "#8aab4d",
+        "#a2835e",
+        "#b2cc73",
+        "#c4a277",
+        "#e2c496"
+      ]
+    },
+    "pine": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#34271f",
+        "#3e6345",
+        "#65874b",
+        "#70452f",
+        "#96b55f",
+        "#a56b3f",
+        "#bf873d",
+        "#cc9256"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7ts_thatch",
+      "purpose": "thatch",
+      "kind": "object",
+      "profile": "house",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-TeamStyle-20261027/Native/thatch.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/C7-Buildings-v5/approval.md"
+      },
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C7-TeamStyle-20261027/Native/thatch.png",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7ts_thatch_0_0",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_thatch_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7ts_thatch_1_0",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_thatch_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7ts_thatch_2_0",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_thatch_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7ts_thatch_3_0",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_thatch_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7ts_thatch_0_1",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_thatch_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7ts_thatch_1_1",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_thatch_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7ts_thatch_2_1",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_thatch_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7ts_thatch_3_1",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_thatch_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7ts_thatch_0_2",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_thatch_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7ts_thatch_1_2",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_thatch_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7ts_thatch_2_2",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_thatch_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7ts_thatch_3_2",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_thatch_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "c7ts_tile_house",
+      "purpose": "tile-house",
+      "kind": "object",
+      "profile": "house",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-TeamStyle-20261027/Native/tile-house.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/C7-Buildings-v5/approval.md"
+      },
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C7-TeamStyle-20261027/Native/tile-house.png",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7ts_tile_house_0_0",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_tile_house_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7ts_tile_house_1_0",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_tile_house_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7ts_tile_house_2_0",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_tile_house_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7ts_tile_house_3_0",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_tile_house_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7ts_tile_house_0_1",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_tile_house_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7ts_tile_house_1_1",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_tile_house_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7ts_tile_house_2_1",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_tile_house_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7ts_tile_house_3_1",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_tile_house_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7ts_tile_house_0_2",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_tile_house_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7ts_tile_house_1_2",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_tile_house_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7ts_tile_house_2_2",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_tile_house_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7ts_tile_house_3_2",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_tile_house_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "c7ts_pine",
+      "purpose": "pine",
+      "kind": "object",
+      "profile": "pine",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-TeamStyle-20261027/Native/pine.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "size": [
+        4,
+        3
+      ],
+      "image": "ArtReview/C7-TeamStyle-20261027/Native/pine.png",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7ts_pine_0_0",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_pine_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7ts_pine_1_0",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_pine_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7ts_pine_2_0",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_pine_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7ts_pine_3_0",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_pine_3_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7ts_pine_0_1",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_pine_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7ts_pine_1_1",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_pine_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7ts_pine_2_1",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_pine_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7ts_pine_3_1",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_pine_3_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7ts_pine_0_2",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_pine_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7ts_pine_1_2",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_pine_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7ts_pine_2_2",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_pine_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7ts_pine_3_2",
+          "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_pine_3_2.png"
+        }
+      ]
+    },
+    {
+      "id": "c7ts_grass_dirt",
+      "purpose": "grass_dirt_boundary",
+      "kind": "modular",
+      "moduleType": "ground_boundary",
+      "profile": "ground",
+      "source": {
+        "kind": "ai_processed",
+        "path": "Tools/ArtTrials/c7_team_finish.lua"
+      },
+      "review": {
+        "status": "changes_requested",
+        "feedback": "사용자가 기존 본편 지형 유지를 선택. 이 C7 땅 시안은 미채택."
+      },
+      "requiredPieces": [
+        "center",
+        "edge",
+        "outer_corner",
+        "inner_corner"
+      ],
+      "pieces": {
+        "grass-0": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-0.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_0_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_0_0_0.png"
+            }
+          ]
+        },
+        "grass-1": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-1.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_1_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_1_0_0.png"
+            }
+          ]
+        },
+        "grass-10": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-10.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_10_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_10_0_0.png"
+            }
+          ]
+        },
+        "grass-11": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-11.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_11_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_11_0_0.png"
+            }
+          ]
+        },
+        "grass-110": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-110.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_110_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_110_0_0.png"
+            }
+          ]
+        },
+        "grass-111": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-111.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_111_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_111_0_0.png"
+            }
+          ]
+        },
+        "grass-12": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-12.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_12_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_12_0_0.png"
+            }
+          ]
+        },
+        "grass-127": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-127.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_127_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_127_0_0.png"
+            }
+          ]
+        },
+        "grass-13": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-13.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_13_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_13_0_0.png"
+            }
+          ]
+        },
+        "grass-137": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-137.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_137_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_137_0_0.png"
+            }
+          ]
+        },
+        "grass-139": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-139.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_139_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_139_0_0.png"
+            }
+          ]
+        },
+        "grass-14": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-14.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_14_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_14_0_0.png"
+            }
+          ]
+        },
+        "grass-141": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-141.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_141_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_141_0_0.png"
+            }
+          ]
+        },
+        "grass-143": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-143.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_143_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_143_0_0.png"
+            }
+          ]
+        },
+        "grass-15": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-15.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_15_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_15_0_0.png"
+            }
+          ]
+        },
+        "grass-155": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-155.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_155_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_155_0_0.png"
+            }
+          ]
+        },
+        "grass-159": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-159.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_159_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_159_0_0.png"
+            }
+          ]
+        },
+        "grass-175": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-175.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_175_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_175_0_0.png"
+            }
+          ]
+        },
+        "grass-19": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-19.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_19_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_19_0_0.png"
+            }
+          ]
+        },
+        "grass-191": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-191.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_191_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_191_0_0.png"
+            }
+          ]
+        },
+        "grass-2": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-2.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_2_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_2_0_0.png"
+            }
+          ]
+        },
+        "grass-205": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-205.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_205_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_205_0_0.png"
+            }
+          ]
+        },
+        "grass-207": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-207.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_207_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_207_0_0.png"
+            }
+          ]
+        },
+        "grass-223": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-223.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_223_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_223_0_0.png"
+            }
+          ]
+        },
+        "grass-23": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-23.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_23_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_23_0_0.png"
+            }
+          ]
+        },
+        "grass-239": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-239.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_239_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_239_0_0.png"
+            }
+          ]
+        },
+        "grass-255": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-255.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_255_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_255_0_0.png"
+            }
+          ]
+        },
+        "grass-27": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-27.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_27_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_27_0_0.png"
+            }
+          ]
+        },
+        "grass-3": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-3.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_3_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_3_0_0.png"
+            }
+          ]
+        },
+        "grass-31": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-31.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_31_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_31_0_0.png"
+            }
+          ]
+        },
+        "grass-38": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-38.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_38_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_38_0_0.png"
+            }
+          ]
+        },
+        "grass-39": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-39.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_39_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_39_0_0.png"
+            }
+          ]
+        },
+        "grass-4": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-4.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_4_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_4_0_0.png"
+            }
+          ]
+        },
+        "grass-46": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-46.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_46_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_46_0_0.png"
+            }
+          ]
+        },
+        "grass-47": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-47.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_47_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_47_0_0.png"
+            }
+          ]
+        },
+        "grass-5": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-5.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_5_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_5_0_0.png"
+            }
+          ]
+        },
+        "grass-55": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-55.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_55_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_55_0_0.png"
+            }
+          ]
+        },
+        "grass-6": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-6.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_6_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_6_0_0.png"
+            }
+          ]
+        },
+        "grass-63": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-63.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_63_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_63_0_0.png"
+            }
+          ]
+        },
+        "grass-7": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-7.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_7_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_7_0_0.png"
+            }
+          ]
+        },
+        "grass-76": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-76.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_76_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_76_0_0.png"
+            }
+          ]
+        },
+        "grass-77": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-77.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_77_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_77_0_0.png"
+            }
+          ]
+        },
+        "grass-78": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-78.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_78_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_78_0_0.png"
+            }
+          ]
+        },
+        "grass-79": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-79.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_79_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_79_0_0.png"
+            }
+          ]
+        },
+        "grass-8": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-8.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_8_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_8_0_0.png"
+            }
+          ]
+        },
+        "grass-9": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-9.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_9_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_9_0_0.png"
+            }
+          ]
+        },
+        "grass-95": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-95.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_95_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_95_0_0.png"
+            }
+          ]
+        },
+        "grass-center-1": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-center-1.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_center_1_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_center_1_0_0.png"
+            }
+          ]
+        },
+        "grass-center-2": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-center-2.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_center_2_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_center_2_0_0.png"
+            }
+          ]
+        },
+        "grass-center-3": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-center-3.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_center_3_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_center_3_0_0.png"
+            }
+          ]
+        },
+        "center": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-255.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_255_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_255_0_0.png"
+            }
+          ]
+        },
+        "edge": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-110.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_110_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_110_0_0.png"
+            }
+          ]
+        },
+        "outer_corner": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-38.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_38_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_38_0_0.png"
+            }
+          ]
+        },
+        "inner_corner": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/grass-127.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_grass_127_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_grass_127_0_0.png"
+            }
+          ]
+        },
+        "dirt": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/dirt.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_dirt_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_dirt_0_0.png"
+            }
+          ]
+        },
+        "dirt-1": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/dirt-1.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_dirt_1_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_dirt_1_0_0.png"
+            }
+          ]
+        },
+        "dirt-2": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/dirt-2.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_dirt_2_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_dirt_2_0_0.png"
+            }
+          ]
+        },
+        "dirt-3": {
+          "size": [
+            1,
+            1
+          ],
+          "image": "ArtReview/C7-TeamStyle-20261027/Native/dirt-3.png",
+          "tiles": [
+            {
+              "dx": 0,
+              "dy": 0,
+              "layer": "ground",
+              "tile": "c7ts_dirt_3_0_0",
+              "image": "ArtReview/C7-TeamStyle-20261027/Cells/c7ts_dirt_3_0_0.png"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

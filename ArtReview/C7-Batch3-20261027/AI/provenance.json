@@ -1,0 +1,17 @@
+{
+  "tool": "built-in imagegen",
+  "mode": "one separate whole-object generation per image; single review batch",
+  "referenceRoles": {
+    "Docs/Images/team-style-reference.png": "target upper Venice/Arabia style",
+    "ArtReview/C7-Batch2-20261027/Native/forest_round.png": "approved foliage shapes and pixel density",
+    "woodland4_4_4.png": "existing large broadleaf footprint/crown",
+    "woodland6_3_4.png": "existing light trunk and green crown",
+    "woodland7_3_4.png": "existing yellow foliage tree purpose"
+  },
+  "pipeline": "whole silhouette uniform nearest sampling in Aseprite, A5 explicit candidate palettes, native contour layer",
+  "sourceAlphaThreshold": 224,
+  "profiles": "3 individual7-color candidates; global D3 not decided",
+  "seasonSystemAdded": false,
+  "runtimeRecolor": false,
+  "productionApplied": false
+}

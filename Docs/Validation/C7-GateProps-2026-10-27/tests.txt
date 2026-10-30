@@ -1,0 +1,10 @@
+test_actual_play_latest_pixels_and_only_three_areas (test_c7_gate_props.GatePropsChecks) ... ok
+test_native_sizes_feet_palette_and_contours (test_c7_gate_props.GatePropsChecks) ... ok
+test_previously_submitted_props_unchanged (test_c7_gate_props.GatePropsChecks) ... ok
+test_three_editable_sources_reexport_rgba (test_c7_gate_props.GatePropsChecks) ... ok
+test_three_whole_objects_and_independent_pending (test_c7_gate_props.GatePropsChecks) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.292s
+
+OK

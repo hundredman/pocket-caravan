@@ -1,0 +1,17 @@
+{
+  "errors": [],
+  "statuses": {
+    "c7_remaining_boat": "pending",
+    "c7_remaining_sheaf_naru": "pending",
+    "c7_remaining_laundry": "pending",
+    "c7_remaining_sheaf_jangdan": "pending",
+    "c7_remaining_pine_west": "pending",
+    "c7_remaining_round_west": "pending",
+    "c7_remaining_small_store": "pending",
+    "c7_remaining_small_rock": "pending",
+    "c7_remaining_pine_east": "pending",
+    "c7_remaining_round_east": "pending",
+    "c7_remaining_bench": "pending",
+    "c7_remaining_lotus": "pending"
+  }
+}

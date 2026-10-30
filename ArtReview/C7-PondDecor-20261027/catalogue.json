@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "native16": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2d4536",
+        "#3e6345",
+        "#65874b",
+        "#96b55f",
+        "#9c536e",
+        "#d88da4",
+        "#f3bfcb",
+        "#edc878"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7_pond_leaves",
+      "kind": "object",
+      "purpose": "floating_leaves",
+      "profile": "native16",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C7-PondDecor-20261027/Native/leaves.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-PondDecor-20261027/Native/leaves.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "rules": {
+        "onTerrain": [
+          "water"
+        ],
+        "forbidRoad": true
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_pond_leaves",
+          "image": "ArtReview/C7-PondDecor-20261027/Native/leaves.png"
+        }
+      ]
+    },
+    {
+      "id": "c7_pond_flower",
+      "kind": "object",
+      "purpose": "floating_flower",
+      "profile": "native16",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C7-PondDecor-20261027/Native/flower.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-PondDecor-20261027/Native/flower.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "rules": {
+        "onTerrain": [
+          "water"
+        ],
+        "forbidRoad": true
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_pond_flower",
+          "image": "ArtReview/C7-PondDecor-20261027/Native/flower.png"
+        }
+      ]
+    }
+  ]
+}

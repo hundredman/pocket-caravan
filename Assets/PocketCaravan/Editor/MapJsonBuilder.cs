@@ -44,14 +44,21 @@ namespace PocketCaravan.EditorTools
         }
 
         [Serializable]
+        class CropPatch { public int x, y, w, h; }
+        [Serializable] class BackdropCell { public int x,y,tile; }
+
+        [Serializable]
         class MapFile
         {
             public string id, name;
             public int w, h, hours, terrainX, terrainY, legacyHeight;
+            public bool previewOnly;
             public int[] ground, deco, obj, high, road, blocked;
             public string[] palette;
             public MapObject[] objects;
             public ObstaclePlacement[] obstacles;
+            public CropPatch[] natureCrops;
+            public BackdropCell[] cameraBackdrop;
         }
 
         [MenuItem("Pocket Caravan/Tests/지역 통합 등록 검사")]
@@ -169,7 +176,11 @@ namespace PocketCaravan.EditorTools
             var paths = new List<string>(registry.ScenePaths);
             foreach (var path in paths) list.Add(new EditorBuildSettingsScene(path, true));
             foreach (var scene in EditorBuildSettings.scenes)
-                if (!paths.Contains(scene.path) && File.Exists(scene.path)) list.Add(scene);
+                if (!paths.Contains(scene.path) && File.Exists(scene.path))
+                {
+                    bool retired=GoryeoLayout.Resolve(Path.GetFileNameWithoutExtension(scene.path))!=Path.GetFileNameWithoutExtension(scene.path);
+                    list.Add(new EditorBuildSettingsScene(scene.path, !retired && scene.enabled));
+                }
             EditorBuildSettings.scenes = list.ToArray();
             AssetDatabase.SaveAssets();
         }
@@ -210,13 +221,13 @@ namespace PocketCaravan.EditorTools
             AssetDatabase.SaveAssets();
         }
 
-        static void BuildScene(MapFile f, string path, WorldRegistry.MapEntry entry = null)
+        static void BuildScene(MapFile f, string path, WorldRegistry.MapEntry entry = null, string previewDirectory = null)
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             // 새 씬을 만든 뒤에 에셋을 불러온다 (앞서 불러온 에셋은 내려감)
             var db = AssetDatabase.LoadAssetAtPath<GameDatabase>(DbPath);
             var tiles = new Tile[f.palette.Length];
-            for (int i = 1; i < f.palette.Length; i++) tiles[i] = TileFor(f.palette[i]);
+            for (int i = 1; i < f.palette.Length; i++) tiles[i] = TileFor(f.palette[i], previewDirectory);
             var blocker = BlockerTile();
 
             var gridGo = new GameObject("Map");
@@ -226,6 +237,12 @@ namespace PocketCaravan.EditorTools
             var obj = Layer(gridGo, "Objects", 5);
             var high = Layer(gridGo, "Above", 20);   // 나무 윗부분: 플레이어 위로 그림
             var blocked = Layer(gridGo, "Blocked", 0, renderer: false);
+            if(f.cameraBackdrop!=null&&f.cameraBackdrop.Length>0)
+            {
+                var backdrop=Layer(gridGo,"CameraBackdrop",-10);
+                foreach(var cell in f.cameraBackdrop)
+                    if(cell.tile>0&&cell.tile<tiles.Length)backdrop.SetTile(new Vector3Int(cell.x,f.h-cell.y-1,0),tiles[cell.tile]);
+            }
 
             Paint(ground, f.ground, f, tiles);
             Paint(deco, f.deco, f, tiles);
@@ -236,6 +253,7 @@ namespace PocketCaravan.EditorTools
 
             var map = gridGo.AddComponent<MapRoot>();
             map.mapId = f.id;
+            map.previewOnly = f.previewOnly;
             map.travelHours = f.hours;
             map.displayName = f.name;
             map.ground = ground; map.road = null; map.blocked = blocked;
@@ -243,6 +261,12 @@ namespace PocketCaravan.EditorTools
             map.region = entry == null ? null : AssetDatabase.LoadAssetAtPath<RegionData>(entry.region.regionAssetPath);
             map.terrainOrigin = new Vector2Int(f.terrainX,f.terrainY);
             map.worldCoord = entry == null ? Vector2Int.zero : new Vector2Int(entry.worldX, entry.worldY);
+
+            if (f.natureCrops != null && f.natureCrops.Length > 0)
+            {
+                var depth = gridGo.AddComponent<CropDepth>(); depth.lower = obj; depth.upper = high;
+                depth.patches = Array.ConvertAll(f.natureCrops, p => new RectInt(p.x, f.h - p.y - p.h, p.w, p.h));
+            }
 
             var roads = gridGo.AddComponent<RoadGrid>();
             roads.width = f.w; roads.height = f.h;
@@ -296,7 +320,11 @@ namespace PocketCaravan.EditorTools
                         break;
                     case "market":
                         var t = db.towns.Find(x => x != null && x.id == o.town);
-                        var npc = Character($"장터 상인 ({(t != null ? t.displayName : o.town)})", "merchant_tall", center, objects);
+                        // 10/27 통합: C1 역할 그림은 고려·중간권만 등록돼 있다. 다른 지역(북유럽·베네치아·아라비아) 장터 상인은 예전 공용 그림을 쓴다.
+                        string rid = entry != null && entry.region != null ? entry.region.regionId : "";
+                        string marketArt = (rid == "goryeo" || rid == "transit") ? NpcArtBindings.Get("market:" + o.town)
+                            : (NpcArtBindings.TryGet("market:" + o.town) ?? "merchant_tall");
+                        var npc = Character($"장터 상인 ({(t != null ? t.displayName : o.town)})", marketArt, center, objects);
                         npc.AddComponent<TownMarket>().town = t;
                         break;
                     case "talker":
@@ -317,7 +345,7 @@ namespace PocketCaravan.EditorTools
                         var an = new GameObject($"Anim {o.sheet}");
                         an.transform.SetParent(objects); an.transform.position = center;
                         var asr = an.AddComponent<SpriteRenderer>();
-                        asr.sortingOrder = o.sheet == "ripples" ? 1 : 4;   // 물결은 바닥 바로 위, 꽃은 소품과 같은 높이
+                        asr.sortingOrder = (o.sheet == "ripples" || o.sheet == "goryeo_ripples") ? 1 : 4;   // 물결은 바닥 바로 위, 꽃은 소품과 같은 높이
                         var sa = an.AddComponent<SpriteAnim>();
                         sa.frames = SheetFrames(o.sheet, o.frames > 0 ? o.frames : 4);
                         sa.fps = o.fps > 0 ? o.fps : 4f;
@@ -327,7 +355,7 @@ namespace PocketCaravan.EditorTools
                         var spot = new GameObject("도적 출몰 자리").AddComponent<BanditSpot>();
                         spot.transform.SetParent(objects); spot.transform.position = center;
                         spot.sightRange = o.radius > 0 ? o.radius : 6f;
-                        var bgo = Character("도적", "bandit_tall", center, objects);
+                        var bgo = Character("도적", RoleArt(entry, "bandit", "bandit_tall"), center, objects);
                         bgo.AddComponent<PlayerMotor>().walkSpeed = 3.4f;
                         var bandit = bgo.AddComponent<Bandit>();
                         bandit.anim = bgo.GetComponent<CharacterAnimator>();
@@ -346,11 +374,14 @@ namespace PocketCaravan.EditorTools
                             director = new GameObject("돌발 사건").AddComponent<RoadEventDirector>();
                             director.transform.SetParent(objects);
                         }
-                        foreach (var (etype, ech) in new[] { (RoadEvent.Type.FallenTraveler, "villager_rabbit_tall"), (RoadEvent.Type.Peddler, "trader_tall") })
+                        foreach (var (etype, ech) in new[] { (RoadEvent.Type.FallenTraveler, RoleArt(entry, "event_fallen_traveler", "villager_rabbit_tall")), (RoadEvent.Type.Peddler, RoleArt(entry, "event_peddler", "trader_tall")) })
                         {
                             var ego = Character(etype == RoadEvent.Type.Peddler ? "떠돌이 상인" : "쓰러진 행인", ech, center, objects);
                             var ev = ego.AddComponent<RoadEvent>();
                             ev.type = etype;
+                            ev.reputationScope = ReputationScope.Civilization;
+                            ev.reputationTarget = "goryeo";
+                            ev.reputationSize = ReputationSize.Small;
                             // 눕힐 때 그림만 돌리도록 몸을 자식으로 옮긴다
                             var body = new GameObject("Body");
                             body.transform.SetParent(ego.transform, false);
@@ -381,7 +412,7 @@ namespace PocketCaravan.EditorTools
                         if (o.path != null)
                             for (int k = 0; k + 1 < o.path.Length; k += 2)
                                 pts.Add(grid.GetCellCenterWorld(new Vector3Int(o.path[k], f.h - 1 - o.path[k + 1], 0)));
-                        var wgo = Character("NPC 상인", "trader_tall", pts.Count > 0 ? pts[0] : center, objects);
+                        var wgo = Character("NPC 상인", RoleArt(entry, "walker", "trader_tall"), pts.Count > 0 ? pts[0] : center, objects);
                         var walker = wgo.AddComponent<Walker>();
                         walker.path = pts;
                         walker.traderIndex = o.idx;
@@ -396,6 +427,21 @@ namespace PocketCaravan.EditorTools
                         if (o.path != null)
                             for (int k = 0; k + 1 < o.path.Length; k += 2)
                                 worker.path.Add(grid.GetCellCenterWorld(new Vector3Int(o.path[k], f.h - 1 - o.path[k + 1], 0)));
+                        break;
+                    case "lantern":
+                        var lantern = new GameObject("고려 석등");
+                        lantern.transform.SetParent(objects); lantern.transform.position = center;
+                        var lamp = lantern.AddComponent<Light2D>();
+                        lamp.lightType = Light2D.LightType.Point;
+                        lamp.color = new Color(1f,.73f,.38f);
+                        lamp.pointLightOuterRadius = 3.2f; lamp.pointLightInnerRadius = .35f;
+                        lamp.intensity = .03f;
+                        var glow = lantern.AddComponent<GoryeoLantern>();
+                        glow.lamp = lamp; glow.phase = o.x * .7f + o.y;
+                        break;
+                    case "pastime":
+                        var fisher = Character(o.name, o.character, center, objects);
+                        fisher.AddComponent<GoryeoPastime>();
                         break;
                     case "ambience":
                         var sound = new GameObject("물가 주변음");
@@ -430,18 +476,18 @@ namespace PocketCaravan.EditorTools
             player.AddComponent<PlayerMotor>();
             player.AddComponent<PlayerController>().anim = anim;
 
-            // 카메라: 320×180 기준, 16 PPU 픽셀 퍼펙트
+            // Wider 480×270 view, native 16 PPU pixel art.
             var camGo = new GameObject("Main Camera") { tag = "MainCamera" };
             var cam = camGo.AddComponent<Camera>();
             cam.orthographic = true;
-            cam.orthographicSize = 6.75f;
+            cam.orthographicSize = 8.4375f;
             cam.clearFlags = CameraClearFlags.SolidColor;
             cam.backgroundColor = new Color32(0x22, 0x2B, 0x22, 0xFF);
             camGo.transform.position = new Vector3(startPos.x, startPos.y, -10f);
             var ppc = camGo.AddComponent<PixelPerfectCamera>();
             SetInt(ppc, "m_AssetsPPU", PixelArtImporter.PPU);
-            SetInt(ppc, "m_RefResolutionX", 384);
-            SetInt(ppc, "m_RefResolutionY", 216);
+            SetInt(ppc, "m_RefResolutionX", 480);
+            SetInt(ppc, "m_RefResolutionY", 270);
             SetInt(ppc, "m_GridSnapping", 1);
             camGo.AddComponent<CameraFollow>().target = player.transform;
 
@@ -458,10 +504,14 @@ namespace PocketCaravan.EditorTools
         }
 
         /// <summary>별도 도구에서 한 장만 생성. 본편 맵 색인·빌드 씬 목록을 다시 쓰지 않는다.</summary>
-        public static void BuildSingleMap(string json, string scenePath)
+        public static void BuildSingleMap(string json, string scenePath, string previewDirectory = null)
         {
+            if (previewDirectory != null && (!previewDirectory.StartsWith(Root + "/Editor/B2Preview/", StringComparison.Ordinal)
+                || previewDirectory.Contains("..") || !scenePath.StartsWith(Root + "/Editor/B2Preview/", StringComparison.Ordinal)))
+                throw new InvalidDataException("B2 preview must remain in its isolated editor directory.");
+            if (previewDirectory != null) EnsureFolder(previewDirectory + "/TileAssets");
             var map = JsonUtility.FromJson<MapFile>(json);
-            BuildScene(map, scenePath, WorldRegistry.Load().Map(map.id));
+            BuildScene(map, scenePath, WorldRegistry.Load().Map(map.id), previewDirectory);
         }
 
         /// <summary>모든 맵이 함께 쓰는 후처리 설정. 코드가 기준이라 매번 값을 다시 쓴다.</summary>
@@ -512,9 +562,21 @@ namespace PocketCaravan.EditorTools
             return tm;
         }
 
+        /// <summary>10/27 통합: 고려·중간권은 C1 역할 그림(npc_roles.json), 다른 지역은 merge 전 공용 그림을 그대로 쓴다 (지역 분위기 유지).</summary>
+        static string RoleArt(WorldRegistry.MapEntry entry, string role, string legacy)
+        {
+            string rid = entry != null && entry.region != null ? entry.region.regionId : "goryeo";
+            return rid == "goryeo" || rid == "transit" ? NpcArtBindings.Get(role) : legacy;
+        }
+
         /// <summary>16×24 캐릭터 (Art/Characters/이름_방향프레임.png). 아래를 보고 서 있다.</summary>
         static GameObject Character(string name, string character, Vector3 pos, Transform parent)
         {
+            // 10/27 통합: 고려·중간권 맵은 C1 역할 경로(NPC/…)만 쓴다 (Python 내보내기·테스트가 보장).
+            // 다른 지역(북유럽·베네치아·아라비아)은 기존 캐릭터 이름(Art/Characters/이름_d0.png)을 쓰므로, 그림이 실제로 있으면 허용한다.
+            if (string.IsNullOrEmpty(character) || (!character.StartsWith("NPC/", StringComparison.Ordinal)
+                && AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Characters/{character}_d0.png") == null))
+                throw new InvalidDataException("사람 NPC 역할 경로가 아니고 그림도 없습니다: " + character);
             var go = new GameObject(name);
             go.transform.SetParent(parent);
             go.transform.position = pos;
@@ -564,12 +626,12 @@ namespace PocketCaravan.EditorTools
 
         static Sprite LoadSprite(string name) => AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Placeholder/{name}.png");
 
-        static Tile TileFor(string name)
+        static Tile TileFor(string name, string previewDirectory = null)
         {
-            string assetPath = $"{TileAssetDir}/{name}.asset";
+            string assetPath = $"{(previewDirectory == null ? TileAssetDir : previewDirectory + "/TileAssets")}/{name}.asset";
             var t = AssetDatabase.LoadAssetAtPath<Tile>(assetPath);
             if (t != null) return t;
-            var sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{TilePngDir}/{name}.png");
+            var sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{(previewDirectory == null ? TilePngDir : previewDirectory + "/Tiles")}/{name}.png");
             if (sprite == null) { Debug.LogWarning($"타일 그림 없음: {name}"); return null; }
             t = ScriptableObject.CreateInstance<Tile>();
             t.sprite = sprite;

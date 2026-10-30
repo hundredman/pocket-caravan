@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-27",
+  "userQuote": "좋아.",
+  "assets": [
+    {
+      "id": "c7_batch2_forest_round",
+      "image": "ArtReview/Approved/C7-Batch2-v1/forest_round.png",
+      "source": "ArtReview/Approved/C7-Batch2-v1/forest_round.aseprite",
+      "status": "approved",
+      "date": "2026-10-27",
+      "userQuote": "좋아.",
+      "scope": "묶음2 둥근형·기울어진형·넓은형 숲나무 세 그림 승인; 본편배치/다른그림은별도",
+      "evidence": "ArtReview/Approved/C7-Batch2-v1/README.md",
+      "rgbaEvidence": {
+        "size": [
+          48,
+          64
+        ],
+        "rgbaSHA256": "3fcde8969af6fb18b062724b43611da467a7f6dc34cf9897eb102747b640cdbf"
+      }
+    },
+    {
+      "id": "c7_batch2_forest_bent",
+      "image": "ArtReview/Approved/C7-Batch2-v1/forest_bent.png",
+      "source": "ArtReview/Approved/C7-Batch2-v1/forest_bent.aseprite",
+      "status": "approved",
+      "date": "2026-10-27",
+      "userQuote": "좋아.",
+      "scope": "묶음2 둥근형·기울어진형·넓은형 숲나무 세 그림 승인; 본편배치/다른그림은별도",
+      "evidence": "ArtReview/Approved/C7-Batch2-v1/README.md",
+      "rgbaEvidence": {
+        "size": [
+          48,
+          64
+        ],
+        "rgbaSHA256": "750680527614eab01a7036ffa2229191c07c6329b60904ef77c099319d951ce5"
+      }
+    },
+    {
+      "id": "c7_batch2_forest_wide",
+      "image": "ArtReview/Approved/C7-Batch2-v1/forest_wide.png",
+      "source": "ArtReview/Approved/C7-Batch2-v1/forest_wide.aseprite",
+      "status": "approved",
+      "date": "2026-10-27",
+      "userQuote": "좋아.",
+      "scope": "묶음2 둥근형·기울어진형·넓은형 숲나무 세 그림 승인; 본편배치/다른그림은별도",
+      "evidence": "ArtReview/Approved/C7-Batch2-v1/README.md",
+      "rgbaEvidence": {
+        "size": [
+          64,
+          48
+        ],
+        "rgbaSHA256": "acf91edb33798a0536fc58bc5fec01996bc93265b4be5bb1f7ab5234dae487fc"
+      }
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+[
+  {
+    "assetId": "c6_goryeo_woodland8_92384100",
+    "purpose": "preserved_goryeo_woodland8",
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland8_92384100.png",
+    "size": [
+      3,
+      2
+    ],
+    "usage": [
+      {
+        "map": "goryeo_songak.json",
+        "referencedRenderCells": 18
+      },
+      {
+        "map": "goryeo_jangdan.json",
+        "referencedRenderCells": 42
+      },
+      {
+        "map": "Naru.json",
+        "referencedRenderCells": 30
+      },
+      {
+        "map": "Dakmok.json",
+        "referencedRenderCells": 12
+      },
+      {
+        "map": "Gaegyeong.json",
+        "referencedRenderCells": 36
+      }
+    ]
+  },
+  {
+    "assetId": "c6_goryeo_woodland9_9d822f53",
+    "purpose": "preserved_goryeo_woodland9",
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland9_9d822f53.png",
+    "size": [
+      2,
+      2
+    ],
+    "usage": [
+      {
+        "map": "goryeo_songak.json",
+        "referencedRenderCells": 72
+      },
+      {
+        "map": "goryeo_jangdan.json",
+        "referencedRenderCells": 72
+      },
+      {
+        "map": "Naru.json",
+        "referencedRenderCells": 64
+      },
+      {
+        "map": "Dakmok.json",
+        "referencedRenderCells": 52
+      },
+      {
+        "map": "Gaegyeong.json",
+        "referencedRenderCells": 104
+      }
+    ]
+  },
+  {
+    "assetId": "c6_goryeo_woodland10_8a468436",
+    "purpose": "preserved_goryeo_woodland10",
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland10_8a468436.png",
+    "size": [
+      2,
+      2
+    ],
+    "usage": [
+      {
+        "map": "goryeo_songak.json",
+        "referencedRenderCells": 44
+      },
+      {
+        "map": "goryeo_jangdan.json",
+        "referencedRenderCells": 12
+      },
+      {
+        "map": "Naru.json",
+        "referencedRenderCells": 32
+      },
+      {
+        "map": "Dakmok.json",
+        "referencedRenderCells": 28
+      },
+      {
+        "map": "Gaegyeong.json",
+        "referencedRenderCells": 16
+      }
+    ]
+  },
+  {
+    "assetId": "c6_goryeo_woodland11_43cf5755",
+    "purpose": "preserved_goryeo_woodland11",
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_woodland11_43cf5755.png",
+    "size": [
+      3,
+      2
+    ],
+    "usage": [
+      {
+        "map": "goryeo_songak.json",
+        "referencedRenderCells": 18
+      },
+      {
+        "map": "goryeo_jangdan.json",
+        "referencedRenderCells": 48
+      },
+      {
+        "map": "Naru.json",
+        "referencedRenderCells": 60
+      },
+      {
+        "map": "Dakmok.json",
+        "referencedRenderCells": 36
+      },
+      {
+        "map": "Gaegyeong.json",
+        "referencedRenderCells": 48
+      }
+    ]
+  }
+]

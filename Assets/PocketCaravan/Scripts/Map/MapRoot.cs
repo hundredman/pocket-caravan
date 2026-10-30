@@ -42,6 +42,8 @@ namespace PocketCaravan
         {
             if (ground == null || !ground.HasTile(c)) return false;
             if (blocked != null && blocked.HasTile(c)) return false;
+            var dressing = GetComponent<VillageDressing>();
+            if (dressing != null && dressing.Blocks(c)) return false;
             if (Interactable.BlockerAt(c) != null) return false;
             var obstacles=GetComponent<ObstacleField>();
             if(obstacles!=null && obstacles.Blocks(c,actor))return false;

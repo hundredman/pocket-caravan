@@ -1,0 +1,6 @@
+{
+  "gardenWall": "Complete finite4x2garden wall matches c6_goryeo_wall. Not city-wall single tiles house:10:8/house:10:9, not modular repeat wall; no gate or road binding in this trial.",
+  "largePaper": "Separate4x3large rack, not approved3x2rack; current Dakmok uses both.",
+  "onggi": "One16x16small open brown jar, not the approved3x2celadon display.",
+  "cherry": "Deferred: legacy STAMPS cherry points to nature(14,0)2x2, but no corresponding registered frozen whole object or matching nature keys found in current index/catalogue. No inferred substitution to another woodland tree. Confirm source/current binding before candidate or replacement."
+}

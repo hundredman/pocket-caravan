@@ -1,0 +1,9 @@
+test_actual_play_same_previous_and_only_cart_changed (test_c7_cart_revision.CartRevisionChecks) ... ok
+test_native_source_reexports_rgba (test_c7_cart_revision.CartRevisionChecks) ... ok
+test_sibling_pixels_preserved (test_c7_cart_revision.CartRevisionChecks) ... ok
+test_whole_cart_and_pending_production (test_c7_cart_revision.CartRevisionChecks) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.298s
+
+OK

@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-27",
+  "purpose": "Read-only teammate style references; never imported as game sprites",
+  "nodes": [
+    {
+      "nodeId": "77:9",
+      "fileKey": "JeXCjYTYRGtV8FCnXWWiqe",
+      "file": "figma-77-9.png",
+      "width": 1024,
+      "height": 1024,
+      "format": "png",
+      "original_width": 1254,
+      "original_height": 1254
+    },
+    {
+      "nodeId": "78:11",
+      "fileKey": "JeXCjYTYRGtV8FCnXWWiqe",
+      "file": "figma-78-11.png",
+      "width": 1024,
+      "height": 768,
+      "format": "png",
+      "original_width": 1448,
+      "original_height": 1086
+    },
+    {
+      "nodeId": "92:31",
+      "fileKey": "JeXCjYTYRGtV8FCnXWWiqe",
+      "file": "figma-92-31.png",
+      "width": 408,
+      "height": 445,
+      "format": "png",
+      "original_width": 408,
+      "original_height": 445
+    },
+    {
+      "nodeId": "92:32",
+      "fileKey": "JeXCjYTYRGtV8FCnXWWiqe",
+      "file": "figma-92-32.png",
+      "width": 631,
+      "height": 482,
+      "format": "png",
+      "original_width": 631,
+      "original_height": 482
+    },
+    {
+      "nodeId": "92:102",
+      "fileKey": "JeXCjYTYRGtV8FCnXWWiqe",
+      "file": "figma-92-102.png",
+      "width": 668,
+      "height": 667,
+      "format": "png",
+      "original_width": 668,
+      "original_height": 667
+    },
+    {
+      "nodeId": "92:107",
+      "fileKey": "JeXCjYTYRGtV8FCnXWWiqe",
+      "file": "figma-92-107.png",
+      "width": 668,
+      "height": 667,
+      "format": "png",
+      "original_width": 668,
+      "original_height": 667
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+# 아라비아 정적 검사 2026-10-27 19:05:52 · Unity 6000.3.26f1
+결과: 통과
+- [PASS] 공용 등록 검사 (MapJsonBuilder.ValidateWorld)
+- [PASS] 시작 맵은 그대로 Naru — Naru
+- [PASS] DB에 아라비아 마을·상품·퀘스트 등록
+- [PASS] DB에 아라비아 5개 거점(수도1+마을4)·직물·향신료 등록 — arabia_ahsa, arabia_zabid, arabia_taiz, arabia_jeddah, arabia_sanaa
+- [PASS] arabia_ahsa 마을 좌표 = 등록 맵 좌표 — (20, 0)
+- [PASS] arabia_zabid 마을 좌표 = 등록 맵 좌표 — (22, 0)
+- [PASS] arabia_taiz 마을 좌표 = 등록 맵 좌표 — (24, 0)
+- [PASS] arabia_jeddah 마을 좌표 = 등록 맵 좌표 — (26, 0)
+- [PASS] arabia_sanaa 마을 좌표 = 등록 맵 좌표 — (28, 0)
+- [PASS] 아라비아 마을 좌표가 기존 마을과 겹치지 않음
+- [PASS] 의뢰 전용품은 판매 불가(questItem)
+- [PASS] Q1 맡긴 짐 무게 ≤ 빈 등짐 적재량 — 4/10
+- [PASS] Q2 선행 조건 = Q1
+- [PASS] Q2 구매 단계 = 자비드 장터·곡물·2개
+- [PASS] Q2 보수 > 자비드 곡물 2개 실제 구매비 (평일) — 보수 30 − 구매비 10 = 20
+- [PASS] Q2 보수 > 구매비 (장날) — 장날 구매비 12
+- [PASS] 시험 세션 설정 (전용 저장 파일) — pocket_caravan_arabia_test_save.json
+- [PASS] Q2 진입 자금: 시작 자금 + Q1 보수 ≥ 구매비 — 100+20 ≥ 12
+- [PASS] 교역 차익 참고: 자비드→알 아흐사 곡물 1개 판매가 − 구매가 — 6 − 5
+- [PASS] arabia_ahsa 씬 존재·빌드 목록 포함
+- [PASS] arabia_farmroad 씬 존재·빌드 목록 포함
+- [PASS] arabia_shortcut 씬 존재·빌드 목록 포함
+- [PASS] arabia_taiz 씬 존재·빌드 목록 포함
+- [PASS] arabia_zabid 씬 존재·빌드 목록 포함
+- [PASS] arabia_jeddah 씬 존재·빌드 목록 포함
+- [PASS] arabia_sanaa 씬 존재·빌드 목록 포함
+- [PASS] arabia_central_dunes 씬 존재·빌드 목록 포함
+- [PASS] arabia_central_canyon 씬 존재·빌드 목록 포함
+- [PASS] arabia_central_westvale 씬 존재·빌드 목록 포함
+- [PASS] arabia_central_bazaar 씬 존재·빌드 목록 포함
+- [PASS] arabia_central_eastvale 씬 존재·빌드 목록 포함
+- [PASS] arabia_central_steppe 씬 존재·빌드 목록 포함
+- [PASS] arabia_ahsa MapRoot·지역·좌표
+- [PASS] arabia_ahsa GameManager 중복 배치 없음
+- [PASS] arabia_farmroad MapRoot·지역·좌표
+- [PASS] arabia_farmroad GameManager 중복 배치 없음
+- [PASS] arabia_shortcut MapRoot·지역·좌표
+- [PASS] arabia_shortcut GameManager 중복 배치 없음
+- [PASS] arabia_taiz MapRoot·지역·좌표
+- [PASS] arabia_taiz GameManager 중복 배치 없음
+- [PASS] arabia_zabid MapRoot·지역·좌표
+- [PASS] arabia_zabid GameManager 중복 배치 없음
+- [PASS] arabia_jeddah MapRoot·지역·좌표
+- [PASS] arabia_jeddah GameManager 중복 배치 없음
+- [PASS] arabia_sanaa MapRoot·지역·좌표
+- [PASS] arabia_sanaa GameManager 중복 배치 없음
+- [PASS] arabia_central_dunes MapRoot·지역·좌표
+- [PASS] arabia_central_dunes GameManager 중복 배치 없음
+- [PASS] arabia_central_canyon MapRoot·지역·좌표
+- [PASS] arabia_central_canyon GameManager 중복 배치 없음
+- [PASS] arabia_central_westvale MapRoot·지역·좌표
+- [PASS] arabia_central_westvale GameManager 중복 배치 없음
+- [PASS] arabia_central_bazaar MapRoot·지역·좌표
+- [PASS] arabia_central_bazaar GameManager 중복 배치 없음
+- [PASS] arabia_central_eastvale MapRoot·지역·좌표
+- [PASS] arabia_central_eastvale GameManager 중복 배치 없음
+- [PASS] arabia_central_steppe MapRoot·지역·좌표
+- [PASS] arabia_central_steppe GameManager 중복 배치 없음
+- [PASS] NPC 배치: 하산·마리암·힌드바드 = 알 아흐사, 부엌 담당 = 자비드 — arabia_ahsa:arabia_maryam, arabia_ahsa:arabia_hindbad, arabia_ahsa:arabia_hasan, arabia_zabid:arabia_kitchen_keeper
+- [PASS] 장터·게시판: 알 아흐사 (장터 1곳, 마을 데이터 연결)
+- [PASS] 장터·게시판: 자비드 (장터 1곳, 마을 데이터 연결)
+- [PASS] 장터·게시판: 타이즈 (장터 1곳, 마을 데이터 연결)
+- [PASS] 장터·게시판: 제다 (장터 1곳, 마을 데이터 연결)
+- [PASS] 장터·게시판: 사나 (장터 1곳, 마을 데이터 연결)
+- [PASS] 알 아흐사 S0 시작 스폰
+- [PASS] 출구 arabia_ahsa → arabia_shortcut/arabia_shortcut_spawn_seam_ahsa_0 — 폭 (41, 1)↔(41, 1), 역방향 있음
+- [PASS] 출구 arabia_ahsa → arabia_shortcut/arabia_shortcut_spawn_seam_ahsa_1 — 폭 (7, 1)↔(7, 1), 역방향 있음
+- [PASS] 출구 arabia_ahsa → arabia_shortcut/arabia_shortcut_spawn_seam_ahsa_2 — 폭 (9, 1)↔(9, 1), 역방향 있음
+- [PASS] 출구 arabia_ahsa → arabia_farmroad/arabia_farmroad_spawn_seam_ahsa_0 — 폭 (1, 9)↔(1, 9), 역방향 있음
+- [PASS] 출구 arabia_ahsa → arabia_farmroad/arabia_farmroad_spawn_seam_ahsa_1 — 폭 (1, 9)↔(1, 9), 역방향 있음
+- [PASS] 출구 arabia_ahsa → arabia_farmroad/arabia_farmroad_spawn_seam_ahsa_2 — 폭 (1, 5)↔(1, 5), 역방향 있음
+- [PASS] 출구 arabia_ahsa → arabia_farmroad/arabia_farmroad_spawn_seam_ahsa_3 — 폭 (1, 14)↔(1, 14), 역방향 있음
+- [PASS] 출구 arabia_ahsa → arabia_farmroad/arabia_farmroad_spawn_seam_ahsa_4 — 폭 (1, 1)↔(1, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_taiz/arabia_taiz_spawn_seam_farmroad_0 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_taiz/arabia_taiz_spawn_seam_farmroad_1 — 폭 (20, 1)↔(20, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_taiz/arabia_taiz_spawn_seam_farmroad_2 — 폭 (9, 1)↔(9, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_taiz/arabia_taiz_spawn_seam_farmroad_3 — 폭 (7, 1)↔(7, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_taiz/arabia_taiz_spawn_seam_farmroad_4 — 폭 (6, 1)↔(6, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_taiz/arabia_taiz_spawn_seam_farmroad_5 — 폭 (9, 1)↔(9, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_ahsa/arabia_ahsa_spawn_seam_farmroad_0 — 폭 (1, 9)↔(1, 9), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_ahsa/arabia_ahsa_spawn_seam_farmroad_1 — 폭 (1, 9)↔(1, 9), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_ahsa/arabia_ahsa_spawn_seam_farmroad_2 — 폭 (1, 5)↔(1, 5), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_ahsa/arabia_ahsa_spawn_seam_farmroad_3 — 폭 (1, 14)↔(1, 14), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_ahsa/arabia_ahsa_spawn_seam_farmroad_4 — 폭 (1, 1)↔(1, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_jeddah/arabia_jeddah_spawn_seam_farmroad_0 — 폭 (1, 14)↔(1, 14), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_jeddah/arabia_jeddah_spawn_seam_farmroad_1 — 폭 (1, 6)↔(1, 6), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_jeddah/arabia_jeddah_spawn_seam_farmroad_2 — 폭 (1, 9)↔(1, 9), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_jeddah/arabia_jeddah_spawn_seam_farmroad_3 — 폭 (1, 1)↔(1, 1), 역방향 있음
+- [PASS] 출구 arabia_farmroad → arabia_jeddah/arabia_jeddah_spawn_seam_farmroad_4 — 폭 (1, 7)↔(1, 7), 역방향 있음
+- [PASS] 출구 arabia_shortcut → arabia_central_dunes/arabia_central_dunes_spawn_s_02 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_shortcut → arabia_taiz/arabia_taiz_spawn_seam_shortcut_0 — 폭 (1, 3)↔(1, 3), 역방향 있음
+- [PASS] 출구 arabia_shortcut → arabia_taiz/arabia_taiz_spawn_seam_shortcut_1 — 폭 (1, 8)↔(1, 8), 역방향 있음
+- [PASS] 출구 arabia_shortcut → arabia_taiz/arabia_taiz_spawn_seam_shortcut_2 — 폭 (1, 29)↔(1, 29), 역방향 있음
+- [PASS] 출구 arabia_shortcut → arabia_ahsa/arabia_ahsa_spawn_seam_shortcut_0 — 폭 (41, 1)↔(41, 1), 역방향 있음
+- [PASS] 출구 arabia_shortcut → arabia_ahsa/arabia_ahsa_spawn_seam_shortcut_1 — 폭 (7, 1)↔(7, 1), 역방향 있음
+- [PASS] 출구 arabia_shortcut → arabia_ahsa/arabia_ahsa_spawn_seam_shortcut_2 — 폭 (9, 1)↔(9, 1), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_sanaa/arabia_sanaa_spawn_seam_taiz_0 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_shortcut/arabia_shortcut_spawn_seam_taiz_0 — 폭 (1, 3)↔(1, 3), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_shortcut/arabia_shortcut_spawn_seam_taiz_1 — 폭 (1, 8)↔(1, 8), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_shortcut/arabia_shortcut_spawn_seam_taiz_2 — 폭 (1, 29)↔(1, 29), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_zabid/arabia_zabid_spawn_seam_taiz_0 — 폭 (1, 12)↔(1, 12), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_zabid/arabia_zabid_spawn_seam_taiz_1 — 폭 (1, 5)↔(1, 5), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_zabid/arabia_zabid_spawn_seam_taiz_2 — 폭 (1, 13)↔(1, 13), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_farmroad/arabia_farmroad_spawn_seam_taiz_0 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_farmroad/arabia_farmroad_spawn_seam_taiz_1 — 폭 (20, 1)↔(20, 1), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_farmroad/arabia_farmroad_spawn_seam_taiz_2 — 폭 (9, 1)↔(9, 1), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_farmroad/arabia_farmroad_spawn_seam_taiz_3 — 폭 (7, 1)↔(7, 1), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_farmroad/arabia_farmroad_spawn_seam_taiz_4 — 폭 (6, 1)↔(6, 1), 역방향 있음
+- [PASS] 출구 arabia_taiz → arabia_farmroad/arabia_farmroad_spawn_seam_taiz_5 — 폭 (9, 1)↔(9, 1), 역방향 있음
+- [PASS] 출구 arabia_zabid → arabia_central_canyon/arabia_central_canyon_spawn_s_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_zabid → arabia_taiz/arabia_taiz_spawn_seam_zabid_0 — 폭 (1, 12)↔(1, 12), 역방향 있음
+- [PASS] 출구 arabia_zabid → arabia_taiz/arabia_taiz_spawn_seam_zabid_1 — 폭 (1, 5)↔(1, 5), 역방향 있음
+- [PASS] 출구 arabia_zabid → arabia_taiz/arabia_taiz_spawn_seam_zabid_2 — 폭 (1, 13)↔(1, 13), 역방향 있음
+- [PASS] 출구 arabia_zabid → arabia_jeddah/arabia_jeddah_spawn_seam_zabid_0 — 폭 (16, 1)↔(16, 1), 역방향 있음
+- [PASS] 출구 arabia_zabid → arabia_jeddah/arabia_jeddah_spawn_seam_zabid_1 — 폭 (15, 1)↔(15, 1), 역방향 있음
+- [PASS] 출구 arabia_zabid → arabia_jeddah/arabia_jeddah_spawn_seam_zabid_2 — 폭 (6, 1)↔(6, 1), 역방향 있음
+- [PASS] 출구 arabia_zabid → arabia_jeddah/arabia_jeddah_spawn_seam_zabid_3 — 폭 (15, 1)↔(15, 1), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_zabid/arabia_zabid_spawn_seam_jeddah_0 — 폭 (16, 1)↔(16, 1), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_zabid/arabia_zabid_spawn_seam_jeddah_1 — 폭 (15, 1)↔(15, 1), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_zabid/arabia_zabid_spawn_seam_jeddah_2 — 폭 (6, 1)↔(6, 1), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_zabid/arabia_zabid_spawn_seam_jeddah_3 — 폭 (15, 1)↔(15, 1), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_farmroad/arabia_farmroad_spawn_seam_jeddah_0 — 폭 (1, 14)↔(1, 14), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_farmroad/arabia_farmroad_spawn_seam_jeddah_1 — 폭 (1, 6)↔(1, 6), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_farmroad/arabia_farmroad_spawn_seam_jeddah_2 — 폭 (1, 9)↔(1, 9), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_farmroad/arabia_farmroad_spawn_seam_jeddah_3 — 폭 (1, 1)↔(1, 1), 역방향 있음
+- [PASS] 출구 arabia_jeddah → arabia_farmroad/arabia_farmroad_spawn_seam_jeddah_4 — 폭 (1, 7)↔(1, 7), 역방향 있음
+- [PASS] 출구 arabia_sanaa → arabia_central_dunes/arabia_central_dunes_spawn_s_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_sanaa → arabia_taiz/arabia_taiz_spawn_seam_sanaa_0 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_dunes → arabia_sanaa/arabia_sanaa_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_dunes → arabia_shortcut/arabia_shortcut_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_dunes → arabia_central_canyon/arabia_central_canyon_spawn_seam_dunes_0 — 폭 (1, 19)↔(1, 19), 역방향 있음
+- [PASS] 출구 arabia_central_dunes → arabia_central_canyon/arabia_central_canyon_spawn_seam_dunes_1 — 폭 (1, 18)↔(1, 18), 역방향 있음
+- [PASS] 출구 arabia_central_dunes → arabia_central_canyon/arabia_central_canyon_spawn_seam_dunes_2 — 폭 (1, 1)↔(1, 1), 역방향 있음
+- [PASS] 출구 arabia_central_dunes → arabia_central_westvale/arabia_central_westvale_spawn_seam_dunes_0 — 폭 (8, 1)↔(8, 1), 역방향 있음
+- [PASS] 출구 arabia_central_dunes → arabia_central_westvale/arabia_central_westvale_spawn_seam_dunes_1 — 폭 (41, 1)↔(41, 1), 역방향 있음
+- [PASS] 출구 arabia_central_dunes → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_dunes_0 — 폭 (16, 1)↔(16, 1), 역방향 있음
+- [PASS] 출구 arabia_central_dunes → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_dunes_1 — 폭 (38, 1)↔(38, 1), 역방향 있음
+- [PASS] 출구 arabia_central_canyon → arabia_zabid/arabia_zabid_spawn_n_01 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_canyon → arabia_central_dunes/arabia_central_dunes_spawn_seam_canyon_0 — 폭 (1, 19)↔(1, 19), 역방향 있음
+- [PASS] 출구 arabia_central_canyon → arabia_central_dunes/arabia_central_dunes_spawn_seam_canyon_1 — 폭 (1, 18)↔(1, 18), 역방향 있음
+- [PASS] 출구 arabia_central_canyon → arabia_central_dunes/arabia_central_dunes_spawn_seam_canyon_2 — 폭 (1, 1)↔(1, 1), 역방향 있음
+- [PASS] 출구 arabia_central_canyon → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_canyon_0 — 폭 (2, 1)↔(2, 1), 역방향 있음
+- [PASS] 출구 arabia_central_canyon → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_canyon_1 — 폭 (37, 1)↔(37, 1), 역방향 있음
+- [PASS] 출구 arabia_central_canyon → arabia_central_eastvale/arabia_central_eastvale_spawn_seam_canyon_0 — 폭 (16, 1)↔(16, 1), 역방향 있음
+- [PASS] 출구 arabia_central_canyon → arabia_central_eastvale/arabia_central_eastvale_spawn_seam_canyon_1 — 폭 (32, 1)↔(32, 1), 역방향 있음
+- [PASS] 출구 arabia_central_westvale → arabia_central_dunes/arabia_central_dunes_spawn_seam_west_0 — 폭 (8, 1)↔(8, 1), 역방향 있음
+- [PASS] 출구 arabia_central_westvale → arabia_central_dunes/arabia_central_dunes_spawn_seam_west_1 — 폭 (41, 1)↔(41, 1), 역방향 있음
+- [PASS] 출구 arabia_central_westvale → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_west_0 — 폭 (1, 13)↔(1, 13), 역방향 있음
+- [PASS] 출구 arabia_central_westvale → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_west_1 — 폭 (1, 10)↔(1, 10), 역방향 있음
+- [PASS] 출구 arabia_central_westvale → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_west_2 — 폭 (1, 5)↔(1, 5), 역방향 있음
+- [PASS] 출구 arabia_central_westvale → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_west_3 — 폭 (1, 21)↔(1, 21), 역방향 있음
+- [PASS] 출구 arabia_central_westvale → arabia_central_steppe/arabia_central_steppe_spawn_seam_west_0 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_westvale/arabia_central_westvale_spawn_seam_bazaar_0 — 폭 (1, 13)↔(1, 13), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_westvale/arabia_central_westvale_spawn_seam_bazaar_1 — 폭 (1, 10)↔(1, 10), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_westvale/arabia_central_westvale_spawn_seam_bazaar_2 — 폭 (1, 5)↔(1, 5), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_westvale/arabia_central_westvale_spawn_seam_bazaar_3 — 폭 (1, 21)↔(1, 21), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_dunes/arabia_central_dunes_spawn_seam_bazaar_0 — 폭 (16, 1)↔(16, 1), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_dunes/arabia_central_dunes_spawn_seam_bazaar_1 — 폭 (38, 1)↔(38, 1), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_canyon/arabia_central_canyon_spawn_seam_bazaar_0 — 폭 (2, 1)↔(2, 1), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_canyon/arabia_central_canyon_spawn_seam_bazaar_1 — 폭 (37, 1)↔(37, 1), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_eastvale/arabia_central_eastvale_spawn_seam_bazaar_0 — 폭 (1, 1)↔(1, 1), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_eastvale/arabia_central_eastvale_spawn_seam_bazaar_1 — 폭 (1, 16)↔(1, 16), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_eastvale/arabia_central_eastvale_spawn_seam_bazaar_2 — 폭 (1, 4)↔(1, 4), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_eastvale/arabia_central_eastvale_spawn_seam_bazaar_3 — 폭 (1, 16)↔(1, 16), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_eastvale/arabia_central_eastvale_spawn_seam_bazaar_4 — 폭 (1, 12)↔(1, 12), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_steppe/arabia_central_steppe_spawn_seam_bazaar_0 — 폭 (1, 1)↔(1, 1), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_steppe/arabia_central_steppe_spawn_seam_bazaar_1 — 폭 (13, 1)↔(13, 1), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_steppe/arabia_central_steppe_spawn_seam_bazaar_2 — 폭 (14, 1)↔(14, 1), 역방향 있음
+- [PASS] 출구 arabia_central_bazaar → arabia_central_steppe/arabia_central_steppe_spawn_seam_bazaar_3 — 폭 (52, 1)↔(52, 1), 역방향 있음
+- [PASS] 출구 arabia_central_eastvale → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_east_0 — 폭 (1, 1)↔(1, 1), 역방향 있음
+- [PASS] 출구 arabia_central_eastvale → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_east_1 — 폭 (1, 16)↔(1, 16), 역방향 있음
+- [PASS] 출구 arabia_central_eastvale → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_east_2 — 폭 (1, 4)↔(1, 4), 역방향 있음
+- [PASS] 출구 arabia_central_eastvale → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_east_3 — 폭 (1, 16)↔(1, 16), 역방향 있음
+- [PASS] 출구 arabia_central_eastvale → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_east_4 — 폭 (1, 12)↔(1, 12), 역방향 있음
+- [PASS] 출구 arabia_central_eastvale → arabia_central_canyon/arabia_central_canyon_spawn_seam_east_0 — 폭 (16, 1)↔(16, 1), 역방향 있음
+- [PASS] 출구 arabia_central_eastvale → arabia_central_canyon/arabia_central_canyon_spawn_seam_east_1 — 폭 (32, 1)↔(32, 1), 역방향 있음
+- [PASS] 출구 arabia_central_eastvale → arabia_central_steppe/arabia_central_steppe_spawn_seam_east_0 — 폭 (3, 1)↔(3, 1), 역방향 있음
+- [PASS] 출구 arabia_central_steppe → arabia_central_westvale/arabia_central_westvale_spawn_seam_steppe_0 — 폭 (4, 1)↔(4, 1), 역방향 있음
+- [PASS] 출구 arabia_central_steppe → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_steppe_0 — 폭 (1, 1)↔(1, 1), 역방향 있음
+- [PASS] 출구 arabia_central_steppe → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_steppe_1 — 폭 (13, 1)↔(13, 1), 역방향 있음
+- [PASS] 출구 arabia_central_steppe → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_steppe_2 — 폭 (14, 1)↔(14, 1), 역방향 있음
+- [PASS] 출구 arabia_central_steppe → arabia_central_bazaar/arabia_central_bazaar_spawn_seam_steppe_3 — 폭 (52, 1)↔(52, 1), 역방향 있음
+- [PASS] 출구 arabia_central_steppe → arabia_central_eastvale/arabia_central_eastvale_spawn_seam_steppe_0 — 폭 (3, 1)↔(3, 1), 역방향 있음
+- [PASS] 출구 짝 수 (오픈월드 이음새 포함, 양방향이라 짝수) — 118
+- [PASS] 이어짐: arabia_ahsa ↔ arabia_farmroad
+- [PASS] 이어짐: arabia_farmroad ↔ arabia_jeddah
+- [PASS] 이어짐: arabia_jeddah ↔ arabia_zabid
+- [PASS] 이어짐: arabia_zabid ↔ arabia_taiz
+- [PASS] 이어짐: arabia_taiz ↔ arabia_sanaa
+- [PASS] 이어짐: arabia_ahsa ↔ arabia_shortcut
+- [PASS] 이어짐: arabia_sanaa ↔ arabia_central_dunes
+- [PASS] 이어짐: arabia_shortcut ↔ arabia_central_dunes
+- [PASS] 이어짐: arabia_zabid ↔ arabia_central_canyon
+- [PASS] 기존 고려·중간권 마을끼리 장터 연결 유지 (NPC 상인 필터 회귀) — 7개 마을
+- [PASS] 아라비아 ↔ 고려 장터는 미연결 (원격 거래 차단) — naru
+- [PASS] 아라비아 5개 거점 장터 서로 연결 — 모두 연결

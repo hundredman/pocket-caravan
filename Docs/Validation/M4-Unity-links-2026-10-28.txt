@@ -1,0 +1,14 @@
+start transit_crossroads
+use transit_crossroads Exit → north_c_road_se edge=N size=(4, 1) spawn=link_transit_crossroads
+ok arrived north_c_road_se cell=(15, 1, 0) onExit=False walk=True
+use north_c_road_se Exit → transit_crossroads edge=S size=(4, 1) spawn=link_north_c_road_se
+ok arrived transit_crossroads cell=(26, 69, 0) onExit=False walk=True
+use transit_crossroads Exit → arabia_central_eastvale edge=W size=(1, 2) spawn=link_transit_crossroads
+ok arrived arabia_central_eastvale cell=(45, 12, 0) onExit=False walk=True
+use arabia_central_eastvale Exit → transit_crossroads edge=E size=(1, 2) spawn=link_arabia_central_eastvale
+ok arrived transit_crossroads cell=(13, 33, 0) onExit=False walk=True
+use transit_crossroads Exit → arabia_central_steppe edge=W size=(1, 3) spawn=link_transit_crossroads
+ok arrived arabia_central_steppe cell=(59, 45, 0) onExit=False walk=True
+use arabia_central_steppe Exit → transit_crossroads edge=E size=(1, 3) spawn=link_arabia_central_steppe
+ok arrived transit_crossroads cell=(1, 45, 0) onExit=False walk=True
+END

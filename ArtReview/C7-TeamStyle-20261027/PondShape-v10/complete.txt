@@ -1,0 +1,1 @@
+Actual Unity Play render; original terrain and no paving in both; original spurred pond vs new rounded pond, same curved staging route; staged art review, previewOnly true; PPU16, Point, 480x270; existing approved characters and first complete 11-cell pond (second off-camera pond excluded); no navigation or manual-play claim.

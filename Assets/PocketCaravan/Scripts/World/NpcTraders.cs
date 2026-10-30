@@ -47,6 +47,23 @@ namespace PocketCaravan
         }
 
         TownData Town(string id) => db.towns.Find(t => t != null && t.id == id);
+
+        // 출구로 이어지지 않은 지역의 장터는 거래·소문 대상에서 뺀다 (연결된 기존 마을끼리는 그대로).
+        static bool Connected(TownData a, TownData b)
+        {
+            var world = WorldIndex.Get();
+            return world == null || world.MarketsConnected(a.id, b.id);
+        }
+
+        static bool ReachableFromHere(TownData town)
+        {
+            var world = WorldIndex.Get();
+            string here = MapRoot.Current != null ? MapRoot.Current.mapId : null;
+            if (world == null || string.IsNullOrEmpty(here) || world.Map(here) == null) return true;
+            string target = world.MapOf("market", town.id);
+            if (string.IsNullOrEmpty(target) || world.Map(target) == null) return true;
+            return target == here || world.NextStep(here, target) != null;
+        }
         ItemData Item(string id) => db.items.Find(i => i != null && i.id == id);
 
         public void OnHour()
@@ -87,10 +104,10 @@ namespace PocketCaravan
             foreach (var s in from.stock)
             {
                 if (s.item == null || s.item.questItem || mf.Stock(s.item) < 3f) continue;
-                int buy = mf.BuyPrice(s.item);
+                int buy = mf.BaseBuyPrice(s.item);
                 foreach (var to in db.towns)
                 {
-                    if (to == null || to == from) continue;
+                    if (to == null || to == from || !Connected(from, to)) continue;
                     float gain = (market(to).NpcSellPrice(s.item) - buy) / (float)buy;
                     gain /= Mathf.Max(1, ContractManager.Distance(from, to));   // 가까울수록 좋음
                     if (gain > bestGain) { bestGain = gain; best = s.item; bestTo = to; }
@@ -105,7 +122,7 @@ namespace PocketCaravan
             int n = 0; float paid = 0;
             for (int i = 0; i < 4 && mf.Stock(best) >= 2f; i++)
             {
-                int price = mf.BuyPrice(best);
+                int price = mf.BaseBuyPrice(best);
                 mf.RecordBuy(best, price);
                 paid += price; n++;
             }
@@ -121,7 +138,7 @@ namespace PocketCaravan
             string tip = null; float bestRatio = 1.15f;
             foreach (var town in db.towns)
             {
-                if (town == null) continue;
+                if (town == null || !ReachableFromHere(town)) continue;
                 var m = market(town);
                 foreach (var item in db.items)
                 {

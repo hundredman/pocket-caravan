@@ -1,0 +1,8 @@
+{
+  "errors": [],
+  "statuses": {
+    "c7_gateprops_gate": "approved",
+    "c7_gateprops_well": "approved",
+    "c7_gateprops_stone_lantern": "approved"
+  }
+}

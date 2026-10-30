@@ -10,17 +10,13 @@
       "chain": [
         "transit_crossroads",
         "transit_central_approach",
-        "transit_ferry",
         "transit_wetroad",
         "transit_woodtown",
-        "transit_pass",
         "goryeo_songak"
       ],
       "localEdge": "E",
-      "localSpawn": "E",
       "target": "transit_central_approach",
-      "targetSpawn": "W",
-      "width": 3
+      "note": "M4(2026-10-28): 새 맵은 걸을 수 있는 경계 전체가 출입구라 출구 폭·스폰 이름은 고정하지 않는다"
     },
     {
       "direction": "N",
@@ -51,6 +47,8 @@
     "geography": "recognizable_real_world_motifs_with_adjusted_scale",
     "scalePolicy": "해안·반도·산지·내륙의 상대적 형태와 환경 연속성을 살리되 문명별 거리/면적/비율은 이동 경험과 제작 범위에 맞춰 과장·축소한다.",
     "localRoadShape": "freeform",
-    "futureTopology": "여러 경유 도시와 대안 교역로가 있는 거미줄 연결로 확장 가능"
+    "futureTopology": "여러 경유 도시와 대안 교역로가 있는 거미줄 연결로 확장 가능",
+    "ownedCentralTiles": 25000,
+    "wholeCentralContinentTiles": 100000
   }
 }

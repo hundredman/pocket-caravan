@@ -1,0 +1,128 @@
+{
+ "map": "north_c_road_nw",
+ "name": "눈숲 고갯길",
+ "kind": "travel",
+ "items": [
+  {
+   "name": "고갯마루 쉼터",
+   "kind": "rest",
+   "asset": null,
+   "w": 7,
+   "h": 5,
+   "id": "",
+   "memo": "쉼터 마당",
+   "x": -60,
+   "y": -151
+  },
+  {
+   "name": "나무꾼 오두막",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "art": "h_shed",
+   "door": [
+    -63,
+    -146
+   ],
+   "laneLen": 0,
+   "x": -64,
+   "y": -149
+  },
+  {
+   "name": "모닥불",
+   "kind": "spot",
+   "asset": "fire",
+   "w": 2,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "fire",
+   "x": -52,
+   "y": -150
+  },
+  {
+   "name": "땔감",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "wood",
+   "gather": "wood",
+   "x": -61,
+   "y": -148
+  },
+  {
+   "name": "땔감 2",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "wood",
+   "gather": "wood",
+   "x": -48,
+   "y": -154
+  },
+  {
+   "name": "약초",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "herb",
+   "gather": "herb",
+   "x": -64,
+   "y": -134
+  },
+  {
+   "name": "나무꾼",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -64,
+   "y": -146
+  },
+  {
+   "name": "길 지키는 노인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -59,
+   "y": -153
+  },
+  {
+   "name": "이벤트 1",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -60,
+   "y": -143
+  },
+  {
+   "name": "이벤트 2",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -34,
+   "y": -158
+  }
+ ],
+ "laneCells": 0
+}

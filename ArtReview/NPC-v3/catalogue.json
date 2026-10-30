@@ -1,0 +1,225 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "chief": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "palette": [
+        "#1d1516",
+        "#221a22",
+        "#271c1c",
+        "#2c2a38",
+        "#30201e",
+        "#3a2b26",
+        "#3a3434",
+        "#3b3635",
+        "#42302a",
+        "#45404c",
+        "#4a342d",
+        "#4e3b2f",
+        "#54433b",
+        "#55504e",
+        "#60483a",
+        "#60607a",
+        "#67462e",
+        "#6e6878",
+        "#7f776d",
+        "#837b70",
+        "#966caa",
+        "#a09789",
+        "#a97c54",
+        "#b9b6c3",
+        "#bc7058",
+        "#beb8d0",
+        "#c29d7f",
+        "#c9c2b3",
+        "#cd9371",
+        "#cfc8b6",
+        "#e2deee",
+        "#eb998f",
+        "#edc09b",
+        "#efe9d9",
+        "#f6e6cc",
+        "#fadcbb",
+        "#fffaea"
+      ],
+      "binaryAlpha": true
+    },
+    "woman": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "palette": [
+        "#191216",
+        "#1d1516",
+        "#221a22",
+        "#262939",
+        "#30201e",
+        "#362827",
+        "#384158",
+        "#422d23",
+        "#42302a",
+        "#482c36",
+        "#4a342d",
+        "#4b3b26",
+        "#4e3b2f",
+        "#543741",
+        "#54433b",
+        "#575355",
+        "#5c7096",
+        "#5d4036",
+        "#60483a",
+        "#765038",
+        "#ac894b",
+        "#b17f52",
+        "#bc7058",
+        "#c17f90",
+        "#c29d7f",
+        "#c8788e",
+        "#c9c6c1",
+        "#cd9371",
+        "#e2be92",
+        "#eb998f",
+        "#ec9cb0",
+        "#edc09b",
+        "#fadcbb",
+        "#fae6a0",
+        "#ffe0e6",
+        "#fffaea"
+      ],
+      "binaryAlpha": true
+    },
+    "trader": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "palette": [
+        "#191216",
+        "#1d1516",
+        "#221a22",
+        "#271c1c",
+        "#2c201f",
+        "#2e1f1b",
+        "#30201e",
+        "#362827",
+        "#382620",
+        "#3a2b26",
+        "#42302a",
+        "#462f25",
+        "#473c33",
+        "#4c3626",
+        "#4e3b2f",
+        "#513e33",
+        "#56473b",
+        "#5d4036",
+        "#60483a",
+        "#684a2c",
+        "#765038",
+        "#7a553b",
+        "#966848",
+        "#986f42",
+        "#a08b6c",
+        "#ae7c43",
+        "#bb916c",
+        "#bc7058",
+        "#bd825a",
+        "#d88464",
+        "#e2be70",
+        "#e5b284",
+        "#e5be70",
+        "#ecc45c",
+        "#f5cd9b",
+        "#f8f0e0",
+        "#fffaea"
+      ],
+      "binaryAlpha": true
+    }
+  },
+  "assets": [
+    {
+      "id": "trial_chief_v3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/NPC-v3/chief-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/NPC-v3/chief-front.aseprite"
+      },
+      "profile": "chief",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_chief_v3",
+          "image": "ArtReview/NPC-v3/chief-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_v3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/NPC-v3/woman-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/NPC-v3/woman-front.aseprite"
+      },
+      "profile": "woman",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_v3",
+          "image": "ArtReview/NPC-v3/woman-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_v3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/NPC-v3/trader-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/NPC-v3/trader-front.aseprite"
+      },
+      "profile": "trader",
+      "review": {
+        "status": "pending"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_v3",
+          "image": "ArtReview/NPC-v3/trader-front.png"
+        }
+      ]
+    }
+  ]
+}

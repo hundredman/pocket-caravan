@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147baa154c7bc4bf39645666676b3271, type: 3}
+  m_Name: Town_ArabiaTaiz
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.TownData
+  id: arabia_taiz
+  displayName: "\uD0C0\uC774\uC988"
+  region: {fileID: 11400000, guid: 3b201f1f4e8c7415fbff7de929be09b8, type: 2}
+  journeyNote: "\uC5FC\uC0C9 \uACF5\uBC29 \uB9C8\uC744. \uC9C1\uBB3C \uACF5\uAE09\uC9C0,
+    \uC0DD\uD65C \uC2DD\uB7C9 \uC18C\uBE44\uC9C0."
+  worldCoord: {x: 24, y: 0}
+  startLevel: 1
+  settlementTier: 2
+  facilities:
+  - id: arabia_taiz_rest
+    displayName: "\uC5EC\uAD00 \uC27C\uD130"
+    kind: 0
+    minTier: 1
+    minCredit: 0
+    description: 
+    storageCapacity: 120
+  stock:
+  - item: {fileID: 11400000, guid: 35a7e3db33a56468183a9b53947724c8, type: 2}
+    optimal: 40
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: c8af66d8d995047beb40404ffae04de1, type: 2}
+    optimal: 14
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 3fb63f26ff0b04548bdf8a538aaeba74, type: 2}
+    optimal: 12
+    localPriceMultiplier: 1
+  defaultOptimal: 3
+  vehiclesForSale: []

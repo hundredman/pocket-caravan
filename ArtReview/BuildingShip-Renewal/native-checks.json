@@ -1,0 +1,237 @@
+{
+  "assets": [
+    {
+      "name": "cottage",
+      "size": [
+        80,
+        64
+      ],
+      "colors": 21,
+      "binaryAlpha": true,
+      "originalBBox": [
+        1,
+        14,
+        78,
+        62
+      ],
+      "newBBox": [
+        2,
+        18,
+        78,
+        63
+      ],
+      "originalRGBA": "f05a3fd855584201b97dfd04bc7667671f317369194304a71ec612cc5a210515",
+      "newRGBA": "e628f1dd18ff43e9ef801b3783c4cd77030144a6347fe31549fb7df754a01cf0"
+    },
+    {
+      "name": "pavilion",
+      "size": [
+        80,
+        80
+      ],
+      "colors": 27,
+      "binaryAlpha": true,
+      "originalBBox": [
+        3,
+        5,
+        76,
+        80
+      ],
+      "newBBox": [
+        2,
+        3,
+        78,
+        79
+      ],
+      "originalRGBA": "6a228844efaa3acabf9ad7a88dabd566fc0a18be0394da5a1efe903ddd3b8bd2",
+      "newRGBA": "ccfdcf5e7428391d18ba4532eb90c68d75c53004bab47135ab7a3b241430f1cb"
+    },
+    {
+      "name": "thatch",
+      "size": [
+        64,
+        48
+      ],
+      "colors": 20,
+      "binaryAlpha": true,
+      "originalBBox": [
+        2,
+        8,
+        62,
+        47
+      ],
+      "newBBox": [
+        2,
+        10,
+        62,
+        47
+      ],
+      "originalRGBA": "78f9b55e28f17e4b4aad235dda27ba196bfb6ec930d8fb2a7a8890c57f26e81b",
+      "newRGBA": "fd068c3b5f9e7d41ef0e1816145b21c5dd42e666ac79b4a9cd682f017b0d9528"
+    },
+    {
+      "name": "tile-house",
+      "size": [
+        64,
+        48
+      ],
+      "colors": 27,
+      "binaryAlpha": true,
+      "originalBBox": [
+        2,
+        10,
+        62,
+        47
+      ],
+      "newBBox": [
+        2,
+        11,
+        62,
+        47
+      ],
+      "originalRGBA": "206eb57b001ced8f866ee895c972f3120a3d97c72d802f848ccdcd6efb3385b1",
+      "newRGBA": "03e1939a96d1e3e6a62d4a451af1e4695bc40b36ef68365dc03fc657e6d47683"
+    },
+    {
+      "name": "gaekju",
+      "size": [
+        96,
+        64
+      ],
+      "colors": 28,
+      "binaryAlpha": true,
+      "originalBBox": [
+        2,
+        13,
+        94,
+        63
+      ],
+      "newBBox": [
+        2,
+        14,
+        94,
+        63
+      ],
+      "originalRGBA": "4c0bdf0565081598b3cc7e230774889df454d949147d39095404b9e66482786d",
+      "newRGBA": "1191cecd8f3f3e0d31954d4e7f885ecb1de3efaad471ef0b13c63f10c2251a7b"
+    },
+    {
+      "name": "gate",
+      "size": [
+        96,
+        80
+      ],
+      "colors": 29,
+      "binaryAlpha": true,
+      "originalBBox": [
+        1,
+        18,
+        95,
+        80
+      ],
+      "newBBox": [
+        2,
+        14,
+        94,
+        79
+      ],
+      "originalRGBA": "274138d508605fbea87a2cd26149fb26a8aa254dd188f3a481934a2dee2cc67f",
+      "newRGBA": "bb74d9afe42c3e8d2a3aad3f26458c93645a8f8c8c5e59d19c168e93759b1fd4"
+    },
+    {
+      "name": "palace",
+      "size": [
+        160,
+        112
+      ],
+      "colors": 30,
+      "binaryAlpha": true,
+      "originalBBox": [
+        2,
+        14,
+        158,
+        112
+      ],
+      "newBBox": [
+        2,
+        15,
+        158,
+        111
+      ],
+      "originalRGBA": "c0b5cb54c0f50d1b70a7efd5118fe18b4f2566d82ef116d634d292ac90d1fb52",
+      "newRGBA": "4ad78b479f104716cbd28bcb78a77f05d9d9a557f9a334353cde9565dab7f201"
+    },
+    {
+      "name": "shop",
+      "size": [
+        96,
+        64
+      ],
+      "colors": 30,
+      "binaryAlpha": true,
+      "originalBBox": [
+        2,
+        8,
+        94,
+        63
+      ],
+      "newBBox": [
+        2,
+        10,
+        94,
+        63
+      ],
+      "originalRGBA": "71450da35b1228b3f0db4a6118a92248e02dc18675a89e94df4f3b149f6b449e",
+      "newRGBA": "edcf75a60357b569d2dfc753fdf003cd88d3199f040a34122c33fec88f32fbe6"
+    },
+    {
+      "name": "small_store",
+      "size": [
+        64,
+        48
+      ],
+      "colors": 28,
+      "binaryAlpha": true,
+      "originalBBox": [
+        0,
+        5,
+        64,
+        48
+      ],
+      "newBBox": [
+        2,
+        9,
+        62,
+        47
+      ],
+      "originalRGBA": "5a8b8344715f2e2eeb0aae2481c059aa3e01be806c6d4957dbd0cc5f35e243bb",
+      "newRGBA": "025a6dd9d2e0abc54ba760bcea9cc889c8b74576915e9398a618aae70f3e1d72"
+    },
+    {
+      "name": "boat",
+      "size": [
+        80,
+        32
+      ],
+      "colors": 16,
+      "binaryAlpha": true,
+      "originalBBox": [
+        1,
+        8,
+        78,
+        30
+      ],
+      "newBBox": [
+        3,
+        9,
+        78,
+        29
+      ],
+      "originalRGBA": "eb4c9a3972d95dda26232e63487054c35f0cf80d26bf66601c98d5b17648be6d",
+      "newRGBA": "ed1b03e5bc33ec8101a3cd0ac4dc257866338f1a37bf36fabd281b2318fe9e2d"
+    }
+  ],
+  "review": "approved",
+  "productionReplaced": false,
+  "mode": "built-in imagegen + native Aseprite NEAREST and existing C7 draft colors"
+}

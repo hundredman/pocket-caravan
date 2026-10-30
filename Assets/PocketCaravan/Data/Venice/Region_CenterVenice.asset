@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52173c030d53540968a2e67252f4c4e2, type: 3}
+  m_Name: Region_CenterVenice
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.RegionData
+  id: center_venice
+  displayName: "\uBCF8\uD1A0 \uC11C\uBD80"
+  townReputation: 0
+  note: "\uC81C\uC548 \uCD08\uC548. \uC911\uC559 \uB300\uB959 \uC11C\uCABD 1/4(\uBCA0\uB124\uCE58\uC544
+    \uB2F4\uB2F9). \uD0A4\uC624\uC790\uC5D0\uC11C \uBC30\uB85C \uAC74\uB108 \uB3D9\uBB38
+    \uD070\uAE38\uAE4C\uC9C0. \uC911\uC559 \uAD8C\uC5ED \uC5F0\uACB0\uC740 \uD1B5\uD569
+    \uD6C4."
+  deliveryRewards:
+    enabled: 0
+    revision: 1
+    dispatchFee: 1.5
+    perWeight: 0.65
+    perWeightPerStep: 0.25
+    premiumMultiplier: 1.8
+    premiumMinWeight: 8
+    premiumMaxWeight: 12

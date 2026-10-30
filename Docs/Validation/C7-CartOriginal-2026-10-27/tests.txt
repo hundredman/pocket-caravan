@@ -1,0 +1,7 @@
+test_actual_capture_only_cart_changed (test_c7_cart_original.OriginalCartChecks) ... ok
+test_unchanged_original_pixels (test_c7_cart_original.OriginalCartChecks) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.007s
+
+OK

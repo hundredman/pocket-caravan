@@ -1,0 +1,44 @@
+{
+  "ArtReview/C7-Batch4-20261027/Native/well.png": {
+    "size": [
+      16,
+      32
+    ],
+    "rgbaSHA256": "199222043446aebeadb5fd7ed4b21b231aec26866fb688924f5ff3e15d5a6efc"
+  },
+  "ArtReview/C7-Batch4-20261027/Native/stone_lantern.png": {
+    "size": [
+      16,
+      32
+    ],
+    "rgbaSHA256": "49a409329edd129adb88c9b5e4cc38ce5fbfdf81f4951a4fe910791db78ed3a6"
+  },
+  "ArtReview/Approved/C7-Buildings-v5/tile-house.png": {
+    "size": [
+      64,
+      48
+    ],
+    "rgbaSHA256": "5f86d1265dc6f647aaace448070dd8afcd62160edb972185cba6586b3d3688cf"
+  },
+  "ArtReview/Approved/C7-Buildings-v5/thatch.png": {
+    "size": [
+      64,
+      48
+    ],
+    "rgbaSHA256": "78f9b55e28f17e4b4aad235dda27ba196bfb6ec930d8fb2a7a8890c57f26e81b"
+  },
+  "ArtReview/Approved/C7-Shop-v1/shop.png": {
+    "size": [
+      96,
+      64
+    ],
+    "rgbaSHA256": "71450da35b1228b3f0db4a6118a92248e02dc18675a89e94df4f3b149f6b449e"
+  },
+  "ArtReview/Approved/C7-Gaekju-v1/gaekju.png": {
+    "size": [
+      96,
+      64
+    ],
+    "rgbaSHA256": "4c0bdf0565081598b3cc7e230774889df454d949147d39095404b9e66482786d"
+  }
+}

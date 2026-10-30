@@ -1,0 +1,18 @@
+// Swap only the memory assembly board to pending modules. No saved scene/assets.
+var root="/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-a4/ArtReview/A4-Water-v1/";
+var holder=GameObject.Find("A4 lake assembly trial");var water=holder.transform.Find("Trial water").GetComponent<UnityEngine.Tilemaps.Tilemap>();
+var images=new System.Collections.Generic.Dictionary<string,UnityEngine.Tilemaps.Tile>();
+foreach(var line in System.IO.File.ReadAllLines(root+"unity-lake-placement.csv")){
+ if(string.IsNullOrWhiteSpace(line))continue;var v=line.Split(',');var key=v[2];UnityEngine.Tilemaps.Tile tile;
+ if(!images.TryGetValue(key,out tile)){
+ var tex=new Texture2D(2,2,TextureFormat.RGBA32,false);tex.LoadImage(System.IO.File.ReadAllBytes(root+"pieces/"+key+".png"));tex.filterMode=FilterMode.Point;
+ tile=ScriptableObject.CreateInstance<UnityEngine.Tilemaps.Tile>();tile.sprite=Sprite.Create(tex,new Rect(0,0,16,16),new Vector2(.5f,.5f),16,0,SpriteMeshType.FullRect);tile.colliderType=UnityEngine.Tilemaps.Tile.ColliderType.None;images.Add(key,tile);}
+ water.SetTile(new Vector3Int(int.Parse(v[0]),int.Parse(v[1]),0),tile);
+}
+// Subtle native ripple frames are separate water-purpose overlays, not transformations.
+var rippleTexture=new Texture2D(2,2,TextureFormat.RGBA32,false);rippleTexture.LoadImage(System.IO.File.ReadAllBytes(root+"pieces/ripple_0.png"));rippleTexture.filterMode=FilterMode.Point;
+var rippleSprite=Sprite.Create(rippleTexture,new Rect(0,0,16,16),new Vector2(.5f,.5f),16,0,SpriteMeshType.FullRect);
+foreach(var p in new Vector2Int[]{new Vector2Int(7,7),new Vector2Int(10,10),new Vector2Int(14,8),new Vector2Int(18,10),new Vector2Int(21,6)}){
+ var go=new GameObject("A4 ripple frame");go.transform.SetParent(holder.transform,false);go.transform.localPosition=new Vector3(p.x+.5f,16-p.y+.5f,0);var r=go.AddComponent<SpriteRenderer>();r.sprite=rippleSprite;r.sortingOrder=2;
+}
+UnityEditor.EditorApplication.Step();return new {moduleKinds=images.Count,ripples=5,ppu=16,sourceFrames=4};

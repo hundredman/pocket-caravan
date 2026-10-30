@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
   m_Name: T2_BuyPaper
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  retired: 1
   id: tutorial_2
   title: "\uC885\uC774 \uC0AC \uC624\uAE30"
   chain: "\uD589\uC0C1\uC758 \uCCAB\uAC78\uC74C"

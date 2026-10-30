@@ -1,0 +1,234 @@
+[
+  {
+    "assetId": "c6_boat_3258f818",
+    "size": [
+      5,
+      2
+    ],
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_boat_3258f818.png",
+    "usage": [
+      {
+        "map": "Naru.json",
+        "renderCells": 10
+      }
+    ],
+    "status": "remaining_variant_or_role_review",
+    "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+  },
+  {
+    "assetId": "c6_sheaf_c21644db",
+    "size": [
+      1,
+      2
+    ],
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_sheaf_c21644db.png",
+    "usage": [
+      {
+        "map": "Naru.json",
+        "renderCells": 4
+      }
+    ],
+    "status": "remaining_variant_or_role_review",
+    "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+  },
+  {
+    "assetId": "c6_laundry_4c045117",
+    "size": [
+      2,
+      2
+    ],
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_laundry_4c045117.png",
+    "usage": [
+      {
+        "map": "Dakmok.json",
+        "renderCells": 4
+      },
+      {
+        "map": "Naru.json",
+        "renderCells": 4
+      }
+    ],
+    "status": "remaining_variant_or_role_review",
+    "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+  },
+  {
+    "assetId": "c6_sheaf_5994fbae",
+    "size": [
+      1,
+      2
+    ],
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_sheaf_5994fbae.png",
+    "usage": [
+      {
+        "map": "goryeo_jangdan.json",
+        "renderCells": 2
+      }
+    ],
+    "status": "remaining_variant_or_role_review",
+    "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+  },
+  {
+    "assetId": "c6_pinebig_a6c49380",
+    "size": [
+      4,
+      3
+    ],
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_pinebig_a6c49380.png",
+    "usage": [
+      {
+        "map": "transit_ferry.json",
+        "renderCells": 228
+      },
+      {
+        "map": "transit_pass.json",
+        "renderCells": 300
+      },
+      {
+        "map": "transit_wetroad.json",
+        "renderCells": 180
+      },
+      {
+        "map": "transit_woodtown.json",
+        "renderCells": 240
+      }
+    ],
+    "status": "remaining_variant_or_role_review",
+    "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+  },
+  {
+    "assetId": "c6_roundbig_0c978872",
+    "size": [
+      4,
+      3
+    ],
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_roundbig_0c978872.png",
+    "usage": [
+      {
+        "map": "transit_ferry.json",
+        "renderCells": 180
+      },
+      {
+        "map": "transit_pass.json",
+        "renderCells": 48
+      },
+      {
+        "map": "transit_wetroad.json",
+        "renderCells": 216
+      },
+      {
+        "map": "transit_woodtown.json",
+        "renderCells": 120
+      }
+    ],
+    "status": "remaining_variant_or_role_review",
+    "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+  },
+  {
+    "assetId": "c6_store_499ea1ea",
+    "size": [
+      4,
+      3
+    ],
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_store_499ea1ea.png",
+    "usage": [
+      {
+        "map": "transit_ferry.json",
+        "renderCells": 12
+      },
+      {
+        "map": "transit_woodtown.json",
+        "renderCells": 12
+      }
+    ],
+    "status": "remaining_variant_or_role_review",
+    "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+  },
+  {
+    "assetId": "c6_module_rock_15917f3a",
+    "size": [
+      2,
+      2
+    ],
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_module_rock_15917f3a.png",
+    "usage": [
+      {
+        "map": "transit_central_approach.json",
+        "renderCells": 124
+      },
+      {
+        "map": "transit_crossroads.json",
+        "renderCells": 236
+      }
+    ],
+    "status": "remaining_variant_or_role_review",
+    "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+  },
+  {
+    "assetId": "c6_pinebig_0cd79e57",
+    "size": [
+      4,
+      3
+    ],
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_pinebig_0cd79e57.png",
+    "usage": [
+      {
+        "map": "transit_central_approach.json",
+        "renderCells": 96
+      }
+    ],
+    "status": "remaining_variant_or_role_review",
+    "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+  },
+  {
+    "assetId": "c6_roundbig_b8a4adcf",
+    "size": [
+      4,
+      3
+    ],
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_roundbig_b8a4adcf.png",
+    "usage": [
+      {
+        "map": "transit_central_approach.json",
+        "renderCells": 48
+      },
+      {
+        "map": "transit_crossroads.json",
+        "renderCells": 60
+      }
+    ],
+    "status": "remaining_variant_or_role_review",
+    "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+  },
+  {
+    "assetId": "c6_bench_ac9f82d8",
+    "size": [
+      3,
+      1
+    ],
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/c6_bench_ac9f82d8.png",
+    "usage": [
+      {
+        "map": "transit_crossroads.json",
+        "renderCells": 3
+      }
+    ],
+    "status": "remaining_variant_or_role_review",
+    "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+  },
+  {
+    "assetId": "c6_lotus",
+    "size": [
+      2,
+      1
+    ],
+    "image": "Assets/PocketCaravan/Art/Baked/Objects/lotus_2_1.png",
+    "usage": [
+      {
+        "map": "Gaegyeong.json",
+        "renderCells": 4
+      }
+    ],
+    "status": "remaining_variant_or_role_review",
+    "note": "No full replacement approval inferred from a larger/smaller or similarly named asset."
+  }
+]

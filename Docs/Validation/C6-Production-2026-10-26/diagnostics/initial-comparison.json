@@ -1,0 +1,116 @@
+{
+  "mode": "Actual Unity Play camera at fixed authoring poses; OnGUI excluded",
+  "maps": [
+    {
+      "map": "Dakmok",
+      "size": [
+        480,
+        270
+      ],
+      "differentPixels": 0,
+      "beforeSHA256": "7d055264cc83bdd57b4b77c37878146ed5fec7145dd4217494f94162c8ae59ff",
+      "afterSHA256": "7d055264cc83bdd57b4b77c37878146ed5fec7145dd4217494f94162c8ae59ff"
+    },
+    {
+      "map": "Gaegyeong",
+      "size": [
+        480,
+        270
+      ],
+      "differentPixels": 0,
+      "beforeSHA256": "3b58fb66e2cde8c8636996b274c67d48f845d7ff7c2d1e1fb687013df405b178",
+      "afterSHA256": "3b58fb66e2cde8c8636996b274c67d48f845d7ff7c2d1e1fb687013df405b178"
+    },
+    {
+      "map": "Naru",
+      "size": [
+        480,
+        270
+      ],
+      "differentPixels": 204,
+      "beforeSHA256": "4ce43f33325d35752d7ef87550bdad398502cb1cfad4c17a0acdc636a5362a65",
+      "afterSHA256": "a813190773bba9164c80cb35c777e39d51fff076570e00ca2dc23276a18ce403"
+    },
+    {
+      "map": "goryeo_jangdan",
+      "size": [
+        480,
+        270
+      ],
+      "differentPixels": 0,
+      "beforeSHA256": "0560ab0b732e80b2a3d1b644aa0e4a21402d9e02b2f7d6d72b216d7732a0e033",
+      "afterSHA256": "0560ab0b732e80b2a3d1b644aa0e4a21402d9e02b2f7d6d72b216d7732a0e033"
+    },
+    {
+      "map": "goryeo_songak",
+      "size": [
+        480,
+        270
+      ],
+      "differentPixels": 0,
+      "beforeSHA256": "91fddb13c0fee97f788b3771f523877a259ad6efc0370128c093adbc1d677c37",
+      "afterSHA256": "91fddb13c0fee97f788b3771f523877a259ad6efc0370128c093adbc1d677c37"
+    },
+    {
+      "map": "transit_central_approach",
+      "size": [
+        480,
+        270
+      ],
+      "differentPixels": 0,
+      "beforeSHA256": "3cfdba9bc83de1e0861d00316cd8582161b84e23e2075e39975e1dfc614f8d98",
+      "afterSHA256": "3cfdba9bc83de1e0861d00316cd8582161b84e23e2075e39975e1dfc614f8d98"
+    },
+    {
+      "map": "transit_crossroads",
+      "size": [
+        480,
+        270
+      ],
+      "differentPixels": 0,
+      "beforeSHA256": "83eabaf3d81dfb640b75222187515f3c9428a101808ac13b32836a3a9a528985",
+      "afterSHA256": "83eabaf3d81dfb640b75222187515f3c9428a101808ac13b32836a3a9a528985"
+    },
+    {
+      "map": "transit_ferry",
+      "size": [
+        480,
+        270
+      ],
+      "differentPixels": 0,
+      "beforeSHA256": "b03d447f910cf9b0edd9ad1e53b0052854f086d197d52e740f4688b9b1b52159",
+      "afterSHA256": "b03d447f910cf9b0edd9ad1e53b0052854f086d197d52e740f4688b9b1b52159"
+    },
+    {
+      "map": "transit_pass",
+      "size": [
+        480,
+        270
+      ],
+      "differentPixels": 0,
+      "beforeSHA256": "630cc1078c209df9dcf849036e9b220886d2bc40d0d299fa8641f7961bd12ca5",
+      "afterSHA256": "630cc1078c209df9dcf849036e9b220886d2bc40d0d299fa8641f7961bd12ca5"
+    },
+    {
+      "map": "transit_wetroad",
+      "size": [
+        480,
+        270
+      ],
+      "differentPixels": 0,
+      "beforeSHA256": "64f7945d3f1ef78f0e22d77e0dee1d96d8a8ad42996728d8555adcf0a7f1f559",
+      "afterSHA256": "64f7945d3f1ef78f0e22d77e0dee1d96d8a8ad42996728d8555adcf0a7f1f559"
+    },
+    {
+      "map": "transit_woodtown",
+      "size": [
+        480,
+        270
+      ],
+      "differentPixels": 0,
+      "beforeSHA256": "c607a5b9fd641320b893a49ba91346ce14ea787748f3e9c7fe959d92baea2961",
+      "afterSHA256": "c607a5b9fd641320b893a49ba91346ce14ea787748f3e9c7fe959d92baea2961"
+    }
+  ],
+  "allPixelIdentical": false
+}

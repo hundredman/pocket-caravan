@@ -1,0 +1,1222 @@
+[
+  {
+    "map": "transit_woodtown",
+    "prop": "store@23,4",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 22.74146270751953,
+    "y": 34.548179626464844,
+    "overlapPixels": 20
+  },
+  {
+    "map": "transit_ferry",
+    "prop": "store@22,4",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 21.741445541381836,
+    "y": 44.548248291015625,
+    "overlapPixels": 20
+  },
+  {
+    "map": "transit_woodtown",
+    "prop": "house_plain@36,5",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 35.7414665222168,
+    "y": 33.54817199707031,
+    "overlapPixels": 18
+  },
+  {
+    "map": "transit_ferry",
+    "prop": "house_plain@36,7",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 35.741634368896484,
+    "y": 41.547603607177734,
+    "overlapPixels": 18
+  },
+  {
+    "map": "transit_woodtown",
+    "prop": "store@23,4",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 27.2584228515625,
+    "y": 34.452239990234375,
+    "overlapPixels": 17
+  },
+  {
+    "map": "transit_ferry",
+    "prop": "store@22,4",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 26.2584228515625,
+    "y": 44.452239990234375,
+    "overlapPixels": 17
+  },
+  {
+    "map": "transit_woodtown",
+    "prop": "house_thatch@10,5",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 14.258423805236816,
+    "y": 33.452239990234375,
+    "overlapPixels": 13
+  },
+  {
+    "map": "transit_ferry",
+    "prop": "house_thatch@8,6",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 12.258423805236816,
+    "y": 42.452239990234375,
+    "overlapPixels": 13
+  },
+  {
+    "map": "transit_central_approach",
+    "prop": "house_thatch@53,5",
+    "side": "west",
+    "result": "reached",
+    "steps": 12,
+    "x": 52.74617385864258,
+    "y": 43.50002670288086,
+    "overlapPixels": 13
+  },
+  {
+    "map": "transit_central_approach",
+    "prop": "house_thatch@53,5",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 57.2559700012207,
+    "y": 43.42634201049805,
+    "overlapPixels": 13
+  },
+  {
+    "map": "transit_crossroads",
+    "prop": "house_thatch@37,12",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 41.258419036865234,
+    "y": 36.45224380493164,
+    "overlapPixels": 13
+  },
+  {
+    "map": "transit_pass",
+    "prop": "house_thatch@8,18",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 7.744026184082031,
+    "y": 20.574064254760742,
+    "overlapPixels": 12
+  },
+  {
+    "map": "transit_woodtown",
+    "prop": "house_thatch@10,5",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 9.741534233093262,
+    "y": 33.54793167114258,
+    "overlapPixels": 12
+  },
+  {
+    "map": "transit_ferry",
+    "prop": "house_thatch@8,6",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 7.741498947143555,
+    "y": 42.548057556152344,
+    "overlapPixels": 12
+  },
+  {
+    "map": "transit_crossroads",
+    "prop": "house_thatch@37,12",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 36.74153518676758,
+    "y": 36.547935485839844,
+    "overlapPixels": 12
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_royal@31,11",
+    "side": "east",
+    "result": "reached",
+    "steps": 20,
+    "x": 41.25726318359375,
+    "y": 45.456298828125,
+    "overlapPixels": 10
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_manor@39,14",
+    "side": "west",
+    "result": "reached",
+    "steps": 19,
+    "x": 38.74900436401367,
+    "y": 43.463993072509766,
+    "overlapPixels": 5
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_manor@23,15",
+    "side": "west",
+    "result": "reached",
+    "steps": 31,
+    "x": 22.745281219482422,
+    "y": 42.462257385253906,
+    "overlapPixels": 5
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_manor@44,15",
+    "side": "west",
+    "result": "reached",
+    "steps": 17,
+    "x": 43.74554443359375,
+    "y": 42.50000762939453,
+    "overlapPixels": 5
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_stall@24,24",
+    "side": "west",
+    "result": "reached",
+    "steps": 9,
+    "x": 23.745031356811523,
+    "y": 33.573280334472656,
+    "overlapPixels": 5
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_stall@43,24",
+    "side": "west",
+    "result": "reached",
+    "steps": 7,
+    "x": 42.74164962768555,
+    "y": 33.547515869140625,
+    "overlapPixels": 5
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@51,11",
+    "side": "west",
+    "result": "reached",
+    "steps": 15,
+    "x": 50.74528503417969,
+    "y": 46.46539306640625,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@66,38",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 65.74527740478516,
+    "y": 19.4630069732666,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@55,24",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 54.74423599243164,
+    "y": 33.576107025146484,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@74,23",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 73.74539184570312,
+    "y": 34.57229232788086,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@50,2",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 49.74525451660156,
+    "y": 55.57273864746094,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@72,2",
+    "side": "west",
+    "result": "reached",
+    "steps": 11,
+    "x": 71.74311828613281,
+    "y": 55.49894714355469,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@74,13",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 73.74528503417969,
+    "y": 44.57269287109375,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@67,12",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 66.74528503417969,
+    "y": 45.57269287109375,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@56,11",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 55.74524688720703,
+    "y": 46.57274627685547,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_manor@25,33",
+    "side": "west",
+    "result": "reached",
+    "steps": 7,
+    "x": 24.744321823120117,
+    "y": 24.5758113861084,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_manor@43,33",
+    "side": "west",
+    "result": "reached",
+    "steps": 9,
+    "x": 42.74522018432617,
+    "y": 24.572914123535156,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_manor@44,41",
+    "side": "west",
+    "result": "reached",
+    "steps": 7,
+    "x": 43.741661071777344,
+    "y": 16.547481536865234,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland6@57,22",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 56.745391845703125,
+    "y": 35.572269439697266,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland6@17,40",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 16.741649627685547,
+    "y": 17.547515869140625,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland6@54,35",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 53.74526596069336,
+    "y": 22.572677612304688,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland6@30,51",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 29.74541473388672,
+    "y": 6.572208881378174,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Dakmok",
+    "prop": "goryeo_woodland6@2,11",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 1.7452625036239624,
+    "y": 46.57271194458008,
+    "overlapPixels": 4
+  },
+  {
+    "map": "goryeo_songak",
+    "prop": "goryeo_woodland6@5,17",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 4.745257377624512,
+    "y": 40.572731018066406,
+    "overlapPixels": 4
+  },
+  {
+    "map": "goryeo_songak",
+    "prop": "goryeo_woodland6@34,35",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 33.741722106933594,
+    "y": 22.547273635864258,
+    "overlapPixels": 4
+  },
+  {
+    "map": "goryeo_songak",
+    "prop": "goryeo_woodland6@49,17",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 48.74525833129883,
+    "y": 40.572731018066406,
+    "overlapPixels": 4
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland6@3,3",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 2.745283365249634,
+    "y": 49.461421966552734,
+    "overlapPixels": 4
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland6@15,3",
+    "side": "west",
+    "result": "reached",
+    "steps": 13,
+    "x": 14.749460220336914,
+    "y": 49.50002670288086,
+    "overlapPixels": 4
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland6@17,25",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 16.745296478271484,
+    "y": 27.572595596313477,
+    "overlapPixels": 4
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland6@3,46",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 2.7440056800842285,
+    "y": 6.5749101638793945,
+    "overlapPixels": 4
+  },
+  {
+    "map": "transit_woodtown",
+    "prop": "house_plain@36,5",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 40.258419036865234,
+    "y": 33.45224380493164,
+    "overlapPixels": 4
+  },
+  {
+    "map": "transit_ferry",
+    "prop": "house_plain@36,7",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 40.258419036865234,
+    "y": 41.452239990234375,
+    "overlapPixels": 4
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland7@21,41",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 20.745283126831055,
+    "y": 16.462255477905273,
+    "overlapPixels": 3
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_cottage@23,41",
+    "side": "east",
+    "result": "reached",
+    "steps": 13,
+    "x": 28.254716873168945,
+    "y": 16.46590805053711,
+    "overlapPixels": 3
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland4@61,39",
+    "side": "east",
+    "result": "reached",
+    "steps": 12,
+    "x": 65.2509765625,
+    "y": 18.43944549560547,
+    "overlapPixels": 3
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland4@3,49",
+    "side": "east",
+    "result": "reached",
+    "steps": 12,
+    "x": 7.250972270965576,
+    "y": 8.439440727233887,
+    "overlapPixels": 3
+  },
+  {
+    "map": "goryeo_songak",
+    "prop": "goryeo_pavilion@39,18",
+    "side": "east",
+    "result": "reached",
+    "steps": 13,
+    "x": 44.25471496582031,
+    "y": 39.5342903137207,
+    "overlapPixels": 3
+  },
+  {
+    "map": "goryeo_songak",
+    "prop": "goryeo_woodland6@36,48",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 35.744224548339844,
+    "y": 9.4262113571167,
+    "overlapPixels": 3
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_cottage@44,21",
+    "side": "east",
+    "result": "reached",
+    "steps": 25,
+    "x": 49.2584114074707,
+    "y": 31.547733306884766,
+    "overlapPixels": 3
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland6@2,42",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 1.7489734888076782,
+    "y": 10.439253807067871,
+    "overlapPixels": 3
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland7@27,33",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 26.749113082885742,
+    "y": 19.439735412597656,
+    "overlapPixels": 3
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland7@65,40",
+    "side": "west",
+    "result": "reached",
+    "steps": 15,
+    "x": 64.74527740478516,
+    "y": 12.465076446533203,
+    "overlapPixels": 3
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland4@69,38",
+    "side": "east",
+    "result": "reached",
+    "steps": 13,
+    "x": 73.25434112548828,
+    "y": 19.499988555908203,
+    "overlapPixels": 2
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland2@21,8",
+    "side": "east",
+    "result": "reached",
+    "steps": 11,
+    "x": 24.254716873168945,
+    "y": 49.465518951416016,
+    "overlapPixels": 2
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland2@10,4",
+    "side": "east",
+    "result": "reached",
+    "steps": 11,
+    "x": 13.254712104797363,
+    "y": 53.46541976928711,
+    "overlapPixels": 2
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland2@26,8",
+    "side": "east",
+    "result": "reached",
+    "steps": 11,
+    "x": 29.254714965820312,
+    "y": 49.465511322021484,
+    "overlapPixels": 2
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland4@26,48",
+    "side": "east",
+    "result": "reached",
+    "steps": 18,
+    "x": 30.25752067565918,
+    "y": 9.500330924987793,
+    "overlapPixels": 2
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland4@14,49",
+    "side": "east",
+    "result": "reached",
+    "steps": 12,
+    "x": 18.254714965820312,
+    "y": 8.463301658630371,
+    "overlapPixels": 2
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland2@6,8",
+    "side": "east",
+    "result": "reached",
+    "steps": 31,
+    "x": 9.260798454284668,
+    "y": 49.50001907348633,
+    "overlapPixels": 2
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland2@30,13",
+    "side": "east",
+    "result": "reached",
+    "steps": 11,
+    "x": 33.25471496582031,
+    "y": 39.465511322021484,
+    "overlapPixels": 2
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland2@66,29",
+    "side": "east",
+    "result": "reached",
+    "steps": 17,
+    "x": 69.25784301757812,
+    "y": 23.50033950805664,
+    "overlapPixels": 2
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland2@70,18",
+    "side": "east",
+    "result": "reached",
+    "steps": 11,
+    "x": 73.25472259521484,
+    "y": 34.464908599853516,
+    "overlapPixels": 2
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland2@27,37",
+    "side": "east",
+    "result": "reached",
+    "steps": 19,
+    "x": 30.254714965820312,
+    "y": 15.462040901184082,
+    "overlapPixels": 2
+  },
+  {
+    "map": "Naru",
+    "prop": "house_tile@22,12",
+    "side": "west",
+    "result": "reached",
+    "steps": 16,
+    "x": 21.742923736572266,
+    "y": 46.501468658447266,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@51,11",
+    "side": "east",
+    "result": "reached",
+    "steps": 11,
+    "x": 54.25471496582031,
+    "y": 46.465415954589844,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland4@58,25",
+    "side": "east",
+    "result": "reached",
+    "steps": 5,
+    "x": 62.254722595214844,
+    "y": 32.5726432800293,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@74,23",
+    "side": "east",
+    "result": "reached",
+    "steps": 9,
+    "x": 77.25471496582031,
+    "y": 34.572635650634766,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland4@66,42",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 70.25598907470703,
+    "y": 15.574479103088379,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@50,2",
+    "side": "east",
+    "result": "reached",
+    "steps": 9,
+    "x": 53.25471115112305,
+    "y": 55.572608947753906,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@72,2",
+    "side": "east",
+    "result": "reached",
+    "steps": 11,
+    "x": 75.25472259521484,
+    "y": 55.46541976928711,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland4@55,38",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 59.25598907470703,
+    "y": 19.574495315551758,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland4@72,46",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 76.25598907470703,
+    "y": 11.574522018432617,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@74,13",
+    "side": "east",
+    "result": "reached",
+    "steps": 9,
+    "x": 77.25470733642578,
+    "y": 44.5726203918457,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland7@15,2",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 14.74526596069336,
+    "y": 55.57270812988281,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@67,12",
+    "side": "east",
+    "result": "reached",
+    "steps": 9,
+    "x": 70.25470733642578,
+    "y": 45.5726203918457,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Naru",
+    "prop": "goryeo_woodland6@56,11",
+    "side": "east",
+    "result": "reached",
+    "steps": 9,
+    "x": 59.25471115112305,
+    "y": 46.572608947753906,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_cottage@23,41",
+    "side": "west",
+    "result": "reached",
+    "steps": 18,
+    "x": 22.74951934814453,
+    "y": 16.441129684448242,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland4@25,54",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 29.255990982055664,
+    "y": 3.574409246444702,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland4@64,25",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 68.25598907470703,
+    "y": 32.574501037597656,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland6@57,22",
+    "side": "east",
+    "result": "reached",
+    "steps": 9,
+    "x": 60.25471496582031,
+    "y": 35.5726203918457,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland6@17,40",
+    "side": "east",
+    "result": "reached",
+    "steps": 9,
+    "x": 20.2545166015625,
+    "y": 17.57198715209961,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland4@4,53",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 8.255999565124512,
+    "y": 4.575239658355713,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland6@54,35",
+    "side": "east",
+    "result": "reached",
+    "steps": 9,
+    "x": 57.254695892333984,
+    "y": 22.57256317138672,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland4@18,52",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 22.25598907470703,
+    "y": 5.574565410614014,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland4@20,45",
+    "side": "east",
+    "result": "reached",
+    "steps": 5,
+    "x": 24.255699157714844,
+    "y": 12.575899124145508,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Gaegyeong",
+    "prop": "goryeo_woodland6@30,51",
+    "side": "east",
+    "result": "reached",
+    "steps": 9,
+    "x": 33.254695892333984,
+    "y": 6.572568893432617,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Dakmok",
+    "prop": "house_plain@7,29",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 6.744024276733398,
+    "y": 29.574665069580078,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Dakmok",
+    "prop": "goryeo_woodland6@2,11",
+    "side": "east",
+    "result": "reached",
+    "steps": 9,
+    "x": 5.254702091217041,
+    "y": 46.57259750366211,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Dakmok",
+    "prop": "goryeo_woodland4@8,10",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 12.255990982055664,
+    "y": 47.57454299926758,
+    "overlapPixels": 1
+  },
+  {
+    "map": "Dakmok",
+    "prop": "goryeo_woodland7@33,16",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 32.741546630859375,
+    "y": 41.54788589477539,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_songak",
+    "prop": "house_plain@20,14",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 19.741485595703125,
+    "y": 44.548099517822266,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_songak",
+    "prop": "house_plain@27,23",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 26.741329193115234,
+    "y": 35.54865646362305,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_songak",
+    "prop": "goryeo_woodland6@5,17",
+    "side": "east",
+    "result": "reached",
+    "steps": 9,
+    "x": 8.2547025680542,
+    "y": 40.57259750366211,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_songak",
+    "prop": "goryeo_woodland6@34,35",
+    "side": "east",
+    "result": "reached",
+    "steps": 9,
+    "x": 37.25452423095703,
+    "y": 22.57199478149414,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_songak",
+    "prop": "goryeo_woodland6@31,47",
+    "side": "east",
+    "result": "reached",
+    "steps": 5,
+    "x": 34.25599670410156,
+    "y": 10.575233459472656,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_songak",
+    "prop": "goryeo_woodland6@36,48",
+    "side": "east",
+    "result": "reached",
+    "steps": 17,
+    "x": 39.25114440917969,
+    "y": 9.501117706298828,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_songak",
+    "prop": "goryeo_woodland6@49,17",
+    "side": "east",
+    "result": "reached",
+    "steps": 9,
+    "x": 52.25471115112305,
+    "y": 40.572608947753906,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "house_plain@39,17",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 38.744022369384766,
+    "y": 36.574520111083984,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "house_plain@40,24",
+    "side": "west",
+    "result": "reached",
+    "steps": 6,
+    "x": 39.74125671386719,
+    "y": 29.548925399780273,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_cottage@44,21",
+    "side": "west",
+    "result": "reached",
+    "steps": 20,
+    "x": 43.74577331542969,
+    "y": 31.458234786987305,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland4@2,25",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 6.255989074707031,
+    "y": 27.574382781982422,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland6@3,3",
+    "side": "east",
+    "result": "reached",
+    "steps": 11,
+    "x": 6.254711627960205,
+    "y": 49.465518951416016,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland4@7,5",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 11.255990982055664,
+    "y": 47.574554443359375,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland7@11,48",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 10.745275497436523,
+    "y": 4.572670936584473,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland7@45,33",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 44.741722106933594,
+    "y": 19.547266006469727,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland7@56,35",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 55.74143600463867,
+    "y": 17.548295974731445,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland6@15,3",
+    "side": "east",
+    "result": "reached",
+    "steps": 17,
+    "x": 18.25360679626465,
+    "y": 49.499969482421875,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland7@71,35",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 70.74153900146484,
+    "y": 17.547882080078125,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland7@18,41",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 17.745264053344727,
+    "y": 11.572698593139648,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland6@17,25",
+    "side": "east",
+    "result": "reached",
+    "steps": 9,
+    "x": 20.254690170288086,
+    "y": 27.572546005249023,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland4@19,11",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 23.25598907470703,
+    "y": 41.57456970214844,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland7@70,40",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 69.74528503417969,
+    "y": 12.572653770446777,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland6@3,46",
+    "side": "east",
+    "result": "reached",
+    "steps": 9,
+    "x": 6.254673004150391,
+    "y": 6.572497367858887,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland4@2,7",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 6.255989074707031,
+    "y": 45.57437515258789,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland4@9,18",
+    "side": "east",
+    "result": "reached",
+    "steps": 10,
+    "x": 13.255988121032715,
+    "y": 34.57437515258789,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland6@7,13",
+    "side": "east",
+    "result": "reached",
+    "steps": 5,
+    "x": 10.254727363586426,
+    "y": 39.57267761230469,
+    "overlapPixels": 1
+  },
+  {
+    "map": "goryeo_jangdan",
+    "prop": "goryeo_woodland7@23,35",
+    "side": "west",
+    "result": "reached",
+    "steps": 5,
+    "x": 22.74528694152832,
+    "y": 17.57262420654297,
+    "overlapPixels": 1
+  }
+]

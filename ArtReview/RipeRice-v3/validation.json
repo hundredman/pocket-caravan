@@ -1,0 +1,21 @@
+{
+  "status": "pending",
+  "size": [
+    32,
+    32
+  ],
+  "opaqueBBox": [
+    5,
+    6,
+    27,
+    31
+  ],
+  "colors": 5,
+  "binaryAlpha": true,
+  "goldPaletteUnchanged": true,
+  "asepriteRoundtripRGBA": true,
+  "rgbaSha256": "3d1672a088df4b64f83c5688e0315e9087b0220d61233048714a11e6ccc1bdef",
+  "shapeReview": "lower stems upright; only upper panicles droop; human approval pending",
+  "mode": "built-in imagegen edit + Aseprite native cleanup",
+  "productionApplied": false
+}

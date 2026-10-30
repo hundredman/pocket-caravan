@@ -13,11 +13,24 @@ namespace PocketCaravan
             SaveSystem.Validate(data);
             Require(db!=null,"게임 데이터가 없습니다.");
             if(!string.IsNullOrEmpty(data.scene) && sceneAvailable!=null)
-                Require(sceneAvailable(data.scene),"현재 빌드에 없는 저장 맵: "+data.scene);
+                Require(sceneAvailable(GoryeoLayout.Resolve(data.scene)),"현재 빌드에 없는 저장 맵: "+data.scene);
             foreach(string id in data.cargoItems)
                 Require(db.items.Exists(i=>i!=null && i.id==id),"현재 데이터에 없는 화물: "+id);
             if(!string.IsNullOrEmpty(data.vehicle))
                 Require(db.vehicles.Exists(v=>v!=null && v.id==data.vehicle),"현재 데이터에 없는 이동 수단: "+data.vehicle);
+            if (data.q1MigrationVersion == 1)
+            {
+                var legacyIds = new HashSet<string>();
+                foreach (string id in data.legacyMainFinishedIds)
+                    Require(!string.IsNullOrEmpty(id) && legacyIds.Add(id) && data.finishedQuests.Contains(id)
+                        && db.quests.Exists(q => q != null && q.id == id), "옛 메인 완료 이주 기록이 맞지 않습니다.");
+            }
+            if(data.tradeActivity!=null&&data.tradeActivity.schemaVersion==1)
+            {
+                foreach(var p in data.tradeActivity.purchases)
+                    Require(db.towns.Exists(t=>t!=null&&t.id==p.town)&&db.items.Exists(i=>i!=null&&i.id==p.item),"최근 매입 기록 대상을 찾을 수 없습니다.");
+                foreach(var d in data.tradeActivity.daily)Require(db.towns.Exists(t=>t!=null&&t.id==d.town),"일일 판매 마을을 찾을 수 없습니다.");
+            }
             var activeIds=new HashSet<string>();
             foreach(var progress in data.quests)
             {
@@ -25,6 +38,12 @@ namespace PocketCaravan
                 var quest=db.quests.Find(q=>q!=null && q.id==progress.id);
                 Require(quest!=null,"현재 데이터에 없는 진행 의뢰: "+progress.id);
                 Require(activeIds.Add(progress.id),"의뢰 진행 ID가 중복됐습니다: "+progress.id);
+                if (progress.rewardCaptured && progress.acceptedReputationSize != ReputationSize.None)
+                {
+                    Require(Enum.IsDefined(typeof(ReputationSize), progress.acceptedReputationSize)
+                        && Enum.IsDefined(typeof(ReputationScope), progress.acceptedReputationScope)
+                        && !string.IsNullOrWhiteSpace(progress.acceptedReputationTarget), "의뢰 평판 보상 기록이 올바르지 않습니다: " + progress.id);
+                }
                 Require(progress.step>=0 && progress.step<=quest.objectives.Count && progress.amount>=0,"의뢰 진행 단계가 맞지 않습니다: "+progress.id);
             }
             foreach(string id in data.finishedQuests)

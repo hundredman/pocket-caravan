@@ -1,0 +1,33 @@
+{
+  "boundaryCompleted": true,
+  "boundaryChecks": 8368,
+  "villageCompleted": true,
+  "villageChecks": 1511,
+  "pythonTests": 343,
+  "pythonSkipped": 16,
+  "pythonFailures": 0,
+  "approvedCameraChanged": false,
+  "restoredForests": [
+    "goryeo_jangdan",
+    "goryeo_songak"
+  ],
+  "additionalRice": [
+    {
+      "id": "village-fill-rice-1",
+      "asset": "small-plot",
+      "role": "rice",
+      "x": 240,
+      "y": 8,
+      "map": "goryeo/개경",
+      "removedTrees": 0,
+      "forestBarrierFraction": 0.0
+    }
+  ],
+  "totalRice": 9,
+  "newBoundaryCells": 0,
+  "worldExits": 1408,
+  "worldErrors": 0,
+  "certifySources": 87,
+  "certifyTiles": 3293,
+  "certifyErrors": 0
+}

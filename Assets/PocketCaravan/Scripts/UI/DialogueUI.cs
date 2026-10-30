@@ -125,8 +125,11 @@ namespace PocketCaravan
             if (!open) return;
             UIStyle.Begin();
             GUI.depth = -10;   // 다른 글자들 위에
-            if (bodyStyle == null)
+            if (bodyStyle == null || bodyStyle.font != UIStyle.RegularFont)
+            {
                 bodyStyle = new GUIStyle(UIStyle.Wrap) { richText = false, clipping = TextClipping.Clip };
+                pageWidth = -1;
+            }
             float w = Mathf.Min(460, UIStyle.VirtualWidth - 20), h = 104;
             float bodyWidth = w - 20;
             if (pages.Count == 0 || !Mathf.Approximately(pageWidth, bodyWidth))
@@ -156,7 +159,7 @@ namespace PocketCaravan
             }
             if (choices.Count == 0)
             {
-                GUI.Label(new Rect(bx - 120, r.yMax - 20, 120, 16), "Space 계속", UIStyle.Right);
+                GUI.Label(new Rect(bx - 120, r.yMax - 20, 120, 16), "계속 (Space)", UIStyle.Right);
                 return;
             }
             for (int i = choices.Count - 1; i >= 0; i--)

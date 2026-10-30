@@ -1,0 +1,7 @@
+// C7 proposal; not D3 shared-palette approval
+#8aab4d
+#b2cc73
+#6d8b3a
+#c4a277
+#e2c496
+#a2835e

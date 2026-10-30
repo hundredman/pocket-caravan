@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-24",
+  "scope": "R6 -> Q1 -> A5 -> C1 trial -> C2/C3 trial",
+  "runtime": {
+    "R6": "complete, 926cd004",
+    "Q1": "complete, 702ce26a plus migration fix 8130cccf",
+    "A5": "implemented; Claude sample review pending",
+    "art": "C1 three NPCs and C2/C3 house/tree trial submitted, user approval pending"
+  },
+  "checks": {
+    "unityR6": 87,
+    "unityQ1": 25,
+    "unitySaveRegression": 27,
+    "unityVersion": "6000.3.26f1",
+    "unityScope": "editor logic/actual data/JsonUtility; no art replacement or human play",
+    "dotnetQuest": {
+      "observations": 51,
+      "q1Checks": 41,
+      "knownDiagnosticObservations": 10,
+      "note": "10 baseline observations include known legacy definition-change defect reproductions"
+    },
+    "dotnetReputation": 45,
+    "pythonTests": 89,
+    "worldErrors": 0,
+    "registeredExits": 92,
+    "q1NpcRefs": "all five giver/turn-in IDs found in existing map data",
+    "existingModifiedDataIds": "preserved",
+    "finalAssets": "identical to verified codex/q1; no trial artwork installed",
+    "art": "A2 catalogue/PNG technical preview valid; no production placement checked"
+  },
+  "artifacts": {
+    "C1": "ArtReview/C1/review-all.png",
+    "C2C3": "ArtReview/C2-C3/review-all.png"
+  },
+  "limitations": [
+    "User art approval pending",
+    "Claude A5 sample visual review pending",
+    "D3 palette remains candidate",
+    "Game screen comparisons are composites of actual prior captures at 480x270, not replacement screenshots",
+    "No human gameplay, actual movement or public build run"
+  ],
+  "git": "local commits only; main merge remains Claude review responsibility"
+}

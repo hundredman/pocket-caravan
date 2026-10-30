@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 2,
+  "purpose": "네 문명 + 공용 중앙 대륙(X자 4등분) 연결 (2026-10-27 통합, 기우 확정안). 각 팀이 길과 '합칠 때' 표지판으로 준비한 자리를 쓴다. 북유럽 쪽은 Tools/MapGen/north_center.py가 만들고, 나머지 쪽은 Tools/Integration/connect_regions.py가 맵 JSON에 넣는다 (생성기로 맵을 다시 만들면 이 스크립트를 다시 실행).",
+  "spawnRule": "맵 X에 Y에서 들어올 때 서는 자리 = link_<Y>. 출구 사각형을 edge 반대(안쪽)로 두께만큼 옮긴 자리.",
+  "links": [
+    {
+      "id": "①",
+      "note": "북↔서: 눈숲 마을 서쪽 ↔ 베네치아 포도밭 북쪽 성문 길",
+      "a": {
+        "map": "north_c_snowwood",
+        "edge": "W",
+        "by": "north_center.py"
+      },
+      "b": {
+        "map": "venice_c_vineyard",
+        "edge": "N",
+        "x": 12,
+        "y": 2,
+        "w": 4,
+        "h": 1
+      }
+    },
+    {
+      "id": "⑨",
+      "note": "북↔서 (10/28): 서남 솔숲길 가운데 갈림길 서쪽 숲길 ↔ 베네치아 산기슭 고갯길 동쪽 끝 (고갯길 쪽 길은 Tools/Integration/paint_link_roads.py가 그림)",
+      "a": {
+        "map": "north_c_road_sw",
+        "edge": "W",
+        "by": "north_center.py"
+      },
+      "b": {
+        "map": "venice_c_pass",
+        "edge": "E",
+        "x": 59,
+        "y": 26,
+        "w": 1,
+        "h": 3
+      }
+    },
+    {
+      "id": "⑩",
+      "note": "북↔서 (10/28): 서남 솔숲길 아래쪽 갈림길 남쪽 숲길 ↔ 베네치아 동문 큰길 북쪽 (동문 쪽 길은 paint_link_roads.py)",
+      "a": {
+        "map": "north_c_road_sw",
+        "edge": "S",
+        "by": "north_center.py"
+      },
+      "b": {
+        "map": "venice_c_gate",
+        "edge": "N",
+        "x": 30,
+        "y": 0,
+        "w": 4,
+        "h": 1
+      }
+    },
+    {
+      "id": "⑪",
+      "note": "북↔동 (10/28): 동남 물가길 남쪽 ↔ 고려 내륙 교역 길목 북쪽 (② 개울 나루 동쪽 다리길 대신. 교역 길목 쪽 길·출구 자리는 고려 생성기 Tools/WorldLayout/m4_links.py(은샘 확인 10/28))",
+      "a": {
+        "map": "north_c_road_se",
+        "edge": "S",
+        "by": "north_center.py"
+      },
+      "b": {
+        "map": "transit_crossroads",
+        "edge": "N",
+        "x": 26,
+        "y": 9,
+        "w": 4,
+        "h": 1
+      }
+    },
+    {
+      "id": "④",
+      "note": "남↔동: 아라비아 소나무 고원 '고려 쪽 →' 길 끝 ↔ 고려 내륙 교역 길목 서쪽 아래",
+      "a": {
+        "map": "arabia_central_eastvale",
+        "edge": "E",
+        "x": 46,
+        "y": 42,
+        "w": 1,
+        "h": 2
+      },
+      "b": {
+        "map": "transit_crossroads",
+        "edge": "W",
+        "x": 12,
+        "y": 45,
+        "w": 1,
+        "h": 2
+      }
+    },
+    {
+      "id": "⑤",
+      "note": "한가운데: 북쪽 길목 마을 남쪽 끝 ↔ 아라비아 초원 꼭대기 '네 지역의 구역이 여기서 만납니다'",
+      "a": {
+        "map": "north_c_crossing",
+        "edge": "S",
+        "by": "north_center.py"
+      },
+      "b": {
+        "map": "arabia_central_steppe",
+        "edge": "N",
+        "x": 54,
+        "y": 7,
+        "w": 4,
+        "h": 1
+      }
+    },
+    {
+      "id": "⑥",
+      "note": "남↔서: 베네치아 돌다리 나루 큰길 동쪽 끝(모퉁이 동쪽) ↔ 아라비아 포도밭 언덕 '← 베네치아 쪽' 길 끝",
+      "a": {
+        "map": "venice_c_bridge",
+        "edge": "E",
+        "x": 47,
+        "y": 18,
+        "w": 1,
+        "h": 4
+      },
+      "b": {
+        "map": "arabia_central_westvale",
+        "edge": "W",
+        "x": 16,
+        "y": 46,
+        "w": 1,
+        "h": 4
+      }
+    },
+    {
+      "id": "⑦",
+      "note": "중심: 베네치아 동문 큰길 동쪽 끝 ↔ 아라비아 한가운데 초원 꼭대기 왼쪽",
+      "a": {
+        "map": "venice_c_gate",
+        "edge": "E",
+        "x": 71,
+        "y": 31,
+        "w": 1,
+        "h": 3
+      },
+      "b": {
+        "map": "arabia_central_steppe",
+        "edge": "W",
+        "x": 51,
+        "y": 8,
+        "w": 1,
+        "h": 3
+      }
+    },
+    {
+      "id": "⑧",
+      "note": "중심: 고려 내륙 교역 길목 서쪽 가운데 ↔ 아라비아 한가운데 초원 꼭대기 오른쪽",
+      "a": {
+        "map": "transit_crossroads",
+        "edge": "W",
+        "x": 0,
+        "y": 32,
+        "w": 1,
+        "h": 3
+      },
+      "b": {
+        "map": "arabia_central_steppe",
+        "edge": "E",
+        "x": 60,
+        "y": 8,
+        "w": 1,
+        "h": 3
+      }
+    }
+  ],
+  "signs": [
+    {
+      "map": "venice_c_vineyard",
+      "x": 16,
+      "y": 3,
+      "text": "북서 포구 · 북쪽 조각(눈숲 마을) 방면\n성문을 나서면 북유럽 쪽 중앙"
+    },
+    {
+      "map": "venice_c_gate",
+      "x": 66,
+      "y": 28,
+      "text": "동쪽 · 대륙 중심 (한가운데 초원)\n네 지역의 구역이 만나는 곳"
+    },
+    {
+      "map": "venice_c_bridge",
+      "x": 48,
+      "y": 17,
+      "add": true,
+      "text": "→ 아라비아 쪽 구역\n(서쪽 포도밭 언덕)"
+    },
+    {
+      "map": "arabia_central_westvale",
+      "x": 16,
+      "y": 45,
+      "text": "← 베네치아 쪽 구역\n(돌다리 나루)"
+    },
+    {
+      "map": "arabia_central_eastvale",
+      "x": 44,
+      "y": 41,
+      "text": "고려 쪽 구역 →\n(내륙 교역 길목)"
+    },
+    {
+      "map": "arabia_central_steppe",
+      "x": 57,
+      "y": 6,
+      "text": "대륙의 한가운데 (초원)\n네 지역의 구역이 여기서 만납니다.\n↑ 북유럽 · ← 베네치아 · → 고려 · ↓ 만국 장터"
+    },
+    {
+      "map": "transit_crossroads",
+      "x": 34,
+      "y": 22,
+      "text": "교역로 안내\n동쪽: 고려 교역로 · 북쪽: 북유럽 쪽 동남 물가길 · 서쪽 가운데: 대륙 한가운데 초원 · 서쪽 아래: 대륙 남쪽(소나무 고원)",
+      "add": true
+    },
+    {
+      "map": "venice_c_pass",
+      "x": 55,
+      "y": 24,
+      "add": true,
+      "text": "→ 북쪽 조각 (서남 솔숲길)\n북유럽 쪽 중앙 · 북쪽 길목 마을"
+    },
+    {
+      "map": "venice_c_gate",
+      "x": 35,
+      "y": 3,
+      "add": true,
+      "text": "↑ 북쪽 조각 (서남 솔숲길)\n북유럽 쪽 중앙"
+    },
+    {
+      "map": "transit_crossroads",
+      "x": 30,
+      "y": 10,
+      "add": true,
+      "text": "↑ 북쪽 조각 (동남 물가길)\n북유럽 쪽 중앙 · 개울 나루"
+    }
+  ]
+}

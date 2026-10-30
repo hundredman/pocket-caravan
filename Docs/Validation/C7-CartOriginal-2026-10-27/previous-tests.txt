@@ -1,0 +1,10 @@
+test_actual_play_previous_frame_and_changed_regions (test_c7_cart_roof_v2.CartRoofV2Checks) ... ok
+test_existing_approved_and_sibling_assets_preserved (test_c7_cart_roof_v2.CartRoofV2Checks) ... ok
+test_house_only_roof_changed (test_c7_cart_roof_v2.CartRoofV2Checks) ... ok
+test_native_reexports_and_palette (test_c7_cart_roof_v2.CartRoofV2Checks) ... ok
+test_whole_objects_and_review_gate (test_c7_cart_roof_v2.CartRoofV2Checks) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.185s
+
+OK

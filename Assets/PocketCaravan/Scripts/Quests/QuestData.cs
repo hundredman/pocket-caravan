@@ -38,6 +38,7 @@ namespace PocketCaravan
     public class QuestData : ScriptableObject
     {
         public string id;
+        public bool retired;
         public string title;
         [Tooltip("튜토리얼 등 연속 퀘스트 이름 (퀘스트 목록에 묶어 보임)")] public string chain;
         [TextArea] public string summary;
@@ -63,6 +64,9 @@ namespace PocketCaravan
         [Header("보상")]
         public int rewardMoney;
         public int rewardCredit;
+        public ReputationScope rewardReputationScope;
+        public string rewardReputationTarget;
+        public ReputationSize rewardReputationSize;
         [Tooltip("보상 기록 필드가 없던 구 저장의 활성 의뢰에만 아래 이전 약속 적용")]
         public bool hasLegacyReward;
         public int legacyRewardMoney, legacyRewardCredit;

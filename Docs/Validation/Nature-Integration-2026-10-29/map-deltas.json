@@ -1,0 +1,67 @@
+{
+  "transit_central_approach": {
+    "blockedChanged": 59,
+    "roadChanged": 0,
+    "cropPatches": 0
+  },
+  "transit_south_inland": {
+    "blockedChanged": 0,
+    "roadChanged": 0,
+    "cropPatches": 0
+  },
+  "transit_woodtown": {
+    "blockedChanged": 175,
+    "roadChanged": 0,
+    "cropPatches": 0
+  },
+  "transit_ferry": {
+    "blockedChanged": 0,
+    "roadChanged": 0,
+    "cropPatches": 0
+  },
+  "transit_southport": {
+    "blockedChanged": 0,
+    "roadChanged": 0,
+    "cropPatches": 0
+  },
+  "transit_wetroad": {
+    "blockedChanged": 24,
+    "roadChanged": 0,
+    "cropPatches": 0
+  },
+  "goryeo_songak": {
+    "blockedChanged": 221,
+    "roadChanged": 0,
+    "cropPatches": 0
+  },
+  "goryeo_jangdan": {
+    "blockedChanged": 0,
+    "roadChanged": 0,
+    "cropPatches": 2
+  },
+  "transit_crossroads": {
+    "blockedChanged": 0,
+    "roadChanged": 0,
+    "cropPatches": 0
+  },
+  "transit_pass": {
+    "blockedChanged": 0,
+    "roadChanged": 0,
+    "cropPatches": 0
+  },
+  "Naru": {
+    "blockedChanged": 0,
+    "roadChanged": 0,
+    "cropPatches": 1
+  },
+  "Dakmok": {
+    "blockedChanged": 0,
+    "roadChanged": 0,
+    "cropPatches": 0
+  },
+  "Gaegyeong": {
+    "blockedChanged": 0,
+    "roadChanged": 0,
+    "cropPatches": 0
+  }
+}

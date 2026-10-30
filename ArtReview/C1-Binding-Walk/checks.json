@@ -1,0 +1,61 @@
+{
+  "characters": [
+    {
+      "name": "porter",
+      "frames": 16,
+      "approvedFrontExact": true,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "paletteSubsetOfApprovedFront": true,
+      "asepriteReopenedSheetExact": true,
+      "tags": "dulr",
+      "durationMs": 125
+    },
+    {
+      "name": "merchant",
+      "frames": 16,
+      "approvedFrontExact": true,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "paletteSubsetOfApprovedFront": true,
+      "asepriteReopenedSheetExact": true,
+      "tags": "dulr",
+      "durationMs": 125
+    },
+    {
+      "name": "merchant_silk",
+      "frames": 16,
+      "approvedFrontExact": true,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "paletteSubsetOfApprovedFront": true,
+      "asepriteReopenedSheetExact": true,
+      "tags": "dulr",
+      "durationMs": 125
+    },
+    {
+      "name": "scholar",
+      "frames": 16,
+      "approvedFrontExact": true,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "paletteSubsetOfApprovedFront": true,
+      "asepriteReopenedSheetExact": true,
+      "tags": "dulr",
+      "durationMs": 125
+    },
+    {
+      "name": "woman_ricecake",
+      "frames": 16,
+      "approvedFrontExact": true,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "paletteSubsetOfApprovedFront": true,
+      "asepriteReopenedSheetExact": true,
+      "tags": "dulr",
+      "durationMs": 125
+    }
+  ],
+  "userApproval": "pending for directions and walk",
+  "D3PaletteApproval": false
+}

@@ -12,9 +12,12 @@ namespace PocketCaravan
             public string id, title, history, adaptation, travel;
             public Source[] sources;
         }
-        [Serializable] public class Book { public Card[] cards; }
+        [Serializable] public class Book { public string heading; public Card[] cards; }
 
-        public Book Content { get; private set; }
+        Book goryeo, venice;
+        /// <summary>지금 맵의 지역 백과. 베네치아·본토 서부(venice_*) 맵이면 베네치아 백과, 그 밖은 고려 백과 (2026-10-26)</summary>
+        public Book Content =>
+            MapRoot.Current != null && MapRoot.Current.mapId != null && MapRoot.Current.mapId.StartsWith("venice_") && venice != null ? venice : goryeo;
         public bool IsOpen { get; private set; }
         int selected;
         Vector2 listScroll, pageScroll;
@@ -22,7 +25,9 @@ namespace PocketCaravan
         void Awake()
         {
             var text = Resources.Load<TextAsset>("CommerceGuide/Goryeo");
-            if (text != null) Content = JsonUtility.FromJson<Book>(text.text);
+            if (text != null) goryeo = JsonUtility.FromJson<Book>(text.text);
+            var v = Resources.Load<TextAsset>("CommerceGuide/Venice");
+            if (v != null) venice = JsonUtility.FromJson<Book>(v.text);
         }
 
         public void Open()
@@ -49,10 +54,10 @@ namespace PocketCaravan
             if (!IsOpen) return;
             UIStyle.Begin();
             GUI.depth = -10;
-            float width = Mathf.Min(560, UIStyle.VirtualWidth - 16), height = 320;
+            float width = Mathf.Min(560, UIStyle.VirtualWidth - 16), height = UIStyle.WindowHeight(320);
             var r = new Rect((UIStyle.VirtualWidth - width) / 2, (UIStyle.VirtualHeight - height) / 2, width, height);
             GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(new Rect(r.x + 12, r.y + 10, width - 112, 20), "상업 백과 · 고려의 모티브와 여행", UIStyle.Rich);
+            GUI.Label(new Rect(r.x + 12, r.y + 10, width - 112, 20), "상업 백과 · " + (Content != null && !string.IsNullOrEmpty(Content.heading) ? Content.heading : "고려의 모티브와 여행"), UIStyle.Rich);
             if (GUI.Button(new Rect(r.xMax - 92, r.y + 8, 80, 20), "닫기 Esc", UIStyle.Button)) Close();
             GUI.Label(new Rect(r.x + 12, r.y + 32, width - 24, 16), "여러 시대의 상인 문화가 만난 가상 세계입니다. 읽지 않아도 거래할 수 있어요.", UIStyle.Small);
             if (Content == null || Content.cards == null || Content.cards.Length == 0)

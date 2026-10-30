@@ -1,0 +1,287 @@
+{
+ "maps": {
+  "north_birka": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 38,
+   "laneCells": 14,
+   "merged": [
+    "north_pass"
+   ]
+  },
+  "north_herd": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 20,
+   "laneCells": 15,
+   "merged": []
+  },
+  "north_hunter": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 19,
+   "laneCells": 9,
+   "merged": []
+  },
+  "north_naru": {
+   "missing": [
+    "낚시터"
+   ],
+   "laneBlocked": [],
+   "n": 33,
+   "laneCells": 18,
+   "merged": [
+    "north_fjord_road"
+   ]
+  },
+  "north_laugar": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 22,
+   "laneCells": 13,
+   "merged": []
+  },
+  "north_icecave": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 14,
+   "laneCells": 7,
+   "merged": []
+  },
+  "north_runehill": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 15,
+   "laneCells": 2,
+   "merged": []
+  },
+  "north_c_gatetown": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 24,
+   "laneCells": 19,
+   "merged": []
+  },
+  "north_c_snowwood": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 20,
+   "laneCells": 8,
+   "merged": []
+  },
+  "north_c_creek": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 21,
+   "laneCells": 6,
+   "merged": []
+  },
+  "north_c_crossing": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 27,
+   "laneCells": 7,
+   "merged": []
+  },
+  "north_c_road_nw": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 10,
+   "laneCells": 0,
+   "merged": []
+  },
+  "north_c_road_ne": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 11,
+   "laneCells": 0,
+   "merged": []
+  },
+  "north_c_runeway": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 12,
+   "laneCells": 2,
+   "merged": []
+  },
+  "north_c_road_sw": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 13,
+   "laneCells": 4,
+   "merged": []
+  },
+  "north_c_road_se": {
+   "missing": [],
+   "laneBlocked": [],
+   "n": 11,
+   "laneCells": 5,
+   "merged": []
+  }
+ },
+ "gates": [
+  {
+   "maps": [
+    "north_herd",
+    "north_laugar"
+   ],
+   "x": -23,
+   "y": -276
+  },
+  {
+   "maps": [
+    "north_icecave",
+    "north_naru"
+   ],
+   "x": 31,
+   "y": -262
+  },
+  {
+   "maps": [
+    "north_herd",
+    "north_hunter"
+   ],
+   "x": -30,
+   "y": -254
+  },
+  {
+   "maps": [
+    "north_birka",
+    "north_laugar"
+   ],
+   "x": 5,
+   "y": -252
+  },
+  {
+   "maps": [
+    "north_birka",
+    "north_hunter"
+   ],
+   "x": -16,
+   "y": -220
+  },
+  {
+   "maps": [
+    "north_birka",
+    "north_naru"
+   ],
+   "x": 21,
+   "y": -220
+  },
+  {
+   "maps": [
+    "north_c_gatetown",
+    "north_c_road_nw"
+   ],
+   "x": -32,
+   "y": -157
+  },
+  {
+   "maps": [
+    "north_c_gatetown",
+    "north_c_road_ne"
+   ],
+   "x": 26,
+   "y": -156
+  },
+  {
+   "maps": [
+    "north_c_road_nw",
+    "north_c_snowwood"
+   ],
+   "x": -62,
+   "y": -126
+  },
+  {
+   "maps": [
+    "north_c_runeway",
+    "north_c_snowwood"
+   ],
+   "x": -30,
+   "y": -111
+  },
+  {
+   "maps": [
+    "north_c_creek",
+    "north_c_runeway"
+   ],
+   "x": 24,
+   "y": -106
+  },
+  {
+   "maps": [
+    "north_c_creek",
+    "north_c_road_se"
+   ],
+   "x": 39,
+   "y": -89
+  },
+  {
+   "maps": [
+    "north_c_road_sw",
+    "north_c_snowwood"
+   ],
+   "x": -51,
+   "y": -87
+  },
+  {
+   "maps": [
+    "north_c_crossing",
+    "north_c_road_sw"
+   ],
+   "x": -23,
+   "y": -63
+  },
+  {
+   "maps": [
+    "north_c_crossing",
+    "north_c_road_se"
+   ],
+   "x": 20,
+   "y": -60
+  },
+  {
+   "maps": [
+    "north_laugar",
+    "north_runehill"
+   ],
+   "x": -1,
+   "y": -305
+  },
+  {
+   "maps": [
+    "north_birka",
+    "north_c_gatetown"
+   ],
+   "x": -4,
+   "y": -170
+  },
+  {
+   "maps": [
+    "north_c_gatetown",
+    "north_c_runeway"
+   ],
+   "x": 0,
+   "y": -129
+  },
+  {
+   "maps": [
+    "north_c_creek",
+    "north_c_road_ne"
+   ],
+   "x": 39,
+   "y": -125
+  },
+  {
+   "maps": [
+    "north_c_crossing",
+    "north_c_runeway"
+   ],
+   "x": 9,
+   "y": -78
+  }
+ ],
+ "gateCount": 20,
+ "roadNetworks": 3,
+ "oldContentLost": []
+}

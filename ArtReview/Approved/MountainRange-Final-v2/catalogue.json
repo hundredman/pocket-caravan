@@ -1,0 +1,555 @@
+{
+  "status": "approved",
+  "productionApplied": false,
+  "assets": {
+    "west-cap": {
+      "path": "west-cap.png",
+      "size": [
+        128,
+        192
+      ],
+      "ports": {
+        "E": {
+          "side": "E",
+          "x": 128,
+          "y": 0,
+          "template": "ew"
+        }
+      },
+      "source": "west-cap.aseprite"
+    },
+    "body-a": {
+      "path": "body-a.png",
+      "size": [
+        192,
+        192
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 192,
+          "y": 0,
+          "template": "ew"
+        }
+      },
+      "source": "body-a.aseprite"
+    },
+    "body-b": {
+      "path": "body-b.png",
+      "size": [
+        64,
+        192
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 64,
+          "y": 0,
+          "template": "ew"
+        }
+      },
+      "source": "body-b.aseprite"
+    },
+    "east-cap": {
+      "path": "east-cap.png",
+      "size": [
+        128,
+        192
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        }
+      },
+      "source": "east-cap.aseprite"
+    },
+    "bend-north": {
+      "path": "bend-north.png",
+      "size": [
+        192,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 64,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 192,
+          "y": 0,
+          "template": "ew"
+        }
+      },
+      "source": "bend-north.aseprite"
+    },
+    "bend-south": {
+      "path": "bend-south.png",
+      "size": [
+        192,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 192,
+          "y": 64,
+          "template": "ew"
+        }
+      },
+      "source": "bend-south.aseprite"
+    },
+    "north-cap": {
+      "path": "north-cap.png",
+      "size": [
+        192,
+        128
+      ],
+      "ports": {
+        "S": {
+          "side": "S",
+          "x": 0,
+          "y": 128,
+          "template": "ns"
+        }
+      },
+      "source": "north-cap.aseprite"
+    },
+    "north-south-body": {
+      "path": "north-south-body.png",
+      "size": [
+        192,
+        192
+      ],
+      "ports": {
+        "N": {
+          "side": "N",
+          "x": 0,
+          "y": 0,
+          "template": "ns"
+        },
+        "S": {
+          "side": "S",
+          "x": 0,
+          "y": 192,
+          "template": "ns"
+        }
+      },
+      "source": "north-south-body.aseprite"
+    },
+    "south-cap": {
+      "path": "south-cap.png",
+      "size": [
+        192,
+        128
+      ],
+      "ports": {
+        "N": {
+          "side": "N",
+          "x": 0,
+          "y": 0,
+          "template": "ns"
+        }
+      },
+      "source": "south-cap.aseprite"
+    },
+    "turn-w-n": {
+      "path": "turn-w-n.png",
+      "size": [
+        256,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 64,
+          "template": "ew"
+        },
+        "N": {
+          "side": "N",
+          "x": 64,
+          "y": 0,
+          "template": "ns"
+        }
+      },
+      "source": "turn-w-n.aseprite"
+    },
+    "turn-w-s": {
+      "path": "turn-w-s.png",
+      "size": [
+        256,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        },
+        "S": {
+          "side": "S",
+          "x": 64,
+          "y": 256,
+          "template": "ns"
+        }
+      },
+      "source": "turn-w-s.aseprite"
+    },
+    "turn-e-n": {
+      "path": "turn-e-n.png",
+      "size": [
+        256,
+        256
+      ],
+      "ports": {
+        "E": {
+          "side": "E",
+          "x": 256,
+          "y": 64,
+          "template": "ew"
+        },
+        "N": {
+          "side": "N",
+          "x": 0,
+          "y": 0,
+          "template": "ns"
+        }
+      },
+      "source": "turn-e-n.aseprite"
+    },
+    "turn-e-s": {
+      "path": "turn-e-s.png",
+      "size": [
+        256,
+        256
+      ],
+      "ports": {
+        "E": {
+          "side": "E",
+          "x": 256,
+          "y": 0,
+          "template": "ew"
+        },
+        "S": {
+          "side": "S",
+          "x": 0,
+          "y": 256,
+          "template": "ns"
+        }
+      },
+      "source": "turn-e-s.aseprite"
+    },
+    "branch-w-e-n": {
+      "path": "branch-w-e-n.png",
+      "size": [
+        384,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 64,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 384,
+          "y": 64,
+          "template": "ew"
+        },
+        "N": {
+          "side": "N",
+          "x": 96,
+          "y": 0,
+          "template": "ns"
+        }
+      },
+      "source": "branch-w-e-n.aseprite"
+    },
+    "branch-w-e-s": {
+      "path": "branch-w-e-s.png",
+      "size": [
+        384,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 384,
+          "y": 0,
+          "template": "ew"
+        },
+        "S": {
+          "side": "S",
+          "x": 96,
+          "y": 256,
+          "template": "ns"
+        }
+      },
+      "source": "branch-w-e-s.aseprite"
+    },
+    "branch-n-s-w": {
+      "path": "branch-n-s-w.png",
+      "size": [
+        256,
+        384
+      ],
+      "ports": {
+        "N": {
+          "side": "N",
+          "x": 64,
+          "y": 0,
+          "template": "ns"
+        },
+        "S": {
+          "side": "S",
+          "x": 64,
+          "y": 384,
+          "template": "ns"
+        },
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 96,
+          "template": "ew"
+        }
+      },
+      "source": "branch-n-s-w.aseprite"
+    },
+    "branch-n-s-e": {
+      "path": "branch-n-s-e.png",
+      "size": [
+        256,
+        384
+      ],
+      "ports": {
+        "N": {
+          "side": "N",
+          "x": 0,
+          "y": 0,
+          "template": "ns"
+        },
+        "S": {
+          "side": "S",
+          "x": 0,
+          "y": 384,
+          "template": "ns"
+        },
+        "E": {
+          "side": "E",
+          "x": 256,
+          "y": 96,
+          "template": "ew"
+        }
+      },
+      "source": "branch-n-s-e.aseprite"
+    },
+    "mountain-pass": {
+      "path": "mountain-pass.png",
+      "size": [
+        256,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 256,
+          "y": 0,
+          "template": "ew"
+        }
+      },
+      "source": "mountain-pass.aseprite"
+    },
+    "stream-valley": {
+      "path": "stream-valley.png",
+      "size": [
+        256,
+        272
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 16,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 256,
+          "y": 16,
+          "template": "ew"
+        },
+        "N": {
+          "side": "N",
+          "x": 96,
+          "y": 0,
+          "template": "water"
+        },
+        "S": {
+          "side": "S",
+          "x": 96,
+          "y": 272,
+          "template": "water"
+        }
+      },
+      "source": "stream-valley.aseprite"
+    },
+    "spring-waterfall": {
+      "path": "spring-waterfall.png",
+      "size": [
+        256,
+        256
+      ],
+      "ports": {
+        "W": {
+          "side": "W",
+          "x": 0,
+          "y": 0,
+          "template": "ew"
+        },
+        "E": {
+          "side": "E",
+          "x": 256,
+          "y": 0,
+          "template": "ew"
+        },
+        "S": {
+          "side": "S",
+          "x": 96,
+          "y": 256,
+          "template": "water"
+        }
+      },
+      "source": "spring-waterfall.aseprite"
+    },
+    "river-straight": {
+      "path": "river-straight.png",
+      "size": [
+        64,
+        64
+      ],
+      "ports": {
+        "N": {
+          "side": "N",
+          "x": 0,
+          "y": 0,
+          "template": "water"
+        },
+        "S": {
+          "side": "S",
+          "x": 0,
+          "y": 64,
+          "template": "water"
+        }
+      },
+      "source": "river-straight.aseprite"
+    },
+    "river-outlet": {
+      "path": "river-outlet.png",
+      "size": [
+        64,
+        64
+      ],
+      "ports": {
+        "N": {
+          "side": "N",
+          "x": 0,
+          "y": 0,
+          "template": "water"
+        },
+        "S": {
+          "side": "S",
+          "x": 0,
+          "y": 64,
+          "template": "water-ground"
+        }
+      },
+      "source": "river-outlet.aseprite"
+    }
+  },
+  "newAssets": [
+    "branch-w-e-n",
+    "branch-w-e-s",
+    "branch-n-s-w",
+    "branch-n-s-e",
+    "mountain-pass",
+    "stream-valley",
+    "spring-waterfall",
+    "river-straight",
+    "river-outlet"
+  ],
+  "package": "Package/",
+  "frozenApprovedAssets": [
+    "west-cap",
+    "body-a",
+    "body-b",
+    "east-cap",
+    "bend-north",
+    "bend-south"
+  ],
+  "finalReviewAssets": [
+    "west-cap",
+    "body-a",
+    "body-b",
+    "east-cap",
+    "bend-north",
+    "bend-south",
+    "north-cap",
+    "north-south-body",
+    "south-cap",
+    "turn-w-n",
+    "turn-w-s",
+    "turn-e-n",
+    "turn-e-s",
+    "branch-w-e-n",
+    "branch-w-e-s",
+    "branch-n-s-w",
+    "branch-n-s-e",
+    "mountain-pass",
+    "stream-valley",
+    "spring-waterfall",
+    "river-straight",
+    "river-outlet"
+  ],
+  "pixelSize": 16,
+  "previewOnly": true,
+  "approvalRecord": "approval.json"
+}

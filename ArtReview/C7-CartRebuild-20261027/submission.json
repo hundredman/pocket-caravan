@@ -1,0 +1,34 @@
+{
+  "status": "changes_requested",
+  "productionApplied": false,
+  "files": {
+    "Native/cart.png": {
+      "size": [
+        32,
+        32
+      ],
+      "rgbaSHA256": "d5bee276794de9bb95a810cad4347330b808ced42388d3b1a8bfed2ab03e612a"
+    },
+    "Screens/before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "dc9fe8f419395210b6b8fc74aab808b336d29a662c5230a5f7ccd67d22e79a75"
+    },
+    "Screens/trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "67bef2d7f3a9ba9b5aafed02177b82624c91afb4f0e5f145bbcac3c4cde6ad28"
+    },
+    "comparison.png": {
+      "size": [
+        1000,
+        1020
+      ],
+      "rgbaSHA256": "602c49f1efd20684f42c9576cc1761c2201935cf21a47783eb62584403b96954"
+    }
+  }
+}

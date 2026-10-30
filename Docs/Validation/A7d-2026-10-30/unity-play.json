@@ -1,0 +1,976 @@
+{
+    "playCompleted": true,
+    "error": "",
+    "checks": [
+        {
+            "test": "start in previewOnly",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "preview map loaded",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "serialized/runtime barriers match",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "all crop patches connected",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "entire paddy remains walkable",
+            "detail": "goryeo_songak 13,53",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "182,-30",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "songak-ridge 480x270",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "songak-ridge-without-player 480x270",
+            "passed": true
+        },
+        {
+            "test": "player remains visible",
+            "detail": "songak-ridge: 184",
+            "passed": true
+        },
+        {
+            "test": "motor never enters barrier",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "ridge stops motor",
+            "detail": "81",
+            "passed": true
+        },
+        {
+            "test": "blocked saved position repaired",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "motor never enters barrier",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "ridge stops motor",
+            "detail": "81",
+            "passed": true
+        },
+        {
+            "test": "blocked saved position repaired",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "motor never enters barrier",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "ridge stops motor",
+            "detail": "81",
+            "passed": true
+        },
+        {
+            "test": "blocked saved position repaired",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "motor never enters barrier",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "ridge stops motor",
+            "detail": "81",
+            "passed": true
+        },
+        {
+            "test": "blocked saved position repaired",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "motor never enters barrier",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "ridge stops motor",
+            "detail": "81",
+            "passed": true
+        },
+        {
+            "test": "blocked saved position repaired",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "motor never enters barrier",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "ridge stops motor",
+            "detail": "81",
+            "passed": true
+        },
+        {
+            "test": "blocked saved position repaired",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "ridge collision probes ran",
+            "detail": "6",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "preview map loaded",
+            "detail": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "serialized/runtime barriers match",
+            "detail": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "all crop patches connected",
+            "detail": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "entire paddy remains walkable",
+            "detail": "goryeo_jangdan 37,9",
+            "passed": true
+        },
+        {
+            "test": "entire paddy remains walkable",
+            "detail": "goryeo_jangdan 43,22",
+            "passed": true
+        },
+        {
+            "test": "entire paddy remains walkable",
+            "detail": "goryeo_jangdan 20,11",
+            "passed": true
+        },
+        {
+            "test": "entire paddy remains walkable",
+            "detail": "goryeo_jangdan 18,55",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "216,20",
+            "passed": true
+        },
+        {
+            "test": "crop depth connected",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "rice-inside 480x270",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "rice-inside-without-player 480x270",
+            "passed": true
+        },
+        {
+            "test": "player remains visible",
+            "detail": "rice-inside: 212",
+            "passed": true
+        },
+        {
+            "test": "rice preserves passage",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "rice walk completed",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "221,26",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "rice-path 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "preview map loaded",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "serialized/runtime barriers match",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "all crop patches connected",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "entire paddy remains walkable",
+            "detail": "Naru 34,5",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "preview map loaded",
+            "detail": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "serialized/runtime barriers match",
+            "detail": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "all crop patches connected",
+            "detail": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "entire paddy remains walkable",
+            "detail": "Gaegyeong 12,64",
+            "passed": true
+        },
+        {
+            "test": "entire paddy remains walkable",
+            "detail": "Gaegyeong 48,58",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "preview map loaded",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "serialized/runtime barriers match",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "preview map loaded",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "serialized/runtime barriers match",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "116,-28",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "source-upper 480x270",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "121,-13",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "source-lower 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "preview map loaded",
+            "detail": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "serialized/runtime barriers match",
+            "detail": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_crossroads",
+            "passed": true
+        },
+        {
+            "test": "preview map loaded",
+            "detail": "transit_crossroads",
+            "passed": true
+        },
+        {
+            "test": "serialized/runtime barriers match",
+            "detail": "transit_crossroads",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_southport",
+            "passed": true
+        },
+        {
+            "test": "preview map loaded",
+            "detail": "transit_southport",
+            "passed": true
+        },
+        {
+            "test": "serialized/runtime barriers match",
+            "detail": "transit_southport",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "preview map loaded",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "serialized/runtime barriers match",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_pass",
+            "passed": true
+        },
+        {
+            "test": "preview map loaded",
+            "detail": "transit_pass",
+            "passed": true
+        },
+        {
+            "test": "serialized/runtime barriers match",
+            "detail": "transit_pass",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "preview map loaded",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "serialized/runtime barriers match",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_south_inland",
+            "passed": true
+        },
+        {
+            "test": "preview map loaded",
+            "detail": "transit_south_inland",
+            "passed": true
+        },
+        {
+            "test": "serialized/runtime barriers match",
+            "detail": "transit_south_inland",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "66,-52",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-west 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "229,-64",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-capital 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "187,-52",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-goryeo 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "116,-18",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-lake 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "217,20",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-granary-north 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "198,66",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-granary-south 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "240,24",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-capital-fields 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "172,-12",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-songak-fields 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "reachable pose",
+            "detail": "242,36",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "asset-naru-fields 480x270",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "relocated exit ID preserved",
+            "detail": "transit_woodtown / seam_transit_woodtown_14",
+            "passed": true
+        },
+        {
+            "test": "relocated boundary reaches preview destination",
+            "detail": "transit_woodtown -> transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "relocated arrival is safe",
+            "detail": "seam_transit_woodtown_14",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "reverse boundary exists",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "relocated boundary round trip",
+            "detail": "seam_transit_woodtown_14",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "relocated exit ID preserved",
+            "detail": "transit_woodtown / seam_transit_woodtown_15",
+            "passed": true
+        },
+        {
+            "test": "relocated boundary reaches preview destination",
+            "detail": "transit_woodtown -> transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "relocated arrival is safe",
+            "detail": "seam_transit_woodtown_15",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "reverse boundary exists",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "relocated boundary round trip",
+            "detail": "seam_transit_woodtown_15",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "relocated exit ID preserved",
+            "detail": "transit_wetroad / seam_transit_wetroad_13",
+            "passed": true
+        },
+        {
+            "test": "relocated boundary reaches preview destination",
+            "detail": "transit_wetroad -> transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "relocated arrival is safe",
+            "detail": "seam_transit_wetroad_13",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "reverse boundary exists",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "relocated boundary round trip",
+            "detail": "seam_transit_wetroad_13",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "relocated exit ID preserved",
+            "detail": "transit_wetroad / seam_transit_wetroad_14",
+            "passed": true
+        },
+        {
+            "test": "relocated boundary reaches preview destination",
+            "detail": "transit_wetroad -> transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "relocated arrival is safe",
+            "detail": "seam_transit_wetroad_14",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "reverse boundary exists",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "relocated boundary round trip",
+            "detail": "seam_transit_wetroad_14",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "relocated exit ID preserved",
+            "detail": "transit_wetroad / seam_transit_wetroad_15",
+            "passed": true
+        },
+        {
+            "test": "relocated boundary reaches preview destination",
+            "detail": "transit_wetroad -> transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "relocated arrival is safe",
+            "detail": "seam_transit_wetroad_15",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_central_approach",
+            "passed": true
+        },
+        {
+            "test": "reverse boundary exists",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "relocated boundary round trip",
+            "detail": "seam_transit_wetroad_15",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "relocated exit ID preserved",
+            "detail": "transit_wetroad / seam_transit_wetroad_15",
+            "passed": true
+        },
+        {
+            "test": "relocated boundary reaches preview destination",
+            "detail": "transit_wetroad -> transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "relocated arrival is safe",
+            "detail": "seam_transit_wetroad_15",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "reverse boundary exists",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "relocated boundary round trip",
+            "detail": "seam_transit_wetroad_15",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_wetroad",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "cover-goryeo_songak 480x270",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "arrival-goryeo_songak 480x270",
+            "passed": true
+        },
+        {
+            "test": "real travel destination",
+            "detail": "transit_wetroad -> goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "travel uses integrated candidate scene",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "travel never enables production save",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "regional arrival captured",
+            "detail": "고려",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "cover-transit_woodtown 480x270",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "arrival-transit_woodtown 480x270",
+            "passed": true
+        },
+        {
+            "test": "real travel destination",
+            "detail": "goryeo_songak -> transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "travel uses integrated candidate scene",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "travel never enables production save",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "regional arrival captured",
+            "detail": "중앙 대륙",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "cover-transit_ferry 480x270",
+            "passed": true
+        },
+        {
+            "test": "real travel destination",
+            "detail": "transit_woodtown -> transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "travel uses integrated candidate scene",
+            "detail": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "travel never enables production save",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "cover-Naru 480x270",
+            "passed": true
+        },
+        {
+            "test": "native capture",
+            "detail": "arrival-Naru 480x270",
+            "passed": true
+        },
+        {
+            "test": "real travel destination",
+            "detail": "transit_ferry -> Naru",
+            "passed": true
+        },
+        {
+            "test": "travel uses integrated candidate scene",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "travel never enables production save",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "regional arrival captured",
+            "detail": "고려",
+            "passed": true
+        },
+        {
+            "test": "autosave remains disabled",
+            "detail": "Naru",
+            "passed": true
+        },
+        {
+            "test": "isolated save write",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "isolated save read/apply preserves money and credit",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "isolated save preserves map and quest data",
+            "detail": "",
+            "passed": true
+        },
+        {
+            "test": "isolated save test cannot overwrite production save",
+            "detail": "",
+            "passed": true
+        }
+    ]
+}

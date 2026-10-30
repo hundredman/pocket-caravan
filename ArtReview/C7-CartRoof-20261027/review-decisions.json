@@ -1,0 +1,14 @@
+{
+  "c7_cr_cart": {
+    "status": "changes_requested",
+    "date": "2026-10-27",
+    "feedback": "첫 소품 묶음의 수레로 복원",
+    "userQuote": "수레는 바꾸지 않은 처음 버전이 더 나았어. 그리고 기와집의 윗 부분이 흰데 다른 기와 지붕들처럼 수정해줘."
+  },
+  "c7_cr_tile_house": {
+    "status": "changes_requested",
+    "date": "2026-10-27",
+    "feedback": "흰 윗부분을 다른 기와 지붕과 같은 청회색으로 수정",
+    "userQuote": "수레는 바꾸지 않은 처음 버전이 더 나았어. 그리고 기와집의 윗 부분이 흰데 다른 기와 지붕들처럼 수정해줘."
+  }
+}

@@ -1,0 +1,130 @@
+[
+  {
+    "file": "Tools/MapGen/maps.py",
+    "line": 43,
+    "target": "map:Naru:worker:나루 짐꾼",
+    "old": "villager_dog_tall",
+    "new": "NPC/npc_naru_porter/npc_naru_porter_tall",
+    "reason": "existing approved role"
+  },
+  {
+    "file": "Tools/MapGen/maps.py",
+    "line": 81,
+    "target": "map:Naru:talker:뱃사공",
+    "old": "villager_bear_tall",
+    "new": "NPC/npc_naru_boatman/npc_naru_boatman_tall",
+    "reason": "existing approved role"
+  },
+  {
+    "file": "Tools/MapGen/maps.py",
+    "line": 82,
+    "target": "map:Naru:talker:농부",
+    "old": "villager_rabbit_tall",
+    "new": "NPC/npc_naru_farmer/npc_naru_farmer_tall",
+    "reason": "existing approved role"
+  },
+  {
+    "file": "Tools/MapGen/maps.py",
+    "line": 116,
+    "target": "map:Route01:talker:주모",
+    "old": "villager_tanuki_tall",
+    "new": null,
+    "reason": "non-exported legacy geometry marker; binding removed"
+  },
+  {
+    "file": "Tools/MapGen/maps.py",
+    "line": 127,
+    "target": "map:Route01:talker:길손",
+    "old": "villager_fox_tall",
+    "new": null,
+    "reason": "non-exported legacy geometry marker; binding removed"
+  },
+  {
+    "file": "Tools/MapGen/maps.py",
+    "line": 129,
+    "target": "map:Route01:talker:수레꾼",
+    "old": "villager_dog_tall",
+    "new": null,
+    "reason": "non-exported legacy geometry marker; binding removed"
+  },
+  {
+    "file": "Tools/MapGen/maps.py",
+    "line": 187,
+    "target": "map:Dakmok:worker:종이 일꾼",
+    "old": "villager_rabbit_tall",
+    "new": "NPC/npc_paper_worker/npc_paper_worker_tall",
+    "reason": "existing approved role"
+  },
+  {
+    "file": "Tools/MapGen/gaegyeong.py",
+    "line": 113,
+    "target": "map:Gaegyeong:worker:시전 짐꾼",
+    "old": "villager_dog_tall",
+    "new": "NPC/npc_capital_porter/npc_capital_porter_tall",
+    "reason": "existing approved role"
+  },
+  {
+    "file": "Tools/MapGen/gaegyeong.py",
+    "line": 117,
+    "target": "map:Gaegyeong:worker:시전 행상",
+    "old": "villager_fox_tall",
+    "new": "NPC/npc_capital_peddler/npc_capital_peddler_tall",
+    "reason": "existing approved role"
+  },
+  {
+    "file": "Tools/MapGen/frontier.py",
+    "line": 19,
+    "target": "map:transit_pass:talker:길손",
+    "old": "villager_dog_tall",
+    "new": "NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall",
+    "reason": "existing approved role"
+  },
+  {
+    "file": "Tools/MapGen/frontier.py",
+    "line": 42,
+    "target": "map:transit_woodtown:talker:땔감 장수",
+    "old": "villager_bear_tall",
+    "new": "NPC/npc_wood_seller/npc_wood_seller_tall",
+    "reason": "existing approved role"
+  },
+  {
+    "file": "Tools/MapGen/frontier.py",
+    "line": 90,
+    "target": "map:transit_ferry:talker:나루 상인",
+    "old": "villager_tanuki_tall",
+    "new": "NPC/npc_ferry_merchant/npc_ferry_merchant_tall",
+    "reason": "existing approved role"
+  },
+  {
+    "file": "Tools/MapGen/frontier.py",
+    "line": 113,
+    "target": "map:transit_central_approach:talker:길손",
+    "old": "villager_dog_tall",
+    "new": "NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall",
+    "reason": "existing approved role"
+  },
+  {
+    "file": "Tools/MapGen/frontier.py",
+    "line": 143,
+    "target": "map:transit_crossroads:talker:길목 안내인",
+    "old": "villager_tanuki_tall",
+    "new": "NPC/npc_crossroads_guide/npc_crossroads_guide_tall",
+    "reason": "existing approved role"
+  },
+  {
+    "file": "Tools/MapGen/goryeo_roads.py",
+    "line": 57,
+    "target": "map:goryeo_fieldroad:worker:들판 일꾼",
+    "old": "villager_dog_tall",
+    "new": null,
+    "reason": "non-exported legacy geometry marker; binding removed"
+  },
+  {
+    "file": "Tools/MapGen/settlement_details.py",
+    "line": 67,
+    "target": "map:Naru:pastime:나루 낚시",
+    "old": "villager_rabbit_tall",
+    "new": "NPC/npc_naru_fishing_child/npc_naru_fishing_child_tall",
+    "reason": "existing approved role"
+  }
+]

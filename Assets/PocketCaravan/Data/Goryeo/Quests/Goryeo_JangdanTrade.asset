@@ -22,7 +22,7 @@ MonoBehaviour:
     \uD560 \uC218 \uC788\uC5B4\uC694."
   giverNpc: goryeo_jangdan_farmer
   requires:
-  - {fileID: 11400000, guid: 5f1b114771f824928af105094288dc10, type: 2}
+  - {fileID: 11400000, guid: 43973e5d8c4254dbb5d6a2a4ff27fb14, type: 2}
   requiresAny: []
   choiceGroup: 
   offerLine: "\uC7A5\uB2E8 \uC7A5\uD130\uC5D0\uC11C \uACE1\uC2DD \uC138 \uAFB8\uB7EC\uBBF8\uB97C
@@ -51,10 +51,13 @@ MonoBehaviour:
     count: 3
     completeLine: 
   rewardMoney: 10
-  rewardCredit: 1
-  hasLegacyReward: 0
-  legacyRewardMoney: 0
-  legacyRewardCredit: 0
+  rewardCredit: 0
+  rewardReputationScope: 0
+  rewardReputationTarget: goryeo
+  rewardReputationSize: 2
+  hasLegacyReward: 1
+  legacyRewardMoney: 10
+  legacyRewardCredit: 1
   finishNote: "\uD310\uB9E4 \uB300\uAE08\uC5D0\uC11C \uB9E4\uC785 \uC6D0\uAC00\uB97C
     \uBE7C\uACE0, \uB3CC\uC544\uAC08 \uB54C \uC2E4\uC744 \uBB3C\uAC74\uB3C4 \uC0B4\uD3B4\uBCF4\uC138\uC694.
     \uC2DC\uC138\uB294 \uAC70\uB798\uB7C9\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9D1\uB2C8\uB2E4."

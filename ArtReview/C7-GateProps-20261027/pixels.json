@@ -1,0 +1,23 @@
+{
+  "gate": {
+    "size": [
+      96,
+      80
+    ],
+    "rgbaSHA256": "274138d508605fbea87a2cd26149fb26a8aa254dd188f3a481934a2dee2cc67f"
+  },
+  "well": {
+    "size": [
+      16,
+      32
+    ],
+    "rgbaSHA256": "199222043446aebeadb5fd7ed4b21b231aec26866fb688924f5ff3e15d5a6efc"
+  },
+  "stone_lantern": {
+    "size": [
+      16,
+      32
+    ],
+    "rgbaSHA256": "49a409329edd129adb88c9b5e4cc38ce5fbfdf81f4951a4fe910791db78ed3a6"
+  }
+}

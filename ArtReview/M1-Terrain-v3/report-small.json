@@ -1,0 +1,281 @@
+{
+ "seed": 7,
+ "landCells": 38253,
+ "classCounts": {
+  "깊은 바다": 4600,
+  "얕은 바다": 2074,
+  "모래 해변": 777,
+  "바위 해안": 70,
+  "강": 1364,
+  "습지": 282,
+  "들판(밭)": 1662,
+  "풀밭": 20803,
+  "꽃풀밭": 1260,
+  "언덕": 2365,
+  "숲": 7329,
+  "산(통행 불가)": 1089,
+  "봉우리(통행 불가)": 1325,
+  "마을 범위": 0
+ },
+ "rivers": [
+  {
+   "label": "큰 강 (곡창을 지나 나루 하구로)",
+   "cells": 201,
+   "mouth": [
+    281,
+    30
+   ]
+  },
+  {
+   "label": "개경 강 (닥목 계곡 → 개경 항구)",
+   "cells": 86,
+   "mouth": [
+    275,
+    -13
+   ]
+  },
+  {
+   "label": "대륙 동쪽 강 (북동 길)",
+   "cells": 156,
+   "mouth": [
+    155,
+    -78
+   ]
+  }
+ ],
+ "villages": [
+  {
+   "key": "goryeo/개경",
+   "label": "개경",
+   "area": 1102,
+   "target": 1100,
+   "center": [
+    265,
+    -11
+   ]
+  },
+  {
+   "key": "goryeo/송악",
+   "label": "송악",
+   "area": 652,
+   "target": 650,
+   "center": [
+    185,
+    -17
+   ]
+  },
+  {
+   "key": "goryeo/닥목",
+   "label": "닥목",
+   "area": 602,
+   "target": 600,
+   "center": [
+    226,
+    -50
+   ]
+  },
+  {
+   "key": "goryeo/나루",
+   "label": "나루",
+   "area": 703,
+   "target": 700,
+   "center": [
+    244,
+    38
+   ]
+  },
+  {
+   "key": "goryeo/장단",
+   "label": "장단",
+   "area": 703,
+   "target": 700,
+   "center": [
+    206,
+    42
+   ]
+  },
+  {
+   "key": "east/동문 마을",
+   "label": "동문 마을",
+   "area": 752,
+   "target": 750,
+   "center": [
+    137,
+    0
+   ]
+  },
+  {
+   "key": "east/북동 포구",
+   "label": "북동 포구",
+   "area": 803,
+   "target": 800,
+   "center": [
+    115,
+    -95
+   ]
+  },
+  {
+   "key": "east/남동 포구",
+   "label": "남동 포구",
+   "area": 801,
+   "target": 800,
+   "center": [
+    115,
+    94
+   ]
+  },
+  {
+   "key": "east/중앙 길목 마을",
+   "label": "중앙 길목 마을",
+   "area": 853,
+   "target": 850,
+   "center": [
+    50,
+    0
+   ]
+  }
+ ],
+ "roads": [
+  {
+   "fromKey": "goryeo/나루",
+   "toKey": "goryeo/장단",
+   "cells": 39,
+   "bridgeCells": 2,
+   "mountainPassCells": 0,
+   "maps": [
+    "goryeo/나루",
+    "goryeo/장단"
+   ]
+  },
+  {
+   "fromKey": "goryeo/송악",
+   "toKey": "east/동문 마을",
+   "cells": 67,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "maps": [
+    "east/동문 마을",
+    "goryeo/송악"
+   ]
+  },
+  {
+   "fromKey": "goryeo/송악",
+   "toKey": "goryeo/닥목",
+   "cells": 47,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "maps": [
+    "goryeo/닥목",
+    "goryeo/송악"
+   ]
+  },
+  {
+   "fromKey": "goryeo/닥목",
+   "toKey": "goryeo/개경",
+   "cells": 46,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "maps": [
+    "goryeo/개경",
+    "goryeo/닥목"
+   ]
+  },
+  {
+   "fromKey": "goryeo/개경",
+   "toKey": "goryeo/나루",
+   "cells": 72,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "maps": [
+    "goryeo/개경",
+    "goryeo/나루"
+   ]
+  },
+  {
+   "fromKey": "goryeo/장단",
+   "toKey": "goryeo/송악",
+   "cells": 82,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "maps": [
+    "goryeo/송악",
+    "goryeo/장단"
+   ]
+  },
+  {
+   "fromKey": "goryeo/개경",
+   "toKey": "goryeo/송악",
+   "cells": 85,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "maps": [
+    "goryeo/개경",
+    "goryeo/닥목",
+    "goryeo/송악"
+   ]
+  },
+  {
+   "fromKey": "east/동문 마을",
+   "toKey": "east/중앙 길목 마을",
+   "cells": 141,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "maps": [
+    "east/동문 마을",
+    "east/북동 길",
+    "east/북쪽 내륙길",
+    "east/중앙 길목 마을"
+   ]
+  },
+  {
+   "fromKey": "east/동문 마을",
+   "toKey": "east/북동 포구",
+   "cells": 123,
+   "bridgeCells": 3,
+   "mountainPassCells": 0,
+   "maps": [
+    "east/동문 마을",
+    "east/북동 길",
+    "east/북동 포구"
+   ]
+  },
+  {
+   "fromKey": "east/동문 마을",
+   "toKey": "east/남동 포구",
+   "cells": 142,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "maps": [
+    "east/남동 길",
+    "east/남동 포구",
+    "east/동문 마을"
+   ]
+  },
+  {
+   "fromKey": "east/북동 포구",
+   "toKey": "east/중앙 길목 마을",
+   "cells": 134,
+   "bridgeCells": 1,
+   "mountainPassCells": 0,
+   "maps": [
+    "east/북동 길",
+    "east/북동 포구",
+    "east/북쪽 내륙길",
+    "east/중앙 길목 마을"
+   ]
+  },
+  {
+   "fromKey": "east/남동 포구",
+   "toKey": "east/중앙 길목 마을",
+   "cells": 163,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "maps": [
+    "east/남동 포구",
+    "east/남쪽 내륙길",
+    "east/중앙 길목 마을"
+   ]
+  }
+ ],
+ "roadCells": 2414
+}

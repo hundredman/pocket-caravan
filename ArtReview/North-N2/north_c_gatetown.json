@@ -1,0 +1,324 @@
+{
+ "map": "north_c_gatetown",
+ "name": "북문 마을",
+ "kind": "town",
+ "items": [
+  {
+   "name": "장터 광장",
+   "kind": "plaza",
+   "asset": null,
+   "w": 12,
+   "h": 7,
+   "id": "market:north_post",
+   "memo": "",
+   "x": -13,
+   "y": -149
+  },
+  {
+   "name": "촌장 집",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 3,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "h_turf",
+   "door": [
+    -6,
+    -150
+   ],
+   "laneLen": 4,
+   "x": -7,
+   "y": -152
+  },
+  {
+   "name": "여관",
+   "kind": "lot",
+   "asset": "longhouse",
+   "w": 4,
+   "h": 5,
+   "id": "",
+   "memo": "",
+   "art": "woodhouse",
+   "door": [
+    -3,
+    -136
+   ],
+   "laneLen": 3,
+   "x": -5,
+   "y": -141
+  },
+  {
+   "name": "천막 좌판 1",
+   "kind": "lot",
+   "asset": "tent",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "art": "Minigame:stall_fur",
+   "door": [
+    -10,
+    -150
+   ],
+   "laneLen": 8,
+   "x": -11,
+   "y": -153
+  },
+  {
+   "name": "천막 좌판 2",
+   "kind": "lot",
+   "asset": "tent",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "art": "Minigame:stall_fur",
+   "door": [
+    -8,
+    -138
+   ],
+   "laneLen": 10,
+   "x": -9,
+   "y": -141
+  },
+  {
+   "name": "이벤트 마당",
+   "kind": "yard",
+   "asset": null,
+   "w": 8,
+   "h": 5,
+   "id": "",
+   "memo": "",
+   "x": 2,
+   "y": -150
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 3,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "h_turf",
+   "door": [
+    -6,
+    -157
+   ],
+   "laneLen": 0,
+   "x": -7,
+   "y": -159
+  },
+  {
+   "name": "집 2",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "art": "h_shed",
+   "door": [
+    -10,
+    -158
+   ],
+   "laneLen": 0,
+   "x": -11,
+   "y": -161
+  },
+  {
+   "name": "집 3",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 3,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "h_turf",
+   "door": [
+    3,
+    -154
+   ],
+   "laneLen": 0,
+   "x": 2,
+   "y": -156
+  },
+  {
+   "name": "집 4",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 3,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "h_turf",
+   "door": [
+    -14,
+    -158
+   ],
+   "laneLen": 0,
+   "x": -15,
+   "y": -160
+  },
+  {
+   "name": "국경 표석",
+   "kind": "spot",
+   "asset": "runestone",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "runestone",
+   "x": -11,
+   "y": -141
+  },
+  {
+   "name": "게시판",
+   "kind": "spot",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "board:north_post",
+   "memo": "",
+   "x": -4,
+   "y": -151
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "asset": "well",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "well",
+   "x": -6,
+   "y": -162
+  },
+  {
+   "name": "횃불 1",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "lantern",
+   "x": 2,
+   "y": -144
+  },
+  {
+   "name": "횃불 2",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "lantern",
+   "x": 0,
+   "y": -154
+  },
+  {
+   "name": "북문 마을 촌장",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -6,
+   "y": -153
+  },
+  {
+   "name": "국경 표석 지기",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -9,
+   "y": -138
+  },
+  {
+   "name": "여관 주인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -2,
+   "y": -136
+  },
+  {
+   "name": "남쪽에서 온 향신료 상인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -8,
+   "y": -151
+  },
+  {
+   "name": "천막 상인 아이",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -7,
+   "y": -138
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 10,
+   "y": -151
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 10,
+   "y": -143
+  },
+  {
+   "name": "성장 자리 3",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 9,
+   "y": -160
+  },
+  {
+   "name": "성장 자리 4",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 2,
+   "y": -164
+  }
+ ],
+ "laneCells": 19
+}

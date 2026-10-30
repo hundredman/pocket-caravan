@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-27",
+  "cart": {
+    "kind": "ai_processed",
+    "reference": "Docs/Images/team-style-reference.png",
+    "geometry": "정면에 가까운 좌우 대칭·같은 차축의 두 바퀴·적재함에서 이어지는 두 손잡이",
+    "processing": "온전한 개체 균등 최근접/A5 후보17색/Aseprite 네이티브 외곽선"
+  },
+  "roof": {
+    "kind": "authored",
+    "reference": "AI/roof-reference.png",
+    "base": "ArtReview/Approved/C7-Buildings-v5/tile-house.png",
+    "processing": "AI는 기와 골·용마루·처마 구성 참고만, 최종64×48에서 지붕 색 픽셀만 별도 레이어 작성; 벽·실루엣 보존"
+  }
+}

@@ -1,0 +1,6677 @@
+{
+  "Naru": [
+    {
+      "x": 22,
+      "y": 12,
+      "key": "goryeo:house:4:3:0:0",
+      "name": "house_tile"
+    },
+    {
+      "x": 23,
+      "y": 12,
+      "key": "goryeo:house:4:3:1:0",
+      "name": "house_tile"
+    },
+    {
+      "x": 24,
+      "y": 12,
+      "key": "goryeo:house:4:3:2:0",
+      "name": "house_tile"
+    },
+    {
+      "x": 25,
+      "y": 12,
+      "key": "goryeo:house:4:3:3:0",
+      "name": "house_tile"
+    },
+    {
+      "x": 14,
+      "y": 12,
+      "key": "goryeo:thatch:4:3:0:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 15,
+      "y": 12,
+      "key": "goryeo:thatch:4:3:1:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 16,
+      "y": 12,
+      "key": "goryeo:thatch:4:3:2:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 17,
+      "y": 12,
+      "key": "goryeo:thatch:4:3:3:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 26,
+      "y": 12,
+      "key": "goryeo:house:4:3:0:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 27,
+      "y": 12,
+      "key": "goryeo:house:4:3:1:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 28,
+      "y": 12,
+      "key": "goryeo:house:4:3:2:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 29,
+      "y": 12,
+      "key": "goryeo:house:4:3:3:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 26,
+      "y": 21,
+      "key": "goryeo:thatch:4:3:0:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 27,
+      "y": 21,
+      "key": "goryeo:thatch:4:3:1:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 28,
+      "y": 21,
+      "key": "goryeo:thatch:4:3:2:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 29,
+      "y": 21,
+      "key": "goryeo:thatch:4:3:3:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 39,
+      "y": 14,
+      "key": "goryeo_manor:0:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 40,
+      "y": 14,
+      "key": "goryeo_manor:1:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 41,
+      "y": 14,
+      "key": "goryeo_manor:2:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 42,
+      "y": 14,
+      "key": "goryeo_manor:3:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 43,
+      "y": 14,
+      "key": "goryeo_manor:4:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 44,
+      "y": 14,
+      "key": "goryeo_manor:5:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 39,
+      "y": 15,
+      "key": "goryeo_manor:0:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 40,
+      "y": 15,
+      "key": "goryeo_manor:1:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 41,
+      "y": 15,
+      "key": "goryeo_manor:2:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 42,
+      "y": 15,
+      "key": "goryeo_manor:3:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 43,
+      "y": 15,
+      "key": "goryeo_manor:4:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 44,
+      "y": 15,
+      "key": "goryeo_manor:5:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 24,
+      "y": 4,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 25,
+      "y": 4,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 26,
+      "y": 4,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 27,
+      "y": 4,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 51,
+      "y": 11,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 52,
+      "y": 11,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 53,
+      "y": 11,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 51,
+      "y": 12,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 52,
+      "y": 12,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 53,
+      "y": 12,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 58,
+      "y": 25,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 59,
+      "y": 25,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 60,
+      "y": 25,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 61,
+      "y": 25,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 58,
+      "y": 26,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 59,
+      "y": 26,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 60,
+      "y": 26,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 61,
+      "y": 26,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 69,
+      "y": 38,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 70,
+      "y": 38,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 71,
+      "y": 38,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 72,
+      "y": 38,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 69,
+      "y": 39,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 70,
+      "y": 39,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 71,
+      "y": 39,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 72,
+      "y": 39,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 66,
+      "y": 38,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 67,
+      "y": 38,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 68,
+      "y": 38,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 66,
+      "y": 39,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 67,
+      "y": 39,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 68,
+      "y": 39,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 21,
+      "y": 8,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 22,
+      "y": 8,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 23,
+      "y": 8,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 21,
+      "y": 9,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 22,
+      "y": 9,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 23,
+      "y": 9,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 55,
+      "y": 24,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 56,
+      "y": 24,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 57,
+      "y": 24,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 55,
+      "y": 25,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 56,
+      "y": 25,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 57,
+      "y": 25,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 74,
+      "y": 23,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 75,
+      "y": 23,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 76,
+      "y": 23,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 74,
+      "y": 24,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 75,
+      "y": 24,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 76,
+      "y": 24,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 66,
+      "y": 42,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 67,
+      "y": 42,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 68,
+      "y": 42,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 69,
+      "y": 42,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 66,
+      "y": 43,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 67,
+      "y": 43,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 68,
+      "y": 43,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 69,
+      "y": 43,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 18,
+      "y": 45,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 19,
+      "y": 45,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 20,
+      "y": 45,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 21,
+      "y": 45,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 50,
+      "y": 2,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 51,
+      "y": 2,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 52,
+      "y": 2,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 50,
+      "y": 3,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 51,
+      "y": 3,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 52,
+      "y": 3,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 72,
+      "y": 2,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 73,
+      "y": 2,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 74,
+      "y": 2,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 72,
+      "y": 3,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 73,
+      "y": 3,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 74,
+      "y": 3,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 37,
+      "y": 45,
+      "key": "goryeo_woodland5:0:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 38,
+      "y": 45,
+      "key": "goryeo_woodland5:1:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 39,
+      "y": 45,
+      "key": "goryeo_woodland5:2:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 40,
+      "y": 45,
+      "key": "goryeo_woodland5:3:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 37,
+      "y": 46,
+      "key": "goryeo_woodland5:0:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 38,
+      "y": 46,
+      "key": "goryeo_woodland5:1:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 39,
+      "y": 46,
+      "key": "goryeo_woodland5:2:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 40,
+      "y": 46,
+      "key": "goryeo_woodland5:3:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 14,
+      "y": 39,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 15,
+      "y": 39,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 16,
+      "y": 39,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 17,
+      "y": 39,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 10,
+      "y": 4,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 11,
+      "y": 4,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 12,
+      "y": 4,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 10,
+      "y": 5,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 11,
+      "y": 5,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 12,
+      "y": 5,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 26,
+      "y": 8,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 27,
+      "y": 8,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 28,
+      "y": 8,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 26,
+      "y": 9,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 27,
+      "y": 9,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 28,
+      "y": 9,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 21,
+      "y": 41,
+      "key": "goryeo_woodland7:0:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 22,
+      "y": 41,
+      "key": "goryeo_woodland7:1:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 23,
+      "y": 41,
+      "key": "goryeo_woodland7:2:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 21,
+      "y": 42,
+      "key": "goryeo_woodland7:0:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 22,
+      "y": 42,
+      "key": "goryeo_woodland7:1:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 23,
+      "y": 42,
+      "key": "goryeo_woodland7:2:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 9,
+      "y": 13,
+      "key": "goryeo_woodland5:0:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 10,
+      "y": 13,
+      "key": "goryeo_woodland5:1:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 11,
+      "y": 13,
+      "key": "goryeo_woodland5:2:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 12,
+      "y": 13,
+      "key": "goryeo_woodland5:3:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 9,
+      "y": 14,
+      "key": "goryeo_woodland5:0:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 10,
+      "y": 14,
+      "key": "goryeo_woodland5:1:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 11,
+      "y": 14,
+      "key": "goryeo_woodland5:2:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 12,
+      "y": 14,
+      "key": "goryeo_woodland5:3:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 55,
+      "y": 38,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 56,
+      "y": 38,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 57,
+      "y": 38,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 58,
+      "y": 38,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 55,
+      "y": 39,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 56,
+      "y": 39,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 57,
+      "y": 39,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 58,
+      "y": 39,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 31,
+      "y": 45,
+      "key": "goryeo_woodland5:0:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 32,
+      "y": 45,
+      "key": "goryeo_woodland5:1:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 33,
+      "y": 45,
+      "key": "goryeo_woodland5:2:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 34,
+      "y": 45,
+      "key": "goryeo_woodland5:3:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 31,
+      "y": 46,
+      "key": "goryeo_woodland5:0:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 32,
+      "y": 46,
+      "key": "goryeo_woodland5:1:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 33,
+      "y": 46,
+      "key": "goryeo_woodland5:2:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 34,
+      "y": 46,
+      "key": "goryeo_woodland5:3:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 11,
+      "y": 9,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 12,
+      "y": 9,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 13,
+      "y": 9,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 14,
+      "y": 9,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 63,
+      "y": 23,
+      "key": "goryeo_woodland5:0:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 64,
+      "y": 23,
+      "key": "goryeo_woodland5:1:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 65,
+      "y": 23,
+      "key": "goryeo_woodland5:2:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 66,
+      "y": 23,
+      "key": "goryeo_woodland5:3:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 63,
+      "y": 24,
+      "key": "goryeo_woodland5:0:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 64,
+      "y": 24,
+      "key": "goryeo_woodland5:1:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 65,
+      "y": 24,
+      "key": "goryeo_woodland5:2:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 66,
+      "y": 24,
+      "key": "goryeo_woodland5:3:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 72,
+      "y": 46,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 73,
+      "y": 46,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 74,
+      "y": 46,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 75,
+      "y": 46,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 72,
+      "y": 47,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 73,
+      "y": 47,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 74,
+      "y": 47,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 75,
+      "y": 47,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 7,
+      "y": 8,
+      "key": "goryeo_woodland5:0:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "key": "goryeo_woodland5:1:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 9,
+      "y": 8,
+      "key": "goryeo_woodland5:2:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 10,
+      "y": 8,
+      "key": "goryeo_woodland5:3:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 7,
+      "y": 9,
+      "key": "goryeo_woodland5:0:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 8,
+      "y": 9,
+      "key": "goryeo_woodland5:1:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 9,
+      "y": 9,
+      "key": "goryeo_woodland5:2:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 10,
+      "y": 9,
+      "key": "goryeo_woodland5:3:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 74,
+      "y": 13,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 75,
+      "y": 13,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 76,
+      "y": 13,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 74,
+      "y": 14,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 75,
+      "y": 14,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 76,
+      "y": 14,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 15,
+      "y": 2,
+      "key": "goryeo_woodland7:0:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 16,
+      "y": 2,
+      "key": "goryeo_woodland7:1:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 17,
+      "y": 2,
+      "key": "goryeo_woodland7:2:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 15,
+      "y": 3,
+      "key": "goryeo_woodland7:0:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 16,
+      "y": 3,
+      "key": "goryeo_woodland7:1:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 17,
+      "y": 3,
+      "key": "goryeo_woodland7:2:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 67,
+      "y": 12,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 68,
+      "y": 12,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 69,
+      "y": 12,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 67,
+      "y": 13,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 68,
+      "y": 13,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 69,
+      "y": 13,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 56,
+      "y": 11,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 57,
+      "y": 11,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 58,
+      "y": 11,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 56,
+      "y": 12,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 57,
+      "y": 12,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 58,
+      "y": 12,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    }
+  ],
+  "Gaegyeong": [
+    {
+      "x": 31,
+      "y": 11,
+      "key": "goryeo_royal:0:0",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 32,
+      "y": 11,
+      "key": "goryeo_royal:1:0",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 33,
+      "y": 11,
+      "key": "goryeo_royal:2:0",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 34,
+      "y": 11,
+      "key": "goryeo_royal:3:0",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 35,
+      "y": 11,
+      "key": "goryeo_royal:4:0",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 36,
+      "y": 11,
+      "key": "goryeo_royal:5:0",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 37,
+      "y": 11,
+      "key": "goryeo_royal:6:0",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 38,
+      "y": 11,
+      "key": "goryeo_royal:7:0",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 39,
+      "y": 11,
+      "key": "goryeo_royal:8:0",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 40,
+      "y": 11,
+      "key": "goryeo_royal:9:0",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 31,
+      "y": 12,
+      "key": "goryeo_royal:0:1",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 32,
+      "y": 12,
+      "key": "goryeo_royal:1:1",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 33,
+      "y": 12,
+      "key": "goryeo_royal:2:1",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 34,
+      "y": 12,
+      "key": "goryeo_royal:3:1",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 35,
+      "y": 12,
+      "key": "goryeo_royal:4:1",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 36,
+      "y": 12,
+      "key": "goryeo_royal:5:1",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 37,
+      "y": 12,
+      "key": "goryeo_royal:6:1",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 38,
+      "y": 12,
+      "key": "goryeo_royal:7:1",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 39,
+      "y": 12,
+      "key": "goryeo_royal:8:1",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 40,
+      "y": 12,
+      "key": "goryeo_royal:9:1",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 31,
+      "y": 13,
+      "key": "goryeo_royal:0:2",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 32,
+      "y": 13,
+      "key": "goryeo_royal:1:2",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 33,
+      "y": 13,
+      "key": "goryeo_royal:2:2",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 34,
+      "y": 13,
+      "key": "goryeo_royal:3:2",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 35,
+      "y": 13,
+      "key": "goryeo_royal:4:2",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 36,
+      "y": 13,
+      "key": "goryeo_royal:5:2",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 37,
+      "y": 13,
+      "key": "goryeo_royal:6:2",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 38,
+      "y": 13,
+      "key": "goryeo_royal:7:2",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 39,
+      "y": 13,
+      "key": "goryeo_royal:8:2",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 40,
+      "y": 13,
+      "key": "goryeo_royal:9:2",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 31,
+      "y": 14,
+      "key": "goryeo_royal:0:3",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 32,
+      "y": 14,
+      "key": "goryeo_royal:1:3",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 33,
+      "y": 14,
+      "key": "goryeo_royal:2:3",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 34,
+      "y": 14,
+      "key": "goryeo_royal:3:3",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 35,
+      "y": 14,
+      "key": "goryeo_royal:4:3",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 36,
+      "y": 14,
+      "key": "goryeo_royal:5:3",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 37,
+      "y": 14,
+      "key": "goryeo_royal:6:3",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 38,
+      "y": 14,
+      "key": "goryeo_royal:7:3",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 39,
+      "y": 14,
+      "key": "goryeo_royal:8:3",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 40,
+      "y": 14,
+      "key": "goryeo_royal:9:3",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 31,
+      "y": 15,
+      "key": "goryeo_royal:0:4",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 32,
+      "y": 15,
+      "key": "goryeo_royal:1:4",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 33,
+      "y": 15,
+      "key": "goryeo_royal:2:4",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 34,
+      "y": 15,
+      "key": "goryeo_royal:3:4",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 35,
+      "y": 15,
+      "key": "goryeo_royal:4:4",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 36,
+      "y": 15,
+      "key": "goryeo_royal:5:4",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 37,
+      "y": 15,
+      "key": "goryeo_royal:6:4",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 38,
+      "y": 15,
+      "key": "goryeo_royal:7:4",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 39,
+      "y": 15,
+      "key": "goryeo_royal:8:4",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 40,
+      "y": 15,
+      "key": "goryeo_royal:9:4",
+      "name": "goryeo_royal"
+    },
+    {
+      "x": 23,
+      "y": 15,
+      "key": "goryeo_manor:0:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 24,
+      "y": 15,
+      "key": "goryeo_manor:1:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 25,
+      "y": 15,
+      "key": "goryeo_manor:2:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 26,
+      "y": 15,
+      "key": "goryeo_manor:3:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 27,
+      "y": 15,
+      "key": "goryeo_manor:4:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 28,
+      "y": 15,
+      "key": "goryeo_manor:5:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 23,
+      "y": 16,
+      "key": "goryeo_manor:0:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 24,
+      "y": 16,
+      "key": "goryeo_manor:1:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 25,
+      "y": 16,
+      "key": "goryeo_manor:2:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 26,
+      "y": 16,
+      "key": "goryeo_manor:3:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 27,
+      "y": 16,
+      "key": "goryeo_manor:4:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 28,
+      "y": 16,
+      "key": "goryeo_manor:5:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 44,
+      "y": 15,
+      "key": "goryeo_manor:0:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 45,
+      "y": 15,
+      "key": "goryeo_manor:1:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 46,
+      "y": 15,
+      "key": "goryeo_manor:2:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 47,
+      "y": 15,
+      "key": "goryeo_manor:3:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 48,
+      "y": 15,
+      "key": "goryeo_manor:4:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 49,
+      "y": 15,
+      "key": "goryeo_manor:5:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 44,
+      "y": 16,
+      "key": "goryeo_manor:0:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 45,
+      "y": 16,
+      "key": "goryeo_manor:1:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 46,
+      "y": 16,
+      "key": "goryeo_manor:2:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 47,
+      "y": 16,
+      "key": "goryeo_manor:3:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 48,
+      "y": 16,
+      "key": "goryeo_manor:4:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 49,
+      "y": 16,
+      "key": "goryeo_manor:5:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 24,
+      "y": 24,
+      "key": "goryeo_stall:0:0",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 25,
+      "y": 24,
+      "key": "goryeo_stall:1:0",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 26,
+      "y": 24,
+      "key": "goryeo_stall:2:0",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 27,
+      "y": 24,
+      "key": "goryeo_stall:3:0",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 28,
+      "y": 24,
+      "key": "goryeo_stall:4:0",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 29,
+      "y": 24,
+      "key": "goryeo_stall:5:0",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 24,
+      "y": 25,
+      "key": "goryeo_stall:0:1",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 25,
+      "y": 25,
+      "key": "goryeo_stall:1:1",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 26,
+      "y": 25,
+      "key": "goryeo_stall:2:1",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 27,
+      "y": 25,
+      "key": "goryeo_stall:3:1",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 28,
+      "y": 25,
+      "key": "goryeo_stall:4:1",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 29,
+      "y": 25,
+      "key": "goryeo_stall:5:1",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 43,
+      "y": 24,
+      "key": "goryeo_stall:0:0",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 44,
+      "y": 24,
+      "key": "goryeo_stall:1:0",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 45,
+      "y": 24,
+      "key": "goryeo_stall:2:0",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 46,
+      "y": 24,
+      "key": "goryeo_stall:3:0",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 47,
+      "y": 24,
+      "key": "goryeo_stall:4:0",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 48,
+      "y": 24,
+      "key": "goryeo_stall:5:0",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 43,
+      "y": 25,
+      "key": "goryeo_stall:0:1",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 44,
+      "y": 25,
+      "key": "goryeo_stall:1:1",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 45,
+      "y": 25,
+      "key": "goryeo_stall:2:1",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 46,
+      "y": 25,
+      "key": "goryeo_stall:3:1",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 47,
+      "y": 25,
+      "key": "goryeo_stall:4:1",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 48,
+      "y": 25,
+      "key": "goryeo_stall:5:1",
+      "name": "goryeo_stall"
+    },
+    {
+      "x": 25,
+      "y": 33,
+      "key": "goryeo_manor:0:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 26,
+      "y": 33,
+      "key": "goryeo_manor:1:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 27,
+      "y": 33,
+      "key": "goryeo_manor:2:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 28,
+      "y": 33,
+      "key": "goryeo_manor:3:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 29,
+      "y": 33,
+      "key": "goryeo_manor:4:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 30,
+      "y": 33,
+      "key": "goryeo_manor:5:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 25,
+      "y": 34,
+      "key": "goryeo_manor:0:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 26,
+      "y": 34,
+      "key": "goryeo_manor:1:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 27,
+      "y": 34,
+      "key": "goryeo_manor:2:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 28,
+      "y": 34,
+      "key": "goryeo_manor:3:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 29,
+      "y": 34,
+      "key": "goryeo_manor:4:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 30,
+      "y": 34,
+      "key": "goryeo_manor:5:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 43,
+      "y": 33,
+      "key": "goryeo_manor:0:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 44,
+      "y": 33,
+      "key": "goryeo_manor:1:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 45,
+      "y": 33,
+      "key": "goryeo_manor:2:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 46,
+      "y": 33,
+      "key": "goryeo_manor:3:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 47,
+      "y": 33,
+      "key": "goryeo_manor:4:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 48,
+      "y": 33,
+      "key": "goryeo_manor:5:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 43,
+      "y": 34,
+      "key": "goryeo_manor:0:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 44,
+      "y": 34,
+      "key": "goryeo_manor:1:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 45,
+      "y": 34,
+      "key": "goryeo_manor:2:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 46,
+      "y": 34,
+      "key": "goryeo_manor:3:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 47,
+      "y": 34,
+      "key": "goryeo_manor:4:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 48,
+      "y": 34,
+      "key": "goryeo_manor:5:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 23,
+      "y": 41,
+      "key": "goryeo_cottage:0:0",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 24,
+      "y": 41,
+      "key": "goryeo_cottage:1:0",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 25,
+      "y": 41,
+      "key": "goryeo_cottage:2:0",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 26,
+      "y": 41,
+      "key": "goryeo_cottage:3:0",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 27,
+      "y": 41,
+      "key": "goryeo_cottage:4:0",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 23,
+      "y": 42,
+      "key": "goryeo_cottage:0:1",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 24,
+      "y": 42,
+      "key": "goryeo_cottage:1:1",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 25,
+      "y": 42,
+      "key": "goryeo_cottage:2:1",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 26,
+      "y": 42,
+      "key": "goryeo_cottage:3:1",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 27,
+      "y": 42,
+      "key": "goryeo_cottage:4:1",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 44,
+      "y": 41,
+      "key": "goryeo_manor:0:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 45,
+      "y": 41,
+      "key": "goryeo_manor:1:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 46,
+      "y": 41,
+      "key": "goryeo_manor:2:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 47,
+      "y": 41,
+      "key": "goryeo_manor:3:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 48,
+      "y": 41,
+      "key": "goryeo_manor:4:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 49,
+      "y": 41,
+      "key": "goryeo_manor:5:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 44,
+      "y": 42,
+      "key": "goryeo_manor:0:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 45,
+      "y": 42,
+      "key": "goryeo_manor:1:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 46,
+      "y": 42,
+      "key": "goryeo_manor:2:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 47,
+      "y": 42,
+      "key": "goryeo_manor:3:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 48,
+      "y": 42,
+      "key": "goryeo_manor:4:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 49,
+      "y": 42,
+      "key": "goryeo_manor:5:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 25,
+      "y": 54,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 26,
+      "y": 54,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 27,
+      "y": 54,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 28,
+      "y": 54,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 25,
+      "y": 55,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 26,
+      "y": 55,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 27,
+      "y": 55,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 28,
+      "y": 55,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 64,
+      "y": 25,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 65,
+      "y": 25,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 66,
+      "y": 25,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 67,
+      "y": 25,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 64,
+      "y": 26,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 65,
+      "y": 26,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 66,
+      "y": 26,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 67,
+      "y": 26,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 13,
+      "y": 9,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 14,
+      "y": 9,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 15,
+      "y": 9,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 16,
+      "y": 9,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 8,
+      "y": 15,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 9,
+      "y": 15,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 10,
+      "y": 15,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 8,
+      "y": 16,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 9,
+      "y": 16,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 10,
+      "y": 16,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 61,
+      "y": 49,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 62,
+      "y": 49,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 63,
+      "y": 49,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 64,
+      "y": 49,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 57,
+      "y": 22,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 58,
+      "y": 22,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 59,
+      "y": 22,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 57,
+      "y": 23,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 58,
+      "y": 23,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 59,
+      "y": 23,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 17,
+      "y": 40,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 18,
+      "y": 40,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 19,
+      "y": 40,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 17,
+      "y": 41,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 18,
+      "y": 41,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 19,
+      "y": 41,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 6,
+      "y": 12,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 7,
+      "y": 12,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 8,
+      "y": 12,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 9,
+      "y": 12,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 26,
+      "y": 48,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 27,
+      "y": 48,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 28,
+      "y": 48,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 29,
+      "y": 48,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 26,
+      "y": 49,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 27,
+      "y": 49,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 28,
+      "y": 49,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 29,
+      "y": 49,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 4,
+      "y": 53,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 5,
+      "y": 53,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 6,
+      "y": 53,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 7,
+      "y": 53,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 4,
+      "y": 54,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 5,
+      "y": 54,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 6,
+      "y": 54,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 7,
+      "y": 54,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 54,
+      "y": 35,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 55,
+      "y": 35,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 56,
+      "y": 35,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 54,
+      "y": 36,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 55,
+      "y": 36,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 56,
+      "y": 36,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 18,
+      "y": 52,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 19,
+      "y": 52,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 20,
+      "y": 52,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 21,
+      "y": 52,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 18,
+      "y": 53,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 19,
+      "y": 53,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 20,
+      "y": 53,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 21,
+      "y": 53,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 14,
+      "y": 49,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 15,
+      "y": 49,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 16,
+      "y": 49,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 17,
+      "y": 49,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 14,
+      "y": 50,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 15,
+      "y": 50,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 16,
+      "y": 50,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 17,
+      "y": 50,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "key": "goryeo_woodland5:0:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "key": "goryeo_woodland5:1:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "key": "goryeo_woodland5:2:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "key": "goryeo_woodland5:3:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "key": "goryeo_woodland5:0:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "key": "goryeo_woodland5:1:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "key": "goryeo_woodland5:2:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "key": "goryeo_woodland5:3:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 20,
+      "y": 45,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 21,
+      "y": 45,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 22,
+      "y": 45,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 23,
+      "y": 45,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 20,
+      "y": 46,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 21,
+      "y": 46,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 22,
+      "y": 46,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 23,
+      "y": 46,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 30,
+      "y": 51,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 31,
+      "y": 51,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 32,
+      "y": 51,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 30,
+      "y": 52,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 31,
+      "y": 52,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 32,
+      "y": 52,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 15,
+      "y": 16,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 16,
+      "y": 16,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 17,
+      "y": 16,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 15,
+      "y": 17,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 16,
+      "y": 17,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 17,
+      "y": 17,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 2,
+      "y": 20,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 3,
+      "y": 20,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 4,
+      "y": 20,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 5,
+      "y": 20,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 6,
+      "y": 8,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 7,
+      "y": 8,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 6,
+      "y": 9,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 7,
+      "y": 9,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 8,
+      "y": 9,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 61,
+      "y": 39,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 62,
+      "y": 39,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 63,
+      "y": 39,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 64,
+      "y": 39,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 61,
+      "y": 40,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 62,
+      "y": 40,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 63,
+      "y": 40,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 64,
+      "y": 40,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 3,
+      "y": 49,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 4,
+      "y": 49,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 5,
+      "y": 49,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 6,
+      "y": 49,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 3,
+      "y": 50,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 4,
+      "y": 50,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 5,
+      "y": 50,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 6,
+      "y": 50,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    }
+  ],
+  "Dakmok": [
+    {
+      "x": 19,
+      "y": 19,
+      "key": "goryeo:thatch:4:3:0:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 20,
+      "y": 19,
+      "key": "goryeo:thatch:4:3:1:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 21,
+      "y": 19,
+      "key": "goryeo:thatch:4:3:2:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 22,
+      "y": 19,
+      "key": "goryeo:thatch:4:3:3:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 7,
+      "y": 29,
+      "key": "goryeo:house:4:3:0:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 8,
+      "y": 29,
+      "key": "goryeo:house:4:3:1:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 9,
+      "y": 29,
+      "key": "goryeo:house:4:3:2:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 10,
+      "y": 29,
+      "key": "goryeo:house:4:3:3:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 10,
+      "y": 32,
+      "key": "goryeo:thatch:4:3:0:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 11,
+      "y": 32,
+      "key": "goryeo:thatch:4:3:1:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 12,
+      "y": 32,
+      "key": "goryeo:thatch:4:3:2:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 13,
+      "y": 32,
+      "key": "goryeo:thatch:4:3:3:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 29,
+      "y": 21,
+      "key": "goryeo_manor:0:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 30,
+      "y": 21,
+      "key": "goryeo_manor:1:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 31,
+      "y": 21,
+      "key": "goryeo_manor:2:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 32,
+      "y": 21,
+      "key": "goryeo_manor:3:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 33,
+      "y": 21,
+      "key": "goryeo_manor:4:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 34,
+      "y": 21,
+      "key": "goryeo_manor:5:0",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 29,
+      "y": 22,
+      "key": "goryeo_manor:0:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 30,
+      "y": 22,
+      "key": "goryeo_manor:1:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 31,
+      "y": 22,
+      "key": "goryeo_manor:2:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 32,
+      "y": 22,
+      "key": "goryeo_manor:3:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 33,
+      "y": 22,
+      "key": "goryeo_manor:4:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 34,
+      "y": 22,
+      "key": "goryeo_manor:5:1",
+      "name": "goryeo_manor"
+    },
+    {
+      "x": 28,
+      "y": 42,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 29,
+      "y": 42,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 30,
+      "y": 42,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 28,
+      "y": 43,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 29,
+      "y": 43,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 30,
+      "y": 43,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 21,
+      "y": 44,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 22,
+      "y": 44,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 23,
+      "y": 44,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 24,
+      "y": 44,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 12,
+      "y": 50,
+      "key": "goryeo_woodland5:0:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 13,
+      "y": 50,
+      "key": "goryeo_woodland5:1:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 14,
+      "y": 50,
+      "key": "goryeo_woodland5:2:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 15,
+      "y": 50,
+      "key": "goryeo_woodland5:3:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 12,
+      "y": 51,
+      "key": "goryeo_woodland5:0:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 13,
+      "y": 51,
+      "key": "goryeo_woodland5:1:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 14,
+      "y": 51,
+      "key": "goryeo_woodland5:2:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 15,
+      "y": 51,
+      "key": "goryeo_woodland5:3:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 37,
+      "y": 41,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 38,
+      "y": 41,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 39,
+      "y": 41,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 40,
+      "y": 41,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 3,
+      "y": 45,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 4,
+      "y": 45,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 5,
+      "y": 45,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 6,
+      "y": 45,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 2,
+      "y": 11,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 3,
+      "y": 11,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 4,
+      "y": 11,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 2,
+      "y": 12,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 3,
+      "y": 12,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 4,
+      "y": 12,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 24,
+      "y": 11,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 25,
+      "y": 11,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 26,
+      "y": 11,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 24,
+      "y": 12,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 25,
+      "y": 12,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 26,
+      "y": 12,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 8,
+      "y": 10,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 9,
+      "y": 10,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 10,
+      "y": 10,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 11,
+      "y": 10,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 8,
+      "y": 11,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 9,
+      "y": 11,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 10,
+      "y": 11,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 11,
+      "y": 11,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 35,
+      "y": 27,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 36,
+      "y": 27,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 37,
+      "y": 27,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 38,
+      "y": 27,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 37,
+      "y": 52,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 38,
+      "y": 52,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 39,
+      "y": 52,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 37,
+      "y": 53,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 38,
+      "y": 53,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 39,
+      "y": 53,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 3,
+      "y": 53,
+      "key": "goryeo_woodland5:0:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 4,
+      "y": 53,
+      "key": "goryeo_woodland5:1:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 5,
+      "y": 53,
+      "key": "goryeo_woodland5:2:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 6,
+      "y": 53,
+      "key": "goryeo_woodland5:3:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 3,
+      "y": 54,
+      "key": "goryeo_woodland5:0:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 4,
+      "y": 54,
+      "key": "goryeo_woodland5:1:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 5,
+      "y": 54,
+      "key": "goryeo_woodland5:2:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 6,
+      "y": 54,
+      "key": "goryeo_woodland5:3:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 28,
+      "y": 12,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 29,
+      "y": 12,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 30,
+      "y": 12,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 31,
+      "y": 12,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 33,
+      "y": 16,
+      "key": "goryeo_woodland7:0:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 34,
+      "y": 16,
+      "key": "goryeo_woodland7:1:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 35,
+      "y": 16,
+      "key": "goryeo_woodland7:2:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 33,
+      "y": 17,
+      "key": "goryeo_woodland7:0:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 34,
+      "y": 17,
+      "key": "goryeo_woodland7:1:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 35,
+      "y": 17,
+      "key": "goryeo_woodland7:2:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 18,
+      "y": 12,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 19,
+      "y": 12,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 20,
+      "y": 12,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 18,
+      "y": 13,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 19,
+      "y": 13,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 20,
+      "y": 13,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 10,
+      "y": 40,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 11,
+      "y": 40,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 12,
+      "y": 40,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 10,
+      "y": 41,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 11,
+      "y": 41,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 12,
+      "y": 41,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 36,
+      "y": 30,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 37,
+      "y": 30,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 38,
+      "y": 30,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 39,
+      "y": 30,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 40,
+      "y": 46,
+      "key": "goryeo_woodland5:0:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 41,
+      "y": 46,
+      "key": "goryeo_woodland5:1:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 42,
+      "y": 46,
+      "key": "goryeo_woodland5:2:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 43,
+      "y": 46,
+      "key": "goryeo_woodland5:3:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 40,
+      "y": 47,
+      "key": "goryeo_woodland5:0:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 41,
+      "y": 47,
+      "key": "goryeo_woodland5:1:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 42,
+      "y": 47,
+      "key": "goryeo_woodland5:2:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 43,
+      "y": 47,
+      "key": "goryeo_woodland5:3:1",
+      "name": "goryeo_woodland5"
+    }
+  ],
+  "goryeo_songak": [
+    {
+      "x": 14,
+      "y": 17,
+      "key": "goryeo:thatch:4:3:0:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 15,
+      "y": 17,
+      "key": "goryeo:thatch:4:3:1:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 16,
+      "y": 17,
+      "key": "goryeo:thatch:4:3:2:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 17,
+      "y": 17,
+      "key": "goryeo:thatch:4:3:3:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 20,
+      "y": 14,
+      "key": "goryeo:house:4:3:0:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 21,
+      "y": 14,
+      "key": "goryeo:house:4:3:1:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 22,
+      "y": 14,
+      "key": "goryeo:house:4:3:2:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 23,
+      "y": 14,
+      "key": "goryeo:house:4:3:3:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 26,
+      "y": 15,
+      "key": "goryeo:thatch:4:3:0:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 27,
+      "y": 15,
+      "key": "goryeo:thatch:4:3:1:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 28,
+      "y": 15,
+      "key": "goryeo:thatch:4:3:2:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 29,
+      "y": 15,
+      "key": "goryeo:thatch:4:3:3:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 27,
+      "y": 23,
+      "key": "goryeo:house:4:3:0:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 28,
+      "y": 23,
+      "key": "goryeo:house:4:3:1:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 29,
+      "y": 23,
+      "key": "goryeo:house:4:3:2:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 30,
+      "y": 23,
+      "key": "goryeo:house:4:3:3:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 39,
+      "y": 18,
+      "key": "goryeo_pavilion:0:0",
+      "name": "goryeo_pavilion"
+    },
+    {
+      "x": 40,
+      "y": 18,
+      "key": "goryeo_pavilion:1:0",
+      "name": "goryeo_pavilion"
+    },
+    {
+      "x": 41,
+      "y": 18,
+      "key": "goryeo_pavilion:2:0",
+      "name": "goryeo_pavilion"
+    },
+    {
+      "x": 42,
+      "y": 18,
+      "key": "goryeo_pavilion:3:0",
+      "name": "goryeo_pavilion"
+    },
+    {
+      "x": 43,
+      "y": 18,
+      "key": "goryeo_pavilion:4:0",
+      "name": "goryeo_pavilion"
+    },
+    {
+      "x": 39,
+      "y": 19,
+      "key": "goryeo_pavilion:0:1",
+      "name": "goryeo_pavilion"
+    },
+    {
+      "x": 40,
+      "y": 19,
+      "key": "goryeo_pavilion:1:1",
+      "name": "goryeo_pavilion"
+    },
+    {
+      "x": 41,
+      "y": 19,
+      "key": "goryeo_pavilion:2:1",
+      "name": "goryeo_pavilion"
+    },
+    {
+      "x": 42,
+      "y": 19,
+      "key": "goryeo_pavilion:3:1",
+      "name": "goryeo_pavilion"
+    },
+    {
+      "x": 43,
+      "y": 19,
+      "key": "goryeo_pavilion:4:1",
+      "name": "goryeo_pavilion"
+    },
+    {
+      "x": 39,
+      "y": 20,
+      "key": "goryeo_pavilion:0:2",
+      "name": "goryeo_pavilion"
+    },
+    {
+      "x": 40,
+      "y": 20,
+      "key": "goryeo_pavilion:1:2",
+      "name": "goryeo_pavilion"
+    },
+    {
+      "x": 41,
+      "y": 20,
+      "key": "goryeo_pavilion:2:2",
+      "name": "goryeo_pavilion"
+    },
+    {
+      "x": 42,
+      "y": 20,
+      "key": "goryeo_pavilion:3:2",
+      "name": "goryeo_pavilion"
+    },
+    {
+      "x": 43,
+      "y": 20,
+      "key": "goryeo_pavilion:4:2",
+      "name": "goryeo_pavilion"
+    },
+    {
+      "x": 54,
+      "y": 10,
+      "key": "goryeo_woodland3:0:0",
+      "name": "goryeo_woodland3"
+    },
+    {
+      "x": 55,
+      "y": 10,
+      "key": "goryeo_woodland3:1:0",
+      "name": "goryeo_woodland3"
+    },
+    {
+      "x": 56,
+      "y": 10,
+      "key": "goryeo_woodland3:2:0",
+      "name": "goryeo_woodland3"
+    },
+    {
+      "x": 57,
+      "y": 10,
+      "key": "goryeo_woodland3:3:0",
+      "name": "goryeo_woodland3"
+    },
+    {
+      "x": 5,
+      "y": 17,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 6,
+      "y": 17,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 7,
+      "y": 17,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 5,
+      "y": 18,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 6,
+      "y": 18,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 7,
+      "y": 18,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 30,
+      "y": 6,
+      "key": "goryeo_woodland5:0:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 31,
+      "y": 6,
+      "key": "goryeo_woodland5:1:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 32,
+      "y": 6,
+      "key": "goryeo_woodland5:2:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 33,
+      "y": 6,
+      "key": "goryeo_woodland5:3:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 30,
+      "y": 7,
+      "key": "goryeo_woodland5:0:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 31,
+      "y": 7,
+      "key": "goryeo_woodland5:1:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 32,
+      "y": 7,
+      "key": "goryeo_woodland5:2:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 33,
+      "y": 7,
+      "key": "goryeo_woodland5:3:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 34,
+      "y": 35,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 35,
+      "y": 35,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 36,
+      "y": 35,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 34,
+      "y": 36,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 35,
+      "y": 36,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 36,
+      "y": 36,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 16,
+      "y": 12,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 17,
+      "y": 12,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 18,
+      "y": 12,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 16,
+      "y": 13,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 17,
+      "y": 13,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 18,
+      "y": 13,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 31,
+      "y": 47,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 32,
+      "y": 47,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 33,
+      "y": 47,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 31,
+      "y": 48,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 32,
+      "y": 48,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 33,
+      "y": 48,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 47,
+      "y": 36,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 48,
+      "y": 36,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 49,
+      "y": 36,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 47,
+      "y": 37,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 48,
+      "y": 37,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 49,
+      "y": 37,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 54,
+      "y": 14,
+      "key": "goryeo_woodland1:0:0",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 55,
+      "y": 14,
+      "key": "goryeo_woodland1:1:0",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 56,
+      "y": 14,
+      "key": "goryeo_woodland1:2:0",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 54,
+      "y": 15,
+      "key": "goryeo_woodland1:0:1",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 55,
+      "y": 15,
+      "key": "goryeo_woodland1:1:1",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 56,
+      "y": 15,
+      "key": "goryeo_woodland1:2:1",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 27,
+      "y": 48,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 28,
+      "y": 48,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 29,
+      "y": 48,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 30,
+      "y": 48,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 32,
+      "y": 43,
+      "key": "goryeo_woodland1:0:0",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 33,
+      "y": 43,
+      "key": "goryeo_woodland1:1:0",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 34,
+      "y": 43,
+      "key": "goryeo_woodland1:2:0",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 32,
+      "y": 44,
+      "key": "goryeo_woodland1:0:1",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 33,
+      "y": 44,
+      "key": "goryeo_woodland1:1:1",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 34,
+      "y": 44,
+      "key": "goryeo_woodland1:2:1",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 36,
+      "y": 48,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 37,
+      "y": 48,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 38,
+      "y": 48,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 36,
+      "y": 49,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 37,
+      "y": 49,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 38,
+      "y": 49,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 22,
+      "y": 32,
+      "key": "goryeo_woodland3:0:0",
+      "name": "goryeo_woodland3"
+    },
+    {
+      "x": 23,
+      "y": 32,
+      "key": "goryeo_woodland3:1:0",
+      "name": "goryeo_woodland3"
+    },
+    {
+      "x": 24,
+      "y": 32,
+      "key": "goryeo_woodland3:2:0",
+      "name": "goryeo_woodland3"
+    },
+    {
+      "x": 25,
+      "y": 32,
+      "key": "goryeo_woodland3:3:0",
+      "name": "goryeo_woodland3"
+    },
+    {
+      "x": 40,
+      "y": 36,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 41,
+      "y": 36,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 42,
+      "y": 36,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 43,
+      "y": 36,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 54,
+      "y": 40,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 55,
+      "y": 40,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 56,
+      "y": 40,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 54,
+      "y": 41,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 55,
+      "y": 41,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 56,
+      "y": 41,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 37,
+      "y": 52,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 38,
+      "y": 52,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 39,
+      "y": 52,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 40,
+      "y": 52,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 21,
+      "y": 43,
+      "key": "goryeo_woodland1:0:0",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 22,
+      "y": 43,
+      "key": "goryeo_woodland1:1:0",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 23,
+      "y": 43,
+      "key": "goryeo_woodland1:2:0",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 21,
+      "y": 44,
+      "key": "goryeo_woodland1:0:1",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 22,
+      "y": 44,
+      "key": "goryeo_woodland1:1:1",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 23,
+      "y": 44,
+      "key": "goryeo_woodland1:2:1",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 26,
+      "y": 31,
+      "key": "goryeo_woodland3:0:0",
+      "name": "goryeo_woodland3"
+    },
+    {
+      "x": 27,
+      "y": 31,
+      "key": "goryeo_woodland3:1:0",
+      "name": "goryeo_woodland3"
+    },
+    {
+      "x": 28,
+      "y": 31,
+      "key": "goryeo_woodland3:2:0",
+      "name": "goryeo_woodland3"
+    },
+    {
+      "x": 29,
+      "y": 31,
+      "key": "goryeo_woodland3:3:0",
+      "name": "goryeo_woodland3"
+    },
+    {
+      "x": 44,
+      "y": 35,
+      "key": "goryeo_woodland1:0:0",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 45,
+      "y": 35,
+      "key": "goryeo_woodland1:1:0",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 46,
+      "y": 35,
+      "key": "goryeo_woodland1:2:0",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 44,
+      "y": 36,
+      "key": "goryeo_woodland1:0:1",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 45,
+      "y": 36,
+      "key": "goryeo_woodland1:1:1",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 46,
+      "y": 36,
+      "key": "goryeo_woodland1:2:1",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 4,
+      "y": 28,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 5,
+      "y": 28,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 6,
+      "y": 28,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 7,
+      "y": 28,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 49,
+      "y": 10,
+      "key": "goryeo_woodland1:0:0",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 50,
+      "y": 10,
+      "key": "goryeo_woodland1:1:0",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 51,
+      "y": 10,
+      "key": "goryeo_woodland1:2:0",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 49,
+      "y": 11,
+      "key": "goryeo_woodland1:0:1",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 50,
+      "y": 11,
+      "key": "goryeo_woodland1:1:1",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 51,
+      "y": 11,
+      "key": "goryeo_woodland1:2:1",
+      "name": "goryeo_woodland1"
+    },
+    {
+      "x": 49,
+      "y": 17,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 50,
+      "y": 17,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 51,
+      "y": 17,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 49,
+      "y": 18,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 50,
+      "y": 18,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 51,
+      "y": 18,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 40,
+      "y": 39,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 41,
+      "y": 39,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 42,
+      "y": 39,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 43,
+      "y": 39,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    }
+  ],
+  "goryeo_jangdan": [
+    {
+      "x": 28,
+      "y": 17,
+      "key": "goryeo:thatch:4:3:0:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 29,
+      "y": 17,
+      "key": "goryeo:thatch:4:3:1:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 30,
+      "y": 17,
+      "key": "goryeo:thatch:4:3:2:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 31,
+      "y": 17,
+      "key": "goryeo:thatch:4:3:3:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 39,
+      "y": 17,
+      "key": "goryeo:house:4:3:0:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 40,
+      "y": 17,
+      "key": "goryeo:house:4:3:1:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 41,
+      "y": 17,
+      "key": "goryeo:house:4:3:2:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 42,
+      "y": 17,
+      "key": "goryeo:house:4:3:3:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 43,
+      "y": 18,
+      "key": "goryeo:thatch:4:3:0:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 44,
+      "y": 18,
+      "key": "goryeo:thatch:4:3:1:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 45,
+      "y": 18,
+      "key": "goryeo:thatch:4:3:2:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 46,
+      "y": 18,
+      "key": "goryeo:thatch:4:3:3:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 40,
+      "y": 24,
+      "key": "goryeo:house:4:3:0:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 41,
+      "y": 24,
+      "key": "goryeo:house:4:3:1:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 42,
+      "y": 24,
+      "key": "goryeo:house:4:3:2:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 43,
+      "y": 24,
+      "key": "goryeo:house:4:3:3:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 44,
+      "y": 21,
+      "key": "goryeo_cottage:0:0",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 45,
+      "y": 21,
+      "key": "goryeo_cottage:1:0",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 46,
+      "y": 21,
+      "key": "goryeo_cottage:2:0",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 47,
+      "y": 21,
+      "key": "goryeo_cottage:3:0",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 48,
+      "y": 21,
+      "key": "goryeo_cottage:4:0",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 44,
+      "y": 22,
+      "key": "goryeo_cottage:0:1",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 45,
+      "y": 22,
+      "key": "goryeo_cottage:1:1",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 46,
+      "y": 22,
+      "key": "goryeo_cottage:2:1",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 47,
+      "y": 22,
+      "key": "goryeo_cottage:3:1",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 48,
+      "y": 22,
+      "key": "goryeo_cottage:4:1",
+      "name": "goryeo_cottage"
+    },
+    {
+      "x": 74,
+      "y": 31,
+      "key": "goryeo_woodland7:0:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 75,
+      "y": 31,
+      "key": "goryeo_woodland7:1:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 76,
+      "y": 31,
+      "key": "goryeo_woodland7:2:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 74,
+      "y": 32,
+      "key": "goryeo_woodland7:0:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 75,
+      "y": 32,
+      "key": "goryeo_woodland7:1:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 76,
+      "y": 32,
+      "key": "goryeo_woodland7:2:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 2,
+      "y": 42,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 3,
+      "y": 42,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 4,
+      "y": 42,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 2,
+      "y": 43,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 3,
+      "y": 43,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 4,
+      "y": 43,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 2,
+      "y": 25,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 3,
+      "y": 25,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 4,
+      "y": 25,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 5,
+      "y": 25,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 2,
+      "y": 26,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 3,
+      "y": 26,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 4,
+      "y": 26,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 5,
+      "y": 26,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 61,
+      "y": 24,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 62,
+      "y": 24,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 63,
+      "y": 24,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 61,
+      "y": 25,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 62,
+      "y": 25,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 63,
+      "y": 25,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 32,
+      "y": 39,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 33,
+      "y": 39,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 34,
+      "y": 39,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 35,
+      "y": 39,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 39,
+      "y": 35,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 40,
+      "y": 35,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 41,
+      "y": 35,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 42,
+      "y": 35,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 19,
+      "y": 49,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 20,
+      "y": 49,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 21,
+      "y": 49,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 22,
+      "y": 49,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 41,
+      "y": 3,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 42,
+      "y": 3,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 43,
+      "y": 3,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 44,
+      "y": 3,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 9,
+      "y": 5,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 10,
+      "y": 5,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 9,
+      "y": 6,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 10,
+      "y": 6,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 11,
+      "y": 48,
+      "key": "goryeo_woodland7:0:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 12,
+      "y": 48,
+      "key": "goryeo_woodland7:1:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 13,
+      "y": 48,
+      "key": "goryeo_woodland7:2:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 11,
+      "y": 49,
+      "key": "goryeo_woodland7:0:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 12,
+      "y": 49,
+      "key": "goryeo_woodland7:1:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 13,
+      "y": 49,
+      "key": "goryeo_woodland7:2:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 45,
+      "y": 33,
+      "key": "goryeo_woodland7:0:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 46,
+      "y": 33,
+      "key": "goryeo_woodland7:1:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 47,
+      "y": 33,
+      "key": "goryeo_woodland7:2:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 45,
+      "y": 34,
+      "key": "goryeo_woodland7:0:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 46,
+      "y": 34,
+      "key": "goryeo_woodland7:1:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 47,
+      "y": 34,
+      "key": "goryeo_woodland7:2:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 45,
+      "y": 41,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 46,
+      "y": 41,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 47,
+      "y": 41,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 48,
+      "y": 41,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 59,
+      "y": 38,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 60,
+      "y": 38,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 61,
+      "y": 38,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 59,
+      "y": 39,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 60,
+      "y": 39,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 61,
+      "y": 39,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 56,
+      "y": 35,
+      "key": "goryeo_woodland7:0:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 57,
+      "y": 35,
+      "key": "goryeo_woodland7:1:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 58,
+      "y": 35,
+      "key": "goryeo_woodland7:2:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 56,
+      "y": 36,
+      "key": "goryeo_woodland7:0:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 57,
+      "y": 36,
+      "key": "goryeo_woodland7:1:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 58,
+      "y": 36,
+      "key": "goryeo_woodland7:2:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 15,
+      "y": 3,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 16,
+      "y": 3,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 17,
+      "y": 3,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 15,
+      "y": 4,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 16,
+      "y": 4,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 17,
+      "y": 4,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 55,
+      "y": 21,
+      "key": "goryeo_woodland5:0:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 56,
+      "y": 21,
+      "key": "goryeo_woodland5:1:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 57,
+      "y": 21,
+      "key": "goryeo_woodland5:2:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 58,
+      "y": 21,
+      "key": "goryeo_woodland5:3:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 55,
+      "y": 22,
+      "key": "goryeo_woodland5:0:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 56,
+      "y": 22,
+      "key": "goryeo_woodland5:1:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 57,
+      "y": 22,
+      "key": "goryeo_woodland5:2:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 58,
+      "y": 22,
+      "key": "goryeo_woodland5:3:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 46,
+      "y": 45,
+      "key": "goryeo_woodland5:0:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 47,
+      "y": 45,
+      "key": "goryeo_woodland5:1:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 48,
+      "y": 45,
+      "key": "goryeo_woodland5:2:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 49,
+      "y": 45,
+      "key": "goryeo_woodland5:3:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 46,
+      "y": 46,
+      "key": "goryeo_woodland5:0:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 47,
+      "y": 46,
+      "key": "goryeo_woodland5:1:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 48,
+      "y": 46,
+      "key": "goryeo_woodland5:2:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 49,
+      "y": 46,
+      "key": "goryeo_woodland5:3:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 30,
+      "y": 13,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 31,
+      "y": 13,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 32,
+      "y": 13,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 30,
+      "y": 14,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 31,
+      "y": 14,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 32,
+      "y": 14,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 60,
+      "y": 8,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 61,
+      "y": 8,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 62,
+      "y": 8,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 60,
+      "y": 9,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 61,
+      "y": 9,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 62,
+      "y": 9,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 66,
+      "y": 29,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 67,
+      "y": 29,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 68,
+      "y": 29,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 66,
+      "y": 30,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 67,
+      "y": 30,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 68,
+      "y": 30,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 28,
+      "y": 46,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 29,
+      "y": 46,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 30,
+      "y": 46,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 31,
+      "y": 46,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 38,
+      "y": 3,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 39,
+      "y": 3,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 40,
+      "y": 3,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 38,
+      "y": 4,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 39,
+      "y": 4,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 40,
+      "y": 4,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 71,
+      "y": 35,
+      "key": "goryeo_woodland7:0:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 72,
+      "y": 35,
+      "key": "goryeo_woodland7:1:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 73,
+      "y": 35,
+      "key": "goryeo_woodland7:2:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 71,
+      "y": 36,
+      "key": "goryeo_woodland7:0:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 72,
+      "y": 36,
+      "key": "goryeo_woodland7:1:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 73,
+      "y": 36,
+      "key": "goryeo_woodland7:2:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 35,
+      "y": 49,
+      "key": "goryeo_woodland5:0:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 36,
+      "y": 49,
+      "key": "goryeo_woodland5:1:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 37,
+      "y": 49,
+      "key": "goryeo_woodland5:2:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 38,
+      "y": 49,
+      "key": "goryeo_woodland5:3:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 35,
+      "y": 50,
+      "key": "goryeo_woodland5:0:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 36,
+      "y": 50,
+      "key": "goryeo_woodland5:1:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 37,
+      "y": 50,
+      "key": "goryeo_woodland5:2:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 38,
+      "y": 50,
+      "key": "goryeo_woodland5:3:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 18,
+      "y": 41,
+      "key": "goryeo_woodland7:0:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 19,
+      "y": 41,
+      "key": "goryeo_woodland7:1:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 20,
+      "y": 41,
+      "key": "goryeo_woodland7:2:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 18,
+      "y": 42,
+      "key": "goryeo_woodland7:0:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 19,
+      "y": 42,
+      "key": "goryeo_woodland7:1:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 20,
+      "y": 42,
+      "key": "goryeo_woodland7:2:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 27,
+      "y": 33,
+      "key": "goryeo_woodland7:0:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 28,
+      "y": 33,
+      "key": "goryeo_woodland7:1:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 29,
+      "y": 33,
+      "key": "goryeo_woodland7:2:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 27,
+      "y": 34,
+      "key": "goryeo_woodland7:0:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 28,
+      "y": 34,
+      "key": "goryeo_woodland7:1:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 29,
+      "y": 34,
+      "key": "goryeo_woodland7:2:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 5,
+      "y": 42,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 6,
+      "y": 42,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 7,
+      "y": 42,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 5,
+      "y": 43,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 6,
+      "y": 43,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 7,
+      "y": 43,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 70,
+      "y": 18,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 71,
+      "y": 18,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 72,
+      "y": 18,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 70,
+      "y": 19,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 71,
+      "y": 19,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 72,
+      "y": 19,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 57,
+      "y": 32,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 58,
+      "y": 32,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 59,
+      "y": 32,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 60,
+      "y": 32,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 17,
+      "y": 25,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 18,
+      "y": 25,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 19,
+      "y": 25,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 17,
+      "y": 26,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 18,
+      "y": 26,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 19,
+      "y": 26,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 14,
+      "y": 49,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 15,
+      "y": 49,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 16,
+      "y": 49,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 17,
+      "y": 49,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 29,
+      "y": 41,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 30,
+      "y": 41,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 31,
+      "y": 41,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 29,
+      "y": 42,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 30,
+      "y": 42,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 31,
+      "y": 42,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 73,
+      "y": 23,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 74,
+      "y": 23,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 75,
+      "y": 23,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 76,
+      "y": 23,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 19,
+      "y": 11,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 20,
+      "y": 11,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 21,
+      "y": 11,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 22,
+      "y": 11,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 19,
+      "y": 12,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 20,
+      "y": 12,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 21,
+      "y": 12,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 22,
+      "y": 12,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 8,
+      "y": 41,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 9,
+      "y": 41,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 10,
+      "y": 41,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 8,
+      "y": 42,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 9,
+      "y": 42,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 10,
+      "y": 42,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 3,
+      "y": 13,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 4,
+      "y": 13,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 5,
+      "y": 13,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 6,
+      "y": 13,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 3,
+      "y": 14,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 4,
+      "y": 14,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 5,
+      "y": 14,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 6,
+      "y": 14,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 70,
+      "y": 40,
+      "key": "goryeo_woodland7:0:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 71,
+      "y": 40,
+      "key": "goryeo_woodland7:1:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 72,
+      "y": 40,
+      "key": "goryeo_woodland7:2:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 70,
+      "y": 41,
+      "key": "goryeo_woodland7:0:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 71,
+      "y": 41,
+      "key": "goryeo_woodland7:1:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 72,
+      "y": 41,
+      "key": "goryeo_woodland7:2:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 32,
+      "y": 45,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 33,
+      "y": 45,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 34,
+      "y": 45,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 35,
+      "y": 45,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 3,
+      "y": 46,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 4,
+      "y": 46,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 5,
+      "y": 46,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 3,
+      "y": 47,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 4,
+      "y": 47,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 5,
+      "y": 47,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 2,
+      "y": 8,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 3,
+      "y": 8,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 4,
+      "y": 8,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 5,
+      "y": 8,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 65,
+      "y": 40,
+      "key": "goryeo_woodland7:0:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 66,
+      "y": 40,
+      "key": "goryeo_woodland7:1:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 67,
+      "y": 40,
+      "key": "goryeo_woodland7:2:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 65,
+      "y": 41,
+      "key": "goryeo_woodland7:0:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 66,
+      "y": 41,
+      "key": "goryeo_woodland7:1:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 67,
+      "y": 41,
+      "key": "goryeo_woodland7:2:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 27,
+      "y": 37,
+      "key": "goryeo_woodland2:0:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 28,
+      "y": 37,
+      "key": "goryeo_woodland2:1:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 29,
+      "y": 37,
+      "key": "goryeo_woodland2:2:0",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 27,
+      "y": 38,
+      "key": "goryeo_woodland2:0:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 28,
+      "y": 38,
+      "key": "goryeo_woodland2:1:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 29,
+      "y": 38,
+      "key": "goryeo_woodland2:2:1",
+      "name": "goryeo_woodland2"
+    },
+    {
+      "x": 9,
+      "y": 18,
+      "key": "goryeo_woodland4:0:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 10,
+      "y": 18,
+      "key": "goryeo_woodland4:1:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 11,
+      "y": 18,
+      "key": "goryeo_woodland4:2:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 12,
+      "y": 18,
+      "key": "goryeo_woodland4:3:0",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 9,
+      "y": 19,
+      "key": "goryeo_woodland4:0:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 10,
+      "y": 19,
+      "key": "goryeo_woodland4:1:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 11,
+      "y": 19,
+      "key": "goryeo_woodland4:2:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 12,
+      "y": 19,
+      "key": "goryeo_woodland4:3:1",
+      "name": "goryeo_woodland4"
+    },
+    {
+      "x": 40,
+      "y": 31,
+      "key": "goryeo_woodland0:0:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 41,
+      "y": 31,
+      "key": "goryeo_woodland0:1:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 42,
+      "y": 31,
+      "key": "goryeo_woodland0:2:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 43,
+      "y": 31,
+      "key": "goryeo_woodland0:3:0",
+      "name": "goryeo_woodland0"
+    },
+    {
+      "x": 7,
+      "y": 13,
+      "key": "goryeo_woodland6:0:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 8,
+      "y": 13,
+      "key": "goryeo_woodland6:1:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 9,
+      "y": 13,
+      "key": "goryeo_woodland6:2:0",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 7,
+      "y": 14,
+      "key": "goryeo_woodland6:0:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 8,
+      "y": 14,
+      "key": "goryeo_woodland6:1:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 9,
+      "y": 14,
+      "key": "goryeo_woodland6:2:1",
+      "name": "goryeo_woodland6"
+    },
+    {
+      "x": 58,
+      "y": 14,
+      "key": "goryeo_woodland5:0:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 59,
+      "y": 14,
+      "key": "goryeo_woodland5:1:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 60,
+      "y": 14,
+      "key": "goryeo_woodland5:2:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 61,
+      "y": 14,
+      "key": "goryeo_woodland5:3:0",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 58,
+      "y": 15,
+      "key": "goryeo_woodland5:0:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 59,
+      "y": 15,
+      "key": "goryeo_woodland5:1:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 60,
+      "y": 15,
+      "key": "goryeo_woodland5:2:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 61,
+      "y": 15,
+      "key": "goryeo_woodland5:3:1",
+      "name": "goryeo_woodland5"
+    },
+    {
+      "x": 23,
+      "y": 35,
+      "key": "goryeo_woodland7:0:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 24,
+      "y": 35,
+      "key": "goryeo_woodland7:1:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 25,
+      "y": 35,
+      "key": "goryeo_woodland7:2:0",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 23,
+      "y": 36,
+      "key": "goryeo_woodland7:0:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 24,
+      "y": 36,
+      "key": "goryeo_woodland7:1:1",
+      "name": "goryeo_woodland7"
+    },
+    {
+      "x": 25,
+      "y": 36,
+      "key": "goryeo_woodland7:2:1",
+      "name": "goryeo_woodland7"
+    }
+  ],
+  "transit_pass": [
+    {
+      "x": 8,
+      "y": 18,
+      "key": "house:0:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 9,
+      "y": 18,
+      "key": "house:1:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 10,
+      "y": 18,
+      "key": "house:2:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 11,
+      "y": 18,
+      "key": "house:3:0",
+      "name": "house_thatch"
+    }
+  ],
+  "transit_woodtown": [
+    {
+      "x": 10,
+      "y": 5,
+      "key": "house:0:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 11,
+      "y": 5,
+      "key": "house:1:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 12,
+      "y": 5,
+      "key": "house:2:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 13,
+      "y": 5,
+      "key": "house:3:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 23,
+      "y": 4,
+      "key": "house:19:0",
+      "name": "store"
+    },
+    {
+      "x": 24,
+      "y": 4,
+      "key": "house:20:0",
+      "name": "store"
+    },
+    {
+      "x": 25,
+      "y": 4,
+      "key": "house:21:0",
+      "name": "store"
+    },
+    {
+      "x": 26,
+      "y": 4,
+      "key": "house:22:0",
+      "name": "store"
+    },
+    {
+      "x": 36,
+      "y": 5,
+      "key": "house:4:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 37,
+      "y": 5,
+      "key": "house:5:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 38,
+      "y": 5,
+      "key": "house:6:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 39,
+      "y": 5,
+      "key": "house:7:0",
+      "name": "house_plain"
+    }
+  ],
+  "transit_wetroad": [],
+  "transit_ferry": [
+    {
+      "x": 8,
+      "y": 6,
+      "key": "house:0:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 9,
+      "y": 6,
+      "key": "house:1:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 10,
+      "y": 6,
+      "key": "house:2:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 11,
+      "y": 6,
+      "key": "house:3:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 22,
+      "y": 4,
+      "key": "house:19:0",
+      "name": "store"
+    },
+    {
+      "x": 23,
+      "y": 4,
+      "key": "house:20:0",
+      "name": "store"
+    },
+    {
+      "x": 24,
+      "y": 4,
+      "key": "house:21:0",
+      "name": "store"
+    },
+    {
+      "x": 25,
+      "y": 4,
+      "key": "house:22:0",
+      "name": "store"
+    },
+    {
+      "x": 36,
+      "y": 7,
+      "key": "house:4:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 37,
+      "y": 7,
+      "key": "house:5:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 38,
+      "y": 7,
+      "key": "house:6:0",
+      "name": "house_plain"
+    },
+    {
+      "x": 39,
+      "y": 7,
+      "key": "house:7:0",
+      "name": "house_plain"
+    }
+  ],
+  "transit_central_approach": [
+    {
+      "x": 53,
+      "y": 5,
+      "key": "house:0:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 54,
+      "y": 5,
+      "key": "house:1:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 55,
+      "y": 5,
+      "key": "house:2:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 56,
+      "y": 5,
+      "key": "house:3:0",
+      "name": "house_thatch"
+    }
+  ],
+  "transit_crossroads": [
+    {
+      "x": 37,
+      "y": 12,
+      "key": "house:0:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 38,
+      "y": 12,
+      "key": "house:1:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 39,
+      "y": 12,
+      "key": "house:2:0",
+      "name": "house_thatch"
+    },
+    {
+      "x": 40,
+      "y": 12,
+      "key": "house:3:0",
+      "name": "house_thatch"
+    }
+  ]
+}

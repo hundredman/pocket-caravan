@@ -7,13 +7,15 @@ ROOT=Path(__file__).resolve().parents[2]
 
 class TransitContract(unittest.TestCase):
     def test_intermediate_journey_and_independent_towns(self):
+        # M4(2026-10-28): 중앙 동쪽 8맵(남동 포구·남쪽 내륙길 추가). 출구는 중앙 동쪽·고려 맵으로만
         region=json.loads((ROOT/'Assets/PocketCaravan/World/Regions/transit.json').read_text())
+        goryeo={e['mapId'] for e in json.loads((ROOT/'Assets/PocketCaravan/World/Regions/goryeo.json').read_text())['maps']}
         maps={e['mapId']:json.loads((ROOT/e['jsonPath']).read_text()) for e in region['maps']}
-        self.assertEqual(len(maps),6)
+        self.assertEqual(len(maps),8)
         for mid,data in maps.items():
             self.assertTrue(mid.startswith('transit_'))
             for o in data['objects']:
-                if o['kind']=='exit':self.assertIn(o['target'],set(maps)|{'goryeo_songak','goryeo_westcoast'})
+                if o['kind']=='exit' and not o['spawn'].startswith('link_'):self.assertIn(o['target'],set(maps)|goryeo)   # link_: 통합 브랜치의 다른 문명 연결(region_links.json)
         database=(ROOT/'Assets/PocketCaravan/Resources/GameDatabase.asset').read_text()
         towns={o['town'] for m in maps.values() for o in m['objects'] if o['kind']=='market'}
         self.assertEqual(towns,{'transit_woodtown','transit_ferry'})

@@ -1,0 +1,16 @@
+{
+  "tool": "built-in imagegen",
+  "mode": "one independent generation per whole prop; one review batch",
+  "referenceRoles": {
+    "Docs/Images/team-style-reference.png": "upper Venice/Arabia drawing style",
+    "ArtReview/Approved/C7-Shop-v1/shop.png": "approved timber/stone colors and pixel density",
+    "c6_cart_e1a728ea.png": "old cart orientation and 2x2 frame",
+    "c6_well_a3de50d0.png": "old well purpose and1x2 frame",
+    "lantern_1_2.png": "standing stone lantern structure and1x2 frame"
+  },
+  "pipeline": "whole object uniform nearest sampling in Aseprite; A5 candidate building/prop21colors; native exterior contour",
+  "sourceAlphaThreshold": 224,
+  "seasonOrFacilityFunctionAdded": false,
+  "productionApplied": false,
+  "allLegacyVariantsReplaced": false
+}

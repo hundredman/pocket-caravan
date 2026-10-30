@@ -1,0 +1,1360 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "trial_character": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "palette": [
+        "#2c1a12",
+        "#998065",
+        "#729362",
+        "#521d14",
+        "#141f2e",
+        "#090a0d",
+        "#3c362d",
+        "#ac9c89",
+        "#5d5d58",
+        "#d8c2a2",
+        "#503c2d",
+        "#813d21",
+        "#4a5662",
+        "#dbc6b9",
+        "#242c38",
+        "#2c3947",
+        "#b27a52",
+        "#0d1520",
+        "#7f625a",
+        "#6b6f73",
+        "#374352",
+        "#e48642",
+        "#835e3f",
+        "#51301e",
+        "#a06536",
+        "#7f8745",
+        "#cd914f",
+        "#394b28",
+        "#c1907b",
+        "#f6f2ec",
+        "#e8a958",
+        "#764e34",
+        "#623a23",
+        "#221a22",
+        "#ea9192",
+        "#f0eadc",
+        "#ae8d6d",
+        "#535532",
+        "#658555",
+        "#646d38",
+        "#c68542",
+        "#60483a",
+        "#ba6d36",
+        "#9c9286",
+        "#b18987",
+        "#f8c47f",
+        "#4d4645",
+        "#f0b869"
+      ],
+      "binaryAlpha": true
+    }
+  },
+  "assets": [
+    {
+      "id": "trial_naru_chief_d0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_d0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_d0",
+          "image": "ArtReview/C1/frames/naru_chief_d0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_naru_chief_d1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_d1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_d1",
+          "image": "ArtReview/C1/frames/naru_chief_d1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_naru_chief_d2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_d2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_d2",
+          "image": "ArtReview/C1/frames/naru_chief_d2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_naru_chief_d3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_d3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_d3",
+          "image": "ArtReview/C1/frames/naru_chief_d3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_naru_chief_l0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_l0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_l0",
+          "image": "ArtReview/C1/frames/naru_chief_l0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_naru_chief_l1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_l1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_l1",
+          "image": "ArtReview/C1/frames/naru_chief_l1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_naru_chief_l2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_l2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_l2",
+          "image": "ArtReview/C1/frames/naru_chief_l2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_naru_chief_l3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_l3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_l3",
+          "image": "ArtReview/C1/frames/naru_chief_l3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_naru_chief_r0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_r0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_r0",
+          "image": "ArtReview/C1/frames/naru_chief_r0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_naru_chief_r1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_r1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_r1",
+          "image": "ArtReview/C1/frames/naru_chief_r1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_naru_chief_r2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_r2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_r2",
+          "image": "ArtReview/C1/frames/naru_chief_r2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_naru_chief_r3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_r3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_r3",
+          "image": "ArtReview/C1/frames/naru_chief_r3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_naru_chief_u0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_u0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_u0",
+          "image": "ArtReview/C1/frames/naru_chief_u0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_naru_chief_u1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_u1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_u1",
+          "image": "ArtReview/C1/frames/naru_chief_u1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_naru_chief_u2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_u2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_u2",
+          "image": "ArtReview/C1/frames/naru_chief_u2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_naru_chief_u3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/naru_chief_u3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/naru_chief.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_naru_chief_u3",
+          "image": "ArtReview/C1/frames/naru_chief_u3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_d0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_d0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_d0",
+          "image": "ArtReview/C1/frames/trader_d0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_d1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_d1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_d1",
+          "image": "ArtReview/C1/frames/trader_d1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_d2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_d2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_d2",
+          "image": "ArtReview/C1/frames/trader_d2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_d3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_d3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_d3",
+          "image": "ArtReview/C1/frames/trader_d3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_l0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_l0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_l0",
+          "image": "ArtReview/C1/frames/trader_l0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_l1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_l1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_l1",
+          "image": "ArtReview/C1/frames/trader_l1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_l2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_l2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_l2",
+          "image": "ArtReview/C1/frames/trader_l2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_l3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_l3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_l3",
+          "image": "ArtReview/C1/frames/trader_l3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_r0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_r0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_r0",
+          "image": "ArtReview/C1/frames/trader_r0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_r1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_r1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_r1",
+          "image": "ArtReview/C1/frames/trader_r1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_r2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_r2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_r2",
+          "image": "ArtReview/C1/frames/trader_r2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_r3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_r3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_r3",
+          "image": "ArtReview/C1/frames/trader_r3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_u0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_u0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_u0",
+          "image": "ArtReview/C1/frames/trader_u0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_u1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_u1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_u1",
+          "image": "ArtReview/C1/frames/trader_u1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_u2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_u2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_u2",
+          "image": "ArtReview/C1/frames/trader_u2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_u3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/trader_u3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/trader.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_u3",
+          "image": "ArtReview/C1/frames/trader_u3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_d0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_d0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_d0",
+          "image": "ArtReview/C1/frames/woman_d0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_d1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_d1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_d1",
+          "image": "ArtReview/C1/frames/woman_d1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_d2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_d2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_d2",
+          "image": "ArtReview/C1/frames/woman_d2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_d3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_d3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_d3",
+          "image": "ArtReview/C1/frames/woman_d3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_l0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_l0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_l0",
+          "image": "ArtReview/C1/frames/woman_l0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_l1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_l1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_l1",
+          "image": "ArtReview/C1/frames/woman_l1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_l2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_l2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_l2",
+          "image": "ArtReview/C1/frames/woman_l2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_l3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_l3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_l3",
+          "image": "ArtReview/C1/frames/woman_l3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_r0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_r0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_r0",
+          "image": "ArtReview/C1/frames/woman_r0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_r1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_r1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_r1",
+          "image": "ArtReview/C1/frames/woman_r1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_r2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_r2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_r2",
+          "image": "ArtReview/C1/frames/woman_r2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_r3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_r3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_r3",
+          "image": "ArtReview/C1/frames/woman_r3.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_u0",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_u0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_u0",
+          "image": "ArtReview/C1/frames/woman_u0.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_u1",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_u1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_u1",
+          "image": "ArtReview/C1/frames/woman_u1.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_u2",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_u2.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_u2",
+          "image": "ArtReview/C1/frames/woman_u2.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_u3",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1/frames/woman_u3.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1/woman.aseprite"
+      },
+      "review": {
+        "status": "changes_requested"
+      },
+      "profile": "trial_character",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_u3",
+          "image": "ArtReview/C1/frames/woman_u3.png"
+        }
+      ]
+    }
+  ]
+}

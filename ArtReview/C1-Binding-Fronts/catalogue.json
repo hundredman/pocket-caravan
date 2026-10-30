@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "porter": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4e3727",
+        "#4f4246",
+        "#60483a",
+        "#775345",
+        "#896946",
+        "#ae7f55",
+        "#ae946b",
+        "#af6d55",
+        "#ccc3b1",
+        "#cf9977",
+        "#d0b989",
+        "#ddb989",
+        "#e3bf78",
+        "#e49390",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9"
+      ]
+    },
+    "merchant": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4e3727",
+        "#4f4246",
+        "#576b90",
+        "#5b4439",
+        "#60483a",
+        "#775345",
+        "#7c97b5",
+        "#af6d55",
+        "#ccc3b1",
+        "#cf9977",
+        "#ddb989",
+        "#e49390",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9"
+      ]
+    },
+    "merchant_silk": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4e3727",
+        "#4f4246",
+        "#576b90",
+        "#5b4439",
+        "#60483a",
+        "#775345",
+        "#7c97b5",
+        "#af6d55",
+        "#c2778f",
+        "#cf9977",
+        "#ddb989",
+        "#e3bf78",
+        "#e49390",
+        "#e699ae",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9"
+      ]
+    },
+    "scholar": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#2c2a38",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4e3727",
+        "#4f4246",
+        "#576b90",
+        "#5b4439",
+        "#60483a",
+        "#60607a",
+        "#775345",
+        "#7c97b5",
+        "#896946",
+        "#af6d55",
+        "#ccc3b1",
+        "#cf9977",
+        "#e49390",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9"
+      ]
+    },
+    "woman_ricecake": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#221b20",
+        "#261e21",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4e3727",
+        "#4e3b2f",
+        "#4f4246",
+        "#576b90",
+        "#5b4439",
+        "#60483a",
+        "#775345",
+        "#aa8d58",
+        "#ae7f55",
+        "#af6d55",
+        "#c2778f",
+        "#ccc3b1",
+        "#cf9977",
+        "#ddb989",
+        "#e49390",
+        "#e699ae",
+        "#edc19d",
+        "#f1e9d8",
+        "#f8dbba",
+        "#fdf7e9",
+        "#ffe0e6"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "trial_binding_porter",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Fronts/porter-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Fronts/porter-front.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/C1-Binding-Fronts/approval.md"
+      },
+      "profile": "porter",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_porter",
+          "image": "ArtReview/C1-Binding-Fronts/porter-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_merchant",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Fronts/merchant-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Fronts/merchant-front.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/C1-Binding-Fronts/approval.md"
+      },
+      "profile": "merchant",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_merchant",
+          "image": "ArtReview/C1-Binding-Fronts/merchant-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_merchant_silk",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Fronts/merchant_silk-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Fronts/merchant_silk-front.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/C1-Binding-Fronts/approval.md"
+      },
+      "profile": "merchant_silk",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_merchant_silk",
+          "image": "ArtReview/C1-Binding-Fronts/merchant_silk-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_scholar",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Fronts/scholar-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Fronts/scholar-front.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/C1-Binding-Fronts/approval.md"
+      },
+      "profile": "scholar",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_scholar",
+          "image": "ArtReview/C1-Binding-Fronts/scholar-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_binding_woman_ricecake",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/C1-Binding-Fronts/woman_ricecake-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/C1-Binding-Fronts/woman_ricecake-front.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/C1-Binding-Fronts/approval.md"
+      },
+      "profile": "woman_ricecake",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_binding_woman_ricecake",
+          "image": "ArtReview/C1-Binding-Fronts/woman_ricecake-front.png"
+        }
+      ]
+    }
+  ]
+}

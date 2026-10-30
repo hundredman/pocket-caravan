@@ -11,6 +11,9 @@ namespace PocketCaravan
         public string displayName;
         public RegionData homeRegion;
         public int startingCredit;
+        [Header("주인공 그림")]
+        [Tooltip("이 출신으로 시작하면 어느 지역 맵에서든 쓰는 주인공 걷기 그림 16장 [방향×4 + 프레임], 방향은 아래·위·왼쪽·오른쪽. 메뉴 Pocket Caravan/통합/주인공 그림 연결이 채운다. 비우면 씬에 있는 그림 그대로")]
+        public Sprite[] playerFrames = new Sprite[0];
         [Header("강점 (1 = 보통). 목표: 자기 분야에서 시간당 이익 +10~15%, 다른 곳에서는 0")]
         [Tooltip("모든 이동 속도 배율. 바이킹 1.05")] public float speedMultiplier = 1f;
         [Tooltip("길 없는 곳(풀밭·숲)에서의 추가 속도 배율. 바이킹 1.3")] public float offroadSpeedMultiplier = 1f;

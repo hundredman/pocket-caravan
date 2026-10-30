@@ -47,27 +47,33 @@ namespace PocketCaravan
         float Demand => GameManager.I != null && GameManager.I.Clock.IsMarketDay ? db.marketDayDemand : 1f;
 
         /// <summary>플레이어가 살 때 값</summary>
-        public int BuyPrice(ItemData item) => MarketMath.Price(town.BasePriceFor(item), Optimal(item), Stock(item), Demand);
+        public int BaseBuyPrice(ItemData item) => MarketMath.Price(town.BasePriceFor(item), Optimal(item), Stock(item), Demand);
 
         static OriginData Origin => GameManager.I != null ? GameManager.I.Player.origin : null;
 
         /// <summary>팔 때 재고가 늘어나는 양. 베네치아는 다른 지역 물건을 팔 때 덜 늘어 값이 덜 떨어진다.</summary>
         public float SellStockDelta(ItemData item)
         {
-            var o = Origin;
+            return SellStockDelta(item,Origin);
+        }
+        float SellStockDelta(ItemData item,OriginData o)
+        {
             bool foreign = item.originTown != null && item.originTown.region != town.region;
             return foreign && o != null ? o.resaleDropMultiplier : 1f;
         }
 
         /// <summary>플레이어가 팔 때 받는 값 (한 개를 더 넣었을 때 기준)</summary>
-        public int SellPrice(ItemData item)
+        public int BaseSellPrice(ItemData item) => BaseSellPrice(item,Origin);
+        public int BaseSellPrice(ItemData item,OriginData o)
         {
-            int p = MarketMath.Buyback(MarketMath.Price(town.BasePriceFor(item), Optimal(item), Stock(item) + SellStockDelta(item), Demand));
-            var o = Origin;
+            int p = MarketMath.Buyback(MarketMath.Price(town.BasePriceFor(item), Optimal(item), Stock(item) + SellStockDelta(item,o), Demand));
             if (o != null && o.longHaulBonus > 0 && item.MapsFrom(town) >= o.longHaulMinMaps)
                 p = Mathf.RoundToInt(p * (1f + o.longHaulBonus));
             return p;
         }
+
+        public int BuyPrice(ItemData item) => ReputationPricing.Quote(this,item,false,GameManager.I?.Player,GameManager.I?.Player?.tradeActivity,GameManager.I?.Clock.TotalHours??0);
+        public int SellPrice(ItemData item) => ReputationPricing.Quote(this,item,true,GameManager.I?.Player,GameManager.I?.Player?.tradeActivity,GameManager.I?.Clock.TotalHours??0);
 
         public bool CanBuy(ItemData item) => Stock(item) >= 1f;
 
@@ -86,9 +92,10 @@ namespace PocketCaravan
             AddVolume(price);
         }
 
-        public void RecordSell(ItemData item, int price)
+        public void RecordSell(ItemData item, int price) => RecordSell(item,price,Origin);
+        public void RecordSell(ItemData item,int price,OriginData origin)
         {
-            stock[item] = Stock(item) + SellStockDelta(item);
+            stock[item] = Stock(item) + SellStockDelta(item,origin);
             AddVolume(price);
         }
 
@@ -109,8 +116,10 @@ namespace PocketCaravan
             if(item==null || item.questItem) blocker="일반 교역품을 선택하세요.";
             else if(player==null || requested<=0) blocker="수량을 확인하세요.";
             else if(float.IsNaN(item.weight) || float.IsInfinity(item.weight) || item.weight<=0) blocker="물품 무게를 확인하세요.";
+            else if(!selling && ReputationPricing.BuyDenial(player,town,item)!=null) blocker=ReputationPricing.BuyDenial(player,town,item);
             else
             {
+                var activity=player.tradeActivity.Clone();float now=GameManager.I?.Clock.TotalHours??0;
                 var copy=new MarketState(town,db,false) { Level=Level, TradeVolume=TradeVolume };
                 foreach(var row in stock)copy.stock[row.Key]=row.Value;
                 long total=0; int limit=Mathf.Min(requested,MaxBatch);
@@ -119,17 +128,17 @@ namespace PocketCaravan
                     if(selling)
                     {
                         if(i>=player.cargo.Count(item)){blocker="팔 물건이 없습니다.";break;}
-                        int price=copy.SellPrice(item);
-                        if(price<=0 || total+price>int.MaxValue || (long)player.money+total+price>int.MaxValue){blocker="보유금 한도를 확인하세요.";break;}
-                        total+=price; prices.Add(price); copy.RecordSell(item,price);
+                        int price=ReputationPricing.Quote(copy,item,true,player,activity,now);
+                        if(price<0 || total+price>int.MaxValue || (long)player.money+total+price>int.MaxValue){blocker="보유금 한도를 확인하세요.";break;}
+                        total+=price; prices.Add(price); activity.Sold(town.id,item.id,now);copy.RecordSell(item,price,player.origin);
                     }
                     else
                     {
                         if(!copy.CanBuy(item)){blocker="재고가 없습니다.";break;}
-                        int price=copy.BuyPrice(item);
+                        int price=ReputationPricing.Quote(copy,item,false,player,activity,now);
                         if(price<=0 || total+price>player.money){blocker="매입 자금이 부족합니다.";break;}
                         if(!player.CanCarry(item,i+1)){blocker="남은 적재 공간이 부족합니다.";break;}
-                        total+=price; prices.Add(price); copy.RecordBuy(item,price);
+                        total+=price; prices.Add(price); activity.Bought(town.id,item.id,now,price);copy.RecordBuy(item,price);
                     }
                 }
             }

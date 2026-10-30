@@ -1,0 +1,11 @@
+{
+  "tool": "built-in imagegen",
+  "role": "composition reference only, not resized into final cart",
+  "references": [
+    "Docs/Images/team-style-reference.png",
+    "ArtReview/Approved/C7-Shop-v1/shop.png"
+  ],
+  "finalSource": "32x32 authored Aseprite layers from Tools/ArtTrials/c7_cart_rebuild.lua",
+  "finalMethod": "native-grid box, shafts and two wheel silhouettes; A5 native palette check only, no downsampling",
+  "productionApplied": false
+}

@@ -1,0 +1,147 @@
+{
+  "characters": [
+    {
+      "name": "farmer",
+      "title": "장단 농부",
+      "existingNpcId": "goryeo_jangdan_farmer",
+      "animalComparison": "villager_dog",
+      "size": [
+        16,
+        24
+      ],
+      "visibleBox": [
+        1,
+        4,
+        15,
+        24
+      ],
+      "colors": 21,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedPixelEqual": true
+    },
+    {
+      "name": "herbalist",
+      "title": "송악 약재상",
+      "existingNpcId": "goryeo_songak_merchant",
+      "animalComparison": "villager_rabbit",
+      "size": [
+        16,
+        24
+      ],
+      "visibleBox": [
+        0,
+        4,
+        15,
+        24
+      ],
+      "colors": 20,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedPixelEqual": true
+    },
+    {
+      "name": "dakmok_chief",
+      "title": "닥목 촌장",
+      "existingNpcId": "dakmok_chief",
+      "animalComparison": "dakmokchief",
+      "size": [
+        16,
+        24
+      ],
+      "visibleBox": [
+        1,
+        4,
+        16,
+        24
+      ],
+      "colors": 23,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedPixelEqual": true
+    },
+    {
+      "name": "gaekju",
+      "title": "개경 객주",
+      "existingNpcId": "gaekju",
+      "animalComparison": "gaekju",
+      "size": [
+        16,
+        24
+      ],
+      "visibleBox": [
+        0,
+        5,
+        15,
+        24
+      ],
+      "colors": 22,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedPixelEqual": true
+    },
+    {
+      "name": "child",
+      "title": "아이",
+      "existingNpcId": null,
+      "animalComparison": "villager_fox",
+      "size": [
+        16,
+        24
+      ],
+      "visibleBox": [
+        1,
+        9,
+        14,
+        24
+      ],
+      "colors": 23,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedPixelEqual": true
+    },
+    {
+      "name": "boatman",
+      "title": "뱃사공",
+      "existingNpcId": null,
+      "animalComparison": "villager_bear",
+      "size": [
+        16,
+        24
+      ],
+      "visibleBox": [
+        1,
+        6,
+        16,
+        24
+      ],
+      "colors": 20,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedPixelEqual": true
+    },
+    {
+      "name": "bandit",
+      "title": "도적",
+      "existingNpcId": "bandit",
+      "animalComparison": "bandit",
+      "size": [
+        16,
+        24
+      ],
+      "visibleBox": [
+        1,
+        4,
+        16,
+        24
+      ],
+      "colors": 23,
+      "binaryAlpha": true,
+      "bottom": 24,
+      "asepriteReopenedPixelEqual": true
+    }
+  ],
+  "userApproval": "seven front sprites approved; directions and walking pending",
+  "scope": "seven front sprites only",
+  "D3PaletteApproval": false
+}

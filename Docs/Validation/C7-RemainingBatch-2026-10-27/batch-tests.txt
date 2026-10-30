@@ -1,0 +1,13 @@
+test_all_native_sizes_feet_palettes_binary_alpha_and_contour (Tools.Integration.test_c7_remaining_batch.RemainingBatchChecks) ... ok
+test_all_twelve_original_variants_are_in_one_batch (Tools.Integration.test_c7_remaining_batch.RemainingBatchChecks) ... ok
+test_complete_render_cells_reassemble_and_missing_any_object_is_rejected (Tools.Integration.test_c7_remaining_batch.RemainingBatchChecks) ... ok
+test_editable_sources_reexport_same_decoded_pixels (Tools.Integration.test_c7_remaining_batch.RemainingBatchChecks) ... ok
+test_editor_camera_all_pages_latest_pixels_and_only_item_rectangles_changed (Tools.Integration.test_c7_remaining_batch.RemainingBatchChecks) ... ok
+test_original_art_and_previous_approval_pixels_preserved (Tools.Integration.test_c7_remaining_batch.RemainingBatchChecks) ... ok
+test_preview_valid_and_each_unapproved_item_remains_gated (Tools.Integration.test_c7_remaining_batch.RemainingBatchChecks) ... ok
+test_single_sheaves_have_a_broad_body_without_a_long_thin_waist (Tools.Integration.test_c7_remaining_batch.RemainingBatchChecks) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.472s
+
+OK

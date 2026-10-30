@@ -1,0 +1,18 @@
+# Reproducible intermediates and unused authoring sizes; submitted originals/captures stay tracked.
+/Base/
+/Layers/
+/Maps/
+/Headwaters/Native/*-small.*
+/Unity/EditorBuildSettings.before
+/Unity/play-checks.json
+/Unity/roundtrip-save.json*
+/design-report.json
+/overview-draft.png
+/reach.txt
+/sources-draft.png
+
+/Integration/Base/
+/Integration/Layers/
+/Integration/Production/EditorBuildSettings.before
+/Integration/Production/play-checks.json
+/Integration/Production/legacy-*.json*

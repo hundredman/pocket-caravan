@@ -1,0 +1,14 @@
+{
+  "gate": {
+    "kind": "ai_processed",
+    "references": [
+      "ArtReview/Approved/C7-Palace-v1/palace.png",
+      "ArtReview/Approved/C7-Buildings-v6/tile-house.png",
+      "Docs/Images/team-style-reference.png"
+    ],
+    "generated": "AI/gate.png",
+    "processing": "complete object uniform nearest-neighbor to94x62; A5 explicit candidate palette; Aseprite native contour;96x80 canvas bottom80"
+  },
+  "well": "C7-Batch4 native files copied intact, no regeneration",
+  "stone_lantern": "C7-Batch4 native files copied intact, no regeneration"
+}

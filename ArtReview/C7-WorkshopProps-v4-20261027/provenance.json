@@ -1,0 +1,16 @@
+{
+  "base": "ArtReview/C7-WorkshopProps-v3-20261027/Native/",
+  "harvest": {
+    "kind": "ai_processed",
+    "generationCount": 1,
+    "aiEdit": "AI/harvest.png",
+    "reference": "Assets/PocketCaravan/Art/Baked/Objects/c6_goryeo_harvest_168ed569.png",
+    "processing": "Complete cluster edit; uniform nearest-neighbor/A5 previous grain9 palette; native full-object source edits retain its own foreground sack/basket. No runtime asset fragments."
+  },
+  "celadon": {
+    "kind": "authored",
+    "generationCount": 0,
+    "processing": "Native vase rim, neck and both shoulders centered at x14; previous palette8 colors retained"
+  },
+  "paperRack": "Previous native files copied unchanged"
+}

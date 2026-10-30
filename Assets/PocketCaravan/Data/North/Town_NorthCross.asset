@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147baa154c7bc4bf39645666676b3271, type: 3}
+  m_Name: Town_NorthCross
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.TownData
+  id: north_cross
+  displayName: "\uBD81\uCABD \uAE38\uBAA9 \uB9C8\uC744"
+  region: {fileID: 11400000, guid: 76f6af14ac4b40d38c9eb06c412a7fcf, type: 2}
+  journeyNote: "\uC138 \uAE38\uC774 \uBAA8\uC774\uB294 \uAE38\uBAA9. \uBD81\uCABD
+    \uBB3C\uAC74\uC744 \uB300\uB959 \uC911\uC2EC\uC73C\uB85C \uB118\uAE30\uB294 \uACF3\uC774\uB77C
+    \uBAA8\uD53C\xB7\uD638\uBC15\xB7\uCE58\uC988\uB97C \uCC3E\uC544\uC694."
+  worldCoord: {x: 29, y: -3}
+  startLevel: 1
+  settlementTier: 0
+  facilities:
+  - id: north_cross_rest
+    displayName: "\uAE38\uBAA9 \uC5EC\uAD00"
+    kind: 0
+    minTier: 1
+    minCredit: 0
+    description: 
+    storageCapacity: 120
+  - id: north_cross_info
+    displayName: "\uAE38\uBAA9 \uAE38 \uC548\uB0B4"
+    kind: 1
+    minTier: 1
+    minCredit: 0
+    description: "\uC138 \uAE38\uC774 \uBAA8\uC774\uB294 \uACF3: \uB8EC\uB3CC \uD070\uAE38(\uAC00\uC7A5
+      \uBE60\uB984, \uB208\uB291\uB300), \uC11C\uB0A8 \uC194\uC232\uAE38(\uC0B0\uC801),
+      \uB3D9\uB0A8 \uBB3C\uAC00\uAE38(\uAC15 \uBC94\uB78C).\n\uB0A8\uCABD\uC740 \uB300\uB959
+      \uC911\uC2EC\uC73C\uB85C \uC774\uC5B4\uC9D1\uB2C8\uB2E4 (\uD569\uCE60 \uB54C
+      \uC5F4\uB9BC)."
+    storageCapacity: 120
+  stock:
+  - item: {fileID: 11400000, guid: 50275f575aa3b43f48d7278feb007ee0, type: 2}
+    optimal: 14
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 1a2fc2ad478bf45eb8826708d861bb18, type: 2}
+    optimal: 2
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 84e8ea6b0681441bcb997c074af766ab, type: 2}
+    optimal: 1
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 7b10b12610b4b41fbaf940255ab242b6, type: 2}
+    optimal: 2
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 5bdb4599b599a4bafb2d6eba12a7a241, type: 2}
+    optimal: 3
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 97c21223f4815486bb4749fc7f944272, type: 2}
+    optimal: 6
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 5bbced6f7b2b141b6897cb7a47bc713b, type: 2}
+    optimal: 4
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 7645750b0300140cc98872c430ca7535, type: 2}
+    optimal: 3
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 840f65a4b800a4990ae2697928fa33a8, type: 2}
+    optimal: 1
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: fec223f6bbcd34f3081779f3a8fc48a6, type: 2}
+    optimal: 1
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 0a76bedd5de954bbf95126de12d3bcc9, type: 2}
+    optimal: 4
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 3809c24bcba7c4d5597c08ba74fd633d, type: 2}
+    optimal: 4
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 41be696c8633c49c1b90d85a3e7d7080, type: 2}
+    optimal: 4
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: c68bcc6f465544aacb714f9d90a4ad45, type: 2}
+    optimal: 1
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 708a9b54371a348d9a085c78dc8f3170, type: 2}
+    optimal: 2
+    localPriceMultiplier: 1
+  defaultOptimal: 4
+  vehiclesForSale: []

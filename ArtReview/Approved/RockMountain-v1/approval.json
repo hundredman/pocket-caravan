@@ -1,0 +1,37 @@
+{
+  "status": "approved",
+  "date": "2026-10-29",
+  "approvedBy": "user",
+  "statement": "좋은 것 같네.",
+  "scope": "제출한 온전한 돌산·낮은 암벽·산자락3종의 형태·색·크기와 검토 배치. 본편 적용과 새 산맥 연결 조각은 별도.",
+  "assets": [
+    {
+      "name": "mountain",
+      "size": [
+        192,
+        160
+      ],
+      "rgbaSha256": "3e739c26a812c8d8a785663fe010c0cea076a8e1845ae0718fb6d42b9b79d468",
+      "sourceSha256": "33faa59131583c432c5761bfa9136ea1bf731576e36004e8715a3e63146d048a"
+    },
+    {
+      "name": "ridge",
+      "size": [
+        256,
+        112
+      ],
+      "rgbaSha256": "8170016c6eb7af8ad95fe975c72f97e3e35e3579cbde4b2c16b34a2d7cb4ddbd",
+      "sourceSha256": "b8e09b0a53c69669b9ced68a7c61d002bfba117c9fef08d0174809c3410606cd"
+    },
+    {
+      "name": "foothill",
+      "size": [
+        128,
+        80
+      ],
+      "rgbaSha256": "d8ddcd5156e48d0229f81df720203fbad4cde9c6d692bc7c72a900e428ee886d",
+      "sourceSha256": "5d6b363722db1bb88caf678ae1ab424574d0c916d8ab75c9ff641ea2fb7e39cb"
+    }
+  ],
+  "productionApplied": false
+}

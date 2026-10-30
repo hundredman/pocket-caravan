@@ -1,0 +1,31 @@
+{
+  "rebuiltAndChecked": 11,
+  "keptOriginalYaml": true,
+  "reason": "맵/타일/빌더 입력 동일·Unity 재생성/검사/전후 캡처 후 불필요한 로컬 오브젝트 ID 재직렬화만 커밋에서 제외",
+  "rebuiltSceneSHA256": {
+    "Assets/PocketCaravan/Scenes/Goryeo/Naru.unity": "1b9f414200b66c89d8b88380522e71306662ac4b301d19069ed75be1eaea2b4f",
+    "Assets/PocketCaravan/Scenes/Goryeo/Gaegyeong.unity": "ff94875dd769b354db9a68997d867be47b57e5d92d856e2e5f04ee2d5794f68d",
+    "Assets/PocketCaravan/Scenes/Goryeo/Dakmok.unity": "3ae738c3377dbf340198022504ec64bbbe1adccdfcf73c4e06a5fc5e4a1aa8bc",
+    "Assets/PocketCaravan/Scenes/Goryeo/goryeo_songak.unity": "684440a4053207e7c903a4f6a6d22b868a4b386e400873ae20e9b228c1ebe44e",
+    "Assets/PocketCaravan/Scenes/Goryeo/goryeo_jangdan.unity": "bb66f9fe3ed4da17bd639bd3c5dfd844492b4dc0aa10a33708cc840e372bceb7",
+    "Assets/PocketCaravan/Scenes/Transit/transit_pass.unity": "17c4b04b1ec3dc5f8288c58085255bd1e75551a8beba6105d8ad67507546227d",
+    "Assets/PocketCaravan/Scenes/Transit/transit_woodtown.unity": "3872b5f6ebcf9d6f9e07435ac71b36de744b013612b08dfd7d3a26efd5ecf2d0",
+    "Assets/PocketCaravan/Scenes/Transit/transit_wetroad.unity": "5fdd44ce8070240807d272fe145d40907f4e335170e7c5b7651abcf3d74bb0dd",
+    "Assets/PocketCaravan/Scenes/Transit/transit_ferry.unity": "a2af0c007fff5c1f69b01676dad0f155c3bc86711f3e3d507be29b2a1cc70483",
+    "Assets/PocketCaravan/Scenes/Transit/transit_central_approach.unity": "ee5b2b7f4ec30802543de6a74c24d878f0c8d01d9794a9ca0b780bde319442e7",
+    "Assets/PocketCaravan/Scenes/Transit/transit_crossroads.unity": "2b6df53a7116860f9e0d412b7f336dfb1a63477d66eaf82c97ef19dba7a9da59"
+  },
+  "keptSceneSHA256": {
+    "Assets/PocketCaravan/Scenes/Goryeo/Naru.unity": "81f8f705944db554971f25773407ac2fe7f8cd81bc5598ad34ce21b76a5df654",
+    "Assets/PocketCaravan/Scenes/Goryeo/Gaegyeong.unity": "6988fe8a95cf4f4d70ecf4c6bc69ab9702e4dccfb330bef3c17360b88bd2053c",
+    "Assets/PocketCaravan/Scenes/Goryeo/Dakmok.unity": "d0504aaba1b3eca620da3d54143d397dc8bd484ffe9439533d75790ea39b0b14",
+    "Assets/PocketCaravan/Scenes/Goryeo/goryeo_songak.unity": "599401df66e330fd0a332b39ac327f76b9ad7d4661f63f8d0f8c6780309a177e",
+    "Assets/PocketCaravan/Scenes/Goryeo/goryeo_jangdan.unity": "23ef7243377dca06b371d214e1894bbd5dc966156c52acdec534f52f4b9237fc",
+    "Assets/PocketCaravan/Scenes/Transit/transit_pass.unity": "2f81b7ffb9f7f5b61ec936a132867ed6579215c4c5524ae6e90a013c23aa4fe9",
+    "Assets/PocketCaravan/Scenes/Transit/transit_woodtown.unity": "00bc4d003e677b595f166344393e35d3f631fc0844d68c96bc43e39fd615d1f4",
+    "Assets/PocketCaravan/Scenes/Transit/transit_wetroad.unity": "2ad202426476624c9a090d3b021ed5186d31421bcc8e00a2fd588493ebe9120e",
+    "Assets/PocketCaravan/Scenes/Transit/transit_ferry.unity": "53ae39c6e7f75b87e2fcfb46bf7e6b58d49deb2ed7362ce16e228d23f6199bb5",
+    "Assets/PocketCaravan/Scenes/Transit/transit_central_approach.unity": "72f86e9a5f6da4d19817afe41c55f5b0ebec28417487702f1948f67713ae768f",
+    "Assets/PocketCaravan/Scenes/Transit/transit_crossroads.unity": "b238596dd21797ea78c1e07de2def3e2b49970e457ac6c999aa903b8f04e5f9d"
+  }
+}

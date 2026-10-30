@@ -1,0 +1,126 @@
+{
+  "map": "goryeo_songak",
+  "sourceScene": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_songak.unity",
+  "scope": "Edit mode, original scene materials/lights/SpriteRenderers; temporary atlas clones; no gameplay loop",
+  "tileCount": 689,
+  "atlasSize": "512x1024",
+  "sourceTileRGBAIdentical": true,
+  "tilePropertiesCompared": 689,
+  "frames": [
+    {
+      "index": 0,
+      "camera": "(37.0000, 42.0000, 42.5000)",
+      "differentPixels": 0
+    },
+    {
+      "index": 1,
+      "camera": "(15.0000, 8.4375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 2,
+      "camera": "(45.0000, 8.4375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 3,
+      "camera": "(75.0000, 8.4375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 4,
+      "camera": "(15.0000, 25.3125, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 5,
+      "camera": "(45.0000, 25.3125, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 6,
+      "camera": "(75.0000, 25.3125, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 7,
+      "camera": "(15.0000, 42.1875, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 8,
+      "camera": "(45.0000, 42.1875, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 9,
+      "camera": "(75.0000, 42.1875, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 10,
+      "camera": "(15.0000, 59.0625, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 11,
+      "camera": "(45.0000, 59.0625, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 12,
+      "camera": "(75.0000, 59.0625, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 13,
+      "camera": "(15.0000, 75.9375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 14,
+      "camera": "(45.0000, 75.9375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 15,
+      "camera": "(75.0000, 75.9375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 16,
+      "camera": "(37.1730, 42.2810, 4.2188)",
+      "differentPixels": 0
+    },
+    {
+      "index": 17,
+      "camera": "(37.1730, 42.2810, 16.8750)",
+      "differentPixels": 0
+    }
+  ],
+  "totalDifferentPixels": 0,
+  "cellChecks": 6536,
+  "cellsIdentical": true,
+  "cellsBefore": "B0-6C-71-05-6A-82-A7-4F-BC-25-E5-68-C9-8A-B5-18-0F-0D-77-41-50-A6-43-AF-60-A0-C8-41-74-24-EC-17",
+  "cellsAfter": "B0-6C-71-05-6A-82-A7-4F-BC-25-E5-68-C9-8A-B5-18-0F-0D-77-41-50-A6-43-AF-60-A0-C8-41-74-24-EC-17",
+  "motorStarts": 16,
+  "motorTicksPerMode": 11520,
+  "motorTrajectoryIdentical": true,
+  "walkBefore": "12-92-D1-F9-68-02-30-9E-BD-90-EE-7D-1D-88-E3-60-43-EF-78-08-35-4F-A1-E6-72-DC-B3-77-02-75-D9-D8",
+  "walkAfter": "12-92-D1-F9-68-02-30-9E-BD-90-EE-7D-1D-88-E3-60-43-EF-78-08-35-4F-A1-E6-72-DC-B3-77-02-75-D9-D8",
+  "movementStatistics": [
+    {
+      "moved": 9244,
+      "stopped": 2276
+    },
+    {
+      "moved": 9244,
+      "stopped": 2276
+    }
+  ],
+  "gameplayComponentsAndSortingIdentical": true,
+  "gameBefore": "D8-70-FE-38-DA-AD-BE-D9-CD-77-E2-45-02-5A-05-97-4D-2F-27-A5-D5-A6-8B-A6-C1-51-A2-89-6F-DB-91-6B",
+  "gameAfter": "D8-70-FE-38-DA-AD-BE-D9-CD-77-E2-45-02-5A-05-97-4D-2F-27-A5-D5-A6-8B-A6-C1-51-A2-89-6F-DB-91-6B",
+  "logs": [],
+  "productionWrites": 0
+}

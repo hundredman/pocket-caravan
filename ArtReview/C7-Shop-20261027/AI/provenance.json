@@ -1,0 +1,22 @@
+{
+  "tool": "built-in imagegen",
+  "referenceRoles": {
+    "Docs/Images/team-style-reference.png": "upper Venice/Arabia style only",
+    "ArtReview/Approved/C7-Buildings-v5/tile-house.png": "approved camera and roof style",
+    "Assets/PocketCaravan/Art/Baked/Sprites/shop_6_4.png": "existing complete six-by-four shop architecture"
+  },
+  "iterations": [
+    {
+      "file": "first-wide-study.png",
+      "result": "92x46 occupied area; too low/wide, internal only"
+    },
+    {
+      "file": "shop.png",
+      "result": "architecturally recomposed taller; whole native92x55"
+    }
+  ],
+  "sourceAlphaThreshold": 224,
+  "process": "complete-object uniform nearest native sampling, A5 candidate21 colors, separate Aseprite one-pixel exterior outline",
+  "runtimeTransforms": false,
+  "productionApplied": false
+}

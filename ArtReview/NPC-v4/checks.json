@@ -1,0 +1,45 @@
+{
+  "characters": [
+    {
+      "character": "chief",
+      "size": [
+        16,
+        24
+      ],
+      "beforeColors": 37,
+      "afterColors": 28,
+      "silhouetteAlphaAndBaseline": "identical",
+      "asepriteReopen": "pixel-identical",
+      "binaryAlpha": true
+    },
+    {
+      "character": "woman",
+      "size": [
+        16,
+        24
+      ],
+      "beforeColors": 36,
+      "afterColors": 27,
+      "silhouetteAlphaAndBaseline": "body/face/baseline retained; 11 unwanted isolated arm pixels removed",
+      "asepriteReopen": "pixel-identical",
+      "binaryAlpha": true
+    },
+    {
+      "character": "trader",
+      "size": [
+        16,
+        24
+      ],
+      "beforeColors": 37,
+      "afterColors": 26,
+      "silhouetteAlphaAndBaseline": "identical",
+      "asepriteReopen": "pixel-identical",
+      "binaryAlpha": true
+    }
+  ],
+  "scope": "front native art, no Unity scene or gameplay validation",
+  "userApproval": "woman-front current image/style confirmed; chief/trader and other directions pending",
+  "D3PaletteApproval": false,
+  "womanArmFix": "11 isolated raised-arm pixels removed; remaining pixels identical",
+  "womanEyeFix": "one skin pixel separates screen-right eye from hair; all other pixels unchanged"
+}

@@ -1,0 +1,308 @@
+{
+ "narrow_ochre": [
+  0,
+  0,
+  2,
+  4
+ ],
+ "narrow_salmon": [
+  2,
+  0,
+  2,
+  4
+ ],
+ "narrow_rose": [
+  4,
+  0,
+  2,
+  4
+ ],
+ "narrow_cream": [
+  6,
+  0,
+  2,
+  4
+ ],
+ "narrow_brick": [
+  8,
+  0,
+  2,
+  4
+ ],
+ "narrow_sage": [
+  10,
+  0,
+  2,
+  4
+ ],
+ "narrow_sky": [
+  12,
+  0,
+  2,
+  4
+ ],
+ "narrow_tall_ochre": [
+  14,
+  0,
+  2,
+  5
+ ],
+ "narrow_tall_salmon": [
+  0,
+  5,
+  2,
+  5
+ ],
+ "narrow_tall_rose": [
+  2,
+  5,
+  2,
+  5
+ ],
+ "narrow_tall_cream": [
+  4,
+  5,
+  2,
+  5
+ ],
+ "narrow_tall_brick": [
+  6,
+  5,
+  2,
+  5
+ ],
+ "narrow_tall_sage": [
+  8,
+  5,
+  2,
+  5
+ ],
+ "narrow_tall_sky": [
+  10,
+  5,
+  2,
+  5
+ ],
+ "house_ochre": [
+  12,
+  5,
+  3,
+  4
+ ],
+ "house_salmon": [
+  0,
+  10,
+  3,
+  4
+ ],
+ "house_rose": [
+  3,
+  10,
+  3,
+  4
+ ],
+ "house_cream": [
+  6,
+  10,
+  3,
+  4
+ ],
+ "house_brick": [
+  9,
+  10,
+  3,
+  4
+ ],
+ "house_sage": [
+  12,
+  10,
+  3,
+  4
+ ],
+ "house_sky": [
+  0,
+  14,
+  3,
+  4
+ ],
+ "house_tall_ochre": [
+  3,
+  14,
+  3,
+  5
+ ],
+ "house_tall_salmon": [
+  6,
+  14,
+  3,
+  5
+ ],
+ "house_tall_rose": [
+  9,
+  14,
+  3,
+  5
+ ],
+ "house_tall_cream": [
+  12,
+  14,
+  3,
+  5
+ ],
+ "house_tall_brick": [
+  0,
+  19,
+  3,
+  5
+ ],
+ "house_tall_sage": [
+  3,
+  19,
+  3,
+  5
+ ],
+ "house_tall_sky": [
+  6,
+  19,
+  3,
+  5
+ ],
+ "shop_ochre": [
+  9,
+  19,
+  3,
+  4
+ ],
+ "shop_salmon": [
+  12,
+  19,
+  3,
+  4
+ ],
+ "shop_rose": [
+  0,
+  24,
+  3,
+  4
+ ],
+ "shop_cream": [
+  3,
+  24,
+  3,
+  4
+ ],
+ "shop_sage": [
+  6,
+  24,
+  3,
+  4
+ ],
+ "wide_ochre": [
+  9,
+  24,
+  4,
+  4
+ ],
+ "wide_salmon": [
+  0,
+  28,
+  4,
+  4
+ ],
+ "wide_rose": [
+  4,
+  28,
+  4,
+  4
+ ],
+ "wide_cream": [
+  8,
+  28,
+  4,
+  4
+ ],
+ "wide_brick": [
+  12,
+  28,
+  4,
+  4
+ ],
+ "wide_sage": [
+  0,
+  32,
+  4,
+  4
+ ],
+ "wide_sky": [
+  4,
+  32,
+  4,
+  4
+ ],
+ "wide_shop_ochre": [
+  8,
+  32,
+  4,
+  4
+ ],
+ "wide_shop_salmon": [
+  12,
+  32,
+  4,
+  4
+ ],
+ "wide_shop_rose": [
+  0,
+  36,
+  4,
+  4
+ ],
+ "wide_shop_cream": [
+  4,
+  36,
+  4,
+  4
+ ],
+ "wide_shop_sage": [
+  8,
+  36,
+  4,
+  4
+ ],
+ "palazzo_rose": [
+  0,
+  40,
+  5,
+  5
+ ],
+ "palazzo_cream": [
+  5,
+  40,
+  5,
+  5
+ ],
+ "palazzo_salmon": [
+  10,
+  40,
+  5,
+  5
+ ],
+ "palazzo_ochre": [
+  0,
+  45,
+  5,
+  5
+ ],
+ "wall_v": [
+  5,
+  45,
+  2,
+  1
+ ],
+ "tower": [
+  7,
+  45,
+  4,
+  6
+ ]
+}

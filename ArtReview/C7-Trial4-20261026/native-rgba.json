@@ -1,0 +1,359 @@
+{
+  "ArtReview/C7-Trial4-20261026/Native/dirt.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "ca7cff63e5b5b6cbdd9d428f527d57161f83f1a54a361e7790f877a6b58394d1"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-0.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "8046c2700f6d330a39ff2912458b5d13edc70c44cd09f96b534d581dde2a7708"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-1.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "7216c3d29188e66d4adc16bbd123d8415795baa25e9860a4f10ca1206bd42bfa"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-10.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "0c28dc91d0fbf44b30004bfc20e8cab9bcb202d613ba95e7df660029dd63ce2a"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-11.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "36477ab790c9531096ef74ce7eccedb5d30bc454e4e0008d21657dfc787d7e6f"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-110.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "dc2f3aeef24178183783ae05ba6f70be3a6927a2b25f070415d6810ce77e1b64"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-111.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "019734d0845a9795b8a14a1e11369accbfb4b39762690d834affc0c7a3a1d770"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-12.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "280b6bd4b774bfc30bccf7a863e8a3b515bef834c33965f3c8c8958cf68dd6c9"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-127.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "c6e8ae4c09bbda2ec0f31cac1a9d104ae2d48b8341d28cc5643f2bdbbb67aec2"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-13.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "d5324b4ad25cf7b066c852ed9de75062b53eaf6b88963a2c08dab327ca3c9d89"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-137.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "4055f7106f5c17b37751d020f814cae09519d085d48990a0b5e511ac407df528"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-139.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "736e7c3e3bc44f3274ee56497852fe5d36a397a95fac281435127cca4f011a8a"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-14.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "4adec43322736996dbf2565cd4ab3f56002e1850cf2ca47fc7096fac3181ee2a"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-141.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "eba9406dc784b9150142f6bc49f81b8895d0c9fd5ee63fbe9c309ef6fea6ce93"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-143.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "65e66a163b67b772b21ca1684c3a799e1889c1d072eca625c7fbaa1585cb2877"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-15.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "88da231ac036fc3e651025be5971c5f367afec21e7206c4ebf8f4d3108725769"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-155.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "5be282bd2a620b8f44ea898a30b36ec35cbdf2898de04418b8dd4fc694a3581e"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-159.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "143fabde0480a33214d3fb01ce9423cc26e0b13626307a2c28ad6f352441255b"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-175.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "abe804b74d22eee7d608234e65358bac1ee39ebb8007d2eded0354c035377575"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-19.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "3c28a7015305497ddf865fdde99dee90f6948ae3fa3e2bf0fe033abd5b773dc5"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-191.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "3e37fd5375997692108564a3728630b53b200a06d38c0904957e1bb25955e0dd"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-2.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "ddbeeb8442f453639fad4e8963add6d5afd419083340afeed43730dfd034f127"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-205.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "fbb15129fe7c1fac25c13504a6aabd0f8569f80a84d8fd919fb584be59643a8c"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-207.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "678cf89bd98de6b710462d33bea04b0a97a2a3c07a265f81b26e2db63e6010df"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-223.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "1640b398e31af2d0498acb9d5e61e410b03d176ee5a7950fa6e1b7a8b1d31a67"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-23.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "54dee97c0805c1c86dbee3ef420354d74edbb90922cc76745d78a1c6db258cec"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-239.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "291547fbf9b00543a29b01b68fc853dfe72a45d9956c13c4d17bb9c24f708727"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-255.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "0033949a7cf6ab02e90aee44302a0e893faf44cef2c6864f83a7ef02d275c852"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-27.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "f1988ddcab53fb3765c28de7189516cea24f988f34b78a7ba4dfe8ef2edcf829"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-3.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "babea4461893db91a35f0390e3aa44ec5e93dd086f908958b94a90d285395145"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-31.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "86aed7dd1e8c3cd5cd4752f39cb40427ce0e422b01fcbfacf6b5812588c5ec68"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-38.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "1fd3b52fa8b26f008dd901db38f2706e8bcdb03babae15a331b9a896bb8b34eb"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-39.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "679a59d98f822e7816f3b1b9911627e31bbcc93a74c1a2e84666b4827a84ef80"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-4.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "1c4a4c4c3979317283f5b12ce629f5e54f8556eeaa7bb4722bfd746d31a9a7e6"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-46.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "cbd9ed1ec5e06cfbacdf978b6197bfc32f5bdf91d0b216830f9b88c5f2163ee0"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-47.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "6e61e77b70bf5055638f67139927b384dd510e7cbfde031ef2a579f7d27d7226"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-5.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "109ee9b66f5998dd922d493f81c18e264d3f411ef38cd5268e2f0120f81ec997"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-55.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "ad37ceefa836fa67b7298dc638b1ab39715113f1f37092878e7f32ea0c2630e7"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-6.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "ff4ef9e32eb5090cb86ef739b0093850b8ea42a5cd185245e7e5d832945b8fa5"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-63.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "722bf2b39c71af085aa788df7ecab57f156b7d9ca3ef3f5f46bec821b5d41fc0"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-7.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "eb06e45984ba56e3000c3efdc42165fd8043b28d62d35aa0fc722e37cf11f70b"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-76.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "d44dba0a01b5520d746d6af6b574556447fcc9f0379abe987b493e7f68ce00ea"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-77.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "2afdbe9158d01ebad690c5c58ed80230ea8c61a0ba8fa9126a8182c578ad7af9"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-78.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "b09e79fcb0867ba5649ec6e5ecc6af52e73acc9f921a276abadfa2475e084fef"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-79.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "1961f06da23952c69b5445490d8173705d9a02cd24f3d6c9048fb9e727c87566"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-8.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "c1fb0b2f83532f507655df597e69d159f6ad2122cf2bdbefeb1e11a37b961929"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-9.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "5b05aba7d967c2fd628f0971f597ef6600b4c3e0231995f376ceb3766f310254"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/grass-95.png": {
+    "size": [
+      16,
+      16
+    ],
+    "rgbaSHA256": "ae850ee2b02357d33261650c5806af405d40b64c1378610119ffe6fe399fcd84"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/pine.png": {
+    "size": [
+      64,
+      48
+    ],
+    "rgbaSHA256": "f7eb6cd4ef1ba3e4b63a9404cfc496522e3b5d6d4fd85770a79e7b1856e3418f"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/thatch.png": {
+    "size": [
+      64,
+      48
+    ],
+    "rgbaSHA256": "9091f79738b7185489167b64ab93179832b0b1e74c98e3343debe6e66a885bae"
+  },
+  "ArtReview/C7-Trial4-20261026/Native/tile-house.png": {
+    "size": [
+      64,
+      48
+    ],
+    "rgbaSHA256": "c48e29536f8bac300b65543ee20524343855d37213257754c6b591192fac33e6"
+  }
+}

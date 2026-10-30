@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "chief": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "palette": [
+        "#221b20",
+        "#2c2a38",
+        "#2e2120",
+        "#42302a",
+        "#463830",
+        "#4e3b2f",
+        "#4f4246",
+        "#60483a",
+        "#60607a",
+        "#6c4c2d",
+        "#775345",
+        "#7e7569",
+        "#7f776d",
+        "#9d75a8",
+        "#9f9688",
+        "#ae7f55",
+        "#af6d55",
+        "#bdb4c6",
+        "#cabea9",
+        "#ccc3b1",
+        "#cf9977",
+        "#e2958c",
+        "#e6e1ea",
+        "#edc19d",
+        "#f1e9d8",
+        "#f6e6cc",
+        "#f8dbba",
+        "#fdf7e9"
+      ],
+      "binaryAlpha": true
+    },
+    "woman": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "palette": [
+        "#221b20",
+        "#261e21",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4e3b2f",
+        "#4f3729",
+        "#4f4246",
+        "#576b90",
+        "#5b4439",
+        "#60483a",
+        "#775345",
+        "#7c553b",
+        "#aa8d58",
+        "#ae7f55",
+        "#af6d55",
+        "#c2778f",
+        "#c9c6c1",
+        "#cf9977",
+        "#ddb989",
+        "#e49390",
+        "#e699ae",
+        "#ebd293",
+        "#edc19d",
+        "#f8dbba",
+        "#fdf7e9",
+        "#ffe0e6"
+      ],
+      "binaryAlpha": true
+    },
+    "trader": {
+      "pixelsPerCell": [
+        16,
+        24
+      ],
+      "palette": [
+        "#221b20",
+        "#261e21",
+        "#2a2021",
+        "#2e2120",
+        "#392b2a",
+        "#42302a",
+        "#4c3527",
+        "#4e3727",
+        "#4e3b2f",
+        "#5c4539",
+        "#60483a",
+        "#6c4c2d",
+        "#775345",
+        "#785238",
+        "#9a6d4c",
+        "#a08b6c",
+        "#af6d55",
+        "#b3834a",
+        "#cf9977",
+        "#d78a70",
+        "#e0ba70",
+        "#e3bf78",
+        "#e7b68d",
+        "#f8dbba",
+        "#f8f0e0",
+        "#fdf7e9"
+      ],
+      "binaryAlpha": true
+    }
+  },
+  "assets": [
+    {
+      "id": "trial_chief_v4",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/NPC-v4/chief-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/NPC-v4/chief-front.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "chief",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_chief_v4",
+          "image": "ArtReview/NPC-v4/chief-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_woman_v4",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/NPC-v4/woman-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/NPC-v4/woman-front.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/woman-front-v4.approval.md"
+      },
+      "profile": "woman",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_woman_v4",
+          "image": "ArtReview/NPC-v4/woman-front.png"
+        }
+      ]
+    },
+    {
+      "id": "trial_trader_v4",
+      "kind": "object",
+      "purpose": "character",
+      "size": [
+        1,
+        1
+      ],
+      "image": "ArtReview/NPC-v4/trader-front.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/NPC-v4/trader-front.aseprite"
+      },
+      "review": {
+        "status": "pending"
+      },
+      "profile": "trader",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "trial_trader_v4",
+          "image": "ArtReview/NPC-v4/trader-front.png"
+        }
+      ]
+    }
+  ]
+}

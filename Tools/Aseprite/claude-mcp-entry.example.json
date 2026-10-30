@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "aseprite": {
+      "command": "/Users/kim/.local/share/pocket-caravan/aseprite-mcp/0cd6aac4420a603ec10d19c9fe49a1bb5f6bff8b/aseprite-mcp",
+      "args": [
+        "--aseprite",
+        "/Applications/Aseprite.app/Contents/MacOS/aseprite",
+        "--workspace",
+        "/Users/kim/.local/share/pocket-caravan/aseprite-workspace",
+        "--timeout",
+        "30s"
+      ]
+    }
+  }
+}

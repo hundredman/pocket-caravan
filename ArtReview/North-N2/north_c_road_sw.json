@@ -1,0 +1,167 @@
+{
+ "map": "north_c_road_sw",
+ "name": "서남 솔숲길",
+ "kind": "travel",
+ "items": [
+  {
+   "name": "숯쟁이 터",
+   "kind": "rest",
+   "asset": null,
+   "w": 7,
+   "h": 5,
+   "id": "",
+   "memo": "쉼터 마당",
+   "x": -50,
+   "y": -71
+  },
+  {
+   "name": "숯가마",
+   "kind": "lot",
+   "asset": "kiln",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "art": "new:kiln_A",
+   "door": [
+    -50,
+    -72
+   ],
+   "laneLen": 4,
+   "x": -51,
+   "y": -75
+  },
+  {
+   "name": "숯쟁이 오두막",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "art": "h_shed",
+   "door": [
+    -44,
+    -74
+   ],
+   "laneLen": 0,
+   "x": -45,
+   "y": -77
+  },
+  {
+   "name": "모닥불",
+   "kind": "spot",
+   "asset": "fire",
+   "w": 2,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "fire",
+   "x": -47,
+   "y": -65
+  },
+  {
+   "name": "땔감",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "wood",
+   "gather": "wood",
+   "x": -34,
+   "y": -69
+  },
+  {
+   "name": "땔감 2",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "wood",
+   "gather": "wood",
+   "x": -52,
+   "y": -49
+  },
+  {
+   "name": "사냥터",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "hunt",
+   "gather": "hunt",
+   "x": -70,
+   "y": -77
+  },
+  {
+   "name": "숯쟁이",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -48,
+   "y": -73
+  },
+  {
+   "name": "순록 치는 소녀",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -43,
+   "y": -65
+  },
+  {
+   "name": "떠돌이 음유시인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -42,
+   "y": -70
+  },
+  {
+   "name": "이벤트 1",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -42,
+   "y": -71
+  },
+  {
+   "name": "이벤트 2",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -71,
+   "y": -79
+  },
+  {
+   "name": "도적",
+   "kind": "bandit",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -23,
+   "y": -62
+  }
+ ],
+ "laneCells": 4
+}

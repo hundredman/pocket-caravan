@@ -1,0 +1,1 @@
+Actual Unity Play render; same original terrain and staging; no gate and old props / new gate and pending well-lantern; same approved blue ridge house in both; same well, stone lantern, approved houses and actors, original terrain and pending pond; difference limited to gate and two prop rectangles. previewOnly true; PPU16 Point480x270; no navigation or manual-play claim.

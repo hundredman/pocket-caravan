@@ -1,0 +1,92 @@
+[
+  {
+    "name": "플레이어 너구리",
+    "path": "Assets/PocketCaravan/Art/Characters/tanuki_tall_d0.png",
+    "canvas": [
+      16,
+      24
+    ],
+    "visibleBox": [
+      1,
+      5,
+      15,
+      24
+    ],
+    "opaquePixels": 198
+  },
+  {
+    "name": "기존 동물 촌장",
+    "path": "Assets/PocketCaravan/Art/Characters/elder_tall_d0.png",
+    "canvas": [
+      16,
+      24
+    ],
+    "visibleBox": [
+      1,
+      5,
+      15,
+      24
+    ],
+    "opaquePixels": 198
+  },
+  {
+    "name": "사람 촌장",
+    "path": "ArtReview/C1-Expand-1/chief-front.png",
+    "canvas": [
+      16,
+      24
+    ],
+    "visibleBox": [
+      1,
+      5,
+      16,
+      24
+    ],
+    "opaquePixels": 190
+  },
+  {
+    "name": "기존 동물 행상",
+    "path": "Assets/PocketCaravan/Art/Characters/trader_tall_d0.png",
+    "canvas": [
+      16,
+      24
+    ],
+    "visibleBox": [
+      1,
+      5,
+      15,
+      24
+    ],
+    "opaquePixels": 198
+  },
+  {
+    "name": "사람 행상",
+    "path": "ArtReview/C1-Expand-1/trader-front.png",
+    "canvas": [
+      16,
+      24
+    ],
+    "visibleBox": [
+      0,
+      4,
+      15,
+      24
+    ],
+    "opaquePixels": 222
+  },
+  {
+    "name": "승인된 아낙",
+    "path": "ArtReview/Approved/woman-front-v4.png",
+    "canvas": [
+      16,
+      24
+    ],
+    "visibleBox": [
+      1,
+      2,
+      15,
+      24
+    ],
+    "opaquePixels": 196
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "checks": [
+    {
+      "map": "Naru",
+      "reachable": 1099,
+      "interactions": 9,
+      "unreachable": []
+    },
+    {
+      "map": "Dakmok",
+      "reachable": 1112,
+      "interactions": 6,
+      "unreachable": []
+    },
+    {
+      "map": "goryeo_songak",
+      "reachable": 1436,
+      "interactions": 5,
+      "unreachable": []
+    },
+    {
+      "map": "goryeo_jangdan",
+      "reachable": 504,
+      "interactions": 5,
+      "unreachable": []
+    },
+    {
+      "map": "Gaegyeong",
+      "reachable": 1257,
+      "interactions": 19,
+      "unreachable": []
+    }
+  ],
+  "scope": "Actual Play reachability from spawn including current dynamic Interactable blockers; all 44 interactions reachable. Not exhaustive time-varying NPC traffic simulation."
+}

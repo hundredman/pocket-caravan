@@ -1,0 +1,133 @@
+{
+ "map": "north_c_road_ne",
+ "name": "개울 다리길",
+ "kind": "travel",
+ "items": [
+  {
+   "name": "다리목 쉼터",
+   "kind": "rest",
+   "asset": null,
+   "w": 7,
+   "h": 5,
+   "id": "",
+   "memo": "쉼터 마당",
+   "x": 58,
+   "y": -151
+  },
+  {
+   "name": "모닥불",
+   "kind": "spot",
+   "asset": "fire",
+   "w": 2,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "fire",
+   "x": 61,
+   "y": -145
+  },
+  {
+   "name": "낚시터",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "fish",
+   "gather": "fish",
+   "x": 62,
+   "y": -157
+  },
+  {
+   "name": "땔감",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "wood",
+   "gather": "wood",
+   "x": 46,
+   "y": -148
+  },
+  {
+   "name": "약초",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "herb",
+   "gather": "herb",
+   "x": 73,
+   "y": -148
+  },
+  {
+   "name": "다리지기",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 81,
+   "y": -148
+  },
+  {
+   "name": "길손 음유시인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 58,
+   "y": -145
+  },
+  {
+   "name": "얼음 낚시꾼",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 64,
+   "y": -156
+  },
+  {
+   "name": "이벤트 1",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 65,
+   "y": -155
+  },
+  {
+   "name": "이벤트 2",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 37,
+   "y": -144
+  },
+  {
+   "name": "이벤트 3",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 89,
+   "y": -137
+  }
+ ],
+ "laneCells": 0
+}

@@ -1,0 +1,126 @@
+{
+  "stage": "2a",
+  "status": "pending_visual_approval",
+  "productionApplied": false,
+  "assets": [
+    {
+      "name": "bend-north",
+      "size": [
+        192,
+        256
+      ],
+      "rgbaSha256": "6e8088b57efc82a0aa87c9770f1152ff84393174c8376dfd9c7d9f3adc005392",
+      "asepriteRGBAEqual": true
+    },
+    {
+      "name": "bend-south",
+      "size": [
+        192,
+        256
+      ],
+      "rgbaSha256": "f882565e2a4dfc3ec6e0dba9f2f11f6f1c9b7ba5670ba8a2313d558e40fda086",
+      "asepriteRGBAEqual": true
+    }
+  ],
+  "joins": [
+    {
+      "left": "west-cap",
+      "right": "bend-north",
+      "portDecodedRGBAEqual": true
+    },
+    {
+      "left": "body-a",
+      "right": "bend-north",
+      "portDecodedRGBAEqual": true
+    },
+    {
+      "left": "body-b",
+      "right": "bend-north",
+      "portDecodedRGBAEqual": true
+    },
+    {
+      "left": "bend-north",
+      "right": "body-a",
+      "portDecodedRGBAEqual": true
+    },
+    {
+      "left": "bend-north",
+      "right": "body-b",
+      "portDecodedRGBAEqual": true
+    },
+    {
+      "left": "bend-north",
+      "right": "east-cap",
+      "portDecodedRGBAEqual": true
+    },
+    {
+      "left": "west-cap",
+      "right": "bend-south",
+      "portDecodedRGBAEqual": true
+    },
+    {
+      "left": "body-a",
+      "right": "bend-south",
+      "portDecodedRGBAEqual": true
+    },
+    {
+      "left": "body-b",
+      "right": "bend-south",
+      "portDecodedRGBAEqual": true
+    },
+    {
+      "left": "bend-south",
+      "right": "body-a",
+      "portDecodedRGBAEqual": true
+    },
+    {
+      "left": "bend-south",
+      "right": "body-b",
+      "portDecodedRGBAEqual": true
+    },
+    {
+      "left": "bend-south",
+      "right": "east-cap",
+      "portDecodedRGBAEqual": true
+    },
+    {
+      "left": "bend-north",
+      "right": "bend-north",
+      "portDecodedRGBAEqual": true
+    },
+    {
+      "left": "bend-north",
+      "right": "bend-south",
+      "portDecodedRGBAEqual": true
+    },
+    {
+      "left": "bend-south",
+      "right": "bend-north",
+      "portDecodedRGBAEqual": true
+    },
+    {
+      "left": "bend-south",
+      "right": "bend-south",
+      "portDecodedRGBAEqual": true
+    }
+  ],
+  "s1FrozenPixelsUnchanged": true,
+  "sameLightingNoRotation": true,
+  "planViewDisplacementPixels": 64,
+  "unity": {
+    "mode": "Edit",
+    "captures": [
+      "reference",
+      "north",
+      "south",
+      "s-west",
+      "s-east"
+    ],
+    "wholeFrameRGBADifferences": 0
+  },
+  "ninetyDegreeTurns": false,
+  "independentInnerOuterCornerTiles": false,
+  "branches": false,
+  "valleys": false,
+  "playTest": false
+}

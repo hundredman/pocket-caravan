@@ -1,0 +1,43 @@
+{
+  "status": "approved",
+  "productionApplied": false,
+  "files": {
+    "gaekju.png": {
+      "size": [
+        96,
+        64
+      ],
+      "rgbaSHA256": "4c0bdf0565081598b3cc7e230774889df454d949147d39095404b9e66482786d"
+    },
+    "before.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "2819dacad34c0f5f26cff1df8efa07070e3bedc51d6c46dae47ac9ca3da6bc8f"
+    },
+    "trial.png": {
+      "size": [
+        480,
+        270
+      ],
+      "rgbaSHA256": "f488d9119683688f6419850b617371b08d40fff1d83e641ba1be012e6616f248"
+    },
+    "style-comparison.png": {
+      "size": [
+        1480,
+        850
+      ],
+      "rgbaSHA256": "383f731c42143b3b010d7a030d511984becb7c75cbfe59d942079c133990b455"
+    },
+    "game-comparison.png": {
+      "size": [
+        1000,
+        480
+      ],
+      "rgbaSHA256": "70ff272e8774973f28b9844210017ea03c8ee921c373a76ae991a4a879a79d8e"
+    }
+  },
+  "reviewDecision": "ArtReview/C7-Gaekju-20261027/review-decision.json",
+  "historicalCaption": "Submitted pending captions retained as history; later approval is recorded separately."
+}

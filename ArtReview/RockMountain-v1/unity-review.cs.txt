@@ -1,0 +1,46 @@
+string root="/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship";
+if(UnityEditor.EditorApplication.isPlaying)throw new System.Exception("Use Edit mode");
+var original=UnityEngine.SceneManagement.SceneManager.GetActiveScene();bool dirty=original.isDirty;
+var scene=UnityEditor.SceneManagement.EditorSceneManager.NewScene(UnityEditor.SceneManagement.NewSceneSetup.EmptyScene,UnityEditor.SceneManagement.NewSceneMode.Additive);
+UnityEngine.SceneManagement.SceneManager.SetActiveScene(scene);
+var material=new UnityEngine.Material(UnityEngine.Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default"));
+var cache=new System.Collections.Generic.Dictionary<string,UnityEngine.Sprite>();
+System.Func<string,UnityEngine.Sprite> load=path=>{
+ UnityEngine.Sprite result;if(cache.TryGetValue(path,out result))return result;
+ var texture=new UnityEngine.Texture2D(2,2,UnityEngine.TextureFormat.RGBA32,false);
+ UnityEngine.ImageConversion.LoadImage(texture,System.IO.File.ReadAllBytes(root+"/"+path));texture.filterMode=UnityEngine.FilterMode.Point;
+ var sprite=UnityEngine.Sprite.Create(texture,new UnityEngine.Rect(0,0,texture.width,texture.height),new UnityEngine.Vector2(.5f,0),16);
+ cache[path]=sprite;return sprite;
+};
+System.Action<string,string,int,int,int> place=(name,path,x,y,order)=>{
+ var go=new UnityEngine.GameObject(name);go.layer=31;go.transform.position=new UnityEngine.Vector3(x/16f,y/16f,0);
+ var renderer=go.AddComponent<UnityEngine.SpriteRenderer>();renderer.sprite=load(path);renderer.sharedMaterial=material;renderer.sortingOrder=order;
+};
+var lightGo=new UnityEngine.GameObject("Review directional light");lightGo.layer=31;lightGo.AddComponent<UnityEngine.Light>().type=UnityEngine.LightType.Directional;
+var goCamera=new UnityEngine.GameObject("Rock mountain review camera");
+var cam=goCamera.AddComponent<UnityEngine.Camera>();cam.orthographic=true;cam.orthographicSize=270f/32;
+cam.aspect=480f/270;cam.cullingMask=1<<31;cam.transform.position=new UnityEngine.Vector3(15,270f/32,-10);
+cam.clearFlags=UnityEngine.CameraClearFlags.SolidColor;cam.backgroundColor=new UnityEngine.Color32(114,147,98,255);
+var rt=new UnityEngine.RenderTexture(480,270,24,UnityEngine.RenderTextureFormat.ARGB32);rt.Create();var previous=UnityEngine.RenderTexture.active;
+try{
+ foreach(string name in new[]{"reference","mountain","ridge","forest"}){
+  var objects=new System.Collections.Generic.List<UnityEngine.GameObject>();
+  foreach(string line in System.IO.File.ReadAllLines(root+"/ArtReview/RockMountain-v1/placements-"+name+".tsv")){
+   var a=line.Split('\t');var sp=load(a[0]);
+   int x=int.Parse(a[1]),y=int.Parse(a[2]),order=int.Parse(a[3]);
+   place("Rock review "+name,a[0],x+(int)sp.rect.width/2,270-y-(int)sp.rect.height,order);
+  }
+  UnityEngine.Rendering.RenderPipeline.SubmitRenderRequest(cam,new UnityEngine.Rendering.Universal.UniversalRenderPipeline.SingleCameraRequest{destination=rt});
+  UnityEngine.RenderTexture.active=rt;var pixels=new UnityEngine.Texture2D(480,270,UnityEngine.TextureFormat.RGB24,false);
+  pixels.ReadPixels(new UnityEngine.Rect(0,0,480,270),0,0);pixels.Apply();
+  System.IO.File.WriteAllBytes(root+"/ArtReview/RockMountain-v1/unity-"+name+"-480x270.png",pixels.EncodeToPNG());UnityEngine.Object.DestroyImmediate(pixels);
+  foreach(var go in scene.GetRootGameObjects())if(go.name.StartsWith("Rock review "))UnityEngine.Object.DestroyImmediate(go);
+ }
+}finally{
+ UnityEngine.RenderTexture.active=previous;rt.Release();UnityEngine.Object.DestroyImmediate(rt);
+ UnityEngine.SceneManagement.SceneManager.SetActiveScene(original);UnityEditor.SceneManagement.EditorSceneManager.CloseScene(scene,true);
+ foreach(var s in cache.Values){var texture=s.texture;UnityEngine.Object.DestroyImmediate(s);UnityEngine.Object.DestroyImmediate(texture);}
+ UnityEngine.Object.DestroyImmediate(material);
+}
+if(original.isDirty!=dirty)throw new System.Exception("Original scene dirty changed");
+return new {capture="480x270",wholeRockPrototypes=3,productionWrites=0,originalSceneRestored=true};

@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "gaekju": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e241d",
+        "#b78137",
+        "#daa34a",
+        "#f0c365",
+        "#68452d",
+        "#98653b",
+        "#bc8850",
+        "#c4a779",
+        "#e0c99b",
+        "#f4dfb5",
+        "#77746c",
+        "#a29b87",
+        "#c4bca7",
+        "#4a627a",
+        "#718da3",
+        "#a5b9c3",
+        "#794b3b",
+        "#ad624c",
+        "#d69062",
+        "#547e6a",
+        "#86a28b"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "c7_gaekju_candidate",
+      "kind": "object",
+      "purpose": "merchant_lodging_candidate",
+      "size": [
+        6,
+        4
+      ],
+      "image": "ArtReview/C7-Gaekju-20261027/Native/gaekju.png",
+      "profile": "gaekju",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/C7-Gaekju-20261027/Native/gaekju.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "date": "2026-10-27",
+        "userQuote": "좋아. 다음에는 이미지를 여러개 만든 다음 한번에 검사받는게 낫겠어. 이제는 퀄리티가 올라와서.",
+        "scope": "객주용6×4 큰기와집 외형 후보 한 개의 그림 승인; 공용큰집 일괄교체/객주역할·기능 연결/다른 에셋은 별도",
+        "evidence": "ArtReview/Approved/C7-Gaekju-v1/README.md",
+        "rgbaEvidence": {
+          "size": [
+            96,
+            64
+          ],
+          "rgbaSHA256": "4c0bdf0565081598b3cc7e230774889df454d949147d39095404b9e66482786d"
+        }
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_gaekju_0_0",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_gaekju_1_0",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_gaekju_2_0",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_2_0.png"
+        },
+        {
+          "dx": 3,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_gaekju_3_0",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_3_0.png"
+        },
+        {
+          "dx": 4,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_gaekju_4_0",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_4_0.png"
+        },
+        {
+          "dx": 5,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "c7_gaekju_5_0",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_5_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_gaekju_0_1",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_gaekju_1_1",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_gaekju_2_1",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_2_1.png"
+        },
+        {
+          "dx": 3,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_gaekju_3_1",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_3_1.png"
+        },
+        {
+          "dx": 4,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_gaekju_4_1",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_4_1.png"
+        },
+        {
+          "dx": 5,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "c7_gaekju_5_1",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_5_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_gaekju_0_2",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_gaekju_1_2",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_gaekju_2_2",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_2_2.png"
+        },
+        {
+          "dx": 3,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_gaekju_3_2",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_3_2.png"
+        },
+        {
+          "dx": 4,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_gaekju_4_2",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_4_2.png"
+        },
+        {
+          "dx": 5,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "c7_gaekju_5_2",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_5_2.png"
+        },
+        {
+          "dx": 0,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_gaekju_0_3",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_0_3.png"
+        },
+        {
+          "dx": 1,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_gaekju_1_3",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_1_3.png"
+        },
+        {
+          "dx": 2,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_gaekju_2_3",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_2_3.png"
+        },
+        {
+          "dx": 3,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_gaekju_3_3",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_3_3.png"
+        },
+        {
+          "dx": 4,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_gaekju_4_3",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_4_3.png"
+        },
+        {
+          "dx": 5,
+          "dy": 3,
+          "layer": "obj",
+          "tile": "c7_gaekju_5_3",
+          "image": "ArtReview/C7-Gaekju-20261027/Cells/c7_gaekju_5_3.png"
+        }
+      ]
+    }
+  ]
+}
