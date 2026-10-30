@@ -42,6 +42,7 @@ namespace PocketCaravan
             text = null;
             var gm = GameManager.I;
             if (gm == null || gm.Quests == null || !NorthUtil.InNorth) return;
+            if (NorthIntro.Active) return;   // 10/30 시작 튜토리얼 중에는 튜토리얼 안내가 맡음
             foreach (var p in gm.Quests.Active)
                 if (p != null && p.quest != null && p.quest.id != null && p.quest.id.StartsWith("north_")) return;   // 진행 중이면 공용 안내가 맡음
             foreach (var q in gm.Db.quests)
