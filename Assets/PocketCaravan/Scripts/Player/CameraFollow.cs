@@ -11,6 +11,8 @@ namespace PocketCaravan
         Camera cam;
         Vector3 vel;
         bool snap = true;
+        Vector3 lastTarget; bool hasLast;
+        [Tooltip("대상이 한 프레임에 이만큼(칸) 넘게 움직이면 순간이동으로 보고 바로 붙는다")] public float warpDistance = 3f;
 
         void Awake()
         {
@@ -46,6 +48,10 @@ namespace PocketCaravan
         void LateUpdate()
         {
             if (target == null) return;
+            Vector3 p = target.position;
+            // 2026-10-29(북유럽): 순간이동(맵 도착·저장 복원) 뒤 카메라가 미끄러져 따라오지 않게
+            if (hasLast && (p - lastTarget).sqrMagnitude > warpDistance * warpDistance) snap = true;
+            lastTarget = p; hasLast = true;
             if (cam == null) cam = GetComponent<Camera>();
             Vector3 desired = Confine(target.position);
             if (snap || smoothTime <= 0f)

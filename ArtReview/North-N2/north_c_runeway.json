@@ -1,0 +1,150 @@
+{
+ "map": "north_c_runeway",
+ "name": "룬돌 큰길",
+ "kind": "travel",
+ "items": [
+  {
+   "name": "길손 역참",
+   "kind": "rest",
+   "asset": null,
+   "w": 7,
+   "h": 5,
+   "id": "",
+   "memo": "쉼터 마당",
+   "x": -2,
+   "y": -109
+  },
+  {
+   "name": "역참",
+   "kind": "lot",
+   "asset": "longhouse",
+   "w": 4,
+   "h": 5,
+   "id": "",
+   "memo": "",
+   "art": "woodhouse",
+   "door": [
+    2,
+    -98
+   ],
+   "laneLen": 2,
+   "x": 0,
+   "y": -103
+  },
+  {
+   "name": "룬돌 둥지",
+   "kind": "spot",
+   "asset": "runestone",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "옛 사람의 룬돌",
+   "art": "runestone",
+   "x": 6,
+   "y": -107
+  },
+  {
+   "name": "모닥불",
+   "kind": "spot",
+   "asset": "fire",
+   "w": 2,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "fire",
+   "x": 5,
+   "y": -103
+  },
+  {
+   "name": "약초",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "herb",
+   "gather": "herb",
+   "x": 2,
+   "y": -111
+  },
+  {
+   "name": "사냥터",
+   "kind": "gather",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "hunt",
+   "gather": "hunt",
+   "x": -13,
+   "y": -108
+  },
+  {
+   "name": "역참지기",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 3,
+   "y": -98
+  },
+  {
+   "name": "룬 읽는 노인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 8,
+   "y": -108
+  },
+  {
+   "name": "길손 행상",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": -2,
+   "y": -103
+  },
+  {
+   "name": "이벤트 1",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -10,
+   "y": -109
+  },
+  {
+   "name": "이벤트 2",
+   "kind": "event",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 20,
+   "y": -109
+  },
+  {
+   "name": "도적",
+   "kind": "bandit",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 10,
+   "y": -78
+  }
+ ],
+ "laneCells": 2
+}

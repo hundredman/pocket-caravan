@@ -19,7 +19,7 @@ namespace PocketCaravan
             {
                 gm.enabled=false; // Freeze the world clock in the authoring lab.
                 foreach(var component in gm.GetComponents<MonoBehaviour>())
-                    if(component is HUD || component is QuestTracker || component is CommerceGuideUI || component is WorldMapUI || component is TradeLedgerUI || component is TownFacilitiesUI || component is PauseMenu || component is AmbientFX)component.enabled=false;
+                    if(component is HUD || component is QuestTracker || component is CommerceGuideUI || component is WorldMapUI || component is TradeLedgerUI || component is InventoryUI || component is TownFacilitiesUI || component is PauseMenu || component is AmbientFX)component.enabled=false;
             }
             int chosenEnvironment=environmentIndex;
             if(!lockLayout)Load(selected);else appearance.Apply();

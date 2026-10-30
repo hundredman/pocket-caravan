@@ -111,9 +111,6 @@ EditorBuildSettings:
     path: Assets/PocketCaravan/Scenes/North/north_birka.unity
     guid: f9d9f7918220843f686a2747cebf4244
   - enabled: 1
-    path: Assets/PocketCaravan/Scenes/North/north_fjord_road.unity
-    guid: ae7dd0172ddbe4be7b2e8261a6935f6a
-  - enabled: 1
     path: Assets/PocketCaravan/Scenes/North/north_hunter.unity
     guid: 1103b8474eba74f378e7e9224f925c73
   - enabled: 1
@@ -131,9 +128,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/PocketCaravan/Scenes/North/north_icecave.unity
     guid: 0468a1a6e1e95435aa6475c2e2ad244a
-  - enabled: 1
-    path: Assets/PocketCaravan/Scenes/North/north_pass.unity
-    guid: c62f6ce6f3bb24929880ede8c6ac9437
   - enabled: 1
     path: Assets/PocketCaravan/Scenes/Transit/transit_pass.unity
     guid: 528b5ef34de354dc8a22e183f68dd949

@@ -116,6 +116,10 @@ namespace PocketCaravan.EditorTools
             var stockfish = Item("north_stockfish", "말린 대구", 1f, 42f, naru);      // 얼음 대구 3 (9×3)
             var furcoat = Item("north_furcoat", "털옷", 2f, 88f, hunter);             // 모피 2 (30×2) + 수공 5
             var herbmead = Item("north_herbmead", "온천 약초 꿀술", 2f, 62f, laugar);  // 꿀술 2 (12×2) + 약초 1 (18)
+            // 10/30 눈숲 마을 눈싸움 보상 (NorthSnowball.cs): 아이들이 만든 눈사람 장식. 장터에서 팔 수 있는 가벼운 기념품
+            var snowman = Item("north_snowman", "눈사람 장식", 1f, 20f, cwood);
+            // 10/30 라우가르 꿀벌 오두막 보상 (NorthBees.cs): 하루 한 단지. 양조장에서 꿀술 2 대신 쓰고, 장터에서도 판다
+            var honey = Item("north_honey", "벌꿀 단지", 1f, 15f, laugar);
 
             // 재고: 산지는 크게(싸게), 소비지는 작게(비싸게 팔림). 나루는 배가 모피를 실어 가서 모피 수요가 큼
             birka.stock.AddRange(new[] { S(mead, 30), S(fur, 8), S(amber, 4), S(meat, 15), S(herb, 4), S(cheese, 5) });
@@ -140,6 +144,9 @@ namespace PocketCaravan.EditorTools
             // 가공품: 중앙 마을·비르카 장터 목록에 올린다 (값은 산지에서 멀수록 비쌈). 산지 마을엔 두지 않는다
             foreach (var t in new[] { birka, post, cwood, ccreek, cross })
                 t.stock.AddRange(new[] { S(stockfish, 4), S(furcoat, 4), S(herbmead, 4) });
+            // 10/30 눈사람 장식: 눈숲 마을 밖 장터에서 기념품으로 사 준다 (재고가 적어 값이 좋음)
+            foreach (var t in new[] { birka, post, ccreek, cross }) t.stock.Add(S(snowman, 1));
+            foreach (var t in new[] { birka, hunter, naru, cwood, cross }) t.stock.Add(S(honey, 2));
             // 손수레는 공용 수단(고려 데이터)을 그대로 판다 (팀 규칙: 공통 수단을 지역마다 복제하지 않음)
             var cart = AssetDatabase.LoadAssetAtPath<VehicleData>($"{Root}/Data/Goryeo/Vehicle_Handcart.asset");
             if (cart != null) birka.vehiclesForSale.Add(cart);
@@ -193,7 +200,7 @@ namespace PocketCaravan.EditorTools
             db.quests.RemoveAll(q => q == null || q.id.StartsWith("north_"));
             // 북유럽 마을을 앞에 둔다: 손수레 길 안내가 목록에서 처음 찾은 마을(원래는 개경)을 가리키기 때문
             db.towns.InsertRange(0, new[] { birka, hunter, naru, laugar, herd, post, cwood, ccreek, cross });
-            db.items.AddRange(new[] { mead, fur, amber, meat, herb, cheese, salt, cod, charr, salmon, stockfish, furcoat, herbmead, butter, hay, saltLick, meadJar });
+            db.items.AddRange(new[] { mead, fur, amber, meat, herb, cheese, salt, cod, charr, salmon, stockfish, furcoat, herbmead, butter, hay, saltLick, meadJar, snowman, honey });
             db.vehicles.RemoveAll(v => v == null || v.id.StartsWith("north_"));
             db.vehicles.Add(sled);
             db.quests.AddRange(quests);

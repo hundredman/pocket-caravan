@@ -12,14 +12,6 @@
       "generator": "north:birka"
     },
     {
-      "mapId": "north_fjord_road",
-      "jsonPath": "Assets/PocketCaravan/Maps/North/north_fjord_road.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/North/north_fjord_road.unity",
-      "worldX": 34,
-      "worldY": 1,
-      "generator": "north:fjord_road"
-    },
-    {
       "mapId": "north_hunter",
       "jsonPath": "Assets/PocketCaravan/Maps/North/north_hunter.json",
       "scenePath": "Assets/PocketCaravan/Scenes/North/north_hunter.unity",
@@ -66,14 +58,6 @@
       "worldX": 34,
       "worldY": 2,
       "generator": "north:icecave"
-    },
-    {
-      "mapId": "north_pass",
-      "jsonPath": "Assets/PocketCaravan/Maps/North/north_pass.json",
-      "scenePath": "Assets/PocketCaravan/Scenes/North/north_pass.unity",
-      "worldX": 33,
-      "worldY": 0,
-      "generator": "north:border_pass"
     }
   ],
   "npcs": [

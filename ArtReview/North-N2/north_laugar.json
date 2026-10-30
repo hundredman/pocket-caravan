@@ -1,0 +1,295 @@
+{
+ "map": "north_laugar",
+ "name": "라우가르 온천 마을",
+ "kind": "town",
+ "items": [
+  {
+   "name": "목욕 회관",
+   "kind": "lot",
+   "asset": "bathhouse",
+   "w": 3,
+   "h": 4,
+   "id": "",
+   "memo": "온천 호숫가",
+   "art": "h_round",
+   "door": [
+    6,
+    -274
+   ],
+   "laneLen": 2,
+   "x": 5,
+   "y": -278
+  },
+  {
+   "name": "장터 광장",
+   "kind": "plaza",
+   "asset": null,
+   "w": 7,
+   "h": 12,
+   "id": "market:north_laugar",
+   "memo": "",
+   "x": 7,
+   "y": -273
+  },
+  {
+   "name": "온천 김 1",
+   "kind": "shore",
+   "asset": null,
+   "w": 2,
+   "h": 1,
+   "id": "",
+   "memo": "김 오르는 물가(anim)",
+   "x": 5,
+   "y": -280
+  },
+  {
+   "name": "온천 김 2",
+   "kind": "shore",
+   "asset": null,
+   "w": 2,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 9,
+   "y": -276
+  },
+  {
+   "name": "꿀술 양조장",
+   "kind": "lot",
+   "asset": "brewery",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "꿀술 2 ...",
+   "art": "h_dome",
+   "door": [
+    2,
+    -259
+   ],
+   "laneLen": 2,
+   "x": 1,
+   "y": -262
+  },
+  {
+   "name": "약초꾼 오두막",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "art": "h_shed",
+   "door": [
+    -1,
+    -263
+   ],
+   "laneLen": 4,
+   "x": -2,
+   "y": -266
+  },
+  {
+   "name": "이벤트 마당",
+   "kind": "yard",
+   "asset": null,
+   "w": 5,
+   "h": 8,
+   "id": "",
+   "memo": "",
+   "x": -7,
+   "y": -282
+  },
+  {
+   "name": "집 1",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 3,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "h_turf",
+   "door": [
+    8,
+    -258
+   ],
+   "laneLen": 2,
+   "x": 7,
+   "y": -260
+  },
+  {
+   "name": "집 2",
+   "kind": "lot",
+   "asset": "turf",
+   "w": 3,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "h_turf",
+   "door": [
+    2,
+    -278
+   ],
+   "laneLen": 1,
+   "x": 1,
+   "y": -280
+  },
+  {
+   "name": "집 3",
+   "kind": "lot",
+   "asset": "longhouse",
+   "w": 4,
+   "h": 5,
+   "id": "",
+   "memo": "",
+   "art": "woodhouse",
+   "door": [
+    -11,
+    -277
+   ],
+   "laneLen": 0,
+   "x": -13,
+   "y": -282
+  },
+  {
+   "name": "집 4",
+   "kind": "lot",
+   "asset": "hut",
+   "w": 3,
+   "h": 3,
+   "id": "",
+   "memo": "",
+   "art": "h_shed",
+   "door": [
+    8,
+    -254
+   ],
+   "laneLen": 2,
+   "x": 7,
+   "y": -257
+  },
+  {
+   "name": "게시판",
+   "kind": "spot",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "board:north_laugar",
+   "memo": "",
+   "x": 2,
+   "y": -269
+  },
+  {
+   "name": "우물",
+   "kind": "spot",
+   "asset": "well",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "well",
+   "x": -3,
+   "y": -269
+  },
+  {
+   "name": "횃불 1",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "lantern",
+   "x": 1,
+   "y": -265
+  },
+  {
+   "name": "횃불 2",
+   "kind": "lantern",
+   "asset": "brazier",
+   "w": 1,
+   "h": 2,
+   "id": "",
+   "memo": "",
+   "art": "lantern",
+   "x": 4,
+   "y": -276
+  },
+  {
+   "name": "목욕 회관 주인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 12,
+   "y": -275
+  },
+  {
+   "name": "약초꾼",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 0,
+   "y": -262
+  },
+  {
+   "name": "쉬어 가는 상인",
+   "kind": "npc",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "talker",
+   "x": 15,
+   "y": -273
+  },
+  {
+   "name": "성장 자리 1",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 15,
+   "y": -265
+  },
+  {
+   "name": "성장 자리 2",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": 2,
+   "y": -288
+  },
+  {
+   "name": "성장 자리 3",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -10,
+   "y": -272
+  },
+  {
+   "name": "성장 자리 4",
+   "kind": "growth",
+   "asset": null,
+   "w": 1,
+   "h": 1,
+   "id": "",
+   "memo": "",
+   "x": -8,
+   "y": -265
+  }
+ ],
+ "laneCells": 13
+}

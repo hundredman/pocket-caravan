@@ -1,0 +1,567 @@
+{
+ "seed": 11,
+ "classCounts": {
+  "깊은 바다": 5461,
+  "얕은 바다": 2635,
+  "자갈 해변": 662,
+  "바위 해안": 292,
+  "강": 491,
+  "늪": 140,
+  "밭": 576,
+  "풀밭": 13642,
+  "툰드라": 7255,
+  "언덕": 2734,
+  "침엽수림": 6447,
+  "눈밭": 1422,
+  "산(통행 불가)": 2017,
+  "빙하·만년설(통행 불가)": 973,
+  "호수": 139,
+  "온천": 114
+ },
+ "rivers": [
+  {
+   "label": "얼음강 (빙하 → 피오르 나루 앞바다)",
+   "cells": 60,
+   "source": [
+    39,
+    -293
+   ],
+   "mouth": [
+    60,
+    -255
+   ]
+  },
+  {
+   "label": "북쪽 개울 (북문 동쪽 언덕 → 개울 나루 마을 옆 → 북동 바다)",
+   "cells": 122,
+   "source": [
+    16,
+    -128
+   ],
+   "mouth": [
+    88,
+    -145
+   ]
+  },
+  {
+   "label": "동남 물가길 연못 개울",
+   "cells": 11,
+   "pondCells": 139
+  }
+ ],
+ "springCells": 114,
+ "villages": [
+  {
+   "key": "north_birka",
+   "label": "비르카 (수도)",
+   "target": 850,
+   "area": 850,
+   "center": [
+    4,
+    -223
+   ],
+   "moved": 0.0
+  },
+  {
+   "key": "north_laugar",
+   "label": "라우가르 온천 마을",
+   "target": 600,
+   "area": 597,
+   "center": [
+    4,
+    -273
+   ],
+   "moved": 1.0
+  },
+  {
+   "key": "north_runehill",
+   "label": "룬돌 언덕",
+   "target": 520,
+   "area": 520,
+   "center": [
+    -3,
+    -323
+   ],
+   "moved": 7.1
+  },
+  {
+   "key": "north_icecave",
+   "label": "얼음 동굴 골짜기",
+   "target": 520,
+   "area": 516,
+   "center": [
+    50,
+    -276
+   ],
+   "moved": 11.3
+  },
+  {
+   "key": "north_naru",
+   "label": "피오르 나루 마을",
+   "target": 600,
+   "area": 602,
+   "center": [
+    40,
+    -226
+   ],
+   "moved": 17.8
+  },
+  {
+   "key": "north_herd",
+   "label": "순록 고원 마을",
+   "target": 560,
+   "area": 559,
+   "center": [
+    -41,
+    -267
+   ],
+   "moved": 0.0
+  },
+  {
+   "key": "north_hunter",
+   "label": "모피 사냥꾼 마을",
+   "target": 520,
+   "area": 519,
+   "center": [
+    -44,
+    -224
+   ],
+   "moved": 14.0
+  },
+  {
+   "key": "north_c_gatetown",
+   "label": "북문 마을",
+   "target": 800,
+   "area": 799,
+   "center": [
+    0,
+    -150
+   ],
+   "moved": 0.0
+  },
+  {
+   "key": "north_c_snowwood",
+   "label": "눈숲 마을",
+   "target": 800,
+   "area": 800,
+   "center": [
+    -52,
+    -108
+   ],
+   "moved": 0.0
+  },
+  {
+   "key": "north_c_creek",
+   "label": "개울 나루 마을",
+   "target": 800,
+   "area": 798,
+   "center": [
+    49,
+    -110
+   ],
+   "moved": 3.6
+  },
+  {
+   "key": "north_c_crossing",
+   "label": "북쪽 길목 마을",
+   "target": 850,
+   "area": 850,
+   "center": [
+    0,
+    -58
+   ],
+   "moved": 0.0
+  }
+ ],
+ "roads": [
+  {
+   "fromKey": "north_birka",
+   "toKey": "north_hunter",
+   "via": null,
+   "cells": 59,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "snowCells": 0,
+   "boundaryCrossings": 1,
+   "maps": [
+    "north_birka",
+    "north_hunter"
+   ]
+  },
+  {
+   "fromKey": "north_birka",
+   "toKey": "north_naru",
+   "via": null,
+   "cells": 47,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "snowCells": 0,
+   "boundaryCrossings": 1,
+   "maps": [
+    "north_birka",
+    "north_naru"
+   ]
+  },
+  {
+   "fromKey": "north_herd",
+   "toKey": "north_laugar",
+   "via": null,
+   "cells": 59,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "snowCells": 0,
+   "boundaryCrossings": 1,
+   "maps": [
+    "north_herd",
+    "north_laugar"
+   ]
+  },
+  {
+   "fromKey": "north_herd",
+   "toKey": "north_hunter",
+   "via": null,
+   "cells": 74,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "snowCells": 0,
+   "boundaryCrossings": 1,
+   "maps": [
+    "north_herd",
+    "north_hunter"
+   ]
+  },
+  {
+   "fromKey": "north_laugar",
+   "toKey": "north_runehill",
+   "via": null,
+   "cells": 61,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "snowCells": 0,
+   "boundaryCrossings": 1,
+   "maps": [
+    "north_laugar",
+    "north_runehill"
+   ]
+  },
+  {
+   "fromKey": "north_birka",
+   "toKey": "north_laugar",
+   "via": null,
+   "cells": 54,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "snowCells": 0,
+   "boundaryCrossings": 1,
+   "maps": [
+    "north_birka",
+    "north_laugar"
+   ]
+  },
+  {
+   "fromKey": "north_naru",
+   "toKey": "north_icecave",
+   "via": null,
+   "cells": 57,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "snowCells": 20,
+   "passCarvedCells": 33,
+   "boundaryCrossings": 1,
+   "maps": [
+    "north_icecave",
+    "north_naru"
+   ]
+  },
+  {
+   "fromKey": "north_birka",
+   "toKey": "north_herd",
+   "via": null,
+   "cells": 111,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "snowCells": 0,
+   "boundaryCrossings": 2,
+   "maps": [
+    "north_birka",
+    "north_herd",
+    "north_laugar"
+   ]
+  },
+  {
+   "fromKey": "north_c_gatetown",
+   "toKey": "north_c_snowwood",
+   "via": "north_c_road_nw",
+   "cells": 146,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "snowCells": 8,
+   "passCarvedCells": 16,
+   "boundaryCrossings": 2,
+   "maps": [
+    "north_c_gatetown",
+    "north_c_road_nw",
+    "north_c_snowwood"
+   ]
+  },
+  {
+   "fromKey": "north_c_gatetown",
+   "toKey": "north_c_creek",
+   "via": "north_c_road_ne",
+   "cells": 87,
+   "bridgeCells": 2,
+   "mountainPassCells": 0,
+   "snowCells": 0,
+   "boundaryCrossings": 2,
+   "maps": [
+    "north_c_creek",
+    "north_c_gatetown",
+    "north_c_road_ne"
+   ]
+  },
+  {
+   "fromKey": "north_c_snowwood",
+   "toKey": "north_c_crossing",
+   "via": "north_c_road_sw",
+   "cells": 104,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "snowCells": 0,
+   "boundaryCrossings": 2,
+   "maps": [
+    "north_c_crossing",
+    "north_c_road_sw",
+    "north_c_snowwood"
+   ]
+  },
+  {
+   "fromKey": "north_c_creek",
+   "toKey": "north_c_crossing",
+   "via": "north_c_road_se",
+   "cells": 111,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "snowCells": 0,
+   "boundaryCrossings": 2,
+   "maps": [
+    "north_c_creek",
+    "north_c_crossing",
+    "north_c_road_se"
+   ]
+  },
+  {
+   "fromKey": "north_birka",
+   "toKey": "north_c_gatetown",
+   "via": null,
+   "cells": 89,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "snowCells": 0,
+   "boundaryCrossings": 1,
+   "maps": [
+    "north_birka",
+    "north_c_gatetown"
+   ]
+  },
+  {
+   "fromKey": "north_c_gatetown",
+   "toKey": "north_c_crossing",
+   "via": "north_c_runeway",
+   "cells": 122,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "snowCells": 0,
+   "boundaryCrossings": 2,
+   "maps": [
+    "north_c_crossing",
+    "north_c_gatetown",
+    "north_c_runeway"
+   ]
+  },
+  {
+   "fromKey": "north_c_snowwood",
+   "toKey": "north_c_creek",
+   "via": "north_c_runeway",
+   "cells": 163,
+   "bridgeCells": 0,
+   "mountainPassCells": 0,
+   "snowCells": 0,
+   "boundaryCrossings": 2,
+   "maps": [
+    "north_c_creek",
+    "north_c_runeway",
+    "north_c_snowwood"
+   ]
+  }
+ ],
+ "exits": [
+  {
+   "map": "north_c_road_sw",
+   "label": "⑨ 베네치아 (venice_c_pass)",
+   "at": [
+    -79,
+    -74
+   ],
+   "cells": 40
+  },
+  {
+   "map": "north_c_road_ne",
+   "label": "고려 북동 포구",
+   "at": [
+    105,
+    -127
+   ],
+   "cells": 92
+  },
+  {
+   "map": "north_c_crossing",
+   "label": "⑤ 한가운데 초원",
+   "at": [
+    7,
+    -8
+   ],
+   "cells": 46
+  },
+  {
+   "map": "north_c_snowwood",
+   "label": "① 베네치아 (venice_c_vineyard)",
+   "at": [
+    -101,
+    -94
+   ],
+   "cells": 58
+  },
+  {
+   "map": "north_c_road_sw",
+   "label": "⑩ 베네치아 (venice_c_gate)",
+   "at": [
+    -49,
+    -46
+   ],
+   "cells": 35
+  },
+  {
+   "map": "north_c_road_se",
+   "label": "⑪ 고려 교역 길목 (transit_crossroads)",
+   "at": [
+    42,
+    -40
+   ],
+   "cells": 34
+  }
+ ],
+ "maps": [
+  {
+   "key": "north_birka",
+   "name": "비르카 (수도)",
+   "n0Target": 3800,
+   "area": 3225,
+   "land": 2752
+  },
+  {
+   "key": "north_herd",
+   "name": "순록 고원 마을",
+   "n0Target": 2700,
+   "area": 3079,
+   "land": 2075
+  },
+  {
+   "key": "north_hunter",
+   "name": "모피 사냥꾼 마을",
+   "n0Target": 2600,
+   "area": 2213,
+   "land": 1306
+  },
+  {
+   "key": "north_naru",
+   "name": "피오르 나루 마을",
+   "n0Target": 2800,
+   "area": 2368,
+   "land": 1429
+  },
+  {
+   "key": "north_laugar",
+   "name": "라우가르 온천 마을",
+   "n0Target": 2800,
+   "area": 2750,
+   "land": 2750
+  },
+  {
+   "key": "north_icecave",
+   "name": "얼음 동굴 골짜기",
+   "n0Target": 2700,
+   "area": 3244,
+   "land": 2099
+  },
+  {
+   "key": "north_runehill",
+   "name": "룬돌 언덕",
+   "n0Target": 2600,
+   "area": 3115,
+   "land": 1916
+  },
+  {
+   "key": "north_c_gatetown",
+   "name": "북문 마을",
+   "n0Target": 3200,
+   "area": 2981,
+   "land": 2573
+  },
+  {
+   "key": "north_c_snowwood",
+   "name": "눈숲 마을",
+   "n0Target": 3200,
+   "area": 3840,
+   "land": 3587
+  },
+  {
+   "key": "north_c_creek",
+   "name": "개울 나루 마을",
+   "n0Target": 3200,
+   "area": 3155,
+   "land": 3155
+  },
+  {
+   "key": "north_c_crossing",
+   "name": "북쪽 길목 마을",
+   "n0Target": 3200,
+   "area": 3439,
+   "land": 3439
+  },
+  {
+   "key": "north_c_road_nw",
+   "name": "눈숲 고갯길",
+   "n0Target": 2440,
+   "area": 2558,
+   "land": 1712
+  },
+  {
+   "key": "north_c_road_ne",
+   "name": "개울 다리길",
+   "n0Target": 2440,
+   "area": 2804,
+   "land": 1882
+  },
+  {
+   "key": "north_c_runeway",
+   "name": "룬돌 큰길",
+   "n0Target": 2440,
+   "area": 2077,
+   "land": 2077
+  },
+  {
+   "key": "north_c_road_sw",
+   "name": "서남 솔숲길",
+   "n0Target": 2440,
+   "area": 2083,
+   "land": 2083
+  },
+  {
+   "key": "north_c_road_se",
+   "name": "동남 물가길",
+   "n0Target": 2440,
+   "area": 2069,
+   "land": 2069
+  }
+ ]
+}

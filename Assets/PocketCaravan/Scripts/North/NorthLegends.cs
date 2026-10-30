@@ -15,7 +15,7 @@ namespace PocketCaravan
         public static readonly string[] Places = { "", "룬돌 언덕 오솔길 남쪽 숲 틈", "피오르 길 얼어붙은 호숫가", "라우가르 온천 마을 뒤편",
             "얼음 동굴 골짜기 폭포 옆", "피오르 나루 마을 북쪽 바닷가", "모피 사냥꾼 마을 남쪽 숲", "국경 고개 내리막 바위 뒤" };
 
-        static readonly string[] Lore =
+        public static readonly string[] Lore =
         {
             "",
             "처음 남쪽으로 길을 떠난 상인들은 눈 속에서 길을 잃었다. 그날 밤, 하늘에 초록빛 강이 흘렀다.",
@@ -28,6 +28,22 @@ namespace PocketCaravan
         };
 
         public const int Total = 7;
+        /// <summary>10/30 숨은 룬돌 귀띔: 맵 생성기가 실제 자리로 쓴 Resources/North/RuneHints.json ("라우가르 온천 마을 동쪽, 물가").
+        /// 파일이 없으면 예전 Places 문구.</summary>
+        [System.Serializable] class HintFile { public string[] hints; }
+        static string[] hints;
+        public static string Hint(int i)
+        {
+            if (hints == null)
+            {
+                var t = Resources.Load<TextAsset>("North/RuneHints");
+                hints = t != null ? (JsonUtility.FromJson<HintFile>(t.text)?.hints ?? new string[0]) : new string[0];
+            }
+            if (i >= 0 && i < hints.Length && !string.IsNullOrEmpty(hints[i])) return hints[i];
+            return i >= 0 && i < Places.Length ? Places[i] : "";
+        }
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetHints() => hints = null;
         public static int Found { get { int n = 0; for (int i = 1; i <= Total; i++) if (NorthSave.Has("rune:" + i)) n++; return n; } }
         public static bool Blessed => NorthSave.Has("blessed");
 
@@ -80,8 +96,19 @@ namespace PocketCaravan
                     () => Read(idx), Interactable.Kind.Quest);
             }
             if (ring.Length >= 2)
-                NorthSpot.Make(root, NorthUtil.Cell(map, ring[0], ring[1]),
-                    () => Blessed ? "룬돌 고리 (축복받음)" : "룬돌 고리의 중심", Ring, Interactable.Kind.Quest);
+            {
+                var rp = NorthUtil.Cell(map, ring[0], ring[1]);
+                NorthSpot.Make(root, rp, () => Blessed ? "룬돌 고리 (축복받음)" : "룬돌 고리의 중심", Ring, Interactable.Kind.Quest);
+                // 10/30(기우: 아무것도 없는 데 이름표만 떠서 이상함): 고리 한가운데에 룬 새긴 돌판을 바닥에 그린다(밟고 설 수 있음)
+                var disc = NorthUtil.Load("ring_center", new Vector2(0.5f, 0.5f));
+                if (disc != null)
+                {
+                    var go = new GameObject("Ring Center Stone");
+                    go.transform.SetParent(root, false);
+                    go.transform.position = rp + new Vector3(0f, -0.3f, 0f);
+                    var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = disc; sr.sortingOrder = 5;
+                }
+            }
         }
 
         void Read(int idx)
@@ -107,7 +134,7 @@ namespace PocketCaravan
             if (n < Total)
             {
                 var missing = new List<string>();
-                for (int i = 1; i <= Total; i++) if (!NorthSave.Has("rune:" + i)) missing.Add("· " + Places[i]);
+                for (int i = 1; i <= Total; i++) if (!NorthSave.Has("rune:" + i)) missing.Add("· " + Hint(i));
                 DialogueUI.Show("룬돌 고리", $"고리의 돌들이 무언가를 기다리는 듯하다. 지금까지 읽은 전설 조각: {n}/{Total}\n\n아직 못 읽은 조각이 있다는 곳:\n" + string.Join("\n", missing)
                     + "\n\n(숨은 룬돌은 밤에 은은히 빛난다)");
                 return;

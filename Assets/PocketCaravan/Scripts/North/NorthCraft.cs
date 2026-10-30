@@ -163,14 +163,14 @@ namespace PocketCaravan
             // 공용 이벤트는 새 게임에서 비워질 수 있어 맵마다 다시 건다 (두 번 걸리지 않게 먼저 뺌)
             GameEvents.ItemSold -= OnSold; GameEvents.ItemSold += OnSold;
             if (root != null) Destroy(root.gameObject);
-            root = null; idlers.Clear(); yard.Clear(); shouters.Clear(); stallLabels.Clear(); shoutWho = -1;
+            root = null; idlers.Clear(); yard.Clear(); shouters.Clear(); stallLabels.Clear(); sideLabels.Clear(); shoutWho = -1;
             if (shopOpen) CloseShop();
             if (map == null || !map.StartsWith("north_") || GameManager.I == null) return;
             root = new GameObject("North Craft").transform;
 
             // 큰 장 알림: 중앙·국경 고개에 들어서면 하루 한 번, 큰 장 마을에서는 들어설 때마다
             if (map == FairMap) Notify.Show($"큰 장이 섰다! 오늘 {FairName} 장터에서 팔면 {Mathf.RoundToInt(FairBonus * 10)}할을 더 받는다.", 4f);
-            else if ((map.StartsWith("north_c_") || map == "north_pass") && Mathf.RoundToInt(NorthSave.Get("fairnote", -1f)) != Today)
+            else if (map.StartsWith("north_c_") && Mathf.RoundToInt(NorthSave.Get("fairnote", -1f)) != Today)
             {
                 NorthSave.Set("fairnote", Today);
                 Notify.Show(FairNews, 4f);
@@ -196,7 +196,9 @@ namespace PocketCaravan
                 int k = c[i + 2];
                 if (k < 0 || k >= Recipes.Length) continue;
                 var pos = NorthUtil.Cell(map, c[i], c[i + 1]);
-                var s = NorthSpot.Make(root, pos, () => ShopLabel(k), () => Workshop(k), Interactable.Kind.Person);
+                // 10/29(기우): 긴 이름표가 머리 위에서 일꾼을 가려서, 공용 이름표는 비우고 일꾼 왼쪽에 오른쪽 맞춤으로 그린다(OnGUI sideLabels)
+                var s = NorthSpot.Make(root, pos, () => "", () => Workshop(k), Interactable.Kind.Person);
+                sideLabels.Add((pos + new Vector3(-0.7f, 0.75f, 0f), () => ShopLabel(k)));
                 Animate(s.gameObject, Prefix[k], 0f);
             }
         }
@@ -231,6 +233,9 @@ namespace PocketCaravan
         readonly List<(Vector3 at, string[] lines, bool keeper)> shouters = new List<(Vector3, string[], bool)>();
         // 10/27 장꾼 이름표: 좌판 지붕 위에 직접 그린다 (머리 위에 그리면 좌판 지붕·물건을 가려서)
         readonly List<(Vector3 at, string text)> stallLabels = new List<(Vector3, string)>();
+        // 10/29 공방 일꾼 이름표: 일꾼 왼쪽 (끝이 일꾼 바로 왼쪽에 오게 오른쪽 맞춤)
+        readonly List<(Vector3 at, System.Func<string> text)> sideLabels = new List<(Vector3, System.Func<string>)>();
+        GUIStyle sideLabelStyle, sideShadowStyle;
         GUIStyle stallLabelStyle, stallShadowStyle;
         int shoutWho = -1; string shoutText; float shoutT, shoutNext;
         bool fairHere;
@@ -508,6 +513,22 @@ namespace PocketCaravan
                 GUI.Label(new Rect(lx - 79f, ly - 7f, 160f, 12f), l.text, stallShadowStyle);
                 GUI.Label(new Rect(lx - 80f, ly - 8f, 160f, 12f), l.text, stallLabelStyle);
             }
+            if (sideLabelStyle == null)
+            {
+                sideLabelStyle = new GUIStyle(stallLabelStyle) { alignment = TextAnchor.MiddleRight };
+                sideLabelStyle.normal.textColor = new Color(0.95f, 0.95f, 0.95f);
+                sideShadowStyle = new GUIStyle(sideLabelStyle);
+                sideShadowStyle.normal.textColor = new Color(0f, 0f, 0f, 0.75f);
+            }
+            foreach (var l in sideLabels)
+            {
+                var lp = cam.WorldToScreenPoint(l.at);
+                if (lp.z < 0f) continue;
+                float lx = lp.x / sc, ly = (Screen.height - lp.y) / sc;
+                string sideText = l.text();
+                GUI.Label(new Rect(lx - 199f, ly - 7f, 200f, 12f), sideText, sideShadowStyle);
+                GUI.Label(new Rect(lx - 200f, ly - 8f, 200f, 12f), sideText, sideLabelStyle);
+            }
             if (shoutWho < 0 || shoutWho >= shouters.Count) return;
             var sh = shouters[shoutWho];
             var sp = cam.WorldToScreenPoint(sh.at);
@@ -553,9 +574,10 @@ namespace PocketCaravan
         {
             var r = Recipes[k];
             int n = Batches(k);
-            if (n <= 0) return $"{r.shop} ({r.inputText} → {r.productName})";
+            // 10/30(기우): 재료·만드는 것 같은 긴 설명은 이름표에 적지 않는다 — 말 걸면 일꾼이 알려 줌. 이름과 진행 상태만 짧게
+            if (n <= 0) return r.shop;
             float left = ReadyAt(k) - Now;
-            return left <= 0f ? $"{r.shop} ({r.productName} {n}개 다 됐음!)" : $"{r.shop} (남은 {Mathf.CeilToInt(left)}시간)";
+            return left <= 0f ? $"{r.shop} (다 됐음!)" : $"{r.shop} ({Mathf.CeilToInt(left)}시간)";
         }
 
         void Workshop(int k)
@@ -583,6 +605,16 @@ namespace PocketCaravan
                 can = Mathf.Min(can, it != null ? gm.Player.cargo.Count(it) / r.counts[i] : 0);
             }
             if (r.fee > 0) can = Mathf.Min(can, gm.Player.money / r.fee);
+            // 10/30 라우가르 꿀벌 오두막(NorthBees.cs)에서 받은 벌꿀 단지: 양조장에서 꿀술 2 대신 쓸 수 있다
+            var honey = r.key == "brew" ? gm.ItemById(NorthBees.HoneyId) : null;
+            var herb = r.key == "brew" ? gm.ItemById("north_herb") : null;
+            bool honeyOk = honey != null && herb != null && gm.Player.cargo.Count(honey) >= 1 && gm.Player.cargo.Count(herb) >= 1;
+            if (can <= 0 && honeyOk)
+            {
+                DialogueUI.Show(r.worker, "오, 그 벌꿀 단지! 그거면 꿀술 두 병 몫이야. 약초 하나랑 같이 맡기면 약초 꿀술을 빚어 주지.\n" + $"{r.hours:0}시간 뒤에 찾아가.",
+                    new DialogueUI.Choice("벌꿀 단지 1 + 온천 약초 1 맡기기", () => BeginHoney(k)), new DialogueUI.Choice("다음에", null));
+                return;
+            }
             if (can <= 0)
             {
                 DialogueUI.Show(r.worker, r.hello + $"\n\n{r.inputText}개를 가져오면 {r.productName} 하나를 만들어 줄게." + (r.fee > 0 ? $" 수공은 {r.fee}냥." : "") + $" {r.hours:0}시간 걸려.");
@@ -591,6 +623,7 @@ namespace PocketCaravan
             var choices = new List<DialogueUI.Choice>();
             choices.Add(new DialogueUI.Choice($"1번 맡기기 ({r.inputText}{(r.fee > 0 ? $", {r.fee}냥" : "")})", () => Begin(k, 1)));
             if (can > 1) choices.Add(new DialogueUI.Choice($"{can}번 맡기기 ({r.productName} {can}개{(r.fee > 0 ? $", {r.fee * can}냥" : "")})", () => Begin(k, can)));
+            if (honeyOk) choices.Add(new DialogueUI.Choice("벌꿀 단지 1 + 온천 약초 1 맡기기", () => BeginHoney(k)));
             choices.Add(new DialogueUI.Choice("다음에", null));
             DialogueUI.Show(r.worker, r.hello + $"\n{r.hours:0}시간 뒤에 찾아가.", choices.ToArray());
         }
@@ -617,6 +650,22 @@ namespace PocketCaravan
             NorthSave.Set("craft:" + r.key + ":t", Now + r.hours);
             NorthSave.Set("craft:" + r.key + ":c", cost);           // 한 개당 원가 (장부 손익용)
             Notify.Show($"{r.shop}에 맡겼다. {r.hours:0}시간 뒤에 {r.productName} {times}개를 찾아갈 수 있다.", 3f);
+            if (!AudioManager.Muted) sfx.PlayOneShot(coin, 0.4f);
+        }
+
+        /// <summary>10/30 양조장: 벌꿀 단지 1 + 약초 1 → 약초 꿀술 1 (꿀술 2 대신)</summary>
+        void BeginHoney(int k)
+        {
+            var gm = GameManager.I;
+            var r = Recipes[k];
+            var honey = gm.ItemById(NorthBees.HoneyId); var herb = gm.ItemById("north_herb");
+            if (honey == null || herb == null || gm.Player.cargo.Count(honey) < 1 || gm.Player.cargo.Count(herb) < 1) { Notify.Show("재료가 모자라…", 2f); return; }
+            float cost = gm.Player.cargo.AverageCost(honey) + gm.Player.cargo.AverageCost(herb);
+            gm.Player.cargo.Remove(honey, 1); gm.Player.cargo.Remove(herb, 1);
+            NorthSave.Set("craft:" + r.key + ":n", 1);
+            NorthSave.Set("craft:" + r.key + ":t", Now + r.hours);
+            NorthSave.Set("craft:" + r.key + ":c", cost);
+            Notify.Show($"{r.shop}에 맡겼다. {r.hours:0}시간 뒤에 {r.productName} 1개를 찾아갈 수 있다.", 3f);
             if (!AudioManager.Muted) sfx.PlayOneShot(coin, 0.4f);
         }
 

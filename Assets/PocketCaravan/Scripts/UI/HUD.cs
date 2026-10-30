@@ -106,10 +106,10 @@ namespace PocketCaravan
             }
             if(UIStyle.CrispRegion)
             {
-                GUI.Label(new Rect(8,UIStyle.VirtualHeight-30,UIStyle.VirtualWidth-16,26),"WASD 이동 · Shift 달리기 · Space 대화 · Tab 상태\nQ 퀘스트 · M 지도 · L 장부 · Esc 메뉴",UIStyle.Small);return;
+                GUI.Label(new Rect(8,UIStyle.VirtualHeight-30,UIStyle.VirtualWidth-16,26),"WASD 이동 · Shift 달리기 · Space 대화 · Tab 상태\nQ 퀘스트 · I 소지품 · M 지도 · L 장부 · Esc 메뉴",UIStyle.Small);return;
             }
-            GUI.Label(new Rect(6, UIStyle.VirtualHeight - 16, 520, 14),
-                "WASD 이동 · Shift 달리기 · Space 말 걸기 · Tab 상태 · Q 퀘스트 · M 지도 · L 장부 · Esc 메뉴", UIStyle.Small);
+            GUI.Label(new Rect(6, UIStyle.VirtualHeight - 16, 580, 14),
+                "WASD 이동 · Shift 달리기 · Space 말 걸기 · Tab 상태 · Q 퀘스트 · I 소지품 · M 지도 · L 장부 · Esc 메뉴", UIStyle.Small);
         }
 
         static void Gauge(float x, ref float y, string label, float v, Color32 c)

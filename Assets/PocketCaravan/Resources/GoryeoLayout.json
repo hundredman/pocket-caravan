@@ -176,6 +176,14 @@
     {
       "oldId": "goryeo_southcoast",
       "newId": "goryeo_jangdan"
+    },
+    {
+      "oldId": "north_pass",
+      "newId": "north_birka"
+    },
+    {
+      "oldId": "north_fjord_road",
+      "newId": "north_naru"
     }
   ]
 }
