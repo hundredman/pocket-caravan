@@ -137,18 +137,18 @@ def daily(m, taken):
     out["seats"] = _spaced(seats, 3, 8)
     market = next((o for o in m.objects if o["kind"] == "market"), None)
     if market:
-        busy = {(o["x"] + dx, o["y"] + dy) for o in m.objects for dx in (-2, -1, 0, 1, 2) for dy in (-2, -1, 0, 1, 2)
-                if o["kind"] not in ("anim", "growth", "ambience")}
+        busy = {(o["x"] + dx, o["y"] + dy) for o in m.objects for dx in range(-4, 5) for dy in range(-4, 5)
+                if o["kind"] not in ("anim", "growth", "ambience")}      # 2026-10-29: 사람 둘레 4칸을 피해 붐비지 않게
         start = next(((market["x"] + dx, market["y"] + dy) for dx in (-1, 0, 1) for dy in (-1, 0, 1, 2) if _walk(m, market["x"] + dx, market["y"] + dy)), None)
         dist, q = ({start: 0}, deque([start])) if start else ({}, deque())
         while q:
             c = q.popleft()
             for p in ((c[0] + 1, c[1]), (c[0] - 1, c[1]), (c[0], c[1] + 1), (c[0], c[1] - 1)):
-                if p not in dist and _walk(m, *p) and dist[c] < 12:
+                if p not in dist and _walk(m, *p) and dist[c] < 18:
                     dist[p] = dist[c] + 1; q.append(p)
         def open_cell(c):
             return c not in busy and c not in m.decks and not m.water[c[1]][c[0]] and all(_walk(m, c[0] + dx, c[1] + dy) for dx in (-1, 0, 1) for dy in (0, 1))
-        wander = sorted((d, c) for c, d in dist.items() if 4 <= d <= 9 and open_cell(c))
+        wander = sorted((d, c) for c, d in dist.items() if 5 <= d <= 14 and open_cell(c))
         out["wander"] = list(wander[0][1]) if wander else []
         # 곤돌라 나루: 장터에서 걸어서 닿는, 바로 옆(아래·좌우)이 물인 물가 칸
         def water_next(c):

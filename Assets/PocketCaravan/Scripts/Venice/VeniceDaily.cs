@@ -8,7 +8,7 @@ namespace PocketCaravan
     /// - 떠돌이 상인: 날마다 장터 마을 8곳 중 한 곳(VeniceMerchant). 오늘의 특가·동작 비법서·사자 문장 소문.
     /// - 벤치 앞 칸에 앉기(VeniceSeat), 여관 주인·숙소 주인 옆 '여관에서 쉬기'(VeniceInn), 석호 나루의 곤돌라 배(VeniceTraghetto).
     /// - 하루 처음 베네치아 맵에 들어오면 떠돌이 상인·특가 마을을 알린다.
-    /// - 다음 이야기 길잡이: 진행 중인 베네치아 퀘스트가 없을 때 다음 퀘스트를 누가 주는지 화면 위에 한 줄.
+    /// - 다음 이야기 길잡이: 진행 중인 베네치아 퀘스트가 없을 때 다음 퀘스트를 누가 주는지 화면 아래 가운데에 한 줄 (10-30 북유럽 NorthGuide와 같은 자리·모양).
     /// - 푹 쉼(여관): 8시간 동안 달릴 때 체력이 절반만 준다(공용 PlayerController.staminaDrain 값을 버프 동안만 바꿨다 되돌린다).
     /// 저장: VeniceSave (rested_until, deal_n 오늘 산 특가 수, announce 날짜).
     /// </summary>
@@ -30,6 +30,7 @@ namespace PocketCaravan
 
         Transform root;
         float baseDrain = -1f;
+        PlayerController drainOwner;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Attach()
@@ -107,8 +108,16 @@ namespace PocketCaravan
         {
             var pc = PlayerController.Instance;
             if (pc == null) return;
+            // 10-30 베네치아 안에서만 쓴다. 밖에서는 손대지 않아 북유럽 여관 버프 같은 다른 지역 값과 다투지 않는다.
+            bool inside = VeniceUtil.InVenice;
+            if (pc != drainOwner) { drainOwner = pc; baseDrain = -1f; }
+            if (!inside)
+            {
+                if (baseDrain >= 0f) { pc.staminaDrain = baseDrain; baseDrain = -1f; }   // 나갈 때 한 번만 되돌린다
+                return;
+            }
             if (baseDrain < 0f) baseDrain = pc.staminaDrain;
-            pc.staminaDrain = !VeniceUtil.InVenice ? baseDrain : Rested ? baseDrain * .5f : VeniceSeat.Breather ? baseDrain * .75f : baseDrain;
+            pc.staminaDrain = Rested ? baseDrain * .5f : VeniceSeat.Breather ? baseDrain * .75f : baseDrain;
         }
 
         // ---------------- 다음 이야기 길잡이 ----------------
@@ -131,8 +140,11 @@ namespace PocketCaravan
             string who = best.giverNpc;
             foreach (var g in Givers) if (g.npc == best.giverNpc) who = g.name;
             var map = WorldIndex.Get()?.MapOf("npc", best.giverNpc);
-            return $"다음 이야기 「{best.title}」 — {who}{(map != null ? $" ({MapName(map)})" : "")}";
+            // 2026-10-30 북유럽 NorthGuide와 같은 글 모양
+            return $"<color=#ffde59>다음 이야기</color>  <b>{who}</b> 「{best.title}」" + (map != null ? $"  <color=#c9c3d6>· {MapName(map)}</color>" : "") + "  <color=#ffde59>!</color>";
         }
+
+        static GUIStyle guideStyle;
 
         void OnGUI()
         {
@@ -141,13 +153,13 @@ namespace PocketCaravan
             if (Rested) text = (text != null ? text + "   " : "") + "<color=#9FE0A0>푹 쉼</color>";
             if (text == null) return;
             UIStyle.Begin();
+            // 2026-10-30 북유럽 다음 이야기 줄(NorthGuide)과 같은 자리·모양: 화면 아래 가운데, 조작 안내·목표 줄 위
+            if (guideStyle == null) guideStyle = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow };
+            float w = Mathf.Min(UIStyle.VirtualWidth - 20f, guideStyle.CalcSize(new GUIContent(text)).x + 20f);
             GUI.depth = -5;
-            // 왼쪽 위 상태 창 바로 아래 (가운데 위는 알림, 가운데 아래는 공용 '목표' 줄이 쓴다)
-            var content = new GUIContent($"<size=9><color=#FCE6A8>{text}</color></size>");
-            float w = Mathf.Min(260f, UIStyle.Rich.CalcSize(content).x + 10f);
-            var r = new Rect(4, 94, w, 14);
-            var c = GUI.color; GUI.color = new Color(0f, 0f, 0f, .5f); GUI.DrawTexture(r, Texture2D.whiteTexture); GUI.color = c;
-            GUI.Label(new Rect(r.x + 5, r.y - 1, w, 16), content, UIStyle.Rich);
+            var r = new Rect((UIStyle.VirtualWidth - w) / 2f, UIStyle.VirtualHeight - 64f, w, 18f);
+            GUI.Box(r, GUIContent.none, UIStyle.Box);
+            GUI.Label(r, text, guideStyle);
         }
     }
 }

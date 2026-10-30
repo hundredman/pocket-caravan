@@ -1,0 +1,127 @@
+{
+  "map": "transit_woodtown",
+  "sourceScene": "Assets/PocketCaravan/Scenes/Transit/transit_woodtown.unity",
+  "scope": "Edit mode, original scene materials/lights/SpriteRenderers; temporary atlas clones; no gameplay loop",
+  "tileCount": 650,
+  "atlasSize": "512x1024",
+  "sourceTileRGBAIdentical": true,
+  "tilePropertiesCompared": 650,
+  "baselineControlDifferentPixels": 0,
+  "frames": [
+    {
+      "index": 0,
+      "camera": "(43.5000, 34.5000, 35.0000)",
+      "differentPixels": 3826
+    },
+    {
+      "index": 1,
+      "camera": "(15.0000, 8.4375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 2,
+      "camera": "(45.0000, 8.4375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 3,
+      "camera": "(75.0000, 8.4375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 4,
+      "camera": "(15.0000, 25.3125, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 5,
+      "camera": "(45.0000, 25.3125, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 6,
+      "camera": "(75.0000, 25.3125, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 7,
+      "camera": "(15.0000, 42.1875, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 8,
+      "camera": "(45.0000, 42.1875, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 9,
+      "camera": "(75.0000, 42.1875, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 10,
+      "camera": "(15.0000, 59.0625, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 11,
+      "camera": "(45.0000, 59.0625, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 12,
+      "camera": "(75.0000, 59.0625, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 13,
+      "camera": "(15.0000, 75.9375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 14,
+      "camera": "(45.0000, 75.9375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 15,
+      "camera": "(75.0000, 75.9375, 8.4375)",
+      "differentPixels": 0
+    },
+    {
+      "index": 16,
+      "camera": "(43.6730, 34.7810, 4.2188)",
+      "differentPixels": 0
+    },
+    {
+      "index": 17,
+      "camera": "(43.6730, 34.7810, 16.8750)",
+      "differentPixels": 0
+    }
+  ],
+  "totalDifferentPixels": 3826,
+  "cellChecks": 6319,
+  "cellsIdentical": true,
+  "cellsBefore": "E7-30-E6-A4-33-2D-90-8E-6D-21-B0-33-56-12-93-61-CA-A6-8C-1E-8B-0D-F7-94-0F-6B-E2-26-6E-4B-5A-70",
+  "cellsAfter": "E7-30-E6-A4-33-2D-90-8E-6D-21-B0-33-56-12-93-61-CA-A6-8C-1E-8B-0D-F7-94-0F-6B-E2-26-6E-4B-5A-70",
+  "motorStarts": 16,
+  "motorTicksPerMode": 11520,
+  "motorTrajectoryIdentical": true,
+  "walkBefore": "9F-F8-57-E5-D9-A3-E5-EE-BB-34-4E-64-89-A3-C2-01-28-6A-52-D2-F6-DB-31-75-48-90-F7-C6-E4-17-D7-DF",
+  "walkAfter": "9F-F8-57-E5-D9-A3-E5-EE-BB-34-4E-64-89-A3-C2-01-28-6A-52-D2-F6-DB-31-75-48-90-F7-C6-E4-17-D7-DF",
+  "movementStatistics": [
+    {
+      "moved": 8954,
+      "stopped": 2566
+    },
+    {
+      "moved": 8954,
+      "stopped": 2566
+    }
+  ],
+  "gameplayComponentsAndSortingIdentical": true,
+  "gameBefore": "2C-09-0A-6A-05-3E-4C-C9-F6-AB-82-02-53-9D-67-81-67-BD-4E-05-AC-5C-64-96-58-88-D8-26-08-95-8F-3F",
+  "gameAfter": "2C-09-0A-6A-05-3E-4C-C9-F6-AB-82-02-53-9D-67-81-67-BD-4E-05-AC-5C-64-96-58-88-D8-26-08-95-8F-3F",
+  "logs": [],
+  "productionWrites": 0
+}

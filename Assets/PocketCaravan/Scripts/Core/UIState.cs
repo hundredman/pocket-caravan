@@ -24,37 +24,55 @@ namespace PocketCaravan
     /// </summary>
     public static class UIStyle
     {
-        public const float VirtualHeight = 360f;
+        public static bool CrispRegion => GoryeoTravelTransition.RegionOf(MapRoot.Current != null ? MapRoot.Current.mapId : null) != null;
+        public static float VirtualHeight => CrispRegion ? Screen.height / Scale : 360f;
         static Font font, small;
         static bool skinned;
         public static Font SmallFont => small != null ? small : font;
 
-        public static float Scale => Screen.height / VirtualHeight;
+        public static float Scale => CrispRegion ? Mathf.Max(1f, Mathf.Floor(Screen.height / 270f)) : Screen.height / 360f;
         public static float VirtualWidth => Screen.width / Scale;
+        public static float WindowHeight(float desired) => CrispRegion ? Mathf.Min(desired,VirtualHeight-16) : desired;
 
         static GUIStyle center, right, rich, wrap, smallStyle;
+        static bool fontProfile;
+        public static Font RegularFont => font;
+        static UIStyle()
+        {
+            Font.textureRebuilt+=f=>{if(fontProfile&&(f==font||f==small))PointFont(f);};
+        }
+        static void PointFont(Font f)
+        {
+            if(f!=null&&f.material!=null&&f.material.mainTexture!=null)f.material.mainTexture.filterMode=FilterMode.Point;
+        }
         /// <summary>작은 글씨 (9px 갓무리)</summary>
-        public static GUIStyle Small => smallStyle ??= new GUIStyle(GUI.skin.label) { font = SmallFont, fontSize = 9, richText = true, wordWrap = true };
-        public static GUIStyle Center => center ??= new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter };
-        public static GUIStyle Right => right ??= new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleRight };
+        public static int BodySize => CrispRegion ? 12 : 11;
+        public static int SmallSize => CrispRegion ? 10 : 9;
+        public static GUIStyle Small => smallStyle ??= new GUIStyle(GUI.skin.label) { font = SmallFont, fontSize = SmallSize, richText = true, wordWrap = true };
+        public static GUIStyle Center => center ??= new GUIStyle(GUI.skin.label) { font = RegularFont, alignment = TextAnchor.MiddleCenter };
+        public static GUIStyle Right => right ??= new GUIStyle(GUI.skin.label) { font = RegularFont, alignment = TextAnchor.MiddleRight };
         static GUIStyle centerRich;
-        public static GUIStyle CenterRich => centerRich ??= new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, richText = true };
-        public static GUIStyle Rich => rich ??= new GUIStyle(GUI.skin.label) { richText = true };
-        public static GUIStyle Wrap => wrap ??= new GUIStyle(GUI.skin.label) { wordWrap = true, richText = true };
+        public static GUIStyle CenterRich => centerRich ??= new GUIStyle(GUI.skin.label) { font = RegularFont, alignment = TextAnchor.MiddleCenter, richText = true };
+        public static GUIStyle Rich => rich ??= new GUIStyle(GUI.skin.label) { font = RegularFont, richText = true };
+        public static GUIStyle Wrap => wrap ??= new GUIStyle(GUI.skin.label) { font = RegularFont, wordWrap = true, richText = true };
 
         public static void Begin()
         {
-            if (font == null)
+            if (font == null || fontProfile != CrispRegion)
             {
-                font = Resources.Load<Font>("Fonts/Galmuri11");
-                small = Resources.Load<Font>("Fonts/Galmuri9");
+                fontProfile = CrispRegion;
+                string prefix = fontProfile ? "Fonts/GoryeoGalmuri" : "Fonts/Galmuri";
+                font = Resources.Load<Font>(prefix + "11") ?? Resources.Load<Font>("Fonts/Galmuri11");
+                small = Resources.Load<Font>(prefix + "9") ?? Resources.Load<Font>("Fonts/Galmuri9");
+                center=right=rich=wrap=smallStyle=centerRich=null;skinned=false;
                 if (font == null)
                     font = Font.CreateDynamicFontFromOSFont(new[] { "Apple SD Gothic Neo", "Malgun Gothic", "NanumGothic", "Noto Sans CJK KR", "Arial" }, 12);
             }
             GUI.skin.font = font;
-            GUI.skin.label.fontSize = 11;
-            GUI.skin.button.fontSize = 11;
-            GUI.skin.box.fontSize = 11;
+            if(fontProfile){PointFont(font);PointFont(small);}
+            GUI.skin.label.fontSize = BodySize;
+            GUI.skin.button.fontSize = BodySize;
+            GUI.skin.box.fontSize = BodySize;
             if (!skinned || box.normal.background == null) Skin();
             GUI.matrix = Matrix4x4.Scale(new Vector3(Scale, Scale, 1f));
         }

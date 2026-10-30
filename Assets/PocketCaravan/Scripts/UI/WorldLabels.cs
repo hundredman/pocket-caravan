@@ -116,12 +116,12 @@ namespace PocketCaravan
                 arrowTex = Triangle(12, 12, true);
                 downTex = Triangle(10, 8, false);
             }
-            if (nameStyle == null)
+            if (nameStyle == null || nameStyle.font != UIStyle.SmallFont)
             {
-                nameStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.SmallFont, alignment = TextAnchor.MiddleCenter, fontSize = 9, clipping = TextClipping.Overflow };
+                nameStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.SmallFont, alignment = TextAnchor.MiddleCenter, fontSize = UIStyle.SmallSize, clipping = TextClipping.Overflow };
                 shadowStyle = new GUIStyle(nameStyle);
                 shadowStyle.normal.textColor = new Color(0f, 0f, 0f, 0.8f);
-                guideStyle = new GUIStyle(nameStyle) { font = GUI.skin.font, fontSize = 11 };
+                guideStyle = new GUIStyle(nameStyle) { font = GUI.skin.font, fontSize = UIStyle.BodySize };
             }
         }
 

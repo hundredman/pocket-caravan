@@ -1,0 +1,316 @@
+{
+  "schemaVersion": 1,
+  "status": "review",
+  "description": "User: restore forest-clearing paddy sites; additional rice only on open/sparse land, live unchanged.",
+  "clearings": [
+    {
+      "id": "songak-ridge",
+      "x": 172,
+      "y": -43,
+      "w": 20,
+      "h": 13,
+      "contour": true
+    },
+    {
+      "id": "source-ridge",
+      "x": 100,
+      "y": -26,
+      "w": 32,
+      "h": 16,
+      "contour": true
+    },
+    {
+      "id": "source-outlet",
+      "x": 114,
+      "y": -10,
+      "w": 4,
+      "h": 4,
+      "contour": true
+    },
+    {
+      "id": "west-headwater",
+      "x": 64,
+      "y": -58,
+      "w": 10,
+      "h": 10,
+      "contour": true
+    },
+    {
+      "id": "capital-backpeak",
+      "x": 227,
+      "y": -70,
+      "w": 12,
+      "h": 10,
+      "contour": true
+    },
+    {
+      "id": "capital-headwater",
+      "x": 225,
+      "y": -68,
+      "w": 6,
+      "h": 6,
+      "contour": true
+    },
+    {
+      "id": "goryeo-headwater",
+      "x": 182,
+      "y": -58,
+      "w": 10,
+      "h": 10,
+      "contour": true
+    },
+    {
+      "id": "paddy-jangdan-1",
+      "x": 194,
+      "y": 18,
+      "w": 12,
+      "h": 8
+    },
+    {
+      "id": "paddy-jangdan-2",
+      "x": 192,
+      "y": 62,
+      "w": 12,
+      "h": 8
+    },
+    {
+      "id": "paddy-naru-1",
+      "x": 236,
+      "y": 32,
+      "w": 12,
+      "h": 8
+    },
+    {
+      "id": "paddy-naru-2",
+      "x": 234,
+      "y": 20,
+      "w": 12,
+      "h": 8
+    },
+    {
+      "id": "paddy-songak-1",
+      "x": 166,
+      "y": -16,
+      "w": 12,
+      "h": 8
+    },
+    {
+      "id": "paddy-gaegyeong-1",
+      "x": 270,
+      "y": 14,
+      "w": 12,
+      "h": 8
+    },
+    {
+      "id": "village-fill-rice-1",
+      "x": 240,
+      "y": 8,
+      "w": 12,
+      "h": 8
+    }
+  ],
+  "placements": [
+    {
+      "id": "songak-west",
+      "asset": "west-cap",
+      "x": 172,
+      "y": -43,
+      "role": "rock"
+    },
+    {
+      "id": "songak-body",
+      "asset": "body-b",
+      "x": 180,
+      "y": -43,
+      "role": "rock"
+    },
+    {
+      "id": "songak-east",
+      "asset": "east-cap",
+      "x": 184,
+      "y": -43,
+      "role": "rock"
+    },
+    {
+      "id": "source-west",
+      "asset": "west-cap",
+      "x": 100,
+      "y": -26,
+      "role": "rock"
+    },
+    {
+      "id": "source-spring",
+      "asset": "spring-waterfall",
+      "x": 108,
+      "y": -26,
+      "role": "water-rock"
+    },
+    {
+      "id": "source-east",
+      "asset": "east-cap",
+      "x": 124,
+      "y": -26,
+      "role": "rock"
+    },
+    {
+      "id": "source-outlet",
+      "asset": "river-outlet",
+      "x": 114,
+      "y": -10,
+      "role": "water-rock"
+    },
+    {
+      "id": "jangdan-rice-north",
+      "asset": "small-plot",
+      "x": 211,
+      "y": 16,
+      "role": "rice"
+    },
+    {
+      "id": "jangdan-rice-south",
+      "asset": "small-plot",
+      "x": 217,
+      "y": 29,
+      "role": "rice"
+    },
+    {
+      "id": "west-headwater",
+      "asset": "compact-spring-west",
+      "x": 64,
+      "y": -58,
+      "role": "water-rock"
+    },
+    {
+      "id": "capital-backpeak",
+      "asset": "mountain",
+      "x": 227,
+      "y": -70,
+      "role": "rock"
+    },
+    {
+      "id": "capital-headwater",
+      "asset": "compact-spring-west-tiny",
+      "x": 225,
+      "y": -68,
+      "role": "water-rock"
+    },
+    {
+      "id": "goryeo-headwater",
+      "asset": "compact-spring-east",
+      "x": 182,
+      "y": -58,
+      "role": "water-rock"
+    },
+    {
+      "id": "paddy-jangdan-1",
+      "asset": "small-plot",
+      "x": 194,
+      "y": 18,
+      "role": "rice"
+    },
+    {
+      "id": "paddy-jangdan-2",
+      "asset": "small-plot",
+      "x": 192,
+      "y": 62,
+      "role": "rice"
+    },
+    {
+      "id": "paddy-naru-1",
+      "asset": "small-plot",
+      "x": 236,
+      "y": 32,
+      "role": "rice"
+    },
+    {
+      "id": "paddy-naru-2",
+      "asset": "small-plot",
+      "x": 234,
+      "y": 20,
+      "role": "rice"
+    },
+    {
+      "id": "paddy-songak-1",
+      "asset": "small-plot",
+      "x": 166,
+      "y": -16,
+      "role": "rice"
+    },
+    {
+      "id": "paddy-gaegyeong-1",
+      "asset": "small-plot",
+      "x": 270,
+      "y": 14,
+      "role": "rice"
+    },
+    {
+      "id": "village-fill-rice-1",
+      "asset": "small-plot",
+      "role": "rice",
+      "x": 240,
+      "y": 8
+    }
+  ],
+  "connections": [
+    {
+      "a": "songak-west",
+      "portA": "E",
+      "b": "songak-body",
+      "portB": "W"
+    },
+    {
+      "a": "songak-body",
+      "portA": "E",
+      "b": "songak-east",
+      "portB": "W"
+    },
+    {
+      "a": "source-west",
+      "portA": "E",
+      "b": "source-spring",
+      "portB": "W"
+    },
+    {
+      "a": "source-spring",
+      "portA": "E",
+      "b": "source-east",
+      "portB": "W"
+    },
+    {
+      "a": "source-spring",
+      "portA": "S",
+      "b": "source-outlet",
+      "portB": "N"
+    }
+  ],
+  "sourceDecision": "사용자 2026-10-29: 큰 폭포를 유지하고 주변 출입구·도착 위치 조정. 기존 맵/스폰 ID 유지.",
+  "headwaters": [
+    {
+      "x": 66,
+      "y": -48,
+      "placement": "west-headwater"
+    },
+    {
+      "x": 226,
+      "y": -62,
+      "placement": "capital-headwater"
+    },
+    {
+      "x": 191,
+      "y": -48,
+      "placement": "goryeo-headwater"
+    },
+    {
+      "x": 117,
+      "y": -9,
+      "placement": "source-spring",
+      "connection": [
+        116,
+        -6
+      ]
+    }
+  ],
+  "approvedBy": "user",
+  "approvedAt": "2026-10-30",
+  "approvalEvidence": "User: 아, 그럼 통합해줘. — displayed A7d batch and integration discussion"
+}

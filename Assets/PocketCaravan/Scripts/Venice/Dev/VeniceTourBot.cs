@@ -521,7 +521,9 @@ namespace PocketCaravan
 
         static Interactable FindByName(string name)
         {
-            foreach (var it in Interactable.All) if (it != null && it.DisplayName == name) return it;
+            VeniceLabels.ShowAll = true;                 // 멀리 있는 장소도 이름으로 찾는다 (장소 이름표는 평소 가까이에서만 뜬다)
+            try { foreach (var it in Interactable.All) if (it != null && it.DisplayName == name) return it; }
+            finally { VeniceLabels.ShowAll = false; }
             return null;
         }
     }

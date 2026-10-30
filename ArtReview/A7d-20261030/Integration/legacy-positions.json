@@ -1,0 +1,29 @@
+{
+  "points": [
+    {
+      "map": "transit_central_approach",
+      "x": 61,
+      "y": 29
+    },
+    {
+      "map": "transit_woodtown",
+      "x": 27,
+      "y": 55
+    },
+    {
+      "map": "transit_wetroad",
+      "x": 25,
+      "y": 2
+    },
+    {
+      "map": "goryeo_songak",
+      "x": 29,
+      "y": 68
+    },
+    {
+      "map": "Dakmok",
+      "x": 40,
+      "y": 55
+    }
+  ]
+}

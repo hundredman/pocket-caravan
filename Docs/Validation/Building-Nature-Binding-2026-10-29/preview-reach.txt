@@ -1,0 +1,19 @@
+{
+ "mapsReached": [
+  "Dakmok",
+  "Gaegyeong",
+  "Naru",
+  "goryeo_jangdan",
+  "goryeo_songak",
+  "transit_central_approach",
+  "transit_crossroads",
+  "transit_ferry",
+  "transit_pass",
+  "transit_south_inland",
+  "transit_southport",
+  "transit_wetroad",
+  "transit_woodtown"
+ ],
+ "mapsMissing": [],
+ "unreached": []
+}

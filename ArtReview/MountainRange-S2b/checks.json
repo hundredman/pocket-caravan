@@ -1,0 +1,489 @@
+{
+  "stage": "2b",
+  "status": "pending_visual_approval",
+  "productionApplied": false,
+  "assets": [
+    {
+      "name": "north-cap",
+      "size": [
+        192,
+        128
+      ],
+      "rgbaSha256": "d925bc7d3b4165749c5e995c55609524e55c0a598504f3e60fd2b0745d921dc2",
+      "asepriteRGBAEqual": true,
+      "portsOnSameConnectedMass": true
+    },
+    {
+      "name": "north-south-body",
+      "size": [
+        192,
+        192
+      ],
+      "rgbaSha256": "dd1eb5ef48a13ac7512dca8478d9d196fcb1217b2b9a459d3c4eace7f4e2679f",
+      "asepriteRGBAEqual": true,
+      "portsOnSameConnectedMass": true
+    },
+    {
+      "name": "south-cap",
+      "size": [
+        192,
+        128
+      ],
+      "rgbaSha256": "0bf60989985010b51c5479bd3458484569b1c927d1b4106bd469f63e1b84efb8",
+      "asepriteRGBAEqual": true,
+      "portsOnSameConnectedMass": true
+    },
+    {
+      "name": "turn-w-n",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "6f2b821d97b25cb6ef665294156fa2812d59cbc271d2b3963749ff1681c3dcde",
+      "asepriteRGBAEqual": true,
+      "portsOnSameConnectedMass": true
+    },
+    {
+      "name": "turn-w-s",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "17d117df625934061e2df491ebb426b62cf87d7fb13cd739baf7bb355f6138c0",
+      "asepriteRGBAEqual": true,
+      "portsOnSameConnectedMass": true
+    },
+    {
+      "name": "turn-e-n",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "4ddd7512bab33caa767a28066e064d897051e1aa77eaa0458161f618f20b7bdc",
+      "asepriteRGBAEqual": true,
+      "portsOnSameConnectedMass": true
+    },
+    {
+      "name": "turn-e-s",
+      "size": [
+        256,
+        256
+      ],
+      "rgbaSha256": "8100dfc9bf6264dcf4b8927fa5c64a49e95630e17fc1f5eba231a5a4892cf3dc",
+      "asepriteRGBAEqual": true,
+      "portsOnSameConnectedMass": true
+    }
+  ],
+  "compatiblePortPairs": [
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "body-a",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "body-b",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "east-cap",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "bend-north",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "bend-south",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "turn-w-n",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "west-cap",
+      "side": "E",
+      "second": "turn-w-s",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "body-a",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "body-b",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "east-cap",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "bend-north",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "bend-south",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "turn-w-n",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-a",
+      "side": "E",
+      "second": "turn-w-s",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "body-a",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "body-b",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "east-cap",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "bend-north",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "bend-south",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "turn-w-n",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "body-b",
+      "side": "E",
+      "second": "turn-w-s",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "body-a",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "body-b",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "east-cap",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "bend-north",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "bend-south",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "turn-w-n",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-north",
+      "side": "E",
+      "second": "turn-w-s",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "body-a",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "body-b",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "east-cap",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "bend-north",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "bend-south",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "turn-w-n",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "bend-south",
+      "side": "E",
+      "second": "turn-w-s",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-cap",
+      "side": "S",
+      "second": "north-south-body",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-cap",
+      "side": "S",
+      "second": "south-cap",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-cap",
+      "side": "S",
+      "second": "turn-w-n",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-cap",
+      "side": "S",
+      "second": "turn-e-n",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-south-body",
+      "side": "S",
+      "second": "north-south-body",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-south-body",
+      "side": "S",
+      "second": "south-cap",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-south-body",
+      "side": "S",
+      "second": "turn-w-n",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "north-south-body",
+      "side": "S",
+      "second": "turn-e-n",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-w-s",
+      "side": "S",
+      "second": "north-south-body",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-w-s",
+      "side": "S",
+      "second": "south-cap",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-w-s",
+      "side": "S",
+      "second": "turn-w-n",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-w-s",
+      "side": "S",
+      "second": "turn-e-n",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "body-a",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "body-b",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "east-cap",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "bend-north",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "bend-south",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "turn-w-n",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-n",
+      "side": "E",
+      "second": "turn-w-s",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "body-a",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "body-b",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "east-cap",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "bend-north",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "bend-south",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "turn-w-n",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "E",
+      "second": "turn-w-s",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "S",
+      "second": "north-south-body",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "S",
+      "second": "south-cap",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "S",
+      "second": "turn-w-n",
+      "decodedRGBAEqual": true
+    },
+    {
+      "first": "turn-e-s",
+      "side": "S",
+      "second": "turn-e-n",
+      "decodedRGBAEqual": true
+    }
+  ],
+  "northSouthMasterRGBAEqual": true,
+  "frozenS1S2aPixelsUnchanged": true,
+  "ninetyDegreeTurns": true,
+  "concaveConvexPairedCornerModules": true,
+  "independentFilledAreaAutotiles": false,
+  "unity": {
+    "mode": "Edit",
+    "captures": [
+      "wn",
+      "ws",
+      "en",
+      "es",
+      "mixed"
+    ],
+    "wholeFrameRGBADifferences": 0
+  },
+  "branches": false,
+  "passes": false,
+  "streams": false,
+  "playTest": false
+}

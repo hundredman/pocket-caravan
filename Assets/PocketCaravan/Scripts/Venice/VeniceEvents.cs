@@ -28,6 +28,10 @@ namespace PocketCaravan
 
         Transform root;
         System.Collections.Generic.HashSet<Vector3Int> floodCells = new System.Collections.Generic.HashSet<Vector3Int>();
+        static VeniceEvents inst;
+
+        /// <summary>이 칸이 아쿠아 알타 때 물이 차는 칸인가 (걷기 연출 VeniceStride가 쓴다)</summary>
+        public static bool IsFlooded(Vector3Int cell) => inst != null && inst.floodCells.Contains(cell);
         SpriteRenderer follower;
         VeniceMaskSeller seller;
         float baseWalk = -1f;
@@ -45,7 +49,7 @@ namespace PocketCaravan
                 GameManager.I.gameObject.AddComponent<VeniceEvents>();
         }
 
-        void OnEnable() { SceneManager.sceneLoaded += OnLoaded; Build(); }
+        void OnEnable() { inst = this; SceneManager.sceneLoaded += OnLoaded; Build(); }
         void OnDisable() { SceneManager.sceneLoaded -= OnLoaded; ShowFlood(false); if (root != null) Destroy(root.gameObject); }
         void OnLoaded(Scene s, LoadSceneMode m) => Build();
 
@@ -54,6 +58,12 @@ namespace PocketCaravan
             if (root != null) Destroy(root.gameObject);
             ShowFlood(false);
             root = null; follower = null; floodShown = false; floodCells.Clear();
+            if (!VeniceUtil.InVenice && MapRoot.Current != null && Following)
+            {
+                // 10-30 동행 중에 베네치아 밖으로 나가면 순례자는 여기서 헤어진다 (나중에 엉뚱한 곳에서 사례가 나오지 않게)
+                VeniceSave.Set("lost_follow", 0f);
+                Notify.Show("순례자: \"여기서부턴 혼자 가 볼게요. 고마웠어요!\"", 4f);
+            }
             if (!VeniceUtil.InVenice || MapRoot.Current == null) return;
             var data = VeniceData.Get(VeniceUtil.Map);
             root = new GameObject("베네치아 사건").transform;

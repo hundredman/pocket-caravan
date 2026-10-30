@@ -1,0 +1,46 @@
+{
+  "shots": [
+    {
+      "mapId": "Gaegyeong",
+      "slug": "gaegyeong",
+      "x": 35.0,
+      "y": 27.0
+    },
+    {
+      "mapId": "goryeo_songak",
+      "slug": "songak",
+      "x": 43.5,
+      "y": 25.0
+    },
+    {
+      "mapId": "Dakmok",
+      "slug": "dakmok",
+      "x": 34.0,
+      "y": 35.0
+    },
+    {
+      "mapId": "goryeo_jangdan",
+      "slug": "jangdan",
+      "x": 34,
+      "y": 68
+    },
+    {
+      "mapId": "transit_woodtown",
+      "slug": "woodtown",
+      "x": 39.0,
+      "y": 36.5
+    },
+    {
+      "mapId": "transit_ferry",
+      "slug": "ferry",
+      "x": 34.0,
+      "y": 26.5
+    },
+    {
+      "mapId": "Naru",
+      "slug": "naru",
+      "x": 34.0,
+      "y": 57.0
+    }
+  ]
+}

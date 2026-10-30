@@ -1,0 +1,69 @@
+{
+  "points": [
+    {
+      "asset": "boat",
+      "map": "transit_south_inland",
+      "x": 92.5,
+      "y": 48
+    },
+    {
+      "asset": "shop",
+      "map": "transit_crossroads",
+      "x": 49.0,
+      "y": 0
+    },
+    {
+      "asset": "small_store",
+      "map": "transit_south_inland",
+      "x": 78.0,
+      "y": 47
+    },
+    {
+      "asset": "thatch",
+      "map": "transit_crossroads",
+      "x": 55.0,
+      "y": -1
+    },
+    {
+      "asset": "tile-house",
+      "map": "transit_crossroads",
+      "x": 50.0,
+      "y": 17
+    },
+    {
+      "asset": "cottage",
+      "map": "transit_crossroads",
+      "x": 57.5,
+      "y": 18
+    },
+    {
+      "asset": "pavilion",
+      "map": "goryeo_songak",
+      "x": 193.5,
+      "y": -25
+    },
+    {
+      "asset": "palace",
+      "map": "Gaegyeong",
+      "x": 262.0,
+      "y": -4
+    },
+    {
+      "asset": "gaekju",
+      "map": "transit_crossroads",
+      "x": 49.0,
+      "y": 13
+    }
+  ],
+  "instances": {
+    "boat": 6,
+    "shop": 7,
+    "small_store": 7,
+    "thatch": 24,
+    "tile-house": 13,
+    "cottage": 7,
+    "pavilion": 1,
+    "palace": 1,
+    "gaekju": 2
+  }
+}

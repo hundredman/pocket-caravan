@@ -53,6 +53,7 @@ namespace PocketCaravan
         readonly List<ItemData> pickItems = new List<ItemData>();
         string photoPath;
         Texture2D preview;
+        bool blockedBefore;
         float previewUntil, flash;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -99,15 +100,18 @@ namespace PocketCaravan
                 if (Key('F') || InputReader.CancelPressed() || InputReader.InteractPressed()) Close();
                 return;
             }
-            if (UIState.Blocking) return;
-
             // 말 걸기 (대화창은 공용이 연다. 같은 프레임의 TalkTarget으로 누구인지 안다)
-            if (InputReader.InteractPressed() && pc.TalkTarget != null && lastTalkFrame != Time.frameCount)
+            // 10-30: 공용 PlayerController가 먼저 돌아 대화창이 이번 프레임에 Blocking을 켜므로, Blocking 검사보다 앞에서
+            // "지난 프레임엔 막혀 있지 않았다"로 판단한다 (대화 넘기기 Space는 세지 않는다).
+            bool wasFree = !blockedBefore;
+            blockedBefore = UIState.Blocking;
+            if (wasFree && InputReader.InteractPressed() && pc.TalkTarget != null && lastTalkFrame != Time.frameCount)
             {
                 lastTalkFrame = Time.frameCount;
                 int fi = FriendIndex(pc.TalkTarget.DisplayName);
                 if (fi >= 0) Talked(fi);
             }
+            if (UIState.Blocking) return;
             if (Key('G') && pc.TalkTarget != null)
             {
                 int fi = FriendIndex(pc.TalkTarget.DisplayName);
@@ -218,6 +222,7 @@ namespace PocketCaravan
             if (photoFrames > 2 && File.Exists(photoPath))
             {
                 photo = false;
+                if (preview != null) Destroy(preview);   // 10-30 지난 사진 그림을 풀어 준다
                 preview = new Texture2D(2, 2);
                 preview.LoadImage(File.ReadAllBytes(photoPath));
                 previewUntil = Time.unscaledTime + 3f;

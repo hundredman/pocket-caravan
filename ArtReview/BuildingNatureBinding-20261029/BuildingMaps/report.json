@@ -1,0 +1,429 @@
+{
+ "Naru": {
+  "key": "goryeo/나루",
+  "w": 88,
+  "h": 84,
+  "cells": 3947,
+  "walkable": 1631,
+  "reachable": 1591,
+  "palette": 298,
+  "pixelDiff": 0,
+  "terrain": [
+   202,
+   27
+  ],
+  "villages": [
+   "naru"
+  ],
+  "exits": 68,
+  "spawns": 69,
+  "objects": {
+   "ambience": 1,
+   "anim": 96,
+   "board": 1,
+   "exit": 68,
+   "growth": 8,
+   "lantern": 1,
+   "market": 1,
+   "npc": 2,
+   "pastime": 1,
+   "sign": 1,
+   "spawn": 69,
+   "talker": 2,
+   "worker": 1
+  },
+  "moved": [],
+  "missing": []
+ },
+ "goryeo_jangdan": {
+  "key": "goryeo/장단",
+  "w": 61,
+  "h": 98,
+  "cells": 3740,
+  "walkable": 2619,
+  "reachable": 1991,
+  "palette": 326,
+  "pixelDiff": 0,
+  "terrain": [
+   174,
+   7
+  ],
+  "villages": [
+   "jangdan"
+  ],
+  "exits": 151,
+  "spawns": 151,
+  "objects": {
+   "anim": 20,
+   "board": 1,
+   "exit": 151,
+   "lantern": 1,
+   "market": 1,
+   "npc": 1,
+   "sign": 1,
+   "spawn": 151
+  },
+  "moved": [],
+  "missing": []
+ },
+ "goryeo_songak": {
+  "key": "goryeo/송악",
+  "w": 74,
+  "h": 84,
+  "cells": 4221,
+  "walkable": 2153,
+  "reachable": 2132,
+  "palette": 689,
+  "pixelDiff": 0,
+  "terrain": [
+   153,
+   -69
+  ],
+  "villages": [
+   "songak"
+  ],
+  "exits": 66,
+  "spawns": 66,
+  "objects": {
+   "anim": 59,
+   "board": 1,
+   "exit": 66,
+   "lantern": 2,
+   "market": 1,
+   "npc": 1,
+   "sign": 1,
+   "spawn": 66
+  },
+  "moved": [],
+  "missing": []
+ },
+ "Dakmok": {
+  "key": "goryeo/닥목",
+  "w": 93,
+  "h": 80,
+  "cells": 4133,
+  "walkable": 1212,
+  "reachable": 591,
+  "palette": 627,
+  "pixelDiff": 0,
+  "terrain": [
+   192,
+   -93
+  ],
+  "villages": [
+   "dakmok"
+  ],
+  "exits": 22,
+  "spawns": 22,
+  "objects": {
+   "ambience": 1,
+   "anim": 60,
+   "board": 1,
+   "exit": 22,
+   "lantern": 1,
+   "market": 1,
+   "npc": 1,
+   "sign": 1,
+   "spawn": 22,
+   "worker": 1
+  },
+  "moved": [],
+  "missing": []
+ },
+ "Gaegyeong": {
+  "key": "goryeo/개경",
+  "w": 72,
+  "h": 76,
+  "cells": 3959,
+  "walkable": 2422,
+  "reachable": 1963,
+  "palette": 450,
+  "pixelDiff": 0,
+  "terrain": [
+   222,
+   -44
+  ],
+  "villages": [
+   "gaegyeong"
+  ],
+  "exits": 60,
+  "spawns": 60,
+  "objects": {
+   "anim": 48,
+   "board": 1,
+   "exit": 60,
+   "lantern": 4,
+   "market": 1,
+   "npc": 1,
+   "spawn": 60,
+   "villager": 8,
+   "walker": 2,
+   "worker": 2
+  },
+  "moved": [],
+  "missing": []
+ },
+ "transit_woodtown": {
+  "key": "east/동문 마을",
+  "w": 87,
+  "h": 69,
+  "cells": 3016,
+  "walkable": 1774,
+  "reachable": 1661,
+  "palette": 648,
+  "pixelDiff": 0,
+  "terrain": [
+   96,
+   -31
+  ],
+  "villages": [
+   "woodtown"
+  ],
+  "exits": 99,
+  "spawns": 99,
+  "objects": {
+   "board": 1,
+   "exit": 99,
+   "lantern": 2,
+   "market": 1,
+   "spawn": 99,
+   "talker": 1
+  },
+  "moved": [],
+  "missing": []
+ },
+ "transit_ferry": {
+  "key": "east/북동 포구",
+  "w": 80,
+  "h": 55,
+  "cells": 3101,
+  "walkable": 1920,
+  "reachable": 1913,
+  "palette": 379,
+  "pixelDiff": 0,
+  "terrain": [
+   83,
+   -127
+  ],
+  "villages": [
+   "ferry"
+  ],
+  "exits": 47,
+  "spawns": 47,
+  "objects": {
+   "ambience": 1,
+   "anim": 20,
+   "board": 1,
+   "exit": 47,
+   "lantern": 2,
+   "market": 1,
+   "spawn": 47,
+   "talker": 1
+  },
+  "moved": [],
+  "missing": []
+ },
+ "transit_crossroads": {
+  "key": "east/중앙 길목 마을",
+  "w": 92,
+  "h": 80,
+  "cells": 3823,
+  "walkable": 3602,
+  "reachable": 3602,
+  "palette": 410,
+  "pixelDiff": 0,
+  "terrain": [
+   2,
+   -34
+  ],
+  "villages": [
+   "crossroads"
+  ],
+  "exits": 137,
+  "spawns": 137,
+  "objects": {
+   "exit": 137,
+   "lantern": 2,
+   "sign": 2,
+   "spawn": 137,
+   "talker": 1
+  },
+  "moved": [],
+  "missing": [
+   "anim 7"
+  ]
+ },
+ "transit_southport": {
+  "key": "east/남동 포구",
+  "w": 86,
+  "h": 68,
+  "cells": 3335,
+  "walkable": 2024,
+  "reachable": 2021,
+  "palette": 437,
+  "pixelDiff": 0,
+  "terrain": [
+   82,
+   59
+  ],
+  "villages": [
+   "southport"
+  ],
+  "exits": 70,
+  "spawns": 70,
+  "objects": {
+   "exit": 70,
+   "lantern": 2,
+   "spawn": 70
+  },
+  "moved": [],
+  "missing": []
+ },
+ "transit_wetroad": {
+  "key": "east/북동 길",
+  "w": 78,
+  "h": 64,
+  "cells": 2883,
+  "walkable": 1524,
+  "reachable": 1462,
+  "palette": 482,
+  "pixelDiff": 0,
+  "terrain": [
+   86,
+   -82
+  ],
+  "villages": [],
+  "exits": 106,
+  "spawns": 106,
+  "objects": {
+   "ambience": 1,
+   "anim": 11,
+   "exit": 106,
+   "spawn": 106
+  },
+  "moved": [],
+  "missing": []
+ },
+ "transit_pass": {
+  "key": "east/남동 길",
+  "w": 65,
+  "h": 68,
+  "cells": 3077,
+  "walkable": 2451,
+  "reachable": 2446,
+  "palette": 385,
+  "pixelDiff": 0,
+  "terrain": [
+   121,
+   13
+  ],
+  "villages": [],
+  "exits": 108,
+  "spawns": 108,
+  "objects": {
+   "bandit": 1,
+   "exit": 108,
+   "sign": 1,
+   "spawn": 108,
+   "talker": 1
+  },
+  "moved": [
+   "길손(길 가운데)",
+   "bandit"
+  ],
+  "missing": []
+ },
+ "transit_central_approach": {
+  "key": "east/북쪽 내륙길",
+  "w": 71,
+  "h": 87,
+  "cells": 3095,
+  "walkable": 1724,
+  "reachable": 1701,
+  "palette": 644,
+  "pixelDiff": 0,
+  "terrain": [
+   40,
+   -74
+  ],
+  "villages": [
+   "rest_north"
+  ],
+  "exits": 104,
+  "spawns": 104,
+  "objects": {
+   "anim": 3,
+   "exit": 104,
+   "lantern": 1,
+   "spawn": 104,
+   "talker": 1
+  },
+  "moved": [
+   "길손(길 가운데)"
+  ],
+  "missing": []
+ },
+ "transit_south_inland": {
+  "key": "east/남쪽 내륙길",
+  "w": 67,
+  "h": 73,
+  "cells": 2663,
+  "walkable": 1668,
+  "reachable": 1543,
+  "palette": 398,
+  "pixelDiff": 0,
+  "terrain": [
+   54,
+   13
+  ],
+  "villages": [
+   "rest_lake"
+  ],
+  "exits": 141,
+  "spawns": 141,
+  "objects": {
+   "exit": 141,
+   "lantern": 1,
+   "spawn": 141
+  },
+  "moved": [],
+  "missing": []
+ },
+ "links": [
+  {
+   "id": "⑪",
+   "other": "north_c_road_se",
+   "map": "transit_crossroads",
+   "edge": "N",
+   "x": 26,
+   "y": 9,
+   "w": 4,
+   "h": 1
+  },
+  {
+   "id": "⑧",
+   "other": "arabia_central_steppe",
+   "map": "transit_crossroads",
+   "edge": "W",
+   "x": 0,
+   "y": 32,
+   "w": 1,
+   "h": 3
+  },
+  {
+   "id": "④",
+   "other": "arabia_central_eastvale",
+   "map": "transit_crossroads",
+   "edge": "W",
+   "x": 12,
+   "y": 45,
+   "w": 1,
+   "h": 2
+  }
+ ],
+ "_tiles": {
+  "certifyErrors": 0,
+  "newTiles": 1290,
+  "reusedExisting": 33
+ }
+}

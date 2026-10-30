@@ -1,8 +1,13 @@
-"""베네치아 시간대 배경 음악 (2026-10-27): 원래 배경 음악 naru.ogg의 선율·화음·빠르기를 그대로 두고 악기만 베네치아풍으로 바꾼다.
-    음표: venice_naru_notes.csv — naru.ogg를 basic-pitch로 받아 적은 표 (북유럽 브랜치 Tools/Audio/north_naru_notes.csv와 같은 자료)
-    악기: 아침 만돌린 + 기타 / 낮 만돌린 트레몰로 + 아코디언 화음 + 탬버린 / 저녁 아코디언 선율 + 기타 / 밤 부드러운 아코디언 + 하프 (조금 느리게)
+"""베네치아 시간대 배경 음악. 북유럽 편곡(Tools/Audio/north_arrange.py)과 같은 짜임으로, 악기만 베네치아(이탈리아)풍으로 바꾼다.
+    음표: venice_naru_notes.csv — naru.ogg를 basic-pitch로 받아 적은 표 (북유럽 north_naru_notes.csv와 같은 자료)
+    짜임(북유럽과 같음): 받아 적은 음을 그대로 쓰고 높이에 따라 선율(67↑)·가운데(52~66)·베이스로 나눠 다른 악기로 연주, 아침·낮만 북.
+    악기 (2026-10-29, 종소리·오르골은 쓰지 않는다):
+      아침 만돌린 선율 + 기타 + 기타 베이스, 탬버린 한 번
+      낮   바이올린 선율 + 만돌린 + 첼로, 북 + 탬버린
+      저녁 부드러운 바이올린 + 기타 + 첼로
+      밤   리코더 선율 + 하프 + 기타 베이스 (조금 느리게)
     사용: python Tools/ArtGen/venice_arrange.py   → Assets/PocketCaravan/Resources/Venice/Audio/venice_{morning,day,evening,night}.wav
-    numpy만 쓴다(필터·잔향을 직접 계산)."""
+    numpy만 쓴다(북유럽은 scipy를 쓰지만 같은 계산을 numpy로 옮겼다)."""
 import csv, os, wave
 import numpy as np
 
@@ -21,7 +26,7 @@ def load_notes():
         if 0 <= k < BARS * 16 and v >= 50:          # 약한 것은 배음 잡음
             notes.append([k, d, p, v])
     notes.sort(); clean = []
-    for n in notes:                                 # 같은 음이 겹치면 하나만
+    for n in notes:                                 # 같은 음 겹침 정리
         if any(c[2] == n[2] and c[0] <= n[0] < c[0] + c[1] for c in clean[-12:]):
             continue
         clean.append(n)
@@ -32,9 +37,6 @@ def hz(p):
     return 440 * 2 ** ((p - 69) / 12)
 
 
-rng = np.random.default_rng(11)
-
-
 def env(n, a, rel):
     e = np.ones(n); ai = min(n, int(a * R)); ri = min(n, int(rel * R))
     if ai: e[:ai] = np.linspace(0, 1, ai)
@@ -42,69 +44,66 @@ def env(n, a, rel):
     return e
 
 
-def pluck(f, dur, bright=.5, decay=.996):
-    """Karplus-Strong (한 주기씩 묶어 빠르게)"""
-    n = int((min(dur, 1.5) + .7) * R); P = max(2, int(R / f))
-    b = rng.uniform(-1, 1, P)
-    b = bright * b + (1 - bright) * np.concatenate([[b[-1]], b[:-1]])
+def bowed(f, dur, bright=1.0, vibd=.005, noise=.015, seed=0):
+    """바이올린·첼로: 톱니파 배음 + 늦게 들어오는 비브라토 + 활 잡음"""
+    n = int((dur + .25) * R); t = np.arange(n) / R
+    vib = 1 + vibd * np.sin(2 * np.pi * 5.5 * t) * np.clip((t - .15) / .3, 0, 1)
+    ph = np.cumsum(2 * np.pi * f * vib / R); v = np.zeros(n)
+    for h in range(1, 12):
+        if f * h > 9000:
+            break
+        v += np.sin(ph * h) / h ** (1.0 + .6 / bright)
+    v += np.random.default_rng(seed).normal(0, noise, n)
+    return v * env(n, .06, .25) * .5
+
+
+def recorder(f, dur, seed=0):
+    n = int((dur + .2) * R); t = np.arange(n) / R
+    vib = 1 + .005 * np.sin(2 * np.pi * 5 * t) * np.clip((t - .12) / .3, 0, 1)
+    ph = np.cumsum(2 * np.pi * f * vib / R)
+    v = np.sin(ph) + .3 * np.sin(2 * ph) + .1 * np.sin(3 * ph)
+    breath = np.random.default_rng(seed).normal(0, .03, n)
+    breath = np.convolve(breath, np.ones(8) / 8, mode="same")
+    return (v + breath) * env(n, .04, .18) * .5
+
+
+def pluck(f, dur, decay=.996, seed=0, bright=.5):
+    """기타·만돌린·하프 (Karplus-Strong)"""
+    n = int((min(dur, 1.5) + .9) * R); P = max(2, int(R / f))
+    b = np.random.default_rng(seed).uniform(-1, 1, P)
+    b = bright * b + (1 - bright) * np.roll(b, 1)
     out = []
     for _ in range(n // P + 1):
         out.append(b.copy()); b = decay * .5 * (b + np.roll(b, -1))
-    x = np.concatenate(out)[:n]
-    return x * np.exp(-np.arange(n) / R * 1.4) * .6
+    return np.concatenate(out)[:n] * np.exp(-np.arange(n) / R * 1.2) * .6
 
 
-def mandolin(f, dur, tremolo=False):
-    """만돌린: 겹줄을 살짝 어긋나게 뜯는다. 트레몰로면 같은 음을 빠르게 거듭"""
-    if not tremolo:
-        a = pluck(f, dur, .75); b = pluck(f * 1.003, dur, .75)
-        return (a + b) * .5
-    n = int((dur + .5) * R); x = np.zeros(n); t = 0.0; i = 0
-    while t < max(dur, .12):
-        c = pluck(f * (1.002 if i % 2 else 1.0), .14, .8, .99) * (.75 if i % 2 else 1.0)
-        at = int(t * R); x[at:at + len(c)] += c[:n - at]; t += .07; i += 1
-    return x * .6
+def mandolin(f, dur, seed=0):
+    """겹줄: 살짝 어긋난 두 줄을 같이 뜯는다"""
+    a = pluck(f, dur, .995, seed, .75); b = pluck(f * 1.002, dur, .995, seed + 7, .75)
+    return (a + b) * .5
 
 
-def guitar(f, dur):
-    return pluck(f, dur, .35, .997) * .9
+def drum(strength, seed=3):
+    n = int(.7 * R); t = np.arange(n) / R; f = 60 + 55 * np.exp(-t * 18); ph = np.cumsum(2 * np.pi * f / R)
+    return strength * (np.sin(ph) * np.exp(-t * 6) * .9 + np.random.default_rng(seed).uniform(-1, 1, n) * np.exp(-t * 45) * .2)
 
 
-def harp(f, dur):
-    return pluck(f, dur, .25, .998)
-
-
-def accordion(f, dur, soft=1.0):
-    """아코디언: 살짝 어긋난 두 리드 + 배음 + 느린 떨림, 부드러운 시작"""
-    n = int((dur + .2) * R); t = np.arange(n) / R
-    v = 1 + .003 * np.sin(2 * np.pi * 5 * t)
-    x = np.zeros(n)
-    for k, a in ((1, 1.0), (2, .5 * soft), (3, .3 * soft), (4, .15 * soft), (5, .08 * soft)):
-        x += a * (np.sin(2 * np.pi * f * k * t * v) + .8 * np.sin(2 * np.pi * f * k * 1.004 * t * v))
-    return x * env(n, .05, .15) * .22
-
-
-def tambourine(strength):
-    n = int(.18 * R); t = np.arange(n) / R
-    jingle = rng.standard_normal(n); jingle = jingle - np.convolve(jingle, np.ones(3) / 3, mode="same")
-    return strength * jingle * np.exp(-t / .045) * .5
+def tambourine(strength, seed=5):
+    n = int(.14 * R); t = np.arange(n) / R
+    j = np.random.default_rng(seed).standard_normal(n); j = j - np.convolve(j, np.ones(3) / 3, mode="same")
+    return strength * j * np.exp(-t / .035) * .45
 
 
 def lowpass(x, fc):
-    a = np.exp(-2 * np.pi * fc / R)                 # 한 극 저역 통과 (두 번 거친다)
-    for _ in range(2):
-        y = np.empty_like(x); acc = 0.0
-        # 빠르게: 누적 필터를 블록 대신 벡터식으로 쓰기 어려워 직접 돈다 (곡 길이 40초 안팎이라 충분)
-        for i in range(len(x)):
-            acc = (1 - a) * x[i] + a * acc; y[i] = acc
-        x = y
-    return x
+    """2차 버터워스와 같은 크기 응답을 주파수 영역에서 곱한다"""
+    X = np.fft.rfft(x); f = np.fft.rfftfreq(len(x), 1 / R)
+    return np.fft.irfft(X / np.sqrt(1 + (f / fc) ** 4), len(x))
 
 
-def reverb(x, decay=1.5, wet=.22):
+def reverb(x, decay=1.6, wet=.22, seed=1):
     n = int(decay * R); t = np.arange(n) / R
-    ir = rng.normal(0, 1, n) * np.exp(-t * 6.9 / decay)
-    ir = np.convolve(ir, np.ones(6) / 6, mode="same"); ir /= np.sqrt(np.sum(ir ** 2))
+    ir = np.random.default_rng(seed).normal(0, 1, n) * np.exp(-t * 6.9 / decay); ir = lowpass(ir, 5000); ir /= np.sqrt(np.sum(ir ** 2))
     size = 1 << int(np.ceil(np.log2(len(x) + n)))
     wetx = np.fft.irfft(np.fft.rfft(x, size) * np.fft.rfft(ir, size), size)[:len(x)]
     return x * (1 - wet) + wetx * wet * 1.4
@@ -115,29 +114,35 @@ def add(buf, sig, at):
 
 
 def render(slot, notes):
-    tempo = 1.12 if slot == 3 else 1.0
-    st = S * tempo; L = int(BARS * 16 * st * R); tail = int(3 * R)
-    mel = np.zeros(L + tail); mid = np.zeros(L + tail); bas = np.zeros(L + tail); per = np.zeros(L + tail)
-    for k, d, p, v in notes:
+    st = S * (1.08 if slot == 3 else 1.0)           # 밤은 조금 느리게 (북유럽 1.12보다 덜)
+    L = int(BARS * 16 * st * R); tail = int(3 * R)
+    mel, mid, bas, per = (np.zeros(L + tail) for _ in range(4))
+    for i, (k, d, p, v) in enumerate(notes):
         f = hz(p); dur = d * st; at = int(k * st * R); vel = (v / 100) ** 1.2
-        if p >= 67:                                 # 선율
-            c = (mandolin(f, dur) if slot == 0 else mandolin(f, dur, tremolo=dur > .3) if slot == 1
-                 else accordion(f, dur) * 1.6 if slot == 2 else accordion(f, dur, .4) * 1.3)
+        if p >= 67:
+            c = (mandolin(f, dur, i) if slot == 0 else bowed(f, dur, 1.0, .006, .012, i) if slot == 1
+                 else bowed(f, dur, .7, .007, .01, i) * .9 if slot == 2 else recorder(f, dur, i))
             add(mel, c * vel, at)
-        elif p >= 52:                               # 가운데 화음
-            c = guitar(f, dur) if slot in (0, 2) else accordion(f, dur, .6) * .7 if slot == 1 else harp(f, dur)
+        elif p >= 52:
+            c = (pluck(f, dur, .997, i, .5) if slot in (0, 2) else mandolin(f, dur, i) * .9 if slot == 1
+                 else pluck(f, dur, .998, i, .28))
             add(mid, c * vel, at)
-        else:                                       # 베이스
-            add(bas, guitar(f, dur) * vel, at)
-    if slot in (0, 1):                              # 탬버린 (아침은 가볍게 한 번, 낮은 두 번)
+        else:
+            c = bowed(f, dur, .5, .003, .008, i) * .7 if slot in (1, 2) else pluck(f, dur, .998, i, .3)
+            add(bas, c * vel, at)
+    if slot in (0, 1):
         for b in range(BARS):
-            for beat, sv in (((0, .5), (2, .35)) if slot == 1 else ((2, .25),)):
-                add(per, tambourine(sv), int((b * 16 + beat * 4) * st * R))
-                if slot == 1: add(per, tambourine(sv * .5), int((b * 16 + beat * 4 + 2) * st * R))
-    g = {0: (.6, .42, .4, .25), 1: (.55, .38, .42, .3), 2: (.5, .34, .4, 0), 3: (.55, .3, .25, 0)}[slot]
+            if slot == 1:
+                add(per, drum(1.0, b), int((b * 16) * st * R)); add(per, drum(.55, b + 50), int((b * 16 + 8) * st * R))
+                for beat in (4, 12):
+                    add(per, tambourine(.8, b * 2 + beat), int((b * 16 + beat) * st * R))
+            else:
+                add(per, drum(.5, b), int((b * 16) * st * R))
+                add(per, tambourine(.5, b), int((b * 16 + 8) * st * R))
+    g = {0: (.55, .42, .38, .25), 1: (.5, .42, .42, .35), 2: (.5, .32, .4, 0), 3: (.6, .32, .25, 0)}[slot]
     mix = mel * g[0] + mid * g[1] + bas * g[2] + per * g[3]
-    mix = lowpass(mix, 6500 if slot < 2 else 4500)
-    mix = reverb(mix, 1.3 if slot < 2 else 2.0, .2 if slot < 2 else .3)
+    mix = lowpass(mix, 7000 if slot < 2 else 5500)
+    mix = reverb(mix, 1.4 if slot < 2 else 1.9, .2 if slot < 2 else .26)
     loop = mix[:L].copy(); loop[:tail] += mix[L:L + tail]        # 꼬리를 앞으로 감아 이음매 없이 반복
     loop = loop / np.sqrt(np.mean(loop ** 2)) * .085
     return np.clip(loop, -.95, .95), L / R

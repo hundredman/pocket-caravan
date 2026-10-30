@@ -10,7 +10,7 @@ namespace PocketCaravan
     [DefaultExecutionOrder(1001)]
     public class VeniceSeat : Interactable
     {
-        public override string DisplayName => "벤치에 앉기";
+        public override string DisplayName => VeniceLabels.Place(this, "벤치에 앉기");   // 가까이 가야 이름표가 뜬다
         public override Kind Category => Kind.Market;
 
         static VeniceSeat sitting;

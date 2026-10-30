@@ -1,136 +1,134 @@
 {
- "width": 506,
- "height": 270,
+ "width": 592,
+ "height": 252,
  "maps": [
   {
    "mapId": "venice_rialto",
-   "x": 82,
-   "y": 110,
+   "x": 70,
+   "y": 74,
    "w": 75,
    "h": 84,
-   "labelX": 109.5,
-   "labelY": 168
+   "labelX": 97.5,
+   "labelY": 114.5
   },
   {
    "mapId": "venice_santerasmo",
-   "x": 10,
-   "y": 80,
+   "x": 12,
+   "y": 67,
    "w": 58,
    "h": 56,
-   "labelX": 35.5,
-   "labelY": 116
-  },
-  {
-   "mapId": "venice_murano",
-   "x": 171,
-   "y": 70,
-   "w": 57,
-   "h": 56,
-   "labelX": 199.5,
-   "labelY": 109
+   "labelX": 37.5,
+   "labelY": 85.5
   },
   {
    "mapId": "venice_burano",
-   "x": 10,
-   "y": 150,
+   "x": 12,
+   "y": 123,
    "w": 58,
    "h": 61,
-   "labelX": 30.5,
-   "labelY": 214
+   "labelX": 32.5,
+   "labelY": 169.5
+  },
+  {
+   "mapId": "venice_murano",
+   "x": 145,
+   "y": 67,
+   "w": 57,
+   "h": 56,
+   "labelX": 173.5,
+   "labelY": 88.5
   },
   {
    "mapId": "venice_chioggia",
-   "x": 171,
-   "y": 140,
+   "x": 145,
+   "y": 123,
    "w": 57,
    "h": 61,
-   "labelX": 201.5,
-   "labelY": 194
+   "labelX": 175.5,
+   "labelY": 159.5
   },
   {
    "mapId": "venice_c_landing",
-   "x": 250,
-   "y": 107,
+   "x": 212,
+   "y": 98,
    "w": 80,
    "h": 56,
-   "labelX": 276.5,
-   "labelY": 161
+   "labelX": 238.5,
+   "labelY": 134.5
   },
   {
    "mapId": "venice_c_vineyard",
-   "x": 280,
-   "y": 51,
+   "x": 212,
+   "y": 40,
    "w": 63,
    "h": 56,
-   "labelX": 316.5,
-   "labelY": 96
+   "labelX": 248.5,
+   "labelY": 67.5
   },
   {
    "mapId": "venice_c_marsh",
-   "x": 290,
-   "y": 163,
+   "x": 212,
+   "y": 156,
    "w": 63,
    "h": 56,
-   "labelX": 321.5,
-   "labelY": 209
+   "labelX": 243.5,
+   "labelY": 184.0
   },
   {
    "mapId": "venice_c_pass",
-   "x": 343,
-   "y": 51,
+   "x": 294,
+   "y": 56,
    "w": 60,
    "h": 44,
-   "labelX": 372.5,
-   "labelY": 91
-  },
-  {
-   "mapId": "venice_c_bridge",
-   "x": 353,
-   "y": 173,
-   "w": 60,
-   "h": 44,
-   "labelX": 383.5,
-   "labelY": 213
+   "labelX": 324.0,
+   "labelY": 78.0
   },
   {
    "mapId": "venice_c_post",
-   "x": 353,
-   "y": 112,
+   "x": 294,
+   "y": 102,
    "w": 64,
    "h": 48,
-   "labelX": 375.5,
-   "labelY": 155
+   "labelX": 316.5,
+   "labelY": 127.5
+  },
+  {
+   "mapId": "venice_c_bridge",
+   "x": 294,
+   "y": 152,
+   "w": 60,
+   "h": 44,
+   "labelX": 324.0,
+   "labelY": 174.0
   },
   {
    "mapId": "venice_c_gate",
-   "x": 417,
-   "y": 102,
+   "x": 360,
+   "y": 90,
    "w": 72,
    "h": 71,
-   "labelX": 453.5,
-   "labelY": 155
+   "labelX": 396.0,
+   "labelY": 125.5
   }
  ],
+ "pixelsPerTile": 4,
+ "geography": "continuous_tiles",
+ "terrainSource": "Tools/MapGen/venice_tilemap.py",
  "annotations": [
   {
    "text": "베네치아 석호",
-   "x": 14,
-   "y": 10
+   "x": 12,
+   "y": 236
   },
   {
    "text": "본토 서부 (중앙 서쪽 조각)",
-   "x": 280,
-   "y": 10
+   "x": 215,
+   "y": 2
   },
   {
-   "text": "↑ 북서 포구 (통합 후)",
-   "x": 266,
-   "y": 29
-  },
-  {
-   "text": "→ 대륙 중심",
-   "x": 466,
-   "y": 145
+   "text": "대륙 중심 →",
+   "x": 532,
+   "y": 134.0
   }
  ]
 }

@@ -13,7 +13,7 @@ namespace PocketCaravan
         public enum Recipe { GlassArt, Lace }
         public Recipe recipe;
 
-        public override string DisplayName => recipe == Recipe.GlassArt ? "무라노 장식 공방" : "부라노 레이스 공방";
+        public override string DisplayName => VeniceLabels.Place(this, recipe == Recipe.GlassArt ? "무라노 장식 공방" : "부라노 레이스 공방");   // 가까이 가야 이름표가 뜬다
         public override Kind Category => Kind.Market;
 
         public override void Interact(PlayerController player)

@@ -6,7 +6,7 @@ namespace PocketCaravan
     /// <summary>화면 위쪽 가운데에 잠깐 뜨는 알림 (퀘스트 수락·완료, 마을 발전 등).</summary>
     public static class Notify
     {
-        struct Entry { public string text; public float until; }
+        struct Entry { public string text, key; public float until; }
         static readonly List<Entry> entries = new List<Entry>();
 
         public static void Show(string text, float seconds = 3.5f)
@@ -16,6 +16,12 @@ namespace PocketCaravan
         }
 
         public static void Clear() => entries.Clear();
+        public static void Location(string text,float seconds)
+        {
+            entries.RemoveAll(e=>e.key=="location");
+            entries.Add(new Entry{text=text,key="location",until=Time.unscaledTime+seconds});
+            if(entries.Count>4)entries.RemoveAt(0);
+        }
 
         static GUIStyle wrapCenter;
         static GUIStyle WrapCenter => wrapCenter ??= new GUIStyle(UIStyle.Center) { wordWrap = true, richText = true };
@@ -23,6 +29,7 @@ namespace PocketCaravan
         /// <summary>OnGUI 안에서 부른다 (UIStyle.Begin 이후).</summary>
         public static void Draw()
         {
+            if(wrapCenter!=null&&wrapCenter.font!=UIStyle.RegularFont)wrapCenter=null;
             entries.RemoveAll(e => Time.unscaledTime > e.until);
             float y = 8;
             foreach (var e in entries)

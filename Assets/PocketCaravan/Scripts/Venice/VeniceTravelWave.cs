@@ -30,8 +30,11 @@ namespace PocketCaravan
 
         const int IrisSize = 128;
         GUIStyle title;
-        bool land;
-        Vector2 focus;        // 구멍 가운데 (화면 픽셀, 위가 0)
+        bool land, boat;
+        Vector2 focus;
+
+        /// <summary>곤돌라 나루로 건널 때 VeniceTraghetto가 켠다: 발자국 대신 곤돌라가 물결 위로 건너간다 (2026-10-29)</summary>
+        public static bool ByBoat;        // 구멍 가운데 (화면 픽셀, 위가 0)
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void RegisterSelf() => Register(id => id.StartsWith("venice_"), new VeniceTravelWave());
@@ -42,6 +45,8 @@ namespace PocketCaravan
         {
             bool ferry = (fromMap == "venice_chioggia" && toMap == "venice_c_landing") || (fromMap == "venice_c_landing" && toMap == "venice_chioggia");
             land = !ferry && (Mainland(fromMap) || Mainland(toMap));
+            boat = ByBoat || ferry;
+            ByBoat = false;
         }
 
         public override void Draw(float cover, bool covering, string nextName, float heldFor)
@@ -94,11 +99,30 @@ namespace PocketCaravan
             Box(new Rect(r.x, r.y + 2f, r.width, r.height - 4f), t.paper, alpha);
             GUI.color = new Color(t.ink.r, t.ink.g, t.ink.b, alpha);
             GUI.Label(r, name, title);
-            // 고양이 발자국 네 개가 이름표 아래로 차례로 찍힌다
-            int steps = Mathf.Clamp(Mathf.FloorToInt(held / .08f) + 1, 1, 4);
-            for (int i = 0; i < steps; i++)
-                Paw(w / 2f - 30f + i * 20f, r.yMax + 10f + (i % 2) * 6f, t.rim, alpha);
+            if (boat) Boat(t, w / 2f, r.yMax + 14f, alpha, held);
+            else
+            {
+                // 고양이 발자국 네 개가 이름표 아래로 차례로 찍힌다
+                int steps = Mathf.Clamp(Mathf.FloorToInt(held / .08f) + 1, 1, 4);
+                for (int i = 0; i < steps; i++)
+                    Paw(w / 2f - 30f + i * 20f, r.yMax + 10f + (i % 2) * 6f, t.rim, alpha);
+            }
             GUI.matrix = Matrix4x4.identity;
+        }
+
+        /// <summary>곤돌라가 물결 두 줄 위로 왼쪽에서 오른쪽으로 건너간다</summary>
+        static void Boat(Theme t, float cx, float y, float alpha, float held)
+        {
+            for (int i = 0; i < 6; i++)                                  // 물결
+                Box(new Rect(cx - 42f + i * 15f + Mathf.Repeat(held * 20f, 15f), y + 9f + (i % 2), 7f, 1f), t.rim, alpha * .8f);
+            var sp = VeniceUtil.Sprite("gondola");
+            if (sp == null) return;
+            float x = cx - 30f + Mathf.Clamp01(held / .6f) * 44f;
+            var tr = sp.textureRect; var tex = sp.texture;
+            var uv = new Rect(tr.x / tex.width, tr.y / tex.height, tr.width / tex.width, tr.height / tex.height);
+            GUI.color = new Color(1f, 1f, 1f, alpha);
+            float bob = Mathf.Round(Mathf.Sin(held * 9f));
+            GUI.DrawTextureWithTexCoords(new Rect(Mathf.Round(x - tr.width / 2f), Mathf.Round(y + 6f - tr.height + bob), tr.width, tr.height), tex, uv);
         }
 
         static void Paw(float x, float y, Color c, float alpha)

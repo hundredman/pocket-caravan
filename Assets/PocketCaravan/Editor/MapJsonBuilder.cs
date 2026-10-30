@@ -44,6 +44,10 @@ namespace PocketCaravan.EditorTools
         }
 
         [Serializable]
+        class CropPatch { public int x, y, w, h; }
+        [Serializable] class BackdropCell { public int x,y,tile; }
+
+        [Serializable]
         class MapFile
         {
             public string id, name;
@@ -53,6 +57,8 @@ namespace PocketCaravan.EditorTools
             public string[] palette;
             public MapObject[] objects;
             public ObstaclePlacement[] obstacles;
+            public CropPatch[] natureCrops;
+            public BackdropCell[] cameraBackdrop;
         }
 
         [MenuItem("Pocket Caravan/Tests/지역 통합 등록 검사")]
@@ -231,6 +237,12 @@ namespace PocketCaravan.EditorTools
             var obj = Layer(gridGo, "Objects", 5);
             var high = Layer(gridGo, "Above", 20);   // 나무 윗부분: 플레이어 위로 그림
             var blocked = Layer(gridGo, "Blocked", 0, renderer: false);
+            if(f.cameraBackdrop!=null&&f.cameraBackdrop.Length>0)
+            {
+                var backdrop=Layer(gridGo,"CameraBackdrop",-10);
+                foreach(var cell in f.cameraBackdrop)
+                    if(cell.tile>0&&cell.tile<tiles.Length)backdrop.SetTile(new Vector3Int(cell.x,f.h-cell.y-1,0),tiles[cell.tile]);
+            }
 
             Paint(ground, f.ground, f, tiles);
             Paint(deco, f.deco, f, tiles);
@@ -249,6 +261,12 @@ namespace PocketCaravan.EditorTools
             map.region = entry == null ? null : AssetDatabase.LoadAssetAtPath<RegionData>(entry.region.regionAssetPath);
             map.terrainOrigin = new Vector2Int(f.terrainX,f.terrainY);
             map.worldCoord = entry == null ? Vector2Int.zero : new Vector2Int(entry.worldX, entry.worldY);
+
+            if (f.natureCrops != null && f.natureCrops.Length > 0)
+            {
+                var depth = gridGo.AddComponent<CropDepth>(); depth.lower = obj; depth.upper = high;
+                depth.patches = Array.ConvertAll(f.natureCrops, p => new RectInt(p.x, f.h - p.y - p.h, p.w, p.h));
+            }
 
             var roads = gridGo.AddComponent<RoadGrid>();
             roads.width = f.w; roads.height = f.h;

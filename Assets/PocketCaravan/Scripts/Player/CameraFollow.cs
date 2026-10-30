@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PocketCaravan
 {
-    /// <summary>플레이어를 따라가되 맵 밖은 보이지 않게 막는다.</summary>
+    /// <summary>주인공을 중심으로 따라가며 맵 가장자리와 코너에서는 화면을 고정한다.</summary>
     [RequireComponent(typeof(Camera))]
     public class CameraFollow : MonoBehaviour
     {
@@ -19,9 +19,28 @@ namespace PocketCaravan
             cam = GetComponent<Camera>();
             if (target == null)
             {
-                var p = FindAnyObjectByType<PlayerController>();
-                if (p != null) target = p.transform;
+                var player = FindAnyObjectByType<PlayerController>();
+                if (player != null) target = player.transform;
             }
+        }
+
+        Vector3 Confine(Vector3 position)
+        {
+            var map = MapRoot.Current;
+            if (map != null)
+            {
+                var bounds = map.WorldBounds;
+                float halfHeight = cam.orthographicSize;
+                float halfWidth = halfHeight * cam.aspect;
+                position.x = bounds.size.x > 2 * halfWidth
+                    ? Mathf.Clamp(position.x, bounds.min.x + halfWidth, bounds.max.x - halfWidth)
+                    : bounds.center.x;
+                position.y = bounds.size.y > 2 * halfHeight
+                    ? Mathf.Clamp(position.y, bounds.min.y + halfHeight, bounds.max.y - halfHeight)
+                    : bounds.center.y;
+            }
+            position.z = -10f;
+            return position;
         }
 
         public void SnapNow() { snap = true; LateUpdate(); }
@@ -30,20 +49,23 @@ namespace PocketCaravan
         {
             if (target == null) return;
             Vector3 p = target.position;
-            // 2026-10-29: 순간이동(맵 도착·저장 복원) 뒤 카메라가 미끄러져 따라오지 않게
+            // 2026-10-29(북유럽): 순간이동(맵 도착·저장 복원) 뒤 카메라가 미끄러져 따라오지 않게
             if (hasLast && (p - lastTarget).sqrMagnitude > warpDistance * warpDistance) snap = true;
             lastTarget = p; hasLast = true;
-            var map = MapRoot.Current;
-            if (map != null)
+            if (cam == null) cam = GetComponent<Camera>();
+            Vector3 desired = Confine(target.position);
+            if (snap || smoothTime <= 0f)
             {
-                var b = map.WorldBounds;
-                float h = cam.orthographicSize, w = h * cam.aspect;
-                p.x = b.size.x > 2 * w ? Mathf.Clamp(p.x, b.min.x + w, b.max.x - w) : b.center.x;
-                p.y = b.size.y > 2 * h ? Mathf.Clamp(p.y, b.min.y + h, b.max.y - h) : b.center.y;
+                transform.position = desired;
+                vel = Vector3.zero;
+                snap = false;
             }
-            p.z = -10f;
-            if (snap || smoothTime <= 0f) { transform.position = p; vel = Vector3.zero; snap = false; }
-            else transform.position = Vector3.SmoothDamp(transform.position, p, ref vel, smoothTime);
+            else
+            {
+                Vector3 position = Vector3.SmoothDamp(transform.position, desired, ref vel, smoothTime);
+                // Viewport/zoom changes must not leave the interpolated camera outside the map.
+                transform.position = Confine(position);
+            }
         }
     }
 }

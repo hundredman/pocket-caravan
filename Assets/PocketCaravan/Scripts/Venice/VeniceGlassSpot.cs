@@ -10,7 +10,7 @@ namespace PocketCaravan
     /// </summary>
     public class VeniceGlassSpot : Interactable
     {
-        public override string DisplayName => "유리 가마 작업대";
+        public override string DisplayName => VeniceLabels.Place(this, "유리 가마 작업대");   // 가까이 가야 이름표가 뜬다
         public override Kind Category => Kind.Market;
 
         bool playing;

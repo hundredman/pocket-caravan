@@ -75,7 +75,7 @@ namespace PocketCaravan
             {
                 if (InputReader.InteractPressed() && !UIState.JustClosed && TalkTarget != null) TalkTarget.Interact(this);
                 var exit = MapExit.At(motor.Cell,motor.Facing);
-                if (exit != null) exit.Use(motor);
+                if (exit != null) exit.TryUseAtBoundary(motor, input);
             }
             UpdateBody();
         }

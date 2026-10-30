@@ -1,0 +1,90 @@
+// Unity MCP execute_code method body. Review-only, memory sprites, no scene save.
+string root="/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship";
+string output=root+"/ArtReview/BuildingShip-Renewal/Unity";
+System.IO.Directory.CreateDirectory(output);
+if(UnityEditor.EditorApplication.isPlaying)throw new System.Exception("Use Edit mode for this art-only review");
+var originalScene=UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+bool originalDirty=originalScene.isDirty;
+var scene=UnityEditor.SceneManagement.EditorSceneManager.NewScene(UnityEditor.SceneManagement.NewSceneSetup.EmptyScene,UnityEditor.SceneManagement.NewSceneMode.Additive);
+UnityEngine.SceneManagement.SceneManager.SetActiveScene(scene);
+var material=new UnityEngine.Material(UnityEngine.Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default"));
+var cache=new System.Collections.Generic.Dictionary<string,UnityEngine.Sprite>();
+System.Func<string,UnityEngine.Sprite> load=path=>{
+ UnityEngine.Sprite found;
+ if(cache.TryGetValue(path,out found))return found;
+ var texture=new UnityEngine.Texture2D(2,2,UnityEngine.TextureFormat.RGBA32,false);
+ UnityEngine.ImageConversion.LoadImage(texture,System.IO.File.ReadAllBytes(root+"/"+path));
+ texture.filterMode=UnityEngine.FilterMode.Point;texture.wrapMode=UnityEngine.TextureWrapMode.Clamp;
+ var sprite=UnityEngine.Sprite.Create(texture,new UnityEngine.Rect(0,0,texture.width,texture.height),new UnityEngine.Vector2(.5f,0),16);
+ cache[path]=sprite;return sprite;
+};
+var parents=new UnityEngine.GameObject[3];
+UnityEngine.GameObject parent=null;
+System.Action<string,string,float,float,int> draw=(name,path,x,y,order)=>{
+ var go=new UnityEngine.GameObject(name);go.layer=31;go.transform.SetParent(parent.transform,false);
+ go.transform.position=new UnityEngine.Vector3(x/16f,y/16f,0);
+ var renderer=go.AddComponent<UnityEngine.SpriteRenderer>();renderer.sprite=load(path);renderer.sharedMaterial=material;renderer.sortingOrder=order;
+};
+string grass="Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_0_12_goryeo_jade.png";
+if(!System.IO.File.Exists(root+"/"+grass))grass="Assets/PocketCaravan/Art/NinjaAdventure/Tiles/floor_0_12.png";
+string wet="Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_1_7_goryeo_jade.png";
+if(!System.IO.File.Exists(root+"/"+wet))wet="Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_1_7.png";
+string bank="Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_1_6_goryeo_jade.png";
+if(!System.IO.File.Exists(root+"/"+bank))bank="Assets/PocketCaravan/Art/NinjaAdventure/Tiles/water_1_6.png";
+string[] names={"cottage","thatch","tile-house","small_store","pavilion","gaekju","shop","palace","gate","boat"};
+string[] originals={
+ "ArtReview/Approved/C7-Batch1-v1/cottage.png",
+ "ArtReview/Approved/C7-Buildings-v5/thatch.png",
+ "ArtReview/Approved/C7-Buildings-v6/tile-house.png",
+ "ArtReview/C7-RemainingBatch-20261027/Native/small_store.png",
+ "ArtReview/Approved/C7-Batch1-v1/pavilion.png",
+ "ArtReview/Approved/C7-Gaekju-v1/gaekju.png",
+ "ArtReview/Approved/C7-Shop-v1/shop.png",
+ "ArtReview/Approved/C7-Palace-v1/palace.png",
+ "ArtReview/Approved/C7-GateProps-v1/gate.png",
+ "ArtReview/C7-RemainingBatch-20261027/Native/boat.png"};
+int[] pages={0,0,0,0,1,1,1,2,2,2};
+int[] px={75,190,295,405,80,240,395,125,325,390};
+int[] py={145,145,145,145,115,125,125,100,115,18};
+for(int page=0;page<3;page++){
+ parent=new UnityEngine.GameObject("Building and boat review page "+page);parent.layer=31;parents[page]=parent;
+ for(int y=0;y<17;y++)for(int x=0;x<30;x++)draw("Approved ground",grass,x*16+8,y*16,0);
+ if(page==2)for(int y=0;y<4;y++)for(int x=0;x<30;x++)draw("Approved water",y==3?bank:wet,x*16+8,y*16,1);
+ draw("Approved player","Assets/PocketCaravan/Art/Characters/tanuki_tall_d0.png",170,page==2?74:85,10);
+ draw("Approved human NPC","Assets/PocketCaravan/Art/Characters/NPC/npc_naru_well_woman/npc_naru_well_woman_tall_d0.png",220,page==2?74:85,10);
+ parent.SetActive(false);
+}
+var cameraGO=new UnityEngine.GameObject("BuildingShip Renewal review camera");cameraGO.layer=31;
+var camera=cameraGO.AddComponent<UnityEngine.Camera>();camera.orthographic=true;camera.orthographicSize=270f/32;
+camera.aspect=480f/270;camera.cullingMask=1<<31;camera.depth=1000;camera.clearFlags=UnityEngine.CameraClearFlags.SolidColor;
+camera.backgroundColor=new UnityEngine.Color32(114,147,98,255);camera.transform.position=new UnityEngine.Vector3(15,270f/32,-10);
+var rt=new UnityEngine.RenderTexture(480,270,24,UnityEngine.RenderTextureFormat.ARGB32);rt.Create();
+var oldRT=UnityEngine.RenderTexture.active;
+try{
+ for(int page=0;page<3;page++){
+  parent=parents[page];parent.SetActive(true);
+  var assetObjects=new System.Collections.Generic.List<UnityEngine.GameObject>();
+  for(int version=0;version<2;version++){
+   foreach(var go in assetObjects)UnityEngine.Object.DestroyImmediate(go);assetObjects.Clear();
+   for(int i=0;i<names.Length;i++)if(pages[i]==page){
+    string path=version==0?originals[i]:"ArtReview/BuildingShip-Renewal/Native/"+names[i]+".png";
+    draw(names[i],path,px[i],py[i],5);
+    assetObjects.Add(parent.transform.GetChild(parent.transform.childCount-1).gameObject);
+   }
+   UnityEngine.Rendering.RenderPipeline.SubmitRenderRequest(camera,new UnityEngine.Rendering.Universal.UniversalRenderPipeline.SingleCameraRequest{destination=rt});
+   UnityEngine.RenderTexture.active=rt;
+   var texture=new UnityEngine.Texture2D(480,270,UnityEngine.TextureFormat.RGB24,false);
+   texture.ReadPixels(new UnityEngine.Rect(0,0,480,270),0,0);texture.Apply();
+   System.IO.File.WriteAllBytes(output+"/page-"+page+"-"+(version==0?"before":"after")+".png",texture.EncodeToPNG());
+   UnityEngine.Object.DestroyImmediate(texture);
+  }
+  parent.SetActive(false);
+ }
+ parents[2].SetActive(true);
+}finally{UnityEngine.RenderTexture.active=oldRT;rt.Release();UnityEngine.Object.DestroyImmediate(rt);}
+if(originalScene.isDirty!=originalDirty)throw new System.Exception("Original scene dirty state changed");
+UnityEngine.SceneManagement.SceneManager.SetActiveScene(originalScene);
+UnityEditor.SceneManagement.EditorSceneManager.CloseScene(scene,true);
+foreach(var item in cache.Values){var texture=item.texture;UnityEngine.Object.DestroyImmediate(item);UnityEngine.Object.DestroyImmediate(texture);}
+UnityEngine.Object.DestroyImmediate(material);
+return new {captures=6,width=480,height=270,originalScene=originalScene.path,originalDirtyUnchanged=true,productionAssetsWritten=0,reviewOnly=true};

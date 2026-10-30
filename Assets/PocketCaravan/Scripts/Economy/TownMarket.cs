@@ -20,7 +20,7 @@ namespace PocketCaravan
         float profitThisVisit;
         int marketTab, quantityMode, customQuantity = 1;
         int RequestedCount => quantityMode==0?1:quantityMode==1?5:quantityMode==2?MarketState.MaxBatch:Mathf.Clamp(customQuantity,1,MarketState.MaxBatch);
-        Vector2 vehicleScroll;
+        Vector2 vehicleScroll, contentScroll;
         // 10/28 품목 목록: 한 줄 높이와 보이는 칸 높이 (방향키로 고를 때 스크롤 맞추기)
         const float RowH = 18f, ListH = 128f;   // 보이는 줄 약 7개 (예전 42 = 2줄). 아래 빈자리까지 씀
         float lastMoveY;
@@ -96,15 +96,22 @@ namespace PocketCaravan
             var p = gm.Player;
             var m = Market;
 
-            float w = Mathf.Min(548, UIStyle.VirtualWidth - 16), h = 350;
+            float w = Mathf.Min(548, UIStyle.VirtualWidth - 16), h = UIStyle.WindowHeight(350);
             var rect = new Rect((UIStyle.VirtualWidth - w) / 2, (UIStyle.VirtualHeight - h) / 2, w, h);
             GUI.Box(rect, "", UIStyle.Box);
             GUILayout.BeginArea(new Rect(rect.x + 12, rect.y + 8, w - 24, h - 56));
+            contentScroll=GUILayout.BeginScrollView(contentScroll);
 
             string marketDay = gm.Clock.IsMarketDay ? "  <color=#ffd84a>· 오늘은 장날 (값 상승)</color>" : "";
             int nextLevel = m.Level < gm.Db.maxTownLevel && m.Level < gm.Db.townLevelVolume.Length ? gm.Db.townLevelVolume[m.Level] : 0;
             string growth = nextLevel > 0 ? $"   다음 등급까지 거래 {Mathf.Max(0, nextLevel - Mathf.RoundToInt(m.TradeVolume))}냥" : "";
             // 10/28 제목과 돈·짐을 한 줄로 (품목 목록을 넓히려고)
+            if(UIStyle.CrispRegion)
+            {
+                GUILayout.Label($"<color=#FFE08A>{town.displayName} 장터</color>  ({m.LevelName}){marketDay}",UIStyle.Rich);
+                GUILayout.Label($"돈 {p.money} · 짐 {p.TotalWeight:0.#}/{p.Capacity:0.#}{growth}",UIStyle.Small);
+            }
+            else
             GUILayout.Label($"<color=#FFE08A>{town.displayName} 장터</color>  ({m.LevelName}){marketDay}   <size=9>돈 {p.money} · 짐 {p.TotalWeight:0.#}/{p.Capacity:0.#}{growth}</size>", UIStyle.Rich);
             if(town.vehiclesForSale.Count>0)
             {
@@ -128,7 +135,7 @@ namespace PocketCaravan
                 GUILayout.EndHorizontal();
 
                 scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(ListH));
-                rowButton ??= new GUIStyle(UIStyle.Button) { margin = new RectOffset(2, 2, 1, 1) };
+                if(rowButton==null||rowButton.fontSize!=UIStyle.BodySize)rowButton = new GUIStyle(UIStyle.Button) { margin = new RectOffset(2, 2, 1, 1) };
                 foreach (var item in ItemsShown(p))
                 {
                     GUILayout.BeginHorizontal(GUILayout.Height(RowH));
@@ -151,6 +158,7 @@ namespace PocketCaravan
 
                 DrawBatch(gm);
             }
+            GUILayout.EndScrollView();
             GUILayout.EndArea();
             GUI.Label(new Rect(rect.x + 12, rect.yMax - 48, w - 242, soldThisVisit>0?28:42), message, UIStyle.Wrap);
             if(soldThisVisit>0)GUI.Label(new Rect(rect.x+12,rect.yMax-18,w-242,12),$"이번 판매 {soldThisVisit}개 · 수령 {revenueThisVisit} · 손익 {Signed(profitThisVisit)}",UIStyle.Small);
