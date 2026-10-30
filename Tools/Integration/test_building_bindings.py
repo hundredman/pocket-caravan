@@ -27,11 +27,18 @@ class BuildingBindings(unittest.TestCase):
         for name in expected:
             self.assertEqual(manifest['sources']['sprite:c7:'+name]['path'],binding.ASSETS[name]['png'])
 
-    def test_graphics_only_replacement_keeps_all_gameplay_fields(self):
-        record=json.loads((ROOT/'ArtReview/BuildingNatureBinding-20261029/building-binding.json').read_text())
-        self.assertEqual(len(record['gameplaySHA256']),13)
-        for mid,sha in record['gameplaySHA256'].items():
+    def test_integration_preserves_gameplay_except_approved_nature_and_entrances(self):
+        baseline=json.loads((ROOT/'Docs/Validation/A7d-Integration-2026-10-30/before-map-gameplay.json').read_text())
+        changes=json.loads((ROOT/'Docs/Validation/A7d-Integration-2026-10-30/nature-exits.json').read_text())['relocations']
+        moved_exits={(c['map'],c['target'],c['spawnId'])for c in changes}
+        moved_spawns={(c['target'],c['spawnId'])for c in changes}
+        for mid,before in baseline.items():
             d=json.loads((ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').read_text())
-            gameplay={k:v for k,v in d.items() if k not in ['ground','deco','obj','high','palette']}
-            self.assertEqual(hashlib.sha256(json.dumps(gameplay,sort_keys=True,separators=(',',':')).encode()).hexdigest(),sha,mid)
+            for key,value in before['stable'].items():self.assertEqual(d[key],value,(mid,key))
+            for obj in before['objects']:
+                if obj['kind']=='exit'and(mid,obj['target'],obj['spawn'])in moved_exits:
+                    self.assertTrue(any(o['kind']=='exit'and o['target']==obj['target']and o['spawn']==obj['spawn']for o in d['objects']))
+                elif obj['kind']=='spawn'and(mid,obj['id'])in moved_spawns:
+                    self.assertTrue(any(o['kind']=='spawn'and o['id']==obj['id']for o in d['objects']))
+                else:self.assertIn(obj,d['objects'],(mid,obj))
 if __name__=='__main__':unittest.main()

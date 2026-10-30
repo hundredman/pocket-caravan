@@ -23,7 +23,7 @@ def approval_for(sid,path):
         a='ArtReview/A7d-20261030/Headwaters/catalogue.json'
         d=json.loads((ROOT/a).read_text())
         if not any(item['path']==path for item in d['assets']):raise ValueError('Unregistered draft headwater')
-        return a+' (review artwork; production requires approval)'
+        return a if d['status']=='approved' else a+' (review artwork; production requires approval)'
     if path.startswith('ArtReview/Approved/'):
         a=ROOT/p.parent/'approval.json'
         if not a.exists():

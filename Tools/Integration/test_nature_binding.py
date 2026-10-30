@@ -1,5 +1,5 @@
 """Whole-source nature integration: approval gate, ports, masks and current-map safety."""
-import copy,json,sys,tempfile,unittest
+import copy,json,sys,tempfile,unittest,hashlib
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
@@ -59,8 +59,8 @@ class NaturePreview(unittest.TestCase):
                         self.assertEqual(d['blocked'][y*w+x],0,(mid,o['id']));self.assertNotIn((x,y),exits,(mid,o['id']))
 
     def test_rice_uses_full_footprint_without_new_barrier(self):
-        d=self.maps['goryeo_jangdan'];before=json.loads((ROOT/'Assets/PocketCaravan/Maps/goryeo_jangdan.json').read_text())
-        self.assertEqual(before['blocked'],d['blocked'])
+        d=self.maps['goryeo_jangdan'];before=json.loads((ROOT/'Docs/Validation/A7d-Integration-2026-10-30/before-map-gameplay.json').read_text())['goryeo_jangdan']
+        self.assertEqual(before['blockedSHA'],hashlib.sha256(json.dumps(d['blocked'],separators=(',',':')).encode()).hexdigest())
         self.assertEqual(len(d['natureCrops']),2)
         for p in d['natureCrops']:self.assertEqual((p['w'],p['h']),(12,8))
 

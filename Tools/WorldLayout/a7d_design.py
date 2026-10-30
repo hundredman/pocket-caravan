@@ -19,7 +19,11 @@ def main():
     for name in ['compact-spring-west','compact-spring-east','compact-spring-west-tiny']:
         p=ART/'Headwaters/Native'/(name+'.png');im=Image.open(p).convert('RGBA')
         assets.append(dict(name=name,path=str(p.relative_to(ROOT)),size=list(im.size),rgbaSha256=sha(im),mask=profile(im)))
-    (ART/'Headwaters/catalogue.json').write_text(json.dumps(dict(status='review',scope='new whole sprites; user approval pending',assets=assets),indent=2))
+    catalogue=ART/'Headwaters/catalogue.json'
+    previous=json.loads(catalogue.read_text())if catalogue.exists()else{}
+    if previous.get('status')=='approved':
+        if previous['assets']!=assets:raise ValueError('Approved headwater sources changed; new review required')
+    else:catalogue.write_text(json.dumps(dict(status='review',scope='new whole sprites; user approval pending',assets=assets),indent=2))
     masks=json.loads((HERE/'nature_masks.json').read_text());im=Image.open(ROOT/'ArtReview/Approved/RockMountain-v1/mountain.png').convert('RGBA');masks['assets']['mountain']=profile(im);masks['assets']['mountain']['replaceWater']=False
     (HERE/'nature_masks.json').write_text(json.dumps(masks,indent=2)+'\n')
     additions=[('west-headwater','compact-spring-west',64,-58),('capital-backpeak','mountain',227,-70),('capital-headwater','compact-spring-west-tiny',225,-68),('goryeo-headwater','compact-spring-east',182,-58)]

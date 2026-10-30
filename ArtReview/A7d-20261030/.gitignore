@@ -10,3 +10,9 @@
 /overview-draft.png
 /reach.txt
 /sources-draft.png
+
+/Integration/Base/
+/Integration/Layers/
+/Integration/Production/EditorBuildSettings.before
+/Integration/Production/play-checks.json
+/Integration/Production/legacy-*.json*

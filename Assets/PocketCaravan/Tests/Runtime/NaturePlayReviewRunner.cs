@@ -17,6 +17,8 @@ namespace PocketCaravan.EditorTools
         public static bool ProductionOnly;
         [Serializable] class ArtPoint { public string asset,map; public float x,y; public bool focus; }
         [Serializable] class ArtPoints { public ArtPoint[] points; }
+        [Serializable] class LegacyPoint {public string map;public int x,y;}
+        [Serializable] class LegacyPoints {public LegacyPoint[] points;}
         [Serializable] class Crop { public int x,y,w,h; }
         [Serializable] class Map { public string id; public int w,h; public int[] blocked,ground; public Crop[] natureCrops; }
         [Serializable] class Endpoint { public int[] exit, arrival; }
@@ -268,17 +270,52 @@ namespace PocketCaravan.EditorTools
                     if(MapRoot.Current.ground.HasTile(p)!=(data.ground[i]!=0))missing++;
                 }
                 Check(mismatch==0&&missing==0,"production ground/barriers match generated map",id);
+                var crop=FindFirstObjectByType<CropDepth>();
+                if(data.natureCrops!=null)Check(crop!=null&&crop.patches.Length==data.natureCrops.Length,"production paddies connected",id);
+                foreach(var c in MapRoot.Current.ground.cellBounds.allPositionsWithin)
+                {
+                    if(!MapRoot.Current.blocked.HasTile(c))continue;
+                    Vector3 repaired;
+                    Check(MapRoot.Current.TryResolveSavedPosition(MapRoot.Current.CellCenter(c)-(Vector3)Motor.feetOffset,Motor.feetOffset,out repaired)&&MapRoot.Current.IsWalkable(MapRoot.Current.WorldToCell(repaired+(Vector3)Motor.feetOffset)),"production blocked save position repaired",id);
+                    break;
+                }
+            }
+            string legacyFile=Output+"/../legacy-positions.json";
+            if(File.Exists(legacyFile))foreach(var point in JsonUtility.FromJson<LegacyPoints>(File.ReadAllText(legacyFile)).points)
+            {
+                yield return LoadProduction(point.map);
+                var map=MapRoot.Current;var oldPosition=map.CellCenter(new Vector3Int(point.x,point.y,0))-(Vector3)Motor.feetOffset;
+                var saved=new SaveData{scene=point.map,layoutVersion=GoryeoLayout.Current,mapHeight=map.GetComponent<RoadGrid>().height,px=oldPosition.x,py=oldPosition.y,money=1234,credit=21,stamina=.8f,origin=GameManager.I.Player.origin.id,vehicle=GameManager.I.Player.vehicle.id};
+                GameManager.I.Player.reputation.ExportTo(saved);GameManager.I.Quests.Export(saved);
+                string file=Output+"/legacy-"+point.map+".json";Check(SaveSystem.WriteAt(file,saved),"isolated old-position save written",point.map);
+                var loaded=JsonUtility.FromJson<SaveData>(File.ReadAllText(file));SaveSystem.Validate(loaded);
+                bool applied=(bool)typeof(GameManager).GetMethod("TryApplySave",BindingFlags.NonPublic|BindingFlags.Instance).Invoke(GameManager.I,new object[]{loaded});
+                Check(applied&&GameManager.I.Player.money==1234&&GameManager.I.Player.credit==21,"old-position save preserves progress",point.map);
+                typeof(GameManager).GetField("pendingExact",BindingFlags.NonPublic|BindingFlags.Instance).SetValue(GameManager.I,(Vector3?)SaveSystem.PositionFor(loaded));
+                typeof(GameManager).GetField("pendingFacing",BindingFlags.NonPublic|BindingFlags.Instance).SetValue(GameManager.I,Vector2Int.down);
+                yield return EditorSceneManager.LoadSceneAsyncInPlayMode(ProductionScene(point.map),new LoadSceneParameters(LoadSceneMode.Single));yield return null;Freeze();
+                Check(MapRoot.Current.IsWalkable(Motor.Cell)&&MapExit.At(Motor.Cell)==null,"new mountain repairs old safe saved feet",point.map);
+                Check(!GameManager.I.AutosaveEnabled,"original save remains protected",point.map);
             }
             var views=JsonUtility.FromJson<ArtPoints>(File.ReadAllText(Output+"/../asset-views.json"));
             foreach(var point in views.points)
             {
-                yield return LoadProduction(point.map);Pose(point.x,point.y);yield return Capture("asset-"+point.asset);
+                yield return LoadProduction(point.map);Pose(point.x,point.y);
+                var follow=FindFirstObjectByType<CameraFollow>();
+                if(point.focus){follow.enabled=false;var pos=Position(point.x,point.y);pos.z=Camera.main.transform.position.z;Camera.main.transform.position=pos;}
+                yield return Capture("asset-"+point.asset);if(point.focus)follow.enabled=true;
             }
-            foreach(var id in new[]{"Naru","goryeo_songak","transit_woodtown"})
+            foreach(var id in new[]{"Naru","venice_rialto","arabia_ahsa","north_birka","goryeo_songak","transit_woodtown"})
             {
-                GameManager.I.TravelTo(id,"S0");float start=Time.realtimeSinceStartup;
+                Time.timeScale=1;GameManager.I.TravelTo(id,"S0");float start=Time.realtimeSinceStartup;
                 while(GameManager.I.IsTravelling){if(Time.realtimeSinceStartup-start>60)throw new TimeoutException(id);yield return null;}
                 Check(MapRoot.Current.mapId==id&&!MapRoot.Current.previewOnly,"production real travel",id);Freeze();
+                for(int frame=0;frame<5;frame++)yield return null;
+                if(!UIStyle.CrispRegion)yield return new WaitForSecondsRealtime(7.2f); // Regional help toasts expire normally before clean capture.
+                Check(UIStyle.CrispRegion?UIStyle.Scale==Mathf.Floor(UIStyle.Scale):Mathf.Approximately(UIStyle.Scale,Screen.height/360f),"regional UI scale after real travel",id);
+                yield return Capture("travel-ui-"+id);
+                var market=FindFirstObjectByType<TownMarket>();
+                if(market!=null){market.Interact(PlayerController.Instance);yield return Capture("travel-market-"+id);typeof(TownMarket).GetMethod("Close",BindingFlags.NonPublic|BindingFlags.Instance).Invoke(market,null);}
             }
         }
     }

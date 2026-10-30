@@ -1,6 +1,6 @@
 {
-  "status": "review",
-  "scope": "new whole sprites; user approval pending",
+  "status": "approved",
+  "scope": "user-approved whole headwater sprites; A7d integration 2026-10-30",
   "assets": [
     {
       "name": "compact-spring-west",
@@ -137,5 +137,8 @@
         "replaceWater": true
       }
     }
-  ]
+  ],
+  "approvedBy": "user",
+  "approvedAt": "2026-10-30",
+  "evidence": "User: 아, 그럼 통합해줘. — displayed A7d batch and integration discussion"
 }

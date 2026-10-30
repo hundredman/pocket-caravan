@@ -19,7 +19,7 @@
 - **에셋 규칙:** 에셋은 만들어진 목적 그대로만 쓴다. 잘라 쓰기, 이어 붙이기, 다른 용도로 쓰기, 즉석 변형을 하지 않는다. 필요하면 새로 만들고, 이어지는 지형은 조립용 에셋으로 만든다([방향 기준](../Direction.md) 2절).
 - **아트:** 귀여운 픽셀 아트 한 가지로 통일한다. AI 이미지도 쓸 수 있지만, 실제 해상도 격자·공통 팔레트로 정리해 다른 에셋에 녹아드는 것만 넣는다([아트 기준](../ArtGuide.md) 4절). 부드럽게 축소해 바로 넣지 않는다.
 - **담당 범위:** 다른 문명과 중앙 대륙의 나머지 3/4은 만들지 않는다. 다른 팀의 브랜치·씬·데이터를 다시 생성하거나 덮어쓰지 않는다.
-- **팀 공용 파일(PR #23 진행 중):** `Assets/PocketCaravan/Scripts/Core·Economy·Quests·UI`, `Resources/GameDatabase·WorldIndex`, `ProjectSettings/EditorBuildSettings.asset`, transit 장면, `Assets/PocketCaravan/World/Connections`는 PR #23(`region/goryeo`)에 단계별로 올린다(은샘 2026-10-28, 2026-10-27 동결을 대신함). 단계마다 커밋 → 통합 검사 → push → PR이 main과 충돌 없는지(mergeable) 확인한다. `.asset`·`.unity`는 한 단계에서 한 번에 고치고, 바꾼 공용 파일은 PR 설명에 적는다.
+- **팀 공용 파일(PR #23 진행 중):** `Assets/PocketCaravan/Scripts/Core·Economy·Quests·UI`, `Resources/GameDatabase·WorldIndex`, `ProjectSettings/EditorBuildSettings.asset`, transit 장면, `Assets/PocketCaravan/World/Connections`는 PR #23(`region/goryeo` → `integration`, 사용자 2026-10-30 통합 지시)에 단계별로 올린다(은샘 2026-10-28, 2026-10-27 동결을 대신함). 단계마다 커밋 → 통합 검사 → push → PR이 대상 integration과 충돌 없는지(mergeable) 확인한다. `.asset`·`.unity`는 한 단계에서 한 번에 고치고, 바꾼 공용 파일은 PR 설명에 적는다.
 - **생성물:** `Maps/*.json`, 씬, `Resources/WorldMap` 이미지는 원본(`Tools/…`)을 고친 뒤 다시 만든다. 생성물만 고치지 않는다.
 - **보존:** 시장·상품·퀘스트·NPC·시설 아이디와 저장 데이터는 유지한다. 형식을 바꾸면 옛 저장 이주를 함께 만든다.
 - **검사:** 실행하지 않은 검사를 통과했다고 쓰지 않는다. 정적 검사, Unity 씬 검사, 실제 이동, 사람이 해 본 플레이를 구분해서 적는다.
