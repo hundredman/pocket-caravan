@@ -1,0 +1,23 @@
+{
+  "edgeCompleted": true,
+  "edgeChecks": 9426,
+  "travelCompleted": true,
+  "travelChecks": 543,
+  "actualTrips": 6,
+  "isolatedPreviewArrivals": 6,
+  "pythonTests": 345,
+  "pythonSkipped": 16,
+  "pythonFailures": 0,
+  "rendering": {
+    "originalRegularLayerSlots": 88218,
+    "newRegularLayerSlots": 62633,
+    "omittedFarNeighborSlots": 25585,
+    "removedBackdropSlots": 27764,
+    "viewMaskRenderers": 13,
+    "visibilityRimCells": 1,
+    "terrainSources": 54,
+    "terrainCompositeTiles": 1670
+  },
+  "approvedCameraChanged": false,
+  "productionMapsChanged": false
+}

@@ -206,6 +206,8 @@ namespace PocketCaravan
                 for (float t = 0; t < 1f; t += Dt() / cover) { fade = t; yield return null; }
             fade = cover > 0f ? 1f : 0f;
             coveredAt = Time.unscaledTime;
+            // Present a fully covered frame before scene loading can stall the main thread.
+            if (cover > 0f) yield return null;
             pendingSpawnId = spawnId; pendingOffset = offset; pendingFacing = facing; pendingExact = exact;
             yield return SceneManager.LoadSceneAsync(sceneName);
             yield return null;

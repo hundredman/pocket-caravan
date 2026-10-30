@@ -77,6 +77,7 @@ def main():
     ap.add_argument('--review-root',type=Path)
     ap.add_argument('--world-map-preview',action='store_true')
     ap.add_argument('--preserve-objects',action='store_true',help='Art-only regeneration: retain current function/exit/spawn IDs and positions')
+    ap.add_argument('--isolated-views',action='store_true',help='Render owned map with only a one-cell fading neighbor rim; no extended backdrop')
     a=ap.parse_args()
     if a.preview_root:
         if a.production or not a.preview_root.resolve().is_relative_to((ROOT/'Assets/PocketCaravan/Editor/B2Preview').resolve()):raise ValueError('Isolated preview path required')
@@ -184,11 +185,12 @@ def main():
         # Camera context stays outside the playable rectangle and never changes collisions/IDs.
         import camera_backdrop
         backdrop=[]
-        for dx,dy in camera_backdrop.exterior_cells(objects,w,h,set(MAPID.values())):
+        for dx,dy in ([] if a.isolated_views else camera_backdrop.exterior_cells(objects,w,h,set(MAPID.values()))):
             xx,yy=x0+dx,y0+dy
             if 0<=xx<m['own'].shape[1]and 0<=yy<m['own'].shape[0]and m['own'][yy,xx]:
                 backdrop.append(dict(x=dx,y=dy,tile=P(backdrop_name(yy,xx))))
-        if backdrop:data['cameraBackdrop']=backdrop
+        if a.isolated_views:data['viewOwnership']=inside_.astype(int).ravel().tolist()
+        elif backdrop:data['cameraBackdrop']=backdrop
         (PREV/'Maps'/f'{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
         if a.production:(ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
         atlas.append(dict(mapId=mid,box=(int(x0),int(y0),w,h),vz=vz))

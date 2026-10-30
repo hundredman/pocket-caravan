@@ -11,6 +11,14 @@ namespace PocketCaravan.EditorTools
         [Serializable] public class Map {public string mapId,village;public Space[] spaces;}
         [Serializable] public class Manifest {public Asset[] assets;public Map[] maps;}
         [Serializable] public class Header {public int h;}
+        [MenuItem("Pocket Caravan/Review/맵 경계 검토 (이웃 최소 표시)")]
+        public static void OpenIsolatedManual()
+        {
+            SessionState.SetString("Codex.NatureIntegrationReview.Root",Root);
+            SessionState.SetString("Codex.NatureIntegrationReview.Output","ArtReview/MapIsolation-20261030/Manual");
+            Directory.CreateDirectory(NatureIntegrationReview.Output);
+            NatureIntegrationReview.OpenManual();
+        }
         public static void Build()
         {
             if(EditorApplication.isPlaying)throw new InvalidOperationException("Stop Play before building review scenes");
