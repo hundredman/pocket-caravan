@@ -11,6 +11,7 @@ ROOT=Path(__file__).resolve().parents[2];HERE=Path(__file__).parent
 OUT=ROOT/'ArtReview/VillageFill-20261030';PREV=ROOT/'Assets/PocketCaravan/Editor/B2Preview/VillageFill'
 sys.path.insert(0,str(HERE))
 import building_bindings
+import market_layout
 ASSETS={
  'sign':ROOT/'Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_0_2.png',
  'board':ROOT/'Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_1_2.png',
@@ -18,7 +19,9 @@ ASSETS={
  'cart':ROOT/'Assets/PocketCaravan/Art/Baked/Objects/c6_cart_f74ffdac.png',
  'bench':ROOT/'ArtReview/C7-RemainingBatch-20261027/Native/bench.png',
  'harvest':ROOT/'ArtReview/Approved/C7-WorkshopProps-v4/harvest.png',
- 'thatch':building_bindings.path('thatch')}
+ 'thatch':building_bindings.path('thatch'),
+ 'grain_stall':ROOT/'ArtReview/MarketCourts-20261030/Native/grain_stall.png',
+ 'wares_counter':ROOT/'ArtReview/MarketCourts-20261030/Native/wares_counter.png'}
 def sha(p):return hashlib.sha256(Image.open(p).convert('RGBA').tobytes()).hexdigest()
 def write(p,d):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
 def design():
@@ -92,7 +95,7 @@ def design():
   if not dest.exists()or sha(dest)!=sha(p):shutil.copyfile(p,dest)
   native=OUT/'Native'/f'{name}.png';native.parent.mkdir(exist_ok=True)
   if not native.exists()or sha(native)!=sha(p):shutil.copyfile(p,native)
-  assets.append(dict(id=name,reviewImage=str(native.relative_to(ROOT)),source=str(p.relative_to(ROOT)),image=str(dest.relative_to(ROOT)),size=[im.width//16,im.height//16],rgbaSha256=sha(p)))
+  assets.append(dict(id=name,approval='pending'if name in ('grain_stall','wares_counter')else 'existing approved art',reviewImage=str(native.relative_to(ROOT)),source=str(p.relative_to(ROOT)),image=str(dest.relative_to(ROOT)),size=[im.width//16,im.height//16],rgbaSha256=sha(p)))
  sizes={a['id']:a['size']for a in assets}
  for key,v in z.items():
   mid={'rest_north':'transit_central_approach','rest_lake':'transit_south_inland'}.get(v['map'],v['map'])
@@ -121,14 +124,11 @@ def design():
   for name,aid in [('장터 광장','market'),('이벤트 마당','event-yard')]:
    if name not in its:continue
    it=its[name];g=dict(id=aid,props=[])
-   wants=['bench','cart']if aid=='market' and not any(o['kind']=='market'for o in md['objects'])else ['stall','harvest']if aid=='market' and key=='goryeo/장단' else ['stall','cart']if aid=='market'else ['bench','cart','harvest']if key=='goryeo/장단'else ['bench','cart']
-   for asset in wants:
-    sw,sh=sizes[asset];ok=False
-    for y in range(it['y'],it['y']+it['h']-sh+1):
-     for x in range(it['x'],it['x']+it['w']-sw+1):
-      if place(asset,x,y,g):ok=True;break
-     if ok:break
-    if not ok:gaps.append(dict(village=key,feature=name,asset=asset,reason='keep existing access and artwork clear'))
+   if any(o['kind']=='market'for o in md['objects']):
+    rect=(it['x'],it['y'],it['w'],it['h'])
+    if aid=='market':market_layout.arrange(mid,rect,place,g)
+    else:market_layout.event_edge(rect,place,g)
+   # Future market functions remain pending; no fake trading counter is added.
    groups.append(g)
   for it in v['items']:
    if it.get('missing'):missing.append(dict(village=key,feature=it['name'],reason='M2 placement failed; not a missing texture',resolved=False))
@@ -155,7 +155,7 @@ def design():
    else:gaps.append(dict(village=mid,feature='이정표',reason='no safe adjacent visual position'))
   if group['props']:entries.append(dict(mapId=mid,village=mid,spaces=[group]))
  inputs={mid:dict(metadata={k:md[k]for k in ['id','name','w','h','terrainX','terrainY','worldX','worldY','travelHours']if k in md},kinds=sorted({o['kind']for o in md['objects']}),visibleLayersSha256=hashlib.sha256(json.dumps({layer:[md['palette'][i]for i in md[layer]]for layer in ['ground','deco','obj','high']},sort_keys=True,separators=(',',':')).encode()).hexdigest(),objectSignatures=[hashlib.sha256(json.dumps(o,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()for o in md['objects']])for mid,md in maps.items()if mid in own_ids}
- result=dict(inputMaps=inputs,status='review',assets=assets,maps=entries,addedRice=added,missingSlots=missing,unplacedProps=gaps,policy='Everyday event-yard props are a separate runtime root; SetEvent replaces and restores them. No automatic event invented.')
+ result=dict(inputMaps=inputs,status='review',assets=assets,maps=entries,addedRice=added,missingSlots=missing,unplacedProps=gaps,policy='User rejected scattered yard props: perimeter vendor rows + central customer aisle. Existing functional markets only; pending sites unchanged. Event sales counters form a separate replaceable root. Draft art and layout require approval.')
  write(OUT/'manifest.json',result)
  print('Added rice',[(p['map'],p['x'],p['y'])for p in added]);print('Props',sum(len(s['props'])for e in entries for s in e['spaces']),'unplaced',len(gaps),'unplaced houses',len(missing))
 if __name__=='__main__':design()

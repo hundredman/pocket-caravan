@@ -8,7 +8,7 @@ sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
 @unittest.skipUnless((OUT/'manifest.json').exists(),'Village dressing review not generated')
 class VillageFillReview(unittest.TestCase):
  def setUp(self):self.manifest=json.loads((OUT/'manifest.json').read_text())
- def test_whole_approved_images_retain_pixels_dimensions_and_purpose(self):
+ def test_whole_review_images_retain_pixels_dimensions_and_purpose(self):
   for a in self.manifest['assets']:
    with Image.open(ROOT/a['source'])as im:src=im.convert('RGBA')
    with Image.open(ROOT/a['reviewImage'])as im:dst=im.convert('RGBA')
@@ -20,11 +20,12 @@ class VillageFillReview(unittest.TestCase):
    board=[s for s in m['spaces']if s['id']=='board']
    self.assertEqual(bool(board),'board' in kinds)
    if 'market' not in kinds:
-    self.assertFalse(any(p['asset']=='stall'for s in m['spaces']for p in s['props']))
+    self.assertFalse(any(p['asset']in ('stall','grain_stall','wares_counter')for s in m['spaces']for p in s['props']))
  def test_default_event_yards_have_a_separate_restoreable_group(self):
   for m in self.manifest['maps']:
    yard=next((s for s in m['spaces']if s['id']=='event-yard'),None)
-   if yard:self.assertGreaterEqual(len(yard['props']),2,m['village'])
+   if yard and 'market'in self.manifest['inputMaps'][m['mapId']]['kinds']:self.assertGreaterEqual(len(yard['props']),2,m['village'])
+   elif yard:self.assertEqual(yard['props'],[],m['village'])
    else:self.assertEqual([s['id']for s in m['spaces']],['signs'])
  def test_added_rice_never_replaces_a_major_forest(self):
   for p in self.manifest['addedRice']:

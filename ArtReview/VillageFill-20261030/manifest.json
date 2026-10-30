@@ -3065,6 +3065,7 @@
   "assets": [
     {
       "id": "sign",
+      "approval": "existing approved art",
       "reviewImage": "ArtReview/VillageFill-20261030/Native/sign.png",
       "source": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_0_2.png",
       "image": "Assets/PocketCaravan/Editor/B2Preview/VillageFill/Whole/sign.png",
@@ -3076,6 +3077,7 @@
     },
     {
       "id": "board",
+      "approval": "existing approved art",
       "reviewImage": "ArtReview/VillageFill-20261030/Native/board.png",
       "source": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_1_2.png",
       "image": "Assets/PocketCaravan/Editor/B2Preview/VillageFill/Whole/board.png",
@@ -3087,6 +3089,7 @@
     },
     {
       "id": "stall",
+      "approval": "existing approved art",
       "reviewImage": "ArtReview/VillageFill-20261030/Native/stall.png",
       "source": "ArtReview/Approved/BuildingShip-Renewal-v1/shop.png",
       "image": "Assets/PocketCaravan/Editor/B2Preview/VillageFill/Whole/stall.png",
@@ -3098,6 +3101,7 @@
     },
     {
       "id": "cart",
+      "approval": "existing approved art",
       "reviewImage": "ArtReview/VillageFill-20261030/Native/cart.png",
       "source": "Assets/PocketCaravan/Art/Baked/Objects/c6_cart_f74ffdac.png",
       "image": "Assets/PocketCaravan/Editor/B2Preview/VillageFill/Whole/cart.png",
@@ -3109,6 +3113,7 @@
     },
     {
       "id": "bench",
+      "approval": "existing approved art",
       "reviewImage": "ArtReview/VillageFill-20261030/Native/bench.png",
       "source": "ArtReview/C7-RemainingBatch-20261027/Native/bench.png",
       "image": "Assets/PocketCaravan/Editor/B2Preview/VillageFill/Whole/bench.png",
@@ -3120,6 +3125,7 @@
     },
     {
       "id": "harvest",
+      "approval": "existing approved art",
       "reviewImage": "ArtReview/VillageFill-20261030/Native/harvest.png",
       "source": "ArtReview/Approved/C7-WorkshopProps-v4/harvest.png",
       "image": "Assets/PocketCaravan/Editor/B2Preview/VillageFill/Whole/harvest.png",
@@ -3131,6 +3137,7 @@
     },
     {
       "id": "thatch",
+      "approval": "existing approved art",
       "reviewImage": "ArtReview/VillageFill-20261030/Native/thatch.png",
       "source": "ArtReview/Approved/BuildingShip-Renewal-v1/thatch.png",
       "image": "Assets/PocketCaravan/Editor/B2Preview/VillageFill/Whole/thatch.png",
@@ -3139,6 +3146,30 @@
         3
       ],
       "rgbaSha256": "fd068c3b5f9e7d41ef0e1816145b21c5dd42e666ac79b4a9cd682f017b0d9528"
+    },
+    {
+      "id": "grain_stall",
+      "approval": "pending",
+      "reviewImage": "ArtReview/VillageFill-20261030/Native/grain_stall.png",
+      "source": "ArtReview/MarketCourts-20261030/Native/grain_stall.png",
+      "image": "Assets/PocketCaravan/Editor/B2Preview/VillageFill/Whole/grain_stall.png",
+      "size": [
+        3,
+        3
+      ],
+      "rgbaSha256": "ca2930cf8933eeb0a1a81fa2c17520c358738ec97bd922c04e0334cc46c14a2a"
+    },
+    {
+      "id": "wares_counter",
+      "approval": "pending",
+      "reviewImage": "ArtReview/VillageFill-20261030/Native/wares_counter.png",
+      "source": "ArtReview/MarketCourts-20261030/Native/wares_counter.png",
+      "image": "Assets/PocketCaravan/Editor/B2Preview/VillageFill/Whole/wares_counter.png",
+      "size": [
+        3,
+        2
+      ],
+      "rgbaSha256": "ba4bac3315126a404e3bad13a524dd24e4f6a530e11cd1840f05cc8443f2c0e3"
     }
   ],
   "maps": [
@@ -3162,17 +3193,31 @@
           "id": "market",
           "props": [
             {
-              "asset": "stall",
-              "x": 36,
+              "asset": "grain_stall",
+              "x": 32,
               "y": 44,
-              "w": 6,
-              "h": 4
+              "w": 3,
+              "h": 3
             },
             {
-              "asset": "cart",
-              "x": 30,
+              "asset": "grain_stall",
+              "x": 36,
               "y": 44,
-              "w": 2,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 28,
+              "y": 50,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 32,
+              "y": 50,
+              "w": 3,
               "h": 2
             }
           ]
@@ -3181,17 +3226,24 @@
           "id": "event-yard",
           "props": [
             {
-              "asset": "bench",
-              "x": 30,
-              "y": 27,
-              "w": 3,
-              "h": 1
-            },
-            {
-              "asset": "cart",
+              "asset": "grain_stall",
               "x": 33,
               "y": 27,
-              "w": 2,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 28,
+              "y": 30,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 33,
+              "y": 30,
+              "w": 3,
               "h": 2
             }
           ]
@@ -3218,17 +3270,31 @@
           "id": "market",
           "props": [
             {
-              "asset": "stall",
-              "x": 40,
-              "y": 55,
-              "w": 6,
-              "h": 4
-            },
-            {
-              "asset": "cart",
+              "asset": "grain_stall",
               "x": 40,
               "y": 53,
-              "w": 2,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 44,
+              "y": 53,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 40,
+              "y": 61,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 44,
+              "y": 61,
+              "w": 3,
               "h": 2
             }
           ]
@@ -3237,17 +3303,17 @@
           "id": "event-yard",
           "props": [
             {
-              "asset": "bench",
+              "asset": "wares_counter",
               "x": 46,
               "y": 35,
               "w": 3,
-              "h": 1
+              "h": 2
             },
             {
-              "asset": "cart",
+              "asset": "wares_counter",
               "x": 49,
               "y": 35,
-              "w": 2,
+              "w": 3,
               "h": 2
             }
           ]
@@ -3286,17 +3352,17 @@
           "id": "market",
           "props": [
             {
-              "asset": "stall",
-              "x": 29,
-              "y": 43,
-              "w": 6,
-              "h": 4
-            },
-            {
-              "asset": "cart",
+              "asset": "grain_stall",
               "x": 29,
               "y": 41,
-              "w": 2,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 36,
+              "y": 45,
+              "w": 3,
               "h": 2
             }
           ]
@@ -3305,17 +3371,31 @@
           "id": "event-yard",
           "props": [
             {
-              "asset": "bench",
+              "asset": "grain_stall",
               "x": 39,
               "y": 53,
               "w": 3,
-              "h": 1
+              "h": 3
             },
             {
-              "asset": "cart",
-              "x": 42,
+              "asset": "grain_stall",
+              "x": 44,
               "y": 53,
-              "w": 2,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 39,
+              "y": 56,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 44,
+              "y": 56,
+              "w": 3,
               "h": 2
             }
           ]
@@ -3354,16 +3434,37 @@
           "id": "market",
           "props": [
             {
-              "asset": "stall",
+              "asset": "grain_stall",
               "x": 22,
               "y": 34,
-              "w": 6,
-              "h": 4
+              "w": 3,
+              "h": 3
             },
             {
-              "asset": "harvest",
-              "x": 29,
+              "asset": "grain_stall",
+              "x": 30,
               "y": 34,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 22,
+              "y": 39,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 26,
+              "y": 39,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 30,
+              "y": 39,
               "w": 3,
               "h": 2
             }
@@ -3373,23 +3474,30 @@
           "id": "event-yard",
           "props": [
             {
-              "asset": "bench",
+              "asset": "grain_stall",
               "x": 31,
               "y": 24,
               "w": 3,
-              "h": 1
+              "h": 3
             },
             {
-              "asset": "cart",
-              "x": 34,
+              "asset": "grain_stall",
+              "x": 36,
               "y": 24,
-              "w": 2,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 31,
+              "y": 27,
+              "w": 3,
               "h": 2
             },
             {
-              "asset": "harvest",
+              "asset": "wares_counter",
               "x": 36,
-              "y": 24,
+              "y": 27,
               "w": 3,
               "h": 2
             }
@@ -3429,17 +3537,38 @@
           "id": "market",
           "props": [
             {
-              "asset": "stall",
+              "asset": "grain_stall",
               "x": 33,
               "y": 28,
-              "w": 6,
-              "h": 4
+              "w": 3,
+              "h": 3
             },
             {
-              "asset": "cart",
-              "x": 40,
+              "asset": "grain_stall",
+              "x": 41,
               "y": 28,
-              "w": 2,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 33,
+              "y": 33,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 37,
+              "y": 33,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 41,
+              "y": 33,
+              "w": 3,
               "h": 2
             }
           ]
@@ -3448,17 +3577,31 @@
           "id": "event-yard",
           "props": [
             {
-              "asset": "bench",
+              "asset": "grain_stall",
               "x": 30,
               "y": 17,
               "w": 3,
-              "h": 1
+              "h": 3
             },
             {
-              "asset": "cart",
-              "x": 33,
+              "asset": "grain_stall",
+              "x": 35,
               "y": 17,
-              "w": 2,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 30,
+              "y": 20,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 35,
+              "y": 20,
+              "w": 3,
               "h": 2
             }
           ]
@@ -3485,17 +3628,38 @@
           "id": "market",
           "props": [
             {
-              "asset": "stall",
+              "asset": "grain_stall",
               "x": 28,
               "y": 24,
-              "w": 6,
-              "h": 4
+              "w": 3,
+              "h": 3
             },
             {
-              "asset": "cart",
-              "x": 35,
+              "asset": "grain_stall",
+              "x": 36,
               "y": 24,
-              "w": 2,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 28,
+              "y": 29,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 32,
+              "y": 29,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 36,
+              "y": 29,
+              "w": 3,
               "h": 2
             }
           ]
@@ -3504,17 +3668,31 @@
           "id": "event-yard",
           "props": [
             {
-              "asset": "bench",
+              "asset": "grain_stall",
               "x": 43,
               "y": 27,
               "w": 3,
-              "h": 1
+              "h": 3
             },
             {
-              "asset": "cart",
-              "x": 46,
+              "asset": "grain_stall",
+              "x": 48,
               "y": 27,
-              "w": 2,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 43,
+              "y": 30,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 48,
+              "y": 30,
+              "w": 3,
               "h": 2
             }
           ]
@@ -3527,41 +3705,11 @@
       "spaces": [
         {
           "id": "market",
-          "props": [
-            {
-              "asset": "bench",
-              "x": 27,
-              "y": 40,
-              "w": 3,
-              "h": 1
-            },
-            {
-              "asset": "cart",
-              "x": 30,
-              "y": 40,
-              "w": 2,
-              "h": 2
-            }
-          ]
+          "props": []
         },
         {
           "id": "event-yard",
-          "props": [
-            {
-              "asset": "bench",
-              "x": 36,
-              "y": 30,
-              "w": 3,
-              "h": 1
-            },
-            {
-              "asset": "cart",
-              "x": 39,
-              "y": 30,
-              "w": 2,
-              "h": 2
-            }
-          ]
+          "props": []
         }
       ]
     },
@@ -3571,41 +3719,11 @@
       "spaces": [
         {
           "id": "market",
-          "props": [
-            {
-              "asset": "bench",
-              "x": 38,
-              "y": 35,
-              "w": 3,
-              "h": 1
-            },
-            {
-              "asset": "cart",
-              "x": 41,
-              "y": 35,
-              "w": 2,
-              "h": 2
-            }
-          ]
+          "props": []
         },
         {
           "id": "event-yard",
-          "props": [
-            {
-              "asset": "bench",
-              "x": 53,
-              "y": 38,
-              "w": 3,
-              "h": 1
-            },
-            {
-              "asset": "cart",
-              "x": 56,
-              "y": 38,
-              "w": 2,
-              "h": 2
-            }
-          ]
+          "props": []
         },
         {
           "id": "signs",
@@ -3634,41 +3752,11 @@
       "spaces": [
         {
           "id": "market",
-          "props": [
-            {
-              "asset": "bench",
-              "x": 36,
-              "y": 36,
-              "w": 3,
-              "h": 1
-            },
-            {
-              "asset": "cart",
-              "x": 39,
-              "y": 36,
-              "w": 2,
-              "h": 2
-            }
-          ]
+          "props": []
         },
         {
           "id": "event-yard",
-          "props": [
-            {
-              "asset": "bench",
-              "x": 37,
-              "y": 51,
-              "w": 3,
-              "h": 1
-            },
-            {
-              "asset": "cart",
-              "x": 40,
-              "y": 51,
-              "w": 2,
-              "h": 2
-            }
-          ]
+          "props": []
         }
       ]
     },
@@ -3678,41 +3766,11 @@
       "spaces": [
         {
           "id": "market",
-          "props": [
-            {
-              "asset": "bench",
-              "x": 27,
-              "y": 29,
-              "w": 3,
-              "h": 1
-            },
-            {
-              "asset": "cart",
-              "x": 30,
-              "y": 29,
-              "w": 2,
-              "h": 2
-            }
-          ]
+          "props": []
         },
         {
           "id": "event-yard",
-          "props": [
-            {
-              "asset": "bench",
-              "x": 35,
-              "y": 40,
-              "w": 3,
-              "h": 1
-            },
-            {
-              "asset": "cart",
-              "x": 38,
-              "y": 40,
-              "w": 2,
-              "h": 2
-            }
-          ]
+          "props": []
         }
       ]
     },
@@ -3736,17 +3794,24 @@
           "id": "market",
           "props": [
             {
-              "asset": "stall",
+              "asset": "grain_stall",
               "x": 28,
               "y": 23,
-              "w": 6,
-              "h": 4
+              "w": 3,
+              "h": 3
             },
             {
-              "asset": "cart",
-              "x": 35,
+              "asset": "grain_stall",
+              "x": 36,
               "y": 23,
-              "w": 2,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 37,
+              "y": 27,
+              "w": 3,
               "h": 2
             }
           ]
@@ -3755,17 +3820,31 @@
           "id": "event-yard",
           "props": [
             {
-              "asset": "bench",
+              "asset": "grain_stall",
               "x": 40,
               "y": 38,
               "w": 3,
-              "h": 1
+              "h": 3
             },
             {
-              "asset": "cart",
-              "x": 43,
+              "asset": "grain_stall",
+              "x": 45,
               "y": 38,
-              "w": 2,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 40,
+              "y": 41,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 45,
+              "y": 41,
+              "w": 3,
               "h": 2
             }
           ]
@@ -3830,5 +3909,5 @@
     }
   ],
   "unplacedProps": [],
-  "policy": "Everyday event-yard props are a separate runtime root; SetEvent replaces and restores them. No automatic event invented."
+  "policy": "User rejected scattered yard props: perimeter vendor rows + central customer aisle. Existing functional markets only; pending sites unchanged. Event sales counters form a separate replaceable root. Draft art and layout require approval."
 }
