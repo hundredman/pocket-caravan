@@ -4,8 +4,8 @@ namespace PocketCaravan.EditorTools
 {
     public sealed class CameraStabilityPlayReview:MonoBehaviour
     {
-        public const string Output="ArtReview/CameraStability-20261030";
-        [Serializable] public class Row {public string map;public int probes;public float maxBeforeStep,maxAfterStep,maxBeforeTurn,maxAfterTurn,maxLiveFrameStep;}
+        public const string Output="ArtReview/CameraCenter-20261030";
+        [Serializable] public class Row {public string map;public int probes;public float maxBeforeStep,maxAfterStep,maxBeforeTurn,maxAfterTurn,maxLiveFrameStep,maxCenterRuleError;public int edgeHoldChecks;}
         [Serializable] public class Report {public bool complete;public string error;public List<Row> maps=new List<Row>();}
         float previousCaptureDelta;readonly Report report=new Report();PlayerMotor Motor=>PlayerController.Instance.Motor;
         void OnEnable(){SceneManager.sceneLoaded+=IsolateInput;}
@@ -14,7 +14,11 @@ namespace PocketCaravan.EditorTools
         IEnumerator Start(){var stack=new Stack<IEnumerator>();stack.Push(Run());while(stack.Count>0){object item=null;bool moved=false;Exception error=null;try{moved=stack.Peek().MoveNext();if(moved)item=stack.Peek().Current;}catch(Exception e){error=e;}if(error!=null){Finish(error);yield break;}if(!moved){stack.Pop();continue;}if(item is IEnumerator)stack.Push((IEnumerator)item);else yield return item;}Finish(null);}
         void Finish(Exception e){report.complete=e==null;report.error=e==null?null:e.ToString();Save();Time.timeScale=1;Time.captureDeltaTime=previousCaptureDelta;Application.runInBackground=false;EditorApplication.isPlaying=false;}
         void Save(){Directory.CreateDirectory(Output);File.WriteAllText(Output+"/checks.json",JsonUtility.ToJson(report,true));}
-        void Pose(Vector2 feet,Vector2Int face){Motor.Teleport((Vector3)(feet-Motor.feetOffset),face);UnityEngine.Object.FindFirstObjectByType<CameraFollow>().SnapNow();}
+        void Pose(Vector2 feet,Vector2Int face){Motor.Teleport((Vector3)(feet-Motor.feetOffset),face);UnityEngine.Object.FindFirstObjectByType<CameraFollow>().SnapNow();
+            var b=MapRoot.Current.WorldBounds;var cam=Camera.main;float h=cam.orthographicSize,w=h*cam.aspect;var expected=Motor.transform.position;
+            expected.x=b.size.x>2*w?Mathf.Clamp(expected.x,b.min.x+w,b.max.x-w):b.center.x;expected.y=b.size.y>2*h?Mathf.Clamp(expected.y,b.min.y+h,b.max.y-h):b.center.y;expected.z=-10;
+            float error=Vector3.Distance(expected,cam.transform.position);if(report.maps.Count>0)report.maps[report.maps.Count-1].maxCenterRuleError=Mathf.Max(report.maps[report.maps.Count-1].maxCenterRuleError,error);if(error>.0001f)throw new Exception("Camera must center player subject only to fixed map bounds: "+error);
+        }
         Vector3 Before(){var cam=Camera.main;var map=MapRoot.Current;var p=Motor.transform.position;var b=map.WorldBounds;float h=cam.orthographicSize,w=h*cam.aspect;p.x=b.size.x>2*w?Mathf.Clamp(p.x,b.min.x+w,b.max.x-w):b.center.x;p.y=b.size.y>2*h?Mathf.Clamp(p.y,b.min.y+h,b.max.y-h):b.center.y;
             var best=new MapExit[4];var score=new[]{float.PositiveInfinity,float.PositiveInfinity,float.PositiveInfinity,float.PositiveInfinity};
             foreach(var e in MapExit.All){if(GoryeoTravelTransition.RegionOf(e.targetScene)==null)continue;Rect r=e.WorldRect;int a=e.edge=="W"?0:e.edge=="E"?1:e.edge=="S"?2:e.edge=="N"?3:-1;if(a<0)continue;var f=Motor.Feet;float l=a<2?Mathf.Max(Mathf.Max(r.yMin-f.y,f.y-r.yMax),0):Mathf.Max(Mathf.Max(r.xMin-f.x,f.x-r.xMax),0);float d=a==0?f.x-r.xMin:a==1?r.xMax-f.x:a==2?f.y-r.yMin:r.yMax-f.y;if(l>.75f||d<-.001f||d>(a<2?w:h)+1)continue;float s=l*1000+d;if(s<score[a]){score[a]=s;best[a]=e;}}
@@ -33,6 +37,16 @@ namespace PocketCaravan.EditorTools
                     Pose(feet,Vector2Int.left);row.maxAfterTurn=Mathf.Max(row.maxAfterTurn,Vector3.Distance(after,Camera.main.transform.position));row.maxBeforeTurn=Mathf.Max(row.maxBeforeTurn,Vector3.Distance(before,Before()));
                     if(row.maxAfterStep>.12f||row.maxAfterTurn>.0001f)throw new Exception(id+" camera discontinuity "+JsonUtility.ToJson(row));if(++count%120==0)yield return null;
                 }Save();
+                // Independent fixed-target probes verify interior centring, all sides and four corners.
+                var originalTarget=follow.target;var probe=new GameObject("Temporary camera bound probe");follow.target=probe.transform;
+                var box=MapRoot.Current.WorldBounds;float hx=Camera.main.orthographicSize*Camera.main.aspect,hy=Camera.main.orthographicSize;
+                foreach(int sx in new[]{-1,0,1})foreach(int sy in new[]{-1,0,1})
+                {
+                    if(sx==0&&sy==0)continue;
+                    probe.transform.position=new Vector3(sx<0?box.min.x+.2f:sx>0?box.max.x-.2f:box.center.x,sy<0?box.min.y+.2f:sy>0?box.max.y-.2f:box.center.y,0);follow.SnapNow();Vector3 anchor=Camera.main.transform.position;
+                    probe.transform.position+=new Vector3(sx*.1f,sy*.1f,0);follow.SnapNow();if(Vector3.Distance(anchor,Camera.main.transform.position)>.0001f)throw new Exception(id+" edge/corner must hold");row.edgeHoldChecks++;
+                }
+                follow.target=originalTarget;Destroy(probe);
                 // Rendered updates exercise SmoothDamp and actual motor collision, not only target math.
                 var start=candidates.Find(p=>Free(p));Pose(start,Vector2Int.right);follow.smoothTime=.12f;Time.timeScale=1;Vector3 previous=Camera.main.transform.position;
                 foreach(var direction in new[]{Vector2.right,Vector2.up,Vector2.left,Vector2.down})for(int frame=0;frame<30;frame++){Motor.Tick(direction,3.8f,1f/60);yield return null;float step=Vector3.Distance(previous,Camera.main.transform.position);row.maxLiveFrameStep=Mathf.Max(row.maxLiveFrameStep,step);if(step>1f)throw new Exception(id+" live camera step "+step);previous=Camera.main.transform.position;}

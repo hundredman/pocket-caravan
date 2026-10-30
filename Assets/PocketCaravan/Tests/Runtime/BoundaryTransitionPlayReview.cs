@@ -70,14 +70,16 @@ namespace PocketCaravan.EditorTools
                     Check(!exit.TryGetBoundaryContact(Motor,direction,out result),"exit cell center is not the edge",id+" "+exit.edge);
                     Pose(Contact(exit),direction);Check(!exit.TryGetBoundaryContact(Motor,-direction,out result),"turning inward does not travel",id);
                     Check(exit.TryGetBoundaryContact(Motor,direction,out result),"outer feet reach boundary",id+" "+exit.edge);
-                    // The production contact path frames the exact exit before starting the fade.
-                    Motor.Teleport(result,Facing(direction));follow.SnapNow();follow.FrameExit(exit);
+                    Motor.Teleport(result,Facing(direction));follow.SnapNow();
                     Vector3 held=follow.transform.position;follow.SendMessage("LateUpdate");
-                    Check(Vector3.Distance(held,follow.transform.position)<.0001f,"outgoing fade holds contact frame",id);
-                    Rect r=exit.WorldRect;Vector3 edgePoint=Motor.Feet;
-                    switch(exit.edge){case "E":edgePoint.x=r.xMax;break;case "W":edgePoint.x=r.xMin;break;case "N":edgePoint.y=r.yMax;break;case "S":edgePoint.y=r.yMin;break;}
-                    Camera.main.ResetWorldToCameraMatrix();Vector3 v=Camera.main.WorldToViewportPoint(edgePoint);float screen=exit.edge=="E"?v.x:exit.edge=="W"?1-v.x:exit.edge=="N"?v.y:1-v.y;
-                    Check(Mathf.Abs(screen-1)<.001f,"exit is the visible screen edge",id+" "+exit.edge+" v="+v+" camera="+Camera.main.transform.position+" h="+Camera.main.orthographicSize+" aspect="+Camera.main.aspect+" rect="+r);total++;
+                    Check(Vector3.Distance(held,follow.transform.position)<.0001f,"stationary camera holds independently of exit",id);
+                    // User now prioritizes centred follow and fixed map edges over exit-plane framing.
+                    var bounds=MapRoot.Current.WorldBounds;var camera=Camera.main;float halfH=camera.orthographicSize,halfW=halfH*camera.aspect;
+                    Vector3 expected=Motor.transform.position;
+                    expected.x=bounds.size.x>2*halfW?Mathf.Clamp(expected.x,bounds.min.x+halfW,bounds.max.x-halfW):bounds.center.x;
+                    expected.y=bounds.size.y>2*halfH?Mathf.Clamp(expected.y,bounds.min.y+halfH,bounds.max.y-halfH):bounds.center.y;expected.z=-10;
+                    Check(Vector3.Distance(held,expected)<.0001f,"contact never reframes camera to an exit",id+" "+exit.edge);total++;
+                    Rect r=exit.WorldRect;
                     if(filmed.Contains(exit.edge)||!FreeFeet(Contact(exit)-direction*1.5f)||!FreeFeet(Contact(exit)-direction*.9f))continue;
                     bool onRoad=MapRoot.Current.GetComponent<RoadGrid>().GradeAt(MapRoot.Current.WorldToCell(Center(exit)))>0;
                     if(!onRoad)continue;filmed.Add(exit.edge);
@@ -90,7 +92,7 @@ namespace PocketCaravan.EditorTools
                     // Reproduce the previous trigger and original rectangular camera without changing scene data.
                     Vector2 oldFeet=Center(exit);switch(exit.edge){case "E":oldFeet.x=r.xMin+.02f;break;case "W":oldFeet.x=r.xMax-.02f;break;case "N":oldFeet.y=r.yMin+.02f;break;case "S":oldFeet.y=r.yMax-.02f;break;}
                     Pose(oldFeet,direction);follow.enabled=false;OldCamera();yield return Capture(exit.edge+"-before");
-                    follow.enabled=true;Pose(Contact(exit),direction);follow.FrameExit(exit);yield return Capture(exit.edge+"-after");
+                    follow.enabled=true;Pose(Contact(exit),direction);yield return Capture(exit.edge+"-after");
                 }
             }
             Check(total>800,"own exit coverage",total.ToString());Check(filmed.Count==4,"all four directions filmed");

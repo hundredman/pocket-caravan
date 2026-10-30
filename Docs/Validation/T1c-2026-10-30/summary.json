@@ -1,0 +1,17 @@
+{
+  "complete": true,
+  "maps": 13,
+  "microSteps": 23770,
+  "centerError": 0.0,
+  "edgeCornerChecks": 104,
+  "maxMicroCameraStep": 0.0200042724609375,
+  "renderedFrames": 1560,
+  "controlledHz": 60,
+  "maxRenderedCameraStep": 0.06305694580078125,
+  "boundaryChecks": 7182,
+  "pythonTests": 341,
+  "pythonSkip": 16,
+  "pythonFailures": 0,
+  "worldExits": 1408,
+  "worldErrors": 0
+}

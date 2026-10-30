@@ -73,12 +73,10 @@ namespace PocketCaravan
         public bool TryUseAtBoundary(PlayerMotor player, Vector2 input)
         {
             Vector3 contact;if(!TryGetBoundaryContact(player,input,out contact))return false;
-            bool framed=GoryeoTravelTransition.RegionOf(MapRoot.Current.mapId)!=null&&GoryeoTravelTransition.RegionOf(targetScene)!=null;
-            if(framed)
+            bool ownBoundary=GoryeoTravelTransition.RegionOf(MapRoot.Current.mapId)!=null&&GoryeoTravelTransition.RegionOf(targetScene)!=null;
+            if(ownBoundary)
             {
                 player.Teleport(contact,player.Facing);
-                var camera=Camera.main!=null?Camera.main.GetComponent<CameraFollow>():null;
-                if(camera!=null)camera.FrameExit(this);
             }
             Use(player);return true;
         }
