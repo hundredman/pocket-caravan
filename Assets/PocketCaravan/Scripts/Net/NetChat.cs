@@ -9,21 +9,23 @@ namespace PocketCaravan
     /// <summary>
     /// 온라인 채팅 (2026-10-30, feature/online 7단계).
     /// - 접속 중 Enter: 입력 칸이 열린다 → Enter 보내기 · Esc 닫기. 쓰는 동안은 다른 창처럼 이동이 멈춘다.
-    /// - 말은 접속한 모두에게 간다. 같은 맵 사람(나 포함)이 한 말은 머리 위 말풍선으로도 뜬다. 다른 맵 사람 말은 목록에만 (다른 맵) 표시.
-    /// - 왼쪽 아래(접속 표시 위)에 최근 6줄. 12초 지나면 사라지고, 입력 칸을 열면 다시 보인다.
+    /// - 말은 접속한 모두에게 간다. 같은 맵 사람(나 포함)이 한 말은 머리 위 말풍선으로도 뜬다. 다른 맵 사람 말도 목록에 똑같이 보이고, 이름 옆에 그 맵 이름이 붙는다.
+    /// - 8단계: 공유 장터 거래·저장 같은 알림 줄(System)도 같은 목록에 회색으로 남긴다.
+    /// - 왼쪽 아래(접속 표시 위)에 최근 8줄. 12초 지나면 사라지고, 입력 칸을 열면 다시 보인다.
     /// - 서버가 꺾쇠(&lt;&gt;)를 바꿔 보내므로 남의 말에 글자 꾸미기 태그가 끼어들지 않는다.
     /// 한글 입력: 입력 칸은 NetTextBox(게임이 직접 두벌식으로 조합). Enter를 누르면 두 프레임 뒤에 조합 중인 글자까지 함께 보낸다.
     /// 공용 코드는 읽기만 한다(UIState · UIStyle · PlayerController · GameManager).
     /// </summary>
     public class NetChat : MonoBehaviour
     {
-        const int MaxLines = 6, MaxChars = 80;
+        const int MaxLines = 8, MaxChars = 80;
         const float LineSeconds = 12f, FadeSeconds = 2f, LogWidth = 230f;
-        const string MeColor = "#ffde59", OtherColor = "#8fd3ff", DimColor = "#a49db5", ErrorColor = "#ff9a8a";
+        const string MeColor = "#ffde59", OtherColor = "#8fd3ff", DimColor = "#a49db5", ErrorColor = "#ff9a8a", SystemColor = "#c9e8b0";
 
         class Line { public string text; public float at; }
         class Bubble { public string text; public float until; }
 
+        static NetChat inst;
         readonly List<Line> lines = new List<Line>();
         readonly Dictionary<string, Bubble> bubbles = new Dictionary<string, Bubble>();
         readonly List<string> expired = new List<string>();
@@ -40,6 +42,14 @@ namespace PocketCaravan
             var go = new GameObject("NetChat");
             DontDestroyOnLoad(go);
             go.AddComponent<NetChat>();
+        }
+
+        void Awake() => inst = this;
+
+        /// <summary>알림 한 줄 (공유 장터 거래, 저장 등). 채팅 목록에 연두색으로 남는다</summary>
+        public static void System(string text)
+        {
+            if (inst != null && !string.IsNullOrEmpty(text)) inst.Add($"<color={SystemColor}>· {text}</color>");
         }
 
         void OnEnable() => NetClient.Received += OnReceived;
@@ -66,9 +76,8 @@ namespace PocketCaravan
                     bool mine = m.id == net.MyId;
                     bool here = mine || (m.map == net.CurrentMap && !string.IsNullOrEmpty(m.map));
                     string who = string.IsNullOrEmpty(m.name) ? m.id : m.name;
-                    Add(here
-                        ? $"<color={(mine ? MeColor : OtherColor)}>{who}</color>: {m.text}"
-                        : $"<color={DimColor}>{who} (다른 맵)</color>: <color={DimColor}>{m.text}</color>");
+                    string where = here || string.IsNullOrEmpty(m.map) ? "" : $" <color={DimColor}>({MapName(m.map)})</color>";
+                    Add($"<color={(mine ? MeColor : OtherColor)}>{who}</color>{where}: {m.text}");
                     if (here) bubbles[m.id ?? ""] = new Bubble { text = m.text, until = Time.unscaledTime + Mathf.Clamp(3f + m.text.Length * 0.08f, 3f, 8f) };
                     if (!mine) Sfx.Play("open", here ? .25f : .12f);
                     break;
@@ -76,6 +85,12 @@ namespace PocketCaravan
                     Add($"<color={ErrorColor}>서버: {m.why}</color>");
                     break;
             }
+        }
+
+        static string MapName(string mapId)
+        {
+            var index = WorldIndex.Get();
+            return index != null ? index.MapName(mapId) : mapId;
         }
 
         void Add(string text)

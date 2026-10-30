@@ -4,6 +4,8 @@
   "name": "pocket-caravan-server",
   "main": "src/index.ts",
   "compatibility_date": "2026-09-01",
+  // 올린 코드의 버전. 세계 방이 예전 코드로 돌고 있으면 스스로 다시 켜게 한다 (src/world.ts fetch)
+  "version_metadata": { "binding": "VERSION" },
   "durable_objects": {
     "bindings": [{ "name": "WORLD", "class_name": "WorldRoom" }]
   },

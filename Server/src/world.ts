@@ -28,6 +28,16 @@
  *  7단계 (2026-10-30) 채팅
  *   게임 → 서버  {"t":"say","text":"안녕"}                         80자까지, 1초에 1번
  *   서버 → 모두  {"t":"say","id":"p3","name":"윤채","map":"venice_rialto","text":"안녕"}   보낸 사람에게도 간다
+ *  8단계 (2026-10-30) 접속키 로그인 · 돈·짐 저장 · 장터 공유 · 리액션
+ *   hello에 "pass"(접속키 4~32자)를 넣으면 계정으로 들어온다. 처음 보는 이름이면 계정을 만들고, 있는 이름이면 접속키가 맞아야 한다.
+ *   계정은 번호(id)가 늘 같고, 같은 계정이 다른 곳에서 들어오면 예전 접속을 4004로 닫는다. 접속키가 틀리면 4005로 닫는다.
+ *   접속키가 없으면 손님(저장 없음). 계정이 있는 이름은 손님이 쓸 수 없다.
+ *   welcome에 "account"(계정인지) · "hasSave" · "save"({money,items,counts,costs,at}) · "seq"(마지막 거래 번호)가 붙는다.
+ *   게임 → 서버  {"t":"save","money":1200,"items":["silk"],"counts":[3],"costs":[90]}     계정만. 바뀌었을 때 몇 초에 한 번
+ *   게임 → 서버  {"t":"trade","town":"venice_rialto","item":"silk","n":3,"d":2.5,"sell":true}   공유 장터에서 사고판 것 (d: 재고 변화)
+ *   서버 → 다른 사람 모두  {"t":"trade","seq":12,"at":…,"id":"p3","name":"윤채","town":…,"item":…,"n":3,"d":2.5,"sell":true}
+ *   hello의 "since"(이 게임이 마지막으로 받은 거래 번호, 처음이면 -1)보다 뒤의, 30분 안 남의 거래를 welcome 다음에 {"t":"trades","list":[…]}로 보낸다.
+ *   게임 → 서버  {"t":"emote","e":"dance","name":"춤"}  →  서버 → 같은 맵  {"t":"emote","id":"p3","e":"dance","name":"춤"}
  */
 import { DurableObject } from "cloudflare:workers";
 import type { Env } from "./index";
@@ -42,14 +52,31 @@ const SWEEP_MS = 10_000;
 const RATE_SOFT = 30, RATE_HARD = 90;
 /** 채팅: 글자 수 · 최소 간격 */
 const SAY_MAX = 80, SAY_GAP_MS = 1000;
-/** 메시지 한 개의 최대 글자 수 */
-const MAX_CHARS = 1000;
+/** 메시지 한 개의 최대 글자 수 (짐 저장이 가장 길다) */
+const MAX_CHARS = 16000;
+/** 짐 저장: 물건 종류 수 */
+const SAVE_ITEMS = 200;
+/** 거래 기록: 남겨 두는 수 · 새로 들어온 사람에게 다시 보내 주는 기간 */
+const TRADE_KEEP = 300, TRADE_REPLAY_MS = 30 * 60_000;
+/** 리액션 최소 간격 */
+const EMOTE_GAP_MS = 400;
 
-export const Close = { TooMany: 4001, Version: 4002, Timeout: 4003, Replaced: 4004 } as const;
+export const Close = { TooMany: 4001, Version: 4002, Timeout: 4003, Replaced: 4004, Login: 4005 } as const;
+
+/** 서버에 저장하는 돈·짐 (계정마다) */
+interface SaveData { money: number; items: string[]; counts: number[]; costs: number[]; at: number; }
+
+/** 계정 (저장소 키 "acct:" + 소문자 이름) */
+interface Account { name: string; salt: string; hash: string; id: string; created: number; save?: SaveData; }
+
+/** 공유 장터 거래 한 건 */
+interface Trade { seq: number; at: number; id: string; name: string; town: string; item: string; n: number; d: number; sell: boolean; }
 
 interface Player {
   id: string;
   key: string;
+  /** 계정 저장소 키 ("" 이면 손님) */
+  acct?: string;
   name: string;
   look: string;
   map: string;
@@ -68,6 +95,8 @@ export class WorldRoom extends DurableObject<Env> {
   /** 아이디 → 1초 칸의 시작 시각·받은 수. 방이 잠들면 지워져도 괜찮다 */
   private rate = new Map<string, { start: number; n: number; warned: boolean }>();
   private lastSay = new Map<string, number>();
+  private lastEmote = new Map<string, number>();
+  private lastSave = new Map<string, number>();
 
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
@@ -75,7 +104,13 @@ export class WorldRoom extends DurableObject<Env> {
     ctx.setWebSocketAutoResponse(new WebSocketRequestResponsePair('{"t":"ping"}', '{"t":"pong"}'));
   }
 
-  async fetch(_request: Request): Promise<Response> {
+  async fetch(request: Request): Promise<Response> {
+    // 입구(Worker)가 이 방보다 새 코드면, 이 방은 예전 코드로 돌고 있는 것이다. 스스로 다시 켜서 새 코드로 바꾼다.
+    // (접속이 끊기면 게임이 저절로 다시 붙는다. 입구는 한 번 더 요청한다)
+    const want = request.headers.get("x-pc-version") ?? "";
+    const mine = this.env.VERSION?.timestamp ?? "";
+    if (want && mine && Date.parse(want) > Date.parse(mine)) this.ctx.abort("새 코드로 다시 켭니다");
+
     const pair = new WebSocketPair();
     const [client, server] = Object.values(pair);
     this.ctx.acceptWebSocket(server);
@@ -110,13 +145,72 @@ export class WorldRoom extends DurableObject<Env> {
           return this.shut(ws, me, Close.Version, "version");
         }
         me.key = cleanKey(msg.key);
-        if (me.key) this.replaceOld(ws, me);
-        me.name = this.uniqueName(cleanName(msg.name) || me.id, ws);
+        const name = cleanName(msg.name);
+        const pass = typeof msg.pass === "string" ? msg.pass : "";
+        let acct: Account | undefined;
+        if (name) {
+          const ak = "acct:" + name.toLowerCase();
+          acct = await this.ctx.storage.get<Account>(ak);
+          if (pass) {
+            if (pass.length < 4 || pass.length > 32) return this.refuse(ws, me, "접속키는 4~32자로 정해 주세요");
+            if (acct) {
+              if ((await hashKey(acct.salt, pass)) !== acct.hash) return this.refuse(ws, me, `'${acct.name}'은(는) 다른 접속키로 쓰고 있는 이름이에요`);
+            } else {
+              const salt = randomHex(16);
+              acct = { name, salt, hash: await hashKey(salt, pass), id: me.id, created: now };
+              await this.ctx.storage.put(ak, acct);
+            }
+            me.acct = ak;
+            me.id = acct.id;
+            me.name = acct.name;
+          } else if (acct) {
+            return this.refuse(ws, me, `'${acct.name}'은(는) 접속키가 있는 이름이에요. 접속키를 넣어 주세요`);
+          }
+        }
+        if (me.key || me.acct) this.replaceOld(ws, me);
+        if (!me.acct) me.name = this.uniqueName(name || me.id, ws);
         me.look = cleanMap(msg.look);
         ws.serializeAttachment(me);
-        send(ws, { t: "welcome", v: PROTOCOL, id: me.id, name: me.name, online: this.count() });
+        const seq = (await this.ctx.storage.get<number>("tradeSeq")) ?? 0;
+        send(ws, {
+          t: "welcome", v: PROTOCOL, id: me.id, name: me.name, online: this.count(), seq,
+          account: !!me.acct, hasSave: !!acct?.save && !!me.acct, save: me.acct ? acct?.save ?? null : null,
+        });
         this.broadcast({ t: "online", online: this.count() }, (o) => o !== ws);
+        await this.replayTrades(ws, me, msg.since, seq, now);
         return;
+      }
+      case "save": {
+        ws.serializeAttachment(me);
+        if (!me.acct) return send(ws, { t: "error", why: "접속키로 들어와야 저장돼요" });
+        if (now - (this.lastSave.get(me.id) ?? 0) < 1000) return;
+        const save = cleanSave(msg, now);
+        if (!save) return send(ws, { t: "error", why: "저장할 돈·짐 모양이 이상합니다" });
+        this.lastSave.set(me.id, now);
+        const acct = await this.ctx.storage.get<Account>(me.acct);
+        if (!acct) return;
+        acct.save = save;
+        await this.ctx.storage.put(me.acct, acct);
+        return send(ws, { t: "saved", at: save.at });
+      }
+      case "trade": {
+        ws.serializeAttachment(me);
+        const town = cleanMap(msg.town), item = cleanMap(msg.item);
+        const n = Number.isInteger(msg.n) && msg.n >= 1 && msg.n <= 1000 ? msg.n as number : 0;
+        const d = typeof msg.d === "number" && Number.isFinite(msg.d) && Math.abs(msg.d) <= 10000 ? Math.round(msg.d * 1000) / 1000 : null;
+        if (!town || !item || !n || d === null) return send(ws, { t: "error", why: "거래 모양이 이상합니다" });
+        const seq = ((await this.ctx.storage.get<number>("tradeSeq")) ?? 0) + 1;
+        const trade: Trade = { seq, at: now, id: me.id, name: me.name, town, item, n, d, sell: msg.sell === true };
+        const log = ((await this.ctx.storage.get<Trade[]>("trades")) ?? []).concat(trade).slice(-TRADE_KEEP);
+        await this.ctx.storage.put({ tradeSeq: seq, trades: log });
+        return this.broadcast({ t: "trade", ...trade }, (o) => o !== ws);
+      }
+      case "emote": {
+        ws.serializeAttachment(me);
+        const e = cleanMap(msg.e);
+        if (!e || !me.map || now - (this.lastEmote.get(me.id) ?? 0) < EMOTE_GAP_MS) return;
+        this.lastEmote.set(me.id, now);
+        return this.toMap(me.map, { t: "emote", id: me.id, e, name: cleanName(msg.name) }, ws);
       }
       case "enter": {
         const map = cleanMap(msg.map);
@@ -183,6 +277,21 @@ export class WorldRoom extends DurableObject<Env> {
     if (this.live().length > 0) await this.ctx.storage.setAlarm(Date.now() + SWEEP_MS);
   }
 
+  /** 로그인 실패: 이유를 알리고 4005로 닫는다 (게임은 다시 접속하지 않는다) */
+  private refuse(ws: WebSocket, me: Player, why: string): void {
+    send(ws, { t: "error", why });
+    this.shut(ws, me, Close.Login, "login");
+  }
+
+  /** 들어온 사람이 아직 못 받은 남의 거래(30분 안)를 한 번에 보낸다 */
+  private async replayTrades(ws: WebSocket, me: Player, since: unknown, seq: number, now: number): Promise<void> {
+    let from = typeof since === "number" && Number.isInteger(since) ? since : -1;
+    if (from > seq) from = -1;   // 서버 기록이 지워졌다
+    const log = (await this.ctx.storage.get<Trade[]>("trades")) ?? [];
+    const list = log.filter((t) => t.seq > from && now - t.at < TRADE_REPLAY_MS && t.id !== me.id);
+    if (list.length > 0) send(ws, { t: "trades", list });
+  }
+
   /** 1초 칸마다 받은 수를 센다. 넘치면 false(버림), 크게 넘치면 닫는다 */
   private allow(ws: WebSocket, me: Player, now: number): boolean {
     let r = this.rate.get(me.id);
@@ -196,12 +305,17 @@ export class WorldRoom extends DurableObject<Env> {
     return true;
   }
 
-  /** 같은 key로 남아 있던 예전 접속을 닫고, 그 번호를 이어받는다 */
+  /**
+   * 같은 게임(key)이나 같은 계정으로 남아 있던 예전 접속을 닫는다.
+   * 손님은 예전 번호를 이어받고, 계정은 원래 계정 번호를 쓴다.
+   */
   private replaceOld(ws: WebSocket, me: Player): void {
     for (const [s, p] of this.live()) {
-      if (s === ws || p.key !== me.key) continue;
-      this.rate.delete(me.id);
-      me.id = p.id;
+      if (s === ws) continue;
+      const sameGame = !!me.key && p.key === me.key;
+      const sameAcct = !!me.acct && p.acct === me.acct;
+      if (!sameGame && !sameAcct) continue;
+      if (!me.acct) { this.rate.delete(me.id); me.id = p.id; }
       this.shut(s, p, Close.Replaced, "replaced");
     }
   }
@@ -231,6 +345,8 @@ export class WorldRoom extends DurableObject<Env> {
     if (!me || me.gone) return;
     this.rate.delete(me.id);
     this.lastSay.delete(me.id);
+    this.lastEmote.delete(me.id);
+    this.lastSave.delete(me.id);
     if (me.map) this.toMap(me.map, { t: "leave", id: me.id }, ws);
     this.broadcast({ t: "online", online: this.count(ws) }, (o) => o !== ws);
   }
@@ -290,6 +406,33 @@ function cleanName(name: unknown): string {
 /** 채팅: 80자까지 */
 function cleanText(text: unknown): string {
   return typeof text === "string" ? [...plain(text)].slice(0, SAY_MAX).join("").trim() : "";
+}
+
+/** 저장할 돈·짐: 모양이 맞을 때만 */
+function cleanSave(m: any, now: number): SaveData | null {
+  const money = m?.money;
+  if (!Number.isInteger(money) || money < 0 || money > 2147483647) return null;
+  const items = m.items, counts = m.counts, costs = m.costs;
+  if (!Array.isArray(items) || !Array.isArray(counts) || !Array.isArray(costs)) return null;
+  if (items.length > SAVE_ITEMS || items.length !== counts.length || items.length !== costs.length) return null;
+  for (let i = 0; i < items.length; i++) {
+    if (!cleanMap(items[i])) return null;
+    if (!Number.isInteger(counts[i]) || counts[i] < 1 || counts[i] > 1_000_000) return null;
+    if (typeof costs[i] !== "number" || !Number.isFinite(costs[i]) || costs[i] < 0 || costs[i] > 1e9) return null;
+  }
+  return { money, items, counts, costs: costs.map((c: number) => Math.round(c * 100) / 100), at: now };
+}
+
+/** 접속키 확인용: 소금 + 접속키의 SHA-256 (접속키 자체는 저장하지 않는다) */
+async function hashKey(salt: string, pass: string): Promise<string> {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`${salt}:${pass}`));
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+function randomHex(bytes: number): string {
+  const a = new Uint8Array(bytes);
+  crypto.getRandomValues(a);
+  return [...a].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
 /** 다시 접속 확인용 비밀 글자: 영문·숫자 16~64자 */

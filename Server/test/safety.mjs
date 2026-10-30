@@ -94,7 +94,7 @@ check([...(longSay?.text ?? "")].length === 80, `긴 말은 80자로 자른다 (
 const spam = await hello(`폭주${RUN}`);
 spam.send({ t: "enter", map }); await spam.wait((m) => m.t === "room");
 for (let i = 0; i < 40; i++) spam.send({ t: "pos", x: i, y: 0, fx: 1, fy: 0, m: true });
-await sleep(400);
+await sleep(900);   // 실제 서버는 막 켜졌을 때 조금 늦다
 const relayed = dupB.got.filter((m) => m.t === "pos" && m.id === spam.welcome.id).length;
 check(relayed > 0 && relayed <= 30, `1초에 40개 보내면 다른 사람에게는 30개 이하만 전달 (${relayed}개)`);
 check(!!spam.got.find((m) => m.t === "error" && m.why.includes("너무 많이")), "보낸 사람에게 '너무 많이' 안내");

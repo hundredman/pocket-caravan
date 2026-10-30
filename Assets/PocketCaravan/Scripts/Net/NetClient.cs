@@ -26,6 +26,8 @@ namespace PocketCaravan
     ///   게임을 켤 때마다 만드는 비밀 글자(key)를 보내서, 다시 붙으면 서버가 예전 번호를 그대로 준다.
     ///   5초마다 ping을 보내고(가만히 있어도), 20초 넘게 서버 소식이 없으면 끊긴 것으로 보고 다시 붙는다.
     /// - 7단계: 채팅(Say). 입력 칸과 말풍선은 NetChat이 그린다.
+    /// - 8단계: 접속키 로그인(이름 + 접속키 → 계정, 돈·짐 서버 저장은 NetSave), 공유 장터(NetMarket), 리액션 전달(NetEmote → RemotePlayers).
+    ///   접속키는 이 컴퓨터 설정(PlayerPrefs)에 남는다. 서버는 접속키를 그대로 두지 않고 확인용 값만 저장한다.
     /// 메시지는 JSON 한 줄이고 "t"가 종류다 (Server/src/world.ts와 같은 약속).
     /// </summary>
     public class NetClient : MonoBehaviour
@@ -55,6 +57,39 @@ namespace PocketCaravan
             public bool m;
             public string text;
             public List<Peer> players;
+            // 8단계
+            public bool account, hasSave;
+            public SaveData save;
+            public int seq;
+            public long at;
+            public string town, item, e;
+            public int n;
+            public float d;
+            public bool sell;
+            public List<TradeRec> list;
+        }
+
+        /// <summary>서버에 저장된 돈·짐 (costs는 물건마다 산 값의 합)</summary>
+        [Serializable]
+        public class SaveData
+        {
+            public int money;
+            public List<string> items = new List<string>();
+            public List<int> counts = new List<int>();
+            public List<float> costs = new List<float>();
+            public long at;
+        }
+
+        /// <summary>공유 장터 거래 한 건 (d: 재고 변화)</summary>
+        [Serializable]
+        public class TradeRec
+        {
+            public int seq;
+            public long at;
+            public string id, name, town, item;
+            public int n;
+            public float d;
+            public bool sell;
         }
 
         /// <summary>같은 맵에 있는 다른 플레이어 (서버가 알려 준 마지막 상태)</summary>
@@ -71,10 +106,11 @@ namespace PocketCaravan
         }
 
         // 보내는 메시지 (필요한 칸만)
-        [Serializable] class HelloOut { public string t = "hello"; public int v = Protocol; public string name; public string look; public string key; }
+        [Serializable] class HelloOut { public string t = "hello"; public int v = Protocol; public string name; public string look; public string key; public string pass; public int since; }
         [Serializable] class EnterOut { public string t = "enter"; public string map; }
         [Serializable] class PosOut { public string t = "pos"; public float x, y; public int fx, fy; public bool m; }
         [Serializable] class SayOut { public string t = "say"; public string text; }
+        [Serializable] class EmoteOut { public string t = "emote"; public string e; public string name; }
 
         public static NetClient I { get; private set; }
         /// <summary>서버에서 메시지가 올 때마다 (메인 스레드). 다음 단계(위치·다른 사람 표시)가 듣는다</summary>
@@ -86,6 +122,10 @@ namespace PocketCaravan
         public string MyName { get; private set; } = "";
         /// <summary>다시 접속하려고 한 횟수 (Waiting · Connecting 중)</summary>
         public int Retries => retries;
+        /// <summary>접속키로 들어온 계정이면 true (돈·짐이 서버에 저장된다)</summary>
+        public bool IsAccount { get; private set; }
+        /// <summary>접속 버튼을 누른 서버 주소 (공유 장터가 서버마다 받은 거래 번호를 따로 기억한다)</summary>
+        public string Address => target != null ? target.ToString() : (address ?? "").Trim();
         public int OnlineCount { get; private set; }
         public string LastError { get; private set; } = "";
         /// <summary>지금 맵에 같이 있는 다른 플레이어 (아이디 → 상태). 다음 단계에서 화면에 그린다</summary>
@@ -119,7 +159,7 @@ namespace PocketCaravan
         readonly string sessionKey = Guid.NewGuid().ToString("N");
 
         bool window;
-        string address;
+        string address, pass;
         /// <summary>이름 칸 (한글이 쳐지는 칸, NetTextBox)</summary>
         readonly NetTextBox nameBox = new NetTextBox(16);
         string playerName { get => nameBox.Text; set => nameBox.Text = value ?? ""; }
@@ -137,6 +177,7 @@ namespace PocketCaravan
         void Awake()
         {
             address = PlayerPrefs.GetString("net.address", DefaultAddress);
+            pass = PlayerPrefs.GetString("net.pass", "");
             playerName = PlayerPrefs.GetString("net.name", "");
         }
 
@@ -155,6 +196,7 @@ namespace PocketCaravan
             }
             PlayerPrefs.SetString("net.address", url);
             PlayerPrefs.SetString("net.name", (playerName ?? "").Trim());
+            PlayerPrefs.SetString("net.pass", pass ?? "");
             PlayerPrefs.Save();
             wantOnline = true;
             retries = 0;
@@ -193,7 +235,7 @@ namespace PocketCaravan
             _ = Task.Run(() => ReceiveLoop(ws, c.Token));
             _ = Task.Run(() => SendLoop(ws, outSignal, c.Token));
             var origin = GameManager.I != null && GameManager.I.Player != null ? GameManager.I.Player.origin : null;
-            Send(new HelloOut { name = (playerName ?? "").Trim(), look = origin != null ? origin.id : "", key = sessionKey });
+            Send(new HelloOut { name = (playerName ?? "").Trim(), look = origin != null ? origin.id : "", key = sessionKey, pass = pass ?? "", since = NetMarket.Since(Address) });
         }
 
         /// <summary>끊기 버튼 · 게임 끝. 다시 접속도 멈춘다</summary>
@@ -209,7 +251,7 @@ namespace PocketCaravan
         /// </summary>
         void Lost(string reason, int code)
         {
-            bool final = code == 4001 || code == 4002 || code == 4004;
+            bool final = code == 4001 || code == 4002 || code == 4004 || code == 4005;
             if (final) wantOnline = false;
             Drop(reason);
             if (!wantOnline) { retries = 0; return; }
@@ -223,7 +265,8 @@ namespace PocketCaravan
             4001 => "메시지를 너무 많이 보내서 서버가 끊었습니다",
             4002 => "서버와 게임 버전이 다릅니다. 브랜치를 다시 받아 주세요",
             4003 => "서버가 응답 없는 접속으로 보고 끊었습니다",
-            4004 => "같은 게임이 다른 연결로 다시 접속했습니다",
+            4004 => "같은 이름으로 다른 곳에서 접속해서 여기는 끊었습니다",
+            4005 => null,   // 로그인 실패: 서버가 먼저 보낸 이유(error)를 그대로 둔다
             _ => $"서버가 연결을 닫았습니다 ({code}{(string.IsNullOrEmpty(text) ? "" : " " + text)})",
         };
 
@@ -234,6 +277,7 @@ namespace PocketCaravan
             Status = State.Offline;
             Interlocked.Exchange(ref lastHeardTicks, 0);
             MyId = "";
+            IsAccount = false;
             OnlineCount = 0;
             peers.Clear();
             sentMap = null;
@@ -266,6 +310,13 @@ namespace PocketCaravan
             if (socket == null || outSignal == null) return;
             outbox.Enqueue(JsonUtility.ToJson(msg));
             outSignal.Release();
+        }
+
+        /// <summary>리액션을 같은 맵 사람들에게 알린다 (NetEmote.Send로 부른다)</summary>
+        public void Emote(string id, string name)
+        {
+            if (Status != State.Online || string.IsNullOrEmpty(id)) return;
+            Send(new EmoteOut { e = id, name = name ?? "" });
         }
 
         /// <summary>채팅 한 줄 (80자까지는 서버가 자른다). 서버가 받아 주면 나에게도 "say"로 돌아온다</summary>
@@ -399,6 +450,7 @@ namespace PocketCaravan
                     Status = State.Online;
                     MyId = msg.id;
                     MyName = string.IsNullOrEmpty(msg.name) ? msg.id : msg.name;
+                    IsAccount = msg.account;
                     OnlineCount = msg.online;
                     LastError = "";
                     string asked = (playerName ?? "").Trim();
@@ -501,7 +553,7 @@ namespace PocketCaravan
         {
             GUI.depth = -11;
             if (field == null) field = new GUIStyle(GUI.skin.textField) { fontSize = UIStyle.BodySize, alignment = TextAnchor.MiddleLeft };
-            float w = 300f, h = 176f;
+            float w = 300f, h = 214f;
             var r = new Rect((UIStyle.VirtualWidth - w) / 2f, (UIStyle.VirtualHeight - h) / 2f, w, h);
             GUI.Box(r, "", UIStyle.Box);
             float x = r.x + 14f, fw = w - 28f, y = r.y + 8f;
@@ -518,6 +570,11 @@ namespace PocketCaravan
             GUI.Label(new Rect(x, y, fw, 14f), "이름 (다른 사람에게 보임 · 칸을 눌러 입력)", UIStyle.Rich);
             if (editable) nameBox.Draw(new Rect(x, y + 15f, fw, 18f), field, clickToToggle: true);
             else GUI.TextField(new Rect(x, y + 15f, fw, 18f), playerName, 16, field);
+            y += 38f;
+            GUI.Label(new Rect(x, y, fw, 14f), "접속키 (넣으면 돈·짐이 서버에 저장 · 4자 이상)", UIStyle.Rich);
+            var passRect = new Rect(x, y + 15f, fw, 18f);
+            if (Event.current.type == EventType.MouseDown && passRect.Contains(Event.current.mousePosition)) nameBox.End();
+            pass = GUI.PasswordField(passRect, pass ?? "", '*', 32, field);
             y += 40f;
             GUI.enabled = true;
 
@@ -536,7 +593,7 @@ namespace PocketCaravan
 
             string line = Status == State.Waiting ? $"<color=#ffb347>{LastError} · 곧 다시 접속합니다</color>"
                 : !string.IsNullOrEmpty(LastError) ? $"<color=#ff9a8a>{LastError}</color>"
-                : Status == State.Online ? $"<color=#8fe08f>접속됨 · {MyName} ({MyId}) · 지금 {OnlineCount}명 · Enter 채팅</color>"
+                : Status == State.Online ? $"<color=#8fe08f>접속됨 · {MyName} ({MyId}){(IsAccount ? " · 계정" : " · 손님")} · 지금 {OnlineCount}명 · Enter 채팅</color>"
                 : Status == State.Connecting ? "서버에 연결하는 중…"
                 : "<color=#c9c3d6>이름을 넣고 접속을 누르세요 (주소는 팀 시험 서버)</color>";
             GUI.Label(new Rect(x, y, fw, 16f), $"<size={UIStyle.SmallSize}>{line}</size>", UIStyle.Rich);
