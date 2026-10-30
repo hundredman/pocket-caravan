@@ -27,7 +27,8 @@ namespace PocketCaravan
     public class NetClient : MonoBehaviour
     {
         public const int Protocol = 1;
-        public const string DefaultAddress = "ws://127.0.0.1:8787/ws";
+        /// <summary>팀 시험 서버 (Cloudflare, 2026-10-30 배포). 내 컴퓨터 서버로 개발할 때는 접속 창에서 ws://127.0.0.1:8787/ws 로 바꾼다</summary>
+        public const string DefaultAddress = "wss://pocket-caravan-server.baribari.workers.dev/ws";
         public enum State { Offline, Connecting, Online }
 
         /// <summary>서버에서 받는 메시지 한 개. 종류마다 쓰는 칸만 채워진다(JsonUtility는 없는 칸을 기본값으로 둔다)</summary>
@@ -424,7 +425,7 @@ namespace PocketCaravan
             string line = !string.IsNullOrEmpty(LastError) ? $"<color=#ff9a8a>{LastError}</color>"
                 : Status == State.Online ? $"<color=#8fe08f>접속됨 · 내 번호 {MyId} · 지금 {OnlineCount}명</color>"
                 : Status == State.Connecting ? "서버에 연결하는 중…"
-                : "<color=#c9c3d6>서버를 켠 사람에게 받은 주소를 넣으세요</color>";
+                : "<color=#c9c3d6>이름을 넣고 접속을 누르세요 (주소는 팀 시험 서버)</color>";
             GUI.Label(new Rect(x, y, fw, 16f), $"<size={UIStyle.SmallSize}>{line}</size>", UIStyle.Rich);
         }
     }
