@@ -12,8 +12,7 @@ namespace PocketCaravan
     /// - 말은 접속한 모두에게 간다. 같은 맵 사람(나 포함)이 한 말은 머리 위 말풍선으로도 뜬다. 다른 맵 사람 말은 목록에만 (다른 맵) 표시.
     /// - 왼쪽 아래(접속 표시 위)에 최근 6줄. 12초 지나면 사라지고, 입력 칸을 열면 다시 보인다.
     /// - 서버가 꺾쇠(&lt;&gt;)를 바꿔 보내므로 남의 말에 글자 꾸미기 태그가 끼어들지 않는다.
-    /// 한글 입력: 입력 칸은 NetTextBox(입력기를 직접 켬). Enter로 글자를 확정하는 프레임에 바로 보내면 마지막 글자가 빠질 수 있어
-    /// 두 프레임 뒤에 보내고, 그때도 조합 중인 글자가 있으면 함께 보낸다.
+    /// 한글 입력: 입력 칸은 NetTextBox(게임이 직접 두벌식으로 조합). Enter를 누르면 두 프레임 뒤에 조합 중인 글자까지 함께 보낸다.
     /// 공용 코드는 읽기만 한다(UIState · UIStyle · PlayerController · GameManager).
     /// </summary>
     public class NetChat : MonoBehaviour
@@ -177,7 +176,7 @@ namespace PocketCaravan
             GUI.Label(new Rect(panel.x + 6f, panel.y + 3f, 30f, 16f), "<b>말</b>", UIStyle.Rich);
             box.Draw(new Rect(panel.x + 30f, panel.y + 3f, panel.width - 36f, 16f), field);
             GUI.Label(new Rect(panel.x, panel.y - 13f, panel.width, 12f),
-                $"<size={UIStyle.SmallSize}><color={DimColor}>Enter 보내기 · Esc 닫기 · 접속한 모두에게 보여요 · {box.Full.Length}/{MaxChars}</color></size>", UIStyle.Rich);
+                $"<size={UIStyle.SmallSize}><color={DimColor}>Enter 보내기 · Esc 닫기 · 가/A 바꾸기: 오른쪽 Alt · {box.Full.Length}/{MaxChars}</color></size>", UIStyle.Rich);
             return panel.y - 15f;
         }
 

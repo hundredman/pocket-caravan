@@ -515,7 +515,7 @@ namespace PocketCaravan
             if (Event.current.type == EventType.MouseDown && addressRect.Contains(Event.current.mousePosition)) nameBox.End();
             address = GUI.TextField(addressRect, address ?? "", 160, field);
             y += 38f;
-            GUI.Label(new Rect(x, y, fw, 14f), "이름 (다른 사람에게 보임)", UIStyle.Rich);
+            GUI.Label(new Rect(x, y, fw, 14f), "이름 (다른 사람에게 보임 · 칸을 눌러 입력)", UIStyle.Rich);
             if (editable) nameBox.Draw(new Rect(x, y + 15f, fw, 18f), field, clickToToggle: true);
             else GUI.TextField(new Rect(x, y + 15f, fw, 18f), playerName, 16, field);
             y += 40f;
