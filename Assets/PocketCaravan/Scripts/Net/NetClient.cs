@@ -119,7 +119,10 @@ namespace PocketCaravan
         readonly string sessionKey = Guid.NewGuid().ToString("N");
 
         bool window;
-        string address, playerName;
+        string address;
+        /// <summary>이름 칸 (한글이 쳐지는 칸, NetTextBox)</summary>
+        readonly NetTextBox nameBox = new NetTextBox(16);
+        string playerName { get => nameBox.Text; set => nameBox.Text = value ?? ""; }
         GUIStyle field;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -143,6 +146,7 @@ namespace PocketCaravan
         public void Connect()
         {
             if (Status != State.Offline) return;
+            nameBox.End();
             string url = (address ?? "").Trim();
             if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || (uri.Scheme != "ws" && uri.Scheme != "wss"))
             {
@@ -450,7 +454,7 @@ namespace PocketCaravan
         {
             if (window)
             {
-                bool typing = GUIUtility.keyboardControl != 0;
+                bool typing = GUIUtility.keyboardControl != 0 || nameBox.Active;
                 if (InputReader.CancelPressed() || (OPressed() && !typing)) CloseWindow();
                 return;
             }
@@ -464,6 +468,7 @@ namespace PocketCaravan
         void CloseWindow()
         {
             window = false;
+            nameBox.End();
             GUIUtility.keyboardControl = 0;
             UIState.Release();
         }
@@ -506,10 +511,13 @@ namespace PocketCaravan
             bool editable = Status == State.Offline;
             GUI.enabled = editable;
             GUI.Label(new Rect(x, y, fw, 14f), "서버 주소", UIStyle.Rich);
-            address = GUI.TextField(new Rect(x, y + 15f, fw, 18f), address ?? "", 160, field);
+            var addressRect = new Rect(x, y + 15f, fw, 18f);
+            if (Event.current.type == EventType.MouseDown && addressRect.Contains(Event.current.mousePosition)) nameBox.End();
+            address = GUI.TextField(addressRect, address ?? "", 160, field);
             y += 38f;
             GUI.Label(new Rect(x, y, fw, 14f), "이름 (다른 사람에게 보임)", UIStyle.Rich);
-            playerName = GUI.TextField(new Rect(x, y + 15f, fw, 18f), playerName ?? "", 16, field);
+            if (editable) nameBox.Draw(new Rect(x, y + 15f, fw, 18f), field, clickToToggle: true);
+            else GUI.TextField(new Rect(x, y + 15f, fw, 18f), playerName, 16, field);
             y += 40f;
             GUI.enabled = true;
 
