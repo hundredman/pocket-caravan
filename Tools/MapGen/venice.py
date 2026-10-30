@@ -131,23 +131,20 @@ def capital(m):
     row(m, 38, 42, [("narrow_tall", "ochre")])
     put(m, [("vg_laundry", 40, 44), ("vg_well", 41, 47), ("vg_pot_plant", 38, 48), ("vg_cp_pennant", 52, 51)])
     # ---- 서쪽 주택 골목 (북서 모서리와 y51~52 골목은 둑길 입구로 비운다) ----
-    row(m, 38, 32, [("narrow_tall", "salmon"), ("house_tall", "cream")])
-    row(m, 38, 37, [("narrow_tall", "brick")])
+    row(m, 38, 32, [("narrow_tall", "salmon")])     # 2026-10-29 붐빔 완화: 서쪽 골목 집 두 채를 빼 빈터로 둔다
     put(m, [("vg_flower_pot2", 41, 38), ("vg_cp_planter", 40, 40)])
     row(m, 38, 54, [("palazzo", "rose")])
     row(m, 44, 54, [("narrow", "sky"), ("shop", "ochre")])
-    row(m, 49, 53, [("narrow_tall", "salmon"), ("narrow_tall", "cream"), ("house_tall", "brick")])
+    row(m, 49, 53, [("narrow_tall", "salmon")])     # 2026-10-29: 남쪽 줄집 셋 → 하나
     # ---- 운하 동쪽: 상인회관, 여관, 주택 묶음 ----
     m.building("vg_cap_inn", 62, 25)               # 북동 모서리(67~73, 24~29)는 유리공방 둑길 입구
     m.set_zone(62, 30, 72, 35, "court")
     put(m, [("vg_well", 66, 31), ("vg_flower_shelf", 70, 32), ("vg_cp_bench", 63, 33)])
     m.building("vg_cap_hall", 63, 37)              # 상인회관
-    row(m, 69, 37, [("narrow_tall", "ochre"), ("narrow_tall", "rose")])
+    row(m, 69, 37, [("narrow_tall", "ochre")])      # 2026-10-29: 운하 동쪽 집을 덜어 낸다 (아래 두 줄도)
     put(m, [("vg_px_cap_flag_red", 62, 41), ("vg_px_cap_flag_blue", 69, 42)])
     row(m, 62, 44, [("narrow", "cream"), ("shop", "salmon")])
-    row(m, 67, 44, [("narrow_tall", "brick")])
     row(m, 70, 44, [("house_tall", "ochre")])     # 69열은 파란 깃발 자리
-    row(m, 62, 51, [("narrow_tall", "rose")])
     row(m, 66, 52, [("wide_shop", "cream"), ("narrow", "sage")])
     boats(m, [("vg_gondola", 57, 28), ("vg_cp_mooring", 57, 38), ("vg_cp_mooring", 59, 41), ("vg_gondola", 57, 44),
               ("vg_gondola", 57, 54)])

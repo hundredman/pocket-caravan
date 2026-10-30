@@ -11,7 +11,7 @@ namespace PocketCaravan
     /// </summary>
     public class VeniceTraghetto : Interactable
     {
-        public override string DisplayName => "곤돌라 나루";
+        public override string DisplayName => VeniceLabels.Place(this, "곤돌라 나루");   // 가까이 가야 이름표가 뜬다
         public override Kind Category => Kind.Market;
         const int Fare = 6;
 
@@ -77,6 +77,7 @@ namespace PocketCaravan
             gm.Clock.Advance(.5f);
             Sfx.Play("coin");
             VeniceSave.Set("traghetto_rides", VeniceSave.Get("traghetto_rides") + 1);
+            VeniceTravelWave.ByBoat = true;          // 건너는 동안 발자국 대신 곤돌라
             gm.TravelTo(map, spawn);
         }
 

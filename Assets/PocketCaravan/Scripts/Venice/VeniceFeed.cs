@@ -8,7 +8,7 @@ namespace PocketCaravan
     /// </summary>
     public class VeniceFeed : Interactable
     {
-        public override string DisplayName => "비둘기 모이 주머니";
+        public override string DisplayName => VeniceLabels.Place(this, "비둘기 모이 주머니");   // 가까이 가야 이름표가 뜬다
         public override Kind Category => Kind.Market;
 
         void Start()

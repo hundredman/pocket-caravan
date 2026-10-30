@@ -15,7 +15,7 @@ namespace PocketCaravan
             ("venice_wine", "포도주"), ("venice_glass_art", "유리 장식"), ("venice_lace", "레이스 손수건"),
         };
 
-        public override string DisplayName => "상인회관 전시실";
+        public override string DisplayName => VeniceLabels.Place(this, "상인회관 전시실");   // 가까이 가야 이름표가 뜬다
         public override Kind Category => Kind.Market;
 
         static int Filled { get { int n = 0; foreach (var s in Shelf) if (VeniceSave.Has("museum:" + s.id)) n++; return n; } }

@@ -34,6 +34,36 @@ namespace PocketCaravan.EditorTools
             Debug.Log("[베네치아] 데이터와 맵 12개(베네치아 5 + 본토 7)를 만들었습니다. Scenes/Venice/venice_rialto에서 Play하세요.");
         }
 
+        /// <summary>
+        /// 석호 씬 5개만 다시 만든다 (2026-10-29). 통합 브랜치의 본토 씬에는 다른 문명 연결이 들어 있어 건드리지 않는다.
+        /// 공용 데이터(GameDatabase)도 다시 쓰지 않는다.
+        /// </summary>
+        [MenuItem("Pocket Caravan/베네치아/석호 씬만 다시 만들기")]
+        public static void BuildLagoonOnly()
+        {
+            if (EditorApplication.isPlaying) throw new InvalidOperationException("Play 종료 후 실행하세요.");
+            MapJsonBuilder.BuildSelected(MapIds);
+            foreach (var id in MapIds) AttachDistricts(id);
+            BuildTileAtlas();
+            Debug.Log("[베네치아] 석호 씬 5개를 다시 만들었습니다.");
+        }
+
+        /// <summary>
+        /// 베네치아 씬 12개(석호 5 + 본토 7)를 맵 JSON에서 다시 만든다 (2026-10-29). 공용 데이터(GameDatabase)는 다시 쓰지 않는다.
+        /// 본토 JSON에 들어 있는 통합 브랜치의 다른 문명 연결(link_ 출구)은 JSON 그대로 씬에 들어간다.
+        /// </summary>
+        [MenuItem("Pocket Caravan/베네치아/베네치아 씬 12개 다시 만들기 (데이터 제외)")]
+        public static void BuildScenesOnly()
+        {
+            if (EditorApplication.isPlaying) throw new InvalidOperationException("Play 종료 후 실행하세요.");
+            var all = new List<string>(MapIds); all.AddRange(MainlandIds);
+            MapJsonBuilder.BuildSelected(all.ToArray());
+            foreach (var id in MapIds) AttachDistricts(id);
+            foreach (var id in MainlandIds) UseVeniceCatIn(id);
+            BuildTileAtlas();
+            Debug.Log("[베네치아] 씬 12개를 다시 만들었습니다 (데이터 제외).");
+        }
+
         const string AtlasPath = Data + "/VeniceTiles.spriteatlasv2";
 
         /// <summary>

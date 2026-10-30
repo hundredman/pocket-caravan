@@ -9,7 +9,7 @@ namespace PocketCaravan
     /// </summary>
     public class VeniceNetSpot : Interactable
     {
-        public override string DisplayName => "그물 던지는 잔교";
+        public override string DisplayName => VeniceLabels.Place(this, "그물 던지는 잔교");   // 가까이 가야 이름표가 뜬다
         public override Kind Category => Kind.Market;
 
         bool playing;
