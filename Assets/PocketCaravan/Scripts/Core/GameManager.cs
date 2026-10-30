@@ -202,9 +202,12 @@ namespace PocketCaravan
             float reveal = transition != null ? transition.RevealSeconds : 0.18f;
             // 지역 효과는 한 프레임이 길어도(씬 불러오기 직후 등) 건너뛰지 않게 프레임당 진행을 1/30초로 묶는다
             float Dt() => transition != null ? Mathf.Min(Time.unscaledDeltaTime, 1f / 30f) : Time.unscaledDeltaTime;
-            for (float t = 0; t < 1f; t += Dt() / cover) { fade = t; yield return null; }
-            fade = 1f;
+            if (cover > 0f)
+                for (float t = 0; t < 1f; t += Dt() / cover) { fade = t; yield return null; }
+            fade = cover > 0f ? 1f : 0f;
             coveredAt = Time.unscaledTime;
+            // Present a fully covered frame before scene loading can stall the main thread.
+            if (cover > 0f) yield return null;
             pendingSpawnId = spawnId; pendingOffset = offset; pendingFacing = facing; pendingExact = exact;
             yield return SceneManager.LoadSceneAsync(sceneName);
             yield return null;
@@ -212,7 +215,8 @@ namespace PocketCaravan
             while (transition != null && (Time.unscaledTime - coveredAt < transition.MinHoldSeconds
                    || Time.unscaledTime - loadedAt < transition.AfterLoadSeconds)) yield return null;
             transitionCovering = false;
-            for (float t = 1f; t > 0f; t -= Dt() / reveal) { fade = t; yield return null; }
+            if (reveal > 0f)
+                for (float t = 1f; t > 0f; t -= Dt() / reveal) { fade = t; yield return null; }
             fade = 0f;
             transition = null;
             IsTravelling = false;
@@ -291,9 +295,11 @@ namespace PocketCaravan
                 if (map.travelHours > 0 && !loadedFromSave)
                 {
                     Clock.Advance(map.travelHours);
-                    if(UIStyle.CrispRegion)Notify.Location(map.displayName,3f);else Notify.Show(map.displayName,3f);
+                    if(transition == null || transition.ShowArrivalNotice)
+                    { if(UIStyle.CrispRegion)Notify.Location(map.displayName,3f);else Notify.Show(map.displayName,3f); }
                 }
-                else if(UIStyle.CrispRegion)Notify.Location(map.displayName,2.5f);else Notify.Show(map.displayName,2.5f);
+                else if(transition == null || transition.ShowArrivalNotice)
+                { if(UIStyle.CrispRegion)Notify.Location(map.displayName,2.5f);else Notify.Show(map.displayName,2.5f); }
                 GameEvents.RaiseMapEntered(map.mapId);
                 sun = null;
                 foreach (var light in FindObjectsByType<UnityEngine.Rendering.Universal.Light2D>(FindObjectsSortMode.None))

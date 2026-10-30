@@ -1,0 +1,4 @@
+Python unittest: 341 run, 16 skipped, 0 failures.
+World validation: 1408 registered exits, 0 errors.
+Python compile: village_fill.py, village_review_sheet.py, test_village_fill_review.py passed.
+Unity compilation console: 0 errors.

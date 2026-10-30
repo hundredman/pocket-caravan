@@ -18,6 +18,8 @@ namespace PocketCaravan
         public virtual float MinHoldSeconds => 0f;
         /// <summary>새 씬을 다 불러온 뒤 덮인 채 더 머무는 시간(초). 불러오는 동안 멈춰 있던 연출을 이어서 보여 줄 때 쓴다. 기본 0.</summary>
         public virtual float AfterLoadSeconds => 0f;
+        /// <summary>도착 직후 자동 맵 이름 알림을 표시할지. 연속된 지역 안 이동은 끌 수 있다.</summary>
+        public virtual bool ShowArrivalNotice => true;
 
         /// <summary>이동을 시작할 때 한 번 부른다 (떠나는 맵, 도착 맵). 같은 효과 안에서 이동 종류별로 그림을 바꿀 때 쓴다. 기본은 아무것도 안 함.</summary>
         public virtual void Begin(string fromMap, string toMap) { }

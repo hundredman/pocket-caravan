@@ -1,0 +1,15 @@
+{
+  "unityCompleted": true,
+  "unityChecks": 550,
+  "routePairs": 169,
+  "actualMapChanges": 6,
+  "pythonTests": 343,
+  "pythonSkipped": 16,
+  "pythonFailures": 0,
+  "worldExits": 1408,
+  "worldErrors": 0,
+  "sharedFiles": [
+    "Scripts/Core/GameManager.cs",
+    "Scripts/Core/TravelTransition.cs"
+  ]
+}

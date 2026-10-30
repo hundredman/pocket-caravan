@@ -51,6 +51,7 @@ namespace PocketCaravan
         public override float RevealSeconds => crossing ? 0.28f : 0.14f;
         public override float MinHoldSeconds => crossing ? 0.65f : 0f;
         public override float AfterLoadSeconds => crossing ? 0.25f : 0f;
+        public override bool ShowArrivalNotice => crossing;
 
         public override void Draw(float cover, bool covering, string nextName, float heldFor)
         {

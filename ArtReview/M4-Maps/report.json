@@ -6,7 +6,7 @@
   "cells": 3947,
   "walkable": 1631,
   "reachable": 1591,
-  "palette": 335,
+  "palette": 419,
   "pixelDiff": 0,
   "terrain": [
    202,
@@ -42,7 +42,7 @@
   "cells": 3740,
   "walkable": 2633,
   "reachable": 2005,
-  "palette": 363,
+  "palette": 825,
   "pixelDiff": 0,
   "terrain": [
    174,
@@ -73,7 +73,7 @@
   "cells": 4221,
   "walkable": 2270,
   "reachable": 2245,
-  "palette": 847,
+  "palette": 1233,
   "pixelDiff": 0,
   "terrain": [
    153,
@@ -104,7 +104,7 @@
   "cells": 4133,
   "walkable": 1250,
   "reachable": 591,
-  "palette": 696,
+  "palette": 745,
   "pixelDiff": 0,
   "terrain": [
    192,
@@ -137,7 +137,7 @@
   "cells": 3959,
   "walkable": 2422,
   "reachable": 1963,
-  "palette": 481,
+  "palette": 870,
   "pixelDiff": 0,
   "terrain": [
    222,
@@ -170,7 +170,7 @@
   "cells": 3016,
   "walkable": 1782,
   "reachable": 1633,
-  "palette": 844,
+  "palette": 1287,
   "pixelDiff": 0,
   "terrain": [
    96,
@@ -284,7 +284,7 @@
   "cells": 2883,
   "walkable": 1516,
   "reachable": 1463,
-  "palette": 550,
+  "palette": 1729,
   "pixelDiff": 0,
   "terrain": [
    86,
@@ -309,7 +309,7 @@
   "cells": 3077,
   "walkable": 2451,
   "reachable": 2446,
-  "palette": 385,
+  "palette": 727,
   "pixelDiff": 0,
   "terrain": [
    121,
@@ -335,7 +335,7 @@
   "cells": 3095,
   "walkable": 1798,
   "reachable": 1720,
-  "palette": 737,
+  "palette": 1273,
   "pixelDiff": 0,
   "terrain": [
    40,
@@ -363,7 +363,7 @@
   "cells": 2663,
   "walkable": 1668,
   "reachable": 1543,
-  "palette": 398,
+  "palette": 679,
   "pixelDiff": 0,
   "terrain": [
    54,
@@ -416,7 +416,7 @@
  ],
  "_tiles": {
   "certifyErrors": 0,
-  "newTiles": 1670,
+  "newTiles": 3291,
   "reusedExisting": 33
  }
 }

@@ -16,6 +16,8 @@ namespace PocketCaravan
         [Tooltip("모서리에 걸렸을 때 옆으로 비켜 주는 최대 거리")] public float cornerSlide = 0.4f;
 
         public Vector2 Velocity { get; private set; }
+        /// <summary>이번 Tick에서 시도한 이동. 벽에 막혀 속도가0이 되어도 경계 접촉 판정에 쓴다.</summary>
+        public Vector2 AttemptedDelta { get; private set; }
         public Vector2Int Facing { get; private set; } = Vector2Int.down;
         public bool IsMoving => Velocity.sqrMagnitude > 0.04f;
         public Vector2 Feet => (Vector2)transform.position + feetOffset;
@@ -24,7 +26,7 @@ namespace PocketCaravan
         public void Teleport(Vector3 pos, Vector2Int facing)
         {
             transform.position = pos;
-            Velocity = Vector2.zero;
+            Velocity = Vector2.zero; AttemptedDelta = Vector2.zero;
             if (facing != Vector2Int.zero) Facing = facing;
         }
 
@@ -44,6 +46,7 @@ namespace PocketCaravan
             Velocity = Vector2.MoveTowards(Velocity, target, rate * Mathf.Clamp(traction,.05f,1) * dt);
 
             Vector2 delta = (Velocity + drift) * dt;
+            AttemptedDelta = delta;
             MoveAxis(new Vector2(delta.x, 0f));
             MoveAxis(new Vector2(0f, delta.y));
         }
@@ -77,10 +80,17 @@ namespace PocketCaravan
             var map = MapRoot.Current;
             if (map == null) return true;
             Vector2 c = pos + feetOffset, h = feetSize * 0.5f;
-            return map.IsWalkable(map.WorldToCell(new Vector2(c.x - h.x, c.y - h.y)),this)
-                && map.IsWalkable(map.WorldToCell(new Vector2(c.x + h.x, c.y - h.y)),this)
-                && map.IsWalkable(map.WorldToCell(new Vector2(c.x - h.x, c.y + h.y)),this)
-                && map.IsWalkable(map.WorldToCell(new Vector2(c.x + h.x, c.y + h.y)),this);
+            Vector2 a=new Vector2(c.x-h.x,c.y-h.y),b=new Vector2(c.x+h.x,c.y-h.y);
+            Vector2 e=new Vector2(c.x-h.x,c.y+h.y),f=new Vector2(c.x+h.x,c.y+h.y);
+            if(FreeSamples(map,a,b,e,f))return true;
+            var exit=MapExit.At(map.WorldToCell(c),Facing);
+            return exit!=null&&exit.TryProjectFootprint(c,ref a,ref b,ref e,ref f)&&FreeSamples(map,a,b,e,f);
+        }
+
+        bool FreeSamples(MapRoot map,Vector2 a,Vector2 b,Vector2 c,Vector2 d)
+        {
+            return map.IsWalkable(map.WorldToCell(a),this)&&map.IsWalkable(map.WorldToCell(b),this)
+                &&map.IsWalkable(map.WorldToCell(c),this)&&map.IsWalkable(map.WorldToCell(d),this);
         }
 
         void OnDrawGizmosSelected()

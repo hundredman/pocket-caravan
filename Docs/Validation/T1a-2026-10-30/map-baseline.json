@@ -1,0 +1,54 @@
+{
+  "transit_central_approach": {
+    "gameplaySHA": "8674a608e441afba4cd1247f6a762d5e86f5da23d1383f10737cfb80b82cec31",
+    "visibleLayersSHA": "e0bb928df7e1e8864db67ad207f639763a208c8f3f15e83bc916e40132d2a7a6"
+  },
+  "transit_south_inland": {
+    "gameplaySHA": "5d444af6ffa76220d1766b08114d09d03646ca7552723149818acb3fa9d164ed",
+    "visibleLayersSHA": "a1e4e3e632493ecc8041877c32eea84c38997c85dd71e7211166d817fe561df8"
+  },
+  "transit_woodtown": {
+    "gameplaySHA": "31e1fdf3a7357fb609dff66a614140e53e85b7648f8fc206988528cb6445e1b3",
+    "visibleLayersSHA": "1b25e19fb7a88e37d460d8b44c37dc5e880151ce4375433a297911069c8dcfb1"
+  },
+  "transit_ferry": {
+    "gameplaySHA": "b430bfa3ff8e2260cc1f65efdb031dc50034afd4d4b72fd325f4693ca5d6fab3",
+    "visibleLayersSHA": "c7689b068acbe04cb83e16c0380e524b4220bc528b574b5032a3d833cc2c9e7e"
+  },
+  "transit_southport": {
+    "gameplaySHA": "088007b31aa451e309a48cfd78cf1953b1190413d3e1e6caa44e1960707ff14e",
+    "visibleLayersSHA": "1b7677644c6ad50723e56e0a915a75177d13e50b18c64774fbb9d81fdd2a6113"
+  },
+  "transit_wetroad": {
+    "gameplaySHA": "a8a1e8a80793776276f2bb874d71ef35db13ca0d1ba0956e6969f0e2edfc6dcf",
+    "visibleLayersSHA": "27dd58fca70c5ddd181cadfe1acb628cfd86d26bb7323014ef915e0517666d5b"
+  },
+  "goryeo_songak": {
+    "gameplaySHA": "c240bfc352a3e8a254e1d70d256002b0fb8850fbfd4ed226f7ddab96c29193b8",
+    "visibleLayersSHA": "070d7b1832c1d0ec4a5134d381cb4007eb8bf95c7673f5c68f00a38c422a0244"
+  },
+  "goryeo_jangdan": {
+    "gameplaySHA": "5e6853032343e885244b8e8b8f3914a58046d631a489742295060530d85675d9",
+    "visibleLayersSHA": "b968b9188ce530af847e5180336a5a2a0e6a2e7224f5c4dcb66dc4555e02b0de"
+  },
+  "transit_crossroads": {
+    "gameplaySHA": "a078a54b5bd1fa0bdb2c5d97fc0a98e499d21756c1fddf3a15574fc80520b9a3",
+    "visibleLayersSHA": "db6e4e41436105bcc1bcba8cd35a14c1b3dc69643abae0718ca6047f6afb4981"
+  },
+  "transit_pass": {
+    "gameplaySHA": "a25228c7d591a61b7dbefe624576ea0897cd23b8e948eb13f5d3e5ee70068d89",
+    "visibleLayersSHA": "ccfd283649d828bff4f94be581eb468b6b09f0f436269156b77c942e309deb86"
+  },
+  "Naru": {
+    "gameplaySHA": "a3abb9ed190cb02bba5c707a763f5a7bcaa8e367a5907e81e2bcaf87f2c84392",
+    "visibleLayersSHA": "35e1c84f698bf14454db58d3ded73841819dfd4e8976b9e70dc57150b1d51f76"
+  },
+  "Dakmok": {
+    "gameplaySHA": "0ca03237f3a2deebe99f26a4181a1b94249d1b796d8776e7d2468ab94006f333",
+    "visibleLayersSHA": "e86d404481846bd187570c90741b682b488ccf590830a2077fe779bff8ab694c"
+  },
+  "Gaegyeong": {
+    "gameplaySHA": "67b609f0da9c0f02c9c62625103997b7167a74a355c45ab4b89790a2c0a669a8",
+    "visibleLayersSHA": "cd6b8d193510a78b19ee55fa7775bf98b98a2b03f43d19135d229be395965bd1"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "originalRegularLayerSlots": 88218,
+  "newRegularLayerSlots": 62633,
+  "omittedFarNeighborSlots": 25585,
+  "removedBackdropSlots": 27764,
+  "viewMaskRenderers": 13,
+  "visibilityRimCells": 1,
+  "terrainSources": 54,
+  "terrainCompositeTiles": 1670
+}
