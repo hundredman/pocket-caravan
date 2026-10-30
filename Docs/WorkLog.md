@@ -256,3 +256,5 @@
 | 2026-10-30 | Codex | T1g 경계 가림 취소·공터 확인 | 이 커밋 (codex/transition-boundary) | 사용자 지시로 가림/소유 마스크/먼 타일 제외 제거·이웃 배경 원복, 후보13맵/씬 재생성. 페이드·카메라·접촉·논9/복원숲 유지. 정적343(16skip)/세계1408출구 오류0, Unity13씬 누락스크립트0/가림0/꾸밈12루트. 공터11마을59소품은 검토본 기본 표현·승인 대기, 본편/원격 미반영. 메뉴를 마을 공터 검토로 정리. 실제 이동/사람 플레이/FPS/빌드 재검사 안 함. 상세 Validation/T1g-2026-10-30. |
 
 | 2026-10-30 | Codex | 사용자 지시 A7e 소품 분산안 반려·장터 재구성 | 이 커밋 (codex/transition-boundary) | 신규 천막곡물좌판48×48/잡화판매대48×32 내장imagegen→명시적초안팔레트/최근접정리→PNG/ASE2쌍RGBA일치. 기존시장7곳 좌판열/고객통로·이벤트마당53좌판+게시판/이정표14=67배치, 미정4곳 장터 보류. 후보13씬 재생성, 정적343(16skip)/UnityPlay936확인 실패0·전후14장+게시판UI/장단480×270. 숲·논9/기능·ID/카메라/페이드 유지. 본편/원격 미반영, 신규그림/배치 승인 대기. 사람WASD/FPS/빌드 미검사. 상세Validation/A7e-Market-2026-10-30. |
+
+| 2026-10-30 | Codex | 사용자 지시 GitHub 통합 준비·PR24 | 이 커밋 (codex/transition-boundary) | region/goryeo에 카메라/전환·숲복원·장터검토본 업로드, integration 대상 PR24 생성(https://github.com/hundredman/pocket-caravan/pull/24). 최신main 포함·팀integration 포함, 전체diff --check/세계1408출구 오류0. 기존정적343(16skip)/최종장터Unity936검증 참조. 새장터는검토본만/본편교체미포함. GitHub연결도구404로 인증CLI사용. AgentGuide 팀카톡사전공지전달확인 전 병합보류·병합완료로보고하지않음. |
