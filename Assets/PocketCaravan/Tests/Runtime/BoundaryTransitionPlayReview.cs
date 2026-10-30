@@ -70,7 +70,11 @@ namespace PocketCaravan.EditorTools
                     Check(!exit.TryGetBoundaryContact(Motor,direction,out result),"exit cell center is not the edge",id+" "+exit.edge);
                     Pose(Contact(exit),direction);Check(!exit.TryGetBoundaryContact(Motor,-direction,out result),"turning inward does not travel",id);
                     Check(exit.TryGetBoundaryContact(Motor,direction,out result),"outer feet reach boundary",id+" "+exit.edge);
-                    Motor.Teleport(result,Facing(direction));follow.SnapNow();Rect r=exit.WorldRect;Vector3 edgePoint=Motor.Feet;
+                    // The production contact path frames the exact exit before starting the fade.
+                    Motor.Teleport(result,Facing(direction));follow.SnapNow();follow.FrameExit(exit);
+                    Vector3 held=follow.transform.position;follow.SendMessage("LateUpdate");
+                    Check(Vector3.Distance(held,follow.transform.position)<.0001f,"outgoing fade holds contact frame",id);
+                    Rect r=exit.WorldRect;Vector3 edgePoint=Motor.Feet;
                     switch(exit.edge){case "E":edgePoint.x=r.xMax;break;case "W":edgePoint.x=r.xMin;break;case "N":edgePoint.y=r.yMax;break;case "S":edgePoint.y=r.yMin;break;}
                     Camera.main.ResetWorldToCameraMatrix();Vector3 v=Camera.main.WorldToViewportPoint(edgePoint);float screen=exit.edge=="E"?v.x:exit.edge=="W"?1-v.x:exit.edge=="N"?v.y:1-v.y;
                     Check(Mathf.Abs(screen-1)<.001f,"exit is the visible screen edge",id+" "+exit.edge+" v="+v+" camera="+Camera.main.transform.position+" h="+Camera.main.orthographicSize+" aspect="+Camera.main.aspect+" rect="+r);total++;

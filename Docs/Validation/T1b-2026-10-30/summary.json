@@ -1,0 +1,20 @@
+{
+  "cameraCompleted": true,
+  "cameraProbes": 23770,
+  "renderedWalkingFrames": 1560,
+  "controlledHz": 60,
+  "maxOldTargetStep": 28.0,
+  "maxNewTargetStep": 0.04472920671105385,
+  "maxNewTurnChange": 0.0,
+  "maxRenderedCameraStep": 0.13262711465358734,
+  "villageChecks": 1511,
+  "villagePassed": true,
+  "transitionChecks": 7182,
+  "transitionPassed": true,
+  "worldExits": 1408,
+  "worldErrors": 0,
+  "pythonTests": 341,
+  "pythonSkipped": 16,
+  "pythonFailed": 0,
+  "unityCompileErrors": 0
+}

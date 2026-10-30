@@ -4,7 +4,7 @@ namespace PocketCaravan.EditorTools
     [InitializeOnLoad] public static class BoundaryTransitionReview
     {
         const string Key="Codex.BoundaryTransitionReview";
-        public const string Output="ArtReview/TransitionBoundary-20261030";
+        public static string Output=>SessionState.GetString("Codex.BoundaryTransitionReview.Output","ArtReview/TransitionBoundary-20261030");
         [Serializable] public class CheckRow{public bool passed;public string test,detail;}
         [Serializable] public class Report{public bool completed;public string error;public List<CheckRow> checks=new List<CheckRow>();}
         static Report report;

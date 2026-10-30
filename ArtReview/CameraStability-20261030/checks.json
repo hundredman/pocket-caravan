@@ -1,0 +1,123 @@
+{
+    "complete": true,
+    "error": "",
+    "maps": [
+        {
+            "map": "Naru",
+            "probes": 1346,
+            "maxBeforeStep": 19.0,
+            "maxAfterStep": 0.044722381979227069,
+            "maxBeforeTurn": 22.0,
+            "maxAfterTurn": 0.0,
+            "maxLiveFrameStep": 0.06305694580078125
+        },
+        {
+            "map": "Gaegyeong",
+            "probes": 1804,
+            "maxBeforeStep": 28.0,
+            "maxAfterStep": 0.04472408816218376,
+            "maxBeforeTurn": 29.0,
+            "maxAfterTurn": 0.0,
+            "maxLiveFrameStep": 0.09233342856168747
+        },
+        {
+            "map": "Dakmok",
+            "probes": 830,
+            "maxBeforeStep": 14.5,
+            "maxAfterStep": 0.044722381979227069,
+            "maxBeforeTurn": 0.0,
+            "maxAfterTurn": 0.0,
+            "maxLiveFrameStep": 0.12611007690429688
+        },
+        {
+            "map": "goryeo_songak",
+            "probes": 1778,
+            "maxBeforeStep": 14.5,
+            "maxAfterStep": 0.044722381979227069,
+            "maxBeforeTurn": 27.0,
+            "maxAfterTurn": 0.0,
+            "maxLiveFrameStep": 0.06253969669342041
+        },
+        {
+            "map": "goryeo_jangdan",
+            "probes": 2629,
+            "maxBeforeStep": 14.5,
+            "maxAfterStep": 0.04472920671105385,
+            "maxBeforeTurn": 26.0,
+            "maxAfterTurn": 0.0,
+            "maxLiveFrameStep": 0.06305503845214844
+        },
+        {
+            "map": "transit_woodtown",
+            "probes": 1713,
+            "maxBeforeStep": 14.5,
+            "maxAfterStep": 0.04472408816218376,
+            "maxBeforeTurn": 24.0,
+            "maxAfterTurn": 0.0,
+            "maxLiveFrameStep": 0.13262711465358735
+        },
+        {
+            "map": "transit_ferry",
+            "probes": 1419,
+            "maxBeforeStep": 20.0,
+            "maxAfterStep": 0.044722381979227069,
+            "maxBeforeTurn": 27.0,
+            "maxAfterTurn": 0.0,
+            "maxLiveFrameStep": 0.0629417896270752
+        },
+        {
+            "map": "transit_crossroads",
+            "probes": 2814,
+            "maxBeforeStep": 0.020000457763671876,
+            "maxAfterStep": 0.04472920671105385,
+            "maxBeforeTurn": 0.0,
+            "maxAfterTurn": 0.0,
+            "maxLiveFrameStep": 0.08472521603107453
+        },
+        {
+            "map": "transit_southport",
+            "probes": 1533,
+            "maxBeforeStep": 3.0,
+            "maxAfterStep": 0.044722381979227069,
+            "maxBeforeTurn": 10.0,
+            "maxAfterTurn": 0.0,
+            "maxLiveFrameStep": 0.06305694580078125
+        },
+        {
+            "map": "transit_wetroad",
+            "probes": 1682,
+            "maxBeforeStep": 22.0,
+            "maxAfterStep": 0.044722381979227069,
+            "maxBeforeTurn": 27.0,
+            "maxAfterTurn": 0.0,
+            "maxLiveFrameStep": 0.09533298760652542
+        },
+        {
+            "map": "transit_pass",
+            "probes": 2273,
+            "maxBeforeStep": 12.0,
+            "maxAfterStep": 0.044722381979227069,
+            "maxBeforeTurn": 0.0,
+            "maxAfterTurn": 0.0,
+            "maxLiveFrameStep": 0.12430191040039063
+        },
+        {
+            "map": "transit_central_approach",
+            "probes": 1950,
+            "maxBeforeStep": 14.5,
+            "maxAfterStep": 0.044722381979227069,
+            "maxBeforeTurn": 28.0,
+            "maxAfterTurn": 0.0,
+            "maxLiveFrameStep": 0.0629759356379509
+        },
+        {
+            "map": "transit_south_inland",
+            "probes": 1999,
+            "maxBeforeStep": 15.0,
+            "maxAfterStep": 0.044722381979227069,
+            "maxBeforeTurn": 27.0,
+            "maxAfterTurn": 0.0,
+            "maxLiveFrameStep": 0.08926773071289063
+        }
+    ]
+}

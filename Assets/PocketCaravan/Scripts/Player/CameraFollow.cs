@@ -13,10 +13,9 @@ namespace PocketCaravan
         Vector3 vel;
         bool snap = true;
         MapRoot cachedMap;
+        MapRoot framedExitMap;
         int cachedExitCount = -1;
         readonly List<MapExit> boundaries = new List<MapExit>();
-        readonly MapExit[] best = new MapExit[4];
-        readonly float[] score = new float[4];
 
         void CacheBoundaries(MapRoot map)
         {
@@ -33,25 +32,30 @@ namespace PocketCaravan
             var player=PlayerController.Instance;
             if(boundaries.Count==0||player==null)return position;
             Vector2 feet=player.Motor.Feet;float h=cam.orthographicSize,w=h*cam.aspect;
-            // Prefer the boundary on the player's current row/column; nearby rows bridge stair-step seams.
-            for(int i=0;i<4;i++){best[i]=null;score[i]=float.PositiveInfinity;}
+            // Each boundary contributes a continuous limit, including across stair-step seams.
+            // Hard row cutoffs selected a completely different plane after a tiny sideways step.
+            float left=float.NegativeInfinity,right=float.PositiveInfinity;
+            float bottom=float.NegativeInfinity,top=float.PositiveInfinity;
             foreach(var exit in boundaries)
             {
                 Rect r=exit.WorldRect;int axis=exit.edge=="W"?0:exit.edge=="E"?1:exit.edge=="S"?2:exit.edge=="N"?3:-1;
                 if(axis<0)continue;
                 float lateral=axis<2?Mathf.Max(Mathf.Max(r.yMin-feet.y,feet.y-r.yMax),0):Mathf.Max(Mathf.Max(r.xMin-feet.x,feet.x-r.xMax),0);
-                float distance=axis==0?feet.x-r.xMin:axis==1?r.xMax-feet.x:axis==2?feet.y-r.yMin:r.yMax-feet.y;
-                if(lateral>.75f||distance<-.001f||distance>(axis<2?w:h)+1)continue;
-                float value=lateral*1000+distance;
-                if(value<score[axis]){score[axis]=value;best[axis]=exit;}
+                float falloff=lateral*2f;
+                switch(axis)
+                {
+                    case 0:left=Mathf.Max(left,r.xMin+w-falloff);break;
+                    case 1:right=Mathf.Min(right,r.xMax-w+falloff);break;
+                    case 2:bottom=Mathf.Max(bottom,r.yMin+h-falloff);break;
+                    case 3:top=Mathf.Min(top,r.yMax-h+falloff);break;
+                }
             }
-            float left=best[0]!=null?best[0].WorldRect.xMin+w:float.NegativeInfinity;
-            float right=best[1]!=null?best[1].WorldRect.xMax-w:float.PositiveInfinity;
-            float bottom=best[2]!=null?best[2].WorldRect.yMin+h:float.NegativeInfinity;
-            float top=best[3]!=null?best[3].WorldRect.yMax-h:float.PositiveInfinity;
-            // In narrow corners prioritize the side the player is actually heading toward.
-            position.x=left<=right?Mathf.Clamp(position.x,left,right):player.Motor.Facing.x>0?right:left;
-            position.y=bottom<=top?Mathf.Clamp(position.y,bottom,top):player.Motor.Facing.y>0?top:bottom;
+            // The viewport cannot fit both sides of a narrow neck. Keep the nearest centre
+            // in the interval instead of jumping to the opposite side when facing changes.
+            left=Mathf.Min(left,feet.x+w);right=Mathf.Max(right,feet.x-w);
+            bottom=Mathf.Min(bottom,feet.y+h);top=Mathf.Max(top,feet.y-h);
+            position.x=Mathf.Clamp(position.x,Mathf.Min(left,right),Mathf.Max(left,right));
+            position.y=Mathf.Clamp(position.y,Mathf.Min(bottom,top),Mathf.Max(bottom,top));
             return position;
         }
 
@@ -62,6 +66,7 @@ namespace PocketCaravan
             Vector3 p=transform.position;Rect r=exit.WorldRect;float h=cam.orthographicSize,w=h*cam.aspect;
             switch(exit.edge){case "E":p.x=r.xMax-w;break;case "W":p.x=r.xMin+w;break;case "N":p.y=r.yMax-h;break;case "S":p.y=r.yMin+h;break;}
             transform.position=p;vel=Vector3.zero;
+            framedExitMap=MapRoot.Current;
         }
 
         void Awake()
@@ -74,11 +79,13 @@ namespace PocketCaravan
             }
         }
 
-        public void SnapNow() { snap = true; LateUpdate(); }
+        public void SnapNow() { framedExitMap=null; snap = true; LateUpdate(); }
 
         void LateUpdate()
         {
             if (target == null) return;
+            // Keep the final contact frame steady throughout the outgoing fade.
+            if (framedExitMap != null && framedExitMap == MapRoot.Current) return;
             Vector3 p = target.position;
             var map = MapRoot.Current;
             if (map != null)
