@@ -19,6 +19,11 @@ def rgba_sha(im):return hashlib.sha256(im.convert('RGBA').tobytes()).hexdigest()
 def approval_for(sid,path):
     """원본의 승인 근거. 승인 근거가 없는 원본은 쓸 수 없다."""
     p=Path(path)
+    if path.startswith('ArtReview/A7d-20261030/Headwaters/Native/'):
+        a='ArtReview/A7d-20261030/Headwaters/catalogue.json'
+        d=json.loads((ROOT/a).read_text())
+        if not any(item['path']==path for item in d['assets']):raise ValueError('Unregistered draft headwater')
+        return a+' (review artwork; production requires approval)'
     if path.startswith('ArtReview/Approved/'):
         a=ROOT/p.parent/'approval.json'
         if not a.exists():

@@ -11,7 +11,7 @@ namespace PocketCaravan.EditorTools
     [InitializeOnLoad]
     public static class NatureIntegrationReview
     {
-        public const string Root = "Assets/PocketCaravan/Editor/B2Preview/A7";
+        public static string Root => SessionState.GetString("Codex.NatureIntegrationReview.Root", "Assets/PocketCaravan/Editor/B2Preview/A7");
         public static string Output => SessionState.GetString("Codex.NatureIntegrationReview.Output", "ArtReview/NatureBinding-20261029/Unity");
         const string Active = "Codex.NatureIntegrationReview";
         const string BuildBackupKey = "Codex.NatureIntegrationReview.BuildBackup";

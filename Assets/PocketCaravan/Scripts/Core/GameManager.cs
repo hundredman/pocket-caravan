@@ -291,9 +291,9 @@ namespace PocketCaravan
                 if (map.travelHours > 0 && !loadedFromSave)
                 {
                     Clock.Advance(map.travelHours);
-                    Notify.Show(map.displayName, 3f);
+                    if(UIStyle.CrispRegion)Notify.Location(map.displayName,3f);else Notify.Show(map.displayName,3f);
                 }
-                else Notify.Show(map.displayName, 2.5f);
+                else if(UIStyle.CrispRegion)Notify.Location(map.displayName,2.5f);else Notify.Show(map.displayName,2.5f);
                 GameEvents.RaiseMapEntered(map.mapId);
                 sun = null;
                 foreach (var light in FindObjectsByType<UnityEngine.Rendering.Universal.Light2D>(FindObjectsSortMode.None))

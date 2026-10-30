@@ -104,6 +104,10 @@ namespace PocketCaravan
                 GUI.Box(status,"",UIStyle.Box);
                 GUI.Label(new Rect(status.x+5,status.y+3,status.width-10,18),"저장 복원 중단 · 이번 세션 저장 안 됨 · Esc에서 원인 확인",UIStyle.Small);
             }
+            if(UIStyle.CrispRegion)
+            {
+                GUI.Label(new Rect(8,UIStyle.VirtualHeight-30,UIStyle.VirtualWidth-16,26),"WASD 이동 · Shift 달리기 · Space 대화 · Tab 상태\nQ 퀘스트 · M 지도 · L 장부 · Esc 메뉴",UIStyle.Small);return;
+            }
             GUI.Label(new Rect(6, UIStyle.VirtualHeight - 16, 520, 14),
                 "WASD 이동 · Shift 달리기 · Space 말 걸기 · Tab 상태 · Q 퀘스트 · M 지도 · L 장부 · Esc 메뉴", UIStyle.Small);
         }

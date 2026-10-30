@@ -948,7 +948,7 @@ def export_layers(out,img,gimg,dimg,deck,objs,water,road,road0,Z,FMASK,own,w,H,W
     (out/'parts.json').write_text(json.dumps(dict(sources=srcs,parts={f'{l}:{y}:{x}':v_ for (l,y,x),v_ in PARTS.items()}),ensure_ascii=False))
     if os.environ.get('M4_NATURE')=='review':
         import m4_nature
-        print('승인 자연 배치 검토:',m4_nature.apply_layers(out,FMASK))
+        print('승인 자연 배치 검토:',m4_nature.apply_layers(out,FMASK,path=Path(os.environ.get('M4_NATURE_LAYOUT',str(m4_nature.LAYOUT)))))
     else:
         import m4_nature
         if m4_nature.LIVE.exists():

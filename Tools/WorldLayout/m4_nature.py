@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[2]
 T=16
 LAYOUT=Path(__file__).with_name('nature_layout.json')
 LIVE=Path(__file__).with_name('nature_live.json')  # Created only after placement approval.
-TREES=('forest_','pine_','round_','broadleaf','light_tree','golden_tree','willow','moss_rock','small_rock','shrub','fallen_log')
+TREES=('forest_','pine_','round_','broadleaf','light_tree','golden_tree','willow','moss_rock','small_rock','shrub','fallen_log','tall_grass')
 def rgba(path):return Image.open(path).convert('RGBA')
 
 def preserve_objects(new_seams,walk,origin=(0,-130)):
@@ -84,7 +84,7 @@ def load_layout(path=LAYOUT,production=False):
     catalogue=json.loads((ROOT/'ArtReview/Approved/MountainRange-Final-v2/catalogue.json').read_text())['assets']
     assets={}
     profiles=json.loads(LAYOUT.with_name('nature_masks.json').read_text())['assets']
-    for directory in ['MountainRange-Final-v2','RiceField-v5']:
+    for directory in ['MountainRange-Final-v2','RiceField-v5','RockMountain-v1']:
         base=ROOT/'ArtReview/Approved'/directory;approval=json.loads((base/'approval.json').read_text())
         if approval.get('status')!='approved':raise ValueError('Nature art is not approved')
         for item in approval['assets']:
@@ -98,6 +98,16 @@ def load_layout(path=LAYOUT,production=False):
                     rows=profile[field]
                     if len(rows)!=im.height//T or any(len(row)!=im.width//T or set(row)-{'0','1'} for row in rows):raise ValueError('Invalid authored nature mask')
                 assets[item['name']]['mask']=profile
+    draft=ROOT/'ArtReview/A7d-20261030/Headwaters/catalogue.json'
+    if draft.exists():
+        d=json.loads(draft.read_text())
+        needed={p['asset'] for p in config['placements'] if p.get('enabled',True)}
+        for item in d['assets']:
+            if item['name'] not in needed:continue
+            if production and d['status']!='approved':raise ValueError('Headwater artwork approval required')
+            p=ROOT/item['path'];im=rgba(p)
+            if list(im.size)!=item['size'] or hashlib.sha256(im.tobytes()).hexdigest()!=item['rgbaSha256']:raise ValueError('Headwater source changed')
+            assets[item['name']]={'image':im,'path':item['path'],'ports':{},'mask':item['mask']}
     placements={}
     for p in config['placements']:
         if not p.get('enabled',True):continue
@@ -131,6 +141,7 @@ def apply_layers(folder,forest_masks,origin=(0,-130),production=False,path=LAYOU
                 shape[py:py+alpha.shape[0],px:px+alpha.shape[1]]|=alpha
             clear[y:y+z['h'],x:x+z['w']]|=ndimage.binary_dilation(shape,iterations=1)[y:y+z['h'],x:x+z['w']]
         else:clear[y:y+z['h'],x:x+z['w']]=True
+    clear &= masks['own']
     # Identify original instances by source+world anchor, then remove each whole instance.
     instances={}
     for key,items in parts.items():
@@ -149,7 +160,9 @@ def apply_layers(folder,forest_masks,origin=(0,-130),production=False,path=LAYOU
             removed.add(k)
             shadow_candidates[ya:yb,xa:xb]=True
             foot=y+sh-1
-            if 0<=foot<h:removed_trunks[foot,max(0,x+(sw-1)//2):min(w,x+sw//2+1)]=True
+            if 0<=foot<h:
+                if sid.split(':')[1].startswith(('shrub','small_rock','moss_rock','fallen_log','tall_grass')):removed_trunks[foot,max(0,x):min(w,x+sw)]=True
+                else:removed_trunks[foot,max(0,x+(sw-1)//2):min(w,x+sw//2+1)]=True
         elif xa<xb and ya<yb:
             canopy[ya:yb,xa:xb]|=alpha[ya-y:yb-y,xa-x:xb-x]
     canopy_interior=ndimage.binary_erosion(canopy,iterations=1)
@@ -167,16 +180,22 @@ def apply_layers(folder,forest_masks,origin=(0,-130),production=False,path=LAYOU
     # Clear the old forest barrier only where vegetation is replaced; reinforce remaining trunks.
     masks['blocked']&=~(((clear|shadow_candidates&~canopy)&forest|removed_trunks)&~protected)
     for k,im in instances.items():
-        if k in removed:continue
+        if k in removed or k[0].split(':')[1].startswith('tall_grass'):continue
         sid,px,py=k;x,y=px//T,py//T;sw,sh=im.width//T,im.height//T;foot=y+sh-1
         if 0<=foot<h:masks['blocked'][foot,max(0,x+(sw-1)//2):min(w,x+sw//2+1)]=True
+    # Authored paddy clearings contain no protected roads/water or functional props.
+    rice_ids={p['id']for p in config['placements']if p.get('enabled',True)and p['role']=='rice'}
+    for z in config['clearings']:
+        if z['id']not in rice_ids:continue
+        x,y=z['x']-ox,z['y']-oy;view=np.s_[y:y+z['h'],x:x+z['w']]
+        masks['blocked'][view]&=protected[view]
     placements=[];new_water=np.zeros((h,w),bool);rock=np.zeros((h,w),bool)
     for p in config['placements']:
         if not p.get('enabled',True):continue
         a=assets[p['asset']];im=a['image'];x,y=p['x']-ox,p['y']-oy;sw,sh=im.width//T,im.height//T
         if x<0 or y<0 or x+sw>w or y+sh>h:raise ValueError('Nature outside world')
-        if not masks['own'][y:y+sh,x:x+sw].all():raise ValueError('Nature touches another team region: '+p['id'])
         arr=np.array(im);occupied=arr[:,:,3].reshape(sh,T,sw,T).max((1,3))>0
+        if (occupied&~masks['own'][y:y+sh,x:x+sw]).any():raise ValueError('Nature touches another team region: '+p['id'])
         profile=a['mask'];mask=lambda field:np.array([[v=='1' for v in row] for row in profile[field]],bool)
         collision,wet,above=mask('blocked'),mask('water'),mask('above')
         if p['role']=='rice':
@@ -187,8 +206,8 @@ def apply_layers(folder,forest_masks,origin=(0,-130),production=False,path=LAYOU
         if p['role']=='water-rock':
             if profile.get('replaceWater'):
                 old_water=masks['water'][y:y+sh,x:x+sw].copy()
-                masks['blocked'][y:y+sh,x:x+sw]&=~(old_water&~wet)
-                masks['water'][y:y+sh,x:x+sw]=wet
+                masks['blocked'][y:y+sh,x:x+sw]&=~(old_water&occupied&~wet)
+                masks['water'][y:y+sh,x:x+sw]=np.where(occupied,wet,old_water)
             new_water[y:y+sh,x:x+sw]|=wet
         sid='nature:'+p['asset'];sources[sid]=a['path'];cache[sid]=im
         for dy in range(sh):

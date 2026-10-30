@@ -15,9 +15,10 @@ namespace PocketCaravan.EditorTools
         public static Action<Exception> Complete;
         public static string ReviewRoot, Output, ChangesPath;
         public static bool ProductionOnly;
-        [Serializable] class ArtPoint { public string asset,map; public float x,y; }
+        [Serializable] class ArtPoint { public string asset,map; public float x,y; public bool focus; }
         [Serializable] class ArtPoints { public ArtPoint[] points; }
-        [Serializable] class Map { public string id; public int w,h; public int[] blocked,ground; }
+        [Serializable] class Crop { public int x,y,w,h; }
+        [Serializable] class Map { public string id; public int w,h; public int[] blocked,ground; public Crop[] natureCrops; }
         [Serializable] class Endpoint { public int[] exit, arrival; }
         [Serializable] class Relocation { public string map,target,spawnId; public Endpoint @new; }
         [Serializable] class Changes { public Relocation[] relocations; }
@@ -104,6 +105,18 @@ namespace PocketCaravan.EditorTools
                 for (int y = 0; y < data.h; y++) for (int x = 0; x < data.w; x++)
                     if (MapRoot.Current.blocked.HasTile(new Vector3Int(x, data.h - y - 1, 0)) != (data.blocked[y * data.w + x] != 0)) differences++;
                 Check(differences == 0, "serialized/runtime barriers match", id);
+                if(data.natureCrops!=null)
+                {
+                    var crops=FindFirstObjectByType<CropDepth>();
+                    Check(crops!=null&&crops.patches.Length==data.natureCrops.Length,"all crop patches connected",id);
+                    foreach(var crop in data.natureCrops)
+                    {
+                        bool clear=true;
+                        for(int y=crop.y;y<crop.y+crop.h;y++)for(int x=crop.x;x<crop.x+crop.w;x++)
+                            clear&=MapRoot.Current.IsWalkable(new Vector3Int(x,data.h-y-1,0));
+                        Check(clear,"entire paddy remains walkable",id+" "+crop.x+","+crop.y);
+                    }
+                }
                 if (id == "goryeo_songak")
                 {
                     Pose(182, -30); yield return VisibleCapture("songak-ridge");
@@ -135,7 +148,7 @@ namespace PocketCaravan.EditorTools
                 {
                     Pose(216, 20); yield return null;
                     var depth = FindFirstObjectByType<CropDepth>();
-                    Check(depth != null && depth.patches.Length == 2, "crop depth connected");
+                    Check(depth != null && data.natureCrops!=null&&depth.patches.Length == data.natureCrops.Length, "crop depth connected");
                     depth.Apply(Motor.Cell);
                     yield return VisibleCapture("rice-inside");
                     int ticks = 0; bool passage = true;
@@ -157,7 +170,11 @@ namespace PocketCaravan.EditorTools
                 {
                     yield return EditorSceneManager.LoadSceneAsyncInPlayMode(ReviewRoot+"/Scenes/"+point.map+".unity",new LoadSceneParameters(LoadSceneMode.Single));yield return null;
                 }
-                Freeze();Pose(point.x,point.y);yield return Capture("asset-"+point.asset);
+                Freeze();Pose(point.x,point.y);
+                var follow=FindFirstObjectByType<CameraFollow>();
+                if(point.focus){follow.enabled=false;var position=Position(point.x,point.y);position.z=Camera.main.transform.position.z;Camera.main.transform.position=position;}
+                yield return Capture("asset-"+point.asset);
+                if(point.focus)follow.enabled=true;
             }
             var changes = JsonUtility.FromJson<Changes>(File.ReadAllText(ChangesPath));
             foreach (var change in changes.relocations)
