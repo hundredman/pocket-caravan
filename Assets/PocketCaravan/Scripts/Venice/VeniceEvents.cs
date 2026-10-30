@@ -58,6 +58,12 @@ namespace PocketCaravan
             if (root != null) Destroy(root.gameObject);
             ShowFlood(false);
             root = null; follower = null; floodShown = false; floodCells.Clear();
+            if (!VeniceUtil.InVenice && MapRoot.Current != null && Following)
+            {
+                // 10-30 동행 중에 베네치아 밖으로 나가면 순례자는 여기서 헤어진다 (나중에 엉뚱한 곳에서 사례가 나오지 않게)
+                VeniceSave.Set("lost_follow", 0f);
+                Notify.Show("순례자: \"여기서부턴 혼자 가 볼게요. 고마웠어요!\"", 4f);
+            }
             if (!VeniceUtil.InVenice || MapRoot.Current == null) return;
             var data = VeniceData.Get(VeniceUtil.Map);
             root = new GameObject("베네치아 사건").transform;

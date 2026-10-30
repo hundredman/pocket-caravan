@@ -18,6 +18,7 @@ namespace PocketCaravan
         public override string DisplayName => VeniceLabels.Place(this, "상인회관 전시실");   // 가까이 가야 이름표가 뜬다
         public override Kind Category => Kind.Market;
 
+        internal static bool Complete => Filled >= Shelf.Length;   // 10-30 놀거리 표시(VeniceActivityHints)가 본다
         static int Filled { get { int n = 0; foreach (var s in Shelf) if (VeniceSave.Has("museum:" + s.id)) n++; return n; } }
 
         public override void Interact(PlayerController player)

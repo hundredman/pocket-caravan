@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 namespace PocketCaravan
 {
     /// <summary>
-    /// 리액션 동작 (2026-10-26~27, 제안). 베네치아·본토 서부 맵에서 R을 누르면 동작 바퀴가 열린다(방향키로 고르고 Space·R).
+    /// 리액션 동작 (2026-10-26~27, 제안). 베네치아·본토 서부 맵에서 R을 누르면 동작 바퀴가 열린다(방향키로 고르고 Space, R·Esc로 닫기. 10-30 북유럽 리액션 바퀴와 모양·조작 통일).
     /// 처음엔 인사·깡총·박수, 나머지(빙글·기지개·춤·하트·낮잠·노 젓기·가면 춤)는 친구 하트 2(VeniceSocial)나 떠돌이 상인에게서 배운다.
     /// 그림(자식 CharacterAnimator)의 위치·크기·기울기만 잠깐 바꾸고 다음 프레임 전에 되돌린다. 움직이면 바로 멈춘다.
     /// 가까운 주민은 돌아보며 깡총 뛰고 한마디 하며 같은 조각(하트·음표 등)을 띄운다. 광장 비둘기가 다가온다.
@@ -116,6 +116,8 @@ namespace PocketCaravan
                 case 'R': return kb.rKey.wasPressedThisFrame;
                 case '<': return kb.leftArrowKey.wasPressedThisFrame || kb.aKey.wasPressedThisFrame;
                 case '>': return kb.rightArrowKey.wasPressedThisFrame || kb.dKey.wasPressedThisFrame;
+                case '^': return kb.upArrowKey.wasPressedThisFrame || kb.wKey.wasPressedThisFrame;
+                case 'v': return kb.downArrowKey.wasPressedThisFrame || kb.sKey.wasPressedThisFrame;
             }
             return false;
 #else
@@ -140,14 +142,20 @@ namespace PocketCaravan
 
             if (wheel)
             {
-                if (Key('<')) sel = Step(sel, -1);
-                if (Key('>')) sel = Step(sel, 1);
-                if (InputReader.InteractPressed() || Key('R'))
+                // 2026-10-30 북유럽 리액션 바퀴와 같은 조작: ←↑ 이전 · →↓ 다음 · Space 하기 · R/Esc 닫기
+                if (Key('<') || Key('^')) sel = Step(sel, -1);
+                if (Key('>') || Key('v')) sel = Step(sel, 1);
+                if (InputReader.CancelPressed() || Key('R')) { wheel = false; UIState.Release(); }
+                else if (InputReader.InteractPressed())
                 {
-                    if (!Knows(sel)) { Sfx.Play("cancel", .5f); return; }       // 아직 못 배운 동작
+                    if (!Knows(sel))                                             // 아직 못 배운 동작: 배우는 곳을 알려 준다
+                    {
+                        Sfx.Play("cancel", .5f);
+                        Notify.Show($"아직 모르는 리액션이야. {Moves[sel].teacher} 배울 수 있어.", 2.5f);
+                        return;
+                    }
                     wheel = false; UIState.Release(); Perform(sel);
                 }
-                else if (InputReader.CancelPressed()) { wheel = false; UIState.Release(); }
                 return;
             }
             if (UIState.Blocking || VeniceSeat.IsSitting || !Key('R')) return;   // 앉아 있을 땐 동작 안 함 (그림 덧입힘이 겹치지 않게)
@@ -362,25 +370,35 @@ namespace PocketCaravan
                 GUI.color = old;
                 GUI.Label(r, $"<color=#3A2E3A><size=9>{s.text}</size></color>", UIStyle.CenterRich);
             }
-            if (!wheel) return;
-            float bw = 46, gap = 4, total = Moves.Length * (bw + gap) - gap;
-            float x = (UIStyle.VirtualWidth - total) / 2f, y = UIStyle.VirtualHeight - 110;
-            GUI.Box(new Rect(x - 10, y - 24, total + 20, 76), "", UIStyle.Box);
-            GUI.Label(new Rect(x, y - 20, total, 16), "<size=9>동작  ◀ ▶ 고르기 · Space 하기 · Esc 닫기</size>", UIStyle.CenterRich);
-            var cur = Moves[sel];
-            string info = Knows(sel) ? $"'{cur.name}'" : $"<color=#FFD27A>'{cur.name}'</color> — {cur.teacher} 배운다";
-            GUI.Label(new Rect(x - 10, y + 33, total + 20, 14), $"<size=9>{info}</size>", UIStyle.CenterRich);
+            if (wheel) DrawWheel();
+        }
+
+        /// <summary>2026-10-30 북유럽 리액션 바퀴(NorthSocial.DrawWheel)와 같은 모양: 화면을 어둡게 깔고 칸을 둥글게 놓는다.
+        /// 베네치아는 동작이 10개라 북유럽(8개, 반지름 92)보다 가로로 넓힌 타원에 놓아 칸이 겹치지 않게 한다.</summary>
+        void DrawWheel()
+        {
+            float cx = UIStyle.VirtualWidth / 2f, cy = UIStyle.VirtualHeight / 2f, rx = 128f, ry = 96f;
+            var old = GUI.color;
+            GUI.color = new Color(0f, 0f, 0.05f, 0.4f);
+            GUI.DrawTexture(new Rect(0, 0, UIStyle.VirtualWidth, UIStyle.VirtualHeight), Texture2D.whiteTexture);
+            GUI.color = old;
             for (int i = 0; i < Moves.Length; i++)
             {
-                var r = new Rect(x + i * (bw + gap), y, bw, 30);
+                float a = -Mathf.PI / 2f + i * Mathf.PI * 2f / Moves.Length;
+                var r = new Rect(cx + Mathf.Cos(a) * rx - 38, cy + Mathf.Sin(a) * ry - 13, 76, 26);
                 bool known = Knows(i);
-                GUI.color = i == sel ? new Color(1f, .85f, .4f, 1f) : known ? new Color(1f, 1f, 1f, .25f) : new Color(0f, 0f, 0f, .35f);
-                GUI.DrawTexture(r, Texture2D.whiteTexture);
-                GUI.color = old;
-                string label = known ? Moves[i].name : "?";
-                GUI.Label(r, $"<size=9>{(i == sel ? "<color=#3A2E3A>" : known ? "" : "<color=#FFFFFF88>")}{label}{(i == sel || !known ? "</color>" : "")}</size>", UIStyle.CenterRich);
+                GUI.Box(r, GUIContent.none, UIStyle.Box);
+                string label = known ? Moves[i].name : "???";
+                if (i == sel) label = $"<color=#ffde59><b>▶ {label}</b></color>";
+                else if (!known) label = $"<color=#8a8296>{label}</color>";
+                GUI.Label(r, label, OneLine);
             }
+            GUI.Label(new Rect(cx - 80, cy - 10, 160, 20), "<b>리액션</b>", UIStyle.CenterRich);
+            GUI.Label(new Rect(cx - 120, cy + ry + 22, 240, 16), "← → 고르기 · Space 하기 · R/Esc 닫기", UIStyle.CenterRich);
         }
+
+        static GUIStyle oneLine;
+        static GUIStyle OneLine => oneLine ?? (oneLine = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow });
 
         void OnDisable() => Restore();
     }
