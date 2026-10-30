@@ -10,6 +10,7 @@ namespace PocketCaravan
     /// - 위치는 1초에 10번 오므로, 그 사이를 부드럽게 이어 움직인다. 멀리 순간이동했으면 바로 옮긴다.
     /// - 머리 위에 하늘색 이름표(마을 사람과 구분). 부딪히지 않고 겹쳐 지나간다(충돌체 없음).
     /// - 맵을 떠나거나 끊기면, 또는 5초 넘게 소식이 없으면 지운다.
+    /// - 7단계: 채팅 말풍선이 위치를 묻는다(TryGetPosition).
     /// 공용 코드는 읽기만 한다(PlayerController · StartChoices · PlayerAppearance).
     /// </summary>
     public class RemotePlayers : MonoBehaviour
@@ -25,6 +26,7 @@ namespace PocketCaravan
             public string look, name;
         }
 
+        static RemotePlayers inst;
         readonly Dictionary<string, Avatar> avatars = new Dictionary<string, Avatar>();
         readonly List<string> gone = new List<string>();
         string shownMap;
@@ -37,6 +39,17 @@ namespace PocketCaravan
             var go = new GameObject("RemotePlayers");
             DontDestroyOnLoad(go);
             go.AddComponent<RemotePlayers>();
+        }
+
+        void Awake() => inst = this;
+
+        /// <summary>화면에 그려진 다른 플레이어의 발밑 위치 (채팅 말풍선이 따라간다)</summary>
+        public static bool TryGetPosition(string id, out Vector3 pos)
+        {
+            pos = default;
+            if (inst == null || id == null || !inst.avatars.TryGetValue(id, out var a) || a.root == null) return false;
+            pos = a.root.transform.position;
+            return true;
         }
 
         void Update()

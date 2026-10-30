@@ -59,10 +59,13 @@ const roomC = await c.wait((m) => m.t === "room" && m.map === "test_rialto");
 const aInC = roomC?.players?.find((p) => p.id === a.id);
 check(aInC?.x === 12.5, "나중에 들어온 C도 A의 마지막 위치를 받는다");
 
+// 실제 서버엔 다른 사람이 있을 수 있으니, A가 나가기 전 수에서 1 줄었는지 본다
+const before = [...b.got].reverse().find((m) => m.t === "online" || m.t === "welcome")?.online ?? 0;
+const seen = b.got.length;
 a.ws.close();
 check(!!(await b.wait((m) => m.t === "leave" && m.id === a.id)), "A가 끊으면 B는 A가 나간 것을 받는다");
-const online = await b.wait((m) => m.t === "online" && m.online === 2);
-check(!!online, "접속자 수가 2명으로 줄어든 것을 받는다");
+const online = await b.wait((m) => m.t === "online" && b.got.indexOf(m) >= seen);
+check(online?.online === before - 1, `접속자 수가 하나 준 것을 받는다 (${before} → ${online?.online})`);
 
 b.ws.close(); c.ws.close();
 console.log(failed ? `실패 ${failed}건` : "모두 통과");
