@@ -1,0 +1,17 @@
+{
+  "name": "pocket-caravan-server",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Pocket Caravan 온라인 서버 (Cloudflare Workers + Durable Objects)",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "check": "tsc --noEmit",
+    "test:two": "node test/two_clients.mjs"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261030.1",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.156.0"
+  }
+}

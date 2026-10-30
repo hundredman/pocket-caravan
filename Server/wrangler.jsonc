@@ -1,0 +1,12 @@
+// Pocket Caravan 온라인 서버 설정 (Cloudflare Workers + Durable Objects)
+// 내 컴퓨터에서 켜기: npm run dev  → http://localhost:8787 , 게임 접속 주소 ws://localhost:8787/ws
+{
+  "name": "pocket-caravan-server",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "durable_objects": {
+    "bindings": [{ "name": "WORLD", "class_name": "WorldRoom" }]
+  },
+  // 무료 플랜은 SQLite 저장 방식 Durable Object만 쓸 수 있다
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["WorldRoom"] }]
+}
