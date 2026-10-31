@@ -13,8 +13,11 @@ namespace PocketCaravan
     /// - 7단계: 채팅 말풍선이 위치를 묻는다(TryGetPosition).
     /// - 8단계: 리액션(서버 "emote")을 받으면 그 사람 캐릭터가 동작하고(인사·깡총·박수·빙글·춤·하트·쉬기),
     ///   머리 위에 리액션 이름이 크게 뜨고 기호(★ ♪ ♥ z !)가 떠오른다. 동작 모양은 아이디로 고른다(NetEmote 설명 참고).
+    /// - 채팅 리액션 명령(/춤 등)은 내 캐릭터에도 같은 동작과 머리 위 표시를 한다(PlaySelf).
+    ///   공용 CarryVisual이 그림 자리를 정한 뒤에 덧입히고(실행 순서 1000), 다음 프레임 처음에 되돌린다. 걷기 시작하면 멈춘다.
     /// 공용 코드는 읽기만 한다(PlayerController · StartChoices · PlayerAppearance).
     /// </summary>
+    [DefaultExecutionOrder(1000)]
     public class RemotePlayers : MonoBehaviour
     {
         const float StaleSeconds = 5f, Snap = 4f, Smooth = 14f;
@@ -34,6 +37,49 @@ namespace PocketCaravan
         static readonly Vector2Int[] SpinFacings = { new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(0, 1), new Vector2Int(-1, 0) };
 
         static RemotePlayers inst;
+
+        // 내 캐릭터 리액션 (채팅 명령)
+        static string selfKind, selfName;
+        static float selfStart, selfLength;
+        Transform selfBody;
+        Vector3 selfPos, selfScale;
+        Quaternion selfRot;
+        bool selfApplied;
+
+        /// <summary>내 캐릭터가 리액션을 한다 (채팅 명령 /춤 등). 다른 사람에게 알리는 건 NetEmote가 한다</summary>
+        public static void PlaySelf(string id, string name)
+        {
+            selfKind = Kind(id);
+            selfName = name;
+            selfStart = Time.unscaledTime;
+            selfLength = Length(selfKind);
+        }
+
+        /// <summary>지난 프레임에 덧입힌 내 그림을 되돌린다</summary>
+        void RestoreSelf()
+        {
+            if (!selfApplied) return;
+            selfApplied = false;
+            if (selfBody == null) return;
+            selfBody.localPosition = selfPos;
+            selfBody.localScale = selfScale;
+            selfBody.localRotation = selfRot;
+        }
+
+        void LateUpdate()
+        {
+            if (selfKind == null) return;
+            var pc = PlayerController.Instance;
+            float k = (Time.unscaledTime - selfStart) / selfLength;
+            if (pc == null || pc.anim == null || k >= 1f || (pc.Motor != null && pc.Motor.IsMoving)) { selfKind = null; return; }
+            selfBody = pc.anim.transform;
+            selfPos = selfBody.localPosition; selfScale = selfBody.localScale; selfRot = selfBody.localRotation;
+            Pose(selfKind, k, out var lift, out var sx, out var sy, out var tilt);
+            selfBody.localPosition = selfPos + new Vector3(0f, Mathf.Round(lift * 16f) / 16f, 0f);
+            selfBody.localScale = new Vector3(selfScale.x * sx, selfScale.y * sy, selfScale.z);
+            selfBody.localRotation = selfRot * Quaternion.Euler(0f, 0f, tilt);
+            selfApplied = true;
+        }
         readonly Dictionary<string, Avatar> avatars = new Dictionary<string, Avatar>();
         readonly List<string> gone = new List<string>();
         string shownMap;
@@ -182,6 +228,7 @@ namespace PocketCaravan
 
         void Update()
         {
+            RestoreSelf();
             var net = NetClient.I;
             var map = MapRoot.Current;
             var pc = PlayerController.Instance;
@@ -262,16 +309,16 @@ namespace PocketCaravan
         }
 
         /// <summary>머리 위 리액션 이름(톡 튀어나오며 커진다)과 떠오르는 기호 셋</summary>
-        void DrawEmote(Camera cam, Avatar a, float scale)
+        void DrawEmote(Camera cam, Vector3 feet, string kind, string label, float start, float length, float scale)
         {
-            float k = Mathf.Clamp01((Time.unscaledTime - a.emoteStart) / a.emoteLength);
+            float k = Mathf.Clamp01((Time.unscaledTime - start) / length);
             if (emoteStyle == null || emoteStyle.font != UIStyle.RegularFont)
             {
                 emoteStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.RegularFont, fontSize = UIStyle.BodySize + 2, alignment = TextAnchor.MiddleCenter, richText = true, clipping = TextClipping.Overflow, fontStyle = FontStyle.Bold };
                 symbolStyle = new GUIStyle(emoteStyle) { fontSize = UIStyle.BodySize + 4 };
             }
-            string symbol = Symbol(a.emote, out var color);
-            var head = cam.WorldToScreenPoint(a.root.transform.position + new Vector3(0f, 1.6f, 0f));
+            string symbol = Symbol(kind, out var color);
+            var head = cam.WorldToScreenPoint(feet + new Vector3(0f, 1.6f, 0f));
             if (head.z < 0f) return;
             float hx = head.x / scale, hy = (Screen.height - head.y) / scale;
             float pop = k < .15f ? Mathf.Lerp(6f, 0f, k / .15f) : 0f;   // 처음에 아래에서 톡 올라온다
@@ -279,7 +326,7 @@ namespace PocketCaravan
             var old = GUI.color;
             GUI.color = new Color(1f, 1f, 1f, alpha);
             emoteStyle.normal.textColor = new Color(1f, .9f, .4f);
-            UIStyle.Outlined(new Rect(hx - 70f, hy - 10f + pop, 140f, 18f), $"{symbol} {a.emoteName}", emoteStyle);
+            UIStyle.Outlined(new Rect(hx - 70f, hy - 10f + pop, 140f, 18f), $"{symbol} {label}", emoteStyle);
             for (int i = 0; i < 3; i++)
             {
                 float phase = Mathf.Repeat(k * 1.6f + i / 3f, 1f);
@@ -295,7 +342,9 @@ namespace PocketCaravan
         void OnGUI()
         {
             var cam = Camera.main;
-            if (avatars.Count == 0 || cam == null || UIState.Blocking) return;
+            var me = PlayerController.Instance;
+            bool selfShow = selfKind != null && me != null;
+            if ((avatars.Count == 0 && !selfShow) || cam == null || UIState.Blocking) return;
             UIStyle.Begin();
             GUI.depth = -3;
             if (nameStyle == null || nameStyle.font != UIStyle.SmallFont)
@@ -315,8 +364,9 @@ namespace PocketCaravan
                 foreach (var o in new[] { new Vector2(1, 0), new Vector2(-1, 0), new Vector2(0, 1), new Vector2(0, -1) })
                     GUI.Label(new Rect(r.x + o.x, r.y + o.y, r.width, r.height), a.name, shadowStyle);
                 GUI.Label(r, a.name, nameStyle);
-                if (a.emote != null) DrawEmote(cam, a, scale);
+                if (a.emote != null) DrawEmote(cam, a.root.transform.position, a.emote, a.emoteName, a.emoteStart, a.emoteLength, scale);
             }
+            if (selfShow) DrawEmote(cam, me.transform.position, selfKind, selfName, selfStart, selfLength, scale);
         }
     }
 }

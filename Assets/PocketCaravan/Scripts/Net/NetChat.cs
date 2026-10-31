@@ -11,6 +11,8 @@ namespace PocketCaravan
     /// - 접속 중 Enter: 입력 칸이 열린다 → Enter 보내기 · Esc 닫기. 쓰는 동안은 다른 창처럼 이동이 멈춘다.
     /// - 말은 접속한 모두에게 간다. 같은 맵 사람(나 포함)이 한 말은 머리 위 말풍선으로도 뜬다. 다른 맵 사람 말도 목록에 똑같이 보이고, 이름 옆에 그 맵 이름이 붙는다.
     /// - 8단계: 공유 장터 거래·저장 같은 알림 줄(System)도 같은 목록에 회색으로 남긴다.
+    /// - 리액션 명령 (2026-10-31): "/춤"처럼 /로 시작하면 말 대신 리액션을 한다. 모든 지역에서 된다(고려·아라비아는 R 리액션이 없어서).
+    ///   내 캐릭터도 같이 움직이고(RemotePlayers.PlaySelf), 같은 맵 사람에게 보인다(NetEmote). "/리액션"이면 목록을 보여 준다.
     /// - 왼쪽 아래(접속 표시 위)에 최근 8줄. 12초 지나면 사라지고, 입력 칸을 열면 다시 보인다.
     /// - 서버가 꺾쇠(&lt;&gt;)를 바꿔 보내므로 남의 말에 글자 꾸미기 태그가 끼어들지 않는다.
     /// 한글 입력: 입력 칸은 NetTextBox(게임이 직접 두벌식으로 조합). Enter를 누르면 두 프레임 뒤에 조합 중인 글자까지 함께 보낸다.
@@ -23,6 +25,21 @@ namespace PocketCaravan
         const string MeColor = "#ffde59", OtherColor = "#8fd3ff", DimColor = "#a49db5", ErrorColor = "#ff9a8a", SystemColor = "#c9e8b0";
 
         class Line { public string text; public float at; }
+
+        /// <summary>채팅 리액션 명령: 아이디 · 보여 줄 이름 · 받아 주는 말(한글·영어)</summary>
+        static readonly (string id, string name, string[] words)[] Commands =
+        {
+            ("bow", "인사", new[] { "인사", "안녕", "bow", "wave", "hi" }),
+            ("hop", "깡총", new[] { "깡총", "점프", "hop", "jump" }),
+            ("clap", "박수", new[] { "박수", "짝짝", "clap" }),
+            ("spin", "빙글", new[] { "빙글", "회전", "spin" }),
+            ("dance", "춤", new[] { "춤", "댄스", "dance" }),
+            ("love", "하트", new[] { "하트", "사랑", "love", "heart" }),
+            ("nap", "낮잠", new[] { "낮잠", "잠", "nap", "sleep" }),
+            ("surprise", "놀람", new[] { "놀람", "깜짝", "wow" }),
+            ("joy", "기쁨", new[] { "기쁨", "야호", "joy" }),
+            ("think", "생각", new[] { "생각", "음", "think" }),
+        };
         class Bubble { public string text; public float until; }
 
         static NetChat inst;
@@ -66,7 +83,7 @@ namespace PocketCaravan
             switch (m.t)
             {
                 case "welcome":
-                    if (!toldHowTo) { toldHowTo = true; Add($"<color={DimColor}>Enter를 누르면 채팅할 수 있어요</color>"); }
+                    if (!toldHowTo) { toldHowTo = true; Add($"<color={DimColor}>Enter를 누르면 채팅 · /춤 /박수 같은 리액션 (목록: /리액션)</color>"); }
                     break;
                 case "join":
                     if (!string.IsNullOrEmpty(m.name)) Add($"<color={DimColor}>{m.name} 님이 이 맵에 왔어요</color>");
@@ -124,7 +141,9 @@ namespace PocketCaravan
             {
                 if (sendFrame >= 0 && Time.frameCount >= sendFrame)
                 {
-                    net.Say(box.Full);
+                    string text = box.Full.Trim();
+                    if (text.StartsWith("/")) Command(text.Substring(1).Trim());
+                    else net.Say(text);
                     Close();
                 }
                 else if (InputReader.CancelPressed()) Close();
@@ -145,6 +164,27 @@ namespace PocketCaravan
             foreach (var kv in bubbles)
                 if (Time.unscaledTime > kv.Value.until || (kv.Key != net.MyId && !net.Peers.ContainsKey(kv.Key))) expired.Add(kv.Key);
             foreach (var id in expired) bubbles.Remove(id);
+        }
+
+        /// <summary>/로 시작하는 말: 리액션을 하거나 목록을 보여 준다</summary>
+        void Command(string word)
+        {
+            string w = word.ToLowerInvariant();
+            if (w == "" || w == "리액션" || w == "도움" || w == "help" || w == "?")
+            {
+                var names = new List<string>();
+                foreach (var c in Commands) names.Add("/" + c.name);
+                Add($"<color={DimColor}>리액션: {string.Join(" ", names)}</color>");
+                return;
+            }
+            foreach (var c in Commands)
+                if (global::System.Array.IndexOf(c.words, w) >= 0)
+                {
+                    NetEmote.Send(c.id, c.name);
+                    RemotePlayers.PlaySelf(c.id, c.name);
+                    return;
+                }
+            Add($"<color={ErrorColor}>모르는 명령이에요: /{word} · 목록은 /리액션</color>");
         }
 
         void Close()
@@ -191,7 +231,7 @@ namespace PocketCaravan
             GUI.Label(new Rect(panel.x + 6f, panel.y + 3f, 30f, 16f), "<b>말</b>", UIStyle.Rich);
             box.Draw(new Rect(panel.x + 30f, panel.y + 3f, panel.width - 36f, 16f), field);
             GUI.Label(new Rect(panel.x, panel.y - 13f, panel.width, 12f),
-                $"<size={UIStyle.SmallSize}><color={DimColor}>Enter 보내기 · Esc 닫기 · 가/A 바꾸기: 오른쪽 Alt · {box.Full.Length}/{MaxChars}</color></size>", UIStyle.Rich);
+                $"<size={UIStyle.SmallSize}><color={DimColor}>Enter 보내기 · Esc 닫기 · /리액션 · 가/A: 오른쪽 Alt · {box.Full.Length}/{MaxChars}</color></size>", UIStyle.Rich);
             return panel.y - 15f;
         }
 
