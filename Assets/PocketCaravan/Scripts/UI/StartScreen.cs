@@ -18,6 +18,8 @@ namespace PocketCaravan
         Texture2D[] previews;
 
         public static bool IsOpen => inst != null && inst.mode != Mode.Closed;
+        /// <summary>true인 동안 시작 화면이 키를 받지 않는다. 그 위에 다른 화면(온라인 로그인 NetLogin)이 먼저 떠 있을 때 쓴다 (2026-10-31)</summary>
+        public static bool Held;
         public static bool Available { get { var c = StartChoices.Get(); return c != null && c.choices.Count > 0; } }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -44,6 +46,7 @@ namespace PocketCaravan
         {
             if (mode == Mode.Closed || GameManager.I == null) return;
             UIState.Blocking = true;
+            if (Held) { lastMove = Vector2.one; return; }   // 위에 다른 화면이 떠 있다. 돌아올 때 눌려 있던 키는 무시
             var choices = StartChoices.Get();
             Vector2 mv = InputReader.MoveVector();
             Vector2 step = Vector2.zero;

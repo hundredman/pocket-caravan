@@ -15,11 +15,18 @@ namespace PocketCaravan
     /// - 가/A 바꾸기: 오른쪽 Alt(한/영 키) · Shift+Space · 칸 오른쪽 '가/A'를 누르기. 고른 것은 이 컴퓨터에 기억한다.
     /// - Backspace는 조합 중이면 자모 하나씩, 아니면 글자 하나씩 지운다. 커서 옮기기는 없다(끝에만 쓴다).
     /// 글자는 IMGUI 키 이벤트로 받는다(그리는 동안만 받으므로 Draw를 매 OnGUI에 불러야 한다).
+    /// 접속키 칸처럼 Masked면 글자를 *로 가리고, AllowKorean이 false면 한글 조합과 가/A 표시를 끈다. 글자색은 TextColor.
     /// </summary>
     public class NetTextBox
     {
         public readonly int Max;
         public bool Active { get; private set; }
+        /// <summary>글자를 *로 가린다 (접속키)</summary>
+        public bool Masked;
+        /// <summary>false면 영어 키를 한글로 바꾸지 않고 가/A 표시도 없다</summary>
+        public bool AllowKorean = true;
+        /// <summary>글자·커서 색 (밝은 바탕 칸이면 어둡게)</summary>
+        public Color TextColor = new Color(0.97f, 0.95f, 0.9f);
         /// <summary>확정된 글. 바꾸면 조합 중이던 글자는 버린다</summary>
         public string Text { get => text; set { text = value ?? ""; hangul = default; } }
         /// <summary>아직 조합 중인 글자 (예: "ㅎ", "한")</summary>
@@ -59,6 +66,7 @@ namespace PocketCaravan
 
         void Toggle()
         {
+            if (!AllowKorean) return;
             text = Full;
             hangul = default;
             Korean = !Korean;
@@ -66,7 +74,7 @@ namespace PocketCaravan
 
         void Type(char c)
         {
-            char j = Hangul.IsJamo(c) ? c : Korean ? Hangul.FromKey(c) : '\0';
+            char j = Hangul.IsJamo(c) ? c : AllowKorean && Korean ? Hangul.FromKey(c) : '\0';
             if (j != '\0')
             {
                 var saved = hangul;
@@ -93,7 +101,7 @@ namespace PocketCaravan
         {
             var e = Event.current;
             var badge = new Rect(r.xMax - 18f, r.y + 1f, 17f, r.height - 2f);
-            if (e.type == EventType.MouseDown && badge.Contains(e.mousePosition)) { Toggle(); Begin(); e.Use(); }
+            if (AllowKorean && e.type == EventType.MouseDown && badge.Contains(e.mousePosition)) { Toggle(); Begin(); e.Use(); }
             else if (clickToToggle && e.type == EventType.MouseDown)
             {
                 if (r.Contains(e.mousePosition)) { Begin(); e.Use(); }
@@ -109,16 +117,17 @@ namespace PocketCaravan
                 badgeStyle = new GUIStyle(plainStyle) { alignment = TextAnchor.MiddleCenter };
             }
             var plain = plainStyle;
-            var inner = new Rect(r.x + 3f, r.y, r.width - 24f, r.height);
-            string comp = hangul.Render();
-            float textW = plain.CalcSize(new GUIContent(text)).x;
+            var inner = new Rect(r.x + 3f, r.y, r.width - (AllowKorean ? 24f : 6f), r.height);
+            string comp = Masked ? "" : hangul.Render();
+            string shown = Masked ? new string('*', text.Length) : text;
+            float textW = plain.CalcSize(new GUIContent(shown)).x;
             float compW = comp.Length > 0 ? plain.CalcSize(new GUIContent(comp)).x : 0f;
             float shift = Mathf.Min(0f, inner.width - (textW + compW + 4f));
 
             var old = plain.normal.textColor;
             GUI.BeginGroup(inner);
-            plain.normal.textColor = new Color(0.97f, 0.95f, 0.9f);
-            GUI.Label(new Rect(shift, 0f, textW + 2f, inner.height), text, plain);
+            plain.normal.textColor = TextColor;
+            GUI.Label(new Rect(shift, 0f, textW + 2f, inner.height), shown, plain);
             if (compW > 0f)
             {
                 var yellow = new Color(1f, 0.87f, 0.35f);   // 조합 중인 글자는 노랗게, 밑줄
@@ -130,13 +139,22 @@ namespace PocketCaravan
                 GUI.color = ink;
             }
             if (Active && (Time.unscaledTime * 2f) % 2f < 1.2f)
+            {
+                var ink = GUI.color;
+                GUI.color = TextColor;
                 GUI.DrawTexture(new Rect(shift + textW + compW + 1f, 3f, 1f, inner.height - 6f), Texture2D.whiteTexture);
+                GUI.color = ink;
+            }
             plain.normal.textColor = old;
             GUI.EndGroup();
+            if (!AllowKorean) return;
 
             // 가/A 표시 (누르면 바뀜)
             var c = GUI.color;
-            GUI.color = Korean ? new Color(1f, 0.87f, 0.35f) : new Color(0.75f, 0.8f, 0.9f);
+            bool lightField = TextColor.grayscale < .5f;   // 밝은 바탕 칸(글자가 어두움)
+            GUI.color = Korean ? (lightField ? new Color(.23f, .44f, .33f) : new Color(1f, 0.87f, 0.35f))
+                               : (lightField ? new Color(.5f, .42f, .33f) : new Color(0.75f, 0.8f, 0.9f));
+            badgeStyle.normal.textColor = Color.white;
             GUI.Label(badge, Korean ? "가" : "A", badgeStyle);
             GUI.color = c;
         }
@@ -145,7 +163,7 @@ namespace PocketCaravan
         {
 #if ENABLE_INPUT_SYSTEM
             // 한/영 키는 키보드에 따라 오른쪽 Alt로 들어온다. 한 프레임에 한 번만 본다
-            if (altCheckedFrame != Time.frameCount)
+            if (AllowKorean && altCheckedFrame != Time.frameCount)
             {
                 altCheckedFrame = Time.frameCount;
                 var k = Keyboard.current;
@@ -155,7 +173,7 @@ namespace PocketCaravan
             if (e.type != EventType.KeyDown) return;
             if (e.keyCode == KeyCode.Backspace) { Backspace(); e.Use(); return; }
             char ch = e.character;
-            if (ch == ' ' && e.shift) { Toggle(); e.Use(); return; }
+            if (ch == ' ' && e.shift && AllowKorean) { Toggle(); e.Use(); return; }
             if (ch == '\0' || char.IsControl(ch)) return;   // Enter · Tab · Esc · 글자 없는 키
             if (e.alt || e.control || e.command) return;
             Type(ch);

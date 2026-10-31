@@ -7,6 +7,8 @@ namespace PocketCaravan
 {
     /// <summary>
     /// 돈·짐 서버 저장 (2026-10-30, feature/online 8단계). 접속키로 들어온 계정만.
+    /// - 로그인은 게임 첫 화면에서 하지만, 고르기는 게임이 실제로 시작된 뒤(이어하기·새로 시작으로 맵에 들어간 뒤) 한다 (2026-10-31).
+    ///   그래야 이 컴퓨터 저장을 불러온 다음에 서버 것과 견준다.
     /// - 들어오면: 서버에 저장된 게 없으면 지금 돈·짐을 올린다. 있는데 이 컴퓨터와 다르면 둘 중 하나를 고르는 창을 띄운다
     ///   ("서버 것 불러오기" / "이 컴퓨터 것으로 올리기"). 같으면 그대로.
     /// - 그다음 접속해 있는 동안 돈·짐이 바뀌면 3초에 한 번 올린다. 같은 실행에서 다시 붙었을 때는 묻지 않고 올린다.
@@ -21,6 +23,7 @@ namespace PocketCaravan
 
         [Serializable] class SaveOut { public string t = "save"; public int money; public List<string> items = new List<string>(); public List<int> counts = new List<int>(); public List<float> costs = new List<float>(); }
 
+        NetClient.Msg waiting;      // 게임이 시작되기를 기다리는 접속 인사 (welcome)
         NetClient.SaveData offer;   // 고르는 창에 보여 줄 서버 저장
         bool showing;               // 고르는 창이 떠 있다 (다른 창이 열려 있으면 닫힐 때까지 기다린다)
         string decidedFor;          // 이번 실행에서 이미 정한 계정 이름
@@ -47,7 +50,17 @@ namespace PocketCaravan
             if (m.t != "welcome") return;
             live = false;
             lastSent = null;
-            if (!m.account || Player == null) { CloseOffer(); return; }
+            CloseOffer();
+            waiting = m;
+        }
+
+        /// <summary>시작 화면이 닫히고 맵에 들어와 내 돈·짐이 정해졌다</summary>
+        static bool GameStarted => !StartScreen.IsOpen && !NetLogin.IsOpen && MapRoot.Current != null && Player != null
+                                   && !(GameManager.I != null && GameManager.I.IsTravelling);
+
+        void Decide(NetClient.Msg m)
+        {
+            if (!m.account || Player == null) return;
             var net = NetClient.I;
             if (decidedFor == net.MyName || !m.hasSave || m.save == null) { Begin(m.hasSave ? null : "서버에 돈·짐을 처음 저장했어요"); return; }
             if (Signature(m.save.money, m.save.items, m.save.counts) == Signature(Snapshot())) { Begin(null); return; }
@@ -67,7 +80,14 @@ namespace PocketCaravan
         {
             var net = NetClient.I;
             bool online = net != null && net.Status == NetClient.State.Online && net.IsAccount;
-            if (!online) { live = false; if (offer != null) CloseOffer(); return; }
+            if (!online) { live = false; waiting = null; if (offer != null) CloseOffer(); return; }
+            if (waiting != null)
+            {
+                if (!GameStarted) return;
+                var m = waiting;
+                waiting = null;
+                Decide(m);
+            }
             if (offer != null && !showing && !UIState.Blocking && !UIState.JustClosed)
             {
                 showing = true;

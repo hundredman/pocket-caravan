@@ -7,16 +7,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 namespace PocketCaravan
 {
     /// <summary>
-    /// 온라인 접속 (2026-10-30, feature/online 시험). 서버는 저장소의 Server/ (Cloudflare Workers + Durable Objects).
-    /// - O 키: 접속 창 (서버 주소 · 이름 · 접속/끊기). 주소와 이름은 이 컴퓨터 설정(PlayerPrefs)에만 남는다. 게임 저장 파일과는 무관하다.
-    /// - 접속 중이면 화면 왼쪽 아래에 "온라인 · p1 · 2명 접속".
+    /// 온라인 접속 (2026-10-30, feature/online). 서버는 저장소의 Server/ (Cloudflare Workers + Durable Objects).
+    /// - 이 파일은 연결과 메시지만 맡는다. 로그인 화면(게임 첫 화면)과 게임 중 온라인 창(O)은 NetLogin이 그리고 Connect를 부른다 (2026-10-31).
+    /// - 접속 중이면 화면 왼쪽 아래에 "온라인 · p1 · 2명 접속". 시작 화면이 떠 있는 동안은 숨기고 위치도 보내지 않는다.
     /// - 받은 메시지는 백그라운드에서 줄에 넣고 Update(메인 스레드)에서 꺼내 처리한다. 보내기도 한 줄로 차례대로 보낸다.
     /// - 접속하지 않으면 아무것도 하지 않는다(혼자 플레이 그대로). 공용 코드는 읽기만 한다.
     /// - 4단계: 접속하면 지금 맵을 알리고(enter), 움직이는 동안 1초에 10번·가만히 있으면 1초에 1번 위치를 보낸다(pos).
@@ -124,8 +121,8 @@ namespace PocketCaravan
         public int Retries => retries;
         /// <summary>접속키로 들어온 계정이면 true (돈·짐이 서버에 저장된다)</summary>
         public bool IsAccount { get; private set; }
-        /// <summary>접속 버튼을 누른 서버 주소 (공유 장터가 서버마다 받은 거래 번호를 따로 기억한다)</summary>
-        public string Address => target != null ? target.ToString() : (address ?? "").Trim();
+        /// <summary>접속한 서버 주소 (공유 장터가 서버마다 받은 거래 번호를 따로 기억한다)</summary>
+        public string Address => target != null ? target.ToString() : "";
         public int OnlineCount { get; private set; }
         public string LastError { get; private set; } = "";
         /// <summary>지금 맵에 같이 있는 다른 플레이어 (아이디 → 상태). 다음 단계에서 화면에 그린다</summary>
@@ -158,12 +155,8 @@ namespace PocketCaravan
         /// <summary>이 게임 실행의 비밀 글자. 다시 붙을 때 서버가 같은 사람으로 알아본다</summary>
         readonly string sessionKey = Guid.NewGuid().ToString("N");
 
-        bool window;
-        string address, pass;
-        /// <summary>이름 칸 (한글이 쳐지는 칸, NetTextBox)</summary>
-        readonly NetTextBox nameBox = new NetTextBox(16);
-        string playerName { get => nameBox.Text; set => nameBox.Text = value ?? ""; }
-        GUIStyle field;
+        /// <summary>로그인 때 넣은 이름·접속키 (다시 접속할 때도 쓴다)</summary>
+        string askedName = "", pass = "";
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void Boot()
@@ -174,38 +167,32 @@ namespace PocketCaravan
             I = go.AddComponent<NetClient>();
         }
 
-        void Awake()
-        {
-            address = PlayerPrefs.GetString("net.address", DefaultAddress);
-            pass = PlayerPrefs.GetString("net.pass", "");
-            playerName = PlayerPrefs.GetString("net.name", "");
-        }
-
         // ---------------- 접속 · 끊기 ----------------
 
-        /// <summary>접속 창의 접속 버튼. 끊기를 누를 때까지 끊겨도 다시 붙는다</summary>
-        public void Connect()
+        /// <summary>
+        /// 접속한다 (NetLogin이 부른다). 이름 + 접속키면 계정, 접속키가 없으면 손님.
+        /// Disconnect를 부를 때까지 끊겨도 다시 붙는다. 주소가 이상하면 false
+        /// </summary>
+        public bool Connect(string address, string name, string accessKey)
         {
-            if (Status != State.Offline) return;
-            nameBox.End();
+            if (Status != State.Offline) return false;
             string url = (address ?? "").Trim();
             if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || (uri.Scheme != "ws" && uri.Scheme != "wss"))
             {
-                LastError = "주소는 ws:// 또는 wss://로 시작해야 합니다";
-                return;
+                LastError = "서버 주소는 ws:// 또는 wss://로 시작해야 합니다";
+                return false;
             }
-            PlayerPrefs.SetString("net.address", url);
-            PlayerPrefs.SetString("net.name", (playerName ?? "").Trim());
-            PlayerPrefs.SetString("net.pass", pass ?? "");
-            PlayerPrefs.Save();
+            askedName = (name ?? "").Trim();
+            pass = accessKey ?? "";
             wantOnline = true;
             retries = 0;
             LastError = "";
             target = uri;
             Open();
+            return true;
         }
 
-        /// <summary>접속 버튼으로 정한 주소 (다시 접속할 때도 이 주소로)</summary>
+        /// <summary>접속한 주소 (다시 접속할 때도 이 주소로)</summary>
         Uri target;
 
         async void Open()
@@ -235,7 +222,7 @@ namespace PocketCaravan
             _ = Task.Run(() => ReceiveLoop(ws, c.Token));
             _ = Task.Run(() => SendLoop(ws, outSignal, c.Token));
             var origin = GameManager.I != null && GameManager.I.Player != null ? GameManager.I.Player.origin : null;
-            Send(new HelloOut { name = (playerName ?? "").Trim(), look = origin != null ? origin.id : "", key = sessionKey, pass = pass ?? "", since = NetMarket.Since(Address) });
+            Send(new HelloOut { name = askedName, look = origin != null ? origin.id : "", key = sessionKey, pass = pass, since = NetMarket.Since(Address) });
         }
 
         /// <summary>끊기 버튼 · 게임 끝. 다시 접속도 멈춘다</summary>
@@ -412,12 +399,12 @@ namespace PocketCaravan
                 Lost("서버 소식이 20초 넘게 없습니다", 0);
             if (Status == State.Waiting && Time.unscaledTime >= retryAt) Open();
             if (Status == State.Online) Report();
-            WindowKeys();
         }
 
         /// <summary>맵이 바뀌었으면 알리고, 위치를 보낸다 (움직이면 0.1초, 가만히 있으면 1초마다)</summary>
         void Report()
         {
+            if (StartScreen.IsOpen) return;   // 아직 시작 화면: 고른 뒤 들어갈 맵에서부터 알린다
             var gm = GameManager.I;
             var map = MapRoot.Current;
             if (map == null || (gm != null && gm.IsTravelling)) return;
@@ -453,8 +440,9 @@ namespace PocketCaravan
                     IsAccount = msg.account;
                     OnlineCount = msg.online;
                     LastError = "";
-                    string asked = (playerName ?? "").Trim();
-                    if (retries > 0) Notify.Show($"다시 연결됐어요 · 지금 {msg.online}명", 2.5f);
+                    string asked = askedName;
+                    if (StartScreen.IsOpen || NetLogin.IsOpen) { }   // 첫 화면: 로그인 화면이 알아서 넘어간다
+                    else if (retries > 0) Notify.Show($"다시 연결됐어요 · 지금 {msg.online}명", 2.5f);
                     else if (asked.Length > 0 && MyName != asked) Notify.Show($"이름이 겹쳐서 '{MyName}'(으)로 들어왔어요", 4f);
                     else Notify.Show($"온라인 접속: {msg.id} · 지금 {msg.online}명", 3f);
                     retries = 0;
@@ -491,46 +479,13 @@ namespace PocketCaravan
         void OnDestroy() => Disconnect();
         void OnApplicationQuit() => Disconnect();
 
-        // ---------------- 접속 창 (O) ----------------
-
-        static bool OPressed()
-        {
-#if ENABLE_INPUT_SYSTEM
-            return Keyboard.current != null && Keyboard.current.oKey.wasPressedThisFrame;
-#else
-            return Input.GetKeyDown(KeyCode.O);
-#endif
-        }
-
-        void WindowKeys()
-        {
-            if (window)
-            {
-                bool typing = GUIUtility.keyboardControl != 0 || nameBox.Active;
-                if (InputReader.CancelPressed() || (OPressed() && !typing)) CloseWindow();
-                return;
-            }
-            if (!OPressed() || UIState.Blocking || UIState.JustClosed) return;
-            if (GameManager.I != null && GameManager.I.IsTravelling) return;
-            window = true;
-            UIState.Blocking = true;
-            Sfx.Play("open", .5f);
-        }
-
-        void CloseWindow()
-        {
-            window = false;
-            nameBox.End();
-            GUIUtility.keyboardControl = 0;
-            UIState.Release();
-        }
+        // ---------------- 화면 왼쪽 아래 접속 표시 ----------------
 
         void OnGUI()
         {
-            if (Status == State.Offline && !window) return;
+            if (Status == State.Offline || StartScreen.IsOpen) return;
             UIStyle.Begin();
-            if (Status != State.Offline) DrawStatus();
-            if (window) DrawWindow();
+            DrawStatus();
         }
 
         void DrawStatus()
@@ -538,7 +493,7 @@ namespace PocketCaravan
             string here = sentMap != null && !waitingRoom ? $" · 이 맵 {peers.Count + 1}명" : "";
             string text = Status switch
             {
-                State.Online => $"<color=#8fe08f>●</color> 온라인 · {MyId} · 전체 {OnlineCount}명{here}",
+                State.Online => $"<color=#8fe08f>●</color> 온라인 · {MyName} · 전체 {OnlineCount}명{here}",
                 State.Waiting => $"<color=#ffb347>○</color> 다시 연결 중… ({retries}번째 · {Mathf.CeilToInt(Mathf.Max(0f, retryAt - Time.unscaledTime))}초 뒤)",
                 _ => retries > 0 ? $"<color=#ffde59>○</color> 다시 연결하는 중… ({retries}번째)" : "<color=#ffde59>●</color> 접속 중…",
             };
@@ -547,56 +502,6 @@ namespace PocketCaravan
             var r = new Rect(6f, UIStyle.VirtualHeight - 60f, w, 16f);
             GUI.Box(r, GUIContent.none, UIStyle.Box);
             GUI.Label(new Rect(r.x + 6f, r.y, w, r.height), text, UIStyle.Rich);
-        }
-
-        void DrawWindow()
-        {
-            GUI.depth = -11;
-            if (field == null) field = new GUIStyle(GUI.skin.textField) { fontSize = UIStyle.BodySize, alignment = TextAnchor.MiddleLeft };
-            float w = 300f, h = 214f;
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2f, (UIStyle.VirtualHeight - h) / 2f, w, h);
-            GUI.Box(r, "", UIStyle.Box);
-            float x = r.x + 14f, fw = w - 28f, y = r.y + 8f;
-            GUI.Label(new Rect(r.x, y, w, 16f), "<b>온라인 접속 (시험)</b>", UIStyle.CenterRich);
-            y += 22f;
-
-            bool editable = Status == State.Offline;
-            GUI.enabled = editable;
-            GUI.Label(new Rect(x, y, fw, 14f), "서버 주소", UIStyle.Rich);
-            var addressRect = new Rect(x, y + 15f, fw, 18f);
-            if (Event.current.type == EventType.MouseDown && addressRect.Contains(Event.current.mousePosition)) nameBox.End();
-            address = GUI.TextField(addressRect, address ?? "", 160, field);
-            y += 38f;
-            GUI.Label(new Rect(x, y, fw, 14f), "이름 (다른 사람에게 보임 · 칸을 눌러 입력)", UIStyle.Rich);
-            if (editable) nameBox.Draw(new Rect(x, y + 15f, fw, 18f), field, clickToToggle: true);
-            else GUI.TextField(new Rect(x, y + 15f, fw, 18f), playerName, 16, field);
-            y += 38f;
-            GUI.Label(new Rect(x, y, fw, 14f), "접속키 (넣으면 돈·짐이 서버에 저장 · 4자 이상)", UIStyle.Rich);
-            var passRect = new Rect(x, y + 15f, fw, 18f);
-            if (Event.current.type == EventType.MouseDown && passRect.Contains(Event.current.mousePosition)) nameBox.End();
-            pass = GUI.PasswordField(passRect, pass ?? "", '*', 32, field);
-            y += 40f;
-            GUI.enabled = true;
-
-            var b = new Rect(x, y, (fw - 8f) / 2f, 20f);
-            if (Status == State.Offline)
-            {
-                if (GUI.Button(b, "접속", UIStyle.Button)) { GUIUtility.keyboardControl = 0; Connect(); }
-            }
-            else if (Status == State.Connecting && retries == 0)
-            {
-                GUI.enabled = false; GUI.Button(b, "접속 중…", UIStyle.Button); GUI.enabled = true;
-            }
-            else if (GUI.Button(b, Status == State.Online ? "끊기" : "그만 (다시 연결 멈춤)", UIStyle.Button)) Disconnect();
-            if (GUI.Button(new Rect(b.xMax + 8f, y, b.width, 20f), "닫기 (O · Esc)", UIStyle.Button)) CloseWindow();
-            y += 26f;
-
-            string line = Status == State.Waiting ? $"<color=#ffb347>{LastError} · 곧 다시 접속합니다</color>"
-                : !string.IsNullOrEmpty(LastError) ? $"<color=#ff9a8a>{LastError}</color>"
-                : Status == State.Online ? $"<color=#8fe08f>접속됨 · {MyName} ({MyId}){(IsAccount ? " · 계정" : " · 손님")} · 지금 {OnlineCount}명 · Enter 채팅</color>"
-                : Status == State.Connecting ? "서버에 연결하는 중…"
-                : "<color=#c9c3d6>이름을 넣고 접속을 누르세요 (주소는 팀 시험 서버)</color>";
-            GUI.Label(new Rect(x, y, fw, 16f), $"<size={UIStyle.SmallSize}>{line}</size>", UIStyle.Rich);
         }
     }
 }
