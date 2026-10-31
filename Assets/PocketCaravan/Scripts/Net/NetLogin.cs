@@ -249,7 +249,7 @@ namespace PocketCaravan
         void Styles()
         {
             if (label != null && label.font == UIStyle.RegularFont) return;
-            label = new GUIStyle(GUI.skin.label) { font = UIStyle.RegularFont, fontSize = 11, alignment = TextAnchor.MiddleLeft, clipping = TextClipping.Overflow, richText = true };
+            label = new GUIStyle(GUI.skin.label) { font = UIStyle.RegularFont, fontSize = 11, alignment = TextAnchor.MiddleLeft, clipping = TextClipping.Overflow, richText = true, wordWrap = false };
             small = new GUIStyle(label) { font = UIStyle.SmallFont, fontSize = 9 };
             big = new GUIStyle(label) { fontSize = 13, alignment = TextAnchor.MiddleCenter };
             plainField = new GUIStyle(GUI.skin.label) { font = UIStyle.RegularFont, fontSize = 11, alignment = TextAnchor.MiddleLeft, padding = new RectOffset(0, 0, 0, 0) };
@@ -317,6 +317,9 @@ namespace PocketCaravan
             return GUI.Button(r, GUIContent.none, GUIStyle.none) ? !on : on;
         }
 
+        /// <summary>DrawForm이 차지하는 높이 (그리기 전에 카드 크기를 정한다)</summary>
+        float FormHeight => 41 + 37 + 17 + (showServer ? 35 : 0) + 22 + 24 + (string.IsNullOrEmpty(note) ? 0 : 20);
+
         /// <summary>이름 · 접속키 · (서버 주소) · 기억 · 버튼 · 안내. 다 그린 아래쪽 y를 돌려준다</summary>
         float DrawForm(float x, float y, float w, bool start)
         {
@@ -329,8 +332,8 @@ namespace PocketCaravan
             Text(new Rect(x, y, w, 14), "비밀번호처럼 나만 아는 글자 · 4자 이상", soft, small, TextAnchor.MiddleRight);
             Field(new Rect(x, y + 15, w, 20), keyBox);
             y += 37;
-            Text(new Rect(x, y, w, 12), "처음 쓰는 이름이면 이 이름과 접속키로 새로 만들어져요. 돈·짐이 서버에 저장돼요.", soft, small);
-            y += 15;
+            Text(new Rect(x, y, w, 12), "처음 쓰는 이름이면 새 계정이 만들어져요", soft, small);
+            y += 17;
             if (showServer)
             {
                 Text(new Rect(x, y, w, 14), "서버 주소 (개발용)", ink, small);
@@ -351,10 +354,13 @@ namespace PocketCaravan
                 if (Button(new Rect(x + bw + 10, y, bw, 24), "혼자 하기", false)) PlayAlone();
             }
             else if (Button(new Rect(x + bw + 10, y, bw, 24), "닫기", false)) CloseGame();
-            y += 30;
+            y += 24;
             if (!string.IsNullOrEmpty(note))
-                Text(new Rect(x - 10, y, w + 20, 14), note, noteBad ? Pick : (light ? Green : new Color32(0x8F, 0xE0, 0x8F, 0xFF)), small, TextAnchor.MiddleCenter);
-            return y + 14;
+            {
+                Text(new Rect(x - 10, y + 6, w + 20, 14), note, noteBad ? Pick : (light ? Green : new Color32(0x8F, 0xE0, 0x8F, 0xFF)), small, TextAnchor.MiddleCenter);
+                y += 20;
+            }
+            return y;
         }
 
         void DrawStart()
@@ -374,7 +380,7 @@ namespace PocketCaravan
 
             Text(new Rect(0, 54, W, 24), "함께 떠나는 상인 길", TitleColor, big, TextAnchor.MiddleCenter);
 
-            float cw = 320, ch = showServer ? 238 : 203;
+            float cw = 320, ch = 14 + FormHeight + 16;
             var card = new Rect((W - cw) / 2, 82, cw, ch);
             Fill(new Rect(card.x + 3, card.y + 4, card.width, card.height), Shadow);
             Fill(card, White);
@@ -390,7 +396,7 @@ namespace PocketCaravan
         {
             light = false;
             GUI.depth = -11;
-            float w = 320, h = Online ? 150 : (showServer ? 250 : 215);
+            float w = 320, h = Online ? 156 : 30 + FormHeight + 14;
             var r = new Rect((UIStyle.VirtualWidth - w) / 2f, (UIStyle.VirtualHeight - h) / 2f, w, h);
             GUI.Box(r, "", UIStyle.Box);
             float x = r.x + 16, fw = w - 32, y = r.y + 8;
@@ -406,8 +412,10 @@ namespace PocketCaravan
             y += 18;
             Text(new Rect(x, y, fw, 14), $"지금 접속한 사람 {net.OnlineCount}명 · 이 맵 {net.Peers.Count + 1}명", White, small);
             y += 16;
-            Text(new Rect(x, y, fw, 14), "Enter 채팅 · /춤 같은 리액션 · 공유 장터: 리알토·개경·비르카·제다", new Color32(0xC9, 0xC3, 0xD6, 0xFF), small);
-            y += 24;
+            Text(new Rect(x, y, fw, 14), "Enter 채팅 · /춤 같은 리액션 (/리액션 목록)", new Color32(0xC9, 0xC3, 0xD6, 0xFF), small);
+            y += 14;
+            Text(new Rect(x, y, fw, 14), "공유 장터: 리알토 · 개경 · 비르카 · 제다", new Color32(0xC9, 0xC3, 0xD6, 0xFF), small);
+            y += 22;
             float bw = (fw - 16) / 3;
             if (Button(new Rect(x, y, bw, 22), "끊기", false)) { net.Disconnect(); Say("접속을 끊었어요", false); }
             if (Button(new Rect(x + bw + 8, y, bw, 22), "다른 이름으로", false)) SwitchAccount();
