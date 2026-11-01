@@ -232,13 +232,19 @@ def after_finish(m, key, mine, seams, names, new_anchor, rng_seed=0):
         if o['kind'] != 'exit': continue
         cells = [(o['x'] + a, o['y'] + b) for a in range(o.get('w', 1)) for b in range(o.get('h', 1))]
         if not any(m.inside(*c) and m.road[c[1]][c[0]] > 0 for c in cells): continue
-        groups.setdefault(o['target'], []).append(cells[len(cells) // 2])
+        c_ = cells[len(cells) // 2]
+        # 2026-10-31(기우: 사냥꾼 마을 아래 출구에 이정표 없음) 같은 곳으로 가는 출구라도 8칸 넘게 떨어져 있으면 따로 세운다
+        k_ = next((k for k, v in groups.items() if k[0] == o['target'] and abs(v[0][0] - c_[0]) + abs(v[0][1] - c_[1]) <= 8), (o['target'], len(groups)))
+        groups.setdefault(k_, []).append(c_)
     ARROW = {'N': '↑', 'S': '↓', 'W': '←', 'E': '→'}
     def side(edge): return ARROW.get(edge, '·')
-    seen_t = set()
+    edge_of = {}
     for o in m.objects:
-        if o['kind'] != 'exit' or o['target'] in seen_t or o['target'] not in groups: continue
-        seen_t.add(o['target']); ex, ey = groups[o['target']][0]
+        if o['kind'] == 'exit': edge_of.setdefault(o['target'], o['edge'])
+    for (tgt_, _), cs_ in groups.items():
+        o = dict(target=tgt_, edge=next((q['edge'] for q in m.objects if q['kind'] == 'exit' and q['target'] == tgt_
+                                         and q['x'] <= cs_[0][0] < q['x'] + q.get('w', 1) and q['y'] <= cs_[0][1] < q['y'] + q.get('h', 1)), edge_of.get(tgt_)))
+        ex, ey = cs_[0]
         # 출구에서 안쪽으로 5~8칸 들어온 길가
         best = None
         for (x, y) in road:
@@ -252,7 +258,7 @@ def after_finish(m, key, mine, seams, names, new_anchor, rng_seed=0):
     # 장터(쉼터) 이정표: 이 맵에서 갈 수 있는 곳 모두
     dests = []
     for o in m.objects:
-        if o['kind'] == 'exit' and o['target'] in groups and o['target'] not in [d[1] for d in dests]: dests.append((o['edge'], o['target']))
+        if o['kind'] == 'exit' and any(k[0] == o['target'] for k in groups) and o['target'] not in [d[1] for d in dests]: dests.append((o['edge'], o['target']))
     if dests:
         ax, ay = new_anchor
         for r in range(2, 9):

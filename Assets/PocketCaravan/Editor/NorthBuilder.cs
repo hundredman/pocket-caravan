@@ -60,7 +60,7 @@ namespace PocketCaravan.EditorTools
             {
                 new TownFacility { id = "north_capital_rest", displayName = "회관 손님방", kind = FacilityKind.Rest, minTier = 1, minCredit = 0, storageCapacity = 120f },
                 new TownFacility { id = "north_capital_info", displayName = "룬돌 길 안내소", kind = FacilityKind.RouteInformation, minTier = 2, minCredit = 1, storageCapacity = 120f,
-                    description = "북쪽 산길로 온천 마을(그 위 룬돌 언덕), 서쪽 옛 관문 너머 순록 고원, 동쪽 피오르 길에서 피오르 나루·트롤 다리 너머 얼음 동굴 골짜기로 갈라집니다.\n남쪽 얼음 나루길을 건너면 국경 고개, 고개 서쪽이 모피 사냥꾼 마을, 고개 아래가 중앙 대륙입니다.\n모피는 숲에서 싸고 바닷가에서 비쌉니다." },
+                    description = "북쪽 산길로 온천 마을(그 위 룬돌 언덕), 서쪽으로 모피 사냥꾼 마을과 그 위 순록 고원, 동쪽으로 피오르 나루(그 위 얼음 동굴 골짜기)로 갈라집니다.\n남쪽 출구로 내려가면 바로 중앙 대륙의 북문 마을입니다.\n모피는 숲에서 싸고 바닷가에서 비쌉니다." },
                 new TownFacility { id = "north_capital_warehouse", displayName = "상인 길드 창고", kind = FacilityKind.Warehouse, minTier = 3, minCredit = 3, storageCapacity = 120f },
             };
             var hunter = Town("Town_Hunter", "north_hunter", "모피 사냥꾼 마을", new Vector2Int(28, 0), 1);
@@ -84,7 +84,7 @@ namespace PocketCaravan.EditorTools
             }
             // 북문 마을 (id는 예전 교역 초소 north_post 그대로: 저장·소금 산지 유지)
             var post = CenterTown("Town_NorthPost", "north_post", "북문 마을", new Vector2Int(29, -1), "북문 여관", "북문 길 안내",
-                "북쪽 고개를 오르면 국경 고개, 그 너머가 비르카입니다.\n서쪽 눈숲 고갯길은 눈숲 마을(썰매), 동쪽 개울 다리길은 개울 나루 마을(낚시·나룻배).\n남쪽 룬돌 큰길이 북쪽 길목 마을까지 가장 빠르지만 눈늑대가 나옵니다.");
+                "북쪽 길로 올라가면 바로 북유럽 수도 비르카입니다.\n서쪽 눈숲 고갯길은 눈숲 마을(썰매), 동쪽 개울 다리길은 개울 나루 마을(낚시·나룻배).\n남쪽 룬돌 큰길이 북쪽 길목 마을까지 가장 빠르지만 눈늑대가 나옵니다.");
             var cwood = CenterTown("Town_NorthCWood", "north_cwood", "눈숲 마을", new Vector2Int(28, -2), "숲 마을 쉼터", "썰매꾼 길 안내",
                 "북쪽 눈숲 고갯길로 북문 마을, 남쪽 서남 솔숲길로 북쪽 길목 마을.\n솔숲길엔 산적이 숨어 있고, 바람 부는 날엔 통나무가 길을 막습니다.\n서쪽은 북서 포구(베네치아 쪽) 길을 닦는 중입니다.");
             var ccreek = CenterTown("Town_NorthCCreek", "north_ccreek", "개울 나루 마을", new Vector2Int(30, -2), "물방앗간 쉼터", "나루 길 안내",
@@ -192,7 +192,7 @@ namespace PocketCaravan.EditorTools
             var hay = QuestItem("north_hay", "건초 한 짐", 6f);          // 무거워서 등짐 한도를 느끼게
             var saltLick = QuestItem("north_salt_lick", "소금 덩이", 3f);
             var meadJar = QuestItem("north_mead_jar", "꿀술 단지", 2f);
-            var quests = BuildQuests(butter, hay, saltLick, meat, cart, meadJar, mead, fur, sled);
+            var quests = BuildQuests(butter, hay, saltLick, meat, cart, meadJar, mead, fur, sled, salt, stockfish, herb, cheese, amber);
 
             // 테스트용 등록 (북유럽 것만 지우고 다시 넣음, 고려 목록은 그대로)
             db.towns.RemoveAll(t => t == null || t.id.StartsWith("north_"));
@@ -213,13 +213,17 @@ namespace PocketCaravan.EditorTools
         // ---------- 퀘스트 (초반 공통 시나리오 북유럽판: Q1, Q2, Q5, Q7) ----------
 
         const string Innkeeper = "north_innkeeper", Husband = "north_husband", Wife = "north_wife", Goats = "north_goats", Har = "north_har",
-            Warehouse = "north_warehouse", Tomte = "north_tomte", Bold = "north_bold";
+            Warehouse = "north_warehouse", Tomte = "north_tomte", Bold = "north_bold",
+            // 10/31 마을 곁가지·주는 사람 옮기기 (맵의 talker를 npc로 바꿈, World/Regions/north.json npcs)
+            Tora = "north_tora", Captain = "north_captain", Herbalist = "north_herbalist", Bathkeeper = "north_bathkeeper",
+            HerdGranny = "north_herd_granny", Sledmaker = "north_sledmaker", Runekeeper = "north_runekeeper", Miner = "north_miner";
 
         static QuestObjective O(ObjectiveType type, string text, string target = null, ItemData item = null, int count = 1, string line = null, VehicleData vehicle = null) =>
             new QuestObjective { type = type, text = text, targetId = target, item = item, count = count, completeLine = line, vehicle = vehicle };
 
         static List<QuestData> BuildQuests(ItemData butter, ItemData hay, ItemData saltLick, ItemData meat, VehicleData cart,
-            ItemData meadJar, ItemData mead, ItemData fur, VehicleData sled)
+            ItemData meadJar, ItemData mead, ItemData fur, VehicleData sled,
+            ItemData salt, ItemData stockfish, ItemData herb, ItemData cheese, ItemData amber)
         {
             const string chain = "빈 등짐에서 손수레까지";
             string dir = $"{DataDir}/Quests";
@@ -242,7 +246,7 @@ namespace PocketCaravan.EditorTools
             var q1 = Q("N1_Butter", q =>
             {
                 q.id = "north_q1_butter"; q.title = "집 보는 남편의 버터 단지"; q.chain = chain; q.giverNpc = Husband;
-                q.summary = "비르카의 남편이 만든 버터 단지를 모피 사냥꾼 마을 들판의 아내에게 전한다. 남쪽 얼음 나루길을 건너 국경 고개에서 서쪽으로 간다.";
+                q.summary = "비르카의 남편이 만든 버터 단지를 모피 사냥꾼 마을 들판의 아내에게 전한다. 비르카 서쪽 출구로 나가면 바로 사냥꾼 마을이다.";
                 q.offerLine = "오늘은 아내랑 일을 바꿨거든. 아내는 들일, 나는 집안일. 그런데 버터를 저어 놨더니 아내가 점심에 먹고 싶다지 뭐야. 사냥꾼 마을 들판에 있으니 이 단지 좀 갖다 주게.";
                 q.giveItem = butter; q.giveCount = 1;
                 q.objectives.Add(O(ObjectiveType.VisitMap, "모피 사냥꾼 마을에 가기", "north_hunter"));
@@ -280,12 +284,12 @@ namespace PocketCaravan.EditorTools
             // Q5 (자유): 위험한 길 너머 배달 — 다리 밑 트롤
             Q("N5_Troll", q =>
             {
-                q.id = "north_q5_troll"; q.title = "다리 밑 트롤"; q.chain = chain; q.giverNpc = Innkeeper; q.requires.Add(q2);
-                q.summary = "소금 덩이를 사냥꾼 마을 목장의 염소지기 삼형제에게 배달한다. 사냥꾼 마을은 국경 고개 서쪽에 있다.";
-                q.offerLine = "사냥꾼 마을 목장의 염소지기 삼형제가 소금 덩이를 기다린단다. 그런데 큰길 다리 밑에 트롤 패거리가 살아. 통행료를 내든, 냅다 달리든, 숲으로 돌아가든 네가 정하렴.";
+                q.id = "north_q5_troll"; q.title = "다리 밑 트롤"; q.chain = chain; q.giverNpc = Warehouse; q.requires.Add(q2);
+                q.summary = "피오르 나루 창고지기가 맡긴 소금 덩이를 사냥꾼 마을의 순록지기 삼형제에게 배달한다. 나루에서 비르카로 나가는 서쪽 길목엔 트롤 패거리가 산다.";
+                q.offerLine = "배로 들어온 소금 덩이야. 사냥꾼 마을 순록지기 삼형제가 순록한테 핥게 한다고 기다리고 있지. 그런데 비르카로 나가는 서쪽 길목 다리 밑에 트롤 패거리가 살아. 통행료를 내든, 냅다 달리든 자네가 정하게.";
                 q.giveItem = saltLick; q.giveCount = 1;
-                q.objectives.Add(O(ObjectiveType.Deliver, "목장의 염소지기 맏형에게 소금 덩이 전하기", Goats, saltLick, 1,
-                    "오, 소금이다! 염소들이 신나겠군. 트롤한테 \"뒤에 더 큰 짐꾼이 온다\"고 하면 한 번은 속는다니까. 고마워."));
+                q.objectives.Add(O(ObjectiveType.Deliver, "순록지기 맏형에게 소금 덩이 전하기", Goats, saltLick, 1,
+                    "오, 소금이다! 순록들이 신나겠군. 트롤한테 \"뒤에 더 큰 짐꾼이 온다\"고 하면 한 번은 속는다니까. 고마워."));
                 q.rewardMoney = 50; q.rewardCredit = 1;
             });
 
@@ -350,21 +354,83 @@ namespace PocketCaravan.EditorTools
             // Q8 (10/24): 눈보라를 달리는 썰매 — 하르와 순록 고원 썰매 장인이 함께 만든 짐 썰매. 대표 장면 "눈보라 속 순록 썰매"
             Q("N8_Sled", q =>
             {
-                q.id = "north_q8_sled"; q.title = "눈보라를 달리는 썰매"; q.chain = "북쪽의 길"; q.giverNpc = Har; q.requires.Add(q7);
-                q.summary = "하르가 순록 고원의 썰매 장인과 짐 썰매를 만든다. 깔개로 쓸 모피를 가져다주고, 순록 고원 장터에서 썰매를 사서 국경 고개 너머 북문 마을까지 달려 본다.";
-                q.offerLine = "손수레로는 눈길에서 바퀴가 빠지지. 고원의 썰매 장인 녀석이랑 짐 썰매를 만들기로 했네. 깔개로 쓸 모피 세 장만 가져다주겠나? 다 되면 고원 장터에 내놓겠네.";
-                q.objectives.Add(O(ObjectiveType.Deliver, "하르에게 모피 3장 가져다주기", Har, fur, 3,
-                    "좋은 모피로군! 이제 고원으로 보내 썰매에 깔겠네. 값이 좀 나가니 돈을 모아 두게."));
+                q.id = "north_q8_sled"; q.title = "눈보라를 달리는 썰매"; q.chain = "북쪽의 길"; q.giverNpc = Sledmaker; q.requires.Add(q7);
+                q.summary = "순록 고원의 썰매 장인이 하르의 손수레에 지지 않을 짐 썰매를 만든다. 깔개로 쓸 모피를 가져다주고, 고원 장터에서 썰매를 사서 비르카 남쪽 북문 마을까지 달려 본다.";
+                q.offerLine = "하르 녀석 손수레를 샀다고? 눈길에선 바퀴가 빠진다네. 내가 제대로 된 짐 썰매를 만들어 주지. 깔개로 쓸 모피 세 장만 가져다주겠나? 다 되면 고원 장터에 내놓겠네.";
+                q.objectives.Add(O(ObjectiveType.Deliver, "썰매 장인에게 모피 3장 가져다주기", Sledmaker, fur, 3,
+                    "좋은 모피로군! 바로 썰매에 깔겠네. 값이 좀 나가니 돈을 모아 두게."));
                 if (sled != null)
                 {
                     q.objectives.Add(O(ObjectiveType.HaveMoney, $"썰매 값 {sled.price}냥 모으기", null, null, sled.price));
                     q.objectives.Add(O(ObjectiveType.BuyVehicle, "순록 고원 장터에서 순록 썰매 사기", null, null, 1, null, sled));
                 }
-                q.objectives.Add(O(ObjectiveType.VisitMap, "썰매를 타고 국경 고개 너머 북문 마을까지 달리기", "north_c_gatetown"));
-                q.objectives.Add(O(ObjectiveType.Talk, "하르에게 썰매 자랑하기", Har, null, 1,
-                    "눈보라 속에서도 순록이 길을 아는 법이지. 이제 북쪽 어디든 달릴 수 있겠군!"));
+                q.objectives.Add(O(ObjectiveType.VisitMap, "썰매를 타고 비르카 남쪽 북문 마을까지 달리기", "north_c_gatetown"));
+                q.objectives.Add(O(ObjectiveType.Talk, "썰매 장인에게 썰매 자랑하기", Sledmaker, null, 1,
+                    "눈보라 속에서도 순록이 길을 아는 법이지. 하르 녀석한테도 꼭 보여 주게!"));
                 q.rewardMoney = 60; q.rewardCredit = 2;
                 q.finishNote = "순록 썰매를 얻었다! 눈밭에서 빠르고 짐을 40까지 싣는다. 눈보라에도 걷기보다 덜 느려진다.";
+            });
+
+            // ---------- 10/31 마을 곁가지 (큰 줄기 Q2를 마치면 열림, 그 마을 사람에게 말 걸면 시작) ----------
+            const string side = "북쪽 마을 이야기";
+            Q("N9_TanSalt", q =>
+            {
+                q.id = "north_q9_tansalt"; q.title = "가죽 절일 소금"; q.chain = side; q.giverNpc = Tora; q.requires.Add(q2);
+                q.summary = "모피 사냥꾼 마을의 무두장이 토라에게 소금 3자루를 가져다준다. 남쪽 소금은 북문 마을 장터에서 가장 싸다.";
+                q.offerLine = "가죽 절일 소금이 다 떨어졌어. 여기선 소금이 귀해서 부르는 게 값이야. 북문 마을엔 남쪽 소금이 넘친다던데, 세 자루만 사다 줄래? 수고비는 두둑이 쳐 줄게.";
+                q.objectives.Add(O(ObjectiveType.Buy, "북문 마을 장터에서 남쪽 소금 3개 사기", "north_post", salt, 3));
+                q.objectives.Add(O(ObjectiveType.Deliver, "무두장이 토라에게 소금 전하기", Tora, salt, 3,
+                    "이거면 한 달은 버티겠다! 봐, 거기선 싸고 여기선 귀하지. 모피를 남쪽에 가져가면 반대로 되는 거고."));
+                q.rewardMoney = 70; q.rewardCredit = 1;
+                q.finishNote = "싼 곳에서 사서 귀한 곳에 가져가면 돈이 된다. 소금은 내려갈 때, 모피는 올라올 때가 아니라 내려갈 때 싣자.";
+            });
+            Q("N10_Stockfish", q =>
+            {
+                q.id = "north_q10_stockfish"; q.title = "온천으로 가는 말린 대구"; q.chain = side; q.giverNpc = Captain; q.requires.Add(q2);
+                q.summary = "피오르 나루 선장의 부탁으로 말린 대구 2개를 라우가르 목욕 회관 주인에게 배달한다. 대구 덕장에 얼음 대구 3마리를 맡기면 말린 대구가 된다.";
+                q.offerLine = "라우가르 목욕 회관에서 손님상에 낼 말린 대구를 주문했는데, 배가 묶여서 못 보내고 있네. 덕장에서 만들든 장터에서 사든 두 개만 갖다 주겠나?";
+                q.objectives.Add(O(ObjectiveType.Deliver, "라우가르 목욕 회관 주인에게 말린 대구 2개 전하기", Bathkeeper, stockfish, 2,
+                    "오, 나루 선장이 보낸 거구먼! 탕에서 나와 먹는 말린 대구가 최고지. 몸 좀 녹이고 가게."));
+                q.rewardMoney = 110; q.rewardCredit = 1;
+            });
+            Q("N11_Herb", q =>
+            {
+                q.id = "north_q11_herb"; q.title = "고원 할머니께 약초"; q.chain = side; q.giverNpc = Herbalist; q.requires.Add(q2);
+                q.summary = "라우가르 약초꾼이 맡긴 온천 약초 2묶음을 순록 고원의 목동 할머니에게 배달한다.";
+                q.offerLine = "고원 목동 할머니가 겨울마다 무릎이 쑤신다고 이 약초를 찾으셔. 온천물에 담가 둬서 오래 가니까 서두르지 않아도 돼. 두 묶음만 전해 줄래?";
+                q.giveItem = herb; q.giveCount = 2;
+                q.objectives.Add(O(ObjectiveType.Deliver, "순록 고원 목동 할머니에게 약초 전하기", HerdGranny, herb, 2,
+                    "아이고, 라우가르 약초구나. 이거 달여 먹으면 겨울이 거뜬하지. 고맙다, 얘야."));
+                q.rewardMoney = 35; q.rewardCredit = 1;
+            });
+            Q("N12_Cheese", q =>
+            {
+                q.id = "north_q12_cheese"; q.title = "고원 치즈 내려보내기"; q.chain = side; q.giverNpc = HerdGranny; q.requires.Add(q2);
+                q.summary = "순록 고원 장터에서 순록 치즈 4개를 사서 북문 마을 장터에 판다. 산지에서 멀어질수록 값을 더 받는다.";
+                q.offerLine = "올해는 치즈가 너무 많이 나와서 여기선 헐값이란다. 북문 마을 사람들은 고원 치즈를 귀하게 여긴다더라. 네 개만 가져가서 팔아 보렴. 남는 돈은 네 몫이야.";
+                q.objectives.Add(O(ObjectiveType.Buy, "순록 고원 장터에서 치즈 4개 사기", "north_herd", cheese, 4));
+                q.objectives.Add(O(ObjectiveType.Sell, "북문 마을 장터에 치즈 4개 팔기", "north_post", cheese, 4));
+                q.rewardMoney = 30; q.rewardCredit = 1;
+                q.finishNote = "산지에서 싸게 사서 먼 장터에 팔았다. 북쪽 물건은 남쪽으로 내려갈수록 값이 오른다.";
+            });
+            Q("N13_RiteMead", q =>
+            {
+                q.id = "north_q13_ritemead"; q.title = "룬돌 고리에 올릴 꿀술"; q.chain = side; q.giverNpc = Runekeeper; q.requires.Add(q2);
+                q.summary = "룬 지기 노인에게 룬돌 고리 의식에 올릴 꿀술 2병을 가져다준다. 꿀술은 비르카 장터에서 가장 싸다.";
+                q.offerLine = "고리 한가운데 불을 지필 때 조상님께 꿀술을 올리는 게 법도라네. 이 늙은이는 언덕을 내려가기가 힘들어서 말이야. 꿀술 두 병만 구해다 주겠나?";
+                q.objectives.Add(O(ObjectiveType.Deliver, "룬 지기 노인에게 꿀술 2병 전하기", Runekeeper, mead, 2,
+                    "고맙네. 오늘 밤 고리에 불을 지피면 룬돌이 더 밝게 빛날 걸세. 숨은 룬돌을 찾거든 언제든 다시 오게."));
+                q.rewardMoney = 40; q.rewardCredit = 1;
+            });
+            Q("N14_Amber", q =>
+            {
+                q.id = "north_q14_amber"; q.title = "얼음 속 호박, 남쪽으로"; q.chain = side; q.giverNpc = Miner; q.requires.Add(q2);
+                q.summary = "피오르 나루 장터에서 호박 2개를 사서 북쪽 길목 마을 장터에 판다. 길목은 북쪽 물건을 대륙 중심으로 넘기는 곳이라 호박을 비싸게 산다.";
+                q.offerLine = "동굴에서 캔 호박은 다 나루 장터로 넘기지. 그런데 남쪽 끝 길목 마을에선 몇 배를 쳐 준다더군. 먼 길이지만 한번 해 보겠나? 나루에서 두 개만 사서 가져가 보게.";
+                q.objectives.Add(O(ObjectiveType.Buy, "피오르 나루 장터에서 호박 2개 사기", "north_naru", amber, 2));
+                q.objectives.Add(O(ObjectiveType.Sell, "북쪽 길목 마을 장터에 호박 2개 팔기", "north_cross", amber, 2));
+                q.rewardMoney = 50; q.rewardCredit = 1;
+                q.finishNote = "가볍고 비싼 물건은 멀리 가져갈수록 이익이 크다.";
             });
 
             foreach (var q in list) EditorUtility.SetDirty(q);

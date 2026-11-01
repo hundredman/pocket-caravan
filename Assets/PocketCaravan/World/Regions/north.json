@@ -81,9 +81,9 @@
     },
     {
       "id": "north_goats",
-      "name": "염소지기 그루프 맏형",
-      "sprite": "north_goat_tall",
-      "greeting": "우리 삼형제는 다리 건너 이 목장에서 염소를 쳐. 다리 밑 트롤만 없으면 좋으련만."
+      "name": "순록지기 그루프 맏형",
+      "sprite": "north_p_herder_tall",
+      "greeting": "우리 삼형제는 마을 가운데서 순록을 쳐. 소금 덩이만 있으면 순록들이 졸졸 따라오지."
     },
     {
       "id": "north_har",
@@ -102,6 +102,54 @@
       "name": "욕심쟁이 형 볼드",
       "sprite": "north_wolf_viking_tall",
       "greeting": "이 몸이 비르카에서 제일가는 부자 볼드다! 사는 것도 파는 것도 멈추는 법을 모르지."
+    },
+    {
+      "id": "north_tora",
+      "name": "가죽 무두장이 토라",
+      "sprite": "north_p_smith_tall",
+      "greeting": "가죽은 소금에 절여 말려야 안 썩어.\n그래서 이 마을은 늘 소금이 모자라. 잘 무두질한 모피는 남쪽으로 갈수록 비싸게 팔려."
+    },
+    {
+      "id": "north_captain",
+      "name": "선장",
+      "sprite": "north_bear_sailor_tall",
+      "greeting": "남쪽 바다로 나가는 배는 모피를 잔뜩 실어 가.\n그래서 여기선 모피가 금값이지. 부두 동쪽 낚시꾼 조합에 가 봐.\n얼음 낚시로 잡은 물고기 기록을 봐 주고, 큰 놈을 잡으면 상금도 줘."
+    },
+    {
+      "id": "north_herbalist",
+      "name": "약초꾼",
+      "sprite": "north_hare_tall",
+      "greeting": "눈 밑에서도 이 온천 둘레에선 약초가 자라.\n바닷가 사람들이 비싸게 사 가."
+    },
+    {
+      "id": "north_bathkeeper",
+      "name": "목욕 회관 주인",
+      "sprite": "north_bear_granny_tall",
+      "greeting": "얼어붙은 길을 건너왔구먼. 몸부터 녹이고 가게. 탕 가장자리에서 Space를 누르면 몸을 담글 수 있어.\n한번 녹이고 나면 눈보라 속을 걸어도 한동안 덜 지치지."
+    },
+    {
+      "id": "north_herd_granny",
+      "name": "순록 목동 할머니",
+      "sprite": "north_p_granny_tall",
+      "greeting": "순록은 눈 밑 이끼 냄새를 기가 막히게 맡지.\n길을 잃으면 순록을 따라가. 우리 앞에서 이끼를 주면 순록들이 좋아해.\n사흘만 챙겨 주면 내가 선물을 주지."
+    },
+    {
+      "id": "north_sledmaker",
+      "name": "썰매 장인",
+      "sprite": "north_p_smith_tall",
+      "greeting": "비르카의 하르 녀석이 손수레만 만든다고?\n눈길엔 썰매지!\n언젠가 제대로 된 걸 보여 주지. 썰매는 눈보라 속에서도 잘 미끄러진다네.\n걷는 것과는 비교가 안 되지."
+    },
+    {
+      "id": "north_runekeeper",
+      "name": "룬 지기 노인",
+      "sprite": "north_owl_elder_tall",
+      "greeting": "이 고리의 룬돌들은 오래된 이야기를 품고 있지.\n북쪽 땅 곳곳에 흩어진 룬돌을 찾아 읽어 보게. 숨은 룬돌은 일곱 개라네.\n밤이면 은은히 빛나지.\n일곱 조각을 다 읽고 별빛 아래 이 고리 한가운데에 서 보게."
+    },
+    {
+      "id": "north_miner",
+      "name": "광부 할아범",
+      "sprite": "north_moose_tall",
+      "greeting": "동굴 깊은 곳엔 호박이 얼음에 갇혀 있지.\n무너진 길만 치우면 다시 캘 수 있을 텐데. 푸른 수정은 밤에 혼자 빛나.\n길 잃은 사람한텐 등불 대신이야."
     }
   ],
   "villagers": [

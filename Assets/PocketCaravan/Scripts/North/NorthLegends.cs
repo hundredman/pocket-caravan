@@ -12,8 +12,8 @@ namespace PocketCaravan
     /// </summary>
     public class NorthLegends : MonoBehaviour
     {
-        public static readonly string[] Places = { "", "룬돌 언덕 오솔길 남쪽 숲 틈", "피오르 길 얼어붙은 호숫가", "라우가르 온천 마을 뒤편",
-            "얼음 동굴 골짜기 폭포 옆", "피오르 나루 마을 북쪽 바닷가", "모피 사냥꾼 마을 남쪽 숲", "국경 고개 내리막 바위 뒤" };
+        public static readonly string[] Places = { "", "룬돌 큰길 서쪽 숲 틈", "피오르 나루 마을 위쪽 얼어붙은 호숫가", "라우가르 온천 마을 뒤편",
+            "얼음 동굴 골짜기 폭포 옆", "피오르 나루 마을 남쪽 끝 바닷가 후미", "모피 사냥꾼 마을 남쪽 숲", "비르카 남쪽 내리막 바위 뒤" };   // 10/31 국경 고개·피오르 길이 비르카·피오르 나루로 합쳐져 자리 이름 맞춤
 
         public static readonly string[] Lore =
         {

@@ -88,6 +88,9 @@ namespace PocketCaravan
             outlineStyle.font = style.font; outlineStyle.fontSize = style.fontSize; outlineStyle.alignment = style.alignment;
             outlineStyle.wordWrap = style.wordWrap; outlineStyle.clipping = style.clipping; outlineStyle.richText = true;
             outlineStyle.normal.textColor = new Color(0.07f, 0.05f, 0.1f, 0.85f);
+            // 11/01 마우스를 올리면 글자가 hover 색(진한 색)으로 바뀌어 테두리와 겹쳐 뭉개 보이던 것: 모든 상태를 normal 색으로
+            outlineStyle.hover.textColor = outlineStyle.active.textColor = outlineStyle.focused.textColor = outlineStyle.normal.textColor;
+            style.hover.textColor = style.active.textColor = style.focused.textColor = style.normal.textColor;
             string plain = ColorTag.Replace(text, "");
             foreach (var o in OutlineOffsets) GUI.Label(new Rect(r.x + o.x, r.y + o.y, r.width, r.height), plain, outlineStyle);
             GUI.Label(r, text, style);

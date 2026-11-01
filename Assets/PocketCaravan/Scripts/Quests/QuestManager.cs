@@ -203,8 +203,11 @@ namespace PocketCaravan
                 if (!p.CanCarry(q.offerItem, q.offerCount)) return "짐이 꽉 찼구먼. 짐을 좀 덜고 오게.";
             }
             if (q.giveItem != null && q.giveCount > 0 && !p.CanCarry(q.giveItem, q.giveCount)) return "짐이 꽉 찼구먼. 짐을 좀 덜고 오게.";
-            return null;
+            return ExtraAcceptBlocker?.Invoke(q);   // 11/01 지역별 추가 조건 (예: 북유럽 동시 퀘스트 3개). 없으면 null
         }
+
+        /// <summary>11/01 지역이 수락 조건을 더할 수 있는 자리. 막을 이유(대사)를 돌려주면 수락이 막힌다. 공용 규칙은 그대로.</summary>
+        public static System.Func<QuestData, string> ExtraAcceptBlocker;
 
         public void Accept(QuestData q)
         {

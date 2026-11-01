@@ -19,7 +19,16 @@ namespace PocketCaravan
             ("north_bold", "욕심쟁이 볼드", "비르카 광장 왼쪽"),
             ("north_har", "목수 하르", "비르카 남서쪽, 장터 거리 왼쪽 끝 집 앞"),
             ("north_warehouse", "창고지기", "피오르 나루 서쪽 창고 앞"),
-            ("north_goats", "염소지기 맏형", "모피 사냥꾼 마을 동쪽 염소 목장 안"),
+            ("north_goats", "순록지기 맏형", "모피 사냥꾼 마을 게시판 왼쪽"),
+            // 10/31 마을 곁가지·옮긴 퀘스트
+            ("north_tora", "무두장이 토라", "모피 사냥꾼 마을 북서쪽 천막 앞 (나무 다리 건너)"),
+            ("north_captain", "선장", "피오르 나루 부두 앞"),
+            ("north_herbalist", "약초꾼", "라우가르 온천 마을 장터 아래"),
+            ("north_bathkeeper", "목욕 회관 주인", "라우가르 온천 마을 목욕 회관 앞"),
+            ("north_herd_granny", "순록 목동 할머니", "순록 고원 마을 남쪽 모닥불 옆"),
+            ("north_sledmaker", "썰매 장인", "순록 고원 마을 남쪽, 목동 할머니 옆"),
+            ("north_runekeeper", "룬 지기 노인", "룬돌 언덕 고리 앞"),
+            ("north_miner", "광부 할아범", "얼음 동굴 골짜기 남쪽 동굴 입구"),
         };
 
         GUIStyle style;

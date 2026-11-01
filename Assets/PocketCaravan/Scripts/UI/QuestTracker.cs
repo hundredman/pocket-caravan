@@ -46,7 +46,11 @@ namespace PocketCaravan
             var gm = GameManager.I;
             string line = null;
             if (qm.Tracked != null)
-                line = $"<color=#ffd84a>▸</color> {qm.Tracked.quest.title}  <color=#d8d2e6>· {qm.ProgressText(qm.Tracked)}</color>";
+            {
+                int others = 0; foreach (var ap in qm.Active) if (ap != qm.Tracked) others++;
+                string more = others > 0 ? $"  <color=#9a8fb0>외 {others}개</color>" : "";   // 11/01 진행 중인 다른 퀘스트 수 (Q 수첩에서 안내 바꾸기)
+                line = $"<color=#ffd84a>▸</color> {qm.Tracked.quest.title}  <color=#d8d2e6>· {qm.ProgressText(qm.Tracked)}</color>{more}";
+            }
             else if (gm.Player.contracts.Count > 0)
             {
                 var c = gm.Player.contracts[0];
@@ -56,6 +60,12 @@ namespace PocketCaravan
             if (line == null) return;
             if(compactStyle==null||compactStyle.font!=UIStyle.RegularFont)compactStyle = new GUIStyle(UIStyle.Rich) { wordWrap = false, clipping = TextClipping.Clip, alignment = TextAnchor.UpperRight };
             float w = Mathf.Min(300, UIStyle.VirtualWidth * 0.45f);
+            // 11/01 길면 오른쪽 맞춤 때문에 앞(제목)이 잘려 "썰매 · …"처럼 보였다: 넘치면 제목을 빼고 할 일만 보인다
+            if (qm.Tracked != null && compactStyle.CalcSize(new GUIContent(line)).x > w)
+            {
+                int others = 0; foreach (var ap in qm.Active) if (ap != qm.Tracked) others++;
+                line = $"<color=#ffd84a>▸</color> <color=#d8d2e6>{qm.ProgressText(qm.Tracked)}</color>" + (others > 0 ? $"  <color=#9a8fb0>외 {others}개</color>" : "");
+            }
             UIStyle.Outlined(new Rect(UIStyle.VirtualWidth - w - 8, 8, w, 16), line, compactStyle);
         }
 
@@ -125,6 +135,20 @@ namespace PocketCaravan
                     if (p.RewardCredit > 0) reward += $"신용 {p.RewardCredit}";
                     if (reward != "") GUILayout.Label("보상: " + reward);
                     GUILayout.Space(6);
+                }
+                // 11/01 게시판에서 받은 배달 의뢰도 수첩에서 보이게 (전엔 Tab으로 펼쳐야만 보였다)
+                var gmc = GameManager.I;
+                if (gmc.Player.contracts.Count > 0)
+                {
+                    GUILayout.Label("<color=#9fd8ff>게시판 배달 의뢰</color>", UIStyle.Rich);
+                    foreach (var c in gmc.Player.contracts)
+                    {
+                        any = true;
+                        string state = c.dropped ? "<color=#ff8a7a>떨어뜨림!</color>" : $"상태 {Mathf.RoundToInt(c.condition * 100)}%";
+                        GUILayout.Label($"<color=#9fd8ff>■</color> {c.cargo} → {gmc.Contracts.TownName(c.toTown)}", new GUIStyle(UIStyle.Rich) { wordWrap = true });
+                        GUILayout.Label($"{gmc.Contracts.TimeLeftText(c)} · {state} · 보수 {c.reward}냥", UIStyle.Wrap);
+                        GUILayout.Space(4);
+                    }
                 }
                 if (!any) GUILayout.Label("진행 중인 퀘스트가 없다. 자유 거래와 게시판 배달도 선택할 수 있다.", UIStyle.Wrap);
             }

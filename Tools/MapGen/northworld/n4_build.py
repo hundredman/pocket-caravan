@@ -165,6 +165,78 @@ REST_TALKERS = [   # 2026-10-29: 빈 넓은 눈밭에 세우는 말 거는 사�
     ('길 위의 행상 토베', 'north_bear_sailor_tall', ['장터가 어느 쪽이더라… 이정표를 볼 걸 그랬군.', '짐이 무거우면 길 위로만 다니게. 눈밭은 발이 빠져.']),   # 10/30 군나르는 얼음 동굴 짐 찾기 주인공으로 옮김
     ('사냥꾼 리브', 'north_lynx_tall', ['발자국을 보니 여우가 지나갔군. 오늘은 운이 좋겠어.', '해 지기 전엔 마을로 돌아가는 게 좋아.']),
 ]
+# 2026-10-31(기우: 같은 사람·같은 대사 겹침 정리) 맵별 쉼터 사람 고정. None이면 사람 없이 모닥불만
+REST_PICK = {'north_c_gatetown': None,   # 북문 마을은 이미 말 거는 사람이 많음 (사냥꾼 리브가 세 맵에 겹쳤음)
+             'north_c_runeway': ('길 위의 행상 토베', 'north_bear_sailor_tall', ['장터가 어느 쪽이더라… 이정표를 볼 걸 그랬군.', '짐이 무거우면 길 위로만 다니게. 눈밭은 발이 빠져.'])}
+DROP_TALKERS = {('north_birka', '국경 경비대장'), ('north_birka', '남쪽에서 온 상인')}   # 북문 마을 국경 표석 지기·향신료 상인과 역할이 겹침
+TALKER_LINES = {   # 옛 대사가 다른 맵과 겹쳐서 바꾼 것 (첫 줄만 바꾸고 나머지는 옛 대사)
+    ('north_herd', '여관 주인'): ['고원 바람이 매섭지?\n꿀술 한 잔에 화롯가 자리는 공짜야.'],
+    ('north_c_road_sw', '떠돌이 음유시인'): ['솔숲 바람 소리에 맞춰 한 곡 뽑아 볼까?\n산적만 안 나오면 좋은 길이지.'],
+    ('north_c_road_se', '남쪽 행상'): ['물가 길은 느려도 안전하지.\n남쪽 길목에선 북쪽 소금을 찾는 사람이 많아.']}
+EXTRA_REST = {   # 2026-10-31(기우: 썰렁한 마을 보강) 모닥불(왼쪽 위 칸) + 말 거는 사람. 맵 칸 좌표(지금 맵 기준)
+    'north_hunter': dict(fires=[(47, 40)], talkers=[
+        (51, 41, '덫 놓는 사냥꾼 울바', 'north_p_herder_tall', ['올무는 눈 위 발자국 따라 놓는 거야.\n여우는 늘 같은 길로 다니거든.', '불가에 좀 앉아 있다 가.\n여기 바람은 뼛속까지 들어와.']),
+        (19, 27, '가죽 무두장이 토라', 'north_p_smith_tall', ['가죽은 소금에 절여 말려야 안 썩어.\n그래서 이 마을은 늘 소금이 모자라.', '잘 무두질한 모피는 남쪽으로 갈수록 비싸게 팔려.'])]),
+    'north_c_snowwood': dict(fires=[(38, 35)], talkers=[
+        (42, 36, '숲지기 노인 브란', 'north_p_oldman_tall', ['이 숲 나무는 마을 모두의 거야.\n한 그루 베면 한 그루 심는 게 규칙이지.', '장터는 동쪽 끝이야.\n썰매 언덕도 거기 있지.']),
+        (14, 51, '포도밭에서 온 행상 마르코', 'north_p_trader_tall', ['서쪽 포도밭 언덕을 넘어왔소.\n포도주 한 통이면 모피 두 장이랑 바꿔 준다더군.', '눈숲 장터는 동쪽 끝이오.\n길 따라 쭉 가면 되오.'])])}
+# 2026-10-31(기우: 다른 지역 가는 풀밭·흙바닥은 길 끝에 있어야) N1 출구 자리 기준이라 길 중간에 깔리던 것을 맵 끝 출구 앞으로 옮김
+REGION_PATCH_FIX = {'north_c_snowwood': ('grassedge', (0, 42, 12, 56), True),   # (바닥, 새로 깔 칸 범위 x0,y0,x1,y1, 범위 밖 옛 조각 지우기)
+                    'north_c_road_se': ('dirtedge', (20, 69, 35, 75), False)}  # 흙바닥은 아래 출구 끝까지 이어 붙임
+REGION_ROAD = {'north_c_road_se': (24, 63, 35, 75)}   # 2026-10-31(기우) 고려 쪽 갈림길 아래 길은 흙길로 (고려 땅 길과 비슷하게)
+NO_GRASS = {'north_c_road_se'}
+# 2026-10-31(기우) 베네치아 가는 길 끝도 그 지역 길처럼: 포도밭 언덕·산기슭 고갯길은 흙길, 동문 큰길은 베네치아 돌판 길
+EXIT_ROADS = {'north_c_snowwood': [((0, 46, 10, 51), 'dirt')],
+              'north_c_road_sw': [((0, 13, 10, 20), 'dirt'), ((36, 54, 45, 65), 'slab')]}
+
+def apply_exit_roads(m, key):
+    if key not in EXIT_ROADS: return
+    rng_ = random.Random(31)
+    dirt = {(x, y) for y in range(m.h) for x in range(m.w) if isinstance(m.ground[y][x], str) and m.ground[y][x].endswith('@dirtedge')}
+    for (x0, y0, x1, y1), kind in EXIT_ROADS[key]:
+        cells = {(x, y) for y in range(y0, y1 + 1) for x in range(x0, x1 + 1) if m.inside(x, y) and m.road[y][x] > 0}
+        if kind == 'dirt': dirt |= cells
+        else:
+            for (x, y) in cells: m.ground[y][x] = f'vq_L_g_cap_slab{rng_.randint(0, 1)}_0_{x % 2}_{y % 2}_0_--------'
+    inside = lambda a, b: (a, b) in dirt or (not m.inside(a, b) and (min(max(a, 0), m.w - 1), min(max(b, 0), m.h - 1)) in dirt)
+    for (x, y) in dirt: m.ground[y][x] = tiles.autotile(inside, x, y, 'floor', 0, 7) + '@dirtedge'
+   # 2026-10-31(기우) 동남 물가길은 풀밭 없이 눈으로만
+REGION_PROPS = {'camp:3:5', 'camp:4:5', 'house:19:14'}   # 풀밭 위 포도 상자·술통
+CRITTER_FIX = {'north_hunter': {'goat': dict(kind='reindeer', x0=37, y0=40, x1=44, y1=44)}}   # 2026-10-31(기우) 양 같던 염소 → 마을 가운데 순록
+
+def fix_region_patch(m, key):
+    if key in NO_GRASS:
+        for y in range(m.h):
+            for x in range(m.w):
+                if isinstance(m.ground[y][x], str) and m.ground[y][x].endswith('@grassedge'): m.ground[y][x] = nt.SNOW
+    if key not in REGION_PATCH_FIX: return
+    mode, (bx0, by0, bx1, by1), wipe = REGION_PATCH_FIX[key]
+    inb = lambda x, y: bx0 <= x <= bx1 and by0 <= y <= by1
+    cur = {(x, y) for y in range(m.h) for x in range(m.w) if isinstance(m.ground[y][x], str) and m.ground[y][x].endswith('@' + mode)}
+    if wipe:
+        for (x, y) in [c for c in cur if not inb(*c)]:
+            m.ground[y][x] = nt.SNOW
+            for yy in (y, y - 1):
+                if m.inside(x, yy) and m.obj[yy][x] in REGION_PROPS:
+                    m.obj[yy][x] = None
+                    if m.high[yy][x] is None: m.blocked[yy][x] = False
+        cur = {c for c in cur if inb(*c)}
+    new = {(x, y) for y in range(by0, by1 + 1) for x in range(bx0, bx1 + 1) if m.inside(x, y) and not m.blocked[y][x] and m.road[y][x] == 0
+           and m.obj[y][x] is None and m.high[y][x] is None and not m.water[y][x]}
+    if key in REGION_ROAD:
+        rx0, ry0, rx1, ry1 = REGION_ROAD[key]
+        new |= {(x, y) for y in range(ry0, ry1 + 1) for x in range(rx0, rx1 + 1) if m.inside(x, y) and m.road[y][x] > 0}
+    mask = cur | new
+    inside = lambda a, b: (a, b) in mask or (not m.inside(a, b) and (min(max(a, 0), m.w - 1), min(max(b, 0), m.h - 1)) in mask)
+    for (x, y) in mask: m.ground[y][x] = tiles.autotile(inside, x, y, 'floor', 0, 7) + '@' + mode
+
+# 2026-10-31(기우: 퀘스트를 마을별로) 퀘스트를 주고받는 사람은 talker → npc (World/Regions/north.json npcs에 같은 id 등록)
+TALKER_TO_NPC = {('north_hunter', '가죽 무두장이 토라'): 'north_tora', ('north_naru', '선장'): 'north_captain',
+                 ('north_laugar', '약초꾼'): 'north_herbalist', ('north_laugar', '목욕 회관 주인'): 'north_bathkeeper',
+                 ('north_herd', '순록 목동 할머니'): 'north_herd_granny', ('north_herd', '썰매 장인'): 'north_sledmaker',
+                 ('north_runehill', '룬 지기 노인'): 'north_runekeeper', ('north_icecave', '광부 할아범'): 'north_miner'}
+SECRET_MOVE = {('north_naru', 5): (12, 66)}   # 2026-10-31(기우) 숨은 룬돌 5번이 2번과 5칸 거리 → 나루 남쪽 끝 바닷가 후미로
+KEEPER_EXTRA = {'north_c_creek': ([41, 30], [41, 29])}   # 위쪽 좌판에 장꾼이 안 붙어 빈 좌판이던 것 (말 거는 칸, 맡은 좌판)
 ROAD_CLEAR = 3    # 2026-10-29(사용자): 숲 지형에서 길 양옆 이만큼은 나무를 심지 않는다
 ROAD_THIN = 6     # 그 밖 이 칸까지는 절반만 심는다(듬성한 숲)
 CORRIDOR_PAD = 1   # 통로 양옆 여유 칸(출구 폭 4 + 2 = 6칸 트인 눈밭, 가운데 2칸 다진 길). 포켓몬 길처럼 나무 벽 사이 넓은 통로
@@ -1593,8 +1665,12 @@ def build(key):
         elif k == 'npc' and it.get('id') and not it.get('memo', '').startswith('talker'):
             m.add('npc', x, y, npc=it['id']); report['npc'] += 1
         elif k == 'npc':
+            if (key, it['name']) in DROP_TALKERS: continue
             o = old_talker(key, it['name'])
-            if o: m.talker(x, y, it['name'], o.get('character', ''), *o.get('lines', []))
+            if o:
+                ln_ = list(o.get('lines', []))
+                for i_, t_ in enumerate(TALKER_LINES.get((key, it['name']), [])): ln_[i_:i_ + 1] = [t_]
+                m.talker(x, y, it['name'], o.get('character', ''), *ln_)
             else: m.talker(x, y, it['name'], 'north_p_trader_tall', '...'); report['talkerNoOld'].append(it['name'])
             report['talker'] += 1
         elif k == 'event': m.event(x, y)
@@ -1683,12 +1759,23 @@ def build(key):
         if kind_ == 'rest' and m.stamp('fire', x_, y_, force=True):
             m.stamp('logbench', x_ - 1, y_ + 2, force=True); m.stamp('logs', x_ + 3, y_, force=True)
         elif kind_ == 'talker':
-            nm_, ch_, ln_ = REST_TALKERS[(KEYS.index(key) * 5 + j_ * 3) % len(REST_TALKERS)]
-            m.talker(x_, y_, nm_, ch_, *ln_); m.stamp('fire', x_ + 2, y_, force=True)
+            pick_ = REST_PICK.get(key, REST_TALKERS[(KEYS.index(key) * 5 + j_ * 3) % len(REST_TALKERS)])
+            if pick_: m.talker(x_, y_, pick_[0], pick_[1], *pick_[2])
+            m.stamp('fire', x_ + 2, y_, force=True)
         else:
             for (a, b, st_) in ((0, 0, 'logs'), (3, 0, 'stump'), (1, 2, 'crate_berry'), (-2, 1, 'lantern')):
                 m.stamp(st_, x_ + a, y_ + b, force=True)
         report['rest'].append((kind_, x_, y_))
+    for (fx_, fy_) in EXTRA_REST.get(key, {}).get('fires', []): m.stamp('fire', fx_, fy_, force=True)   # 의자 자리는 stamp가 같이 남김
+    for (tx_, ty_, nm_, ch_, ln_) in EXTRA_REST.get(key, {}).get('talkers', []): m.talker(tx_, ty_, nm_, ch_, *ln_)
+    fix_region_patch(m, key)
+    apply_exit_roads(m, key)
+    for (sx_, sy_, si_) in list(m.secrets):
+        if (key, si_) in SECRET_MOVE:
+            m.high[sy_][sx_] = None; m.obj[sy_ + 1][sx_] = None; m.blocked[sy_ + 1][sx_] = False
+            m.secrets.remove((sx_, sy_, si_)); m.secret_rune(si_, *SECRET_MOVE[(key, si_)])
+    for o_ in m.objects:
+        if o_.get('kind') == 'talker' and (key, o_.get('name')) in TALKER_TO_NPC: o_['kind'] = 'npc'; o_['npc'] = TALKER_TO_NPC[(key, o_['name'])]
     report['stallFix'] = fix_stalls(m, mine)
     m.finish()
     # 2026-10-29(사용자): 모닥불 의자가 길 바로 옆이면 길을 막아서 뺀다(라우가르 불 쬐기 오른쪽 의자)
@@ -2156,13 +2243,13 @@ def life_of(m):
         museum=[v for c in spot_cells(m, "museum") for v in c] + (list(museum_row(m)) if spot_cells(m, "museum") else []),
         fortune=[v for c in spot_cells(m, "fortune") for v in c], ferry=[v for c in spot_cells(m, "ferry") for v in c],
         seats=[v for (k, x, y) in getattr(m, "spots", []) if k == "seat" for v in (x, y)],
-        stalls=ms[0], crowd=ms[1], inns=inn_spots(m), keepers=keeper_spots(m), keeperStall=keeper_stalls(m), stallArt=stall_art(m),
+        stalls=ms[0], crowd=ms[1], inns=inn_spots(m), keepers=keeper_spots(m) + KEEPER_EXTRA.get(m.id, ([], []))[0], keeperStall=keeper_stalls(m) + KEEPER_EXTRA.get(m.id, ([], []))[1], stallArt=stall_art(m),
         sides=side_spots(m), spitters=spit_sellers(m),
         craft=[v for i, k in enumerate(("craft_fish", "craft_fur", "craft_brew")) for c in spot_cells(m, k) for v in (c[0], c[1], i)],
         yard=[v for i, k in enumerate(("yard_fish", "yard_fur", "yard_brew")) for (kk, x, y) in getattr(m, "spots", []) if kk == k for v in (x, y, i)],
         market=[v for o in m.objects if o["kind"] == "market" for v in nearest_walk(m, o["x"] + 2, o["y"] + 1, avoid={(o["x"], o["y"])})],
         sledTrack=[[x, y] for (x, y) in getattr(m, "sled_track", []) or []],
-        critters=m.life)
+        critters=[dict(c_, **CRITTER_FIX.get(m.id, {}).get(c_.get('kind'), {})) if isinstance(c_, dict) else c_ for c_ in m.life])
 
 def _corridor_anchor(m):
     """담당 밖인데 걸을 수 있는 칸(출구 복도 등) → 지도에 찍을 내 땅 칸. 'x,y,ax,ay' (위에서부터 y)

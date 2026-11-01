@@ -16,6 +16,7 @@ namespace PocketCaravan
         float baseSpeed;
         Transform sled;
         SpriteRenderer sledSr;
+        Sprite sledV, sledH;   // 11/01 세로(위에서 본, 앞=위)·가로(옆모습, 앞=오른쪽) 그림. 돌리지 않고 방향마다 골라 쓴다
         AudioSource bells;
         Sprite puff;
         readonly System.Collections.Generic.List<(SpriteRenderer sr, float born)> puffs = new System.Collections.Generic.List<(SpriteRenderer, float)>();
@@ -79,7 +80,9 @@ namespace PocketCaravan
             go.transform.SetParent(player, false);
             sled = go.transform;
             sledSr = go.AddComponent<SpriteRenderer>();
-            sledSr.sprite = NorthUtil.Load("cargo_v", new Vector2(0.5f, 0.5f));
+            sledV = NorthUtil.Load("cargo_v", new Vector2(0.5f, 0.5f));
+            sledH = NorthUtil.Load("cargo_h", new Vector2(0.5f, 0.2f));
+            sledSr.sprite = sledV;
             go.SetActive(false);
         }
 
@@ -94,8 +97,12 @@ namespace PocketCaravan
             else if (bells.volume <= 0f && bells.isPlaying) bells.Stop();
             if (!show) { ClearPuffs(); return; }
             Vector2 facing = (Vector2)motor.Facing;
-            sled.localPosition = -(Vector3)(facing * 0.95f) + new Vector3(0f, -0.15f, 0f);
-            sled.localRotation = Quaternion.Euler(0, 0, -Mathf.Atan2(facing.x, facing.y) * Mathf.Rad2Deg);
+            bool side = Mathf.Abs(facing.x) > Mathf.Abs(facing.y);
+            sledSr.sprite = side && sledH != null ? sledH : sledV;
+            sledSr.flipX = side && facing.x < 0;          // 왼쪽으로 가면 옆모습을 뒤집어 앞(말린 활대)이 순록 쪽
+            sledSr.flipY = !side && facing.y < 0;         // 아래로 가면 위에 끌려오므로 앞이 아래(순록 쪽)
+            sled.localPosition = side ? new Vector3(-facing.x * 1.15f, -0.45f, 0f) : -(Vector3)(facing * 0.95f) + new Vector3(0f, -0.15f, 0f);
+            sled.localRotation = Quaternion.identity;
             sledSr.sortingOrder = facing.y > 0 ? 12 : 8;
             // 눈 위를 달리면 썰매 뒤로 눈가루가 날린다
             if (NorthUtil.InNorth && moving > 1f && Time.time >= puffAt)

@@ -72,23 +72,55 @@ def bobber():
     return im
 
 
-def cargo_sled(horizontal):
-    """짐 싣는 순록 썰매 (플레이어 뒤에 끌려옴). 가로: 20x12 옆모습, 세로: 14x18 위에서 본 모습. 모피 짐 위에 붉은 끈"""
-    WOOD, WOOD_D, RUN, FUR, FUR_D, RED, SACK = (170, 112, 66, 255), (110, 70, 40, 255), (70, 62, 70, 255), (196, 160, 120, 255), (150, 118, 86, 255), (196, 64, 52, 255), (214, 196, 150, 255)
-    if horizontal:
-        im = Image.new("RGBA", (20, 12), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
-        d.line((1, 11, 18, 11), fill=RUN); d.arc((14, 6, 20, 12), 270, 90, fill=RUN)          # 날 (앞쪽이 휘어 올라감)
-        d.rectangle((2, 7, 17, 9), fill=WOOD, outline=WOOD_D)
-        for x in (4, 9, 14): d.line((x, 10, x, 11), fill=WOOD_D)
-        d.ellipse((3, 1, 10, 8), fill=FUR, outline=FUR_D); d.ellipse((8, 2, 15, 8), fill=SACK, outline=FUR_D)
-        d.line((2, 5, 16, 5), fill=RED)
-    else:
-        im = Image.new("RGBA", (14, 18), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
-        d.line((1, 2, 1, 17), fill=RUN); d.line((12, 2, 12, 17), fill=RUN)
-        d.rectangle((2, 3, 11, 16), fill=WOOD, outline=WOOD_D)
-        d.ellipse((3, 4, 10, 10), fill=FUR, outline=FUR_D); d.ellipse((3, 9, 10, 15), fill=SACK, outline=FUR_D)
-        d.line((2, 9, 11, 9), fill=RED)
+# 2026-11-01(기우: 썰매가 상자 같음) A안 "나무 짐썰매": 앞이 말린 쇠 활대 + 짐 자루 + 빨간 끈. 세로 14x23(앞=위), 가로 24x13(앞=오른쪽)
+_SL = {"Image": Image}
+exec(compile(r'''
+O=(46,32,40,255); WD=(96,60,38,255); WM=(146,96,58,255); WL=(190,134,84,255); MET=(86,88,104,255); MET2=(140,144,160,255)
+RED=(198,58,58,255); REDD=(140,36,44,255); SK=(220,198,150,255); SKD=(176,150,104,255)
+FUR=(128,96,72,255); FURL=(170,138,104,255); BL=(66,92,168,255); BLL=(110,140,210,255); WH=(240,236,226,255); GOLD=(222,180,70,255)
+def img(w,h): return Image.new('RGBA',(w,h),(0,0,0,0))
+def px(im,x,y,c):
+    if 0<=x<im.width and 0<=y<im.height: im.putpixel((x,y),c)
+def rect(im,x0,y0,x1,y1,c):
+    for y in range(y0,y1+1):
+        for x in range(x0,x1+1): px(im,x,y,c)
+def outline(im):
+    src=im.copy()
+    for y in range(im.height):
+        for x in range(im.width):
+            if src.getpixel((x,y))[3]==0 and any(0<=x+a<im.width and 0<=y+b<im.height and src.getpixel((x+a,y+b))[3]>0 and src.getpixel((x+a,y+b))!=O for a,b in((1,0),(-1,0),(0,1),(0,-1))):
+                im.putpixel((x,y),O)
     return im
+# ---------- 위에서 본 썰매 (앞=위쪽), 14x22 ----------
+def top_common(im,runner=MET,curl=True):
+    for x in (1,12):
+        rect(im,x,3,x,21,runner)
+    if curl:  # 앞이 말려 올라간 활대
+        for x,y in ((1,2),(2,1),(3,1),(12,2),(11,1),(10,1)): px(im,x,y,runner)
+    for y in range(5,21):
+        rect(im,2,y,11,y,WM if (y//2)%2 else WL)
+        if y%4==0: rect(im,2,y,11,y,WD)
+    rect(im,2,4,11,4,WD); rect(im,2,21,11,21,WD)
+def topA():   # 나무 짐썰매: 자루 + 빨간 끈
+    im=img(14,23); top_common(im)
+    rect(im,3,7,10,17,SK); rect(im,3,12,10,12,SKD); rect(im,9,7,10,17,SKD)
+    for y in (9,15): rect(im,2,y,11,y,RED)
+    rect(im,6,7,6,17,REDD)
+    return outline(im)
+def sideA():
+    im=img(24,13)
+    rect(im,1,12,19,12,MET); px(im,20,11,MET); px(im,21,10,MET); px(im,21,9,MET); px(im,20,8,MET)  # 활대
+    for x in (4,10,16): rect(im,x,9,x,11,WD)
+    rect(im,2,8,18,8,WM); rect(im,2,7,18,7,WL)
+    rect(im,4,2,10,6,SK); rect(im,11,3,16,6,SK); rect(im,10,2,10,6,SKD); rect(im,16,4,16,6,SKD)
+    rect(im,7,2,7,6,RED); rect(im,14,3,14,6,RED)
+    return outline(im)
+''', "sled_a", "exec"), _SL)
+
+
+def cargo_sled(horizontal):
+    """짐 싣는 순록 썰매 (플레이어 뒤에 끌려옴). NorthTravel이 방향에 따라 세로(위·아래)/가로(옆, 왼쪽은 뒤집기) 그림을 고른다"""
+    return _SL["sideA"]() if horizontal else _SL["topA"]()
 
 
 def small_icons():

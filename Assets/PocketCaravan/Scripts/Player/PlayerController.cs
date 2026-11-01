@@ -92,7 +92,7 @@ namespace PocketCaravan
             }
             s *= Mathf.Lerp(1f, fullLoadSpeed, p.LoadRatio);
             if (Running) s *= runMultiplier;
-            if (InputReader.DebugFast()) s *= DebugFastMultiplier;   // 임시 시험용 (G, 6배)
+            if (InputReader.DebugFast()) s *= DebugFastMultiplier;   // 임시 시험용 (C, 6배)
             var obstacles=MapRoot.Current!=null?MapRoot.Current.GetComponent<ObstacleField>():null;
             if(obstacles!=null){obstacles.Effects(motor.Cell,out float multiplier,out _,out _,out _,out _);s*=multiplier;}
             return s * motor.walkSpeed;

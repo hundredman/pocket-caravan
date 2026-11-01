@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: N12_Cheese
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: north_q12_cheese
+  retired: 0
+  title: "\uACE0\uC6D0 \uCE58\uC988 \uB0B4\uB824\uBCF4\uB0B4\uAE30"
+  chain: "\uBD81\uCABD \uB9C8\uC744 \uC774\uC57C\uAE30"
+  summary: "\uC21C\uB85D \uACE0\uC6D0 \uC7A5\uD130\uC5D0\uC11C \uC21C\uB85D \uCE58\uC988
+    4\uAC1C\uB97C \uC0AC\uC11C \uBD81\uBB38 \uB9C8\uC744 \uC7A5\uD130\uC5D0 \uD310\uB2E4.
+    \uC0B0\uC9C0\uC5D0\uC11C \uBA40\uC5B4\uC9C8\uC218\uB85D \uAC12\uC744 \uB354 \uBC1B\uB294\uB2E4."
+  giverNpc: north_herd_granny
+  requires:
+  - {fileID: 11400000, guid: 4fedf6281e4284f77b4d0ceeef3e5f7e, type: 2}
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "\uC62C\uD574\uB294 \uCE58\uC988\uAC00 \uB108\uBB34 \uB9CE\uC774 \uB098\uC640\uC11C
+    \uC5EC\uAE30\uC120 \uD5D0\uAC12\uC774\uB780\uB2E4. \uBD81\uBB38 \uB9C8\uC744
+    \uC0AC\uB78C\uB4E4\uC740 \uACE0\uC6D0 \uCE58\uC988\uB97C \uADC0\uD558\uAC8C \uC5EC\uAE34\uB2E4\uB354\uB77C.
+    \uB124 \uAC1C\uB9CC \uAC00\uC838\uAC00\uC11C \uD314\uC544 \uBCF4\uB834. \uB0A8\uB294
+    \uB3C8\uC740 \uB124 \uBAAB\uC774\uC57C."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 2
+    text: "\uC21C\uB85D \uACE0\uC6D0 \uC7A5\uD130\uC5D0\uC11C \uCE58\uC988 4\uAC1C
+      \uC0AC\uAE30"
+    targetId: north_herd
+    item: {fileID: 11400000, guid: 7b10b12610b4b41fbaf940255ab242b6, type: 2}
+    vehicle: {fileID: 0}
+    count: 4
+    completeLine: 
+  - type: 3
+    text: "\uBD81\uBB38 \uB9C8\uC744 \uC7A5\uD130\uC5D0 \uCE58\uC988 4\uAC1C \uD314\uAE30"
+    targetId: north_post
+    item: {fileID: 11400000, guid: 7b10b12610b4b41fbaf940255ab242b6, type: 2}
+    vehicle: {fileID: 0}
+    count: 4
+    completeLine: 
+  rewardMoney: 30
+  rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "\uC0B0\uC9C0\uC5D0\uC11C \uC2F8\uAC8C \uC0AC\uC11C \uBA3C \uC7A5\uD130\uC5D0
+    \uD314\uC558\uB2E4. \uBD81\uCABD \uBB3C\uAC74\uC740 \uB0A8\uCABD\uC73C\uB85C
+    \uB0B4\uB824\uAC08\uC218\uB85D \uAC12\uC774 \uC624\uB978\uB2E4."
