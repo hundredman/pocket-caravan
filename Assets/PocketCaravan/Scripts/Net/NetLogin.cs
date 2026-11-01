@@ -1,0 +1,425 @@
+using UnityEngine;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
+
+namespace PocketCaravan
+{
+    /// <summary>
+    /// 로그인 화면 · 온라인 창 (2026-10-31, feature/online).
+    /// - 게임을 켜면 시작 화면(이어하기 · 새로 시작)보다 먼저 로그인 화면이 뜬다. 이름 + 접속키로 접속하거나 "혼자 하기".
+    ///   처음 쓰는 이름이면 그 이름과 접속키로 계정이 만들어진다. 접속키가 틀리면 그 자리에서 알려 준다.
+    ///   "이 컴퓨터에 기억"을 켜 두면 다음부터는 켜자마자 저절로 접속한다(실패하면 로그인 화면이 그대로 남는다).
+    ///   접속되면 시작 화면으로 넘어간다. 로그인 화면이 떠 있는 동안 시작 화면은 키를 받지 않는다(StartScreen.Held).
+    /// - 게임 중 O 키: 온라인 창. 접속해 있으면 내 이름·계정·접속자 수와 끊기 · 다른 이름으로 접속, 아니면 로그인 칸.
+    /// - Tab 칸 바꾸기 · Enter 접속 · 한글은 NetTextBox(가/A: 오른쪽 Alt). 서버 주소는 "서버 바꾸기"를 눌러야 보인다(개발용).
+    /// - 다른 씬에서 바로 Play하면 시작 화면이 없어서 로그인 화면도 안 뜬다. 편집기에서 볼 때는 Preview를 켠다(메뉴 온라인/화면 캡처).
+    /// 이름·접속키·주소·기억 여부는 이 컴퓨터 설정(PlayerPrefs)에만 남는다. 게임 저장 파일과는 무관하다.
+    /// </summary>
+    public class NetLogin : MonoBehaviour
+    {
+        enum Panel { None, Start, Game }
+
+        /// <summary>편집기 미리보기: 시작 화면이 없어도 첫 화면 로그인을 띄운다</summary>
+        public static bool Preview;
+        /// <summary>로그인 화면이나 온라인 창이 떠 있다</summary>
+        public static bool IsOpen => inst != null && inst.panel != Panel.None;
+
+        static NetLogin inst;
+        Panel panel;
+        bool startDone;      // 이번 실행에서 첫 화면 로그인을 끝냈다 (접속했거나 혼자 하기)
+        bool autoTried;      // 기억한 이름·접속키로 저절로 접속해 봤다
+        bool submitting;     // 접속을 눌러 결과를 기다리는 중
+        bool remember, showServer;
+        string address, note;
+        bool noteBad;
+        readonly NetTextBox nameBox = new NetTextBox(16);
+        readonly NetTextBox keyBox = new NetTextBox(32) { Masked = true, AllowKorean = false };
+        readonly NetTextBox addressBox = new NetTextBox(160) { AllowKorean = false };
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        static void Boot()
+        {
+            if (FindFirstObjectByType<NetLogin>() != null) return;
+            var go = new GameObject("NetLogin");
+            DontDestroyOnLoad(go);
+            inst = go.AddComponent<NetLogin>();
+        }
+
+        void Awake()
+        {
+            inst = this;
+            address = PlayerPrefs.GetString("net.address", NetClient.DefaultAddress);
+            remember = PlayerPrefs.GetInt("net.remember", 1) == 1;
+            nameBox.Text = PlayerPrefs.GetString("net.name", "");
+            keyBox.Text = remember ? PlayerPrefs.GetString("net.pass", "") : "";
+            addressBox.Text = address;
+        }
+
+        static NetClient Net => NetClient.I;
+        static bool Online => Net != null && Net.Status == NetClient.State.Online;
+
+        // ---------------- 열고 닫기 ----------------
+
+        void Update()
+        {
+            bool startWanted = !startDone && (StartScreen.IsOpen || Preview);
+            if (startWanted && panel != Panel.Start) OpenStart();
+            if (panel == Panel.Start && !startWanted) { CloseStart(); return; }
+            if (panel == Panel.Start) { UpdateStart(); return; }
+            UpdateGame();
+        }
+
+        void OpenStart()
+        {
+            panel = Panel.Start;
+            StartScreen.Held = true;
+            UIState.Blocking = true;
+            note = null;
+            Focus(nameBox.Text.Trim().Length == 0 ? nameBox : keyBox.Text.Length == 0 ? keyBox : null);
+            if (!autoTried && remember && nameBox.Text.Trim().Length > 0 && keyBox.Text.Length >= 4)
+            {
+                autoTried = true;
+                Submit(auto: true);
+            }
+        }
+
+        void CloseStart()
+        {
+            panel = Panel.None;
+            startDone = true;
+            Preview = false;
+            StartScreen.Held = false;
+            Focus(null);
+            if (!StartScreen.IsOpen) UIState.Release();
+        }
+
+        void UpdateStart()
+        {
+            UIState.Blocking = true;
+            StartScreen.Held = true;
+            if (!submitting) return;
+            var net = Net;
+            if (Online) { submitting = false; Sfx.Play("accept", .6f); CloseStart(); return; }
+            if (net == null || net.Status == NetClient.State.Offline || net.Status == NetClient.State.Waiting)
+            {
+                // 첫 화면에서는 몇 번이고 다시 붙지 않고, 이유를 보여 주고 고르게 한다
+                string why = net != null && !string.IsNullOrEmpty(net.LastError) ? net.LastError : "서버에 연결하지 못했어요";
+                if (net != null) net.Disconnect();
+                submitting = false;
+                Say(Friendly(why), true);
+                Focus(keyBox);
+            }
+        }
+
+        void UpdateGame()
+        {
+            if (panel == Panel.Game)
+            {
+                if (submitting && (Online || Net == null || Net.Status == NetClient.State.Offline))
+                {
+                    submitting = false;
+                    if (!Online) Say(Friendly(Net != null ? Net.LastError : ""), true);
+                    else { Say(null, false); Sfx.Play("accept", .6f); }
+                }
+                bool typing = nameBox.Active || keyBox.Active || addressBox.Active;
+                if (InputReader.CancelPressed() || (OPressed() && !typing)) CloseGame();
+                return;
+            }
+            if (!OPressed() || UIState.Blocking || UIState.JustClosed || StartScreen.IsOpen) return;
+            if (GameManager.I != null && GameManager.I.IsTravelling) return;
+            panel = Panel.Game;
+            UIState.Blocking = true;
+            note = null;
+            if (!Online) Focus(nameBox.Text.Trim().Length == 0 ? nameBox : null);
+            Sfx.Play("open", .5f);
+        }
+
+        void CloseGame()
+        {
+            panel = Panel.None;
+            Focus(null);
+            UIState.Release();
+        }
+
+        static bool OPressed()
+        {
+#if ENABLE_INPUT_SYSTEM
+            return Keyboard.current != null && Keyboard.current.oKey.wasPressedThisFrame;
+#else
+            return Input.GetKeyDown(KeyCode.O);
+#endif
+        }
+
+        // ---------------- 접속 ----------------
+
+        void Submit(bool auto = false)
+        {
+            if (submitting || Net == null) return;
+            if (Net.Status != NetClient.State.Offline) Net.Disconnect();
+            Focus(null);
+            string name = nameBox.Full.Trim(), key = keyBox.Full;
+            if (name.Length == 0) { Say("이름을 넣어 주세요", true); Focus(nameBox); return; }
+            if (key.Length > 0 && key.Length < 4) { Say("접속키는 4자 이상으로 정해 주세요", true); Focus(keyBox); return; }
+            if (showServer) address = addressBox.Full.Trim();
+            nameBox.Text = name;
+            PlayerPrefs.SetString("net.name", name);
+            PlayerPrefs.SetString("net.address", address);
+            PlayerPrefs.SetInt("net.remember", remember ? 1 : 0);
+            if (remember) PlayerPrefs.SetString("net.pass", key); else PlayerPrefs.DeleteKey("net.pass");
+            PlayerPrefs.Save();
+            if (!Net.Connect(address, name, key)) { Say(Net.LastError, true); return; }
+            submitting = true;
+            Say(auto ? $"{name}(으)로 저절로 접속하는 중…" : "접속하는 중…", false);
+        }
+
+        void PlayAlone()
+        {
+            if (Net != null && Net.Status != NetClient.State.Offline) Net.Disconnect();
+            submitting = false;
+            Sfx.Play("accept", .5f);
+            CloseStart();
+        }
+
+        /// <summary>끊고, 저장된 접속키를 지우고 로그인 칸을 보여 준다</summary>
+        void SwitchAccount()
+        {
+            if (Net != null) Net.Disconnect();
+            keyBox.Text = "";
+            PlayerPrefs.DeleteKey("net.pass");
+            PlayerPrefs.Save();
+            Say("다른 이름으로 들어오려면 이름과 접속키를 넣어 주세요", false);
+            Focus(nameBox);
+        }
+
+        void Say(string text, bool bad) { note = text; noteBad = bad; }
+
+        /// <summary>서버·연결 오류를 사람 말로</summary>
+        static string Friendly(string why)
+        {
+            if (string.IsNullOrEmpty(why)) return "서버에 연결하지 못했어요. 인터넷을 확인하고 다시 눌러 주세요";
+            if (why.StartsWith("서버: ")) return why.Substring(4);
+            if (why.StartsWith("접속 실패") || why.StartsWith("연결이 끊겼습니다")) return "서버에 연결하지 못했어요. 인터넷을 확인하고 다시 눌러 주세요";
+            return why;
+        }
+
+        void Focus(NetTextBox box)
+        {
+            foreach (var b in new[] { nameBox, keyBox, addressBox }) if (b != box) b.End();
+            if (box != null) box.Begin();
+        }
+
+        // ---------------- 그리기 ----------------
+
+        // 시작 화면과 같은 색 (StartScreen)
+        static readonly Color32 Bg = new Color32(0xEF, 0xE6, 0xCF, 0xFF), BgCheck = new Color32(0xE8, 0xDE, 0xC4, 0xFF);
+        static readonly Color32 Green = new Color32(0x3A, 0x71, 0x55, 0xFF), GreenDark = new Color32(0x2C, 0x58, 0x42, 0xFF);
+        static readonly Color32 Brown = new Color32(0x4A, 0x35, 0x24, 0xFF), BrownLight = new Color32(0x8A, 0x6A, 0x46, 0xFF);
+        static readonly Color32 TitleColor = new Color32(0x6B, 0x4A, 0x2B, 0xFF), Shadow = new Color32(0xD6, 0xC8, 0xA6, 0xFF);
+        static readonly Color32 Pick = new Color32(0xE0, 0x57, 0x3A, 0xFF), White = new Color32(0xFF, 0xFF, 0xFF, 0xFF), Cream = new Color32(0xFB, 0xF5, 0xE6, 0xFF);
+
+        GUIStyle label, small, big, plainField, gameField;
+        bool light;   // 지금 그리는 화면이 밝은(시작 화면) 쪽인가
+
+        void OnGUI()
+        {
+            if (panel == Panel.None) return;
+            UIStyle.Begin();
+            Styles();
+            var e = Event.current;
+            if (e.type == EventType.KeyDown)
+            {
+                if (e.keyCode == KeyCode.Tab) { NextField(); e.Use(); }
+                else if ((e.keyCode == KeyCode.Return || e.keyCode == KeyCode.KeypadEnter) && FormShown) { Submit(); e.Use(); }
+            }
+            if (panel == Panel.Start) DrawStart();
+            else DrawGame();
+        }
+
+        bool FormShown => panel == Panel.Start || !Online;
+
+        void NextField()
+        {
+            if (!FormShown) return;
+            if (nameBox.Active) Focus(keyBox);
+            else if (keyBox.Active && showServer) Focus(addressBox);
+            else Focus(nameBox);
+        }
+
+        void Styles()
+        {
+            if (label != null && label.font == UIStyle.RegularFont) return;
+            label = new GUIStyle(GUI.skin.label) { font = UIStyle.RegularFont, fontSize = 11, alignment = TextAnchor.MiddleLeft, clipping = TextClipping.Overflow, richText = true, wordWrap = false };
+            small = new GUIStyle(label) { font = UIStyle.SmallFont, fontSize = 9 };
+            big = new GUIStyle(label) { fontSize = 13, alignment = TextAnchor.MiddleCenter };
+            plainField = new GUIStyle(GUI.skin.label) { font = UIStyle.RegularFont, fontSize = 11, alignment = TextAnchor.MiddleLeft, padding = new RectOffset(0, 0, 0, 0) };
+            foreach (var st in new[] { plainField.normal, plainField.hover, plainField.focused, plainField.active }) st.background = null;
+            gameField = new GUIStyle(GUI.skin.textField) { font = UIStyle.RegularFont, fontSize = UIStyle.BodySize, alignment = TextAnchor.MiddleLeft };
+        }
+
+        static void Fill(Rect r, Color32 c)
+        {
+            var old = GUI.color; GUI.color = UIStyle.Lin(c);
+            GUI.DrawTexture(r, Texture2D.whiteTexture);
+            GUI.color = old;
+        }
+
+        static void Frame(Rect r, Color32 c, float t)
+        {
+            Fill(new Rect(r.x, r.y, r.width, t), c); Fill(new Rect(r.x, r.yMax - t, r.width, t), c);
+            Fill(new Rect(r.x, r.y, t, r.height), c); Fill(new Rect(r.xMax - t, r.y, t, r.height), c);
+        }
+
+        void Text(Rect r, string s, Color32 c, GUIStyle st, TextAnchor a = TextAnchor.MiddleLeft)
+        {
+            st.alignment = a;
+            st.normal.textColor = light ? (Color)UIStyle.Lin(c) : (Color)c;
+            GUI.Label(r, s, st);
+        }
+
+        bool Button(Rect r, string text, bool primary)
+        {
+            if (!light) return GUI.Button(r, text, UIStyle.Button);
+            bool hover = r.Contains(Event.current.mousePosition);
+            Fill(new Rect(r.x + 2, r.y + 3, r.width, r.height), Shadow);
+            Fill(r, primary ? (hover ? GreenDark : Green) : (hover ? Cream : White));
+            Frame(r, primary ? GreenDark : BrownLight, 1);
+            Text(r, text, primary ? White : Brown, label, TextAnchor.MiddleCenter);
+            return GUI.Button(r, GUIContent.none, GUIStyle.none);
+        }
+
+        /// <summary>입력 칸 하나 (칸을 누르면 그 칸에 쓴다)</summary>
+        void Field(Rect r, NetTextBox box)
+        {
+            var e = Event.current;
+            if (e.type == EventType.MouseDown && r.Contains(e.mousePosition)) { Focus(box); e.Use(); }
+            if (light)
+            {
+                Fill(r, White);
+                Frame(r, box.Active ? Pick : BrownLight, box.Active ? 2 : 1);
+                box.TextColor = UIStyle.Lin(Brown);
+                box.Draw(new Rect(r.x + 3, r.y, r.width - 4, r.height), plainField);
+            }
+            else
+            {
+                box.TextColor = new Color(0.97f, 0.95f, 0.9f);
+                box.Draw(r, gameField);
+            }
+        }
+
+        /// <summary>네모 칸 + 글: 누르면 켜고 끈다</summary>
+        bool Check(Rect r, bool on, string text)
+        {
+            var box = new Rect(r.x, r.y + (r.height - 10) / 2, 10, 10);
+            if (light) { Fill(box, White); Frame(box, BrownLight, 1); if (on) Fill(new Rect(box.x + 2, box.y + 2, 6, 6), Green); }
+            else { GUI.Box(box, GUIContent.none, UIStyle.Box); if (on) Fill(new Rect(box.x + 3, box.y + 3, 4, 4), new Color32(0x8F, 0xE0, 0x8F, 0xFF)); }
+            Text(new Rect(box.xMax + 5, r.y, r.width - 15, r.height), text, light ? Brown : White, small);
+            return GUI.Button(r, GUIContent.none, GUIStyle.none) ? !on : on;
+        }
+
+        /// <summary>DrawForm이 차지하는 높이 (그리기 전에 카드 크기를 정한다)</summary>
+        float FormHeight => 41 + 37 + 17 + (showServer ? 35 : 0) + 22 + 24 + (string.IsNullOrEmpty(note) ? 0 : 20);
+
+        /// <summary>이름 · 접속키 · (서버 주소) · 기억 · 버튼 · 안내. 다 그린 아래쪽 y를 돌려준다</summary>
+        float DrawForm(float x, float y, float w, bool start)
+        {
+            Color32 ink = light ? Brown : White, soft = light ? BrownLight : new Color32(0xC9, 0xC3, 0xD6, 0xFF);
+            Text(new Rect(x, y, w, 14), "이름", ink, label);
+            Text(new Rect(x, y, w, 14), "다른 사람에게 보이는 이름 · 16자까지", soft, small, TextAnchor.MiddleRight);
+            Field(new Rect(x, y + 15, w, 20), nameBox);
+            y += 41;
+            Text(new Rect(x, y, w, 14), "접속키", ink, label);
+            Text(new Rect(x, y, w, 14), "비밀번호처럼 나만 아는 글자 · 4자 이상", soft, small, TextAnchor.MiddleRight);
+            Field(new Rect(x, y + 15, w, 20), keyBox);
+            y += 37;
+            Text(new Rect(x, y, w, 12), "처음 쓰는 이름이면 새 계정이 만들어져요", soft, small);
+            y += 17;
+            if (showServer)
+            {
+                Text(new Rect(x, y, w, 14), "서버 주소 (개발용)", ink, small);
+                Field(new Rect(x, y + 13, w, 18), addressBox);
+                y += 35;
+            }
+            bool r = Check(new Rect(x, y, w, 14), remember, "이 컴퓨터에 기억하고 다음에는 바로 접속");
+            if (r != remember) { remember = r; Sfx.Play("open", .4f); }
+            y += 22;
+            float bw = (w - 10) / 2;
+            if (submitting)
+            {
+                Button(new Rect(x, y, bw, 24), "접속하는 중…", true);
+            }
+            else if (Button(new Rect(x, y, bw, 24), "접속하기", true)) Submit();
+            if (start)
+            {
+                if (Button(new Rect(x + bw + 10, y, bw, 24), "혼자 하기", false)) PlayAlone();
+            }
+            else if (Button(new Rect(x + bw + 10, y, bw, 24), "닫기", false)) CloseGame();
+            y += 24;
+            if (!string.IsNullOrEmpty(note))
+            {
+                Text(new Rect(x - 10, y + 6, w + 20, 14), note, noteBad ? Pick : (light ? Green : new Color32(0x8F, 0xE0, 0x8F, 0xFF)), small, TextAnchor.MiddleCenter);
+                y += 20;
+            }
+            return y;
+        }
+
+        void DrawStart()
+        {
+            light = true;
+            GUI.depth = -600;   // 시작 화면(-500) 위
+            float W = UIStyle.VirtualWidth, H = UIStyle.VirtualHeight;
+            Fill(new Rect(0, 0, W, H), Bg);
+            for (int y = 0; y < H; y += 20)
+                for (int x = 0; x < W; x += 20)
+                    if (((x / 20) + (y / 20)) % 2 == 1) Fill(new Rect(x, y, 20, 20), BgCheck);
+
+            var head = new Rect(20, 12, W - 40, 34);
+            Fill(head, Green);
+            Text(new Rect(head.x + 14, head.y, 200, head.height), "Pocket Caravan", White, label);
+            Text(new Rect(head.x, head.y, head.width - 14, head.height), "온라인", White, small, TextAnchor.MiddleRight);
+
+            Text(new Rect(0, 54, W, 24), "함께 떠나는 상인 길", TitleColor, big, TextAnchor.MiddleCenter);
+
+            float cw = 320, ch = 14 + FormHeight + 16;
+            var card = new Rect((W - cw) / 2, 82, cw, ch);
+            Fill(new Rect(card.x + 3, card.y + 4, card.width, card.height), Shadow);
+            Fill(card, White);
+            DrawForm(card.x + 18, card.y + 12, cw - 36, true);
+
+            Text(new Rect(0, H - 26, W, 14), "Tab 칸 바꾸기 · Enter 접속 · 한글/영어: 오른쪽 Alt", BrownLight, small, TextAnchor.MiddleCenter);
+            var server = new Rect(W - 90, H - 26, 76, 14);
+            Text(server, showServer ? "서버 주소 숨기기" : "서버 바꾸기", BrownLight, small, TextAnchor.MiddleRight);
+            if (GUI.Button(server, GUIContent.none, GUIStyle.none)) { showServer = !showServer; addressBox.Text = address; }
+        }
+
+        void DrawGame()
+        {
+            light = false;
+            GUI.depth = -11;
+            float w = 320, h = Online ? 156 : 30 + FormHeight + 14;
+            var r = new Rect((UIStyle.VirtualWidth - w) / 2f, (UIStyle.VirtualHeight - h) / 2f, w, h);
+            GUI.Box(r, "", UIStyle.Box);
+            float x = r.x + 16, fw = w - 32, y = r.y + 8;
+            Text(new Rect(r.x, y, w, 16), "<b>온라인</b>", White, label, TextAnchor.MiddleCenter);
+            y += 22;
+            if (!Online) { DrawForm(x, y, fw, false); return; }
+
+            var net = Net;
+            string kind = net.IsAccount ? "<color=#8fe08f>계정</color> · 돈·짐이 서버에 저장돼요" : "<color=#ffde59>손님</color> · 접속키가 없어서 저장되지 않아요";
+            Text(new Rect(x, y, fw, 16), $"<b>{net.MyName}</b>  <color=#c9c3d6>({net.MyId})</color>", White, label);
+            y += 18;
+            Text(new Rect(x, y, fw, 14), kind, White, small);
+            y += 18;
+            Text(new Rect(x, y, fw, 14), $"지금 접속한 사람 {net.OnlineCount}명 · 이 맵 {net.Peers.Count + 1}명", White, small);
+            y += 16;
+            Text(new Rect(x, y, fw, 14), "Enter 채팅 · /춤 같은 리액션 (/리액션 목록)", new Color32(0xC9, 0xC3, 0xD6, 0xFF), small);
+            y += 14;
+            Text(new Rect(x, y, fw, 14), "공유 장터: 리알토 · 개경 · 비르카 · 제다", new Color32(0xC9, 0xC3, 0xD6, 0xFF), small);
+            y += 22;
+            float bw = (fw - 16) / 3;
+            if (Button(new Rect(x, y, bw, 22), "끊기", false)) { net.Disconnect(); Say("접속을 끊었어요", false); }
+            if (Button(new Rect(x + bw + 8, y, bw, 22), "다른 이름으로", false)) SwitchAccount();
+            if (Button(new Rect(x + (bw + 8) * 2, y, bw, 22), "닫기 (O)", false)) CloseGame();
+        }
+    }
+}

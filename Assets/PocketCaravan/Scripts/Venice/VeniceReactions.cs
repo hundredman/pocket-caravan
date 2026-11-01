@@ -175,6 +175,7 @@ namespace PocketCaravan
             nextBit = Time.time;
             Sfx.Play(info.move == Move.Nap ? "cancel" : info.move == Move.Love ? "accept" : "voice", .5f);
             VeniceLife.Attract(player.transform.position, 2.5f);
+            NetEmote.Send(info.id, info.name);   // 온라인이면 같은 맵 사람들에게도 보인다 (feature/online)
 
             // 가까운 주민이 돌아보고 깡총, 한마디
             int said = 0;
