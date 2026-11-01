@@ -172,6 +172,7 @@ DROP_TALKERS = {('north_birka', '국경 경비대장'), ('north_birka', '남쪽�
 TALKER_LINES = {   # 옛 대사가 다른 맵과 겹쳐서 바꾼 것 (첫 줄만 바꾸고 나머지는 옛 대사)
     ('north_herd', '여관 주인'): ['고원 바람이 매섭지?\n꿀술 한 잔에 화롯가 자리는 공짜야.'],
     ('north_c_road_sw', '떠돌이 음유시인'): ['솔숲 바람 소리에 맞춰 한 곡 뽑아 볼까?\n산적만 안 나오면 좋은 길이지.'],
+    ('north_naru', '길손'): ['북쪽 갈림길에 트롤 패거리가 산다더군.\n라우가르로 가는 지름길인데, 통행료를 내거나 냅다 달려야 해.', '트롤이 싫으면 서쪽 비르카로 돌아가게.\n멀어도 그쪽 길은 조용하지.'],
     ('north_c_road_se', '남쪽 행상'): ['물가 길은 느려도 안전하지.\n남쪽 길목에선 북쪽 소금을 찾는 사람이 많아.']}
 EXTRA_REST = {   # 2026-10-31(기우: 썰렁한 마을 보강) 모닥불(왼쪽 위 칸) + 말 거는 사람. 맵 칸 좌표(지금 맵 기준)
     'north_hunter': dict(fires=[(47, 40)], talkers=[
@@ -235,7 +236,42 @@ TALKER_TO_NPC = {('north_hunter', '가죽 무두장이 토라'): 'north_tora', (
                  ('north_laugar', '약초꾼'): 'north_herbalist', ('north_laugar', '목욕 회관 주인'): 'north_bathkeeper',
                  ('north_herd', '순록 목동 할머니'): 'north_herd_granny', ('north_herd', '썰매 장인'): 'north_sledmaker',
                  ('north_runehill', '룬 지기 노인'): 'north_runekeeper', ('north_icecave', '광부 할아범'): 'north_miner'}
+def move_enclosed_signs(m):
+    """2026-11-01: 길을 넓힌 뒤(n6) 길 한가운데·길 홈에 남은 이정표를 길 바로 옆(길 이웃 1칸) 빈 칸으로 옮기고, 옛 자리는 길로 메워 바닥 모양을 다시 맞춘다"""
+    import re as _r
+    R_ = lambda x, y: m.inside(x, y) and m.road[y][x] > 0
+    D4_ = ((1, 0), (-1, 0), (0, 1), (0, -1))
+    taken = {(o['x'], o['y']) for o in m.objects}
+    moved = []
+    for o in m.objects:
+        if o.get('kind') != 'sign': continue
+        x, y = o['x'], o['y']
+        n = sum(R_(x + a, y + b) for a, b in D4_)
+        if not ((R_(x - 1, y) and R_(x + 1, y)) or (R_(x, y - 1) and R_(x, y + 1)) or n >= 3): continue
+        best = None
+        for r in range(1, 5):
+            for b in range(-r, r + 1):
+                for a in range(-r, r + 1):
+                    X, Y = x + a, y + b
+                    if not m.inside(X, Y) or (X, Y) in taken or R_(X, Y) or m.blocked[Y][X] or m.obj[Y][X] is not None or m.high[Y][X] is not None: continue
+                    if sum(R_(X + p, Y + q) for p, q in D4_) != 1: continue
+                    if best is None or abs(a) + abs(b) < best[0]: best = (abs(a) + abs(b), X, Y)
+            if best: break
+        if not best: continue
+        _, X, Y = best
+        m.obj[Y][X] = m.obj[y][x]; m.blocked[Y][X] = True
+        m.obj[y][x] = None; m.blocked[y][x] = False
+        m.road[y][x] = max(m.road[y + b][x + a] for a, b in D4_ if m.inside(x + a, y + b))
+        for b in range(-1, 2):
+            for a in range(-1, 2):
+                X2, Y2 = x + a, y + b
+                if R_(X2, Y2) and ((X2, Y2) == (x, y) or (isinstance(m.ground[Y2][X2], str) and _r.match(r'^floor:[0-6]:1[4-7]$', m.ground[Y2][X2]))):
+                    m.ground[Y2][X2] = tiles.autotile(R_, X2, Y2, 'floor', 0, 14)
+        o['x'], o['y'] = X, Y; taken.add((X, Y)); moved.append(((x, y), (X, Y)))
+    return moved
+
 SECRET_MOVE = {('north_naru', 5): (12, 66)}   # 2026-10-31(기우) 숨은 룬돌 5번이 2번과 5칸 거리 → 나루 남쪽 끝 바닷가 후미로
+BANDIT_MOVE = {'north_c_road_sw': (56, 30), 'north_c_runeway': (43, 42), 'north_naru': (18, 17)}   # 나루는 북쪽 갈림길(얼음 동굴·라우가르 출구 쪽): 통행료 뒤 출구로 나가는 게 보이게   # 2026-11-01(기우: 들어오자마자 도적) 출구·도착 자리에서 14칸 넘게 떨어진 길 위로
 KEEPER_EXTRA = {'north_c_creek': ([41, 30], [41, 29])}   # 위쪽 좌판에 장꾼이 안 붙어 빈 좌판이던 것 (말 거는 칸, 맡은 좌판)
 ROAD_CLEAR = 3    # 2026-10-29(사용자): 숲 지형에서 길 양옆 이만큼은 나무를 심지 않는다
 ROAD_THIN = 6     # 그 밖 이 칸까지는 절반만 심는다(듬성한 숲)
@@ -1770,6 +1806,8 @@ def build(key):
     for (tx_, ty_, nm_, ch_, ln_) in EXTRA_REST.get(key, {}).get('talkers', []): m.talker(tx_, ty_, nm_, ch_, *ln_)
     fix_region_patch(m, key)
     apply_exit_roads(m, key)
+    for o_ in m.objects:
+        if o_.get('kind') == 'bandit' and key in BANDIT_MOVE: o_['x'], o_['y'] = BANDIT_MOVE[key]
     for (sx_, sy_, si_) in list(m.secrets):
         if (key, si_) in SECRET_MOVE:
             m.high[sy_][sx_] = None; m.obj[sy_ + 1][sx_] = None; m.blocked[sy_ + 1][sx_] = False
@@ -1942,6 +1980,7 @@ def build(key):
         m.stamps.remove(st); report['stallFix']['stallsRemoved'].append((int(st[1]), int(st[2])))
     from n6_fix import ux_fixes as _ux   # 2026-10-30 유저테스트 반영
     report['ux'] = _ux(m, key, mine)
+    report['signMoved'] = move_enclosed_signs(m)   # 2026-11-01(기우: 이정표가 길 한가운데)
     _mf = mine2.copy()   # (10/30) 다른 지역 길(담당 밖)도 걷는 땅으로 보고 검사
     for (cx, cy) in reg_walk: _mf[cy, cx] = True
     report['unreach'] = final_check(m, _mf)

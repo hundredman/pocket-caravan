@@ -285,8 +285,8 @@ namespace PocketCaravan.EditorTools
             Q("N5_Troll", q =>
             {
                 q.id = "north_q5_troll"; q.title = "다리 밑 트롤"; q.chain = chain; q.giverNpc = Warehouse; q.requires.Add(q2);
-                q.summary = "피오르 나루 창고지기가 맡긴 소금 덩이를 사냥꾼 마을의 순록지기 삼형제에게 배달한다. 나루에서 비르카로 나가는 서쪽 길목엔 트롤 패거리가 산다.";
-                q.offerLine = "배로 들어온 소금 덩이야. 사냥꾼 마을 순록지기 삼형제가 순록한테 핥게 한다고 기다리고 있지. 그런데 비르카로 나가는 서쪽 길목 다리 밑에 트롤 패거리가 살아. 통행료를 내든, 냅다 달리든 자네가 정하게.";
+                q.summary = "피오르 나루 창고지기가 맡긴 소금 덩이를 사냥꾼 마을의 순록지기 삼형제에게 배달한다. 나루 북쪽 갈림길(라우가르로 가는 지름길)엔 트롤 패거리가 산다. 돌아가려면 서쪽 비르카 길로.";
+                q.offerLine = "배로 들어온 소금 덩이야. 사냥꾼 마을 순록지기 삼형제가 순록한테 핥게 한다고 기다리고 있지. 북쪽 갈림길로 라우가르를 거쳐 가면 빠른데, 거기 트롤 패거리가 살아. 통행료를 내든, 냅다 달리든, 서쪽 비르카로 돌아가든 자네가 정하게.";
                 q.giveItem = saltLick; q.giveCount = 1;
                 q.objectives.Add(O(ObjectiveType.Deliver, "순록지기 맏형에게 소금 덩이 전하기", Goats, saltLick, 1,
                     "오, 소금이다! 순록들이 신나겠군. 트롤한테 \"뒤에 더 큰 짐꾼이 온다\"고 하면 한 번은 속는다니까. 고마워."));
