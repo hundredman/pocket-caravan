@@ -15,12 +15,15 @@ class MapTileDependencies(unittest.TestCase):
             for entry in json.loads(manifest.read_text())['maps']:
                 m=json.loads((ROOT/entry['jsonPath']).read_text())
                 scene=(ROOT/entry['scenePath']).read_text()
-                for name in m['palette']:
+                used={i for layer in ('ground','deco','obj','high')for i in m.get(layer,[])}
+                used.update(cell['tile']for cell in m.get('cameraBackdrop',[]))
+                for index,name in enumerate(m['palette']):
                     if not name:continue
                     tile=BASE/'TileAssets'/(name+'.asset');png=BASE/'Tiles'/(name+'.png')
                     for p in (tile,png,Path(str(tile)+'.meta'),Path(str(png)+'.meta')):
                         self.assertTrue(p.is_file(),str(p))
-                    self.assertTrue(guid(Path(str(tile)+'.meta')) in scene,(entry['mapId'],name))
+                    # Unused palette entries need files, but have no scene reference.
+                    if index in used:self.assertTrue(guid(Path(str(tile)+'.meta')) in scene,(entry['mapId'],name))
                     self.assertIn(guid(Path(str(png)+'.meta')),tile.read_text(),name)
 
 if __name__=='__main__':unittest.main()

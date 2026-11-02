@@ -500,6 +500,8 @@ namespace PocketCaravan.EditorTools
             vol.isGlobal = true;
             vol.sharedProfile = PostFxProfile();
 
+            if (previewDirectory == null && !f.previewOnly) GoryeoMarketLayout.Apply(map, f.h);
+
             EditorSceneManager.SaveScene(scene, path);
         }
 

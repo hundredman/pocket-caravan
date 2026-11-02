@@ -1,0 +1,27 @@
+.....................s.............................................sssss.s................................................................................................../Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/Tools/Integration/test_c7_trial.py:57: ResourceWarning: unclosed file <_io.BufferedReader name='/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/ArtReview/C7-Trial4-20261026/Screens-v2/before.png'>
+  self.assertEqual(Image.open(OUT/'Screens-v2'/(name+'.png')).size,(480,270))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/Tools/Integration/test_c7_trial.py:57: ResourceWarning: unclosed file <_io.BufferedReader name='/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/ArtReview/C7-Trial4-20261026/Screens-v2/trial.png'>
+  self.assertEqual(Image.open(OUT/'Screens-v2'/(name+'.png')).size,(480,270))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.............................s............................s.....................F.F.........................sssss...s...s......................................................
+======================================================================
+FAIL: test_every_map_has_a_walkable_arrival_and_aliases_are_kept (test_m4_production.SaveMigration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/Tools/Integration/test_m4_production.py", line 81, in test_every_map_has_a_walkable_arrival_and_aliases_are_kept
+    self.assertEqual(len(g['aliases']),8);self.assertEqual(sorted(m['id'] for m in g['maps']),sorted(MAPS))
+AssertionError: 10 != 8
+
+======================================================================
+FAIL: test_registered_scene_tile_and_sprite_dependencies_are_present (test_map_tile_dependencies.MapTileDependencies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/Tools/Integration/test_map_tile_dependencies.py", line 23, in test_registered_scene_tile_and_sprite_dependencies_are_present
+    self.assertTrue(guid(Path(str(tile)+'.meta')) in scene,(entry['mapId'],name))
+AssertionError: False is not true : ('north_c_snowwood', 'floor_3_7_grassedge')
+
+----------------------------------------------------------------------
+Ran 347 tests in 27.372s
+
+FAILED (failures=2, skipped=16)
