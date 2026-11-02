@@ -1,0 +1,5366 @@
+{
+    "complete": true,
+    "error": "",
+    "checks": [
+        {
+            "test": "loaded requested map (actual=Gaegyeong)",
+            "map": "Assets/PocketCaravan/Scenes/Goryeo/Gaegyeong.unity",
+            "passed": true
+        },
+        {
+            "test": "user saves disabled",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "production scene is not previewOnly",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "default dressing exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/board.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/board.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible board",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible market",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible event-yard",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "old position under prop recovers safely",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "event replaces everyday appearance",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "event clears everyday collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "event end restores appearance and collision",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "map rendering ready (colors=2861)",
+            "map": "ArtReview/MarketProduction-20261102/Unity/gaegyeong-after.png",
+            "passed": true
+        },
+        {
+            "test": "native 1280x720 capture",
+            "map": "ArtReview/MarketProduction-20261102/Unity/gaegyeong-after.png",
+            "passed": true
+        },
+        {
+            "test": "existing contract board opens",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "contract board closes",
+            "map": "Gaegyeong",
+            "passed": true
+        },
+        {
+            "test": "loaded requested map (actual=goryeo_songak)",
+            "map": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_songak.unity",
+            "passed": true
+        },
+        {
+            "test": "user saves disabled",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "production scene is not previewOnly",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "default dressing exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/board.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/board.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible board",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible market",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible event-yard",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/sign.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/sign.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible signs",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "old position under prop recovers safely",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "event replaces everyday appearance",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "event clears everyday collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "event end restores appearance and collision",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "map rendering ready (colors=2257)",
+            "map": "ArtReview/MarketProduction-20261102/Unity/songak-after.png",
+            "passed": true
+        },
+        {
+            "test": "native 1280x720 capture",
+            "map": "ArtReview/MarketProduction-20261102/Unity/songak-after.png",
+            "passed": true
+        },
+        {
+            "test": "existing contract board opens",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "contract board closes",
+            "map": "goryeo_songak",
+            "passed": true
+        },
+        {
+            "test": "loaded requested map (actual=Dakmok)",
+            "map": "Assets/PocketCaravan/Scenes/Goryeo/Dakmok.unity",
+            "passed": true
+        },
+        {
+            "test": "user saves disabled",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "production scene is not previewOnly",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "default dressing exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/board.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/board.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible board",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible market",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible event-yard",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/sign.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/sign.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible signs",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "old position under prop recovers safely",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "event replaces everyday appearance",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "event clears everyday collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "event end restores appearance and collision",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "map rendering ready (colors=2510)",
+            "map": "ArtReview/MarketProduction-20261102/Unity/dakmok-after.png",
+            "passed": true
+        },
+        {
+            "test": "native 1280x720 capture",
+            "map": "ArtReview/MarketProduction-20261102/Unity/dakmok-after.png",
+            "passed": true
+        },
+        {
+            "test": "existing contract board opens",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "contract board closes",
+            "map": "Dakmok",
+            "passed": true
+        },
+        {
+            "test": "loaded requested map (actual=goryeo_jangdan)",
+            "map": "Assets/PocketCaravan/Scenes/Goryeo/goryeo_jangdan.unity",
+            "passed": true
+        },
+        {
+            "test": "user saves disabled",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "production scene is not previewOnly",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "default dressing exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/board.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/board.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible board",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible market",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible event-yard",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/sign.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/sign.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible signs",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "old position under prop recovers safely",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "event replaces everyday appearance",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "event clears everyday collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "event end restores appearance and collision",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "map rendering ready (colors=2543)",
+            "map": "ArtReview/MarketProduction-20261102/Unity/jangdan-after.png",
+            "passed": true
+        },
+        {
+            "test": "native 1280x720 capture",
+            "map": "ArtReview/MarketProduction-20261102/Unity/jangdan-after.png",
+            "passed": true
+        },
+        {
+            "test": "existing contract board opens",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "map rendering ready (colors=1708)",
+            "map": "ArtReview/MarketProduction-20261102/Unity/jangdan-board-ui.png",
+            "passed": true
+        },
+        {
+            "test": "native 1280x720 capture",
+            "map": "ArtReview/MarketProduction-20261102/Unity/jangdan-board-ui.png",
+            "passed": true
+        },
+        {
+            "test": "contract board closes",
+            "map": "goryeo_jangdan",
+            "passed": true
+        },
+        {
+            "test": "loaded requested map (actual=transit_woodtown)",
+            "map": "Assets/PocketCaravan/Scenes/Transit/transit_woodtown.unity",
+            "passed": true
+        },
+        {
+            "test": "user saves disabled",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "production scene is not previewOnly",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "default dressing exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/board.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/board.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible board",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible market",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible event-yard",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "old position under prop recovers safely",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "event replaces everyday appearance",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "event clears everyday collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "event end restores appearance and collision",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "map rendering ready (colors=2158)",
+            "map": "ArtReview/MarketProduction-20261102/Unity/woodtown-after.png",
+            "passed": true
+        },
+        {
+            "test": "native 1280x720 capture",
+            "map": "ArtReview/MarketProduction-20261102/Unity/woodtown-after.png",
+            "passed": true
+        },
+        {
+            "test": "existing contract board opens",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "contract board closes",
+            "map": "transit_woodtown",
+            "passed": true
+        },
+        {
+            "test": "loaded requested map (actual=transit_ferry)",
+            "map": "Assets/PocketCaravan/Scenes/Transit/transit_ferry.unity",
+            "passed": true
+        },
+        {
+            "test": "user saves disabled",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "production scene is not previewOnly",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "default dressing exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/board.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/board.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible board",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible market",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible event-yard",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "old position under prop recovers safely",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "event replaces everyday appearance",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "event clears everyday collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "event end restores appearance and collision",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "map rendering ready (colors=2243)",
+            "map": "ArtReview/MarketProduction-20261102/Unity/ferry-after.png",
+            "passed": true
+        },
+        {
+            "test": "native 1280x720 capture",
+            "map": "ArtReview/MarketProduction-20261102/Unity/ferry-after.png",
+            "passed": true
+        },
+        {
+            "test": "existing contract board opens",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "contract board closes",
+            "map": "transit_ferry",
+            "passed": true
+        },
+        {
+            "test": "loaded requested map (actual=Naru)",
+            "map": "Assets/PocketCaravan/Scenes/Goryeo/Naru.unity",
+            "passed": true
+        },
+        {
+            "test": "user saves disabled",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "production scene is not previewOnly",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "default dressing exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/board.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/board.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible board",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible market",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible event-yard",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "production sprite is outside editor preview",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/sign.png",
+            "passed": true
+        },
+        {
+            "test": "whole sprite unit scale",
+            "map": "Assets/PocketCaravan/Art/Goryeo/Markets/sign.png",
+            "passed": true
+        },
+        {
+            "test": "normal state visible signs",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "normal prop collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "old position under prop recovers safely",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "event replaces everyday appearance",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "event clears everyday collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "event end restores appearance and collision",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character has 16 frames",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "character frame texture exists",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "map rendering ready (colors=2616)",
+            "map": "ArtReview/MarketProduction-20261102/Unity/naru-after.png",
+            "passed": true
+        },
+        {
+            "test": "native 1280x720 capture",
+            "map": "ArtReview/MarketProduction-20261102/Unity/naru-after.png",
+            "passed": true
+        },
+        {
+            "test": "existing contract board opens",
+            "map": "Naru",
+            "passed": true
+        },
+        {
+            "test": "contract board closes",
+            "map": "Naru",
+            "passed": true
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+{
+  "status": "approved",
+  "date": "2026-11-02",
+  "scope": "Reviewed two market sprites and existing 67-placement market layout; user requested production integration. No new settlement functions.",
+  "userInstruction": "통합해줘.",
+  "assets": [
+    {
+      "id": "grain_stall",
+      "image": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+      "size": [
+        3,
+        3
+      ],
+      "source": "ArtReview/MarketCourts-20261030/Native/grain_stall.png",
+      "rgbaSha256": "ca2930cf8933eeb0a1a81fa2c17520c358738ec97bd922c04e0334cc46c14a2a"
+    },
+    {
+      "id": "wares_counter",
+      "image": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+      "size": [
+        3,
+        2
+      ],
+      "source": "ArtReview/MarketCourts-20261030/Native/wares_counter.png",
+      "rgbaSha256": "ba4bac3315126a404e3bad13a524dd24e4f6a530e11cd1840f05cc8443f2c0e3"
+    }
+  ],
+  "layoutSha256": "5526030234492b45c2d857a91bc3df742e85c6c003fd03951062ef2f0d0c9389"
+}

@@ -563,3 +563,11 @@ CameraFollow는 승인 상태 그대로다. 전환은 발 중심이 바깥 면�
 시장 기능이 미정인 남동포구·중앙길목·쉼터2곳은 좌판과 이벤트 콘텐츠를 임의로 만들지 않았다. 해당 빈 공간은 여전히 후속 과제다. 새2종과 시장7곳 배치는 모두 승인 대기 검토본이며 본편 맵/씬/원격 미반영. ArtReview/MarketCourts-20261030의 실제 게임 캡처와 나란히 비교로 확인받는다. 검증은 Validation/A7e-Market-2026-10-30 참조.
 
 장터 재검토 검사: 정적343(16skip) 실패0, Unity Play936확인/7곳 전후14장+게시판UI·장단 실제480×270, PNG/ASE2종 RGBA 일치, 콘솔 오류0. 사람 수동 보행/FPS/빌드는 미검사. 검토 승인 대기.
+
+## A7e 장터 본편 연결 (2026-11-02)
+
+사용자 ‘통합해줘’ 지시로 검토본의 시장7곳53좌판·게시판/이정표14개(합67개)를 본편9씬에 연결했다. 새 곡물좌판48×48·잡화판매대48×32 및 게시판/이정표16×16의 온전한 PNG4개를 Art/Goryeo/Markets에 두었다. Data/Goryeo/MarketLayout.json은 본편 배치 원본, Tools/WorldLayout/market_production.py는 승인 배치 지문/이미지RGBA를 검증해 내보내는 도구다. Editor/GoryeoMarketLayout가 공통 MapJsonBuilder의 본편 생성 시 배치를 적용하므로 재생성해도 사라지지 않는다. Editor 검토 폴더의 PNG에 의존하지 않는다. VillageDressing의 기존 충돌·이벤트 마당 교체/복원을 재사용한다.
+
+실제 본편7시장 Play 자동1072확인·7장+게시판UI1장 촬영, 9본편씬/67Sprite 확인, 정적347(16skip) 실패0·세계1437출구 오류0, 실제 게임저장6파일 바이트 동일. 구 검사2건의 낡은 전제(총별칭8개 고정·사용하지 않는 팔레트도 씬에 있어야 함)를 기존고려8별칭보존/중복검사·실사용타일 GUID검사로 정정했다. 해당 실패조건이 변경 전 integration f90cb68d4에도 있었음을 확인했다.
+
+게임 Core/Economy/Quests/UI·GameDatabase·WorldIndex·EditorBuildSettings·지역등록/연결·맵JSON/지형·타문명씬·저장형식은 이번 변경에서 그대로다. 기능 미정4곳은 새 시장을 만들지 않았고 추가 논 검토안도 적용하지 않았다. 9씬은 원본에서 재생성했으며 실제 사람 보행·장시간/FPS·게임빌드는 미검사다. integration 원격병합 상태는 WorkLog의 후속 기록을 확인한다. [검증](Validation/MarketProduction-2026-11-02/README.md).
