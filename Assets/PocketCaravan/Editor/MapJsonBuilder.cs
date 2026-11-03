@@ -47,6 +47,14 @@ namespace PocketCaravan.EditorTools
         class CropPatch { public int x, y, w, h; }
         [Serializable] class BackdropCell { public int x,y,tile; }
 
+        [Serializable] class FloodCellFile
+        {
+            public int x,y,dryGrade,wetGrade;
+            public string dryGround,wetGround,dryDeco,wetDeco;
+            public bool dryBlocked,wetBlocked;
+        }
+        [Serializable] class FloodFile { public string id,definitionId;public float phaseOffset;public FloodCellFile[] cells; }
+
         [Serializable]
         class MapFile
         {
@@ -57,6 +65,7 @@ namespace PocketCaravan.EditorTools
             public string[] palette;
             public MapObject[] objects;
             public ObstaclePlacement[] obstacles;
+            public FloodFile[] terrainFloods;
             public CropPatch[] natureCrops;
             public BackdropCell[] cameraBackdrop;
         }
@@ -274,6 +283,30 @@ namespace PocketCaravan.EditorTools
             for (int i = 0; i < f.road.Length; i++) { var c = Cell(f, i); roads.grades[c.y * f.w + c.x] = f.road[i]; }
 
             if(f.obstacles!=null && f.obstacles.Length>0){var hazards=gridGo.AddComponent<ObstacleField>();hazards.library=Resources.Load<ObstacleLibrary>("Obstacles/ObstacleLibrary");hazards.placements=new List<ObstaclePlacement>(f.obstacles);}
+
+            // Optional paired terrain. Maps without this metadata retain their existing behavior.
+            if(f.terrainFloods!=null)
+            {
+                var seenFloods=new HashSet<string>();var seenCells=new HashSet<Vector3Int>();
+                var library=Resources.Load<ObstacleLibrary>("Obstacles/ObstacleLibrary");
+                foreach(var flood in f.terrainFloods)
+                {
+                    if(flood==null||!RoadHazardSchedule.Managed(flood.id)||!seenFloods.Add(flood.id)||flood.definitionId!="river_flood"||flood.cells==null||flood.cells.Length==0)
+                        throw new InvalidDataException("Invalid terrain flood metadata");
+                    if(Array.Exists(f.obstacles??Array.Empty<ObstaclePlacement>(),p=>p!=null&&(p.id==flood.id||p.definitionId=="river_flood")))throw new InvalidDataException("Duplicate terrain/sprite flood placement");
+                    var definition=library!=null?library.Find(flood.definitionId):null;if(definition==null)throw new InvalidDataException("Missing river_flood definition");
+                    var component=gridGo.AddComponent<RiverFloodTerrain>();component.placementId=flood.id;component.definition=definition;component.phaseOffset=flood.phaseOffset;component.blocker=blocker;
+                    var patches=new List<RiverFloodTerrain.Cell>();
+                    foreach(var c in flood.cells)
+                    {
+                        var cell=new Vector3Int(c.x,f.h-1-c.y,0);
+                        if(c.x<0||c.y<0||c.x>=f.w||c.y>=f.h||!seenCells.Add(cell))throw new InvalidDataException("Flood cells overlap/outside map");
+                        TileBase Resolve(string name){if(string.IsNullOrEmpty(name))return null;var tile=TileFor(name,previewDirectory);if(tile==null)throw new InvalidDataException("Missing flood tile: "+name);return tile;}
+                        patches.Add(new RiverFloodTerrain.Cell{position=cell,dryGround=Resolve(c.dryGround),wetGround=Resolve(c.wetGround),dryDeco=Resolve(c.dryDeco),wetDeco=Resolve(c.wetDeco),dryBlocked=c.dryBlocked,wetBlocked=c.wetBlocked,dryGrade=c.dryGrade,wetGrade=c.wetGrade});
+                    }
+                    component.cells=patches.ToArray();
+                }
+            }
 
             var objects = new GameObject("Objects").transform;
             RoadEventDirector director = null;
