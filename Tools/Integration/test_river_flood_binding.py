@@ -15,7 +15,12 @@ class FloodBinding(unittest.TestCase):
  def test_rendered_pair_matches_approved_rgba(self):
   from e3_flood_terrain import render
   from PIL import Image
-  data=attach(self.source);wet=copy.deepcopy(data)
+  # 승인 그림 뒤에 덧붙인 생활 보강(goryeo_life.py: 이정표 칸)은 기록대로 되돌린 뒤 비교한다(범람 칸과 겹치지 않음).
+  source=copy.deepcopy(self.source);life=ROOT/'Tools/WorldLayout/goryeo_life_applied.json'
+  for c in (json.loads(life.read_text()) if life.exists() else {}).get(source['id'],[]):
+   i=c['y']*source['w']+c['x'];source['obj'][i]=source['palette'].index(c['obj']) if c['obj'] else 0
+   source['blocked'][i]=c['blocked'];source['reachable'][i]=c['reachable']
+  data=attach(source);wet=copy.deepcopy(data)
   for cell in data['terrainFloods'][0]['cells']:
    i=cell['y']*data['w']+cell['x']
    for layer,key in [('ground','wetGround'),('deco','wetDeco')]:
