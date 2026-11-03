@@ -17,7 +17,7 @@ def run():
    for y in range(im.height//16):
     for x in range(im.width//16):
      p=OUT/'Cells'/f'{name}_{x}_{y}.png';im.crop((x*16,y*16,x*16+16,y*16+16)).save(p);tiles.append(dict(dx=x,dy=y,layer='obj',tile=f'e3_{name}_{x}_{y}',image=str(p.relative_to(ROOT))))
-   assets.append(dict(id='e3_'+name,purpose='trade_item'if name.startswith('transit_')else 'road_hazard',kind='object',profile='native16',size=[im.width//16,im.height//16],image=str(file.relative_to(ROOT)),tiles=tiles,source=dict(kind='ai_processed',path='Tools/ArtTrials/e3_e2_native.lua'),review=dict(status='pending')))
+   assets.append(dict(id='e3_'+name,purpose='trade_item'if name.startswith('transit_')else 'road_hazard',kind='object',profile='native16',size=[im.width//16,im.height//16],image=str(file.relative_to(ROOT)),tiles=tiles,source=dict(kind='ai_processed',path='Tools/ArtTrials/e3_e2_native.lua'),review=dict(status='changes_requested',reason='사용자 반려·시안 폐기·추가 제작 및 연결 취소(2026-11-03)') if name.startswith('river_flood') else dict(status='pending')))
    back=Path(td)/(name+'.png');subprocess.run(['/Applications/Aseprite.app/Contents/MacOS/aseprite','--batch',str(file.with_suffix('.aseprite')),'--save-as',str(back)],check=True)
    with Image.open(back)as rebuilt:assert rebuilt.convert('RGBA').tobytes()==im.tobytes()
    evidence.append(dict(id=name,size=size,colors=len({c for c in im.getdata()if c[3]}),binaryAlpha=True,asepriteRGBAEqual=True,rgba=hashlib.sha256(im.tobytes()).hexdigest()))

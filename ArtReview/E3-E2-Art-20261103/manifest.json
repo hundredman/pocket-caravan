@@ -1,5 +1,5 @@
 {
-  "status": "v2 pending user visual approval",
+  "status": "flood cancelled/rejected; ports and other art pending approval",
   "productionChanged": false,
   "assets": [
     {
@@ -7481,5 +7481,9 @@
   "revision": 2,
   "nativeDirectory": "ArtReview/E3-E2-Art-20261103/Native",
   "unityChecks": 45,
-  "unityCaptures": 9
+  "unityCaptures": 9,
+  "cancelledAssets": [
+    "river_flood_high",
+    "river_flood_low"
+  ]
 }

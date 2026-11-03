@@ -238,7 +238,8 @@
         "path": "Tools/ArtTrials/e3_e2_native.lua"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "reason": "사용자 반려·시안 폐기·추가 제작 및 연결 취소(2026-11-03)"
       }
     },
     {
@@ -363,7 +364,8 @@
         "path": "Tools/ArtTrials/e3_e2_native.lua"
       },
       "review": {
-        "status": "pending"
+        "status": "changes_requested",
+        "reason": "사용자 반려·시안 폐기·추가 제작 및 연결 취소(2026-11-03)"
       }
     },
     {
