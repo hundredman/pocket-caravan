@@ -792,7 +792,13 @@ MonoBehaviour:
   - kind: market
     id: transit_crossroads
     mapId: transit_crossroads
+  - kind: board
+    id: transit_crossroads
+    mapId: transit_crossroads
   - kind: market
+    id: transit_southport
+    mapId: transit_southport
+  - kind: board
     id: transit_southport
     mapId: transit_southport
   - kind: market
