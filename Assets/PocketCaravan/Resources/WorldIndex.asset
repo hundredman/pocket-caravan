@@ -732,11 +732,17 @@ MonoBehaviour:
   - kind: npc
     id: north_wife
     mapId: north_hunter
+  - kind: npc
+    id: north_tora
+    mapId: north_hunter
   - kind: market
     id: north_naru
     mapId: north_naru
   - kind: board
     id: north_naru
+    mapId: north_naru
+  - kind: npc
+    id: north_captain
     mapId: north_naru
   - kind: npc
     id: north_warehouse
@@ -747,12 +753,30 @@ MonoBehaviour:
   - kind: board
     id: north_laugar
     mapId: north_laugar
+  - kind: npc
+    id: north_bathkeeper
+    mapId: north_laugar
+  - kind: npc
+    id: north_herbalist
+    mapId: north_laugar
   - kind: market
     id: north_herd
     mapId: north_herd
   - kind: board
     id: north_herd
     mapId: north_herd
+  - kind: npc
+    id: north_herd_granny
+    mapId: north_herd
+  - kind: npc
+    id: north_sledmaker
+    mapId: north_herd
+  - kind: npc
+    id: north_runekeeper
+    mapId: north_runehill
+  - kind: npc
+    id: north_miner
+    mapId: north_icecave
   - kind: market
     id: transit_woodtown
     mapId: transit_woodtown

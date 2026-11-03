@@ -47,8 +47,7 @@ namespace PocketCaravan.EditorTools
         /// 공용 기능(여관 사람 등)을 마을마다 JSON에 넣고 "전체 준비" 한 번으로 전 지역 씬이 같이 갱신되게 한다.
         /// 다른 지역처럼 BuildSelected라 그 밖의 씬은 재직렬화하지 않는다.
         /// </summary>
-        [MenuItem("Pocket Caravan/통합/고려·중간권 씬 다시 만들기", priority = 61)]
-        public static void BuildGoryeoAndTransit()
+        static void BuildGoryeoAndTransit()
         {
             var ids = WorldRegistry.Load().maps
                 .FindAll(m => m.region != null && (m.region.regionId == "goryeo" || m.region.regionId == "transit"))
