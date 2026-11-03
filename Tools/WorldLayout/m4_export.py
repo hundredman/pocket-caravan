@@ -69,9 +69,16 @@ def world_map(m,lay,atlas,keys,destination=None):
                   terrainSource='Tools/WorldLayout/m4_export.py',scope=scope,centralContinentTotalCells=100000,centralEastOwnedCells=25000,annotations=[],settlements=settlements)
         (WM/f'{stem}Layout.json').write_text(json.dumps(lay_,ensure_ascii=False,separators=(',',':')))
 
+def bind_approved_flood(data):
+    """Approved asset placement; also used by the metadata-only regeneration path."""
+    sys.path.insert(0,str(ROOT/'Tools/MapGen'))
+    from river_flood_binding import attach
+    return attach(data)
+
 def main():
     global PREV,REVIEW
-    ap=argparse.ArgumentParser();ap.add_argument('layers')
+    ap=argparse.ArgumentParser();ap.add_argument('layers',nargs='?')
+    ap.add_argument('--bind-approved-flood',action='store_true',help='승인 범람 상태만 현재 생성 맵에 다시 생성(기존 층/ID 유지)')
     ap.add_argument('--production',action='store_true',help='④ 본편: Maps/·Art 타일·인증 기록·지도(Resources/WorldMap)에 쓴다')
     ap.add_argument('--preview-root',type=Path)
     ap.add_argument('--review-root',type=Path)
@@ -84,6 +91,16 @@ def main():
     if a.review_root:
         if a.production or not a.review_root.resolve().is_relative_to((ROOT/'ArtReview').resolve()):raise ValueError('Isolated review path required')
         REVIEW=a.review_root
+    if a.bind_approved_flood:
+        source=ROOT/'Assets/PocketCaravan/Maps/transit_wetroad.json'
+        data=bind_approved_flood(json.loads(source.read_text()))
+        if not a.production:data['previewOnly']=True
+        target=source if a.production else PREV/'Maps'/source.name
+        target.parent.mkdir(parents=True,exist_ok=True)
+        target.write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
+        print('Approved flood metadata regenerated:',target.relative_to(ROOT))
+        return
+    if not a.layers:ap.error('layers or --bind-approved-flood is required')
     if a.production and (a.layers and (Path(a.layers)/'nature.json').exists()):
         import m4_nature
         nature_record=json.loads((Path(a.layers)/'nature.json').read_text())
@@ -189,6 +206,7 @@ def main():
             if 0<=xx<m['own'].shape[1]and 0<=yy<m['own'].shape[0]and m['own'][yy,xx]:
                 backdrop.append(dict(x=dx,y=dy,tile=P(backdrop_name(yy,xx))))
         if backdrop:data['cameraBackdrop']=backdrop
+        data=bind_approved_flood(data)
         (PREV/'Maps'/f'{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
         if a.production:(ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
         atlas.append(dict(mapId=mid,box=(int(x0),int(y0),w,h),vz=vz))

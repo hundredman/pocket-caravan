@@ -1,6 +1,6 @@
-"""Attach approved paired terrain metadata to a generated map; keep production placement with Claude.
+"""Attach approved paired terrain metadata to a generated map; asset placement is owned by Codex (user 2026-11-03).
 Usage: python river_flood_binding.py INPUT.json OUTPUT.json [--id e3_wetroad_flood]
-Import attach() in the owner's export pipeline before writing the map. No PNG edits.
+attach() is called by m4_export's source pipeline before writing the map. No PNG edits.
 """
 import argparse,copy,json,sys
 from pathlib import Path

@@ -26,6 +26,15 @@ class FloodBinding(unittest.TestCase):
   for stage,value in [('normal',data),('flood',wet)]:
    with Image.open(ROOT/'ArtReview/E3-FloodTerrain-20261103'/(stage+'-map.png'))as approved:
     self.assertEqual(render(value).tobytes(),approved.convert('RGBA').tobytes(),stage)
+ def test_export_entry_point_regenerates_metadata_without_changing_live_map(self):
+  import tempfile,subprocess
+  source=ROOT/'Assets/PocketCaravan/Maps/transit_wetroad.json';before=source.read_bytes()
+  base=ROOT/'Assets/PocketCaravan/Editor/B2Preview';base.mkdir(parents=True,exist_ok=True)
+  with tempfile.TemporaryDirectory(prefix='flood-test-',dir=base)as folder:
+   subprocess.run([sys.executable,str(ROOT/'Tools/WorldLayout/m4_export.py'),'--bind-approved-flood','--preview-root',folder],check=True,capture_output=True)
+   generated=json.loads((Path(folder)/'Maps/transit_wetroad.json').read_text())
+   expected=attach(self.source);expected['previewOnly']=True
+   self.assertEqual(generated,expected);self.assertTrue(generated['previewOnly']);self.assertEqual(source.read_bytes(),before)
  def test_other_maps_unchanged(self):
   for path in (ROOT/'Assets/PocketCaravan/Maps').glob('*.json'):
    data=json.loads(path.read_text())

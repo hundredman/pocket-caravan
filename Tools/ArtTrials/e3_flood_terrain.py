@@ -70,7 +70,7 @@ def render(d):
 
 def run():
  OUT.mkdir(parents=True,exist_ok=True);(PREVIEW/'Maps').mkdir(parents=True,exist_ok=True);(PREVIEW/'Tiles').mkdir(exist_ok=True)
- before=json.loads((ROOT/'Assets/PocketCaravan/Maps/transit_wetroad.json').read_text());after,report=states(before)
+ before=json.loads((ROOT/'Assets/PocketCaravan/Maps/transit_wetroad.json').read_text());before.pop('terrainFloods',None);after,report=states(before)
  for stage,d in [('normal',before),('flood',after)]:
   render(d).save(OUT/(stage+'-map.png'))
   d['previewOnly']=True

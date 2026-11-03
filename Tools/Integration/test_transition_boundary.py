@@ -21,11 +21,19 @@ class CameraBoundary(unittest.TestCase):
         applied=json.loads(life.read_text()) if life.exists() else {}
         for mid,r in rows.items():
             d=json.loads((ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').read_text())
+            # The T1 baseline freezes dry terrain/IDs. Approved E3 paired-state metadata
+            # is checked against its source recipe before removing only that extension.
+            if 'terrainFloods' in d:
+                self.assertEqual(mid,'transit_wetroad')
+                sys.path.insert(0,str(ROOT/'Tools/MapGen'))
+                from river_flood_binding import attach
+                base={k:v for k,v in d.items()if k!='terrainFloods'}
+                self.assertEqual(d['terrainFloods'],attach(base)['terrainFloods'])
             for c in applied.get(mid,[]):
                 i=c['y']*d['w']+c['x'];d['obj'][i]=d['palette'].index(c['obj']) if c['obj'] else 0
                 d['blocked'][i]=c['blocked'];d['reachable'][i]=c['reachable']
             d['objects']=[o for o in d['objects'] if not str(o.get('id','')).startswith('life_')]
-            stable={k:v for k,v in d.items()if k not in {'palette','ground','deco','obj','high','cameraBackdrop'}}
+            stable={k:v for k,v in d.items()if k not in {'palette','ground','deco','obj','high','cameraBackdrop','terrainFloods'}}
             art={k:[d['palette'][i]for i in d[k]]for k in ['ground','deco','obj','high']}
             self.assertEqual(sha(stable),r['gameplaySHA'],mid);self.assertEqual(sha(art),r['visibleLayersSHA'],mid)
     def test_corner_context_covers_outgoing_frame_without_painting_walkable_cells(self):

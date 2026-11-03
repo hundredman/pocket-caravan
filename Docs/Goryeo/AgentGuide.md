@@ -17,6 +17,7 @@
 
 - **결정 대기 항목은 구현하지 않는다.** 배치안 D(D1)와 해안선 v2(D9)는 승인됐다. 결정 대기 목록은 [작업 계획](../Plan.md)을 본다.
 - **에셋 규칙:** 에셋은 만들어진 목적 그대로만 쓴다. 잘라 쓰기, 이어 붙이기, 다른 용도로 쓰기, 즉석 변형을 하지 않는다. 필요하면 새로 만들고, 이어지는 지형은 조립용 에셋으로 만든다([방향 기준](../Direction.md) 2절).
+- **에셋 담당(사용자 2026-11-03):** 에셋 관련 제작·정리·맵 배치·승인 후 본편 연결은 기본적으로 Codex가 끝까지 맡는다. 품질이 부족하면 그때 Claude에게 검토/인계를 요청할 수 있다. 이전의 에셋 제작 Codex/배치 Claude 분리는 이 범위에서 대체한다. 그림 승인은 여전히 사용자에게 받는다.
 - **아트:** 귀여운 픽셀 아트 한 가지로 통일한다. AI 이미지도 쓸 수 있지만, 실제 해상도 격자·공통 팔레트로 정리해 다른 에셋에 녹아드는 것만 넣는다([아트 기준](../ArtGuide.md) 4절). 부드럽게 축소해 바로 넣지 않는다.
 - **담당 범위:** 다른 문명과 중앙 대륙의 나머지 3/4은 만들지 않는다. 다른 팀의 브랜치·씬·데이터를 다시 생성하거나 덮어쓰지 않는다.
 - **팀 공용 파일:** `Assets/PocketCaravan/Scripts/Core·Economy·Quests·UI`, `Resources/GameDatabase·WorldIndex`, `ProjectSettings/EditorBuildSettings.asset`, transit 장면, `Assets/PocketCaravan/World/Connections`는 `region/goryeo` → `integration` 대상 PR에 단계별로 올린다(PR #23 통합 완료, 사용자 2026-10-30 지시)(은샘 2026-10-28, 2026-10-27 동결을 대신함). 단계마다 커밋 → 통합 검사 → push → PR이 대상 integration과 충돌 없는지(mergeable) 확인한다. `.asset`·`.unity`는 한 단계에서 한 번에 고치고, 바꾼 공용 파일은 PR 설명에 적는다.
