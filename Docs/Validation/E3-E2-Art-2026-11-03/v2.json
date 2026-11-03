@@ -1,0 +1,239 @@
+{
+  "unity": {
+    "complete": true,
+    "error": "",
+    "checks": [
+      {
+        "test": "safe bootstrap",
+        "detail": "",
+        "passed": true
+      },
+      {
+        "test": "ground sprite exists",
+        "detail": "trial",
+        "passed": true
+      },
+      {
+        "test": "ground sprite PPU16",
+        "detail": "trial",
+        "passed": true
+      },
+      {
+        "test": "preview only",
+        "detail": "trial",
+        "passed": true
+      },
+      {
+        "test": "save disabled",
+        "detail": "trial",
+        "passed": true
+      },
+      {
+        "test": "sprite exists",
+        "detail": "Log candidate",
+        "passed": true
+      },
+      {
+        "test": "native scale",
+        "detail": "Log candidate",
+        "passed": true
+      },
+      {
+        "test": "sprite exists",
+        "detail": "Flood high candidate",
+        "passed": true
+      },
+      {
+        "test": "native scale",
+        "detail": "Flood high candidate",
+        "passed": true
+      },
+      {
+        "test": "sprite exists",
+        "detail": "Flood low candidate",
+        "passed": true
+      },
+      {
+        "test": "native scale",
+        "detail": "Flood low candidate",
+        "passed": true
+      },
+      {
+        "test": "render complete",
+        "detail": "log",
+        "passed": true
+      },
+      {
+        "test": "native480x270",
+        "detail": "log",
+        "passed": true
+      },
+      {
+        "test": "render complete",
+        "detail": "river-normal",
+        "passed": true
+      },
+      {
+        "test": "native480x270",
+        "detail": "river-normal",
+        "passed": true
+      },
+      {
+        "test": "render complete",
+        "detail": "flood-high",
+        "passed": true
+      },
+      {
+        "test": "native480x270",
+        "detail": "flood-high",
+        "passed": true
+      },
+      {
+        "test": "render complete",
+        "detail": "flood-low",
+        "passed": true
+      },
+      {
+        "test": "native480x270",
+        "detail": "flood-low",
+        "passed": true
+      },
+      {
+        "test": "render complete",
+        "detail": "item-ui",
+        "passed": true
+      },
+      {
+        "test": "native480x270",
+        "detail": "item-ui",
+        "passed": true
+      },
+      {
+        "test": "ground sprite exists",
+        "detail": "southport-before",
+        "passed": true
+      },
+      {
+        "test": "ground sprite PPU16",
+        "detail": "southport-before",
+        "passed": true
+      },
+      {
+        "test": "preview only",
+        "detail": "southport-before",
+        "passed": true
+      },
+      {
+        "test": "save disabled",
+        "detail": "southport-before",
+        "passed": true
+      },
+      {
+        "test": "render complete",
+        "detail": "southport-before",
+        "passed": true
+      },
+      {
+        "test": "native480x270",
+        "detail": "southport-before",
+        "passed": true
+      },
+      {
+        "test": "ground sprite exists",
+        "detail": "ferry-before",
+        "passed": true
+      },
+      {
+        "test": "ground sprite PPU16",
+        "detail": "ferry-before",
+        "passed": true
+      },
+      {
+        "test": "preview only",
+        "detail": "ferry-before",
+        "passed": true
+      },
+      {
+        "test": "save disabled",
+        "detail": "ferry-before",
+        "passed": true
+      },
+      {
+        "test": "render complete",
+        "detail": "ferry-before",
+        "passed": true
+      },
+      {
+        "test": "native480x270",
+        "detail": "ferry-before",
+        "passed": true
+      },
+      {
+        "test": "ground sprite exists",
+        "detail": "southport-after",
+        "passed": true
+      },
+      {
+        "test": "ground sprite PPU16",
+        "detail": "southport-after",
+        "passed": true
+      },
+      {
+        "test": "preview only",
+        "detail": "southport-after",
+        "passed": true
+      },
+      {
+        "test": "save disabled",
+        "detail": "southport-after",
+        "passed": true
+      },
+      {
+        "test": "render complete",
+        "detail": "southport-after",
+        "passed": true
+      },
+      {
+        "test": "native480x270",
+        "detail": "southport-after",
+        "passed": true
+      },
+      {
+        "test": "ground sprite exists",
+        "detail": "ferry-after",
+        "passed": true
+      },
+      {
+        "test": "ground sprite PPU16",
+        "detail": "ferry-after",
+        "passed": true
+      },
+      {
+        "test": "preview only",
+        "detail": "ferry-after",
+        "passed": true
+      },
+      {
+        "test": "save disabled",
+        "detail": "ferry-after",
+        "passed": true
+      },
+      {
+        "test": "render complete",
+        "detail": "ferry-after",
+        "passed": true
+      },
+      {
+        "test": "native480x270",
+        "detail": "ferry-after",
+        "passed": true
+      }
+    ]
+  },
+  "saveFiles": 9,
+  "savesUnchanged": true,
+  "unchangedOtherThreeRGBA": true,
+  "floodOpaqueBefore": 2015,
+  "floodOpaqueAfter": 2884,
+  "ferrySeaCells": 727
+}

@@ -13,7 +13,7 @@ def run():
   x=i*480;d.text((x+10,305),label,font=font(21),fill='white');im=Image.open(OUT/'Unity'/(name+'.png')).convert('RGB');assert im.size==(480,270);board.paste(im,(x,340))
  d.text((12,625),'검토용 · 본편 미적용 · 하단은 실제 Unity480×270 · 실제 사건 배치/작동은 승인 후 Claude 연결',font=font(21),fill='white');board.save(OUT/'review-assets.png')
  board=Image.new('RGB',(960,660),'#263035');d=ImageDraw.Draw(board)
- for row,(slug,title)in enumerate([('southport','남동 포구 · 바다 쪽 빈 모서리'),('ferry','북동 포구 · 잔물결 바탕색')]):
+ for row,(slug,title)in enumerate([('southport','남동 포구 · 바다 쪽 빈 모서리'),('ferry','북동 포구 · 빈 모서리·잔물결')]):
   for col,version in enumerate(['before','after']):
    x,y=col*480,row*330;d.text((x+8,y+6),title+(' / 이전'if col==0 else' / 수정'),font=font(19),fill='white');im=Image.open(OUT/'Unity'/(slug+'-'+version+'.png')).convert('RGB');assert im.size==(480,270);board.paste(im,(x,y+40))
  board.save(OUT/'review-ports.png')

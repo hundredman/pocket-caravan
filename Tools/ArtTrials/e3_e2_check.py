@@ -26,7 +26,9 @@ def run():
  with Image.open(OUT/'Native/river_flood_high.png')as hi,Image.open(OUT/'Native/river_flood_low.png')as lo:
   hi=hi.convert('RGBA');lo=lo.convert('RGBA');assert sum(c[3]>0 for c in lo.getdata())<sum(c[3]>0 for c in hi.getdata())
   assert all(not lo.getpixel((x,y))[3]or hi.getpixel((x,y))[3]for y in range(48)for x in range(80))
-  for im in [hi,lo]:assert all(im.getpixel((79,y))==(127,185,175,255)for y in range(48))
+  for im in [hi,lo]:assert all(im.getpixel((79,y))==(127,185,175,255)for y in range(5,43))
+  for im in [hi,lo]:assert all(im.getpixel((x,0))[3]==im.getpixel((x,47))[3]==0 for x in range(80)) and all(im.getpixel((0,y))[3]==0 for y in range(48))
+  assert sum(c[3]>0 for c in hi.getdata())>=2700
  (OUT/'native-checks.json').write_text(json.dumps(dict(status='pending user approval',assets=evidence,a2Errors=errors,a2PlacementsChecked=False,floodEastPortMatchesRiver=True,recededMaskSubset=True),ensure_ascii=False,indent=2)+'\n')
  print('Native PNG/ASE5 pairs RGBA equal; A2 catalogue0 errors; right water ports/receded subset valid')
 if __name__=='__main__':run()

@@ -1,0 +1,13 @@
+/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/Tools/Integration/test_e3_e2_art_review.py:24: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertTrue({(255,255,255,255),(132,103,94,255),(120,160,153,255)}.issubset(set(im.getdata())))
+/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/Tools/Integration/test_e3_e2_art_review.py:25: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertGreaterEqual(sum(c[3]>0 for c in hi.getdata()),2700)
+/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/Tools/Integration/test_e3_e2_art_review.py:26: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertLess(sum(c[3]>0 for c in lo.getdata()),sum(c[3]>0 for c in hi.getdata()))
+./Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/Tools/Integration/test_e3_e2_art_review.py:15: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertEqual(im.size,size);self.assertLessEqual(set(im.convert('RGBA').getchannel('A').getdata()),{0,255})
+..
+----------------------------------------------------------------------
+Ran 3 tests in 0.080s
+
+OK

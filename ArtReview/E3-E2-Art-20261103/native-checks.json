@@ -18,10 +18,10 @@
         80,
         48
       ],
-      "colors": 3,
+      "colors": 5,
       "binaryAlpha": true,
       "asepriteRGBAEqual": true,
-      "rgba": "b754c60aab0348226b03ad7df226ffd0ab1d1f8ac4d4ee317568401c33254b32"
+      "rgba": "a9c264bc9455dd05e77d36eaf5da960a895cdb74416e5bd63c1dcb2df2677f89"
     },
     {
       "id": "river_flood_low",
@@ -29,10 +29,10 @@
         80,
         48
       ],
-      "colors": 3,
+      "colors": 5,
       "binaryAlpha": true,
       "asepriteRGBAEqual": true,
-      "rgba": "627c1c7027950c91ca4cbe9d12c69b3c36480efd2f8a7b5adace9d03f665b5a9"
+      "rgba": "a9e89eab5df6b78d012d591605f8e951f72fbab6fc8c47440ac366610b43eebc"
     },
     {
       "id": "transit_spice",

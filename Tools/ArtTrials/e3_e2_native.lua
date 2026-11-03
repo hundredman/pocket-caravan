@@ -30,31 +30,43 @@ end
 object('fallen_log',48,48,wood)
 object('transit_spice',16,16,icons)
 object('transit_wool',16,16,icons)
-local function flood(name)
- local raw=folder..'Raw/'..name..'.png';local f=io.open(raw,'rb');if not f then return end;f:close()
- local src=app.open(raw);local im=src.cels[1].image;local w,h=80,48
- local mask,sample={},{}
- for y=0,h-1 do for x=0,w-1 do local c=im:getPixel(math.min(im.width-1,math.floor((x+.5)*im.width/w)),math.min(im.height-1,math.floor((y+.5)*im.height/h)));local i=y*w+x+1;sample[i]=c;mask[i]=pc.rgbaA(c)>=128 or x>=64 end end
- if name=='river_flood_low' then
-  local high=app.open(folder..'Native/river_flood_high.png');local hi=high.cels[1].image
-  for y=0,h-1 do for x=0,w-1 do local i=y*w+x+1;local c=sample[i];if pc.rgbaR(c)>pc.rgbaG(c)*1.15 or pc.rgbaA(hi:getPixel(x,y))==0 then mask[i]=false end;if x>=64 then mask[i]=true end end end
-  high:close()
+-- V2: generated contour, widened offline on the native grid. Only east port is open.
+local src=app.open(folder..'v2/Raw/river_flood_high.png');local im=src.cels[1].image
+local left={}
+for y=3,44 do
+ local sy=math.floor((y-3+.5)*im.height/42);local first=79
+ for x=0,79 do
+  local c=im:getPixel(math.min(im.width-1,math.floor((x+.5)*im.width/80)),math.min(im.height-1,sy))
+  if pc.rgbaA(c)>=128 and pc.rgbaG(c)>pc.rgbaR(c)+15 and pc.rgbaB(c)>pc.rgbaR(c)+10 then first=x;break end
  end
- -- Remove isolated transparent holes left by generation; retain outside transparency.
- local outside,queue={},{}
- local function push(x,y)if x<0 or y<0 or x>=w or y>=h then return end;local i=y*w+x+1;if not mask[i]and not outside[i]then outside[i]=true;queue[#queue+1]={x,y}end end
- for x=0,w-1 do push(x,0);push(x,h-1)end;for y=0,h-1 do push(0,y);push(w-1,y)end
- local n=1;while n<=#queue do local p=queue[n];n=n+1;push(p[1]-1,p[2]);push(p[1]+1,p[2]);push(p[1],p[2]-1);push(p[1],p[2]+1)end
- for i=1,w*h do if not mask[i]and not outside[i]then mask[i]=true end end
- local out=Sprite(w,h,ColorMode.RGB);local dest=out.cels[1].image
- for y=0,h-1 do for x=0,w-1 do local i=y*w+x+1;if mask[i]then
-  local edge=x<w-1 and ((x>0 and not mask[i-1])or(y>0 and not mask[i-w])or(y<h-1 and not mask[i+w]))
-  dest:drawPixel(x,y,edge and color(88,143,140)or color(127,185,175))
- end end end
- -- Keep only compact horizontal highlights from the generated source, not gradients.
- for y=1,h-1 do local x=0;while x<w do local start=x;local function bright(xx)local c=sample[y*w+xx+1];return mask[y*w+xx+1]and pc.rgbaR(c)>145 and pc.rgbaG(c)>195 and pc.rgbaB(c)>185 end
-  if bright(x)then while x<w and bright(x)do x=x+1 end;local count=x-start;if count>=2 and count<=8 then for xx=start,x-1 do dest:drawPixel(xx,y,color(172,214,202))end end else x=x+1 end
- end end
- save(out,name);src:close()
+ left[y]=math.max(4,math.floor(first*.40)+4)
 end
-flood('river_flood_high');flood('river_flood_low')
+left[3]=70;left[4]=60;left[43]=60;left[44]=70
+local function flood(name,low)
+ local mask={}
+ for y=3,44 do
+  local start=left[y];if low then start=math.min(76,start+34)end
+  for x=start,79 do mask[y*80+x]=true end
+ end
+ local function has(x,y)return mask[y*80+x]and x>=0 and x<80 and y>=0 and y<48 end
+ local out=Sprite(80,48,ColorMode.RGB);local dest=out.cels[1].image
+ for y=1,46 do for x=1,79 do
+  local inside=has(x,y);local near=false;local far=false;local edge=false
+  for dy=-2,2 do for dx=-2,2 do
+   if math.abs(dx)+math.abs(dy)<=2 then
+    if has(x+dx,y+dy)then far=true;if math.abs(dx)+math.abs(dy)<=1 then near=true end
+    elseif x+dx<80 and math.abs(dx)+math.abs(dy)<=1 then edge=true end
+   end
+  end end
+  if inside then dest:drawPixel(x,y,edge and color(120,160,153)or color(127,185,175))
+  elseif near then dest:drawPixel(x,y,color(255,255,255))
+  elseif far then dest:drawPixel(x,y,color(132,103,94))end
+ end end
+ -- An actual open east water connection; no bank across the join.
+ for y=5,42 do dest:drawPixel(79,y,color(127,185,175))end
+ for _,v in ipairs({{24,18,3},{39,32,4},{60,13,3},{68,37,3}})do
+  for x=v[1],v[1]+v[3]-1 do if has(x,v[2])and has(x,v[2]-2)and has(x-2,v[2])then dest:drawPixel(x,v[2],color(172,214,202))end end
+ end
+ save(out,name)
+end
+flood('river_flood_high',false);flood('river_flood_low',true);src:close()

@@ -30,10 +30,11 @@ def run():
   before=json.loads((ROOT/'Assets/PocketCaravan/Maps'/f'{mid}.json').read_text());after=copy.deepcopy(before)
   if slug=='southport':after,changes=coast_context(after);reports[slug]=dict(visualSeaCells=changes,collisionChanged=False)
   else:
+   after,changes=coast_context(after)
    changed=0
    for o in after['objects']:
     if o['kind']=='anim'and o.get('sheet')=='ripples':o['sheet']='goryeo_ripples';changed+=1
-   reports[slug]=dict(reboundAnimations=changed,frames='existing goryeo_ripples (RGBA/alpha unchanged)')
+   reports[slug]=dict(visualSeaCells=changes,collisionChanged=False,reboundAnimations=changed,frames='existing goryeo_ripples (RGBA/alpha unchanged)')
   for version,d in [('before',before),('after',after)]:
    d['previewOnly']=True;names.update(n for n in d['palette']if n);write(PREV/'Maps'/f'{slug}-{version}.json',d)
  # A neutral terrain trial, same 16px ground, with a vertical path and matching river.
