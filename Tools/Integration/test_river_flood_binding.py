@@ -1,7 +1,11 @@
 import copy,json,sys,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'Tools/MapGen'))
-from river_flood_binding import attach,ID
+try:   # GitHub 검사(content-check.yml)는 Pillow만 깐다. numpy·scipy가 없으면 건너뛴다.
+    from river_flood_binding import attach,ID
+    HAVE=True
+except ImportError:HAVE=False
+@unittest.skipUnless(HAVE,'numpy/scipy not installed')
 class FloodBinding(unittest.TestCase):
  @classmethod
  def setUpClass(cls):cls.source=json.loads((ROOT/'Assets/PocketCaravan/Maps/transit_wetroad.json').read_text())

@@ -26,9 +26,11 @@ class CameraBoundary(unittest.TestCase):
             if 'terrainFloods' in d:
                 self.assertEqual(mid,'transit_wetroad')
                 sys.path.insert(0,str(ROOT/'Tools/MapGen'))
-                from river_flood_binding import attach
-                base={k:v for k,v in d.items()if k!='terrainFloods'}
-                self.assertEqual(d['terrainFloods'],attach(base)['terrainFloods'])
+                try:from river_flood_binding import attach   # numpy 필요(없으면 범람 대조만 건너뜀, test_river_flood_binding이 맡음)
+                except ImportError:attach=None
+                if attach:
+                    base={k:v for k,v in d.items()if k!='terrainFloods'}
+                    self.assertEqual(d['terrainFloods'],attach(base)['terrainFloods'])
             for c in applied.get(mid,[]):
                 i=c['y']*d['w']+c['x'];d['obj'][i]=d['palette'].index(c['obj']) if c['obj'] else 0
                 d['blocked'][i]=c['blocked'];d['reachable'][i]=c['reachable']

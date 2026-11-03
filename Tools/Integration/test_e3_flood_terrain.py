@@ -1,11 +1,15 @@
 """Connected terrain flooding: state geometry and production preservation."""
 import json,sys,unittest
 from pathlib import Path
-import numpy as np
-from scipy import ndimage
 from PIL import Image
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'Tools/ArtTrials'))
-from e3_flood_terrain import states,TILES
+try:   # GitHub 검사(content-check.yml)는 Pillow만 깐다. numpy·scipy가 없으면 건너뛴다.
+    import numpy as np
+    from scipy import ndimage
+    from e3_flood_terrain import states,TILES
+    HAVE=True
+except ImportError:HAVE=False
+@unittest.skipUnless(HAVE,'numpy/scipy not installed')
 class FloodTerrain(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
