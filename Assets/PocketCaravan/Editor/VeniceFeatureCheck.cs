@@ -231,9 +231,8 @@ namespace PocketCaravan.EditorTools
                     var social = gm.GetComponent<VeniceSocial>();
                     typeof(VeniceSocial).GetField("book", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(social, false);
                     UIState.Release();
-                    var inn = UnityEngine.Object.FindAnyObjectByType<VeniceInn>();
-                    report.AppendLine($"여관 침대: {(inn != null ? "있음" : "없음")}, 시계 {gm.Clock.Label}");
-                    if (inn != null) { Near(p, inn, new Vector3(0, -1f, 0)); inn.Sleep(); }
+                    report.AppendLine($"여관(공용 Inn): 시계 {gm.Clock.Label}");   // 2026-11-03 침대 대신 공용 Inn
+                    Inn.SleepNow();
                     step = 4; waitUntil = now + 1.0f; break;
                 }
                 case 4:

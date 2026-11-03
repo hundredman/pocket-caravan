@@ -222,19 +222,19 @@ namespace PocketCaravan
                 Ok(!(bool)Field(so, "picking"), "5 같은 날 두 번째 선물은 막힘");
                 yield return Shot("gift_blocked");
             }
-            // 2 여관
-            var bed = FindAnyObjectByType<VeniceInn>();
-            Ok(bed != null, "2 여관 주인 옆 침대");
-            if (bed != null)
+            // 2 여관 (2026-11-03 공용 Inn: 여관 주인에게 말 걸면 대화 뒤 "쉬어 갈래요?")
+            if (inn != null)
             {
-                yield return Face(bed);
+                yield return Face(inn);
                 yield return Press(Key.Space);           // 대화창
                 yield return Wait(.2f);
-                yield return Press(Key.Space);           // 첫 선택지 '쉬어 가기'
+                yield return Press(Key.Space);           // 대화 닫기
+                yield return Wait(.5f);
+                yield return Press(Key.Space);           // "쉬어 갈래요"
                 yield return Wait(1f);
                 yield return Shot("inn_sleep");
                 yield return Wait(2.2f);
-                Ok(VeniceDaily.Rested && !UIState.Blocking, $"2 쉬고 깸, 푹 쉼 {VeniceDaily.Rested}, 시계 {gm.Clock.Label}");
+                Ok(RestBuff.Rested && !UIState.Blocking, $"2 쉬고 깸, 푹 쉼 {RestBuff.Rested}, 시계 {gm.Clock.Label}");
             }
             // 3 벤치
             var seats = FindObjectsByType<VeniceSeat>(FindObjectsSortMode.None);
@@ -477,7 +477,6 @@ namespace PocketCaravan
                 Ok(FindAnyObjectByType<VeniceMerchant>() != null, $"{MapRoot.Current.displayName}: {day}일째 떠돌이 상인");
                 var dir = FindAnyObjectByType<RoadEventDirector>();
                 Ok(true, $"{MapRoot.Current.displayName}: 길 사건 자리 {(dir != null ? dir.events.Count : 0)}");
-                if (map == "venice_c_post") Ok(FindAnyObjectByType<VeniceInn>() != null, "대상 숙소: 숙소 주인 옆 침대");
             }
             // 밤 도적 (나루터 직행로)
             SetClock(3, 23);

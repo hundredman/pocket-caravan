@@ -6,11 +6,11 @@ namespace PocketCaravan
     /// <summary>
     /// 베네치아 하루 생활 (2026-10-27, 제안). 맵에 들어올 때마다 그 맵의 생활 자리를 놓는다(VeniceLife.json, venice_life.py가 만든다).
     /// - 떠돌이 상인: 날마다 장터 마을 8곳 중 한 곳(VeniceMerchant). 오늘의 특가·동작 비법서·사자 문장 소문.
-    /// - 벤치 앞 칸에 앉기(VeniceSeat), 여관 주인·숙소 주인 옆 '여관에서 쉬기'(VeniceInn), 석호 나루의 곤돌라 배(VeniceTraghetto).
+    /// - 벤치 앞 칸에 앉기(VeniceSeat), 석호 나루의 곤돌라 배(VeniceTraghetto). 여관은 2026-11-03부터 공용 Inn(여관 주인에게 말 걸기).
     /// - 하루 처음 베네치아 맵에 들어오면 떠돌이 상인·특가 마을을 알린다.
     /// - 다음 이야기 길잡이: 진행 중인 베네치아 퀘스트가 없을 때 다음 퀘스트를 누가 주는지 화면 아래 가운데에 한 줄 (10-30 북유럽 NorthGuide와 같은 자리·모양).
-    /// - 푹 쉼(여관): 8시간 동안 달릴 때 체력이 절반만 준다(공용 PlayerController.staminaDrain 값을 버프 동안만 바꿨다 되돌린다).
-    /// 저장: VeniceSave (rested_until, deal_n 오늘 산 특가 수, announce 날짜).
+    /// - 벤치 한숨 돌림은 공용 StaminaMods에 배율만 등록한다(푹 쉼 적용은 공용 Inn).
+    /// 저장: VeniceSave (deal_n 오늘 산 특가 수, announce 날짜). rested_until은 공용 RestBuff로 옮김.
     /// </summary>
     public class VeniceDaily : MonoBehaviour
     {
@@ -25,12 +25,9 @@ namespace PocketCaravan
         public static string DealItem => DealItems[(Day * 5 + 2) % DealItems.Length];
         public static string DealMap => MerchantMap;      // 특가는 떠돌이 상인이 판다
 
-        public static float RestedUntil => VeniceSave.Get("rested_until", -1f);
-        public static bool Rested => GameManager.I != null && GameManager.I.Clock.TotalHours < RestedUntil;
+        public static bool Rested => RestBuff.Rested;   // 2026-11-03 공용 여관으로 통합
 
         Transform root;
-        float baseDrain = -1f;
-        PlayerController drainOwner;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Attach()
@@ -61,7 +58,6 @@ namespace PocketCaravan
             if (VeniceUtil.Map == MerchantMap && data.wander != null && data.wander.Length >= 2) Spot<VeniceMerchant>(data.wander, "떠돌이 상인");
             foreach (var p in VeniceData.Points(data.seats)) Spot<VeniceSeat>(new[] { p.x, p.y }, "벤치");
             if (data.dock != null && data.dock.Length >= 2) Spot<VeniceTraghetto>(data.dock, "곤돌라 나루");
-            Invoke(nameof(PlaceInn), .1f);                 // 씬의 NPC가 다 켜진 뒤
 
             if (GameManager.I != null && !VeniceSave.Has("keyhint"))
             {
@@ -76,26 +72,6 @@ namespace PocketCaravan
             }
         }
 
-        void PlaceInn()
-        {
-            if (root == null || MapRoot.Current == null) return;
-            Interactable host = null;                      // 먼저 찾고 나서 만든다 (목록을 도는 중에 새 Interactable이 들어가지 않게)
-            foreach (var it in Interactable.All)
-                if (it != null && (it.DisplayName == "여관 주인" || it.DisplayName == "숙소 주인")) { host = it; break; }
-            if (host == null) return;
-            var c = host.Cell;
-            foreach (var d in new[] { Vector3Int.right, Vector3Int.left, new Vector3Int(1, -1, 0), new Vector3Int(-1, -1, 0), Vector3Int.down })
-            {
-                var cell = c + d;
-                if (!MapRoot.Current.IsWalkable(cell) || Interactable.At(cell) != null) continue;
-                var go = new GameObject("여관에서 쉬기");
-                go.transform.SetParent(root, false);
-                go.transform.position = MapRoot.Current.CellCenter(cell);
-                go.AddComponent<VeniceInn>();
-                return;
-            }
-        }
-
         T Spot<T>(int[] xy, string name) where T : Interactable
         {
             var go = new GameObject(name);
@@ -106,18 +82,8 @@ namespace PocketCaravan
 
         void Update()
         {
-            var pc = PlayerController.Instance;
-            if (pc == null) return;
-            // 10-30 베네치아 안에서만 쓴다. 밖에서는 손대지 않아 북유럽 여관 버프 같은 다른 지역 값과 다투지 않는다.
-            bool inside = VeniceUtil.InVenice;
-            if (pc != drainOwner) { drainOwner = pc; baseDrain = -1f; }
-            if (!inside)
-            {
-                if (baseDrain >= 0f) { pc.staminaDrain = baseDrain; baseDrain = -1f; }   // 나갈 때 한 번만 되돌린다
-                return;
-            }
-            if (baseDrain < 0f) baseDrain = pc.staminaDrain;
-            pc.staminaDrain = Rested ? baseDrain * .5f : VeniceSeat.Breather ? baseDrain * .75f : baseDrain;
+            // 2026-11-03 체력 소모 배율은 공용 StaminaMods에 등록만 한다 (적용은 공용 Inn). 베네치아 밖에서는 배율을 거둔다.
+            StaminaMods.Set("venice_breather", VeniceUtil.InVenice && VeniceSeat.Breather ? .75f : 1f);
         }
 
         // ---------------- 다음 이야기 길잡이 ----------------

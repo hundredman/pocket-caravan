@@ -41,7 +41,7 @@ namespace PocketCaravan
             message = !InRange() ? "장터 가까이에서 이용하세요." : FacilityAccess.Denial(town, f, gm.Player);
             if (message != null) return;
             detail = "";
-            if (f.kind == FacilityKind.Rest) { gm.Player.stamina = 1f; message = "짐을 내려놓고 쉬었습니다. 체력이 회복됐습니다."; }
+            if (f.kind == FacilityKind.Rest) { Close(); Inn.Offer(f.displayName); return; }   // 2026-11-03 여관 통합: 공용 Inn이 묻고 재운다
             else if (f.kind == FacilityKind.RouteInformation) { detail = f.description; message = "길 안내를 열었습니다. 본문을 내려 읽을 수 있습니다."; scroll = Vector2.zero; }
             else { warehouse = f; scroll.y = 10000; message = "이 마을에 맡긴 물건은 여기서 다시 찾을 수 있습니다."; }
             gm.SaveNow();
@@ -77,7 +77,7 @@ namespace PocketCaravan
                 string denial = FacilityAccess.Denial(town, f, p);
                 GUILayout.Label($"{f.displayName} · 거점 {f.minTier}등급 / 신용 {f.minCredit}", UIStyle.Rich);
                 GUILayout.BeginHorizontal();
-                GUILayout.Label(denial ?? (f.kind == FacilityKind.Warehouse ? $"보관 한도 {f.storageCapacity:0} · 일반 교역품" : f.kind == FacilityKind.Rest ? "체력 회복" : "주변 길과 거래처 안내"), UIStyle.Small);
+                GUILayout.Label(denial ?? (f.kind == FacilityKind.Warehouse ? $"보관 한도 {f.storageCapacity:0} · 일반 교역품" : f.kind == FacilityKind.Rest ? $"{Inn.Price}냥 · {Inn.SleepHours:0}시간 자고 체력 가득 · {Inn.BuffHours:0}시간 덜 지침" : "주변 길과 거래처 안내"), UIStyle.Small);
                 GUI.enabled = denial == null;
                 if (GUILayout.Button("이용", UIStyle.Button, GUILayout.Width(52))) Use(f);
                 GUI.enabled = true; GUILayout.EndHorizontal();
