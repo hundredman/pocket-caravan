@@ -17,7 +17,7 @@ namespace PocketCaravan
     /// - 양조장 (라우가르 온천): 꿀술 2 + 온천 약초 1 → 온천 약초 꿀술 1, 6시간
     /// 자리는 NorthLife.json "craft" [x, y, 종류], 마당 그림 기준점 "yard" [x, y, 종류]. 마당 그림은 진행에 따라 바뀐다
     /// (덕장: 빈 틀 → 막 건 대구 → 다 마름 / 털옷: 진열 → 작업 중(가죽 틀) / 양조장: 솥 김이 세짐 → 다 되면 꼭지 술통에서 꿀술이 똑똑).
-    /// 진행은 NorthSave ("craft:키:n" 맡긴 횟수, "craft:키:t" 다 되는 시각).
+    /// 공방 규칙·저장은 2026-11-04부터 공용 Crafting (옛 저장 north:craft:키:*도 이어 읽음).
     /// </summary>
     public class NorthCraft : MonoBehaviour
     {
@@ -29,31 +29,12 @@ namespace PocketCaravan
         static int Today => GameManager.I != null ? GameManager.I.Clock.day : 0;
 
         // ---------------- 공방 ----------------
-        struct Recipe
-        {
-            public string key, shop, worker, product, productName, hello;
-            public string[] inputs; public int[] counts; public string inputText;
-            public int fee; public float hours;
-        }
-        static readonly Recipe[] Recipes =
-        {
-            new Recipe { key = "fish", shop = "대구 덕장", worker = "덕장 일꾼", product = "north_stockfish", productName = "말린 대구",
-                inputs = new[] { "north_cod" }, counts = new[] { 3 }, inputText = "얼음 대구 3", fee = 0, hours = 12f,
-                hello = "바닷바람에 대구를 말리면 가볍고 오래가는 말린 대구가 돼. 남쪽 사람들은 이걸 금처럼 쳐 주지." },
-            new Recipe { key = "fur", shop = "털옷 공방", worker = "털옷 장인", product = "north_furcoat", productName = "털옷",
-                inputs = new[] { "north_fur" }, counts = new[] { 2 }, inputText = "모피 2", fee = 5, hours = 8f,
-                hello = "모피 두 장이면 따뜻한 털옷 한 벌이야. 눈 녹은 남쪽에서도 산 넘어갈 상인들이 줄을 서." },
-            new Recipe { key = "brew", shop = "양조장", worker = "양조장 할머니", product = "north_herbmead", productName = "온천 약초 꿀술",
-                inputs = new[] { "north_mead", "north_herb" }, counts = new[] { 2, 1 }, inputText = "꿀술 2 + 온천 약초 1", fee = 0, hours = 6f,
-                hello = "꿀술에 온천 약초를 담가 김 오르는 통에서 익히지. 마시면 온몸이 노곤해져." },
-        };
-        const int MaxBatch = 5;
+        // 2026-11-04 통합: 만드는 규칙(재료·시간·찾아가기·저장)은 공용 Crafting. 여기는 북유럽 공방 자리·마당 그림만.
+        static readonly string[] RecipeIds = { "north_fish", "north_fur", "north_brew" };
         static readonly string[] Prefix = { "craft_fish", "craft_fur", "craft_brew" };
 
         Transform root;
         string lastMap;
-        AudioSource sfx;
-        AudioClip coin, done;
         readonly List<(SpriteRenderer sr, Sprite[] f, float phase)> idlers = new List<(SpriteRenderer, Sprite[], float)>();
         // 10/26 공방 마당 그림 (진행 상태에 따라 바뀜)
         readonly List<(int kind, string role, SpriteRenderer sr)> yard = new List<(int, string, SpriteRenderer)>();
@@ -68,14 +49,6 @@ namespace PocketCaravan
             DontDestroyOnLoad(go);
             go.AddComponent<NorthCraft>();
         }
-
-        void Awake()
-        {
-            sfx = gameObject.AddComponent<AudioSource>(); sfx.playOnAwake = false;
-            coin = NorthUtil.Tone("north_fair_coin", 0.2f, new[] { 1568f, 2093f }, 0.25f);
-            done = NorthUtil.Tone("north_craft_done", 0.5f, new[] { 523f, 784f, 1046f }, 0.3f);
-        }
-
 
         void Update()
         {
@@ -122,11 +95,7 @@ namespace PocketCaravan
         }
 
         /// <summary>진행 상태: 0 = 비어 있음, 1 = 만드는 중, 2 = 다 됨</summary>
-        static int State(int k)
-        {
-            if (Batches(k) <= 0) return 0;
-            return ReadyAt(k) - Now > 0f ? 1 : 2;
-        }
+        static int State(int k) => Crafting.State(RecipeIds[k]);
 
         void UpdateYard()
         {
@@ -179,11 +148,11 @@ namespace PocketCaravan
             for (int i = 0; i + 2 < c.Length; i += 3)
             {
                 int k = c[i + 2];
-                if (k < 0 || k >= Recipes.Length) continue;
+                if (k < 0 || k >= RecipeIds.Length) continue;
                 var pos = NorthUtil.Cell(map, c[i], c[i + 1]);
                 // 10/29(기우): 긴 이름표가 머리 위에서 일꾼을 가려서, 공용 이름표는 비우고 일꾼 왼쪽에 오른쪽 맞춤으로 그린다(OnGUI sideLabels)
-                var s = NorthSpot.Make(root, pos, () => "", () => Workshop(k), Interactable.Kind.Person);
-                sideLabels.Add((pos + new Vector3(-0.7f, 0.75f, 0f), () => ShopLabel(k)));
+                var s = NorthSpot.Make(root, pos, () => "", () => Crafting.Open(RecipeIds[k]), Interactable.Kind.Person);
+                sideLabels.Add((pos + new Vector3(-0.7f, 0.75f, 0f), () => Crafting.Label(RecipeIds[k])));
                 Animate(s.gameObject, Prefix[k], 0f);
             }
         }
@@ -540,124 +509,5 @@ namespace PocketCaravan
             var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = sp; sr.sortingOrder = order;
         }
 
-        // ---------------- 공방 ----------------
-
-        static float Now => GameManager.I != null ? GameManager.I.Clock.TotalHours : 0f;
-        static int Batches(int k) => Mathf.RoundToInt(NorthSave.Get("craft:" + Recipes[k].key + ":n", 0f));
-        static float ReadyAt(int k) => NorthSave.Get("craft:" + Recipes[k].key + ":t", 0f);
-
-        static string ShopLabel(int k)
-        {
-            var r = Recipes[k];
-            int n = Batches(k);
-            // 10/30(기우): 재료·만드는 것 같은 긴 설명은 이름표에 적지 않는다 — 말 걸면 일꾼이 알려 줌. 이름과 진행 상태만 짧게
-            if (n <= 0) return r.shop;
-            float left = ReadyAt(k) - Now;
-            return left <= 0f ? $"{r.shop} (다 됐음!)" : $"{r.shop} ({Mathf.CeilToInt(left)}시간)";
-        }
-
-        void Workshop(int k)
-        {
-            var gm = GameManager.I;
-            if (gm == null) return;
-            var r = Recipes[k];
-            int n = Batches(k);
-            if (n > 0)
-            {
-                float left = ReadyAt(k) - Now;
-                if (left > 0f)
-                {
-                    DialogueUI.Show(r.worker, $"{r.productName} {n}개, 아직 만드는 중이야. {Mathf.CeilToInt(left)}시간쯤 뒤에 다시 와.");
-                    return;
-                }
-                DialogueUI.Show(r.worker, $"{r.productName} {n}개 다 됐어! 가져가.",
-                    new DialogueUI.Choice("찾아가기", () => Collect(k)), new DialogueUI.Choice("나중에", null));
-                return;
-            }
-            int can = MaxBatch;
-            for (int i = 0; i < r.inputs.Length; i++)
-            {
-                var it = gm.ItemById(r.inputs[i]);
-                can = Mathf.Min(can, it != null ? gm.Player.cargo.Count(it) / r.counts[i] : 0);
-            }
-            if (r.fee > 0) can = Mathf.Min(can, gm.Player.money / r.fee);
-            // 10/30 라우가르 꿀벌 오두막(NorthBees.cs)에서 받은 벌꿀 단지: 양조장에서 꿀술 2 대신 쓸 수 있다
-            var honey = r.key == "brew" ? gm.ItemById(NorthBees.HoneyId) : null;
-            var herb = r.key == "brew" ? gm.ItemById("north_herb") : null;
-            bool honeyOk = honey != null && herb != null && gm.Player.cargo.Count(honey) >= 1 && gm.Player.cargo.Count(herb) >= 1;
-            if (can <= 0 && honeyOk)
-            {
-                DialogueUI.Show(r.worker, "오, 그 벌꿀 단지! 그거면 꿀술 두 병 몫이야. 약초 하나랑 같이 맡기면 약초 꿀술을 빚어 주지.\n" + $"{r.hours:0}시간 뒤에 찾아가.",
-                    new DialogueUI.Choice("벌꿀 단지 1 + 온천 약초 1 맡기기", () => BeginHoney(k)), new DialogueUI.Choice("다음에", null));
-                return;
-            }
-            if (can <= 0)
-            {
-                DialogueUI.Show(r.worker, r.hello + $"\n\n{r.inputText}개를 가져오면 {r.productName} 하나를 만들어 줄게." + (r.fee > 0 ? $" 수공은 {r.fee}냥." : "") + $" {r.hours:0}시간 걸려.");
-                return;
-            }
-            var choices = new List<DialogueUI.Choice>();
-            choices.Add(new DialogueUI.Choice($"1번 맡기기 ({r.inputText}{(r.fee > 0 ? $", {r.fee}냥" : "")})", () => Begin(k, 1)));
-            if (can > 1) choices.Add(new DialogueUI.Choice($"{can}번 맡기기 ({r.productName} {can}개{(r.fee > 0 ? $", {r.fee * can}냥" : "")})", () => Begin(k, can)));
-            if (honeyOk) choices.Add(new DialogueUI.Choice("벌꿀 단지 1 + 온천 약초 1 맡기기", () => BeginHoney(k)));
-            choices.Add(new DialogueUI.Choice("다음에", null));
-            DialogueUI.Show(r.worker, r.hello + $"\n{r.hours:0}시간 뒤에 찾아가.", choices.ToArray());
-        }
-
-        void Begin(int k, int times)
-        {
-            var gm = GameManager.I;
-            var r = Recipes[k];
-            float cost = r.fee;
-            for (int i = 0; i < r.inputs.Length; i++)
-            {
-                var it = gm.ItemById(r.inputs[i]);
-                if (it == null || gm.Player.cargo.Count(it) < r.counts[i] * times) { Notify.Show("재료가 모자라…", 2f); return; }
-            }
-            if (gm.Player.money < r.fee * times) { Notify.Show("돈이 모자라…", 2f); return; }
-            for (int i = 0; i < r.inputs.Length; i++)
-            {
-                var it = gm.ItemById(r.inputs[i]);
-                cost += gm.Player.cargo.AverageCost(it) * r.counts[i];
-                gm.Player.cargo.Remove(it, r.counts[i] * times);
-            }
-            gm.Player.money -= r.fee * times;
-            NorthSave.Set("craft:" + r.key + ":n", times);
-            NorthSave.Set("craft:" + r.key + ":t", Now + r.hours);
-            NorthSave.Set("craft:" + r.key + ":c", cost);           // 한 개당 원가 (장부 손익용)
-            Notify.Show($"{r.shop}에 맡겼다. {r.hours:0}시간 뒤에 {r.productName} {times}개를 찾아갈 수 있다.", 3f);
-            if (!AudioManager.Muted) sfx.PlayOneShot(coin, 0.4f);
-        }
-
-        /// <summary>10/30 양조장: 벌꿀 단지 1 + 약초 1 → 약초 꿀술 1 (꿀술 2 대신)</summary>
-        void BeginHoney(int k)
-        {
-            var gm = GameManager.I;
-            var r = Recipes[k];
-            var honey = gm.ItemById(NorthBees.HoneyId); var herb = gm.ItemById("north_herb");
-            if (honey == null || herb == null || gm.Player.cargo.Count(honey) < 1 || gm.Player.cargo.Count(herb) < 1) { Notify.Show("재료가 모자라…", 2f); return; }
-            float cost = gm.Player.cargo.AverageCost(honey) + gm.Player.cargo.AverageCost(herb);
-            gm.Player.cargo.Remove(honey, 1); gm.Player.cargo.Remove(herb, 1);
-            NorthSave.Set("craft:" + r.key + ":n", 1);
-            NorthSave.Set("craft:" + r.key + ":t", Now + r.hours);
-            NorthSave.Set("craft:" + r.key + ":c", cost);
-            Notify.Show($"{r.shop}에 맡겼다. {r.hours:0}시간 뒤에 {r.productName} 1개를 찾아갈 수 있다.", 3f);
-            if (!AudioManager.Muted) sfx.PlayOneShot(coin, 0.4f);
-        }
-
-        void Collect(int k)
-        {
-            var gm = GameManager.I;
-            var r = Recipes[k];
-            var item = gm.ItemById(r.product);
-            if (item == null) { Notify.Show("(가공품 데이터가 없어요: 테스트 준비를 다시 실행)", 3f); return; }
-            int n = Batches(k), got = 0;
-            float unit = NorthSave.Get("craft:" + r.key + ":c", 0f);
-            while (got < n && gm.Player.CanCarry(item)) { gm.Player.cargo.Add(item, 1, unit); got++; }
-            if (got == 0) { Notify.Show("짐이 꽉 찼다. 짐을 덜고 다시 오자.", 2.5f); return; }
-            NorthSave.Set("craft:" + r.key + ":n", n - got);
-            Notify.Show(got < n ? $"{r.productName} {got}개를 챙겼다. 짐이 차서 {n - got}개는 맡겨 둠." : $"{r.productName} {got}개를 챙겼다!", 3f);
-            if (!AudioManager.Muted) sfx.PlayOneShot(done, 0.4f);
-        }
     }
 }

@@ -105,6 +105,8 @@ integration 작업트리에서 `Assets/PocketCaravan/Scripts`·`Data`·`Scenes`�
 | 큰 장 순환 | `Scripts/Economy/CentralFair.cs` | 북·서 장식만 (`NorthCraft`, `VeniceFair`) | ✔ 조각마다 하루 한 곳 (북4·서3·동2). 동쪽 장식 그림 없음 |
 | 리액션 (R) | `Scripts/UI/Reactions.cs` | 날씨 기도 효과(`NorthSocial`) | ✔ 공통 8 + 지역 고유 2 = 10칸 |
 | 친밀도·선물(G)·친구 수첩(F)·사진(P) | `Scripts/UI/Social.cs` | 없음 | ✔ 지역마다 친구 8명. 고려·아라비아 친구는 **초안**(지역 담당이 대사 수정) |
+| 밤 축제 | `Scripts/Economy/NightFestival.cs` | 북 오로라·베 카니발 연출 | ✔ 북 오로라(오로라 밤)·베 카니발(%7==5)·고려 연등회(%7==2, 개경)·아라비아 향료 밤시장(%7==6, 사나). 특산품 3할 |
+| 공방/제작 | `Scripts/Economy/Crafting.cs` (+ `WorkshopSpot`) | 북 마당 그림 | ✔ 엔진 통일 (북 3·베 2). **고려·아라비아 공방은 지역 담당이 Recipes에 추가** |
 
 - 점검 메뉴: `Pocket Caravan/통합/리액션 전부 배우기·처음 상태로 (Play 중)`
 - 옛 저장 호환: 북유럽·베네치아 친밀도 점수·받은 하트·배운 리액션은 그대로 이어진다.
