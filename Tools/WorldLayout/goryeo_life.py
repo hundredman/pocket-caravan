@@ -3,7 +3,7 @@
 - 맵을 다시 내보내지 않는다(A7d 자연 지형·장터 등 이후 작업을 지키기 위해). 이미 있는 맵 JSON에 객체·칸만 더한다.
 - 다시 실행해도 같다: 앞서 붙인 것(id가 life_로 시작)과 바꾼 칸을 기록(goryeo_life_applied.json)으로 되돌린 뒤 다시 붙인다.
 - 주민: goryeo_life.json. 자리는 M2 구역도 자리 이름(spot)이나 길 맵의 길 가운데(road). 길이 아닌 빈칸을 먼저 고른다.
-- 이정표: 맵마다 이웃 맵(같은 지역) 한 곳당 하나. 그 이웃으로 가는 출구 가운데에서 안쪽으로 3~7칸, 길 옆 빈칸.
+- 이정표: 맵마다 길로 이어진 이웃 맵 한 곳당 하나. 길이 지나는 그 출구 가운데에서 안쪽으로 3~8칸, 길 옆 빈칸.
   그림은 승인된 장터 이정표와 같은 원본 타일(element_0_2)을 위 개체층에 놓고 그 칸을 막는다. 글은 화살표 + 방향 + 맵 이름.
 - 사람과 이정표가 걸을 수 있는 칸을 둘로 나누거나 출구·기능 객체를 막지 않는지 확인한다(아니면 다른 칸).
 - 다른 문명 연결 출구(link_)는 이정표를 세우지 않는다(통합 브랜치 region_links.json의 표지판이 맡는다).
@@ -144,7 +144,7 @@ def main():
             if o['kind']=='exit' and o['target'] in maps and not str(o.get('spawn','')).startswith('link_'):
                 cells=[(o['x']+a,o['y']+b) for a in range(o['w']) for b in range(o['h'])]
                 roadn=sum(1 for c in cells if m.d['road'][m.i(*c)])
-                runs[o['target']].append((roadn,len(cells),o,cells))
+                if roadn:runs[o['target']].append((roadn,len(cells),o,cells))   # 길로 이어진 출구만(풀밭 경계에는 세우지 않음, 2026-11-03 화면 확인)
         if 'SIGN_TILE' not in m.d['palette']:pass
         for target,lst in sorted(runs.items()):
           lst.sort(key=lambda r:(-r[0],-r[1]));placed=None

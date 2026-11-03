@@ -29,20 +29,6 @@
    "obj": "",
    "blocked": 0,
    "reachable": 1
-  },
-  {
-   "x": 4,
-   "y": 52,
-   "obj": "",
-   "blocked": 0,
-   "reachable": 1
-  },
-  {
-   "x": 5,
-   "y": 53,
-   "obj": "",
-   "blocked": 0,
-   "reachable": 1
   }
  ],
  "Dakmok": [
@@ -65,13 +51,6 @@
   {
    "x": 57,
    "y": 36,
-   "obj": "",
-   "blocked": 0,
-   "reachable": 1
-  },
-  {
-   "x": 64,
-   "y": 72,
    "obj": "",
    "blocked": 0,
    "reachable": 1
@@ -105,30 +84,9 @@
    "obj": "",
    "blocked": 0,
    "reachable": 1
-  },
-  {
-   "x": 13,
-   "y": 25,
-   "obj": "",
-   "blocked": 0,
-   "reachable": 1
   }
  ],
  "transit_pass": [
-  {
-   "x": 59,
-   "y": 21,
-   "obj": "",
-   "blocked": 0,
-   "reachable": 1
-  },
-  {
-   "x": 3,
-   "y": 28,
-   "obj": "",
-   "blocked": 0,
-   "reachable": 1
-  },
   {
    "x": 17,
    "y": 53,
@@ -155,13 +113,6 @@
   {
    "x": 53,
    "y": 41,
-   "obj": "",
-   "blocked": 0,
-   "reachable": 1
-  },
-  {
-   "x": 16,
-   "y": 56,
    "obj": "",
    "blocked": 0,
    "reachable": 1
@@ -215,22 +166,8 @@
    "reachable": 1
   },
   {
-   "x": 52,
-   "y": 78,
-   "obj": "",
-   "blocked": 0,
-   "reachable": 1
-  },
-  {
    "x": 63,
    "y": 50,
-   "obj": "",
-   "blocked": 0,
-   "reachable": 1
-  },
-  {
-   "x": 65,
-   "y": 54,
    "obj": "",
    "blocked": 0,
    "reachable": 1
@@ -270,13 +207,6 @@
  ],
  "transit_south_inland": [
   {
-   "x": 42,
-   "y": 3,
-   "obj": "",
-   "blocked": 0,
-   "reachable": 1
-  },
-  {
    "x": 8,
    "y": 27,
    "obj": "",
@@ -284,22 +214,8 @@
    "reachable": 1
   },
   {
-   "x": 59,
-   "y": 48,
-   "obj": "",
-   "blocked": 0,
-   "reachable": 1
-  },
-  {
    "x": 42,
    "y": 58,
-   "obj": "",
-   "blocked": 0,
-   "reachable": 1
-  },
-  {
-   "x": 41,
-   "y": 4,
    "obj": "",
    "blocked": 0,
    "reachable": 1
