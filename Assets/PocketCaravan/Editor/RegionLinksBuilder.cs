@@ -35,10 +35,27 @@ namespace PocketCaravan.EditorTools
             if (!Step("아라비아 씬", ArabiaRegionSetup.BuildScenes)) return;
             if (!Step("북유럽 씬", () => MapJsonBuilder.BuildSelected(
                 WorldRegistry.Load().maps.FindAll(m => m.mapId.StartsWith("north_")).ConvertAll(m => m.mapId).ToArray()))) return;
+            if (!Step("고려·중간권 씬", BuildGoryeoAndTransit)) return;   // 2026-11-03 통합: 전 지역 씬을 JSON 최신 상태로 맞춘다
             if (!Step("연결된 고려 맵 씬", BuildLinkedOthers)) return;
             if (!Step("주인공 그림 연결", PlayerArtBinder.BindAll)) return;
             AssetDatabase.SaveAssets();
             Debug.Log("[통합] 전체 준비 끝. Tests > 지역 통합 등록 검사 → north_c_crossing에서 Play로 연결을 걸어서 확인하세요.");
+        }
+
+        /// <summary>
+        /// 2026-11-03 통합: 고려·중간권(transit) 등록부의 맵 전부를 JSON → 씬으로 다시 만든다.
+        /// 공용 기능(여관 사람 등)을 마을마다 JSON에 넣고 "전체 준비" 한 번으로 전 지역 씬이 같이 갱신되게 한다.
+        /// 다른 지역처럼 BuildSelected라 그 밖의 씬은 재직렬화하지 않는다.
+        /// </summary>
+        [MenuItem("Pocket Caravan/통합/고려·중간권 씬 다시 만들기", priority = 61)]
+        public static void BuildGoryeoAndTransit()
+        {
+            var ids = WorldRegistry.Load().maps
+                .FindAll(m => m.region != null && (m.region.regionId == "goryeo" || m.region.regionId == "transit"))
+                .ConvertAll(m => m.mapId);
+            if (ids.Count == 0) { Debug.LogWarning("[통합] 고려·중간권 등록 맵이 없습니다."); return; }
+            MapJsonBuilder.BuildSelected(ids.ToArray());
+            Debug.Log($"[통합] 고려·중간권 맵 {ids.Count}개를 다시 만들었습니다: {string.Join(", ", ids)}");
         }
 
         /// <summary>연결 목록에 든 맵 중 지역 메뉴가 만들지 않는 맵(고려 쪽)만 다시 만든다.</summary>
