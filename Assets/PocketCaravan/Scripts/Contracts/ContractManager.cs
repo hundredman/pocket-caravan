@@ -37,6 +37,13 @@ namespace PocketCaravan
             ["naru"] = new[] { "소금 자루", "건어물 상자", "뱃사람 편지", "곡식 섬" },
             ["gaegyeong"] = new[] { "인삼 상자", "비단 꾸러미", "약재 보따리", "관청 문서" },
             ["dakmok"] = new[] { "한지 묶음", "닥나무 껍질", "붓과 먹", "종이 상자" },
+            // 11/03 고려·중앙 동쪽: 다른 마을 게시판도 '짐 꾸러미' 대신 그 마을 물건 이름을 쓴다.
+            ["goryeo_songak"] = new[] { "인삼 상자", "약초 보따리", "산나물 바구니" },
+            ["goryeo_jangdan"] = new[] { "곡식 섬", "볏짚 묶음", "콩 자루" },
+            ["transit_woodtown"] = new[] { "장작 묶음", "송진 단지", "나무 그릇 상자" },
+            ["transit_ferry"] = new[] { "말린 생선 꾸러미", "그물 꾸러미", "송진 단지" },
+            ["transit_southport"] = new[] { "소금 가마니", "건어물 상자", "뱃사람 짐" },
+            ["transit_crossroads"] = new[] { "객주 장부", "먼 길 짐 보따리", "곡식 자루" },
         };
 
         public ContractManager(GameDatabase db, GameClock clock, PlayerState player, WorldIndex world = null, int? randomSeed = null)

@@ -4,7 +4,9 @@
 - 다시 실행해도 같다: 앞서 붙인 것(id가 life_로 시작)과 바꾼 칸을 기록(goryeo_life_applied.json)으로 되돌린 뒤 다시 붙인다.
 - 주민: goryeo_life.json. 자리는 M2 구역도 자리 이름(spot)이나 길 맵의 길 가운데(road). 길이 아닌 빈칸을 먼저 고른다.
 - 이정표: 맵마다 길로 이어진 이웃 맵 한 곳당 하나. 길이 지나는 그 출구 가운데에서 안쪽으로 3~8칸, 길 옆 빈칸.
-  그림은 승인된 장터 이정표와 같은 원본 타일(element_0_2)을 위 개체층에 놓고 그 칸을 막는다. 글은 화살표 + 방향 + 맵 이름.
+  그림은 승인된 장터 이정표와 같은 원본 타일(element_0_2)을 위 개체층에 놓고 그 칸을 막는다.
+  글(11/03 은샘: 화살표는 길의 방향과 맞게, 양방향이면 더 좋다): 이정표에서 각 목적지(이웃 맵 출구·다른 문명 연결·이 맵 장터)까지
+  길을 따라 가는 첫 구간(10칸)의 방향을 화살표로 쓰고, 같은 방향끼리 묶어 한 이정표에 모두 적는다.
 - 사람과 이정표가 걸을 수 있는 칸을 둘로 나누거나 출구·기능 객체를 막지 않는지 확인한다(아니면 다른 칸).
 - 다른 문명 연결 출구(link_)는 이정표를 세우지 않는다(통합 브랜치 region_links.json의 표지판이 맡는다).
 사용: python3 Tools/WorldLayout/goryeo_life.py
@@ -186,7 +188,52 @@ def main():
             if SIGN_TILE not in m.d['palette']:m.d['palette'].append(SIGN_TILE)
             m.d['obj'][i]=m.d['palette'].index(SIGN_TILE);m.d['blocked'][i]=1;m.d['reachable'][i]=0
             m.d['objects'].append(O('sign',*placed,id='life_sign_'+target,text=f"{ARROW[o['edge']]}: {name}"))
-            report[mid].append(f"이정표 {ARROW[o['edge']]} {name} {placed}")
+            report[mid].append(f"이정표({name} 출구 쪽) {placed}")
+    # 이정표 글: 길을 따라가는 방향(양방향 이상)
+    import heapq
+    def sign_text(m,start,own):
+        ex=m.exits();dist={};prev={};pq=[]
+        for dx,dy in STEP.values():
+            q=(start[0]+dx,start[1]+dy)
+            if m.walk(*q):dist[q]=0;prev[q]=None;heapq.heappush(pq,(0,q))
+        while pq:
+            c,p=heapq.heappop(pq)
+            if c>dist.get(p,1e9):continue
+            for dx,dy in STEP.values():
+                q=(p[0]+dx,p[1]+dy)
+                if q==start or not m.walk(*q):continue
+                nc=c+(1 if m.d['road'][m.i(*q)] else 4)
+                if nc<dist.get(q,1e9):dist[q]=nc;prev[q]=p;heapq.heappush(pq,(nc,q))
+        goals={}
+        for o in m.d['objects']:
+            if o['kind']=='exit':
+                if str(o.get('spawn','')).startswith('link_'):
+                    nm={'north':'북유럽 가는 길','arabia':'아라비아 가는 길','venice':'베네치아 가는 길'}.get(o['target'].split('_')[0])
+                    if not nm:continue
+                elif o['target'] in maps:nm=maps[o['target']].d['name']
+                else:continue
+                cells=[(o['x']+a,o['y']+b) for a in range(o['w']) for b in range(o['h'])]
+                if not any(m.d['road'][m.i(*c)] for c in cells):continue
+                for c in cells:
+                    if c in dist and (nm not in goals or dist[c]<dist[goals[nm]]):goals[nm]=c
+            elif o['kind']=='market':
+                c=(o['x'],o['y']+1)
+                if c in dist:goals.setdefault('마을 장터',c)
+        groups=collections.OrderedDict()
+        for nm,g in sorted(goals.items(),key=lambda kv:(kv[0]!=own,dist[kv[1]])):
+            path=[g]
+            while prev[path[-1]] is not None:path.append(prev[path[-1]])
+            path.reverse();tip=path[min(9,len(path)-1)]
+            dx,dy=tip[0]-start[0],tip[1]-start[1]
+            ar=('→' if dx>0 else '←') if abs(dx)>=abs(dy) else ('↓' if dy>0 else '↑')
+            groups.setdefault(ar,[]).append(nm)
+        return '\n'.join(f"{a} {' · '.join(v)}" for a,v in groups.items()),len(groups)
+    for mid,m in maps.items():
+        for o in m.d['objects']:
+            if o['kind']=='sign' and str(o['id']).startswith('life_sign_'):
+                own=maps[o['id'][len('life_sign_'):]].d['name']
+                o['text'],n=sign_text(m,(o['x'],o['y']),own)
+                report[mid].append('    '+own+' 쪽 이정표 글('+str(n)+'방향): '+o['text'].replace('\n',' / '))
     # 확인: 기능 객체·출구가 여전히 같은 덩어리에서 닿는지(주민 칸은 막힌 것으로 본다)
     for mid,m in maps.items():
         tk=[(o['x'],o['y']) for o in m.d['objects'] if o['kind'] in('talker','market') and str(o.get('id','')).startswith('life_')]
