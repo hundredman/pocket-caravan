@@ -119,8 +119,8 @@ namespace PocketCaravan
         static readonly System.Type[] Parts =
         {
             typeof(VeniceAtmosphere), typeof(VeniceDaily), typeof(VeniceEvents), typeof(VeniceFair), typeof(VeniceLife),
-            typeof(VeniceMapUI), typeof(VeniceMenu), typeof(VeniceQuestDirector), typeof(VeniceRace), typeof(VeniceReactions),
-            typeof(VeniceSocial), typeof(VeniceSound), typeof(VeniceStride), typeof(VeniceActivityHints),
+            typeof(VeniceMapUI), typeof(VeniceMenu), typeof(VeniceQuestDirector), typeof(VeniceRace),
+            typeof(VeniceSound), typeof(VeniceStride), typeof(VeniceActivityHints),
         };
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -139,7 +139,7 @@ namespace PocketCaravan
 
         static void OnLoaded(UnityEngine.SceneManagement.Scene s, UnityEngine.SceneManagement.LoadSceneMode m)
         {
-            if (GameManager.I == null || GameManager.I.GetComponent<VeniceReactions>() != null) return;
+            if (GameManager.I == null || GameManager.I.GetComponent<VeniceAtmosphere>() != null) return;
             foreach (var t in Parts)
                 t.GetMethod("Attach", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)?.Invoke(null, null);
         }

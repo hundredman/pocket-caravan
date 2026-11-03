@@ -120,9 +120,9 @@ namespace PocketCaravan
         IEnumerator Common()
         {
             Log("■ 공통");
-            Ok(VeniceSave.Has("keyhint"), "1 키 안내를 한 번 보여 줌 (keyhint 기록)");
+            Ok(gm.HasMemo("social:tips"), "1 키 안내를 한 번 보여 줌 (공용 social:tips 기록)");
             // 2 동작 바퀴
-            var rx = gm.GetComponent<VeniceReactions>();
+            var rx = FindAnyObjectByType<Reactions>();   // 2026-11-04 공용 리액션
             yield return Press(Key.R);
             Ok((bool)Field(rx, "wheel"), "2 R로 동작 바퀴가 열림");
             int known = 0; for (int i = 0; i < 10; i++) if (VeniceReactions.Knows(i)) known++;
@@ -155,7 +155,7 @@ namespace PocketCaravan
             // 3 친구 수첩·사진
             yield return Wait(1.5f);
             yield return Press(Key.F);
-            var so = gm.GetComponent<VeniceSocial>();
+            var so = FindAnyObjectByType<Social>();   // 2026-11-04 공용 친밀도
             Ok((bool)Field(so, "book"), "3 F로 친구 수첩 열림");
             yield return Shot("friend_book");
             yield return Press(Key.F);
@@ -211,7 +211,7 @@ namespace PocketCaravan
                 Ok(VeniceSocial.Points("여관 주인") == 1, $"5 하루 첫 말 걸기 +1 (점수 {VeniceSocial.Points("여관 주인")})");
                 yield return Shot("hearts_overhead");
                 yield return Press(Key.G);
-                var so = gm.GetComponent<VeniceSocial>();
+                var so = FindAnyObjectByType<Social>();   // 2026-11-04 공용 친밀도
                 Ok((bool)Field(so, "picking"), "5 G로 선물 고르기 창");
                 yield return Shot("gift_picker");
                 yield return Press(Key.Space);

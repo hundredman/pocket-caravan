@@ -113,10 +113,10 @@ namespace PocketCaravan
         {
             switch (e)
             {
-                case "bow": case "wave": case "nod": case "pray": return "bow";
+                case "bow": case "wave": case "nod": case "pray": case "jeol": case "salam": return "bow";
                 case "clap": return "clap";
                 case "spin": case "mask": return "spin";
-                case "dance": case "row": case "stretch": return "dance";
+                case "dance": case "row": case "stretch": case "fan": return "dance";
                 case "love": return "love";
                 case "nap": case "think": return "rest";
                 default: return "hop";   // hop · joy · surprise · 모르는 것

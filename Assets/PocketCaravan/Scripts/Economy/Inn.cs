@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -61,6 +62,8 @@ namespace PocketCaravan
         static readonly string[] HostWords = { "여관", "숙소", "객주" };
 
         static Inn instance;
+        /// <summary>여관에서 자고 깬 순간 (지역 리액션 배우기 등이 듣는다)</summary>
+        public static event Action Rested;
         float fade = -1f;             // -1 꺼짐, 0→2 어두워졌다가 밝아짐
         bool slept;
         float baseDrain = -1f;
@@ -181,6 +184,7 @@ namespace PocketCaravan
                 UIState.Release();
                 Sfx.Play("levelup", .6f);
                 Notify.Show($"푹 쉬었다! {BuffHours:0}시간 동안 달려도 덜 지친다.", 4f);
+                Rested?.Invoke();
             }
         }
 

@@ -19,7 +19,7 @@ namespace PocketCaravan
         class Ice { public float x, y; public bool big, hit; }
         readonly List<Ice> ices = new List<Ice>();
         float bx, dist, speed, timer, runTime, bump, stroke, spawnAt;
-        int hits, refund;
+        int hits;
         string result;
         int startFrame;
         readonly Dictionary<string, Texture2D> tex = new Dictionary<string, Texture2D>();
@@ -53,7 +53,7 @@ namespace PocketCaravan
             m.dest = destMap; m.facing = face;
             m.ices.Clear();
             m.bx = 0f; m.dist = 0f; m.speed = 40f; m.runTime = 0f; m.bump = 0f; m.stroke = 0f; m.spawnAt = 160f;
-            m.hits = 0; m.refund = 0; m.result = null;
+            m.hits = 0; m.result = null;
             m.state = S.Ready; m.timer = 1.5f; m.startFrame = Time.frameCount;
             UIState.Blocking = true;
         }
@@ -127,7 +127,7 @@ namespace PocketCaravan
                 return;
             }
             bool fast = runTime <= FastTime;
-            if (fast && GameManager.I != null) { GameManager.I.Player.money += Refund; refund = Refund; }
+            if (fast && GameManager.I != null) { GameManager.I.Player.money += Refund; }
             result = $"건넜다! {runTime:0.0}초 · 얼음에 {hits}번 쿵"
                      + (fast ? $"\n사공: \"솜씨 좋네! 노 젓는 값으로 {Refund}냥 돌려줄게.\"" : "\n사공: \"수고했어. 천천히 와도 괜찮아.\"");
             state = S.Result; startFrame = Time.frameCount;

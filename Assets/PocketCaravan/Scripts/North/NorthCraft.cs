@@ -4,7 +4,7 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// 10/26 중앙 큰 장 + 북유럽 특산 공방. 공용 코드는 고치지 않는다 (GameEvents.ItemSold를 듣기만 함).
+    /// 10/26 중앙 큰 장(장식) + 북유럽 특산 공방. 큰 장 규칙(날짜·덤·알림)은 2026-11-04부터 공용 CentralFair.
     ///
     /// [돌아가며 열리는 큰 장] (팀 공통 규칙 Docs/NorthFair.md)
     /// - 날마다 중앙 북쪽 마을 4곳 중 한 곳에 큰 장이 선다. 차례: 북문 → 눈숲 → 개울 나루 → 길목 (게임 날짜 % 4).
@@ -22,17 +22,11 @@ namespace PocketCaravan
     public class NorthCraft : MonoBehaviour
     {
         // ---------------- 큰 장 ----------------
-        public const float FairBonus = 0.2f;
-        static readonly string[] FairMaps = { "north_c_gatetown", "north_c_snowwood", "north_c_creek", "north_c_crossing" };
-        static readonly string[] FairTownIds = { "north_post", "north_cwood", "north_ccreek", "north_cross" };
-        static readonly string[] FairNames = { "북문 마을", "눈숲 마을", "개울 나루 마을", "북쪽 길목 마을" };
-
+        // 2026-11-04 통합: 어디서 언제 서는지·덤·알림은 공용 CentralFair가 맡는다. 여기는 북쪽 장식(좌판·구경꾼·외침)만.
+        public static string FairMap => CentralFair.Today("north").mapId;
+        public static string FairName => CentralFair.Today("north").name;
+        public static string FairNews => CentralFair.News("north");
         static int Today => GameManager.I != null ? GameManager.I.Clock.day : 0;
-        static int FairIndex => ((Today % FairMaps.Length) + FairMaps.Length) % FairMaps.Length;
-        public static string FairMap => FairMaps[FairIndex];
-        public static string FairName => FairNames[FairIndex];
-        public static string FairTownId => FairTownIds[FairIndex];
-        public static string FairNews => $"오늘 큰 장: {FairName} (팔면 {Mathf.RoundToInt(FairBonus * 10)}할 더)";
 
         // ---------------- 공방 ----------------
         struct Recipe
@@ -82,7 +76,6 @@ namespace PocketCaravan
             done = NorthUtil.Tone("north_craft_done", 0.5f, new[] { 523f, 784f, 1046f }, 0.3f);
         }
 
-        void OnDestroy() { GameEvents.ItemSold -= OnSold; }
 
         void Update()
         {
@@ -160,22 +153,14 @@ namespace PocketCaravan
 
         void Rebuild(string map)
         {
-            // 공용 이벤트는 새 게임에서 비워질 수 있어 맵마다 다시 건다 (두 번 걸리지 않게 먼저 뺌)
-            GameEvents.ItemSold -= OnSold; GameEvents.ItemSold += OnSold;
             if (root != null) Destroy(root.gameObject);
             root = null; idlers.Clear(); yard.Clear(); shouters.Clear(); stallLabels.Clear(); sideLabels.Clear(); shoutWho = -1;
             if (shopOpen) CloseShop();
             if (map == null || !map.StartsWith("north_") || GameManager.I == null) return;
             root = new GameObject("North Craft").transform;
 
-            // 큰 장 알림: 중앙·국경 고개에 들어서면 하루 한 번, 큰 장 마을에서는 들어설 때마다
-            if (map == FairMap) Notify.Show($"큰 장이 섰다! 오늘 {FairName} 장터에서 팔면 {Mathf.RoundToInt(FairBonus * 10)}할을 더 받는다.", 4f);
-            else if (map.StartsWith("north_c_") && Mathf.RoundToInt(NorthSave.Get("fairnote", -1f)) != Today)
-            {
-                NorthSave.Set("fairnote", Today);
-                Notify.Show(FairNews, 4f);
-            }
-            BuildMarket(map, map == FairMap);
+            // 큰 장 알림은 공용 CentralFair가 한다
+            BuildMarket(map, CentralFair.IsFairMap(map));
             // 10/27 고기 꼬치 화덕 옆 꼬치 장수
             var sp = NorthData.Get(map, "spitters");
             for (int i = 0; i + 1 < sp.Length; i += 2)
@@ -553,15 +538,6 @@ namespace PocketCaravan
             go.transform.SetParent(root, false);
             go.transform.position = NorthUtil.Cell(map, cx, cy);
             var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = sp; sr.sortingOrder = order;
-        }
-
-        void OnSold(ItemData item, TownData town, int price, int profit)
-        {
-            if (town == null || town.id != FairTownId || price <= 0 || GameManager.I == null) return;
-            int bonus = Mathf.Max(1, Mathf.RoundToInt(price * FairBonus));
-            GameManager.I.Player.money += bonus;
-            Notify.Show($"큰 장 덤 +{bonus}냥", 1.5f);
-            if (!AudioManager.Muted) sfx.PlayOneShot(coin, 0.4f);
         }
 
         // ---------------- 공방 ----------------

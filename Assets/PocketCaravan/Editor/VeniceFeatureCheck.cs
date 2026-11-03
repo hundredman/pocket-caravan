@@ -220,16 +220,16 @@ namespace PocketCaravan.EditorTools
                     int m0 = gm.Player.money;
                     for (int i = 0; i < 4; i++) VeniceSocial.TestGift("여관 주인", wine);
                     report.AppendLine($"친밀도: 여관 주인 점수 {VeniceSocial.Points("여관 주인")} 하트 {VeniceSocial.Hearts("여관 주인")}, 춤 배움 {VeniceSave.Has("react:dance")}, 돈 {m0}→{gm.Player.money}, 기념품 {VeniceSave.Has("keepsake:여관 주인")}");
-                    var social = gm.GetComponent<VeniceSocial>();
-                    typeof(VeniceSocial).GetField("book", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(social, true);
+                    var social = UnityEngine.Object.FindAnyObjectByType<Social>();
+                    typeof(Social).GetField("book", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(social, true);
                     UIState.Blocking = true;
                     step = 3; waitUntil = now + 1f; break;
                 }
                 case 3:
                 {
                     Shot("life_2_friend_book");
-                    var social = gm.GetComponent<VeniceSocial>();
-                    typeof(VeniceSocial).GetField("book", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(social, false);
+                    var social = UnityEngine.Object.FindAnyObjectByType<Social>();
+                    typeof(Social).GetField("book", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(social, false);
                     UIState.Release();
                     report.AppendLine($"여관(공용 Inn): 시계 {gm.Clock.Label}");   // 2026-11-03 침대 대신 공용 Inn
                     Inn.SleepNow();
@@ -528,7 +528,7 @@ namespace PocketCaravan.EditorTools
                 case 8:
                     var fish = gm.Db.items.Find(i => i != null && i.id == "venice_fish");
                     report.AppendLine($"그물 보상(2번 성공 가정): 절인 생선 {gm.Player.cargo.Count(fish)}개, 오늘 함 {VeniceSave.DoneToday("net")}");
-                    while (VeniceFair.Today.town != "venice_c_landing") gm.Clock.day++;   // 오늘을 나루터 큰 장 날로
+                    while (VeniceFair.Today.townId != "venice_c_landing") gm.Clock.day++;   // 오늘을 나루터 큰 장 날로
                     gm.TravelTo("venice_c_landing", "from_venice_chioggia");
                     step = 9; waitUntil = now + 2.5f; break;
                 case 9:

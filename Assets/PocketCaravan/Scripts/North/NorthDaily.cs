@@ -526,7 +526,7 @@ namespace PocketCaravan
             string body = $"(룬 돌을 던진다… 달그락)\n\n다음 네 시간: {W(next1)}\n그다음 네 시간: {W(next2)}\n오늘 밤 오로라: {(aurora ? "뜬다" : "안 뜬다")}"
                           + (next1 == NorthAtmosphere.Weather.Blizzard || next2 == NorthAtmosphere.Weather.Blizzard ? "\n\n눈보라가 오는구먼. 썰매나 온천으로 대비하게." : "")
                           + "\n\n" + DealNews();
-            if (NorthSocial.Knows(7) && !prayed && NorthAtmosphere.Shown >= NorthAtmosphere.Weather.Heavy)
+            if (Reactions.Knows("pray") && !prayed && NorthAtmosphere.Shown >= NorthAtmosphere.Weather.Heavy)
                 body += "\n\n지금 날씨 기도를 올리면 하늘이 조금 누그러질 게야. (R → 날씨 기도, 하루 한 번)";
             DialogueUI.Show("룬 점쟁이", body);
         }

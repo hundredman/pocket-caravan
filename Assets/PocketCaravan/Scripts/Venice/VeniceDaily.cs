@@ -59,11 +59,7 @@ namespace PocketCaravan
             foreach (var p in VeniceData.Points(data.seats)) Spot<VeniceSeat>(new[] { p.x, p.y }, "벤치");
             if (data.dock != null && data.dock.Length >= 2) Spot<VeniceTraghetto>(data.dock, "곤돌라 나루");
 
-            if (GameManager.I != null && !VeniceSave.Has("keyhint"))
-            {
-                VeniceSave.Set("keyhint", 1f);
-                Notify.Show("베네치아: R 동작 · G 선물 · F 친구 수첩 · P 사진 · 벤치에서 Space로 앉기", 7f);
-            }
+            // 2026-11-04 키 안내(R·G·F·P)는 공용 Social이 한 번 띄운다
             else if (GameManager.I != null && (int)VeniceSave.Get("announce", -1) != Day)
             {
                 VeniceSave.Set("announce", Day);
