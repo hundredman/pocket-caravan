@@ -3,6 +3,12 @@
   "status": "approved",
   "approval": "User 2026-11-02: integrate the reviewed market assets into production.",
   "reviewSource": "ArtReview/VillageFill-20261030/manifest.json",
+  "extensions": [
+    {
+      "source": "ArtReview/MarketCourts-E2-20261103/layout.json",
+      "status": "review"
+    }
+  ],
   "assets": [
     {
       "id": "sign",
@@ -601,6 +607,91 @@
               "h": 1
             }
           ]
+        },
+        {
+          "id": "board",
+          "props": [
+            {
+              "asset": "board",
+              "x": 51,
+              "y": 35,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        },
+        {
+          "id": "market",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 38,
+              "y": 35,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 46,
+              "y": 35,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 38,
+              "y": 40,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 42,
+              "y": 40,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 46,
+              "y": 40,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        },
+        {
+          "id": "event-yard",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 53,
+              "y": 38,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 58,
+              "y": 38,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 53,
+              "y": 41,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 58,
+              "y": 41,
+              "w": 3,
+              "h": 2
+            }
+          ]
         }
       ]
     },
@@ -708,6 +799,98 @@
               "y": 30,
               "w": 1,
               "h": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mapId": "transit_southport",
+      "width": 86,
+      "height": 68,
+      "spaces": [
+        {
+          "id": "board",
+          "props": [
+            {
+              "asset": "board",
+              "x": 34,
+              "y": 38,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        },
+        {
+          "id": "market",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 27,
+              "y": 40,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 35,
+              "y": 40,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 27,
+              "y": 45,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 31,
+              "y": 45,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 35,
+              "y": 45,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        },
+        {
+          "id": "event-yard",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 36,
+              "y": 30,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 41,
+              "y": 30,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 36,
+              "y": 33,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 41,
+              "y": 33,
+              "w": 3,
+              "h": 2
             }
           ]
         }

@@ -146,6 +146,11 @@ def main():
         if not p:report[t['map']].append('빈칸 없음: 장터 '+t['town']);continue
         m.d['objects'].append(O('market',*p,id='life_market_'+t['town'],town=t['town'],character=t['character']))
         report[t['map']].append(f"장터 {t['town']} {p}")
+        if t.get('board'):   # 게시판 그림(승인 장터 배치) 앞 칸에서 상호작용 = m4_objects 게시판 규칙
+            bx,by=spots[t['map']][t['board']];q=(bx,by+1)
+            if not m.walk(*q) or q in {(o['x'],o['y']) for o in m.d['objects'] if o['kind'] not in('exit','spawn','anim','ambience')} or q in m.exits():raise SystemExit(f"{t['map']}: 게시판 앞 칸 막힘 {q}")
+            m.d['objects'].append(O('board',*q,id='life_board_'+t['town'],town=t['town']))
+            report[t['map']].append(f"게시판 {t['town']} {q}")
     # 이정표
     for mid,m in maps.items():
         ex=m.exits();runs=collections.defaultdict(list)

@@ -128,13 +128,15 @@
       "map": "transit_southport",
       "town": "transit_southport",
       "spot": "장터 광장",
-      "character": "NPC/npc_ferry_merchant/npc_ferry_merchant_tall"
+      "character": "NPC/npc_ferry_merchant/npc_ferry_merchant_tall",
+      "board": "게시판"
     },
     {
       "map": "transit_crossroads",
       "town": "transit_crossroads",
       "spot": "장터 광장",
-      "character": "NPC/npc_capital_peddler/npc_capital_peddler_tall"
+      "character": "NPC/npc_capital_peddler/npc_capital_peddler_tall",
+      "board": "게시판"
     }
   ]
 }

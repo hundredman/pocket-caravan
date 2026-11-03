@@ -8,7 +8,9 @@ ROOT=Path(__file__).resolve().parents[2]
 SOURCE=ROOT/'ArtReview/VillageFill-20261030/manifest.json'
 LAYOUT=ROOT/'Assets/PocketCaravan/Data/Goryeo/MarketLayout.json'
 ART=ROOT/'Assets/PocketCaravan/Art/Goryeo/Markets'
-ALLOWED={'Naru','Gaegyeong','Dakmok','goryeo_jangdan','goryeo_songak','transit_woodtown','transit_ferry','transit_crossroads','transit_pass'}
+ALLOWED={'Naru','Gaegyeong','Dakmok','goryeo_jangdan','goryeo_songak','transit_woodtown','transit_ferry','transit_crossroads','transit_pass','transit_southport'}
+# 11/03 E2: 새 장터에 승인된 그림을 더 놓는 배치. status가 review면 은샘 그림 검토 중(본편에 넣어 화면으로 확인).
+EXTENSIONS=[ROOT/'ArtReview/MarketCourts-E2-20261103/layout.json']
 def rgba(path):
  with Image.open(path)as im:return hashlib.sha256(im.convert('RGBA').tobytes()).hexdigest()
 def promote():
@@ -33,7 +35,22 @@ def promote():
   for k,v in source['inputMaps'][m['mapId']]['metadata'].items():
    if d[k]!=v:raise ValueError('Map metadata changed: '+m['mapId']+'/'+k)
   maps.append(dict(mapId=m['mapId'],width=d['w'],height=d['h'],spaces=[s for s in m['spaces']if s['props']]))
- result=dict(schemaVersion=1,status='approved',approval='User 2026-11-02: integrate the reviewed market assets into production.',reviewSource=SOURCE.relative_to(ROOT).as_posix(),assets=assets,maps=maps)
+ ext=[]
+ for path in EXTENSIONS:
+  e=json.loads(path.read_text())
+  if e['status'] not in('review','approved'):continue
+  ext.append(dict(source=path.relative_to(ROOT).as_posix(),status=e['status']))
+  for em in e['maps']:
+   if em['mapId']not in ALLOWED:raise ValueError('Unexpected region: '+em['mapId'])
+   if any(p['asset']not in used for s in em['spaces']for p in s['props']):raise ValueError('Extension uses unapproved art: '+em['mapId'])
+   cur=next((m for m in maps if m['mapId']==em['mapId']),None)
+   if cur is None:
+    d=json.loads((ROOT/'Assets/PocketCaravan/Maps'/f"{em['mapId']}.json").read_text())
+    cur=dict(mapId=em['mapId'],width=d['w'],height=d['h'],spaces=[]);maps.append(cur)
+   have={s['id']for s in cur['spaces']}
+   if have&{s['id']for s in em['spaces']}:raise ValueError('Extension overlaps reviewed space: '+em['mapId'])
+   cur['spaces']+=em['spaces']
+ result=dict(schemaVersion=1,status='approved',approval='User 2026-11-02: integrate the reviewed market assets into production.',reviewSource=SOURCE.relative_to(ROOT).as_posix(),extensions=ext,assets=assets,maps=maps)
  LAYOUT.parent.mkdir(parents=True,exist_ok=True);LAYOUT.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
  print(f"Production market source: {len(maps)} maps, {len(assets)} whole images, {sum(len(s['props'])for m in maps for s in m['spaces'])} placements")
 if __name__=='__main__':promote()

@@ -104,9 +104,10 @@ class CentralConnection(unittest.TestCase):
 
     def test_no_extra_trade_town_or_bandit_added_in_connector_maps(self):
         self.assertFalse(any(o['kind'] in ['market','board','bandit'] for o in self.maps['transit_central_approach']['objects']))
-        # 11/03 E2: 길목 마을에는 장터 상인 하나만 연다(게시판·도적은 아직 없음).
+        # 11/03 E2: 길목 마을에는 장터 상인·게시판을 하나씩 연다(도적은 없음).
         cr=self.maps['transit_crossroads']['objects']
         self.assertEqual([o['town'] for o in cr if o['kind']=='market'],['transit_crossroads'])
-        self.assertFalse(any(o['kind'] in ['board','bandit'] for o in cr))
+        self.assertEqual([o['town'] for o in cr if o['kind']=='board'],['transit_crossroads'])
+        self.assertFalse(any(o['kind']=='bandit' for o in cr))
 
 if __name__=='__main__':unittest.main()

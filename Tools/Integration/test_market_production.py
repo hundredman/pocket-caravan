@@ -12,6 +12,8 @@ class ProductionMarkets(unittest.TestCase):
  def test_approved_review_art_and_all_positions_are_preserved(self):
   review=json.loads((ROOT/self.data['reviewSource']).read_text())
   expected={m['mapId']:[s for s in m['spaces']if s['props']]for m in review['maps']if any(s['props']for s in m['spaces'])}
+  for e in self.data.get('extensions',[]):   # 11/03 E2: 승인 그림을 새 장터에 더 놓은 배치(검토 기록과 같아야 함)
+   for em in json.loads((ROOT/e['source']).read_text())['maps']:expected[em['mapId']]=expected.get(em['mapId'],[])+em['spaces']
   self.assertEqual({m['mapId']:m['spaces']for m in self.data['maps']},expected)
   for a in self.data['assets']:
    self.assertTrue(a['image'].startswith('Assets/PocketCaravan/Art/Goryeo/Markets/'))
