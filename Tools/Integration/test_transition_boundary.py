@@ -16,8 +16,15 @@ class CameraBoundary(unittest.TestCase):
     def test_gameplay_and_original_art_are_unchanged(self):
         rows=json.loads((ROOT/'Docs/Validation/T1a-2026-10-30/map-baseline.json').read_text())
         sha=lambda d:hashlib.sha256(json.dumps(d,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
+        # 이후 의도된 덧붙임(생활 보강 goryeo_life.py: 주민·이정표)은 기록대로 되돌린 뒤 비교한다
+        life=ROOT/'Tools/WorldLayout/goryeo_life_applied.json'
+        applied=json.loads(life.read_text()) if life.exists() else {}
         for mid,r in rows.items():
             d=json.loads((ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').read_text())
+            for c in applied.get(mid,[]):
+                i=c['y']*d['w']+c['x'];d['obj'][i]=d['palette'].index(c['obj']) if c['obj'] else 0
+                d['blocked'][i]=c['blocked'];d['reachable'][i]=c['reachable']
+            d['objects']=[o for o in d['objects'] if not str(o.get('id','')).startswith('life_')]
             stable={k:v for k,v in d.items()if k not in {'palette','ground','deco','obj','high','cameraBackdrop'}}
             art={k:[d['palette'][i]for i in d[k]]for k in ['ground','deco','obj','high']}
             self.assertEqual(sha(stable),r['gameplaySHA'],mid);self.assertEqual(sha(art),r['visibleLayersSHA'],mid)
