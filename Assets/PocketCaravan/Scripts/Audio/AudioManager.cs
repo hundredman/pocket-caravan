@@ -23,7 +23,11 @@ namespace PocketCaravan
 
         static readonly Dictionary<string, string> MapMusic = new Dictionary<string, string>
         {
-            ["Naru"] = "naru", ["Route01"] = "road", ["Gaegyeong"] = "capital", ["Dakmok"] = "dakmok",
+            // 고려·중앙 동쪽 13맵(M4, 2026-11-03 정리). 표에 없는 맵(다른 지역)은 예전처럼 naru
+            ["Naru"] = "naru", ["Gaegyeong"] = "capital", ["Dakmok"] = "dakmok",
+            ["goryeo_songak"] = "capital", ["goryeo_jangdan"] = "naru",
+            ["transit_woodtown"] = "dakmok", ["transit_ferry"] = "naru", ["transit_southport"] = "naru", ["transit_crossroads"] = "dakmok",
+            ["transit_wetroad"] = "road", ["transit_pass"] = "road", ["transit_central_approach"] = "road", ["transit_south_inland"] = "road",
         };
 
         void Awake()
