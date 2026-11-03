@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147baa154c7bc4bf39645666676b3271, type: 3}
+  m_Name: Town_Southport
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.TownData
+  id: transit_southport
+  displayName: "\uB0A8\uB3D9 \uD3EC\uAD6C"
+  region: {fileID: 11400000, guid: 33ac5d5fe768644189807a1d29eda36b, type: 2}
+  journeyNote: "\uC18C\uAE08\u00B7\uB9D0\uB9B0 \uC0DD\uC120 \uC0B0\uC9C0. \uC778\uC0BC\uACFC \uD55C\uC9C0\uB294 \uADC0\uD558\uAC8C \uCCD0 \uC900\uB2E4."
+  worldCoord: {x: 8, y: 1}
+  startLevel: 1
+  settlementTier: 2
+  facilities:
+  - id: transit_southport_rest
+    displayName: "\uAE38\uC190 \uC27C\uD130"
+    kind: 0
+    minTier: 1
+    minCredit: 0
+    description: 
+    storageCapacity: 120
+  - id: transit_southport_info
+    displayName: "\uAE38 \uC548\uB0B4"
+    kind: 1
+    minTier: 2
+    minCredit: 0
+    description: "\uB0A8\uCABD \uBC14\uB2F7\uAC00 \uD3EC\uAD6C\uC785\uB2C8\uB2E4. \uB0A8\uB3D9 \uAE38\uC744 \uB530\uB77C \uBD81\uCABD\uC73C\uB85C \uAC00\uBA74 \uACE0\uB824 \uC7A5\uB2E8, \uC11C\uCABD \uD638\uC22B\uAC00 \uAE38\uC744 \uC9C0\uB098\uBA74 \uB0B4\uB959 \uAD50\uC5ED \uAE38\uBAA9\uC785\uB2C8\uB2E4. \uACE0\uAC2F\uAE38\uC5D0\uB294 \uB3C4\uC801\uC774 \uB098\uC624\uB2C8 \uC9D0\uC744 \uC870\uC2EC\uD558\uC138\uC694."
+    storageCapacity: 120
+  stock:
+  - item: {fileID: 11400000, guid: 26670207d8df843b19235b8d81286a8d, type: 2}
+    optimal: 56
+    localPriceMultiplier: 0.75
+  - item: {fileID: 11400000, guid: 432a10a42612648bcba79fd3b0f4b7a7, type: 2}
+    optimal: 64
+    localPriceMultiplier: 0.8
+  - item: {fileID: 11400000, guid: be3a5de9ae7594a3389e4078a55c7e19, type: 2}
+    optimal: 12
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 9b0a33b14044448d8962b7818d9d0df6, type: 2}
+    optimal: 14
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 34ab4741f86eb44b3bae564c5daa0f12, type: 2}
+    optimal: 4
+    localPriceMultiplier: 1.5
+  - item: {fileID: 11400000, guid: c7b553013268140eca99e3276caecd4f, type: 2}
+    optimal: 6
+    localPriceMultiplier: 1.3
+  - item: {fileID: 11400000, guid: 3b1d3708de2364a25ad4a9d27b2306a1, type: 2}
+    optimal: 2
+    localPriceMultiplier: 1.2
+  defaultOptimal: 3
+  vehiclesForSale: []

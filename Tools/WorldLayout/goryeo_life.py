@@ -1,4 +1,4 @@
-"""고려·중앙 동쪽 생활 보강(2026-11-03): 말 거는 주민과 방향 이정표를 본편 맵 JSON에 덧붙인다.
+"""고려·중앙 동쪽 생활 보강(2026-11-03): 말 거는 주민·방향 이정표·새 마을 장터 상인을 본편 맵 JSON에 덧붙인다.
 
 - 맵을 다시 내보내지 않는다(A7d 자연 지형·장터 등 이후 작업을 지키기 위해). 이미 있는 맵 JSON에 객체·칸만 더한다.
 - 다시 실행해도 같다: 앞서 붙인 것(id가 life_로 시작)과 바꾼 칸을 기록(goryeo_life_applied.json)으로 되돌린 뒤 다시 붙인다.
@@ -94,7 +94,7 @@ def main():
     maps={mid:Map(p) for mid,p in regions()}
     revert(maps)
     zones=json.loads((ROOT/'ArtReview/M2-Zones/zones.json').read_text())['villages']
-    spots=collections.defaultdict(dict)
+    spots=collections.defaultdict(dict);sizes=collections.defaultdict(dict)
     for vz in zones.values():
         for it in vz['items']:
             if it.get('missing') or 'x' not in it:continue
@@ -102,7 +102,7 @@ def main():
                 lx,ly=it['x']-m.d['terrainX'],it['y']-m.d['terrainY']
                 if m.walk(lx,ly) or (m.inside(lx,ly) and any(m.walk(lx+dx,ly+dy) for dx,dy in STEP.values())):
                     # 맵 직사각형이 겹치므로 그 칸이 이 맵에서 걸을 수 있는(=이 맵 구역) 경우만
-                    if m.walk(lx,ly) or m.d['ground'][m.i(lx,ly)]:spots[mid].setdefault(it['name'],(lx,ly))
+                    if m.walk(lx,ly) or m.d['ground'][m.i(lx,ly)]:spots[mid].setdefault(it['name'],(lx,ly));sizes[mid].setdefault(it['name'],(it.get('w',1),it.get('h',1)))
     # 건물 문 앞(문 칸과 그 양옆·한 칸 앞)은 비운다
     doors=collections.defaultdict(set)
     for vz in zones.values():
@@ -137,6 +137,15 @@ def main():
         if not p:report[t['map']].append('빈칸 없음: '+t['name']);continue
         m.d['objects'].append(O('talker',*p,id='life_'+t['name'],name=t['name'],character=t['character'],lines=t['lines']))
         report[t['map']].append(f"주민 {t['name']} {p}")
+    # 새 마을 장터 상인(11/03 E2). 장터 광장 가운데 윗줄 = m4_objects 장터 규칙. 길 위여도 된다(광장은 대개 흙길).
+    for t in SPEC.get('markets',[]):
+        m=maps[t['map']];occ=m.occupied()
+        if t['spot'] not in spots[t['map']]:report[t['map']].append('자리 없음: '+t['spot']);continue
+        (x,y),(w,h)=spots[t['map']][t['spot']],sizes[t['map']][t['spot']]
+        p=nearest(m,x+w//2,y+1,occ,prefer_offroad=False)
+        if not p:report[t['map']].append('빈칸 없음: 장터 '+t['town']);continue
+        m.d['objects'].append(O('market',*p,id='life_market_'+t['town'],town=t['town'],character=t['character']))
+        report[t['map']].append(f"장터 {t['town']} {p}")
     # 이정표
     for mid,m in maps.items():
         ex=m.exits();runs=collections.defaultdict(list)
@@ -175,7 +184,7 @@ def main():
             report[mid].append(f"이정표 {ARROW[o['edge']]} {name} {placed}")
     # 확인: 기능 객체·출구가 여전히 같은 덩어리에서 닿는지(주민 칸은 막힌 것으로 본다)
     for mid,m in maps.items():
-        tk=[(o['x'],o['y']) for o in m.d['objects'] if o['kind']=='talker' and str(o.get('id','')).startswith('life_')]
+        tk=[(o['x'],o['y']) for o in m.d['objects'] if o['kind'] in('talker','market') and str(o.get('id','')).startswith('life_')]
         before=len(set(m.components().values()))
         after=len(set(m.components(tk).values()))
         if after>before:raise SystemExit(f'{mid}: 주민이 길을 막음 ({before}→{after})')

@@ -1,35 +1,158 @@
 {
-  "note": "고려·중앙 동쪽 생활 보강(2026-11-03, 은샘 지시: 다른 지역보다 사람·이정표가 적음). goryeo_life.py가 맵 JSON에 덧붙인다. 자리는 M2 구역도의 자리 이름(spot) 또는 맵 이름(길 맵은 길 가운데). 그림은 승인된 C1 인물 그림만 쓴다.",
+  "note": "고려·중앙 동쪽 생활 보강(2026-11-03, 은샘 지시: 다른 지역보다 사람·이정표가 적음). goryeo_life.py가 맵 JSON에 덧붙인다. 자리는 M2 구역도의 자리 이름(spot) 또는 맵 이름(길 맵은 길 가운데). 그림은 승인된 C1 인물 그림만 쓴다. markets: 새 마을 장터 상인(TownData 필요). 자리는 장터 광장 가운데 윗줄(m4_objects와 같은 규칙), 그림은 승인된 인물 그림 재사용.",
   "talkers": [
-    {"map": "Gaegyeong", "spot": "장터 광장", "name": "비단 상인", "character": "NPC/npc_resident_silk/npc_resident_silk_tall",
-     "lines": ["비단은 가볍지만 값이 많이 나가오. 수레가 없을 때는 무거운 짐보다 이런 물건이 낫지.", "대륙으로 가려면 송악이나 장단에서 서쪽으로 나가시오."]},
-    {"map": "Gaegyeong", "spot": "이벤트 마당", "name": "선비", "character": "NPC/npc_resident_scholar/npc_resident_scholar_tall",
-     "lines": ["개경 사람들은 장부를 잘 적는 상인을 믿지. 값은 날마다 달라지니 본 것을 적어 두게."]},
-    {"map": "goryeo_songak", "spot": "장터 광장", "name": "약재 짐꾼", "character": "NPC/npc_resident_porter/npc_resident_porter_tall",
-     "lines": ["인삼은 무게에 비해 값이 크오. 멀리 갈수록 더 비싸게 쳐주는 곳이 있지.", "서쪽 고개를 넘으면 동문 마을이오. 대륙으로 가는 길이 거기서 시작되지."]},
-    {"map": "Dakmok", "spot": "장터 광장", "name": "떡 장수", "character": "NPC/npc_resident_ricecake/npc_resident_ricecake_tall",
-     "lines": ["한지 마르는 날엔 마을이 조용해요. 종이는 개경과 대륙 쪽 마을에서 반겨 주지요."]},
-    {"map": "goryeo_jangdan", "spot": "수확 더미", "name": "볏단 일꾼", "character": "NPC/npc_resident_porter/npc_resident_porter_tall",
-     "lines": ["곡식은 무거워서 지게로는 몇 섬 못 나르오. 손수레가 있으면 한결 낫지.", "북쪽은 송악, 동쪽은 개경이오. 남서쪽 고개 너머는 대륙으로 가는 남동 길이고."]},
-    {"map": "transit_woodtown", "spot": "주민", "name": "동문 짐꾼", "character": "NPC/npc_resident_porter/npc_resident_porter_tall",
-     "lines": ["여기서부터 대륙이오. 북동 길로 가면 강가 포구, 남쪽으로 가면 호숫가와 남동 포구가 나오지."]},
-    {"map": "transit_ferry", "spot": "뱃사공", "name": "뱃사공", "character": "NPC/npc_resident_boatman/npc_resident_boatman_tall",
-     "lines": ["강 건너 동문 마을까지는 북동 길을 따라가오. 강가라 길이 구불구불하지."]},
-    {"map": "transit_southport", "spot": "포구 상인", "name": "포구 상인", "character": "NPC/npc_resident_silk/npc_resident_silk_tall",
-     "lines": ["여기는 남쪽 바닷가 포구예요. 고갯길에 도적이 나온다니 짐을 싣고 올 땐 조심하세요."]},
-    {"map": "transit_southport", "spot": "뱃사공", "name": "뱃사공", "character": "NPC/npc_resident_boatman/npc_resident_boatman_tall",
-     "lines": ["남동 길을 따라 북쪽으로 가면 고려 장단이 나오오."]},
-    {"map": "transit_crossroads", "spot": "길목 상인", "name": "길목 안내인", "character": "NPC/npc_crossroads_guide/npc_crossroads_guide_tall",
-     "lines": ["여기가 대륙 한가운데로 이어지는 길목이오.", "북서쪽 길은 북유럽 사람들의 땅으로, 서쪽 길 둘은 아라비아 사람들의 초원과 고원으로 이어지오. 동쪽으로 가면 고려요."]},
-    {"map": "transit_crossroads", "spot": "객주 주인", "name": "주막 주인", "character": "NPC/npc_resident_ricecake/npc_resident_ricecake_tall",
-     "lines": ["먼 길 떠나는 상인들이 여기서 짐을 다시 꾸리지요. 네 문명 사람을 다 볼 수 있는 곳이에요."]},
-    {"map": "transit_central_approach", "spot": "평상", "name": "쉬어 가는 나그네", "character": "NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall",
-     "lines": ["북쪽 쉼터에서 다리를 쉬고 가오. 남쪽으로 내려가면 대륙 한가운데 길목이 나오지."]},
-    {"map": "transit_south_inland", "spot": "어부", "name": "어부", "character": "NPC/npc_resident_boatman/npc_resident_boatman_tall",
-     "lines": ["호수 물고기는 아침에 잘 잡혀요. 이 길은 남동 포구와 길목 마을 사이에 있지요."]},
-    {"map": "transit_pass", "road": true, "name": "고갯길 나그네", "character": "NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall",
-     "lines": ["이 고개엔 도적이 나온다오. 통행료를 달라면 주고 지나가는 게 짐을 지키는 길이지."]},
-    {"map": "transit_wetroad", "road": true, "name": "강가 짐꾼", "character": "NPC/npc_resident_porter/npc_resident_porter_tall",
-     "lines": ["북동 길은 강을 따라 나 있소. 북쪽 끝은 버들나루 포구, 남쪽 끝은 동문 마을이지."]}
+    {
+      "map": "Gaegyeong",
+      "spot": "장터 광장",
+      "name": "비단 상인",
+      "character": "NPC/npc_resident_silk/npc_resident_silk_tall",
+      "lines": [
+        "비단은 가볍지만 값이 많이 나가오. 수레가 없을 때는 무거운 짐보다 이런 물건이 낫지.",
+        "대륙으로 가려면 송악이나 장단에서 서쪽으로 나가시오."
+      ]
+    },
+    {
+      "map": "Gaegyeong",
+      "spot": "이벤트 마당",
+      "name": "선비",
+      "character": "NPC/npc_resident_scholar/npc_resident_scholar_tall",
+      "lines": [
+        "개경 사람들은 장부를 잘 적는 상인을 믿지. 값은 날마다 달라지니 본 것을 적어 두게."
+      ]
+    },
+    {
+      "map": "goryeo_songak",
+      "spot": "장터 광장",
+      "name": "약재 짐꾼",
+      "character": "NPC/npc_resident_porter/npc_resident_porter_tall",
+      "lines": [
+        "인삼은 무게에 비해 값이 크오. 멀리 갈수록 더 비싸게 쳐주는 곳이 있지.",
+        "서쪽 고개를 넘으면 동문 마을이오. 대륙으로 가는 길이 거기서 시작되지."
+      ]
+    },
+    {
+      "map": "Dakmok",
+      "spot": "장터 광장",
+      "name": "떡 장수",
+      "character": "NPC/npc_resident_ricecake/npc_resident_ricecake_tall",
+      "lines": [
+        "한지 마르는 날엔 마을이 조용해요. 종이는 개경과 대륙 쪽 마을에서 반겨 주지요."
+      ]
+    },
+    {
+      "map": "goryeo_jangdan",
+      "spot": "수확 더미",
+      "name": "볏단 일꾼",
+      "character": "NPC/npc_resident_porter/npc_resident_porter_tall",
+      "lines": [
+        "곡식은 무거워서 지게로는 몇 섬 못 나르오. 손수레가 있으면 한결 낫지.",
+        "북쪽은 송악, 동쪽은 개경이오. 남서쪽 고개 너머는 대륙으로 가는 남동 길이고."
+      ]
+    },
+    {
+      "map": "transit_woodtown",
+      "spot": "주민",
+      "name": "동문 짐꾼",
+      "character": "NPC/npc_resident_porter/npc_resident_porter_tall",
+      "lines": [
+        "여기서부터 대륙이오. 북동 길로 가면 강가 포구, 남쪽으로 가면 호숫가와 남동 포구가 나오지."
+      ]
+    },
+    {
+      "map": "transit_ferry",
+      "spot": "뱃사공",
+      "name": "뱃사공",
+      "character": "NPC/npc_resident_boatman/npc_resident_boatman_tall",
+      "lines": [
+        "강 건너 동문 마을까지는 북동 길을 따라가오. 강가라 길이 구불구불하지."
+      ]
+    },
+    {
+      "map": "transit_southport",
+      "spot": "포구 상인",
+      "name": "포구 사람",
+      "character": "NPC/npc_resident_silk/npc_resident_silk_tall",
+      "lines": [
+        "여기는 남쪽 바닷가 포구예요. 고갯길에 도적이 나온다니 짐을 싣고 올 땐 조심하세요."
+      ]
+    },
+    {
+      "map": "transit_southport",
+      "spot": "뱃사공",
+      "name": "뱃사공",
+      "character": "NPC/npc_resident_boatman/npc_resident_boatman_tall",
+      "lines": [
+        "남동 길을 따라 북쪽으로 가면 고려 장단이 나오오."
+      ]
+    },
+    {
+      "map": "transit_crossroads",
+      "spot": "길목 상인",
+      "name": "길목 안내인",
+      "character": "NPC/npc_crossroads_guide/npc_crossroads_guide_tall",
+      "lines": [
+        "여기가 대륙 한가운데로 이어지는 길목이오.",
+        "북서쪽 길은 북유럽 사람들의 땅으로, 서쪽 길 둘은 아라비아 사람들의 초원과 고원으로 이어지오. 동쪽으로 가면 고려요."
+      ]
+    },
+    {
+      "map": "transit_crossroads",
+      "spot": "객주 주인",
+      "name": "주막 주인",
+      "character": "NPC/npc_resident_ricecake/npc_resident_ricecake_tall",
+      "lines": [
+        "먼 길 떠나는 상인들이 여기서 짐을 다시 꾸리지요. 네 문명 사람을 다 볼 수 있는 곳이에요."
+      ]
+    },
+    {
+      "map": "transit_central_approach",
+      "spot": "평상",
+      "name": "쉬어 가는 나그네",
+      "character": "NPC/npc_transit_central_approach_traveler/npc_transit_central_approach_traveler_tall",
+      "lines": [
+        "북쪽 쉼터에서 다리를 쉬고 가오. 남쪽으로 내려가면 대륙 한가운데 길목이 나오지."
+      ]
+    },
+    {
+      "map": "transit_south_inland",
+      "spot": "어부",
+      "name": "어부",
+      "character": "NPC/npc_resident_boatman/npc_resident_boatman_tall",
+      "lines": [
+        "호수 물고기는 아침에 잘 잡혀요. 이 길은 남동 포구와 길목 마을 사이에 있지요."
+      ]
+    },
+    {
+      "map": "transit_pass",
+      "road": true,
+      "name": "고갯길 나그네",
+      "character": "NPC/npc_transit_pass_traveler/npc_transit_pass_traveler_tall",
+      "lines": [
+        "이 고개엔 도적이 나온다오. 통행료를 달라면 주고 지나가는 게 짐을 지키는 길이지."
+      ]
+    },
+    {
+      "map": "transit_wetroad",
+      "road": true,
+      "name": "강가 짐꾼",
+      "character": "NPC/npc_resident_porter/npc_resident_porter_tall",
+      "lines": [
+        "북동 길은 강을 따라 나 있소. 북쪽 끝은 버들나루 포구, 남쪽 끝은 동문 마을이지."
+      ]
+    }
+  ],
+  "markets": [
+    {
+      "map": "transit_southport",
+      "town": "transit_southport",
+      "spot": "장터 광장",
+      "character": "NPC/npc_ferry_merchant/npc_ferry_merchant_tall"
+    },
+    {
+      "map": "transit_crossroads",
+      "town": "transit_crossroads",
+      "spot": "장터 광장",
+      "character": "NPC/npc_capital_peddler/npc_capital_peddler_tall"
+    }
   ]
 }
