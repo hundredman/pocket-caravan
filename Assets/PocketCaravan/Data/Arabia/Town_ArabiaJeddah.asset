@@ -29,6 +29,16 @@ MonoBehaviour:
     minCredit: 0
     description: 
     storageCapacity: 120
+  - id: arabia_jeddah_info
+    displayName: "\uB300\uC0C1 \uAE38 \uC548\uB0B4"
+    kind: 1
+    minTier: 2
+    minCredit: 1
+    description: "\uC0AC\uB098\uB85C \uAC00\uB294 \uB450 \uAE38: \uC9C0\uB984\uAE38(\uBE60\uB974\uC9C0\uB9CC
+      \uBAA8\uB798\uBC14\uB78C), \uB18D\uB85C(\uB290\uB9AC\uC9C0\uB9CC \uB300\uC0C1
+      \uC219\uC18C).\n\uBC30\uB85C \uB4E4\uC5B4\uC628 \uD5A5\uC2E0\uB8CC\uB294 \uB0B4\uB959
+      \uC218\uB3C4\uC5D0\uC11C \uBE44\uC309\uB2C8\uB2E4."
+    storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: 96610d66c3d64410a98a84e4cf5d03ee, type: 2}
     optimal: 40

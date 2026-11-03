@@ -86,6 +86,13 @@ namespace PocketCaravan.EditorTools
             var jeddah = Town("Town_ArabiaJeddah", JeddahTown, "제다", 26, "교역 중계 항구. 배로 들어온 향신료 공급지, 사나로 가는 두 길의 출발점.");
             var sanaa = Town("Town_ArabiaSanaa", SanaaTown, "사나", 28, "수도. 여러 산지 상품의 큰 소비처.");
             taiz.settlementTier = 2; jeddah.settlementTier = 2; sanaa.settlementTier = 3;   // 02 §2 제안 등급 (실험값)
+            // 2026-11-04 통합(기우): 다른 지역과 같은 시설 규칙 — 2등급부터 길 안내, 수도(3등급)에 창고. 글은 아라비아 담당이 다듬어도 됨
+            foreach (var (t, info) in new[] {
+                (taiz, "남쪽 길로 자비드, 서쪽 해안길로 제다, 북쪽 고원길로 사나.\n염색 직물은 바다 건너 항구에서 값이 오릅니다."),
+                (jeddah, "사나로 가는 두 길: 지름길(빠르지만 모래바람), 농로(느리지만 대상 숙소).\n배로 들어온 향신료는 내륙 수도에서 비쌉니다."),
+                (sanaa, "남쪽으로 제다·타이즈, 북쪽 성문 밖은 중앙 대륙 사막(만국 장터 가는 길)입니다.\n수도는 먼 산지 물건을 가장 비싸게 삽니다.") })
+                t.facilities.Add(new TownFacility { id = t.id + "_info", displayName = t == sanaa ? "궁전 길 안내소" : "대상 길 안내", kind = FacilityKind.RouteInformation, minTier = 2, minCredit = 1, description = info });
+            sanaa.facilities.Add(new TownFacility { id = sanaa.id + "_warehouse", displayName = "수도 상인 창고", kind = FacilityKind.Warehouse, minTier = 3, minCredit = 3, storageCapacity = 120f });
 
             Sprite Icon(string itemId) { var i = keepItems.Find(x => x != null && x.id == itemId); return i != null ? i.icon : null; }
             ItemData Item(string file, string id, string label, float weight, float price, TownData origin, bool quest, Sprite icon)

@@ -107,6 +107,8 @@ integration 작업트리에서 `Assets/PocketCaravan/Scripts`·`Data`·`Scenes`�
 | 친밀도·선물(G)·친구 수첩(F)·사진(P) | `Scripts/UI/Social.cs` | 없음 | ✔ 지역마다 친구 8명. 고려·아라비아 친구는 **초안**(지역 담당이 대사 수정) |
 | 밤 축제 | `Scripts/Economy/NightFestival.cs` | 북 오로라·베 카니발 연출 | ✔ 북 오로라(오로라 밤)·베 카니발(%7==5)·고려 연등회(%7==2, 개경)·아라비아 향료 밤시장(%7==6, 사나). 특산품 3할 |
 | 공방/제작 | `Scripts/Economy/Crafting.cs` (+ `WorkshopSpot`) | 북 마당 그림 | ✔ 엔진 통일 (북 3·베 2). **고려·아라비아 공방은 지역 담당이 Recipes에 추가** |
+| 다음 이야기 길잡이 · 퀘스트 동시 제한 | `Scripts/Quests/StoryGuide.cs` | 없음 (NorthGuide·NorthQuestLimit 지움) | ✔ 전 지역. 한 지역 의뢰 3개까지, 북 곁가지 2개까지 |
+| 마을 데이터 A | `NorthBuilder.cs`, `ArabiaRegionSetup.cs`, 맵 JSON | — | ✔ 북 4마을 손님방·등급, 중앙북 2등급, 아라비아 길 안내(2등급↑)·사나 창고, 본토 나루터·포도밭 의뢰 게시판. **중간권 마을 소개 글은 R2 고정 자산이라 고려 담당 몫** |
 
 - 점검 메뉴: `Pocket Caravan/통합/리액션 전부 배우기·처음 상태로 (Play 중)`
 - 옛 저장 호환: 북유럽·베네치아 친밀도 점수·받은 하트·배운 리액션은 그대로 이어진다.

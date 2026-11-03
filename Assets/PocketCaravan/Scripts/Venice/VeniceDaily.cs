@@ -8,7 +8,7 @@ namespace PocketCaravan
     /// - 떠돌이 상인: 날마다 장터 마을 8곳 중 한 곳(VeniceMerchant). 오늘의 특가·동작 비법서·사자 문장 소문.
     /// - 벤치 앞 칸에 앉기(VeniceSeat), 석호 나루의 곤돌라 배(VeniceTraghetto). 여관은 2026-11-03부터 공용 Inn(여관 주인에게 말 걸기).
     /// - 하루 처음 베네치아 맵에 들어오면 떠돌이 상인·특가 마을을 알린다.
-    /// - 다음 이야기 길잡이: 진행 중인 베네치아 퀘스트가 없을 때 다음 퀘스트를 누가 주는지 화면 아래 가운데에 한 줄 (10-30 북유럽 NorthGuide와 같은 자리·모양).
+    /// - (2026-11-04 공용 StoryGuide로 옮김) 다음 이야기 길잡이: 진행 중인 베네치아 퀘스트가 없을 때 다음 퀘스트를 누가 주는지 화면 아래 가운데에 한 줄 (10-30 북유럽 NorthGuide와 같은 자리·모양).
     /// - 벤치 한숨 돌림은 공용 StaminaMods에 배율만 등록한다(푹 쉼 적용은 공용 Inn).
     /// 저장: VeniceSave (deal_n 오늘 산 특가 수, announce 날짜). rested_until은 공용 RestBuff로 옮김.
     /// </summary>
@@ -82,46 +82,6 @@ namespace PocketCaravan
             StaminaMods.Set("venice_breather", VeniceUtil.InVenice && VeniceSeat.Breather ? .75f : 1f);
         }
 
-        // ---------------- 다음 이야기 길잡이 ----------------
-        static readonly (string npc, string name)[] Givers =
-        {
-            ("venice_innkeeper", "여관 주인"), ("venice_clerk", "상인회 서기"), ("venice_gardener", "과수원 일꾼"),
-            ("venice_glassmaker", "유리 장인"), ("venice_fisher", "부라노 어부"), ("venice_warehouse", "창고지기"),
-        };
-
-        static string NextStory()
-        {
-            var gm = GameManager.I;
-            if (gm == null || gm.Quests == null) return null;
-            foreach (var p in gm.Quests.Active) if (p.quest != null && p.quest.id.StartsWith("venice_")) return null;
-            QuestData best = null;
-            foreach (var q in gm.Db.quests)
-                if (q != null && q.id != null && q.id.StartsWith("venice_q") && gm.Quests.CanStart(q) && (best == null || string.CompareOrdinal(q.id, best.id) < 0))
-                    best = q;
-            if (best == null) return null;
-            string who = best.giverNpc;
-            foreach (var g in Givers) if (g.npc == best.giverNpc) who = g.name;
-            var map = WorldIndex.Get()?.MapOf("npc", best.giverNpc);
-            // 2026-10-30 북유럽 NorthGuide와 같은 글 모양
-            return $"<color=#ffde59>다음 이야기</color>  <b>{who}</b> 「{best.title}」" + (map != null ? $"  <color=#c9c3d6>· {MapName(map)}</color>" : "") + "  <color=#ffde59>!</color>";
-        }
-
-        static GUIStyle guideStyle;
-
-        void OnGUI()
-        {
-            if (!VeniceUtil.InVenice || UIState.Blocking || GameManager.I == null || GameManager.I.IsTravelling) return;
-            var text = NextStory();
-            if (Rested) text = (text != null ? text + "   " : "") + "<color=#9FE0A0>푹 쉼</color>";
-            if (text == null) return;
-            UIStyle.Begin();
-            // 2026-10-30 북유럽 다음 이야기 줄(NorthGuide)과 같은 자리·모양: 화면 아래 가운데, 조작 안내·목표 줄 위
-            if (guideStyle == null) guideStyle = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow };
-            float w = Mathf.Min(UIStyle.VirtualWidth - 20f, guideStyle.CalcSize(new GUIContent(text)).x + 20f);
-            GUI.depth = -5;
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2f, UIStyle.VirtualHeight - 64f, w, 18f);
-            GUI.Box(r, GUIContent.none, UIStyle.Box);
-            GUI.Label(r, text, guideStyle);
-        }
+        // 2026-11-04 다음 이야기 길잡이는 공용 StoryGuide, "푹 쉼" 표시는 공용 Inn이 한다
     }
 }

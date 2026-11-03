@@ -21,8 +21,15 @@ MonoBehaviour:
     \uB35C \uC9C0\uCCD0\uC694."
   worldCoord: {x: 29, y: 2}
   startLevel: 1
-  settlementTier: 0
-  facilities: []
+  settlementTier: 1
+  facilities:
+  - id: north_laugar_rest
+    displayName: "\uC628\uCC9C \uC190\uB2D8\uBC29"
+    kind: 0
+    minTier: 1
+    minCredit: 0
+    description: 
+    storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: 5bbced6f7b2b141b6897cb7a47bc713b, type: 2}
     optimal: 30

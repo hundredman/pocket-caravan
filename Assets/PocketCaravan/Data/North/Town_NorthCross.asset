@@ -20,7 +20,7 @@ MonoBehaviour:
     \uBAA8\uD53C\xB7\uD638\uBC15\xB7\uCE58\uC988\uB97C \uCC3E\uC544\uC694."
   worldCoord: {x: 29, y: -3}
   startLevel: 1
-  settlementTier: 0
+  settlementTier: 2
   facilities:
   - id: north_cross_rest
     displayName: "\uAE38\uBAA9 \uC5EC\uAD00"

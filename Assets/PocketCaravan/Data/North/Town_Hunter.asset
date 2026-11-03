@@ -20,8 +20,15 @@ MonoBehaviour:
     2\uC7A5\uC744 \uB9E1\uAE30\uBA74 \uD138\uC637\uC774 \uB3FC\uC694."
   worldCoord: {x: 28, y: 0}
   startLevel: 1
-  settlementTier: 0
-  facilities: []
+  settlementTier: 1
+  facilities:
+  - id: north_hunter_rest
+    displayName: "\uC0AC\uB0E5\uAFBC \uC624\uB450\uB9C9 \uC190\uB2D8\uBC29"
+    kind: 0
+    minTier: 1
+    minCredit: 0
+    description: 
+    storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: 1a2fc2ad478bf45eb8826708d861bb18, type: 2}
     optimal: 30

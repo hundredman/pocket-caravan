@@ -20,7 +20,7 @@ MonoBehaviour:
     \uD53C\uC624\uB974 \uB098\uB8E8\uAE4C\uC9C0 \uBC14\uB85C \uAC00\uC694."
   worldCoord: {x: 30, y: -2}
   startLevel: 1
-  settlementTier: 0
+  settlementTier: 2
   facilities:
   - id: north_ccreek_rest
     displayName: "\uBB3C\uBC29\uC557\uAC04 \uC27C\uD130"

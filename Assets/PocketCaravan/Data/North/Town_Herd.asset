@@ -20,8 +20,15 @@ MonoBehaviour:
     \uC370\uB9E4\uAC00 \uAC00\uC7A5 \uBE68\uB77C\uC694."
   worldCoord: {x: 28, y: 1}
   startLevel: 1
-  settlementTier: 0
-  facilities: []
+  settlementTier: 1
+  facilities:
+  - id: north_herd_rest
+    displayName: "\uACE0\uC6D0 \uC5EC\uAD00 \uC190\uB2D8\uBC29"
+    kind: 0
+    minTier: 1
+    minCredit: 0
+    description: 
+    storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: 7b10b12610b4b41fbaf940255ab242b6, type: 2}
     optimal: 30

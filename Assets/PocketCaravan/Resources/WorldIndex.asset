@@ -657,7 +657,13 @@ MonoBehaviour:
   - kind: market
     id: venice_c_landing
     mapId: venice_c_landing
+  - kind: board
+    id: venice_c_landing
+    mapId: venice_c_landing
   - kind: market
+    id: venice_c_vineyard
+    mapId: venice_c_vineyard
+  - kind: board
     id: venice_c_vineyard
     mapId: venice_c_vineyard
   - kind: market

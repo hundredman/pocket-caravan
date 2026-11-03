@@ -34,8 +34,8 @@ namespace PocketCaravan
             new Town { chunk = "west", townId = "venice_c_caravanserai", mapId = "venice_c_post", name = "대상 숙소" },
             new Town { chunk = "west", townId = "venice_c_landing", mapId = "venice_c_landing", name = "본토 나루터" },
             new Town { chunk = "west", townId = "venice_c_vineyard", mapId = "venice_c_vineyard", name = "포도밭 양조장" },
-            new Town { chunk = "east", townId = "transit_ferry", mapId = "transit_ferry", name = "나루터 마을" },
-            new Town { chunk = "east", townId = "transit_woodtown", mapId = "transit_woodtown", name = "나무 마을" },
+            new Town { chunk = "east", townId = "transit_ferry", mapId = "transit_ferry", name = "버들나루 마을" },
+            new Town { chunk = "east", townId = "transit_woodtown", mapId = "transit_woodtown", name = "솔재 길목 마을" },
         };
 
         /// <summary>조각별 덤 비율 바꾸기 (예: 베네치아 사자의 축복이면 서쪽 2할 5푼)</summary>
