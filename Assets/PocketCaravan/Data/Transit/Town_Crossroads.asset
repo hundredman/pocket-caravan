@@ -53,9 +53,6 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 26670207d8df843b19235b8d81286a8d, type: 2}
     optimal: 8
     localPriceMultiplier: 1.4
-  - item: {fileID: 11400000, guid: 3b1d3708de2364a25ad4a9d27b2306a1, type: 2}
-    optimal: 2
-    localPriceMultiplier: 1.3
   - item: {fileID: 11400000, guid: 34ab4741f86eb44b3bae564c5daa0f12, type: 2}
     optimal: 4
     localPriceMultiplier: 1.3
