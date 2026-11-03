@@ -88,6 +88,7 @@ namespace PocketCaravan
         public static bool IsHost(Interactable it)
         {
             if (it == null || it.DisplayName == null || it.Category == Interactable.Kind.Board || it.Category == Interactable.Kind.Market) return false;
+            if (it.DisplayName.Contains("손님")) return false;   // "대상 숙소 손님" 같은 투숙객은 여관 주인이 아니다
             foreach (var w in HostWords) if (it.DisplayName.Contains(w)) return true;
             return false;
         }
