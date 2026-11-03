@@ -78,7 +78,12 @@ class Distances(unittest.TestCase):
 class SaveMigration(unittest.TestCase):
     def test_every_map_has_a_walkable_arrival_and_aliases_are_kept(self):
         g=json.loads((ROOT/'Assets/PocketCaravan/Resources/GoryeoLayout.json').read_text())
-        self.assertEqual(len(g['aliases']),8);self.assertEqual(sorted(m['id'] for m in g['maps']),sorted(MAPS))
+        # Other regions may append aliases; all original Goryeo mappings must survive.
+        expected={'Route01':'Naru','goryeo_ridge':'goryeo_songak','goryeo_descent':'Gaegyeong','goryeo_fieldroad':'goryeo_jangdan','goryeo_westcoast':'Naru','goryeo_tidalcoast':'Naru','goryeo_rivervalley':'Dakmok','goryeo_southcoast':'goryeo_jangdan'}
+        actual={a['oldId']:a['newId']for a in g['aliases']}
+        self.assertEqual(len(actual),len(g['aliases']),'duplicate save aliases')
+        self.assertTrue(expected.items()<=actual.items(),'legacy Goryeo mappings changed')
+        self.assertEqual(sorted(m['id'] for m in g['maps']),sorted(MAPS))
         for e in g['maps']:
             d=load(e['id']);
             for x,y in((e['spawnX'],e['spawnY']),(e['dropX'],e['dropY'])):

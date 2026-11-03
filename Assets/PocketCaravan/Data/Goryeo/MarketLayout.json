@@ -1,0 +1,717 @@
+{
+  "schemaVersion": 1,
+  "status": "approved",
+  "approval": "User 2026-11-02: integrate the reviewed market assets into production.",
+  "reviewSource": "ArtReview/VillageFill-20261030/manifest.json",
+  "assets": [
+    {
+      "id": "sign",
+      "image": "Assets/PocketCaravan/Art/Goryeo/Markets/sign.png",
+      "size": [
+        1,
+        1
+      ],
+      "source": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_0_2.png",
+      "rgbaSha256": "385623393b59b12782c0a5e0077d876bff6801852ac6933f6fd17528ed51da92"
+    },
+    {
+      "id": "board",
+      "image": "Assets/PocketCaravan/Art/Goryeo/Markets/board.png",
+      "size": [
+        1,
+        1
+      ],
+      "source": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/element_1_2.png",
+      "rgbaSha256": "f1e58bf668e42a05034fc875b441befe500ce044748c1cb2cb9538277d8c2ccc"
+    },
+    {
+      "id": "grain_stall",
+      "image": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+      "size": [
+        3,
+        3
+      ],
+      "source": "ArtReview/MarketCourts-20261030/Native/grain_stall.png",
+      "rgbaSha256": "ca2930cf8933eeb0a1a81fa2c17520c358738ec97bd922c04e0334cc46c14a2a"
+    },
+    {
+      "id": "wares_counter",
+      "image": "Assets/PocketCaravan/Art/Goryeo/Markets/wares_counter.png",
+      "size": [
+        3,
+        2
+      ],
+      "source": "ArtReview/MarketCourts-20261030/Native/wares_counter.png",
+      "rgbaSha256": "ba4bac3315126a404e3bad13a524dd24e4f6a530e11cd1840f05cc8443f2c0e3"
+    }
+  ],
+  "maps": [
+    {
+      "mapId": "Gaegyeong",
+      "width": 72,
+      "height": 76,
+      "spaces": [
+        {
+          "id": "board",
+          "props": [
+            {
+              "asset": "board",
+              "x": 33,
+              "y": 42,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        },
+        {
+          "id": "market",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 32,
+              "y": 44,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 36,
+              "y": 44,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 28,
+              "y": 50,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 32,
+              "y": 50,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        },
+        {
+          "id": "event-yard",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 33,
+              "y": 27,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 28,
+              "y": 30,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 33,
+              "y": 30,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mapId": "goryeo_songak",
+      "width": 74,
+      "height": 84,
+      "spaces": [
+        {
+          "id": "board",
+          "props": [
+            {
+              "asset": "board",
+              "x": 38,
+              "y": 58,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        },
+        {
+          "id": "market",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 40,
+              "y": 53,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 44,
+              "y": 53,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 40,
+              "y": 61,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 44,
+              "y": 61,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        },
+        {
+          "id": "event-yard",
+          "props": [
+            {
+              "asset": "wares_counter",
+              "x": 46,
+              "y": 35,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 49,
+              "y": 35,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        },
+        {
+          "id": "signs",
+          "props": [
+            {
+              "asset": "sign",
+              "x": 47,
+              "y": 62,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mapId": "Dakmok",
+      "width": 93,
+      "height": 80,
+      "spaces": [
+        {
+          "id": "board",
+          "props": [
+            {
+              "asset": "board",
+              "x": 34,
+              "y": 48,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        },
+        {
+          "id": "market",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 29,
+              "y": 41,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 36,
+              "y": 45,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        },
+        {
+          "id": "event-yard",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 39,
+              "y": 53,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 44,
+              "y": 53,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 39,
+              "y": 56,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 44,
+              "y": 56,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        },
+        {
+          "id": "signs",
+          "props": [
+            {
+              "asset": "sign",
+              "x": 41,
+              "y": 52,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mapId": "goryeo_jangdan",
+      "width": 61,
+      "height": 98,
+      "spaces": [
+        {
+          "id": "board",
+          "props": [
+            {
+              "asset": "board",
+              "x": 28,
+              "y": 32,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        },
+        {
+          "id": "market",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 22,
+              "y": 34,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 30,
+              "y": 34,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 22,
+              "y": 39,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 26,
+              "y": 39,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 30,
+              "y": 39,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        },
+        {
+          "id": "event-yard",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 31,
+              "y": 24,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 36,
+              "y": 24,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 31,
+              "y": 27,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 36,
+              "y": 27,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        },
+        {
+          "id": "signs",
+          "props": [
+            {
+              "asset": "sign",
+              "x": 34,
+              "y": 40,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mapId": "transit_woodtown",
+      "width": 87,
+      "height": 69,
+      "spaces": [
+        {
+          "id": "board",
+          "props": [
+            {
+              "asset": "board",
+              "x": 46,
+              "y": 29,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        },
+        {
+          "id": "market",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 33,
+              "y": 28,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 41,
+              "y": 28,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 33,
+              "y": 33,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 37,
+              "y": 33,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 41,
+              "y": 33,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        },
+        {
+          "id": "event-yard",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 30,
+              "y": 17,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 35,
+              "y": 17,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 30,
+              "y": 20,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 35,
+              "y": 20,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mapId": "transit_ferry",
+      "width": 80,
+      "height": 55,
+      "spaces": [
+        {
+          "id": "board",
+          "props": [
+            {
+              "asset": "board",
+              "x": 41,
+              "y": 23,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        },
+        {
+          "id": "market",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 28,
+              "y": 24,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 36,
+              "y": 24,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 28,
+              "y": 29,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 32,
+              "y": 29,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 36,
+              "y": 29,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        },
+        {
+          "id": "event-yard",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 43,
+              "y": 27,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 48,
+              "y": 27,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 43,
+              "y": 30,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 48,
+              "y": 30,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mapId": "transit_crossroads",
+      "width": 92,
+      "height": 80,
+      "spaces": [
+        {
+          "id": "signs",
+          "props": [
+            {
+              "asset": "sign",
+              "x": 34,
+              "y": 21,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "asset": "sign",
+              "x": 30,
+              "y": 9,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "width": 88,
+      "height": 84,
+      "spaces": [
+        {
+          "id": "board",
+          "props": [
+            {
+              "asset": "board",
+              "x": 41,
+              "y": 27,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        },
+        {
+          "id": "market",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 28,
+              "y": 23,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 36,
+              "y": 23,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 37,
+              "y": 27,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        },
+        {
+          "id": "event-yard",
+          "props": [
+            {
+              "asset": "grain_stall",
+              "x": 40,
+              "y": 38,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 45,
+              "y": 38,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "wares_counter",
+              "x": 40,
+              "y": 41,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 45,
+              "y": 41,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        },
+        {
+          "id": "signs",
+          "props": [
+            {
+              "asset": "sign",
+              "x": 52,
+              "y": 29,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mapId": "transit_pass",
+      "width": 65,
+      "height": 68,
+      "spaces": [
+        {
+          "id": "signs",
+          "props": [
+            {
+              "asset": "sign",
+              "x": 32,
+              "y": 30,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
