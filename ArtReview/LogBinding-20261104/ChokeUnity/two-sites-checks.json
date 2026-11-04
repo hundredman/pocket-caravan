@@ -1,0 +1,32 @@
+{
+    "complete": true,
+    "error": "",
+    "checks": [
+        "bootstrap saves off",
+        "preview saves off forest-horizontal",
+        "route open before forest-horizontal",
+        "960x540 forest-horizontal-before",
+        "route blocked through 15x15 corridor forest-horizontal",
+        "native sprite active forest-horizontal",
+        "960x540 forest-horizontal-blocked",
+        "clear interaction reachable from (39, 47, 0) forest-horizontal",
+        "clear interaction reachable from (39, 39, 0) forest-horizontal",
+        "clearing approach forest-horizontal",
+        "route restored after3s clear forest-horizontal",
+        "no money/cargo charge forest-horizontal",
+        "960x540 forest-horizontal-cleared",
+        "preview saves off forest-diagonal",
+        "route open before forest-diagonal",
+        "960x540 forest-diagonal-before",
+        "route blocked through 15x15 corridor forest-diagonal",
+        "native sprite active forest-diagonal",
+        "960x540 forest-diagonal-blocked",
+        "clear interaction reachable from (47, 49, 0) forest-diagonal",
+        "clear interaction reachable from (55, 57, 0) forest-diagonal",
+        "clearing approach forest-diagonal",
+        "route restored after3s clear forest-diagonal",
+        "no money/cargo charge forest-diagonal",
+        "960x540 forest-diagonal-cleared",
+        "no saves enabled"
+    ]
+}

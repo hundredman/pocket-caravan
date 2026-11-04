@@ -1,0 +1,10 @@
+{
+  "originalFieldsUnchanged": true,
+  "addedKeys": [
+    "nativeLogs",
+    "obstacles"
+  ],
+  "newPlacement": "e3_central_approach_log",
+  "mapId": "transit_central_approach",
+  "otherMapsChanged": false
+}

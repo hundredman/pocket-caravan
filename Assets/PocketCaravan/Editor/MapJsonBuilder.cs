@@ -65,6 +65,7 @@ namespace PocketCaravan.EditorTools
             public string[] palette;
             public MapObject[] objects;
             public ObstaclePlacement[] obstacles;
+            public GoryeoLogLayout.Binding[] nativeLogs;
             public FloodFile[] terrainFloods;
             public CropPatch[] natureCrops;
             public BackdropCell[] cameraBackdrop;
@@ -283,6 +284,7 @@ namespace PocketCaravan.EditorTools
             for (int i = 0; i < f.road.Length; i++) { var c = Cell(f, i); roads.grades[c.y * f.w + c.x] = f.road[i]; }
 
             if(f.obstacles!=null && f.obstacles.Length>0){var hazards=gridGo.AddComponent<ObstacleField>();hazards.library=Resources.Load<ObstacleLibrary>("Obstacles/ObstacleLibrary");hazards.placements=new List<ObstaclePlacement>(f.obstacles);}
+            GoryeoLogLayout.Apply(map,f.nativeLogs);
 
             // Optional paired terrain. Maps without this metadata retain their existing behavior.
             if(f.terrainFloods!=null)

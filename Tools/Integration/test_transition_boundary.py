@@ -25,6 +25,9 @@ class CameraBoundary(unittest.TestCase):
             sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
             from port_water import restore_for_historical_checks
             d=restore_for_historical_checks(d)
+            # Only the exact approved native-log placement is normalized; other edits stay visible.
+            from native_log_binding import restore_for_historical_checks as restore_log
+            d=restore_log(d)
             # The T1 baseline freezes dry terrain/IDs. Approved E3 paired-state metadata
             # is checked against its source recipe before removing only that extension.
             if 'terrainFloods' in d:
