@@ -21,6 +21,10 @@ class CameraBoundary(unittest.TestCase):
         applied=json.loads(life.read_text()) if life.exists() else {}
         for mid,r in rows.items():
             d=json.loads((ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').read_text())
+            import sys
+            sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
+            from port_water import restore_for_historical_checks
+            d=restore_for_historical_checks(d)
             # The T1 baseline freezes dry terrain/IDs. Approved E3 paired-state metadata
             # is checked against its source recipe before removing only that extension.
             if 'terrainFloods' in d:

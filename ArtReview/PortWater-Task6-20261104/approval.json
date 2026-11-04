@@ -1,0 +1,12 @@
+{
+  "status": "approved",
+  "date": "2026-11-04",
+  "userReply": "통나무같은 경우는 조금 더 길어야 할 것 같아. 포구는 조항.",
+  "interpretation": "문맥상 포구는 좋아(승인)의 오타로 이해했고 작업 시작 때 사용자에게 해석을 알림",
+  "maps": [
+    "transit_southport",
+    "transit_ferry"
+  ],
+  "scope": "승인 검토본의 막힌 바다 빈 모서리 채움 및 버들나루 ripples→goryeo_ripples 참조만",
+  "evidence": "ArtReview/E3-E2-Art-20261103/review-ports.png"
+}

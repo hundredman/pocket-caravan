@@ -1,0 +1,13 @@
+{
+    "complete": true,
+    "error": "",
+    "checks": [
+        "preview-only and saves off",
+        "walkable trial approach",
+        "original48 whole native",
+        "960x540 before",
+        "long64 whole native no scaling",
+        "960x540 after",
+        "no saves enabled"
+    ]
+}

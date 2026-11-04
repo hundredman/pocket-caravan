@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "status": "approved",
+  "approval": "ArtReview/PortWater-Task6-20261104/approval.json",
+  "maps": [
+    {
+      "mapId": "transit_southport",
+      "fillEastSea": true,
+      "fixRipples": false
+    },
+    {
+      "mapId": "transit_ferry",
+      "fillEastSea": true,
+      "fixRipples": true
+    }
+  ]
+}

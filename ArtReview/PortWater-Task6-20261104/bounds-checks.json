@@ -1,0 +1,34 @@
+[
+  {
+    "mapId": "transit_southport",
+    "before": [
+      0,
+      0,
+      86,
+      68
+    ],
+    "after": [
+      0,
+      0,
+      86,
+      68
+    ],
+    "cameraGroundBoundsUnchanged": true
+  },
+  {
+    "mapId": "transit_ferry",
+    "before": [
+      0,
+      0,
+      80,
+      55
+    ],
+    "after": [
+      0,
+      0,
+      80,
+      55
+    ],
+    "cameraGroundBoundsUnchanged": true
+  }
+]

@@ -28,7 +28,7 @@ class E3Art(unittest.TestCase):
  def test_sea_context_never_creates_new_land_or_walkable_cells(self):
   import e3_e2_preview
   for name in ['transit_southport','transit_ferry']:
-   before=json.loads((ROOT/'Assets/PocketCaravan/Maps'/(name+'.json')).read_text());after,cells=e3_e2_preview.coast_context(before)
+   before=json.loads((ROOT/'ArtReview/PortWater-Task6-20261104/Before'/(name+'.json')).read_text());after,cells=e3_e2_preview.coast_context(before)
    self.assertGreater(len(cells),0)
    for key in before:
     if key!='ground':self.assertEqual(before[key],after[key],key)

@@ -75,6 +75,10 @@ def bind_approved_flood(data):
     from river_flood_binding import attach
     return attach(data)
 
+def bind_approved_port_water(data):
+    from port_water import attach
+    return attach(data)[0]
+
 def main():
     global PREV,REVIEW
     ap=argparse.ArgumentParser();ap.add_argument('layers',nargs='?')
@@ -207,6 +211,7 @@ def main():
                 backdrop.append(dict(x=dx,y=dy,tile=P(backdrop_name(yy,xx))))
         if backdrop:data['cameraBackdrop']=backdrop
         data=bind_approved_flood(data)
+        data=bind_approved_port_water(data)
         (PREV/'Maps'/f'{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
         if a.production:(ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
         atlas.append(dict(mapId=mid,box=(int(x0),int(y0),w,h),vz=vz))
