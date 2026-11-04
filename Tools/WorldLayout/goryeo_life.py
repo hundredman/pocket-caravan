@@ -11,7 +11,7 @@
 - 다른 문명 연결 출구(link_)는 이정표를 세우지 않는다(통합 브랜치 region_links.json의 표지판이 맡는다).
 사용: python3 Tools/WorldLayout/goryeo_life.py
 """
-import json,collections
+import json,collections,argparse
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 SPEC=json.loads((Path(__file__).parent/'goryeo_life.json').read_text())
@@ -92,8 +92,29 @@ def revert(maps):
             m.d['blocked'][i]=c['blocked'];m.d['reachable'][i]=c['reachable']
     for m in maps.values():m.d['objects']=[o for o in m.d['objects'] if not str(o.get('id','')).startswith('life_')]
 
+def apply_workshops(maps):
+    """승인된 비충돌 접수만 추가한다. 기존 사람/이정표/층/ID는 보존한다."""
+    changed=[]
+    for mid,m in maps.items():
+        old=m.d['objects']
+        m.d['objects']=[o for o in old if not str(o.get('id','')).startswith('life_workshop_')]
+        for w in SPEC.get('workshops',[]):
+            if w['map']!=mid:continue
+            if not w['id'].startswith('goryeo_') or w.get('blocksMovement',False):raise ValueError('고려 비충돌 공방만 허용')
+            approved=json.loads((ROOT/w['approval']).read_text())
+            if approved.get('status')!='approved' or (approved.get('mapId'),approved.get('recipeId'),approved.get('x'),approved.get('y'))!=(mid,w['id'],w['x'],w['y']):raise ValueError('공방 배치 사용자 승인/위치 일치 필요')
+            p=(w['x'],w['y'])
+            if not m.walk(*p) or not m.d['reachable'][m.i(*p)] or p in m.occupied() or p in m.exits():raise ValueError(f'{mid}: 승인 공방 자리 사용 불가 {p}')
+            m.d['objects'].append(O('workshop',*p,id='life_workshop_'+w['id'],name=w['name'],type=w['id'],town=w['town']))
+        if old!=m.d['objects']:changed.append(mid)
+    return changed
+
 def main():
+    parser=argparse.ArgumentParser();parser.add_argument('--workshops-only',action='store_true');args=parser.parse_args()
     maps={mid:Map(p) for mid,p in regions()}
+    if args.workshops_only:
+        for mid in apply_workshops(maps):maps[mid].path.write_text(json.dumps(maps[mid].d,ensure_ascii=False,separators=(',',':')))
+        print('승인 공방 접수 반영 완료(기존 층/사람/이정표 유지)');return
     revert(maps)
     zones=json.loads((ROOT/'ArtReview/M2-Zones/zones.json').read_text())['villages']
     spots=collections.defaultdict(dict);sizes=collections.defaultdict(dict)
@@ -234,6 +255,7 @@ def main():
                 own=maps[o['id'][len('life_sign_'):]].d['name']
                 o['text'],n=sign_text(m,(o['x'],o['y']),own)
                 report[mid].append('    '+own+' 쪽 이정표 글('+str(n)+'방향): '+o['text'].replace('\n',' / '))
+    apply_workshops(maps)
     # 확인: 기능 객체·출구가 여전히 같은 덩어리에서 닿는지(주민 칸은 막힌 것으로 본다)
     for mid,m in maps.items():
         tk=[(o['x'],o['y']) for o in m.d['objects'] if o['kind'] in('talker','market') and str(o.get('id','')).startswith('life_')]

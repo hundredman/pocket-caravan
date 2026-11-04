@@ -17,6 +17,7 @@ namespace PocketCaravan.EditorTools
             {
                 EditorSceneManager.OpenScene("Assets/PocketCaravan/Scenes/Goryeo/Dakmok.unity");var map=UnityEngine.Object.FindFirstObjectByType<MapRoot>();map.previewOnly=true;
                 foreach(var e in UnityEngine.Object.FindObjectsByType<MapExit>(FindObjectsSortMode.None))e.gameObject.SetActive(false);
+                foreach(var existing in UnityEngine.Object.FindObjectsByType<GoryeoWorkshopSpot>(FindObjectsSortMode.None))existing.enabled=false;
                 var cell=new Vector3Int(37,26,0);if(!map.IsWalkable(cell)||Interactable.At(cell)!=null)throw new InvalidOperationException("Workshop entrance is occupied");
                 var spot=new GameObject("한지 공방 검토 자리").AddComponent<GoryeoWorkshopTrialSpot>();spot.recipeId=GoryeoWorkshopTrialSpot.Id;spot.blocksMovement=false;spot.transform.position=map.CellCenter(cell);
                 Directory.CreateDirectory(Path.GetDirectoryName(Scene));EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(),Scene);

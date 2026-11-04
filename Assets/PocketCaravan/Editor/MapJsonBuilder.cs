@@ -362,6 +362,12 @@ namespace PocketCaravan.EditorTools
                         var npc = Character($"장터 상인 ({(t != null ? t.displayName : o.town)})", marketArt, center, objects);
                         npc.AddComponent<TownMarket>().town = t;
                         break;
+                    case "workshop":
+                        if(string.IsNullOrEmpty(o.type)||!o.type.StartsWith("goryeo_",StringComparison.Ordinal)||Crafting.Find(o.type)==null)
+                            throw new InvalidDataException("고려 공방 레시피 없음: "+o.type);
+                        var ws=new GameObject(o.name).AddComponent<GoryeoWorkshopSpot>();ws.transform.SetParent(objects);ws.transform.position=center;
+                        ws.recipeId=o.type;ws.townId=o.town;ws.blocksMovement=false;
+                        break;
                     case "talker":
                         var tk = Character(o.name, o.character, center, objects).AddComponent<TalkNpc>();
                         tk.displayName = o.name; tk.lines = o.lines;

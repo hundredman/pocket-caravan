@@ -1,0 +1,12 @@
+{
+  "status": "approved",
+  "date": "2026-11-04",
+  "userReply": "좋은 것 같아.",
+  "evidence": "ArtReview/GoryeoWorkshop-Task3-20261104/Unity/placement-after.png",
+  "scope": "닥목 한지 작업장 앞 접수(37,53), 주문형1개/6시간/일2회/현지매입가+5(최소18)",
+  "productionApplied": true,
+  "mapId": "Dakmok",
+  "recipeId": "goryeo_hanji",
+  "x": 37,
+  "y": 53
+}

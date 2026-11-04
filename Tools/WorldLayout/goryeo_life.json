@@ -147,5 +147,17 @@
       "character": "NPC/npc_capital_peddler/npc_capital_peddler_tall",
       "board": "게시판"
     }
+  ],
+  "workshops": [
+    {
+      "map": "Dakmok",
+      "id": "goryeo_hanji",
+      "town": "dakmok",
+      "name": "닥목 한지 공방",
+      "x": 37,
+      "y": 53,
+      "blocksMovement": false,
+      "approval": "ArtReview/GoryeoWorkshop-Task3-20261104/approval.json"
+    }
   ]
 }
