@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "mode": "precise-object-edit",
+  "reference": "Assets/PocketCaravan/Art/Goryeo/Markets/grain_stall.png",
+  "prompts": [
+    "Use case: precise-object-edit. Create one festive fair-day merchant stall sprite based closely on supplied approved pixel-art stall. Keep its front-facing slightly overhead orthographic top-down RPG perspective, single compact wooden stall, cream awning, dark brown pixel outlines, golden wood, boxes and sacks of goods. Add a short neat row of indigo and warm ivory triangular pennants along the front awning and indigo edge stripe, restrained Goryeo market-festival feeling, no modern objects, no text, no people. Strong readable silhouette and clean chunky pixel clusters suitable for final native 48x48 pixels, no tiny clutter, no blur, no gradients. Object occupies similar square silhouette to reference, full standalone object with transparent empty margin all around. Transparent background. This is an additional fair-day variant, not replacement of original.",
+    "Use case: precise-object-edit. Single festive fair-day merchant stall pixel sprite, based on supplied approved reference. Match wooden frame, full square silhouette and slightly elevated front-facing RPG camera, cream canvas awning with dark brown outlines and golden wooden counter, a few readable boxes and cloth sacks. Add muted teal awning border and a short row of alternating teal and warm vermilion triangular pennants hanging under front roof edge. Restrained historical east-Asian market fair. Clean chunky pixel clusters readable at final native 48x48, limited flat colors, no gradients or blur. Keep complete object, no ground/people/text/shadows beyond silhouette, transparent background, generous transparent margin."
+  ],
+  "nativePreparation": "Tools/ArtTrials/central_fair_native.lua: whole-object fit to 48x48, nearest pixels, approved stall palette + indigo/teal/vermilion, binary alpha; no production edits"
+}
