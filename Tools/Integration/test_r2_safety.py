@@ -68,6 +68,13 @@ class R2SafetyChecks(unittest.TestCase):
                     self.assertEqual(data.count(line),1,name+' exact approved journeyNote line')
                     data=data.replace(line,b'',1)
                 if name in STALE_INFO_FIXED:data=data.replace(INFO_NEW,INFO_OLD)
+                # Task6: undo only the exact approved icon ref / newly added goods, retaining the historic fixture.
+                deltas=json.loads((ROOT/'Docs/Validation/TradeGoods-Task6-2026-11-04/approved-r2-deltas.json').read_text())['files']
+                self.assertEqual(set(deltas),{'Assets/PocketCaravan/Data/Goryeo/Item_grain.asset','Assets/PocketCaravan/Data/Goryeo/Town_Gaegyeong.asset'})
+                for change in deltas.get(name,[]):
+                    new,old=change['new'].encode(),change['old'].encode()
+                    self.assertEqual(data.count(new),1,name+' exact approved Task6 change')
+                    data=data.replace(new,old,1)
                 self.assertEqual(hashlib.sha256(data).hexdigest(),digest,name)
         frozen=OUT/'LegacyMarketState.cs.txt'
         self.assertEqual(hashlib.sha256(frozen.read_bytes()).hexdigest(),manifest['files']['Assets/PocketCaravan/Scripts/Economy/MarketState.cs'])

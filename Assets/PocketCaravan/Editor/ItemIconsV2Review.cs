@@ -10,6 +10,7 @@ namespace PocketCaravan.EditorTools
         public const string V3Folder="Assets/PocketCaravan/Editor/B2Preview/ItemIconsV320261104/";
         public static void Prepare(){PrepareAt("ArtReview/ItemIcons-v2-20261104/Native/",Folder,null);}
         public static void PrepareV3(){PrepareAt("ArtReview/ItemIcons-v3-20261104/Native/",V3Folder,"ArtReview/ItemIcons-v2-20261104/Native/");}
+        public static void PrepareV4(){PrepareAt("ArtReview/WoolWidth-v4-20261104/Native/","Assets/PocketCaravan/Editor/B2Preview/ItemIconsV420261104/","ArtReview/ItemIcons-v3-20261104/Native/");}
         static void PrepareAt(string after,string folder,string before)
         {
             if(EditorApplication.isPlaying)throw new InvalidOperationException("Stop Play first");Directory.CreateDirectory(folder);

@@ -1,0 +1,18 @@
+{
+    "complete": true,
+    "error": "",
+    "checks": [
+        "preview and save isolation",
+        "before native icon grain",
+        "before native icon transit_spice",
+        "before native icon transit_wool",
+        "actual inventory window open",
+        "960x540 inventory-before",
+        "after native icon grain",
+        "after native icon transit_spice",
+        "after native icon transit_wool",
+        "960x540 inventory-after",
+        "production DB and grain icon unchanged; preview goods not added to DB",
+        "saves remain off"
+    ]
+}

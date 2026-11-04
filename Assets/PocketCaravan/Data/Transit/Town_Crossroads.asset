@@ -15,7 +15,11 @@ MonoBehaviour:
   id: transit_crossroads
   displayName: "\uB0B4\uB959 \uAD50\uC5ED \uAE38\uBAA9"
   region: {fileID: 11400000, guid: 33ac5d5fe768644189807a1d29eda36b, type: 2}
-  journeyNote: "\ub2e4\ub978 \ubb38\uba85\uc73c\ub85c \uc774\uc5b4\uc9c0\ub294 \ub0b4\ub959 \uad50\uc5ed \uae38\ubaa9\uc785\ub2c8\ub2e4. \uace1\ubb3c\u00b7\ub554\uac10\uacfc \uace0\ub824\uc758 \uc885\uc774\u00b7\ub098\uc804\uce60\uae30\ub97c \uc0b4\ud3b4\ubcf4\uc138\uc694. \uadc0\ud658 \uc804\uc5d0\ub294 \uac70\ub798 \uc870\uac74\uc744 \ub2e4\uc2dc \ud655\uc778\ud558\uc138\uc694."
+  journeyNote: "\uB2E4\uB978 \uBB38\uBA85\uC73C\uB85C \uC774\uC5B4\uC9C0\uB294 \uB0B4\uB959
+    \uAD50\uC5ED \uAE38\uBAA9\uC785\uB2C8\uB2E4. \uACE1\uBB3C\xB7\uB554\uAC10\uACFC
+    \uACE0\uB824\uC758 \uC885\uC774\xB7\uB098\uC804\uCE60\uAE30\uB97C \uC0B4\uD3B4\uBCF4\uC138\uC694.
+    \uADC0\uD658 \uC804\uC5D0\uB294 \uAC70\uB798 \uC870\uAC74\uC744 \uB2E4\uC2DC
+    \uD655\uC778\uD558\uC138\uC694."
   worldCoord: {x: 9, y: 1}
   startLevel: 1
   settlementTier: 2
@@ -32,7 +36,10 @@ MonoBehaviour:
     kind: 1
     minTier: 2
     minCredit: 0
-    description: "\uB300\uB959 \uD55C\uAC00\uC6B4\uB370\uB85C \uC774\uC5B4\uC9C0\uB294 \uAE38\uBAA9\uC785\uB2C8\uB2E4. \uBD81\uC11C\uCABD \uAE38\uC740 \uBD81\uC720\uB7FD, \uC11C\uCABD \uAE38 \uB458\uC740 \uC544\uB77C\uBE44\uC544\uB85C \uC774\uC5B4\uC9D1\uB2C8\uB2E4. \uB3D9\uCABD\uC73C\uB85C \uAC00\uBA74 \uACE0\uB824\uB85C \uB3CC\uC544\uAC11\uB2C8\uB2E4."
+    description: "\uB300\uB959 \uD55C\uAC00\uC6B4\uB370\uB85C \uC774\uC5B4\uC9C0\uB294
+      \uAE38\uBAA9\uC785\uB2C8\uB2E4. \uBD81\uC11C\uCABD \uAE38\uC740 \uBD81\uC720\uB7FD,
+      \uC11C\uCABD \uAE38 \uB458\uC740 \uC544\uB77C\uBE44\uC544\uB85C \uC774\uC5B4\uC9D1\uB2C8\uB2E4.
+      \uB3D9\uCABD\uC73C\uB85C \uAC00\uBA74 \uACE0\uB824\uB85C \uB3CC\uC544\uAC11\uB2C8\uB2E4."
     storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: 9b0a33b14044448d8962b7818d9d0df6, type: 2}
@@ -56,5 +63,11 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 34ab4741f86eb44b3bae564c5daa0f12, type: 2}
     optimal: 4
     localPriceMultiplier: 1.3
+  - item: {fileID: 11400000, guid: 257a8b1dc97e04519a571b31296d8bd1, type: 2}
+    optimal: 48
+    localPriceMultiplier: 0.7
+  - item: {fileID: 11400000, guid: ccca67fc8d80e426f8229c10a9455f50, type: 2}
+    optimal: 3
+    localPriceMultiplier: 1.4
   defaultOptimal: 3
   vehiclesForSale: []

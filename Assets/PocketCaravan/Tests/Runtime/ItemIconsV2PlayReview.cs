@@ -29,7 +29,7 @@ namespace PocketCaravan.EditorTools
             Directory.CreateDirectory(Output);for(int i=0;i<10;i++)yield return null;var gm=GameManager.I;Check(MapRoot.Current.previewOnly&&!gm.AutosaveEnabled,"preview and save isolation");Time.timeScale=0;
             foreach(var g in UnityEngine.Object.FindObjectsByType<StoryGuide>(FindObjectsSortMode.None))g.enabled=false;
             foreach(var d in UnityEngine.Object.FindObjectsByType<DialogueUI>(FindObjectsSortMode.None))typeof(DialogueUI).GetMethod("Close",BindingFlags.Instance|BindingFlags.NonPublic).Invoke(d,null);UIState.Blocking=false;Notify.Clear();
-            int count=gm.Db.items.Count;var grain=gm.ItemById("grain");var savedIcon=grain.icon;gm.Player.cargo.Clear();
+            int count=gm.Db.items.Count;var grain=gm.ItemById("grain");var savedIcon=grain.icon;var registeredSpice=gm.ItemById("transit_spice");var registeredWool=gm.ItemById("transit_wool");gm.Player.cargo.Clear();
             foreach(var id in new[]{"grain","transit_spice","transit_wool"})
             {
                 var p=id=="grain"?Instantiate(grain):ScriptableObject.CreateInstance<ItemData>();p.id=id;p.displayName=id=="grain"?"곡식":id=="transit_spice"?"향신료":"양모";p.weight=id=="grain"?grain.weight:id=="transit_spice"?1:2;
@@ -38,7 +38,7 @@ namespace PocketCaravan.EditorTools
             var salt=Instantiate(gm.ItemById("salt"));previews.Add(salt);gm.Player.cargo.Add(salt,1,0);
             inventory=UnityEngine.Object.FindFirstObjectByType<InventoryUI>();inventory.Open();Check(inventory.IsOpen,"actual inventory window open");yield return Photo("inventory-before");
             for(int i=0;i<3;i++){var p=previews[i];p.icon=AssetDatabase.LoadAssetAtPath<Sprite>(SpriteFolder+p.id+"-after.png");Check(p.icon!=null&&p.icon.rect.size==new Vector2(16,16)&&p.icon.pixelsPerUnit==16,"after native icon "+p.id);}
-            yield return Photo("inventory-after");Check(gm.Db.items.Count==count&&grain.icon==savedIcon&&gm.ItemById("transit_spice")==null&&gm.ItemById("transit_wool")==null,"production DB and grain icon unchanged; new goods not registered");Check(!gm.AutosaveEnabled,"saves remain off");
+            yield return Photo("inventory-after");Check(gm.Db.items.Count==count&&grain.icon==savedIcon&&gm.ItemById("transit_spice")==registeredSpice&&gm.ItemById("transit_wool")==registeredWool,"production DB and grain icon unchanged; preview goods not added to DB");Check(!gm.AutosaveEnabled,"saves remain off");
         }
     }
 }

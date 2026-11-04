@@ -1,0 +1,112 @@
+{
+    "complete": true,
+    "error": "",
+    "checks": [
+        "save-isolated bootstrap",
+        "three registered production icons",
+        "actual production scene with saves off transit_southport",
+        "production market bound transit_southport",
+        "960x540 transit_southport-market",
+        "supplier purchase transit_spice",
+        "new supply route to capital profitable transit_spice",
+        "real buy transit_southport transit_spice",
+        "recalculated same-town resale no profit transit_southport transit_spice",
+        "real buy transit_southport transit_wool",
+        "recalculated same-town resale no profit transit_southport transit_wool",
+        "real buy gaegyeong transit_spice",
+        "recalculated same-town resale no profit gaegyeong transit_spice",
+        "real buy gaegyeong transit_wool",
+        "recalculated same-town resale no profit gaegyeong transit_wool",
+        "actual production scene with saves off transit_crossroads",
+        "production market bound transit_crossroads",
+        "960x540 transit_crossroads-market",
+        "supplier purchase transit_wool",
+        "new supply route to capital profitable transit_wool",
+        "real buy transit_crossroads transit_spice",
+        "recalculated same-town resale no profit transit_crossroads transit_spice",
+        "real buy transit_crossroads transit_wool",
+        "recalculated same-town resale no profit transit_crossroads transit_wool",
+        "real buy gaegyeong transit_spice",
+        "recalculated same-town resale no profit gaegyeong transit_spice",
+        "real buy gaegyeong transit_wool",
+        "recalculated same-town resale no profit gaegyeong transit_wool",
+        "legacy v2 save without new goods still restores",
+        "new goods and market stock use existing v2 save format",
+        "960x540 registered-inventory",
+        "saves remain disabled"
+    ],
+    "cycles": [
+        {
+            "town": "transit_southport",
+            "item": "transit_spice",
+            "buy": 15,
+            "sell": 12,
+            "profit": -3
+        },
+        {
+            "town": "transit_southport",
+            "item": "transit_wool",
+            "buy": 28,
+            "sell": 23,
+            "profit": -5
+        },
+        {
+            "town": "gaegyeong",
+            "item": "transit_spice",
+            "buy": 79,
+            "sell": 68,
+            "profit": -11
+        },
+        {
+            "town": "gaegyeong",
+            "item": "transit_wool",
+            "buy": 57,
+            "sell": 50,
+            "profit": -7
+        },
+        {
+            "town": "transit_crossroads",
+            "item": "transit_spice",
+            "buy": 62,
+            "sell": 52,
+            "profit": -10
+        },
+        {
+            "town": "transit_crossroads",
+            "item": "transit_wool",
+            "buy": 10,
+            "sell": 8,
+            "profit": -2
+        },
+        {
+            "town": "gaegyeong",
+            "item": "transit_spice",
+            "buy": 79,
+            "sell": 68,
+            "profit": -11
+        },
+        {
+            "town": "gaegyeong",
+            "item": "transit_wool",
+            "buy": 51,
+            "sell": 45,
+            "profit": -6
+        }
+    ],
+    "routes": [
+        {
+            "town": "transit_southport -> gaegyeong",
+            "item": "transit_spice",
+            "buy": 14,
+            "sell": 68,
+            "profit": 54
+        },
+        {
+            "town": "transit_crossroads -> gaegyeong",
+            "item": "transit_wool",
+            "buy": 10,
+            "sell": 45,
+            "profit": 35
+        }
+    ]
+}

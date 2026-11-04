@@ -10,12 +10,12 @@
     {
       "id": "transit_spice",
       "source": "ArtReview/E3-E2-Art-20261103/Native/transit_spice.png",
-      "status": "approved reuse of original"
+      "status": "approved v3 applied"
     },
     {
       "id": "transit_wool",
       "source": "ArtReview/ItemIcons-v3-20261104/Native/transit_wool.png",
-      "status": "pending user visual approval"
+      "status": "approved v3 applied"
     }
   ],
   "ports": {
@@ -28,7 +28,7 @@
     "river_flood_low"
   ],
   "productionChanged": false,
-  "latestIconReview": "ArtReview/ItemIcons-v3-20261104/README.md",
-  "note": "향신료 v1 유지 선택, 볏단 두께/양모 v1 윗중앙 홈 보정 v3는 사용자 승인 대기. 통나무/포구는 별도 대기.",
+  "latestIconReview": "ArtReview/WoolWidth-v4-20261104/README.md",
+  "note": "v3 아이콘 승인/본편 연결 완료. 이후 양모 폭14→12 v4만 별도 승인 대기. 통나무/포구는 여전히 별도 대기.",
   "grainReview": "ArtReview/ItemIcons-v3-20261104/Native/grain.png"
 }

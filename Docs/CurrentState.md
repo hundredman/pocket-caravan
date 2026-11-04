@@ -623,3 +623,11 @@ Woodtown/Ferry/Southport/Crossroads의 journeyNote4곳을 역할·귀환 거래 
 ## 2026-11-04 작업5: 새 장터 전용 좌판
 
 사용자 승인 생선 덕장/소금 좌판/피륙·양모 좌판/향신료 판매대를 남동 포구·내륙 교역 길목 장터와 마당 기존10개 자리에 연결했다. 좌표/캔버스/통행 범위는 그대로이며 기존 곡물/잡화 좌판도 남아 있다. MarketCourts-E2/layout.json 승인 원본·RGBA/배치 해시에서 market_production으로 재현하고 BuildSelected로 두 transit 씬만 재생성했다. 실제 본편 Play29확인·4캡처, 출구/기능 연결 정적 검사·Python358 두 환경/Unity8종 통과·저장9파일 불변. DB/기능ID/저장 형식/다른 맵·공용 큰 장 순환은 변경하지 않았다. Docs/Validation/SpecialtyMarkets-Production-Task5-2026-11-04 참조.
+
+## 2026-11-04 작업6: 승인 아이콘·향신료/양모 연결
+
+승인 v3 볏단/양모와 기존 향신료16×16을 Art/Goryeo/Items에 원본 그대로 연결했다. 공용 grain.png는 보존하고 기존 grain ItemData는 아이콘 참조만 바꿨다. 새 transit_spice(기준22/무게1)/transit_wool(14/2)을 GameDatabase에 추가, E2 문서대로 남동포구 향신료40/0.65·길목 양모48/0.7 및 길목/개경 수요를 추가했다. 거리 계수는 ItemData 기본0.25, 수요 재고는 마을 defaultOptimal. 기존 DB 항목/재고/상품ID·수치·맵/씬은 유지했다. 재현 GoryeoTradeGoodsUpgrade.Apply 및 item_icons_promote.py.
+
+실제 본편 TownMarket 매입/판매·신규 공급→개경 이익·8회 같은 마을 재계산 되팔기 이익0이하·기존/신규품목 v2 저장 복원 등 자동 Play32확인, 실제3캡처·저장9파일 불변. Python360 두 환경/Unity 지정8종 통과. 초기 E1 입력 해시 갱신 누락1실패를 보고서 원본 재생성으로 해결했고 거리 결과 자체는 그대로다. R2 과거 고정 비교는 승인된 곡식 아이콘 참조/개경 새 재고 블록만 정확히 되돌린다.
+
+현재 경로의 신규 상품 수익은 옛 E2 예상보다 커서 별도 Claude 검토 메모(Task6-Goods-Review-2026-11-04)를 남겼다. 임의 가격 조정/밸런스 최종 승인 없음. 추가 요청 양모 폭14→12 v4는 previewOnly 실제 소지품 비교/Play12확인만 했고 본편은 승인된 v3 유지. 통나무/포구 별도 승인 대기. 사람/온라인/신규 상품 장거리 실제 보행 검사는 하지 않았다.
