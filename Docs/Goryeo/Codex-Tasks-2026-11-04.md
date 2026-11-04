@@ -41,3 +41,7 @@
 - integration(기우 통합) 합치기, 고려 맵 6개 여관 주인 충돌 해결, 새 마을 2곳 객주 주인.
 - 맵 전환: 창호지 문(은샘 A안, `Scripts/Map/GoryeoTravelTransition.cs`). 카메라가 이웃 맵 배경까지 따라감(`Scripts/Player/CameraFollow.cs`).
 - 남은 결정: 메시지 창이 많이 뜨는 것(기우 공용 기능)은 은샘이 기우에게 전달.
+
+## 진행 기록
+
+- 2026-11-04 Codex 1번: 실제 이름8개/등록 선물 연결 확인 후 [대사·기념품 수정안](Reviews/Social-2026-11-04.md)과 후보 JSON 작성. 사용자 승인 대기. Social.cs 미반영·Play/G 선물 미검사. 2번 이후는 1번 승인·반영·확인 뒤 순서대로 진행한다. 준비 검사: 전체354개(정식 환경23skip/Pillow전용32skip)실패0, 월드0오류, Unity 지정8종 통과. push/PR 없음.
