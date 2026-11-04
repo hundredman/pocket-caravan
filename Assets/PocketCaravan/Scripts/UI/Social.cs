@@ -10,7 +10,7 @@ namespace PocketCaravan
     /// <summary>
     /// 사람들과 어울리기 (전 지역 공용, 2026-11-04 통합: 북유럽 NorthSocial + 베네치아 VeniceSocial을 합침).
     /// - 친밀도: 지역마다 주요 8명. 하루 한 번 말 걸면 +1, 선물(G) +2, 좋아하는 선물 +5. 하트 3칸 (4·10·20점).
-    ///   하트 1: 가까워짐 + 좋아하는 물건 귀띔 / 하트 2: 리액션을 가르쳐 줌(없으면 답례 50냥) / 하트 3: 기념품 + 150냥 + 신용 +1.
+    ///   하트 1: 가까워짐 + 좋아하는 물건 귀띔 / 하트 2: 리액션을 가르쳐 줌(없으면 답례 50냥) / 하트 3: 기념품 + 50냥 + 신용 +1.
     /// - 선물(G): 말 걸 수 있는 주요 인물 앞에서. 짐 목록에서 방향키로 골라 Space (좋아하는 것이 맨 앞). 하루 한 번. 돈 답례는 없다.
     /// - 친구 수첩(F): 지금 지역 8명의 하트·좋아하는 것(하트 1 이후)·다음 보상. ←→로 다른 지역 쪽도 본다.
     /// - 사진(P): 지역 색 액자(북 나무 · 베 금빛 · 고려 단청 · 아라비아 타일)에 장소·날짜를 넣어 Photos 폴더에 저장, 잠깐 보여 준다.
@@ -279,10 +279,10 @@ namespace PocketCaravan
                 Notify.Show(taught != null ? $"{title}  \"{f.l2}\"  — 리액션 '{taught}'을(를) 배웠다! (R)" : $"{title}  \"{f.l2}\"  (50냥)", 6f);
                 return;
             }
-            GM.Player.money += 150;
+            GM.Player.money += 50;
             GM.Player.credit += 1;
             GM.SetMemo(K(f, "keepsake"), 1f);
-            Notify.Show($"{title}  \"{f.l3}\"  — {f.keepsake} · 150냥 · 신용 +1", 7f);
+            Notify.Show($"{title}  \"{f.l3}\"  — {f.keepsake} · 50냥 · 신용 +1", 7f);
         }
 
         void OpenGift(int fi)
