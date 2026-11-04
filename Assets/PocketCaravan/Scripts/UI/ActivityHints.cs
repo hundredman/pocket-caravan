@@ -5,28 +5,28 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// 놀거리 알림 (2026-10-30, 제안). 미니게임·놀거리가 어디 있는지 몰라 지나치던 것을 줄인다.
-    /// - 머리 위 표시: 오늘 아직 할 수 있는 놀거리 자리 위에 별과 이름("★ 유리 불기")이 떠서 까딱인다. 14칸 안에서 보이고,
-    ///   4칸 안으로 들어오면 원래 장소 이름표가 뜨므로 사라진다. 오늘 이미 했으면 흐린 "내일 다시"만.
-    /// - 화면 가장자리 화살표: 가장 가까운 '오늘 할 수 있는' 놀거리가 화면 밖이면 그쪽 가장자리에 화살표와 이름.
-    /// - 맵 알림: 맵에 들어오면(하루 한 번, 맵마다) "여기서 할 수 있는 것: 유리 불기 · 장식 공방".
-    /// 공용 코드는 고치지 않는다. 새 놀거리는 Rules에 한 줄 더하면 된다(이름이 null이면 표시하지 않음).
+    /// 놀거리 알림 (전 지역 공용, 2026-11-05 통합: 베네치아 VeniceActivityHints를 그대로 올림).
+    /// - 머리 위 표시: 오늘 아직 할 수 있는 놀거리 자리 위에 별과 이름("★ 유리 불기"). 14칸 안에서 보이고 4칸 안이면 원래 이름표가 대신한다.
+    ///   오늘 이미 했으면 흐린 "내일 다시".
+    /// - 화면 가장자리 화살표: 가장 가까운 '오늘 할 수 있는' 놀거리가 화면 밖이면 그쪽 가장자리에.
+    /// - 맵 알림: 맵에 들어오면(하루 한 번, 맵마다) "여기서 할 수 있는 것: …".
+    /// 어떤 자리가 놀거리인지는 두 가지로 등록한다. 이름이 null이면 놀거리로 치지 않는다.
+    ///   Rules[종류] = 자리 → (이름, 오늘 했는지)         — 자기 클래스가 있는 자리
+    ///   NameRules[이름표] = 자리 → (이름, 오늘 했는지)   — NorthSpot처럼 한 클래스를 여럿이 쓰는 자리 (이름표로 구분)
+    /// 공용 자리(떠돌이 상인·전시실·수집물·공방)는 여기서 등록하고, 지역 자리는 지역 코드가 등록한다.
+    /// 저장: 공용 메모 "hint:맵" (오늘 알림했는지).
     /// </summary>
-    public class VeniceActivityHints : MonoBehaviour
+    public class ActivityHints : MonoBehaviour
     {
-        /// <summary>놀거리 종류 → (이름, 오늘 이미 했는지). 이름이 null이면 이 자리는 놀거리로 치지 않는다</summary>
         public static readonly Dictionary<Type, Func<Interactable, (string name, bool done)>> Rules = new Dictionary<Type, Func<Interactable, (string, bool)>>
         {
-            { typeof(VeniceGlassSpot), _ => ("유리 불기", VeniceSave.DoneToday("glass")) },
-            { typeof(VeniceNetSpot), _ => ("그물 던지기", VeniceSave.DoneToday("net")) },
-            { typeof(VeniceFeed), _ => ("비둘기 모이 주기", VeniceSave.DoneToday("feed")) },
-            { typeof(VeniceTraghetto), _ => (VeniceUtil.Map == "venice_rialto" ? "곤돌라 경주" : null, false) },
-            { typeof(VeniceWorkshop), i => ((VeniceWorkshop)i).recipe == VeniceWorkshop.Recipe.GlassArt
-                ? ("유리 장식 공방", false)
-                : ("레이스 공방", Crafting.DoneForToday("venice_lace")) },
-            { typeof(VeniceMuseum), _ => ("전시실 기증", VeniceMuseum.Complete) },
-            { typeof(VeniceMerchant), _ => ("떠돌이 상인", false) },
+            { typeof(Peddler.Spot), _ => ("떠돌이 상인", false) },
+            { typeof(Museum.Spot), i => ("전시실 기증", Museum.Complete(((Museum.Spot)i).region)) },
+            { typeof(Collectibles.Spot), i => (Collectibles.Read(((Collectibles.Spot)i).region, ((Collectibles.Spot)i).index) ? null : Collectibles.Of(((Collectibles.Spot)i).region)?.name, false) },
+            { typeof(WorkshopSpot), i => (Crafting.Label(((WorkshopSpot)i).recipeId), Crafting.DoneForToday(((WorkshopSpot)i).recipeId)) },
+            { typeof(GoryeoPastime), _ => ("나루 낚시", false) },
         };
+        public static readonly Dictionary<string, Func<Interactable, (string name, bool done)>> NameRules = new Dictionary<string, Func<Interactable, (string, bool)>>();
 
         const float Far = 14f, Near = 4f;
         readonly List<(Interactable spot, string name, bool done)> spots = new List<(Interactable, string, bool)>();
@@ -35,19 +35,30 @@ namespace PocketCaravan
         float announceAt = -1f;
         Sprite star;
 
+        static string Map => MapRoot.Current != null ? MapRoot.Current.mapId : null;
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Attach()
         {
-            if (GameManager.I != null && GameManager.I.GetComponent<VeniceActivityHints>() == null)
-                GameManager.I.gameObject.AddComponent<VeniceActivityHints>();
+            if (GameManager.I != null && GameManager.I.GetComponent<ActivityHints>() == null)
+                GameManager.I.gameObject.AddComponent<ActivityHints>();
         }
 
         void Update()
         {
-            if (!VeniceUtil.InVenice) { spots.Clear(); lastMap = null; return; }
-            if (VeniceUtil.Map != lastMap) { lastMap = VeniceUtil.Map; announceAt = Time.time + .8f; nextScan = 0f; }   // 생활 자리가 다 놓인 뒤 알린다
+            if (Map == null) { spots.Clear(); lastMap = null; return; }
+            if (Map != lastMap) { lastMap = Map; announceAt = Time.time + .8f; nextScan = 0f; }   // 자리가 다 놓인 뒤 알린다
             if (Time.time >= nextScan) { nextScan = Time.time + .5f; Scan(); }
             if (announceAt > 0f && Time.time >= announceAt) { announceAt = -1f; Announce(); }
+        }
+
+        static bool Rule(Interactable it, out (string name, bool done) r)
+        {
+            r = (null, false);
+            if (Rules.TryGetValue(it.GetType(), out var f)) { r = f(it); return r.name != null; }
+            string label = it.DisplayName;
+            if (!string.IsNullOrEmpty(label) && NameRules.TryGetValue(label, out var g)) { r = g(it); return r.name != null; }
+            return false;
         }
 
         void Scan()
@@ -55,29 +66,29 @@ namespace PocketCaravan
             spots.Clear();
             foreach (var it in Interactable.All)
             {
-                if (it == null || !it.isActiveAndEnabled || !Rules.TryGetValue(it.GetType(), out var rule)) continue;
-                var (name, done) = rule(it);
-                if (name != null) spots.Add((it, name, done));
+                if (it == null || !it.isActiveAndEnabled) continue;
+                if (Rule(it, out var r)) spots.Add((it, r.name, r.done));
             }
         }
 
         void Announce()
         {
-            string key = "hint_" + VeniceUtil.Map;
-            if (spots.Count == 0 || VeniceSave.DoneToday(key)) return;
+            var gm = GameManager.I;
+            string key = "hint:" + Map;
+            if (gm == null || spots.Count == 0 || Mathf.RoundToInt(gm.GetMemo(key, -1f)) == gm.Clock.day) return;
             var names = new List<string>();
             foreach (var s in spots) if (!s.done && !names.Contains(s.name)) names.Add(s.name);
             if (names.Count == 0) return;
-            VeniceSave.MarkToday(key);
+            gm.SetMemo(key, gm.Clock.day);
             Notify.Show("여기서 할 수 있는 것: " + string.Join(" · ", names) + "  (별 표시를 찾아가 보자)", 5f);
         }
 
         void OnGUI()
         {
             var cam = Camera.main; var pc = PlayerController.Instance;
-            if (!VeniceUtil.InVenice || cam == null || pc == null || UIState.Blocking || spots.Count == 0) return;
+            if (Map == null || cam == null || pc == null || UIState.Blocking || spots.Count == 0) return;
             if (GameManager.I != null && GameManager.I.IsTravelling) return;
-            if (star == null) star = VeniceUtil.Sprite("fx_star");
+            if (star == null) star = Collectibles.LoadSprite("Common/fx_star", new Vector2(0.5f, 0.5f));
             UIStyle.Begin();
             GUI.depth = -4;
             float scale = UIStyle.Scale, bob = Mathf.Round(Mathf.Sin(Time.time * 3f) * 2f);
@@ -108,11 +119,10 @@ namespace PocketCaravan
             GUI.Label(new Rect(r.x + (withStar ? 10f : 0f), r.y, r.width - (withStar ? 10f : 0f), r.height), text, Line);
         }
 
-        /// <summary>가장 가까운 놀거리가 화면 밖이면 그쪽 가장자리에 화살표</summary>
         void EdgeArrow(Camera cam, Vector3 world, string name, float scale)
         {
             var vp = cam.WorldToViewportPoint(world);
-            if (vp.z > 0f && vp.x > .03f && vp.x < .97f && vp.y > .05f && vp.y < .95f) return;   // 화면 안이면 머리 위 표시로 충분
+            if (vp.z > 0f && vp.x > .03f && vp.x < .97f && vp.y > .05f && vp.y < .95f) return;
             Vector2 dir = new Vector2(vp.x - .5f, vp.y - .5f);
             if (vp.z < 0f) dir = -dir;
             if (dir.sqrMagnitude < 1e-4f) return;

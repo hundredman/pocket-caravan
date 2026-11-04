@@ -9,7 +9,7 @@ namespace PocketCaravan
     /// - 순록 먹이 (순록 고원 우리): 하루 한 번. 이끼 한 줌을 내려놓으면 순록들이 걸어와 고개 숙여 뜯어 먹는다. 사흘째엔 치즈 선물.
     /// - 낚시꾼 조합 (피오르 나루): 도감·기록 상금.
     /// - 회관 전시실 (비르카): 물고기 3종·호박·룬 탁본·은빛 뿔을 기증하면 전시대가 채워진다. 다 채우면 칭호·200냥·리액션.
-    /// - 떠돌이 상인: 매일 다른 장터 마을에. 리액션 책·오로라 병·황금 미끼.
+    /// - 떠돌이 상인: 공용 Peddler (2026-11-05). 북유럽은 오로라 병·황금 미끼를 고유 상품으로 등록.
     /// - 오늘의 특가: 매일 한 마을 좌판에서 물건 하나를 4할 싸게.
     /// - 떨어진 선물: 매일 북유럽 길 몇 군데에 반짝이는 주머니 (밟으면 줍기).
     /// - 룬 점쟁이 (비르카 광장): 다음 날씨와 오늘 밤 오로라를 점쳐 줌.
@@ -59,6 +59,7 @@ namespace PocketCaravan
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Boot()
         {
+            RegisterCommon();
             if (FindFirstObjectByType<NorthDaily>() != null) return;
             var go = new GameObject("NorthDaily");
             DontDestroyOnLoad(go);
@@ -91,8 +92,6 @@ namespace PocketCaravan
         static int Today => GameManager.I != null ? GameManager.I.Clock.day : 0;
         static int Hash(int a, int b) { unchecked { uint h = (uint)(a * 73856093) ^ (uint)(b * 19349663); h ^= h >> 13; h *= 0x5bd1e995; h ^= h >> 15; return (int)(h & 0x7fffffff); } }
         public static string WandererTown => Towns[Hash(Today, 1) % Towns.Length];
-        public static string DealTown => Towns[Hash(Today, 2) % Towns.Length];
-        static string DealItem => DealItems[Hash(Today, 3) % DealItems.Length];
 
         void Update()
         {
@@ -162,25 +161,14 @@ namespace PocketCaravan
             // 전시실: 회관 문 옆 기증 자리 (10/27 전시대 여섯 개는 뺌 — 마당에 책상이 늘어선 게 어색하다는 의견)
             var mus = NorthData.Get(map, "museum");
             if (mus.Length >= 2)
-                NorthSpot.Make(root, NorthUtil.Cell(map, mus[0], mus[1]), () => $"회관 전시실 ({Donated}/{Exhibits.Length})", Museum, Interactable.Kind.Board);
+                NorthSpot.Make(root, NorthUtil.Cell(map, mus[0], mus[1]), () => "회관 " + Museum.Label(Reactions.Region.North), () => Museum.Open(Reactions.Region.North), Interactable.Kind.Board);
             // 룬 점쟁이
             var fort = NorthData.Get(map, "fortune");
             if (fort.Length >= 2) Person(NorthUtil.Cell(map, fort[0], fort[1]), "fortune", () => "룬 점쟁이", Fortune, Interactable.Kind.Person);
             // 나룻배 사공 (10/26): 중앙 개울 나루 마을 ↔ 피오르 나루 마을
             var ferry = NorthData.Get(map, "ferry");
             if (ferry.Length >= 2) Person(NorthUtil.Cell(map, ferry[0], ferry[1]), "ferry", () => "나룻배 사공", Ferry, Interactable.Kind.Person);
-            // 떠돌이 상인 · 오늘의 특가 (장터 옆)
-            var market = NorthData.Get(map, "market");
-            if (market.Length >= 2)
-            {
-                var mp = NorthUtil.Cell(map, market[0], market[1]);
-                // 10/27 장터 사람과 이름표가 겹치지 않게, 맵 생성기가 고른 장터 옆 빈 땅 두 곳 (없으면 예전처럼 장터 양옆)
-                var sides = NorthData.Get(map, "sides");
-                Vector3 wp = sides.Length >= 2 ? NorthUtil.Cell(map, sides[0], sides[1]) : mp + new Vector3(1.5f, 0f, 0f);
-                Vector3 dp = sides.Length >= 4 ? NorthUtil.Cell(map, sides[2], sides[3]) : mp + new Vector3(-1.5f, 0f, 0f);
-                if (map == WandererTown) { Person(wp, "wanderer", () => "떠돌이 상인", Wanderer, Interactable.Kind.Market); Notify.Show("떠돌이 상인이 이 마을 장터에 와 있다!", 3f); }
-                if (map == DealTown) { Person(map == WandererTown || sides.Length < 4 ? dp : wp, "dealer", () => "오늘의 특가 좌판", Deal, Interactable.Kind.Market); }
-            }
+            // 떠돌이 상인·오늘의 특가는 2026-11-05부터 공용 Peddler가 장터 옆에 세운다
             // 떨어진 선물: 오늘 고른 길 맵 세 곳에 두 개씩
             int idx = System.Array.IndexOf(GiftMaps, map);
             if (idx >= 0 && (Hash(Today, 10 + idx) % 10) < 3)
@@ -336,49 +324,7 @@ namespace PocketCaravan
 
         // ---------------- 회관 전시실 ----------------
 
-        static int Donated { get { int n = 0; foreach (var e in Exhibits) if (NorthSave.Has("museum:" + e.key)) n++; return n; } }
-
-        void Museum()
-        {
-            var gm = GameManager.I;
-            var choices = new List<DialogueUI.Choice>();
-            var lines = new List<string>();
-            foreach (var e in Exhibits)
-            {
-                bool done = NorthSave.Has("museum:" + e.key);
-                lines.Add((done ? "■ " : "□ ") + e.name);
-                if (done || choices.Count >= 3) continue;
-                if (e.item == "#runes" ? NorthLegends.Found >= NorthLegends.Total : e.item == "#blessed" ? NorthLegends.Blessed :
-                    gm.ItemById(e.item) != null && gm.Player.cargo.Count(gm.ItemById(e.item)) > 0)
-                {
-                    var ex = e;
-                    choices.Add(new DialogueUI.Choice($"{e.name} 기증하기", () => Donate(ex.key, ex.name, ex.item)));
-                }
-            }
-            choices.Add(new DialogueUI.Choice("구경만 할게요", null));
-            DialogueUI.Show("회관 전시실 관리인", "북쪽 땅의 보물을 모으고 있다네. 자네가 찾은 걸 기증해 주면 길이길이 전하겠네.\n\n" + string.Join("\n", lines), choices.ToArray());
-        }
-
-        void Donate(string key, string name, string item)
-        {
-            var gm = GameManager.I;
-            if (!item.StartsWith("#"))
-            {
-                var it = gm.ItemById(item);
-                if (it == null || !gm.Player.cargo.Remove(it, 1)) return;
-            }
-            NorthSave.Set("museum:" + key, 1f);
-            if (!AudioManager.Muted) sfx.PlayOneShot(chime, 0.6f);
-            Rebuild(NorthUtil.Map);   // 전시대에 바로 올라가게
-            if (Donated >= Exhibits.Length && !NorthSave.Has("museum:complete"))
-            {
-                NorthSave.Set("museum:complete", 1f);
-                gm.Player.money += 200; gm.Player.credit += 1;
-                string taught = NorthSocial.Teach("joy");
-                DialogueUI.Show("회관 전시실 관리인", "전시실이 가득 찼어! 자네는 이제 '북쪽의 큐레이터'일세.\n(200냥 · 신용 +1" + (taught != null ? $" · 리액션 '{taught}'" : "") + ")");
-            }
-            else Notify.Show($"'{name}'을(를) 기증했다 ({Donated}/{Exhibits.Length})", 3f);
-        }
+        // 전시실 기증 창·보상은 2026-11-05부터 공용 Museum (목록·옛 저장 키는 RegisterCommon에서 등록)
 
         // ---------------- 나룻배 ----------------
 
@@ -402,31 +348,49 @@ namespace PocketCaravan
                 new DialogueUI.Choice("다음에", null));
         }
 
-        // ---------------- 떠돌이 상인 ----------------
-
-        void Wanderer()
+        // ---------------- 떠돌이 상인 (공용 Peddler) ----------------
+        // 북유럽은 통합 전 순서(날짜 해시)와 특가 후보를 그대로 쓰고, 오로라 병·황금 미끼만 고유 상품으로 얹는다.
+        static void RegisterCommon()
         {
-            var gm = GameManager.I;
-            var choices = new List<DialogueUI.Choice>
+            var N = Reactions.Region.North;
+            // 전시실: 북유럽 여섯 칸 (룬 탁본·은빛 순록의 뿔은 물건이 아니라 조건)
+            var shelf = new List<Museum.Entry>();
+            foreach (var e in Exhibits)
             {
-                new DialogueUI.Choice("리액션 책 (80냥)", () => Buy(80, () =>
+                var ex = e;
+                shelf.Add(ex.item == "#runes" ? new Museum.Entry { key = ex.key, name = ex.name, have = () => NorthLegends.Found >= NorthLegends.Total }
+                        : ex.item == "#blessed" ? new Museum.Entry { key = ex.key, name = ex.name, have = () => NorthLegends.Blessed }
+                        : new Museum.Entry { key = ex.key, name = ex.name, item = ex.item });
+            }
+            Museum.Shelf[N] = shelf.ToArray();
+            Museum.KeyFor[N] = key => "north:museum:" + key;
+            Museum.OnComplete[N] = () => { string t = Reactions.Teach("joy"); if (t != null) Notify.Show($"리액션 '{t}'을(를) 배웠다! (R)", 4f); };
+            // 숨은 룬돌: 자리·읽기·고리 의식은 NorthLegends 그대로, 공용에는 이름·전설·저장 키만 (수첩·알림용)
+            var lore = new string[NorthLegends.Total];
+            for (int i = 0; i < lore.Length; i++) lore[i] = i + 1 < NorthLegends.Lore.Length ? NorthLegends.Lore[i + 1] : "";
+            Collectibles.Sets[N] = new Collectibles.Set { name = "이끼 낀 룬돌", readName = "읽은 룬돌", lore = lore, autoPlace = false, maps = new string[0] };
+            Collectibles.KeyFor[N] = i => i == 99 ? "north:blessed" : "north:rune:" + (i + 1);
+            // 놀거리 알림: 북유럽 자리는 NorthSpot을 같이 써서 이름표로 구분
+            ActivityHints.Rules[typeof(NorthFishingSpot)] = _ => ("얼음 낚시", false);
+            ActivityHints.Rules[typeof(NorthSledStart)] = _ => ("썰매", false);
+            ActivityHints.NameRules["돌탑 쌓기"] = _ => ("돌탑 쌓기", false);
+            ActivityHints.NameRules["눈싸움하는 아이들"] = _ => ("눈싸움", false);
+            ActivityHints.NameRules["이끼 낀 룬돌"] = _ => ("룬돌 전설", false);
+            Peddler.Schedule[Reactions.Region.North] = () => WandererTown;
+            Peddler.DealItems[Reactions.Region.North] = DealItems;
+            Peddler.Extras[Reactions.Region.North] = () => new List<DialogueUI.Choice>
+            {
+                new DialogueUI.Choice("오로라 병 (40냥) — 오늘 밤 꼭 오로라", () => Peddler.Pay(40, () =>
                 {
-                    string t = NorthSocial.TeachRandom();
-                    if (t == null) { gm.Player.money += 80; DialogueUI.Show("떠돌이 상인", "이런, 자넨 이미 다 아는구먼! 돈은 돌려주지."); }
-                })),
-                new DialogueUI.Choice("오로라 병 (40냥) — 오늘 밤 꼭 오로라", () => Buy(40, () =>
-                {
-                    NorthSave.Set("aurora_day", Mathf.FloorToInt(gm.Clock.TotalHours / 24f));
+                    NorthSave.Set("aurora_day", Mathf.FloorToInt(GameManager.I.Clock.TotalHours / 24f));
                     Notify.Show("병을 열자 초록 빛이 하늘로 올라갔다. 오늘 밤엔 꼭 오로라가 뜬다!", 3.5f);
                 })),
-                new DialogueUI.Choice("황금 미끼 (30냥) — 다음 낚시 3번 귀한 물고기", () => Buy(30, () =>
+                new DialogueUI.Choice("황금 미끼 (30냥) — 다음 낚시 3번 귀한 물고기", () => Peddler.Pay(30, () =>
                 {
                     NorthSave.Add("bait", 3f);
                     Notify.Show("황금 미끼를 챙겼다. 다음 낚시 세 번은 귀한 물고기가 잘 문다!", 3f);
                 })),
-                new DialogueUI.Choice("구경만 할게요", null),
             };
-            DialogueUI.Show("떠돌이 상인", $"오늘은 {TownNames[System.Array.IndexOf(Towns, WandererTown)]}에 들렀지! 내일은 또 어디로 갈지 몰라. 귀한 물건 구경하고 가게.", choices.ToArray());
         }
 
         void Buy(int price, System.Action then)
@@ -438,42 +402,8 @@ namespace PocketCaravan
             then();
         }
 
-        // ---------------- 오늘의 특가 ----------------
-
-        void Deal()
-        {
-            var gm = GameManager.I;
-            var it = gm.ItemById(DealItem);
-            if (it == null) { DialogueUI.Show("특가 좌판", "오늘은 물건이 다 떨어졌어."); return; }
-            int left = 5 - Mathf.RoundToInt(NorthSave.Get("deal:" + Today));
-            int price = Mathf.Max(1, Mathf.RoundToInt(it.basePrice * 0.6f));
-            if (left <= 0) { DialogueUI.Show("특가 좌판", $"오늘 {it.displayName} 특가는 다 팔렸어! 내일 또 와."); return; }
-            DialogueUI.Show("특가 좌판", $"오늘의 특가! {it.displayName} 한 개에 {price}냥 (평소보다 4할 싸). 오늘 남은 건 {left}개야.",
-                new DialogueUI.Choice($"1개 사기 ({price}냥)", () => DealBuy(it, price, 1)),
-                new DialogueUI.Choice($"{left}개 다 사기 ({price * left}냥)", () => DealBuy(it, price, left)),
-                new DialogueUI.Choice("다음에", null));
-        }
-
-        void DealBuy(ItemData it, int price, int n)
-        {
-            var gm = GameManager.I;
-            if (gm.Player.money < price * n) { Notify.Show("돈이 모자라…", 2f); return; }
-            if (!gm.Player.CanCarry(it, n)) { Notify.Show("짐이 가득 차서 못 실어.", 2f); return; }
-            gm.Player.money -= price * n;
-            gm.Player.cargo.Add(it, n, price);
-            NorthSave.Add("deal:" + Today, n);
-            if (!AudioManager.Muted) sfx.PlayOneShot(coin, 0.5f);
-            Notify.Show($"{it.displayName} {n}개를 특가로 샀다", 2.5f);
-        }
-
-        /// <summary>마을에 들어설 때 오늘의 특가 알림 (어느 마을인지 미리 알 수 있게 룬 점쟁이·초소 길 안내가 말해 줌)</summary>
-        public static string DealNews()
-        {
-            var gm = GameManager.I;
-            var it = gm != null ? gm.ItemById(DealItem) : null;
-            int ti = System.Array.IndexOf(Towns, DealTown), wi = System.Array.IndexOf(Towns, WandererTown);
-            return $"오늘의 특가: {TownNames[ti]} 좌판의 {(it != null ? it.displayName : "물건")}\n떠돌이 상인: {TownNames[wi]}\n" + NorthCraft.FairNews;
-        }
+        /// <summary>마을에 들어설 때 오늘 장터 소식 (룬 점쟁이·초소 길 안내가 말해 줌)</summary>
+        public static string DealNews() => Peddler.News(Reactions.Region.North) + "\n" + NorthCraft.FairNews;
 
         // ---------------- 떨어진 선물 ----------------
 

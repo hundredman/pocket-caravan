@@ -120,7 +120,7 @@ namespace PocketCaravan
         {
             typeof(VeniceAtmosphere), typeof(VeniceDaily), typeof(VeniceEvents), typeof(VeniceFair), typeof(VeniceLife),
             typeof(VeniceMapUI), typeof(VeniceMenu), typeof(VeniceQuestDirector), typeof(VeniceRace),
-            typeof(VeniceSound), typeof(VeniceStride), typeof(VeniceActivityHints),
+            typeof(VeniceSound), typeof(VeniceStride), 
         };
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]

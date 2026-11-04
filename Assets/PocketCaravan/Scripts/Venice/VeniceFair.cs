@@ -14,7 +14,7 @@ namespace PocketCaravan
     public class VeniceFair : MonoBehaviour
     {
         // 2026-11-04 통합: 어디서 언제 서는지·덤·알림·화면 띠는 공용 CentralFair. 여기는 서쪽 장식(줄무늬 좌판·깃발)만.
-        static float Bonus => VeniceLion.Blessed ? .25f : .2f;   // 사자 문장 일곱 개를 다 찾으면 2할 5푼
+        static float Bonus => VeniceLegacy.LionBlessed ? .25f : .2f;   // 사자 문장 일곱 개를 다 찾으면 2할 5푼
         Transform deco;
 
         public static CentralFair.Town Today => CentralFair.Today("west");

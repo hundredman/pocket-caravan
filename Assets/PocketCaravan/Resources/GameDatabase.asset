@@ -42,6 +42,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8fcf64b0e9e02ef42a811e652539ab6c, type: 2}
   - {fileID: 11400000, guid: f0481849b4ca4134faf4c3466df7bf6e, type: 2}
   - {fileID: 11400000, guid: 5d6f67d084c304c4085459c6ae25bdcf, type: 2}
+  - {fileID: 11400000, guid: ccca67fc8d80e426f8229c10a9455f50, type: 2}
+  - {fileID: 11400000, guid: 257a8b1dc97e04519a571b31296d8bd1, type: 2}
   - {fileID: 11400000, guid: 5bdb4599b599a4bafb2d6eba12a7a241, type: 2}
   - {fileID: 11400000, guid: 1a2fc2ad478bf45eb8826708d861bb18, type: 2}
   - {fileID: 11400000, guid: 84e8ea6b0681441bcb997c074af766ab, type: 2}
@@ -61,8 +63,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d1a72c6d5727143acb6b447b3e240481, type: 2}
   - {fileID: 11400000, guid: c68bcc6f465544aacb714f9d90a4ad45, type: 2}
   - {fileID: 11400000, guid: 708a9b54371a348d9a085c78dc8f3170, type: 2}
-  - {fileID: 11400000, guid: ccca67fc8d80e426f8229c10a9455f50, type: 2}
-  - {fileID: 11400000, guid: 257a8b1dc97e04519a571b31296d8bd1, type: 2}
   towns:
   - {fileID: 11400000, guid: 2c9147faaf0a843a7a9ac6e8a53c0e86, type: 2}
   - {fileID: 11400000, guid: 64b9df746835e454b957665c23b9725d, type: 2}
