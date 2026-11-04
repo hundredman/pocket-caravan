@@ -27,5 +27,7 @@
     "river_flood_high",
     "river_flood_low"
   ],
-  "productionChanged": false
+  "productionChanged": false,
+  "latestIconReview": "ArtReview/ItemIcons-v2-20261104/README.md",
+  "note": "양모/향신료 v1은 사용자 수정 요청으로 대체 검토 중. 곡식 볏단 그림을 새 검토에 추가. 통나무/포구 승인 상태는 유지."
 }

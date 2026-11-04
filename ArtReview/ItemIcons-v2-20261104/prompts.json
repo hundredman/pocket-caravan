@@ -1,0 +1,20 @@
+{
+  "tool": "built-in image_gen",
+  "specs": [
+    {
+      "name": "transit_wool",
+      "ref": "ArtReview/E3-E2-Art-20261103/Native/transit_wool.png",
+      "prompt": "Use case: precise-object-edit. Redesign the supplied wool inventory icon for the same cute pixel-art trading RPG. A SINGLE plump loose bundle of raw sheep wool, naturally rounded oval with three or four broad fluffy lobes, asymmetrical soft tuft at the top, small soft creases. A thin warm tan cord curves naturally around lower middle, not a rigid straight belt. Make it clearly wool fleece, not two stacked cushions, not a rectangular package, not a basket or sack, not a sheep head or yarn ball. Same dark warm brown outline and ivory/cream/light tan flat 2-3 shades as reference, clean chunky clusters readable when finalized to native 16x16 pixels. Compact object about 13x12 logical pixels. Entire object, front/slightly top-down RPG icon, no realistic texture or fine fibers, no gradients or blur, no text. Truly transparent background, no ground or cast shadow, even empty margin."
+    },
+    {
+      "name": "grain",
+      "ref": "Assets/PocketCaravan/Art/Items/grain.png",
+      "prompt": "Use case: stylized-concept. Replace this grain sack icon with ONE small standing tied sheaf of harvested ripe RICE stalks, a Korean 볏단, for the same cute historical trading RPG. Warm golden straw matching thatched roofs, dark brown outline, flat 2-3 golden shades. A dense compact bundle pinched and tied at middle with one visible brown straw rope, straight stalks fanning slightly at bottom, a broad cluster of ripe rice panicles at top gently bowing, not a sack and not a wheat loaf. Strong simple sheaf silhouette, no individual tiny grains or intricate lines. Whole icon occupies about 11x14 logical pixels on final native 16x16 canvas. Front/slightly elevated RPG inventory view, clean chunky pixel clusters, no gradients, no blur, no ground/no shadow/no text/no people. True transparent background with empty margin. Preserve game's reference palette and outline weight."
+    },
+    {
+      "name": "transit_spice",
+      "ref": "ArtReview/E3-E2-Art-20261103/Native/transit_spice.png",
+      "prompt": "Use case: precise-object-edit. Make a SMALL targeted refinement of the supplied tiny pixel-art spice pouch inventory icon. Keep the recognizable open tan cloth pouch, reddish-orange spice heap at top, cream rim and central cord/knot, palette, proportions, front/slightly top-down view and overall identity. Change only the pouch's LOWER SILHOUETTE: taper its lower corners softly into a rounded bulging cloth bottom with a very short curved base, so it no longer has square corners or a straight rectangular box-shaped base. Keep it compact and full, do not turn into bottle, bowl or basket, no feet or flat wooden platform. Clean chunky dark brown one-logical-pixel outline, ochre cloth 2-3 flat shades, simple russet spice. Final native target16x16 pixels, object roughly11x13. No blur/gradients/text/ground/shadow, whole single object on truly transparent background with empty margin."
+    }
+  ]
+}
