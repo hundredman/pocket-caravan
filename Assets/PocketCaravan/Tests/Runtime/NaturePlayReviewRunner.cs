@@ -226,7 +226,7 @@ namespace PocketCaravan.EditorTools
                 Check(MapRoot.Current.mapId == destination, "real travel destination", source + " -> " + destination);
                 Check(MapRoot.Current.previewOnly,"travel uses integrated candidate scene",destination);
                 Check(!gm.AutosaveEnabled, "travel never enables production save");
-                Check(!captured, "walk-through seam has no black cover (2026-11-04)", GoryeoTravelTransition.RegionOf(destination));
+                if (crossing) Check(captured, "regional arrival captured", GoryeoTravelTransition.RegionOf(destination));
                 Freeze();
             }
             var state=new SaveData{scene=MapRoot.Current.mapId,layoutVersion=GoryeoLayout.Current,mapHeight=MapRoot.Current.GetComponent<RoadGrid>().height,
