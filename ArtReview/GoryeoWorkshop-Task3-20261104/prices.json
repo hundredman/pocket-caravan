@@ -1,0 +1,53 @@
+{
+    "scope": "Initial stock, neutral reputation, normal day, no origin/haggle bonuses; equal destination sale state. Order fee=max(18,current Dakmok paper buy+5). No future-price guarantee.",
+    "rows": [
+        {
+            "town": "dakmok",
+            "directBuy": 13,
+            "orderCost": 18,
+            "destinationSell": 10,
+            "tradeProfit": -3,
+            "orderProfit": -8
+        },
+        {
+            "town": "gaegyeong",
+            "directBuy": 13,
+            "orderCost": 18,
+            "destinationSell": 24,
+            "tradeProfit": 11,
+            "orderProfit": 6
+        },
+        {
+            "town": "transit_woodtown",
+            "directBuy": 13,
+            "orderCost": 18,
+            "destinationSell": 35,
+            "tradeProfit": 22,
+            "orderProfit": 17
+        },
+        {
+            "town": "transit_ferry",
+            "directBuy": 13,
+            "orderCost": 18,
+            "destinationSell": 52,
+            "tradeProfit": 39,
+            "orderProfit": 34
+        },
+        {
+            "town": "transit_southport",
+            "directBuy": 13,
+            "orderCost": 18,
+            "destinationSell": 63,
+            "tradeProfit": 50,
+            "orderProfit": 45
+        },
+        {
+            "town": "transit_crossroads",
+            "directBuy": 13,
+            "orderCost": 18,
+            "destinationSell": 81,
+            "tradeProfit": 68,
+            "orderProfit": 63
+        }
+    ]
+}

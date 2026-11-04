@@ -1,0 +1,20 @@
+{
+  "status": "review",
+  "mapId": "Dakmok",
+  "recipeId": "goryeo_hanji",
+  "shop": "닥목 한지 공방",
+  "worker": "한지 장인",
+  "product": "paper",
+  "productName": "종이",
+  "inputs": [],
+  "feeFloor": 18,
+  "labourAboveLocalBuy": 5,
+  "hours": 6,
+  "maxBatch": 1,
+  "dailyMax": 2,
+  "x": 37,
+  "y": 53,
+  "blocksMovement": false,
+  "art": "existing approved paper_large workshop and paper_rack grounds",
+  "memo": "재료는 공방 제공. 현지 종이 매입가+5냥 이상으로 주문비를 정하고 승인 전 본편 배치/레시피 등록은 하지 않음"
+}

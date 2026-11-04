@@ -1,0 +1,12 @@
+{
+  "cell": [
+    37,
+    53
+  ],
+  "walkable": true,
+  "reachable": true,
+  "exitOverlap": false,
+  "existingObjectOverlap": false,
+  "blocksMovement": false,
+  "productionApplied": false
+}
