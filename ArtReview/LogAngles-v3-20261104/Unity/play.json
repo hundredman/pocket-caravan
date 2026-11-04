@@ -1,0 +1,17 @@
+{
+    "complete": true,
+    "error": "",
+    "checks": [
+        "preview-only and saves off",
+        "walkable trial approach",
+        "whole native48 PPU16 scale1 rotation0 horizontal",
+        "960x540 horizontal",
+        "whole native48 PPU16 scale1 rotation0 diagonal_ne",
+        "960x540 diagonal_ne",
+        "whole native48 PPU16 scale1 rotation0 diagonal_nw",
+        "960x540 diagonal_nw",
+        "whole native48 PPU16 scale1 rotation0 vertical",
+        "960x540 vertical",
+        "no saves enabled"
+    ]
+}

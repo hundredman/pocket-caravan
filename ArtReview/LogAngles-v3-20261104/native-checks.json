@@ -1,0 +1,66 @@
+[
+  {
+    "name": "horizontal",
+    "canvas": [
+      48,
+      48
+    ],
+    "visibleBounds": [
+      1,
+      22,
+      47,
+      47
+    ],
+    "asepriteRGBAEqual": true,
+    "binaryAlpha": true,
+    "originalPaletteOnly": true
+  },
+  {
+    "name": "diagonal_ne",
+    "canvas": [
+      48,
+      48
+    ],
+    "visibleBounds": [
+      1,
+      6,
+      47,
+      47
+    ],
+    "asepriteRGBAEqual": true,
+    "binaryAlpha": true,
+    "originalPaletteOnly": true
+  },
+  {
+    "name": "diagonal_nw",
+    "canvas": [
+      48,
+      48
+    ],
+    "visibleBounds": [
+      1,
+      7,
+      47,
+      47
+    ],
+    "asepriteRGBAEqual": true,
+    "binaryAlpha": true,
+    "originalPaletteOnly": true
+  },
+  {
+    "name": "vertical",
+    "canvas": [
+      48,
+      48
+    ],
+    "visibleBounds": [
+      12,
+      1,
+      35,
+      47
+    ],
+    "asepriteRGBAEqual": true,
+    "binaryAlpha": true,
+    "originalPaletteOnly": true
+  }
+]
