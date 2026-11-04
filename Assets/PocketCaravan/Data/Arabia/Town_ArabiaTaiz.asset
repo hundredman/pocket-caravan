@@ -28,6 +28,16 @@ MonoBehaviour:
     minCredit: 0
     description: 
     storageCapacity: 120
+  - id: arabia_taiz_info
+    displayName: "\uB300\uC0C1 \uAE38 \uC548\uB0B4"
+    kind: 1
+    minTier: 2
+    minCredit: 1
+    description: "\uB0A8\uCABD \uAE38\uB85C \uC790\uBE44\uB4DC, \uC11C\uCABD \uD574\uC548\uAE38\uB85C
+      \uC81C\uB2E4, \uBD81\uCABD \uACE0\uC6D0\uAE38\uB85C \uC0AC\uB098.\n\uC5FC\uC0C9
+      \uC9C1\uBB3C\uC740 \uBC14\uB2E4 \uAC74\uB108 \uD56D\uAD6C\uC5D0\uC11C \uAC12\uC774
+      \uC624\uB985\uB2C8\uB2E4."
+    storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: 35a7e3db33a56468183a9b53947724c8, type: 2}
     optimal: 40

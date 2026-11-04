@@ -68,6 +68,13 @@ namespace PocketCaravan.EditorTools
             // 10/23 추가: 온천 마을, 순록 고원 마을 (10/28 배치 바꿈: 온천은 비르카 북쪽, 순록 고원은 비르카 서쪽)
             var laugar = Town("Town_Laugar", "north_laugar", "라우가르 온천 마을", new Vector2Int(29, 2), 1);
             var herd = Town("Town_Herd", "north_herd", "순록 고원 마을", new Vector2Int(28, 1), 1);
+            // 2026-11-04 통합: 다른 지역처럼 마을 등급과 손님방(여관 쉬기) 시설을 둔다
+            foreach (var (t, rest) in new[] { (hunter, "사냥꾼 오두막 손님방"), (naru, "피오르 여관 손님방"), (laugar, "온천 손님방"), (herd, "고원 여관 손님방") })
+            {
+                t.settlementTier = 1;
+                t.facilities = new System.Collections.Generic.List<TownFacility>
+                { new TownFacility { id = t.id + "_rest", displayName = rest, kind = FacilityKind.Rest, minTier = 1, minCredit = 0, storageCapacity = 120f } };
+            }
             // 10/26 중앙 대륙 북쪽 1/4 (피자 구성): 장터 마을 4곳. 북유럽 지역(2만 칸)이 아니라 중앙 북쪽 구역 소속 (World/Regions/center_north.json)
             // 좌표는 center_north.json의 worldX, worldY와 같게 (화요일 중앙 합칠 때 다시 정함)
             var centerNorth = Upsert<RegionData>($"{Root}/Data/Center/Region_CenterNorth.asset", r => { r.id = "center_north"; r.displayName = "중앙 북쪽"; r.note = "중앙 대륙 10만 칸 중 북쪽 1/4 (기우 담당, 2만5천 칸). 마을 4곳 + 길 5곳"; });
@@ -75,6 +82,7 @@ namespace PocketCaravan.EditorTools
             {
                 var t = Town(file, id, name, coord, 1);
                 t.region = centerNorth;
+                t.settlementTier = 2;   // 2026-11-04 통합: 중앙 장터 마을은 2등급 (중간권 나루터·나무 마을과 같게)
                 t.facilities = new System.Collections.Generic.List<TownFacility>
                 {
                     new TownFacility { id = id + "_rest", displayName = rest, kind = FacilityKind.Rest, minTier = 1, minCredit = 0, storageCapacity = 120f },

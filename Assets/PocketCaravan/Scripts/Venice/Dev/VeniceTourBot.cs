@@ -120,9 +120,9 @@ namespace PocketCaravan
         IEnumerator Common()
         {
             Log("■ 공통");
-            Ok(VeniceSave.Has("keyhint"), "1 키 안내를 한 번 보여 줌 (keyhint 기록)");
+            Ok(gm.HasMemo("social:tips"), "1 키 안내를 한 번 보여 줌 (공용 social:tips 기록)");
             // 2 동작 바퀴
-            var rx = gm.GetComponent<VeniceReactions>();
+            var rx = FindAnyObjectByType<Reactions>();   // 2026-11-04 공용 리액션
             yield return Press(Key.R);
             Ok((bool)Field(rx, "wheel"), "2 R로 동작 바퀴가 열림");
             int known = 0; for (int i = 0; i < 10; i++) if (VeniceReactions.Knows(i)) known++;
@@ -155,7 +155,7 @@ namespace PocketCaravan
             // 3 친구 수첩·사진
             yield return Wait(1.5f);
             yield return Press(Key.F);
-            var so = gm.GetComponent<VeniceSocial>();
+            var so = FindAnyObjectByType<Social>();   // 2026-11-04 공용 친밀도
             Ok((bool)Field(so, "book"), "3 F로 친구 수첩 열림");
             yield return Shot("friend_book");
             yield return Press(Key.F);
@@ -211,7 +211,7 @@ namespace PocketCaravan
                 Ok(VeniceSocial.Points("여관 주인") == 1, $"5 하루 첫 말 걸기 +1 (점수 {VeniceSocial.Points("여관 주인")})");
                 yield return Shot("hearts_overhead");
                 yield return Press(Key.G);
-                var so = gm.GetComponent<VeniceSocial>();
+                var so = FindAnyObjectByType<Social>();   // 2026-11-04 공용 친밀도
                 Ok((bool)Field(so, "picking"), "5 G로 선물 고르기 창");
                 yield return Shot("gift_picker");
                 yield return Press(Key.Space);
@@ -222,19 +222,19 @@ namespace PocketCaravan
                 Ok(!(bool)Field(so, "picking"), "5 같은 날 두 번째 선물은 막힘");
                 yield return Shot("gift_blocked");
             }
-            // 2 여관
-            var bed = FindAnyObjectByType<VeniceInn>();
-            Ok(bed != null, "2 여관 주인 옆 침대");
-            if (bed != null)
+            // 2 여관 (2026-11-03 공용 Inn: 여관 주인에게 말 걸면 대화 뒤 "쉬어 갈래요?")
+            if (inn != null)
             {
-                yield return Face(bed);
+                yield return Face(inn);
                 yield return Press(Key.Space);           // 대화창
                 yield return Wait(.2f);
-                yield return Press(Key.Space);           // 첫 선택지 '쉬어 가기'
+                yield return Press(Key.Space);           // 대화 닫기
+                yield return Wait(.5f);
+                yield return Press(Key.Space);           // "쉬어 갈래요"
                 yield return Wait(1f);
                 yield return Shot("inn_sleep");
                 yield return Wait(2.2f);
-                Ok(VeniceDaily.Rested && !UIState.Blocking, $"2 쉬고 깸, 푹 쉼 {VeniceDaily.Rested}, 시계 {gm.Clock.Label}");
+                Ok(RestBuff.Rested && !UIState.Blocking, $"2 쉬고 깸, 푹 쉼 {RestBuff.Rested}, 시계 {gm.Clock.Label}");
             }
             // 3 벤치
             var seats = FindObjectsByType<VeniceSeat>(FindObjectsSortMode.None);
@@ -477,7 +477,6 @@ namespace PocketCaravan
                 Ok(FindAnyObjectByType<VeniceMerchant>() != null, $"{MapRoot.Current.displayName}: {day}일째 떠돌이 상인");
                 var dir = FindAnyObjectByType<RoadEventDirector>();
                 Ok(true, $"{MapRoot.Current.displayName}: 길 사건 자리 {(dir != null ? dir.events.Count : 0)}");
-                if (map == "venice_c_post") Ok(FindAnyObjectByType<VeniceInn>() != null, "대상 숙소: 숙소 주인 옆 침대");
             }
             // 밤 도적 (나루터 직행로)
             SetClock(3, 23);

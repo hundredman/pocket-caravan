@@ -7,7 +7,7 @@ namespace PocketCaravan
     /// 베네치아·본토 서부 날씨와 밤 축제 (2026-10-26, 제안). 보이기만 하고 이동·충돌·저장은 바꾸지 않는다(카니발 덤만 돈에 더함).
     /// - 날씨: 게임 시간 4시간마다 바뀐다. 맑음이 잦고, 아침(5~11시)에는 석호 안개, 가끔 비. 화면 위에 옅은 안개 띠·빗줄기.
     /// - 카니발 밤: 7일마다 하루(날짜 % 7 == 5) 19~23시 리알토. 색종이가 흩날리고 가면 쓴 사람들이 광장을 돈다.
-    ///   그동안 리알토 장터에서 유리그릇·유리 장식·레이스를 팔면 판 값의 3할을 더 받는다(GameEvents.ItemSold).
+    ///   (2026-11-04: 덤은 공용 NightFestival) 그동안 리알토 장터에서 유리그릇·유리 장식·레이스를 팔면 판 값의 3할을 더 받는다(GameEvents.ItemSold).
     /// 공용 AmbientFX(꽃잎)는 그대로 둔다.
     /// </summary>
     public class VeniceAtmosphere : MonoBehaviour
@@ -46,19 +46,11 @@ namespace PocketCaravan
                 GameManager.I.gameObject.AddComponent<VeniceAtmosphere>();
         }
 
-        void OnEnable() { SceneManager.sceneLoaded += OnLoaded; Hook(); }
-        void OnDisable() { SceneManager.sceneLoaded -= OnLoaded; GameEvents.ItemSold -= OnSold; }
-        void OnLoaded(Scene s, LoadSceneMode m) { Hook(); lastWeatherKey = null; }
-        void Hook() { GameEvents.ItemSold -= OnSold; GameEvents.ItemSold += OnSold; }
+        void OnEnable() { SceneManager.sceneLoaded += OnLoaded; }
+        void OnDisable() { SceneManager.sceneLoaded -= OnLoaded; }
+        void OnLoaded(Scene s, LoadSceneMode m) { lastWeatherKey = null; }
+        // 2026-11-04 카니발 덤(유리·레이스 3할)은 공용 NightFestival로 옮김
 
-        void OnSold(ItemData item, TownData town, int price, int profit)
-        {
-            if (!CarnivalNight || town == null || town.id != "venice_rialto" || item == null || price <= 0) return;
-            if (item.id != "venice_glass" && item.id != "venice_glass_art" && item.id != "venice_lace") return;
-            int bonus = Mathf.Max(1, Mathf.RoundToInt(price * .3f));
-            GameManager.I.Player.money += bonus;
-            Notify.Show($"카니발 손님이 더 쳐 줬다 +{bonus}냥", 2.5f);
-        }
 
         void Update()
         {

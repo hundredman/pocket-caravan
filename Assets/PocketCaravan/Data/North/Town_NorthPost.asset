@@ -21,7 +21,7 @@ MonoBehaviour:
     \uC911 \uD558\uB098\uC608\uC694."
   worldCoord: {x: 29, y: -1}
   startLevel: 1
-  settlementTier: 0
+  settlementTier: 2
   facilities:
   - id: north_post_rest
     displayName: "\uBD81\uBB38 \uC5EC\uAD00"

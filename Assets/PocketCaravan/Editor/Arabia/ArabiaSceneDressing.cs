@@ -54,6 +54,8 @@ namespace PocketCaravan.EditorTools
             foreach (var talk in Object.FindObjectsByType<TalkNpc>(FindObjectsSortMode.None))
             {
                 if (talk.GetComponent<CharacterAnimator>() == null || talk.GetComponent<ArabiaWanderer>() != null) continue;
+                // 2026-11-03 통합: 여관 주인(공용 Inn)은 건물 문 앞에 서 있어야 찾기 쉽다 → 거닐지 않는다
+                if (talk.displayName != null && (talk.displayName.Contains("여관") || talk.displayName.Contains("숙소") || talk.displayName.Contains("객주"))) continue;
                 talk.gameObject.AddComponent<ArabiaWanderer>();
                 EditorUtility.SetDirty(talk.gameObject);
             }

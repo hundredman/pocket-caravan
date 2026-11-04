@@ -62,7 +62,7 @@ transit_central_approach
       내륙 교역 길목 쪽 이정표 글(2방향): ↓ 내륙 교역 길목 / → 버들 물가 길
       버들 물가 길 쪽 이정표 글(2방향): → 버들 물가 길 / ← 내륙 교역 길목
 transit_crossroads 
-  주민 주막 주인 (49, 47)
+  주민 객주 주인 (49, 47)
   장터 transit_crossroads (44, 36)
   게시판 transit_crossroads (51, 36)
   이정표(초원 진입로 출구 쪽) (65, 21)
@@ -72,6 +72,7 @@ transit_crossroads
 transit_southport 
   주민 포구 사람 (33, 36)
   주민 뱃사공 (41, 51)
+  주민 포구 객주 주인 (41, 43)
   장터 transit_southport (33, 41)
   게시판 transit_southport (34, 39)
   이정표(솔바람 고개 출구 쪽) (57, 15)

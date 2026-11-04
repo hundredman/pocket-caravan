@@ -28,6 +28,23 @@ MonoBehaviour:
     minCredit: 0
     description: 
     storageCapacity: 120
+  - id: arabia_sanaa_info
+    displayName: "\uAD81\uC804 \uAE38 \uC548\uB0B4\uC18C"
+    kind: 1
+    minTier: 2
+    minCredit: 1
+    description: "\uB0A8\uCABD\uC73C\uB85C \uC81C\uB2E4\xB7\uD0C0\uC774\uC988, \uBD81\uCABD
+      \uC131\uBB38 \uBC16\uC740 \uC911\uC559 \uB300\uB959 \uC0AC\uB9C9(\uB9CC\uAD6D
+      \uC7A5\uD130 \uAC00\uB294 \uAE38)\uC785\uB2C8\uB2E4.\n\uC218\uB3C4\uB294 \uBA3C
+      \uC0B0\uC9C0 \uBB3C\uAC74\uC744 \uAC00\uC7A5 \uBE44\uC2F8\uAC8C \uC0BD\uB2C8\uB2E4."
+    storageCapacity: 120
+  - id: arabia_sanaa_warehouse
+    displayName: "\uC218\uB3C4 \uC0C1\uC778 \uCC3D\uACE0"
+    kind: 2
+    minTier: 3
+    minCredit: 3
+    description: 
+    storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: 35a7e3db33a56468183a9b53947724c8, type: 2}
     optimal: 14

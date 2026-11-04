@@ -451,6 +451,7 @@ namespace PocketCaravan
         public float GetMemo(string key, float fallback = 0f) => cooldowns.TryGetValue(key, out var v) ? v : fallback;
         public bool HasMemo(string key) => cooldowns.ContainsKey(key);
         public void SetMemo(string key, float value) => cooldowns[key] = value;
+        public void ClearMemo(string key) => cooldowns.Remove(key);   // 2026-11-04 점검 도구(리액션 잊기)용
 
         /// <summary>가장 비싼 짐 (물건은 한 묶음 기준가, 의뢰는 보수)</summary>
         object MostValuable(out string name)

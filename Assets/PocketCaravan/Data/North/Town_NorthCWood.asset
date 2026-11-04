@@ -20,7 +20,7 @@ MonoBehaviour:
     \uC0B0\uC801\uC774 \uC228\uC5B4 \uC788\uC5B4\uC694."
   worldCoord: {x: 28, y: -2}
   startLevel: 1
-  settlementTier: 0
+  settlementTier: 2
   facilities:
   - id: north_cwood_rest
     displayName: "\uC232 \uB9C8\uC744 \uC27C\uD130"

@@ -23,7 +23,7 @@ namespace PocketCaravan
             { typeof(VeniceTraghetto), _ => (VeniceUtil.Map == "venice_rialto" ? "곤돌라 경주" : null, false) },
             { typeof(VeniceWorkshop), i => ((VeniceWorkshop)i).recipe == VeniceWorkshop.Recipe.GlassArt
                 ? ("유리 장식 공방", false)
-                : ("레이스 공방", VeniceSave.DoneToday("lace") && VeniceSave.Get("lace_count") >= 2) },
+                : ("레이스 공방", Crafting.DoneForToday("venice_lace")) },
             { typeof(VeniceMuseum), _ => ("전시실 기증", VeniceMuseum.Complete) },
             { typeof(VeniceMerchant), _ => ("떠돌이 상인", false) },
         };

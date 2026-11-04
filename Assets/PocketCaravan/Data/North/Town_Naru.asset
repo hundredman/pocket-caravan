@@ -21,8 +21,15 @@ MonoBehaviour:
     \uAC1C\uC6B8 \uB098\uB8E8 \uB9C8\uC744\uAE4C\uC9C0 \uAC00\uC694."
   worldCoord: {x: 30, y: 0}
   startLevel: 1
-  settlementTier: 0
-  facilities: []
+  settlementTier: 1
+  facilities:
+  - id: north_naru_rest
+    displayName: "\uD53C\uC624\uB974 \uC5EC\uAD00 \uC190\uB2D8\uBC29"
+    kind: 0
+    minTier: 1
+    minCredit: 0
+    description: 
+    storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: 84e8ea6b0681441bcb997c074af766ab, type: 2}
     optimal: 20

@@ -8,12 +8,14 @@
     "visibleLayersSHA": "a1e4e3e632493ecc8041877c32eea84c38997c85dd71e7211166d817fe561df8"
   },
   "transit_woodtown": {
-    "gameplaySHA": "31e1fdf3a7357fb609dff66a614140e53e85b7648f8fc206988528cb6445e1b3",
-    "visibleLayersSHA": "1b25e19fb7a88e37d460d8b44c37dc5e880151ce4375433a297911069c8dcfb1"
+    "gameplaySHA": "97b4651a3b8031b9edf739afd9d73795c2e17e3228103b3799d6aae0f7eb52e0",
+    "visibleLayersSHA": "1b25e19fb7a88e37d460d8b44c37dc5e880151ce4375433a297911069c8dcfb1",
+    "note": "2026-11-04 통합: 여관 주인(talker) 1명 추가로 gameplaySHA 갱신"
   },
   "transit_ferry": {
-    "gameplaySHA": "b430bfa3ff8e2260cc1f65efdb031dc50034afd4d4b72fd325f4693ca5d6fab3",
-    "visibleLayersSHA": "c7689b068acbe04cb83e16c0380e524b4220bc528b574b5032a3d833cc2c9e7e"
+    "gameplaySHA": "c3685115387df6d824dc2c513ec1229a64f7e3c49589cfad70783c7271e4ac3d",
+    "visibleLayersSHA": "c7689b068acbe04cb83e16c0380e524b4220bc528b574b5032a3d833cc2c9e7e",
+    "note": "2026-11-04 통합: 여관 주인(talker) 1명 추가로 gameplaySHA 갱신"
   },
   "transit_southport": {
     "gameplaySHA": "088007b31aa451e309a48cfd78cf1953b1190413d3e1e6caa44e1960707ff14e",
@@ -24,12 +26,14 @@
     "visibleLayersSHA": "27dd58fca70c5ddd181cadfe1acb628cfd86d26bb7323014ef915e0517666d5b"
   },
   "goryeo_songak": {
-    "gameplaySHA": "c240bfc352a3e8a254e1d70d256002b0fb8850fbfd4ed226f7ddab96c29193b8",
-    "visibleLayersSHA": "070d7b1832c1d0ec4a5134d381cb4007eb8bf95c7673f5c68f00a38c422a0244"
+    "gameplaySHA": "2d3fb6a42363f0345ba9a381ac02d95e0fcca0586978e10d3919d32edbfcedd8",
+    "visibleLayersSHA": "070d7b1832c1d0ec4a5134d381cb4007eb8bf95c7673f5c68f00a38c422a0244",
+    "note": "2026-11-04 통합: 여관 주인(talker) 1명 추가로 gameplaySHA 갱신"
   },
   "goryeo_jangdan": {
-    "gameplaySHA": "5e6853032343e885244b8e8b8f3914a58046d631a489742295060530d85675d9",
-    "visibleLayersSHA": "b968b9188ce530af847e5180336a5a2a0e6a2e7224f5c4dcb66dc4555e02b0de"
+    "gameplaySHA": "319dd8c5519db33eaf81a83f5173a3aa3bea4cb933a0a42c8c1c2e838a8f0779",
+    "visibleLayersSHA": "b968b9188ce530af847e5180336a5a2a0e6a2e7224f5c4dcb66dc4555e02b0de",
+    "note": "2026-11-04 통합: 여관 주인(talker) 1명 추가로 gameplaySHA 갱신"
   },
   "transit_crossroads": {
     "gameplaySHA": "a078a54b5bd1fa0bdb2c5d97fc0a98e499d21756c1fddf3a15574fc80520b9a3",
@@ -40,12 +44,14 @@
     "visibleLayersSHA": "ccfd283649d828bff4f94be581eb468b6b09f0f436269156b77c942e309deb86"
   },
   "Naru": {
-    "gameplaySHA": "a3abb9ed190cb02bba5c707a763f5a7bcaa8e367a5907e81e2bcaf87f2c84392",
-    "visibleLayersSHA": "35e1c84f698bf14454db58d3ded73841819dfd4e8976b9e70dc57150b1d51f76"
+    "gameplaySHA": "c7194888242133b936b842f4bf085a49c60ae07b4bbd374302e0e24ac2f1b2d9",
+    "visibleLayersSHA": "35e1c84f698bf14454db58d3ded73841819dfd4e8976b9e70dc57150b1d51f76",
+    "note": "2026-11-04 통합: 여관 주인(talker) 1명 추가로 gameplaySHA 갱신"
   },
   "Dakmok": {
-    "gameplaySHA": "0ca03237f3a2deebe99f26a4181a1b94249d1b796d8776e7d2468ab94006f333",
-    "visibleLayersSHA": "e86d404481846bd187570c90741b682b488ccf590830a2077fe779bff8ab694c"
+    "gameplaySHA": "4e6d7d745c7035133792bcbb778cfaa8d19c40315d6c8d6db504be0709bedcfe",
+    "visibleLayersSHA": "e86d404481846bd187570c90741b682b488ccf590830a2077fe779bff8ab694c",
+    "note": "2026-11-04 통합: 여관 주인(talker) 1명 추가로 gameplaySHA 갱신"
   },
   "Gaegyeong": {
     "gameplaySHA": "67b609f0da9c0f02c9c62625103997b7167a74a355c45ab4b89790a2c0a669a8",
