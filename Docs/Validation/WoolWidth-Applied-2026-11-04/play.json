@@ -1,0 +1,21 @@
+{
+  "complete": true,
+  "registeredItems": true,
+  "temporaryItemCopiesUsed": false,
+  "scenePreviewOnly": true,
+  "inventoryOpen": true,
+  "productionIcon": "Assets/PocketCaravan/Art/Goryeo/Items/transit_wool.png",
+  "spriteCanvas": [
+    16,
+    16
+  ],
+  "PPU": 16,
+  "capture": "registered-inventory.png",
+  "captureSize": [
+    960,
+    540
+  ],
+  "autosaveEnabled": false,
+  "playStopped": true,
+  "humanPlay": false
+}

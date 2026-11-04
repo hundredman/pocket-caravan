@@ -19,6 +19,6 @@
   "contentWidthBefore": 14,
   "contentWidthAfter": 12,
   "rgbaSha256": "54746cc8d55111168755325745df84f3984af25a4d0057b103877afd5d020186",
-  "productionApplied": false,
-  "status": "pending user visual approval"
+  "productionApplied": true,
+  "status": "approved, applied and validated"
 }

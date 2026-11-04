@@ -14,8 +14,8 @@
     },
     {
       "id": "transit_wool",
-      "source": "ArtReview/ItemIcons-v3-20261104/Native/transit_wool.png",
-      "status": "approved v3 applied"
+      "source": "ArtReview/WoolWidth-v4-20261104/Native/transit_wool.png",
+      "status": "approved v4 applied and validated"
     }
   ],
   "ports": {
@@ -29,6 +29,6 @@
   ],
   "productionChanged": false,
   "latestIconReview": "ArtReview/WoolWidth-v4-20261104/README.md",
-  "note": "v3 아이콘 승인/본편 연결 완료. 이후 양모 폭14→12 v4만 별도 승인 대기. 통나무/포구는 여전히 별도 대기.",
+  "note": "v3 곡식/향신료 및 폭 조정 양모 v4 사용자 승인·본편 적용/검사 완료. 통나무/포구는 별도 대기.",
   "grainReview": "ArtReview/ItemIcons-v3-20261104/Native/grain.png"
 }
