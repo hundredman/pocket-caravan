@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: Quest_ArabiaQ08CarpetOrder
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: arabia_q08_carpet_order
+  retired: 0
+  title: "\uB77C\uC2DC\uB4DC\uC758 \uC591\uD0C4\uC790 \uC8FC\uBB38"
+  chain: "\uC544\uB77C\uBE44\uC544 1\uC7A5"
+  summary: "\uD0C0\uC774\uC988 \uC9C1\uBB3C \uC0C1\uC778 \uB77C\uC2DC\uB4DC\uAC00
+    \uC0AC\uB098 \uC591\uD0C4\uC790\uB97C \uC8FC\uBB38\uD55C\uB2E4. \uC218\uB3C4\uC5D0\uC11C
+    \uC0AC\uC11C \uAC70\uAFB8\uB85C \uAC00\uC838\uC624\uB294 \uAE38."
+  giverNpc: arabia_rashid
+  requires:
+  - {fileID: 11400000, guid: 8c0397b6a5a0e44d8a4ab955d0295c1c, type: 2}
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "\uBC14\uB2E4 \uAC74\uB108 \uC190\uB2D8\uC774 \uC0AC\uB098 \uC591\uD0C4\uC790\uB97C
+    \uCC3E\uC544. \uB450 \uC7A5\uB9CC \uAC00\uC838\uB2E4\uC8FC\uBA74 \uAC12\uC740
+    \uB109\uB109\uD788 \uCE58\uB974\uC9C0.\n\uC0AC\uB098\uB294 \uBD81\uCABD \uACE0\uC6D0\uAE38
+    \uB05D\uC774\uC57C."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 2
+    text: "\uC0AC\uB098 \uC7A5\uD130\uC5D0\uC11C \uC591\uD0C4\uC790 \uC0AC\uAE30"
+    targetId: arabia_sanaa
+    item: {fileID: 11400000, guid: 6d6e2b16c8f25490192ba51a8d9a8235, type: 2}
+    vehicle: {fileID: 0}
+    count: 2
+    completeLine: 
+  - type: 1
+    text: "\uD0C0\uC774\uC988 \uB77C\uC2DC\uB4DC\uC5D0\uAC8C \uC591\uD0C4\uC790 \uC804\uD558\uAE30"
+    targetId: arabia_rashid
+    item: {fileID: 11400000, guid: 6d6e2b16c8f25490192ba51a8d9a8235, type: 2}
+    vehicle: {fileID: 0}
+    count: 2
+    completeLine: "\uC774 \uBB34\uB2AC\uC57C. \uC190\uB2D8\uC774 \uAE30\uBED0\uD558\uACA0\uAD70."
+  rewardMoney: 55
+  rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "\uC591\uD0C4\uC790\uB294 \uBB34\uAC81\uB2E4. \uB099\uD0C0\uAC00 \uC788\uC73C\uBA74
+    \uD3B8\uD558\uB2E4."

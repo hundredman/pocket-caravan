@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: Quest_ArabiaQ07Pearl
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: arabia_q07_pearl
+  retired: 0
+  title: "\uC9C4\uC8FC \uD55C \uC54C"
+  chain: "\uC544\uB77C\uBE44\uC544 1\uC7A5"
+  summary: "\uC81C\uB2E4 \uD56D\uAD6C\uC5D0\uC11C \uC9C4\uC8FC\uB97C \uD55C \uC54C
+    \uC0AC\uC11C \uC5B4\uB514\uB4E0 \uB354 \uBE44\uC2FC \uACF3\uC5D0 \uD310\uB2E4.
+    \uC774\uC775\uC744 \uB0A8\uAE30\uB294 \uC5F0\uC2B5."
+  giverNpc: arabia_hindbad
+  requires:
+  - {fileID: 11400000, guid: bcb16efe364b54311b791c4a12646150, type: 2}
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "\uC81C\uB2E4 \uC7A0\uC218\uBD80\uB4E4\uC774 \uC9C4\uC8FC\uB97C \uCE90
+    \uC628\uB300. \uD55C \uC54C \uC0AC\uC11C \uB2E4\uB978 \uB370 \uD314\uBA74 \uC774\uC775\uC774
+    \uC5BC\uB9C8\uB098 \uB0A8\uB294\uC9C0 \uBCFC\uB798?\n\uC0B0 \uAC12\uBCF4\uB2E4
+    40\uB0E5\uC740 \uB354 \uB0A8\uACA8 \uBD10."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 2
+    text: "\uC81C\uB2E4 \uC7A5\uD130\uC5D0\uC11C \uC9C4\uC8FC \uC0AC\uAE30"
+    targetId: arabia_jeddah
+    item: {fileID: 11400000, guid: 5c29389e146c94149a69fc2395b82df4, type: 2}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: 
+  - type: 4
+    text: "\uD310\uB9E4 \uC774\uC775 40\uB0E5 \uB0A8\uAE30\uAE30"
+    targetId: 
+    item: {fileID: 0}
+    vehicle: {fileID: 0}
+    count: 40
+    completeLine: "\uBD10, \uC9D0\uC740 \uC791\uC544\uB3C4 \uC774\uC775\uC740 \uD06C\uC9C0.
+      \uADF8\uAC8C \uC7A5\uC0AC\uC57C."
+  rewardMoney: 45
+  rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "\uC774\uC775\uC740 \uD310 \uAC12\uC5D0\uC11C \uC0B0 \uAC12\uC744 \uBE80
+    \uAC83. \uC7A5\uBD80(J)\uC5D0\uC11C \uBCFC \uC218 \uC788\uB2E4."

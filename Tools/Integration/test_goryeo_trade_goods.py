@@ -17,7 +17,9 @@ class ApprovedGoods(unittest.TestCase):
  def test_preexisting_items_stocks_and_grain_values_preserved(self):
   before=json.loads((ROOT/'Docs/Validation/TradeGoods-Task6-2026-11-04/before-inputs.json').read_text())
   db=(ROOT/'Assets/PocketCaravan/Resources/GameDatabase.asset').read_text().split('  items:\n',1)[1].split('  towns:\n',1)[0];items=re.findall(r'guid: ([0-9a-f]{32})',db)
-  self.assertEqual(items[:-2],before['preexistingItemGuids']);self.assertEqual(len(items),len(set(items)))
+  # 2026-11-05(기우): 전체 준비가 품목 순서를 바꾸고 다른 지역이 품목을 덧붙이므로, '기존 품목이 같은 순서로 남아 있는지'만 본다
+  pre=set(before['preexistingItemGuids']);self.assertEqual([g for g in items if g in pre],before['preexistingItemGuids']);self.assertEqual(len(items),len(set(items)))
+  for g in ('ccca67fc8d80e426f8229c10a9455f50','257a8b1dc97e04519a571b31296d8bd1'):self.assertIn(g,items)
   for path,old in before['stocks'].items():
    rows=re.findall(r'  - item: .*\n    optimal: .*\n    localPriceMultiplier: .*\n',(ROOT/path).read_text());self.assertEqual(rows[:len(old)],old)
   grain=re.sub(r'^  icon: .*\n','',(ROOT/'Assets/PocketCaravan/Data/Goryeo/Item_grain.asset').read_text(),flags=re.M);self.assertEqual(grain,before['grainBeforeWithoutIcon'])

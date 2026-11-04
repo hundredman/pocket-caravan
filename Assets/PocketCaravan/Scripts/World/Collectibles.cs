@@ -148,7 +148,8 @@ namespace PocketCaravan
             if (mr.road != null)
                 foreach (var p in mr.road.cellBounds.allPositionsWithin) if (mr.road.HasTile(p)) roads.Add(new Vector2Int(p.x, p.y));
             var market = UnityEngine.Object.FindAnyObjectByType<TownMarket>();
-            Vector2 anchor = market != null ? (Vector2)mr.WorldToCell(market.transform.position) : new Vector2(b.center.x, b.center.y);
+            Vector2 anchor = new Vector2(b.center.x, b.center.y);
+            if (market != null) { var mc = mr.WorldToCell(market.transform.position); anchor = new Vector2(mc.x, mc.y); }
             Vector2 center = new Vector2(b.center.x, b.center.y);
             float best = -1f; Vector3Int bestCell = default; bool any = false;
             foreach (var p in b.allPositionsWithin)
