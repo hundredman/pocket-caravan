@@ -17,6 +17,7 @@ namespace PocketCaravan
         {
             if (registered) return;
             RegisterRoute((from, to) => RegionOf(from) != null && RegionOf(to) != null, new GoryeoTravelTransition());
+            GameEvents.MapEntered += Announce;
             registered = true;
         }
 
@@ -45,15 +46,38 @@ namespace PocketCaravan
         {
             crossing = IsRegionalCrossing(fromMap, toMap);
             destination = crossing ? RegionOf(toMap) : null;
+            // 도착 알림(화면을 덮지 않음): 지역이 바뀌면 "지역 · 맵", 장터 마을에 들어서면 마을 이름.
+            // 다른 지역(북유럽 순록·베네치아 고양이)은 마을 도착 때 이름표를 보여 준다. 고려·중앙 동쪽은 땅이 이어져 있어 덮지 않고 알림만.
+            pendingRegion = destination;
+            pendingTown = crossing || IsTown(toMap);
+            pendingMap = toMap;
+        }
+
+        static string pendingRegion, pendingMap;
+        static bool pendingTown;
+        static readonly string[] TownMaps =
+        {
+            "Naru", "Gaegyeong", "Dakmok", "goryeo_songak", "goryeo_jangdan",
+            "transit_woodtown", "transit_ferry", "transit_southport", "transit_crossroads",
+        };
+        static bool IsTown(string id) => Array.IndexOf(TownMaps, GoryeoLayout.Resolve(id ?? "")) >= 0;
+
+        static void Announce(string mapId)
+        {
+            if (!pendingTown || pendingMap != mapId || MapRoot.Current == null) { pendingTown = false; return; }
+            string name = MapRoot.Current.displayName;
+            if (!string.IsNullOrEmpty(pendingRegion)) Notify.Location(pendingRegion + " · " + name, 3.5f);
+            else Notify.Location(name, 2.5f);
+            pendingTown = false; pendingRegion = null;
         }
 
         // 2026-11-04(기우 요청·은샘 지시): 고려·중앙 동쪽 맵은 땅이 이어져 있어 출구가 아니라 걸어서 넘어간다.
-        // 그래서 맵을 넘을 때 검은 화면을 띄우지 않는다(맵 이동처럼 보이지 않게). 지역이 바뀔 때만 이름 알림을 띄운다.
+        // 그래서 맵을 넘을 때 검은 화면을 띄우지 않는다(맵 이동처럼 보이지 않게). 이름 알림은 Announce(지역이 바뀔 때·장터 마을 도착).
         public override float CoverSeconds => 0f;
         public override float RevealSeconds => 0f;
         public override float MinHoldSeconds => 0f;
         public override float AfterLoadSeconds => 0f;
-        public override bool ShowArrivalNotice => crossing;
+        public override bool ShowArrivalNotice => false;   // 알림은 Announce가 띄운다
 
         public override void Draw(float cover, bool covering, string nextName, float heldFor)
         {
