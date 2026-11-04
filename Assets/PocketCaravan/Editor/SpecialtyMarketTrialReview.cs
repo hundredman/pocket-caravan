@@ -10,12 +10,15 @@ namespace PocketCaravan.EditorTools
     {
         public const string Folder="Assets/PocketCaravan/Editor/B2Preview/SpecialtyMarkets20261104/";
         [Serializable]class Art{public string id,image;public int w,h;}
-        [Serializable]class Proposal{public string status;public GoryeoMarketLayout.Map[] maps;public Art[] assets;}
+        [Serializable]class Prop{public string asset,oldAsset;public int x,y,w,h;}
+        [Serializable]class Space{public string id;public Prop[] props;}
+        [Serializable]class Map{public string mapId;public Space[] spaces;}
+        [Serializable]class Proposal{public string status;public Map[] maps;public Art[] assets;}
         public static void Build()
         {
             if(EditorApplication.isPlaying||UnityEngine.SceneManagement.SceneManager.GetActiveScene().isDirty)throw new InvalidOperationException("Stop Play/save edits first");
             var data=JsonUtility.FromJson<Proposal>(File.ReadAllText("ArtReview/SpecialtyMarkets-Task5-20261104/layout.json"));
-            if(data.status!="review"||data.maps.Length!=2)throw new InvalidDataException("Wrong review scope");
+            if((data.status!="review"&&data.status!="approved")||data.maps.Length!=2)throw new InvalidDataException("Wrong review scope");
             Directory.CreateDirectory(Folder);var sprites=new Dictionary<string,Sprite>();
             foreach(var a in data.assets)
             {
@@ -39,7 +42,7 @@ namespace PocketCaravan.EditorTools
                     var expected=map.ground.CellToWorld(new Vector3Int(p.x,height-p.y-p.h,0));SpriteRenderer target=null;
                     foreach(var sr in parent.GetComponentsInChildren<SpriteRenderer>())if(Vector3.Distance(sr.transform.position,expected)<.01f)target=sr;
                     if(target==null||target.sprite.rect.size!=sprites[p.asset].rect.size)throw new InvalidDataException("Target/footprint mismatch");
-                    targets.Add(target);originals.Add(target.sprite);variants.Add(sprites[p.asset]);
+                    targets.Add(target);originals.Add(AssetDatabase.LoadAssetAtPath<Sprite>("Assets/PocketCaravan/Art/Goryeo/Markets/"+p.oldAsset+".png"));variants.Add(sprites[p.asset]);
                 }
                 var dressing=map.gameObject.AddComponent<SpecialtyMarketTrialDressing>();dressing.targets=targets.ToArray();dressing.originals=originals.ToArray();dressing.variants=variants.ToArray();
                 EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(),Folder+m.mapId+".unity");

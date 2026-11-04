@@ -1,189 +1,227 @@
 {
- "status": "review",
- "date": "2026-11-03",
- "scope": "E2 새 장터(남동 포구·내륙 교역 길목)에 이미 승인된 게시판·곡물 좌판·잡화 판매대를 놓는다. 새 그림 없음. 짜임은 솔재 길목 마을과 같다(장터 광장 좌판 2 + 판매대 3, 이벤트 마당 좌판 2 + 판매대 2, 게시판 1).",
- "userInstruction": "일단 추가하고 이미지 검토한 뒤에 결정할게.",
- "decision": "은샘 그림 검토 대기. 거절되면 이 파일과 market_production.py의 EXTENSIONS 줄을 되돌린다.",
- "maps": [
-  {
-   "mapId": "transit_southport",
-   "spaces": [
+  "status": "approved",
+  "date": "2026-11-04",
+  "scope": "새 좌판4종·기존 위치/크기 그대로 두 마을10개 교체, 시장/마당 배치 승인",
+  "decision": "사용자 승인·본편 연결",
+  "approval": "ArtReview/SpecialtyMarkets-Task5-20261104/approval.json",
+  "assets": [
     {
-     "id": "board",
-     "props": [
-      {
-       "asset": "board",
-       "x": 34,
-       "y": 38,
-       "w": 1,
-       "h": 1
-      }
-     ]
+      "id": "fish_rack",
+      "size": [
+        3,
+        2
+      ],
+      "source": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/fish_rack.png",
+      "rgbaSha256": "9442529d2223447365129e0611cfc89636ebe68d76cfd4bb9b363ab3ff1ac01c"
     },
     {
-     "id": "market",
-     "props": [
-      {
-       "asset": "grain_stall",
-       "x": 27,
-       "y": 40,
-       "w": 3,
-       "h": 3
-      },
-      {
-       "asset": "grain_stall",
-       "x": 35,
-       "y": 40,
-       "w": 3,
-       "h": 3
-      },
-      {
-       "asset": "wares_counter",
-       "x": 27,
-       "y": 45,
-       "w": 3,
-       "h": 2
-      },
-      {
-       "asset": "wares_counter",
-       "x": 31,
-       "y": 45,
-       "w": 3,
-       "h": 2
-      },
-      {
-       "asset": "wares_counter",
-       "x": 35,
-       "y": 45,
-       "w": 3,
-       "h": 2
-      }
-     ]
+      "id": "salt_stall",
+      "size": [
+        3,
+        3
+      ],
+      "source": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/salt_stall.png",
+      "rgbaSha256": "9fab65fd3bcdf4929c8caa45cbac4d5d7117c6c5f63a8b22bb4ea5459ae2efd4"
     },
     {
-     "id": "event-yard",
-     "props": [
-      {
-       "asset": "grain_stall",
-       "x": 36,
-       "y": 30,
-       "w": 3,
-       "h": 3
-      },
-      {
-       "asset": "grain_stall",
-       "x": 41,
-       "y": 30,
-       "w": 3,
-       "h": 3
-      },
-      {
-       "asset": "wares_counter",
-       "x": 36,
-       "y": 33,
-       "w": 3,
-       "h": 2
-      },
-      {
-       "asset": "wares_counter",
-       "x": 41,
-       "y": 33,
-       "w": 3,
-       "h": 2
-      }
-     ]
+      "id": "cloth_stall",
+      "size": [
+        3,
+        3
+      ],
+      "source": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/cloth_stall.png",
+      "rgbaSha256": "633c458851c331bccd2bcfc7bf560387b983946cfffbec2be71bd4e77951c89b"
+    },
+    {
+      "id": "spice_stall",
+      "size": [
+        3,
+        2
+      ],
+      "source": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/spice_stall.png",
+      "rgbaSha256": "84629beca25189bd6b81b3bcb79cb680e7b4f77153712328b762df57d0de9969"
     }
-   ]
-  },
-  {
-   "mapId": "transit_crossroads",
-   "spaces": [
+  ],
+  "maps": [
     {
-     "id": "board",
-     "props": [
-      {
-       "asset": "board",
-       "x": 51,
-       "y": 35,
-       "w": 1,
-       "h": 1
-      }
-     ]
+      "mapId": "transit_southport",
+      "spaces": [
+        {
+          "id": "board",
+          "props": [
+            {
+              "asset": "board",
+              "x": 34,
+              "y": 38,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        },
+        {
+          "id": "market",
+          "props": [
+            {
+              "asset": "salt_stall",
+              "x": 27,
+              "y": 40,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 35,
+              "y": 40,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "fish_rack",
+              "x": 27,
+              "y": 45,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 31,
+              "y": 45,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "fish_rack",
+              "x": 35,
+              "y": 45,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        },
+        {
+          "id": "event-yard",
+          "props": [
+            {
+              "asset": "salt_stall",
+              "x": 36,
+              "y": 30,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 41,
+              "y": 30,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "fish_rack",
+              "x": 36,
+              "y": 33,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 41,
+              "y": 33,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        }
+      ]
     },
     {
-     "id": "market",
-     "props": [
-      {
-       "asset": "grain_stall",
-       "x": 38,
-       "y": 35,
-       "w": 3,
-       "h": 3
-      },
-      {
-       "asset": "grain_stall",
-       "x": 46,
-       "y": 35,
-       "w": 3,
-       "h": 3
-      },
-      {
-       "asset": "wares_counter",
-       "x": 38,
-       "y": 40,
-       "w": 3,
-       "h": 2
-      },
-      {
-       "asset": "wares_counter",
-       "x": 42,
-       "y": 40,
-       "w": 3,
-       "h": 2
-      },
-      {
-       "asset": "wares_counter",
-       "x": 46,
-       "y": 40,
-       "w": 3,
-       "h": 2
-      }
-     ]
-    },
-    {
-     "id": "event-yard",
-     "props": [
-      {
-       "asset": "grain_stall",
-       "x": 53,
-       "y": 38,
-       "w": 3,
-       "h": 3
-      },
-      {
-       "asset": "grain_stall",
-       "x": 58,
-       "y": 38,
-       "w": 3,
-       "h": 3
-      },
-      {
-       "asset": "wares_counter",
-       "x": 53,
-       "y": 41,
-       "w": 3,
-       "h": 2
-      },
-      {
-       "asset": "wares_counter",
-       "x": 58,
-       "y": 41,
-       "w": 3,
-       "h": 2
-      }
-     ]
+      "mapId": "transit_crossroads",
+      "spaces": [
+        {
+          "id": "board",
+          "props": [
+            {
+              "asset": "board",
+              "x": 51,
+              "y": 35,
+              "w": 1,
+              "h": 1
+            }
+          ]
+        },
+        {
+          "id": "market",
+          "props": [
+            {
+              "asset": "cloth_stall",
+              "x": 38,
+              "y": 35,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 46,
+              "y": 35,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "spice_stall",
+              "x": 38,
+              "y": 40,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 42,
+              "y": 40,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "spice_stall",
+              "x": 46,
+              "y": 40,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        },
+        {
+          "id": "event-yard",
+          "props": [
+            {
+              "asset": "cloth_stall",
+              "x": 53,
+              "y": 38,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "grain_stall",
+              "x": 58,
+              "y": 38,
+              "w": 3,
+              "h": 3
+            },
+            {
+              "asset": "spice_stall",
+              "x": 53,
+              "y": 41,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "asset": "wares_counter",
+              "x": 58,
+              "y": 41,
+              "w": 3,
+              "h": 2
+            }
+          ]
+        }
+      ]
     }
-   ]
-  }
- ]
+  ]
 }

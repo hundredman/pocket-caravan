@@ -6,7 +6,7 @@
   "extensions": [
     {
       "source": "ArtReview/MarketCourts-E2-20261103/layout.json",
-      "status": "review"
+      "status": "approved"
     }
   ],
   "assets": [
@@ -49,6 +49,46 @@
       ],
       "source": "ArtReview/MarketCourts-20261030/Native/wares_counter.png",
       "rgbaSha256": "ba4bac3315126a404e3bad13a524dd24e4f6a530e11cd1840f05cc8443f2c0e3"
+    },
+    {
+      "id": "fish_rack",
+      "image": "Assets/PocketCaravan/Art/Goryeo/Markets/fish_rack.png",
+      "size": [
+        3,
+        2
+      ],
+      "source": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/fish_rack.png",
+      "rgbaSha256": "9442529d2223447365129e0611cfc89636ebe68d76cfd4bb9b363ab3ff1ac01c"
+    },
+    {
+      "id": "salt_stall",
+      "image": "Assets/PocketCaravan/Art/Goryeo/Markets/salt_stall.png",
+      "size": [
+        3,
+        3
+      ],
+      "source": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/salt_stall.png",
+      "rgbaSha256": "9fab65fd3bcdf4929c8caa45cbac4d5d7117c6c5f63a8b22bb4ea5459ae2efd4"
+    },
+    {
+      "id": "cloth_stall",
+      "image": "Assets/PocketCaravan/Art/Goryeo/Markets/cloth_stall.png",
+      "size": [
+        3,
+        3
+      ],
+      "source": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/cloth_stall.png",
+      "rgbaSha256": "633c458851c331bccd2bcfc7bf560387b983946cfffbec2be71bd4e77951c89b"
+    },
+    {
+      "id": "spice_stall",
+      "image": "Assets/PocketCaravan/Art/Goryeo/Markets/spice_stall.png",
+      "size": [
+        3,
+        2
+      ],
+      "source": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/spice_stall.png",
+      "rgbaSha256": "84629beca25189bd6b81b3bcb79cb680e7b4f77153712328b762df57d0de9969"
     }
   ],
   "maps": [
@@ -624,7 +664,7 @@
           "id": "market",
           "props": [
             {
-              "asset": "grain_stall",
+              "asset": "cloth_stall",
               "x": 38,
               "y": 35,
               "w": 3,
@@ -638,7 +678,7 @@
               "h": 3
             },
             {
-              "asset": "wares_counter",
+              "asset": "spice_stall",
               "x": 38,
               "y": 40,
               "w": 3,
@@ -652,7 +692,7 @@
               "h": 2
             },
             {
-              "asset": "wares_counter",
+              "asset": "spice_stall",
               "x": 46,
               "y": 40,
               "w": 3,
@@ -664,7 +704,7 @@
           "id": "event-yard",
           "props": [
             {
-              "asset": "grain_stall",
+              "asset": "cloth_stall",
               "x": 53,
               "y": 38,
               "w": 3,
@@ -678,7 +718,7 @@
               "h": 3
             },
             {
-              "asset": "wares_counter",
+              "asset": "spice_stall",
               "x": 53,
               "y": 41,
               "w": 3,
@@ -825,7 +865,7 @@
           "id": "market",
           "props": [
             {
-              "asset": "grain_stall",
+              "asset": "salt_stall",
               "x": 27,
               "y": 40,
               "w": 3,
@@ -839,7 +879,7 @@
               "h": 3
             },
             {
-              "asset": "wares_counter",
+              "asset": "fish_rack",
               "x": 27,
               "y": 45,
               "w": 3,
@@ -853,7 +893,7 @@
               "h": 2
             },
             {
-              "asset": "wares_counter",
+              "asset": "fish_rack",
               "x": 35,
               "y": 45,
               "w": 3,
@@ -865,7 +905,7 @@
           "id": "event-yard",
           "props": [
             {
-              "asset": "grain_stall",
+              "asset": "salt_stall",
               "x": 36,
               "y": 30,
               "w": 3,
@@ -879,7 +919,7 @@
               "h": 3
             },
             {
-              "asset": "wares_counter",
+              "asset": "fish_rack",
               "x": 36,
               "y": 33,
               "w": 3,

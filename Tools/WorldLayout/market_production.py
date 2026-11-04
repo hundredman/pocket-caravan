@@ -39,6 +39,18 @@ def promote():
  for path in EXTENSIONS:
   e=json.loads(path.read_text())
   if e['status'] not in('review','approved'):continue
+  if e.get('assets'):
+   approved=json.loads((ROOT/e['approval']).read_text())
+   digest=hashlib.sha256(json.dumps(e['maps'],sort_keys=True,separators=(',',':')).encode()).hexdigest()
+   if e['status']!='approved' or approved['status']!='approved' or approved['layoutSha256']!=digest or approved['assets']!=e['assets']:raise ValueError('Extension changed after approval')
+   if {m['mapId']for m in e['maps']}!=set(approved['maps']):raise ValueError('Extension map scope changed')
+   for a in e['assets']:
+    src=ROOT/a['source'];dest=ART/(a['id']+'.png')
+    if a['id'] in used or rgba(src)!=a['rgbaSha256']:raise ValueError('Unapproved/duplicate extension art: '+a['id'])
+    with Image.open(src)as im:
+     if im.size!=tuple(n*16 for n in a['size']):raise ValueError('Wrong extension native size')
+    shutil.copyfile(src,dest);used.add(a['id'])
+    assets.append(dict(id=a['id'],image=dest.relative_to(ROOT).as_posix(),size=a['size'],source=a['source'],rgbaSha256=rgba(dest)))
   ext.append(dict(source=path.relative_to(ROOT).as_posix(),status=e['status']))
   for em in e['maps']:
    if em['mapId']not in ALLOWED:raise ValueError('Unexpected region: '+em['mapId'])

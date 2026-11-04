@@ -1,9 +1,9 @@
 {
-  "status": "review",
+  "status": "approved",
   "date": "2026-11-03",
   "scope": "승인 전 검토 전용: 기존 좌판 자리/크기/통행을 유지하고 포구·길목 전용 그림을 섞는다.",
   "userInstruction": "일단 추가하고 이미지 검토한 뒤에 결정할게.",
-  "decision": "사용자 그림 승인 대기. 본편 MarketCourts-E2/MarketLayout은 유지.",
+  "decision": "사용자 그래. 승인 후 본편 연결",
   "maps": [
     {
       "mapId": "transit_southport",
@@ -206,7 +206,7 @@
       ]
     }
   ],
-  "source": "ArtReview/MarketCourts-E2-20261103/layout.json",
+  "source": "ArtReview/SpecialtyMarkets-Task5-20261104/before-layout.json",
   "assets": [
     {
       "id": "fish_rack",

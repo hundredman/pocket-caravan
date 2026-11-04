@@ -619,3 +619,7 @@ Woodtown/Ferry/Southport/Crossroads의 journeyNote4곳을 역할·귀환 거래 
 ## 2026-11-04 작업4: 큰 장 좌판
 
 사용자 승인 남색/청록 좌판48×48을 솔재 길목·버들나루 기존 좌판4개씩에 연결했다. market_production --fair-only가 승인 RGBA를 확인해 FairLayout/전체 PNG를 생성하고, GoryeoMarketLayout 원본에서 GoryeoFairDressing을 두 마을에만 연결한다. 공용 CentralFair 일정·2할 보너스를 읽기만 하며 새 마을 순환 추가는 하지 않았다. MapJsonBuilder.BuildSelected로 두 transit 씬 재생성. 같은 씬 날짜 변경에 따른 원본 복원/큰 장 재표시, 비활성/재활성 복원, 좌판 주변 통행 등 자동 Play291확인, 실제6캡처·저장9파일 불변. Docs/Validation/CentralFair-Production-Task4-2026-11-04 참조.
+
+## 2026-11-04 작업5: 새 장터 전용 좌판
+
+사용자 승인 생선 덕장/소금 좌판/피륙·양모 좌판/향신료 판매대를 남동 포구·내륙 교역 길목 장터와 마당 기존10개 자리에 연결했다. 좌표/캔버스/통행 범위는 그대로이며 기존 곡물/잡화 좌판도 남아 있다. MarketCourts-E2/layout.json 승인 원본·RGBA/배치 해시에서 market_production으로 재현하고 BuildSelected로 두 transit 씬만 재생성했다. 실제 본편 Play29확인·4캡처, 출구/기능 연결 정적 검사·Python358 두 환경/Unity8종 통과·저장9파일 불변. DB/기능ID/저장 형식/다른 맵·공용 큰 장 순환은 변경하지 않았다. Docs/Validation/SpecialtyMarkets-Production-Task5-2026-11-04 참조.

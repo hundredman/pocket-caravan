@@ -5,7 +5,7 @@ from PIL import Image,ImageDraw,ImageFont
 ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'ArtReview/SpecialtyMarkets-Task5-20261104'
 def main():
  data=json.loads((OUT/'layout.json').read_text());old=json.loads((ROOT/data['source']).read_text());checks=[]
- assert data['status']=='review';assert len(data['maps'])==len(old['maps'])==2
+ assert data['status']in('review','approved');assert len(data['maps'])==len(old['maps'])==2
  for a,b in zip(data['maps'],old['maps']):
   assert a['mapId']==b['mapId'];assert len(a['spaces'])==len(b['spaces'])
   for sa,sb in zip(a['spaces'],b['spaces']):

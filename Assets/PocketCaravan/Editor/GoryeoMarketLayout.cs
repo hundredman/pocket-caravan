@@ -78,15 +78,10 @@ namespace PocketCaravan.EditorTools
             dressing.spaces = groups.ToArray();
             if(fairMap){if(fairStalls.Count!=4)throw new InvalidDataException("Expected four reviewed fair stalls");root.gameObject.AddComponent<GoryeoFairDressing>().stalls=fairStalls.ToArray();}
         }
-        [MenuItem("Pocket Caravan/Art/승인 장터 본편 씬 생성")]
-        public static void Rebuild()
+        public static void ImportMarketArt()
         {
-            if (EditorApplication.isPlaying) throw new InvalidOperationException("Stop Play first");
-            for (int i=0; i<UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
-                if (UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).isDirty) throw new InvalidOperationException("Unsaved scene");
-            var data = Read(); var setup = EditorSceneManager.GetSceneManagerSetup();
             AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
-            foreach (var art in data.assets)
+            foreach (var art in Read().assets)
             {
                 var im = AssetImporter.GetAtPath(art.image) as TextureImporter;
                 if (im == null) throw new InvalidDataException(art.image);
@@ -95,6 +90,15 @@ namespace PocketCaravan.EditorTools
                 settings.spritePivot=Vector2.zero; settings.spriteAlignment=(int)SpriteAlignment.Custom; im.SetTextureSettings(settings);
                 im.filterMode=FilterMode.Point; im.mipmapEnabled=false; im.textureCompression=TextureImporterCompression.Uncompressed; im.SaveAndReimport();
             }
+        }
+        [MenuItem("Pocket Caravan/Art/승인 장터 본편 씬 생성")]
+        public static void Rebuild()
+        {
+            if (EditorApplication.isPlaying) throw new InvalidOperationException("Stop Play first");
+            for (int i=0; i<UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
+                if (UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).isDirty) throw new InvalidOperationException("Unsaved scene");
+            var data = Read(); var setup = EditorSceneManager.GetSceneManagerSetup();
+            ImportMarketArt();
             var registry=WorldRegistry.Load();
             try { foreach (var map in data.maps)
             {

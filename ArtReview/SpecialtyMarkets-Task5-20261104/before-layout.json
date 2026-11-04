@@ -1,0 +1,189 @@
+{
+ "status": "review",
+ "date": "2026-11-03",
+ "scope": "E2 새 장터(남동 포구·내륙 교역 길목)에 이미 승인된 게시판·곡물 좌판·잡화 판매대를 놓는다. 새 그림 없음. 짜임은 솔재 길목 마을과 같다(장터 광장 좌판 2 + 판매대 3, 이벤트 마당 좌판 2 + 판매대 2, 게시판 1).",
+ "userInstruction": "일단 추가하고 이미지 검토한 뒤에 결정할게.",
+ "decision": "은샘 그림 검토 대기. 거절되면 이 파일과 market_production.py의 EXTENSIONS 줄을 되돌린다.",
+ "maps": [
+  {
+   "mapId": "transit_southport",
+   "spaces": [
+    {
+     "id": "board",
+     "props": [
+      {
+       "asset": "board",
+       "x": 34,
+       "y": 38,
+       "w": 1,
+       "h": 1
+      }
+     ]
+    },
+    {
+     "id": "market",
+     "props": [
+      {
+       "asset": "grain_stall",
+       "x": 27,
+       "y": 40,
+       "w": 3,
+       "h": 3
+      },
+      {
+       "asset": "grain_stall",
+       "x": 35,
+       "y": 40,
+       "w": 3,
+       "h": 3
+      },
+      {
+       "asset": "wares_counter",
+       "x": 27,
+       "y": 45,
+       "w": 3,
+       "h": 2
+      },
+      {
+       "asset": "wares_counter",
+       "x": 31,
+       "y": 45,
+       "w": 3,
+       "h": 2
+      },
+      {
+       "asset": "wares_counter",
+       "x": 35,
+       "y": 45,
+       "w": 3,
+       "h": 2
+      }
+     ]
+    },
+    {
+     "id": "event-yard",
+     "props": [
+      {
+       "asset": "grain_stall",
+       "x": 36,
+       "y": 30,
+       "w": 3,
+       "h": 3
+      },
+      {
+       "asset": "grain_stall",
+       "x": 41,
+       "y": 30,
+       "w": 3,
+       "h": 3
+      },
+      {
+       "asset": "wares_counter",
+       "x": 36,
+       "y": 33,
+       "w": 3,
+       "h": 2
+      },
+      {
+       "asset": "wares_counter",
+       "x": 41,
+       "y": 33,
+       "w": 3,
+       "h": 2
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "mapId": "transit_crossroads",
+   "spaces": [
+    {
+     "id": "board",
+     "props": [
+      {
+       "asset": "board",
+       "x": 51,
+       "y": 35,
+       "w": 1,
+       "h": 1
+      }
+     ]
+    },
+    {
+     "id": "market",
+     "props": [
+      {
+       "asset": "grain_stall",
+       "x": 38,
+       "y": 35,
+       "w": 3,
+       "h": 3
+      },
+      {
+       "asset": "grain_stall",
+       "x": 46,
+       "y": 35,
+       "w": 3,
+       "h": 3
+      },
+      {
+       "asset": "wares_counter",
+       "x": 38,
+       "y": 40,
+       "w": 3,
+       "h": 2
+      },
+      {
+       "asset": "wares_counter",
+       "x": 42,
+       "y": 40,
+       "w": 3,
+       "h": 2
+      },
+      {
+       "asset": "wares_counter",
+       "x": 46,
+       "y": 40,
+       "w": 3,
+       "h": 2
+      }
+     ]
+    },
+    {
+     "id": "event-yard",
+     "props": [
+      {
+       "asset": "grain_stall",
+       "x": 53,
+       "y": 38,
+       "w": 3,
+       "h": 3
+      },
+      {
+       "asset": "grain_stall",
+       "x": 58,
+       "y": 38,
+       "w": 3,
+       "h": 3
+      },
+      {
+       "asset": "wares_counter",
+       "x": 53,
+       "y": 41,
+       "w": 3,
+       "h": 2
+      },
+      {
+       "asset": "wares_counter",
+       "x": 58,
+       "y": 41,
+       "w": 3,
+       "h": 2
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
