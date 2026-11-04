@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "status": "approved",
+  "reviewSource": "ArtReview/CentralFair-Task4-20261104/approval.json",
+  "mapIds": [
+    "transit_woodtown",
+    "transit_ferry"
+  ],
+  "target": "grain_stall",
+  "assets": [
+    {
+      "id": "fair_indigo",
+      "image": "Assets/PocketCaravan/Art/Goryeo/Markets/fair_indigo.png",
+      "size": [
+        3,
+        3
+      ],
+      "rgbaSha256": "5c4ca16fba5f6d07c8dcef52af2c129b638f3972c867ac7001059ff040e09c77"
+    },
+    {
+      "id": "fair_teal",
+      "image": "Assets/PocketCaravan/Art/Goryeo/Markets/fair_teal.png",
+      "size": [
+        3,
+        3
+      ],
+      "rgbaSha256": "dce44a2ace27d3ccb15737205669c16aef9d73bada366de5f7b4c24abb90abb1"
+    }
+  ]
+}

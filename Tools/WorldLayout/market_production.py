@@ -53,4 +53,28 @@ def promote():
  result=dict(schemaVersion=1,status='approved',approval='User 2026-11-02: integrate the reviewed market assets into production.',reviewSource=SOURCE.relative_to(ROOT).as_posix(),extensions=ext,assets=assets,maps=maps)
  LAYOUT.parent.mkdir(parents=True,exist_ok=True);LAYOUT.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
  print(f"Production market source: {len(maps)} maps, {len(assets)} whole images, {sum(len(s['props'])for m in maps for s in m['spaces'])} placements")
-if __name__=='__main__':promote()
+def promote_fair():
+ source=ROOT/'ArtReview/CentralFair-Task4-20261104'
+ approval=json.loads((source/'approval.json').read_text())
+ if approval['status']!='approved' or approval['mapIds']!=['transit_woodtown','transit_ferry'] or approval['target']!='grain_stall':raise ValueError('Unapproved fair scope')
+ assets=[]
+ for row in approval['variants']:
+  name=row['asset']
+  if name not in ('fair_indigo','fair_teal'):raise ValueError('Unknown fair art')
+  src=source/'Native'/(name+'.png');dest=ART/(name+'.png')
+  with Image.open(src)as im:
+   if im.size!=(48,48):raise ValueError('Fair size changed')
+  if rgba(src)!=row['rgbaSha256']:raise ValueError('Approved fair pixels changed')
+  ART.mkdir(parents=True,exist_ok=True);shutil.copyfile(src,dest)
+  assets.append(dict(id=name,image=dest.relative_to(ROOT).as_posix(),size=[3,3],rgbaSha256=rgba(dest)))
+ if len(assets)!=2:raise ValueError('Expected two variants')
+ layout=dict(schemaVersion=1,status='approved',reviewSource=(source/'approval.json').relative_to(ROOT).as_posix(),mapIds=approval['mapIds'],target=approval['target'],assets=assets)
+ (LAYOUT.parent/'FairLayout.json').write_text(json.dumps(layout,ensure_ascii=False,indent=2)+'\n')
+ print('Approved fair art: two maps, two whole 48x48 variants; footprints unchanged')
+if __name__=='__main__':
+ import argparse
+ parser=argparse.ArgumentParser();parser.add_argument('--fair-only',action='store_true');args=parser.parse_args()
+ if args.fair_only:promote_fair()
+ else:
+  promote()
+  if (ROOT/'ArtReview/CentralFair-Task4-20261104/approval.json').exists():promote_fair()

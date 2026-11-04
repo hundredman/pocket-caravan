@@ -615,3 +615,7 @@ Woodtown/Ferry/Southport/Crossroads의 journeyNote4곳을 역할·귀환 거래 
 ## 2026-11-04 작업3: 고려 한지 공방
 
 사용자 승인으로 닥목 기존 한지 작업장 앞(37,53)에 비충돌 접수를 연결했다. 기존 paper1개,6시간,하루2회,현재 닥목 매입가+5(최소18), 재료는 공방 제공. 동일 판매 조건에서 직접 매입보다 비용이 최소5냥 높다. 공용 Crafting에는 고려 레시피만 추가하고 고려 진입점에서 새 날짜 횟수 초기화/현재 주문비를 처리한다. 기존 메모 저장 형식을 유지했다. goryeo_life 배치 원본에서 workshop만 추가하고 Dakmok 씬 재생성. 본편 주문/수령·재진입·v2 저장 복원 등 Play33확인, 저장9파일 보존·정적356 두 환경/Unity 지정8종 통과. Docs/Validation/Workshop-Production-Task3-2026-11-04 참조.
+
+## 2026-11-04 작업4: 큰 장 좌판
+
+사용자 승인 남색/청록 좌판48×48을 솔재 길목·버들나루 기존 좌판4개씩에 연결했다. market_production --fair-only가 승인 RGBA를 확인해 FairLayout/전체 PNG를 생성하고, GoryeoMarketLayout 원본에서 GoryeoFairDressing을 두 마을에만 연결한다. 공용 CentralFair 일정·2할 보너스를 읽기만 하며 새 마을 순환 추가는 하지 않았다. MapJsonBuilder.BuildSelected로 두 transit 씬 재생성. 같은 씬 날짜 변경에 따른 원본 복원/큰 장 재표시, 비활성/재활성 복원, 좌판 주변 통행 등 자동 Play291확인, 실제6캡처·저장9파일 불변. Docs/Validation/CentralFair-Production-Task4-2026-11-04 참조.
