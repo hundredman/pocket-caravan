@@ -1,7 +1,7 @@
 {
   "date": "2026-11-04",
   "task": 1,
-  "status": "pending_user_approval",
+  "status": "approved",
   "source": "Assets/PocketCaravan/Scripts/UI/Social.cs",
   "sourceSHA256": "962f95ac7b30e86650ada777e50c1e19c8536430d0b67e9b14c7c7879231b394",
   "original": [
@@ -174,5 +174,7 @@
     "transit_southport"
   ],
   "saveKeysPreserved": true,
-  "codeApplied": false
+  "codeApplied": true,
+  "approvedDate": "2026-11-04",
+  "userReply": "그래."
 }
