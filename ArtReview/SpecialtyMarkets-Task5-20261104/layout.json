@@ -1,0 +1,236 @@
+{
+  "status": "review",
+  "date": "2026-11-03",
+  "scope": "승인 전 검토 전용: 기존 좌판 자리/크기/통행을 유지하고 포구·길목 전용 그림을 섞는다.",
+  "userInstruction": "일단 추가하고 이미지 검토한 뒤에 결정할게.",
+  "decision": "사용자 그림 승인 대기. 본편 MarketCourts-E2/MarketLayout은 유지.",
+  "maps": [
+    {
+      "mapId": "transit_southport",
+      "spaces": [
+        {
+          "id": "board",
+          "props": [
+            {
+              "asset": "board",
+              "x": 34,
+              "y": 38,
+              "w": 1,
+              "h": 1,
+              "oldAsset": "board"
+            }
+          ]
+        },
+        {
+          "id": "market",
+          "props": [
+            {
+              "asset": "salt_stall",
+              "x": 27,
+              "y": 40,
+              "w": 3,
+              "h": 3,
+              "oldAsset": "grain_stall"
+            },
+            {
+              "asset": "grain_stall",
+              "x": 35,
+              "y": 40,
+              "w": 3,
+              "h": 3,
+              "oldAsset": "grain_stall"
+            },
+            {
+              "asset": "fish_rack",
+              "x": 27,
+              "y": 45,
+              "w": 3,
+              "h": 2,
+              "oldAsset": "wares_counter"
+            },
+            {
+              "asset": "wares_counter",
+              "x": 31,
+              "y": 45,
+              "w": 3,
+              "h": 2,
+              "oldAsset": "wares_counter"
+            },
+            {
+              "asset": "fish_rack",
+              "x": 35,
+              "y": 45,
+              "w": 3,
+              "h": 2,
+              "oldAsset": "wares_counter"
+            }
+          ]
+        },
+        {
+          "id": "event-yard",
+          "props": [
+            {
+              "asset": "salt_stall",
+              "x": 36,
+              "y": 30,
+              "w": 3,
+              "h": 3,
+              "oldAsset": "grain_stall"
+            },
+            {
+              "asset": "grain_stall",
+              "x": 41,
+              "y": 30,
+              "w": 3,
+              "h": 3,
+              "oldAsset": "grain_stall"
+            },
+            {
+              "asset": "fish_rack",
+              "x": 36,
+              "y": 33,
+              "w": 3,
+              "h": 2,
+              "oldAsset": "wares_counter"
+            },
+            {
+              "asset": "wares_counter",
+              "x": 41,
+              "y": 33,
+              "w": 3,
+              "h": 2,
+              "oldAsset": "wares_counter"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mapId": "transit_crossroads",
+      "spaces": [
+        {
+          "id": "board",
+          "props": [
+            {
+              "asset": "board",
+              "x": 51,
+              "y": 35,
+              "w": 1,
+              "h": 1,
+              "oldAsset": "board"
+            }
+          ]
+        },
+        {
+          "id": "market",
+          "props": [
+            {
+              "asset": "cloth_stall",
+              "x": 38,
+              "y": 35,
+              "w": 3,
+              "h": 3,
+              "oldAsset": "grain_stall"
+            },
+            {
+              "asset": "grain_stall",
+              "x": 46,
+              "y": 35,
+              "w": 3,
+              "h": 3,
+              "oldAsset": "grain_stall"
+            },
+            {
+              "asset": "spice_stall",
+              "x": 38,
+              "y": 40,
+              "w": 3,
+              "h": 2,
+              "oldAsset": "wares_counter"
+            },
+            {
+              "asset": "wares_counter",
+              "x": 42,
+              "y": 40,
+              "w": 3,
+              "h": 2,
+              "oldAsset": "wares_counter"
+            },
+            {
+              "asset": "spice_stall",
+              "x": 46,
+              "y": 40,
+              "w": 3,
+              "h": 2,
+              "oldAsset": "wares_counter"
+            }
+          ]
+        },
+        {
+          "id": "event-yard",
+          "props": [
+            {
+              "asset": "cloth_stall",
+              "x": 53,
+              "y": 38,
+              "w": 3,
+              "h": 3,
+              "oldAsset": "grain_stall"
+            },
+            {
+              "asset": "grain_stall",
+              "x": 58,
+              "y": 38,
+              "w": 3,
+              "h": 3,
+              "oldAsset": "grain_stall"
+            },
+            {
+              "asset": "spice_stall",
+              "x": 53,
+              "y": 41,
+              "w": 3,
+              "h": 2,
+              "oldAsset": "wares_counter"
+            },
+            {
+              "asset": "wares_counter",
+              "x": 58,
+              "y": 41,
+              "w": 3,
+              "h": 2,
+              "oldAsset": "wares_counter"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": "ArtReview/MarketCourts-E2-20261103/layout.json",
+  "assets": [
+    {
+      "id": "fish_rack",
+      "w": 3,
+      "h": 2,
+      "image": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/fish_rack.png"
+    },
+    {
+      "id": "salt_stall",
+      "w": 3,
+      "h": 3,
+      "image": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/salt_stall.png"
+    },
+    {
+      "id": "cloth_stall",
+      "w": 3,
+      "h": 3,
+      "image": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/cloth_stall.png"
+    },
+    {
+      "id": "spice_stall",
+      "w": 3,
+      "h": 2,
+      "image": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/spice_stall.png"
+    }
+  ]
+}

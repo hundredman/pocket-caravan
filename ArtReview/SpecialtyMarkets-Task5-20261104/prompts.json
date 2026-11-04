@@ -1,0 +1,25 @@
+{
+  "tool": "built-in image_gen",
+  "prompts": [
+    {
+      "name": "fish_rack",
+      "ref": "wares_counter",
+      "prompt": "Use case: stylized-concept. Asset for a cute historical Goryeo trading RPG. Match the provided approved market props: slightly overhead front-facing orthographic view, dark brown pixel outline, golden wood, cream cloth, flat 2-3 shade clusters, restrained teal accents, clean large shapes and readable goods. Genuine transparent background, single complete isolated object with margin, no ground, no people, no text, no perspective vanishing point, no gradients or blur. Create a wide low wooden fish-drying rack, no canopy. Two simple horizontal wood rails on sturdy short posts, several recognizable silvery fish with tapered tails hanging in a neat spaced row, subtle rope ties. A compact port market drying stand. Wide 3:2 silhouette, final native target 48x32 pixels. Fish must read clearly after reduction, avoid tiny scales or busy texture. Same width and overall low height as reference counter, full object."
+    },
+    {
+      "name": "salt_stall",
+      "ref": "grain_stall",
+      "prompt": "Use case: stylized-concept. Asset for a cute historical Goryeo trading RPG. Match the provided approved market props: slightly overhead front-facing orthographic view, dark brown pixel outline, golden wood, cream cloth, flat 2-3 shade clusters, restrained teal accents, clean large shapes and readable goods. Genuine transparent background, single complete isolated object with margin, no ground, no people, no text, no perspective vanishing point, no gradients or blur. Create a salt merchant canopy stall matching the reference stall's square proportions and wooden frame. Cream canvas awning with narrow faded teal edge. On the counter a few broad open beige sacks of clearly white salt crystals/heaps and a simple wooden scoop; one tied white salt sack below. No food baskets or vegetables. Three chunky salt piles rather than many tiny grains. Compact 3x3 tile footprint, final native target48x48 pixels."
+    },
+    {
+      "name": "cloth_stall",
+      "ref": "grain_stall",
+      "prompt": "Use case: stylized-concept. Asset for a cute historical Goryeo trading RPG. Match the provided approved market props: slightly overhead front-facing orthographic view, dark brown pixel outline, golden wood, cream cloth, flat 2-3 shade clusters, restrained teal accents, clean large shapes and readable goods. Genuine transparent background, single complete isolated object with margin, no ground, no people, no text, no perspective vanishing point, no gradients or blur. Create a cloth and wool merchant canopy stall matching reference's square proportions and wooden frame. Cream canvas awning with restrained indigo edge. On counter three neatly folded bolts of cloth in muted indigo, ochre and teal, and a large soft ivory wool bundle; below counter two rolled cloth bolts. Clearly fabric and wool, no jars, no text. Compact 3x3 tile silhouette final native48x48 pixels. Simple broad shapes and limited detail."
+    },
+    {
+      "name": "spice_stall",
+      "ref": "wares_counter",
+      "prompt": "Use case: stylized-concept. Asset for a cute historical Goryeo trading RPG. Match the provided approved market props: slightly overhead front-facing orthographic view, dark brown pixel outline, golden wood, cream cloth, flat 2-3 shade clusters, restrained teal accents, clean large shapes and readable goods. Genuine transparent background, single complete isolated object with margin, no ground, no people, no text, no perspective vanishing point, no gradients or blur. Create a wide low spice merchant wooden counter with NO canopy, matching reference low rectangular proportions. Three open beige cloth sacks with broad rust-red, golden ochre and earthy green spice heaps, and one small wooden scoop lying beside them. One simple tied supply sack at one end, sturdy wood legs and apron below. Distinct large spice mounds, no tiny individual grains, no labels or jars. Wide3:2 silhouette final native48x32 pixels."
+    }
+  ]
+}
