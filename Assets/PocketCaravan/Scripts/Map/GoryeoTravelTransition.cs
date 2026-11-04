@@ -47,10 +47,12 @@ namespace PocketCaravan
             destination = crossing ? RegionOf(toMap) : null;
         }
 
-        public override float CoverSeconds => crossing ? 0.22f : 0.10f;
-        public override float RevealSeconds => crossing ? 0.28f : 0.14f;
-        public override float MinHoldSeconds => crossing ? 0.65f : 0f;
-        public override float AfterLoadSeconds => crossing ? 0.25f : 0f;
+        // 2026-11-04(기우 요청·은샘 지시): 고려·중앙 동쪽 맵은 땅이 이어져 있어 출구가 아니라 걸어서 넘어간다.
+        // 그래서 맵을 넘을 때 검은 화면을 띄우지 않는다(맵 이동처럼 보이지 않게). 지역이 바뀔 때만 이름 알림을 띄운다.
+        public override float CoverSeconds => 0f;
+        public override float RevealSeconds => 0f;
+        public override float MinHoldSeconds => 0f;
+        public override float AfterLoadSeconds => 0f;
         public override bool ShowArrivalNotice => crossing;
 
         public override void Draw(float cover, bool covering, string nextName, float heldFor)
