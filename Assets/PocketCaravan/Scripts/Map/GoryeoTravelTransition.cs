@@ -17,7 +17,6 @@ namespace PocketCaravan
         {
             if (registered) return;
             RegisterRoute((from, to) => RegionOf(from) != null && RegionOf(to) != null, new GoryeoTravelTransition());
-            GameEvents.MapEntered += Announce;
             registered = true;
         }
 
@@ -51,6 +50,8 @@ namespace PocketCaravan
             pendingRegion = destination;
             pendingTown = crossing || IsTown(toMap);
             pendingMap = toMap;
+            // GameEvents는 Play 시작·새 게임 때 구독을 모두 지우므로 이동할 때마다 다시 건다(중복 없이).
+            GameEvents.MapEntered -= Announce; GameEvents.MapEntered += Announce;
         }
 
         static string pendingRegion, pendingMap;
