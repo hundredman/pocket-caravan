@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "item16": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true
+    }
+  },
+  "assets": [
+    {
+      "id": "goryeo_item_grain",
+      "purpose": "inventory icon: grain",
+      "kind": "object",
+      "size": [
+        1,
+        1
+      ],
+      "image": "Assets/PocketCaravan/Art/Goryeo/Items/grain.png",
+      "profile": "item16",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/ItemIcons-v3-20261104/Native/grain.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/ItemIcons-v3-20261104/approval.json"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_item_grain",
+          "image": "Assets/PocketCaravan/Art/Goryeo/Items/grain.png"
+        }
+      ]
+    },
+    {
+      "id": "goryeo_item_transit_spice",
+      "purpose": "inventory icon: transit_spice",
+      "kind": "object",
+      "size": [
+        1,
+        1
+      ],
+      "image": "Assets/PocketCaravan/Art/Goryeo/Items/transit_spice.png",
+      "profile": "item16",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/ItemIcons-v3-20261104/Native/transit_spice.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/ItemIcons-v3-20261104/approval.json"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_item_transit_spice",
+          "image": "Assets/PocketCaravan/Art/Goryeo/Items/transit_spice.png"
+        }
+      ]
+    },
+    {
+      "id": "goryeo_item_transit_wool",
+      "purpose": "inventory icon: transit_wool",
+      "kind": "object",
+      "size": [
+        1,
+        1
+      ],
+      "image": "Assets/PocketCaravan/Art/Goryeo/Items/transit_wool.png",
+      "profile": "item16",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/WoolWidth-v4-20261104/Native/transit_wool.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/WoolWidth-v4-20261104/approval.json"
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_item_transit_wool",
+          "image": "Assets/PocketCaravan/Art/Goryeo/Items/transit_wool.png"
+        }
+      ]
+    }
+  ]
+}

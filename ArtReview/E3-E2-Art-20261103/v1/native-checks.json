@@ -1,0 +1,64 @@
+{
+  "status": "pending user approval",
+  "assets": [
+    {
+      "id": "fallen_log",
+      "size": [
+        48,
+        48
+      ],
+      "colors": 7,
+      "binaryAlpha": true,
+      "asepriteRGBAEqual": true,
+      "rgba": "a8451b7c3c96064b01d42e265f28cdd48f071d0bbe91605ff8e7cdc629d06bfb"
+    },
+    {
+      "id": "river_flood_high",
+      "size": [
+        80,
+        48
+      ],
+      "colors": 3,
+      "binaryAlpha": true,
+      "asepriteRGBAEqual": true,
+      "rgba": "b754c60aab0348226b03ad7df226ffd0ab1d1f8ac4d4ee317568401c33254b32"
+    },
+    {
+      "id": "river_flood_low",
+      "size": [
+        80,
+        48
+      ],
+      "colors": 3,
+      "binaryAlpha": true,
+      "asepriteRGBAEqual": true,
+      "rgba": "627c1c7027950c91ca4cbe9d12c69b3c36480efd2f8a7b5adace9d03f665b5a9"
+    },
+    {
+      "id": "transit_spice",
+      "size": [
+        16,
+        16
+      ],
+      "colors": 5,
+      "binaryAlpha": true,
+      "asepriteRGBAEqual": true,
+      "rgba": "71d60fc1b86f967869f7b54e695c5fccafaff7010cf93f063caea8c2cb0436f1"
+    },
+    {
+      "id": "transit_wool",
+      "size": [
+        16,
+        16
+      ],
+      "colors": 6,
+      "binaryAlpha": true,
+      "asepriteRGBAEqual": true,
+      "rgba": "1c3c9961d20731b2883af1b34490518dae5d2036776e19bf37f93e5bd916ef34"
+    }
+  ],
+  "a2Errors": [],
+  "a2PlacementsChecked": false,
+  "floodEastPortMatchesRiver": true,
+  "recededMaskSubset": true
+}

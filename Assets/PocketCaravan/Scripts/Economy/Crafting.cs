@@ -12,7 +12,7 @@ namespace PocketCaravan
     /// [지역 담당이 공방 더하는 법]
     /// 1) 아래 Recipes에 한 줄 (id는 "지역_이름", 재료·결과 물건 id는 GameDatabase에 있는 것)
     /// 2) 맵에 공방 자리: 공방 일꾼(talker 등)에 WorkshopSpot을 붙이거나, 지역 코드에서 Crafting.Open("id")를 부른다
-    /// 고려·아라비아는 아직 공방이 없다 (가공품 물건·그림부터 정해야 함 — 지역 담당).
+    /// 고려 한지 공방은 현지 매입가에 작업삯을 더해 주문받는다. 아라비아 공방은 아직 없다.
     ///
     /// 저장: 공용 메모 "craft:id:n|t|c|day|cnt". 통합 전 북유럽 저장(north:craft:키:*)도 이어서 읽는다.
     /// </summary>
@@ -48,7 +48,10 @@ namespace PocketCaravan
             new Recipe { id = "venice_lace", shop = "부라노 레이스 공방", worker = "레이스 뜨는 할머니", product = "venice_lace", productName = "레이스 손수건",
                 fee = 25, hours = 0f, maxBatch = 1, dailyMax = 2,
                 hello = "한 장 뜨는 데 손이 많이 가. 가벼워서 짐 걱정 없이 멀리 팔 수 있지." },
-            // ---------- 고려 (은샘) — 아직 없음 ----------
+            // ---------- 고려 (은샘 · 2026-11-04 승인) ----------
+            new Recipe { id = "goryeo_hanji", shop = "닥목 한지 공방", worker = "한지 장인", product = "paper", productName = "종이",
+                fee = 18, hours = 6f, maxBatch = 1, dailyMax = 2,
+                hello = "재료는 공방에서 마련합니다. 삯을 맡기면 종이 한 묶음을 떠서 말려 드리지요." },
             // ---------- 아라비아 (은인) — 아직 없음 ----------
         };
 

@@ -30,6 +30,10 @@ namespace PocketCaravan
             if (map != null)
             {
                 var bounds = map.WorldBounds;
+                // 2026-11-04(고려·중앙 동쪽): 이웃 맵 그림(CameraBackdrop)이 깔린 맵은 그 범위까지 카메라를 허용한다.
+                // 땅이 이어진 맵 경계를 걸어서 넘을 때 카메라가 맵 끝에 걸렸다가 튀지 않게 한다. 배경이 없는 다른 지역은 그대로.
+                var backdrop = BackdropOf(map);
+                if (backdrop != null) bounds.Encapsulate(backdrop.Value);
                 float halfHeight = cam.orthographicSize;
                 float halfWidth = halfHeight * cam.aspect;
                 position.x = bounds.size.x > 2 * halfWidth
@@ -41,6 +45,25 @@ namespace PocketCaravan
             }
             position.z = -10f;
             return position;
+        }
+
+        MapRoot backdropMap; Bounds? backdropBounds;
+        Bounds? BackdropOf(MapRoot map)
+        {
+            if (backdropMap == map) return backdropBounds;
+            backdropMap = map; backdropBounds = null;
+            foreach (var layer in map.GetComponentsInChildren<UnityEngine.Tilemaps.Tilemap>())
+            {
+                if (layer.name != "CameraBackdrop") continue;
+                layer.CompressBounds();
+                var b = layer.cellBounds;
+                if (b.size.x <= 0 || b.size.y <= 0) break;
+                var bounds = new Bounds();
+                bounds.SetMinMax(layer.CellToWorld(b.min), layer.CellToWorld(b.max));
+                backdropBounds = bounds;
+                break;
+            }
+            return backdropBounds;
         }
 
         public void SnapNow() { snap = true; LateUpdate(); }

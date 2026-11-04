@@ -1,0 +1,39 @@
+[
+  {
+    "unchangedAllPositions": true,
+    "unchangedAllFootprints": true,
+    "productionApplied": false
+  },
+  {
+    "asset": "fish_rack",
+    "size": [
+      48,
+      32
+    ],
+    "rgbaSha256": "9442529d2223447365129e0611cfc89636ebe68d76cfd4bb9b363ab3ff1ac01c"
+  },
+  {
+    "asset": "salt_stall",
+    "size": [
+      48,
+      48
+    ],
+    "rgbaSha256": "9fab65fd3bcdf4929c8caa45cbac4d5d7117c6c5f63a8b22bb4ea5459ae2efd4"
+  },
+  {
+    "asset": "cloth_stall",
+    "size": [
+      48,
+      48
+    ],
+    "rgbaSha256": "633c458851c331bccd2bcfc7bf560387b983946cfffbec2be71bd4e77951c89b"
+  },
+  {
+    "asset": "spice_stall",
+    "size": [
+      48,
+      32
+    ],
+    "rgbaSha256": "84629beca25189bd6b81b3bcb79cb680e7b4f77153712328b762df57d0de9969"
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "status": "approved",
+  "date": "2026-11-03",
+  "userReply": "그래 이런 느낌이 맞아. 좋아.",
+  "sourceCommit": "ccfbf0c65",
+  "evidence": "ArtReview/E3-FloodTerrain-20261103/unity-comparison.png",
+  "scope": "북동 길 평상시/범람 지형과 길 차단·복원 방향",
+  "productionApplied": true,
+  "productionMap": "transit_wetroad"
+}

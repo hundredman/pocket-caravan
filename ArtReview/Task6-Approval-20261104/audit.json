@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-04",
+  "status": "pending user approval",
+  "assets": [
+    {
+      "id": "fallen_log",
+      "source": "ArtReview/E3-E2-Art-20261103/Native/fallen_log.png",
+      "status": "pending user visual approval"
+    },
+    {
+      "id": "transit_spice",
+      "source": "ArtReview/E3-E2-Art-20261103/Native/transit_spice.png",
+      "status": "approved v3 applied"
+    },
+    {
+      "id": "transit_wool",
+      "source": "ArtReview/WoolWidth-v4-20261104/Native/transit_wool.png",
+      "status": "approved v4 applied and validated"
+    }
+  ],
+  "ports": {
+    "source": "ArtReview/E3-E2-Art-20261103/review-ports.png",
+    "captureDate": "2026-11-03",
+    "status": "pending user visual approval"
+  },
+  "excluded": [
+    "river_flood_high",
+    "river_flood_low"
+  ],
+  "productionChanged": false,
+  "latestIconReview": "ArtReview/WoolWidth-v4-20261104/README.md",
+  "note": "v3 곡식/향신료 및 폭 조정 양모 v4 사용자 승인·본편 적용/검사 완료. 통나무/포구는 별도 대기.",
+  "grainReview": "ArtReview/ItemIcons-v3-20261104/Native/grain.png"
+}

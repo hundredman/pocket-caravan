@@ -54,7 +54,7 @@ class Registration(unittest.TestCase):
     def test_old_ids_kept(self):
         towns={o['town'] for mid in MAPS for o in load(mid)['objects'] if o['kind']=='market'}
         npcs={o['npc'] for mid in MAPS for o in load(mid)['objects'] if o['kind']=='npc'}
-        self.assertEqual(towns,{'naru','goryeo_jangdan','goryeo_songak','dakmok','gaegyeong','transit_woodtown','transit_ferry'})
+        self.assertEqual(towns,{'naru','goryeo_jangdan','goryeo_songak','dakmok','gaegyeong','transit_woodtown','transit_ferry','transit_southport','transit_crossroads'})   # 11/03 E2 새 마을 장터
         self.assertEqual(npcs,{'naru_chief','naru_well_woman','gaekju','dakmok_chief','goryeo_songak_merchant','goryeo_jangdan_farmer'})
 
 class WaterLife(unittest.TestCase):

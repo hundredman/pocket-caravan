@@ -1,0 +1,359 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "native16": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "binaryAlpha": true,
+      "palette": [
+        "#2e221b",
+        "#4c3121",
+        "#6b472b",
+        "#916139",
+        "#d3a369",
+        "#ecc78f",
+        "#f8dead"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "e3_log_horizontal",
+      "purpose": "road_hazard",
+      "kind": "object",
+      "profile": "native16",
+      "size": [
+        3,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/horizontal.png",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "e3_log_horizontal_0_0",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/horizontal_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "e3_log_horizontal_1_0",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/horizontal_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "e3_log_horizontal_2_0",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/horizontal_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "e3_log_horizontal_0_1",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/horizontal_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "e3_log_horizontal_1_1",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/horizontal_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "e3_log_horizontal_2_1",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/horizontal_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "e3_log_horizontal_0_2",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/horizontal_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "e3_log_horizontal_1_2",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/horizontal_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "e3_log_horizontal_2_2",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/horizontal_2_2.png"
+        }
+      ],
+      "source": {
+        "kind": "ai_processed",
+        "path": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/horizontal.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/LogAngles-v3-20261104/approval.json"
+      }
+    },
+    {
+      "id": "e3_log_diagonal_ne",
+      "purpose": "road_hazard",
+      "kind": "object",
+      "profile": "native16",
+      "size": [
+        3,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/diagonal_ne.png",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_ne_0_0",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_ne_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_ne_1_0",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_ne_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_ne_2_0",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_ne_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_ne_0_1",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_ne_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_ne_1_1",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_ne_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_ne_2_1",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_ne_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_ne_0_2",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_ne_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_ne_1_2",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_ne_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_ne_2_2",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_ne_2_2.png"
+        }
+      ],
+      "source": {
+        "kind": "ai_processed",
+        "path": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/diagonal_ne.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/LogAngles-v3-20261104/approval.json"
+      }
+    },
+    {
+      "id": "e3_log_diagonal_nw",
+      "purpose": "road_hazard",
+      "kind": "object",
+      "profile": "native16",
+      "size": [
+        3,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/diagonal_nw.png",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_nw_0_0",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_nw_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_nw_1_0",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_nw_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_nw_2_0",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_nw_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_nw_0_1",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_nw_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_nw_1_1",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_nw_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_nw_2_1",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_nw_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_nw_0_2",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_nw_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_nw_1_2",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_nw_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "e3_log_diagonal_nw_2_2",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/diagonal_nw_2_2.png"
+        }
+      ],
+      "source": {
+        "kind": "ai_processed",
+        "path": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/diagonal_nw.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/LogAngles-v3-20261104/approval.json"
+      }
+    },
+    {
+      "id": "e3_log_vertical",
+      "purpose": "road_hazard",
+      "kind": "object",
+      "profile": "native16",
+      "size": [
+        3,
+        3
+      ],
+      "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/vertical.png",
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "e3_log_vertical_0_0",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/vertical_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "e3_log_vertical_1_0",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/vertical_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "e3_log_vertical_2_0",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/vertical_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "e3_log_vertical_0_1",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/vertical_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "e3_log_vertical_1_1",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/vertical_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "e3_log_vertical_2_1",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/vertical_2_1.png"
+        },
+        {
+          "dx": 0,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "e3_log_vertical_0_2",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/vertical_0_2.png"
+        },
+        {
+          "dx": 1,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "e3_log_vertical_1_2",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/vertical_1_2.png"
+        },
+        {
+          "dx": 2,
+          "dy": 2,
+          "layer": "obj",
+          "tile": "e3_log_vertical_2_2",
+          "image": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/Cells/vertical_2_2.png"
+        }
+      ],
+      "source": {
+        "kind": "ai_processed",
+        "path": "Assets/PocketCaravan/Art/Goryeo/RoadLogs/vertical.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/LogAngles-v3-20261104/approval.json"
+      }
+    }
+  ]
+}

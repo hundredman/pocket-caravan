@@ -1,0 +1,12 @@
+start
+FAIL target Naru 이정표 got=null at (50, 76, 0)
+FAIL target Naru 뱃사공 got=null at (47, 55, 0)
+FAIL target Naru 이정표 got=null at (52, 53, 0)
+FAIL target Naru 농부 got=null at (26, 53, 0)
+FAIL target Naru 이정표 got=null at (24, 48, 0)
+FAIL target Naru 나루 짐꾼 got=null at (46, 53, 0)
+END ok=75 bad=6
+
+# Naru 다시(시작 튜토리얼 대화가 열려 있어 첫 번째 실행의 Naru 6건이 대상 없음으로 나옴)
+start
+END ok=6 bad=0

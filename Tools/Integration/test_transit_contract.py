@@ -18,7 +18,7 @@ class TransitContract(unittest.TestCase):
                 if o['kind']=='exit' and not o['spawn'].startswith('link_'):self.assertIn(o['target'],set(maps)|goryeo)   # link_: 통합 브랜치의 다른 문명 연결(region_links.json)
         database=(ROOT/'Assets/PocketCaravan/Resources/GameDatabase.asset').read_text()
         towns={o['town'] for m in maps.values() for o in m['objects'] if o['kind']=='market'}
-        self.assertEqual(towns,{'transit_woodtown','transit_ferry'})
+        self.assertEqual(towns,{'transit_woodtown','transit_ferry','transit_southport','transit_crossroads'})   # 11/03 E2
         for p in (ROOT/'Assets/PocketCaravan/Data/Transit').glob('*.asset'):
             if not p.name.startswith(('Town_','Item_')):continue
             guid=re.search(r'^guid: (\S+)$',Path(str(p)+'.meta').read_text(),re.M)[1]

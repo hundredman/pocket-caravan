@@ -1,0 +1,16 @@
+{
+  "canvas": [
+    64,
+    48
+  ],
+  "visibleBounds": [
+    1,
+    25,
+    63,
+    47
+  ],
+  "asepriteDecodedRGBAEqual": true,
+  "binaryAlpha": true,
+  "originalPaletteOnly": true,
+  "productionBinding": false
+}

@@ -1,0 +1,22 @@
+{
+    "complete": true,
+    "error": "",
+    "checks": [
+        "save-isolated preview",
+        "Social installed",
+        "real talker display name matches friend",
+        "walkable interaction position",
+        "salt registered",
+        "PlayerController selects real friend",
+        "Space talk awards one point",
+        "960x540 capture talk",
+        "dialogue closed",
+        "real G key opens gift picker",
+        "960x540 capture gift-picker",
+        "one salt consumed by gift confirmation",
+        "approved salt is liked gift plus five points",
+        "first-heart dialogue reached",
+        "960x540 capture gift-result",
+        "autosave remains off"
+    ]
+}

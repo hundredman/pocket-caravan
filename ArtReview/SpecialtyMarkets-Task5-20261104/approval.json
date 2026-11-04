@@ -1,0 +1,49 @@
+{
+  "status": "approved",
+  "date": "2026-11-04",
+  "userReply": "그래.",
+  "maps": [
+    "transit_southport",
+    "transit_crossroads"
+  ],
+  "layoutSha256": "06cc4169e8888a58e8be555c74a52a5907425dbb37e816fcb91499a402b0f61c",
+  "assets": [
+    {
+      "id": "fish_rack",
+      "size": [
+        3,
+        2
+      ],
+      "source": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/fish_rack.png",
+      "rgbaSha256": "9442529d2223447365129e0611cfc89636ebe68d76cfd4bb9b363ab3ff1ac01c"
+    },
+    {
+      "id": "salt_stall",
+      "size": [
+        3,
+        3
+      ],
+      "source": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/salt_stall.png",
+      "rgbaSha256": "9fab65fd3bcdf4929c8caa45cbac4d5d7117c6c5f63a8b22bb4ea5459ae2efd4"
+    },
+    {
+      "id": "cloth_stall",
+      "size": [
+        3,
+        3
+      ],
+      "source": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/cloth_stall.png",
+      "rgbaSha256": "633c458851c331bccd2bcfc7bf560387b983946cfffbec2be71bd4e77951c89b"
+    },
+    {
+      "id": "spice_stall",
+      "size": [
+        3,
+        2
+      ],
+      "source": "ArtReview/SpecialtyMarkets-Task5-20261104/Native/spice_stall.png",
+      "rgbaSha256": "84629beca25189bd6b81b3bcb79cb680e7b4f77153712328b762df57d0de9969"
+    }
+  ],
+  "scope": "새 좌판4종·기존 위치/크기 그대로 두 마을10개 교체, 시장/마당 배치 승인"
+}

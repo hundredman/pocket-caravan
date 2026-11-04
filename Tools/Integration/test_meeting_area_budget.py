@@ -13,6 +13,11 @@ class MeetingAreaBudget(unittest.TestCase):
             manifest=json.loads((ROOT/f'Assets/PocketCaravan/World/Regions/{region}.json').read_text())
             for entry in manifest['maps']:
                 m=json.loads((ROOT/entry['jsonPath']).read_text())
+                # Approved blocked sea context is scenery outside the original owned area.
+                import sys
+                sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
+                from port_water import restore_for_historical_checks
+                m=restore_for_historical_checks(m)
                 self.assertEqual(len(m['ground']),m['w']*m['h'])
                 for i,g in enumerate(m['ground']):
                     if g:

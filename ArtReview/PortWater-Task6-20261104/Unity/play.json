@@ -1,0 +1,25 @@
+{
+    "complete": true,
+    "error": "",
+    "checks": [
+        "bootstrap saves off",
+        "correct actual/preview scene transit_southport before",
+        "sea cells remain blocked and correct before/after ground transit_southport before",
+        "market binding preserved transit_southport",
+        "960x540 transit_southport-before",
+        "correct actual/preview scene transit_southport after",
+        "sea cells remain blocked and correct before/after ground transit_southport after",
+        "market binding preserved transit_southport",
+        "960x540 transit_southport-after",
+        "correct actual/preview scene transit_ferry before",
+        "sea cells remain blocked and correct before/after ground transit_ferry before",
+        "existing transparent ripple references before",
+        "market binding preserved transit_ferry",
+        "960x540 transit_ferry-before",
+        "correct actual/preview scene transit_ferry after",
+        "sea cells remain blocked and correct before/after ground transit_ferry after",
+        "existing transparent ripple references after",
+        "market binding preserved transit_ferry",
+        "960x540 transit_ferry-after"
+    ]
+}

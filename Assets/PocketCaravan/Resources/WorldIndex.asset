@@ -499,7 +499,7 @@ MonoBehaviour:
     height: 80
     legacyHeight: 80
     coord: {x: 9, y: 1}
-    town: 
+    town: transit_crossroads
     neighbors:
     - transit_central_approach
     - transit_south_inland
@@ -511,7 +511,7 @@ MonoBehaviour:
     height: 68
     legacyHeight: 68
     coord: {x: 8, y: 1}
-    town: 
+    town: transit_southport
     neighbors:
     - transit_south_inland
     - transit_pass
@@ -795,6 +795,18 @@ MonoBehaviour:
   - kind: board
     id: transit_ferry
     mapId: transit_ferry
+  - kind: market
+    id: transit_crossroads
+    mapId: transit_crossroads
+  - kind: board
+    id: transit_crossroads
+    mapId: transit_crossroads
+  - kind: market
+    id: transit_southport
+    mapId: transit_southport
+  - kind: board
+    id: transit_southport
+    mapId: transit_southport
   - kind: market
     id: venice_rialto
     mapId: venice_rialto

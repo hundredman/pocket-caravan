@@ -1,0 +1,7 @@
+.../Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan-codex-building-ship/Tools/Integration/test_e3_flood_terrain.py:25: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertEqual(set(im.convert('RGBA').getdata()),{(127,185,175,255)},(x,y))
+.
+----------------------------------------------------------------------
+Ran 4 tests in 0.066s
+
+OK

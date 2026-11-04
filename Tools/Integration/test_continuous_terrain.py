@@ -78,7 +78,7 @@ class ContinuousTerrain(unittest.TestCase):
 
     def test_settlements_and_cargo_scope_are_not_replaced_by_landscape_sectors(self):
         markets={o['town'] for m in self.maps.values() for o in m['objects'] if o['kind']=='market'}
-        self.assertEqual(markets,{'naru','gaegyeong','dakmok','goryeo_songak','goryeo_jangdan','transit_woodtown','transit_ferry'})
+        self.assertEqual(markets,{'naru','gaegyeong','dakmok','goryeo_songak','goryeo_jangdan','transit_woodtown','transit_ferry','transit_southport','transit_crossroads'})   # 11/03 E2 새 마을 장터
         self.assertEqual(len([m for m in self.maps if not m.startswith('transit_')]),5)
         self.assertNotIn('Route01',self.maps)
 

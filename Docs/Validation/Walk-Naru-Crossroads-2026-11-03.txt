@@ -1,0 +1,9 @@
+start
+at Naru (37, 51, 0)
+reached goryeo_jangdan in 5.8s stuck=0 at (49, 49, 0)
+reached transit_pass in 17.9s stuck=0 at (61, 46, 0)
+reached transit_woodtown in 11.3s stuck=0 at (69, 28, 0)
+reached transit_wetroad in 15.2s stuck=0 at (63, 10, 0)
+reached transit_central_approach in 14.8s stuck=0 at (66, 43, 0)
+reached transit_crossroads in 14.5s stuck=0 at (74, 53, 0)
+END arrived transit_crossroads

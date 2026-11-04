@@ -1,0 +1,21 @@
+{
+    "complete": true,
+    "error": "",
+    "checks": [
+        "bootstrap saves off",
+        "preview saves off forest-diagonal",
+        "route open before forest-diagonal",
+        "960x540 forest-diagonal-before",
+        "route blocked through 15x15 corridor forest-diagonal",
+        "native sprite active forest-diagonal",
+        "960x540 forest-diagonal-blocked",
+        "full-map alternate route True forest-diagonal",
+        "clear interaction reachable from (47, 49, 0) forest-diagonal",
+        "clear interaction reachable from (55, 57, 0) forest-diagonal",
+        "clearing approach forest-diagonal",
+        "route restored after3s clear forest-diagonal",
+        "no money/cargo charge forest-diagonal",
+        "960x540 forest-diagonal-cleared",
+        "no saves enabled"
+    ]
+}

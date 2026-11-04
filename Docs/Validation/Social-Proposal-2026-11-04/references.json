@@ -1,0 +1,28 @@
+{
+  "friendNamesMatched": 8,
+  "questNpcNames": 6,
+  "talkerNames": 2,
+  "boatmanMaps": [
+    "Naru",
+    "transit_ferry",
+    "transit_southport"
+  ],
+  "sourceUnchanged": true,
+  "status": "candidate only",
+  "giftIdsRegistered": [
+    "firewood",
+    "ginseng",
+    "grain",
+    "najeon",
+    "paper",
+    "salt",
+    "transit_driedfish"
+  ],
+  "commonReactionsKept": [
+    "dance",
+    "love",
+    "joy",
+    "surprise",
+    "nap"
+  ]
+}

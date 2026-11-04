@@ -1,0 +1,15 @@
+{
+    "complete": true,
+    "error": "",
+    "checks": [
+        "save isolation",
+        "visible journey note transit_woodtown",
+        "visible journey note transit_ferry",
+        "visible journey note transit_southport",
+        "visible journey note transit_crossroads",
+        "Q opens journey notebook",
+        "960x540 journey-top",
+        "960x540 journey-bottom",
+        "no save enabled"
+    ]
+}

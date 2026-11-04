@@ -1,0 +1,14 @@
+{
+  "status": "complete",
+  "postApplyValidationRun": true,
+  "artErrors": 0,
+  "pythonTests": 360,
+  "pythonFullSkipped": 23,
+  "pythonPillowSkipped": 32,
+  "pythonFailures": 0,
+  "unityChecksPassed": 8,
+  "registeredInventoryCaptured": true,
+  "savesUnchanged": 9,
+  "humanPlay": false,
+  "onlinePlay": false
+}

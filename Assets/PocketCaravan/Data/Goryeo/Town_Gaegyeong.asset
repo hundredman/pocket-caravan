@@ -67,6 +67,12 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: cb00db234c4f1496797b7984a9849509, type: 2}
     optimal: 25
     localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: ccca67fc8d80e426f8229c10a9455f50, type: 2}
+    optimal: 4
+    localPriceMultiplier: 1.5
+  - item: {fileID: 11400000, guid: 257a8b1dc97e04519a571b31296d8bd1, type: 2}
+    optimal: 4
+    localPriceMultiplier: 1.3
   defaultOptimal: 4
   vehiclesForSale:
   - {fileID: 11400000, guid: 913f67411fb2e4eb9868cba57a9545f6, type: 2}

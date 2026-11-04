@@ -16,6 +16,7 @@ namespace PocketCaravan
             public ObstaclePlacement placement;public ObstacleDefinition definition;public RectInt area;
             public bool resolved,active,escapeGrace,wasBlocking;public Vector2 actor,home;
             public SpriteRenderer renderer,footprint;public ObstacleHandle handle;
+            public GoryeoLogVisuals.Entry nativeLog;
         }
         readonly List<State> states=new List<State>();
         readonly Dictionary<Vector3Int,List<State>> cells=new Dictionary<Vector3Int,List<State>>();
@@ -47,11 +48,12 @@ namespace PocketCaravan
                 var d=library.Find(p.definitionId);if(d==null){Debug.LogError("장애 정의 없음: "+p.definitionId);continue;}
                 var rect=p.Rect(road.height,d);
                 if(rect.width<=0 || rect.height<=0 || rect.xMin<0 || rect.yMin<0 || rect.xMax>road.width || rect.yMax>road.height){Debug.LogError("장애 범위 이탈: "+p.id);continue;}
-                var s=new State{placement=p,definition=d,area=rect,active=p.enabled && d.Active(Elapsed,p.phaseOffset)};
+                var binding=GetComponent<GoryeoLogVisuals>();
+                var s=new State{placement=p,definition=d,area=rect,active=p.enabled && d.Active(Elapsed,p.phaseOffset),nativeLog=binding!=null?binding.Find(p,d):null};
                 s.home=map.CellCenter(new Vector3Int(rect.x,rect.y,0))+(Vector3)new Vector2((rect.width-1)*.5f,(rect.height-1)*.5f);s.actor=s.home;
                 states.Add(s);if(d.mode==ObstacleMode.Threat)threats.Add(s);
                 for(int y=rect.yMin;y<rect.yMax;y++)for(int x=rect.xMin;x<rect.xMax;x++)
-                {var c=new Vector3Int(x,y,0);if(!cells.TryGetValue(c,out var list)){list=new List<State>();cells[c]=list;}list.Add(s);}
+                {if(s.nativeLog!=null&&!s.nativeLog.Contains(x-rect.x,y-rect.y))continue;var c=new Vector3Int(x,y,0);if(!cells.TryGetValue(c,out var list)){list=new List<State>();cells[c]=list;}list.Add(s);}
                 var go=new GameObject(d.displayName);go.transform.SetParent(visualRoot,false);go.transform.position=s.home;
                 s.renderer=go.AddComponent<SpriteRenderer>();s.renderer.sortingOrder=12;
                 if(footprintSprite==null)footprintSprite=Sprite.Create(Texture2D.whiteTexture,new Rect(0,0,1,1),new Vector2(.5f,.5f),1);
@@ -59,6 +61,11 @@ namespace PocketCaravan
                 s.footprint=areaVisual.AddComponent<SpriteRenderer>();s.footprint.sprite=footprintSprite;s.footprint.sortingOrder=3;
                 var marker=new GameObject("Action marker");marker.transform.SetParent(visualRoot,false);
                 marker.transform.position=map.CellCenter(new Vector3Int(rect.x-1,Mathf.Clamp(rect.y+rect.height/2,0,road.height-1),0));
+                if(s.nativeLog!=null)
+                {
+                    Vector3 center=Vector3.zero;foreach(var c in s.nativeLog.occupied)center+=map.CellCenter(new Vector3Int(rect.x+c.x,rect.y+c.y,0));
+                    marker.transform.position=center/Mathf.Max(1,s.nativeLog.occupied.Length);
+                }
                 s.handle=marker.AddComponent<ObstacleHandle>();s.handle.blocksMovement=false;s.handle.field=this;s.handle.placementId=p.id;
                 s.escapeGrace=s.active && OverlapsPlayer(s);RefreshVisual(s);
             }
@@ -139,6 +146,23 @@ namespace PocketCaravan
         void RefreshVisual(State s)
         {
             if(s.renderer==null)return;
+            if(s.nativeLog!=null)
+            {
+                s.renderer.sprite=s.nativeLog.sprite;s.renderer.transform.localScale=Vector3.one;
+                s.renderer.transform.position=map.CellCenter(new Vector3Int(s.area.x,s.area.y,0))-new Vector3(.5f,.5f,0);
+                s.renderer.color=Color.white;s.renderer.enabled=s.active&&!s.resolved;
+                if(s.handle!=null)s.handle.gameObject.SetActive(s.active&&!s.resolved);
+                if(s.footprint!=null)s.footprint.enabled=false;
+                // Keep one interaction marker on the nearest part of the trunk, reachable from either side.
+                var player=PlayerController.Instance;
+                if(s.handle!=null&&player!=null)
+                {
+                    float best=float.PositiveInfinity;Vector3 point=s.home;
+                    foreach(var c in s.nativeLog.occupied){var v=map.CellCenter(new Vector3Int(s.area.x+c.x,s.area.y+c.y,0));float distance=((Vector2)v-player.Motor.Feet).sqrMagnitude;if(distance<best){best=distance;point=v;}}
+                    s.handle.transform.position=point;
+                }
+                return;
+            }
             if(s.footprint!=null)
             {
                 bool block=s.definition.Blocks(GameManager.I!=null?GameManager.I.Player:null);

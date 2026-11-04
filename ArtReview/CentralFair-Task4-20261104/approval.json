@@ -1,0 +1,29 @@
+{
+  "status": "approved",
+  "date": "2026-11-04",
+  "userReply": "진행해줘.",
+  "mapIds": [
+    "transit_woodtown",
+    "transit_ferry"
+  ],
+  "target": "grain_stall",
+  "variants": [
+    {
+      "asset": "fair_indigo",
+      "width": 48,
+      "height": 48,
+      "binaryAlpha": true,
+      "reexportSameRGBA": true,
+      "rgbaSha256": "5c4ca16fba5f6d07c8dcef52af2c129b638f3972c867ac7001059ff040e09c77"
+    },
+    {
+      "asset": "fair_teal",
+      "width": 48,
+      "height": 48,
+      "binaryAlpha": true,
+      "reexportSameRGBA": true,
+      "rgbaSha256": "dce44a2ace27d3ccb15737205669c16aef9d73bada366de5f7b4c24abb90abb1"
+    }
+  ],
+  "scope": "승인한 전체 좌판2종을 기존 장터/마당 자리4곳씩 교체. 일정/보너스/충돌 유지."
+}

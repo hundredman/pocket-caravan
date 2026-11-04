@@ -1,0 +1,56 @@
+{
+  "status": "approved",
+  "date": "2026-11-04",
+  "scope": "기존 가로 및 새 세로·양쪽 사선 통나무 네 방향 그림",
+  "evidence": [
+    "native-comparison.png",
+    "game-comparison.png"
+  ],
+  "userReplies": [
+    "좋아. 이후 비가 오고 벼락이 치고 쓰러진 나무로 쓰면 되겠다. 길을 막는 용도로.",
+    "혹은 산적이 나무로 길을 막은뒤 사용하는 용도일 수도 있고",
+    "아니다. 산적은 취소."
+  ],
+  "intendedUse": "비·벼락 뒤 쓰러진 나무로 길을 막음",
+  "excludedUse": "산적의 통나무 길막음 연계안은 사용자 취소",
+  "productionBound": false,
+  "weatherRulesImplemented": false,
+  "assets": [
+    {
+      "name": "horizontal",
+      "path": "ArtReview/LogAngles-v3-20261104/Native/horizontal.png",
+      "canvas": [
+        48,
+        48
+      ],
+      "decodedRGBAsha256": "a8451b7c3c96064b01d42e265f28cdd48f071d0bbe91605ff8e7cdc629d06bfb"
+    },
+    {
+      "name": "diagonal_ne",
+      "path": "ArtReview/LogAngles-v3-20261104/Native/diagonal_ne.png",
+      "canvas": [
+        48,
+        48
+      ],
+      "decodedRGBAsha256": "cc69a2ebc3438b4f09fbfe2c46aad54bca47d84ec308a597e23ecc25ac33e6d3"
+    },
+    {
+      "name": "diagonal_nw",
+      "path": "ArtReview/LogAngles-v3-20261104/Native/diagonal_nw.png",
+      "canvas": [
+        48,
+        48
+      ],
+      "decodedRGBAsha256": "bb4d3b078d4c58a4ec16a69d2b4925ac3aedebd0ac487c862c951ac742be9719"
+    },
+    {
+      "name": "vertical",
+      "path": "ArtReview/LogAngles-v3-20261104/Native/vertical.png",
+      "canvas": [
+        48,
+        48
+      ],
+      "decodedRGBAsha256": "a215d8891b541961e4221dbaa9204324ee8c5aedbc2acc540876ceba100e6578"
+    }
+  ]
+}
