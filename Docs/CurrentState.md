@@ -658,3 +658,12 @@ Woodtown/Ferry/Southport/Crossroads의 journeyNote4곳을 역할·귀환 거래 
 MapJsonBuilder의 선택 nativeLogs 메타데이터→GoryeoLogLayout/GoryeoLogVisuals→ObstacleField의 명시적 적용만으로 연결했다. 메타데이터 없는 기존 장애물은 원래 그림/사각 충돌을 유지한다. 기존 fallen_log ID·3초/무료/8시간50% 일정과 방문 단위 해결 상태·저장 형식은 그대로다. native_log_binding --apply는 승인된 두 메타데이터 필드만 추가하고 기존 JSON의 모든 필드/지형·길·NPC·시장·출구를 유지한다. m4_export 원본에는 후속 재현 연결만 넣고 전체 재생성하지 않았다. BuildSelected로 해당 transit 씬1개만 재생성했다.
 
 실제 본편 Play15확인/3캡처: 사건 전 연결→활성 시15×15 길목 단절→혼자3초 제거 후 복원, 어느 편에서도 상호작용 대상 접근 가능·재산 불변·유령 이름표 없음. 전체 맵에는 더 먼 우회 연결이 남아 있다. 검토 전용4방향 Play132확인(전 칸 충돌 비교·PlayerMotor 진입 차단/제거 후 통행·이동 취소·재진입·겹침 발생 시 탈출·기존 장애물 유지)도 통과. 저장9파일 불변. 정적368개 두 환경(23/32skip)·월드0오류/1437출구·Unity 지정8종 결과는 Docs/Validation/NativeLogBinding-Task6-2026-11-04. 사람 수동 플레이/온라인/빌드는 미검사다. 비·벼락 연동·추가 사건 위치/횟수는 구현하지 않았다.
+
+
+### 고려 분위기 A1 — 날씨 (2026-11-05)
+
+사용자 승인 맑음·봄비·장맛비·물가 아침 안개를 고려5맵/중앙 동쪽8맵에 연결했다. GoryeoAtmosphereDirector가 RegionOf로 대상만 판별, 승인 Resources/Goryeo/Atmosphere 설정으로 맵별 GoryeoAtmosphere 하나만 설치한다. 원본은 ArtReview/Goryeo-Atmosphere-A1-20261105/source.json·approval.json→GoryeoAtmosphereReview.PromoteApproved다. 공용 WeatherOverlay/WeatherSkin을 그대로 재사용하고 씬/맵/공용 코드는 수정하지 않았다.
+
+날짜/seed73 해시로 같은 날 같은 기본 날씨를 정한다. 안개는 물가8맵/오전4~9시만 보이고 나머지는 맑음이다. 봄비70/장맛비128개, 안개 띠3개/얇은 haze. 카메라 주변 고정 풀로 재사용하고 맵 이탈 시 정리한다. 비·안개 때 공용 꽃잎/구름 그림자의 renderer 표시만 숨겼다 복원한다. 실제 비가 떨어지고 안개는 천천히 흘러간다. 안개 보강 요청은 사용자가 취소하고 기존 시안을 승인했다.
+
+검토2맵 Play51확인/10캡처·움직임80확인/72프레임·실제 본편13맵67확인·날짜/맵53,248사례·정적368(23/32skip)/Unity8종·월드0오류/저장9파일 보존. 새 소리/속도/경제/저장 변경은 없다. 남동 포구 시설 설명의 “남동 길을”만 “솔바람 고개를”로 정정했다. 목표 PC 빌드FPS/사람/온라인 미검사. Docs/Validation/Goryeo-Atmosphere-A1-2026-11-05 참조. 다음은 분위기 A4 걷기 연출·발소리다.

@@ -1,0 +1,14 @@
+{
+  "status": "approved",
+  "date": "2026-11-05",
+  "userReply": "아니다 그냥 승인할게.",
+  "scope": "맑음·봄비·장맛비·아침 안개 및 실제 움직임, 고려·중앙 동쪽13맵 시각 연출",
+  "evidence": [
+    "Naru-comparison.png",
+    "goryeo_jangdan-comparison.png",
+    "rain-motion.gif",
+    "mist-motion.gif"
+  ],
+  "movementEffects": false,
+  "audioAdded": false
+}

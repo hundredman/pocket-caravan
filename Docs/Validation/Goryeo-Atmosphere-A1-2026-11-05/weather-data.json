@@ -1,0 +1,8 @@
+{
+    "dateMapCases": 53248,
+    "passed": [
+        "13 maps x4096 dates: deterministic, morning/location fog, all4 states",
+        "6 foreign/unknown IDs untouched; global random unchanged",
+        "Visual proposal only; no save/clock/terrain/economy or movement writes"
+    ]
+}
