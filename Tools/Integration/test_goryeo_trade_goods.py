@@ -6,7 +6,10 @@ ROOT=Path(__file__).resolve().parents[2]
 class ApprovedGoods(unittest.TestCase):
  def test_approved_pixels_and_registered_goods_specs(self):
   a=json.loads((ROOT/'ArtReview/ItemIcons-v3-20261104/approval.json').read_text());self.assertEqual(a['status'],'approved')
-  for row in a['assets']:
+  rows={r['id']:r for r in a['assets']}
+  override=json.loads((ROOT/'ArtReview/WoolWidth-v4-20261104/approval.json').read_text());self.assertEqual(override['status'],'approved');self.assertEqual([r['id']for r in override['assets']],['transit_wool'])
+  rows.update({r['id']:r for r in override['assets']})
+  for row in rows.values():
    with Image.open(ROOT/row['source'])as src,Image.open(ROOT/'Assets/PocketCaravan/Art/Goryeo/Items'/(row['id']+'.png'))as dest:
     src=src.convert('RGBA');dest=dest.convert('RGBA');self.assertEqual(dest.size,(16,16));self.assertEqual(src.tobytes(),dest.tobytes());self.assertEqual(hashlib.sha256(dest.tobytes()).hexdigest(),row['rgbaSha256'])
   for file,id,price,weight in [('Item_Spice','transit_spice',22,1),('Item_Wool','transit_wool',14,2)]:

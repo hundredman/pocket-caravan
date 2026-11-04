@@ -1,0 +1,15 @@
+{
+  "status": "approved",
+  "date": "2026-11-04",
+  "userReply": "좋다.",
+  "assets": [
+    {
+      "id": "transit_wool",
+      "source": "ArtReview/WoolWidth-v4-20261104/Native/transit_wool.png",
+      "rgbaSha256": "54746cc8d55111168755325745df84f3984af25a4d0057b103877afd5d020186"
+    }
+  ],
+  "scope": "양모 폭14→12px, 높이/캔버스/팔레트 유지",
+  "productionApplied": true,
+  "verification": "사용자 일시 중지 요청으로 적용 후 최종 검사 대기"
+}

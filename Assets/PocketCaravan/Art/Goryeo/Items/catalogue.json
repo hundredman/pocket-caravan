@@ -78,11 +78,11 @@
       "profile": "item16",
       "source": {
         "kind": "authored",
-        "path": "ArtReview/ItemIcons-v3-20261104/Native/transit_wool.aseprite"
+        "path": "ArtReview/WoolWidth-v4-20261104/Native/transit_wool.aseprite"
       },
       "review": {
         "status": "approved",
-        "evidence": "ArtReview/ItemIcons-v3-20261104/approval.json"
+        "evidence": "ArtReview/WoolWidth-v4-20261104/approval.json"
       },
       "tiles": [
         {
