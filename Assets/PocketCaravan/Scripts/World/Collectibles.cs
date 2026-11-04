@@ -11,7 +11,7 @@ namespace PocketCaravan
     /// 지역마다 맵 일곱 곳에 하나씩, 길에서 먼 구석에 숨어 있다. 읽을 때마다 전설 한 조각, 일곱을 다 읽으면 300냥·신용 +2 + 지역 축복(OnComplete).
     /// - 북유럽: 자리·전설·축복 의식(룬돌 고리)은 NorthLegends가 예전 그대로. 여기엔 이름·키만 등록해 수첩 표시·놀거리 알림이 같이 보이게 한다.
     /// - 베네치아: 자리는 VeniceLife가 세우고(VeniceLife.json "lion"), 전설·저장·보상은 공용. 축복(큰 장 덤 2할 5푼)은 OnComplete.
-    /// - 고려·아라비아: 맵 일곱 곳(Set.maps)에서 "길에서 가장 먼 걸을 수 있는 칸"을 맵을 열 때 계산해 세운다(초안 전설 포함, 지역 담당이 다듬기).
+    /// - 고려(장승, 길가 어귀)·아라비아(별 돌, 길에서 먼 구석): 맵 일곱 곳(Set.maps)에서 자리를 맵을 열 때 계산해 세운다. 일곱 다 읽으면 그 지역 안에서 달릴 때 체력 소모 1할 감소.
     /// 저장: 공용 메모 "collect:지역:n" (북 "north:rune:n+1", 베 "venice:lion:n"은 KeyFor로 이어받음).
     /// </summary>
     public static class Collectibles
@@ -24,26 +24,30 @@ namespace PocketCaravan
             public string[] maps, lore;
             public string completeText;
             public bool autoPlace;                        // true면 공용 Runner가 맵을 열 때 세운다
+            public bool roadside;                         // true면 길가(길 옆 칸, 장터에서 먼 어귀)에, false면 길에서 가장 먼 구석에
+            public string blessingName;                   // 일곱 다 읽은 뒤 효과 이름 (그 지역 안에서 달릴 때 체력 소모 1할 감소)
         }
 
         public static readonly Dictionary<Reactions.Region, Set> Sets = new Dictionary<Reactions.Region, Set>
         {
             { Reactions.Region.Goryeo, new Set {
-                name = "이끼 낀 옛 비석", readName = "읽은 옛 비석", sprite = "Common/stele", glow = "Common/glow", autoPlace = true,
+                name = "말 없는 장승", readName = "말 건넨 장승", sprite = "Common/jangseung", glow = null, autoPlace = true, roadside = true,
+                blessingName = "장승의 보살핌",
                 maps = new[] { "Gaegyeong", "Dakmok", "Naru", "goryeo_jangdan", "goryeo_songak", "transit_ferry", "transit_woodtown" },
                 lore = new[] {
-                    "옛날 벽란도에 큰 배 한 척이 닿았다.\n뱃사람들은 먼 바다 너머에서 향료와 유리를 싣고 왔다고 했다.",
-                    "개경의 상인들은 저울을 속이지 않겠다고\n비석 앞에서 맹세했다. 글자는 비바람에 닳았어도 약속은 남았다.",
-                    "닥나무 껍질을 두드리던 장인은\n종이 한 장마다 비석의 글귀를 한 줄씩 옮겨 적었다고 한다.",
-                    "나루의 사공들은 배를 띄우기 전에\n비석에 물 한 바가지를 끼얹었다. 강이 길을 열어 주기를 빌며.",
-                    "장단 들판의 농부들은 첫 곡식을 비석 앞에 놓았다.\n장터에 가져갈 짐이 가벼워지라고.",
-                    "송악 산길을 넘던 보부상들도\n고갯마루 비석에 짐을 내려놓고 쉬어 갔다.",
-                    "일곱 비석을 다 읽은 상인은\n어느 장터에서든 말 한마디면 믿음을 샀다고 한다.",
+                    "개경 어귀 장승이 말했다.\n\"밤마다 우리 일곱은 서로 말을 건넨다네. 자네 발소리도 벌써 송악까지 갔지.\"",
+                    "닥목 장승이 말했다.\n\"닥나무 껍질 두드리는 소리가 멎으면 비가 온다는 뜻이야. 종이 짐은 덮고 가게.\"",
+                    "나루 장승이 말했다.\n\"사공이 노를 두 번 두드리면 물살이 세다는 신호지. 세 번이면 오늘은 건너지 말게.\"",
+                    "장단 장승이 말했다.\n\"들판 곡식은 첫 수확이 제일 싸고 제일 좋아. 장터보다 밭에서 사는 게 상인의 눈이지.\"",
+                    "송악 장승이 말했다.\n\"고개 넘는 길에 짐을 내려놓고 쉬는 이는 끝까지 가고, 서두르는 이는 반에서 돌아오더군.\"",
+                    "버들나루 장승이 말했다.\n\"강 건너 사람들은 말이 달라도 저울은 같아. 저울을 속이지 않는 자에게 길이 열리지.\"",
+                    "솔재 장승이 말했다.\n\"일곱 장승의 말을 다 들은 상인은 어느 어귀에서든 우리가 지켜 준다네. 잘 가게.\"",
                 },
-                completeText = "일곱 비석을 모두 읽었다! 상금 300냥, 신용 +2, '비석의 믿음'",
+                completeText = "일곱 장승의 말을 모두 들었다! 상금 300냥, 신용 +2, '장승의 보살핌'(고려 안에서 달릴 때 덜 지침)",
             } },
             { Reactions.Region.Arabia, new Set {
-                name = "별을 새긴 돌", readName = "읽은 별 돌", sprite = "Common/stele", glow = "Common/glow", autoPlace = true,
+                name = "별을 새긴 돌", readName = "읽은 별 돌", sprite = "Common/starstone", glow = "Common/glow", autoPlace = true, roadside = false,
+                blessingName = "별의 길잡이",
                 maps = new[] { "arabia_sanaa", "arabia_taiz", "arabia_zabid", "arabia_ahsa", "arabia_jeddah", "arabia_central_dunes", "arabia_central_canyon" },
                 lore = new[] {
                     "옛날 사막을 건너던 대상이 길을 잃었다.\n밤하늘의 별 하나가 유난히 밝아 그 별을 따라 사나에 닿았다고 한다.",
@@ -54,7 +58,7 @@ namespace PocketCaravan
                     "제다의 뱃사람들도 바다로 나가기 전에\n별 돌을 한 번씩 쓰다듬었다.",
                     "일곱 별 돌을 다 읽은 상인은\n어느 대상에 끼어도 맨 앞자리를 내주었다고 한다.",
                 },
-                completeText = "일곱 별 돌을 모두 읽었다! 상금 300냥, 신용 +2, '별의 길잡이'",
+                completeText = "일곱 별 돌을 모두 읽었다! 상금 300냥, 신용 +2, '별의 길잡이'(아라비아 안에서 달릴 때 덜 지침)",
             } },
         };
 
@@ -88,6 +92,7 @@ namespace PocketCaravan
                 gm.Player.money += Reward; gm.Player.credit += 2;
                 Sfx.Play("levelup");
                 if (OnComplete.TryGetValue(r, out var more)) more?.Invoke();
+                if (!string.IsNullOrEmpty(set.blessingName)) StaminaMods.Set("collect:blessing", 0.9f);
                 Notify.Show(set.completeText ?? $"일곱 개를 모두 찾았다! 상금 {Reward}냥, 신용 +2", 6f);
             }
             else Notify.Show($"{set.name}을(를) 찾았다 ({found} / {Total})", 3f);
@@ -131,29 +136,41 @@ namespace PocketCaravan
             return Sprite.Create(t, new Rect(0, 0, t.width, t.height), pivot, 16f);
         }
 
-        /// <summary>길(road 타일)에서 가장 먼, 걸을 수 있는 칸. 길이 없으면 장터/가운데에서 가장 먼 칸. 같으면 해시로.</summary>
-        static Vector3Int? FarCorner(MapRoot mr, int seed)
+        /// <summary>
+        /// 숨길 칸. roadside=false: 길(road 타일)에서 가장 먼 걸을 수 있는 칸(길이 없으면 가운데서 가장 먼 칸).
+        /// roadside=true: 길 옆(길은 아니고 길과 맞닿은) 칸 중 장터에서 가장 먼 칸 = 마을 어귀. 같으면 해시로 고정.
+        /// </summary>
+        static Vector3Int? FindCell(MapRoot mr, int seed, bool roadside)
         {
             if (mr == null || mr.ground == null) return null;
             var b = mr.ground.cellBounds;
-            var roads = new List<Vector2Int>();
+            var roads = new HashSet<Vector2Int>();
             if (mr.road != null)
                 foreach (var p in mr.road.cellBounds.allPositionsWithin) if (mr.road.HasTile(p)) roads.Add(new Vector2Int(p.x, p.y));
+            var market = UnityEngine.Object.FindAnyObjectByType<TownMarket>();
+            Vector2 anchor = market != null ? (Vector2)mr.WorldToCell(market.transform.position) : new Vector2(b.center.x, b.center.y);
             Vector2 center = new Vector2(b.center.x, b.center.y);
             float best = -1f; Vector3Int bestCell = default; bool any = false;
             foreach (var p in b.allPositionsWithin)
             {
                 if (!mr.ground.HasTile(p) || !mr.IsWalkable(p) || Interactable.At(p) != null) continue;
-                // 맵 가장자리 1칸은 뺀다 (출구 근처)
-                if (p.x <= b.xMin + 1 || p.x >= b.xMax - 2 || p.y <= b.yMin + 1 || p.y >= b.yMax - 2) continue;
+                if (p.x <= b.xMin + 1 || p.x >= b.xMax - 2 || p.y <= b.yMin + 1 || p.y >= b.yMax - 2) continue;   // 가장자리(출구) 1칸은 뺀다
+                var q = new Vector2Int(p.x, p.y);
                 float d;
-                if (roads.Count > 0)
+                if (roadside && roads.Count > 0)
+                {
+                    if (roads.Contains(q)) continue;
+                    bool adj = roads.Contains(q + Vector2Int.left) || roads.Contains(q + Vector2Int.right) || roads.Contains(q + Vector2Int.up) || roads.Contains(q + Vector2Int.down);
+                    if (!adj) continue;
+                    d = (anchor - (Vector2)q).sqrMagnitude;
+                }
+                else if (roads.Count > 0)
                 {
                     d = float.MaxValue;
-                    foreach (var r in roads) { float dd = (r.x - p.x) * (r.x - p.x) + (r.y - p.y) * (r.y - p.y); if (dd < d) d = dd; }
+                    foreach (var r in roads) { float dd = (r - q).sqrMagnitude; if (dd < d) d = dd; }
                 }
-                else d = (center - new Vector2(p.x, p.y)).sqrMagnitude;
-                d += ((p.x * 73856093 ^ p.y * 19349663 ^ seed) & 0xff) / 1000f;   // 같은 거리면 해시로 고정
+                else d = (center - (Vector2)q).sqrMagnitude;
+                d += ((p.x * 73856093 ^ p.y * 19349663 ^ seed) & 0xff) / 1000f;
                 if (d > best) { best = d; bestCell = p; any = true; }
             }
             return any ? bestCell : (Vector3Int?)null;
@@ -167,10 +184,12 @@ namespace PocketCaravan
             {
                 if (GameManager.I == null || MapRoot.Current == null) return;
                 var r = Reactions.Here; var set = Of(r);
+                // 축복: 일곱 다 읽은 지역 안에서 달릴 때 체력 소모 1할 감소 (북·베는 자기 축복이 따로 있어 blessingName이 비어 있음)
+                StaminaMods.Set("collect:blessing", set != null && !string.IsNullOrEmpty(set.blessingName) && Complete(r) ? 0.9f : 1f);
                 if (set == null || !set.autoPlace || set.maps == null) return;
                 int idx = Array.IndexOf(set.maps, MapRoot.Current.mapId);
                 if (idx < 0) return;
-                var cell = FarCorner(MapRoot.Current, idx + 1);
+                var cell = FindCell(MapRoot.Current, idx + 1, set.roadside);
                 if (cell == null) { Debug.LogWarning($"[수집물] {MapRoot.Current.mapId}: 숨길 자리가 없다"); return; }
                 var go = new GameObject(set.name);
                 go.transform.position = MapRoot.Current.CellCenter(cell.Value);
