@@ -15,6 +15,7 @@ MonoBehaviour:
   id: transit_ferry
   displayName: "\uBC84\uB4E4\uB098\uB8E8 \uB9C8\uC744"
   region: {fileID: 11400000, guid: 33ac5d5fe768644189807a1d29eda36b, type: 2}
+  journeyNote: "\uac15\uacfc \ubc14\ub2f7\uae38\uc774 \ub9cc\ub098\ub294 \ud3ec\uad6c\uc785\ub2c8\ub2e4. \ub9d0\ub9b0 \uc0dd\uc120\u00b7\uc18c\uae08\uacfc \uace0\ub824\uc5d0\uc11c \uac00\uc838\uc628 \uc9d0\uc744 \ube44\uad50\ud574 \ubcf4\uc138\uc694. \uadc0\ud658 \uc9d0\uc740 \ud604\uc7ac \uc2dc\uc138\ub97c \ubcf4\uace0 \uace0\ub974\uc138\uc694."
   worldCoord: {x: 8, y: 0}
   startLevel: 1
   settlementTier: 2

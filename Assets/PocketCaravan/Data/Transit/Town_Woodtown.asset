@@ -15,6 +15,7 @@ MonoBehaviour:
   id: transit_woodtown
   displayName: "\uC194\uC7AC \uAE38\uBAA9 \uB9C8\uC744"
   region: {fileID: 11400000, guid: 33ac5d5fe768644189807a1d29eda36b, type: 2}
+  journeyNote: "\uace0\ub824\uc640 \uc911\uc559 \ub300\ub959\uc744 \uc787\ub294 \uae38\ubaa9\uc785\ub2c8\ub2e4. \ub554\uac10\u00b7\uc1a1\uc9c4\uc744 \uc0b4\ud3b4\ubcf4\uace0, \uadc0\ud658\ud560 \ub54c\ub294 \uace0\ub824\ub85c \uac00\uc838\uac08 \uc9d0\uc758 \uc2dc\uc138\ub97c \ud655\uc778\ud558\uc138\uc694."
   worldCoord: {x: 6, y: 0}
   startLevel: 1
   settlementTier: 2

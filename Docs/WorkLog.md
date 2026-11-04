@@ -280,3 +280,5 @@
 - 2026-11-04 Codex 작업지시1번 (이 커밋, merge/integration-goryeo): 고려 친구8명 대사/기념품 후보표·JSON 작성, 이름/지역/친밀도 저장 키 유지·선물 상품 등록·뱃사공3포구 공유 확인. 땔감 장수 선물 소금 변경안, 미구현 효과 암시 제거. 사용자 승인 전 Social.cs 미반영. Python354(전체환경23skip/Pillow만32skip)실패0·월드0오류/1437출구·Unity 지정8종 통과. Play/G 선물/시각변경 미실행, 다음번호 미착수. 기존 packages-lock/프로토타입/발표 변경은 미포함, push/PR 없음.
 
 - 2026-11-04 Codex 지시1번 완료(이 커밋, merge/integration-goryeo): 사용자 승인8명 대사/기념품을 공용 Scripts/UI/Social.cs 고려(G) 블록에만 반영, 다른 지역/이름/저장키 유지. 실제 입력 Space/G/Space Play로 땔감 장수 소금선물·친밀도1→6·첫하트 대사 확인/960×540 3캡처. 백업 후 저장9파일 불변. 정적354(전체23skip/Pillow만32skip)실패0·월드0오류/1437출구·Unity 지정8종 통과. 데이터/본편씬은 미수정, push/PR 없음.
+
+- 2026-11-04 Codex 지시2번 완료(이 커밋): Transit Town4곳 journeyNote만 변경/추가, 가격·이익 보장 표현 제거. Woodtown/Ferry는 정확한 신규 한 줄만 역변환 후 R2원본 해시 대조. 정적354(전체23skip/Pillow만32skip)실패0·R2대상5·월드0오류·Unity 지정8종 통과. 실제Q수첩4곳 연결/960×540 2캡처, 저장9파일 백업/불변. 맵/씬/DB/다른필드 미변경, push/PR 없음.
