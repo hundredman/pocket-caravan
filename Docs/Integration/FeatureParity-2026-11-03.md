@@ -112,6 +112,7 @@ integration 작업트리에서 `Assets/PocketCaravan/Scripts`·`Data`·`Scenes`�
 | 전시실 기증 | `Scripts/Economy/Museum.cs` | 북: 자리(NorthDaily)·목록 등록 / 베: 자리(VeniceLife)·목록 등록(`VeniceLegacy`) | ✔ 전 지역 (11/5). 6칸 채우면 칭호+200냥+신용1. 고려(개경)·아라비아(사나)는 장터 옆에 자동 배치, 목록은 그 지역 산지 물건 6개 자동(지역 담당이 `Museum.Shelf`로 바꿀 수 있음). `VeniceMuseum` 삭제 |
 | 숨은 수집물 7개 + 전설 | `Scripts/World/Collectibles.cs` | 북: NorthLegends 그대로(룬돌 고리 의식 포함), 공용엔 이름·전설·키만 / 베: 자리는 VeniceLife, 전설·보상은 공용 | ✔ 전 지역 (11/5). 일곱 읽으면 300냥+신용2+지역 축복. 고려 "말 없는 장승"(길가 어귀, 그림 `Common/jangseung.png` 새로 그림)·아라비아 "별을 새긴 돌"(길에서 먼 구석)은 맵 7곳에 자동 배치. 축복 = 그 지역 안 달리기 체력 소모 1할 감소. 전설은 기우가 씀(11/5). `VeniceLion` 삭제 |
 | 놀거리 알림 (★ 표시·화살표·맵 알림) | `Scripts/UI/ActivityHints.cs` | 지역 자리는 `ActivityHints.Rules`(클래스) / `NameRules`(이름표)로 등록 | ✔ 전 지역 (11/5). 공용 자리(떠돌이 상인·전시실·수집물·공방·나루 낚시) 기본 등록, 북(얼음 낚시·썰매·돌탑·눈싸움·룬돌)·베(유리 불기·그물·모이·곤돌라 경주·공방) 등록. `VeniceActivityHints` 삭제 |
+| 날씨 사건 (길 잃은 사람) | `Scripts/World/LostTraveler.cs` | 북: 날씨·자리·꿀술 선택지(NorthEvents.RegisterCommon) / 베: 날씨·자리·물 한 모금(VeniceLegacy) | ✔ 전 지역 (11/5). 궂은 4시간 블록마다 길 맵에 한 명, 데려다주면 40냥+신용1+지역 선물(북 모피·베 포도주·고려 인삼·아라비아 대추야자). 고려는 날씨가 없어 **블록 규칙(4블록에 1)**으로 뜸 → 은샘이 날씨 넣으면 `LostTraveler.Weather[Goryeo]` 한 줄. 아라비아는 3블록에 1 + 모래바람 연출. `VeniceLostTraveler` 삭제, `Common/traveler.png`(고려 쓰러진 길손 그림 복사) |
 | 마을 데이터 A | `NorthBuilder.cs`, `ArabiaRegionSetup.cs`, 맵 JSON | — | ✔ 북 4마을 손님방·등급, 중앙북 2등급, 아라비아 길 안내(2등급↑)·사나 창고, 본토 나루터·포도밭 의뢰 게시판. **중간권 마을 소개 글은 R2 고정 자산이라 고려 담당 몫** |
 
 - 점검 메뉴: `Pocket Caravan/통합/리액션 전부 배우기·처음 상태로 (Play 중)`

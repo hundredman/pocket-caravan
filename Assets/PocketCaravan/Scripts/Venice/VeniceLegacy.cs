@@ -48,6 +48,26 @@ namespace PocketCaravan
             Collectibles.KeyFor[V] = i => i == 99 ? "venice:lion_blessing" : "venice:lion:" + i;
             Collectibles.OnComplete[V] = () => VeniceSave.Set("lion_blessing", 1f);
 
+            // ---- 길 잃은 순례자 ----
+            LostTraveler.Weather[V] = () => VeniceAtmosphere.Now != VeniceAtmosphere.Weather.Clear;
+            LostTraveler.Place[V] = map =>
+            {
+                var data = VeniceData.Get(map);
+                return data != null && data.lost != null && data.lost.Length >= 2 ? VeniceUtil.Cell(data.lost[0], data.lost[1]) : (Vector3?)null;
+            };
+            LostTraveler.Extras[V] = spot => new List<DialogueUI.Choice>
+            {
+                new DialogueUI.Choice("물 한 모금 나눠 주기 (5냥)", () =>
+                {
+                    var gm = GameManager.I;
+                    if (gm.Player.money < 5) { Notify.Show("돈이 모자란다.", 2.5f); return; }
+                    gm.Player.money -= 5; gm.Player.credit += 1;
+                    Sfx.Play("success", .7f);
+                    Notify.Show("순례자가 고마워하며 길을 물어 떠났다. 신용 +1", 3.5f);
+                    LostTraveler.Dismiss(spot);
+                }),
+            };
+
             // ---- 놀거리 알림 ----
             ActivityHints.Rules[typeof(VeniceGlassSpot)] = _ => ("유리 불기", VeniceSave.DoneToday("glass"));
             ActivityHints.Rules[typeof(VeniceNetSpot)] = _ => ("그물 던지기", VeniceSave.DoneToday("net"));

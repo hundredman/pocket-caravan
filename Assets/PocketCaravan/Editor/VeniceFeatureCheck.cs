@@ -292,7 +292,7 @@ namespace PocketCaravan.EditorTools
                     for (int d = 1; d < 60; d++)            // 길 잃은 순례자: 맑지 않은 시각을 찾는다
                     {
                         bool found = false;
-                        for (int h = 6; h < 20; h++) { SetClock(gm, d, h); if (VeniceEvents.LostWeather && !VeniceEvents.AcquaAlta) { found = true; break; } }
+                        for (int h = 6; h < 20; h++) { SetClock(gm, d, h); if (LostTraveler.BadWeather(Reactions.Region.Venice) && !VeniceEvents.AcquaAlta) { found = true; break; } }
                         if (found) break;
                     }
                     report.AppendLine($"순례자 시험 날씨: {VeniceAtmosphere.Now} ({gm.Clock.Label})");
@@ -300,9 +300,9 @@ namespace PocketCaravan.EditorTools
                     step = 11; waitUntil = now + 3f; break;
                 case 11:
                 {
-                    var lost = UnityEngine.Object.FindAnyObjectByType<VeniceLostTraveler>();
+                    var lost = UnityEngine.Object.FindAnyObjectByType<LostTraveler.Spot>();
                     report.AppendLine($"   돌다리에 순례자: {(lost != null ? "있음" : "없음")}");
-                    if (lost != null) { Near(p, lost, new Vector3(1f, 0, 0)); Shot("life_9_pilgrim"); gm.GetComponent<VeniceEvents>().StartFollow(lost); }
+                    if (lost != null) { Near(p, lost, new Vector3(1f, 0, 0)); Shot("life_9_pilgrim"); lost.Interact(p); }
                     lifeMoney = gm.Player.money; lifeCredit = gm.Player.credit;
                     step = 12; waitUntil = now + 1f; break;
                 }

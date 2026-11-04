@@ -487,13 +487,13 @@ namespace PocketCaravan
             for (int d = 1; d < 60; d++)
             {
                 bool found = false;
-                for (int h = 6; h < 20; h++) { SetClock(d, h); if (VeniceEvents.LostWeather && !VeniceEvents.AcquaAlta) { found = true; break; } }
+                for (int h = 6; h < 20; h++) { SetClock(d, h); if (LostTraveler.BadWeather(Reactions.Region.Venice) && !VeniceEvents.AcquaAlta) { found = true; break; } }
                 if (found) break;
             }
             foreach (var map in new[] { "venice_c_marsh", "venice_c_pass", "venice_c_bridge", "venice_c_gate" })
             {
                 yield return Travel(map);
-                var lost = FindAnyObjectByType<VeniceLostTraveler>();
+                var lost = FindAnyObjectByType<LostTraveler.Spot>();
                 if (map == "venice_c_gate") Ok(lost == null, $"{MapRoot.Current.displayName}: 같은 날씨에 두 번째 순례자는 나오지 않음");
                 else Ok(lost != null, $"{MapRoot.Current.displayName}: {VeniceAtmosphere.Now} 날 순례자");
                 yield return Shot(map + "_view");

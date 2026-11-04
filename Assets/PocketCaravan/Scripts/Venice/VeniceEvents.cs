@@ -7,10 +7,10 @@ namespace PocketCaravan
     /// 베네치아 날씨·밤 사건 (2026-10-27, 제안). 공용 코드는 고치지 않는다.
     /// 1) 아쿠아 알타(높은 물): 닷새마다(날짜 % 5 == 2) 아침 6~12시, 석호 다섯 섬 물가 칸에 물이 차오른다.
     ///    물 찬 칸을 지나면 걸음이 0.8배(공용 PlayerMotor.walkSpeed에 배율만 곱했다가 되돌린다). 물가에서 먼 길은 그대로.
-    /// 2) 길 잃은 순례자: 안개·비가 오는 동안 본토 길 맵(습지·고갯길·돌다리·동문)의 자리(VeniceLife "lost")에 나타난다.
+    /// 2) 길 잃은 순례자: 공용 LostTraveler (2026-11-05). 베네치아는 날씨(안개·비)·자리(VeniceLife "lost")·물 한 모금 선택지만 등록(VeniceLegacy).
     ///    "따라오세요" → 맵을 넘어서도 뒤따라오고, 장터 있는 마을에 함께 들어가면 사례 40냥·신용 +1·포도주 1병. 날씨 한 번에 한 명.
     /// 3) 카니발 불꽃놀이: 카니발 밤 리알토 하늘에 불꽃이 터지고 가면 장수(VeniceMaskSeller)가 선다.
-    /// 진행: VeniceSave ("lost:날:블록" 만남, "lost_follow" 동행 중).
+    /// 진행: 공용 메모 (LostTraveler).
     /// </summary>
     public class VeniceEvents : MonoBehaviour
     {
@@ -23,8 +23,7 @@ namespace PocketCaravan
             }
         }
         public static bool LostWeather => VeniceAtmosphere.Now != VeniceAtmosphere.Weather.Clear;
-        static string LostKey => GameManager.I != null ? $"lost:{GameManager.I.Clock.day}:{GameManager.I.Clock.Hour / 4}" : "lost:-";
-        public static bool Following => VeniceSave.Get("lost_follow") > 0f;
+        public static bool Following => LostTraveler.Following;   // 2026-11-05 공용 LostTraveler
 
         Transform root;
         System.Collections.Generic.HashSet<Vector3Int> floodCells = new System.Collections.Generic.HashSet<Vector3Int>();
@@ -32,7 +31,6 @@ namespace PocketCaravan
 
         /// <summary>이 칸이 아쿠아 알타 때 물이 차는 칸인가 (걷기 연출 VeniceStride가 쓴다)</summary>
         public static bool IsFlooded(Vector3Int cell) => inst != null && inst.floodCells.Contains(cell);
-        SpriteRenderer follower;
         VeniceMaskSeller seller;
         float baseWalk = -1f;
         bool floodShown;
@@ -57,13 +55,7 @@ namespace PocketCaravan
         {
             if (root != null) Destroy(root.gameObject);
             ShowFlood(false);
-            root = null; follower = null; floodShown = false; floodCells.Clear();
-            if (!VeniceUtil.InVenice && MapRoot.Current != null && Following)
-            {
-                // 10-30 동행 중에 베네치아 밖으로 나가면 순례자는 여기서 헤어진다 (나중에 엉뚱한 곳에서 사례가 나오지 않게)
-                VeniceSave.Set("lost_follow", 0f);
-                Notify.Show("순례자: \"여기서부턴 혼자 가 볼게요. 고마웠어요!\"", 4f);
-            }
+            root = null; floodShown = false; floodCells.Clear();
             if (!VeniceUtil.InVenice || MapRoot.Current == null) return;
             var data = VeniceData.Get(VeniceUtil.Map);
             root = new GameObject("베네치아 사건").transform;
@@ -71,56 +63,9 @@ namespace PocketCaravan
             {
                 foreach (var p in VeniceData.Points(data.flood))
                     floodCells.Add(MapRoot.Current.WorldToCell(VeniceUtil.Cell(p.x, p.y)));
-                if (data.lost != null && data.lost.Length >= 2 && LostWeather && !VeniceSave.Has(LostKey) && !Following)
-                {
-                    var go = new GameObject("길 잃은 순례자");
-                    go.transform.SetParent(root, false);
-                    go.transform.position = VeniceUtil.Cell(data.lost[0], data.lost[1]);
-                    go.AddComponent<VeniceLostTraveler>();
-                }
-            }
-            if (Following)
-            {
-                // 동행 중인 순례자가 새 맵에서도 뒤따른다. 장터 마을에 함께 들어오면 사례.
-                if (data != null && data.market != null && data.market.Length >= 2) { Arrive(); }
-                else MakeFollower();
+                // 길 잃은 순례자는 2026-11-05부터 공용 LostTraveler가 세운다 (자리 VeniceLife "lost"는 VeniceLegacy가 등록)
             }
         }
-
-        void MakeFollower()
-        {
-            var pc = PlayerController.Instance;
-            follower = new GameObject("따라오는 순례자").AddComponent<SpriteRenderer>();
-            follower.transform.SetParent(root, false);
-            follower.sprite = VeniceUtil.Sprite("pilgrim");
-            follower.sortingOrder = 10;
-            if (pc != null) follower.transform.position = pc.transform.position + new Vector3(-.8f, 0f, 0f);
-        }
-
-        static void Arrive()
-        {
-            var gm = GameManager.I;
-            VeniceSave.Set("lost_follow", 0f);
-            gm.Player.money += 40;
-            gm.Player.credit += 1;
-            Sfx.Play("levelup", .7f);
-            var wine = VeniceUtil.Item("venice_wine");
-            string gift = wine != null && gm.Player.CanCarry(wine) ? "포도주 1병" : "";
-            if (gift != "") gm.Player.cargo.Add(wine, 1);
-            Notify.Show($"순례자를 마을까지 데려다주었다! 사례 40냥·신용 +1{(gift != "" ? "·" + gift : "")}", 5f);
-        }
-
-        /// <summary>순례자가 "따라오세요"를 들었을 때</summary>
-        public void StartFollow(VeniceLostTraveler who)
-        {
-            VeniceSave.Set(LostKey, 1f);
-            VeniceSave.Set("lost_follow", 1f);
-            if (who != null) Destroy(who.gameObject);
-            MakeFollower();
-            Notify.Show("순례자가 뒤따라온다. 장터 있는 마을까지 데려다주자.", 4f);
-        }
-
-        public static void Met() => VeniceSave.Set(LostKey, 1f);
 
         void Update()
         {
@@ -152,13 +97,6 @@ namespace PocketCaravan
                 }
             }
             else if (!carnival && seller != null) { Destroy(seller.gameObject); seller = null; }
-            // 따라오는 순례자
-            if (follower != null && pc != null)
-            {
-                var target = pc.transform.position + new Vector3(-.9f, .1f, 0f);
-                follower.transform.position = Vector3.Lerp(follower.transform.position, target, Time.deltaTime * 3f);
-                follower.transform.localScale = new Vector3(1f, 1f + Mathf.Abs(Mathf.Sin(Time.time * 8f)) * .04f, 1f);
-            }
         }
 
         // 물 찬 칸: 맵 Grid 아래에 런타임 타일맵 하나 (스프라이트 584개를 따로 만들면 안 그려지는 경우가 있었고 무겁다)
