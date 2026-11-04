@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-04",
+  "status": "pending user approval",
+  "assets": [
+    {
+      "id": "fallen_log",
+      "source": "ArtReview/E3-E2-Art-20261103/Native/fallen_log.png",
+      "status": "pending user visual approval"
+    },
+    {
+      "id": "transit_spice",
+      "source": "ArtReview/E3-E2-Art-20261103/Native/transit_spice.png",
+      "status": "pending user visual approval"
+    },
+    {
+      "id": "transit_wool",
+      "source": "ArtReview/E3-E2-Art-20261103/Native/transit_wool.png",
+      "status": "pending user visual approval"
+    }
+  ],
+  "ports": {
+    "source": "ArtReview/E3-E2-Art-20261103/review-ports.png",
+    "captureDate": "2026-11-03",
+    "status": "pending user visual approval"
+  },
+  "excluded": [
+    "river_flood_high",
+    "river_flood_low"
+  ],
+  "productionChanged": false
+}
