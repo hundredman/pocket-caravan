@@ -1,0 +1,26 @@
+{
+  "status": "grain and wool pending user approval; original spice selected",
+  "date": "2026-11-04",
+  "userChoice": "향신료는 이전 아이콘 유지",
+  "assets": [
+    {
+      "id": "grain",
+      "source": "ArtReview/ItemIcons-v3-20261104/Native/grain.png",
+      "rgbaSha256": "2e847aba0eacc4a7b2086d4c2c44ec0b4d51a9ec167cc93a7630ff69fff87db8",
+      "status": "pending user visual approval"
+    },
+    {
+      "id": "transit_spice",
+      "source": "ArtReview/ItemIcons-v3-20261104/Native/transit_spice.png",
+      "rgbaSha256": "71d60fc1b86f967869f7b54e695c5fccafaff7010cf93f063caea8c2cb0436f1",
+      "status": "approved reuse of original"
+    },
+    {
+      "id": "transit_wool",
+      "source": "ArtReview/ItemIcons-v3-20261104/Native/transit_wool.png",
+      "rgbaSha256": "19eb5f8194fcad97cdae504ff94f5ceed3c08b12eec7e7ac4edcfc4e0ea861af",
+      "status": "pending user visual approval"
+    }
+  ],
+  "productionApplied": false
+}

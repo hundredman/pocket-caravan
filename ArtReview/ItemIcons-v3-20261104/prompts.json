@@ -1,0 +1,30 @@
+{
+  "grain": {
+    "tool": "built-in image_gen",
+    "prompt": "Use case: precise-object-edit. Edit only the thickness of the supplied golden harvested-rice SHEAF inventory icon for the same cute pixel-art trading RPG. Preserve its golden color palette, dark warm brown outline, drooping rice panicles, center brown tie, height, front view, flat shading and chunky pixel style. Make the bundled straight stalks below the tie noticeably PLUMPER and broader, about 35 percent wider; the tied middle also slightly fuller. Keep the base as a dense broad cut bundle with a small outward fan, not a skinny single stalk. In the final native16x16 icon the lower stalk bundle should read about FIVE logical pixels across instead of about three. Keep the top rice panicles recognizable, make the entire object compact and substantial. Do not introduce a new shape/style, sack, tree, live plant roots, extra objects or text. Whole object on truly transparent background with generous margin, no ground shadow, no gradients or blur. Preserve overall height rather than stretching horizontally.",
+    "reference": "ArtReview/ItemIcons-v2-20261104/Raw/grain.png"
+  },
+  "wool": {
+    "tool": "Aseprite native source edit",
+    "source": "ArtReview/E3-E2-Art-20261103/Native/transit_wool.aseprite",
+    "changedPixels": [
+      [
+        7,
+        3
+      ],
+      [
+        8,
+        3
+      ],
+      [
+        8,
+        4
+      ]
+    ],
+    "preserveAllOtherPixels": true
+  },
+  "spice": {
+    "tool": "reuse original unchanged",
+    "source": "ArtReview/E3-E2-Art-20261103/Native/transit_spice.aseprite"
+  }
+}

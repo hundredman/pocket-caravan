@@ -1,0 +1,29 @@
+[
+  {
+    "id": "grain",
+    "size": [
+      16,
+      16
+    ],
+    "reexportSameRGBA": true,
+    "rgbaSha256": "2e847aba0eacc4a7b2086d4c2c44ec0b4d51a9ec167cc93a7630ff69fff87db8"
+  },
+  {
+    "id": "transit_spice",
+    "size": [
+      16,
+      16
+    ],
+    "reexportSameRGBA": true,
+    "rgbaSha256": "71d60fc1b86f967869f7b54e695c5fccafaff7010cf93f063caea8c2cb0436f1"
+  },
+  {
+    "id": "transit_wool",
+    "size": [
+      16,
+      16
+    ],
+    "reexportSameRGBA": true,
+    "rgbaSha256": "19eb5f8194fcad97cdae504ff94f5ceed3c08b12eec7e7ac4edcfc4e0ea861af"
+  }
+]

@@ -10,11 +10,11 @@
     {
       "id": "transit_spice",
       "source": "ArtReview/E3-E2-Art-20261103/Native/transit_spice.png",
-      "status": "pending user visual approval"
+      "status": "approved reuse of original"
     },
     {
       "id": "transit_wool",
-      "source": "ArtReview/E3-E2-Art-20261103/Native/transit_wool.png",
+      "source": "ArtReview/ItemIcons-v3-20261104/Native/transit_wool.png",
       "status": "pending user visual approval"
     }
   ],
@@ -28,6 +28,7 @@
     "river_flood_low"
   ],
   "productionChanged": false,
-  "latestIconReview": "ArtReview/ItemIcons-v2-20261104/README.md",
-  "note": "양모/향신료 v1은 사용자 수정 요청으로 대체 검토 중. 곡식 볏단 그림을 새 검토에 추가. 통나무/포구 승인 상태는 유지."
+  "latestIconReview": "ArtReview/ItemIcons-v3-20261104/README.md",
+  "note": "향신료 v1 유지 선택, 볏단 두께/양모 v1 윗중앙 홈 보정 v3는 사용자 승인 대기. 통나무/포구는 별도 대기.",
+  "grainReview": "ArtReview/ItemIcons-v3-20261104/Native/grain.png"
 }
