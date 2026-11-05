@@ -367,30 +367,22 @@ namespace PocketCaravan
 
         void DrawStart()
         {
-            light = true;
+            // 11/05 UI B안: 시작 화면과 같은 종이 바둑판 + 주황 머리띠, 로그인 칸은 게임 중 온라인 창과 같은 종이 창
+            light = false;
             GUI.depth = -600;   // 시작 화면(-500) 위
             float W = UIStyle.VirtualWidth, H = UIStyle.VirtualHeight;
-            Fill(new Rect(0, 0, W, H), Bg);
-            for (int y = 0; y < H; y += 20)
-                for (int x = 0; x < W; x += 20)
-                    if (((x / 20) + (y / 20)) % 2 == 1) Fill(new Rect(x, y, 20, 20), BgCheck);
+            CuteUI.Backdrop("온라인");
+            CuteUI.LabelCenter(W / 2, 62, "함께 떠나는 상인 길", CuteUI.Text, false, true);
 
-            var head = new Rect(20, 12, W - 40, 34);
-            Fill(head, Green);
-            Text(new Rect(head.x + 14, head.y, 200, head.height), "Pocket Caravan", White, label);
-            Text(new Rect(head.x, head.y, head.width - 14, head.height), "온라인", White, small, TextAnchor.MiddleRight);
+            float cw = 320, ch = 36 + FormHeight;
+            var card = new Rect(Mathf.Round((W - cw) / 2), 90, cw, ch);
+            CuteUI.Window(card);
+            CuteUI.TitlePlate(card.center.x, card.y - 11, "접속");
+            DrawForm(card.x + 18, card.y + 22, cw - 36, true);
 
-            Text(new Rect(0, 54, W, 24), "함께 떠나는 상인 길", TitleColor, big, TextAnchor.MiddleCenter);
-
-            float cw = 320, ch = 14 + FormHeight + 16;
-            var card = new Rect((W - cw) / 2, 82, cw, ch);
-            Fill(new Rect(card.x + 3, card.y + 4, card.width, card.height), Shadow);
-            Fill(card, White);
-            DrawForm(card.x + 18, card.y + 12, cw - 36, true);
-
-            Text(new Rect(0, H - 26, W, 14), "Tab 칸 바꾸기 · Enter 접속 · 한글/영어: 오른쪽 Alt", BrownLight, small, TextAnchor.MiddleCenter);
-            var server = new Rect(W - 90, H - 26, 76, 14);
-            Text(server, showServer ? "서버 주소 숨기기" : "서버 바꾸기", BrownLight, small, TextAnchor.MiddleRight);
+            CuteUI.LabelCenter(W / 2, H - 20, "Tab 칸 바꾸기 · Enter 접속 · 한글/영어: 오른쪽 Alt", CuteUI.Sub, true);
+            var server = new Rect(W - 96, H - 27, 82, 14);
+            CuteUI.LabelRight(server.xMax, server.center.y, showServer ? "서버 주소 숨기기" : "서버 바꾸기", CuteUI.Interact, true);
             if (GUI.Button(server, GUIContent.none, GUIStyle.none)) { showServer = !showServer; addressBox.Text = address; }
         }
 
