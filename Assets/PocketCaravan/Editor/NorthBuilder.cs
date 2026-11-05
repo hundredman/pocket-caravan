@@ -155,6 +155,14 @@ namespace PocketCaravan.EditorTools
             // 10/30 눈사람 장식: 눈숲 마을 밖 장터에서 기념품으로 사 준다 (재고가 적어 값이 좋음)
             foreach (var t in new[] { birka, post, ccreek, cross }) t.stock.Add(S(snowman, 1));
             foreach (var t in new[] { birka, hunter, naru, cwood, cross }) t.stock.Add(S(honey, 2));
+            // 2026-11-05 통합(기우) 장터 규칙: 마을마다 생필품(땔감·곡식, 산지 없는 공용 물건) 2줄. 다른 지역 물건은 기준 공급품에 넣지 않는다
+            var firewood = AssetDatabase.LoadAssetAtPath<ItemData>($"{Root}/Data/Goryeo/Item_firewood.asset");
+            var grainCommon = AssetDatabase.LoadAssetAtPath<ItemData>($"{Root}/Data/Goryeo/Item_grain.asset");
+            foreach (var t in new[] { birka, hunter, naru, laugar, herd, post, cwood, ccreek, cross })
+            {
+                if (firewood != null) t.stock.Add(S(firewood, t == cwood ? 30 : 8));   // 눈숲 마을이 땔감 산지
+                if (grainCommon != null) t.stock.Add(S(grainCommon, t == birka || t == post ? 12 : 6));
+            }
             // 손수레는 공용 수단(고려 데이터)을 그대로 판다 (팀 규칙: 공통 수단을 지역마다 복제하지 않음)
             var cart = AssetDatabase.LoadAssetAtPath<VehicleData>($"{Root}/Data/Goryeo/Vehicle_Handcart.asset");
             if (cart != null) birka.vehiclesForSale.Add(cart);

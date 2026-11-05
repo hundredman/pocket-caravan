@@ -207,6 +207,14 @@ namespace PocketCaravan.EditorTools
             rialto.stock.Add(new TownData.StockEntry { item = glassArt, optimal = 6, localPriceMultiplier = 1f });
             rialto.stock.Add(new TownData.StockEntry { item = lace, optimal = 6, localPriceMultiplier = 1f });
             chioggia.stock.Add(new TownData.StockEntry { item = wine, optimal = 12, localPriceMultiplier = 1.1f });
+            // 2026-11-05 통합(기우) 장터 규칙: 마을마다 생필품(땔감·곡식, 산지 없는 공용 물건) 2줄. 다른 지역 물건은 기준 공급품에 넣지 않는다
+            var firewood = AssetDatabase.LoadAssetAtPath<ItemData>(Root + "/Data/Goryeo/Item_firewood.asset");
+            var grainCommon = AssetDatabase.LoadAssetAtPath<ItemData>(Root + "/Data/Goryeo/Item_grain.asset");
+            foreach (var t in new[] { rialto, chioggia, murano, santerasmo, burano, caravanserai, landing, vineyard })
+            {
+                if (firewood != null) t.stock.Add(new TownData.StockEntry { item = firewood, optimal = t == vineyard ? 24 : 8, localPriceMultiplier = 1f });   // 포도밭 양조장이 땔감 산지
+                if (grainCommon != null) t.stock.Add(new TownData.StockEntry { item = grainCommon, optimal = t == landing ? 24 : 8, localPriceMultiplier = 1f });   // 본토 나루터가 곡식 집산
+            }
 
             var handcart = db.vehicles.Find(v => v != null && v.id == "handcart");
             foreach (var t in new[] { rialto, chioggia, murano, santerasmo, burano, caravanserai, landing, vineyard }) t.vehiclesForSale.Clear();
