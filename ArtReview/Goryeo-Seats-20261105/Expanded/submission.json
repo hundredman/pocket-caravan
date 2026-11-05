@@ -1,0 +1,53 @@
+{
+  "status": "review",
+  "production": false,
+  "userApprovedOnly": "모닥불 움직임 / Motion/approval.json",
+  "newPoseApprovalPending": [
+    "venice",
+    "viking",
+    "arabia"
+  ],
+  "art": [
+    {
+      "originId": "goryeo",
+      "file": "ArtReview/Goryeo-Seats-20261105/tanuki-seated-front.png",
+      "width": 16,
+      "height": 24,
+      "ppu": 16,
+      "pivotY": 0.25,
+      "rgbaSha256": "785a75482608c22f197465897c2bc2f27251814311adcfb1c5673b01c6895ff3"
+    },
+    {
+      "originId": "venice",
+      "file": "ArtReview/Goryeo-Seats-20261105/Expanded/venice-seated-front.png",
+      "width": 16,
+      "height": 24,
+      "ppu": 16,
+      "pivotY": 0.25,
+      "rgbaSha256": "45d3a9893a057834319d3fcb9b1118e8c1a421120015e683f2ed6439aa0089da"
+    },
+    {
+      "originId": "viking",
+      "file": "ArtReview/Goryeo-Seats-20261105/Expanded/viking-seated-front.png",
+      "width": 16,
+      "height": 24,
+      "ppu": 16,
+      "pivotY": 0.25,
+      "rgbaSha256": "3f071784a90d199053be7387300546dc93e856bcd5aac0867ebdd4d37ce043e4"
+    },
+    {
+      "originId": "arabia",
+      "file": "ArtReview/Goryeo-Seats-20261105/Expanded/arabia-seated-front.png",
+      "width": 32,
+      "height": 48,
+      "ppu": 32,
+      "pivotY": 0.4166666666666667,
+      "rgbaSha256": "88a248fa29773c85dfa4c9f12998f0c6e238864ff72616205a80980ae210be84"
+    }
+  ],
+  "nativeMethods": {
+    "venice": "original text/palette definitions + new knees",
+    "viking": "original reindeer text/palette definitions + new knees",
+    "arabia": "Aseprite lower body redraw; upper31rows pixel-identical; AI concept discarded"
+  }
+}

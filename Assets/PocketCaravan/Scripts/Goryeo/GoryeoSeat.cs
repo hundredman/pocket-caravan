@@ -8,25 +8,36 @@ namespace PocketCaravan
     public sealed class GoryeoSeat : Interactable
     {
         [Serializable] public class Site { public string id,mapId,name,source; public int x,y,propX,propY; public float lift; public bool fire; }
-        [Serializable] public class Config { public string status,originId,sprite; public Site[] seats; }
+        [Serializable] public class PoseData { public string originId,file; public float ppu,pivotY; }
+        [Serializable] public class Art { public string originId; public Sprite sprite; }
+        [Serializable] public class Config { public string status,originId,sprite; public Site[] seats; public PoseData[] poses; }
         public Site site;
         public Sprite seatedSprite;
+        public Art[] art;
         static GoryeoSeat current;
         PlayerController actor;
+        OriginData seatedOrigin;
+        Sprite activePose;
         Vector3 standing,bodyRest;
         Vector2Int facing;
         public static bool Sitting(PlayerController pc) => current != null && current.actor == pc;
         public override string DisplayName => site == null ? "" : site.name;
         public override string ActionVerb => current==this ? "일어나기" : "앉기";
         public override Kind Category => Kind.Board;
+        public Sprite PoseFor(OriginData origin)
+        {
+            if(origin==null)return null;
+            if(art!=null)foreach(var drawing in art)if(drawing!=null&&drawing.originId==origin.id)return drawing.sprite;
+            return art==null&&origin.id=="goryeo"?seatedSprite:null;
+        }
 
         bool Safe(PlayerController pc)
         {
             var map=MapRoot.Current;
-            return pc!=null && pc.Motor!=null && pc.anim!=null && seatedSprite!=null && site!=null &&
+            return pc!=null && pc.Motor!=null && pc.anim!=null && site!=null &&
                 map!=null && map.previewOnly && map.mapId==site.mapId && gameObject.scene==map.gameObject.scene &&
                 GameManager.I!=null && !GameManager.I.AutosaveEnabled && !GameManager.I.IsTravelling &&
-                GameManager.I.Player.origin!=null && GameManager.I.Player.origin.id=="goryeo" &&
+                PoseFor(GameManager.I.Player.origin)!=null && (actor==null||GameManager.I.Player.origin==seatedOrigin) &&
                 !UIState.Blocking && map.IsWalkable(Cell,pc.Motor) && MapExit.At(Cell)==null &&
                 Vector2.Distance(pc.transform.position,transform.position)<=pc.talkRange;
         }
@@ -34,6 +45,7 @@ namespace PocketCaravan
         {
             if(current!=null || !Safe(pc))return;
             actor=pc;current=this;standing=pc.transform.position;facing=pc.Motor.Facing;
+            seatedOrigin=GameManager.I.Player.origin;activePose=PoseFor(seatedOrigin);
             bodyRest=pc.anim.transform.localPosition;
             pc.Motor.Teleport(transform.position,Vector2Int.down);
             pc.anim.facing=Vector2Int.down;pc.anim.walking=false;
@@ -65,25 +77,32 @@ namespace PocketCaravan
                         actor.anim.GetComponent<SpriteRenderer>().sprite=actor.anim.frames[d*4];
                 }
             }
-            actor=null;if(current==this)current=null;
+            actor=null;activePose=null;seatedOrigin=null;if(current==this)current=null;
         }
         void LateUpdate()
         {
             if(actor==null)return;
             if(!Safe(actor)){Stand();return;}
             actor.anim.transform.localPosition=bodyRest+Vector3.up*site.lift;
-            actor.anim.GetComponent<SpriteRenderer>().sprite=seatedSprite;
+            actor.anim.GetComponent<SpriteRenderer>().sprite=activePose;
         }
         protected override void OnDisable(){Stand();base.OnDisable();}
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void ResetSession()=>current=null;
 #if UNITY_EDITOR
         public static int InstallReview(Config config,Sprite pose)
+            =>InstallReview(config,new[]{new Art{originId="goryeo",sprite=pose}});
+        public static int InstallReview(Config config,Art[] drawings)
         {
             var map=MapRoot.Current;
             if(map==null||!map.previewOnly||GameManager.I==null||GameManager.I.AutosaveEnabled||
-               config==null||config.status!="review"||config.originId!="goryeo"||pose==null)
+               config==null||config.status!="review"||config.originId!="goryeo"||drawings==null||drawings.Length==0)
                 throw new InvalidOperationException("Explicit preview with saves OFF required");
+            var ids=new System.Collections.Generic.HashSet<string>();
+            foreach(var drawing in drawings)
+                if(drawing==null||drawing.sprite==null||!ids.Add(drawing.originId)||
+                   (drawing.originId!="goryeo"&&drawing.originId!="venice"&&drawing.originId!="viking"&&drawing.originId!="arabia"))
+                    throw new ArgumentException("Invalid or duplicate native pose");
             foreach(var old in FindObjectsByType<GoryeoSeat>(FindObjectsSortMode.None))DestroyImmediate(old.gameObject);
             int count=0;
             foreach(var s in config.seats)
@@ -93,7 +112,9 @@ namespace PocketCaravan
                 if(!map.IsWalkable(cell)||MapExit.At(cell)!=null)continue;
                 var go=new GameObject("Review seat "+s.id);go.transform.SetParent(map.transform,false);
                 go.transform.position=map.CellCenter(cell)-(Vector3)PlayerController.Instance.Motor.feetOffset;
-                var seat=go.AddComponent<GoryeoSeat>();seat.blocksMovement=false;seat.site=s;seat.seatedSprite=pose;count++;
+                var seat=go.AddComponent<GoryeoSeat>();seat.blocksMovement=false;seat.site=s;seat.art=(Art[])drawings.Clone();
+                foreach(var drawing in drawings)if(drawing.originId=="goryeo")seat.seatedSprite=drawing.sprite;
+                count++;
                 if(s.fire)
                 {
                     for(int y=0;y<2;y++)for(int x=0;x<2;x++)

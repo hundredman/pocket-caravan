@@ -11,8 +11,8 @@ namespace PocketCaravan.EditorTools
 {
     public sealed class GoryeoSeatPlayReview:MonoBehaviour
     {
-        public bool motion;
-        string Out=>motion?"ArtReview/Goryeo-Seats-20261105/Motion/":"ArtReview/Goryeo-Seats-20261105/Unity/";
+        public bool motion,expanded;
+        string Out=>expanded?"ArtReview/Goryeo-Seats-20261105/Expanded/Unity/":motion?"ArtReview/Goryeo-Seats-20261105/Motion/":"ArtReview/Goryeo-Seats-20261105/Unity/";
         [Serializable]class Report{public bool complete;public string error;public List<string> checks=new List<string>();}
         [Serializable]class MotionSample{public string phase;public int frame,embers;public float light;public Vector3 ember;}
         [Serializable]class MotionReport{public string framesPath;public List<MotionSample> samples=new List<MotionSample>();}
@@ -92,11 +92,12 @@ namespace PocketCaravan.EditorTools
                 Check(gm.Player.money==money&&JsonUtility.ToJson(gm.Player.cargo)==cargo&&gm.Player.vehicle==vehicle&&!gm.AutosaveEnabled,"money cargo vehicle saving unchanged "+seat.site.id);
             }
             if(motion)yield return CaptureMotion();
+            if(expanded)yield return ExpandedPoses();
             foreach(var s in FindObjectsByType<GoryeoSeat>(FindObjectsSortMode.None))s.Stand();
             var last=FindFirstObjectByType<GoryeoSeat>();pc.Motor.Teleport(last.transform.position,Vector2Int.down);last.Interact(pc);Check(GoryeoSeat.Sitting(pc),"sitting before real scene unload");
             yield return UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode("Assets/PocketCaravan/Scenes/Goryeo/Naru.unity",new LoadSceneParameters(LoadSceneMode.Single));
             for(int i=0;i<8;i++)yield return null;Prepare();Check(!GoryeoSeat.Sitting(PlayerController.Instance)&&FindObjectsByType<GoryeoSeat>(FindObjectsSortMode.None).Length==0,"scene unload releases without leaked seats");
-            if(motion)Check(FindObjectsByType<GoryeoCampfire>(FindObjectsSortMode.None).Length==0,"scene unload removes campfire motion");
+            if(motion||expanded)Check(FindObjectsByType<GoryeoCampfire>(FindObjectsSortMode.None).Length==0,"scene unload removes campfire motion");
             Check(!gm.AutosaveEnabled,"saves OFF at end");
         }
         IEnumerator CaptureMotion()
@@ -136,6 +137,56 @@ namespace PocketCaravan.EditorTools
             MapRoot.Current.previewOnly=false;yield return null;yield return new WaitForEndOfFrame();Check(!fx.Visible&&fx.LightIntensity==0,"production scene guard keeps effect off");MapRoot.Current.previewOnly=true;
             Check(gm.Player.money==money&&JsonUtility.ToJson(gm.Player.cargo)==cargo&&!gm.AutosaveEnabled,"motion has no economy/save effects");
             File.WriteAllText(Out+"samples.json",JsonUtility.ToJson(r,true));
+        }
+        IEnumerator ExpandedPoses()
+        {
+            var config=JsonUtility.FromJson<GoryeoSeat.Config>(File.ReadAllText("ArtReview/Goryeo-Seats-20261105/Expanded/source.json"));
+            var art=new List<GoryeoSeat.Art>();
+            foreach(var data in config.poses)
+            {
+                var texture=new Texture2D(2,2,TextureFormat.RGBA32,false);texture.LoadImage(File.ReadAllBytes(data.file));texture.filterMode=FilterMode.Point;
+                var sprite=Sprite.Create(texture,new Rect(0,0,texture.width,texture.height),new Vector2(.5f,data.pivotY),data.ppu);
+                art.Add(new GoryeoSeat.Art{originId=data.originId,sprite=sprite});
+            }
+            Check(GoryeoSeat.InstallReview(config,art.ToArray())==3,"all-origin native art explicitly installed at three review seats");
+            yield return null;yield return new WaitForEndOfFrame();
+            Check(FindObjectsByType<GoryeoCampfire>(FindObjectsSortMode.None).Length==1,"reinstall cleans previous fire effect");
+            bool rejected=false;try{GoryeoSeat.InstallReview(config,new[]{art[0],art[0]});}catch(ArgumentException){rejected=true;}
+            Check(rejected&&FindObjectsByType<GoryeoSeat>(FindObjectsSortMode.None).Length==3,"duplicate art rejects without deleting valid seats");
+            var gm=GameManager.I;var pc=PlayerController.Instance;var cam=Camera.main;
+            gm.Clock.minuteOfDay=12*60;
+            foreach(var data in config.poses)
+            {
+                string file=data.originId=="goryeo"?"Assets/PocketCaravan/Data/Goryeo/Origin_Goryeo.asset":
+                    "Assets/PocketCaravan/Data/Origins/Origin_"+(data.originId=="venice"?"Venice":data.originId=="viking"?"Viking":"Arabia")+".asset";
+                var origin=AssetDatabase.LoadAssetAtPath<OriginData>(file);Check(origin!=null,"existing origin "+data.originId);gm.Player.origin=origin;
+                for(int n=0;n<3;n++)yield return null;
+                int money=gm.Player.money;string cargo=JsonUtility.ToJson(gm.Player.cargo);var vehicle=gm.Player.vehicle;
+                foreach(var seat in FindObjectsByType<GoryeoSeat>(FindObjectsSortMode.None))
+                {
+                    pc.Motor.Teleport(seat.transform.position,Vector2Int.down);cam.transform.position=seat.transform.position+Vector3.up*2+new Vector3(0,0,-10);
+                    var standing=pc.transform.position;var scale=pc.anim.transform.localScale;
+                    if(seat.site.fire)yield return Photo(data.originId+"-before");
+                    seat.Interact(pc);yield return new WaitForEndOfFrame();
+                    Check(GoryeoSeat.Sitting(pc)&&pc.anim.GetComponent<SpriteRenderer>().sprite==seat.PoseFor(origin),"correct native seated identity "+data.originId+seat.site.id);
+                    var pose=seat.PoseFor(origin);var idle=origin.playerFrames[0];
+                    Check(pose.rect.size==idle.rect.size&&pose.pixelsPerUnit==idle.pixelsPerUnit&&Vector2.Distance(pose.pivot,idle.pivot)<.01f&&pc.anim.transform.localScale==scale,"canvas PPU pivot scale retained "+data.originId+seat.site.id);
+                    Check(MapRoot.Current.IsWalkable(pc.Motor.Cell)&&pc.Motor.Velocity==Vector2.zero&&!UIState.Blocking,"safe feet and ordinary UI "+data.originId+seat.site.id);
+                    if(seat.site.fire)yield return Photo(data.originId+"-after");
+                    float seatedSpeed=pc.CurrentSpeed();GoryeoSeat.Handle(pc,Vector2.right,false,false);
+                    Check(!GoryeoSeat.Sitting(pc)&&Vector3.Distance(pc.transform.position,standing)<.001f&&Mathf.Abs(pc.CurrentSpeed()-seatedSpeed)<.001f,"movement stands at original speed/position "+data.originId+seat.site.id);
+                    seat.Interact(pc);GoryeoSeat.Handle(pc,Vector2.zero,true,false);Check(!GoryeoSeat.Sitting(pc),"Space stands "+data.originId+seat.site.id);
+                }
+                Check(gm.Player.origin==origin&&gm.Player.money==money&&JsonUtility.ToJson(gm.Player.cargo)==cargo&&gm.Player.vehicle==vehicle&&!gm.AutosaveEnabled,"origin cargo vehicle money saves retained "+data.originId);
+            }
+            var last=FindFirstObjectByType<GoryeoSeat>();pc.Motor.Teleport(last.transform.position,Vector2Int.down);last.Interact(pc);
+            Check(GoryeoSeat.Sitting(pc),"seated before origin switch");
+            gm.Player.origin=AssetDatabase.LoadAssetAtPath<OriginData>("Assets/PocketCaravan/Data/Goryeo/Origin_Goryeo.asset");
+            yield return null;yield return new WaitForEndOfFrame();Check(!GoryeoSeat.Sitting(pc),"changing origin stands without wrong-race pose");
+            var unknown=ScriptableObject.CreateInstance<OriginData>();unknown.id="qa_unknown_origin";gm.Player.origin=unknown;
+            last.Interact(pc);Check(!GoryeoSeat.Sitting(pc),"unknown/costume without pose never becomes another animal");
+            gm.Player.origin=AssetDatabase.LoadAssetAtPath<OriginData>("Assets/PocketCaravan/Data/Goryeo/Origin_Goryeo.asset");Destroy(unknown);
+            for(int n=0;n<3;n++)yield return null;
         }
     }
 }
