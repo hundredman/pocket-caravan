@@ -83,46 +83,8 @@ namespace PocketCaravan
         }
 
         // ---------- 그리기 (가상 해상도 640×360 기준) ----------
-        static readonly Color32 Bg = new Color32(0xEF, 0xE6, 0xCF, 0xFF);
-        static readonly Color32 BgCheck = new Color32(0xE8, 0xDE, 0xC4, 0xFF);
-        static readonly Color32 Green = new Color32(0x3A, 0x71, 0x55, 0xFF);
-        static readonly Color32 Brown = new Color32(0x4A, 0x35, 0x24, 0xFF);
-        static readonly Color32 BrownLight = new Color32(0x8A, 0x6A, 0x46, 0xFF);
-        static readonly Color32 Title = new Color32(0x6B, 0x4A, 0x2B, 0xFF);
-        static readonly Color32 Shadow = new Color32(0xD6, 0xC8, 0xA6, 0xFF);
-        static readonly Color32 CharBg = new Color32(0xF6, 0xEF, 0xDC, 0xFF);
-        static readonly Color32 Pick = new Color32(0xE0, 0x57, 0x3A, 0xFF);
-        static readonly Color32 White = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
-        static readonly Color32 Cream = new Color32(0xFB, 0xF5, 0xE6, 0xFF);
-
-        GUIStyle text, textSmall, textBig;
-
-        static void Fill(Rect r, Color32 c)
-        {
-            var old = GUI.color; GUI.color = UIStyle.Lin(c);
-            GUI.DrawTexture(r, Texture2D.whiteTexture);
-            GUI.color = old;
-        }
-
-        static void Frame(Rect r, Color32 c, float t)
-        {
-            Fill(new Rect(r.x, r.y, r.width, t), c); Fill(new Rect(r.x, r.yMax - t, r.width, t), c);
-            Fill(new Rect(r.x, r.y, t, r.height), c); Fill(new Rect(r.xMax - t, r.y, t, r.height), c);
-        }
-
-        GUIStyle Style(ref GUIStyle s, Font f, int size, Color32 c, TextAnchor a)
-        {
-            if (s == null) s = new GUIStyle(GUI.skin.label) { font = f, fontSize = size, alignment = a, clipping = TextClipping.Overflow, wordWrap = false };
-            s.normal.textColor = UIStyle.Lin(c);
-            return s;
-        }
-
-        void Label(Rect r, string s, Color32 c, bool small = false, TextAnchor a = TextAnchor.MiddleCenter)
-        {
-            var st = small ? Style(ref textSmall, UIStyle.SmallFont, 9, c, a) : Style(ref text, GUI.skin.font, 11, c, a);
-            st.alignment = a;
-            GUI.Label(r, s, st);
-        }
+        // 11/05 UI B안: 종이 바둑판 바탕 + 주황 머리띠(CuteUI.Backdrop), 메뉴는 종이 창, 문명 카드는 테 두른 카드.
+        // 고른 것은 청록(상호작용). 고르는 법·출발 규칙은 그대로.
 
         void OnGUI()
         {
@@ -130,34 +92,26 @@ namespace PocketCaravan
             UIStyle.Begin();
             GUI.depth = -500;   // HUD·대화창 위, 맵 이동 페이드(-1000) 아래
             float W = UIStyle.VirtualWidth, H = UIStyle.VirtualHeight;
-            Fill(new Rect(0, 0, W, H), Bg);
-            for (int y = 0; y < H; y += 20)
-                for (int x = 0; x < W; x += 20)
-                    if (((x / 20) + (y / 20)) % 2 == 1) Fill(new Rect(x, y, 20, 20), BgCheck);
-
-            // 머리띠
-            var head = new Rect(20, 12, W - 40, 34);
-            Fill(head, Green);
-            Label(new Rect(head.x + 14, head.y, 200, head.height), "Pocket Caravan", White, false, TextAnchor.MiddleLeft);
-
+            CuteUI.Backdrop();
             if (mode == Mode.Menu) { DrawMenu(W, H); return; }
             DrawPick(W, H);
         }
 
         void DrawMenu(float W, float H)
         {
-            var box = new Rect((W - 220) / 2, 130, 220, 110);
-            Fill(new Rect(box.x + 3, box.y + 4, box.width, box.height), Shadow);
-            Fill(box, White);
+            var box = new Rect(Mathf.Round((W - 240) / 2), 128, 240, 112);
+            CuteUI.Window(box);
+            CuteUI.TitlePlate(box.center.x, box.y - 11, "바리바리");
             string[] items = { "이어하기", "새로 시작 (지난 저장 덮어씀)" };
             for (int i = 0; i < 2; i++)
             {
-                var r = new Rect(box.x + 16, box.y + 18 + i * 40, box.width - 32, 30);
-                Fill(r, i == menuIndex ? Cream : White);
-                if (i == menuIndex) { Frame(r, Pick, 2); Label(new Rect(r.x - 14, r.y, 12, r.height), "▶", Pick); }
-                Label(r, items[i], Brown);
+                var r = new Rect(box.x + 18, box.y + 22 + i * 38, box.width - 36, 28);
+                bool on = i == menuIndex;
+                CuteUI.Box(r, 8, on ? CuteUI.Interact : CuteUI.Paper, on ? CuteUI.Ink : CuteUI.Line, 1, on ? 2 : 0, CuteUI.InteractLo);
+                if (on) CuteUI.Fill(new Rect(r.x + 5, r.y + 2, r.width - 10, 1), CuteUI.InteractHi);
+                CuteUI.LabelCenter(r.center.x, r.center.y, items[i], on ? CuteUI.OnInteract : CuteUI.Text, false, on);
             }
-            Label(new Rect(0, H - 26, W, 14), "↑ ↓ 고르기 · Space 결정", BrownLight, true);
+            CuteUI.LabelCenter(W / 2, H - 20, "↑ ↓ 고르기 · Space 결정", CuteUI.Sub, true);
         }
 
         void DrawPick(float W, float H)
@@ -170,46 +124,44 @@ namespace PocketCaravan
                     previews[i] = string.IsNullOrEmpty(all.choices[i].preview) ? null : Resources.Load<Texture2D>(all.choices[i].preview);
             }
 
-            Label(new Rect(0, 52, W, 26), "어느 문명의 상인으로 떠날까?", Title);
-            const float cw = 190, ch = 107, gap = 20;
-            float x0 = (W - (cw * 2 + gap)) / 2, y0 = 83;
+            CuteUI.LabelCenter(W / 2, 64, "어느 문명의 상인으로 떠날까?", CuteUI.Text, false, true);
+            const float cw = 190, ch = 107, gap = 22;
+            float x0 = Mathf.Round((W - (cw * 2 + gap)) / 2), y0 = 80;
             for (int i = 0; i < all.choices.Count && i < 4; i++)
             {
                 var c = all.choices[i];
-                var r = new Rect(x0 + (i % 2) * (cw + gap), y0 + (i / 2) * (ch + 13), cw, ch);
-                Fill(new Rect(r.x + 3, r.y + 4, r.width, r.height), Shadow);
-                Fill(r, White);
-                if (i == pick)
-                {
-                    Frame(new Rect(r.x - 4, r.y - 4, r.width + 8, r.height + 8), Pick, 3);
-                    Label(new Rect(r.x - 18, r.y, 12, r.height), "▶", Pick);
-                }
+                var r = new Rect(x0 + (i % 2) * (cw + gap), y0 + (i / 2) * (ch + 14), cw, ch);
+                bool on = i == pick;
+                if (on) CuteUI.Box(new Rect(r.x - 4, r.y - 4, r.width + 8, r.height + 8), 10, CuteUI.Interact, CuteUI.Ink, 1, 2, CuteUI.InteractLo);
+                CuteUI.Card(r);
                 // 출발 마을 그림
-                var mapR = new Rect(r.x + 6, r.y + 6, 125, 95);
+                var mapR = new Rect(r.x + 7, r.y + 7, 122, 93);
                 if (previews[i] != null) GUI.DrawTexture(mapR, previews[i], ScaleMode.ScaleAndCrop);
-                else Fill(mapR, CharBg);
+                else CuteUI.Fill(mapR, CuteUI.Paper2);
+                CuteUI.Box(new Rect(mapR.x - 1, mapR.y - 1, mapR.width + 2, mapR.height + 2), 2, new Color32(0, 0, 0, 0), CuteUI.Ink);
                 // 주인공
-                var charR = new Rect(mapR.xMax + 4, r.y + 6, r.xMax - 6 - (mapR.xMax + 4), 95);
-                Fill(charR, CharBg);
+                var charR = new Rect(mapR.xMax + 4, r.y + 7, r.xMax - 7 - (mapR.xMax + 4), 93);
+                CuteUI.Box(charR, 5, CuteUI.Paper2, CuteUI.Line);
                 DrawHero(c.origin, new Rect(charR.x, charR.y + 8, charR.width, 62));
-                Label(new Rect(charR.x, charR.yMax - 18, charR.width, 14), c.animal, BrownLight, true);
+                CuteUI.LabelCenter(charR.center.x, charR.yMax - 11, c.animal, CuteUI.Sub, true);
                 // 이름표
                 string name = string.IsNullOrEmpty(c.startTown) ? c.region : $"{c.region} · {c.startTown}";
-                float tw = Style(ref text, GUI.skin.font, 11, Brown, TextAnchor.MiddleCenter).CalcSize(new GUIContent(name)).x + 12;
-                var tag = new Rect(mapR.x + 4, mapR.yMax - 22, Mathf.Min(mapR.width - 8, tw), 18);
-                Fill(tag, White);
-                Label(tag, name, Brown);
+                float tw = Mathf.Min(mapR.width - 8, CuteUI.Width(name, false, true) + 14);
+                var tag = new Rect(mapR.x + 4, mapR.yMax - 22, tw, 17);
+                CuteUI.Box(tag, 7, on ? CuteUI.Interact : CuteUI.Paper, CuteUI.Ink);
+                CuteUI.LabelCenter(tag.center.x, tag.center.y, name, on ? CuteUI.OnInteract : CuteUI.Text, false, true);
             }
 
             // 고른 문명 한 줄 소개
             var sel = all.choices[Mathf.Clamp(pick, 0, all.choices.Count - 1)];
-            var bar = new Rect((W - 420) / 2, H - 39, 420, 30);
-            Fill(bar, Cream);
-            Frame(bar, Shadow, 2);
             string who = sel.origin != null ? sel.origin.displayName : "";
-            Label(new Rect(bar.x, bar.y + 1, bar.width, 16), $"{sel.region} · {who} ({sel.animal}) · 강점: {sel.strength}", Brown);
-            Label(new Rect(bar.x, bar.y + 16, bar.width, 12),
-                $"{sel.startTown}에서 출발 · ← → ↑ ↓ 고르기 · Space 출발" + (hasSave ? " · Esc 뒤로" : ""), BrownLight, true);
+            string intro = $"{sel.region} · {who} ({sel.animal}) · 강점: {sel.strength}";
+            float bw = Mathf.Min(W - 24, Mathf.Max(430, CuteUI.Width(intro) + 30));   // 강점 글이 길어도 칸 안에
+            var bar = new Rect(Mathf.Round((W - bw) / 2), H - 40, bw, 32);
+            CuteUI.Box(bar, 9, CuteUI.Paper, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
+            CuteUI.LabelCenter(bar.center.x, bar.y + 10, intro, CuteUI.Text);
+            CuteUI.LabelCenter(bar.center.x, bar.y + 23,
+                $"{sel.startTown}에서 출발 · ← → ↑ ↓ 고르기 · Space 출발" + (hasSave ? " · Esc 뒤로" : ""), CuteUI.Sub, true);
         }
 
         static void DrawHero(OriginData origin, Rect area)

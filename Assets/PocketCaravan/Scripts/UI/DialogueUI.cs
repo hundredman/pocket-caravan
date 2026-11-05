@@ -127,7 +127,7 @@ namespace PocketCaravan
             GUI.depth = -10;   // 다른 글자들 위에
             if (bodyStyle == null || bodyStyle.font != UIStyle.RegularFont)
             {
-                bodyStyle = new GUIStyle(UIStyle.Wrap) { richText = false, clipping = TextClipping.Clip };
+                bodyStyle = new GUIStyle(CuteUI.PaperWrap) { richText = false, clipping = TextClipping.Clip };   // 11/05 UI B안: 종이 위 진한 글씨
                 pageWidth = -1;
             }
             float w = Mathf.Min(460, UIStyle.VirtualWidth - 20), h = 104;
@@ -143,32 +143,40 @@ namespace PocketCaravan
                     consumed += pages[pageIndex].Length;
                 pageWidth = bodyWidth;
             }
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2, UIStyle.VirtualHeight - h - 26, w, h);
-            GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(new Rect(r.x + 10, r.y + 6, w - 20, 16), $"<color=#FFE08A>{speaker}</color>", UIStyle.Rich);
-            GUI.Label(new Rect(r.x + 10, r.y + 24, bodyWidth, BodyHeight), CurrentPage, bodyStyle);
+            var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), UIStyle.VirtualHeight - h - 26, w, h);
+            // 11/05 UI B안: 종이 창 + 왼쪽 위에 걸친 주황 이름표
+            CuteUI.Window(r);
+            if (!string.IsNullOrEmpty(speaker))
+            {
+                float nw = CuteUI.Width(speaker, false, true) + 22;
+                var tag = new Rect(r.x + 12, r.y - 9, nw, 18);
+                CuteUI.Box(tag, 7, CuteUI.Frame, CuteUI.Ink, 2, 2);
+                CuteUI.LabelCenter(tag.center.x, tag.center.y + 1, speaker, CuteUI.Ink, false, true);
+                CuteUI.LabelCenter(tag.center.x, tag.center.y, speaker, CuteUI.White, false, true);
+            }
+            GUI.Label(new Rect(r.x + 10, r.y + 15, bodyWidth, BodyHeight), CurrentPage, bodyStyle);   // 이름이 창 위 이름표로 올라가서 본문도 위로
 
             if (pages.Count > 1)
-                GUI.Label(new Rect(r.x + 10, r.yMax - 20, 60, 16), $"{pageIndex + 1} / {pages.Count}", UIStyle.Small);
+                GUI.Label(new Rect(r.x + 10, r.yMax - 22, 60, 16), $"<color=#6a5464>{pageIndex + 1} / {pages.Count}</color>", CuteUI.PaperSmall);
 
             float bx = r.xMax - 10;
             if (!ChoicesVisible)
             {
-                if (GUI.Button(new Rect(bx - 104, r.yMax - 24, 104, 18), "다음 (Space)", UIStyle.Button)) NextPage();
+                if (GUI.Button(new Rect(bx - 104, r.yMax - 26, 104, 18), "다음 (Space)", CuteUI.PaperButtonOn)) NextPage();
                 return;
             }
             if (choices.Count == 0)
             {
-                GUI.Label(new Rect(bx - 120, r.yMax - 20, 120, 16), "계속 (Space)", UIStyle.Right);
+                GUI.Label(new Rect(bx - 120, r.yMax - 22, 120, 16), "<color=#6a5464>계속 (Space)</color>", CuteUI.PaperRight);
                 return;
             }
             for (int i = choices.Count - 1; i >= 0; i--)
             {
                 var c = choices[i];
                 string label = i == 0 ? c.label + " (Space)" : (i == choices.Count - 1 ? c.label + " (Esc)" : c.label);
-                float bw = Mathf.Max(60f, UIStyle.Button.CalcSize(new GUIContent(label)).x + 14f);
+                float bw = Mathf.Max(60f, CuteUI.PaperButton.CalcSize(new GUIContent(label)).x + 14f);
                 bx -= bw;
-                if (GUI.Button(new Rect(bx, r.yMax - 24, bw, 18), label, UIStyle.Button)) { Pick(c); return; }
+                if (GUI.Button(new Rect(bx, r.yMax - 26, bw, 18), label, i == 0 ? CuteUI.PaperButtonOn : CuteUI.PaperButton)) { Pick(c); return; }   // Space 고르는 것 = 청록
                 bx -= 6;
             }
         }

@@ -335,6 +335,67 @@ namespace PocketCaravan
             return h;
         }
 
+        // ---------------- 종이 창 안 GUILayout 모양 (장터·여정 수첩·대화) ----------------
+        // 11/05 레이아웃 코드는 그대로 두고 UIStyle.Rich/Small/Wrap/Button 자리에 넣는다: 종이 위 진한 글씨, 종이 버튼(고른 것은 청록)
+        static GUIStyle paperRich, paperSmall, paperWrap, paperRight, paperButton, paperButtonOn;
+        static Font paperFont;
+
+        static void PaperStyles()
+        {
+            if (paperRich != null && paperFont == UIStyle.RegularFont && paperButton.normal.background != null) return;
+            paperFont = UIStyle.RegularFont;
+            paperRich = new GUIStyle(UIStyle.Rich);
+            paperSmall = new GUIStyle(UIStyle.Small);
+            paperWrap = new GUIStyle(UIStyle.Wrap);
+            paperRight = new GUIStyle(UIStyle.Right) { richText = true };
+            foreach (var s in new[] { paperRich, paperSmall, paperWrap, paperRight })
+                foreach (var st in new[] { s.normal, s.hover, s.active, s.focused }) st.textColor = Text;
+            paperButton = ButtonStyle(Paper, Paper2, Line, Text, Text);
+            paperButtonOn = ButtonStyle(Interact, InteractLo, InteractLo, OnInteract, OnInteract);
+        }
+
+        static GUIStyle ButtonStyle(Color32 fill, Color32 hover, Color32 press, Color32 text, Color32 pressText)
+        {
+            var s = new GUIStyle(UIStyle.Button) { border = new RectOffset(4, 4, 4, 4), richText = true };
+            void Set(GUIStyleState st, Color32 f, Color32 t)
+            {
+                st.background = RoundTex(4, f, Ink, 1);
+#if UNITY_EDITOR
+                st.scaledBackgrounds = new Texture2D[0];
+#endif
+                st.textColor = t;
+            }
+            Set(s.normal, fill, text); Set(s.focused, fill, text); Set(s.hover, hover, text); Set(s.active, press, pressText);
+            s.onNormal = s.normal; s.onHover = s.hover; s.onActive = s.active; s.onFocused = s.focused;
+            return s;
+        }
+
+        /// <summary>종이 위 한 줄 글씨 (색 태그 됨)</summary>
+        public static GUIStyle PaperRich { get { PaperStyles(); return paperRich; } }
+        public static GUIStyle PaperSmall { get { PaperStyles(); return paperSmall; } }
+        public static GUIStyle PaperWrap { get { PaperStyles(); return paperWrap; } }
+        public static GUIStyle PaperRight { get { PaperStyles(); return paperRight; } }
+        /// <summary>종이 버튼 (진한 테두리)</summary>
+        public static GUIStyle PaperButton { get { PaperStyles(); return paperButton; } }
+        /// <summary>고른 탭·줄·버튼 (청록 = 상호작용)</summary>
+        public static GUIStyle PaperButtonOn { get { PaperStyles(); return paperButtonOn; } }
+        public static GUIStyle PaperButtonIf(bool on) => on ? PaperButtonOn : PaperButton;
+
+        /// <summary>어두운 바탕용 색 태그를 종이 위에서 읽히는 색으로 (금색 → 갈주황, 연두 → 진초록, 연빨강 → 빨강, 연보라 → 보조)</summary>
+        public static string PaperColors(string s)
+        {
+            if (string.IsNullOrEmpty(s) || s.IndexOf("<color", System.StringComparison.Ordinal) < 0) return s;
+            foreach (var (from, to) in ColorSwaps) s = s.Replace(from, to);
+            return s;
+        }
+        static readonly (string from, string to)[] ColorSwaps =
+        {
+            ("#FFE08A", "#a8541c"), ("#ffe08a", "#a8541c"), ("#ffd84a", "#c0611a"), ("#ffde59", "#c0611a"),
+            ("#a8f0a0", "#1e8a3e"), ("#8fe08f", "#1e8a3e"), ("#ff9a8a", "#d6334f"), ("#ff8a7a", "#d6334f"),
+            ("#9a93ad", "#6a5464"), ("#9a8fb0", "#6a5464"), ("#c9c3d6", "#6a5464"), ("#d8d2e6", "#6a5464"), ("#9a8", "#6a5464"),
+            ("#9fd8ff", "#1a78b8"),
+        };
+
         // ---------------- 판·모양 ----------------
         public static void Fill(Rect r, Color32 c) { if (Repaint) GUI.DrawTexture(Snap(r), SolidTex(c)); }
 
@@ -579,6 +640,30 @@ namespace PocketCaravan
             if (on) Fill(new Rect(b.x + 3, b.y + 3, 5, 5), Interact);
             Label(b.xMax + 5, r.center.y, label, Text, true);
             return GUI.Button(r, GUIContent.none, GUIStyle.none) ? !on : on;
+        }
+
+        // ---------------- 시작·로그인 화면 바탕 ----------------
+        static readonly Color32 BackA = Hex(0xFFF0DC), BackB = Hex(0xFBE5C8);
+
+        /// <summary>시작 화면·첫 로그인 화면 바탕: 종이 바둑판 + 주황 머리띠 "Pocket Caravan" (오른쪽 글씨는 선택)</summary>
+        public static void Backdrop(string right = null)
+        {
+            float W = UIStyle.VirtualWidth, H = UIStyle.VirtualHeight;
+            Fill(new Rect(0, 0, W, H), BackA);
+            for (int y = 0; y < H; y += 20)
+                for (int x = 0; x < W; x += 20)
+                    if (((x / 20) + (y / 20)) % 2 == 1) Fill(new Rect(x, y, 20, 20), BackB);
+            var head = new Rect(20, 12, W - 40, 30);
+            Box(head, 8, Frame, Ink, 2, 3);
+            Fill(new Rect(head.x + 5, head.y + 3, head.width - 10, 1), FrameHi);
+            Icon(Pic.Star4, head.x + 10, head.y + 11);
+            Label(head.x + 22, head.center.y + 1, "Pocket Caravan", Ink, false, true);
+            Label(head.x + 22, head.center.y, "Pocket Caravan", White, false, true);
+            if (!string.IsNullOrEmpty(right))
+            {
+                LabelRight(head.xMax - 12, head.center.y + 1, right, Ink, true, true);
+                LabelRight(head.xMax - 12, head.center.y, right, White, true, true);
+            }
         }
 
         // ---------------- 위 가운데 줄 (할 일·다음 이야기) ----------------

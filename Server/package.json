@@ -9,7 +9,9 @@
     "check": "tsc --noEmit",
     "test:two": "node test/two_clients.mjs",
     "test:safety": "node test/safety.mjs",
-    "test:accounts": "node test/accounts.mjs"
+    "test:accounts": "node test/accounts.mjs",
+    "admin": "node tools/admin.mjs",
+    "test:admin": "node test/admin.mjs"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261030.1",

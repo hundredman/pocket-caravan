@@ -64,6 +64,8 @@ namespace PocketCaravan
             public float d;
             public bool sell;
             public List<TradeRec> list;
+            // 9단계 (11/05): 관리자가 지운 접속키를 이번에 새로 정했다
+            public bool newPass;
         }
 
         /// <summary>서버에 저장된 돈·짐 (costs는 물건마다 산 값의 합)</summary>
@@ -238,7 +240,7 @@ namespace PocketCaravan
         /// </summary>
         void Lost(string reason, int code)
         {
-            bool final = code == 4001 || code == 4002 || code == 4004 || code == 4005;
+            bool final = code == 4001 || code == 4002 || code == 4004 || code == 4005 || code == 4006;
             if (final) wantOnline = false;
             Drop(reason);
             if (!wantOnline) { retries = 0; return; }
@@ -254,6 +256,7 @@ namespace PocketCaravan
             4003 => "서버가 응답 없는 접속으로 보고 끊었습니다",
             4004 => "같은 이름으로 다른 곳에서 접속해서 여기는 끊었습니다",
             4005 => null,   // 로그인 실패: 서버가 먼저 보낸 이유(error)를 그대로 둔다
+            4006 => null,   // 관리자가 끊음(내보내기·계정 지움): 이유는 서버가 먼저 보냈다
             _ => $"서버가 연결을 닫았습니다 ({code}{(string.IsNullOrEmpty(text) ? "" : " " + text)})",
         };
 
@@ -441,7 +444,8 @@ namespace PocketCaravan
                     OnlineCount = msg.online;
                     LastError = "";
                     string asked = askedName;
-                    if (StartScreen.IsOpen || NetLogin.IsOpen) { }   // 첫 화면: 로그인 화면이 알아서 넘어간다
+                    if (msg.newPass) Notify.Show("접속키를 새로 정했어요. 다음부터 이 접속키로 들어와요", 5f);
+                    else if (StartScreen.IsOpen || NetLogin.IsOpen) { }   // 첫 화면: 로그인 화면이 알아서 넘어간다
                     else if (retries > 0) Notify.Show($"다시 연결됐어요 · 지금 {msg.online}명", 2.5f);
                     else if (asked.Length > 0 && MyName != asked) Notify.Show($"이름이 겹쳐서 '{MyName}'(으)로 들어왔어요", 4f);
                     else Notify.Show($"온라인 접속: {msg.id} · 지금 {msg.online}명", 3f);
