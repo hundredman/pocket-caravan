@@ -1,0 +1,10 @@
+{
+  "status": "approved",
+  "date": "2026-11-05",
+  "userReply": "일단 좋은 것 같아.",
+  "context": "게임1시간=평상시실제15초이나 승선은 전환/로딩만 기다리고 시계1시간 진행 설명 후 승인",
+  "sourceSha256": "efa16ed291c77843f4d223a2899e000db58edb1038ce004d11e371d07e041d42",
+  "fare": 8,
+  "hours": 1,
+  "scope": "three mutual direct routes, cargo/vehicle retained, existing boatmen and adjacent arrivals; existing moored boats verified at all3 ports"
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "mapId": "Naru",
+    "source": "ArtReview/M2-Zones/zones.json",
+    "boatAsset": "ArtReview/Approved/BuildingShip-Renewal-v1/boat.png",
+    "tileWidth": 5,
+    "tileHeight": 2,
+    "localX": 53,
+    "localY": 27,
+    "changed": false
+  },
+  {
+    "mapId": "transit_ferry",
+    "source": "ArtReview/M2-Zones/zones.json",
+    "boatAsset": "ArtReview/Approved/BuildingShip-Renewal-v1/boat.png",
+    "tileWidth": 5,
+    "tileHeight": 2,
+    "localX": 44,
+    "localY": 20,
+    "changed": false
+  },
+  {
+    "mapId": "transit_southport",
+    "source": "ArtReview/M2-Zones/zones.json",
+    "boatAsset": "ArtReview/Approved/BuildingShip-Renewal-v1/boat.png",
+    "tileWidth": 5,
+    "tileHeight": 2,
+    "localX": 45,
+    "localY": 45,
+    "changed": false
+  }
+]
