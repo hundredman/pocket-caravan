@@ -1,0 +1,138 @@
+{
+ "width": 315,
+ "height": 292,
+ "maps": [
+  {
+   "mapId": "arabia_central_bazaar",
+   "x": 102,
+   "y": 56,
+   "w": 96,
+   "h": 56,
+   "labelX": 150.0,
+   "labelY": 84.0
+  },
+  {
+   "mapId": "arabia_central_canyon",
+   "x": 163,
+   "y": 112,
+   "w": 152,
+   "h": 48,
+   "labelX": 239.0,
+   "labelY": 136.0
+  },
+  {
+   "mapId": "arabia_central_dunes",
+   "x": 0,
+   "y": 112,
+   "w": 168,
+   "h": 48,
+   "labelX": 84.0,
+   "labelY": 136.0
+  },
+  {
+   "mapId": "arabia_central_eastvale",
+   "x": 197,
+   "y": 56,
+   "w": 64,
+   "h": 56,
+   "labelX": 229.0,
+   "labelY": 84.0
+  },
+  {
+   "mapId": "arabia_central_steppe",
+   "x": 104,
+   "y": 0,
+   "w": 112,
+   "h": 56,
+   "labelX": 160.0,
+   "labelY": 28.0
+  },
+  {
+   "mapId": "arabia_central_westvale",
+   "x": 39,
+   "y": 56,
+   "w": 64,
+   "h": 56,
+   "labelX": 71.0,
+   "labelY": 84.0
+  },
+  {
+   "mapId": "arabia_sanaa",
+   "x": 126,
+   "y": 160,
+   "w": 64,
+   "h": 44,
+   "labelX": 151.5,
+   "labelY": 187.5
+  },
+  {
+   "mapId": "arabia_shortcut",
+   "x": 62,
+   "y": 204,
+   "w": 64,
+   "h": 44,
+   "labelX": 94.0,
+   "labelY": 226.0
+  },
+  {
+   "mapId": "arabia_taiz",
+   "x": 126,
+   "y": 204,
+   "w": 64,
+   "h": 44,
+   "labelX": 155.5,
+   "labelY": 226.5
+  },
+  {
+   "mapId": "arabia_zabid",
+   "x": 190,
+   "y": 204,
+   "w": 64,
+   "h": 44,
+   "labelX": 204.5,
+   "labelY": 227.5
+  },
+  {
+   "mapId": "arabia_ahsa",
+   "x": 62,
+   "y": 248,
+   "w": 64,
+   "h": 44,
+   "labelX": 85.5,
+   "labelY": 270.5
+  },
+  {
+   "mapId": "arabia_farmroad",
+   "x": 126,
+   "y": 248,
+   "w": 64,
+   "h": 44,
+   "labelX": 158.0,
+   "labelY": 270.0
+  },
+  {
+   "mapId": "arabia_jeddah",
+   "x": 190,
+   "y": 248,
+   "w": 64,
+   "h": 44,
+   "labelX": 212.5,
+   "labelY": 276.5
+  }
+ ],
+ "annotations": [
+  {
+   "text": "중앙 대륙 남쪽 조각",
+   "x": 2,
+   "y": 2
+  },
+  {
+   "text": "아라비아 남부 (예멘·홍해 길)",
+   "x": 62,
+   "y": 156
+  }
+ ],
+ "geography": "unified",
+ "terrainSource": "Tools/MapGen/unified_map.py",
+ "pixelsPerTile": 4
+}

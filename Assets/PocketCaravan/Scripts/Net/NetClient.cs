@@ -488,20 +488,35 @@ namespace PocketCaravan
             DrawStatus();
         }
 
+        /// <summary>
+        /// 11/05 B안: 오른쪽 위 단추 왼쪽에 "사람 3명" 알약. 마우스를 올리면 내 이름·이 맵 사람 수.
+        /// 끊겨서 다시 붙는 중이면 빨간 점(알림), 처음 접속 중이면 노란 점.
+        /// </summary>
         void DrawStatus()
         {
-            string here = sentMap != null && !waitingRoom ? $" · 이 맵 {peers.Count + 1}명" : "";
-            string text = Status switch
-            {
-                State.Online => $"<color=#8fe08f>●</color> 온라인 · {MyName} · 전체 {OnlineCount}명{here}",
-                State.Waiting => $"<color=#ffb347>○</color> 다시 연결 중… ({retries}번째 · {Mathf.CeilToInt(Mathf.Max(0f, retryAt - Time.unscaledTime))}초 뒤)",
-                _ => retries > 0 ? $"<color=#ffde59>○</color> 다시 연결하는 중… ({retries}번째)" : "<color=#ffde59>●</color> 접속 중…",
-            };
             GUI.depth = -6;
-            float w = UIStyle.Rich.CalcSize(new GUIContent(text)).x + 12f;
-            var r = new Rect(6f, UIStyle.VirtualHeight - 60f, w, 16f);
-            GUI.Box(r, GUIContent.none, UIStyle.Box);
-            GUI.Label(new Rect(r.x + 6f, r.y, w, r.height), text, UIStyle.Rich);
+            bool online = Status == State.Online;
+            string label = Status switch
+            {
+                State.Online => $"{OnlineCount}명",
+                State.Waiting => $"다시 연결 {Mathf.CeilToInt(Mathf.Max(0f, retryAt - Time.unscaledTime))}초",
+                _ => retries > 0 ? "다시 연결 중…" : "접속 중…",
+            };
+            float w = Mathf.Round(6 + 11 + 5 + CuteUI.Width(label, false, true) + 9);
+            var r = new Rect(Mathf.Round(HUD.ButtonsLeft - 7 - w), 9, w, 18);
+            CuteUI.Pill(r);
+            if (online) CuteUI.Icon(CuteUI.Pic.People, r.x + 6, r.y + 5);
+            else CuteUI.Circle(r.x + 8, r.y + 5, 8, Status == State.Waiting || retries > 0 ? CuteUI.Alert : CuteUI.Deco, CuteUI.Ink);
+            CuteUI.Label(r.x + 22, r.y + 9, label, CuteUI.Text, false, true);
+            if (online && r.Contains(Event.current.mousePosition))
+            {
+                string here = sentMap != null && !waitingRoom ? $"이 맵 {peers.Count + 1}명" : "이 맵 확인 중";
+                string line = $"{MyName} · 전체 {OnlineCount}명 · {here}";
+                float tw = CuteUI.Width(line, true) + 16;
+                var tip = new Rect(Mathf.Round(r.xMax - tw), r.yMax + 4, tw, 17);
+                CuteUI.Box(tip, 7, CuteUI.Paper, CuteUI.Ink, 1, 2);
+                CuteUI.Label(tip.x + 8, tip.y + 8.5f, line, CuteUI.Text, true);
+            }
         }
     }
 }
