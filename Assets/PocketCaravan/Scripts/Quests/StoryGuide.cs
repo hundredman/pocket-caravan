@@ -45,6 +45,8 @@ namespace PocketCaravan
             // 아라비아
             { "arabia_hasan", ("길잡이 하산", null) }, { "arabia_maryam", ("여관 주인 마리암", null) }, { "arabia_hindbad", ("짐꾼 힌드바드", null) },
             { "arabia_kitchen_keeper", ("공동 부엌 담당", null) },
+            { "arabia_elder", ("자비드 찻집 노인", null) }, { "arabia_rashid", ("직물 상인 라시드", null) }, { "arabia_dyer", ("타이즈 염색 장인", null) },
+            { "arabia_yusuf", ("수레 장인 유수프", null) }, { "arabia_portmaster", ("제다 물류 담당", null) }, { "arabia_nadia", ("시장 상인 나디아", null) }, { "arabia_gardener", ("궁전 정원사", null) },
         };
 
         static GameManager GM => GameManager.I;

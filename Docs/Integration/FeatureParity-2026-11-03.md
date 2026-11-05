@@ -108,8 +108,14 @@ integration 작업트리에서 `Assets/PocketCaravan/Scripts`·`Data`·`Scenes`�
 | 밤 축제 | `Scripts/Economy/NightFestival.cs` | 북 오로라·베 카니발 연출 | ✔ 북 오로라(오로라 밤)·베 카니발(%7==5)·고려 연등회(%7==2, 개경)·아라비아 향료 밤시장(%7==6, 사나). 특산품 3할 |
 | 공방/제작 | `Scripts/Economy/Crafting.cs` (+ `WorkshopSpot`) | 북 마당 그림 | ✔ 엔진 통일 (북 3·베 2). **고려·아라비아 공방은 지역 담당이 Recipes에 추가** |
 | 다음 이야기 길잡이 · 퀘스트 동시 제한 | `Scripts/Quests/StoryGuide.cs` | 없음 (NorthGuide·NorthQuestLimit 지움) | ✔ 전 지역. 한 지역 의뢰 3개까지, 북 곁가지 2개까지 |
+| 떠돌이 상인 | `Scripts/Economy/Peddler.cs` | 북: 오로라 병·황금 미끼 / 베: 사자 문장 소문·가면 춤 비법서 (`Peddler.Extras`에 등록) | ✔ 전 지역 (11/5). 지역마다 날마다 장터 마을 한 곳(고려·아라비아는 WorldIndex 장터 맵 날짜 해시, 북·베는 옛 순서 유지). 특가 하루 5개, 값은 "가격 믿음"(시세 쪽으로 날마다 절반 다가간 값의 6할, 기준가 3할~1배). 리액션 책 60냥. 북 특가 좌판은 상인에게 합침. `VeniceMerchant` 삭제, `Resources/Common/peddler.png`(고려 행상 그림 복사) |
+| 전시실 기증 | `Scripts/Economy/Museum.cs` | 북: 자리(NorthDaily)·목록 등록 / 베: 자리(VeniceLife)·목록 등록(`VeniceLegacy`) | ✔ 전 지역 (11/5). 6칸 채우면 칭호+200냥+신용1. 고려(개경)·아라비아(사나)는 장터 옆에 자동 배치, 목록은 그 지역 산지 물건 6개 자동(지역 담당이 `Museum.Shelf`로 바꿀 수 있음). `VeniceMuseum` 삭제 |
+| 숨은 수집물 7개 + 전설 | `Scripts/World/Collectibles.cs` | 북: NorthLegends 그대로(룬돌 고리 의식 포함), 공용엔 이름·전설·키만 / 베: 자리는 VeniceLife, 전설·보상은 공용 | ✔ 전 지역 (11/5). 일곱 읽으면 300냥+신용2+지역 축복. 고려 "말 없는 장승"(길가 어귀, 그림 `Common/jangseung.png` 새로 그림)·아라비아 "별을 새긴 돌"(길에서 먼 구석)은 맵 7곳에 자동 배치. 축복 = 그 지역 안 달리기 체력 소모 1할 감소. 전설은 기우가 씀(11/5). `VeniceLion` 삭제 |
+| 놀거리 알림 (★ 표시·화살표·맵 알림) | `Scripts/UI/ActivityHints.cs` | 지역 자리는 `ActivityHints.Rules`(클래스) / `NameRules`(이름표)로 등록 | ✔ 전 지역 (11/5). 공용 자리(떠돌이 상인·전시실·수집물·공방·나루 낚시) 기본 등록, 북(얼음 낚시·썰매·돌탑·눈싸움·룬돌)·베(유리 불기·그물·모이·곤돌라 경주·공방) 등록. `VeniceActivityHints` 삭제 |
+| 날씨 사건 (길 잃은 사람) | `Scripts/World/LostTraveler.cs` | 북: 날씨·자리·꿀술 선택지(NorthEvents.RegisterCommon) / 베: 날씨·자리·물 한 모금(VeniceLegacy) | ✔ 전 지역 (11/5). 궂은 4시간 블록마다 길 맵에 한 명, 데려다주면 40냥+신용1+지역 선물(북 모피·베 포도주·고려 인삼·아라비아 대추야자). 고려는 날씨가 없어 **블록 규칙(4블록에 1)**으로 뜸 → 은샘이 날씨 넣으면 `LostTraveler.Weather[Goryeo]` 한 줄. 아라비아는 3블록에 1 + 모래바람 연출. `VeniceLostTraveler` 삭제, `Common/traveler.png`(고려 쓰러진 길손 그림 복사) |
+| 아라비아 콘텐츠 (품목·탈것·퀘스트·미니게임) | `Editor/Arabia/ArabiaRegionSetup.cs`(데이터), `Scripts/Arabia/ArabiaPastimes.cs`(미니게임) | — | ✔ 11/5 (기우, 11/4 팀 결정 "빠르게 구현"). 품목 6개 추가(유향·커피·진주·소금·가죽·양탄자, 아이콘 임시), 장터 5~8개, 낙타(45짐·300냥, 제다·사나), 퀘스트 Q3~Q12(12개, 말 거는 사람 7명을 의뢰 NPC로: 자비드 노인·타이즈 라시드·염색 장인·제다 유수프·물류 담당·사나 나디아·정원사), 미니게임 3개(대추야자 따기·낙타 경주·모래바람 건너기, 창 안에서, 하루 한 번 보상). **Unity에서 `아라비아/1. 데이터 갱신` + `통합/전체 준비` 필요**. 은샘 검사 `test_goryeo_trade_goods`는 품목 순서 대신 "기존 순서 유지"로 완화 |
 | 마을 데이터 A | `NorthBuilder.cs`, `ArabiaRegionSetup.cs`, 맵 JSON | — | ✔ 북 4마을 손님방·등급, 중앙북 2등급, 아라비아 길 안내(2등급↑)·사나 창고, 본토 나루터·포도밭 의뢰 게시판. **중간권 마을 소개 글은 R2 고정 자산이라 고려 담당 몫** |
 
 - 점검 메뉴: `Pocket Caravan/통합/리액션 전부 배우기·처음 상태로 (Play 중)`
 - 옛 저장 호환: 북유럽·베네치아 친밀도 점수·받은 하트·배운 리액션은 그대로 이어진다.
-- 선물 돈 답례(북유럽 1.5배/절반)는 없앰. 하트 3 보상은 전 지역 "기념품 + 150냥 + 신용 +1".
+- 선물 돈 답례(북유럽 1.5배/절반)는 없앰. 하트 3 보상은 전 지역 "기념품 + 50냥 + 신용 +1" (11/4 팀 결정, 150→50).

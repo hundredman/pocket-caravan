@@ -106,10 +106,14 @@ namespace PocketCaravan
                 Spot<VeniceHonesty>(data.inspector, "부두 검수원");
             // 리알토: 비둘기 모이 주머니, 상인회관 전시실
             if (data.feed != null && data.feed.Length >= 2) Spot<VeniceFeed>(data.feed, "비둘기 모이 주머니");
-            if (data.museum != null && data.museum.Length >= 2) Spot<VeniceMuseum>(data.museum, "상인회관 전시실");
-            // 숨은 사자 문장 (VeniceLion)
+            // 2026-11-05 전시실·사자 문장은 공용 Museum·Collectibles (자리만 여기서, 규칙은 VeniceLegacy 등록)
+            if (data.museum != null && data.museum.Length >= 2) Spot<Museum.Spot>(data.museum, "상인회관 전시실").region = Reactions.Region.Venice;
             if (data.lion != null && data.lion.Length >= 2)
-                Spot<VeniceLion>(data.lion, "사자 문장").index = System.Array.IndexOf(VeniceLion.Maps, VeniceUtil.Map);
+            {
+                var lion = Spot<Collectibles.Spot>(data.lion, "사자 문장");
+                lion.region = Reactions.Region.Venice; lion.index = System.Array.IndexOf(VeniceLegacy.LionMaps, VeniceUtil.Map);
+                lion.Dress(VeniceUtil.Sprite("lion"), VeniceUtil.Sprite("glow"));
+            }
             if (data.gulls)
                 for (int i = 0; i < 3; i++)
                     gulls.Add(new Gull { r = Make("gull_0", Vector3.zero, 22, "갈매기"), wait = i * 3f + (float)rng.NextDouble() * 2f });

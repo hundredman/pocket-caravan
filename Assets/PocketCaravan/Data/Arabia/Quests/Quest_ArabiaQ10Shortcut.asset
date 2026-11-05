@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: Quest_ArabiaQ10Shortcut
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: arabia_q10_shortcut
+  retired: 0
+  title: "\uC9C0\uB984\uAE38\uC744 \uAC74\uB108\uB2E4"
+  chain: "\uC544\uB77C\uBE44\uC544 1\uC7A5"
+  summary: "\uB099\uD0C0\uB97C \uD0C0\uACE0 \uC81C\uB2E4-\uC0AC\uB098 \uC9C0\uB984\uAE38\uC744
+    \uAC74\uB108 \uBCF8\uB2E4. \uBAA8\uB798\uBC14\uB78C\uC774 \uBD80\uB294 \uAE38."
+  giverNpc: arabia_yusuf
+  requires:
+  - {fileID: 11400000, guid: d649539af01284a37bf25a0364f241c4, type: 2}
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "\uB099\uD0C0\uB97C \uC0C0\uAD70. \uADF8\uB7FC \uC9C0\uB984\uAE38\uC744
+    \uD55C\uBC88 \uAC00 \uBD10. \uBAA8\uB798\uBC14\uB78C\uC774 \uBD88 \uB550 \uBA48\uCD94\uACE0,
+    \uADF8\uCE58\uBA74 \uB2EC\uB9AC\uB294 \uAC70\uC57C.\n\uAC74\uB108\uC11C \uC54C
+    \uC544\uD750\uC0AC \uAC00\uC8FD \uB450 \uC7A5\uC744 \uC0AC\uB098\uC5D0 \uD314\uACE0
+    \uC624\uBA74 \uC548\uC7A5\uAC12\uC740 \uB0B4\uAC00 \uAE4E\uC544 \uC8FC\uC9C0."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 5
+    text: "\uC9C0\uB984\uAE38 \uAC74\uB108\uAE30"
+    targetId: arabia_shortcut
+    item: {fileID: 0}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: 
+  - type: 3
+    text: "\uC0AC\uB098 \uC7A5\uD130\uC5D0 \uB099\uD0C0 \uAC00\uC8FD \uD314\uAE30"
+    targetId: arabia_sanaa
+    item: {fileID: 11400000, guid: ba761a7499f0a47bd8a7877ad4eb96ee, type: 2}
+    vehicle: {fileID: 0}
+    count: 2
+    completeLine: "\uC9C0\uB984\uAE38\uC744 \uAC74\uB10C \uC0C1\uC778\uC740 \uB300\uC0C1\uC774
+      \uC778\uC815\uD574 \uC8FC\uC9C0."
+  rewardMoney: 45
+  rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "\uC9C0\uB984\uAE38\uC740 \uBE60\uB974\uC9C0\uB9CC \uBAA8\uB798\uBC14\uB78C\uC5D0
+    \uC9D0\uC744 \uC783\uC744 \uC218 \uC788\uB2E4."

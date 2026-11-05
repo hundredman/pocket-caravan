@@ -272,7 +272,7 @@ namespace PocketCaravan
                 yield return RaceBot();
             }
             // 8 떠돌이 상인 (5일째)
-            var mer = FindAnyObjectByType<VeniceMerchant>();
+            var mer = FindAnyObjectByType<Peddler.Spot>();
             Ok(mer != null, $"8 5일째 떠돌이 상인이 리알토에 ({VeniceDaily.MerchantMap})");
             if (mer != null)
             {
@@ -373,7 +373,7 @@ namespace PocketCaravan
             yield return Shot("acqua_alta");
             SetClock(8, 10);                                 // 8일째: 떠돌이 상인 무라노
             yield return Travel("venice_murano");
-            Ok(FindAnyObjectByType<VeniceMerchant>() != null, "6 8일째 떠돌이 상인");
+            Ok(FindAnyObjectByType<Peddler.Spot>() != null, "6 8일째 떠돌이 상인");
             // 2 유리 불기 (바늘이 금빛 칸 가운데 올 때 Space)
             var glass = FindAnyObjectByType<VeniceGlassSpot>();
             if (glass != null)
@@ -410,7 +410,7 @@ namespace PocketCaravan
             SetClock(6, 10);
             yield return Travel("venice_burano");
             yield return Shot("burano_view");
-            Ok(FindAnyObjectByType<VeniceMerchant>() != null, "5 6일째 떠돌이 상인");
+            Ok(FindAnyObjectByType<Peddler.Spot>() != null, "5 6일째 떠돌이 상인");
             var net = FindAnyObjectByType<VeniceNetSpot>();
             if (net != null)
             {
@@ -439,7 +439,7 @@ namespace PocketCaravan
             SetClock(4, 10);
             yield return Travel("venice_chioggia");
             yield return Shot("chioggia_view");
-            Ok(FindAnyObjectByType<VeniceMerchant>() != null, "4 4일째 떠돌이 상인");
+            Ok(FindAnyObjectByType<Peddler.Spot>() != null, "4 4일째 떠돌이 상인");
             var dock = FindAnyObjectByType<VeniceTraghetto>();
             var ferry = FindByName("본토행 뱃사공");
             Ok(dock != null && ferry != null && Vector3.Distance(dock.transform.position, ferry.transform.position) > 4f,
@@ -462,7 +462,7 @@ namespace PocketCaravan
             SetClock(2, 10);
             yield return Travel("venice_santerasmo");
             yield return Shot("santerasmo_view");
-            Ok(FindAnyObjectByType<VeniceMerchant>() != null, "3 2일째 떠돌이 상인");
+            Ok(FindAnyObjectByType<Peddler.Spot>() != null, "3 2일째 떠돌이 상인");
             Ok(FindByName("과수원 일꾼") != null, "2 과수원 일꾼 있음");
         }
 
@@ -474,7 +474,7 @@ namespace PocketCaravan
                 SetClock(day, 10);
                 yield return Travel(map);
                 yield return Shot(map + "_view");
-                Ok(FindAnyObjectByType<VeniceMerchant>() != null, $"{MapRoot.Current.displayName}: {day}일째 떠돌이 상인");
+                Ok(FindAnyObjectByType<Peddler.Spot>() != null, $"{MapRoot.Current.displayName}: {day}일째 떠돌이 상인");
                 var dir = FindAnyObjectByType<RoadEventDirector>();
                 Ok(true, $"{MapRoot.Current.displayName}: 길 사건 자리 {(dir != null ? dir.events.Count : 0)}");
             }
@@ -487,13 +487,13 @@ namespace PocketCaravan
             for (int d = 1; d < 60; d++)
             {
                 bool found = false;
-                for (int h = 6; h < 20; h++) { SetClock(d, h); if (VeniceEvents.LostWeather && !VeniceEvents.AcquaAlta) { found = true; break; } }
+                for (int h = 6; h < 20; h++) { SetClock(d, h); if (LostTraveler.BadWeather(Reactions.Region.Venice) && !VeniceEvents.AcquaAlta) { found = true; break; } }
                 if (found) break;
             }
             foreach (var map in new[] { "venice_c_marsh", "venice_c_pass", "venice_c_bridge", "venice_c_gate" })
             {
                 yield return Travel(map);
-                var lost = FindAnyObjectByType<VeniceLostTraveler>();
+                var lost = FindAnyObjectByType<LostTraveler.Spot>();
                 if (map == "venice_c_gate") Ok(lost == null, $"{MapRoot.Current.displayName}: 같은 날씨에 두 번째 순례자는 나오지 않음");
                 else Ok(lost != null, $"{MapRoot.Current.displayName}: {VeniceAtmosphere.Now} 날 순례자");
                 yield return Shot(map + "_view");

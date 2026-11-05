@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: Quest_ArabiaQ06Frankincense
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: arabia_q06_frankincense
+  retired: 0
+  title: "\uC0AC\uB098\uC758 \uC720\uD5A5"
+  chain: "\uC544\uB77C\uBE44\uC544 1\uC7A5"
+  summary: "\uC218\uB3C4 \uC0AC\uB098\uC5D0\uC11C \uC720\uD5A5 \uB369\uC774\uB97C
+    \uC0AC\uC11C \uC54C \uC544\uD750\uC0AC \uC5EC\uAD00\uC758 \uB9C8\uB9AC\uC554\uC5D0\uAC8C
+    \uAC00\uC838\uC628\uB2E4. \uAC70\uAFB8\uB85C \uAC00\uB294 \uAD50\uC5ED."
+  giverNpc: arabia_maryam
+  requires:
+  - {fileID: 11400000, guid: cd7d016434e454871ad6adc5bb1696db, type: 2}
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "\uC5EC\uAD00\uC5D0 \uD53C\uC6B8 \uC720\uD5A5\uC774 \uB5A8\uC5B4\uC84C\uC5B4.
+    \uC720\uD5A5\uC740 \uC0AC\uB098\uC5D0\uC11C\uB9CC \uB098\uC640. \uB450 \uB369\uC774\uB9CC
+    \uAC00\uC838\uB2E4\uC8FC\uBA74 \uB109\uB109\uD788 \uCCD0\uC904\uAC8C.\n\uB3CC\uC544\uC624\uB294
+    \uAE38\uC5D0 \uC0AC\uB098 \uC591\uD0C4\uC790\uB3C4 \uB208\uC5EC\uACA8\uBCF4\uB834,
+    \uC81C\uB2E4\uC5D0\uC11C \uBE44\uC2F8."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 2
+    text: "\uC0AC\uB098 \uC7A5\uD130\uC5D0\uC11C \uC720\uD5A5 \uB369\uC774 \uC0AC\uAE30"
+    targetId: arabia_sanaa
+    item: {fileID: 11400000, guid: e91d10fc3709041a4830878ef553e6a0, type: 2}
+    vehicle: {fileID: 0}
+    count: 2
+    completeLine: 
+  - type: 1
+    text: "\uC54C \uC544\uD750\uC0AC \uC5EC\uAD00\uC758 \uB9C8\uB9AC\uC554\uC5D0\uAC8C
+      \uC720\uD5A5 \uB369\uC774 \uC804\uD558\uAE30"
+    targetId: arabia_maryam
+    item: {fileID: 11400000, guid: e91d10fc3709041a4830878ef553e6a0, type: 2}
+    vehicle: {fileID: 0}
+    count: 2
+    completeLine: "\uC774 \uD5A5\uC774\uC57C. \uC774\uC81C \uC5EC\uAD00\uC5D0 \uC190\uB2D8\uC774
+      \uB04A\uC774\uC9C0 \uC54A\uACA0\uAD6C\uB098. \uB10C \uC774\uC81C \uC774 \uB545\uC758
+      \uC0C1\uC778\uC774\uB2E4."
+  rewardMoney: 60
+  rewardCredit: 2
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "\uC544\uB77C\uBE44\uC544 1\uC7A5\uC774 \uB05D\uB0AC\uB2E4. \uC911\uC559
+    \uB300\uB959 \uC0AC\uB9C9 \uB108\uBA38 \uB9CC\uAD6D \uC7A5\uD130\uB85C \uAC00
+    \uBCF4\uC790."

@@ -612,23 +612,44 @@ MonoBehaviour:
   - kind: board
     id: arabia_zabid
     mapId: arabia_zabid
+  - kind: npc
+    id: arabia_elder
+    mapId: arabia_zabid
   - kind: market
     id: arabia_taiz
     mapId: arabia_taiz
   - kind: board
     id: arabia_taiz
+    mapId: arabia_taiz
+  - kind: npc
+    id: arabia_rashid
+    mapId: arabia_taiz
+  - kind: npc
+    id: arabia_dyer
     mapId: arabia_taiz
   - kind: market
     id: arabia_jeddah
     mapId: arabia_jeddah
   - kind: board
     id: arabia_jeddah
+    mapId: arabia_jeddah
+  - kind: npc
+    id: arabia_portmaster
+    mapId: arabia_jeddah
+  - kind: npc
+    id: arabia_yusuf
     mapId: arabia_jeddah
   - kind: market
     id: arabia_sanaa
     mapId: arabia_sanaa
   - kind: board
     id: arabia_sanaa
+    mapId: arabia_sanaa
+  - kind: npc
+    id: arabia_nadia
+    mapId: arabia_sanaa
+  - kind: npc
+    id: arabia_gardener
     mapId: arabia_sanaa
   - kind: market
     id: north_post
