@@ -23,7 +23,7 @@ namespace PocketCaravan
         const int MaxLines = 8, MaxChars = 80;
         const float LineSeconds = 12f, FadeSeconds = 2f, LogWidth = 230f;
         // 11/05 UI B안: 종이 바탕 위 글씨라 진한 색 (전엔 어두운 바탕용 밝은 색)
-        const string MeColor = "#1f625e", OtherColor = "#a8541c", DimColor = "#6a5464", ErrorColor = "#d6334f", SystemColor = "#3f7a3a";
+        const string MeColor = "#1f625e", OtherColor = "#a8541c", DimColor = "#6a5464", ErrorColor = "#d6334f", SystemColor = "#3f7a3a", NoticeColor = "#c0611a";
 
         class Line { public string text; public float at; }
 
@@ -102,6 +102,12 @@ namespace PocketCaravan
                     break;
                 case "error":
                     Add($"<color={ErrorColor}>서버: {m.why}</color>");
+                    break;
+                case "notice":   // 11/05 관리자 알림 (npm run admin -- 알림 "…"): 채팅 목록과 가운데 아래 알림에 같이
+                    if (string.IsNullOrEmpty(m.text)) break;
+                    Add($"<color={NoticeColor}><b>[알림]</b> {m.text}</color>");
+                    Notify.Show("알림: " + m.text, 6f);
+                    Sfx.Play("open", .4f);
                     break;
             }
         }
