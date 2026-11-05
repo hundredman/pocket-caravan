@@ -1,0 +1,16 @@
+{
+    "complete": false,
+    "error": "System.Exception: monsoon still requires original50percent roll\n  at PocketCaravan.EditorTools.GoryeoStormLogPlayReview.Check (System.Boolean ok, System.String text) [0x0001b] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoStormLogPlayReview.cs:17 \n  at PocketCaravan.EditorTools.GoryeoStormLogPlayReview+<Run>d__15.MoveNext () [0x0043d] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoStormLogPlayReview.cs:43 \n  at PocketCaravan.EditorTools.GoryeoStormLogPlayReview+<Start>d__5.MoveNext () [0x00064] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoStormLogPlayReview.cs:18 ",
+    "scheduleCases": 16425,
+    "checks": [
+        "bootstrap saves off",
+        "8hour50percent unchanged",
+        "365days x3windows x3offsets x5schedule regression cases",
+        "unmanaged unchanged",
+        "invalid hour fails closed",
+        "no log on nonstorm despite positive oldroll Clear",
+        "actual480x270 Clear-open",
+        "no log on nonstorm despite positive oldroll Rain",
+        "actual480x270 Rain-open"
+    ]
+}

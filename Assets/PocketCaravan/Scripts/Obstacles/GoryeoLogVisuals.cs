@@ -2,9 +2,11 @@ using System;
 using UnityEngine;
 namespace PocketCaravan
 {
-    /// <summary>Opt-in approved whole sprites and occupied cells. No weather or event-rule changes.</summary>
+    /// <summary>Approved whole sprites/occupied cells and one-time initialization for the approved storm log.</summary>
+    [DefaultExecutionOrder(-150)]
     public sealed class GoryeoLogVisuals:MonoBehaviour
     {
+        void Start()=>GoryeoStormLogs.Initialize(GetComponent<ObstacleField>());
         [Serializable]public class Entry
         {
             public string placementId;public Sprite sprite;public Vector2Int[] occupied;

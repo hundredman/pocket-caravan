@@ -1,0 +1,10 @@
+{
+  "status": "review",
+  "provenance": "Original synthesized filtered noise, no external sample; not a field recording",
+  "sampleRate": 32000,
+  "seconds": 5.5,
+  "seed": 20261105,
+  "peak": 0.24,
+  "rms": 0.03387066914576673,
+  "sha256": "dbdae13634f9677cca94f1669619320f2539db485092b8aaaf708ec8b010fd79"
+}
