@@ -90,6 +90,7 @@ namespace PocketCaravan
                 s *= p.origin.speedMultiplier;
                 if (grade == 0) s *= p.origin.offroadSpeedMultiplier; // 길 없는 곳
             }
+            s = GoryeoGroundSpeed.Apply(s,p,motor.Cell);
             s *= Mathf.Lerp(1f, fullLoadSpeed, p.LoadRatio);
             if (Running) s *= runMultiplier;
             if (InputReader.DebugFast()) s *= DebugFastMultiplier;   // 임시 시험용 (C, 6배)

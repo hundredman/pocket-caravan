@@ -1,0 +1,67 @@
+[
+  {
+    "id": "Naru",
+    "grassCells": 1196,
+    "grassWithNonzeroRoad": 0
+  },
+  {
+    "id": "Gaegyeong",
+    "grassCells": 1825,
+    "grassWithNonzeroRoad": 0
+  },
+  {
+    "id": "Dakmok",
+    "grassCells": 955,
+    "grassWithNonzeroRoad": 0
+  },
+  {
+    "id": "goryeo_songak",
+    "grassCells": 1791,
+    "grassWithNonzeroRoad": 0
+  },
+  {
+    "id": "goryeo_jangdan",
+    "grassCells": 2254,
+    "grassWithNonzeroRoad": 0
+  },
+  {
+    "id": "transit_woodtown",
+    "grassCells": 1370,
+    "grassWithNonzeroRoad": 0
+  },
+  {
+    "id": "transit_ferry",
+    "grassCells": 1620,
+    "grassWithNonzeroRoad": 0
+  },
+  {
+    "id": "transit_southport",
+    "grassCells": 1592,
+    "grassWithNonzeroRoad": 0
+  },
+  {
+    "id": "transit_crossroads",
+    "grassCells": 2975,
+    "grassWithNonzeroRoad": 0
+  },
+  {
+    "id": "transit_wetroad",
+    "grassCells": 1219,
+    "grassWithNonzeroRoad": 0
+  },
+  {
+    "id": "transit_pass",
+    "grassCells": 2263,
+    "grassWithNonzeroRoad": 0
+  },
+  {
+    "id": "transit_central_approach",
+    "grassCells": 1443,
+    "grassWithNonzeroRoad": 0
+  },
+  {
+    "id": "transit_south_inland",
+    "grassCells": 1405,
+    "grassWithNonzeroRoad": 0
+  }
+]
