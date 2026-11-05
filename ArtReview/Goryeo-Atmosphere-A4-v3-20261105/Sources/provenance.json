@@ -1,0 +1,52 @@
+[
+  {
+    "kind": "dirt",
+    "url": "https://raw.githubusercontent.com/liamgh/FlopperFlinger/fe8c11c5dfa604c43308de459c4ec305db8d619b/footstep07.ogg",
+    "gitBlobSHA1": "2b2175ec4d57f93a8d673e9ff9a6febdd7bd266b",
+    "author": "Kenney",
+    "pack": "RPG Audio",
+    "license": "CC0",
+    "origin": "https://kenney.nl/assets/rpg-audio",
+    "note": "Whole original file retained."
+  },
+  {
+    "kind": "grass",
+    "url": "https://raw.githubusercontent.com/latent-spaces/brag/669ab9286aa28b6c3ee30e75f181ee74319d012a/skills/brag/assets/sfx/impact/footstep_grass_000.ogg",
+    "gitBlobSHA1": "5b5ec879a5ca457d18ad01a81af805409e35207f",
+    "author": "Kenney",
+    "pack": "Impact Sounds",
+    "license": "CC0",
+    "origin": "https://kenney.nl/assets/impact-sounds",
+    "note": "Whole original file retained."
+  },
+  {
+    "kind": "stone",
+    "url": "https://raw.githubusercontent.com/latent-spaces/brag/669ab9286aa28b6c3ee30e75f181ee74319d012a/skills/brag/assets/sfx/impact/footstep_concrete_000.ogg",
+    "gitBlobSHA1": "163cc56468f1734fe694351e7ff984699afa8b86",
+    "author": "Kenney",
+    "pack": "Impact Sounds",
+    "license": "CC0",
+    "origin": "https://kenney.nl/assets/impact-sounds",
+    "note": "Whole original file retained."
+  },
+  {
+    "kind": "wood",
+    "url": "https://raw.githubusercontent.com/latent-spaces/brag/669ab9286aa28b6c3ee30e75f181ee74319d012a/skills/brag/assets/sfx/impact/footstep_wood_000.ogg",
+    "gitBlobSHA1": "1a519c74dc71da391a93e033aa63eb641da80dd9",
+    "author": "Kenney",
+    "pack": "Impact Sounds",
+    "license": "CC0",
+    "origin": "https://kenney.nl/assets/impact-sounds",
+    "note": "Whole original file retained."
+  },
+  {
+    "kind": "splash",
+    "url": "https://raw.githubusercontent.com/PerpetualBeta/Citadel/36249966ead30ea5e4e0eba9e9f0e7636d46992b/Resources/Audio/wade.wav",
+    "gitBlobSHA1": "105190f7998e76f0216c204471881ca869fe8fee",
+    "author": "rubberduck",
+    "pack": "40 CC0 water / splash / slime SFX",
+    "license": "CC0",
+    "origin": "https://opengameart.org/content/40-cc0-water-splash-slime-sfx",
+    "note": "Processed mirror wading splash; mirror credits identify splash_12/splash_14. Whole mirrored clip retained."
+  }
+]
