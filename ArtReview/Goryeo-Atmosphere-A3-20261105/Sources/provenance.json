@@ -1,0 +1,52 @@
+[
+  {
+    "kind": "crowd",
+    "author": "Joseph SARDIN",
+    "page": "https://bigsoundbank.com/outdoor-market-1-s2728.html",
+    "url": "https://bigsoundbank.com/UPLOAD/mp3/2728.mp3",
+    "license": "CC0",
+    "retrieved": "2026-11-05",
+    "note": "public MP3 download",
+    "sha256": "ef6b788c98a4d97c8cb04496a251f13c98aadfff952c4f93185a3089c6bc4752"
+  },
+  {
+    "kind": "chicken",
+    "author": "DenisChardonnet",
+    "page": "https://bigsoundbank.com/henhouse-s0282.html",
+    "url": "https://bigsoundbank.com/UPLOAD/mp3/0282.mp3",
+    "license": "CC0",
+    "retrieved": "2026-11-05",
+    "note": "public MP3 download",
+    "sha256": "f3c8ad223eabb1e2d7691fe5211278267b6854b0ca42bd65304dc2f887d57e1f"
+  },
+  {
+    "kind": "cow",
+    "author": "spurioustransients",
+    "page": "https://freesound.org/people/spurioustransients/sounds/513557/",
+    "url": "https://cdn.freesound.org/previews/513/513557_2898771-hq.mp3",
+    "license": "CC0",
+    "retrieved": "2026-11-05",
+    "note": "public HQ preview, not login-only original",
+    "sha256": "632e49c423a3359c2524fa84d5d0e946ae9457497dc2d5de634b226ede24fb28"
+  },
+  {
+    "kind": "dog",
+    "author": "kwahmah_02",
+    "page": "https://freesound.org/people/kwahmah_02/sounds/277058/",
+    "url": "https://cdn.freesound.org/previews/277/277058_4486188-hq.mp3",
+    "license": "CC0",
+    "retrieved": "2026-11-05",
+    "note": "public HQ preview, not login-only original",
+    "sha256": "af621c68568e6c5178d38e2a464eddd21be8b5822475b29f5ebfe10f5feb1a25"
+  },
+  {
+    "kind": "bird",
+    "author": "FartMuffin",
+    "page": "https://freesound.org/people/FartMuffin/sounds/506285/",
+    "url": "https://cdn.freesound.org/previews/506/506285_10643288-hq.mp3",
+    "license": "CC0",
+    "retrieved": "2026-11-05",
+    "note": "public HQ preview, not login-only original",
+    "sha256": "a05e79c97f8d7ac58875f6df2532ae17dffe2ad6cacdb5dc3055270dc39912e6"
+  }
+]
