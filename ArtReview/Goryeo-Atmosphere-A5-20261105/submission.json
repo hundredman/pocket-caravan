@@ -1,0 +1,23 @@
+{
+  "status": "pending",
+  "productionApplied": false,
+  "nearCells": 4,
+  "maps": 13,
+  "playChecks": 385,
+  "board": "game-comparison-final.png",
+  "captures": [
+    "Dakmok-before.png",
+    "Dakmok-far.png",
+    "Dakmok-near.png",
+    "Gaegyeong-before.png",
+    "Gaegyeong-far.png",
+    "Gaegyeong-near.png",
+    "Naru-before.png",
+    "Naru-far.png",
+    "Naru-near.png",
+    "Naru-well.png",
+    "transit_woodtown-before.png",
+    "transit_woodtown-far.png",
+    "transit_woodtown-near.png"
+  ]
+}

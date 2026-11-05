@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "animal": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "palette": [
+        "#30221a",
+        "#5e3f2a",
+        "#97785d",
+        "#aa442c",
+        "#baa796",
+        "#d48f2a",
+        "#dfaa5c",
+        "#f8e5c0",
+        "#fff6dd"
+      ],
+      "binaryAlpha": true
+    }
+  },
+  "assets": [
+    {
+      "id": "goryeo_life_chicken_0",
+      "kind": "object",
+      "purpose": "village_animal",
+      "size": [
+        2,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Art/chicken_0.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/Approved/GoryeoAtmosphereA7/chicken.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/GoryeoAtmosphereA7/approval.json"
+      },
+      "profile": "animal",
+      "rules": {
+        "onTerrain": [
+          "grass",
+          "dirt"
+        ],
+        "forbidRoad": false
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_chicken_0_0_0",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/chicken_0_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_chicken_0_1_0",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/chicken_0_1_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_chicken_0_0_1",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/chicken_0_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_chicken_0_1_1",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/chicken_0_1_1.png"
+        }
+      ]
+    },
+    {
+      "id": "goryeo_life_chicken_1",
+      "kind": "object",
+      "purpose": "village_animal",
+      "size": [
+        2,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Art/chicken_1.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/Approved/GoryeoAtmosphereA7/chicken.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/GoryeoAtmosphereA7/approval.json"
+      },
+      "profile": "animal",
+      "rules": {
+        "onTerrain": [
+          "grass",
+          "dirt"
+        ],
+        "forbidRoad": false
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_chicken_1_0_0",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/chicken_1_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_chicken_1_1_0",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/chicken_1_1_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_chicken_1_0_1",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/chicken_1_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_chicken_1_1_1",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/chicken_1_1_1.png"
+        }
+      ]
+    },
+    {
+      "id": "goryeo_life_dog_0",
+      "kind": "object",
+      "purpose": "village_animal",
+      "size": [
+        2,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Art/dog_0.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/Approved/GoryeoAtmosphereA7/dog.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/GoryeoAtmosphereA7/approval.json"
+      },
+      "profile": "animal",
+      "rules": {
+        "onTerrain": [
+          "grass",
+          "dirt"
+        ],
+        "forbidRoad": false
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_dog_0_0_0",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/dog_0_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_dog_0_1_0",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/dog_0_1_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_dog_0_0_1",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/dog_0_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_dog_0_1_1",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/dog_0_1_1.png"
+        }
+      ]
+    },
+    {
+      "id": "goryeo_life_dog_1",
+      "kind": "object",
+      "purpose": "village_animal",
+      "size": [
+        2,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Art/dog_1.png",
+      "source": {
+        "kind": "ai_processed",
+        "path": "ArtReview/Approved/GoryeoAtmosphereA7/dog.aseprite"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/GoryeoAtmosphereA7/approval.json"
+      },
+      "profile": "animal",
+      "rules": {
+        "onTerrain": [
+          "grass",
+          "dirt"
+        ],
+        "forbidRoad": false
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_dog_1_0_0",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/dog_1_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_dog_1_1_0",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/dog_1_1_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_dog_1_0_1",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/dog_1_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_dog_1_1_1",
+          "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Cells/dog_1_1_1.png"
+        }
+      ]
+    }
+  ]
+}

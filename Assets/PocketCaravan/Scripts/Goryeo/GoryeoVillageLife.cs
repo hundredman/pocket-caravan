@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 namespace PocketCaravan
 {
-    /// <summary>A7 preview-only visual life. Whole sprites, bounded renderers, no collision or save writes.</summary>
+    /// <summary>A7 approved production or preview visual life. Whole sprites, bounded renderers, no collision or save writes.</summary>
     public sealed class GoryeoVillageLife:MonoBehaviour
     {
         [Serializable]public class Point{public string kind,reason;public float x,y,bx,by;}
         [Serializable]public class Art{public string key;public Sprite sprite;}
-        public Point[] points;public Art[] art;public Sprite[] traderFrames;
+        public Point[] points;public Art[] art;public Sprite[] traderFrames;public bool approvedForProduction;
         public const int RendererLimit=64;
         class Item{public Point point;public SpriteRenderer renderer;public float phase;public int puff=-1;public GoryeoVisualWalker walker;public Light2D light;}
         readonly List<Item> items=new List<Item>();Transform owned;MapRoot map;
@@ -20,10 +20,11 @@ namespace PocketCaravan
         Sprite SpriteFor(string key){if(art!=null)foreach(var a in art)if(a.key==key)return a.sprite;return null;}
         public void Configure(Point[] data,Art[] assets,Sprite[] trader){points=data;art=assets;traderFrames=trader;Rebuild();}
         void OnEnable(){if(points!=null)Rebuild();}
+        bool Allowed=>map!=null&&MapRoot.Current==map&&GoryeoTravelTransition.RegionOf(map.mapId)!=null&&(map.previewOnly||approvedForProduction);
         public void Rebuild()
         {
-            Clear();map=GetComponent<MapRoot>();if(map==null||!map.previewOnly||GoryeoTravelTransition.RegionOf(map.mapId)==null||points==null)return;
-            owned=new GameObject("Goryeo A7 review life").transform;owned.SetParent(transform,false);
+            Clear();map=GetComponent<MapRoot>();if(!Allowed||points==null)return;
+            owned=new GameObject("Goryeo village life").transform;owned.SetParent(transform,false);
             foreach(var point in points)
             {
                 int count=point.kind=="smoke"?4:1;
@@ -50,7 +51,7 @@ namespace PocketCaravan
         void Update()=>Tick(Time.time);
         public void Tick(float now)
         {
-            if(owned==null||map==null||!map.previewOnly||MapRoot.Current!=map)return;
+            if(owned==null||!Allowed)return;
             int hour=GameManager.I!=null?GameManager.I.Clock.Hour:12;
             foreach(var item in items)
             {
@@ -71,21 +72,5 @@ namespace PocketCaravan
         }
         void Clear(){if(owned!=null)Destroy(owned.gameObject);owned=null;items.Clear();}
         void OnDisable()=>Clear();
-    }
-    /// <summary>Reuse Walker path/animation fields without its interaction registry or global Random draws.</summary>
-    public sealed class GoryeoVisualWalker:Walker
-    {
-        int target=1;
-        protected override void OnEnable(){}
-        protected override void OnDisable(){}
-        public override void Interact(PlayerController player){}
-        void Update()
-        {
-            if(path==null||path.Count<2||UIState.Blocking){if(anim!=null)anim.walking=false;return;}
-            var player=PlayerController.Instance;if(player!=null&&Vector2.Distance(player.Motor.Feet,transform.position)<1.2f){if(anim!=null)anim.walking=false;return;}
-            var delta=path[target]-transform.position;if(delta.magnitude<.05f){target=target==0?path.Count-1:0;if(anim!=null)anim.walking=false;return;}
-            transform.position+=Vector3.ClampMagnitude(delta,speed*Time.deltaTime);
-            if(anim!=null){anim.walking=true;anim.facing=Mathf.Abs(delta.x)>=Mathf.Abs(delta.y)?new Vector2Int(delta.x>0?1:-1,0):new Vector2Int(0,delta.y>0?1:-1);}
-        }
     }
 }
