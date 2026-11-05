@@ -1,0 +1,42 @@
+{
+  "status": "review",
+  "production": false,
+  "flameFps": 7,
+  "emberLimit": 3,
+  "lights": 1,
+  "animationReplayMs": 120,
+  "art": [
+    {
+      "path": "Assets/PocketCaravan/Resources/North/flame_0.png",
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSha256": "8a7061903a0d9b92e495c3db9b5cda50079c605c0807c53edb972e8b96a65ea6"
+    },
+    {
+      "path": "Assets/PocketCaravan/Resources/North/flame_1.png",
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSha256": "89558a6d2037e6e102bf095a605d56a6f65a9b938f4a2d5d2d599297a8dcc7b2"
+    },
+    {
+      "path": "Assets/PocketCaravan/Resources/North/flame_2.png",
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSha256": "897e148c2c34c636b019b04387ba06ca2a1b31075474a0e084a05d6212ab0db4"
+    },
+    {
+      "path": "Assets/PocketCaravan/Resources/North/flame_3.png",
+      "size": [
+        16,
+        16
+      ],
+      "rgbaSha256": "701b1300dd3cba0358571c747399540852ba392236736f657c54fcf10716b06d"
+    }
+  ]
+}

@@ -104,6 +104,8 @@ namespace PocketCaravan
                         part.transform.position=map.CellCenter(new Vector3Int(s.propX+x,RoadGrid.Current.height-s.propY-y-1,0));
                         var renderer=part.AddComponent<SpriteRenderer>();renderer.sprite=piece;renderer.sortingOrder=6;
                     }
+                    var center=map.CellCenter(new Vector3Int(s.propX,RoadGrid.Current.height-s.propY-1,0))+new Vector3(.5f,-.5f,0);
+                    go.AddComponent<GoryeoCampfire>().Configure(map,center);
                 }
             }
             return count;

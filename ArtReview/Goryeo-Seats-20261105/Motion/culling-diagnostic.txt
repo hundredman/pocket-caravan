@@ -1,0 +1,1 @@
+camera=(1044.50, 52.82, -9.50) main=(1044.50, 52.82, -9.50) viewport=(-32.85, 0.45, 10.00) visible=False embers=0 light=0
