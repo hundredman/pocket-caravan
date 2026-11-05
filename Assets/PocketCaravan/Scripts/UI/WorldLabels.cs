@@ -49,13 +49,13 @@ namespace PocketCaravan
                 if (target && it.Category != Interactable.Kind.Quest) DrawDown(p + new Vector2(0, -12));
             }
 
-            // 2) 말 걸기 안내
+            // 2) 말 걸기 안내 (11/05 B안: 보라 알약 = 상호작용, 안에 중립 키캡 [Space])
             if (player != null && player.TalkTarget != null && !UIState.Blocking)
             {
                 Vector2 p = ToGui(cam, player.TalkTarget.transform.position + new Vector3(0f, -0.7f, 0f));
-                string verb = !string.IsNullOrEmpty(player.TalkTarget.ActionVerb) ? player.TalkTarget.ActionVerb + " (Space)"
-                    : player.TalkTarget is DroppedCargo ? "줍기 (Space)" : player.TalkTarget is ContractBoard ? "게시판 보기 (Space)" : player.TalkTarget is TownMarket ? "사고팔기 (Space)" : "말 걸기 (Space)";
-                Outlined(new Rect(p.x - 70, p.y, 140, 12), verb, Color.white, nameStyle);
+                string verb = !string.IsNullOrEmpty(player.TalkTarget.ActionVerb) ? player.TalkTarget.ActionVerb
+                    : player.TalkTarget is DroppedCargo ? "줍기" : player.TalkTarget is ContractBoard ? "게시판 보기" : player.TalkTarget is TownMarket ? "사고팔기" : "말 걸기";
+                CuteUI.SpacePrompt(p.x, p.y, verb);
             }
 
             // 3) 퀘스트 길 안내

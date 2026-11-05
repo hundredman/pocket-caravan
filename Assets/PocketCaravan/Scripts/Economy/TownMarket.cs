@@ -242,7 +242,7 @@ namespace PocketCaravan
         void Observe()
         {
             var gm = GameManager.I;
-            gm.Player.ledger.Observe(town, Market, ItemsShown(gm.Player));
+            gm.Player.ledger.Observe(town, Market, ItemsShown(gm.Player), gm.Clock != null ? gm.Clock.day : 0);
         }
 
         static string Signed(float value) => value.ToString("+0.#;-0.#;0");

@@ -1,0 +1,118 @@
+{
+ "width": 428,
+ "height": 180,
+ "maps": [
+  {
+   "mapId": "venice_rialto",
+   "x": 62,
+   "y": 38,
+   "w": 75,
+   "h": 84,
+   "labelX": 89.5,
+   "labelY": 78.5
+  },
+  {
+   "mapId": "venice_santerasmo",
+   "x": 4,
+   "y": 31,
+   "w": 58,
+   "h": 56,
+   "labelX": 29.5,
+   "labelY": 49.5
+  },
+  {
+   "mapId": "venice_burano",
+   "x": 4,
+   "y": 87,
+   "w": 58,
+   "h": 61,
+   "labelX": 24.5,
+   "labelY": 133.5
+  },
+  {
+   "mapId": "venice_murano",
+   "x": 137,
+   "y": 31,
+   "w": 57,
+   "h": 56,
+   "labelX": 165.5,
+   "labelY": 52.5
+  },
+  {
+   "mapId": "venice_chioggia",
+   "x": 137,
+   "y": 87,
+   "w": 57,
+   "h": 61,
+   "labelX": 167.5,
+   "labelY": 123.5
+  },
+  {
+   "mapId": "venice_c_landing",
+   "x": 204,
+   "y": 62,
+   "w": 80,
+   "h": 56,
+   "labelX": 230.5,
+   "labelY": 98.5
+  },
+  {
+   "mapId": "venice_c_vineyard",
+   "x": 204,
+   "y": 4,
+   "w": 63,
+   "h": 56,
+   "labelX": 240.5,
+   "labelY": 31.5
+  },
+  {
+   "mapId": "venice_c_marsh",
+   "x": 204,
+   "y": 120,
+   "w": 63,
+   "h": 56,
+   "labelX": 235.5,
+   "labelY": 148.0
+  },
+  {
+   "mapId": "venice_c_pass",
+   "x": 286,
+   "y": 20,
+   "w": 60,
+   "h": 44,
+   "labelX": 316.0,
+   "labelY": 42.0
+  },
+  {
+   "mapId": "venice_c_post",
+   "x": 286,
+   "y": 66,
+   "w": 64,
+   "h": 48,
+   "labelX": 308.5,
+   "labelY": 91.5
+  },
+  {
+   "mapId": "venice_c_bridge",
+   "x": 286,
+   "y": 116,
+   "w": 60,
+   "h": 44,
+   "labelX": 316.0,
+   "labelY": 138.0
+  },
+  {
+   "mapId": "venice_c_gate",
+   "x": 352,
+   "y": 54,
+   "w": 72,
+   "h": 71,
+   "labelX": 388.0,
+   "labelY": 89.5
+  }
+ ],
+ "pixelsPerTile": 4,
+ "geography": "continuous_tiles",
+ "terrainSource": "Tools/MapGen/unified_map.py",
+ "annotations": []
+}

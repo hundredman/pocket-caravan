@@ -8,6 +8,7 @@ namespace PocketCaravan
     /// 북유럽 맵(north_)에 있을 때 M을 누르면 고려 교역도 대신 "북유럽 교역도"를 보여 준다 (공용 WorldMapUI는 고치지 않음).
     /// 북유럽에 있는 동안만 공용 지도 컴포넌트를 잠시 끄고, 다른 지역으로 나가면 원래대로 켠다.
     /// 지도 그림·배치: Resources/WorldMap/NorthTerrain.png, NorthLayout.json (Tools/MapGen/north_cartography.py가 만든다).
+    /// 2026-11-05 UI B안 통일(윤채): 그리기만 공용 CuteMap으로 바꿈. 열고 닫기·이름·마을·내 위치(OwnCell) 계산은 그대로.
     /// </summary>
     public class NorthMapUI : MonoBehaviour
     {
@@ -32,12 +33,9 @@ namespace PocketCaravan
             { "north_laugar", "north_laugar" }, { "north_herd", "north_herd" }, { "north_c_gatetown", "north_post" },
             { "north_c_snowwood", "north_cwood" }, { "north_c_creek", "north_ccreek" }, { "north_c_crossing", "north_cross" },
         };
-        static readonly Color Ink = new Color32(68, 57, 41, 255);
-
         bool open;
-        Texture2D terrain, paper;
+        Texture2D terrain;
         Atlas atlas;
-        GUIStyle ink, caption, title;
         WorldMapUI shared;
         GameManager sharedOwner;
         bool suppressed;
@@ -55,23 +53,9 @@ namespace PocketCaravan
 
         void Awake()
         {
-            terrain = Resources.Load<Texture2D>("WorldMap/NorthTerrain");
-            if (terrain != null && terrain.isReadable && QualitySettings.activeColorSpace == ColorSpace.Linear)
-            {
-                // 공용 지도와 같은 방식: OnGUI 색 공간에 맞춘 표시용 사본 (원본 PNG는 그대로)
-                paper = new Texture2D(terrain.width, terrain.height, TextureFormat.RGBA32, false) { filterMode = FilterMode.Point };
-                var c = terrain.GetPixels32();
-                for (int i = 0; i < c.Length; i++) c[i] = UIStyle.Lin(c[i]);
-                paper.SetPixels32(c);
-                paper.Apply();
-            }
-            var json = Resources.Load<TextAsset>("WorldMap/NorthLayout");
+            terrain = Resources.Load<Texture2D>("WorldMap/Unified/NorthMap");   // 11/05 모든 지역 같은 그림체 (unified_map.py, 배치·own·out은 NorthLayout 그대로)
+            var json = Resources.Load<TextAsset>("WorldMap/Unified/NorthMapLayout");
             if (json != null) atlas = JsonUtility.FromJson<Atlas>(json.text);
-        }
-
-        void OnDestroy()
-        {
-            if (paper != null) Destroy(paper);
         }
 
         void Update()
@@ -111,75 +95,37 @@ namespace PocketCaravan
             UIStyle.Begin();
             GUI.depth = -10;
             GUI.color = GUI.contentColor = Color.white;
-            if (ink == null)
-            {
-                ink = new GUIStyle(UIStyle.Rich) { fontSize = 10, wordWrap = false };
-                foreach (var s in new[] { ink.normal, ink.hover, ink.active, ink.focused }) s.textColor = UIStyle.Lin((Color32)Ink);
-                caption = new GUIStyle(ink) { alignment = TextAnchor.MiddleCenter, fontSize = 7 };   // 10/24: 중앙 구역이 붙어 지도가 작아져서 이름표를 작게
-                title = new GUIStyle(ink) { fontSize = 13 };
-            }
-
-            float width = Mathf.Min(610, UIStyle.VirtualWidth - 16), height = Mathf.Min(352, UIStyle.VirtualHeight - 8);
-            var panel = new Rect((UIStyle.VirtualWidth - width) / 2, (UIStyle.VirtualHeight - height) / 2, width, height);
-            Fill(panel, new Color32(100, 76, 48, 255));
-            Fill(new Rect(panel.x + 3, panel.y + 3, width - 6, height - 6), new Color32(225, 211, 171, 255));
-            GUI.Label(new Rect(panel.x + 16, panel.y + 10, width - 32, 20), "북유럽 교역도 · 피오르와 고원의 마을들", title);
-            GUI.Label(new Rect(panel.xMax - 76, panel.y + 13, 65, 14), "M / Esc 닫기", ink);
-
-            if (terrain == null || atlas == null || atlas.maps == null || atlas.width <= 0 || atlas.height <= 0)
-            {
-                GUI.Label(new Rect(panel.x + 16, panel.y + 45, width - 32, 24), "북유럽 지도 데이터가 없습니다. Tools/MapGen/export_north.py를 실행해 주세요.", ink);
-                return;
-            }
-            float scale = Mathf.Min((width - 24) / atlas.width, (height - 84) / atlas.height);
-            var canvas = new Rect(panel.center.x - atlas.width * scale / 2, panel.y + 36, atlas.width * scale, atlas.height * scale);
-            GUI.DrawTexture(canvas, paper != null ? paper : terrain, ScaleMode.StretchToFill);
-
-            Vector2 Project(float x, float y) => new Vector2(canvas.x + x * scale, canvas.y + y * scale);
             string here = MapRoot.Current != null ? MapRoot.Current.mapId : "";
-            var placed = new List<Rect>();   // 10/24: 이미 놓은 이름표. 겹치면 아래·오른쪽·왼쪽으로 비켜 놓는다
-            foreach (var area in atlas.maps)
-            {
-                var info = index != null ? index.Map(area.mapId) : null;
-                string name = info != null ? info.displayName : (Names.TryGetValue(area.mapId, out var n) ? n : area.mapId);
-                string town = info != null ? info.town : (Towns.TryGetValue(area.mapId, out var t) ? t : "");
-                var p = Project(area.labelX, area.labelY);
-                bool destination = !string.IsNullOrEmpty(town) && gm.Player.contracts.Exists(c => c.toTown == town);
-                Dot(p, 3, destination ? new Color32(170, 95, 43, 255) : (Color32)Ink);
-                string label = destination ? name + " · 의뢰" : name;
-                float lw = Mathf.Min(150, caption.CalcSize(new GUIContent(label)).x + 4);   // 10/27 긴 마을 이름이 잘리지 않게
-                Rect Spot(float x, float y) => new Rect(Mathf.Clamp(x, canvas.x, canvas.xMax - lw), Mathf.Clamp(y, canvas.y, canvas.yMax - 10), lw, 10);
-                var tries = new[] { Spot(p.x - lw / 2, p.y - 14), Spot(p.x - lw / 2, p.y + 5), Spot(p.x + 6, p.y - 5), Spot(p.x - lw - 6, p.y - 5),
-                                    Spot(p.x - lw / 2, p.y - 25), Spot(p.x - lw / 2, p.y + 16) };
-                var lr = tries[0];
-                foreach (var c in tries)
-                    if (!placed.Exists(o => o.Overlaps(c))) { lr = c; break; }
-                placed.Add(lr);
-                Fill(lr, new Color32(224, 210, 167, 190));
-                GUI.Label(lr, label, caption);
-                if (area.mapId == here)
+            var places = new List<CuteMap.Place>();
+            Vector2? me = null;
+            bool ready = terrain != null && atlas != null && atlas.maps != null && atlas.width > 0 && atlas.height > 0;
+            if (ready)
+                foreach (var area in atlas.maps)
                 {
-                    var player = FindAnyObjectByType<PlayerMotor>();
-                    if (player != null)
+                    var info = index != null ? index.Map(area.mapId) : null;
+                    string name = info != null ? info.displayName : (Names.TryGetValue(area.mapId, out var n) ? n : area.mapId);
+                    string town = info != null ? info.town : (Towns.TryGetValue(area.mapId, out var t) ? t : "");
+                    bool destination = !string.IsNullOrEmpty(town) && gm.Player.contracts.Exists(c => c.toTown == town);
+                    places.Add(new CuteMap.Place { name = name, at = new Vector2(area.labelX, area.labelY), destination = destination });
+                    if (area.mapId == here)
                     {
-                        var cell = OwnCell(area, player.Cell.x, (int)area.h - 1 - player.Cell.y);
-                        var at = Project(area.x + cell.x + .5f, area.y + cell.y + .5f);
-                        Dot(at, 5, Color.white);
-                        Dot(at, 3, new Color32(189, 55, 42, 255));
+                        var player = FindAnyObjectByType<PlayerMotor>();
+                        if (player != null)
+                        {
+                            var cell = OwnCell(area, player.Cell.x, (int)area.h - 1 - player.Cell.y);
+                            me = new Vector2(area.x + cell.x + .5f, area.y + cell.y + .5f);
+                        }
                     }
                 }
-            }
-            float ly = panel.yMax - 44;
-            GUI.Label(new Rect(panel.x + 16, ly, width - 32, 14),
-                "붉은 점: 내 위치    갈색 길: 교역로    옅은 물: 얼어붙은 피오르    회녹색: 절벽    지붕: 마을    의뢰: 배달 목적지", ink);
             string current = Names.TryGetValue(here, out var cn) ? cn : (index != null ? index.MapName(here) : here);
             if (Towns.TryGetValue(here, out var townId))
             {
                 var td = gm.Db.towns.Find(x => x != null && x.id == townId);
                 if (td != null) current += " · " + gm.GetMarket(td).LevelName;
             }
-            GUI.Label(new Rect(panel.x + 16, ly + 17, width - 32, 14),
-                "현재: " + current + "    |    다리 밑 트롤과 의뢰 기한을 확인하며 이동하세요.", ink);
+            var res = CuteMap.Draw("북유럽 교역도 · 피오르와 고원의 마을들", ready ? terrain : null, ready ? atlas.width : 0, ready ? atlas.height : 0, places, me, current,
+                "다리 밑 트롤과 의뢰 기한을 확인하며 이동하세요");
+            if (res.close) Close();
         }
 
         // 2026-10-30: 맵 가장자리 출구 복도는 옆 맵 땅 위에 있어서, 그대로 찍으면 붉은 점이 옆 마을에 가 있다.
@@ -216,16 +162,6 @@ namespace PocketCaravan
                 if (bd != int.MaxValue) return best;
             }
             return new Vector2Int(x, y);
-        }
-
-        static void Dot(Vector2 p, float r, Color c) => Fill(new Rect(p.x - r, p.y - r, r * 2, r * 2), c);
-
-        static void Fill(Rect rect, Color color)
-        {
-            var old = GUI.color;
-            GUI.color = UIStyle.Lin((Color32)color);
-            GUI.DrawTexture(rect, Texture2D.whiteTexture);
-            GUI.color = old;
         }
     }
 }
