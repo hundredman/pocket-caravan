@@ -12,7 +12,10 @@ class LabelsTrial(unittest.TestCase):
   self.assertGreater(count,10)
  def test_scoped_preview_no_new_functionality_or_shared_ui_edits(self):
   code=(ROOT/'Assets/PocketCaravan/Scripts/Goryeo/GoryeoPlaceLabels.cs').read_text();self.assertNotIn('RuntimeInitializeOnLoadMethod',code);self.assertIn('map.previewOnly||approvedForProduction',code);self.assertIn('original.enabled=originalEnabled',code);self.assertNotIn('.Interact(',code);self.assertNotIn('.DisplayName =',code)
-  self.assertFalse((ROOT/'Assets/PocketCaravan/Resources/Goryeo/PlaceLabels.json').exists())
+  production=json.loads((ROOT/'Assets/PocketCaravan/Resources/Goryeo/PlaceLabels.json').read_text());source=json.loads((OUT/'source.json').read_text());approval=json.loads((OUT/'approval.json').read_text());self.assertEqual(production['status'],'approved');self.assertEqual(approval['userReply'],'A5 이대로 승인');self.assertEqual(production['near'],4);self.assertEqual(len(production['maps']),13)
+  for a,b in zip(production['maps'],source['maps']):
+   for k in ('id','w','h'):self.assertEqual(a[k],b[k])
+   self.assertEqual(a['places'],[{k:p[k]for k in ('text','x','y')}for p in b['places']])
   # Quest navigation and Space prompts retain the common implementation, after the name loop.
   common=(ROOT/'Assets/PocketCaravan/Scripts/UI/WorldLabels.cs').read_text()
   for start,end in [('            // 2) 말 걸기 안내','            // 3) 퀘스트 길 안내'),('            // 3) 퀘스트 길 안내','        static Vector2 ToGui')]:

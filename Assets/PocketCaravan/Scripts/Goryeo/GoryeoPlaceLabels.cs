@@ -3,7 +3,7 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// A5 scoped review: nearby places, uncluttered labels; preserve person, interaction and quest UI.
+    /// A5 scoped labels: nearby places, uncluttered labels; preserve person, interaction and quest UI.
     /// Own-map opt-in only. Common WorldLabels is restored on disable/scene exit.
     /// </summary>
     public sealed class GoryeoPlaceLabels : MonoBehaviour
@@ -24,6 +24,8 @@ namespace PocketCaravan
         public readonly System.Collections.Generic.List<string> DrawnNames=new System.Collections.Generic.List<string>();
         MapRoot map;WorldLabels original;bool originalEnabled,ownsOriginal;
         public bool OwnsOriginal=>ownsOriginal;
+        public bool OriginalEnabled=>originalEnabled;
+        public void Refresh()=>Sync();
         bool Allowed=>map!=null&&MapRoot.Current==map&&GoryeoTravelTransition.RegionOf(map.mapId)!=null&&(map.previewOnly||approvedForProduction);
         public static bool Nearby(Vector2 feet,Vector2 at)=>(feet-at).sqrMagnitude<=Near*Near;
         public static bool IsPlace(Interactable it)=>it is TownMarket||it is ContractBoard||it is WorkshopSpot||Inn.IsHost(it)||(it is TalkNpc&&it.GetComponent<CharacterAnimator>()==null);
