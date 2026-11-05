@@ -1,0 +1,13 @@
+{
+  "status": "approved",
+  "date": "2026-11-05",
+  "userReply": "이 표현과 빈도로 승인",
+  "audioSha256": "dbdae13634f9677cca94f1669619320f2539db485092b8aaaf708ec8b010fd79",
+  "sourceSha256": "50130be95701587debae6c77fb6863ee096de7a0ef388edb4d30c39370ffe9bf",
+  "effectSha256": "8834b2efa8628d3e31d84f2d52acb57a07f4ae380fd513929878021277c35c9d",
+  "mapId": "transit_central_approach",
+  "placementId": "e3_central_approach_log",
+  "oncePerWindowPerSession": true,
+  "reviewGif": "thunder-review.gif",
+  "reviewAudio": "thunder-review.mp3"
+}

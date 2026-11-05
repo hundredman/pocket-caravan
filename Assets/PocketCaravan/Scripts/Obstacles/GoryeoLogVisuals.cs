@@ -6,7 +6,7 @@ namespace PocketCaravan
     [DefaultExecutionOrder(-150)]
     public sealed class GoryeoLogVisuals:MonoBehaviour
     {
-        void Start()=>GoryeoStormLogs.Initialize(GetComponent<ObstacleField>());
+        void Start(){GoryeoStormLogs.Initialize(GetComponent<ObstacleField>());GoryeoThunderDirector.Apply(GetComponent<MapRoot>());}
         [Serializable]public class Entry
         {
             public string placementId;public Sprite sprite;public Vector2Int[] occupied;

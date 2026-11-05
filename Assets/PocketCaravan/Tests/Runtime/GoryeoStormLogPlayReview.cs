@@ -63,8 +63,8 @@ namespace PocketCaravan.EditorTools
         }
         IEnumerator RunThunder()
         {
-            Directory.CreateDirectory(Out);Check(!GameManager.I.AutosaveEnabled,"bootstrap saves off");yield return Load(Window(GoryeoAtmosphere.Kind.Monsoon,true));var map=MapRoot.Current;map.previewOnly=true;
-            int count=map.GetComponents<AudioSource>().Length;var trial=map.gameObject.AddComponent<GoryeoThunderTrial>();trial.clip=AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/PocketCaravan/Editor/B2Preview/StormLogs/distant-thunder.wav");Check(trial.clip!=null,"review imported thunder");yield return null;yield return null;Check(!trial.Source.isPlaying,"no autoplay before explicit trigger");
+            Directory.CreateDirectory(Out);Check(!GameManager.I.AutosaveEnabled,"bootstrap saves off");yield return Load(Window(GoryeoAtmosphere.Kind.Monsoon,true));var map=MapRoot.Current;map.previewOnly=true;var installed=map.GetComponent<GoryeoThunder>();if(installed!=null)Destroy(installed);var hook=map.GetComponent<GoryeoThunderTrigger>();if(hook!=null)Destroy(hook);yield return null;yield return null;
+            int count=map.GetComponents<AudioSource>().Length;var trial=map.gameObject.AddComponent<GoryeoThunder>();trial.clip=AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/PocketCaravan/Editor/B2Preview/StormLogs/distant-thunder.wav");Check(trial.clip!=null,"review imported thunder");yield return null;yield return null;Check(!trial.Source.isPlaying,"no autoplay before explicit trigger");
             Check(trial.PlayOnce(),"one storm preview trigger");Time.timeScale=1;GameManager.I.Clock.realSecondsPerDay=36000;
             float maximum=0;for(int frame=0;frame<12;frame++){maximum=Mathf.Max(maximum,trial.Flash);yield return Photo("thunder-frame-"+frame.ToString("00"));yield return new WaitForSecondsRealtime(.06f);}
             Check(maximum>0&&maximum<=.07f,"one soft fade flash max7percent");Check(trial.Source.isPlaying,"actual delayed thunder playing");
