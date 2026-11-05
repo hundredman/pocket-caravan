@@ -129,5 +129,14 @@
     "transit_woodtown-before.png",
     "transit_woodtown-night.png"
   ],
-  "maxMapRenderers": 21
+  "maxMapRenderers": 21,
+  "boards": [
+    "game-comparison-final.png",
+    "detail-comparison-final.png"
+  ],
+  "supersededBoards": [
+    "game-comparison.png",
+    "detail-comparison.png"
+  ],
+  "playChecks": 364
 }

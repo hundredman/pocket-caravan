@@ -20,6 +20,6 @@ ResourceWarning: Enable tracemalloc to get the object allocation traceback
   im=im.convert('RGBA');self.assertEqual(im.size,(32,32));self.assertLessEqual(set(im.getchannel('A').getdata()),{0,255});self.assertLessEqual(len(set(im.getdata())),10);bbox=im.getbbox();self.assertLessEqual(bbox[3]-bbox[1],16);self.assertEqual(bbox[3],30);states.append(im.tobytes())
 ..............s.........................................s........sssss...s...s.........................................s.ss.................
 ----------------------------------------------------------------------
-Ran 380 tests in 120.764s
+Ran 380 tests in 198.270s
 
 OK (skipped=23)

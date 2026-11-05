@@ -13,11 +13,11 @@ def board():
   for j,state in enumerate(('before','after','night')):
    with Image.open(OUT/'Unity'/f'{id}-{state}.png')as im:
     assert im.size==(480,270);b.paste(im.convert('RGB'),(j*488,y+25))
- b.save(OUT/'game-comparison.png')
+ b.save(OUT/'game-comparison-final.png')
  b=Image.new('RGB',(976,650),'#eee9dc');d=ImageDraw.Draw(b);d.text((10,8),'물가·논 가까이 보기 · 실제 Unity 480×270 · 기존 / 수정안',font=font(23),fill='#2f291f')
  for i,(id,label)in enumerate([('Naru','나루 · 승인된 배 전체/갈매기'),('goryeo_jangdan','장단 · 기존 논 위 새')]):
   y=46+i*300;d.text((12,y),label,font=font(18),fill='#2f291f')
   for j,state in enumerate(('before','after')):
    with Image.open(OUT/'Unity'/f'{id}-detail-{state}.png')as im:assert im.size==(480,270);b.paste(im.convert('RGB'),(j*488,y+25))
- b.save(OUT/'detail-comparison.png')
+ b.save(OUT/'detail-comparison-final.png')
 if __name__=='__main__':board()

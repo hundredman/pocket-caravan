@@ -34,7 +34,7 @@ namespace PocketCaravan
                     var item=new Item{point=point,renderer=sr,phase=items.Count*.73f,puff=point.kind=="smoke"?p:-1};items.Add(item);
                     if(point.kind=="lamp")
                     {
-                        var light=go.AddComponent<Light2D>();light.lightType=Light2D.LightType.Point;light.color=new Color(1,.73f,.38f);light.pointLightOuterRadius=2.6f;light.pointLightInnerRadius=.3f;
+                        var light=go.AddComponent<Light2D>();light.lightType=Light2D.LightType.Point;light.targetSortingLayers=new[]{SortingLayer.NameToID("Default")};light.color=new Color(1,.73f,.38f);light.pointLightOuterRadius=2.6f;light.pointLightInnerRadius=.3f;
                         var glow=go.AddComponent<GoryeoLantern>();glow.lamp=light;glow.phase=item.phase;item.light=light;
                     }
                     if(point.kind=="walker")
