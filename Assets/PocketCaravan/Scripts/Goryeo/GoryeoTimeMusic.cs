@@ -3,7 +3,7 @@ using System.Reflection;
 using UnityEngine;
 namespace PocketCaravan
 {
-    /// <summary>A2 review opt-in; six clip choices, two bounded crossfading sources, no settings/save writes.</summary>
+    /// <summary>Approved A2 playback; six clip choices, two bounded crossfading sources, no settings/save writes.</summary>
     public sealed class GoryeoTimeMusic:MonoBehaviour
     {
         public AudioClip[] clips=new AudioClip[6];public bool approvedForProduction;

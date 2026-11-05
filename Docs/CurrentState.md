@@ -689,8 +689,12 @@ v1 합성음은 날카롭고 부자연스럽다는 피드백으로 미채택, v2
 
 사용자 “A5 이대로 승인” 후 GoryeoPlaceLabelsReview.PromoteApproved → Resources/Goryeo/PlaceLabels → 전용 Director로 본편13맵에 연결했다. 기존4칸 임계·장터/게시판/공방/이정표·객주/우물/물가21개 점·중첩/중복 정리와 실제 이름/ID·일반사람/퀘스트 표식·Space/목표 안내를 보존한다. 공용 WorldLabels 코드는 고치지 않고 소유 맵에서 enabled 상태를 잠시 대신 제어하며 끄기·승인 해제·다른 지역/씬 이탈 시 원래 값으로 복원한다. 본편407확인/480×2709장·다른3문명 미설치/공용UI 복원, 정적385 두 환경(23/32skip)/Unity8종·월드0오류·저장9파일 불변. 지형/맵/씬/공용/다른지역 파일·판정·이동/경제/저장 형식 미변경. 사람/온라인/빌드FPS·장시간 미검사. Docs/Validation/Goryeo-A5-Binding-A2-2026-11-05 참조.
 
-### 고려 분위기 A2 — 시간대 음악 검토 (2026-11-05)
+### 고려 분위기 A2 — 승인된 시간대 음악 (2026-11-05)
 
-ArtReview/Goryeo-Atmosphere-A2-20261105: 원작16마디 악보·직접 합성/편곡한 아침/낮/저녁/밤4곡(PCM16 stereo32kHz,43.64/36.92/48/56.47초)과 각각14초 들어보기. source.json과 Python 합성 원본으로 재생성 가능하다. 실제 전통악기 녹음/외부 음원이 아니다. 마을9곳은05~10/10~17/17~20/20~05 시간대4곡, 이동 구역4곳은 기존road, 위험 시 기존danger를 우선하는 제안이다. 원래 naru/capital/dakmok 파일은 보존한다.
+사용자 “A2 이대로 승인” 후 원작 합성/편곡4곡을 Resources/Goryeo/TimeMusic에 온전하게 복사했다. approval.json에 검토 source/4WAV 지문과 승인 원문을 보존하며 GoryeoTimeMusicReview.PromoteApproved로 검증/재생성한다. PCM stereo32kHz 보존·미리 로드,4곡 전체 약24MB PCM. 실제 전통악기 녹음/외부 음원이 아니다. 마을9곳은05~10/10~17/17~20/20~05 시간대4곡, 이동 구역4곳은 기존road, 위험은 기존danger 우선이다. 기존 naru/capital/dakmok 파일은 보존한다.
 
-자동 본편 훅이 없는 GoryeoTimeMusic 검토 모듈은2소스·보통2초/위험0.6초 equal-power 페이드와 같은 시간대 마을 이동 시 곡 유지, 실제 음량·음소거/누락 파일·외부/끄기/파괴 복원을 구현했다. AudioManager의 음악 버스/현재곡은 읽고 mute 상태만 보관/복원하며 효과음/음량 설정 값·공용 코드는 바꾸지 않는다. 검토용 파일만 Editor/B2Preview에 복사, Resources/본편 설치 없음. 조건624(13×24×2)/Play50확인(실제 재생 위치·페이드/설정·기존 road/danger·마을 이동·다른3문명 복원/정리), 정적385 두 환경/Unity8종·저장9파일 보존. 소리·적용 방식 사용자 승인 대기. 승인 후 연결하고 A6 속도 수치 제안으로 이어간다. 사람 청감/온라인/빌드FPS·장시간 미검사.
+GoryeoTimeMusicDirector가 승인된 소유 본편 맵에서 지속 GameManager에 모듈 하나만 설치한다.2소스·보통2초/위험0.6초 equal-power 페이드, 같은 시간대 마을 이동 곡 유지, 실제 음량/음소거와 누락/끄기/파괴/다른3문명 진입 시 공용 음악 mute 원상복원. AudioManager private 음악버스/현재곡은 읽기만 하고 mute만 보관·복원하며 설정/효과음·공용 파일은 고치지 않았다.
+
+조건624/초기 검토Play50 보존, 최종 PCM 본편Play89확인: 실제13맵 자동설치/단일모듈·곡선택, 실제 재생 위치 진행/시간대 페이드·길/위험 원곡·설정/복원·재산 불변/저장OFF. 정적385 두 환경(23/32skip)·월드0오류1437출구/Unity8종/저장9파일 불변. 사람 직접/온라인/빌드FPS·장시간/실제 스피커 청감 미검사. Docs/Validation/Goryeo-A2-Binding-2026-11-05 참조.
+
+A6는 Docs/Goryeo/WeatherSpeed-A6-Proposal-2026-11-05.md에 흙길 봄비97%/장맛비94%, 나머지100%를 제안했다. 수치 승인 전 속도/공용 PlayerController·판정/시계/경제/저장은 바꾸지 않는다. B단계는 사용자 후속 선택 대기다.

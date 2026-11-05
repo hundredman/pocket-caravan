@@ -1,0 +1,18 @@
+{
+    "status": "approved",
+    "maps": [
+        "Naru",
+        "Gaegyeong",
+        "Dakmok",
+        "goryeo_songak",
+        "goryeo_jangdan",
+        "transit_woodtown",
+        "transit_ferry",
+        "transit_southport",
+        "transit_crossroads",
+        "transit_wetroad",
+        "transit_pass",
+        "transit_central_approach",
+        "transit_south_inland"
+    ]
+}

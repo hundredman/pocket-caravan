@@ -1,6 +1,6 @@
 # 분위기 A2 시간대 음악 검토 (2026-11-05)
 
-**새 음악/적용 방식 사용자 승인 대기·본편 미적용.** Native에 아침/낮/저녁/밤4곡의 PCM16 stereo32kHz WAV가 있다. 들어보기는 time-music-review.mp3(아침→낮→저녁→밤 각각14초/사이0.5초), 개별 morning/day/evening/night-review.mp3다. 전체 반복곡 길이는43.64/36.92/48/56.47초다.
+**사용자 “A2 이대로 승인” 후 13맵 본편 연결 완료.** Native에 아침/낮/저녁/밤4곡의 PCM16 stereo32kHz WAV가 있다. 들어보기는 time-music-review.mp3(아침→낮→저녁→밤 각각14초/사이0.5초), 개별 morning/day/evening/night-review.mp3다. 전체 반복곡 길이는43.64/36.92/48/56.47초다.
 
 ## 제안
 
@@ -8,7 +8,7 @@
 - 이동 구역4곳(transit_wetroad/pass/central_approach/south_inland)은 기존 road 음원을 그대로 쓴다. 위험일 때는 기존 danger 음원이 모든 시간대보다 우선한다.
 - 위6개 음원 선택을 전용2소스에서 재생한다. 보통2초 equal-power 페이드, 위험 전환0.6초다. 같은 시간대 마을 이동에서는 재시작하지 않는다.
 - 원래 AudioManager 코드는 그대로다. 사설 musicA/musicB/currentClip을 읽어 실제 원본 음악 버스 둘의 mute만 보관/제어하며, 끄기·누락 파일·다른 지역 진입 시 원래 mute 값으로 복원한다. 효과음 버스나 musicVolume 설정을 덮어쓰지 않는다. AudioManager.Muted와 실제 musicVolume을 매 프레임 따른다.
-- 승인 전에는 검토용으로만 설치하며 자동 본편 훅/Resources 새 음악 등록이 없다. 다른 지역에서 새 음악은 멈추고 기존 음악 제어에 돌려준다.
+- 승인 후 GoryeoTimeMusicReview.PromoteApproved가 원본/4WAV 지문을 검증해 Resources/Goryeo/TimeMusic에 복사한다. PCM/32kHz 보존/미리 로드로 가져오고, GoryeoTimeMusicDirector가 소유 본편 맵에서 GameManager에 모듈 하나를 설치한다. 다른 지역에서는 새 음악을 멈추고 원래 음악 제어에 돌려준다.
 
 ## 제작과 검사
 
@@ -20,8 +20,8 @@ GoryeoTimeMusicPlayReview 결과 Unity/play.json:
 
 - 데이터624조건(13맵×24시간×위험2상태): 마을 시간대/길/위험 우선순위와 외부6 ID 제외.
 - Play50확인: 실제 재생 위치 진행(게임 시간을 멈춘 상태),2소스/중복 재시작0, 시간 변화 시 두 곡 겹침과 equal-power 중간값/완료, 같은 시간대 마을 이동 시 곡 유지, 음량/음소거/0음량, 기존 road/danger 참조/위험 해제, 빠진 파일 원래 음악 복귀, 다른3문명에서 멈춤·원래 mute 복원, 비활성/파괴 소스 정리·효과음/돈·짐 불변·저장OFF. 실제 Naru/Gaegyeong/transit_wetroad와3외부 맵을 로드했으며13개 모두를 실제 이동했다고 쓰지 않는다.
-- 검토 파일은 무시되는 Editor/B2Preview/AtmosphereA2에만 복사했다. 본편 재생 코드를 붙이지 않았다.
+- 초기 검토 파일/Play50 기록은 보존했다. 승인 후 Native4WAV를 변형 없이 본편 Resources로 복사했다. Unity/production.json 최종 PCM 본편89확인: 위 재생/페이드/설정/복원 검사에 실제13맵 설치·중복0·선택 검사를 추가했다.
 - 정적385개 최종 통과(전체23skip/Pillow32skip), 월드0오류/1437출구, Unity 지정8종 통과·콘솔 error0. 저장9파일 백업 후 변경0.
 - 중간 정적1실패는 성긴 밤 편곡에도 임의의 최소80노트를 요구한 검사 가정이었다. 노트 수로 품질을 재지 않고 실제 신호의 음량/피크/반복 경계와 유효 악보를 검사하도록 고친 후 최종 통과했다.
 
-빌드·온라인/시연PC FPS/장시간·사람 직접 플레이·실제 스피커 청감은 검사하지 않았다. 음원/정책 승인 뒤 본편 연결, 그다음 A6 속도 수치 제안. push/PR/빌드 없음.
+빌드·온라인/시연PC FPS/장시간·사람 직접 플레이·실제 스피커 청감은 검사하지 않았다. 음원/정책 승인·본편 연결 완료. A6는 별도 수치 제안 승인 대기이며 속도 코드는 미변경. push/PR/빌드 없음.

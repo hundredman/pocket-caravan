@@ -12,6 +12,7 @@ namespace PocketCaravan.EditorTools
     public sealed class GoryeoTimeMusicPlayReview:MonoBehaviour
     {
         const string Out="ArtReview/Goryeo-Atmosphere-A2-20261105/";
+        public bool production;
         static readonly FieldInfo CommonA=typeof(AudioManager).GetField("musicA",BindingFlags.NonPublic|BindingFlags.Instance),CommonB=typeof(AudioManager).GetField("musicB",BindingFlags.NonPublic|BindingFlags.Instance),Sfx=typeof(AudioManager).GetField("sfx",BindingFlags.NonPublic|BindingFlags.Instance);
         [Serializable]class Report{public bool complete;public string error;public int choiceCases;public List<string> checks=new List<string>();}
         readonly Report r=new Report();AudioManager master;float oldVolume;bool oldMute,backedUp;GoryeoTimeMusic music;
@@ -19,17 +20,19 @@ namespace PocketCaravan.EditorTools
         void Mute(bool value)=>typeof(AudioManager).GetProperty("Muted",BindingFlags.Public|BindingFlags.Static).SetValue(null,value);
         void Preview(Scene scene,LoadSceneMode mode){var map=MapRoot.Current;if(map!=null&&GoryeoTravelTransition.RegionOf(map.mapId)!=null)map.previewOnly=true;}
         IEnumerator Load(string path){yield return UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode("Assets/PocketCaravan/Scenes/"+path+".unity",new LoadSceneParameters(LoadSceneMode.Single));for(int n=0;n<8;n++)yield return null;}
-        IEnumerator Start(){DontDestroyOnLoad(gameObject);SceneManager.sceneLoaded+=Preview;var stack=new Stack<IEnumerator>();stack.Push(Run());while(stack.Count>0){bool n=false;object v=null;Exception e=null;try{n=stack.Peek().MoveNext();if(n)v=stack.Peek().Current;}catch(Exception x){e=x;}if(e!=null){Finish(e);yield break;}if(!n){stack.Pop();continue;}if(v is IEnumerator)stack.Push((IEnumerator)v);else yield return v;}Finish(null);}
-        void Finish(Exception e){SceneManager.sceneLoaded-=Preview;if(music!=null)music.enabled=false;if(backedUp){if(master!=null)master.musicVolume=oldVolume;Mute(oldMute);}r.complete=e==null;r.error=e==null?"":e.ToString();Directory.CreateDirectory(Out+"Unity");File.WriteAllText(Out+"Unity/play.json",JsonUtility.ToJson(r,true));Time.timeScale=1;Application.runInBackground=false;EditorApplication.isPlaying=false;}
+        IEnumerator Start(){DontDestroyOnLoad(gameObject);if(!production)SceneManager.sceneLoaded+=Preview;var stack=new Stack<IEnumerator>();stack.Push(Run());while(stack.Count>0){bool n=false;object v=null;Exception e=null;try{n=stack.Peek().MoveNext();if(n)v=stack.Peek().Current;}catch(Exception x){e=x;}if(e!=null){Finish(e);yield break;}if(!n){stack.Pop();continue;}if(v is IEnumerator)stack.Push((IEnumerator)v);else yield return v;}Finish(null);}
+        void Finish(Exception e){SceneManager.sceneLoaded-=Preview;if(music!=null)music.enabled=false;if(backedUp){if(master!=null)master.musicVolume=oldVolume;Mute(oldMute);}r.complete=e==null;r.error=e==null?"":e.ToString();Directory.CreateDirectory(Out+"Unity");File.WriteAllText(Out+(production?"Unity/production.json":"Unity/play.json"),JsonUtility.ToJson(r,true));Time.timeScale=1;Application.runInBackground=false;EditorApplication.isPlaying=false;}
         AudioSource Selected(){for(int n=0;n<2;n++)if(music.Bus(n).clip==music.clips[music.Selected]&&music.Weight(n)>.9f)return music.Bus(n);return null;}
         IEnumerator Run()
         {
             Check(!GameManager.I.AutosaveEnabled,"bootstrap saves off");Time.timeScale=0;yield return Load("Goryeo/Naru");
             master=GameManager.I.GetComponent<AudioManager>();oldVolume=master.musicVolume;oldMute=AudioManager.Muted;backedUp=true;master.musicVolume=.4f;Mute(false);
-            var a=CommonA.GetValue(master)as AudioSource;var b=CommonB.GetValue(master)as AudioSource;var sfx=Sfx.GetValue(master)as AudioSource;bool muteA=a.mute,muteB=b.mute,muteSfx=sfx.mute;int baseCount=GameManager.I.GetComponents<AudioSource>().Length;
+            var a=CommonA.GetValue(master)as AudioSource;var b=CommonB.GetValue(master)as AudioSource;var sfx=Sfx.GetValue(master)as AudioSource;var installed=GameManager.I.GetComponent<GoryeoTimeMusic>();if(installed!=null)installed.enabled=false;bool muteA=a.mute,muteB=b.mute,muteSfx=sfx.mute;int baseCount=GameManager.I.GetComponents<AudioSource>().Length;
             int money=GameManager.I.Player.money;string cargo=JsonUtility.ToJson(GameManager.I.Player.cargo);
-            Check(GameManager.I.GetComponent<GoryeoTimeMusic>()==null,"no unapproved production music hook");music=GameManager.I.gameObject.AddComponent<GoryeoTimeMusic>();music.enabled=false;
-            int i=0;foreach(var name in new[]{"morning","day","evening","night"})music.clips[i++]=AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/PocketCaravan/Editor/B2Preview/AtmosphereA2/"+name+".wav");music.clips[4]=Resources.Load<AudioClip>("Audio/Music/road");music.clips[5]=Resources.Load<AudioClip>("Audio/Music/danger");
+            music=GameManager.I.GetComponent<GoryeoTimeMusic>();
+            if(production){Check(music!=null&&music.approvedForProduction&&!MapRoot.Current.previewOnly,"approved automatic production music hook");baseCount-=2;}
+            else{if(music!=null){Destroy(music);yield return null;yield return null;}MapRoot.Current.previewOnly=true;baseCount=GameManager.I.GetComponents<AudioSource>().Length;music=GameManager.I.gameObject.AddComponent<GoryeoTimeMusic>();}music.enabled=false;
+            int i=0;foreach(var name in new[]{"morning","day","evening","night"})music.clips[i++]=production?Resources.Load<AudioClip>("Goryeo/TimeMusic/"+name):AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/PocketCaravan/Editor/B2Preview/AtmosphereA2/"+name+".wav");music.clips[4]=Resources.Load<AudioClip>("Audio/Music/road");music.clips[5]=Resources.Load<AudioClip>("Audio/Music/danger");
             for(int n=0;n<6;n++)Check(music.clips[n]!=null&&music.clips[n].length>0,"imported choice "+n);music.enabled=true;music.Tick(0);
             foreach(var id in new[]{"Naru","Gaegyeong","Dakmok","goryeo_songak","goryeo_jangdan","transit_woodtown","transit_ferry","transit_southport","transit_crossroads","transit_wetroad","transit_pass","transit_central_approach","transit_south_inland"})for(int hour=0;hour<24;hour++)foreach(bool danger in new[]{false,true})
             {
@@ -49,6 +52,11 @@ namespace PocketCaravan.EditorTools
             var kept=music.clips[4];music.clips[4]=null;music.Tick(.1f);Check(!music.OwnsCommon&&a.mute==muteA&&b.mute==muteB,"missing asset falls back to original audio");music.clips[4]=kept;music.Tick(2);
             foreach(var path in new[]{"Venice/venice_rialto","Arabia/arabia_ahsa","North/north_birka"}){yield return Load(path);music.Tick(.1f);Check(music.Selected==-1&&!music.OwnsCommon&&!music.Bus(0).isPlaying&&!music.Bus(1).isPlaying,"no own music in foreign map "+path);Check(a.mute==muteA&&b.mute==muteB,"foreign original music mute flags restored "+path);Check(!GameManager.I.AutosaveEnabled,"foreign saves off "+path);}
             yield return Load("Goryeo/Naru");master.musicVolume=.4f;music.Tick(2);music.enabled=false;Check(a.mute==muteA&&b.mute==muteB&&!music.Bus(0).isPlaying&&!music.Bus(1).isPlaying,"disable stops and restores original music");music.enabled=true;music.Tick(2);Check(music.OwnsCommon,"re-enable resumes bounded music");Destroy(music);yield return null;yield return null;Check(GameManager.I.GetComponents<AudioSource>().Length==baseCount&&a.mute==muteA&&b.mute==muteB,"owned sources removed and original restored on destroy");
+            if(production)
+            {
+                foreach(var path in new[]{"Goryeo/Naru","Goryeo/Gaegyeong","Goryeo/Dakmok","Goryeo/goryeo_songak","Goryeo/goryeo_jangdan","Transit/transit_woodtown","Transit/transit_ferry","Transit/transit_southport","Transit/transit_crossroads","Transit/transit_wetroad","Transit/transit_pass","Transit/transit_central_approach","Transit/transit_south_inland"})
+                {yield return Load(path);music=GameManager.I.GetComponent<GoryeoTimeMusic>();Check(music!=null&&music.approvedForProduction&&!MapRoot.Current.previewOnly,"production installation "+path);GoryeoTimeMusicDirector.Apply();Check(GameManager.I.GetComponents<GoryeoTimeMusic>().Length==1,"one controller "+path);music.Tick(2);Check(music.Selected==GoryeoTimeMusic.Choice(MapRoot.Current.mapId,GameManager.I.Clock.Hour,false),"actual production choice "+path);}
+            }
             Check(money==GameManager.I.Player.money&&cargo==JsonUtility.ToJson(GameManager.I.Player.cargo)&&sfx.mute==muteSfx,"money cargo and SFX state unchanged");Check(!GameManager.I.AutosaveEnabled,"saves remain off");
         }
     }

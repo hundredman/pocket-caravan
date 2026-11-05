@@ -1,6 +1,6 @@
 {
-  "status": "pending",
-  "productionApplied": false,
+  "status": "approved",
+  "productionApplied": true,
   "audio": "time-music-review.mp3",
   "tracks": [
     "Native/morning.wav",
@@ -9,5 +9,6 @@
     "Native/night.wav"
   ],
   "choiceCases": 624,
-  "playChecks": 50
+  "playChecks": 50,
+  "productionChecks": 89
 }

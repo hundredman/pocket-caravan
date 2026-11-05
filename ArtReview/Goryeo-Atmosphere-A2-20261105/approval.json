@@ -1,0 +1,13 @@
+{
+  "status": "approved",
+  "date": "2026-11-05",
+  "userReply": "A2 이대로 승인",
+  "sourceSha256": "2ee1901b8139ab932ddad4b29aa6e947a7110816406adc3698a9d8efdb2204a8",
+  "tracks": {
+    "morning": "114ea0d264ffaff471c19ff6f48c53183a82423c2172065515046b31a9a615a8",
+    "day": "74006634b779a4618996b7ed66cf70c8d188200c2e6ee5737b34d36427d2953f",
+    "evening": "3d93fe2a2db84eaefd04c9c19c590db9540f6f41b43c844ffc727ebba40c401e",
+    "night": "88318d9d83d347ebf2bafa3dbd602f5c9e54760c2afbc72a3e8d2199e7c78e96"
+  },
+  "scope": "9 towns: time music; 4 roads: existing road; danger: existing danger; 2s/0.6s fades"
+}
