@@ -1,0 +1,12 @@
+{
+  "status": "pending",
+  "productionApplied": false,
+  "fare": 8,
+  "hours": 1,
+  "directedTrips": 6,
+  "playChecks": 102,
+  "reviewImage": "game-review.png",
+  "sourceSha256": "efa16ed291c77843f4d223a2899e000db58edb1038ce004d11e371d07e041d42",
+  "cargoPolicy": "cargo and vehicle retained; no extra load restriction",
+  "scope": "three direct port pairs, menu and adjacent arrival cells"
+}

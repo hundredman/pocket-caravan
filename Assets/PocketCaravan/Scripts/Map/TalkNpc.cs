@@ -14,6 +14,7 @@ namespace PocketCaravan
 
         public override void Interact(PlayerController player)
         {
+            if (GoryeoFerry.TryInteract(this,player)) return;
             if (lines == null || lines.Length == 0) return;
             DialogueUI.Show(displayName, lines[next % lines.Length]);
             next++;

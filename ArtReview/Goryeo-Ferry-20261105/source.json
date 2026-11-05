@@ -1,0 +1,58 @@
+{
+  "status": "review",
+  "fare": 8,
+  "hours": 1.0,
+  "ports": [
+    {
+      "mapId": "Naru",
+      "name": "예성 나루",
+      "townId": "naru",
+      "width": 88,
+      "height": 84,
+      "npcX": 47,
+      "npcY": 28,
+      "arrivalX": 46,
+      "arrivalY": 28
+    },
+    {
+      "mapId": "transit_ferry",
+      "name": "버들나루",
+      "townId": "transit_ferry",
+      "width": 80,
+      "height": 55,
+      "npcX": 39,
+      "npcY": 14,
+      "arrivalX": 38,
+      "arrivalY": 14
+    },
+    {
+      "mapId": "transit_southport",
+      "name": "남동 포구",
+      "townId": "transit_southport",
+      "width": 86,
+      "height": 68,
+      "npcX": 41,
+      "npcY": 51,
+      "arrivalX": 40,
+      "arrivalY": 51
+    }
+  ],
+  "proposal": "All three ports connect directly; cargo/vehicle unchanged; no minigame/new unlock.",
+  "walkingSeconds": [
+    {
+      "from": "naru",
+      "to": "transit_ferry",
+      "seconds": 57.088441
+    },
+    {
+      "from": "naru",
+      "to": "transit_southport",
+      "seconds": 39.987715
+    },
+    {
+      "from": "transit_ferry",
+      "to": "transit_southport",
+      "seconds": 59.74326
+    }
+  ]
+}
