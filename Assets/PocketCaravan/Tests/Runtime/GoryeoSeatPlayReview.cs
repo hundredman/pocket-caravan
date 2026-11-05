@@ -11,8 +11,8 @@ namespace PocketCaravan.EditorTools
 {
     public sealed class GoryeoSeatPlayReview:MonoBehaviour
     {
-        public bool motion,expanded;
-        string Out=>expanded?"ArtReview/Goryeo-Seats-20261105/Expanded/Unity/":motion?"ArtReview/Goryeo-Seats-20261105/Motion/":"ArtReview/Goryeo-Seats-20261105/Unity/";
+        public bool motion,expanded,alignment;
+        string Out=>alignment?"ArtReview/Goryeo-Seats-20261105/AlignedV2/Unity/":expanded?"ArtReview/Goryeo-Seats-20261105/Expanded/Unity/":motion?"ArtReview/Goryeo-Seats-20261105/Motion/":"ArtReview/Goryeo-Seats-20261105/Unity/";
         [Serializable]class Report{public bool complete;public string error;public List<string> checks=new List<string>();}
         [Serializable]class MotionSample{public string phase;public int frame,embers;public float light;public Vector3 ember;}
         [Serializable]class MotionReport{public string framesPath;public List<MotionSample> samples=new List<MotionSample>();}
@@ -59,7 +59,7 @@ namespace PocketCaravan.EditorTools
             var obstaclePanel=map.GetComponent<ObstacleField>();if(obstaclePanel!=null)obstaclePanel.enabled=false;
             gm.Player.origin=AssetDatabase.LoadAssetAtPath<OriginData>("Assets/PocketCaravan/Data/Goryeo/Origin_Goryeo.asset");
             var config=JsonUtility.FromJson<GoryeoSeat.Config>(File.ReadAllText("ArtReview/Goryeo-Seats-20261105/source.json"));
-            var t=new Texture2D(16,24,TextureFormat.RGBA32,false);t.LoadImage(File.ReadAllBytes("ArtReview/Goryeo-Seats-20261105/tanuki-seated-front.png"));t.filterMode=FilterMode.Point;
+            var t=new Texture2D(16,24,TextureFormat.RGBA32,false);t.LoadImage(File.ReadAllBytes(alignment?"ArtReview/Goryeo-Seats-20261105/AlignedV2/goryeo-seated-front.png":"ArtReview/Goryeo-Seats-20261105/tanuki-seated-front.png"));t.filterMode=FilterMode.Point;
             var pose=Sprite.Create(t,new Rect(0,0,16,24),new Vector2(.5f,.25f),16);
             bool rejected=false;try{GoryeoSeat.InstallReview(config,pose);}catch(InvalidOperationException){rejected=true;}Check(rejected,"production map refuses explicit review install");map.previewOnly=true;
             Check(GoryeoSeat.InstallReview(config,pose)==3,"three furniture candidates walkable/no exits");
@@ -140,7 +140,7 @@ namespace PocketCaravan.EditorTools
         }
         IEnumerator ExpandedPoses()
         {
-            var config=JsonUtility.FromJson<GoryeoSeat.Config>(File.ReadAllText("ArtReview/Goryeo-Seats-20261105/Expanded/source.json"));
+            var config=JsonUtility.FromJson<GoryeoSeat.Config>(File.ReadAllText(alignment?"ArtReview/Goryeo-Seats-20261105/AlignedV2/source.json":"ArtReview/Goryeo-Seats-20261105/Expanded/source.json"));
             var art=new List<GoryeoSeat.Art>();
             foreach(var data in config.poses)
             {

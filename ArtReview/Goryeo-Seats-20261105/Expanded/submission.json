@@ -1,5 +1,5 @@
 {
-  "status": "review",
+  "status": "revision-requested",
   "production": false,
   "userApprovedOnly": "모닥불 움직임 / Motion/approval.json",
   "newPoseApprovalPending": [
@@ -49,5 +49,7 @@
     "venice": "original text/palette definitions + new knees",
     "viking": "original reindeer text/palette definitions + new knees",
     "arabia": "Aseprite lower body redraw; upper31rows pixel-identical; AI concept discarded"
-  }
+  },
+  "supersededBy": "ArtReview/Goryeo-Seats-20261105/AlignedV2",
+  "userFeedback": "세 캐릭터의 중심이 삐뚤고 사막여우가 앉아 보이지 않음"
 }

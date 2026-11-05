@@ -1,0 +1,80 @@
+{
+  "goryeo": {
+    "bodyRows": [
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "oldCenters": [
+      7.5,
+      7.0,
+      6.5,
+      6.5,
+      7.0
+    ],
+    "newCenters": [
+      7.5,
+      7.5,
+      7.5,
+      7.5,
+      7.5
+    ],
+    "headCenter": 7.5
+  },
+  "venice": {
+    "bodyRows": [
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "oldCenters": [
+      7.5,
+      7.0,
+      6.5,
+      6.5,
+      7.0
+    ],
+    "newCenters": [
+      7.5,
+      7.5,
+      7.5,
+      7.5,
+      7.5
+    ],
+    "headCenter": 7.5
+  },
+  "viking": {
+    "bodyRows": [
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "oldCenters": [
+      7.5,
+      7.0,
+      6.5,
+      6.5,
+      7.0
+    ],
+    "newCenters": [
+      7.5,
+      7.5,
+      7.5,
+      7.5,
+      7.5
+    ],
+    "headCenter": 7.5
+  },
+  "arabia": {
+    "intactHeadAndUpperCoatRows": 26,
+    "loweredPixels": 4,
+    "foldedKnees": true,
+    "nativeMethod": "Aseprite native redraw, no new AI image"
+  }
+}
