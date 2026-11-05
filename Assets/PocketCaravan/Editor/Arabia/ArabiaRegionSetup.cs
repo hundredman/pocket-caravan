@@ -135,6 +135,15 @@ namespace PocketCaravan.EditorTools
             Stock(taiz, (cloth, 40), (coffee, 30), (grain, 14), (dates, 12), (salt, 10), (frank, 8));
             Stock(jeddah, (spice, 40), (pearl, 20), (salt, 30), (cloth, 16), (dates, 14), (grain, 14), (coffee, 10));
             Stock(sanaa, (frank, 30), (carpet, 20), (cloth, 14), (spice, 14), (grain, 18), (dates, 18), (coffee, 12), (pearl, 6));
+            // 2026-11-05 통합(기우) 장터 규칙: 마을마다 생필품(땔감·곡식, 산지 없는 공용 물건) 2줄
+            var firewood = AssetDatabase.LoadAssetAtPath<ItemData>(Root + "/Data/Goryeo/Item_firewood.asset");
+            var grainCommon = AssetDatabase.LoadAssetAtPath<ItemData>(Root + "/Data/Goryeo/Item_grain.asset");
+            foreach (var t in new[] { ahsa, zabid, taiz, jeddah, sanaa })
+            {
+                if (firewood != null) t.stock.Add(new TownData.StockEntry { item = firewood, optimal = t == taiz ? 20 : 6, localPriceMultiplier = 1f });   // 타이즈 고원이 땔감 산지
+                if (grainCommon != null) t.stock.Add(new TownData.StockEntry { item = grainCommon, optimal = t == zabid ? 20 : 8, localPriceMultiplier = 1f });
+                EditorUtility.SetDirty(t);
+            }
 
             // 탈것: 낙타 (모래·험한 길에서 빠름). 제다·사나에서 판다
             var camel = Get<VehicleData>(DataDir + "/Vehicle_ArabiaCamel.asset");

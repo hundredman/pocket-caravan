@@ -97,3 +97,23 @@
 - bazaarBot: github.com/larsiusprime/bazaarBot (Haxe) / economia.js (JS 포트)
 - Endless Sky: github.com/endless-sky/endless-sky — `source/Trade.cpp`, `TradingPanel.cpp`
 - 우리 코드: `Assets/PocketCaravan/Scripts/Economy/` (MarketMath·MarketState·ReputationPricing·TradeActivity)
+
+## 8. 장터 기준 공급품 규칙 (2026-11-05, 전 지역 공통)
+
+**한 줄**: 장터에는 그 마을이 평소 다루는 물건만 보이고, 다른 나라 물건은 플레이어가 가져와 팔아야 생긴다.
+
+- 장터 목록 = 기준 공급품(`TownData.stock`) + 실제 거래된 물건 + 내가 든 물건. 값만 물어보는 건 목록에 안 올림(`MarketState.Stock` 11/5 수정 — 그 전엔 NPC 상인이 값을 훑는 바람에 어느 장터든 전 품목 53개가 다 떴음).
+- 기준 공급품은 마을마다 **5개 이상**:
+
+| 종류 | 몇 개 | 적정 재고 | 뜻 |
+|---|---|---|---|
+| 산지 | 1~2 | 20~40 | 여기서 나는 것, 싸고 많음 |
+| 지역 소비 | 3~5 | 8~18 | 같은 문명권 물건, 사 주는 것 |
+| 생필품 | 1~2 | 6~30 | 땔감·곡식 (산지 없는 공용 물건, 어느 나라나 같음) |
+| 다른 문명권 | 0 | — | 안 넣음 |
+
+- 문명권 = 북유럽+중앙북 / 베네치아+본토 서부 / 고려+중간권 / 아라비아. 중앙 조각(허브)은 산지가 없어도 되고 다른 문명권 물건을 4개까지 둘 수 있다.
+- 값은 어디서나 기준가 × (적정/현재 재고) × (1 + 0.35 × 산지에서 떨어진 맵 수) — 그래서 멀리 가져갈수록 비싸게 팔린다. 생필품은 산지가 없어 어디서나 같은 값(교역용이 아니라 소비용).
+- 검사: `python3 -m unittest Tools/Integration/test_market_rule.py` — 깨지면 어느 마을이 왜 어긋나는지 바로 나온다.
+- 예외: 장단 들마을(4개)은 R2 고정 자산(`test_r2_safety`·`test_distance_calibration`이 해시로 묶음)이라 통합 담당이 못 고침 → 은샘이 1개 채우고 두 검사의 해시를 갱신하면 예외를 뺀다.
+- 데이터는 각 지역 빌더에 있음: `NorthBuilder`·`VeniceRegionSetup`·`ArabiaRegionSetup`(전체 준비가 돌림), `GoryeoRegionUpgrade`(`고려/수도와 네 마을·시설 데이터 갱신` 메뉴).

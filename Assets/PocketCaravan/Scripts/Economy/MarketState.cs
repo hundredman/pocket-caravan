@@ -34,15 +34,9 @@ namespace PocketCaravan
 
         public IEnumerable<ItemData> KnownItems => stock.Keys;
 
-        public float Stock(ItemData item)
-        {
-            if (!stock.TryGetValue(item, out var s))
-            {
-                s = Optimal(item);
-                stock[item] = s;
-            }
-            return s;
-        }
+        /// <summary>현재 재고. 재고표에 없는 물건은 적정치로 본다 — 2026-11-05(기우): 값만 물어볼 때는 재고표에 끼워 넣지 않는다.
+        /// (NPC 상인이 모든 장터의 모든 물건 값을 훑는 바람에 어느 장터든 전 세계 품목 53개가 다 떴었다. 실제 거래가 있을 때만 표에 오른다.)</summary>
+        public float Stock(ItemData item) => stock.TryGetValue(item, out var s) ? s : Optimal(item);
 
         float Demand => GameManager.I != null && GameManager.I.Clock.IsMarketDay ? db.marketDayDemand : 1f;
 
