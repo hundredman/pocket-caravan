@@ -1,0 +1,15 @@
+{
+    "complete": false,
+    "error": "System.Exception: native pose / no scaling north_fire\n  at PocketCaravan.EditorTools.GoryeoSeatPlayReview.Check (System.Boolean ok, System.String s) [0x0001b] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoSeatPlayReview.cs:17 \n  at PocketCaravan.EditorTools.GoryeoSeatPlayReview+<Run>d__8.MoveNext () [0x00497] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoSeatPlayReview.cs:71 \n  at PocketCaravan.EditorTools.GoryeoSeatPlayReview+<Start>d__4.MoveNext () [0x00054] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoSeatPlayReview.cs:24 ",
+    "checks": [
+        "safe preview bootstrap saves OFF",
+        "no automatic production seats",
+        "saves remain OFF after scene load",
+        "production map refuses explicit review install",
+        "three furniture candidates walkable/no exits",
+        "idempotent reinstall",
+        "actual 480x270 north_fire-before",
+        "seat without global lock north_fire",
+        "safe stationary feet north_fire"
+    ]
+}
