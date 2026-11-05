@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 namespace PocketCaravan
 {
-    /// <summary>A4 presentation only. Scene opt-in; preview art/audio is never auto-installed.</summary>
+    /// <summary>A4 presentation only. Approved production director or explicit review scene opt-in.</summary>
     public sealed class GoryeoStride:MonoBehaviour
     {
         public enum Surface{Other,Dirt,Grass,Stone,Wood}

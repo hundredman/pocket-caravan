@@ -24,6 +24,12 @@ class StrideTrial(unittest.TestCase):
   for row in source:
    file=OUT/'Sources'/(row['kind']+('.wav'if row['kind']=='splash'else'.ogg'));raw=file.read_bytes();sha=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest();self.assertEqual(sha,row['gitBlobSHA1']);self.assertEqual(row['license'],'CC0');hashes.add(sha)
   self.assertEqual(len(hashes),5)
+ def test_approved_production_binding_preserves_sources_and_audio(self):
+  approval=json.loads((OUT/'approval.json').read_text());self.assertEqual(approval['status'],'approved')
+  target=ROOT/'Assets/PocketCaravan/Resources/Goryeo/Stride';config=json.loads((target/'Surfaces.json').read_text());self.assertEqual(config['status'],'approved')
+  source=json.loads((OUT/'source.json').read_text());self.assertEqual(config['maps'],[{k:m[k]for k in ('id','data','w','h')}for m in source['maps']])
+  for kind in stride.KINDS:
+   name=kind+'.wav';raw=(target/name).read_bytes();self.assertEqual(raw,(OUT/'Native'/name).read_bytes());self.assertEqual(hashlib.sha256(raw).hexdigest(),approval['sha256'][name])
  def test_demo_order_matches_the_review_labels(self):
   source=json.loads((OUT/'source.json').read_text());self.assertEqual([t['kind']for t in source['timeline']],['dirt','grass','stone','wood','splash'])
   self.assertEqual(source['timeline'][0]['startSeconds'],0)

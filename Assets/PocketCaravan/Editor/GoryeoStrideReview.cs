@@ -10,6 +10,16 @@ namespace PocketCaravan.EditorTools
         public const string Folder="Assets/PocketCaravan/Editor/B2Preview/AtmosphereA4/";
         [Serializable]public class Map{public string id,data;public int w,h;}
         [Serializable]public class Source{public string status;public Map[] maps;}
+        public static void PromoteApproved()
+        {
+            const string review="ArtReview/Goryeo-Atmosphere-A4-v3-20261105/";
+            var approval=JsonUtility.FromJson<Source>(File.ReadAllText(review+"approval.json"));
+            if(approval.status!="approved")throw new InvalidDataException("A4 approval missing");
+            var source=JsonUtility.FromJson<Source>(File.ReadAllText(review+"source.json"));source.status="approved";
+            const string target="Assets/PocketCaravan/Resources/Goryeo/Stride/";Directory.CreateDirectory(target);
+            foreach(var name in new[]{"dirt","grass","stone","wood","splash"})File.Copy(review+"Native/"+name+".wav",target+name+".wav",true);
+            File.WriteAllText(target+"Surfaces.json",JsonUtility.ToJson(source,true)+"\n");AssetDatabase.Refresh();
+        }
         public static void Build()
         {
             if(EditorApplication.isPlaying||UnityEngine.SceneManagement.SceneManager.GetActiveScene().isDirty)throw new InvalidOperationException("Stop Play/save scene first");
