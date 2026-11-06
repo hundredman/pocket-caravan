@@ -1,9 +1,11 @@
 {
-  "status": "pending-user-approval",
+  "status": "approved",
   "runtimeChecks": 295,
   "nativeCaptures": 15,
   "sheet": "review-sheet.png",
   "goryeoMapLabelsOutsideTerrain": true,
   "currentLocationFullNameRetained": true,
-  "remoteIntegrationChanged": false
+  "remoteIntegrationChanged": false,
+  "userApproval": "이대로 승인",
+  "approvalDate": "2026-11-07"
 }

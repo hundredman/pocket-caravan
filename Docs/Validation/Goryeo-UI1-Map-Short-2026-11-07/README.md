@@ -7,4 +7,4 @@
 - world-validation.txt:최종0오류·1437출구.
 - save-preservation.json:기존8해시 불변·임시0. 최종 Console error0·Play 종료.
 
-[범위와 미검사](../../Goryeo/UI1-Map-Short-2026-11-07.md). 사람 직접 플레이/네이티브 클릭/실제 온라인/빌드/FPS는 미검사다. 수정 그림 승인 대기·원격 미반영.
+[범위와 미검사](../../Goryeo/UI1-Map-Short-2026-11-07.md). 사람 직접 플레이/네이티브 클릭/실제 온라인/빌드/FPS는 미검사다. 수정 그림 사용자 “이대로 승인”·원격 미반영.

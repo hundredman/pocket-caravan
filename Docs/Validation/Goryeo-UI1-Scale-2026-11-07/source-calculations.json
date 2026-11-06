@@ -1,0 +1,150 @@
+{
+  "type": "static formula calculations, not runtime results",
+  "source": "Assets/PocketCaravan/Scripts/Core/UIState.cs",
+  "cases": [
+    {
+      "screen": [
+        360,
+        270
+      ],
+      "goryeo": {
+        "scale": 1,
+        "virtual": [
+          360.0,
+          270.0
+        ],
+        "bodySizeTimesScale": 12,
+        "smallSizeTimesScale": 10
+      },
+      "other": {
+        "scale": 0.75,
+        "virtual": [
+          480.0,
+          360
+        ],
+        "bodySizeTimesScale": 8.25,
+        "smallSizeTimesScale": 6.75
+      }
+    },
+    {
+      "screen": [
+        480,
+        270
+      ],
+      "goryeo": {
+        "scale": 1,
+        "virtual": [
+          480.0,
+          270.0
+        ],
+        "bodySizeTimesScale": 12,
+        "smallSizeTimesScale": 10
+      },
+      "other": {
+        "scale": 0.75,
+        "virtual": [
+          640.0,
+          360
+        ],
+        "bodySizeTimesScale": 8.25,
+        "smallSizeTimesScale": 6.75
+      }
+    },
+    {
+      "screen": [
+        640,
+        360
+      ],
+      "goryeo": {
+        "scale": 1,
+        "virtual": [
+          640.0,
+          360.0
+        ],
+        "bodySizeTimesScale": 12,
+        "smallSizeTimesScale": 10
+      },
+      "other": {
+        "scale": 1.0,
+        "virtual": [
+          640.0,
+          360
+        ],
+        "bodySizeTimesScale": 11.0,
+        "smallSizeTimesScale": 9.0
+      }
+    },
+    {
+      "screen": [
+        960,
+        540
+      ],
+      "goryeo": {
+        "scale": 2,
+        "virtual": [
+          480.0,
+          270.0
+        ],
+        "bodySizeTimesScale": 24,
+        "smallSizeTimesScale": 20
+      },
+      "other": {
+        "scale": 1.5,
+        "virtual": [
+          640.0,
+          360
+        ],
+        "bodySizeTimesScale": 16.5,
+        "smallSizeTimesScale": 13.5
+      }
+    },
+    {
+      "screen": [
+        1280,
+        720
+      ],
+      "goryeo": {
+        "scale": 2,
+        "virtual": [
+          640.0,
+          360.0
+        ],
+        "bodySizeTimesScale": 24,
+        "smallSizeTimesScale": 20
+      },
+      "other": {
+        "scale": 2.0,
+        "virtual": [
+          640.0,
+          360
+        ],
+        "bodySizeTimesScale": 22.0,
+        "smallSizeTimesScale": 18.0
+      }
+    },
+    {
+      "screen": [
+        1920,
+        1080
+      ],
+      "goryeo": {
+        "scale": 4,
+        "virtual": [
+          480.0,
+          270.0
+        ],
+        "bodySizeTimesScale": 48,
+        "smallSizeTimesScale": 40
+      },
+      "other": {
+        "scale": 3.0,
+        "virtual": [
+          640.0,
+          360
+        ],
+        "bodySizeTimesScale": 33.0,
+        "smallSizeTimesScale": 27.0
+      }
+    }
+  ]
+}
