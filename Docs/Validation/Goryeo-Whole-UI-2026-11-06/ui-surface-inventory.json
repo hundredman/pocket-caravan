@@ -1,0 +1,429 @@
+[
+  {
+    "source": "Assets/PocketCaravan/Scripts/Arabia/ArabiaIntro.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Arabia/ArabiaMapUI.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Arabia/ArabiaPastimes.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Contracts/ContractBoard.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": true,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Core/GameManager.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Economy/CentralFair.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Economy/Inn.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Economy/NightFestival.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Economy/TownMarket.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": true,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Goryeo/GoryeoDailyActivity.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Goryeo/GoryeoPlaceLabels.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Goryeo/GoryeoThunder.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/MapModules/ModuleLabUI.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Net/NetChat.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Net/NetClient.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Net/NetLogin.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": true,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Net/NetSave.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Net/RemotePlayers.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/North/NorthBees.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/North/NorthCaravan.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/North/NorthCraft.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/North/NorthDaily.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/North/NorthErrands.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/North/NorthFerryGame.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/North/NorthFireSeat.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/North/NorthIntro.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/North/NorthLegends.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/North/NorthMapUI.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/North/NorthMinigames.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/North/NorthRunehill.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/North/NorthSnowball.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/North/NorthSpeedCheck.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/North/NorthTransition.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Obstacles/ObstacleField.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Obstacles/ObstacleLabUI.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Quests/StoryGuide.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/UI/ActivityHints.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/UI/CommerceGuideUI.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/UI/DialogueUI.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": true,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/UI/HUD.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/UI/InventoryUI.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/UI/PauseMenu.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/UI/QuestTracker.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": true,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/UI/Reactions.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/UI/Social.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/UI/StartScreen.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": true,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/UI/TownFacilitiesUI.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": true,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/UI/TradeLedgerUI.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": true,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/UI/WorldLabels.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/UI/WorldMapUI.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Venice/VeniceAtmosphere.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Venice/VeniceDistricts.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Venice/VeniceEvents.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Venice/VeniceGlassSpot.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Venice/VeniceIntro.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Venice/VeniceMapUI.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": false,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Venice/VeniceMenu.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Venice/VeniceNetSpot.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/Venice/VeniceRace.cs",
+    "otherRegionDedicated": true,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/World/GoryeoIntro.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  },
+  {
+    "source": "Assets/PocketCaravan/Scripts/World/GoryeoPastime.cs",
+    "otherRegionDedicated": false,
+    "hasSharedPaperWindow": false,
+    "hasLegacyPanel": true,
+    "hasOnGUI": true
+  }
+]

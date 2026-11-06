@@ -6,7 +6,8 @@ namespace PocketCaravan
     /// <summary>
     /// E3 길 위 사건 일정. 맵 JSON의 장애 배치 중 id가 "e3_"로 시작하는 것만 게임 시간으로 켜고 끈다.
     /// 고려 맵에는 e3_ 배치를 두지 않으므로 고려 안에서는 생기지 않는다.
-    /// 통나무(fallen_log): 8시간 창마다 확률로 쓰러져 있다. 치우면 그 방문 동안 사라진다(치우기 3초, 비용 없음).
+    /// 통나무(fallen_log): 8시간 창마다 확률로 쓰러져 있다. 승인된 초원 진입로 한 곳은 장맛비 날에만 적용한다.
+    /// 치우면 그 방문 동안 사라진다(치우기 3초, 비용 없음). 날짜/시간 갱신은 기존처럼 진입 시 판정한다.
     /// 강 범람(river_flood): 범람한 날에만 켜진다. 켜진 동안 물이 불었다 빠지기를 반복하므로 기다리거나 돌아간다.
     /// 산적은 기존 BanditSpot을 그대로 쓴다. 결과는 맵·시간 창으로 정해져 다시 들어와도 같다.
     /// </summary>
@@ -24,7 +25,7 @@ namespace PocketCaravan
         {
             if (!Managed(placementId)) return null;
             if (definitionId == "fallen_log")
-                return Roll(mapId + "|" + placementId + "|log|" + Mathf.FloorToInt(totalHours / LogWindowHours)) < LogChance;
+                return GoryeoStormLogs.Allows(mapId,placementId,totalHours) && Roll(mapId + "|" + placementId + "|log|" + Mathf.FloorToInt(totalHours / LogWindowHours)) < LogChance;
             if (definitionId == "river_flood")
                 return Roll(mapId + "|" + placementId + "|flood|" + Mathf.FloorToInt(totalHours / 24f)) < FloodDayChance;
             return null;

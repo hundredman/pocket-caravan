@@ -8,6 +8,7 @@ namespace PocketCaravan
         bool open, confirmNew;
         string message = "";
         Vector2 issueScroll;
+        Rect lastWindow, issueViewport;
 
         void Update()
         {
@@ -31,23 +32,23 @@ namespace PocketCaravan
             UIStyle.Begin();
             GUI.depth = -10;   // 다른 글자들 위에
             var issue = GameManager.I != null ? GameManager.I.LoadIssue : null;
-            var statusStyle = new GUIStyle(UIStyle.Wrap) { richText = false };
+            var statusStyle = new GUIStyle(CuteUI.PaperWrap) { richText = false };
             float w = Mathf.Min(360, UIStyle.VirtualWidth - 16);
             float issueHeight = string.IsNullOrEmpty(issue) ? 0 : statusStyle.CalcHeight(new GUIContent(issue), w-50)+8;
-            float h = UIStyle.WindowHeight(Mathf.Min(344, 192+issueHeight));
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2, (UIStyle.VirtualHeight - h) / 2, w, h);
-            GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(new Rect(r.x, r.y + 8, w, 14), "Pocket Caravan", UIStyle.CenterRich);
-            float y = r.y + 28;
+            float h = UIStyle.WindowHeight(Mathf.Min(344, 192+issueHeight)) - 6;
+            var r = lastWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round((UIStyle.VirtualHeight - h) / 2 + 6), w, h);
+            CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, "게임 메뉴");
+            float y = r.y + 18;
             if (issueHeight > 0)
             {
-                float shown = Mathf.Min(issueHeight,h-192);
-                issueScroll = GUI.BeginScrollView(new Rect(r.x+16,y,w-32,shown),issueScroll,new Rect(0,0,w-50,issueHeight));
+                float shown = Mathf.Max(0, Mathf.Min(issueHeight,h-180));
+                issueViewport = new Rect(r.x+16,y,w-32,shown);
+                issueScroll = GUI.BeginScrollView(issueViewport,issueScroll,new Rect(0,0,w-50,issueHeight));
                 GUI.Label(new Rect(0,0,w-50,issueHeight),issue,statusStyle);
                 GUI.EndScrollView();
                 y += shown;
             }
-            if (Button(ref y, r, "계속하기 (Esc)")) Close();
+            if (Button(ref y, r, "계속하기 (Esc)", true)) Close();
             if (Button(ref y, r, "상업 백과"))
             {
                 Close();
@@ -64,9 +65,9 @@ namespace PocketCaravan
             GUI.Label(new Rect(r.x+16, r.yMax-36, w-32, 30), message, statusStyle);
         }
 
-        static bool Button(ref float y, Rect r, string label)
+        static bool Button(ref float y, Rect r, string label, bool primary = false)
         {
-            bool b = GUI.Button(new Rect(r.x + 16, y, r.width - 32, 20), label, UIStyle.Button);
+            bool b = GUI.Button(new Rect(r.x + 16, y, r.width - 32, 20), label, primary ? CuteUI.PaperButtonOn : CuteUI.PaperButton);
             y += 24;
             return b;
         }

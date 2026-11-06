@@ -1,0 +1,7 @@
+{
+    "status": "approved",
+    "mapId": "transit_central_approach",
+    "placementId": "e3_central_approach_log",
+    "windowHours": 8.0,
+    "oncePerWindowPerSession": true
+}

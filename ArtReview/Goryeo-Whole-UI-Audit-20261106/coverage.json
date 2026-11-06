@@ -1,0 +1,23 @@
+{
+  "status": "first-pass-audit",
+  "nativeCaptures": 26,
+  "auditChecks": 58,
+  "screenSizes": [
+    [
+      480,
+      270
+    ],
+    [
+      960,
+      540
+    ]
+  ],
+  "onlineConnected": false,
+  "questFixture": "canonical q1_naru imported review-only progress",
+  "otherOriginsGameplayTested": false,
+  "minimumViewportFindings": [
+    "StartScreen origins clipped",
+    "Peddler dialogue first choice outside left edge"
+  ],
+  "notClaimed": "All 61 UI code surfaces executed, all minigames, actual IME/mouse/online or a finished whole-game QA."
+}

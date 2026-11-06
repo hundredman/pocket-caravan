@@ -1,0 +1,13 @@
+{
+  "status": "approved",
+  "scope": "shared text contrast; map name/layout changes deferred",
+  "beforeChecks": 46,
+  "afterChecks": 48,
+  "nativeCaptures": 30,
+  "sheet": "review-sheet.png",
+  "paletteUnchanged": true,
+  "whiteTextPixelsEqual": true,
+  "remoteIntegrationChanged": false,
+  "userApproval": "이대로 승인",
+  "approvalDate": "2026-11-07"
+}

@@ -1,0 +1,1 @@
+EditorSceneManager.LoadSceneAsyncInPlayMode Naru: buildIndex=-1 preview=False saves=False

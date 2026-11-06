@@ -1,0 +1,17 @@
+{
+  "channels": 2,
+  "sampleRate": 32000,
+  "sampleBytes": 2,
+  "seconds": 5.5,
+  "peak": 0.23999755851924193,
+  "rms": 0.03320017653033039,
+  "firstSamples": [
+    0,
+    0
+  ],
+  "lastSamples": [
+    0,
+    0
+  ],
+  "sha256": "dbdae13634f9677cca94f1669619320f2539db485092b8aaaf708ec8b010fd79"
+}

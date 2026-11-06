@@ -1,0 +1,19 @@
+{
+  "sourceCommit": "9c0fe9d06c10fc8670276a56f9ef51de0b424123",
+  "sourceRef": "9c0fe9d06",
+  "originalFramework": "net8.0",
+  "originalTargetExitCode": 1,
+  "reviewFramework": "net10.0",
+  "sourceSha256": {
+    "Tools/Integration/StandingProbe/Program.cs": "7090776e1f6684f42ef026342711b645da968f98559f0ff414034305808e6d4b",
+    "Tools/Integration/StandingProbe/Stubs.cs": "8582b0729b7dc997140f3460b20826e62be64fd7b206b5c09d544737a54d7cde",
+    "Tools/Integration/StandingProbe/StandingProbe.csproj": "9ae5b3c6246337409327f60fa3d53500bc390c2ac6fab08582b3714f461adc7a",
+    "Tools/Integration/StandingProbe/nuget.config": "7d59a339f0f6022f0710d690fe52e2a0f868519847651f6c10f6c9ff1bd7213a",
+    "Assets/PocketCaravan/Scripts/Economy/Haggle.cs": "6d33f9284d234cd63d946ad10495b6d62623f882f10714c1fc4d1c2a63eab7ee",
+    "Assets/PocketCaravan/Scripts/Economy/StandingRecovery.cs": "483937b6045bc45e690c2aa4a963e316be7d4fa376813447c12dfecbc49985f3",
+    "Assets/PocketCaravan/Scripts/Economy/TradeActivity.cs": "7ac03b3729ebb3cabe78528ef83dd03a93e2abd78f0b7cedb835b5ecd74fab9f",
+    "Assets/PocketCaravan/Scripts/Core/ReputationState.cs": "adccafe9c8c440d35649566c8663551b4c80161a326477d09addb22c26fcf620",
+    "Assets/PocketCaravan/Scripts/Core/ReputationAwards.cs": "c71a2cd259621f5f3d166d1a0d98f14ec39dca71b064df8f87551867b22b898d"
+  },
+  "note": "Only temporary csproj framework and second probe Program.cs changed; game rule sources are unchanged. Unity dependencies use original probe stubs."
+}

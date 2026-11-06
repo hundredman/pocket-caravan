@@ -1,0 +1,8 @@
+{
+    "complete": false,
+    "error": "System.Exception: isolated slot retained Goryeo/Naru actual=/Users/kim/Library/Application Support/DefaultCompany/PocketCaravan/codex_ui_audit_4cf10c1ceec24626b90bfb82a232eda9.json expected=/Users/kim/Library/Application Support/DefaultCompany/PocketCaravan/codex_ui_audit_5d10911dfbb04641822fbdef08b9a45d.json\n  at PocketCaravan.EditorTools.GoryeoWholeUIAuditReview.Check (System.Boolean value, System.String text) [0x0001b] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoWholeUIAuditReview.cs:28 \n  at PocketCaravan.EditorTools.GoryeoWholeUIAuditReview+<Load>d__16.MoveNext () [0x00090] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoWholeUIAuditReview.cs:73 \n  at PocketCaravan.EditorTools.GoryeoWholeUIAuditReview+<Start>d__12.MoveNext () [0x00054] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoWholeUIAuditReview.cs:35 ",
+    "checks": [
+        "saves OFF bootstrap",
+        "actual viewport 480x270"
+    ]
+}

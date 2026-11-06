@@ -144,6 +144,8 @@ namespace PocketCaravan
                 || (d.q1MigrationVersion == 1 && d.legacyMainFinishedIds == null)
                 || (d.q1MigrationVersion == 0 && d.legacyMainFinishedIds != null && d.legacyMainFinishedIds.Count > 0))
                 throw new InvalidDataException("메인 이주 기록의 버전/목록이 올바르지 않습니다.");
+            foreach (var c in d.contracts) c?.ValidateRecovery();
+            foreach (var b in d.boards) if (b?.list != null) foreach (var c in b.list) c?.ValidateRecovery();
             new WarehouseStore().Import(d.storedCargo);
         }
 

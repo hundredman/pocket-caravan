@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><RollForward>Major</RollForward><ImplicitUsings>enable</ImplicitUsings><Nullable>disable</Nullable><NoWarn>CS0649;CS9113</NoWarn></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../../Assets/PocketCaravan/Scripts/Economy/Haggle.cs" Link="Source/Haggle.cs" />
+    <Compile Include="../../../Assets/PocketCaravan/Scripts/Economy/StandingRecovery.cs" Link="Source/StandingRecovery.cs" />
+    <Compile Include="../../../Assets/PocketCaravan/Scripts/Economy/TradeActivity.cs" Link="Source/TradeActivity.cs" />
+    <Compile Include="../../../Assets/PocketCaravan/Scripts/Core/ReputationState.cs" Link="Source/ReputationState.cs" />
+    <Compile Include="../../../Assets/PocketCaravan/Scripts/Core/ReputationAwards.cs" Link="Source/ReputationAwards.cs" />
+  </ItemGroup>
+</Project>

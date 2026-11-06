@@ -1,0 +1,142 @@
+{
+  "status": "pending",
+  "productionApplied": false,
+  "assets": [
+    {
+      "key": "chicken_0",
+      "path": "ArtReview/Goryeo-Atmosphere-A7-20261105/Native/chicken_0.png",
+      "size": [
+        32,
+        32
+      ],
+      "decodedRGBAsha256": "0165afe28c78ff63d9f42cb39c0cfb410ced040dab1b0b3c7c2934a0672d910d"
+    },
+    {
+      "key": "chicken_1",
+      "path": "ArtReview/Goryeo-Atmosphere-A7-20261105/Native/chicken_1.png",
+      "size": [
+        32,
+        32
+      ],
+      "decodedRGBAsha256": "168fd2d6718e622b5f5b496f298e2feffe420fb9385ba19845f37b2b4c835840"
+    },
+    {
+      "key": "dog_0",
+      "path": "ArtReview/Goryeo-Atmosphere-A7-20261105/Native/dog_0.png",
+      "size": [
+        32,
+        32
+      ],
+      "decodedRGBAsha256": "e270e4ebf0772cba1f9c85b7c699d9c8da7d8c9f44b702cc6283312321fe8f7e"
+    },
+    {
+      "key": "dog_1",
+      "path": "ArtReview/Goryeo-Atmosphere-A7-20261105/Native/dog_1.png",
+      "size": [
+        32,
+        32
+      ],
+      "decodedRGBAsha256": "a7d58184d22561d948f9c4d4773b839cd712784727ac3ddf7899f93e39d67912"
+    },
+    {
+      "key": "bird_0",
+      "path": "Assets/PocketCaravan/Resources/Venice/Life/pigeon_0.png",
+      "size": [
+        8,
+        8
+      ],
+      "decodedRGBAsha256": "a7616a3add7907489ee1876e6e59c83c412b48eb6d3506d8fb26db24402547e1"
+    },
+    {
+      "key": "bird_1",
+      "path": "Assets/PocketCaravan/Resources/Venice/Life/pigeon_1.png",
+      "size": [
+        8,
+        8
+      ],
+      "decodedRGBAsha256": "ea15f43ce58f78c5298b55b17d657a2b7e805f26c88e9a8b2d078416fcf5c944"
+    },
+    {
+      "key": "gull_0",
+      "path": "Assets/PocketCaravan/Resources/Venice/Life/gull_0.png",
+      "size": [
+        12,
+        7
+      ],
+      "decodedRGBAsha256": "a0b4461d941f69d8741f784ae7b1efbc2e147163e48309c86b39c33a2660be23"
+    },
+    {
+      "key": "gull_1",
+      "path": "Assets/PocketCaravan/Resources/Venice/Life/gull_1.png",
+      "size": [
+        12,
+        7
+      ],
+      "decodedRGBAsha256": "362083c58ca3c7814f32c2a4b0926adcb8f0d36eb347d7a9e544d8986d97cadc"
+    },
+    {
+      "key": "smoke",
+      "path": "Assets/PocketCaravan/Resources/Venice/Life/puff.png",
+      "size": [
+        6,
+        6
+      ],
+      "decodedRGBAsha256": "bd806b7ef261018b499ab94614e673c3df42019138f267cbb89d0412db4eef61"
+    },
+    {
+      "key": "boat",
+      "path": "ArtReview/Approved/BuildingShip-Renewal-v1/boat.png",
+      "size": [
+        80,
+        32
+      ],
+      "decodedRGBAsha256": "ed1b03e5bc33ec8101a3cd0ac4dc257866338f1a37bf36fabd281b2318fe9e2d"
+    },
+    {
+      "key": "cart",
+      "path": "Assets/PocketCaravan/Art/Baked/Objects/c6_cart_e1a728ea.png",
+      "size": [
+        32,
+        32
+      ],
+      "decodedRGBAsha256": "c2df672b0c83cf957f64116c98e773416ecd6337f42d9ad449c4494e7c212365"
+    },
+    {
+      "key": "lamp",
+      "path": "ArtReview/Approved/C7-GateProps-v1/stone_lantern.png",
+      "size": [
+        16,
+        32
+      ],
+      "decodedRGBAsha256": "49a409329edd129adb88c9b5e4cc38ce5fbfdf81f4951a4fe910791db78ed3a6"
+    }
+  ],
+  "captures": [
+    "Dakmok-after.png",
+    "Dakmok-before.png",
+    "Dakmok-night.png",
+    "Naru-after.png",
+    "Naru-before.png",
+    "Naru-detail-after.png",
+    "Naru-detail-before.png",
+    "Naru-night.png",
+    "goryeo_jangdan-after.png",
+    "goryeo_jangdan-before.png",
+    "goryeo_jangdan-detail-after.png",
+    "goryeo_jangdan-detail-before.png",
+    "goryeo_jangdan-night.png",
+    "transit_woodtown-after.png",
+    "transit_woodtown-before.png",
+    "transit_woodtown-night.png"
+  ],
+  "maxMapRenderers": 21,
+  "boards": [
+    "game-comparison-final.png",
+    "detail-comparison-final.png"
+  ],
+  "supersededBoards": [
+    "game-comparison.png",
+    "detail-comparison.png"
+  ],
+  "playChecks": 364
+}

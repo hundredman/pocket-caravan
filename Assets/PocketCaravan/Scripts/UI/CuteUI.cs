@@ -6,11 +6,12 @@ namespace PocketCaravan
 {
     /// <summary>
     /// 2026-11-05 UI B안(귀여움 + 대비) 그리기 도구. 상태 줄·할 일 줄·교역 장부·온라인 표시·말 걸기 안내가 쓴다.
-    /// 다른 창(장터·퀘스트 수첩·대화 등)은 아직 UIStyle 그대로다.
+    /// 장터·퀘스트 수첩·대화 등 공용 창도 종이 스타일을 재사용한다.
     /// 색은 역할마다 하나: 상호작용(청록) = 누르거나 고를 수 있는 것, 알림(빨강) = 새 이야기·주의,
     /// 살 때(파랑)·팔 때(주황), 이득(초록)·0(회색)·손해(빨강). 단축키는 중립색 키캡.
-    /// 텍스처는 sRGB로 만들고 색을 그대로 넣는다. UIStyle.Lin을 거치면 두 번 어두워진다
+    /// 텍스처는 sRGB로 만들고 색을 그대로 넣는다. 텍스처에 UIStyle.Lin을 거치면 두 번 어두워진다
     /// (11/04 윈도우 캡처: 창 바탕 #2C263B가 #04020B로 나옴).
+    /// 글자 색은 별도로 UIStyle.Lin을 거쳐 승인 팔레트의 대비를 유지한다.
     /// OnGUI 안에서 UIStyle.Begin() 다음에 부른다. 좌표는 UIStyle 가상 좌표다.
     /// </summary>
     public static class CuteUI
@@ -297,7 +298,7 @@ namespace PocketCaravan
         public static float Label(float x, float cy, string s, Color32 col, bool isSmall = false, bool bold = false)
         {
             var st = St(isSmall);
-            st.normal.textColor = col;
+            st.normal.textColor = UIStyle.Lin(col);
             var size = st.CalcSize(new GUIContent(s));
             var r = new Rect(Mathf.Round(x), Mathf.Round(cy - size.y / 2f), size.x + 2, size.y);
             GUI.Label(r, s, st);
@@ -317,7 +318,7 @@ namespace PocketCaravan
         public static float WrapCenter(float x, float y, float w, string s, Color32 col)
         {
             St(false);
-            wrapCenter.normal.textColor = col;
+            wrapCenter.normal.textColor = UIStyle.Lin(col);
             float h = wrapCenter.CalcHeight(new GUIContent(s), w);
             GUI.Label(new Rect(Mathf.Round(x), Mathf.Round(y), w, h), s, wrapCenter);
             return h;
@@ -327,7 +328,7 @@ namespace PocketCaravan
         public static float Wrap(float x, float y, float w, string s, Color32 col, bool isSmall = false, bool bold = false)
         {
             var st = St(isSmall, true);
-            st.normal.textColor = col;
+            st.normal.textColor = UIStyle.Lin(col);
             float h = st.CalcHeight(new GUIContent(s), w);
             var r = new Rect(Mathf.Round(x), Mathf.Round(y), w, h);
             GUI.Label(r, s, st);
@@ -349,9 +350,9 @@ namespace PocketCaravan
             paperWrap = new GUIStyle(UIStyle.Wrap);
             paperRight = new GUIStyle(UIStyle.Right) { richText = true };
             foreach (var s in new[] { paperRich, paperSmall, paperWrap, paperRight })
-                foreach (var st in new[] { s.normal, s.hover, s.active, s.focused }) st.textColor = Text;
+                foreach (var st in new[] { s.normal, s.hover, s.active, s.focused }) st.textColor = UIStyle.Lin(s == paperSmall ? Sub : Text);
             paperButton = ButtonStyle(Paper, Paper2, Line, Text, Text);
-            paperButtonOn = ButtonStyle(Interact, InteractLo, InteractLo, OnInteract, OnInteract);
+            paperButtonOn = ButtonStyle(Interact, InteractLo, InteractLo, Text, Text);
         }
 
         static GUIStyle ButtonStyle(Color32 fill, Color32 hover, Color32 press, Color32 text, Color32 pressText)
@@ -363,7 +364,7 @@ namespace PocketCaravan
 #if UNITY_EDITOR
                 st.scaledBackgrounds = new Texture2D[0];
 #endif
-                st.textColor = t;
+                st.textColor = UIStyle.Lin(t);
             }
             Set(s.normal, fill, text); Set(s.focused, fill, text); Set(s.hover, hover, text); Set(s.active, press, pressText);
             s.onNormal = s.normal; s.onHover = s.hover; s.onActive = s.active; s.onFocused = s.focused;
@@ -382,10 +383,25 @@ namespace PocketCaravan
         public static GUIStyle PaperButtonIf(bool on) => on ? PaperButtonOn : PaperButton;
 
         /// <summary>어두운 바탕용 색 태그를 종이 위에서 읽히는 색으로 (금색 → 갈주황, 연두 → 진초록, 연빨강 → 빨강, 연보라 → 보조)</summary>
+        static readonly Dictionary<string, string> linearPaperTags = new Dictionary<string, string>();
+
         public static string PaperColors(string s)
         {
             if (string.IsNullOrEmpty(s) || s.IndexOf("<color", System.StringComparison.Ordinal) < 0) return s;
             foreach (var (from, to) in ColorSwaps) s = s.Replace(from, to);
+            // GUI text colors (including rich-text tags) are linear shader inputs in this project.
+            // Keep the existing sRGB palette; only compensate the text, never the paper textures.
+            if (QualitySettings.activeColorSpace == ColorSpace.Linear)
+                foreach (var (_, to) in ColorSwaps)
+                {
+                    if (!linearPaperTags.TryGetValue(to, out var encoded))
+                    {
+                        if (!ColorUtility.TryParseHtmlString(to, out var col)) continue;
+                        encoded = "#" + ColorUtility.ToHtmlStringRGB(col.linear).ToLowerInvariant();
+                        linearPaperTags[to] = encoded;
+                    }
+                    s = s.Replace(to, encoded);
+                }
             return s;
         }
         static readonly (string from, string to)[] ColorSwaps =

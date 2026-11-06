@@ -1,0 +1,13 @@
+{
+    "status": "approved",
+    "settings": {
+        "seed": 73,
+        "rainParticles": 70,
+        "monsoonParticles": 128,
+        "clearBelow": 55,
+        "rainBelow": 80,
+        "monsoonBelow": 90,
+        "mistStart": 4.0,
+        "mistEnd": 9.0
+    }
+}

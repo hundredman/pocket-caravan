@@ -1,0 +1,1020 @@
+{
+  "status": "review",
+  "maps": [
+    {
+      "id": "Naru",
+      "w": 88,
+      "h": 84,
+      "points": [
+        {
+          "kind": "bird",
+          "x": 40.5,
+          "y": 74.5,
+          "bx": 40.5,
+          "by": 74.5,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 41.05,
+          "y": 74.15,
+          "bx": 41.05,
+          "by": 74.15,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 41.6,
+          "y": 73.8,
+          "bx": 41.6,
+          "by": 73.8,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "chicken",
+          "x": 26.5,
+          "y": 54.5,
+          "bx": 26.5,
+          "by": 54.5,
+          "reason": "same approved A3 village yard anchor"
+        },
+        {
+          "kind": "smoke",
+          "x": 44.9,
+          "y": 62.72,
+          "bx": 44.9,
+          "by": 62.72,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "smoke",
+          "x": 38.12,
+          "y": 48.04,
+          "bx": 38.12,
+          "by": 48.04,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "smoke",
+          "x": 51.12,
+          "y": 51.04,
+          "bx": 51.12,
+          "by": 51.04,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "lamp",
+          "x": 27.5,
+          "y": 57.5,
+          "bx": 27.5,
+          "by": 57.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        },
+        {
+          "kind": "lamp",
+          "x": 40.5,
+          "y": 57.5,
+          "bx": 40.5,
+          "by": 57.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        },
+        {
+          "kind": "boat",
+          "x": 59.5,
+          "y": 40.5,
+          "bx": 62.5,
+          "by": 40.5,
+          "reason": "whole approved boat on verified clear water corridor"
+        },
+        {
+          "kind": "gull",
+          "x": 52,
+          "y": 55,
+          "bx": 52,
+          "by": 55,
+          "reason": "water-side gull, airborne"
+        },
+        {
+          "kind": "gull",
+          "x": 54,
+          "y": 56,
+          "bx": 54,
+          "by": 56,
+          "reason": "water-side gull, airborne"
+        }
+      ]
+    },
+    {
+      "id": "Gaegyeong",
+      "w": 72,
+      "h": 76,
+      "points": [
+        {
+          "kind": "bird",
+          "x": 18.5,
+          "y": 7.5,
+          "bx": 18.5,
+          "by": 7.5,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 19.05,
+          "y": 7.15,
+          "bx": 19.05,
+          "by": 7.15,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 19.6,
+          "y": 6.8,
+          "bx": 19.6,
+          "by": 6.8,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "dog",
+          "x": 27.5,
+          "y": 25.5,
+          "bx": 27.5,
+          "by": 25.5,
+          "reason": "same approved A3 village yard anchor"
+        },
+        {
+          "kind": "smoke",
+          "x": 48.12,
+          "y": 24.04,
+          "bx": 48.12,
+          "by": 24.04,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "smoke",
+          "x": 47.12,
+          "y": 19.04,
+          "bx": 47.12,
+          "by": 19.04,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "smoke",
+          "x": 52.12,
+          "y": 36.04,
+          "bx": 52.12,
+          "by": 36.04,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "lamp",
+          "x": 27.5,
+          "y": 28.5,
+          "bx": 27.5,
+          "by": 28.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        },
+        {
+          "kind": "lamp",
+          "x": 42.5,
+          "y": 34.5,
+          "bx": 42.5,
+          "by": 34.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        }
+      ]
+    },
+    {
+      "id": "Dakmok",
+      "w": 93,
+      "h": 80,
+      "points": [
+        {
+          "kind": "bird",
+          "x": 42.5,
+          "y": 30.5,
+          "bx": 42.5,
+          "by": 30.5,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 43.05,
+          "y": 30.15,
+          "bx": 43.05,
+          "by": 30.15,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 43.6,
+          "y": 29.8,
+          "bx": 43.6,
+          "by": 29.8,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "dog",
+          "x": 26.5,
+          "y": 32.5,
+          "bx": 26.5,
+          "by": 32.5,
+          "reason": "same approved A3 village yard anchor"
+        },
+        {
+          "kind": "smoke",
+          "x": 31.9,
+          "y": 30.72,
+          "bx": 31.9,
+          "by": 30.72,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "smoke",
+          "x": 18.12,
+          "y": 8.040000000000006,
+          "bx": 18.12,
+          "by": 8.040000000000006,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "smoke",
+          "x": 8.120000000000001,
+          "y": 6.040000000000006,
+          "bx": 8.120000000000001,
+          "by": 6.040000000000006,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "lamp",
+          "x": 28.5,
+          "y": 35.5,
+          "bx": 28.5,
+          "by": 35.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        },
+        {
+          "kind": "lamp",
+          "x": 37.5,
+          "y": 39.5,
+          "bx": 37.5,
+          "by": 39.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        }
+      ]
+    },
+    {
+      "id": "goryeo_songak",
+      "w": 74,
+      "h": 84,
+      "points": [
+        {
+          "kind": "bird",
+          "x": 19.5,
+          "y": 26.5,
+          "bx": 19.5,
+          "by": 26.5,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 20.05,
+          "y": 26.15,
+          "bx": 20.05,
+          "by": 26.15,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 20.6,
+          "y": 25.8,
+          "bx": 20.6,
+          "by": 25.8,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "dog",
+          "x": 35.5,
+          "y": 24.5,
+          "bx": 35.5,
+          "by": 24.5,
+          "reason": "same approved A3 village yard anchor"
+        },
+        {
+          "kind": "smoke",
+          "x": 47.12,
+          "y": 34.04,
+          "bx": 47.12,
+          "by": 34.04,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "smoke",
+          "x": 57.12,
+          "y": 36.04,
+          "bx": 57.12,
+          "by": 36.04,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "smoke",
+          "x": 70.9,
+          "y": 58.72,
+          "bx": 70.9,
+          "by": 58.72,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "lamp",
+          "x": 35.5,
+          "y": 31.5,
+          "bx": 35.5,
+          "by": 31.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        },
+        {
+          "kind": "lamp",
+          "x": 47.5,
+          "y": 28.5,
+          "bx": 47.5,
+          "by": 28.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        }
+      ]
+    },
+    {
+      "id": "goryeo_jangdan",
+      "w": 61,
+      "h": 98,
+      "points": [
+        {
+          "kind": "bird",
+          "x": 43.5,
+          "y": 84.5,
+          "bx": 43.5,
+          "by": 84.5,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 44.05,
+          "y": 84.15,
+          "bx": 44.05,
+          "by": 84.15,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 44.6,
+          "y": 83.8,
+          "bx": 44.6,
+          "by": 83.8,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "chicken",
+          "x": 20.5,
+          "y": 57.5,
+          "bx": 20.5,
+          "by": 57.5,
+          "reason": "same approved A3 village yard anchor"
+        },
+        {
+          "kind": "smoke",
+          "x": 47.9,
+          "y": 52.72,
+          "bx": 47.9,
+          "by": 52.72,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "lamp",
+          "x": 21.5,
+          "y": 60.5,
+          "bx": 21.5,
+          "by": 60.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        },
+        {
+          "kind": "lamp",
+          "x": 23.5,
+          "y": 64.5,
+          "bx": 23.5,
+          "by": 64.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        }
+      ]
+    },
+    {
+      "id": "transit_woodtown",
+      "w": 87,
+      "h": 69,
+      "points": [
+        {
+          "kind": "bird",
+          "x": 47.5,
+          "y": 33.5,
+          "bx": 47.5,
+          "by": 33.5,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 48.05,
+          "y": 33.15,
+          "bx": 48.05,
+          "by": 33.15,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 48.6,
+          "y": 32.8,
+          "bx": 48.6,
+          "by": 32.8,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "dog",
+          "x": 31.5,
+          "y": 34.5,
+          "bx": 31.5,
+          "by": 34.5,
+          "reason": "same approved A3 village yard anchor"
+        },
+        {
+          "kind": "smoke",
+          "x": 44.9,
+          "y": 51.72,
+          "bx": 44.9,
+          "by": 51.72,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "smoke",
+          "x": 43.12,
+          "y": 58.04,
+          "bx": 43.12,
+          "by": 58.04,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "lamp",
+          "x": 32.5,
+          "y": 37.5,
+          "bx": 32.5,
+          "by": 37.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        },
+        {
+          "kind": "lamp",
+          "x": 45.5,
+          "y": 37.5,
+          "bx": 45.5,
+          "by": 37.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        },
+        {
+          "kind": "walker",
+          "x": 38.5,
+          "y": 35.5,
+          "bx": 44.5,
+          "by": 35.5,
+          "reason": "existing wide reachable road, no blockers/exits changed"
+        },
+        {
+          "kind": "cart",
+          "x": 38.5,
+          "y": 35.5,
+          "bx": 44.5,
+          "by": 35.5,
+          "reason": "same verified road, staggered from walking trader"
+        }
+      ]
+    },
+    {
+      "id": "transit_ferry",
+      "w": 80,
+      "h": 55,
+      "points": [
+        {
+          "kind": "bird",
+          "x": 47.5,
+          "y": 28.5,
+          "bx": 47.5,
+          "by": 28.5,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 48.05,
+          "y": 28.15,
+          "bx": 48.05,
+          "by": 28.15,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 48.6,
+          "y": 27.8,
+          "bx": 48.6,
+          "by": 27.8,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "dog",
+          "x": 26.5,
+          "y": 24.5,
+          "bx": 26.5,
+          "by": 24.5,
+          "reason": "same approved A3 village yard anchor"
+        },
+        {
+          "kind": "smoke",
+          "x": 49.12,
+          "y": 20.04,
+          "bx": 49.12,
+          "by": 20.04,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "smoke",
+          "x": 43.9,
+          "y": 13.719999999999999,
+          "bx": 43.9,
+          "by": 13.719999999999999,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "lamp",
+          "x": 27.5,
+          "y": 27.5,
+          "bx": 27.5,
+          "by": 27.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        },
+        {
+          "kind": "lamp",
+          "x": 42.5,
+          "y": 30.5,
+          "bx": 42.5,
+          "by": 30.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        },
+        {
+          "kind": "walker",
+          "x": 37.5,
+          "y": 27.5,
+          "bx": 43.5,
+          "by": 27.5,
+          "reason": "existing wide reachable road, no blockers/exits changed"
+        },
+        {
+          "kind": "cart",
+          "x": 37.5,
+          "y": 27.5,
+          "bx": 43.5,
+          "by": 27.5,
+          "reason": "same verified road, staggered from walking trader"
+        },
+        {
+          "kind": "boat",
+          "x": 55.5,
+          "y": 29.5,
+          "bx": 58.5,
+          "by": 29.5,
+          "reason": "whole approved boat on verified clear water corridor"
+        },
+        {
+          "kind": "gull",
+          "x": 41,
+          "y": 37,
+          "bx": 41,
+          "by": 37,
+          "reason": "water-side gull, airborne"
+        },
+        {
+          "kind": "gull",
+          "x": 43,
+          "y": 38,
+          "bx": 43,
+          "by": 38,
+          "reason": "water-side gull, airborne"
+        }
+      ]
+    },
+    {
+      "id": "transit_southport",
+      "w": 86,
+      "h": 68,
+      "points": [
+        {
+          "kind": "bird",
+          "x": 48.5,
+          "y": 34.5,
+          "bx": 48.5,
+          "by": 34.5,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 49.05,
+          "y": 34.15,
+          "bx": 49.05,
+          "by": 34.15,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 49.6,
+          "y": 33.8,
+          "bx": 49.6,
+          "by": 33.8,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "dog",
+          "x": 25.5,
+          "y": 21.5,
+          "bx": 25.5,
+          "by": 21.5,
+          "reason": "same approved A3 village yard anchor"
+        },
+        {
+          "kind": "smoke",
+          "x": 36.12,
+          "y": 41.04,
+          "bx": 36.12,
+          "by": 41.04,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "smoke",
+          "x": 51.9,
+          "y": 39.72,
+          "bx": 51.9,
+          "by": 39.72,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "lamp",
+          "x": 26.5,
+          "y": 24.5,
+          "bx": 26.5,
+          "by": 24.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        },
+        {
+          "kind": "lamp",
+          "x": 33.5,
+          "y": 29.5,
+          "bx": 33.5,
+          "by": 29.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        },
+        {
+          "kind": "walker",
+          "x": 40.5,
+          "y": 33.5,
+          "bx": 46.5,
+          "by": 33.5,
+          "reason": "existing wide reachable road, no blockers/exits changed"
+        },
+        {
+          "kind": "cart",
+          "x": 40.5,
+          "y": 33.5,
+          "bx": 46.5,
+          "by": 33.5,
+          "reason": "same verified road, staggered from walking trader"
+        },
+        {
+          "kind": "boat",
+          "x": 58.5,
+          "y": 32.5,
+          "bx": 61.5,
+          "by": 32.5,
+          "reason": "whole approved boat on verified clear water corridor"
+        }
+      ]
+    },
+    {
+      "id": "transit_crossroads",
+      "w": 92,
+      "h": 80,
+      "points": [
+        {
+          "kind": "bird",
+          "x": 49.5,
+          "y": 37.5,
+          "bx": 49.5,
+          "by": 37.5,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 50.05,
+          "y": 37.15,
+          "bx": 50.05,
+          "by": 37.15,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 50.6,
+          "y": 36.8,
+          "bx": 50.6,
+          "by": 36.8,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "dog",
+          "x": 36.5,
+          "y": 38.5,
+          "bx": 36.5,
+          "by": 38.5,
+          "reason": "same approved A3 village yard anchor"
+        },
+        {
+          "kind": "smoke",
+          "x": 56.12,
+          "y": 35.04,
+          "bx": 56.12,
+          "by": 35.04,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "smoke",
+          "x": 49.12,
+          "y": 31.04,
+          "bx": 49.12,
+          "by": 31.04,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "smoke",
+          "x": 56.9,
+          "y": 30.72,
+          "bx": 56.9,
+          "by": 30.72,
+          "reason": "approved house side flue; morning/evening only"
+        },
+        {
+          "kind": "lamp",
+          "x": 37.5,
+          "y": 41.5,
+          "bx": 37.5,
+          "by": 41.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        },
+        {
+          "kind": "lamp",
+          "x": 46.5,
+          "y": 45.5,
+          "bx": 46.5,
+          "by": 45.5,
+          "reason": "small extra village lantern; approved whole stone lantern"
+        },
+        {
+          "kind": "walker",
+          "x": 43.5,
+          "y": 39.5,
+          "bx": 49.5,
+          "by": 39.5,
+          "reason": "existing wide reachable road, no blockers/exits changed"
+        },
+        {
+          "kind": "cart",
+          "x": 43.5,
+          "y": 39.5,
+          "bx": 49.5,
+          "by": 39.5,
+          "reason": "same verified road, staggered from walking trader"
+        }
+      ]
+    },
+    {
+      "id": "transit_wetroad",
+      "w": 78,
+      "h": 64,
+      "points": [
+        {
+          "kind": "bird",
+          "x": 42.5,
+          "y": 30.5,
+          "bx": 42.5,
+          "by": 30.5,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 43.05,
+          "y": 30.15,
+          "bx": 43.05,
+          "by": 30.15,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 43.6,
+          "y": 29.8,
+          "bx": 43.6,
+          "by": 29.8,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "walker",
+          "x": 28.5,
+          "y": 40.5,
+          "bx": 34.5,
+          "by": 40.5,
+          "reason": "existing wide reachable road, no blockers/exits changed"
+        },
+        {
+          "kind": "cart",
+          "x": 28.5,
+          "y": 40.5,
+          "bx": 34.5,
+          "by": 40.5,
+          "reason": "same verified road, staggered from walking trader"
+        }
+      ]
+    },
+    {
+      "id": "transit_pass",
+      "w": 65,
+      "h": 68,
+      "points": [
+        {
+          "kind": "bird",
+          "x": 36.5,
+          "y": 33.5,
+          "bx": 36.5,
+          "by": 33.5,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 37.05,
+          "y": 33.15,
+          "bx": 37.05,
+          "by": 33.15,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 37.6,
+          "y": 32.8,
+          "bx": 37.6,
+          "by": 32.8,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        }
+      ]
+    },
+    {
+      "id": "transit_central_approach",
+      "w": 71,
+      "h": 87,
+      "points": [
+        {
+          "kind": "bird",
+          "x": 39.5,
+          "y": 44.5,
+          "bx": 39.5,
+          "by": 44.5,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 40.05,
+          "y": 44.15,
+          "bx": 40.05,
+          "by": 44.15,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 40.6,
+          "y": 43.8,
+          "bx": 40.6,
+          "by": 43.8,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "walker",
+          "x": 36.5,
+          "y": 48.5,
+          "bx": 42.5,
+          "by": 48.5,
+          "reason": "existing wide reachable road, no blockers/exits changed"
+        },
+        {
+          "kind": "cart",
+          "x": 36.5,
+          "y": 48.5,
+          "bx": 42.5,
+          "by": 48.5,
+          "reason": "same verified road, staggered from walking trader"
+        }
+      ]
+    },
+    {
+      "id": "transit_south_inland",
+      "w": 67,
+      "h": 73,
+      "points": [
+        {
+          "kind": "bird",
+          "x": 37.5,
+          "y": 36.5,
+          "bx": 37.5,
+          "by": 36.5,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 38.05,
+          "y": 36.15,
+          "bx": 38.05,
+          "by": 36.15,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "bird",
+          "x": 38.6,
+          "y": 35.8,
+          "bx": 38.6,
+          "by": 35.8,
+          "reason": "existing rice/grass anchor; airborne, no land edit"
+        },
+        {
+          "kind": "walker",
+          "x": 28.5,
+          "y": 37.5,
+          "bx": 34.5,
+          "by": 37.5,
+          "reason": "existing wide reachable road, no blockers/exits changed"
+        },
+        {
+          "kind": "cart",
+          "x": 28.5,
+          "y": 37.5,
+          "bx": 34.5,
+          "by": 37.5,
+          "reason": "same verified road, staggered from walking trader"
+        }
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "key": "chicken_0",
+      "path": "ArtReview/Goryeo-Atmosphere-A7-20261105/Native/chicken_0.png"
+    },
+    {
+      "key": "chicken_1",
+      "path": "ArtReview/Goryeo-Atmosphere-A7-20261105/Native/chicken_1.png"
+    },
+    {
+      "key": "dog_0",
+      "path": "ArtReview/Goryeo-Atmosphere-A7-20261105/Native/dog_0.png"
+    },
+    {
+      "key": "dog_1",
+      "path": "ArtReview/Goryeo-Atmosphere-A7-20261105/Native/dog_1.png"
+    },
+    {
+      "key": "bird_0",
+      "path": "Assets/PocketCaravan/Resources/Venice/Life/pigeon_0.png"
+    },
+    {
+      "key": "bird_1",
+      "path": "Assets/PocketCaravan/Resources/Venice/Life/pigeon_1.png"
+    },
+    {
+      "key": "gull_0",
+      "path": "Assets/PocketCaravan/Resources/Venice/Life/gull_0.png"
+    },
+    {
+      "key": "gull_1",
+      "path": "Assets/PocketCaravan/Resources/Venice/Life/gull_1.png"
+    },
+    {
+      "key": "smoke",
+      "path": "Assets/PocketCaravan/Resources/Venice/Life/puff.png"
+    },
+    {
+      "key": "boat",
+      "path": "ArtReview/Approved/BuildingShip-Renewal-v1/boat.png"
+    },
+    {
+      "key": "cart",
+      "path": "Assets/PocketCaravan/Art/Baked/Objects/c6_cart_e1a728ea.png"
+    },
+    {
+      "key": "lamp",
+      "path": "ArtReview/Approved/C7-GateProps-v1/stone_lantern.png"
+    }
+  ],
+  "renderLimit": 64,
+  "note": "New animals from built-in imagegen, finalized via Aseprite native32x32/2frames/binary alpha/palette. Existing Venice effect/bird sprites reused whole for same purposes. Whole approved boat/cart/lantern preserved. No production hook."
+}

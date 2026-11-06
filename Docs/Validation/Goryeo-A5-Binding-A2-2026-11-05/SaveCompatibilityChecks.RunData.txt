@@ -1,0 +1,32 @@
+Warning: [저장] 실패, 기존 파일 보존: 잔고·위치·체력·시각 저장값이 올바르지 않습니다.
+{
+    "passed": [
+        "legacy missing optional IDs remains loadable",
+        "current registered cargo vehicle quest market accepted",
+        "unknown carried cargo rejected without mutating payload",
+        "duplicate carried IDs cannot merge or overflow on load",
+        "unknown vehicle cannot silently become starting vehicle",
+        "unavailable saved map blocked before travel",
+        "unknown active quest cannot disappear",
+        "unknown completed quest cannot reset completion",
+        "negative quest step rejected",
+        "quest step beyond authored objectives rejected",
+        "duplicate active quest IDs rejected",
+        "null active progress rejected",
+        "unknown stored market cannot lose state",
+        "unknown market stock cannot disappear",
+        "mismatched market arrays rejected",
+        "unknown active delivery destination rejected",
+        "unknown board town cannot disappear",
+        "null collection rejected before any state import",
+        "invalid wallet rejected",
+        "invalid clock rejected",
+        "NaN position rejected",
+        "invalid stamina rejected",
+        "unknown warehouse and legacy drop IDs remain preserved",
+        "pending recovery payload unchanged",
+        "valid file write succeeds",
+        "valid replacement creates backup",
+        "invalid write preserves current and backup files"
+    ]
+}

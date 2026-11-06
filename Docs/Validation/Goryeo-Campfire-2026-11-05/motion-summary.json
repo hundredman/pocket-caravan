@@ -1,0 +1,65 @@
+{
+  "day": {
+    "samples": 20,
+    "frames": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "maxEmbers": 3,
+    "lightMin": 0.07417143881320953,
+    "lightMax": 0.08507762104272842
+  },
+  "night": {
+    "samples": 20,
+    "frames": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "maxEmbers": 3,
+    "lightMin": 0.3167133927345276,
+    "lightMax": 0.3643021881580353
+  },
+  "wholeOriginalFlamePixelsUnchanged": true,
+  "nightGroundPixelObservations": [
+    {
+      "xy": [
+        220,
+        160
+      ],
+      "before": [
+        58,
+        81,
+        67,
+        255
+      ],
+      "after": [
+        60,
+        83,
+        67,
+        255
+      ]
+    },
+    {
+      "xy": [
+        232,
+        130
+      ],
+      "before": [
+        58,
+        82,
+        67,
+        255
+      ],
+      "after": [
+        60,
+        83,
+        68,
+        255
+      ]
+    }
+  ]
+}

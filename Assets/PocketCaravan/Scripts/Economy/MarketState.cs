@@ -66,8 +66,11 @@ namespace PocketCaravan
             return p;
         }
 
-        public int BuyPrice(ItemData item) => ReputationPricing.Quote(this,item,false,GameManager.I?.Player,GameManager.I?.Player?.tradeActivity,GameManager.I?.Clock.TotalHours??0);
-        public int SellPrice(ItemData item) => ReputationPricing.Quote(this,item,true,GameManager.I?.Player,GameManager.I?.Player?.tradeActivity,GameManager.I?.Clock.TotalHours??0);
+        public int BuyPrice(ItemData item) => BuyPrice(item,0);
+        public int SellPrice(ItemData item) => SellPrice(item,0);
+        // haggle: 이번 거래에만 쓰는 흥정 폭(R3). 평판 상한과 동시 견적 규칙은 Quote가 다시 적용한다.
+        public int BuyPrice(ItemData item,float haggle) => ReputationPricing.Quote(this,item,false,GameManager.I?.Player,GameManager.I?.Player?.tradeActivity,GameManager.I?.Clock.TotalHours??0,haggle,0);
+        public int SellPrice(ItemData item,float haggle) => ReputationPricing.Quote(this,item,true,GameManager.I?.Player,GameManager.I?.Player?.tradeActivity,GameManager.I?.Clock.TotalHours??0,0,haggle);
 
         public bool CanBuy(ItemData item) => Stock(item) >= 1f;
 
@@ -104,7 +107,8 @@ namespace PocketCaravan
         }
 
         /// <summary>가격·재고·시장 등급 변화를 복제 상태에서 계산한다. 화물/잔고/성장 이벤트를 변경하지 않는다.</summary>
-        public MarketEstimate Preview(ItemData item, PlayerState player, int requested, bool selling)
+        public MarketEstimate Preview(ItemData item, PlayerState player, int requested, bool selling) => Preview(item,player,requested,selling,0);
+        public MarketEstimate Preview(ItemData item, PlayerState player, int requested, bool selling, float haggle)
         {
             var prices=new List<int>(); string blocker=null;
             if(item==null || item.questItem) blocker="일반 교역품을 선택하세요.";
@@ -122,14 +126,14 @@ namespace PocketCaravan
                     if(selling)
                     {
                         if(i>=player.cargo.Count(item)){blocker="팔 물건이 없습니다.";break;}
-                        int price=ReputationPricing.Quote(copy,item,true,player,activity,now);
+                        int price=ReputationPricing.Quote(copy,item,true,player,activity,now,0,haggle);
                         if(price<0 || total+price>int.MaxValue || (long)player.money+total+price>int.MaxValue){blocker="보유금 한도를 확인하세요.";break;}
                         total+=price; prices.Add(price); activity.Sold(town.id,item.id,now);copy.RecordSell(item,price,player.origin);
                     }
                     else
                     {
                         if(!copy.CanBuy(item)){blocker="재고가 없습니다.";break;}
-                        int price=ReputationPricing.Quote(copy,item,false,player,activity,now);
+                        int price=ReputationPricing.Quote(copy,item,false,player,activity,now,haggle,0);
                         if(price<=0 || total+price>player.money){blocker="매입 자금이 부족합니다.";break;}
                         if(!player.CanCarry(item,i+1)){blocker="남은 적재 공간이 부족합니다.";break;}
                         total+=price; prices.Add(price); activity.Bought(town.id,item.id,now,price);copy.RecordBuy(item,price);

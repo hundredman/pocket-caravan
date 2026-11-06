@@ -1,0 +1,10 @@
+{
+  "status": "approved",
+  "existingThemeApproved": true,
+  "nativeCaptures": 11,
+  "runtimeChecks": 100,
+  "beforeAfter": "before-after.png",
+  "scope": "Existing shared theme; text contrast, primary button text, information grouping and unavailable-action explanation. No new palette/frame/art.",
+  "remoteIntegrationChanged": false,
+  "approval": "2026-11-06 사용자: 이대로 승인"
+}

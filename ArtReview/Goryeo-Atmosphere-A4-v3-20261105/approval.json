@@ -1,0 +1,13 @@
+{
+  "status": "approved",
+  "date": "2026-11-05",
+  "userReply": "이 버전으로 승인",
+  "scope": "v3 흙·풀·돌·나무·물 발소리와 앞서 제출한 작은 먼지·물 튀김 본편 연결",
+  "sha256": {
+    "wood.wav": "c6bcc9b94756948f25fdd9186635b5f6a44d61e5baa36169206b36604fc1e49a",
+    "dirt.wav": "ee6ec36f148ae0870705531782dd8a87e25ea867575a00507366a89495d9be74",
+    "stone.wav": "d7a3af88dd4804ec819e8bb88c7b64bc3b9b543480a5f46954b32d8a73ac522c",
+    "grass.wav": "3c12541ac867169b551f705519285b09a4aaad622c8d1fff6dcfb0ae70441faf",
+    "splash.wav": "f960fb5567f936de33938f770862fb110411f947df8836495aa77b68b533a436"
+  }
+}

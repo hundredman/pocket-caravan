@@ -1,0 +1,23 @@
+sss..................s.............................................sssss.s................................................................................................../Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_trial.py:57: ResourceWarning: unclosed file <_io.BufferedReader name='/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-Trial4-20261026/Screens-v2/before.png'>
+  self.assertEqual(Image.open(OUT/'Screens-v2'/(name+'.png')).size,(480,270))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_trial.py:57: ResourceWarning: unclosed file <_io.BufferedReader name='/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-Trial4-20261026/Screens-v2/trial.png'>
+  self.assertEqual(Image.open(OUT/'Screens-v2'/(name+'.png')).size,(480,270))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.............................s...../Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_central_fair_art.py:16: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  im=im.convert('RGBA');ref=ref.convert('RGBA');self.assertEqual(im.size,(48,48));self.assertEqual(im.tobytes(),ref.tobytes());self.assertLessEqual(set(im.getchannel('A').getdata()),{0,255});self.assertEqual(hashlib.sha256(im.tobytes()).hexdigest(),rows[a['id']]['rgbaSha256']);self.assertEqual(a['size'],[3,3])
+................../Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_e3_e2_art_review.py:24: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertTrue({(255,255,255,255),(132,103,94,255),(120,160,153,255)}.issubset(set(im.getdata())))
+/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_e3_e2_art_review.py:25: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertGreaterEqual(sum(c[3]>0 for c in hi.getdata()),2700)
+/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_e3_e2_art_review.py:26: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertLess(sum(c[3]>0 for c in lo.getdata()),sum(c[3]>0 for c in hi.getdata()))
+./Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_e3_e2_art_review.py:15: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertEqual(im.size,size);self.assertLessEqual(set(im.convert('RGBA').getchannel('A').getdata()),{0,255})
+..ssss............/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_goryeo_life_trial.py:28: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  im=im.convert('RGBA');self.assertEqual(im.size,(32,32));self.assertLessEqual(set(im.getchannel('A').getdata()),{0,255});self.assertLessEqual(len(set(im.getdata())),10);bbox=im.getbbox();self.assertLessEqual(bbox[3]-bbox[1],16);self.assertEqual(bbox[3],30);states.append(im.tobytes())
+................s.........................................s........sssss...s...s....................sssss................s.ss.................
+----------------------------------------------------------------------
+Ran 385 tests in 131.483s
+
+OK (skipped=32)

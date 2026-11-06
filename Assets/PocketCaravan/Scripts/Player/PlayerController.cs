@@ -65,13 +65,16 @@ namespace PocketCaravan
             // 2026-10-29: 맵 이동 중에는 감속조차 하지 않고 그 자리에 멈춘다(페이드 중에 몇 칸 더 걸어가 보이던 문제)
             //   PlayerMotor는 거리 보정 검사(E1)의 입력 파일이라 건드리지 않고, 제자리 Teleport로 속도만 0으로 만든다
             if (GameManager.I.IsTravelling) { motor.Teleport(transform.position, Vector2Int.zero); TalkTarget = null; UpdateBody(); return; }
-            Vector2 input = locked ? Vector2.zero : InputReader.MoveVector();
+            bool seatHandled = GoryeoSeat.BeforeMove(this, locked);
+            Vector2 input = locked || GoryeoSeat.Sitting(this) ? Vector2.zero : InputReader.MoveVector();
             Running = !locked && !exhausted && InputReader.Run() && input.sqrMagnitude > 0.01f;
-            motor.Tick(input, CurrentSpeed(), Time.deltaTime);
+            // Modal UI stops motion immediately, including residual velocity and ground drift.
+            if(locked || GoryeoSeat.Sitting(this))motor.Teleport(transform.position,Vector2Int.zero);
+            else motor.Tick(input, CurrentSpeed(), Time.deltaTime);
             if (!locked) UpdateCarry(Time.deltaTime);
 
             TalkTarget = locked ? null : Interactable.Nearest(transform.position, motor.Facing, talkRange);
-            if (!locked)
+            if (!locked && !seatHandled)
             {
                 if (InputReader.InteractPressed() && !UIState.JustClosed && TalkTarget != null) TalkTarget.Interact(this);
                 var exit = MapExit.At(motor.Cell,motor.Facing);
@@ -90,6 +93,7 @@ namespace PocketCaravan
                 s *= p.origin.speedMultiplier;
                 if (grade == 0) s *= p.origin.offroadSpeedMultiplier; // 길 없는 곳
             }
+            s = GoryeoGroundSpeed.Apply(s,p,motor.Cell);
             s *= Mathf.Lerp(1f, fullLoadSpeed, p.LoadRatio);
             if (Running) s *= runMultiplier;
             if (InputReader.DebugFast()) s *= DebugFastMultiplier;   // 임시 시험용 (C, 6배)

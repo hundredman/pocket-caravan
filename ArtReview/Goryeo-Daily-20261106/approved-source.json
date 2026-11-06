@@ -1,0 +1,13 @@
+{
+  "status": "approved",
+  "mapId": "Naru",
+  "id": "naru_water",
+  "memoKey": "goryeo:daily:water_day",
+  "name": "예성 나루 우물",
+  "width": 88,
+  "height": 84,
+  "x": 43,
+  "y": 35,
+  "seconds": 3,
+  "reward": 3
+}

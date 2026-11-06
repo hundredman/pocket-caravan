@@ -1,0 +1,16 @@
+{
+  "oldSaveFiles": 9,
+  "allUnchanged": true,
+  "remainingR3R4OrUIAuditSaves": 0,
+  "hashes": {
+    "pocket_caravan_preview_save.json": "1d028f92036187673469f28ea3f4449ee66b0ecfd04c3d187a45c49afae34bfe",
+    "pocket_caravan_save.json.bak": "8621a866a66177601eaee64c8c34bb7d01848b3e02f9a0c9ffd1e05e7958dca9",
+    "pocket_caravan_save.before-linkcheck-claude-20261028.json": "c7c300cb7af0cb1892a5b45c9a19cef49f16f26aaf72a2fb4491d6ee673cc92c",
+    "pocket_caravan_save.before-lifecheck-claude-20261103.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+    "pocket_caravan_save.before-e2-claude-20261103.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+    "pocket_caravan_save.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+    "pocket_caravan_save.before-M4-claude-20261028.json": "29e874c3a436547d0022b380385131b9775b4d2fdc88e1ccad2c7777601388aa",
+    "pocket_caravan_save.before-walk-claude-20261103.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+    "pocket_caravan_save.before-exitcheck-claude-20261028.json": "c7c300cb7af0cb1892a5b45c9a19cef49f16f26aaf72a2fb4491d6ee673cc92c"
+  }
+}

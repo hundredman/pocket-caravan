@@ -1,0 +1,31 @@
+{
+    "complete": true,
+    "error": "",
+    "scheduleCases": 0,
+    "checks": [
+        "bootstrap saves off",
+        "review imported thunder",
+        "no autoplay before explicit trigger",
+        "one storm preview trigger",
+        "actual480x270 thunder-frame-00",
+        "actual480x270 thunder-frame-01",
+        "actual480x270 thunder-frame-02",
+        "actual480x270 thunder-frame-03",
+        "actual480x270 thunder-frame-04",
+        "actual480x270 thunder-frame-05",
+        "actual480x270 thunder-frame-06",
+        "actual480x270 thunder-frame-07",
+        "actual480x270 thunder-frame-08",
+        "actual480x270 thunder-frame-09",
+        "actual480x270 thunder-frame-10",
+        "actual480x270 thunder-frame-11",
+        "one soft fade flash max7percent",
+        "actual delayed thunder playing",
+        "actual SFX setting followed",
+        "mute silences thunder",
+        "hard gate no production thunder/flash",
+        "no thunder in clear weather",
+        "owned source cleaned up",
+        "saves off after trial"
+    ]
+}

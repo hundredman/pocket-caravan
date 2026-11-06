@@ -1,0 +1,8 @@
+{
+  "status": "approved",
+  "date": "2026-11-06",
+  "userReply": "게시판 수정안 승인",
+  "scope": "공용 의뢰 게시판 창 높이·목록 세로 스크롤·글 너비 레이아웃만",
+  "productionBeforeSha256": "320d4ae1423cd5c787c7a60c583a9b36ab3cdbcf6b5d072d3155d6ef15c9d104",
+  "trialSha256": "f5446c2eba5e5f44e6670472d96859e4546c1f4ef5828ddf449f397b735e1912"
+}

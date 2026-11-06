@@ -1,0 +1,5 @@
+Input: <color=#a8f0a0>보수 24냥</color> · <color=#ff9a8a>속죄</color>
+Once: <color=#03410c>보수 24냥</color> · <color=#ab0814>속죄</color>
+Twice: <color=#03410c>보수 24냥</color> · <color=#ab0814>속죄</color>
+Idempotent: True
+Color space: Linear

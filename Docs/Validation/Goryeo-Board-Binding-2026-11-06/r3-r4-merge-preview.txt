@@ -1,0 +1,25 @@
+2dcf7a571abb847871dc4eb761c5ca3ca3e3ca6a
+100644 45103ab58632dd3264a68b5a3aa3d29d05563e21 1	Assets/PocketCaravan/Scripts/Contracts/ContractBoard.cs
+100644 5f729f930d9c433ada758c25f53f1edb9a9779cc 2	Assets/PocketCaravan/Scripts/Contracts/ContractBoard.cs
+100644 248dca4f5364239ee179879fade1bceb3a51d506 3	Assets/PocketCaravan/Scripts/Contracts/ContractBoard.cs
+100644 c53c194f0f2a9cbe79be8b3d33e141358479155e 1	Assets/PocketCaravan/Scripts/Economy/TownMarket.cs
+100644 e59fd36c4acb8455973a179fc49686c2d0b641c9 2	Assets/PocketCaravan/Scripts/Economy/TownMarket.cs
+100644 df6d8724fd81625759703c242dcce5a8bb11fcf0 3	Assets/PocketCaravan/Scripts/Economy/TownMarket.cs
+100644 845cc90b9dfc77250951f954c22bf35eef573b7b 1	Docs/Plan.md
+100644 d8af7d64f1159fff82ecd05d7a2049889e98faca 2	Docs/Plan.md
+100644 84f7816799e1677996aafcf630eb73aa7fbd13ca 3	Docs/Plan.md
+100644 ed3085fcc8e9fd7be0267673f1fdcae0fdcc4406 1	Docs/WorkLog.md
+100644 7026d999aa5d606f9cdcf3330f83fb90acd30bf6 2	Docs/WorkLog.md
+100644 77750f9c98ccb2d8442b4c06987778e3e35c8873 3	Docs/WorkLog.md
+
+Auto-merging Assets/PocketCaravan/Scripts/Contracts/ContractBoard.cs
+CONFLICT (content): Merge conflict in Assets/PocketCaravan/Scripts/Contracts/ContractBoard.cs
+Auto-merging Assets/PocketCaravan/Scripts/Contracts/ContractManager.cs
+Auto-merging Assets/PocketCaravan/Scripts/Economy/TownMarket.cs
+CONFLICT (content): Merge conflict in Assets/PocketCaravan/Scripts/Economy/TownMarket.cs
+Auto-merging Assets/PocketCaravan/Scripts/UI/TownFacilitiesUI.cs
+Auto-merging Docs/CurrentState.md
+Auto-merging Docs/Plan.md
+CONFLICT (content): Merge conflict in Docs/Plan.md
+Auto-merging Docs/WorkLog.md
+CONFLICT (content): Merge conflict in Docs/WorkLog.md

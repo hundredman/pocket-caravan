@@ -1,0 +1,13 @@
+{
+  "status": "approved",
+  "date": "2026-11-05",
+  "userReply": "이 방향으로 승인",
+  "scope": "A3 장터 웅성임·닭·소·개·새 소리, 거리·시간대·간격을 둔 본편 연결",
+  "sha256": {
+    "bird.wav": "c685a926a9264c8db26988a9eec605c66f4b3d503c7a8885d2427bd505b7fb66",
+    "cow.wav": "d7393a344cdece476b7811da601f64387a867a0671fb744d29e6f800d8c67b2b",
+    "chicken.wav": "2e81e2c73c22d18ca25d5cda18e996974f860816b2d5f9d0aeab1655a15cd674",
+    "dog.wav": "1fb438901cec365e63fb7e34c0ab57d6eaf55b583c1c14f31d8ce1f7bc32f2df",
+    "crowd.wav": "85f57382898490b215801aa8f61aa52c30fd781372b662be1e270ad10c8b8720"
+  }
+}

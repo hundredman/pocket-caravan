@@ -1,0 +1,66 @@
+{
+    "checks": [
+        "transit_resin: 공급지/거리 2 이상 및 1·3·5개 거래 수수료 후 이익 확인",
+        "transit_driedfish: 공급지/거리 2 이상 및 1·3·5개 거래 수수료 후 이익 확인",
+        "중간권 등록 씬 존재"
+    ],
+    "trades": [
+        {
+            "item": "transit_resin",
+            "count": 1,
+            "cost": 8,
+            "revenue": 16,
+            "profit": 8
+        },
+        {
+            "item": "transit_resin",
+            "count": 3,
+            "cost": 24,
+            "revenue": 46,
+            "profit": 22
+        },
+        {
+            "item": "transit_resin",
+            "count": 5,
+            "cost": 41,
+            "revenue": 75,
+            "profit": 34
+        },
+        {
+            "item": "transit_resin",
+            "count": 10,
+            "cost": 86,
+            "revenue": 142,
+            "profit": 56
+        },
+        {
+            "item": "transit_driedfish",
+            "count": 1,
+            "cost": 9,
+            "revenue": 17,
+            "profit": 8
+        },
+        {
+            "item": "transit_driedfish",
+            "count": 3,
+            "cost": 27,
+            "revenue": 51,
+            "profit": 24
+        },
+        {
+            "item": "transit_driedfish",
+            "count": 5,
+            "cost": 46,
+            "revenue": 85,
+            "profit": 39
+        },
+        {
+            "item": "transit_driedfish",
+            "count": 10,
+            "cost": 96,
+            "revenue": 163,
+            "profit": 67
+        }
+    ],
+    "scope": "실제 MarketState의 초기 재고·출신 능력 없음·시간 회복 없음. 실제 이동 시간/멀티 수익 검증은 별도."
+}

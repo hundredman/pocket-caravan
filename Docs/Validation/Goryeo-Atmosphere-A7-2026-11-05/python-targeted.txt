@@ -1,0 +1,7 @@
+./Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_goryeo_life_trial.py:28: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  im=im.convert('RGBA');self.assertEqual(im.size,(32,32));self.assertLessEqual(set(im.getchannel('A').getdata()),{0,255});self.assertLessEqual(len(set(im.getdata())),10);bbox=im.getbbox();self.assertLessEqual(bbox[3]-bbox[1],16);self.assertEqual(bbox[3],30);states.append(im.tobytes())
+...
+----------------------------------------------------------------------
+Ran 4 tests in 0.626s
+
+OK

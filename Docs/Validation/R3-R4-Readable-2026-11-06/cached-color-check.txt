@@ -1,0 +1,2 @@
+Once: <color=#03410c>보수 24냥</color> · <color=#ab0814>속죄</color>
+1000 calls stable/idempotent: True

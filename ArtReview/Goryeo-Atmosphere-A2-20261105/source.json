@@ -1,0 +1,3153 @@
+{
+  "status": "review",
+  "sampleRate": 32000,
+  "channels": 2,
+  "tracks": [
+    {
+      "name": "morning",
+      "tempo": 88,
+      "durationSeconds": 43.636375,
+      "rms": 0.061974297862825684,
+      "peak": 0.2016839757806495,
+      "loopJump": 0.002209428589904118,
+      "path": "ArtReview/Goryeo-Atmosphere-A2-20261105/Native/morning.wav",
+      "score": [
+        {
+          "kind": "flute",
+          "midi": 74,
+          "beat": 0,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 76,
+          "beat": 1,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 79,
+          "beat": 2,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 0.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 57,
+          "beat": 0.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 1.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        },
+        {
+          "kind": "flute",
+          "midi": 81,
+          "beat": 4,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 79,
+          "beat": 6,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 76,
+          "beat": 7,
+          "durationBeats": 0.7,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 4.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 57,
+          "beat": 4.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 5.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        },
+        {
+          "kind": "flute",
+          "midi": 79,
+          "beat": 8,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 83,
+          "beat": 9,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 81,
+          "beat": 10,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 43,
+          "beat": 8.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 8.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 9.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        },
+        {
+          "kind": "flute",
+          "midi": 79,
+          "beat": 12,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 76,
+          "beat": 14,
+          "durationBeats": 0.7,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 74,
+          "beat": 15,
+          "durationBeats": 0.8,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 43,
+          "beat": 12.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 12.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 13.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        },
+        {
+          "kind": "flute",
+          "midi": 76,
+          "beat": 16,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 79,
+          "beat": 17,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 81,
+          "beat": 18,
+          "durationBeats": 0.8,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 79,
+          "beat": 19,
+          "durationBeats": 0.7,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 47,
+          "beat": 16.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 54,
+          "beat": 16.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 17.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        },
+        {
+          "kind": "flute",
+          "midi": 83,
+          "beat": 20,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 81,
+          "beat": 22,
+          "durationBeats": 1.2,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 47,
+          "beat": 20.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 54,
+          "beat": 20.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 21.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        },
+        {
+          "kind": "flute",
+          "midi": 79,
+          "beat": 24,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 76,
+          "beat": 25.5,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 74,
+          "beat": 27,
+          "durationBeats": 0.7,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 45,
+          "beat": 24.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 52,
+          "beat": 24.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 25.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        },
+        {
+          "kind": "flute",
+          "midi": 76,
+          "beat": 28,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 74,
+          "beat": 29.5,
+          "durationBeats": 2,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 45,
+          "beat": 28.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 52,
+          "beat": 28.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 29.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        },
+        {
+          "kind": "flute",
+          "midi": 74,
+          "beat": 32,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 76,
+          "beat": 33,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 79,
+          "beat": 34,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 32.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 57,
+          "beat": 32.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 33.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        },
+        {
+          "kind": "flute",
+          "midi": 81,
+          "beat": 36,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 79,
+          "beat": 38,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 76,
+          "beat": 39,
+          "durationBeats": 0.7,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 36.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 57,
+          "beat": 36.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 37.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        },
+        {
+          "kind": "flute",
+          "midi": 79,
+          "beat": 40,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 83,
+          "beat": 41,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 81,
+          "beat": 42,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 43,
+          "beat": 40.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 40.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 41.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        },
+        {
+          "kind": "flute",
+          "midi": 79,
+          "beat": 44,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 76,
+          "beat": 46,
+          "durationBeats": 0.7,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 74,
+          "beat": 47,
+          "durationBeats": 0.8,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 43,
+          "beat": 44.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 44.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 45.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        },
+        {
+          "kind": "flute",
+          "midi": 76,
+          "beat": 48,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 79,
+          "beat": 49,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 81,
+          "beat": 50,
+          "durationBeats": 0.8,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 79,
+          "beat": 51,
+          "durationBeats": 0.7,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 47,
+          "beat": 48.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 54,
+          "beat": 48.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 49.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        },
+        {
+          "kind": "flute",
+          "midi": 83,
+          "beat": 52,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 81,
+          "beat": 54,
+          "durationBeats": 1.2,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 47,
+          "beat": 52.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 54,
+          "beat": 52.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 53.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        },
+        {
+          "kind": "flute",
+          "midi": 79,
+          "beat": 56,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 76,
+          "beat": 57.5,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 74,
+          "beat": 59,
+          "durationBeats": 0.7,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 45,
+          "beat": 56.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 52,
+          "beat": 56.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 57.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        },
+        {
+          "kind": "flute",
+          "midi": 76,
+          "beat": 60,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "flute",
+          "midi": 74,
+          "beat": 61.5,
+          "durationBeats": 2,
+          "level": 0.25,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 45,
+          "beat": 60.0,
+          "durationBeats": 3.7,
+          "level": 0.13,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 52,
+          "beat": 60.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.13,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 61.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.13,
+          "pan": 0.4
+        }
+      ]
+    },
+    {
+      "name": "day",
+      "tempo": 104,
+      "durationSeconds": 36.9230625,
+      "rms": 0.06117873015037056,
+      "peak": 0.25673949608226154,
+      "loopJump": 0.0011031962262669185,
+      "path": "ArtReview/Goryeo-Atmosphere-A2-20261105/Native/day.wav",
+      "score": [
+        {
+          "kind": "pluck",
+          "midi": 74,
+          "beat": 0,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "flute",
+          "midi": 62,
+          "beat": 0.04,
+          "durationBeats": 1.2,
+          "level": 0.1,
+          "pan": 0.15
+        },
+        {
+          "kind": "pluck",
+          "midi": 76,
+          "beat": 1,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 79,
+          "beat": 2,
+          "durationBeats": 1.5,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 0.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 57,
+          "beat": 0.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 1.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 0,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 2,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 81,
+          "beat": 4,
+          "durationBeats": 1.5,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 79,
+          "beat": 6,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 76,
+          "beat": 7,
+          "durationBeats": 0.7,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 4.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 57,
+          "beat": 4.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 5.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 4,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 6,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 79,
+          "beat": 8,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "flute",
+          "midi": 67,
+          "beat": 8.04,
+          "durationBeats": 1.2,
+          "level": 0.1,
+          "pan": 0.15
+        },
+        {
+          "kind": "pluck",
+          "midi": 83,
+          "beat": 9,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 81,
+          "beat": 10,
+          "durationBeats": 1.5,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 43,
+          "beat": 8.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 8.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 9.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 8,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 10,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 79,
+          "beat": 12,
+          "durationBeats": 1.5,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 76,
+          "beat": 14,
+          "durationBeats": 0.7,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 74,
+          "beat": 15,
+          "durationBeats": 0.8,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 43,
+          "beat": 12.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 12.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 13.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 12,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 14,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 76,
+          "beat": 16,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "flute",
+          "midi": 64,
+          "beat": 16.04,
+          "durationBeats": 1.2,
+          "level": 0.1,
+          "pan": 0.15
+        },
+        {
+          "kind": "pluck",
+          "midi": 79,
+          "beat": 17,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 81,
+          "beat": 18,
+          "durationBeats": 0.8,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 79,
+          "beat": 19,
+          "durationBeats": 0.7,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 47,
+          "beat": 16.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 54,
+          "beat": 16.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 17.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 16,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 18,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 83,
+          "beat": 20,
+          "durationBeats": 1.5,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 81,
+          "beat": 22,
+          "durationBeats": 1.2,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 47,
+          "beat": 20.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 54,
+          "beat": 20.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 21.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 20,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 22,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 79,
+          "beat": 24,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "flute",
+          "midi": 67,
+          "beat": 24.04,
+          "durationBeats": 1.2,
+          "level": 0.1,
+          "pan": 0.15
+        },
+        {
+          "kind": "pluck",
+          "midi": 76,
+          "beat": 25.5,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 74,
+          "beat": 27,
+          "durationBeats": 0.7,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 45,
+          "beat": 24.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 52,
+          "beat": 24.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 25.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 24,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 26,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 76,
+          "beat": 28,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 74,
+          "beat": 29.5,
+          "durationBeats": 2,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 45,
+          "beat": 28.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 52,
+          "beat": 28.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 29.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 28,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 30,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 74,
+          "beat": 32,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "flute",
+          "midi": 62,
+          "beat": 32.04,
+          "durationBeats": 1.2,
+          "level": 0.1,
+          "pan": 0.15
+        },
+        {
+          "kind": "pluck",
+          "midi": 76,
+          "beat": 33,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 79,
+          "beat": 34,
+          "durationBeats": 1.5,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 32.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 57,
+          "beat": 32.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 33.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 32,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 34,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 81,
+          "beat": 36,
+          "durationBeats": 1.5,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 79,
+          "beat": 38,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 76,
+          "beat": 39,
+          "durationBeats": 0.7,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 36.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 57,
+          "beat": 36.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 37.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 36,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 38,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 79,
+          "beat": 40,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "flute",
+          "midi": 67,
+          "beat": 40.04,
+          "durationBeats": 1.2,
+          "level": 0.1,
+          "pan": 0.15
+        },
+        {
+          "kind": "pluck",
+          "midi": 83,
+          "beat": 41,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 81,
+          "beat": 42,
+          "durationBeats": 1.5,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 43,
+          "beat": 40.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 40.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 41.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 40,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 42,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 79,
+          "beat": 44,
+          "durationBeats": 1.5,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 76,
+          "beat": 46,
+          "durationBeats": 0.7,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 74,
+          "beat": 47,
+          "durationBeats": 0.8,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 43,
+          "beat": 44.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 50,
+          "beat": 44.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 45.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 44,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 46,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 76,
+          "beat": 48,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "flute",
+          "midi": 64,
+          "beat": 48.04,
+          "durationBeats": 1.2,
+          "level": 0.1,
+          "pan": 0.15
+        },
+        {
+          "kind": "pluck",
+          "midi": 79,
+          "beat": 49,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 81,
+          "beat": 50,
+          "durationBeats": 0.8,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 79,
+          "beat": 51,
+          "durationBeats": 0.7,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 47,
+          "beat": 48.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 54,
+          "beat": 48.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 49.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 48,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 50,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 83,
+          "beat": 52,
+          "durationBeats": 1.5,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 81,
+          "beat": 54,
+          "durationBeats": 1.2,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 47,
+          "beat": 52.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 54,
+          "beat": 52.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 53.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 52,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 54,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 79,
+          "beat": 56,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "flute",
+          "midi": 67,
+          "beat": 56.04,
+          "durationBeats": 1.2,
+          "level": 0.1,
+          "pan": 0.15
+        },
+        {
+          "kind": "pluck",
+          "midi": 76,
+          "beat": 57.5,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 74,
+          "beat": 59,
+          "durationBeats": 0.7,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 45,
+          "beat": 56.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 52,
+          "beat": 56.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 57.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 56,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 58,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 76,
+          "beat": 60,
+          "durationBeats": 1,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 74,
+          "beat": 61.5,
+          "durationBeats": 2,
+          "level": 0.34,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 45,
+          "beat": 60.0,
+          "durationBeats": 3.7,
+          "level": 0.16,
+          "pan": -0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 52,
+          "beat": 60.6,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.16,
+          "pan": 0
+        },
+        {
+          "kind": "pluck",
+          "midi": 59,
+          "beat": 61.2,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.16,
+          "pan": 0.4
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 60,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        },
+        {
+          "kind": "drum",
+          "midi": 0,
+          "beat": 62,
+          "durationBeats": 0.5,
+          "level": 0.07,
+          "pan": 0
+        }
+      ]
+    },
+    {
+      "name": "evening",
+      "tempo": 80,
+      "durationSeconds": 48.0,
+      "rms": 0.06137998123915173,
+      "peak": 0.23910319228482058,
+      "loopJump": 0.0001232989961378367,
+      "path": "ArtReview/Goryeo-Atmosphere-A2-20261105/Native/evening.wav",
+      "score": [
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 0,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 64,
+          "beat": 1,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 67,
+          "beat": 2,
+          "durationBeats": 1.5,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 50,
+          "beat": 0.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 57,
+          "beat": 0.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 0.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 69,
+          "beat": 4,
+          "durationBeats": 1.5,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 67,
+          "beat": 6,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 64,
+          "beat": 7,
+          "durationBeats": 0.7,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 50,
+          "beat": 4.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 57,
+          "beat": 4.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 4.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 67,
+          "beat": 8,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 71,
+          "beat": 9,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 69,
+          "beat": 10,
+          "durationBeats": 1.5,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 43,
+          "beat": 8.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 50,
+          "beat": 8.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 8.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 67,
+          "beat": 12,
+          "durationBeats": 1.5,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 64,
+          "beat": 14,
+          "durationBeats": 0.7,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 15,
+          "durationBeats": 0.8,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 43,
+          "beat": 12.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 50,
+          "beat": 12.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 12.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 64,
+          "beat": 16,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 67,
+          "beat": 17,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 69,
+          "beat": 18,
+          "durationBeats": 0.8,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 67,
+          "beat": 19,
+          "durationBeats": 0.7,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 47,
+          "beat": 16.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 54,
+          "beat": 16.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 16.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 71,
+          "beat": 20,
+          "durationBeats": 1.5,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 69,
+          "beat": 22,
+          "durationBeats": 1.2,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 47,
+          "beat": 20.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 54,
+          "beat": 20.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 20.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 67,
+          "beat": 24,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 64,
+          "beat": 25.5,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 27,
+          "durationBeats": 0.7,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 45,
+          "beat": 24.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 52,
+          "beat": 24.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 24.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 64,
+          "beat": 28,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 29.5,
+          "durationBeats": 2,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 45,
+          "beat": 28.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 52,
+          "beat": 28.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 28.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 32,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 64,
+          "beat": 33,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 67,
+          "beat": 34,
+          "durationBeats": 1.5,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 50,
+          "beat": 32.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 57,
+          "beat": 32.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 32.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 69,
+          "beat": 36,
+          "durationBeats": 1.5,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 67,
+          "beat": 38,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 64,
+          "beat": 39,
+          "durationBeats": 0.7,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 50,
+          "beat": 36.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 57,
+          "beat": 36.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 36.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 67,
+          "beat": 40,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 71,
+          "beat": 41,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 69,
+          "beat": 42,
+          "durationBeats": 1.5,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 43,
+          "beat": 40.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 50,
+          "beat": 40.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 40.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 67,
+          "beat": 44,
+          "durationBeats": 1.5,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 64,
+          "beat": 46,
+          "durationBeats": 0.7,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 47,
+          "durationBeats": 0.8,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 43,
+          "beat": 44.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 50,
+          "beat": 44.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 44.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 64,
+          "beat": 48,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 67,
+          "beat": 49,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 69,
+          "beat": 50,
+          "durationBeats": 0.8,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 67,
+          "beat": 51,
+          "durationBeats": 0.7,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 47,
+          "beat": 48.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 54,
+          "beat": 48.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 48.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 71,
+          "beat": 52,
+          "durationBeats": 1.5,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 69,
+          "beat": 54,
+          "durationBeats": 1.2,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 47,
+          "beat": 52.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 54,
+          "beat": 52.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 52.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 67,
+          "beat": 56,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 64,
+          "beat": 57.5,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 59,
+          "durationBeats": 0.7,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 45,
+          "beat": 56.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 52,
+          "beat": 56.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 56.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        },
+        {
+          "kind": "pluck",
+          "midi": 64,
+          "beat": 60,
+          "durationBeats": 1,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pluck",
+          "midi": 62,
+          "beat": 61.5,
+          "durationBeats": 2,
+          "level": 0.29,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 45,
+          "beat": 60.0,
+          "durationBeats": 3.7,
+          "level": 0.105,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 52,
+          "beat": 60.03,
+          "durationBeats": 3.3000000000000003,
+          "level": 0.105,
+          "pan": 0
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 60.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.105,
+          "pan": 0.4
+        }
+      ]
+    },
+    {
+      "name": "night",
+      "tempo": 68,
+      "durationSeconds": 56.47059375,
+      "rms": 0.06133276689212699,
+      "peak": 0.24597213167436585,
+      "loopJump": 7.856581041779456e-05,
+      "path": "ArtReview/Goryeo-Atmosphere-A2-20261105/Native/night.wav",
+      "score": [
+        {
+          "kind": "mallet",
+          "midi": 62,
+          "beat": 0,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "mallet",
+          "midi": 67,
+          "beat": 2,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 50,
+          "beat": 0.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 0.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        },
+        {
+          "kind": "mallet",
+          "midi": 69,
+          "beat": 4,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "mallet",
+          "midi": 64,
+          "beat": 7,
+          "durationBeats": 0.7,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 50,
+          "beat": 4.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 4.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        },
+        {
+          "kind": "mallet",
+          "midi": 67,
+          "beat": 8,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "mallet",
+          "midi": 69,
+          "beat": 10,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 43,
+          "beat": 8.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 8.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        },
+        {
+          "kind": "mallet",
+          "midi": 67,
+          "beat": 12,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "mallet",
+          "midi": 62,
+          "beat": 15,
+          "durationBeats": 0.8,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 43,
+          "beat": 12.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 12.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        },
+        {
+          "kind": "mallet",
+          "midi": 64,
+          "beat": 16,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "mallet",
+          "midi": 69,
+          "beat": 18,
+          "durationBeats": 0.8,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "mallet",
+          "midi": 67,
+          "beat": 19,
+          "durationBeats": 0.7,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 47,
+          "beat": 16.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 16.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        },
+        {
+          "kind": "mallet",
+          "midi": 71,
+          "beat": 20,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 47,
+          "beat": 20.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 20.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        },
+        {
+          "kind": "mallet",
+          "midi": 67,
+          "beat": 24,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "mallet",
+          "midi": 62,
+          "beat": 27,
+          "durationBeats": 0.7,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 45,
+          "beat": 24.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 24.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        },
+        {
+          "kind": "mallet",
+          "midi": 64,
+          "beat": 28,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 45,
+          "beat": 28.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 28.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        },
+        {
+          "kind": "mallet",
+          "midi": 62,
+          "beat": 32,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "mallet",
+          "midi": 67,
+          "beat": 34,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 50,
+          "beat": 32.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 32.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        },
+        {
+          "kind": "mallet",
+          "midi": 69,
+          "beat": 36,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "mallet",
+          "midi": 64,
+          "beat": 39,
+          "durationBeats": 0.7,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 50,
+          "beat": 36.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 36.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        },
+        {
+          "kind": "mallet",
+          "midi": 67,
+          "beat": 40,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "mallet",
+          "midi": 69,
+          "beat": 42,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 43,
+          "beat": 40.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 40.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        },
+        {
+          "kind": "mallet",
+          "midi": 67,
+          "beat": 44,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "mallet",
+          "midi": 62,
+          "beat": 47,
+          "durationBeats": 0.8,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 43,
+          "beat": 44.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 44.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        },
+        {
+          "kind": "mallet",
+          "midi": 64,
+          "beat": 48,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "mallet",
+          "midi": 69,
+          "beat": 50,
+          "durationBeats": 0.8,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "mallet",
+          "midi": 67,
+          "beat": 51,
+          "durationBeats": 0.7,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 47,
+          "beat": 48.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 48.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        },
+        {
+          "kind": "mallet",
+          "midi": 71,
+          "beat": 52,
+          "durationBeats": 1.5,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 47,
+          "beat": 52.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 62,
+          "beat": 52.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        },
+        {
+          "kind": "mallet",
+          "midi": 67,
+          "beat": 56,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "mallet",
+          "midi": 62,
+          "beat": 59,
+          "durationBeats": 0.7,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 45,
+          "beat": 56.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 56.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        },
+        {
+          "kind": "mallet",
+          "midi": 64,
+          "beat": 60,
+          "durationBeats": 1,
+          "level": 0.25,
+          "pan": -0.12
+        },
+        {
+          "kind": "pad",
+          "midi": 45,
+          "beat": 60.0,
+          "durationBeats": 3.7,
+          "level": 0.085,
+          "pan": -0.4
+        },
+        {
+          "kind": "pad",
+          "midi": 59,
+          "beat": 60.06,
+          "durationBeats": 2.9000000000000004,
+          "level": 0.085,
+          "pan": 0.4
+        }
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "kind": "morning",
+      "startSeconds": 0.0,
+      "durationSeconds": 14
+    },
+    {
+      "kind": "day",
+      "startSeconds": 14.5,
+      "durationSeconds": 14
+    },
+    {
+      "kind": "evening",
+      "startSeconds": 29.0,
+      "durationSeconds": 14
+    },
+    {
+      "kind": "night",
+      "startSeconds": 43.5,
+      "durationSeconds": 14
+    }
+  ],
+  "timeSlots": [
+    "05:00-10:00",
+    "10:00-17:00",
+    "17:00-20:00",
+    "20:00-05:00"
+  ],
+  "policy": "Town maps: four original time arrangements. Four transit road maps keep existing road clip; danger keeps existing danger clip. Two-source fade, mute/music setting respected. No shared AudioManager edits.",
+  "provenance": "Original score and deterministic synthesized instruments in Tools/Atmosphere/goryeo_time_music_trial.py; no external recordings, no copied regional code or music. Instrument descriptions are synthesized timbre intentions, not recordings of traditional instruments."
+}

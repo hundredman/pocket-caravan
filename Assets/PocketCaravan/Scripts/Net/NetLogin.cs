@@ -274,7 +274,7 @@ namespace PocketCaravan
         void Text(Rect r, string s, Color32 c, GUIStyle st, TextAnchor a = TextAnchor.MiddleLeft)
         {
             st.alignment = a;
-            st.normal.textColor = light ? (Color)UIStyle.Lin(c) : (Color)c;
+            st.normal.textColor = UIStyle.Lin(c);
             GUI.Label(r, s, st);
         }
 
@@ -304,7 +304,7 @@ namespace PocketCaravan
             else
             {
                 CuteUI.Box(r, 5, CuteUI.White, box.Active ? CuteUI.Interact : CuteUI.Line, box.Active ? 2 : 1);
-                box.TextColor = (Color)CuteUI.Text;
+                box.TextColor = UIStyle.Lin(CuteUI.Text);
                 box.Draw(new Rect(r.x + 4, r.y, r.width - 6, r.height), plainField);
             }
         }

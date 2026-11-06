@@ -1,0 +1,10 @@
+{
+  "status": "approved",
+  "runtimeChecks": 221,
+  "nativeCaptures": 13,
+  "sheet": "review-sheet.png",
+  "theme": "existing approved CuteUI paper",
+  "remoteIntegrationChanged": false,
+  "userApproval": "이대로 승인",
+  "approvalDate": "2026-11-07"
+}

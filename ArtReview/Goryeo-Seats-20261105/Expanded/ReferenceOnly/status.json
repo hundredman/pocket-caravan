@@ -1,0 +1,6 @@
+{
+  "status": "discarded",
+  "reason": "원본과 다른 얼굴·옷. 요청문에도 실제 원본(주황 상의/청록 허리띠)과 다른 green scarf/pale tunic을 적어 정정했다.",
+  "runtimeUse": false,
+  "method": "built-in imagegen; pose reference only; native redraw in Aseprite"
+}

@@ -1,0 +1,43 @@
+{
+    "complete": true,
+    "error": "",
+    "scheduleCases": 16425,
+    "entries": [
+        "sceneLoaded transit_central_approach time=180.0013 enabled=False expected=False",
+        "afterStart requested=180 actual=180.0013 enabled=False active=False",
+        "sceneLoaded transit_central_approach time=396 enabled=False expected=False",
+        "afterStart requested=396 actual=396 enabled=False active=False",
+        "sceneLoaded transit_central_approach time=204 enabled=False expected=False",
+        "afterStart requested=204 actual=204 enabled=False active=False",
+        "sceneLoaded transit_central_approach time=228 enabled=True expected=True",
+        "afterStart requested=228 actual=228 enabled=True active=True",
+        "sceneLoaded transit_central_approach time=228 enabled=True expected=True",
+        "afterStart requested=228 actual=228 enabled=True active=True"
+    ],
+    "checks": [
+        "bootstrap saves off",
+        "8hour50percent unchanged",
+        "365days x3windows x3offsets x5schedule regression cases",
+        "unmanaged unchanged",
+        "invalid hour fails closed",
+        "no log on nonstorm despite positive oldroll Clear",
+        "actual480x270 Clear-open",
+        "no log on nonstorm despite positive oldroll Rain",
+        "actual480x270 Rain-open",
+        "monsoon still requires original50percent roll",
+        "initialization corrects serialized true even if scene schedule callback was skipped",
+        "actual storm log installed",
+        "existing free3second action",
+        "approved local corridor blocked during monsoon",
+        "actual480x270 Monsoon-blocked",
+        "single actor can approach from one side",
+        "start clearing alone",
+        "not cleared before3seconds",
+        "clear3seconds restores path",
+        "same visit resolved remains after schedule apply",
+        "actual480x270 Monsoon-cleared",
+        "same original window can recur on new visit, existing semantics",
+        "money/cargo unchanged",
+        "final saves off"
+    ]
+}

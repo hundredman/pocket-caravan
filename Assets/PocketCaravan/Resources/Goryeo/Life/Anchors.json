@@ -1,0 +1,448 @@
+{
+    "status": "approved",
+    "maps": [
+        {
+            "id": "Naru",
+            "w": 88,
+            "h": 84,
+            "points": [
+                {
+                    "kind": "crowd",
+                    "reason": "existing market object, daytime only",
+                    "x": 34,
+                    "y": 59,
+                    "startHour": 8,
+                    "endHour": 19,
+                    "radius": 12.0,
+                    "level": 0.3199999928474426,
+                    "interval": 0.0
+                },
+                {
+                    "kind": "bird",
+                    "reason": "existing rice field, occasional birds",
+                    "x": 40,
+                    "y": 74,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 22.0
+                },
+                {
+                    "kind": "chicken",
+                    "reason": "yard ambience near existing village; A7 animal anchor candidate",
+                    "x": 26,
+                    "y": 54,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 26.0
+                }
+            ]
+        },
+        {
+            "id": "Gaegyeong",
+            "w": 72,
+            "h": 76,
+            "points": [
+                {
+                    "kind": "crowd",
+                    "reason": "existing market object, daytime only",
+                    "x": 35,
+                    "y": 30,
+                    "startHour": 8,
+                    "endHour": 19,
+                    "radius": 12.0,
+                    "level": 0.3199999928474426,
+                    "interval": 0.0
+                },
+                {
+                    "kind": "bird",
+                    "reason": "existing rice field, occasional birds",
+                    "x": 18,
+                    "y": 7,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 22.0
+                },
+                {
+                    "kind": "dog",
+                    "reason": "yard ambience near existing village; A7 animal anchor candidate",
+                    "x": 27,
+                    "y": 25,
+                    "startHour": 5,
+                    "endHour": 21,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 44.0
+                }
+            ]
+        },
+        {
+            "id": "Dakmok",
+            "w": 93,
+            "h": 80,
+            "points": [
+                {
+                    "kind": "crowd",
+                    "reason": "existing market object, daytime only",
+                    "x": 34,
+                    "y": 37,
+                    "startHour": 8,
+                    "endHour": 19,
+                    "radius": 12.0,
+                    "level": 0.3199999928474426,
+                    "interval": 0.0
+                },
+                {
+                    "kind": "bird",
+                    "reason": "existing reachable grass clearing",
+                    "x": 42,
+                    "y": 30,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 22.0
+                },
+                {
+                    "kind": "dog",
+                    "reason": "yard ambience near existing village; A7 animal anchor candidate",
+                    "x": 26,
+                    "y": 32,
+                    "startHour": 5,
+                    "endHour": 21,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 44.0
+                }
+            ]
+        },
+        {
+            "id": "goryeo_songak",
+            "w": 74,
+            "h": 84,
+            "points": [
+                {
+                    "kind": "crowd",
+                    "reason": "existing market object, daytime only",
+                    "x": 43,
+                    "y": 29,
+                    "startHour": 8,
+                    "endHour": 19,
+                    "radius": 12.0,
+                    "level": 0.3199999928474426,
+                    "interval": 0.0
+                },
+                {
+                    "kind": "bird",
+                    "reason": "existing rice field, occasional birds",
+                    "x": 19,
+                    "y": 26,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 22.0
+                },
+                {
+                    "kind": "dog",
+                    "reason": "yard ambience near existing village; A7 animal anchor candidate",
+                    "x": 35,
+                    "y": 24,
+                    "startHour": 5,
+                    "endHour": 21,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 44.0
+                }
+            ]
+        },
+        {
+            "id": "goryeo_jangdan",
+            "w": 61,
+            "h": 98,
+            "points": [
+                {
+                    "kind": "crowd",
+                    "reason": "existing market object, daytime only",
+                    "x": 28,
+                    "y": 62,
+                    "startHour": 8,
+                    "endHour": 19,
+                    "radius": 12.0,
+                    "level": 0.3199999928474426,
+                    "interval": 0.0
+                },
+                {
+                    "kind": "bird",
+                    "reason": "existing rice field, occasional birds",
+                    "x": 43,
+                    "y": 84,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 22.0
+                },
+                {
+                    "kind": "chicken",
+                    "reason": "yard ambience near existing village; A7 animal anchor candidate",
+                    "x": 20,
+                    "y": 57,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 26.0
+                },
+                {
+                    "kind": "cow",
+                    "reason": "field edge, occasional distant cow; A7 anchor candidate",
+                    "x": 32,
+                    "y": 80,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 40.0
+                }
+            ]
+        },
+        {
+            "id": "transit_woodtown",
+            "w": 87,
+            "h": 69,
+            "points": [
+                {
+                    "kind": "crowd",
+                    "reason": "existing market object, daytime only",
+                    "x": 39,
+                    "y": 39,
+                    "startHour": 8,
+                    "endHour": 19,
+                    "radius": 12.0,
+                    "level": 0.3199999928474426,
+                    "interval": 0.0
+                },
+                {
+                    "kind": "bird",
+                    "reason": "existing reachable grass clearing",
+                    "x": 47,
+                    "y": 33,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 22.0
+                },
+                {
+                    "kind": "dog",
+                    "reason": "yard ambience near existing village; A7 animal anchor candidate",
+                    "x": 31,
+                    "y": 34,
+                    "startHour": 5,
+                    "endHour": 21,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 44.0
+                }
+            ]
+        },
+        {
+            "id": "transit_ferry",
+            "w": 80,
+            "h": 55,
+            "points": [
+                {
+                    "kind": "crowd",
+                    "reason": "existing market object, daytime only",
+                    "x": 34,
+                    "y": 29,
+                    "startHour": 8,
+                    "endHour": 19,
+                    "radius": 12.0,
+                    "level": 0.3199999928474426,
+                    "interval": 0.0
+                },
+                {
+                    "kind": "bird",
+                    "reason": "existing reachable grass clearing",
+                    "x": 47,
+                    "y": 28,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 22.0
+                },
+                {
+                    "kind": "dog",
+                    "reason": "yard ambience near existing village; A7 animal anchor candidate",
+                    "x": 26,
+                    "y": 24,
+                    "startHour": 5,
+                    "endHour": 21,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 44.0
+                }
+            ]
+        },
+        {
+            "id": "transit_southport",
+            "w": 86,
+            "h": 68,
+            "points": [
+                {
+                    "kind": "crowd",
+                    "reason": "existing market object, daytime only",
+                    "x": 33,
+                    "y": 26,
+                    "startHour": 8,
+                    "endHour": 19,
+                    "radius": 12.0,
+                    "level": 0.3199999928474426,
+                    "interval": 0.0
+                },
+                {
+                    "kind": "bird",
+                    "reason": "existing reachable grass clearing",
+                    "x": 48,
+                    "y": 34,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 22.0
+                },
+                {
+                    "kind": "dog",
+                    "reason": "yard ambience near existing village; A7 animal anchor candidate",
+                    "x": 25,
+                    "y": 21,
+                    "startHour": 5,
+                    "endHour": 21,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 44.0
+                }
+            ]
+        },
+        {
+            "id": "transit_crossroads",
+            "w": 92,
+            "h": 80,
+            "points": [
+                {
+                    "kind": "crowd",
+                    "reason": "existing market object, daytime only",
+                    "x": 44,
+                    "y": 43,
+                    "startHour": 8,
+                    "endHour": 19,
+                    "radius": 12.0,
+                    "level": 0.3199999928474426,
+                    "interval": 0.0
+                },
+                {
+                    "kind": "bird",
+                    "reason": "existing reachable grass clearing",
+                    "x": 49,
+                    "y": 37,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 22.0
+                },
+                {
+                    "kind": "dog",
+                    "reason": "yard ambience near existing village; A7 animal anchor candidate",
+                    "x": 36,
+                    "y": 38,
+                    "startHour": 5,
+                    "endHour": 21,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 44.0
+                }
+            ]
+        },
+        {
+            "id": "transit_wetroad",
+            "w": 78,
+            "h": 64,
+            "points": [
+                {
+                    "kind": "bird",
+                    "reason": "existing reachable grass clearing",
+                    "x": 42,
+                    "y": 30,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 22.0
+                }
+            ]
+        },
+        {
+            "id": "transit_pass",
+            "w": 65,
+            "h": 68,
+            "points": [
+                {
+                    "kind": "bird",
+                    "reason": "existing reachable grass clearing",
+                    "x": 36,
+                    "y": 33,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 22.0
+                }
+            ]
+        },
+        {
+            "id": "transit_central_approach",
+            "w": 71,
+            "h": 87,
+            "points": [
+                {
+                    "kind": "bird",
+                    "reason": "existing reachable grass clearing",
+                    "x": 39,
+                    "y": 44,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 22.0
+                }
+            ]
+        },
+        {
+            "id": "transit_south_inland",
+            "w": 67,
+            "h": 73,
+            "points": [
+                {
+                    "kind": "bird",
+                    "reason": "existing reachable grass clearing",
+                    "x": 37,
+                    "y": 36,
+                    "startHour": 5,
+                    "endHour": 19,
+                    "radius": 14.0,
+                    "level": 0.44999998807907107,
+                    "interval": 22.0
+                }
+            ]
+        }
+    ]
+}

@@ -26,6 +26,19 @@ namespace PocketCaravan
         public float finalDeadline;   // 이때가 지나면 실패
         public float condition = 1f;  // 짐 상태 0~1
         public bool dropped;          // 지금 길에 떨어져 있음
+        // R4 속죄 의뢰: 평판이 마이너스인 단위만 연다. 보증금은 수락 때 내고 성공하면 돌려받는다.
+        public bool atonement;
+        public int deposit;
+        public int atonementScope;    // ReputationScope 값
+        public string atonementTarget;
+
+        public void ValidateRecovery()
+        {
+            if (!atonement) return; // Old ordinary contracts have none of the additive R4 fields.
+            if (deposit <= 0 || reward != 0 || minCredit != 0 || (atonementScope != 0 && atonementScope != 1)
+                || string.IsNullOrWhiteSpace(atonementTarget))
+                throw new System.IO.InvalidDataException("속죄 의뢰의 보증금/평판 대상이 올바르지 않습니다.");
+        }
 
         public float Window => Mathf.Max(1f, deadline - acceptedAt);
         public bool Premium => minCredit > 0;
