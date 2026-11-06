@@ -1,0 +1,6 @@
+{
+  "reference": "previous modal QA backup",
+  "files": 9,
+  "changedSinceReference": 0,
+  "operation": "read-only field audit; no Unity Play or save writes"
+}

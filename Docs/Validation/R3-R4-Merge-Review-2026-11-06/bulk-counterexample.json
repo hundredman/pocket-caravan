@@ -1,0 +1,21 @@
+{
+  "town": "naru",
+  "item": "grain",
+  "day": 1,
+  "requested": 100,
+  "actual": 1,
+  "normalChance": 0.6,
+  "bulkChance": 0.65000004,
+  "normalOutcome": "Refused",
+  "requestedOutcome": "Success",
+  "dealAppliesToSameItemAfterQuantityChange": true,
+  "dealFields": [
+    "town",
+    "item",
+    "selling",
+    "day",
+    "discount",
+    "strength"
+  ],
+  "limitation": "Actual original C# rule source; quantity/affordability is supplied as a caller scenario. Unity UI/Market.Preview is not executed here."
+}

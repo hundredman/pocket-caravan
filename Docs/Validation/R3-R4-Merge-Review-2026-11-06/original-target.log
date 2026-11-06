@@ -1,0 +1,5 @@
+/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/pocket-r3-r4-review-epfa_n_w/Tools/Integration/StandingProbe/StandingProbe.csproj : error NU1100: 'net8.0'에 대해 'Microsoft.NETCore.App.Ref (= 8.0.31)'을(를) 확인할 수 없습니다.
+/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/pocket-r3-r4-review-epfa_n_w/Tools/Integration/StandingProbe/StandingProbe.csproj : error NU1100: 'net8.0'에 대해 'Microsoft.AspNetCore.App.Ref (= 8.0.31)'을(를) 확인할 수 없습니다.
+/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/pocket-r3-r4-review-epfa_n_w/Tools/Integration/StandingProbe/StandingProbe.csproj : error NU1100: 'net8.0'에 대해 'Microsoft.NETCore.App.Host.osx-arm64 (= 8.0.31)'을(를) 확인할 수 없습니다.
+
+빌드하지 못했습니다. 빌드 오류를 수정하고 다시 실행하세요.

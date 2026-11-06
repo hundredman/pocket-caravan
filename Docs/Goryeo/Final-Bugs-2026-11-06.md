@@ -29,6 +29,8 @@ ContractBoard.OnGUI는 높이310·목록202를 고정해, 고려 기본 화면48
 
 git merge-tree --write-tree HEAD claude/r3-r4로 작업 폴더/인덱스를 건드리지 않는 병합 미리보기를 했다. 최초 내용 충돌은 TownMarket.cs, Docs/Plan.md, Docs/WorkLog.md였다. 승인 게시판 레이아웃을 반영한 뒤 다시 미리보기하니 ContractBoard.cs도 충돌한다(Docs/Validation/Goryeo-Board-Binding-2026-11-06/r3-r4-merge-preview.txt). 실제 병합은 하지 않았다. 단순 HEAD..옛브랜치 diff의 삭제 목록을 실제 병합 삭제 결과로 해석하지 않는다.
 
+추가 [Codex 병합 전 코드 검토](R3-R4-Merge-Review-2026-11-06.md)에서 원본 규칙56검사/대량 보너스 반례와 검사 환경 문제를 확인했다. 실제 Claude 검토는 아직이며, 아래 기본 순서와 함께 그 검토서의 수량 연결·저장 실패·SDK 보완을 확인해야 한다.
+
 Claude 검토 순서:
 
 1. 현재 일괄 거래/견적 일치 검사·상점→장부 전환·지역 UI 가독성을 유지하면서 R3 가격/잠금과 R4 회복/게시판 처리를 결합한다. 옛 TownMarket 전체로 덮어쓰지 않는다.
