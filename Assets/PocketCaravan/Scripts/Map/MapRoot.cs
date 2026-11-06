@@ -45,6 +45,8 @@ namespace PocketCaravan
             var dressing = GetComponent<VillageDressing>();
             if (dressing != null && dressing.Blocks(c)) return false;
             if (Interactable.BlockerAt(c) != null) return false;
+            var fire=GetComponent<GoryeoFireFootprint>();
+            if(fire!=null&&fire.Blocks(c,actor))return false;
             var obstacles=GetComponent<ObstacleField>();
             if(obstacles!=null && obstacles.Blocks(c,actor))return false;
             return true;

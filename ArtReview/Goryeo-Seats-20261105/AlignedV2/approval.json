@@ -1,0 +1,42 @@
+{
+  "status": "approved",
+  "userQuote": "좋다.",
+  "date": "2026-11-06",
+  "scope": "AlignedV2 네 출신 앉기 그림·앞서 제시한 쉼터 세 자리 본편 연결. 모닥불 움직임은 별도 승인 유지",
+  "sourceSha256": "ceda6673b30f7280557a0a05393e310a7a1c07f7412422ae60a18e0e1ffe582b",
+  "art": [
+    {
+      "file": "ArtReview/Goryeo-Seats-20261105/AlignedV2/goryeo-seated-front.png",
+      "rgbaSha256": "9d65423fd6d44e3545c2a2e7d3890326c1d2d750a9a2de0623157e8f61244c86"
+    },
+    {
+      "file": "ArtReview/Goryeo-Seats-20261105/AlignedV2/venice-seated-front.png",
+      "rgbaSha256": "da5fd5785d3cb7eee9bc626d24720eb278d0ca30e560d5761570c52746702808"
+    },
+    {
+      "file": "ArtReview/Goryeo-Seats-20261105/AlignedV2/viking-seated-front.png",
+      "rgbaSha256": "e16a993d38f6c417342e380088fdbc5a522cd9f1912147a7b2b8dc94cc178ce8"
+    },
+    {
+      "file": "ArtReview/Goryeo-Seats-20261105/AlignedV2/arabia-seated-front.png",
+      "rgbaSha256": "28ee97be265abca760c9226c92a5824274e25535a88f5d89bcb3311b536b3da5"
+    },
+    {
+      "file": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/camp_12_5.png",
+      "rgbaSha256": "0d3bb3b6a17873be07bb146581e5873ac487db42cb3786d53e524b6e0d4980c7"
+    },
+    {
+      "file": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/camp_13_5.png",
+      "rgbaSha256": "e055249f02094839e852ced03364eccd399b3c0ef6c2c172a83fd07ae89cf794"
+    },
+    {
+      "file": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/camp_12_6.png",
+      "rgbaSha256": "6b80c40c7c1b1eac38599753eeb14d092e978e5259ad158309a042c9c9f22f6f"
+    },
+    {
+      "file": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/camp_13_6.png",
+      "rgbaSha256": "ffde4343bd339677b03affc3acf56ff612992b4cd1872762ddfcf548a9e07191"
+    }
+  ],
+  "reviewCommit": "b54f8deb4"
+}

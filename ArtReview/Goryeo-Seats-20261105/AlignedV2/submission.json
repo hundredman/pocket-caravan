@@ -1,5 +1,5 @@
 {
-  "status": "review",
+  "status": "approved",
   "production": false,
   "supersedes": "Expanded v1 and original tanuki seated trial",
   "userFeedback": "너구리, 고양이, 순록이 앉아 있을때 삐뚤해보이고 사막여우는 앉은 것 같아 보이지 않아.",
@@ -128,5 +128,6 @@
       "foldedKnees": true,
       "nativeMethod": "Aseprite native redraw, no new AI image"
     }
-  }
+  },
+  "approvedBy": "사용자 2026-11-06 좋다."
 }

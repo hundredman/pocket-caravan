@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PocketCaravan
 {
-    /// <summary>ATM-B3 opt-in review only. The motor remains on safe ground; only the body sits on the furniture.</summary>
+    /// <summary>Approved seating or explicit editor review. Physical feet remain on safe ground.</summary>
     [DefaultExecutionOrder(1200)]
     public sealed class GoryeoSeat : Interactable
     {
@@ -14,6 +14,7 @@ namespace PocketCaravan
         public Site site;
         public Sprite seatedSprite;
         public Art[] art;
+        public bool approvedForProduction;
         static GoryeoSeat current;
         PlayerController actor;
         OriginData seatedOrigin;
@@ -34,9 +35,9 @@ namespace PocketCaravan
         bool Safe(PlayerController pc)
         {
             var map=MapRoot.Current;
-            return pc!=null && pc.Motor!=null && pc.anim!=null && site!=null &&
-                map!=null && map.previewOnly && map.mapId==site.mapId && gameObject.scene==map.gameObject.scene &&
-                GameManager.I!=null && !GameManager.I.AutosaveEnabled && !GameManager.I.IsTravelling &&
+            return pc!=null && pc.isActiveAndEnabled && pc.Motor!=null && pc.anim!=null && site!=null &&
+                map!=null && map.mapId==site.mapId && gameObject.scene==map.gameObject.scene &&
+                GameManager.I!=null && (map.previewOnly?!GameManager.I.AutosaveEnabled:approvedForProduction&&map.mapId=="transit_central_approach") && !GameManager.I.IsTravelling &&
                 PoseFor(GameManager.I.Player.origin)!=null && (actor==null||GameManager.I.Player.origin==seatedOrigin) &&
                 !UIState.Blocking && map.IsWalkable(Cell,pc.Motor) && MapExit.At(Cell)==null &&
                 Vector2.Distance(pc.transform.position,transform.position)<=pc.talkRange;
@@ -81,7 +82,7 @@ namespace PocketCaravan
         }
         void LateUpdate()
         {
-            if(actor==null)return;
+            if(actor==null){if(current==this)Stand();return;}
             if(!Safe(actor)){Stand();return;}
             actor.anim.transform.localPosition=bodyRest+Vector3.up*site.lift;
             actor.anim.GetComponent<SpriteRenderer>().sprite=activePose;
@@ -89,6 +90,56 @@ namespace PocketCaravan
         protected override void OnDisable(){Stand();base.OnDisable();}
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void ResetSession()=>current=null;
+        static bool ValidArt(Art[] drawings)
+        {
+            if(drawings==null||drawings.Length==0)return false;
+            var ids=new System.Collections.Generic.HashSet<string>();
+            foreach(var drawing in drawings)
+                if(drawing==null||drawing.sprite==null||!ids.Add(drawing.originId)||
+                   (drawing.originId!="goryeo"&&drawing.originId!="venice"&&drawing.originId!="viking"&&drawing.originId!="arabia"))return false;
+            return true;
+        }
+        public static int InstallApproved(Config config,Art[] drawings,Sprite[] fire)
+        {
+            var map=MapRoot.Current;var pc=PlayerController.Instance;var road=map!=null?map.GetComponent<RoadGrid>():null;
+            if(map==null||map.previewOnly||map.mapId!="transit_central_approach"||road==null||road.width!=71||road.height!=87||
+               pc==null||pc.gameObject.scene!=map.gameObject.scene||config==null||config.status!="approved"||config.seats==null||config.seats.Length!=3||
+               !ValidArt(drawings)||drawings.Length!=4||fire==null||fire.Length!=4)return 0;
+            if(map.GetComponentsInChildren<GoryeoSeat>(true).Length>0)return 0;
+            foreach(var piece in fire)if(piece==null)return 0;
+            var ids=new System.Collections.Generic.HashSet<string>();
+            foreach(var s in config.seats)
+            {
+                if(s==null||s.mapId!=map.mapId||!ids.Add(s.id)||s.x<0||s.x>=road.width||s.y<0||s.y>=road.height||
+                   !map.IsWalkable(new Vector3Int(s.x,road.height-s.y-1,0))||MapExit.At(new Vector3Int(s.x,road.height-s.y-1,0))!=null)return 0;
+                if(s.fire)for(int y=0;y<2;y++)for(int x=0;x<2;x++)
+                {var c=new Vector3Int(s.propX+x,road.height-s.propY-y-1,0);if(!map.IsWalkable(c)||MapExit.At(c)!=null)return 0;}
+            }
+            foreach(var s in config.seats)Create(map,s,drawings,fire,true);
+            return config.seats.Length;
+        }
+        static GoryeoSeat Create(MapRoot map,Site site,Art[] drawings,Sprite[] fire,bool approved)
+        {
+            int h=map.GetComponent<RoadGrid>().height;
+            var go=new GameObject("Goryeo seat "+site.id);go.transform.SetParent(map.transform,false);
+            go.transform.position=map.CellCenter(new Vector3Int(site.x,h-site.y-1,0))-(Vector3)PlayerController.Instance.Motor.feetOffset;
+            var seat=go.AddComponent<GoryeoSeat>();seat.blocksMovement=false;seat.site=site;seat.art=(Art[])drawings.Clone();seat.approvedForProduction=approved;
+            foreach(var drawing in drawings)if(drawing.originId=="goryeo")seat.seatedSprite=drawing.sprite;
+            if(site.fire)
+            {
+                for(int y=0;y<2;y++)for(int x=0;x<2;x++)
+                {
+                    var part=new GameObject("Whole campfire module");part.transform.SetParent(go.transform,false);
+                    part.transform.position=map.CellCenter(new Vector3Int(site.propX+x,h-site.propY-y-1,0));
+                    var sr=part.AddComponent<SpriteRenderer>();sr.sprite=fire[y*2+x];sr.sortingOrder=6;
+                }
+                var center=map.CellCenter(new Vector3Int(site.propX,h-site.propY-1,0))+new Vector3(.5f,-.5f,0);
+                go.AddComponent<GoryeoCampfire>().Configure(map,center,approved);
+                var field=map.GetComponent<GoryeoFireFootprint>();if(field==null)field=map.gameObject.AddComponent<GoryeoFireFootprint>();
+                field.Configure(seat,site.propX,h-site.propY-2,PlayerController.Instance.Motor);
+            }
+            return seat;
+        }
 #if UNITY_EDITOR
         public static int InstallReview(Config config,Sprite pose)
             =>InstallReview(config,new[]{new Art{originId="goryeo",sprite=pose}});
@@ -98,11 +149,9 @@ namespace PocketCaravan
             if(map==null||!map.previewOnly||GameManager.I==null||GameManager.I.AutosaveEnabled||
                config==null||config.status!="review"||config.originId!="goryeo"||drawings==null||drawings.Length==0)
                 throw new InvalidOperationException("Explicit preview with saves OFF required");
-            var ids=new System.Collections.Generic.HashSet<string>();
-            foreach(var drawing in drawings)
-                if(drawing==null||drawing.sprite==null||!ids.Add(drawing.originId)||
-                   (drawing.originId!="goryeo"&&drawing.originId!="venice"&&drawing.originId!="viking"&&drawing.originId!="arabia"))
-                    throw new ArgumentException("Invalid or duplicate native pose");
+            if(!ValidArt(drawings))throw new ArgumentException("Invalid or duplicate native pose");
+            var fire=new Sprite[4];for(int y=0;y<2;y++)for(int x=0;x<2;x++)
+            {fire[y*2+x]=UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/PocketCaravan/Art/NinjaAdventure/Tiles/camp_"+(12+x)+"_"+(5+y)+".png");if(fire[y*2+x]==null)throw new InvalidOperationException("Missing fire module");}
             foreach(var old in FindObjectsByType<GoryeoSeat>(FindObjectsSortMode.None))DestroyImmediate(old.gameObject);
             int count=0;
             foreach(var s in config.seats)
@@ -110,24 +159,7 @@ namespace PocketCaravan
                 if(s.mapId!=map.mapId)continue;
                 var cell=new Vector3Int(s.x,RoadGrid.Current.height-s.y-1,0);
                 if(!map.IsWalkable(cell)||MapExit.At(cell)!=null)continue;
-                var go=new GameObject("Review seat "+s.id);go.transform.SetParent(map.transform,false);
-                go.transform.position=map.CellCenter(cell)-(Vector3)PlayerController.Instance.Motor.feetOffset;
-                var seat=go.AddComponent<GoryeoSeat>();seat.blocksMovement=false;seat.site=s;seat.art=(Art[])drawings.Clone();
-                foreach(var drawing in drawings)if(drawing.originId=="goryeo")seat.seatedSprite=drawing.sprite;
-                count++;
-                if(s.fire)
-                {
-                    for(int y=0;y<2;y++)for(int x=0;x<2;x++)
-                    {
-                        var piece=UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/PocketCaravan/Art/NinjaAdventure/Tiles/camp_"+(12+x)+"_"+(5+y)+".png");
-                        if(piece==null)throw new InvalidOperationException("Missing original campfire module");
-                        var part=new GameObject("Whole campfire module");part.transform.SetParent(go.transform,false);
-                        part.transform.position=map.CellCenter(new Vector3Int(s.propX+x,RoadGrid.Current.height-s.propY-y-1,0));
-                        var renderer=part.AddComponent<SpriteRenderer>();renderer.sprite=piece;renderer.sortingOrder=6;
-                    }
-                    var center=map.CellCenter(new Vector3Int(s.propX,RoadGrid.Current.height-s.propY-1,0))+new Vector3(.5f,-.5f,0);
-                    go.AddComponent<GoryeoCampfire>().Configure(map,center);
-                }
+                Create(map,s,drawings,fire,false);count++;
             }
             return count;
         }

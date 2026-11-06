@@ -3,7 +3,7 @@ using UnityEngine.Rendering.Universal;
 
 namespace PocketCaravan
 {
-    /// <summary>Explicit ATM-B3 preview: whole flame frames, three pooled embers and one soft local light.</summary>
+    /// <summary>Approved or explicit-review campfire: whole frames, three pooled embers and one soft local light.</summary>
     public sealed class GoryeoCampfire : MonoBehaviour
     {
         public const int EmberLimit=3;
@@ -17,6 +17,7 @@ namespace PocketCaravan
         Texture2D dotTexture;
         Light2D glow;
         float elapsed;
+        bool approvedForProduction;
         public int FrameIndex { get; private set; }
         public bool Visible { get; private set; }
         public float LightIntensity=>glow!=null&&glow.enabled?glow.intensity:0;
@@ -24,10 +25,10 @@ namespace PocketCaravan
         public Vector3 Center=>center;
         public int VisibleEmbers { get { int n=0;foreach(var e in embers)if(e!=null&&e.enabled)n++;return n; } }
 
-        public void Configure(MapRoot owner,Vector3 at)
+        public void Configure(MapRoot owner,Vector3 at,bool approved=false)
         {
             if(owned!=null)throw new System.InvalidOperationException("Campfire already configured");
-            map=owner;center=at;
+            map=owner;center=at;approvedForProduction=approved;
             owned=new GameObject("Campfire motion review").transform;owned.SetParent(transform,false);
             owned.position=center;
             for(int i=0;i<frames.Length;i++)
@@ -55,8 +56,8 @@ namespace PocketCaravan
             var renderer=child.AddComponent<SpriteRenderer>();renderer.sortingOrder=order;return renderer;
         }
         static Vector3 Snap(Vector3 p)=>new Vector3(Mathf.Round(p.x*16)/16,Mathf.Round(p.y*16)/16,p.z);
-        bool Allowed=>map!=null&&MapRoot.Current==map&&map.previewOnly&&
-            GoryeoTravelTransition.RegionOf(map.mapId)!=null&&GameManager.I!=null&&!GameManager.I.AutosaveEnabled;
+        bool Allowed=>map!=null&&MapRoot.Current==map&&GoryeoTravelTransition.RegionOf(map.mapId)!=null&&GameManager.I!=null&&
+            (map.previewOnly?!GameManager.I.AutosaveEnabled:approvedForProduction&&map.mapId=="transit_central_approach");
         bool OnScreen(Camera camera)
         {
             if(camera==null)return false;
