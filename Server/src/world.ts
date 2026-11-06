@@ -38,6 +38,14 @@
  *   서버 → 다른 사람 모두  {"t":"trade","seq":12,"at":…,"id":"p3","name":"윤채","town":…,"item":…,"n":3,"d":2.5,"sell":true}
  *   hello의 "since"(이 게임이 마지막으로 받은 거래 번호, 처음이면 -1)보다 뒤의, 30분 안 남의 거래를 welcome 다음에 {"t":"trades","list":[…]}로 보낸다.
  *   게임 → 서버  {"t":"emote","e":"dance","name":"춤"}  →  서버 → 같은 맵  {"t":"emote","id":"p3","e":"dance","name":"춤"}
+ *  9단계 (2026-11-05) 관리 도구. 입구(index.ts)가 관리 키를 확인한 HTTP 요청만 여기 admin()으로 온다
+ *   GET  /admin/status    접속자(이름·맵·계정인지·조용한 시간) · 계정 수 · 거래 기록
+ *   GET  /admin/accounts  계정 목록 (접속키·소금은 빼고)
+ *   POST /admin/reset     {"name":"윤채"}  접속키를 지운다. 다음에 들어올 때 넣는 접속키가 새 접속키가 된다(돈·짐·번호는 그대로)
+ *   POST /admin/delete    {"names":[…]} 또는 {"prefix":"계정시험"}  "confirm":true가 없으면 지울 목록만 알려 준다
+ *   POST /admin/kick      {"name":"윤채"}  접속을 4006으로 닫는다
+ *   POST /admin/notice    {"text":"5분 뒤 서버 점검"}  →  서버 → 모두  {"t":"notice","text":…}
+ *   welcome의 "newPass": 접속키를 지운 계정에 새 접속키를 정하고 들어왔다
  */
 import { DurableObject } from "cloudflare:workers";
 import type { Env } from "./index";
@@ -60,13 +68,15 @@ const SAVE_ITEMS = 200;
 const TRADE_KEEP = 300, TRADE_REPLAY_MS = 30 * 60_000;
 /** 리액션 최소 간격 */
 const EMOTE_GAP_MS = 400;
+/** 관리자 알림 글자 수 */
+const NOTICE_MAX = 120;
 
-export const Close = { TooMany: 4001, Version: 4002, Timeout: 4003, Replaced: 4004, Login: 4005 } as const;
+export const Close = { TooMany: 4001, Version: 4002, Timeout: 4003, Replaced: 4004, Login: 4005, Admin: 4006 } as const;
 
 /** 서버에 저장하는 돈·짐 (계정마다) */
 interface SaveData { money: number; items: string[]; counts: number[]; costs: number[]; at: number; }
 
-/** 계정 (저장소 키 "acct:" + 소문자 이름) */
+/** 계정 (저장소 키 "acct:" + 소문자 이름). hash가 ""이면 관리자가 접속키를 지운 것: 다음 접속키로 새로 정한다 */
 interface Account { name: string; salt: string; hash: string; id: string; created: number; save?: SaveData; }
 
 /** 공유 장터 거래 한 건 */
@@ -111,6 +121,9 @@ export class WorldRoom extends DurableObject<Env> {
     const mine = this.env.VERSION?.timestamp ?? "";
     if (want && mine && Date.parse(want) > Date.parse(mine)) this.ctx.abort("새 코드로 다시 켭니다");
 
+    const path = new URL(request.url).pathname;
+    if (path.startsWith("/admin/")) return this.admin(request, path.slice("/admin/".length));
+
     const pair = new WebSocketPair();
     const [client, server] = Object.values(pair);
     this.ctx.acceptWebSocket(server);
@@ -148,12 +161,19 @@ export class WorldRoom extends DurableObject<Env> {
         const name = cleanName(msg.name);
         const pass = typeof msg.pass === "string" ? msg.pass : "";
         let acct: Account | undefined;
+        let newPass = false;
         if (name) {
           const ak = "acct:" + name.toLowerCase();
           acct = await this.ctx.storage.get<Account>(ak);
           if (pass) {
             if (pass.length < 4 || pass.length > 32) return this.refuse(ws, me, "접속키는 4~32자로 정해 주세요");
-            if (acct) {
+            if (acct && !acct.hash) {
+              // 관리자가 접속키를 지웠다: 이번에 넣은 접속키를 새 접속키로 정한다
+              acct.salt = randomHex(16);
+              acct.hash = await hashKey(acct.salt, pass);
+              await this.ctx.storage.put(ak, acct);
+              newPass = true;
+            } else if (acct) {
               if ((await hashKey(acct.salt, pass)) !== acct.hash) return this.refuse(ws, me, `'${acct.name}'은(는) 다른 접속키로 쓰고 있는 이름이에요`);
             } else {
               const salt = randomHex(16);
@@ -164,7 +184,9 @@ export class WorldRoom extends DurableObject<Env> {
             me.id = acct.id;
             me.name = acct.name;
           } else if (acct) {
-            return this.refuse(ws, me, `'${acct.name}'은(는) 접속키가 있는 이름이에요. 접속키를 넣어 주세요`);
+            return this.refuse(ws, me, acct.hash
+              ? `'${acct.name}'은(는) 접속키가 있는 이름이에요. 접속키를 넣어 주세요`
+              : `'${acct.name}'의 접속키를 새로 정해야 해요. 쓰고 싶은 접속키를 넣어 주세요`);
           }
         }
         if (me.key || me.acct) this.replaceOld(ws, me);
@@ -175,6 +197,7 @@ export class WorldRoom extends DurableObject<Env> {
         send(ws, {
           t: "welcome", v: PROTOCOL, id: me.id, name: me.name, online: this.count(), seq,
           account: !!me.acct, hasSave: !!acct?.save && !!me.acct, save: me.acct ? acct?.save ?? null : null,
+          ...(newPass ? { newPass: true } : {}),
         });
         this.broadcast({ t: "online", online: this.count() }, (o) => o !== ws);
         await this.replayTrades(ws, me, msg.since, seq, now);
@@ -275,6 +298,96 @@ export class WorldRoom extends DurableObject<Env> {
       if (now - Math.max(p.heard, pinged) > STALE_MS) this.shut(s, p, Close.Timeout, "timeout");
     }
     if (this.live().length > 0) await this.ctx.storage.setAlarm(Date.now() + SWEEP_MS);
+  }
+
+  // ---------------- 관리 도구 (2026-11-05) ----------------
+
+  /** 관리 요청 하나. 관리 키는 입구(index.ts)가 이미 확인했다 */
+  private async admin(request: Request, what: string): Promise<Response> {
+    let body: any = {};
+    if (request.method === "POST") {
+      try { body = await request.json(); } catch { return reply({ error: "JSON이 아닙니다" }, 400); }
+      if (!body || typeof body !== "object") body = {};
+    }
+    const now = Date.now();
+    switch (`${request.method} ${what}`) {
+      case "GET status": {
+        const players = this.live().map(([s, p]) => {
+          const pinged = this.ctx.getWebSocketAutoResponseTimestamp(s)?.getTime() ?? 0;
+          return { id: p.id, name: p.name, map: p.map, look: p.look, account: !!p.acct, quietSec: Math.round((now - Math.max(p.heard, pinged)) / 1000) };
+        });
+        const trades = (await this.ctx.storage.get<Trade[]>("trades")) ?? [];
+        return reply({
+          online: players.length, players,
+          accounts: (await this.accounts()).size,
+          tradeSeq: (await this.ctx.storage.get<number>("tradeSeq")) ?? 0,
+          tradesKept: trades.length, lastTradeAt: trades.at(-1)?.at ?? 0,
+        });
+      }
+      case "GET accounts": {
+        const online = new Set(this.live().map(([, p]) => p.acct ?? ""));
+        const list = [...(await this.accounts())].map(([k, a]) => ({
+          name: a.name, id: a.id, created: a.created, online: online.has(k), needsPass: !a.hash,
+          savedAt: a.save?.at ?? 0, money: a.save?.money ?? null, kinds: a.save?.items.length ?? 0,
+        }));
+        list.sort((a, b) => a.created - b.created);
+        return reply({ count: list.length, accounts: list });
+      }
+      case "POST reset": {
+        const k = acctKey(body.name);
+        const acct = k ? await this.ctx.storage.get<Account>(k) : undefined;
+        if (!acct) return reply({ error: `'${cleanName(body.name)}' 계정이 없어요` }, 404);
+        acct.salt = "";
+        acct.hash = "";
+        await this.ctx.storage.put(k, acct);
+        return reply({ ok: true, name: acct.name });
+      }
+      case "POST delete": {
+        const all = await this.accounts();
+        let keys: string[];
+        if (Array.isArray(body.names)) {
+          keys = body.names.map(acctKey).filter((k: string) => k && all.has(k));
+        } else if (typeof body.prefix === "string") {
+          const pre = cleanName(body.prefix).toLowerCase();
+          if ([...pre].length < 2) return reply({ error: "prefix는 2자 이상으로 넣어 주세요" }, 400);
+          keys = [...all.keys()].filter((k) => k.startsWith("acct:" + pre));
+        } else {
+          return reply({ error: "names(이름 목록)나 prefix(이름 앞부분)를 넣어 주세요" }, 400);
+        }
+        const names = keys.map((k) => all.get(k)!.name);
+        if (body.confirm !== true) return reply({ dry: true, match: names });
+        const gone = new Set(keys);
+        for (const [s, p] of this.live()) if (p.acct && gone.has(p.acct)) this.kick(s, p, "계정이 지워져서 접속을 끊었어요");
+        for (let i = 0; i < keys.length; i += 128) await this.ctx.storage.delete(keys.slice(i, i + 128));
+        return reply({ deleted: names });
+      }
+      case "POST kick": {
+        const name = cleanName(body.name).toLowerCase();
+        if (!name) return reply({ error: "name(이름)을 넣어 주세요" }, 400);
+        let kicked = 0;
+        for (const [s, p] of this.live()) if (p.name.toLowerCase() === name) { this.kick(s, p, "관리자가 접속을 끊었어요"); kicked++; }
+        return reply({ kicked });
+      }
+      case "POST notice": {
+        const text = typeof body.text === "string" ? [...plain(body.text)].slice(0, NOTICE_MAX).join("").trim() : "";
+        if (!text) return reply({ error: "text(알림 글)가 비어 있어요" }, 400);
+        this.broadcast({ t: "notice", text }, () => true);
+        return reply({ sent: this.count(), text });
+      }
+      default:
+        return reply({ error: `모르는 관리 요청: ${request.method} /admin/${what}` }, 404);
+    }
+  }
+
+  /** 모든 계정 (저장소 키 → 계정) */
+  private async accounts(): Promise<Map<string, Account>> {
+    return this.ctx.storage.list<Account>({ prefix: "acct:" });
+  }
+
+  /** 관리자가 접속을 닫는다: 이유를 알리고 4006으로 닫는다 (게임은 다시 접속하지 않는다) */
+  private kick(ws: WebSocket, me: Player, why: string): void {
+    send(ws, { t: "error", why });
+    this.shut(ws, me, Close.Admin, "admin");
   }
 
   /** 로그인 실패: 이유를 알리고 4005로 닫는다 (게임은 다시 접속하지 않는다) */
@@ -391,6 +504,17 @@ function send(ws: WebSocket, msg: unknown): void {
 
 function sendRaw(ws: WebSocket, json: string): void {
   try { ws.send(json); } catch { /* 끊긴 소켓 */ }
+}
+
+/** 관리 요청의 답 (JSON) */
+function reply(body: unknown, status = 200): Response {
+  return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json; charset=utf-8" } });
+}
+
+/** 이름 → 계정 저장소 키 ("" 이면 이름이 이상하다) */
+function acctKey(name: unknown): string {
+  const n = cleanName(name);
+  return n ? "acct:" + n.toLowerCase() : "";
 }
 
 /** 화면에 그대로 찍히는 글: 제어 문자는 빈칸으로, 꺾쇠(<>)는 글자 꾸미기 태그가 되지 않게 바꾼다 */

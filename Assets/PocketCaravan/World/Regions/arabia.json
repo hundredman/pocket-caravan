@@ -132,6 +132,48 @@
       "name": "공동 부엌 담당",
       "sprite": "arabia_woman_baker_tall",
       "greeting": "자비드 공동 부엌이야. 오늘 저녁도 여러 집이 함께 먹지. 곡물은 큰길 남쪽 장터에서 살 수 있어."
+    },
+    {
+      "id": "arabia_elder",
+      "name": "차 마시는 노인",
+      "sprite": "arabia_npc_scholar_tall",
+      "greeting": "자비드 찻집은 소문이 모이는 곳이지. 앉아서 한 잔 하고 가게. 바다 건너 제다 소식도 여기서 먼저 들린다네."
+    },
+    {
+      "id": "arabia_rashid",
+      "name": "직물 상인 라시드",
+      "sprite": "arabia_npc_merchant_tall",
+      "greeting": "타이즈 직물은 바다 건너에서도 알아주지. 좋은 양탄자가 있으면 내가 산다네."
+    },
+    {
+      "id": "arabia_dyer",
+      "name": "염색 장인",
+      "sprite": "arabia_woman_weaver_tall",
+      "greeting": "쪽빛은 세 번, 꼭두서니는 두 번 담가야 고운 색이 나와요. 소금이 있어야 색이 붙지요."
+    },
+    {
+      "id": "arabia_portmaster",
+      "name": "물류 담당",
+      "sprite": "arabia_npc_sailor_tall",
+      "greeting": "배가 들어오면 창고가 하루 만에 차고 하루 만에 비네. 장부를 잘 적어야 살아남지."
+    },
+    {
+      "id": "arabia_yusuf",
+      "name": "수레 장인 유수프",
+      "sprite": "arabia_npc_bedouin_tall",
+      "greeting": "낙타 없이 사막을 건너는 건 바보나 하는 짓이지. 안장은 내가 손봐 주마."
+    },
+    {
+      "id": "arabia_nadia",
+      "name": "시장 상인 나디아",
+      "sprite": "arabia_woman_perfumer_tall",
+      "greeting": "수도 장터엔 없는 게 없지만, 없는 게 하나 있지. 바로 타이즈 커피야."
+    },
+    {
+      "id": "arabia_gardener",
+      "name": "정원사",
+      "sprite": "arabia_woman_grandma_tall",
+      "greeting": "궁전 정원엔 대추야자가 있어야 해. 알 아흐사 것이 제일 달지."
     }
   ],
   "villagers": [

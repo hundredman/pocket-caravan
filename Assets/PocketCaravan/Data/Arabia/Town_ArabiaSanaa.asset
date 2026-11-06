@@ -46,6 +46,12 @@ MonoBehaviour:
     description: 
     storageCapacity: 120
   stock:
+  - item: {fileID: 11400000, guid: e91d10fc3709041a4830878ef553e6a0, type: 2}
+    optimal: 30
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 6d6e2b16c8f25490192ba51a8d9a8235, type: 2}
+    optimal: 20
+    localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: 35a7e3db33a56468183a9b53947724c8, type: 2}
     optimal: 14
     localPriceMultiplier: 1
@@ -58,5 +64,18 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 3fb63f26ff0b04548bdf8a538aaeba74, type: 2}
     optimal: 18
     localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 3bbcadd919dce44fea221ee95643a4b4, type: 2}
+    optimal: 12
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 5c29389e146c94149a69fc2395b82df4, type: 2}
+    optimal: 6
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: cb00db234c4f1496797b7984a9849509, type: 2}
+    optimal: 6
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 9b0a33b14044448d8962b7818d9d0df6, type: 2}
+    optimal: 8
+    localPriceMultiplier: 1
   defaultOptimal: 3
-  vehiclesForSale: []
+  vehiclesForSale:
+  - {fileID: 11400000, guid: 8703b62086062409a8e822f5733926c5, type: 2}

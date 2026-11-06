@@ -64,6 +64,8 @@ namespace PocketCaravan
             public float d;
             public bool sell;
             public List<TradeRec> list;
+            // 9단계 (11/05): 관리자가 지운 접속키를 이번에 새로 정했다
+            public bool newPass;
         }
 
         /// <summary>서버에 저장된 돈·짐 (costs는 물건마다 산 값의 합)</summary>
@@ -238,7 +240,7 @@ namespace PocketCaravan
         /// </summary>
         void Lost(string reason, int code)
         {
-            bool final = code == 4001 || code == 4002 || code == 4004 || code == 4005;
+            bool final = code == 4001 || code == 4002 || code == 4004 || code == 4005 || code == 4006;
             if (final) wantOnline = false;
             Drop(reason);
             if (!wantOnline) { retries = 0; return; }
@@ -254,6 +256,7 @@ namespace PocketCaravan
             4003 => "서버가 응답 없는 접속으로 보고 끊었습니다",
             4004 => "같은 이름으로 다른 곳에서 접속해서 여기는 끊었습니다",
             4005 => null,   // 로그인 실패: 서버가 먼저 보낸 이유(error)를 그대로 둔다
+            4006 => null,   // 관리자가 끊음(내보내기·계정 지움): 이유는 서버가 먼저 보냈다
             _ => $"서버가 연결을 닫았습니다 ({code}{(string.IsNullOrEmpty(text) ? "" : " " + text)})",
         };
 
@@ -441,7 +444,8 @@ namespace PocketCaravan
                     OnlineCount = msg.online;
                     LastError = "";
                     string asked = askedName;
-                    if (StartScreen.IsOpen || NetLogin.IsOpen) { }   // 첫 화면: 로그인 화면이 알아서 넘어간다
+                    if (msg.newPass) Notify.Show("접속키를 새로 정했어요. 다음부터 이 접속키로 들어와요", 5f);
+                    else if (StartScreen.IsOpen || NetLogin.IsOpen) { }   // 첫 화면: 로그인 화면이 알아서 넘어간다
                     else if (retries > 0) Notify.Show($"다시 연결됐어요 · 지금 {msg.online}명", 2.5f);
                     else if (asked.Length > 0 && MyName != asked) Notify.Show($"이름이 겹쳐서 '{MyName}'(으)로 들어왔어요", 4f);
                     else Notify.Show($"온라인 접속: {msg.id} · 지금 {msg.online}명", 3f);
@@ -488,20 +492,35 @@ namespace PocketCaravan
             DrawStatus();
         }
 
+        /// <summary>
+        /// 11/05 B안: 오른쪽 위 단추 왼쪽에 "사람 3명" 알약. 마우스를 올리면 내 이름·이 맵 사람 수.
+        /// 끊겨서 다시 붙는 중이면 빨간 점(알림), 처음 접속 중이면 노란 점.
+        /// </summary>
         void DrawStatus()
         {
-            string here = sentMap != null && !waitingRoom ? $" · 이 맵 {peers.Count + 1}명" : "";
-            string text = Status switch
-            {
-                State.Online => $"<color=#8fe08f>●</color> 온라인 · {MyName} · 전체 {OnlineCount}명{here}",
-                State.Waiting => $"<color=#ffb347>○</color> 다시 연결 중… ({retries}번째 · {Mathf.CeilToInt(Mathf.Max(0f, retryAt - Time.unscaledTime))}초 뒤)",
-                _ => retries > 0 ? $"<color=#ffde59>○</color> 다시 연결하는 중… ({retries}번째)" : "<color=#ffde59>●</color> 접속 중…",
-            };
             GUI.depth = -6;
-            float w = UIStyle.Rich.CalcSize(new GUIContent(text)).x + 12f;
-            var r = new Rect(6f, UIStyle.VirtualHeight - 60f, w, 16f);
-            GUI.Box(r, GUIContent.none, UIStyle.Box);
-            GUI.Label(new Rect(r.x + 6f, r.y, w, r.height), text, UIStyle.Rich);
+            bool online = Status == State.Online;
+            string label = Status switch
+            {
+                State.Online => $"{OnlineCount}명",
+                State.Waiting => $"다시 연결 {Mathf.CeilToInt(Mathf.Max(0f, retryAt - Time.unscaledTime))}초",
+                _ => retries > 0 ? "다시 연결 중…" : "접속 중…",
+            };
+            float w = Mathf.Round(6 + 11 + 5 + CuteUI.Width(label, false, true) + 9);
+            var r = new Rect(Mathf.Round(HUD.ButtonsLeft - 7 - w), 9, w, 18);
+            CuteUI.Pill(r);
+            if (online) CuteUI.Icon(CuteUI.Pic.People, r.x + 6, r.y + 5);
+            else CuteUI.Circle(r.x + 8, r.y + 5, 8, Status == State.Waiting || retries > 0 ? CuteUI.Alert : CuteUI.Deco, CuteUI.Ink);
+            CuteUI.Label(r.x + 22, r.y + 9, label, CuteUI.Text, false, true);
+            if (online && r.Contains(Event.current.mousePosition))
+            {
+                string here = sentMap != null && !waitingRoom ? $"이 맵 {peers.Count + 1}명" : "이 맵 확인 중";
+                string line = $"{MyName} · 전체 {OnlineCount}명 · {here}";
+                float tw = CuteUI.Width(line, true) + 16;
+                var tip = new Rect(Mathf.Round(r.xMax - tw), r.yMax + 4, tw, 17);
+                CuteUI.Box(tip, 7, CuteUI.Paper, CuteUI.Ink, 1, 2);
+                CuteUI.Label(tip.x + 8, tip.y + 8.5f, line, CuteUI.Text, true);
+            }
         }
     }
 }

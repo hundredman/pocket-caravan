@@ -44,6 +44,11 @@ namespace PocketCaravan.EditorTools
         public const string ClothId = "arabia_cloth", SpiceId = "arabia_spice";
         public const string DatesId = "arabia_dates", GrainId = "arabia_grain", DeliveryDatesId = "arabia_delivery_dates";
         public const string Q1Id = "arabia_q01_first_delivery", Q2Id = "arabia_q02_supper";
+        // 2026-11-05 (기우·통합): 장터 품목 최소 5개·탈것·퀘스트 흐름 맞추기
+        public const string FrankId = "arabia_frankincense", CoffeeId = "arabia_coffee", PearlId = "arabia_pearl", SaltId = "arabia_salt", LeatherId = "arabia_leather", CarpetId = "arabia_carpet";
+        public const string CamelId = "arabia_camel";
+        public const string Q3Id = "arabia_q03_cloth_road", Q4Id = "arabia_q04_spice_capital", Q5Id = "arabia_q05_camel", Q6Id = "arabia_q06_frankincense", Q7Id = "arabia_q07_pearl";
+        public const string Q8Id = "arabia_q08_carpet_order", Q9Id = "arabia_q09_dye_salt", Q10Id = "arabia_q10_shortcut", Q11Id = "arabia_q11_coffee", Q12Id = "arabia_q12_garden_dates";
         public const string SaveFileName = "pocket_caravan_arabia_test_save.json";
 
         // 실험값 (Docs/Arabia/02 §5). 플레이 평가 후 조정한다.
@@ -116,11 +121,37 @@ namespace PocketCaravan.EditorTools
                 town.stock = entries.Select(e => new TownData.StockEntry { item = e.item, optimal = e.optimal, localPriceMultiplier = 1f }).ToList();
                 EditorUtility.SetDirty(town);
             }
-            Stock(ahsa, (dates, 40), (grain, 12));
-            Stock(zabid, (grain, 40), (dates, 12));
-            Stock(taiz, (cloth, 40), (grain, 14), (dates, 12));
-            Stock(jeddah, (spice, 40), (cloth, 16), (dates, 14), (grain, 14));
-            Stock(sanaa, (cloth, 14), (spice, 14), (grain, 18), (dates, 18));
+            // 2026-11-05 새 품목 6개 (아이콘은 임시로 다른 지역 것 재사용 — 아라비아 담당이 바꿀 것)
+            var frank = Item("Item_ArabiaFrankincense", FrankId, "유향 덩이", 1, 16, sanaa, false, Icon("transit_resin"));
+            var coffee = Item("Item_ArabiaCoffee", CoffeeId, "커피 열매 자루", 1, 10, taiz, false, Icon("north_herb"));
+            var pearl = Item("Item_ArabiaPearl", PearlId, "진주", 0.5f, 20, jeddah, false, Icon("north_amber"));
+            var salt = Item("Item_ArabiaSalt", SaltId, "바닷소금 덩이", 1, 4, jeddah, false, Icon("salt_parcel"));
+            var leather = Item("Item_ArabiaLeather", LeatherId, "낙타 가죽", 1, 7, ahsa, false, Icon("north_fur"));
+            var carpet = Item("Item_ArabiaCarpet", CarpetId, "양탄자", 2, 18, sanaa, false, Icon("venice_lace"));
+
+            // 장터 품목 최소 5개 (11/4 팀 결정). 산지 40·집산 20~30·소비 8~18
+            Stock(ahsa, (dates, 40), (leather, 30), (grain, 12), (salt, 10), (coffee, 8));
+            Stock(zabid, (grain, 40), (salt, 24), (dates, 12), (cloth, 10), (leather, 8));
+            Stock(taiz, (cloth, 40), (coffee, 30), (grain, 14), (dates, 12), (salt, 10), (frank, 8));
+            Stock(jeddah, (spice, 40), (pearl, 20), (salt, 30), (cloth, 16), (dates, 14), (grain, 14), (coffee, 10));
+            Stock(sanaa, (frank, 30), (carpet, 20), (cloth, 14), (spice, 14), (grain, 18), (dates, 18), (coffee, 12), (pearl, 6));
+            // 2026-11-05 통합(기우) 장터 규칙: 마을마다 생필품(땔감·곡식, 산지 없는 공용 물건) 2줄
+            var firewood = AssetDatabase.LoadAssetAtPath<ItemData>(Root + "/Data/Goryeo/Item_firewood.asset");
+            var grainCommon = AssetDatabase.LoadAssetAtPath<ItemData>(Root + "/Data/Goryeo/Item_grain.asset");
+            foreach (var t in new[] { ahsa, zabid, taiz, jeddah, sanaa })
+            {
+                if (firewood != null) t.stock.Add(new TownData.StockEntry { item = firewood, optimal = t == taiz ? 20 : 6, localPriceMultiplier = 1f });   // 타이즈 고원이 땔감 산지
+                if (grainCommon != null) t.stock.Add(new TownData.StockEntry { item = grainCommon, optimal = t == zabid ? 20 : 8, localPriceMultiplier = 1f });
+                EditorUtility.SetDirty(t);
+            }
+
+            // 탈것: 낙타 (모래·험한 길에서 빠름). 제다·사나에서 판다
+            var camel = Get<VehicleData>(DataDir + "/Vehicle_ArabiaCamel.asset");
+            camel.id = CamelId; camel.displayName = "낙타"; camel.capacity = 45f; camel.price = 300; camel.minTownLevel = 2;
+            camel.speedByGrade = new[] { 1.25f, 1.15f, 1.05f, 1f };
+            if (!db.vehicles.Contains(camel)) db.vehicles.Add(camel);
+            EditorUtility.SetDirty(camel);
+            jeddah.vehiclesForSale = new List<VehicleData> { camel }; sanaa.vehiclesForSale = new List<VehicleData> { camel };
 
             var q1 = Get<QuestData>(QuestDir + "/Quest_ArabiaQ01FirstDelivery.asset");
             q1.id = Q1Id; q1.title = "힌드바드의 반쪽 짐"; q1.chain = "아라비아 1장";
@@ -157,6 +188,93 @@ namespace PocketCaravan.EditorTools
             if (!db.quests.Contains(q2)) db.quests.Add(q2);
             EditorUtility.SetDirty(q2);
 
+            // ---- 2026-11-05 Q3~Q7: 알 아흐사 세 사람(마리암·하산·힌드바드)이 이어서 준다. 다른 마을엔 아직 의뢰 NPC가 없어 사기·팔기·가기 목표로 짰다.
+            QuestData Quest(string file, string id, string title, string giver, QuestData req, string summary, string offer, int money, int credit, string note, params QuestObjective[] objs)
+            {
+                var q = Get<QuestData>(QuestDir + "/" + file + ".asset");
+                q.id = id; q.title = title; q.chain = "아라비아 1장"; q.summary = summary; q.giverNpc = giver;
+                q.requires = req != null ? new List<QuestData> { req } : new List<QuestData>();
+                q.offerLine = offer; q.giveItem = null; q.giveCount = 0; q.offerItem = null; q.offerCount = 0; q.offerPrice = 0;
+                q.objectives = new List<QuestObjective>(objs);
+                q.rewardMoney = money; q.rewardCredit = credit; q.finishNote = note;
+                if (!db.quests.Contains(q)) db.quests.Add(q);
+                EditorUtility.SetDirty(q);
+                return q;
+            }
+            var q3 = Quest("Quest_ArabiaQ03ClothRoad", Q3Id, "타이즈의 염색 직물", "arabia_hasan", q2,
+                "타이즈 염색 공방 마을에서 직물 꾸러미를 사서 항구 제다에 판다. 처음으로 두 마을을 잇는 길.",
+                "자비드까지는 가 봤지? 그럼 다음은 타이즈야. 거기 염색 직물을 제다 항구에 가져가면 값이 올라.\n직물 2개면 돼. 길은 남쪽으로 쭉.",
+                40, 1, "제다 항구에선 배로 들어온 향신료를 판다. 내륙으로 가져가면 더 비싸다.",
+                new QuestObjective { type = ObjectiveType.VisitMap, text = "타이즈에 가기", targetId = TaizMap },
+                new QuestObjective { type = ObjectiveType.Buy, text = "타이즈 장터에서 직물 꾸러미 사기", targetId = TaizTown, item = cloth, count = 2 },
+                new QuestObjective { type = ObjectiveType.Sell, text = "제다 장터에 직물 꾸러미 팔기", targetId = JeddahTown, item = cloth, count = 2,
+                    completeLine = "바다 건너 상인들이 타이즈 직물을 좋아하지. 잘 가져왔어." });
+            var q4 = Quest("Quest_ArabiaQ04SpiceCapital", Q4Id, "향신료는 수도로", "arabia_maryam", q3,
+                "제다 항구에서 향신료 자루를 사서 수도 사나에 판다. 아라비아에서 가장 긴 교역 길.",
+                "제다에서 사나로 가는 길이 둘이야. 지름길은 빠르지만 모래바람이 불고, 농로는 느리지만 대상 숙소가 있어.\n향신료 3자루를 사나까지 가져가 보렴.",
+                50, 1, "사나는 수도라 먼 산지 물건을 가장 비싸게 산다. 유향과 양탄자는 거꾸로 사나가 산지다.",
+                new QuestObjective { type = ObjectiveType.Buy, text = "제다 장터에서 향신료 자루 사기", targetId = JeddahTown, item = spice, count = 3 },
+                new QuestObjective { type = ObjectiveType.Sell, text = "사나 장터에 향신료 자루 팔기", targetId = SanaaTown, item = spice, count = 3,
+                    completeLine = "수도 사람들은 향신료 없인 밥을 안 먹지. 좋은 값에 팔렸을 거야." });
+            var q5 = Quest("Quest_ArabiaQ05Camel", Q5Id, "낙타 한 마리", "arabia_hasan", q3,
+                "돈을 모아 제다나 사나에서 낙타를 산다. 모래와 험한 길에서 빠르고 짐도 더 싣는다.",
+                "등짐으로 사막을 건너는 건 무리야. 300냥을 모으면 제다나 사나에서 낙타를 살 수 있어.\n낙타는 모래 위에서 사람보다 빨라.",
+                60, 1, "낙타를 사면 지름길의 모래바람도 덜 무섭다.",
+                new QuestObjective { type = ObjectiveType.HaveMoney, text = "300냥 모으기", count = 300 },
+                new QuestObjective { type = ObjectiveType.BuyVehicle, text = "낙타 사기", vehicle = camel,
+                    completeLine = "좋은 낙타군. 이제 자네도 대상이야." });
+            var q6 = Quest("Quest_ArabiaQ06Frankincense", Q6Id, "사나의 유향", "arabia_maryam", q4,
+                "수도 사나에서 유향 덩이를 사서 알 아흐사 여관의 마리암에게 가져온다. 거꾸로 가는 교역.",
+                "여관에 피울 유향이 떨어졌어. 유향은 사나에서만 나와. 두 덩이만 가져다주면 넉넉히 쳐줄게.\n돌아오는 길에 사나 양탄자도 눈여겨보렴, 제다에서 비싸.",
+                60, 2, "아라비아 1장이 끝났다. 중앙 대륙 사막 너머 만국 장터로 가 보자.",
+                new QuestObjective { type = ObjectiveType.Buy, text = "사나 장터에서 유향 덩이 사기", targetId = SanaaTown, item = frank, count = 2 },
+                new QuestObjective { type = ObjectiveType.Deliver, text = "알 아흐사 여관의 마리암에게 유향 덩이 전하기", targetId = "arabia_maryam", item = frank, count = 2,
+                    completeLine = "이 향이야. 이제 여관에 손님이 끊이지 않겠구나. 넌 이제 이 땅의 상인이다." });
+            var q7 = Quest("Quest_ArabiaQ07Pearl", Q7Id, "진주 한 알", "arabia_hindbad", q2,
+                "제다 항구에서 진주를 한 알 사서 어디든 더 비싼 곳에 판다. 이익을 남기는 연습.",
+                "제다 잠수부들이 진주를 캐 온대. 한 알 사서 다른 데 팔면 이익이 얼마나 남는지 볼래?\n산 값보다 40냥은 더 남겨 봐.",
+                45, 1, "이익은 판 값에서 산 값을 뺀 것. 장부(J)에서 볼 수 있다.",
+                new QuestObjective { type = ObjectiveType.Buy, text = "제다 장터에서 진주 사기", targetId = JeddahTown, item = pearl, count = 1 },
+                new QuestObjective { type = ObjectiveType.Profit, text = "판매 이익 40냥 남기기", count = 40,
+                    completeLine = "봐, 짐은 작아도 이익은 크지. 그게 장사야." });
+
+            // ---- Q8~Q12: 다른 마을 사람들이 준다 (맵 JSON의 말 거는 사람 7명을 의뢰 NPC로 바꿈, World/Regions/arabia.json 등록)
+            var q8 = Quest("Quest_ArabiaQ08CarpetOrder", Q8Id, "라시드의 양탄자 주문", "arabia_rashid", q3,
+                "타이즈 직물 상인 라시드가 사나 양탄자를 주문한다. 수도에서 사서 거꾸로 가져오는 길.",
+                "바다 건너 손님이 사나 양탄자를 찾아. 두 장만 가져다주면 값은 넉넉히 치르지.\n사나는 북쪽 고원길 끝이야.",
+                55, 1, "양탄자는 무겁다. 낙타가 있으면 편하다.",
+                new QuestObjective { type = ObjectiveType.Buy, text = "사나 장터에서 양탄자 사기", targetId = SanaaTown, item = carpet, count = 2 },
+                new QuestObjective { type = ObjectiveType.Deliver, text = "타이즈 라시드에게 양탄자 전하기", targetId = "arabia_rashid", item = carpet, count = 2,
+                    completeLine = "이 무늬야. 손님이 기뻐하겠군." });
+            var q9 = Quest("Quest_ArabiaQ09DyeSalt", Q9Id, "염색 재료 소금", "arabia_dyer", q3,
+                "타이즈 염색 장인에게 제다 바닷소금을 가져다준다. 소금이 있어야 색이 천에 붙는다.",
+                "소금이 떨어졌어요. 제다 바닷가 소금 세 덩이만 구해 주세요. 소금 없인 색이 흐르거든요.",
+                35, 1, "싼 물건도 필요한 곳에 가져가면 값이 된다.",
+                new QuestObjective { type = ObjectiveType.Buy, text = "제다 장터에서 바닷소금 덩이 사기", targetId = JeddahTown, item = salt, count = 3 },
+                new QuestObjective { type = ObjectiveType.Deliver, text = "타이즈 염색 장인에게 바닷소금 전하기", targetId = "arabia_dyer", item = salt, count = 3,
+                    completeLine = "이제 쪽빛이 제대로 붙겠어요. 고마워요." });
+            var q10 = Quest("Quest_ArabiaQ10Shortcut", Q10Id, "지름길을 건너다", "arabia_yusuf", q5,
+                "낙타를 타고 제다-사나 지름길을 건너 본다. 모래바람이 부는 길.",
+                "낙타를 샀군. 그럼 지름길을 한번 가 봐. 모래바람이 불 땐 멈추고, 그치면 달리는 거야.\n건너서 알 아흐사 가죽 두 장을 사나에 팔고 오면 안장값은 내가 깎아 주지.",
+                45, 1, "지름길은 빠르지만 모래바람에 짐을 잃을 수 있다.",
+                new QuestObjective { type = ObjectiveType.VisitMap, text = "지름길 건너기", targetId = ShortcutMap },
+                new QuestObjective { type = ObjectiveType.Sell, text = "사나 장터에 낙타 가죽 팔기", targetId = SanaaTown, item = leather, count = 2,
+                    completeLine = "지름길을 건넌 상인은 대상이 인정해 주지." });
+            var q11 = Quest("Quest_ArabiaQ11Coffee", Q11Id, "나디아의 커피", "arabia_nadia", q4,
+                "사나 시장 상인 나디아가 타이즈 커피를 찾는다. 고원 커피를 수도로.",
+                "수도엔 없는 게 없는데 타이즈 커피만 없어. 세 자루만 가져다줘. 수도 사람들이 줄을 설 거야.",
+                50, 1, "커피는 타이즈 고원에서만 난다. 수도에서 가장 비싸다.",
+                new QuestObjective { type = ObjectiveType.Buy, text = "타이즈 장터에서 커피 열매 자루 사기", targetId = TaizTown, item = coffee, count = 3 },
+                new QuestObjective { type = ObjectiveType.Deliver, text = "사나 나디아에게 커피 전하기", targetId = "arabia_nadia", item = coffee, count = 3,
+                    completeLine = "이 향! 내일부터 내 가게 앞에 줄이 설 거야." });
+            var q12 = Quest("Quest_ArabiaQ12GardenDates", Q12Id, "궁전 정원의 대추야자", "arabia_gardener", q6,
+                "사나 궁전 정원사에게 알 아흐사 대추야자를 가져다준다. 아라비아 1장의 마무리.",
+                "궁전 잔치에 대추야자가 모자라. 알 아흐사 것으로 네 묶음만. 제일 먼 산지에서 제일 단 열매가 나오지.",
+                70, 2, "아라비아 땅끝에서 수도까지, 상인의 길이 이어졌다.",
+                new QuestObjective { type = ObjectiveType.Buy, text = "알 아흐사 장터에서 대추야자 사기", targetId = AhsaTown, item = dates, count = 4 },
+                new QuestObjective { type = ObjectiveType.Deliver, text = "사나 정원사에게 대추야자 전하기", targetId = "arabia_gardener", item = dates, count = 4,
+                    completeLine = "잔치가 살았네. 궁전 사람들이 네 이름을 기억할 거야." });
+
             var session = Get<RegionTestSession>(SessionPath);
             session.regionId = RegionId; session.startScene = AhsaMap; session.saveFileName = SaveFileName;
             session.startMoney = startMoney;
@@ -167,7 +285,7 @@ namespace PocketCaravan.EditorTools
 
             // 기존 목록·시작 설정이 그대로인지 확인 (추가만 허용)
             bool kept = keepItems.All(db.items.Contains) && keepTowns.All(db.towns.Contains) && keepQuests.All(db.quests.Contains)
-                && keepVehicles.SequenceEqual(db.vehicles) && db.startMoney == startMoney && db.startVehicle == startVehicle && db.startOrigin == startOrigin
+                && db.vehicles.Take(vehicles0).SequenceEqual(keepVehicles) && db.startMoney == startMoney && db.startVehicle == startVehicle && db.startOrigin == startOrigin
                 && db.items.Take(items0).SequenceEqual(keepItems) && db.towns.Take(towns0).SequenceEqual(keepTowns) && db.quests.Take(quests0).SequenceEqual(keepQuests);
             if (!kept) throw new InvalidOperationException("기존 GameDatabase 항목이 바뀌었습니다. 저장하지 않습니다.");
             EditorUtility.SetDirty(db);

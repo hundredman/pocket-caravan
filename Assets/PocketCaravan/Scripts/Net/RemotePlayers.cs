@@ -325,8 +325,12 @@ namespace PocketCaravan
             float alpha = k > .85f ? (1f - k) / .15f : 1f;
             var old = GUI.color;
             GUI.color = new Color(1f, 1f, 1f, alpha);
-            emoteStyle.normal.textColor = new Color(1f, .9f, .4f);
-            UIStyle.Outlined(new Rect(hx - 70f, hy - 10f + pop, 140f, 18f), $"{symbol} {label}", emoteStyle);
+            // 11/05 UI B안: 리액션 이름도 말풍선과 같은 종이 알약
+            string text = $"{symbol} {label}";
+            float tw = CuteUI.Width(text, false, true) + 14f;
+            var pill = new Rect(Mathf.Round(hx - tw / 2f), Mathf.Round(hy - 9f + pop), Mathf.Round(tw), 17f);
+            CuteUI.Box(pill, 7, CuteUI.Paper, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
+            CuteUI.LabelCenter(pill.center.x, pill.center.y, text, CuteUI.Text, false, true);
             for (int i = 0; i < 3; i++)
             {
                 float phase = Mathf.Repeat(k * 1.6f + i / 3f, 1f);

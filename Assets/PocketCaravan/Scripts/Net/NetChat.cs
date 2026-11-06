@@ -22,7 +22,8 @@ namespace PocketCaravan
     {
         const int MaxLines = 8, MaxChars = 80;
         const float LineSeconds = 12f, FadeSeconds = 2f, LogWidth = 230f;
-        const string MeColor = "#ffde59", OtherColor = "#8fd3ff", DimColor = "#a49db5", ErrorColor = "#ff9a8a", SystemColor = "#c9e8b0";
+        // 11/05 UI B안: 종이 바탕 위 글씨라 진한 색 (전엔 어두운 바탕용 밝은 색)
+        const string MeColor = "#1f625e", OtherColor = "#a8541c", DimColor = "#6a5464", ErrorColor = "#d6334f", SystemColor = "#3f7a3a", NoticeColor = "#c0611a";
 
         class Line { public string text; public float at; }
 
@@ -51,6 +52,7 @@ namespace PocketCaravan
         int sendFrame = -1;
         float openedAt;
         GUIStyle field, lineStyle, bubbleStyle;
+        static readonly Color32 LogFill = new Color32(0xFF, 0xFA, 0xF2, 228);
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void Boot()
@@ -100,6 +102,12 @@ namespace PocketCaravan
                     break;
                 case "error":
                     Add($"<color={ErrorColor}>서버: {m.why}</color>");
+                    break;
+                case "notice":   // 11/05 관리자 알림 (npm run admin -- 알림 "…"): 채팅 목록과 가운데 아래 알림에 같이
+                    if (string.IsNullOrEmpty(m.text)) break;
+                    Add($"<color={NoticeColor}><b>[알림]</b> {m.text}</color>");
+                    Notify.Show("알림: " + m.text, 6f);
+                    Sfx.Play("open", .4f);
                     break;
             }
         }
@@ -209,7 +217,7 @@ namespace PocketCaravan
             DrawBubbles(net);
             if (UIState.Blocking && !typing) return;   // 다른 창이 열려 있으면 목록은 숨긴다
 
-            float bottom = UIStyle.VirtualHeight - 64f;   // 접속 표시(아래에서 60) 바로 위
+            float bottom = UIStyle.VirtualHeight - 10f - HUD.BottomReserved;   // 11/05 접속 표시는 오른쪽 위로 옮김: 아래 조작 안내·저장 문제 줄 바로 위
             if (typing) bottom = DrawInput(bottom);
             DrawLines(bottom);
         }
@@ -217,38 +225,55 @@ namespace PocketCaravan
         void Styles()
         {
             if (lineStyle != null && lineStyle.font == UIStyle.SmallFont) return;
-            lineStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.SmallFont, fontSize = UIStyle.SmallSize, richText = true, wordWrap = true, clipping = TextClipping.Overflow };
+            lineStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.SmallFont, fontSize = UIStyle.SmallSize, richText = true, wordWrap = true, clipping = TextClipping.Overflow, padding = new RectOffset(0, 0, 1, 1) };
+            lineStyle.normal.textColor = CuteUI.Text;
             bubbleStyle = new GUIStyle(lineStyle) { alignment = TextAnchor.MiddleCenter, richText = false };
-            bubbleStyle.normal.textColor = new Color(0.97f, 0.95f, 0.9f);
-            field = new GUIStyle(GUI.skin.textField) { font = UIStyle.RegularFont, fontSize = UIStyle.BodySize, alignment = TextAnchor.MiddleLeft };
+            bubbleStyle.normal.textColor = CuteUI.Text;
+            field = new GUIStyle(GUI.skin.label) { font = UIStyle.RegularFont, fontSize = UIStyle.BodySize, alignment = TextAnchor.MiddleLeft, padding = new RectOffset(0, 0, 0, 0) };
+            foreach (var st in new[] { field.normal, field.hover, field.focused, field.active }) st.background = null;
         }
 
-        /// <summary>입력 칸. 위쪽 끝 y를 돌려준다 (목록을 그 위에 쌓는다)</summary>
+        /// <summary>
+        /// 입력 칸 (11/05 B안: 종이 카드 + 흰 칸 + 청록 테두리, 아래 줄에 도움말). 위쪽 끝 y를 돌려준다 (목록을 그 위에 쌓는다)
+        /// </summary>
         float DrawInput(float bottom)
         {
-            var panel = new Rect(6f, bottom - 24f, LogWidth + 40f, 22f);
-            GUI.Box(panel, GUIContent.none, UIStyle.Box);
-            GUI.Label(new Rect(panel.x + 6f, panel.y + 3f, 30f, 16f), "<b>말</b>", UIStyle.Rich);
-            box.Draw(new Rect(panel.x + 30f, panel.y + 3f, panel.width - 36f, 16f), field);
-            GUI.Label(new Rect(panel.x, panel.y - 13f, panel.width, 12f),
-                $"<size={UIStyle.SmallSize}><color={DimColor}>Enter 보내기 · Esc 닫기 · /리액션 · 가/A: 오른쪽 Alt · {box.Full.Length}/{MaxChars}</color></size>", UIStyle.Rich);
-            return panel.y - 15f;
+            var panel = new Rect(6f, bottom - 38f, LogWidth + 40f, 36f);
+            CuteUI.Box(panel, 8, CuteUI.Paper, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
+            CuteUI.Label(panel.x + 8f, panel.y + 11.5f, "말", CuteUI.Text, false, true);
+            var fieldRect = new Rect(panel.x + 26f, panel.y + 4f, panel.width - 32f, 16f);
+            CuteUI.Box(fieldRect, 4, CuteUI.White, CuteUI.Interact, 2);
+            box.TextColor = (Color)CuteUI.Text;
+            box.Draw(new Rect(fieldRect.x + 4f, fieldRect.y, fieldRect.width - 6f, fieldRect.height), field);
+            CuteUI.Label(panel.x + 8f, panel.y + 28.5f, $"Enter 보내기 · Esc 닫기 · /리액션 · 가/A: 오른쪽 Alt · {box.Full.Length}/{MaxChars}", CuteUI.Sub, true);
+            return panel.y - 4f;
         }
 
+        /// <summary>채팅 목록 (11/05 B안: 반투명 종이 카드 위 진한 글씨, 오래되면 카드째 흐려진다)</summary>
         void DrawLines(float bottom)
         {
             var old = GUI.color;
-            float y = bottom;
+            var shown = new List<(string text, float h, float alpha)>();
+            float total = 0f, top = 0f;
             for (int i = lines.Count - 1; i >= 0; i--)
             {
                 float age = Time.unscaledTime - lines[i].at;
                 float alpha = typing ? 1f : Mathf.Clamp01((LineSeconds - age) / FadeSeconds);
                 if (alpha <= 0f) continue;
-                var content = new GUIContent(lines[i].text);
-                float h = lineStyle.CalcHeight(content, LogWidth);
+                float h = lineStyle.CalcHeight(new GUIContent(lines[i].text), LogWidth);
+                shown.Add((lines[i].text, h, alpha));
+                total += h;
+                top = Mathf.Max(top, alpha);
+            }
+            if (shown.Count == 0) return;
+            GUI.color = new Color(1f, 1f, 1f, top);
+            CuteUI.Box(new Rect(6f, bottom - total - 8f, LogWidth + 12f, total + 8f), 8, LogFill, LogFill, 0, 2, CuteUI.SoftShadow);
+            float y = bottom - 4f;
+            foreach (var (text, h, alpha) in shown)
+            {
                 y -= h;
                 GUI.color = new Color(1f, 1f, 1f, alpha);
-                UIStyle.Outlined(new Rect(8f, y, LogWidth, h), lines[i].text, lineStyle);
+                GUI.Label(new Rect(12f, y, LogWidth, h), text, lineStyle);
             }
             GUI.color = old;
         }
@@ -271,10 +296,20 @@ namespace PocketCaravan
                 var content = new GUIContent(kv.Value.text);
                 float w = Mathf.Min(140f, bubbleStyle.CalcSize(content).x + 4f);
                 float h = bubbleStyle.CalcHeight(content, w);
-                float cx = sp.x / scale, by = (Screen.height - sp.y) / scale;
-                var r = new Rect(cx - w / 2f - 5f, by - h - 6f, w + 10f, h + 6f);
-                GUI.Box(r, GUIContent.none, UIStyle.Box);
-                GUI.Label(new Rect(r.x + 5f, r.y + 3f, w, h), content, bubbleStyle);
+                float cx = Mathf.Round(sp.x / scale), by = Mathf.Round((Screen.height - sp.y) / scale);
+                // 11/05 B안 말풍선: 종이 + 테두리(내 말은 청록) + 아래 꼬리
+                var r = new Rect(Mathf.Round(cx - w / 2f - 6f), by - h - 10f, Mathf.Round(w + 12f), Mathf.Round(h + 7f));
+                var line = kv.Key == net.MyId ? CuteUI.Interact : CuteUI.Ink;
+                CuteUI.Box(r, 6, CuteUI.Paper, line, 1, 2, CuteUI.SoftShadow);
+                CuteUI.Fill(new Rect(cx - 3f, r.yMax - 1f, 7f, 1f), CuteUI.Paper);
+                CuteUI.Fill(new Rect(cx - 3f, r.yMax - 1f, 1f, 2f), line);
+                CuteUI.Fill(new Rect(cx + 3f, r.yMax - 1f, 1f, 2f), line);
+                CuteUI.Fill(new Rect(cx - 2f, r.yMax, 5f, 1f), CuteUI.Paper);
+                CuteUI.Fill(new Rect(cx - 2f, r.yMax + 1f, 1f, 1f), line);
+                CuteUI.Fill(new Rect(cx + 2f, r.yMax + 1f, 1f, 1f), line);
+                CuteUI.Fill(new Rect(cx - 1f, r.yMax + 1f, 3f, 1f), CuteUI.Paper);
+                CuteUI.Fill(new Rect(cx - 1f, r.yMax + 2f, 3f, 1f), line);
+                GUI.Label(new Rect(r.x + 6f, r.y + 3f, w, h), content, bubbleStyle);
             }
         }
     }

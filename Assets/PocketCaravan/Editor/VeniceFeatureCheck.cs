@@ -199,14 +199,14 @@ namespace PocketCaravan.EditorTools
                     step = 1; waitUntil = now + 3f; break;
                 case 1:
                 {
-                    var mer = UnityEngine.Object.FindAnyObjectByType<VeniceMerchant>();
+                    var mer = UnityEngine.Object.FindAnyObjectByType<Peddler.Spot>();
                     report.AppendLine($"떠돌이 상인: 오늘 {VeniceDaily.MerchantMap}, 여기 {(mer != null ? "있음" : "없음")}, 특가 {VeniceDaily.DealItem}");
                     var deal = VeniceUtil.Item(VeniceDaily.DealItem);
                     if (deal != null)
                     {
                         int m0 = gm.Player.money, c0 = gm.Player.cargo.Count(deal);
-                        VeniceMerchant.BuyDeal(deal); VeniceMerchant.BuyDeal(deal);
-                        report.AppendLine($"   특가 2개: 짐 {c0}→{gm.Player.cargo.Count(deal)}, 돈 {m0}→{gm.Player.money} (기준가 {deal.basePrice}, 특가 {VeniceMerchant.DealPrice(deal)})");
+                        Peddler.BuyDeal(Reactions.Region.Venice, deal); Peddler.BuyDeal(Reactions.Region.Venice, deal);
+                        report.AppendLine($"   특가 2개: 짐 {c0}→{gm.Player.cargo.Count(deal)}, 돈 {m0}→{gm.Player.money} (기준가 {deal.basePrice}, 특가 {Peddler.DealPrice(Reactions.Region.Venice, deal)})");
                     }
                     if (mer != null) { Near(p, mer, new Vector3(0, -1.5f, 0)); mer.Interact(p); }
                     step = 2; waitUntil = now + 1.2f; break;
@@ -292,7 +292,7 @@ namespace PocketCaravan.EditorTools
                     for (int d = 1; d < 60; d++)            // 길 잃은 순례자: 맑지 않은 시각을 찾는다
                     {
                         bool found = false;
-                        for (int h = 6; h < 20; h++) { SetClock(gm, d, h); if (VeniceEvents.LostWeather && !VeniceEvents.AcquaAlta) { found = true; break; } }
+                        for (int h = 6; h < 20; h++) { SetClock(gm, d, h); if (LostTraveler.BadWeather(Reactions.Region.Venice) && !VeniceEvents.AcquaAlta) { found = true; break; } }
                         if (found) break;
                     }
                     report.AppendLine($"순례자 시험 날씨: {VeniceAtmosphere.Now} ({gm.Clock.Label})");
@@ -300,9 +300,9 @@ namespace PocketCaravan.EditorTools
                     step = 11; waitUntil = now + 3f; break;
                 case 11:
                 {
-                    var lost = UnityEngine.Object.FindAnyObjectByType<VeniceLostTraveler>();
+                    var lost = UnityEngine.Object.FindAnyObjectByType<LostTraveler.Spot>();
                     report.AppendLine($"   돌다리에 순례자: {(lost != null ? "있음" : "없음")}");
-                    if (lost != null) { Near(p, lost, new Vector3(1f, 0, 0)); Shot("life_9_pilgrim"); gm.GetComponent<VeniceEvents>().StartFollow(lost); }
+                    if (lost != null) { Near(p, lost, new Vector3(1f, 0, 0)); Shot("life_9_pilgrim"); lost.Interact(p); }
                     lifeMoney = gm.Player.money; lifeCredit = gm.Player.credit;
                     step = 12; waitUntil = now + 1f; break;
                 }
@@ -543,11 +543,11 @@ namespace PocketCaravan.EditorTools
                     gm.TravelTo("venice_rialto", "from_venice_chioggia_49");
                     step = 10; waitUntil = now + 2.5f; break;
                 case 10:
-                    var lion = UnityEngine.Object.FindAnyObjectByType<VeniceLion>();
+                    var lion = UnityEngine.Object.FindAnyObjectByType<Collectibles.Spot>();
                     report.AppendLine("리알토 사자 문장: " + (lion != null ? $"있음 ({lion.Cell}, 번호 {lion.index})" : "없음"));
-                    if (lion != null) { lion.Interact(PlayerController.Instance); report.AppendLine($"   읽은 문장 {VeniceLion.Found} / 7"); }
+                    if (lion != null) { lion.Interact(PlayerController.Instance); report.AppendLine($"   읽은 문장 {Collectibles.Found(Reactions.Region.Venice)} / 7"); }
                     var feed = UnityEngine.Object.FindAnyObjectByType<VeniceFeed>();
-                    var museum = UnityEngine.Object.FindAnyObjectByType<VeniceMuseum>();
+                    var museum = UnityEngine.Object.FindAnyObjectByType<Museum.Spot>();
                     report.AppendLine($"모이 주머니 {(feed != null ? "있음" : "없음")}, 전시실 {(museum != null ? "있음" : "없음")}, 날씨 {VeniceAtmosphere.Now}");
                     if (feed != null) { int m0 = gm.Player.money; feed.Interact(PlayerController.Instance); report.AppendLine($"   모이 주기: 돈 {m0}→{gm.Player.money}, 오늘 함 {VeniceSave.DoneToday("feed")}"); }
                     var snd = gm.GetComponent<VeniceSound>();

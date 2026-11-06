@@ -5,8 +5,9 @@ namespace PocketCaravan
 {
     /// <summary>
     /// 다음 이야기 길잡이 + 퀘스트 동시 진행 제한 (전 지역 공용, 2026-11-04 통합: 북유럽 NorthGuide·NorthQuestLimit + 베네치아 VeniceDaily 길잡이).
-    /// [길잡이] 지금 지역의 퀘스트를 하나도 진행하지 않을 때, 다음에 받을 수 있는 그 지역 퀘스트를 누가 주는지 화면 아래 가운데에 한 줄.
-    ///   ("다음 이야기  집 보는 남편 「…」 · 비르카 서쪽 첫 집 앞  !") 시작 튜토리얼 중에는 튜토리얼 안내가 맡는다.
+    /// [길잡이] 지금 지역의 퀘스트를 하나도 진행하지 않을 때, 다음에 받을 수 있는 그 지역 퀘스트를 누가 주는지 한 줄.
+    ///   11/05 B안: 화면 위 가운데 알약 ("! 집 보는 남편을 만나기 · 비르카 서쪽 첫 집 앞"). 할 일 줄이 있으면 그 아래.
+    ///   시작 튜토리얼 중에는 튜토리얼 안내가 맡는다.
     /// [동시 제한] 한 지역의 사람이 주는 퀘스트는 한 번에 3개까지. 북유럽 마을 곁가지("북쪽 마을 이야기")는 그중 2개까지.
     ///   사람이 주지 않는 자동 퀘스트는 세지만 막지 않는다.
     /// 퀘스트의 지역은 주는 사람이 있는 맵으로 정한다 (WorldIndex). 공용 QuestManager는 읽기만 하고 ExtraAcceptBlocker 자리에 조건만 더한다.
@@ -44,6 +45,8 @@ namespace PocketCaravan
             // 아라비아
             { "arabia_hasan", ("길잡이 하산", null) }, { "arabia_maryam", ("여관 주인 마리암", null) }, { "arabia_hindbad", ("짐꾼 힌드바드", null) },
             { "arabia_kitchen_keeper", ("공동 부엌 담당", null) },
+            { "arabia_elder", ("자비드 찻집 노인", null) }, { "arabia_rashid", ("직물 상인 라시드", null) }, { "arabia_dyer", ("타이즈 염색 장인", null) },
+            { "arabia_yusuf", ("수레 장인 유수프", null) }, { "arabia_portmaster", ("제다 물류 담당", null) }, { "arabia_nadia", ("시장 상인 나디아", null) }, { "arabia_gardener", ("궁전 정원사", null) },
         };
 
         static GameManager GM => GameManager.I;
@@ -86,9 +89,20 @@ namespace PocketCaravan
         }
 
         // ---------------- 길잡이 ----------------
-        GUIStyle style;
-        string text;
+        static StoryGuide instance;
+        string who, where;
         float nextCheck;
+
+        /// <summary>다음 이야기 줄이 떠 있는지 (알림이 그 아래로 비킨다)</summary>
+        public static bool Showing => Ready && !HUD.Expanded;
+
+        static bool Ready => instance != null && instance.isActiveAndEnabled && !string.IsNullOrEmpty(instance.who)
+            && !UIState.Blocking && GM != null && !GM.IsTravelling;
+
+        /// <summary>Tab으로 펼쳤을 때 오른쪽 할 일 카드에 넣을 다음 이야기 ("여관 주인을 만나기", "리알토"). 없으면 null</summary>
+        public static (string action, string where)? Next => Ready ? (instance.who + CuteUI.Eul(instance.who) + " 만나기", instance.where) : ((string, string)?)null;
+
+        void Awake() => instance = this;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Boot()
@@ -103,32 +117,27 @@ namespace PocketCaravan
         {
             if (Time.unscaledTime < nextCheck) return;
             nextCheck = Time.unscaledTime + 0.5f;
-            text = null;
+            who = where = null;
             if (GM == null || GM.Quests == null || MapRoot.Current == null || IntroActive) return;
             var here = Reactions.Here;
             foreach (var p in GM.Quests.Active) if (p != null && In(p.quest, here)) return;   // 진행 중이면 공용 퀘스트 안내가 맡는다
             foreach (var q in GM.Db.quests)
             {
                 if (q == null || q.retired || string.IsNullOrEmpty(q.giverNpc) || !In(q, here) || !GM.Quests.CanStart(q)) continue;
-                string name = q.giverNpc, where = null;
-                if (Givers.TryGetValue(q.giverNpc, out var g)) { name = g.name; where = g.where; }
-                if (string.IsNullOrEmpty(where)) { var map = WorldIndex.Get()?.MapOf("npc", q.giverNpc); if (map != null) where = WorldIndex.Get().MapName(map); }
-                text = $"<color=#ffde59>다음 이야기</color>  <b>{name}</b>" + (string.IsNullOrEmpty(q.title) ? "" : $" 「{q.title}」")
-                     + (string.IsNullOrEmpty(where) ? "" : $"  <color=#c9c3d6>· {where}</color>") + "  <color=#ffde59>!</color>";
+                string name = q.giverNpc, place = null;
+                if (Givers.TryGetValue(q.giverNpc, out var g)) { name = g.name; place = g.where; }
+                if (string.IsNullOrEmpty(place)) { var map = WorldIndex.Get()?.MapOf("npc", q.giverNpc); if (map != null) place = WorldIndex.Get().MapName(map); }
+                who = name; where = place;
                 return;
             }
         }
 
         void OnGUI()
         {
-            if (string.IsNullOrEmpty(text) || UIState.Blocking || GM == null || GM.IsTravelling) return;
+            if (!Showing) return;
             UIStyle.Begin();
-            if (style == null) style = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow };
-            float w = Mathf.Min(UIStyle.VirtualWidth - 20f, style.CalcSize(new GUIContent(text)).x + 20f);
             GUI.depth = -5;   // 머리 위 이름표보다 앞에
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2f, UIStyle.VirtualHeight - 64f, w, 18f);   // 조작 안내·목표 줄과 겹치지 않게
-            GUI.Box(r, GUIContent.none, UIStyle.Box);
-            GUI.Label(r, text, style);
+            CuteUI.TopPill(6 + (QuestTracker.LineVisible ? 24 : 0), true, null, who + CuteUI.Eul(who) + " 만나기", where);
         }
     }
 }

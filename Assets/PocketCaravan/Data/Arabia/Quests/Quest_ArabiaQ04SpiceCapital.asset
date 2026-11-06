@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: Quest_ArabiaQ04SpiceCapital
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: arabia_q04_spice_capital
+  retired: 0
+  title: "\uD5A5\uC2E0\uB8CC\uB294 \uC218\uB3C4\uB85C"
+  chain: "\uC544\uB77C\uBE44\uC544 1\uC7A5"
+  summary: "\uC81C\uB2E4 \uD56D\uAD6C\uC5D0\uC11C \uD5A5\uC2E0\uB8CC \uC790\uB8E8\uB97C
+    \uC0AC\uC11C \uC218\uB3C4 \uC0AC\uB098\uC5D0 \uD310\uB2E4. \uC544\uB77C\uBE44\uC544\uC5D0\uC11C
+    \uAC00\uC7A5 \uAE34 \uAD50\uC5ED \uAE38."
+  giverNpc: arabia_maryam
+  requires:
+  - {fileID: 11400000, guid: 8c0397b6a5a0e44d8a4ab955d0295c1c, type: 2}
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "\uC81C\uB2E4\uC5D0\uC11C \uC0AC\uB098\uB85C \uAC00\uB294 \uAE38\uC774
+    \uB458\uC774\uC57C. \uC9C0\uB984\uAE38\uC740 \uBE60\uB974\uC9C0\uB9CC \uBAA8\uB798\uBC14\uB78C\uC774
+    \uBD88\uACE0, \uB18D\uB85C\uB294 \uB290\uB9AC\uC9C0\uB9CC \uB300\uC0C1 \uC219\uC18C\uAC00
+    \uC788\uC5B4.\n\uD5A5\uC2E0\uB8CC 3\uC790\uB8E8\uB97C \uC0AC\uB098\uAE4C\uC9C0
+    \uAC00\uC838\uAC00 \uBCF4\uB834."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 2
+    text: "\uC81C\uB2E4 \uC7A5\uD130\uC5D0\uC11C \uD5A5\uC2E0\uB8CC \uC790\uB8E8
+      \uC0AC\uAE30"
+    targetId: arabia_jeddah
+    item: {fileID: 11400000, guid: 96610d66c3d64410a98a84e4cf5d03ee, type: 2}
+    vehicle: {fileID: 0}
+    count: 3
+    completeLine: 
+  - type: 3
+    text: "\uC0AC\uB098 \uC7A5\uD130\uC5D0 \uD5A5\uC2E0\uB8CC \uC790\uB8E8 \uD314\uAE30"
+    targetId: arabia_sanaa
+    item: {fileID: 11400000, guid: 96610d66c3d64410a98a84e4cf5d03ee, type: 2}
+    vehicle: {fileID: 0}
+    count: 3
+    completeLine: "\uC218\uB3C4 \uC0AC\uB78C\uB4E4\uC740 \uD5A5\uC2E0\uB8CC \uC5C6\uC778
+      \uBC25\uC744 \uC548 \uBA39\uC9C0. \uC88B\uC740 \uAC12\uC5D0 \uD314\uB838\uC744
+      \uAC70\uC57C."
+  rewardMoney: 50
+  rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "\uC0AC\uB098\uB294 \uC218\uB3C4\uB77C \uBA3C \uC0B0\uC9C0 \uBB3C\uAC74\uC744
+    \uAC00\uC7A5 \uBE44\uC2F8\uAC8C \uC0B0\uB2E4. \uC720\uD5A5\uACFC \uC591\uD0C4\uC790\uB294
+    \uAC70\uAFB8\uB85C \uC0AC\uB098\uAC00 \uC0B0\uC9C0\uB2E4."

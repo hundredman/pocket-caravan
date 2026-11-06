@@ -12,6 +12,13 @@ namespace PocketCaravan
     /// </summary>
     public static class InputReader
     {
+        // 2026-11-05 화면 단추(오른쪽 위 퀘스트·지도·장부)로 누른 키: 다음 프레임에 한 번 눌린 것으로 친다
+        static char virtualKey;
+        static int virtualFrame = -1;
+        /// <summary>화면 단추로 키를 누른다 ('q' 퀘스트, 'm' 지도, 'l' 장부)</summary>
+        public static void Press(char key) { virtualKey = key; virtualFrame = Time.frameCount + 1; }
+        static bool Virtual(char key) => virtualKey == key && Time.frameCount == virtualFrame;
+
 #if ENABLE_INPUT_SYSTEM
         static Keyboard K => Keyboard.current;
 
@@ -34,9 +41,9 @@ namespace PocketCaravan
         public static bool InteractPressed() => K != null && K.spaceKey.wasPressedThisFrame;
         public static bool ConfirmPressed() => InteractPressed();
         public static bool CancelPressed() => K != null && K.escapeKey.wasPressedThisFrame;
-        public static bool QuestLogPressed() => K != null && K.qKey.wasPressedThisFrame;
-        public static bool MapPressed() => K != null && K.mKey.wasPressedThisFrame;
-        public static bool LedgerPressed() => K != null && K.lKey.wasPressedThisFrame;
+        public static bool QuestLogPressed() => (K != null && K.qKey.wasPressedThisFrame) || Virtual('q');
+        public static bool MapPressed() => (K != null && K.mKey.wasPressedThisFrame) || Virtual('m');
+        public static bool LedgerPressed() => (K != null && K.lKey.wasPressedThisFrame) || Virtual('l');
         /// <summary>상태창·할 일 펼치기 (5초 뒤 다시 한 줄)</summary>
         public static bool StatusPressed() => K != null && K.tabKey.wasPressedThisFrame;
         /// <summary>소지품 창 (2026-10-30)</summary>
@@ -66,9 +73,9 @@ namespace PocketCaravan
         public static bool InteractPressed() => Input.GetKeyDown(KeyCode.Space);
         public static bool ConfirmPressed() => InteractPressed();
         public static bool CancelPressed() => Input.GetKeyDown(KeyCode.Escape);
-        public static bool QuestLogPressed() => Input.GetKeyDown(KeyCode.Q);
-        public static bool MapPressed() => Input.GetKeyDown(KeyCode.M);
-        public static bool LedgerPressed() => Input.GetKeyDown(KeyCode.L);
+        public static bool QuestLogPressed() => Input.GetKeyDown(KeyCode.Q) || Virtual('q');
+        public static bool MapPressed() => Input.GetKeyDown(KeyCode.M) || Virtual('m');
+        public static bool LedgerPressed() => Input.GetKeyDown(KeyCode.L) || Virtual('l');
         public static bool StatusPressed() => Input.GetKeyDown(KeyCode.Tab);
         public static bool InventoryPressed() => Input.GetKeyDown(KeyCode.I);
         public static Vector2Int MovePressed()

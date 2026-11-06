@@ -218,6 +218,10 @@ namespace PocketCaravan
         {var s=states.Find(v=>v.placement.id==id);if(s==null)return;s.placement.enabled=value;bool active=value && !s.resolved && s.definition.Active(Elapsed,s.placement.phaseOffset);if(active && !s.active)s.escapeGrace=OverlapsPlayer(s);s.active=active;RefreshVisual(s);}
         public void ResetState(){Elapsed=0;Message="장애 상태 초기화";Rebuild();}
         bool showDetails;
+        /// <summary>오른쪽 위 단추 아래에서 이 표시가 차지한 높이 (Tab 할 일 카드가 그 아래로 비킨다). 그린 프레임에만 유효</summary>
+        public static float TopRightUsed => usedFrame >= Time.frameCount - 1 ? used : 0f;
+        static float used;
+        static int usedFrame = -1;
         void OnGUI()
         {
             if(map==null || MapRoot.Current!=map || states.Count==0)return;
@@ -228,21 +232,47 @@ namespace PocketCaravan
                 Effects(pc.Motor.Cell,out float speed,out _,out _,out _,out float visibility);
                 if(visibility<1){GUI.depth=10;var color=GUI.color;GUI.color=new Color(.32f,.37f,.4f,(1-visibility)*.65f);GUI.DrawTexture(new Rect(0,0,UIStyle.VirtualWidth,UIStyle.VirtualHeight),Texture2D.whiteTexture);GUI.color=color;GUI.depth=-24;}
             }
-            var s=focus ?? states[0];float w=Mathf.Min(300,UIStyle.VirtualWidth-16);
-            GUILayout.BeginArea(new Rect(UIStyle.VirtualWidth-w-8,8,w,showDetails?204:64),UIStyle.Box);
-            GUILayout.Label(s.definition.displayName+" · "+(s.resolved?"해결":s.active?"활성":"통행 가능"),UIStyle.Rich);
-            if(GUILayout.Button(showDetails?"상세 접기":"상세 · 대응 방법",UIStyle.Button))showDetails=!showDetails;
-            if(!showDetails){GUILayout.EndArea();return;}
-            string detail=string.IsNullOrWhiteSpace(s.definition.description)?s.definition.category+" · 우회로와 대응 방법을 비교하세요.":s.definition.description;
-            GUILayout.Label(detail,UIStyle.Wrap);
-            var d=s.definition;
-            GUILayout.Label($"등짐×{d.walkSpeed:0.##} / 수레×{d.cartSpeed:0.##} · 비용 {d.money}냥"+(d.itemCount>0?$" · {GameManager.I?.ItemById(d.itemId)?.displayName ?? "재료"} {d.itemCount}개":""),UIStyle.Small);
-            if(d.Timed)GUILayout.Label("현재 단계 남은 시간 "+PhaseRemaining(s).ToString("0.0")+"초 · 우회 가능",UIStyle.Small);
-            if(working!=null)GUILayout.Label("작업 "+(Progress*100).ToString("0")+"% · 이동하면 취소",UIStyle.Small);
-            GUI.enabled=pc!=null && Near(s,pc) && !s.resolved && d.action!=ObstacleAction.None;
-            if(GUILayout.Button(d.action==ObstacleAction.Pay?"비용 지불 / Space":d.action==ObstacleAction.Repair?"보수 시작 / Space":"제거 시작 / Space",UIStyle.Button))TryWork(s.placement.id,pc);
-            GUI.enabled=true;GUILayout.Label(Message ?? "가까이 가서 Space · 우회로도 비교하세요.",UIStyle.Wrap);
-            GUILayout.EndArea();
+            // 11/05 UI B안: 오른쪽 위 단추를 가리던 큰 검은 창 대신, 단추 아래 한 줄 알약 (누르면 자세히 카드)
+            var s=focus ?? states[0];var d=s.definition;
+            float vw=UIStyle.VirtualWidth,top=44;
+            string line=d.displayName+" · "+(s.resolved?"해결":s.active?"활성":"통행 가능");
+            Color32 dot=s.resolved?CuteUI.Sub:s.active?CuteUI.Alert:CuteUI.Up;
+            string more=showDetails?"접기":"자세히";
+            float pw=Mathf.Round(21+CuteUI.Width(line,true)+8+CuteUI.Width(more,true)+10);
+            var pill=new Rect(vw-6-pw,top,pw,18);
+            CuteUI.Pill(pill);
+            CuteUI.Circle(pill.x+8,pill.y+5,8,dot,dot,0);
+            float tx=CuteUI.Label(pill.x+21,pill.y+9,line,CuteUI.Text,true);
+            CuteUI.Label(tx+8,pill.y+9,more,CuteUI.Interact,true);
+            if(GUI.Button(pill,GUIContent.none,GUIStyle.none))showDetails=!showDetails;
+            float bottom=pill.yMax;
+            if(showDetails)
+            {
+                float w=Mathf.Min(260,vw-16),x=vw-6-w,inner=w-20;
+                string detail=CuteUI.Plain(string.IsNullOrWhiteSpace(d.description)?d.category+" · 우회로와 대응 방법을 비교하세요.":d.description);
+                string stats=$"등짐×{d.walkSpeed:0.##} / 수레×{d.cartSpeed:0.##} · 비용 {d.money}냥"+(d.itemCount>0?$" · {GameManager.I?.ItemById(d.itemId)?.displayName ?? "재료"} {d.itemCount}개":"");
+                string timer=d.Timed?"현재 단계 남은 시간 "+PhaseRemaining(s).ToString("0.0")+"초 · 우회 가능":null;
+                string work=working!=null?"작업 "+(Progress*100).ToString("0")+"% · 이동하면 취소":null;
+                string msg=CuteUI.Plain(Message ?? "가까이 가서 Space · 우회로도 비교하세요.");
+                string act=d.action==ObstacleAction.Pay?"비용 지불 (Space)":d.action==ObstacleAction.Repair?"보수 시작 (Space)":"제거 시작 (Space)";
+                float h=8+CuteUI.WrapHeight(detail,inner)+4+CuteUI.WrapHeight(stats,inner,true)+(timer!=null?14:0)+(work!=null?14:0)+6+22+6+CuteUI.WrapHeight(msg,inner,true)+10;
+                var card=new Rect(x,pill.yMax+4,w,h);
+                CuteUI.Card(card);
+                float y=card.y+8;
+                y+=CuteUI.Wrap(x+10,y,inner,detail,CuteUI.Text)+4;
+                y+=CuteUI.Wrap(x+10,y,inner,stats,CuteUI.Sub,true);
+                if(timer!=null){CuteUI.Label(x+10,y+6,timer,CuteUI.Sub,true);y+=14;}
+                if(work!=null){CuteUI.Label(x+10,y+6,work,CuteUI.Interact,true);y+=14;}
+                y+=6;
+                var br=new Rect(x+10,y,inner,22);
+                bool can=pc!=null && Near(s,pc) && !s.resolved && d.action!=ObstacleAction.None;
+                if(can){if(CuteUI.Button(br,act))TryWork(s.placement.id,pc);}
+                else{CuteUI.Box(br,8,CuteUI.Paper2,CuteUI.Line);CuteUI.LabelCenter(br.center.x,br.center.y,act,CuteUI.Sub);}
+                y+=28;
+                CuteUI.Wrap(x+10,y,inner,msg,CuteUI.Sub,true);
+                bottom=card.yMax;
+            }
+            used=bottom-top+6;usedFrame=Time.frameCount;
         }
         void OnDestroy(){if(footprintSprite!=null)Destroy(footprintSprite);}
         public float PhaseRemaining(State s)

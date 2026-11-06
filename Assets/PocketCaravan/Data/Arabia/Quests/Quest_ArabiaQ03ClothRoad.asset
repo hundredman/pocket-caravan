@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deef7dcc246514e33a7d0d3e920a98bc, type: 3}
+  m_Name: Quest_ArabiaQ03ClothRoad
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
+  id: arabia_q03_cloth_road
+  retired: 0
+  title: "\uD0C0\uC774\uC988\uC758 \uC5FC\uC0C9 \uC9C1\uBB3C"
+  chain: "\uC544\uB77C\uBE44\uC544 1\uC7A5"
+  summary: "\uD0C0\uC774\uC988 \uC5FC\uC0C9 \uACF5\uBC29 \uB9C8\uC744\uC5D0\uC11C
+    \uC9C1\uBB3C \uAFB8\uB7EC\uBBF8\uB97C \uC0AC\uC11C \uD56D\uAD6C \uC81C\uB2E4\uC5D0
+    \uD310\uB2E4. \uCC98\uC74C\uC73C\uB85C \uB450 \uB9C8\uC744\uC744 \uC787\uB294
+    \uAE38."
+  giverNpc: arabia_hasan
+  requires:
+  - {fileID: 11400000, guid: bcb16efe364b54311b791c4a12646150, type: 2}
+  requiresAny: []
+  choiceGroup: 
+  offerLine: "\uC790\uBE44\uB4DC\uAE4C\uC9C0\uB294 \uAC00 \uBD24\uC9C0? \uADF8\uB7FC
+    \uB2E4\uC74C\uC740 \uD0C0\uC774\uC988\uC57C. \uAC70\uAE30 \uC5FC\uC0C9 \uC9C1\uBB3C\uC744
+    \uC81C\uB2E4 \uD56D\uAD6C\uC5D0 \uAC00\uC838\uAC00\uBA74 \uAC12\uC774 \uC62C\uB77C.\n\uC9C1\uBB3C
+    2\uAC1C\uBA74 \uB3FC. \uAE38\uC740 \uB0A8\uCABD\uC73C\uB85C \uCB49."
+  giveItem: {fileID: 0}
+  giveCount: 0
+  offerItem: {fileID: 0}
+  offerCount: 0
+  offerPrice: 0
+  objectives:
+  - type: 5
+    text: "\uD0C0\uC774\uC988\uC5D0 \uAC00\uAE30"
+    targetId: arabia_taiz
+    item: {fileID: 0}
+    vehicle: {fileID: 0}
+    count: 1
+    completeLine: 
+  - type: 2
+    text: "\uD0C0\uC774\uC988 \uC7A5\uD130\uC5D0\uC11C \uC9C1\uBB3C \uAFB8\uB7EC\uBBF8
+      \uC0AC\uAE30"
+    targetId: arabia_taiz
+    item: {fileID: 11400000, guid: 35a7e3db33a56468183a9b53947724c8, type: 2}
+    vehicle: {fileID: 0}
+    count: 2
+    completeLine: 
+  - type: 3
+    text: "\uC81C\uB2E4 \uC7A5\uD130\uC5D0 \uC9C1\uBB3C \uAFB8\uB7EC\uBBF8 \uD314\uAE30"
+    targetId: arabia_jeddah
+    item: {fileID: 11400000, guid: 35a7e3db33a56468183a9b53947724c8, type: 2}
+    vehicle: {fileID: 0}
+    count: 2
+    completeLine: "\uBC14\uB2E4 \uAC74\uB108 \uC0C1\uC778\uB4E4\uC774 \uD0C0\uC774\uC988
+      \uC9C1\uBB3C\uC744 \uC88B\uC544\uD558\uC9C0. \uC798 \uAC00\uC838\uC654\uC5B4."
+  rewardMoney: 40
+  rewardCredit: 1
+  rewardReputationScope: 0
+  rewardReputationTarget: 
+  rewardReputationSize: 0
+  hasLegacyReward: 0
+  legacyRewardMoney: 0
+  legacyRewardCredit: 0
+  finishNote: "\uC81C\uB2E4 \uD56D\uAD6C\uC5D0\uC120 \uBC30\uB85C \uB4E4\uC5B4\uC628
+    \uD5A5\uC2E0\uB8CC\uB97C \uD310\uB2E4. \uB0B4\uB959\uC73C\uB85C \uAC00\uC838\uAC00\uBA74
+    \uB354 \uBE44\uC2F8\uB2E4."

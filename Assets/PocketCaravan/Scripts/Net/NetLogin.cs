@@ -12,6 +12,7 @@ namespace PocketCaravan
     ///   "이 컴퓨터에 기억"을 켜 두면 다음부터는 켜자마자 저절로 접속한다(실패하면 로그인 화면이 그대로 남는다).
     ///   접속되면 시작 화면으로 넘어간다. 로그인 화면이 떠 있는 동안 시작 화면은 키를 받지 않는다(StartScreen.Held).
     /// - 게임 중 O 키: 온라인 창. 접속해 있으면 내 이름·계정·접속자 수와 끊기 · 다른 이름으로 접속, 아니면 로그인 칸.
+    ///   (2026-11-05 UI B안: 게임 중 창은 CuteUI 모양. 첫 화면 로그인은 시작 화면과 같은 크림·초록 그대로)
     /// - Tab 칸 바꾸기 · Enter 접속 · 한글은 NetTextBox(가/A: 오른쪽 Alt). 서버 주소는 "서버 바꾸기"를 눌러야 보인다(개발용).
     /// - 다른 씬에서 바로 Play하면 시작 화면이 없어서 로그인 화면도 안 뜬다. 편집기에서 볼 때는 Preview를 켠다(메뉴 온라인/화면 캡처).
     /// 이름·접속키·주소·기억 여부는 이 컴퓨터 설정(PlayerPrefs)에만 남는다. 게임 저장 파일과는 무관하다.
@@ -279,7 +280,7 @@ namespace PocketCaravan
 
         bool Button(Rect r, string text, bool primary)
         {
-            if (!light) return GUI.Button(r, text, UIStyle.Button);
+            if (!light) return primary ? CuteUI.Button(r, text) : CuteUI.SoftButton(r, text);
             bool hover = r.Contains(Event.current.mousePosition);
             Fill(new Rect(r.x + 2, r.y + 3, r.width, r.height), Shadow);
             Fill(r, primary ? (hover ? GreenDark : Green) : (hover ? Cream : White));
@@ -302,18 +303,19 @@ namespace PocketCaravan
             }
             else
             {
-                box.TextColor = new Color(0.97f, 0.95f, 0.9f);
-                box.Draw(r, gameField);
+                CuteUI.Box(r, 5, CuteUI.White, box.Active ? CuteUI.Interact : CuteUI.Line, box.Active ? 2 : 1);
+                box.TextColor = (Color)CuteUI.Text;
+                box.Draw(new Rect(r.x + 4, r.y, r.width - 6, r.height), plainField);
             }
         }
 
         /// <summary>네모 칸 + 글: 누르면 켜고 끈다</summary>
         bool Check(Rect r, bool on, string text)
         {
+            if (!light) return CuteUI.Check(r, on, text);
             var box = new Rect(r.x, r.y + (r.height - 10) / 2, 10, 10);
-            if (light) { Fill(box, White); Frame(box, BrownLight, 1); if (on) Fill(new Rect(box.x + 2, box.y + 2, 6, 6), Green); }
-            else { GUI.Box(box, GUIContent.none, UIStyle.Box); if (on) Fill(new Rect(box.x + 3, box.y + 3, 4, 4), new Color32(0x8F, 0xE0, 0x8F, 0xFF)); }
-            Text(new Rect(box.xMax + 5, r.y, r.width - 15, r.height), text, light ? Brown : White, small);
+            Fill(box, White); Frame(box, BrownLight, 1); if (on) Fill(new Rect(box.x + 2, box.y + 2, 6, 6), Green);
+            Text(new Rect(box.xMax + 5, r.y, r.width - 15, r.height), text, Brown, small);
             return GUI.Button(r, GUIContent.none, GUIStyle.none) ? !on : on;
         }
 
@@ -323,7 +325,7 @@ namespace PocketCaravan
         /// <summary>이름 · 접속키 · (서버 주소) · 기억 · 버튼 · 안내. 다 그린 아래쪽 y를 돌려준다</summary>
         float DrawForm(float x, float y, float w, bool start)
         {
-            Color32 ink = light ? Brown : White, soft = light ? BrownLight : new Color32(0xC9, 0xC3, 0xD6, 0xFF);
+            Color32 ink = light ? Brown : CuteUI.Text, soft = light ? BrownLight : CuteUI.Sub;
             Text(new Rect(x, y, w, 14), "이름", ink, label);
             Text(new Rect(x, y, w, 14), "다른 사람에게 보이는 이름 · 16자까지", soft, small, TextAnchor.MiddleRight);
             Field(new Rect(x, y + 15, w, 20), nameBox);
@@ -357,7 +359,7 @@ namespace PocketCaravan
             y += 24;
             if (!string.IsNullOrEmpty(note))
             {
-                Text(new Rect(x - 10, y + 6, w + 20, 14), note, noteBad ? Pick : (light ? Green : new Color32(0x8F, 0xE0, 0x8F, 0xFF)), small, TextAnchor.MiddleCenter);
+                Text(new Rect(x - 10, y + 6, w + 20, 14), note, noteBad ? (light ? Pick : CuteUI.Alert) : (light ? Green : CuteUI.Up), small, TextAnchor.MiddleCenter);
                 y += 20;
             }
             return y;
@@ -365,30 +367,22 @@ namespace PocketCaravan
 
         void DrawStart()
         {
-            light = true;
+            // 11/05 UI B안: 시작 화면과 같은 종이 바둑판 + 주황 머리띠, 로그인 칸은 게임 중 온라인 창과 같은 종이 창
+            light = false;
             GUI.depth = -600;   // 시작 화면(-500) 위
             float W = UIStyle.VirtualWidth, H = UIStyle.VirtualHeight;
-            Fill(new Rect(0, 0, W, H), Bg);
-            for (int y = 0; y < H; y += 20)
-                for (int x = 0; x < W; x += 20)
-                    if (((x / 20) + (y / 20)) % 2 == 1) Fill(new Rect(x, y, 20, 20), BgCheck);
+            CuteUI.Backdrop("온라인");
+            CuteUI.LabelCenter(W / 2, 62, "함께 떠나는 상인 길", CuteUI.Text, false, true);
 
-            var head = new Rect(20, 12, W - 40, 34);
-            Fill(head, Green);
-            Text(new Rect(head.x + 14, head.y, 200, head.height), "Pocket Caravan", White, label);
-            Text(new Rect(head.x, head.y, head.width - 14, head.height), "온라인", White, small, TextAnchor.MiddleRight);
+            float cw = 320, ch = 36 + FormHeight;
+            var card = new Rect(Mathf.Round((W - cw) / 2), 90, cw, ch);
+            CuteUI.Window(card);
+            CuteUI.TitlePlate(card.center.x, card.y - 11, "접속");
+            DrawForm(card.x + 18, card.y + 22, cw - 36, true);
 
-            Text(new Rect(0, 54, W, 24), "함께 떠나는 상인 길", TitleColor, big, TextAnchor.MiddleCenter);
-
-            float cw = 320, ch = 14 + FormHeight + 16;
-            var card = new Rect((W - cw) / 2, 82, cw, ch);
-            Fill(new Rect(card.x + 3, card.y + 4, card.width, card.height), Shadow);
-            Fill(card, White);
-            DrawForm(card.x + 18, card.y + 12, cw - 36, true);
-
-            Text(new Rect(0, H - 26, W, 14), "Tab 칸 바꾸기 · Enter 접속 · 한글/영어: 오른쪽 Alt", BrownLight, small, TextAnchor.MiddleCenter);
-            var server = new Rect(W - 90, H - 26, 76, 14);
-            Text(server, showServer ? "서버 주소 숨기기" : "서버 바꾸기", BrownLight, small, TextAnchor.MiddleRight);
+            CuteUI.LabelCenter(W / 2, H - 20, "Tab 칸 바꾸기 · Enter 접속 · 한글/영어: 오른쪽 Alt", CuteUI.Sub, true);
+            var server = new Rect(W - 96, H - 27, 82, 14);
+            CuteUI.LabelRight(server.xMax, server.center.y, showServer ? "서버 주소 숨기기" : "서버 바꾸기", CuteUI.Interact, true);
             if (GUI.Button(server, GUIContent.none, GUIStyle.none)) { showServer = !showServer; addressBox.Text = address; }
         }
 
@@ -396,30 +390,37 @@ namespace PocketCaravan
         {
             light = false;
             GUI.depth = -11;
-            float w = 320, h = Online ? 156 : 30 + FormHeight + 14;
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2f, (UIStyle.VirtualHeight - h) / 2f, w, h);
-            GUI.Box(r, "", UIStyle.Box);
-            float x = r.x + 16, fw = w - 32, y = r.y + 8;
-            Text(new Rect(r.x, y, w, 16), "<b>온라인</b>", White, label, TextAnchor.MiddleCenter);
-            y += 22;
+            CuteUI.Dim();
+            float w = 320, h = Online ? 170 : 36 + FormHeight;
+            var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2f), Mathf.Round((UIStyle.VirtualHeight - h) / 2f + 6), w, h);
+            CuteUI.Window(r);
+            CuteUI.TitlePlate(r.center.x, r.y - 11, "온라인");
+            float x = r.x + 18, fw = w - 36, y = r.y + 22;
             if (!Online) { DrawForm(x, y, fw, false); return; }
 
             var net = Net;
-            string kind = net.IsAccount ? "<color=#8fe08f>계정</color> · 돈·짐이 서버에 저장돼요" : "<color=#ffde59>손님</color> · 접속키가 없어서 저장되지 않아요";
-            Text(new Rect(x, y, fw, 16), $"<b>{net.MyName}</b>  <color=#c9c3d6>({net.MyId})</color>", White, label);
-            y += 18;
-            Text(new Rect(x, y, fw, 14), kind, White, small);
-            y += 18;
-            Text(new Rect(x, y, fw, 14), $"지금 접속한 사람 {net.OnlineCount}명 · 이 맵 {net.Peers.Count + 1}명", White, small);
+            // 내 이름 카드: 초상 + 이름(아이디) + 계정/손님
+            CuteUI.Box(new Rect(x, y, fw, 42), 8, CuteUI.Paper2, CuteUI.Line);
+            CuteUI.Portrait(x + 4, y + 3, 36);
+            float nx = CuteUI.Label(x + 46, y + 13, net.MyName, CuteUI.Text, false, true);
+            CuteUI.Label(nx + 6, y + 13.5f, $"({net.MyId})", CuteUI.Sub, true);
+            string tag = net.IsAccount ? "계정" : "손님";
+            float tw = CuteUI.Width(tag, true, true) + 10;
+            CuteUI.Box(new Rect(x + 46, y + 22, tw, 13), 5, net.IsAccount ? CuteUI.Up : CuteUI.Deco, CuteUI.Ink);
+            CuteUI.LabelCenter(x + 46 + tw / 2f, y + 28.5f, tag, net.IsAccount ? CuteUI.White : CuteUI.Ink, true, true);
+            CuteUI.Label(x + 46 + tw + 6, y + 28.5f, net.IsAccount ? "돈·짐이 서버에 저장돼요" : "접속키가 없어서 저장되지 않아요", CuteUI.Sub, true);
+            y += 50;
+            CuteUI.Icon(CuteUI.Pic.People, x, y + 2);
+            CuteUI.Label(x + 15, y + 6, $"지금 접속한 사람 {net.OnlineCount}명 · 이 맵 {net.Peers.Count + 1}명", CuteUI.Text, true);
             y += 16;
-            Text(new Rect(x, y, fw, 14), "Enter 채팅 · /춤 같은 리액션 (/리액션 목록)", new Color32(0xC9, 0xC3, 0xD6, 0xFF), small);
+            CuteUI.Label(x, y + 6, "Enter 채팅 · /춤 같은 리액션 (/리액션 목록)", CuteUI.Sub, true);
             y += 14;
-            Text(new Rect(x, y, fw, 14), "공유 장터: 리알토 · 개경 · 비르카 · 제다", new Color32(0xC9, 0xC3, 0xD6, 0xFF), small);
+            CuteUI.Label(x, y + 6, "공유 장터: 리알토 · 개경 · 비르카 · 제다", CuteUI.Sub, true);
             y += 22;
             float bw = (fw - 16) / 3;
-            if (Button(new Rect(x, y, bw, 22), "끊기", false)) { net.Disconnect(); Say("접속을 끊었어요", false); }
-            if (Button(new Rect(x + bw + 8, y, bw, 22), "다른 이름으로", false)) SwitchAccount();
-            if (Button(new Rect(x + (bw + 8) * 2, y, bw, 22), "닫기 (O)", false)) CloseGame();
+            if (CuteUI.SoftButton(new Rect(x, y, bw, 22), "끊기")) { net.Disconnect(); Say("접속을 끊었어요", false); }
+            if (CuteUI.SoftButton(new Rect(x + bw + 8, y, bw, 22), "다른 이름으로")) SwitchAccount();
+            if (CuteUI.SoftButton(new Rect(x + (bw + 8) * 2, y, bw, 22), "닫기 (O)")) CloseGame();
         }
     }
 }
