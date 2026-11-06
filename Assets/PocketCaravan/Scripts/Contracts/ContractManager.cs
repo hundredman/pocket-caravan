@@ -84,14 +84,19 @@ namespace PocketCaravan
         // 신용이 낮은 상인도 다시 시작할 수 있도록 비어 있지 않은 게시판에 일반 의뢰 하나를 남긴다.
         void EnsureBasic(Board b, TownData town)
         {
-            if (b.list.Count == 0 || b.list.Exists(c => !c.Premium)) return;
+            if (b.list.Count == 0 || b.list.Exists(c => !c.Premium && !c.atonement)) return;
             var basic = Generate(town, true);
-            if (basic != null) b.list[b.list.Count - 1] = basic;
+            int last = b.list.FindLastIndex(c => c != null && !c.atonement);
+            if (basic != null && last >= 0) b.list[last] = basic;
         }
 
         public Board BoardOf(string town) => boards.Find(b => b.town == town);
-        public List<Contract> Available(string town) => BoardOf(town)?.list.FindAll(c =>
-            c != null && c.fromTown == town && CanOffer(Town(town), Town(c.toTown))) ?? new List<Contract>();
+        public List<Contract> Available(string town)
+        {
+            var b=BoardOf(town);
+            EnsureAtonement(b,Town(town));
+            return b?.list.FindAll(c=>c!=null && c.fromTown==town && CanOffer(Town(town),Town(c.toTown))) ?? new List<Contract>();
+        }
 
         /// <summary>관문 해금 전 기본 규칙. 출신이 아니라 출발 마을의 지역과 실제 연결을 확인한다.</summary>
         public bool CanOffer(TownData from, TownData to)
@@ -143,7 +148,7 @@ namespace PocketCaravan
         void RepriceUnaccepted(TownData from, Contract offer)
         {
             var rules = DeliveryReward.Rules(from);
-            if (rules == null || offer.rewardRuleVersion == rules.revision || player.contracts.Exists(c => c.id == offer.id)) return;
+            if (offer.atonement || rules == null || offer.rewardRuleVersion == rules.revision || player.contracts.Exists(c => c.id == offer.id)) return;
             var to = Town(offer.toTown);
             if (to == null) return;
             int steps = DeliveryReward.RouteSteps(world, from.id, to.id);
@@ -159,7 +164,7 @@ namespace PocketCaravan
             float now = clock.TotalHours;
             foreach (var b in boards)
             {
-                if (b.list.Count < BoardSize && now - b.lastAdded >= RefillHours)
+                if (b.list.FindAll(c => c != null && !c.atonement).Count < BoardSize && now - b.lastAdded >= RefillHours)
                 {
                     var t = Town(b.town);
                     if (t != null)
@@ -170,6 +175,7 @@ namespace PocketCaravan
                     }
                     b.lastAdded = now;
                 }
+                EnsureAtonement(b, Town(b.town));
             }
             // 최종 기한이 지난 의뢰는 실패
             foreach (var c in new List<Contract>(player.contracts))
@@ -178,9 +184,18 @@ namespace PocketCaravan
                 {
                     player.contracts.Remove(c);
                     player.credit -= 1;
-                    Notify.Show($"의뢰 실패: {c.cargo} (기한 지남) · 신용 −1", 5f);
                     Sfx.Play("fail");
-                    ReputationAwards.ForTown(Town(c.fromTown), ReputationSize.Medium, -1, "contract:expired");
+                    if (c.atonement)
+                    {
+                        // 속죄 의뢰 실패: 보증금만 잃는다. 평판은 더 떨어지지 않는다.
+                        CloseAtonement(c);
+                        Notify.Show($"속죄 의뢰 실패: {c.cargo} (기한 지남) · 보증금 {c.deposit}냥 잃음 · 신용 −1", 5f);
+                    }
+                    else
+                    {
+                        Notify.Show($"의뢰 실패: {c.cargo} (기한 지남) · 신용 −1", 5f);
+                        ReputationAwards.ForTown(Town(c.fromTown), ReputationSize.Medium, -1, "contract:expired");
+                    }
                     GameEvents.RaiseContractFinished(c, false);
                 }
             }
@@ -193,6 +208,11 @@ namespace PocketCaravan
             if (player.contracts.Exists(active => active.id == c.id)) return "이미 맡은 의뢰입니다.";
             if (player.contracts.Count >= MaxActive) return $"의뢰는 한 번에 {MaxActive}개까지 맡을 수 있습니다.";
             if (c.Premium && player.credit < c.minCredit) return $"신용 {c.minCredit} 이상이어야 맡길 수 있다고 합니다.";
+            if (c.atonement)
+            {
+                if (!StandingRecovery.Negative(player.reputation, (ReputationScope)c.atonementScope, c.atonementTarget)) return "평판이 이미 중립 이상입니다.";
+                if (player.money < c.deposit) return $"보증금 {c.deposit}냥이 필요합니다.";
+            }
             if (!player.CanCarryWeight(c.weight)) return "짐이 너무 많아 더 실을 수 없습니다.";
             return null;
         }
@@ -208,6 +228,7 @@ namespace PocketCaravan
             c.deadline = now + c.hours;
             c.finalDeadline = now + c.hours * 1.5f;
             c.condition = 1f;
+            if (c.atonement) player.money -= c.deposit;
             player.contracts.Add(c);
             Sfx.Play("accept");
             Notify.Show($"의뢰를 맡았다: {c.cargo} → {TownName(c.toTown)}");
@@ -228,6 +249,8 @@ namespace PocketCaravan
                 return new ContractResult { message = "도착지 게시판에서 납품해 주세요." };
             if (c.dropped)
                 return new ContractResult { message = "떨어뜨린 의뢰 짐을 먼저 회수해 주세요." };
+            if (c.atonement && (long)player.money + c.deposit > int.MaxValue)
+                return new ContractResult { message = "보증금을 돌려받을 잔고 공간이 부족합니다. 거래 후 다시 납품해 주세요." };
             float now = clock.TotalHours;
             var r = new ContractResult();
             player.contracts.Remove(c);
@@ -253,11 +276,15 @@ namespace PocketCaravan
                 r.credit = -1;
                 r.message = "이걸 어떻게 받나. 없던 일로 하세. (신용 −1)";
             }
+            if (c.atonement) FinishAtonement(c, ref r);
+            else
+            {
+                ReputationAwards.ForTown(Town(c.fromTown), r.credit == 0 ? ReputationSize.VerySmall : ReputationSize.Medium,
+                    r.credit > 0 ? 1 : -1, r.credit > 0 ? "contract:success" : r.success ? "contract:partial" : "contract:failed");
+            }
             player.money += r.paid;
             player.credit += r.credit;
             Sfx.Play(r.success ? "success" : "fail");
-            ReputationAwards.ForTown(Town(c.fromTown), r.credit == 0 ? ReputationSize.VerySmall : ReputationSize.Medium,
-                r.credit > 0 ? 1 : -1, r.credit > 0 ? "contract:success" : r.success ? "contract:partial" : "contract:failed");
             GameEvents.RaiseContractFinished(c, r.success);
             return r;
         }
@@ -269,9 +296,68 @@ namespace PocketCaravan
             int penalty = Mathf.Min(player.money, Mathf.RoundToInt(c.reward * 0.2f));
             player.money -= penalty;
             player.credit -= 1;
-            Notify.Show($"의뢰 짐을 빼앗겼다: {c.cargo} · 배상 {penalty} · 신용 −1", 5f);
-            ReputationAwards.ForTown(Town(c.fromTown), ReputationSize.Small, -1, "contract:lost");
+            if (c.atonement)
+            {
+                CloseAtonement(c);
+                Notify.Show($"속죄 의뢰 짐을 빼앗겼다: {c.cargo} · 보증금 {c.deposit}냥 잃음 · 신용 −1", 5f);
+            }
+            else
+            {
+                Notify.Show($"의뢰 짐을 빼앗겼다: {c.cargo} · 배상 {penalty} · 신용 −1", 5f);
+                ReputationAwards.ForTown(Town(c.fromTown), ReputationSize.Small, -1, "contract:lost");
+            }
             GameEvents.RaiseContractFinished(c, false);
+        }
+
+        // ---------- R4 속죄 의뢰 ----------
+        static readonly string[] AtonementCargo = { "구호 물자", "급한 약재", "모자란 곡식" };
+
+        bool AtonementOpen(int scope, string target) =>
+            boards.Exists(b => b.list.Exists(c => c != null && c.atonement && c.atonementScope == scope && c.atonementTarget == target))
+            || player.contracts.Exists(c => c.atonement && c.atonementScope == scope && c.atonementTarget == target);
+
+        /// <summary>평판 단위가 마이너스이고 재개방 시간이 지났으면 그 단위에 하나만 연다. 중립 이상이 되면 게시만 거둔다.</summary>
+        void EnsureAtonement(Board b, TownData town)
+        {
+            if (b == null || town == null || town.region == null) return;
+            var scope = ReputationPricing.Scope(town); string target = ReputationPricing.Target(town);
+            if (!StandingRecovery.Negative(player.reputation, scope, target))
+            {
+                b.list.RemoveAll(c => c != null && c.atonement && !player.contracts.Contains(c));
+                return;
+            }
+            if (AtonementOpen((int)scope, target) || clock.TotalHours < player.tradeActivity.AtonementReopensAt((int)scope, target)) return;
+            TownData to = null; int best = -1;
+            foreach (var other in db.towns)
+            {
+                if (!CanOffer(town, other)) continue;
+                int steps = Mathf.Max(1, DeliveryReward.RouteSteps(world, town.id, other.id));
+                if (steps > best) { best = steps; to = other; }
+            }
+            if (to == null) return;
+            b.list.Add(new Contract
+            {
+                id = nextId++, fromTown = town.id, toTown = to.id,
+                cargo = AtonementCargo[rng.Next(AtonementCargo.Length)], weight = 3, reward = 0, quotedRouteSteps = best,
+                minCredit = 0, hours = StandingRecovery.AtonementHours(best),
+                atonement = true, deposit = StandingRecovery.AtonementDeposit(best),
+                atonementScope = (int)scope, atonementTarget = target,
+            });
+        }
+
+        void CloseAtonement(Contract c) =>
+            player.tradeActivity.SetAtonementReopen(c.atonementScope, c.atonementTarget, clock.TotalHours + StandingRecovery.AtonementReopenHours);
+
+        /// <summary>성공·부분 성공은 보증금을 돌려주고 평판을 올린다(중립까지). 실패는 보증금만 잃는다.</summary>
+        void FinishAtonement(Contract c, ref ContractResult r)
+        {
+            CloseAtonement(c);
+            var scope = (ReputationScope)c.atonementScope;
+            if (!r.success) { r.message = $"이걸로는 안 되겠네. (보증금 {c.deposit}냥 잃음, 신용 −1)"; return; }
+            int gained = StandingRecovery.Raise(player.reputation, scope, c.atonementTarget,
+                ReputationAwards.PointsFor(r.credit > 0 ? StandingRecovery.AtonementSize : StandingRecovery.AtonementPartialSize));
+            r.paid += c.deposit;
+            r.message = $"덕분에 한시름 놓았네. 보증금 {c.deposit}냥을 돌려받았다. (평판 +{gained}{(r.credit > 0 ? ", 신용 +1" : "")})";
         }
 
         public string TimeLeftText(Contract c)

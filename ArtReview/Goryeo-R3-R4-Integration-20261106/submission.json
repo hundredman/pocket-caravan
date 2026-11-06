@@ -1,0 +1,29 @@
+{
+  "status": "pending-user-screen-approval",
+  "scope": [
+    "R3 market haggling",
+    "R4 recovery facility",
+    "R4 chore and atonement board"
+  ],
+  "resolution": [
+    480,
+    270
+  ],
+  "runtimeChecks": 99,
+  "productionSourceOnLocalReviewBranch": true,
+  "remoteIntegrationChanged": false,
+  "artOrMapChanges": false,
+  "screens": [
+    "01-market-haggle-top.png",
+    "02-market-haggle-controls.png",
+    "03-recovery-negative.png",
+    "04-board-chore-report.png",
+    "04a-recovery-chore-accepted.png",
+    "05-recovery-complete.png",
+    "06-board-atonement-offer.png",
+    "06a-board-atonement-accepted.png",
+    "06b-board-atonement-delivered.png",
+    "07-board-atonement-complete.png"
+  ],
+  "comparisonSheet": "review-sheet.png"
+}

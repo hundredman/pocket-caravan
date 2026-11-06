@@ -1,0 +1,12 @@
+{
+  "installedSDKs": "10.0.401 [/usr/local/share/dotnet/sdk]\n",
+  "originalTarget": "net8.0",
+  "temporaryTarget": "net10.0",
+  "sources": {
+    "Assets/PocketCaravan/Scripts/Economy/TradeActivity.cs": "7ac03b3729ebb3cabe78528ef83dd03a93e2abd78f0b7cedb835b5ecd74fab9f",
+    "Assets/PocketCaravan/Scripts/Economy/Haggle.cs": "0fb0ef6ea033acb041f4fce578402be5c58f6bc1073821f8d587d104373da2a6",
+    "Assets/PocketCaravan/Scripts/Economy/StandingRecovery.cs": "483937b6045bc45e690c2aa4a963e316be7d4fa376813447c12dfecbc49985f3",
+    "Assets/PocketCaravan/Scripts/Core/ReputationState.cs": "adccafe9c8c440d35649566c8663551b4c80161a326477d09addb22c26fcf620",
+    "Assets/PocketCaravan/Scripts/Core/ReputationAwards.cs": "c71a2cd259621f5f3d166d1a0d98f14ec39dca71b064df8f87551867b22b898d"
+  }
+}

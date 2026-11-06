@@ -1,0 +1,1 @@
+첫 Q1Checks.Run에서 R3의 Buy/Sell 선택적 float 인자 추가로 기존 리플렉션 한 인자 호출이 TargetParameterCountException으로 실패했다. 게임의 기존 한 인자 진입점을 보존하고 할인 처리는 BuyHaggled/SellHaggled로 분리했다. Q1 재실행25항목 통과. 검사 생략/완화는 하지 않았다.

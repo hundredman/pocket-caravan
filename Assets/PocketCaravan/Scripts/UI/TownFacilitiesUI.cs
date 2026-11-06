@@ -54,6 +54,65 @@ namespace PocketCaravan
             message = denial ?? $"{item.displayName} 1개를 " + (deposit ? "맡겼습니다." : "찾았습니다.");
             if (denial == null) gm.SaveNow();
         }
+        static readonly int[] DonationSteps = { 50, 100, 200 };
+
+        // R4: 마이너스일 때만 보인다. 세 길 모두 중립(0점)까지만 올린다.
+        void DrawRecovery(GameManager gm, PlayerState p)
+        {
+            if (town.region == null) return;
+            var scope = ReputationPricing.Scope(town); string target = ReputationPricing.Target(town);
+            if (!StandingRecovery.Negative(p.reputation, scope, target)) return;
+            GUILayout.Label("평판 회복 · 중립까지만 회복", UIStyle.Rich);
+            GUILayout.Label($"{ReputationPricing.Progress(p, town)} · 남은 {StandingRecovery.Missing(p.reputation, scope, target)}점", UIStyle.Wrap);
+            var chore = p.tradeActivity.ActiveChore;
+            GUILayout.BeginHorizontal();
+            if (chore != null)
+                GUILayout.Label($"마을 일 진행 중: {StandingRecovery.ChoreTitles[chore.kind % StandingRecovery.ChoreTitles.Length]} ({gm.Contracts.TownName(chore.town)}) · {StandingRecovery.ChoreReport}", UIStyle.Wrap);
+            else
+            {
+                int kind = StandingRecovery.ChoreKind(town.id, gm.Clock.day);
+                GUILayout.Label($"① {StandingRecovery.ChoreTitles[kind]} · 무료 · 평판 +{ReputationAwards.PointsFor(StandingRecovery.ChoreSize)}", UIStyle.Wrap, GUILayout.Width(Mathf.Min(530, UIStyle.VirtualWidth-16)-106));
+                if (GUILayout.Button("맡기", UIStyle.Button, GUILayout.Width(52))) StartChore(gm, p, kind, scope, target);
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.Label($"② 기부: {StandingRecovery.CoinsPerPoint}냥 = 1점, 필요한 만큼만 받음", UIStyle.Wrap);
+            GUILayout.BeginHorizontal();
+            foreach (int amount in DonationSteps)
+            {
+                int cost = Mathf.Min(StandingRecovery.DonationCost(p.reputation, scope, target, amount), p.money);
+                GUI.enabled = cost >= StandingRecovery.CoinsPerPoint;
+                if (GUILayout.Button($"{amount}냥", UIStyle.Button, GUILayout.Width(52))) Donate(gm, p, amount, scope, target);
+            }
+            GUI.enabled = true;
+            GUILayout.EndHorizontal();
+            GUILayout.Label("③ 속죄 의뢰: 게시판에서 · 보증금 필요 · 빠듯한 기한", UIStyle.Wrap);
+            GUILayout.Space(8);
+        }
+
+        void StartChore(GameManager gm, PlayerState p, int kind, ReputationScope scope, string target)
+        {
+            if (!InRange()) { message = "장터 가까이에서 이용하세요."; return; }
+            message = StandingRecovery.ChoreDenial(p.tradeActivity, p.reputation, scope, target);
+            if (message != null) return;
+            if (!SavedEconomyChange.Try(gm,()=>p.tradeActivity.StartChore(town.id, kind, gm.Clock.TotalHours)))
+            { message=SavedEconomyChange.Failure; return; }
+            message = "마을 일을 맡았습니다.\n이 마을 게시판에 보고하세요.";
+            Sfx.Play("accept");
+        }
+
+        void Donate(GameManager gm, PlayerState p, int amount, ReputationScope scope, string target)
+        {
+            if (!InRange()) { message = "장터 가까이에서 이용하세요."; return; }
+            int paid=0, gained=0;
+            if (!SavedEconomyChange.Try(gm,()=>{
+                (paid,gained)=StandingRecovery.Donate(p.reputation,scope,target,amount,p.money);
+                p.money-=paid;
+            })) { message=SavedEconomyChange.Failure; return; }
+            if (paid<=0) { message="기부할 수 없습니다."; return; }
+            message=$"{paid}냥을 기부했습니다. 평판 +{gained}.";
+            Sfx.Play("coin");
+        }
+
         void OnGUI()
         {
             if (!open || GameManager.I == null) return;
@@ -62,10 +121,11 @@ namespace PocketCaravan
             float w = Mathf.Min(530, UIStyle.VirtualWidth - 16), h = UIStyle.WindowHeight(326);
             var rect = new Rect((UIStyle.VirtualWidth-w)/2, (UIStyle.VirtualHeight-h)/2, w, h);
             GUI.Box(rect, "", UIStyle.Box);
-            GUILayout.BeginArea(new Rect(rect.x+12, rect.y+8, w-24, h-94));
+            GUILayout.BeginArea(new Rect(rect.x+12, rect.y+8, w-24, h-64));
             GUILayout.Label($"{town.displayName} 시설 · 거점 {town.SettlementTier}등급 · 내 신용 {p.credit}", UIStyle.Rich);
             GUILayout.Label("마을 방문·기본 매매는 신용과 관계없이 가능합니다.", UIStyle.Small);
             scroll = GUILayout.BeginScrollView(scroll);
+            DrawRecovery(gm, p);
             if (!string.IsNullOrEmpty(detail))
             {
                 GUILayout.Label(detail, UIStyle.Wrap);
@@ -102,7 +162,7 @@ namespace PocketCaravan
                 }
             }
             GUILayout.EndScrollView(); GUILayout.EndArea();
-            GUI.Label(new Rect(rect.x+12, rect.yMax-70, w-24, 40), message ?? "", UIStyle.Wrap);
+            GUI.Label(new Rect(rect.x+12, rect.yMax-46, w-118, 34), message ?? "", UIStyle.Wrap);
             if (GUI.Button(new Rect(rect.xMax-96, rect.yMax-26, 82, 20), "닫기 (Esc)", UIStyle.Button)) Close();
         }
     }

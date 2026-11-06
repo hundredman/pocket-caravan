@@ -1,0 +1,7 @@
+test_live_probe (Tools.Integration.test_r3_r4_rules.R3R4Rules.test_live_probe) ... ok
+test_recorded_probe (Tools.Integration.test_r3_r4_rules.R3R4Rules.test_recorded_probe) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 7.950s
+
+OK
