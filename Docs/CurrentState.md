@@ -831,3 +831,7 @@ Unity 자동162확인·480×270/960×540/360×270 12캡처·컴파일error0. 방
 ### integration 통합 전 Codex 재검토 (2026-11-07)
 
 사용자 지시로 기존 PR27에 분위기/생활 승인본·R3/R4·공용 UI/지도를 함께 올릴 범위를 재검토했다. 최신 integration은 기능 브랜치 조상으로 충돌 없음, DB/씬/연결/다른 문명 전용 파일은 차이 없음. Python403/23skip·세계0오류1437출구·Unity Editor7종·실제 임시 저장 R3/R4 Play100확인/10캡처 통과, 저장8불변/임시0. 새 차단 결함 없음. 원격 병합은 이번 사전 카톡 전달 확인 뒤 진행하며 아직 integration 미병합이다. [검토/카톡 문안](Goryeo/Integration-Review-2026-11-07.md).
+
+### GitHub integration 반영 완료 (2026-11-07)
+
+사용자가 사전 카톡 전달을 확인해 PR27을 integration에 병합했다. 병합86e46c840, 검증 원본775500b5a, GitHub 검사2개 성공. 원격 integration에 병합 커밋이 포함되고 검증 원본과 전체 트리가 동일함을 확인했다. 새 테스트 재실행으로 표현하지 않는다. 공용 UI/지도/R3R4·고려 분위기/생활 기능이 반영됐다. 완료 카톡 문안을 작성했으며 에이전트가 카톡을 직접 보낸 것은 아니다. [결과](Validation/Goryeo-Integration-2026-11-07/merge-result.json).

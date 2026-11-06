@@ -1,0 +1,14 @@
+{
+  "pullRequest": "https://github.com/hundredman/pocket-caravan/pull/27",
+  "state": "MERGED",
+  "mergeCommit": "86e46c840919e50a483367dfeb54cfebca263127",
+  "validatedHead": "775500b5a824902425da6a59b0229e6ef37429ed",
+  "teamNoticeConfirmedByUser": "팀에 전달했어",
+  "githubChecks": {
+    "push": "SUCCESS",
+    "pullRequest": "SUCCESS"
+  },
+  "mergedTreeEqualsValidatedHead": true,
+  "mergePresentInOriginIntegration": true,
+  "postNotice": "completion wording prepared for user to forward; agent did not send Kakao"
+}

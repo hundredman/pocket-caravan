@@ -1,6 +1,6 @@
 # 고려 integration 통합 전 검토
 
-사용자가 Claude 사용량 소진으로 Codex에 검토·카톡 문안·GitHub 반영을 맡겼다. 기존 PR #27(region/goryeo → integration)을 최신 승인 상태로 갱신하는 범위다. 실제 카톡 사전 공지 전달 확인 후 원격 integration을 병합한다. 현재는 미병합이다.
+사용자가 Claude 사용량 소진으로 Codex에 검토·카톡 문안·GitHub 반영을 맡겼다. 기존 PR #27(region/goryeo → integration)을 최신 승인 상태로 갱신하는 범위다. 사용자가 “팀에 전달했어”로 사전 공지 전달을 확인했다. PR #27은 integration에 병합 완료됐으며 병합 커밋은 `86e46c840919e50a483367dfeb54cfebca263127`다. GitHub 검사2개 성공, 원격 integration 포함과 검증한775500b5a 대비 전체 트리 동일을 확인했다.
 
 ## 범위
 
@@ -59,6 +59,6 @@ DB/GameDatabase·WorldIndex·씬·Connections·빌드 목록·맵 JSON·다른 �
 
 ## 카톡 완료 공지 틀
 
-고려 PR #27 integration 통합 완료했습니다. 병합 커밋: [병합 후 실제 해시]. GitHub CI: [병합 전 최신 결과]. 날씨·생활 기능/흥정·회복/공용 UI·지도 수정이 반영됐습니다. DB·씬·맵 연결/다른 문명 전용 파일은 변경하지 않았고, 실제 온라인·장시간 성능은 추가 확인 대상입니다. 최신 integration을 받아 확인해 주세요.
+고려 PR #27 integration 통합 완료했습니다. 병합 커밋: 86e46c840. GitHub CI: 검사2개 모두 성공. 날씨·생활 기능/흥정·회복/공용 UI·지도 수정이 반영됐습니다. DB·씬·맵 연결/다른 문명 전용 파일은 변경하지 않았고, 실제 온라인·장시간 성능은 추가 확인 대상입니다. 최신 integration을 받아 확인해 주세요.
 
 완료 공지는 실제 병합 뒤 결과/해시를 채워 전달한다. 공지 문안 작성/PR댓글을 카톡 전송으로 간주하지 않는다. [검증 기록](../Validation/Goryeo-Integration-2026-11-07/README.md).

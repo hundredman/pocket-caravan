@@ -394,3 +394,5 @@
 - 2026-11-07 Codex UI1(이 커밋): 짧은 지도 이름·양옆 배치 사용자 “이대로 승인” 기록. 배율 원인/공용사용처 정적 조사·6크기 계산표 저장(실행검사 아님). 고려270정수/타지역360연속 기준과 폰트 크기 차이 확인, 전용 창/미니게임·좌표변환 영향 범위 기록. 게임 코드/규격 미변경·Unity/Python 재실행없음·기존 지도295검사와 구분. 배율 통일/최소 크기 및 미확인 세부 UI 후속·최신main반영후보고/push없음. Docs/Goryeo/UI1-Scale-Review-2026-11-07.md.
 
 - 2026-11-07 Codex integration 사전검토(이 커밋): 사용자 위임으로 PR27 범위42기존커밋/분위기·생활/R3R4/승인UI·지도 재검토, integration조상·DB/씬/연결/타문명전용차이0 확인. Python403/23skip·세계1437출구0오류·Editor7종·임시저장ON Play100/10캡처·컴파일error0·저장8불변/임시0. 도구환경 lock/runInBackground·3D실험제외. PR갱신·CI확인 뒤 실제 팀 사전공지 확인 전 병합대기. 온라인/사람플레이/빌드/FPS미검사. Docs/Goryeo/Integration-Review-2026-11-07.md.
+
+- 2026-11-07 Codex integration 완료(이 커밋): 사용자 “팀에 전달했어” 확인 후 PR27 원격 병합86e46c840. GitHub검사2성공/mergeable확인·원격integration포함·검증775500b5a와전체트리동일 확인, 최신main/integration로컬반영. 게임코드추가변경·새검사재실행없음. 실제온라인/FPS/빌드미검사 유지, 완료카톡전달문안작성(직접전송안함). Docs/Validation/Goryeo-Integration-2026-11-07/merge-result.json.
