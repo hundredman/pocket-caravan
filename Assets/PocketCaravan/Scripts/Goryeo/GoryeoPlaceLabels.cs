@@ -22,6 +22,10 @@ namespace PocketCaravan
         public const float Near=4f;
         public readonly System.Collections.Generic.List<Rect> DrawnRects=new System.Collections.Generic.List<Rect>();
         public readonly System.Collections.Generic.List<string> DrawnNames=new System.Collections.Generic.List<string>();
+        readonly System.Collections.Generic.List<Rect> layoutRects=new System.Collections.Generic.List<Rect>();
+        readonly System.Collections.Generic.List<Rect> boardLayoutRects=new System.Collections.Generic.List<Rect>();
+        public readonly System.Collections.Generic.List<Rect> BoardRects=new System.Collections.Generic.List<Rect>();
+        Vector2 guiOrigin;
         MapRoot map;WorldLabels original;bool originalEnabled,ownsOriginal;
         public bool OwnsOriginal=>ownsOriginal;
         public bool OriginalEnabled=>originalEnabled;
@@ -49,25 +53,33 @@ namespace PocketCaravan
         {
             if(string.IsNullOrEmpty(text)||DrawnRects.Count>=48)return;
             float width=Mathf.Min(UIStyle.VirtualWidth-8,Mathf.Ceil(nameStyle.CalcSize(new GUIContent(text)).x)+8);
-            var rect=new Rect(Mathf.Round(Mathf.Clamp(p.x-width/2,4,UIStyle.VirtualWidth-width-4)),Mathf.Round(Mathf.Clamp(p.y-8,25,UIStyle.VirtualHeight-58)),width,14);
+            // 겹침 검사는 카메라와 무관한 좌표에서 한다. 화면 가장자리에 이름을 몰아 붙이지 않는다.
+            var rect=new Rect(Mathf.Round(p.x-width/2-guiOrigin.x),Mathf.Round(p.y-8-guiOrigin.y),width,14);
             for(int shift=0;shift<12;shift++)
             {
-                bool overlap=false;foreach(var other in DrawnRects)if(other.Overlaps(rect)){overlap=true;break;}
-                if(!overlap)break;rect.y-=15;if(rect.y<25)return;
+                bool overlap=false;
+                foreach(var other in layoutRects)if(other.Overlaps(rect)){overlap=true;break;}
+                if(!overlap)foreach(var other in boardLayoutRects)if(other.Overlaps(rect)){overlap=true;break;}
+                if(!overlap)break;rect.y-=15;
             }
-            foreach(var other in DrawnRects)if(other.Overlaps(rect))return;
+            foreach(var other in layoutRects)if(other.Overlaps(rect))return;
+            foreach(var other in boardLayoutRects)if(other.Overlaps(rect))return;
+            layoutRects.Add(rect);rect.position+=guiOrigin;
+            if(rect.x<4||rect.xMax>UIStyle.VirtualWidth-4||rect.y<25||rect.yMax>UIStyle.VirtualHeight-44)return;
             DrawnRects.Add(rect);DrawnNames.Add(text);
             if(place){var old=GUI.color;GUI.color=new Color(.10f,.08f,.13f,.88f);GUI.DrawTexture(rect,Texture2D.whiteTexture);GUI.color=old;}
             Outlined(rect,text,color,nameStyle);
         }
         void OnGUI()
         {
-            DrawnRects.Clear();DrawnNames.Clear();if(!Allowed||!ownsOriginal)return;
+            DrawnRects.Clear();DrawnNames.Clear();layoutRects.Clear();boardLayoutRects.Clear();BoardRects.Clear();if(!Allowed||!ownsOriginal)return;
             var gm = GameManager.I;
             var cam = Camera.main;
             if (gm == null || cam == null || MapRoot.Current == null || UIState.Blocking) return;
             UIStyle.Begin();
             Init();
+            guiOrigin=ToGui(cam,Vector3.zero);
+            CollectBoards(cam);
 
             var player = PlayerController.Instance;
             var nav = Navigator.Compute(gm);
@@ -76,7 +88,8 @@ namespace PocketCaravan
             foreach (var it in Interactable.All)
             {
                 Vector2 p = ToGui(cam, it.transform.position + new Vector3(0f, 1.0f, 0f));
-                if (p.x < -50 || p.y < -20 || p.x > UIStyle.VirtualWidth + 50 || p.y > UIStyle.VirtualHeight + 20) continue;
+                if(it is ContractBoard && ClosestBoard(p,out Rect board))p=new Vector2(board.center.x,board.yMin-12);
+
                 bool place=IsPlace(it);string label=LabelFor(it,player!=null?player.Motor.Feet:(Vector2)it.transform.position);
                 if (string.IsNullOrEmpty(label)) {if(nav.HasValue&&nav.Value.target==it&&it.Category!=Interactable.Kind.Quest)DrawDown(p+new Vector2(0,-12));continue;}   // 이름 없는 자리(같은 모닥불의 두 번째 의자 등)는 이름표를 띄우지 않는다
                 Color c = it.Category switch
@@ -108,6 +121,7 @@ namespace PocketCaravan
                 Vector2 p = ToGui(cam, player.TalkTarget.transform.position + new Vector3(0f, -0.7f, 0f));
                 string verb = !string.IsNullOrEmpty(player.TalkTarget.ActionVerb) ? player.TalkTarget.ActionVerb
                     : player.TalkTarget is DroppedCargo ? "줍기" : player.TalkTarget is ContractBoard ? "게시판 보기" : player.TalkTarget is TownMarket ? "사고팔기" : "말 걸기";
+                if(player.TalkTarget is ContractBoard && ClosestBoard(p,out Rect board))p=new Vector2(board.center.x,board.yMax+12);
                 CuteUI.SpacePrompt(p.x, p.y, verb);
             }
 
@@ -140,10 +154,38 @@ namespace PocketCaravan
 
         static Vector2 ToGui(Camera cam, Vector3 world)
         {
-            var s = cam.WorldToScreenPoint(world);
-            return new Vector2(s.x / UIStyle.Scale, (Screen.height - s.y) / UIStyle.Scale);
+            if(cam.orthographic)
+            {
+                float pixels=Screen.height/(2*cam.orthographicSize*UIStyle.Scale);
+                var origin=cam.WorldToScreenPoint(Vector3.zero);
+                return new Vector2(Mathf.Round(world.x*pixels)+Mathf.Round(origin.x/UIStyle.Scale),
+                    Mathf.Round(-world.y*pixels)+Mathf.Round((Screen.height-origin.y)/UIStyle.Scale));
+            }
+            var s=cam.WorldToScreenPoint(world);
+            return new Vector2(Mathf.Round(s.x/UIStyle.Scale),Mathf.Round((Screen.height-s.y)/UIStyle.Scale));
         }
 
+        void CollectBoards(Camera cam)
+        {
+            var dressing=map.GetComponent<VillageDressing>();if(dressing==null)return;
+            foreach(var space in dressing.spaces)
+            {
+                if(space.id!="board"||space.normal==null||!space.normal.activeInHierarchy)continue;
+                foreach(var sr in space.normal.GetComponentsInChildren<SpriteRenderer>())
+                {
+                    if(!sr.enabled||sr.sprite==null)continue;
+                    var a=ToGui(cam,sr.bounds.min);var b=ToGui(cam,sr.bounds.max);
+                    var rect=Rect.MinMaxRect(Mathf.Min(a.x,b.x)-2,Mathf.Min(a.y,b.y)-2,Mathf.Max(a.x,b.x)+2,Mathf.Max(a.y,b.y)+2);
+                    BoardRects.Add(rect);rect.position-=guiOrigin;boardLayoutRects.Add(rect);
+                }
+            }
+        }
+        bool ClosestBoard(Vector2 p,out Rect result)
+        {
+            result=default;float distance=80*80;
+            foreach(var rect in BoardRects){float d=(p-rect.center).sqrMagnitude;if(d<distance){distance=d;result=rect;}}
+            return result.width>0;
+        }
         static void Outlined(Rect r, string text, Color c, GUIStyle style)
         {
             shadowStyle.alignment = style.alignment;
@@ -151,6 +193,8 @@ namespace PocketCaravan
             var sr = r; sr.x += 1; sr.y += 1;
             GUI.Label(sr, text, shadowStyle);
             style.normal.textColor = c;
+            style.hover.textColor=style.active.textColor=style.focused.textColor=c;
+            shadowStyle.hover.textColor=shadowStyle.active.textColor=shadowStyle.focused.textColor=shadowStyle.normal.textColor;
             GUI.Label(r, text, style);
         }
 

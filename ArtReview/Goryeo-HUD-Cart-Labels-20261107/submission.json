@@ -1,0 +1,10 @@
+{
+  "status": "pending-user-approval",
+  "runtimeChecks": 407,
+  "nativeCaptures": 48,
+  "portraitReference": "before view reconstructed with previous rendering code inside editor QA; new HUD is production code",
+  "sheet": "review-sheet.png",
+  "motion": "label-pan.gif",
+  "movementStall": "not reproduced; user reports restart recovered; not marked fixed",
+  "remoteIntegrationChanged": false
+}

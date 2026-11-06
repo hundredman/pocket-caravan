@@ -10,13 +10,16 @@ class LabelsTrial(unittest.TestCase):
    for p in row['places']:
     count+=1;self.assertIn(p['text'],('우물','객주','선착장'));self.assertTrue(0<=p['x']<=d['w']and 0<=p['y']<=d['h']);self.assertTrue(p['source'].startswith('sprite:c7:')or p['source'].startswith('existing waterside'))
   self.assertGreater(count,10)
- def test_scoped_preview_no_new_functionality_or_shared_ui_edits(self):
+ def test_labels_keep_scope_and_common_interaction_logic(self):
   code=(ROOT/'Assets/PocketCaravan/Scripts/Goryeo/GoryeoPlaceLabels.cs').read_text();self.assertNotIn('RuntimeInitializeOnLoadMethod',code);self.assertIn('map.previewOnly||approvedForProduction',code);self.assertIn('original.enabled=originalEnabled',code);self.assertNotIn('.Interact(',code);self.assertNotIn('.DisplayName =',code)
   production=json.loads((ROOT/'Assets/PocketCaravan/Resources/Goryeo/PlaceLabels.json').read_text());source=json.loads((OUT/'source.json').read_text());approval=json.loads((OUT/'approval.json').read_text());self.assertEqual(production['status'],'approved');self.assertEqual(approval['userReply'],'A5 이대로 승인');self.assertEqual(production['near'],4);self.assertEqual(len(production['maps']),13)
   for a,b in zip(production['maps'],source['maps']):
    for k in ('id','w','h'):self.assertEqual(a[k],b[k])
    self.assertEqual(a['places'],[{k:p[k]for k in ('text','x','y')}for p in b['places']])
-  # Quest navigation and Space prompts retain the common implementation, after the name loop.
+  # Only the board-art anchor is allowed to differ in the prompt; actions/navigation stay common.
+  board_anchor='                if(player.TalkTarget is ContractBoard && ClosestBoard(p,out Rect board))p=new Vector2(board.center.x,board.yMax+12);\n'
+  self.assertEqual(code.count(board_anchor),1)
+  code=code.replace(board_anchor,'')
   common=(ROOT/'Assets/PocketCaravan/Scripts/UI/WorldLabels.cs').read_text()
   for start,end in [('            // 2) 말 걸기 안내','            // 3) 퀘스트 길 안내'),('            // 3) 퀘스트 길 안내','        static Vector2 ToGui')]:
    self.assertEqual(code[code.index(start):code.index(end)],common[common.index(start):common.index(end)])

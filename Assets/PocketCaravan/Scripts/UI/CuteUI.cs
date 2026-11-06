@@ -492,17 +492,29 @@ namespace PocketCaravan
 
         public static void Sprite(Sprite s, Rect dst) => Sprite(s, dst, new Rect(0, 0, 1, 1));
 
-        /// <summary>플레이어 얼굴 동그라미 (지금 모습의 위쪽)</summary>
+        // 걷는 방향/프레임 대신 정면 기본 그림을 사용한다.
+        static Sprite PortraitSource()
+        {
+            var pc = PlayerController.Instance;
+            if (pc != null && pc.anim != null && pc.anim.frames != null && pc.anim.frames.Length > 0 && pc.anim.frames[0] != null)
+                return pc.anim.frames[0];
+            var origin = GameManager.I != null ? GameManager.I.Player.origin : null;
+            if (origin != null && origin.playerFrames != null && origin.playerFrames.Length > 0) return origin.playerFrames[0];
+            return null;
+        }
+
+        /// <summary>정면 초상. 위 여백을 포함해 얼굴 아래까지 정수 픽셀로 표시한다.</summary>
         public static void Portrait(float x, float y, int d)
         {
             FramedCircle(x, y, d);
-            var pc = PlayerController.Instance;
-            var sr = pc != null && pc.anim != null ? pc.anim.GetComponent<SpriteRenderer>() : null;
-            if (sr == null || sr.sprite == null) { Icon(Pic.Coin, x + d / 2f - 4, y + d / 2f - 4); return; }
-            var tr = sr.sprite.rect;
-            float showW = Mathf.Min(tr.width, d - 8), showH = Mathf.Min(tr.height * 0.6f, d - 8);
-            var part = new Rect((1f - showW / tr.width) / 2f, 1f - showH / tr.height, showW / tr.width, showH / tr.height);
-            Sprite(sr.sprite, new Rect(x + (d - showW) / 2f, y + 4, showW, showH), part, sr.flipX);
+            var sprite = PortraitSource();
+            if (sprite == null) { Icon(Pic.Coin, x + d / 2f - 4, y + d / 2f - 4); return; }
+            var tr = sprite.rect;
+            float headHeight = Mathf.Min(tr.height, Mathf.Ceil(tr.height * .75f));
+            float scale = Mathf.Min((d - 10f) / tr.width, (d - 10f) / headHeight);
+            float w = tr.width * scale, h = headHeight * scale;
+            var part = new Rect(0, 1f - headHeight / tr.height, 1, headHeight / tr.height);
+            Sprite(sprite, new Rect(x + (d - w) / 2f, y + (d - h) / 2f, w, h), part);
         }
 
         // ---------------- 조각 ----------------

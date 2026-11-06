@@ -396,3 +396,5 @@
 - 2026-11-07 Codex integration 사전검토(이 커밋): 사용자 위임으로 PR27 범위42기존커밋/분위기·생활/R3R4/승인UI·지도 재검토, integration조상·DB/씬/연결/타문명전용차이0 확인. Python403/23skip·세계1437출구0오류·Editor7종·임시저장ON Play100/10캡처·컴파일error0·저장8불변/임시0. 도구환경 lock/runInBackground·3D실험제외. PR갱신·CI확인 뒤 실제 팀 사전공지 확인 전 병합대기. 온라인/사람플레이/빌드/FPS미검사. Docs/Goryeo/Integration-Review-2026-11-07.md.
 
 - 2026-11-07 Codex integration 완료(이 커밋): 사용자 “팀에 전달했어” 확인 후 PR27 원격 병합86e46c840. GitHub검사2성공/mergeable확인·원격integration포함·검증775500b5a와전체트리동일 확인, 최신main/integration로컬반영. 게임코드추가변경·새검사재실행없음. 실제온라인/FPS/빌드미검사 유지, 완료카톡전달문안작성(직접전송안함). Docs/Validation/Goryeo-Integration-2026-11-07/merge-result.json.
+
+- 2026-11-07 Codex UI2(이 커밋, codex/hud-cart-label-fixes): 제보4표시보완(정면 초상/얼굴75%, 무인생활수레정지·사람뒤순서, 게시판그림보호·안내위치, 이름표카메라독립배치/픽셀동기). 사용자진행 SaveNow성공 후 별도QA, 최종407확인/48캡처·Python403/23skip·세계1437출구0오류·error0·체크포인트후9저장불변/임시0. 초기검사도구API2건·옛공용안내비교전제1건 정정/로그보존. 이동막힘은 재시작후정상·미재현/원인미확인. 화면/체감확인대기·로컬만/push없음·온라인/FPS/빌드미검사. Docs/Goryeo/HUD-Cart-Labels-Fixes-2026-11-07.md.
