@@ -78,11 +78,11 @@ namespace PocketCaravan
                     string name = info != null && !string.IsNullOrEmpty(info.displayName) ? info.displayName
                         : !string.IsNullOrEmpty(area.name) ? area.name : area.mapId;
                     bool destination = info != null && !string.IsNullOrEmpty(info.town) && gm.Player.contracts.Exists(c => c.toTown == info.town);
-                    places.Add(new CuteMap.Place { name = name, at = new Vector2(area.labelX, area.labelY), destination = destination });
+                    places.Add(new CuteMap.Place { name = ShortLabel(name), at = new Vector2(area.labelX, area.labelY), destination = destination });
                 }
                 if (activeAtlas.settlements != null)
                     foreach (var settlement in activeAtlas.settlements)
-                        places.Add(new CuteMap.Place { name = settlement.text, at = new Vector2(settlement.x, settlement.y), minor = true });
+                        places.Add(new CuteMap.Place { name = ShortLabel(settlement.text), at = new Vector2(settlement.x, settlement.y), minor = true });
                 string here = MapRoot.Current != null ? MapRoot.Current.mapId : "";
                 var areaHere = Array.Find(activeAtlas.maps, a => a.mapId == here);
                 var player = PlayerController.Instance;
@@ -95,9 +95,28 @@ namespace PocketCaravan
             string current = index != null && MapRoot.Current != null ? index.MapName(MapRoot.Current.mapId) : "";
             var res = CuteMap.Draw(regional ? "고려 상세 지도" : "고려 · 중앙 대륙 동쪽 교역도", activeTerrain,
                 activeAtlas != null ? activeAtlas.width : 0, activeAtlas != null ? activeAtlas.height : 0, places, me, current,
-                $"북 ↑ · 지역 이름 {places.Count}곳", null, regionalAtlas != null ? (regional ? "전체 지도" : "고려 상세") : null);
+                $"북 ↑ · 지역 이름 {places.Count}곳", null, regionalAtlas != null ? (regional ? "전체 지도" : "고려 상세") : null, sideLabels: true);
             if (res.toggle) regional = !regional;
             if (res.close) { open = false; UIState.Release(); }
+        }
+
+        // 지도 이름표만 줄인다. 등록 이름/현재 위치/저장 ID는 그대로다.
+        static string ShortLabel(string name)
+        {
+            switch (name)
+            {
+                case "예성 나루 마을": return "예성 나루";
+                case "장단 들마을": return "장단";
+                case "송악 산록 마을": return "송악";
+                case "닥나무 마을": return "닥나무";
+                case "솔재 길목 마을": return "솔재";
+                case "버들나루 마을": return "버들나루";
+                case "내륙 교역 길목": return "교역 길목";
+                case "버들 물가 길": return "버들 물가";
+                case "북쪽 쉼터 마을": return "북쪽 쉼터";
+                case "남쪽 호숫가 마을": return "남쪽 호숫가";
+                default: return name;
+            }
         }
 
         public static Rect PanelRect(float width,float height)=>new Rect(8,8,Mathf.Max(200,width-16),Mathf.Max(180,height-16));

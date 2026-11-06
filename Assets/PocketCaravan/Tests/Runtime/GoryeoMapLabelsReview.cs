@@ -15,7 +15,7 @@ namespace PocketCaravan.EditorTools
     /// <summary>Editor-only map name/layout checks in actual GameViews. No server connection or user save writes.</summary>
     public sealed class GoryeoMapLabelsReview : MonoBehaviour
     {
-        const string Out = "ArtReview/Goryeo-UI1-Map-20261107/";
+        const string Out = "ArtReview/Goryeo-UI1-Map-Short-20261107/";
         const BindingFlags Flags = BindingFlags.Instance | BindingFlags.NonPublic;
         [Serializable] class Report { public bool complete; public string error; public List<string> checks = new List<string>(); }
         readonly Report report = new Report();
@@ -100,9 +100,11 @@ namespace PocketCaravan.EditorTools
             var rects=(Rect[])Field(layout,"rects");var labels=(string[])Field(layout,"labels");var points=(Vector2[])Field(layout,"points");
             var places=(CuteMap.Place[])Field(layout,"places");var area=(Rect)Field(layout,"area");var pin=(Rect)Field(layout,"pin");
             Check(Inside(new Rect(0,0,UIStyle.VirtualWidth,UIStyle.VirtualHeight),area),"map panel inside viewport "+name);
-            bool labelsFit=true,noOverlaps=true,markersClear=true,pinClear=true;
+            bool labelsFit=true,noOverlaps=true,markersClear=true,pinClear=true,terrainClear=true;
+            var canvas=(Rect)Field(layout,"canvas");
             var style=(GUIStyle)typeof(CuteMap).GetProperty("TagStyle",BindingFlags.NonPublic|BindingFlags.Static).GetValue(null);
             for(int i=0;i<rects.Length;i++) {
+                terrainClear &= !rects[i].Overlaps(canvas);
                 labelsFit &= Inside(area,rects[i])&&style.CalcHeight(new GUIContent(labels[i]),rects[i].width)<=rects[i].height+.1f;
                 for(int j=0;j<i;j++)noOverlaps &= !rects[i].Overlaps(rects[j]);
                 for(int j=0;j<points.Length;j++)markersClear &= !rects[i].Overlaps(new Rect(points[j].x-4,points[j].y-4,8,8));
@@ -117,11 +119,20 @@ namespace PocketCaravan.EditorTools
             for(int i=0;i<foot.Count;i++) {footerClear &= Inside(new Rect(0,0,UIStyle.VirtualWidth,UIStyle.VirtualHeight),foot[i]);for(int j=0;j<i;j++)footerClear &= !foot[i].Overlaps(foot[j]);}
             Check(footerClear,"footer information fits without overlap "+name);
             if(goryeo) {
+                Check(terrainClear,"name tags do not cover terrain "+name);
                 var map=FindFirstObjectByType<WorldMapUI>();var atlas=(WorldMapUI.Atlas)map.GetType().GetField(regional?"regionalAtlas":"atlas",Flags).GetValue(map);
                 Check(places.Length==atlas.maps.Length+(atlas.settlements==null?0:atlas.settlements.Length),"all atlas entries retained "+name);
-                for(int i=0;i<atlas.maps.Length;i++)Check(places[i].name==WorldIndex.Get().MapName(atlas.maps[i].mapId),"registered map name "+atlas.maps[i].mapId+" "+name);
+                for(int i=0;i<atlas.maps.Length;i++)Check(places[i].name==ExpectedLabel(WorldIndex.Get().MapName(atlas.maps[i].mapId)),"short registered map name "+atlas.maps[i].mapId+" "+name);
             }
             var cached=Layout();Check(ReferenceEquals(cached,layout),"cached layout inspected "+name);
+        }
+        static string ExpectedLabel(string name)
+        {
+            var labels=new Dictionary<string,string> {
+                {"예성 나루 마을","예성 나루"},{"장단 들마을","장단"},{"송악 산록 마을","송악"},{"닥나무 마을","닥나무"},
+                {"솔재 길목 마을","솔재"},{"버들나루 마을","버들나루"},{"내륙 교역 길목","교역 길목"},{"버들 물가 길","버들 물가"},
+                {"북쪽 쉼터 마을","북쪽 쉼터"},{"남쪽 호숫가 마을","남쪽 호숫가"}};
+            return labels.TryGetValue(name,out string label)?label:name;
         }
         IEnumerator MapPhoto(string name,bool goryeo=false,bool regional=false)
         {

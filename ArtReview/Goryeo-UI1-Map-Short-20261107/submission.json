@@ -1,0 +1,9 @@
+{
+  "status": "pending-user-approval",
+  "runtimeChecks": 295,
+  "nativeCaptures": 15,
+  "sheet": "review-sheet.png",
+  "goryeoMapLabelsOutsideTerrain": true,
+  "currentLocationFullNameRetained": true,
+  "remoteIntegrationChanged": false
+}

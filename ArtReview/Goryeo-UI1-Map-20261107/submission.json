@@ -1,10 +1,15 @@
 {
-  "status": "pending-user-approval",
+  "status": "revision-requested",
   "runtimeChecks": 286,
   "nativeCaptures": 15,
   "sheet": "review-sheet.png",
   "registeredGoryeoMapNames": 13,
   "settlementNamesRetained": 2,
   "goryeoDetailNames": 5,
-  "remoteIntegrationChanged": false
+  "remoteIntegrationChanged": false,
+  "userFeedback": [
+    "지도에서 이름은 짧은게 나아.",
+    "그리고 이름에 지도가 조금 가려."
+  ],
+  "revision": "../Goryeo-UI1-Map-Short-20261107/review-sheet.png"
 }

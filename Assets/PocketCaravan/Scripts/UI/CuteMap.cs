@@ -35,7 +35,7 @@ namespace PocketCaravan
         /// toggleLabel이 있으면 왼쪽 위에 보조 단추 (고려 전체/상세).
         /// </summary>
         public static Result Draw(string title, Texture2D terrain, float atlasW, float atlasH, List<Place> places, Vector2? me,
-            string current, string legend, List<(string text, Vector2 at)> notes = null, string toggleLabel = null)
+            string current, string legend, List<(string text, Vector2 at)> notes = null, string toggleLabel = null, bool sideLabels = false)
         {
             var result = new Result();
             CuteUI.Dim();
@@ -58,7 +58,8 @@ namespace PocketCaravan
                 Footer(r, area, current, legend, stackKeys, stackSwatches);
                 return result;
             }
-            float scale = Mathf.Min((area.width - 10) / atlasW, (area.height - 10) / atlasH);
+            float sideSpace = sideLabels ? Mathf.Clamp(area.width * .22f, 60, 105) : 0;
+            float scale = Mathf.Min((area.width - 10 - sideSpace * 2) / atlasW, (area.height - 10) / atlasH);
             var canvas = new Rect(Mathf.Round(area.center.x - atlasW * scale / 2), Mathf.Round(area.center.y - atlasH * scale / 2),
                 Mathf.Round(atlasW * scale), Mathf.Round(atlasH * scale));
             if (Event.current.type == EventType.Repaint) GUI.DrawTexture(canvas, terrain, ScaleMode.StretchToFill);
@@ -75,7 +76,7 @@ namespace PocketCaravan
                     CuteUI.Label(nr.x + 4, nr.center.y, text, CuteUI.Sub, true);
                 }
 
-            NearLabels(places, Project, canvas, area, me.HasValue ? (Vector2?)Project(me.Value) : null);
+            NearLabels(places, Project, canvas, area, me.HasValue ? (Vector2?)Project(me.Value) : null, sideLabels);
 
             if (me.HasValue) Pin(Project(me.Value));
             Footer(r, area, current, legend, stackKeys, stackSwatches);
@@ -87,6 +88,7 @@ namespace PocketCaravan
             public Rect canvas, area, pin;
             public Font font;
             public int size;
+            public bool sideLabels;
             public Place[] places;
             public Vector2[] points;
             public string[] labels;
@@ -119,37 +121,91 @@ namespace PocketCaravan
         }
 
         /// <summary>밀집한 곳만 빈 공간을 탐색한다. 결과를 캐시해 매 OnGUI마다 후보를 다시 찾지 않는다.</summary>
-        static void NearLabels(List<Place> places, System.Func<Vector2, Vector2> project, Rect canvas, Rect area, Vector2? me)
+        static void NearLabels(List<Place> places, System.Func<Vector2, Vector2> project, Rect canvas, Rect area, Vector2? me, bool sideLabels)
         {
             var pin = me.HasValue ? new Rect(Mathf.Round(me.Value.x)-8, Mathf.Round(me.Value.y)-20, 17, 24) : default;
             var layout = lastLabels;
             if (layout == null || layout.canvas != canvas || layout.area != area || layout.pin != pin
-                || layout.font != UIStyle.SmallFont || layout.size != UIStyle.SmallSize || !SamePlaces(layout, places))
+                || layout.font != UIStyle.SmallFont || layout.size != UIStyle.SmallSize || layout.sideLabels != sideLabels || !SamePlaces(layout, places))
             {
-                layout = new LabelLayout { canvas=canvas, area=area, pin=pin, font=UIStyle.SmallFont, size=UIStyle.SmallSize,
+                layout = new LabelLayout { canvas=canvas, area=area, pin=pin, font=UIStyle.SmallFont, size=UIStyle.SmallSize, sideLabels=sideLabels,
                     places=places.ToArray(), points=new Vector2[places.Count], labels=new string[places.Count], rects=new Rect[places.Count] };
                 var order = new List<int>(); var markers = new List<Rect>();
                 for (int i=0;i<places.Count;i++)
                 {
                     layout.points[i]=project(places[i].at);
-                    layout.labels[i]=(places[i].name ?? "")+(places[i].destination ? " · 의뢰" : "");
+                    layout.labels[i]=(places[i].name ?? "")+(places[i].destination && !sideLabels ? " · 의뢰" : "");
                     markers.Add(new Rect(layout.points[i].x-4,layout.points[i].y-4,8,8)); order.Add(i);
                 }
                 if (me.HasValue) markers.Add(pin);
                 order.Sort((a,b)=> {int cmp=layout.points[a].y.CompareTo(layout.points[b].y); return cmp!=0?cmp:a.CompareTo(b);});
+                if (!sideLabels || !SideLabels(layout,order))
+                {
                 var placed = new List<Rect>();
                 foreach (int i in order)
                 {
-                    float width=Mathf.Min(Mathf.Max(20,area.width-8), Mathf.Min(160,CuteUI.Width(layout.labels[i],true)+10));
+                    float maxWidth = sideLabels ? Mathf.Max(20, Mathf.Min(canvas.x-area.x,area.xMax-canvas.xMax)-8) : 160;
+                    float width=Mathf.Min(Mathf.Max(20,area.width-8), Mathf.Min(maxWidth,CuteUI.Width(layout.labels[i],true)+10));
                     float height=Mathf.Max(13,Mathf.Ceil(TagStyle.CalcHeight(new GUIContent(layout.labels[i]),width)));
-                    layout.rects[i]=PlaceLabel(layout.points[i],width,height,canvas,area,placed,markers);
+                    layout.rects[i]=PlaceLabel(layout.points[i],width,height,canvas,area,placed,markers,sideLabels);
                     placed.Add(layout.rects[i]);
+                }
                 }
                 lastLabels=layout;
             }
             for(int i=0;i<places.Count;i++) Leader(layout.points[i],layout.rects[i]);
             for(int i=0;i<places.Count;i++) Dot(layout.points[i],places[i]);
             for(int i=0;i<places.Count;i++) Tag(layout.rects[i],layout.labels[i],places[i]);
+        }
+
+        // 두 열의 총 높이를 제한하면서 각 점에 가까운 쪽을 고른다.
+        // 위에서부터 차례로 놓은 뒤 아래쪽 경계를 넘는 행만 위로 당긴다.
+        static bool SideLabels(LabelLayout layout,List<int> order)
+        {
+            int n=order.Count, capacity=Mathf.FloorToInt(layout.area.height-4);
+            var widths=new float[n];var heights=new float[n];var weights=new int[n];
+            float maxWidth=Mathf.Min(layout.canvas.x-layout.area.x,layout.area.xMax-layout.canvas.xMax)-8;
+            var cost=new float[n+1,capacity+1];var previous=new int[n+1,capacity+1];var choseLeft=new bool[n+1,capacity+1];
+            for(int i=0;i<=n;i++)for(int h=0;h<=capacity;h++)cost[i,h]=float.PositiveInfinity;
+            cost[0,0]=0;int used=0;
+            for(int row=0;row<n;row++)
+            {
+                int i=order[row];widths[i]=Mathf.Min(maxWidth,CuteUI.Width(layout.labels[i],true)+10);
+                heights[i]=Mathf.Max(13,Mathf.Ceil(TagStyle.CalcHeight(new GUIContent(layout.labels[i]),widths[i])));
+                int weight=weights[i]=Mathf.CeilToInt(heights[i])+2;
+                float leftDistance=Mathf.Abs(layout.points[i].x-layout.canvas.x),rightDistance=Mathf.Abs(layout.canvas.xMax-layout.points[i].x);
+                for(int h=0;h<=capacity;h++)
+                {
+                    if(float.IsPositiveInfinity(cost[row,h]))continue;
+                    if(h+weight<=capacity && cost[row,h]+leftDistance<cost[row+1,h+weight])
+                    {cost[row+1,h+weight]=cost[row,h]+leftDistance;previous[row+1,h+weight]=h;choseLeft[row+1,h+weight]=true;}
+                    if(used-h+weight<=capacity && cost[row,h]+rightDistance<cost[row+1,h])
+                    {cost[row+1,h]=cost[row,h]+rightDistance;previous[row+1,h]=h;choseLeft[row+1,h]=false;}
+                }
+                used+=weight;
+            }
+            int best=-1;float bestCost=float.PositiveInfinity;
+            for(int h=0;h<=capacity;h++)if(cost[n,h]<bestCost){best=h;bestCost=cost[n,h];}
+            if(best<0)return false;
+            var sides=new bool[n];
+            for(int row=n;row>0;row--){sides[order[row-1]]=choseLeft[row,best];best=previous[row,best];}
+            foreach(bool left in new[]{true,false})
+            {
+                var column=new List<int>();float next=layout.area.y+3;
+                foreach(int i in order)if(sides[i]==left)
+                {
+                    float top=Mathf.Max(next,layout.points[i].y-heights[i]/2);
+                    float x=left?layout.canvas.x-5-widths[i]:layout.canvas.xMax+5;
+                    layout.rects[i]=new Rect(Mathf.Round(x),Mathf.Round(top),widths[i],heights[i]);
+                    next=layout.rects[i].yMax+2;column.Add(i);
+                }
+                float bottom=layout.area.yMax-3;
+                for(int row=column.Count-1;row>=0;row--)
+                {
+                    int i=column[row];var r=layout.rects[i];r.y=Mathf.Min(r.y,bottom-r.height);layout.rects[i]=r;bottom=r.y-2;
+                }
+            }
+            return true;
         }
 
         static void Leader(Vector2 p, Rect label)
@@ -219,7 +275,7 @@ namespace PocketCaravan
         }
 
         /// <summary>가까운 후보가 모두 막힌 경우에만 지도 틀 안 빈 곳도 탐색한다.</summary>
-        static Rect PlaceLabel(Vector2 p, float w, float h, Rect canvas, Rect area, List<Rect> placed, List<Rect> markers)
+        static Rect PlaceLabel(Vector2 p, float w, float h, Rect canvas, Rect area, List<Rect> placed, List<Rect> markers, bool sideLabels)
         {
             float hw=w/2;
             var offsets=new[]{new Vector2(0,-h-4),new Vector2(0,5),new Vector2(hw+6,-h/2),new Vector2(-hw-6,-h/2),
@@ -232,6 +288,7 @@ namespace PocketCaravan
                 var lr=new Rect(Mathf.Round(Mathf.Clamp(x,area.x+3,area.xMax-w-3)),Mathf.Round(Mathf.Clamp(y,area.y+3,area.yMax-h-3)),w,h);
                 var padded=new Rect(lr.x-2,lr.y-1,lr.width+4,lr.height+2);
                 float penalty=Vector2.Distance(lr.center,p)*.2f;
+                if(sideLabels && padded.Overlaps(canvas)) penalty+=100000;
                 foreach(var other in placed) if(padded.Overlaps(other)) penalty+=10000;
                 foreach(var other in markers) if(padded.Overlaps(other)) penalty+=1000;
                 if(lr.x<canvas.x||lr.xMax>canvas.xMax) penalty+=3;
