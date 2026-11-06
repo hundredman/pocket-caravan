@@ -736,4 +736,11 @@ Space 앉기·이동/Space로 일어나기, UI/컨트롤러 비활성/출신 변
 
 별도 일회용 슬롯의 실제 저장ON 자동Play128확인/480×27011캡처, 네 출신 캐릭터 영역의 검토·본편 픽셀차이0/안전한 저장 JSON/실제 씬 복원/겹친 좌표 유지·완전 탈출/다른5맵 미설치·중복/해제·상태 보존을 확인했다. 전체 화면 픽셀차이0을 주장하지 않는다. Python398 두환경23/32skip·월드0오류1437출구/Unity8종54씬·콘솔error0·사용자저장9불변/임시파일0. 도로/출구/NPC 비중첩 및 불판4칸 외 접근성 유지도 정적 BFS 검사했다.
 
-승인과 미술 이력: 처음 너구리 시안54·모닥불 검토150·다른 출신 v1 검토137 후 사용자 지적을 받아 V2에서 세 캐릭터 하체 중심을7.5px로 정렬하고 사막여우 머리/상체를 낮춰 다시 그렸다. V2 검토137/396정적 후 “좋다.” 승인을 받았다. 이전 시안·실패/정정 기록은 보존했다. 현재 본편은 V2다. 공용Core/Economy/Quests/UI·DB/WorldIndex/Connections/BuildSettings·원래 캐릭터/다른지역·맵/씬/ID·저장 형식은 미변경. 사람 키보드/시작화면 이어하기·온라인·장시간/FPS·빌드는 미검사다. 상세 Docs/Goryeo/Seats-ATM-B3-2026-11-05.md·Docs/Validation/Goryeo-Seats-Binding-2026-11-06 및 ArtReview/Goryeo-Seats-Binding-20261106. 다음 ATM-B4 일상 활동은 미착수다.
+승인과 미술 이력: 처음 너구리 시안54·모닥불 검토150·다른 출신 v1 검토137 후 사용자 지적을 받아 V2에서 세 캐릭터 하체 중심을7.5px로 정렬하고 사막여우 머리/상체를 낮춰 다시 그렸다. V2 검토137/396정적 후 “좋다.” 승인을 받았다. 이전 시안·실패/정정 기록은 보존했다. 현재 본편은 V2다. 공용Core/Economy/Quests/UI·DB/WorldIndex/Connections/BuildSettings·원래 캐릭터/다른지역·맵/씬/ID·저장 형식은 미변경. 사람 키보드/시작화면 이어하기·온라인·장시간/FPS·빌드는 미검사다. 상세 Docs/Goryeo/Seats-ATM-B3-2026-11-05.md·Docs/Validation/Goryeo-Seats-Binding-2026-11-06 및 ArtReview/Goryeo-Seats-Binding-20261106. ATM-B4 일상 활동은 아래 검토 단계로 이어졌다.
+
+
+### ATM-B4 일상 활동 — 우물 물 긷기 검토 (2026-11-06)
+
+나루 기존 우물에 명시적 Editor/previewOnly/저장OFF에서만 설치하는 GoryeoDailyActivity 검토본을 만들었다. 가까이에서 물 긷기 선택→실제3초 진행→완료 안내, 하루1회·다음날 재개/중단시 미소모다. 기존 GetMemo/SetMemo와 cooldownKeys/Until만 사용하며 옛 저장의 키 누락은 이용 가능으로 읽는다. 돈/신용/평판/아이템/체력 보너스·시간 비용·새 그림/소리는 없다. 두레박/손동작 애니메이션도 이번 검토에 포함하지 않았다.
+
+자동Play42확인/실제480×2704장: UI·접근/취소·날짜/슬롯/컨트롤러/씬 해제, 같은날/다음날 제한·임시슬롯 실제SaveNow/Read/Apply 복원·돈/신용/수레/화물/시각 보존을 검사했다. 사용자저장9백업/해시불변·임시0, Python399 두환경23/32skip·월드0오류1437출구·Unity8종54씬/콘솔error0. 사람키보드/앱재시작·온라인/장시간/FPS·빌드 미검사. **화면 승인 대기/본편 미연결**, 소 여물 등 다른활동 미착수이며 B4완료가 아니다. 공용Core/Economy/Quests/UI/DB/WorldIndex/Connections/BuildSettings·맵/씬/다른지역·기존ID·저장형식 미변경. 완료직후 본편자동저장 정책은 후속 연결 단계에서 검사한다. Docs/Goryeo/Daily-ATM-B4-2026-11-06.md와 ArtReview/Goryeo-Daily-20261106·Docs/Validation/Goryeo-Daily-2026-11-06 참조.
