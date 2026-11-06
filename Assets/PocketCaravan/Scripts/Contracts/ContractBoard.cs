@@ -85,13 +85,13 @@ namespace PocketCaravan
             var p = gm.Player;
 
             float w = Mathf.Min(470, UIStyle.VirtualWidth - 16), h = UIStyle.WindowHeight(310) - 6;
-            var wrapRich = new GUIStyle(CuteUI.PaperRich) { wordWrap = true };
+            var wrapRich = CuteUI.PaperWrap;
             var rect = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round((UIStyle.VirtualHeight - h) / 2 + 6), w, h);
             CuteUI.Dim();
             CuteUI.Window(rect);
             CuteUI.TitlePlate(rect.center.x, rect.y - 11, Cm.TownName(town) + " 의뢰 게시판");
             GUILayout.BeginArea(new Rect(rect.x + 14, rect.y + 14, w - 28, h - 28));
-            GUILayout.Label($"돈 {p.money}   신용 {p.credit}   짐 {p.TotalWeight:0.#}/{p.Capacity:0.#}   맡은 의뢰 {p.contracts.Count}/{ContractManager.MaxActive}", CuteUI.PaperSmall);
+            GUILayout.Label($"돈 {p.money} · 신용 {p.credit} · 짐 {p.TotalWeight:0.#}/{p.Capacity:0.#} · 의뢰 {p.contracts.Count}/{ContractManager.MaxActive}", CuteUI.PaperRich);
 
             GUILayout.Label($"남는 적재 공간 {Mathf.Max(0, p.Capacity-p.TotalWeight):0.#} · 배달 짐도 공간을 씁니다. 귀환 상품과 비교하세요.", CuteUI.PaperSmall);
             float footerHeight = Mathf.Clamp(CuteUI.PaperWrap.CalcHeight(new GUIContent(message ?? ""), w - 128), 18f, 60f);
@@ -118,7 +118,7 @@ namespace PocketCaravan
                 GUILayout.BeginHorizontal();
                 string state = c.dropped ? "<color=#ff8a7a>길에 떨어뜨림</color>" : $"상태 {Mathf.RoundToInt(c.condition * 100)}%";
                 string pay = c.atonement ? $"보증금 {c.deposit} 반환" : $"보수 {c.reward}";
-                GUILayout.Label(CuteUI.PaperColors($"{c.cargo}  ·  {state}  ·  남은 시간 {Cm.TimeLeftText(c)}  ·  {pay}"), wrapRich, GUILayout.Width(w - 128));
+                GUILayout.Label(CuteUI.PaperColors($"{c.cargo} · {state}\n남은 시간 {Cm.TimeLeftText(c)} · {pay}"), wrapRich, GUILayout.Width(w - 128));
                 GUI.enabled = !c.dropped;
                 if (GUILayout.Button("납품", CuteUI.PaperButtonOn, GUILayout.Width(60), GUILayout.Height(18)))
                 {
@@ -139,8 +139,8 @@ namespace PocketCaravan
                 string route = c.quotedRouteSteps > 0 ? $" · 연결 {c.quotedRouteSteps}구간" : "";
                 string premium = c.Premium ? $" <color=#ffd84a>(신용 {c.minCredit}↑)</color>" : "";
                 string text = c.atonement
-                    ? $"<color=#ff9a8a>속죄 의뢰</color> {c.cargo}\n→ {Cm.TownName(c.toTown)} · 무게 {c.weight:0} {route} · 빠듯한 기한 {c.hours:0}시간 · 보증금 {c.deposit}냥(성공 시 반환) · 평판 회복(중립까지) · 보수 없음"
-                    : $"{c.cargo}{premium}\n→ {Cm.TownName(c.toTown)} · 무게 {c.weight:0} {route} · 기한 {c.hours:0}시간 · <color=#a8f0a0>보수 {c.reward}</color>";
+                    ? $"<color=#ff9a8a>속죄 의뢰</color> · {c.cargo}\n→ {Cm.TownName(c.toTown)}{route} · 짐 {c.weight:0}\n기한 {c.hours:0}시간 · 보증금 {c.deposit}냥(성공 시 반환)\n성공: 평판 회복(중립까지) · 보수 없음"
+                    : $"{c.cargo}{premium}\n→ {Cm.TownName(c.toTown)}{route}\n짐 {c.weight:0} · 기한 {c.hours:0}시간 · <color=#a8f0a0>보수 {c.reward}냥</color>";
                 GUILayout.Label(CuteUI.PaperColors(text), wrapRich, GUILayout.Width(w - 128));
                 string why = Cm.CanAccept(c);
                 if (GUILayout.Button("맡기", CuteUI.PaperButtonOn, GUILayout.Width(60), GUILayout.Height(18)))
@@ -149,7 +149,7 @@ namespace PocketCaravan
                     else message = AcceptSaved(c);
                 }
                 GUILayout.EndHorizontal();
-                GUILayout.Space(2);
+                GUILayout.Space(6);
             }
             GUILayout.EndScrollView();
 

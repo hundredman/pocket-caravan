@@ -1,0 +1,45 @@
+{
+  "note": "Same heading ROI; darkest rendered glyph core only. Not a full WCAG conformance evaluation.",
+  "samples": [
+    {
+      "version": "Paper",
+      "roi": [
+        22,
+        81,
+        335,
+        98
+      ],
+      "backgroundRGB": [
+        255,
+        253,
+        249
+      ],
+      "darkestStrokeRGB": [
+        145,
+        130,
+        146
+      ],
+      "coreStrokeContrast": 3.556
+    },
+    {
+      "version": "Readable",
+      "roi": [
+        22,
+        81,
+        335,
+        98
+      ],
+      "backgroundRGB": [
+        255,
+        253,
+        249
+      ],
+      "darkestStrokeRGB": [
+        111,
+        107,
+        110
+      ],
+      "coreStrokeContrast": 5.162
+    }
+  ]
+}

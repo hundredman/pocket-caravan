@@ -1,0 +1,9 @@
+{
+  "status": "pending-user-readability-approval",
+  "existingThemeApproved": true,
+  "nativeCaptures": 11,
+  "runtimeChecks": 100,
+  "beforeAfter": "before-after.png",
+  "scope": "Existing shared theme; text contrast, primary button text, information grouping and unavailable-action explanation. No new palette/frame/art.",
+  "remoteIntegrationChanged": false
+}

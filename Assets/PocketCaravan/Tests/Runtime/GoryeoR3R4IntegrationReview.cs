@@ -15,7 +15,7 @@ namespace PocketCaravan.EditorTools
     /// <summary>Visual board fixtures open through Interact; Escape uses virtual Keyboard/InputReader.</summary>
     public sealed class GoryeoR3R4IntegrationReview : MonoBehaviour
     {
-        const string Out = "ArtReview/Goryeo-R3-R4-Paper-20261106/";
+        const string Out = "ArtReview/Goryeo-R3-R4-Readable-20261106/";
         const BindingFlags Flags = BindingFlags.Instance | BindingFlags.NonPublic;
         [Serializable] class Report { public bool complete; public string error; public List<string> checks = new List<string>(); }
         readonly Report report = new Report();
@@ -223,7 +223,7 @@ namespace PocketCaravan.EditorTools
             float hour=gm.Clock.TotalHours;string done=(string)Call(board,"ReportChore",gm,p);
             Check(p.tradeActivity.ActiveChore==null&&StandingRecovery.Score(p.reputation,scope,target)==-75&&Mathf.Abs(gm.Clock.TotalHours-hour-1)<.001,"chore once +75 and exactly1 gamehour");
             Check(((string)Call(board,"ReportChore",gm,p)).Contains("없습니다")&&StandingRecovery.Score(p.reputation,scope,target)==-75,"duplicate chore report cannot reward");
-            yield return Keypress(Key.Escape);Near(market);TownFacilitiesUI.Show(town);p.money=500;
+            yield return Keypress(Key.Escape);Near(market);TownFacilitiesUI.Show(town);p.money=500;yield return Photo("03b-recovery-funded");
             FailAfter(gm,()=>{var donation=StandingRecovery.Donate(p.reputation,scope,target,100,p.money);p.money-=donation.paid;},"donation money and reputation");
             Call(facilities,"Donate",gm,p,100,scope,target);
             Check(p.money==400&&StandingRecovery.Score(p.reputation,scope,target)==-25,"donation pays100 gains50");

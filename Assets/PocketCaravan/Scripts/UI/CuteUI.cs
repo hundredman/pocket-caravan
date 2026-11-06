@@ -349,9 +349,9 @@ namespace PocketCaravan
             paperWrap = new GUIStyle(UIStyle.Wrap);
             paperRight = new GUIStyle(UIStyle.Right) { richText = true };
             foreach (var s in new[] { paperRich, paperSmall, paperWrap, paperRight })
-                foreach (var st in new[] { s.normal, s.hover, s.active, s.focused }) st.textColor = Text;
+                foreach (var st in new[] { s.normal, s.hover, s.active, s.focused }) st.textColor = UIStyle.Lin(s == paperSmall ? Sub : Text);
             paperButton = ButtonStyle(Paper, Paper2, Line, Text, Text);
-            paperButtonOn = ButtonStyle(Interact, InteractLo, InteractLo, OnInteract, OnInteract);
+            paperButtonOn = ButtonStyle(Interact, InteractLo, InteractLo, Text, Text);
         }
 
         static GUIStyle ButtonStyle(Color32 fill, Color32 hover, Color32 press, Color32 text, Color32 pressText)
@@ -363,7 +363,7 @@ namespace PocketCaravan
 #if UNITY_EDITOR
                 st.scaledBackgrounds = new Texture2D[0];
 #endif
-                st.textColor = t;
+                st.textColor = UIStyle.Lin(t);
             }
             Set(s.normal, fill, text); Set(s.focused, fill, text); Set(s.hover, hover, text); Set(s.active, press, pressText);
             s.onNormal = s.normal; s.onHover = s.hover; s.onActive = s.active; s.onFocused = s.focused;
@@ -382,10 +382,25 @@ namespace PocketCaravan
         public static GUIStyle PaperButtonIf(bool on) => on ? PaperButtonOn : PaperButton;
 
         /// <summary>어두운 바탕용 색 태그를 종이 위에서 읽히는 색으로 (금색 → 갈주황, 연두 → 진초록, 연빨강 → 빨강, 연보라 → 보조)</summary>
+        static readonly Dictionary<string, string> linearPaperTags = new Dictionary<string, string>();
+
         public static string PaperColors(string s)
         {
             if (string.IsNullOrEmpty(s) || s.IndexOf("<color", System.StringComparison.Ordinal) < 0) return s;
             foreach (var (from, to) in ColorSwaps) s = s.Replace(from, to);
+            // GUI text colors (including rich-text tags) are linear shader inputs in this project.
+            // Keep the existing sRGB palette; only compensate the text, never the paper textures.
+            if (QualitySettings.activeColorSpace == ColorSpace.Linear)
+                foreach (var (_, to) in ColorSwaps)
+                {
+                    if (!linearPaperTags.TryGetValue(to, out var encoded))
+                    {
+                        if (!ColorUtility.TryParseHtmlString(to, out var col)) continue;
+                        encoded = "#" + ColorUtility.ToHtmlStringRGB(col.linear).ToLowerInvariant();
+                        linearPaperTags[to] = encoded;
+                    }
+                    s = s.Replace(to, encoded);
+                }
             return s;
         }
         static readonly (string from, string to)[] ColorSwaps =

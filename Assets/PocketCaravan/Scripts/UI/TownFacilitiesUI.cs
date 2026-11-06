@@ -74,7 +74,8 @@ namespace PocketCaravan
                 if (GUILayout.Button("맡기", CuteUI.PaperButtonOn, GUILayout.Width(52))) StartChore(gm, p, kind, scope, target);
             }
             GUILayout.EndHorizontal();
-            GUILayout.Label($"② 기부: {StandingRecovery.CoinsPerPoint}냥 = 1점, 필요한 만큼만 받음", CuteUI.PaperWrap);
+            GUILayout.Label(p.money < StandingRecovery.CoinsPerPoint ? $"② 기부: 돈이 부족합니다 ({StandingRecovery.CoinsPerPoint}냥부터)"
+                : $"② 기부: {StandingRecovery.CoinsPerPoint}냥 = 1점, 필요한 만큼만 받음", CuteUI.PaperWrap);
             GUILayout.BeginHorizontal();
             foreach (int amount in DonationSteps)
             {
@@ -123,7 +124,7 @@ namespace PocketCaravan
             CuteUI.Window(rect);
             CuteUI.TitlePlate(rect.center.x, rect.y - 11, town.displayName + " 시설");
             GUILayout.BeginArea(new Rect(rect.x+14, rect.y+14, w-28, h-68));
-            GUILayout.Label($"거점 {town.SettlementTier}등급 · 내 신용 {p.credit}", CuteUI.PaperRich);
+            GUILayout.Label($"돈 {p.money}냥 · 거점 {town.SettlementTier}등급 · 신용 {p.credit}", CuteUI.PaperRich);
             GUILayout.Label("마을 방문·기본 매매는 신용과 관계없이 가능합니다.", CuteUI.PaperSmall);
             scroll = GUILayout.BeginScrollView(scroll);
             DrawRecovery(gm, p);

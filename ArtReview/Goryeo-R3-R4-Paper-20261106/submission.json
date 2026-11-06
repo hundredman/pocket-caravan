@@ -1,5 +1,5 @@
 {
-  "status": "pending-user-screen-approval",
+  "status": "approved-existing-theme",
   "direction": "Reuse existing shared CuteUI paper theme from the market, per user request. No new theme.",
   "runtimeChecks": 99,
   "nativeResolution": [
@@ -9,5 +9,8 @@
   "rawScreens": 10,
   "comparisonSheet": "review-sheet.png",
   "sharedThemeSourceUnchanged": true,
-  "remoteIntegrationChanged": false
+  "remoteIntegrationChanged": false,
+  "approval": "사용자: 좋아. 이 테마에서 조금 더 시인성이나 가독성을 발전시킬 수 있을까?",
+  "laterReadabilityChangesApproved": false,
+  "nextReview": "../Goryeo-R3-R4-Readable-20261106/submission.json"
 }

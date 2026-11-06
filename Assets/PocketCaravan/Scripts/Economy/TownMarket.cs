@@ -185,7 +185,7 @@ namespace PocketCaravan
         {
             GUILayout.BeginHorizontal();
             if(GUILayout.Button("-",CuteUI.PaperButton,GUILayout.Width(24),GUILayout.Height(18))){customQuantity=Mathf.Max(1,RequestedCount-1);quantityMode=3;}
-            GUILayout.Label($"{RequestedCount}개까지",CuteUI.PaperSmall,GUILayout.Width(58));
+            GUILayout.Label($"최대 {RequestedCount}개",CuteUI.PaperSmall,GUILayout.Width(68));
             if(GUILayout.Button("+",CuteUI.PaperButton,GUILayout.Width(24),GUILayout.Height(18))){customQuantity=Mathf.Min(MarketState.MaxBatch,RequestedCount+1);quantityMode=3;}
             string[] modes={"1개","최대5개","최대100개"};
             for(int i=0;i<modes.Length;i++)if(GUILayout.Button(modes[i],CuteUI.PaperButtonIf(quantityMode==i),GUILayout.Height(18)))quantityMode=i;
