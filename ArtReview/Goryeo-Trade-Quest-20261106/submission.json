@@ -1,5 +1,5 @@
 {
-  "status": "review",
+  "status": "approved",
   "scope": "공용 의뢰 게시판 레이아웃만. 본편 미적용/사용자 승인 대기",
   "productionFile": "Assets/PocketCaravan/Scripts/Contracts/ContractBoard.cs",
   "productionSha256": "320d4ae1423cd5c787c7a60c583a9b36ab3cdbcf6b5d072d3155d6ef15c9d104",

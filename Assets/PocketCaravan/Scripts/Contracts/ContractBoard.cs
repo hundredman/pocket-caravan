@@ -54,7 +54,7 @@ namespace PocketCaravan
             var gm = GameManager.I;
             var p = gm.Player;
 
-            float w = Mathf.Min(470, UIStyle.VirtualWidth - 16), h = 310;
+            float w = Mathf.Min(470, UIStyle.VirtualWidth - 16), h = UIStyle.WindowHeight(310);
             var wrapRich = new GUIStyle(UIStyle.Rich) { wordWrap = true };
             var rect = new Rect((UIStyle.VirtualWidth - w) / 2, (UIStyle.VirtualHeight - h) / 2, w, h);
             GUI.Box(rect, "", UIStyle.Box);
@@ -63,7 +63,7 @@ namespace PocketCaravan
             GUILayout.Label($"돈 {p.money}   신용 {p.credit}   짐 {p.TotalWeight:0.#}/{p.Capacity:0.#}   맡은 의뢰 {p.contracts.Count}/{ContractManager.MaxActive}", UIStyle.Small);
 
             GUILayout.Label($"남는 적재 공간 {Mathf.Max(0, p.Capacity-p.TotalWeight):0.#} · 배달 짐도 공간을 씁니다. 귀환 상품과 비교하세요.", UIStyle.Small);
-            scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(202));
+            scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(Mathf.Max(72f, h - 108f)));
 
             // 1) 이 마을로 가져온 짐
             bool header = false;
@@ -73,7 +73,7 @@ namespace PocketCaravan
                 if (!header) { GUILayout.Label("납품할 짐", UIStyle.Rich); header = true; }
                 GUILayout.BeginHorizontal();
                 string state = c.dropped ? "<color=#ff8a7a>길에 떨어뜨림</color>" : $"상태 {Mathf.RoundToInt(c.condition * 100)}%";
-                GUILayout.Label($"{c.cargo}  ·  {state}  ·  남은 시간 {Cm.TimeLeftText(c)}  ·  보수 {c.reward}", wrapRich, GUILayout.Width(w - 110));
+                GUILayout.Label($"{c.cargo}  ·  {state}  ·  남은 시간 {Cm.TimeLeftText(c)}  ·  보수 {c.reward}", wrapRich, GUILayout.Width(w - 128));
                 GUI.enabled = !c.dropped;
                 if (GUILayout.Button("납품", UIStyle.Button, GUILayout.Width(60), GUILayout.Height(18)))
                 {
@@ -95,7 +95,7 @@ namespace PocketCaravan
                 string route = c.quotedRouteSteps > 0 ? $" · 연결 {c.quotedRouteSteps}구간" : "";
                 string premium = c.Premium ? $" <color=#ffd84a>(신용 {c.minCredit}↑)</color>" : "";
                 GUILayout.Label($"{c.cargo}{premium}\n→ {Cm.TownName(c.toTown)} · 무게 {c.weight:0} {route} · 기한 {c.hours:0}시간 · <color=#a8f0a0>보수 {c.reward}</color>",
-                    wrapRich, GUILayout.Width(w - 110));
+                    wrapRich, GUILayout.Width(w - 128));
                 string why = Cm.CanAccept(c);
                 if (GUILayout.Button("맡기", UIStyle.Button, GUILayout.Width(60), GUILayout.Height(18)))
                 {

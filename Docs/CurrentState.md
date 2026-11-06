@@ -763,6 +763,15 @@ Space 앉기·이동/Space로 일어나기, UI/컨트롤러 비활성/출신 변
 
 실제 등록 씬에서 Q1다섯 퀘스트를 진행해 자동Play149확인. 첫짐·곡식3거래·송악일반배달·종이2매입/수도납품판매, 수락중/완료후 시작메뉴이어하기·짐/퀘스트/돈복원, 계약/완료보상중복거절·같은마을재계산되팔기0이하를 확인했다. NPC대화/수락·보고/장터열기·L장부는 가상Keyboard→일반입력이고, 제안선택OfferAt/거래TradeBatch/게시판Accept·Deliver는 함수호출이다. 여관권유는IMGUI키를받아 가상Keyboard의Esc가전달되지않으므로CloseAsk콜백으로별도취소했다. 직접클릭했다고주장하지않는다. NativeCUA접근은실패했다.
 
-실제480×270 게시판의고정높이310이제목/닫기를자르는문제를확인했다. Editor전용previewOnly/저장OFF GoryeoBoardLayoutTrial로창높이제한/목록스크롤수정안을촬영했다. 본편ContractBoard미변경·그림승인대기. R3/R4코드는현재branch에없고별도claude/r3-r4(9c0fe9d06)에있다. merge-tree미리보기에서TownMarket/Plan/WorkLog충돌·실제병합미실행. 오래된구현기록을현재본편완료로취급하지않는다. 공용코드동결/판단필요시검토지시에따라병합은Claude검토로넘긴다.
+실제480×270 게시판의고정높이310이제목/닫기를자르는문제를확인했다. Editor전용previewOnly/저장OFF GoryeoBoardLayoutTrial로창높이제한/목록스크롤수정안을촬영했다. 이후 사용자 승인으로 아래 게시판 본편 반영을 완료했다. R3/R4코드는현재branch에없고별도claude/r3-r4(9c0fe9d06)에있다. merge-tree미리보기에서TownMarket/Plan/WorkLog충돌·실제병합미실행. 오래된구현기록을현재본편완료로취급하지않는다. 공용코드동결/판단필요시검토지시에따라병합은Claude검토로넘긴다.
 
 Python400 두환경23/32skip·월드0오류1437출구·Unity8종54씬/콘솔error0·저장9해시불변/임시0. 최종성공149 이전가정실패/IMGUI입력제한기록은보존했다. 실제도보/기한·사람입력/마우스·앱재시작/온라인/실제디스크고장·장시간/FPS/빌드는미검사. R3/R4실행검사는코드부재로미실행·전체최종완료아님. 새게임기능/본편/공용코드/맵·저장형식은미변경이며확장은시작하지않는다. Docs/Goryeo/Final-Bugs-2026-11-06.md·Docs/Validation/Goryeo-Trade-Quest-2026-11-06·ArtReview/Goryeo-Trade-Quest-20261106 참조.
+
+
+### 승인 의뢰 게시판 레이아웃 본편 반영 (2026-11-06)
+
+사용자 “게시판 수정안 승인” 후 공용 Contracts/ContractBoard.cs의 고정높이310→UIStyle.WindowHeight(310), 목록202→남은높이에맞춤, 두목록글너비를18px줄이는4줄만 바꿨다. 원본과 검토코드지문을확인해승인기록을남겼고 전체파일교체는하지않았다. 수락/납품·보상·저장·ID·맵/다른지역전용코드는미변경이다.
+
+본편 자동54확인/네이티브9캡처: 고려480×270/960×540, 빈목록·수락메시지·납품목록·완료메시지, 다른세문명640×360 패널/목록/닫기범위를확인하고 직접그림도검토했다. 승인검토본/본편의불투명패널456×246 RGBA차이0이며 전체화면차이0주장은아니다. 창열기는함수호출·Esc닫기는가상Keyboard→일반입력이고 네이티브마우스클릭/사람플레이는아니다.
+
+Python400 두환경23/32skip·월드0오류1437출구/Unity8종54씬·콘솔error0·사용자저장9해시불변/임시0. 화면시험은저장OFF/일회용슬롯이며 실제저장/디스크고장·프로세스재시작/온라인/FPS·빌드는이번범위에서미검사다. Docs/Validation/Goryeo-Board-Binding-2026-11-06·ArtReview/Goryeo-Board-Binding-20261106 참조. 레이아웃반영후R3/R4병합미리보기는ContractBoard.cs/TownMarket.cs와Plan/WorkLog가충돌한다. 실제병합은하지않았고승인레이아웃을보존해Claude검토가필요하다. 전체최종완료가아니다.
