@@ -757,3 +757,12 @@ Space 앉기·이동/Space로 일어나기, UI/컨트롤러 비활성/출신 변
 이어하기 준비 SaveData는 공개Read→QA의 saveToLoad 주입이고 이후실제StartScreen/Continue경로를 사용했다. 앱재시작/Awake전체·실제IO고장·온라인·직접키보드/장시간·목표PC FPS/빌드는 미검사다. Python400 두환경23/32skip·월드0오류1437출구·Unity8종54씬/콘솔error0·사용자저장9해시불변/임시0. 전체 최종 점검은 아직 완료가 아니며 퀘스트완주·실제거래/흥정/속죄납품 사람플레이는 별도다. Docs/Validation/Goryeo-Final-Input-2026-11-06 및 ArtReview/Goryeo-Final-Input-20261106 참조.
 
 수확 돕기는 사용자 동의에 따라 최종 버그 수정 이후의 선택 확장 후보로 기록했다. 작은구역1곳/하루1회/소액사례비부터 검토하되 위치/보상수치·벤그림/복원은 미확정이다. 새 그림·기능 구현은 하지 않았다.
+
+
+### 최종 점검 2차 — 거래·Q1 및 미해결 사항 (2026-11-06)
+
+실제 등록 씬에서 Q1다섯 퀘스트를 진행해 자동Play149확인. 첫짐·곡식3거래·송악일반배달·종이2매입/수도납품판매, 수락중/완료후 시작메뉴이어하기·짐/퀘스트/돈복원, 계약/완료보상중복거절·같은마을재계산되팔기0이하를 확인했다. NPC대화/수락·보고/장터열기·L장부는 가상Keyboard→일반입력이고, 제안선택OfferAt/거래TradeBatch/게시판Accept·Deliver는 함수호출이다. 여관권유는IMGUI키를받아 가상Keyboard의Esc가전달되지않으므로CloseAsk콜백으로별도취소했다. 직접클릭했다고주장하지않는다. NativeCUA접근은실패했다.
+
+실제480×270 게시판의고정높이310이제목/닫기를자르는문제를확인했다. Editor전용previewOnly/저장OFF GoryeoBoardLayoutTrial로창높이제한/목록스크롤수정안을촬영했다. 본편ContractBoard미변경·그림승인대기. R3/R4코드는현재branch에없고별도claude/r3-r4(9c0fe9d06)에있다. merge-tree미리보기에서TownMarket/Plan/WorkLog충돌·실제병합미실행. 오래된구현기록을현재본편완료로취급하지않는다. 공용코드동결/판단필요시검토지시에따라병합은Claude검토로넘긴다.
+
+Python400 두환경23/32skip·월드0오류1437출구·Unity8종54씬/콘솔error0·저장9해시불변/임시0. 최종성공149 이전가정실패/IMGUI입력제한기록은보존했다. 실제도보/기한·사람입력/마우스·앱재시작/온라인/실제디스크고장·장시간/FPS/빌드는미검사. R3/R4실행검사는코드부재로미실행·전체최종완료아님. 새게임기능/본편/공용코드/맵·저장형식은미변경이며확장은시작하지않는다. Docs/Goryeo/Final-Bugs-2026-11-06.md·Docs/Validation/Goryeo-Trade-Quest-2026-11-06·ArtReview/Goryeo-Trade-Quest-20261106 참조.

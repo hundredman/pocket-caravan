@@ -1,0 +1,16 @@
+{
+  "status": "review",
+  "scope": "공용 의뢰 게시판 레이아웃만. 본편 미적용/사용자 승인 대기",
+  "productionFile": "Assets/PocketCaravan/Scripts/Contracts/ContractBoard.cs",
+  "productionSha256": "320d4ae1423cd5c787c7a60c583a9b36ab3cdbcf6b5d072d3155d6ef15c9d104",
+  "trialFile": "Assets/PocketCaravan/Tests/Runtime/GoryeoBoardLayoutTrial.cs",
+  "trialSha256": "f5446c2eba5e5f44e6670472d96859e4546c1f4ef5828ddf449f397b735e1912",
+  "screens": [
+    "songak-board.png",
+    "songak-board-proposed.png"
+  ],
+  "nativeSize": [
+    480,
+    270
+  ]
+}

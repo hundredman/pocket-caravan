@@ -1,0 +1,20 @@
+779790020530ce1e31d2f6f59f7476e318502465
+100644 c53c194f0f2a9cbe79be8b3d33e141358479155e 1	Assets/PocketCaravan/Scripts/Economy/TownMarket.cs
+100644 e59fd36c4acb8455973a179fc49686c2d0b641c9 2	Assets/PocketCaravan/Scripts/Economy/TownMarket.cs
+100644 df6d8724fd81625759703c242dcce5a8bb11fcf0 3	Assets/PocketCaravan/Scripts/Economy/TownMarket.cs
+100644 845cc90b9dfc77250951f954c22bf35eef573b7b 1	Docs/Plan.md
+100644 54a9e44255e42b38e95ef4d358816a91bc536c80 2	Docs/Plan.md
+100644 84f7816799e1677996aafcf630eb73aa7fbd13ca 3	Docs/Plan.md
+100644 ed3085fcc8e9fd7be0267673f1fdcae0fdcc4406 1	Docs/WorkLog.md
+100644 46d4be638dd78b38f9d4db97f09afd94b11d6a1a 2	Docs/WorkLog.md
+100644 77750f9c98ccb2d8442b4c06987778e3e35c8873 3	Docs/WorkLog.md
+
+Auto-merging Assets/PocketCaravan/Scripts/Contracts/ContractManager.cs
+Auto-merging Assets/PocketCaravan/Scripts/Economy/TownMarket.cs
+CONFLICT (content): Merge conflict in Assets/PocketCaravan/Scripts/Economy/TownMarket.cs
+Auto-merging Assets/PocketCaravan/Scripts/UI/TownFacilitiesUI.cs
+Auto-merging Docs/CurrentState.md
+Auto-merging Docs/Plan.md
+CONFLICT (content): Merge conflict in Docs/Plan.md
+Auto-merging Docs/WorkLog.md
+CONFLICT (content): Merge conflict in Docs/WorkLog.md
