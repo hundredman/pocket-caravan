@@ -12,7 +12,7 @@
 
 ## 표시와 기준
 
-현재 캡처/전후 그림: `ArtReview/Goryeo-R3-R4-Readable-20261106`. 이전 종이 테마는 사용자 승인 상태이며, 이번 가독성 보완안은 별도 그림 확인 대기다. GitHub integration에는 미반영/push 없음.
+현재 캡처/전후 그림: `ArtReview/Goryeo-R3-R4-Readable-20261106`. 이전 종이 테마는 사용자 승인 상태이며, 이번 가독성 보완안도2026-11-06 사용자 “이대로 승인”으로 확정했다. 이후 UI1 배치 변경은 별도 검토 상태다. GitHub integration에는 미반영/push 없음.
 
 글자 대비의 참고 기준은 [W3C Contrast Minimum](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum/)의 일반 글자4.5:1이다. 웹 접근성 인증을 이 게임에 적용/선언한 것은 아니다. Unity의 [GUIStyleState.textColor](https://docs.unity.com/en-us/engine/6000.0/script-reference/unityengine/guistylestate)는 표시 상태별 글자색이다. 색 공간에 대한 이번 보정 판단은 문서의 보편적 보장으로 주장하지 않고 이 프로젝트 실제 캡처 실험에 근거한다.
 

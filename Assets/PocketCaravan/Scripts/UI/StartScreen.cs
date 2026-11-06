@@ -16,6 +16,11 @@ namespace PocketCaravan
         int menuIndex, pick;
         Vector2 lastMove;
         Texture2D[] previews;
+        Vector2 pickScroll, lastPickViewSize;
+        int visiblePick = -1;
+        Rect pickViewport, pickFooter;
+        readonly System.Collections.Generic.List<Rect> pickRects = new System.Collections.Generic.List<Rect>();
+        static int PickColumns(float width) => width >= 444f ? 2 : 1;
 
         public static bool IsOpen => inst != null && inst.mode != Mode.Closed;
         /// <summary>true인 동안 시작 화면이 키를 받지 않는다. 그 위에 다른 화면(온라인 로그인 NetLogin)이 먼저 떠 있을 때 쓴다 (2026-10-31)</summary>
@@ -36,7 +41,7 @@ namespace PocketCaravan
             if (inst == null) Boot();
             inst.hasSave = saveExists;
             inst.menuIndex = 0;
-            inst.pick = 0;
+            inst.pick = 0; inst.pickScroll = Vector2.zero; inst.visiblePick = -1;
             inst.mode = saveExists ? Mode.Menu : Mode.Pick;
             inst.lastMove = Vector2.one;   // 첫 프레임에 눌려 있던 키는 무시
             UIState.Blocking = true;
@@ -61,16 +66,17 @@ namespace PocketCaravan
                 {
                     Sfx.Play("accept");
                     if (menuIndex == 0) { mode = Mode.Closed; GameManager.I.ContinueFromStartScreen(); }
-                    else { mode = Mode.Pick; pick = 0; }
+                    else { mode = Mode.Pick; pick = 0; pickScroll = Vector2.zero; visiblePick = -1; }
                 }
                 return;
             }
 
             int n = choices != null ? choices.choices.Count : 0;
             if (n == 0) { mode = Mode.Closed; GameManager.I.ContinueFromStartScreen(); return; }
-            // 2열 격자: 좌우는 같은 줄, 위아래는 두 칸씩
-            if (step.x != 0) { int col = pick % 2, row = pick / 2; col = Mathf.Clamp(col + (int)step.x, 0, 1); int p = row * 2 + col; if (p < n && p != pick) { pick = p; Sfx.Play("open"); } }
-            if (step.y != 0) { int p = pick - 2 * (int)step.y; if (p >= 0 && p < n) { pick = p; Sfx.Play("open"); } }
+            // 평소 2열, 좁은 창 1열. 선택된 카드는 DrawPick에서 보이는 범위로 스크롤한다.
+            int columns = PickColumns(UIStyle.VirtualWidth);
+            if (step.x != 0) { int col = pick % columns, row = pick / columns; col = Mathf.Clamp(col + (int)step.x, 0, columns - 1); int p = row * columns + col; if (p < n && p != pick) { pick = p; Sfx.Play("open"); } }
+            if (step.y != 0) { int p = pick - columns * (int)step.y; if (p >= 0 && p < n) { pick = p; Sfx.Play("open"); } }
             if (hasSave && InputReader.CancelPressed()) { mode = Mode.Menu; Sfx.Play("cancel"); return; }
             if (InputReader.ConfirmPressed())
             {
@@ -124,13 +130,40 @@ namespace PocketCaravan
                     previews[i] = string.IsNullOrEmpty(all.choices[i].preview) ? null : Resources.Load<Texture2D>(all.choices[i].preview);
             }
 
-            CuteUI.LabelCenter(W / 2, 64, "어느 문명의 상인으로 떠날까?", CuteUI.Text, false, true);
-            const float cw = 190, ch = 107, gap = 22;
-            float x0 = Mathf.Round((W - (cw * 2 + gap)) / 2), y0 = 80;
+            var sel = all.choices[Mathf.Clamp(pick, 0, all.choices.Count - 1)];
+            string who = sel.origin != null ? sel.origin.displayName : "";
+            string intro = $"{sel.region} · {who} ({sel.animal}) · 강점: {sel.strength}";
+            string hint = $"{sel.startTown}에서 출발 · ← → ↑ ↓ 고르기 · Space 출발" + (hasSave ? " · Esc 뒤로" : "");
+            float bw = Mathf.Min(W - 24, Mathf.Max(430, CuteUI.Width(intro) + 30));
+            float introHeight = CuteUI.WrapHeight(intro, bw - 20);
+            float hintHeight = CuteUI.WrapHeight(hint, bw - 20, true);
+            float footerHeight = Mathf.Max(32, introHeight + hintHeight + 8);
+            pickFooter = new Rect(Mathf.Round((W - bw) / 2), H - footerHeight - 8, bw, footerHeight);
+
+            CuteUI.LabelCenter(W / 2, 56, "어느 문명의 상인으로 떠날까?", CuteUI.Text, false, true);
+            const float cw = 190, ch = 107, gap = 22, rowGap = 14;
+            int columns = PickColumns(W), count = Mathf.Min(4, all.choices.Count);
+            int rows = Mathf.CeilToInt(count / (float)columns);
+            float contentHeight = rows * ch + Mathf.Max(0, rows - 1) * rowGap + 8;
+            pickViewport = new Rect(8, 72, W - 16, Mathf.Max(1, pickFooter.y - 4 - 72));
+            float contentWidth = pickViewport.width - (contentHeight > pickViewport.height ? 18 : 0);
+            float x0 = Mathf.Round((contentWidth - (columns * cw + (columns - 1) * gap)) / 2), y0 = 4;
+            if (visiblePick != pick || lastPickViewSize != pickViewport.size)
+            {
+                float top = (pick / columns) * (ch + rowGap), bottom = top + ch + 8;
+                if (top < pickScroll.y) pickScroll.y = top;
+                else if (bottom > pickScroll.y + pickViewport.height) pickScroll.y = bottom - pickViewport.height;
+                pickScroll.y = Mathf.Clamp(pickScroll.y, 0, Mathf.Max(0, contentHeight - pickViewport.height));
+                visiblePick = pick; lastPickViewSize = pickViewport.size;
+            }
+            pickScroll.x = 0; pickScroll.y = Mathf.Round(pickScroll.y);
+            pickRects.Clear();
+            pickScroll = GUI.BeginScrollView(pickViewport, pickScroll, new Rect(0, 0, contentWidth, contentHeight));
             for (int i = 0; i < all.choices.Count && i < 4; i++)
             {
                 var c = all.choices[i];
-                var r = new Rect(x0 + (i % 2) * (cw + gap), y0 + (i / 2) * (ch + 14), cw, ch);
+                var r = new Rect(x0 + (i % columns) * (cw + gap), y0 + (i / columns) * (ch + rowGap), cw, ch);
+                pickRects.Add(r);
                 bool on = i == pick;
                 if (on) CuteUI.Box(new Rect(r.x - 4, r.y - 4, r.width + 8, r.height + 8), 10, CuteUI.Interact, CuteUI.Ink, 1, 2, CuteUI.InteractLo);
                 CuteUI.Card(r);
@@ -152,16 +185,13 @@ namespace PocketCaravan
                 CuteUI.LabelCenter(tag.center.x, tag.center.y, name, on ? CuteUI.OnInteract : CuteUI.Text, false, true);
             }
 
-            // 고른 문명 한 줄 소개
-            var sel = all.choices[Mathf.Clamp(pick, 0, all.choices.Count - 1)];
-            string who = sel.origin != null ? sel.origin.displayName : "";
-            string intro = $"{sel.region} · {who} ({sel.animal}) · 강점: {sel.strength}";
-            float bw = Mathf.Min(W - 24, Mathf.Max(430, CuteUI.Width(intro) + 30));   // 강점 글이 길어도 칸 안에
-            var bar = new Rect(Mathf.Round((W - bw) / 2), H - 40, bw, 32);
-            CuteUI.Box(bar, 9, CuteUI.Paper, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
-            CuteUI.LabelCenter(bar.center.x, bar.y + 10, intro, CuteUI.Text);
-            CuteUI.LabelCenter(bar.center.x, bar.y + 23,
-                $"{sel.startTown}에서 출발 · ← → ↑ ↓ 고르기 · Space 출발" + (hasSave ? " · Esc 뒤로" : ""), CuteUI.Sub, true);
+            GUI.EndScrollView();
+
+            // 목록과 분리한 고정 소개. 긴 강점/키 안내도 창 안에서 줄바꿈한다.
+            CuteUI.Box(pickFooter, 9, CuteUI.Paper, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
+            CuteUI.WrapCenter(pickFooter.x + 10, pickFooter.y + 4, bw - 20, intro, CuteUI.Text);
+            CuteUI.Wrap(pickFooter.x + 10, pickFooter.y + 4 + introHeight, bw - 20, hint, CuteUI.Sub, true);
+
         }
 
         static void DrawHero(OriginData origin, Rect area)

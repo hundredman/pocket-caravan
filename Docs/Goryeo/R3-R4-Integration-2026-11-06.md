@@ -2,7 +2,7 @@
 
 ## 상태
 
-Codex가 사용자 지시로 Claude 작업을 인계했다. `codex/r3-r4-integration`에서 `claude/r3-r4` 원본9c0fe9d06의 게임 코드9개와 규칙 검사를 현재 region/goryeo의 UI B안·거래/게시판에 결합했다. 옛 파일 전체를 덮거나 다른 문명 전용 파일·맵을 재생성하지 않았다. **구현·아래 검사 완료, 사용자 화면 승인 대기. GitHub integration 반영·push/PR/게임 빌드는 하지 않았다.**
+Codex가 사용자 지시로 Claude 작업을 인계했다. `codex/r3-r4-integration`에서 `claude/r3-r4` 원본9c0fe9d06의 게임 코드9개와 규칙 검사를 현재 region/goryeo의 UI B안·거래/게시판에 결합했다. 옛 파일 전체를 덮거나 다른 문명 전용 파일·맵을 재생성하지 않았다. **구현·아래 검사·공용 테마/가독성 화면 승인 완료(2026-11-06 사용자 “이대로 승인”). GitHub integration 반영·push/PR/게임 빌드는 하지 않았다.** 후속 UI1 배치 수정안은 별도 검토 상태다([기록](UI1-Layout-2026-11-06.md)).
 
 ## 바뀐 동작
 

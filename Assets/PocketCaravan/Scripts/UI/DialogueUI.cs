@@ -27,6 +27,10 @@ namespace PocketCaravan
         int pageIndex;
         float pageWidth;
         GUIStyle bodyStyle;
+        Vector2 choiceScroll;
+        Rect lastWindow, choiceViewport;
+        readonly List<Rect> choiceRects = new List<Rect>();
+        GUIStyle wrappedChoice, wrappedChoiceOn;
         const float BodyHeight = 52f; // 기본 글꼴 3줄 + 레이블 패딩
 
         public int PageCount => pages.Count;
@@ -45,7 +49,7 @@ namespace PocketCaravan
             d.pages.Clear();
             d.pageIndex = 0;
             d.pageWidth = 0;
-            d.choices.Clear();
+            d.choices.Clear(); d.choiceScroll = Vector2.zero;
             if (choices != null) d.choices.AddRange(choices);
             d.open = true;
             d.openedFrame = Time.frameCount;
@@ -143,7 +147,38 @@ namespace PocketCaravan
                     consumed += pages[pageIndex].Length;
                 pageWidth = bodyWidth;
             }
-            var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), UIStyle.VirtualHeight - h - 26, w, h);
+            if (wrappedChoice == null || wrappedChoice.font != UIStyle.RegularFont)
+            {
+                wrappedChoice = new GUIStyle(CuteUI.PaperButton) { wordWrap = true, clipping = TextClipping.Clip };
+                wrappedChoiceOn = new GUIStyle(CuteUI.PaperButtonOn) { wordWrap = true, clipping = TextClipping.Clip };
+            }
+            var labels = new List<string>(); var widths = new List<float>();
+            float totalWidth = 0; bool multiline = false;
+            for (int i = 0; i < choices.Count; i++)
+            {
+                string label = i == 0 ? choices[i].label + " (Space)" : i == choices.Count - 1 ? choices[i].label + " (Esc)" : choices[i].label;
+                labels.Add(label); multiline |= label.IndexOf('\n') >= 0 || label.IndexOf('\r') >= 0;
+                float width = Mathf.Max(60f, CuteUI.PaperButton.CalcSize(new GUIContent(label)).x + 14f);
+                widths.Add(width); totalWidth += width + (i > 0 ? 6 : 0);
+            }
+            bool stacked = ChoicesVisible && (totalWidth > bodyWidth || multiline);
+            float pageReserve = stacked && pages.Count > 1 ? 16 : 0;
+            var heights = new List<float>(); float totalHeight = 0;
+            float maxHeight = Mathf.Max(104, UIStyle.VirtualHeight - 48), contentWidth = bodyWidth;
+            if (stacked)
+            {
+                foreach (string label in labels) { float height = Mathf.Max(18, wrappedChoice.CalcHeight(new GUIContent(label), contentWidth)); heights.Add(height); totalHeight += height + 6; }
+                totalHeight -= 6;
+                if (104 + totalHeight - 18 + pageReserve > maxHeight)
+                {
+                    contentWidth -= 18; heights.Clear(); totalHeight = 0;
+                    foreach (string label in labels) { float height = Mathf.Max(18, wrappedChoice.CalcHeight(new GUIContent(label), contentWidth)); heights.Add(height); totalHeight += height + 6; }
+                    totalHeight -= 6;
+                }
+                h = Mathf.Min(maxHeight, 104 + totalHeight - 18 + pageReserve);
+            }
+            var r = lastWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), UIStyle.VirtualHeight - h - 26, w, h);
+            choiceRects.Clear(); choiceViewport = default;
             // 11/05 UI B안: 종이 창 + 왼쪽 위에 걸친 주황 이름표
             CuteUI.Window(r);
             if (!string.IsNullOrEmpty(speaker))
@@ -157,7 +192,7 @@ namespace PocketCaravan
             GUI.Label(new Rect(r.x + 10, r.y + 15, bodyWidth, BodyHeight), CurrentPage, bodyStyle);   // 이름이 창 위 이름표로 올라가서 본문도 위로
 
             if (pages.Count > 1)
-                GUI.Label(new Rect(r.x + 10, r.yMax - 22, 60, 16), $"<color=#6a5464>{pageIndex + 1} / {pages.Count}</color>", CuteUI.PaperSmall);
+                GUI.Label(new Rect(r.x + 10, stacked ? r.y + 72 : r.yMax - 22, 60, 16), $"<color=#6a5464>{pageIndex + 1} / {pages.Count}</color>", CuteUI.PaperSmall);
 
             float bx = r.xMax - 10;
             if (!ChoicesVisible)
@@ -170,14 +205,33 @@ namespace PocketCaravan
                 GUI.Label(new Rect(bx - 120, r.yMax - 22, 120, 16), "<color=#6a5464>계속 (Space)</color>", CuteUI.PaperRight);
                 return;
             }
-            for (int i = choices.Count - 1; i >= 0; i--)
+            if (stacked)
             {
-                var c = choices[i];
-                string label = i == 0 ? c.label + " (Space)" : (i == choices.Count - 1 ? c.label + " (Esc)" : c.label);
-                float bw = Mathf.Max(60f, CuteUI.PaperButton.CalcSize(new GUIContent(label)).x + 14f);
-                bx -= bw;
-                if (GUI.Button(new Rect(bx, r.yMax - 26, bw, 18), label, i == 0 ? CuteUI.PaperButtonOn : CuteUI.PaperButton)) { Pick(c); return; }   // Space 고르는 것 = 청록
-                bx -= 6;
+                float shownHeight = h - 104 + 18 - pageReserve;
+                choiceViewport = new Rect(r.x + 10, r.yMax - 8 - shownHeight, bodyWidth, shownHeight);
+                choiceScroll.y = Mathf.Round(choiceScroll.y);
+                choiceScroll = GUI.BeginScrollView(choiceViewport, choiceScroll, new Rect(0, 0, contentWidth, totalHeight));
+                float y = 0;
+                for (int i = 0; i < choices.Count; i++)
+                {
+                    var row = new Rect(0, y, contentWidth, heights[i]); choiceRects.Add(row);
+                    if (GUI.Button(row, labels[i], i == 0 ? wrappedChoiceOn : wrappedChoice))
+                    {
+                        GUI.EndScrollView(); Pick(choices[i]); return;
+                    }
+                    y += heights[i] + 6;
+                }
+                GUI.EndScrollView();
+            }
+            else
+            {
+                choiceViewport = new Rect(r.x + 10, r.yMax - 26, bodyWidth, 18);
+                for (int i = choices.Count - 1; i >= 0; i--)
+                {
+                    bx -= widths[i]; var row = new Rect(bx, r.yMax - 26, widths[i], 18); choiceRects.Add(row);
+                    if (GUI.Button(row, labels[i], i == 0 ? CuteUI.PaperButtonOn : CuteUI.PaperButton)) { Pick(choices[i]); return; }
+                    bx -= 6;
+                }
             }
         }
     }

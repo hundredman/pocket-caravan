@@ -1,0 +1,23 @@
+{
+  "status": "pending-user-layout-approval",
+  "approvedReadabilityThemeUnchanged": true,
+  "runtimeChecks": 162,
+  "nativeCaptures": 12,
+  "sizes": [
+    [
+      480,
+      270
+    ],
+    [
+      960,
+      540
+    ],
+    [
+      360,
+      270
+    ]
+  ],
+  "sheet": "review-sheet.png",
+  "scope": "Start picker scrolls unchanged-size cards and keeps footer separate; overflowing dialogue choices wrap/stack and scroll if needed. Existing origin IDs, actions, Space/Esc callbacks retained.",
+  "remoteIntegrationChanged": false
+}
