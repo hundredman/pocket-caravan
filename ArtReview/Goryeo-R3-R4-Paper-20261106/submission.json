@@ -1,0 +1,13 @@
+{
+  "status": "pending-user-screen-approval",
+  "direction": "Reuse existing shared CuteUI paper theme from the market, per user request. No new theme.",
+  "runtimeChecks": 99,
+  "nativeResolution": [
+    480,
+    270
+  ],
+  "rawScreens": 10,
+  "comparisonSheet": "review-sheet.png",
+  "sharedThemeSourceUnchanged": true,
+  "remoteIntegrationChanged": false
+}

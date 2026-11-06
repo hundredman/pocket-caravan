@@ -15,7 +15,7 @@ namespace PocketCaravan.EditorTools
     /// <summary>Visual board fixtures open through Interact; Escape uses virtual Keyboard/InputReader.</summary>
     public sealed class GoryeoR3R4IntegrationReview : MonoBehaviour
     {
-        const string Out = "ArtReview/Goryeo-R3-R4-Integration-20261106/";
+        const string Out = "ArtReview/Goryeo-R3-R4-Paper-20261106/";
         const BindingFlags Flags = BindingFlags.Instance | BindingFlags.NonPublic;
         [Serializable] class Report { public bool complete; public string error; public List<string> checks = new List<string>(); }
         readonly Report report = new Report();

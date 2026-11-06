@@ -62,30 +62,29 @@ namespace PocketCaravan
             if (town.region == null) return;
             var scope = ReputationPricing.Scope(town); string target = ReputationPricing.Target(town);
             if (!StandingRecovery.Negative(p.reputation, scope, target)) return;
-            GUILayout.Label("평판 회복 · 중립까지만 회복", UIStyle.Rich);
-            GUILayout.Label($"{ReputationPricing.Progress(p, town)} · 남은 {StandingRecovery.Missing(p.reputation, scope, target)}점", UIStyle.Wrap);
+            GUILayout.Label($"평판 회복 · {ReputationAwards.TargetName(gm.Db, scope, target)} · 중립까지 {StandingRecovery.Missing(p.reputation, scope, target)}점", CuteUI.PaperWrap);
             var chore = p.tradeActivity.ActiveChore;
             GUILayout.BeginHorizontal();
             if (chore != null)
-                GUILayout.Label($"마을 일 진행 중: {StandingRecovery.ChoreTitles[chore.kind % StandingRecovery.ChoreTitles.Length]} ({gm.Contracts.TownName(chore.town)}) · {StandingRecovery.ChoreReport}", UIStyle.Wrap);
+                GUILayout.Label($"마을 일 진행 중: {StandingRecovery.ChoreTitles[chore.kind % StandingRecovery.ChoreTitles.Length]} ({gm.Contracts.TownName(chore.town)}) · {StandingRecovery.ChoreReport}", CuteUI.PaperWrap);
             else
             {
                 int kind = StandingRecovery.ChoreKind(town.id, gm.Clock.day);
-                GUILayout.Label($"① {StandingRecovery.ChoreTitles[kind]} · 무료 · 평판 +{ReputationAwards.PointsFor(StandingRecovery.ChoreSize)}", UIStyle.Wrap, GUILayout.Width(Mathf.Min(530, UIStyle.VirtualWidth-16)-106));
-                if (GUILayout.Button("맡기", UIStyle.Button, GUILayout.Width(52))) StartChore(gm, p, kind, scope, target);
+                GUILayout.Label($"① {StandingRecovery.ChoreTitles[kind]} · 무료 · 평판 +{ReputationAwards.PointsFor(StandingRecovery.ChoreSize)}", CuteUI.PaperWrap, GUILayout.Width(Mathf.Min(530, UIStyle.VirtualWidth-16)-134));
+                if (GUILayout.Button("맡기", CuteUI.PaperButtonOn, GUILayout.Width(52))) StartChore(gm, p, kind, scope, target);
             }
             GUILayout.EndHorizontal();
-            GUILayout.Label($"② 기부: {StandingRecovery.CoinsPerPoint}냥 = 1점, 필요한 만큼만 받음", UIStyle.Wrap);
+            GUILayout.Label($"② 기부: {StandingRecovery.CoinsPerPoint}냥 = 1점, 필요한 만큼만 받음", CuteUI.PaperWrap);
             GUILayout.BeginHorizontal();
             foreach (int amount in DonationSteps)
             {
                 int cost = Mathf.Min(StandingRecovery.DonationCost(p.reputation, scope, target, amount), p.money);
                 GUI.enabled = cost >= StandingRecovery.CoinsPerPoint;
-                if (GUILayout.Button($"{amount}냥", UIStyle.Button, GUILayout.Width(52))) Donate(gm, p, amount, scope, target);
+                if (GUILayout.Button($"{amount}냥", CuteUI.PaperButton, GUILayout.Width(52))) Donate(gm, p, amount, scope, target);
             }
             GUI.enabled = true;
             GUILayout.EndHorizontal();
-            GUILayout.Label("③ 속죄 의뢰: 게시판에서 · 보증금 필요 · 빠듯한 기한", UIStyle.Wrap);
+            GUILayout.Label("③ 속죄 의뢰: 게시판에서 · 보증금 필요 · 빠듯한 기한", CuteUI.PaperWrap);
             GUILayout.Space(8);
         }
 
@@ -118,52 +117,54 @@ namespace PocketCaravan
             if (!open || GameManager.I == null) return;
             UIStyle.Begin(); GUI.depth = -12;
             var gm = GameManager.I; var p = gm.Player;
-            float w = Mathf.Min(530, UIStyle.VirtualWidth - 16), h = UIStyle.WindowHeight(326);
-            var rect = new Rect((UIStyle.VirtualWidth-w)/2, (UIStyle.VirtualHeight-h)/2, w, h);
-            GUI.Box(rect, "", UIStyle.Box);
-            GUILayout.BeginArea(new Rect(rect.x+12, rect.y+8, w-24, h-64));
-            GUILayout.Label($"{town.displayName} 시설 · 거점 {town.SettlementTier}등급 · 내 신용 {p.credit}", UIStyle.Rich);
-            GUILayout.Label("마을 방문·기본 매매는 신용과 관계없이 가능합니다.", UIStyle.Small);
+            float w = Mathf.Min(530, UIStyle.VirtualWidth - 16), h = UIStyle.WindowHeight(326) - 6;
+            var rect = new Rect(Mathf.Round((UIStyle.VirtualWidth-w)/2), Mathf.Round((UIStyle.VirtualHeight-h)/2 + 6), w, h);
+            CuteUI.Dim();
+            CuteUI.Window(rect);
+            CuteUI.TitlePlate(rect.center.x, rect.y - 11, town.displayName + " 시설");
+            GUILayout.BeginArea(new Rect(rect.x+14, rect.y+14, w-28, h-68));
+            GUILayout.Label($"거점 {town.SettlementTier}등급 · 내 신용 {p.credit}", CuteUI.PaperRich);
+            GUILayout.Label("마을 방문·기본 매매는 신용과 관계없이 가능합니다.", CuteUI.PaperSmall);
             scroll = GUILayout.BeginScrollView(scroll);
             DrawRecovery(gm, p);
             if (!string.IsNullOrEmpty(detail))
             {
-                GUILayout.Label(detail, UIStyle.Wrap);
+                GUILayout.Label(CuteUI.PaperColors(detail), CuteUI.PaperWrap);
                 GUILayout.Space(8);
             }
             foreach (var f in town.facilities)
             {
                 if (f == null) continue;
                 string denial = FacilityAccess.Denial(town, f, p);
-                GUILayout.Label($"{f.displayName} · 거점 {f.minTier}등급 / 신용 {f.minCredit}", UIStyle.Rich);
+                GUILayout.Label($"{f.displayName} · 거점 {f.minTier}등급 / 신용 {f.minCredit}", CuteUI.PaperRich);
                 GUILayout.BeginHorizontal();
-                GUILayout.Label(denial ?? (f.kind == FacilityKind.Warehouse ? $"보관 한도 {f.storageCapacity:0} · 일반 교역품" : f.kind == FacilityKind.Rest ? $"{Inn.Price}냥 · {Inn.SleepHours:0}시간 자고 체력 가득 · {Inn.BuffHours:0}시간 덜 지침" : "주변 길과 거래처 안내"), UIStyle.Small);
+                GUILayout.Label(denial ?? (f.kind == FacilityKind.Warehouse ? $"보관 한도 {f.storageCapacity:0} · 일반 교역품" : f.kind == FacilityKind.Rest ? $"{Inn.Price}냥 · {Inn.SleepHours:0}시간 자고 체력 가득 · {Inn.BuffHours:0}시간 덜 지침" : "주변 길과 거래처 안내"), CuteUI.PaperSmall);
                 GUI.enabled = denial == null;
-                if (GUILayout.Button("이용", UIStyle.Button, GUILayout.Width(52))) Use(f);
+                if (GUILayout.Button("이용", CuteUI.PaperButton, GUILayout.Width(52))) Use(f);
                 GUI.enabled = true; GUILayout.EndHorizontal();
             }
             if (warehouse != null)
             {
-                GUILayout.Label("창고 · 한 개씩 맡기기 / 찾기", UIStyle.Rich);
+                GUILayout.Label("창고 · 한 개씩 맡기기 / 찾기", CuteUI.PaperRich);
                 foreach (var item in gm.Db.items)
                 {
                     if (item == null || item.questItem || p.cargo.Count(item) == 0) continue;
-                    GUILayout.BeginHorizontal(); GUILayout.Label($"{item.displayName} 보유 {p.cargo.Count(item)}개", UIStyle.Small);
-                    if (GUILayout.Button("맡기기", UIStyle.Button, GUILayout.Width(60))) Transfer(item, true);
+                    GUILayout.BeginHorizontal(); GUILayout.Label($"{item.displayName} 보유 {p.cargo.Count(item)}개", CuteUI.PaperSmall);
+                    if (GUILayout.Button("맡기기", CuteUI.PaperButton, GUILayout.Width(60))) Transfer(item, true);
                     GUILayout.EndHorizontal();
                 }
                 foreach (var s in new List<StoredCargo>(p.warehouse.At(town.id)))
                 {
                     var item = gm.ItemById(s.itemId);
-                    GUILayout.BeginHorizontal(); GUILayout.Label($"{(item != null ? item.displayName : s.itemId)} 보관 {s.count}개", UIStyle.Small);
+                    GUILayout.BeginHorizontal(); GUILayout.Label($"{(item != null ? item.displayName : s.itemId)} 보관 {s.count}개", CuteUI.PaperSmall);
                     GUI.enabled = item != null;
-                    if (GUILayout.Button("찾기", UIStyle.Button, GUILayout.Width(60))) Transfer(item, false);
+                    if (GUILayout.Button("찾기", CuteUI.PaperButton, GUILayout.Width(60))) Transfer(item, false);
                     GUI.enabled = true; GUILayout.EndHorizontal();
                 }
             }
             GUILayout.EndScrollView(); GUILayout.EndArea();
-            GUI.Label(new Rect(rect.x+12, rect.yMax-46, w-118, 34), message ?? "", UIStyle.Wrap);
-            if (GUI.Button(new Rect(rect.xMax-96, rect.yMax-26, 82, 20), "닫기 (Esc)", UIStyle.Button)) Close();
+            GUI.Label(new Rect(rect.x+12, rect.yMax-46, w-118, 34), message ?? "", CuteUI.PaperWrap);
+            if (GUI.Button(new Rect(rect.xMax-96, rect.yMax-26, 82, 20), "닫기 (Esc)", CuteUI.PaperButton)) Close();
         }
     }
 }
