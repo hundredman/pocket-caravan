@@ -8,4 +8,4 @@
 - save-preservation.json:이번 시작 시8저장 불변·일회용0. 본 저장은 검사 전부터 없고 앞선 백업 유지, 복원 안 함.
 - Unity Console error0, Play 종료 확인. 네이티브 클릭/사람 플레이/빌드/온라인/이전Editor8종 미검사.
 
-새 네 창은 사용자 그림 승인 대기다. 원격integration 미반영.
+새 네 창은 사용자 “이대로 승인”으로 승인됐다(2026-11-07). 원격integration 미반영.

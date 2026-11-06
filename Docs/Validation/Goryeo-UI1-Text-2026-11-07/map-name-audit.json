@@ -1,0 +1,131 @@
+{
+  "GoryeoMapLayout": {
+    "maps": [
+      {
+        "mapId": "Naru",
+        "atlasName": "나루",
+        "registeredName": "예성 나루 마을",
+        "sameName": false
+      },
+      {
+        "mapId": "goryeo_jangdan",
+        "atlasName": "장단",
+        "registeredName": "장단 들마을",
+        "sameName": false
+      },
+      {
+        "mapId": "goryeo_songak",
+        "atlasName": "송악",
+        "registeredName": "송악 산록 마을",
+        "sameName": false
+      },
+      {
+        "mapId": "Dakmok",
+        "atlasName": "닥목",
+        "registeredName": "닥나무 마을",
+        "sameName": false
+      },
+      {
+        "mapId": "Gaegyeong",
+        "atlasName": "개경",
+        "registeredName": "개경",
+        "sameName": true
+      },
+      {
+        "mapId": "transit_woodtown",
+        "atlasName": "동문 마을",
+        "registeredName": "솔재 길목 마을",
+        "sameName": false
+      },
+      {
+        "mapId": "transit_ferry",
+        "atlasName": "북동 포구",
+        "registeredName": "버들나루 마을",
+        "sameName": false
+      },
+      {
+        "mapId": "transit_crossroads",
+        "atlasName": "중앙 길목 마을",
+        "registeredName": "내륙 교역 길목",
+        "sameName": false
+      },
+      {
+        "mapId": "transit_southport",
+        "atlasName": "남동 포구",
+        "registeredName": "남동 포구",
+        "sameName": true
+      },
+      {
+        "mapId": "transit_wetroad",
+        "atlasName": "북동 길",
+        "registeredName": "버들 물가 길",
+        "sameName": false
+      },
+      {
+        "mapId": "transit_pass",
+        "atlasName": "남동 길",
+        "registeredName": "솔바람 고개",
+        "sameName": false
+      },
+      {
+        "mapId": "transit_central_approach",
+        "atlasName": "북쪽 내륙길",
+        "registeredName": "초원 진입로",
+        "sameName": false
+      },
+      {
+        "mapId": "transit_south_inland",
+        "atlasName": "남쪽 내륙길",
+        "registeredName": "남쪽 내륙길",
+        "sameName": true
+      }
+    ],
+    "settlements": [
+      {
+        "text": "북쪽 쉼터 마을",
+        "x": 77.0,
+        "y": 91.0
+      },
+      {
+        "text": "남쪽 호숫가 마을",
+        "x": 83.0,
+        "y": 171.5
+      }
+    ]
+  },
+  "GoryeoRegionalMapLayout": {
+    "maps": [
+      {
+        "mapId": "Naru",
+        "atlasName": "나루",
+        "registeredName": "예성 나루 마을",
+        "sameName": false
+      },
+      {
+        "mapId": "goryeo_jangdan",
+        "atlasName": "장단",
+        "registeredName": "장단 들마을",
+        "sameName": false
+      },
+      {
+        "mapId": "goryeo_songak",
+        "atlasName": "송악",
+        "registeredName": "송악 산록 마을",
+        "sameName": false
+      },
+      {
+        "mapId": "Dakmok",
+        "atlasName": "닥목",
+        "registeredName": "닥나무 마을",
+        "sameName": false
+      },
+      {
+        "mapId": "Gaegyeong",
+        "atlasName": "개경",
+        "registeredName": "개경",
+        "sameName": true
+      }
+    ],
+    "settlements": []
+  }
+}

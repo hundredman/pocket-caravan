@@ -1,0 +1,11 @@
+{
+  "status": "pending-user-approval",
+  "scope": "shared text contrast; map name/layout changes deferred",
+  "beforeChecks": 46,
+  "afterChecks": 48,
+  "nativeCaptures": 30,
+  "sheet": "review-sheet.png",
+  "paletteUnchanged": true,
+  "whiteTextPixelsEqual": true,
+  "remoteIntegrationChanged": false
+}

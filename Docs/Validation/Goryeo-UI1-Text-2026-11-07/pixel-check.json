@@ -1,0 +1,11 @@
+{
+  "comparison": "decoded RGBA pixels",
+  "whiteTextRowEqual": true,
+  "region": [
+    0,
+    196,
+    480,
+    220
+  ],
+  "note": "Synthetic palette white text row only; not whole-world or all UI identity."
+}
