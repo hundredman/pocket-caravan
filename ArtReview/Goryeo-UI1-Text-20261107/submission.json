@@ -1,5 +1,5 @@
 {
-  "status": "pending-user-approval",
+  "status": "approved",
   "scope": "shared text contrast; map name/layout changes deferred",
   "beforeChecks": 46,
   "afterChecks": 48,
@@ -7,5 +7,7 @@
   "sheet": "review-sheet.png",
   "paletteUnchanged": true,
   "whiteTextPixelsEqual": true,
-  "remoteIntegrationChanged": false
+  "remoteIntegrationChanged": false,
+  "userApproval": "이대로 승인",
+  "approvalDate": "2026-11-07"
 }

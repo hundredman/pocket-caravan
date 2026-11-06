@@ -1,0 +1,10 @@
+{
+  "status": "pending-user-approval",
+  "runtimeChecks": 286,
+  "nativeCaptures": 15,
+  "sheet": "review-sheet.png",
+  "registeredGoryeoMapNames": 13,
+  "settlementNamesRetained": 2,
+  "goryeoDetailNames": 5,
+  "remoteIntegrationChanged": false
+}
