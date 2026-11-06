@@ -1,0 +1,24 @@
+{
+    "complete": false,
+    "error": "System.Exception: start-screen Space Continue restores balance and daily record\n  at PocketCaravan.EditorTools.GoryeoFinalInputReview.Check (System.Boolean value, System.String text) [0x0001b] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoFinalInputReview.cs:24 \n  at PocketCaravan.EditorTools.GoryeoFinalInputReview+<Run>d__18.MoveNext () [0x00571] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoFinalInputReview.cs:133 \n  at PocketCaravan.EditorTools.GoryeoFinalInputReview+<Start>d__8.MoveNext () [0x00054] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoFinalInputReview.cs:31 ",
+    "checks": [
+        "safe preview bootstrap",
+        "offline prerequisite selected before start menu",
+        "virtual keyboard owns ordinary InputReader",
+        "isolated slot retained Goryeo/Naru",
+        "old save fixture has no daily memo",
+        "approved well auto installed",
+        "Space opens well dialogue and blocks ordinary interaction",
+        "offer displays approved reward",
+        "second Space invokes normal dialogue choice and begins",
+        "Escape cancels without opening pause menu or consuming reward",
+        "Space can retry after cancel",
+        "ordinary input flow pays exactly three coins",
+        "actual480x270 well-complete",
+        "completion Space closes without reopening activity",
+        "same-day Space shows done message without payment",
+        "Escape closes done dialogue without pause menu",
+        "checkpoint for start-screen Continue",
+        "actual480x270 continue-menu"
+    ]
+}
