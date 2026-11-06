@@ -68,7 +68,8 @@ namespace PocketCaravan
             bool seatHandled = GoryeoSeat.BeforeMove(this, locked);
             Vector2 input = locked || GoryeoSeat.Sitting(this) ? Vector2.zero : InputReader.MoveVector();
             Running = !locked && !exhausted && InputReader.Run() && input.sqrMagnitude > 0.01f;
-            if(GoryeoSeat.Sitting(this))motor.Teleport(transform.position,Vector2Int.zero);
+            // Modal UI stops motion immediately, including residual velocity and ground drift.
+            if(locked || GoryeoSeat.Sitting(this))motor.Teleport(transform.position,Vector2Int.zero);
             else motor.Tick(input, CurrentSpeed(), Time.deltaTime);
             if (!locked) UpdateCarry(Time.deltaTime);
 
