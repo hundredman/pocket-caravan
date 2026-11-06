@@ -18,14 +18,18 @@ namespace PocketCaravan
         const int Cols = 6;
         const float Slot = 40f, Gap = 4f;
         int openedFrame, selected;
-        Vector2 contractScroll;
+        Vector2 contractScroll, itemScroll, detailScroll;
+        int columns = Cols, visibleSelection = -1;
+        Vector2 lastItemViewSize;
+        Rect lastWindow, itemViewport, detailViewport, contractViewport;
+        readonly List<Rect> itemRects = new List<Rect>();
         readonly List<KeyValuePair<ItemData, int>> rows = new List<KeyValuePair<ItemData, int>>();
 
         public void Open()
         {
             var gm = GameManager.I;
             if (IsOpen || UIState.Blocking || gm == null || gm.IsTravelling) return;
-            IsOpen = true; openedFrame = Time.frameCount; selected = 0;
+            IsOpen = true; openedFrame = Time.frameCount; selected = 0; visibleSelection = -1; itemScroll = detailScroll = Vector2.zero;
             UIState.Blocking = true;
             Sfx.Play("open");
             Opened?.Invoke();
@@ -45,7 +49,7 @@ namespace PocketCaravan
                 if (Time.frameCount != openedFrame && (InputReader.InventoryPressed() || InputReader.CancelPressed())) { Close(); return; }
                 var mv = InputReader.MovePressed();
                 if (mv != Vector2Int.zero && rows.Count > 0)
-                    selected = Mathf.Clamp(selected + mv.x - mv.y * Cols, 0, rows.Count - 1);
+                    selected = Mathf.Clamp(selected + mv.x - mv.y * columns, 0, rows.Count - 1);
             }
             else if (InputReader.InventoryPressed() && !UIState.JustClosed) Open();
         }
@@ -68,83 +72,97 @@ namespace PocketCaravan
             Collect(gm);
             UIStyle.Begin();
             GUI.depth = -10;
-            float width = Mathf.Min(470, UIStyle.VirtualWidth - 16), height = UIStyle.WindowHeight(300);
-            var r = new Rect((UIStyle.VirtualWidth - width) / 2, (UIStyle.VirtualHeight - height) / 2, width, height);
-            GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(new Rect(r.x + 12, r.y + 9, width - 110, 18), "소지품", UIStyle.Rich);
-            if (GUI.Button(new Rect(r.xMax - 94, r.y + 8, 82, 20), "닫기 I / Esc", UIStyle.Button)) Close();
-
-            // 위: 돈 · 신용 · 운반 수단 · 적재
+            float width = Mathf.Min(470, UIStyle.VirtualWidth - 16), height = UIStyle.WindowHeight(300) - 6;
+            var r = lastWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - width) / 2), Mathf.Round((UIStyle.VirtualHeight - height) / 2 + 6), width, height);
+            CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, "소지품");
             string vehicle = p.vehicle != null ? p.vehicle.displayName : "등짐";
-            GUI.Label(new Rect(r.x + 12, r.y + 31, width - 24, 14),
-                $"<color=#ffe08a>돈 {p.money}냥</color>   신용 {p.credit}   운반: {vehicle}", UIStyle.Rich);
-            GUI.Label(new Rect(r.x + 12, r.y + 49, 120, 12), $"짐 {p.TotalWeight:0.#} / {p.Capacity:0.#}", UIStyle.Small);
-            UIStyle.Bar(new Rect(r.x + 100, r.y + 52, width - 124, 6), p.LoadRatio, p.LoadRatio > 0.85f ? new Color32(230, 120, 90, 255) : new Color32(226, 196, 120, 255));
+            string summary = $"돈 {p.money}냥 · 신용 {p.credit} · 운반 {vehicle}";
+            float summaryHeight = Mathf.Max(18, CuteUI.PaperWrap.CalcHeight(new GUIContent(summary), width - 28));
+            GUI.Label(new Rect(r.x + 14, r.y + 14, width - 28, summaryHeight), summary, CuteUI.PaperWrap);
+            float capacityY = r.y + 14 + summaryHeight + 3;
+            GUI.Label(new Rect(r.x + 14, capacityY, 120, 14), $"짐 {p.TotalWeight:0.#} / {p.Capacity:0.#}", CuteUI.PaperSmall);
+            UIStyle.Bar(new Rect(r.x + 110, capacityY + 5, width - 138, 6), p.LoadRatio, p.LoadRatio > 0.85f ? CuteUI.Down : CuteUI.Load);
 
-            // 가운데 왼쪽: 물건 칸
-            float gx = r.x + 12, gy = r.y + 68;
-            int shown = Mathf.Max(rows.Count, Cols * 2);
+            float gx = r.x + 14, gy = capacityY + 19, cy = r.yMax - 94;
+            int newColumns = Mathf.Clamp(Mathf.FloorToInt((width - 190) / (Slot + Gap)), 1, Cols);
+            if (columns != newColumns) visibleSelection = -1;
+            columns = newColumns;
+            float gridWidth = columns * (Slot + Gap) + 14;
+            float gridHeight = Mathf.Max(Slot, Mathf.Min(Slot * 2 + Gap, cy - 8 - gy));
+            itemViewport = new Rect(gx, gy, gridWidth, gridHeight);
+            if (lastItemViewSize != itemViewport.size) { visibleSelection = -1; lastItemViewSize = itemViewport.size; }
+            int shown = Mathf.Max(rows.Count, columns * 2);
+            float contentHeight = Mathf.Ceil(shown / (float)columns) * (Slot + Gap) - Gap;
+            if (visibleSelection != selected)
+            {
+                float top = (selected / columns) * (Slot + Gap), bottom = top + Slot;
+                if (top < itemScroll.y) itemScroll.y = top;
+                else if (bottom > itemScroll.y + gridHeight) itemScroll.y = bottom - gridHeight;
+                detailScroll = Vector2.zero; visibleSelection = selected;
+            }
+            itemScroll.y = Mathf.Round(Mathf.Clamp(itemScroll.y, 0, Mathf.Max(0, contentHeight - gridHeight)));
+            itemScroll = GUI.BeginScrollView(itemViewport, itemScroll, new Rect(0, 0, columns * (Slot + Gap) - Gap, contentHeight));
+            itemRects.Clear();
             for (int i = 0; i < shown; i++)
             {
-                var cell = new Rect(gx + (i % Cols) * (Slot + Gap), gy + (i / Cols) * (Slot + Gap), Slot, Slot);
-                if (cell.yMax > r.y + height - 70) break;
-                var old = GUI.color;
-                if (i == selected && i < rows.Count) GUI.color = new Color(1f, 0.82f, 0.35f);   // 고른 칸은 금빛 테두리
-                GUI.Box(cell, "", UIStyle.Box);
-                GUI.color = old;
+                var cell = new Rect((i % columns) * (Slot + Gap), (i / columns) * (Slot + Gap), Slot, Slot); itemRects.Add(cell);
+                CuteUI.Box(cell, 4, CuteUI.Paper2, i == selected && i < rows.Count ? CuteUI.Interact : CuteUI.Line, i == selected && i < rows.Count ? 2 : 1);
                 if (i >= rows.Count) continue;
                 var item = rows[i].Key;
                 if (GUI.Button(cell, "", GUIStyle.none)) selected = i;
                 DrawIcon(new Rect(cell.x + 6, cell.y + 4, 28, 28), item);
                 GUI.Label(new Rect(cell.x, cell.yMax - 13, cell.width - 3, 12), $"<b>{rows[i].Value}</b>", RightSmall);
             }
-            if (rows.Count == 0)
-                GUI.Label(new Rect(gx, gy + Slot * 2 + Gap * 2 + 4, Cols * (Slot + Gap), 30), "짐이 비어 있어요. 장터(Space)에서 물건을 사 보세요.", UIStyle.Small);
+            GUI.EndScrollView();
 
-            // 가운데 오른쪽: 고른 물건 자세히
-            float dx = gx + Cols * (Slot + Gap) + 6, dw = r.xMax - 12 - dx;
-            var info = new Rect(dx, gy, dw, Slot * 2 + Gap);
-            GUI.Box(info, "", UIStyle.Box);
+            float dx = itemViewport.xMax + 8;
+            var info = new Rect(dx, gy, r.xMax - 14 - dx, gridHeight);
+            CuteUI.Box(info, 4, CuteUI.Paper2, CuteUI.Line);
+            string details = "칸을 고르면\n자세한 정보가 나와요.";
             if (rows.Count > 0)
             {
                 var item = rows[selected].Key; int n = rows[selected].Value;
                 float avg = p.cargo.AverageCost(item);
-                var lines = new List<string>
-                {
-                    $"<b>{item.displayName}</b> × {n}",
-                    $"무게 {item.weight:0.#} (모두 {item.weight * n:0.#})",
-                    item.questItem ? "<color=#9ad0ff>부탁받은 물건 · 팔 수 없음</color>" : avg > 0 ? $"평균 원가 {avg:0.#}냥" : "얻은 물건 (원가 없음)",
-                };
+                var lines = new List<string> { $"<b>{item.displayName}</b> × {n}", $"무게 {item.weight:0.#} (모두 {item.weight * n:0.#})",
+                    item.questItem ? "부탁받은 물건 · 팔 수 없음" : avg > 0 ? $"평균 원가 {avg:0.#}냥" : "얻은 물건 (원가 없음)" };
                 if (!item.questItem)
                 {
                     var choices = CargoSaleGuide.Observed(p.ledger, gm.Db.towns, item, WorldIndex.Get(), MapRoot.Current != null ? MapRoot.Current.mapId : null);
                     lines.Add(choices.Count > 0 ? $"확인한 최고 판매처: {choices[0].town.displayName} {choices[0].sell}냥" : "판매처 미확인 · 장부(L)");
                 }
-                GUI.Label(new Rect(info.x + 6, info.y + 4, info.width - 12, info.height - 8), string.Join("\n", lines), UIStyle.Small);
+                details = string.Join("\n", lines);
             }
-            else GUI.Label(new Rect(info.x + 6, info.y + 4, info.width - 12, 40), "칸을 고르면\n자세한 정보가 나와요.", UIStyle.Small);
+            else details = "짐이 비어 있어요.\n장터에서 물건을 살 수 있어요.";
+            detailViewport = new Rect(info.x + 5, info.y + 4, info.width - 10, info.height - 8);
+            float detailWidth = Mathf.Max(1, detailViewport.width - 18);
+            float detailHeight = Mathf.Max(detailViewport.height, CuteUI.PaperSmall.CalcHeight(new GUIContent(details), detailWidth));
+            detailScroll = GUI.BeginScrollView(detailViewport, detailScroll, new Rect(0, 0, detailWidth, detailHeight));
+            GUI.Label(new Rect(0, 0, detailWidth, detailHeight), details, CuteUI.PaperSmall); GUI.EndScrollView();
 
-            // 아래: 맡은 배달 짐
-            float cy = r.yMax - 66;
-            GUI.Label(new Rect(r.x + 12, cy, width - 24, 14), $"맡은 배달 짐 {p.contracts.Count}개", UIStyle.Rich);
-            var view = new Rect(r.x + 12, cy + 16, width - 24, 32);
-            contractScroll = GUI.BeginScrollView(view, contractScroll, new Rect(0, 0, view.width - 18, Mathf.Max(32, p.contracts.Count * 14)));
-            if (p.contracts.Count == 0) GUI.Label(new Rect(0, 0, view.width - 18, 14), "없음 · 마을 게시판에서 의뢰를 맡을 수 있어요.", UIStyle.Small);
+            GUI.Label(new Rect(r.x + 14, cy, width - 28, 16), $"맡은 배달 짐 {p.contracts.Count}개", CuteUI.PaperRich);
+            contractViewport = new Rect(r.x + 14, cy + 18, width - 28, 36);
+            var contractLines = new List<string>(); var contractHeights = new List<float>(); float totalHeight = 0;
             var cm = gm.Contracts;
-            for (int i = 0; i < p.contracts.Count; i++)
+            foreach (var c in p.contracts)
             {
-                var c = p.contracts[i];
-                string to = cm != null ? cm.TownName(c.toTown) : c.toTown;
-                string left = cm != null ? cm.TimeLeftText(c) : "";
-                GUI.Label(new Rect(0, i * 14, view.width - 18, 14), $"{c.cargo} (무게 {c.weight:0.#}) → {to} · {left} · 보수 {c.reward}냥", UIStyle.Small);
+                string to = cm != null ? cm.TownName(c.toTown) : c.toTown, left = cm != null ? cm.TimeLeftText(c) : "";
+                string pay = c.atonement ? $"보증금 {c.deposit}냥 반환" : $"보수 {c.reward}냥";
+                string line = $"{c.cargo} (무게 {c.weight:0.#}) → {to}\n{left} · {pay}";
+                float h = Mathf.Max(24, CuteUI.PaperSmall.CalcHeight(new GUIContent(line), contractViewport.width - 18));
+                contractLines.Add(line); contractHeights.Add(h); totalHeight += h + 4;
             }
+            contractScroll = GUI.BeginScrollView(contractViewport, contractScroll, new Rect(0, 0, contractViewport.width - 18, Mathf.Max(36, totalHeight)));
+            if (contractLines.Count == 0) GUI.Label(new Rect(0, 0, contractViewport.width - 18, 30), "없음 · 마을 게시판에서 의뢰를 맡을 수 있어요.", CuteUI.PaperSmall);
+            float y = 0;
+            for (int i = 0; i < contractLines.Count; i++) { GUI.Label(new Rect(0, y, contractViewport.width - 18, contractHeights[i]), contractLines[i], CuteUI.PaperSmall); y += contractHeights[i] + 4; }
             GUI.EndScrollView();
-            GUI.Label(new Rect(r.x + 12, r.yMax - 15, width - 24, 12), "방향키로 칸 고르기 · 창고에 맡긴 물건은 보관소에서 볼 수 있어요.", UIStyle.Small);
+            GUI.Label(new Rect(r.x + 14, r.yMax - 34, width - 124, 28), "방향키로 칸 선택 · 창고 물품은 보관소에서 확인", CuteUI.PaperSmall);
+            if (GUI.Button(new Rect(r.xMax - 96, r.yMax - 28, 82, 20), "닫기 I / Esc", CuteUI.PaperButton)) Close();
         }
 
         static GUIStyle rightSmall, rightBase;   // 글꼴 프로필이 바뀌면(UIStyle.Small이 새로 만들어지면) 다시 만든다
-        static GUIStyle RightSmall => rightSmall != null && rightBase == UIStyle.Small ? rightSmall
-            : (rightSmall = new GUIStyle(rightBase = UIStyle.Small) { alignment = TextAnchor.LowerRight, wordWrap = false });
+        static GUIStyle RightSmall => rightSmall != null && rightBase == CuteUI.PaperSmall ? rightSmall
+            : (rightSmall = new GUIStyle(rightBase = CuteUI.PaperSmall) { alignment = TextAnchor.LowerRight, wordWrap = false });
 
         static void DrawIcon(Rect r, ItemData item)
         {
@@ -156,7 +174,7 @@ namespace PocketCaravan
                 var d = new Rect(r.center.x - tr.width * k / 2, r.center.y - tr.height * k / 2, tr.width * k, tr.height * k);
                 GUI.DrawTextureWithTexCoords(d, t, new Rect(tr.x / t.width, tr.y / t.height, tr.width / t.width, tr.height / t.height));
             }
-            else GUI.Label(r, string.IsNullOrEmpty(item.displayName) ? "?" : item.displayName.Substring(0, 1), UIStyle.CenterRich);
+            else GUI.Label(r, string.IsNullOrEmpty(item.displayName) ? "?" : item.displayName.Substring(0, 1), CuteUI.PaperRich);
         }
     }
 }

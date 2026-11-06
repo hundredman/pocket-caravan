@@ -1,5 +1,5 @@
 {
-  "status": "pending-user-layout-approval",
+  "status": "approved",
   "approvedReadabilityThemeUnchanged": true,
   "runtimeChecks": 162,
   "nativeCaptures": 12,
@@ -19,5 +19,6 @@
   ],
   "sheet": "review-sheet.png",
   "scope": "Start picker scrolls unchanged-size cards and keeps footer separate; overflowing dialogue choices wrap/stack and scroll if needed. Existing origin IDs, actions, Space/Esc callbacks retained.",
-  "remoteIntegrationChanged": false
+  "remoteIntegrationChanged": false,
+  "userApproval": "이대로 승인"
 }

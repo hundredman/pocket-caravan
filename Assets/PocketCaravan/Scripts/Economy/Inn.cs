@@ -57,6 +57,7 @@ namespace PocketCaravan
     /// </summary>
     public class Inn : MonoBehaviour
     {
+        Rect askWindow, askTextRect, yesRect, noRect;
         public const int Price = 15;
         public const float SleepHours = 4f, BuffHours = 8f;
         static readonly string[] HostWords = { "여관", "숙소", "객주" };
@@ -236,15 +237,20 @@ namespace PocketCaravan
             }
             UIStyle.Begin();
             GUI.depth = -900;
-            if (wrap == null) wrap = new GUIStyle(UIStyle.Rich) { wordWrap = true };
-            float w = 300f, h = 96f;
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2f, UIStyle.VirtualHeight - h - 50f, w, h);
-            GUI.Box(r, GUIContent.none, UIStyle.Box);
-            GUI.Label(new Rect(r.x + 12, r.y + 8, w - 24, 16), $"<b>{askHost}</b>", UIStyle.Rich);
-            string text = askNote ?? $"따뜻한 방 있어요. 쉬어 갈래요?\n<color=#c9c3d6><size=9>{Price}냥 · {SleepHours:0}시간 푹 자고 체력 가득 · {BuffHours:0}시간 동안 달려도 덜 지침</size></color>";
-            GUI.Label(new Rect(r.x + 12, r.y + 26, w - 24, 40), text, wrap);
-            if (askNote == null && GUI.Button(new Rect(r.x + 12, r.yMax - 26, 130, 20), $"쉬어 갈래요 ({Price}냥)", UIStyle.Button)) Rest();
-            if (GUI.Button(new Rect(r.xMax - 112, r.yMax - 26, 100, 20), "괜찮아요 Esc", UIStyle.Button)) CloseAsk();
+            wrap = CuteUI.PaperWrap;
+            float w = Mathf.Min(360, UIStyle.VirtualWidth - 16);
+            string text = askNote ?? $"따뜻한 방 있어요. 쉬어 갈래요?\n{Price}냥 · {SleepHours:0}시간 휴식 · 체력 가득\n{BuffHours:0}시간 동안 달릴 때 덜 지침";
+            float textHeight = wrap.CalcHeight(new GUIContent(text), w - 28);
+            float h = Mathf.Max(106, textHeight + 54);
+            var r = askWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round(UIStyle.VirtualHeight - h - 50), w, h);
+            CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, askHost);
+            askTextRect = new Rect(r.x + 14, r.y + 14, w - 28, textHeight);
+            GUI.Label(askTextRect, text, wrap);
+            float yesWidth = Mathf.Floor((w - 36) * .56f);
+            yesRect = new Rect(r.x + 14, r.yMax - 28, yesWidth, 20);
+            noRect = new Rect(r.x + 22 + yesWidth, r.yMax - 28, w - 36 - yesWidth, 20);
+            if (askNote == null && GUI.Button(yesRect, $"쉬어 갈래요 ({Price}냥)", CuteUI.PaperButtonOn)) Rest();
+            if (GUI.Button(noRect, "괜찮아요 Esc", CuteUI.PaperButton)) CloseAsk();
         }
     }
 }
