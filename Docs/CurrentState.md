@@ -747,4 +747,4 @@ Space 앉기·이동/Space로 일어나기, UI/컨트롤러 비활성/출신 변
 
 본편 자동Play53확인/실제480×2704장: 저장ON 임시슬롯에서 실제 지급/SaveNow→Read→Apply·같은날 중복 차단·다음날 가능·저장차단 주입 후 지급/날짜 복원·다른5맵 미설치/중단·돈+3 이외 신용/수레/화물·시각 보존. 사용자저장9백업/해시불변·임시0, Python400 두환경23/32skip·월드0오류1437출구·Unity8종54씬/콘솔error0. 사람 직접키보드/앱재시작·시작화면 이어하기·실제디스크고장/온라인·장시간/FPS·빌드는 미검사다. 코드상 실패예외를 복원하지만 실제IO오류는 주입하지 않았다.
 
-공용Core/Economy/Quests/UI/DB/WorldIndex/Connections/BuildSettings·맵/씬/다른지역·기존ID·저장형식 미변경. Docs/Goryeo/Daily-ATM-B4-2026-11-06.md와 ArtReview/Goryeo-Daily-Binding-20261106·Docs/Validation/Goryeo-Daily-Binding-2026-11-06 참조. 우물1종은 완료했고 여물 등 추가 활동은 후속이다.
+공용Core/Economy/Quests/UI/DB/WorldIndex/Connections/BuildSettings·맵/씬/다른지역·기존ID·저장형식 미변경. Docs/Goryeo/Daily-ATM-B4-2026-11-06.md와 ArtReview/Goryeo-Daily-Binding-20261106·Docs/Validation/Goryeo-Daily-Binding-2026-11-06 참조. 우물1종은 완료했다. 소 여물은 자동 후속이 아닌 선택 후보이며 현재 소 그림/배치는 확인되지 않고 울음소리만 있다. 추가 작업은 에셋·배치·공용 기능과 필요성을 먼저 확인한다(Docs/Goryeo/Next-Work-Review-2026-11-06.md).
