@@ -739,8 +739,12 @@ Space 앉기·이동/Space로 일어나기, UI/컨트롤러 비활성/출신 변
 승인과 미술 이력: 처음 너구리 시안54·모닥불 검토150·다른 출신 v1 검토137 후 사용자 지적을 받아 V2에서 세 캐릭터 하체 중심을7.5px로 정렬하고 사막여우 머리/상체를 낮춰 다시 그렸다. V2 검토137/396정적 후 “좋다.” 승인을 받았다. 이전 시안·실패/정정 기록은 보존했다. 현재 본편은 V2다. 공용Core/Economy/Quests/UI·DB/WorldIndex/Connections/BuildSettings·원래 캐릭터/다른지역·맵/씬/ID·저장 형식은 미변경. 사람 키보드/시작화면 이어하기·온라인·장시간/FPS·빌드는 미검사다. 상세 Docs/Goryeo/Seats-ATM-B3-2026-11-05.md·Docs/Validation/Goryeo-Seats-Binding-2026-11-06 및 ArtReview/Goryeo-Seats-Binding-20261106. ATM-B4 일상 활동은 아래 검토 단계로 이어졌다.
 
 
-### ATM-B4 일상 활동 — 우물 물 긷기 검토 (2026-11-06)
+### ATM-B4 일상 활동 — 승인 우물 본편 연결 (2026-11-06)
 
-나루 기존 우물에 명시적 Editor/previewOnly/저장OFF에서만 설치하는 GoryeoDailyActivity 검토본을 만들었다. 가까이에서 물 긷기 선택→실제3초 진행→완료 안내, 하루1회·다음날 재개/중단시 미소모다. 기존 GetMemo/SetMemo와 cooldownKeys/Until만 사용하며 옛 저장의 키 누락은 이용 가능으로 읽는다. 돈/신용/평판/아이템/체력 보너스·시간 비용·새 그림/소리는 없다. 두레박/손동작 애니메이션도 이번 검토에 포함하지 않았다.
+사용자가 “작은 보상”을 요청해 사례비3냥을 제안했고 “좋아. 다음은”으로 승인했다. 나루 기존 우물 한 곳에서 하루1회·실제3초 물 긷기를 본편에 연결했다. 기존 그림/충돌·아낙 배치는 유지한다. GoryeoDailyDirector가 본편 Naru에만 한 개를 설치하고, 다른 마을/문명과 preview에는 자동 설치하지 않는다. 초기 무보상 검토본/화면·42확인은 이력으로 보존했다.
 
-자동Play42확인/실제480×2704장: UI·접근/취소·날짜/슬롯/컨트롤러/씬 해제, 같은날/다음날 제한·임시슬롯 실제SaveNow/Read/Apply 복원·돈/신용/수레/화물/시각 보존을 검사했다. 사용자저장9백업/해시불변·임시0, Python399 두환경23/32skip·월드0오류1437출구·Unity8종54씬/콘솔error0. 사람키보드/앱재시작·온라인/장시간/FPS·빌드 미검사. **화면 승인 대기/본편 미연결**, 소 여물 등 다른활동 미착수이며 B4완료가 아니다. 공용Core/Economy/Quests/UI/DB/WorldIndex/Connections/BuildSettings·맵/씬/다른지역·기존ID·저장형식 미변경. 완료직후 본편자동저장 정책은 후속 연결 단계에서 검사한다. Docs/Goryeo/Daily-ATM-B4-2026-11-06.md와 ArtReview/Goryeo-Daily-20261106·Docs/Validation/Goryeo-Daily-2026-11-06 참조.
+시작 전 SaveNow로 저장 가능 여부를 확인한다. 완료 시 돈+3과 공개Memo(goryeo:daily:water_day) 날짜를 함께 반영해 한 번 저장하고, 저장 실패/예외이면 둘 다 복원한다. 그만두기/비활성/맵 이탈/슬롯·날짜 변경은 미소모다. 같은날/과거날짜 재수령을 막으며 다음날 재이용할 수 있다. 기존 cooldownKeys/Until에 저장되어 옛 저장키 누락은 이용 가능으로 읽는다. 새 저장 필드·신용/평판/체력·시간 비용/그림/소리/동작 애니메이션은 없다.
+
+본편 자동Play53확인/실제480×2704장: 저장ON 임시슬롯에서 실제 지급/SaveNow→Read→Apply·같은날 중복 차단·다음날 가능·저장차단 주입 후 지급/날짜 복원·다른5맵 미설치/중단·돈+3 이외 신용/수레/화물·시각 보존. 사용자저장9백업/해시불변·임시0, Python400 두환경23/32skip·월드0오류1437출구·Unity8종54씬/콘솔error0. 사람 직접키보드/앱재시작·시작화면 이어하기·실제디스크고장/온라인·장시간/FPS·빌드는 미검사다. 코드상 실패예외를 복원하지만 실제IO오류는 주입하지 않았다.
+
+공용Core/Economy/Quests/UI/DB/WorldIndex/Connections/BuildSettings·맵/씬/다른지역·기존ID·저장형식 미변경. Docs/Goryeo/Daily-ATM-B4-2026-11-06.md와 ArtReview/Goryeo-Daily-Binding-20261106·Docs/Validation/Goryeo-Daily-Binding-2026-11-06 참조. 우물1종은 완료했고 여물 등 추가 활동은 후속이다.

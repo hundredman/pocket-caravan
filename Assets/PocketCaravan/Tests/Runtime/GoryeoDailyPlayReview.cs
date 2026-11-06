@@ -72,7 +72,8 @@ namespace PocketCaravan.EditorTools
             Check(!gm.AutosaveEnabled, "bootstrap saves OFF");
             SaveSystem.UseSlot("codex_daily_qa_" + Guid.NewGuid().ToString("N") + ".json"); slotPath = SaveSystem.CurrentPath;
             yield return Load("Goryeo/Naru");
-            Check(FindObjectsByType<GoryeoDailyActivity>(FindObjectsSortMode.None).Length == 0, "production scene has no automatic daily trial");
+            Check(FindObjectsByType<GoryeoDailyActivity>(FindObjectsSortMode.None).Length == 1, "production scene has approved daily well");
+            foreach(var existing in FindObjectsByType<GoryeoDailyActivity>(FindObjectsSortMode.None)) DestroyImmediate(existing.gameObject);
             var cfg = JsonUtility.FromJson<GoryeoDailyActivity.Site>(File.ReadAllText(Out + "source.json"));
             bool refused = false; try { GoryeoDailyActivity.InstallReview(cfg); } catch (InvalidOperationException) { refused = true; }
             Check(refused, "production map rejected by review installer");
@@ -121,7 +122,8 @@ namespace PocketCaravan.EditorTools
             typeof(GameManager).GetField("autosave", Flags).SetValue(gm, false);
             Near(activity); gm.Clock.day = 19; Check(activity.DoneToday, "earlier game date cannot bypass completed later date");
             gm.Clock.day = 21; Check(!activity.DoneToday && activity.Begin(pc), "following game day available"); activity.Cancel();
-            yield return Load("Goryeo/Naru"); Check(FindObjectsByType<GoryeoDailyActivity>(FindObjectsSortMode.None).Length == 0, "reenter production scene does not install trial");
+            yield return Load("Goryeo/Naru"); Check(FindObjectsByType<GoryeoDailyActivity>(FindObjectsSortMode.None).Length == 1, "reenter production scene installs approved well only");
+            foreach(var existing in FindObjectsByType<GoryeoDailyActivity>(FindObjectsSortMode.None)) DestroyImmediate(existing.gameObject);
             MapRoot.Current.previewOnly = true; activity = GoryeoDailyActivity.InstallReview(cfg); Near(activity); gm.Clock.day = 20;
             Check(activity.DoneToday, "same game manager memo survives scene reload");
             gm.Clock.day = 21; Check(activity.Begin(PlayerController.Instance), "start before leaving map");
