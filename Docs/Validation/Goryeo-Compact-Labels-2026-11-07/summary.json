@@ -1,0 +1,24 @@
+{
+  "unityChecks": 782,
+  "afterCaptures": 18,
+  "beforeCaptures": 5,
+  "maps": 13,
+  "viewports": [
+    "480x270",
+    "960x540",
+    "480x360"
+  ],
+  "pythonBeforeTheme": {
+    "tests": 403,
+    "skipped": 23
+  },
+  "finalSourceTests": 2,
+  "registeredExits": 1437,
+  "worldErrors": 0,
+  "saveFilesUnchanged": true,
+  "pdfPages": 2,
+  "manualFiveMinutePlaytest": false,
+  "online": false,
+  "build": false,
+  "visualApproval": "pending"
+}

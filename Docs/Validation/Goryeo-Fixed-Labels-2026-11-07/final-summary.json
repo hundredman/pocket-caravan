@@ -1,0 +1,16 @@
+{
+  "runtimeChecks": 2699,
+  "nativeCaptures": 30,
+  "maps": 13,
+  "sameTargetPromptComparisons": 25,
+  "targetSwitches": 9,
+  "pythonTests": 403,
+  "pythonSkips": 23,
+  "sourceChecksAfterBoxRestore": 2,
+  "worldExits": 1437,
+  "worldErrors": 0,
+  "savedFilesUnchanged": 9,
+  "nativeHumanWalk": false,
+  "onlineTested": false,
+  "pushed": false
+}

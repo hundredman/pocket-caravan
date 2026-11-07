@@ -29,8 +29,8 @@ namespace PocketCaravan
         {
             var gm = GameManager.I;
             if (IsOpen || UIState.Blocking || gm == null || gm.IsTravelling) return;
+            if (!UIState.TryOpen(this, Close)) return;
             IsOpen = true; openedFrame = Time.frameCount; selected = 0; visibleSelection = -1; itemScroll = detailScroll = Vector2.zero;
-            UIState.Blocking = true;
             Sfx.Play("open");
             Opened?.Invoke();
         }
@@ -39,7 +39,7 @@ namespace PocketCaravan
         {
             if (!IsOpen) return;
             IsOpen = false;
-            UIState.Release();
+            UIState.Release(this);
         }
 
         void Update()

@@ -1,0 +1,14 @@
+{
+  "goryeo": {
+    "wholePortraitRgbaUnchanged": true
+  },
+  "venice": {
+    "wholePortraitRgbaUnchanged": true
+  },
+  "viking": {
+    "wholePortraitRgbaUnchanged": true
+  },
+  "arabia": {
+    "wholePortraitRgbaUnchanged": false
+  }
+}

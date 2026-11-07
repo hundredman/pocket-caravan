@@ -1,0 +1,10 @@
+{
+  "kind": "Editor checks, not native player testing",
+  "goryeo": 25,
+  "transit": 3,
+  "q1": 25,
+  "experience": 302,
+  "trade": 449,
+  "saveCompatibility": 27,
+  "terrainSceneCheck": "not rerun; no maps/scenes changed"
+}

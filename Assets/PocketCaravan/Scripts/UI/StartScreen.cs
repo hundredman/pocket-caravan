@@ -39,6 +39,7 @@ namespace PocketCaravan
         public static void Open(bool saveExists)
         {
             if (inst == null) Boot();
+            UIState.Reset();
             inst.hasSave = saveExists;
             inst.menuIndex = 0;
             inst.pick = 0; inst.pickScroll = Vector2.zero; inst.visiblePick = -1;

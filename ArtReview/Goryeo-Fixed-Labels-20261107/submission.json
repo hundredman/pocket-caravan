@@ -1,0 +1,14 @@
+{
+  "status": "pending-final-user-review",
+  "runtimeChecks": 2699,
+  "nativeCaptures": 30,
+  "layout": "name above / Space below, fixed to target; small boxed quest !/? on right",
+  "movement": "tool moves actual player among16positions, not human continuous walk; GIF reverses frames for looping",
+  "questQuestion": "existing q1_naru accepted in SaveOFF test slot and actual Jangdan turn-in question rendered",
+  "scope": "13 Goryeo/east-central maps",
+  "remoteIntegrationChanged": false,
+  "userStyleChoice": "기존 네모 아이콘이 나은 것 같아",
+  "comparison": "comparison.png",
+  "motion": "movement.gif",
+  "unchangedFennecReview": "ArtReview/Goryeo-Fennec-Smaller-20261107/comparison.png"
+}

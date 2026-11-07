@@ -1,0 +1,22 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Retrieved 1 log entries.\",\"data\":[{\"type\":\"Assert\",\"message\":\"Assertion failed\",\"file\":\"/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Library/PackageCache/com.unity.inputsystem@7a4e1a2a8194/InputSystem/Runtime/InputManager.cs\",\"line\":2997,\"stackTrace\":\"UnityEditor.EditorApplication:Internal_PlayModeStateChanged (UnityEditor.PlayModeStateChange) (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:506)\\n\"}]}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Retrieved 1 log entries.",
+    "data": [
+      {
+        "type": "Assert",
+        "message": "Assertion failed",
+        "file": "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Library/PackageCache/com.unity.inputsystem@7a4e1a2a8194/InputSystem/Runtime/InputManager.cs",
+        "line": 2997,
+        "stackTrace": "UnityEditor.EditorApplication:Internal_PlayModeStateChanged (UnityEditor.PlayModeStateChange) (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:506)\n"
+      }
+    ]
+  },
+  "isError": false
+}

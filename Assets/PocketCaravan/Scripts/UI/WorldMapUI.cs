@@ -45,18 +45,20 @@ namespace PocketCaravan
         {
             if (open && (InputReader.MapPressed() || InputReader.CancelPressed()))
             {
-                open = false;
-                UIState.Release();
+                Close();
                 return;
             }
             if (!open && InputReader.MapPressed() && !UIState.Blocking && GameManager.I != null && !GameManager.I.IsTravelling
                 && !RegionMapOverride.Claims(MapRoot.Current != null ? MapRoot.Current.mapId : null))   // 지역 지도가 맡은 맵에서는 열지 않는다
             {
+                if (!UIState.TryOpen(this, Close)) return;
                 open = true;
-                UIState.Blocking = true;
                 Sfx.Play("open");
             }
         }
+
+        void Close() { open = false; UIState.Release(this); }
+        void OnDisable() { if (open) Close(); }
 
         void OnGUI()
         {
@@ -97,7 +99,7 @@ namespace PocketCaravan
                 activeAtlas != null ? activeAtlas.width : 0, activeAtlas != null ? activeAtlas.height : 0, places, me, current,
                 $"북 ↑ · 지역 이름 {places.Count}곳", null, regionalAtlas != null ? (regional ? "전체 지도" : "고려 상세") : null, sideLabels: true);
             if (res.toggle) regional = !regional;
-            if (res.close) { open = false; UIState.Release(); }
+            if (res.close) Close();
         }
 
         // 지도 이름표만 줄인다. 등록 이름/현재 위치/저장 ID는 그대로다.

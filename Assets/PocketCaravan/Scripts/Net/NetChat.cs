@@ -25,7 +25,7 @@ namespace PocketCaravan
         // 11/05 UI B안: 종이 바탕 위 글씨라 진한 색 (전엔 어두운 바탕용 밝은 색)
         const string MeColor = "#1f625e", OtherColor = "#a8541c", DimColor = "#6a5464", ErrorColor = "#d6334f", SystemColor = "#3f7a3a", NoticeColor = "#c0611a";
 
-        class Line { public string text; public float at; }
+        class Line { public string text; public float at, seconds; public bool transient; }
 
         /// <summary>채팅 리액션 명령: 아이디 · 보여 줄 이름 · 받아 주는 말(한글·영어)</summary>
         static readonly (string id, string name, string[] words)[] Commands =
@@ -85,7 +85,7 @@ namespace PocketCaravan
             switch (m.t)
             {
                 case "welcome":
-                    if (!toldHowTo) { toldHowTo = true; Add($"<color={DimColor}>Enter를 누르면 채팅 · /춤 /박수 같은 리액션 (목록: /리액션)</color>"); }
+                    if (!toldHowTo) { toldHowTo = true; Add($"<color={DimColor}>Enter 채팅 · /리액션 도움말</color>", 6f, true); }
                     break;
                 case "join":
                     if (!string.IsNullOrEmpty(m.name)) Add($"<color={DimColor}>{m.name} 님이 이 맵에 왔어요</color>");
@@ -118,10 +118,16 @@ namespace PocketCaravan
             return index != null ? index.MapName(mapId) : mapId;
         }
 
-        void Add(string text)
+        void Add(string text, float seconds = LineSeconds, bool transient = false)
         {
-            lines.Add(new Line { text = text, at = Time.unscaledTime });
+            lines.Add(new Line { text = text, at = Time.unscaledTime, seconds = seconds, transient = transient });
             if (lines.Count > MaxLines) lines.RemoveAt(0);
+        }
+
+        float LineAlpha(Line line, float now)
+        {
+            if (typing && !line.transient) return 1f;
+            return Mathf.Clamp01((line.seconds - (now - line.at)) / FadeSeconds);
         }
 
         static bool EnterPressed()
@@ -208,7 +214,7 @@ namespace PocketCaravan
         {
             var net = NetClient.I;
             if (net == null || net.Status != NetClient.State.Online) return;
-            bool anyLine = typing || (lines.Count > 0 && Time.unscaledTime - lines[lines.Count - 1].at < LineSeconds);
+            bool anyLine = typing || lines.Exists(line => LineAlpha(line, Time.unscaledTime) > 0f);
             if (!anyLine && bubbles.Count == 0) return;
             UIStyle.Begin();
             Styles();
@@ -257,8 +263,7 @@ namespace PocketCaravan
             float total = 0f, top = 0f;
             for (int i = lines.Count - 1; i >= 0; i--)
             {
-                float age = Time.unscaledTime - lines[i].at;
-                float alpha = typing ? 1f : Mathf.Clamp01((LineSeconds - age) / FadeSeconds);
+                float alpha = LineAlpha(lines[i], Time.unscaledTime);
                 if (alpha <= 0f) continue;
                 float h = lineStyle.CalcHeight(new GUIContent(lines[i].text), LogWidth);
                 shown.Add((lines[i].text, h, alpha));

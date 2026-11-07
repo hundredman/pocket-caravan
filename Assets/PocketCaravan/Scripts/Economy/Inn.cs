@@ -100,6 +100,7 @@ namespace PocketCaravan
         /// <summary>다른 UI(시설창 등)에서 "쉬어 갈래요?" 창을 연다. 이미 푹 쉼이면 알림만.</summary>
         public static void Offer(string host)
         {
+            if (UIState.Blocking) return;
             if (instance == null) Boot();
             if (instance == null) return;
             if (RestBuff.Rested) { Notify.Show($"{host}: 아직 푹 쉬어서 개운하네요. 다음에 또 와요!", 3f); return; }

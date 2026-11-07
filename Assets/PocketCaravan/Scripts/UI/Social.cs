@@ -423,6 +423,12 @@ namespace PocketCaravan
                 if (it == null) continue;
                 int fi = FriendIndex(it.DisplayName);
                 if (fi < 0) continue;
+                var labels = MapRoot.Current != null ? MapRoot.Current.GetComponent<GoryeoPlaceLabels>() : null;
+                if (labels != null && labels.OwnsOriginal)
+                {
+                    if (pc.TalkTarget == it) labels.DrawFriendHint(HeartText(Hearts(Friends[fi])));
+                    continue;
+                }
                 if ((it.transform.position - pc.transform.position).sqrMagnitude > 4.5f * 4.5f) continue;
                 var sp = Camera.main.WorldToScreenPoint(it.transform.position + new Vector3(0, 2.3f, 0));
                 if (sp.z < 0f) continue;

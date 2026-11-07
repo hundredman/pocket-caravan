@@ -1,0 +1,55 @@
+{
+  "initialQaBeforeUserCheckpoint": {
+    "baseline": {
+      "pocket_caravan_preview_save.json": "1d028f92036187673469f28ea3f4449ee66b0ecfd04c3d187a45c49afae34bfe",
+      "pocket_caravan_save.json.bak": "417e7b04d74a8c67c3911a5b017c5dd6dde2ea46510f72d6ddf97cfa4d904ae8",
+      "pocket_caravan_save.before-linkcheck-claude-20261028.json": "c7c300cb7af0cb1892a5b45c9a19cef49f16f26aaf72a2fb4491d6ee673cc92c",
+      "pocket_caravan_save.before-lifecheck-claude-20261103.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+      "pocket_caravan_save.before-e2-claude-20261103.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+      "pocket_caravan_save.json": "ee0d2f98ac5dfb1c701f2d4578785838df8df4b282038b8e29adc0e1174a8cf3",
+      "pocket_caravan_save.before-M4-claude-20261028.json": "29e874c3a436547d0022b380385131b9775b4d2fdc88e1ccad2c7777601388aa",
+      "pocket_caravan_save.before-walk-claude-20261103.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+      "pocket_caravan_save.before-exitcheck-claude-20261028.json": "c7c300cb7af0cb1892a5b45c9a19cef49f16f26aaf72a2fb4491d6ee673cc92c"
+    },
+    "after": {
+      "pocket_caravan_preview_save.json": "1d028f92036187673469f28ea3f4449ee66b0ecfd04c3d187a45c49afae34bfe",
+      "pocket_caravan_save.json.bak": "417e7b04d74a8c67c3911a5b017c5dd6dde2ea46510f72d6ddf97cfa4d904ae8",
+      "pocket_caravan_save.before-linkcheck-claude-20261028.json": "c7c300cb7af0cb1892a5b45c9a19cef49f16f26aaf72a2fb4491d6ee673cc92c",
+      "pocket_caravan_save.before-lifecheck-claude-20261103.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+      "pocket_caravan_save.before-e2-claude-20261103.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+      "pocket_caravan_save.json": "ee0d2f98ac5dfb1c701f2d4578785838df8df4b282038b8e29adc0e1174a8cf3",
+      "pocket_caravan_save.before-M4-claude-20261028.json": "29e874c3a436547d0022b380385131b9775b4d2fdc88e1ccad2c7777601388aa",
+      "pocket_caravan_save.before-walk-claude-20261103.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+      "pocket_caravan_save.before-exitcheck-claude-20261028.json": "c7c300cb7af0cb1892a5b45c9a19cef49f16f26aaf72a2fb4491d6ee673cc92c"
+    },
+    "unchanged": true,
+    "temporarySlotsRemain": []
+  },
+  "afterSuccessfulUserCheckpoint": {
+    "baseline": {
+      "pocket_caravan_preview_save.json": "1d028f92036187673469f28ea3f4449ee66b0ecfd04c3d187a45c49afae34bfe",
+      "pocket_caravan_save.json.bak": "42825c43c7ae89ec5616ef28aed64c46ea26c78f1586ae2c185be15fbadb8805",
+      "pocket_caravan_save.before-linkcheck-claude-20261028.json": "c7c300cb7af0cb1892a5b45c9a19cef49f16f26aaf72a2fb4491d6ee673cc92c",
+      "pocket_caravan_save.before-lifecheck-claude-20261103.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+      "pocket_caravan_save.before-e2-claude-20261103.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+      "pocket_caravan_save.json": "d9c965285b307dc988a8580c6d95edef589cab52763f16925b28eef69688954b",
+      "pocket_caravan_save.before-M4-claude-20261028.json": "29e874c3a436547d0022b380385131b9775b4d2fdc88e1ccad2c7777601388aa",
+      "pocket_caravan_save.before-walk-claude-20261103.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+      "pocket_caravan_save.before-exitcheck-claude-20261028.json": "c7c300cb7af0cb1892a5b45c9a19cef49f16f26aaf72a2fb4491d6ee673cc92c"
+    },
+    "after": {
+      "pocket_caravan_preview_save.json": "1d028f92036187673469f28ea3f4449ee66b0ecfd04c3d187a45c49afae34bfe",
+      "pocket_caravan_save.json.bak": "42825c43c7ae89ec5616ef28aed64c46ea26c78f1586ae2c185be15fbadb8805",
+      "pocket_caravan_save.before-linkcheck-claude-20261028.json": "c7c300cb7af0cb1892a5b45c9a19cef49f16f26aaf72a2fb4491d6ee673cc92c",
+      "pocket_caravan_save.before-lifecheck-claude-20261103.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+      "pocket_caravan_save.before-e2-claude-20261103.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+      "pocket_caravan_save.json": "d9c965285b307dc988a8580c6d95edef589cab52763f16925b28eef69688954b",
+      "pocket_caravan_save.before-M4-claude-20261028.json": "29e874c3a436547d0022b380385131b9775b4d2fdc88e1ccad2c7777601388aa",
+      "pocket_caravan_save.before-walk-claude-20261103.json": "17b3e8f68362d7173bcbd57e62a9f2efcc1924c8d268c888ce24d8b8eb8b49e6",
+      "pocket_caravan_save.before-exitcheck-claude-20261028.json": "c7c300cb7af0cb1892a5b45c9a19cef49f16f26aaf72a2fb4491d6ee673cc92c"
+    },
+    "unchanged": true,
+    "files": 9
+  },
+  "temporarySlotsRemain": []
+}

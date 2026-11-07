@@ -1,0 +1,27 @@
+{
+  "status": "superseded-by-fixed-anchor-review",
+  "instruction": "사용자가 이번 작업은 중간 승인 없이 모두 끝낸 뒤 마지막에 확인한다고 지시함",
+  "superseded": "paper nameplate preview superseded by text-only white-outline names and Space-only hint",
+  "scenario": "Docs/Goryeo/Demo-Scenario-2026-11-07.md",
+  "remoteIntegrationChanged": false,
+  "runtimeChecks": 916,
+  "gameCaptures": 61,
+  "modalChatChecks": 47,
+  "r3r4TempSaveChecks": 100,
+  "screens": [
+    "nameplate-portrait-review.png",
+    "windows-chat-review.png",
+    "13-map-mosaic.png"
+  ],
+  "motion": "label-pan.gif",
+  "sourceCaptures": "ArtReview/Goryeo-Nameplate-Outline-20261107",
+  "limitations": [
+    "native human play and all viewport sizes not tested",
+    "online meeting and demo rehearsal not performed",
+    "original movement stall unreproduced"
+  ],
+  "savedFilesUnchanged": 9,
+  "fennecFollowup": "ArtReview/Goryeo-Fennec-Smaller-20261107/comparison.png",
+  "fennecFollowupChecks": 57,
+  "supersededBy": "ArtReview/Goryeo-Fixed-Labels-20261107/submission.json"
+}

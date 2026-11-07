@@ -55,12 +55,15 @@ namespace PocketCaravan
             Vector2 facing = player.Motor.Facing;
             cart.localPosition = -(Vector3)(facing * .95f) + new Vector3(wobble * .08f, -.1f + Mathf.Abs(wobble) * .05f, 0);
             cart.localRotation = Quaternion.Euler(0, 0, -Mathf.Atan2(facing.x, facing.y) * Mathf.Rad2Deg + wobble * 4f);
-            int order = facing.y > 0 ? 12 : 8;
+            var body = player.anim != null ? player.anim.GetComponent<SpriteRenderer>() : null;
+            int order = body != null ? body.sortingOrder - 2 : 8;
+            if (body != null) cartSprite.sortingLayerID = body.sortingLayerID;
             cartSprite.sortingOrder = order;
             for (int i = 0; i < crates.Length; i++)
             {
                 crates[i].enabled = state.LoadRatio > i / 3f;
                 crates[i].sortingOrder = order + 1;
+                if (body != null) crates[i].sortingLayerID = body.sortingLayerID;
             }
         }
 

@@ -31,7 +31,7 @@ namespace PocketCaravan
                 for(int p=0;p<count&&items.Count<RendererLimit;p++)
                 {
                     var go=new GameObject(point.kind);go.transform.SetParent(owned,false);go.transform.position=At(point.x,point.y);
-                    var sr=go.AddComponent<SpriteRenderer>();sr.sprite=SpriteFor(point.kind=="chicken"||point.kind=="dog"||point.kind=="bird"||point.kind=="gull"?point.kind+"_0":point.kind);sr.sortingOrder=point.kind=="smoke"||point.kind=="gull"||point.kind=="bird"?22:point.kind=="boat"||point.kind=="lamp"?4:10;
+                    var sr=go.AddComponent<SpriteRenderer>();sr.sprite=SpriteFor(point.kind=="chicken"||point.kind=="dog"||point.kind=="bird"||point.kind=="gull"?point.kind+"_0":point.kind);sr.sortingOrder=point.kind=="smoke"||point.kind=="gull"||point.kind=="bird"?22:point.kind=="boat"||point.kind=="lamp"?4:point.kind=="cart"?8:10;
                     var item=new Item{point=point,renderer=sr,phase=items.Count*.73f,puff=point.kind=="smoke"?p:-1};items.Add(item);
                     if(point.kind=="lamp")
                     {
@@ -62,7 +62,7 @@ namespace PocketCaravan
                     case"chicken":case"dog":sr.sprite=SpriteFor(p.kind+"_"+((int)(now*.8f+item.phase)%2));show=hour>=5&&hour<21;break;
                     case"bird":case"gull":at+=new Vector3(Mathf.Sin(now*.35f+item.phase)*1.5f,Mathf.Sin(now*.65f+item.phase)*.35f+.35f,0);sr.sprite=SpriteFor(p.kind+"_"+((int)(now*3+item.phase)%2));show=hour>=5&&hour<20;break;
                     case"boat":at=Vector3.Lerp(at,At(p.bx,p.by),.5f+.5f*Mathf.Sin(now*.12f+item.phase));break;
-                    case"cart":at=Vector3.Lerp(at,At(p.bx,p.by),Mathf.PingPong(now*.035f+.65f,1));show=hour>=6&&hour<19;break;
+                    case"cart":show=hour>=6&&hour<19;break; // 끄는 사람이 없는 생활 수레는 제자리에 세운다.
                     case"walker":at=item.walker.transform.position;show=hour>=6&&hour<19;break;
                 }
                 if(item.walker==null){at.x=Mathf.Round(at.x*16)/16;at.y=Mathf.Round(at.y*16)/16;sr.transform.position=at;}show=show&&Visible(at);sr.enabled=show;

@@ -21,17 +21,17 @@ namespace PocketCaravan
 
         public override void Interact(PlayerController player)
         {
+            if (!UIState.TryOpen(this, Close)) return;
             open = true;
             openedFrame = Time.frameCount;
             message = "";
-            UIState.Blocking = true;
             Sfx.Play("open");
         }
 
         void Close()
         {
             open = false;
-            UIState.Release();
+            UIState.Release(this);
         }
 
         void Update()

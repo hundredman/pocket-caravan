@@ -1,0 +1,17 @@
+{
+    "complete": true,
+    "error": "",
+    "checks": [
+        "saves OFF bootstrap",
+        "actual viewport 480x270",
+        "isolated slot retained Goryeo/Naru actual=/Users/kim/Library/Application Support/DefaultCompany/PocketCaravan/codex_modal_cf93d2666b6d475b8b9e7d2ead8aee48.json expected=/Users/kim/Library/Application Support/DefaultCompany/PocketCaravan/codex_modal_cf93d2666b6d475b8b9e7d2ead8aee48.json",
+        "normal registered scene index Goryeo/Naru",
+        "native capture 01-market-inventory 480x270",
+        "inventory remains open",
+        "baseline defect: market stacks over inventory",
+        "native capture 02-dialogue-inventory 480x270",
+        "baseline defect: dialogue stacks over inventory",
+        "baseline defect: closing dialogue unlocks a still-open inventory",
+        "no save file throughout modal review"
+    ]
+}
