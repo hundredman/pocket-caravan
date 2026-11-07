@@ -1,0 +1,25 @@
+{
+  "personalSaveFiles": 9,
+  "changedPersonalSaveFiles": [
+    "pocket_caravan_save.json.bak",
+    "pocket_caravan_save.json"
+  ],
+  "unityChecks": 40,
+  "unityCaptures": 9,
+  "actualAutomatedTravels": 5,
+  "boundaryTests": 4,
+  "worldExits": 1437,
+  "worldErrors": 0,
+  "consoleErrors": 0,
+  "productionFixImplemented": false,
+  "prototype": "one temporary Naru west exit with rectangle-aligned bounds, original destination spawn; destroyed after travel",
+  "notTested": [
+    "full 13-map repartition",
+    "human WASD play",
+    "old-save relocation after new bounds",
+    "online",
+    "long-run FPS",
+    "build"
+  ],
+  "personalSaveComparisonNote": "17:14 지문과 비교하면 본체·bak 2파일이 18:27 변경됨. 긴 중단 중 변경 원인 미확인. 격리 QA 슬롯 미생성만 확인했으며 개인 저장 불변으로 판정하지 않음. 자동 복원하지 않음."
+}

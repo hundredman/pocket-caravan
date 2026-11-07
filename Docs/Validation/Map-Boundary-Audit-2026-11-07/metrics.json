@@ -1,0 +1,6082 @@
+{
+  "scope": "read-only current registered map JSON, current layout ownership, nominal four-neighbor grid routes",
+  "cameraReference": {
+    "orthographicSize": 8.4375,
+    "aspect": 1.7777777777777777,
+    "viewCells": [
+      30,
+      16.875
+    ]
+  },
+  "ownMapCount": 13,
+  "b1AssignedAreaBudget": 45000,
+  "exportReportedAssignedArea": 44993,
+  "ownExitObjects": 1189,
+  "ownInteriorExitObjects": 1100,
+  "starterComparison": {
+    "goryeo": {
+      "ids": [
+        "Dakmok",
+        "Gaegyeong",
+        "Naru",
+        "goryeo_jangdan",
+        "goryeo_songak"
+      ],
+      "count": 5,
+      "widthRange": [
+        61,
+        93
+      ],
+      "heightRange": [
+        76,
+        98
+      ],
+      "medianBoundingArea": 6216,
+      "medianUnblockedCells": 2267,
+      "medianB1AssignedArea": 3997,
+      "exitObjects": 367,
+      "directionalInsetExits": 335
+    },
+    "venice": {
+      "ids": [
+        "venice_burano",
+        "venice_chioggia",
+        "venice_murano",
+        "venice_rialto",
+        "venice_santerasmo"
+      ],
+      "count": 5,
+      "widthRange": [
+        57,
+        75
+      ],
+      "heightRange": [
+        56,
+        84
+      ],
+      "medianBoundingArea": 3477,
+      "medianUnblockedCells": 1118,
+      "medianB1AssignedArea": null,
+      "exitObjects": 17,
+      "directionalInsetExits": 0
+    },
+    "north": {
+      "ids": [
+        "north_birka",
+        "north_herd",
+        "north_hunter",
+        "north_laugar",
+        "north_naru"
+      ],
+      "count": 5,
+      "widthRange": [
+        56,
+        70
+      ],
+      "heightRange": [
+        78,
+        95
+      ],
+      "medianBoundingArea": 5440,
+      "medianUnblockedCells": 2211,
+      "medianB1AssignedArea": null,
+      "exitObjects": 30,
+      "directionalInsetExits": 4
+    },
+    "arabia": {
+      "ids": [
+        "arabia_ahsa",
+        "arabia_jeddah",
+        "arabia_sanaa",
+        "arabia_taiz",
+        "arabia_zabid"
+      ],
+      "count": 5,
+      "widthRange": [
+        64,
+        64
+      ],
+      "heightRange": [
+        44,
+        44
+      ],
+      "medianBoundingArea": 2816,
+      "medianUnblockedCells": 2136,
+      "medianB1AssignedArea": null,
+      "exitObjects": 40,
+      "directionalInsetExits": 0
+    }
+  },
+  "maps": [
+    {
+      "id": "north_c_creek",
+      "name": "개울 나루 마을",
+      "w": 79,
+      "h": 79,
+      "boundingArea": 6241,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2879,
+      "paintedGroundCells": 6241,
+      "backdropCells": 0,
+      "exitObjects": 5,
+      "uniqueTargets": 3,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "north_c_road_ne": 51,
+        "north_c_runeway": 45,
+        "north_c_road_se": 61
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_c_road_se",
+          "to": "north_c_runeway",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "north_c_road_ne",
+          "to": "north_c_runeway",
+          "steps": 70,
+          "nominalWalkSeconds": 18.42
+        },
+        {
+          "from": "north_c_road_ne",
+          "to": "north_c_road_se",
+          "steps": 90,
+          "nominalWalkSeconds": 23.68
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_c_road_se",
+          "to": "north_c_runeway",
+          "steps": 54,
+          "nominalWalkSeconds": 14.21
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "north_c_road_se",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "north_c_road_ne",
+          "to": "north_c_runeway",
+          "steps": 68,
+          "nominalWalkSeconds": 17.89
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "north_c_road_ne",
+          "steps": 68,
+          "nominalWalkSeconds": 17.89
+        },
+        {
+          "from": "north_c_road_se",
+          "to": "north_c_road_ne",
+          "steps": 87,
+          "nominalWalkSeconds": 22.89
+        },
+        {
+          "from": "north_c_road_ne",
+          "to": "north_c_road_se",
+          "steps": 88,
+          "nominalWalkSeconds": 23.16
+        }
+      ]
+    },
+    {
+      "id": "north_c_crossing",
+      "name": "북쪽 길목 마을",
+      "w": 63,
+      "h": 94,
+      "boundingArea": 5922,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 3469,
+      "paintedGroundCells": 5922,
+      "backdropCells": 0,
+      "exitObjects": 7,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 1,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "north_c_runeway": 46,
+        "north_c_road_se": 33,
+        "north_c_road_sw": 38,
+        "arabia_central_steppe": 63
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_c_road_se",
+          "to": "north_c_runeway",
+          "steps": 35,
+          "nominalWalkSeconds": 9.21
+        },
+        {
+          "from": "north_c_road_se",
+          "to": "north_c_road_sw",
+          "steps": 63,
+          "nominalWalkSeconds": 16.58
+        },
+        {
+          "from": "north_c_road_sw",
+          "to": "north_c_runeway",
+          "steps": 68,
+          "nominalWalkSeconds": 17.89
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "north_c_road_se",
+          "steps": 80,
+          "nominalWalkSeconds": 21.05
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "north_c_road_sw",
+          "steps": 83,
+          "nominalWalkSeconds": 21.84
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "north_c_runeway",
+          "steps": 99,
+          "nominalWalkSeconds": 26.05
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_c_road_se",
+          "to": "north_c_runeway",
+          "steps": 33,
+          "nominalWalkSeconds": 8.68
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "north_c_road_se",
+          "steps": 33,
+          "nominalWalkSeconds": 8.68
+        },
+        {
+          "from": "north_c_road_se",
+          "to": "north_c_road_sw",
+          "steps": 61,
+          "nominalWalkSeconds": 16.05
+        },
+        {
+          "from": "north_c_road_sw",
+          "to": "north_c_road_se",
+          "steps": 61,
+          "nominalWalkSeconds": 16.05
+        },
+        {
+          "from": "north_c_road_sw",
+          "to": "north_c_runeway",
+          "steps": 66,
+          "nominalWalkSeconds": 17.37
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "north_c_road_sw",
+          "steps": 66,
+          "nominalWalkSeconds": 17.37
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "north_c_road_se",
+          "steps": 79,
+          "nominalWalkSeconds": 20.79
+        },
+        {
+          "from": "north_c_road_se",
+          "to": "arabia_central_steppe",
+          "steps": 80,
+          "nominalWalkSeconds": 21.05
+        },
+        {
+          "from": "north_c_road_sw",
+          "to": "arabia_central_steppe",
+          "steps": 81,
+          "nominalWalkSeconds": 21.32
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "north_c_road_sw",
+          "steps": 82,
+          "nominalWalkSeconds": 21.58
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "arabia_central_steppe",
+          "steps": 97,
+          "nominalWalkSeconds": 25.53
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "north_c_runeway",
+          "steps": 98,
+          "nominalWalkSeconds": 25.79
+        }
+      ]
+    },
+    {
+      "id": "north_c_gatetown",
+      "name": "북문 마을",
+      "w": 81,
+      "h": 61,
+      "boundingArea": 4941,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2377,
+      "paintedGroundCells": 4941,
+      "backdropCells": 0,
+      "exitObjects": 5,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "north_birka": 38,
+        "north_c_road_ne": 56,
+        "north_c_runeway": 30,
+        "north_c_road_nw": 39
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_birka",
+          "to": "north_c_road_nw",
+          "steps": 55,
+          "nominalWalkSeconds": 14.47
+        },
+        {
+          "from": "north_birka",
+          "to": "north_c_runeway",
+          "steps": 63,
+          "nominalWalkSeconds": 16.58
+        },
+        {
+          "from": "north_birka",
+          "to": "north_c_road_ne",
+          "steps": 69,
+          "nominalWalkSeconds": 18.16
+        },
+        {
+          "from": "north_c_road_nw",
+          "to": "north_c_runeway",
+          "steps": 71,
+          "nominalWalkSeconds": 18.68
+        },
+        {
+          "from": "north_c_road_ne",
+          "to": "north_c_runeway",
+          "steps": 74,
+          "nominalWalkSeconds": 19.47
+        },
+        {
+          "from": "north_c_road_ne",
+          "to": "north_c_road_nw",
+          "steps": 80,
+          "nominalWalkSeconds": 21.05
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_c_road_nw",
+          "to": "north_birka",
+          "steps": 53,
+          "nominalWalkSeconds": 13.95
+        },
+        {
+          "from": "north_birka",
+          "to": "north_c_road_nw",
+          "steps": 53,
+          "nominalWalkSeconds": 13.95
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "north_birka",
+          "steps": 61,
+          "nominalWalkSeconds": 16.05
+        },
+        {
+          "from": "north_birka",
+          "to": "north_c_runeway",
+          "steps": 61,
+          "nominalWalkSeconds": 16.05
+        },
+        {
+          "from": "north_c_road_ne",
+          "to": "north_birka",
+          "steps": 67,
+          "nominalWalkSeconds": 17.63
+        },
+        {
+          "from": "north_birka",
+          "to": "north_c_road_ne",
+          "steps": 67,
+          "nominalWalkSeconds": 17.63
+        },
+        {
+          "from": "north_c_road_nw",
+          "to": "north_c_runeway",
+          "steps": 69,
+          "nominalWalkSeconds": 18.16
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "north_c_road_nw",
+          "steps": 69,
+          "nominalWalkSeconds": 18.16
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "north_c_road_ne",
+          "steps": 72,
+          "nominalWalkSeconds": 18.95
+        },
+        {
+          "from": "north_c_road_ne",
+          "to": "north_c_runeway",
+          "steps": 73,
+          "nominalWalkSeconds": 19.21
+        },
+        {
+          "from": "north_c_road_ne",
+          "to": "north_c_road_nw",
+          "steps": 78,
+          "nominalWalkSeconds": 20.53
+        },
+        {
+          "from": "north_c_road_nw",
+          "to": "north_c_road_ne",
+          "steps": 78,
+          "nominalWalkSeconds": 20.53
+        }
+      ]
+    },
+    {
+      "id": "north_c_road_ne",
+      "name": "개울 다리길",
+      "w": 106,
+      "h": 63,
+      "boundingArea": 6678,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 1702,
+      "paintedGroundCells": 6678,
+      "backdropCells": 0,
+      "exitObjects": 3,
+      "uniqueTargets": 2,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "north_c_creek": null,
+        "north_c_gatetown": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_c_creek",
+          "to": "north_c_gatetown",
+          "steps": 54,
+          "nominalWalkSeconds": 14.21
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_c_creek",
+          "to": "north_c_gatetown",
+          "steps": 52,
+          "nominalWalkSeconds": 13.68
+        },
+        {
+          "from": "north_c_gatetown",
+          "to": "north_c_creek",
+          "steps": 53,
+          "nominalWalkSeconds": 13.95
+        }
+      ]
+    },
+    {
+      "id": "north_c_road_nw",
+      "name": "눈숲 고갯길",
+      "w": 86,
+      "h": 58,
+      "boundingArea": 4988,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 1454,
+      "paintedGroundCells": 4988,
+      "backdropCells": 0,
+      "exitObjects": 3,
+      "uniqueTargets": 2,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "north_c_snowwood": null,
+        "north_c_gatetown": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_c_gatetown",
+          "to": "north_c_snowwood",
+          "steps": 65,
+          "nominalWalkSeconds": 17.11
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_c_gatetown",
+          "to": "north_c_snowwood",
+          "steps": 63,
+          "nominalWalkSeconds": 16.58
+        },
+        {
+          "from": "north_c_snowwood",
+          "to": "north_c_gatetown",
+          "steps": 66,
+          "nominalWalkSeconds": 17.37
+        }
+      ]
+    },
+    {
+      "id": "north_c_road_se",
+      "name": "동남 물가길",
+      "w": 61,
+      "h": 76,
+      "boundingArea": 4636,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2041,
+      "paintedGroundCells": 4636,
+      "backdropCells": 0,
+      "exitObjects": 7,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "north_c_crossing": null,
+        "north_c_creek": null,
+        "north_c_runeway": null,
+        "transit_crossroads": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_c_creek",
+          "to": "north_c_runeway",
+          "steps": 30,
+          "nominalWalkSeconds": 7.89
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "north_c_runeway",
+          "steps": 45,
+          "nominalWalkSeconds": 11.84
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "transit_crossroads",
+          "steps": 45,
+          "nominalWalkSeconds": 11.84
+        },
+        {
+          "from": "north_c_creek",
+          "to": "north_c_crossing",
+          "steps": 61,
+          "nominalWalkSeconds": 16.05
+        },
+        {
+          "from": "north_c_creek",
+          "to": "transit_crossroads",
+          "steps": 81,
+          "nominalWalkSeconds": 21.32
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "transit_crossroads",
+          "steps": 97,
+          "nominalWalkSeconds": 25.53
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_c_creek",
+          "to": "north_c_runeway",
+          "steps": 27,
+          "nominalWalkSeconds": 7.11
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "north_c_creek",
+          "steps": 28,
+          "nominalWalkSeconds": 7.37
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "north_c_runeway",
+          "steps": 43,
+          "nominalWalkSeconds": 11.32
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "transit_crossroads",
+          "steps": 43,
+          "nominalWalkSeconds": 11.32
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "north_c_crossing",
+          "steps": 43,
+          "nominalWalkSeconds": 11.32
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "north_c_crossing",
+          "steps": 44,
+          "nominalWalkSeconds": 11.58
+        },
+        {
+          "from": "north_c_creek",
+          "to": "north_c_crossing",
+          "steps": 58,
+          "nominalWalkSeconds": 15.26
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "north_c_creek",
+          "steps": 59,
+          "nominalWalkSeconds": 15.53
+        },
+        {
+          "from": "north_c_creek",
+          "to": "transit_crossroads",
+          "steps": 78,
+          "nominalWalkSeconds": 20.53
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "north_c_creek",
+          "steps": 80,
+          "nominalWalkSeconds": 21.05
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "transit_crossroads",
+          "steps": 95,
+          "nominalWalkSeconds": 25.0
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "north_c_runeway",
+          "steps": 96,
+          "nominalWalkSeconds": 25.26
+        }
+      ]
+    },
+    {
+      "id": "north_c_road_sw",
+      "name": "서남 솔숲길",
+      "w": 71,
+      "h": 66,
+      "boundingArea": 4686,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2150,
+      "paintedGroundCells": 4686,
+      "backdropCells": 0,
+      "exitObjects": 6,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "north_c_snowwood": null,
+        "north_c_crossing": null,
+        "venice_c_pass": null,
+        "venice_c_gate": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_c_crossing",
+          "to": "venice_c_gate",
+          "steps": 45,
+          "nominalWalkSeconds": 11.84
+        },
+        {
+          "from": "north_c_snowwood",
+          "to": "venice_c_pass",
+          "steps": 54,
+          "nominalWalkSeconds": 14.21
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "north_c_snowwood",
+          "steps": 56,
+          "nominalWalkSeconds": 14.74
+        },
+        {
+          "from": "north_c_snowwood",
+          "to": "venice_c_gate",
+          "steps": 67,
+          "nominalWalkSeconds": 17.63
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "venice_c_pass",
+          "steps": 80,
+          "nominalWalkSeconds": 21.05
+        },
+        {
+          "from": "venice_c_gate",
+          "to": "venice_c_pass",
+          "steps": 88,
+          "nominalWalkSeconds": 23.16
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_c_crossing",
+          "to": "venice_c_gate",
+          "steps": 43,
+          "nominalWalkSeconds": 11.32
+        },
+        {
+          "from": "venice_c_gate",
+          "to": "north_c_crossing",
+          "steps": 44,
+          "nominalWalkSeconds": 11.58
+        },
+        {
+          "from": "north_c_snowwood",
+          "to": "venice_c_pass",
+          "steps": 52,
+          "nominalWalkSeconds": 13.68
+        },
+        {
+          "from": "venice_c_pass",
+          "to": "north_c_snowwood",
+          "steps": 53,
+          "nominalWalkSeconds": 13.95
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "north_c_snowwood",
+          "steps": 54,
+          "nominalWalkSeconds": 14.21
+        },
+        {
+          "from": "north_c_snowwood",
+          "to": "north_c_crossing",
+          "steps": 56,
+          "nominalWalkSeconds": 14.74
+        },
+        {
+          "from": "north_c_snowwood",
+          "to": "venice_c_gate",
+          "steps": 65,
+          "nominalWalkSeconds": 17.11
+        },
+        {
+          "from": "venice_c_gate",
+          "to": "north_c_snowwood",
+          "steps": 66,
+          "nominalWalkSeconds": 17.37
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "venice_c_pass",
+          "steps": 78,
+          "nominalWalkSeconds": 20.53
+        },
+        {
+          "from": "venice_c_pass",
+          "to": "north_c_crossing",
+          "steps": 79,
+          "nominalWalkSeconds": 20.79
+        },
+        {
+          "from": "venice_c_gate",
+          "to": "venice_c_pass",
+          "steps": 87,
+          "nominalWalkSeconds": 22.89
+        },
+        {
+          "from": "venice_c_pass",
+          "to": "venice_c_gate",
+          "steps": 87,
+          "nominalWalkSeconds": 22.89
+        }
+      ]
+    },
+    {
+      "id": "north_c_runeway",
+      "name": "룬돌 큰길",
+      "w": 62,
+      "h": 58,
+      "boundingArea": 3596,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 1960,
+      "paintedGroundCells": 3596,
+      "backdropCells": 0,
+      "exitObjects": 7,
+      "uniqueTargets": 5,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "north_c_creek": null,
+        "north_c_snowwood": null,
+        "north_c_crossing": null,
+        "north_c_gatetown": null,
+        "north_c_road_se": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_c_crossing",
+          "to": "north_c_road_se",
+          "steps": 7,
+          "nominalWalkSeconds": 1.84
+        },
+        {
+          "from": "north_c_creek",
+          "to": "north_c_gatetown",
+          "steps": 50,
+          "nominalWalkSeconds": 13.16
+        },
+        {
+          "from": "north_c_gatetown",
+          "to": "north_c_snowwood",
+          "steps": 51,
+          "nominalWalkSeconds": 13.42
+        },
+        {
+          "from": "north_c_creek",
+          "to": "north_c_crossing",
+          "steps": 53,
+          "nominalWalkSeconds": 13.95
+        },
+        {
+          "from": "north_c_creek",
+          "to": "north_c_snowwood",
+          "steps": 61,
+          "nominalWalkSeconds": 16.05
+        },
+        {
+          "from": "north_c_creek",
+          "to": "north_c_road_se",
+          "steps": 63,
+          "nominalWalkSeconds": 16.58
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "north_c_gatetown",
+          "steps": 64,
+          "nominalWalkSeconds": 16.84
+        },
+        {
+          "from": "north_c_gatetown",
+          "to": "north_c_road_se",
+          "steps": 74,
+          "nominalWalkSeconds": 19.47
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "north_c_snowwood",
+          "steps": 75,
+          "nominalWalkSeconds": 19.74
+        },
+        {
+          "from": "north_c_road_se",
+          "to": "north_c_snowwood",
+          "steps": 85,
+          "nominalWalkSeconds": 22.37
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_c_crossing",
+          "to": "north_c_road_se",
+          "steps": 9,
+          "nominalWalkSeconds": 2.37
+        },
+        {
+          "from": "north_c_road_se",
+          "to": "north_c_crossing",
+          "steps": 9,
+          "nominalWalkSeconds": 2.37
+        },
+        {
+          "from": "north_c_creek",
+          "to": "north_c_gatetown",
+          "steps": 48,
+          "nominalWalkSeconds": 12.63
+        },
+        {
+          "from": "north_c_gatetown",
+          "to": "north_c_creek",
+          "steps": 48,
+          "nominalWalkSeconds": 12.63
+        },
+        {
+          "from": "north_c_gatetown",
+          "to": "north_c_snowwood",
+          "steps": 49,
+          "nominalWalkSeconds": 12.89
+        },
+        {
+          "from": "north_c_snowwood",
+          "to": "north_c_gatetown",
+          "steps": 49,
+          "nominalWalkSeconds": 12.89
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "north_c_creek",
+          "steps": 51,
+          "nominalWalkSeconds": 13.42
+        },
+        {
+          "from": "north_c_creek",
+          "to": "north_c_crossing",
+          "steps": 53,
+          "nominalWalkSeconds": 13.95
+        },
+        {
+          "from": "north_c_creek",
+          "to": "north_c_snowwood",
+          "steps": 59,
+          "nominalWalkSeconds": 15.53
+        },
+        {
+          "from": "north_c_road_se",
+          "to": "north_c_creek",
+          "steps": 61,
+          "nominalWalkSeconds": 16.05
+        },
+        {
+          "from": "north_c_snowwood",
+          "to": "north_c_creek",
+          "steps": 61,
+          "nominalWalkSeconds": 16.05
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "north_c_gatetown",
+          "steps": 62,
+          "nominalWalkSeconds": 16.32
+        },
+        {
+          "from": "north_c_gatetown",
+          "to": "north_c_crossing",
+          "steps": 62,
+          "nominalWalkSeconds": 16.32
+        },
+        {
+          "from": "north_c_creek",
+          "to": "north_c_road_se",
+          "steps": 63,
+          "nominalWalkSeconds": 16.58
+        },
+        {
+          "from": "north_c_gatetown",
+          "to": "north_c_road_se",
+          "steps": 72,
+          "nominalWalkSeconds": 18.95
+        },
+        {
+          "from": "north_c_road_se",
+          "to": "north_c_gatetown",
+          "steps": 72,
+          "nominalWalkSeconds": 18.95
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "north_c_snowwood",
+          "steps": 73,
+          "nominalWalkSeconds": 19.21
+        },
+        {
+          "from": "north_c_snowwood",
+          "to": "north_c_crossing",
+          "steps": 75,
+          "nominalWalkSeconds": 19.74
+        },
+        {
+          "from": "north_c_road_se",
+          "to": "north_c_snowwood",
+          "steps": 83,
+          "nominalWalkSeconds": 21.84
+        },
+        {
+          "from": "north_c_snowwood",
+          "to": "north_c_road_se",
+          "steps": 85,
+          "nominalWalkSeconds": 22.37
+        }
+      ]
+    },
+    {
+      "id": "north_c_snowwood",
+      "name": "눈숲 마을",
+      "w": 113,
+      "h": 65,
+      "boundingArea": 7345,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 3466,
+      "paintedGroundCells": 7345,
+      "backdropCells": 0,
+      "exitObjects": 7,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 2,
+      "exitsAtLeastHalfScreenInside": 2,
+      "maxDirectionalInset": 23,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "north_c_road_nw": 69,
+        "north_c_runeway": 36,
+        "north_c_road_sw": 36,
+        "venice_c_vineyard": 88
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_c_road_sw",
+          "to": "north_c_runeway",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "north_c_road_nw",
+          "to": "venice_c_vineyard",
+          "steps": 65,
+          "nominalWalkSeconds": 17.11
+        },
+        {
+          "from": "north_c_road_sw",
+          "to": "venice_c_vineyard",
+          "steps": 95,
+          "nominalWalkSeconds": 25.0
+        },
+        {
+          "from": "north_c_road_nw",
+          "to": "north_c_runeway",
+          "steps": 103,
+          "nominalWalkSeconds": 27.11
+        },
+        {
+          "from": "north_c_road_nw",
+          "to": "north_c_road_sw",
+          "steps": 106,
+          "nominalWalkSeconds": 27.89
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "venice_c_vineyard",
+          "steps": 126,
+          "nominalWalkSeconds": 33.16
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_c_road_sw",
+          "to": "north_c_runeway",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "north_c_road_sw",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "venice_c_vineyard",
+          "to": "north_c_road_nw",
+          "steps": 64,
+          "nominalWalkSeconds": 16.84
+        },
+        {
+          "from": "north_c_road_nw",
+          "to": "venice_c_vineyard",
+          "steps": 67,
+          "nominalWalkSeconds": 17.63
+        },
+        {
+          "from": "north_c_road_sw",
+          "to": "venice_c_vineyard",
+          "steps": 93,
+          "nominalWalkSeconds": 24.47
+        },
+        {
+          "from": "venice_c_vineyard",
+          "to": "north_c_road_sw",
+          "steps": 94,
+          "nominalWalkSeconds": 24.74
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "north_c_road_nw",
+          "steps": 101,
+          "nominalWalkSeconds": 26.58
+        },
+        {
+          "from": "north_c_road_nw",
+          "to": "north_c_runeway",
+          "steps": 102,
+          "nominalWalkSeconds": 26.84
+        },
+        {
+          "from": "north_c_road_sw",
+          "to": "north_c_road_nw",
+          "steps": 104,
+          "nominalWalkSeconds": 27.37
+        },
+        {
+          "from": "north_c_road_nw",
+          "to": "north_c_road_sw",
+          "steps": 105,
+          "nominalWalkSeconds": 27.63
+        },
+        {
+          "from": "venice_c_vineyard",
+          "to": "north_c_runeway",
+          "steps": 125,
+          "nominalWalkSeconds": 32.89
+        },
+        {
+          "from": "north_c_runeway",
+          "to": "venice_c_vineyard",
+          "steps": 126,
+          "nominalWalkSeconds": 33.16
+        }
+      ]
+    },
+    {
+      "id": "Dakmok",
+      "name": "닥나무 마을",
+      "w": 93,
+      "h": 80,
+      "boundingArea": 7440,
+      "b1AssignedArea": 3402,
+      "exportReportedArea": 4133,
+      "unblockedCells": 1248,
+      "paintedGroundCells": 6183,
+      "backdropCells": 111,
+      "exitObjects": 22,
+      "uniqueTargets": 2,
+      "directionalInsetExits": 22,
+      "exitsAtLeastHalfScreenInside": 20,
+      "maxDirectionalInset": 47,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "goryeo_songak": 28,
+        "Gaegyeong": 37
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "Gaegyeong",
+          "to": "goryeo_songak",
+          "steps": 26,
+          "nominalWalkSeconds": 6.84
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "Gaegyeong",
+          "to": "goryeo_songak",
+          "steps": 25,
+          "nominalWalkSeconds": 6.58
+        },
+        {
+          "from": "goryeo_songak",
+          "to": "Gaegyeong",
+          "steps": 25,
+          "nominalWalkSeconds": 6.58
+        }
+      ]
+    },
+    {
+      "id": "Gaegyeong",
+      "name": "개경",
+      "w": 72,
+      "h": 76,
+      "boundingArea": 5472,
+      "b1AssignedArea": 5001,
+      "exportReportedArea": 3959,
+      "unblockedCells": 2420,
+      "paintedGroundCells": 5156,
+      "backdropCells": 2584,
+      "exitObjects": 60,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 56,
+      "exitsAtLeastHalfScreenInside": 29,
+      "maxDirectionalInset": 58,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "Dakmok": 42,
+        "goryeo_jangdan": 40,
+        "Naru": 30,
+        "goryeo_songak": 43
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "Naru",
+          "to": "goryeo_jangdan",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "goryeo_jangdan",
+          "to": "goryeo_songak",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "Naru",
+          "to": "goryeo_songak",
+          "steps": 36,
+          "nominalWalkSeconds": 9.47
+        },
+        {
+          "from": "Dakmok",
+          "to": "goryeo_jangdan",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "Dakmok",
+          "to": "Naru",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "Dakmok",
+          "to": "goryeo_songak",
+          "steps": 60,
+          "nominalWalkSeconds": 15.79
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "Naru",
+          "to": "goryeo_jangdan",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "goryeo_jangdan",
+          "to": "Naru",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "goryeo_jangdan",
+          "to": "goryeo_songak",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "goryeo_songak",
+          "to": "goryeo_jangdan",
+          "steps": 6,
+          "nominalWalkSeconds": 1.58
+        },
+        {
+          "from": "goryeo_songak",
+          "to": "Naru",
+          "steps": 31,
+          "nominalWalkSeconds": 8.16
+        },
+        {
+          "from": "Naru",
+          "to": "goryeo_songak",
+          "steps": 35,
+          "nominalWalkSeconds": 9.21
+        },
+        {
+          "from": "goryeo_songak",
+          "to": "Dakmok",
+          "steps": 51,
+          "nominalWalkSeconds": 13.42
+        },
+        {
+          "from": "Dakmok",
+          "to": "goryeo_jangdan",
+          "steps": 56,
+          "nominalWalkSeconds": 14.74
+        },
+        {
+          "from": "Dakmok",
+          "to": "Naru",
+          "steps": 56,
+          "nominalWalkSeconds": 14.74
+        },
+        {
+          "from": "Naru",
+          "to": "Dakmok",
+          "steps": 56,
+          "nominalWalkSeconds": 14.74
+        },
+        {
+          "from": "goryeo_jangdan",
+          "to": "Dakmok",
+          "steps": 56,
+          "nominalWalkSeconds": 14.74
+        },
+        {
+          "from": "Dakmok",
+          "to": "goryeo_songak",
+          "steps": 59,
+          "nominalWalkSeconds": 15.53
+        }
+      ]
+    },
+    {
+      "id": "Naru",
+      "name": "예성 나루 마을",
+      "w": 88,
+      "h": 84,
+      "boundingArea": 7392,
+      "b1AssignedArea": 3997,
+      "exportReportedArea": 3947,
+      "unblockedCells": 1629,
+      "paintedGroundCells": 5390,
+      "backdropCells": 821,
+      "exitObjects": 68,
+      "uniqueTargets": 2,
+      "directionalInsetExits": 63,
+      "exitsAtLeastHalfScreenInside": 47,
+      "maxDirectionalInset": 67,
+      "routeReference": "default spawn S0",
+      "referenceToExitSteps": {
+        "goryeo_jangdan": 16,
+        "Gaegyeong": 41
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "Gaegyeong",
+          "to": "goryeo_jangdan",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "Gaegyeong",
+          "to": "goryeo_jangdan",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "goryeo_jangdan",
+          "to": "Gaegyeong",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        }
+      ]
+    },
+    {
+      "id": "north_birka",
+      "name": "비르카",
+      "w": 62,
+      "h": 95,
+      "boundingArea": 5890,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2696,
+      "paintedGroundCells": 5890,
+      "backdropCells": 0,
+      "exitObjects": 7,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "default spawn S0",
+      "referenceToExitSteps": {
+        "north_laugar": 52,
+        "north_naru": 28,
+        "north_hunter": 43,
+        "north_c_gatetown": 58
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_hunter",
+          "to": "north_laugar",
+          "steps": 22,
+          "nominalWalkSeconds": 5.79
+        },
+        {
+          "from": "north_hunter",
+          "to": "north_naru",
+          "steps": 61,
+          "nominalWalkSeconds": 16.05
+        },
+        {
+          "from": "north_laugar",
+          "to": "north_naru",
+          "steps": 67,
+          "nominalWalkSeconds": 17.63
+        },
+        {
+          "from": "north_c_gatetown",
+          "to": "north_hunter",
+          "steps": 75,
+          "nominalWalkSeconds": 19.74
+        },
+        {
+          "from": "north_c_gatetown",
+          "to": "north_naru",
+          "steps": 86,
+          "nominalWalkSeconds": 22.63
+        },
+        {
+          "from": "north_c_gatetown",
+          "to": "north_laugar",
+          "steps": 102,
+          "nominalWalkSeconds": 26.84
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_hunter",
+          "to": "north_laugar",
+          "steps": 20,
+          "nominalWalkSeconds": 5.26
+        },
+        {
+          "from": "north_laugar",
+          "to": "north_hunter",
+          "steps": 20,
+          "nominalWalkSeconds": 5.26
+        },
+        {
+          "from": "north_hunter",
+          "to": "north_naru",
+          "steps": 59,
+          "nominalWalkSeconds": 15.53
+        },
+        {
+          "from": "north_naru",
+          "to": "north_hunter",
+          "steps": 59,
+          "nominalWalkSeconds": 15.53
+        },
+        {
+          "from": "north_laugar",
+          "to": "north_naru",
+          "steps": 65,
+          "nominalWalkSeconds": 17.11
+        },
+        {
+          "from": "north_naru",
+          "to": "north_laugar",
+          "steps": 65,
+          "nominalWalkSeconds": 17.11
+        },
+        {
+          "from": "north_c_gatetown",
+          "to": "north_hunter",
+          "steps": 73,
+          "nominalWalkSeconds": 19.21
+        },
+        {
+          "from": "north_hunter",
+          "to": "north_c_gatetown",
+          "steps": 73,
+          "nominalWalkSeconds": 19.21
+        },
+        {
+          "from": "north_c_gatetown",
+          "to": "north_naru",
+          "steps": 84,
+          "nominalWalkSeconds": 22.11
+        },
+        {
+          "from": "north_naru",
+          "to": "north_c_gatetown",
+          "steps": 86,
+          "nominalWalkSeconds": 22.63
+        },
+        {
+          "from": "north_c_gatetown",
+          "to": "north_laugar",
+          "steps": 100,
+          "nominalWalkSeconds": 26.32
+        },
+        {
+          "from": "north_laugar",
+          "to": "north_c_gatetown",
+          "steps": 100,
+          "nominalWalkSeconds": 26.32
+        }
+      ]
+    },
+    {
+      "id": "north_herd",
+      "name": "순록 고원 마을",
+      "w": 56,
+      "h": 91,
+      "boundingArea": 5096,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2211,
+      "paintedGroundCells": 5096,
+      "backdropCells": 0,
+      "exitObjects": 5,
+      "uniqueTargets": 3,
+      "directionalInsetExits": 2,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 4,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "north_runehill": 80,
+        "north_laugar": 37,
+        "north_hunter": 40
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_laugar",
+          "to": "north_runehill",
+          "steps": 7,
+          "nominalWalkSeconds": 1.84
+        },
+        {
+          "from": "north_hunter",
+          "to": "north_laugar",
+          "steps": 39,
+          "nominalWalkSeconds": 10.26
+        },
+        {
+          "from": "north_hunter",
+          "to": "north_runehill",
+          "steps": 88,
+          "nominalWalkSeconds": 23.16
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_laugar",
+          "to": "north_runehill",
+          "steps": 7,
+          "nominalWalkSeconds": 1.84
+        },
+        {
+          "from": "north_runehill",
+          "to": "north_laugar",
+          "steps": 7,
+          "nominalWalkSeconds": 1.84
+        },
+        {
+          "from": "north_laugar",
+          "to": "north_hunter",
+          "steps": 37,
+          "nominalWalkSeconds": 9.74
+        },
+        {
+          "from": "north_hunter",
+          "to": "north_laugar",
+          "steps": 38,
+          "nominalWalkSeconds": 10.0
+        },
+        {
+          "from": "north_hunter",
+          "to": "north_runehill",
+          "steps": 86,
+          "nominalWalkSeconds": 22.63
+        },
+        {
+          "from": "north_runehill",
+          "to": "north_hunter",
+          "steps": 86,
+          "nominalWalkSeconds": 22.63
+        }
+      ]
+    },
+    {
+      "id": "north_hunter",
+      "name": "모피 사냥꾼 마을",
+      "w": 59,
+      "h": 78,
+      "boundingArea": 4602,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 1692,
+      "paintedGroundCells": 4602,
+      "backdropCells": 0,
+      "exitObjects": 5,
+      "uniqueTargets": 3,
+      "directionalInsetExits": 1,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 4,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "north_laugar": 57,
+        "north_birka": 29,
+        "north_herd": 46
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_herd",
+          "to": "north_laugar",
+          "steps": 37,
+          "nominalWalkSeconds": 9.74
+        },
+        {
+          "from": "north_birka",
+          "to": "north_laugar",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "north_birka",
+          "to": "north_herd",
+          "steps": 71,
+          "nominalWalkSeconds": 18.68
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_laugar",
+          "to": "north_herd",
+          "steps": 35,
+          "nominalWalkSeconds": 9.21
+        },
+        {
+          "from": "north_herd",
+          "to": "north_laugar",
+          "steps": 36,
+          "nominalWalkSeconds": 9.47
+        },
+        {
+          "from": "north_birka",
+          "to": "north_laugar",
+          "steps": 55,
+          "nominalWalkSeconds": 14.47
+        },
+        {
+          "from": "north_laugar",
+          "to": "north_birka",
+          "steps": 55,
+          "nominalWalkSeconds": 14.47
+        },
+        {
+          "from": "north_birka",
+          "to": "north_herd",
+          "steps": 69,
+          "nominalWalkSeconds": 18.16
+        },
+        {
+          "from": "north_herd",
+          "to": "north_birka",
+          "steps": 70,
+          "nominalWalkSeconds": 18.42
+        }
+      ]
+    },
+    {
+      "id": "north_icecave",
+      "name": "얼음 동굴 골짜기",
+      "w": 60,
+      "h": 99,
+      "boundingArea": 5940,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 1780,
+      "paintedGroundCells": 5940,
+      "backdropCells": 0,
+      "exitObjects": 3,
+      "uniqueTargets": 3,
+      "directionalInsetExits": 1,
+      "exitsAtLeastHalfScreenInside": 1,
+      "maxDirectionalInset": 12,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "north_runehill": null,
+        "north_naru": null,
+        "north_laugar": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_laugar",
+          "to": "north_runehill",
+          "steps": 30,
+          "nominalWalkSeconds": 7.89
+        },
+        {
+          "from": "north_laugar",
+          "to": "north_naru",
+          "steps": 93,
+          "nominalWalkSeconds": 24.47
+        },
+        {
+          "from": "north_naru",
+          "to": "north_runehill",
+          "steps": 95,
+          "nominalWalkSeconds": 25.0
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_laugar",
+          "to": "north_runehill",
+          "steps": 28,
+          "nominalWalkSeconds": 7.37
+        },
+        {
+          "from": "north_runehill",
+          "to": "north_laugar",
+          "steps": 28,
+          "nominalWalkSeconds": 7.37
+        },
+        {
+          "from": "north_laugar",
+          "to": "north_naru",
+          "steps": 91,
+          "nominalWalkSeconds": 23.95
+        },
+        {
+          "from": "north_naru",
+          "to": "north_laugar",
+          "steps": 91,
+          "nominalWalkSeconds": 23.95
+        },
+        {
+          "from": "north_naru",
+          "to": "north_runehill",
+          "steps": 93,
+          "nominalWalkSeconds": 24.47
+        },
+        {
+          "from": "north_runehill",
+          "to": "north_naru",
+          "steps": 93,
+          "nominalWalkSeconds": 24.47
+        }
+      ]
+    },
+    {
+      "id": "north_laugar",
+      "name": "라우가르 온천 마을",
+      "w": 70,
+      "h": 79,
+      "boundingArea": 5530,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2860,
+      "paintedGroundCells": 5530,
+      "backdropCells": 0,
+      "exitObjects": 8,
+      "uniqueTargets": 6,
+      "directionalInsetExits": 1,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 7,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "north_runehill": 69,
+        "north_herd": 47,
+        "north_hunter": 41,
+        "north_birka": 20,
+        "north_naru": 28,
+        "north_icecave": 93
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_birka",
+          "to": "north_naru",
+          "steps": 35,
+          "nominalWalkSeconds": 9.21
+        },
+        {
+          "from": "north_birka",
+          "to": "north_hunter",
+          "steps": 37,
+          "nominalWalkSeconds": 9.74
+        },
+        {
+          "from": "north_herd",
+          "to": "north_hunter",
+          "steps": 41,
+          "nominalWalkSeconds": 10.79
+        },
+        {
+          "from": "north_hunter",
+          "to": "north_naru",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "north_birka",
+          "to": "north_herd",
+          "steps": 59,
+          "nominalWalkSeconds": 15.53
+        },
+        {
+          "from": "north_herd",
+          "to": "north_runehill",
+          "steps": 76,
+          "nominalWalkSeconds": 20.0
+        },
+        {
+          "from": "north_herd",
+          "to": "north_naru",
+          "steps": 77,
+          "nominalWalkSeconds": 20.26
+        },
+        {
+          "from": "north_birka",
+          "to": "north_runehill",
+          "steps": 82,
+          "nominalWalkSeconds": 21.58
+        },
+        {
+          "from": "north_icecave",
+          "to": "north_runehill",
+          "steps": 85,
+          "nominalWalkSeconds": 22.37
+        },
+        {
+          "from": "north_hunter",
+          "to": "north_runehill",
+          "steps": 89,
+          "nominalWalkSeconds": 23.42
+        },
+        {
+          "from": "north_naru",
+          "to": "north_runehill",
+          "steps": 98,
+          "nominalWalkSeconds": 25.79
+        },
+        {
+          "from": "north_birka",
+          "to": "north_icecave",
+          "steps": 110,
+          "nominalWalkSeconds": 28.95
+        },
+        {
+          "from": "north_icecave",
+          "to": "north_naru",
+          "steps": 111,
+          "nominalWalkSeconds": 29.21
+        },
+        {
+          "from": "north_herd",
+          "to": "north_icecave",
+          "steps": 113,
+          "nominalWalkSeconds": 29.74
+        },
+        {
+          "from": "north_hunter",
+          "to": "north_icecave",
+          "steps": 126,
+          "nominalWalkSeconds": 33.16
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_naru",
+          "to": "north_birka",
+          "steps": 33,
+          "nominalWalkSeconds": 8.68
+        },
+        {
+          "from": "north_birka",
+          "to": "north_hunter",
+          "steps": 35,
+          "nominalWalkSeconds": 9.21
+        },
+        {
+          "from": "north_birka",
+          "to": "north_naru",
+          "steps": 35,
+          "nominalWalkSeconds": 9.21
+        },
+        {
+          "from": "north_hunter",
+          "to": "north_birka",
+          "steps": 35,
+          "nominalWalkSeconds": 9.21
+        },
+        {
+          "from": "north_herd",
+          "to": "north_hunter",
+          "steps": 39,
+          "nominalWalkSeconds": 10.26
+        },
+        {
+          "from": "north_hunter",
+          "to": "north_herd",
+          "steps": 39,
+          "nominalWalkSeconds": 10.26
+        },
+        {
+          "from": "north_hunter",
+          "to": "north_naru",
+          "steps": 55,
+          "nominalWalkSeconds": 14.47
+        },
+        {
+          "from": "north_naru",
+          "to": "north_hunter",
+          "steps": 55,
+          "nominalWalkSeconds": 14.47
+        },
+        {
+          "from": "north_birka",
+          "to": "north_herd",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "north_herd",
+          "to": "north_birka",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "north_herd",
+          "to": "north_runehill",
+          "steps": 74,
+          "nominalWalkSeconds": 19.47
+        },
+        {
+          "from": "north_runehill",
+          "to": "north_herd",
+          "steps": 74,
+          "nominalWalkSeconds": 19.47
+        },
+        {
+          "from": "north_herd",
+          "to": "north_naru",
+          "steps": 75,
+          "nominalWalkSeconds": 19.74
+        },
+        {
+          "from": "north_naru",
+          "to": "north_herd",
+          "steps": 75,
+          "nominalWalkSeconds": 19.74
+        },
+        {
+          "from": "north_birka",
+          "to": "north_runehill",
+          "steps": 80,
+          "nominalWalkSeconds": 21.05
+        },
+        {
+          "from": "north_runehill",
+          "to": "north_birka",
+          "steps": 80,
+          "nominalWalkSeconds": 21.05
+        },
+        {
+          "from": "north_icecave",
+          "to": "north_runehill",
+          "steps": 83,
+          "nominalWalkSeconds": 21.84
+        },
+        {
+          "from": "north_runehill",
+          "to": "north_icecave",
+          "steps": 83,
+          "nominalWalkSeconds": 21.84
+        },
+        {
+          "from": "north_hunter",
+          "to": "north_runehill",
+          "steps": 87,
+          "nominalWalkSeconds": 22.89
+        },
+        {
+          "from": "north_runehill",
+          "to": "north_hunter",
+          "steps": 87,
+          "nominalWalkSeconds": 22.89
+        },
+        {
+          "from": "north_naru",
+          "to": "north_runehill",
+          "steps": 96,
+          "nominalWalkSeconds": 25.26
+        },
+        {
+          "from": "north_runehill",
+          "to": "north_naru",
+          "steps": 96,
+          "nominalWalkSeconds": 25.26
+        },
+        {
+          "from": "north_birka",
+          "to": "north_icecave",
+          "steps": 108,
+          "nominalWalkSeconds": 28.42
+        },
+        {
+          "from": "north_icecave",
+          "to": "north_birka",
+          "steps": 108,
+          "nominalWalkSeconds": 28.42
+        },
+        {
+          "from": "north_icecave",
+          "to": "north_naru",
+          "steps": 109,
+          "nominalWalkSeconds": 28.68
+        },
+        {
+          "from": "north_naru",
+          "to": "north_icecave",
+          "steps": 109,
+          "nominalWalkSeconds": 28.68
+        },
+        {
+          "from": "north_herd",
+          "to": "north_icecave",
+          "steps": 111,
+          "nominalWalkSeconds": 29.21
+        },
+        {
+          "from": "north_icecave",
+          "to": "north_herd",
+          "steps": 111,
+          "nominalWalkSeconds": 29.21
+        },
+        {
+          "from": "north_hunter",
+          "to": "north_icecave",
+          "steps": 124,
+          "nominalWalkSeconds": 32.63
+        },
+        {
+          "from": "north_icecave",
+          "to": "north_hunter",
+          "steps": 124,
+          "nominalWalkSeconds": 32.63
+        }
+      ]
+    },
+    {
+      "id": "north_naru",
+      "name": "피오르 나루 마을",
+      "w": 64,
+      "h": 85,
+      "boundingArea": 5440,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 1468,
+      "paintedGroundCells": 5440,
+      "backdropCells": 0,
+      "exitObjects": 5,
+      "uniqueTargets": 3,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "north_icecave": 48,
+        "north_birka": 30,
+        "north_laugar": 48
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_icecave",
+          "to": "north_laugar",
+          "steps": 34,
+          "nominalWalkSeconds": 8.95
+        },
+        {
+          "from": "north_birka",
+          "to": "north_laugar",
+          "steps": 50,
+          "nominalWalkSeconds": 13.16
+        },
+        {
+          "from": "north_birka",
+          "to": "north_icecave",
+          "steps": 73,
+          "nominalWalkSeconds": 19.21
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_icecave",
+          "to": "north_laugar",
+          "steps": 32,
+          "nominalWalkSeconds": 8.42
+        },
+        {
+          "from": "north_laugar",
+          "to": "north_icecave",
+          "steps": 32,
+          "nominalWalkSeconds": 8.42
+        },
+        {
+          "from": "north_birka",
+          "to": "north_laugar",
+          "steps": 48,
+          "nominalWalkSeconds": 12.63
+        },
+        {
+          "from": "north_laugar",
+          "to": "north_birka",
+          "steps": 48,
+          "nominalWalkSeconds": 12.63
+        },
+        {
+          "from": "north_birka",
+          "to": "north_icecave",
+          "steps": 71,
+          "nominalWalkSeconds": 18.68
+        },
+        {
+          "from": "north_icecave",
+          "to": "north_birka",
+          "steps": 71,
+          "nominalWalkSeconds": 18.68
+        }
+      ]
+    },
+    {
+      "id": "north_runehill",
+      "name": "룬돌 언덕",
+      "w": 96,
+      "h": 66,
+      "boundingArea": 6336,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 1944,
+      "paintedGroundCells": 6336,
+      "backdropCells": 0,
+      "exitObjects": 3,
+      "uniqueTargets": 3,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "north_icecave": null,
+        "north_herd": null,
+        "north_laugar": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_herd",
+          "to": "north_laugar",
+          "steps": 53,
+          "nominalWalkSeconds": 13.95
+        },
+        {
+          "from": "north_icecave",
+          "to": "north_laugar",
+          "steps": 84,
+          "nominalWalkSeconds": 22.11
+        },
+        {
+          "from": "north_herd",
+          "to": "north_icecave",
+          "steps": 115,
+          "nominalWalkSeconds": 30.26
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_herd",
+          "to": "north_laugar",
+          "steps": 51,
+          "nominalWalkSeconds": 13.42
+        },
+        {
+          "from": "north_laugar",
+          "to": "north_herd",
+          "steps": 51,
+          "nominalWalkSeconds": 13.42
+        },
+        {
+          "from": "north_icecave",
+          "to": "north_laugar",
+          "steps": 82,
+          "nominalWalkSeconds": 21.58
+        },
+        {
+          "from": "north_laugar",
+          "to": "north_icecave",
+          "steps": 82,
+          "nominalWalkSeconds": 21.58
+        },
+        {
+          "from": "north_herd",
+          "to": "north_icecave",
+          "steps": 113,
+          "nominalWalkSeconds": 29.74
+        },
+        {
+          "from": "north_icecave",
+          "to": "north_herd",
+          "steps": 113,
+          "nominalWalkSeconds": 29.74
+        }
+      ]
+    },
+    {
+      "id": "venice_burano",
+      "name": "부라노 어촌",
+      "w": 58,
+      "h": 61,
+      "boundingArea": 3538,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 913,
+      "paintedGroundCells": 3538,
+      "backdropCells": 0,
+      "exitObjects": 2,
+      "uniqueTargets": 2,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "venice_rialto": 42,
+        "venice_santerasmo": 55
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "venice_rialto",
+          "to": "venice_santerasmo",
+          "steps": 84,
+          "nominalWalkSeconds": 22.11
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "venice_rialto",
+          "to": "venice_santerasmo",
+          "steps": 83,
+          "nominalWalkSeconds": 21.84
+        },
+        {
+          "from": "venice_santerasmo",
+          "to": "venice_rialto",
+          "steps": 83,
+          "nominalWalkSeconds": 21.84
+        }
+      ]
+    },
+    {
+      "id": "venice_chioggia",
+      "name": "키오자 교역항",
+      "w": 57,
+      "h": 61,
+      "boundingArea": 3477,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 882,
+      "paintedGroundCells": 3477,
+      "backdropCells": 0,
+      "exitObjects": 3,
+      "uniqueTargets": 3,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "venice_rialto": 35,
+        "venice_murano": 51,
+        "venice_c_landing": 35
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "venice_c_landing",
+          "to": "venice_murano",
+          "steps": 58,
+          "nominalWalkSeconds": 15.26
+        },
+        {
+          "from": "venice_murano",
+          "to": "venice_rialto",
+          "steps": 72,
+          "nominalWalkSeconds": 18.95
+        },
+        {
+          "from": "venice_c_landing",
+          "to": "venice_rialto",
+          "steps": 72,
+          "nominalWalkSeconds": 18.95
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "venice_murano",
+          "to": "venice_c_landing",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "venice_c_landing",
+          "to": "venice_murano",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "venice_murano",
+          "to": "venice_rialto",
+          "steps": 71,
+          "nominalWalkSeconds": 18.68
+        },
+        {
+          "from": "venice_rialto",
+          "to": "venice_murano",
+          "steps": 71,
+          "nominalWalkSeconds": 18.68
+        },
+        {
+          "from": "venice_rialto",
+          "to": "venice_c_landing",
+          "steps": 71,
+          "nominalWalkSeconds": 18.68
+        },
+        {
+          "from": "venice_c_landing",
+          "to": "venice_rialto",
+          "steps": 71,
+          "nominalWalkSeconds": 18.68
+        }
+      ]
+    },
+    {
+      "id": "venice_murano",
+      "name": "무라노 유리공방",
+      "w": 57,
+      "h": 56,
+      "boundingArea": 3192,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 1118,
+      "paintedGroundCells": 3192,
+      "backdropCells": 0,
+      "exitObjects": 3,
+      "uniqueTargets": 2,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "venice_rialto": 31,
+        "venice_chioggia": 53
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "venice_chioggia",
+          "to": "venice_rialto",
+          "steps": 84,
+          "nominalWalkSeconds": 22.11
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "venice_chioggia",
+          "to": "venice_rialto",
+          "steps": 83,
+          "nominalWalkSeconds": 21.84
+        },
+        {
+          "from": "venice_rialto",
+          "to": "venice_chioggia",
+          "steps": 83,
+          "nominalWalkSeconds": 21.84
+        }
+      ]
+    },
+    {
+      "id": "venice_rialto",
+      "name": "리알토",
+      "w": 75,
+      "h": 84,
+      "boundingArea": 6300,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2696,
+      "paintedGroundCells": 6300,
+      "backdropCells": 0,
+      "exitObjects": 6,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "default spawn S0",
+      "referenceToExitSteps": {
+        "venice_santerasmo": 40,
+        "venice_burano": 50,
+        "venice_murano": 53,
+        "venice_chioggia": 54
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "venice_chioggia",
+          "to": "venice_murano",
+          "steps": 59,
+          "nominalWalkSeconds": 15.53
+        },
+        {
+          "from": "venice_murano",
+          "to": "venice_santerasmo",
+          "steps": 74,
+          "nominalWalkSeconds": 19.47
+        },
+        {
+          "from": "venice_burano",
+          "to": "venice_santerasmo",
+          "steps": 76,
+          "nominalWalkSeconds": 20.0
+        },
+        {
+          "from": "venice_burano",
+          "to": "venice_chioggia",
+          "steps": 82,
+          "nominalWalkSeconds": 21.58
+        },
+        {
+          "from": "venice_chioggia",
+          "to": "venice_santerasmo",
+          "steps": 94,
+          "nominalWalkSeconds": 24.74
+        },
+        {
+          "from": "venice_burano",
+          "to": "venice_murano",
+          "steps": 103,
+          "nominalWalkSeconds": 27.11
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "venice_chioggia",
+          "to": "venice_murano",
+          "steps": 58,
+          "nominalWalkSeconds": 15.26
+        },
+        {
+          "from": "venice_murano",
+          "to": "venice_chioggia",
+          "steps": 58,
+          "nominalWalkSeconds": 15.26
+        },
+        {
+          "from": "venice_murano",
+          "to": "venice_santerasmo",
+          "steps": 73,
+          "nominalWalkSeconds": 19.21
+        },
+        {
+          "from": "venice_santerasmo",
+          "to": "venice_murano",
+          "steps": 73,
+          "nominalWalkSeconds": 19.21
+        },
+        {
+          "from": "venice_burano",
+          "to": "venice_santerasmo",
+          "steps": 75,
+          "nominalWalkSeconds": 19.74
+        },
+        {
+          "from": "venice_santerasmo",
+          "to": "venice_burano",
+          "steps": 75,
+          "nominalWalkSeconds": 19.74
+        },
+        {
+          "from": "venice_burano",
+          "to": "venice_chioggia",
+          "steps": 81,
+          "nominalWalkSeconds": 21.32
+        },
+        {
+          "from": "venice_chioggia",
+          "to": "venice_burano",
+          "steps": 81,
+          "nominalWalkSeconds": 21.32
+        },
+        {
+          "from": "venice_chioggia",
+          "to": "venice_santerasmo",
+          "steps": 93,
+          "nominalWalkSeconds": 24.47
+        },
+        {
+          "from": "venice_santerasmo",
+          "to": "venice_chioggia",
+          "steps": 93,
+          "nominalWalkSeconds": 24.47
+        },
+        {
+          "from": "venice_burano",
+          "to": "venice_murano",
+          "steps": 102,
+          "nominalWalkSeconds": 26.84
+        },
+        {
+          "from": "venice_murano",
+          "to": "venice_burano",
+          "steps": 102,
+          "nominalWalkSeconds": 26.84
+        }
+      ]
+    },
+    {
+      "id": "venice_santerasmo",
+      "name": "산테라스모 과수원",
+      "w": 58,
+      "h": 56,
+      "boundingArea": 3248,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 1272,
+      "paintedGroundCells": 3248,
+      "backdropCells": 0,
+      "exitObjects": 3,
+      "uniqueTargets": 2,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "venice_rialto": 38,
+        "venice_burano": 51
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "venice_burano",
+          "to": "venice_rialto",
+          "steps": 75,
+          "nominalWalkSeconds": 19.74
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "venice_burano",
+          "to": "venice_rialto",
+          "steps": 74,
+          "nominalWalkSeconds": 19.47
+        },
+        {
+          "from": "venice_rialto",
+          "to": "venice_burano",
+          "steps": 74,
+          "nominalWalkSeconds": 19.47
+        }
+      ]
+    },
+    {
+      "id": "venice_c_bridge",
+      "name": "돌다리 나루",
+      "w": 60,
+      "h": 44,
+      "boundingArea": 2640,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 1581,
+      "paintedGroundCells": 2640,
+      "backdropCells": 0,
+      "exitObjects": 3,
+      "uniqueTargets": 3,
+      "directionalInsetExits": 1,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 12,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "venice_c_marsh": null,
+        "venice_c_post": null,
+        "arabia_central_westvale": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "arabia_central_westvale",
+          "to": "venice_c_post",
+          "steps": 19,
+          "nominalWalkSeconds": 5.0
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "venice_c_marsh",
+          "steps": 47,
+          "nominalWalkSeconds": 12.37
+        },
+        {
+          "from": "venice_c_marsh",
+          "to": "venice_c_post",
+          "steps": 64,
+          "nominalWalkSeconds": 16.84
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "venice_c_post",
+          "to": "arabia_central_westvale",
+          "steps": 18,
+          "nominalWalkSeconds": 4.74
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "venice_c_post",
+          "steps": 18,
+          "nominalWalkSeconds": 4.74
+        },
+        {
+          "from": "venice_c_marsh",
+          "to": "arabia_central_westvale",
+          "steps": 46,
+          "nominalWalkSeconds": 12.11
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "venice_c_marsh",
+          "steps": 46,
+          "nominalWalkSeconds": 12.11
+        },
+        {
+          "from": "venice_c_marsh",
+          "to": "venice_c_post",
+          "steps": 63,
+          "nominalWalkSeconds": 16.58
+        },
+        {
+          "from": "venice_c_post",
+          "to": "venice_c_marsh",
+          "steps": 63,
+          "nominalWalkSeconds": 16.58
+        }
+      ]
+    },
+    {
+      "id": "venice_c_gate",
+      "name": "동문 큰길",
+      "w": 72,
+      "h": 71,
+      "boundingArea": 5112,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 4179,
+      "paintedGroundCells": 5112,
+      "backdropCells": 0,
+      "exitObjects": 3,
+      "uniqueTargets": 3,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "venice_c_post": null,
+        "north_c_road_sw": null,
+        "arabia_central_steppe": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_c_road_sw",
+          "to": "venice_c_post",
+          "steps": 62,
+          "nominalWalkSeconds": 16.32
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "north_c_road_sw",
+          "steps": 69,
+          "nominalWalkSeconds": 18.16
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "venice_c_post",
+          "steps": 71,
+          "nominalWalkSeconds": 18.68
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_c_road_sw",
+          "to": "venice_c_post",
+          "steps": 61,
+          "nominalWalkSeconds": 16.05
+        },
+        {
+          "from": "venice_c_post",
+          "to": "north_c_road_sw",
+          "steps": 61,
+          "nominalWalkSeconds": 16.05
+        },
+        {
+          "from": "north_c_road_sw",
+          "to": "arabia_central_steppe",
+          "steps": 68,
+          "nominalWalkSeconds": 17.89
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "north_c_road_sw",
+          "steps": 68,
+          "nominalWalkSeconds": 17.89
+        },
+        {
+          "from": "venice_c_post",
+          "to": "arabia_central_steppe",
+          "steps": 70,
+          "nominalWalkSeconds": 18.42
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "venice_c_post",
+          "steps": 70,
+          "nominalWalkSeconds": 18.42
+        }
+      ]
+    },
+    {
+      "id": "venice_c_landing",
+      "name": "본토 나루터",
+      "w": 80,
+      "h": 56,
+      "boundingArea": 4480,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 3396,
+      "paintedGroundCells": 4480,
+      "backdropCells": 0,
+      "exitObjects": 4,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "venice_chioggia": 32,
+        "venice_c_vineyard": 61,
+        "venice_c_marsh": 44,
+        "venice_c_post": 59
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "venice_c_marsh",
+          "to": "venice_c_post",
+          "steps": 51,
+          "nominalWalkSeconds": 13.42
+        },
+        {
+          "from": "venice_c_post",
+          "to": "venice_c_vineyard",
+          "steps": 52,
+          "nominalWalkSeconds": 13.68
+        },
+        {
+          "from": "venice_c_marsh",
+          "to": "venice_c_vineyard",
+          "steps": 59,
+          "nominalWalkSeconds": 15.53
+        },
+        {
+          "from": "venice_c_marsh",
+          "to": "venice_chioggia",
+          "steps": 78,
+          "nominalWalkSeconds": 20.53
+        },
+        {
+          "from": "venice_c_vineyard",
+          "to": "venice_chioggia",
+          "steps": 79,
+          "nominalWalkSeconds": 20.79
+        },
+        {
+          "from": "venice_c_post",
+          "to": "venice_chioggia",
+          "steps": 79,
+          "nominalWalkSeconds": 20.79
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "venice_c_marsh",
+          "to": "venice_c_post",
+          "steps": 50,
+          "nominalWalkSeconds": 13.16
+        },
+        {
+          "from": "venice_c_post",
+          "to": "venice_c_marsh",
+          "steps": 50,
+          "nominalWalkSeconds": 13.16
+        },
+        {
+          "from": "venice_c_post",
+          "to": "venice_c_vineyard",
+          "steps": 51,
+          "nominalWalkSeconds": 13.42
+        },
+        {
+          "from": "venice_c_vineyard",
+          "to": "venice_c_post",
+          "steps": 51,
+          "nominalWalkSeconds": 13.42
+        },
+        {
+          "from": "venice_c_marsh",
+          "to": "venice_c_vineyard",
+          "steps": 58,
+          "nominalWalkSeconds": 15.26
+        },
+        {
+          "from": "venice_c_vineyard",
+          "to": "venice_c_marsh",
+          "steps": 58,
+          "nominalWalkSeconds": 15.26
+        },
+        {
+          "from": "venice_chioggia",
+          "to": "venice_c_marsh",
+          "steps": 77,
+          "nominalWalkSeconds": 20.26
+        },
+        {
+          "from": "venice_c_marsh",
+          "to": "venice_chioggia",
+          "steps": 77,
+          "nominalWalkSeconds": 20.26
+        },
+        {
+          "from": "venice_chioggia",
+          "to": "venice_c_vineyard",
+          "steps": 78,
+          "nominalWalkSeconds": 20.53
+        },
+        {
+          "from": "venice_chioggia",
+          "to": "venice_c_post",
+          "steps": 78,
+          "nominalWalkSeconds": 20.53
+        },
+        {
+          "from": "venice_c_post",
+          "to": "venice_chioggia",
+          "steps": 78,
+          "nominalWalkSeconds": 20.53
+        },
+        {
+          "from": "venice_c_vineyard",
+          "to": "venice_chioggia",
+          "steps": 78,
+          "nominalWalkSeconds": 20.53
+        }
+      ]
+    },
+    {
+      "id": "venice_c_marsh",
+      "name": "강 하구 습지길",
+      "w": 63,
+      "h": 56,
+      "boundingArea": 3528,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 1072,
+      "paintedGroundCells": 3528,
+      "backdropCells": 0,
+      "exitObjects": 2,
+      "uniqueTargets": 2,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "venice_c_landing": null,
+        "venice_c_bridge": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "venice_c_bridge",
+          "to": "venice_c_landing",
+          "steps": 92,
+          "nominalWalkSeconds": 24.21
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "venice_c_bridge",
+          "to": "venice_c_landing",
+          "steps": 91,
+          "nominalWalkSeconds": 23.95
+        },
+        {
+          "from": "venice_c_landing",
+          "to": "venice_c_bridge",
+          "steps": 91,
+          "nominalWalkSeconds": 23.95
+        }
+      ]
+    },
+    {
+      "id": "venice_c_pass",
+      "name": "산기슭 고갯길",
+      "w": 60,
+      "h": 44,
+      "boundingArea": 2640,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 1529,
+      "paintedGroundCells": 2640,
+      "backdropCells": 0,
+      "exitObjects": 3,
+      "uniqueTargets": 3,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "venice_c_vineyard": null,
+        "venice_c_post": null,
+        "north_c_road_sw": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_c_road_sw",
+          "to": "venice_c_post",
+          "steps": 32,
+          "nominalWalkSeconds": 8.42
+        },
+        {
+          "from": "venice_c_post",
+          "to": "venice_c_vineyard",
+          "steps": 65,
+          "nominalWalkSeconds": 17.11
+        },
+        {
+          "from": "north_c_road_sw",
+          "to": "venice_c_vineyard",
+          "steps": 68,
+          "nominalWalkSeconds": 17.89
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_c_road_sw",
+          "to": "venice_c_post",
+          "steps": 31,
+          "nominalWalkSeconds": 8.16
+        },
+        {
+          "from": "venice_c_post",
+          "to": "north_c_road_sw",
+          "steps": 31,
+          "nominalWalkSeconds": 8.16
+        },
+        {
+          "from": "venice_c_post",
+          "to": "venice_c_vineyard",
+          "steps": 64,
+          "nominalWalkSeconds": 16.84
+        },
+        {
+          "from": "venice_c_vineyard",
+          "to": "venice_c_post",
+          "steps": 64,
+          "nominalWalkSeconds": 16.84
+        },
+        {
+          "from": "north_c_road_sw",
+          "to": "venice_c_vineyard",
+          "steps": 67,
+          "nominalWalkSeconds": 17.63
+        },
+        {
+          "from": "venice_c_vineyard",
+          "to": "north_c_road_sw",
+          "steps": 67,
+          "nominalWalkSeconds": 17.63
+        }
+      ]
+    },
+    {
+      "id": "venice_c_post",
+      "name": "대상 숙소",
+      "w": 64,
+      "h": 48,
+      "boundingArea": 3072,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2759,
+      "paintedGroundCells": 3072,
+      "backdropCells": 0,
+      "exitObjects": 4,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "venice_c_pass": 32,
+        "venice_c_bridge": 29,
+        "venice_c_landing": 22,
+        "venice_c_gate": 41
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "venice_c_bridge",
+          "to": "venice_c_pass",
+          "steps": 47,
+          "nominalWalkSeconds": 12.37
+        },
+        {
+          "from": "venice_c_landing",
+          "to": "venice_c_pass",
+          "steps": 52,
+          "nominalWalkSeconds": 13.68
+        },
+        {
+          "from": "venice_c_bridge",
+          "to": "venice_c_landing",
+          "steps": 53,
+          "nominalWalkSeconds": 13.95
+        },
+        {
+          "from": "venice_c_gate",
+          "to": "venice_c_pass",
+          "steps": 53,
+          "nominalWalkSeconds": 13.95
+        },
+        {
+          "from": "venice_c_bridge",
+          "to": "venice_c_gate",
+          "steps": 54,
+          "nominalWalkSeconds": 14.21
+        },
+        {
+          "from": "venice_c_gate",
+          "to": "venice_c_landing",
+          "steps": 63,
+          "nominalWalkSeconds": 16.58
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "venice_c_bridge",
+          "to": "venice_c_pass",
+          "steps": 46,
+          "nominalWalkSeconds": 12.11
+        },
+        {
+          "from": "venice_c_pass",
+          "to": "venice_c_bridge",
+          "steps": 46,
+          "nominalWalkSeconds": 12.11
+        },
+        {
+          "from": "venice_c_landing",
+          "to": "venice_c_pass",
+          "steps": 51,
+          "nominalWalkSeconds": 13.42
+        },
+        {
+          "from": "venice_c_pass",
+          "to": "venice_c_landing",
+          "steps": 51,
+          "nominalWalkSeconds": 13.42
+        },
+        {
+          "from": "venice_c_bridge",
+          "to": "venice_c_landing",
+          "steps": 52,
+          "nominalWalkSeconds": 13.68
+        },
+        {
+          "from": "venice_c_gate",
+          "to": "venice_c_pass",
+          "steps": 52,
+          "nominalWalkSeconds": 13.68
+        },
+        {
+          "from": "venice_c_landing",
+          "to": "venice_c_bridge",
+          "steps": 52,
+          "nominalWalkSeconds": 13.68
+        },
+        {
+          "from": "venice_c_pass",
+          "to": "venice_c_gate",
+          "steps": 52,
+          "nominalWalkSeconds": 13.68
+        },
+        {
+          "from": "venice_c_bridge",
+          "to": "venice_c_gate",
+          "steps": 53,
+          "nominalWalkSeconds": 13.95
+        },
+        {
+          "from": "venice_c_gate",
+          "to": "venice_c_bridge",
+          "steps": 53,
+          "nominalWalkSeconds": 13.95
+        },
+        {
+          "from": "venice_c_gate",
+          "to": "venice_c_landing",
+          "steps": 62,
+          "nominalWalkSeconds": 16.32
+        },
+        {
+          "from": "venice_c_landing",
+          "to": "venice_c_gate",
+          "steps": 62,
+          "nominalWalkSeconds": 16.32
+        }
+      ]
+    },
+    {
+      "id": "venice_c_vineyard",
+      "name": "포도밭 언덕",
+      "w": 63,
+      "h": 56,
+      "boundingArea": 3528,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 3337,
+      "paintedGroundCells": 3528,
+      "backdropCells": 0,
+      "exitObjects": 3,
+      "uniqueTargets": 3,
+      "directionalInsetExits": 1,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 2,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "venice_c_landing": 41,
+        "venice_c_pass": 34,
+        "north_c_snowwood": 45
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_c_snowwood",
+          "to": "venice_c_landing",
+          "steps": 60,
+          "nominalWalkSeconds": 15.79
+        },
+        {
+          "from": "north_c_snowwood",
+          "to": "venice_c_pass",
+          "steps": 61,
+          "nominalWalkSeconds": 16.05
+        },
+        {
+          "from": "venice_c_landing",
+          "to": "venice_c_pass",
+          "steps": 77,
+          "nominalWalkSeconds": 20.26
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_c_snowwood",
+          "to": "venice_c_landing",
+          "steps": 59,
+          "nominalWalkSeconds": 15.53
+        },
+        {
+          "from": "venice_c_landing",
+          "to": "north_c_snowwood",
+          "steps": 59,
+          "nominalWalkSeconds": 15.53
+        },
+        {
+          "from": "north_c_snowwood",
+          "to": "venice_c_pass",
+          "steps": 60,
+          "nominalWalkSeconds": 15.79
+        },
+        {
+          "from": "venice_c_pass",
+          "to": "north_c_snowwood",
+          "steps": 60,
+          "nominalWalkSeconds": 15.79
+        },
+        {
+          "from": "venice_c_landing",
+          "to": "venice_c_pass",
+          "steps": 76,
+          "nominalWalkSeconds": 20.0
+        },
+        {
+          "from": "venice_c_pass",
+          "to": "venice_c_landing",
+          "steps": 76,
+          "nominalWalkSeconds": 20.0
+        }
+      ]
+    },
+    {
+      "id": "arabia_ahsa",
+      "name": "알 아흐사",
+      "w": 64,
+      "h": 44,
+      "boundingArea": 2816,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2132,
+      "paintedGroundCells": 2816,
+      "backdropCells": 0,
+      "exitObjects": 8,
+      "uniqueTargets": 2,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "default spawn S0",
+      "referenceToExitSteps": {
+        "arabia_shortcut": 43,
+        "arabia_farmroad": 32
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "arabia_farmroad",
+          "to": "arabia_shortcut",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "arabia_farmroad",
+          "to": "arabia_shortcut",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_shortcut",
+          "to": "arabia_farmroad",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        }
+      ]
+    },
+    {
+      "id": "arabia_central_bazaar",
+      "name": "만국 장터",
+      "w": 96,
+      "h": 56,
+      "boundingArea": 5376,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 4976,
+      "paintedGroundCells": 5376,
+      "backdropCells": 0,
+      "exitObjects": 17,
+      "uniqueTargets": 5,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "arabia_central_westvale": null,
+        "arabia_central_dunes": null,
+        "arabia_central_canyon": null,
+        "arabia_central_eastvale": null,
+        "arabia_central_steppe": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_central_westvale",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_central_eastvale",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_central_dunes",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "arabia_central_steppe",
+          "steps": 7,
+          "nominalWalkSeconds": 1.84
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "arabia_central_westvale",
+          "steps": 10,
+          "nominalWalkSeconds": 2.63
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_central_eastvale",
+          "steps": 40,
+          "nominalWalkSeconds": 10.53
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_central_steppe",
+          "steps": 55,
+          "nominalWalkSeconds": 14.47
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_central_steppe",
+          "steps": 55,
+          "nominalWalkSeconds": 14.47
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_central_westvale",
+          "steps": 56,
+          "nominalWalkSeconds": 14.74
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "arabia_central_westvale",
+          "steps": 95,
+          "nominalWalkSeconds": 25.0
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_central_eastvale",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_central_westvale",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "arabia_central_canyon",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "arabia_central_dunes",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_central_dunes",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_central_canyon",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "arabia_central_steppe",
+          "steps": 6,
+          "nominalWalkSeconds": 1.58
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "arabia_central_eastvale",
+          "steps": 6,
+          "nominalWalkSeconds": 1.58
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "arabia_central_westvale",
+          "steps": 9,
+          "nominalWalkSeconds": 2.37
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "arabia_central_steppe",
+          "steps": 9,
+          "nominalWalkSeconds": 2.37
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "arabia_central_dunes",
+          "steps": 39,
+          "nominalWalkSeconds": 10.26
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_central_eastvale",
+          "steps": 41,
+          "nominalWalkSeconds": 10.79
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_central_steppe",
+          "steps": 54,
+          "nominalWalkSeconds": 14.21
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_central_steppe",
+          "steps": 54,
+          "nominalWalkSeconds": 14.21
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "arabia_central_dunes",
+          "steps": 54,
+          "nominalWalkSeconds": 14.21
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "arabia_central_canyon",
+          "steps": 54,
+          "nominalWalkSeconds": 14.21
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "arabia_central_canyon",
+          "steps": 55,
+          "nominalWalkSeconds": 14.47
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_central_westvale",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "arabia_central_westvale",
+          "steps": 94,
+          "nominalWalkSeconds": 24.74
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "arabia_central_eastvale",
+          "steps": 94,
+          "nominalWalkSeconds": 24.74
+        }
+      ]
+    },
+    {
+      "id": "arabia_central_canyon",
+      "name": "붉은 바위 협곡",
+      "w": 152,
+      "h": 48,
+      "boundingArea": 7296,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 5198,
+      "paintedGroundCells": 6971,
+      "backdropCells": 0,
+      "exitObjects": 8,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "arabia_zabid": null,
+        "arabia_central_dunes": null,
+        "arabia_central_bazaar": null,
+        "arabia_central_eastvale": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_dunes",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_eastvale",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_central_eastvale",
+          "steps": 40,
+          "nominalWalkSeconds": 10.53
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "arabia_zabid",
+          "steps": 48,
+          "nominalWalkSeconds": 12.63
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_zabid",
+          "steps": 54,
+          "nominalWalkSeconds": 14.21
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_zabid",
+          "steps": 56,
+          "nominalWalkSeconds": 14.74
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_dunes",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_central_bazaar",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_eastvale",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "arabia_central_bazaar",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_central_eastvale",
+          "steps": 39,
+          "nominalWalkSeconds": 10.26
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "arabia_central_dunes",
+          "steps": 40,
+          "nominalWalkSeconds": 10.53
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "arabia_zabid",
+          "steps": 47,
+          "nominalWalkSeconds": 12.37
+        },
+        {
+          "from": "arabia_zabid",
+          "to": "arabia_central_eastvale",
+          "steps": 47,
+          "nominalWalkSeconds": 12.37
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_zabid",
+          "steps": 53,
+          "nominalWalkSeconds": 13.95
+        },
+        {
+          "from": "arabia_zabid",
+          "to": "arabia_central_bazaar",
+          "steps": 53,
+          "nominalWalkSeconds": 13.95
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_zabid",
+          "steps": 55,
+          "nominalWalkSeconds": 14.47
+        },
+        {
+          "from": "arabia_zabid",
+          "to": "arabia_central_dunes",
+          "steps": 55,
+          "nominalWalkSeconds": 14.47
+        }
+      ]
+    },
+    {
+      "id": "arabia_central_dunes",
+      "name": "모래바람 오아시스",
+      "w": 168,
+      "h": 48,
+      "boundingArea": 8064,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 6250,
+      "paintedGroundCells": 7739,
+      "backdropCells": 0,
+      "exitObjects": 9,
+      "uniqueTargets": 5,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "arabia_sanaa": null,
+        "arabia_shortcut": null,
+        "arabia_central_canyon": null,
+        "arabia_central_westvale": null,
+        "arabia_central_bazaar": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_canyon",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_westvale",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_sanaa",
+          "steps": 14,
+          "nominalWalkSeconds": 3.68
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_sanaa",
+          "steps": 47,
+          "nominalWalkSeconds": 12.37
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "arabia_shortcut",
+          "steps": 50,
+          "nominalWalkSeconds": 13.16
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_central_westvale",
+          "steps": 56,
+          "nominalWalkSeconds": 14.74
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_shortcut",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "arabia_sanaa",
+          "to": "arabia_shortcut",
+          "steps": 71,
+          "nominalWalkSeconds": 18.68
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_shortcut",
+          "steps": 72,
+          "nominalWalkSeconds": 18.95
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "arabia_sanaa",
+          "steps": 94,
+          "nominalWalkSeconds": 24.74
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_canyon",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_central_bazaar",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_westvale",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "arabia_central_bazaar",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_sanaa",
+          "steps": 13,
+          "nominalWalkSeconds": 3.42
+        },
+        {
+          "from": "arabia_sanaa",
+          "to": "arabia_central_canyon",
+          "steps": 13,
+          "nominalWalkSeconds": 3.42
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_sanaa",
+          "steps": 46,
+          "nominalWalkSeconds": 12.11
+        },
+        {
+          "from": "arabia_sanaa",
+          "to": "arabia_central_bazaar",
+          "steps": 46,
+          "nominalWalkSeconds": 12.11
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "arabia_shortcut",
+          "steps": 49,
+          "nominalWalkSeconds": 12.89
+        },
+        {
+          "from": "arabia_shortcut",
+          "to": "arabia_central_westvale",
+          "steps": 49,
+          "nominalWalkSeconds": 12.89
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_central_westvale",
+          "steps": 55,
+          "nominalWalkSeconds": 14.47
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_shortcut",
+          "steps": 56,
+          "nominalWalkSeconds": 14.74
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "arabia_central_canyon",
+          "steps": 56,
+          "nominalWalkSeconds": 14.74
+        },
+        {
+          "from": "arabia_shortcut",
+          "to": "arabia_central_bazaar",
+          "steps": 56,
+          "nominalWalkSeconds": 14.74
+        },
+        {
+          "from": "arabia_sanaa",
+          "to": "arabia_shortcut",
+          "steps": 70,
+          "nominalWalkSeconds": 18.42
+        },
+        {
+          "from": "arabia_shortcut",
+          "to": "arabia_sanaa",
+          "steps": 70,
+          "nominalWalkSeconds": 18.42
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_shortcut",
+          "steps": 71,
+          "nominalWalkSeconds": 18.68
+        },
+        {
+          "from": "arabia_shortcut",
+          "to": "arabia_central_canyon",
+          "steps": 71,
+          "nominalWalkSeconds": 18.68
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "arabia_sanaa",
+          "steps": 93,
+          "nominalWalkSeconds": 24.47
+        },
+        {
+          "from": "arabia_sanaa",
+          "to": "arabia_central_westvale",
+          "steps": 93,
+          "nominalWalkSeconds": 24.47
+        }
+      ]
+    },
+    {
+      "id": "arabia_central_eastvale",
+      "name": "동쪽 소나무 고원",
+      "w": 64,
+      "h": 56,
+      "boundingArea": 3584,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2923,
+      "paintedGroundCells": 3023,
+      "backdropCells": 0,
+      "exitObjects": 9,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 1,
+      "exitsAtLeastHalfScreenInside": 1,
+      "maxDirectionalInset": 17,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "arabia_central_bazaar": null,
+        "arabia_central_canyon": null,
+        "arabia_central_steppe": null,
+        "transit_crossroads": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_canyon",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_steppe",
+          "steps": 3,
+          "nominalWalkSeconds": 0.79
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "transit_crossroads",
+          "steps": 14,
+          "nominalWalkSeconds": 3.68
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "transit_crossroads",
+          "steps": 47,
+          "nominalWalkSeconds": 12.37
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_central_steppe",
+          "steps": 66,
+          "nominalWalkSeconds": 17.37
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "transit_crossroads",
+          "steps": 86,
+          "nominalWalkSeconds": 22.63
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_canyon",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_central_bazaar",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "arabia_central_bazaar",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_steppe",
+          "steps": 3,
+          "nominalWalkSeconds": 0.79
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "transit_crossroads",
+          "steps": 13,
+          "nominalWalkSeconds": 3.42
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "arabia_central_canyon",
+          "steps": 13,
+          "nominalWalkSeconds": 3.42
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "transit_crossroads",
+          "steps": 46,
+          "nominalWalkSeconds": 12.11
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "arabia_central_bazaar",
+          "steps": 46,
+          "nominalWalkSeconds": 12.11
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_central_steppe",
+          "steps": 65,
+          "nominalWalkSeconds": 17.11
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "arabia_central_canyon",
+          "steps": 65,
+          "nominalWalkSeconds": 17.11
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "transit_crossroads",
+          "steps": 85,
+          "nominalWalkSeconds": 22.37
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "arabia_central_steppe",
+          "steps": 85,
+          "nominalWalkSeconds": 22.37
+        }
+      ]
+    },
+    {
+      "id": "arabia_central_steppe",
+      "name": "한가운데 초원",
+      "w": 112,
+      "h": 56,
+      "boundingArea": 6272,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 5345,
+      "paintedGroundCells": 5150,
+      "backdropCells": 0,
+      "exitObjects": 9,
+      "uniqueTargets": 6,
+      "directionalInsetExits": 3,
+      "exitsAtLeastHalfScreenInside": 2,
+      "maxDirectionalInset": 51,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "arabia_central_westvale": null,
+        "arabia_central_bazaar": null,
+        "arabia_central_eastvale": null,
+        "north_c_crossing": null,
+        "venice_c_gate": null,
+        "transit_crossroads": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "north_c_crossing",
+          "to": "venice_c_gate",
+          "steps": 4,
+          "nominalWalkSeconds": 1.05
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "transit_crossroads",
+          "steps": 4,
+          "nominalWalkSeconds": 1.05
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_eastvale",
+          "steps": 5,
+          "nominalWalkSeconds": 1.32
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_westvale",
+          "steps": 7,
+          "nominalWalkSeconds": 1.84
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "venice_c_gate",
+          "steps": 9,
+          "nominalWalkSeconds": 2.37
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "transit_crossroads",
+          "steps": 51,
+          "nominalWalkSeconds": 13.42
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "north_c_crossing",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "venice_c_gate",
+          "steps": 60,
+          "nominalWalkSeconds": 15.79
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "venice_c_gate",
+          "steps": 89,
+          "nominalWalkSeconds": 23.42
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "transit_crossroads",
+          "steps": 89,
+          "nominalWalkSeconds": 23.42
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "north_c_crossing",
+          "steps": 95,
+          "nominalWalkSeconds": 25.0
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "north_c_crossing",
+          "steps": 95,
+          "nominalWalkSeconds": 25.0
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "transit_crossroads",
+          "steps": 98,
+          "nominalWalkSeconds": 25.79
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "venice_c_gate",
+          "steps": 98,
+          "nominalWalkSeconds": 25.79
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "arabia_central_westvale",
+          "steps": 99,
+          "nominalWalkSeconds": 26.05
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "north_c_crossing",
+          "to": "venice_c_gate",
+          "steps": 3,
+          "nominalWalkSeconds": 0.79
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "transit_crossroads",
+          "steps": 3,
+          "nominalWalkSeconds": 0.79
+        },
+        {
+          "from": "venice_c_gate",
+          "to": "north_c_crossing",
+          "steps": 3,
+          "nominalWalkSeconds": 0.79
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "north_c_crossing",
+          "steps": 3,
+          "nominalWalkSeconds": 0.79
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_eastvale",
+          "steps": 6,
+          "nominalWalkSeconds": 1.58
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "arabia_central_bazaar",
+          "steps": 6,
+          "nominalWalkSeconds": 1.58
+        },
+        {
+          "from": "venice_c_gate",
+          "to": "transit_crossroads",
+          "steps": 8,
+          "nominalWalkSeconds": 2.11
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_westvale",
+          "steps": 8,
+          "nominalWalkSeconds": 2.11
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "arabia_central_bazaar",
+          "steps": 8,
+          "nominalWalkSeconds": 2.11
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "venice_c_gate",
+          "steps": 8,
+          "nominalWalkSeconds": 2.11
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "transit_crossroads",
+          "steps": 50,
+          "nominalWalkSeconds": 13.16
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "arabia_central_bazaar",
+          "steps": 52,
+          "nominalWalkSeconds": 13.68
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "arabia_central_bazaar",
+          "steps": 56,
+          "nominalWalkSeconds": 14.74
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "north_c_crossing",
+          "steps": 56,
+          "nominalWalkSeconds": 14.74
+        },
+        {
+          "from": "venice_c_gate",
+          "to": "arabia_central_bazaar",
+          "steps": 59,
+          "nominalWalkSeconds": 15.53
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "venice_c_gate",
+          "steps": 59,
+          "nominalWalkSeconds": 15.53
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "transit_crossroads",
+          "steps": 88,
+          "nominalWalkSeconds": 23.16
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "venice_c_gate",
+          "steps": 88,
+          "nominalWalkSeconds": 23.16
+        },
+        {
+          "from": "venice_c_gate",
+          "to": "arabia_central_westvale",
+          "steps": 90,
+          "nominalWalkSeconds": 23.68
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "arabia_central_eastvale",
+          "steps": 90,
+          "nominalWalkSeconds": 23.68
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "arabia_central_westvale",
+          "steps": 94,
+          "nominalWalkSeconds": 24.74
+        },
+        {
+          "from": "north_c_crossing",
+          "to": "arabia_central_eastvale",
+          "steps": 94,
+          "nominalWalkSeconds": 24.74
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "north_c_crossing",
+          "steps": 94,
+          "nominalWalkSeconds": 24.74
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "north_c_crossing",
+          "steps": 94,
+          "nominalWalkSeconds": 24.74
+        },
+        {
+          "from": "venice_c_gate",
+          "to": "arabia_central_eastvale",
+          "steps": 97,
+          "nominalWalkSeconds": 25.53
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "venice_c_gate",
+          "steps": 97,
+          "nominalWalkSeconds": 25.53
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "transit_crossroads",
+          "steps": 97,
+          "nominalWalkSeconds": 25.53
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "arabia_central_westvale",
+          "steps": 97,
+          "nominalWalkSeconds": 25.53
+        },
+        {
+          "from": "arabia_central_westvale",
+          "to": "arabia_central_eastvale",
+          "steps": 98,
+          "nominalWalkSeconds": 25.79
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "arabia_central_westvale",
+          "steps": 100,
+          "nominalWalkSeconds": 26.32
+        }
+      ]
+    },
+    {
+      "id": "arabia_central_westvale",
+      "name": "서쪽 포도밭 언덕",
+      "w": 64,
+      "h": 56,
+      "boundingArea": 3584,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2937,
+      "paintedGroundCells": 3023,
+      "backdropCells": 0,
+      "exitObjects": 8,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 1,
+      "exitsAtLeastHalfScreenInside": 1,
+      "maxDirectionalInset": 16,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "arabia_central_dunes": null,
+        "arabia_central_bazaar": null,
+        "arabia_central_steppe": null,
+        "venice_c_bridge": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_dunes",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_steppe",
+          "steps": 4,
+          "nominalWalkSeconds": 1.05
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "venice_c_bridge",
+          "steps": 6,
+          "nominalWalkSeconds": 1.58
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "venice_c_bridge",
+          "steps": 48,
+          "nominalWalkSeconds": 12.63
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_central_steppe",
+          "steps": 62,
+          "nominalWalkSeconds": 16.32
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "venice_c_bridge",
+          "steps": 90,
+          "nominalWalkSeconds": 23.68
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_dunes",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_central_bazaar",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "arabia_central_bazaar",
+          "steps": 3,
+          "nominalWalkSeconds": 0.79
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "arabia_central_steppe",
+          "steps": 4,
+          "nominalWalkSeconds": 1.05
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "venice_c_bridge",
+          "steps": 5,
+          "nominalWalkSeconds": 1.32
+        },
+        {
+          "from": "venice_c_bridge",
+          "to": "arabia_central_dunes",
+          "steps": 6,
+          "nominalWalkSeconds": 1.58
+        },
+        {
+          "from": "venice_c_bridge",
+          "to": "arabia_central_bazaar",
+          "steps": 47,
+          "nominalWalkSeconds": 12.37
+        },
+        {
+          "from": "arabia_central_bazaar",
+          "to": "venice_c_bridge",
+          "steps": 47,
+          "nominalWalkSeconds": 12.37
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_central_steppe",
+          "steps": 61,
+          "nominalWalkSeconds": 16.05
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "arabia_central_dunes",
+          "steps": 61,
+          "nominalWalkSeconds": 16.05
+        },
+        {
+          "from": "venice_c_bridge",
+          "to": "arabia_central_steppe",
+          "steps": 89,
+          "nominalWalkSeconds": 23.42
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "venice_c_bridge",
+          "steps": 89,
+          "nominalWalkSeconds": 23.42
+        }
+      ]
+    },
+    {
+      "id": "arabia_farmroad",
+      "name": "나즈드 대상로",
+      "w": 64,
+      "h": 44,
+      "boundingArea": 2816,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2478,
+      "paintedGroundCells": 2816,
+      "backdropCells": 0,
+      "exitObjects": 16,
+      "uniqueTargets": 3,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "arabia_taiz": null,
+        "arabia_ahsa": null,
+        "arabia_jeddah": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "arabia_ahsa",
+          "to": "arabia_taiz",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_jeddah",
+          "to": "arabia_taiz",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_ahsa",
+          "to": "arabia_jeddah",
+          "steps": 63,
+          "nominalWalkSeconds": 16.58
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "arabia_ahsa",
+          "to": "arabia_taiz",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_jeddah",
+          "to": "arabia_taiz",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_taiz",
+          "to": "arabia_ahsa",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_taiz",
+          "to": "arabia_jeddah",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_ahsa",
+          "to": "arabia_jeddah",
+          "steps": 62,
+          "nominalWalkSeconds": 16.32
+        },
+        {
+          "from": "arabia_jeddah",
+          "to": "arabia_ahsa",
+          "steps": 62,
+          "nominalWalkSeconds": 16.32
+        }
+      ]
+    },
+    {
+      "id": "arabia_jeddah",
+      "name": "제다",
+      "w": 64,
+      "h": 44,
+      "boundingArea": 2816,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2010,
+      "paintedGroundCells": 2816,
+      "backdropCells": 0,
+      "exitObjects": 9,
+      "uniqueTargets": 2,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "arabia_zabid": 29,
+        "arabia_farmroad": 21
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "arabia_farmroad",
+          "to": "arabia_zabid",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "arabia_farmroad",
+          "to": "arabia_zabid",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_zabid",
+          "to": "arabia_farmroad",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        }
+      ]
+    },
+    {
+      "id": "arabia_sanaa",
+      "name": "사나",
+      "w": 64,
+      "h": 44,
+      "boundingArea": 2816,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2136,
+      "paintedGroundCells": 2816,
+      "backdropCells": 0,
+      "exitObjects": 2,
+      "uniqueTargets": 2,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "arabia_central_dunes": 31,
+        "arabia_taiz": 20
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_taiz",
+          "steps": 43,
+          "nominalWalkSeconds": 11.32
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_taiz",
+          "steps": 42,
+          "nominalWalkSeconds": 11.05
+        },
+        {
+          "from": "arabia_taiz",
+          "to": "arabia_central_dunes",
+          "steps": 42,
+          "nominalWalkSeconds": 11.05
+        }
+      ]
+    },
+    {
+      "id": "arabia_shortcut",
+      "name": "룹알할리 빈 사막",
+      "w": 64,
+      "h": 44,
+      "boundingArea": 2816,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2382,
+      "paintedGroundCells": 2816,
+      "backdropCells": 0,
+      "exitObjects": 7,
+      "uniqueTargets": 3,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "arabia_central_dunes": null,
+        "arabia_taiz": null,
+        "arabia_ahsa": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "arabia_ahsa",
+          "to": "arabia_taiz",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_taiz",
+          "steps": 36,
+          "nominalWalkSeconds": 9.47
+        },
+        {
+          "from": "arabia_ahsa",
+          "to": "arabia_central_dunes",
+          "steps": 43,
+          "nominalWalkSeconds": 11.32
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "arabia_ahsa",
+          "to": "arabia_taiz",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_taiz",
+          "to": "arabia_ahsa",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_taiz",
+          "steps": 35,
+          "nominalWalkSeconds": 9.21
+        },
+        {
+          "from": "arabia_taiz",
+          "to": "arabia_central_dunes",
+          "steps": 35,
+          "nominalWalkSeconds": 9.21
+        },
+        {
+          "from": "arabia_ahsa",
+          "to": "arabia_central_dunes",
+          "steps": 42,
+          "nominalWalkSeconds": 11.05
+        },
+        {
+          "from": "arabia_central_dunes",
+          "to": "arabia_ahsa",
+          "steps": 42,
+          "nominalWalkSeconds": 11.05
+        }
+      ]
+    },
+    {
+      "id": "arabia_taiz",
+      "name": "타이즈",
+      "w": 64,
+      "h": 44,
+      "boundingArea": 2816,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2520,
+      "paintedGroundCells": 2816,
+      "backdropCells": 0,
+      "exitObjects": 13,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "arabia_sanaa": 24,
+        "arabia_shortcut": 29,
+        "arabia_zabid": 34,
+        "arabia_farmroad": 25
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "arabia_farmroad",
+          "to": "arabia_shortcut",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_farmroad",
+          "to": "arabia_zabid",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_sanaa",
+          "to": "arabia_shortcut",
+          "steps": 32,
+          "nominalWalkSeconds": 8.42
+        },
+        {
+          "from": "arabia_sanaa",
+          "to": "arabia_zabid",
+          "steps": 34,
+          "nominalWalkSeconds": 8.95
+        },
+        {
+          "from": "arabia_farmroad",
+          "to": "arabia_sanaa",
+          "steps": 46,
+          "nominalWalkSeconds": 12.11
+        },
+        {
+          "from": "arabia_shortcut",
+          "to": "arabia_zabid",
+          "steps": 63,
+          "nominalWalkSeconds": 16.58
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "arabia_farmroad",
+          "to": "arabia_shortcut",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_farmroad",
+          "to": "arabia_zabid",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_shortcut",
+          "to": "arabia_farmroad",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_zabid",
+          "to": "arabia_farmroad",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_sanaa",
+          "to": "arabia_shortcut",
+          "steps": 31,
+          "nominalWalkSeconds": 8.16
+        },
+        {
+          "from": "arabia_shortcut",
+          "to": "arabia_sanaa",
+          "steps": 31,
+          "nominalWalkSeconds": 8.16
+        },
+        {
+          "from": "arabia_sanaa",
+          "to": "arabia_zabid",
+          "steps": 33,
+          "nominalWalkSeconds": 8.68
+        },
+        {
+          "from": "arabia_zabid",
+          "to": "arabia_sanaa",
+          "steps": 33,
+          "nominalWalkSeconds": 8.68
+        },
+        {
+          "from": "arabia_farmroad",
+          "to": "arabia_sanaa",
+          "steps": 45,
+          "nominalWalkSeconds": 11.84
+        },
+        {
+          "from": "arabia_sanaa",
+          "to": "arabia_farmroad",
+          "steps": 45,
+          "nominalWalkSeconds": 11.84
+        },
+        {
+          "from": "arabia_shortcut",
+          "to": "arabia_zabid",
+          "steps": 62,
+          "nominalWalkSeconds": 16.32
+        },
+        {
+          "from": "arabia_zabid",
+          "to": "arabia_shortcut",
+          "steps": 62,
+          "nominalWalkSeconds": 16.32
+        }
+      ]
+    },
+    {
+      "id": "arabia_zabid",
+      "name": "자비드",
+      "w": 64,
+      "h": 44,
+      "boundingArea": 2816,
+      "b1AssignedArea": null,
+      "exportReportedArea": null,
+      "unblockedCells": 2240,
+      "paintedGroundCells": 2816,
+      "backdropCells": 0,
+      "exitObjects": 8,
+      "uniqueTargets": 3,
+      "directionalInsetExits": 0,
+      "exitsAtLeastHalfScreenInside": 0,
+      "maxDirectionalInset": 0,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "arabia_central_canyon": 38,
+        "arabia_taiz": 13,
+        "arabia_jeddah": 27
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "arabia_jeddah",
+          "to": "arabia_taiz",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_taiz",
+          "steps": 35,
+          "nominalWalkSeconds": 9.21
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_jeddah",
+          "steps": 48,
+          "nominalWalkSeconds": 12.63
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "arabia_jeddah",
+          "to": "arabia_taiz",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_taiz",
+          "to": "arabia_jeddah",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_taiz",
+          "steps": 34,
+          "nominalWalkSeconds": 8.95
+        },
+        {
+          "from": "arabia_taiz",
+          "to": "arabia_central_canyon",
+          "steps": 34,
+          "nominalWalkSeconds": 8.95
+        },
+        {
+          "from": "arabia_central_canyon",
+          "to": "arabia_jeddah",
+          "steps": 47,
+          "nominalWalkSeconds": 12.37
+        },
+        {
+          "from": "arabia_jeddah",
+          "to": "arabia_central_canyon",
+          "steps": 47,
+          "nominalWalkSeconds": 12.37
+        }
+      ]
+    },
+    {
+      "id": "goryeo_jangdan",
+      "name": "장단 들마을",
+      "w": 61,
+      "h": 98,
+      "boundingArea": 5978,
+      "b1AssignedArea": 4298,
+      "exportReportedArea": 3740,
+      "unblockedCells": 2631,
+      "paintedGroundCells": 5619,
+      "backdropCells": 5110,
+      "exitObjects": 151,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 129,
+      "exitsAtLeastHalfScreenInside": 65,
+      "maxDirectionalInset": 80,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "transit_pass": 25,
+        "Naru": 26,
+        "goryeo_songak": 33,
+        "Gaegyeong": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "Gaegyeong",
+          "to": "goryeo_songak",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "Gaegyeong",
+          "to": "Naru",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "goryeo_songak",
+          "to": "transit_pass",
+          "steps": 9,
+          "nominalWalkSeconds": 2.37
+        },
+        {
+          "from": "Naru",
+          "to": "goryeo_songak",
+          "steps": 36,
+          "nominalWalkSeconds": 9.47
+        },
+        {
+          "from": "Naru",
+          "to": "transit_pass",
+          "steps": 48,
+          "nominalWalkSeconds": 12.63
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "Gaegyeong",
+          "to": "goryeo_songak",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "goryeo_songak",
+          "to": "Gaegyeong",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "Gaegyeong",
+          "to": "Naru",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "Naru",
+          "to": "Gaegyeong",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "goryeo_songak",
+          "to": "transit_pass",
+          "steps": 8,
+          "nominalWalkSeconds": 2.11
+        },
+        {
+          "from": "transit_pass",
+          "to": "goryeo_songak",
+          "steps": 8,
+          "nominalWalkSeconds": 2.11
+        },
+        {
+          "from": "Naru",
+          "to": "goryeo_songak",
+          "steps": 35,
+          "nominalWalkSeconds": 9.21
+        },
+        {
+          "from": "goryeo_songak",
+          "to": "Naru",
+          "steps": 35,
+          "nominalWalkSeconds": 9.21
+        },
+        {
+          "from": "Naru",
+          "to": "transit_pass",
+          "steps": 47,
+          "nominalWalkSeconds": 12.37
+        },
+        {
+          "from": "transit_pass",
+          "to": "Naru",
+          "steps": 47,
+          "nominalWalkSeconds": 12.37
+        }
+      ]
+    },
+    {
+      "id": "goryeo_songak",
+      "name": "송악 산록 마을",
+      "w": 74,
+      "h": 84,
+      "boundingArea": 6216,
+      "b1AssignedArea": 3302,
+      "exportReportedArea": 4221,
+      "unblockedCells": 2267,
+      "paintedGroundCells": 6133,
+      "backdropCells": 2184,
+      "exitObjects": 66,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 65,
+      "exitsAtLeastHalfScreenInside": 25,
+      "maxDirectionalInset": 52,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "Dakmok": 33,
+        "transit_woodtown": 46,
+        "goryeo_jangdan": 26,
+        "Gaegyeong": 67
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "Gaegyeong",
+          "to": "goryeo_jangdan",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "Dakmok",
+          "to": "goryeo_jangdan",
+          "steps": 37,
+          "nominalWalkSeconds": 9.74
+        },
+        {
+          "from": "goryeo_jangdan",
+          "to": "transit_woodtown",
+          "steps": 45,
+          "nominalWalkSeconds": 11.84
+        },
+        {
+          "from": "Dakmok",
+          "to": "Gaegyeong",
+          "steps": 46,
+          "nominalWalkSeconds": 12.11
+        },
+        {
+          "from": "Dakmok",
+          "to": "transit_woodtown",
+          "steps": 79,
+          "nominalWalkSeconds": 20.79
+        },
+        {
+          "from": "Gaegyeong",
+          "to": "transit_woodtown",
+          "steps": 113,
+          "nominalWalkSeconds": 29.74
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "Gaegyeong",
+          "to": "goryeo_jangdan",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "goryeo_jangdan",
+          "to": "Gaegyeong",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "Dakmok",
+          "to": "goryeo_jangdan",
+          "steps": 36,
+          "nominalWalkSeconds": 9.47
+        },
+        {
+          "from": "goryeo_jangdan",
+          "to": "Dakmok",
+          "steps": 36,
+          "nominalWalkSeconds": 9.47
+        },
+        {
+          "from": "goryeo_jangdan",
+          "to": "transit_woodtown",
+          "steps": 42,
+          "nominalWalkSeconds": 11.05
+        },
+        {
+          "from": "transit_woodtown",
+          "to": "goryeo_jangdan",
+          "steps": 44,
+          "nominalWalkSeconds": 11.58
+        },
+        {
+          "from": "Dakmok",
+          "to": "Gaegyeong",
+          "steps": 45,
+          "nominalWalkSeconds": 11.84
+        },
+        {
+          "from": "Gaegyeong",
+          "to": "Dakmok",
+          "steps": 45,
+          "nominalWalkSeconds": 11.84
+        },
+        {
+          "from": "Dakmok",
+          "to": "transit_woodtown",
+          "steps": 78,
+          "nominalWalkSeconds": 20.53
+        },
+        {
+          "from": "transit_woodtown",
+          "to": "Dakmok",
+          "steps": 78,
+          "nominalWalkSeconds": 20.53
+        },
+        {
+          "from": "Gaegyeong",
+          "to": "transit_woodtown",
+          "steps": 112,
+          "nominalWalkSeconds": 29.47
+        },
+        {
+          "from": "transit_woodtown",
+          "to": "Gaegyeong",
+          "steps": 112,
+          "nominalWalkSeconds": 29.47
+        }
+      ]
+    },
+    {
+      "id": "transit_central_approach",
+      "name": "초원 진입로",
+      "w": 71,
+      "h": 87,
+      "boundingArea": 6177,
+      "b1AssignedArea": 3047,
+      "exportReportedArea": 3095,
+      "unblockedCells": 1796,
+      "paintedGroundCells": 5290,
+      "backdropCells": 2697,
+      "exitObjects": 109,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 104,
+      "exitsAtLeastHalfScreenInside": 73,
+      "maxDirectionalInset": 54,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "transit_crossroads": null,
+        "transit_wetroad": null,
+        "transit_south_inland": null,
+        "transit_woodtown": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "transit_crossroads",
+          "to": "transit_south_inland",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "transit_woodtown",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "transit_woodtown",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "transit_wetroad",
+          "to": "transit_woodtown",
+          "steps": 27,
+          "nominalWalkSeconds": 7.11
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "transit_wetroad",
+          "steps": 44,
+          "nominalWalkSeconds": 11.58
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "transit_crossroads",
+          "to": "transit_south_inland",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "transit_crossroads",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "transit_woodtown",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "transit_woodtown",
+          "to": "transit_south_inland",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "transit_woodtown",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "transit_woodtown",
+          "to": "transit_crossroads",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "transit_wetroad",
+          "to": "transit_woodtown",
+          "steps": 26,
+          "nominalWalkSeconds": 6.84
+        },
+        {
+          "from": "transit_woodtown",
+          "to": "transit_wetroad",
+          "steps": 26,
+          "nominalWalkSeconds": 6.84
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "transit_wetroad",
+          "steps": 43,
+          "nominalWalkSeconds": 11.32
+        },
+        {
+          "from": "transit_wetroad",
+          "to": "transit_crossroads",
+          "steps": 43,
+          "nominalWalkSeconds": 11.32
+        }
+      ]
+    },
+    {
+      "id": "transit_crossroads",
+      "name": "내륙 교역 길목",
+      "w": 92,
+      "h": 80,
+      "boundingArea": 7360,
+      "b1AssignedArea": 3200,
+      "exportReportedArea": 3823,
+      "unblockedCells": 3600,
+      "paintedGroundCells": 5629,
+      "backdropCells": 0,
+      "exitObjects": 137,
+      "uniqueTargets": 5,
+      "directionalInsetExits": 130,
+      "exitsAtLeastHalfScreenInside": 96,
+      "maxDirectionalInset": 53,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "transit_central_approach": 32,
+        "transit_south_inland": 49,
+        "north_c_road_se": 41,
+        "arabia_central_eastvale": 40,
+        "arabia_central_steppe": 45
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "transit_central_approach",
+          "to": "transit_south_inland",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "north_c_road_se",
+          "to": "transit_central_approach",
+          "steps": 18,
+          "nominalWalkSeconds": 4.74
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "arabia_central_steppe",
+          "steps": 23,
+          "nominalWalkSeconds": 6.05
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "north_c_road_se",
+          "steps": 49,
+          "nominalWalkSeconds": 12.89
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "north_c_road_se",
+          "steps": 50,
+          "nominalWalkSeconds": 13.16
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "transit_central_approach",
+          "steps": 70,
+          "nominalWalkSeconds": 18.42
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "transit_central_approach",
+          "steps": 71,
+          "nominalWalkSeconds": 18.68
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "transit_south_inland",
+          "steps": 72,
+          "nominalWalkSeconds": 18.95
+        },
+        {
+          "from": "north_c_road_se",
+          "to": "transit_south_inland",
+          "steps": 92,
+          "nominalWalkSeconds": 24.21
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "transit_south_inland",
+          "steps": 96,
+          "nominalWalkSeconds": 25.26
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "transit_central_approach",
+          "to": "transit_south_inland",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "transit_central_approach",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "transit_central_approach",
+          "to": "north_c_road_se",
+          "steps": 17,
+          "nominalWalkSeconds": 4.47
+        },
+        {
+          "from": "north_c_road_se",
+          "to": "transit_central_approach",
+          "steps": 19,
+          "nominalWalkSeconds": 5.0
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "arabia_central_eastvale",
+          "steps": 22,
+          "nominalWalkSeconds": 5.79
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "arabia_central_steppe",
+          "steps": 24,
+          "nominalWalkSeconds": 6.32
+        },
+        {
+          "from": "north_c_road_se",
+          "to": "arabia_central_steppe",
+          "steps": 48,
+          "nominalWalkSeconds": 12.63
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "north_c_road_se",
+          "steps": 48,
+          "nominalWalkSeconds": 12.63
+        },
+        {
+          "from": "north_c_road_se",
+          "to": "arabia_central_eastvale",
+          "steps": 49,
+          "nominalWalkSeconds": 12.89
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "north_c_road_se",
+          "steps": 49,
+          "nominalWalkSeconds": 12.89
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "transit_central_approach",
+          "steps": 69,
+          "nominalWalkSeconds": 18.16
+        },
+        {
+          "from": "transit_central_approach",
+          "to": "arabia_central_steppe",
+          "steps": 69,
+          "nominalWalkSeconds": 18.16
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "transit_central_approach",
+          "steps": 70,
+          "nominalWalkSeconds": 18.42
+        },
+        {
+          "from": "transit_central_approach",
+          "to": "arabia_central_eastvale",
+          "steps": 70,
+          "nominalWalkSeconds": 18.42
+        },
+        {
+          "from": "arabia_central_eastvale",
+          "to": "transit_south_inland",
+          "steps": 71,
+          "nominalWalkSeconds": 18.68
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "arabia_central_eastvale",
+          "steps": 71,
+          "nominalWalkSeconds": 18.68
+        },
+        {
+          "from": "north_c_road_se",
+          "to": "transit_south_inland",
+          "steps": 91,
+          "nominalWalkSeconds": 23.95
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "north_c_road_se",
+          "steps": 91,
+          "nominalWalkSeconds": 23.95
+        },
+        {
+          "from": "arabia_central_steppe",
+          "to": "transit_south_inland",
+          "steps": 95,
+          "nominalWalkSeconds": 25.0
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "arabia_central_steppe",
+          "steps": 95,
+          "nominalWalkSeconds": 25.0
+        }
+      ]
+    },
+    {
+      "id": "transit_ferry",
+      "name": "버들나루 마을",
+      "w": 80,
+      "h": 55,
+      "boundingArea": 4400,
+      "b1AssignedArea": 3200,
+      "exportReportedArea": 3101,
+      "unblockedCells": 1919,
+      "paintedGroundCells": 4150,
+      "backdropCells": 5,
+      "exitObjects": 47,
+      "uniqueTargets": 1,
+      "directionalInsetExits": 43,
+      "exitsAtLeastHalfScreenInside": 20,
+      "maxDirectionalInset": 70,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "transit_wetroad": 27
+      },
+      "betweenNeighborMinRoutes": [],
+      "arrivalToDifferentNeighborRoutes": []
+    },
+    {
+      "id": "transit_pass",
+      "name": "솔바람 고개",
+      "w": 65,
+      "h": 68,
+      "boundingArea": 4420,
+      "b1AssignedArea": 3051,
+      "exportReportedArea": 3077,
+      "unblockedCells": 2449,
+      "paintedGroundCells": 4389,
+      "backdropCells": 2552,
+      "exitObjects": 108,
+      "uniqueTargets": 4,
+      "directionalInsetExits": 92,
+      "exitsAtLeastHalfScreenInside": 44,
+      "maxDirectionalInset": 51,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "goryeo_jangdan": null,
+        "transit_southport": null,
+        "transit_woodtown": null,
+        "transit_south_inland": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "transit_south_inland",
+          "to": "transit_woodtown",
+          "steps": 14,
+          "nominalWalkSeconds": 3.68
+        },
+        {
+          "from": "goryeo_jangdan",
+          "to": "transit_woodtown",
+          "steps": 23,
+          "nominalWalkSeconds": 6.05
+        },
+        {
+          "from": "goryeo_jangdan",
+          "to": "transit_southport",
+          "steps": 30,
+          "nominalWalkSeconds": 7.89
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "transit_southport",
+          "steps": 49,
+          "nominalWalkSeconds": 12.89
+        },
+        {
+          "from": "transit_southport",
+          "to": "transit_woodtown",
+          "steps": 54,
+          "nominalWalkSeconds": 14.21
+        },
+        {
+          "from": "goryeo_jangdan",
+          "to": "transit_south_inland",
+          "steps": 58,
+          "nominalWalkSeconds": 15.26
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "transit_south_inland",
+          "to": "transit_woodtown",
+          "steps": 9,
+          "nominalWalkSeconds": 2.37
+        },
+        {
+          "from": "transit_woodtown",
+          "to": "transit_south_inland",
+          "steps": 13,
+          "nominalWalkSeconds": 3.42
+        },
+        {
+          "from": "goryeo_jangdan",
+          "to": "transit_woodtown",
+          "steps": 22,
+          "nominalWalkSeconds": 5.79
+        },
+        {
+          "from": "transit_woodtown",
+          "to": "goryeo_jangdan",
+          "steps": 22,
+          "nominalWalkSeconds": 5.79
+        },
+        {
+          "from": "goryeo_jangdan",
+          "to": "transit_southport",
+          "steps": 29,
+          "nominalWalkSeconds": 7.63
+        },
+        {
+          "from": "transit_southport",
+          "to": "goryeo_jangdan",
+          "steps": 29,
+          "nominalWalkSeconds": 7.63
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "transit_southport",
+          "steps": 48,
+          "nominalWalkSeconds": 12.63
+        },
+        {
+          "from": "transit_southport",
+          "to": "transit_south_inland",
+          "steps": 48,
+          "nominalWalkSeconds": 12.63
+        },
+        {
+          "from": "transit_southport",
+          "to": "transit_woodtown",
+          "steps": 53,
+          "nominalWalkSeconds": 13.95
+        },
+        {
+          "from": "transit_woodtown",
+          "to": "transit_southport",
+          "steps": 53,
+          "nominalWalkSeconds": 13.95
+        },
+        {
+          "from": "goryeo_jangdan",
+          "to": "transit_south_inland",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "goryeo_jangdan",
+          "steps": 57,
+          "nominalWalkSeconds": 15.0
+        }
+      ]
+    },
+    {
+      "id": "transit_south_inland",
+      "name": "남쪽 내륙길",
+      "w": 67,
+      "h": 73,
+      "boundingArea": 4891,
+      "b1AssignedArea": 3052,
+      "exportReportedArea": 2663,
+      "unblockedCells": 1666,
+      "paintedGroundCells": 4088,
+      "backdropCells": 1901,
+      "exitObjects": 141,
+      "uniqueTargets": 5,
+      "directionalInsetExits": 124,
+      "exitsAtLeastHalfScreenInside": 82,
+      "maxDirectionalInset": 40,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "transit_southport": null,
+        "transit_central_approach": null,
+        "transit_woodtown": null,
+        "transit_crossroads": null,
+        "transit_pass": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "transit_central_approach",
+          "to": "transit_crossroads",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "transit_central_approach",
+          "to": "transit_woodtown",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "transit_woodtown",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "transit_southport",
+          "steps": 66,
+          "nominalWalkSeconds": 17.37
+        },
+        {
+          "from": "transit_central_approach",
+          "to": "transit_southport",
+          "steps": 77,
+          "nominalWalkSeconds": 20.26
+        },
+        {
+          "from": "transit_southport",
+          "to": "transit_woodtown",
+          "steps": 78,
+          "nominalWalkSeconds": 20.53
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "transit_central_approach",
+          "to": "transit_crossroads",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "transit_central_approach",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "transit_central_approach",
+          "to": "transit_woodtown",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "transit_woodtown",
+          "to": "transit_central_approach",
+          "steps": 2,
+          "nominalWalkSeconds": 0.53
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "transit_woodtown",
+          "steps": 3,
+          "nominalWalkSeconds": 0.79
+        },
+        {
+          "from": "transit_woodtown",
+          "to": "transit_crossroads",
+          "steps": 3,
+          "nominalWalkSeconds": 0.79
+        },
+        {
+          "from": "transit_crossroads",
+          "to": "transit_southport",
+          "steps": 65,
+          "nominalWalkSeconds": 17.11
+        },
+        {
+          "from": "transit_southport",
+          "to": "transit_crossroads",
+          "steps": 65,
+          "nominalWalkSeconds": 17.11
+        },
+        {
+          "from": "transit_woodtown",
+          "to": "transit_southport",
+          "steps": 75,
+          "nominalWalkSeconds": 19.74
+        },
+        {
+          "from": "transit_central_approach",
+          "to": "transit_southport",
+          "steps": 76,
+          "nominalWalkSeconds": 20.0
+        },
+        {
+          "from": "transit_southport",
+          "to": "transit_central_approach",
+          "steps": 76,
+          "nominalWalkSeconds": 20.0
+        },
+        {
+          "from": "transit_southport",
+          "to": "transit_woodtown",
+          "steps": 77,
+          "nominalWalkSeconds": 20.26
+        }
+      ]
+    },
+    {
+      "id": "transit_southport",
+      "name": "남동 포구",
+      "w": 86,
+      "h": 68,
+      "boundingArea": 5848,
+      "b1AssignedArea": 3200,
+      "exportReportedArea": 3335,
+      "unblockedCells": 2022,
+      "paintedGroundCells": 5566,
+      "backdropCells": 0,
+      "exitObjects": 70,
+      "uniqueTargets": 2,
+      "directionalInsetExits": 70,
+      "exitsAtLeastHalfScreenInside": 53,
+      "maxDirectionalInset": 35,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "transit_south_inland": 40,
+        "transit_pass": 51
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "transit_pass",
+          "to": "transit_south_inland",
+          "steps": 39,
+          "nominalWalkSeconds": 10.26
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "transit_pass",
+          "to": "transit_south_inland",
+          "steps": 38,
+          "nominalWalkSeconds": 10.0
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "transit_pass",
+          "steps": 38,
+          "nominalWalkSeconds": 10.0
+        }
+      ]
+    },
+    {
+      "id": "transit_wetroad",
+      "name": "버들 물가 길",
+      "w": 78,
+      "h": 64,
+      "boundingArea": 4992,
+      "b1AssignedArea": 3050,
+      "exportReportedArea": 2883,
+      "unblockedCells": 1513,
+      "paintedGroundCells": 4977,
+      "backdropCells": 6928,
+      "exitObjects": 107,
+      "uniqueTargets": 3,
+      "directionalInsetExits": 104,
+      "exitsAtLeastHalfScreenInside": 70,
+      "maxDirectionalInset": 61,
+      "routeReference": "none",
+      "referenceToExitSteps": {
+        "transit_central_approach": null,
+        "transit_woodtown": null,
+        "transit_ferry": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "transit_central_approach",
+          "to": "transit_woodtown",
+          "steps": 16,
+          "nominalWalkSeconds": 4.21
+        },
+        {
+          "from": "transit_ferry",
+          "to": "transit_woodtown",
+          "steps": 45,
+          "nominalWalkSeconds": 11.84
+        },
+        {
+          "from": "transit_central_approach",
+          "to": "transit_ferry",
+          "steps": 46,
+          "nominalWalkSeconds": 12.11
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "transit_central_approach",
+          "to": "transit_woodtown",
+          "steps": 15,
+          "nominalWalkSeconds": 3.95
+        },
+        {
+          "from": "transit_woodtown",
+          "to": "transit_central_approach",
+          "steps": 15,
+          "nominalWalkSeconds": 3.95
+        },
+        {
+          "from": "transit_ferry",
+          "to": "transit_central_approach",
+          "steps": 42,
+          "nominalWalkSeconds": 11.05
+        },
+        {
+          "from": "transit_ferry",
+          "to": "transit_woodtown",
+          "steps": 42,
+          "nominalWalkSeconds": 11.05
+        },
+        {
+          "from": "transit_woodtown",
+          "to": "transit_ferry",
+          "steps": 44,
+          "nominalWalkSeconds": 11.58
+        },
+        {
+          "from": "transit_central_approach",
+          "to": "transit_ferry",
+          "steps": 45,
+          "nominalWalkSeconds": 11.84
+        }
+      ]
+    },
+    {
+      "id": "transit_woodtown",
+      "name": "솔재 길목 마을",
+      "w": 87,
+      "h": 69,
+      "boundingArea": 6003,
+      "b1AssignedArea": 3200,
+      "exportReportedArea": 3016,
+      "unblockedCells": 1779,
+      "paintedGroundCells": 6003,
+      "backdropCells": 2871,
+      "exitObjects": 103,
+      "uniqueTargets": 5,
+      "directionalInsetExits": 98,
+      "exitsAtLeastHalfScreenInside": 72,
+      "maxDirectionalInset": 55,
+      "routeReference": "walkable cells beside first market",
+      "referenceToExitSteps": {
+        "transit_wetroad": 28,
+        "goryeo_songak": 22,
+        "transit_south_inland": 53,
+        "transit_pass": 28,
+        "transit_central_approach": null
+      },
+      "betweenNeighborMinRoutes": [
+        {
+          "from": "transit_central_approach",
+          "to": "transit_south_inland",
+          "steps": 0,
+          "nominalWalkSeconds": 0.0
+        },
+        {
+          "from": "goryeo_songak",
+          "to": "transit_pass",
+          "steps": 7,
+          "nominalWalkSeconds": 1.84
+        },
+        {
+          "from": "goryeo_songak",
+          "to": "transit_wetroad",
+          "steps": 11,
+          "nominalWalkSeconds": 2.89
+        },
+        {
+          "from": "transit_pass",
+          "to": "transit_wetroad",
+          "steps": 43,
+          "nominalWalkSeconds": 11.32
+        },
+        {
+          "from": "transit_pass",
+          "to": "transit_south_inland",
+          "steps": 59,
+          "nominalWalkSeconds": 15.53
+        },
+        {
+          "from": "goryeo_songak",
+          "to": "transit_south_inland",
+          "steps": 77,
+          "nominalWalkSeconds": 20.26
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "transit_wetroad",
+          "steps": 80,
+          "nominalWalkSeconds": 21.05
+        }
+      ],
+      "arrivalToDifferentNeighborRoutes": [
+        {
+          "from": "transit_central_approach",
+          "to": "transit_south_inland",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "transit_central_approach",
+          "steps": 1,
+          "nominalWalkSeconds": 0.26
+        },
+        {
+          "from": "transit_pass",
+          "to": "goryeo_songak",
+          "steps": 4,
+          "nominalWalkSeconds": 1.05
+        },
+        {
+          "from": "goryeo_songak",
+          "to": "transit_pass",
+          "steps": 6,
+          "nominalWalkSeconds": 1.58
+        },
+        {
+          "from": "goryeo_songak",
+          "to": "transit_wetroad",
+          "steps": 10,
+          "nominalWalkSeconds": 2.63
+        },
+        {
+          "from": "transit_wetroad",
+          "to": "goryeo_songak",
+          "steps": 10,
+          "nominalWalkSeconds": 2.63
+        },
+        {
+          "from": "transit_pass",
+          "to": "transit_wetroad",
+          "steps": 40,
+          "nominalWalkSeconds": 10.53
+        },
+        {
+          "from": "transit_wetroad",
+          "to": "transit_pass",
+          "steps": 42,
+          "nominalWalkSeconds": 11.05
+        },
+        {
+          "from": "transit_pass",
+          "to": "transit_south_inland",
+          "steps": 58,
+          "nominalWalkSeconds": 15.26
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "transit_pass",
+          "steps": 58,
+          "nominalWalkSeconds": 15.26
+        },
+        {
+          "from": "goryeo_songak",
+          "to": "transit_south_inland",
+          "steps": 76,
+          "nominalWalkSeconds": 20.0
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "goryeo_songak",
+          "steps": 76,
+          "nominalWalkSeconds": 20.0
+        },
+        {
+          "from": "transit_south_inland",
+          "to": "transit_wetroad",
+          "steps": 79,
+          "nominalWalkSeconds": 20.79
+        },
+        {
+          "from": "transit_wetroad",
+          "to": "transit_south_inland",
+          "steps": 79,
+          "nominalWalkSeconds": 20.79
+        }
+      ]
+    }
+  ],
+  "samples": [
+    {
+      "mapId": "Naru",
+      "target": "goryeo_jangdan",
+      "edge": "N",
+      "x": 21,
+      "y": 32,
+      "w": 1,
+      "h": 1,
+      "insetCells": 32,
+      "onRoad": true,
+      "spawnDistance": 16,
+      "probeX": 21,
+      "probeY": 32
+    },
+    {
+      "mapId": "goryeo_songak",
+      "target": "Dakmok",
+      "edge": "N",
+      "x": 61,
+      "y": 37,
+      "w": 1,
+      "h": 1,
+      "insetCells": 37,
+      "onRoad": true,
+      "spawnDistance": 36,
+      "probeX": 61,
+      "probeY": 37
+    },
+    {
+      "mapId": "north_birka",
+      "target": "north_naru",
+      "edge": "E",
+      "x": 61,
+      "y": 42,
+      "w": 1,
+      "h": 2,
+      "insetCells": 0,
+      "onRoad": true,
+      "spawnDistance": 28,
+      "probeX": 61,
+      "probeY": 43
+    },
+    {
+      "mapId": "venice_rialto",
+      "target": "venice_santerasmo",
+      "edge": "W",
+      "x": 0,
+      "y": 25,
+      "w": 1,
+      "h": 5,
+      "insetCells": 0,
+      "onRoad": true,
+      "spawnDistance": 40,
+      "probeX": 0,
+      "probeY": 27
+    }
+  ],
+  "limits": [
+    "boundingArea includes neighbor context and sea; not playable/owned area",
+    "routes ignore dynamic NPC/event collisions, weather, load and diagonal shortcuts; seconds are not human play time",
+    "a one-cell inset on a team map is grouped as screen-edge-adjacent; >1 is the interior statistic",
+    "B1 areas are budgets; M4 export area is a prior generation report, not freshly regenerated ownership; routes use current production JSON"
+  ]
+}
