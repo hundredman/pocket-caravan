@@ -196,14 +196,6 @@ namespace PocketCaravan
 
         public Rect GuideRect { get; private set; }
         public string GuideText { get; private set; }
-        void TrackerText(Rect r, string text, Color ink, Color outline)
-        {
-            style.normal.textColor=style.hover.textColor=style.active.textColor=style.focused.textColor=outline;
-            for(int y=-1;y<=1;y++)for(int x=-1;x<=1;x++)
-                if(x!=0||y!=0)GUI.Label(new Rect(r.x+x,r.y+y,r.width,r.height),text,style);
-            style.normal.textColor=style.hover.textColor=style.active.textColor=style.focused.textColor=ink;
-            GUI.Label(r,text,style);
-        }
         void OnGUI()
         {
             int s = Step;
@@ -217,13 +209,16 @@ namespace PocketCaravan
             string t = s == 1 ? "선착장 일꾼에게 말 걸기 (Space)"
                      : s == 10 ? "선착장 일꾼에게 돌아가 말 걸기 (Space)"
                      : Tasks[s - 2];
-            const float w=152;
-            float textHeight=Mathf.Ceil(style.CalcHeight(new GUIContent(t),w));
+            const float w=168, padding=8;
+            float textHeight=Mathf.Ceil(style.CalcHeight(new GUIContent(t),w-2*padding));
             // Compact quest tracker below the Q/M/L buttons, separate from the portrait.
-            var r=new Rect(Mathf.Round(UIStyle.VirtualWidth-w-12),52,w,14+textHeight);
+            var r=new Rect(Mathf.Round(UIStyle.VirtualWidth-w),52,w,30+textHeight);
             GuideRect=r;GuideText=t;
-            TrackerText(new Rect(r.x,r.y,w,14),title,UIStyle.Lin(CuteUI.Deco),UIStyle.Lin(CuteUI.Ink));
-            TrackerText(new Rect(r.x,r.y+14,w,textHeight),t,UIStyle.Lin(CuteUI.Text),UIStyle.Lin(CuteUI.White));
+            CuteUI.Card(r);
+            style.normal.textColor=style.hover.textColor=style.active.textColor=style.focused.textColor=UIStyle.Lin(CuteUI.Sub);
+            GUI.Label(new Rect(r.x+padding,r.y+padding,w-2*padding,14),title,style);
+            style.normal.textColor=style.hover.textColor=style.active.textColor=style.focused.textColor=UIStyle.Lin(CuteUI.Text);
+            GUI.Label(new Rect(r.x+padding,r.y+22,w-2*padding,textHeight),t,style);
         }
     }
 }
