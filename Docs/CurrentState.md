@@ -882,4 +882,4 @@ Unity 자동162확인·480×270/960×540/360×270 12캡처·컴파일error0. 방
 
 원본 `Tools/WorldLayout/t3_install.py` → 본편 JSON/좌표 리소스/고려 쪽 Connections/지도, Unity `T3Production.Build()` → 우리13씬·WorldIndex 우리 항목만 갱신한다. 다른 지역 씬/맵·WorldIndex 타 항목·빌드 목록·카메라/MapExit/페이드 코드는 유지했다. 옛 저장(layoutVersion0~2)은 새 v3로 메모리 이주한다. v2는 물리 위치/소유맵 변환, v0~1은 기존 M4 도착 정책 후 변환, 막힘/고립/출구는 안전 복원한다. 우물·3앉기·나룻배·장소/소리/생활 연출·발소리·장터·통나무·범람 좌표도 함께 이주했다. 기존 내부 spawn ID는 안전한 S0 별칭으로 보존했다.
 
-본편 자동 이동·635출구 모터접근·17쌍 양방향 이동·타담당3왕복·나룻배3구간·옛저장 이주·정적 전체회귀를 검사했다. 사람의 WASD 체감, 전체 Q1 수동 완주, 실온라인, 장시간 FPS, 빌드는 미검사다. 최신 main을 포함한 `codex/team-system-audit-20261107` 로컬 변경이며 원격 미반영. [검증·실제 화면](Validation/T3-Production-2026-11-08/README.md), [승인·설계](Goryeo/T3-Boundary-Review-2026-11-07.md).
+본편 자동 이동·635출구 모터접근·17쌍 양방향 이동·타담당3왕복·나룻배3구간·옛저장 이주·정적 전체회귀를 검사했다. 사람의 WASD 체감, 전체 Q1 수동 완주, 실온라인, 장시간 FPS, 빌드는 미검사다. 최신 main과 팀 integration을 포함하며, 앞서 승인한 공용 UI 통일과 함께 [PR #29](https://github.com/hundredman/pocket-caravan/pull/29)로 GitHub integration에 병합했다(2026-11-08, `f356ed767`). GitHub 검사2개 통과. [검증·실제 화면](Validation/T3-Production-2026-11-08/README.md), [승인·설계](Goryeo/T3-Boundary-Review-2026-11-07.md).
