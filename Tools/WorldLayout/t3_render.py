@@ -35,7 +35,7 @@ def main():
         label=d['name'].replace(' 마을','').replace('예성 나루','나루').replace('닥나무','닥목').replace(' 들마을','').replace(' 산록','')
         for draw in (dl,dr):draw.text(p,label,font=f,fill='white',stroke_width=2,stroke_fill='#1e2920')
     out=Image.new('RGB',(1836,856),'#eee9df');draw=ImageDraw.Draw(out);title=ImageFont.truetype(FONT,22)
-    draw.text((12,8),'현재: 불규칙한 내부 경계',font=title,fill='#292824');draw.text((930,8),'검토안: 마을을 유지하고 외곽 길목에서 전환',font=title,fill='#292824')
+    draw.text((12,8),'현재: 불규칙한 내부 경계',font=title,fill='#292824');draw.text((930,8),'검토안: 길·풀밭 모두 맵 끝에서 전환',font=title,fill='#292824')
     out.paste(left,(12,42));out.paste(right,(930,42));draw.text((12,827),'노란 선은 구역 경계 · 마을/주요 지형 유지 · 서쪽 끝 4칸 축소 시안 · 본편 미적용',font=f,fill='#292824')
     out.save(t.REVIEW/'boundary-overview.png')
     # Per-map full terrain at native pixels, useful to inspect real extent/cropping.
@@ -60,5 +60,13 @@ def main():
                 image=Image.open(path).convert('RGB').resize((474,267),Image.Resampling.NEAREST);comparison.paste(image,(x,36))
             draw.text((12,311),'실제 외곽까지 걸어서 이동 · 건물/숲/논 유지 · 페이드 변경 없음 · 본편 미적용',font=f,fill='#292824')
             comparison.save(t.REVIEW/'Naru-before-after.png')
+    stages=[('grass-before.png','1. 길 없는 풀밭에서 접근'),('grass-edge.png','2. 맵 끝에 닿아 전환'),('grass-arrival.png','3. 장단 풀밭에 도착'),('grass-return.png','4. 같은 풀밭으로 나루에 귀환')]
+    if all((t.REVIEW/name).exists()for name,_ in stages):
+        sheet=Image.new('RGB',(1000,658),'#eee9df');draw=ImageDraw.Draw(sheet)
+        draw.text((12,8),'풀밭 경계 실제 왕복 · Unity 검토본 · 본편 미적용',font=title,fill='#292824')
+        for i,(name,label)in enumerate(stages):
+            x=12+(i%2)*496;y=42+(i//2)*308;draw.text((x,y),label,font=f,fill='#292824')
+            image=Image.open(t.REVIEW/name).convert('RGB').resize((480,270),Image.Resampling.NEAREST);sheet.paste(image,(x,y+26))
+        sheet.save(t.REVIEW/'grass-crossing.png')
     print('Rendered 13 native terrain views and overview; source artwork unchanged')
 if __name__=='__main__':main()

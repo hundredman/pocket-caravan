@@ -159,5 +159,6 @@
     "Gaegyeong": "4e0b8b07f1318136328efcfc2d549d4c46098b1419eb9bd2c9653ba075e03cac",
     "goryeo_jangdan": "959098ff5aee8869bd404970040087e27184708811c7b8fb21bc7860c993e805",
     "Naru": "a85bdc3a2591e51ffe9d791aae202597e31babee75caee36695c225677ec6cd2"
-  }
+  },
+  "portalPolicy": "reachable grass and dirt; actual scene outer faces; no road-only restriction"
 }

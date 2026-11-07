@@ -52,7 +52,7 @@ class BoundaryReview(unittest.TestCase):
                 for y in range(spawn['y'],spawn['y']+spawn['h']):
                     for x in range(spawn['x'],spawn['x']+spawn['w']):
                         self.assertTrue(0<=x<target['w']and 0<=y<target['h']);self.assertFalse(target['blocked'][y*target['w']+x]);self.assertNotIn((x,y),exits)
-    def test_connected_13_map_road_network_and_return_exits(self):
+    def test_connected_13_map_network_and_return_exits(self):
         graph={mid:{o['target']for o in d['objects']if o['kind']=='exit'and o['target']in self.maps}for mid,d in self.maps.items()}
         seen={'Naru'};queue=deque(seen)
         while queue:
@@ -61,6 +61,61 @@ class BoundaryReview(unittest.TestCase):
         self.assertEqual(seen,set(self.maps))
         for mid,targets in graph.items():
             for target in targets:self.assertIn(mid,graph[target])
+    def test_offroad_sample_and_all_eligible_grass_faces_are_open(self):
+        sample=self.report['grassSample'];self.assertIsNotNone(sample)
+        d=self.maps[sample['mapId']]
+        dx,dy={'W':(-1,0),'E':(1,0),'N':(0,-1),'S':(0,1)}[sample['edge']]
+        for step in range(3):
+            x,y=sample['x']-dx*step,sample['y']-dy*step
+            self.assertEqual(d['road'][y*d['w']+x],0);self.assertFalse(d['blocked'][y*d['w']+x])
+        self.assertGreater(self.report['surfaceExitCells']['offRoadExitCells'],0)
+        # Independently inspect adjacent exported scene rectangles, not just the
+        # generator's coverage counter. An unobstructed grass face must work too.
+        main={};ports={}
+        for mid,d in self.maps.items():
+            labels,_=ndimage.label(np.array(d['blocked']).reshape(d['h'],d['w'])==0)
+            start=next(o for o in d['objects']if o['kind']=='spawn'and o['id']=='S0')
+            main[mid]=labels==labels[start['y'],start['x']]
+            for e in d['objects']:
+                if e['kind']!='exit':continue
+                for y in range(e['y'],e['y']+e['h']):
+                    for x in range(e['x'],e['x']+e['w']):ports[mid,x,y,e['edge']]=e['target']
+        reserved={}
+        for p in self.config['externalReviewPorts']:
+            d=self.maps[p['mapId']]
+            for dy in range(p['size'][1]):
+                for dx in range(p['size'][0]):reserved[p['mapId'],p['world'][0]-d['terrainX']+dx,p['world'][1]-d['terrainY']+dy,p['edge']]=p['target']
+        checked=0;offroad=0
+        for mid,d in self.maps.items():
+            for edge,dx,dy in (('W',-1,0),('E',1,0),('N',0,-1),('S',0,1)):
+                cells=[(0,y)for y in range(d['h'])]if edge=='W'else[(d['w']-1,y)for y in range(d['h'])]if edge=='E'else[(x,0)for x in range(d['w'])]if edge=='N'else[(x,d['h']-1)for x in range(d['w'])]
+                for x,y in cells:
+                    if not main[mid][y,x]or not main[mid][y-dy,x-dx]:continue
+                    wx,wy=d['terrainX']+x+dx,d['terrainY']+y+dy
+                    neighbor=next(((key,v)for key,v in self.maps.items()if key!=mid and v['terrainX']<=wx<v['terrainX']+v['w']and v['terrainY']<=wy<v['terrainY']+v['h']),None)
+                    if neighbor is None:continue
+                    target,other=neighbor;xx,yy=wx-other['terrainX'],wy-other['terrainY']
+                    if not(0<=xx+dx<other['w']and 0<=yy+dy<other['h']):continue
+                    if not main[target][yy,xx]or not main[target][yy+dy,xx+dx]:continue
+                    opposite={'N':'S','S':'N','W':'E','E':'W'}[edge]
+                    if (target,xx,yy,opposite)in reserved:
+                        self.assertNotIn((mid,x,y,edge),ports);continue
+                    self.assertIn((mid,x,y,edge),ports,(mid,x,y,edge))
+                    self.assertEqual(ports[mid,x,y,edge],reserved.get((mid,x,y,edge),target))
+                    checked+=1;offroad+=d['road'][y*d['w']+x]==0
+        self.assertGreater(checked,100);self.assertGreater(offroad,100)
+    def test_every_local_grass_face_returns_to_the_same_neighbor(self):
+        faces={}
+        for mid,d in self.maps.items():
+            for e in d['objects']:
+                if e['kind']!='exit':continue
+                for y in range(e['y'],e['y']+e['h']):
+                    for x in range(e['x'],e['x']+e['w']):faces[mid,d['terrainX']+x,d['terrainY']+y,e['edge']]=e['target']
+        for (mid,x,y,edge),target in faces.items():
+            if target not in self.maps:continue
+            dx,dy={'W':(-1,0),'E':(1,0),'N':(0,-1),'S':(0,1)}[edge]
+            opposite={'N':'S','S':'N','W':'E','E':'W'}[edge]
+            self.assertEqual(faces.get((target,x+dx,y+dy,opposite)),mid,(mid,x,y,edge,target))
     def test_default_starts_and_functional_content_share_walk_component(self):
         for mid,d in self.maps.items():
             labels,_=ndimage.label(np.array(d['blocked']).reshape(d['h'],d['w'])==0)

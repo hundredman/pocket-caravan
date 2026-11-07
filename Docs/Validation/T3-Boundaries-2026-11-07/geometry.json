@@ -20,13 +20,13 @@
       ],
       "oldWalkable": 1919,
       "walkable": 1949,
-      "exits": 1,
+      "exits": 26,
       "targets": [
         "transit_wetroad"
       ],
       "components": 4,
       "largestComponent": 1942,
-      "foreignPending": 0
+      "externalExitObjects": 0
     },
     {
       "mapId": "transit_central_approach",
@@ -45,7 +45,7 @@
       ],
       "oldWalkable": 1796,
       "walkable": 1789,
-      "exits": 25,
+      "exits": 62,
       "targets": [
         "transit_crossroads",
         "transit_wetroad",
@@ -53,7 +53,7 @@
       ],
       "components": 18,
       "largestComponent": 1676,
-      "foreignPending": 0
+      "externalExitObjects": 0
     },
     {
       "mapId": "transit_crossroads",
@@ -72,7 +72,7 @@
       ],
       "oldWalkable": 3600,
       "walkable": 3550,
-      "exits": 23,
+      "exits": 71,
       "targets": [
         "arabia_central_eastvale",
         "arabia_central_steppe",
@@ -82,7 +82,7 @@
       ],
       "components": 4,
       "largestComponent": 3542,
-      "foreignPending": 3
+      "externalExitObjects": 3
     },
     {
       "mapId": "transit_south_inland",
@@ -101,14 +101,14 @@
       ],
       "oldWalkable": 1666,
       "walkable": 1613,
-      "exits": 8,
+      "exits": 47,
       "targets": [
         "transit_crossroads",
         "transit_southport"
       ],
       "components": 4,
       "largestComponent": 1610,
-      "foreignPending": 0
+      "externalExitObjects": 0
     },
     {
       "mapId": "transit_wetroad",
@@ -127,7 +127,7 @@
       ],
       "oldWalkable": 1513,
       "walkable": 1557,
-      "exits": 26,
+      "exits": 67,
       "targets": [
         "transit_central_approach",
         "transit_ferry",
@@ -135,7 +135,7 @@
       ],
       "components": 4,
       "largestComponent": 1426,
-      "foreignPending": 0
+      "externalExitObjects": 0
     },
     {
       "mapId": "transit_woodtown",
@@ -154,7 +154,7 @@
       ],
       "oldWalkable": 1779,
       "walkable": 1969,
-      "exits": 23,
+      "exits": 76,
       "targets": [
         "goryeo_songak",
         "transit_central_approach",
@@ -163,7 +163,7 @@
       ],
       "components": 13,
       "largestComponent": 1906,
-      "foreignPending": 0
+      "externalExitObjects": 0
     },
     {
       "mapId": "transit_pass",
@@ -182,14 +182,15 @@
       ],
       "oldWalkable": 2449,
       "walkable": 2192,
-      "exits": 2,
+      "exits": 74,
       "targets": [
+        "goryeo_jangdan",
         "transit_southport",
         "transit_woodtown"
       ],
       "components": 20,
       "largestComponent": 1854,
-      "foreignPending": 0
+      "externalExitObjects": 0
     },
     {
       "mapId": "transit_southport",
@@ -208,14 +209,14 @@
       ],
       "oldWalkable": 2022,
       "walkable": 1942,
-      "exits": 4,
+      "exits": 38,
       "targets": [
         "transit_pass",
         "transit_south_inland"
       ],
       "components": 2,
       "largestComponent": 1941,
-      "foreignPending": 0
+      "externalExitObjects": 0
     },
     {
       "mapId": "goryeo_songak",
@@ -234,15 +235,16 @@
       ],
       "oldWalkable": 2267,
       "walkable": 2169,
-      "exits": 7,
+      "exits": 38,
       "targets": [
         "Dakmok",
+        "Gaegyeong",
         "goryeo_jangdan",
         "transit_woodtown"
       ],
       "components": 25,
       "largestComponent": 1894,
-      "foreignPending": 0
+      "externalExitObjects": 0
     },
     {
       "mapId": "Dakmok",
@@ -261,14 +263,14 @@
       ],
       "oldWalkable": 1248,
       "walkable": 1316,
-      "exits": 6,
+      "exits": 21,
       "targets": [
         "Gaegyeong",
         "goryeo_songak"
       ],
       "components": 33,
       "largestComponent": 706,
-      "foreignPending": 0
+      "externalExitObjects": 0
     },
     {
       "mapId": "Gaegyeong",
@@ -287,14 +289,15 @@
       ],
       "oldWalkable": 2420,
       "walkable": 2223,
-      "exits": 7,
+      "exits": 20,
       "targets": [
         "Dakmok",
-        "Naru"
+        "Naru",
+        "goryeo_songak"
       ],
       "components": 6,
       "largestComponent": 1949,
-      "foreignPending": 0
+      "externalExitObjects": 0
     },
     {
       "mapId": "goryeo_jangdan",
@@ -313,14 +316,15 @@
       ],
       "oldWalkable": 2631,
       "walkable": 2643,
-      "exits": 2,
+      "exits": 64,
       "targets": [
         "Naru",
-        "goryeo_songak"
+        "goryeo_songak",
+        "transit_pass"
       ],
       "components": 3,
       "largestComponent": 2443,
-      "foreignPending": 0
+      "externalExitObjects": 0
     },
     {
       "mapId": "Naru",
@@ -339,14 +343,14 @@
       ],
       "oldWalkable": 1629,
       "walkable": 2023,
-      "exits": 7,
+      "exits": 31,
       "targets": [
         "Gaegyeong",
         "goryeo_jangdan"
       ],
       "components": 2,
       "largestComponent": 1987,
-      "foreignPending": 0
+      "externalExitObjects": 0
     }
   ],
   "preservedFunctions": [
@@ -1566,28 +1570,12 @@
       "goryeo_jangdan"
     ],
     [
-      "Gaegyeong",
-      "goryeo_songak"
-    ],
-    [
       "goryeo_jangdan",
-      "Gaegyeong"
-    ],
-    [
-      "goryeo_jangdan",
-      "transit_pass"
-    ],
-    [
-      "goryeo_songak",
       "Gaegyeong"
     ],
     [
       "transit_central_approach",
       "transit_south_inland"
-    ],
-    [
-      "transit_pass",
-      "goryeo_jangdan"
     ],
     [
       "transit_pass",
@@ -1772,7 +1760,7 @@
     }
   ],
   "notes": [
-    "Existing three foreign links/target spawns retained. Other region assets untouched; preview explorer stays within the 13 review maps.",
+    "Existing three foreign links/target spawns retained. Other region assets untouched; foreign ports load their existing registered scenes in the isolated SaveOFF preview.",
     "Depth-patch rectangles are intersected at scene borders; native artwork tiles are unchanged."
   ],
   "trimmedReviewCells": [
@@ -1795,6 +1783,55 @@
   ],
   "trimmedWalkableCells": 4,
   "trimNote": "Review-only: west tip is shortened by one column to fit two separate existing foreign portals on the same true outer face. No new land or foreign file changes.",
+  "portalPolicy": "reachable grass and dirt at actual outer faces; safe approach/arrival; foreign gateway strips excluded from local crossings in both directions",
+  "surfaceExitCells": {
+    "offRoadExitCells": 806,
+    "roadExitCells": 162
+  },
+  "uncoveredBoundaryCells": [],
+  "reservedLocalFaces": [
+    {
+      "mapId": "transit_central_approach",
+      "world": [
+        24,
+        -19
+      ],
+      "edge": "S"
+    },
+    {
+      "mapId": "transit_central_approach",
+      "world": [
+        25,
+        -19
+      ],
+      "edge": "S"
+    },
+    {
+      "mapId": "transit_central_approach",
+      "world": [
+        26,
+        -19
+      ],
+      "edge": "S"
+    },
+    {
+      "mapId": "transit_central_approach",
+      "world": [
+        27,
+        -19
+      ],
+      "edge": "S"
+    }
+  ],
+  "grassSample": {
+    "mapId": "Naru",
+    "target": "goryeo_jangdan",
+    "edge": "W",
+    "x": 0,
+    "y": 26,
+    "spawn": "t3_seam_Naru_3",
+    "span": 1
+  },
   "inputs": {
     "transit_ferry": "2f3af8cc7b4f4542a9abc174065f06468d27a3fc00fc9346b7ef54995a8d1abf",
     "transit_central_approach": "0eaec10969bc9783779e0244fd61efa6f2f5dc41d3a1f144bea0ab014a98c906",

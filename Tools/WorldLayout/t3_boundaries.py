@@ -20,6 +20,45 @@ VALIDATION=ROOT/'Docs/Validation/T3-Boundaries-2026-11-07'
 LAYERS=('ground','deco','obj','high')
 MOVABLE={'anim','ambience','sign','lantern'}
 
+def filter_boundary_faces(boundary,ports,walk,oy):
+    """Keep accessible faces; reserve foreign gateway strips in both directions.
+
+    Split local runs/paired arrivals. A local crossing must not arrive opposite
+    a foreign gate and then send a player to another region when walking back.
+    """
+    for mid,entries in list(boundary.items()):
+        reserved={(p['world'][0]+dx,p['world'][1]+dy,p['edge'])
+                  for p in ports if p['mapId']==mid
+                  for dx in range(p['size'][0]) for dy in range(p['size'][1])}
+        for exit in list(entries):
+            if exit['kind']!='exit':continue
+            horizontal=exit['edge']in ('N','S');length=exit['w']if horizontal else exit['h']
+            x,y=exit['world']
+            dy,dx={'N':(-1,0),'S':(1,0),'W':(0,-1),'E':(0,1)}[exit['edge']]
+            keep=[]
+            for i in range(length):
+                xx,yy=x+(i if horizontal else 0),y+(0 if horizontal else i)
+                approach=((yy-oy-dy,xx-dx),(yy-oy+2*dy,xx+2*dx))
+                safe=all(0<=ay<walk.shape[0]and 0<=ax<walk.shape[1]and walk[ay,ax]for ay,ax in approach)
+                opposite_gate=any(p['mapId']==exit['target']and {'N':'S','S':'N','W':'E','E':'W'}[p['edge']]==exit['edge']
+                    and p['world'][0]<=xx+dx<p['world'][0]+p['size'][0]and p['world'][1]<=yy+dy<p['world'][1]+p['size'][1]for p in ports)
+                keep.append(safe and (xx,yy,exit['edge'])not in reserved and not opposite_gate)
+            if all(keep):continue
+            arrivals=boundary[exit['target']]
+            spawn=next(s for s in arrivals if s['kind']=='spawn'and s['id']==exit['spawn'])
+            entries.remove(exit);arrivals.remove(spawn)
+            i=0
+            while i<length:
+                if not keep[i]:i+=1;continue
+                start=i
+                while i<length and keep[i]:i+=1
+                name=exit['spawn']+'_face_'+str(start)
+                for original,destination,kind in ((exit,entries,'exit'),(spawn,arrivals,'spawn')):
+                    item=copy.deepcopy(original);xx,yy=item['world']
+                    item['world']=(xx+(start if horizontal else 0),yy+(0 if horizontal else start))
+                    item['w'],item['h']=(i-start,1)if horizontal else (1,i-start)
+                    item['spawn'if kind=='exit'else'id']=name;destination.append(item)
+
 def read_sources():
     config=json.loads(CONFIG.read_text())
     if config['schemaVersion']!=1 or config['status']!='review':raise ValueError('Review source only')
@@ -59,18 +98,25 @@ def generate(config,sources):
     boxes={}
     for idx,mid in enumerate(ids):
         yy,xx=np.nonzero(known&(owners==idx));boxes[mid]=[int(xx.min()),int(yy.min()+oy),int(xx.max()+1),int(yy.max()+oy+1)]
-    portal_walk=walk & ndimage.binary_dilation(road>0,iterations=1)
-    # Keep the terrain intact. Reject portal cells with a tree/rock immediately
-    # behind either side; a point-only contact test would miss this approach wall.
-    for y,x in zip(*np.nonzero(portal_walk)):
-        for dy,dx in ((0,1),(1,0)):
-            ny,nx=y+dy,x+dx
-            if ny>=height or nx>=width or owners[y,x]==owners[ny,nx] or not portal_walk[ny,nx]:continue
-            approach=[(y-dy,x-dx),(ny+dy,nx+dx)]
-            if not all(0<=ay<height and 0<=ax<width and walk[ay,ax] for ay,ax in approach):
-                portal_walk[y,x]=False;portal_walk[ny,nx]=False
     for mid,override in config.get('boundsOverrides',{}).items():boxes[mid]=override
+    # Dirt and grass use the same rule: the shared outer face must be reachable
+    # from the town/start component on both sides. Do not open detached pockets.
+    portal_walk=np.zeros_like(walk)
+    for mid,(x0,y0,x1,y1)in boxes.items():
+        region=np.s_[y0-oy:y1-oy,x0:x1]
+        labels,_=ndimage.label(walk[region]);counts=np.bincount(labels.ravel());counts[0]=0
+        source=sources[mid]
+        refs=[o for o in source['objects']if o['kind']=='spawn'and o.get('id')=='S0']or[o for o in source['objects']if o['kind']=='market']or[o for o in source['objects']if o['kind']=='talker']
+        main=0
+        if refs:
+            xx=refs[0]['x']+source['terrainX']-x0;yy=refs[0]['y']+source['terrainY']-y0
+            if 0<=xx<x1-x0 and 0<=yy<y1-y0:main=int(labels[yy,xx])
+        if not main:main=int(counts.argmax())
+        portal_walk[region]=labels==main
     boundary=seams(owners,portal_walk,ids,0,oy)
+    # Reject each obstructed face independently: a tree behind the north face
+    # must not close an otherwise clear east/west corner crossing.
+    filter_boundary_faces(boundary,config.get('externalReviewPorts',[]),portal_walk,oy)
     for entries in boundary.values():
         for entry in entries:
             key='spawn' if entry['kind']=='exit' else 'id'
@@ -158,14 +204,44 @@ def generate(config,sources):
             objs.append(O('spawn',xx,yy,id='S0'))
         data['objects']=objs;data.update(extras[mid]);maps[mid]=data
         newlinks={o['target']for o in objs if o['kind']=='exit'}
-        metrics.append(dict(mapId=mid,name=data['name'],oldBox=[sources[mid]['terrainX'],sources[mid]['terrainY'],sources[mid]['w'],sources[mid]['h']],box=[x0,y0,w,h],oldWalkable=sum(not b for b in sources[mid]['blocked']),walkable=sum(not b for b in data['blocked']),exits=sum(o['kind']=='exit'for o in objs),targets=sorted(newlinks),components=int(n),largestComponent=int(counts.max()),foreignPending=sum(e['source']==mid for e in foreign)))
+        metrics.append(dict(mapId=mid,name=data['name'],oldBox=[sources[mid]['terrainX'],sources[mid]['terrainY'],sources[mid]['w'],sources[mid]['h']],box=[x0,y0,w,h],oldWalkable=sum(not b for b in sources[mid]['blocked']),walkable=sum(not b for b in data['blocked']),exits=sum(o['kind']=='exit'for o in objs),targets=sorted(newlinks),components=int(n),largestComponent=int(counts.max()),externalExitObjects=sum(e['source']==mid for e in foreign)))
     newlinks={(mid,o['target'])for mid,d in maps.items()for o in d['objects']if o['kind']=='exit'}
-    report=dict(status='review only; no production/save migration',knownGroundCells=int(known.sum()),walkableCells=int(walk.sum()),maps=metrics,preservedFunctions=preserved,movedDecorativeObjects=dict(moved),removedLinks=sorted(oldlinks-newlinks),addedLinks=sorted(newlinks-oldlinks),foreignBaseline=foreign,externalReviewPorts=external,notes=['Existing three foreign links/target spawns retained. Other region assets untouched; preview explorer stays within the 13 review maps.','Depth-patch rectangles are intersected at scene borders; native artwork tiles are unchanged.'])
+    report=dict(status='review only; no production/save migration',knownGroundCells=int(known.sum()),walkableCells=int(walk.sum()),maps=metrics,preservedFunctions=preserved,movedDecorativeObjects=dict(moved),removedLinks=sorted(oldlinks-newlinks),addedLinks=sorted(newlinks-oldlinks),foreignBaseline=foreign,externalReviewPorts=external,notes=['Existing three foreign links/target spawns retained. Other region assets untouched; foreign ports load their existing registered scenes in the isolated SaveOFF preview.','Depth-patch rectangles are intersected at scene borders; native artwork tiles are unchanged.'])
     covered=np.zeros_like(known)
     for mid,(x0,y0,x1,y1)in boxes.items():covered[y0-oy:y1-oy,x0:x1]=True
     report['trimmedReviewCells']=[[int(x),int(y+oy)]for y,x in zip(*np.nonzero(known&~covered))]
     report['trimmedWalkableCells']=int((walk&~covered).sum())
     report['trimNote']='Review-only: west tip is shortened by one column to fit two separate existing foreign portals on the same true outer face. No new land or foreign file changes.'
+    surfaces=Counter();samples=[];actual={}
+    for mid,data in maps.items():
+        for e in data['objects']:
+            if e['kind']!='exit':continue
+            for dy in range(e['h']):
+                for dx in range(e['w']):
+                    wx,wy=data['terrainX']+e['x']+dx,data['terrainY']+e['y']+dy
+                    actual[mid,wx,wy,e['edge']]=e['target']
+                    if e['target']not in maps:continue
+                    offroad=road[wy-oy,wx]==0
+                    surfaces['offRoadExitCells'if offroad else'roadExitCells']+=1
+                    ddx,ddy={'W':(-1,0),'E':(1,0),'N':(0,-1),'S':(0,1)}[e['edge']]
+                    clear_meadow=all(0<=xx<width and 0<=yy<height and portal_walk[yy,xx]and road[yy,xx]==0 and not water[yy,xx]and not tile_world['obj'][yy,xx]and not tile_world['high'][yy,xx]for xx,yy in ((wx-ddx*k,wy-oy-ddy*k)for k in range(3)))
+                    if offroad and clear_meadow:
+                        samples.append(dict(mapId=mid,target=e['target'],edge=e['edge'],x=e['x']+dx,y=e['y']+dy,spawn=e['spawn'],span=e['w']*e['h']))
+    uncovered=[];reserved_local=[]
+    for y,x in zip(*np.nonzero(portal_walk)):
+        for edge,dy,dx in (('N',-1,0),('S',1,0),('W',0,-1),('E',0,1)):
+            ny,nx=y+dy,x+dx
+            if not(0<=ny<height and 0<=nx<width)or not portal_walk[ny,nx]or owners[y,x]==owners[ny,nx]:continue
+            if not all(0<=ay<height and 0<=ax<width and portal_walk[ay,ax]for ay,ax in ((y-dy,x-dx),(y+2*dy,x+2*dx))):continue
+            mid=ids[owners[y,x]]
+            opposite_gate=any(p['mapId']==ids[owners[ny,nx]]and {'N':'S','S':'N','W':'E','E':'W'}[p['edge']]==edge
+                and p['world'][0]<=nx<p['world'][0]+p['size'][0]and p['world'][1]<=ny+oy<p['world'][1]+p['size'][1]for p in config['externalReviewPorts'])
+            if opposite_gate:
+                reserved_local.append(dict(mapId=mid,world=[int(x),int(y+oy)],edge=edge));continue
+            if (mid,int(x),int(y+oy),edge)not in actual:uncovered.append(dict(mapId=mid,world=[int(x),int(y+oy)],edge=edge))
+    report.update(portalPolicy='reachable grass and dirt at actual outer faces; safe approach/arrival; foreign gateway strips excluded from local crossings in both directions',surfaceExitCells=dict(surfaces),uncoveredBoundaryCells=uncovered,reservedLocalFaces=reserved_local)
+    preferred=sorted(samples,key=lambda s:(s['mapId']!='Naru',s['target']!='goryeo_jangdan',s['edge']!='W',s['span']!=1,s['y'],s['x']))
+    report['grassSample']=preferred[0]if preferred else None
     return maps,report,tile_world,owners,known
 
 def main():

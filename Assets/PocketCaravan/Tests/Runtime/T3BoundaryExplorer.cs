@@ -21,9 +21,11 @@ namespace PocketCaravan.EditorTools
         const string Out="Docs/Validation/T3-Boundaries-2026-11-07/";
         const string Images="ArtReview/T3-Boundaries-20261107/";
         const BindingFlags F=BindingFlags.Instance|BindingFlags.NonPublic;
-        [Serializable]class Plan{public Metric[] maps;}
+        [Serializable]class Plan{public Metric[] maps;public GrassSample grassSample;}
+        [Serializable]class GrassSample{public string mapId,target,edge,spawn;public int x,y;}
+        [Serializable]class GrassResult{public string source,target;public int sourceGrade,arrivalGrade;public bool travelled,returned;public Vector3 contactViewport;}
         [Serializable]class Metric{public string mapId;}
-        [Serializable]class Report{public bool complete;public string error;public List<string> checks=new List<string>();public List<Row> samples=new List<Row>();}
+        [Serializable]class Report{public bool complete;public string error;public GrassResult grassCrossing;public List<string> checks=new List<string>();public List<Row> samples=new List<Row>();}
         [Serializable]class Row{public string mapId,target,edge;public Vector3 viewport;public int exits;public bool passed;}
         readonly Report report=new Report();string slot;bool loading;TravelTransition fx;float fade;bool covering;float held;
         void Check(bool ok,string message){if(!ok)throw new Exception(message);report.checks.Add(message);}
@@ -84,7 +86,7 @@ namespace PocketCaravan.EditorTools
                     var bounds=map.WorldBounds;
                     bool outer=exit.edge=="E"?Mathf.Abs(r.xMax-bounds.max.x)<.001f:exit.edge=="W"?Mathf.Abs(r.xMin-bounds.min.x)<.001f:exit.edge=="N"?Mathf.Abs(r.yMax-bounds.max.y)<.001f:Mathf.Abs(r.yMin-bounds.min.y)<.001f;
                     Check(outer,"exit is actual scene outer face "+metric.mapId+"/"+exit.targetSpawnId);
-                    // Use a representative road portal for visual captures.
+                    // Capture one representative outer-face contact per map.
                     if(sample==null){Camera.main.GetComponent<CameraFollow>().SnapNow();yield return Photo(metric.mapId+"-edge");var vp=Camera.main.WorldToViewportPoint(motor.transform.position);
                         float edge=exit.edge=="E"?1-vp.x:exit.edge=="W"?vp.x:exit.edge=="N"?1-vp.y:vp.y;
                         Check(edge<.055f&&edge>-.055f,"rendered contact within 5.5% of screen end "+metric.mapId);
@@ -93,6 +95,7 @@ namespace PocketCaravan.EditorTools
                 }
                 report.samples.Add(sample);
             }
+            yield return CaptureGrass(plan.grassSample);
             // Preview navigation uses editor scene loading, not production GameManager.TravelTo.
             yield return Load("Naru");var origin=MapRoot.Current;MapExit selected=null;foreach(var exit in MapExit.All)if(exit.targetScene=="goryeo_jangdan"){selected=exit;break;}
             Check(selected!=null,"Naru to Jangdan preview port");string destination=selected.targetSpawnId;
@@ -110,6 +113,40 @@ namespace PocketCaravan.EditorTools
                 motor=PlayerController.Instance.Motor;Check(MapExit.At(motor.Cell)==null,"foreign arrival is inside and not an exit "+target);Check(MapRoot.Current.IsWalkable(motor.Cell,motor),"foreign arrival is walkable "+target);
             }
             Check(!File.Exists(slot),"isolated preview save never written");
+        }
+        IEnumerator CaptureGrass(GrassSample sample)
+        {
+            Check(sample!=null,"off-road crossing sample exists");yield return Load(sample.mapId);
+            var map=MapRoot.Current;var motor=PlayerController.Instance.Motor;MapExit exit=null;
+            var cell=new Vector3Int(sample.x,map.ground.cellBounds.yMax-1-sample.y,0);
+            foreach(var e in MapExit.All)if(e.targetScene==sample.target&&e.targetSpawnId==sample.spawn&&e.Contains(cell)){exit=e;break;}
+            Check(exit!=null,"exact grass crossing exists");
+            var direction=sample.edge=="W"?Vector2.left:sample.edge=="E"?Vector2.right:sample.edge=="N"?Vector2.up:Vector2.down;
+            var facing=new Vector2Int((int)direction.x,(int)direction.y);Vector3 contact;
+            report.grassCrossing=new GrassResult{source=sample.mapId,target=sample.target,sourceGrade=RoadGrid.Current.GradeAt(cell)};
+            Check(report.grassCrossing.sourceGrade==0,"crossing is grass/off-road, not a dirt path");
+            var feet=(Vector2)map.CellCenter(cell)-direction*2;
+            motor.Teleport((Vector3)(feet-motor.feetOffset),facing);Camera.main.GetComponent<CameraFollow>().SnapNow();
+            Check(!exit.TryGetBoundaryContact(motor,direction,out contact),"grass does not travel two cells early");
+            yield return Photo("grass-before");
+            bool walked=false;for(int i=0;i<150;i++){motor.Tick(direction,3.8f,1f/60);if(exit.TryGetBoundaryContact(motor,direction,out contact)){walked=true;break;}}
+            Check(walked,"continuous grass walk reaches the actual outer face");Camera.main.GetComponent<CameraFollow>().SnapNow();yield return Photo("grass-edge");
+            report.grassCrossing.contactViewport=Camera.main.WorldToViewportPoint(motor.transform.position);
+            yield return Travel(exit);Check(MapRoot.Current.mapId==sample.target,"grass travel loads the paired neighbor preview");
+            motor=PlayerController.Instance.Motor;Check(MapRoot.Current.IsWalkable(motor.Cell,motor),"grass arrival clear of actual blockers");
+            Check(MapExit.At(motor.Cell)==null,"grass arrival not on a return exit");
+            report.grassCrossing.arrivalGrade=RoadGrid.Current.GradeAt(motor.Cell);report.grassCrossing.travelled=true;
+            yield return Photo("grass-arrival");
+            MapExit back=null;
+            for(int i=0;i<150;i++){
+                motor.Tick(-direction,3.8f,1f/60);var candidate=MapExit.At(motor.Cell,motor.Facing);
+                if(candidate!=null&&candidate.TryGetBoundaryContact(motor,-direction,out contact)){back=candidate;break;}
+            }
+            Check(back!=null&&back.targetScene==sample.mapId,"same grass strip returns to its original neighbor");
+            yield return Travel(back);Check(MapRoot.Current.mapId==sample.mapId,"grass round trip returns to the source preview");
+            motor=PlayerController.Instance.Motor;Check(MapRoot.Current.IsWalkable(motor.Cell,motor),"grass return arrival clear of actual blockers");
+            Check(MapExit.At(motor.Cell)==null,"grass return does not immediately travel again");report.grassCrossing.returned=true;
+            yield return Photo("grass-return");
         }
         IEnumerator AuditExternal()
         {
