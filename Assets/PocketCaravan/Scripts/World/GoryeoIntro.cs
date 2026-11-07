@@ -41,7 +41,7 @@ namespace PocketCaravan
 
         Transform root;
         float runTime;
-        GUIStyle style;
+        static GUIStyle style;
 
         class Person : Interactable
         {
@@ -115,7 +115,7 @@ namespace PocketCaravan
             DialogueUI.Show("나루의 아침",
                 "나루에는 아침마다 짐이 내린다.\n어떤 것은 장터에 남고, 어떤 것은 먼 마을로 떠난다.\n\n" +
                 "오늘, 새내기 행상 한 사람이 선착장에 섰다.",
-                new DialogueUI.Choice("선착장으로", () => Notify.Show("바로 옆 선착장 일꾼에게 다가가 Space로 말을 걸어 보세요.", 5f)));
+                new DialogueUI.Choice("선착장으로", null));
         }
 
         /// <summary>같은 맵에 서 있는 사람(이름으로 찾음)의 지금 그림을 빌린다. 없으면 null</summary>
@@ -164,7 +164,7 @@ namespace PocketCaravan
             var gm = GameManager.I;
             if (gm != null) gm.Player.money += 20;
             Sfx.Play("coin");
-            Notify.Show("일꾼이 노잣돈 20냥을 건넸다 · 다음: 나루 촌장「소금 한 꾸러미」", 5f);
+            Notify.Show("일꾼이 노잣돈 20냥을 건넸다", 5f);
         }
 
         void Done(int task)
@@ -172,7 +172,7 @@ namespace PocketCaravan
             if (Step != task + 2) return;
             Step = task + 3;
             Sfx.Play("coin");
-            Notify.Show(Step <= 9 ? $"잘했어요! 다음: {Tasks[Step - 2]}" : "다 했어요! 선착장 일꾼에게 돌아가 말을 걸어 보세요.", 4f);
+            // The persistent task card is the single next-step instruction.
         }
 
         void OnInventory() { if (IsCat) Done(3); }
@@ -196,30 +196,43 @@ namespace PocketCaravan
 
         public Rect GuideRect { get; private set; }
         public string GuideText { get; private set; }
+        public static bool Showing => Active && !UIState.Blocking && IsCat && InGoryeo;
+        static GUIStyle GuideStyle
+        {
+            get
+            {
+                if(style==null||style.font!=UIStyle.SmallFont||style.fontSize!=UIStyle.SmallSize)
+                    style=new GUIStyle() { font=UIStyle.SmallFont,fontSize=UIStyle.SmallSize,
+                        alignment=TextAnchor.UpperLeft,wordWrap=true,richText=false,
+                        clipping=TextClipping.Clip,padding=new RectOffset(0,0,0,0) };
+                return style;
+            }
+        }
+        static string TaskText(int step) => step==1?"선착장 일꾼에게 말 걸기 (Space)":step==10?"선착장 일꾼에게 돌아가 말 걸기 (Space)":Tasks[step-2];
+        // Called inside OnGUI after UIStyle.Begin, including by the common notification renderer.
+        public static Rect ReservedGuideRect
+        {
+            get
+            {
+                if(!Showing)return default;
+                const float width=168;
+                float h=30+Mathf.Ceil(GuideStyle.CalcHeight(new GUIContent(TaskText(Step)),width-16));
+                return new Rect(Mathf.Round(UIStyle.VirtualWidth-width),Mathf.Round(UIStyle.VirtualHeight-h-4-HUD.BottomReserved),width,h);
+            }
+        }
         void OnGUI()
         {
-            int s = Step;
-            if (s < 1 || s > 10 || UIState.Blocking || !IsCat || !InGoryeo) return;
-            UIStyle.Begin();
-            GUI.depth = -5;
-            style ??= new GUIStyle() { font=UIStyle.SmallFont, fontSize=UIStyle.SmallSize,
-                alignment=TextAnchor.UpperLeft,wordWrap=true,richText=false,
-                clipping=TextClipping.Clip,padding=new RectOffset(0,0,0,0) };
+            if(!Showing)return;
+            UIStyle.Begin();GUI.depth=-5;
+            int s=Step;var textStyle=GuideStyle;
             string title=s==1?"처음 배우기":s==10?"배우기 완료":$"배우기 {s-1}/{Tasks.Length}";
-            string t = s == 1 ? "선착장 일꾼에게 말 걸기 (Space)"
-                     : s == 10 ? "선착장 일꾼에게 돌아가 말 걸기 (Space)"
-                     : Tasks[s - 2];
-            const float w=168, padding=8;
-            float textHeight=Mathf.Ceil(style.CalcHeight(new GUIContent(t),w-2*padding));
-            // Compact quest tracker at the lower-right screen edge.
-            float h=30+textHeight;
-            var r=new Rect(Mathf.Round(UIStyle.VirtualWidth-w),Mathf.Round(UIStyle.VirtualHeight-h-4),w,h);
-            GuideRect=r;GuideText=t;
+            string text=TaskText(s);var r=ReservedGuideRect;
+            GuideRect=r;GuideText=text;
             CuteUI.Card(r);
-            style.normal.textColor=style.hover.textColor=style.active.textColor=style.focused.textColor=UIStyle.Lin(CuteUI.Sub);
-            GUI.Label(new Rect(r.x+padding,r.y+padding,w-2*padding,14),title,style);
-            style.normal.textColor=style.hover.textColor=style.active.textColor=style.focused.textColor=UIStyle.Lin(CuteUI.Text);
-            GUI.Label(new Rect(r.x+padding,r.y+22,w-2*padding,textHeight),t,style);
+            textStyle.normal.textColor=textStyle.hover.textColor=textStyle.active.textColor=textStyle.focused.textColor=UIStyle.Lin(CuteUI.Sub);
+            GUI.Label(new Rect(r.x+8,r.y+8,r.width-16,14),title,textStyle);
+            textStyle.normal.textColor=textStyle.hover.textColor=textStyle.active.textColor=textStyle.focused.textColor=UIStyle.Lin(CuteUI.Text);
+            GUI.Label(new Rect(r.x+8,r.y+22,r.width-16,r.height-30),text,textStyle);
         }
     }
 }

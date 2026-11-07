@@ -3,6 +3,9 @@ import json,sys,unittest
 from pathlib import Path
 from PIL import Image
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'Tools/ArtTrials'))
+import sys
+sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
+from t3_history import map_at,resource_at
 try:   # GitHub 검사(content-check.yml)는 Pillow만 깐다. numpy·scipy가 없으면 건너뛴다.
     import numpy as np
     from scipy import ndimage
@@ -13,7 +16,7 @@ except ImportError:HAVE=False
 class FloodTerrain(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
-  cls.dry=json.loads((ROOT/'Assets/PocketCaravan/Maps/transit_wetroad.json').read_text());cls.wet,cls.report=states(cls.dry)
+  cls.dry=map_at(ROOT/'Assets/PocketCaravan/Maps/transit_wetroad.json');cls.wet,cls.report=states(cls.dry)
  def test_expansion_is_joined_to_river_and_submerges_road(self):
   d,a=self.dry,self.wet;h,w=d['h'],d['w'];old=np.array(d['water'],bool).reshape(h,w);wet=np.array(a['water'],bool).reshape(h,w);new=wet&~old
   self.assertTrue(wet[old].all());self.assertEqual(new.sum(),62)

@@ -1,0 +1,9 @@
+test_corner_context_covers_outgoing_frame_without_painting_walkable_cells (Tools.Integration.test_transition_boundary.CameraBoundary.test_corner_context_covers_outgoing_frame_without_painting_walkable_cells) ... ok
+test_gameplay_and_original_art_are_unchanged (Tools.Integration.test_transition_boundary.CameraBoundary.test_gameplay_and_original_art_are_unchanged) ... ok
+test_no_neighbor_context_without_scene_exits (Tools.Integration.test_transition_boundary.CameraBoundary.test_no_neighbor_context_without_scene_exits) ... ok
+test_visual_context_stays_outside_playable_rectangle (Tools.Integration.test_transition_boundary.CameraBoundary.test_visual_context_stays_outside_playable_rectangle) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.174s
+
+OK

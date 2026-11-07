@@ -1,0 +1,14 @@
+{
+  "foreignIndexMaps": 41,
+  "foreignIndexPlaces": 76,
+  "foreignMapSceneChanges": [],
+  "unchanged": {
+    "Assets/PocketCaravan/World/Connections/central_ports.json": true,
+    "ProjectSettings/EditorBuildSettings.asset": true,
+    "Assets/PocketCaravan/Scripts/Player/CameraFollow.cs": true,
+    "Assets/PocketCaravan/Scripts/Map/MapExit.cs": true,
+    "Assets/PocketCaravan/Scripts/Map/GoryeoTravelTransition.cs": true,
+    "Assets/PocketCaravan/Scripts/Core/TravelTransition.cs": true
+  },
+  "personalSavePolicy": "All production runtime audits began in previewOnly SaveOFF, used unique isolated slots, and checked no slot file was written. No claim of a full-session personal-file fingerprint comparison."
+}

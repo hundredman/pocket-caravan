@@ -1,0 +1,36 @@
+{
+  "complete": true,
+  "unityGeometryChecks": 2717,
+  "runtimeRoutesChecks": 201,
+  "directedLocalRoutes": 34,
+  "ferryRoutes": 3,
+  "saveMigrationChecks": 143720,
+  "grassCrossing": {
+    "source": "Naru",
+    "target": "goryeo_jangdan",
+    "sourceGrade": 0,
+    "arrivalGrade": 0,
+    "travelled": true,
+    "returned": true,
+    "contactViewport": {
+      "x": 0.0017778277397155762,
+      "y": 0.5004444122314453,
+      "z": 10.0
+    }
+  },
+  "staticTotal": 424,
+  "staticSkipped": 23,
+  "staticFailures": 0,
+  "worldExits": 883,
+  "worldErrors": 0,
+  "foreignIndexMaps": 41,
+  "foreignIndexPlaces": 76,
+  "notRun": [
+    "human WASD feel",
+    "full manual Q1 playthrough",
+    "real online",
+    "long running FPS",
+    "build",
+    "push/PR/integration merge"
+  ]
+}

@@ -71,7 +71,7 @@ class CentralConnection(unittest.TestCase):
         region=json.loads((ROOT/'Assets/PocketCaravan/World/Regions/goryeo.json').read_text())
         for e in region['maps']:
             self.assertGreaterEqual(entries[e['mapId']]['x'],central['x']+central['w'])
-        self.assertTrue({'S','W'}<={o['edge'] for o in self.maps['goryeo_songak']['objects'] if o['kind']=='exit' and o['target']=='transit_woodtown'})   # 송악의 서남쪽
+        self.assertTrue({'W'}<={o['edge'] for o in self.maps['goryeo_songak']['objects'] if o['kind']=='exit' and o['target']=='transit_woodtown'})   # 송악의 서남쪽
 
     def test_ferry_is_no_longer_signposted_as_terminus(self):
         # M4(2026-10-28): 방향 안내 이정표는 M5에서 새로 쓴다. 지금은 북동 포구가 끝이라고 적힌 이정표가 없는지만 본다

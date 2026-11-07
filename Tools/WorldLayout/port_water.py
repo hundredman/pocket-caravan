@@ -25,6 +25,8 @@ def attach(data):
  return d,report
 def restore_for_historical_checks(data):
  """Undo only approved visual deltas when older gameplay/area/art fixtures are compared."""
+ from t3_history import restore_map
+ data=restore_map(data)
  if data['id']not in ('transit_southport','transit_ferry'):return data
  before=json.loads((ROOT/'ArtReview/PortWater-Task6-20261104/Before'/(data['id']+'.json')).read_text())
  expected,report=attach(before);d=copy.deepcopy(data)

@@ -13,7 +13,7 @@ namespace PocketCaravan
         public int version = 2;
         public ReputationState.Save reputation;
         public TradeActivity.Save tradeActivity;
-        public int layoutVersion; // 1: five broad Goryeo regions; missing/0 is migrated read-only.
+        public int layoutVersion; // 1: broad regions, 2: M4, 3: T3 exterior boundaries; old saves migrate in memory.
         public string scene;
         public float px, py;
         public int mapHeight; // 0: 맵 확장 전 저장. WorldIndex의 고정된 이전 높이를 사용한다.
@@ -87,6 +87,7 @@ namespace PocketCaravan
         /// <summary>위쪽 기준 타일은 유지하고, 맵 높이 확장으로 바뀐 Unity y만 보정한다.</summary>
         public static Vector3 PositionFor(SaveData data)
         {
+            GoryeoBoundaryLayout.Migrate(data);
             if (GoryeoLayout.TryPosition(data, out var migrated)) return migrated;
             var info = WorldIndex.Get()?.Map(GoryeoLayout.Resolve(data.scene));
             int current = info != null ? info.height : 0;

@@ -23,10 +23,12 @@ class LiveNature(unittest.TestCase):
                         i=y*d['w']+x
                         self.assertGreater(d['ground'][i],0,(mid,x,y))
                         self.assertEqual((d['blocked'][i],d['water'][i],d['road'][i]),(0,0,0),(mid,x,y))
-        self.assertEqual(total,8)
+        before={(d['terrainX']+c['x']+x,d['terrainY']+c['y']+y)for d in __import__('t3_history').data()['maps'].values()for c in d.get('natureCrops',[])for y in range(c['h'])for x in range(c['w'])}
+        after={(d['terrainX']+c['x']+x,d['terrainY']+c['y']+y)for d in self.maps.values()for c in d.get('natureCrops',[])for y in range(c['h'])for x in range(c['w'])}
+        self.assertEqual(before,after)
     def test_existing_other_civilization_connections_are_unchanged(self):
         for mid,b in self.before.items():
             old=[o for o in b['objects']if o['kind']=='exit'and o['target']not in self.maps]
             now=[o for o in self.maps[mid]['objects']if o['kind']=='exit'and o['target']not in self.maps]
-            self.assertEqual(old,now,mid)
+            self.assertEqual(sorted((o['target'],o['spawn'],o['w'],o['h'])for o in old),sorted((o['target'],o['spawn'],o['w'],o['h'])for o in now),mid)
 if __name__=='__main__':unittest.main()

@@ -1,0 +1,218 @@
+{
+  "complete": true,
+  "error": "",
+  "checks": [
+    "SaveOFF bootstrap",
+    "exact registered exit Naru N",
+    "actual exit contact ready Naru",
+    "rendered transition point inside actual viewport Naru",
+    "Goryeo cell-center threshold already delayed",
+    "interior Naru exit switches near screen center",
+    "removing backdrop camera expansion alone still switches inside frame",
+    "actual travel invoked Naru",
+    "registered target actually loaded goryeo_jangdan",
+    "isolated slot retained after travel",
+    "exact registered exit goryeo_songak N",
+    "actual exit contact ready goryeo_songak",
+    "rendered transition point inside actual viewport goryeo_songak",
+    "actual travel invoked goryeo_songak",
+    "registered target actually loaded Dakmok",
+    "isolated slot retained after travel",
+    "exact registered exit north_birka E",
+    "actual exit contact ready north_birka",
+    "rendered transition point inside actual viewport north_birka",
+    "North transition is visually near right edge",
+    "actual travel invoked north_birka",
+    "registered target actually loaded north_naru",
+    "isolated slot retained after travel",
+    "exact registered exit venice_rialto W",
+    "actual exit contact ready venice_rialto",
+    "rendered transition point inside actual viewport venice_rialto",
+    "Venice transition is visually near left edge",
+    "actual travel invoked venice_rialto",
+    "registered target actually loaded venice_santerasmo",
+    "isolated slot retained after travel",
+    "original paired destination spawn retained for prototype",
+    "whole existing terrain tile available",
+    "preview does not travel two cells before the edge",
+    "preview is bounded at its outer edge",
+    "rectangle prototype reaches actual left screen edge before travel",
+    "same existing regional transition effect retained",
+    "prototype uses normal MapExit travel",
+    "prototype arrives using original paired spawn",
+    "preview never enables autosave",
+    "no isolated QA slot file written"
+  ],
+  "rows": [
+    {
+      "mapId": "Naru",
+      "target": "goryeo_jangdan",
+      "edge": "N",
+      "insetCells": 32,
+      "centerTriggers": false,
+      "boundaryTriggers": true,
+      "actualTravel": true,
+      "proposalOnly": false,
+      "playerViewport": {
+        "x": 0.5,
+        "y": 0.5004415512084961,
+        "z": 10.0
+      },
+      "noBackdropViewport": {
+        "x": 0.5,
+        "y": 0.5004415512084961,
+        "z": 10.0
+      },
+      "camera": {
+        "x": 21.5,
+        "y": 52.319950103759766,
+        "z": -10.0
+      },
+      "noBackdropCamera": {
+        "x": 21.5,
+        "y": 52.319950103759766,
+        "z": -10.0
+      },
+      "viewCells": {
+        "x": 30.0,
+        "y": 16.875
+      }
+    },
+    {
+      "mapId": "goryeo_songak",
+      "target": "Dakmok",
+      "edge": "N",
+      "insetCells": 37,
+      "centerTriggers": false,
+      "boundaryTriggers": true,
+      "actualTravel": true,
+      "proposalOnly": false,
+      "playerViewport": {
+        "x": 0.5,
+        "y": 0.5004415512084961,
+        "z": 10.0
+      },
+      "noBackdropViewport": {
+        "x": 0.5833333730697632,
+        "y": 0.5004415512084961,
+        "z": 10.0
+      },
+      "camera": {
+        "x": 61.5,
+        "y": 47.319950103759766,
+        "z": -10.0
+      },
+      "noBackdropCamera": {
+        "x": 59.0,
+        "y": 47.319950103759766,
+        "z": -10.0
+      },
+      "viewCells": {
+        "x": 30.0,
+        "y": 16.875
+      }
+    },
+    {
+      "mapId": "north_birka",
+      "target": "north_naru",
+      "edge": "E",
+      "insetCells": 0,
+      "centerTriggers": true,
+      "boundaryTriggers": true,
+      "actualTravel": true,
+      "proposalOnly": false,
+      "playerViewport": {
+        "x": 0.9833334684371948,
+        "y": 0.5004446506500244,
+        "z": 10.0
+      },
+      "noBackdropViewport": {
+        "x": 0.9833334684371948,
+        "y": 0.5004446506500244,
+        "z": 10.0
+      },
+      "camera": {
+        "x": 47.0,
+        "y": 51.81999969482422,
+        "z": -10.0
+      },
+      "noBackdropCamera": {
+        "x": 47.0,
+        "y": 51.81999969482422,
+        "z": -10.0
+      },
+      "viewCells": {
+        "x": 30.0,
+        "y": 16.875
+      }
+    },
+    {
+      "mapId": "venice_rialto",
+      "target": "venice_santerasmo",
+      "edge": "W",
+      "insetCells": 0,
+      "centerTriggers": true,
+      "boundaryTriggers": true,
+      "actualTravel": true,
+      "proposalOnly": false,
+      "playerViewport": {
+        "x": 0.016666680574417114,
+        "y": 0.5004444122314453,
+        "z": 10.0
+      },
+      "noBackdropViewport": {
+        "x": 0.016666680574417114,
+        "y": 0.5004444122314453,
+        "z": 10.0
+      },
+      "camera": {
+        "x": 15.0,
+        "y": 56.81999969482422,
+        "z": -10.0
+      },
+      "noBackdropCamera": {
+        "x": 15.0,
+        "y": 56.81999969482422,
+        "z": -10.0
+      },
+      "viewCells": {
+        "x": 30.0,
+        "y": 16.875
+      }
+    },
+    {
+      "mapId": "Naru-rectangle-preview",
+      "target": "goryeo_jangdan",
+      "edge": "W",
+      "insetCells": 0,
+      "centerTriggers": false,
+      "boundaryTriggers": true,
+      "actualTravel": true,
+      "proposalOnly": true,
+      "playerViewport": {
+        "x": 0.0011109709739685059,
+        "y": 0.5004446506500244,
+        "z": 10.0
+      },
+      "noBackdropViewport": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "camera": {
+        "x": 37.0,
+        "y": 51.81999969482422,
+        "z": -10.0
+      },
+      "noBackdropCamera": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "viewCells": {
+        "x": 30.0,
+        "y": 16.875
+      }
+    }
+  ]
+}

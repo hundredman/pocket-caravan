@@ -8,7 +8,7 @@ ROOT=Path(__file__).resolve().parents[2]
 SOURCE=ROOT/'ArtReview/VillageFill-20261030/manifest.json'
 LAYOUT=ROOT/'Assets/PocketCaravan/Data/Goryeo/MarketLayout.json'
 ART=ROOT/'Assets/PocketCaravan/Art/Goryeo/Markets'
-ALLOWED={'Naru','Gaegyeong','Dakmok','goryeo_jangdan','goryeo_songak','transit_woodtown','transit_ferry','transit_crossroads','transit_pass','transit_southport'}
+ALLOWED={'Naru','Gaegyeong','Dakmok','goryeo_jangdan','goryeo_songak','transit_woodtown','transit_ferry','transit_crossroads','transit_pass','transit_southport','transit_central_approach','transit_south_inland','transit_wetroad'}
 # 11/03 E2: 새 장터에 승인된 그림을 더 놓는 배치. status가 review면 은샘 그림 검토 중(본편에 넣어 화면으로 확인).
 EXTENSIONS=[ROOT/'ArtReview/MarketCourts-E2-20261103/layout.json']
 def rgba(path):

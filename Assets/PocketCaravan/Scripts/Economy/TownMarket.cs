@@ -115,12 +115,6 @@ namespace PocketCaravan
             int nextLevel = m.Level < gm.Db.maxTownLevel && m.Level < gm.Db.townLevelVolume.Length ? gm.Db.townLevelVolume[m.Level] : 0;
             string growth = nextLevel > 0 ? $"   다음 등급까지 거래 {Mathf.Max(0, nextLevel - Mathf.RoundToInt(m.TradeVolume))}냥" : "";
             // 10/28 제목과 돈·짐을 한 줄로 (품목 목록을 넓히려고)
-            if(UIStyle.CrispRegion)
-            {
-                GUILayout.Label($"<b>{m.LevelName}</b>{marketDay}",CuteUI.PaperRich);
-                GUILayout.Label($"돈 {p.money} · 짐 {p.TotalWeight:0.#}/{p.Capacity:0.#}{growth}",CuteUI.PaperSmall);
-            }
-            else
             GUILayout.Label($"<b>{m.LevelName}</b>{marketDay}   <size=9>돈 {p.money} · 짐 {p.TotalWeight:0.#}/{p.Capacity:0.#}{growth}</size>", CuteUI.PaperRich);
             if(town.vehiclesForSale.Count>0)
             {

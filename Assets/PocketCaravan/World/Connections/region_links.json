@@ -65,10 +65,11 @@
       "b": {
         "map": "transit_crossroads",
         "edge": "N",
-        "x": 26,
-        "y": 9,
+        "x": 21,
+        "y": 0,
         "w": 4,
-        "h": 1
+        "h": 1,
+        "by": "Tools/WorldLayout/t3_install.py"
       }
     },
     {
@@ -85,10 +86,11 @@
       "b": {
         "map": "transit_crossroads",
         "edge": "W",
-        "x": 12,
-        "y": 45,
+        "x": 0,
+        "y": 19,
         "w": 1,
-        "h": 2
+        "h": 2,
+        "by": "Tools/WorldLayout/t3_install.py"
       }
     },
     {
@@ -155,9 +157,10 @@
         "map": "transit_crossroads",
         "edge": "W",
         "x": 0,
-        "y": 32,
+        "y": 16,
         "w": 1,
-        "h": 3
+        "h": 3,
+        "by": "Tools/WorldLayout/t3_install.py"
       },
       "b": {
         "map": "arabia_central_steppe",
@@ -209,8 +212,8 @@
     },
     {
       "map": "transit_crossroads",
-      "x": 34,
-      "y": 22,
+      "x": 33,
+      "y": 6,
       "text": "교역로 안내\n동쪽: 고려 교역로 · 북쪽: 북유럽 쪽 동남 물가길 · 서쪽 가운데: 대륙 한가운데 초원 · 서쪽 아래: 대륙 남쪽(소나무 고원)",
       "add": true
     },
@@ -230,8 +233,8 @@
     },
     {
       "map": "transit_crossroads",
-      "x": 30,
-      "y": 10,
+      "x": 25,
+      "y": 3,
       "add": true,
       "text": "↑ 북쪽 조각 (동남 물가길)\n북유럽 쪽 중앙 · 개울 나루"
     }

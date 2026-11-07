@@ -1,0 +1,73 @@
+{
+  "status": "review only; awaiting visual approval; production unchanged",
+  "unityComplete": true,
+  "unityChecks": 2642,
+  "exitObjects": 635,
+  "unityScreenshots": 30,
+  "existingForeignTravelChecks": 19,
+  "previewForeignRoundTrips": 3,
+  "staticTests": 15,
+  "worldExits": 1437,
+  "worldErrors": 0,
+  "protectedAssets": 15888,
+  "changedProtectedAssets": [],
+  "changedPersonalSaves": [],
+  "saveNote": "This grass revision: all 9 personal save fingerprints unchanged. QA SaveOFF/isolated slot; no restoration performed.",
+  "remaining": [
+    "visual approval",
+    "production source/coordinate consumer migration",
+    "old-save world-position migration and aliases",
+    "WorldIndex/Connections/world map regeneration",
+    "full regression",
+    "human play",
+    "online",
+    "long-run FPS",
+    "build"
+  ],
+  "consoleErrors": 0,
+  "previewControllers": 1,
+  "optionalDependencyCheck": "Without NumPy/SciPy: 11 authoring tests explicitly skipped, not passed; local environment: 15 passed",
+  "surfaceExitCells": {
+    "offRoadExitCells": 806,
+    "roadExitCells": 162
+  },
+  "missingEligibleBoundaryCells": 0,
+  "originalRoadFaceCellsRetained": 164,
+  "grassRoundTrips": 1,
+  "nativeTerrainPngsWithIdenticalDecodedRGBA": 13,
+  "reservedLocalFaces": [
+    {
+      "mapId": "transit_central_approach",
+      "world": [
+        24,
+        -19
+      ],
+      "edge": "S"
+    },
+    {
+      "mapId": "transit_central_approach",
+      "world": [
+        25,
+        -19
+      ],
+      "edge": "S"
+    },
+    {
+      "mapId": "transit_central_approach",
+      "world": [
+        26,
+        -19
+      ],
+      "edge": "S"
+    },
+    {
+      "mapId": "transit_central_approach",
+      "world": [
+        27,
+        -19
+      ],
+      "edge": "S"
+    }
+  ],
+  "allLocalFaceReturnTargetsMatch": true
+}

@@ -3,6 +3,9 @@ import json,sys,unittest,hashlib
 from pathlib import Path
 from PIL import Image
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'Tools/WorldLayout'));sys.path.insert(0,str(ROOT/'Tools/MapGen'))
+import sys
+sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
+from t3_history import map_at,resource_at
 import native_log_binding as logs
 from collections import deque
 from asset_manifest import validate_catalogue
@@ -18,7 +21,7 @@ class NativeLogs(unittest.TestCase):
    image=Image.open(ROOT/a['image']).convert('RGBA');expected={'horizontal':{(0,0),(1,0),(2,0),(1,1),(2,1)},'diagonal_ne':{(0,0),(1,0),(1,1),(2,1),(2,2)},'diagonal_nw':{(0,2),(0,1),(1,1),(1,0),(2,0)},'vertical':{(1,0),(1,1),(1,2)}}[a['variant']]
    actual={(c['x'],c['y'])for c in a['occupied']};self.assertEqual(actual,expected);self.assertLess(len(actual),9);self.assertTrue(actual)
  def test_candidates_preserve_current_map_and_cannot_apply_elsewhere(self):
-  source=json.loads((ROOT/'Assets/PocketCaravan/Maps/transit_south_inland.json').read_text())
+  source=map_at(ROOT/'Assets/PocketCaravan/Maps/transit_south_inland.json')
   for n in logs.NAMES:
    data=logs.candidate(source,n);self.assertTrue(data['previewOnly']);self.assertNotIn('nativeLogs',source)
    for k in source:
@@ -30,7 +33,7 @@ class NativeLogs(unittest.TestCase):
  def test_revised_forest_candidates_close_an_existing_corridor_without_terrain_edits(self):
   spec=json.loads((logs.OUT/'revised-layout.json').read_text());arts=json.loads((ROOT/'Assets/PocketCaravan/Data/Goryeo/LogArt.json').read_text())['assets']
   for row in spec['options']:
-   data=logs.revised_candidates()[row['name']];self.assertEqual(data,json.loads((logs.OUT/(row['name']+'.json')).read_text()));before=json.loads((ROOT/'Assets/PocketCaravan/Maps'/(row['mapId']+'.json')).read_text())
+   data=logs.revised_candidates()[row['name']];self.assertEqual(data,json.loads((logs.OUT/(row['name']+'.json')).read_text()));before=map_at(ROOT/'Assets/PocketCaravan/Maps'/(row['mapId']+'.json'))
    for k in before:
     if k!='previewOnly':self.assertEqual(data[k],before[k])
    w,h=data['w'],data['h'];walk={(x,y)for y in range(h)for x in range(w)if data['ground'][y*w+x]and not data['blocked'][y*w+x]};art=next(a for a in arts if a['variant']==row['variant']);mask={(row['x']+c['x'],row['y']+2-c['y'])for c in art['occupied']}
@@ -46,12 +49,12 @@ class NativeLogs(unittest.TestCase):
     return False
    self.assertTrue(mask<=walk);self.assertTrue(connected(set()));self.assertFalse(connected(mask))
  def test_production_binding_is_approved_idempotent_and_metadata_only(self):
-  before=json.loads((logs.OUT/'production-source-before.json').read_text());actual=json.loads((ROOT/'Assets/PocketCaravan/Maps/transit_central_approach.json').read_text());expected=logs.bind_approved(before)
+  before=json.loads((logs.OUT/'production-source-before.json').read_text());actual=map_at(ROOT/'Assets/PocketCaravan/Maps/transit_central_approach.json');expected=logs.bind_approved(before)
   self.assertEqual(expected,actual);self.assertEqual(logs.bind_approved(actual),actual);self.assertEqual(logs.restore_for_historical_checks(actual),before)
   for key in before:self.assertEqual(actual[key],before[key])
   self.assertEqual(set(actual)-set(before),{'obstacles','nativeLogs'});self.assertEqual(actual['nativeLogs'][0]['variant'],'diagonal_nw');self.assertFalse(actual.get('previewOnly',False))
   changed=json.loads(json.dumps(actual));changed['nativeLogs'][0]['variant']='vertical'
   with self.assertRaises(ValueError):logs.bind_approved(changed)
   with self.assertRaises(ValueError):logs.restore_for_historical_checks(changed)
-  naru=json.loads((ROOT/'Assets/PocketCaravan/Maps/Naru.json').read_text());self.assertEqual(logs.bind_approved(naru),naru)
+  naru=map_at(ROOT/'Assets/PocketCaravan/Maps/Naru.json');self.assertEqual(logs.bind_approved(naru),naru)
 if __name__=='__main__':unittest.main()

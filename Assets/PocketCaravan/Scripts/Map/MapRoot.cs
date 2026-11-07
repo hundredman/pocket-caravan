@@ -20,6 +20,7 @@ namespace PocketCaravan
         [Tooltip("이 맵(길)에 들어서면 흐르는 게임 시간. 짧게 걸어도 하루 여정처럼 느껴지게")] public int travelHours;
 
         [Tooltip("제작 시험장: 빌드 0번 씬에서도 기존 저장 적용/자동 저장을 끈다")] public bool previewOnly;
+        public int boundaryLayoutVersion;
 
         [Header("레이어")]
         public Tilemap ground;
@@ -58,7 +59,7 @@ namespace PocketCaravan
         {
             restored = saved;
             var feet = saved + (Vector3)feetOffset;
-            if (IsWalkable(WorldToCell(feet))) return true;
+            if (IsWalkable(WorldToCell(feet)) && (boundaryLayoutVersion<3 || (GoryeoBoundaryLayout.MainCell(mapId,WorldToCell(feet)) && MapExit.At(WorldToCell(feet))==null))) return true;
             if (ground == null) return false;
             float best = float.PositiveInfinity;
             var bounds = ground.cellBounds;
@@ -70,7 +71,7 @@ namespace PocketCaravan
                     for (int x = bounds.xMin; x < bounds.xMax; x++)
                     {
                         var cell = new Vector3Int(x, y, 0);
-                        if (!IsWalkable(cell) || MapExit.At(cell) != null) continue;
+                        if (!IsWalkable(cell) || MapExit.At(cell) != null || (boundaryLayoutVersion>=3 && !GoryeoBoundaryLayout.MainCell(mapId,cell))) continue;
                         bool onRoad = (roadGrid != null && roadGrid.GradeAt(cell) > 0) || (road != null && road.HasTile(cell));
                         if (pass == 0 && !onRoad) continue;
                         var center = CellCenter(cell);
