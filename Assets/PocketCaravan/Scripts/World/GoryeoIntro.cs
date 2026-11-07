@@ -211,8 +211,9 @@ namespace PocketCaravan
                      : Tasks[s - 2];
             const float w=168, padding=8;
             float textHeight=Mathf.Ceil(style.CalcHeight(new GUIContent(t),w-2*padding));
-            // Compact quest tracker below the Q/M/L buttons, separate from the portrait.
-            var r=new Rect(Mathf.Round(UIStyle.VirtualWidth-w),52,w,30+textHeight);
+            // Compact quest tracker at the lower-right screen edge.
+            float h=30+textHeight;
+            var r=new Rect(Mathf.Round(UIStyle.VirtualWidth-w),Mathf.Round(UIStyle.VirtualHeight-h-4),w,h);
             GuideRect=r;GuideText=t;
             CuteUI.Card(r);
             style.normal.textColor=style.hover.textColor=style.active.textColor=style.focused.textColor=UIStyle.Lin(CuteUI.Sub);

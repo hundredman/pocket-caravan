@@ -34,6 +34,7 @@ namespace PocketCaravan
         string lastMap;
         float announceAt = -1f;
         Sprite star;
+        GoryeoIntro goryeoIntro;
 
         static string Map => MapRoot.Current != null ? MapRoot.Current.mapId : null;
 
@@ -83,8 +84,10 @@ namespace PocketCaravan
             Notify.Show("여기서 할 수 있는 것: " + string.Join(" · ", names) + "  (별 표시를 찾아가 보자)", 5f);
         }
 
+        public Rect EdgeRect { get; private set; }
         void OnGUI()
         {
+            EdgeRect=default;
             var cam = Camera.main; var pc = PlayerController.Instance;
             if (Map == null || cam == null || pc == null || UIState.Blocking || spots.Count == 0) return;
             if (GameManager.I != null && GameManager.I.IsTravelling) return;
@@ -110,13 +113,24 @@ namespace PocketCaravan
         static GUIStyle line;
         static GUIStyle Line => line ?? (line = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow });
 
-        void Badge(Vector2 at, string text, bool withStar)
+        Rect Badge(Vector2 at, string text, bool withStar, bool screenEdge=false)
         {
             float w = Line.CalcSize(new GUIContent(text)).x + (withStar ? 22f : 12f);
             var r = new Rect(at.x - w / 2f, at.y - 18f, w, 16f);
+            if(screenEdge)
+            {
+                r.x=Mathf.Clamp(r.x,4,Mathf.Max(4,UIStyle.VirtualWidth-r.width-4));
+                r.y=Mathf.Clamp(r.y,4,Mathf.Max(4,UIStyle.VirtualHeight-r.height-4));
+                var gm=GameManager.I;
+                if(goryeoIntro==null)goryeoIntro=FindFirstObjectByType<GoryeoIntro>();
+                var intro=goryeoIntro;
+                if(gm!=null&&intro!=null&&intro.isActiveAndEnabled&&GoryeoIntro.Active&&gm.Player.origin!=null&&gm.Player.origin.id=="goryeo"&&GoryeoTravelTransition.RegionOf(Map)!=null&&r.Overlaps(intro.GuideRect))
+                    r.y=Mathf.Max(4,intro.GuideRect.yMin-r.height-4);
+            }
             GUI.Box(r, GUIContent.none, UIStyle.Box);
             if (withStar && star != null) DrawSprite(star, new Rect(r.x + 3f, r.y + 2f, 12f, 12f));
             GUI.Label(new Rect(r.x + (withStar ? 10f : 0f), r.y, r.width - (withStar ? 10f : 0f), r.height), text, Line);
+            return r;
         }
 
         void EdgeArrow(Camera cam, Vector3 world, string name, float scale)
@@ -132,7 +146,7 @@ namespace PocketCaravan
             string arrow = Mathf.Abs(dir.x) > Mathf.Abs(dir.y) ? (dir.x > 0 ? "▶" : "◀") : (dir.y > 0 ? "▲" : "▼");
             float a = .75f + .25f * Mathf.Sin(Time.time * 4f);
             var old = GUI.color; GUI.color = new Color(1f, 1f, 1f, a);
-            Badge(p + new Vector2(0f, 8f), $"<color=#ffde59>{arrow} {name}</color>", false);
+            EdgeRect=Badge(p + new Vector2(0f, 8f), $"<color=#ffde59>{arrow} {name}</color>", false, true);
             GUI.color = old;
         }
 

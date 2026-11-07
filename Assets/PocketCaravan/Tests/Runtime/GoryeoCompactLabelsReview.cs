@@ -15,7 +15,7 @@ namespace PocketCaravan.EditorTools
         public static bool Before;
         public static bool IntroOnly;
         public static Action<int,int> Resize;
-        static string Out=>IntroOnly?"ArtReview/Goryeo-Intro-Card-20261107/":"ArtReview/Goryeo-Compact-Labels-20261107/";
+        static string Out=>IntroOnly?"ArtReview/Goryeo-Intro-Bottom-20261107/":"ArtReview/Goryeo-Compact-Labels-20261107/";
         const BindingFlags F=BindingFlags.Instance|BindingFlags.NonPublic;
         [Serializable] class Scope { public ScopeMap[] maps; }
         [Serializable] class ScopeMap { public string id; }
@@ -53,8 +53,10 @@ namespace PocketCaravan.EditorTools
                     for(int step=1;step<=10;step++){
                         gm.SetMemo("goryeo:intro",step);yield return Frames();
                         var r=intro.GuideRect;
-                        Check(r.height>=24&&r.yMin>=52&&r.width==168&&Mathf.Abs(r.xMax-UIStyle.VirtualWidth)<.1f,"compact tutorial tracker below Q/M/L step "+step+" "+size);
-                        Check(r.xMin>=10&&r.xMax<=UIStyle.VirtualWidth&&r.yMax<UIStyle.VirtualHeight-44,"tutorial guide fits viewport step "+step+" "+size);
+                        Check(r.height>=24&&Mathf.Abs(r.yMax-(UIStyle.VirtualHeight-4))<.1f&&r.width==168&&Mathf.Abs(r.xMax-UIStyle.VirtualWidth)<.1f,"compact tutorial tracker bottom right step "+step+" "+size);
+                        Check(r.xMin>=10&&r.xMax<=UIStyle.VirtualWidth&&r.yMax<=UIStyle.VirtualHeight-4,"tutorial guide fits viewport step "+step+" "+size);
+                        var hints=gm.GetComponent<ActivityHints>();
+                        if(hints!=null&&hints.EdgeRect.width>0){Check(!hints.EdgeRect.Overlaps(r),"activity arrow separate from tutorial");Check(hints.EdgeRect.xMin>=4&&hints.EdgeRect.xMax<=UIStyle.VirtualWidth-4,"activity arrow inside viewport");}
                         if(step==1){Check(intro.GuideText.Contains("Space")&&intro.GuideText.Contains("선착장 일꾼"),"complete first conversation instruction");yield return Photo("first-"+size.x+"x"+size.y);}
                         if(step==10)yield return Photo("return-"+size.x+"x"+size.y);
                     }
