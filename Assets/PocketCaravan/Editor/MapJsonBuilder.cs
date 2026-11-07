@@ -365,10 +365,19 @@ namespace PocketCaravan.EditorTools
                         npc.AddComponent<TownMarket>().town = t;
                         break;
                     case "workshop":
-                        if(string.IsNullOrEmpty(o.type)||!o.type.StartsWith("goryeo_",StringComparison.Ordinal)||Crafting.Find(o.type)==null)
-                            throw new InvalidDataException("고려 공방 레시피 없음: "+o.type);
-                        var ws=new GameObject(o.name).AddComponent<GoryeoWorkshopSpot>();ws.transform.SetParent(objects);ws.transform.position=center;
-                        ws.recipeId=o.type;ws.townId=o.town;ws.blocksMovement=false;
+                        if(string.IsNullOrEmpty(o.type)||Crafting.Find(o.type)==null)
+                            throw new InvalidDataException("공방 레시피 없음: "+o.type);
+                        if(o.type.StartsWith("goryeo_",StringComparison.Ordinal))
+                        {   // 고려는 하루 상한이 있는 전용 자리
+                            var ws=new GameObject(o.name).AddComponent<GoryeoWorkshopSpot>();ws.transform.SetParent(objects);ws.transform.position=center;
+                            ws.recipeId=o.type;ws.townId=o.town;ws.blocksMovement=false;
+                        }
+                        else
+                        {   // 11/07 (기우) 다른 지역: 일꾼 그림(character) + 공용 WorkshopSpot
+                            var wshop=string.IsNullOrEmpty(o.character)?new GameObject(o.name):Character(o.name,o.character,center,objects);
+                            if(string.IsNullOrEmpty(o.character)){wshop.transform.SetParent(objects);wshop.transform.position=center;}
+                            var ws=wshop.AddComponent<WorkshopSpot>();ws.recipeId=o.type;
+                        }
                         break;
                     case "talker":
                         var tk = Character(o.name, o.character, center, objects).AddComponent<TalkNpc>();

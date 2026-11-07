@@ -59,8 +59,8 @@ namespace PocketCaravan
                 GUI.Label(new Rect(r.x + 14, r.y + 8, w - 28, 22), Title, UIStyle.Center);
                 GUI.Label(new Rect(r.x + 14, r.y + 30, w - 28, 30), Hint, UIStyle.Wrap);
                 Draw(new Rect(r.x + 14, r.y + 64, w - 28, h - 110));
-                GUI.Label(new Rect(r.x + 14, r.y + h - 46, w - 28, 30), result, UIStyle.Wrap);
-                if (GUI.Button(new Rect(r.x + w - 74, r.y + h - 26, 60, 20), finished ? "닫기 · Space" : "그만 · Esc", UIStyle.Button)) Close();
+                GUI.Label(new Rect(r.x + 14, r.y + h - 46, w - 28 - 104, 30), result, UIStyle.Wrap);   // 11/07 오른쪽 단추 자리 비움
+                if (GUI.Button(new Rect(r.x + w - 112, r.y + h - 28, 98, 22), finished ? "닫기 · Space" : "그만 · Esc", UIStyle.Button)) Close();   // 11/07 60px라 "닫기 · Space" 잘림 → 고려 놀거리와 같은 폭
             }
             protected static void Fill(Rect r, Color c) { var o = GUI.color; GUI.color = c; GUI.DrawTexture(r, Texture2D.whiteTexture); GUI.color = o; }
         }

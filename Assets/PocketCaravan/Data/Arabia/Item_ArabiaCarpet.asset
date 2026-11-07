@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
   id: arabia_carpet
   displayName: "\uC591\uD0C4\uC790"
-  icon: {fileID: 21300000, guid: db030fdc3c2fe014ca33abe6cb0bf78a, type: 3}
+  icon: {fileID: 21300000, guid: 50bdc09153724f54b5fb923ecabc463a, type: 3}
   weight: 2
   basePrice: 18
   originTown: {fileID: 11400000, guid: d5b6573b388d94b518b74530886a92f1, type: 2}
