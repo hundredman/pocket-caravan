@@ -1,0 +1,21 @@
+{
+    "complete": true,
+    "error": "",
+    "checks": [
+        "SaveOFF bootstrap",
+        "real wellside woman found",
+        "native capture well",
+        "real Naru fishing found",
+        "native capture fishing-place",
+        "fishing opens",
+        "native capture fishing-480x270",
+        "fishing releases modal",
+        "fishing opens",
+        "native capture fishing-960x540",
+        "fishing releases modal",
+        "fishing opens",
+        "native capture fishing-480x360",
+        "fishing releases modal",
+        "no writes to isolated or user saves"
+    ]
+}

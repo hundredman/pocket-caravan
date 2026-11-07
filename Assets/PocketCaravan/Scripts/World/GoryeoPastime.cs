@@ -76,31 +76,34 @@ namespace PocketCaravan
             base.OnDisable();
         }
 
+        public Rect WindowRect { get; private set; }
         void OnGUI()
         {
             if (!open) return;
             UIStyle.Begin();
+            GUI.depth = -10;
             float w = Mathf.Min(340f, UIStyle.VirtualWidth - 20f);
-            var r = new Rect((UIStyle.VirtualWidth - w) * .5f, 94, w, 202);
-            GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(new Rect(r.x+14,r.y+10,w-28,22), "예성 나루 · 잠깐의 낚시", UIStyle.Center);
-            GUI.Label(new Rect(r.x+14,r.y+36,w-28,30), "잠시 낚시를 즐기고, 물고기는 다시 놓아줘요.", UIStyle.Wrap);
+            var r = new Rect((UIStyle.VirtualWidth - w) * .5f, (UIStyle.VirtualHeight - 202f) * .5f, w, 202);
+            WindowRect = r;
+            CuteUI.Dim();
+            CuteUI.Window(r);
+            CuteUI.TitlePlate(r.center.x, r.y-11, "잠깐의 낚시");
+            CuteUI.LabelCenter(r.center.x, r.y+24, "예성 나루", CuteUI.Sub, true);
+            GUI.Label(new Rect(r.x+14,r.y+36,w-28,30), "잠시 낚시를 즐기고, 물고기는 다시 놓아줘요.", CuteUI.PaperWrap);
             var track = new Rect(r.x+24,r.y+79,w-48,22);
             var old = GUI.color;
-            GUI.color = new Color(.12f,.22f,.28f); GUI.DrawTexture(track,Texture2D.whiteTexture);
+            CuteUI.Box(track, 3, CuteUI.Paper2, CuteUI.Line, 1);
             if (attempts < 3)
             {
-                GUI.color = new Color(.34f,.67f,.58f);
-                GUI.DrawTexture(new Rect(track.x+(Target-.105f)*track.width,track.y,.21f*track.width,track.height),Texture2D.whiteTexture);
-                GUI.color = new Color(.97f,.85f,.56f);
-                GUI.DrawTexture(new Rect(track.x+Needle*track.width-2,track.y-3,4,track.height+6),Texture2D.whiteTexture);
+                CuteUI.Fill(new Rect(track.x+(Target-.105f)*track.width,track.y+2,.21f*track.width,track.height-4), CuteUI.Interact);
+                CuteUI.Fill(new Rect(track.x+Needle*track.width-2,track.y-3,4,track.height+6), CuteUI.Ink);
             }
             GUI.color = old;
-            GUI.Label(new Rect(r.x+14,r.y+110,w-28,34),result,UIStyle.Wrap);
-            GUI.Label(new Rect(r.x+14,r.y+145,w-28,20),$"{attempts}/3번 · 만난 물고기 {catches} · 이번 방문 최고 {best}",UIStyle.Center);
-            if (attempts < 3 && GUI.Button(new Rect(r.x+14,r.y+173,w-96,22),waiting ? "낚싯줄 던지기 · Space" : "낚아채기 · Space",UIStyle.Button))
+            GUI.Label(new Rect(r.x+14,r.y+110,w-28,34),result,CuteUI.PaperWrap);
+            GUI.Label(new Rect(r.x+14,r.y+145,w-28,20),$"{attempts}/3번 · 만난 물고기 {catches} · 이번 방문 최고 {best}",CuteUI.PaperRight);
+            if (attempts < 3 && GUI.Button(new Rect(r.x+14,r.y+173,w-124,22),waiting ? "낚싯줄 던지기 · Space" : "낚아채기 · Space",CuteUI.PaperButtonOn))
             { if (waiting) Cast(); else Strike(); }
-            if (GUI.Button(new Rect(r.x+w-74,r.y+173,60,22),"닫기 · Esc",UIStyle.Button)) Close();
+            if (GUI.Button(new Rect(r.x+w-102,r.y+173,88,22),"닫기 · Esc",CuteUI.PaperButton)) Close();
         }
     }
 }

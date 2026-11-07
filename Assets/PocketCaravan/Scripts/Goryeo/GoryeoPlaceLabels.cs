@@ -42,8 +42,54 @@ namespace PocketCaravan
         public static string LabelFor(Interactable it,Vector2 feet)
         {
             if(it==null)return "";if(IsPlace(it)&&!Nearby(feet,it.transform.position))return "";
-            if(it is TownMarket market&&market.town!=null)return market.town.displayName+" 장터";
-            return PlainName(it.DisplayName);
+            if(it is TownMarket market&&market.town!=null)return "장터";
+            return ShortName(it.DisplayName);
+        }
+        // Display aliases only: original DisplayName remains the social/save/quest identity.
+        public static string ShortName(string text)
+        {
+            text=PlainName(text);
+            if(text=="나루 우물가 아낙")return "아낙";
+            foreach(var prefix in new[]{"닥나무 마을 ","나루 마을 ","예성 나루 ","나루 ","장단 ","개경 ","송악 ","닥목 ","산록 "})
+                if(text!=null&&text.StartsWith(prefix,System.StringComparison.Ordinal))return text.Substring(prefix.Length);
+            return text;
+        }
+        public Rect FriendHintRect { get; private set; }
+        public void DrawFriendHint(string hearts)
+        {
+            // One contextual footer, rather than another floating panel over a name/head.
+            string text=hearts+"  G 선물";
+            float w=Mathf.Ceil(CuteUI.Width(text,true))+2;
+            FriendHintRect=new Rect((UIStyle.VirtualWidth-w)/2,UIStyle.VirtualHeight-22,w,12);
+            CuteUI.WorldText(FriendHintRect.center.x,FriendHintRect.center.y,text,true);
+        }
+        readonly System.Collections.Generic.HashSet<Interactable> hiddenNames=new System.Collections.Generic.HashSet<Interactable>();
+        Rect NameRect(Vector2 p,string text)
+        {
+            float w=Mathf.Min(UIStyle.VirtualWidth-8,Mathf.Ceil(CuteUI.Width(text,true))+2);
+            float h=Mathf.Ceil(nameStyle.CalcSize(new GUIContent(text)).y)+2;
+            return new Rect(Mathf.Round(p.x-w/2-guiOrigin.x)+guiOrigin.x,Mathf.Round(p.y-h/2-guiOrigin.y)+guiOrigin.y,w,h);
+        }
+        void ReserveNames(Camera cam)
+        {
+            hiddenNames.Clear();
+            var items=new System.Collections.Generic.List<Interactable>();
+            foreach(var it in Interactable.All)if(it!=null&&!string.IsNullOrEmpty(it.DisplayName))items.Add(it);
+            items.Sort((a,b)=>{
+                int pa=a.GetComponentInChildren<CharacterAnimator>()!=null?0:1,pb=b.GetComponentInChildren<CharacterAnimator>()!=null?0:1;
+                int c=pa.CompareTo(pb);if(c!=0)return c;
+                c=a.transform.position.y.CompareTo(b.transform.position.y);if(c!=0)return c;
+                c=a.transform.position.x.CompareTo(b.transform.position.x);return c!=0?c:string.CompareOrdinal(a.DisplayName,b.DisplayName);
+            });
+            var reserved=new System.Collections.Generic.List<Rect>();
+            foreach(var it in items){
+                string text=it is TownMarket?"장터":ShortName(it.DisplayName);
+                var r=NameRect(NamePoint(cam,BodyBounds(it)),text);
+                if(BadgeFor(it)!=QuestMarker.None)r.width+=15;
+                var padded=r;padded.xMin-=2;padded.xMax+=2;padded.yMin-=1;padded.yMax+=1;
+                bool overlap=false;foreach(var other in reserved)if(other.Overlaps(padded)){overlap=true;break;}
+                if(overlap)hiddenNames.Add(it);else reserved.Add(padded);
+            }
         }
         void OnEnable(){map=GetComponent<MapRoot>();Sync();}
         void Update()=>Sync();
@@ -69,11 +115,12 @@ namespace PocketCaravan
         Rect Name(Vector2 p,string text,bool fallbackPlace=false)
         {
             if(string.IsNullOrEmpty(text)||DrawnRects.Count>=48)return default;
-            float width=Mathf.Min(UIStyle.VirtualWidth-8,Mathf.Ceil(CuteUI.Width(text,true))+2);
-            float height=Mathf.Ceil(nameStyle.CalcSize(new GUIContent(text)).y)+2;
-            var rect=new Rect(Mathf.Round(p.x-width/2-guiOrigin.x)+guiOrigin.x,Mathf.Round(p.y-height/2-guiOrigin.y)+guiOrigin.y,width,height);
+            var rect=NameRect(p,text);
             if(rect.x<4||rect.xMax>UIStyle.VirtualWidth-4||rect.y<25||rect.yMax>UIStyle.VirtualHeight-44)return default;
-            if(fallbackPlace)foreach(var existing in DrawnRects)if(existing.Overlaps(rect))return default;
+            if(fallbackPlace){
+                foreach(var existing in DrawnRects)if(existing.Overlaps(rect))return default;
+                foreach(var badge in QuestBadgeRects.Values)if(badge.Overlaps(rect))return default;
+            }
             DrawnRects.Add(rect);DrawnNames.Add(text);
             var ink=UIStyle.Lin(CuteUI.Text);
             nameStyle.normal.textColor=nameStyle.hover.textColor=nameStyle.active.textColor=nameStyle.focused.textColor=ink;
@@ -92,6 +139,7 @@ namespace PocketCaravan
             Init();
             guiOrigin=ToGui(cam,Vector3.zero);
             CollectBoards(cam);
+            ReserveNames(cam);
 
             var player = PlayerController.Instance;
             var nav = Navigator.Compute(gm);
@@ -195,6 +243,7 @@ namespace PocketCaravan
         }
         void DrawName(Camera cam,Interactable it,Vector2 feet,bool target)
         {
+            if(it==null||hiddenNames.Contains(it))return;
             var body=BodyBounds(it);var p=NamePoint(cam,body);string label=LabelFor(it,feet);
             var rect=Name(p,label);
             if(rect.height>0)
