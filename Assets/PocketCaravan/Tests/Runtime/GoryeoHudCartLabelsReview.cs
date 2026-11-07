@@ -16,7 +16,7 @@ namespace PocketCaravan.EditorTools
     public sealed class GoryeoHudCartLabelsReview : MonoBehaviour
     {
         public static bool PortraitsOnly;
-        static string Out=>PortraitsOnly?"ArtReview/Goryeo-Fennec-Smaller-20261107/":"ArtReview/Goryeo-Nameplate-Outline-20261107/";
+        static string Out=>PortraitsOnly?"ArtReview/Goryeo-Fennec-Smaller-20261107/":"ArtReview/Goryeo-HUD-Fixed-Anchors-20261107/";
         const BindingFlags Flags = BindingFlags.Instance | BindingFlags.NonPublic;
         [Serializable] class LayoutSnapshot { public string[] names; public Rect[] rectangles, protectedArt; public Vector2 origin; }
         [Serializable] class Scope { public ScopeMap[] maps; }
@@ -128,13 +128,10 @@ namespace PocketCaravan.EditorTools
             var style=(GUIStyle)typeof(GoryeoPlaceLabels).GetField("nameStyle",BindingFlags.NonPublic|BindingFlags.Static).GetValue(null);
             Check(style.font==UIStyle.SmallFont&&style.fontSize==UIStyle.SmallSize,"nameplates retain original compact font size with white outline");
             Check(Vector4.Distance(style.normal.textColor,UIStyle.Lin(CuteUI.Text))<.00001f,"nameplates use dark text core");
-            bool pairs=true;for(int i=0;i<labels.DrawnRects.Count;i++)for(int j=0;j<i;j++)pairs &= !labels.DrawnRects[i].Overlaps(labels.DrawnRects[j]);
-            Check(pairs,"compact text labels do not overlap each other");
-            bool artwork=true;foreach(var name in labels.DrawnRects)foreach(var art in labels.ProtectedAssetRects)artwork &= !name.Overlaps(art);
-            Check(artwork,"name extents avoid foreground sprites and object/above tile cells");
+            foreach(var pair in labels.TargetNameRects)
+                Check(!pair.Value.Overlaps(labels.TargetBodyRects[pair.Key]),"fixed name does not cover its own actor/prop");
             foreach(var rect in labels.DrawnRects)Check(rect.height<=UIStyle.SmallSize+5,"text-only label has minimal vertical padding");
-            bool clear=true;foreach(var a in labels.DrawnRects)foreach(var b in labels.BoardRects)clear &= !a.Overlaps(b);
-            Check(clear,"world names do not cover board artwork");Check(labels.DrawnNames.Contains("의뢰 게시판"),"board name still visible");
+            Check(labels.DrawnNames.Contains("의뢰 게시판"),"board name still visible");
         }
         IEnumerator Run()
         {
@@ -175,12 +172,12 @@ namespace PocketCaravan.EditorTools
             pc.Motor.Teleport(pc.transform.position,Vector2Int.up);pc.anim.facing=Vector2Int.up;yield return Frames();yield return Photo("01-player-cart-north");
             var board=FindFirstObjectByType<ContractBoard>();NearBoard(board);yield return Frames();yield return Photo("02-board");var labels=MapRoot.Current.GetComponent<GoryeoPlaceLabels>();CheckBoard(labels);
             var baseline=labels.DrawnRects.ToArray();var names=labels.DrawnNames.ToArray();var oldOrigin=(Vector2)typeof(GoryeoPlaceLabels).GetField("guiOrigin",Flags).GetValue(labels);
-            File.WriteAllText(Out+"pan-baseline.json",JsonUtility.ToJson(new LayoutSnapshot{names=names,rectangles=baseline,protectedArt=labels.ProtectedAssetRects.ToArray(),origin=oldOrigin},true));
+            File.WriteAllText(Out+"pan-baseline.json",JsonUtility.ToJson(new LayoutSnapshot{names=names,rectangles=baseline,protectedArt=labels.BoardRects.ToArray(),origin=oldOrigin},true));
             for(int step=0;step<24;step++)
             {
                 Camera.main.transform.position+=new Vector3(.017f,.013f,0);yield return Frames();
                 var origin=(Vector2)typeof(GoryeoPlaceLabels).GetField("guiOrigin",Flags).GetValue(labels);int expectedCount=0;
-                File.WriteAllText(Out+"pan-layout-"+step.ToString("00")+".json",JsonUtility.ToJson(new LayoutSnapshot{names=labels.DrawnNames.ToArray(),rectangles=labels.DrawnRects.ToArray(),protectedArt=labels.ProtectedAssetRects.ToArray(),origin=origin},true));
+                File.WriteAllText(Out+"pan-layout-"+step.ToString("00")+".json",JsonUtility.ToJson(new LayoutSnapshot{names=labels.DrawnNames.ToArray(),rectangles=labels.DrawnRects.ToArray(),protectedArt=labels.BoardRects.ToArray(),origin=origin},true));
                 for(int i=0;i<baseline.Length;i++)
                 {
                     var expected=baseline[i];expected.position+=origin-oldOrigin;
@@ -220,8 +217,7 @@ namespace PocketCaravan.EditorTools
                 }
                 yield return Frames();yield return Photo("map-"+row.id);
                 labels=MapRoot.Current.GetComponent<GoryeoPlaceLabels>();Check(labels!=null&&labels.OwnsOriginal,"scoped labels own map "+row.id);
-                bool clear=true;foreach(var name in labels.DrawnRects)foreach(var art in labels.ProtectedAssetRects)clear &= !name.Overlaps(art);
-                Check(clear,"labels avoid protected foreground art "+row.id);
+                foreach(var pair in labels.TargetNameRects)Check(!pair.Value.Overlaps(labels.TargetBodyRects[pair.Key]),"fixed name avoids own body "+row.id);
                 foreach(var rect in labels.DrawnRects)Check(rect.height<=UIStyle.SmallSize+5,"minimal label padding "+row.id);
                 if(board!=null)CheckBoard(labels);
             }

@@ -16,14 +16,11 @@ class LabelsTrial(unittest.TestCase):
   for a,b in zip(production['maps'],source['maps']):
    for k in ('id','w','h'):self.assertEqual(a[k],b[k])
    self.assertEqual(a['places'],[{k:p[k]for k in ('text','x','y')}for p in b['places']])
-  # Only the approved Space-only display differs; target selection/navigation stay common.
-  board_anchor='                if(player.TalkTarget is ContractBoard && ClosestBoard(p,out Rect board))p=new Vector2(board.center.x,board.yMax+12);\n'
-  self.assertEqual(code.count(board_anchor),0)
-  code=code.replace(board_anchor,'')
-  compact='                compactPrompt=DrawSpace(p);'
-  self.assertEqual(code.count(compact),1)
-  code=code.replace(compact,'                CuteUI.SpacePrompt(p.x, p.y, verb);')
+  prompt=code[code.index('            // 2) 말 걸기 안내'):code.index('            // 3) 퀘스트 길 안내')]
+  self.assertIn('player != null && player.TalkTarget != null && !UIState.Blocking',prompt)
+  self.assertIn('compactPrompt=DrawSpace(cam,player.TalkTarget);',prompt)
+  self.assertNotIn('Interact(',prompt)
   common=(ROOT/'Assets/PocketCaravan/Scripts/UI/WorldLabels.cs').read_text()
-  for start,end in [('            // 2) 말 걸기 안내','            // 3) 퀘스트 길 안내'),('            // 3) 퀘스트 길 안내','        static Vector2 ToGui')]:
-   self.assertEqual(code[code.index(start):code.index(end)],common[common.index(start):common.index(end)])
+  start='            // 3) 퀘스트 길 안내';end='        static Vector2 ToGui'
+  self.assertEqual(code[code.index(start):code.index(end)],common[common.index(start):common.index(end)])
 if __name__=='__main__':unittest.main()
