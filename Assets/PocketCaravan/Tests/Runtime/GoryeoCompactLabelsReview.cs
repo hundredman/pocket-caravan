@@ -13,8 +13,9 @@ namespace PocketCaravan.EditorTools
     public sealed class GoryeoCompactLabelsReview : MonoBehaviour
     {
         public static bool Before;
+        public static bool IntroOnly;
         public static Action<int,int> Resize;
-        const string Out="ArtReview/Goryeo-Compact-Labels-20261107/";
+        static string Out=>IntroOnly?"ArtReview/Goryeo-Intro-Hint-20261107/":"ArtReview/Goryeo-Compact-Labels-20261107/";
         const BindingFlags F=BindingFlags.Instance|BindingFlags.NonPublic;
         [Serializable] class Scope { public ScopeMap[] maps; }
         [Serializable] class ScopeMap { public string id; }
@@ -44,6 +45,22 @@ namespace PocketCaravan.EditorTools
             typeof(GameManager).GetField("firstSceneLoaded",F).SetValue(gm,true);
             SaveSystem.UseSlot("codex_compact_labels_"+Guid.NewGuid().ToString("N")+".json");slot=SaveSystem.CurrentPath;
             Resize(480,270);yield return Frames();yield return SceneManager.LoadSceneAsync("Naru");yield return Frames();Quiet();gm.Clock.minuteOfDay=720;
+            if(IntroOnly){
+                Check(gm.Player.origin!=null&&gm.Player.origin.id=="goryeo","Goryeo tutorial origin");
+                var intro=FindFirstObjectByType<GoryeoIntro>();Check(intro!=null,"real Goryeo intro component");
+                foreach(var size in new[]{new Vector2Int(480,270),new Vector2Int(960,540),new Vector2Int(480,360)}){
+                    Resize(size.x,size.y);yield return Frames();
+                    for(int step=1;step<=10;step++){
+                        gm.SetMemo("goryeo:intro",step);yield return Frames();
+                        var r=intro.GuideRect;
+                        Check(r.height>=24&&r.yMin>=52&&r.width==152&&Mathf.Abs(r.xMax-(UIStyle.VirtualWidth-12))<.1f,"compact tutorial tracker below Q/M/L step "+step+" "+size);
+                        Check(r.xMin>=10&&r.xMax<=UIStyle.VirtualWidth-10&&r.yMax<UIStyle.VirtualHeight-44,"tutorial guide fits viewport step "+step+" "+size);
+                        if(step==1){Check(intro.GuideText.Contains("Space")&&intro.GuideText.Contains("선착장 일꾼"),"complete first conversation instruction");yield return Photo("first-"+size.x+"x"+size.y);}
+                        if(step==10)yield return Photo("return-"+size.x+"x"+size.y);
+                    }
+                }
+                Check(!gm.AutosaveEnabled&&!File.Exists(slot),"isolated tutorial review writes no save");yield break;
+            }
             Interactable woman=null;foreach(var it in Interactable.All)if(it.DisplayName=="나루 우물가 아낙")woman=it;
             Check(woman!=null,"real wellside woman found");Focus(woman);yield return Photo("well");
             if(!Before){var labels=MapRoot.Current.GetComponent<GoryeoPlaceLabels>();Check(labels.DrawnNames.Contains("아낙"),"short name rendered without changing source identity");var prior=new Dictionary<Interactable,Rect>(labels.TargetNameRects);for(int i=0;i<5;i++){PlayerController.Instance.Motor.Teleport(woman.transform.position+new Vector3((i-2)*.35f,-1.4f,0)-(Vector3)PlayerController.Instance.Motor.feetOffset,Vector2Int.up);yield return Frames();foreach(var p in prior)if(labels.TargetNameRects.TryGetValue(p.Key,out var r))Check(r==p.Value,"name remains fixed while player moves");}}

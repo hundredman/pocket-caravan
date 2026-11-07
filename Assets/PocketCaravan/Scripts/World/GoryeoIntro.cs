@@ -194,19 +194,36 @@ namespace PocketCaravan
             else if (s == 9 && InputReader.LedgerPressed()) Done(7);
         }
 
+        public Rect GuideRect { get; private set; }
+        public string GuideText { get; private set; }
+        void TrackerText(Rect r, string text, Color ink, Color outline)
+        {
+            style.normal.textColor=style.hover.textColor=style.active.textColor=style.focused.textColor=outline;
+            for(int y=-1;y<=1;y++)for(int x=-1;x<=1;x++)
+                if(x!=0||y!=0)GUI.Label(new Rect(r.x+x,r.y+y,r.width,r.height),text,style);
+            style.normal.textColor=style.hover.textColor=style.active.textColor=style.focused.textColor=ink;
+            GUI.Label(r,text,style);
+        }
         void OnGUI()
         {
             int s = Step;
             if (s < 1 || s > 10 || UIState.Blocking || !IsCat || !InGoryeo) return;
             UIStyle.Begin();
-            style ??= new GUIStyle(UIStyle.Rich) { alignment = TextAnchor.MiddleCenter };
-            string t = s == 1 ? "바로 옆 <b>선착장 일꾼</b>에게 Space로 말을 걸어 보세요"
-                     : s == 10 ? "할 일을 다 했어요! <b>선착장 일꾼</b>에게 돌아가 말을 걸어 보세요"
-                     : $"<color=#ffde59>배우기 {s - 1}/{Tasks.Length}</color>  {Tasks[s - 2]}";
-            float w = Mathf.Min(420, UIStyle.VirtualWidth - 20);
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2, 30, w, 20);
-            GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(r, t, style);
+            GUI.depth = -5;
+            style ??= new GUIStyle() { font=UIStyle.SmallFont, fontSize=UIStyle.SmallSize,
+                alignment=TextAnchor.UpperLeft,wordWrap=true,richText=false,
+                clipping=TextClipping.Clip,padding=new RectOffset(0,0,0,0) };
+            string title=s==1?"처음 배우기":s==10?"배우기 완료":$"배우기 {s-1}/{Tasks.Length}";
+            string t = s == 1 ? "선착장 일꾼에게 말 걸기 (Space)"
+                     : s == 10 ? "선착장 일꾼에게 돌아가 말 걸기 (Space)"
+                     : Tasks[s - 2];
+            const float w=152;
+            float textHeight=Mathf.Ceil(style.CalcHeight(new GUIContent(t),w));
+            // Compact quest tracker below the Q/M/L buttons, separate from the portrait.
+            var r=new Rect(Mathf.Round(UIStyle.VirtualWidth-w-12),52,w,14+textHeight);
+            GuideRect=r;GuideText=t;
+            TrackerText(new Rect(r.x,r.y,w,14),title,UIStyle.Lin(CuteUI.Deco),UIStyle.Lin(CuteUI.Ink));
+            TrackerText(new Rect(r.x,r.y+14,w,textHeight),t,UIStyle.Lin(CuteUI.Text),UIStyle.Lin(CuteUI.White));
         }
     }
 }
