@@ -1,0 +1,27 @@
+{
+  "pr": 28,
+  "validatedHead": "50c5feb26f4be6346d08bd3ee5b954ef8b6a605e",
+  "baseIntegration": "86e46c840919e50a483367dfeb54cfebca263127",
+  "isolatedTrackedWorktree": "/tmp/pocket-caravan-ui-integration-20261107",
+  "python": {
+    "tests": 403,
+    "skipped": 23,
+    "result": "pass"
+  },
+  "world": {
+    "exits": 1437,
+    "errors": 0
+  },
+  "unityCurrentConsoleErrors": 0,
+  "unityNewPlayRun": false,
+  "priorFinalPlay": {
+    "checks": 133,
+    "captures": 6,
+    "mapsPreviouslyChecked": 13
+  },
+  "conflicts": false,
+  "mapsScenesResourcesSettingsPackagesChanged": false,
+  "online": false,
+  "build": false,
+  "notification": "post-merge draft per explicit user instruction"
+}
