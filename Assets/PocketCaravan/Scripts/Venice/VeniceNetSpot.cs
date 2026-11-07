@@ -85,33 +85,39 @@ namespace PocketCaravan
             if (!playing) return;
             UIStyle.Begin();
             GUI.depth = -20;
-            float w = 300f, h = 140f;
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2f, UIStyle.VirtualHeight / 2f - h / 2f, w, h);
-            GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(new Rect(r.x + 12, r.y + 8, w - 24, 18), $"부라노 그물 던지기   남은 그물 {throwsLeft}   잡음 {caught}", UIStyle.Rich);
-            var c = GUI.color;
+            // 11/07 UI B안: 종이 창 + 주황 제목. 위에 남은 그물·잡은 수 알약, 가운데 물(물고기 떼 그림자), 아래 힘 막대, 안내 키캡 또는 결과
+            const float w = 300f, h = 150f;
+            var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2f), Mathf.Round(UIStyle.VirtualHeight / 2f - h / 2f), w, h);
+            CuteUI.Window(r);
+            CuteUI.TitlePlate(r.center.x, r.y - 11f, "부라노 그물 던지기");
+            string left = $"남은 그물 {throwsLeft}", caughtLabel = $"잡음 {caught}";
+            var p1 = new Rect(r.x + 16f, r.y + 14f, CuteUI.Width(left, true, true) + 16f, 15f);
+            var p2 = new Rect(p1.xMax + 6f, p1.y, CuteUI.Width(caughtLabel, true, true) + 16f, 15f);
+            CuteUI.Box(p1, 7, CuteUI.Paper2, CuteUI.Line);
+            CuteUI.LabelCenter(p1.center.x, p1.center.y, left, CuteUI.Text, true, true);
+            CuteUI.Box(p2, 7, caught > 0 ? CuteUI.Up : CuteUI.Paper2, caught > 0 ? CuteUI.Ink : CuteUI.Line);
+            CuteUI.LabelCenter(p2.center.x, p2.center.y, caughtLabel, caught > 0 ? CuteUI.White : CuteUI.Text, true, true);
             // 물 (가까움 → 멂), 물고기 떼 그림자, 던질 거리 표시
-            var water = new Rect(r.x + 16, r.y + 32, w - 32, 44);
-            GUI.color = new Color(.23f, .55f, .6f, 1f);
-            GUI.DrawTexture(water, Texture2D.whiteTexture);
-            GUI.color = new Color(.1f, .25f, .3f, .7f);
-            float fx = water.x + fish * water.width;
-            GUI.DrawTexture(new Rect(fx - 10, water.y + 14, 20, 12), Texture2D.whiteTexture);
-            GUI.DrawTexture(new Rect(fx - 6, water.y + 10, 12, 20), Texture2D.whiteTexture);
+            var water = new Rect(r.x + 16f, r.y + 36f, w - 32f, 44f);
+            CuteUI.Box(water, 5, new Color32(0x3B, 0x8C, 0x99, 0xFF), CuteUI.Ink);
+            for (int i = 0; i < 6; i++)   // 잔물결
+                CuteUI.Fill(new Rect(water.x + 14f + (i * 47) % (water.width - 34f), water.y + 8f + (i * 13) % 28, 8f, 1f), new Color32(0x7F, 0xC4, 0xCC, 0xFF));
+            float fx = Mathf.Round(water.x + fish * water.width);
+            CuteUI.Box(new Rect(fx - 11f, water.y + 13f, 22f, 16f), 7, new Color32(0x1E, 0x4F, 0x58, 0xFF), new Color32(0x1E, 0x4F, 0x58, 0xFF));
             if (Time.unscaledTime < flashUntil)
+                CuteUI.Box(new Rect(Mathf.Round(water.x + power * water.width - 12f), water.y + 8f, 24f, 28f), 6,
+                    lastHit ? CuteUI.Deco : CuteUI.Paper, CuteUI.Ink);
+            CuteUI.Bar(new Rect(water.x, water.y + 52f, water.width, 10f), power, CuteUI.Deco, CuteUI.White);
+            if (resultUntil > 0f) CuteUI.WrapCenter(r.x + 14f, r.y + 104f, w - 28f, message ?? "", CuteUI.Text);
+            else
             {
-                GUI.color = lastHit ? new Color(.95f, .95f, .7f, .9f) : new Color(1f, 1f, 1f, .5f);
-                GUI.DrawTexture(new Rect(water.x + power * water.width - 12, water.y + 8, 24, 28), Texture2D.whiteTexture);
+                float x = r.center.x - (CuteUI.KeycapWidth("Space") + CuteUI.Width(" 던지기", true) + 14f + CuteUI.KeycapWidth("Esc") + CuteUI.Width(" 그만", true)) / 2f;
+                x += CuteUI.Keycap(x, r.y + 106f, "Space", true);
+                x = CuteUI.Label(x + 3f, r.y + 112.5f, "던지기", CuteUI.Text, true) + 14f;
+                x += CuteUI.Keycap(x, r.y + 106f, "Esc", true);
+                CuteUI.Label(x + 3f, r.y + 112.5f, "그만", CuteUI.Text, true);
+                CuteUI.LabelCenter(r.center.x, r.y + 129f, "막대 끝이 물고기 떼에 닿을 때 던져요", CuteUI.Sub, true);
             }
-            // 힘 막대
-            var bar = new Rect(water.x, water.y + 54, water.width, 10);
-            GUI.color = new Color(.3f, .25f, .2f, 1f);
-            GUI.DrawTexture(bar, Texture2D.whiteTexture);
-            GUI.color = new Color(.95f, .8f, .4f, 1f);
-            GUI.DrawTexture(new Rect(bar.x, bar.y, power * bar.width, bar.height), Texture2D.whiteTexture);
-            GUI.color = c;
-            GUI.Label(new Rect(r.x + 12, r.y + 104, w - 24, 30),
-                resultUntil > 0f ? message : "Space: 던지기 (막대 끝이 물고기 떼에 닿을 때)   Esc: 그만", UIStyle.Rich);
         }
     }
 }

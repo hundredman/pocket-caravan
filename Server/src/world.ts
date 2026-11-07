@@ -46,6 +46,13 @@
  *   POST /admin/kick      {"name":"윤채"}  접속을 4006으로 닫는다
  *   POST /admin/notice    {"text":"5분 뒤 서버 점검"}  →  서버 → 모두  {"t":"notice","text":…}
  *   welcome의 "newPass": 접속키를 지운 계정에 새 접속키를 정하고 들어왔다
+ *  10단계 (2026-11-07) 게임 저장 통째로 (수레·창고·평판·퀘스트까지). 돈·짐 저장(8단계)도 예전 게임을 위해 그대로 둔다
+ *   welcome에 "fullOk":true(이 서버가 통째 저장을 받는다)와, 있으면 "full":{at,h,day,money,map,origin,size}(요약만)가 붙는다
+ *   게임 → 서버  {"t":"full","at":…,"h":"sha256","zip":"gzip+base64","day":12,"money":1200,"map":"venice_rialto","origin":"venice"}
+ *                계정만. 5초에 한 번까지. at은 그 컴퓨터에서 저장 파일을 쓴 시각, h는 저장 글(JSON)의 SHA-256
+ *   서버 → 게임  {"t":"fullSaved","at":…,"h":…}
+ *   게임 → 서버  {"t":"getFull"}  →  서버 → 게임  {"t":"fullData","at":…,"h":…,"zip":…}  (없으면 zip이 "")
+ *   서버는 압축을 풀지 않는다. 모양(base64·길이)만 본다
  */
 import { DurableObject } from "cloudflare:workers";
 import type { Env } from "./index";
@@ -60,8 +67,10 @@ const SWEEP_MS = 10_000;
 const RATE_SOFT = 30, RATE_HARD = 90;
 /** 채팅: 글자 수 · 최소 간격 */
 const SAY_MAX = 80, SAY_GAP_MS = 1000;
-/** 메시지 한 개의 최대 글자 수 (짐 저장이 가장 길다) */
+/** 메시지 한 개의 최대 글자 수 (짐 저장이 가장 길다). 통째 저장(full)만 FULL_CHARS까지 */
 const MAX_CHARS = 16000;
+/** 통째 저장: 압축 글(base64) 최대 길이 (≈ 압축 90KB, 저장 JSON 몇백 KB) · 최소 간격 */
+const FULL_ZIP_MAX = 120_000, FULL_CHARS = FULL_ZIP_MAX + 2000, FULL_GAP_MS = 5000;
 /** 짐 저장: 물건 종류 수 */
 const SAVE_ITEMS = 200;
 /** 거래 기록: 남겨 두는 수 · 새로 들어온 사람에게 다시 보내 주는 기간 */
@@ -76,8 +85,11 @@ export const Close = { TooMany: 4001, Version: 4002, Timeout: 4003, Replaced: 40
 /** 서버에 저장하는 돈·짐 (계정마다) */
 interface SaveData { money: number; items: string[]; counts: number[]; costs: number[]; at: number; }
 
+/** 통째 저장 요약 (계정에 같이 둔다). 압축 글은 "full:" + 소문자 이름에 따로 둔다 */
+interface FullInfo { at: number; h: string; day: number; money: number; map: string; origin: string; size: number; saved: number; }
+
 /** 계정 (저장소 키 "acct:" + 소문자 이름). hash가 ""이면 관리자가 접속키를 지운 것: 다음 접속키로 새로 정한다 */
-interface Account { name: string; salt: string; hash: string; id: string; created: number; save?: SaveData; }
+interface Account { name: string; salt: string; hash: string; id: string; created: number; save?: SaveData; full?: FullInfo; }
 
 /** 공유 장터 거래 한 건 */
 interface Trade { seq: number; at: number; id: string; name: string; town: string; item: string; n: number; d: number; sell: boolean; }
@@ -107,6 +119,7 @@ export class WorldRoom extends DurableObject<Env> {
   private lastSay = new Map<string, number>();
   private lastEmote = new Map<string, number>();
   private lastSave = new Map<string, number>();
+  private lastFull = new Map<string, number>();
 
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
@@ -143,7 +156,7 @@ export class WorldRoom extends DurableObject<Env> {
     me.heard = now;
 
     const size = typeof data === "string" ? data.length : data.byteLength;
-    if (size > MAX_CHARS) { ws.serializeAttachment(me); return send(ws, { t: "error", why: "메시지가 너무 깁니다" }); }
+    if (size > FULL_CHARS) { ws.serializeAttachment(me); return send(ws, { t: "error", why: "메시지가 너무 깁니다" }); }
     let msg: any;
     try {
       msg = JSON.parse(typeof data === "string" ? data : new TextDecoder().decode(data));
@@ -151,6 +164,7 @@ export class WorldRoom extends DurableObject<Env> {
       ws.serializeAttachment(me);
       return send(ws, { t: "error", why: "JSON이 아닙니다" });
     }
+    if (size > MAX_CHARS && msg?.t !== "full") { ws.serializeAttachment(me); return send(ws, { t: "error", why: "메시지가 너무 깁니다" }); }
     switch (msg?.t) {
       case "hello": {
         if (msg.v !== PROTOCOL) {
@@ -197,6 +211,7 @@ export class WorldRoom extends DurableObject<Env> {
         send(ws, {
           t: "welcome", v: PROTOCOL, id: me.id, name: me.name, online: this.count(), seq,
           account: !!me.acct, hasSave: !!acct?.save && !!me.acct, save: me.acct ? acct?.save ?? null : null,
+          fullOk: true, ...(me.acct && acct?.full ? { full: acct.full } : {}),
           ...(newPass ? { newPass: true } : {}),
         });
         this.broadcast({ t: "online", online: this.count() }, (o) => o !== ws);
@@ -215,6 +230,29 @@ export class WorldRoom extends DurableObject<Env> {
         acct.save = save;
         await this.ctx.storage.put(me.acct, acct);
         return send(ws, { t: "saved", at: save.at });
+      }
+      case "full": {
+        ws.serializeAttachment(me);
+        if (!me.acct) return send(ws, { t: "error", why: "접속키로 들어와야 저장돼요" });
+        if (now - (this.lastFull.get(me.id) ?? 0) < FULL_GAP_MS) return send(ws, { t: "error", why: "게임 저장을 너무 자주 올립니다" });
+        const zip = typeof msg.zip === "string" && msg.zip.length > 0 && msg.zip.length <= FULL_ZIP_MAX && /^[A-Za-z0-9+/]+={0,2}$/.test(msg.zip) ? msg.zip as string : "";
+        const h = typeof msg.h === "string" && /^[0-9a-f]{64}$/.test(msg.h) ? msg.h as string : "";
+        const at = Number.isInteger(msg.at) && msg.at > 0 && msg.at < 1e14 ? msg.at as number : 0;
+        if (!zip || !h || !at) return send(ws, { t: "error", why: "게임 저장 모양이 이상합니다" });
+        this.lastFull.set(me.id, now);
+        const acct = await this.ctx.storage.get<Account>(me.acct);
+        if (!acct) return;
+        const int = (v: unknown) => Number.isInteger(v) && Math.abs(v as number) <= 2147483647 ? v as number : 0;
+        acct.full = { at, h, day: int(msg.day), money: int(msg.money), map: cleanMap(msg.map), origin: cleanMap(msg.origin), size: zip.length, saved: now };
+        await this.ctx.storage.put({ [me.acct]: acct, ["full:" + me.acct.slice("acct:".length)]: zip });
+        return send(ws, { t: "fullSaved", at, h });
+      }
+      case "getFull": {
+        ws.serializeAttachment(me);
+        if (!me.acct) return send(ws, { t: "error", why: "접속키로 들어와야 불러올 수 있어요" });
+        const acct = await this.ctx.storage.get<Account>(me.acct);
+        const zip = (await this.ctx.storage.get<string>("full:" + me.acct.slice("acct:".length))) ?? "";
+        return send(ws, { t: "fullData", at: acct?.full?.at ?? 0, h: acct?.full?.h ?? "", zip: acct?.full ? zip : "" });
       }
       case "trade": {
         ws.serializeAttachment(me);
@@ -329,6 +367,7 @@ export class WorldRoom extends DurableObject<Env> {
         const list = [...(await this.accounts())].map(([k, a]) => ({
           name: a.name, id: a.id, created: a.created, online: online.has(k), needsPass: !a.hash,
           savedAt: a.save?.at ?? 0, money: a.save?.money ?? null, kinds: a.save?.items.length ?? 0,
+          fullAt: a.full?.saved ?? 0, fullDay: a.full?.day ?? null, fullMap: a.full?.map ?? "", fullSize: a.full?.size ?? 0,
         }));
         list.sort((a, b) => a.created - b.created);
         return reply({ count: list.length, accounts: list });
@@ -358,7 +397,8 @@ export class WorldRoom extends DurableObject<Env> {
         if (body.confirm !== true) return reply({ dry: true, match: names });
         const gone = new Set(keys);
         for (const [s, p] of this.live()) if (p.acct && gone.has(p.acct)) this.kick(s, p, "계정이 지워져서 접속을 끊었어요");
-        for (let i = 0; i < keys.length; i += 128) await this.ctx.storage.delete(keys.slice(i, i + 128));
+        const withFull = keys.flatMap((k) => [k, "full:" + k.slice("acct:".length)]);
+        for (let i = 0; i < withFull.length; i += 128) await this.ctx.storage.delete(withFull.slice(i, i + 128));
         return reply({ deleted: names });
       }
       case "POST kick": {
@@ -460,6 +500,7 @@ export class WorldRoom extends DurableObject<Env> {
     this.lastSay.delete(me.id);
     this.lastEmote.delete(me.id);
     this.lastSave.delete(me.id);
+    this.lastFull.delete(me.id);
     if (me.map) this.toMap(me.map, { t: "leave", id: me.id }, ws);
     this.broadcast({ t: "online", online: this.count(ws) }, (o) => o !== ws);
   }

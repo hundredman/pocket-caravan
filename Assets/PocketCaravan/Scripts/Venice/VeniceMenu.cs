@@ -80,26 +80,38 @@ namespace PocketCaravan
             if (!open) return;
             UIStyle.Begin();
             GUI.depth = -18;
-            float w = 260, rowH = 18;
-            var bodyContent = new GUIContent($"<size=9>{body}</size>");
-            float bodyH = Mathf.Max(12f, UIStyle.Wrap.CalcHeight(bodyContent, w - 24));     // 설명이 몇 줄이든 선택지와 겹치지 않게
-            float top = 24 + bodyH + 4, h = top + options.Count * rowH + 16;
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2f, UIStyle.VirtualHeight - h - 40, w, h);
-            GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(new Rect(r.x + 12, r.y + 6, w - 24, 16), $"<color=#FCE6A8>{title}</color>", UIStyle.Rich);
-            GUI.Label(new Rect(r.x + 12, r.y + 22, w - 24, bodyH), bodyContent, UIStyle.Wrap);
+            // 11/07 UI B안: 대화창과 같은 종이 창 + 왼쪽 위 주황 이름표. 고른 줄은 청록(상호작용), 나머지는 종이 줄
+            const float w = 268f, rowH = 20f;
+            var bodyContent = new GUIContent($"<size=9>{CuteUI.PaperColors(body ?? "")}</size>");
+            float bodyH = string.IsNullOrEmpty(body) ? 0f : Mathf.Max(12f, CuteUI.PaperWrap.CalcHeight(bodyContent, w - 24));   // 설명이 몇 줄이든 선택지와 겹치지 않게
+            float top = 16f + bodyH + 6f, h = top + options.Count * rowH + 22f;
+            var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2f), Mathf.Round(UIStyle.VirtualHeight - h - 40f), w, h);
+            CuteUI.Window(r);
+            if (!string.IsNullOrEmpty(title))
+            {
+                string name = CuteUI.Plain(title);
+                var tag = new Rect(r.x + 12f, r.y - 9f, CuteUI.Width(name, false, true) + 22f, 18f);
+                CuteUI.Box(tag, 7, CuteUI.Frame, CuteUI.Ink, 2, 2);
+                CuteUI.LabelCenter(tag.center.x, tag.center.y + 1f, name, CuteUI.Ink, false, true);
+                CuteUI.LabelCenter(tag.center.x, tag.center.y, name, CuteUI.White, false, true);
+            }
+            if (bodyH > 0f) GUI.Label(new Rect(r.x + 12f, r.y + 15f, w - 24f, bodyH), bodyContent, CuteUI.PaperWrap);
             for (int i = 0; i < options.Count; i++)
             {
-                var row = new Rect(r.x + 10, r.y + top + i * rowH, w - 20, rowH - 2);
+                var row = new Rect(r.x + 10f, r.y + top + i * rowH, w - 20f, rowH - 3f);
                 if (i == sel)
                 {
-                    var c = GUI.color; GUI.color = new Color(1f, .85f, .4f, .9f);
-                    GUI.DrawTexture(row, Texture2D.whiteTexture); GUI.color = c;
+                    CuteUI.Box(row, 7, CuteUI.Interact, CuteUI.Ink, 1, 1, CuteUI.InteractLo);
+                    CuteUI.Label(row.x + 8f, row.center.y, CuteUI.Plain(options[i].label), CuteUI.OnInteract, false, true);
                 }
-                GUI.Label(row, i == sel ? $"<color=#3A2E3A>▶ {options[i].label}</color>" : $"   {options[i].label}", UIStyle.Rich);
+                else
+                {
+                    CuteUI.Box(row, 7, CuteUI.Paper, CuteUI.Line);
+                    GUI.Label(new Rect(row.x + 8f, row.y, row.width - 12f, row.height), CuteUI.PaperColors(options[i].label), CuteUI.PaperRich);
+                }
                 if (Event.current.type == EventType.MouseDown && row.Contains(Event.current.mousePosition)) { Pick(i); Event.current.Use(); return; }
             }
-            GUI.Label(new Rect(r.x + 10, r.yMax - 14, w - 20, 12), "<size=9><color=#CFC6B8>↑↓ 고르기 · Space 정하기 · Esc 닫기</color></size>", UIStyle.CenterRich);
+            CuteUI.LabelCenter(r.center.x, r.yMax - 12f, "↑↓ 고르기 · Space 정하기 · Esc 닫기", CuteUI.Sub, true);
         }
     }
 }

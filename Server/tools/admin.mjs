@@ -88,8 +88,9 @@ switch (cmd) {
   case "계정": case "accounts": {
     const s = await call("GET", "accounts");
     console.log(`계정 ${s.count}개`);
-    if (s.count) table(s.accounts.map((a) => [a.name, a.id, when(a.created), when(a.savedAt), a.money ?? "-", a.kinds, (a.online ? "접속 중 " : "") + (a.needsPass ? "접속키 새로 정하는 중" : "")]),
-      ["이름", "번호", "만든 날", "마지막 저장", "돈", "짐 종류", "상태"]);
+    if (s.count) table(s.accounts.map((a) => [a.name, a.id, when(a.created), when(a.savedAt), a.money ?? "-", a.kinds,
+      a.fullAt ? `${a.fullDay}일째 ${when(a.fullAt)}` : "-", (a.online ? "접속 중 " : "") + (a.needsPass ? "접속키 새로 정하는 중" : "")]),
+      ["이름", "번호", "만든 날", "마지막 저장", "돈", "짐 종류", "게임 저장", "상태"]);
     break;
   }
   case "접속키초기화": case "reset": {
