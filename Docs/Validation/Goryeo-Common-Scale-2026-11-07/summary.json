@@ -41,5 +41,12 @@
     "venice_rialto": true,
     "north_birka": true,
     "arabia_sanaa": true
-  }
+  },
+  "latestTeamIntegration": "253393de9",
+  "validatedAfterTeamSyncHead": "7f5904205c4618d8c3a277e40875d9172506b333",
+  "afterTeamSyncChecks": 46,
+  "afterTeamSyncPythonTests": 403,
+  "afterTeamSyncPythonSkipped": 23,
+  "afterTeamSyncConsoleErrors": 0,
+  "reviewNetworkState": "Offline"
 }
