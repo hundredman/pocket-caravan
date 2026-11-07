@@ -1,0 +1,33 @@
+{
+  "status": "review only; awaiting visual approval; production unchanged",
+  "unityComplete": true,
+  "unityChecks": 651,
+  "exitObjects": 141,
+  "unityScreenshots": 26,
+  "existingForeignTravelChecks": 19,
+  "previewForeignRoundTrips": 3,
+  "staticTests": 13,
+  "worldExits": 1437,
+  "worldErrors": 0,
+  "protectedAssets": 15888,
+  "changedProtectedAssets": [],
+  "changedPersonalSaves": [
+    "pocket_caravan_save.json.bak",
+    "pocket_caravan_save.json"
+  ],
+  "saveNote": "QA SaveOFF/isolated slot; personal files changed during session, origin not asserted; no restoration performed",
+  "remaining": [
+    "visual approval",
+    "production source/coordinate consumer migration",
+    "old-save world-position migration and aliases",
+    "WorldIndex/Connections/world map regeneration",
+    "full regression",
+    "human play",
+    "online",
+    "long-run FPS",
+    "build"
+  ],
+  "consoleErrors": 0,
+  "previewControllers": 1,
+  "optionalDependencyCheck": "Without NumPy/SciPy: new 9 tests explicitly skipped, not passed; local authored environment: 13 passed"
+}

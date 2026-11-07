@@ -1,0 +1,1813 @@
+{
+  "status": "review only; no production/save migration",
+  "knownGroundCells": 46848,
+  "walkableCells": 26939,
+  "maps": [
+    {
+      "mapId": "transit_ferry",
+      "name": "버들나루 마을",
+      "oldBox": [
+        83,
+        -127,
+        80,
+        55
+      ],
+      "box": [
+        83,
+        -127,
+        81,
+        52
+      ],
+      "oldWalkable": 1919,
+      "walkable": 1949,
+      "exits": 1,
+      "targets": [
+        "transit_wetroad"
+      ],
+      "components": 4,
+      "largestComponent": 1942,
+      "foreignPending": 0
+    },
+    {
+      "mapId": "transit_central_approach",
+      "name": "초원 진입로",
+      "oldBox": [
+        40,
+        -74,
+        71,
+        87
+      ],
+      "box": [
+        21,
+        -75,
+        86,
+        57
+      ],
+      "oldWalkable": 1796,
+      "walkable": 1789,
+      "exits": 25,
+      "targets": [
+        "transit_crossroads",
+        "transit_wetroad",
+        "transit_woodtown"
+      ],
+      "components": 18,
+      "largestComponent": 1676,
+      "foreignPending": 0
+    },
+    {
+      "mapId": "transit_crossroads",
+      "name": "내륙 교역 길목",
+      "oldBox": [
+        2,
+        -34,
+        92,
+        80
+      ],
+      "box": [
+        3,
+        -18,
+        104,
+        46
+      ],
+      "oldWalkable": 3600,
+      "walkable": 3550,
+      "exits": 23,
+      "targets": [
+        "arabia_central_eastvale",
+        "arabia_central_steppe",
+        "north_c_road_se",
+        "transit_central_approach",
+        "transit_south_inland"
+      ],
+      "components": 4,
+      "largestComponent": 3542,
+      "foreignPending": 3
+    },
+    {
+      "mapId": "transit_south_inland",
+      "name": "남쪽 내륙길",
+      "oldBox": [
+        54,
+        13,
+        67,
+        73
+      ],
+      "box": [
+        33,
+        28,
+        74,
+        45
+      ],
+      "oldWalkable": 1666,
+      "walkable": 1613,
+      "exits": 8,
+      "targets": [
+        "transit_crossroads",
+        "transit_southport"
+      ],
+      "components": 4,
+      "largestComponent": 1610,
+      "foreignPending": 0
+    },
+    {
+      "mapId": "transit_wetroad",
+      "name": "버들 물가 길",
+      "oldBox": [
+        86,
+        -82,
+        78,
+        64
+      ],
+      "box": [
+        107,
+        -75,
+        60,
+        49
+      ],
+      "oldWalkable": 1513,
+      "walkable": 1557,
+      "exits": 26,
+      "targets": [
+        "transit_central_approach",
+        "transit_ferry",
+        "transit_woodtown"
+      ],
+      "components": 4,
+      "largestComponent": 1426,
+      "foreignPending": 0
+    },
+    {
+      "mapId": "transit_woodtown",
+      "name": "솔재 길목 마을",
+      "oldBox": [
+        96,
+        -31,
+        87,
+        69
+      ],
+      "box": [
+        107,
+        -26,
+        60,
+        46
+      ],
+      "oldWalkable": 1779,
+      "walkable": 1969,
+      "exits": 23,
+      "targets": [
+        "goryeo_songak",
+        "transit_central_approach",
+        "transit_pass",
+        "transit_wetroad"
+      ],
+      "components": 13,
+      "largestComponent": 1906,
+      "foreignPending": 0
+    },
+    {
+      "mapId": "transit_pass",
+      "name": "솔바람 고개",
+      "oldBox": [
+        121,
+        13,
+        65,
+        68
+      ],
+      "box": [
+        107,
+        20,
+        60,
+        53
+      ],
+      "oldWalkable": 2449,
+      "walkable": 2192,
+      "exits": 2,
+      "targets": [
+        "transit_southport",
+        "transit_woodtown"
+      ],
+      "components": 20,
+      "largestComponent": 1854,
+      "foreignPending": 0
+    },
+    {
+      "mapId": "transit_southport",
+      "name": "남동 포구",
+      "oldBox": [
+        82,
+        59,
+        86,
+        68
+      ],
+      "box": [
+        82,
+        73,
+        85,
+        54
+      ],
+      "oldWalkable": 2022,
+      "walkable": 1942,
+      "exits": 4,
+      "targets": [
+        "transit_pass",
+        "transit_south_inland"
+      ],
+      "components": 2,
+      "largestComponent": 1941,
+      "foreignPending": 0
+    },
+    {
+      "mapId": "goryeo_songak",
+      "name": "송악 산록 마을",
+      "oldBox": [
+        153,
+        -69,
+        74,
+        84
+      ],
+      "box": [
+        167,
+        -79,
+        47,
+        101
+      ],
+      "oldWalkable": 2267,
+      "walkable": 2169,
+      "exits": 7,
+      "targets": [
+        "Dakmok",
+        "goryeo_jangdan",
+        "transit_woodtown"
+      ],
+      "components": 25,
+      "largestComponent": 1894,
+      "foreignPending": 0
+    },
+    {
+      "mapId": "Dakmok",
+      "name": "닥나무 마을",
+      "oldBox": [
+        192,
+        -93,
+        93,
+        80
+      ],
+      "box": [
+        214,
+        -93,
+        75,
+        64
+      ],
+      "oldWalkable": 1248,
+      "walkable": 1316,
+      "exits": 6,
+      "targets": [
+        "Gaegyeong",
+        "goryeo_songak"
+      ],
+      "components": 33,
+      "largestComponent": 706,
+      "foreignPending": 0
+    },
+    {
+      "mapId": "Gaegyeong",
+      "name": "개경",
+      "oldBox": [
+        222,
+        -44,
+        72,
+        76
+      ],
+      "box": [
+        214,
+        -29,
+        80,
+        51
+      ],
+      "oldWalkable": 2420,
+      "walkable": 2223,
+      "exits": 7,
+      "targets": [
+        "Dakmok",
+        "Naru"
+      ],
+      "components": 6,
+      "largestComponent": 1949,
+      "foreignPending": 0
+    },
+    {
+      "mapId": "goryeo_jangdan",
+      "name": "장단 들마을",
+      "oldBox": [
+        174,
+        7,
+        61,
+        98
+      ],
+      "box": [
+        167,
+        22,
+        57,
+        105
+      ],
+      "oldWalkable": 2631,
+      "walkable": 2643,
+      "exits": 2,
+      "targets": [
+        "Naru",
+        "goryeo_songak"
+      ],
+      "components": 3,
+      "largestComponent": 2443,
+      "foreignPending": 0
+    },
+    {
+      "mapId": "Naru",
+      "name": "예성 나루 마을",
+      "oldBox": [
+        202,
+        27,
+        88,
+        84
+      ],
+      "box": [
+        224,
+        22,
+        69,
+        89
+      ],
+      "oldWalkable": 1629,
+      "walkable": 2023,
+      "exits": 7,
+      "targets": [
+        "Gaegyeong",
+        "goryeo_jangdan"
+      ],
+      "components": 2,
+      "largestComponent": 1987,
+      "foreignPending": 0
+    }
+  ],
+  "preservedFunctions": [
+    {
+      "mapId": "transit_ferry",
+      "kind": "market",
+      "id": "transit_ferry",
+      "world": [
+        117,
+        -102
+      ]
+    },
+    {
+      "mapId": "transit_ferry",
+      "kind": "board",
+      "id": "transit_ferry",
+      "world": [
+        124,
+        -103
+      ]
+    },
+    {
+      "mapId": "transit_ferry",
+      "kind": "talker",
+      "id": "나루 상인",
+      "world": [
+        117,
+        -105
+      ]
+    },
+    {
+      "mapId": "transit_ferry",
+      "kind": "talker",
+      "id": "나루 여관 주인",
+      "world": [
+        121,
+        -104
+      ]
+    },
+    {
+      "mapId": "transit_ferry",
+      "kind": "talker",
+      "id": "life_뱃사공",
+      "world": [
+        122,
+        -113
+      ]
+    },
+    {
+      "mapId": "transit_central_approach",
+      "kind": "talker",
+      "id": "길손",
+      "world": [
+        87,
+        -28
+      ]
+    },
+    {
+      "mapId": "transit_central_approach",
+      "kind": "talker",
+      "id": "life_쉬어 가는 나그네",
+      "world": [
+        78,
+        -41
+      ]
+    },
+    {
+      "mapId": "transit_crossroads",
+      "kind": "talker",
+      "id": "길목 안내인",
+      "world": [
+        52,
+        -1
+      ]
+    },
+    {
+      "mapId": "transit_crossroads",
+      "kind": "talker",
+      "id": "life_객주 주인",
+      "world": [
+        51,
+        13
+      ]
+    },
+    {
+      "mapId": "transit_crossroads",
+      "kind": "market",
+      "id": "transit_crossroads",
+      "world": [
+        46,
+        2
+      ]
+    },
+    {
+      "mapId": "transit_crossroads",
+      "kind": "board",
+      "id": "transit_crossroads",
+      "world": [
+        53,
+        2
+      ]
+    },
+    {
+      "mapId": "transit_south_inland",
+      "kind": "talker",
+      "id": "life_어부",
+      "world": [
+        81,
+        50
+      ]
+    },
+    {
+      "mapId": "transit_wetroad",
+      "kind": "talker",
+      "id": "life_강가 짐꾼",
+      "world": [
+        127,
+        -51
+      ]
+    },
+    {
+      "mapId": "transit_woodtown",
+      "kind": "market",
+      "id": "transit_woodtown",
+      "world": [
+        135,
+        -2
+      ]
+    },
+    {
+      "mapId": "transit_woodtown",
+      "kind": "board",
+      "id": "transit_woodtown",
+      "world": [
+        142,
+        -1
+      ]
+    },
+    {
+      "mapId": "transit_woodtown",
+      "kind": "talker",
+      "id": "땔감 장수",
+      "world": [
+        127,
+        -4
+      ]
+    },
+    {
+      "mapId": "transit_woodtown",
+      "kind": "talker",
+      "id": "여관 주인",
+      "world": [
+        131,
+        -4
+      ]
+    },
+    {
+      "mapId": "transit_woodtown",
+      "kind": "talker",
+      "id": "life_길목 짐꾼",
+      "world": [
+        141,
+        -10
+      ]
+    },
+    {
+      "mapId": "transit_pass",
+      "kind": "talker",
+      "id": "길손",
+      "world": [
+        150,
+        44
+      ]
+    },
+    {
+      "mapId": "transit_pass",
+      "kind": "bandit",
+      "id": "",
+      "world": [
+        149,
+        43
+      ]
+    },
+    {
+      "mapId": "transit_southport",
+      "kind": "talker",
+      "id": "life_포구 사람",
+      "world": [
+        115,
+        95
+      ]
+    },
+    {
+      "mapId": "transit_southport",
+      "kind": "talker",
+      "id": "life_뱃사공",
+      "world": [
+        123,
+        110
+      ]
+    },
+    {
+      "mapId": "transit_southport",
+      "kind": "talker",
+      "id": "life_포구 객주 주인",
+      "world": [
+        123,
+        102
+      ]
+    },
+    {
+      "mapId": "transit_southport",
+      "kind": "market",
+      "id": "transit_southport",
+      "world": [
+        115,
+        100
+      ]
+    },
+    {
+      "mapId": "transit_southport",
+      "kind": "board",
+      "id": "transit_southport",
+      "world": [
+        116,
+        98
+      ]
+    },
+    {
+      "mapId": "goryeo_songak",
+      "kind": "market",
+      "id": "goryeo_songak",
+      "world": [
+        196,
+        -15
+      ]
+    },
+    {
+      "mapId": "goryeo_songak",
+      "kind": "board",
+      "id": "goryeo_songak",
+      "world": [
+        191,
+        -10
+      ]
+    },
+    {
+      "mapId": "goryeo_songak",
+      "kind": "npc",
+      "id": "goryeo_songak_merchant",
+      "world": [
+        191,
+        -20
+      ]
+    },
+    {
+      "mapId": "goryeo_songak",
+      "kind": "talker",
+      "id": "송악 객주 주인",
+      "world": [
+        198,
+        -17
+      ]
+    },
+    {
+      "mapId": "goryeo_songak",
+      "kind": "talker",
+      "id": "life_약재 짐꾼",
+      "world": [
+        189,
+        -18
+      ]
+    },
+    {
+      "mapId": "Dakmok",
+      "kind": "market",
+      "id": "dakmok",
+      "world": [
+        226,
+        -51
+      ]
+    },
+    {
+      "mapId": "Dakmok",
+      "kind": "board",
+      "id": "dakmok",
+      "world": [
+        226,
+        -44
+      ]
+    },
+    {
+      "mapId": "Dakmok",
+      "kind": "npc",
+      "id": "dakmok_chief",
+      "world": [
+        225,
+        -43
+      ]
+    },
+    {
+      "mapId": "Dakmok",
+      "kind": "worker",
+      "id": "종이 일꾼",
+      "world": [
+        234,
+        -42
+      ]
+    },
+    {
+      "mapId": "Dakmok",
+      "kind": "talker",
+      "id": "닥목 객주 주인",
+      "world": [
+        217,
+        -41
+      ]
+    },
+    {
+      "mapId": "Dakmok",
+      "kind": "talker",
+      "id": "life_떡 장수",
+      "world": [
+        219,
+        -53
+      ]
+    },
+    {
+      "mapId": "Dakmok",
+      "kind": "workshop",
+      "id": "dakmok",
+      "world": [
+        229,
+        -40
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "market",
+      "id": "gaegyeong",
+      "world": [
+        257,
+        1
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "board",
+      "id": "gaegyeong",
+      "world": [
+        255,
+        -1
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "npc",
+      "id": "gaekju",
+      "world": [
+        260,
+        13
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "worker",
+      "id": "시전 짐꾼",
+      "world": [
+        248,
+        -1
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "worker",
+      "id": "시전 행상",
+      "world": [
+        271,
+        6
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "walker",
+      "id": "",
+      "world": [
+        251,
+        1
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "walker",
+      "id": "",
+      "world": [
+        262,
+        6
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "villager",
+      "id": "",
+      "world": [
+        250,
+        4
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "villager",
+      "id": "",
+      "world": [
+        243,
+        -23
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "villager",
+      "id": "",
+      "world": [
+        251,
+        -17
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "villager",
+      "id": "",
+      "world": [
+        260,
+        -4
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "villager",
+      "id": "",
+      "world": [
+        273,
+        -2
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "villager",
+      "id": "",
+      "world": [
+        260,
+        6
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "villager",
+      "id": "",
+      "world": [
+        279,
+        6
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "villager",
+      "id": "",
+      "world": [
+        269,
+        11
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "talker",
+      "id": "life_비단 상인",
+      "world": [
+        249,
+        1
+      ]
+    },
+    {
+      "mapId": "Gaegyeong",
+      "kind": "talker",
+      "id": "life_선비",
+      "world": [
+        252,
+        -19
+      ]
+    },
+    {
+      "mapId": "goryeo_jangdan",
+      "kind": "market",
+      "id": "goryeo_jangdan",
+      "world": [
+        202,
+        42
+      ]
+    },
+    {
+      "mapId": "goryeo_jangdan",
+      "kind": "board",
+      "id": "goryeo_jangdan",
+      "world": [
+        202,
+        40
+      ]
+    },
+    {
+      "mapId": "goryeo_jangdan",
+      "kind": "npc",
+      "id": "goryeo_jangdan_farmer",
+      "world": [
+        198,
+        36
+      ]
+    },
+    {
+      "mapId": "goryeo_jangdan",
+      "kind": "talker",
+      "id": "장단 객주 주인",
+      "world": [
+        198,
+        40
+      ]
+    },
+    {
+      "mapId": "goryeo_jangdan",
+      "kind": "talker",
+      "id": "life_볏단 일꾼",
+      "world": [
+        194,
+        34
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "spawn",
+      "id": "S0",
+      "world": [
+        239,
+        59
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "market",
+      "id": "naru",
+      "world": [
+        236,
+        51
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "board",
+      "id": "naru",
+      "world": [
+        243,
+        55
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "npc",
+      "id": "naru_chief",
+      "world": [
+        245,
+        52
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "npc",
+      "id": "naru_well_woman",
+      "world": [
+        247,
+        62
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "talker",
+      "id": "뱃사공",
+      "world": [
+        249,
+        55
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "talker",
+      "id": "농부",
+      "world": [
+        228,
+        57
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "worker",
+      "id": "나루 짐꾼",
+      "world": [
+        248,
+        57
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "pastime",
+      "id": "나루 낚시",
+      "world": [
+        256,
+        63
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "growth",
+      "id": "naru",
+      "world": [
+        225,
+        48
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "growth",
+      "id": "naru",
+      "world": [
+        246,
+        58
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "growth",
+      "id": "naru",
+      "world": [
+        232,
+        58
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "growth",
+      "id": "naru",
+      "world": [
+        256,
+        60
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "growth",
+      "id": "naru",
+      "world": [
+        251,
+        69
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "growth",
+      "id": "naru",
+      "world": [
+        230,
+        56
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "growth",
+      "id": "naru",
+      "world": [
+        233,
+        56
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "growth",
+      "id": "naru",
+      "world": [
+        236,
+        56
+      ]
+    },
+    {
+      "mapId": "Naru",
+      "kind": "talker",
+      "id": "나루 객주 주인",
+      "world": [
+        239,
+        65
+      ]
+    }
+  ],
+  "movedDecorativeObjects": {
+    "transit_south_inland": [
+      {
+        "fromMap": "transit_crossroads",
+        "kind": "sign",
+        "world": [
+          60,
+          33
+        ]
+      }
+    ],
+    "transit_ferry": [
+      {
+        "fromMap": "transit_wetroad",
+        "kind": "anim",
+        "world": [
+          154,
+          -79
+        ]
+      }
+    ],
+    "transit_woodtown": [
+      {
+        "fromMap": "transit_wetroad",
+        "kind": "sign",
+        "world": [
+          112,
+          -25
+        ]
+      },
+      {
+        "fromMap": "transit_pass",
+        "kind": "sign",
+        "world": [
+          153,
+          17
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          153,
+          -26
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "sign",
+        "world": [
+          161,
+          -7
+        ]
+      }
+    ],
+    "transit_wetroad": [
+      {
+        "fromMap": "transit_woodtown",
+        "kind": "sign",
+        "world": [
+          132,
+          -27
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          159,
+          -54
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          162,
+          -55
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          154,
+          -46
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          163,
+          -58
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          165,
+          -56
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          154,
+          -40
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          156,
+          -50
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          153,
+          -37
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          160,
+          -57
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          153,
+          -31
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          166,
+          -61
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          162,
+          -61
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          154,
+          -34
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          160,
+          -52
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          158,
+          -51
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          155,
+          -44
+        ]
+      },
+      {
+        "fromMap": "goryeo_songak",
+        "kind": "anim",
+        "world": [
+          155,
+          -38
+        ]
+      }
+    ],
+    "goryeo_songak": [
+      {
+        "fromMap": "Dakmok",
+        "kind": "anim",
+        "world": [
+          204,
+          -67
+        ]
+      },
+      {
+        "fromMap": "Dakmok",
+        "kind": "anim",
+        "world": [
+          201,
+          -70
+        ]
+      },
+      {
+        "fromMap": "Dakmok",
+        "kind": "anim",
+        "world": [
+          211,
+          -71
+        ]
+      },
+      {
+        "fromMap": "Dakmok",
+        "kind": "anim",
+        "world": [
+          213,
+          -77
+        ]
+      },
+      {
+        "fromMap": "Dakmok",
+        "kind": "anim",
+        "world": [
+          209,
+          -74
+        ]
+      },
+      {
+        "fromMap": "Dakmok",
+        "kind": "anim",
+        "world": [
+          205,
+          -74
+        ]
+      },
+      {
+        "fromMap": "Dakmok",
+        "kind": "anim",
+        "world": [
+          207,
+          -69
+        ]
+      },
+      {
+        "fromMap": "Dakmok",
+        "kind": "anim",
+        "world": [
+          203,
+          -63
+        ]
+      },
+      {
+        "fromMap": "Dakmok",
+        "kind": "anim",
+        "world": [
+          197,
+          -64
+        ]
+      },
+      {
+        "fromMap": "goryeo_jangdan",
+        "kind": "sign",
+        "world": [
+          193,
+          15
+        ]
+      }
+    ],
+    "Gaegyeong": [
+      {
+        "fromMap": "Dakmok",
+        "kind": "sign",
+        "world": [
+          237,
+          -29
+        ]
+      }
+    ],
+    "Dakmok": [
+      {
+        "fromMap": "Gaegyeong",
+        "kind": "anim",
+        "world": [
+          281,
+          -32
+        ]
+      },
+      {
+        "fromMap": "Gaegyeong",
+        "kind": "anim",
+        "world": [
+          285,
+          -37
+        ]
+      },
+      {
+        "fromMap": "Gaegyeong",
+        "kind": "anim",
+        "world": [
+          282,
+          -41
+        ]
+      },
+      {
+        "fromMap": "Gaegyeong",
+        "kind": "anim",
+        "world": [
+          285,
+          -32
+        ]
+      },
+      {
+        "fromMap": "Gaegyeong",
+        "kind": "anim",
+        "world": [
+          280,
+          -36
+        ]
+      },
+      {
+        "fromMap": "Gaegyeong",
+        "kind": "anim",
+        "world": [
+          283,
+          -30
+        ]
+      },
+      {
+        "fromMap": "Gaegyeong",
+        "kind": "anim",
+        "world": [
+          278,
+          -41
+        ]
+      },
+      {
+        "fromMap": "Gaegyeong",
+        "kind": "anim",
+        "world": [
+          283,
+          -34
+        ]
+      }
+    ],
+    "Naru": [
+      {
+        "fromMap": "Gaegyeong",
+        "kind": "anim",
+        "world": [
+          286,
+          29
+        ]
+      },
+      {
+        "fromMap": "Gaegyeong",
+        "kind": "anim",
+        "world": [
+          287,
+          26
+        ]
+      },
+      {
+        "fromMap": "Gaegyeong",
+        "kind": "anim",
+        "world": [
+          289,
+          24
+        ]
+      },
+      {
+        "fromMap": "Gaegyeong",
+        "kind": "anim",
+        "world": [
+          283,
+          27
+        ]
+      },
+      {
+        "fromMap": "Gaegyeong",
+        "kind": "sign",
+        "world": [
+          253,
+          26
+        ]
+      }
+    ],
+    "goryeo_jangdan": [
+      {
+        "fromMap": "Naru",
+        "kind": "anim",
+        "world": [
+          205,
+          92
+        ]
+      },
+      {
+        "fromMap": "Naru",
+        "kind": "anim",
+        "world": [
+          213,
+          95
+        ]
+      },
+      {
+        "fromMap": "Naru",
+        "kind": "anim",
+        "world": [
+          215,
+          98
+        ]
+      },
+      {
+        "fromMap": "Naru",
+        "kind": "anim",
+        "world": [
+          206,
+          95
+        ]
+      },
+      {
+        "fromMap": "Naru",
+        "kind": "anim",
+        "world": [
+          220,
+          95
+        ]
+      },
+      {
+        "fromMap": "Naru",
+        "kind": "anim",
+        "world": [
+          216,
+          94
+        ]
+      },
+      {
+        "fromMap": "Naru",
+        "kind": "anim",
+        "world": [
+          203,
+          101
+        ]
+      },
+      {
+        "fromMap": "Naru",
+        "kind": "anim",
+        "world": [
+          218,
+          97
+        ]
+      },
+      {
+        "fromMap": "Naru",
+        "kind": "anim",
+        "world": [
+          204,
+          97
+        ]
+      },
+      {
+        "fromMap": "Naru",
+        "kind": "anim",
+        "world": [
+          212,
+          92
+        ]
+      },
+      {
+        "fromMap": "Naru",
+        "kind": "anim",
+        "world": [
+          221,
+          98
+        ]
+      },
+      {
+        "fromMap": "Naru",
+        "kind": "anim",
+        "world": [
+          207,
+          90
+        ]
+      },
+      {
+        "fromMap": "Naru",
+        "kind": "anim",
+        "world": [
+          207,
+          99
+        ]
+      },
+      {
+        "fromMap": "Naru",
+        "kind": "anim",
+        "world": [
+          209,
+          93
+        ]
+      }
+    ]
+  },
+  "removedLinks": [
+    [
+      "Gaegyeong",
+      "goryeo_jangdan"
+    ],
+    [
+      "Gaegyeong",
+      "goryeo_songak"
+    ],
+    [
+      "goryeo_jangdan",
+      "Gaegyeong"
+    ],
+    [
+      "goryeo_jangdan",
+      "transit_pass"
+    ],
+    [
+      "goryeo_songak",
+      "Gaegyeong"
+    ],
+    [
+      "transit_central_approach",
+      "transit_south_inland"
+    ],
+    [
+      "transit_pass",
+      "goryeo_jangdan"
+    ],
+    [
+      "transit_pass",
+      "transit_south_inland"
+    ],
+    [
+      "transit_south_inland",
+      "transit_central_approach"
+    ],
+    [
+      "transit_south_inland",
+      "transit_pass"
+    ],
+    [
+      "transit_south_inland",
+      "transit_woodtown"
+    ],
+    [
+      "transit_woodtown",
+      "transit_south_inland"
+    ]
+  ],
+  "addedLinks": [],
+  "foreignBaseline": [
+    {
+      "source": "transit_crossroads",
+      "exit": {
+        "w": 4,
+        "h": 1,
+        "id": "",
+        "npc": "",
+        "town": "",
+        "target": "north_c_road_se",
+        "spawn": "link_transit_crossroads",
+        "edge": "N",
+        "text": "",
+        "name": "",
+        "character": "",
+        "lines": [],
+        "variant": 0,
+        "idx": 0,
+        "sheet": "",
+        "frames": 0,
+        "fps": 0.0,
+        "radius": 0.0,
+        "type": "",
+        "path": [],
+        "kind": "exit",
+        "x": 26,
+        "y": 9
+      },
+      "world": [
+        28,
+        -25
+      ]
+    },
+    {
+      "source": "transit_crossroads",
+      "exit": {
+        "w": 1,
+        "h": 2,
+        "id": "",
+        "npc": "",
+        "town": "",
+        "target": "arabia_central_eastvale",
+        "spawn": "link_transit_crossroads",
+        "edge": "W",
+        "text": "",
+        "name": "",
+        "character": "",
+        "lines": [],
+        "variant": 0,
+        "idx": 0,
+        "sheet": "",
+        "frames": 0,
+        "fps": 0.0,
+        "radius": 0.0,
+        "type": "",
+        "path": [],
+        "kind": "exit",
+        "x": 12,
+        "y": 45
+      },
+      "world": [
+        14,
+        11
+      ]
+    },
+    {
+      "source": "transit_crossroads",
+      "exit": {
+        "w": 1,
+        "h": 3,
+        "id": "",
+        "npc": "",
+        "town": "",
+        "target": "arabia_central_steppe",
+        "spawn": "link_transit_crossroads",
+        "edge": "W",
+        "text": "",
+        "name": "",
+        "character": "",
+        "lines": [],
+        "variant": 0,
+        "idx": 0,
+        "sheet": "",
+        "frames": 0,
+        "fps": 0.0,
+        "radius": 0.0,
+        "type": "",
+        "path": [],
+        "kind": "exit",
+        "x": 0,
+        "y": 32
+      },
+      "world": [
+        2,
+        -2
+      ]
+    }
+  ],
+  "externalReviewPorts": [
+    {
+      "target": "north_c_road_se",
+      "oldWorld": [
+        28,
+        -25
+      ],
+      "world": [
+        24,
+        -18
+      ],
+      "incomingSpawn": "link_north_c_road_se",
+      "incomingWorld": [
+        24,
+        -16
+      ],
+      "size": [
+        4,
+        1
+      ]
+    },
+    {
+      "target": "arabia_central_steppe",
+      "oldWorld": [
+        2,
+        -2
+      ],
+      "world": [
+        3,
+        -2
+      ],
+      "incomingSpawn": "link_arabia_central_steppe",
+      "incomingWorld": [
+        5,
+        -2
+      ],
+      "size": [
+        1,
+        3
+      ]
+    },
+    {
+      "target": "arabia_central_eastvale",
+      "oldWorld": [
+        14,
+        11
+      ],
+      "world": [
+        3,
+        1
+      ],
+      "incomingSpawn": "link_arabia_central_eastvale",
+      "incomingWorld": [
+        5,
+        1
+      ],
+      "size": [
+        1,
+        2
+      ]
+    }
+  ],
+  "notes": [
+    "Existing three foreign links/target spawns retained. Other region assets untouched; preview explorer stays within the 13 review maps.",
+    "Depth-patch rectangles are intersected at scene borders; native artwork tiles are unchanged."
+  ],
+  "trimmedReviewCells": [
+    [
+      2,
+      -2
+    ],
+    [
+      2,
+      -1
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      2,
+      1
+    ]
+  ],
+  "trimmedWalkableCells": 4,
+  "trimNote": "Review-only: west tip is shortened by one column to fit two separate existing foreign portals on the same true outer face. No new land or foreign file changes.",
+  "inputs": {
+    "transit_ferry": "2f3af8cc7b4f4542a9abc174065f06468d27a3fc00fc9346b7ef54995a8d1abf",
+    "transit_central_approach": "0eaec10969bc9783779e0244fd61efa6f2f5dc41d3a1f144bea0ab014a98c906",
+    "transit_crossroads": "2bfa68cac290d3b8d26830605da39533f23b62cec733c24953bc86329aa8c1fc",
+    "transit_south_inland": "13aef181112ed1b9546a090559a014eda810f12dca96adc63476e1478f27c30f",
+    "transit_wetroad": "70aaa1c1cc31579123fe8195f5c98d0d0296b6aea1d22c45eea1251296583a05",
+    "transit_woodtown": "71b3349590f39e161eb7d899173019e476b0fb1bb10b38fb30826663404fb78e",
+    "transit_pass": "d9991303219244b0a60640e6cf0b2392cc9e2e5e2a3d5fc405c8128d1b8fa233",
+    "transit_southport": "239b0e8cf0357c220169a6aeddf4bb4bbfa2a1af27b1250f7223b254aef1955e",
+    "goryeo_songak": "de0185da346f0dfc087060bf1d8e5f9bd1f12532b0f84858a74e91e5968ae47b",
+    "Dakmok": "506147842d3067a081605a6b8e52fc85137ba09bfd36048dbed203e43abdb575",
+    "Gaegyeong": "4e0b8b07f1318136328efcfc2d549d4c46098b1419eb9bd2c9653ba075e03cac",
+    "goryeo_jangdan": "959098ff5aee8869bd404970040087e27184708811c7b8fb21bc7860c993e805",
+    "Naru": "a85bdc3a2591e51ffe9d791aae202597e31babee75caee36695c225677ec6cd2"
+  }
+}
