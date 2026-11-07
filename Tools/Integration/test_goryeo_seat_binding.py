@@ -7,6 +7,9 @@ from pathlib import Path
 from PIL import Image
 
 ROOT=Path(__file__).resolve().parents[2]
+import sys
+sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
+from t3_history import map_at,resource_at
 RESOURCE=ROOT/'Assets/PocketCaravan/Resources/Goryeo/Seats'
 REVIEW=ROOT/'ArtReview/Goryeo-Seats-20261105/AlignedV2'
 
@@ -14,7 +17,7 @@ REVIEW=ROOT/'ArtReview/Goryeo-Seats-20261105/AlignedV2'
 class SeatBindingTests(unittest.TestCase):
     def test_approved_native_pixels_and_import_profiles(self):
         approval=json.loads((REVIEW/'approval.json').read_text())
-        config=json.loads((RESOURCE/'Config.json').read_text())
+        config=resource_at(RESOURCE/'Config.json')
         self.assertEqual(approval['status'],'approved');self.assertEqual(config['status'],'approved')
         self.assertEqual(hashlib.sha256((REVIEW/'source.json').read_bytes()).hexdigest(),approval['sourceSha256'])
         original=json.loads((REVIEW/'source.json').read_text())
@@ -39,7 +42,7 @@ class SeatBindingTests(unittest.TestCase):
                 self.assertEqual(live.convert('RGBA').tobytes(),old.convert('RGBA').tobytes())
 
     def test_fire_blocks_no_route_exit_or_new_land_component(self):
-        cfg=json.loads((RESOURCE/'Config.json').read_text());m=json.loads((ROOT/'Assets/PocketCaravan/Maps/transit_central_approach.json').read_text());w,h=m['w'],m['h']
+        cfg=resource_at(RESOURCE/'Config.json');m=map_at(ROOT/'Assets/PocketCaravan/Maps/transit_central_approach.json');w,h=m['w'],m['h']
         walk={(i%w,i//w)for i,g in enumerate(m['ground'])if g and not m['blocked'][i]}
         fire=next(s for s in cfg['seats']if s.get('fire'));cells={(fire['propX']+x,fire['propY']+y)for x in range(2)for y in range(2)}
         self.assertTrue(cells<=walk)

@@ -130,7 +130,8 @@ namespace PocketCaravan
         {
             return value != null && value.status == status && value.mapId == "Naru"
                 && value.id == "naru_water" && value.memoKey == "goryeo:daily:water_day"
-                && value.width == 88 && value.height == 84 && value.x == 43 && value.y == 35
+                && ((value.width == 88 && value.height == 84 && value.x == 43 && value.y == 35)
+                    || (GoryeoBoundaryLayout.Matches(value.mapId,value.width,value.height) && value.x>=0 && value.x<value.width && value.y>=0 && value.y<value.height))
                 && value.seconds == 3 && (status == "approved" ? value.reward == 3 : value.reward >= 0 && value.reward <= 3);
         }
         static GoryeoDailyActivity Install(Site value, bool production)

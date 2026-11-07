@@ -57,6 +57,8 @@ def bind_approved(data):
  if data.get('obstacles')not in (None,[],[p])or data.get('nativeLogs')not in (None,[],[b]):raise ValueError('Existing obstacles need review')
  result=copy.deepcopy(data);result['obstacles']=[p];result['nativeLogs']=[b];return result
 def restore_for_historical_checks(data):
+ from t3_history import restore_map
+ data=restore_map(data)
  if data['id']!='transit_central_approach'or 'nativeLogs'not in data:return copy.deepcopy(data)
  before=json.loads((OUT/'production-source-before.json').read_text());expected=bind_approved(before)
  if data.get('obstacles')!=expected['obstacles']or data.get('nativeLogs')!=expected['nativeLogs']:raise ValueError('Approved log metadata changed')

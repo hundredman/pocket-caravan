@@ -59,7 +59,7 @@ namespace PocketCaravan
 
         bool TryApplySave(SaveData data)
         {
-            try { Apply(data); return true; }
+            try { GoryeoBoundaryLayout.Migrate(data); Apply(data); return true; }
             catch (System.Exception e) { BlockFailedLoad(e.Message); return false; }
         }
 

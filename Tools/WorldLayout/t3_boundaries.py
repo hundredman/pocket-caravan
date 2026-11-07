@@ -61,7 +61,14 @@ def filter_boundary_faces(boundary,ports,walk,oy):
 
 def read_sources():
     config=json.loads(CONFIG.read_text())
-    if config['schemaVersion']!=1 or config['status']!='review':raise ValueError('Review source only')
+    if config['schemaVersion']!=1 or config['status']not in ('review','approved'):raise ValueError('Invalid boundary source')
+    bundle=HERE/'t3_baseline.json.gz'
+    if bundle.exists():
+        import gzip
+        sources=json.loads(gzip.decompress(bundle.read_bytes()))['maps']
+        for mid,d in sources.items():
+            if hashlib.sha256(json.dumps(d,sort_keys=True,ensure_ascii=False).encode()).hexdigest()!=config['sourceLocks'][mid]:raise ValueError('Frozen baseline changed: '+mid)
+        return config,sources
     sources={}
     for mid in config['cuts']:
         paths=list((ROOT/'Assets/PocketCaravan/Maps').rglob(mid+'.json'))

@@ -1,10 +1,1 @@
-{
-  "status": "approved",
-  "mapId": "transit_central_approach",
-  "id": "e3_central_approach_log",
-  "variant": "diagonal_nw",
-  "x": 50,
-  "y": 32,
-  "width": 3,
-  "height": 3
-}
+{"status":"approved","mapId":"transit_central_approach","id":"e3_central_approach_log","variant":"diagonal_nw","x":69,"y":33,"width":3,"height":3}

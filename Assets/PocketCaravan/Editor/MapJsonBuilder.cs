@@ -59,7 +59,7 @@ namespace PocketCaravan.EditorTools
         class MapFile
         {
             public string id, name;
-            public int w, h, hours, terrainX, terrainY, legacyHeight;
+            public int w, h, hours, terrainX, terrainY, legacyHeight, boundaryLayoutVersion;
             public bool previewOnly;
             public int[] ground, deco, obj, high, road, blocked;
             public string[] palette;
@@ -264,6 +264,7 @@ namespace PocketCaravan.EditorTools
             var map = gridGo.AddComponent<MapRoot>();
             map.mapId = f.id;
             map.previewOnly = f.previewOnly;
+            map.boundaryLayoutVersion = f.boundaryLayoutVersion;
             map.travelHours = f.hours;
             map.displayName = f.name;
             map.ground = ground; map.road = null; map.blocked = blocked;
@@ -378,6 +379,10 @@ namespace PocketCaravan.EditorTools
                         var sg = new GameObject("이정표").AddComponent<TalkNpc>();
                         sg.transform.SetParent(objects); sg.transform.position = center;
                         sg.displayName = "이정표"; sg.lines = new[] { o.text }; sg.blocksMovement = false; // 칸은 소품 타일이 막음
+                        if(f.boundaryLayoutVersion==3 && o.sheet=="Assets/PocketCaravan/Art/Goryeo/Markets/sign.png") {
+                            var visual=new GameObject("승인된 이정표");visual.transform.SetParent(sg.transform,false);visual.transform.localPosition=new Vector3(-.5f,-.5f,0);
+                            var renderer=visual.AddComponent<SpriteRenderer>();renderer.sprite=AssetDatabase.LoadAssetAtPath<Sprite>(o.sheet);renderer.sortingOrder=5;
+                        }
                         break;
                     case "board":
                         var bd = new GameObject("의뢰 게시판").AddComponent<ContractBoard>();

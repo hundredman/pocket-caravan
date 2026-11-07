@@ -1,6 +1,6 @@
 # T3 경계·길목 재조정 검토본
 
-2026-11-07 Codex. 사용자 경계 정리 지시를 반영했다. **13맵 검토본이며 본편 수정 완료가 아니다.** 본편 Maps/Scenes/WorldIndex/Connections/저장·전환·카메라 코드는 바꾸지 않았다.
+2026-11-07 Codex 검토본. 사용자 2026-11-08 “이대로 확정”으로 길·풀밭 경계안을 승인했다. **승인안을 로컬 본편에 연결했고 저장·좌표 이주를 완료했다.** 아래 검토 당시 기록과 [본편 적용 결과](../Validation/T3-Production-2026-11-08/README.md)를 구분한다. GitHub integration에는 아직 올리지 않았다.
 
 ## 달라진 점
 
@@ -40,7 +40,7 @@
 2. WASD로 이동한다. 카메라가 가장자리에서 멈춘 뒤 캐릭터가 외곽 출구까지 가면 이동한다. 페이드는 기존 TravelTransition 정책을 재사용한다.
 3. 이 모드는 이동·경계 검토용이며 NPC 상호작용·경제/저장 시험을 대신하지 않는다. 개인 저장 적용/자동 저장을 끄고 랜덤 격리 슬롯을 사용한다. Play를 멈추면 본편 상태로 남는 변경은 없다.
 
-재생성: NumPy·SciPy·Pillow가 있는 Python으로 `Tools/WorldLayout/t3_boundaries.py`, 필요하면 `t3_render.py` 실행 후 위 Tests의 `T3 경계 검토 씬 생성` 메뉴를 실행한다. 원본은 t3_boundaries.json의 구획·출구 설정과 bcf551a60의 동결 맵 입력이다. sourceLocks가 달라지면 먼저 최신 변경을 검토하고 재기준화해야 하며, 변경된 본편을 조용히 다시 입력으로 사용하지 않는다. 생성물을 손으로 수정하지 않는다.
+재생성: NumPy·SciPy·Pillow가 있는 Python으로 `Tools/WorldLayout/t3_boundaries.py`, 필요하면 `t3_render.py` 실행 후 위 Tests의 `T3 경계 검토 씬 생성` 메뉴를 실행한다. 원본은 t3_boundaries.json의 구획·출구 설정과 t3_baseline.json.gz의 동결 맵 입력이다. sourceLocks가 달라지면 먼저 최신 변경을 검토하고 재기준화해야 하며, 변경된 본편을 조용히 다시 입력으로 사용하지 않는다. 생성물을 손으로 수정하지 않는다.
 
 ## 검사
 
@@ -55,11 +55,12 @@
 
 근거: [길 출구 보존](../Validation/T3-Boundaries-2026-11-07/grass-road-regression.json), [그림·저장 보존](../Validation/T3-Boundaries-2026-11-07/grass-preservation.json), [Unity](../Validation/T3-Boundaries-2026-11-07/unity.json), [정상 본편 외부 연결 확인](../Validation/T3-Boundaries-2026-11-07/foreign-audit.json), [정적 검사](../Validation/T3-Boundaries-2026-11-07/static.txt), [구획·면적·연결 변경표](../Validation/T3-Boundaries-2026-11-07/geometry.json).
 
-## 승인 뒤 남은 본편 작업
+## 승인 후 본편 연결 (2026-11-08)
 
-경계 화면 승인 후에만 진행한다. 검토본에서 이동이 된다고 본편 완료로 표시하지 않는다.
+사용자 확정 후 `t3_install.py`에서 본편 13 JSON·생활 기능/장터/나룻배 좌표·지도·고려 쪽 연결표를 재생성했다. `T3Production.Build()`는 등록된 우리 13씬과 WorldIndex의 우리 항목만 갱신한다. 빌드 목록과 다른 지역 파일은 유지했다.
 
-1. 동결 지형 원본에 승인 구획을 연결하고 본편 원본 생성 경로를 완성한다. 기존 spawn 별칭과 본편의 생활 활동/배·여관/장소/시장/위험 좌표 원본도 새 원점으로 함께 변환한다.
-2. 저장 layoutVersion2의 로컬 위치를 옛 원점·높이로 세계 위치에 옮긴 뒤 새 소유 맵/원점으로 변환한다. 줄인4칸 및 출구 직전/도착 저장의 안전 복원·중복 이주 방지·수레/발길 호환을 검사한다. 아직 구현하지 않았다. 걸을 수 있어도 마을과 단절된 조각으로 복원하지 않도록 주 통행 구역 도달성도 검사해야 한다.
-3. 우리 쪽 Connections 좌표·WorldIndex·지도 배치/표시 범위만 갱신하고 상대 맵/도착 ID는 유지한다. 생성 본편13씬·모든 왕복/이전 저장·퀘스트/생활 기능·팀 회귀를 검사한다.
-4. 실제 화면 승인을 기록하고 로컬 커밋한다. GitHub 통합은 별도 지시 범위다.
+`layoutVersion=3` 이주는 동결된 v2 원점·높이에서 세계 위치를 구한 뒤 새 소유 맵으로 옮긴다. v0·v1/옛 ID는 기존 M4 도착 정책을 유지한 뒤 변환한다. 유효한 위치는 그대로, 잘린4칸·막힘·고립 조각·출구 위는 같은 대상 구역의 주 통행 영역 안전 칸으로 복구한다. 떨어진 짐도 위치만 옮기고 미등록 상품/계약 정보는 보존한다. 돈·짐·퀘스트 등의 필드는 바꾸지 않으며 이주는 메모리에서만 수행한다. 개인 저장에 대한 디스크 쓰기는 하지 않았다.
+
+본편 재생성은 NumPy·SciPy·Pillow 환경에서 `python Tools/WorldLayout/t3_install.py --write --worldmaps`, Unity에서 `PocketCaravan.EditorTools.T3Production.Build()` 순서다. 원본 `t3_baseline.json.gz`에는 승인 직전 9536d0d29 입력이 들어 있고 맵 sourceLocks를 유지한다. 새 팀 변경이 출력에 들어오면 검사 없이 덮어쓰지 않도록 기존/설치 지문이 다를 때 중단한다. 옛 M4 본편 생성은 차단하며 과거 그림 검토 재현은 `t3_history.py`의 명시적 동결 입력으로 검사한다. 새 본편의 실제 좌표·전수 재생성·물리 위치 보존 검사는 `test_t3_production.py`가 맡는다.
+
+검사 수치·실제 화면·재현 명령·확인하지 못한 범위는 [검증 기록](../Validation/T3-Production-2026-11-08/README.md)을 따른다.

@@ -2,12 +2,15 @@
 import json
 from pathlib import Path
 from collections import deque
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'WorldLayout'))
+from t3_history import map_at
 ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'ArtReview/Goryeo-Ferry-20261105'
 IDS=[('Naru','예성 나루','naru'),('transit_ferry','버들나루','transit_ferry'),('transit_southport','남동 포구','transit_southport')]
-def build(write=False):
+def build(write=False,historical=False):
  ports=[]
  for mid,name,town in IDS:
-  data=json.loads((ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').read_text());w,h=data['w'],data['h'];people=[o for o in data['objects']if o['kind']=='talker'and o.get('name')=='뱃사공'];assert len(people)==1;person=people[0];x,y=person['x'],person['y'];arrival=(x-1,y)
+  data=(map_at((ROOT/f'Assets/PocketCaravan/Maps/{mid}.json')) if historical else json.loads((ROOT/f'Assets/PocketCaravan/Maps/{mid}.json').read_text()));w,h=data['w'],data['h'];people=[o for o in data['objects']if o['kind']=='talker'and o.get('name')=='뱃사공'];assert len(people)==1;person=people[0];x,y=person['x'],person['y'];arrival=(x-1,y)
   def open_cell(c):
    a,b=c
    return 0<=a<w and 0<=b<h and data['ground'][b*w+a]!=0 and not data['blocked'][b*w+a]and not any(o['kind']in['npc','talker','market','board','sign']and(o['x'],o['y'])==c for o in data['objects'])

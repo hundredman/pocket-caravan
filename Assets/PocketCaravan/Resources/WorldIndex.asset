@@ -15,13 +15,13 @@ MonoBehaviour:
   maps:
   - mapId: Naru
     displayName: "\uC608\uC131 \uB098\uB8E8 \uB9C8\uC744"
-    height: 84
-    legacyHeight: 84
+    height: 89
+    legacyHeight: 89
     coord: {x: 0, y: 0}
     town: naru
     neighbors:
-    - goryeo_jangdan
     - Gaegyeong
+    - goryeo_jangdan
   - mapId: arabia_ahsa
     displayName: "\uC54C \uC544\uD750\uC0AC"
     height: 44
@@ -328,46 +328,44 @@ MonoBehaviour:
     - arabia_central_steppe
   - mapId: Gaegyeong
     displayName: "\uAC1C\uACBD"
-    height: 76
-    legacyHeight: 76
+    height: 51
+    legacyHeight: 51
     coord: {x: 2, y: 0}
     town: gaegyeong
     neighbors:
     - Dakmok
-    - goryeo_jangdan
     - Naru
     - goryeo_songak
   - mapId: Dakmok
     displayName: "\uB2E5\uB098\uBB34 \uB9C8\uC744"
-    height: 80
-    legacyHeight: 80
+    height: 64
+    legacyHeight: 64
     coord: {x: 3, y: 0}
     town: dakmok
     neighbors:
-    - goryeo_songak
     - Gaegyeong
+    - goryeo_songak
   - mapId: goryeo_songak
     displayName: "\uC1A1\uC545 \uC0B0\uB85D \uB9C8\uC744"
-    height: 84
-    legacyHeight: 84
+    height: 101
+    legacyHeight: 101
     coord: {x: 0, y: 1}
     town: goryeo_songak
     neighbors:
-    - Dakmok
-    - transit_woodtown
     - goryeo_jangdan
+    - Dakmok
     - Gaegyeong
+    - transit_woodtown
   - mapId: goryeo_jangdan
     displayName: "\uC7A5\uB2E8 \uB4E4\uB9C8\uC744"
-    height: 98
-    legacyHeight: 98
+    height: 105
+    legacyHeight: 105
     coord: {x: 4, y: 0}
     town: goryeo_jangdan
     neighbors:
+    - goryeo_songak
     - transit_pass
     - Naru
-    - goryeo_songak
-    - Gaegyeong
   - mapId: north_birka
     displayName: "\uBE44\uB974\uCE74"
     height: 95
@@ -444,72 +442,69 @@ MonoBehaviour:
     - north_laugar
   - mapId: transit_pass
     displayName: "\uC194\uBC14\uB78C \uACE0\uAC1C"
-    height: 68
-    legacyHeight: 68
+    height: 53
+    legacyHeight: 53
     coord: {x: 5, y: 0}
     town: 
     neighbors:
-    - goryeo_jangdan
-    - transit_southport
     - transit_woodtown
-    - transit_south_inland
+    - transit_southport
+    - goryeo_jangdan
   - mapId: transit_woodtown
     displayName: "\uC194\uC7AC \uAE38\uBAA9 \uB9C8\uC744"
-    height: 69
-    legacyHeight: 69
+    height: 46
+    legacyHeight: 46
     coord: {x: 6, y: 0}
     town: transit_woodtown
     neighbors:
     - transit_wetroad
-    - goryeo_songak
-    - transit_south_inland
     - transit_pass
     - transit_central_approach
+    - goryeo_songak
   - mapId: transit_wetroad
     displayName: "\uBC84\uB4E4 \uBB3C\uAC00 \uAE38"
-    height: 64
-    legacyHeight: 64
+    height: 49
+    legacyHeight: 49
     coord: {x: 7, y: 0}
     town: 
     neighbors:
-    - transit_central_approach
-    - transit_woodtown
     - transit_ferry
+    - transit_woodtown
+    - transit_central_approach
   - mapId: transit_ferry
     displayName: "\uBC84\uB4E4\uB098\uB8E8 \uB9C8\uC744"
-    height: 55
-    legacyHeight: 55
+    height: 52
+    legacyHeight: 52
     coord: {x: 8, y: 0}
     town: transit_ferry
     neighbors:
     - transit_wetroad
   - mapId: transit_central_approach
     displayName: "\uCD08\uC6D0 \uC9C4\uC785\uB85C"
-    height: 87
-    legacyHeight: 87
+    height: 57
+    legacyHeight: 57
     coord: {x: 9, y: 0}
     town: 
     neighbors:
     - transit_crossroads
     - transit_wetroad
-    - transit_south_inland
     - transit_woodtown
   - mapId: transit_crossroads
     displayName: "\uB0B4\uB959 \uAD50\uC5ED \uAE38\uBAA9"
-    height: 80
-    legacyHeight: 80
+    height: 46
+    legacyHeight: 46
     coord: {x: 9, y: 1}
     town: transit_crossroads
     neighbors:
+    - north_c_road_se
+    - arabia_central_steppe
+    - arabia_central_eastvale
     - transit_central_approach
     - transit_south_inland
-    - north_c_road_se
-    - arabia_central_eastvale
-    - arabia_central_steppe
   - mapId: transit_southport
     displayName: "\uB0A8\uB3D9 \uD3EC\uAD6C"
-    height: 68
-    legacyHeight: 68
+    height: 54
+    legacyHeight: 54
     coord: {x: 8, y: 1}
     town: transit_southport
     neighbors:
@@ -517,16 +512,13 @@ MonoBehaviour:
     - transit_pass
   - mapId: transit_south_inland
     displayName: "\uB0A8\uCABD \uB0B4\uB959\uAE38"
-    height: 73
-    legacyHeight: 73
+    height: 45
+    legacyHeight: 45
     coord: {x: 10, y: 0}
     town: 
     neighbors:
-    - transit_southport
-    - transit_central_approach
-    - transit_woodtown
     - transit_crossroads
-    - transit_pass
+    - transit_southport
   - mapId: venice_rialto
     displayName: "\uB9AC\uC54C\uD1A0"
     height: 84
@@ -576,18 +568,6 @@ MonoBehaviour:
     - venice_murano
     - venice_c_landing
   places:
-  - kind: market
-    id: naru
-    mapId: Naru
-  - kind: board
-    id: naru
-    mapId: Naru
-  - kind: npc
-    id: naru_chief
-    mapId: Naru
-  - kind: npc
-    id: naru_well_woman
-    mapId: Naru
   - kind: market
     id: arabia_ahsa
     mapId: arabia_ahsa
@@ -694,42 +674,6 @@ MonoBehaviour:
     id: venice_c_caravanserai
     mapId: venice_c_post
   - kind: market
-    id: gaegyeong
-    mapId: Gaegyeong
-  - kind: board
-    id: gaegyeong
-    mapId: Gaegyeong
-  - kind: npc
-    id: gaekju
-    mapId: Gaegyeong
-  - kind: market
-    id: dakmok
-    mapId: Dakmok
-  - kind: board
-    id: dakmok
-    mapId: Dakmok
-  - kind: npc
-    id: dakmok_chief
-    mapId: Dakmok
-  - kind: market
-    id: goryeo_songak
-    mapId: goryeo_songak
-  - kind: board
-    id: goryeo_songak
-    mapId: goryeo_songak
-  - kind: npc
-    id: goryeo_songak_merchant
-    mapId: goryeo_songak
-  - kind: market
-    id: goryeo_jangdan
-    mapId: goryeo_jangdan
-  - kind: board
-    id: goryeo_jangdan
-    mapId: goryeo_jangdan
-  - kind: npc
-    id: goryeo_jangdan_farmer
-    mapId: goryeo_jangdan
-  - kind: market
     id: north_birka
     mapId: north_birka
   - kind: board
@@ -805,30 +749,6 @@ MonoBehaviour:
     id: north_miner
     mapId: north_icecave
   - kind: market
-    id: transit_woodtown
-    mapId: transit_woodtown
-  - kind: board
-    id: transit_woodtown
-    mapId: transit_woodtown
-  - kind: market
-    id: transit_ferry
-    mapId: transit_ferry
-  - kind: board
-    id: transit_ferry
-    mapId: transit_ferry
-  - kind: market
-    id: transit_crossroads
-    mapId: transit_crossroads
-  - kind: board
-    id: transit_crossroads
-    mapId: transit_crossroads
-  - kind: market
-    id: transit_southport
-    mapId: transit_southport
-  - kind: board
-    id: transit_southport
-    mapId: transit_southport
-  - kind: market
     id: venice_rialto
     mapId: venice_rialto
   - kind: board
@@ -876,3 +796,75 @@ MonoBehaviour:
   - kind: npc
     id: venice_warehouse
     mapId: venice_chioggia
+  - kind: market
+    id: transit_ferry
+    mapId: transit_ferry
+  - kind: board
+    id: transit_ferry
+    mapId: transit_ferry
+  - kind: market
+    id: transit_crossroads
+    mapId: transit_crossroads
+  - kind: board
+    id: transit_crossroads
+    mapId: transit_crossroads
+  - kind: market
+    id: transit_woodtown
+    mapId: transit_woodtown
+  - kind: board
+    id: transit_woodtown
+    mapId: transit_woodtown
+  - kind: market
+    id: transit_southport
+    mapId: transit_southport
+  - kind: board
+    id: transit_southport
+    mapId: transit_southport
+  - kind: market
+    id: goryeo_songak
+    mapId: goryeo_songak
+  - kind: board
+    id: goryeo_songak
+    mapId: goryeo_songak
+  - kind: npc
+    id: goryeo_songak_merchant
+    mapId: goryeo_songak
+  - kind: market
+    id: dakmok
+    mapId: Dakmok
+  - kind: board
+    id: dakmok
+    mapId: Dakmok
+  - kind: npc
+    id: dakmok_chief
+    mapId: Dakmok
+  - kind: market
+    id: gaegyeong
+    mapId: Gaegyeong
+  - kind: board
+    id: gaegyeong
+    mapId: Gaegyeong
+  - kind: npc
+    id: gaekju
+    mapId: Gaegyeong
+  - kind: market
+    id: goryeo_jangdan
+    mapId: goryeo_jangdan
+  - kind: board
+    id: goryeo_jangdan
+    mapId: goryeo_jangdan
+  - kind: npc
+    id: goryeo_jangdan_farmer
+    mapId: goryeo_jangdan
+  - kind: market
+    id: naru
+    mapId: Naru
+  - kind: board
+    id: naru
+    mapId: Naru
+  - kind: npc
+    id: naru_chief
+    mapId: Naru
+  - kind: npc
+    id: naru_well_woman
+    mapId: Naru

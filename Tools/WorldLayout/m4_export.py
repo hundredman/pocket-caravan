@@ -99,6 +99,9 @@ def main():
     if a.review_root:
         if a.production or not a.review_root.resolve().is_relative_to((ROOT/'ArtReview').resolve()):raise ValueError('Isolated review path required')
         REVIEW=a.review_root
+    if a.production and not a.bind_approved_flood:
+        current=ROOT/'Assets/PocketCaravan/Maps/Naru.json'
+        if current.exists() and json.loads(current.read_text()).get('boundaryLayoutVersion')==3:raise ValueError('T3 approved layout: use t3_install.py; M4 production export would restore obsolete boundaries')
     if a.bind_approved_flood:
         source=ROOT/'Assets/PocketCaravan/Maps/transit_wetroad.json'
         data=bind_approved_flood(json.loads(source.read_text()))
