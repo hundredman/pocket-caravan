@@ -15,8 +15,9 @@ namespace PocketCaravan.EditorTools
         public static bool Before;
         public static bool IntroOnly;
         public static bool TeamAudit;
+        public static bool ScaleAudit;
         public static Action<int,int> Resize;
-        static string Out=>TeamAudit?"ArtReview/Goryeo-Team-Audit-20261107/":IntroOnly?"ArtReview/Goryeo-Intro-Bottom-20261107/":"ArtReview/Goryeo-Compact-Labels-20261107/";
+        static string Out=>ScaleAudit?"ArtReview/Goryeo-Common-Scale-20261107/":TeamAudit?"ArtReview/Goryeo-Team-Audit-20261107/":IntroOnly?"ArtReview/Goryeo-Intro-Bottom-20261107/":"ArtReview/Goryeo-Compact-Labels-20261107/";
         const BindingFlags F=BindingFlags.Instance|BindingFlags.NonPublic;
         [Serializable] class Scope { public ScopeMap[] maps; }
         [Serializable] class ScopeMap { public string id; }
@@ -40,10 +41,12 @@ namespace PocketCaravan.EditorTools
         IEnumerator Photo(string name){yield return Frames();var t=ScreenCapture.CaptureScreenshotAsTexture();File.WriteAllBytes(Out+(Before?"before-":"after-")+name+".png",t.EncodeToPNG());Check(t.width==Screen.width&&t.height==Screen.height,"native capture "+name);Destroy(t);}
         void Focus(Interactable it){var pc=PlayerController.Instance;var cam=Camera.main;cam.GetComponent<CameraFollow>().enabled=false;cam.orthographicSize=8.4375f;cam.transform.position=it.transform.position+new Vector3(0,-2,-10);pc.Motor.Teleport(it.transform.position+Vector3.down*1.3f-(Vector3)pc.Motor.feetOffset,Vector2Int.up);}
         bool sampleStyles; bool socialFontMatches, hintFontMatches;
+        float measuredScale, measuredHeight;int measuredBody,measuredSmall;
         void OnGUI()
         {
-            if(!TeamAudit||!sampleStyles||Camera.main==null||Camera.main.pixelWidth!=Screen.width||Camera.main.pixelHeight!=Screen.height)return;
+            if((!TeamAudit&&!ScaleAudit)||!sampleStyles||Camera.main==null||Camera.main.pixelWidth!=Screen.width||Camera.main.pixelHeight!=Screen.height)return;
             UIStyle.Begin();
+            measuredScale=UIStyle.Scale;measuredHeight=UIStyle.VirtualHeight;measuredBody=UIStyle.BodySize;measuredSmall=UIStyle.SmallSize;
             const BindingFlags flags=BindingFlags.Static|BindingFlags.NonPublic;
             var one=(GUIStyle)typeof(Social).GetProperty("OneLine",flags).GetValue(null);
             var center=(GUIStyle)typeof(Social).GetProperty("CenterLine",flags).GetValue(null);
@@ -94,12 +97,58 @@ namespace PocketCaravan.EditorTools
             Check(!UIState.Blocking,"well cancel releases input");
             Check(!gm.AutosaveEnabled&&!File.Exists(slot),"team comparison writes no save");
         }
+        IEnumerator ScaleComparison(GameManager gm)
+        {
+            sampleStyles=true;
+            foreach(string scene in new[]{"Naru","venice_rialto","north_birka","arabia_sanaa"}){
+                Resize(960,540);yield return Frames();yield return SceneManager.LoadSceneAsync(scene);yield return Frames();Quiet();gm.SetMemo("goryeo:intro",0);yield return Frames();
+                bool matches=Mathf.Abs(measuredScale-540f/360f)<.001f&&measuredHeight==360&&measuredBody==11&&measuredSmall==9;
+                Check(matches==(!Before||scene!="Naru"),(Before?"baseline":"fixed")+" common scale="+matches+" "+scene+" scale="+measuredScale+" body="+measuredBody);
+                yield return Photo("hud-"+scene);
+            }
+            yield return SceneManager.LoadSceneAsync("Naru");yield return Frames();Quiet();
+            foreach(var size in new[]{new Vector2Int(480,270),new Vector2Int(960,540),new Vector2Int(1280,720),new Vector2Int(1920,1080)}){
+                Resize(size.x,size.y);yield return Frames();
+                if(!Before)Check(Mathf.Abs(measuredScale-size.y/360f)<.001f&&measuredHeight==360,"same team scale at "+size);
+                var intro=FindFirstObjectByType<GoryeoIntro>();gm.SetMemo("goryeo:intro",1);yield return Photo("guide-"+size.x+"x"+size.y);
+                Check(intro.GuideRect.xMin>=0&&intro.GuideRect.yMin>=0&&intro.GuideRect.xMax<=UIStyle.VirtualWidth&&intro.GuideRect.yMax<=UIStyle.VirtualHeight,"guide in viewport "+size);
+            }
+            Resize(960,540);yield return Frames();var tutorial=FindFirstObjectByType<GoryeoIntro>();
+            if(!Before){
+                gm.SetMemo("goryeo:intro",3);
+                typeof(HUD).GetField("expandedUntil",BindingFlags.Static|BindingFlags.NonPublic).SetValue(null,Time.unscaledTime+30);
+                yield return Photo("guide-expanded-help");
+                Check(HUD.Expanded&&tutorial.GuideRect.yMax<=UIStyle.VirtualHeight-HUD.BottomReserved,"task card avoids expanded common HUD help");
+                typeof(HUD).GetField("expandedUntil",BindingFlags.Static|BindingFlags.NonPublic).SetValue(null,-1f);yield return Frames();
+            }
+            for(int task=0;task<8;task++){
+                Notify.Clear();gm.SetMemo("goryeo:intro",task+2);
+                typeof(GoryeoIntro).GetMethod("Done",F).Invoke(tutorial,new object[]{task});yield return Frames();
+                var entries=(System.Collections.IList)typeof(Notify).GetField("entries",BindingFlags.NonPublic|BindingFlags.Static).GetValue(null);
+                Check(Before?entries.Count==1:entries.Count==0,(Before?"baseline duplicate":"single card")+" tutorial transition "+task);
+                if(task==0||task==7)yield return Photo("next-task-"+task);
+            }
+            Notify.Clear();gm.SetMemo("goryeo:intro",3);
+            Notify.Show("검토용 보상 알림 · 물품을 전달해 사례비 3냥을 받았습니다. 거래 결과가 장부에 남았습니다.",30);
+            yield return Photo("reward-with-guide");
+            if(!Before){
+                var rectangles=(IEnumerable<Rect>)typeof(Notify).GetField("DrawnRects",BindingFlags.Public|BindingFlags.Static).GetValue(null);
+                int count=0;foreach(var r in rectangles){count++;Check(!r.Overlaps(tutorial.GuideRect),"reward toast avoids task card");Check(r.xMin>=0&&r.xMax<=UIStyle.VirtualWidth&&r.yMin>=0&&r.yMax<=UIStyle.VirtualHeight,"toast stays in viewport");}Check(count>0,"important reward toast retained");
+            }
+            Notify.Clear();gm.SetMemo("goryeo:intro",0);yield return Frames();
+            var inventory=FindFirstObjectByType<InventoryUI>();inventory.Open();yield return Photo("inventory");Check(inventory.IsOpen,"common inventory still opens");inventory.Close();yield return Frames();
+            var market=FindFirstObjectByType<TownMarket>();market.Interact(PlayerController.Instance);yield return Photo("market");Check(UIState.Blocking,"market modal retained");typeof(TownMarket).GetMethod("Close",F).Invoke(market,null);yield return Frames();
+            InputReader.Press('q');yield return Frames();yield return Photo("quest-log");InputReader.Press('q');yield return Frames();Check(!UIState.Blocking,"quest log closes");
+            InputReader.Press('m');yield return Frames();yield return Photo("map");InputReader.Press('m');yield return Frames();Check(!UIState.Blocking,"map closes");
+            Check(!gm.AutosaveEnabled&&!File.Exists(slot),"common scale review writes no save");
+        }
         IEnumerator Run()
         {
             var gm=GameManager.I;Check(gm!=null&&!gm.AutosaveEnabled,"SaveOFF bootstrap");
             var login=FindFirstObjectByType<NetLogin>();if(login!=null)typeof(NetLogin).GetMethod("PlayAlone",F).Invoke(login,null);
             typeof(GameManager).GetField("firstSceneLoaded",F).SetValue(gm,true);
             SaveSystem.UseSlot("codex_compact_labels_"+Guid.NewGuid().ToString("N")+".json");slot=SaveSystem.CurrentPath;
+            if(ScaleAudit){yield return ScaleComparison(gm);yield break;}
             if(TeamAudit){yield return TeamComparison(gm);yield break;}
             Resize(480,270);yield return Frames();yield return SceneManager.LoadSceneAsync("Naru");yield return Frames();Quiet();gm.Clock.minuteOfDay=720;
             if(IntroOnly){

@@ -1,0 +1,45 @@
+{
+  "baselineChecks": 37,
+  "afterChecks": 46,
+  "beforeCaptures": 15,
+  "afterCaptures": 16,
+  "actualRegions": 4,
+  "viewports": [
+    "480x270",
+    "960x540",
+    "1280x720",
+    "1920x1080"
+  ],
+  "scale": "Screen.height/360 in all regions",
+  "font": "common Galmuri body11 small9",
+  "eightTutorialTransitionsEmitNoDuplicateToast": true,
+  "importantToastRetainedAndSeparated": true,
+  "expandedHudSpacingChecked": true,
+  "commonHudMoneyStatusCropRGBAEqual": {
+    "venice_rialto": true,
+    "north_birka": true,
+    "arabia_sanaa": true
+  },
+  "crop": [
+    60,
+    12,
+    188,
+    59
+  ],
+  "pythonTests": 403,
+  "pythonSkipped": 23,
+  "sourceTests": 2,
+  "worldExits": 1437,
+  "worldErrors": 0,
+  "personalSaveFilesUnchanged": 9,
+  "nativeHumanInput": false,
+  "online": false,
+  "build": false,
+  "remotePushed": false,
+  "visualApproval": "pending",
+  "existingOtherRegionHudCropUnchangedRGBA": {
+    "venice_rialto": true,
+    "north_birka": true,
+    "arabia_sanaa": true
+  }
+}
