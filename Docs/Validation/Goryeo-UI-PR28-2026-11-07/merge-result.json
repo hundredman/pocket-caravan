@@ -1,0 +1,34 @@
+{
+  "headRefOid": "032c051a8a85ca349946c63875f154b790db788d",
+  "mergeCommit": {
+    "oid": "0a668f47a74da45de6fc400fd9d1ed93e6926d8e"
+  },
+  "mergedAt": "2026-11-07T06:43:13Z",
+  "number": 28,
+  "state": "MERGED",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-11-07T06:43:03Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/hundredman/pocket-caravan/actions/runs/42348128371/job/128330225058",
+      "name": "validate",
+      "startedAt": "2026-11-07T06:41:40Z",
+      "status": "COMPLETED",
+      "workflowName": "Region content checks"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-11-07T06:43:03Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/hundredman/pocket-caravan/actions/runs/42348124453/job/128330213164",
+      "name": "validate",
+      "startedAt": "2026-11-07T06:41:37Z",
+      "status": "COMPLETED",
+      "workflowName": "Region content checks"
+    }
+  ],
+  "url": "https://github.com/hundredman/pocket-caravan/pull/28",
+  "teamNoticeSent": false,
+  "noticePolicy": "post-merge; user forwards prepared Kakao text"
+}

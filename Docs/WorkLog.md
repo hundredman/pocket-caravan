@@ -418,3 +418,5 @@
 - 2026-11-07 Codex 통합 준비(이 커밋): 사용자 integration 즉시 병합 지시와 사후 공지 전환을 AgentGuide에 반영. 대상은 PR27 이후 초상/수레/이름표·창 동시열림/채팅 안내·낚시/튜토리얼 추적 UI·5분 데모 문서. integration이 현재HEAD의 조상(미반영10커밋), 충돌 없음. 원격 병합 결과는 후속 기록. 개인 실험/설정 변경은 제외.
 
 - 2026-11-07 Codex PR28 통합 검사(이 커밋): 분리된 추적파일 체크아웃50c5feb26에서 Python403/23skip·세계1437/0오류·diff공백검사 통과, 현재Unity콘솔error0(새Play 재실행아님). integration 조상관계/충돌없음·공용변경PR기재·DB/맵/씬/설정/개인실험제외. 사용자 즉시병합/사후공지 지시로 PR28 준비, 원격검사완료 후 병합. Docs/Validation/Goryeo-UI-PR28-2026-11-07/.
+
+- 2026-11-07 Codex PR28 병합 기록(이 커밋): 사용자 즉시병합/사후공지 지시로 GitHub integration 병합완료(0a668f47a, 검증head032c051a8·원격검사2성공·로컬403/23skip·출구1437/0오류). fetch로 원격포함 확인·통합용임시worktree정리·개인설정/실험보존. 사후 카톡 전달문안 제공, 직접발송없음. 재시작으로 풀린 이동막힘원인/실온라인/장시간성능/5분유저리허설미확인. PR https://github.com/hundredman/pocket-caravan/pull/28.
