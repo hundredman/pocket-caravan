@@ -7,7 +7,9 @@
 //   지우기 --앞 계정시험     이름이 "계정시험"으로 시작하는 계정 모두 (시험 계정 정리)
 //   내보내기 <이름>          그 사람의 접속을 끊는다 (게임이 다시 접속하지 않는다)
 //   알림 "<글>"              접속한 모두에게 알림 (120자까지)
-// 영어 명령도 된다: status · accounts · reset · delete (--prefix) · kick · notice
+//   저장기록 <이름>          그 사람의 게임 저장 기록 (지금 것 + 예전 것 최근 5개, 번호 포함)
+//   되돌리기 <이름> <번호>    예전 게임 저장으로 되돌린다. 그 사람이 다시 로그인하면 "서버 것 / 이 컴퓨터 것" 고르는 창이 뜬다
+// 영어 명령도 된다: status · accounts · reset · delete (--prefix) · kick · notice · saves · restore
 // 관리 키: 환경 변수 ADMIN_KEY, 없으면 Server/.dev.vars의 ADMIN_KEY. 올린 서버에도 같은 값을 넣어 둔다
 //   (npx wrangler secret put ADMIN_KEY)
 import { readFileSync } from "node:fs";
@@ -81,6 +83,8 @@ switch (cmd) {
   case "상태": case "status": {
     const s = await call("GET", "status");
     console.log(`접속 ${s.online}명 · 계정 ${s.accounts}개 · 공유 장터 거래 ${s.tradeSeq}번째까지 (남겨 둔 것 ${s.tradesKept}건, 마지막 ${when(s.lastTradeAt)})`);
+    if (s.usage) console.log(`오늘(${s.usage.day} UTC) 사용량 어림: ${s.usage.estimate.toLocaleString()} / ${s.usage.limit.toLocaleString()}번 `
+      + `(${(s.usage.estimate / s.usage.limit * 100).toFixed(1)}% · 접속 ${s.usage.opens} · 메시지 ${s.usage.msgs} · 관리 ${s.usage.admin})`);
     if (s.players.length) table(s.players.map((p) => [p.name, p.id, p.account ? "계정" : "손님", p.look || "-", p.map || "-", `${p.quietSec}초`]),
       ["이름", "번호", "종류", "출신", "맵", "조용한 시간"]);
     break;
@@ -122,6 +126,23 @@ switch (cmd) {
     if (!text) fail('알림 글을 넣어 주세요: 알림 "5분 뒤 서버 점검"');
     const r = await call("POST", "notice", { text });
     console.log(`${r.sent}명에게 보냈어요: ${r.text}`);
+    break;
+  }
+  case "저장기록": case "saves": {
+    if (!rest[0]) fail("이름을 넣어 주세요: 저장기록 <이름>");
+    const r = await call("POST", "saves", { name: rest[0] });
+    const row = (f) => [`${f.day}일째`, `${f.money}냥`, f.map || "-", when(f.saved)];
+    if (!r.current) { console.log(`'${r.name}'은(는) 서버에 게임 저장이 없어요.`); break; }
+    table([["지금", ...row(r.current)], ...r.history.map((x) => [`${x.slot}번`, ...row(x)])], ["번호", "날", "돈", "맵", "올린 때"]);
+    if (r.history.length) console.log(`되돌리려면: 되돌리기 ${r.name} <번호>`);
+    break;
+  }
+  case "되돌리기": case "restore": {
+    const slot = Number(rest[1]);
+    if (!rest[0] || !Number.isInteger(slot)) fail("이름과 번호를 넣어 주세요: 되돌리기 <이름> <번호>  (번호는 저장기록에서)");
+    const r = await call("POST", "restore", { name: rest[0], slot });
+    console.log(`'${r.name}' 게임 저장을 ${r.day}일째 · ${r.money}냥 (${r.map || "-"})으로 되돌렸어요. 지금 것도 기록에 남겼어요.`);
+    console.log("그 사람이 게임을 다시 켜서 로그인하면 고르는 창이 떠요. \"서버 것으로 하기\"를 고르면 돼요.");
     break;
   }
   default:

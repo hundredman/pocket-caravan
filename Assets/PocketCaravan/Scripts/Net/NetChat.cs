@@ -189,8 +189,10 @@ namespace PocketCaravan
                 var names = new List<string>();
                 foreach (var c in Commands) names.Add("/" + c.name);
                 Add($"<color={DimColor}>리액션: {string.Join(" ", names)}</color>");
+                Add($"<color={DimColor}>/선물 이름 물건 개수 · /선물 이름 100냥 · /순위</color>");
                 return;
             }
+            if (NetGift.TryCommand(word) || NetScores.TryCommand(word)) return;   // 11/07 선물 · 순위표
             foreach (var c in Commands)
                 if (global::System.Array.IndexOf(c.words, w) >= 0)
                 {

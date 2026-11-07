@@ -67,9 +67,30 @@ namespace PocketCaravan
             // 9단계 (11/05): 관리자가 지운 접속키를 이번에 새로 정했다
             public bool newPass;
             // 10단계 (11/07): 게임 저장 통째로. fullOk = 이 서버가 받는다, full = 서버 저장 요약(없으면 h가 빈 글), h·zip = 받은 저장
-            public bool fullOk;
+            public bool fullOk, extras;
             public FullInfo full;
             public string h, zip;
+            // 11단계 (11/07): 순위표(board·value·best·rank·boards) · 선물(gid·from·to·money·cost·ok)
+            public string board, gid, from, to;
+            public int value, best, rank, money;
+            public float cost;
+            public bool ok;
+            public List<Board> boards;
+        }
+
+        /// <summary>순위표 한 판 (id: "money" 부자 상인 · "gondola" 곤돌라 경주 …)</summary>
+        [Serializable]
+        public class Board
+        {
+            public string id;
+            public List<BoardRow> rows = new List<BoardRow>();
+        }
+
+        [Serializable]
+        public class BoardRow
+        {
+            public string name;
+            public int value;
         }
 
         /// <summary>서버에 저장된 게임 저장 요약 (at: 그 컴퓨터에서 저장 파일을 쓴 시각 ms, h: 저장 글의 SHA-256)</summary>
@@ -139,6 +160,8 @@ namespace PocketCaravan
         public int Retries => retries;
         /// <summary>접속키로 들어온 계정이면 true (돈·짐이 서버에 저장된다)</summary>
         public bool IsAccount { get; private set; }
+        /// <summary>서버가 순위표·선물(11단계)을 안다 (welcome.extras). 예전 서버면 false</summary>
+        public bool ServerExtras { get; private set; }
         /// <summary>접속한 서버 주소 (공유 장터가 서버마다 받은 거래 번호를 따로 기억한다)</summary>
         public string Address => target != null ? target.ToString() : "";
         public int OnlineCount { get; private set; }
@@ -284,6 +307,7 @@ namespace PocketCaravan
             Interlocked.Exchange(ref lastHeardTicks, 0);
             MyId = "";
             IsAccount = false;
+            ServerExtras = false;
             OnlineCount = 0;
             peers.Clear();
             sentMap = null;
@@ -457,6 +481,7 @@ namespace PocketCaravan
                     MyId = msg.id;
                     MyName = string.IsNullOrEmpty(msg.name) ? msg.id : msg.name;
                     IsAccount = msg.account;
+                    ServerExtras = msg.extras;
                     OnlineCount = msg.online;
                     LastError = "";
                     string asked = askedName;

@@ -138,6 +138,7 @@ namespace PocketCaravan
             endShown = Time.unscaledTime + .8f;
             int total = score + Mathf.RoundToInt(t * 2f);
             score = total;
+            NetScores.Report("gondola", total);   // 11/07 온라인 순위표 (계정으로 접속했을 때만)
             var gm = GameManager.I;
             int prize = Mathf.Min(80, total / 10);
             gm.Player.money += prize;
