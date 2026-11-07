@@ -36,8 +36,8 @@ namespace PocketCaravan
         {
             var gm = GameManager.I;
             if (IsOpen || UIState.Blocking || gm == null || gm.IsTravelling) return;
+            if (!UIState.TryOpen(this, Close)) return;
             IsOpen = true;
-            UIState.Blocking = true;
             Sfx.Play("open");
         }
 
@@ -45,7 +45,7 @@ namespace PocketCaravan
         {
             if (!IsOpen) return;
             IsOpen = false;
-            UIState.Release();
+            UIState.Release(this);
         }
 
         void Update() { if (IsOpen && InputReader.CancelPressed()) Close(); }

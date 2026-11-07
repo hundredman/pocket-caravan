@@ -15,15 +15,15 @@ namespace PocketCaravan
             if (!InputReader.CancelPressed()) return;
             if (open) { Close(); return; }
             if (UIState.Blocking || UIState.JustClosed || GameManager.I == null || GameManager.I.IsTravelling) return;
+            if (!UIState.TryOpen(this, Close)) return;
             open = true; confirmNew = false; message = "";
-            UIState.Blocking = true;
             Sfx.Play("open");
         }
 
         void Close()
         {
             open = false;
-            UIState.Release();
+            UIState.Release(this);
         }
 
         void OnGUI()
@@ -59,7 +59,7 @@ namespace PocketCaravan
             if (Button(ref y, r, AudioManager.Muted ? "소리 켜기" : "소리 끄기")) AudioManager.ToggleMute();
             if (Button(ref y, r, confirmNew ? "정말 처음부터? (한 번 더)" : "처음부터 시작"))
             {
-                if (confirmNew) { open = false; UIState.Release(); GameManager.NewGame(); return; }
+                if (confirmNew) { open = false; UIState.Release(this); GameManager.NewGame(); return; }
                 confirmNew = true;
             }
             GUI.Label(new Rect(r.x+16, r.yMax-36, w-32, 30), message, statusStyle);

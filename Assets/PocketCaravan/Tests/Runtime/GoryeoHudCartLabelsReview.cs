@@ -15,7 +15,7 @@ namespace PocketCaravan.EditorTools
     /// <summary>Editor-only text palette and real UI comparison. No server connection or user save writes.</summary>
     public sealed class GoryeoHudCartLabelsReview : MonoBehaviour
     {
-        const string Out="ArtReview/Goryeo-HUD-Cart-Labels-20261107/";
+        const string Out="ArtReview/Goryeo-Nameplate-Readable-20261107/";
         const BindingFlags Flags = BindingFlags.Instance | BindingFlags.NonPublic;
         [Serializable] class Report { public bool complete; public string error; public List<string> checks = new List<string>(); }
         readonly Report report = new Report();
@@ -110,6 +110,11 @@ namespace PocketCaravan.EditorTools
         void CheckBoard(GoryeoPlaceLabels labels)
         {
             Check(labels.BoardRects.Count>0,"real board art protection exists");
+            var style=(GUIStyle)typeof(GoryeoPlaceLabels).GetField("nameStyle",BindingFlags.NonPublic|BindingFlags.Static).GetValue(null);
+            Check(style.font==UIStyle.RegularFont&&style.fontSize==UIStyle.BodySize,"nameplates use readable body font");
+            Check(Vector4.Distance(style.normal.textColor,UIStyle.Lin(CuteUI.Text))<.00001f,"nameplates use dark paper text color");
+            bool pairs=true;for(int i=0;i<labels.DrawnRects.Count;i++)for(int j=0;j<i;j++)pairs &= !labels.DrawnRects[i].Overlaps(labels.DrawnRects[j]);
+            Check(pairs,"larger nameplates do not overlap each other");
             bool clear=true;foreach(var a in labels.DrawnRects)foreach(var b in labels.BoardRects)clear &= !a.Overlaps(b);
             Check(clear,"world names do not cover board artwork");Check(labels.DrawnNames.Contains("의뢰 게시판"),"board name still visible");
         }
@@ -129,13 +134,13 @@ namespace PocketCaravan.EditorTools
             if(origin.playerFrames!=null&&origin.playerFrames.Length>=16)
             {
                 gm.Player.origin=origin;pc.anim.frames=origin.playerFrames;
-                pc.anim.facing=Vector2Int.down;pc.anim.walking=false;yield return Frames();legacyPortrait=true;yield return Photo("portrait-before-"+origin.id);legacyPortrait=false;
+                pc.anim.facing=Vector2Int.down;pc.anim.walking=false;yield return Frames();legacyPortrait=true;yield return Photo("portrait-before-"+origin.id);var legacyPixels=PortraitPixels();legacyPortrait=false;
                 Color32[] first=null;int index=0;
                 foreach(var facing in new[]{Vector2Int.down,Vector2Int.up,Vector2Int.left,Vector2Int.right})
                 {
                     pc.anim.facing=facing;yield return Frames();yield return Photo("portrait-after-"+origin.id+"-"+index);
                     Check(source.Invoke(null,null)==origin.playerFrames[0],"portrait stays front for "+origin.id+" "+facing);
-                    var pixels=PortraitPixels();if(first==null)first=pixels;else Check(Equal(first,pixels),"portrait RGBA unchanged by facing "+origin.id+" "+facing);index++;
+                    var pixels=PortraitPixels();if(origin.id=="arabia")Check(Equal(legacyPixels,pixels),"fennec uses original portrait RGBA framing "+facing);if(first==null)first=pixels;else Check(Equal(first,pixels),"portrait RGBA unchanged by facing "+origin.id+" "+facing);index++;
                 }
             }
             }

@@ -5,17 +5,40 @@ namespace PocketCaravan
     /// <summary>창이 열려 있으면 이동과 시간을 멈춘다.</summary>
     public static class UIState
     {
-        public static bool Blocking;
-        /// <summary>창이 닫힌 프레임. 닫는 키(E)가 같은 프레임에 '말 걸기'로 또 쓰이지 않게 한다.</summary>
+        static bool legacyBlocking;
+        static UnityEngine.Object owner;
+        static System.Action closeOwner;
+        // 기존 지역 UI의 bool API는 유지하되 다른 창의 잠금을 풀지는 못한다.
+        public static bool Blocking { get => legacyBlocking || owner != null; set => legacyBlocking = value; }
         public static int ClosedFrame = -1;
+        public static bool JustClosed => Time.frameCount == ClosedFrame;
 
+        public static bool TryOpen(UnityEngine.Object next, System.Action close)
+        {
+            if (next == null) return false;
+            if (owner == next) return true;
+            if (Blocking) return false;
+            owner = next; closeOwner = close; legacyBlocking = false;
+            return true;
+        }
+        public static void Release(UnityEngine.Object caller)
+        {
+            if (caller == null || owner != caller) return;
+            owner = null; closeOwner = null; legacyBlocking = false; ClosedFrame = Time.frameCount;
+        }
         public static void Release()
         {
-            Blocking = false;
-            ClosedFrame = Time.frameCount;
+            if (owner != null) return;
+            legacyBlocking = false; ClosedFrame = Time.frameCount;
         }
-
-        public static bool JustClosed => Time.frameCount == ClosedFrame;
+        public static void Reset()
+        {
+            var close = closeOwner;
+            owner = null; closeOwner = null; legacyBlocking = false; ClosedFrame = Time.frameCount;
+            close?.Invoke();
+        }
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics() { owner = null; closeOwner = null; legacyBlocking = false; ClosedFrame = -1; }
     }
 
     /// <summary>

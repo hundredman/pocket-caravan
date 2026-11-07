@@ -510,6 +510,15 @@ namespace PocketCaravan
             var sprite = PortraitSource();
             if (sprite == null) { Icon(Pic.Coin, x + d / 2f - 4, y + d / 2f - 4); return; }
             var tr = sprite.rect;
+            var origin = GameManager.I != null ? GameManager.I.Player.origin : null;
+            if (origin != null && origin.id == "arabia")
+            {
+                // 사막여우는 사용자가 선호한 이전 크기/범위를 유지하되 정면은 고정한다.
+                float showW = Mathf.Min(tr.width, d - 8), showH = Mathf.Min(tr.height * .6f, d - 8);
+                var oldPart = new Rect((1f - showW / tr.width) / 2f, 1f - showH / tr.height, showW / tr.width, showH / tr.height);
+                Sprite(sprite, new Rect(x + (d - showW) / 2f, y + 4, showW, showH), oldPart);
+                return;
+            }
             float headHeight = Mathf.Min(tr.height, Mathf.Ceil(tr.height * .75f));
             float scale = Mathf.Min((d - 10f) / tr.width, (d - 10f) / headHeight);
             float w = tr.width * scale, h = headHeight * scale;
@@ -649,6 +658,16 @@ namespace PocketCaravan
             Box(new Rect(x, y, w, 17), 7, Paper, Ink, 1, 2, SoftShadow);
             Keycap(x + 3, y + 2, "Space", true);
             Label(x + 3 + kw + 5, y + 8.5f, verb, Text, true);
+        }
+
+        /// <summary>게시판 바로 아래의 작은 키 안내. 클릭 버튼을 새로 만들지 않는다.</summary>
+        public static Rect CompactSpacePrompt(float cx, float y, string verb)
+        {
+            float kw=KeycapWidth("Space"), w=Mathf.Round(kw+Width(verb,true)+12);
+            var r=new Rect(Mathf.Round(cx-w/2),Mathf.Round(y),w,13);
+            Box(r,3,Paper,Line);Keycap(r.x,r.y,"Space",true);
+            Label(r.x+kw+4,r.y+6.5f,verb,Text,true);
+            return r;
         }
 
         /// <summary>보조 버튼 (종이색 + 진한 테). 눌리면 true</summary>

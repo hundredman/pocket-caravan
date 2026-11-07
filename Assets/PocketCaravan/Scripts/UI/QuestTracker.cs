@@ -17,17 +17,12 @@ namespace PocketCaravan
         {
             if (GameManager.I == null) return;
             GameManager.I.Quests.Tick();
-            if (InputReader.QuestLogPressed() && (logOpen || !UIState.Blocking))
-            {
-                logOpen = !logOpen;
-                if (logOpen) UIState.Blocking = true; else UIState.Release();
-            }
-            else if (logOpen && InputReader.CancelPressed())
-            {
-                logOpen = false;
-                UIState.Release();
-            }
+            if (logOpen && (InputReader.QuestLogPressed() || InputReader.CancelPressed())) CloseLog();
+            else if (InputReader.QuestLogPressed() && !UIState.Blocking && !UIState.JustClosed && !GameManager.I.IsTravelling
+                && UIState.TryOpen(this, CloseLog)) logOpen = true;
         }
+        void CloseLog() { logOpen = false; UIState.Release(this); }
+        void OnDisable() { if (logOpen) CloseLog(); }
 
         void OnGUI()
         {

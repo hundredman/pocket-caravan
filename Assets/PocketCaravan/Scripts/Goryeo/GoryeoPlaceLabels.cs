@@ -26,6 +26,7 @@ namespace PocketCaravan
         readonly System.Collections.Generic.List<Rect> boardLayoutRects=new System.Collections.Generic.List<Rect>();
         public readonly System.Collections.Generic.List<Rect> BoardRects=new System.Collections.Generic.List<Rect>();
         Vector2 guiOrigin;
+        Rect compactPrompt;
         MapRoot map;WorldLabels original;bool originalEnabled,ownsOriginal;
         public bool OwnsOriginal=>ownsOriginal;
         public bool OriginalEnabled=>originalEnabled;
@@ -52,27 +53,31 @@ namespace PocketCaravan
         void Name(Vector2 p,string text,Color color,bool place)
         {
             if(string.IsNullOrEmpty(text)||DrawnRects.Count>=48)return;
-            float width=Mathf.Min(UIStyle.VirtualWidth-8,Mathf.Ceil(nameStyle.CalcSize(new GUIContent(text)).x)+8);
+            float width=Mathf.Min(UIStyle.VirtualWidth-8,Mathf.Ceil(nameStyle.CalcSize(new GUIContent(text)).x)+14);
             // 겹침 검사는 카메라와 무관한 좌표에서 한다. 화면 가장자리에 이름을 몰아 붙이지 않는다.
-            var rect=new Rect(Mathf.Round(p.x-width/2-guiOrigin.x),Mathf.Round(p.y-8-guiOrigin.y),width,14);
+            float height=Mathf.Max(18,Mathf.Ceil(nameStyle.CalcSize(new GUIContent(text)).y)+6);
+            var rect=new Rect(Mathf.Round(p.x-width/2-guiOrigin.x),Mathf.Round(p.y-height/2-guiOrigin.y),width,height);
             for(int shift=0;shift<12;shift++)
             {
                 bool overlap=false;
                 foreach(var other in layoutRects)if(other.Overlaps(rect)){overlap=true;break;}
                 if(!overlap)foreach(var other in boardLayoutRects)if(other.Overlaps(rect)){overlap=true;break;}
-                if(!overlap)break;rect.y-=15;
+                if(!overlap)break;rect.y-=height+2;
             }
             foreach(var other in layoutRects)if(other.Overlaps(rect))return;
             foreach(var other in boardLayoutRects)if(other.Overlaps(rect))return;
             layoutRects.Add(rect);rect.position+=guiOrigin;
             if(rect.x<4||rect.xMax>UIStyle.VirtualWidth-4||rect.y<25||rect.yMax>UIStyle.VirtualHeight-44)return;
             DrawnRects.Add(rect);DrawnNames.Add(text);
-            if(place){var old=GUI.color;GUI.color=new Color(.10f,.08f,.13f,.88f);GUI.DrawTexture(rect,Texture2D.whiteTexture);GUI.color=old;}
-            Outlined(rect,text,color,nameStyle);
+            CuteUI.Box(rect,3,CuteUI.Paper,CuteUI.Line);
+            CuteUI.Fill(new Rect(rect.x+3,rect.y+5,2,rect.height-10),(Color32)color);
+            var ink=UIStyle.Lin(CuteUI.Text);
+            nameStyle.normal.textColor=nameStyle.hover.textColor=nameStyle.active.textColor=nameStyle.focused.textColor=ink;
+            GUI.Label(new Rect(rect.x+7,rect.y+2,rect.width-10,rect.height-4),text,nameStyle);
         }
         void OnGUI()
         {
-            DrawnRects.Clear();DrawnNames.Clear();layoutRects.Clear();boardLayoutRects.Clear();BoardRects.Clear();if(!Allowed||!ownsOriginal)return;
+            DrawnRects.Clear();DrawnNames.Clear();layoutRects.Clear();boardLayoutRects.Clear();BoardRects.Clear();compactPrompt=default;if(!Allowed||!ownsOriginal)return;
             var gm = GameManager.I;
             var cam = Camera.main;
             if (gm == null || cam == null || MapRoot.Current == null || UIState.Blocking) return;
@@ -87,7 +92,7 @@ namespace PocketCaravan
             // 1) 이름표
             foreach (var it in Interactable.All)
             {
-                Vector2 p = ToGui(cam, it.transform.position + new Vector3(0f, 1.0f, 0f));
+                Vector2 p = ToGui(cam, NameAnchor(it));
                 if(it is ContractBoard && ClosestBoard(p,out Rect board))p=new Vector2(board.center.x,board.yMin-12);
 
                 bool place=IsPlace(it);string label=LabelFor(it,player!=null?player.Motor.Feet:(Vector2)it.transform.position);
@@ -122,7 +127,8 @@ namespace PocketCaravan
                 string verb = !string.IsNullOrEmpty(player.TalkTarget.ActionVerb) ? player.TalkTarget.ActionVerb
                     : player.TalkTarget is DroppedCargo ? "줍기" : player.TalkTarget is ContractBoard ? "게시판 보기" : player.TalkTarget is TownMarket ? "사고팔기" : "말 걸기";
                 if(player.TalkTarget is ContractBoard && ClosestBoard(p,out Rect board))p=new Vector2(board.center.x,board.yMax+12);
-                CuteUI.SpacePrompt(p.x, p.y, verb);
+                if(player.TalkTarget is ContractBoard) compactPrompt=CuteUI.CompactSpacePrompt(p.x,p.y,"보기");
+                else CuteUI.SpacePrompt(p.x, p.y, verb);
             }
 
             // 3) 퀘스트 길 안내
@@ -163,6 +169,18 @@ namespace PocketCaravan
             }
             var s=cam.WorldToScreenPoint(world);
             return new Vector2(Mathf.Round(s.x/UIStyle.Scale),Mathf.Round((Screen.height-s.y)/UIStyle.Scale));
+        }
+
+        static Vector3 NameAnchor(Interactable it)
+        {
+            var anim=it.GetComponentInChildren<CharacterAnimator>();
+            if(anim!=null && anim.frames!=null && anim.frames.Length>0 && anim.frames[0]!=null)
+            {
+                // 걷기 프레임 윤곽 대신 정면의 고정 범위를 기준으로 삼는다.
+                var top=anim.transform.TransformPoint(anim.frames[0].bounds.max);
+                return new Vector3(it.transform.position.x,top.y+.8f,it.transform.position.z);
+            }
+            return it.transform.position+Vector3.up;
         }
 
         void CollectBoards(Camera cam)
@@ -213,9 +231,9 @@ namespace PocketCaravan
                 arrowTex = Triangle(12, 12, true);
                 downTex = Triangle(10, 8, false);
             }
-            if (nameStyle == null || nameStyle.font != UIStyle.SmallFont)
+            if (nameStyle == null || nameStyle.font != UIStyle.RegularFont || nameStyle.fontSize != UIStyle.BodySize)
             {
-                nameStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.SmallFont, alignment = TextAnchor.MiddleCenter, fontSize = UIStyle.SmallSize, clipping = TextClipping.Overflow };
+                nameStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.RegularFont, alignment = TextAnchor.MiddleCenter, fontSize = UIStyle.BodySize, clipping = TextClipping.Clip, padding = new RectOffset(0,0,0,0), richText = false };
                 shadowStyle = new GUIStyle(nameStyle);
                 shadowStyle.normal.textColor = new Color(0f, 0f, 0f, 0.8f);
                 guideStyle = new GUIStyle(nameStyle) { font = GUI.skin.font, fontSize = UIStyle.BodySize };

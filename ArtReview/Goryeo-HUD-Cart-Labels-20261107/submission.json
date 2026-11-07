@@ -1,10 +1,12 @@
 {
-  "status": "pending-user-approval",
+  "status": "partially-approved-followup-required",
   "runtimeChecks": 407,
   "nativeCaptures": 48,
   "portraitReference": "before view reconstructed with previous rendering code inside editor QA; new HUD is production code",
   "sheet": "review-sheet.png",
   "motion": "label-pan.gif",
   "movementStall": "not reproduced; user reports restart recovered; not marked fixed",
-  "remoteIntegrationChanged": false
+  "remoteIntegrationChanged": false,
+  "userFeedback": "일단 좋아. 다만 사막여우 초상화는 이전이 더 나은 것 같아. 물건/NPC 이름표 가독성 추가 보완 요청.",
+  "followup": "Docs/Goryeo/Handoff-2026-11-07-UI.md"
 }

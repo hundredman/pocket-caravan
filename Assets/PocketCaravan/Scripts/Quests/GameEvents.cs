@@ -28,7 +28,7 @@ namespace PocketCaravan
         {
             MapEntered = null; ItemBought = null; ItemSold = null; VehicleBought = null;
             ContractFinished = null; TownLeveled = null; ReputationContributed = null;
-            UIState.Blocking = false;
+            UIState.Reset();
             Notify.Clear();
         }
 

@@ -20,6 +20,9 @@ class LabelsTrial(unittest.TestCase):
   board_anchor='                if(player.TalkTarget is ContractBoard && ClosestBoard(p,out Rect board))p=new Vector2(board.center.x,board.yMax+12);\n'
   self.assertEqual(code.count(board_anchor),1)
   code=code.replace(board_anchor,'')
+  compact='                if(player.TalkTarget is ContractBoard) compactPrompt=CuteUI.CompactSpacePrompt(p.x,p.y,"보기");\n                else CuteUI.SpacePrompt(p.x, p.y, verb);'
+  self.assertEqual(code.count(compact),1)
+  code=code.replace(compact,'                CuteUI.SpacePrompt(p.x, p.y, verb);')
   common=(ROOT/'Assets/PocketCaravan/Scripts/UI/WorldLabels.cs').read_text()
   for start,end in [('            // 2) 말 걸기 안내','            // 3) 퀘스트 길 안내'),('            // 3) 퀘스트 길 안내','        static Vector2 ToGui')]:
    self.assertEqual(code[code.index(start):code.index(end)],common[common.index(start):common.index(end)])

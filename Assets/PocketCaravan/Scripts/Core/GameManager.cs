@@ -157,7 +157,7 @@ namespace PocketCaravan
             // HUD·대화·메뉴·NPC 시뮬레이션은 테스트 씬 자체 UI로 대체한다.
             foreach (var component in GetComponents<MonoBehaviour>()) component.enabled = false;
             foreach (var source in GetComponents<AudioSource>()) source.Stop();
-            UIState.Blocking = false;
+            UIState.Reset();
         }
 
         UnityEngine.Rendering.Universal.Light2D sun;
@@ -228,7 +228,7 @@ namespace PocketCaravan
         {
             bool first = !firstSceneLoaded;
             firstSceneLoaded = true;
-            UIState.Blocking = false;
+            UIState.Reset();
 
             // 지역 시험 세션: 그 지역 씬에서 Play를 시작하면 본편 저장 대신 전용 파일을 읽고 쓴다.
             bool startedRegionSession = first && TryBeginRegionSession();
@@ -339,7 +339,7 @@ namespace PocketCaravan
         {
             skipStartScreen = true;
             firstSceneLoaded = false;
-            UIState.Blocking = false;
+            UIState.Reset();
             OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
         }
 
@@ -353,7 +353,7 @@ namespace PocketCaravan
             Player.credit = choice.origin != null ? choice.origin.startingCredit : 0;
             Player.money = Db.startMoney;
             Player.reputation.Initialize(ReputationState.HomeOf(Player.origin));
-            UIState.Blocking = false;
+            UIState.Reset();
             StartCoroutine(Travel(choice.startScene, string.IsNullOrEmpty(choice.startSpawn) ? SpawnPoint.StartId : choice.startSpawn, 0f, default, null));
         }
 
@@ -575,7 +575,7 @@ namespace PocketCaravan
             I = null;
             if (old != null) { old.autosave = false; Destroy(old.gameObject); }
             GameEvents.ClearAll();
-            UIState.Blocking = false;
+            UIState.Reset();
             Boot();
             if (!string.IsNullOrEmpty(restart)) SceneManager.LoadScene(restart);
             else SceneManager.LoadScene(0);

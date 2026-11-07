@@ -36,6 +36,7 @@ namespace PocketCaravan
         public override void Interact(PlayerController player)
         {
             if (town == null) { Debug.LogWarning($"{name}: TownData가 비어 있습니다."); return; }
+            if (!UIState.TryOpen(this, Close)) return;
             open = true;
             openedFrame = Time.frameCount;
             message = "";
@@ -43,7 +44,6 @@ namespace PocketCaravan
             deal = null;
             if (selected == null) foreach (var item in ItemsShown(GameManager.I.Player)) { selected = item; break; }
             Observe();
-            UIState.Blocking = true;
             Sfx.Play("open");
         }
 
@@ -51,7 +51,7 @@ namespace PocketCaravan
         {
             open = false;
             deal = null;
-            UIState.Release();
+            UIState.Release(this);
         }
 
         void Update()
