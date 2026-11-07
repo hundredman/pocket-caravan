@@ -304,16 +304,7 @@ namespace PocketCaravan
                 float cx = Mathf.Round(sp.x / scale), by = Mathf.Round((Screen.height - sp.y) / scale);
                 // 11/05 B안 말풍선: 종이 + 테두리(내 말은 청록) + 아래 꼬리
                 var r = new Rect(Mathf.Round(cx - w / 2f - 6f), by - h - 10f, Mathf.Round(w + 12f), Mathf.Round(h + 7f));
-                var line = kv.Key == net.MyId ? CuteUI.Interact : CuteUI.Ink;
-                CuteUI.Box(r, 6, CuteUI.Paper, line, 1, 2, CuteUI.SoftShadow);
-                CuteUI.Fill(new Rect(cx - 3f, r.yMax - 1f, 7f, 1f), CuteUI.Paper);
-                CuteUI.Fill(new Rect(cx - 3f, r.yMax - 1f, 1f, 2f), line);
-                CuteUI.Fill(new Rect(cx + 3f, r.yMax - 1f, 1f, 2f), line);
-                CuteUI.Fill(new Rect(cx - 2f, r.yMax, 5f, 1f), CuteUI.Paper);
-                CuteUI.Fill(new Rect(cx - 2f, r.yMax + 1f, 1f, 1f), line);
-                CuteUI.Fill(new Rect(cx + 2f, r.yMax + 1f, 1f, 1f), line);
-                CuteUI.Fill(new Rect(cx - 1f, r.yMax + 1f, 3f, 1f), CuteUI.Paper);
-                CuteUI.Fill(new Rect(cx - 1f, r.yMax + 2f, 3f, 1f), line);
+                CuteUI.Bubble(r, cx, kv.Key == net.MyId ? CuteUI.Interact : CuteUI.Ink);
                 GUI.Label(new Rect(r.x + 6f, r.y + 3f, w, h), content, bubbleStyle);
             }
         }

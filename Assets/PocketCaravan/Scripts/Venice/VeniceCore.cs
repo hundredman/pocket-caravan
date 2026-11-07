@@ -64,6 +64,9 @@ namespace PocketCaravan
         public static bool InVenice => Map != null && Map.StartsWith("venice_");
         public static bool InMainland => Map != null && Map.StartsWith("venice_c_");
 
+        /// <summary>위 가운데 알약(할 일 줄 · 다음 이야기) 아래 빈 자리의 y (11/07 UI B안: 구역 이름·첫 안내가 겹치지 않게)</summary>
+        public static float TopFree => 6f + (QuestTracker.LineVisible ? 24f : 0f) + (StoryGuide.Showing ? 24f : 0f);
+
         /// <summary>맵 JSON 칸(위가 0) → 월드 좌표(칸 가운데)</summary>
         public static Vector3 Cell(int x, int y)
         {

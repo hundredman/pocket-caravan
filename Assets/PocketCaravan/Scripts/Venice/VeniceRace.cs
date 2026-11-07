@@ -164,9 +164,9 @@ namespace PocketCaravan
             GUI.depth = -25;
             float vw = UIStyle.VirtualWidth, vh = UIStyle.VirtualHeight;
             var old = GUI.color;
-            GUI.color = new Color(0f, 0f, 0f, .55f);
-            GUI.DrawTexture(new Rect(0, 0, vw, vh), Texture2D.whiteTexture);
-            var o = new Vector2((vw - W) / 2f, (vh - H) / 2f + 8f);
+            CuteUI.Dim();
+            var o = new Vector2(Mathf.Round((vw - W) / 2f), Mathf.Round((vh - H) / 2f + 8f));
+            CuteUI.Box(new Rect(o.x - 3f, o.y - 3f, W + 6f, H + 6f), 5, CuteUI.Ink, CuteUI.Ink, 1, 2);   // 11/07 UI B안: 운하 둘레 진한 테
             // 운하 물·물결
             GUI.color = new Color(.32f, .55f, .6f);
             GUI.DrawTexture(new Rect(o.x, o.y, W, H), Texture2D.whiteTexture);
@@ -235,15 +235,31 @@ namespace PocketCaravan
                 GUI.color = new Color(.55f, .38f, .2f); GUI.DrawTexture(new Rect(bx + 4, by + 16 + oar, 10, 2), Texture2D.whiteTexture);
             }
             GUI.color = old;
-            // 머리말
-            GUI.Label(new Rect(o.x, o.y - 18, W, 16), $"곤돌라 경주   점수 {score}   남은 {Mathf.Max(0, Duration - t):0}초   {new string('♥', 3 - hits)}{new string('♡', hits)}", UIStyle.CenterRich);
-            UIStyle.Bar(new Rect(o.x, o.y + H + 4, W, 6), stamina, new Color32(0x9F, 0xE0, 0xA0, 0xFF));
-            GUI.Label(new Rect(o.x, o.y + H + 11, W, 14), "<size=9>←→ 젓기 · Space 힘껏 젓기(노 힘)</size>", UIStyle.CenterRich);
+            // 11/07 UI B안 머리말: 종이 알약 하나에 점수 · 남은 시간 · 목숨 세 칸(빨강 = 남음)
+            string scoreText = $"점수 {score}", timeText = $"남은 {Mathf.Max(0, Duration - t):0}초";
+            float hw = Mathf.Round(10f + CuteUI.Width(scoreText, false, true) + 10f + CuteUI.Width(timeText, true) + 10f + 3 * 11f + 6f);
+            var head = new Rect(Mathf.Round(o.x + (W - hw) / 2f), o.y - 27f, hw, 19f);
+            CuteUI.Pill(head);
+            float hx = CuteUI.Label(head.x + 10f, head.center.y, scoreText, CuteUI.Text, false, true) + 10f;
+            hx = CuteUI.Label(hx, head.center.y + .5f, timeText, CuteUI.Sub, true) + 10f;
+            for (int i = 0; i < 3; i++) CuteUI.Circle(hx + i * 11f, head.y + 5f, 9, i < 3 - hits ? CuteUI.Alert : CuteUI.Paper2, i < 3 - hits ? CuteUI.Ink : CuteUI.Line);
+            // 노 힘 막대 + 키캡 안내
+            CuteUI.Bar(new Rect(o.x, o.y + H + 6f, W, 8f), stamina, CuteUI.Stamina, CuteUI.StaminaHi);
+            float kw = CuteUI.KeycapWidth("← →") + 3f + CuteUI.Width("젓기", true) + 12f + CuteUI.KeycapWidth("Space") + 3f + CuteUI.Width("힘껏 젓기", true);
+            float kx = Mathf.Round(o.x + (W - kw) / 2f), ky = o.y + H + 18f;
+            kx += CuteUI.Keycap(kx, ky, "← →") + 3f;
+            kx = CuteUI.Label(kx, ky + 6.5f, "젓기", CuteUI.White, true) + 12f;
+            kx += CuteUI.Keycap(kx, ky, "Space") + 3f;
+            CuteUI.Label(kx, ky + 6.5f, "힘껏 젓기", CuteUI.White, true);
             if (done)
             {
-                var r = new Rect(o.x + 10, o.y + H / 2f - 40, W - 20, 80);
-                GUI.Box(r, "", UIStyle.Box);
-                GUI.Label(new Rect(r.x + 8, r.y + 6, r.width - 16, r.height - 12), resultText + "\n<size=9>Space 닫기</size>", UIStyle.CenterRich);
+                var r = new Rect(o.x + 6f, Mathf.Round(o.y + H / 2f - 46f), W - 12f, 92f);
+                CuteUI.Window(r);
+                CuteUI.TitlePlate(r.center.x, r.y - 11f, "경주 끝!");
+                CuteUI.WrapCenter(r.x + 10f, r.y + 16f, r.width - 20f, resultText ?? "", CuteUI.Text);
+                float bx = Mathf.Round(r.center.x - (CuteUI.KeycapWidth("Space") + 3f + CuteUI.Width("닫기", true)) / 2f);
+                bx += CuteUI.Keycap(bx, r.yMax - 20f, "Space", true) + 3f;
+                CuteUI.Label(bx, r.yMax - 13.5f, "닫기", CuteUI.Text, true);
             }
         }
     }

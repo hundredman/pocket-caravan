@@ -102,32 +102,35 @@ namespace PocketCaravan
             if (!playing) return;
             UIStyle.Begin();
             GUI.depth = -20;
-            float w = 300f, h = 128f;
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2f, UIStyle.VirtualHeight / 2f - h / 2f, w, h);
-            GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(new Rect(r.x + 12, r.y + 8, w - 24, 18), $"무라노 유리 불기   {Mathf.Min(round + 1, 3)} / 3", UIStyle.Rich);
-            // 유리 방울 (맞힐수록 커진다)
-            float glob = 8f + hits * 6f;
-            var c = GUI.color;
-            GUI.color = new Color(1f, .62f, .25f, .95f);
-            GUI.DrawTexture(new Rect(r.x + w - 40 - glob / 2f, r.y + 34 - glob / 2f + 10f, glob, glob), Texture2D.whiteTexture);
-            // 열 막대: 빨강 → 금빛 칸 → 빨강, 바늘
-            var bar = new Rect(r.x + 16, r.y + 62, w - 32, 16);
-            GUI.color = new Color(.45f, .16f, .1f, 1f);
-            GUI.DrawTexture(bar, Texture2D.whiteTexture);
-            GUI.color = new Color(1f, .82f, .3f, 1f);
-            GUI.DrawTexture(new Rect(bar.x + (zone - zoneW / 2f) * bar.width, bar.y, zoneW * bar.width, bar.height), Texture2D.whiteTexture);
-            GUI.color = Color.white;
-            GUI.DrawTexture(new Rect(bar.x + needle * bar.width - 1.5f, bar.y - 4, 3, bar.height + 8), Texture2D.whiteTexture);
-            // 지난 결과
+            // 11/07 UI B안: 종이 창 + 주황 제목. 왼쪽 위 세 번의 결과(초록 맞힘 · 빨강 놓침 · 회색 아직),
+            // 오른쪽 위 유리 방울(맞힐수록 커진다), 가운데 열 막대(금빛 칸에 바늘을 맞춘다), 아래 안내 키캡 또는 결과
+            const float w = 300f, h = 136f;
+            var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2f), Mathf.Round(UIStyle.VirtualHeight / 2f - h / 2f), w, h);
+            CuteUI.Window(r);
+            CuteUI.TitlePlate(r.center.x, r.y - 11f, "무라노 유리 불기");
             for (int i = 0; i < 3; i++)
             {
-                GUI.color = i < round ? (results[i] ? new Color(.5f, .9f, .5f) : new Color(.9f, .4f, .35f)) : new Color(.6f, .6f, .6f, .6f);
-                GUI.DrawTexture(new Rect(r.x + 16 + i * 14, r.y + 34, 10, 10), Texture2D.whiteTexture);
+                var fill = i < round ? (results[i] ? CuteUI.Up : CuteUI.Down) : CuteUI.Paper2;
+                CuteUI.Circle(r.x + 18f + i * 16f, r.y + 22f, 12, fill, i < round ? CuteUI.Ink : CuteUI.Line);
             }
-            GUI.color = c;
-            GUI.Label(new Rect(r.x + 12, r.y + 90, w - 24, 30),
-                resultUntil > 0f ? message : "Space: 불기   Esc: 그만두기", UIStyle.Rich);
+            CuteUI.Label(r.x + 70f, r.y + 28f, $"{Mathf.Min(round + 1, 3)} / 3번째", CuteUI.Sub, true);
+            int glob = 10 + hits * 6;
+            CuteUI.Circle(r.xMax - 34f - glob / 2f, r.y + 34f - glob / 2f, glob, CuteUI.Frame, CuteUI.Ink, 1, 2);
+            CuteUI.Fill(new Rect(r.xMax - 34f - glob / 4f, r.y + 34f - glob / 4f, 2f, 2f), CuteUI.White);   // 유리 반짝임
+            var bar = new Rect(r.x + 18f, r.y + 60f, w - 36f, 16f);
+            CuteUI.Box(bar, 4, new Color32(0x8A, 0x2C, 0x1C, 0xFF), CuteUI.Ink);
+            CuteUI.Fill(new Rect(bar.x + 1f + (zone - zoneW / 2f) * (bar.width - 2f), bar.y + 1f, zoneW * (bar.width - 2f), bar.height - 2f), CuteUI.Deco);
+            float nx = Mathf.Round(bar.x + needle * bar.width);
+            CuteUI.Box(new Rect(nx - 2f, bar.y - 5f, 5f, bar.height + 10f), 2, CuteUI.White, CuteUI.Ink);
+            if (resultUntil > 0f) CuteUI.WrapCenter(r.x + 14f, r.y + 88f, w - 28f, message ?? "", CuteUI.Text);
+            else
+            {
+                float x = r.center.x - (CuteUI.KeycapWidth("Space") + CuteUI.Width(" 불기", true) + 14f + CuteUI.KeycapWidth("Esc") + CuteUI.Width(" 그만두기", true)) / 2f;
+                x += CuteUI.Keycap(x, r.y + 96f, "Space", true);
+                x = CuteUI.Label(x + 3f, r.y + 102.5f, "불기", CuteUI.Text, true) + 14f;
+                x += CuteUI.Keycap(x, r.y + 96f, "Esc", true);
+                CuteUI.Label(x + 3f, r.y + 102.5f, "그만두기", CuteUI.Text, true);
+            }
         }
     }
 }

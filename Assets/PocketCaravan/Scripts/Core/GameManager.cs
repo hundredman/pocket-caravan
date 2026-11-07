@@ -334,6 +334,21 @@ namespace PocketCaravan
             }
         }
 
+        /// <summary>
+        /// 온라인 계정에 저장된 게임으로 이 컴퓨터 저장을 바꾼다 (2026-11-07, Net/NetSave). 시작 화면이 떠 있고 아직 게임을 시작하지 않았을 때만.
+        /// 저장 파일에 쓰고(예전 파일은 SaveSystem이 .bak으로 남긴다) 다시 읽어서, "이어하기"가 그 저장으로 시작하게 한다.
+        /// </summary>
+        public bool UseSaveFromServer(SaveData d)
+        {
+            if (d == null || !StartScreen.IsOpen || skipStartScreen || SaveSystem.UsingSeparateSlot) return false;
+            if (!SaveSystem.Write(d)) return false;
+            var read = SaveSystem.Read();
+            if (read == null) return false;
+            saveToLoad = read;
+            StartScreen.Open(true);
+            return true;
+        }
+
         /// <summary>시작 화면 "이어하기": 붙잡아 둔 첫 씬 처리를 그대로 이어간다 (저장 불러오기 포함).</summary>
         public void ContinueFromStartScreen()
         {

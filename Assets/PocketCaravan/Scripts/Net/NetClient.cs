@@ -66,6 +66,22 @@ namespace PocketCaravan
             public List<TradeRec> list;
             // 9단계 (11/05): 관리자가 지운 접속키를 이번에 새로 정했다
             public bool newPass;
+            // 10단계 (11/07): 게임 저장 통째로. fullOk = 이 서버가 받는다, full = 서버 저장 요약(없으면 h가 빈 글), h·zip = 받은 저장
+            public bool fullOk;
+            public FullInfo full;
+            public string h, zip;
+        }
+
+        /// <summary>서버에 저장된 게임 저장 요약 (at: 그 컴퓨터에서 저장 파일을 쓴 시각 ms, h: 저장 글의 SHA-256)</summary>
+        [Serializable]
+        public class FullInfo
+        {
+            public long at;
+            public string h;
+            public int day, money;
+            public string map, origin;
+            public int size;
+            public long saved;
         }
 
         /// <summary>서버에 저장된 돈·짐 (costs는 물건마다 산 값의 합)</summary>

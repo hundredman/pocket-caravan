@@ -105,7 +105,8 @@ namespace PocketCaravan
             var rect = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round((UIStyle.VirtualHeight - h) / 2 + 6), w, h);
             CuteUI.Dim();
             CuteUI.Window(rect);
-            CuteUI.TitlePlate(rect.center.x, rect.y - 11, town.displayName + " 장터");
+            // 이름에 이미 "장터"가 있으면(리알토 장터) 다시 붙이지 않는다
+            CuteUI.TitlePlate(rect.center.x, rect.y - 11, town.displayName.EndsWith("장터") ? town.displayName : town.displayName + " 장터");
             GUILayout.BeginArea(new Rect(rect.x + 14, rect.y + 14, w - 28, h - 62));
             contentScroll=GUILayout.BeginScrollView(contentScroll);
             float banLeft = p.tradeActivity.BanRemaining(town.id, gm.Clock.TotalHours);
@@ -168,8 +169,8 @@ namespace PocketCaravan
                 GUILayout.EndScrollView();
                 DrawTradeInfo(gm, m);
 
-                if (banLeft > 0) GUILayout.Label($"<color=#ff9a8a>상인이 거래를 거절합니다 · {Mathf.CeilToInt(banLeft)}시간 뒤 다시 거래할 수 있습니다.</color>", CuteUI.PaperRich);
-                else { DrawHaggle(gm, m); DrawBatch(gm); }
+                if (banLeft > 0) GUILayout.Label($"<color=#d6334f>상인이 거래를 거절합니다 · {Mathf.CeilToInt(banLeft)}시간 뒤 다시 거래할 수 있습니다.</color>", CuteUI.PaperRich);
+                else { DrawBatch(gm); DrawHaggle(gm, m); }   // 11/07 사기·팔기가 창 아래로 밀려 안 보여서 흥정 줄보다 위로
             }
             GUILayout.EndScrollView();
             GUILayout.EndArea();

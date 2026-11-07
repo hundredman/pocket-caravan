@@ -24,7 +24,6 @@ namespace PocketCaravan
 
         string current;
         float shownAt = -10f;
-        GUIStyle style;
 
         void Update()
         {
@@ -52,13 +51,16 @@ namespace PocketCaravan
             float t = Time.unscaledTime - shownAt;
             if (t > labelSeconds || string.IsNullOrEmpty(current)) return;
             UIStyle.Begin();
-            if (style == null) style = new GUIStyle(UIStyle.Rich) { alignment = TextAnchor.MiddleCenter, fontSize = 12 };
             float a = Mathf.Clamp01(Mathf.Min(t / 0.25f, (labelSeconds - t) / 0.5f));
             var c = GUI.color;
             GUI.color = new Color(1f, 1f, 1f, a);
-            var r = new Rect(UIStyle.VirtualWidth / 2 - 70, 10, 140, 20);
-            GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(r, current, style);
+            // 11/07 UI B안: 위 가운데 알약들 아래에 핀 + 구역 이름 종이 알약 (살짝 내려오며 나타난다)
+            float w = Mathf.Round(CuteUI.Width(current, false, true) + 30f);
+            float y = Mathf.Round(VeniceUtil.TopFree + 2f + (VeniceIntro.Showing ? 24f : 0f) - (1f - Mathf.Clamp01(t / 0.25f)) * 4f);
+            var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2f), y, w, 20f);
+            CuteUI.Pill(r);
+            CuteUI.Icon(CuteUI.Pic.Pin, r.x + 9f, r.y + 6f, 1, CuteUI.Frame);
+            CuteUI.Label(r.x + 19f, r.center.y, current, CuteUI.Text, false, true);
             GUI.color = c;
         }
     }
