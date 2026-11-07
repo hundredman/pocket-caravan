@@ -420,3 +420,5 @@
 - 2026-11-07 Codex PR28 통합 검사(이 커밋): 분리된 추적파일 체크아웃50c5feb26에서 Python403/23skip·세계1437/0오류·diff공백검사 통과, 현재Unity콘솔error0(새Play 재실행아님). integration 조상관계/충돌없음·공용변경PR기재·DB/맵/씬/설정/개인실험제외. 사용자 즉시병합/사후공지 지시로 PR28 준비, 원격검사완료 후 병합. Docs/Validation/Goryeo-UI-PR28-2026-11-07/.
 
 - 2026-11-07 Codex PR28 병합 기록(이 커밋): 사용자 즉시병합/사후공지 지시로 GitHub integration 병합완료(0a668f47a, 검증head032c051a8·원격검사2성공·로컬403/23skip·출구1437/0오류). fetch로 원격포함 확인·통합용임시worktree정리·개인설정/실험보존. 사후 카톡 전달문안 제공, 직접발송없음. 재시작으로 풀린 이동막힘원인/실온라인/장시간성능/5분유저리허설미확인. PR https://github.com/hundredman/pocket-caravan/pull/28.
+
+- 2026-11-07 Codex UI3(이 커밋): 사용자 팀 구현 우선/자기 수정 재검토 지시를 Direction에 반영. CuteUI/NetChat 글꼴 프로필 갱신·VeniceLabels 근접표시·공용카드 재사용으로 캐시잔류/장소표시누락/우물테마 보완. 실제4문명왕복/지역지도↔소지품 Play67/8캡처·기존문제재현32·최종error0·저장9파일동일. Python403/23skip(제한환경 Aseprite27실행오류 보존, 승인된 제한밖 재실행통과), 세계1437/0오류. 최신main포함·로컬만/그림대기·온라인/사람연속/장시간성능/빌드미검사. Docs/Goryeo/Team-System-Audit-2026-11-07.md.

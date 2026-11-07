@@ -14,8 +14,9 @@ namespace PocketCaravan.EditorTools
     {
         public static bool Before;
         public static bool IntroOnly;
+        public static bool TeamAudit;
         public static Action<int,int> Resize;
-        static string Out=>IntroOnly?"ArtReview/Goryeo-Intro-Bottom-20261107/":"ArtReview/Goryeo-Compact-Labels-20261107/";
+        static string Out=>TeamAudit?"ArtReview/Goryeo-Team-Audit-20261107/":IntroOnly?"ArtReview/Goryeo-Intro-Bottom-20261107/":"ArtReview/Goryeo-Compact-Labels-20261107/";
         const BindingFlags F=BindingFlags.Instance|BindingFlags.NonPublic;
         [Serializable] class Scope { public ScopeMap[] maps; }
         [Serializable] class ScopeMap { public string id; }
@@ -38,12 +39,68 @@ namespace PocketCaravan.EditorTools
         void Quiet(){foreach(var s in FindObjectsByType<StoryGuide>(FindObjectsSortMode.None)){s.StopAllCoroutines();s.enabled=false;}foreach(var s in FindObjectsByType<GoryeoIntro>(FindObjectsSortMode.None))s.StopAllCoroutines();var d=FindFirstObjectByType<DialogueUI>();if(d!=null)typeof(DialogueUI).GetMethod("Close",F).Invoke(d,null);UIState.Reset();Notify.Clear();Time.timeScale=0;}
         IEnumerator Photo(string name){yield return Frames();var t=ScreenCapture.CaptureScreenshotAsTexture();File.WriteAllBytes(Out+(Before?"before-":"after-")+name+".png",t.EncodeToPNG());Check(t.width==Screen.width&&t.height==Screen.height,"native capture "+name);Destroy(t);}
         void Focus(Interactable it){var pc=PlayerController.Instance;var cam=Camera.main;cam.GetComponent<CameraFollow>().enabled=false;cam.orthographicSize=8.4375f;cam.transform.position=it.transform.position+new Vector3(0,-2,-10);pc.Motor.Teleport(it.transform.position+Vector3.down*1.3f-(Vector3)pc.Motor.feetOffset,Vector2Int.up);}
+        bool sampleStyles; bool socialFontMatches, hintFontMatches;
+        void OnGUI()
+        {
+            if(!TeamAudit||!sampleStyles||Camera.main==null||Camera.main.pixelWidth!=Screen.width||Camera.main.pixelHeight!=Screen.height)return;
+            UIStyle.Begin();
+            const BindingFlags flags=BindingFlags.Static|BindingFlags.NonPublic;
+            var one=(GUIStyle)typeof(Social).GetProperty("OneLine",flags).GetValue(null);
+            var center=(GUIStyle)typeof(Social).GetProperty("CenterLine",flags).GetValue(null);
+            var hint=(GUIStyle)typeof(ActivityHints).GetProperty("Line",flags).GetValue(null);
+            socialFontMatches=one.font==UIStyle.RegularFont&&one.fontSize==UIStyle.BodySize&&center.font==UIStyle.RegularFont&&center.fontSize==UIStyle.BodySize;
+            hintFontMatches=hint.font==UIStyle.RegularFont&&hint.fontSize==UIStyle.BodySize;
+        }
+        IEnumerator TeamComparison(GameManager gm)
+        {
+            sampleStyles=true;Resize(960,540);yield return Frames();
+            var scenes=new[]{"Naru","venice_rialto","north_birka","arabia_sanaa","Naru"};
+            for(int n=0;n<scenes.Length;n++){
+                string scene=scenes[n];yield return SceneManager.LoadSceneAsync(scene);yield return Frames();Quiet();
+                var social=FindFirstObjectByType<Social>();Check(social!=null,"shared team Social exists "+scene);
+                typeof(Social).GetField("page",F).SetValue(social,Array.IndexOf((Reactions.Region[])typeof(Social).GetField("Pages",BindingFlags.NonPublic|BindingFlags.Static).GetValue(null),Reactions.Here));
+                typeof(Social).GetField("book",F).SetValue(social,true);UIState.Blocking=true;yield return Frames();
+                bool expectFresh=!Before||n==0||n==4;
+                Check(socialFontMatches==expectFresh,(Before?"baseline":"fixed")+" friendship font matches="+socialFontMatches+" "+scene);
+                Check(hintFontMatches==expectFresh,(Before?"baseline":"fixed")+" activity font matches="+hintFontMatches+" "+scene);
+                yield return Photo("friends-"+n+"-"+scene);
+                typeof(Social).GetField("book",F).SetValue(social,false);UIState.Release();
+                if(!Before){
+                    yield return Frames();InputReader.Press('m');yield return Frames();
+                    Type type=scene=="Naru"?typeof(WorldMapUI):scene=="venice_rialto"?typeof(VeniceMapUI):scene=="north_birka"?typeof(NorthMapUI):typeof(ArabiaMapUI);
+                    var regional=FindFirstObjectByType(type);Check(regional!=null,"existing team map component "+scene);
+                    var field=type.GetField("open",F);Check((bool)field.GetValue(regional)&&UIState.Blocking,"HUD M opens actual team map "+scene);
+                    var inventory=FindFirstObjectByType<InventoryUI>();inventory.Open();Check(!inventory.IsOpen,"team map blocks common inventory "+scene);
+                    InputReader.Press('m');yield return Frames();Check(!(bool)field.GetValue(regional)&&!UIState.Blocking,"M closes team map and releases movement "+scene);
+                    inventory.Open();Check(inventory.IsOpen,"shared inventory opens after map "+scene);
+                    InputReader.Press('m');yield return Frames();Check(!(bool)field.GetValue(regional)&&inventory.IsOpen,"owned inventory blocks legacy team map "+scene);
+                    inventory.Close();yield return Frames();Check(!UIState.Blocking,"common window releases movement "+scene);
+                }
+            }
+            sampleStyles=false;
+            var well=FindFirstObjectByType<GoryeoDailyActivity>();var fish=FindFirstObjectByType<GoryeoPastime>();
+            Check(well!=null&&fish!=null,"approved Goryeo optional activities installed");
+            foreach(var it in new Interactable[]{well,fish}){
+                string far=GoryeoPlaceLabels.LabelFor(it,(Vector2)it.transform.position+Vector2.right*10);
+                Check(Before?!string.IsNullOrEmpty(far):string.IsNullOrEmpty(far),(Before?"baseline all-distance":"fixed proximity")+" place label "+it.DisplayName);
+                Check(!string.IsNullOrEmpty(GoryeoPlaceLabels.LabelFor(it,it.transform.position)),"near label retained "+it.DisplayName);
+            }
+            Focus(well);yield return Photo("well-near");
+            PlayerController.Instance.Motor.Teleport(well.transform.position+Vector3.left*10-(Vector3)PlayerController.Instance.Motor.feetOffset,Vector2Int.right);yield return Photo("well-far");
+            Focus(well);yield return Frames();
+            // Isolated preview mode only; original production config/save stays untouched.
+            MapRoot.Current.previewOnly=true;typeof(GoryeoDailyActivity).GetField("approved",F).SetValue(well,false);
+            Check(well.Begin(PlayerController.Instance),"well starts in explicit SaveOFF preview");yield return Photo("well-progress");well.Cancel();
+            Check(!UIState.Blocking,"well cancel releases input");
+            Check(!gm.AutosaveEnabled&&!File.Exists(slot),"team comparison writes no save");
+        }
         IEnumerator Run()
         {
             var gm=GameManager.I;Check(gm!=null&&!gm.AutosaveEnabled,"SaveOFF bootstrap");
             var login=FindFirstObjectByType<NetLogin>();if(login!=null)typeof(NetLogin).GetMethod("PlayAlone",F).Invoke(login,null);
             typeof(GameManager).GetField("firstSceneLoaded",F).SetValue(gm,true);
             SaveSystem.UseSlot("codex_compact_labels_"+Guid.NewGuid().ToString("N")+".json");slot=SaveSystem.CurrentPath;
+            if(TeamAudit){yield return TeamComparison(gm);yield break;}
             Resize(480,270);yield return Frames();yield return SceneManager.LoadSceneAsync("Naru");yield return Frames();Quiet();gm.Clock.minuteOfDay=720;
             if(IntroOnly){
                 Check(gm.Player.origin!=null&&gm.Player.origin.id=="goryeo","Goryeo tutorial origin");

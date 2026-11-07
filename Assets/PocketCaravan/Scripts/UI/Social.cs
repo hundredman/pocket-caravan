@@ -458,8 +458,15 @@ namespace PocketCaravan
         }
 
         static GUIStyle oneLine, centerLine;
-        static GUIStyle OneLine => oneLine ??= new GUIStyle(UIStyle.Rich) { wordWrap = false, clipping = TextClipping.Overflow };
-        static GUIStyle CenterLine => centerLine ??= new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow };
+        // Same profile invalidation as the shared CuteUI paper styles / NetChat.
+        static void LineStyles()
+        {
+            if(oneLine!=null&&centerLine!=null&&oneLine.font==UIStyle.RegularFont&&oneLine.fontSize==UIStyle.BodySize)return;
+            oneLine=new GUIStyle(UIStyle.Rich) { wordWrap=false, clipping=TextClipping.Overflow };
+            centerLine=new GUIStyle(UIStyle.CenterRich) { wordWrap=false, clipping=TextClipping.Overflow };
+        }
+        static GUIStyle OneLine { get { LineStyles(); return oneLine; } }
+        static GUIStyle CenterLine { get { LineStyles(); return centerLine; } }
 
         void DrawBook(float vw, float vh)
         {

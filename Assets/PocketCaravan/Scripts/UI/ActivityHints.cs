@@ -111,7 +111,15 @@ namespace PocketCaravan
         }
 
         static GUIStyle line;
-        static GUIStyle Line => line ?? (line = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow });
+        static GUIStyle Line
+        {
+            get
+            {
+                if(line==null||line.font!=UIStyle.RegularFont||line.fontSize!=UIStyle.BodySize)
+                    line=new GUIStyle(UIStyle.CenterRich) { wordWrap=false, clipping=TextClipping.Overflow };
+                return line;
+            }
+        }
 
         Rect Badge(Vector2 at, string text, bool withStar, bool screenEdge=false)
         {

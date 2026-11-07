@@ -1,0 +1,28 @@
+{
+  "baselineReproductionChecks": 32,
+  "afterChecks": 67,
+  "beforeCaptures": 8,
+  "afterCaptures": 8,
+  "actualScenes": [
+    "Naru",
+    "venice_rialto",
+    "north_birka",
+    "arabia_sanaa",
+    "Naru"
+  ],
+  "mapInput": "actual regional map via InputReader.Press HUD virtual key; not native human input",
+  "python": {
+    "tests": 403,
+    "skipped": 23,
+    "result": "pass after approved unsandboxed rerun",
+    "sandboxRun": "27 Aseprite SIGABRT errors recorded separately"
+  },
+  "worldExits": 1437,
+  "worldErrors": 0,
+  "personalSaveFilesUnchanged": 9,
+  "manualPlay": false,
+  "online": false,
+  "build": false,
+  "visualApproval": "pending",
+  "remotePushed": false
+}

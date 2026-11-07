@@ -119,11 +119,11 @@ namespace PocketCaravan
             GUI.depth = -11;
             float w = Mathf.Min(300, UIStyle.VirtualWidth - 16);
             var r = new Rect((UIStyle.VirtualWidth - w) / 2, UIStyle.VirtualHeight - 110, w, 98);
-            GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(new Rect(r.x + 12, r.y + 9, w - 24, 20), "우물 · 물 긷기", UIStyle.Center);
-            GUI.Label(new Rect(r.x + 12, r.y + 32, w - 24, 20), "두레박을 천천히 끌어 올려요.", UIStyle.Center);
-            UIStyle.Bar(new Rect(r.x + 22, r.y + 58, w - 44, 8), Progress, new Color32(109, 176, 204, 255));
-            if (GUI.Button(new Rect(r.x + w / 2 - 44, r.y + 72, 88, 19), "그만두기 · Esc", UIStyle.Button)) Cancel();
+            CuteUI.Card(r);
+            CuteUI.LabelCenter(r.center.x,r.y+19,"우물 · 물 긷기",CuteUI.Text);
+            CuteUI.LabelCenter(r.center.x,r.y+42,"두레박을 천천히 끌어 올려요.",CuteUI.Sub,true);
+            CuteUI.Bar(new Rect(r.x + 22, r.y + 58, w - 44, 8), Progress, CuteUI.Interact, CuteUI.InteractHi);
+            if (GUI.Button(new Rect(r.x + w / 2 - 52, r.y + 72, 104, 19), "그만두기 · Esc", CuteUI.PaperButton)) Cancel();
         }
 
         static bool Valid(Site value, string status)

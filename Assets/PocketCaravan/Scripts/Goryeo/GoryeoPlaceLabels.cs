@@ -38,7 +38,7 @@ namespace PocketCaravan
         public void Refresh()=>Sync();
         bool Allowed=>map!=null&&MapRoot.Current==map&&GoryeoTravelTransition.RegionOf(map.mapId)!=null&&(map.previewOnly||approvedForProduction);
         public static bool Nearby(Vector2 feet,Vector2 at)=>(feet-at).sqrMagnitude<=Near*Near;
-        public static bool IsPlace(Interactable it)=>it is TownMarket||it is ContractBoard||it is WorkshopSpot||Inn.IsHost(it)||(it is TalkNpc&&it.GetComponent<CharacterAnimator>()==null);
+        public static bool IsPlace(Interactable it)=>it is TownMarket||it is ContractBoard||it is WorkshopSpot||it is GoryeoDailyActivity||it is GoryeoPastime||it is GoryeoSeat||Inn.IsHost(it)||(it is TalkNpc&&it.GetComponent<CharacterAnimator>()==null);
         public static string LabelFor(Interactable it,Vector2 feet)
         {
             if(it==null)return "";if(IsPlace(it)&&!Nearby(feet,it.transform.position))return "";
