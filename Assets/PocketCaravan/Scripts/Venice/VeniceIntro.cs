@@ -36,7 +36,6 @@ namespace PocketCaravan
 
         Transform root;
         float runTime;
-        GUIStyle style;
 
         class Person : Interactable
         {
@@ -179,19 +178,20 @@ namespace PocketCaravan
             else if (s == 9 && InputReader.LedgerPressed()) Done(7);
         }
 
+        /// <summary>위 가운데 배우기 알약이 떠 있다 (구역 이름 알약이 그 아래로 비킨다)</summary>
+        public static bool Showing { get { int s = Step; return s >= 1 && s <= 10 && !UIState.Blocking && IsCat && VeniceUtil.InVenice; } }
+
         void OnGUI()
         {
+            if (!Showing) return;
             int s = Step;
-            if (s < 1 || s > 10 || UIState.Blocking || !IsCat || !VeniceUtil.InVenice) return;
             UIStyle.Begin();
-            style ??= new GUIStyle(UIStyle.Rich) { alignment = TextAnchor.MiddleCenter };
-            string t = s == 1 ? "바로 옆 <b>상인회 안내원</b>에게 Space로 말을 걸어 보세요"
-                     : s == 10 ? "할 일을 다 했어요! <b>안내원 조반나</b>에게 돌아가 말을 걸어 보세요"
-                     : $"<color=#ffde59>배우기 {s - 1}/{Tasks.Length}</color>  {Tasks[s - 2]}";
-            float w = Mathf.Min(420, UIStyle.VirtualWidth - 20);
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2, 30, w, 20);
-            GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(r, t, style);
+            // 11/07 UI B안: 할 일 줄과 같은 위 가운데 알약 (전구 = 배우기, 오른쪽 작은 글 = 몇 번째). 위 알약들 아래 빈 자리에
+            string main = s == 1 ? "상인회 안내원에게 말 걸기"
+                        : s == 10 ? "안내원 조반나에게 돌아가기"
+                        : CuteUI.Plain(Tasks[s - 2]);
+            string where = s == 1 ? "바로 옆 · Space" : s == 10 ? "다 했어요!" : $"배우기 {s - 1}/{Tasks.Length}";
+            CuteUI.TopPill(VeniceUtil.TopFree + 2f, false, CuteUI.Pic.Bulb, main, where, false);
         }
     }
 }

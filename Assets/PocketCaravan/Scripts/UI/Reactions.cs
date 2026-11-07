@@ -540,43 +540,62 @@ namespace PocketCaravan
                 if (s.who == null) continue;
                 var sp = Camera.main.WorldToScreenPoint(s.who.position + new Vector3(0, 2.6f, 0));
                 if (sp.z < 0f) continue;
-                var p = new Vector2(sp.x / UIStyle.Scale, (Screen.height - sp.y) / UIStyle.Scale);
-                float w = Mathf.Max(40, OneLine.CalcSize(new GUIContent(s.text)).x + 14f);
-                var r = new Rect(p.x - w / 2f, p.y - 16, w, 16);
-                GUI.color = new Color(1f, .98f, .92f, .95f); GUI.DrawTexture(r, Texture2D.whiteTexture);
-                GUI.color = old;
-                GUI.Label(r, $"<color=#3A2E3A><size=9>{s.text}</size></color>", UIStyle.CenterRich);
+                // 11/07 UI B안: 채팅 말풍선과 같은 종이 말풍선
+                float px = Mathf.Round(sp.x / UIStyle.Scale), py = Mathf.Round((Screen.height - sp.y) / UIStyle.Scale);
+                float w = Mathf.Max(34f, Mathf.Round(CuteUI.Width(s.text, true) + 12f));
+                var r = new Rect(Mathf.Round(px - w / 2f), py - 18f, w, 15f);
+                CuteUI.Bubble(r, px, CuteUI.Ink);
+                CuteUI.LabelCenter(px, r.center.y, s.text, CuteUI.Text, true);
             }
             if (wheel) DrawWheel();
         }
 
-        /// <summary>화면을 어둡게 깔고 10칸을 가로로 넓힌 타원에 놓는다 (칸이 겹치지 않게)</summary>
+        /// <summary>
+        /// 화면을 어둡게 깔고 10칸을 가로로 넓힌 타원에 놓는다 (칸이 겹치지 않게).
+        /// 11/07 UI B안: 칸은 종이 알약, 고른 칸은 청록(상호작용), 아직 못 배운 칸은 옅게 "???", 지역 고유는 노란 별.
+        /// 가운데는 "리액션"과 배운 수, 아래는 키캡 안내.
+        /// </summary>
         void DrawWheel()
         {
             var list = Wheel();
-            float cx = UIStyle.VirtualWidth / 2f, cy = UIStyle.VirtualHeight / 2f, rx = 128f, ry = 96f;
-            var old = GUI.color;
-            GUI.color = new Color(0f, 0f, 0.05f, 0.4f);
-            GUI.DrawTexture(new Rect(0, 0, UIStyle.VirtualWidth, UIStyle.VirtualHeight), Texture2D.whiteTexture);
-            GUI.color = old;
+            float cx = Mathf.Round(UIStyle.VirtualWidth / 2f), cy = Mathf.Round(UIStyle.VirtualHeight / 2f), rx = 128f, ry = 96f;
+            CuteUI.Dim();
+            int knownCount = 0;
+            foreach (var m in list) if (Knows(m.id)) knownCount++;
+            CuteUI.FramedCircle(cx - 29f, cy - 29f, 58);
+            CuteUI.LabelCenter(cx, cy - 5f, "리액션", CuteUI.Text, false, true);
+            CuteUI.LabelCenter(cx, cy + 9f, $"{knownCount}/{list.Count}", CuteUI.Sub, true);
             for (int i = 0; i < list.Count; i++)
             {
                 float a = -Mathf.PI / 2f + i * Mathf.PI * 2f / list.Count;
-                var r = new Rect(cx + Mathf.Cos(a) * rx - 38, cy + Mathf.Sin(a) * ry - 13, 76, 26);
-                bool known = Knows(list[i].id);
-                GUI.Box(r, GUIContent.none, UIStyle.Box);
+                var r = new Rect(Mathf.Round(cx + Mathf.Cos(a) * rx - 36f), Mathf.Round(cy + Mathf.Sin(a) * ry - 11f), 72f, 22f);
+                bool known = Knows(list[i].id), on = i == sel, local = known && list[i].region != Region.Common;
+                if (on)
+                {
+                    CuteUI.Box(r, 10, CuteUI.Interact, CuteUI.Ink, 1, 2, CuteUI.InteractLo);
+                    CuteUI.Fill(new Rect(r.x + 6f, r.y + 2f, r.width - 12f, 1f), CuteUI.InteractHi);
+                }
+                else if (known) CuteUI.Box(r, 10, CuteUI.Paper, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
+                else CuteUI.Box(r, 10, CuteUI.Paper2, CuteUI.Line, 1);
                 string label = known ? list[i].name : "???";
-                if (list[i].region != Region.Common && known) label = $"<color=#9fd8ff>{label}</color>";   // 지역 고유는 하늘색
-                if (i == sel) label = $"<color=#ffde59><b>▶ {(known ? list[i].name : "???")}</b></color>";
-                else if (!known) label = $"<color=#8a8296>{label}</color>";
-                GUI.Label(r, label, OneLine);
+                float lw = CuteUI.Width(label, false, on) + (local ? 11f : 0f);
+                float lx = Mathf.Round(r.center.x - lw / 2f);
+                if (local) { CuteUI.Icon(CuteUI.Pic.Star4, lx, r.center.y - 3f, 1, on ? CuteUI.White : CuteUI.Deco); lx += 11f; }
+                CuteUI.Label(lx, r.center.y, label, on ? CuteUI.OnInteract : known ? CuteUI.Text : CuteUI.Sub, false, on);
             }
-            GUI.Label(new Rect(cx - 80, cy - 10, 160, 20), "<b>리액션</b>", UIStyle.CenterRich);
-            GUI.Label(new Rect(cx - 120, cy + ry + 22, 240, 16), "← → 고르기 · Space 하기 · R/Esc 닫기", UIStyle.CenterRich);
+            // 아래 키캡 안내: ← → 고르기 · Space 하기 · R 닫기
+            string[] keys = { "← →", "Space", "R" }, says = { "고르기", "하기", "닫기" };
+            float total = 0f;
+            for (int i = 0; i < keys.Length; i++) total += CuteUI.KeycapWidth(keys[i]) + 3f + CuteUI.Width(says[i], true) + (i < keys.Length - 1 ? 10f : 0f);
+            var strip = new Rect(Mathf.Round(cx - total / 2f - 8f), Mathf.Round(cy + ry + 18f), Mathf.Round(total + 16f), 19f);
+            CuteUI.Pill(strip);
+            float x = strip.x + 8f;
+            for (int i = 0; i < keys.Length; i++)
+            {
+                x += CuteUI.Keycap(x, strip.y + 3f, keys[i], true) + 3f;
+                x = CuteUI.Label(x, strip.center.y, says[i], CuteUI.Text, true) + 10f;   // Label은 글 끝 x를 돌려준다
+            }
         }
-
-        static GUIStyle oneLine;
-        static GUIStyle OneLine => oneLine ?? (oneLine = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow });
 
         void OnDisable() => Restore();
     }

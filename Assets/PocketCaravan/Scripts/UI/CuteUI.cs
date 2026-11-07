@@ -454,6 +454,21 @@ namespace PocketCaravan
         /// <summary>종이색 알약 (위쪽 할 일 줄·온라인 표시)</summary>
         public static void Pill(Rect r) => Box(r, (int)r.height / 2 - 1, Paper, Ink, 1, 2, SoftShadow);
 
+        /// <summary>말풍선 (종이 + 테 + 아래 꼬리). tailX = 꼬리 가운데 x. 채팅·리액션 혼잣말이 같이 쓴다</summary>
+        public static void Bubble(Rect r, float tailX, Color32 line)
+        {
+            float cx = Mathf.Round(tailX);
+            Box(r, 6, Paper, line, 1, 2, SoftShadow);
+            Fill(new Rect(cx - 3f, r.yMax - 1f, 7f, 1f), Paper);
+            Fill(new Rect(cx - 3f, r.yMax - 1f, 1f, 2f), line);
+            Fill(new Rect(cx + 3f, r.yMax - 1f, 1f, 2f), line);
+            Fill(new Rect(cx - 2f, r.yMax, 5f, 1f), Paper);
+            Fill(new Rect(cx - 2f, r.yMax + 1f, 1f, 1f), line);
+            Fill(new Rect(cx + 2f, r.yMax + 1f, 1f, 1f), line);
+            Fill(new Rect(cx - 1f, r.yMax + 1f, 3f, 1f), Paper);
+            Fill(new Rect(cx - 1f, r.yMax + 2f, 3f, 1f), line);
+        }
+
         public static void Circle(float x, float y, int d, Color32 fill, Color32 line, int lw = 1, int shadow = 0)
         {
             if (!Repaint) return;
