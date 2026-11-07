@@ -1,0 +1,7 @@
+test_labels_keep_scope_and_common_interaction_logic (Tools.Integration.test_goryeo_labels_trial.LabelsTrial.test_labels_keep_scope_and_common_interaction_logic) ... ok
+test_only_existing_whole_sprites_and_bank_anchors (Tools.Integration.test_goryeo_labels_trial.LabelsTrial.test_only_existing_whole_sprites_and_bank_anchors) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.056s
+
+OK

@@ -1,0 +1,16 @@
+{
+  "status": "local implementation validated; final visual user review pending",
+  "runtimeUi": 916,
+  "runtimeModalAndChat": 47,
+  "r3r4RealTemporarySave": 100,
+  "pythonTests": 403,
+  "pythonSkipped": 23,
+  "worldExits": 1437,
+  "worldErrors": 0,
+  "consoleErrorEntries": 0,
+  "savedFilesUnchangedAfterCheckpoint": 9,
+  "latestMainIncluded": "f5e39581b",
+  "pushed": false,
+  "demoRehearsed": false,
+  "r3r4Captures": 11
+}

@@ -15,8 +15,11 @@ namespace PocketCaravan.EditorTools
     /// <summary>Editor-only text palette and real UI comparison. No server connection or user save writes.</summary>
     public sealed class GoryeoHudCartLabelsReview : MonoBehaviour
     {
-        const string Out="ArtReview/Goryeo-Nameplate-Readable-20261107/";
+        const string Out="ArtReview/Goryeo-Nameplate-Outline-20261107/";
         const BindingFlags Flags = BindingFlags.Instance | BindingFlags.NonPublic;
+        [Serializable] class LayoutSnapshot { public string[] names; public Rect[] rectangles, protectedArt; public Vector2 origin; }
+        [Serializable] class Scope { public ScopeMap[] maps; }
+        [Serializable] class ScopeMap { public string id; }
         [Serializable] class Report { public bool complete; public string error; public List<string> checks = new List<string>(); }
         readonly Report report = new Report();
         public static Action<int,int> Resize;
@@ -102,6 +105,12 @@ namespace PocketCaravan.EditorTools
         IEnumerator Frames(){for(int i=0;i<4;i++)yield return null;yield return new WaitForEndOfFrame();}
         Color32[] PortraitPixels(){var all=lastCapture.GetPixels32();var result=new Color32[36*36];for(int y=0;y<36;y++)for(int x=0;x<36;x++)result[y*36+x]=all[(Screen.height-41+y)*Screen.width+4+x];return result;}
         bool Equal(Color32[] a,Color32[] b){if(a.Length!=b.Length)return false;for(int i=0;i<a.Length;i++)if(!a[i].Equals(b[i]))return false;return true;}
+        bool EqualFace(Color32[] a,Color32[] b)
+        {
+            // 기존 코드 오버레이는 반투명 원형 테두리를 두 번 그린다. 얼굴 영역만 원본과 비교한다.
+            for(int y=4;y<19;y++)for(int x=10;x<26;x++)if(!a[(35-y)*36+x].Equals(b[(35-y)*36+x]))return false;
+            return true;
+        }
         void NearBoard(ContractBoard board)
         {
             var pc=PlayerController.Instance;pc.enabled=true;pc.Motor.Teleport(board.transform.position+Vector3.down*2-(Vector3)pc.Motor.feetOffset,Vector2Int.up);
@@ -110,11 +119,19 @@ namespace PocketCaravan.EditorTools
         void CheckBoard(GoryeoPlaceLabels labels)
         {
             Check(labels.BoardRects.Count>0,"real board art protection exists");
+            if(PlayerController.Instance.TalkTarget is ContractBoard)
+            {
+                var prompt=(Rect)typeof(GoryeoPlaceLabels).GetField("compactPrompt",Flags).GetValue(labels);
+                Check(prompt.height==12 && prompt.width<40,"Space-only prompt has no verb or box padding");
+            }
             var style=(GUIStyle)typeof(GoryeoPlaceLabels).GetField("nameStyle",BindingFlags.NonPublic|BindingFlags.Static).GetValue(null);
-            Check(style.font==UIStyle.RegularFont&&style.fontSize==UIStyle.BodySize,"nameplates use readable body font");
-            Check(Vector4.Distance(style.normal.textColor,UIStyle.Lin(CuteUI.Text))<.00001f,"nameplates use dark paper text color");
+            Check(style.font==UIStyle.SmallFont&&style.fontSize==UIStyle.SmallSize,"nameplates retain original compact font size with white outline");
+            Check(Vector4.Distance(style.normal.textColor,UIStyle.Lin(CuteUI.Text))<.00001f,"nameplates use dark text core");
             bool pairs=true;for(int i=0;i<labels.DrawnRects.Count;i++)for(int j=0;j<i;j++)pairs &= !labels.DrawnRects[i].Overlaps(labels.DrawnRects[j]);
-            Check(pairs,"larger nameplates do not overlap each other");
+            Check(pairs,"compact text labels do not overlap each other");
+            bool artwork=true;foreach(var name in labels.DrawnRects)foreach(var art in labels.ProtectedAssetRects)artwork &= !name.Overlaps(art);
+            Check(artwork,"name extents avoid foreground sprites and object/above tile cells");
+            foreach(var rect in labels.DrawnRects)Check(rect.height<=UIStyle.SmallSize+5,"text-only label has minimal vertical padding");
             bool clear=true;foreach(var a in labels.DrawnRects)foreach(var b in labels.BoardRects)clear &= !a.Overlaps(b);
             Check(clear,"world names do not cover board artwork");Check(labels.DrawnNames.Contains("의뢰 게시판"),"board name still visible");
         }
@@ -140,7 +157,7 @@ namespace PocketCaravan.EditorTools
                 {
                     pc.anim.facing=facing;yield return Frames();yield return Photo("portrait-after-"+origin.id+"-"+index);
                     Check(source.Invoke(null,null)==origin.playerFrames[0],"portrait stays front for "+origin.id+" "+facing);
-                    var pixels=PortraitPixels();if(origin.id=="arabia")Check(Equal(legacyPixels,pixels),"fennec uses original portrait RGBA framing "+facing);if(first==null)first=pixels;else Check(Equal(first,pixels),"portrait RGBA unchanged by facing "+origin.id+" "+facing);index++;
+                    var pixels=PortraitPixels();if(origin.id=="arabia")Check(EqualFace(legacyPixels,pixels),"fennec uses original face RGBA framing (frame shadow excluded) "+facing);if(first==null)first=pixels;else Check(Equal(first,pixels),"portrait RGBA unchanged by facing "+origin.id+" "+facing);index++;
                 }
             }
             }
@@ -156,11 +173,27 @@ namespace PocketCaravan.EditorTools
             pc.Motor.Teleport(pc.transform.position,Vector2Int.up);pc.anim.facing=Vector2Int.up;yield return Frames();yield return Photo("01-player-cart-north");
             var board=FindFirstObjectByType<ContractBoard>();NearBoard(board);yield return Frames();yield return Photo("02-board");var labels=MapRoot.Current.GetComponent<GoryeoPlaceLabels>();CheckBoard(labels);
             var baseline=labels.DrawnRects.ToArray();var names=labels.DrawnNames.ToArray();var oldOrigin=(Vector2)typeof(GoryeoPlaceLabels).GetField("guiOrigin",Flags).GetValue(labels);
+            File.WriteAllText(Out+"pan-baseline.json",JsonUtility.ToJson(new LayoutSnapshot{names=names,rectangles=baseline,protectedArt=labels.ProtectedAssetRects.ToArray(),origin=oldOrigin},true));
             for(int step=0;step<24;step++)
             {
                 Camera.main.transform.position+=new Vector3(.017f,.013f,0);yield return Frames();
-                var origin=(Vector2)typeof(GoryeoPlaceLabels).GetField("guiOrigin",Flags).GetValue(labels);Check(labels.DrawnRects.Count==baseline.Length,"stable label count during camera pan "+step);
-                for(int i=0;i<baseline.Length;i++)Check(labels.DrawnNames[i]==names[i]&&Vector2.Distance(labels.DrawnRects[i].position-origin,baseline[i].position-oldOrigin)<.1f,"camera-independent label placement "+step+" "+names[i]);
+                var origin=(Vector2)typeof(GoryeoPlaceLabels).GetField("guiOrigin",Flags).GetValue(labels);int expectedCount=0;
+                File.WriteAllText(Out+"pan-layout-"+step.ToString("00")+".json",JsonUtility.ToJson(new LayoutSnapshot{names=labels.DrawnNames.ToArray(),rectangles=labels.DrawnRects.ToArray(),protectedArt=labels.ProtectedAssetRects.ToArray(),origin=origin},true));
+                for(int i=0;i<baseline.Length;i++)
+                {
+                    var expected=baseline[i];expected.position+=origin-oldOrigin;
+                    bool visible=expected.x>=4 && expected.xMax<=UIStyle.VirtualWidth-4 && expected.y>=25 && expected.yMax<=UIStyle.VirtualHeight-44;
+                    bool present=false;for(int j=0;j<labels.DrawnNames.Count;j++)if(labels.DrawnNames[j]==names[i]&&Vector2.Distance(labels.DrawnRects[j].position,expected.position)<.1f)present=true;
+                    if(visible){expectedCount++;Check(present,"camera-independent label placement "+step+" "+names[i]);}
+                    else Check(!present,"only viewport-clipped label hides "+step+" "+names[i]);
+                }
+                for(int j=0;j<labels.DrawnNames.Count;j++)
+                {
+                    var previous=labels.DrawnRects[j];previous.position-=origin-oldOrigin;
+                    bool known=false;for(int i=0;i<names.Length;i++)if(names[i]==labels.DrawnNames[j]&&Vector2.Distance(baseline[i].position,previous.position)<.1f)known=true;
+                    if(known)continue;
+                    Check(previous.x<4||previous.xMax>UIStyle.VirtualWidth-4||previous.y<25||previous.yMax>UIStyle.VirtualHeight-44,"new label enters only from viewport edge "+step+" "+labels.DrawnNames[j]);
+                }
                 CheckBoard(labels);yield return Photo("pan-"+step.ToString("00"));
             }
             yield return Load("Transit/transit_woodtown");pc=PlayerController.Instance;pc.enabled=false;var life=MapRoot.Current.GetComponent<GoryeoVillageLife>();Check(life!=null&&life.Root!=null,"production village life installed");
@@ -173,6 +206,23 @@ namespace PocketCaravan.EditorTools
             }
             Check(carts>0,"real unattended cart covered");yield return Photo("03-village-cart");
             board=FindFirstObjectByType<ContractBoard>();NearBoard(board);yield return Frames();yield return Photo("04-central-board");CheckBoard(MapRoot.Current.GetComponent<GoryeoPlaceLabels>());
+            var scope=JsonUtility.FromJson<Scope>(Resources.Load<TextAsset>("Goryeo/PlaceLabels").text);Check(scope.maps.Length==13,"all thirteen approved label maps covered");
+            foreach(var row in scope.maps)
+            {
+                yield return Load(row.id);gm.Clock.minuteOfDay=720;pc=PlayerController.Instance;
+                board=FindFirstObjectByType<ContractBoard>();
+                if(board!=null)NearBoard(board);
+                else
+                {
+                    pc.enabled=false;var cam=Camera.main;cam.GetComponent<CameraFollow>().enabled=false;cam.orthographicSize=8.4375f;cam.transform.position=pc.transform.position+new Vector3(0,0,-10);
+                }
+                yield return Frames();yield return Photo("map-"+row.id);
+                labels=MapRoot.Current.GetComponent<GoryeoPlaceLabels>();Check(labels!=null&&labels.OwnsOriginal,"scoped labels own map "+row.id);
+                bool clear=true;foreach(var name in labels.DrawnRects)foreach(var art in labels.ProtectedAssetRects)clear &= !name.Overlaps(art);
+                Check(clear,"labels avoid protected foreground art "+row.id);
+                foreach(var rect in labels.DrawnRects)Check(rect.height<=UIStyle.SmallSize+5,"minimal label padding "+row.id);
+                if(board!=null)CheckBoard(labels);
+            }
             Check(!gm.AutosaveEnabled&&!File.Exists(slotPath),"preview never writes save");
         }
     }

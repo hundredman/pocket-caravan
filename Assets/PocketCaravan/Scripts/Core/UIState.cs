@@ -11,6 +11,7 @@ namespace PocketCaravan
         // 기존 지역 UI의 bool API는 유지하되 다른 창의 잠금을 풀지는 못한다.
         public static bool Blocking { get => legacyBlocking || owner != null; set => legacyBlocking = value; }
         public static int ClosedFrame = -1;
+        public static int ResetVersion { get; private set; }
         public static bool JustClosed => Time.frameCount == ClosedFrame;
 
         public static bool TryOpen(UnityEngine.Object next, System.Action close)
@@ -33,12 +34,13 @@ namespace PocketCaravan
         }
         public static void Reset()
         {
+            ResetVersion++;
             var close = closeOwner;
             owner = null; closeOwner = null; legacyBlocking = false; ClosedFrame = Time.frameCount;
             close?.Invoke();
         }
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void ResetStatics() { owner = null; closeOwner = null; legacyBlocking = false; ClosedFrame = -1; }
+        static void ResetStatics() { owner = null; closeOwner = null; legacyBlocking = false; ClosedFrame = -1; ResetVersion = 0; }
     }
 
     /// <summary>

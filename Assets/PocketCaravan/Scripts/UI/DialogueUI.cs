@@ -22,7 +22,7 @@ namespace PocketCaravan
         string speaker, text;
         readonly List<Choice> choices = new List<Choice>();
         bool open;
-        sealed class Pending { public string speaker, text; public Choice[] choices; public int scene; }
+        sealed class Pending { public string speaker, text; public Choice[] choices; public int scene, version; }
         readonly Queue<Pending> pending = new Queue<Pending>();
         int openedFrame;
         readonly List<string> pages = new List<string>();
@@ -49,7 +49,7 @@ namespace PocketCaravan
             if (!UIState.TryOpen(d, d.Close))
             {
                 d.pending.Enqueue(new Pending { speaker=speaker, text=text, choices=choices,
-                    scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().handle });
+                    version=UIState.ResetVersion, scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().handle });
                 return;
             }
             d.speaker = speaker;
@@ -69,6 +69,8 @@ namespace PocketCaravan
             UIState.Release(this);
         }
 
+        void OnDisable() { pending.Clear(); if (open) Close(); }
+
         void Pick(Choice c)
         {
             Close();
@@ -80,7 +82,7 @@ namespace PocketCaravan
             if (!open && pending.Count > 0 && !UIState.Blocking && !UIState.JustClosed)
             {
                 var next=pending.Dequeue();
-                if(next.scene==UnityEngine.SceneManagement.SceneManager.GetActiveScene().handle) Show(next.speaker,next.text,next.choices);
+                if(next.version==UIState.ResetVersion && next.scene==UnityEngine.SceneManagement.SceneManager.GetActiveScene().handle) Show(next.speaker,next.text,next.choices);
                 return;
             }
             if (!open || pages.Count == 0 || Time.frameCount == openedFrame) return;

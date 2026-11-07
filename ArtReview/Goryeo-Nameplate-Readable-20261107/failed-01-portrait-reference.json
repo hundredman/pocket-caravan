@@ -1,0 +1,25 @@
+{
+    "complete": false,
+    "error": "System.Exception: fennec uses original portrait RGBA framing (0, -1)\n  at PocketCaravan.EditorTools.GoryeoHudCartLabelsReview.Check (System.Boolean value, System.String text) [0x0001b] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoHudCartLabelsReview.cs:28 \n  at PocketCaravan.EditorTools.GoryeoHudCartLabelsReview+<Run>d__29.MoveNext () [0x0046c] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoHudCartLabelsReview.cs:148 \n  at PocketCaravan.EditorTools.GoryeoHudCartLabelsReview+<Start>d__12.MoveNext () [0x00054] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoHudCartLabelsReview.cs:35 ",
+    "checks": [
+        "saves OFF bootstrap",
+        "actual viewport 480x270",
+        "isolated slot retained Goryeo/Naru actual=/Users/kim/Library/Application Support/DefaultCompany/PocketCaravan/codex_hud_cart_936c82c4b8ca4446b820e44135c3b555.json expected=/Users/kim/Library/Application Support/DefaultCompany/PocketCaravan/codex_hud_cart_936c82c4b8ca4446b820e44135c3b555.json",
+        "normal registered scene index Goryeo/Naru",
+        "native capture portrait-before-goryeo 480x270",
+        "native capture portrait-after-goryeo-0 480x270",
+        "portrait stays front for goryeo (0, -1)",
+        "native capture portrait-after-goryeo-1 480x270",
+        "portrait stays front for goryeo (0, 1)",
+        "portrait RGBA unchanged by facing goryeo (0, 1)",
+        "native capture portrait-after-goryeo-2 480x270",
+        "portrait stays front for goryeo (-1, 0)",
+        "portrait RGBA unchanged by facing goryeo (-1, 0)",
+        "native capture portrait-after-goryeo-3 480x270",
+        "portrait stays front for goryeo (1, 0)",
+        "portrait RGBA unchanged by facing goryeo (1, 0)",
+        "native capture portrait-before-arabia 480x270",
+        "native capture portrait-after-arabia-0 480x270",
+        "portrait stays front for arabia (0, -1)"
+    ]
+}

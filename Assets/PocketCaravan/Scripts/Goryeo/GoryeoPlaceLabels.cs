@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace PocketCaravan
 {
@@ -9,6 +10,14 @@ namespace PocketCaravan
     public sealed class GoryeoPlaceLabels : MonoBehaviour
     {
         static Texture2D arrowTex, downTex;
+        static readonly Vector2[] PlacementOffsets=BuildPlacementOffsets();
+        static Vector2[] BuildPlacementOffsets()
+        {
+            var offsets=new System.Collections.Generic.List<Vector2>();
+            for(int y=-48;y<=48;y+=4)for(int x=-48;x<=48;x+=4)offsets.Add(new Vector2(x,y));
+            offsets.Sort((a,b)=>{int distance=a.sqrMagnitude.CompareTo(b.sqrMagnitude);return distance!=0?distance:a.y.CompareTo(b.y);});
+            return offsets.ToArray();
+        }
         static GUIStyle nameStyle, shadowStyle, guideStyle;
 
         static readonly Color QuestColor = new Color(1f, 0.85f, 0.25f);
@@ -25,6 +34,12 @@ namespace PocketCaravan
         readonly System.Collections.Generic.List<Rect> layoutRects=new System.Collections.Generic.List<Rect>();
         readonly System.Collections.Generic.List<Rect> boardLayoutRects=new System.Collections.Generic.List<Rect>();
         public readonly System.Collections.Generic.List<Rect> BoardRects=new System.Collections.Generic.List<Rect>();
+        readonly System.Collections.Generic.List<Rect> assetLayoutRects=new System.Collections.Generic.List<Rect>();
+        public readonly System.Collections.Generic.List<Rect> ProtectedAssetRects=new System.Collections.Generic.List<Rect>();
+        readonly System.Collections.Generic.List<Bounds> tileArtBounds=new System.Collections.Generic.List<Bounds>();
+        SpriteRenderer[] mapSprites;
+        Tilemap objectTiles,aboveTiles;
+        float nextSpriteScan;
         Vector2 guiOrigin;
         Rect compactPrompt;
         MapRoot map;WorldLabels original;bool originalEnabled,ownsOriginal;
@@ -53,30 +68,30 @@ namespace PocketCaravan
         void Name(Vector2 p,string text,Color color,bool place)
         {
             if(string.IsNullOrEmpty(text)||DrawnRects.Count>=48)return;
-            float width=Mathf.Min(UIStyle.VirtualWidth-8,Mathf.Ceil(nameStyle.CalcSize(new GUIContent(text)).x)+14);
+            float width=Mathf.Min(UIStyle.VirtualWidth-8,Mathf.Ceil(CuteUI.Width(text,true))+2);
             // 겹침 검사는 카메라와 무관한 좌표에서 한다. 화면 가장자리에 이름을 몰아 붙이지 않는다.
-            float height=Mathf.Max(18,Mathf.Ceil(nameStyle.CalcSize(new GUIContent(text)).y)+6);
+            float height=Mathf.Ceil(nameStyle.CalcSize(new GUIContent(text)).y)+2;
             var rect=new Rect(Mathf.Round(p.x-width/2-guiOrigin.x),Mathf.Round(p.y-height/2-guiOrigin.y),width,height);
-            for(int shift=0;shift<12;shift++)
+            var start=rect;bool found=false;
+            // 대상 가까이에서 가장 작은 이동부터 빈자리를 찾는다. 화면 경계로 밀어 붙이지 않는다.
+            foreach(var offset in PlacementOffsets)
             {
-                bool overlap=false;
-                foreach(var other in layoutRects)if(other.Overlaps(rect)){overlap=true;break;}
-                if(!overlap)foreach(var other in boardLayoutRects)if(other.Overlaps(rect)){overlap=true;break;}
-                if(!overlap)break;rect.y-=height+2;
+                var candidate=start;candidate.position+=offset;
+                if(!Free(candidate))continue;rect=candidate;found=true;break;
             }
-            foreach(var other in layoutRects)if(other.Overlaps(rect))return;
-            foreach(var other in boardLayoutRects)if(other.Overlaps(rect))return;
+            if(!found)return;
             layoutRects.Add(rect);rect.position+=guiOrigin;
             if(rect.x<4||rect.xMax>UIStyle.VirtualWidth-4||rect.y<25||rect.yMax>UIStyle.VirtualHeight-44)return;
             DrawnRects.Add(rect);DrawnNames.Add(text);
-            CuteUI.Box(rect,3,CuteUI.Paper,CuteUI.Line);
-            CuteUI.Fill(new Rect(rect.x+3,rect.y+5,2,rect.height-10),(Color32)color);
             var ink=UIStyle.Lin(CuteUI.Text);
             nameStyle.normal.textColor=nameStyle.hover.textColor=nameStyle.active.textColor=nameStyle.focused.textColor=ink;
-            GUI.Label(new Rect(rect.x+7,rect.y+2,rect.width-10,rect.height-4),text,nameStyle);
+            CuteUI.WorldText(rect.center.x,rect.center.y,text,true);
         }
         void OnGUI()
         {
+            var renderCamera=Camera.main;
+            // 에디터 Scene 뷰의 Screen 크기로 게임 카메라 좌표를 다시 계산하지 않는다.
+            if(Application.isEditor && renderCamera!=null && (renderCamera.pixelWidth!=Screen.width||renderCamera.pixelHeight!=Screen.height))return;
             DrawnRects.Clear();DrawnNames.Clear();layoutRects.Clear();boardLayoutRects.Clear();BoardRects.Clear();compactPrompt=default;if(!Allowed||!ownsOriginal)return;
             var gm = GameManager.I;
             var cam = Camera.main;
@@ -85,31 +100,19 @@ namespace PocketCaravan
             Init();
             guiOrigin=ToGui(cam,Vector3.zero);
             CollectBoards(cam);
+            CollectAssets(cam);
 
             var player = PlayerController.Instance;
             var nav = Navigator.Compute(gm);
 
-            // 1) 이름표
-            foreach (var it in Interactable.All)
-            {
-                Vector2 p = ToGui(cam, NameAnchor(it));
-                if(it is ContractBoard && ClosestBoard(p,out Rect board))p=new Vector2(board.center.x,board.yMin-12);
-
-                bool place=IsPlace(it);string label=LabelFor(it,player!=null?player.Motor.Feet:(Vector2)it.transform.position);
-                if (string.IsNullOrEmpty(label)) {if(nav.HasValue&&nav.Value.target==it&&it.Category!=Interactable.Kind.Quest)DrawDown(p+new Vector2(0,-12));continue;}   // 이름 없는 자리(같은 모닥불의 두 번째 의자 등)는 이름표를 띄우지 않는다
-                Color c = it.Category switch
-                {
-                    Interactable.Kind.Quest => QuestColor,
-                    Interactable.Kind.Market => MarketColor,
-                    Interactable.Kind.Board => BoardColor,
-                    Interactable.Kind.Danger => DangerColor,
-                    _ => PersonColor,
-                };
-                bool target = nav.HasValue && nav.Value.target == it;
-                Name(p,label,c,place);
-                // 퀘스트 NPC는 머리 위 !·? 표시가 있으니, 나머지(장터 등)만 화살표로 짚어 준다
-                if (target && it.Category != Interactable.Kind.Quest) DrawDown(p + new Vector2(0, -12));
-            }
+            // 가까이서 조작 중인 대상과 게시판 이름을 먼저 배치한다.
+            var focused=player!=null?player.TalkTarget:null;
+            var feet=player!=null?player.Motor.Feet:Vector2.zero;
+            if(focused!=null)DrawName(cam,focused,feet,nav.HasValue&&nav.Value.target==focused);
+            foreach(var it in Interactable.All)
+                if(it is ContractBoard && it!=focused)DrawName(cam,it,feet,nav.HasValue&&nav.Value.target==it);
+            foreach(var it in Interactable.All)
+                if(it!=focused && !(it is ContractBoard))DrawName(cam,it,feet,nav.HasValue&&nav.Value.target==it);
 
             if(player!=null)foreach(var place in places)
             {
@@ -126,9 +129,7 @@ namespace PocketCaravan
                 Vector2 p = ToGui(cam, player.TalkTarget.transform.position + new Vector3(0f, -0.7f, 0f));
                 string verb = !string.IsNullOrEmpty(player.TalkTarget.ActionVerb) ? player.TalkTarget.ActionVerb
                     : player.TalkTarget is DroppedCargo ? "줍기" : player.TalkTarget is ContractBoard ? "게시판 보기" : player.TalkTarget is TownMarket ? "사고팔기" : "말 걸기";
-                if(player.TalkTarget is ContractBoard && ClosestBoard(p,out Rect board))p=new Vector2(board.center.x,board.yMax+12);
-                if(player.TalkTarget is ContractBoard) compactPrompt=CuteUI.CompactSpacePrompt(p.x,p.y,"보기");
-                else CuteUI.SpacePrompt(p.x, p.y, verb);
+                compactPrompt=DrawSpace(p);
             }
 
             // 3) 퀘스트 길 안내
@@ -171,6 +172,25 @@ namespace PocketCaravan
             return new Vector2(Mathf.Round(s.x/UIStyle.Scale),Mathf.Round((Screen.height-s.y)/UIStyle.Scale));
         }
 
+        void DrawName(Camera cam,Interactable it,Vector2 feet,bool target)
+        {
+                Vector2 p = ToGui(cam, NameAnchor(it));
+
+                bool place=IsPlace(it);string label=LabelFor(it,feet);
+                if (string.IsNullOrEmpty(label)) {if(target&&it.Category!=Interactable.Kind.Quest)DrawDown(p+new Vector2(0,-12));return;}   // 이름 없는 자리(같은 모닥불의 두 번째 의자 등)는 이름표를 띄우지 않는다
+                Color c = it.Category switch
+                {
+                    Interactable.Kind.Quest => QuestColor,
+                    Interactable.Kind.Market => MarketColor,
+                    Interactable.Kind.Board => BoardColor,
+                    Interactable.Kind.Danger => DangerColor,
+                    _ => PersonColor,
+                };
+                Name(p,label,c,place);
+                // 퀘스트 NPC는 머리 위 !·? 표시가 있으니, 나머지(장터 등)만 화살표로 짚어 준다
+                if (target && it.Category != Interactable.Kind.Quest) DrawDown(p + new Vector2(0, -12));
+        }
+
         static Vector3 NameAnchor(Interactable it)
         {
             var anim=it.GetComponentInChildren<CharacterAnimator>();
@@ -178,7 +198,7 @@ namespace PocketCaravan
             {
                 // 걷기 프레임 윤곽 대신 정면의 고정 범위를 기준으로 삼는다.
                 var top=anim.transform.TransformPoint(anim.frames[0].bounds.max);
-                return new Vector3(it.transform.position.x,top.y+.8f,it.transform.position.z);
+                return new Vector3(it.transform.position.x,top.y+.5f,it.transform.position.z);
             }
             return it.transform.position+Vector3.up;
         }
@@ -198,11 +218,62 @@ namespace PocketCaravan
                 }
             }
         }
-        bool ClosestBoard(Vector2 p,out Rect result)
+        bool Free(Rect candidate)
         {
-            result=default;float distance=80*80;
-            foreach(var rect in BoardRects){float d=(p-rect.center).sqrMagnitude;if(d<distance){distance=d;result=rect;}}
-            return result.width>0;
+            foreach(var other in layoutRects)if(other.Overlaps(candidate))return false;
+            foreach(var other in boardLayoutRects)if(other.Overlaps(candidate))return false;
+            foreach(var other in assetLayoutRects)if(other.Overlaps(candidate))return false;
+            return true;
+        }
+        void Protect(Camera cam,Bounds bounds)
+        {
+            var a=ToGui(cam,bounds.min);var b=ToGui(cam,bounds.max);
+            var rect=Rect.MinMaxRect(Mathf.Min(a.x,b.x)-1,Mathf.Min(a.y,b.y)-1,Mathf.Max(a.x,b.x)+1,Mathf.Max(a.y,b.y)+1);
+            ProtectedAssetRects.Add(rect);rect.position-=guiOrigin;assetLayoutRects.Add(rect);
+        }
+        void CollectAssets(Camera cam)
+        {
+            assetLayoutRects.Clear();ProtectedAssetRects.Clear();
+            if(mapSprites==null||Time.unscaledTime>=nextSpriteScan)
+            {
+                mapSprites=map.GetComponentsInChildren<SpriteRenderer>();nextSpriteScan=Time.unscaledTime+1f;
+                objectTiles=map.transform.Find("Objects")?.GetComponent<Tilemap>();
+                aboveTiles=map.transform.Find("Above")?.GetComponent<Tilemap>();
+                tileArtBounds.Clear();CacheTiles(objectTiles);CacheTiles(aboveTiles);
+            }
+            foreach(var sr in mapSprites)
+                if(sr!=null&&sr.gameObject.activeInHierarchy&&sr.sprite!=null&&sr.sortingOrder>=5&&sr.sortingOrder<30)Protect(cam,sr.bounds);
+            foreach(var it in Interactable.All)
+            {
+                var anim=it.GetComponentInChildren<CharacterAnimator>();
+                if(anim!=null&&anim.frames!=null&&anim.frames.Length>0&&anim.frames[0]!=null)
+                {
+                    var local=anim.frames[0].bounds;
+                    Protect(cam,new Bounds(anim.transform.TransformPoint(local.center),Vector3.Scale(local.size,anim.transform.lossyScale)));
+                }
+            }
+            var pc=PlayerController.Instance;
+            if(pc!=null&&pc.anim!=null){var sr=pc.anim.GetComponent<SpriteRenderer>();if(sr!=null&&sr.sprite!=null)Protect(cam,sr.bounds);}
+            foreach(var bounds in tileArtBounds)Protect(cam,bounds);
+        }
+        void CacheTiles(Tilemap tiles)
+        {
+            if(tiles==null)return;
+            foreach(var cell in tiles.cellBounds.allPositionsWithin)
+                if(tiles.HasTile(cell))tileArtBounds.Add(new Bounds(tiles.GetCellCenterWorld(cell),Vector3.Scale(tiles.cellSize,tiles.transform.lossyScale)));
+        }
+        Rect DrawSpace(Vector2 anchor)
+        {
+            float w=Mathf.Ceil(CuteUI.Width("Space",true))+2;
+            foreach(var candidateOffset in PlacementOffsets)
+            {
+                var offset=new Vector2(candidateOffset.x,-candidateOffset.y);
+                var rect=new Rect(Mathf.Round(anchor.x-w/2+offset.x),Mathf.Round(anchor.y+offset.y),w,12);
+                if(rect.x<4||rect.xMax>UIStyle.VirtualWidth-4||rect.y<25||rect.yMax>UIStyle.VirtualHeight-44)continue;
+                var local=rect;local.position-=guiOrigin;if(!Free(local))continue;
+                CuteUI.WorldText(rect.center.x,rect.center.y,"Space",true);return rect;
+            }
+            return default;
         }
         static void Outlined(Rect r, string text, Color c, GUIStyle style)
         {
@@ -231,9 +302,9 @@ namespace PocketCaravan
                 arrowTex = Triangle(12, 12, true);
                 downTex = Triangle(10, 8, false);
             }
-            if (nameStyle == null || nameStyle.font != UIStyle.RegularFont || nameStyle.fontSize != UIStyle.BodySize)
+            if (nameStyle == null || nameStyle.font != UIStyle.SmallFont || nameStyle.fontSize != UIStyle.SmallSize)
             {
-                nameStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.RegularFont, alignment = TextAnchor.MiddleCenter, fontSize = UIStyle.BodySize, clipping = TextClipping.Clip, padding = new RectOffset(0,0,0,0), richText = false };
+                nameStyle = new GUIStyle() { font = UIStyle.SmallFont, alignment = TextAnchor.MiddleCenter, fontSize = UIStyle.SmallSize, clipping = TextClipping.Clip, padding = new RectOffset(0,0,0,0), richText = false };
                 shadowStyle = new GUIStyle(nameStyle);
                 shadowStyle.normal.textColor = new Color(0f, 0f, 0f, 0.8f);
                 guideStyle = new GUIStyle(nameStyle) { font = GUI.skin.font, fontSize = UIStyle.BodySize };

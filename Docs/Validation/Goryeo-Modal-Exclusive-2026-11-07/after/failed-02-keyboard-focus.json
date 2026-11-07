@@ -1,0 +1,15 @@
+{
+    "complete": false,
+    "error": "System.Exception: queued dialogue opens only after inventory closes inv=True dialogue=False lock=True\n  at PocketCaravan.EditorTools.GoryeoModalReview.Check (System.Boolean value, System.String text) [0x0001b] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoModalReview.cs:29 \n  at PocketCaravan.EditorTools.GoryeoModalReview+<Run>d__27.MoveNext () [0x00434] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoModalReview.cs:148 \n  at PocketCaravan.EditorTools.GoryeoModalReview+<Start>d__14.MoveNext () [0x00054] in /Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Assets/PocketCaravan/Tests/Runtime/GoryeoModalReview.cs:36 ",
+    "checks": [
+        "saves OFF bootstrap",
+        "actual viewport 480x270",
+        "isolated slot retained Goryeo/Naru actual=/Users/kim/Library/Application Support/DefaultCompany/PocketCaravan/codex_modal_bcae8755b2884fcd9a32e38a401d6007.json expected=/Users/kim/Library/Application Support/DefaultCompany/PocketCaravan/codex_modal_bcae8755b2884fcd9a32e38a401d6007.json",
+        "normal registered scene index Goryeo/Naru",
+        "native capture 01-market-inventory 480x270",
+        "inventory remains open",
+        "market entry cannot stack over inventory",
+        "native capture 02-dialogue-inventory 480x270",
+        "busy dialogue waits behind inventory"
+    ]
+}

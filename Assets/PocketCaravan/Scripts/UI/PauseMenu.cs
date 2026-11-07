@@ -26,6 +26,8 @@ namespace PocketCaravan
             UIState.Release(this);
         }
 
+        void OnDisable() { if (open) Close(); }
+
         void OnGUI()
         {
             if (!open) return;

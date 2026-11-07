@@ -16,11 +16,11 @@ class LabelsTrial(unittest.TestCase):
   for a,b in zip(production['maps'],source['maps']):
    for k in ('id','w','h'):self.assertEqual(a[k],b[k])
    self.assertEqual(a['places'],[{k:p[k]for k in ('text','x','y')}for p in b['places']])
-  # Only the board-art anchor is allowed to differ in the prompt; actions/navigation stay common.
+  # Only the approved Space-only display differs; target selection/navigation stay common.
   board_anchor='                if(player.TalkTarget is ContractBoard && ClosestBoard(p,out Rect board))p=new Vector2(board.center.x,board.yMax+12);\n'
-  self.assertEqual(code.count(board_anchor),1)
+  self.assertEqual(code.count(board_anchor),0)
   code=code.replace(board_anchor,'')
-  compact='                if(player.TalkTarget is ContractBoard) compactPrompt=CuteUI.CompactSpacePrompt(p.x,p.y,"보기");\n                else CuteUI.SpacePrompt(p.x, p.y, verb);'
+  compact='                compactPrompt=DrawSpace(p);'
   self.assertEqual(code.count(compact),1)
   code=code.replace(compact,'                CuteUI.SpacePrompt(p.x, p.y, verb);')
   common=(ROOT/'Assets/PocketCaravan/Scripts/UI/WorldLabels.cs').read_text()

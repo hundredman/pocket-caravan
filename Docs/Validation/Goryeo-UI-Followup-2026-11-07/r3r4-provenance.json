@@ -1,0 +1,6 @@
+{
+  "source": "Assets/PocketCaravan/Tests/Runtime/GoryeoR3R4IntegrationReview.cs",
+  "sha256": "4fc622abc98ecdb7f370b4b4d6ebf98f98f8af5fb698a77d0b361f9484d15f8a",
+  "temporaryClass": "CodexUIR3R4Smoke",
+  "changes": "class name and output directory only"
+}
