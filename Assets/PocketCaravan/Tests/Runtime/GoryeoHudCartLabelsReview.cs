@@ -15,7 +15,8 @@ namespace PocketCaravan.EditorTools
     /// <summary>Editor-only text palette and real UI comparison. No server connection or user save writes.</summary>
     public sealed class GoryeoHudCartLabelsReview : MonoBehaviour
     {
-        const string Out="ArtReview/Goryeo-Nameplate-Outline-20261107/";
+        public static bool PortraitsOnly;
+        static string Out=>PortraitsOnly?"ArtReview/Goryeo-Fennec-Smaller-20261107/":"ArtReview/Goryeo-Nameplate-Outline-20261107/";
         const BindingFlags Flags = BindingFlags.Instance | BindingFlags.NonPublic;
         [Serializable] class LayoutSnapshot { public string[] names; public Rect[] rectangles, protectedArt; public Vector2 origin; }
         [Serializable] class Scope { public ScopeMap[] maps; }
@@ -157,10 +158,11 @@ namespace PocketCaravan.EditorTools
                 {
                     pc.anim.facing=facing;yield return Frames();yield return Photo("portrait-after-"+origin.id+"-"+index);
                     Check(source.Invoke(null,null)==origin.playerFrames[0],"portrait stays front for "+origin.id+" "+facing);
-                    var pixels=PortraitPixels();if(origin.id=="arabia")Check(EqualFace(legacyPixels,pixels),"fennec uses original face RGBA framing (frame shadow excluded) "+facing);if(first==null)first=pixels;else Check(Equal(first,pixels),"portrait RGBA unchanged by facing "+origin.id+" "+facing);index++;
+                    var pixels=PortraitPixels();if(origin.id=="arabia")Check(!EqualFace(legacyPixels,pixels),"fennec portrait is reduced from original framing "+facing);if(first==null)first=pixels;else Check(Equal(first,pixels),"portrait RGBA unchanged by facing "+origin.id+" "+facing);index++;
                 }
             }
             }
+            if(PortraitsOnly){gm.Player.origin=originalOrigin;pc.anim.frames=originalFrames;Check(!gm.AutosaveEnabled&&!File.Exists(slotPath),"portrait-only preview never writes save");yield break;}
             gm.Player.origin=originalOrigin;pc.anim.frames=originalFrames;gm.Player.vehicle=gm.Db.vehicles.Find(v=>v.id=="handcart");Check(gm.Player.vehicle!=null,"existing handcart vehicle");
             var body=pc.anim.GetComponent<SpriteRenderer>();var carry=pc.GetComponent<CarryVisual>();var cart=(Transform)carry.GetType().GetField("cart",Flags).GetValue(carry);
             foreach(var facing in new[]{Vector2Int.down,Vector2Int.up,Vector2Int.left,Vector2Int.right})

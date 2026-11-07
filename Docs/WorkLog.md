@@ -402,3 +402,5 @@
 - 2026-11-07 Codex UI2(이 WIP 커밋): 사용자 사용량 중단/인수인계 요청. 부분 승인과 사막여우·이름표/모달/Space안내 미검증 코드를 보존, 채팅 안내 미착수. 수정 전 모달11확인·일부Python2통과만, 수정 후 Unity/전체회귀 미실행. SaveNow성공/Play종료 이력 확인·최신origin/main f5e39581b 포함·push없음. Docs/Goryeo/Handoff-2026-11-07-UI.md.
 
 - 2026-11-07 Codex UI2/시연(이 커밋): 중단WIP재개·사용자 최종 일괄 확인 지시 반영. 사막여우 원구도/작은 외곽선 이름표·전경 보호·Space단독/큰창 소유 잠금·대화 정리/채팅6초 소멸. 최종 Play916/61캡처·모달47·임시저장R3R4 100·Python403/23skip·Editor6종·세계1437/0오류. 검토 도구 실패/재로딩/정리 이력 별도 보존, 최종 콘솔·저장 해시 JSON 참조. 시연6분/3분·대사/대체/리허설 문서 작성, 실제 온라인·리허설/FPS·빌드/이동막힘원인 미확인. 최종 사용자 확인 대기·로컬만, 최신main확인. Docs/Goryeo/UI-Followup-2026-11-07.md.
+
+- 2026-11-07 Codex UI2(이 커밋): 사용자 요청 사막여우 초상화만 약10% 축소·구도/정면유지. 저장OFF57확인/20캡처·콘솔error0·다른3초상36×36 RGBA동일. 전체회귀/온라인/빌드재실행없음. 최신main병합 Already up to date·로컬만. ArtReview/Goryeo-Fennec-Smaller-20261107/comparison.png.

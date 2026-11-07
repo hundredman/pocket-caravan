@@ -513,10 +513,11 @@ namespace PocketCaravan
             var origin = GameManager.I != null ? GameManager.I.Player.origin : null;
             if (origin != null && origin.id == "arabia")
             {
-                // 사막여우는 사용자가 선호한 이전 크기/범위를 유지하되 정면은 고정한다.
+                // 이전 얼굴 구도/정면을 유지하고 사막여우만 약10% 작게 표시한다.
                 float showW = Mathf.Min(tr.width, d - 8), showH = Mathf.Min(tr.height * .6f, d - 8);
                 var oldPart = new Rect((1f - showW / tr.width) / 2f, 1f - showH / tr.height, showW / tr.width, showH / tr.height);
-                Sprite(sprite, new Rect(x + (d - showW) / 2f, y + 4, showW, showH), oldPart);
+                float portraitW=Mathf.Round(showW*.9f),portraitH=Mathf.Round(showH*(portraitW/showW));
+                Sprite(sprite, new Rect(x + (d - portraitW) / 2f, y + 4 + (showH-portraitH)/2f, portraitW, portraitH), oldPart);
                 return;
             }
             float headHeight = Mathf.Min(tr.height, Mathf.Ceil(tr.height * .75f));
