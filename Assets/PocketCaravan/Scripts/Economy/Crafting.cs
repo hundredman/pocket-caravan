@@ -52,7 +52,13 @@ namespace PocketCaravan
             new Recipe { id = "goryeo_hanji", shop = "닥목 한지 공방", worker = "한지 장인", product = "paper", productName = "종이",
                 fee = 18, hours = 6f, maxBatch = 1, dailyMax = 2,
                 hello = "재료는 공방에서 마련합니다. 삯을 맡기면 종이 한 묶음을 떠서 말려 드리지요." },
-            // ---------- 아라비아 (은인) — 아직 없음 ----------
+            // ---------- 아라비아 (기우 · 2026-11-07) ----------
+            new Recipe { id = "arabia_perfume", shop = "사나 향유 공방", worker = "향유 장인", product = "arabia_perfume", productName = "향유",
+                inputs = new[] { "arabia_frankincense" }, counts = new[] { 2 }, inputText = "유향 덩이 2", fee = 8, hours = 6f,
+                hello = "유향 두 덩이를 기름에 우리면 향유 한 병이 되오. 가볍고, 바다 건너면 값이 세 곱은 뛰지." },
+            new Recipe { id = "arabia_roast", shop = "타이즈 커피 볶는 집", worker = "커피 볶는 아주머니", product = "arabia_roasted_coffee", productName = "볶은 커피",
+                inputs = new[] { "arabia_coffee" }, counts = new[] { 2 }, inputText = "커피 열매 자루 2", fee = 4, hours = 4f,
+                hello = "열매 그대로는 아무도 안 사. 볶아야 향이 나지. 자루 둘을 맡기면 볶은 커피 한 자루로 만들어 줄게." },
         };
 
         public static Recipe Find(string id) => Recipes.Find(r => r.id == id);

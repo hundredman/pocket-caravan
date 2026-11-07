@@ -46,6 +46,7 @@
  *   POST /admin/kick      {"name":"윤채"}  접속을 4006으로 닫는다
  *   POST /admin/notice    {"text":"5분 뒤 서버 점검"}  →  서버 → 모두  {"t":"notice","text":…}
  *   welcome의 "newPass": 접속키를 지운 계정에 새 접속키를 정하고 들어왔다
+ *   (11단계) welcome의 "extras":true = 이 서버가 순위표·선물을 안다. 게임은 이게 있을 때만 score·getBoards·gift를 보낸다
  *  10단계 (2026-11-07) 게임 저장 통째로 (수레·창고·평판·퀘스트까지). 돈·짐 저장(8단계)도 예전 게임을 위해 그대로 둔다
  *   welcome에 "fullOk":true(이 서버가 통째 저장을 받는다)와, 있으면 "full":{at,h,day,money,map,origin,size}(요약만)가 붙는다
  *   게임 → 서버  {"t":"full","at":…,"h":"sha256","zip":"gzip+base64","day":12,"money":1200,"map":"venice_rialto","origin":"venice"}
@@ -53,6 +54,18 @@
  *   서버 → 게임  {"t":"fullSaved","at":…,"h":…}
  *   게임 → 서버  {"t":"getFull"}  →  서버 → 게임  {"t":"fullData","at":…,"h":…,"zip":…}  (없으면 zip이 "")
  *   서버는 압축을 풀지 않는다. 모양(base64·길이)만 본다
+ *  11단계 (2026-11-07) 무료 플랜 안에서 더한 것
+ *   저장 기록: 게임 저장을 덮을 때 10분에 한 번(또는 날짜가 줄면 = 새로 시작) 예전 것을 "fullv:이름:칸"에 남긴다 (최근 5개)
+ *     POST /admin/saves {"name"} 기록 보기 · POST /admin/restore {"name","slot"} 되돌리기 (지금 것도 기록에 남긴다.
+ *     되돌린 저장은 at이 지금이 되어, 다음 로그인 때 게임이 "서버 것 / 이 컴퓨터 것" 고르는 창을 띄운다)
+ *   순위표: 게임 → 서버 {"t":"score","board":"gondola","value":123}  계정만, 판마다 사람별 최고점 (위 20명)
+ *           서버 → 게임 {"t":"scored","board","value","best","rank"}  (rank 0 = 20위 밖)
+ *           게임 → 서버 {"t":"getBoards"}  →  {"t":"boards","boards":[{id,rows:[{name,value}]}]}  "money" 판은 계정 저장의 돈으로 만든다
+ *   선물: 게임 → 서버 {"t":"gift","gid":"a1","to":"은샘","money":100} 또는 {…,"item":"silk","n":3,"cost":270}
+ *         서버 → 받는 사람 {"t":"gift","gid":"p3:a1","from":"윤채",…}  →  받는 사람 → 서버 {"t":"giftAck","gid":"p3:a1","ok":true}
+ *         서버 → 보낸 사람 {"t":"giftResult","gid":"a1","ok":…,"why":…,"to":…}  (받는 사람이 없거나 10초 안에 답이 없으면 ok:false)
+ *         보낸 게임은 보낼 때 돈·짐을 빼 두고, ok:false면 돌려받는다
+ *   사용량: 접속·메시지·관리 요청 수를 날마다(UTC) 세어 GET /admin/status의 "usage"로 보여 준다 (무료 한도 하루 10만 번 어림)
  */
 import { DurableObject } from "cloudflare:workers";
 import type { Env } from "./index";
@@ -71,6 +84,14 @@ const SAY_MAX = 80, SAY_GAP_MS = 1000;
 const MAX_CHARS = 16000;
 /** 통째 저장: 압축 글(base64) 최대 길이 (≈ 압축 90KB, 저장 JSON 몇백 KB) · 최소 간격 */
 const FULL_ZIP_MAX = 120_000, FULL_CHARS = FULL_ZIP_MAX + 2000, FULL_GAP_MS = 5000;
+/** 게임 저장 기록: 남겨 두는 수 · 새 기록을 남기는 최소 간격 */
+const HISTORY_KEEP = 5, HISTORY_GAP_MS = 10 * 60_000;
+/** 순위표: 판 종류 수 · 판마다 남기는 사람 수 · 보내 주는 사람 수 · 점수 최소 간격 */
+const BOARD_MAX = 30, BOARD_KEEP = 20, BOARD_SHOW = 10, SCORE_GAP_MS = 1000;
+/** 선물: 최소 간격 · 받는 쪽 답을 기다리는 시간 · 한 번에 보내는 최대 돈·개수 */
+const GIFT_GAP_MS = 2000, GIFT_WAIT_MS = 10_000, GIFT_MONEY_MAX = 1_000_000, GIFT_COUNT_MAX = 1000;
+/** 사용량을 저장소에 적는 간격 */
+const USAGE_SAVE_MS = 60_000;
 /** 짐 저장: 물건 종류 수 */
 const SAVE_ITEMS = 200;
 /** 거래 기록: 남겨 두는 수 · 새로 들어온 사람에게 다시 보내 주는 기간 */
@@ -88,8 +109,24 @@ interface SaveData { money: number; items: string[]; counts: number[]; costs: nu
 /** 통째 저장 요약 (계정에 같이 둔다). 압축 글은 "full:" + 소문자 이름에 따로 둔다 */
 interface FullInfo { at: number; h: string; day: number; money: number; map: string; origin: string; size: number; saved: number; }
 
+/** 남겨 둔 예전 게임 저장 (압축 글은 "fullv:" + 소문자 이름 + ":" + slot) */
+interface FullHist extends FullInfo { slot: number; }
+
 /** 계정 (저장소 키 "acct:" + 소문자 이름). hash가 ""이면 관리자가 접속키를 지운 것: 다음 접속키로 새로 정한다 */
-interface Account { name: string; salt: string; hash: string; id: string; created: number; save?: SaveData; full?: FullInfo; }
+interface Account {
+  name: string; salt: string; hash: string; id: string; created: number; save?: SaveData; full?: FullInfo;
+  /** 예전 게임 저장 요약 (최근 것이 앞) · 다음에 쓸 칸 */
+  hist?: FullHist[]; histNext?: number;
+}
+
+/** 순위표 한 줄 (저장소 키 "board:" + 판 아이디, 판 목록은 "boards") */
+interface BoardRow { name: string; value: number; at: number; }
+
+/** 받는 사람의 답을 기다리는 선물 */
+interface PendingGift { from: WebSocket; clientGid: string; to: WebSocket; toName: string; at: number; }
+
+/** 날마다(UTC) 센 사용량 (저장소 키 "usage:" + 날짜) */
+interface Usage { day: string; opens: number; msgs: number; admin: number; }
 
 /** 공유 장터 거래 한 건 */
 interface Trade { seq: number; at: number; id: string; name: string; town: string; item: string; n: number; d: number; sell: boolean; }
@@ -120,6 +157,13 @@ export class WorldRoom extends DurableObject<Env> {
   private lastEmote = new Map<string, number>();
   private lastSave = new Map<string, number>();
   private lastFull = new Map<string, number>();
+  private lastScore = new Map<string, number>();
+  private lastGift = new Map<string, number>();
+  /** "보낸 사람 번호:보낸 게임의 gid" → 받는 사람 답을 기다리는 선물. 방이 잠들면 지워진다(보낸 게임이 시간이 지나 돌려받는다) */
+  private gifts = new Map<string, PendingGift>();
+  /** 오늘 사용량 (저장소와 USAGE_SAVE_MS마다 맞춘다) */
+  private usage: Usage = { day: "", opens: 0, msgs: 0, admin: 0 };
+  private usageSaved = 0;
 
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
@@ -135,6 +179,7 @@ export class WorldRoom extends DurableObject<Env> {
     if (want && mine && Date.parse(want) > Date.parse(mine)) this.ctx.abort("새 코드로 다시 켭니다");
 
     const path = new URL(request.url).pathname;
+    await this.tally(path.startsWith("/admin/") ? "admin" : "opens");
     if (path.startsWith("/admin/")) return this.admin(request, path.slice("/admin/".length));
 
     const pair = new WebSocketPair();
@@ -152,6 +197,7 @@ export class WorldRoom extends DurableObject<Env> {
     const me = ws.deserializeAttachment() as Player;
     if (!me || me.gone) return;
     const now = Date.now();
+    await this.tally("msgs");
     if (!this.allow(ws, me, now)) return;
     me.heard = now;
 
@@ -211,7 +257,7 @@ export class WorldRoom extends DurableObject<Env> {
         send(ws, {
           t: "welcome", v: PROTOCOL, id: me.id, name: me.name, online: this.count(), seq,
           account: !!me.acct, hasSave: !!acct?.save && !!me.acct, save: me.acct ? acct?.save ?? null : null,
-          fullOk: true, ...(me.acct && acct?.full ? { full: acct.full } : {}),
+          fullOk: true, extras: true, ...(me.acct && acct?.full ? { full: acct.full } : {}),
           ...(newPass ? { newPass: true } : {}),
         });
         this.broadcast({ t: "online", online: this.count() }, (o) => o !== ws);
@@ -243,8 +289,16 @@ export class WorldRoom extends DurableObject<Env> {
         const acct = await this.ctx.storage.get<Account>(me.acct);
         if (!acct) return;
         const int = (v: unknown) => Number.isInteger(v) && Math.abs(v as number) <= 2147483647 ? v as number : 0;
+        const name = me.acct.slice("acct:".length);
+        const puts: Record<string, unknown> = {};
+        // 11단계 저장 기록: 덮기 전에 예전 것을 남긴다 (10분에 한 번, 또는 날짜가 줄었으면 = 새로 시작했으면 바로)
+        const prev = acct.full, last = acct.hist?.[0];
+        if (prev && prev.h !== h && (!last || last.h !== prev.h) && (int(msg.day) < prev.day || !last || prev.saved - last.saved >= HISTORY_GAP_MS)) {
+          const prevZip = await this.ctx.storage.get<string>("full:" + name);
+          if (prevZip) this.keepHistory(acct, name, prev, prevZip, puts);
+        }
         acct.full = { at, h, day: int(msg.day), money: int(msg.money), map: cleanMap(msg.map), origin: cleanMap(msg.origin), size: zip.length, saved: now };
-        await this.ctx.storage.put({ [me.acct]: acct, ["full:" + me.acct.slice("acct:".length)]: zip });
+        await this.ctx.storage.put({ ...puts, [me.acct]: acct, ["full:" + name]: zip });
         return send(ws, { t: "fullSaved", at, h });
       }
       case "getFull": {
@@ -253,6 +307,66 @@ export class WorldRoom extends DurableObject<Env> {
         const acct = await this.ctx.storage.get<Account>(me.acct);
         const zip = (await this.ctx.storage.get<string>("full:" + me.acct.slice("acct:".length))) ?? "";
         return send(ws, { t: "fullData", at: acct?.full?.at ?? 0, h: acct?.full?.h ?? "", zip: acct?.full ? zip : "" });
+      }
+      case "score": {
+        ws.serializeAttachment(me);
+        if (!me.acct) return send(ws, { t: "error", why: "접속키로 들어와야 순위에 올라요" });
+        const board = cleanBoard(msg.board);
+        const value = Number.isInteger(msg.value) && msg.value >= 0 && msg.value <= 1e9 ? msg.value as number : -1;
+        if (!board || board === "money" || value < 0) return send(ws, { t: "error", why: "점수 모양이 이상합니다" });
+        if (now - (this.lastScore.get(me.id) ?? 0) < SCORE_GAP_MS) return;
+        this.lastScore.set(me.id, now);
+        const ids = (await this.ctx.storage.get<string[]>("boards")) ?? [];
+        if (!ids.includes(board) && ids.length >= BOARD_MAX) return send(ws, { t: "error", why: "순위표 종류가 너무 많아요" });
+        const rows = (await this.ctx.storage.get<BoardRow[]>("board:" + board)) ?? [];
+        const mine = rows.find((r) => r.name.toLowerCase() === me.name.toLowerCase());
+        if (!mine || value > mine.value) {
+          const next = rows.filter((r) => r !== mine).concat({ name: me.name, value, at: now })
+            .sort((a, b) => b.value - a.value || a.at - b.at).slice(0, BOARD_KEEP);
+          await this.ctx.storage.put({ ["board:" + board]: next, ...(ids.includes(board) ? {} : { boards: ids.concat(board) }) });
+          rows.splice(0, rows.length, ...next);
+        }
+        const rank = rows.findIndex((r) => r.name.toLowerCase() === me.name.toLowerCase()) + 1;
+        return send(ws, { t: "scored", board, value, best: Math.max(value, mine?.value ?? 0), rank });
+      }
+      case "getBoards": {
+        ws.serializeAttachment(me);
+        const boards: { id: string; rows: { name: string; value: number }[] }[] = [];
+        const money = [...(await this.accounts()).values()]
+          .map((a) => ({ name: a.name, value: a.full?.money ?? a.save?.money ?? -1 }))
+          .filter((r) => r.value >= 0).sort((a, b) => b.value - a.value).slice(0, BOARD_SHOW);
+        boards.push({ id: "money", rows: money });
+        for (const id of (await this.ctx.storage.get<string[]>("boards")) ?? []) {
+          const rows = (await this.ctx.storage.get<BoardRow[]>("board:" + id)) ?? [];
+          boards.push({ id, rows: rows.slice(0, BOARD_SHOW).map((r) => ({ name: r.name, value: r.value })) });
+        }
+        return send(ws, { t: "boards", boards });
+      }
+      case "gift": {
+        ws.serializeAttachment(me);
+        const clientGid = typeof msg.gid === "string" && /^[A-Za-z0-9]{1,32}$/.test(msg.gid) ? msg.gid as string : "";
+        const to = cleanName(msg.to);
+        const money = Number.isInteger(msg.money) && msg.money > 0 && msg.money <= GIFT_MONEY_MAX ? msg.money as number : 0;
+        const item = money ? "" : cleanMap(msg.item);
+        const n = Number.isInteger(msg.n) && msg.n >= 1 && msg.n <= GIFT_COUNT_MAX ? msg.n as number : 0;
+        const cost = typeof msg.cost === "number" && Number.isFinite(msg.cost) && msg.cost >= 0 && msg.cost <= 1e9 ? Math.round(msg.cost * 100) / 100 : 0;
+        if (!clientGid || !to || (!money && !(item && n))) return send(ws, { t: "error", why: "선물 모양이 이상합니다" });
+        const fail = (why: string) => send(ws, { t: "giftResult", gid: clientGid, ok: false, why, to });
+        if (now - (this.lastGift.get(me.id) ?? 0) < GIFT_GAP_MS) return fail("선물은 2초에 한 번만 보낼 수 있어요");
+        this.lastGift.set(me.id, now);
+        const target = this.live().find(([s, p]) => s !== ws && p.name.toLowerCase() === to.toLowerCase());
+        if (!target) return fail(`'${to}' 님이 지금 접속해 있지 않아요`);
+        const gid = `${me.id}:${clientGid}`;
+        this.gifts.set(gid, { from: ws, clientGid, to: target[0], toName: target[1].name, at: now });
+        send(target[0], { t: "gift", gid, from: me.name, item, n: money ? 0 : n, cost: money ? 0 : cost, money });
+        return send(ws, { t: "giftSent", gid: clientGid, to: target[1].name });
+      }
+      case "giftAck": {
+        ws.serializeAttachment(me);
+        const g = typeof msg.gid === "string" ? this.gifts.get(msg.gid) : undefined;
+        if (!g || g.to !== ws) return;
+        this.gifts.delete(msg.gid);
+        return send(g.from, { t: "giftResult", gid: g.clientGid, ok: msg.ok === true, why: cleanText(msg.why), to: me.name });
       }
       case "trade": {
         ws.serializeAttachment(me);
@@ -335,7 +449,11 @@ export class WorldRoom extends DurableObject<Env> {
       const pinged = this.ctx.getWebSocketAutoResponseTimestamp(s)?.getTime() ?? 0;
       if (now - Math.max(p.heard, pinged) > STALE_MS) this.shut(s, p, Close.Timeout, "timeout");
     }
+    for (const [gid, g] of this.gifts)   // 받는 사람이 답이 없는 선물: 보낸 사람이 돌려받게 한다
+      if (now - g.at > GIFT_WAIT_MS) { this.gifts.delete(gid); send(g.from, { t: "giftResult", gid: g.clientGid, ok: false, why: "받는 쪽이 답이 없어요", to: g.toName }); }
+    await this.saveUsage(false);
     if (this.live().length > 0) await this.ctx.storage.setAlarm(Date.now() + SWEEP_MS);
+    else await this.saveUsage(true);
   }
 
   // ---------------- 관리 도구 (2026-11-05) ----------------
@@ -360,7 +478,32 @@ export class WorldRoom extends DurableObject<Env> {
           accounts: (await this.accounts()).size,
           tradeSeq: (await this.ctx.storage.get<number>("tradeSeq")) ?? 0,
           tradesKept: trades.length, lastTradeAt: trades.at(-1)?.at ?? 0,
+          // 무료 한도는 하루(UTC) 요청 10만 번. 웹소켓 메시지는 20개가 요청 1번으로 센다 (어림값: 방이 잠든 사이의 ping 자동 응답은 안 센다)
+          usage: { ...this.usage, estimate: this.usage.opens + this.usage.admin + Math.ceil(this.usage.msgs / 20), limit: 100_000 },
         });
+      }
+      case "POST saves": {
+        const k = acctKey(body.name);
+        const acct = k ? await this.ctx.storage.get<Account>(k) : undefined;
+        if (!acct) return reply({ error: `'${cleanName(body.name)}' 계정이 없어요` }, 404);
+        const info = (f?: FullInfo) => f && { at: f.at, saved: f.saved, day: f.day, money: f.money, map: f.map, origin: f.origin, size: f.size };
+        return reply({ name: acct.name, current: info(acct.full) ?? null, history: (acct.hist ?? []).map((x) => ({ slot: x.slot, ...info(x) })) });
+      }
+      case "POST restore": {
+        const k = acctKey(body.name);
+        const acct = k ? await this.ctx.storage.get<Account>(k) : undefined;
+        if (!acct) return reply({ error: `'${cleanName(body.name)}' 계정이 없어요` }, 404);
+        const pick = (acct.hist ?? []).find((x) => x.slot === body.slot);
+        const name = k.slice("acct:".length);
+        const zip = pick ? await this.ctx.storage.get<string>("fullv:" + name + ":" + pick.slot) : undefined;
+        if (!pick || !zip) return reply({ error: "그 번호의 저장 기록이 없어요" }, 404);
+        const puts: Record<string, unknown> = {};
+        const curZip = await this.ctx.storage.get<string>("full:" + name);
+        if (acct.full && curZip && acct.full.h !== pick.h) this.keepHistory(acct, name, acct.full, curZip, puts);   // 되돌리기도 되돌릴 수 있게
+        const { slot: _slot, ...picked } = pick;
+        acct.full = { ...picked, at: now, saved: now };   // 지금 시각으로: 다음 로그인 때 게임이 고르는 창을 띄운다
+        await this.ctx.storage.put({ ...puts, [k]: acct, ["full:" + name]: zip });
+        return reply({ ok: true, name: acct.name, day: picked.day, money: picked.money, map: picked.map });
       }
       case "GET accounts": {
         const online = new Set(this.live().map(([, p]) => p.acct ?? ""));
@@ -397,8 +540,18 @@ export class WorldRoom extends DurableObject<Env> {
         if (body.confirm !== true) return reply({ dry: true, match: names });
         const gone = new Set(keys);
         for (const [s, p] of this.live()) if (p.acct && gone.has(p.acct)) this.kick(s, p, "계정이 지워져서 접속을 끊었어요");
-        const withFull = keys.flatMap((k) => [k, "full:" + k.slice("acct:".length)]);
+        const withFull = keys.flatMap((k) => {
+          const n = k.slice("acct:".length);
+          return [k, "full:" + n, ...Array.from({ length: HISTORY_KEEP }, (_, i) => `fullv:${n}:${i}`)];
+        });
         for (let i = 0; i < withFull.length; i += 128) await this.ctx.storage.delete(withFull.slice(i, i + 128));
+        // 순위표에서도 뺀다
+        const lower = new Set(names.map((n) => n.toLowerCase()));
+        for (const id of (await this.ctx.storage.get<string[]>("boards")) ?? []) {
+          const rows = (await this.ctx.storage.get<BoardRow[]>("board:" + id)) ?? [];
+          const kept = rows.filter((r) => !lower.has(r.name.toLowerCase()));
+          if (kept.length !== rows.length) await this.ctx.storage.put("board:" + id, kept);
+        }
         return reply({ deleted: names });
       }
       case "POST kick": {
@@ -422,6 +575,32 @@ export class WorldRoom extends DurableObject<Env> {
   /** 모든 계정 (저장소 키 → 계정) */
   private async accounts(): Promise<Map<string, Account>> {
     return this.ctx.storage.list<Account>({ prefix: "acct:" });
+  }
+
+  /** 예전 게임 저장 하나를 기록 칸에 남긴다 (칸은 돌아가며 쓴다). 저장소에 쓸 것은 puts에 더하고 acct를 고친다 */
+  private keepHistory(acct: Account, name: string, info: FullInfo, zip: string, puts: Record<string, unknown>): void {
+    const slot = (acct.histNext ?? 0) % HISTORY_KEEP;
+    acct.histNext = slot + 1;
+    acct.hist = [{ ...info, slot }, ...(acct.hist ?? []).filter((x) => x.slot !== slot)].slice(0, HISTORY_KEEP);
+    puts[`fullv:${name}:${slot}`] = zip;
+  }
+
+  /** 사용량 하나 세기. 날이 바뀌었거나 방이 새로 켜졌으면 저장소에 적어 둔 오늘 값부터 이어 센다 */
+  private async tally(kind: "opens" | "msgs" | "admin"): Promise<void> {
+    const day = new Date().toISOString().slice(0, 10);
+    if (this.usage.day !== day) {
+      if (this.usage.day) await this.saveUsage(true);
+      this.usage = (await this.ctx.storage.get<Usage>("usage:" + day)) ?? { day, opens: 0, msgs: 0, admin: 0 };
+      this.usageSaved = Date.now();
+    }
+    this.usage[kind]++;
+  }
+
+  /** 사용량을 저장소에 적는다 (now가 아니면 USAGE_SAVE_MS가 지났을 때만: 무료 한도의 '쓰기 수'를 아끼려고) */
+  private async saveUsage(now: boolean): Promise<void> {
+    if (!this.usage.day || (!now && Date.now() - this.usageSaved < USAGE_SAVE_MS)) return;
+    this.usageSaved = Date.now();
+    await this.ctx.storage.put("usage:" + this.usage.day, this.usage);
   }
 
   /** 관리자가 접속을 닫는다: 이유를 알리고 4006으로 닫는다 (게임은 다시 접속하지 않는다) */
@@ -501,6 +680,12 @@ export class WorldRoom extends DurableObject<Env> {
     this.lastEmote.delete(me.id);
     this.lastSave.delete(me.id);
     this.lastFull.delete(me.id);
+    this.lastScore.delete(me.id);
+    this.lastGift.delete(me.id);
+    for (const [gid, g] of this.gifts) {
+      if (g.to === ws) { this.gifts.delete(gid); send(g.from, { t: "giftResult", gid: g.clientGid, ok: false, why: "받는 사람이 접속을 끊었어요", to: g.toName }); }
+      else if (g.from === ws) this.gifts.delete(gid);
+    }
     if (me.map) this.toMap(me.map, { t: "leave", id: me.id }, ws);
     this.broadcast({ t: "online", online: this.count(ws) }, (o) => o !== ws);
   }
@@ -550,6 +735,11 @@ function sendRaw(ws: WebSocket, json: string): void {
 /** 관리 요청의 답 (JSON) */
 function reply(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json; charset=utf-8" } });
+}
+
+/** 순위표 판 아이디: 영문 소문자·숫자·밑줄 32자까지 */
+function cleanBoard(id: unknown): string {
+  return typeof id === "string" && /^[a-z0-9_]{1,32}$/.test(id) ? id : "";
 }
 
 /** 이름 → 계정 저장소 키 ("" 이면 이름이 이상하다) */

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
   id: arabia_salt
   displayName: "\uBC14\uB2F7\uC18C\uAE08 \uB369\uC774"
-  icon: {fileID: 21300000, guid: db4d4dd9280834d12982a12b779298ac, type: 3}
+  icon: {fileID: 21300000, guid: 898646e6c2f94f01ba4ebb944423bcb3, type: 3}
   weight: 1
   basePrice: 4
   originTown: {fileID: 11400000, guid: f818d1d5cb77245f7ae6a206b7685bc7, type: 2}

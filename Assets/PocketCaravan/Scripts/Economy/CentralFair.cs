@@ -8,7 +8,7 @@ namespace PocketCaravan
     /// <summary>
     /// 돌아가며 열리는 큰 장 (전 지역 공용, 2026-11-04 통합: 북유럽 NorthCraft + 베네치아 VeniceFair의 규칙 부분을 합침).
     /// 규칙은 Docs/NorthFair.md 그대로:
-    /// 1) 하루에 한 곳 — 게임 날짜 % 마을 수. 기본은 "조각마다 한 곳"(북·서·동 조각에 하루 한 곳씩 = 매일 세 곳).
+    /// 1) 하루에 한 곳 — 게임 날짜 % 마을 수. 기본은 "조각마다 한 곳"(북·서·동·남 조각에 하루 한 곳씩 = 매일 네 곳).
     ///    Mode를 Whole로 바꾸면 "중앙 전체에서 하루 한 곳"(시연·멀티 모임용).
     /// 2) 큰 장 마을 장터에서 팔면 판 값의 2할을 덤으로 (조각별 덤 바꾸기: BonusOverride).
     /// 3) 중앙 조각에 들어서면 하루 한 번 "오늘 큰 장: ○○" 알림, 큰 장 마을에서는 들어설 때마다 + 화면 위 띠.
@@ -36,6 +36,10 @@ namespace PocketCaravan
             new Town { chunk = "west", townId = "venice_c_vineyard", mapId = "venice_c_vineyard", name = "포도밭 양조장" },
             new Town { chunk = "east", townId = "transit_ferry", mapId = "transit_ferry", name = "버들나루 마을" },
             new Town { chunk = "east", townId = "transit_woodtown", mapId = "transit_woodtown", name = "솔재 길목 마을" },
+            // 2026-11-07 아라비아(남쪽 조각): 중앙 길 맵(arabia_central_*)에는 장터 마을이 없어 작은 마을 셋이 돌아가며 선다 (수도 사나·항구 제다는 제외)
+            new Town { chunk = "south", townId = "arabia_zabid", mapId = "arabia_zabid", name = "자비드" },
+            new Town { chunk = "south", townId = "arabia_ahsa",  mapId = "arabia_ahsa",  name = "알 아흐사" },
+            new Town { chunk = "south", townId = "arabia_taiz",  mapId = "arabia_taiz",  name = "타이즈" },
         };
 
         /// <summary>조각별 덤 비율 바꾸기 (예: 베네치아 사자의 축복이면 서쪽 2할 5푼)</summary>
@@ -51,6 +55,7 @@ namespace PocketCaravan
             if (mapId.StartsWith("north_c_")) return "north";
             if (mapId.StartsWith("venice_c_")) return "west";
             if (mapId.StartsWith("transit_")) return "east";
+            if (mapId.StartsWith("arabia_")) return "south";   // 11/07 아라비아는 지역 전체가 한 조각
             return null;
         }
 

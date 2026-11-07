@@ -391,7 +391,7 @@ namespace PocketCaravan
             light = false;
             GUI.depth = -11;
             CuteUI.Dim();
-            float w = 320, h = Online ? 170 : 36 + FormHeight;
+            float w = 320, h = Online ? 196 : 36 + FormHeight;
             var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2f), Mathf.Round((UIStyle.VirtualHeight - h) / 2f + 6), w, h);
             CuteUI.Window(r);
             CuteUI.TitlePlate(r.center.x, r.y - 11, "온라인");
@@ -408,15 +408,18 @@ namespace PocketCaravan
             float tw = CuteUI.Width(tag, true, true) + 10;
             CuteUI.Box(new Rect(x + 46, y + 22, tw, 13), 5, net.IsAccount ? CuteUI.Up : CuteUI.Deco, CuteUI.Ink);
             CuteUI.LabelCenter(x + 46 + tw / 2f, y + 28.5f, tag, net.IsAccount ? CuteUI.White : CuteUI.Ink, true, true);
-            CuteUI.Label(x + 46 + tw + 6, y + 28.5f, net.IsAccount ? "돈·짐이 서버에 저장돼요" : "접속키가 없어서 저장되지 않아요", CuteUI.Sub, true);
+            CuteUI.Label(x + 46 + tw + 6, y + 28.5f, net.IsAccount ? "게임 진행이 서버에 저장돼요" : "접속키가 없어서 저장되지 않아요", CuteUI.Sub, true);
             y += 50;
             CuteUI.Icon(CuteUI.Pic.People, x, y + 2);
             CuteUI.Label(x + 15, y + 6, $"지금 접속한 사람 {net.OnlineCount}명 · 이 맵 {net.Peers.Count + 1}명", CuteUI.Text, true);
             y += 16;
-            CuteUI.Label(x, y + 6, "Enter 채팅 · /춤 같은 리액션 (/리액션 목록)", CuteUI.Sub, true);
+            CuteUI.Label(x, y + 6, "Enter 채팅 · /선물 · /순위 · /리액션 도움말", CuteUI.Sub, true);
             y += 14;
             CuteUI.Label(x, y + 6, "공유 장터: 리알토 · 개경 · 비르카 · 제다", CuteUI.Sub, true);
-            y += 22;
+            y += 20;
+            // 11/07 순위표: 온라인 창을 닫고 연다
+            if (CuteUI.Button(new Rect(x, y, fw, 20), "순위표 보기", CuteUI.Pic.Star4)) { CloseGame(); NetScores.Open(); }
+            y += 28;
             float bw = (fw - 16) / 3;
             if (CuteUI.SoftButton(new Rect(x, y, bw, 22), "끊기")) { net.Disconnect(); Say("접속을 끊었어요", false); }
             if (CuteUI.SoftButton(new Rect(x + bw + 8, y, bw, 22), "다른 이름으로")) SwitchAccount();

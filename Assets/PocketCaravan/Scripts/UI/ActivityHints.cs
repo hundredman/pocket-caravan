@@ -80,7 +80,7 @@ namespace PocketCaravan
             foreach (var s in spots) if (!s.done && !names.Contains(s.name)) names.Add(s.name);
             if (names.Count == 0) return;
             gm.SetMemo(key, gm.Clock.day);
-            Notify.Show("여기서 할 수 있는 것: " + string.Join(" · ", names) + "  (별 표시를 찾아가 보자)", 5f);
+            Notify.Show("여기서 할 수 있는 것\n" + string.Join(" · ", names) + "\n(★ 표시를 찾아가 보자)", 5f);   // 11/07(기우) 긴 문장이 어중간하게 접혀서 세 줄로
         }
 
         public Rect EdgeRect { get; private set; }

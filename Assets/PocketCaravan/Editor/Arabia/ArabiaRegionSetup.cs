@@ -121,13 +121,17 @@ namespace PocketCaravan.EditorTools
                 town.stock = entries.Select(e => new TownData.StockEntry { item = e.item, optimal = e.optimal, localPriceMultiplier = 1f }).ToList();
                 EditorUtility.SetDirty(town);
             }
-            // 2026-11-05 새 품목 6개 (아이콘은 임시로 다른 지역 것 재사용 — 아라비아 담당이 바꿀 것)
-            var frank = Item("Item_ArabiaFrankincense", FrankId, "유향 덩이", 1, 16, sanaa, false, Icon("transit_resin"));
-            var coffee = Item("Item_ArabiaCoffee", CoffeeId, "커피 열매 자루", 1, 10, taiz, false, Icon("north_herb"));
-            var pearl = Item("Item_ArabiaPearl", PearlId, "진주", 0.5f, 20, jeddah, false, Icon("north_amber"));
-            var salt = Item("Item_ArabiaSalt", SaltId, "바닷소금 덩이", 1, 4, jeddah, false, Icon("salt_parcel"));
-            var leather = Item("Item_ArabiaLeather", LeatherId, "낙타 가죽", 1, 7, ahsa, false, Icon("north_fur"));
-            var carpet = Item("Item_ArabiaCarpet", CarpetId, "양탄자", 2, 18, sanaa, false, Icon("venice_lace"));
+            // 2026-11-05 새 품목 6개. 아이콘은 11/07 아라비아 전용 그림 (Art/Items/arabia_*.png, 16px)
+            Sprite Art(string file) => AssetDatabase.LoadAssetAtPath<Sprite>(Root + "/Art/Items/" + file + ".png");
+            var frank = Item("Item_ArabiaFrankincense", FrankId, "유향 덩이", 1, 16, sanaa, false, Art("arabia_frankincense"));
+            var coffee = Item("Item_ArabiaCoffee", CoffeeId, "커피 열매 자루", 1, 10, taiz, false, Art("arabia_coffee"));
+            var pearl = Item("Item_ArabiaPearl", PearlId, "진주", 0.5f, 20, jeddah, false, Art("arabia_pearl"));
+            var salt = Item("Item_ArabiaSalt", SaltId, "바닷소금 덩이", 1, 4, jeddah, false, Art("arabia_salt"));
+            var leather = Item("Item_ArabiaLeather", LeatherId, "낙타 가죽", 1, 7, ahsa, false, Art("arabia_leather"));
+            var carpet = Item("Item_ArabiaCarpet", CarpetId, "양탄자", 2, 18, sanaa, false, Art("arabia_carpet"));
+            // 11/07 공방 가공품 (Crafting: arabia_perfume · arabia_roast). 장터 재고엔 안 넣는다 — 만들어서 멀리 파는 물건
+            Item("Item_ArabiaPerfume", "arabia_perfume", "향유", 0.5f, 36, sanaa, false, Art("arabia_perfume"));
+            Item("Item_ArabiaRoastedCoffee", "arabia_roasted_coffee", "볶은 커피", 1, 24, taiz, false, Art("arabia_roasted_coffee"));
 
             // 장터 품목 최소 5개 (11/4 팀 결정). 산지 40·집산 20~30·소비 8~18
             Stock(ahsa, (dates, 40), (leather, 30), (grain, 12), (salt, 10), (coffee, 8));
