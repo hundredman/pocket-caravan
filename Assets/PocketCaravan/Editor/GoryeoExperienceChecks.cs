@@ -57,8 +57,9 @@ namespace PocketCaravan.EditorTools
                 Check(id + " uniquely registered", db.quests.FindAll(q => q != null && q.id == id).Count == 1);
             var supply = db.quests.Find(q => q.id == "goryeo_cart_supply");
             Check("post-cart shipment does not force legacy tutorial completion", supply.requires.Count == 1 && supply.requires[0].id == "goryeo_jangdan_trade");
-            Check("cart supply exceeds backpack capacity", Item("firewood").weight * 4 > db.vehicles.Find(v => v.id == "walk").capacity);
-            Check("cart supply fits handcart", Item("firewood").weight * 4 <= db.vehicles.Find(v => v.id == "handcart").capacity);
+            // 11/08 은샘: 땔감 공급 의뢰는 등짐 한 번에 나를 수 있어야 한다(전에는 네 단이라 등짐에 안 들어가 납품이 막혔다)
+            Check("cart supply fits backpack in one trip", Item("firewood").weight * supply.objectives[1].count <= db.vehicles.Find(v => v.id == "walk").capacity);
+            Check("cart supply buys where the previous trade ended (Gaegyeong)", supply.giverNpc == "gaekju" && supply.objectives[0].targetId == "gaegyeong");
             return report;
         }
     }

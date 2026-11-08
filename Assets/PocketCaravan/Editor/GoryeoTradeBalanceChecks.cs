@@ -139,7 +139,7 @@ namespace PocketCaravan.EditorTools
                 var viaBasic=Intro();viaBasic.finishedQuests.Add(basic.id);gm.Quests.Import(viaBasic);
                 Check(r,"old freight finish unlocks same return trade",gm.Quests.CanStart(returning) && !gm.Quests.CanStart(supply));
                 var pending=Intro();pending.quests.Add(new QuestManager.Save{id=supply.id,step=1,amount=0});gm.Quests.Import(pending);
-                var wood=gm.ItemById("firewood");p.cargo.Add(wood,4,2);string why;gm.Quests.TryCompleteAt("dakmok_chief",out why);
+                var wood=gm.ItemById("firewood");p.cargo.Add(wood,supply.objectives[1].count,2);string why;gm.Quests.TryCompleteAt("dakmok_chief",out why);
                 Check(r,"supply consumes freight and unlocks return trade",why==null && p.cargo.Count(wood)==0 && gm.Quests.IsFinished(supply) && gm.Quests.CanStart(returning));
                 Check(r,"finished freight blocks duplicate introduction",!gm.Quests.CanStart(basic));
                 foreach(var town in db.towns)gm.GetMarket(town).Import(new MarketState.Save{town=town.id,level=town.startLevel},gm.ItemById);
