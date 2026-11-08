@@ -9,7 +9,9 @@ namespace PocketCaravan
     ///   살 때 -1개, 팔 때는 장터가 실제로 늘린 만큼(MarketState.SellStockDelta, 출신 강점 포함).
     /// - 남의 거래를 받으면 내 장터 재고에 같은 변화를 더한다(MarketState.Export → 고쳐서 Import). 값은 재고로 정해지니 바로 바뀐다.
     ///   재고 회복(매시간)은 각자 게임 시계대로 일어난다. 장터 등급·거래액은 나누지 않는다.
-    /// - 접속하지 않은 동안의 거래: 다시 접속하면 서버가 30분 안의 놓친 거래를 보내 준다. 받은 마지막 번호는 서버 주소마다 기억한다.
+    /// - 접속하지 않은 동안의 거래 (11/08): 새 서버는 접속할 때 공유 장터 재고(적정 재고와의 차이)를 통째로 보내 준다.
+    ///   그동안의 거래와 세상 시간에 따른 회복이 모두 들어 있어 아무리 오래 쉬어도 모두 같은 재고다.
+    ///   예전 서버면 놓친 거래(24시간·300건까지)를 다시 받아 더한다. 받은 마지막 번호는 서버 주소마다 기억한다.
     /// 공용 코드(MarketState · GameEvents · GameManager)는 공개된 것만 쓰고 고치지 않는다.
     /// </summary>
     public class NetMarket : MonoBehaviour
@@ -36,10 +38,40 @@ namespace PocketCaravan
 
         public static bool IsShared(TownData town) => town != null && System.Array.IndexOf(SharedTowns, town.id) >= 0;
 
+        /// <summary>이번 접속에서 서버가 공유 장터 재고를 통째로 줬다 (11/08). 예전 서버면 false: 지난 거래를 다시 받아 더한다.</summary>
+        public static bool ServerShared { get; private set; }
+        /// <summary>
+        /// 공유 장터 크기 배율 (11/08): 최근 1시간 접속한 사람이 많으면 서버가 키운다(1~3). 공유 장터의 적정 재고에 곱한다.
+        /// 사람이 많아도 한 사람의 거래가 값에 주는 영향이 비슷하다. 혼자 하기·예전 서버는 1.
+        /// </summary>
+        public static float Scale { get; private set; } = 1f;
+        public static float ScaleFor(TownData town) => IsShared(town) ? Scale : 1f;
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetShared() { ServerShared = false; Scale = 1f; }
+
+        /// <summary>배율을 바꾼다. 적정 재고와의 차이는 그대로 두어 값이 갑자기 튀지 않게 한다.</summary>
+        static void ChangeScale(float scale)
+        {
+            scale = Mathf.Clamp(float.IsNaN(scale) ? 1f : scale, 1f, 10f);
+            if (Mathf.Approximately(scale, Scale)) return;
+            var gm = GameManager.I;
+            var shift = new List<(MarketState market, ItemData item, float dev)>();
+            if (gm != null && gm.Db != null)
+                foreach (var id in SharedTowns)
+                {
+                    var town = gm.Db.towns.Find(t => t != null && t.id == id);
+                    if (town == null) continue;
+                    var market = gm.GetMarket(town);
+                    foreach (var it in market.KnownItems) shift.Add((market, it, market.Stock(it) - market.Optimal(it)));
+                }
+            Scale = scale;
+            foreach (var (market, item, dev) in shift) market.SetStock(item, market.Optimal(item) + dev);
+        }
+
         // ---------- 받은 마지막 거래 번호 (서버 주소마다) ----------
 
         static string SeqKey(string address) => "net.tradeSeq:" + (address ?? "");
-        /// <summary>이 서버에서 마지막으로 받은 거래 번호. 처음이면 -1 (서버가 30분 안의 거래를 보내 준다)</summary>
+        /// <summary>이 서버에서 마지막으로 받은 거래 번호. 처음이면 -1 (예전 서버가 놓친 거래를 보내 준다)</summary>
         public static int Since(string address) => PlayerPrefs.GetInt(SeqKey(address), -1);
         static void Saw(int seq)
         {
@@ -86,6 +118,8 @@ namespace PocketCaravan
 
         void Update()
         {
+            // 끊겨서 혼자 하기로 돌아가면 공유 장터도 원래 크기로 (잠깐 끊겨 다시 붙는 중에는 그대로)
+            if (ServerShared && !WorldClock.Active) { ChangeScale(1f); ServerShared = false; }
             if (pending.Count == 0 || Time.unscaledTime < nextFlush) return;
             if (Online)
                 foreach (var p in pending.Values)
@@ -101,11 +135,16 @@ namespace PocketCaravan
             {
                 case "welcome":
                     Saw(m.seq);
+                    ServerShared = m.marketOk;
+                    if (m.marketOk) { ChangeScale(m.marketScale > 0f ? m.marketScale : 1f); ApplySnapshot(m.market); }
                     if (!toldTowns)
                     {
                         toldTowns = true;
                         NetChat.System($"공유 장터: {TownList()} · 여기서 사고팔면 접속한 모두의 값이 같이 바뀌어요");
                     }
+                    break;
+                case "online":
+                    if (ServerShared && m.marketScale > 0f) ChangeScale(m.marketScale);
                     break;
                 case "trade":
                     Saw(m.seq);
@@ -126,6 +165,30 @@ namespace PocketCaravan
             }
         }
 
+        /// <summary>
+        /// 공유 장터 재고를 서버 값으로 맞춘다 (11/08): 재고 = 내 적정 재고 + 서버의 차이. 서버에 없는 물건은 적정 재고(차이 0).
+        /// 오래 접속하지 않았어도, 그동안의 거래와 회복이 모두 반영된 같은 재고를 받는다.
+        /// </summary>
+        static void ApplySnapshot(List<NetClient.MarketRow> rows)
+        {
+            var gm = GameManager.I;
+            if (gm == null || gm.Db == null) return;
+            foreach (var id in SharedTowns)
+            {
+                var town = gm.Db.towns.Find(t => t != null && t.id == id);
+                if (town == null) continue;
+                var market = gm.GetMarket(town);
+                foreach (var it in new List<ItemData>(market.KnownItems)) market.SetStock(it, market.Optimal(it));
+                if (rows == null) continue;
+                foreach (var r in rows)
+                {
+                    if (r == null || r.town != id) continue;
+                    var it = gm.ItemById(r.item);
+                    if (it != null) market.SetStock(it, market.Optimal(it) + r.dev);
+                }
+            }
+        }
+
         /// <summary>장터 재고에 변화를 더한다. 모르는 마을·물건이면 false</summary>
         static bool Apply(string townId, string itemId, float d, out TownData town, out ItemData item)
         {
@@ -136,13 +199,9 @@ namespace PocketCaravan
             item = gm.ItemById(itemId);
             if (town == null || item == null || System.Array.IndexOf(SharedTowns, townId) < 0) return false;
 
+            // 처음 보는 물건이면 적정 재고에서 시작한다 (11/08: Stock()이 재고표에 올리지 않게 바뀐 뒤 남의 거래가 빠지던 것 고침)
             var market = gm.GetMarket(town);
-            market.Stock(item);   // 처음 보는 물건이면 적정 재고로 만들어 둔다
-            var save = market.Export();
-            int i = save.items.IndexOf(item.id);
-            if (i < 0) return false;
-            save.stocks[i] = Mathf.Max(0f, save.stocks[i] + d);
-            market.Import(save, gm.ItemById);
+            market.SetStock(item, market.Stock(item) + d);
             return true;
         }
 

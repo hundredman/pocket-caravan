@@ -123,7 +123,7 @@ namespace PocketCaravan
         /// <summary>밀집한 곳만 빈 공간을 탐색한다. 결과를 캐시해 매 OnGUI마다 후보를 다시 찾지 않는다.</summary>
         static void NearLabels(List<Place> places, System.Func<Vector2, Vector2> project, Rect canvas, Rect area, Vector2? me, bool sideLabels)
         {
-            var pin = me.HasValue ? new Rect(Mathf.Round(me.Value.x)-8, Mathf.Round(me.Value.y)-20, 17, 24) : default;
+            var pin = me.HasValue ? new Rect(Mathf.Round(me.Value.x)-6, Mathf.Round(me.Value.y)-15, 13, 18) : default;
             var layout = lastLabels;
             if (layout == null || layout.canvas != canvas || layout.area != area || layout.pin != pin
                 || layout.font != UIStyle.SmallFont || layout.size != UIStyle.SmallSize || layout.sideLabels != sideLabels || !SamePlaces(layout, places))
@@ -153,7 +153,7 @@ namespace PocketCaravan
                 }
                 lastLabels=layout;
             }
-            for(int i=0;i<places.Count;i++) Leader(layout.points[i],layout.rects[i]);
+            for(int i=0;i<places.Count;i++) if(sideLabels) Elbow(layout.points[i],layout.rects[i]); else Leader(layout.points[i],layout.rects[i]);
             for(int i=0;i<places.Count;i++) Dot(layout.points[i],places[i]);
             for(int i=0;i<places.Count;i++) Tag(layout.rects[i],layout.labels[i],places[i]);
         }
@@ -189,8 +189,11 @@ namespace PocketCaravan
             if(best<0)return false;
             var sides=new bool[n];
             for(int row=n;row>0;row--){sides[order[row-1]]=choseLeft[row,best];best=previous[row,best];}
+            var segments=new List<Rect>();
             foreach(bool left in new[]{true,false})
             {
+                var lane=new List<int>();foreach(int i in order)if(sides[i]==left)lane.Add(i);
+                if(Lanes(layout,lane,widths,heights,left,segments))continue;
                 var column=new List<int>();float next=layout.area.y+3;
                 foreach(int i in order)if(sides[i]==left)
                 {
@@ -206,6 +209,92 @@ namespace PocketCaravan
                 }
             }
             return true;
+        }
+
+        const float MinJog = 6, MaxJog = 70;
+
+        /// <summary>
+        /// 2026-11-08 고려 지도: 연결선이 점에서 위나 아래로 꺾인 뒤 옆으로 이름표까지 간다.
+        /// 같은 높이에 점이 여러 개여도 선이 서로 겹치거나 다른 점을 지나지 않는 높이(줄)를 고른다. 자리가 모자라면 false (예전 배치).
+        /// </summary>
+        static bool Lanes(LabelLayout layout, List<int> column, float[] widths, float[] heights, bool left, List<Rect> segments)
+        {
+            // 위에서부터 차례로 놓되, 순서를 몇 가지 바꿔 보고 선끼리 덜 엇갈리는 배치를 고른다.
+            var orders=new List<List<int>>{new List<int>(column)};
+            var reversed=new List<int>(column);reversed.Reverse();orders.Add(reversed);
+            for(int a=0;a<column.Count;a++)for(int b=a+1;b<column.Count&&b<=a+3;b++){var o=new List<int>(column);(o[a],o[b])=(o[b],o[a]);orders.Add(o);}
+            Dictionary<int,Rect> bestRects=null;List<Rect> bestSegments=null;float best=float.MaxValue;
+            foreach(var order in orders)
+            {
+                var rects=new Dictionary<int,Rect>();var mine=new List<Rect>();
+                float total=TryLanes(layout,order,widths,heights,left,segments,rects,mine);
+                if(total<best){best=total;bestRects=rects;bestSegments=mine;}
+            }
+            if(bestRects==null)return false;
+            foreach(var kv in bestRects)layout.rects[kv.Key]=kv.Value;
+            segments.AddRange(bestSegments);
+            return true;
+        }
+
+        const float CrossCost = 300;
+        const float NearGap = 22, NearCost = 6;
+
+        static float TryLanes(LabelLayout layout, List<int> order, float[] widths, float[] heights, bool left, List<Rect> segments, Dictionary<int,Rect> rects, List<Rect> mine)
+        {
+            float top=layout.area.y+3,bottom=layout.area.yMax-3,total=0;
+            var hs=new List<Rect>();var vs=new List<Rect>();
+            foreach(int i in order)
+            {
+                var p=layout.points[i];float w=widths[i],h=heights[i];
+                float x=Mathf.Round(left?layout.canvas.x-5-w:layout.canvas.xMax+5),edge=left?x+w:x;
+                Rect best=default;float bestCost=float.MaxValue;Rect bestH=default,bestV=default;
+                for(float d=MinJog;d<=MaxJog;d++)
+                {
+                    if(d>bestCost)break;
+                    foreach(float sign in new[]{-1f,1f})
+                    {
+                        var r=new Rect(x,Mathf.Round(p.y+sign*d-h/2),w,h);
+                        if(r.y<top||r.yMax>bottom)continue;
+                        bool hit=false;foreach(var o in rects.Values)if(new Rect(o.x,o.y-2,o.width,o.height+4).Overlaps(r)){hit=true;break;}
+                        if(hit)continue;
+                        float lane=LaneY(r),px=Mathf.Round(p.x),py=Mathf.Round(p.y);
+                        var hseg=new Rect(Mathf.Min(px,edge),lane,Mathf.Abs(edge-px)+1,1);
+                        var vseg=new Rect(px,Mathf.Min(py,lane),1,Mathf.Abs(lane-py)+1);
+                        float cost=d;
+                        for(int j=0;j<layout.points.Length;j++)
+                        {
+                            if(j==i)continue;var q=layout.points[j];var dot=new Rect(q.x-5,q.y-5,10,10);
+                            if(dot.Overlaps(hseg)||dot.Overlaps(vseg))cost+=1000;
+                            // 다른 점 바로 위·아래를 스치는 가로선은 그 점의 선처럼 보여 헷갈린다
+                            else if(q.x>hseg.x&&q.x<hseg.xMax){float gap=Mathf.Abs(q.y-lane);if(gap<NearGap)cost+=(NearGap-gap)*NearCost;}
+                        }
+                        if(layout.pin.width>0&&(layout.pin.Overlaps(hseg)||layout.pin.Overlaps(vseg)))cost+=300;
+                        foreach(var s in segments)if(s.Overlaps(hseg)||s.Overlaps(vseg))cost+=CrossCost;
+                        foreach(var s in vs)if(s.Overlaps(hseg))cost+=CrossCost;
+                        foreach(var s in hs)if(s.Overlaps(vseg))cost+=CrossCost;
+                        for(int k=0;k<layout.rects.Length;k++)if(!rects.ContainsKey(k)&&layout.rects[k].width>0&&(layout.rects[k].Overlaps(hseg)||layout.rects[k].Overlaps(vseg)))cost+=1000;
+                        if(cost<bestCost){bestCost=cost;best=r;bestH=hseg;bestV=vseg;}
+                    }
+                }
+                if(bestCost==float.MaxValue)return float.MaxValue;
+                rects[i]=best;hs.Add(bestH);vs.Add(bestV);total+=bestCost;
+            }
+            // 나중에 놓인 선이 먼저 놓인 선의 세로 부분을 가로지르는 경우도 센다
+            for(int a=0;a<hs.Count;a++)for(int b=0;b<vs.Count;b++)if(a!=b&&hs[a].Overlaps(vs[b]))total+=CrossCost;
+            mine.AddRange(hs);mine.AddRange(vs);
+            return total;
+        }
+
+        static float LaneY(Rect label) => Mathf.Round(label.y + label.height / 2);
+
+        /// <summary>양옆 이름표용 연결선: 점에서 세로로 꺾은 뒤 가로로 이름표 가장자리까지</summary>
+        static void Elbow(Vector2 p, Rect label)
+        {
+            var col = new Color32(CuteUI.Ink.r,CuteUI.Ink.g,CuteUI.Ink.b,200);
+            float x=Mathf.Round(p.x), y=Mathf.Round(p.y), ly=LaneY(label);
+            float ex = label.x >= x ? label.x : label.xMax - 1;
+            if (Mathf.Abs(ly-y) >= 1) CuteUI.Fill(new Rect(x,Mathf.Min(y,ly),1,Mathf.Abs(ly-y)+1),col);
+            CuteUI.Fill(new Rect(Mathf.Min(x,ex),ly,Mathf.Abs(ex-x)+1,1),col);
         }
 
         static void Leader(Vector2 p, Rect label)
@@ -226,15 +315,14 @@ namespace PocketCaravan
             GUI.Label(lr, label, TagStyle);
         }
 
-        /// <summary>내 위치: 주황 핀 (흰 가운데 + 아래 뾰족)</summary>
+        /// <summary>내 위치 핀 (2026-11-08 모든 지역 통일): 주황으로 채운 작은 원 + 아래 뾰족</summary>
         static void Pin(Vector2 p)
         {
             float x = Mathf.Round(p.x), y = Mathf.Round(p.y);
-            CuteUI.Circle(x - 2, y - 2, 5, CuteUI.Ink, CuteUI.Ink);
-            for (int i = 0; i < 4; i++) CuteUI.Fill(new Rect(x - 3 + i, y - 6 + i, 7 - 2 * i, 1), CuteUI.Ink);
-            for (int i = 0; i < 3; i++) CuteUI.Fill(new Rect(x - 2 + i, y - 6 + i, 5 - 2 * i, 1), CuteUI.Frame);
-            CuteUI.Circle(x - 7, y - 19, 15, CuteUI.Frame, CuteUI.Ink, 1, 1);
-            CuteUI.Circle(x - 2, y - 14, 5, CuteUI.White, CuteUI.White, 0);
+            CuteUI.Circle(x - 1, y - 1, 3, CuteUI.Ink, CuteUI.Ink);
+            for (int i = 0; i < 3; i++) CuteUI.Fill(new Rect(x - 2 + i, y - 5 + i, 5 - 2 * i, 1), CuteUI.Ink);
+            for (int i = 0; i < 2; i++) CuteUI.Fill(new Rect(x - 1 + i, y - 5 + i, 3 - 2 * i, 1), CuteUI.Frame);
+            CuteUI.Circle(x - 5, y - 15, 11, CuteUI.Frame, CuteUI.Ink, 1, 1);   // 주황으로 꽉 채운 원 (가운데 흰 점 없음)
         }
 
         static float KeyLegendWidth() => CuteUI.Width("의뢰 목적지",true)+CuteUI.Width("마을",true)+CuteUI.Width("내 위치",true)+70;

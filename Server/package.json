@@ -14,7 +14,8 @@
     "test:admin": "node test/admin.mjs",
     "test:full": "node test/fullsave.mjs",
     "test:extras": "node test/extras.mjs",
-    "test:backup": "node test/backup.mjs"
+    "test:backup": "node test/backup.mjs",
+    "test:market": "node test/market.mjs"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261030.1",

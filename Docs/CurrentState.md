@@ -911,3 +911,7 @@ macOS Codex seatbelt에서 Aseprite가 AppKit 초기화 중 SIGABRT로 끝나던
 문명 선택 중 기본 고려 출신의 Arrive가 먼저 step1을 쓰고 예약 대사는 취소되던 누락을 복구했다. 선택 완료 후 하단 `나루의 아침` 1페이지·일꾼 부름→Space 안내, 옛step1저장복구/진행2~11보존·중복Start/맵이탈예약정리를 적용했다. 첫검사중 StartScreen 자동로그인 재개로 돈·짐 요약 전송을 발견해 즉시끊고, 별도시험칸의 NetSave 요약/전체 동기화를 함께 막았다. 본편 전체 저장 업로드는 없었고 서버 요약의 기존값/복구는 미확인이다. 이후 로그인억제/Offline·SaveOFF로 재검사. Unity오류0·431/23skip·세계883/0·개인저장9동일. 그림/상세/한계는 [검증](Validation/Goryeo-Opening-2026-11-08/README.md).
 
 - 2026-11-08 네 문명 매매 튜토리얼의 상단 안내를 `상인에게 물건 하나 구매하기` / `산 물건을 다른 마을 상인에게 판매하기`로 통일했다. 사용자 정정대로 문구2개×4지역만 변경했으며 판매 완료 판정을 다른 마을 조건으로 새로 바꾸지는 않았다. 컴파일/콘솔0·Offline/SaveOFF 실제8캡처, 전체회귀/매매재검사없음. [기록](Validation/Trade-Wording-2026-11-08/README.md).
+
+## PR #30 integration 반영 (2026-11-08)
+
+사용자 GitHub업로드 지시로 region/goryeo a5ce62076을 PR#30으로 올리고 자동검사2성공/MERGEABLE/CLEAN 확인 후 integration에 병합했다(b3fcfb91e,12:14KST). 고려 첫도입/일꾼/튜토리얼·공용이름표/호칭·4문명매매안내·시험저장전송보호·Aseprite도구가 반영됐다. 원격 코드/도구가 검증한 source와 동일하고 로컬도FF했다. 최종431/23skip·세계883/0·Unity격리30/콘솔0·개인저장9동일. 사후공지 [문안](Goryeo/Team-Notice-PR30.md), [원격상태](Validation/Region-Consistency-Integration-2026-11-08/github.json). 실제온라인/장시간/빌드는 미검사.

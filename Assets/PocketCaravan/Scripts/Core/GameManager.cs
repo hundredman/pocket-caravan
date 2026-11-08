@@ -96,6 +96,7 @@ namespace PocketCaravan
 
             Clock = new GameClock { realSecondsPerDay = Db.realSecondsPerDay };
             Clock.NewHour += OnNewHour;
+            Clock.Jumped += OnClockJumped;
 
             Quests = new QuestManager(Db.quests);
             Contracts = new ContractManager(Db, Clock, Player);
@@ -167,7 +168,8 @@ namespace PocketCaravan
 
         void Update()
         {
-            if (!UIState.Blocking) Clock.Tick(Time.deltaTime);
+            // 창이 열린 동안은 의뢰 시간이 멈춘다. 온라인 세상 시간은 그래도 서버 기준으로 맞춘다
+            Clock.Tick(UIState.Blocking ? 0f : Time.deltaTime);
             ApplyDaylight();
         }
 
@@ -432,6 +434,19 @@ namespace PocketCaravan
             if (hour == 6 && Clock.IsMarketDay) Notify.Show("오늘은 장날! 장터 값이 오른다.", 4f);
         }
 
+        /// <summary>
+        /// 온라인 세상 시계로 한 번에 건너뛰었다(접속 등). 그동안 장터 재고도 회복된 것으로 친다(최대 없음, 한 번에 계산).
+        /// 한 시간 몫은 NewHour가 이미 한다. 서버가 재고를 통째로 준 공유 장터는 이미 지금 값이라 건너뛴다.
+        /// </summary>
+        void OnClockJumped(float hours)
+        {
+            float extra = hours - 1f;
+            if (extra <= 0f) return;
+            foreach (var t in Db.towns) if (t != null) GetMarket(t);
+            foreach (var m in markets.Values)
+                if (!(NetMarket.ServerShared && NetMarket.IsShared(m.town))) m.RecoverHours(extra);
+        }
+
         // ---------- 떨어진 짐 ----------
 
         /// <summary>이전 호출 호환용. 새 주행 낙하는 만들지 않는다.</summary>
@@ -516,7 +531,7 @@ namespace PocketCaravan
                 origin = Player.origin != null ? Player.origin.id : null,
                 vehicle = Player.vehicle != null ? Player.vehicle.id : null,
                 stamina = Player.stamina, shake = Player.shake,
-                day = Clock.day, minute = Clock.minuteOfDay,
+                day = Clock.day, minute = Clock.minuteOfDay, playHours = Clock.playHours,
                 nextContractId = Contracts.nextId,
             };
             foreach (var kv in Player.cargo.Items) { d.cargoItems.Add(kv.Key.id); d.cargoCounts.Add(kv.Value); d.cargoCosts.Add(Player.cargo.TotalCost(kv.Key)); }
@@ -524,7 +539,7 @@ namespace PocketCaravan
             d.tradeActivity = Player.tradeActivity.Export();
             d.contracts.AddRange(Player.contracts);
             Quests.Export(d);
-            foreach (var m in markets.Values) d.markets.Add(m.Export());
+            foreach (var m in markets.Values) d.markets.Add(m.ExportForSave());
             d.boards.AddRange(Contracts.boards);
             d.traders.AddRange(Traders.traders);
             d.drops.AddRange(Drops);
@@ -559,6 +574,8 @@ namespace PocketCaravan
             Player.contracts.AddRange(d.contracts);
             Clock.day = Mathf.Max(1, d.day);
             Clock.minuteOfDay = d.minute;
+            // 옛 저장은 의뢰 기한이 세상 시간 기준이었으니 그 값에서 이어받는다
+            Clock.playHours = d.playHours > 0f ? d.playHours : Clock.TotalHours;
             Quests.Import(d);
             markets.Clear();
             foreach (var s in d.markets)

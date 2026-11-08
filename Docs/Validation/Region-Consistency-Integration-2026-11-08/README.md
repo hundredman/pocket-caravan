@@ -1,6 +1,6 @@
 # 지역 표시·시작 이야기 통합 검사
 
-2026-11-08 Codex. 사용자 “일단 깃헙으로 올리자” 지시로 region/goryeo→integration 업로드/병합 진행. 현재 제품 변경은 최신integration ff9a9ccf6와 최신main을 포함한다.
+2026-11-08 Codex. 사용자 “일단 깃헙으로 올리자” 지시로 region/goryeo→integration PR #30 병합 완료(b3fcfb91e, 12:14 KST). GitHub 검사2개 SUCCESS/MERGEABLE/CLEAN 확인 후 병합하고 로컬도FF했다. 결과는 github.json을 따른다. 원격 코드/도구와 검증한 source a5ce62076의 차이는0이다. 현재 제품 변경은 최신integration ff9a9ccf6와 최신main을 포함한다.
 
 ## 들어가는 변경
 

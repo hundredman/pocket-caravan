@@ -39,6 +39,11 @@ const b = await join("은샘");
 const c = await join("기우");
 check(a.id && b.id && c.id && new Set([a.id, b.id, c.id]).size === 3, `세 명이 서로 다른 번호 (${a.id}, ${b.id}, ${c.id})`);
 
+// 11/08 공용 세상 시계: 접속하면 서버 시각과 기준 시각을 받는다 (모두 같은 게임 시간을 계산)
+const clockA = a.got.find((m) => m.t === "welcome")?.clock, clockB = b.got.find((m) => m.t === "welcome")?.clock;
+check(Number.isFinite(clockA?.now) && Math.abs(clockA.now - Date.now()) < 60_000, "welcome에 서버 시각(clock.now)이 있다");
+check(clockA?.epoch === clockB?.epoch && clockA?.secondsPerDay === 360 && clockA.epoch === Date.UTC(2026, 10, 1), "모두 같은 기준 시각·하루 길이를 받는다");
+
 a.send({ t: "enter", map: "test_rialto" });
 await a.wait((m) => m.t === "room");
 b.send({ t: "enter", map: "test_rialto" });

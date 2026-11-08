@@ -124,7 +124,7 @@ namespace PocketCaravan
                 if (td != null) current += " · " + gm.GetMarket(td).LevelName;
             }
             var res = CuteMap.Draw("북유럽 교역도 · 피오르와 고원의 마을들", ready ? terrain : null, ready ? atlas.width : 0, ready ? atlas.height : 0, places, me, current,
-                "다리 밑 트롤과 의뢰 기한을 확인하며 이동하세요");
+                "다리 밑 트롤과 의뢰 기한을 확인하며 이동하세요", sideLabels: true);   // 2026-11-08 고려 지도와 같은 양옆 이름표·꺾은 선 (은샘, 기우님 확인 요청)
             if (res.close) Close();
         }
 

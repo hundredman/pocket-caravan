@@ -32,6 +32,7 @@ namespace PocketCaravan
 
         public int day;
         public float minute;
+        public float playHours; // 2026-11-08 내 의뢰 시간. 0: 옛 저장 → 불러올 때 day·minute의 세상 시간으로 이어받는다
 
         public List<QuestManager.Save> quests = new List<QuestManager.Save>();
         public List<string> finishedQuests = new List<string>();
