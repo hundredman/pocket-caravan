@@ -1,4 +1,4 @@
-"""11/08 고려 장승(숨은 수집물) 고정 자리: 걸어서 닿고, 맵 가장자리(위 상태줄 밑)에 있지 않아야 한다. 장단은 GoryeoBridges 다리로 건넌다."""
+"""11/08 고려 장승(숨은 수집물) 고정 자리: 걸어서 닿고, 맵 가장자리(위 상태줄 밑)에 있지 않아야 한다. 장단은 GoryeoBridges 징검다리로 건넌다."""
 import json, re, unittest
 from collections import deque
 from pathlib import Path
@@ -34,15 +34,16 @@ class GoryeoJangseung(unittest.TestCase):
             self.assertGreaterEqual(yj, 5, mid)   # 위 상태줄(약 3칸) 밑에 가리지 않게
             self.assertTrue(4 <= x < w - 4, mid)
 
-    def test_bridge_spans_only_water(self):
+    def test_stepping_stones_cross_only_water_in_one_line(self):
+        from PIL import Image
         for b in json.loads((A / 'Resources/Goryeo/Bridges/Config.json').read_text())['bridges']:
+            for p in b['pieces']:
+                with Image.open(A / f"Resources/Goryeo/Bridges/Art/{p['art']}.png") as im:
+                    self.assertEqual(im.size, (16, 16)); self.assertLessEqual(set(im.convert('RGBA').getchannel('A').tobytes()), {0, 255})
             d = json.loads((A / f"Maps/{b['mapId']}.json").read_text()); w, h = d['w'], d['h']
             cells = [(b['walk'][i], b['walk'][i + 1]) for i in range(0, len(b['walk']), 2)]
-            for x, y in cells: self.assertTrue(d['water'][(h - 1 - y) * w + x])
-            ys = {y for _, y in cells}; self.assertEqual(len(ys), 1)
-            y = ys.pop(); xs = sorted(x for x, _ in cells)
-            for end in ((xs[0] - 1, y), (xs[-1] + 1, y)):
-                i = (h - 1 - end[1]) * w + end[0]; self.assertFalse(d['water'][i] or d['blocked'][i], end)
+            for x, y in cells: self.assertTrue(d['water'][(h - 1 - y) * w + x], (x, y))
+            for a, c in zip(cells, cells[1:]): self.assertEqual(abs(a[0] - c[0]) + abs(a[1] - c[1]), 1)
 
 
 if __name__ == '__main__':
