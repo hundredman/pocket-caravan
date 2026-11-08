@@ -157,10 +157,19 @@ def generate(config,sources):
                 for k in('deco','obj','high'):tile_world[k][rr,cc]=''
                 if not walk[rr,cc]:forest_cells.append([int(cc),int(rr+oy)])
                 tile_world['ground'][rr,cc]=grass;walk[rr,cc]=True;known[rr,cc]=True
-        def R(x,y):return 0<=y-oy<height and 0<=x<width and new[y-oy,x]
+        edge_box=boxes.get(edit.get('map'))if edit.get('openEdge')else None
+        def R(x,y):
+            # A road that reaches the scene edge keeps going off-map (no end cap), like the main roads across borders.
+            if edge_box:
+                bx0,by0,bx1,by1=edge_box
+                if not(bx0<=x<bx1 and by0<=y<by1):
+                    cx,cy=min(max(x,bx0),bx1-1),min(max(y,by0),by1-1)
+                    if (cx,cy)!=(x,y)and abs(cx-x)+abs(cy-y)==1:return bool(new[cy-oy,cx])
+            return 0<=y-oy<height and 0<=x<width and new[y-oy,x]
         for wy in range(ey0-1,ey1+1):
             for wx in range(ex0-1,ex1+1):
                 r=wy-oy
+                if edge_box and not(edge_box[0]<=wx<edge_box[2]and edge_box[1]<=wy<edge_box[3]):continue
                 if not new[r,wx]:
                     if mask[r,wx]:road[r,wx]=0;tile_world['ground'][r,wx]=grass
                     continue
