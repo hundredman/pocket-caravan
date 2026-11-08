@@ -349,6 +349,7 @@ namespace PocketCaravan
                 case ObjectiveType.Sell:
                     return !string.IsNullOrEmpty(o.targetId) ? ("market", o.targetId) : ((string, string)?)null;
                 case ObjectiveType.BuyVehicle:
+                    if (!string.IsNullOrEmpty(o.targetId)) return ("market", o.targetId);   // 11/08 손수레처럼 여러 지역이 파는 수단은 의뢰가 장터를 정해 준다
                     foreach (var t in GameManager.I.Db.towns)
                         if (t != null && t.vehiclesForSale.Contains(o.vehicle)) return ("market", t.id);
                     return null;

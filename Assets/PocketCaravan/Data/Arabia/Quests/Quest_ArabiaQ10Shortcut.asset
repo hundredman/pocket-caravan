@@ -20,7 +20,7 @@ MonoBehaviour:
     \uAC74\uB108 \uBCF8\uB2E4. \uBAA8\uB798\uBC14\uB78C\uC774 \uBD80\uB294 \uAE38."
   giverNpc: arabia_yusuf
   requires:
-  - {fileID: 11400000, guid: d649539af01284a37bf25a0364f241c4, type: 2}
+  - {fileID: 11400000, guid: f5f3841cfade1406686c81d68eb308cf, type: 2}
   requiresAny: []
   choiceGroup: 
   offerLine: "\uB099\uD0C0\uB97C \uC0C0\uAD70. \uADF8\uB7FC \uC9C0\uB984\uAE38\uC744
