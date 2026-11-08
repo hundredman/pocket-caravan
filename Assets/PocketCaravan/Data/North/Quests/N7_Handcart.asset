@@ -66,6 +66,4 @@ MonoBehaviour:
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0
-  finishNote: "\uC190\uC218\uB808\uB97C \uC0C0\uB2E4! 1\uC7A5 \uB05D. (\uAD00\uBB38\uACFC
-    \uB2E4\uB978 \uC9C0\uC5ED \uC5F0\uACB0\uC740 \uC9C0\uC5ED\uC744 \uD569\uCE60
-    \uB54C \uC5F4\uB9B0\uB2E4)"
+  finishNote: "\uc190\uc218\ub808\ub97c \uc0c0\ub2e4! 1\uc7a5 \ub05d."

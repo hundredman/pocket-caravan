@@ -153,38 +153,58 @@ namespace PocketCaravan
 
         static readonly string[] FishIds = { "north_cod", "north_char", "north_salmon" };
 
+        /// <summary>
+        /// 11/08 축제 장수가 한 밤(게임 날짜)에 사 주는 생선 수. 예전엔 끝없이 사 줘서, 피오르 장터에서 싸게 사 온 생선을
+        /// 1.6배로 몽땅 되팔 수 있었다. 얼음 낚시로 한 밤에 잡을 만한 수만 받는다 (진행 메모 north:festfish:day · :n)
+        /// </summary>
+        const int FestivalFishMax = 10;
+
+        static int FishLeftTonight(GameManager gm)
+        {
+            if (Mathf.RoundToInt(gm.GetMemo("north:festfish:day", -1f)) != gm.Clock.day)
+            {
+                gm.SetMemo("north:festfish:day", gm.Clock.day);
+                gm.SetMemo("north:festfish:n", 0f);
+            }
+            return Mathf.Max(0, FestivalFishMax - Mathf.RoundToInt(gm.GetMemo("north:festfish:n")));
+        }
+
         void FestivalShop()
         {
             var gm = GameManager.I;
             if (gm == null) return;
-            int total = 0, count = 0;
+            int left = FishLeftTonight(gm), total = 0, count = 0;
             foreach (var id in FishIds)
             {
                 var it = gm.ItemById(id);
                 if (it == null) continue;
-                int n = gm.Player.cargo.Count(it);
+                int n = Mathf.Min(gm.Player.cargo.Count(it), left - count);
+                if (n <= 0) continue;
                 count += n; total += Mathf.RoundToInt(it.basePrice * 1.6f) * n;
             }
             var choices = new List<DialogueUI.Choice>();
-            if (count > 0) choices.Add(new DialogueUI.Choice($"생선 {count}마리 다 팔기 ({total}냥)", SellAllFish));
+            if (count > 0) choices.Add(new DialogueUI.Choice($"생선 {count}마리 팔기 ({total}냥)", SellAllFish));
             choices.Add(new DialogueUI.Choice("오로라 꿀술 한 잔 (5냥)", DrinkMead));
             choices.Add(new DialogueUI.Choice("구경만 할게요", null));
             string taught = NorthSocial.Teach("dance");   // 축제에선 다들 춤을 춘다
-            DialogueUI.Show("축제 생선 장수", "오로라 축제다! 오늘 밤엔 생선을 평소의 1.6배로 사 줄게. 얼음 낚시로 잡은 거 있으면 다 가져와!"
-                + (taught != null ? "\n\n(광장 사람들을 따라 춤을 배웠다! R)" : ""), choices.ToArray());
+            string talk = left > 0
+                ? $"오로라 축제다! 오늘 밤엔 생선을 평소의 1.6배로 사 줄게. 얼음 낚시로 잡은 거 있으면 가져와! (오늘 밤 {left}마리까지)"
+                : "오로라 축제다! 오늘 밤 생선은 넉넉히 샀어. 다음 축제에 또 가져와!";
+            DialogueUI.Show("축제 생선 장수", talk + (taught != null ? "\n\n(광장 사람들을 따라 춤을 배웠다! R)" : ""), choices.ToArray());
         }
 
         void SellAllFish()
         {
             var gm = GameManager.I;
-            int total = 0;
+            int left = FishLeftTonight(gm), total = 0, sold = 0;
             foreach (var id in FishIds)
             {
                 var it = gm.ItemById(id);
                 if (it == null) continue;
-                int n = gm.Player.cargo.Count(it);
-                if (n > 0 && gm.Player.cargo.Remove(it, n)) total += Mathf.RoundToInt(it.basePrice * 1.6f) * n;
+                int n = Mathf.Min(gm.Player.cargo.Count(it), left - sold);
+                if (n > 0 && gm.Player.cargo.Remove(it, n)) { total += Mathf.RoundToInt(it.basePrice * 1.6f) * n; sold += n; }
             }
+            gm.SetMemo("north:festfish:n", gm.GetMemo("north:festfish:n") + sold);
             gm.Player.money += total;
             if (!AudioManager.Muted) sfx.PlayOneShot(thanks, 0.6f);
             Notify.Show($"축제 장수에게 생선을 팔았다 (+{total}냥)", 3f);
