@@ -31,7 +31,7 @@ namespace PocketCaravan.EditorTools
                 foreach(var g in UnityEngine.Object.FindObjectsByType<StoryGuide>(FindObjectsSortMode.None))g.enabled=false;
                 foreach(var d in UnityEngine.Object.FindObjectsByType<DialogueUI>(FindObjectsSortMode.None))typeof(DialogueUI).GetMethod("Close",Private).Invoke(d,null);UIState.Blocking=false;Notify.Clear();
                 var market=UnityEngine.Object.FindFirstObjectByType<TownMarket>();Check(market.town.id==id,"production market bound "+id);var item=gm.ItemById(id=="transit_southport"?"transit_spice":"transit_wool");
-                market.Interact(PlayerController.Instance);typeof(TownMarket).GetField("selected",Private).SetValue(market,item);typeof(TownMarket).GetField("scroll",Private).SetValue(market,new Vector2(0,48));yield return Photo(id+"-market");
+                market.Interact(PlayerController.Instance);typeof(TownMarket).GetField("selected",Private).SetValue(market,item);typeof(TownMarket).GetField("listScroll",Private).SetValue(market,48f);yield return Photo(id+"-market");
                 int routeStart=gm.Player.money;Trade(market,"Buy",item);Check(gm.Player.cargo.Count(item)==1,"supplier purchase "+item.id);int routeBuy=routeStart-gm.Player.money;
                 market.town=gm.Db.towns.Find(t=>t.id=="gaegyeong");Trade(market,"Sell",item);int routeProfit=gm.Player.money-routeStart;
                 Check(gm.Player.cargo.Count(item)==0&&routeProfit>0,"new supply route to capital profitable "+item.id);report.routes.Add(new Cycle{town=id+" -> gaegyeong",item=item.id,buy=routeBuy,sell=routeBuy+routeProfit,profit=routeProfit});market.town=gm.Db.towns.Find(t=>t.id==id);

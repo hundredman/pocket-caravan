@@ -5,7 +5,9 @@ namespace PocketCaravan
 {
     /// <summary>
     /// 장터 상인. Space로 열면 사고팔기와 이동 수단 구입 창이 뜬다.
-    /// 창은 임시 UI(OnGUI)다. 정식 UI가 생기면 MarketState만 그대로 쓰고 화면만 바꾸면 된다.
+    /// 2026-11-08 은샘: 장부(L)와 같은 CuteUI 모양으로 새로 짰다. 사고파는 규칙(MarketState·흥정·평판)은 그대로다.
+    /// - 탭: 사기(상인이 파는 것) · 팔기(내 짐) · 운반 수단. ←→로 탭, ↑↓로 물건.
+    /// - 왼쪽 목록 + 오른쪽 고른 물건(값·재고·원가·다른 장터 최고 값, 수량 −/+/최대, 큰 사기·팔기 버튼, 흥정).
     /// </summary>
     public class TownMarket : Interactable
     {
@@ -13,20 +15,17 @@ namespace PocketCaravan
 
         bool open;
         int openedFrame;
-        Vector2 scroll;
+        float listScroll, listHeight = 150f, vehicleListScroll;
         string message = "";
         ItemData selected;
         int soldThisVisit, revenueThisVisit;
         float profitThisVisit;
         int marketTab, quantityMode, customQuantity = 1;
         int RequestedCount => quantityMode==0?1:quantityMode==1?5:quantityMode==2?MarketState.MaxBatch:Mathf.Clamp(customQuantity,1,MarketState.MaxBatch);
-        Vector2 vehicleScroll, contentScroll;
-        // 10/28 품목 목록: 한 줄 높이와 보이는 칸 높이 (방향키로 고를 때 스크롤 맞추기)
-        const float RowH = 18f, ListH = 128f;   // 보이는 줄 약 7개 (예전 42 = 2줄). 아래 빈자리까지 씀
-        float lastMoveY;
-        static GUIStyle rowButton, rowOn;   // 11/05 고른 품목은 청록 버튼 (전엔 ▸ 표시)
+        const float RowH = 26f;   // 목록 한 줄 높이 (↑↓로 고를 때 스크롤 맞추기)
+        float lastMoveY, lastMoveX;
         HaggleDeal deal;
-        bool haggleSelling;
+        bool haggleSelling => marketTab == 1;
 
         MarketState Market => GameManager.I.GetMarket(town);
 
@@ -42,7 +41,10 @@ namespace PocketCaravan
             message = "";
             soldThisVisit = revenueThisVisit = 0; profitThisVisit = 0;
             deal = null;
-            if (selected == null) foreach (var item in ItemsShown(GameManager.I.Player)) { selected = item; break; }
+            // 팔 물건이 있으면 팔기부터 (상인에게 가면 먼저 팔고 그 돈으로 산다)
+            bool canSell = false;
+            foreach (var item in TabItems(GameManager.I.Player, true)) if (!item.questItem) { canSell = true; break; }
+            SetTab(canSell ? 1 : 0);
             Observe();
             Sfx.Play("open");
         }
@@ -59,20 +61,29 @@ namespace PocketCaravan
             if (!open || Time.frameCount == openedFrame) return;
             if (InputReader.LedgerPressed()) { OpenLedger(); return; }
             if (InputReader.CancelPressed() || InputReader.InteractPressed()) { Close(); return; }
-            // 10/28 ↑↓(W/S)로 품목 고르기. 고른 줄이 목록 칸 안에 보이게 스크롤을 맞춘다
-            float my = InputReader.MoveVector().y;
-            int step = Mathf.Abs(my) > 0.5f && Mathf.Abs(lastMoveY) <= 0.5f ? (my > 0 ? -1 : 1) : 0;
-            lastMoveY = my;
-            if (step == 0 || marketTab != 0 || GameManager.I == null) return;
-            var items = ItemsShown(GameManager.I.Player);
+            if (GameManager.I == null) return;
+            // 11/08 ←→ 사기·팔기(·운반 수단) 탭, ↑↓ 물건 고르기
+            var mv = InputReader.MoveVector();
+            int stepY = Mathf.Abs(mv.y) > 0.5f && Mathf.Abs(lastMoveY) <= 0.5f ? (mv.y > 0 ? -1 : 1) : 0;
+            int stepX = Mathf.Abs(mv.x) > 0.5f && Mathf.Abs(lastMoveX) <= 0.5f ? (mv.x > 0 ? 1 : -1) : 0;
+            lastMoveY = mv.y; lastMoveX = mv.x;
+            if (stepX != 0)
+            {
+                int tabs = town.vehiclesForSale.Count > 0 ? 3 : 2;
+                int t = Mathf.Clamp(marketTab + stepX, 0, tabs - 1);
+                if (t != marketTab) { SetTab(t); Sfx.Play("move"); }
+                return;
+            }
+            if (stepY == 0 || marketTab > 1) return;
+            var items = TabItems(GameManager.I.Player, marketTab == 1);
             if (items.Count == 0) return;
-            int i = Mathf.Clamp(items.IndexOf(selected) + step, 0, items.Count - 1);
+            int i = Mathf.Clamp(items.IndexOf(selected) + stepY, 0, items.Count - 1);
             if (items[i] == selected) return;
             selected = items[i];
             Sfx.Play("move");
             float top = i * RowH, bottom = top + RowH;
-            if (top < scroll.y) scroll.y = top;
-            else if (bottom > scroll.y + ListH) scroll.y = bottom - ListH;
+            if (top < listScroll) listScroll = top;
+            else if (bottom > listScroll + listHeight) listScroll = bottom - listHeight;
         }
 
         // Close before opening the next modal; its opening-frame guard consumes the same L press.
@@ -91,149 +102,272 @@ namespace PocketCaravan
             if (open) Close();
         }
 
+        bool haggleOpen;
+
+        void SetTab(int t)
+        {
+            marketTab = t; listScroll = 0; haggleOpen = false;
+            if (t > 1 || GameManager.I == null) return;
+            var items = TabItems(GameManager.I.Player, t == 1);
+            if (!items.Contains(selected)) selected = items.Count > 0 ? items[0] : null;
+        }
+
+        /// <summary>사기 탭: 이 장터가 다루는 물건. 팔기 탭: 내 짐 (맡은 짐은 맨 아래)</summary>
+        List<ItemData> TabItems(PlayerState p, bool selling)
+        {
+            var result = new List<ItemData>();
+            if (selling)
+            {
+                foreach (var kv in p.cargo.Items) if (kv.Key != null && !kv.Key.questItem && kv.Value > 0) result.Add(kv.Key);
+                foreach (var kv in p.cargo.Items) if (kv.Key != null && kv.Key.questItem && kv.Value > 0) result.Add(kv.Key);
+                return result;
+            }
+            var seen = new HashSet<ItemData>();
+            foreach (var st in town.stock) if (st.item != null && !st.item.questItem && seen.Add(st.item)) result.Add(st.item);
+            foreach (var item in Market.KnownItems) if (item != null && !item.questItem && seen.Add(item)) result.Add(item);
+            return result;
+        }
+
         void OnGUI()
         {
             if (!open || GameManager.I == null) return;
             UIStyle.Begin();
-            GUI.depth = -10;   // 다른 글자들 위에
+            GUI.depth = -10;
             var gm = GameManager.I;
             var p = gm.Player;
             var m = Market;
 
-            // 11/05 UI B안: 종이 창 + 제목 리본, 글씨·버튼은 CuteUI 종이 모양 (배치·기능은 그대로)
-            float w = Mathf.Min(548, UIStyle.VirtualWidth - 16), h = UIStyle.WindowHeight(350) - 6;
-            var rect = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round((UIStyle.VirtualHeight - h) / 2 + 6), w, h);
             CuteUI.Dim();
-            CuteUI.Window(rect);
-            // 이름에 이미 "장터"가 있으면(리알토 장터) 다시 붙이지 않는다
-            CuteUI.TitlePlate(rect.center.x, rect.y - 11, town.displayName.EndsWith("장터") ? town.displayName : town.displayName + " 장터");
-            GUILayout.BeginArea(new Rect(rect.x + 14, rect.y + 14, w - 28, h - 62));
-            contentScroll=GUILayout.BeginScrollView(contentScroll);
-            float banLeft = p.tradeActivity.BanRemaining(town.id, gm.Clock.TotalHours);
+            float w = Mathf.Min(520, UIStyle.VirtualWidth - 16), h = 288;
+            var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round((UIStyle.VirtualHeight - h) / 2 + 8), w, h);
+            CuteUI.Window(r);
+            CuteUI.TitlePlate(r.center.x, r.y - 11, town.displayName.EndsWith("장터") ? town.displayName : town.displayName + " 장터");
+            CuteUI.Keycap(r.xMax - 32 - CuteUI.KeycapWidth("Esc") - 3, r.y - 3, "Esc");
+            if (CuteUI.CloseButton(r.xMax - 32, r.y - 9)) { Close(); return; }
 
-            string marketDay = gm.Clock.IsMarketDay ? "  <color=#c0611a>· 오늘은 장날 (값 상승)</color>" : "";
-            int nextLevel = m.Level < gm.Db.maxTownLevel && m.Level < gm.Db.townLevelVolume.Length ? gm.Db.townLevelVolume[m.Level] : 0;
-            string growth = nextLevel > 0 ? $"   다음 등급까지 거래 {Mathf.Max(0, nextLevel - Mathf.RoundToInt(m.TradeVolume))}냥" : "";
-            // 10/28 제목과 돈·짐을 한 줄로 (품목 목록을 넓히려고)
-            GUILayout.Label($"<b>{m.LevelName}</b>{marketDay}   <size=9>돈 {p.money} · 짐 {p.TotalWeight:0.#}/{p.Capacity:0.#}{growth}</size>", CuteUI.PaperRich);
-            if(town.vehiclesForSale.Count>0)
+            // 위: 돈 · 짐 (+ 장날)
+            float hy = r.y + 24;
+            CuteUI.Icon(CuteUI.Pic.Coin, r.x + 18, hy - 5);
+            float x = CuteUI.Label(r.x + 31, hy, $"{p.money}냥", CuteUI.Text, false, true) + 12;
+            CuteUI.Icon(CuteUI.Pic.Sack, x, hy - 4);
+            CuteUI.Bar(new Rect(x + 13, hy - 4, 56, 8), p.Capacity > 0 ? p.TotalWeight / p.Capacity : 0, CuteUI.Load, CuteUI.LoadHi);
+            x = CuteUI.Label(x + 73, hy, $"{p.TotalWeight:0.#}/{p.Capacity:0.#}", CuteUI.Sub, true) + 10;
+            if (gm.Clock.IsMarketDay)
             {
-                GUILayout.BeginHorizontal();
-                if(GUILayout.Button("상품 거래",CuteUI.PaperButtonIf(marketTab==0)))marketTab=0;
-                if(GUILayout.Button("운반 수단",CuteUI.PaperButtonIf(marketTab==1)))marketTab=1;
-                GUILayout.EndHorizontal();
+                float bw = CuteUI.Width("장날", true, true) + 12;
+                CuteUI.Box(new Rect(x, hy - 7, bw, 14), 6, CuteUI.SellSoft, CuteUI.Sell);
+                CuteUI.LabelCenter(x + bw / 2, hy, "장날", CuteUI.Sell, true, true);
             }
-            else marketTab=0;
-            if(marketTab==1) DrawVehicles(p,m);
-            else
-            {
-                // 10/28 평판과 기준 공급품을 한 줄로 (목록 칸을 넓히려고)
-                GUILayout.Label(CuteUI.PaperColors(ReputationPricing.Progress(p,town) + "   · " + LocalGoods(gm)), CuteUI.PaperSmall);
-                GUILayout.BeginHorizontal();
-                GUILayout.Label("품목 선택 / 무게  <color=#6a5464>↑↓</color>", CuteUI.PaperSmall, GUILayout.Width(144));
-                GUILayout.Label("<color=#1a78b8>살 때</color>", CuteUI.PaperSmall, GUILayout.Width(44));   // 살 때 파랑·팔 때 주황 (장부와 같은 색)
-                GUILayout.Label("<color=#c06c00>팔 때</color>", CuteUI.PaperSmall, GUILayout.Width(44));
-                GUILayout.Label("재고", CuteUI.PaperSmall, GUILayout.Width(34));
-                GUILayout.Label("보유", CuteUI.PaperSmall, GUILayout.Width(34));
-                GUILayout.EndHorizontal();
 
-                scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(ListH));
-                if(rowButton==null||rowButton.fontSize!=UIStyle.BodySize||rowButton.normal.background==null)
-                {
-                    rowButton = new GUIStyle(CuteUI.PaperButton) { margin = new RectOffset(2, 2, 1, 1) };
-                    rowOn = new GUIStyle(CuteUI.PaperButtonOn) { margin = new RectOffset(2, 2, 1, 1) };
-                }
-                foreach (var item in ItemsShown(p))
-                {
-                    GUILayout.BeginHorizontal(GUILayout.Height(RowH));
-                    var iconRect = GUILayoutUtility.GetRect(16, 16, GUILayout.Width(16), GUILayout.Height(16));
-                    if (item.icon != null) DrawSprite(iconRect, item.icon);
-                    if (GUILayout.Button($"{item.displayName} ({item.weight:0.#})",
-                        selected == item ? rowOn : rowButton, GUILayout.Width(124), GUILayout.Height(RowH - 2))) selected = item;
-                    int buy = m.BuyPrice(item), sell = m.SellPrice(item);
-                    float avg = p.cargo.AverageCost(item);
-                    string sellText = item.questItem ? "맡은 짐" : (p.cargo.Count(item) > 0 && avg > 0 ? (sell > avg ? $"<color=#1e8a3e>{sell}</color>" : $"<color=#d6334f>{sell}</color>") : sell.ToString());
-                    string denial=ReputationPricing.BuyDenial(p,town,item);
-                    GUILayout.Label(denial!=null?"신뢰 필요":m.CanBuy(item) && !item.questItem ? buy.ToString() : "-",CuteUI.PaperSmall,GUILayout.Width(44));
-                    GUILayout.Label(sellText, CuteUI.PaperRich, GUILayout.Width(44));
-                    GUILayout.Label(Mathf.FloorToInt(m.Stock(item)).ToString(), CuteUI.PaperRich, GUILayout.Width(34));
-                    GUILayout.Label(p.cargo.Count(item).ToString(), CuteUI.PaperRich, GUILayout.Width(34));
-                    GUILayout.EndHorizontal();
-                }
-                GUILayout.EndScrollView();
-                DrawTradeInfo(gm, m);
+            var c = new Rect(r.x + 15, r.y + 60, r.width - 30, r.height - 92);
+            CuteUI.Box(c, 7, CuteUI.Paper, CuteUI.Ink);
+            float tx = c.x + 6;
+            if (CuteUI.Tab(tx, c.y, "사기", CuteUI.Pic.Basket, marketTab == 0, out float w0) && marketTab != 0) SetTab(0);
+            tx += w0 + 3;
+            if (CuteUI.Tab(tx, c.y, "팔기", CuteUI.Pic.Coin7, marketTab == 1, out float w1) && marketTab != 1) SetTab(1);
+            tx += w1 + 3;
+            if (town.vehiclesForSale.Count > 0 && CuteUI.Tab(tx, c.y, "운반 수단", CuteUI.Pic.Sack, marketTab == 2, out _) && marketTab != 2) SetTab(2);
+            if (marketTab > 1 && town.vehiclesForSale.Count == 0) SetTab(0);
 
-                if (banLeft > 0) GUILayout.Label($"<color=#d6334f>상인이 거래를 거절합니다 · {Mathf.CeilToInt(banLeft)}시간 뒤 다시 거래할 수 있습니다.</color>", CuteUI.PaperRich);
-                else { DrawBatch(gm); DrawHaggle(gm, m); }   // 11/07 사기·팔기가 창 아래로 밀려 안 보여서 흥정 줄보다 위로
-            }
-            GUILayout.EndScrollView();
-            GUILayout.EndArea();
-            GUI.Label(new Rect(rect.x + 14, rect.yMax - 48, w - 244, soldThisVisit>0?28:40), CuteUI.PaperColors(message), CuteUI.PaperWrap);
-            if(soldThisVisit>0)GUI.Label(new Rect(rect.x+14,rect.yMax-20,w-244,12),$"이번 판매 {soldThisVisit}개 · 수령 {revenueThisVisit} · 손익 {Signed(profitThisVisit)}",CuteUI.PaperSmall);
+            if (marketTab == 2) DrawVehicles(p, m, c);
+            else DrawGoods(gm, m, c);
+
+            // 아래: 결과 한 줄 + 마을 시설
+            float fy = r.yMax - 17;
             bool recover = town.region != null && StandingRecovery.Negative(p.reputation, ReputationPricing.Scope(town), ReputationPricing.Target(town));
-            if ((town.facilities.Count > 0 || recover) && GUI.Button(new Rect(rect.xMax - 215, rect.yMax - 32, 110, 20), recover ? "평판 회복·시설" : "마을 시설", CuteUI.PaperButton))
-            { Close(); TownFacilitiesUI.Show(town); }
-            if (GUI.Button(new Rect(rect.xMax - 96, rect.yMax - 32, 82, 20), "닫기 (Esc)", CuteUI.PaperButton)) Close();
+            float right = r.xMax - 15;
+            if (town.facilities.Count > 0 || recover)
+            {
+                string fl = recover ? "평판 회복·시설" : "마을 시설";
+                float fw = CuteUI.Width(fl, true) + 18;
+                if (CuteUI.SoftButton(new Rect(right - fw, fy - 9, fw, 18), fl)) { Close(); TownFacilitiesUI.Show(town); return; }
+                right -= fw + 8;
+            }
+            right -= CuteUI.KeycapWidth("L") + CuteUI.Width("장부", true) + 4;
+            float kx = CuteUI.Keycap(right, fy - 6, "L", true);
+            CuteUI.Label(right + kx + 3, fy, "장부", CuteUI.Sub, true);
+            if (!string.IsNullOrEmpty(message)) CuteUI.Label(r.x + 18, fy, Fit(CuteUI.Plain(message), right - r.x - 30, true, false), CuteUI.Text, true);
         }
 
-        void DrawBatch(GameManager gm)
+        void DrawGoods(GameManager gm, MarketState m, Rect c)
         {
-            GUILayout.BeginHorizontal();
-            if(GUILayout.Button("-",CuteUI.PaperButton,GUILayout.Width(24),GUILayout.Height(18))){customQuantity=Mathf.Max(1,RequestedCount-1);quantityMode=3;}
-            GUILayout.Label($"최대 {RequestedCount}개",CuteUI.PaperSmall,GUILayout.Width(68));
-            if(GUILayout.Button("+",CuteUI.PaperButton,GUILayout.Width(24),GUILayout.Height(18))){customQuantity=Mathf.Min(MarketState.MaxBatch,RequestedCount+1);quantityMode=3;}
-            string[] modes={"1개","최대5개","최대100개"};
-            for(int i=0;i<modes.Length;i++)if(GUILayout.Button(modes[i],CuteUI.PaperButtonIf(quantityMode==i),GUILayout.Height(18)))quantityMode=i;
-            GUILayout.EndHorizontal();
-            if(selected==null || selected.questItem)return;
-            int requested=RequestedCount;
-            float buyHaggle=DealFor(false),sellHaggle=DealFor(true);
-            var buy=Market.Preview(selected,gm.Player,buyHaggle>0?deal.count:requested,false,buyHaggle);
-            var sell=Market.Preview(selected,gm.Player,sellHaggle>0?deal.count:requested,true,sellHaggle);
-            GUILayout.BeginHorizontal();
-            GUILayout.Label((buy.count>0?$"{buy.count}개 총 {buy.total}냥 · 남는 돈 {gm.Player.money-buy.total} · 보상 별도":buy.blocker)+(buyHaggle>0?" · 흥정가":""),CuteUI.PaperSmall);
-            GUI.enabled=buy.count>0;
-            if(GUILayout.Button($"{buy.count}개 사기",CuteUI.PaperButtonOn,GUILayout.Width(86),GUILayout.Height(18)))TradeBatch(buy);
-            GUI.enabled=true;GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUILayout.Label((sell.count>0?$"{sell.count}개 수령 {sell.total}냥 · 매매 손익 {Signed(sell.profit)}냥":sell.blocker)+(sellHaggle>0?" · 흥정가":""),CuteUI.PaperSmall);
-            GUI.enabled=sell.count>0;
-            if(GUILayout.Button($"{sell.count}개 팔기",CuteUI.PaperButtonOn,GUILayout.Width(86),GUILayout.Height(18)))TradeBatch(sell);
-            GUI.enabled=true;GUILayout.EndHorizontal();
+            var p = gm.Player;
+            bool selling = marketTab == 1;
+            var items = TabItems(p, selling);
+            const float lw = 196f;
+            var area = new Rect(c.x + 6, c.y + 8, lw + 4, c.height - 12);
+            listHeight = area.height;
+            if (items.Count == 0)
+            {
+                CuteUI.LabelCenter(c.center.x, c.center.y - 6, selling ? "팔 짐이 없어요" : "지금 파는 물건이 없어요", CuteUI.Text, false, true);
+                if (selling) CuteUI.LabelCenter(c.center.x, c.center.y + 10, "사기 탭에서 물건을 사 보세요", CuteUI.Sub, true);
+                return;
+            }
+            if (!items.Contains(selected)) selected = items[0];
+            listScroll = Scroll(area, listScroll, items.Count * RowH);
+            GUI.BeginGroup(area);
+            for (int i = 0; i < items.Count; i++)
+            {
+                var item = items[i];
+                float y = i * RowH - listScroll;
+                if (y + RowH < 0 || y > area.height) continue;
+                bool on = item == selected;
+                var row = new Rect(0, y, lw, RowH - 2);
+                if (on)
+                {
+                    CuteUI.Box(row, 8, CuteUI.Interact, CuteUI.Ink, 1, 2, CuteUI.InteractLo);
+                    CuteUI.Fill(new Rect(5, y + 2, lw - 10, 1), CuteUI.InteractHi);
+                }
+                ItemIcon(item, 5, y + 4, 1);
+                float valueLeft;
+                bool dim = false;
+                if (selling)
+                {
+                    int n = p.cargo.Count(item);
+                    if (item.questItem) { valueLeft = lw - 6 - CuteUI.Width("맡은 짐", true); CuteUI.Label(valueLeft, y + 12, "맡은 짐", on ? CuteUI.OnInteract : CuteUI.Zero, true); dim = true; }
+                    else
+                    {
+                        int sell = m.SellPrice(item); float avg = p.cargo.AverageCost(item);
+                        valueLeft = avg > 0 ? CuteUI.GainBadge(lw - 5, y + 12, sell - avg) - 4 : lw - 5;
+                        valueLeft = CuteUI.LabelRight(valueLeft, y + 12, sell.ToString(), on ? CuteUI.OnInteract : CuteUI.Sell, false, true) - 4;
+                    }
+                    CuteUI.Label(26, y + 12, Fit(item.displayName + (n > 1 ? $" ×{n}" : ""), valueLeft - 30, false, on), on ? CuteUI.OnInteract : dim ? CuteUI.Zero : CuteUI.Text, false, on);
+                }
+                else
+                {
+                    bool can = m.CanBuy(item) && ReputationPricing.BuyDenial(p, town, item) == null;
+                    string v = !m.CanBuy(item) ? "품절" : ReputationPricing.BuyDenial(p, town, item) != null ? "신뢰 필요" : m.BuyPrice(item).ToString();
+                    valueLeft = CuteUI.LabelRight(lw - 7, y + 12, v, on ? CuteUI.OnInteract : can ? CuteUI.Buy : CuteUI.Zero, !can, can) - 4;
+                    CuteUI.Label(26, y + 12, Fit(item.displayName, valueLeft - 30, false, on), on ? CuteUI.OnInteract : can ? CuteUI.Text : CuteUI.Zero, false, on);
+                }
+                if (GUI.Button(row, GUIContent.none, GUIStyle.none) && selected != item) { selected = item; haggleOpen = false; }
+            }
+            GUI.EndGroup();
+            for (float yy = c.y + 8; yy < c.yMax - 8; yy += 3) CuteUI.Fill(new Rect(c.x + lw + 14, yy, 1, 1), CuteUI.Line);
+            DrawDetail(gm, m, new Rect(c.x + lw + 24, c.y + 8, c.xMax - 10 - (c.x + lw + 24), c.height - 14));
+        }
+
+        void DrawDetail(GameManager gm, MarketState m, Rect d)
+        {
+            var p = gm.Player;
+            var item = selected;
+            if (item == null) return;
+            bool selling = marketTab == 1;
+            // 물건: 큰 그림 · 이름 · 한 개 값
+            CuteUI.FramedCircle(d.x, d.y, 40);
+            ItemIcon(item, d.x + 4, d.y + 4, 2);
+            CuteUI.Label(d.x + 48, d.y + 11, Fit(item.displayName, d.width - 50, false, true), CuteUI.Text, false, true);
+            if (item.questItem) { CuteUI.Label(d.x + 48, d.y + 28, "맡은 짐이라 팔 수 없어요", CuteUI.Sub, true); return; }
+            float haggle = DealFor(selling);
+            int unit = selling ? m.SellPrice(item, haggle) : m.BuyPrice(item, haggle);
+            float vx = d.x + 48;
+            if (haggle > 0) vx = Struck(vx, d.y + 29, (selling ? m.SellPrice(item) : m.BuyPrice(item)).ToString()) + 5;   // 흥정 전 값 취소선
+            vx = CuteUI.Label(vx, d.y + 29, $"{unit}냥", selling ? CuteUI.Sell : CuteUI.Buy, false, true);
+            if (selling)
+            {
+                float avg = p.cargo.AverageCost(item);
+                if (avg > 0) CuteUI.GainBadge(vx + 6 + CuteUI.Width(CuteUI.GainText(unit - avg), true, true) + 10, d.y + 29, unit - avg);
+            }
+            else CuteUI.Label(vx + 8, d.y + 29, $"남은 {Mathf.FloorToInt(m.Stock(item))}개", CuteUI.Sub, true);
+
+            float banLeft = p.tradeActivity.BanRemaining(town.id, gm.Clock.TotalHours);
+            if (banLeft > 0)
+            {
+                CuteUI.Wrap(d.x, d.y + 62, d.width, $"상인이 거래를 거절해요. {Mathf.CeilToInt(banLeft)}시간 뒤에 다시 와요.", CuteUI.Down, true);
+                return;
+            }
+            string denial = selling ? null : ReputationPricing.BuyDenial(p, town, item);
+            if (denial != null) { CuteUI.Wrap(d.x, d.y + 62, d.width, "이 상인과 더 친해져야 살 수 있어요.", CuteUI.Sub, true); return; }
+
+            // 수량: − n + 최대
+            int max = m.Preview(item, p, MarketState.MaxBatch, selling, haggle).count;
+            if (haggle > 0) max = Mathf.Min(max, deal.count);
+            int want = Mathf.Clamp(RequestedCount, 1, Mathf.Max(1, max));
+            float qy = d.y + 60;
+            CuteUI.Label(d.x, qy + 9, "수량", CuteUI.Sub, true);
+            var minus = new Rect(d.x + 30, qy, 20, 18);
+            var plus = new Rect(d.x + 92, qy, 20, 18);
+            if (CuteUI.SoftButton(minus, "−")) { customQuantity = Mathf.Max(1, want - 1); quantityMode = 3; }
+            CuteUI.Box(new Rect(d.x + 53, qy, 36, 18), 5, CuteUI.White, CuteUI.Ink);
+            CuteUI.LabelCenter(d.x + 71, qy + 9, max > 0 ? want.ToString() : "0", CuteUI.Text, false, true);
+            if (CuteUI.SoftButton(plus, "+")) { customQuantity = Mathf.Min(Mathf.Max(1, max), want + 1); quantityMode = 3; }
+            if (CuteUI.SoftButton(new Rect(d.x + 116, qy, 38, 18), "최대")) quantityMode = 2;
+
+            var est = m.Preview(item, p, haggle > 0 ? deal.count : want, selling, haggle);
+            // 흥정을 열면 합계·거래 버튼 자리에 3단계를 띄운다 (겹친 버튼이 눌리지 않게 거래 버튼은 그리지 않는다)
+            if (haggleOpen) { DrawHaggle(gm, new Rect(d.xMax - 58, qy, 58, 18), new Rect(d.x, qy + 26, d.width, d.yMax - qy - 26), est.count); return; }
+            float sy = qy + 30;
+            if (est.count > 0)
+            {
+                CuteUI.Label(d.x, sy, "합계", CuteUI.Sub, true);
+                CuteUI.Icon(CuteUI.Pic.Coin7, d.x + 30, sy - 4);
+                float ex = d.x + 41;
+                if (haggle > 0) ex = Struck(ex, sy, m.Preview(item, p, est.count, selling).total.ToString()) + 5;
+                ex = CuteUI.Label(ex, sy, $"{est.total}냥", CuteUI.Text, false, true);
+                if (selling && est.profit != 0) CuteUI.GainBadge(ex + 8 + CuteUI.Width(CuteUI.GainText(est.profit), true, true) + 10, sy, est.profit);
+            }
+            else CuteUI.Wrap(d.x, sy - 6, d.width, est.blocker ?? "", CuteUI.Down, true);
+
+            // 큰 버튼
+            var btn = new Rect(d.x, sy + 16, d.width, 26);
+            string label = est.count > 0 ? $"{est.count}개 {(selling ? "팔기" : "사기")}" : selling ? "팔 수 없어요" : "살 수 없어요";
+            if (est.count > 0)
+            {
+                if (CuteUI.Button(btn, label, selling ? CuteUI.Pic.Coin7 : CuteUI.Pic.Basket)) TradeBatch(est);
+            }
+            else
+            {
+                CuteUI.Box(btn, 8, CuteUI.ZeroSoft, CuteUI.Line);
+                CuteUI.LabelCenter(btn.center.x, btn.center.y, label, CuteUI.Zero, false, true);
+            }
+
+            DrawHaggle(gm, new Rect(d.xMax - 58, qy, 58, 18), new Rect(d.x, btn.yMax + 6, d.width, d.yMax - btn.yMax - 6), est.count);
+
+        }
+
+        // 흥정: 수량 줄 오른쪽 "흥정" 버튼. 누르면 아래에 3단계(살짝·적당히·세게: 깎는 폭 · 성공 확률)가 열린다.
+        // 결과는 다음 한 번의 거래에만 적용된다.
+        void DrawHaggle(GameManager gm, Rect button, Rect panel, int count)
+        {
+            if (count <= 0) { haggleOpen = false; return; }
+            var p = gm.Player; var entry = ReputationPricing.Entry(p, town); float max = ReputationPricing.MaxHaggle(entry.standing);
+            string denial = Haggle.Denial(p.tradeActivity, town.id, gm.Clock.day, gm.Clock.TotalHours, max);
+            bool done = DealFor(haggleSelling) > 0;
+            if (done || denial != null)
+            {
+                haggleOpen = false;
+                CuteUI.Box(button, 8, CuteUI.ZeroSoft, CuteUI.Line);
+                CuteUI.LabelCenter(button.center.x, button.center.y, "흥정", CuteUI.Zero, false, true);
+                if (denial != null && !done) CuteUI.Label(panel.x, panel.y + 8, Fit(denial, panel.width, true, false), CuteUI.Zero, true);
+                return;
+            }
+            if (haggleOpen) { CuteUI.Box(button, 8, CuteUI.Interact, CuteUI.Ink, 1, 2, CuteUI.InteractLo); CuteUI.LabelCenter(button.center.x, button.center.y, "흥정", CuteUI.OnInteract, false, true); if (GUI.Button(button, GUIContent.none, GUIStyle.none)) haggleOpen = false; }
+            else if (CuteUI.SoftButton(button, "흥정")) haggleOpen = true;
+            if (!haggleOpen) return;
+
+            float bh = 22, gap = 3;
+            var box = new Rect(panel.x, panel.y, panel.width, Mathf.Min(panel.height, 3 * bh + 2 * gap + 8));
+            CuteUI.Box(box, 8, CuteUI.Paper2, CuteUI.Line);
+            int i = 0;
+            foreach (HaggleStrength k in new[] { HaggleStrength.Light, HaggleStrength.Fair, HaggleStrength.Hard })
+            {
+                float chance = HaggleRules.Chance(max, entry.standing, k, town.id, count);
+                var b = new Rect(box.x + 4, box.y + 4 + i * (bh + gap), box.width - 8, bh);
+                if (b.yMax > box.yMax) break;
+                bool hover = b.Contains(Event.current.mousePosition);
+                CuteUI.Box(b, 7, hover ? CuteUI.White : CuteUI.Paper, CuteUI.Ink);
+                CuteUI.Label(b.x + 8, b.center.y, HaggleRules.Name(k), CuteUI.Text, false, true);
+                CuteUI.Label(b.x + 64, b.center.y, $"{HaggleRules.Discount(max, k) * 100:0.#}% {(haggleSelling ? "더 받기" : "깎기")}", CuteUI.Sub, true);
+                CuteUI.LabelRight(b.xMax - 8, b.center.y, $"성공 {chance * 100:0}%", chance >= .6f ? CuteUI.Up : chance >= .4f ? CuteUI.Sell : CuteUI.Down, true, true);
+                if (GUI.Button(b, GUIContent.none, GUIStyle.none)) { TryHaggle(k, max, entry.standing, count); haggleOpen = false; }
+                i++;
+            }
         }
 
         float DealFor(bool selling,ItemData item=null)
         {
             var it=item??selected;var gm=GameManager.I;
             return deal!=null && it!=null && deal.AppliesTo(town.id,it.id,selling,gm.Clock.day,Market.Preview(it,gm.Player,RequestedCount,selling).count)?deal.discount:0;
-        }
-
-        // R3 흥정 한 줄: 방향(살 때/팔 때)과 세기를 고른다. 결과는 다음 한 번의 거래에만 적용된다.
-        void DrawHaggle(GameManager gm,MarketState m)
-        {
-            if(selected==null || selected.questItem)return;
-            var p=gm.Player;var entry=ReputationPricing.Entry(p,town);float max=ReputationPricing.MaxHaggle(entry.standing);
-            string denial=Haggle.Denial(p.tradeActivity,town.id,gm.Clock.day,gm.Clock.TotalHours,max);
-            GUILayout.BeginHorizontal();
-            GUILayout.Label($"흥정 · 상인 {HaggleRules.TemperamentName(town.id)}",CuteUI.PaperSmall,GUILayout.Width(96));
-            if(GUILayout.Button((!haggleSelling?"▸ ":"")+"살 때",CuteUI.PaperButton,GUILayout.Height(18)))haggleSelling=false;
-            if(GUILayout.Button((haggleSelling?"▸ ":"")+"팔 때",CuteUI.PaperButton,GUILayout.Height(18)))haggleSelling=true;
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            float active=DealFor(haggleSelling);
-            GUI.enabled=denial==null && active<=0;
-            int count=m.Preview(selected,p,RequestedCount,haggleSelling).count;
-            GUI.enabled=GUI.enabled && count>0;
-            foreach(HaggleStrength k in new[]{HaggleStrength.Light,HaggleStrength.Fair,HaggleStrength.Hard})
-            {
-                float chance=HaggleRules.Chance(max,entry.standing,k,town.id,count);
-                if(GUILayout.Button($"{HaggleRules.Name(k)} {HaggleRules.Discount(max,k)*100:0.#}% ({chance*100:0}%)",CuteUI.PaperButton,GUILayout.Height(18)))TryHaggle(k,max,entry.standing,count);
-            }
-            GUI.enabled=true;
-            GUILayout.EndHorizontal();
-            string note=active>0?$"흥정 성공: 다음 {(haggleSelling?"팔기":"사기")} 한 번에 {active*100:0.#}% 적용"
-                :denial??"괄호는 성공 확률. 실패하면 오늘은 더 흥정할 수 없고, '세게' 실패는 거래 취소 + 잠시 거래 불가. 평판은 깎이지 않습니다.";
-            GUILayout.Label(note,CuteUI.PaperWrap);
         }
 
         void TryHaggle(HaggleStrength k,float max,ReputationStanding standing,int count)
@@ -245,28 +379,39 @@ namespace PocketCaravan
             if(!SavedEconomyChange.Try(gm,()=>r=Haggle.Try(gm.Player.tradeActivity,town.id,selected.id,haggleSelling,count,
                 standing,max,k,gm.Clock.day,gm.Clock.TotalHours)))
             { message=SavedEconomyChange.Failure; return; }
-            message=r.message;
+            // 11/08 아래 한 줄에 들어가게 짧게 (자세한 까닭은 흥정 버튼 아래·거래 칸에 나온다)
+            message=r.outcome==HaggleOutcome.Refused?"흥정 실패 · 원래 값으로는 거래할 수 있어요"
+                :r.outcome==HaggleOutcome.Cancelled?$"흥정 실패 · 상인이 화가 나서 {HaggleRules.BanHours:0}시간 동안 거래하지 않아요"
+                :r.message;
             if(r.outcome==HaggleOutcome.Success){deal=r.deal;Sfx.Play("coin");}
             else{deal=null;Sfx.Play("cancel");}
         }
 
-        void DrawVehicles(PlayerState player,MarketState market)
+        void DrawVehicles(PlayerState player, MarketState market, Rect c)
         {
-            GUILayout.Label("수단 가격 외에 다음 상품을 살 돈도 남겨 두세요. 배달 짐도 적재 공간을 씁니다.",CuteUI.PaperWrap);
-            vehicleScroll=GUILayout.BeginScrollView(vehicleScroll,GUILayout.Height(198));
-            foreach(var v in town.vehiclesForSale)
+            var list = new List<VehicleData>();
+            foreach (var v in town.vehiclesForSale) if (v != null && v.minTownLevel <= market.Level) list.Add(v);
+            var area = new Rect(c.x + 6, c.y + 8, c.width - 10, c.height - 12);
+            const float rowH = 40f;
+            vehicleListScroll = Scroll(area, vehicleListScroll, list.Count * rowH);
+            GUI.BeginGroup(area);
+            for (int i = 0; i < list.Count; i++)
             {
-                if(v==null || v.minTownLevel>market.Level)continue;
-                bool owned=player.vehicle==v;
-                GUILayout.Label($"<b>{v.displayName}</b> · 적재 {v.capacity:0} · 가격 {v.price}냥",CuteUI.PaperRich);
-                int remaining=player.money-v.price;
-                GUILayout.Label(owned?"현재 사용 중":remaining>=0?$"구입 후 보유금 {remaining}냥 · 상품 매입비는 별도":"돈이 부족합니다.",CuteUI.PaperSmall);
-                if(!owned && remaining==0)GUILayout.Label("매입 자금이 남지 않습니다. 일반 배달로 자금을 마련할 수 있습니다.",CuteUI.PaperWrap);
-                GUI.enabled=!owned && remaining>=0 && player.TotalWeight<=v.capacity;
-                if(GUILayout.Button(owned?"사용 중":"구입",CuteUI.PaperButtonIf(owned),GUILayout.Height(20)))BuyVehicle(v);
-                GUI.enabled=true;GUILayout.Space(6);
+                var v = list[i];
+                float y = i * rowH - vehicleListScroll;
+                if (y + rowH < 0 || y > area.height) continue;
+                bool owned = player.vehicle == v;
+                bool can = !owned && player.money >= v.price && player.TotalWeight <= v.capacity;
+                CuteUI.Box(new Rect(0, y, area.width - 6, rowH - 4), 8, i % 2 == 0 ? CuteUI.Paper2 : CuteUI.Paper, CuteUI.Line);
+                CuteUI.Label(10, y + 12, v.displayName, CuteUI.Text, false, true);
+                CuteUI.Icon(CuteUI.Pic.Sack, 10, y + 21);
+                CuteUI.Label(22, y + 25, $"짐 {v.capacity:0}", CuteUI.Sub, true);
+                var b = new Rect(area.width - 98, y + 7, 86, 22);
+                if (owned) { CuteUI.Box(b, 8, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter(b.center.x, b.center.y, "쓰는 중", CuteUI.Zero, false, true); }
+                else if (can) { if (CuteUI.Button(b, $"{v.price}냥")) BuyVehicle(v); }
+                else { CuteUI.Box(b, 8, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter(b.center.x, b.center.y, $"{v.price}냥", CuteUI.Zero, false, true); }
             }
-            GUILayout.EndScrollView();
+            GUI.EndGroup();
         }
 
         // 각 단위 거래는 기존 규칙/이벤트를 유지한다. 실행 직전 견적이 달라졌으면 시작하지 않는다.
@@ -308,53 +453,41 @@ namespace PocketCaravan
 
         static string Signed(float value) => value.ToString("+0.#;-0.#;0");
 
-        string LocalGoods(GameManager gm)
+        /// <summary>회색 글씨 + 가운데 취소선. 오른쪽 끝 x를 돌려준다</summary>
+        static float Struck(float x, float cy, string s)
         {
-            var supply=new List<string>();var demand=new List<string>();
-            foreach(var entry in town.stock)
-            {
-                if(entry.item==null || entry.item.questItem)continue;
-                float factor=entry.localPriceMultiplier;
-                if(factor>0 && factor<1 && supply.Count<2)supply.Add(entry.item.displayName);
-                else if(factor>1 && !float.IsInfinity(factor) && demand.Count<2)demand.Add(entry.item.displayName);
-            }
-            if(supply.Count>0 || demand.Count>0)
-                return (supply.Count>0?"공급: "+string.Join(" · ",supply):"")+(supply.Count>0&&demand.Count>0?" / ":"")
-                    +(demand.Count>0?"수요: "+string.Join(" · ",demand):"")+" · 실제 시세는 표에서 확인";
-            var local = new List<string>();
-            foreach (var item in gm.Db.items)
-                if (item != null && !item.questItem && item.originTown == town) local.Add(item.displayName);
-            return local.Count > 0 ? "기준 공급품: " + string.Join(" · ", local) + " · 시세는 품목별로 확인"
-                : "품목을 눌러 원가와 판매처 확인";
+            float xr = CuteUI.Label(x, cy, s, CuteUI.Zero, true);
+            CuteUI.Fill(new Rect(x - 1, Mathf.Round(cy), xr - x + 2, 1), CuteUI.Zero);
+            return xr;
         }
 
-        void DrawTradeInfo(GameManager gm, MarketState market)
+        static void ItemIcon(ItemData item, float x, float y, int scale)
         {
-            // 10/28 한 줄로 줄임 (품목 목록을 넓히려고): 품목 · 기준가 지역 · 내 원가·손익 · 다른 곳 최고 확인가 · 되팔기 제한
-            var panel = GUILayoutUtility.GetRect(10, 20, GUILayout.ExpandWidth(true));
-            CuteUI.Box(panel, 5, CuteUI.Paper2, CuteUI.Line);
-            string text;
-            if (selected == null || selected.questItem)
-                text = "교역품을 고르면 원가와 직접 확인한 시세가 보입니다 · L 장부";
-            else
+            if (item != null && item.icon != null) CuteUI.Sprite(item.icon, new Rect(x, y, 16 * scale, 16 * scale));
+            else CuteUI.Icon(CuteUI.Pic.Sack, x + 3 * scale, y + 4 * scale, scale);
+        }
+
+        static string Fit(string s, float width, bool small, bool bold)
+        {
+            if (string.IsNullOrEmpty(s) || width <= 0 || CuteUI.Width(s, small, bold) <= width) return s;
+            while (s.Length > 1 && CuteUI.Width(s + "…", small, bold) > width) s = s.Substring(0, s.Length - 1);
+            return s + "…";
+        }
+
+        static float Scroll(Rect area, float offset, float contentH)
+        {
+            var e = Event.current;
+            float max = Mathf.Max(0f, contentH - area.height);
+            if (e.type == EventType.ScrollWheel && area.Contains(e.mousePosition)) { offset += e.delta.y * 10f; e.Use(); }
+            offset = Mathf.Clamp(offset, 0f, max);
+            if (max > 0f)
             {
-                var p = gm.Player;
-                string origin = selected.originTown != null ? selected.originTown.displayName : "여러 마을";
-                text = $"{selected.displayName} · 기준 {origin}";
-                if (p.cargo.Count(selected) > 0)
-                    text += $" · 내 원가 {p.cargo.AverageCost(selected):0.#} · 이곳 손익 {Signed(market.SellPrice(selected) - p.cargo.AverageCost(selected))}";
-                TownData best = null; int bestSell = int.MinValue;
-                foreach (var other in gm.Db.towns)
-                {
-                    if (other == null || other == town) continue;
-                    var q = p.ledger.Find(other.id, selected.id);
-                    if (q != null && q.sell > bestSell) { bestSell = q.sell; best = other; }
-                }
-                text += best != null ? $" · 최고 확인 {best.displayName} {bestSell}냥({Signed(bestSell - market.BuyPrice(selected))})" : " · 다른 장터 시세는 가 보면 장부에";
-                if (p.tradeActivity.Restricted(town.id, selected.id, gm.Clock.TotalHours)) text += " · <color=#d6334f>12시간 되팔기 제한</color>";
+                float bh = Mathf.Max(12f, area.height * area.height / contentH);
+                float by = area.y + (area.height - bh) * (offset / max);
+                CuteUI.Fill(new Rect(area.xMax - 3, area.y, 2, area.height), CuteUI.Paper2);
+                CuteUI.Fill(new Rect(area.xMax - 3, by, 2, bh), CuteUI.Line);
             }
-            var st = new GUIStyle(CuteUI.PaperSmall) { richText = true, wordWrap = false, clipping = TextClipping.Clip, alignment = TextAnchor.MiddleLeft };
-            GUI.Label(new Rect(panel.x + 5, panel.y + 1, panel.width - 10, panel.height - 2), text, st);   // 10/28 글자 아래가 잘리던 것: 칸 높이 전체를 씀
+            return offset;
         }
 
         /// <summary>스프라이트 한 장을 GUI 사각형에 그린다 (아틀라스 안의 위치를 고려)</summary>

@@ -206,7 +206,7 @@ namespace PocketCaravan.EditorTools
             Check(sold==bought&&p.money-before<=paid,"recalculated same-market buy/sell profit <= 0 including haggling");
             p.money=5000;p.tradeActivity.Clear();p.cargo.Clear();Set(market,"deal",null);Score(town,3000);
             market.Interact(PlayerController.Instance);yield return Photo("01-market-haggle-top");
-            Set(market,"contentScroll",new Vector2(0,10000));yield return Photo("02-market-haggle-controls");yield return Keypress(Key.Escape);
+            Set(market,"haggleOpen",true);yield return Photo("02-market-haggle-controls");yield return Keypress(Key.Escape);
             // Actual negative save and recovery controls.
             Score(town,-150);p.money=0;Check(gm.SaveNow(),"negative money0 credit-2 fixture saved");
             var neg=SaveSystem.Read();Check(neg!=null&&neg.money==0&&neg.credit==-2,"negative fixture read from disk");
