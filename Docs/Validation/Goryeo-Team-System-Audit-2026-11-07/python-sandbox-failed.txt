@@ -1,0 +1,349 @@
+sss..................s.............................................sssss.s...E...E...E...E....E...E.....E....E....E...E....E.....E.E....E..E....E....E.....E....E..E....E..E/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_trial.py:57: ResourceWarning: unclosed file <_io.BufferedReader name='/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-Trial4-20261026/Screens-v2/before.png'>
+  self.assertEqual(Image.open(OUT/'Screens-v2'/(name+'.png')).size,(480,270))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_trial.py:57: ResourceWarning: unclosed file <_io.BufferedReader name='/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-Trial4-20261026/Screens-v2/trial.png'>
+  self.assertEqual(Image.open(OUT/'Screens-v2'/(name+'.png')).size,(480,270))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+......E....E....E......E.....s...../Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_central_fair_art.py:16: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  im=im.convert('RGBA');ref=ref.convert('RGBA');self.assertEqual(im.size,(48,48));self.assertEqual(im.tobytes(),ref.tobytes());self.assertLessEqual(set(im.getchannel('A').getdata()),{0,255});self.assertEqual(hashlib.sha256(im.tobytes()).hexdigest(),rows[a['id']]['rgbaSha256']);self.assertEqual(a['size'],[3,3])
+................../Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_e3_e2_art_review.py:24: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertTrue({(255,255,255,255),(132,103,94,255),(120,160,153,255)}.issubset(set(im.getdata())))
+/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_e3_e2_art_review.py:25: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertGreaterEqual(sum(c[3]>0 for c in hi.getdata()),2700)
+/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_e3_e2_art_review.py:26: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertLess(sum(c[3]>0 for c in lo.getdata()),sum(c[3]>0 for c in hi.getdata()))
+./Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_e3_e2_art_review.py:15: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertEqual(im.size,size);self.assertLessEqual(set(im.convert('RGBA').getchannel('A').getdata()),{0,255})
+...../Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_e3_flood_terrain.py:29: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertEqual(set(im.convert('RGBA').getdata()),{(127,185,175,255)},(x,y))
+................E/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_goryeo_life_trial.py:28: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  im=im.convert('RGBA');self.assertEqual(im.size,(32,32));self.assertLessEqual(set(im.getchannel('A').getdata()),{0,255});self.assertLessEqual(len(set(im.getdata())),10);bbox=im.getbbox();self.assertLessEqual(bbox[3]-bbox[1],16);self.assertEqual(bbox[3],30);states.append(im.tobytes())
+...........................s..........................................s........sssss...s...s...........................................s.ss.................
+======================================================================
+ERROR: test_three_editable_sources_reexport_rgba (test_c7_batch1.Batch1Checks.test_three_editable_sources_reexport_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_batch1.py", line 43, in test_three_editable_sources_reexport_rgba
+    n=d['name'];p=Path(temp)/(n+'.png');subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(p)],check=True,capture_output=True)
+                                        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-Batch1-20261027/Native/cottage.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpge77ir8l/cottage.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_three_editable_sources_reexport_rgba (test_c7_batch2.Batch2Checks.test_three_editable_sources_reexport_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_batch2.py", line 43, in test_three_editable_sources_reexport_rgba
+    n=d['name'];p=Path(temp)/(n+'.png');subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(p)],check=True,capture_output=True)
+                                        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-Batch2-20261027/Native/forest_round.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpaiwj52u4/forest_round.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_three_editable_sources_reexport_rgba (test_c7_batch3.Batch3Checks.test_three_editable_sources_reexport_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_batch3.py", line 43, in test_three_editable_sources_reexport_rgba
+    n=d['name'];p=Path(temp)/(n+'.png');subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(p)],check=True,capture_output=True)
+                                        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-Batch3-20261027/Native/broadleaf.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpggwuyb_x/broadleaf.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_three_editable_sources_reexport_rgba (test_c7_batch4.Batch4Checks.test_three_editable_sources_reexport_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_batch4.py", line 39, in test_three_editable_sources_reexport_rgba
+    n=d['name'];p=Path(temp)/(n+'.png');subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(p)],check=True,capture_output=True)
+                                        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-Batch4-20261027/Native/cart.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpoeds3dq7/cart.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_native_source_reexports_rgba (test_c7_cart_rebuild.CartRebuildChecks.test_native_source_reexports_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_cart_rebuild.py", line 30, in test_native_source_reexports_rgba
+    p=Path(temp)/'cart.png';subprocess.run([str(binary),'-b',str(OUT/'Native/cart.aseprite'),'--save-as',str(p)],check=True,capture_output=True)
+                            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-CartRebuild-20261027/Native/cart.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmp0pntw2jm/cart.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_native_source_reexports_rgba (test_c7_cart_revision.CartRevisionChecks.test_native_source_reexports_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_cart_revision.py", line 27, in test_native_source_reexports_rgba
+    p=Path(temp)/'cart.png';subprocess.run([str(binary),'-b',str(OUT/'Native/cart.aseprite'),'--save-as',str(p)],check=True,capture_output=True)
+                            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-CartRevision-20261027/Native/cart.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpm0jprsve/cart.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_native_reexports_and_palette (test_c7_cart_roof.CartRoofChecks.test_native_reexports_and_palette)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_cart_roof.py", line 37, in test_native_reexports_and_palette
+    subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(output)],capture_output=True,check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-CartRoof-20261027/Native/cart.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpd39ojhi5/cart.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_native_reexports_and_palette (test_c7_cart_roof_v2.CartRoofV2Checks.test_native_reexports_and_palette)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_cart_roof_v2.py", line 37, in test_native_reexports_and_palette
+    subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(output)],capture_output=True,check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-CartRoof-v2-20261027/Native/cart.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmp9_xx34u0/cart.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_three_editable_sources_reexport_rgba (test_c7_courtyard_props.CourtyardPropsChecks.test_three_editable_sources_reexport_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_courtyard_props.py", line 40, in test_three_editable_sources_reexport_rgba
+    n=d['name'];p=Path(temp)/(n+'.png');subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(p)],check=True,capture_output=True)
+                                        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-CourtyardProps-20261027/Native/paper_large.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpvwxsvb7v/paper_large.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_editable_native_reexports_rgba (test_c7_gaekju.GaekjuChecks.test_editable_native_reexports_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_gaekju.py", line 41, in test_editable_native_reexports_rgba
+    subprocess.run([str(binary),'-b',str(OUT/'Native/gaekju.aseprite'),'--save-as',str(output)],check=True,capture_output=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-Gaekju-20261027/Native/gaekju.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpkcrpw7i2/gaekju.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_three_editable_sources_reexport_rgba (test_c7_gate_props.GatePropsChecks.test_three_editable_sources_reexport_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_gate_props.py", line 41, in test_three_editable_sources_reexport_rgba
+    n=d['name'];p=Path(temp)/(n+'.png');subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(p)],check=True,capture_output=True)
+                                        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-GateProps-20261027/Native/gate.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpmq43qvf8/gate.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_three_editable_sources_reexport_rgba (test_c7_low_nature.LowNatureChecks.test_three_editable_sources_reexport_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_low_nature.py", line 41, in test_three_editable_sources_reexport_rgba
+    n=d['name'];p=Path(temp)/(n+'.png');subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(p)],check=True,capture_output=True)
+                                        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-LowNature-20261027/Native/moss_rock.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmppd109bht/moss_rock.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_aseprite_roundtrip (test_c7_natural_pond.NaturalPondChecks.test_aseprite_roundtrip)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_natural_pond.py", line 41, in test_aseprite_roundtrip
+    subprocess.run([str(binary),'-b',str(OUT/(name+'.aseprite')),'--save-as',str(output)],check=True,capture_output=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-NaturalPond-20261027/pond.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpf3iyj1yz/pond.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_editable_native_reexports_rgba (test_c7_palace.PalaceChecks.test_editable_native_reexports_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_palace.py", line 41, in test_editable_native_reexports_rgba
+    subprocess.run([str(binary),'-b',str(OUT/'Native/palace.aseprite'),'--save-as',str(output)],check=True,capture_output=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-Palace-20261027/Native/palace.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmp4g1qm0m3/palace.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_aseprite_sources_reexport_same_rgba (test_c7_pond_decor.C7PondDecorChecks.test_aseprite_sources_reexport_same_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_pond_decor.py", line 27, in test_aseprite_sources_reexport_same_rgba
+    subprocess.run([str(binary),'-b',str(OUT/'Native'/(name+'.aseprite')),'--save-as',str(output)],check=True,capture_output=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-PondDecor-20261027/Native/leaves.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpzyvc2pbe/leaves.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_native_sources_reexport_identical_decoded_pixels (test_c7_rebuild.C7RebuildChecks.test_native_sources_reexport_identical_decoded_pixels)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_rebuild.py", line 54, in test_native_sources_reexport_identical_decoded_pixels
+    subprocess.run([str(binary),'-b','--script',str(script)],check=True,capture_output=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '--script', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpgciafylg/roundtrip.lua']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_editable_sources_reexport_same_decoded_pixels (test_c7_remaining_batch.RemainingBatchChecks.test_editable_sources_reexport_same_decoded_pixels)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_remaining_batch.py", line 47, in test_editable_sources_reexport_same_decoded_pixels
+    n=d['name'];p=Path(temp)/(n+'.png');subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(p)],check=True,capture_output=True)
+                                        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-RemainingBatch-20261027/Native/boat.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpoo8zz323/boat.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_editable_native_roundtrip_and_existing_colors (test_c7_round_pond.C7RoundPondChecks.test_editable_native_roundtrip_and_existing_colors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_round_pond.py", line 42, in test_editable_native_roundtrip_and_existing_colors
+    subprocess.run([str(binary),'-b',str(OUT/'pond.aseprite'),'--save-as',str(output)],check=True,capture_output=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-RoundPond-20261027/pond.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmp3ai2f8p3/pond.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_editable_native_reexports_rgba (test_c7_shop.ShopChecks.test_editable_native_reexports_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_shop.py", line 42, in test_editable_native_reexports_rgba
+    subprocess.run([str(binary),'-b',str(OUT/'Native/shop.aseprite'),'--save-as',str(output)],check=True,capture_output=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-Shop-20261027/Native/shop.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmp73o0sxqh/shop.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_aseprite_roundtrip (test_c7_sunken_pond.SunkenPondChecks.test_aseprite_roundtrip)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_sunken_pond.py", line 41, in test_aseprite_roundtrip
+    subprocess.run([str(binary),'-b',str(OUT/(name+'.aseprite')),'--save-as',str(output)],check=True,capture_output=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-SunkenPond-20261027/pond.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpr12v9kwb/pond.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_aseprite57_sources_reexport_identical_rgba (test_c7_team_style.C7TeamStyleChecks.test_aseprite57_sources_reexport_identical_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_team_style.py", line 50, in test_aseprite57_sources_reexport_identical_rgba
+    subprocess.run([str(binary),'-b','--script',str(script)],check=True,capture_output=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '--script', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmph9owfju5/roundtrip.lua']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_all_aseprite_sources_reexport_identical_rgba (test_c7_trial.C7TrialChecks.test_all_aseprite_sources_reexport_identical_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_trial.py", line 47, in test_all_aseprite_sources_reexport_identical_rgba
+    subprocess.run([ase,'-b','--script-param','root='+str(OUT),'--script-param','output='+temp,'--script',str(lua)],check=True,capture_output=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '--script-param', 'root=/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-Trial4-20261026', '--script-param', 'output=/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpdmzclgzo', '--script', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpdmzclgzo/roundtrip.lua']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_three_editable_sources_reexport_rgba (test_c7_workshop_props.WorkshopPropsChecks.test_three_editable_sources_reexport_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_workshop_props.py", line 39, in test_three_editable_sources_reexport_rgba
+    n=d['name'];p=Path(temp)/(n+'.png');subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(p)],check=True,capture_output=True)
+                                        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-WorkshopProps-20261027/Native/paper_rack.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpkd7x06_8/paper_rack.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_three_editable_sources_reexport_rgba (test_c7_workshop_props_v2.WorkshopPropsV2Checks.test_three_editable_sources_reexport_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_workshop_props_v2.py", line 39, in test_three_editable_sources_reexport_rgba
+    n=d['name'];p=Path(temp)/(n+'.png');subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(p)],check=True,capture_output=True)
+                                        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-WorkshopProps-v2-20261027/Native/paper_rack.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpzj7g7k24/paper_rack.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_three_editable_sources_reexport_rgba (test_c7_workshop_props_v3.WorkshopPropsV3Checks.test_three_editable_sources_reexport_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_workshop_props_v3.py", line 39, in test_three_editable_sources_reexport_rgba
+    n=d['name'];p=Path(temp)/(n+'.png');subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(p)],check=True,capture_output=True)
+                                        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-WorkshopProps-v3-20261027/Native/paper_rack.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpw4y7l7mq/paper_rack.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_three_editable_sources_reexport_rgba (test_c7_workshop_props_v4.WorkshopPropsV4Checks.test_three_editable_sources_reexport_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_workshop_props_v4.py", line 40, in test_three_editable_sources_reexport_rgba
+    n=d['name'];p=Path(temp)/(n+'.png');subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(p)],check=True,capture_output=True)
+                                        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/ArtReview/C7-WorkshopProps-v4-20261027/Native/paper_rack.aseprite', '--save-as', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmpspiqhw_p/paper_rack.png']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_aseprite_two_frames_reexport_identical_decoded_rgba (test_goryeo_life_trial.VillageLifeTrial.test_aseprite_two_frames_reexport_identical_decoded_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_goryeo_life_trial.py", line 37, in test_aseprite_two_frames_reexport_identical_decoded_rgba
+    script=t/'export.lua';script.write_text('\n'.join(code));subprocess.run([str(ase),'-b','--script',str(script)],check=True,capture_output=True,timeout=60)
+                                                             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Applications/Aseprite.app/Contents/MacOS/aseprite', '-b', '--script', '/var/folders/6n/ply68l3d6936p6fjtcvb5_6c0000gn/T/tmp81ol9law/export.lua']' died with <Signals.SIGABRT: 6>.
+
+----------------------------------------------------------------------
+Ran 403 tests in 53.590s
+
+FAILED (errors=27, skipped=23)

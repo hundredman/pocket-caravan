@@ -4,17 +4,21 @@ from pathlib import Path
 from unittest.mock import patch
 from PIL import Image
 ROOT=Path(__file__).resolve().parents[2]
+import sys
+sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
+from t3_history import map_at,resource_at
 LAYOUT=ROOT/'Assets/PocketCaravan/Data/Goryeo/MarketLayout.json'
 sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
 @unittest.skipUnless(LAYOUT.exists(),'Production markets not promoted')
 class ProductionMarkets(unittest.TestCase):
  def setUp(self):self.data=json.loads(LAYOUT.read_text())
  def test_approved_review_art_and_all_positions_are_preserved(self):
-  review=json.loads((ROOT/self.data['reviewSource']).read_text())
+  data=resource_at(LAYOUT) # archived pre-T3 review; live world-space conservation is in test_t3_production
+  review=json.loads((ROOT/data['reviewSource']).read_text())
   expected={m['mapId']:[s for s in m['spaces']if s['props']]for m in review['maps']if any(s['props']for s in m['spaces'])}
-  for e in self.data.get('extensions',[]):   # 11/03 E2: 승인 그림을 새 장터에 더 놓은 배치(검토 기록과 같아야 함)
+  for e in data.get('extensions',[]):   # 11/03 E2: 승인 그림을 새 장터에 더 놓은 배치(검토 기록과 같아야 함)
    for em in json.loads((ROOT/e['source']).read_text())['maps']:expected[em['mapId']]=expected.get(em['mapId'],[])+em['spaces']
-  self.assertEqual({m['mapId']:m['spaces']for m in self.data['maps']},expected)
+  self.assertEqual({m['mapId']:m['spaces']for m in data['maps']},expected)
   for a in self.data['assets']:
    self.assertTrue(a['image'].startswith('Assets/PocketCaravan/Art/Goryeo/Markets/'))
    with Image.open(ROOT/a['image'])as im:dest=im.convert('RGBA')

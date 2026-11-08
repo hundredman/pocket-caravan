@@ -1,0 +1,368 @@
+{
+  "method": "existing physical-world 8-direction/no-corner-cut metric; fades and load time excluded",
+  "pairs": [
+    {
+      "pair": [
+        "naru",
+        "transit_woodtown"
+      ],
+      "before": 32.35613652783524,
+      "after": 32.35613652783524,
+      "delta": 0.0,
+      "storedReference": 32.356137
+    },
+    {
+      "pair": [
+        "naru",
+        "transit_ferry"
+      ],
+      "before": 57.088440753439784,
+      "after": 57.088440753439784,
+      "delta": 0.0,
+      "storedReference": 57.088441
+    },
+    {
+      "pair": [
+        "naru",
+        "transit_southport"
+      ],
+      "before": 39.660704768067056,
+      "after": 39.660704768067056,
+      "delta": 0.0,
+      "storedReference": 39.987715
+    },
+    {
+      "pair": [
+        "naru",
+        "transit_crossroads"
+      ],
+      "before": 62.74246216771311,
+      "after": 62.74246216771311,
+      "delta": 0.0,
+      "storedReference": 61.862687
+    },
+    {
+      "pair": [
+        "goryeo_jangdan",
+        "naru"
+      ],
+      "before": 9.928400542462594,
+      "after": 9.928400542462594,
+      "delta": 0.0,
+      "storedReference": 9.928401
+    },
+    {
+      "pair": [
+        "goryeo_jangdan",
+        "goryeo_songak"
+      ],
+      "before": 15.654021414273306,
+      "after": 15.654021414273306,
+      "delta": 0.0,
+      "storedReference": 15.654021
+    },
+    {
+      "pair": [
+        "goryeo_jangdan",
+        "transit_woodtown"
+      ],
+      "before": 22.58189031106395,
+      "after": 22.58189031106395,
+      "delta": 0.0,
+      "storedReference": 22.58189
+    },
+    {
+      "pair": [
+        "goryeo_jangdan",
+        "transit_ferry"
+      ],
+      "before": 49.164046444963915,
+      "after": 49.164046444963915,
+      "delta": 0.0,
+      "storedReference": 49.164046
+    },
+    {
+      "pair": [
+        "goryeo_jangdan",
+        "transit_southport"
+      ],
+      "before": 33.02885999786262,
+      "after": 33.02885999786262,
+      "delta": 0.0,
+      "storedReference": 33.292018
+    },
+    {
+      "pair": [
+        "goryeo_jangdan",
+        "transit_crossroads"
+      ],
+      "before": 52.968215950941776,
+      "after": 52.968215950941776,
+      "delta": 0.0,
+      "storedReference": 52.088441
+    },
+    {
+      "pair": [
+        "goryeo_songak",
+        "naru"
+      ],
+      "before": 23.270107071366517,
+      "after": 23.270107071366517,
+      "delta": 0.0,
+      "storedReference": 23.270107
+    },
+    {
+      "pair": [
+        "goryeo_songak",
+        "transit_woodtown"
+      ],
+      "before": 17.469677976539526,
+      "after": 17.469677976539526,
+      "delta": 0.0,
+      "storedReference": 17.469678
+    },
+    {
+      "pair": [
+        "goryeo_songak",
+        "transit_ferry"
+      ],
+      "before": 37.58189031106394,
+      "after": 37.58189031106394,
+      "delta": 0.0,
+      "storedReference": 37.58189
+    },
+    {
+      "pair": [
+        "goryeo_songak",
+        "transit_southport"
+      ],
+      "before": 39.24660131311778,
+      "after": 39.24660131311778,
+      "delta": 0.0,
+      "storedReference": 39.509759
+    },
+    {
+      "pair": [
+        "goryeo_songak",
+        "transit_crossroads"
+      ],
+      "before": 45.250873369940535,
+      "after": 45.250873369940535,
+      "delta": 0.0,
+      "storedReference": 45.14187
+    },
+    {
+      "pair": [
+        "dakmok",
+        "naru"
+      ],
+      "before": 32.89794560758414,
+      "after": 32.89794560758414,
+      "delta": 0.0,
+      "storedReference": 32.897946
+    },
+    {
+      "pair": [
+        "dakmok",
+        "goryeo_jangdan"
+      ],
+      "before": 28.732570048440408,
+      "after": 28.732570048440408,
+      "delta": 0.0,
+      "storedReference": 28.578416
+    },
+    {
+      "pair": [
+        "dakmok",
+        "goryeo_songak"
+      ],
+      "before": 13.732570048440406,
+      "after": 13.732570048440406,
+      "delta": 0.0,
+      "storedReference": 13.578416
+    },
+    {
+      "pair": [
+        "dakmok",
+        "gaegyeong"
+      ],
+      "before": 17.06332116672787,
+      "after": 17.06332116672787,
+      "delta": 0.0,
+      "storedReference": 17.063321
+    },
+    {
+      "pair": [
+        "dakmok",
+        "transit_woodtown"
+      ],
+      "before": 30.05931493274108,
+      "after": 30.05931493274108,
+      "delta": 0.0,
+      "storedReference": 29.905161
+    },
+    {
+      "pair": [
+        "dakmok",
+        "transit_ferry"
+      ],
+      "before": 50.17152726726556,
+      "after": 50.17152726726556,
+      "delta": 0.0,
+      "storedReference": 50.017373
+    },
+    {
+      "pair": [
+        "dakmok",
+        "transit_southport"
+      ],
+      "before": 52.76116422346719,
+      "after": 52.76116422346719,
+      "delta": 0.0,
+      "storedReference": 52.870168
+    },
+    {
+      "pair": [
+        "dakmok",
+        "transit_crossroads"
+      ],
+      "before": 57.84051032614216,
+      "after": 57.84051032614216,
+      "delta": 0.0,
+      "storedReference": 57.577352
+    },
+    {
+      "pair": [
+        "gaegyeong",
+        "naru"
+      ],
+      "before": 17.142667269402875,
+      "after": 17.142667269402875,
+      "delta": 0.0,
+      "storedReference": 17.142667
+    },
+    {
+      "pair": [
+        "gaegyeong",
+        "goryeo_jangdan"
+      ],
+      "before": 26.853060673774362,
+      "after": 26.853060673774362,
+      "delta": 0.0,
+      "storedReference": 26.853061
+    },
+    {
+      "pair": [
+        "gaegyeong",
+        "goryeo_songak"
+      ],
+      "before": 23.13465480142931,
+      "after": 23.13465480142931,
+      "delta": 0.0,
+      "storedReference": 23.134655
+    },
+    {
+      "pair": [
+        "gaegyeong",
+        "transit_woodtown"
+      ],
+      "before": 39.461399685729994,
+      "after": 39.461399685729994,
+      "delta": 0.0,
+      "storedReference": 39.4614
+    },
+    {
+      "pair": [
+        "gaegyeong",
+        "transit_ferry"
+      ],
+      "before": 59.57361202025453,
+      "after": 59.57361202025453,
+      "delta": 0.0,
+      "storedReference": 59.573612
+    },
+    {
+      "pair": [
+        "gaegyeong",
+        "transit_southport"
+      ],
+      "before": 56.80337203747,
+      "after": 56.80337203747,
+      "delta": 0.0,
+      "storedReference": 57.130383
+    },
+    {
+      "pair": [
+        "gaegyeong",
+        "transit_crossroads"
+      ],
+      "before": 67.24259507913114,
+      "after": 67.24259507913114,
+      "delta": 0.0,
+      "storedReference": 67.133592
+    },
+    {
+      "pair": [
+        "transit_ferry",
+        "transit_woodtown"
+      ],
+      "before": 28.277853716504133,
+      "after": 28.277853716504133,
+      "delta": 0.0,
+      "storedReference": 28.277854
+    },
+    {
+      "pair": [
+        "transit_ferry",
+        "transit_southport"
+      ],
+      "before": 59.48010174148417,
+      "after": 59.48010174148417,
+      "delta": 0.0,
+      "storedReference": 59.74326
+    },
+    {
+      "pair": [
+        "transit_southport",
+        "transit_woodtown"
+      ],
+      "before": 31.202248024979934,
+      "after": 31.202248024979934,
+      "delta": 0.0,
+      "storedReference": 31.465406
+    },
+    {
+      "pair": [
+        "transit_crossroads",
+        "transit_woodtown"
+      ],
+      "before": 31.31125159402547,
+      "after": 31.31125159402547,
+      "delta": 0.0,
+      "storedReference": 30.431476
+    },
+    {
+      "pair": [
+        "transit_crossroads",
+        "transit_ferry"
+      ],
+      "before": 40.0360749973283,
+      "after": 40.0360749973283,
+      "delta": 0.0,
+      "storedReference": 40.145079
+    },
+    {
+      "pair": [
+        "transit_crossroads",
+        "transit_southport"
+      ],
+      "before": 33.31071994835353,
+      "after": 33.31071994835353,
+      "delta": 0.0,
+      "storedReference": 33.464874
+    }
+  ],
+  "maxBoundaryDeltaSeconds": 0.0,
+  "maxExistingReferenceDeltaSeconds": 0.879775594025471,
+  "note": "Stored reference already differs slightly from the frozen pre-T3 maps; no economy/route calibration changed."
+}

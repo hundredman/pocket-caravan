@@ -1,0 +1,63 @@
+{
+    "complete": true,
+    "error": "",
+    "checks": [
+        "external audit SaveOFF north_c_road_se",
+        "active serialized exit north_c_road_se",
+        "reachable from market under actual collision north_c_road_se",
+        "normal GameManager travel invoked north_c_road_se",
+        "target actually loaded north_c_road_se",
+        "no autosave after external travel north_c_road_se",
+        "external audit SaveOFF arabia_central_eastvale",
+        "active serialized exit arabia_central_eastvale",
+        "reachable from market under actual collision arabia_central_eastvale",
+        "normal GameManager travel invoked arabia_central_eastvale",
+        "target actually loaded arabia_central_eastvale",
+        "no autosave after external travel arabia_central_eastvale",
+        "external audit SaveOFF arabia_central_steppe",
+        "active serialized exit arabia_central_steppe",
+        "reachable from market under actual collision arabia_central_steppe",
+        "normal GameManager travel invoked arabia_central_steppe",
+        "target actually loaded arabia_central_steppe",
+        "no autosave after external travel arabia_central_steppe",
+        "no isolated external-audit save written"
+    ],
+    "samples": [
+        {
+            "mapId": "transit_crossroads",
+            "target": "north_c_road_se",
+            "edge": "N",
+            "viewport": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "exits": 0,
+            "passed": true
+        },
+        {
+            "mapId": "transit_crossroads",
+            "target": "arabia_central_eastvale",
+            "edge": "W",
+            "viewport": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "exits": 0,
+            "passed": true
+        },
+        {
+            "mapId": "transit_crossroads",
+            "target": "arabia_central_steppe",
+            "edge": "W",
+            "viewport": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "exits": 0,
+            "passed": true
+        }
+    ]
+}

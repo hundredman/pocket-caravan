@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
   id: arabia_leather
   displayName: "\uB099\uD0C0 \uAC00\uC8FD"
-  icon: {fileID: 21300000, guid: 9cd16165feb64942af27f0ec9b0b952d, type: 3}
+  icon: {fileID: 21300000, guid: ed1c160c35fb4740a29f3978e5f472af, type: 3}
   weight: 1
   basePrice: 7
   originTown: {fileID: 11400000, guid: 35e09603f62544394a16a18f476e000a, type: 2}

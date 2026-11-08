@@ -32,10 +32,12 @@ def regions():
     return ids
 
 class Map:
-    def __init__(s,path):
-        s.path=path;s.d=json.loads(path.read_text());s.w,s.h=s.d['w'],s.d['h'];s.props=set()
+    def __init__(s,path,historical=False):
+        from t3_history import map_at,resource_at
+        s.path=path;s.d=map_at(path) if historical else json.loads(path.read_text());s.w,s.h=s.d['w'],s.d['h'];s.props=set()
+        if not historical and s.d.get('boundaryLayoutVersion')==3:raise ValueError('T3 production: regenerate through t3_install.py; archived local coordinates cannot be reapplied')
         # 승인 장터(Data/Goryeo/MarketLayout.json)의 좌판·게시판·이정표 그림 자리와 그 둘레 1칸
-        ml=json.loads((ROOT/'Assets/PocketCaravan/Data/Goryeo/MarketLayout.json').read_text())
+        ml=resource_at(ROOT/'Assets/PocketCaravan/Data/Goryeo/MarketLayout.json') if historical else json.loads((ROOT/'Assets/PocketCaravan/Data/Goryeo/MarketLayout.json').read_text())
         for mm in ml['maps']:
             if mm['mapId']!=s.d['id']:continue
             for sp in mm['spaces']:

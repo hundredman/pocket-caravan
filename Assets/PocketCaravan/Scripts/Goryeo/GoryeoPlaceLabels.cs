@@ -38,7 +38,7 @@ namespace PocketCaravan
         public void Refresh()=>Sync();
         bool Allowed=>map!=null&&MapRoot.Current==map&&GoryeoTravelTransition.RegionOf(map.mapId)!=null&&(map.previewOnly||approvedForProduction);
         public static bool Nearby(Vector2 feet,Vector2 at)=>(feet-at).sqrMagnitude<=Near*Near;
-        public static bool IsPlace(Interactable it)=>it is TownMarket||it is ContractBoard||it is WorkshopSpot||Inn.IsHost(it)||(it is TalkNpc&&it.GetComponent<CharacterAnimator>()==null);
+        public static bool IsPlace(Interactable it)=>it is TownMarket||it is ContractBoard||it is WorkshopSpot||it is GoryeoDailyActivity||it is GoryeoPastime||it is GoryeoSeat||Inn.IsHost(it)||(it is TalkNpc&&it.GetComponent<CharacterAnimator>()==null);
         public static string LabelFor(Interactable it,Vector2 feet)
         {
             if(it==null)return "";if(IsPlace(it)&&!Nearby(feet,it.transform.position))return "";
@@ -186,7 +186,8 @@ namespace PocketCaravan
                 }
                 string guide = n.exit ? $"{n.label}  ({Mathf.RoundToInt(dist)}칸)" : $"{n.label}  {Mathf.RoundToInt(dist)}칸";
                 float gw = 220;
-                Outlined(new Rect((UIStyle.VirtualWidth - gw) / 2, HUD.BottomLine(10, 14), gw, 14), "목표 · " + guide, QuestColor, guideStyle);   // 11/08 아래 쌓는 줄로 (알림·조작 안내와 겹쳤다)
+                if (!GoryeoIntro.Showing)
+                    Outlined(new Rect((UIStyle.VirtualWidth - gw) / 2, HUD.BottomLine(10, 14), gw, 14), "목표 · " + guide, QuestColor, guideStyle);   // 11/08 아래 쌓는 줄로 (알림·조작 안내와 겹쳤다)
             }
         }
 

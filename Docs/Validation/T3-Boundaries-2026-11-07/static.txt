@@ -1,0 +1,20 @@
+test_all_13_ids_preserved_and_every_output_is_preview_only (Tools.Integration.test_t3_boundaries.BoundaryReview.test_all_13_ids_preserved_and_every_output_is_preview_only) ... ok
+test_all_exits_are_on_the_actual_outward_face (Tools.Integration.test_t3_boundaries.BoundaryReview.test_all_exits_are_on_the_actual_outward_face) ... ok
+test_connected_13_map_network_and_return_exits (Tools.Integration.test_t3_boundaries.BoundaryReview.test_connected_13_map_network_and_return_exits) ... ok
+test_default_starts_and_functional_content_share_walk_component (Tools.Integration.test_t3_boundaries.BoundaryReview.test_default_starts_and_functional_content_share_walk_component) ... ok
+test_every_local_grass_face_returns_to_the_same_neighbor (Tools.Integration.test_t3_boundaries.BoundaryReview.test_every_local_grass_face_returns_to_the_same_neighbor) ... ok
+test_existing_three_foreign_links_and_incoming_ids_are_preserved (Tools.Integration.test_t3_boundaries.BoundaryReview.test_existing_three_foreign_links_and_incoming_ids_are_preserved) ... ok
+test_native_world_preserved_except_four_explicit_west_tip_cells (Tools.Integration.test_t3_boundaries.BoundaryReview.test_native_world_preserved_except_four_explicit_west_tip_cells) ... ok
+test_no_two_destinations_share_the_same_outward_cell (Tools.Integration.test_t3_boundaries.BoundaryReview.test_no_two_destinations_share_the_same_outward_cell) ... ok
+test_offroad_sample_and_all_eligible_grass_faces_are_open (Tools.Integration.test_t3_boundaries.BoundaryReview.test_offroad_sample_and_all_eligible_grass_faces_are_open) ... ok
+test_original_function_ids_and_world_coordinates_preserved (Tools.Integration.test_t3_boundaries.BoundaryReview.test_original_function_ids_and_world_coordinates_preserved) ... ok
+test_paired_arrivals_fit_are_walkable_and_not_exit_cells (Tools.Integration.test_t3_boundaries.BoundaryReview.test_paired_arrivals_fit_are_walkable_and_not_exit_cells) ... ok
+test_corner_context_covers_outgoing_frame_without_painting_walkable_cells (Tools.Integration.test_transition_boundary.CameraBoundary.test_corner_context_covers_outgoing_frame_without_painting_walkable_cells) ... ok
+test_gameplay_and_original_art_are_unchanged (Tools.Integration.test_transition_boundary.CameraBoundary.test_gameplay_and_original_art_are_unchanged) ... ok
+test_no_neighbor_context_without_scene_exits (Tools.Integration.test_transition_boundary.CameraBoundary.test_no_neighbor_context_without_scene_exits) ... ok
+test_visual_context_stays_outside_playable_rectangle (Tools.Integration.test_transition_boundary.CameraBoundary.test_visual_context_stays_outside_playable_rectangle) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.670s
+
+OK

@@ -28,8 +28,11 @@ namespace PocketCaravan
         /// 11/05 B안: 종이 상자로, 화면 아래 가운데에서 위로 쌓는다 (위쪽 카드·할 일 줄을 덮지 않게).
         /// 어두운 바탕용 색 태그는 종이 위에서 안 읽혀서 뺀다.
         /// </summary>
-        public static void Draw()
+        public static readonly List<Rect> DrawnRects=new List<Rect>();
+        public static void Draw(Rect reserved=default)
         {
+            bool record=!Application.isEditor||Camera.main==null||(Camera.main.pixelWidth==Screen.width&&Camera.main.pixelHeight==Screen.height);
+            if(record)DrawnRects.Clear();
             entries.RemoveAll(e => Time.unscaledTime > e.until);
             float vw = UIStyle.VirtualWidth;
             float bottom = UIStyle.VirtualHeight - 8 - HUD.BottomReserved;
@@ -49,6 +52,12 @@ namespace PocketCaravan
                 float w = Mathf.Max(80f, Mathf.Min(want, right - left));
                 float th = CuteUI.WrapHeight(text, w - 24f);
                 var r = new Rect(Mathf.Round(left + (right - left - w) / 2f), Mathf.Round(bottom - th - 12f), w, th + 12f);
+                if(reserved.width>0&&r.Overlaps(reserved))   // 고려 배우기 카드 (ScreenZones로도 비키지만 처음 한 프레임을 위해 그대로 둔다)
+                {
+                    if(reserved.xMin-w-8>=8)r.x=Mathf.Floor(reserved.xMin-w-8);
+                    else r.y=Mathf.Min(r.y,reserved.yMin-r.height-6);
+                }
+                if(record)DrawnRects.Add(r);
                 CuteUI.Box(r, 8, CuteUI.Paper, CuteUI.Ink, 1, 2);
                 CuteUI.WrapCenter(r.x + 12f, r.y + 6f, w - 24f, text, CuteUI.Text);
                 bottom = r.y - 5f;

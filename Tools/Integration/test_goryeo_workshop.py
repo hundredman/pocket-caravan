@@ -5,7 +5,7 @@ ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'Tools/World
 import goryeo_life as life
 class WorkshopPlacement(unittest.TestCase):
  def test_approved_workshop_is_idempotent_and_preserves_every_other_field(self):
-  maps={mid:life.Map(path)for mid,path in life.regions()};before={mid:copy.deepcopy(m.d)for mid,m in maps.items()}
+  maps={mid:life.Map(path,historical=True)for mid,path in life.regions()};before={mid:copy.deepcopy(m.d)for mid,m in maps.items()}
   life.apply_workshops(maps)
   for mid,m in maps.items():
    for key in before[mid]:
@@ -20,6 +20,6 @@ class WorkshopPlacement(unittest.TestCase):
   try:
    for change in [dict(x=38),dict(blocksMovement=True)]:
     life.SPEC=copy.deepcopy(old);life.SPEC['workshops'][0].update(change)
-    with self.assertRaises(ValueError):life.apply_workshops({'Dakmok':life.Map(ROOT/'Assets/PocketCaravan/Maps/Dakmok.json')})
+    with self.assertRaises(ValueError):life.apply_workshops({'Dakmok':life.Map(ROOT/'Assets/PocketCaravan/Maps/Dakmok.json',historical=True)})
   finally:life.SPEC=old
 if __name__=='__main__':unittest.main()

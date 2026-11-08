@@ -1,13 +1,16 @@
 import unittest,json,sys,wave,array,hashlib
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'ArtReview/Goryeo-Atmosphere-A3-20261105';sys.path.insert(0,str(ROOT/'Tools/Atmosphere'))
+import sys
+sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
+from t3_history import map_at,resource_at
 import goryeo_life_sound_trial as life
 class LifeSoundTrial(unittest.TestCase):
  def test_anchors_follow_existing_maps_and_markets(self):
-  s=json.loads((OUT/'source.json').read_text());self.assertEqual(s['status'],'review');self.assertEqual(s['maps'],life.maps());self.assertEqual(len(s['maps']),13)
+  s=json.loads((OUT/'source.json').read_text());self.assertEqual(s['status'],'review');self.assertEqual(s['maps'],life.maps(historical=True));self.assertEqual(len(s['maps']),13)
   kinds=set()
   for m in s['maps']:
-   d=json.loads((ROOT/'Assets/PocketCaravan/Maps'/f"{m['id']}.json").read_text());markets={(o['x'],d['h']-o['y']-1)for o in d['objects']if o['kind']=='market'}
+   d=map_at(ROOT/'Assets/PocketCaravan/Maps'/f"{m['id']}.json");markets={(o['x'],d['h']-o['y']-1)for o in d['objects']if o['kind']=='market'}
    self.assertEqual({(p['x'],p['y'])for p in m['points']if p['kind']=='crowd'},markets)
    for p in m['points']:
     kinds.add(p['kind']);self.assertTrue(0<=p['x']<d['w']and 0<=p['y']<d['h']);self.assertLessEqual(p['radius'],14);self.assertLess(p['startHour'],p['endHour'])
@@ -22,7 +25,7 @@ class LifeSoundTrial(unittest.TestCase):
    if row['kind']=='crowd':self.assertLess(abs(a[0]-a[-1]),2000)
    else:self.assertEqual((a[0],a[-1]),(0,0))
  def test_listening_order_and_approved_production_audio(self):
-  s=json.loads((OUT/'source.json').read_text());self.assertEqual([v['kind']for v in s['timeline'][:5]],list(life.KINDS));self.assertTrue((OUT/'life-review.mp3').exists());target=ROOT/'Assets/PocketCaravan/Resources/Goryeo/Life';approval=json.loads((OUT/'approval.json').read_text());self.assertEqual(approval['status'],'approved');production=json.loads((target/'Anchors.json').read_text());self.assertEqual(production['status'],'approved')
+  s=json.loads((OUT/'source.json').read_text());self.assertEqual([v['kind']for v in s['timeline'][:5]],list(life.KINDS));self.assertTrue((OUT/'life-review.mp3').exists());target=ROOT/'Assets/PocketCaravan/Resources/Goryeo/Life';approval=json.loads((OUT/'approval.json').read_text());self.assertEqual(approval['status'],'approved');production=resource_at(target/'Anchors.json');self.assertEqual(production['status'],'approved')
   self.assertEqual(len(production['maps']),len(s['maps']))
   for a,b in zip(production['maps'],s['maps']):
    for key in ('id','w','h'):self.assertEqual(a[key],b[key])

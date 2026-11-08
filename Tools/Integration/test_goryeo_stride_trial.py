@@ -1,17 +1,20 @@
 import collections,json,sys,unittest,wave,array,hashlib
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'ArtReview/Goryeo-Atmosphere-A4-v3-20261105';sys.path.insert(0,str(ROOT/'Tools/Atmosphere'))
+import sys
+sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
+from t3_history import map_at,resource_at
 import goryeo_stride_trial as stride
 class StrideTrial(unittest.TestCase):
  def test_certified_surfaces_match_source_and_do_not_confuse_grade_with_material(self):
-  source=json.loads((OUT/'source.json').read_text());self.assertEqual(source['maps'],stride.surfaces());self.assertEqual(len(source['maps']),13)
+  source=json.loads((OUT/'source.json').read_text());self.assertEqual(source['maps'],stride.surfaces(historical=True));self.assertEqual(len(source['maps']),13)
   for row in source['maps']:
-   d=json.loads((ROOT/'Assets/PocketCaravan/Maps'/(row['id']+'.json')).read_text());self.assertEqual(len(row['data']),row['w']*row['h']);self.assertEqual(row['counts'].get('S',0),0)
+   d=map_at(ROOT/'Assets/PocketCaravan/Maps'/(row['id']+'.json'));self.assertEqual(len(row['data']),row['w']*row['h']);self.assertEqual(row['counts'].get('S',0),0)
    for i,t in enumerate(row['data']):
     x,y=i%row['w'],i//row['w'];j=(row['h']-y-1)*row['w']+x
     if t=='W':self.assertFalse(d['blocked'][j]);self.assertGreater(d['road'][j],0)
   naru=next(m for m in source['maps']if m['id']=='Naru');self.assertEqual(naru['counts']['W'],35)
-  d=json.loads((ROOT/'Assets/PocketCaravan/Maps/Naru.json').read_text());self.assertTrue(any(d['road'][i]==2 and naru['data'][(d['h']-i//d['w']-1)*d['w']+i%d['w']]=='D'for i in range(len(d['road']))))
+  d=map_at(ROOT/'Assets/PocketCaravan/Maps/Naru.json');self.assertTrue(any(d['road'][i]==2 and naru['data'][(d['h']-i//d['w']-1)*d['w']+i%d['w']]=='D'for i in range(len(d['road']))))
  def test_material_foley_is_mono_pcm_without_clipping_or_edge_click(self):
   source=json.loads((OUT/'source.json').read_text());self.assertEqual([c['kind']for c in source['audio']],list(stride.KINDS));fingerprints=set()
   for clip in source['audio']:
@@ -26,7 +29,7 @@ class StrideTrial(unittest.TestCase):
   self.assertEqual(len(hashes),5)
  def test_approved_production_binding_preserves_sources_and_audio(self):
   approval=json.loads((OUT/'approval.json').read_text());self.assertEqual(approval['status'],'approved')
-  target=ROOT/'Assets/PocketCaravan/Resources/Goryeo/Stride';config=json.loads((target/'Surfaces.json').read_text());self.assertEqual(config['status'],'approved')
+  target=ROOT/'Assets/PocketCaravan/Resources/Goryeo/Stride';config=resource_at(target/'Surfaces.json');self.assertEqual(config['status'],'approved')
   source=json.loads((OUT/'source.json').read_text());self.assertEqual(config['maps'],[{k:m[k]for k in ('id','data','w','h')}for m in source['maps']])
   for kind in stride.KINDS:
    name=kind+'.wav';raw=(target/name).read_bytes();self.assertEqual(raw,(OUT/'Native'/name).read_bytes());self.assertEqual(hashlib.sha256(raw).hexdigest(),approval['sha256'][name])

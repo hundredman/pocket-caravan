@@ -30,7 +30,7 @@ namespace PocketCaravan
             if (gm == null) return;
             UIStyle.Begin();
             GUI.depth = logOpen ? -10 : 0;
-            Notify.Draw();
+            Notify.Draw(GoryeoIntro.ReservedGuideRect);
             if (logOpen) DrawLog(gm.Quests); else DrawTracker(gm.Quests);
         }
 

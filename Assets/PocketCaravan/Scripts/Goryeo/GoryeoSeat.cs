@@ -102,7 +102,7 @@ namespace PocketCaravan
         public static int InstallApproved(Config config,Art[] drawings,Sprite[] fire)
         {
             var map=MapRoot.Current;var pc=PlayerController.Instance;var road=map!=null?map.GetComponent<RoadGrid>():null;
-            if(map==null||map.previewOnly||map.mapId!="transit_central_approach"||road==null||road.width!=71||road.height!=87||
+            if(map==null||map.previewOnly||map.mapId!="transit_central_approach"||road==null||!((road.width==71&&road.height==87)||GoryeoBoundaryLayout.Matches(map.mapId,road.width,road.height))||
                pc==null||pc.gameObject.scene!=map.gameObject.scene||config==null||config.status!="approved"||config.seats==null||config.seats.Length!=3||
                !ValidArt(drawings)||drawings.Length!=4||fire==null||fire.Length!=4)return 0;
             if(map.GetComponentsInChildren<GoryeoSeat>(true).Length>0)return 0;

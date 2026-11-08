@@ -1,14 +1,17 @@
 """A3 review only: sourced living ambience and authored anchors, never writes production assets."""
 from pathlib import Path
 import json,subprocess,wave,math,array
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'WorldLayout'))
+from t3_history import map_at
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'ArtReview/Goryeo-Atmosphere-A3-20261105'
 KINDS=('crowd','chicken','cow','dog','bird');RATE=22050
 MAPS=('Naru','Gaegyeong','Dakmok','goryeo_songak','goryeo_jangdan','transit_woodtown','transit_ferry','transit_southport','transit_crossroads','transit_wetroad','transit_pass','transit_central_approach','transit_south_inland')
-def maps():
+def maps(historical=False):
  result=[]
  for id in MAPS:
-  d=json.loads((ROOT/'Assets/PocketCaravan/Maps'/f'{id}.json').read_text());w,h=d['w'],d['h'];points=[]
+  d=(map_at((ROOT/'Assets/PocketCaravan/Maps'/f'{id}.json')) if historical else json.loads((ROOT/'Assets/PocketCaravan/Maps'/f'{id}.json').read_text()));w,h=d['w'],d['h'];points=[]
   def point(kind,x,y,reason):
    if kind in ('chicken','dog','cow'):
     land=[(xx,yy)for yy in range(h)for xx in range(w)if d['reachable'][yy*w+xx]and not d['blocked'][yy*w+xx]and not d['water'][yy*w+xx]]

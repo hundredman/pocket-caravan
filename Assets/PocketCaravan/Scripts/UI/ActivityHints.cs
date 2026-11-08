@@ -34,7 +34,6 @@ namespace PocketCaravan
         string lastMap;
         float announceAt = -1f;
         Sprite star;
-        GoryeoIntro goryeoIntro;
 
         static string Map => MapRoot.Current != null ? MapRoot.Current.mapId : null;
 
@@ -81,7 +80,7 @@ namespace PocketCaravan
             foreach (var s in spots) if (!s.done && !names.Contains(s.name)) names.Add(s.name);
             if (names.Count == 0) return;
             gm.SetMemo(key, gm.Clock.day);
-            Notify.Show("여기서 할 수 있는 것: " + string.Join(" · ", names) + "  (별 표시를 찾아가 보자)", 5f);
+            Notify.Show("여기서 할 수 있는 것\n" + string.Join(" · ", names) + "\n(★ 표시를 찾아가 보자)", 5f);   // 11/07(기우) 긴 문장이 어중간하게 접혀서 세 줄로
         }
 
         public Rect EdgeRect { get; private set; }
@@ -111,7 +110,15 @@ namespace PocketCaravan
         }
 
         static GUIStyle line;
-        static GUIStyle Line => line ?? (line = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow });
+        static GUIStyle Line
+        {
+            get
+            {
+                if(line==null||line.font!=UIStyle.RegularFont||line.fontSize!=UIStyle.BodySize)
+                    line=new GUIStyle(UIStyle.CenterRich) { wordWrap=false, clipping=TextClipping.Overflow };
+                return line;
+            }
+        }
 
         Rect Badge(Vector2 at, string text, bool withStar, bool screenEdge=false)
         {
@@ -121,11 +128,8 @@ namespace PocketCaravan
             {
                 r.x=Mathf.Clamp(r.x,4,Mathf.Max(4,UIStyle.VirtualWidth-r.width-4));
                 r.y=Mathf.Clamp(r.y,4,Mathf.Max(4,UIStyle.VirtualHeight-r.height-4));
-                var gm=GameManager.I;
-                if(goryeoIntro==null)goryeoIntro=FindFirstObjectByType<GoryeoIntro>();
-                var intro=goryeoIntro;
-                if(gm!=null&&intro!=null&&intro.isActiveAndEnabled&&GoryeoIntro.Active&&gm.Player.origin!=null&&gm.Player.origin.id=="goryeo"&&GoryeoTravelTransition.RegionOf(Map)!=null&&r.Overlaps(intro.GuideRect))
-                    r.y=Mathf.Max(4,intro.GuideRect.yMin-r.height-4);
+                var guide=GoryeoIntro.ReservedGuideRect;
+                if(guide.width>0&&r.Overlaps(guide))r.y=Mathf.Max(4,guide.yMin-r.height-4);
             }
             GUI.Box(r, GUIContent.none, UIStyle.Box);
             if (withStar && star != null) DrawSprite(star, new Rect(r.x + 3f, r.y + 2f, 12f, 12f));

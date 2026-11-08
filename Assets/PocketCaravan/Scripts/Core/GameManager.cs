@@ -59,7 +59,7 @@ namespace PocketCaravan
 
         bool TryApplySave(SaveData data)
         {
-            try { Apply(data); return true; }
+            try { GoryeoBoundaryLayout.Migrate(data); Apply(data); return true; }
             catch (System.Exception e) { BlockFailedLoad(e.Message); return false; }
         }
 
@@ -298,10 +298,10 @@ namespace PocketCaravan
                 {
                     Clock.Advance(map.travelHours);
                     if(transition == null || transition.ShowArrivalNotice)
-                    { if(UIStyle.CrispRegion)Notify.Location(map.displayName,3f);else Notify.Show(map.displayName,3f); }
+                    { if(GoryeoTravelTransition.RegionOf(map.mapId)!=null)Notify.Location(map.displayName,3f);else Notify.Show(map.displayName,3f); }
                 }
                 else if(transition == null || transition.ShowArrivalNotice)
-                { if(UIStyle.CrispRegion)Notify.Location(map.displayName,2.5f);else Notify.Show(map.displayName,2.5f); }
+                { if(GoryeoTravelTransition.RegionOf(map.mapId)!=null)Notify.Location(map.displayName,2.5f);else Notify.Show(map.displayName,2.5f); }
                 GameEvents.RaiseMapEntered(map.mapId);
                 sun = null;
                 foreach (var light in FindObjectsByType<UnityEngine.Rendering.Universal.Light2D>(FindObjectsSortMode.None))

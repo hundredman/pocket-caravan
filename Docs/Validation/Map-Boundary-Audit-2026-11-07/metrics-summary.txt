@@ -1,0 +1,156 @@
+{
+  "ownExitObjects": 1189,
+  "ownInteriorExitObjects": 1100,
+  "starterComparison": {
+    "goryeo": {
+      "ids": [
+        "Dakmok",
+        "Gaegyeong",
+        "Naru",
+        "goryeo_jangdan",
+        "goryeo_songak"
+      ],
+      "count": 5,
+      "widthRange": [
+        61,
+        93
+      ],
+      "heightRange": [
+        76,
+        98
+      ],
+      "medianBoundingArea": 6216,
+      "medianUnblockedCells": 2267,
+      "medianB1AssignedArea": 3997,
+      "exitObjects": 367,
+      "directionalInsetExits": 335
+    },
+    "venice": {
+      "ids": [
+        "venice_burano",
+        "venice_chioggia",
+        "venice_murano",
+        "venice_rialto",
+        "venice_santerasmo"
+      ],
+      "count": 5,
+      "widthRange": [
+        57,
+        75
+      ],
+      "heightRange": [
+        56,
+        84
+      ],
+      "medianBoundingArea": 3477,
+      "medianUnblockedCells": 1118,
+      "medianB1AssignedArea": null,
+      "exitObjects": 17,
+      "directionalInsetExits": 0
+    },
+    "north": {
+      "ids": [
+        "north_birka",
+        "north_herd",
+        "north_hunter",
+        "north_laugar",
+        "north_naru"
+      ],
+      "count": 5,
+      "widthRange": [
+        56,
+        70
+      ],
+      "heightRange": [
+        78,
+        95
+      ],
+      "medianBoundingArea": 5440,
+      "medianUnblockedCells": 2211,
+      "medianB1AssignedArea": null,
+      "exitObjects": 30,
+      "directionalInsetExits": 4
+    },
+    "arabia": {
+      "ids": [
+        "arabia_ahsa",
+        "arabia_jeddah",
+        "arabia_sanaa",
+        "arabia_taiz",
+        "arabia_zabid"
+      ],
+      "count": 5,
+      "widthRange": [
+        64,
+        64
+      ],
+      "heightRange": [
+        44,
+        44
+      ],
+      "medianBoundingArea": 2816,
+      "medianUnblockedCells": 2136,
+      "medianB1AssignedArea": null,
+      "exitObjects": 40,
+      "directionalInsetExits": 0
+    }
+  },
+  "samples": [
+    {
+      "mapId": "Naru",
+      "target": "goryeo_jangdan",
+      "edge": "N",
+      "x": 21,
+      "y": 32,
+      "w": 1,
+      "h": 1,
+      "insetCells": 32,
+      "onRoad": true,
+      "spawnDistance": 16,
+      "probeX": 21,
+      "probeY": 32
+    },
+    {
+      "mapId": "goryeo_songak",
+      "target": "Dakmok",
+      "edge": "N",
+      "x": 61,
+      "y": 37,
+      "w": 1,
+      "h": 1,
+      "insetCells": 37,
+      "onRoad": true,
+      "spawnDistance": 36,
+      "probeX": 61,
+      "probeY": 37
+    },
+    {
+      "mapId": "north_birka",
+      "target": "north_naru",
+      "edge": "E",
+      "x": 61,
+      "y": 42,
+      "w": 1,
+      "h": 2,
+      "insetCells": 0,
+      "onRoad": true,
+      "spawnDistance": 28,
+      "probeX": 61,
+      "probeY": 43
+    },
+    {
+      "mapId": "venice_rialto",
+      "target": "venice_santerasmo",
+      "edge": "W",
+      "x": 0,
+      "y": 25,
+      "w": 1,
+      "h": 5,
+      "insetCells": 0,
+      "onRoad": true,
+      "spawnDistance": 40,
+      "probeX": 0,
+      "probeY": 27
+    }
+  ]
+}

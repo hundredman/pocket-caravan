@@ -11,6 +11,20 @@ ID='e3_wetroad_flood'
 def attach(data,placement_id=ID):
  if data['id']!='transit_wetroad':return copy.deepcopy(data)
  if not placement_id.startswith('e3_'):raise ValueError('Existing schedule requires e3_ placement ID')
+ if data.get('boundaryLayoutVersion')==3:
+  sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
+  from t3_history import data as baseline
+  b=baseline()['maps']['transit_wetroad'];expected=attach(b,placement_id)['terrainFloods'];expected=copy.deepcopy(expected)
+  for p in expected:
+   for c in p['cells']:
+    c['x']+=b['terrainX']-data['terrainX'];c['y']+=b['terrainY']-data['terrainY']
+    x,y=c['x'],c['y']
+    if not(0<=x<data['w']and 0<=y<data['h']):raise ValueError('Flood crosses approved scene border')
+    i=y*data['w']+x
+    if data['palette'][data['ground'][i]]!=c['dryGround']or data['palette'][data['deco'][i]]!=c['dryDeco']or bool(data['blocked'][i])!=c['dryBlocked']or data['road'][i]!=c['dryGrade']:raise ValueError('T3 flood dry geometry changed')
+  old=data.get('terrainFloods',[])
+  if old and old!=expected:raise ValueError('T3 flood recipe changed')
+  result=copy.deepcopy(data);result['terrainFloods']=expected;return result
  if (data['w'],data['h'],data.get('terrainX'),data.get('terrainY'))!=(78,64,86,-82):raise ValueError('Map bounds changed: revalidate approved flood geometry')
  if any(p.get('definitionId')=='river_flood'for p in data.get('obstacles',[])):raise ValueError('Existing sprite flood placement: owner must resolve duplication first')
  old=data.get('terrainFloods',[])

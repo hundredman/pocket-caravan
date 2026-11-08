@@ -8,7 +8,10 @@ except ImportError:HAVE=False
 @unittest.skipUnless(HAVE,'numpy/scipy not installed')
 class FloodBinding(unittest.TestCase):
  @classmethod
- def setUpClass(cls):cls.source=json.loads((ROOT/'Assets/PocketCaravan/Maps/transit_wetroad.json').read_text())
+ def setUpClass(cls):
+  sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
+  from t3_history import map_at
+  cls.source=map_at(ROOT/'Assets/PocketCaravan/Maps/transit_wetroad.json')
  def test_binding_preserves_existing_fields_and_ids(self):
   source=copy.deepcopy(self.source);bound=attach(source)
   for key in source:self.assertEqual(bound[key],source[key],key)
@@ -43,6 +46,7 @@ class FloodBinding(unittest.TestCase):
    subprocess.run([sys.executable,str(ROOT/'Tools/WorldLayout/m4_export.py'),'--bind-approved-flood','--preview-root',folder],check=True,capture_output=True)
    generated=json.loads((Path(folder)/'Maps/transit_wetroad.json').read_text())
    expected=attach(self.source);expected['previewOnly']=True
+   live=json.loads(source.read_text());expected=attach(live);expected['previewOnly']=True
    self.assertEqual(generated,expected);self.assertTrue(generated['previewOnly']);self.assertEqual(source.read_bytes(),before)
  def test_other_maps_unchanged(self):
   for path in (ROOT/'Assets/PocketCaravan/Maps').glob('*.json'):

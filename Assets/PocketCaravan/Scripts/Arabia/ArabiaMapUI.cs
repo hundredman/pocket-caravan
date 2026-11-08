@@ -56,6 +56,15 @@ namespace PocketCaravan
             UIState.Release();
         }
 
+        /// <summary>옛 길잡이 탑에서 올려다볼 때 (ArabiaDunesLife, 11/08). M키로 연 것과 같다</summary>
+        public static bool OpenFromTower()
+        {
+            var ui = GameManager.I != null ? GameManager.I.GetComponent<ArabiaMapUI>() : null;
+            if (ui == null || ui.open || UIState.Blocking || GameManager.I.IsTravelling) return false;
+            ui.open = true; UIState.Blocking = true; Sfx.Play("open");
+            return true;
+        }
+
         void OnGUI()
         {
             if (!open || GameManager.I == null) return;

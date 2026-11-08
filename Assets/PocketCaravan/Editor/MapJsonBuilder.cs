@@ -59,7 +59,7 @@ namespace PocketCaravan.EditorTools
         class MapFile
         {
             public string id, name;
-            public int w, h, hours, terrainX, terrainY, legacyHeight;
+            public int w, h, hours, terrainX, terrainY, legacyHeight, boundaryLayoutVersion;
             public bool previewOnly;
             public int[] ground, deco, obj, high, road, blocked;
             public string[] palette;
@@ -264,6 +264,7 @@ namespace PocketCaravan.EditorTools
             var map = gridGo.AddComponent<MapRoot>();
             map.mapId = f.id;
             map.previewOnly = f.previewOnly;
+            map.boundaryLayoutVersion = f.boundaryLayoutVersion;
             map.travelHours = f.hours;
             map.displayName = f.name;
             map.ground = ground; map.road = null; map.blocked = blocked;
@@ -365,10 +366,19 @@ namespace PocketCaravan.EditorTools
                         npc.AddComponent<TownMarket>().town = t;
                         break;
                     case "workshop":
-                        if(string.IsNullOrEmpty(o.type)||!o.type.StartsWith("goryeo_",StringComparison.Ordinal)||Crafting.Find(o.type)==null)
-                            throw new InvalidDataException("고려 공방 레시피 없음: "+o.type);
-                        var ws=new GameObject(o.name).AddComponent<GoryeoWorkshopSpot>();ws.transform.SetParent(objects);ws.transform.position=center;
-                        ws.recipeId=o.type;ws.townId=o.town;ws.blocksMovement=false;
+                        if(string.IsNullOrEmpty(o.type)||Crafting.Find(o.type)==null)
+                            throw new InvalidDataException("공방 레시피 없음: "+o.type);
+                        if(o.type.StartsWith("goryeo_",StringComparison.Ordinal))
+                        {   // 고려는 하루 상한이 있는 전용 자리
+                            var ws=new GameObject(o.name).AddComponent<GoryeoWorkshopSpot>();ws.transform.SetParent(objects);ws.transform.position=center;
+                            ws.recipeId=o.type;ws.townId=o.town;ws.blocksMovement=false;
+                        }
+                        else
+                        {   // 11/07 (기우) 다른 지역: 일꾼 그림(character) + 공용 WorkshopSpot
+                            var wshop=string.IsNullOrEmpty(o.character)?new GameObject(o.name):Character(o.name,o.character,center,objects);
+                            if(string.IsNullOrEmpty(o.character)){wshop.transform.SetParent(objects);wshop.transform.position=center;}
+                            var ws=wshop.AddComponent<WorkshopSpot>();ws.recipeId=o.type;
+                        }
                         break;
                     case "talker":
                         var tk = Character(o.name, o.character, center, objects).AddComponent<TalkNpc>();
@@ -378,6 +388,10 @@ namespace PocketCaravan.EditorTools
                         var sg = new GameObject("이정표").AddComponent<TalkNpc>();
                         sg.transform.SetParent(objects); sg.transform.position = center;
                         sg.displayName = "이정표"; sg.lines = new[] { o.text }; sg.blocksMovement = false; // 칸은 소품 타일이 막음
+                        if(f.boundaryLayoutVersion==3 && o.sheet=="Assets/PocketCaravan/Art/Goryeo/Markets/sign.png") {
+                            var visual=new GameObject("승인된 이정표");visual.transform.SetParent(sg.transform,false);visual.transform.localPosition=new Vector3(-.5f,-.5f,0);
+                            var renderer=visual.AddComponent<SpriteRenderer>();renderer.sprite=AssetDatabase.LoadAssetAtPath<Sprite>(o.sheet);renderer.sortingOrder=5;
+                        }
                         break;
                     case "board":
                         var bd = new GameObject("의뢰 게시판").AddComponent<ContractBoard>();

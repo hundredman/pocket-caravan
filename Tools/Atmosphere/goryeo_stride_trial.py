@@ -1,17 +1,20 @@
 """A4 review only: source-certified walking surfaces and material-specific CC0 foley."""
 from pathlib import Path
 import array,collections,json,math,random,re,shutil,subprocess,wave
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'WorldLayout'))
+from t3_history import map_at
 ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'ArtReview/Goryeo-Atmosphere-A4-v3-20261105'
 KINDS=('dirt','grass','stone','wood','splash');RATE=22050
 def floor_kind(name):
  m=re.search(r'floor[:_](\d+)[:_](\d+)',name)
  if not m:return None
  row=int(m[2]);return 'D'if 7<=row<=10 else 'G'if row>=11 else 'S'
-def surfaces():
+def surfaces(historical=False):
  cert=json.loads((ROOT/'Assets/PocketCaravan/Art/Baked/m4-composites.json').read_text())['tiles'];maps=[]
  ids=['Naru','Gaegyeong','Dakmok','goryeo_songak','goryeo_jangdan','transit_woodtown','transit_ferry','transit_southport','transit_crossroads','transit_wetroad','transit_pass','transit_central_approach','transit_south_inland']
  for mid in ids:
-  d=json.loads((ROOT/'Assets/PocketCaravan/Maps'/(mid+'.json')).read_text());w,h=d['w'],d['h'];data=['O']*(w*h);examples={}
+  d=(map_at((ROOT/'Assets/PocketCaravan/Maps'/(mid+'.json'))) if historical else json.loads((ROOT/'Assets/PocketCaravan/Maps'/(mid+'.json')).read_text()));w,h=d['w'],d['h'];data=['O']*(w*h);examples={}
   for i,t in enumerate(d['ground']):
    if not t or d['blocked'][i]:continue
    name=d['palette'][t];kind=floor_kind(name)
