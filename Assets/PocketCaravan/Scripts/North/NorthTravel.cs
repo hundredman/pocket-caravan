@@ -4,7 +4,8 @@ namespace PocketCaravan
 {
     /// <summary>
     /// 북유럽 이동 (10/24): 날씨와 순록 썰매가 걷는 속도에 주는 영향, 그리고 썰매 모습·방울 소리·눈보라 자국.
-    /// 공용 코드는 고치지 않고, PlayerMotor.walkSpeed(기본 3.8칸/초)에 배율만 곱했다가 북유럽을 벗어나면 되돌린다.
+    /// 2026-11-08 (은샘, 기우 님께 전달): walkSpeed를 직접 바꾸지 않고 공용 SpeedMods "north_travel"에 배율만 넣는다.
+    /// (예전엔 매 프레임 walkSpeed를 덮어써서 다른 지역 배율 — 베네치아 아쿠아 알타 — 이 지워졌다.)
     /// - 걷기: 함박눈 0.92배, 눈보라 0.8배 (중앙 구역은 날씨 자체가 약해짐)
     /// - 순록 썰매(north_sled): 함박눈 1배, 눈보라 0.94배 → "눈보라 속 순록 썰매". 눈 없는 땅에선 느려짐
     ///   (중앙 가운데 줄 0.9배, 북문 큰길 0.8배, 다른 나라 0.7배). 길 등급별 속도는 VehicleData가 맡음 (눈밭 1.45배)
@@ -13,7 +14,6 @@ namespace PocketCaravan
     public class NorthTravel : MonoBehaviour
     {
         PlayerMotor motor;
-        float baseSpeed;
         Transform sled;
         SpriteRenderer sledSr;
         Sprite sledV, sledH;   // 11/01 세로(위에서 본, 앞=위)·가로(옆모습, 앞=오른쪽) 그림. 돌리지 않고 방향마다 골라 쓴다
@@ -65,13 +65,13 @@ namespace PocketCaravan
         void Update()
         {
             var pc = PlayerController.Instance;
-            if (pc == null || GameManager.I == null) { motor = null; return; }
-            if (pc.Motor != motor) { motor = pc.Motor; baseSpeed = motor.walkSpeed; BuildSled(pc.transform); }
-            motor.walkSpeed = baseSpeed * Factor();
+            if (pc == null || GameManager.I == null) { motor = null; SpeedMods.Clear("north_travel"); return; }
+            if (pc.Motor != motor) { motor = pc.Motor; BuildSled(pc.transform); }
+            SpeedMods.Set("north_travel", Factor());
             UpdateSled(pc);
         }
 
-        void OnDisable() { if (motor != null) motor.walkSpeed = baseSpeed; }
+        void OnDisable() => SpeedMods.Clear("north_travel");
 
         void BuildSled(Transform player)
         {

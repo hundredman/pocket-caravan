@@ -287,7 +287,7 @@ namespace PocketCaravan.EditorTools
                     step = 10; waitUntil = now + .8f; break;
                 }
                 case 10:
-                    report.AppendLine($"   물 찬 칸 걸음 속도 {p.Motor.walkSpeed:0.00}");
+                    report.AppendLine($"   물 찬 칸 걸음 배율 {SpeedMods.Get("venice_acqua_alta"):0.00} (기본 걸음 {p.Motor.walkSpeed:0.00})");
                     Shot("life_8_acqua_alta");
                     for (int d = 1; d < 60; d++)            // 길 잃은 순례자: 맑지 않은 시각을 찾는다
                     {
