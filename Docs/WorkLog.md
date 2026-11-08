@@ -440,3 +440,5 @@
 - 2026-11-08 Codex T3 통합 준비(이 커밋): 사용자 “좋아. 일단 올리자”로 업로드/통합 진행. 최신integration c803224e3을238095b2a로 충돌없이 병합·아라비아/온라인11단계보존·타지역전용/DB/서버추가수정0. 병합후Python424/23skip·세계883/0오류·Unity컴파일0·저장이주143720·담당17쌍34방향/나룻배3구간201확인 재실행. 이전UI4승인분도 함께region/goryeo→integration PR대상. 실온라인/사람체감/Q1수동/FPS/빌드미검사·개인설정/3D제외. Docs/Validation/T3-Integration-2026-11-08/README.md.
 
 - 2026-11-08 Codex PR29 통합 완료(이 커밋): 사용자 업로드 지시로 region/goryeo push(d27e43863), PR#29 GitHub검사2개SUCCESS/MERGEABLE/CLEAN 확인후integration병합 f356ed767(01:47 KST). 로컬원격integration까지FF·최신main포함·개인패키지/설정/3D보존. 공용UI통일+T3경계/저장이주반영·타지역전용/DB/서버변경0. 최종원격상태/사후공지초안저장·카톡실제발송안함. 실온라인/사람체감/Q1전체수동/FPS/빌드미검사. Docs/Validation/T3-Integration-2026-11-08/github.json, Docs/Goryeo/Team-Notice-PR29.md.
+
+- 2026-11-08 Codex 최신수신/이름화면점검(이 커밋): integration e9bfb03f1→bee640a09 병합·최신main포함·동일Unity프로젝트확인. 이름/접속키/기억조건으로 자동로그인성공시입력생략, 비시작/지역시험씬은첫화면생략하는기존정책확인. 서버접속억제/SaveOFF 1회메모리관찰로나루로그인열림·개경index30생략확인·제품코드미수정. 424/23skip·세계883/0·콘솔0·개인저장9/로그인설정SHA불변. 붉은돌DB기등록확인·아라비아/1메뉴실행/실서버로그인/아라비아전체플레이/FPS/빌드미실행·원격push없음. 팀공지형식은사용자예시대로실행메뉴/추가내용/공용파일중심으로규칙반영. Docs/Validation/Startup-Audit-2026-11-08/README.md.
