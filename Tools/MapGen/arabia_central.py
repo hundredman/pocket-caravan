@@ -419,6 +419,50 @@ def dress(P):
         P.put(['drawn_datePalm', 'drawn_datePalm2', 'drawn_datePalm3'][x % 3], x, y, force=True)
     T(108, 146, '오아시스 물지기', 'arabia_npc_child_tall', '사막 한가운데라도 여긴 물이 마르지 않아요.',
       '서쪽 모래 언덕 사이에 숨은 샘이 하나 더 있대요. 언덕 사이 좁은 틈을 찾아보세요.')
+    # 11/08 (기우) 오아시스가 휑해서: 쉬는 낙타·물항아리·줄무늬 천막·관목·바위로 대상 쉼터 느낌
+    for name, x, y, kw in [
+        ('drawn_camelRest', 103, 140, dict(foot=1)), ('drawn_camelRest', 121, 143, dict(foot=1)),
+        ('drawn_tentStripe', 118, 136, dict(foot=2)),
+        ('drawn_jar', 103, 144, dict(foot=1)), ('drawn_jarSmall', 104, 145, dict(foot=1)),
+        ('drawn_acaciaRound', 98, 145, dict()), ('drawn_acaciaRound', 127, 143, dict()),
+        ('nature_palmYoung', 116, 146, dict()), ('nature_palmYoung', 107, 136, dict()),
+        ('drawn_rocks', 95, 141, dict()), ('drawn_boulderSmall', 128, 147, dict()),
+        ('drawn_sage', 100, 139, dict(foot=0)), ('drawn_sage', 125, 139, dict(foot=0)), ('drawn_tuft', 103, 149, dict(foot=0)),
+        ('drawn_tuft2', 120, 148, dict(foot=0)), ('drawn_tuft', 96, 142, dict(foot=0)), ('drawn_pebbles', 110, 145, dict(foot=0)),
+        ('drawn_pebbles', 117, 145, dict(foot=0)),
+        # 오아시스 둘레 더: 야자 셋, 서 있는 낙타, 천막 옆 등불·항아리
+        ('drawn_datePalm3', 101, 148, dict()), ('drawn_datePalm2', 124, 140, dict()), ('drawn_datePalm', 112, 148, dict()),
+        ('drawn_camel', 124, 145, dict(foot=1)), ('prop_lantern', 121, 137, dict(foot=1)), ('drawn_jar', 117, 139, dict(foot=1)),
+        ('building_tent', 96, 138, dict(foot=2)),
+        # 사막 전체: 길가 바위·마른 풀, 서쪽에 말라붙은 우물 터(돌담)
+        ('drawn_boulder', 30, 147, dict()), ('drawn_boulder', 55, 142, dict()), ('drawn_boulder', 78, 150, dict()), ('drawn_boulder', 92, 128, dict()),
+        ('drawn_boulder', 135, 147, dict()), ('drawn_boulder', 140, 128, dict()), ('drawn_boulder', 110, 121, dict()), ('drawn_boulder', 125, 149, dict()),
+        ('drawn_boulderSmall', 85, 148, dict()), ('drawn_boulderSmall', 60, 148, dict()), ('drawn_boulderSmall', 100, 125, dict()), ('drawn_boulderSmall', 145, 149, dict()),
+        ('drawn_rocks', 36, 148, dict()), ('drawn_rocks', 118, 128, dict()), ('drawn_rocks', 155, 142, dict()), ('drawn_rocks', 72, 147, dict()),
+        ('drawn_rockWall', 57, 147, dict()), ('drawn_rockWall', 64, 146, dict()), ('drawn_well', 66, 149, dict(foot=1)),
+        ('drawn_sage', 40, 148, dict(foot=0)), ('drawn_sage', 75, 146, dict(foot=0)), ('drawn_sage', 95, 149, dict(foot=0)), ('drawn_sage', 130, 134, dict(foot=0)),
+        ('drawn_sage', 158, 135, dict(foot=0)), ('drawn_sage', 105, 118, dict(foot=0)),
+        ('drawn_tuft', 27, 149, dict(foot=0)), ('drawn_tuft', 50, 150, dict(foot=0)), ('drawn_tuft', 88, 140, dict(foot=0)), ('drawn_tuft', 120, 148, dict(foot=0)),
+        ('drawn_tuft2', 33, 150, dict(foot=0)), ('drawn_tuft2', 68, 144, dict(foot=0)), ('drawn_tuft2', 137, 140, dict(foot=0)), ('drawn_tuft2', 150, 123, dict(foot=0)),
+        ('drawn_tuft2', 98, 150, dict(foot=0)), ('drawn_tuft', 115, 125, dict(foot=0)),
+    ]:
+        if P.has(x, y) and not P.put(name, x, y, force=True, **kw):   # 이 맵 창 안인데도 못 놓은 것만 알림
+            print('WARN dunes 소품 자리 없음', name, x, y)
+    T(119, 139, '대상 길잡이 바심', 'arabia_npc_bedouin_tall',
+      '오아시스에서 하룻밤 묵고 새벽에 떠나는 게 사막의 법이지. 낮의 모래바람은 짐을 다 날려 버리거든.',
+      '서쪽 돌담은 옛날 우물 터야. 말라붙은 지 오래지만, 대상들은 아직도 저길 보고 길을 잡아.')
+    # 11/08 이정표 셋: 오아시스 남쪽 · 마른 우물 터 · 숨은 샘
+    P.sign(110, 147, '모래바람 오아시스\n북: 옛 길잡이 탑을 지나 만국 장터 · 동: 와디 따라 붉은 협곡\n서: 마른 우물 터 → 모래 언덕 너머 숨은 샘 · 남: 큰길 옛길')
+    P.sign(70, 148, '마른 우물 터\n동: 모래바람 오아시스 (반나절) · 서: 모래 언덕 사이로 숨은 샘\n북서: 서쪽 포도밭 언덕')
+    # 11/08 출구마다 이정표: 북서 포도밭 언덕 · 북 만국 장터 · 동 붉은 협곡(위·아래)
+    P.sign(66, 115, '북쪽 길 — 서쪽 포도밭 언덕\n이 길로 올라가면 포도밭과 올리브 언덕. 베네치아 쪽 본토로 이어진다\n남동: 모래바람 오아시스')
+    P.sign(121, 115, '북쪽 길 — 만국 장터\n와디를 건너 북으로 가면 만국 장터 대광장\n남: 옛 길잡이 탑 · 모래바람 오아시스')
+    P.sign(163, 123, '동쪽 와디 길 — 붉은 바위 협곡\n마른 강바닥을 따라가면 붉은 협곡. 낙석 조심\n서: 길잡이 탑 · 오아시스')
+    P.sign(160, 148, '동쪽 좁은 틈 — 협곡 아랫길\n바위 틈으로 들어가면 협곡 아래쪽으로 빠진다\n서: 사나 북문 밖 광장')
+    P.sign(54, 148, '숨은 샘\n지도에 없는 샘. 동: 마른 우물 터 → 오아시스')
+    T(68, 150, '마른 우물의 노인', 'arabia_npc_scholar_tall',
+      '이 우물이 마르기 전엔 여기가 쉼터였지. 지금은 돌담만 남았어.',
+      '동쪽 오아시스까지는 반나절. 물주머니는 채웠나?')
     P.put('building_tent', 150, 135, foot=2)
     P.put('drawn_camelRest', 154, 137, foot=1)
     T(152, 139, '쉬어 가는 대상', 'arabia_npc_bedouin_tall', '장터로 곧장 가려면 탑을 지나 북쪽으로. 짐이 무거우면 쉬었다 가게.')
@@ -480,6 +524,31 @@ def dress(P):
         P.put('drawn_redRockWall', x, y, foot=1)
     P.put('drawn_crates', 270, 134, foot=1)
     P.put('drawn_jar', 259, 136, foot=1)
+    # 11/08 (기우) 협곡 채우기: 마을 사람 셋 + 출구 이정표 넷
+    T(260, 133, '협곡 마을 아이', 'arabia_npc_child_tall',
+      '아치 위에 올라가면 협곡이 다 보여요! 할머니는 위험하다고 하지만요.',
+      '밤에는 바위가 식으면서 딱딱 소리가 나요. 무서운 거 아니에요.')
+    T(270, 136, '협곡 양치기', 'arabia_npc_bedouin_tall',
+      '염소들은 바위 틈 풀을 잘도 찾아 먹지. 나는 그늘만 찾고.',
+      '낙석이 길을 막으면 양들이 먼저 알아. 울음소리가 달라지거든.')
+    T(268, 141, '붉은 돌 캐는 사람', 'arabia_npc_weaver_tall',
+      '이 붉은 돌을 갈면 염료가 돼. 타이즈 염색 장인이 사 가.',
+      '협곡 아랫길 바위는 내가 치울 수 있는 크기가 아니야. 수레 있는 사람이 와야지.')
+    # 11/08 협곡 마을 생활 소품 (사람 수는 그대로)
+    for name, x, y, kw in [
+        ('drawn_donkey', 251, 137, dict(foot=1)), ('drawn_jar', 256, 134, dict(foot=1)), ('drawn_jarSmall', 257, 135, dict(foot=1)),
+        ('drawn_pottedOrange', 262, 131, dict(foot=1)), ('drawn_pottedOrange', 267, 131, dict(foot=1)),
+        ('prop_lantern', 264, 132, dict(foot=1)), ('drawn_crates', 272, 141, dict(foot=1)), ('drawn_jar', 266, 141, dict(foot=1)),
+        ('drawn_redBoulderSmall', 254, 138, dict()), ('drawn_redBoulderSmall', 255, 131, dict()),
+        ('drawn_sage', 253, 141, dict(foot=0)), ('drawn_sage', 275, 130, dict(foot=0)), ('nature_palmYoung', 250, 132, dict()),
+        ('drawn_tuft', 258, 140, dict(foot=0)), ('drawn_tuft2', 271, 132, dict(foot=0)),
+    ]:
+        if P.has(x, y) and not P.put(name, x, y, force=True, **kw):
+            print('WARN canyon 소품 자리 없음', name, x, y)
+    P.sign(172, 134, '서쪽 와디 길 — 모래바람 오아시스\n마른 강을 거슬러 서쪽으로 가면 옛 길잡이 탑과 오아시스\n동: 붉은 바위 아치 · 협곡 마을')
+    P.sign(172, 153, '좁은 틈 — 모래바람 오아시스 남쪽\n바위 틈을 빠져나가면 사나 북문 밖 광장 쪽\n동: 협곡 아랫길 (낙석)')
+    P.sign(205, 115, '북쪽 오르막 — 동쪽 고원\n올라가면 소나무 숲과 고원 마을\n북서: 만국 장터 · 남: 붉은 바위 아치')
+    P.sign(216, 156, '남쪽 협곡길 — 자비드\n협곡을 따라 내려가면 자비드 곡물 장터\n북: 협곡 안내인 천막')
 
     # ---------------- 서쪽 포도밭 언덕 ----------------
     for row in range(4):                                             # 포도밭 (가지런한 줄)

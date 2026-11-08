@@ -326,6 +326,148 @@ namespace PocketCaravan
             }
         }
 
+        // ---------------- 4) 모래 배 돛 돌리기 (11/08 기우, 브레인스토밍 7) ----------------
+
+        public class SandBoat : Game
+        {
+            public override string Id => "boat";
+            public override string DisplayName => "모래 배 돛 돌리기";
+            public override string Title => "모래 배 돛 돌리기";
+            public override string Where => "와디 · 마른 강바닥";
+            public override string Hint => "바람 화살표 방향으로 방향키! 맞으면 배가 미끄러지고, 틀리면 돛이 꺾여 멈춥니다. 30초.";
+            const float Length = 30f, Goal = 48f;
+            static readonly Vector2Int[] Dirs = { Vector2Int.right, Vector2Int.left, Vector2Int.up, Vector2Int.down };
+            static readonly string[] Arrows = { "→", "←", "↑", "↓" };
+            int wind; float windLeft, dist, slide, stall; int hits, miss;
+            protected override string Status => $"남은 {Mathf.Max(0, Length - t):0}초 · 맞힘 {hits} · 꺾임 {miss} · 최고 {Best(Id)}";
+            protected override void Begin() { wind = 0; windLeft = 1.4f; dist = slide = stall = 0f; hits = miss = 0; }
+            protected override void Tick(float dt)
+            {
+                windLeft -= dt;
+                if (windLeft <= 0f) { int n; do n = UnityEngine.Random.Range(0, 4); while (n == wind); wind = n; windLeft = Mathf.Lerp(1.6f, 0.9f, t / Length); }
+                var mv = InputReader.MovePressed();
+                if (mv != Vector2Int.zero && stall <= 0f)
+                {
+                    if (mv == Dirs[wind]) { hits++; slide = .6f; dist += 4f; Sfx.Play("step", .5f); Pop("미끄럼!", new Vector2(BoatX() + 24, 26), CuteUI.Up); }
+                    else { miss++; stall = .7f; dist = Mathf.Max(0f, dist - 2f); Sfx.Play("coin", .3f); Pop("돛이 꺾였다", new Vector2(BoatX() + 24, 26), CuteUI.Alert); }
+                }
+                stall = Mathf.Max(0f, stall - dt); slide = Mathf.Max(0f, slide - dt);
+                if (slide > 0f) dist += dt * 1.5f;
+                if (dist >= Goal || t >= Length) End();
+            }
+            float lastW = 300f;
+            float BoatX() => 6 + Mathf.Clamp01(dist / Goal) * (lastW - 90);
+            void End()
+            {
+                Finish();
+                bool arrived = dist >= Goal; int score = arrived ? Mathf.Max(1, 12 - miss) : 0; SetBest(Id, score);
+                if (arrived && !DoneToday(Id)) { GameManager.I.Player.money += 20; MarkToday(Id); result = $"와디 끝까지 미끄러졌다! 배 주인이 20냥을 줬다. (꺾임 {miss})"; Sfx.Play("levelup", .6f); }
+                else if (arrived) result = $"와디 끝까지 미끄러졌다! (오늘 몫은 이미 받음)";
+                else result = $"바람을 다 못 탔다 ({dist:0}/{Goal:0}). 화살표를 잘 보자!";
+            }
+            protected override void Draw(Rect r)
+            {
+                lastW = r.width;
+                CuteUI.Fill(new Rect(0, 0, r.width, r.height), new Color32(236, 220, 186, 255));
+                // 마른 강바닥 (자갈 띠)
+                CuteUI.Fill(new Rect(0, r.height - 34, r.width, 22), new Color32(205, 182, 140, 255));
+                for (int i = 0; i < 18; i++) CuteUI.Fill(new Rect((i * 37 + 9) % (int)r.width, r.height - 30 + (i * 13) % 14, 4, 2), new Color32(170, 150, 112, 255));
+                for (float x = -10; x < r.width; x += 64) Pic("nature_dune", x, 16, 1f);
+                Pic("nature_deadwood", r.width - 40, r.height - 30, 1f);
+                // 배 (꺾였을 때 기울임 대신 살짝 가라앉음)
+                float bob = slide > 0f ? Mathf.Sin(Time.unscaledTime * 12f) * 2f : 0f;
+                Pic("animal_dhow", BoatX(), r.height - 14 - bob + (stall > 0f ? 3f : 0f), .8f);
+                // 바람 화살표 (크게, 가운데 위)
+                var pill = new Rect(r.width / 2f - 28, 4, 56, 24);
+                CuteUI.Box(pill, 6, CuteUI.Paper, stall > 0f ? CuteUI.Alert : CuteUI.Interact, 2, 1);
+                CuteUI.LabelCenter(pill.center.x, pill.center.y, "바람 " + Arrows[wind], CuteUI.Ink, false, true);
+                // 바람 줄기
+                for (int i = 0; i < 6; i++)
+                {
+                    float yy = 34 + i * 9; float xx = (Time.unscaledTime * (60f + i * 9f) + i * 40f) % (r.width + 30f) - 15f;
+                    if (wind == 1) xx = r.width - xx;
+                    CuteUI.Fill(new Rect(xx, yy, 14, 1), new Color32(255, 250, 230, 160));
+                }
+                CuteUI.Keycap(4, r.height - 22, "←↑↓→");
+            }
+        }
+
+        // ---------------- 5) 붉은 돌 캐기 (11/08 기우, 협곡 브레인스토밍) ----------------
+
+        public class RedStone : Game
+        {
+            public override string Id => "redstone";
+            public override string DisplayName => "붉은 돌 캐기";
+            public override string Title => "붉은 돌 캐기";
+            public override string Where => "붉은 바위 협곡 마을";
+            public override string Hint => "곡괭이가 반짝이는 금 위에 올 때 Space! 금 셋을 맞히면 돌 하나가 쪼개집니다. 25초.";
+            const float Length = 25f;
+            float[] cracks = new float[3]; bool[] hit = new bool[3]; int stones, miss; float shake, chip;
+            float Pick => .5f + .46f * Mathf.Sin(t * (2.6f + stones * .35f));
+            protected override string Status => $"남은 {Mathf.Max(0, Length - t):0}초 · 캔 돌 {stones} · 헛스윙 {miss} · 최고 {Best(Id)}";
+            protected override void Begin() { stones = miss = 0; NewStone(); }
+            void NewStone()
+            {
+                for (int i = 0; i < 3; i++) { cracks[i] = .15f + i * .3f + UnityEngine.Random.Range(-.06f, .06f); hit[i] = false; }
+            }
+            protected override void Tick(float dt)
+            {
+                shake = Mathf.Max(0f, shake - dt * 4f); chip = Mathf.Max(0f, chip - dt * 3f);
+                if (InputReader.ConfirmPressed())
+                {
+                    int best = -1; float bd = .06f;
+                    for (int i = 0; i < 3; i++) if (!hit[i] && Mathf.Abs(Pick - cracks[i]) < bd) { bd = Mathf.Abs(Pick - cracks[i]); best = i; }
+                    if (best >= 0)
+                    {
+                        hit[best] = true; chip = 1f; Sfx.Play("bump", .5f); Pop("딱!", new Vector2(lastW * cracks[best], 30), CuteUI.Up);
+                        if (hit[0] && hit[1] && hit[2]) { stones++; Sfx.Play("coin", .5f); Pop("붉은 돌!", new Vector2(lastW / 2f, 20), CuteUI.Sell); NewStone(); }
+                    }
+                    else { miss++; shake = 1f; Sfx.Play("step", .4f); Pop("헛스윙", new Vector2(lastW * Pick, 30), CuteUI.Alert); }
+                }
+                if (t >= Length) End();
+            }
+            float lastW = 300f;
+            void End()
+            {
+                Finish(); SetBest(Id, stones);
+                var gm = GameManager.I; var item = gm.ItemById("arabia_redstone");
+                int n = Mathf.Min(3, stones);
+                if (n > 0 && !DoneToday(Id) && item != null && gm.Player.CanCarry(item, n)) { gm.Player.cargo.Add(item, n, 0f); MarkToday(Id); result = $"붉은 염료 돌 {n}개를 캤다! 타이즈 염색 장인이 비싸게 사 줄 거야."; Sfx.Play("success", .6f); }
+                else if (n > 0 && DoneToday(Id)) result = $"{stones}개를 쪼갰다. (오늘 몫은 이미 받음)";
+                else if (n > 0) result = item == null ? "(붉은 염료 돌 데이터가 없어요 — 아라비아/1 데이터 갱신)" : "짐이 가득 차서 못 챙겼다.";
+                else result = "한 개도 못 쪼갰다… 반짝이는 금을 노려 보자.";
+            }
+            protected override void Draw(Rect r)
+            {
+                lastW = r.width;
+                CuteUI.Fill(new Rect(0, 0, r.width, r.height), new Color32(232, 176, 140, 255));   // 붉은 바위 벽
+                for (int i = 0; i < 9; i++) CuteUI.Fill(new Rect((i * 47 + 11) % (int)r.width, (i * 23) % (int)(r.height - 40), 22, 3), new Color32(206, 140, 104, 255));
+                Pic("drawn_redBoulderSmall", 6, r.height - 6, 1f); Pic("drawn_redBoulderSmall", r.width - 40, r.height - 8, 1f);
+                // 가운데 큰 돌 (금 셋이 그려진)
+                float sx = Mathf.Sin(Time.unscaledTime * 50f) * shake * 2f;
+                var rock = new Rect(r.width * .08f + sx, 34, r.width * .84f, r.height - 62);
+                CuteUI.Box(rock, 10, new Color32(186, 84, 60, 255), new Color32(100, 36, 28, 255), 2, 2);
+                CuteUI.Fill(new Rect(rock.x + 8, rock.y + 6, rock.width - 16, 4), new Color32(214, 120, 90, 255));
+                for (int i = 0; i < 3; i++)
+                {
+                    float cx = rock.x + cracks[i] * rock.width / 1f * (r.width / rock.width) - rock.x * 0f;
+                    cx = r.width * cracks[i];
+                    float glow = hit[i] ? 0f : .5f + .5f * Mathf.Sin(Time.unscaledTime * 6f + i);
+                    var col = hit[i] ? new Color32(70, 24, 20, 255) : new Color32(255, (byte)(200 + 55 * glow), (byte)(120 + 80 * glow), 255);
+                    // 지그재그 금
+                    for (int k = 0; k < 6; k++) CuteUI.Fill(new Rect(cx - 2 + (k % 2 == 0 ? -2 : 2), rock.y + 6 + k * (rock.height - 12) / 6f, 4, (rock.height - 12) / 6f + 1), col);
+                }
+                // 튀는 돌 조각
+                if (chip > 0f) for (int k = 0; k < 5; k++) CuteUI.Fill(new Rect(r.width / 2f + (k - 2) * 14 * (1.4f - chip), 24 - chip * 10 + k % 2 * 4, 4, 4), new Color32(214, 92, 60, 255));
+                // 곡괭이 (위에서 좌우로)
+                float px = r.width * Pick;
+                CuteUI.Fill(new Rect(px - 1, 6, 3, 24), new Color32(120, 82, 48, 255));        // 자루
+                CuteUI.Fill(new Rect(px - 9, 26, 19, 4), new Color32(90, 96, 110, 255));        // 쇠날
+                CuteUI.Fill(new Rect(px - 1, 30, 3, 4), new Color32(255, 240, 200, 255));       // 끝
+                CuteUI.Keycap(4, r.height - 22, "Space");
+            }
+        }
+
         // ---------------- 자리 ----------------
 
         struct Place { public string map; public int x, y; public Type game; public string label; }
@@ -334,6 +476,8 @@ namespace PocketCaravan
             new Place { map = "arabia_ahsa", x = 20, y = 38, game = typeof(DatePicking) },   // 대추야자 농부 옆
             new Place { map = "arabia_jeddah", x = 44, y = 21, game = typeof(CamelRace) },   // 수레 장인 유수프 옆
             new Place { map = "arabia_shortcut", x = -1, y = -1, game = typeof(SandstormRun) }, // 길 가운데 (자동)
+            new Place { map = "arabia_central_dunes", x = 133, y = 17, game = typeof(SandBoat) },   // 모래 배 주인(135,15) 옆 와디
+            new Place { map = "arabia_central_canyon", x = 102, y = 29, game = typeof(RedStone) },  // 붉은 돌 캐는 사람(100,29) 옆
         };
 
         static Vector3? Cell(MapRoot mr, string map, int x, int y)
@@ -394,6 +538,8 @@ namespace PocketCaravan
             ActivityHints.Rules[typeof(DatePicking)] = _ => ("대추야자 따기", DoneToday("dates"));
             ActivityHints.Rules[typeof(CamelRace)] = _ => ("낙타 경주", DoneToday("camel"));
             ActivityHints.Rules[typeof(SandstormRun)] = _ => ("모래바람 건너기", DoneToday("storm"));
+            ActivityHints.Rules[typeof(SandBoat)] = _ => ("모래 배 돛 돌리기", DoneToday("boat"));
+            ActivityHints.Rules[typeof(RedStone)] = _ => ("붉은 돌 캐기", DoneToday("redstone"));
             if (UnityEngine.Object.FindFirstObjectByType<Runner>() != null) return;
             var go = new GameObject("ArabiaPastimes");
             UnityEngine.Object.DontDestroyOnLoad(go);

@@ -148,6 +148,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--check', action='store_true')
     ap.add_argument('--preview')
+    ap.add_argument('--only', help='이 맵 id만 쓴다 (손으로 고친 다른 맵 JSON을 덮지 않으려고, 11/08 기우)')
     args = ap.parse_args()
     errors, new_assets, outputs = [], set(), []
     import arabia_paint
@@ -178,7 +179,7 @@ def main():
         old = open(path, encoding='utf-8').read() if os.path.exists(path) else None
         if old != text:
             changed.append(d['id'])
-            if not args.check:
+            if not args.check and (not args.only or d['id'] == args.only):
                 with open(path, 'w', encoding='utf-8') as fp:
                     fp.write(text)
         if args.preview:
