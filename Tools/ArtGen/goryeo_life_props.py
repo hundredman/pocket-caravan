@@ -106,11 +106,13 @@ def jar2(cx,base,hw,h):
     c.px(round(cx-lw),top-2,J[5])
     for x in range(round(cx-2),round(cx+1)):c.px(x,top-3,J[2])
     c.outline();return c.im
-def jars():
+def jars(base=False):
+    """11/09 은샘: 항아리는 그대로, 밑 돌 받침은 뺀다(base=True면 옛 모습)"""
     c=C(32,32)
-    for y in range(28,31):
+    for y in (range(28,31) if base else ()):
         for x in range(1,31):c.px(x,y,ST[2] if y==28 else ST[1] if y==29 else ST[0])
-    for x in (6,13,20,27):c.px(x,29,ST[0])
+    if base:
+        for x in (6,13,20,27):c.px(x,29,ST[0])
     c.outline();im=c.im
     for args in [(10,28,6.5,13),(22,28,7,15),(16,30,4.5,8)]:im.alpha_composite(jar2(*args))
     return im

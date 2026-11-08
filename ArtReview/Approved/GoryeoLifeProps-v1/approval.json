@@ -2,7 +2,7 @@
   "status": "approved",
   "approvedBy": "은샘",
   "approvedOn": "2026-11-08",
-  "note": "\"좋아. 잘 만든 것 같은데? 승인할게.\" 코드 도트, 원본 .aseprite는 Tools/ArtGen/aseprite_rgba.py로 씀",
+  "note": "\"좋아. 잘 만든 것 같은데? 승인할게.\" 코드 도트, 원본 .aseprite는 Tools/ArtGen/aseprite_rgba.py로 씀 · 11/09 은샘: 장독대 밑 돌 받침 제거(항아리 픽셀은 그대로), 같은 승인으로 갱신",
   "productionApplied": true,
   "assets": [
     {
@@ -13,7 +13,7 @@
         32,
         32
       ],
-      "decodedRGBAsha256": "98ba9d4f303d49f2f3464bdbccdbdc8090ae70a2487163236630903d1db57a47"
+      "decodedRGBAsha256": "ba4de4992956ed218021370615543ab8b894802d58f4ab9e6869bfb05a90a52c"
     },
     {
       "key": "laundry_0",
@@ -45,5 +45,6 @@
       ],
       "decodedRGBAsha256": "3bfb7b275a4e7b2497986cfbfa146be266f31a35acb8dda50389372edfb221ef"
     }
-  ]
+  ],
+  "updatedOn": "2026-11-09"
 }

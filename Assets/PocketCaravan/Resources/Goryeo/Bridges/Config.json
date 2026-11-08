@@ -1,25 +1,25 @@
 {
  "schemaVersion": 1,
  "status": "trial",
- "note": "11/09 은샘: 장단 강 건너 논(장승 자리)으로 가는 징검다리. 장승이 보이는 장터 쪽이 아니라 남쪽 풀밭으로 돌아, 강이 꺾이는 좁은 곳에 놓는다. pieces = 돌 그림(왼쪽 아래 기준 월드 좌표), walk = 막힘을 푸는 물 칸(x,y 쌍). 돌 그림: Tools/ArtGen/goryeo_stepstones.py",
+ "note": "11/09 은샘: 장단 강 건너 논(장승 자리)으로 가는 징검다리. 장승이 보이는 장터 쪽이 아니라 남쪽 풀밭으로 돌아, 강이 꺾이는 좁은 곳에 놓는다. pieces = 돌 그림(왼쪽 아래 기준 월드 좌표), walk = 막힘을 푸는 물 칸(x,y 쌍). 돌은 화면에 보이는 물 안에만 둔다(기슭 흰 물거품 밖으로 나가지 않게). 돌 그림: Tools/ArtGen/goryeo_stepstones.py",
  "bridges": [
   {
    "mapId": "goryeo_jangdan",
    "pieces": [
     {
      "art": "stepstone_0",
-     "x": 51.85,
-     "y": 84.75
+     "x": 52.05,
+     "y": 85.5125
     },
     {
      "art": "stepstone_1",
-     "x": 52.2,
-     "y": 85.45
+     "x": 51.85,
+     "y": 86.0625
     },
     {
-     "art": "stepstone_0",
-     "x": 51.95,
-     "y": 86.15
+     "art": "stepstone_2",
+     "x": 51.7,
+     "y": 86.6125
     }
    ],
    "walk": [
