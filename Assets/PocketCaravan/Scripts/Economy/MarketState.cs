@@ -38,6 +38,9 @@ namespace PocketCaravan
         /// (NPC 상인이 모든 장터의 모든 물건 값을 훑는 바람에 어느 장터든 전 세계 품목 53개가 다 떴었다. 실제 거래가 있을 때만 표에 오른다.)</summary>
         public float Stock(ItemData item) => stock.TryGetValue(item, out var s) ? s : Optimal(item);
 
+        /// <summary>재고를 정한다 (공유 장터 서버 값 맞추기 · 남의 거래 반영, 2026-11-08). 재고표에 없던 물건이면 올린다.</summary>
+        public void SetStock(ItemData item, float value) { if (item != null && !float.IsNaN(value) && !float.IsInfinity(value)) stock[item] = Mathf.Max(0f, value); }
+
         float Demand => GameManager.I != null && GameManager.I.Clock.IsMarketDay ? db.marketDayDemand : 1f;
 
         /// <summary>플레이어가 살 때 값</summary>
@@ -170,6 +173,22 @@ namespace PocketCaravan
             {
                 var it = item(s.items[i]);
                 if (it != null) stock[it] = s.stocks[i];
+            }
+        }
+
+        /// <summary>
+        /// 여러 시간 몫의 회복을 한 번에 (2026-11-08 접속으로 세상 시간이 건너뛸 때). RecoverOneHour를 hours번 한 것과 같다:
+        /// 적정치와의 차이가 (1 − 비율)^hours 배가 된다.
+        /// </summary>
+        public void RecoverHours(float hours)
+        {
+            if (!(hours > 0f)) return;
+            float keep = Mathf.Pow(1f - Mathf.Clamp01(db.stockRecoveryPerHour), hours);
+            var keys = new List<ItemData>(stock.Keys);
+            foreach (var k in keys)
+            {
+                float opt = Optimal(k);
+                stock[k] = opt + (stock[k] - opt) * keep;
             }
         }
 

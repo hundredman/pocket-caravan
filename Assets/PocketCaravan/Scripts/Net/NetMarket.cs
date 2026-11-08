@@ -9,7 +9,9 @@ namespace PocketCaravan
     ///   살 때 -1개, 팔 때는 장터가 실제로 늘린 만큼(MarketState.SellStockDelta, 출신 강점 포함).
     /// - 남의 거래를 받으면 내 장터 재고에 같은 변화를 더한다(MarketState.Export → 고쳐서 Import). 값은 재고로 정해지니 바로 바뀐다.
     ///   재고 회복(매시간)은 각자 게임 시계대로 일어난다. 장터 등급·거래액은 나누지 않는다.
-    /// - 접속하지 않은 동안의 거래: 다시 접속하면 서버가 30분 안의 놓친 거래를 보내 준다. 받은 마지막 번호는 서버 주소마다 기억한다.
+    /// - 접속하지 않은 동안의 거래 (11/08): 새 서버는 접속할 때 공유 장터 재고(적정 재고와의 차이)를 통째로 보내 준다.
+    ///   그동안의 거래와 세상 시간에 따른 회복이 모두 들어 있어 아무리 오래 쉬어도 모두 같은 재고다.
+    ///   예전 서버면 놓친 거래(24시간·300건까지)를 다시 받아 더한다. 받은 마지막 번호는 서버 주소마다 기억한다.
     /// 공용 코드(MarketState · GameEvents · GameManager)는 공개된 것만 쓰고 고치지 않는다.
     /// </summary>
     public class NetMarket : MonoBehaviour
@@ -36,10 +38,15 @@ namespace PocketCaravan
 
         public static bool IsShared(TownData town) => town != null && System.Array.IndexOf(SharedTowns, town.id) >= 0;
 
+        /// <summary>이번 접속에서 서버가 공유 장터 재고를 통째로 줬다 (11/08). 예전 서버면 false: 지난 거래를 다시 받아 더한다.</summary>
+        public static bool ServerShared { get; private set; }
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetShared() => ServerShared = false;
+
         // ---------- 받은 마지막 거래 번호 (서버 주소마다) ----------
 
         static string SeqKey(string address) => "net.tradeSeq:" + (address ?? "");
-        /// <summary>이 서버에서 마지막으로 받은 거래 번호. 처음이면 -1 (서버가 30분 안의 거래를 보내 준다)</summary>
+        /// <summary>이 서버에서 마지막으로 받은 거래 번호. 처음이면 -1 (예전 서버가 놓친 거래를 보내 준다)</summary>
         public static int Since(string address) => PlayerPrefs.GetInt(SeqKey(address), -1);
         static void Saw(int seq)
         {
@@ -101,6 +108,8 @@ namespace PocketCaravan
             {
                 case "welcome":
                     Saw(m.seq);
+                    ServerShared = m.marketOk;
+                    if (m.marketOk) ApplySnapshot(m.market);
                     if (!toldTowns)
                     {
                         toldTowns = true;
@@ -126,6 +135,30 @@ namespace PocketCaravan
             }
         }
 
+        /// <summary>
+        /// 공유 장터 재고를 서버 값으로 맞춘다 (11/08): 재고 = 내 적정 재고 + 서버의 차이. 서버에 없는 물건은 적정 재고(차이 0).
+        /// 오래 접속하지 않았어도, 그동안의 거래와 회복이 모두 반영된 같은 재고를 받는다.
+        /// </summary>
+        static void ApplySnapshot(List<NetClient.MarketRow> rows)
+        {
+            var gm = GameManager.I;
+            if (gm == null || gm.Db == null) return;
+            foreach (var id in SharedTowns)
+            {
+                var town = gm.Db.towns.Find(t => t != null && t.id == id);
+                if (town == null) continue;
+                var market = gm.GetMarket(town);
+                foreach (var it in new List<ItemData>(market.KnownItems)) market.SetStock(it, market.Optimal(it));
+                if (rows == null) continue;
+                foreach (var r in rows)
+                {
+                    if (r == null || r.town != id) continue;
+                    var it = gm.ItemById(r.item);
+                    if (it != null) market.SetStock(it, market.Optimal(it) + r.dev);
+                }
+            }
+        }
+
         /// <summary>장터 재고에 변화를 더한다. 모르는 마을·물건이면 false</summary>
         static bool Apply(string townId, string itemId, float d, out TownData town, out ItemData item)
         {
@@ -136,13 +169,9 @@ namespace PocketCaravan
             item = gm.ItemById(itemId);
             if (town == null || item == null || System.Array.IndexOf(SharedTowns, townId) < 0) return false;
 
+            // 처음 보는 물건이면 적정 재고에서 시작한다 (11/08: Stock()이 재고표에 올리지 않게 바뀐 뒤 남의 거래가 빠지던 것 고침)
             var market = gm.GetMarket(town);
-            market.Stock(item);   // 처음 보는 물건이면 적정 재고로 만들어 둔다
-            var save = market.Export();
-            int i = save.items.IndexOf(item.id);
-            if (i < 0) return false;
-            save.stocks[i] = Mathf.Max(0f, save.stocks[i] + d);
-            market.Import(save, gm.ItemById);
+            market.SetStock(item, market.Stock(item) + d);
             return true;
         }
 

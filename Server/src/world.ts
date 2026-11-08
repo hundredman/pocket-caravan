@@ -115,6 +115,18 @@ const TRADE_KEEP = 300, TRADE_REPLAY_MS = 24 * 60 * 60_000;   // 2026-11-08: 접
  * 게임 시간 = 아침 8시 1일째 + (지금 − WORLD_EPOCH_MS) × 하루/현실 WORLD_SECONDS_PER_DAY초. 값을 바꾸면 모두의 날짜가 바뀐다.
  */
 const WORLD_EPOCH_MS = Date.UTC(2026, 10, 1), WORLD_SECONDS_PER_DAY = 360;
+/**
+ * 공유 장터 재고 (2026-11-08): 물건마다 "적정 재고와의 차이(dev)"를 서버가 들고 있다.
+ * 게임은 매 시간 재고를 적정치 쪽으로 MARKET_RECOVERY_PER_HOUR만큼 되돌린다(GameDatabase.stockRecoveryPerHour와 같은 값).
+ * 그래서 차이는 세상 시간 1시간마다 (1 − 비율)배로 줄어든다. 오래 접속하지 않아도 모두가 같은 재고를 받는다.
+ */
+const MARKET_RECOVERY_PER_HOUR = 0.04, MARKET_KEEP_MIN = 0.01, MARKET_ITEMS_MAX = 2000;
+interface MarketDev { dev: number; at: number; }
+/** 세상 시간으로 now까지 줄어든 차이 */
+function decayedDev(m: MarketDev, now: number): number {
+  const hours = Math.max(0, now - m.at) / 1000 / WORLD_SECONDS_PER_DAY * 24;
+  return m.dev * Math.pow(1 - MARKET_RECOVERY_PER_HOUR, hours);
+}
 /** 리액션 최소 간격 */
 const EMOTE_GAP_MS = 400;
 /** 관리자 알림 글자 수 */
@@ -283,10 +295,12 @@ export class WorldRoom extends DurableObject<Env> {
           account: !!me.acct, hasSave: !!acct?.save && !!me.acct, save: me.acct ? acct?.save ?? null : null,
           fullOk: true, extras: true, ...(me.acct && acct?.full ? { full: acct.full } : {}),
           clock: { now, epoch: WORLD_EPOCH_MS, secondsPerDay: WORLD_SECONDS_PER_DAY },
+          ...(msg.snap === true ? { marketOk: true, market: await this.marketNow(now) } : {}),
           ...(newPass ? { newPass: true } : {}),
         });
         this.broadcast({ t: "online", online: this.count() }, (o) => o !== ws);
-        await this.replayTrades(ws, me, msg.since, seq, now);
+        // 공유 장터 재고를 통째로 받은 게임은 지난 거래를 다시 받으면 두 번 더해진다
+        if (msg.snap !== true) await this.replayTrades(ws, me, msg.since, seq, now);
         return;
       }
       case "save": {
@@ -402,7 +416,11 @@ export class WorldRoom extends DurableObject<Env> {
         const seq = ((await this.ctx.storage.get<number>("tradeSeq")) ?? 0) + 1;
         const trade: Trade = { seq, at: now, id: me.id, name: me.name, town, item, n, d, sell: msg.sell === true };
         const log = ((await this.ctx.storage.get<Trade[]>("trades")) ?? []).concat(trade).slice(-TRADE_KEEP);
-        await this.ctx.storage.put({ tradeSeq: seq, trades: log });
+        const market = (await this.ctx.storage.get<Record<string, MarketDev>>("market")) ?? {};
+        const key = town + "|" + item;
+        const prev = market[key];
+        if (prev || Object.keys(market).length < MARKET_ITEMS_MAX) market[key] = { dev: (prev ? decayedDev(prev, now) : 0) + d, at: now };
+        await this.ctx.storage.put({ tradeSeq: seq, trades: log, market });
         return this.broadcast({ t: "trade", ...trade }, (o) => o !== ws);
       }
       case "emote": {
@@ -748,6 +766,21 @@ export class WorldRoom extends DurableObject<Env> {
   }
 
   /** 들어온 사람이 아직 못 받은 남의 거래(30분 안)를 한 번에 보낸다 */
+  /** 공유 장터 재고 차이를 지금 시각으로 줄여서 보낸다. 거의 0이 된 것은 지운다 */
+  private async marketNow(now: number): Promise<{ town: string; item: string; dev: number }[]> {
+    const market = (await this.ctx.storage.get<Record<string, MarketDev>>("market")) ?? {};
+    const list: { town: string; item: string; dev: number }[] = [];
+    let pruned = false;
+    for (const [key, m] of Object.entries(market)) {
+      const dev = decayedDev(m, now);
+      if (Math.abs(dev) < MARKET_KEEP_MIN) { delete market[key]; pruned = true; continue; }
+      const [town, item] = key.split("|");
+      list.push({ town, item, dev: Math.round(dev * 1000) / 1000 });
+    }
+    if (pruned) await this.ctx.storage.put("market", market);
+    return list;
+  }
+
   private async replayTrades(ws: WebSocket, me: Player, since: unknown, seq: number, now: number): Promise<void> {
     let from = typeof since === "number" && Number.isInteger(since) ? since : -1;
     if (from > seq) from = -1;   // 서버 기록이 지워졌다

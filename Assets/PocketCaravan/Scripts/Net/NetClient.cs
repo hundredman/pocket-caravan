@@ -78,7 +78,13 @@ namespace PocketCaravan
             public List<Board> boards;
             // 11/08 공용 세상 시계: welcome에 서버 시각(now)·기준 시각(epoch, ms)·하루 길이(secondsPerDay)
             public ClockInfo clock;
+            // 11/08 공유 장터 재고: marketOk = 이 서버가 재고를 들고 있다, market = 물건마다 적정 재고와의 차이
+            public bool marketOk;
+            public List<MarketRow> market;
         }
+
+        [Serializable]
+        public class MarketRow { public string town, item; public float dev; }
 
         [Serializable]
         public class ClockInfo { public long now, epoch; public float secondsPerDay; }
@@ -147,7 +153,7 @@ namespace PocketCaravan
         }
 
         // 보내는 메시지 (필요한 칸만)
-        [Serializable] class HelloOut { public string t = "hello"; public int v = Protocol; public string name; public string look; public string key; public string pass; public int since; }
+        [Serializable] class HelloOut { public string t = "hello"; public int v = Protocol; public string name; public string look; public string key; public string pass; public int since; public bool snap = true; }   // snap: 공유 장터 재고를 통째로 받는다(11/08)
         /// <summary>11/08: look도 싣는다. 시작 화면에서 로그인하면 hello의 look은 아직 고르기 전 기본 출신이라, 맵에 들어갈 때 고친다</summary>
         [Serializable] class EnterOut { public string t = "enter"; public string map; public string look; }
         [Serializable] class PosOut { public string t = "pos"; public float x, y; public int fx, fy; public bool m; }

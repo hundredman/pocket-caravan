@@ -435,16 +435,16 @@ namespace PocketCaravan
         }
 
         /// <summary>
-        /// 온라인 세상 시계로 한 번에 건너뛰었다(접속 등). 그동안 장터 재고도 회복된 것으로 친다.
-        /// 한 시간 몫은 NewHour가 이미 하므로 나머지만, 이틀치(48시간)까지.
+        /// 온라인 세상 시계로 한 번에 건너뛰었다(접속 등). 그동안 장터 재고도 회복된 것으로 친다(최대 없음, 한 번에 계산).
+        /// 한 시간 몫은 NewHour가 이미 한다. 서버가 재고를 통째로 준 공유 장터는 이미 지금 값이라 건너뛴다.
         /// </summary>
-        public const int MaxCatchUpHours = 48;
         void OnClockJumped(float hours)
         {
-            int extra = Mathf.Clamp(Mathf.FloorToInt(hours) - 1, 0, MaxCatchUpHours - 1);
-            if (extra <= 0) return;
+            float extra = hours - 1f;
+            if (extra <= 0f) return;
             foreach (var t in Db.towns) if (t != null) GetMarket(t);
-            for (int i = 0; i < extra; i++) foreach (var m in markets.Values) m.RecoverOneHour();
+            foreach (var m in markets.Values)
+                if (!(NetMarket.ServerShared && NetMarket.IsShared(m.town))) m.RecoverHours(extra);
         }
 
         // ---------- 떨어진 짐 ----------
