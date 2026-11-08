@@ -14,15 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: q1_dakmok
   retired: 0
-  title: "특산품"
-  chain: "고려 한 바퀴"
-  summary: "특산품"
+  title: "\uD2B9\uC0B0\uD488"
+  chain: "\uACE0\uB824 \uD55C \uBC14\uD034"
+  summary: "\uD2B9\uC0B0\uD488"
   giverNpc: dakmok_chief
   requires:
   - {fileID: 11400000, guid: 671321731ba25b9d905da5f205300409, type: 2}
   requiresAny: []
   choiceGroup: 
-  offerLine: "닥목 종이는 고려에서 으뜸이지. 특산품은 난 곳에서 싸고 먼 곳에서 비싸다네. 종이 두 묶음을 사 오게. 수도에서 쓸 데가 있을 걸세."
+  offerLine: "\uB2E5\uB098\uBB34 \uB9C8\uC744 \uC885\uC774\uB294 \uACE0\uB824\uC5D0\uC11C
+    \uC73C\uB738\uC774\uC9C0. \uD2B9\uC0B0\uD488\uC740 \uB09C \uACF3\uC5D0\uC11C
+    \uC2F8\uACE0 \uBA3C \uACF3\uC5D0\uC11C \uBE44\uC2F8\uB2E4\uB124. \uC885\uC774
+    \uB450 \uBB36\uC74C\uC744 \uC0AC \uC624\uAC8C. \uC218\uB3C4\uC5D0\uC11C \uC4F8
+    \uB370\uAC00 \uC788\uC744 \uAC78\uC138."
   giveItem: {fileID: 0}
   giveCount: 0
   offerItem: {fileID: 0}
@@ -30,19 +34,21 @@ MonoBehaviour:
   offerPrice: 0
   objectives:
   - type: 2
-    text: "닥목 장터에서 종이 2개 사기"
+    text: "\uB2E5\uB098\uBB34 \uB9C8\uC744 \uC7A5\uD130\uC5D0\uC11C \uC885\uC774
+      2\uAC1C \uC0AC\uAE30"
     targetId: dakmok
     item: {fileID: 11400000, guid: c7b553013268140eca99e3276caecd4f, type: 2}
     vehicle: {fileID: 0}
     count: 2
-    completeLine: ""
+    completeLine: 
   - type: 0
-    text: "닥목 촌장에게 보이기"
+    text: "\uB2E5\uB098\uBB34 \uB9C8\uC744 \uCD0C\uC7A5\uC5D0\uAC8C \uBCF4\uC774\uAE30"
     targetId: dakmok_chief
     item: {fileID: 0}
     vehicle: {fileID: 0}
     count: 1
-    completeLine: "좋은 종이를 골랐군. 마침 개경 객주가 한지를 기다린다네."
+    completeLine: "\uC88B\uC740 \uC885\uC774\uB97C \uACE8\uB790\uAD70. \uB9C8\uCE68
+      \uAC1C\uACBD \uAC1D\uC8FC\uAC00 \uD55C\uC9C0\uB97C \uAE30\uB2E4\uB9B0\uB2E4\uB124."
   rewardMoney: 10
   rewardCredit: 0
   rewardReputationScope: 0
@@ -51,4 +57,4 @@ MonoBehaviour:
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0
-  finishNote: ""
+  finishNote: 

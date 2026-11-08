@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Goryeo_ReturnTrade
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: goryeo_return_trade
+  retired: 0
   title: "\uBE48 \uC218\uB808\uB85C \uB3CC\uC544\uAC00\uC9C0 \uC54A\uAE30"
   chain: "\uC218\uB808 \uC6B4\uC1A1 \xB7 \uADC0\uD658 \uC7A5\uC0AC"
   summary: "\uB3CC\uC544\uAC08 \uB54C \uC885\uC774 \uB450 \uBB36\uC74C\uC744 \uC0AC\uC11C
@@ -42,7 +43,8 @@ MonoBehaviour:
   offerPrice: 0
   objectives:
   - type: 2
-    text: "\uB2E5\uBAA9 \uC7A5\uD130\uC5D0\uC11C \uC885\uC774 2\uAC1C \uAD6C\uB9E4"
+    text: "\uB2E5\uB098\uBB34 \uB9C8\uC744 \uC7A5\uD130\uC5D0\uC11C \uC885\uC774
+      2\uAC1C \uAD6C\uB9E4"
     targetId: dakmok
     item: {fileID: 11400000, guid: c7b553013268140eca99e3276caecd4f, type: 2}
     vehicle: {fileID: 0}

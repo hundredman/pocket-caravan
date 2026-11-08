@@ -14,15 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: q1_songak
   retired: 0
-  title: "의뢰 게시판과 신용"
-  chain: "고려 한 바퀴"
-  summary: "의뢰 게시판과 신용"
+  title: "\uC758\uB8B0 \uAC8C\uC2DC\uD310\uACFC \uC2E0\uC6A9"
+  chain: "\uACE0\uB824 \uD55C \uBC14\uD034"
+  summary: "\uC758\uB8B0 \uAC8C\uC2DC\uD310\uACFC \uC2E0\uC6A9"
   giverNpc: goryeo_songak_merchant
   requires:
   - {fileID: 11400000, guid: 43973e5d8c4254dbb5d6a2a4ff27fb14, type: 2}
   requiresAny: []
   choiceGroup: 
-  offerLine: "장사꾼은 물건만 파는 게 아니라 약속도 판다네. 게시판에서 의뢰 하나를 맡아 기한 안에 날라 보게. 약속을 지키면 신용이 쌓이고, 신용이 높으면 귀한 짐도 맡긴다네."
+  offerLine: "\uC7A5\uC0AC\uAFBC\uC740 \uBB3C\uAC74\uB9CC \uD30C\uB294 \uAC8C \uC544\uB2C8\uB77C
+    \uC57D\uC18D\uB3C4 \uD310\uB2E4\uB124. \uAC8C\uC2DC\uD310\uC5D0\uC11C \uC758\uB8B0
+    \uD558\uB098\uB97C \uB9E1\uC544 \uAE30\uD55C \uC548\uC5D0 \uB0A0\uB77C \uBCF4\uAC8C.
+    \uC57D\uC18D\uC744 \uC9C0\uD0A4\uBA74 \uC2E0\uC6A9\uC774 \uC313\uC774\uACE0,
+    \uC2E0\uC6A9\uC774 \uB192\uC73C\uBA74 \uADC0\uD55C \uC9D0\uB3C4 \uB9E1\uAE34\uB2E4\uB124."
   giveItem: {fileID: 0}
   giveCount: 0
   offerItem: {fileID: 0}
@@ -30,19 +34,22 @@ MonoBehaviour:
   offerPrice: 0
   objectives:
   - type: 8
-    text: "송악 게시판 의뢰 하나 마치기"
+    text: "\uC1A1\uC545 \uAC8C\uC2DC\uD310 \uC758\uB8B0 \uD558\uB098 \uB9C8\uCE58\uAE30"
     targetId: goryeo_songak
     item: {fileID: 0}
     vehicle: {fileID: 0}
     count: 1
-    completeLine: ""
+    completeLine: 
   - type: 0
-    text: "송악 상인에게 알리기"
+    text: "\uC0B0\uB85D \uC57D\uC7AC \uC7A5\uC218\uC5D0\uAC8C \uC54C\uB9AC\uAE30"
     targetId: goryeo_songak_merchant
     item: {fileID: 0}
     vehicle: {fileID: 0}
     count: 1
-    completeLine: "잘 해냈군. 송악은 고려의 관문이라네. 저 고개 너머가 넓은 중앙 대륙이지. 언젠가 자네도 넘어가게 될 걸세."
+    completeLine: "\uC798 \uD574\uB0C8\uAD70. \uC1A1\uC545\uC740 \uACE0\uB824\uC758
+      \uAD00\uBB38\uC774\uB77C\uB124. \uC800 \uACE0\uAC1C \uB108\uBA38\uAC00 \uB113\uC740
+      \uC911\uC559 \uB300\uB959\uC774\uC9C0. \uC5B8\uC820\uAC00 \uC790\uB124\uB3C4
+      \uB118\uC5B4\uAC00\uAC8C \uB420 \uAC78\uC138."
   rewardMoney: 25
   rewardCredit: 0
   rewardReputationScope: 0
@@ -51,4 +58,5 @@ MonoBehaviour:
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0
-  finishNote: "의뢰가 늦거나 짐이 상하면 보수가 줄고 신용이 떨어집니다."
+  finishNote: "\uC758\uB8B0\uAC00 \uB2A6\uAC70\uB098 \uC9D0\uC774 \uC0C1\uD558\uBA74
+    \uBCF4\uC218\uAC00 \uC904\uACE0 \uC2E0\uC6A9\uC774 \uB5A8\uC5B4\uC9D1\uB2C8\uB2E4."
