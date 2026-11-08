@@ -42,7 +42,7 @@ namespace PocketCaravan
             new Festival { region = Reactions.Region.Goryeo, name = "연등회", capitalMap = "Gaegyeong", capitalName = "개경", townId = "gaegyeong",
                 dayMod = 2, items = new[] { "najeon", "ginseng", "paper" }, itemText = "나전칠기·인삼·종이" },
             new Festival { region = Reactions.Region.Arabia, name = "향료 밤시장", capitalMap = "arabia_sanaa", capitalName = "사나", townId = "arabia_sanaa",
-                dayMod = 6, items = new[] { "arabia_spice", "arabia_cloth", "arabia_dates" }, itemText = "향신료·직물·대추야자" },
+                dayMod = 6, items = new[] { "arabia_spice", "arabia_frankincense", "arabia_perfume", "arabia_carpet", "arabia_cloth" }, itemText = "향신료·유향·향유·양탄자·직물", ownFx = true },   // 11/07 기우: 11/5 새 품목 반영, 연출은 ArabiaNightMarket
         };
 
         public static Festival Of(Reactions.Region r) { foreach (var f in Festivals) if (f.region == r) return f; return null; }

@@ -28,7 +28,8 @@ namespace PocketCaravan
             { "arabia_central_dunes",  new[] { new Vector2Int(106, 33), new Vector2Int(45, 37), new Vector2Int(111, 31) } },
             { "arabia_central_bazaar", new[] { new Vector2Int(18, 13) } },
             { "arabia_central_steppe", new[] { new Vector2Int(27, 36), new Vector2Int(50, 32), new Vector2Int(79, 36) } },
-            { "arabia_shortcut",       new[] { new Vector2Int(47, 36) } },
+            { "arabia_shortcut",       new[] { new Vector2Int(44, 37) } },
+            { "arabia_central_canyon", new[] { new Vector2Int(99, 25) } },   // 협곡 마을 우물 옆 (11/08)   // 시인(47,38) 이름표와 안 겹치게 왼쪽
         };
         const string ShadeKey = "arabia:shade_until";
         const float Lift = 0.3f;
@@ -72,7 +73,8 @@ namespace PocketCaravan
             {
                 rewarded = true;
                 GameManager.I.SetMemo(ShadeKey, GameManager.I.Clock.TotalHours + 1f);
-                Notify.Show("더위를 식혔다. 1시간 동안 덜 지친다.", 3f);
+                var story = ArabiaDunesLife.NightStory();   // 11/08 오아시스 모닥불 밤이면 별자리 이야기
+                Notify.Show(story ?? "더위를 식혔다. 1시간 동안 덜 지친다.", story != null ? 5f : 3f);
             }
         }
 

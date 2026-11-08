@@ -132,11 +132,13 @@ namespace PocketCaravan.EditorTools
             // 11/07 공방 가공품 (Crafting: arabia_perfume · arabia_roast). 장터 재고엔 안 넣는다 — 만들어서 멀리 파는 물건
             Item("Item_ArabiaPerfume", "arabia_perfume", "향유", 0.5f, 36, sanaa, false, Art("arabia_perfume"));
             Item("Item_ArabiaRoastedCoffee", "arabia_roasted_coffee", "볶은 커피", 1, 24, taiz, false, Art("arabia_roasted_coffee"));
+            // 11/08 붉은 바위 협곡 돌 캐기 놀거리 보상. 산지 없음(협곡), 타이즈 염색 장인이 소비 — 타이즈 장터에만 조금
+            var redstone = Item("Item_ArabiaRedstone", "arabia_redstone", "붉은 염료 돌", 1, 14, null, false, Art("arabia_redstone"));
 
             // 장터 품목 최소 5개 (11/4 팀 결정). 산지 40·집산 20~30·소비 8~18
             Stock(ahsa, (dates, 40), (leather, 30), (grain, 12), (salt, 10), (coffee, 8));
             Stock(zabid, (grain, 40), (salt, 24), (dates, 12), (cloth, 10), (leather, 8));
-            Stock(taiz, (cloth, 40), (coffee, 30), (grain, 14), (dates, 12), (salt, 10), (frank, 8));
+            Stock(taiz, (cloth, 40), (coffee, 30), (grain, 14), (dates, 12), (salt, 10), (frank, 8), (redstone, 3));   // 붉은 염료 돌: 염색 고장이라 귀하게 산다
             Stock(jeddah, (spice, 40), (pearl, 20), (salt, 30), (cloth, 16), (dates, 14), (grain, 14), (coffee, 10));
             Stock(sanaa, (frank, 30), (carpet, 20), (cloth, 14), (spice, 14), (grain, 18), (dates, 18), (coffee, 12), (pearl, 6));
             // 2026-11-05 통합(기우) 장터 규칙: 마을마다 생필품(땔감·곡식, 산지 없는 공용 물건) 2줄
