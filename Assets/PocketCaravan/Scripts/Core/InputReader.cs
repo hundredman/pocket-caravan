@@ -9,6 +9,7 @@ namespace PocketCaravan
     /// 키 입력을 한곳에서 읽는다. 키를 바꾸거나 패드를 더할 때 여기만 고친다.
     /// 이동: 방향키/WASD (8방향), 달리기: Shift, 말 걸기·확인: Space, 상태창 펼치기: Tab, 퀘스트 목록: Q, 지도: M, 소지품: I, 취소·메뉴: Esc
     /// 임시 시험용: C를 누르는 동안 6배 빠르게 (나중에 제거). 11/01 G는 북유럽·베네치아 선물 키와 겹쳐 C로 옮김
+    /// 11/08 개발용 키(C 빠르게 · 북유럽 F9 속도 창)는 Unity 에디터·Development Build에서만 (배포판에서 치트가 되지 않게)
     /// </summary>
     public static class InputReader
     {
@@ -18,6 +19,9 @@ namespace PocketCaravan
         /// <summary>화면 단추로 키를 누른다 ('q' 퀘스트, 'm' 지도, 'l' 장부)</summary>
         public static void Press(char key) { virtualKey = key; virtualFrame = Time.frameCount + 1; }
         static bool Virtual(char key) => virtualKey == key && Time.frameCount == virtualFrame;
+
+        /// <summary>개발용 키를 받는지: Unity 에디터이거나 Development Build</summary>
+        public static bool DevKeys => Application.isEditor || Debug.isDebugBuild;
 
 #if ENABLE_INPUT_SYSTEM
         static Keyboard K => Keyboard.current;
@@ -37,7 +41,14 @@ namespace PocketCaravan
 
         public static bool Run() => K != null && (K.leftShiftKey.isPressed || K.rightShiftKey.isPressed);
         /// <summary>임시 시험용: C를 누르는 동안 빠르게 이동 (PlayerController.DebugFastMultiplier = 6배)</summary>
-        public static bool DebugFast() => K != null && K.cKey.isPressed;
+        public static bool DebugFast() => DevKeys && K != null && K.cKey.isPressed;
+        /// <summary>숫자 키 1~9 가운데 이번 프레임에 누른 것 (없으면 0). 대화 선택지를 바로 고른다</summary>
+        public static int NumberPressed()
+        {
+            var k = K; if (k == null) return 0;
+            for (int i = 0; i < 9; i++) if (k[Key.Digit1 + i].wasPressedThisFrame || k[Key.Numpad1 + i].wasPressedThisFrame) return i + 1;
+            return 0;
+        }
         public static bool InteractPressed() => K != null && K.spaceKey.wasPressedThisFrame;
         public static bool ConfirmPressed() => InteractPressed();
         public static bool CancelPressed() => K != null && K.escapeKey.wasPressedThisFrame;
@@ -69,7 +80,12 @@ namespace PocketCaravan
         }
 
         public static bool Run() => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-        public static bool DebugFast() => Input.GetKey(KeyCode.C);
+        public static bool DebugFast() => DevKeys && Input.GetKey(KeyCode.C);
+        public static int NumberPressed()
+        {
+            for (int i = 0; i < 9; i++) if (Input.GetKeyDown(KeyCode.Alpha1 + i) || Input.GetKeyDown(KeyCode.Keypad1 + i)) return i + 1;
+            return 0;
+        }
         public static bool InteractPressed() => Input.GetKeyDown(KeyCode.Space);
         public static bool ConfirmPressed() => InteractPressed();
         public static bool CancelPressed() => Input.GetKeyDown(KeyCode.Escape);

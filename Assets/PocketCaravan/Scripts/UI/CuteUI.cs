@@ -706,7 +706,7 @@ namespace PocketCaravan
         // ---------------- 시작·로그인 화면 바탕 ----------------
         static readonly Color32 BackA = Hex(0xFFF0DC), BackB = Hex(0xFBE5C8);
 
-        /// <summary>시작 화면·첫 로그인 화면 바탕: 종이 바둑판 + 주황 머리띠 "Pocket Caravan" (오른쪽 글씨는 선택)</summary>
+        /// <summary>시작 화면·첫 로그인 화면 바탕: 종이 바둑판 + 주황 머리띠 "바리바리" (오른쪽 글씨는 선택). 11/08 게임 이름을 바리바리로</summary>
         public static void Backdrop(string right = null)
         {
             float W = UIStyle.VirtualWidth, H = UIStyle.VirtualHeight;
@@ -718,8 +718,8 @@ namespace PocketCaravan
             Box(head, 8, Frame, Ink, 2, 3);
             Fill(new Rect(head.x + 5, head.y + 3, head.width - 10, 1), FrameHi);
             Icon(Pic.Star4, head.x + 10, head.y + 11);
-            Label(head.x + 22, head.center.y + 1, "Pocket Caravan", Ink, false, true);
-            Label(head.x + 22, head.center.y, "Pocket Caravan", White, false, true);
+            Label(head.x + 22, head.center.y + 1, "바리바리", Ink, false, true);
+            Label(head.x + 22, head.center.y, "바리바리", White, false, true);
             if (!string.IsNullOrEmpty(right))
             {
                 LabelRight(head.xMax - 12, head.center.y + 1, right, Ink, true, true);
