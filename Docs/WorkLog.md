@@ -456,3 +456,5 @@
 - 2026-11-08 Codex 매매안내문구(이 커밋): 사용자 문구수정 정정/최종문장/다른문명도수정 지시에 따라4Intro Tasks구매/판매2개씩만 통일(상인에게물건하나구매하기/산물건을다른마을상인에게판매하기). 완료판정/교역규칙/ID/대사/저장불변HEAD대조. Unity컴파일/콘솔0·로그인억제Offline/SaveOFF4문명8실제화면. 전체Python/세계/실매매/빌드재검사없음·최신main포함·로컬만·개인설정3D보존. Docs/Validation/Trade-Wording-2026-11-08/README.md.
 
 - 2026-11-08 Codex 지역일관성통합준비(이 커밋): 사용자GitHub업로드지시로region/goryeo→integration준비·최신main/integration포함확인. 최종Python431/23skip·세계883/0·UnityNaru격리이주/대화30·콘솔0·개인저장9SHA동일. 상인호칭/일꾼원본좌표/튜토리얼이주·첫이야기/공용고정이름표/4문명안내/시험저장전송차단/Aseprite도구대상. 공용UI/Quests/Net명시·맵/씬/DB/색인/연결/타지역그림/서버변경0·개인설정3D제외. 온라인/장시간/FPS/빌드미검사. Docs/Validation/Region-Consistency-Integration-2026-11-08/README.md.
+
+- 2026-11-08 Codex PR30통합완료(이 커밋): 사용자업로드지시로region/goryeo a5ce62076 push→PR30자동검사2SUCCESS/MERGEABLE/CLEAN→integration병합 b3fcfb91e(12:14KST). 원격코드/도구가검증source와동일확인·로컬FF·개인설정/3D보존. UI/Quests/Net·이름표공용연결/4문명Intro문구명시·맵씬DB추가변경0. 사후공지문안저장/카톡실제발송안함. 실제온라인/장시간/FPS/빌드미검사. Docs/Goryeo/Team-Notice-PR30.md, Docs/Validation/Region-Consistency-Integration-2026-11-08/github.json.
