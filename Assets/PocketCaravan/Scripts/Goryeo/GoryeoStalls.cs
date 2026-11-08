@@ -15,8 +15,9 @@ namespace PocketCaravan
     /// </summary>
     public sealed class GoryeoStalls : MonoBehaviour
     {
-        [Serializable] public class Keeper { public int at; public string name, title, sprite, hello; public string[] wants; }
-        [Serializable] public class Map { public string id; public Keeper[] keepers; }
+        [Serializable] public class Keeper { public int at; public int stall = -1; public string name, title, sprite, hello; public string[] wants; }   // stall: 이 맵 stalls의 번호(새 좌판), -1이면 at = 기존 좌판 번호
+        [Serializable] public class Stall { public string asset; public int x, y; }   // 11/08 빈 공터에 더 놓는 승인 좌판 그림(왼쪽 아래 칸)
+        [Serializable] public class Map { public string id; public Stall[] stalls; public Keeper[] keepers; }
         [Serializable] public class Config { public int schemaVersion; public string status; public float markup = 1.25f; public int dailyLimit = 5; public Map[] maps; }
 
         static readonly string[] CounterArt = { "wares_counter", "spice_stall", "fish_rack" };
@@ -60,29 +61,48 @@ namespace PocketCaravan
             return config;
         }
 
+        readonly List<(SpriteRenderer keeper, SpriteRenderer counter)> sorting = new List<(SpriteRenderer, SpriteRenderer)>();
+
         void Install(MapRoot map)
         {
             spots.RemoveAll(s => s == null);
+            sorting.Clear();
             if (map.previewOnly || GoryeoTravelTransition.RegionOf(map.mapId) == null) return;
             var cfg = Load();
             var row = cfg != null && cfg.maps != null ? Array.Find(cfg.maps, m => m.id == map.mapId) : null;
             if (row == null || row.keepers == null) return;
             var market = map.transform.Find("Everyday - market");
             var town = FindFirstObjectByType<TownMarket>()?.town;
-            if (market == null || town == null) return;
+            var dressing = map.GetComponent<VillageDressing>();
+            if (market == null || town == null || dressing == null) return;
             var counters = new List<SpriteRenderer>();
             foreach (var sr in market.GetComponentsInChildren<SpriteRenderer>(true))
                 if (sr.sprite != null && Array.IndexOf(CounterArt, sr.sprite.name) >= 0) counters.Add(sr);
             counters.Sort((a, b) => a.transform.position.x != b.transform.position.x ? a.transform.position.x.CompareTo(b.transform.position.x) : a.transform.position.y.CompareTo(b.transform.position.y));
             var root = new GameObject("Goryeo stall keepers").transform;
             root.SetParent(map.transform, false);
+            var footprints = new List<RectInt>();
+            // 11/08 은샘: 빈 공터에 승인 좌판 그림을 더 놓는다 (일자로 늘어서지 않게 자리를 엇갈려 둔다). 막힘은 맨 아랫줄만, 기존 좌판과 같다
+            var extra = new List<SpriteRenderer>();
+            if (row.stalls != null)
+                foreach (var st in row.stalls)
+                {
+                    var art = st != null ? Resources.Load<Sprite>("Goryeo/Stalls/Art/" + st.asset) : null;
+                    if (art == null) { extra.Add(null); continue; }
+                    var go = new GameObject(st.asset);
+                    go.transform.SetParent(root, false);
+                    var cc = map.CellCenter(new Vector3Int(st.x, st.y, 0)); go.transform.position = new Vector3(cc.x - .5f, cc.y - .5f, 0f);
+                    var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = art; sr.sortingOrder = 4;
+                    extra.Add(sr);
+                    footprints.Add(new RectInt(st.x, st.y, Mathf.RoundToInt(art.rect.width / art.pixelsPerUnit), 1));
+                }
             for (int i = 0; i < row.keepers.Length; i++)
             {
                 var k = row.keepers[i];
-                if (k == null || k.at < 0 || k.at >= counters.Count) continue;
+                if (k == null) continue;
+                SpriteRenderer c = k.stall >= 0 ? (k.stall < extra.Count ? extra[k.stall] : null) : (k.at >= 0 && k.at < counters.Count ? counters[k.at] : null);
                 var sprite = Resources.Load<Sprite>("Goryeo/Stalls/Keepers/" + k.sprite);
-                if (sprite == null) continue;
-                var c = counters[k.at];
+                if (c == null || sprite == null) continue;
                 float w = c.sprite.rect.width / c.sprite.pixelsPerUnit;
                 var basePos = c.transform.position;   // 좌판 그림 기준점 = 왼쪽 아래
                 // 그림: 좌판 바로 뒤 (좌판과 같은 순서, 조금 뒤 깊이라 좌판 앞면이 몸 아래를 가린다)
@@ -91,6 +111,10 @@ namespace PocketCaravan
                 body.transform.position = new Vector3(basePos.x + w / 2f, basePos.y + 1.5f, basePos.z + 0.05f);
                 var sr = body.AddComponent<SpriteRenderer>();
                 sr.sprite = sprite; sr.sortingOrder = c.sortingOrder;
+                sorting.Add((sr, c));
+                // 장꾼이 선 칸은 막는다 (좌판 뒤로 걸어 들어가 장꾼과 겹치지 않게)
+                var kc = map.WorldToCell(body.transform.position);
+                footprints.Add(new RectInt(kc.x, kc.y, 1, 1));
                 // 말 거는 자리: 좌판 가운데 칸 (원래 막힌 칸이라 길은 그대로). 이름표는 따로 그린다
                 var spot = new GameObject("말 거는 자리").AddComponent<Spot>();
                 spot.transform.SetParent(body.transform, false);
@@ -99,6 +123,19 @@ namespace PocketCaravan
                 spot.keeper = k; spot.index = i; spot.town = town; spot.mapId = map.mapId; spot.face = sprite; spot.head = body.transform;
                 spots.Add(spot);
             }
+            // 기존 마을 꾸밈(VillageDressing)에 한 공간으로 더해 같은 막힘·앞뒤 정렬을 쓴다
+            var space = new VillageDressing.Space { id = "goryeo-stall-keepers", normal = root.gameObject, footprints = footprints.ToArray() };
+            space.renderers = extra.FindAll(r => r != null).ToArray();
+            var list = new List<VillageDressing.Space>(dressing.spaces);
+            list.RemoveAll(x => x.id == space.id);
+            list.Add(space);
+            dressing.spaces = list.ToArray();
+        }
+
+        void LateUpdate()
+        {
+            foreach (var (keeper, counter) in sorting)
+                if (keeper != null && counter != null) keeper.sortingOrder = counter.sortingOrder;
         }
 
         /// <summary>좌판 앞 말 거는 자리. 이름은 비워 공용 이름표를 띄우지 않고, 장꾼 머리 위에 따로 적는다</summary>

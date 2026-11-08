@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "prop": {
+      "pixelsPerCell": [
+        16,
+        16
+      ],
+      "palette": [
+        "#2e241d",
+        "#3d4a6b",
+        "#576b90",
+        "#5b432f",
+        "#68452d",
+        "#77746c",
+        "#7c97b5",
+        "#86513b",
+        "#98653b",
+        "#a29b87",
+        "#b77c3e",
+        "#c18b52",
+        "#c4bca7",
+        "#ddc696",
+        "#f2dfb3",
+        "#f6e4bf"
+      ],
+      "binaryAlpha": true
+    }
+  },
+  "assets": [
+    {
+      "id": "goryeo_life_jars",
+      "kind": "object",
+      "purpose": "village_prop",
+      "size": [
+        2,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Art/jars.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/Approved/GoryeoLifeProps-v1/jars.aseprite",
+        "generator": "Tools/ArtGen/goryeo_life_props.py"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/GoryeoLifeProps-v1/approval.json"
+      },
+      "profile": "prop",
+      "rules": {
+        "onTerrain": [
+          "grass",
+          "dirt"
+        ],
+        "forbidRoad": false
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_jars_0_0",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/jars_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_jars_1_0",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/jars_1_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_jars_0_1",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/jars_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_jars_1_1",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/jars_1_1.png"
+        }
+      ]
+    },
+    {
+      "id": "goryeo_life_laundry_0",
+      "kind": "object",
+      "purpose": "village_prop",
+      "size": [
+        3,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Art/laundry_0.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/Approved/GoryeoLifeProps-v1/laundry.aseprite",
+        "generator": "Tools/ArtGen/goryeo_life_props.py"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/GoryeoLifeProps-v1/approval.json"
+      },
+      "profile": "prop",
+      "rules": {
+        "onTerrain": [
+          "grass",
+          "dirt"
+        ],
+        "forbidRoad": false
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_laundry_0_0_0",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/laundry_0_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_laundry_0_1_0",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/laundry_0_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_laundry_0_2_0",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/laundry_0_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_laundry_0_0_1",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/laundry_0_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_laundry_0_1_1",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/laundry_0_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_laundry_0_2_1",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/laundry_0_2_1.png"
+        }
+      ]
+    },
+    {
+      "id": "goryeo_life_laundry_1",
+      "kind": "object",
+      "purpose": "village_prop",
+      "size": [
+        3,
+        2
+      ],
+      "image": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Art/laundry_1.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/Approved/GoryeoLifeProps-v1/laundry.aseprite",
+        "generator": "Tools/ArtGen/goryeo_life_props.py"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/GoryeoLifeProps-v1/approval.json"
+      },
+      "profile": "prop",
+      "rules": {
+        "onTerrain": [
+          "grass",
+          "dirt"
+        ],
+        "forbidRoad": false
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_laundry_1_0_0",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/laundry_1_0_0.png"
+        },
+        {
+          "dx": 1,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_laundry_1_1_0",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/laundry_1_1_0.png"
+        },
+        {
+          "dx": 2,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_laundry_1_2_0",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/laundry_1_2_0.png"
+        },
+        {
+          "dx": 0,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_laundry_1_0_1",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/laundry_1_0_1.png"
+        },
+        {
+          "dx": 1,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_laundry_1_1_1",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/laundry_1_1_1.png"
+        },
+        {
+          "dx": 2,
+          "dy": 1,
+          "layer": "obj",
+          "tile": "goryeo_life_laundry_1_2_1",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/laundry_1_2_1.png"
+        }
+      ]
+    },
+    {
+      "id": "goryeo_life_sack",
+      "kind": "object",
+      "purpose": "event_prop",
+      "size": [
+        1,
+        1
+      ],
+      "image": "Assets/PocketCaravan/Resources/Goryeo/Events/sack.png",
+      "source": {
+        "kind": "authored",
+        "path": "ArtReview/Approved/GoryeoLifeProps-v1/sack.aseprite",
+        "generator": "Tools/ArtGen/goryeo_life_props.py"
+      },
+      "review": {
+        "status": "approved",
+        "evidence": "ArtReview/Approved/GoryeoLifeProps-v1/approval.json"
+      },
+      "profile": "prop",
+      "rules": {
+        "onTerrain": [
+          "grass",
+          "dirt"
+        ],
+        "forbidRoad": false
+      },
+      "tiles": [
+        {
+          "dx": 0,
+          "dy": 0,
+          "layer": "obj",
+          "tile": "goryeo_life_sack_0_0",
+          "image": "ArtReview/Approved/GoryeoLifeProps-v1/Cells/sack_0_0.png"
+        }
+      ]
+    }
+  ]
+}

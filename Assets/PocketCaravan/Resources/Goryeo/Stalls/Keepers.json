@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "status": "trial",
- "note": "11/08 은샘 요청: 고려 장터 좌판 장꾼(사 주는 좌판). at = 그 맵 market 낮은 좌판(wares_counter·spice_stall·fish_rack)을 x→y 순으로 센 번호",
+ "note": "11/08 은샘 요청: 고려 장터 좌판 장꾼(사 주는 좌판). at = 그 맵 market 낮은 좌판(wares_counter·spice_stall·fish_rack)을 x→y 순으로 센 번호 · 11/08 stalls = 빈 공터에 더 놓는 승인 좌판(엇갈린 자리), keeper.stall = 그 번호",
  "markup": 1.25,
  "dailyLimit": 5,
  "maps": [
@@ -24,7 +24,8 @@
       "goryeo_goby",
       "goryeo_croaker",
       "goryeo_mineo"
-     ]
+     ],
+     "stall": 1
     },
     {
      "at": 1,
@@ -35,7 +36,20 @@
      "wants": [
       "paper",
       "salt"
-     ]
+     ],
+     "stall": 0
+    }
+   ],
+   "stalls": [
+    {
+     "asset": "spice_stall",
+     "x": 36,
+     "y": 22
+    },
+    {
+     "asset": "wares_counter",
+     "x": 47,
+     "y": 23
     }
    ]
   },
@@ -51,7 +65,28 @@
      "wants": [
       "grain",
       "firewood"
+     ],
+     "stall": -1
+    },
+    {
+     "at": 0,
+     "stall": 0,
+     "name": "곰보 영감",
+     "title": "배 수리꾼",
+     "sprite": "npc_resident_boatman",
+     "hello": "배 틈 메울 송진이랑 불 땔 장작이 늘 모자라. 가져오면 후하게 쳐 주지.",
+     "wants": [
+      "transit_resin",
+      "firewood",
+      "paper"
      ]
+    }
+   ],
+   "stalls": [
+    {
+     "asset": "spice_stall",
+     "x": 9,
+     "y": 54
     }
    ]
   },
@@ -68,7 +103,27 @@
       "firewood",
       "salt",
       "grain"
+     ],
+     "stall": -1
+    },
+    {
+     "at": 0,
+     "stall": 0,
+     "name": "점순",
+     "title": "닥목 주막",
+     "sprite": "npc_resident_ricecake",
+     "hello": "산골이라 생선이 귀해요. 말린 생선이나 소금 있으면 사요.",
+     "wants": [
+      "transit_driedfish",
+      "salt"
      ]
+    }
+   ],
+   "stalls": [
+    {
+     "asset": "wares_counter",
+     "x": 6,
+     "y": 21
     }
    ]
   },
@@ -84,7 +139,8 @@
      "wants": [
       "salt",
       "transit_driedfish"
-     ]
+     ],
+     "stall": 0
     },
     {
      "at": 1,
@@ -95,7 +151,20 @@
      "wants": [
       "grain",
       "firewood"
-     ]
+     ],
+     "stall": 1
+    }
+   ],
+   "stalls": [
+    {
+     "asset": "wares_counter",
+     "x": 16,
+     "y": 37
+    },
+    {
+     "asset": "spice_stall",
+     "x": 21,
+     "y": 40
     }
    ]
   },
@@ -111,7 +180,8 @@
      "wants": [
       "salt",
       "transit_driedfish"
-     ]
+     ],
+     "stall": -1
     },
     {
      "at": 1,
@@ -129,7 +199,8 @@
       "goryeo_goby",
       "goryeo_croaker",
       "goryeo_mineo"
-     ]
+     ],
+     "stall": 0
     },
     {
      "at": 2,
@@ -140,7 +211,20 @@
      "wants": [
       "paper",
       "ginseng"
-     ]
+     ],
+     "stall": 1
+    }
+   ],
+   "stalls": [
+    {
+     "asset": "spice_stall",
+     "x": 41,
+     "y": 86
+    },
+    {
+     "asset": "wares_counter",
+     "x": 33,
+     "y": 89
     }
    ]
   },
@@ -156,7 +240,8 @@
      "wants": [
       "salt",
       "transit_driedfish"
-     ]
+     ],
+     "stall": -1
     },
     {
      "at": 1,
@@ -166,7 +251,8 @@
      "hello": "고갯마루는 추워. 양모 뭉치면 넉넉히 사겠네.",
      "wants": [
       "transit_wool"
-     ]
+     ],
+     "stall": -1
     },
     {
      "at": 2,
@@ -184,7 +270,8 @@
       "goryeo_goby",
       "goryeo_croaker",
       "goryeo_mineo"
-     ]
+     ],
+     "stall": -1
     }
    ]
   },
@@ -200,7 +287,8 @@
      "wants": [
       "transit_resin",
       "firewood"
-     ]
+     ],
+     "stall": -1
     },
     {
      "at": 1,
@@ -211,7 +299,8 @@
      "wants": [
       "transit_spice",
       "salt"
-     ]
+     ],
+     "stall": -1
     },
     {
      "at": 2,
@@ -221,7 +310,8 @@
      "hello": "뱃사람 새참 떡에 곡식이 들어가요.",
      "wants": [
       "grain"
-     ]
+     ],
+     "stall": -1
     }
    ]
   },
@@ -237,7 +327,8 @@
      "wants": [
       "ginseng",
       "najeon"
-     ]
+     ],
+     "stall": -1
     },
     {
      "at": 1,
@@ -256,7 +347,8 @@
       "goryeo_croaker",
       "goryeo_mineo",
       "transit_driedfish"
-     ]
+     ],
+     "stall": -1
     },
     {
      "at": 2,
@@ -267,7 +359,8 @@
      "wants": [
       "paper",
       "salt"
-     ]
+     ],
+     "stall": -1
     }
    ]
   },
@@ -284,7 +377,8 @@
       "transit_resin",
       "transit_wool",
       "firewood"
-     ]
+     ],
+     "stall": -1
     }
    ]
   }
