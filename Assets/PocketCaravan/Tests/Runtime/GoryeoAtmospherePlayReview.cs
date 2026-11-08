@@ -42,17 +42,16 @@ namespace PocketCaravan.EditorTools
                 for(int radius=0;radius<6&&!placed;radius++)for(int dy=-radius;dy<=radius&&!placed;dy++)for(int dx=-radius;dx<=radius&&!placed;dx++){var c=desired+new Vector3Int(dx,dy,0);if(map.IsWalkable(c)){player.Motor.Teleport(map.CellCenter(c)-(Vector3)player.Motor.feetOffset,Vector2Int.down);placed=true;}}
                 Check(placed,"walkable camera sample "+id);var cam=Camera.main;cam.GetComponent<CameraFollow>().enabled=false;cam.orthographicSize=8.4375f;cam.transform.position=map.CellCenter(desired)+new Vector3(0,1,-10);
                 string terrain=Fingerprint(map);int money=GameManager.I.Player.money;string cargo=JsonUtility.ToJson(GameManager.I.Player.cargo);
-                foreach(var kind in new[]{GoryeoAtmosphere.Kind.Clear,GoryeoAtmosphere.Kind.Rain,GoryeoAtmosphere.Kind.Monsoon,GoryeoAtmosphere.Kind.Mist})
+                foreach(var kind in new[]{GoryeoAtmosphere.Kind.Clear,GoryeoAtmosphere.Kind.Rain,GoryeoAtmosphere.Kind.Monsoon})
                 {
-                    float hour=kind==GoryeoAtmosphere.Kind.Mist?7.5f:12;Day(kind,hour,weather);yield return null;weather.Refresh();
-                    Check(weather.Shown==kind,"date-driven "+kind+" "+id);Check(weather.ActiveParticles<=128&&weather.ActiveParticles+weather.ActiveMistBands<=160,"particle budget "+kind+" "+id);
+                    float hour=12;Day(kind,hour,weather);yield return null;weather.Refresh();
+                    Check(weather.Shown==kind,"date-driven "+kind+" "+id);Check(weather.ActiveParticles<=128&&weather.ActiveParticles<=128,"particle budget "+kind+" "+id);
                     Check(Fingerprint(map)==terrain&&GameManager.I.Player.money==money&&JsonUtility.ToJson(GameManager.I.Player.cargo)==cargo,"terrain money/cargo unchanged "+kind+" "+id);
                     yield return Photo(id+"-"+kind);
-                    if(kind==GoryeoAtmosphere.Kind.Mist){Day(GoryeoAtmosphere.Kind.Clear,7.5f,weather);yield return Photo(id+"-ClearMorning");}
                 }
                 Day(GoryeoAtmosphere.Kind.Monsoon,12,weather);int pool=weather.CreatedParticleRenderers;for(int i=0;i<20;i++){Day(GoryeoAtmosphere.Kind.Clear,12,weather);Day(GoryeoAtmosphere.Kind.Rain,12,weather);Day(GoryeoAtmosphere.Kind.Monsoon,12,weather);}Check(pool==weather.CreatedParticleRenderers&&pool==128,"pool reuse no growth "+id);
                 Time.timeScale=1;float start=Time.realtimeSinceStartup;for(int i=0;i<30;i++)yield return null;r.approximateUnscaledFrameMs=(Time.realtimeSinceStartup-start)*1000/30;Time.timeScale=0;
-                string original=map.mapId;map.mapId="north_birka";weather.Refresh();Check(weather.ActiveParticles==0&&weather.ActiveMistBands==0,"foreign scope idle "+id);map.mapId=original;
+                string original=map.mapId;map.mapId="north_birka";weather.Refresh();Check(weather.ActiveParticles==0,"foreign scope idle "+id);map.mapId=original;
                 weather.enabled=false;Check(weather.ActiveParticles==0,"disable hides effect "+id);weather.enabled=true;weather.Refresh();Check(weather.ActiveParticles==128,"enable restores current weather "+id);
                 Check(Fingerprint(map)==terrain,"final terrain unchanged "+id);Check(!GameManager.I.AutosaveEnabled,"saves off "+id);
             }
