@@ -6,6 +6,10 @@ ROOT=Path(__file__).resolve().parents[2]
 sys.path[:0]=[str(ROOT/'Tools/MapGen'),str(ROOT/'Tools/ArtTrials')]
 from asset_manifest import validate
 from c7_catalogue import rgba_evidence
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 OUT=ROOT/'ArtReview/C7-NaturalPond-20261027'
 class NaturalPondChecks(unittest.TestCase):
     def test_manifest_and_whole_preset(self):
@@ -38,7 +42,7 @@ class NaturalPondChecks(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             for name in ['pond','inner-corner']:
                 output=Path(temp)/(name+'.png')
-                subprocess.run([str(binary),'-b',str(OUT/(name+'.aseprite')),'--save-as',str(output)],check=True,capture_output=True)
+                run_aseprite([str(binary),'-b',str(OUT/(name+'.aseprite')),'--save-as',str(output)],check=True,capture_output=True)
                 self.assertEqual(rgba_evidence(output),rgba_evidence(OUT/(name+'.png')))
     def test_actual_play_change_bounds(self):
         folder=ROOT/'ArtReview/C7-TeamStyle-20261027/PondNatural-v13'

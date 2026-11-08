@@ -7,6 +7,10 @@ OUT=ROOT/'ArtReview/MountainRange-S2'
 FROZEN=ROOT/'ArtReview/Approved/MountainRange-S1'
 sys.path.insert(0,str(ROOT/'Tools/MapGen'))
 from tiles import autotile
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 SPEC={n:(f'ArtReview/Approved/MountainRange-S1/{n}.png',w,192,0,0) for n,w in [('west-cap',128),('body-a',192),('body-b',64),('east-cap',128)]}
 SPEC.update({n:(f'ArtReview/MountainRange-S2/Native/{n}.png',192,256,left,right) for n,left,right in [('bend-north',64,0),('bend-south',0,64)]})
 SEQUENCES={'reference':['west-cap','body-a','east-cap'],
@@ -77,7 +81,7 @@ def main():
             im=rgba(ROOT/SPEC[name][0]);assert im.size==(192,256)
             assert set(im.getchannel('A').tobytes())<={0,255} and set(zip(*[iter(im.tobytes())]*4))<=palette
             target=Path(temp)/f'{name}.png'
-            subprocess.run(['/Applications/Aseprite.app/Contents/MacOS/aseprite','-b',str((ROOT/SPEC[name][0]).with_suffix('.aseprite')),'--save-as',str(target)],check=True,capture_output=True)
+            run_aseprite(['/Applications/Aseprite.app/Contents/MacOS/aseprite','-b',str((ROOT/SPEC[name][0]).with_suffix('.aseprite')),'--save-as',str(target)],check=True,capture_output=True)
             check=rgba(target);assert check.size==im.size and check.tobytes()==im.tobytes()
             assets.append(dict(name=name,size=list(im.size),rgbaSha256=hashlib.sha256(im.tobytes()).hexdigest(),asepriteRGBAEqual=True))
     worlds={}

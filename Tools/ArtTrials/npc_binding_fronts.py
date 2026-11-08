@@ -5,6 +5,10 @@ from PIL import Image,ImageDraw,ImageFont
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'Tools/ArtTrials'))
 import npc_expand_remaining as R
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 OUT=ROOT/'ArtReview/C1-Binding-Fronts'
 ASE='/Applications/Aseprite.app/Contents/MacOS/aseprite'
 ROLES=[('porter','지게꾼'),('merchant','시전 상인'),('merchant_silk','비단 장수'),('scholar','선비'),('woman_ricecake','떡 장수')]
@@ -97,8 +101,8 @@ def generate():
     OUT.mkdir(parents=True,exist_ok=True);assets=[];profiles={};checks=[]
     for name,title in ROLES:
         im=render(name);im.save(OUT/f'{name}-front.png')
-        subprocess.run([ASE,'-b',str(OUT/f'{name}-front.png'),'--save-as',str(OUT/f'{name}-front.aseprite')],check=True)
-        reopened=OUT/f'{name}-reopened.png';subprocess.run([ASE,'-b',str(OUT/f'{name}-front.aseprite'),'--save-as',str(reopened)],check=True)
+        run_aseprite([ASE,'-b',str(OUT/f'{name}-front.png'),'--save-as',str(OUT/f'{name}-front.aseprite')],check=True)
+        reopened=OUT/f'{name}-reopened.png';run_aseprite([ASE,'-b',str(OUT/f'{name}-front.aseprite'),'--save-as',str(reopened)],check=True)
         assert Image.open(reopened).convert('RGBA').tobytes()==im.tobytes();reopened.unlink()
         assert im.size==(16,24) and set(im.getchannel('A').get_flattened_data())=={0,255} and im.getchannel('A').getbbox()[3]==24
         profiles[name]=dict(pixelsPerCell=[16,24],binaryAlpha=True,palette=sorted({'#%02x%02x%02x'%p[:3] for p in im.get_flattened_data() if p[3]}))

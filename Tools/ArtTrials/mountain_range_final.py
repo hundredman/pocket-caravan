@@ -7,6 +7,10 @@ from scipy import ndimage
 ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'ArtReview/MountainRange-Final'
 sys.path.insert(0,str(ROOT/'Tools/MapGen'))
 from tiles import autotile
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 BASE=json.loads((ROOT/'ArtReview/MountainRange-S2b/catalogue.json').read_text())['assets']
 A=json.loads(json.dumps(BASE))
 def rgba(path):return Image.open(path).convert('RGBA')
@@ -147,7 +151,7 @@ def main():
             im=image(name);assert list(im.size)==a['size'] and set(im.getchannel('A').tobytes())<={0,255}
             assert set(zip(*[iter(im.tobytes())]*4))<=palette,name
             target=Path(temp)/f'{name}.png';source=(ROOT/a['path']).with_suffix('.aseprite')
-            subprocess.run(['/Applications/Aseprite.app/Contents/MacOS/aseprite','-b',str(source),'--save-as',str(target)],check=True,capture_output=True)
+            run_aseprite(['/Applications/Aseprite.app/Contents/MacOS/aseprite','-b',str(source),'--save-as',str(target)],check=True,capture_output=True)
             check=rgba(target);assert check.size==im.size and check.tobytes()==im.tobytes(),name
             shutil.copy2(ROOT/a['path'],package/f'{name}.png');shutil.copy2(source,package/f'{name}.aseprite')
             assert digest(rgba(package/f'{name}.png'))==digest(im)

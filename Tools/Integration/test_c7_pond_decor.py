@@ -8,6 +8,10 @@ from c7_pond_decor import OUT
 from c7_catalogue import rgba_evidence
 from asset_manifest import validate
 
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
+
 class C7PondDecorChecks(unittest.TestCase):
     def test_a2_water_only_whole_objects_pending(self):
         doc=json.loads((OUT/'catalogue.json').read_text());layout=json.loads((OUT/'layout.json').read_text())
@@ -24,7 +28,7 @@ class C7PondDecorChecks(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             for name in ['leaves','flower']:
                 output=Path(temp)/(name+'.png')
-                subprocess.run([str(binary),'-b',str(OUT/'Native'/(name+'.aseprite')),'--save-as',str(output)],check=True,capture_output=True)
+                run_aseprite([str(binary),'-b',str(OUT/'Native'/(name+'.aseprite')),'--save-as',str(output)],check=True,capture_output=True)
                 self.assertEqual(rgba_evidence(output),rgba_evidence(OUT/'Native'/(name+'.png')))
                 self.assertEqual(rgba_evidence(output)['size'],[16,16])
 

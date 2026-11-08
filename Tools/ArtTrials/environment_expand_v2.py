@@ -5,6 +5,10 @@ from PIL import Image,ImageDraw,ImageFont
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'Tools/MapGen'))
 import goryeo_art as G
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 OUT=ROOT/'ArtReview/Environment-Expand-v2'
 ASE='/Applications/Aseprite.app/Contents/MacOS/aseprite'
 ASSETS=[('palace','궁궐','hall',10,7),('cottage','초가집','thatch',5,4),('willow','버드나무','woodland5',4,4)]+[(f'forest_{i}',f'숲 나무 {i}',f'woodland{i}',*G.NATURE_SIZES[i]) for i in (1,2,3,4,6,7)]+[('cottage_small','초가집(작은형)','thatch',4,3)]
@@ -17,14 +21,14 @@ def generate():
     for key,title,source,w,h in ASSETS:
         original=G.sprite(source,w,h).convert('RGBA');original.save(OUT/f'{key}-before.png')
         output=OUT/key
-        subprocess.run([ASE,'-b','--script-param',f'source={OUT/f"{key}-before.png"}','--script-param',f'output={output}','--script-param','strength=gentle','--script',str(ROOT/'Tools/ArtTrials/gentle_cleanup.lua')],check=True)
+        run_aseprite([ASE,'-b','--script-param',f'source={OUT/f"{key}-before.png"}','--script-param',f'output={output}','--script-param','strength=gentle','--script',str(ROOT/'Tools/ArtTrials/gentle_cleanup.lua')],check=True)
         after=Image.open(OUT/f'{key}.png').convert('RGBA')
         assert after.size==original.size and after.getchannel('A').tobytes()==original.getchannel('A').tobytes()
         colors={p[:3] for p in original.get_flattened_data() if p[3]};aftercolors={p[:3] for p in after.get_flattened_data() if p[3]}
         assert aftercolors<=colors and set(after.getchannel('A').get_flattened_data())=={0,255}
         opaque=sum(p[3]>0 for p in original.get_flattened_data());changed=sum(a[:3]!=b[:3] for a,b in zip(original.get_flattened_data(),after.get_flattened_data()) if a[3])
         assert changed<=int(opaque*.04)
-        reopened=OUT/f'{key}-reopened.png';subprocess.run([ASE,'-b',str(OUT/f'{key}.aseprite'),'--save-as',str(reopened)],check=True)
+        reopened=OUT/f'{key}-reopened.png';run_aseprite([ASE,'-b',str(OUT/f'{key}.aseprite'),'--save-as',str(reopened)],check=True)
         assert Image.open(reopened).convert('RGBA').tobytes()==after.tobytes();reopened.unlink()
         profile=f'{key}_native';profiles[profile]=dict(pixelsPerCell=[16,16],binaryAlpha=True,palette=['#%02x%02x%02x'%c for c in sorted(colors)])
         tiles=[]

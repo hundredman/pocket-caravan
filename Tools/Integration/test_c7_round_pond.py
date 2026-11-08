@@ -7,6 +7,10 @@ sys.path.insert(0,str(ROOT/'Tools/MapGen'))
 sys.path.insert(0,str(ROOT/'Tools/ArtTrials'))
 from asset_manifest import validate
 from c7_catalogue import rgba_evidence
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 OUT=ROOT/'ArtReview/C7-RoundPond-20261027'
 
 class C7RoundPondChecks(unittest.TestCase):
@@ -39,7 +43,7 @@ class C7RoundPondChecks(unittest.TestCase):
         if not binary.exists():self.skipTest('Aseprite unavailable; native roundtrip not run')
         with tempfile.TemporaryDirectory() as temp:
             output=Path(temp)/'pond.png'
-            subprocess.run([str(binary),'-b',str(OUT/'pond.aseprite'),'--save-as',str(output)],check=True,capture_output=True)
+            run_aseprite([str(binary),'-b',str(OUT/'pond.aseprite'),'--save-as',str(output)],check=True,capture_output=True)
             self.assertEqual(rgba_evidence(output),rgba_evidence(OUT/'pond.png'))
         with Image.open(OUT/'pond.png') as im:
             pixels=list(im.convert('RGBA').get_flattened_data())

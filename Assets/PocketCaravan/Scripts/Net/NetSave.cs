@@ -85,6 +85,7 @@ namespace PocketCaravan
 
         void OnReceived(NetClient.Msg m)
         {
+            if (SaveSystem.UsingSeparateSlot) return;
             switch (m.t)
             {
                 case "welcome":
@@ -110,6 +111,14 @@ namespace PocketCaravan
 
         void Update()
         {
+            // Region/editor fixtures can still connect for multiplayer tests, but
+            // neither full saves nor the legacy money/cargo summary belong to the account.
+            if (SaveSystem.UsingSeparateSlot)
+            {
+                live = false; fullLive = false; waiting = null; waitingFull = null;
+                if (Offering) CloseOffer();
+                return;
+            }
             var net = NetClient.I;
             bool online = net != null && net.Status == NetClient.State.Online && net.IsAccount;
             if (!online) { live = false; fullLive = false; waiting = null; waitingFull = null; if (Offering) CloseOffer(); return; }

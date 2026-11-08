@@ -7,6 +7,10 @@ sys.path[:0]=[str(ROOT/'Tools/ArtTrials'),str(ROOT/'Tools/MapGen')]
 from c7_low_nature import OUT,DEFS,PALETTES
 from c7_catalogue import rgba_evidence
 from asset_manifest import validate
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 class LowNatureChecks(unittest.TestCase):
     def test_four_whole_objects_and_review_gate(self):
         doc=json.loads((OUT/'catalogue.json').read_text());layout=json.loads((OUT/'layout.json').read_text())
@@ -38,7 +42,7 @@ class LowNatureChecks(unittest.TestCase):
         if not binary.exists():self.skipTest('Aseprite unavailable; source roundtrip not run')
         with tempfile.TemporaryDirectory() as temp:
             for d in DEFS:
-                n=d['name'];p=Path(temp)/(n+'.png');subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(p)],check=True,capture_output=True)
+                n=d['name'];p=Path(temp)/(n+'.png');run_aseprite([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(p)],check=True,capture_output=True)
                 self.assertEqual(rgba_evidence(p),rgba_evidence(OUT/'Native'/(n+'.png')))
     def test_actual_play_latest_pixels_and_only_three_areas(self):
         self.assertIn('previewOnly true',(OUT/'Screens/complete.txt').read_text())

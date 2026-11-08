@@ -1,0 +1,42 @@
+[
+  {
+    "map": "Naru",
+    "step": 7,
+    "text": "상인에게 물건 하나 구매하기"
+  },
+  {
+    "map": "Naru",
+    "step": 8,
+    "text": "산 물건을 다른 마을 상인에게 판매하기"
+  },
+  {
+    "map": "north_birka",
+    "step": 7,
+    "text": "상인에게 물건 하나 구매하기"
+  },
+  {
+    "map": "north_birka",
+    "step": 8,
+    "text": "산 물건을 다른 마을 상인에게 판매하기"
+  },
+  {
+    "map": "venice_rialto",
+    "step": 7,
+    "text": "상인에게 물건 하나 구매하기"
+  },
+  {
+    "map": "venice_rialto",
+    "step": 8,
+    "text": "산 물건을 다른 마을 상인에게 판매하기"
+  },
+  {
+    "map": "arabia_ahsa",
+    "step": 7,
+    "text": "상인에게 물건 하나 구매하기"
+  },
+  {
+    "map": "arabia_ahsa",
+    "step": 8,
+    "text": "산 물건을 다른 마을 상인에게 판매하기"
+  }
+]

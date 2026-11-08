@@ -13,6 +13,10 @@ sys.path.insert(0,str(ROOT/'Tools/MapGen'))
 from c7_catalogue import OUT, rgba_evidence
 from asset_manifest import validate_catalogue
 
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
+
 
 class C7TrialChecks(unittest.TestCase):
     def test_catalogue_keeps_user_review_decisions(self):
@@ -44,7 +48,7 @@ class C7TrialChecks(unittest.TestCase):
             for name in names:
                 code.append(f"local s=app.open(root..'/Native/{name}.aseprite');s:saveCopyAs(out..'/{name}.png');s:close()")
             lua.write_text('\n'.join(code)+'\n')
-            subprocess.run([ase,'-b','--script-param','root='+str(OUT),'--script-param','output='+temp,'--script',str(lua)],check=True,capture_output=True)
+            run_aseprite([ase,'-b','--script-param','root='+str(OUT),'--script-param','output='+temp,'--script',str(lua)],check=True,capture_output=True)
             for name in names:
                 with self.subTest(name=name):
                     self.assertEqual(rgba_evidence(OUT/'Native'/(name+'.png')),rgba_evidence(Path(temp)/(name+'.png')))

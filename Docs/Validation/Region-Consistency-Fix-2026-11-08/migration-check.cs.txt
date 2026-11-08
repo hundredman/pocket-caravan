@@ -1,0 +1,30 @@
+var gm=PocketCaravan.GameManager.I;
+if(gm==null||gm.AutosaveEnabled||PocketCaravan.NetClient.I.Status!=PocketCaravan.NetClient.State.Offline)throw new System.Exception("Unsafe fixture");
+var flags=System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Static;
+var mem=(System.Collections.Generic.Dictionary<string,float>)typeof(PocketCaravan.GameManager).GetField("cooldowns",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance).GetValue(gm);
+var type=typeof(PocketCaravan.GoryeoIntro);var migrate=type.GetMethod("MigrateOrder",flags);
+var intro=UnityEngine.Object.FindFirstObjectByType<PocketCaravan.GoryeoIntro>();
+var done=type.GetMethod("Done",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance);
+int checks=0;
+for(int old=0;old<=11;old++){
+ mem.Remove("goryeo:intro_order");mem.Remove("goryeo:intro_q_done");gm.SetMemo("goryeo:intro",old);
+ migrate.Invoke(null,null);int expected=old==5||old==6?old-1:old;
+ if(gm.GetMemo("goryeo:intro")!=expected)throw new System.Exception("migration "+old);checks++;
+ migrate.Invoke(null,null);if(gm.GetMemo("goryeo:intro")!=expected)throw new System.Exception("not idempotent");checks++;
+ if(old==5){done.Invoke(intro,new object[]{2});done.Invoke(intro,new object[]{3});if(gm.GetMemo("goryeo:intro")!=7)throw new System.Exception("old Q lost");checks++;}
+ if(old==6){done.Invoke(intro,new object[]{3});if(gm.GetMemo("goryeo:intro")!=7)throw new System.Exception("old Q lost 6");checks++;}
+}
+mem.Remove("goryeo:intro");mem.Remove("goryeo:intro_order");migrate.Invoke(null,null);if(gm.HasMemo("goryeo:intro"))throw new System.Exception("fresh start falsely marked");checks++;
+gm.SetMemo("goryeo:intro",1);gm.SetMemo("goryeo:intro_order",2);mem.Remove("goryeo:intro_q_done");
+var player=PocketCaravan.PlayerController.Instance;
+var guide=System.Array.Find(UnityEngine.Object.FindObjectsByType<PocketCaravan.Interactable>(FindObjectsSortMode.None),x=>x.gameObject.name=="Intro Guide");
+player.transform.position=guide.transform.position+Vector3.left;
+if(PocketCaravan.Interactable.Nearest(player.transform.position,Vector2.right,1.8f)!=guide)throw new System.Exception("guide not interactable at bank");checks++;
+guide.Interact(player);
+var d=UnityEngine.Object.FindFirstObjectByType<PocketCaravan.DialogueUI>();
+if(!PocketCaravan.UIState.Blocking)throw new System.Exception("guide dialogue did not open");checks++;
+var choices=(System.Collections.Generic.List<PocketCaravan.DialogueUI.Choice>)typeof(PocketCaravan.DialogueUI).GetField("choices",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance).GetValue(d);
+typeof(PocketCaravan.DialogueUI).GetMethod("Pick",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance).Invoke(d,new object[]{choices[0]});
+if(gm.GetMemo("goryeo:intro")!=2)throw new System.Exception("first conversation progress");checks++;
+gm.SetMemo("goryeo:intro",4);
+return new {checks=checks,saveOFF=!gm.AutosaveEnabled,next="InventoryUI.Open through real event"};

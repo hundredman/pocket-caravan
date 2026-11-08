@@ -106,7 +106,7 @@ namespace PocketCaravan
                     bool match = (kind == "npc" && it is QuestNpc q && q.npcId == id)
                               || (kind == "market" && it is TownMarket m && m.town != null && m.town.id == id)
                               || (kind == "board" && it is ContractBoard b && b.town == id);
-                    if (match) return new Result { position = it.transform.position, label = it.DisplayName, target = it };
+                    if (match) return new Result { position = it.transform.position, label = WorldDisplayNames.For(it), target = it };
                 }
                 return null;
             }

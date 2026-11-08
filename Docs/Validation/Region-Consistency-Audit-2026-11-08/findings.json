@@ -1,0 +1,94 @@
+{
+  "baseline": "integration ff9a9ccf6, merged locally e0ccae77b; local approved NPC alias changes retained",
+  "tutorials": [
+    {
+      "file": "World/GoryeoIntro.cs",
+      "tasks": [
+        "Shift를 누른 채 걸어서 달려 보기",
+        "Tab을 눌러 내 상태 보기",
+        "Q를 눌러 할 일(퀘스트) 목록 보기",
+        "I를 눌러 보따리(소지품) 열어 보기",
+        "M을 눌러 지도 펼치고 장단 찾아보기",
+        "나루 장터에서 아무 물건이나 하나 사기",
+        "산 물건을 장터에 다시 팔아 보기",
+        "L을 눌러 장부에서 방금 거래 기록 확인하기"
+      ],
+      "topPill": false,
+      "doneShowsNotify": false,
+      "hideOnTab": false
+    },
+    {
+      "file": "North/NorthIntro.cs",
+      "tasks": [
+        "Shift를 누른 채 걸어서 달려 보기",
+        "Tab을 눌러 내 상태 보기",
+        "I를 눌러 소지품 주머니 열어 보기",
+        "M을 눌러 지도 펼쳐 보기",
+        "Q를 눌러 할 일(퀘스트) 목록 보기",
+        "광장 장터에서 아무 물건이나 하나 사기",
+        "산 물건을 장터에 다시 팔아 보기",
+        "L을 눌러 장부에서 방금 거래 기록 확인하기"
+      ],
+      "topPill": true,
+      "doneShowsNotify": true,
+      "hideOnTab": true
+    },
+    {
+      "file": "Venice/VeniceIntro.cs",
+      "tasks": [
+        "Shift를 누른 채 걸어서 달려 보기",
+        "Tab을 눌러 내 상태 보기",
+        "I를 눌러 소지품 주머니 열어 보기",
+        "M을 눌러 지도 펼쳐 보기",
+        "Q를 눌러 할 일(퀘스트) 목록 보기",
+        "리알토 장터에서 아무 물건이나 하나 사기",
+        "산 물건을 장터에 다시 팔아 보기",
+        "L을 눌러 장부에서 방금 거래 기록 확인하기"
+      ],
+      "topPill": true,
+      "doneShowsNotify": true,
+      "hideOnTab": true
+    },
+    {
+      "file": "Arabia/ArabiaIntro.cs",
+      "tasks": [
+        "Shift를 누른 채 걸어서 달려 보기",
+        "Tab을 눌러 내 상태 보기",
+        "I를 눌러 소지품 주머니 열어 보기",
+        "M을 눌러 지도 펼쳐 보기",
+        "Q를 눌러 할 일(퀘스트) 목록 보기",
+        "알 아흐사 장터에서 아무 물건이나 하나 사기",
+        "산 물건을 장터에 다시 팔아 보기",
+        "L을 눌러 장부에서 방금 거래 기록 확인하기"
+      ],
+      "topPill": true,
+      "doneShowsNotify": true,
+      "hideOnTab": true
+    }
+  ],
+  "guide": {
+    "mapHeightCode": 84,
+    "mapHeightActual": 89,
+    "actualTopDownCell": [
+      40,
+      38
+    ],
+    "actualWater": 1,
+    "actualBlocked": 1,
+    "oldPhysicalLocationInCurrentMap": [
+      18,
+      38
+    ],
+    "intendedWater": 0,
+    "intendedBlocked": 0,
+    "runtimePosition": [
+      40.5,
+      50.5
+    ],
+    "runtimeClosestReachableBodyDistance": 7.032951,
+    "talkRange": 1.8,
+    "reachable": false
+  },
+  "runtimeFixture": "All four region origins at step 2, Done(0) invoked in memory to step 3; screenshots show actual game rendering, not a human input playthrough.",
+  "finalFreshConsoleErrors": 0
+}

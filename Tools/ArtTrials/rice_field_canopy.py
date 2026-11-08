@@ -6,6 +6,10 @@ ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'ArtReview/RiceField-v5'
 sys.path.insert(0,str(ROOT/'Tools/MapGen'))
 from tiles import autotile
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 NAMES=[['north-west','north','north-east'],['west','center','east'],['south-west','south','south-east']]
 def rgba(path):return Image.open(path).convert('RGBA')
 def signature(path):
@@ -87,7 +91,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix='rice-canopy-ase-') as temp:
         for i,source in enumerate(sources):
             target=Path(temp)/f'{i}.png'
-            subprocess.run(['/Applications/Aseprite.app/Contents/MacOS/aseprite','-b',str(source),'--save-as',str(target)],check=True,capture_output=True)
+            run_aseprite(['/Applications/Aseprite.app/Contents/MacOS/aseprite','-b',str(source),'--save-as',str(target)],check=True,capture_output=True)
             a=rgba(source.with_suffix('.png'));b=rgba(target)
             assert a.size==b.size and a.tobytes()==b.tobytes(),source
     report=dict(status='pending_visual_approval',productionApplied=False,modules=9,logicalBlockCells=[4,4],

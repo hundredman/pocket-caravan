@@ -1,0 +1,44 @@
+{
+  "fixture": {
+    "autosave": false,
+    "network": "Offline",
+    "firstScene": "Gaegyeong",
+    "personalFilesUnchanged": 9
+  },
+  "migrationAndDialogueChecks": 30,
+  "guide": {
+    "position": [
+      18.5,
+      50.5,
+      0.5
+    ],
+    "sourceWorldCell": [
+      242,
+      60
+    ],
+    "motorTicksFromS0": 28,
+    "distance": 1.29353678,
+    "talkRange": 1.8,
+    "walkable": true
+  },
+  "tutorial": {
+    "inventoryOpenEventStep": 5,
+    "mapVirtualKeyOpenedStep": 6,
+    "questVirtualKeyBlockingStep": 7,
+    "realBuyItem": "salt",
+    "buyStep": 8,
+    "sellStep": 9,
+    "ledgerVirtualKeyOpenedStep": 10,
+    "returnDialogueStep": 11,
+    "returnReward": 20,
+    "expandedHUDHidesIntro": true
+  },
+  "consoleErrors": 0,
+  "notExecuted": [
+    "physical Shift/Tab full input run",
+    "four-origin complete tutorial and first delivery acceptance",
+    "all map density positions",
+    "live server and remote character render",
+    "performance and build"
+  ]
+}

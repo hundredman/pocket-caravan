@@ -1,0 +1,23 @@
+var gm=PocketCaravan.GameManager.I;var f=System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance;var d=UnityEngine.Object.FindFirstObjectByType<PocketCaravan.DialogueUI>();var type=typeof(PocketCaravan.DialogueUI);
+if((bool)type.GetField("open",f).GetValue(d))throw new System.Exception("Acknowledged opening repeated");
+var save=UnityEngine.Object.FindFirstObjectByType<PocketCaravan.NetSave>();var slot=typeof(PocketCaravan.SaveSystem).GetField("slotFile",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Static);var old=slot.GetValue(null);
+try{
+ slot.SetValue(null,null);
+ typeof(PocketCaravan.NetSave).GetMethod("OnReceived",f).Invoke(save,new object[]{new PocketCaravan.NetClient.Msg{t="welcome",account=false}});
+ if(typeof(PocketCaravan.NetSave).GetField("waiting",f).GetValue(save)==null)throw new System.Exception("Normal slot receiver disabled");
+}finally{
+ slot.SetValue(null,old);typeof(PocketCaravan.NetSave).GetMethod("Update",f).Invoke(save,null);
+}
+var intro=UnityEngine.Object.FindFirstObjectByType<PocketCaravan.GoryeoIntro>();var onMap=typeof(PocketCaravan.GoryeoIntro).GetMethod("OnMap",f);
+var mem=(System.Collections.Generic.Dictionary<string,float>)typeof(PocketCaravan.GameManager).GetField("cooldowns",f).GetValue(gm);
+mem.Remove("goryeo:intro_opening");int checks=0;
+foreach(int step in new[]{2,4,7,10,11}){
+ gm.SetMemo("goryeo:intro",step);onMap.Invoke(intro,new object[]{"Naru"});
+ if(typeof(PocketCaravan.GoryeoIntro).GetField("arrival",f).GetValue(intro)!=null||gm.GetMemo("goryeo:intro")!=step)throw new System.Exception("Progressed save replayed opening: "+step);
+ checks++;
+}
+gm.SetMemo("goryeo:intro",1);onMap.Invoke(intro,new object[]{"Naru"});
+if(typeof(PocketCaravan.GoryeoIntro).GetField("arrival",f).GetValue(intro)==null)throw new System.Exception("Legacy step1 not recovered");
+typeof(PocketCaravan.GoryeoIntro).GetMethod("Start",f).Invoke(intro,null);
+if(typeof(PocketCaravan.GoryeoIntro).GetField("arrival",f).GetValue(intro)==null)throw new System.Exception("Duplicate Start cancelled opening");
+return new{acknowledgedDidNotRepeat=true,normalSlotReceives=true,progressedSaveCases=checks,legacyStep1Scheduled=true,duplicateStartPreserved=true,offline=PocketCaravan.NetClient.I.Status.ToString()};
