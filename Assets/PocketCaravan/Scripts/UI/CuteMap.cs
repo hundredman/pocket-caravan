@@ -35,7 +35,7 @@ namespace PocketCaravan
         /// toggleLabel이 있으면 왼쪽 위에 보조 단추 (고려 전체/상세).
         /// </summary>
         public static Result Draw(string title, Texture2D terrain, float atlasW, float atlasH, List<Place> places, Vector2? me,
-            string current, string legend, List<(string text, Vector2 at)> notes = null, string toggleLabel = null, bool sideLabels = false, bool smallPin = false)
+            string current, string legend, List<(string text, Vector2 at)> notes = null, string toggleLabel = null, bool sideLabels = false)
         {
             var result = new Result();
             CuteUI.Dim();
@@ -76,9 +76,9 @@ namespace PocketCaravan
                     CuteUI.Label(nr.x + 4, nr.center.y, text, CuteUI.Sub, true);
                 }
 
-            NearLabels(places, Project, canvas, area, me.HasValue ? (Vector2?)Project(me.Value) : null, sideLabels, smallPin);
+            NearLabels(places, Project, canvas, area, me.HasValue ? (Vector2?)Project(me.Value) : null, sideLabels);
 
-            if (me.HasValue) { if (smallPin) SmallPin(Project(me.Value)); else Pin(Project(me.Value)); }
+            if (me.HasValue) Pin(Project(me.Value));
             Footer(r, area, current, legend, stackKeys, stackSwatches);
             return result;
         }
@@ -121,10 +121,9 @@ namespace PocketCaravan
         }
 
         /// <summary>밀집한 곳만 빈 공간을 탐색한다. 결과를 캐시해 매 OnGUI마다 후보를 다시 찾지 않는다.</summary>
-        static void NearLabels(List<Place> places, System.Func<Vector2, Vector2> project, Rect canvas, Rect area, Vector2? me, bool sideLabels, bool smallPin)
+        static void NearLabels(List<Place> places, System.Func<Vector2, Vector2> project, Rect canvas, Rect area, Vector2? me, bool sideLabels)
         {
-            var pin = !me.HasValue ? default : smallPin ? new Rect(Mathf.Round(me.Value.x)-6, Mathf.Round(me.Value.y)-15, 13, 18)
-                : new Rect(Mathf.Round(me.Value.x)-8, Mathf.Round(me.Value.y)-20, 17, 24);
+            var pin = me.HasValue ? new Rect(Mathf.Round(me.Value.x)-6, Mathf.Round(me.Value.y)-15, 13, 18) : default;
             var layout = lastLabels;
             if (layout == null || layout.canvas != canvas || layout.area != area || layout.pin != pin
                 || layout.font != UIStyle.SmallFont || layout.size != UIStyle.SmallSize || layout.sideLabels != sideLabels || !SamePlaces(layout, places))
@@ -316,19 +315,8 @@ namespace PocketCaravan
             GUI.Label(lr, label, TagStyle);
         }
 
-        /// <summary>내 위치: 주황 핀 (흰 가운데 + 아래 뾰족)</summary>
+        /// <summary>내 위치 핀 (2026-11-08 모든 지역 통일): 주황으로 채운 작은 원 + 아래 뾰족</summary>
         static void Pin(Vector2 p)
-        {
-            float x = Mathf.Round(p.x), y = Mathf.Round(p.y);
-            CuteUI.Circle(x - 2, y - 2, 5, CuteUI.Ink, CuteUI.Ink);
-            for (int i = 0; i < 4; i++) CuteUI.Fill(new Rect(x - 3 + i, y - 6 + i, 7 - 2 * i, 1), CuteUI.Ink);
-            for (int i = 0; i < 3; i++) CuteUI.Fill(new Rect(x - 2 + i, y - 6 + i, 5 - 2 * i, 1), CuteUI.Frame);
-            CuteUI.Circle(x - 7, y - 19, 15, CuteUI.Frame, CuteUI.Ink, 1, 1);
-            CuteUI.Circle(x - 2, y - 14, 5, CuteUI.White, CuteUI.White, 0);
-        }
-
-        /// <summary>내 위치 작은 핀 (고려 지도, 2026-11-08): 기본 핀의 약 3/4 크기, 주황으로 채운 원</summary>
-        static void SmallPin(Vector2 p)
         {
             float x = Mathf.Round(p.x), y = Mathf.Round(p.y);
             CuteUI.Circle(x - 1, y - 1, 3, CuteUI.Ink, CuteUI.Ink);
