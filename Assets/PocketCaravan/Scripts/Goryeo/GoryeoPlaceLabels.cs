@@ -211,6 +211,8 @@ namespace PocketCaravan
             }
             foreach(var sr in it.GetComponentsInChildren<SpriteRenderer>())
                 if(sr.sprite!=null && (!(it is QuestNpc npc)||sr!=npc.marker))return sr.bounds;
+            // 11/08 은샘: 타일로 그린 이정표도 그림으로 단 이정표와 같은 한 칸 몸으로 본다(이름은 바로 위, Space는 바로 아래).
+            if(it is TalkNpc && it.DisplayName=="이정표")return new Bounds(it.transform.position,new Vector3(1f,1f,0));
             return new Bounds(it.transform.position+Vector3.up*.5f,new Vector3(.8f,1f,0));
         }
         static Vector2 NamePoint(Camera cam,Bounds body)

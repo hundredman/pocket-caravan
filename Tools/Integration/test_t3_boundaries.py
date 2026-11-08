@@ -138,7 +138,7 @@ class BoundaryReview(unittest.TestCase):
             expected=self.tiles[layer].copy()
             for x,y in self.report['trimmedReviewCells']:expected[y+130,x]=''
             np.testing.assert_array_equal(restored[layer],expected)
-        self.assertEqual(int(walk.sum()),sum(sum(not b for b in d['blocked'])for d in self.sources.values())-4+self.report['roadForestCells'])  # 11/08 은샘: 숲 사이로 이은 길
+        self.assertEqual(int(walk.sum()),sum(sum(not b for b in d['blocked'])for d in self.sources.values())-4+self.report['roadForestCells']+self.report['signCellsOpened'])  # 11/08 은샘: 숲 사이로 이은 길
     def test_existing_three_foreign_links_and_incoming_ids_are_preserved(self):
         baseline=self.report['foreignBaseline'];self.assertEqual(len(baseline),3)
         expected={'north_c_road_se','arabia_central_eastvale','arabia_central_steppe'}

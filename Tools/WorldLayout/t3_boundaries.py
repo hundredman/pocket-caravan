@@ -184,6 +184,12 @@ def generate(config,sources):
                     col=0 if not W_ else 2 if not E else 1;row=7 if not N else 9 if not S else 8
                     t=f'floor_{col}_{row}_goryeo_jade'
                 tile_world['ground'][r,wx]=t
+    # 11/08: a sign removed by signEdits takes its sign tile and its blocked cell with it (before seams/exits are found).
+    sign_cells=0
+    for e in config.get('signEdits',{}).get('edits',[]):
+        if not e.get('remove'):continue
+        sx,sy=e['world'];r=sy-oy
+        if tile_world['obj'][r,sx]=='element_0_2':tile_world['obj'][r,sx]='';sign_cells+=int(not walk[r,sx]);walk[r,sx]=True
     # 11/08 v4: re-draw the new forest (void fill) and the forest beside new roads with the original forest lattice,
     # so edges show whole trees like the native forest instead of square cuts. Walk/blocked are unchanged.
     forest_render=None
@@ -303,7 +309,7 @@ def generate(config,sources):
     covered=np.zeros_like(known)
     for mid,(x0,y0,x1,y1)in boxes.items():covered[y0-oy:y1-oy,x0:x1]=True
     report['trimmedReviewCells']=[[int(x),int(y+oy)]for y,x in zip(*np.nonzero(known&~covered))]
-    report['roadForestCells']=len(forest_cells)
+    report['roadForestCells']=len(forest_cells);report['signCellsOpened']=sign_cells
     if forest_render:report['forestRender']=dict(cells=forest_render['cells'],changedCells=forest_render['changedCells'],newTiles=sorted(forest_render['tiles']));report['_forestTiles']=forest_render
     report['trimmedWalkableCells']=int((walk&~covered).sum())
     report['trimNote']='Review-only: west tip is shortened by one column to fit two separate existing foreign portals on the same true outer face. No new land or foreign file changes.'

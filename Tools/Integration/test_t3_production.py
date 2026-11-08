@@ -20,7 +20,7 @@ class Production(unittest.TestCase):
    for o in d['objects']:
     if o['kind']!='exit':continue
     count+=1;self.assertEqual({'W':o['x'],'E':d['w']-o['x']-o['w'],'N':o['y'],'S':d['h']-o['y']-o['h']}[o['edge']],0)
-  self.assertEqual(count,671)   # 11/08 v4 경계 (전 635)
+  self.assertEqual(count,677)   # 11/08 v4 경계 (전 635), 이정표 정리로 경계 칸 6개가 열림 (전 671)
  def points(self,rows,key,old,cell=False):
   result=[]
   for row in rows:
