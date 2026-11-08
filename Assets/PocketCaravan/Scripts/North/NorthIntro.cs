@@ -121,7 +121,7 @@ namespace PocketCaravan
             {
                 DialogueUI.Show(Mom,
                     "잘했다! 이제 상인의 기본은 다 익혔구나.\n\n" +
-                    "같은 장터에서 사서 바로 되팔면 손해를 봤지? 장사는 싼 곳에서 사서 그 물건이 귀한 곳에 가져가 파는 거란다.\n" +
+                    "산 곳과 판 곳의 값이 달랐지? 장사는 싼 곳에서 사서 그 물건이 귀한 곳에 가져가 파는 거란다.\n" +
                     "좋은 물건을 좋은 값에 사려면 사람들의 믿음, 신용이 필요해. 신용은 사람들의 부탁을 들어주며 쌓이지.",
                     new DialogueUI.Choice("은빛 순록은요?", () => DialogueUI.Show(Mom,
                         "옛 노래에 은빛 순록은 길을 잃은 상인에게 길을 밟아 보여 준대. 북유럽 곳곳의 룬돌에 그 이야기가 새겨져 있다더구나.\n" +
@@ -151,8 +151,29 @@ namespace PocketCaravan
         }
 
         void OnInventory() { if (IsReindeer) Done(2); }
-        void OnBought(ItemData item, TownData town, int price) { if (IsReindeer) Done(5); }
-        void OnSold(ItemData item, TownData town, int price, int profit) { if (IsReindeer) Done(6); }
+        // 11/08 "산 물건을 다른 마을 상인에게 판매하기": 산 마을(Db.towns 번호)을 기억해 두고, 그 마을이 아닌 곳에서 팔아야 끝난다
+        //   (예전엔 아무 판매로나 끝나, 산 곳에서 되팔아도 넘어갔다). 이 메모가 없는 예전 저장은 아무 판매로나 끝난다
+        const string BuyTownMemo = "north:intro:buytown";
+
+        void OnBought(ItemData item, TownData town, int price)
+        {
+            if (!IsReindeer) return;
+            var gm = GameManager.I;
+            if (Step == 7 && gm != null && gm.Db != null) gm.SetMemo(BuyTownMemo, gm.Db.towns.IndexOf(town));
+            Done(5);
+        }
+
+        void OnSold(ItemData item, TownData town, int price, int profit)
+        {
+            if (!IsReindeer || Step != 8) return;
+            var gm = GameManager.I;
+            if (gm != null && gm.Db != null && gm.HasMemo(BuyTownMemo) && gm.Db.towns.IndexOf(town) == Mathf.RoundToInt(gm.GetMemo(BuyTownMemo)))
+            {
+                Notify.Show("산 마을이 아닌 다른 마을 상인에게 팔아 보세요", 3f);
+                return;
+            }
+            Done(6);
+        }
 
         void Update()
         {
