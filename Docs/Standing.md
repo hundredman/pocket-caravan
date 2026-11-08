@@ -48,7 +48,7 @@
 | 개경 보관소 신용 3 이상 (`TownFacility.minCredit`) | 신용 유지(짐을 맡기는 시설이므로). 수도권 **고급** 시설은 평판 조건 |
 | 길에서 쓰러진 행인을 도우면 신용 +1 (`RoadEvent`) | **평판**으로 바꾼다(확정: 단순 선행은 평판) |
 | 퀘스트 보상 신용 +1~2 (`QuestData.rewardCredit`) | 퀘스트마다 다시 분류: 계약성 일은 신용, 마을 사람 돕기는 평판 |
-| 출신별 시작 신용(바이킹 −2) (`OriginData.startingCredit`) | 바이킹은 기우 담당. 시작 평판 보정과 겹치므로 팀과 정리(임의 수정 안 함) |
+| 출신별 시작 신용 (`OriginData.startingCredit`) | 2026-11-08 은샘 결정: 바이킹 −2 → 0. 네 문명 모두 0에서 시작 |
 
 ### R6 결정 (2026-10-24, Claude — Codex 검토 요청 [R6-Review-Handoff](Validation/R6-Review-Handoff-2026-10-24.md)에 대한 답)
 
