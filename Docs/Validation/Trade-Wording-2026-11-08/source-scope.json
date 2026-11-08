@@ -1,0 +1,18 @@
+[
+  {
+    "file": "Assets/PocketCaravan/Scripts/World/GoryeoIntro.cs",
+    "onlyTwoHintStringsChanged": true
+  },
+  {
+    "file": "Assets/PocketCaravan/Scripts/North/NorthIntro.cs",
+    "onlyTwoHintStringsChanged": true
+  },
+  {
+    "file": "Assets/PocketCaravan/Scripts/Venice/VeniceIntro.cs",
+    "onlyTwoHintStringsChanged": true
+  },
+  {
+    "file": "Assets/PocketCaravan/Scripts/Arabia/ArabiaIntro.cs",
+    "onlyTwoHintStringsChanged": true
+  }
+]

@@ -1,0 +1,2427 @@
+{
+  "scope": "Registered NPC/villager names, named human talkers/workers in their map JSONs, and initial tutorial guides. Unique exact full names per region, spaces included; dynamic scripted people and custom short aliases are not yet a complete runtime inventory.",
+  "regions": [
+    {
+      "region": "arabia",
+      "uniqueNames": 70,
+      "min": 3,
+      "median": 8.0,
+      "max": 13,
+      "mean": 7.69,
+      "distribution": {
+        "3": 1,
+        "4": 1,
+        "5": 8,
+        "6": 11,
+        "7": 9,
+        "8": 15,
+        "9": 16,
+        "10": 5,
+        "11": 1,
+        "12": 2,
+        "13": 1
+      },
+      "over8": 25,
+      "examples": [
+        [
+          9,
+          "직물 상인 라시드"
+        ],
+        [
+          9,
+          "창고 관리인 살마"
+        ],
+        [
+          9,
+          "협곡 마을 할머니"
+        ],
+        [
+          10,
+          "떠돌이 상인 오마르"
+        ],
+        [
+          10,
+          "백화점 지배인 셀린"
+        ],
+        [
+          10,
+          "붉은 돌 캐는 사람"
+        ],
+        [
+          10,
+          "양탄자 위의 노점상"
+        ],
+        [
+          10,
+          "하산의 조카 아미르"
+        ],
+        [
+          11,
+          "향료 대상의 우두머리"
+        ],
+        [
+          12,
+          "망루 터를 살피는 학자"
+        ],
+        [
+          12,
+          "여행 장비 상인 바쉬르"
+        ],
+        [
+          13,
+          "나즈드의 대상 숙소 주인"
+        ]
+      ],
+      "names": [
+        {
+          "name": "정원사",
+          "length": 3,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "낙타몰이",
+          "length": 4,
+          "sources": [
+            "arabia_ahsa"
+          ]
+        },
+        {
+          "name": "곡물 장수",
+          "length": 5,
+          "sources": [
+            "arabia_zabid",
+            "villagers"
+          ]
+        },
+        {
+          "name": "구슬 장수",
+          "length": 5,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "물류 담당",
+          "length": 5,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "방울 춤꾼",
+          "length": 5,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "여관 주인",
+          "length": 5,
+          "sources": [
+            "arabia_jeddah",
+            "arabia_sanaa",
+            "arabia_taiz",
+            "arabia_zabid"
+          ]
+        },
+        {
+          "name": "염색 장인",
+          "length": 5,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "커피 농부",
+          "length": 5,
+          "sources": [
+            "arabia_zabid"
+          ]
+        },
+        {
+          "name": "향수 장수",
+          "length": 5,
+          "sources": [
+            "arabia_ahsa"
+          ]
+        },
+        {
+          "name": "개울가 아이",
+          "length": 6,
+          "sources": [
+            "arabia_central_steppe"
+          ]
+        },
+        {
+          "name": "관람차 사공",
+          "length": 6,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "궁전 문지기",
+          "length": 6,
+          "sources": [
+            "arabia_sanaa"
+          ]
+        },
+        {
+          "name": "길잡이 하산",
+          "length": 6,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "연못 정원사",
+          "length": 6,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "열기구 사공",
+          "length": 6,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "우물가 아이",
+          "length": 6,
+          "sources": [
+            "arabia_ahsa"
+          ]
+        },
+        {
+          "name": "유향 채집꾼",
+          "length": 6,
+          "sources": [
+            "arabia_farmroad"
+          ]
+        },
+        {
+          "name": "포도밭 지기",
+          "length": 6,
+          "sources": [
+            "arabia_central_westvale"
+          ]
+        },
+        {
+          "name": "협곡 안내인",
+          "length": 6,
+          "sources": [
+            "arabia_central_canyon"
+          ]
+        },
+        {
+          "name": "협곡 양치기",
+          "length": 6,
+          "sources": [
+            "arabia_central_canyon"
+          ]
+        },
+        {
+          "name": "고원의 나무꾼",
+          "length": 7,
+          "sources": [
+            "arabia_central_eastvale"
+          ]
+        },
+        {
+          "name": "대추야자 농부",
+          "length": 7,
+          "sources": [
+            "arabia_ahsa",
+            "villagers"
+          ]
+        },
+        {
+          "name": "떠돌이 곡예사",
+          "length": 7,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "모래 배 주인",
+          "length": 7,
+          "sources": [
+            "arabia_central_dunes"
+          ]
+        },
+        {
+          "name": "밭일하는 농부",
+          "length": 7,
+          "sources": [
+            "arabia_zabid"
+          ]
+        },
+        {
+          "name": "북문 수비대장",
+          "length": 7,
+          "sources": [
+            "arabia_sanaa"
+          ]
+        },
+        {
+          "name": "성채 터 경비",
+          "length": 7,
+          "sources": [
+            "arabia_taiz"
+          ]
+        },
+        {
+          "name": "장터지기 카림",
+          "length": 7,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "짐꾼 힌드바드",
+          "length": 7,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "게르의 할아버지",
+          "length": 8,
+          "sources": [
+            "arabia_central_steppe"
+          ]
+        },
+        {
+          "name": "공동 부엌 담당",
+          "length": 8,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "길 잃은 나그네",
+          "length": 8,
+          "sources": [
+            "arabia_shortcut"
+          ]
+        },
+        {
+          "name": "동상 닦는 아이",
+          "length": 8,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "등불 찻집 주인",
+          "length": 8,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "바구니 든 주민",
+          "length": 8,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "별 읽는 점술가",
+          "length": 8,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "빈 사막의 은자",
+          "length": 8,
+          "sources": [
+            "arabia_shortcut"
+          ]
+        },
+        {
+          "name": "숨은 샘의 시인",
+          "length": 8,
+          "sources": [
+            "arabia_central_dunes"
+          ]
+        },
+        {
+          "name": "쉬어 가는 대상",
+          "length": 8,
+          "sources": [
+            "arabia_central_dunes"
+          ]
+        },
+        {
+          "name": "오아시스 물지기",
+          "length": 8,
+          "sources": [
+            "arabia_central_dunes"
+          ]
+        },
+        {
+          "name": "차 마시는 노인",
+          "length": 8,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "피리 부는 악사",
+          "length": 8,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "향료 궁전 주인",
+          "length": 8,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "협곡 마을 아이",
+          "length": 8,
+          "sources": [
+            "arabia_central_canyon"
+          ]
+        },
+        {
+          "name": "대상 길잡이 바심",
+          "length": 9,
+          "sources": [
+            "arabia_central_dunes"
+          ]
+        },
+        {
+          "name": "마른 우물의 노인",
+          "length": 9,
+          "sources": [
+            "arabia_central_dunes"
+          ]
+        },
+        {
+          "name": "보석 상인 야스민",
+          "length": 9,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "북문 밖 낙타몰이",
+          "length": 9,
+          "sources": [
+            "arabia_central_dunes"
+          ]
+        },
+        {
+          "name": "불 재주꾼 자이드",
+          "length": 9,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "비단 상인 레일라",
+          "length": 9,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "빵 굽는 아주머니",
+          "length": 9,
+          "sources": [
+            "arabia_ahsa"
+          ]
+        },
+        {
+          "name": "상인 조합장 하킴",
+          "length": 9,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "성벽 터의 나그네",
+          "length": 9,
+          "sources": [
+            "arabia_central_dunes"
+          ]
+        },
+        {
+          "name": "수레 장인 유수프",
+          "length": 9,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "시장 상인 나디아",
+          "length": 9,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "야시장 꼬치 장수",
+          "length": 9,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "여관 주인 마리암",
+          "length": 9,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "직물 상인 라시드",
+          "length": 9,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "창고 관리인 살마",
+          "length": 9,
+          "sources": [
+            "arabia_taiz"
+          ]
+        },
+        {
+          "name": "협곡 마을 할머니",
+          "length": 9,
+          "sources": [
+            "arabia_central_canyon"
+          ]
+        },
+        {
+          "name": "떠돌이 상인 오마르",
+          "length": 10,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "백화점 지배인 셀린",
+          "length": 10,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "붉은 돌 캐는 사람",
+          "length": 10,
+          "sources": [
+            "arabia_central_canyon"
+          ]
+        },
+        {
+          "name": "양탄자 위의 노점상",
+          "length": 10,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "하산의 조카 아미르",
+          "length": 10,
+          "sources": [
+            "ArabiaIntro"
+          ]
+        },
+        {
+          "name": "향료 대상의 우두머리",
+          "length": 11,
+          "sources": [
+            "arabia_farmroad"
+          ]
+        },
+        {
+          "name": "망루 터를 살피는 학자",
+          "length": 12,
+          "sources": [
+            "arabia_farmroad"
+          ]
+        },
+        {
+          "name": "여행 장비 상인 바쉬르",
+          "length": 12,
+          "sources": [
+            "arabia_central_bazaar"
+          ]
+        },
+        {
+          "name": "나즈드의 대상 숙소 주인",
+          "length": 13,
+          "sources": [
+            "arabia_farmroad"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "center_north",
+      "uniqueNames": 38,
+      "min": 3,
+      "median": 8.0,
+      "max": 14,
+      "mean": 7.58,
+      "distribution": {
+        "3": 4,
+        "4": 2,
+        "5": 3,
+        "6": 4,
+        "7": 4,
+        "8": 9,
+        "9": 4,
+        "10": 3,
+        "11": 1,
+        "12": 1,
+        "13": 2,
+        "14": 1
+      },
+      "over8": 12,
+      "examples": [
+        [
+          9,
+          "빨래하는 아주머니"
+        ],
+        [
+          9,
+          "순록 돌보는 아이"
+        ],
+        [
+          9,
+          "숲 마을 장터지기"
+        ],
+        [
+          9,
+          "숲지기 노인 브란"
+        ],
+        [
+          10,
+          "길 위의 행상 토베"
+        ],
+        [
+          10,
+          "베네치아 유리 상인"
+        ],
+        [
+          10,
+          "별 보는 노인 울프"
+        ],
+        [
+          11,
+          "아라비아 향신료 상인"
+        ],
+        [
+          12,
+          "고개 넘는 나그네 비게"
+        ],
+        [
+          13,
+          "남쪽에서 온 향신료 상인"
+        ],
+        [
+          13,
+          "털모자 쓴 길잡이 아스타"
+        ],
+        [
+          14,
+          "포도밭에서 온 행상 마르코"
+        ]
+      ],
+      "names": [
+        {
+          "name": "강지기",
+          "length": 3,
+          "sources": [
+            "north_c_road_se"
+          ]
+        },
+        {
+          "name": "나무꾼",
+          "length": 3,
+          "sources": [
+            "north_c_road_nw"
+          ]
+        },
+        {
+          "name": "숯쟁이",
+          "length": 3,
+          "sources": [
+            "north_c_road_sw"
+          ]
+        },
+        {
+          "name": "썰매꾼",
+          "length": 3,
+          "sources": [
+            "north_c_snowwood"
+          ]
+        },
+        {
+          "name": "다리지기",
+          "length": 4,
+          "sources": [
+            "north_c_road_ne"
+          ]
+        },
+        {
+          "name": "역참지기",
+          "length": 4,
+          "sources": [
+            "north_c_runeway"
+          ]
+        },
+        {
+          "name": "길손 행상",
+          "length": 5,
+          "sources": [
+            "north_c_runeway"
+          ]
+        },
+        {
+          "name": "남쪽 행상",
+          "length": 5,
+          "sources": [
+            "north_c_road_se"
+          ]
+        },
+        {
+          "name": "여관 주인",
+          "length": 5,
+          "sources": [
+            "north_c_creek",
+            "north_c_crossing",
+            "north_c_gatetown",
+            "north_c_snowwood"
+          ]
+        },
+        {
+          "name": "경비병 하랄",
+          "length": 6,
+          "sources": [
+            "north_c_gatetown"
+          ]
+        },
+        {
+          "name": "길목 문지기",
+          "length": 6,
+          "sources": [
+            "north_c_crossing"
+          ]
+        },
+        {
+          "name": "나그네 할라",
+          "length": 6,
+          "sources": [
+            "north_c_creek"
+          ]
+        },
+        {
+          "name": "얼음 낚시꾼",
+          "length": 6,
+          "sources": [
+            "north_c_creek",
+            "north_c_road_ne"
+          ]
+        },
+        {
+          "name": "길손 음유시인",
+          "length": 7,
+          "sources": [
+            "north_c_road_ne"
+          ]
+        },
+        {
+          "name": "룬 읽는 노인",
+          "length": 7,
+          "sources": [
+            "north_c_runeway"
+          ]
+        },
+        {
+          "name": "물방앗간 주인",
+          "length": 7,
+          "sources": [
+            "north_c_creek"
+          ]
+        },
+        {
+          "name": "상단 우두머리",
+          "length": 7,
+          "sources": [
+            "north_c_crossing"
+          ]
+        },
+        {
+          "name": "경비병 시그문드",
+          "length": 8,
+          "sources": [
+            "north_c_gatetown"
+          ]
+        },
+        {
+          "name": "고려 상단 행수",
+          "length": 8,
+          "sources": [
+            "north_c_crossing"
+          ]
+        },
+        {
+          "name": "국경 표석 지기",
+          "length": 8,
+          "sources": [
+            "north_c_gatetown"
+          ]
+        },
+        {
+          "name": "길 지키는 노인",
+          "length": 8,
+          "sources": [
+            "north_c_road_nw"
+          ]
+        },
+        {
+          "name": "떠돌이 음유시인",
+          "length": 8,
+          "sources": [
+            "north_c_road_sw"
+          ]
+        },
+        {
+          "name": "물레방아 할머니",
+          "length": 8,
+          "sources": [
+            "north_c_road_se"
+          ]
+        },
+        {
+          "name": "북문 마을 촌장",
+          "length": 8,
+          "sources": [
+            "north_c_gatetown"
+          ]
+        },
+        {
+          "name": "순록 치는 소녀",
+          "length": 8,
+          "sources": [
+            "north_c_road_sw"
+          ]
+        },
+        {
+          "name": "천막 상인 아이",
+          "length": 8,
+          "sources": [
+            "north_c_gatetown"
+          ]
+        },
+        {
+          "name": "빨래하는 아주머니",
+          "length": 9,
+          "sources": [
+            "north_c_creek"
+          ]
+        },
+        {
+          "name": "순록 돌보는 아이",
+          "length": 9,
+          "sources": [
+            "north_c_snowwood"
+          ]
+        },
+        {
+          "name": "숲 마을 장터지기",
+          "length": 9,
+          "sources": [
+            "north_c_snowwood"
+          ]
+        },
+        {
+          "name": "숲지기 노인 브란",
+          "length": 9,
+          "sources": [
+            "north_c_snowwood"
+          ]
+        },
+        {
+          "name": "길 위의 행상 토베",
+          "length": 10,
+          "sources": [
+            "north_c_runeway"
+          ]
+        },
+        {
+          "name": "베네치아 유리 상인",
+          "length": 10,
+          "sources": [
+            "north_c_crossing"
+          ]
+        },
+        {
+          "name": "별 보는 노인 울프",
+          "length": 10,
+          "sources": [
+            "north_c_road_ne"
+          ]
+        },
+        {
+          "name": "아라비아 향신료 상인",
+          "length": 11,
+          "sources": [
+            "north_c_crossing"
+          ]
+        },
+        {
+          "name": "고개 넘는 나그네 비게",
+          "length": 12,
+          "sources": [
+            "north_c_road_nw"
+          ]
+        },
+        {
+          "name": "남쪽에서 온 향신료 상인",
+          "length": 13,
+          "sources": [
+            "north_c_gatetown"
+          ]
+        },
+        {
+          "name": "털모자 쓴 길잡이 아스타",
+          "length": 13,
+          "sources": [
+            "north_c_road_nw"
+          ]
+        },
+        {
+          "name": "포도밭에서 온 행상 마르코",
+          "length": 14,
+          "sources": [
+            "north_c_snowwood"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "center_venice",
+      "uniqueNames": 38,
+      "min": 2,
+      "median": 7.0,
+      "max": 13,
+      "mean": 6.87,
+      "distribution": {
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 7,
+        "6": 7,
+        "7": 5,
+        "8": 8,
+        "9": 7,
+        "13": 1
+      },
+      "over8": 8,
+      "examples": [
+        [
+          8,
+          "돌 나르는 인부"
+        ],
+        [
+          8,
+          "장어 잡는 어부"
+        ],
+        [
+          8,
+          "포도 따는 일꾼"
+        ],
+        [
+          8,
+          "포도 밟는 아이"
+        ],
+        [
+          9,
+          "다리 아래 빨래꾼"
+        ],
+        [
+          9,
+          "물새 그리는 화가"
+        ],
+        [
+          9,
+          "밧줄 감는 뱃사람"
+        ],
+        [
+          9,
+          "술통 굴리는 일꾼"
+        ],
+        [
+          9,
+          "약초 캐는 할머니"
+        ],
+        [
+          9,
+          "우편 나르는 기수"
+        ],
+        [
+          9,
+          "짐표 붙이는 서기"
+        ],
+        [
+          13,
+          "포도 바구니 나르는 아낙"
+        ]
+      ],
+      "names": [
+        {
+          "name": "길손",
+          "length": 2,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "양치기",
+          "length": 3,
+          "sources": [
+            "venice_c_pass"
+          ]
+        },
+        {
+          "name": "다리지기",
+          "length": 4,
+          "sources": [
+            "venice_c_bridge"
+          ]
+        },
+        {
+          "name": "관문 경비",
+          "length": 5,
+          "sources": [
+            "venice_c_gate"
+          ]
+        },
+        {
+          "name": "동문 경비",
+          "length": 5,
+          "sources": [
+            "venice_c_gate"
+          ]
+        },
+        {
+          "name": "마구간지기",
+          "length": 5,
+          "sources": [
+            "venice_c_post"
+          ]
+        },
+        {
+          "name": "목동 소년",
+          "length": 5,
+          "sources": [
+            "venice_c_pass"
+          ]
+        },
+        {
+          "name": "석공 조수",
+          "length": 5,
+          "sources": [
+            "venice_c_bridge"
+          ]
+        },
+        {
+          "name": "숙소 주인",
+          "length": 5,
+          "sources": [
+            "venice_c_landing",
+            "venice_c_post",
+            "venice_c_vineyard"
+          ]
+        },
+        {
+          "name": "하역 인부",
+          "length": 5,
+          "sources": [
+            "venice_c_landing"
+          ]
+        },
+        {
+          "name": "귀족의 마부",
+          "length": 6,
+          "sources": [
+            "venice_c_gate"
+          ]
+        },
+        {
+          "name": "나루터 짐꾼",
+          "length": 6,
+          "sources": [
+            "venice_c_landing"
+          ]
+        },
+        {
+          "name": "대상 요리사",
+          "length": 6,
+          "sources": [
+            "venice_c_post"
+          ]
+        },
+        {
+          "name": "떠돌이 악사",
+          "length": 6,
+          "sources": [
+            "venice_c_post"
+          ]
+        },
+        {
+          "name": "양조장 일꾼",
+          "length": 6,
+          "sources": [
+            "venice_c_vineyard"
+          ]
+        },
+        {
+          "name": "양조장 주인",
+          "length": 6,
+          "sources": [
+            "venice_c_vineyard"
+          ]
+        },
+        {
+          "name": "양치기 소년",
+          "length": 6,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "관문 앞 행상",
+          "length": 7,
+          "sources": [
+            "venice_c_gate"
+          ]
+        },
+        {
+          "name": "길 닦는 일꾼",
+          "length": 7,
+          "sources": [
+            "venice_c_gate"
+          ]
+        },
+        {
+          "name": "물 긷는 하인",
+          "length": 7,
+          "sources": [
+            "venice_c_post"
+          ]
+        },
+        {
+          "name": "순례길 나그네",
+          "length": 7,
+          "sources": [
+            "venice_c_pass"
+          ]
+        },
+        {
+          "name": "통역하는 학자",
+          "length": 7,
+          "sources": [
+            "venice_c_post"
+          ]
+        },
+        {
+          "name": "갈대 묶는 일꾼",
+          "length": 8,
+          "sources": [
+            "venice_c_marsh"
+          ]
+        },
+        {
+          "name": "갈대 베는 사람",
+          "length": 8,
+          "sources": [
+            "venice_c_marsh"
+          ]
+        },
+        {
+          "name": "나루 빵집 주인",
+          "length": 8,
+          "sources": [
+            "venice_c_landing"
+          ]
+        },
+        {
+          "name": "대상 숙소 손님",
+          "length": 8,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "돌 나르는 인부",
+          "length": 8,
+          "sources": [
+            "venice_c_pass"
+          ]
+        },
+        {
+          "name": "장어 잡는 어부",
+          "length": 8,
+          "sources": [
+            "venice_c_marsh"
+          ]
+        },
+        {
+          "name": "포도 따는 일꾼",
+          "length": 8,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "포도 밟는 아이",
+          "length": 8,
+          "sources": [
+            "venice_c_vineyard",
+            "villagers"
+          ]
+        },
+        {
+          "name": "다리 아래 빨래꾼",
+          "length": 9,
+          "sources": [
+            "venice_c_bridge"
+          ]
+        },
+        {
+          "name": "물새 그리는 화가",
+          "length": 9,
+          "sources": [
+            "venice_c_landing"
+          ]
+        },
+        {
+          "name": "밧줄 감는 뱃사람",
+          "length": 9,
+          "sources": [
+            "venice_c_landing"
+          ]
+        },
+        {
+          "name": "술통 굴리는 일꾼",
+          "length": 9,
+          "sources": [
+            "venice_c_vineyard"
+          ]
+        },
+        {
+          "name": "약초 캐는 할머니",
+          "length": 9,
+          "sources": [
+            "venice_c_marsh"
+          ]
+        },
+        {
+          "name": "우편 나르는 기수",
+          "length": 9,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "짐표 붙이는 서기",
+          "length": 9,
+          "sources": [
+            "venice_c_landing"
+          ]
+        },
+        {
+          "name": "포도 바구니 나르는 아낙",
+          "length": 13,
+          "sources": [
+            "venice_c_vineyard"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "goryeo",
+      "uniqueNames": 24,
+      "min": 2,
+      "median": 5.0,
+      "max": 9,
+      "mean": 5.88,
+      "distribution": {
+        "2": 3,
+        "3": 1,
+        "4": 1,
+        "5": 8,
+        "6": 1,
+        "8": 8,
+        "9": 2
+      },
+      "over8": 2,
+      "examples": [
+        [
+          5,
+          "종이 일꾼"
+        ],
+        [
+          6,
+          "선착장 일꾼"
+        ],
+        [
+          8,
+          "개경 객주 돈돌"
+        ],
+        [
+          8,
+          "나루 객주 주인"
+        ],
+        [
+          8,
+          "나루 마을 촌장"
+        ],
+        [
+          8,
+          "닥목 객주 주인"
+        ],
+        [
+          8,
+          "산록 약재 장수"
+        ],
+        [
+          8,
+          "송악 객주 주인"
+        ],
+        [
+          8,
+          "장단 객주 주인"
+        ],
+        [
+          8,
+          "장단 곡물 상인"
+        ],
+        [
+          9,
+          "나루 우물가 아낙"
+        ],
+        [
+          9,
+          "닥나무 마을 촌장"
+        ]
+      ],
+      "names": [
+        {
+          "name": "농부",
+          "length": 2,
+          "sources": [
+            "Naru"
+          ]
+        },
+        {
+          "name": "선비",
+          "length": 2,
+          "sources": [
+            "Gaegyeong",
+            "villagers"
+          ]
+        },
+        {
+          "name": "짐꾼",
+          "length": 2,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "뱃사공",
+          "length": 3,
+          "sources": [
+            "Naru",
+            "villagers"
+          ]
+        },
+        {
+          "name": "떡 장수",
+          "length": 4,
+          "sources": [
+            "Dakmok",
+            "villagers"
+          ]
+        },
+        {
+          "name": "나루 짐꾼",
+          "length": 5,
+          "sources": [
+            "Naru"
+          ]
+        },
+        {
+          "name": "볏단 일꾼",
+          "length": 5,
+          "sources": [
+            "goryeo_jangdan"
+          ]
+        },
+        {
+          "name": "비단 상인",
+          "length": 5,
+          "sources": [
+            "Gaegyeong"
+          ]
+        },
+        {
+          "name": "비단 장수",
+          "length": 5,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "시전 짐꾼",
+          "length": 5,
+          "sources": [
+            "Gaegyeong"
+          ]
+        },
+        {
+          "name": "시전 행상",
+          "length": 5,
+          "sources": [
+            "Gaegyeong"
+          ]
+        },
+        {
+          "name": "약재 짐꾼",
+          "length": 5,
+          "sources": [
+            "goryeo_songak"
+          ]
+        },
+        {
+          "name": "종이 일꾼",
+          "length": 5,
+          "sources": [
+            "Dakmok"
+          ]
+        },
+        {
+          "name": "선착장 일꾼",
+          "length": 6,
+          "sources": [
+            "GoryeoIntro"
+          ]
+        },
+        {
+          "name": "개경 객주 돈돌",
+          "length": 8,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "나루 객주 주인",
+          "length": 8,
+          "sources": [
+            "Naru"
+          ]
+        },
+        {
+          "name": "나루 마을 촌장",
+          "length": 8,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "닥목 객주 주인",
+          "length": 8,
+          "sources": [
+            "Dakmok"
+          ]
+        },
+        {
+          "name": "산록 약재 장수",
+          "length": 8,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "송악 객주 주인",
+          "length": 8,
+          "sources": [
+            "goryeo_songak"
+          ]
+        },
+        {
+          "name": "장단 객주 주인",
+          "length": 8,
+          "sources": [
+            "goryeo_jangdan"
+          ]
+        },
+        {
+          "name": "장단 곡물 상인",
+          "length": 8,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "나루 우물가 아낙",
+          "length": 9,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "닥나무 마을 촌장",
+          "length": 9,
+          "sources": [
+            "npcs"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "north",
+      "uniqueNames": 32,
+      "min": 2,
+      "median": 6.0,
+      "max": 11,
+      "mean": 6.31,
+      "distribution": {
+        "2": 2,
+        "3": 4,
+        "4": 1,
+        "5": 3,
+        "6": 8,
+        "7": 4,
+        "8": 4,
+        "9": 3,
+        "10": 1,
+        "11": 2
+      },
+      "over8": 6,
+      "examples": [
+        [
+          7,
+          "톰테 할아버지"
+        ],
+        [
+          7,
+          "훈련하는 전사"
+        ],
+        [
+          8,
+          "나무꾼 에이나르"
+        ],
+        [
+          8,
+          "들일 하는 아내"
+        ],
+        [
+          8,
+          "목욕 회관 주인"
+        ],
+        [
+          8,
+          "쉬어 가는 상인"
+        ],
+        [
+          9,
+          "순록 목동 할머니"
+        ],
+        [
+          9,
+          "약초 캐는 시그네"
+        ],
+        [
+          9,
+          "욕심쟁이 형 볼드"
+        ],
+        [
+          10,
+          "가죽 무두장이 토라"
+        ],
+        [
+          11,
+          "덫 놓는 사냥꾼 울바"
+        ],
+        [
+          11,
+          "순록지기 그루프 맏형"
+        ]
+      ],
+      "names": [
+        {
+          "name": "길손",
+          "length": 2,
+          "sources": [
+            "north_naru"
+          ]
+        },
+        {
+          "name": "선장",
+          "length": 2,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "뱃사공",
+          "length": 3,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "사냥꾼",
+          "length": 3,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "약초꾼",
+          "length": 3,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "어머니",
+          "length": 3,
+          "sources": [
+            "NorthIntro"
+          ]
+        },
+        {
+          "name": "창고지기",
+          "length": 4,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "목수 하르",
+          "length": 5,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "썰매 장인",
+          "length": 5,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "여관 주인",
+          "length": 5,
+          "sources": [
+            "north_herd",
+            "north_hunter",
+            "north_laugar",
+            "north_naru"
+          ]
+        },
+        {
+          "name": "광부 할아범",
+          "length": 6,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "늙은 사냥꾼",
+          "length": 6,
+          "sources": [
+            "north_hunter"
+          ]
+        },
+        {
+          "name": "불가의 아이",
+          "length": 6,
+          "sources": [
+            "north_herd"
+          ]
+        },
+        {
+          "name": "사냥꾼 리브",
+          "length": 6,
+          "sources": [
+            "north_herd"
+          ]
+        },
+        {
+          "name": "상인 길드장",
+          "length": 6,
+          "sources": [
+            "north_birka"
+          ]
+        },
+        {
+          "name": "얄 시그리드",
+          "length": 6,
+          "sources": [
+            "north_birka"
+          ]
+        },
+        {
+          "name": "얼음 낚시꾼",
+          "length": 6,
+          "sources": [
+            "north_icecave",
+            "north_naru"
+          ]
+        },
+        {
+          "name": "여관 할머니",
+          "length": 6,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "룬 지기 노인",
+          "length": 7,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "집 보는 남편",
+          "length": 7,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "톰테 할아버지",
+          "length": 7,
+          "sources": [
+            "north_naru"
+          ]
+        },
+        {
+          "name": "훈련하는 전사",
+          "length": 7,
+          "sources": [
+            "north_birka"
+          ]
+        },
+        {
+          "name": "나무꾼 에이나르",
+          "length": 8,
+          "sources": [
+            "north_icecave"
+          ]
+        },
+        {
+          "name": "들일 하는 아내",
+          "length": 8,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "목욕 회관 주인",
+          "length": 8,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "쉬어 가는 상인",
+          "length": 8,
+          "sources": [
+            "north_laugar"
+          ]
+        },
+        {
+          "name": "순록 목동 할머니",
+          "length": 9,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "약초 캐는 시그네",
+          "length": 9,
+          "sources": [
+            "north_laugar"
+          ]
+        },
+        {
+          "name": "욕심쟁이 형 볼드",
+          "length": 9,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "가죽 무두장이 토라",
+          "length": 10,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "덫 놓는 사냥꾼 울바",
+          "length": 11,
+          "sources": [
+            "north_hunter"
+          ]
+        },
+        {
+          "name": "순록지기 그루프 맏형",
+          "length": 11,
+          "sources": [
+            "npcs"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "transit",
+      "uniqueNames": 14,
+      "min": 2,
+      "median": 5.0,
+      "max": 9,
+      "mean": 5.21,
+      "distribution": {
+        "2": 2,
+        "3": 1,
+        "5": 7,
+        "6": 1,
+        "8": 2,
+        "9": 1
+      },
+      "over8": 1,
+      "examples": [
+        [
+          3,
+          "뱃사공"
+        ],
+        [
+          5,
+          "강가 짐꾼"
+        ],
+        [
+          5,
+          "객주 주인"
+        ],
+        [
+          5,
+          "길목 짐꾼"
+        ],
+        [
+          5,
+          "나루 상인"
+        ],
+        [
+          5,
+          "땔감 장수"
+        ],
+        [
+          5,
+          "여관 주인"
+        ],
+        [
+          5,
+          "포구 사람"
+        ],
+        [
+          6,
+          "길목 안내인"
+        ],
+        [
+          8,
+          "나루 여관 주인"
+        ],
+        [
+          8,
+          "포구 객주 주인"
+        ],
+        [
+          9,
+          "쉬어 가는 나그네"
+        ]
+      ],
+      "names": [
+        {
+          "name": "길손",
+          "length": 2,
+          "sources": [
+            "transit_central_approach",
+            "transit_pass"
+          ]
+        },
+        {
+          "name": "어부",
+          "length": 2,
+          "sources": [
+            "transit_south_inland"
+          ]
+        },
+        {
+          "name": "뱃사공",
+          "length": 3,
+          "sources": [
+            "transit_ferry",
+            "transit_southport"
+          ]
+        },
+        {
+          "name": "강가 짐꾼",
+          "length": 5,
+          "sources": [
+            "transit_wetroad"
+          ]
+        },
+        {
+          "name": "객주 주인",
+          "length": 5,
+          "sources": [
+            "transit_crossroads"
+          ]
+        },
+        {
+          "name": "길목 짐꾼",
+          "length": 5,
+          "sources": [
+            "transit_woodtown"
+          ]
+        },
+        {
+          "name": "나루 상인",
+          "length": 5,
+          "sources": [
+            "transit_ferry"
+          ]
+        },
+        {
+          "name": "땔감 장수",
+          "length": 5,
+          "sources": [
+            "transit_woodtown"
+          ]
+        },
+        {
+          "name": "여관 주인",
+          "length": 5,
+          "sources": [
+            "transit_woodtown"
+          ]
+        },
+        {
+          "name": "포구 사람",
+          "length": 5,
+          "sources": [
+            "transit_southport"
+          ]
+        },
+        {
+          "name": "길목 안내인",
+          "length": 6,
+          "sources": [
+            "transit_crossroads"
+          ]
+        },
+        {
+          "name": "나루 여관 주인",
+          "length": 8,
+          "sources": [
+            "transit_ferry"
+          ]
+        },
+        {
+          "name": "포구 객주 주인",
+          "length": 8,
+          "sources": [
+            "transit_southport"
+          ]
+        },
+        {
+          "name": "쉬어 가는 나그네",
+          "length": 9,
+          "sources": [
+            "transit_central_approach"
+          ]
+        }
+      ]
+    },
+    {
+      "region": "venice",
+      "uniqueNames": 48,
+      "min": 3,
+      "median": 8.0,
+      "max": 11,
+      "mean": 7.62,
+      "distribution": {
+        "3": 1,
+        "4": 1,
+        "5": 6,
+        "6": 8,
+        "7": 5,
+        "8": 7,
+        "9": 14,
+        "10": 2,
+        "11": 4
+      },
+      "over8": 20,
+      "examples": [
+        [
+          9,
+          "땔감 나르는 조수"
+        ],
+        [
+          9,
+          "모래 고르는 일꾼"
+        ],
+        [
+          9,
+          "모래 나르는 조수"
+        ],
+        [
+          9,
+          "벌통 돌보는 사람"
+        ],
+        [
+          9,
+          "상인 집안 아가씨"
+        ],
+        [
+          9,
+          "집 칠하는 아저씨"
+        ],
+        [
+          10,
+          "레이스 배우는 소녀"
+        ],
+        [
+          10,
+          "유리구슬 파는 아이"
+        ],
+        [
+          11,
+          "레이스 뜨는 아주머니"
+        ],
+        [
+          11,
+          "상인회 안내원 조반나"
+        ],
+        [
+          11,
+          "유리 구슬 꿰는 아이"
+        ],
+        [
+          11,
+          "유리구슬 꿰는 할머니"
+        ]
+      ],
+      "names": [
+        {
+          "name": "뱃사람",
+          "length": 3,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "창고지기",
+          "length": 4,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "소금 짐꾼",
+          "length": 5,
+          "sources": [
+            "venice_chioggia"
+          ]
+        },
+        {
+          "name": "시장 일꾼",
+          "length": 5,
+          "sources": [
+            "venice_rialto"
+          ]
+        },
+        {
+          "name": "여관 주인",
+          "length": 5,
+          "sources": [
+            "npcs",
+            "venice_burano",
+            "venice_chioggia",
+            "venice_murano",
+            "venice_santerasmo"
+          ]
+        },
+        {
+          "name": "운하 짐꾼",
+          "length": 5,
+          "sources": [
+            "venice_rialto"
+          ]
+        },
+        {
+          "name": "유리 상인",
+          "length": 5,
+          "sources": [
+            "venice_rialto"
+          ]
+        },
+        {
+          "name": "유리 장인",
+          "length": 5,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "곤돌라 사공",
+          "length": 6,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "과수원 일꾼",
+          "length": 6,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "부두 관리인",
+          "length": 6,
+          "sources": [
+            "venice_rialto"
+          ]
+        },
+        {
+          "name": "부라노 어부",
+          "length": 6,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "상인회 서기",
+          "length": 6,
+          "sources": [
+            "npcs"
+          ]
+        },
+        {
+          "name": "수습 뱃사공",
+          "length": 6,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "젊은 뱃사람",
+          "length": 6,
+          "sources": [
+            "venice_chioggia"
+          ]
+        },
+        {
+          "name": "항구 요리사",
+          "length": 6,
+          "sources": [
+            "venice_chioggia"
+          ]
+        },
+        {
+          "name": "곤돌라 수리공",
+          "length": 7,
+          "sources": [
+            "venice_rialto"
+          ]
+        },
+        {
+          "name": "꽃 파는 아이",
+          "length": 7,
+          "sources": [
+            "venice_rialto"
+          ]
+        },
+        {
+          "name": "꽃 파는 처녀",
+          "length": 7,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "본토행 뱃사공",
+          "length": 7,
+          "sources": [
+            "venice_chioggia"
+          ]
+        },
+        {
+          "name": "상인회 견습생",
+          "length": 7,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "과일 장수 로사",
+          "length": 8,
+          "sources": [
+            "venice_santerasmo"
+          ]
+        },
+        {
+          "name": "그물 너는 아낙",
+          "length": 8,
+          "sources": [
+            "venice_burano"
+          ]
+        },
+        {
+          "name": "꿀벌 쫓는 아이",
+          "length": 8,
+          "sources": [
+            "venice_santerasmo"
+          ]
+        },
+        {
+          "name": "배 목수 마르코",
+          "length": 8,
+          "sources": [
+            "venice_chioggia"
+          ]
+        },
+        {
+          "name": "빵 나르는 소년",
+          "length": 8,
+          "sources": [
+            "venice_rialto"
+          ]
+        },
+        {
+          "name": "소금 굽는 노인",
+          "length": 8,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "저울 보는 서기",
+          "length": 8,
+          "sources": [
+            "venice_chioggia"
+          ]
+        },
+        {
+          "name": "가마 지키는 노인",
+          "length": 9,
+          "sources": [
+            "venice_murano"
+          ]
+        },
+        {
+          "name": "가면 만드는 장인",
+          "length": 9,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "가면 장인 루치아",
+          "length": 9,
+          "sources": [
+            "venice_rialto"
+          ]
+        },
+        {
+          "name": "거리 화가 토니오",
+          "length": 9,
+          "sources": [
+            "venice_rialto"
+          ]
+        },
+        {
+          "name": "과일 나르는 일꾼",
+          "length": 9,
+          "sources": [
+            "venice_santerasmo"
+          ]
+        },
+        {
+          "name": "광장 악사 피에로",
+          "length": 9,
+          "sources": [
+            "venice_rialto"
+          ]
+        },
+        {
+          "name": "그물 깁는 할머니",
+          "length": 9,
+          "sources": [
+            "venice_burano"
+          ]
+        },
+        {
+          "name": "그물 나르는 어부",
+          "length": 9,
+          "sources": [
+            "venice_burano"
+          ]
+        },
+        {
+          "name": "땔감 나르는 조수",
+          "length": 9,
+          "sources": [
+            "venice_murano"
+          ]
+        },
+        {
+          "name": "모래 고르는 일꾼",
+          "length": 9,
+          "sources": [
+            "venice_murano"
+          ]
+        },
+        {
+          "name": "모래 나르는 조수",
+          "length": 9,
+          "sources": [
+            "venice_murano"
+          ]
+        },
+        {
+          "name": "벌통 돌보는 사람",
+          "length": 9,
+          "sources": [
+            "venice_santerasmo"
+          ]
+        },
+        {
+          "name": "상인 집안 아가씨",
+          "length": 9,
+          "sources": [
+            "venice_rialto"
+          ]
+        },
+        {
+          "name": "집 칠하는 아저씨",
+          "length": 9,
+          "sources": [
+            "venice_burano"
+          ]
+        },
+        {
+          "name": "레이스 배우는 소녀",
+          "length": 10,
+          "sources": [
+            "venice_burano"
+          ]
+        },
+        {
+          "name": "유리구슬 파는 아이",
+          "length": 10,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "레이스 뜨는 아주머니",
+          "length": 11,
+          "sources": [
+            "villagers"
+          ]
+        },
+        {
+          "name": "상인회 안내원 조반나",
+          "length": 11,
+          "sources": [
+            "VeniceIntro"
+          ]
+        },
+        {
+          "name": "유리 구슬 꿰는 아이",
+          "length": 11,
+          "sources": [
+            "venice_murano"
+          ]
+        },
+        {
+          "name": "유리구슬 꿰는 할머니",
+          "length": 11,
+          "sources": [
+            "villagers"
+          ]
+        }
+      ]
+    }
+  ],
+  "countryTotals": [
+    {
+      "region": "north",
+      "unique": 68,
+      "median": 7.0,
+      "max": 14,
+      "over8": 18,
+      "longest": [
+        "포도밭에서 온 행상 마르코"
+      ]
+    },
+    {
+      "region": "venice",
+      "unique": 86,
+      "median": 7.5,
+      "max": 13,
+      "over8": 28,
+      "longest": [
+        "포도 바구니 나르는 아낙"
+      ]
+    },
+    {
+      "region": "arabia",
+      "unique": 70,
+      "median": 8.0,
+      "max": 13,
+      "over8": 25,
+      "longest": [
+        "나즈드의 대상 숙소 주인"
+      ]
+    },
+    {
+      "region": "goryeo",
+      "unique": 37,
+      "median": 5,
+      "max": 9,
+      "over8": 3,
+      "longest": [
+        "나루 우물가 아낙",
+        "닥나무 마을 촌장",
+        "쉬어 가는 나그네"
+      ]
+    }
+  ]
+}

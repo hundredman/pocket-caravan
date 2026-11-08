@@ -146,6 +146,12 @@ def proposal():
   match=[o for o in d['objects']if o['kind']=='sign'and o.get('text')==sign['text']]
   if len(match)!=1:raise ValueError('Connection sign missing/ambiguous')
   sign.update(x=match[0]['x'],y=match[0]['y'])
+ # Runtime-spawned tutorial people must use the same authored frame as map objects.
+ intro=json.loads(Path(__file__).with_name('goryeo_intro.json').read_text())
+ mid=intro['mapId'];d=maps[mid];x=intro['worldX']-d['terrainX'];y=intro['worldY']-d['terrainY']
+ if not(0<=x<d['w']and 0<=y<d['h'])or d['blocked'][y*d['w']+x]or not d['reachable'][y*d['w']+x]:
+  raise ValueError('Tutorial guide is not on reachable land')
+ out['Resources/Goryeo/Intro.json']=dict(mapId=mid,width=d['w'],height=d['h'],x=x,y=y)
  out.update(res)
  return out,report
 

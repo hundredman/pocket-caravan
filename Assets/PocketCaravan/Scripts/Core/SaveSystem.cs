@@ -32,6 +32,7 @@ namespace PocketCaravan
 
         public int day;
         public float minute;
+        public float playHours; // 2026-11-08 내 의뢰 시간. 0: 옛 저장 → 불러올 때 day·minute의 세상 시간으로 이어받는다
 
         public List<QuestManager.Save> quests = new List<QuestManager.Save>();
         public List<string> finishedQuests = new List<string>();
@@ -45,6 +46,7 @@ namespace PocketCaravan
         public List<NpcTraders.Trader> traders = new List<NpcTraders.Trader>();
         public List<DropRecord> drops = new List<DropRecord>();
         public List<TradeLedger.Quote> marketQuotes = new List<TradeLedger.Quote>();
+        public List<TradeLedger.Trade> recentTrades = new List<TradeLedger.Trade>();   // 2026-11-08 장부 최근 거래 5줄 (옛 저장은 빈 목록)
         public List<string> cooldownKeys = new List<string>();
         public List<float> cooldownUntil = new List<float>();
     }

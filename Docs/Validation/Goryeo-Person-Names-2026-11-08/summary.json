@@ -1,0 +1,31 @@
+{
+  "changes": [
+    {
+      "type": "TownMarket",
+      "before": "장터",
+      "after": "상인",
+      "original": "개경 상인"
+    },
+    {
+      "type": "GoryeoPastime",
+      "before": "낚시",
+      "after": "낚시꾼",
+      "original": "나루 낚시"
+    }
+  ],
+  "actualGameRenders": true,
+  "nearFarPolicyUnchanged": true,
+  "personalSaveCount": 9,
+  "personalSaveChanges": 0,
+  "network": "Offline",
+  "autosave": false,
+  "consoleErrors": 0,
+  "staticTestsPassed": 2,
+  "notRun": [
+    "full regression suite",
+    "human interaction playthrough",
+    "online",
+    "build"
+  ],
+  "captureNote": "First market post-reload render assertion failed before Game view focus. Focused Game view and verified actual DrawnNames and recaptured; label function itself already returned the correct name. No renderer behavior changed."
+}

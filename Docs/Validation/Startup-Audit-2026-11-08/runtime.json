@@ -1,0 +1,12 @@
+{
+  "scene": "Assets/PocketCaravan/Scenes/Goryeo/Naru.unity",
+  "index": 0,
+  "guard": true,
+  "startOpen": true,
+  "loginOpen": true,
+  "panel": "Start",
+  "autosave": false,
+  "regionSession": null,
+  "network": "Offline",
+  "loadIssue": null
+}

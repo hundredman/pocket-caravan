@@ -11,13 +11,26 @@
 - 도구: `execute_lua`, `inspect_export`. 한 호출 30초 제한. PNG는 10MiB, 스크립트·각 출력 스트림은 1MiB 제한(서버 기본값).
 - Go는 빌드 때만 사용하며 저장소 밖 전용 폴더에 설치했다. 실행 시 Go/패키지 설치 명령을 호출하지 않는다. 바이너리를 갱신할 때는 새 소스 재검토가 필요하다.
 
+## macOS 작업 중 오류 창 방지 (2026-11-08)
+
+이 Mac의 충돌 기록은 `EXC_CRASH/SIGABRT`이며 `AppOSX::init → NSApplication → _RegisterApplication → abort`에서 멈췄다. 배치 모드도 화면 시스템을 초기화하므로 Codex의 macOS seatbelt 실행에서 앱이 시작하다 중단된다. 원본 파일을 읽기 전의 환경 문제이며, 같은 원본 내보내기는 정상 실행 환경에서 통과했다.
+
+- 전체 검사는 `python Tools/Integration/run_checks.py`로 시작한다. 알려진 제한 환경에서는 앱을 한 번도 띄우지 않고 안내와 종료코드2를 반환한다. 이것을 검사 통과/skip으로 세지 않는다.
+- Codex는 이 전체 검사 명령을 `exec_command(sandbox_permissions="require_escalated")`로 실행한다. 일반 터미널에서도 같은 명령을 사용할 수 있다. 환경변수를 지워 탐지를 피하거나 앱/OS 보안·충돌 알림 설정을 바꾸지 않는다.
+- 개별 검사27개와 제작 스크립트15개는 `Tools/Aseprite/cli.py`의 공통 실행 경계를 사용한다. MCP 연결 검사도 자식 프로세스 시작 전에 같은 조건을 검사한다. 새 Python 제작 도구도 `run_aseprite`를 사용한다. 스크립트 인자/실패 판정/RGBA 비교는 그대로다.
+- 직접 CLI 호출도 아래 래퍼를 사용한다. 제한 환경에서는 실행을 멈추므로 승인된 정상 실행 경로로 같은 명령을 다시 실행한다. 래퍼 자체가 권한을 올리거나 프로세스를 우회 실행하지 않는다.
+
+```sh
+python3 Tools/Aseprite/cli.py -- /Applications/Aseprite.app/Contents/MacOS/aseprite -b ...
+```
+
 ## 연결 검사
 
 저장소 루트에서 실행한다. `output/`은 Git에서 제외된다.
 
 ```sh
 mkdir -p output/a6-cli
-/Applications/Aseprite.app/Contents/MacOS/aseprite -b \
+python3 Tools/Aseprite/cli.py -- /Applications/Aseprite.app/Contents/MacOS/aseprite -b \
   --script-param "output=$PWD/output/a6-cli" --script Tools/Aseprite/smoke.lua
 python3 Tools/Aseprite/check_connection.py \
   --binary "$HOME/.local/share/pocket-caravan/aseprite-mcp/0cd6aac4420a603ec10d19c9fe49a1bb5f6bff8b/aseprite-mcp" \

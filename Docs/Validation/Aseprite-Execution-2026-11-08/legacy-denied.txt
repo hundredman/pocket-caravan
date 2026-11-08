@@ -1,0 +1,21 @@
+....E...
+======================================================================
+ERROR: test_three_editable_sources_reexport_rgba (test_c7_workshop_props_v4.WorkshopPropsV4Checks.test_three_editable_sources_reexport_rgba)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Integration/test_c7_workshop_props_v4.py", line 44, in test_three_editable_sources_reexport_rgba
+    n=d['name'];p=Path(temp)/(n+'.png');run_aseprite([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(p)],check=True,capture_output=True)
+                                        ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Aseprite/cli.py", line 25, in run
+    require_batch_access()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/kim/Documents/2026-2/Game Development/팀 프로젝트/PocketCaravan/Tools/Aseprite/cli.py", line 15, in require_batch_access
+    raise AsepriteEnvironmentError(
+    ...<5 lines>...
+    )
+Tools.Aseprite.cli.AsepriteEnvironmentError: Aseprite was NOT started: macOS AppKit initialization crashes in this Codex seatbelt session. Run this same command through the approved unsandboxed tool execution (require_escalated), or from a normal local Terminal. Do not unset CODEX_SANDBOX, retry in this session, suppress crash reports, or mark native checks as passed.
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.049s
+
+FAILED (errors=1)

@@ -7,6 +7,10 @@ sys.path[:0]=[str(ROOT/'Tools/ArtTrials'),str(ROOT/'Tools/MapGen')]
 from c7_cart_roof_v2 import OUT,COLORS,DEFS
 from c7_catalogue import rgba_evidence
 from asset_manifest import validate
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 class CartRoofV2Checks(unittest.TestCase):
     def test_whole_objects_and_review_gate(self):
         doc=json.loads((OUT/'catalogue.json').read_text());layout=json.loads((OUT/'layout.json').read_text())
@@ -34,7 +38,7 @@ class CartRoofV2Checks(unittest.TestCase):
             self.assertEqual(im.getbbox()[3],30 if n=='cart' else 47)
             with tempfile.TemporaryDirectory() as temp:
                 output=Path(temp)/(n+'.png')
-                subprocess.run([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(output)],capture_output=True,check=True)
+                run_aseprite([str(binary),'-b',str(OUT/'Native'/(n+'.aseprite')),'--save-as',str(output)],capture_output=True,check=True)
                 self.assertEqual(rgba_evidence(output),rgba_evidence(OUT/'Native'/(n+'.png')))
     def test_house_only_roof_changed(self):
         a=Image.open(ROOT/DEFS[1]['old']).convert('RGBA');b=Image.open(OUT/'Native/tile-house.png').convert('RGBA')

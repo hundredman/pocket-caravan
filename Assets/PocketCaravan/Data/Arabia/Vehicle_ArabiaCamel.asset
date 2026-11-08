@@ -17,7 +17,7 @@ MonoBehaviour:
   sprite: {fileID: 0}
   capacity: 45
   price: 300
-  minTownLevel: 2
+  minTownLevel: 1
   speedByGrade:
   - 1.25
   - 1.15

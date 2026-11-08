@@ -30,13 +30,16 @@ namespace PocketCaravan
         // 등급이 높을수록 적정 재고가 커서 많이 팔아도 값이 덜 떨어진다.
         float LevelMultiplier => 1f + 0.5f * (Level - 1);
 
-        public float Optimal(ItemData item) => town.OptimalFor(item) * LevelMultiplier;
+        public float Optimal(ItemData item) => town.OptimalFor(item) * LevelMultiplier * NetMarket.ScaleFor(town);
 
         public IEnumerable<ItemData> KnownItems => stock.Keys;
 
         /// <summary>현재 재고. 재고표에 없는 물건은 적정치로 본다 — 2026-11-05(기우): 값만 물어볼 때는 재고표에 끼워 넣지 않는다.
         /// (NPC 상인이 모든 장터의 모든 물건 값을 훑는 바람에 어느 장터든 전 세계 품목 53개가 다 떴었다. 실제 거래가 있을 때만 표에 오른다.)</summary>
         public float Stock(ItemData item) => stock.TryGetValue(item, out var s) ? s : Optimal(item);
+
+        /// <summary>재고를 정한다 (공유 장터 서버 값 맞추기 · 남의 거래 반영, 2026-11-08). 재고표에 없던 물건이면 올린다.</summary>
+        public void SetStock(ItemData item, float value) { if (item != null && !float.IsNaN(value) && !float.IsInfinity(value)) stock[item] = Mathf.Max(0f, value); }
 
         float Demand => GameManager.I != null && GameManager.I.Clock.IsMarketDay ? db.marketDayDemand : 1f;
 
@@ -154,6 +157,20 @@ namespace PocketCaravan
             public List<float> stocks = new List<float>();
         }
 
+        /// <summary>저장 파일용: 온라인 공유 장터 배율을 뺀 재고(차이는 그대로)로 남긴다. 혼자 하기로 불러와도 값이 튀지 않는다.</summary>
+        public Save ExportForSave()
+        {
+            float scale = NetMarket.ScaleFor(town);
+            if (scale == 1f) return Export();
+            var s = new Save { town = town.id, level = Level, volume = TradeVolume };
+            foreach (var kv in stock)
+            {
+                float opt = Optimal(kv.Key);
+                s.items.Add(kv.Key.id); s.stocks.Add(Mathf.Max(0f, kv.Value - opt + opt / scale));
+            }
+            return s;
+        }
+
         public Save Export()
         {
             var s = new Save { town = town.id, level = Level, volume = TradeVolume };
@@ -170,6 +187,22 @@ namespace PocketCaravan
             {
                 var it = item(s.items[i]);
                 if (it != null) stock[it] = s.stocks[i];
+            }
+        }
+
+        /// <summary>
+        /// 여러 시간 몫의 회복을 한 번에 (2026-11-08 접속으로 세상 시간이 건너뛸 때). RecoverOneHour를 hours번 한 것과 같다:
+        /// 적정치와의 차이가 (1 − 비율)^hours 배가 된다.
+        /// </summary>
+        public void RecoverHours(float hours)
+        {
+            if (!(hours > 0f)) return;
+            float keep = Mathf.Pow(1f - Mathf.Clamp01(db.stockRecoveryPerHour), hours);
+            var keys = new List<ItemData>(stock.Keys);
+            foreach (var k in keys)
+            {
+                float opt = Optimal(k);
+                stock[k] = opt + (stock[k] - opt) * keep;
             }
         }
 

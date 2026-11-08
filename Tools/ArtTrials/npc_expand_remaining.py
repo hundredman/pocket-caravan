@@ -3,6 +3,10 @@ from pathlib import Path
 import json
 import subprocess
 from PIL import Image, ImageDraw, ImageFont
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'ArtReview/C1-Expand-2'
 ASE='/Applications/Aseprite.app/Contents/MacOS/aseprite'
@@ -121,8 +125,8 @@ def generate():
     OUT.mkdir(parents=True,exist_ok=True);assets=[];profiles={};checks=[]
     for name,title,animal,npcid in ROLES:
         im=render(name);im.save(OUT/f'{name}-front.png')
-        subprocess.run([ASE,'-b',str(OUT/f'{name}-front.png'),'--save-as',str(OUT/f'{name}-front.aseprite')],check=True)
-        reopened=OUT/f'{name}-reopened.png';subprocess.run([ASE,'-b',str(OUT/f'{name}-front.aseprite'),'--save-as',str(reopened)],check=True)
+        run_aseprite([ASE,'-b',str(OUT/f'{name}-front.png'),'--save-as',str(OUT/f'{name}-front.aseprite')],check=True)
+        reopened=OUT/f'{name}-reopened.png';run_aseprite([ASE,'-b',str(OUT/f'{name}-front.aseprite'),'--save-as',str(reopened)],check=True)
         assert Image.open(reopened).convert('RGBA').tobytes()==im.tobytes();reopened.unlink()
         a=im.getchannel('A');assert set(a.get_flattened_data())=={0,255};assert a.getbbox()[3]==24
         profiles[name]={'pixelsPerCell':[16,24],'binaryAlpha':True,'palette':sorted({'#%02x%02x%02x'%p[:3] for p in im.get_flattened_data() if p[3]})}

@@ -6,7 +6,8 @@ namespace PocketCaravan
 {
     /// <summary>
     /// "푹 쉼" 버프 (2026-11-03 통합: 북유럽 NorthInn + 베네치아 VeniceInn을 공용으로 합침).
-    /// 여관에서 자면 8시간 동안 달릴 때 체력이 절반만 닳는다. 끝나는 시각(게임 시간)을 공용 메모 "rest:until"에 저장한다.
+    /// 여관에서 자면 8시간 동안 달릴 때 체력이 절반만 닳는다. 끝나는 시각을 공용 메모 "rest:until"에 저장한다.
+    /// 2026-11-08: 시각은 내 의뢰 시간(GameClock.PlayHours) 기준. 옛 저장은 PlayHours가 세상 시간에서 이어받으므로 그대로 맞는다.
     /// 옛 저장(north:rested, venice:rested_until)도 읽어서 기존 버프가 끊기지 않게 한다.
     /// </summary>
     public static class RestBuff
@@ -24,8 +25,8 @@ namespace PocketCaravan
                 return u;
             }
         }
-        public static bool Rested => GameManager.I != null && GameManager.I.Clock.TotalHours < Until;
-        public static int HoursLeft => GameManager.I == null ? 0 : Mathf.Max(0, Mathf.CeilToInt(Until - GameManager.I.Clock.TotalHours));
+        public static bool Rested => GameManager.I != null && GameManager.I.Clock.PlayHours < Until;
+        public static int HoursLeft => GameManager.I == null ? 0 : Mathf.Max(0, Mathf.CeilToInt(Until - GameManager.I.Clock.PlayHours));
         public static void Set(float untilHours) { if (GameManager.I != null) GameManager.I.SetMemo(Key, untilHours); }
     }
 
@@ -52,7 +53,10 @@ namespace PocketCaravan
     /// 여관에서 쉬어 가기 (전 지역 공용). 들어가는 길은 두 가지, 결과는 같다:
     /// 1) 이름에 "여관"·"숙소"·"객주"가 든 사람에게 말 걸기 → 대화(퀘스트 포함)가 먼저 나오고 끝나면 "쉬어 갈래요?"
     /// 2) 장터 시설창의 손님방(FacilityKind.Rest) "이용"
-    /// 쉬면 15냥, 화면이 어두워졌다가 4시간 뒤 깬다: 체력 가득, 짐 흔들림 0, 8시간 동안 달려도 덜 지침(RestBuff).
+    /// 쉬면 15냥, 화면이 어두워졌다 밝아진다: 체력 가득, 짐 흔들림 0, 8시간 동안 달려도 덜 지침(RestBuff).
+    /// 2026-11-08 여관 = 버프를 주는 곳 (은샘 결정):
+    /// - 온라인(공용 세상 시계): 시간을 건너뛰지 않고 의뢰 시간도 쓰지 않는다. 버프만.
+    /// - 혼자 하기: 밤(18시~새벽 5시)에 자면 다음 아침 7시에 깨고, 낮에는 예전처럼 4시간 뒤 깬다.
     /// 푹 쉼 중에는 다시 쉴 수 없다(이유를 알려 줌). 따로 이름표나 자리를 만들지 않는다.
     /// </summary>
     public class Inn : MonoBehaviour
@@ -60,6 +64,17 @@ namespace PocketCaravan
         Rect askWindow, askTextRect, yesRect, noRect;
         public const int Price = 15;
         public const float SleepHours = 4f, BuffHours = 8f;
+        public const int WakeHour = 7;
+
+        /// <summary>지금 자면 건너뛸 시간. 온라인은 0 (세상 시계는 아무도 넘길 수 없다)</summary>
+        public static float HoursToSleep(GameClock clock)
+        {
+            if (clock == null || clock.Shared) return 0f;
+            float h = clock.minuteOfDay / 60f;
+            if (h >= 18f) return 24f - h + WakeHour;
+            if (h < 5f) return WakeHour - h;
+            return SleepHours;
+        }
         static readonly string[] HostWords = { "여관", "숙소", "객주" };
 
         static Inn instance;
@@ -173,10 +188,10 @@ namespace PocketCaravan
                 var gm = GameManager.I;
                 if (gm != null)
                 {
-                    gm.Clock.Advance(SleepHours);
+                    gm.Clock.Advance(HoursToSleep(gm.Clock));
                     gm.Player.stamina = 1f;
                     gm.Player.shake = 0f;
-                    RestBuff.Set(gm.Clock.TotalHours + BuffHours);
+                    RestBuff.Set(gm.Clock.PlayHours + BuffHours);
                     gm.SaveNow();
                 }
             }
@@ -240,7 +255,10 @@ namespace PocketCaravan
             GUI.depth = -900;
             wrap = CuteUI.PaperWrap;
             float w = Mathf.Min(360, UIStyle.VirtualWidth - 16);
-            string text = askNote ?? $"따뜻한 방 있어요. 쉬어 갈래요?\n{Price}냥 · {SleepHours:0}시간 휴식 · 체력 가득\n{BuffHours:0}시간 동안 달릴 때 덜 지침";
+            var clock = GameManager.I != null ? GameManager.I.Clock : null;
+            float sleep = HoursToSleep(clock);
+            string rest = sleep <= 0f ? "잠깐 푹 쉬기" : clock != null && clock.minuteOfDay / 60f + sleep >= 24f || clock != null && clock.minuteOfDay < 300f ? $"아침 {WakeHour}시까지 휴식" : $"{sleep:0}시간 휴식";
+            string text = askNote ?? $"따뜻한 방 있어요. 쉬어 갈래요?\n{Price}냥 · {rest} · 체력 가득\n{BuffHours:0}시간 동안 달릴 때 덜 지침";
             float textHeight = wrap.CalcHeight(new GUIContent(text), w - 28);
             float h = Mathf.Max(106, textHeight + 54);
             var r = askWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round(UIStyle.VirtualHeight - h - 50), w, h);

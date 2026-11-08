@@ -438,3 +438,23 @@
 - 2026-11-08 Codex T3 본편 연결(이 커밋): 사용자 풀밭 경계안 “이대로 확정” 후13맵/635출구·장터/우물/앉기/나룻배/장소·소리·생활·발소리/통나무/범람 좌표·지도·우리쪽 연결표/WorldIndex 재생성. layoutVersion0~2→3 메모리 위치이주/새소유맵·주통행영역 안전복원·미등록짐/돈/의뢰 등 보존·반복불변. Python424/23skip·신규21·세계883/0오류·Unity2717/635모터접근/풀밭왕복/타담당3왕복·추가201/17쌍34방향·나룻배3구간·저장이주143720·13씬누락스크립트0·콘솔0. 전후물리거리36쌍차0·타담당41맵/76places·상대연결/페이드/카메라/빌드목록보존. 첫회귀옛좌표/Aseprite제한오류 기록보존후명시적동결재현/실행환경재검사. 최신main포함·로컬만·개인설정/3D보존. 사람체감/Q1수동/실온라인/FPS/빌드미검사. Docs/Validation/T3-Production-2026-11-08/README.md.
 
 - 2026-11-08 Codex T3 통합 준비(이 커밋): 사용자 “좋아. 일단 올리자”로 업로드/통합 진행. 최신integration c803224e3을238095b2a로 충돌없이 병합·아라비아/온라인11단계보존·타지역전용/DB/서버추가수정0. 병합후Python424/23skip·세계883/0오류·Unity컴파일0·저장이주143720·담당17쌍34방향/나룻배3구간201확인 재실행. 이전UI4승인분도 함께region/goryeo→integration PR대상. 실온라인/사람체감/Q1수동/FPS/빌드미검사·개인설정/3D제외. Docs/Validation/T3-Integration-2026-11-08/README.md.
+
+- 2026-11-08 Codex PR29 통합 완료(이 커밋): 사용자 업로드 지시로 region/goryeo push(d27e43863), PR#29 GitHub검사2개SUCCESS/MERGEABLE/CLEAN 확인후integration병합 f356ed767(01:47 KST). 로컬원격integration까지FF·최신main포함·개인패키지/설정/3D보존. 공용UI통일+T3경계/저장이주반영·타지역전용/DB/서버변경0. 최종원격상태/사후공지초안저장·카톡실제발송안함. 실온라인/사람체감/Q1전체수동/FPS/빌드미검사. Docs/Validation/T3-Integration-2026-11-08/github.json, Docs/Goryeo/Team-Notice-PR29.md.
+
+- 2026-11-08 Codex 최신수신/이름화면점검(이 커밋): integration e9bfb03f1→bee640a09 병합·최신main포함·동일Unity프로젝트확인. 이름/접속키/기억조건으로 자동로그인성공시입력생략, 비시작/지역시험씬은첫화면생략하는기존정책확인. 서버접속억제/SaveOFF 1회메모리관찰로나루로그인열림·개경index30생략확인·제품코드미수정. 424/23skip·세계883/0·콘솔0·개인저장9/로그인설정SHA불변. 붉은돌DB기등록확인·아라비아/1메뉴실행/실서버로그인/아라비아전체플레이/FPS/빌드미실행·원격push없음. 팀공지형식은사용자예시대로실행메뉴/추가내용/공용파일중심으로규칙반영. Docs/Validation/Startup-Audit-2026-11-08/README.md.
+
+- 2026-11-08 Codex NPC호칭(이 커밋): 사용자지시로고려장터사람표시→상인·낚시사람표시→낚시꾼, 예약/그리기별칭통일. 담당13맵인물원본/등록정적조사·기존사람호칭/시설명유지·원본DisplayName/ID/저장불변. 이름표정적2통과·개경/나루실제표시/전후4캡처·콘솔0·SaveOFF/Offline·개인저장9SHA동일. 첫렌더검사Game뷰비활성실패후선택/재확인기록. 최신main포함·로컬만·개인설정/3D보존. 전체회귀/전체13씬Play/퀘스트완주/실온라인/FPS/빌드미검사. Docs/Validation/Goryeo-Person-Names-2026-11-08/README.md.
+
+- 2026-11-08 Codex 지역일관성조사(이 커밋): 최신integration ff9a9ccf6→e0ccae77b 수신·로컬이름별칭보존. GoryeoIntro 옛MapH84/GuideCell40,33 누락으로현재나루물위40,38생성·최근접7.03>대화1.8 확인(이전T3에서Codex누락), 수정대기. 고려Q/I/M순서·하단카드·단계알림생략·Tab숨김누락/안내긴이름차이조사, 타3지역상단한줄/하단알림실제4지역동일단계5캡처·고려표시공통화후보정리. 424/23skip·세계883/0·격리저장9동일·새시작콘솔0. 기존Play중C#수신hotreload참조오류를유발한절차실수기록·실제GM저장차단/종료후격리검사. 제품버그수정/실키입력완주/온라인/빌드/원격push없음. Docs/Goryeo/Region-Consistency-Audit-2026-11-08.md.
+
+- 2026-11-08 Codex 지역일관성수정(이 커밋): integration ff9a9ccf6/최신main포함, 타지역이름원본선조사(동적전체아님)·자동축약없이화면별개별검토확정. 일꾼원본좌표→T3리소스/실제S0모터접근·대화복원, I/M/Q순서/옛단계이주30·팀TopPill/Notify/Tab숨김, 고려식고정이름/Space/네모배지공통연결·Navigator/StoryGuide호칭통일. 기존424/23skip+Aseprite제한실패후제한밖통과·신규2통과·세계883/0·컴파일/콘솔0·소지품/M/Q/실매매/L/귀환20냥·4지역5캡처/그린이름겹침0·저장9동일. 서버TS/격리로컬통째저장·순위선물·백업복원모두통과(제품서버코드수정0). 아흐사활동명1개겹침생략/전체맵밀집·4지역실키완주/실서버/성능/빌드미검사. 그림사용자확인/원격미반영·로컬만·개인설정/3D보존. Docs/Goryeo/Region-Consistency-Fix-2026-11-08.md.
+
+- 2026-11-08 Codex Aseprite오류방지(이 커밋): 로컬crash SIGABRT/AppOSX::init→NSApplication→RegisterApplication 확인·seatbelt실행에서만중단/정상경로통과. 공통실행전guard/전체runner·검사27+제작15+MCP연결1=43파일연결, AgentGuide/도구README갱신. 실제제한환경앱시작전종료2/기존개별검사1환경실패유지·신규5·정상전체431/23skip·MCP16×16/PNG/밖경로거부통과·새충돌0(21→21). 앱/OS/Claude·Codex설정/게임C#/아트/저장변경0·Unity/플레이/빌드재검사안함·최신main포함·로컬만/개인설정3D보존. Docs/Validation/Aseprite-Execution-2026-11-08/README.md.
+
+- 2026-11-08 Codex 고려첫이야기(이 커밋): 선택창중기본고려Arrive가step1선기록/예약대사취소→누락 재현. 선택후하단이야기1페이지/일꾼부름·Space안내/확인메모·옛step1복구/단계2·4·7·10·11보존·중복Start/이탈취소·타출신보존검사. 초기격리누락으로 StartScreen자동로그인/돈짐요약전송발견후즉시차단(전체저장업로드0·기존서버요약복구미확인), NetSave시험칸welcome/요약·전체차단9줄보완·일반칸수신메모리검사. 이후로그인억제Offline/SaveOFF재검사/최종캡처. Unity컴파일/콘솔0·최종431/23skip·세계883/0·로컬저장9동일. 그림확인/원격미반영·실키8단계/장시간/빌드미검사·최신main포함·개인설정3D보존. Docs/Validation/Goryeo-Opening-2026-11-08/README.md.
+
+- 2026-11-08 Codex 매매안내문구(이 커밋): 사용자 문구수정 정정/최종문장/다른문명도수정 지시에 따라4Intro Tasks구매/판매2개씩만 통일(상인에게물건하나구매하기/산물건을다른마을상인에게판매하기). 완료판정/교역규칙/ID/대사/저장불변HEAD대조. Unity컴파일/콘솔0·로그인억제Offline/SaveOFF4문명8실제화면. 전체Python/세계/실매매/빌드재검사없음·최신main포함·로컬만·개인설정3D보존. Docs/Validation/Trade-Wording-2026-11-08/README.md.
+
+- 2026-11-08 Codex 지역일관성통합준비(이 커밋): 사용자GitHub업로드지시로region/goryeo→integration준비·최신main/integration포함확인. 최종Python431/23skip·세계883/0·UnityNaru격리이주/대화30·콘솔0·개인저장9SHA동일. 상인호칭/일꾼원본좌표/튜토리얼이주·첫이야기/공용고정이름표/4문명안내/시험저장전송차단/Aseprite도구대상. 공용UI/Quests/Net명시·맵/씬/DB/색인/연결/타지역그림/서버변경0·개인설정3D제외. 온라인/장시간/FPS/빌드미검사. Docs/Validation/Region-Consistency-Integration-2026-11-08/README.md.
+
+- 2026-11-08 Codex PR30통합완료(이 커밋): 사용자업로드지시로region/goryeo a5ce62076 push→PR30자동검사2SUCCESS/MERGEABLE/CLEAN→integration병합 b3fcfb91e(12:14KST). 원격코드/도구가검증source와동일확인·로컬FF·개인설정/3D보존. UI/Quests/Net·이름표공용연결/4문명Intro문구명시·맵씬DB추가변경0. 사후공지문안저장/카톡실제발송안함. 실제온라인/장시간/FPS/빌드미검사. Docs/Goryeo/Team-Notice-PR30.md, Docs/Validation/Region-Consistency-Integration-2026-11-08/github.json.

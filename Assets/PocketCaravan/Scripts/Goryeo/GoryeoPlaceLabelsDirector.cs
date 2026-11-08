@@ -15,11 +15,19 @@ namespace PocketCaravan
         static void OnLoaded(Scene scene,LoadSceneMode mode)=>Apply();
         public static void Apply()
         {
-            var map=MapRoot.Current;if(map==null||map.previewOnly||GoryeoTravelTransition.RegionOf(map.mapId)==null)return;
-            if(config==null){var asset=Resources.Load<TextAsset>("Goryeo/PlaceLabels");if(asset==null)return;config=JsonUtility.FromJson<Config>(asset.text);}
-            if(config==null||config.status!="approved"||config.near!=GoryeoPlaceLabels.Near||config.maps==null)return;
-            var row=Array.Find(config.maps,v=>v.id==map.mapId);var road=map.GetComponent<RoadGrid>();if(row==null||row.places==null||road==null||road.width!=row.w||road.height!=row.h)return;
-            var labels=map.GetComponent<GoryeoPlaceLabels>()??map.gameObject.AddComponent<GoryeoPlaceLabels>();labels.places=row.places;labels.approvedForProduction=true;labels.Refresh();
+            var map=MapRoot.Current;if(map==null||map.previewOnly)return;
+            var places=Array.Empty<GoryeoPlaceLabels.Place>();
+            if(GoryeoTravelTransition.RegionOf(map.mapId)!=null)
+            {
+                if(config==null){var asset=Resources.Load<TextAsset>("Goryeo/PlaceLabels");if(asset==null)return;config=JsonUtility.FromJson<Config>(asset.text);}
+                if(config==null||config.status!="approved"||config.near!=GoryeoPlaceLabels.Near||config.maps==null)return;
+                var row=Array.Find(config.maps,v=>v.id==map.mapId);var road=map.GetComponent<RoadGrid>();
+                if(row==null||row.places==null||road==null||road.width!=row.w||road.height!=row.h)return;
+                places=row.places;
+            }
+            // Foreign regions retain their authoring data; only the common presentation is shared.
+            var labels=map.GetComponent<GoryeoPlaceLabels>()??map.gameObject.AddComponent<GoryeoPlaceLabels>();
+            labels.places=places;labels.approvedForProduction=true;labels.Refresh();
         }
     }
 }

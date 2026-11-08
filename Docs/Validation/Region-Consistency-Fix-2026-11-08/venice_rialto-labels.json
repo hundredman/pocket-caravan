@@ -1,0 +1,15 @@
+{
+  "map": "venice_rialto",
+  "names": [
+    "운하 짐꾼",
+    "빵 나르는 소년",
+    "상인회 견습생",
+    "곤돌라 수리공",
+    "상인회 안내원 조반나"
+  ],
+  "drawn": 5,
+  "overlap": 0,
+  "hidden": [],
+  "badgeCount": 0,
+  "saveOFF": true
+}

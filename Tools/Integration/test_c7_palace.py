@@ -7,6 +7,10 @@ sys.path[:0]=[str(ROOT/'Tools/ArtTrials'),str(ROOT/'Tools/MapGen')]
 from c7_palace import OUT,COLORS
 from c7_catalogue import rgba_evidence
 from asset_manifest import validate
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 class PalaceChecks(unittest.TestCase):
     def test_whole70_cells_and_exact_approved_art(self):
         doc=json.loads((OUT/'catalogue.json').read_text());layout=json.loads((OUT/'layout.json').read_text())
@@ -38,7 +42,7 @@ class PalaceChecks(unittest.TestCase):
         if not binary.exists():self.skipTest('Aseprite unavailable; native reexport not run')
         with tempfile.TemporaryDirectory() as temp:
             output=Path(temp)/'palace.png'
-            subprocess.run([str(binary),'-b',str(OUT/'Native/palace.aseprite'),'--save-as',str(output)],check=True,capture_output=True)
+            run_aseprite([str(binary),'-b',str(OUT/'Native/palace.aseprite'),'--save-as',str(output)],check=True,capture_output=True)
             self.assertEqual(rgba_evidence(output),rgba_evidence(OUT/'Native/palace.png'))
     def test_actual_play_only_palace_changed(self):
         folder=OUT/'Screens';self.assertIn('previewOnly true',(folder/'complete.txt').read_text())

@@ -1,0 +1,15 @@
+{
+  "map": "arabia_ahsa",
+  "names": [
+    "바구니 든 주민",
+    "길잡이 하산",
+    "하산의 조카 아미르"
+  ],
+  "drawn": 3,
+  "overlap": 0,
+  "hidden": [
+    "대추야자 따기"
+  ],
+  "badgeCount": 0,
+  "saveOFF": true
+}

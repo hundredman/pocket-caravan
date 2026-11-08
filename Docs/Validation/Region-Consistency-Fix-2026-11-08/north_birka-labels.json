@@ -1,0 +1,13 @@
+{
+  "map": "north_birka",
+  "names": [
+    "여관 할머니",
+    "상인 길드장",
+    "어머니"
+  ],
+  "drawn": 3,
+  "overlap": 0,
+  "hidden": [],
+  "badgeCount": 0,
+  "saveOFF": true
+}

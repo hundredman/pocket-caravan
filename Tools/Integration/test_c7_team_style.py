@@ -10,6 +10,10 @@ from c7_team_prepare import OUT,HOUSE,GROUND
 from c7_catalogue import rgba_evidence
 from asset_manifest import validate_catalogue
 
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
+
 
 class C7TeamStyleChecks(unittest.TestCase):
     def test_catalogue_pending_and_complete(self):
@@ -47,7 +51,7 @@ class C7TeamStyleChecks(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             script=Path(temp)/'roundtrip.lua'
             script.write_text('\n'.join(f"local s=app.open({json.dumps(str(OUT/'Native'/(n+'.aseprite')),ensure_ascii=False)});s:saveCopyAs({json.dumps(str(Path(temp)/(n+'.png')),ensure_ascii=False)});s:close()" for n in names)+'\n')
-            subprocess.run([str(binary),'-b','--script',str(script)],check=True,capture_output=True)
+            run_aseprite([str(binary),'-b','--script',str(script)],check=True,capture_output=True)
             for n in names:self.assertEqual(rgba_evidence(OUT/'Native'/(n+'.png')),rgba_evidence(Path(temp)/(n+'.png')),n)
 
     def test_actual_figma_reference_evidence(self):

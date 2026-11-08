@@ -5,7 +5,8 @@ namespace PocketCaravan
 {
     /// <summary>
     /// 배달 의뢰 하나. 마을 게시판에서 맡아 기한 안에 다른 마을 게시판에 납품한다.
-    /// 시간은 모두 GameClock.TotalHours 기준.
+    /// 기한(acceptedAt·deadline·finalDeadline)은 내 의뢰 시간 GameClock.PlayHours 기준 (2026-11-08: 게임을 끄면 멈추고, 온라인 세상 시간과 따로 흐른다).
+    /// 2026-11-08 이전 저장은 세상 시간 기준이었으며, 불러올 때 PlayHours를 그 값에서 이어받아 그대로 맞는다.
     /// </summary>
     [Serializable]
     public class Contract

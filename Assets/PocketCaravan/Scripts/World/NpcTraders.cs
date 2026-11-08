@@ -66,6 +66,12 @@ namespace PocketCaravan
         }
         ItemData Item(string id) => db.items.Find(i => i != null && i.id == id);
 
+        /// <summary>
+        /// 온라인에서 서버가 공유 장터 재고를 들고 있으면 NPC 상인은 그 장터에서 사고팔지 않는다 (2026-11-08).
+        /// NPC는 각자 게임에서 따로 돌아서, 공유 장터에서 거래하면 사람마다 재고가 어긋난다. 혼자 하기에서는 예전처럼 거래한다.
+        /// </summary>
+        static bool OffLimits(TownData town) => NetMarket.ServerShared && WorldClock.Active && NetMarket.IsShared(town);
+
         public void OnHour()
         {
             float now = clock.TotalHours;
@@ -82,6 +88,7 @@ namespace PocketCaravan
             var town = Town(tr.town);
             var item = Item(tr.itemId);
             if (town == null || item == null || tr.count <= 0) return;
+            if (OffLimits(town)) { tr.lastNews = $"{town.displayName} 큰 장은 사람이 붐벼서 짐을 풀지 못했소."; tr.count = 0; tr.itemId = null; tr.paid = 0; return; }
             var m = market(town);
             int total = 0;
             for (int i = 0; i < tr.count; i++)
@@ -99,6 +106,21 @@ namespace PocketCaravan
         {
             var from = Town(tr.town);
             if (from == null) return;
+            if (OffLimits(from))
+            {
+                // 공유 장터에서는 사지 않고 가장 가까운 다른 장터로 빈 수레로 옮겨 간다
+                TownData near = null; int nearSteps = int.MaxValue;
+                foreach (var to in db.towns)
+                {
+                    if (to == null || to == from || OffLimits(to) || !Connected(from, to)) continue;
+                    int steps = Mathf.Max(1, ContractManager.Distance(from, to));
+                    if (steps < nearSteps) { near = to; nearSteps = steps; }
+                }
+                if (near == null) { tr.arriveAt = now + 3f; return; }
+                tr.destination = near.id; tr.itemId = null; tr.count = 0; tr.paid = 0;
+                tr.arriveAt = now + 4f * nearSteps;
+                return;
+            }
             var mf = market(from);
             ItemData best = null; TownData bestTo = null; float bestGain = 0;
             foreach (var s in from.stock)
@@ -107,7 +129,7 @@ namespace PocketCaravan
                 int buy = mf.BaseBuyPrice(s.item);
                 foreach (var to in db.towns)
                 {
-                    if (to == null || to == from || !Connected(from, to)) continue;
+                    if (to == null || to == from || OffLimits(to) || !Connected(from, to)) continue;
                     float gain = (market(to).NpcSellPrice(s.item) - buy) / (float)buy;
                     gain /= Mathf.Max(1, ContractManager.Distance(from, to));   // 가까울수록 좋음
                     if (gain > bestGain) { bestGain = gain; best = s.item; bestTo = to; }

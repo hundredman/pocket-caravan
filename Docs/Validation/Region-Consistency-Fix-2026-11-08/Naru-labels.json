@@ -1,0 +1,15 @@
+{
+  "map": "Naru",
+  "names": [
+    "농부",
+    "아낙",
+    "짐꾼",
+    "뱃사공",
+    "선착장 일꾼"
+  ],
+  "drawn": 6,
+  "overlap": 0,
+  "hidden": [],
+  "badgeCount": 1,
+  "saveOFF": true
+}

@@ -14,6 +14,10 @@ from c7_rebuild_catalogue import OUT, OLD
 from c7_catalogue import rgba_evidence
 from asset_manifest import validate_catalogue
 
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
+
 
 class C7RebuildChecks(unittest.TestCase):
     def test_whole_objects_and_complete_boundary_kit_keep_user_feedback(self):
@@ -51,7 +55,7 @@ class C7RebuildChecks(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             script=Path(temp)/'roundtrip.lua'
             script.write_text('\n'.join(f"local s=app.open({json.dumps(str(OUT/'Native'/(name+'.aseprite')),ensure_ascii=False)});s:saveCopyAs({json.dumps(str(Path(temp)/(name+'.png')),ensure_ascii=False)});s:close()" for name in names)+'\n')
-            subprocess.run([str(binary),'-b','--script',str(script)],check=True,capture_output=True)
+            run_aseprite([str(binary),'-b','--script',str(script)],check=True,capture_output=True)
             for name in names:
                 self.assertEqual(rgba_evidence(OUT/'Native'/(name+'.png')),rgba_evidence(Path(temp)/(name+'.png')),name)
 

@@ -39,7 +39,7 @@ namespace PocketCaravan
         Vector3 rest; bool applied; Sprite pose;
 
         public static bool IsSitting => sitting != null;
-        public static bool Shaded => GameManager.I != null && GameManager.I.Clock.TotalHours < GameManager.I.GetMemo(ShadeKey, -1f);
+        public static bool Shaded => GameManager.I != null && GameManager.I.Clock.PlayHours < GameManager.I.GetMemo(ShadeKey, -1f);   // 11/08 여관 버프처럼 내 의뢰 시간 기준 (PR #31)
 
         void Awake() => blocksMovement = false;
 
@@ -72,7 +72,7 @@ namespace PocketCaravan
             if (!rewarded && Time.time - since > 4f)
             {
                 rewarded = true;
-                GameManager.I.SetMemo(ShadeKey, GameManager.I.Clock.TotalHours + 1f);
+                GameManager.I.SetMemo(ShadeKey, GameManager.I.Clock.PlayHours + 1f);
                 var story = ArabiaDunesLife.NightStory();   // 11/08 오아시스 모닥불 밤이면 별자리 이야기
                 Notify.Show(story ?? "더위를 식혔다. 1시간 동안 덜 지친다.", story != null ? 5f : 3f);
             }

@@ -24,7 +24,7 @@
 - **생성물:** `Maps/*.json`, 씬, `Resources/WorldMap` 이미지는 원본(`Tools/…`)을 고친 뒤 다시 만든다. 생성물만 고치지 않는다.
 - **보존:** 시장·상품·퀘스트·NPC·시설 아이디와 저장 데이터는 유지한다. 형식을 바꾸면 옛 저장 이주를 함께 만든다.
 - **검사:** 실행하지 않은 검사를 통과했다고 쓰지 않는다. 정적 검사, Unity 씬 검사, 실제 이동, 사람이 해 본 플레이를 구분해서 적는다.
-- **팀 통합 사후 공지(사용자 2026-11-07 변경):** GitHub `integration` 병합을 지시받으면 사전 공지 전달 확인을 기다리지 않고 검토·검사·충돌 확인 후 병합한다. 병합 뒤 카카오톡 등 실제 팀 채널에 전달할 완료 문안을 제공한다. 문안에는 PR/커밋·작업 범위·공용 파일 변경·검사 결과·주의사항을 담는다. 해당 채널에 연결되어 있지 않으면 사용자가 전달하며, 에이전트가 발송했다고 보고하지 않는다. 채널·수신자를 임의로 정해 보내지 않는다.
+- **팀 통합 사후 공지(사용자 2026-11-07 변경):** GitHub `integration` 병합을 지시받으면 사전 공지 전달 확인을 기다리지 않고 검토·검사·충돌 확인 후 병합한다. 병합 뒤 카카오톡 등 실제 팀 채널에 전달할 완료 문안을 제공한다. 문안에는 PR/커밋·작업 범위·공용 파일 변경·검사 결과·주의사항을 담는다. 공지 본문은 사용자 2026-11-08 예시처럼 “무엇을 올렸는지 → 받은 사람이 실행할 Unity 메뉴/준비 → 추가 내용 → 바꾼 공용 파일” 순서로 짧게 쓴다. 별도 준비가 없으면 없다고 쓰고, 실제 메뉴명을 확인해 적는다. 긴 검사 수치는 본문에 늘어놓지 않는다. 해당 채널에 연결되어 있지 않으면 사용자가 전달하며, 에이전트가 발송했다고 보고하지 않는다. 채널·수신자를 임의로 정해 보내지 않는다.
 - **Git:** 로컬 커밋은 해도 된다. push, PR, 공개 빌드는 은샘이 지시하면 바로 한다(지시 없이 먼저 하지 않는다). 팀 합치기용 브랜치는 `region/goryeo`. Git에 올리지 않은 3D 실험 폴더는 지우지 않는다.
 - **문서:** 정정 문구를 문서 맨 위에 덧붙이지 않는다. 해당 문서 본문을 고친다. 더 이상 맞지 않는 문서는 `Docs/Archive/`로 옮긴다.
 - **글:** 한국어로, 짧고 담백하게 쓴다.
@@ -35,7 +35,7 @@
 - Unity **6000.3.26f1**. 버전을 올리지 않는다.
 - 코드: `Assets/PocketCaravan/Scripts/` (namespace `PocketCaravan`). 에디터 도구: `Assets/PocketCaravan/Editor/`.
 - 맵: `Tools/MapGen`(Python) → `Assets/PocketCaravan/Maps/*.json` → `Editor/MapJsonBuilder` → `Scenes/`.
-- 검사: `python Tools/Integration/validate_world.py`, `python -m unittest discover -s Tools/Integration -p 'test_*.py'` (Pillow 필요).
+- 검사: `python Tools/Integration/validate_world.py`, `python Tools/Integration/run_checks.py` (Pillow 필요, 기존 unittest 전체와 같은 검사 + Aseprite 실행 전 환경 확인). macOS Codex seatbelt에서는 Aseprite를 직접 실행하지 않고 같은 검사 명령을 `require_escalated` 정상 경로로 실행한다. 제한 안에서 반복 재시도하면 앱 오류 창이 생긴다. 개별 제작/검사도 [Aseprite 실행 지침](../../Tools/Aseprite/README.md)을 따른다.
 - Unity 주의사항과 코드 구조는 [코드 규칙](../Reference/CodeConventions.md)에 있다.
 - 아트 시안과 배치 검토안: [Figma 팀 파일](https://www.figma.com/design/JeXCjYTYRGtV8FCnXWWiqe/). `아트 시안` 페이지는 팀원 작업이므로 고치지 않는다.
 

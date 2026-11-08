@@ -161,7 +161,8 @@ namespace PocketCaravan
 
         public void OnHour()
         {
-            float now = clock.TotalHours;
+            float now = clock.TotalHours;      // 게시판 채우기: 세상 시간
+            float played = clock.PlayHours;    // 의뢰 기한: 내 의뢰 시간
             foreach (var b in boards)
             {
                 if (b.list.FindAll(c => c != null && !c.atonement).Count < BoardSize && now - b.lastAdded >= RefillHours)
@@ -180,7 +181,7 @@ namespace PocketCaravan
             // 최종 기한이 지난 의뢰는 실패
             foreach (var c in new List<Contract>(player.contracts))
             {
-                if (now > c.finalDeadline)
+                if (played > c.finalDeadline)
                 {
                     player.contracts.Remove(c);
                     player.credit -= 1;
@@ -223,7 +224,7 @@ namespace PocketCaravan
             if (b == null || c == null || c.fromTown != town || !b.list.Contains(c) || CanAccept(c) != null) return false;
             b.list.Remove(c);
             b.lastAdded = clock.TotalHours;   // 빈자리는 시간이 지나야 채워짐
-            float now = clock.TotalHours;
+            float now = clock.PlayHours;      // 기한은 내 의뢰 시간으로 잰다
             c.acceptedAt = now;
             c.deadline = now + c.hours;
             c.finalDeadline = now + c.hours * 1.5f;
@@ -251,7 +252,7 @@ namespace PocketCaravan
                 return new ContractResult { message = "떨어뜨린 의뢰 짐을 먼저 회수해 주세요." };
             if (c.atonement && (long)player.money + c.deposit > int.MaxValue)
                 return new ContractResult { message = "보증금을 돌려받을 잔고 공간이 부족합니다. 거래 후 다시 납품해 주세요." };
-            float now = clock.TotalHours;
+            float now = clock.PlayHours;
             var r = new ContractResult();
             player.contracts.Remove(c);
             if (now <= c.deadline && c.condition >= 0.9f)
@@ -362,9 +363,9 @@ namespace PocketCaravan
 
         public string TimeLeftText(Contract c)
         {
-            float left = c.deadline - clock.TotalHours;
+            float left = c.deadline - clock.PlayHours;
             if (left >= 0) return $"{Mathf.CeilToInt(left)}시간";
-            float late = c.finalDeadline - clock.TotalHours;
+            float late = c.finalDeadline - clock.PlayHours;
             return late >= 0 ? $"늦음 (마감 {Mathf.CeilToInt(late)}시간)" : "마감";
         }
     }

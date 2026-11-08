@@ -6,6 +6,10 @@ ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'ArtReview/MountainRange-S1'
 sys.path.insert(0,str(ROOT/'Tools/MapGen'))
 from tiles import autotile
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 WIDTHS={'west-cap':128,'body-a':192,'body-b':64,'east-cap':128}
 SHORT=['west-cap','body-a','east-cap']
 LONG=['west-cap','body-a','body-b','body-a','body-b','east-cap']
@@ -67,7 +71,7 @@ def main():
             assert im.size==(width,192) and set(im.getchannel('A').tobytes())<={0,255}
             assert set(zip(*[iter(im.tobytes())]*4))<=palette
             target=Path(temp)/f'{name}.png'
-            subprocess.run(['/Applications/Aseprite.app/Contents/MacOS/aseprite','-b',str(p.with_suffix('.aseprite')),'--save-as',str(target)],check=True,capture_output=True)
+            run_aseprite(['/Applications/Aseprite.app/Contents/MacOS/aseprite','-b',str(p.with_suffix('.aseprite')),'--save-as',str(target)],check=True,capture_output=True)
             check=rgba(target);assert check.size==im.size and check.tobytes()==im.tobytes()
             assets.append(dict(name=name,size=list(im.size),rgbaSha256=hashlib.sha256(im.tobytes()).hexdigest(),asepriteRGBAEqual=True))
     worlds={}

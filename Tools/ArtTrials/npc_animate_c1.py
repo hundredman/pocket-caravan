@@ -6,6 +6,10 @@ ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'Tools/ArtTrials'))
 import npc_expand_remaining as R
 import npc_polish_v4 as V
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 OUT=ROOT/'ArtReview/C1-Walk';ASE='/Applications/Aseprite.app/Contents/MacOS/aseprite'
 PEOPLE=[('chief','나루 촌장','chief-front-c1-expand-1'),('woman','아낙','woman-front-v4'),('trader','행상','trader-front-c1-expand-1')]+[(n,t,n+'-front-c1-expand-2') for n,t,_,_ in R.ROLES]
 
@@ -189,9 +193,9 @@ def generate():
         assert frames[0].tobytes()==front.tobytes()
         assert all(len({frames[i*4+f].tobytes() for f in range(4)})>=3 for i in range(4))
         sheet.save(OUT/f'{name}-sheet.png')
-        subprocess.run([ASE,'-b','--script-param',f'frames={OUT/"frames"}','--script-param',f'name={name}','--script-param',f'output={OUT/f"{name}.aseprite"}','--script',str(ROOT/'Tools/ArtTrials/npc_animate_c1.lua')],check=True,stdout=subprocess.DEVNULL)
+        run_aseprite([ASE,'-b','--script-param',f'frames={OUT/"frames"}','--script-param',f'name={name}','--script-param',f'output={OUT/f"{name}.aseprite"}','--script',str(ROOT/'Tools/ArtTrials/npc_animate_c1.lua')],check=True,stdout=subprocess.DEVNULL)
         reopened=OUT/f'{name}-reopened.png'
-        subprocess.run([ASE,'-b',str(OUT/f'{name}.aseprite'),'--sheet',str(reopened),'--sheet-columns','4','--data',str(OUT/f'{name}-animation.json'),'--format','json-array','--list-tags'],check=True)
+        run_aseprite([ASE,'-b',str(OUT/f'{name}.aseprite'),'--sheet',str(reopened),'--sheet-columns','4','--data',str(OUT/f'{name}-animation.json'),'--format','json-array','--list-tags'],check=True)
         assert Image.open(reopened).convert('RGBA').tobytes()==sheet.tobytes();reopened.unlink()
         info=json.loads((OUT/f'{name}-animation.json').read_text());assert len(info['frames'])==16;assert [(t['name'],t['from'],t['to']) for t in info['meta']['frameTags']]==[(ch,i*4,i*4+3) for i,ch in enumerate('dulr')];assert all(f['duration']==125 for f in info['frames'])
         profile={'pixelsPerCell':[16,24],'binaryAlpha':True,'palette':['#%02x%02x%02x'%p for p in palette]};profiles[name]=profile

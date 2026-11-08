@@ -127,7 +127,7 @@ namespace PocketCaravan
                 string name = q.giverNpc, place = null;
                 if (Givers.TryGetValue(q.giverNpc, out var g)) { name = g.name; place = g.where; }
                 if (string.IsNullOrEmpty(place)) { var map = WorldIndex.Get()?.MapOf("npc", q.giverNpc); if (map != null) place = WorldIndex.Get().MapName(map); }
-                who = name; where = place;
+                who = WorldDisplayNames.ShortName(name); where = place;
                 return;
             }
         }

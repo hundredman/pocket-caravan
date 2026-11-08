@@ -5,6 +5,10 @@ ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'ArtReview/Goryeo-Atmosphere-A
 import sys
 sys.path.insert(0,str(ROOT/'Tools/WorldLayout'))
 from t3_history import map_at,resource_at
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 class VillageLifeTrial(unittest.TestCase):
  def test_verified_road_and_boat_corridors_preserve_land(self):
   s=json.loads((OUT/'source.json').read_text());self.assertEqual(s['status'],'review');self.assertEqual(len(s['maps']),13)
@@ -37,7 +41,7 @@ class VillageLifeTrial(unittest.TestCase):
    t=Path(temp);code=[f"local root={json.dumps(str(OUT),ensure_ascii=False)};local out={json.dumps(str(t),ensure_ascii=False)}"]
    for kind in ('chicken','dog'):
     code.append(f"local s=app.open(root..'/Native/{kind}.aseprite');assert(#s.frames==2);for f=1,2 do local d=Sprite(32,32,ColorMode.RGB);d.cels[1].image:drawImage(s.cels[f].image,Point(0,0));d:saveAs(out..'/{kind}_'..(f-1)..'.png');d:close()end;s:close()")
-   script=t/'export.lua';script.write_text('\n'.join(code));subprocess.run([str(ase),'-b','--script',str(script)],check=True,capture_output=True,timeout=60)
+   script=t/'export.lua';script.write_text('\n'.join(code));run_aseprite([str(ase),'-b','--script',str(script)],check=True,capture_output=True,timeout=60)
    for p in (OUT/'Native').glob('*.png'):
     with Image.open(p)as a,Image.open(t/p.name)as b:self.assertEqual(a.convert('RGBA').tobytes(),b.convert('RGBA').tobytes())
  def test_same_purpose_whole_existing_assets_and_preview_gate(self):

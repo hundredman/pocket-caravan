@@ -8,4 +8,4 @@
 - 본편635출구/모터접근·풀밭왕복·타지역3왕복·13씬/지도 캡처는 앞선 [본편 검증](../T3-Production-2026-11-08/README.md)의 결과다. 이번 병합 뒤 이 캡처 전부를 다시 촬영했다고 세지 않는다.
 - 사람 체감·전체 수동 Q1·실온라인/서버 저장·장시간FPS·빌드는 미검사.
 
-사용자 업로드 지시에 따라 region/goryeo → integration PR로 올린다. 사전 공지를 기다리지 않고 검사 후 병합하며 사후 카톡 문안을 제공한다. 개인 패키지/설정·3D실험은 제외했다.
+사용자 업로드 지시에 따라 region/goryeo → integration [PR #29](https://github.com/hundredman/pocket-caravan/pull/29)를 올렸고, GitHub 검사2개 SUCCESS·MERGEABLE/CLEAN 확인 뒤 2026-11-08 01:47 KST에 병합했다. 통합 커밋 `f356ed767bd147ab454ce13aa31d5c27a271cd89`. [원격 결과](github.json). 로컬도 원격 integration까지 fast-forward했고 최신 main을 포함한다. 개인 패키지/설정·3D실험은 제외했다. 실제 카톡은 발송하지 않았으며 [사후 문안](../../Goryeo/Team-Notice-PR29.md)을 사용자가 전달한다.

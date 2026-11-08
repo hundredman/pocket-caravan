@@ -91,10 +91,13 @@ namespace PocketCaravan.EditorTools
         {
             var gm = GameManager.I; Near(Boatman()); int money = gm.Player.money; float hours = gm.Clock.TotalHours;
             yield return Keypress(Key.Space);
-            Check(UIState.Blocking && FindFirstObjectByType<DialogueUI>().ChoicesVisible, "Space opens boatman choices");
-            yield return Keypress(Key.Space);
+            var dialogue = FindFirstObjectByType<DialogueUI>();
+            Check(UIState.Blocking && dialogue.ChoicesVisible, "Space opens boatman choices");
+            var choices = (System.Collections.Generic.List<DialogueUI.Choice>)typeof(DialogueUI).GetField("choices", Flags).GetValue(dialogue);
+            Check(choices.Count > 1 && choices[0].label == "이야기하기", "Space default is talk (2026-11-08)");
+            typeof(DialogueUI).GetMethod("Pick", Flags).Invoke(dialogue, new object[] { choices.Find(c => c.label.StartsWith(GoryeoFerry.Find(destination).name)) });
             for (int i = 0; i < 600 && (gm.IsTravelling || MapRoot.Current == null || MapRoot.Current.mapId != destination); i++) yield return null;
-            Check(!gm.IsTravelling && MapRoot.Current.mapId == destination, "Space selects first route and arrives " + destination);
+            Check(!gm.IsTravelling && MapRoot.Current.mapId == destination, "route choice arrives " + destination);
             // Directors install after the travel coroutine releases its lock on the next Update.
             yield return null; yield return null;
             Check(gm.Player.money == money-8 && Mathf.Abs(gm.Clock.TotalHours-hours-1)<.001f, "one fare and one game hour " + destination);
