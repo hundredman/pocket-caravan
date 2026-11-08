@@ -32,6 +32,20 @@ namespace PocketCaravan
 
         // ---- 걸어서 가는 길 (같은 맵 안). 물·건물로 막힌 직선 대신 다리·골목을 따라 가리킨다 ----
         const int Lookahead = 4;          // 화살표는 길에서 이만큼 앞 칸을 가리킨다
+        const int SightAhead = 12;        // 11/08: 이만큼 앞까지는 곧게 닿으면 그 칸을 가리킨다
+
+        /// <summary>두 점 사이를 곧게 걸어도 막힌 칸이 없는지 (0.25칸마다 확인)</summary>
+        static bool ClearLine(MapRoot map, Vector3 a, Vector3 b, System.Func<Vector3Int, bool> isGoal)
+        {
+            float len = Vector2.Distance(a, b);
+            int steps = Mathf.Max(1, Mathf.CeilToInt(len / 0.25f));
+            for (int k = 1; k <= steps; k++)
+            {
+                var c = map.WorldToCell(Vector3.Lerp(a, b, k / (float)steps));
+                if (!map.IsWalkable(c) && !isGoal(c)) return false;
+            }
+            return true;
+        }
         const int MaxSearch = 20000;      // 탐색 칸 수 상한 (큰 맵에서도 한 번에 끝나는 크기)
         static Vector3Int cachedFrom, cachedGoal;
         static MapRoot cachedMap;
@@ -80,6 +94,15 @@ namespace PocketCaravan
             cells = path.Count;
             if (path.Count > 0) steer = map.CellCenter(path[Mathf.Min(Lookahead, path.Count) - 1]);
             if (path.Count <= Lookahead) steer = goalWorld;
+            // 11/08 기우: 칸 길은 가로·세로로만 꺾여서, 비스듬히 바로 갈 수 있어도 화살표가 옆(→)만 가리켰다.
+            // 길 위 12칸 앞까지 중에 곧게 걸어 닿는(사이가 막히지 않은) 가장 먼 칸을 가리킨다 → 목적지(▼)와 방향이 맞는다.
+            Vector3 fromW = player.transform.position;
+            for (int i = Mathf.Min(SightAhead, path.Count) - 1; i >= Lookahead; i--)
+            {
+                var c = path[i];
+                Vector3 to = (i == path.Count - 1) ? goalWorld : map.CellCenter(c);
+                if (ClearLine(map, fromW, to, IsGoal)) { steer = to; break; }
+            }
             cachedSteer = steer; cachedCells = cells;
         }
 
