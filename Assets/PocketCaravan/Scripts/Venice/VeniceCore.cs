@@ -11,13 +11,15 @@ namespace PocketCaravan
     /// </summary>
     public static class VeniceSave
     {
-        public static float Get(string key, float fallback = 0f) => GameManager.I != null ? GameManager.I.GetMemo("venice:" + key, fallback) : fallback;
-        public static bool Has(string key) => GameManager.I != null && GameManager.I.HasMemo("venice:" + key);
-        public static void Set(string key, float value) { if (GameManager.I != null) GameManager.I.SetMemo("venice:" + key, value); }
+        // 11/08 공통화 4단계: 공용 RegionMemo("venice:")로 넘긴다 (키 이름·저장 형식 그대로)
+        static readonly RegionMemo M = new RegionMemo("venice:");
+        public static float Get(string key, float fallback = 0f) => M.Get(key, fallback);
+        public static bool Has(string key) => M.Has(key);
+        public static void Set(string key, float value) => M.Set(key, value);
 
         /// <summary>오늘 이미 했는지 (게임 날짜 기준)</summary>
-        public static bool DoneToday(string key) => GameManager.I != null && (int)Get(key + "_day", -1) == GameManager.I.Clock.day;
-        public static void MarkToday(string key) { if (GameManager.I != null) Set(key + "_day", GameManager.I.Clock.day); }
+        public static bool DoneToday(string key) => M.DoneToday(key + "_day");
+        public static void MarkToday(string key) => M.MarkToday(key + "_day");
     }
 
     public static class VeniceData

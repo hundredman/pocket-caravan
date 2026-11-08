@@ -95,25 +95,14 @@ namespace PocketCaravan
         }
     }
 
+    /// <summary>북유럽 진행 메모 "north:". 11/08 공통화 4단계: 공용 RegionMemo로 넘긴다 (전엔 GameManager 내부 표를 리플렉션으로 읽음. 키·저장 형식 그대로)</summary>
     public static class NorthSave
     {
-        static readonly FieldInfo field = typeof(GameManager).GetField("cooldowns", BindingFlags.NonPublic | BindingFlags.Instance);
-        static readonly Dictionary<string, float> fallback = new Dictionary<string, float>();
-
-        static Dictionary<string, float> Table
-        {
-            get
-            {
-                var gm = GameManager.I;
-                if (gm != null && field != null && field.GetValue(gm) is Dictionary<string, float> d) return d;
-                return fallback;   // 혹시 공용 코드가 바뀌어도 게임은 돌아가게 (이번 실행 동안만 기억)
-            }
-        }
-
-        public static float Get(string key, float def = 0f) => Table.TryGetValue("north:" + key, out var v) ? v : def;
-        public static bool Has(string key) => Table.ContainsKey("north:" + key);
-        public static void Set(string key, float value) => Table["north:" + key] = value;
-        public static float Add(string key, float delta) { float v = Get(key) + delta; Set(key, v); return v; }
+        static readonly RegionMemo M = new RegionMemo("north:");
+        public static float Get(string key, float def = 0f) => M.Get(key, def);
+        public static bool Has(string key) => M.Has(key);
+        public static void Set(string key, float value) => M.Set(key, value);
+        public static float Add(string key, float delta) => M.Add(key, delta);
     }
 
     public static class NorthUtil

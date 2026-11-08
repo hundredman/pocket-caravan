@@ -15,8 +15,9 @@ namespace PocketCaravan
     public static class ArabiaPastimes
     {
         static int Day => GameManager.I != null ? GameManager.I.Clock.day : 0;
-        public static bool DoneToday(string id) => GameManager.I != null && Mathf.RoundToInt(GameManager.I.GetMemo($"arabia:pastime:{id}:day", -1f)) == Day;
-        static void MarkToday(string id) => GameManager.I?.SetMemo($"arabia:pastime:{id}:day", Day);
+        static readonly RegionMemo Memo = new RegionMemo("arabia:pastime:");   // 11/08 공통화 4단계 (키 그대로)
+        public static bool DoneToday(string id) => Memo.DoneToday($"{id}:day");
+        static void MarkToday(string id) => Memo.MarkToday($"{id}:day");
         public static int Best(string id) => GameManager.I == null ? 0 : Mathf.RoundToInt(GameManager.I.GetMemo($"arabia:pastime:{id}:best", 0f));
         static void SetBest(string id, int score) { if (GameManager.I != null && score > Best(id)) GameManager.I.SetMemo($"arabia:pastime:{id}:best", score); }
 
