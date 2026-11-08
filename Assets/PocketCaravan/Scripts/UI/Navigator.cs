@@ -21,6 +21,14 @@ namespace PocketCaravan
             public int walkCells;           // 걸어서 가는 칸 수 (길을 못 찾으면 -1)
         }
 
+        /// <summary>
+        /// 11/08 은샘: 지역 첫걸음 안내(Intro)처럼 퀘스트가 아닌 안내도 같은 화살표를 쓰게 한다. 퀘스트·의뢰보다 먼저 본다.
+        /// target(같은 맵의 대상)을 주거나, kind/id(npc·market·board·map)를 주면 다른 맵이면 출구로 안내한다.
+        /// </summary>
+        public struct Hint { public string kind, id, label; public Interactable target; }
+        public static readonly List<System.Func<Hint?>> Tutorials = new List<System.Func<Hint?>>();
+        static Hint? TutorialHint() { foreach (var f in Tutorials) { var h = f != null ? f() : null; if (h.HasValue) return h; } return null; }
+
         public static Result? Compute(GameManager gm)
         {
             var r = ComputeTarget(gm);
@@ -110,8 +118,12 @@ namespace PocketCaravan
         {
             var map = MapRoot.Current;
             if (map == null) return null;
+            var hint = TutorialHint();
+            if (hint.HasValue && hint.Value.target != null && hint.Value.target.isActiveAndEnabled)
+                return new Result { position = hint.Value.target.transform.position, label = hint.Value.label ?? WorldDisplayNames.For(hint.Value.target), target = hint.Value.target };
             var p = gm.Quests.Tracked;
-            (string, string)? t = p != null && p.Current != null ? gm.Quests.TargetOf(p.Current) : null;
+            (string, string)? t = hint.HasValue && !string.IsNullOrEmpty(hint.Value.kind) ? (hint.Value.kind, hint.Value.id)
+                : p != null && p.Current != null ? gm.Quests.TargetOf(p.Current) : null;
             // 퀘스트 안내가 없으면 맡은 의뢰의 목적지 게시판으로
             if (!t.HasValue && gm.Player.contracts.Count > 0) t = ("board", gm.Player.contracts[0].toTown);
             if (!t.HasValue) return null;

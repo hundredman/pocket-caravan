@@ -75,6 +75,7 @@ namespace PocketCaravan
             GameEvents.ItemBought += OnBought;
             GameEvents.ItemSold += OnSold;
             InventoryUI.Opened += OnInventory;
+            if (!Navigator.Tutorials.Contains(NavHint)) Navigator.Tutorials.Add(NavHint);
         }
 
         void OnDisable()
@@ -84,6 +85,60 @@ namespace PocketCaravan
             GameEvents.ItemBought -= OnBought;
             GameEvents.ItemSold -= OnSold;
             InventoryUI.Opened -= OnInventory;
+            Navigator.Tutorials.Remove(NavHint);
+        }
+
+        // 11/08 은샘: 첫걸음 안내에서 사람·상인에게 가야 하는 단계도 퀘스트처럼 길 안내 화살표를 띄운다.
+        //   1·10단계 선착장 일꾼, 사기 단계는 지금 맵 장터(없으면 나루 장터), 팔기 단계는 산 마을이 아닌 가장 가까운 마을 장터.
+        Navigator.Hint? NavHint()
+        {
+            if (!Active || !IsCat || !InGoryeo || StartScreen.IsOpen) return null;
+            int s = Step; var map = MapRoot.Current;
+            if (s == 1 || s == 10)
+            {
+                var guide = root != null ? root.GetComponentInChildren<Person>() : null;
+                if (guide != null) return new Navigator.Hint { target = guide, label = Guide };
+                return new Navigator.Hint { kind = "map", id = Home, label = Guide };
+            }
+            if (s != 7 && s != 8) return null;
+            var gm = GameManager.I; var index = WorldIndex.Get();
+            if (gm == null || gm.Db == null || index == null || map == null) return null;
+            string avoid = null;
+            if (s == 8 && gm.HasMemo(BuyTownMemo))
+            {
+                int i = Mathf.RoundToInt(gm.GetMemo(BuyTownMemo));
+                if (i >= 0 && i < gm.Db.towns.Count && gm.Db.towns[i] != null) avoid = gm.Db.towns[i].id;
+            }
+            foreach (var it in Interactable.All)
+                if (it is TownMarket m && m.town != null && m.town.id != avoid) return new Navigator.Hint { target = it, label = "장터 상인" };
+            // 이 맵에 알맞은 장터가 없으면 맵을 건너는 수가 가장 적은 장터로
+            string best = null; int bestHops = int.MaxValue;
+            foreach (var p in index.places)
+            {
+                if (p.kind != "market" || p.id == avoid || string.IsNullOrEmpty(p.mapId) || GoryeoTravelTransition.RegionOf(p.mapId) == null) continue;   // 고려·중간권 장터만
+                int h = Hops(index, map.mapId, p.mapId);
+                if (h >= 0 && h < bestHops) { bestHops = h; best = p.id; }
+            }
+            if (s == 7 && avoid == null && index.MapOf("market", "naru") != null && Hops(index, map.mapId, index.MapOf("market", "naru")) == bestHops) best = "naru";
+            return best != null ? new Navigator.Hint { kind = "market", id = best } : (Navigator.Hint?)null;
+        }
+
+        static int Hops(WorldIndex index, string from, string to)
+        {
+            from = GoryeoLayout.Resolve(from); to = GoryeoLayout.Resolve(to);
+            if (from == to) return 0;
+            var seen = new System.Collections.Generic.Dictionary<string, int> { [from] = 0 };
+            var q = new System.Collections.Generic.Queue<string>(); q.Enqueue(from);
+            while (q.Count > 0)
+            {
+                var cur = q.Dequeue(); var info = index.Map(cur); if (info == null) continue;
+                foreach (var n in info.neighbors)
+                {
+                    if (seen.ContainsKey(n)) continue;
+                    seen[n] = seen[cur] + 1; if (n == to) return seen[n]; q.Enqueue(n);
+                }
+            }
+            return -1;
         }
 
         void Start() { if (root == null && MapRoot.Current != null && MapRoot.Current.mapId == Home) OnMap(Home); }
@@ -181,7 +236,7 @@ namespace PocketCaravan
                     "같은 물건도 필요한 곳에 가져가면 값이 달라진다네. 그걸 찾는 게 행상의 일이지.\n" +
                     "그리고 맡은 짐을 제때 전하면 신용이 쌓여. 신용 있는 사람에게 더 좋은 일감이 오는 법이야.",
                     new DialogueUI.Choice("첫 짐은 어디서 받아요?", () => DialogueUI.Show(Guide,
-                        "나루 촌장님께 가 보게. 배로 들어온 소금이 있는데, 장단 농부가 기다린다더군.\n\n" +
+                        "나루 촌장님께 가 보게. 배로 들어온 소금이 있는데, 장단 곡물 상인이 기다린다더군.\n\n" +
                         "장단, 송악, 닥목을 거쳐 개경까지 한 바퀴 돌고 나면 자네도 어엿한 상인일세.",
                         new DialogueUI.Choice("다녀올게요!", Finish))));
                 return;

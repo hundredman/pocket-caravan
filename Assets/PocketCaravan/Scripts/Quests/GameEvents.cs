@@ -32,6 +32,32 @@ namespace PocketCaravan
             Notify.Clear();
         }
 
+        /// <summary>
+        /// 게임 안 "처음부터 시작"(GameManager.NewGame)용 (11/08 은샘). 씬을 넘어 살아 있는 물체(DontDestroyOnLoad)의 구독은 남긴다.
+        /// 네 지역 첫걸음 안내(Intro)·온라인 장터처럼 게임을 켤 때 한 번만 구독하는 것들이 ClearAll로 지워지면,
+        /// 같은 실행 안에서 새로 시작한 게임에서는 튜토리얼이 뜨지 않았다. 지워질 옛 GameManager(dying) 아래 구독과
+        /// 일반 C# 객체·정적 구독은 예전처럼 지운다.
+        /// </summary>
+        public static void ClearForNewGame(GameObject dying)
+        {
+            ReputationContributed = Keep(ReputationContributed, dying); MapEntered = Keep(MapEntered, dying);
+            ItemBought = Keep(ItemBought, dying); ItemSold = Keep(ItemSold, dying); VehicleBought = Keep(VehicleBought, dying);
+            ContractFinished = Keep(ContractFinished, dying); TownLeveled = Keep(TownLeveled, dying);
+            UIState.Reset();
+            Notify.Clear();
+        }
+
+        static T Keep<T>(T handlers, GameObject dying) where T : Delegate
+        {
+            if (handlers == null) return null;
+            Delegate kept = null;
+            foreach (var d in handlers.GetInvocationList())
+                if (d.Target is MonoBehaviour mb && mb != null && mb.gameObject.scene.name == "DontDestroyOnLoad"
+                    && (dying == null || !mb.transform.IsChildOf(dying.transform)))
+                    kept = Delegate.Combine(kept, d);
+            return (T)kept;
+        }
+
         public static void RaiseReputationContribution(ReputationContribution value) => ReputationContributed?.Invoke(value);
         public static void RaiseMapEntered(string mapId) => MapEntered?.Invoke(mapId);
         public static void RaiseItemBought(ItemData item, TownData town, int price) => ItemBought?.Invoke(item, town, price);

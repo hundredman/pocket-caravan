@@ -14,14 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: q1_naru
   retired: 0
-  title: "첫 짐"
-  chain: "고려 한 바퀴"
-  summary: "첫 짐"
+  title: "\uCCAB \uC9D0"
+  chain: "\uACE0\uB824 \uD55C \uBC14\uD034"
+  summary: "\uCCAB \uC9D0"
   giverNpc: naru_chief
   requires: []
   requiresAny: []
   choiceGroup: 
-  offerLine: "자네가 행상이 되겠다는 젊은이로군. 배로 들어온 소금 꾸러미를 장단 농부에게 전해 주게. 들판 마을이라 소금이 늘 모자라지."
+  offerLine: "\uC790\uB124\uAC00 \uD589\uC0C1\uC774 \uB418\uACA0\uB2E4\uB294 \uC80A\uC740\uC774\uB85C\uAD70.
+    \uBC30\uB85C \uB4E4\uC5B4\uC628 \uC18C\uAE08 \uAFB8\uB7EC\uBBF8\uB97C \uC7A5\uB2E8
+    \uACE1\uBB3C \uC0C1\uC778\uC5D0\uAC8C \uC804\uD574 \uC8FC\uAC8C. \uB4E4\uD310
+    \uB9C8\uC744\uC774\uB77C \uC18C\uAE08\uC774 \uB298 \uBAA8\uC790\uB77C\uC9C0."
   giveItem: {fileID: 11400000, guid: 5f9bcbf9b7a8444049e8997395807221, type: 2}
   giveCount: 1
   offerItem: {fileID: 0}
@@ -29,12 +32,15 @@ MonoBehaviour:
   offerPrice: 0
   objectives:
   - type: 1
-    text: "장단 농부에게 소금 꾸러미 전하기"
+    text: "\uC7A5\uB2E8 \uACE1\uBB3C \uC0C1\uC778\uC5D0\uAC8C \uC18C\uAE08 \uAFB8\uB7EC\uBBF8
+      \uC804\uD558\uAE30"
     targetId: goryeo_jangdan_farmer
     item: {fileID: 11400000, guid: 5f9bcbf9b7a8444049e8997395807221, type: 2}
     vehicle: {fileID: 0}
     count: 1
-    completeLine: "나루 소금이로군, 고맙네! 장단은 곡식이 남아도는 곳이라 여기선 곡식이 싸다네."
+    completeLine: "\uB098\uB8E8 \uC18C\uAE08\uC774\uB85C\uAD70, \uACE0\uB9D9\uB124!
+      \uC7A5\uB2E8\uC740 \uACE1\uC2DD\uC774 \uB0A8\uC544\uB3C4\uB294 \uACF3\uC774\uB77C
+      \uC5EC\uAE30\uC120 \uACE1\uC2DD\uC774 \uC2F8\uB2E4\uB124."
   rewardMoney: 30
   rewardCredit: 1
   rewardReputationScope: 0
@@ -43,4 +49,7 @@ MonoBehaviour:
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0
-  finishNote: "장터 옆 게시판에는 언제든 배달 의뢰가 붙어 있습니다. 메인 이야기와 상관없이 자유롭게 맡아 보세요."
+  finishNote: "\uC7A5\uD130 \uC606 \uAC8C\uC2DC\uD310\uC5D0\uB294 \uC5B8\uC81C\uB4E0
+    \uBC30\uB2EC \uC758\uB8B0\uAC00 \uBD99\uC5B4 \uC788\uC2B5\uB2C8\uB2E4. \uBA54\uC778
+    \uC774\uC57C\uAE30\uC640 \uC0C1\uAD00\uC5C6\uC774 \uC790\uC720\uB86D\uAC8C \uB9E1\uC544
+    \uBCF4\uC138\uC694."

@@ -296,15 +296,21 @@ namespace PocketCaravan
         public static float Width(string s, bool isSmall = false, bool bold = false) =>
             St(isSmall).CalcSize(new GUIContent(s)).x + (bold ? 1 : 0);
 
+        // 11/08 은샘: 굵게는 같은 글씨를 옆에 한 번 더 그린다. 화면 배율(화면 높이/360)이 정수가 아니면(예: 창 높이 540·1013)
+        // 두 겹이 화면 픽셀 사이에 걸쳐 번져 보였다. 글씨 자리와 굵게 간격을 실제 화면 픽셀에 맞춰, 어느 창 크기에서도 깔끔하게 둔다.
+        // 배율이 정수(720·1080 등)면 굵게 간격은 예전과 같고, 글씨 자리만 화면 픽셀 단위로 맞춘다.
+        static float Snap(float v) { float k = UIStyle.Scale; return k > 0f ? Mathf.Round(v * k) / k : Mathf.Round(v); }
+        static float BoldStep { get { float k = UIStyle.Scale; return k > 0f ? Mathf.Max(1f, Mathf.Floor(k)) / k : 1f; } }
+
         /// <summary>한 줄 글씨 (cy = 가운데 높이). 오른쪽 끝 x를 돌려준다</summary>
         public static float Label(float x, float cy, string s, Color32 col, bool isSmall = false, bool bold = false)
         {
             var st = St(isSmall);
             st.normal.textColor = UIStyle.Lin(col);
             var size = st.CalcSize(new GUIContent(s));
-            var r = new Rect(Mathf.Round(x), Mathf.Round(cy - size.y / 2f), size.x + 2, size.y);
+            var r = new Rect(Snap(x), Snap(cy - size.y / 2f), size.x + 2, size.y);
             GUI.Label(r, s, st);
-            if (bold) GUI.Label(new Rect(r.x + 1, r.y, r.width, r.height), s, st);
+            if (bold) GUI.Label(new Rect(r.x + BoldStep, r.y, r.width, r.height), s, st);
             return x + size.x + (bold ? 1 : 0);
         }
 
@@ -332,9 +338,9 @@ namespace PocketCaravan
             var st = St(isSmall, true);
             st.normal.textColor = UIStyle.Lin(col);
             float h = st.CalcHeight(new GUIContent(s), w);
-            var r = new Rect(Mathf.Round(x), Mathf.Round(y), w, h);
+            var r = new Rect(Snap(x), Snap(y), w, h);
             GUI.Label(r, s, st);
-            if (bold) GUI.Label(new Rect(r.x + 1, r.y, w, h), s, st);
+            if (bold) GUI.Label(new Rect(r.x + BoldStep, r.y, w, h), s, st);
             return h;
         }
 

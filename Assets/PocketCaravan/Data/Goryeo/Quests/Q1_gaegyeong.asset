@@ -14,15 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: q1_gaegyeong
   retired: 0
-  title: "수도 개경"
-  chain: "고려 한 바퀴"
-  summary: "수도 개경"
+  title: "\uC218\uB3C4 \uAC1C\uACBD"
+  chain: "\uACE0\uB824 \uD55C \uBC14\uD034"
+  summary: "\uC218\uB3C4 \uAC1C\uACBD"
   giverNpc: dakmok_chief
   requires:
   - {fileID: 11400000, guid: 432d591b7eb2527fa04e17c193984b57, type: 2}
   requiresAny: []
   choiceGroup: 
-  offerLine: "이 한지 꾸러미를 개경 객주에게 전해 주게. 가는 김에 아까 산 종이도 수도 장터에 팔아 보고. 수도는 고려의 물건이 다 모이는 곳이라네."
+  offerLine: "\uC774 \uD55C\uC9C0 \uAFB8\uB7EC\uBBF8\uB97C \uAC1C\uACBD \uAC1D\uC8FC\uC5D0\uAC8C
+    \uC804\uD574 \uC8FC\uAC8C. \uAC00\uB294 \uAE40\uC5D0 \uC544\uAE4C \uC0B0 \uC885\uC774\uB3C4
+    \uC218\uB3C4 \uC7A5\uD130\uC5D0 \uD314\uC544 \uBCF4\uACE0. \uC218\uB3C4\uB294
+    \uACE0\uB824\uC758 \uBB3C\uAC74\uC774 \uB2E4 \uBAA8\uC774\uB294 \uACF3\uC774\uB77C\uB124."
   giveItem: {fileID: 11400000, guid: 11081dff03b434c32bbd32ec0df9b346, type: 2}
   giveCount: 1
   offerItem: {fileID: 0}
@@ -30,26 +33,30 @@ MonoBehaviour:
   offerPrice: 0
   objectives:
   - type: 5
-    text: "개경에 들어가기"
+    text: "\uAC1C\uACBD\uC5D0 \uB4E4\uC5B4\uAC00\uAE30"
     targetId: Gaegyeong
     item: {fileID: 0}
     vehicle: {fileID: 0}
     count: 1
-    completeLine: ""
+    completeLine: 
   - type: 1
-    text: "개경 객주에게 한지 꾸러미 전하기"
+    text: "\uAC1C\uACBD \uAC1D\uC8FC\uC5D0\uAC8C \uD55C\uC9C0 \uAFB8\uB7EC\uBBF8
+      \uC804\uD558\uAE30"
     targetId: gaekju
     item: {fileID: 11400000, guid: 11081dff03b434c32bbd32ec0df9b346, type: 2}
     vehicle: {fileID: 0}
     count: 1
-    completeLine: "닥목 한지로군, 빛깔이 좋아. 개경은 처음인가? 시전에서는 손수레를 팔고, 객주에서는 짐을 맡아 두기도 한다네."
+    completeLine: "\uB2E5\uB098\uBB34 \uB9C8\uC744 \uD55C\uC9C0\uB85C\uAD70, \uBE5B\uAE54\uC774
+      \uC88B\uC544. \uAC1C\uACBD\uC740 \uCC98\uC74C\uC778\uAC00? \uC2DC\uC804\uC5D0\uC11C\uB294
+      \uC190\uC218\uB808\uB97C \uD314\uACE0, \uAC1D\uC8FC\uC5D0\uC11C\uB294 \uC9D0\uC744
+      \uB9E1\uC544 \uB450\uAE30\uB3C4 \uD55C\uB2E4\uB124."
   - type: 3
-    text: "개경 장터에서 종이 2개 팔기"
+    text: "\uAC1C\uACBD \uC7A5\uD130\uC5D0\uC11C \uC885\uC774 2\uAC1C \uD314\uAE30"
     targetId: gaegyeong
     item: {fileID: 11400000, guid: c7b553013268140eca99e3276caecd4f, type: 2}
     vehicle: {fileID: 0}
     count: 2
-    completeLine: ""
+    completeLine: 
   rewardMoney: 45
   rewardCredit: 1
   rewardReputationScope: 0
@@ -58,4 +65,7 @@ MonoBehaviour:
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0
-  finishNote: "고려 한 바퀴를 마쳤습니다. 이제부터는 자유입니다. 게시판 의뢰, 마을 사이 교역, 송악 너머 중앙 대륙 — 어디로 가도 됩니다."
+  finishNote: "\uACE0\uB824 \uD55C \uBC14\uD034\uB97C \uB9C8\uCCE4\uC2B5\uB2C8\uB2E4.
+    \uC774\uC81C\uBD80\uD130\uB294 \uC790\uC720\uC785\uB2C8\uB2E4. \uAC8C\uC2DC\uD310
+    \uC758\uB8B0, \uB9C8\uC744 \uC0AC\uC774 \uAD50\uC5ED, \uC1A1\uC545 \uB108\uBA38
+    \uC911\uC559 \uB300\uB959 \u2014 \uC5B4\uB514\uB85C \uAC00\uB3C4 \uB429\uB2C8\uB2E4."

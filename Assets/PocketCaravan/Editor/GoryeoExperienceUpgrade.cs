@@ -80,15 +80,17 @@ namespace PocketCaravan.EditorTools
                 "이곳 장터에서 인삼 두 뿌리를 사서 개경에 팔아 보세요. 적은 짐으로 시작할 수 있지만, 많이 사면 매입가가 오릅니다. 닥목으로 향하는 산록 길도 둘러보세요.", first,
                 Trade(ObjectiveType.Buy, "송악 장터에서 인삼 2개 구매", "goryeo_songak", "ginseng", 2),
                 Trade(ObjectiveType.Sell, "개경 장터에서 인삼 2개 판매", "gaegyeong", "ginseng", 2));
-            var grain = Quest("Goryeo_JangdanTrade", "goryeo_jangdan_trade", "들마을의 곡식", "goryeo_jangdan_farmer",
-                "장단 장터에서 곡식 세 꾸러미를 사서 개경에 팔아 보세요. 무게 아홉이라 등짐에도 들어갑니다. 올 때 종이를 실어 오면 귀환 장사도 할 수 있어요.", first,
-                Trade(ObjectiveType.Buy, "장단 장터에서 곡식 3개 구매", "goryeo_jangdan", "grain", 3),
+            // 11/08 은샘: 앞 장사를 마친 마을(송악)에서 바로 사서 판다. 장단으로 되돌아가지 않게.
+            var grain = Quest("Goryeo_JangdanTrade", "goryeo_jangdan_trade", "수도로 가는 곡식", "goryeo_songak_merchant",
+                "방금 곡식을 판 이 장터에서 곡식 세 꾸러미를 사서 개경에 팔아 보세요. 수도는 곡식값이 높아 여기보다 비싸게 받습니다. 무게 아홉이라 등짐에도 들어가요.", first,
+                Trade(ObjectiveType.Buy, "송악 장터에서 곡식 3개 구매", "goryeo_songak", "grain", 3),
                 Trade(ObjectiveType.Sell, "개경 장터에서 곡식 3개 판매", "gaegyeong", "grain", 3));
-            var supply = Quest("Goryeo_CartSupply", "goryeo_cart_supply", "수레에 싣는 땔감", "goryeo_jangdan_farmer",
-                "장단에서 땔감 네 단을 사서 닥목 촌장에게 전해 주세요. 무게 열여섯이니 손수레에 싣는 편이 좋습니다. 돌아올 때 종이 가격도 비교해 보세요.", grain,
-                Trade(ObjectiveType.Buy, "장단 장터에서 땔감 4개 구매", "goryeo_jangdan", "firewood", 4),
-                new QuestObjective { type = ObjectiveType.Deliver, text = "닥목 촌장에게 땔감 4개 납품", targetId = "dakmok_chief", item = Item("firewood"), count = 4,
-                    completeLine = "종이를 뜨려면 닥나무를 삶아야 하지. 이 짐은 등짐 한 번으로 옮기기 어려웠을 게야." });
+            // 11/08 은샘: 곡식을 판 개경에서 바로 땔감을 사고, 등짐 한 번에 드는 두 단만 나른다(네 단은 등짐에 안 들어가 납품이 막혔다).
+            var supply = Quest("Goryeo_CartSupply", "goryeo_cart_supply", "닥나무 마을에 보내는 땔감", "gaekju",
+                "곡식을 잘 팔았군. 이번엔 이 장터에서 땔감 두 단을 사서 닥나무 마을 촌장에게 전해 주게. 종이를 뜨려면 닥나무를 삶을 땔감이 늘 모자라다네. 등짐 한 번에 드는 무게일세.", grain,
+                Trade(ObjectiveType.Buy, "개경 장터에서 땔감 2개 구매", "gaegyeong", "firewood", 2),
+                new QuestObjective { type = ObjectiveType.Deliver, text = "닥나무 마을 촌장에게 땔감 2개 납품", targetId = "dakmok_chief", item = Item("firewood"), count = 2,
+                    completeLine = "종이를 뜨려면 닥나무를 삶아야 하지. 땔감이 제때 와서 살았네." });
             supply.rewardMoney = 20; // 실제 적재 용량이 성장 조건. 기존 손수레 퀘스트 완료를 강제하지 않는다.
             var oldFreight = db.quests.Find(q => q != null && q.id == "dakmok_firewood");
             if (oldFreight == null) throw new InvalidOperationException("기존 땔감 의뢰 누락");

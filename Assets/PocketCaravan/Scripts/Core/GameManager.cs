@@ -608,7 +608,7 @@ namespace PocketCaravan
             var old = I;
             I = null;
             if (old != null) { old.autosave = false; Destroy(old.gameObject); }
-            GameEvents.ClearAll();
+            GameEvents.ClearForNewGame(old != null ? old.gameObject : null);   // 11/08: 지역 첫걸음 안내 같은 상주 구독은 남긴다
             UIState.Reset();
             Boot();
             if (!string.IsNullOrEmpty(restart)) SceneManager.LoadScene(restart);
