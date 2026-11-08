@@ -16,7 +16,6 @@ namespace PocketCaravan
         public static event System.Action Opened;
 
         const int Cols = 6;
-        const float Slot = 40f, Gap = 4f;
         int openedFrame, selected;
         Vector2 contractScroll, itemScroll, detailScroll;
         int columns = Cols, visibleSelection = -1;
@@ -64,6 +63,9 @@ namespace PocketCaravan
             if (selected >= rows.Count) selected = Mathf.Max(0, rows.Count - 1);
         }
 
+        // 11/08 은샘: 글 줄 나열이던 소지품 창을 장부·게시판과 같은 모양으로. 위 줄 = 짐 막대(넘치면 빨강)·운반·신용·돈,
+        // 왼쪽 = 물건 칸(그림·개수), 오른쪽 = 고른 물건(그림·무게·원가·확인한 판매처와 차익), 왼쪽 아래 = 맡은 배달 짐.
+        const float Cell = 36f, CellGap = 4f;
         void OnGUI()
         {
             var gm = GameManager.I;
@@ -72,110 +74,165 @@ namespace PocketCaravan
             Collect(gm);
             UIStyle.Begin();
             GUI.depth = -10;
-            float width = Mathf.Min(470, UIStyle.VirtualWidth - 16), height = UIStyle.WindowHeight(300) - 6;
-            var r = lastWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - width) / 2), Mathf.Round((UIStyle.VirtualHeight - height) / 2 + 6), width, height);
+            float width = Mathf.Min(500, UIStyle.VirtualWidth - 16), height = Mathf.Min(286, UIStyle.VirtualHeight - 34);
+            var r = lastWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - width) / 2), Mathf.Round((UIStyle.VirtualHeight - height) / 2 + 8), width, height);
             CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, "소지품");
-            if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { Close(); return; }   // 11/08 오른쪽 위 X
-            string vehicle = p.vehicle != null ? p.vehicle.displayName : "등짐";
-            string summary = $"돈 {p.money}냥 · 신용 {p.credit} · 운반 {vehicle}";
-            float summaryHeight = Mathf.Max(18, CuteUI.PaperWrap.CalcHeight(new GUIContent(summary), width - 28));
-            GUI.Label(new Rect(r.x + 14, r.y + 14, width - 28, summaryHeight), summary, CuteUI.PaperWrap);
-            float capacityY = r.y + 14 + summaryHeight + 3;
-            GUI.Label(new Rect(r.x + 14, capacityY, 120, 14), $"짐 {p.TotalWeight:0.#} / {p.Capacity:0.#}", CuteUI.PaperSmall);
-            UIStyle.Bar(new Rect(r.x + 110, capacityY + 5, width - 138, 6), p.LoadRatio, p.LoadRatio > 0.85f ? CuteUI.Down : CuteUI.Load);
+            CuteUI.Keycap(r.xMax - 32 - CuteUI.KeycapWidth("I") - 3, r.y - 3, "I");
+            if (CuteUI.CloseButton(r.xMax - 32, r.y - 9)) { Close(); return; }
 
-            float gx = r.x + 14, gy = capacityY + 19, cy = r.yMax - 94;
-            int newColumns = Mathf.Clamp(Mathf.FloorToInt((width - 190) / (Slot + Gap)), 1, Cols);
+            ContractBoard.DrawStatus(p, new Rect(r.x + 15, r.y + 17, width - 30, 20), true);
+            var content = new Rect(r.x + 15, r.y + 43, width - 30, height - 43 - 30);
+            CuteUI.Box(content, 7, CuteUI.Paper, CuteUI.Ink);
+
+            // 왼쪽: 물건 칸
+            float leftW = Mathf.Min(Cols * (Cell + CellGap) + 6, content.width - 190);
+            int newColumns = Mathf.Clamp(Mathf.FloorToInt((leftW - 6) / (Cell + CellGap)), 1, Cols);
             if (columns != newColumns) visibleSelection = -1;
             columns = newColumns;
-            float gridWidth = columns * (Slot + Gap) + 14;
-            float gridHeight = Mathf.Max(Slot, Mathf.Min(Slot * 2 + Gap, cy - 8 - gy));
-            itemViewport = new Rect(gx, gy, gridWidth, gridHeight);
+            float gx = content.x + 8, gy = content.y + 20;
+            CuteUI.Label(gx + 1, content.y + 10, "실은 물건", CuteUI.Sub, true, true);
+            CuteUI.Label(gx + 1 + CuteUI.Width("실은 물건", true, true) + 5, content.y + 10, rows.Count + "가지", CuteUI.Sub, true);
+            float gridHeight = Cell * 3 + CellGap * 2;
+            itemViewport = new Rect(gx, gy, columns * (Cell + CellGap) + 4, gridHeight);
             if (lastItemViewSize != itemViewport.size) { visibleSelection = -1; lastItemViewSize = itemViewport.size; }
-            int shown = Mathf.Max(rows.Count, columns * 2);
-            float contentHeight = Mathf.Ceil(shown / (float)columns) * (Slot + Gap) - Gap;
+            int shown = Mathf.Max(rows.Count, columns * 3);
+            float contentHeight = Mathf.Ceil(shown / (float)columns) * (Cell + CellGap) - CellGap;
             if (visibleSelection != selected)
             {
-                float top = (selected / columns) * (Slot + Gap), bottom = top + Slot;
+                float top = (selected / columns) * (Cell + CellGap), bottom = top + Cell;
                 if (top < itemScroll.y) itemScroll.y = top;
                 else if (bottom > itemScroll.y + gridHeight) itemScroll.y = bottom - gridHeight;
-                detailScroll = Vector2.zero; visibleSelection = selected;
+                visibleSelection = selected;
             }
-            itemScroll.y = Mathf.Round(Mathf.Clamp(itemScroll.y, 0, Mathf.Max(0, contentHeight - gridHeight)));
-            itemScroll = GUI.BeginScrollView(itemViewport, itemScroll, new Rect(0, 0, columns * (Slot + Gap) - Gap, contentHeight));
+            itemScroll.y = Mathf.Round(TradeLedgerUI.Scroll(itemViewport, itemScroll.y, contentHeight));
+            GUI.BeginGroup(itemViewport);
             itemRects.Clear();
             for (int i = 0; i < shown; i++)
             {
-                var cell = new Rect((i % columns) * (Slot + Gap), (i / columns) * (Slot + Gap), Slot, Slot); itemRects.Add(cell);
-                CuteUI.Box(cell, 4, CuteUI.Paper2, i == selected && i < rows.Count ? CuteUI.Interact : CuteUI.Line, i == selected && i < rows.Count ? 2 : 1);
+                var cell = new Rect((i % columns) * (Cell + CellGap), (i / columns) * (Cell + CellGap), Cell, Cell); itemRects.Add(cell);
+                var at = new Rect(cell.x, cell.y - itemScroll.y, Cell, Cell);
+                bool on = i == selected && i < rows.Count;
+                if (at.yMax < 0 || at.y > gridHeight) continue;
+                CuteUI.Box(at, 5, on ? CuteUI.Paper : CuteUI.Paper2, on ? CuteUI.Interact : CuteUI.Line, on ? 2 : 1);
                 if (i >= rows.Count) continue;
                 var item = rows[i].Key;
-                if (GUI.Button(cell, "", GUIStyle.none)) selected = i;
-                DrawIcon(new Rect(cell.x + 6, cell.y + 4, 28, 28), item);
-                GUI.Label(new Rect(cell.x, cell.yMax - 13, cell.width - 3, 12), $"<b>{rows[i].Value}</b>", RightSmall);
+                TradeLedgerUI.ItemIcon(item, at.x + 2, at.y + 2, 2);
+                if (item.questItem) CuteUI.Icon(CuteUI.Pic.Star4, at.x + 2, at.y + 2);
+                string n = rows[i].Value.ToString();
+                float nw = Mathf.Round(CuteUI.Width(n, true, true) + 6);
+                CuteUI.Box(new Rect(at.xMax - nw - 1, at.yMax - 12, nw, 12), 5, CuteUI.White, CuteUI.Ink);
+                CuteUI.LabelCenter(at.xMax - 1 - nw / 2f, at.yMax - 6, n, CuteUI.Ink, true, true);
+                if (GUI.Button(at, GUIContent.none, GUIStyle.none)) { selected = i; detailScroll = Vector2.zero; }
             }
-            GUI.EndScrollView();
+            GUI.EndGroup();
 
-            float dx = itemViewport.xMax + 8;
-            var info = new Rect(dx, gy, r.xMax - 14 - dx, gridHeight);
-            CuteUI.Box(info, 4, CuteUI.Paper2, CuteUI.Line);
-            string details = "칸을 고르면\n자세한 정보가 나와요.";
-            if (rows.Count > 0)
-            {
-                var item = rows[selected].Key; int n = rows[selected].Value;
-                float avg = p.cargo.AverageCost(item);
-                var lines = new List<string> { $"<b>{item.displayName}</b> × {n}", $"무게 {item.weight:0.#} (모두 {item.weight * n:0.#})",
-                    item.questItem ? "부탁받은 물건 · 팔 수 없음" : avg > 0 ? $"평균 원가 {avg:0.#}냥" : "얻은 물건 (원가 없음)" };
-                if (!item.questItem)
-                {
-                    var choices = CargoSaleGuide.Observed(p.ledger, gm.Db.towns, item, WorldIndex.Get(), MapRoot.Current != null ? MapRoot.Current.mapId : null);
-                    lines.Add(choices.Count > 0 ? $"확인한 최고 판매처: {choices[0].town.displayName} {choices[0].sell}냥" : "판매처 미확인 · 장부(L)");
-                }
-                details = string.Join("\n", lines);
-            }
-            else details = "짐이 비어 있어요.\n장터에서 물건을 살 수 있어요.";
-            detailViewport = new Rect(info.x + 5, info.y + 4, info.width - 10, info.height - 8);
-            float detailWidth = Mathf.Max(1, detailViewport.width - 18);
-            float detailHeight = Mathf.Max(detailViewport.height, CuteUI.PaperSmall.CalcHeight(new GUIContent(details), detailWidth));
-            detailScroll = GUI.BeginScrollView(detailViewport, detailScroll, new Rect(0, 0, detailWidth, detailHeight));
-            GUI.Label(new Rect(0, 0, detailWidth, detailHeight), details, CuteUI.PaperSmall); GUI.EndScrollView();
+            // 왼쪽 아래: 맡은 배달 짐
+            float cy0 = itemViewport.yMax + 10;
+            CuteUI.Label(gx + 1, cy0 + 4, "맡은 배달 짐", CuteUI.Sub, true, true);
+            CuteUI.Label(gx + 1 + CuteUI.Width("맡은 배달 짐", true, true) + 5, cy0 + 4, $"{p.contracts.Count}/{ContractManager.MaxActive}", CuteUI.Sub, true);
+            contractViewport = new Rect(gx, cy0 + 12, itemViewport.width, content.yMax - 6 - (cy0 + 12));
+            DrawContracts(gm, p, contractViewport);
+            for (float yy = content.y + 8; yy < content.yMax - 8; yy += 3) CuteUI.Fill(new Rect(itemViewport.xMax + 5, yy, 1, 1), CuteUI.Line);
 
-            GUI.Label(new Rect(r.x + 14, cy, width - 28, 16), $"맡은 배달 짐 {p.contracts.Count}개", CuteUI.PaperRich);
-            contractViewport = new Rect(r.x + 14, cy + 18, width - 28, 36);
-            var contractLines = new List<string>(); var contractHeights = new List<float>(); float totalHeight = 0;
-            var cm = gm.Contracts;
-            foreach (var c in p.contracts)
-            {
-                string to = cm != null ? cm.TownName(c.toTown) : c.toTown, left = cm != null ? cm.TimeLeftText(c) : "";
-                string pay = c.atonement ? $"보증금 {c.deposit}냥 반환" : $"보수 {c.reward}냥";
-                string line = $"{c.cargo} (무게 {c.weight:0.#}) → {to}\n{left} · {pay}";
-                float h = Mathf.Max(24, CuteUI.PaperSmall.CalcHeight(new GUIContent(line), contractViewport.width - 18));
-                contractLines.Add(line); contractHeights.Add(h); totalHeight += h + 4;
-            }
-            contractScroll = GUI.BeginScrollView(contractViewport, contractScroll, new Rect(0, 0, contractViewport.width - 18, Mathf.Max(36, totalHeight)));
-            if (contractLines.Count == 0) GUI.Label(new Rect(0, 0, contractViewport.width - 18, 30), "없음 · 마을 게시판에서 의뢰를 맡을 수 있어요.", CuteUI.PaperSmall);
-            float y = 0;
-            for (int i = 0; i < contractLines.Count; i++) { GUI.Label(new Rect(0, y, contractViewport.width - 18, contractHeights[i]), contractLines[i], CuteUI.PaperSmall); y += contractHeights[i] + 4; }
-            GUI.EndScrollView();
-            GUI.Label(new Rect(r.x + 14, r.yMax - 34, width - 124, 28), "방향키로 칸 선택 · 창고 물품은 보관소에서 확인", CuteUI.PaperSmall);
-            if (GUI.Button(new Rect(r.xMax - 96, r.yMax - 28, 82, 20), "닫기 I / Esc", CuteUI.PaperButton)) Close();
+            // 오른쪽: 고른 물건
+            float dx = itemViewport.xMax + 14;
+            detailViewport = new Rect(dx, content.y + 6, content.xMax - 8 - dx, content.height - 12);
+            DrawDetail(gm, p, detailViewport);
+
+            bool over = p.TotalWeight > p.Capacity + 0.001f;
+            CuteUI.Icon(CuteUI.Pic.Bulb, content.x + 4, r.yMax - 22);
+            CuteUI.Label(content.x + 15, r.yMax - 17, over ? "짐이 넘쳤어요 · 장터에서 더 살 수 없고 걸음이 느려요" : "방향키로 칸 고르기 · 창고에 둔 물건은 보관소에서 봐요", over ? CuteUI.Down : CuteUI.Sub, true);
         }
 
-        static GUIStyle rightSmall, rightBase;   // 글꼴 프로필이 바뀌면(UIStyle.Small이 새로 만들어지면) 다시 만든다
-        static GUIStyle RightSmall => rightSmall != null && rightBase == CuteUI.PaperSmall ? rightSmall
-            : (rightSmall = new GUIStyle(rightBase = CuteUI.PaperSmall) { alignment = TextAnchor.LowerRight, wordWrap = false });
-
-        static void DrawIcon(Rect r, ItemData item)
+        void DrawDetail(GameManager gm, PlayerState p, Rect d)
         {
-            var s = item.icon;
-            if (s != null && s.texture != null)
+            if (rows.Count == 0)
             {
-                var t = s.texture; var tr = s.textureRect;
-                float k = Mathf.Min(r.width / tr.width, r.height / tr.height);
-                var d = new Rect(r.center.x - tr.width * k / 2, r.center.y - tr.height * k / 2, tr.width * k, tr.height * k);
-                GUI.DrawTextureWithTexCoords(d, t, new Rect(tr.x / t.width, tr.y / t.height, tr.width / t.width, tr.height / t.height));
+                CuteUI.Icon(CuteUI.Pic.Sack, d.center.x - 13, d.y + 50, 3);
+                CuteUI.LabelCenter(d.center.x, d.y + 92, "짐이 비어 있어요", CuteUI.Text, true, true);
+                CuteUI.LabelCenter(d.center.x, d.y + 107, "장터에서 물건을 사 보세요", CuteUI.Sub, true);
+                return;
             }
-            else GUI.Label(r, string.IsNullOrEmpty(item.displayName) ? "?" : item.displayName.Substring(0, 1), CuteUI.PaperRich);
+            var item = rows[selected].Key; int n = rows[selected].Value;
+            float x0 = d.x, w0 = d.width;
+            CuteUI.FramedCircle(x0, d.y + 2, 40);
+            TradeLedgerUI.ItemIcon(item, x0 + 4, d.y + 6, 2);
+            float nx = CuteUI.Label(x0 + 48, d.y + 13, TradeLedgerUI.Fit(item.displayName, w0 - 90, false, true), CuteUI.Text, false, true);
+            CuteUI.Label(nx + 4, d.y + 13, "× " + n, CuteUI.Sub, true);
+            CuteUI.Icon(CuteUI.Pic.Pin, x0 + 48, d.y + 21, 1, CuteUI.Sub);
+            CuteUI.Label(x0 + 56, d.y + 25, item.questItem ? "부탁받은 물건" : item.originTown != null ? item.originTown.displayName + " 특산" : "여러 마을", CuteUI.Sub, true);
+
+            float y = d.y + 48;
+            float avg = p.cargo.AverageCost(item);
+            Row(x0, y, w0, "무게", $"{item.weight:0.#} × {n} = {item.weight * n:0.#}", CuteUI.Text, true); y += 19;
+            Row(x0, y, w0, "평균 원가", item.questItem ? "팔 수 없음" : avg > 0 ? $"{avg:0.#}냥" : "원가 없음", CuteUI.Text, false); y += 24;
+            if (item.questItem)
+            {
+                CuteUI.Wrap(x0 + 4, y, w0 - 8, "부탁받은 물건은 장터에서 팔 수 없어요. 맡긴 사람에게 가져다주세요.", CuteUI.Sub, true);
+                return;
+            }
+            CuteUI.Label(x0 + 4, y + 4, "확인한 판매처", CuteUI.Sub, true, true);
+            CuteUI.LabelRight(x0 + w0 - 4, y + 4, "원가보다", CuteUI.Sub, true);
+            y += 12;
+            var choices = CargoSaleGuide.Observed(p.ledger, gm.Db.towns, item, WorldIndex.Get(), MapRoot.Current != null ? MapRoot.Current.mapId : null);
+            if (choices.Count == 0)
+            {
+                CuteUI.Label(x0 + 4, y + 10, "아직 이 물건 값을 본 장터가 없어요", CuteUI.Text, true);
+                CuteUI.Label(x0 + 4, y + 24, "장터를 열면 장부(L)에 적혀요", CuteUI.Sub, true);
+                return;
+            }
+            for (int i = 0; i < choices.Count && y + 20 <= d.yMax; i++)
+            {
+                var ch = choices[i];
+                CuteUI.Box(new Rect(x0, y, w0, 19), 6, i == 0 ? CuteUI.SellSoft : CuteUI.Paper2, i == 0 ? CuteUI.Sell : CuteUI.Paper2, i == 0 ? 1 : 0);
+                float bl = CuteUI.GainBadge(x0 + w0 - 4, y + 9.5f, avg > 0 ? ch.sell - avg : 0);
+                float vx = bl - 6 - CuteUI.Width(ch.sell.ToString(), false, true);
+                CuteUI.Label(vx, y + 9.5f, ch.sell.ToString(), CuteUI.Sell, false, true);
+                CuteUI.Icon(CuteUI.Pic.Coin7, vx - 10, y + 6);
+                string hop = ch.hops == 0 ? "여기" : ch.hops > 0 ? ch.hops + "구간" : "";
+                float tx = CuteUI.Label(x0 + 6, y + 9.5f, TradeLedgerUI.Fit(ch.town.displayName, vx - 14 - (x0 + 6) - CuteUI.Width(hop, true) - 4, true, true), CuteUI.Text, true, true);
+                if (hop != "") CuteUI.Label(tx + 4, y + 9.5f, hop, CuteUI.Sub, true);
+                y += 21;
+            }
+        }
+
+        static void Row(float x, float y, float w, string label, string value, Color32 col, bool striped)
+        {
+            if (striped) CuteUI.Box(new Rect(x, y, w, 17), 5, CuteUI.Paper2, CuteUI.Paper2, 0);
+            CuteUI.Label(x + 6, y + 8.5f, label, CuteUI.Sub, true);
+            CuteUI.LabelRight(x + w - 6, y + 8.5f, value, col, true, true);
+        }
+
+        void DrawContracts(GameManager gm, PlayerState p, Rect area)
+        {
+            var cm = gm.Contracts;
+            if (p.contracts.Count == 0)
+            {
+                CuteUI.Box(new Rect(area.x, area.y + 2, area.width - 4, 22), 6, CuteUI.Paper2, CuteUI.Line);
+                CuteUI.Label(area.x + 8, area.y + 13, "없음 · 마을 게시판에서 맡을 수 있어요", CuteUI.Sub, true);
+                return;
+            }
+            const float rowH = 24f;
+            contractScroll.y = TradeLedgerUI.Scroll(area, contractScroll.y, p.contracts.Count * rowH);
+            GUI.BeginGroup(area);
+            float w = area.width - 6;
+            for (int i = 0; i < p.contracts.Count; i++)
+            {
+                var c = p.contracts[i];
+                float y = 2 + i * rowH - contractScroll.y;
+                if (y + rowH < 0 || y > area.height) continue;
+                CuteUI.Box(new Rect(0, y, w, 22), 6, CuteUI.Paper2, c.dropped ? CuteUI.Alert : CuteUI.Line);
+                CuteUI.Icon(CuteUI.Pic.Sack, 5, y + 6);
+                string pay = c.atonement ? $"보증금 {c.deposit}" : $"{c.reward}냥";
+                float pw = CuteUI.Width(pay, true, true);
+                CuteUI.LabelRight(w - 6, y + 11, pay, c.atonement ? CuteUI.Text : CuteUI.Up, true, true);
+                string left = c.dropped ? "떨어뜨림" : cm != null ? cm.TimeLeftText(c) : "";
+                float lw = CuteUI.Width(left, true);
+                CuteUI.LabelRight(w - 12 - pw, y + 11, left, c.dropped ? CuteUI.Down : CuteUI.Sub, true);
+                string to = cm != null ? cm.TownName(c.toTown) : c.toTown;
+                CuteUI.Label(18, y + 11, TradeLedgerUI.Fit($"{c.cargo} → {to}", w - 18 - 18 - pw - lw, true, true), CuteUI.Text, true, true);
+            }
+            GUI.EndGroup();
         }
     }
 }

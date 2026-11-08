@@ -286,19 +286,48 @@ namespace PocketCaravan
             var clock = GameManager.I != null ? GameManager.I.Clock : null;
             float sleep = HoursToSleep(clock);
             string rest = sleep <= 0f ? "잠깐 푹 쉬기" : clock != null && clock.minuteOfDay / 60f + sleep >= 24f || clock != null && clock.minuteOfDay < 300f ? $"아침 {WakeHour}시까지 휴식" : $"{sleep:0}시간 휴식";
-            string text = askNote ?? $"따뜻한 방 있어요. 쉬어 갈래요?\n{Price}냥 · {rest} · 체력 가득\n{BuffHours:0}시간 동안 달릴 때 덜 지침";
-            float textHeight = wrap.CalcHeight(new GUIContent(text), w - 28);
-            float h = Mathf.Max(106, textHeight + 54);
+            // 11/08 은샘: 값·쉬는 시간·체력 변화를 그림 줄로. 지금 체력 → 가득을 막대로 보여 준다
+            var gm = GameManager.I;
+            string text = askNote ?? "따뜻한 방 있어요. 쉬어 갈래요?";
+            float textHeight = Mathf.Max(16, CuteUI.WrapHeight(text, w - 28));
+            float rowsH = askNote == null ? 3 * 19 + 4 : 0;
+            float h = textHeight + rowsH + 58;
             var r = askWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round(UIStyle.VirtualHeight - h - 50), w, h);
             CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, askHost);
             if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { CloseAsk(); return; }   // 11/08 오른쪽 위 X
-            askTextRect = new Rect(r.x + 14, r.y + 14, w - 28, textHeight);
-            GUI.Label(askTextRect, text, wrap);
+            askTextRect = new Rect(r.x + 14, r.y + 16, w - 28, textHeight + rowsH);
+            CuteUI.Wrap(r.x + 14, r.y + 16, w - 28, text, CuteUI.Text);
+            if (askNote == null && gm != null)
+            {
+                float ry = r.y + 20 + textHeight, rx = r.x + 16, rw = w - 32;
+                bool poor = gm.Player.money < Price;
+                InnRow(rx, ry, rw, CuteUI.Pic.Coin7, "값", $"{Price}냥" + (poor ? $" (가진 돈 {gm.Player.money}냥)" : ""), poor ? CuteUI.Down : CuteUI.Text);
+                ry += 19;
+                CuteUI.Box(new Rect(rx, ry, rw, 17), 5, CuteUI.Paper2, CuteUI.Paper2, 0);
+                CuteUI.Icon(CuteUI.Pic.Bolt, rx + 4, ry + 3);
+                CuteUI.Label(rx + 16, ry + 8.5f, "체력", CuteUI.Sub, true);
+                float bx = rx + 50, bw = rw - 50 - 46;
+                CuteUI.Bar(new Rect(bx, ry + 5, bw, 7), 1f, CuteUI.StaminaHi, CuteUI.StaminaHi);
+                CuteUI.Bar(new Rect(bx, ry + 5, bw, 7), gm.Player.stamina, CuteUI.Stamina, CuteUI.StaminaHi);
+                CuteUI.LabelRight(rx + rw - 6, ry + 8.5f, "→ 가득", CuteUI.Up, true, true);
+                ry += 19;
+                InnRow(rx, ry, rw, CuteUI.Pic.Star4, rest, $"{BuffHours:0}시간 동안 달릴 때 덜 지침", CuteUI.Text);
+            }
             float yesWidth = Mathf.Floor((w - 36) * .56f);
-            yesRect = new Rect(r.x + 14, r.yMax - 28, yesWidth, 20);
-            noRect = new Rect(r.x + 22 + yesWidth, r.yMax - 28, w - 36 - yesWidth, 20);
-            if (askNote == null && GUI.Button(yesRect, $"쉬어 갈래요 ({Price}냥)", CuteUI.PaperButtonOn)) Rest();
-            if (GUI.Button(noRect, "괜찮아요 Esc", CuteUI.PaperButton)) CloseAsk();
+            yesRect = new Rect(r.x + 14, r.yMax - 30, yesWidth, 22);
+            noRect = new Rect(r.x + 22 + yesWidth, r.yMax - 30, w - 36 - yesWidth, 22);
+            if (askNote == null && CuteUI.Button(yesRect, $"쉬어 갈래요 ({Price}냥)")) Rest();
+            if (CuteUI.SoftButton(noRect, askNote == null ? "괜찮아요" : "알겠어요")) CloseAsk();
         }
+
+        static void InnRow(float x, float y, float w, CuteUI.Pic pic, string label, string value, Color32 col)
+        {
+            CuteUI.Box(new Rect(x, y, w, 17), 5, CuteUI.Paper2, CuteUI.Paper2, 0);
+            var ps = CuteUI.PicSize(pic);
+            CuteUI.Icon(pic, x + 9 - ps.x / 2f, y + 8.5f - ps.y / 2f);
+            CuteUI.Label(x + 16, y + 8.5f, label, CuteUI.Sub, true);
+            CuteUI.LabelRight(x + w - 6, y + 8.5f, value, col, true, true);
+        }
+
     }
 }

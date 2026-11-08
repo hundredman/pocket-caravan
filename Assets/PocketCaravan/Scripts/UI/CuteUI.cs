@@ -203,7 +203,7 @@ namespace PocketCaravan
         static Rect Snap(Rect r) => new Rect(Mathf.Round(r.x), Mathf.Round(r.y), Mathf.Round(r.width), Mathf.Round(r.height));
 
         // ---------------- 그림 (픽셀 아이콘) ----------------
-        public enum Pic { Coin, Coin7, Basket, Bolt, Scroll, Compass, OpenBook, People, Sack, Chart, Arrow, Pin, Bulb, XMark, Star4, Menu }
+        public enum Pic { Coin, Coin7, Basket, Bolt, Scroll, Compass, OpenBook, People, Sack, Chart, Arrow, Pin, Bulb, XMark, Star4, Menu, Speaker }
 
         static readonly Dictionary<Pic, (string[] rows, Dictionary<char, Color32> pal)> pics = new Dictionary<Pic, (string[], Dictionary<char, Color32>)>
         {
@@ -231,6 +231,8 @@ namespace PocketCaravan
             { Pic.XMark, (new[] { "##...##", "###.###", ".#####.", "..###..", ".#####.", "###.###", "##...##" }, Pal(('#', 0x2A1A2E))) },
             { Pic.Star4, (new[] { "...y...", "...y...", "..yWy..", "yyWWWyy", "..yWy..", "...y...", "...y..." }, Pal(('y', 0xFFCF33), ('W', 0xFFFFFF))) },
             // 11/08 메뉴 (세 줄, HUD 오른쪽 위 단추 = Esc)
+            // 11/08 소리 (게임 메뉴)
+            { Pic.Speaker, (new[] { "...#......", "..##...#..", "####.#..#.", "#hh#..#.#.", "#hh#..#.#.", "####.#..#.", "..##...#..", "...#......" }, Pal(('#', 0x2A1A2E), ('h', 0xFFCF33))) },
             { Pic.Menu, (new[] { "#########", "#hhhhhhh#", "#########", ".........", "#########", "#hhhhhhh#", "#########", ".........", "#########", "#hhhhhhh#", "#########" }, Pal(('#', 0x2A1A2E), ('h', 0xFFF0DC))) },
         };
 

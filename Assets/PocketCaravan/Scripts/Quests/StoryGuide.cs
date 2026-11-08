@@ -102,6 +102,10 @@ namespace PocketCaravan
         /// <summary>Tab으로 펼쳤을 때 오른쪽 할 일 카드에 넣을 다음 이야기 ("여관 주인을 만나기", "리알토"). 없으면 null</summary>
         public static (string action, string where)? Next => Ready ? (instance.who + CuteUI.Eul(instance.who) + " 만나기", instance.where) : ((string, string)?)null;
 
+        /// <summary>11/08 창이 열려 있어도 쓰는 다음 이야기 (여정 수첩 빈 칸 안내). 없으면 null</summary>
+        public static (string action, string where)? Pending => instance != null && instance.isActiveAndEnabled && !string.IsNullOrEmpty(instance.who)
+            ? (instance.who + CuteUI.Eul(instance.who) + " 만나기", instance.where) : ((string, string)?)null;
+
         void Awake() => instance = this;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
