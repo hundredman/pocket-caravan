@@ -113,13 +113,22 @@ def generate(config,sources):
         px,py,pw,ph=fill['patch']
         patch={k:tile_world[k][py-oy:py-oy+ph,px:px+pw].copy()for k in LAYERS}
         if not (known[py-oy:py-oy+ph,px:px+pw].all() and not walk[py-oy:py-oy+ph,px:px+pw].any() and not water[py-oy:py-oy+ph,px:px+pw].any() and (patch['obj']!='').all()):raise ValueError('Void fill patch is not solid forest')
+        # Next to the sea the void continues as open sea (same plain sea tile as the earlier sea fill), inland as forest.
+        _,(ny,nx)=ndimage.distance_transform_edt(~known,return_indices=True)
+        sea=(tile_world['ground']=='pond_center')|water
+        filled=np.zeros_like(known)
         for mid,(x0,y0,x1,y1)in boxes.items():
             for wy in range(y0,y1):
                 for wx in range(x0,x1):
                     r=wy-oy
-                    if known[r,wx]:continue
-                    for k in LAYERS:tile_world[k][r,wx]=patch[k][(wy-py)%ph,(wx-px)%pw]
-                    known[r,wx]=True;walk[r,wx]=False
+                    if known[r,wx]or filled[r,wx]:continue
+                    if sea[ny[r,wx],nx[r,wx]]:
+                        for k in LAYERS:tile_world[k][r,wx]=''
+                        tile_world['ground'][r,wx]='pond_center'
+                    else:
+                        for k in LAYERS:tile_world[k][r,wx]=patch[k][(wy-py)%ph,(wx-px)%pw]
+                    filled[r,wx]=True
+        known|=filled;walk&=~filled
     # Dirt and grass use the same rule: the shared outer face must be reachable
     # from the town/start component on both sides. Do not open detached pockets.
     portal_walk=np.zeros_like(walk)
