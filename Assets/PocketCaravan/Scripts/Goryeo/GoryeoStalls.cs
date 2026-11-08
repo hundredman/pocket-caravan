@@ -17,7 +17,8 @@ namespace PocketCaravan
     {
         [Serializable] public class Keeper { public int at; public int stall = -1; public string name, title, sprite, hello; public string[] wants; }   // stall: 이 맵 stalls의 번호(새 좌판), -1이면 at = 기존 좌판 번호
         [Serializable] public class Stall { public string asset; public int x, y; }   // 11/08 빈 공터에 더 놓는 승인 좌판 그림(왼쪽 아래 칸)
-        [Serializable] public class Map { public string id; public Stall[] stalls; public Keeper[] keepers; }
+        [Serializable] public class Lift { public int at, dy; }   // 11/08 공터 아래 끝에 붙은 기존 좌판을 dy칸 안쪽(위)으로 뺀다. at = 기존 좌판 번호
+        [Serializable] public class Map { public string id; public Stall[] stalls; public Keeper[] keepers; public Lift[] lift; }
         [Serializable] public class Config { public int schemaVersion; public string status; public float markup = 1.25f; public int dailyLimit = 5; public Map[] maps; }
 
         static readonly string[] CounterArt = { "wares_counter", "spice_stall", "fish_rack" };
@@ -79,6 +80,21 @@ namespace PocketCaravan
             foreach (var sr in market.GetComponentsInChildren<SpriteRenderer>(true))
                 if (sr.sprite != null && Array.IndexOf(CounterArt, sr.sprite.name) >= 0) counters.Add(sr);
             counters.Sort((a, b) => a.transform.position.x != b.transform.position.x ? a.transform.position.x.CompareTo(b.transform.position.x) : a.transform.position.y.CompareTo(b.transform.position.y));
+            // 11/08 은샘 "살짝 뒤로 빼서": 공터 아래 끝에 붙은 기존 좌판을 안쪽으로. 그림과 막힌 칸(맨 아랫줄)을 같이 옮긴다
+            if (row.lift != null)
+                foreach (var l in row.lift)
+                {
+                    if (l == null || l.dy == 0 || l.at < 0 || l.at >= counters.Count) continue;
+                    var c = counters[l.at];
+                    if (c.name.EndsWith(" (moved)")) continue;
+                    var bl = map.WorldToCell(c.transform.position + new Vector3(0.5f, 0.5f, 0f));
+                    c.transform.position += new Vector3(0f, l.dy, 0f);
+                    c.name += " (moved)";
+                    foreach (var sp in dressing.spaces)
+                        for (int f = 0; f < sp.footprints.Length; f++)
+                            if (sp.footprints[f].x == bl.x && sp.footprints[f].y == bl.y)
+                                sp.footprints[f] = new RectInt(bl.x, bl.y + l.dy, sp.footprints[f].width, sp.footprints[f].height);
+                }
             var root = new GameObject("Goryeo stall keepers").transform;
             root.SetParent(map.transform, false);
             var footprints = new List<RectInt>();

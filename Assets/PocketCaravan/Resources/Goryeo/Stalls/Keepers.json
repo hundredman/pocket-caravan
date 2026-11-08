@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "status": "trial",
- "note": "11/08 은샘 요청: 고려 장터 좌판 장꾼(사 주는 좌판). at = 그 맵 market 낮은 좌판(wares_counter·spice_stall·fish_rack)을 x→y 순으로 센 번호 · 11/08 stalls = 빈 공터에 더 놓는 승인 좌판(엇갈린 자리), keeper.stall = 그 번호",
+ "note": "11/08 은샘 요청: 고려 장터 좌판 장꾼(사 주는 좌판). at = 그 맵 market 낮은 좌판(wares_counter·spice_stall·fish_rack)을 x→y 순으로 센 번호 · 11/08 stalls = 빈 공터에 더 놓는 승인 좌판(엇갈린 자리), keeper.stall = 그 번호 · 11/08 lift = 공터 아래 끝에 붙은 기존 좌판을 dy칸 위로(그림·막힌 칸 같이)",
  "markup": 1.25,
  "dailyLimit": 5,
  "maps": [
@@ -43,13 +43,27 @@
    "stalls": [
     {
      "asset": "spice_stall",
-     "x": 36,
-     "y": 22
+     "x": 46,
+     "y": 27
     },
     {
      "asset": "wares_counter",
      "x": 47,
      "y": 23
+    }
+   ],
+   "lift": [
+    {
+     "at": 0,
+     "dy": 1
+    },
+    {
+     "at": 1,
+     "dy": 1
+    },
+    {
+     "at": 2,
+     "dy": 1
     }
    ]
   },
@@ -122,8 +136,8 @@
    "stalls": [
     {
      "asset": "wares_counter",
-     "x": 6,
-     "y": 21
+     "x": 8,
+     "y": 22
     }
    ]
   },
@@ -158,13 +172,23 @@
    "stalls": [
     {
      "asset": "wares_counter",
-     "x": 16,
-     "y": 37
+     "x": 18,
+     "y": 38
     },
     {
      "asset": "spice_stall",
-     "x": 21,
+     "x": 22,
      "y": 40
+    }
+   ],
+   "lift": [
+    {
+     "at": 0,
+     "dy": 1
+    },
+    {
+     "at": 1,
+     "dy": 1
     }
    ]
   },
@@ -223,8 +247,22 @@
     },
     {
      "asset": "wares_counter",
-     "x": 33,
-     "y": 89
+     "x": 34,
+     "y": 90
+    }
+   ],
+   "lift": [
+    {
+     "at": 0,
+     "dy": 1
+    },
+    {
+     "at": 1,
+     "dy": 1
+    },
+    {
+     "at": 2,
+     "dy": 1
     }
    ]
   },
