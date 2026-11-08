@@ -544,6 +544,7 @@ namespace PocketCaravan
             d.traders.AddRange(Traders.traders);
             d.drops.AddRange(Drops);
             d.marketQuotes.AddRange(Player.ledger.Export());
+            d.recentTrades.AddRange(Player.ledger.ExportRecent());
             foreach (var kv in cooldowns) { d.cooldownKeys.Add(kv.Key); d.cooldownUntil.Add(kv.Value); }
             Player.reputation.ExportTo(d);
             return SaveSystem.Write(d);
@@ -556,6 +557,7 @@ namespace PocketCaravan
             Player.warehouse.Import(d.storedCargo);
             Player.tradeActivity.Import(d.tradeActivity);
             Player.ledger.Import(d.marketQuotes);
+            Player.ledger.ImportRecent(d.recentTrades);
             Player.money = d.money;
             Player.credit = d.credit;
             // 출신은 시작 화면이 생기면서 저장에 들어감. 옛 저장(값 없음)은 기본 출신 그대로.

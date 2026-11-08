@@ -14,7 +14,8 @@ namespace PocketCaravan
     public sealed class TradeLedgerUI : MonoBehaviour
     {
         public bool IsOpen { get; private set; }
-        bool showCargo = true;
+        int tab;   // 0 내 짐 판매처 · 1 전체 시세 · 2 최근 거래 (11/08)
+        bool showCargo { get => tab == 0; set => tab = value ? 0 : 1; }
         int openedFrame;
         string selected;
         float listScroll, detailScroll, cargoScroll;
@@ -69,11 +70,12 @@ namespace PocketCaravan
 
             var content = new Rect(r.x + 15, r.y + 50, r.width - 30, r.height - 63);
             CuteUI.Box(content, 7, CuteUI.Paper, CuteUI.Ink);
-            if (CuteUI.Tab(content.x + 6, content.y, "내 짐 판매처", CuteUI.Pic.Sack, showCargo, out float w1)) showCargo = true;
-            if (CuteUI.Tab(content.x + 6 + w1 + 3, content.y, "전체 시세", CuteUI.Pic.Chart, !showCargo, out _)) showCargo = false;
+            if (CuteUI.Tab(content.x + 6, content.y, "내 짐 판매처", CuteUI.Pic.Sack, tab == 0, out float w1)) tab = 0;
+            if (CuteUI.Tab(content.x + 6 + w1 + 3, content.y, "전체 시세", CuteUI.Pic.Chart, tab == 1, out float w2)) tab = 1;
+            if (CuteUI.Tab(content.x + 6 + w1 + 3 + w2 + 3, content.y, "최근 거래", CuteUI.Pic.Coin, tab == 2, out _)) tab = 2;
             CuteUI.LabelRight(content.xMax - 4, content.y - 9,
-                showCargo ? "실은 물건을 어디에 팔면 좋을지 알려 줘요" : "직접 본 값이에요 · 가면 달라질 수 있어요", CuteUI.Sub, true);
-            if (showCargo) DrawCargo(gm, content); else DrawAll(gm, content);
+                tab == 0 ? "실은 물건을 어디에 팔면 좋을지 알려 줘요" : tab == 1 ? "직접 본 값이에요 · 가면 달라질 수 있어요" : $"최근 {TradeLedger.RecentMax}번 사고판 것", CuteUI.Sub, true);
+            if (tab == 0) DrawCargo(gm, content); else if (tab == 1) DrawAll(gm, content); else DrawRecent(gm, content);
         }
 
         // ---------------- 전체 시세 ----------------
@@ -327,6 +329,44 @@ namespace PocketCaravan
             float bw = CuteUI.Width("전체 시세 보기", false, true) + 34;
             if (CuteUI.Button(new Rect(mid - Mathf.Round(bw / 2f), top + 68, bw, 22), "전체 시세 보기", CuteUI.Pic.Chart)) showCargo = false;
             Tip(c, "배달 짐과 창고 물건은 여기 나오지 않아요");
+        }
+
+        // ---------------- 최근 거래 (11/08, 공용) ----------------
+
+        void DrawRecent(GameManager gm, Rect c)
+        {
+            var list = gm.Player.ledger.Recent;
+            if (list.Count == 0)
+            {
+                CuteUI.LabelCenter(c.center.x, c.y + 60, "아직 사고판 기록이 없어요", CuteUI.Text, false, true);
+                CuteUI.LabelCenter(c.center.x, c.y + 78, "장터에서 사거나 팔면 여기 남아요", CuteUI.Sub, true);
+                return;
+            }
+            float y = c.y + 14, w = c.width;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var t = list[i];
+                var item = gm.ItemById(t.item);
+                var town = gm.Db.towns.Find(x => x != null && x.id == t.town);
+                var row = new Rect(c.x + 6, y, w - 12, 30);
+                CuteUI.Box(row, 7, i == 0 ? CuteUI.Paper2 : CuteUI.Paper, CuteUI.Line);
+                // 산/판 딱지
+                var tag = new Rect(row.x + 6, row.y + 7, 30, 16);
+                CuteUI.Box(tag, 6, t.sell ? CuteUI.SellSoft : CuteUI.BuySoft, t.sell ? CuteUI.Sell : CuteUI.Buy, 1);
+                CuteUI.LabelCenter(tag.center.x, tag.center.y, t.sell ? "판매" : "구매", t.sell ? CuteUI.Sell : CuteUI.Buy, true, true);
+                float x = tag.xMax + 6;
+                if (item != null) { ItemIcon(item, x, row.y + 7, 1); x += 19; }
+                x = CuteUI.Label(x, row.y + 15, (item != null ? item.displayName : t.item) + $" ×{t.count}", CuteUI.Text, false, true) + 8;
+                string where = (town != null ? town.displayName : t.town) + (gm.Clock.day - t.day <= 0 ? " · 오늘" : $" · {gm.Clock.day - t.day}일 전");
+                CuteUI.Label(x, row.y + 15.5f, where, CuteUI.Sub, true);
+                // 오른쪽: 합계 냥 (+ 판매면 손익)
+                float rx = row.xMax - 8;
+                if (t.sell) rx = CuteUI.GainBadge(rx, row.y + 15, t.profit) - 6;
+                CuteUI.Icon(CuteUI.Pic.Coin7, rx - 10 - CuteUI.Width(t.total.ToString(), false, true), row.y + 11);
+                CuteUI.LabelRight(rx, row.y + 15, t.total.ToString(), t.sell ? CuteUI.Sell : CuteUI.Buy, false, true);
+                y += 34;
+            }
+            Tip(c, "같은 장터에서 이어서 사고판 것은 한 줄로 묶어요");
         }
 
         // ---------------- 도우미 ----------------

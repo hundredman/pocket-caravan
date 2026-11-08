@@ -46,6 +46,7 @@ namespace PocketCaravan
         public List<NpcTraders.Trader> traders = new List<NpcTraders.Trader>();
         public List<DropRecord> drops = new List<DropRecord>();
         public List<TradeLedger.Quote> marketQuotes = new List<TradeLedger.Quote>();
+        public List<TradeLedger.Trade> recentTrades = new List<TradeLedger.Trade>();   // 2026-11-08 장부 최근 거래 5줄 (옛 저장은 빈 목록)
         public List<string> cooldownKeys = new List<string>();
         public List<float> cooldownUntil = new List<float>();
     }

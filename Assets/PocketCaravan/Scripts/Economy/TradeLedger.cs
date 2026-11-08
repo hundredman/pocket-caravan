@@ -17,8 +17,42 @@ namespace PocketCaravan
 
         readonly List<Quote> quotes = new List<Quote>();
 
+        /// <summary>2026-11-08 최근 거래 (장부 "최근 거래" 칸). 같은 장터에서 같은 물건을 이어서 사고팔면 한 줄로 묶는다. 최대 5줄</summary>
+        [Serializable]
+        public class Trade
+        {
+            public bool sell;
+            public string town, item;
+            public int count, total, profit, day;
+        }
+        public const int RecentMax = 5;
+        readonly List<Trade> recent = new List<Trade>();
+        public IReadOnlyList<Trade> Recent => recent;
+
+        public void Record(bool sell, TownData town, ItemData item, int price, int profit, int day)
+        {
+            if (town == null || item == null) return;
+            var last = recent.Count > 0 ? recent[0] : null;
+            if (last != null && last.sell == sell && last.town == town.id && last.item == item.id && last.day == day)
+            { last.count++; last.total += price; last.profit += profit; return; }
+            recent.Insert(0, new Trade { sell = sell, town = town.id, item = item.id, count = 1, total = price, profit = profit, day = day });
+            if (recent.Count > RecentMax) recent.RemoveRange(RecentMax, recent.Count - RecentMax);
+        }
+        public List<Trade> ExportRecent()
+        {
+            var r = new List<Trade>();
+            foreach (var t in recent) r.Add(new Trade { sell = t.sell, town = t.town, item = t.item, count = t.count, total = t.total, profit = t.profit, day = t.day });
+            return r;
+        }
+        public void ImportRecent(List<Trade> saved)
+        {
+            recent.Clear();
+            if (saved == null) return;   // 11/08 전 저장에는 없다
+            foreach (var t in saved) if (t != null && !string.IsNullOrEmpty(t.town) && !string.IsNullOrEmpty(t.item) && t.count > 0 && recent.Count < RecentMax) recent.Add(t);
+        }
+
         public Quote Find(string town, string item) => quotes.Find(q => q.town == town && q.item == item);
-        public void Clear() => quotes.Clear();
+        public void Clear() { quotes.Clear(); recent.Clear(); }
 
         /// <summary>장터를 열었을 때 그곳 값을 적는다. day = 오늘 게임 날짜 (장부에 "N일 전 확인"으로 나온다)</summary>
         public void Observe(TownData town, MarketState market, IEnumerable<ItemData> items, int day = 0)
