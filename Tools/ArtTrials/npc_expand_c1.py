@@ -8,6 +8,10 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'Tools/ArtTrials'))
 import npc_polish_v4 as V4
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 OUT = ROOT / 'ArtReview/C1-Expand-1'
 ASEPRITE = '/Applications/Aseprite.app/Contents/MacOS/aseprite'
 FONT = '/System/Library/Fonts/AppleSDGothicNeo.ttc'
@@ -54,8 +58,8 @@ def generate():
     checks=[]
     for name in ('chief','trader'):
         im=render(name);im.save(OUT/f'{name}-front.png')
-        subprocess.run([ASEPRITE,'-b',str(OUT/f'{name}-front.png'),'--save-as',str(OUT/f'{name}-front.aseprite')],check=True)
-        subprocess.run([ASEPRITE,'-b',str(OUT/f'{name}-front.aseprite'),'--save-as',str(OUT/f'{name}-reopened.png')],check=True)
+        run_aseprite([ASEPRITE,'-b',str(OUT/f'{name}-front.png'),'--save-as',str(OUT/f'{name}-front.aseprite')],check=True)
+        run_aseprite([ASEPRITE,'-b',str(OUT/f'{name}-front.aseprite'),'--save-as',str(OUT/f'{name}-reopened.png')],check=True)
         reopened=Image.open(OUT/f'{name}-reopened.png').convert('RGBA')
         before=Image.open(ROOT/f'ArtReview/NPC-v4/{name}-front.png').convert('RGBA')
         assert im.size==(16,24) and reopened.tobytes()==im.tobytes()

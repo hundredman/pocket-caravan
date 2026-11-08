@@ -6,6 +6,10 @@ ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'ArtReview/RockMountain-v1'
 sys.path.insert(0,str(ROOT/'Tools/MapGen'))
 from tiles import autotile
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 NAMES=('reference','mountain','ridge','forest')
 SIZES={'mountain':(192,160),'ridge':(256,112),'foothill':(128,80)}
 def rgba(path):return Image.open(path).convert('RGBA')
@@ -63,7 +67,7 @@ def main():
             assert im.size==size and set(im.getchannel('A').tobytes())<={0,255}
             assert set(zip(*[iter(im.tobytes())]*4))<=palette
             target=Path(temp)/f'{name}.png'
-            subprocess.run(['/Applications/Aseprite.app/Contents/MacOS/aseprite','-b',str(p.with_suffix('.aseprite')),'--save-as',str(target)],check=True,capture_output=True)
+            run_aseprite(['/Applications/Aseprite.app/Contents/MacOS/aseprite','-b',str(p.with_suffix('.aseprite')),'--save-as',str(target)],check=True,capture_output=True)
             check=rgba(target);assert check.size==size and check.tobytes()==im.tobytes()
             assets.append(dict(name=name,size=list(size),occupied=list(im.getbbox()),rgbaSha256=hashlib.sha256(im.tobytes()).hexdigest(),asepriteRGBAEqual=True))
     captures=[]

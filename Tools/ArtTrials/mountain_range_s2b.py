@@ -10,6 +10,10 @@ EW=ROOT/'ArtReview/Approved/MountainRange-S1'
 CURVES=ROOT/'ArtReview/Approved/MountainRange-S2a'
 sys.path.insert(0,str(ROOT/'Tools/MapGen'))
 from tiles import autotile
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 def rgba(p):return Image.open(p).convert('RGBA')
 def port(side,offset,w,h):
     return dict(side=side,x=0 if side=='W' else w if side=='E' else offset,
@@ -87,7 +91,7 @@ def main():
             assert list(im.size)==a['size'] and set(im.getchannel('A').tobytes())<={0,255}
             assert set(zip(*[iter(im.tobytes())]*4))<=palette
             target=Path(temp)/f'{name}.png'
-            subprocess.run(['/Applications/Aseprite.app/Contents/MacOS/aseprite','-b',str((ROOT/a['path']).with_suffix('.aseprite')),'--save-as',str(target)],check=True,capture_output=True)
+            run_aseprite(['/Applications/Aseprite.app/Contents/MacOS/aseprite','-b',str((ROOT/a['path']).with_suffix('.aseprite')),'--save-as',str(target)],check=True,capture_output=True)
             check=rgba(target);assert check.size==im.size and check.tobytes()==im.tobytes()
             # Every port's central solid pixel belongs to the same connected mountain mass.
             labels,_=ndimage.label(np.array(im.getchannel('A'))>0,structure=np.ones((3,3)));components=[]

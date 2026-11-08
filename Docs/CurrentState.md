@@ -901,3 +901,7 @@ GoryeoPlaceLabels의 사람 이름표에서 장터는 상인, 낚시는 낚시�
 ## 지역 튜토리얼·표시 통일 (2026-11-08, 로컬/그림 확인 대기)
 
 GoryeoIntro의 옛 맵 상수 좌표 누락을 원본 세계(242,60)→현재 나루(18,38) 리소스 내보내기로 복원했다. I/M/Q 순서와 옛 중간 저장 이주·팀 TopPill/Notify/Tab숨김을 적용했다. 기존 고려식 이름/Space/퀘스트 배지 렌더러를 공용으로 연결하고 Navigator/StoryGuide 표시 호칭을 맞췄다. 타 지역 긴 이름·원본ID/저장은 유지하며 자동 길이 제한을 넣지 않았다. 이름/밀집 배치는 화면별 개별 검토한다. 기존424+신규2정적·세계883/오류0·Unity이주30/실제모터접근·소지품/M/Q/매매/L/귀환보상/4지역캡처 확인, 전체실키완주/모든맵밀집/실서버/성능/빌드는 미검사. [기록](Goryeo/Region-Consistency-Fix-2026-11-08.md).
+
+## Aseprite 실행 경로 (2026-11-08)
+
+macOS Codex seatbelt에서 Aseprite가 AppKit 초기화 중 SIGABRT로 끝나던 경로를 43개 검사/제작/MCP연결 도구의 공통 실행 전 확인으로 차단했다. 전체 검사는 `python Tools/Integration/run_checks.py`를 사용하며 Codex에서는 정상 승인 경로(require_escalated)에서 실행한다. 제한 환경은 앱 시작 전 명확한 실패로 처리하고 skip/통과로 숨기지 않는다. 정상 환경431검사/23skip·MCP16×16실제조작 통과, 새충돌보고0. 앱/OS/클라이언트설정·게임그림/런타임 변경없음. [검증](Validation/Aseprite-Execution-2026-11-08/README.md).

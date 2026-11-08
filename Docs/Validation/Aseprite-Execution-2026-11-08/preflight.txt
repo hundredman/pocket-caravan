@@ -1,0 +1,1 @@
+Aseprite was NOT started: macOS AppKit initialization crashes in this Codex seatbelt session. Run this same command through the approved unsandboxed tool execution (require_escalated), or from a normal local Terminal. Do not unset CODEX_SANDBOX, retry in this session, suppress crash reports, or mark native checks as passed.

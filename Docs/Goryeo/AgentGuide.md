@@ -35,7 +35,7 @@
 - Unity **6000.3.26f1**. 버전을 올리지 않는다.
 - 코드: `Assets/PocketCaravan/Scripts/` (namespace `PocketCaravan`). 에디터 도구: `Assets/PocketCaravan/Editor/`.
 - 맵: `Tools/MapGen`(Python) → `Assets/PocketCaravan/Maps/*.json` → `Editor/MapJsonBuilder` → `Scenes/`.
-- 검사: `python Tools/Integration/validate_world.py`, `python -m unittest discover -s Tools/Integration -p 'test_*.py'` (Pillow 필요).
+- 검사: `python Tools/Integration/validate_world.py`, `python Tools/Integration/run_checks.py` (Pillow 필요, 기존 unittest 전체와 같은 검사 + Aseprite 실행 전 환경 확인). macOS Codex seatbelt에서는 Aseprite를 직접 실행하지 않고 같은 검사 명령을 `require_escalated` 정상 경로로 실행한다. 제한 안에서 반복 재시도하면 앱 오류 창이 생긴다. 개별 제작/검사도 [Aseprite 실행 지침](../../Tools/Aseprite/README.md)을 따른다.
 - Unity 주의사항과 코드 구조는 [코드 규칙](../Reference/CodeConventions.md)에 있다.
 - 아트 시안과 배치 검토안: [Figma 팀 파일](https://www.figma.com/design/JeXCjYTYRGtV8FCnXWWiqe/). `아트 시안` 페이지는 팀원 작업이므로 고치지 않는다.
 

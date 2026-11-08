@@ -2,6 +2,10 @@
 from pathlib import Path
 import hashlib,json,shutil,subprocess
 from PIL import Image
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 ROOT=Path(__file__).resolve().parents[2]
 TRIAL=ROOT/'ArtReview/A4-Water-v1';FROZEN=ROOT/'ArtReview/Approved/A4-Pond'
 ART=ROOT/'Assets/PocketCaravan/Art/Goryeo/Terrain/Pond'
@@ -38,8 +42,8 @@ def install():
         colors.update(p[:3] for p in ground.get_flattened_data());key='pond:'+name
         # Frozen ground module reproduces the approved Ground + water overlay composite exactly.
         pieces[name]=dict(size=[1,1],image=str(path.relative_to(ROOT)),tiles=[dict(dx=0,dy=0,layer='ground',tile=key.replace(':','_'),image='Assets/PocketCaravan/Art/NinjaAdventure/Tiles/'+key.replace(':','_')+'.png')],composition=dict(waterPiece=spec['waterPiece'],paving=str(paving.relative_to(ROOT))))
-    sheet.save(ART/'pond-modules.png');subprocess.run([ASE,'-b',str(ART/'pond-modules.png'),'--save-as',str(ART/'pond-modules.aseprite')],check=True)
-    reopened=ART/'reopened.png';subprocess.run([ASE,'-b',str(ART/'pond-modules.aseprite'),'--save-as',str(reopened)],check=True)
+    sheet.save(ART/'pond-modules.png');run_aseprite([ASE,'-b',str(ART/'pond-modules.png'),'--save-as',str(ART/'pond-modules.aseprite')],check=True)
+    reopened=ART/'reopened.png';run_aseprite([ASE,'-b',str(ART/'pond-modules.aseprite'),'--save-as',str(reopened)],check=True)
     assert Image.open(reopened).convert('RGBA').tobytes()==sheet.tobytes();reopened.unlink()
     catalogue=dict(schemaVersion=1,profiles={'pond_native':dict(pixelsPerCell=[16,16],binaryAlpha=True,palette=['#%02x%02x%02x'%c for c in sorted(colors)])},assets=[dict(id='goryeo_capital_pond',kind='modular',moduleType='water',purpose='capital_pond',profile='pond_native',requiredPieces=list(pieces),pieces=pieces,source=dict(kind='authored',path=str((ART/'pond-modules.aseprite').relative_to(ROOT)),note='Approved authored water composited once with existing AI-processed courtyard paving; no runtime crop/recolor'),review=dict(status='approved',evidence='ArtReview/Approved/A4-Pond/approval.md'))])
     (ART/'catalogue.json').write_text(json.dumps(catalogue,ensure_ascii=False,indent=2)+'\n')

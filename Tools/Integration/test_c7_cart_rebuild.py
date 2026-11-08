@@ -7,6 +7,10 @@ sys.path[:0]=[str(ROOT/'Tools/ArtTrials'),str(ROOT/'Tools/MapGen')]
 from c7_cart_rebuild import OUT,PREVIOUS,BUILDING
 from c7_catalogue import rgba_evidence
 from asset_manifest import validate
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 class CartRebuildChecks(unittest.TestCase):
     def test_whole_cart_and_pending_production(self):
         prep=json.loads((OUT/'a5.json').read_text())
@@ -27,7 +31,7 @@ class CartRebuildChecks(unittest.TestCase):
         binary=Path('/Applications/Aseprite.app/Contents/MacOS/aseprite')
         if not binary.exists():self.skipTest('Aseprite unavailable')
         with tempfile.TemporaryDirectory() as temp:
-            p=Path(temp)/'cart.png';subprocess.run([str(binary),'-b',str(OUT/'Native/cart.aseprite'),'--save-as',str(p)],check=True,capture_output=True)
+            p=Path(temp)/'cart.png';run_aseprite([str(binary),'-b',str(OUT/'Native/cart.aseprite'),'--save-as',str(p)],check=True,capture_output=True)
             self.assertEqual(rgba_evidence(p),rgba_evidence(OUT/'Native/cart.png'))
     def test_sibling_pixels_preserved(self):
         for p,evidence in json.loads((OUT/'context-evidence.json').read_text()).items():self.assertEqual(rgba_evidence(ROOT/p),evidence)

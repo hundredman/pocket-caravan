@@ -8,9 +8,13 @@ import struct
 import subprocess
 import threading
 import tempfile
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import require_batch_access
 
 
 def check(binary, workspace, script):
+    require_batch_access()
     process = subprocess.Popen(
         [str(binary), '--aseprite', '/Applications/Aseprite.app/Contents/MacOS/aseprite',
          '--workspace', str(workspace), '--timeout', '30s'],

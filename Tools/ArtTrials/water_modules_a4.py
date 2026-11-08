@@ -3,6 +3,10 @@ from pathlib import Path
 from collections import Counter
 import json, math, subprocess, sys, tempfile
 from PIL import Image, ImageDraw, ImageFont
+
+import sys as _ase_sys
+_ase_sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from Tools.Aseprite.cli import run as run_aseprite
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'ArtReview/A4-Water-v1'
 ASE='/Applications/Aseprite.app/Contents/MacOS/aseprite'
@@ -100,10 +104,10 @@ def generate():
     wanted={name+'.png' for name in pieces}
     for p in (OUT/'pieces').glob('*.png'):
         if p.name not in wanted:p.unlink()  # obsolete output of this isolated generator only
-    subprocess.run([ASE,'-b','--script-param',f'folder={OUT}','--script',str(ROOT/'Tools/ArtTrials/a4_water_animation.lua')],check=True)
+    run_aseprite([ASE,'-b','--script-param',f'folder={OUT}','--script',str(ROOT/'Tools/ArtTrials/a4_water_animation.lua')],check=True)
     with tempfile.TemporaryDirectory(prefix='pocket-caravan-a4-') as temp:
         png=Path(temp)/'ripple.png';meta=Path(temp)/'ripple.json'
-        subprocess.run([ASE,'-b',str(OUT/'ripple.aseprite'),'--sheet',str(png),'--sheet-type','horizontal','--data',str(meta),'--format','json-array','--list-tags'],check=True)
+        run_aseprite([ASE,'-b',str(OUT/'ripple.aseprite'),'--sheet',str(png),'--sheet-type','horizontal','--data',str(meta),'--format','json-array','--list-tags'],check=True)
         reopened=Image.open(png).convert('RGBA');data=json.loads(meta.read_text())
         assert reopened.size==(64,16) and len(data['frames'])==4
         for i,frame in enumerate(data['frames']):
@@ -116,8 +120,8 @@ def generate():
     rows=[f'{x},{m["h"]-1-y},{lookup[topology(actual_wet,x,y)]},goryeo_paving_{x%4}_{y%4}' for x,y in sorted(scope)]
     (OUT/'unity-pond-placement.csv').write_text('\n'.join(rows)+'\n')
     sheet.save(OUT/'water-sheet.png')
-    subprocess.run([ASE,'-b',str(OUT/'water-sheet.png'),'--save-as',str(OUT/'water-sheet.aseprite')],check=True)
-    subprocess.run([ASE,'-b',str(OUT/'water-sheet.aseprite'),'--save-as',str(OUT/'water-sheet-reopened.png')],check=True)
+    run_aseprite([ASE,'-b',str(OUT/'water-sheet.png'),'--save-as',str(OUT/'water-sheet.aseprite')],check=True)
+    run_aseprite([ASE,'-b',str(OUT/'water-sheet.aseprite'),'--save-as',str(OUT/'water-sheet-reopened.png')],check=True)
     assert Image.open(OUT/'water-sheet-reopened.png').convert('RGBA').tobytes()==sheet.tobytes();(OUT/'water-sheet-reopened.png').unlink()
     palette=['#%02x%02x%02x'%p[:3] for p in COLORS.values()]
     catalogue=dict(schemaVersion=1,profiles={'trial16':dict(pixelsPerCell=[16,16],binaryAlpha=True,palette=palette)},assets=[dict(id='trial_pond_lake_water',kind='modular',moduleType='water',purpose='pond_lake',profile='trial16',source=dict(kind='authored',path='ArtReview/A4-Water-v1/water-sheet.aseprite'),review=dict(status='changes_requested' if (OUT/'review-decision.json').exists() else 'pending'),requiredPieces=list(pieces),pieces=pieces)])

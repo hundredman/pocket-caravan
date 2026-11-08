@@ -1,0 +1,11 @@
+{
+  "protocolVersion": "2024-11-05",
+  "tools": [
+    "execute_lua",
+    "inspect_export"
+  ],
+  "execute_lua": "passed",
+  "inspect_export": "passed: 16x16 image content",
+  "outside_path": "rejected",
+  "aseprite_export": "exists"
+}
