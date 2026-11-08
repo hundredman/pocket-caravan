@@ -19,6 +19,23 @@ namespace PocketCaravan
         readonly Dictionary<string, AudioClip> cache = new Dictionary<string, AudioClip>();
 
         public float musicVolume = 0.45f;
+
+        // 2026-11-08 공통화 5단계: 지역 시간대 음악이 도는 동안 공용 음악을 잠시 끄는 자리.
+        // 예전엔 베네치아·북유럽·아라비아가 musicVolume을 0으로 바꿨다가 저장해 둔 값으로 되돌려서,
+        // 지역을 바로 넘나들면 0이 저장되는 등 서로 꼬일 수 있었다(각 지역 주석에 그 흔적). 이제 musicVolume은 건드리지 않는다.
+        static readonly HashSet<object> silencers = new HashSet<object>();
+        /// <summary>owner가 on이면 공용 음악을 끈다(여러 지역이 동시에 켜도 된다). 끝나면 꼭 false로.</summary>
+        public static void Silence(object owner, bool on)
+        {
+            if (owner == null) return;
+            if (on) silencers.Add(owner); else silencers.Remove(owner);
+        }
+        /// <summary>지역 음악이 쓸 음량 (음소거·음악 볼륨 반영). 공용 음악이 꺼져 있어도 원래 설정 값이다.</summary>
+        public static float MusicLevel => Muted ? 0f : I != null ? I.musicVolume : 0.45f;
+        /// <summary>지금 공용 음악 이름 ("danger" = 위험 음악)</summary>
+        public static string CurrentClip => I != null ? I.currentClip : null;
+        public static bool DangerPlaying => CurrentClip == "danger";
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)] static void ResetSilence() => silencers.Clear();
         public float sfxVolume = 0.7f;
 
         static readonly Dictionary<string, string> MapMusic = new Dictionary<string, string>
@@ -90,7 +107,8 @@ namespace PocketCaravan
 
         void Update()
         {
-            float target = Muted ? 0f : musicVolume;
+            silencers.RemoveWhere(o => o == null || (o is Object u && u == null));   // 사라진 지역 부품
+            float target = Muted || silencers.Count > 0 ? 0f : musicVolume;
             foreach (var m in new[] { musicA, musicB })
             {
                 float goal = m == current ? target : 0f;

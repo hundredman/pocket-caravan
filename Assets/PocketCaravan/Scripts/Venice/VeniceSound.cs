@@ -19,7 +19,6 @@ namespace PocketCaravan
         System.Reflection.FieldInfo openField;
         bool wasOpen; int lastPage = -1; string lastText; float babbleLeft, nextSyl; int voice;
         AudioManager common;
-        float savedVolume = -1f;
         int lastHour = -1;
         float nextGull;
 
@@ -72,18 +71,15 @@ namespace PocketCaravan
             if (clip != null) sfx.PlayOneShot(clip, .22f);
         }
 
+        void OnDisable() => AudioManager.Silence(this, false);   // 11/08 공용 음악 다시 켜기
+
         void Update()
         {
             var gm = GameManager.I;
             bool here = VeniceUtil.InVenice && gm != null;
             if (common == null) common = FindAnyObjectByType<AudioManager>();
-            // 10-30 북유럽에서 바로 넘어오면 북유럽이 끈 0을 저장할 수 있어서, 0보다 클 때만 저장하고 계속 0으로 누른다
-            if (here && common != null)
-            {
-                if (savedVolume < 0f && common.musicVolume > 0f) savedVolume = common.musicVolume;
-                common.musicVolume = 0f;
-            }
-            if (!here && common != null && savedVolume >= 0f) { common.musicVolume = savedVolume; savedVolume = -1f; }
+            // 11/08 (은샘, 윤채 님께 전달): 공용 음악은 musicVolume을 바꾸지 않고 AudioManager.Silence로 끈다
+            AudioManager.Silence(this, here);
 
             float vol = AudioManager.Muted || !here ? 0f : .4f;
             if (here)
