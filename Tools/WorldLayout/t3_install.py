@@ -12,6 +12,7 @@ BASE=ROOT/'Assets/PocketCaravan'
 BUNDLE=Path(__file__).with_name('t3_baseline.json.gz')
 STATE=Path(__file__).with_name('t3_installed.json')
 RES=['Resources/GoryeoLayout.json','Resources/Goryeo/PlaceLabels.json','Resources/Goryeo/Life/Anchors.json','Resources/Goryeo/VillageLife/Anchors.json','Resources/Goryeo/Stride/Surfaces.json','Resources/Goryeo/Ferry/Config.json','Resources/Goryeo/Daily/Config.json','Resources/Goryeo/Seats/Config.json','Data/Goryeo/MarketLayout.json','Data/Goryeo/LogPlacement.json','Resources/WorldMap/GoryeoLayout.json','Resources/WorldMap/GoryeoRegionalLayout.json','World/Connections/region_links.json']
+DROPPED_WALKS=[]
 def digest(d):return hashlib.sha256(json.dumps(d,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
 def baseline():
  raw=BUNDLE.read_bytes();config=json.loads(t3.CONFIG.read_text())
@@ -56,7 +57,8 @@ def proposal():
     q=copy.deepcopy(point);m,x,y=xy(row['id'],q['x'],q['y'],True,cell);q.update(x=x,y=y)
     if 'bx'in q:
      target,bx,by=xy(row['id'],q['bx'],q['by'],True,cell)
-     if m!=target:raise ValueError(('visual path crosses new border',row['id'],point))
+     # v4 (11/08): a decorative walk whose far end now lies in another scene stays at its start point.
+     if m!=target:bx,by=q['x'],q['y'];DROPPED_WALKS.append((row['id'],point.get('kind')))
      q.update(bx=bx,by=by)
     rows[m][key].append(q)
   res[p]['maps']=list(rows.values())
@@ -98,7 +100,8 @@ def proposal():
     rowout['spaces'].append(dict(id=space['id']if m==row['mapId']else row['mapId']+'_'+space['id'],props=props))
  res[p]['maps']=list(rows.values())
  # Freeze v2 coordinate frames and legacy fallback positions; main/recovery masks.
- migration={'version':3,'maps':[]}
+ migration={'version':4,'maps':[]}
+ prev=json.loads(Path(__file__).with_name('t3_v3_frames.json').read_text())['maps']   # v3 saves
  legacy={v['id']:v for v in res['Resources/GoryeoLayout.json']['maps']}
  for mid,d in maps.items():
   mask=np.array(d['blocked']).reshape(d['h'],d['w'])==0
@@ -116,7 +119,7 @@ def proposal():
     for q in space['props']:safe[q['y']+q['h']-1,q['x']:q['x']+q['w']]=False
   if not safe.any():raise ValueError('No safe save recovery '+mid)
   s=old[mid];v=legacy[mid]
-  migration['maps'].append(dict(id=mid,oldX=s['terrainX'],oldY=s['terrainY'],oldWidth=s['w'],oldHeight=s['h'],x=d['terrainX'],y=d['terrainY'],width=d['w'],height=d['h'],legacyX=v['spawnX'],legacyY=v['spawnY'],legacyDropX=v['dropX'],legacyDropY=v['dropY'],main=''.join('1'if c else'0'for c in main.ravel()),stay=''.join('1'if c else'0'for c in stay.ravel()),safe=''.join('1'if c else'0'for c in safe.ravel())))
+  migration['maps'].append(dict(id=mid,oldX=s['terrainX'],oldY=s['terrainY'],oldWidth=s['w'],oldHeight=s['h'],x=d['terrainX'],y=d['terrainY'],width=d['w'],height=d['h'],prevX=prev[mid]['x'],prevY=prev[mid]['y'],prevWidth=prev[mid]['width'],prevHeight=prev[mid]['height'],legacyX=v['spawnX'],legacyY=v['spawnY'],legacyDropX=v['dropX'],legacyDropY=v['dropY'],main=''.join('1'if c else'0'for c in main.ravel()),stay=''.join('1'if c else'0'for c in stay.ravel()),safe=''.join('1'if c else'0'for c in safe.ravel())))
   # Current fallback metadata: older positions are migrated from separate frozen resource.
   v.update(height=d['h'],legacyHeight=d['h'],spawnX=s0['x']+.5,spawnY=d['h']-s0['y']-.18,dropX=s0['x']+.5,dropY=d['h']-s0['y']-.18)
  out['Resources/Goryeo/BoundaryLayout.json']=migration

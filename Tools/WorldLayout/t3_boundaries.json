@@ -13,72 +13,72 @@
     "transit_central_approach": [
       0,
       -75,
-      107,
-      -18
+      115,
+      -15
     ],
     "transit_crossroads": [
       0,
-      -18,
-      107,
+      -15,
+      115,
       28
     ],
     "transit_south_inland": [
       0,
       28,
-      107,
-      73
+      115,
+      66
     ],
     "transit_wetroad": [
-      107,
+      115,
       -75,
       167,
-      -26
+      -30
     ],
     "transit_woodtown": [
-      107,
-      -26,
+      115,
+      -30,
       167,
       20
     ],
     "transit_pass": [
-      107,
+      115,
       20,
       167,
-      73
+      66
     ],
     "transit_southport": [
       0,
-      73,
+      66,
       167,
       130
     ],
     "goryeo_songak": [
       167,
       -130,
-      214,
-      22
+      216,
+      28
     ],
     "Dakmok": [
-      214,
+      216,
       -130,
       300,
-      -29
+      -25
     ],
     "Gaegyeong": [
-      214,
-      -29,
+      216,
+      -25,
       300,
-      22
+      28
     ],
     "goryeo_jangdan": [
       167,
-      22,
-      224,
+      28,
+      222,
       130
     ],
     "Naru": [
-      224,
-      22,
+      222,
+      28,
       300,
       130
     ]
@@ -86,8 +86,8 @@
   "boundsOverrides": {
     "transit_crossroads": [
       3,
-      -18,
-      107,
+      -15,
+      115,
       28
     ]
   },
@@ -98,7 +98,7 @@
       "edge": "N",
       "world": [
         24,
-        -18
+        -15
       ],
       "size": [
         4,
@@ -106,7 +106,7 @@
       ],
       "arrivalWorld": [
         24,
-        -16
+        -13
       ]
     },
     {
@@ -164,8 +164,23 @@
   "approval": {
     "status": "approved",
     "date": "2026-11-08",
-    "userReply": "이대로 확정",
-    "policy": "grass and roads at true exterior; existing fade and three foreign links retained"
+    "userReply": "이게 그나마 최선이겠다. 이걸로 적용하고 길 근처 지형은 조금더 늘려줄수 있어?",
+    "policy": "v4 cuts: roads cross scene borders instead of running along them; meadow of 초원 진입로 kept whole; void cells inside each scene filled with blocked forest; existing three foreign links retained",
+    "previous": {
+      "status": "approved",
+      "date": "2026-11-08",
+      "userReply": "이대로 확정",
+      "policy": "grass and roads at true exterior; existing fade and three foreign links retained"
+    }
   },
-  "baselineBundleSha256": "bed235816d0d58fe36a9c5785cfac20866296cb1e7b342bc89f6827de100ac7c"
+  "baselineBundleSha256": "bed235816d0d58fe36a9c5785cfac20866296cb1e7b342bc89f6827de100ac7c",
+  "voidFill": {
+    "note": "2026-11-08 은샘: 플레이어가 다니는 범위에 검은 빈칸이 보이지 않게, 각 맵 사각형 안의 빈칸을 막힌 숲으로 채운다 (16x16 숲 조각을 반복)",
+    "patch": [
+      136,
+      -127,
+      16,
+      16
+    ]
+  }
 }

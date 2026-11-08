@@ -106,6 +106,20 @@ def generate(config,sources):
     for idx,mid in enumerate(ids):
         yy,xx=np.nonzero(known&(owners==idx));boxes[mid]=[int(xx.min()),int(yy.min()+oy),int(xx.max()+1),int(yy.max()+oy+1)]
     for mid,override in config.get('boundsOverrides',{}).items():boxes[mid]=override
+    # 2026-11-08 v4: no black void inside a scene. Empty cells in each scene rectangle get blocked forest,
+    # copied from one approved 16x16 forest patch (tiles only move; no new art). Walkable land and links are unchanged.
+    fill=config.get('voidFill')
+    if fill:
+        px,py,pw,ph=fill['patch']
+        patch={k:tile_world[k][py-oy:py-oy+ph,px:px+pw].copy()for k in LAYERS}
+        if not (known[py-oy:py-oy+ph,px:px+pw].all() and not walk[py-oy:py-oy+ph,px:px+pw].any()):raise ValueError('Void fill patch is not solid forest')
+        for mid,(x0,y0,x1,y1)in boxes.items():
+            for wy in range(y0,y1):
+                for wx in range(x0,x1):
+                    r=wy-oy
+                    if known[r,wx]:continue
+                    for k in LAYERS:tile_world[k][r,wx]=patch[k][(wy-py)%ph,(wx-px)%pw]
+                    known[r,wx]=True;walk[r,wx]=False
     # Dirt and grass use the same rule: the shared outer face must be reachable
     # from the town/start component on both sides. Do not open detached pockets.
     portal_walk=np.zeros_like(walk)
