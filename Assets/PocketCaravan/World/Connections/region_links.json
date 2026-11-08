@@ -87,7 +87,7 @@
         "map": "transit_crossroads",
         "edge": "W",
         "x": 0,
-        "y": 16,
+        "y": 38,
         "w": 1,
         "h": 2,
         "by": "Tools/WorldLayout/t3_install.py"
@@ -157,7 +157,7 @@
         "map": "transit_crossroads",
         "edge": "W",
         "x": 0,
-        "y": 12,
+        "y": 13,
         "w": 1,
         "h": 3,
         "by": "Tools/WorldLayout/t3_install.py"

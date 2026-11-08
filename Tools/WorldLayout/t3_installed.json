@@ -1,7 +1,7 @@
 {
   "Maps/transit_ferry.json": "8ede5b21fc60860fb4e9ff1581cba4bb731bfd39b824fee225a551181ac5af8a",
-  "Maps/transit_central_approach.json": "5deb63572c34123a0048d06cc5b23da9b6194f1f5f019e9c23c8b5f9c96a37f0",
-  "Maps/transit_crossroads.json": "c15014ac02167f9db6953b68a32f1f5e9a117cd7a37096165784c0dc9a739654",
+  "Maps/transit_central_approach.json": "2902769b1ff803c8be79b5f15735c046875b7964ee441301887144b0d3b85eb0",
+  "Maps/transit_crossroads.json": "213baa1239a92f2c4519a6e02773bd82f32706c9ff1bbeae22491bc9f91fb70d",
   "Maps/transit_south_inland.json": "eddcb067275d3af1a411504897b66c30e721130066cf852b1c03c60ccbd8064c",
   "Maps/transit_wetroad.json": "ed76add8d1e9a80d0d3e237fd462f80d943408ff57a9d8339d86b7681945ef3b",
   "Maps/transit_woodtown.json": "ced830831b1cc6169b3f0a4469e10e26f5865b00ec92f08a4f80e3f26059b28f",
@@ -12,7 +12,7 @@
   "Maps/Gaegyeong.json": "475f8cdb7a1f74094c9edce894f4e579c8ee2539fc91b6121e96a870d8d9b462",
   "Maps/goryeo_jangdan.json": "43f98b9dbe4e909277bd730df3c496c5e77df0693db4939105a203406fa6378c",
   "Maps/Naru.json": "500c8bc1d21d3f1ccdccaae05f3fba8b65a92421fb27c14f37c6d87cb2553014",
-  "Resources/Goryeo/BoundaryLayout.json": "194921a2c4080bdf3389cf46129bb223b094c7962dc4bf618b1e5ffd8724cdbf",
+  "Resources/Goryeo/BoundaryLayout.json": "202c67cf3afa5e6ee352c83ce3748224c38ea4caf5135e8416cc33818df79e5c",
   "Resources/Goryeo/Intro.json": "55bff2f23657b65f0faab25393774144199fb4f83b6a31bbd4bbdda4e4dceb85",
   "Resources/GoryeoLayout.json": "5310cccc1c3db2c294519c2836e387a59c14ce5071dce6742335dfe8377624c2",
   "Resources/Goryeo/PlaceLabels.json": "9428952445349e8b580d8334a14b93c6103c73e51f4fafed3086ba96e1d17753",
@@ -26,5 +26,5 @@
   "Data/Goryeo/LogPlacement.json": "45e39060ae6e9ed6dbba9d8e62bccebcb37c7a2ba588c8c0e5a4f8fae5b015a0",
   "Resources/WorldMap/GoryeoLayout.json": "278656854fad0a47b5c2745f217c6e1b05b9188987e71db6fd8ca7cde2062a8b",
   "Resources/WorldMap/GoryeoRegionalLayout.json": "c07f9b796000bfc9dc0a574b078b5fb05037941c1fbf44a3778580626043d5ac",
-  "World/Connections/region_links.json": "e3ef389503295465ee3242af640efdbfe7cebe6e1d31bfc11d33956b5c82bd2a"
+  "World/Connections/region_links.json": "d24fa7b8a9b17d22cda8322df44a127f3773ae182e343ae3391b5944d914832b"
 }

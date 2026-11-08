@@ -131,6 +131,7 @@ def generate(config,sources):
         known|=filled;walk&=~filled
     # 2026-11-08 v4: small approved road reshapes (e.g. remove a dead-end stub). Road tiles are re-chosen from the
     # existing 9-slice + inner-corner road set by neighbour shape; removed cells become plain grass. No new art.
+    forest_cells=[]
     for edit in config.get('roadEdits',[]):
         ex0,ey0,ex1,ey1=edit['region'];keep=edit.get('keepMaxY',10**6)
         mask=road>0;new=mask.copy()
@@ -143,6 +144,19 @@ def generate(config,sources):
             new[ay0-oy:ay1-oy,ax0:ax1]=True
         grade=int(np.median(road[mask[ey0-oy:ey1-oy,ex0:ex1].nonzero()[0]+ey0-oy,mask[ey0-oy:ey1-oy,ex0:ex1].nonzero()[1]+ex0]))if mask[ey0-oy:ey1-oy,ex0:ex1].any()else 1
         grass=edit.get('grass','floor_0_12_goryeo_jade')
+        if edit.get('throughForest'):
+            # The road continues through the forest to the scene edge: trees on the new road and one cell beside it
+            # are cleared (existing tiles only), so the cut reads as a path between trees, not a hole.
+            added=new&~mask
+            side=ndimage.binary_dilation(added,np.ones((3,3),bool))&~new
+            for rr,cc in zip(*np.nonzero(added|side)):
+                if walk[rr,cc]and not added[rr,cc]:continue
+                if owners[rr,cc]<0:continue
+                bx0,by0,bx1,by1=boxes[ids[owners[rr,cc]]]
+                if not(bx0<=cc<bx1 and by0<=rr+oy<by1):continue
+                for k in('deco','obj','high'):tile_world[k][rr,cc]=''
+                if not walk[rr,cc]:forest_cells.append([int(cc),int(rr+oy)])
+                tile_world['ground'][rr,cc]=grass;walk[rr,cc]=True;known[rr,cc]=True
         def R(x,y):return 0<=y-oy<height and 0<=x<width and new[y-oy,x]
         for wy in range(ey0-1,ey1+1):
             for wx in range(ex0-1,ex1+1):
@@ -270,6 +284,7 @@ def generate(config,sources):
     covered=np.zeros_like(known)
     for mid,(x0,y0,x1,y1)in boxes.items():covered[y0-oy:y1-oy,x0:x1]=True
     report['trimmedReviewCells']=[[int(x),int(y+oy)]for y,x in zip(*np.nonzero(known&~covered))]
+    report['roadForestCells']=len(forest_cells)
     report['trimmedWalkableCells']=int((walk&~covered).sum())
     report['trimNote']='Review-only: west tip is shortened by one column to fit two separate existing foreign portals on the same true outer face. No new land or foreign file changes.'
     surfaces=Counter();samples=[];actual={}
