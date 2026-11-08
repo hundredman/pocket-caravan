@@ -97,7 +97,7 @@ namespace PocketCaravan
                 if (town != null) current += " · " + gm.GetMarket(town).LevelName;
             }
             var res = CuteMap.Draw("아라비아 교역도 · 사막과 홍해 길", ready ? terrain : null, ready ? atlas.width : 0, ready ? atlas.height : 0, places, me, current,
-                "아래: 아라비아 남부 마을 · 위: 중앙 대륙 남쪽 조각");   // 지역 글씨(notes)는 다른 지역 지도와 똑같이 안 쓴다
+                "아래: 아라비아 남부 마을 · 위: 중앙 대륙 남쪽 조각", sideLabels: true);   // 2026-11-08 고려·북유럽 지도와 같은 양옆 이름표·꺾은 선 (PR #31)   // 지역 글씨(notes)는 다른 지역 지도와 똑같이 안 쓴다
             if (res.close) Close();
         }
     }
