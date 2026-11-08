@@ -173,10 +173,9 @@ namespace PocketCaravan.EditorTools
             Check(woman!=null,"real wellside woman found");Focus(woman);yield return Photo("well");
             if(!Before){var labels=MapRoot.Current.GetComponent<GoryeoPlaceLabels>();Check(labels.DrawnNames.Contains("아낙"),"short name rendered without changing source identity");var prior=new Dictionary<Interactable,Rect>(labels.TargetNameRects);for(int i=0;i<5;i++){PlayerController.Instance.Motor.Teleport(woman.transform.position+new Vector3((i-2)*.35f,-1.4f,0)-(Vector3)PlayerController.Instance.Motor.feetOffset,Vector2Int.up);yield return Frames();foreach(var p in prior)if(labels.TargetNameRects.TryGetValue(p.Key,out var r))Check(r==p.Value,"name remains fixed while player moves");}}
             var fish=FindFirstObjectByType<GoryeoPastime>();Check(fish!=null,"real Naru fishing found");Focus(fish);yield return Photo("fishing-place");
-            foreach(var size in new[]{new Vector2Int(480,270),new Vector2Int(960,540),new Vector2Int(480,360)}){
-                Resize(size.x,size.y);yield return Frames();fish.Interact(PlayerController.Instance);Check(fish.IsOpen,"fishing opens");yield return Photo("fishing-"+size.x+"x"+size.y);
-                if(!Before){var r=(Rect)typeof(GoryeoPastime).GetProperty("WindowRect").GetValue(fish);Check(r.xMin>=8&&r.yMin>=8&&r.xMax<=UIStyle.VirtualWidth-8&&r.yMax<=UIStyle.VirtualHeight-8,"fishing fits actual viewport "+size);fish.Cast();yield return Frames();fish.Strike();Check(fish.Attempts==1,"fishing interaction still works");}
-                fish.Close();Check(!UIState.Blocking,"fishing releases modal");}
+            // 2026-11-08: 낚시 게임은 물가 낚싯대(GoryeoFishingSpot)로 옮김. 낚시꾼은 방법을 알려 주는 대화만 연다.
+            fish.Interact(PlayerController.Instance);yield return Frames();Check(UIState.Blocking,"fisher explains fishing in dialogue");
+            {var d=FindFirstObjectByType<DialogueUI>();if(d!=null)typeof(DialogueUI).GetMethod("Close",F).Invoke(d,null);UIState.Reset();yield return Frames();Check(!UIState.Blocking,"fisher dialogue closes");}
             if(!Before){
                 Resize(480,270);yield return Frames();
                 var scope=JsonUtility.FromJson<Scope>(Resources.Load<TextAsset>("Goryeo/PlaceLabels").text);

@@ -25,8 +25,9 @@ namespace PocketCaravan.EditorTools
                 GoryeoAtmosphereDirector.Apply();Check(map.GetComponents<GoryeoAtmosphere>().Length==1,"no duplicate install "+id);
                 for(int d=1;d<1000;d++)if(GoryeoAtmosphere.DayWeather(d)==GoryeoAtmosphere.Kind.Monsoon){GameManager.I.Clock.day=d;GameManager.I.Clock.minuteOfDay=720;break;}
                 weather.Refresh();yield return null;Check(weather.Shown==GoryeoAtmosphere.Kind.Monsoon&&weather.ActiveParticles==128,"actual rain128 "+id);
-                for(int d=1;d<1000;d++)if(GoryeoAtmosphere.DayWeather(d)==GoryeoAtmosphere.Kind.Mist){GameManager.I.Clock.day=d;GameManager.I.Clock.minuteOfDay=450;break;}
-                weather.Refresh();Check((weather.Shown==GoryeoAtmosphere.Kind.Mist)==GoryeoAtmosphere.MistMap(id),"actual mist location "+id);
+                // 11/08 안개 없앰: 예전 안개 날(뽑기 90 이상) 아침도 맑음
+                for(int d=1;d<1000;d++){var o=new GoryeoAtmosphere.Settings();uint h=unchecked((uint)d*2654435761u)^(uint)o.seed;h^=h>>13;h=unchecked(h*2246822519u);h^=h>>16;if(h%100>=o.monsoonBelow){GameManager.I.Clock.day=d;GameManager.I.Clock.minuteOfDay=450;break;}}
+                weather.Refresh();Check(weather.Shown==GoryeoAtmosphere.Kind.Clear,"no mist "+id);
                 if(id=="Naru")
                 {
                     foreach(var guide in UnityEngine.Object.FindObjectsByType<GoryeoIntro>(FindObjectsSortMode.None)){guide.StopAllCoroutines();guide.enabled=false;}
@@ -34,7 +35,7 @@ namespace PocketCaravan.EditorTools
                     foreach(var dialogue in UnityEngine.Object.FindObjectsByType<DialogueUI>(FindObjectsSortMode.None))typeof(DialogueUI).GetMethod("Close",BindingFlags.Instance|BindingFlags.NonPublic).Invoke(dialogue,null);
                     UIState.Blocking=false;Notify.Clear();var player=PlayerController.Instance;player.enabled=false;var cell=new Vector3Int(44,53,0);player.Motor.Teleport(map.CellCenter(cell)-(Vector3)player.Motor.feetOffset,Vector2Int.down);
                     var camera=Camera.main;camera.GetComponent<CameraFollow>().enabled=false;camera.orthographicSize=8.4375f;camera.transform.position=map.CellCenter(cell)+new Vector3(0,1,-10);yield return null;
-                    yield return new WaitForEndOfFrame();var image=ScreenCapture.CaptureScreenshotAsTexture();Check(image.width==480&&image.height==270,"actual480x270");File.WriteAllBytes("ArtReview/Goryeo-Atmosphere-A1-20261105/Unity/Naru-production-mist.png",image.EncodeToPNG());Destroy(image);
+                    yield return new WaitForEndOfFrame();var image=ScreenCapture.CaptureScreenshotAsTexture();Check(image.width==480&&image.height==270,"actual480x270");File.WriteAllBytes("ArtReview/Goryeo-Atmosphere-A1-20261105/Unity/Naru-production-nomist.png",image.EncodeToPNG());Destroy(image);
                 }
                 Check(!GameManager.I.AutosaveEnabled,"saves off "+id);
             }

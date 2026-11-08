@@ -24,12 +24,12 @@ namespace PocketCaravan.EditorTools
             foreach(var d in UnityEngine.Object.FindObjectsByType<DialogueUI>(FindObjectsSortMode.None))typeof(DialogueUI).GetMethod("Close",BindingFlags.Instance|BindingFlags.NonPublic).Invoke(d,null);UIState.Blocking=false;Notify.Clear();
             var player=PlayerController.Instance;player.enabled=false;player.Motor.Teleport(map.CellCenter(new Vector3Int(44,53,0))-(Vector3)player.Motor.feetOffset,Vector2Int.down);
             var cam=Camera.main;cam.GetComponent<CameraFollow>().enabled=false;cam.orthographicSize=8.4375f;cam.transform.position=map.CellCenter(new Vector3Int(44,53,0))+new Vector3(0,1,-10);Time.timeScale=1;
-            foreach(var kind in new[]{GoryeoAtmosphere.Kind.Rain,GoryeoAtmosphere.Kind.Mist})
+            foreach(var kind in new[]{GoryeoAtmosphere.Kind.Rain})
             {
-                for(int day=1;day<1000;day++)if(GoryeoAtmosphere.DayWeather(day,weather.settings)==kind){GameManager.I.Clock.day=day;GameManager.I.Clock.minuteOfDay=(kind==GoryeoAtmosphere.Kind.Mist?7.5f:12)*60;break;}
+                for(int day=1;day<1000;day++)if(GoryeoAtmosphere.DayWeather(day,weather.settings)==kind){GameManager.I.Clock.day=day;GameManager.I.Clock.minuteOfDay=12*60;break;}
                 weather.Refresh();yield return null;yield return null;
-                var tracked=new List<Transform>();var before=new List<Vector3>();foreach(var sr in map.GetComponentsInChildren<SpriteRenderer>())if(sr.name==(kind==GoryeoAtmosphere.Kind.Rain?"Weather particle":"River mist band")){tracked.Add(sr.transform);before.Add(sr.transform.position);}
-                Check(tracked.Count>0,"tracked renderers "+kind);string dir=Frames+"/"+kind;Directory.CreateDirectory(dir);int count=kind==GoryeoAtmosphere.Kind.Rain?24:48;
+                var tracked=new List<Transform>();var before=new List<Vector3>();foreach(var sr in map.GetComponentsInChildren<SpriteRenderer>())if(sr.name=="Weather particle"){tracked.Add(sr.transform);before.Add(sr.transform.position);}
+                Check(tracked.Count>0,"tracked renderers "+kind);string dir=Frames+"/"+kind;Directory.CreateDirectory(dir);int count=24;
                 for(int frame=0;frame<count;frame++)
                 {
                     yield return new WaitForSecondsRealtime(.125f);yield return new WaitForEndOfFrame();var t=ScreenCapture.CaptureScreenshotAsTexture();Check(t.width==480&&t.height==270,"480x270 motion "+kind+" "+frame);File.WriteAllBytes(dir+"/"+frame.ToString("D3")+".png",t.EncodeToPNG());Destroy(t);

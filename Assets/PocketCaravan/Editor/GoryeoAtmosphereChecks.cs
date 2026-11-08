@@ -16,20 +16,15 @@ namespace PocketCaravan.EditorTools
                 for(int day=1;day<=4096;day++)
                 {
                     var a=GoryeoAtmosphere.WeatherFor(day,id,7.5f);var b=GoryeoAtmosphere.WeatherFor(day,id,7.5f);if(a!=b)throw new Exception("Nondeterministic weather");seen.Add(a);
-                    var daily=GoryeoAtmosphere.DayWeather(day);
-                    if(daily==GoryeoAtmosphere.Kind.Mist)
-                    {
-                        if((a==GoryeoAtmosphere.Kind.Mist)!=GoryeoAtmosphere.MistMap(id))throw new Exception("Mist map mismatch");
-                        foreach(float hour in new[]{0f,3.99f,9f,12f,23.99f})if(GoryeoAtmosphere.WeatherFor(day,id,hour)!=GoryeoAtmosphere.Kind.Clear)throw new Exception("Mist outside morning");
-                    }
-                    else if(a!=GoryeoAtmosphere.WeatherFor(day,id,18))throw new Exception("Rain changed within day");
+                    if(a!=GoryeoAtmosphere.DayWeather(day))throw new Exception("Weather differs by map");
+                    if(a!=GoryeoAtmosphere.WeatherFor(day,id,18))throw new Exception("Rain changed within day");
                     report.dateMapCases++;
                 }
             }
-            if(seen.Count!=4)throw new Exception("Missing weather states");
+            if(seen.Count!=3)throw new Exception("Missing weather states");
             foreach(var other in new[]{"north_birka","venice_rialto","arabia_ahsa","transit_fake","",null})for(int day=1;day<=128;day++)if(GoryeoAtmosphere.WeatherFor(day,other,7)!=GoryeoAtmosphere.Kind.Clear)throw new Exception("Foreign weather changed");
             if(random!=JsonUtility.ToJson(UnityEngine.Random.state))throw new Exception("Global random mutated");
-            report.passed.Add("13 maps x4096 dates: deterministic, morning/location fog, all4 states");report.passed.Add("6 foreign/unknown IDs untouched; global random unchanged");report.passed.Add("Visual proposal only; no save/clock/terrain/economy or movement writes");
+            report.passed.Add("13 maps x4096 dates: deterministic, same all day, all 3 states (no fog since 11/08)");report.passed.Add("6 foreign/unknown IDs untouched; global random unchanged");report.passed.Add("Visual proposal only; no save/clock/terrain/economy or movement writes");
             return JsonUtility.ToJson(report,true);
         }
     }

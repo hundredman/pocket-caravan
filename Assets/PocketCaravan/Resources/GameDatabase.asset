@@ -72,6 +72,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 83473d5766add4d82bcaa93693172aed, type: 2}
   - {fileID: 11400000, guid: 637155d4f3f65491496615448d5d202f, type: 2}
   - {fileID: 11400000, guid: e81632383886b4240b7178a791041649, type: 2}
+  - {fileID: 11400000, guid: 737e667691d04421faaee8b11c4f7586, type: 2}
+  - {fileID: 11400000, guid: 424bf16956c79413b935562ce5acf1af, type: 2}
+  - {fileID: 11400000, guid: 4030af5c7cf2b43f689cae89b02d9e22, type: 2}
+  - {fileID: 11400000, guid: 2e26417d801524770afb13785b65a3ed, type: 2}
+  - {fileID: 11400000, guid: 617c288469c9546caab06680f4721faa, type: 2}
+  - {fileID: 11400000, guid: 13eb26ad1fc164c15846a13c31b15cb5, type: 2}
+  - {fileID: 11400000, guid: 31786de04f4734d9883464a1c2ecabdb, type: 2}
+  - {fileID: 11400000, guid: d8cc360e19d574ee898ef9b61ca954bd, type: 2}
+  - {fileID: 11400000, guid: 46489469fbfcd467a9c7f66d53fc46da, type: 2}
   towns:
   - {fileID: 11400000, guid: 2c9147faaf0a843a7a9ac6e8a53c0e86, type: 2}
   - {fileID: 11400000, guid: 64b9df746835e454b957665c23b9725d, type: 2}

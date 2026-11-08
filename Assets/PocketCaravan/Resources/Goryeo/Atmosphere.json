@@ -6,8 +6,6 @@
         "monsoonParticles": 128,
         "clearBelow": 55,
         "rainBelow": 80,
-        "monsoonBelow": 90,
-        "mistStart": 4.0,
-        "mistEnd": 9.0
+        "monsoonBelow": 90
     }
 }
