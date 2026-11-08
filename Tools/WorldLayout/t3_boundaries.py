@@ -132,11 +132,13 @@ def generate(config,sources):
     # 2026-11-08 v4: small approved road reshapes (e.g. remove a dead-end stub). Road tiles are re-chosen from the
     # existing 9-slice + inner-corner road set by neighbour shape; removed cells become plain grass. No new art.
     for edit in config.get('roadEdits',[]):
-        ex0,ey0,ex1,ey1=edit['region'];keep=edit['keepMaxY']
+        ex0,ey0,ex1,ey1=edit['region'];keep=edit.get('keepMaxY',10**6)
         mask=road>0;new=mask.copy()
         for wy in range(ey0,ey1):
             for wx in range(ex0,ex1):
                 if wy>keep:new[wy-oy,wx]=False
+        for rx0,ry0,rx1,ry1 in edit.get('removeRects',[]):
+            new[ry0-oy:ry1-oy,rx0:rx1]=False
         for ax0,ay0,ax1,ay1 in edit.get('addRects',[]):
             new[ay0-oy:ay1-oy,ax0:ax1]=True
         grade=int(np.median(road[mask[ey0-oy:ey1-oy,ex0:ex1].nonzero()[0]+ey0-oy,mask[ey0-oy:ey1-oy,ex0:ex1].nonzero()[1]+ex0]))if mask[ey0-oy:ey1-oy,ex0:ex1].any()else 1
