@@ -293,10 +293,14 @@ namespace PocketCaravan
         /// <summary>색 태그를 뺀 글씨 (어두운 바탕용 색 태그가 종이 위에서 안 읽혀서)</summary>
         public static string Plain(string s) => string.IsNullOrEmpty(s) ? "" : Tags.Replace(s, "");
 
-        // 11/08 은샘: 굵게(bold)는 같은 글씨를 한 칸 옆에 한 번 더 그리는 방식이라, 화면 배율이 정수가 아니면 두 겹이 겹쳐 번져 보였다.
-        // 가독성을 위해 굵게 그리기를 쓰지 않는다. bold 인자는 호출 코드 호환을 위해 남겨 두고 무시한다(강조는 색으로).
         public static float Width(string s, bool isSmall = false, bool bold = false) =>
-            St(isSmall).CalcSize(new GUIContent(s)).x;
+            St(isSmall).CalcSize(new GUIContent(s)).x + (bold ? 1 : 0);
+
+        // 11/08 은샘: 굵게는 같은 글씨를 옆에 한 번 더 그린다. 화면 배율(화면 높이/360)이 정수가 아니면(예: 창 높이 540·1013)
+        // 두 겹이 화면 픽셀 사이에 걸쳐 번져 보였다. 글씨 자리와 굵게 간격을 실제 화면 픽셀에 맞춰, 어느 창 크기에서도 깔끔하게 둔다.
+        // 배율이 정수(720·1080 등)면 굵게 간격은 예전과 같고, 글씨 자리만 화면 픽셀 단위로 맞춘다.
+        static float Snap(float v) { float k = UIStyle.Scale; return k > 0f ? Mathf.Round(v * k) / k : Mathf.Round(v); }
+        static float BoldStep { get { float k = UIStyle.Scale; return k > 0f ? Mathf.Max(1f, Mathf.Floor(k)) / k : 1f; } }
 
         /// <summary>한 줄 글씨 (cy = 가운데 높이). 오른쪽 끝 x를 돌려준다</summary>
         public static float Label(float x, float cy, string s, Color32 col, bool isSmall = false, bool bold = false)
@@ -304,9 +308,10 @@ namespace PocketCaravan
             var st = St(isSmall);
             st.normal.textColor = UIStyle.Lin(col);
             var size = st.CalcSize(new GUIContent(s));
-            var r = new Rect(Mathf.Round(x), Mathf.Round(cy - size.y / 2f), size.x + 2, size.y);
+            var r = new Rect(Snap(x), Snap(cy - size.y / 2f), size.x + 2, size.y);
             GUI.Label(r, s, st);
-            return x + size.x;
+            if (bold) GUI.Label(new Rect(r.x + BoldStep, r.y, r.width, r.height), s, st);
+            return x + size.x + (bold ? 1 : 0);
         }
 
         public static float LabelRight(float xr, float cy, string s, Color32 col, bool isSmall = false, bool bold = false) =>
@@ -333,8 +338,9 @@ namespace PocketCaravan
             var st = St(isSmall, true);
             st.normal.textColor = UIStyle.Lin(col);
             float h = st.CalcHeight(new GUIContent(s), w);
-            var r = new Rect(Mathf.Round(x), Mathf.Round(y), w, h);
+            var r = new Rect(Snap(x), Snap(y), w, h);
             GUI.Label(r, s, st);
+            if (bold) GUI.Label(new Rect(r.x + BoldStep, r.y, w, h), s, st);
             return h;
         }
 
@@ -396,7 +402,7 @@ namespace PocketCaravan
             if (paperCard != null && paperCard.normal.background != null && paperTitle.font == paperRich.font) return;
             paperCard = CardStyle(RoundTex(6, Paper2, Line, 1));
             paperCardOn = CardStyle(RoundTex(6, Paper, Interact, 2));
-            paperTitle = new GUIStyle(paperRich) { wordWrap = true };   // 11/08 합성 굵게(FontStyle.Bold)도 번져 보여 쓰지 않는다
+            paperTitle = new GUIStyle(paperRich) { fontStyle = FontStyle.Bold, wordWrap = true };
             paperNote = new GUIStyle(paperSmall) { wordWrap = true };
             badges.Clear();
         }
@@ -758,9 +764,8 @@ namespace PocketCaravan
             Fill(new Rect(x + 4, y + 3, w - 8, 1), FrameHi);
             Icon(Pic.Star4, x + 9, y + 7);
             Icon(Pic.Star4, x + w - 16, y + 7);
-            // 11/08 은샘: 흰 굵은 글씨 + 한 칸 아래 진한 그림자를 겹치면 화면 배율이 정수가 아닐 때 획이 섞여 번져 보였다.
-            // 같은 색 한 겹으로 그린다.
-            LabelCenter(cx, y + 11, label, Ink, false, true);
+            LabelCenter(cx, y + 12, label, Ink, false, true);
+            LabelCenter(cx, y + 11, label, White, false, true);
         }
 
         /// <summary>"[Space] 말 걸기" 같은 상호작용 안내 (11/05 종이 알약 + 키캡, 색은 빼서 덜 튀게)</summary>
@@ -834,9 +839,13 @@ namespace PocketCaravan
             Box(head, 8, Frame, Ink, 2, 3);
             Fill(new Rect(head.x + 5, head.y + 3, head.width - 10, 1), FrameHi);
             Icon(Pic.Star4, head.x + 10, head.y + 11);
-            Label(head.x + 22, head.center.y, "바리바리", Ink, false, true);   // 11/08 번짐 방지: 한 겹(TitlePlate와 같은 이유)
+            Label(head.x + 22, head.center.y + 1, "바리바리", Ink, false, true);
+            Label(head.x + 22, head.center.y, "바리바리", White, false, true);
             if (!string.IsNullOrEmpty(right))
-                LabelRight(head.xMax - 12, head.center.y, right, Ink, true, true);
+            {
+                LabelRight(head.xMax - 12, head.center.y + 1, right, Ink, true, true);
+                LabelRight(head.xMax - 12, head.center.y, right, White, true, true);
+            }
         }
 
         // ---------------- 위 가운데 줄 (할 일·다음 이야기) ----------------

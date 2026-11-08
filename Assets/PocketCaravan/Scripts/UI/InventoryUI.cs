@@ -112,7 +112,7 @@ namespace PocketCaravan
                 var item = rows[i].Key;
                 if (GUI.Button(cell, "", GUIStyle.none)) selected = i;
                 DrawIcon(new Rect(cell.x + 6, cell.y + 4, 28, 28), item);
-                GUI.Label(new Rect(cell.x, cell.yMax - 13, cell.width - 3, 12), $"{rows[i].Value}", RightSmall);
+                GUI.Label(new Rect(cell.x, cell.yMax - 13, cell.width - 3, 12), $"<b>{rows[i].Value}</b>", RightSmall);
             }
             GUI.EndScrollView();
 
@@ -124,7 +124,7 @@ namespace PocketCaravan
             {
                 var item = rows[selected].Key; int n = rows[selected].Value;
                 float avg = p.cargo.AverageCost(item);
-                var lines = new List<string> { $"{item.displayName} × {n}", $"무게 {item.weight:0.#} (모두 {item.weight * n:0.#})",
+                var lines = new List<string> { $"<b>{item.displayName}</b> × {n}", $"무게 {item.weight:0.#} (모두 {item.weight * n:0.#})",
                     item.questItem ? "부탁받은 물건 · 팔 수 없음" : avg > 0 ? $"평균 원가 {avg:0.#}냥" : "얻은 물건 (원가 없음)" };
                 if (!item.questItem)
                 {

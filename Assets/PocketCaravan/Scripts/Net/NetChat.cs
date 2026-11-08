@@ -105,7 +105,7 @@ namespace PocketCaravan
                     break;
                 case "notice":   // 11/05 관리자 알림 (npm run admin -- 알림 "…"): 채팅 목록과 가운데 아래 알림에 같이
                     if (string.IsNullOrEmpty(m.text)) break;
-                    Add($"<color={NoticeColor}>[알림] {m.text}</color>");
+                    Add($"<color={NoticeColor}><b>[알림]</b> {m.text}</color>");
                     Notify.Show("알림: " + m.text, 6f);
                     Sfx.Play("open", .4f);
                     break;

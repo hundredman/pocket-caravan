@@ -327,7 +327,7 @@ namespace PocketCaravan
             float k = Mathf.Clamp01((Time.unscaledTime - start) / length);
             if (emoteStyle == null || emoteStyle.font != UIStyle.RegularFont)
             {
-                emoteStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.RegularFont, fontSize = UIStyle.BodySize + 2, alignment = TextAnchor.MiddleCenter, richText = true, clipping = TextClipping.Overflow };
+                emoteStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.RegularFont, fontSize = UIStyle.BodySize + 2, alignment = TextAnchor.MiddleCenter, richText = true, clipping = TextClipping.Overflow, fontStyle = FontStyle.Bold };
                 symbolStyle = new GUIStyle(emoteStyle) { fontSize = UIStyle.BodySize + 4 };
             }
             string symbol = Symbol(kind, out var color);
