@@ -1,0 +1,292 @@
+{
+ "schemaVersion": 1,
+ "status": "trial",
+ "note": "11/08 은샘 요청: 고려 장터 좌판 장꾼(사 주는 좌판). at = 그 맵 market 낮은 좌판(wares_counter·spice_stall·fish_rack)을 x→y 순으로 센 번호",
+ "markup": 1.25,
+ "dailyLimit": 5,
+ "maps": [
+  {
+   "id": "Gaegyeong",
+   "keepers": [
+    {
+     "at": 0,
+     "name": "막쇠",
+     "title": "어물전",
+     "sprite": "npc_resident_boatman",
+     "hello": "잡은 고기 가져오면 장터보다 후하게 쳐 주지. 개경 사람들은 생선을 좋아하거든.",
+     "wants": [
+      "goryeo_mullet",
+      "goryeo_grenadier",
+      "goryeo_seabass",
+      "goryeo_crucian",
+      "goryeo_carp",
+      "goryeo_mandarin",
+      "goryeo_goby",
+      "goryeo_croaker",
+      "goryeo_mineo"
+     ]
+    },
+    {
+     "at": 1,
+     "name": "순덕",
+     "title": "지전",
+     "sprite": "npc_resident_ricecake",
+     "hello": "종이는 서울에서 늘 모자라요. 닥나무 종이면 더 좋고요.",
+     "wants": [
+      "paper",
+      "salt"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "Naru",
+   "keepers": [
+    {
+     "at": 0,
+     "name": "뒷방 할멈",
+     "title": "주막 부엌",
+     "sprite": "npc_resident_ricecake",
+     "hello": "뱃사람들 밥 지으려면 곡식이랑 땔감이 끝도 없이 들어.",
+     "wants": [
+      "grain",
+      "firewood"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "Dakmok",
+   "keepers": [
+    {
+     "at": 0,
+     "name": "돌쇠",
+     "title": "지소 일꾼",
+     "sprite": "npc_wood_seller",
+     "hello": "닥을 삶으려면 땔감이 산더미로 들어. 소금도 좀 있으면 좋고.",
+     "wants": [
+      "firewood",
+      "salt",
+      "grain"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "goryeo_songak",
+   "keepers": [
+    {
+     "at": 0,
+     "name": "약초 영감",
+     "title": "산골 약방",
+     "sprite": "npc_resident_scholar",
+     "hello": "산에선 소금이랑 말린 생선이 귀하다네. 가져오면 값을 더 쳐 주지.",
+     "wants": [
+      "salt",
+      "transit_driedfish"
+     ]
+    },
+    {
+     "at": 1,
+     "name": "복녀",
+     "title": "산골 떡집",
+     "sprite": "npc_resident_ricecake",
+     "hello": "떡 찔 곡식이 늘 모자라요. 들마을 곡식이면 반갑죠.",
+     "wants": [
+      "grain",
+      "firewood"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "goryeo_jangdan",
+   "keepers": [
+    {
+     "at": 0,
+     "name": "보부상 덕배",
+     "title": "소금 행상",
+     "sprite": "npc_capital_peddler",
+     "hello": "들마을엔 소금 나는 데가 없어. 나루 소금이면 바로 사지.",
+     "wants": [
+      "salt",
+      "transit_driedfish"
+     ]
+    },
+    {
+     "at": 1,
+     "name": "쇠돌",
+     "title": "어물 행상",
+     "sprite": "npc_resident_boatman",
+     "hello": "강고기든 바닷고기든 다 사. 들마을 잔칫상에 올릴 거야.",
+     "wants": [
+      "goryeo_mullet",
+      "goryeo_grenadier",
+      "goryeo_seabass",
+      "goryeo_crucian",
+      "goryeo_carp",
+      "goryeo_mandarin",
+      "goryeo_goby",
+      "goryeo_croaker",
+      "goryeo_mineo"
+     ]
+    },
+    {
+     "at": 2,
+     "name": "글방 훈장",
+     "title": "지물 행상",
+     "sprite": "npc_paper_worker",
+     "hello": "아이들 글 배울 종이가 모자라서 말일세.",
+     "wants": [
+      "paper",
+      "ginseng"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "transit_woodtown",
+   "keepers": [
+    {
+     "at": 0,
+     "name": "솔재 주모",
+     "title": "산길 주막",
+     "sprite": "npc_resident_ricecake",
+     "hello": "고개 넘는 손님들 먹일 소금이랑 생선이 필요해요.",
+     "wants": [
+      "salt",
+      "transit_driedfish"
+     ]
+    },
+    {
+     "at": 1,
+     "name": "털보",
+     "title": "양모 장수",
+     "sprite": "npc_capital_peddler",
+     "hello": "고갯마루는 추워. 양모 뭉치면 넉넉히 사겠네.",
+     "wants": [
+      "transit_wool"
+     ]
+    },
+    {
+     "at": 2,
+     "name": "산골 어물꾼",
+     "title": "어물 행상",
+     "sprite": "npc_resident_boatman",
+     "hello": "산골에선 생선이 귀하지. 가져오면 후하게 쳐 줌세.",
+     "wants": [
+      "goryeo_mullet",
+      "goryeo_grenadier",
+      "goryeo_seabass",
+      "goryeo_crucian",
+      "goryeo_carp",
+      "goryeo_mandarin",
+      "goryeo_goby",
+      "goryeo_croaker",
+      "goryeo_mineo"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "transit_ferry",
+   "keepers": [
+    {
+     "at": 0,
+     "name": "배목수",
+     "title": "나루 목공",
+     "sprite": "npc_resident_boatman",
+     "hello": "배 틈 메울 송진이 늘 모자라.",
+     "wants": [
+      "transit_resin",
+      "firewood"
+     ]
+    },
+    {
+     "at": 1,
+     "name": "향 객주",
+     "title": "잡화 객주",
+     "sprite": "npc_capital_peddler",
+     "hello": "남쪽 향신료면 값 따지지 않고 사겠소.",
+     "wants": [
+      "transit_spice",
+      "salt"
+     ]
+    },
+    {
+     "at": 2,
+     "name": "나루 떡집",
+     "title": "떡집",
+     "sprite": "npc_resident_ricecake",
+     "hello": "뱃사람 새참 떡에 곡식이 들어가요.",
+     "wants": [
+      "grain"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "transit_crossroads",
+   "keepers": [
+    {
+     "at": 0,
+     "name": "서역 비단상",
+     "title": "비단 객주",
+     "sprite": "npc_resident_silk",
+     "hello": "인삼이나 나전칠기면 먼 길 가져갈 만하지.",
+     "wants": [
+      "ginseng",
+      "najeon"
+     ]
+    },
+    {
+     "at": 1,
+     "name": "길목 어물꾼",
+     "title": "어물 행상",
+     "sprite": "npc_resident_boatman",
+     "hello": "내륙에선 생선이 귀해. 말린 것도 좋아.",
+     "wants": [
+      "goryeo_mullet",
+      "goryeo_grenadier",
+      "goryeo_seabass",
+      "goryeo_crucian",
+      "goryeo_carp",
+      "goryeo_mandarin",
+      "goryeo_goby",
+      "goryeo_croaker",
+      "goryeo_mineo",
+      "transit_driedfish"
+     ]
+    },
+    {
+     "at": 2,
+     "name": "길목 지물상",
+     "title": "지물 행상",
+     "sprite": "npc_paper_worker",
+     "hello": "교역 장부 쓸 종이가 모자라.",
+     "wants": [
+      "paper",
+      "salt"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "transit_southport",
+   "keepers": [
+    {
+     "at": 1,
+     "name": "선주",
+     "title": "포구 선주",
+     "sprite": "npc_resident_boatman",
+     "hello": "배 고칠 송진, 뱃사람 입을 양모가 필요하오.",
+     "wants": [
+      "transit_resin",
+      "transit_wool",
+      "firewood"
+     ]
+    }
+   ]
+  }
+ ]
+}
