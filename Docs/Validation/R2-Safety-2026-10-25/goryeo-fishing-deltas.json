@@ -1,0 +1,24 @@
+{
+  "reason": "2026-11-08 고려 나루 낚시: 세 나루 장터에 그 자리 물고기 3종 재고 줄만 더했다. 옛 R2 비교 때 이 줄만 되돌린다.",
+  "approval": "2026-11-08 은샘 승인 (낚시 개편, 북유럽과 같은 1시간 흩어짐)",
+  "files": {
+    "Assets/PocketCaravan/Data/Goryeo/Town_Naru.asset": [
+      {
+        "old": "",
+        "new": "  - item: {fileID: 11400000, guid: 737e667691d04421faaee8b11c4f7586, type: 2}\n    optimal: 6\n    localPriceMultiplier: 1\n  - item: {fileID: 11400000, guid: 424bf16956c79413b935562ce5acf1af, type: 2}\n    optimal: 3\n    localPriceMultiplier: 1\n  - item: {fileID: 11400000, guid: 4030af5c7cf2b43f689cae89b02d9e22, type: 2}\n    optimal: 1\n    localPriceMultiplier: 1\n"
+      }
+    ],
+    "Assets/PocketCaravan/Data/Transit/Town_Ferry.asset": [
+      {
+        "old": "",
+        "new": "  - item: {fileID: 11400000, guid: 2e26417d801524770afb13785b65a3ed, type: 2}\n    optimal: 6\n    localPriceMultiplier: 1\n  - item: {fileID: 11400000, guid: 617c288469c9546caab06680f4721faa, type: 2}\n    optimal: 3\n    localPriceMultiplier: 1\n  - item: {fileID: 11400000, guid: 13eb26ad1fc164c15846a13c31b15cb5, type: 2}\n    optimal: 1\n    localPriceMultiplier: 1\n"
+      }
+    ],
+    "Assets/PocketCaravan/Data/Transit/Town_Southport.asset": [
+      {
+        "old": "",
+        "new": "  - item: {fileID: 11400000, guid: 31786de04f4734d9883464a1c2ecabdb, type: 2}\n    optimal: 6\n    localPriceMultiplier: 1\n  - item: {fileID: 11400000, guid: d8cc360e19d574ee898ef9b61ca954bd, type: 2}\n    optimal: 3\n    localPriceMultiplier: 1\n  - item: {fileID: 11400000, guid: 46489469fbfcd467a9c7f66d53fc46da, type: 2}\n    optimal: 1\n    localPriceMultiplier: 1\n"
+      }
+    ]
+  }
+}

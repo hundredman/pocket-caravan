@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88a3b8eff4a614f57b369e986199d220, type: 3}
+  m_Name: Item_goryeo_croaker
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
+  id: goryeo_croaker
+  displayName: "\uC870\uAE30"
+  icon: {fileID: 21300000, guid: 714567939b5a142a087eb66f7a348b1d, type: 3}
+  weight: 1
+  basePrice: 24
+  originTown: {fileID: 11400000, guid: d0934d2e0aa442929823a02d7a3e8f96, type: 2}
+  pricePerMap: 0.1
+  questItem: 0

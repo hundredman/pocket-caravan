@@ -27,7 +27,7 @@ namespace PocketCaravan.EditorTools
             var vehicles=new[]{AssetDatabase.LoadAssetAtPath<VehicleData>("Assets/PocketCaravan/Data/Goryeo/Vehicle_Walk.asset"),AssetDatabase.LoadAssetAtPath<VehicleData>("Assets/PocketCaravan/Data/Goryeo/Vehicle_Handcart.asset"),AssetDatabase.LoadAssetAtPath<VehicleData>("Assets/PocketCaravan/Data/North/Vehicle_NorthSled.asset")};
             foreach(var origin in origins)Check(origin!=null,"loaded origin");foreach(var vehicle in vehicles)Check(vehicle!=null,"loaded vehicle");
             int money=GameManager.I.Player.money;string cargo=JsonUtility.ToJson(GameManager.I.Player.cargo);var oldOrigin=GameManager.I.Player.origin;var oldVehicle=GameManager.I.Player.vehicle;
-            foreach(var origin in origins)foreach(var vehicle in vehicles)foreach(var kind in new[]{GoryeoAtmosphere.Kind.Clear,GoryeoAtmosphere.Kind.Mist,GoryeoAtmosphere.Kind.Rain,GoryeoAtmosphere.Kind.Monsoon})for(int grade=1;grade<=3;grade++)foreach(float shared in new[]{.7f,1f,1.6f,1.12f})
+            foreach(var origin in origins)foreach(var vehicle in vehicles)foreach(var kind in new[]{GoryeoAtmosphere.Kind.Clear,GoryeoAtmosphere.Kind.Rain,GoryeoAtmosphere.Kind.Monsoon})for(int grade=1;grade<=3;grade++)foreach(float shared in new[]{.7f,1f,1.6f,1.12f})
             {
                 float offroad=vehicle.SpeedOn(0)*origin.speedMultiplier*origin.offroadSpeedMultiplier;float road=vehicle.SpeedOn(grade)*origin.speedMultiplier;
                 float grass=GoryeoGroundSpeed.Adjust(offroad,offroad,GoryeoStride.Surface.Grass,kind)*shared;float dirt=GoryeoGroundSpeed.Adjust(road,offroad,GoryeoStride.Surface.Dirt,kind)*shared;

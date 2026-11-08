@@ -51,6 +51,18 @@ namespace PocketCaravan
             foreach (var t in saved) if (t != null && !string.IsNullOrEmpty(t.town) && !string.IsNullOrEmpty(t.item) && t.count > 0 && recent.Count < RecentMax) recent.Add(t);
         }
 
+        /// <summary>
+        /// 2026-11-08 "N일 전" 글. 온라인 세상 시계는 처음 접속하거나 오래 쉬었다 오면 날짜가 크게 건너뛴다(혼자 하던 5일째 → 세상 1700일째 등).
+        /// 그만큼 지난 값은 날 수가 의미 없으니 LongAgoDays일 넘으면 "오래 전"으로 쓴다.
+        /// </summary>
+        public const int LongAgoDays = 10;
+        public static string Ago(int today, int day)
+        {
+            int days = today - day;
+            if (days <= 0) return "오늘";
+            return days > LongAgoDays ? "오래 전" : $"{days}일 전";
+        }
+
         public Quote Find(string town, string item) => quotes.Find(q => q.town == town && q.item == item);
         public void Clear() { quotes.Clear(); recent.Clear(); }
 

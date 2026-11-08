@@ -47,7 +47,7 @@ namespace PocketCaravan.EditorTools
                 yield return Capture(prefix+"-map");Set(map,"regional",true);yield return Capture(prefix+"-regional-map");
                 Set(map,"open",false);UIState.Release();
                 market.Interact(PlayerController.Instance);yield return Capture(prefix+"-market");
-                Set(market,"contentScroll",new Vector2(0,10000));yield return Capture(prefix+"-market-scrolled");
+                Set(market,"haggleOpen",true);yield return Capture(prefix+"-market-haggle");   // 11/08 장터 창 새 모양: 스크롤 대신 흥정 3단계
                 market.GetType().GetMethod("Close",Fields|BindingFlags.Public).Invoke(market,null);UIState.Release();
                 TownFacilitiesUI.Show(market.town);yield return Capture(prefix+"-facilities");
                 var facilities=FindFirstObjectByType<TownFacilitiesUI>();

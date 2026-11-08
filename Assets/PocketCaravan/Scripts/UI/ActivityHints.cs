@@ -24,7 +24,6 @@ namespace PocketCaravan
             { typeof(Museum.Spot), i => ("전시실 기증", Museum.Complete(((Museum.Spot)i).region)) },
             { typeof(Collectibles.Spot), i => (Collectibles.Read(((Collectibles.Spot)i).region, ((Collectibles.Spot)i).index) ? null : Collectibles.Of(((Collectibles.Spot)i).region)?.name, false) },
             { typeof(WorkshopSpot), i => (Crafting.Label(((WorkshopSpot)i).recipeId), Crafting.DoneForToday(((WorkshopSpot)i).recipeId)) },
-            { typeof(GoryeoPastime), _ => ("나루 낚시", false) },
         };
         public static readonly Dictionary<string, Func<Interactable, (string name, bool done)>> NameRules = new Dictionary<string, Func<Interactable, (string, bool)>>();
 

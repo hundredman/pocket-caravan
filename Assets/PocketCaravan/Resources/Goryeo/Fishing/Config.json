@@ -1,0 +1,21 @@
+{
+  "status": "approved",
+  "note": "2026-11-08 은샘: 나루 세 곳 물가 낚싯대. x,y = 타일 칸(Unity 셀 좌표), water = 물이 있는 쪽(right/left/up/down). 낚으면 그 자리 물고기가 scatterHours(게임 시간) 동안 흩어진다(북유럽 얼음 구멍과 같은 1시간).",
+  "scatterHours": 1.0,
+  "spots": [
+    { "mapId": "Naru", "name": "예성 나루", "water": "right", "x": 29, "y": 58, "kind": "estuary", "fish": ["goryeo_mullet", "goryeo_grenadier", "goryeo_seabass"] },
+    { "mapId": "transit_ferry", "name": "버들나루", "water": "right", "x": 37, "y": 40, "kind": "river", "fish": ["goryeo_crucian", "goryeo_carp", "goryeo_mandarin"] },
+    { "mapId": "transit_southport", "name": "남동 포구", "water": "right", "x": 38, "y": 11, "kind": "sea", "fish": ["goryeo_goby", "goryeo_croaker", "goryeo_mineo"] }
+  ],
+  "species": [
+    { "id": "goryeo_mullet", "name": "숭어", "tier": 0, "minCm": 30, "maxCm": 60 },
+    { "id": "goryeo_grenadier", "name": "웅어", "tier": 1, "minCm": 20, "maxCm": 32 },
+    { "id": "goryeo_seabass", "name": "농어", "tier": 2, "minCm": 45, "maxCm": 95 },
+    { "id": "goryeo_crucian", "name": "붕어", "tier": 0, "minCm": 12, "maxCm": 30 },
+    { "id": "goryeo_carp", "name": "잉어", "tier": 1, "minCm": 30, "maxCm": 80 },
+    { "id": "goryeo_mandarin", "name": "쏘가리", "tier": 2, "minCm": 25, "maxCm": 55 },
+    { "id": "goryeo_goby", "name": "망둥어", "tier": 0, "minCm": 10, "maxCm": 25 },
+    { "id": "goryeo_croaker", "name": "조기", "tier": 1, "minCm": 20, "maxCm": 38 },
+    { "id": "goryeo_mineo", "name": "민어", "tier": 2, "minCm": 50, "maxCm": 100 }
+  ]
+}

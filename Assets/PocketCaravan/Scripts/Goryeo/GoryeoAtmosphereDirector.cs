@@ -11,7 +11,7 @@ namespace PocketCaravan
         static void Install()
         {
             SceneManager.sceneLoaded-=OnLoaded;SceneManager.sceneLoaded+=OnLoaded;Apply();
-            // 공용 날씨 사건(LostTraveler, 기우 11/05): "고려는 날씨를 넣으면 Weather[Goryeo]에 한 줄 등록". 비·장맛비·안개를 궂은 날씨로 본다.
+            // 공용 날씨 사건(LostTraveler, 기우 11/05): "고려는 날씨를 넣으면 Weather[Goryeo]에 한 줄 등록". 비·장맛비를 궂은 날씨로 본다 (11/08 안개 없앰).
             LostTraveler.Weather[Reactions.Region.Goryeo]=BadWeather;
         }
         static bool BadWeather()

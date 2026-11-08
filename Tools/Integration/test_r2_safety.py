@@ -75,6 +75,13 @@ class R2SafetyChecks(unittest.TestCase):
                     new,old=change['new'].encode(),change['old'].encode()
                     self.assertEqual(data.count(new),1,name+' exact approved Task6 change')
                     data=data.replace(new,old,1)
+                # 11/08 고려 낚시: 세 나루 장터에 더한 물고기 재고 줄만 되돌린다.
+                fishing=json.loads((OUT/'goryeo-fishing-deltas.json').read_text())['files']
+                self.assertEqual(set(fishing),{'Assets/PocketCaravan/Data/Goryeo/Town_Naru.asset','Assets/PocketCaravan/Data/Transit/Town_Ferry.asset','Assets/PocketCaravan/Data/Transit/Town_Southport.asset'})
+                for change in fishing.get(name,[]):
+                    new,old=change['new'].encode(),change['old'].encode()
+                    self.assertEqual(data.count(new),1,name+' exact approved fishing stock')
+                    data=data.replace(new,old,1)
                 self.assertEqual(hashlib.sha256(data).hexdigest(),digest,name)
         frozen=OUT/'LegacyMarketState.cs.txt'
         self.assertEqual(hashlib.sha256(frozen.read_bytes()).hexdigest(),manifest['files']['Assets/PocketCaravan/Scripts/Economy/MarketState.cs'])

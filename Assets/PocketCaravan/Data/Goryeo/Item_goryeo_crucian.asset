@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88a3b8eff4a614f57b369e986199d220, type: 3}
+  m_Name: Item_goryeo_crucian
+  m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.ItemData
+  id: goryeo_crucian
+  displayName: "\uBD95\uC5B4"
+  icon: {fileID: 21300000, guid: 41e9a411e6b7b47e38bf5a0e36fc2c7d, type: 3}
+  weight: 1
+  basePrice: 9
+  originTown: {fileID: 11400000, guid: b6a420a608f7c4232a2b56c2441da62e, type: 2}
+  pricePerMap: 0.1
+  questItem: 0

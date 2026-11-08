@@ -78,4 +78,5 @@ MonoBehaviour:
     localPriceMultiplier: 1
   defaultOptimal: 3
   vehiclesForSale:
+  - {fileID: 11400000, guid: 913f67411fb2e4eb9868cba57a9545f6, type: 2}
   - {fileID: 11400000, guid: 8703b62086062409a8e822f5733926c5, type: 2}

@@ -48,7 +48,7 @@ namespace PocketCaravan.EditorTools
         public const string FrankId = "arabia_frankincense", CoffeeId = "arabia_coffee", PearlId = "arabia_pearl", SaltId = "arabia_salt", LeatherId = "arabia_leather", CarpetId = "arabia_carpet";
         public const string CamelId = "arabia_camel";
         public const string Q3Id = "arabia_q03_cloth_road", Q4Id = "arabia_q04_spice_capital", Q5Id = "arabia_q05_camel", Q6Id = "arabia_q06_frankincense", Q7Id = "arabia_q07_pearl";
-        public const string Q8Id = "arabia_q08_carpet_order", Q9Id = "arabia_q09_dye_salt", Q10Id = "arabia_q10_shortcut", Q11Id = "arabia_q11_coffee", Q12Id = "arabia_q12_garden_dates";
+        public const string Q8Id = "arabia_q08_carpet_order", Q9Id = "arabia_q09_dye_salt", Q10Id = "arabia_q10_shortcut", Q11Id = "arabia_q11_coffee", Q12Id = "arabia_q12_garden_dates", Q13Id = "arabia_q13_camel";   // 11/08 Q5는 손수레, 낙타는 Q13(업그레이드)
         public const string SaveFileName = "pocket_caravan_arabia_test_save.json";
 
         // 실험값 (Docs/Arabia/02 §5). 플레이 평가 후 조정한다.
@@ -157,7 +157,12 @@ namespace PocketCaravan.EditorTools
             camel.speedByGrade = new[] { 1.25f, 1.15f, 1.05f, 1f };
             if (!db.vehicles.Contains(camel)) db.vehicles.Add(camel);
             EditorUtility.SetDirty(camel);
-            jeddah.vehiclesForSale = new List<VehicleData> { camel }; sanaa.vehiclesForSale = new List<VehicleData> { camel };
+            // 11/08 (기우) 다른 지역처럼 공용 손수레를 먼저 팔고, 낙타는 업그레이드. 시작 마을 알 아흐사에서도 손수레를 판다
+            var handcart = db.vehicles.Find(v => v != null && v.id == "handcart");
+            ahsa.vehiclesForSale = handcart != null ? new List<VehicleData> { handcart } : new List<VehicleData>();
+            jeddah.vehiclesForSale = new List<VehicleData> { handcart, camel }.Where(v => v != null).ToList();
+            sanaa.vehiclesForSale = new List<VehicleData> { handcart, camel }.Where(v => v != null).ToList();
+            EditorUtility.SetDirty(ahsa); EditorUtility.SetDirty(jeddah); EditorUtility.SetDirty(sanaa);
 
             var q1 = Get<QuestData>(QuestDir + "/Quest_ArabiaQ01FirstDelivery.asset");
             q1.id = Q1Id; q1.title = "힌드바드의 반쪽 짐"; q1.chain = "아라비아 1장";
@@ -222,12 +227,21 @@ namespace PocketCaravan.EditorTools
                 new QuestObjective { type = ObjectiveType.Buy, text = "제다 장터에서 향신료 자루 사기", targetId = JeddahTown, item = spice, count = 3 },
                 new QuestObjective { type = ObjectiveType.Sell, text = "사나 장터에 향신료 자루 팔기", targetId = SanaaTown, item = spice, count = 3,
                     completeLine = "수도 사람들은 향신료 없인 밥을 안 먹지. 좋은 값에 팔렸을 거야." });
-            var q5 = Quest("Quest_ArabiaQ05Camel", Q5Id, "낙타 한 마리", "arabia_hasan", q3,
-                "돈을 모아 제다나 사나에서 낙타를 산다. 모래와 험한 길에서 빠르고 짐도 더 싣는다.",
-                "등짐으로 사막을 건너는 건 무리야. 300냥을 모으면 제다나 사나에서 낙타를 살 수 있어.\n낙타는 모래 위에서 사람보다 빨라.",
+            // 11/08 Q5는 손수레(다른 지역과 같은 첫 탈것). id·파일 이름은 옛 저장 호환으로 그대로 둔다
+            var q5 = Quest("Quest_ArabiaQ05Camel", Q5Id, "손수레 한 대", "arabia_hasan", q3,
+                "돈을 모아 장터에서 손수레를 산다. 등짐보다 훨씬 많이 싣는다.",
+                "등짐으로는 몇 자루 못 날라. 150냥을 모으면 알 아흐사나 제다, 사나 장터에서 손수레를 살 수 있어.\n수레부터 끌어 보고, 돈이 더 모이면 낙타지.",
+                40, 1, "손수레로 짐을 늘렸다. 다음은 사막의 배, 낙타.",
+                new QuestObjective { type = ObjectiveType.HaveMoney, text = "150냥 모으기", count = 150 },
+                new QuestObjective { type = ObjectiveType.BuyVehicle, text = "알 아흐사 장터에서 손수레 사기", targetId = AhsaTown, vehicle = handcart,
+                    completeLine = "바퀴 소리가 좋군. 이제 짐 걱정은 덜었어." });
+            // 11/08 Q13 낙타 (업그레이드): 제다 수레 장인 유수프가 손수레를 본 뒤 권한다
+            var q13 = Quest("Quest_ArabiaQ13Camel", Q13Id, "낙타 한 마리", "arabia_yusuf", q5,
+                "돈을 모아 제다나 사나에서 낙타를 산다. 모래와 험한 길에서 빠르고 손수레보다 짐도 더 싣는다.",
+                "손수레는 모래에 바퀴가 빠지지. 300냥을 모으면 제다나 사나에서 낙타를 살 수 있어.\n낙타는 모래 위에서 사람보다 빨라.",
                 60, 1, "낙타를 사면 지름길의 모래바람도 덜 무섭다.",
                 new QuestObjective { type = ObjectiveType.HaveMoney, text = "300냥 모으기", count = 300 },
-                new QuestObjective { type = ObjectiveType.BuyVehicle, text = "낙타 사기", vehicle = camel,
+                new QuestObjective { type = ObjectiveType.BuyVehicle, text = "제다 장터에서 낙타 사기", targetId = JeddahTown, vehicle = camel,
                     completeLine = "좋은 낙타군. 이제 자네도 대상이야." });
             var q6 = Quest("Quest_ArabiaQ06Frankincense", Q6Id, "사나의 유향", "arabia_maryam", q4,
                 "수도 사나에서 유향 덩이를 사서 알 아흐사 여관의 마리암에게 가져온다. 거꾸로 가는 교역.",
@@ -239,7 +253,7 @@ namespace PocketCaravan.EditorTools
             var q7 = Quest("Quest_ArabiaQ07Pearl", Q7Id, "진주 한 알", "arabia_hindbad", q2,
                 "제다 항구에서 진주를 한 알 사서 어디든 더 비싼 곳에 판다. 이익을 남기는 연습.",
                 "제다 잠수부들이 진주를 캐 온대. 한 알 사서 다른 데 팔면 이익이 얼마나 남는지 볼래?\n산 값보다 40냥은 더 남겨 봐.",
-                45, 1, "이익은 판 값에서 산 값을 뺀 것. 장부(J)에서 볼 수 있다.",
+                45, 1, "이익은 판 값에서 산 값을 뺀 것. 장부(L)의 최근 거래에서 볼 수 있다.",
                 new QuestObjective { type = ObjectiveType.Buy, text = "제다 장터에서 진주 사기", targetId = JeddahTown, item = pearl, count = 1 },
                 new QuestObjective { type = ObjectiveType.Profit, text = "판매 이익 40냥 남기기", count = 40,
                     completeLine = "봐, 짐은 작아도 이익은 크지. 그게 장사야." });
@@ -259,7 +273,7 @@ namespace PocketCaravan.EditorTools
                 new QuestObjective { type = ObjectiveType.Buy, text = "제다 장터에서 바닷소금 덩이 사기", targetId = JeddahTown, item = salt, count = 3 },
                 new QuestObjective { type = ObjectiveType.Deliver, text = "타이즈 염색 장인에게 바닷소금 전하기", targetId = "arabia_dyer", item = salt, count = 3,
                     completeLine = "이제 쪽빛이 제대로 붙겠어요. 고마워요." });
-            var q10 = Quest("Quest_ArabiaQ10Shortcut", Q10Id, "지름길을 건너다", "arabia_yusuf", q5,
+            var q10 = Quest("Quest_ArabiaQ10Shortcut", Q10Id, "지름길을 건너다", "arabia_yusuf", q13,   // 11/08 낙타(Q13) 뒤
                 "낙타를 타고 제다-사나 지름길을 건너 본다. 모래바람이 부는 길.",
                 "낙타를 샀군. 그럼 지름길을 한번 가 봐. 모래바람이 불 땐 멈추고, 그치면 달리는 거야.\n건너서 알 아흐사 가죽 두 장을 사나에 팔고 오면 안장값은 내가 깎아 주지.",
                 45, 1, "지름길은 빠르지만 모래바람에 짐을 잃을 수 있다.",

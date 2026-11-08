@@ -26,6 +26,8 @@ namespace PocketCaravan
             public bool autoPlace;                        // true면 공용 Runner가 맵을 열 때 세운다
             public bool roadside;                         // true면 길가(길 옆 칸, 장터에서 먼 어귀)에, false면 길에서 가장 먼 구석에
             public string blessingName;                   // 일곱 다 읽은 뒤 효과 이름 (그 지역 안에서 달릴 때 체력 소모 1할 감소)
+            /// <summary>11/08 자동 자리가 UI에 가리는 맵만 손으로 고정 (맵 JSON 좌표, 위가 y=0). 없으면 자동</summary>
+            public Dictionary<string, Vector2Int> fixedAt;
         }
 
         public static readonly Dictionary<Reactions.Region, Set> Sets = new Dictionary<Reactions.Region, Set>
@@ -49,6 +51,8 @@ namespace PocketCaravan
                 name = "별을 새긴 돌", readName = "읽은 별 돌", sprite = "Common/starstone", glow = "Common/glow", autoPlace = true, roadside = false,
                 blessingName = "별의 길잡이",
                 maps = new[] { "arabia_sanaa", "arabia_taiz", "arabia_zabid", "arabia_ahsa", "arabia_jeddah", "arabia_central_dunes", "arabia_central_canyon" },
+                // 11/08 자동 자리(길에서 가장 먼 칸)가 마을에선 늘 맵 모서리라 상태 카드·Q/M/L 단추·조작 줄에 가렸다 → 가장자리에서 들어온, 길에서 떨어진, 길·출구에서 걸어 갈 수 있는 자리로 고정
+                fixedAt = new Dictionary<string, Vector2Int> { { "arabia_sanaa", new Vector2Int(17, 28) }, { "arabia_taiz", new Vector2Int(14, 32) }, { "arabia_zabid", new Vector2Int(21, 11) }, { "arabia_ahsa", new Vector2Int(19, 18) }, { "arabia_jeddah", new Vector2Int(44, 27) }, { "arabia_central_dunes", new Vector2Int(20, 36) }, { "arabia_central_canyon", new Vector2Int(127, 36) } },
                 lore = new[] {
                     "옛날 사막을 건너던 대상이 길을 잃었다.\n밤하늘의 별 하나가 유난히 밝아 그 별을 따라 사나에 닿았다고 한다.",
                     "대상의 우두머리는 그 별을 돌에 새겼다.\n뒤에 오는 이들이 같은 별을 보고 길을 찾도록.",
@@ -190,7 +194,13 @@ namespace PocketCaravan
                 if (set == null || !set.autoPlace || set.maps == null) return;
                 int idx = Array.IndexOf(set.maps, MapRoot.Current.mapId);
                 if (idx < 0) return;
-                var cell = FindCell(MapRoot.Current, idx + 1, set.roadside);
+                Vector3Int? cell = null;
+                if (set.fixedAt != null && set.fixedAt.TryGetValue(MapRoot.Current.mapId, out var fx))
+                {
+                    var rg = MapRoot.Current.GetComponent<RoadGrid>();
+                    if (rg != null && rg.height > 0) { var c = new Vector3Int(fx.x, rg.height - 1 - fx.y, 0); if (MapRoot.Current.IsWalkable(c) && Interactable.At(c) == null) cell = c; }
+                }
+                if (cell == null) cell = FindCell(MapRoot.Current, idx + 1, set.roadside);
                 if (cell == null) { Debug.LogWarning($"[수집물] {MapRoot.Current.mapId}: 숨길 자리가 없다"); return; }
                 var go = new GameObject(set.name);
                 go.transform.position = MapRoot.Current.CellCenter(cell.Value);

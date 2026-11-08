@@ -48,7 +48,7 @@ namespace PocketCaravan.EditorTools
                 {
                     var market=UnityEngine.Object.FindAnyObjectByType<TownMarket>();market.Interact(PlayerController.Instance);
                     typeof(TownMarket).GetField("selected",BindingFlags.Instance|BindingFlags.NonPublic).SetValue(market,gm.Db.items.Find(i=>i.id=="najeon"));
-                    typeof(TownMarket).GetField("scroll",BindingFlags.Instance|BindingFlags.NonPublic).SetValue(market,Vector2.zero);SessionState.SetString(Key,"market");
+                    typeof(TownMarket).GetField("listScroll",BindingFlags.Instance|BindingFlags.NonPublic).SetValue(market,0f);SessionState.SetString(Key,"market");
                 }
                 else if(stage=="market")
                 {ScreenCapture.CaptureScreenshot(Path.GetFullPath(Folder+"market-lock.png"));SessionState.SetString(Key,"mapOpen");}
