@@ -6,11 +6,13 @@
 //   --trade  8초마다 리알토 장터에서 유리그릇 3개 팔기 / 2개 사기를 번갈아 (공유 장터 시험)
 //   --say    10초마다 채팅 한 줄
 //   --gift   (2026-11-08) 따라간 사람에게 100냥, 이어서 유리그릇 2개를 선물한다 (--gift-after=<초>, 기본 6초 뒤). 받은 선물은 저절로 받고 고맙다고 한다
+//   --to=<이름>  그 이름의 접속자만 따라간다 (봇끼리 서로 따라가지 않게)
 //   --score --pass=<접속키>   계정으로 들어와 곤돌라 경주 점수 42점을 순위표에 올린다 (시험 뒤 관리 도구로 계정을 지운다)
 const ARGS = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 const FLAGS = new Set(process.argv.slice(2).filter((a) => a.startsWith("--")));
 const GIFT_AFTER = Number(process.argv.slice(2).find((a) => a.startsWith("--gift-after="))?.slice("--gift-after=".length) ?? 6) * 1000;
 const PASS = process.argv.slice(2).find((a) => a.startsWith("--pass="))?.slice("--pass=".length);
+const TO = process.argv.slice(2).find((a) => a.startsWith("--to="))?.slice("--to=".length);   // 이 이름을 따라간다 (없으면 맵에 있는 아무나)
 const URL = ARGS[0] ?? "ws://127.0.0.1:8787/ws";
 const NAME = ARGS[1] ?? "시험고양이";
 const SECONDS = Number(ARGS[2] ?? 120);
@@ -44,7 +46,7 @@ ws.onmessage = (e) => {
     setTimeout(() => { send({ t: "say", text: `${m.from} 님 선물 고마워요!` }); send({ t: "emote", e: "love", name: "하트" }); }, 800);
   }
   if (m.t === "who") {
-    const other = m.players.find((p) => p.id !== me && p.map);
+    const other = m.players.find((p) => p.id !== me && p.map && (!TO || p.name === TO));
     if (!other) { if (!waitingSaid) console.log("따라갈 접속자를 기다립니다…"); waitingSaid = true; setTimeout(() => send({ t: "who" }), 2000); return; }
     waitingSaid = false;
     target = other.id; targetName = other.name; map = other.map;
