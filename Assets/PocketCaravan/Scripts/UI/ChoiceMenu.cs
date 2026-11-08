@@ -34,6 +34,7 @@ namespace PocketCaravan
 
         public static void Show(string title, string body, params Option[] opts)
         {
+            if (inst == null) Attach();   // 새 게임으로 GameManager가 바뀐 뒤에도 붙인다
             if (inst == null) return;
             inst.title = title; inst.body = body;
             inst.options.Clear(); inst.options.AddRange(opts);

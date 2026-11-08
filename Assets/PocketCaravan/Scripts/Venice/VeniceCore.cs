@@ -121,7 +121,7 @@ namespace PocketCaravan
         static readonly System.Type[] Parts =
         {
             typeof(VeniceAtmosphere), typeof(VeniceDaily), typeof(VeniceEvents), typeof(VeniceFair), typeof(VeniceLife),
-            typeof(VeniceMapUI), typeof(VeniceMenu), typeof(VeniceQuestDirector), typeof(VeniceRace),
+            typeof(VeniceMapUI), typeof(ChoiceMenu), typeof(VeniceQuestDirector), typeof(VeniceRace),
             typeof(VeniceSound), typeof(VeniceStride), 
         };
 
