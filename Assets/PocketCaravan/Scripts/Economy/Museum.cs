@@ -41,6 +41,11 @@ namespace PocketCaravan
         {
             { Reactions.Region.Goryeo, "Gaegyeong" }, { Reactions.Region.Arabia, "arabia_sanaa" },
         };
+        /// <summary>11/08 기우: 장터 옆이 붐비면 자리를 맵 JSON 좌표(위가 y=0)로 고정한다. 그 칸이 막혀 있으면 예전처럼 장터 옆</summary>
+        public static readonly Dictionary<Reactions.Region, Vector2Int> FixedCell = new Dictionary<Reactions.Region, Vector2Int>
+        {
+            { Reactions.Region.Arabia, new Vector2Int(40, 27) },   // 사나 광장 오른쪽 좌판 앞 (왼쪽 장터에 사나 상인·나디아·전시실이 몰려 이름표가 겹쳐서)
+        };
         public static readonly Dictionary<Reactions.Region, string> Keeper = new Dictionary<Reactions.Region, string>
         {
             { Reactions.Region.North, "회관 전시실 관리인" }, { Reactions.Region.Venice, "전시실 관리인" },
@@ -157,19 +162,30 @@ namespace PocketCaravan
                 var market = UnityEngine.Object.FindAnyObjectByType<TownMarket>();
                 if (market == null) return;
                 var c = mr.WorldToCell(market.transform.position);
+                var road = mr.GetComponent<RoadGrid>();
+                if (FixedCell.TryGetValue(r, out var fc) && road != null && road.height > 0)
+                {
+                    var fixedCell = new Vector3Int(fc.x, road.height - 1 - fc.y, c.z);   // JSON 좌표 → 씬 (MapJsonBuilder처럼 위아래 뒤집힘)
+                    if (mr.IsWalkable(fixedCell) && Interactable.At(fixedCell) == null) { Build(fixedCell); return; }
+                }
                 int[] dx = { -2, 2, -3, 3, -2, 2, 0 }, dy = { 1, 1, 0, 0, -1, -1, 2 };
                 for (int i = 0; i < dx.Length; i++)
                 {
                     var cell = new Vector3Int(c.x + dx[i], c.y + dy[i], c.z);
                     if (!mr.IsWalkable(cell) || Interactable.At(cell) != null) continue;
+                    Build(cell);
+                    return;
+                }
+                Debug.LogWarning($"[전시실] {map}: 장터 옆에 세울 자리가 없다");
+
+                void Build(Vector3Int cell)
+                {
                     var go = new GameObject("전시실");
                     go.transform.position = mr.CellCenter(cell);
                     var sp = go.AddComponent<Spot>(); sp.region = r; sp.blocksMovement = true;
                     var t = Resources.Load<Texture2D>("Common/pedestal");
                     if (t != null) { t.filterMode = FilterMode.Point; var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = Sprite.Create(t, new Rect(0, 0, t.width, t.height), new Vector2(0.5f, 0.1f), 16f); sr.sortingOrder = 9; }
-                    return;
                 }
-                Debug.LogWarning($"[전시실] {map}: 장터 옆에 세울 자리가 없다");
             }
         }
 
