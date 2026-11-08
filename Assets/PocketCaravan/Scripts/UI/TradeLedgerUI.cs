@@ -204,8 +204,7 @@ namespace PocketCaravan
         static string SeenText(GameManager gm, TradeLedger.Quote q)
         {
             if (q.seenDay <= 0 || gm.Clock == null) return "언제 봤는지 몰라요";
-            int days = gm.Clock.day - q.seenDay;
-            return days <= 0 ? "오늘 확인" : $"{days}일 전 확인";
+            return TradeLedger.Ago(gm.Clock.day, q.seenDay) + " 확인";
         }
 
         static Summary Summarize(GameManager gm, ItemData item)
@@ -357,7 +356,7 @@ namespace PocketCaravan
                 float x = tag.xMax + 6;
                 if (item != null) { ItemIcon(item, x, row.y + 7, 1); x += 19; }
                 x = CuteUI.Label(x, row.y + 15, (item != null ? item.displayName : t.item) + $" ×{t.count}", CuteUI.Text, false, true) + 8;
-                string where = (town != null ? town.displayName : t.town) + (gm.Clock.day - t.day <= 0 ? " · 오늘" : $" · {gm.Clock.day - t.day}일 전");
+                string where = (town != null ? town.displayName : t.town) + " · " + TradeLedger.Ago(gm.Clock.day, t.day);
                 CuteUI.Label(x, row.y + 15.5f, where, CuteUI.Sub, true);
                 // 오른쪽: 합계 냥 (+ 판매면 손익)
                 float rx = row.xMax - 8;
