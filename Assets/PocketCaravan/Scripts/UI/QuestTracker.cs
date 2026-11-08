@@ -131,18 +131,18 @@ namespace PocketCaravan
             CuteUI.Window(r);
             CuteUI.TitlePlate(r.center.x, r.y - 11, "여정 수첩");
             if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { CloseLog(); return; }
-            GUILayout.BeginArea(new Rect(r.x + 14, r.y + 18, w - 28, h - 30));
+            GUILayout.BeginArea(new Rect(r.x + 14, r.y + 18, w - 28, h - 18 - 26));   // 아래 26은 안내 줄 (영역 밖에 따로 그린다)
             GUILayout.BeginHorizontal();
             for (int i = 0; i < LogTabs.Length; i++)
                 if (GUILayout.Button(LogTabs[i], CuteUI.PaperButtonIf(logTab == i), GUILayout.Height(20)) && logTab != i)
                 { logTab = i; scroll = Vector2.zero; }
             GUILayout.EndHorizontal();
             GUILayout.Space(6);
-            scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(h - 30 - 26 - 18));
+            scroll = GUILayout.BeginScrollView(scroll, GUILayout.ExpandHeight(true));   // 남은 높이를 다 쓴다 (높이를 셈으로 맞추다 아래 안내 줄이 잘렸다)
             if (logTab == 0) DrawQuests(qm); else DrawJourney();
             GUILayout.EndScrollView();
-            GUILayout.Label("←→ 탭 · ↑↓·휠 넘기기 · Q·Esc 닫기", new GUIStyle(CuteUI.PaperSmall) { alignment = TextAnchor.MiddleCenter });
             GUILayout.EndArea();
+            CuteUI.LabelCenter(r.center.x, r.yMax - 14, "←→ 탭 · ↑↓·휠 넘기기 · Q·Esc 닫기", CuteUI.Sub, true);
         }
 
         void DrawQuests(QuestManager qm)

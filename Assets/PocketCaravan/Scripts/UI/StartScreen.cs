@@ -148,7 +148,7 @@ namespace PocketCaravan
             int columns = PickColumns(W), count = Mathf.Min(4, all.choices.Count);
             int rows = Mathf.CeilToInt(count / (float)columns);
             float contentHeight = rows * ch + Mathf.Max(0, rows - 1) * rowGap + 8;
-            pickViewport = new Rect(8, 72, W - 16, Mathf.Max(1, pickFooter.y - 30 - 72));   // 11/08 아래 26은 출발·뒤로 단추 자리
+            pickViewport = new Rect(8, 72, W - 16, Mathf.Max(1, pickFooter.y - 4 - 72));
             float contentWidth = pickViewport.width - (contentHeight > pickViewport.height ? 18 : 0);
             float x0 = Mathf.Round((contentWidth - (columns * cw + (columns - 1) * gap)) / 2), y0 = 4;
             if (visiblePick != pick || lastPickViewSize != pickViewport.size)
@@ -196,11 +196,13 @@ namespace PocketCaravan
 
             GUI.EndScrollView();
 
-            // 11/08 출발·뒤로 단추 (마우스만으로도)
+            // 11/08 출발·뒤로 단추 (마우스만으로도). 카드 칸을 줄이면 스크롤이 생겨서, 질문 줄 양 끝(카드 왼쪽·오른쪽 끝에 맞춰)에 둔다
             if (!Held)
             {
-                if (CuteUI.Button(new Rect(pickFooter.xMax - 96, pickFooter.y - 26, 96, 22), "출발 (Space)")) InputReader.Press(' ');
-                if (hasSave && CuteUI.SoftButton(new Rect(pickFooter.x, pickFooter.y - 26, 80, 22), "뒤로 (Esc)")) InputReader.Press('\x1b');
+                float gridL = pickViewport.x + x0, gridR = gridL + columns * cw + (columns - 1) * gap;
+                if (gridR - gridL < 360) { gridL = 12; gridR = W - 12; }
+                if (CuteUI.Button(new Rect(gridR - 96, 46, 96, 20), "출발 (Space)")) InputReader.Press(' ');
+                if (hasSave && CuteUI.SoftButton(new Rect(gridL, 46, 80, 20), "뒤로 (Esc)")) InputReader.Press('\x1b');
             }
 
             // 목록과 분리한 고정 소개. 긴 강점/키 안내도 창 안에서 줄바꿈한다.
