@@ -131,7 +131,7 @@ namespace PocketCaravan
             int block = Mathf.FloorToInt(hours / 4f);
             if (block != lastBlock) { lastBlock = block; }
             Current = Roll(block);
-            if (Mathf.RoundToInt(NorthSave.Get("calm_block", -1f)) == block && Current > Weather.Light) Current = Weather.Light;   // 날씨 기도
+            if (!WorldClock.Active && Mathf.RoundToInt(NorthSave.Get("calm_block", -1f)) == block && Current > Weather.Light) Current = Weather.Light;   // 날씨 기도 (온라인에선 모두 같은 하늘)
             // 중앙 북쪽 1/4(north_c_)은 남쪽으로 갈수록 눈이 약하다: 윗줄은 함박눈까지, 가운데는 가랑눈까지, 아랫줄은 거의 안 옴
             int thaw = ThawLevel(MapRoot.Current.mapId);
             int shown = Mathf.Min((int)Current, thaw == 0 ? 3 : thaw == 1 ? 2 : thaw == 2 ? 1 : 0);

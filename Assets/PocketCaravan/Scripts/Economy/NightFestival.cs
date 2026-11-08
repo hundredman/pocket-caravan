@@ -69,7 +69,7 @@ namespace PocketCaravan
             struct Lantern { public Vector2 p; public float born, life, sway; }
             readonly List<Spark> sparks = new List<Spark>();
             readonly List<Lantern> lanterns = new List<Lantern>();
-            float nextRocket, nextLantern;
+            double nextRocket, nextLantern;   // 11/08 온라인이면 세상 시각 칸 (WorldBeat)
             bool wasOn;
 
             void OnEnable() { SceneManager.sceneLoaded += OnLoaded; Hook(); }
@@ -119,25 +119,23 @@ namespace PocketCaravan
                     GUI.depth = 6;
                     if (Event.current.type == EventType.Repaint)
                     {
-                        if (now > nextRocket)
+                        if (WorldBeat.Due(ref nextRocket, now, .7f, 1.5f, 41 + (int)f.region, out var rr))   // 11/08 온라인: 모두 같은 때 같은 불꽃
                         {
-                            nextRocket = now + UnityEngine.Random.Range(.7f, 1.5f);
-                            var center = new Vector2(UnityEngine.Random.Range(vw * .15f, vw * .85f), UnityEngine.Random.Range(vh * .1f, vh * .35f));
+                            var center = new Vector2(rr.Range(vw * .15f, vw * .85f), rr.Range(vh * .1f, vh * .35f));
                             var cols = f.region == Reactions.Region.Goryeo
                                 ? new[] { new Color(1f, .55f, .3f), new Color(1f, .85f, .4f), new Color(.95f, .35f, .3f), new Color(.5f, .85f, .6f) }
                                 : new[] { new Color(1f, .8f, .35f), new Color(.35f, .75f, .85f), new Color(.95f, .45f, .6f), new Color(.6f, .5f, 1f) };
-                            var col = cols[UnityEngine.Random.Range(0, cols.Length)];
+                            var col = cols[rr.Range(0, cols.Length)];
                             for (int i = 0; i < 24; i++)
                             {
                                 float ang = i / 24f * Mathf.PI * 2f;
-                                sparks.Add(new Spark { p = center, v = new Vector2(Mathf.Cos(ang), Mathf.Sin(ang)) * UnityEngine.Random.Range(26f, 38f), c = col, born = now, life = 1.3f });
+                                sparks.Add(new Spark { p = center, v = new Vector2(Mathf.Cos(ang), Mathf.Sin(ang)) * rr.Range(26f, 38f), c = col, born = now, life = 1.3f });
                             }
                             Sfx.Play("bump", .2f);
                         }
-                        if (f.region == Reactions.Region.Goryeo && now > nextLantern)   // 연등회: 아래에서 등이 천천히 떠오른다
+                        if (f.region == Reactions.Region.Goryeo && WorldBeat.Due(ref nextLantern, now, .4f, .9f, 43, out var rl))   // 연등회: 아래에서 등이 천천히 떠오른다
                         {
-                            nextLantern = now + UnityEngine.Random.Range(.4f, .9f);
-                            lanterns.Add(new Lantern { p = new Vector2(UnityEngine.Random.Range(20f, vw - 20f), vh + 6f), born = now, life = UnityEngine.Random.Range(7f, 10f), sway = UnityEngine.Random.value * 6f });
+                            lanterns.Add(new Lantern { p = new Vector2(rl.Range(20f, vw - 20f), vh + 6f), born = now, life = rl.Range(7f, 10f), sway = rl.value * 6f });
                         }
                     }
                     var old = GUI.color;

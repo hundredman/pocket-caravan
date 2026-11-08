@@ -25,6 +25,7 @@ namespace PocketCaravan
             public Vector3 target; public float wait, speed, anim; public bool bird;
             public Sprite graze; public bool grazing;   // 10/25 순록: 멈춰 있을 때 고개 숙여 풀(이끼) 뜯기
             public Rect area;
+            public int id; public Vector3 flee;   // 11/08 온라인: 세상 시각으로 정한 자리(WorldWander) + 내 화면에서만 놀라 피한 만큼
         }
 
         readonly Dictionary<string, MapLife> life = new Dictionary<string, MapLife>();
@@ -289,6 +290,7 @@ namespace PocketCaravan
                     c.t.position = RandomIn(area);
                     c.target = c.t.position; c.wait = UnityEngine.Random.Range(0f, 3f);
                     c.speed = c.bird ? 2.2f : 0.9f;
+                    c.id = critters.Count * 131 + g.kind.Length * 7 + g.x0 * 3 + g.y0;   // 맵 데이터 순서로 정해져 모두 같은 번호
                     critters.Add(c);
                 }
             }
@@ -357,6 +359,7 @@ namespace PocketCaravan
         void MoveCritters(float dt)
         {
             var player = MapRoot.Current != null ? FindAnyObjectByType<PlayerMotor>() : null;
+            if (WorldClock.Active) { MoveCrittersOnline(dt, player); return; }
             foreach (var c in critters)
             {
                 // 새는 플레이어가 가까이 오면 날아오르듯 멀리 깡충 도망
@@ -377,6 +380,34 @@ namespace PocketCaravan
                 if (Mathf.Abs(to.x) > 0.01f) c.sr.flipX = to.x < 0f;
                 c.anim += dt * (c.bird ? 8f : 5f);
                 c.sr.sprite = c.frames[(int)c.anim % c.frames.Length];
+            }
+        }
+
+        /// <summary>
+        /// 11/08 기우: 온라인에선 동물 자리를 세상 시각으로 정해 같은 맵 사람은 같은 곳에서 본다 (새 3.5초·짐승 6초마다 새 목적지).
+        /// 새가 놀라 달아나는 건 내 화면에서만 잠깐 비켰다가 제자리로 돌아온다.
+        /// </summary>
+        void MoveCrittersOnline(float dt, PlayerMotor player)
+        {
+            double t = WorldBeat.Seconds;
+            foreach (var c in critters)
+            {
+                var at = WorldWander.At(c.area, c.id, c.speed, c.bird ? 3.5f : 6f, t, out bool moving, out float dx, out bool rest);
+                if (c.bird && player != null)
+                {
+                    Vector3 away = (at + c.flee) - player.transform.position; away.z = 0f;
+                    if (away.magnitude < 1.6f) c.flee += (away.sqrMagnitude > 1e-4f ? away.normalized : Vector3.up) * 2.5f;
+                }
+                c.flee = Vector3.MoveTowards(c.flee, Vector3.zero, dt * 0.8f);
+                bool fleeing = c.flee.sqrMagnitude > 0.01f;
+                c.t.position = at + c.flee;
+                if (moving || fleeing)
+                {
+                    if (Mathf.Abs(dx) > 0.01f) c.sr.flipX = dx < 0f;
+                    c.anim += dt * (c.bird ? 8f : 5f);
+                    c.sr.sprite = c.frames[(int)c.anim % c.frames.Length];
+                }
+                else c.sr.sprite = rest && c.graze != null ? c.graze : c.frames[0];
             }
         }
 

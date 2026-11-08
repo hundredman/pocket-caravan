@@ -261,7 +261,15 @@ namespace PocketCaravan
                 a.anim.walking = p.m || dist > 0.05f;
                 if (p.m) a.emote = null;   // 걷기 시작하면 리액션은 멈춘다
                 ApplyEmote(a);
-                VehicleLook.Draw(ref a.vehicleSr, ref a.trail, a.root.transform, a.sr, a.vehicle, new Vector2(a.anim.facing.x, a.anim.facing.y), a.anim.walking);
+                if (p.s && a.emote == null)
+                {   // 11/08 기우: 앉아 있으면 그 사람 화면과 같은 높이·눌림으로 앞을 보고 앉힌다
+                    var bt = a.anim.transform;
+                    float sq = p.sq > 0.3f && p.sq < 1.5f ? p.sq : 1f;
+                    bt.localPosition = a.bodyPos + new Vector3(0f, Mathf.Clamp(p.sy, -1f, 1f), 0f);
+                    bt.localScale = new Vector3(a.bodyScale.x * (sq < 0.99f ? 1.04f : 1f), a.bodyScale.y * sq, a.bodyScale.z);
+                    a.anim.facing = Vector2Int.down; a.anim.walking = false;
+                }
+                VehicleLook.Draw(ref a.vehicleSr, ref a.trail, a.root.transform, a.sr, a.vehicle, new Vector2(a.anim.facing.x, a.anim.facing.y), a.anim.walking, p.ld);
             }
         }
 

@@ -31,6 +31,7 @@ namespace PocketCaravan
 
         void Update()
         {
+            if (path.Count >= 2 && WorldClock.Active) { OnlineUpdate(); return; }
             if (path.Count < 2 || UIState.Blocking) { SetAnim(Vector2.zero); return; }
             if (pause > 0f) { pause -= Time.deltaTime; SetAnim(Vector2.zero); return; }
             // 플레이어가 바로 앞에 있으면 멈춰서 기다림
@@ -48,6 +49,18 @@ namespace PocketCaravan
             Vector3 move = Vector3.ClampMagnitude(d, speed * Time.deltaTime);
             transform.position += move;
             SetAnim(d);
+        }
+
+        /// <summary>
+        /// 11/08 기우: 온라인에선 서버 세상 시각으로 길 위 자리를 정해 모두 같은 곳에 보인다 (끝에서 2.5초 쉼).
+        /// 나와 이야기하는 동안만 내 화면에서 멈추고, 끝나면 그 자리로 따라붙는다.
+        /// </summary>
+        void OnlineUpdate()
+        {
+            if (pause > 0f) { if (!UIState.Blocking) pause -= Time.deltaTime; SetAnim(Vector2.zero); return; }
+            var goal = PathClock.PingPong(path, speed, 2.5f, PathClock.Seconds + PathClock.Offset(path, traderIndex), out _);
+            Vector3 moved = PathClock.Follow(transform, goal, speed);
+            SetAnim(moved.sqrMagnitude > 1e-8f ? (Vector2)moved : Vector2.zero);
         }
 
         void SetAnim(Vector2 d)

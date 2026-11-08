@@ -21,7 +21,7 @@ namespace PocketCaravan
         Transform festival;
         readonly List<(SpriteRenderer sr, Vector3 v, float born, float life)> sparks = new List<(SpriteRenderer, Vector3, float, float)>();
         Sprite spark;
-        float nextBurst;
+        double nextBurst;   // 11/08 온라인이면 세상 시각 칸 (WorldBeat)
         AudioSource sfx;
         AudioClip pop, thanks;
 
@@ -117,11 +117,10 @@ namespace PocketCaravan
                 var shop = festival.GetComponentInChildren<NorthSpot>(true);
                 if (shop != null && shop.gameObject.activeSelf != on) shop.gameObject.SetActive(on);
             }
-            if (on && Time.time >= nextBurst)
+            if (on && WorldBeat.Due(ref nextBurst, Time.time, 0.6f, 1.4f, 61, out var rr))   // 11/08 온라인: 모두 같은 때 같은 자리에 불꽃
             {
-                nextBurst = Time.time + Random.Range(0.6f, 1.4f);
-                var c = festival.position + new Vector3(Random.Range(-7f, 7f), Random.Range(4f, 8f), 0f);
-                var col = Colors[Random.Range(0, Colors.Length)];
+                var c = festival.position + new Vector3(rr.Range(-7f, 7f), rr.Range(4f, 8f), 0f);
+                var col = Colors[rr.Range(0, Colors.Length)];
                 for (int k = 0; k < 18; k++)
                 {
                     float a = k / 18f * Mathf.PI * 2f;
@@ -129,7 +128,7 @@ namespace PocketCaravan
                     go.transform.position = c;
                     var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = spark; sr.sortingOrder = 36; sr.color = col;
                     go.transform.localScale = new Vector3(2f, 2f, 1f);
-                    sparks.Add((sr, new Vector3(Mathf.Cos(a), Mathf.Sin(a), 0f) * Random.Range(2f, 3.2f), Time.time, Random.Range(0.9f, 1.4f)));
+                    sparks.Add((sr, new Vector3(Mathf.Cos(a), Mathf.Sin(a), 0f) * rr.Range(2f, 3.2f), Time.time, rr.Range(0.9f, 1.4f)));
                 }
                 if (!AudioManager.Muted) sfx.PlayOneShot(pop, 0.35f);
             }

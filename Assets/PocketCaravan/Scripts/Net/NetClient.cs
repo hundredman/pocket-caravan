@@ -47,6 +47,9 @@ namespace PocketCaravan
             public string name;
             public string look;
             public string veh;      // 11/08 운반 수단 (join · room에만 온다)
+            public bool s;          // 11/08 앉기 (pos · join · room)
+            public float sy, sq;
+            public int ld;          // 11/08 짐 상자 수
             public int online;
             public string why;
             public string map;
@@ -153,6 +156,9 @@ namespace PocketCaravan
             public float x, y;
             public int fx, fy;
             public bool m;
+            public bool s;          // 11/08 앉아 있음
+            public float sy, sq;    // 11/08 앉은 모습: 그림이 오르내린 높이 · 세로 눌림 비율 (지역마다 자리 모양이 달라서)
+            public int ld;          // 11/08 손수레 짐 상자 수 (0~3)
             [NonSerialized] public float heardAt;
         }
 
@@ -160,7 +166,7 @@ namespace PocketCaravan
         [Serializable] class HelloOut { public string t = "hello"; public int v = Protocol; public string name; public string look; public string key; public string pass; public int since; public bool snap = true; }   // snap: 공유 장터 재고를 통째로 받는다(11/08)
         /// <summary>11/08: look도 싣는다. 시작 화면에서 로그인하면 hello의 look은 아직 고르기 전 기본 출신이라, 맵에 들어갈 때 고친다</summary>
         [Serializable] class EnterOut { public string t = "enter"; public string map; public string look; public string veh; }   // veh: 11/08 운반 수단
-        [Serializable] class PosOut { public string t = "pos"; public float x, y; public int fx, fy; public bool m; }
+        [Serializable] class PosOut { public string t = "pos"; public float x, y; public int fx, fy; public bool m; public bool s; public float sy, sq; public int ld; }   // s·sy·sq: 11/08 앉기, ld: 짐 상자 수
         [Serializable] class SayOut { public string t = "say"; public string text; }
         [Serializable] class EmoteOut { public string t = "emote"; public string e; public string name; }
 
@@ -191,6 +197,7 @@ namespace PocketCaravan
         string sentMap;
         /// <summary>서버에 알린 내 생김새(출신 아이디). 출신이 바뀌면(새 게임·저장 불러오기) 같은 맵이어도 다시 알린다</summary>
         string sentLook, sentVeh;
+        bool lastSit; int lastLd; float restBodyY, restBodyScaleY = 1f;   // 11/08 앉기
         bool waitingRoom;
         float lastPosAt;
         Vector2 lastPos;
@@ -487,12 +494,22 @@ namespace PocketCaravan
             Vector2 pos = pc.transform.position;
             var facing = pc.anim != null ? pc.anim.facing : lastFacing;
             bool moving = pc.Motor != null && pc.Motor.IsMoving;
+            // 11/08 기우: 앉기. 서 있을 때의 그림 자리·크기를 기억해 두고, 앉으면 그 차이를 함께 보낸다
+            bool sit = SeatRest.Active;
+            float sy = 0f, sq = 1f;
+            var body = pc.anim != null ? pc.anim.transform : null;
+            if (body != null)
+            {
+                if (!sit) { restBodyY = body.localPosition.y; restBodyScaleY = Mathf.Max(0.01f, body.localScale.y); }
+                else { sy = body.localPosition.y - restBodyY; sq = body.localScale.y / restBodyScaleY; }
+            }
+            int ld = gm != null && gm.Player != null ? VehicleLook.Crates(gm.Player.LoadRatio) : 0;   // 11/08 짐 상자 수
             float since = Time.unscaledTime - lastPosAt;
-            bool changed = (pos - lastPos).sqrMagnitude > 0.0004f || facing != lastFacing || moving != lastMoving;
+            bool changed = (pos - lastPos).sqrMagnitude > 0.0004f || facing != lastFacing || moving != lastMoving || sit != lastSit || ld != lastLd;
             if (since < 0.1f || (!changed && since < 1f)) return;
             lastPosAt = Time.unscaledTime;
-            lastPos = pos; lastFacing = facing; lastMoving = moving;
-            Send(new PosOut { x = pos.x, y = pos.y, fx = facing.x, fy = facing.y, m = moving });
+            lastPos = pos; lastFacing = facing; lastMoving = moving; lastSit = sit; lastLd = ld;
+            Send(new PosOut { x = pos.x, y = pos.y, fx = facing.x, fy = facing.y, m = moving, s = sit, sy = sit ? sy : 0f, sq = sit ? sq : 1f, ld = ld });
         }
 
         void Handle(Msg msg)
@@ -535,6 +552,8 @@ namespace PocketCaravan
                     if (!string.IsNullOrEmpty(msg.look)) peer.look = msg.look;
                     if (msg.t == "join") peer.veh = msg.veh ?? "";   // 운반 수단은 join(들어옴·바꿈)에만 실려 온다
                     peer.x = msg.x; peer.y = msg.y; peer.fx = msg.fx; peer.fy = msg.fy; peer.m = msg.m;
+                    peer.s = msg.s; peer.sy = msg.sy; peer.sq = msg.sq > 0f ? msg.sq : 1f;   // 11/08 앉기 (예전 서버면 늘 서 있음)
+                    peer.ld = msg.ld;   // 11/08 짐 상자 수
                     peer.heardAt = Time.unscaledTime;
                     break;
                 case "leave":

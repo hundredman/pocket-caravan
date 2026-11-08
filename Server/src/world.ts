@@ -22,6 +22,8 @@
  *   맵에 들어갈 때(출신이 바뀌면 같은 맵에 다시 enter) 고친다. 같은 맵 사람들에게는 join으로 새 생김새가 간다
  *   (2026-11-08) enter에 "veh"(운반 수단 아이디: handcart · north_sled · arabia_camel, 걷기면 "")도 실을 수 있다.
  *   room · join의 플레이어 정보에 "veh"가 함께 가고, 게임이 그 사람 옆에 손수레·썰매·낙타를 그린다. 바꾸면 같은 맵에 다시 enter.
+ *   (2026-11-08) pos에 손수레 짐 상자 수 "ld"(0~3)도 싣는다. pos · room · join으로 간다.
+ *   (2026-11-08) pos에 앉기 "s"(true/false)와 앉은 모습 "sy"(그림 높이 -1~1)·"sq"(세로 눌림 0.3~1.5)를 실을 수 있다. pos · room · join으로 간다.
  *  6단계 (2026-10-30) 끊겨도 다시 붙기 · 서버 보호
  *   hello에 "key"(게임을 켤 때마다 새로 만드는 비밀 글자)를 실어 보낸다. 같은 key로 다시 들어오면
  *   예전 접속을 닫고 예전 번호(id)를 그대로 준다. welcome의 "name"이 실제로 쓰인 이름이다(겹치면 "윤채(2)").
@@ -188,6 +190,12 @@ interface Player {
   fx: number;
   fy: number;
   m: boolean;
+  /** 앉아 있음 · 앉은 모습(그림 높이 sy, 세로 눌림 sq) — 11/08 */
+  s?: boolean;
+  sy?: number;
+  sq?: number;
+  /** 손수레 짐 상자 수 0~3 — 11/08 */
+  ld?: number;
   /** 마지막으로 메시지를 받은 시각 (ms) */
   heard: number;
   /** 서버가 닫기로 한 접속 (닫히는 중) */
@@ -466,8 +474,12 @@ export class WorldRoom extends DurableObject<Env> {
         me.fx = dir(msg.fx);
         me.fy = dir(msg.fy);
         me.m = msg.m === true;
+        me.s = msg.s === true;   // 11/08 앉기
+        me.sy = me.s ? clampNum(msg.sy, -1, 1, 0) : 0;
+        me.sq = me.s ? clampNum(msg.sq, 0.3, 1.5, 1) : 1;
+        me.ld = Number.isInteger(msg.ld) ? Math.min(3, Math.max(0, msg.ld as number)) : 0;   // 11/08 짐 상자 수
         ws.serializeAttachment(me);
-        this.toMap(me.map, { t: "pos", id: me.id, x: me.x, y: me.y, fx: me.fx, fy: me.fy, m: me.m }, ws);
+        this.toMap(me.map, { t: "pos", id: me.id, x: me.x, y: me.y, fx: me.fx, fy: me.fy, m: me.m, s: me.s, sy: me.sy, sq: me.sq, ld: me.ld }, ws);
         return;
       }
       case "say": {
@@ -923,7 +935,7 @@ export class WorldRoom extends DurableObject<Env> {
 }
 
 function publicInfo(p: Player) {
-  return { id: p.id, name: p.name, look: p.look, veh: p.veh ?? "", x: p.x, y: p.y, fx: p.fx, fy: p.fy, m: p.m };
+  return { id: p.id, name: p.name, look: p.look, veh: p.veh ?? "", x: p.x, y: p.y, fx: p.fx, fy: p.fy, m: p.m, s: p.s ?? false, sy: p.sy ?? 0, sq: p.sq ?? 1, ld: p.ld ?? 0 };
 }
 
 function send(ws: WebSocket, msg: unknown): void {
@@ -1000,6 +1012,11 @@ function cleanKey(key: unknown): string {
 /** 맵·출신 아이디: 영문·숫자·밑줄만, 64자까지 (고려 일부 맵은 Gaegyeong처럼 대문자로 시작) */
 function cleanMap(map: unknown): string {
   return typeof map === "string" && /^[A-Za-z0-9_]{1,64}$/.test(map) ? map : "";
+}
+
+/** 11/08 앉은 모습 숫자: 범위 밖·숫자 아님이면 기본값, 소수 둘째 자리까지 */
+function clampNum(v: unknown, lo: number, hi: number, def: number): number {
+  return typeof v === "number" && Number.isFinite(v) ? Math.round(Math.min(hi, Math.max(lo, v)) * 100) / 100 : def;
 }
 
 /** 좌표: 유한한 숫자만, 소수 둘째 자리까지 */

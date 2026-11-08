@@ -59,6 +59,16 @@ namespace PocketCaravan
             }
             if (hold) { anim.walking = false; return; }
 
+            if (WorldClock.Active)
+            {   // 11/08 기우: 온라인에선 서버 세상 시각으로 순찰길 위 자리를 정해 모두 같은 곳에 보인다 (멈춰 둘러보기 없이 일정하게).
+                // 내가 다가가거나 창을 열면 내 화면에서만 잠깐 멈췄다가, 떠나면 그 자리로 따라붙는다.
+                var goal = PathClock.Loop(path, speed, PathClock.Seconds + PathClock.Offset(path, 7));
+                Vector3 moved = PathClock.Follow(transform, goal, speed);
+                anim.walking = moved.sqrMagnitude > 1e-8f;
+                if (anim.walking) anim.facing = PathClock.Facing(moved);
+                return;
+            }
+
             if (wait > 0f)
             {
                 wait -= Time.deltaTime;

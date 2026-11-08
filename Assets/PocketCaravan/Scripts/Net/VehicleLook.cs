@@ -24,7 +24,10 @@ namespace PocketCaravan
         /// 다른 사람의 운반 수단 그림 하나를 그 사람 그림 옆에 둔다. facing은 그 사람이 보는 쪽.
         /// 손수레·썰매는 내 것과 같은 자리 규칙, 낙타는 지나온 길을 따라온다.
         /// </summary>
-        public static void Draw(ref SpriteRenderer sr, ref VehicleTrail trail, Transform owner, SpriteRenderer body, string vehicle, Vector2 facing, bool moving)
+        /// <summary>짐 상자 수 (내 손수레 CarryVisual과 같은 기준: 짐 비율이 0 넘으면 1개, 1/3 넘으면 2개, 2/3 넘으면 3개)</summary>
+        public static int Crates(float loadRatio) => (loadRatio > 0f ? 1 : 0) + (loadRatio > 1f / 3f ? 1 : 0) + (loadRatio > 2f / 3f ? 1 : 0);
+
+        public static void Draw(ref SpriteRenderer sr, ref VehicleTrail trail, Transform owner, SpriteRenderer body, string vehicle, Vector2 facing, bool moving, int crates = 0)
         {
             if (string.IsNullOrEmpty(vehicle) || owner == null)
             {
@@ -39,6 +42,7 @@ namespace PocketCaravan
                 if (body != null) { sr.sortingLayerID = body.sortingLayerID; sr.sharedMaterial = body.sharedMaterial; }
             }
             sr.gameObject.SetActive(true);
+            if (vehicle != "north_sled") { var old = sr.GetComponent<RemoteSledFx>(); if (old != null) Object.Destroy(old); }   // 썰매에서 바꿨으면 방울 소리 끄기
             if (facing.sqrMagnitude < 0.01f) facing = Vector2.down;
             int baseOrder = body != null ? body.sortingOrder : 10;
             var tr = sr.transform;
@@ -62,6 +66,9 @@ namespace PocketCaravan
                     tr.localScale = Vector3.one; tr.localRotation = Quaternion.identity;
                     tr.localPosition = side ? new Vector3(-facing.x * 1.15f, -0.45f, 0f) : -(Vector3)(facing * 0.95f) + new Vector3(0f, -0.15f, 0f);
                     sr.sortingOrder = facing.y > 0 ? baseOrder + 1 : baseOrder - 2;
+                    var fx = sr.GetComponent<RemoteSledFx>();   // 11/08 방울 소리·눈가루도
+                    if (fx == null) fx = sr.gameObject.AddComponent<RemoteSledFx>();
+                    fx.Tick(owner.position, facing, moving);
                     break;
                 }
                 default:   // handcart (모르는 운반 수단도 손수레로)
@@ -72,6 +79,26 @@ namespace PocketCaravan
                     tr.localRotation = Quaternion.Euler(0, 0, -Mathf.Atan2(facing.x, facing.y) * Mathf.Rad2Deg);
                     sr.sortingOrder = baseOrder - 2;
                     break;
+            }
+            // 11/08 손수레 짐 상자 (내 손수레와 같은 자리·크기). 다른 운반 수단엔 안 그린다
+            bool cart = vehicle != "arabia_camel" && vehicle != "north_sled";
+            for (int i = 0; i < 3; i++)
+            {
+                var c = tr.Find("짐 " + i);
+                if (c == null)
+                {
+                    if (!cart || i >= crates) continue;
+                    c = new GameObject("짐 " + i).transform;
+                    c.SetParent(tr, false);
+                    c.localPosition = new Vector3((i - 1) * .28f, -.14f, 0);
+                    c.localScale = Vector3.one * .42f;
+                    var cs = c.gameObject.AddComponent<SpriteRenderer>();
+                    cs.sprite = Resources.Load<Sprite>("Transport/crate");
+                    cs.sortingLayerID = sr.sortingLayerID; cs.sharedMaterial = sr.sharedMaterial;
+                }
+                var csr = c.GetComponent<SpriteRenderer>();
+                csr.enabled = cart && i < crates;
+                csr.sortingOrder = sr.sortingOrder + 1;
             }
         }
     }
@@ -114,5 +141,58 @@ namespace PocketCaravan
             if (Mathf.Abs(dx) > 0.002f) FaceRight = dx > 0;   // 위·아래로만 가거나 서 있으면 마지막 좌우 방향 유지
             return pos;
         }
+    }
+
+    /// <summary>
+    /// 다른 사람 순록 썰매의 방울 소리·눈가루 (11/08 기우). 내 썰매(NorthTravel)와 같은 소리·같은 눈가루.
+    /// 소리는 나와 가까울수록 크게 (8칸 밖이면 안 들림), 북유럽 땅에서 달릴 때만 눈가루.
+    /// </summary>
+    public sealed class RemoteSledFx : MonoBehaviour
+    {
+        AudioSource bells;
+        Sprite puff;
+        float puffAt, speed;
+        Vector3 last; bool hasLast;
+        readonly System.Collections.Generic.List<(SpriteRenderer sr, float born)> puffs = new System.Collections.Generic.List<(SpriteRenderer, float)>();
+
+        public void Tick(Vector3 owner, Vector2 facing, bool moving)
+        {
+            if (bells == null)
+            {
+                bells = gameObject.AddComponent<AudioSource>();
+                bells.clip = NorthTravel.BellsClip; bells.loop = true; bells.volume = 0f; bells.playOnAwake = false; bells.spatialBlend = 0f;
+                puff = NorthUtil.Pixel(new Color32(250, 250, 255, 255), 2, 2);
+            }
+            float dt = Mathf.Max(Time.deltaTime, 1e-4f);
+            if (hasLast) speed = Mathf.Lerp(speed, Vector2.Distance(owner, last) / dt, 0.2f);
+            last = owner; hasLast = true;
+            var me = PlayerController.Instance;
+            float dist = me != null ? Vector2.Distance(me.transform.position, owner) : 99f;
+            float near = Mathf.Clamp01(1f - dist / 8f);
+            float target = moving && speed > 0.3f && !AudioManager.Muted ? Mathf.Clamp01(speed / 5f) * 0.25f * near : 0f;
+            bells.volume = Mathf.MoveTowards(bells.volume, target, Time.deltaTime * 0.8f);
+            if (bells.volume > 0f && !bells.isPlaying) bells.Play();
+            else if (bells.volume <= 0f && bells.isPlaying) bells.Stop();
+
+            if (NorthUtil.InNorth && moving && speed > 1f && Time.time >= puffAt && puff != null)
+            {
+                puffAt = Time.time + 0.06f;
+                var go = new GameObject("Sled Puff");
+                go.transform.position = transform.position - (Vector3)(facing * 0.4f) + new Vector3(Random.Range(-0.3f, 0.3f), Random.Range(-0.2f, 0.1f), 0f);
+                var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = puff; sr.sortingOrder = 7;
+                puffs.Add((sr, Time.time));
+            }
+            for (int i = puffs.Count - 1; i >= 0; i--)
+            {
+                var (sr, born) = puffs[i];
+                float age = Time.time - born;
+                if (sr == null || age > 0.6f) { if (sr != null) Destroy(sr.gameObject); puffs.RemoveAt(i); continue; }
+                sr.color = new Color(1f, 1f, 1f, 1f - age / 0.6f);
+                sr.transform.position += new Vector3(0f, Time.deltaTime * 0.6f, 0f);
+            }
+        }
+
+        void OnDisable() { if (bells != null) bells.Stop(); foreach (var (sr, _) in puffs) if (sr != null) Destroy(sr.gameObject); puffs.Clear(); }
+        void OnDestroy() => OnDisable();
     }
 }

@@ -18,7 +18,7 @@ namespace PocketCaravan
     {
         class Pigeon { public SpriteRenderer r; public Vector3 home; public float flyT = -1f, back, next; public int frame; }
         class Gull { public SpriteRenderer r; public float speed, y, phase; public bool active; public float wait; }
-        class Boat { public SpriteRenderer r; public Vector3 a, b; public float t, speed; public int dir = 1; }
+        class Boat { public SpriteRenderer r; public Vector3 a, b; public float t, speed, start; public int dir = 1; }   // start: 11/08 온라인 출발 자리
         class Puff { public SpriteRenderer r; public Vector3 from; public float age; }
         class Smoke { public Vector3 at; public float next; }
         class Lamp { public SpriteRenderer glow; }
@@ -84,6 +84,7 @@ namespace PocketCaravan
                 var a = VeniceUtil.Cell(lane[i], lane[i + 1]);
                 var b = VeniceUtil.Cell(lane[i + 2], lane[i + 3]);
                 boats.Add(new Boat { r = Make("gondola", a, 4, "곤돌라"), a = a, b = b, t = (float)rng.NextDouble(), speed = 1.1f + (float)rng.NextDouble() * .4f });
+                boats[boats.Count - 1].start = boats[boats.Count - 1].t;   // 11/08 온라인 출발 자리
             }
             foreach (var p in VeniceData.Points(data.smoke))
                 smokes.Add(new Smoke { at = VeniceUtil.Cell(p.x, p.y) + new Vector3(0f, .6f, 0f), next = (float)rng.NextDouble() });
@@ -170,7 +171,15 @@ namespace PocketCaravan
                     continue;
                 }
                 if ((me - p.home).sqrMagnitude < 4f) { p.flyT = 0f; continue; }
-                if (time >= p.next)
+                if (WorldClock.Active)
+                {   // 11/08 기우: 온라인에선 쪼기·고개 돌리기도 세상 시각으로 (모두 같은 몸짓)
+                    long k = (long)System.Math.Floor(WorldBeat.Seconds / .9 + p.home.x * 1.7 + p.home.y * 2.3);
+                    uint h = unchecked((uint)k * 2654435761u ^ (uint)Mathf.RoundToInt(p.home.x * 100f) * 40503u);
+                    p.frame = (int)(h & 1u);
+                    p.r.sprite = VeniceUtil.Sprite("pigeon_" + p.frame);
+                    p.r.flipX = (h & 2u) != 0;
+                }
+                else if (time >= p.next)
                 {
                     p.frame = Random.value < .5f ? 1 : 0;
                     p.r.sprite = VeniceUtil.Sprite("pigeon_" + p.frame);
@@ -183,9 +192,19 @@ namespace PocketCaravan
             foreach (var b in boats)
             {
                 float len = Mathf.Max(1f, Vector3.Distance(b.a, b.b));
-                b.t += b.dir * b.speed * dt / len;
-                if (b.t > 1f) { b.t = 1f; b.dir = -1; }
-                if (b.t < 0f) { b.t = 0f; b.dir = 1; }
+                if (WorldClock.Active)
+                {   // 11/08 기우: 온라인에선 세상 시각으로 뱃길 위 자리를 정해 모두 같은 곳에 보인다 (출발 자리는 맵마다 정해진 난수 그대로)
+                    double cycle = 2.0 * len / b.speed;
+                    double u = ((WorldBeat.Seconds + b.start * cycle) % cycle) / cycle * 2.0;
+                    b.dir = u < 1.0 ? 1 : -1;
+                    b.t = (float)(u < 1.0 ? u : 2.0 - u);
+                }
+                else
+                {
+                    b.t += b.dir * b.speed * dt / len;
+                    if (b.t > 1f) { b.t = 1f; b.dir = -1; }
+                    if (b.t < 0f) { b.t = 0f; b.dir = 1; }
+                }
                 var pos = Vector3.Lerp(b.a, b.b, b.t);
                 pos.y += Mathf.Round(Mathf.Sin(time * 2f + len) * 1f) / 16f;
                 b.r.transform.position = pos;
