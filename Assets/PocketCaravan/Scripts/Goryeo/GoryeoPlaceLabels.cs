@@ -3,8 +3,8 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// A5 scoped labels: nearby places, uncluttered labels; preserve person, interaction and quest UI.
-    /// Own-map opt-in only. Common WorldLabels is restored on disable/scene exit.
+    /// Shared fixed labels: nearby places, compact quest badges; preserve interaction and identity.
+    /// Production maps opt in via the director. WorldLabels is restored on disable/scene exit.
     /// </summary>
     public sealed class GoryeoPlaceLabels : MonoBehaviour
     {
@@ -36,7 +36,7 @@ namespace PocketCaravan
         public bool OwnsOriginal=>ownsOriginal;
         public bool OriginalEnabled=>originalEnabled;
         public void Refresh()=>Sync();
-        bool Allowed=>map!=null&&MapRoot.Current==map&&GoryeoTravelTransition.RegionOf(map.mapId)!=null&&(map.previewOnly||approvedForProduction);
+        bool Allowed=>map!=null&&MapRoot.Current==map&&(map.previewOnly||approvedForProduction);
         public static bool Nearby(Vector2 feet,Vector2 at)=>(feet-at).sqrMagnitude<=Near*Near;
         public static bool IsPlace(Interactable it)=>it is TownMarket||it is ContractBoard||it is WorkshopSpot||it is GoryeoDailyActivity||it is GoryeoPastime||it is GoryeoSeat||Inn.IsHost(it)||(it is TalkNpc&&it.GetComponent<CharacterAnimator>()==null);
         public static string LabelFor(Interactable it,Vector2 feet)
@@ -45,21 +45,8 @@ namespace PocketCaravan
             return DisplayLabel(it);
         }
         // Person sprites use occupations, while wells/boards/workshops keep their facility labels.
-        static string DisplayLabel(Interactable it)
-        {
-            if(it is TownMarket)return "상인";
-            if(it is GoryeoPastime)return "낚시꾼";
-            return ShortName(it.DisplayName);
-        }
-        // Display aliases only: original DisplayName remains the social/save/quest identity.
-        public static string ShortName(string text)
-        {
-            text=PlainName(text);
-            if(text=="나루 우물가 아낙")return "아낙";
-            foreach(var prefix in new[]{"닥나무 마을 ","나루 마을 ","예성 나루 ","나루 ","장단 ","개경 ","송악 ","닥목 ","산록 "})
-                if(text!=null&&text.StartsWith(prefix,System.StringComparison.Ordinal))return text.Substring(prefix.Length);
-            return text;
-        }
+        static string DisplayLabel(Interactable it)=>WorldDisplayNames.For(it);
+        public static string ShortName(string text)=>WorldDisplayNames.ShortName(text);
         public Rect FriendHintRect { get; private set; }
         public void DrawFriendHint(string hearts)
         {

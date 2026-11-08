@@ -7,7 +7,7 @@ namespace PocketCaravan
     /// 2026-10-30 시작 이야기 + 조작 튜토리얼 (너구리 · 고려 개경상인). 북유럽·베네치아·아라비아 Intro와 같은 흐름,
     /// 대사는 「고려 한 바퀴」 초안(Docs/IntroStory-2026-10-30.md) 프롤로그·0장 「길 떠날 채비」를 따랐다(1~5장은 기존 Q1 그대로).
     /// 1) 나루에 처음 들어오면 프롤로그 자막("나루에는 아침마다 짐이 내린다…")
-    /// 2) 바로 옆 선착장 일꾼에게 Space로 말 걸기 → 달리기 · Tab · Q · 보따리(I) · 지도(M) · 사기 · 팔기 · 장부(L)
+    /// 2) 바로 옆 선착장 일꾼에게 Space로 말 걸기 → 달리기 · Tab · 보따리(I) · 지도(M) · Q · 사기 · 팔기 · 장부(L)
     /// 3) 일꾼에게 돌아가면 "같은 물건도 필요한 곳에 가져가면 값이 달라진다" → 나루 촌장(1장 q1_naru)으로 보냄
     /// 진행은 GameManager 진행 메모 "goryeo:intro". 새 파일만 더했고 기존 고려 파일·씬·퀘스트는 그대로다.
     /// 그림은 같은 맵의 뱃사공 그림을 실행 중에 빌려 쓴다(새 아트 없음).
@@ -16,18 +16,16 @@ namespace PocketCaravan
     public class GoryeoIntro : MonoBehaviour
     {
         const string Home = "Naru";
-        const int MapH = 84;   // Naru.json 높이 (맵 칸은 위가 0)
         const string FirstQuest = "q1_naru";
-        static readonly Vector2Int GuideCell = new Vector2Int(40, 33);   // 시작 자리(S0 (37,32)) 오른쪽 아래
         const string Guide = "선착장 일꾼";
 
         static readonly string[] Tasks =
         {
             "Shift를 누른 채 걸어서 달려 보기",
             "Tab을 눌러 내 상태 보기",
-            "Q를 눌러 할 일(퀘스트) 목록 보기",
             "I를 눌러 보따리(소지품) 열어 보기",
             "M을 눌러 지도 펼치고 장단 찾아보기",
+            "Q를 눌러 할 일(퀘스트) 목록 보기",
             "나루 장터에서 아무 물건이나 하나 사기",
             "산 물건을 장터에 다시 팔아 보기",
             "L을 눌러 장부에서 방금 거래 기록 확인하기",
@@ -36,12 +34,32 @@ namespace PocketCaravan
         public static bool Active => Step >= 1 && Step <= 10;
         static int Step { get => GameManager.I != null ? Mathf.RoundToInt(GameManager.I.GetMemo("goryeo:intro")) : 0; set { if (GameManager.I != null) GameManager.I.SetMemo("goryeo:intro", value); } }
         static bool Started => GameManager.I != null && GameManager.I.HasMemo("goryeo:intro");
-        static Vector3 Cell(int x, int y) => MapRoot.Current.CellCenter(new Vector3Int(x, MapH - 1 - y, 0));
+        [System.Serializable] class Anchor { public string mapId; public int width,height,x,y; }
+        // Legacy saves completed Q before I/M. Keep that completion while teaching the new order.
+        static void MigrateOrder()
+        {
+            var gm=GameManager.I;
+            if(!IsCat||gm.HasMemo("goryeo:intro_order"))return;
+            if(Started)
+            {
+                int old=Step;
+                if(old==5||old==6){gm.SetMemo("goryeo:intro_q_done",1);Step=old-1;}
+            }
+            gm.SetMemo("goryeo:intro_order",2);
+        }
+        static bool GuidePosition(out Vector3 position)
+        {
+            position=default;
+            var asset=Resources.Load<TextAsset>("Goryeo/Intro");var map=MapRoot.Current;
+            if(asset==null||map==null)return false;
+            var a=JsonUtility.FromJson<Anchor>(asset.text);var grid=map.GetComponent<RoadGrid>();
+            if(a==null||a.mapId!=map.mapId||grid==null||grid.width!=a.width||grid.height!=a.height)return false;
+            position=map.CellCenter(new Vector3Int(a.x,a.height-1-a.y,0));return true;
+        }
         static bool InGoryeo => GoryeoTravelTransition.RegionOf(MapRoot.Current != null ? MapRoot.Current.mapId : null) != null;
 
         Transform root;
         float runTime;
-        static GUIStyle style;
 
         class Person : Interactable
         {
@@ -94,10 +112,12 @@ namespace PocketCaravan
             if (root != null) Destroy(root.gameObject);
             root = null;
             if (map != Home || !IsCat) return;
+            MigrateOrder();
+            if(!GuidePosition(out var position)){Debug.LogError("Goryeo tutorial guide anchor missing or stale");return;}
             root = new GameObject("Goryeo Intro").transform;
             var go = new GameObject("Intro Guide");
             go.transform.SetParent(root, false);
-            go.transform.position = Cell(GuideCell.x, GuideCell.y);
+            go.transform.position = position;
             var p = go.AddComponent<Person>();
             p.blocksMovement = false;
             p.label = () => Step == 1 || Step == 10 ? Guide + " !" : Guide;
@@ -171,16 +191,18 @@ namespace PocketCaravan
         {
             if (Step != task + 2) return;
             Step = task + 3;
+            if(Step==6 && GameManager.I.GetMemo("goryeo:intro_q_done")>0)Step=7;
             Sfx.Play("coin");
-            // The persistent task card is the single next-step instruction.
+            Notify.Show(Step<=9?$"잘했어요! 다음: {Tasks[Step-2]}":"다 했어요! 선착장 일꾼에게 돌아가 말을 걸어 보세요.",4f);
         }
 
-        void OnInventory() { if (IsCat) Done(3); }
+        void OnInventory() { if (IsCat) Done(2); }
         void OnBought(ItemData item, TownData town, int price) { if (IsCat) Done(5); }
         void OnSold(ItemData item, TownData town, int price, int profit) { if (IsCat) Done(6); }
 
         void Update()
         {
+            if(IsCat)MigrateOrder();
             int s = Step;
             if (s < 2 || s > 9 || !IsCat || GameManager.I == null) return;
             if (s == 2 && !UIState.Blocking && InputReader.Run() && InputReader.MoveVector().sqrMagnitude > 0.1f)
@@ -189,51 +211,26 @@ namespace PocketCaravan
                 if (runTime > 1f) { runTime = 0f; Done(0); }
             }
             else if (s == 3 && InputReader.StatusPressed()) Done(1);
-            else if (s == 4 && InputReader.QuestLogPressed()) Done(2);
-            else if (s == 6 && InputReader.MapPressed()) Done(4);
+            else if (s == 6 && InputReader.QuestLogPressed()) Done(4);
+            else if (s == 5 && InputReader.MapPressed()) Done(3);
             else if (s == 9 && InputReader.LedgerPressed()) Done(7);
         }
 
         public Rect GuideRect { get; private set; }
         public string GuideText { get; private set; }
-        public static bool Showing => Active && !UIState.Blocking && IsCat && InGoryeo;
-        static GUIStyle GuideStyle
-        {
-            get
-            {
-                if(style==null||style.font!=UIStyle.SmallFont||style.fontSize!=UIStyle.SmallSize)
-                    style=new GUIStyle() { font=UIStyle.SmallFont,fontSize=UIStyle.SmallSize,
-                        alignment=TextAnchor.UpperLeft,wordWrap=true,richText=false,
-                        clipping=TextClipping.Clip,padding=new RectOffset(0,0,0,0) };
-                return style;
-            }
-        }
-        static string TaskText(int step) => step==1?"선착장 일꾼에게 말 걸기 (Space)":step==10?"선착장 일꾼에게 돌아가 말 걸기 (Space)":Tasks[step-2];
-        // Called inside OnGUI after UIStyle.Begin, including by the common notification renderer.
-        public static Rect ReservedGuideRect
-        {
-            get
-            {
-                if(!Showing)return default;
-                const float width=168;
-                float h=30+Mathf.Ceil(GuideStyle.CalcHeight(new GUIContent(TaskText(Step)),width-16));
-                return new Rect(Mathf.Round(UIStyle.VirtualWidth-width),Mathf.Round(UIStyle.VirtualHeight-h-4-HUD.BottomReserved),width,h);
-            }
-        }
+        public static bool Showing => Active && !UIState.Blocking && !HUD.Expanded && IsCat && InGoryeo;
+        // Compatibility for older review tools and notification layout; the bottom card is retired.
+        public static Rect ReservedGuideRect => default;
         void OnGUI()
         {
+            GuideRect=default;GuideText=null;
             if(!Showing)return;
-            UIStyle.Begin();GUI.depth=-5;
-            int s=Step;var textStyle=GuideStyle;
-            string title=s==1?"처음 배우기":s==10?"배우기 완료":$"배우기 {s-1}/{Tasks.Length}";
-            string text=TaskText(s);var r=ReservedGuideRect;
-            GuideRect=r;GuideText=text;
-            ScreenZones.Mark("goryeo.intro",r);   // 11/08 위 가운데 알약·알림이 이 카드를 비키게
-            CuteUI.Card(r);
-            textStyle.normal.textColor=textStyle.hover.textColor=textStyle.active.textColor=textStyle.focused.textColor=UIStyle.Lin(CuteUI.Sub);
-            GUI.Label(new Rect(r.x+8,r.y+8,r.width-16,14),title,textStyle);
-            textStyle.normal.textColor=textStyle.hover.textColor=textStyle.active.textColor=textStyle.focused.textColor=UIStyle.Lin(CuteUI.Text);
-            GUI.Label(new Rect(r.x+8,r.y+22,r.width-16,r.height-30),text,textStyle);
+            UIStyle.Begin();
+            int s=Step;
+            string main=s==1?"선착장 일꾼에게 말 걸기":s==10?"선착장 일꾼에게 돌아가 말 걸기":CuteUI.Plain(Tasks[s-2]);
+            string where=s==1?"바로 옆 · Space":s==10?"다 했어요!":$"배우기 {s-1}/{Tasks.Length}";
+            GuideText=main;
+            CuteUI.TopPill(CuteUI.TopStack(10),false,CuteUI.Pic.Bulb,main,where,false);
         }
     }
 }

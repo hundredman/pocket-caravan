@@ -71,4 +71,4 @@
 
 [기계 판독 조사값](../Validation/Region-Consistency-Audit-2026-11-08/findings.json), [회귀](../Validation/Region-Consistency-Audit-2026-11-08/static.txt), [세계](../Validation/Region-Consistency-Audit-2026-11-08/world.txt), [저장 보존](../Validation/Region-Consistency-Audit-2026-11-08/preservation.json).
 
-최신 main/integration 포함·로컬 기록만. 이번 조사에서 새 제품 코드를 고치거나 push/PR/integration 병합을 하지는 않았다. 받은 팀 코드의 로컬 병합만 수행했다. Unity는 본편 나루 씬에서 정지해 뒀다.
+최신 main/integration 포함·로컬 기록만. 이번 조사에서 새 제품 코드를 고치거나 push/PR/integration 병합을 하지는 않았다. 후속 사용자 지시로 진행한 구현·이름 길이 결정은 [후속 기록](Region-Consistency-Fix-2026-11-08.md)을 따른다. 받은 팀 코드의 로컬 병합만 수행했다. Unity는 본편 나루 씬에서 정지해 뒀다.
