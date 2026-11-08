@@ -37,6 +37,8 @@ namespace PocketCaravan
         /// <summary>11/08 대화창이 지금 화면에 그려져 있으면 그 자리 (알림이 그 위로 비킨다)</summary>
         public static Rect? ShownRect => Time.frameCount - shownFrame <= 1 ? shownRect : (Rect?)null;
         GUIStyle wrappedChoice, wrappedChoiceOn;
+        /// <summary>11/08 키보드로 고른 선택지 (←→·↑↓로 옮기고 Space로 정한다). 예전엔 Space가 늘 첫 번째라 가운데 선택지는 마우스로만 골랐다</summary>
+        int focus;
         const float BodyHeight = 52f; // 기본 글꼴 3줄 + 레이블 패딩
 
         public int PageCount => pages.Count;
@@ -61,7 +63,7 @@ namespace PocketCaravan
             d.pages.Clear();
             d.pageIndex = 0;
             d.pageWidth = 0;
-            d.choices.Clear(); d.choiceScroll = Vector2.zero;
+            d.choices.Clear(); d.choiceScroll = Vector2.zero; d.focus = 0;
             if (choices != null) d.choices.AddRange(choices);
             d.open = true;
             d.openedFrame = Time.frameCount;
@@ -95,9 +97,20 @@ namespace PocketCaravan
                 if (InputReader.InteractPressed() || InputReader.ConfirmPressed() || InputReader.CancelPressed()) NextPage();
                 return;
             }
-            if (choices.Count == 0 && (InputReader.InteractPressed() || InputReader.ConfirmPressed() || InputReader.CancelPressed())) Close();
-            else if (choices.Count > 0 && InputReader.CancelPressed()) Pick(choices[choices.Count - 1]);   // Esc = 마지막 선택지
-            else if (choices.Count > 0 && (InputReader.InteractPressed() || InputReader.ConfirmPressed())) Pick(choices[0]);
+            if (choices.Count == 0)
+            {
+                if (InputReader.InteractPressed() || InputReader.ConfirmPressed() || InputReader.CancelPressed()) Close();
+                return;
+            }
+            // 11/08 ←→·↑↓로 고르기 (가로 단추는 왼쪽부터, 세로 목록은 위부터) · 숫자 1~9로 바로 고르기 · Space = 고른 것 · Esc = 마지막 선택지
+            var mv = InputReader.MovePressed();
+            int step = mv.x != 0 ? mv.x : -mv.y;
+            if (step != 0) { focus = (focus + step + choices.Count) % choices.Count; Sfx.Play("open", .25f); }
+            focus = Mathf.Clamp(focus, 0, choices.Count - 1);
+            int number = InputReader.NumberPressed();
+            if (number > 0 && number <= choices.Count) Pick(choices[number - 1]);
+            else if (InputReader.CancelPressed()) Pick(choices[choices.Count - 1]);
+            else if (InputReader.InteractPressed() || InputReader.ConfirmPressed()) Pick(choices[focus]);
         }
 
         void NextPage()
@@ -175,7 +188,9 @@ namespace PocketCaravan
             float totalWidth = 0; bool multiline = false;
             for (int i = 0; i < choices.Count; i++)
             {
-                string label = i == 0 ? choices[i].label + " (Space)" : i == choices.Count - 1 ? choices[i].label + " (Esc)" : choices[i].label;
+                // 11/08 Space는 지금 고른 선택지에 붙는다. 셋 이상이면 숫자도 붙여 바로 고를 수 있게
+                string label = (choices.Count >= 3 ? (i + 1) + ". " : "") + choices[i].label
+                    + (i == focus ? " (Space)" : i == choices.Count - 1 ? " (Esc)" : "");
                 labels.Add(label); multiline |= label.IndexOf('\n') >= 0 || label.IndexOf('\r') >= 0;
                 float width = Mathf.Max(60f, CuteUI.PaperButton.CalcSize(new GUIContent(label)).x + 14f);
                 widths.Add(width); totalWidth += width + (i > 0 ? 6 : 0);
@@ -235,7 +250,7 @@ namespace PocketCaravan
                 for (int i = 0; i < choices.Count; i++)
                 {
                     var row = new Rect(0, y, contentWidth, heights[i]); choiceRects.Add(row);
-                    if (GUI.Button(row, labels[i], i == 0 ? wrappedChoiceOn : wrappedChoice))
+                    if (GUI.Button(row, labels[i], i == focus ? wrappedChoiceOn : wrappedChoice))   // 11/08 키보드로 고른 것을 강조
                     {
                         GUI.EndScrollView(); Pick(choices[i]); return;
                     }
@@ -249,7 +264,7 @@ namespace PocketCaravan
                 for (int i = choices.Count - 1; i >= 0; i--)
                 {
                     bx -= widths[i]; var row = new Rect(bx, r.yMax - 26, widths[i], 18); choiceRects.Add(row);
-                    if (GUI.Button(row, labels[i], i == 0 ? CuteUI.PaperButtonOn : CuteUI.PaperButton)) { Pick(choices[i]); return; }
+                    if (GUI.Button(row, labels[i], i == focus ? CuteUI.PaperButtonOn : CuteUI.PaperButton)) { Pick(choices[i]); return; }   // 11/08 키보드로 고른 것을 강조
                     bx -= 6;
                 }
             }

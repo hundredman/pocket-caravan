@@ -5,7 +5,7 @@ namespace PocketCaravan
     public static class GoryeoGroundSpeed
     {
         public const float RoadAdvantage=1.05f;
-        public static float WeatherFactor(GoryeoAtmosphere.Kind weather)=>weather==GoryeoAtmosphere.Kind.Rain?.97f:weather==GoryeoAtmosphere.Kind.Monsoon?.94f:1f;
+        public static float WeatherFactor(GoryeoAtmosphere.Kind weather)=>weather==GoryeoAtmosphere.Kind.Rain?SpeedMods.LightWeather:weather==GoryeoAtmosphere.Kind.Monsoon?SpeedMods.HeavyWeather:1f;   // 11/08 팀 기준 (전 .97/.94)
         // Input includes origin/vehicle. Shared load/run/event factors are still applied once by PlayerController.
         public static float Adjust(float current,float offroad,GoryeoStride.Surface surface,GoryeoAtmosphere.Kind weather)
         {

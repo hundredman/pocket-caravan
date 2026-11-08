@@ -32,7 +32,6 @@ namespace PocketCaravan
         /// <summary>이 칸이 아쿠아 알타 때 물이 차는 칸인가 (걷기 연출 VeniceStride가 쓴다)</summary>
         public static bool IsFlooded(Vector3Int cell) => inst != null && inst.floodCells.Contains(cell);
         VeniceMaskSeller seller;
-        float baseWalk = -1f;
         bool floodShown;
         string lastAlta;
         // 불꽃
@@ -48,7 +47,7 @@ namespace PocketCaravan
         }
 
         void OnEnable() { inst = this; SceneManager.sceneLoaded += OnLoaded; Build(); }
-        void OnDisable() { SceneManager.sceneLoaded -= OnLoaded; ShowFlood(false); if (root != null) Destroy(root.gameObject); }
+        void OnDisable() { SceneManager.sceneLoaded -= OnLoaded; SpeedMods.Clear("venice_acqua_alta"); SpeedMods.Clear("venice_weather"); ShowFlood(false); if (root != null) Destroy(root.gameObject); }
         void OnLoaded(Scene s, LoadSceneMode m) => Build();
 
         void Build()
@@ -75,8 +74,10 @@ namespace PocketCaravan
             if (pc != null)
             {
                 bool wet = inVenice && AcquaAlta && floodCells.Contains(pc.Motor.Cell);
-                if (wet && baseWalk < 0f) { baseWalk = pc.Motor.walkSpeed; pc.Motor.walkSpeed = baseWalk * .8f; }   // 물에 들어설 때만 바꾸고
-                else if (!wet && baseWalk >= 0f) { pc.Motor.walkSpeed = baseWalk; baseWalk = -1f; }               // 나오면 그대로 되돌린다
+                // 11/08 (은샘, 윤채 님께 전달): walkSpeed 대신 공용 SpeedMods에 넣는다 (북유럽 NorthTravel이 덮어써서 안 먹던 것 고침)
+                SpeedMods.Set("venice_acqua_alta", wet ? .8f : 1f);
+                // 11/08 팀 기준: 비는 약한 궂은 날씨 (안개는 걸음에 영향 없음)
+                SpeedMods.Set("venice_weather", inVenice && VeniceAtmosphere.Now == VeniceAtmosphere.Weather.Rain ? SpeedMods.LightWeather : 1f);
             }
             if (root == null) return;
             bool alta = AcquaAlta && floodCells.Count > 0;

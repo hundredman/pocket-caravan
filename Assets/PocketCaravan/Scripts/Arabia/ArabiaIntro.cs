@@ -21,17 +21,7 @@ namespace PocketCaravan
         static readonly Vector2Int GuideCell = new Vector2Int(35, 38);   // 시작 자리(남문 S0 (31,37)) 오른쪽 아래 (하산 (29,36) 이름표와 안 겹치게)
         const string Guide = "하산의 조카 아미르";
 
-        static readonly string[] Tasks =
-        {
-            "Shift를 누른 채 걸어서 달려 보기",
-            "Tab을 눌러 내 상태 보기",
-            "I를 눌러 소지품 주머니 열어 보기",
-            "M을 눌러 지도 펼쳐 보기",
-            "Q를 눌러 할 일(퀘스트) 목록 보기",
-            "상인에게 물건 하나 구매하기",
-            "산 물건을 다른 마을 상인에게 판매하기",
-            "L을 눌러 장부에서 방금 거래 기록 확인하기",
-        };
+        static readonly string[] Tasks = ControlLesson.Tasks();   // 11/08 공통화 4단계: 조작 배우기 여덟 가지는 공용 ControlLesson
 
         public static bool Active => Step >= 1 && Step <= 10;
         static int Step { get => GameManager.I != null ? Mathf.RoundToInt(GameManager.I.GetMemo("arabia:intro")) : 0; set { if (GameManager.I != null) GameManager.I.SetMemo("arabia:intro", value); } }
@@ -136,7 +126,7 @@ namespace PocketCaravan
             if (s == 10)
             {
                 DialogueUI.Show(Guide,
-                    "다 했네! 같은 장터에서 사서 바로 되팔면 손해였지? 상인은 어디서 사고, 어느 길로 가고, 어디서 파는지만 알면 돼.\n" +
+                    "다 했네! 산 곳과 판 곳의 값이 달랐지? 상인은 어디서 사고, 어느 길로 가고, 어디서 파는지만 알면 돼.\n" +
                     "그리고 장부 첫 줄 기억해. 짐은 목적지까지, 약속은 사람에게까지. 약속을 지키면 신용이 쌓이고, 신용이 쌓이면 마을 어른들이 장부에 도장을 찍어 줄 거야.",
                     new DialogueUI.Choice("사막여우 상인은 뭐가 좋아?", () => DialogueUI.Show(Guide,
                         "우리 아라비아 대상은 멀리서 가져온 물건을 팔면 값을 더 쳐 받아(+5%). 먼 길을 겁내지 않는 게 우리 장기지.\n\n" +
@@ -165,22 +155,36 @@ namespace PocketCaravan
         }
 
         void OnInventory() { if (IsCat) Done(2); }
-        void OnBought(ItemData item, TownData town, int price) { if (IsCat) Done(5); }
-        void OnSold(ItemData item, TownData town, int price, int profit) { if (IsCat) Done(6); }
+        // 11/08 "산 물건을 다른 마을 상인에게 판매하기": 산 마을(Db.towns 번호)을 기억해 두고, 그 마을이 아닌 곳에서 팔아야 끝난다
+        //   (예전엔 아무 판매로나 끝나, 산 곳에서 되팔아도 넘어갔다). 이 메모가 없는 예전 저장은 아무 판매로나 끝난다
+        const string BuyTownMemo = "arabia:intro:buytown";
+
+        void OnBought(ItemData item, TownData town, int price)
+        {
+            if (!IsCat) return;
+            var gm = GameManager.I;
+            if (Step == 7 && gm != null && gm.Db != null) gm.SetMemo(BuyTownMemo, gm.Db.towns.IndexOf(town));
+            Done(5);
+        }
+
+        void OnSold(ItemData item, TownData town, int price, int profit)
+        {
+            if (!IsCat || Step != 8) return;
+            var gm = GameManager.I;
+            if (gm != null && gm.Db != null && gm.HasMemo(BuyTownMemo) && gm.Db.towns.IndexOf(town) == Mathf.RoundToInt(gm.GetMemo(BuyTownMemo)))
+            {
+                Notify.Show("산 마을이 아닌 다른 마을 상인에게 팔아 보세요", 3f);
+                return;
+            }
+            Done(6);
+        }
 
         void Update()
         {
             int s = Step;
             if (s < 2 || s > 9 || !IsCat || GameManager.I == null) return;
-            if (s == 2 && !UIState.Blocking && InputReader.Run() && InputReader.MoveVector().sqrMagnitude > 0.1f)
-            {
-                runTime += Time.unscaledDeltaTime;
-                if (runTime > 1f) { runTime = 0f; Done(0); }
-            }
-            else if (s == 3 && InputReader.StatusPressed()) Done(1);
-            else if (s == 5 && InputReader.MapPressed()) Done(3);
-            else if (s == 6 && InputReader.QuestLogPressed()) Done(4);
-            else if (s == 9 && InputReader.LedgerPressed()) Done(7);
+            int task = ControlLesson.KeyTask(s, ref runTime);   // 11/08 공용 키 확인 (달리기·Tab·M·Q·L)
+            if (task >= 0) Done(task);
         }
 
         void OnGUI()

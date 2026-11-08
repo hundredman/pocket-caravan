@@ -94,6 +94,7 @@ namespace PocketCaravan
                 if (grade == 0) s *= p.origin.offroadSpeedMultiplier; // 길 없는 곳
             }
             s = GoryeoGroundSpeed.Apply(s,p,motor.Cell);
+            s *= SpeedMods.Product;   // 11/08 지역·날씨 배율 (북유럽 썰매·눈보라, 베네치아 물 찬 칸)
             s *= Mathf.Lerp(1f, fullLoadSpeed, p.LoadRatio);
             if (Running) s *= runMultiplier;
             if (InputReader.DebugFast()) s *= DebugFastMultiplier;   // 임시 시험용 (C, 6배)
@@ -133,5 +134,29 @@ namespace PocketCaravan
             // 달리면 발걸음도 빨라지게
             anim.framesPerSecond = 6f + motor.Velocity.magnitude * 1.2f;
         }
+    }
+
+    /// <summary>
+    /// 2026-11-08 공통화 2단계: 지역·날씨가 걸음 속도에 주는 배율 목록 (체력 StaminaMods와 같은 방식).
+    /// 각 지역은 이름을 붙여 Set/Clear만 하고, PlayerMotor.walkSpeed는 직접 바꾸지 않는다.
+    /// 예전에는 북유럽(NorthTravel)이 매 프레임 walkSpeed를 덮어써서 베네치아 아쿠아 알타 0.8배가 지워졌다.
+    /// </summary>
+    public static class SpeedMods
+    {
+        static readonly System.Collections.Generic.Dictionary<string, float> mods = new System.Collections.Generic.Dictionary<string, float>();
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)] static void Reset() => mods.Clear();
+        public static void Set(string id, float multiplier)
+        {
+            if (float.IsNaN(multiplier) || float.IsInfinity(multiplier) || multiplier <= 0f || Mathf.Approximately(multiplier, 1f)) mods.Remove(id);
+            else mods[id] = multiplier;
+        }
+        public static void Clear(string id) => mods.Remove(id);
+        public static float Get(string id) => mods.TryGetValue(id, out var v) ? v : 1f;
+        public static float Product { get { float m = 1f; foreach (var v in mods.Values) m *= v; return m; } }
+
+        /// <summary>11/08 공통화 3단계 (팀 기준): 약한 궂은 날씨(비·함박눈) 걸음 배율</summary>
+        public const float LightWeather = .95f;
+        /// <summary>11/08 공통화 3단계 (팀 기준): 센 궂은 날씨(장맛비·눈보라·모래바람) 걸음 배율</summary>
+        public const float HeavyWeather = .85f;
     }
 }

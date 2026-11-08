@@ -16,7 +16,7 @@ namespace PocketCaravan
         static readonly string[] Names = { "arabia_bgm_morning", "arabia_bgm_day", "arabia_bgm_night" };
         readonly AudioClip[] songs = new AudioClip[3];
         AudioSource a, b, cur; int playing = -1;
-        AudioManager common; float savedVolume = -1f;
+        AudioManager common;
         static FieldInfo curClipField;
         /// <summary>공용 음악이 위험(danger) 곡이면 우리 곡을 틀지 않는다 (NorthSound와 같은 방식: 비공개 필드만 읽음)</summary>
         static bool CommonDanger(AudioManager m)
@@ -50,19 +50,16 @@ namespace PocketCaravan
             return h >= 5f && h < 10f ? 0 : h >= 10f && h < 17f ? 1 : 2;   // 2 = 밤 (17시부터)
         }
 
+        void OnDisable() => AudioManager.Silence(this, false);   // 11/08 공용 음악 다시 켜기
+
         void Update()
         {
             var gm = GameManager.I;
             if (common == null) common = FindAnyObjectByType<AudioManager>();
             bool here = InArabia && gm != null && songs[1] != null && !CommonDanger(common);
 
-            // 공용 음악: 우리 곡을 트는 동안만 0 (북·베처럼 0보다 클 때만 저장)
-            if (here && common != null)
-            {
-                if (savedVolume < 0f && common.musicVolume > 0f) savedVolume = common.musicVolume;
-                common.musicVolume = 0f;
-            }
-            if (!here && common != null && savedVolume >= 0f) { common.musicVolume = savedVolume; savedVolume = -1f; }
+            // 공용 음악: 우리 곡을 트는 동안만 끈다 (11/08 은샘, 기우 님께 전달: musicVolume 대신 AudioManager.Silence)
+            AudioManager.Silence(this, here);
 
             int want = here ? Slot() : -1;
             if (want >= 0 && songs[want] == null) want = 1;

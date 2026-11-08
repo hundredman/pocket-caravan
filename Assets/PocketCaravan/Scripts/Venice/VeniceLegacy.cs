@@ -71,7 +71,7 @@ namespace PocketCaravan
             // ---- 놀거리 알림 ----
             ActivityHints.Rules[typeof(VeniceGlassSpot)] = _ => ("유리 불기", VeniceSave.DoneToday("glass"));
             ActivityHints.Rules[typeof(VeniceNetSpot)] = _ => ("그물 던지기", VeniceSave.DoneToday("net"));
-            ActivityHints.Rules[typeof(VeniceFeed)] = _ => ("비둘기 모이 주기", VeniceSave.DoneToday("feed"));
+            ActivityHints.Rules[typeof(VeniceFeed)] = _ => ("비둘기 모이 주기", VeniceFeed.FedToday);
             ActivityHints.Rules[typeof(VeniceTraghetto)] = _ => (VeniceUtil.Map == "venice_rialto" ? "곤돌라 경주" : null, false);
             ActivityHints.Rules[typeof(VeniceWorkshop)] = i => ((VeniceWorkshop)i).recipe == VeniceWorkshop.Recipe.GlassArt
                 ? ("유리 장식 공방", false)

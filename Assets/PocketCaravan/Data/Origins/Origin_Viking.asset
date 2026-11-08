@@ -15,7 +15,7 @@ MonoBehaviour:
   id: viking
   displayName: "\uBC14\uC774\uD0B9 \uAD50\uC5ED\uC0C1"
   homeRegion: {fileID: 0}
-  startingCredit: -2
+  startingCredit: 0
   playerFrames:
   - {fileID: 21300000, guid: 1de451302a29e48178d879f112b49cbf, type: 3}
   - {fileID: 21300000, guid: d9cbcbb6e3cc843ff919f1351a8aab09, type: 3}

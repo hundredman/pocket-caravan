@@ -84,6 +84,43 @@ namespace PocketCaravan
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void ResetSlot() { slotFile = null; LoadBlocked = false; }
 
+        /// <summary>
+        /// 11/08 게임 이름을 바리바리로 바꾸며 프로젝트 이름(productName)도 PocketCaravan → 바리바리로 바꿨다.
+        /// 저장 폴더(persistentDataPath)가 이 이름을 따라 바뀌므로, 새 폴더에 본편 저장이 없고 예전 폴더가 있으면 예전 폴더를 한 번 복사한다.
+        /// 새 폴더에 이미 있는 파일(Player.log 등)은 덮지 않고, 예전 폴더는 그대로 남긴다.
+        /// 로그인 기억·소리 설정 같은 PlayerPrefs는 옮기지 못한다 (한 번 다시 넣는다).
+        /// </summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        static void MoveOldFolder()
+        {
+            try
+            {
+                string now = Application.persistentDataPath;
+                string old = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(now) ?? "", "PocketCaravan");
+                if (!Directory.Exists(old) || string.Equals(System.IO.Path.GetFullPath(old).TrimEnd('\\', '/'), System.IO.Path.GetFullPath(now).TrimEnd('\\', '/'), StringComparison.OrdinalIgnoreCase)) return;
+                if (File.Exists(System.IO.Path.Combine(now, "pocket_caravan_save.json")) || File.Exists(System.IO.Path.Combine(now, "pocket_caravan_preview_save.json"))) return;
+                int copied = CopyMissing(old, now);
+                if (copied > 0) Debug.Log($"[저장] 이름이 바리바리로 바뀌어 예전 저장 폴더를 옮겼다 ({copied}개): {old} → {now}");
+            }
+            catch (Exception e) { Debug.LogWarning("[저장] 예전 저장 폴더 옮기기 실패 (예전 폴더는 그대로): " + e.Message); }
+        }
+
+        static int CopyMissing(string from, string to)
+        {
+            int n = 0;
+            Directory.CreateDirectory(to);
+            foreach (var f in Directory.GetFiles(from))
+            {
+                string name = System.IO.Path.GetFileName(f), dest = System.IO.Path.Combine(to, name);
+                if (name.StartsWith("Player", StringComparison.OrdinalIgnoreCase) && name.EndsWith(".log", StringComparison.OrdinalIgnoreCase)) continue;   // 실행 기록은 옮기지 않는다
+                if (File.Exists(dest)) continue;
+                File.Copy(f, dest);
+                n++;
+            }
+            foreach (var d in Directory.GetDirectories(from)) n += CopyMissing(d, System.IO.Path.Combine(to, System.IO.Path.GetFileName(d)));
+            return n;
+        }
+
         public static bool Exists => File.Exists(Path);
 
         /// <summary>위쪽 기준 타일은 유지하고, 맵 높이 확장으로 바뀐 Unity y만 보정한다.</summary>

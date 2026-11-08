@@ -13,7 +13,8 @@ namespace PocketCaravan
     {
         public override string DisplayName => VeniceLabels.Place(this, "곤돌라 나루");   // 가까이 가야 이름표가 뜬다
         public override Kind Category => Kind.Market;
-        const int Fare = 6;
+        const float Hours = .5f;
+        static int Fare => BoatFare.For(Hours);   // 11/08 공용 뱃삯 기준 (30분 6냥, 전과 같음)
 
         SpriteRenderer boat;
         Vector3 boatHome;
@@ -74,7 +75,7 @@ namespace PocketCaravan
             string spawn = BestSpawn(data);
             if (spawn == null) { Notify.Show("그 섬에 댈 나루가 없다.", 2.5f); return; }
             gm.Player.money -= Fare;
-            gm.Clock.Advance(.5f);
+            gm.Clock.Advance(Hours);
             Sfx.Play("coin");
             VeniceSave.Set("traghetto_rides", VeniceSave.Get("traghetto_rides") + 1);
             VeniceTravelWave.ByBoat = true;          // 건너는 동안 발자국 대신 곤돌라

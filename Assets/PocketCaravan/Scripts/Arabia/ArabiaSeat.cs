@@ -67,8 +67,7 @@ namespace PocketCaravan
                 sitting = null;
                 return;
             }
-            var st = GameManager.I.Player;
-            st.stamina = Mathf.Min(1f, st.stamina + pc.staminaRegen * 2f * Time.deltaTime);
+            SeatRest.Tick(pc, Time.deltaTime);   // 11/08 공용 앉기 기본 효과 (전과 같은 3배)
             if (!rewarded && Time.time - since > 4f)
             {
                 rewarded = true;

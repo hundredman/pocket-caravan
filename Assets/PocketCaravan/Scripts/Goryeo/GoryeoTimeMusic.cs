@@ -40,7 +40,7 @@ namespace PocketCaravan
             }
             float duration=wanted==5?.6f:2f;elapsed=Mathf.Min(duration,elapsed+Mathf.Max(0,dt));float angle=elapsed/duration*Mathf.PI*.5f;
             weights[to]=Mathf.Sin(angle);weights[1-to]=fromWeight*Mathf.Cos(angle);
-            float volume=AudioManager.Muted?0:Mathf.Clamp01(master.musicVolume);
+            float volume=Mathf.Clamp01(AudioManager.MusicLevel);   // 11/08 공용 음량 (다른 지역이 musicVolume을 0으로 두던 일 없음)
             for(int i=0;i<2;i++){buses[i].volume=weights[i]*volume;if(i!=to&&elapsed>=duration){buses[i].volume=0;weights[i]=0;if(buses[i].isPlaying)buses[i].Stop();}}
         }
         void Restore(){if(!ownsCommon)return;if(commonA!=null)commonA.mute=oldMuteA;if(commonB!=null)commonB.mute=oldMuteB;ownsCommon=false;}

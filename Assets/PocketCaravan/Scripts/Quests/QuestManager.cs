@@ -199,12 +199,18 @@ namespace PocketCaravan
             var p = GameManager.I.Player;
             if (q.offerItem != null && q.offerCount > 0)
             {
-                if (p.money < q.offerPrice * q.offerCount) return $"{q.offerPrice * q.offerCount}냥이 있어야 넘겨줄 수 있네. 돈을 좀 더 모아 오게.";
-                if (!p.CanCarry(q.offerItem, q.offerCount)) return "짐이 꽉 찼구먼. 짐을 좀 덜고 오게.";
+                if (p.money < q.offerPrice * q.offerCount) return Speech(q, $"{q.offerPrice * q.offerCount}냥이 있어야 넘겨줄 수 있네. 돈을 좀 더 모아 오게.", $"{q.offerPrice * q.offerCount}냥이 있어야 넘겨줄 수 있어요. 돈을 좀 더 모아 오세요.");
+                if (!p.CanCarry(q.offerItem, q.offerCount)) return Speech(q, "짐이 꽉 찼구먼. 짐을 좀 덜고 오게.", "짐이 꽉 찼네요. 짐을 좀 덜고 오세요.");
             }
-            if (q.giveItem != null && q.giveCount > 0 && !p.CanCarry(q.giveItem, q.giveCount)) return "짐이 꽉 찼구먼. 짐을 좀 덜고 오게.";
+            if (q.giveItem != null && q.giveCount > 0 && !p.CanCarry(q.giveItem, q.giveCount)) return Speech(q, "짐이 꽉 찼구먼. 짐을 좀 덜고 오게.", "짐이 꽉 찼네요. 짐을 좀 덜고 오세요.");
             return ExtraAcceptBlocker?.Invoke(q);   // 11/01 지역별 추가 조건 (예: 북유럽 동시 퀘스트 3개). 없으면 null
         }
+
+        /// <summary>
+        /// 11/08 공용 기본 대사의 말투: 퀘스트 주는 사람이 고려에 있으면 고려 말투, 다른 지역(베네치아·아라비아·북유럽)이면 보통 말투.
+        /// 예전엔 모든 지역 주민이 "…넘겨줄 수 있네", "고맙네" 같은 고려 말투를 썼다
+        /// </summary>
+        static string Speech(QuestData q, string goryeo, string plain) => !StoryGuide.RegionOf(q, out var r) || r == Reactions.Region.Goryeo ? goryeo : plain;
 
         /// <summary>11/01 지역이 수락 조건을 더할 수 있는 자리. 막을 이유(대사)를 돌려주면 수락이 막힌다. 공용 규칙은 그대로.</summary>
         public static System.Func<QuestData, string> ExtraAcceptBlocker;
@@ -240,12 +246,12 @@ namespace PocketCaravan
             {
                 if (!HasDeliveryItems(o))
                 {
-                    failReason = $"{o.item.displayName} {o.count}개가 필요하네. (지금 {GameManager.I.Player.cargo.Count(o.item)}개)";
+                    failReason = Speech(p.quest, $"{o.item.displayName} {o.count}개가 필요하네.", $"{o.item.displayName} {o.count}개가 필요해요.") + $" (지금 {GameManager.I.Player.cargo.Count(o.item)}개)";
                     return null;
                 }
                 GameManager.I.Player.cargo.Remove(o.item, o.count);
             }
-            string line = string.IsNullOrEmpty(o.completeLine) ? "고맙네." : o.completeLine;
+            string line = string.IsNullOrEmpty(o.completeLine) ? Speech(p.quest, "고맙네.", "고마워요.") : o.completeLine;
             NextStep(p);
             return line;
         }
