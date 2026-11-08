@@ -12,6 +12,9 @@ namespace PocketCaravan
     /// - 접속하지 않은 동안의 거래 (11/08): 새 서버는 접속할 때 공유 장터 재고(적정 재고와의 차이)를 통째로 보내 준다.
     ///   그동안의 거래와 세상 시간에 따른 회복이 모두 들어 있어 아무리 오래 쉬어도 모두 같은 재고다.
     ///   예전 서버면 놓친 거래(24시간·300건까지)를 다시 받아 더한다. 받은 마지막 번호는 서버 주소마다 기억한다.
+    /// - 혼자 하는 동안(접속 안 함·잠깐 끊김) 공유 장터에서 한 거래 (11/08 윤채): 진행 메모 "net:off:마을|물건"에 재고 변화를 모아 두고,
+    ///   다음에 새 서버에 접속하면 서버 재고를 받은 뒤 내 장터에 다시 더하고 서버에도 올린다.
+    ///   예전엔 접속할 때 서버 재고로 덮여 혼자 몰아 판 값 하락이 사라졌다 (끊었다 붙으면 또 비싸게 팔 수 있었다).
     /// 공용 코드(MarketState · GameEvents · GameManager)는 공개된 것만 쓰고 고치지 않는다.
     /// </summary>
     public class NetMarket : MonoBehaviour
@@ -19,13 +22,19 @@ namespace PocketCaravan
         /// <summary>공유 장터: 베네치아 리알토 · 고려 개경 · 북유럽 비르카 · 아라비아 제다 (제안, 2026-10-30)</summary>
         public static readonly string[] SharedTowns = { "venice_rialto", "gaegyeong", "north_birka", "arabia_jeddah" };
         const float FlushSeconds = 0.5f;
+        /// <summary>혼자 한 거래를 올릴 때 0.5초에 보내는 수 (서버는 1초에 30개를 넘으면 버린다)</summary>
+        const int OfflinePerFlush = 8;
+        const string OfflinePrefix = "net:off:";
 
         [System.Serializable] class TradeOut { public string t = "trade"; public string town, item; public int n; public float d; public bool sell; }
         class Pending { public string town, item; public int n; public float d; public bool sell; }
 
         readonly Dictionary<string, Pending> pending = new Dictionary<string, Pending>();
+        readonly Queue<TradeOut> offlineOut = new Queue<TradeOut>();
         float nextFlush;
         bool toldTowns;
+
+        static string OfflineKey(string town, string item) => OfflinePrefix + town + "|" + item;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void Boot()
@@ -108,7 +117,14 @@ namespace PocketCaravan
 
         void Queue(ItemData item, TownData town, bool sell, float d)
         {
-            if (!Online || item == null || !IsShared(town)) return;
+            if (item == null || !IsShared(town)) return;
+            if (!Online)
+            {
+                // 혼자 하는 동안: 다음 접속 때 올리려고 모아 둔다 (저장에 들어가는 진행 메모)
+                var gm = GameManager.I;
+                if (gm != null) { string memo = OfflineKey(town.id, item.id); gm.SetMemo(memo, gm.GetMemo(memo) + d); }
+                return;
+            }
             string k = town.id + "|" + item.id + "|" + (sell ? "s" : "b");
             if (!pending.TryGetValue(k, out var p)) pending[k] = p = new Pending { town = town.id, item = item.id, sell = sell };
             p.n++;
@@ -120,6 +136,11 @@ namespace PocketCaravan
         {
             // 끊겨서 혼자 하기로 돌아가면 공유 장터도 원래 크기로 (잠깐 끊겨 다시 붙는 중에는 그대로)
             if (ServerShared && !WorldClock.Active) { ChangeScale(1f); ServerShared = false; }
+            if (offlineOut.Count > 0 && Time.unscaledTime >= nextFlush && Online)
+            {
+                for (int i = 0; i < OfflinePerFlush && offlineOut.Count > 0; i++) NetClient.I.Send(offlineOut.Dequeue());
+                nextFlush = Time.unscaledTime + FlushSeconds;
+            }
             if (pending.Count == 0 || Time.unscaledTime < nextFlush) return;
             if (Online)
                 foreach (var p in pending.Values)
@@ -136,7 +157,7 @@ namespace PocketCaravan
                 case "welcome":
                     Saw(m.seq);
                     ServerShared = m.marketOk;
-                    if (m.marketOk) { ChangeScale(m.marketScale > 0f ? m.marketScale : 1f); ApplySnapshot(m.market); }
+                    if (m.marketOk) { ChangeScale(m.marketScale > 0f ? m.marketScale : 1f); ApplySnapshot(m.market); SendOffline(); }
                     if (!toldTowns)
                     {
                         toldTowns = true;
@@ -187,6 +208,27 @@ namespace PocketCaravan
                     if (it != null) market.SetStock(it, market.Optimal(it) + r.dev);
                 }
             }
+        }
+
+        /// <summary>혼자 하는 동안 모아 둔 공유 장터 거래를 서버 재고 위에 다시 더하고, 나눠서 서버에 올린다 (11/08)</summary>
+        void SendOffline()
+        {
+            var gm = GameManager.I;
+            if (gm == null || gm.Db == null) return;
+            int kinds = 0;
+            foreach (var id in SharedTowns)
+                foreach (var it in gm.Db.items)
+                {
+                    if (it == null) continue;
+                    string k = OfflineKey(id, it.id);
+                    if (!gm.HasMemo(k)) continue;
+                    float d = gm.GetMemo(k);
+                    gm.ClearMemo(k);
+                    if (Mathf.Abs(d) < 0.001f || !Apply(id, it.id, d, out _, out _)) continue;
+                    offlineOut.Enqueue(new TradeOut { town = id, item = it.id, n = Mathf.Clamp(Mathf.RoundToInt(Mathf.Abs(d)), 1, 1000), d = Mathf.Clamp(d, -10000f, 10000f), sell = d > 0f });
+                    kinds++;
+                }
+            if (kinds > 0) NetChat.System($"혼자 하는 동안 공유 장터에서 사고판 것 {kinds}가지를 모두의 장터에 반영했어요");
         }
 
         /// <summary>장터 재고에 변화를 더한다. 모르는 마을·물건이면 false</summary>

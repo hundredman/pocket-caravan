@@ -19,10 +19,10 @@ namespace PocketCaravan.EditorTools
         }
 
         [MenuItem("Pocket Caravan/Build/macOS 고려 프리뷰")]
-        public static void Mac() => Build(BuildTarget.StandaloneOSX, "Builds/macOS", "PocketCaravan.app");
+        public static void Mac() => Build(BuildTarget.StandaloneOSX, "Builds/macOS", "Baribari.app");   // 11/08 게임 이름 바리바리 (파일 이름은 압축·전송에서 안 깨지게 영문)
 
         [MenuItem("Pocket Caravan/Build/Windows 고려 프리뷰")]
-        public static void Windows() => Build(BuildTarget.StandaloneWindows64, "Builds/Windows", "PocketCaravan.exe");
+        public static void Windows() => Build(BuildTarget.StandaloneWindows64, "Builds/Windows", "Baribari.exe");   // 11/08 게임 이름 바리바리 (파일 이름은 압축·전송에서 안 깨지게 영문)
 
         [MenuItem("Pocket Caravan/Build/환경 원형 시험장 Windows")]
         public static void ModulesWindows() => Build(BuildTarget.StandaloneWindows64, "Builds/ModuleLibrary/Windows", "PocketCaravanModules.exe", new[]{MapModuleWorkbench.ScenePath,"Assets/PocketCaravan/Scenes/ModuleLab/ModuleComposition.unity"});

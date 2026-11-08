@@ -208,8 +208,29 @@ namespace PocketCaravan
         }
 
         void OnInventory() { if (IsCat) Done(2); }
-        void OnBought(ItemData item, TownData town, int price) { if (IsCat) Done(5); }
-        void OnSold(ItemData item, TownData town, int price, int profit) { if (IsCat) Done(6); }
+        // 11/08 "산 물건을 다른 마을 상인에게 판매하기": 산 마을(Db.towns 번호)을 기억해 두고, 그 마을이 아닌 곳에서 팔아야 끝난다
+        //   (예전엔 아무 판매로나 끝나, 산 곳에서 되팔아도 넘어갔다). 이 메모가 없는 예전 저장은 아무 판매로나 끝난다
+        const string BuyTownMemo = "goryeo:intro:buytown";
+
+        void OnBought(ItemData item, TownData town, int price)
+        {
+            if (!IsCat) return;
+            var gm = GameManager.I;
+            if (Step == 7 && gm != null && gm.Db != null) gm.SetMemo(BuyTownMemo, gm.Db.towns.IndexOf(town));
+            Done(5);
+        }
+
+        void OnSold(ItemData item, TownData town, int price, int profit)
+        {
+            if (!IsCat || Step != 8) return;
+            var gm = GameManager.I;
+            if (gm != null && gm.Db != null && gm.HasMemo(BuyTownMemo) && gm.Db.towns.IndexOf(town) == Mathf.RoundToInt(gm.GetMemo(BuyTownMemo)))
+            {
+                Notify.Show("산 마을이 아닌 다른 마을 상인에게 팔아 보세요", 3f);
+                return;
+            }
+            Done(6);
+        }
 
         void Update()
         {

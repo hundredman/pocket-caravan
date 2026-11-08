@@ -19,6 +19,7 @@ namespace PocketCaravan
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Boot()
         {
+            if (!InputReader.DevKeys) return;   // 11/08 배포판에서는 띄우지 않는다 (C 빠르게 키를 안내하던 개발용 창)
             if (FindFirstObjectByType<NorthSpeedCheck>() != null) return;
             var go = new GameObject("NorthSpeedCheck");
             DontDestroyOnLoad(go);

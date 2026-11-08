@@ -62,7 +62,39 @@ namespace PocketCaravan
         {
             if (GameManager.I == null) return;
             GameManager.I.Clock.Advance(NorthDaily.FerryHours);   // 11/08 공용 기준: 배 타는 시간도 의뢰 시간에서 쓴다 (전엔 0)
+            landing = destMap; landingFace = face;
+            GameEvents.MapEntered -= OnLanded;
+            GameEvents.MapEntered += OnLanded;
             GameManager.I.TravelTo(destMap, "ferry", 0f, face);
+        }
+
+        // 11/08 두 나루 맵에 "ferry" 도착 자리가 없어 맵 기본 자리(가장자리)에 내렸다.
+        // 도착하면 건너편 사공(NorthData "ferry") 바로 옆의 걸을 수 있는 칸으로 옮긴다
+        static string landing;
+        static Vector2Int landingFace;
+
+        static void OnLanded(string mapId)
+        {
+            if (mapId != landing) return;
+            GameEvents.MapEntered -= OnLanded;
+            landing = null;
+            var map = MapRoot.Current;
+            var pc = PlayerController.Instance;
+            var at = NorthData.Get(mapId, "ferry");
+            if (map == null || pc == null || at.Length < 2) return;
+            var center = map.WorldToCell(NorthUtil.Cell(mapId, at[0], at[1]));
+            for (int r = 1; r <= 4; r++)
+                for (int dy = -r; dy <= r; dy++)
+                    for (int dx = -r; dx <= r; dx++)
+                    {
+                        if (Mathf.Max(Mathf.Abs(dx), Mathf.Abs(dy)) != r) continue;
+                        var c = center + new Vector3Int(dx, dy, 0);
+                        if (!map.IsWalkable(c)) continue;
+                        pc.Motor.Teleport(map.CellCenter(c) - (Vector3)pc.Motor.feetOffset, landingFace);
+                        var cam = FindAnyObjectByType<CameraFollow>();
+                        if (cam != null) cam.SnapNow();
+                        return;
+                    }
         }
 
         bool Fresh => Time.frameCount - startFrame < 2;   // 시작한 Space가 바로 노 젓기로 먹지 않게
