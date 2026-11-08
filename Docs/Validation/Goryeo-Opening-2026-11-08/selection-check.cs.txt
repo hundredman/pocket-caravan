@@ -1,0 +1,7 @@
+var gm=PocketCaravan.GameManager.I;var flags=System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance;
+var intro=UnityEngine.Object.FindFirstObjectByType<PocketCaravan.GoryeoIntro>();typeof(PocketCaravan.GoryeoIntro).GetMethod("Start",flags).Invoke(intro,null);
+var d=UnityEngine.Object.FindFirstObjectByType<PocketCaravan.DialogueUI>();var pending=(System.Collections.ICollection)typeof(PocketCaravan.DialogueUI).GetField("pending",flags).GetValue(d);
+if(gm.HasMemo("goryeo:intro")||pending.Count!=0)throw new System.Exception("Opening ran before selection");
+var picker=UnityEngine.Object.FindFirstObjectByType<PocketCaravan.StartScreen>();var mode=typeof(PocketCaravan.StartScreen).GetField("mode",flags);mode.SetValue(picker,System.Enum.Parse(mode.FieldType,"Closed"));
+var choice=PocketCaravan.StartChoices.Get().choices.Find(x=>x.origin!=null&&x.origin.id=="goryeo");gm.BeginNewGame(choice);
+return new{preSelectionIntroMemo=false,preSelectionPending=0,usedActualBeginNewGame=true,saveOFF=!gm.AutosaveEnabled};

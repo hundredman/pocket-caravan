@@ -1,0 +1,15 @@
+var gm=PocketCaravan.GameManager.I;var f=System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance;
+if(gm==null||gm.AutosaveEnabled||PocketCaravan.NetClient.I.Status!=PocketCaravan.NetClient.State.Offline)throw new System.Exception("Unsafe fixture");
+var login=UnityEngine.Object.FindFirstObjectByType<PocketCaravan.NetLogin>();typeof(PocketCaravan.NetLogin).GetField("startDone",f).SetValue(login,true);typeof(PocketCaravan.NetLogin).GetField("autoTried",f).SetValue(login,true);login.enabled=false;PocketCaravan.StartScreen.Held=false;
+PocketCaravan.SaveSystem.UseSlot("codex_opening_story_fixture.json");
+gm.Player.origin=PocketCaravan.StartChoices.FindOrigin("goryeo");
+var mem=(System.Collections.Generic.Dictionary<string,float>)typeof(PocketCaravan.GameManager).GetField("cooldowns",f).GetValue(gm);
+foreach(var key in new[]{"goryeo:intro","goryeo:intro_order","goryeo:intro_q_done","goryeo:intro_opening"})mem.Remove(key);
+var save=UnityEngine.Object.FindFirstObjectByType<PocketCaravan.NetSave>();
+typeof(PocketCaravan.NetSave).GetField("live",f).SetValue(save,true);typeof(PocketCaravan.NetSave).GetField("fullLive",f).SetValue(save,true);
+typeof(PocketCaravan.NetSave).GetMethod("Update",f).Invoke(save,null);
+if((bool)typeof(PocketCaravan.NetSave).GetField("live",f).GetValue(save)||(bool)typeof(PocketCaravan.NetSave).GetField("fullLive",f).GetValue(save))throw new System.Exception("Fixture upload flags not cleared");
+typeof(PocketCaravan.NetSave).GetMethod("OnReceived",f).Invoke(save,new object[]{new PocketCaravan.NetClient.Msg{t="welcome",account=true,fullOk=true}});
+if(typeof(PocketCaravan.NetSave).GetField("waiting",f).GetValue(save)!=null||typeof(PocketCaravan.NetSave).GetField("waitingFull",f).GetValue(save)!=null)throw new System.Exception("Fixture accepts account sync");
+Time.timeScale=0;PocketCaravan.StartScreen.Open(false);UnityEngine.SceneManagement.SceneManager.LoadScene("Naru");
+return new{offline=true,loginSuppressed=true,testSlotSyncBlocked=true,oldUploadFlagsCleared=true};

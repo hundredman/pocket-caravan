@@ -905,3 +905,7 @@ GoryeoIntro의 옛 맵 상수 좌표 누락을 원본 세계(242,60)→현재 �
 ## Aseprite 실행 경로 (2026-11-08)
 
 macOS Codex seatbelt에서 Aseprite가 AppKit 초기화 중 SIGABRT로 끝나던 경로를 43개 검사/제작/MCP연결 도구의 공통 실행 전 확인으로 차단했다. 전체 검사는 `python Tools/Integration/run_checks.py`를 사용하며 Codex에서는 정상 승인 경로(require_escalated)에서 실행한다. 제한 환경은 앱 시작 전 명확한 실패로 처리하고 skip/통과로 숨기지 않는다. 정상 환경431검사/23skip·MCP16×16실제조작 통과, 새충돌보고0. 앱/OS/클라이언트설정·게임그림/런타임 변경없음. [검증](Validation/Aseprite-Execution-2026-11-08/README.md).
+
+## 고려 첫 이야기 (2026-11-08, 로컬/그림 확인 대기)
+
+문명 선택 중 기본 고려 출신의 Arrive가 먼저 step1을 쓰고 예약 대사는 취소되던 누락을 복구했다. 선택 완료 후 하단 `나루의 아침` 1페이지·일꾼 부름→Space 안내, 옛step1저장복구/진행2~11보존·중복Start/맵이탈예약정리를 적용했다. 첫검사중 StartScreen 자동로그인 재개로 돈·짐 요약 전송을 발견해 즉시끊고, 별도시험칸의 NetSave 요약/전체 동기화를 함께 막았다. 본편 전체 저장 업로드는 없었고 서버 요약의 기존값/복구는 미확인이다. 이후 로그인억제/Offline·SaveOFF로 재검사. Unity오류0·431/23skip·세계883/0·개인저장9동일. 그림/상세/한계는 [검증](Validation/Goryeo-Opening-2026-11-08/README.md).

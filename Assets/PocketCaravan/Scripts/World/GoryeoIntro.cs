@@ -6,10 +6,10 @@ namespace PocketCaravan
     /// <summary>
     /// 2026-10-30 시작 이야기 + 조작 튜토리얼 (너구리 · 고려 개경상인). 북유럽·베네치아·아라비아 Intro와 같은 흐름,
     /// 대사는 「고려 한 바퀴」 초안(Docs/IntroStory-2026-10-30.md) 프롤로그·0장 「길 떠날 채비」를 따랐다(1~5장은 기존 Q1 그대로).
-    /// 1) 나루에 처음 들어오면 프롤로그 자막("나루에는 아침마다 짐이 내린다…")
+    /// 1) 나루에 처음 들어오면 선착장 일꾼이 부르는 하단 이야기
     /// 2) 바로 옆 선착장 일꾼에게 Space로 말 걸기 → 달리기 · Tab · 보따리(I) · 지도(M) · Q · 사기 · 팔기 · 장부(L)
     /// 3) 일꾼에게 돌아가면 "같은 물건도 필요한 곳에 가져가면 값이 달라진다" → 나루 촌장(1장 q1_naru)으로 보냄
-    /// 진행은 GameManager 진행 메모 "goryeo:intro". 새 파일만 더했고 기존 고려 파일·씬·퀘스트는 그대로다.
+    /// 진행은 GameManager 진행 메모 "goryeo:intro". 기존 퀘스트/ID/보상을 보존한다.
     /// 그림은 같은 맵의 뱃사공 그림을 실행 중에 빌려 쓴다(새 아트 없음).
     /// 이미 고려 퀘스트를 시작했거나 다른 문명 캐릭터면 나오지 않는다.
     /// </summary>
@@ -59,6 +59,7 @@ namespace PocketCaravan
         static bool InGoryeo => GoryeoTravelTransition.RegionOf(MapRoot.Current != null ? MapRoot.Current.mapId : null) != null;
 
         Transform root;
+        Coroutine arrival;
         float runTime;
 
         class Person : Interactable
@@ -88,30 +89,43 @@ namespace PocketCaravan
 
         void OnDisable()
         {
+            CancelArrival();
             GameEvents.MapEntered -= OnMap;
             GameEvents.ItemBought -= OnBought;
             GameEvents.ItemSold -= OnSold;
             InventoryUI.Opened -= OnInventory;
         }
 
-        void Start() { if (MapRoot.Current != null && MapRoot.Current.mapId == Home) OnMap(Home); }
+        void Start() { if (root == null && MapRoot.Current != null && MapRoot.Current.mapId == Home) OnMap(Home); }
 
         static bool IsCat => GameManager.I != null && GameManager.I.Player.origin != null && GameManager.I.Player.origin.id == "goryeo";
 
         static bool FreshStart()
         {
             var gm = GameManager.I;
-            if (gm == null || gm.Quests == null || !IsCat || Started) return false;
+            if (gm == null || gm.Quests == null || !IsCat) return false;
+            // Recover saves affected by the old picker race, without replaying for
+            // players who already started the lessons or acknowledged this opening.
+            if (Started && (Step != 1 || gm.HasMemo("goryeo:intro_opening"))) return false;
             foreach (var p in gm.Quests.Active) if (p != null && p.quest != null && p.quest.id != null && (p.quest.id.StartsWith("q1_") || p.quest.id.StartsWith("tutorial_"))) return false;
             var q = gm.Db.quests.Find(x => x != null && x.id == FirstQuest);
             return q != null && gm.Quests.CanStart(q);
         }
 
+        void CancelArrival()
+        {
+            if(arrival!=null)StopCoroutine(arrival);
+            arrival=null;
+        }
+
         void OnMap(string map)
         {
+            CancelArrival();
             if (root != null) Destroy(root.gameObject);
             root = null;
-            if (map != Home || !IsCat) return;
+            // Default origin is Goryeo even while the civilization picker is open.
+            // Do not persist Step=1 until that choice has actually been committed.
+            if (map != Home || !IsCat || StartScreen.IsOpen) return;
             MigrateOrder();
             if(!GuidePosition(out var position)){Debug.LogError("Goryeo tutorial guide anchor missing or stale");return;}
             root = new GameObject("Goryeo Intro").transform;
@@ -124,7 +138,7 @@ namespace PocketCaravan
             p.act = TalkGuide;
             Sprite s = BorrowSprite("뱃사공");
             if (s != null) { var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = s; sr.sortingOrder = 10; }
-            if (FreshStart()) StartCoroutine(Arrive());
+            if (FreshStart()) arrival=StartCoroutine(Arrive());
         }
 
         IEnumerator Arrive()
@@ -132,10 +146,17 @@ namespace PocketCaravan
             Step = 1;
             yield return new WaitForSecondsRealtime(0.4f);
             while (GameManager.I != null && GameManager.I.IsTravelling) yield return null;
+            arrival=null;
+            if(!IsCat||MapRoot.Current==null||MapRoot.Current.mapId!=Home||StartScreen.IsOpen||Step!=1)yield break;
             DialogueUI.Show("나루의 아침",
-                "나루에는 아침마다 짐이 내린다.\n어떤 것은 장터에 남고, 어떤 것은 먼 마을로 떠난다.\n\n" +
-                "오늘, 새내기 행상 한 사람이 선착장에 섰다.",
-                new DialogueUI.Choice("선착장으로", null));
+                "아침 짐배가 닿자 나루가 분주해졌다.\n" +
+                "“이보게, 새내기! 장삿길에 나서려면 채비부터 해야지.”\n" +
+                "선착장 일꾼이 당신을 향해 손짓한다.",
+                new DialogueUI.Choice("일꾼에게 가기", () =>
+                {
+                    if(GameManager.I!=null)GameManager.I.SetMemo("goryeo:intro_opening",1);
+                    Notify.Show("선착장 일꾼에게 다가가 Space로 말을 걸어 보세요.",5f);
+                }));
         }
 
         /// <summary>같은 맵에 서 있는 사람(이름으로 찾음)의 지금 그림을 빌린다. 없으면 null</summary>
