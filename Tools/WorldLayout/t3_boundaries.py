@@ -129,6 +129,34 @@ def generate(config,sources):
                         for k in LAYERS:tile_world[k][r,wx]=patch[k][(wy-py)%ph,(wx-px)%pw]
                     filled[r,wx]=True
         known|=filled;walk&=~filled
+    # 2026-11-08 v4: small approved road reshapes (e.g. remove a dead-end stub). Road tiles are re-chosen from the
+    # existing 9-slice + inner-corner road set by neighbour shape; removed cells become plain grass. No new art.
+    for edit in config.get('roadEdits',[]):
+        ex0,ey0,ex1,ey1=edit['region'];keep=edit['keepMaxY']
+        mask=road>0;new=mask.copy()
+        for wy in range(ey0,ey1):
+            for wx in range(ex0,ex1):
+                if wy>keep:new[wy-oy,wx]=False
+        for ax0,ay0,ax1,ay1 in edit.get('addRects',[]):
+            new[ay0-oy:ay1-oy,ax0:ax1]=True
+        grade=int(np.median(road[mask[ey0-oy:ey1-oy,ex0:ex1].nonzero()[0]+ey0-oy,mask[ey0-oy:ey1-oy,ex0:ex1].nonzero()[1]+ex0]))if mask[ey0-oy:ey1-oy,ex0:ex1].any()else 1
+        grass=edit.get('grass','floor_0_12_goryeo_jade')
+        def R(x,y):return 0<=y-oy<height and 0<=x<width and new[y-oy,x]
+        for wy in range(ey0-1,ey1+1):
+            for wx in range(ex0-1,ex1+1):
+                r=wy-oy
+                if not new[r,wx]:
+                    if mask[r,wx]:road[r,wx]=0;tile_world['ground'][r,wx]=grass
+                    continue
+                if not mask[r,wx]:road[r,wx]=grade
+                N,S,W_,E=R(wx,wy-1),R(wx,wy+1),R(wx-1,wy),R(wx+1,wy)
+                if N and S and W_ and E:
+                    t=('floor_6_9_goryeo_jade'if not R(wx-1,wy-1)else'floor_5_9_goryeo_jade'if not R(wx+1,wy-1)else
+                       'floor_6_8_goryeo_jade'if not R(wx-1,wy+1)else'floor_5_8_goryeo_jade'if not R(wx+1,wy+1)else'floor_1_8_goryeo_harvest')
+                else:
+                    col=0 if not W_ else 2 if not E else 1;row=7 if not N else 9 if not S else 8
+                    t=f'floor_{col}_{row}_goryeo_jade'
+                tile_world['ground'][r,wx]=t
     # Dirt and grass use the same rule: the shared outer face must be reachable
     # from the town/start component on both sides. Do not open detached pockets.
     portal_walk=np.zeros_like(walk)
