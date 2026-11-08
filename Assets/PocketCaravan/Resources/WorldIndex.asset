@@ -15,8 +15,8 @@ MonoBehaviour:
   maps:
   - mapId: Naru
     displayName: "\uC608\uC131 \uB098\uB8E8 \uB9C8\uC744"
-    height: 89
-    legacyHeight: 89
+    height: 83
+    legacyHeight: 83
     coord: {x: 0, y: 0}
     town: naru
     neighbors:
@@ -328,8 +328,8 @@ MonoBehaviour:
     - arabia_central_steppe
   - mapId: Gaegyeong
     displayName: "\uAC1C\uACBD"
-    height: 51
-    legacyHeight: 51
+    height: 53
+    legacyHeight: 53
     coord: {x: 2, y: 0}
     town: gaegyeong
     neighbors:
@@ -338,8 +338,8 @@ MonoBehaviour:
     - goryeo_songak
   - mapId: Dakmok
     displayName: "\uB2E5\uB098\uBB34 \uB9C8\uC744"
-    height: 64
-    legacyHeight: 64
+    height: 68
+    legacyHeight: 68
     coord: {x: 3, y: 0}
     town: dakmok
     neighbors:
@@ -347,25 +347,26 @@ MonoBehaviour:
     - goryeo_songak
   - mapId: goryeo_songak
     displayName: "\uC1A1\uC545 \uC0B0\uB85D \uB9C8\uC744"
-    height: 101
-    legacyHeight: 101
+    height: 107
+    legacyHeight: 107
     coord: {x: 0, y: 1}
     town: goryeo_songak
     neighbors:
     - goryeo_jangdan
     - Dakmok
-    - Gaegyeong
     - transit_woodtown
+    - Gaegyeong
   - mapId: goryeo_jangdan
     displayName: "\uC7A5\uB2E8 \uB4E4\uB9C8\uC744"
-    height: 105
-    legacyHeight: 105
+    height: 99
+    legacyHeight: 99
     coord: {x: 4, y: 0}
     town: goryeo_jangdan
     neighbors:
     - goryeo_songak
     - transit_pass
     - Naru
+    - transit_southport
   - mapId: north_birka
     displayName: "\uBE44\uB974\uCE74"
     height: 95
@@ -442,8 +443,8 @@ MonoBehaviour:
     - north_laugar
   - mapId: transit_pass
     displayName: "\uC194\uBC14\uB78C \uACE0\uAC1C"
-    height: 53
-    legacyHeight: 53
+    height: 46
+    legacyHeight: 46
     coord: {x: 5, y: 0}
     town: 
     neighbors:
@@ -452,25 +453,25 @@ MonoBehaviour:
     - goryeo_jangdan
   - mapId: transit_woodtown
     displayName: "\uC194\uC7AC \uAE38\uBAA9 \uB9C8\uC744"
-    height: 46
-    legacyHeight: 46
+    height: 50
+    legacyHeight: 50
     coord: {x: 6, y: 0}
     town: transit_woodtown
     neighbors:
-    - transit_wetroad
     - transit_pass
     - transit_central_approach
     - goryeo_songak
+    - transit_wetroad
   - mapId: transit_wetroad
     displayName: "\uBC84\uB4E4 \uBB3C\uAC00 \uAE38"
-    height: 49
-    legacyHeight: 49
+    height: 45
+    legacyHeight: 45
     coord: {x: 7, y: 0}
     town: 
     neighbors:
     - transit_ferry
-    - transit_woodtown
     - transit_central_approach
+    - transit_woodtown
   - mapId: transit_ferry
     displayName: "\uBC84\uB4E4\uB098\uB8E8 \uB9C8\uC744"
     height: 52
@@ -481,8 +482,8 @@ MonoBehaviour:
     - transit_wetroad
   - mapId: transit_central_approach
     displayName: "\uCD08\uC6D0 \uC9C4\uC785\uB85C"
-    height: 57
-    legacyHeight: 57
+    height: 60
+    legacyHeight: 60
     coord: {x: 9, y: 0}
     town: 
     neighbors:
@@ -491,8 +492,8 @@ MonoBehaviour:
     - transit_woodtown
   - mapId: transit_crossroads
     displayName: "\uB0B4\uB959 \uAD50\uC5ED \uAE38\uBAA9"
-    height: 46
-    legacyHeight: 46
+    height: 43
+    legacyHeight: 43
     coord: {x: 9, y: 1}
     town: transit_crossroads
     neighbors:
@@ -503,17 +504,18 @@ MonoBehaviour:
     - transit_south_inland
   - mapId: transit_southport
     displayName: "\uB0A8\uB3D9 \uD3EC\uAD6C"
-    height: 54
-    legacyHeight: 54
+    height: 61
+    legacyHeight: 61
     coord: {x: 8, y: 1}
     town: transit_southport
     neighbors:
     - transit_south_inland
     - transit_pass
+    - goryeo_jangdan
   - mapId: transit_south_inland
     displayName: "\uB0A8\uCABD \uB0B4\uB959\uAE38"
-    height: 45
-    legacyHeight: 45
+    height: 38
+    legacyHeight: 38
     coord: {x: 10, y: 0}
     town: 
     neighbors:

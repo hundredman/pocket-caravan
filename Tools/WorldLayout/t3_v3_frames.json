@@ -1,0 +1,83 @@
+{
+ "note": "2026-11-08 v3(첫 T3 경계) 맵 틀. v4 경계로 바꿀 때 v3 저장 위치를 옮기는 데 쓴다. 고치지 않는다.",
+ "maps": {
+  "transit_ferry": {
+   "x": 83,
+   "y": -127,
+   "width": 81,
+   "height": 52
+  },
+  "transit_central_approach": {
+   "x": 21,
+   "y": -75,
+   "width": 86,
+   "height": 57
+  },
+  "transit_crossroads": {
+   "x": 3,
+   "y": -18,
+   "width": 104,
+   "height": 46
+  },
+  "transit_south_inland": {
+   "x": 33,
+   "y": 28,
+   "width": 74,
+   "height": 45
+  },
+  "transit_wetroad": {
+   "x": 107,
+   "y": -75,
+   "width": 60,
+   "height": 49
+  },
+  "transit_woodtown": {
+   "x": 107,
+   "y": -26,
+   "width": 60,
+   "height": 46
+  },
+  "transit_pass": {
+   "x": 107,
+   "y": 20,
+   "width": 60,
+   "height": 53
+  },
+  "transit_southport": {
+   "x": 82,
+   "y": 73,
+   "width": 85,
+   "height": 54
+  },
+  "goryeo_songak": {
+   "x": 167,
+   "y": -79,
+   "width": 47,
+   "height": 101
+  },
+  "Dakmok": {
+   "x": 214,
+   "y": -93,
+   "width": 75,
+   "height": 64
+  },
+  "Gaegyeong": {
+   "x": 214,
+   "y": -29,
+   "width": 80,
+   "height": 51
+  },
+  "goryeo_jangdan": {
+   "x": 167,
+   "y": 22,
+   "width": 57,
+   "height": 105
+  },
+  "Naru": {
+   "x": 224,
+   "y": 22,
+   "width": 69,
+   "height": 89
+  }
+ }
+}

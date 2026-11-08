@@ -12,6 +12,7 @@ BASE=ROOT/'Assets/PocketCaravan'
 BUNDLE=Path(__file__).with_name('t3_baseline.json.gz')
 STATE=Path(__file__).with_name('t3_installed.json')
 RES=['Resources/GoryeoLayout.json','Resources/Goryeo/PlaceLabels.json','Resources/Goryeo/Life/Anchors.json','Resources/Goryeo/VillageLife/Anchors.json','Resources/Goryeo/Stride/Surfaces.json','Resources/Goryeo/Ferry/Config.json','Resources/Goryeo/Daily/Config.json','Resources/Goryeo/Seats/Config.json','Data/Goryeo/MarketLayout.json','Data/Goryeo/LogPlacement.json','Resources/WorldMap/GoryeoLayout.json','Resources/WorldMap/GoryeoRegionalLayout.json','World/Connections/region_links.json']
+DROPPED_WALKS=[]
 def digest(d):return hashlib.sha256(json.dumps(d,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
 def baseline():
  raw=BUNDLE.read_bytes();config=json.loads(t3.CONFIG.read_text())
@@ -38,10 +39,33 @@ def proposal():
   xx=wx-d['terrainX'];yy=wy-d['terrainY']
   if bottom:yy=d['h']-1-yy if cell else d['h']-yy
   return target,xx,yy
+ SIGN='Assets/PocketCaravan/Art/Goryeo/Markets/sign.png'
+ edits={tuple(e['world']):e for e in config.get('signEdits',{}).get('edits',[])};used=set();retext={}
  for mid,d in maps.items():
   d['previewOnly']=False;d['boundaryLayoutVersion']=3
-  for o in d['objects']:
-   if mid=='transit_crossroads'and o['kind']=='sign'and (d['terrainX']+o['x'],d['terrainY']+o['y'])in ((28,-15),(7,-4),(7,4)):o['sheet']='Assets/PocketCaravan/Art/Goryeo/Markets/sign.png'
+  pal=d['palette'];w=d['w']
+  for o in list(d['objects']):
+   if o['kind']!='sign':continue
+   at=(d['terrainX']+o['x'],d['terrainY']+o['y'])
+   if mid=='transit_crossroads'and at in((28,-15),(7,-4),(7,4)):o['sheet']=SIGN
+   e=edits.get(at)
+   if not e:continue
+   used.add(at);k=o['y']*w+o['x']
+   # 11/08 이정표 정리: 지우는 이정표는 그 칸의 이정표 그림 타일과 막힘도 함께 걷는다
+   if e.get('remove'):
+    d['objects'].remove(o);retext[o.get('text')]=None   # 그림 타일·막힘은 t3_boundaries.generate가 걷는다(출구 계산 전에)
+    continue
+   if 'text'in e:retext[o.get('text')]=e['text'];o['text']=e['text']
+   if e.get('sheet')and not d['obj'][k]:o['sheet']=SIGN
+   if e.get('move'):o['x']+=e['move'][0];o['y']+=e['move'][1]   # 안내판 그림(마을 꾸밈) 칸으로
+  for at,e in edits.items():
+   x,y=at[0]-d['terrainX'],at[1]-d['terrainY']
+   if e.get('add')and 0<=x<w and 0<=y<d['h']:
+    k=y*w+x
+    if d['blocked'][k]:raise ValueError('New sign on blocked cell')
+    o=dict(w=1,h=1,id='',npc='',town='',target='',spawn='',edge='',text=e['text'],name='',character='',lines=[],variant=0,idx=0,sheet='',frames=0,fps=0.0,radius=0.0,type='',path=[],kind='sign',x=x,y=y)
+    if e.get('sheet'):o['sheet']=SIGN
+    d['objects'].append(o);used.add(at)
   # Keep old internal spawn aliases for scripted journeys/existing references.
   existing={o.get('id')for o in d['objects']if o['kind']=='spawn'}
   fallback=next(o for o in d['objects']if o['kind']=='spawn'and o['id']=='S0')
@@ -49,6 +73,11 @@ def proposal():
    if o['kind']!='spawn'or o['id']in existing:continue
    q=copy.deepcopy(fallback);q['id']=o['id'];d['objects'].append(q);existing.add(q['id'])
   out[b['paths'][mid]]=d
+ # 11/08 연꽃 무리 옆 물결(기존 goryeo_ripples 움직임)
+ for wx,wy in report.get('lotusRender',{}).get('ripples',[]):
+  mid=owner(wx+.5,wy+.5);d=maps[mid]
+  d['objects'].append(dict(w=1,h=1,id='',npc='',town='',target='',spawn='',edge='',text='',name='',character='',lines=[],variant=0,idx=0,sheet='goryeo_ripples',frames=4,fps=3.5,radius=0.0,type='',path=[],kind='anim',x=wx-d['terrainX'],y=wy-d['terrainY']))
+ if set(edits)-used:raise ValueError(('Sign edit without sign',sorted(set(edits)-used)))
  for p,key,cell in [('Resources/Goryeo/PlaceLabels.json','places',False),('Resources/Goryeo/Life/Anchors.json','points',True),('Resources/Goryeo/VillageLife/Anchors.json','points',False)]:
   rows={m:{'id':m,'w':d['w'],'h':d['h'],key:[]}for m,d in maps.items()}
   for row in res[p]['maps']:
@@ -56,7 +85,8 @@ def proposal():
     q=copy.deepcopy(point);m,x,y=xy(row['id'],q['x'],q['y'],True,cell);q.update(x=x,y=y)
     if 'bx'in q:
      target,bx,by=xy(row['id'],q['bx'],q['by'],True,cell)
-     if m!=target:raise ValueError(('visual path crosses new border',row['id'],point))
+     # v4 (11/08): a decorative walk whose far end now lies in another scene stays at its start point.
+     if m!=target:bx,by=q['x'],q['y'];DROPPED_WALKS.append((row['id'],point.get('kind')))
      q.update(bx=bx,by=by)
     rows[m][key].append(q)
   res[p]['maps']=list(rows.values())
@@ -98,7 +128,8 @@ def proposal():
     rowout['spaces'].append(dict(id=space['id']if m==row['mapId']else row['mapId']+'_'+space['id'],props=props))
  res[p]['maps']=list(rows.values())
  # Freeze v2 coordinate frames and legacy fallback positions; main/recovery masks.
- migration={'version':3,'maps':[]}
+ migration={'version':4,'maps':[]}
+ prev=json.loads(Path(__file__).with_name('t3_v3_frames.json').read_text())['maps']   # v3 saves
  legacy={v['id']:v for v in res['Resources/GoryeoLayout.json']['maps']}
  for mid,d in maps.items():
   mask=np.array(d['blocked']).reshape(d['h'],d['w'])==0
@@ -116,7 +147,7 @@ def proposal():
     for q in space['props']:safe[q['y']+q['h']-1,q['x']:q['x']+q['w']]=False
   if not safe.any():raise ValueError('No safe save recovery '+mid)
   s=old[mid];v=legacy[mid]
-  migration['maps'].append(dict(id=mid,oldX=s['terrainX'],oldY=s['terrainY'],oldWidth=s['w'],oldHeight=s['h'],x=d['terrainX'],y=d['terrainY'],width=d['w'],height=d['h'],legacyX=v['spawnX'],legacyY=v['spawnY'],legacyDropX=v['dropX'],legacyDropY=v['dropY'],main=''.join('1'if c else'0'for c in main.ravel()),stay=''.join('1'if c else'0'for c in stay.ravel()),safe=''.join('1'if c else'0'for c in safe.ravel())))
+  migration['maps'].append(dict(id=mid,oldX=s['terrainX'],oldY=s['terrainY'],oldWidth=s['w'],oldHeight=s['h'],x=d['terrainX'],y=d['terrainY'],width=d['w'],height=d['h'],prevX=prev[mid]['x'],prevY=prev[mid]['y'],prevWidth=prev[mid]['width'],prevHeight=prev[mid]['height'],legacyX=v['spawnX'],legacyY=v['spawnY'],legacyDropX=v['dropX'],legacyDropY=v['dropY'],main=''.join('1'if c else'0'for c in main.ravel()),stay=''.join('1'if c else'0'for c in stay.ravel()),safe=''.join('1'if c else'0'for c in safe.ravel())))
   # Current fallback metadata: older positions are migrated from separate frozen resource.
   v.update(height=d['h'],legacyHeight=d['h'],spawnX=s0['x']+.5,spawnY=d['h']-s0['y']-.18,dropX=s0['x']+.5,dropY=d['h']-s0['y']-.18)
  out['Resources/Goryeo/BoundaryLayout.json']=migration
@@ -140,8 +171,10 @@ def proposal():
    mid=endpoint['map'];target=link[other]['map'];d=maps[mid]
    exit=next(o for o in d['objects']if o['kind']=='exit'and o['target']==target)
    endpoint.update(x=exit['x'],y=exit['y'],w=exit['w'],h=exit['h'],edge=exit['edge'],by='Tools/WorldLayout/t3_install.py')
+ spec['signs']=[x for x in spec.get('signs',[])if not(x['map']in maps and x['text']in retext and retext[x['text']]is None)]
  for sign in spec.get('signs',[]):
   if sign['map']not in maps:continue
+  if sign['text']in retext:sign['text']=retext[sign['text']]
   d=maps[sign['map']]
   match=[o for o in d['objects']if o['kind']=='sign'and o.get('text')==sign['text']]
   if len(match)!=1:raise ValueError('Connection sign missing/ambiguous')
@@ -168,6 +201,16 @@ def install(write=False):
   for p,d in out.items():
    path=BASE/p;path.parent.mkdir(parents=True,exist_ok=True);path.write_text((json.dumps(d,ensure_ascii=False,indent=2) if p=='World/Connections/region_links.json' else json.dumps(d,ensure_ascii=False,separators=(',',':')))+'\n')
   STATE.write_text(json.dumps({p:digest(d)for p,d in out.items()},indent=2)+'\n')
+  # 11/08: 다시 그린 숲 가장자리 칸 그림(원본 나무 그림을 겹친 것)과 그 겹친 기록
+  import t3_forest
+  tiles_dir=ROOT/'Assets/PocketCaravan/Art/NinjaAdventure/Tiles';m=json.loads(t3_forest.MANIFEST.read_text());grew=False
+  for fr in(report.get('_forestTiles'),report.get('_lotusTiles')):   # 11/08 숲 가장자리·연꽃 칸 그림과 겹친 기록
+   if not fr or not fr['tiles']:continue
+   for n,im in fr['tiles'].items():
+    if not(tiles_dir/f'{n}.png').exists():im.save(tiles_dir/f'{n}.png')
+   for n,e in fr['entries'].items():
+    if n not in m['tiles']:m['tiles'][n]=e;grew=True
+  if grew:t3_forest.MANIFEST.write_text(json.dumps(m,ensure_ascii=False,indent=0))
  print(json.dumps(dict(outputs=len(out),maps=len(report['maps']),exits=sum(m['exits']for m in report['maps']),write=write),ensure_ascii=False))
 def worldmaps():
  sys.path.insert(0,str(ROOT/'Tools/MapGen'))
