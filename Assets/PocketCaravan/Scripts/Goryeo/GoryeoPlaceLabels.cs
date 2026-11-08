@@ -152,7 +152,6 @@ namespace PocketCaravan
                 var n = nav.Value;
                 Vector2 from = player.transform.position;
                 Vector2 d = (Vector2)n.steer - from;                 // 걸을 수 있는 길의 앞쪽을 가리킨다
-                if (d.sqrMagnitude > 0.01f) d = Navigator.SmoothDirection(d) * d.magnitude;   // 11/08 걸음마다 날뛰지 않게 부드럽게 돈다
                 float dist = n.walkCells >= 0 ? n.walkCells : ((Vector2)n.position - from).magnitude;
                 if (n.exit) DrawDown(ToGui(cam, n.position + new Vector3(0f, 0.9f, 0f)));
                 if (dist > 2.2f && d.sqrMagnitude > 0.01f)
