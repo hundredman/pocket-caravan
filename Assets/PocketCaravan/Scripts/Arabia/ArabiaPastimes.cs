@@ -480,7 +480,7 @@ namespace PocketCaravan
             new Place { map = "arabia_jeddah", x = 44, y = 21, game = typeof(CamelRace) },   // 수레 장인 유수프 옆
             new Place { map = "arabia_shortcut", x = -1, y = -1, game = typeof(SandstormRun) }, // 길 가운데 (자동)
             new Place { map = "arabia_central_dunes", x = 133, y = 17, game = typeof(SandBoat) },   // 모래 배 주인(135,15) 옆 와디
-            new Place { map = "arabia_central_canyon", x = 102, y = 29, game = typeof(RedStone) },  // 붉은 돌 캐는 사람(100,29) 옆
+            new Place { map = "arabia_central_canyon", x = 101, y = 32, game = typeof(RedStone) },  // 붉은 돌 캐는 사람(100,29) 아래 3칸 (11/08 옆에 두니 이름표가 겹쳐서)
         };
 
         static Vector3? Cell(MapRoot mr, string map, int x, int y)
