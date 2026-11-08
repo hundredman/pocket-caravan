@@ -13,7 +13,7 @@ namespace PocketCaravan
         public int version = 2;
         public ReputationState.Save reputation;
         public TradeActivity.Save tradeActivity;
-        public int layoutVersion; // 1: broad regions, 2: M4, 3: T3 exterior boundaries; old saves migrate in memory.
+        public int layoutVersion; // 1: broad regions, 2: M4, 3: T3 exterior boundaries, 4: T3 re-cut (11/08, roads cross borders); old saves migrate in memory.
         public string scene;
         public float px, py;
         public int mapHeight; // 0: 맵 확장 전 저장. WorldIndex의 고정된 이전 높이를 사용한다.

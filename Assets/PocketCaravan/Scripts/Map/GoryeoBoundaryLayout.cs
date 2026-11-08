@@ -4,13 +4,14 @@ using UnityEngine;
 
 namespace PocketCaravan
 {
-    /// <summary>T3 사각 경계. v2의 실제 지형 위치를 보존하고 고립·출구 위 저장은 안전한 자리로 복구한다.</summary>
+    /// <summary>T3 사각 경계. v2의 실제 지형 위치를 보존하고 고립·출구 위 저장은 안전한 자리로 복구한다.
+    /// 2026-11-08 v4: 경계를 다시 나눴다(길이 경계를 따라 잘리지 않게). v3 저장은 v3 틀(prev*)로 세계 위치를 구해 같은 방식으로 옮긴다.</summary>
     public static class GoryeoBoundaryLayout
     {
         [Serializable] public class Frame
         {
             public string id, main, stay, safe;
-            public int oldX,oldY,oldWidth,oldHeight,x,y,width,height;
+            public int oldX,oldY,oldWidth,oldHeight,prevX,prevY,prevWidth,prevHeight,x,y,width,height;
             public float legacyX,legacyY,legacyDropX,legacyDropY;
         }
         [Serializable] class Config { public int version; public Frame[] maps; }
@@ -21,7 +22,7 @@ namespace PocketCaravan
                 if(config==null){var text=Resources.Load<TextAsset>("Goryeo/BoundaryLayout");
                     if(text==null)throw new InvalidOperationException("고려 경계 이주 데이터가 없습니다.");
                     config=JsonUtility.FromJson<Config>(text.text);
-                    if(config==null||config.version!=3||config.maps==null||config.maps.Length!=13)throw new InvalidOperationException("고려 경계 이주 데이터가 올바르지 않습니다.");
+                    if(config==null||config.version!=4||config.maps==null||config.maps.Length!=13)throw new InvalidOperationException("고려 경계 이주 데이터가 올바르지 않습니다.");
                     foreach(var f in config.maps)if(f.width<=0||f.height<=0||f.main==null||f.stay==null||f.stay.Length!=f.width*f.height||f.safe==null||f.main.Length!=f.width*f.height||f.safe.Length!=f.main.Length||!f.safe.Contains("1"))throw new InvalidOperationException("고려 경계 복구 영역이 올바르지 않습니다.");
                 }return config;
             }
@@ -39,7 +40,9 @@ namespace PocketCaravan
             var old=Find(id);
             if(old==null)return new Location{id=id,x=px,y=py,height=savedHeight};
             if(version<2){px=drop?old.legacyDropX:old.legacyX;py=drop?old.legacyDropY:old.legacyY;savedHeight=old.oldHeight;}
-            float wx=old.oldX+px,wy=old.oldY+(savedHeight>0?savedHeight:old.oldHeight)-py;
+            float wx,wy;
+            if(version>=3){wx=old.prevX+px;wy=old.prevY+(savedHeight>0?savedHeight:old.prevHeight)-py;}   // v3 틀
+            else{wx=old.oldX+px;wy=old.oldY+(savedHeight>0?savedHeight:old.oldHeight)-py;}
             if(float.IsNaN(wx)||float.IsInfinity(wx)||float.IsNaN(wy)||float.IsInfinity(wy))throw new InvalidOperationException("저장 위치가 올바르지 않습니다.");
             // Saves store body position; feet are .32 tiles below the body. Drops use their own point.
             float footY=wy+(drop?0:.32f);Frame target=null;
@@ -61,13 +64,13 @@ namespace PocketCaravan
         /// <summary>모든 계산 성공 뒤 메모리 DTO의 위치 필드만 변경. 디스크·재산·의뢰는 건드리지 않는다.</summary>
         public static void Migrate(SaveData data)
         {
-            if(data==null||data.layoutVersion>=3)return;
+            if(data==null||data.layoutVersion>=4)return;
             var player=Convert(data.scene,data.px,data.py,data.mapHeight,data.layoutVersion,false);
             var drops=new List<Location>();
             if(data.drops!=null)foreach(var r in data.drops)drops.Add(Convert(r.mapId,r.x,r.y,0,data.layoutVersion,true));
             data.scene=player.id;data.px=player.x;data.py=player.y;data.mapHeight=player.height;
             if(data.drops!=null)for(int i=0;i<drops.Count;i++){var r=data.drops[i];var p=drops[i];r.mapId=p.id;r.x=p.x;r.y=p.y;}
-            data.layoutVersion=3;
+            data.layoutVersion=4;
         }
     }
 }
