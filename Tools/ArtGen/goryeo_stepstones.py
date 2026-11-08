@@ -41,7 +41,7 @@ def stone(w,h,top=6,lean=0.0):
     for x in range(xs[0],xs[-1]+1):
         if 0<=ly<16 and p[x,ly][3]==0:p[x,ly]=WET
     return im
-VARIANTS=[(12,6,6,0.0),(10,5,7,0.08),(11,6,6,-0.08)]
+VARIANTS=[(9,5,7,0.0),(8,4,8,0.08),(9,5,7,-0.08)]   # 11/09 돌 사이에 물이 보이게 작게
 if __name__=='__main__':
     out=Path(sys.argv[1] if len(sys.argv)>1 else '.');out.mkdir(parents=True,exist_ok=True)
     for i,v in enumerate(VARIANTS):stone(*v).save(out/f'stepstone_{i}.png')

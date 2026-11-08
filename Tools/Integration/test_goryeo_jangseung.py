@@ -32,7 +32,7 @@ class GoryeoJangseung(unittest.TestCase):
             self.assertTrue(walk(c), mid)
             self.assertTrue(any(n in seen for n in ((c[0] + 1, c[1]), (c[0] - 1, c[1]), (c[0], c[1] + 1), (c[0], c[1] - 1))), mid)
             self.assertGreaterEqual(yj, 5, mid)   # 위 상태줄(약 3칸) 밑에 가리지 않게
-            self.assertTrue(4 <= x < w - 4, mid)
+            self.assertTrue(2 <= x < w - 1, mid)   # 오른쪽·왼쪽은 상태줄이 없어 가장자리 한 칸만 피한다
 
     def test_stepping_stones_cross_only_water_in_one_line(self):
         from PIL import Image
