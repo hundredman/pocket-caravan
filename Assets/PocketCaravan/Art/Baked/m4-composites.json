@@ -72375,6 +72375,742 @@
 0
 ]
 ]
+},
+"m4_391524d86c23": {
+"sha256": "391524d86c2381486de205a1eff824dd0689766a3c462d64aba1496e06b71d79",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:forest_round:3:4",
+-16,
+-48
+],
+[
+"sprite:round_west:4:3",
+0,
+-32
+],
+[
+"sprite:forest_bent:3:4",
+-32,
+-32
+]
+]
+},
+"m4_c04e5745a1ba": {
+"sha256": "c04e5745a1ba0e5f829edeb702284a705c07fff511da8e1f234eec3c670dea94",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:round_east:4:3",
+-16,
+-32
+],
+[
+"sprite:forest_wide:4:3",
+-32,
+-16
+],
+[
+"sprite:forest_bent:3:4",
+-32,
+-16
+],
+[
+"sprite:forest_wide:4:3",
+-16,
+0
+]
+]
+},
+"m4_e07d03c0b5ff": {
+"sha256": "e07d03c0b5ff794afe3b6b3a321ceb3a2a9accd077d3c3543351e647282825dc",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:forest_round:3:4",
+-32,
+-48
+],
+[
+"sprite:forest_bent:3:4",
+0,
+-48
+],
+[
+"sprite:round_east:4:3",
+-48,
+0
+],
+[
+"sprite:forest_bent:3:4",
+-16,
+0
+]
+]
+},
+"m4_caf2d149f2f3": {
+"sha256": "caf2d149f2f30346d14d9c733f16b48aebc252d7adfa989d5492b22fa3184aa6",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:forest_round:3:4",
+-32,
+-48
+],
+[
+"sprite:round_east:4:3",
+0,
+-16
+],
+[
+"sprite:forest_wide:4:3",
+-16,
+0
+],
+[
+"sprite:forest_bent:3:4",
+-16,
+0
+]
+]
+},
+"m4_3119ced05c33": {
+"sha256": "3119ced05c33c563d57823867acc119d3acd8b24dbb11ca7f56a2fec901b1d28",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:forest_bent:3:4",
+-32,
+-48
+],
+[
+"sprite:forest_wide:4:3",
+0,
+-16
+],
+[
+"sprite:forest_bent:3:4",
+-32,
+-16
+],
+[
+"sprite:forest_bent:3:4",
+0,
+-16
+],
+[
+"sprite:forest_bent:3:4",
+-16,
+0
+]
+]
+},
+"m4_dc0e17de1412": {
+"sha256": "dc0e17de1412d7e43bb77f0de26ba6d4142ff0127f6efb518a003ed32781ee04",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:forest_wide:4:3",
+-48,
+-32
+],
+[
+"sprite:forest_bent:3:4",
+0,
+-48
+],
+[
+"sprite:forest_round:3:4",
+0,
+-16
+]
+]
+},
+"m4_84a116ebfe27": {
+"sha256": "84a116ebfe27de95da4305d85890d9b34dacd66ce598a5b70ccd0db2d15cd394",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:forest_wide:4:3",
+-32,
+-32
+],
+[
+"sprite:broadleaf:4:4",
+-48,
+-32
+],
+[
+"sprite:round_east:4:3",
+0,
+0
+]
+]
+},
+"m4_1389f797743e": {
+"sha256": "1389f797743e854561d604a981c8db66cbb2ab0376dcc4a599b10f95f07567af",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:forest_wide:4:3",
+-48,
+-32
+],
+[
+"sprite:round_east:4:3",
+-16,
+0
+]
+]
+},
+"m4_207d74f825c8": {
+"sha256": "207d74f825c899146cc57ed60ca606e4db595092f3f1e69e58e20d6af13878b0",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:round_east:4:3",
+-48,
+-32
+],
+[
+"sprite:forest_wide:4:3",
+-48,
+0
+],
+[
+"sprite:forest_bent:3:4",
+0,
+-16
+],
+[
+"sprite:forest_round:3:4",
+-16,
+0
+]
+]
+},
+"m4_5e817c0b9181": {
+"sha256": "5e817c0b9181e43c2ad3b095b8dc076193172ff0201ab327b4a07da63ea059ad",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:forest_bent:3:4",
+-16,
+-48
+],
+[
+"sprite:forest_wide:4:3",
+0,
+-32
+],
+[
+"sprite:forest_bent:3:4",
+-32,
+-32
+],
+[
+"sprite:forest_wide:4:3",
+0,
+0
+],
+[
+"sprite:broadleaf:4:4",
+-16,
+0
+]
+]
+},
+"m4_cce30121a672": {
+"sha256": "cce30121a6721d759f11201f17540fb695c6bf6999b99c5d4f1bc55e2a5231e3",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:forest_bent:3:4",
+-32,
+-48
+],
+[
+"sprite:forest_wide:4:3",
+-16,
+-32
+],
+[
+"sprite:forest_wide:4:3",
+0,
+-16
+],
+[
+"sprite:forest_wide:4:3",
+-16,
+0
+],
+[
+"sprite:broadleaf:4:4",
+-32,
+0
+]
+]
+},
+"m4_fa8fabd6f32b": {
+"sha256": "fa8fabd6f32b1f7dcd04a0294f0089739bf19d8b0387a9867765ff2f7c44a15a",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:forest_bent:3:4",
+-16,
+-48
+],
+[
+"sprite:forest_round:3:4",
+-32,
+-32
+],
+[
+"sprite:broadleaf:4:4",
+0,
+-16
+]
+]
+},
+"m4_2d49115d7a74": {
+"sha256": "2d49115d7a74e939cf9306eda4a8f1ed4c9d309c506ca89069d71c1557aa98c5",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:forest_round:3:4",
+-32,
+-48
+],
+[
+"sprite:broadleaf:4:4",
+0,
+-32
+],
+[
+"sprite:round_east:4:3",
+-48,
+0
+],
+[
+"sprite:forest_bent:3:4",
+-16,
+0
+]
+]
+},
+"m4_13549f5d6cd6": {
+"sha256": "13549f5d6cd669e2d5628b829679c15851a769311aeb7b0cfacbca1c010df263",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:forest_round:3:4",
+-32,
+-48
+],
+[
+"sprite:broadleaf:4:4",
+-16,
+-48
+],
+[
+"sprite:round_west:4:3",
+0,
+-16
+]
+]
+},
+"m4_ae465e9fa6f5": {
+"sha256": "ae465e9fa6f5183c841682859da3336dbabc6b76c0f9ccdffc2e5ae870c0dd85",
+"layer": "high",
+"base": null,
+"parts": [
+[
+"sprite:forest_bent:3:4",
+-32,
+-32
+],
+[
+"sprite:forest_wide:4:3",
+-16,
+-16
+],
+[
+"sprite:forest_wide:4:3",
+-32,
+0
+],
+[
+"sprite:broadleaf:4:4",
+-48,
+0
+]
+]
+},
+"m4_71b83475b4ca": {
+"sha256": "71b83475b4caa0769ab2f32e95426ef6af5bd67e6ef743087ef627b94d09021f",
+"layer": "high",
+"base": null,
+"parts": [
+[
+"sprite:forest_wide:4:3",
+-32,
+-16
+],
+[
+"sprite:forest_wide:4:3",
+-48,
+0
+],
+[
+"sprite:forest_round:3:4",
+0,
+-16
+]
+]
+},
+"m4_30512a06b53b": {
+"sha256": "30512a06b53bac1cce1f816b61a2d1f70f88e34a23fb230954b25ab3cef85530",
+"layer": "high",
+"base": null,
+"parts": [
+[
+"sprite:forest_round:3:4",
+-16,
+-32
+],
+[
+"sprite:round_east:4:3",
+-16,
+0
+],
+[
+"sprite:forest_bent:3:4",
+-16,
+0
+]
+]
+},
+"m4_1121b454cd77": {
+"sha256": "1121b454cd778fdb36df04e4dcc5f159a204b621d106bb36a55acb0602265f2e",
+"layer": "high",
+"base": null,
+"parts": [
+[
+"sprite:broadleaf:4:4",
+-48,
+-32
+],
+[
+"sprite:round_west:4:3",
+-32,
+0
+],
+[
+"sprite:round_east:4:3",
+0,
+0
+]
+]
+},
+"m4_217491022dcb": {
+"sha256": "217491022dcb6b23cf59a12e528aa626949c1eb631120e5d280a7ec174fde6ef",
+"layer": "high",
+"base": null,
+"parts": [
+[
+"sprite:forest_wide:4:3",
+-32,
+-16
+],
+[
+"sprite:forest_wide:4:3",
+-16,
+0
+]
+]
+},
+"m4_27f77fbe933d": {
+"sha256": "27f77fbe933d7ae0dbf81d642ac68a24d6b89da5905482345e85df800e00a0da",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:forest_wide:4:3",
+-32,
+-32
+],
+[
+"sprite:forest_wide:4:3",
+-16,
+-16
+],
+[
+"sprite:forest_wide:4:3",
+-32,
+0
+],
+[
+"sprite:broadleaf:4:4",
+-48,
+0
+],
+[
+"sprite:light_tree:3:4",
+0,
+0
+]
+]
+},
+"m4_6b3734a1bd83": {
+"sha256": "6b3734a1bd83197a50624782c60b41b1fd6e8fb5c7890bf9bba56ffd8862cbad",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:round_west:4:3",
+-32,
+-32
+],
+[
+"sprite:round_east:4:3",
+-48,
+-16
+],
+[
+"sprite:forest_wide:4:3",
+-32,
+0
+],
+[
+"sprite:round_west:4:3",
+0,
+0
+],
+[
+"sprite:forest_bent:3:4",
+-32,
+0
+]
+]
+},
+"m4_765b3b5b3f73": {
+"sha256": "765b3b5b3f73b0950fce20dc1bc0049fee1364f721664b227950521f4a745e4d",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:round_west:4:3",
+-48,
+-32
+],
+[
+"sprite:forest_bent:3:4",
+0,
+-48
+],
+[
+"sprite:forest_round:3:4",
+-32,
+-16
+],
+[
+"sprite:forest_bent:3:4",
+0,
+-16
+],
+[
+"sprite:forest_round:3:4",
+-16,
+0
+]
+]
+},
+"m4_039dae1144d4": {
+"sha256": "039dae1144d48adf1246a03f792ff09c9e8fc6b6c56642b81a8b9703c05e3cd9",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:forest_bent:3:4",
+-16,
+-48
+],
+[
+"sprite:forest_wide:4:3",
+0,
+-32
+],
+[
+"sprite:forest_round:3:4",
+-32,
+-32
+],
+[
+"sprite:forest_round:3:4",
+-16,
+-16
+],
+[
+"sprite:round_west:4:3",
+0,
+0
+],
+[
+"sprite:forest_bent:3:4",
+-32,
+0
+]
+]
+},
+"m4_cec98b8a9cdf": {
+"sha256": "cec98b8a9cdf8c8f13dff549fda302f32c90992a7cef03399b7572067a0f380b",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:round_west:4:3",
+-48,
+-32
+],
+[
+"sprite:forest_round:3:4",
+-32,
+-16
+],
+[
+"sprite:forest_round:3:4",
+-16,
+0
+]
+]
+},
+"m4_754753e24c7f": {
+"sha256": "754753e24c7fb6e0fabd6c198415293ec93d5cfe47ed1404cac0d492553f8f72",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:round_east:4:3",
+-32,
+-32
+],
+[
+"sprite:round_east:4:3",
+0,
+-32
+],
+[
+"sprite:forest_bent:3:4",
+-32,
+-32
+],
+[
+"sprite:forest_bent:3:4",
+-16,
+-16
+],
+[
+"sprite:forest_wide:4:3",
+0,
+0
+],
+[
+"sprite:forest_bent:3:4",
+-32,
+0
+]
+]
+},
+"m4_7b07eadba4da": {
+"sha256": "7b07eadba4da181a9a45dc91bc4f8d7465c679784a27b40790e254e09588c868",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:round_east:4:3",
+-48,
+-32
+],
+[
+"sprite:round_east:4:3",
+-16,
+-32
+],
+[
+"sprite:forest_bent:3:4",
+-32,
+-16
+],
+[
+"sprite:forest_wide:4:3",
+-16,
+0
+]
+]
+},
+"m4_7951131961fc": {
+"sha256": "7951131961fc0d26f1f5bbd3b35d270cad82256d69c8a68f445fcba599f81b44",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:round_east:4:3",
+-32,
+-32
+],
+[
+"sprite:forest_wide:4:3",
+-32,
+0
+],
+[
+"sprite:forest_round:3:4",
+0,
+0
+]
+]
+},
+"m4_c83bb2d259f4": {
+"sha256": "c83bb2d259f4b34481912790ebd041038a02894fb969eb5e57f5577223b8e785",
+"layer": "obj",
+"base": null,
+"parts": [
+[
+"sprite:round_east:4:3",
+-48,
+-32
+],
+[
+"sprite:forest_bent:3:4",
+0,
+-48
+],
+[
+"sprite:forest_wide:4:3",
+-48,
+0
+],
+[
+"sprite:forest_round:3:4",
+-16,
+0
+]
+]
 }
 }
 }

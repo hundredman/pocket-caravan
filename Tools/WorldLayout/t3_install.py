@@ -171,6 +171,15 @@ def install(write=False):
   for p,d in out.items():
    path=BASE/p;path.parent.mkdir(parents=True,exist_ok=True);path.write_text((json.dumps(d,ensure_ascii=False,indent=2) if p=='World/Connections/region_links.json' else json.dumps(d,ensure_ascii=False,separators=(',',':')))+'\n')
   STATE.write_text(json.dumps({p:digest(d)for p,d in out.items()},indent=2)+'\n')
+  # 11/08: 다시 그린 숲 가장자리 칸 그림(원본 나무 그림을 겹친 것)과 그 겹친 기록
+  fr=report.get('_forestTiles')
+  if fr and fr['tiles']:
+   import t3_forest
+   tiles_dir=ROOT/'Assets/PocketCaravan/Art/NinjaAdventure/Tiles';m=json.loads(t3_forest.MANIFEST.read_text())
+   for n,im in fr['tiles'].items():
+    if not(tiles_dir/f'{n}.png').exists():im.save(tiles_dir/f'{n}.png')
+   m['tiles'].update({n:e for n,e in fr['entries'].items()if n not in m['tiles']})
+   t3_forest.MANIFEST.write_text(json.dumps(m,ensure_ascii=False,indent=0))
  print(json.dumps(dict(outputs=len(out),maps=len(report['maps']),exits=sum(m['exits']for m in report['maps']),write=write),ensure_ascii=False))
 def worldmaps():
  sys.path.insert(0,str(ROOT/'Tools/MapGen'))

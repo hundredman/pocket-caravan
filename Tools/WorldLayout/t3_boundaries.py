@@ -129,9 +129,11 @@ def generate(config,sources):
                         for k in LAYERS:tile_world[k][r,wx]=patch[k][(wy-py)%ph,(wx-px)%pw]
                     filled[r,wx]=True
         known|=filled;walk&=~filled
+        filled_forest=filled&(tile_world['ground']!='pond_center')
     # 2026-11-08 v4: small approved road reshapes (e.g. remove a dead-end stub). Road tiles are re-chosen from the
     # existing 9-slice + inner-corner road set by neighbour shape; removed cells become plain grass. No new art.
     forest_cells=[]
+    if not fill:filled_forest=np.zeros_like(known)
     for edit in config.get('roadEdits',[]):
         ex0,ey0,ex1,ey1=edit['region'];keep=edit.get('keepMaxY',10**6)
         mask=road>0;new=mask.copy()
@@ -182,6 +184,14 @@ def generate(config,sources):
                     col=0 if not W_ else 2 if not E else 1;row=7 if not N else 9 if not S else 8
                     t=f'floor_{col}_{row}_goryeo_jade'
                 tile_world['ground'][r,wx]=t
+    # 11/08 v4: re-draw the new forest (void fill) and the forest beside new roads with the original forest lattice,
+    # so edges show whole trees like the native forest instead of square cuts. Walk/blocked are unchanged.
+    forest_render=None
+    if config.get('forestRender'):
+        import t3_forest
+        changed=filled_forest.copy()
+        for cx,cy in forest_cells:changed[cy-oy,cx]=True
+        forest_render=t3_forest.render(tile_world,walk,water,owners,boxes,ids,oy,changed)
     # Dirt and grass use the same rule: the shared outer face must be reachable
     # from the town/start component on both sides. Do not open detached pockets.
     portal_walk=np.zeros_like(walk)
@@ -294,6 +304,7 @@ def generate(config,sources):
     for mid,(x0,y0,x1,y1)in boxes.items():covered[y0-oy:y1-oy,x0:x1]=True
     report['trimmedReviewCells']=[[int(x),int(y+oy)]for y,x in zip(*np.nonzero(known&~covered))]
     report['roadForestCells']=len(forest_cells)
+    if forest_render:report['forestRender']=dict(cells=forest_render['cells'],changedCells=forest_render['changedCells'],newTiles=sorted(forest_render['tiles']));report['_forestTiles']=forest_render
     report['trimmedWalkableCells']=int((walk&~covered).sum())
     report['trimNote']='Review-only: west tip is shortened by one column to fit two separate existing foreign portals on the same true outer face. No new land or foreign file changes.'
     surfaces=Counter();samples=[];actual={}
