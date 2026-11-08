@@ -97,7 +97,7 @@ namespace PocketCaravan
             string current = index != null && MapRoot.Current != null ? index.MapName(MapRoot.Current.mapId) : "";
             var res = CuteMap.Draw(regional ? "고려 상세 지도" : "고려 · 중앙 대륙 동쪽 교역도", activeTerrain,
                 activeAtlas != null ? activeAtlas.width : 0, activeAtlas != null ? activeAtlas.height : 0, places, me, current,
-                $"북 ↑ · 지역 이름 {places.Count}곳", null, regionalAtlas != null ? (regional ? "전체 지도" : "고려 상세") : null, sideLabels: true);
+                $"북 ↑ · 지역 이름 {places.Count}곳", null, regionalAtlas != null ? (regional ? "전체 지도" : "고려 상세") : null, sideLabels: true, smallPin: true);
             if (res.toggle) regional = !regional;
             if (res.close) Close();
         }
