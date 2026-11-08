@@ -27,6 +27,8 @@ namespace PocketCaravan
             }
             DialogueUI.Show(DisplayLabel,
                 "나는 이 창고를 지키는 톰테다. 들어가기 전에 하나 묻지. 여기 금단지, 은단지, 흙단지가 있다. 네가 가져온 단지는 어느 것이냐?",
+                // 11/08 Space(첫 선택지)로 대화를 넘기다 거짓말이 되어 신용·돈을 잃지 않게, 첫 칸은 아무 일 없이 닫는다 (다시 말 걸면 또 묻는다)
+                new DialogueUI.Choice("잠깐만요, 생각해 볼게요", null),
                 new DialogueUI.Choice("금단지입니다", () => Answer(false)),
                 new DialogueUI.Choice("은단지입니다", () => Answer(false)),
                 new DialogueUI.Choice("제 것은 흙단지입니다", () => Answer(true)));
