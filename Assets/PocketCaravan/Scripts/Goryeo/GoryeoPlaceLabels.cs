@@ -38,7 +38,10 @@ namespace PocketCaravan
         public void Refresh()=>Sync();
         bool Allowed=>map!=null&&MapRoot.Current==map&&(map.previewOnly||approvedForProduction);
         public static bool Nearby(Vector2 feet,Vector2 at)=>(feet-at).sqrMagnitude<=Near*Near;
-        public static bool IsPlace(Interactable it)=>it is TownMarket||it is ContractBoard||it is WorkshopSpot||it is GoryeoDailyActivity||it is GoryeoPastime||it is GoryeoSeat||Inn.IsHost(it)||(it is TalkNpc&&it.GetComponent<CharacterAnimator>()==null);
+        // 2026-11-08 은샘: 화면 안의 사람(NPC)은 거리와 상관없이 늘 이름표를 띄운다(베네치아·공용 이름표와 같은 규칙).
+        // 장터 상인·객주 주인·낚시하는 아이처럼 사람 모습이 있으면 사람으로 본다. 우물·게시판·자리·공방·이정표 같은 장소만 가까이(4칸)에서.
+        public static bool IsPerson(Interactable it)=>it!=null&&it.GetComponentInChildren<CharacterAnimator>()!=null;
+        public static bool IsPlace(Interactable it)=>!IsPerson(it)&&(it is TownMarket||it is ContractBoard||it is WorkshopSpot||it is GoryeoDailyActivity||it is GoryeoPastime||it is GoryeoSeat||Inn.IsHost(it)||it is TalkNpc);
         public static string LabelFor(Interactable it,Vector2 feet)
         {
             if(it==null)return "";if(IsPlace(it)&&!Nearby(feet,it.transform.position))return "";
@@ -57,17 +60,20 @@ namespace PocketCaravan
             CuteUI.WorldText(FriendHintRect.center.x,FriendHintRect.center.y,text,true);
         }
         readonly System.Collections.Generic.HashSet<Interactable> hiddenNames=new System.Collections.Generic.HashSet<Interactable>();
+        // 겹친 이름표는 숨기지 않고 위·아래로 비켜 놓는다(사람 이름표가 모두 보이게). 값 = 화면 위아래로 옮긴 양
+        readonly System.Collections.Generic.Dictionary<Interactable,float> nameShift=new System.Collections.Generic.Dictionary<Interactable,float>();
         Rect NameRect(Vector2 p,string text)
         {
             float w=Mathf.Min(UIStyle.VirtualWidth-8,Mathf.Ceil(CuteUI.Width(text,true))+2);
             float h=Mathf.Ceil(nameStyle.CalcSize(new GUIContent(text)).y)+2;
             return new Rect(Mathf.Round(p.x-w/2-guiOrigin.x)+guiOrigin.x,Mathf.Round(p.y-h/2-guiOrigin.y)+guiOrigin.y,w,h);
         }
-        void ReserveNames(Camera cam)
+        void ReserveNames(Camera cam,Vector2 feet)
         {
-            hiddenNames.Clear();
+            hiddenNames.Clear();nameShift.Clear();
             var items=new System.Collections.Generic.List<Interactable>();
-            foreach(var it in Interactable.All)if(it!=null&&!string.IsNullOrEmpty(it.DisplayName))items.Add(it);
+            // 실제로 그릴 이름표만 자리를 잡는다(멀리 있어 안 그리는 장소 이름이 옆 사람 이름표를 밀어내지 않게)
+            foreach(var it in Interactable.All)if(it!=null&&!string.IsNullOrEmpty(LabelFor(it,feet)))items.Add(it);
             items.Sort((a,b)=>{
                 int pa=a.GetComponentInChildren<CharacterAnimator>()!=null?0:1,pb=b.GetComponentInChildren<CharacterAnimator>()!=null?0:1;
                 int c=pa.CompareTo(pb);if(c!=0)return c;
@@ -79,9 +85,15 @@ namespace PocketCaravan
                 string text=DisplayLabel(it);
                 var r=NameRect(NamePoint(cam,BodyBounds(it)),text);
                 if(BadgeFor(it)!=QuestMarker.None)r.width+=15;
-                var padded=r;padded.xMin-=2;padded.xMax+=2;padded.yMin-=1;padded.yMax+=1;
-                bool overlap=false;foreach(var other in reserved)if(other.Overlaps(padded)){overlap=true;break;}
-                if(overlap)hiddenNames.Add(it);else reserved.Add(padded);
+                float step=r.height+1;Rect chosen=default;bool placed=false;
+                foreach(float shift in new[]{0f,-step,step,-2*step,2*step})
+                {
+                    var padded=r;padded.y+=shift;padded.xMin-=2;padded.xMax+=2;padded.yMin-=1;padded.yMax+=1;
+                    bool overlap=false;foreach(var other in reserved)if(other.Overlaps(padded)){overlap=true;break;}
+                    if(overlap)continue;
+                    chosen=padded;placed=true;if(shift!=0f)nameShift[it]=shift;break;
+                }
+                if(!placed)hiddenNames.Add(it);else reserved.Add(chosen);   // 다섯 자리가 모두 막힌 아주 붐비는 곳만 숨긴다
             }
         }
         void OnEnable(){map=GetComponent<MapRoot>();Sync();}
@@ -132,12 +144,12 @@ namespace PocketCaravan
             Init();
             guiOrigin=ToGui(cam,Vector3.zero);
             CollectBoards(cam);
-            ReserveNames(cam);
 
             var player = PlayerController.Instance;
             var nav = Navigator.Compute(gm);
 
             var feet=player!=null?player.Motor.Feet:Vector2.zero;
+            ReserveNames(cam,feet);
             foreach(var it in Interactable.All)DrawName(cam,it,feet,nav.HasValue&&nav.Value.target==it);
 
             if(player!=null)foreach(var place in places)
@@ -239,6 +251,7 @@ namespace PocketCaravan
         {
             if(it==null||hiddenNames.Contains(it))return;
             var body=BodyBounds(it);var p=NamePoint(cam,body);string label=LabelFor(it,feet);
+            if(nameShift.TryGetValue(it,out float shift))p.y+=shift;
             var rect=Name(p,label);
             if(rect.height>0)
             {
