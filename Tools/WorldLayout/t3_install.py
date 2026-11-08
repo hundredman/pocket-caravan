@@ -57,6 +57,7 @@ def proposal():
     continue
    if 'text'in e:retext[o.get('text')]=e['text'];o['text']=e['text']
    if e.get('sheet')and not d['obj'][k]:o['sheet']=SIGN
+   if e.get('move'):o['x']+=e['move'][0];o['y']+=e['move'][1]   # 안내판 그림(마을 꾸밈) 칸으로
   for at,e in edits.items():
    x,y=at[0]-d['terrainX'],at[1]-d['terrainY']
    if e.get('add')and 0<=x<w and 0<=y<d['h']:

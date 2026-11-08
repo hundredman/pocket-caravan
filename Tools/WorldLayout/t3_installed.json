@@ -1,17 +1,17 @@
 {
   "Maps/transit_ferry.json": "3f68861969106fbc046bf903cade9cc5fc830c5e4d7f78b066a1306883bf3aa2",
   "Maps/transit_central_approach.json": "9dd37ac36f4052e0acc82af1f17df66e82ea69d71ea23d13dd027da74ea3bddb",
-  "Maps/transit_crossroads.json": "39d2b7cd4fde29b78122e2415b14318ccfdc3b9f7201c824b971b8cec9cf351d",
+  "Maps/transit_crossroads.json": "195b1c53ef85191b23bad8fd34a5eec192387c1c735b82710f2705750f1cc591",
   "Maps/transit_south_inland.json": "e8d4a31d24127ca450c9e172a966ba902dc62b25bbf916d0b746da9f21f2d8a3",
   "Maps/transit_wetroad.json": "1963800630b7fef639b99e39fb80010e93b80c243614bf56d5bfab939195fec8",
   "Maps/transit_woodtown.json": "4b3c992590295ad5cd27c2bf6012dcf06aee0849f320c2dabae50d5552d681d6",
-  "Maps/transit_pass.json": "5d7295c33a04536b97ccbab960c516df3579158f3a21ce35b35238eb61afe07a",
+  "Maps/transit_pass.json": "4820c5aa2455389c9614cccc2793f0fced717bb2e81b61f03ffe88836a3aa7a0",
   "Maps/transit_southport.json": "12e1f503dd7edc69c49a5558bae98ec417efd2fbb829687efbe4ed08d77bb23c",
-  "Maps/goryeo_songak.json": "be0fd352b399d4afb37740ae2afa6a8647a83284a89b5cacc98479178c951d33",
-  "Maps/Dakmok.json": "91143464550920d2bbea89a7c265b943e54dcf8cfd9ec7c3f78abf25b264a374",
+  "Maps/goryeo_songak.json": "2784acec2a08a6cfc7f96f985ac69f6984ae953d22e02e0c7aee32656fa5df4b",
+  "Maps/Dakmok.json": "7c3c4ff04fdf9344da433c240cde3ecf8aff9659ffcfef01c932c8d44b3fce81",
   "Maps/Gaegyeong.json": "fd3c23ec8c6e8cb0b7ec53eb726538d74c6fdb2cd97af8f836d60b4a27b6c763",
-  "Maps/goryeo_jangdan.json": "b884872d5c4d1cd6f87ed76189345802be7a99ff8a8d14ec4bc3fee99b4cf1af",
-  "Maps/Naru.json": "00669acdafc20dd2f7c752f7d053dbbd4c8f01d9b378e45eb5c60628758ffcbe",
+  "Maps/goryeo_jangdan.json": "b553b4a8c91947242cd6dc7b54aa546af3063bf8feac5fd1b36dfc0e406ad17b",
+  "Maps/Naru.json": "12ee97c06b068420d75e6d474f499f37369d2fcc164be0ae14c8b65f10fafe76",
   "Resources/Goryeo/BoundaryLayout.json": "f9d3ebef9bc3f7b3683b4197364cf0601605d78beaaad4e1b09384d949c603b3",
   "Resources/Goryeo/Intro.json": "55bff2f23657b65f0faab25393774144199fb4f83b6a31bbd4bbdda4e4dceb85",
   "Resources/GoryeoLayout.json": "5310cccc1c3db2c294519c2836e387a59c14ce5071dce6742335dfe8377624c2",
@@ -26,5 +26,5 @@
   "Data/Goryeo/LogPlacement.json": "45e39060ae6e9ed6dbba9d8e62bccebcb37c7a2ba588c8c0e5a4f8fae5b015a0",
   "Resources/WorldMap/GoryeoLayout.json": "278656854fad0a47b5c2745f217c6e1b05b9188987e71db6fd8ca7cde2062a8b",
   "Resources/WorldMap/GoryeoRegionalLayout.json": "c07f9b796000bfc9dc0a574b078b5fb05037941c1fbf44a3778580626043d5ac",
-  "World/Connections/region_links.json": "8be002d77361c0368a0ec4e7c4f06227b77845e0a965b30b0a6b93b284e9b00d"
+  "World/Connections/region_links.json": "765b36c7d0bb4d12efa564f754f8eda54ba4097f02f8b66268c5bf737afdddea"
 }
