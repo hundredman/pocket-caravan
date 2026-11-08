@@ -433,25 +433,17 @@ namespace PocketCaravan
                 var sp = Camera.main.WorldToScreenPoint(it.transform.position + new Vector3(0, 2.3f, 0));
                 if (sp.z < 0f) continue;
                 var p = new Vector2(sp.x / UIStyle.Scale, (Screen.height - sp.y) / UIStyle.Scale);
-                // 11/08 이름표처럼 배경 없이 글씨만 (빨간 하트·크림 빈 하트 + 그림자). 말 걸 수 있는 사람이면 "G 선물"이 붙고 누르면 선물 창
                 int h = Hearts(Friends[fi]);
-                bool target = pc.TalkTarget == it;
-                string full = new string('♥', h), empty = new string('♡', 3 - h);
-                float w = CuteUI.Width(full + empty, true) + (target ? 6f + CuteUI.KeycapWidth("G") + 3f + CuteUI.Width("선물", true) : 0f);
-                var r = new Rect(Mathf.Round(p.x - w / 2f), Mathf.Round(p.y - 7f), Mathf.Round(w), 14f);
-                float x = CuteUI.ShadowLabel(r.x, r.center.y, full, HeartRed);
-                x = CuteUI.ShadowLabel(x, r.center.y, empty, CuteUI.Paper);
-                if (target)
-                {
-                    x += 6f + CuteUI.Keycap(x + 6f, r.y, "G", true) + 3f;
-                    CuteUI.ShadowLabel(x, r.center.y, "선물", CuteUI.Paper);
-                    if (GUI.Button(r, GUIContent.none, GUIStyle.none)) OpenGift(fi);
-                }
+                string g = pc.TalkTarget == it ? " <size=9><color=#ffe08a>G</color> 선물</size>" : "";
+                string text = $"<color=#F05A78>{new string('♥', h)}</color><color=#FFFFFF88>{new string('♡', 3 - h)}</color>{g}";
+                float w = OneLine.CalcSize(new GUIContent(text)).x + 10f;
+                var r = new Rect(p.x - w / 2f, p.y - 9, w, 15);
+                if (g.Length > 0) GUI.Box(r, GUIContent.none, UIStyle.Box);
+                GUI.Label(r, text, CenterLine);
+                if (g.Length > 0 && GUI.Button(r, GUIContent.none, GUIStyle.none)) OpenGift(fi);   // 11/08 "G 선물"을 눌러도 선물 창
             }
         }
 
-        /// <summary>머리 위 하트 색 (배경 없는 글씨라 밝게)</summary>
-        static readonly Color32 HeartRed = new Color32(0xFF, 0x6B, 0x86, 0xFF);
         /// <summary>하트 글: 찬 하트는 빨강, 빈 하트는 보조색 (종이 위에서 읽히게)</summary>
         static string PaperHearts(int h) => CuteUI.PaperColors($"<color=#ff9a8a>{new string('♥', h)}</color><color=#9a93ad>{new string('♡', 3 - h)}</color>");
 
@@ -496,6 +488,17 @@ namespace PocketCaravan
             if (CuteUI.SoftButton(new Rect(r.center.x + 22, by, 74, 20), "그만 (Esc)")) InputReader.Press('\x1b');
             CuteUI.LabelCenter(r.center.x, r.yMax - 10, "←→ 고르기 · 하루 한 번 · 좋아하는 것은 +5", CuteUI.Sub, true);
         }
+
+        static GUIStyle oneLine, centerLine;
+        // Same profile invalidation as the shared CuteUI paper styles / NetChat.
+        static void LineStyles()
+        {
+            if(oneLine!=null&&centerLine!=null&&oneLine.font==UIStyle.RegularFont&&oneLine.fontSize==UIStyle.BodySize)return;
+            oneLine=new GUIStyle(UIStyle.Rich) { wordWrap=false, clipping=TextClipping.Overflow };
+            centerLine=new GUIStyle(UIStyle.CenterRich) { wordWrap=false, clipping=TextClipping.Overflow };
+        }
+        static GUIStyle OneLine { get { LineStyles(); return oneLine; } }
+        static GUIStyle CenterLine { get { LineStyles(); return centerLine; } }
 
         /// <summary>
         /// 11/08 친구 수첩: 종이 창 + 지역 탭(누르면 넘어간다) + 친구마다 종이 카드(하트·이름·오늘 말 건 표시 / 좋아함·다음 목표).

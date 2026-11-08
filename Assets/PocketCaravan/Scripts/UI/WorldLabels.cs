@@ -9,6 +9,7 @@ namespace PocketCaravan
     public class WorldLabels : MonoBehaviour
     {
         static Texture2D arrowTex, downTex;
+        static GUIStyle nameStyle, shadowStyle;
 
         static readonly Color QuestColor = new Color(1f, 0.85f, 0.25f);
         static readonly Color MarketColor = new Color(0.55f, 0.95f, 0.6f);
@@ -27,26 +28,23 @@ namespace PocketCaravan
             var player = PlayerController.Instance;
             var nav = Navigator.Compute(gm);
 
-            // 1) 이름표 (11/08 배경 없이 크림색 글씨 + 그림자, 종류 색으로 옅게 물들인다. 멀리 있으면 흐리게)
-            Vector2 me = player != null ? (Vector2)player.transform.position : Vector2.zero;
+            // 1) 이름표
             foreach (var it in Interactable.All)
             {
                 Vector2 p = ToGui(cam, it.transform.position + new Vector3(0f, 1.0f, 0f));
                 if (p.x < -50 || p.y < -20 || p.x > UIStyle.VirtualWidth + 50 || p.y > UIStyle.VirtualHeight + 20) continue;
                 string label = it.DisplayName;
                 if (string.IsNullOrEmpty(label)) continue;   // 이름 없는 자리(같은 모닥불의 두 번째 의자 등)는 이름표를 띄우지 않는다
-                Color32? dot = it.Category switch
+                Color c = it.Category switch
                 {
-                    Interactable.Kind.Quest => CuteUI.Deco,
-                    Interactable.Kind.Market => CuteUI.Up,
-                    Interactable.Kind.Board => CuteUI.Buy,
-                    Interactable.Kind.Danger => CuteUI.Alert,
-                    _ => (Color32?)null,
+                    Interactable.Kind.Quest => QuestColor,
+                    Interactable.Kind.Market => MarketColor,
+                    Interactable.Kind.Board => BoardColor,
+                    Interactable.Kind.Danger => DangerColor,
+                    _ => PersonColor,
                 };
                 bool target = nav.HasValue && nav.Value.target == it;
-                float dist = player != null ? Vector2.Distance(me, it.transform.position) : 0f;
-                float alpha = target || (player != null && player.TalkTarget == it) ? 1f : Mathf.Lerp(1f, 0.5f, Mathf.InverseLerp(6f, 12f, dist));
-                CuteUI.NameTag(p.x, p.y - 2, label, dot, alpha);
+                Outlined(new Rect(p.x - 60, p.y - 8, 120, 12), label, c, nameStyle);
                 // 퀘스트 NPC는 머리 위 !·? 표시가 있으니, 나머지(장터 등)만 화살표로 짚어 준다
                 if (target && it.Category != Interactable.Kind.Quest) DrawDown(p + new Vector2(0, -12));
             }
@@ -92,6 +90,16 @@ namespace PocketCaravan
             return new Vector2(s.x / UIStyle.Scale, (Screen.height - s.y) / UIStyle.Scale);
         }
 
+        static void Outlined(Rect r, string text, Color c, GUIStyle style)
+        {
+            shadowStyle.alignment = style.alignment;
+            shadowStyle.fontSize = style.fontSize;
+            var sr = r; sr.x += 1; sr.y += 1;
+            GUI.Label(sr, text, shadowStyle);
+            style.normal.textColor = c;
+            GUI.Label(r, text, style);
+        }
+
         static void DrawDown(Vector2 p)
         {
             float bob = Mathf.Floor(Mathf.Sin(Time.time * 5f) * 2f + 2f);
@@ -106,6 +114,12 @@ namespace PocketCaravan
             {
                 arrowTex = Triangle(12, 12, true);
                 downTex = Triangle(10, 8, false);
+            }
+            if (nameStyle == null || nameStyle.font != UIStyle.SmallFont)
+            {
+                nameStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.SmallFont, alignment = TextAnchor.MiddleCenter, fontSize = UIStyle.SmallSize, clipping = TextClipping.Overflow };
+                shadowStyle = new GUIStyle(nameStyle);
+                shadowStyle.normal.textColor = new Color(0f, 0f, 0f, 0.8f);
             }
         }
 

@@ -103,18 +103,26 @@ namespace PocketCaravan
                 if (dist > Far || dist < Near) continue;
                 var sp = cam.WorldToScreenPoint(s.spot.transform.position + new Vector3(0f, 1.6f, 0f));
                 if (sp.z < 0f) continue;
-                Badge(new Vector2(sp.x / scale, (Screen.height - sp.y) / scale + bob), s.done ? $"{s.name} · 내일 다시" : s.name, s.done ? DoneColor : SpotColor, !s.done);
+                Badge(new Vector2(sp.x / scale, (Screen.height - sp.y) / scale + bob), s.done ? $"<color=#9a94a8>{s.name} · 내일 다시</color>" : $"<color=#ffde59>{s.name}</color>", !s.done);
             }
             if (nearest.spot != null) EdgeArrow(cam, nearest.spot.transform.position, nearest.name, scale);
         }
 
-        // 11/08 머리 위 이름표처럼 배경 없이 글씨만 (어두운 상자 → 그림자 글씨)
-        static readonly Color32 SpotColor = new Color32(0xFF, 0xE0, 0x8A, 0xFF), DoneColor = new Color32(0xC9, 0xB8, 0xC2, 0xFF);
-
-        Rect Badge(Vector2 at, string text, Color32 col, bool withStar, bool screenEdge=false)
+        static GUIStyle line;
+        static GUIStyle Line
         {
-            float w = Mathf.Round(CuteUI.Width(text, true) + (withStar ? 14f : 0f));
-            var r = new Rect(Mathf.Round(at.x - w / 2f), Mathf.Round(at.y - 16f), w, 14f);
+            get
+            {
+                if(line==null||line.font!=UIStyle.RegularFont||line.fontSize!=UIStyle.BodySize)
+                    line=new GUIStyle(UIStyle.CenterRich) { wordWrap=false, clipping=TextClipping.Overflow };
+                return line;
+            }
+        }
+
+        Rect Badge(Vector2 at, string text, bool withStar, bool screenEdge=false)
+        {
+            float w = Line.CalcSize(new GUIContent(text)).x + (withStar ? 22f : 12f);
+            var r = new Rect(at.x - w / 2f, at.y - 18f, w, 16f);
             if(screenEdge)
             {
                 r.x=Mathf.Clamp(r.x,4,Mathf.Max(4,UIStyle.VirtualWidth-r.width-4));
@@ -122,8 +130,9 @@ namespace PocketCaravan
                 var guide=GoryeoIntro.ReservedGuideRect;
                 if(guide.width>0&&r.Overlaps(guide))r.y=Mathf.Max(4,guide.yMin-r.height-4);
             }
-            if (withStar && star != null) DrawSprite(star, new Rect(r.x, r.y + 1f, 12f, 12f));
-            CuteUI.ShadowLabel(r.x + (withStar ? 14f : 0f), r.center.y, text, col);
+            GUI.Box(r, GUIContent.none, UIStyle.Box);
+            if (withStar && star != null) DrawSprite(star, new Rect(r.x + 3f, r.y + 2f, 12f, 12f));
+            GUI.Label(new Rect(r.x + (withStar ? 10f : 0f), r.y, r.width - (withStar ? 10f : 0f), r.height), text, Line);
             return r;
         }
 
@@ -140,7 +149,7 @@ namespace PocketCaravan
             string arrow = Mathf.Abs(dir.x) > Mathf.Abs(dir.y) ? (dir.x > 0 ? "▶" : "◀") : (dir.y > 0 ? "▲" : "▼");
             float a = .75f + .25f * Mathf.Sin(Time.time * 4f);
             var old = GUI.color; GUI.color = new Color(1f, 1f, 1f, a);
-            EdgeRect=Badge(p + new Vector2(0f, 8f), $"{arrow} {name}", SpotColor, false, true);
+            EdgeRect=Badge(p + new Vector2(0f, 8f), $"<color=#ffde59>{arrow} {name}</color>", false, true);
             GUI.color = old;
         }
 

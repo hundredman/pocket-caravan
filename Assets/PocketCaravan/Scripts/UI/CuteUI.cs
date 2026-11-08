@@ -777,32 +777,6 @@ namespace PocketCaravan
             return r;
         }
 
-        static readonly Color32 NameShadow = new Color32(42, 26, 46, 210);
-
-        /// <summary>배경 없는 머리 위 글씨: 아래로 진한 그림자 1px + 글씨. 오른쪽 끝 x를 돌려준다</summary>
-        public static float ShadowLabel(float x, float cy, string s, Color32 col)
-        {
-            Label(x + 1, cy + 1, s, NameShadow, true);
-            Label(x, cy + 1, s, NameShadow, true);
-            return Label(x, cy, s, col, true);
-        }
-
-        /// <summary>
-        /// 11/08 머리 위 이름표: 배경 없이 글씨만 (흰 테두리 글씨·흰 알약 모두 무드와 안 맞았다).
-        /// 크림색 글씨 + 아래 진한 그림자라 눈밭·모래·밤에도 읽힌다. dot = 종류 색 (글씨를 그 색 쪽으로 옅게 물들인다).
-        /// alpha로 멀리 있는 이름표를 흐리게 한다. 그린 자리를 돌려준다
-        /// </summary>
-        public static Rect NameTag(float cx, float cy, string text, Color32? dot = null, float alpha = 1f)
-        {
-            float w = Mathf.Round(Width(text, true)), h = 13f;
-            var r = new Rect(Mathf.Round(cx - w / 2f), Mathf.Round(cy - h / 2f), w, h);
-            var old = GUI.color;
-            GUI.color = new Color(old.r, old.g, old.b, old.a * Mathf.Clamp01(alpha));
-            ShadowLabel(r.x, r.center.y, text, dot.HasValue ? Color32.Lerp(dot.Value, Paper, .55f) : Paper);
-            GUI.color = old;
-            return r;
-        }
-
         /// <summary>
         /// 11/08 "목표 · ○○ N칸" 길 안내 줄: 종이 알약 + 노란 점. 흰 테두리 글씨가 종이 UI 무드와 안 맞아서 바꿨다.
         /// 아래 쌓는 줄(HUD.BottomLine 10)에 놓는다. 그린 자리를 돌려준다

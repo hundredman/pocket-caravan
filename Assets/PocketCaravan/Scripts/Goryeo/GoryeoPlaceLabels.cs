@@ -106,7 +106,7 @@ namespace PocketCaravan
             DrawnRects.Add(rect);DrawnNames.Add(text);
             var ink=UIStyle.Lin(CuteUI.Text);
             nameStyle.normal.textColor=nameStyle.hover.textColor=nameStyle.active.textColor=nameStyle.focused.textColor=ink;
-            CuteUI.NameTag(rect.center.x,rect.center.y,text);return rect;   // 11/08 네 지역 같은 이름표 (배경 없는 글씨 + 그림자. 예전: 흰 테두리 글씨)
+            CuteUI.WorldText(rect.center.x,rect.center.y,text,true);return rect;
         }
         void OnGUI()
         {
