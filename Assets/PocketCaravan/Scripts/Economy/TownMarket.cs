@@ -397,6 +397,7 @@ namespace PocketCaravan
             Observe();
             message = $"{Josa.Eul(item.displayName)} {price}에 샀습니다.";
             Sfx.Play("coin");
+            p.ledger.Record(false, town, item, price, 0, GameManager.I.Clock.day);   // 11/08 장부 최근 거래
             GameEvents.RaiseItemBought(item, town, price);
         }
 
@@ -423,6 +424,7 @@ namespace PocketCaravan
             profitThisVisit += price - averageCost;
             Sfx.Play("coin");
             message = $"{Josa.Eul(item.displayName)} {price}냥에 팔았습니다. 손익 {Signed(profit)}냥.";
+            p.ledger.Record(true, town, item, price, profit, GameManager.I.Clock.day);   // 11/08 장부 최근 거래
             GameEvents.RaiseItemSold(item, town, price, profit);
         }
 
