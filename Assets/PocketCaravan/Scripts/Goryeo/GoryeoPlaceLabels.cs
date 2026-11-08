@@ -42,7 +42,13 @@ namespace PocketCaravan
         public static string LabelFor(Interactable it,Vector2 feet)
         {
             if(it==null)return "";if(IsPlace(it)&&!Nearby(feet,it.transform.position))return "";
-            if(it is TownMarket market&&market.town!=null)return "장터";
+            return DisplayLabel(it);
+        }
+        // Person sprites use occupations, while wells/boards/workshops keep their facility labels.
+        static string DisplayLabel(Interactable it)
+        {
+            if(it is TownMarket)return "상인";
+            if(it is GoryeoPastime)return "낚시꾼";
             return ShortName(it.DisplayName);
         }
         // Display aliases only: original DisplayName remains the social/save/quest identity.
@@ -83,7 +89,7 @@ namespace PocketCaravan
             });
             var reserved=new System.Collections.Generic.List<Rect>();
             foreach(var it in items){
-                string text=it is TownMarket?"장터":ShortName(it.DisplayName);
+                string text=DisplayLabel(it);
                 var r=NameRect(NamePoint(cam,BodyBounds(it)),text);
                 if(BadgeFor(it)!=QuestMarker.None)r.width+=15;
                 var padded=r;padded.xMin-=2;padded.xMax+=2;padded.yMin-=1;padded.yMax+=1;

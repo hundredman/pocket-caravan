@@ -442,3 +442,5 @@
 - 2026-11-08 Codex PR29 통합 완료(이 커밋): 사용자 업로드 지시로 region/goryeo push(d27e43863), PR#29 GitHub검사2개SUCCESS/MERGEABLE/CLEAN 확인후integration병합 f356ed767(01:47 KST). 로컬원격integration까지FF·최신main포함·개인패키지/설정/3D보존. 공용UI통일+T3경계/저장이주반영·타지역전용/DB/서버변경0. 최종원격상태/사후공지초안저장·카톡실제발송안함. 실온라인/사람체감/Q1전체수동/FPS/빌드미검사. Docs/Validation/T3-Integration-2026-11-08/github.json, Docs/Goryeo/Team-Notice-PR29.md.
 
 - 2026-11-08 Codex 최신수신/이름화면점검(이 커밋): integration e9bfb03f1→bee640a09 병합·최신main포함·동일Unity프로젝트확인. 이름/접속키/기억조건으로 자동로그인성공시입력생략, 비시작/지역시험씬은첫화면생략하는기존정책확인. 서버접속억제/SaveOFF 1회메모리관찰로나루로그인열림·개경index30생략확인·제품코드미수정. 424/23skip·세계883/0·콘솔0·개인저장9/로그인설정SHA불변. 붉은돌DB기등록확인·아라비아/1메뉴실행/실서버로그인/아라비아전체플레이/FPS/빌드미실행·원격push없음. 팀공지형식은사용자예시대로실행메뉴/추가내용/공용파일중심으로규칙반영. Docs/Validation/Startup-Audit-2026-11-08/README.md.
+
+- 2026-11-08 Codex NPC호칭(이 커밋): 사용자지시로고려장터사람표시→상인·낚시사람표시→낚시꾼, 예약/그리기별칭통일. 담당13맵인물원본/등록정적조사·기존사람호칭/시설명유지·원본DisplayName/ID/저장불변. 이름표정적2통과·개경/나루실제표시/전후4캡처·콘솔0·SaveOFF/Offline·개인저장9SHA동일. 첫렌더검사Game뷰비활성실패후선택/재확인기록. 최신main포함·로컬만·개인설정/3D보존. 전체회귀/전체13씬Play/퀘스트완주/실온라인/FPS/빌드미검사. Docs/Validation/Goryeo-Person-Names-2026-11-08/README.md.
