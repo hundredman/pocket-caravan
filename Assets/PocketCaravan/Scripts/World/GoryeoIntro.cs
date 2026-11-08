@@ -115,7 +115,7 @@ namespace PocketCaravan
             string best = null; int bestHops = int.MaxValue;
             foreach (var p in index.places)
             {
-                if (p.kind != "market" || p.id == avoid || string.IsNullOrEmpty(p.mapId)) continue;
+                if (p.kind != "market" || p.id == avoid || string.IsNullOrEmpty(p.mapId) || GoryeoTravelTransition.RegionOf(p.mapId) == null) continue;   // 고려·중간권 장터만
                 int h = Hops(index, map.mapId, p.mapId);
                 if (h >= 0 && h < bestHops) { bestHops = h; best = p.id; }
             }
