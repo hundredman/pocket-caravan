@@ -64,6 +64,8 @@ namespace PocketCaravan
             built = true;
         }
 
+        void OnDisable() => AudioManager.Silence(this, false);   // 11/08 공용 음악 다시 켜기
+
         void Update()
         {
             bool north = NorthUtil.InNorth && GameManager.I != null;
@@ -98,12 +100,8 @@ namespace PocketCaravan
             bool ours = north && shared != "danger" && songs[1] != null;   // 위험 음악은 공용 그대로
 
             // 공용 음악: 우리 곡을 트는 동안만 볼륨 0, 아니면 원래대로
-            if (audioMgr != null && musicVolField != null)
-            {
-                float v = (float)musicVolField.GetValue(audioMgr);
-                if (ours && v > 0f) { savedMusicVol = v; musicVolField.SetValue(audioMgr, 0f); }
-                else if (!ours && savedMusicVol >= 0f) { musicVolField.SetValue(audioMgr, savedMusicVol); savedMusicVol = -1f; }
-            }
+            // 11/08 (은샘, 기우 님께 전달): musicVolume을 바꾸지 않고 AudioManager.Silence로 끈다
+            AudioManager.Silence(this, ours);
 
             int want = ours ? TimeSlot() : -1;
             if (want >= 0 && songs[want] == null) want = 1;
