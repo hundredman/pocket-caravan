@@ -191,15 +191,7 @@ namespace PocketCaravan
             return nums.ToArray();
         }
 
-        static bool SpaceHeld()
-        {
-#if ENABLE_INPUT_SYSTEM
-            var k = Keyboard.current;
-            return k != null && k.spaceKey.isPressed;
-#else
-            return Input.GetKey(KeyCode.Space);
-#endif
-        }
+        static bool SpaceHeld() => InputReader.SpaceHeld();   // 11/08 마우스 왼쪽 누르고 있기도 (미니게임 클릭)
 
         bool Fresh => Time.frameCount <= startFrame + 1;   // 시작한 프레임의 Space는 무시 (대화 선택에 쓴 키)
 
@@ -514,6 +506,10 @@ namespace PocketCaravan
             Fill(new Rect(0, 0, vw, vh), new Color(0f, 0f, 0.05f, 0.45f));
             if (fishing != FState.None) DrawFishing(vw, vh);
             else DrawSled(vw, vh);
+            // 11/08 마우스: 오른쪽 위 X = Esc(그만), 빈 곳 클릭 = Space (누르고 있기 = 감기)
+            var xr = fishing != FState.None ? new Rect(vw / 2 - 160, vh / 2 - 115, 320, 230) : new Rect(vw / 2 - FieldW / 2, vh / 2 - FieldH / 2 + 10, FieldW, FieldH);
+            if (CuteUI.CloseButton(xr.xMax - 16f, xr.y - 8f)) InputReader.Press('\x1b');
+            InputReader.ClickAsSpace();
         }
 
         void DrawFishing(float vw, float vh)

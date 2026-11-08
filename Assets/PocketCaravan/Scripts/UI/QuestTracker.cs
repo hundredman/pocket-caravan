@@ -20,7 +20,15 @@ namespace PocketCaravan
             if (logOpen && (InputReader.QuestLogPressed() || InputReader.CancelPressed())) CloseLog();
             else if (InputReader.QuestLogPressed() && !UIState.Blocking && !UIState.JustClosed && !GameManager.I.IsTravelling
                 && UIState.TryOpen(this, CloseLog)) logOpen = true;
+            else if (logOpen)
+            {
+                // 11/08 ←→ 탭 바꾸기 · ↑↓ 넘기기 (마우스는 탭 단추 · 휠 · 막대)
+                var mv = InputReader.MovePressed();
+                if (mv.x != 0) { logTab = (logTab + mv.x + LogTabs.Length) % LogTabs.Length; scroll = Vector2.zero; Sfx.Play("open", .25f); }
+                if (mv.y != 0) scroll.y = Mathf.Max(0f, scroll.y - mv.y * 40f);
+            }
         }
+        static readonly string[] LogTabs = { "의뢰", "성장·시설", "주변 거래처" };
         void CloseLog() { logOpen = false; UIState.Release(this); }
         void OnDisable() { if (logOpen) CloseLog(); }
 
@@ -116,60 +124,76 @@ namespace PocketCaravan
 
         void DrawLog(QuestManager qm)
         {
-            // 11/05 UI B안: 종이 창 + 제목 리본, 글씨·버튼은 CuteUI 종이 모양 (내용·기능은 그대로)
-            float w = 380, h = UIStyle.WindowHeight(260);   // 11/08 고려 화면(높이 270)에서 아래가 잘렸다
+            // 11/08 읽기 쉽게: 항목마다 종이 카드(굵은 제목 + 상태 알약 + 작은 설명), 오른쪽 위 X, 얇은 스크롤 막대, ←→ 탭 · 마우스 휠
+            float w = Mathf.Min(430, UIStyle.VirtualWidth - 16), h = UIStyle.WindowHeight(290);
             var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round((UIStyle.VirtualHeight - h) / 2 + 6), w, h);
             CuteUI.Dim();
             CuteUI.Window(r);
             CuteUI.TitlePlate(r.center.x, r.y - 11, "여정 수첩");
-            GUILayout.BeginArea(new Rect(r.x + 14, r.y + 14, w - 28, h - 24));
-            GUILayout.Label("의뢰와 성장 · Q 닫기", CuteUI.PaperSmall);
+            if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { CloseLog(); return; }
+            GUILayout.BeginArea(new Rect(r.x + 14, r.y + 18, w - 28, h - 18 - 26));   // 아래 26은 안내 줄 (영역 밖에 따로 그린다)
             GUILayout.BeginHorizontal();
-            string[] tabs = { "의뢰", "성장·시설", "주변 거래처" };
-            for (int i = 0; i < tabs.Length; i++)
-            {
-                if (GUILayout.Button(tabs[i], CuteUI.PaperButtonIf(logTab == i)) && logTab != i)
+            for (int i = 0; i < LogTabs.Length; i++)
+                if (GUILayout.Button(LogTabs[i], CuteUI.PaperButtonIf(logTab == i), GUILayout.Height(20)) && logTab != i)
                 { logTab = i; scroll = Vector2.zero; }
-            }
             GUILayout.EndHorizontal();
-            scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(h - 80));
-            if (logTab == 0)
-            {
-                bool any = false;
-                foreach (var p in qm.Active)
-                {
-                    any = true;
-                    string chain = string.IsNullOrEmpty(p.quest.chain) ? "" : $"  <color=#6a5464>[{p.quest.chain}]</color>";
-                    GUILayout.Label($"{p.quest.title}{chain}", new GUIStyle(CuteUI.PaperRich) { wordWrap = true });
-                    if (GUILayout.Button(p == qm.Tracked ? "안내 중" : "이 의뢰 길 안내", CuteUI.PaperButtonIf(p == qm.Tracked))) qm.Track(p);
-                    if (!string.IsNullOrEmpty(p.quest.summary)) GUILayout.Label(p.quest.summary, CuteUI.PaperWrap);
-                    GUILayout.Label("지금 할 일: " + qm.ProgressText(p), CuteUI.PaperWrap);
-                    string reward = "";
-                    if (p.RewardMoney > 0) reward += $"돈 {p.RewardMoney}  ";
-                    if (p.RewardCredit > 0) reward += $"신용 {p.RewardCredit}";
-                    if (reward != "") GUILayout.Label("보상: " + reward, CuteUI.PaperRich);
-                    GUILayout.Space(6);
-                }
-                // 11/01 게시판에서 받은 배달 의뢰도 수첩에서 보이게 (전엔 Tab으로 펼쳐야만 보였다)
-                var gmc = GameManager.I;
-                if (gmc.Player.contracts.Count > 0)
-                {
-                    GUILayout.Label("<color=#1a78b8>게시판 배달 의뢰</color>", CuteUI.PaperRich);
-                    foreach (var c in gmc.Player.contracts)
-                    {
-                        any = true;
-                        string state = c.dropped ? "<color=#d6334f>떨어뜨림!</color>" : $"상태 {Mathf.RoundToInt(c.condition * 100)}%";
-                        GUILayout.Label($"<color=#1a78b8>■</color> {c.cargo} → {gmc.Contracts.TownName(c.toTown)}", new GUIStyle(CuteUI.PaperRich) { wordWrap = true });
-                        GUILayout.Label($"{gmc.Contracts.TimeLeftText(c)} · {state} · 보수 {c.reward}냥", CuteUI.PaperWrap);
-                        GUILayout.Space(4);
-                    }
-                }
-                if (!any) GUILayout.Label("진행 중인 퀘스트가 없다. 자유 거래와 게시판 배달도 선택할 수 있다.", CuteUI.PaperWrap);
-            }
-            else DrawJourney();
+            GUILayout.Space(6);
+            scroll = GUILayout.BeginScrollView(scroll, GUILayout.ExpandHeight(true));   // 남은 높이를 다 쓴다 (높이를 셈으로 맞추다 아래 안내 줄이 잘렸다)
+            if (logTab == 0) DrawQuests(qm); else DrawJourney();
             GUILayout.EndScrollView();
             GUILayout.EndArea();
+            CuteUI.LabelCenter(r.center.x, r.yMax - 14, "←→ 탭 · ↑↓·휠 넘기기 · Q·Esc 닫기", CuteUI.Sub, true);
         }
+
+        void DrawQuests(QuestManager qm)
+        {
+            bool any = false;
+            foreach (var p in qm.Active)
+            {
+                any = true;
+                bool on = p == qm.Tracked;
+                GUILayout.BeginVertical(on ? CuteUI.PaperCardOn : CuteUI.PaperCard);
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(p.quest.title, CuteUI.PaperTitle);
+                GUILayout.FlexibleSpace();
+                if (!string.IsNullOrEmpty(p.quest.chain)) GUILayout.Label(p.quest.chain, CuteUI.Badge(CuteUI.BadgeKind.Note));
+                if (on) GUILayout.Label("안내 중", CuteUI.Badge(CuteUI.BadgeKind.On));
+                else if (GUILayout.Button("길 안내", CuteUI.PaperButton, GUILayout.Width(52), GUILayout.Height(16))) qm.Track(p);
+                GUILayout.EndHorizontal();
+                GUILayout.Label("▸ " + CuteUI.Plain(qm.ProgressText(p)), CuteUI.PaperWrap);
+                if (!string.IsNullOrEmpty(p.quest.summary)) GUILayout.Label(CuteUI.Plain(p.quest.summary), CuteUI.PaperNote);
+                string reward = (p.RewardMoney > 0 ? $"돈 {p.RewardMoney}냥" : "") + (p.RewardMoney > 0 && p.RewardCredit > 0 ? " · " : "") + (p.RewardCredit > 0 ? $"신용 +{p.RewardCredit}" : "");
+                if (reward != "") GUILayout.Label("보상 · " + reward, CuteUI.PaperNote);
+                GUILayout.EndVertical();
+            }
+            // 11/01 게시판에서 받은 배달 의뢰도 수첩에서 보이게
+            var gm = GameManager.I;
+            if (gm.Player.contracts.Count > 0)
+            {
+                GUILayout.Label("게시판 배달 의뢰", CuteUI.PaperSmall);
+                foreach (var c in gm.Player.contracts)
+                {
+                    any = true;
+                    GUILayout.BeginVertical(CuteUI.PaperCard);
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label($"{c.cargo} → {gm.Contracts.TownName(c.toTown)}", CuteUI.PaperTitle);
+                    GUILayout.FlexibleSpace();
+                    if (c.dropped) GUILayout.Label("떨어뜨림!", CuteUI.Badge(CuteUI.BadgeKind.Alert));
+                    else GUILayout.Label($"상태 {Mathf.RoundToInt(c.condition * 100)}%", CuteUI.Badge(CuteUI.BadgeKind.Ok));
+                    GUILayout.EndHorizontal();
+                    GUILayout.Label($"{CuteUI.Plain(gm.Contracts.TimeLeftText(c))} · 보수 {c.reward}냥", CuteUI.PaperNote);
+                    GUILayout.EndVertical();
+                }
+            }
+            if (!any)
+            {
+                GUILayout.BeginVertical(CuteUI.PaperCard);
+                GUILayout.Label("진행 중인 의뢰가 없어요", CuteUI.PaperTitle);
+                GUILayout.Label("마을 사람에게 말을 걸거나 의뢰 게시판에서 배달을 받아 보세요. 자유롭게 사고팔아도 돼요.", CuteUI.PaperNote);
+                GUILayout.EndVertical();
+            }
+        }
+
         void DrawJourney()
         {
             var gm = GameManager.I;
@@ -178,29 +202,51 @@ namespace PocketCaravan
                 WorldIndex.Get(), map != null ? map.mapId : null);
             if (logTab == 1)
             {
-                GUILayout.Label($"내 성장 · 신용 {gm.Player.credit} · 적재 {gm.Player.TotalWeight:0.#}/{gm.Player.Capacity:0.#}", CuteUI.PaperRich);
-                GUILayout.Label("마을 방문·기본 매매는 자유입니다. 거점 등급은 마을의 시설 규모, 신용은 내 이용 조건입니다.", CuteUI.PaperWrap);
-                GUILayout.Label(JourneyGuide.NextUnlock(towns, gm.Player), CuteUI.PaperWrap);
+                GUILayout.BeginVertical(CuteUI.PaperCardOn);
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("내 성장", CuteUI.PaperTitle);
+                GUILayout.FlexibleSpace();
+                GUILayout.Label($"신용 {gm.Player.credit}", CuteUI.Badge(CuteUI.BadgeKind.On));
+                GUILayout.Label($"짐 {gm.Player.TotalWeight:0.#}/{gm.Player.Capacity:0.#}", CuteUI.Badge(CuteUI.BadgeKind.Note));
+                GUILayout.EndHorizontal();
+                GUILayout.Label(CuteUI.Plain(JourneyGuide.NextUnlock(towns, gm.Player)), CuteUI.PaperWrap);
+                GUILayout.Label("마을 방문과 기본 매매는 언제나 자유예요. 시설은 마을 등급과 내 신용에 따라 열려요.", CuteUI.PaperNote);
+                GUILayout.EndVertical();
                 foreach (var town in towns)
+                {
+                    bool header = false;
                     foreach (var f in town.facilities)
-                        if (f != null && f.kind != FacilityKind.Rest && town.SettlementTier >= f.minTier)
-                        {
-                            string denial = FacilityAccess.Denial(town, f, gm.Player);
-                            GUILayout.Label($"{town.displayName} · {f.displayName}: {(denial ?? "이용 가능")}\n{JourneyGuide.FacilityEffect(f)}", CuteUI.PaperWrap);
-                        }
-                GUILayout.Label("수레를 사기 전에는 다음 매입 자금도 남기세요. 의뢰 화물도 적재 공간을 씁니다. 창고에 맡긴 물건은 매각된 것이 아닙니다.", CuteUI.PaperWrap);
+                    {
+                        if (f == null || f.kind == FacilityKind.Rest || town.SettlementTier < f.minTier) continue;
+                        if (!header) { GUILayout.BeginVertical(CuteUI.PaperCard); GUILayout.Label(town.displayName, CuteUI.PaperTitle); header = true; }
+                        string denial = FacilityAccess.Denial(town, f, gm.Player);
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Label("· " + f.displayName, CuteUI.PaperRich);
+                        GUILayout.FlexibleSpace();
+                        GUILayout.Label(denial == null ? "이용 가능" : TownFacilitiesUI.ShortDenial(denial), CuteUI.Badge(denial == null ? CuteUI.BadgeKind.Ok : CuteUI.BadgeKind.Locked));
+                        GUILayout.EndHorizontal();
+                        GUILayout.Label(CuteUI.Plain(JourneyGuide.FacilityEffect(f)), CuteUI.PaperNote);
+                    }
+                    if (header) GUILayout.EndVertical();
+                }
+                GUILayout.Label("수레를 사기 전에 다음 매입 자금을 남기세요. 의뢰 화물도 짐칸을 써요. 창고에 맡긴 물건은 판 것이 아니에요.", CuteUI.PaperNote);
             }
             else
             {
-                GUILayout.Label("주변 거래처 · 역할과 귀환 장사", CuteUI.PaperRich);
                 foreach (var town in towns)
                 {
                     bool recorded = JourneyGuide.MarketRecorded(gm.Player.ledger, town.id);
-                    GUILayout.Label($"{town.displayName} · {(recorded ? "장부 기록 있음" : "시세 미확인")}", CuteUI.PaperRich);
-                    if (!string.IsNullOrEmpty(town.journeyNote)) GUILayout.Label(town.journeyNote, CuteUI.PaperWrap);
+                    GUILayout.BeginVertical(CuteUI.PaperCard);
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(town.displayName, CuteUI.PaperTitle);
+                    GUILayout.FlexibleSpace();
+                    GUILayout.Label(recorded ? "장부에 시세 있음" : "시세 모름", CuteUI.Badge(recorded ? CuteUI.BadgeKind.On : CuteUI.BadgeKind.Locked));
+                    GUILayout.EndHorizontal();
+                    if (!string.IsNullOrEmpty(town.journeyNote)) GUILayout.Label(CuteUI.Plain(town.journeyNote), CuteUI.PaperWrap);
+                    GUILayout.EndVertical();
                 }
-                if (towns.Count == 0) GUILayout.Label("현재 맵에 연결된 지역 거래처 정보가 없습니다.", CuteUI.PaperWrap);
-                GUILayout.Label("L 장부는 직접 확인했던 첫 1개 시세입니다. 이동 후 시세·전량 판매 수익은 달라질 수 있습니다. 짧은 길과 수레 큰길을 화물에 맞춰 비교하세요.", CuteUI.PaperWrap);
+                if (towns.Count == 0) GUILayout.Label("이 맵과 이어진 거래처 정보가 없어요.", CuteUI.PaperNote);
+                GUILayout.Label("장부(L)의 시세는 직접 가서 본 값이에요. 가는 동안 값이 바뀔 수 있으니 짧은 길과 큰길을 짐에 맞춰 골라 보세요.", CuteUI.PaperNote);
             }
         }
     }

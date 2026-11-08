@@ -59,6 +59,7 @@ namespace PocketCaravan
             float width = Mathf.Min(560, UIStyle.VirtualWidth - 16), height = UIStyle.WindowHeight(320) - 6;
             var r = lastWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - width) / 2), Mathf.Round((UIStyle.VirtualHeight - height) / 2 + 6), width, height);
             CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, "상업 백과");
+            if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { Close(); return; }   // 11/08 오른쪽 위 X
             string heading = Content != null && !string.IsNullOrEmpty(Content.heading) ? Content.heading : "고려의 모티브와 여행";
             float headingHeight = Mathf.Max(18, CuteUI.PaperWrap.CalcHeight(new GUIContent(heading), width - 28));
             GUI.Label(new Rect(r.x + 14, r.y + 14, width - 28, headingHeight), heading, CuteUI.PaperWrap);

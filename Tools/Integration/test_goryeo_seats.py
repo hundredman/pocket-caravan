@@ -12,6 +12,8 @@ class GoryeoSeatsTests(unittest.TestCase):
     def test_seat_feet_are_on_clear_ground_away_from_transition_cells(self):
         config=json.loads((REVIEW/'source.json').read_text())
         self.assertEqual(config['status'],'review')
+        # 11/08 v4 경계: 리뷰 원본 좌표는 옛 맵 틀이라, 실제로 쓰는 자리(본편 Seats/Config.json)를 본다.
+        config=json.loads((ROOT/'Assets/PocketCaravan/Resources/Goryeo/Seats/Config.json').read_text())
         for s in config['seats']:
             m=json.loads((ROOT/f"Assets/PocketCaravan/Maps/{s['mapId']}.json").read_text())
             x,y=s['x'],s['y'];i=y*m['w']+x

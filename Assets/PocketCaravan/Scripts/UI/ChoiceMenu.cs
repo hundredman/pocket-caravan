@@ -20,6 +20,7 @@ namespace PocketCaravan
         readonly List<Option> options = new List<Option>();
         int sel, openedFrame;
         bool open;
+        Vector2 lastMouse;   // 11/08 마우스를 움직였을 때만 줄을 고른다
 
         public static bool IsOpen => inst != null && inst.open;
 
@@ -96,10 +97,14 @@ namespace PocketCaravan
                 CuteUI.LabelCenter(tag.center.x, tag.center.y + 1f, name, CuteUI.Ink, false, true);
                 CuteUI.LabelCenter(tag.center.x, tag.center.y, name, CuteUI.White, false, true);
             }
+            if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { Close(); return; }   // 11/08 오른쪽 위 X
+            bool mouseMoved = false;
+            if (Event.current.type == EventType.Repaint) { mouseMoved = Event.current.mousePosition != lastMouse; lastMouse = Event.current.mousePosition; }
             if (bodyH > 0f) GUI.Label(new Rect(r.x + 12f, r.y + 15f, w - 24f, bodyH), bodyContent, CuteUI.PaperWrap);
             for (int i = 0; i < options.Count; i++)
             {
                 var row = new Rect(r.x + 10f, r.y + top + i * rowH, w - 20f, rowH - 3f);
+                if (mouseMoved && row.Contains(Event.current.mousePosition)) sel = i;   // 11/08 마우스를 움직여 올린 줄이 골라진다 (가만히 두면 키보드 고르기를 막지 않는다)
                 if (i == sel)
                 {
                     CuteUI.Box(row, 7, CuteUI.Interact, CuteUI.Ink, 1, 1, CuteUI.InteractLo);
@@ -112,7 +117,7 @@ namespace PocketCaravan
                 }
                 if (Event.current.type == EventType.MouseDown && row.Contains(Event.current.mousePosition)) { Pick(i); Event.current.Use(); return; }
             }
-            CuteUI.LabelCenter(r.center.x, r.yMax - 12f, "↑↓ 고르기 · Space 정하기 · Esc 닫기", CuteUI.Sub, true);
+            CuteUI.LabelCenter(r.center.x, r.yMax - 12f, "↑↓·마우스 고르기 · Space·클릭 정하기 · Esc 닫기", CuteUI.Sub, true);
         }
     }
 }

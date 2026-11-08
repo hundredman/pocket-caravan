@@ -20,7 +20,7 @@ class Production(unittest.TestCase):
    for o in d['objects']:
     if o['kind']!='exit':continue
     count+=1;self.assertEqual({'W':o['x'],'E':d['w']-o['x']-o['w'],'N':o['y'],'S':d['h']-o['y']-o['h']}[o['edge']],0)
-  self.assertEqual(count,635)
+  self.assertEqual(count,677)   # 11/08 v4 경계 (전 635), 이정표 정리로 경계 칸 6개가 열림 (전 671)
  def points(self,rows,key,old,cell=False):
   result=[]
   for row in rows:
@@ -32,7 +32,12 @@ class Production(unittest.TestCase):
   return sorted(result)
  def test_labels_audio_and_life_keep_world_positions_and_policy(self):
   for p,key,cell in [('Resources/Goryeo/PlaceLabels.json','places',False),('Resources/Goryeo/Life/Anchors.json','points',True),('Resources/Goryeo/VillageLife/Anchors.json','points',False)]:
-   self.assertEqual(self.points(self.base['resources'][p]['maps'],key,True,cell),self.points(self.out[p]['maps'],key,False,cell),p)
+   old,new=self.points(self.base['resources'][p]['maps'],key,True,cell),self.points(self.out[p]['maps'],key,False,cell)
+   # 11/08 v4: 끝점이 다른 맵으로 넘어간 장식 걸음은 제자리에 선다(t3_install.DROPPED_WALKS). 시작점·종류는 그대로.
+   strip=lambda rows:sorted(json.dumps({k:v for k,v in json.loads(r).items()if k not in('bx','by')},sort_keys=True)for r in rows)
+   self.assertEqual(strip(old),strip(new),p)
+   moved=sum(1 for r in new if 'bx'in json.loads(r) and (json.loads(r)['bx'],json.loads(r)['by'])==(json.loads(r)['x'],json.loads(r)['y']))-sum(1 for r in old if 'bx'in json.loads(r) and (json.loads(r)['bx'],json.loads(r)['by'])==(json.loads(r)['x'],json.loads(r)['y']))
+   self.assertLessEqual(moved,len(install.DROPPED_WALKS),p)
  def test_stride_all_nonempty_materials_stay_at_same_world_cell(self):
   def world(rows,maps):
    return {(maps[r['id']]['terrainX']+i%r['w'],maps[r['id']]['terrainY']+maps[r['id']]['h']-1-i//r['w']):c for r in rows for i,c in enumerate(r['data'])if c!='O'}

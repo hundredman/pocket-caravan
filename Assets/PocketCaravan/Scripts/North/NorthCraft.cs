@@ -343,14 +343,16 @@ namespace PocketCaravan
             if (gm == null) { shopOpen = false; return; }
             var e = Event.current;
             if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Escape) { CloseShop(); e.Use(); return; }
-            if (shopRich == null) shopRich = new GUIStyle(UIStyle.Rich) { wordWrap = false, clipping = TextClipping.Overflow };
+            // 11/08 종이 창 (다른 창과 같은 모양) + 제목 리본 + 오른쪽 위 X. 칸 배치·사고파는 규칙은 그대로
+            if (shopRich == null || shopRich.font != CuteUI.PaperRich.font) shopRich = new GUIStyle(CuteUI.PaperRich) { wordWrap = false, clipping = TextClipping.Overflow };
             var info = KeeperInfo(shopSprite);
             var town = MarketTown();
             float w = 400f, h = 64f + info.items.Length * 24f + 26f;   // 10/27 세 자리 값이 남은 수량 글자와 겹쳐서 넓힘
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2f, (UIStyle.VirtualHeight - h) / 2f, w, h);
-            GUI.Box(r, GUIContent.none, UIStyle.Box);
-            GUI.Label(new Rect(r.x + 12, r.y + 8, w - 24, 18), $"<b>{info.name}</b> · {info.title}   <color=#ffe08a>돈 {gm.Player.money}냥</color>", shopRich);
-            GUI.Label(new Rect(r.x + 12, r.y + 26, w - 24, 16), $"<color=#c9c3d6>{shopMsg}</color>", UIStyle.Small);
+            var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2f), Mathf.Round((UIStyle.VirtualHeight - h) / 2f), w, h);
+            CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, info.name);
+            if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { CloseShop(); return; }
+            GUI.Label(new Rect(r.x + 12, r.y + 12, w - 24, 18), CuteUI.PaperColors($"{info.title}   <color=#ffe08a>돈 {gm.Player.money}냥</color>"), shopRich);
+            GUI.Label(new Rect(r.x + 12, r.y + 28, w - 24, 16), shopMsg ?? "", CuteUI.PaperSmall);
             float y = r.y + 46f;
             foreach (var id in info.items)
             {
@@ -359,19 +361,20 @@ namespace PocketCaravan
                 int left = Left(id);
                 int market = town != null ? gm.GetMarket(town).BuyPrice(item) : Mathf.RoundToInt(item.basePrice);
                 int price = KeeperPrice(item, town);
+                CuteUI.Box(new Rect(r.x + 8, y - 1, w - 16, 22), 6, CuteUI.Paper2, CuteUI.Line);
                 if (item.icon != null) GUI.DrawTexture(new Rect(r.x + 12, y + 2, 16, 16), item.icon.texture);
                 // 칸: 이름 | 장터 값 → 좌판 값 (오른쪽 맞춤) | 남은 수량 | 사기
                 GUI.Label(new Rect(r.x + 34, y + 2, 130, 18), item.displayName, shopRich);
-                if (priceStyle == null) priceStyle = new GUIStyle(shopRich) { alignment = TextAnchor.MiddleRight };
-                GUI.Label(new Rect(r.x + 160, y + 1, 128, 20), $"<color=#8a8296><size=9>장터 {market}</size></color> → <color=#ffde59><b>{price}냥</b></color>", priceStyle);
-                GUI.Label(new Rect(r.x + 296, y + 3, 50, 18), left > 0 ? $"<size=9>{left}개 남음</size>" : "<size=9><color=#8a8296>다 팔림</color></size>", shopRich);
+                if (priceStyle == null || priceStyle.font != shopRich.font) priceStyle = new GUIStyle(shopRich) { alignment = TextAnchor.MiddleRight };
+                GUI.Label(new Rect(r.x + 160, y + 1, 128, 20), CuteUI.PaperColors($"<color=#9a93ad><size=9>장터 {market}</size></color> → <color=#ffde59><b>{price}냥</b></color>"), priceStyle);
+                GUI.Label(new Rect(r.x + 296, y + 3, 50, 18), left > 0 ? $"<size=9>{left}개 남음</size>" : CuteUI.PaperColors("<size=9><color=#9a93ad>다 팔림</color></size>"), shopRich);
                 GUI.enabled = left > 0;
-                if (GUI.Button(new Rect(r.xMax - 52, y, 40, 20), "사기", UIStyle.Button)) BuyFromKeeper(item, town);
+                if (GUI.Button(new Rect(r.xMax - 52, y, 40, 20), "사기", CuteUI.PaperButtonIf(left > 0))) BuyFromKeeper(item, town);
                 GUI.enabled = true;
                 y += 24f;
             }
-            if (GUI.Button(new Rect(r.x + 12, r.yMax - 26, 110, 20), "장터 전부 보기", UIStyle.Button)) { CloseShop(); OpenMarket(); }
-            if (GUI.Button(new Rect(r.xMax - 92, r.yMax - 26, 80, 20), "닫기 Esc", UIStyle.Button)) CloseShop();
+            if (GUI.Button(new Rect(r.x + 12, r.yMax - 26, 110, 20), "장터 전부 보기", CuteUI.PaperButton)) { CloseShop(); OpenMarket(); }
+            if (GUI.Button(new Rect(r.xMax - 92, r.yMax - 26, 80, 20), "닫기 Esc", CuteUI.PaperButton)) CloseShop();
         }
 
         /// <summary>마을마다 장꾼 넷의 순서 (그 마을 특산이 먼저)</summary>

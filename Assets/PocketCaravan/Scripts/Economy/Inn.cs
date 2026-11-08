@@ -291,6 +291,7 @@ namespace PocketCaravan
             float h = Mathf.Max(106, textHeight + 54);
             var r = askWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round(UIStyle.VirtualHeight - h - 50), w, h);
             CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, askHost);
+            if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { CloseAsk(); return; }   // 11/08 오른쪽 위 X
             askTextRect = new Rect(r.x + 14, r.y + 14, w - 28, textHeight);
             GUI.Label(askTextRect, text, wrap);
             float yesWidth = Mathf.Floor((w - 36) * .56f);

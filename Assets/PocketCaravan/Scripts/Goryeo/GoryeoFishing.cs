@@ -217,14 +217,7 @@ namespace PocketCaravan
 
         void ToAim(string msg) { phase = Phase.Aim; power = 0f; powerDir = 1f; castX = -1f; hooked = null; status = msg; lockedUntilRelease = true; }
 
-        static bool SpaceHeld()
-        {
-#if ENABLE_INPUT_SYSTEM
-            var k = UnityEngine.InputSystem.Keyboard.current; return k != null && k.spaceKey.isPressed;
-#else
-            return Input.GetKey(KeyCode.Space);
-#endif
-        }
+        static bool SpaceHeld() => InputReader.SpaceHeld();   // 11/08 마우스 왼쪽 누르고 있기도 (미니게임 클릭)
 
         void Update()
         {
@@ -378,7 +371,9 @@ namespace PocketCaravan
             }
             if (!string.IsNullOrEmpty(status)) GUI.Label(new Rect(r.x + 14, r.yMax - 52, w - 28, 30), status, CuteUI.PaperWrap);
             string key = phase == Phase.Aim ? "던지기" : phase == Phase.Reel ? "누르고 있기 = 감기" : phase == Phase.Result ? "닫기" : "채기";
-            CuteUI.LabelCenter(r.center.x, r.yMax - 14, "Space " + key, CuteUI.Text, true, true);
+            CuteUI.LabelCenter(r.center.x, r.yMax - 14, "Space·클릭 " + key, CuteUI.Text, true, true);
+            if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) InputReader.Press('\x1b');   // 11/08 X = Esc(그만)
+            InputReader.ClickAsSpace();   // 11/08 빈 곳 클릭 = Space (누르고 있기 = 감기)
         }
 
         void DrawWater(Rect a)

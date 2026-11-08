@@ -149,6 +149,7 @@ namespace PocketCaravan
             Plain(button.active, Panel(Rim, Ink), new Color32(0x2C, 0x26, 0x3B, 0xFF));
             GUI.skin.label.normal.textColor = new Color(0.97f, 0.95f, 0.9f);
             GUI.skin.label.clipping = TextClipping.Overflow;   // 칸이 낮아도 글자가 잘리지 않게
+            CuteUI.PaperScrollbars();   // 11/08 굵은 검은 스크롤 막대 → 얇은 종이 막대 (모든 창)
         }
 
         static void Plain(GUIStyleState st, Texture2D bg, Color text)

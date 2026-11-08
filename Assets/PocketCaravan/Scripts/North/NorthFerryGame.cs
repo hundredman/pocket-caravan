@@ -230,6 +230,9 @@ namespace PocketCaravan
                 GUI.Label(new Rect(box.x + 10, box.y + 8, 180, 70), result, UIStyle.Wrap);
                 GUI.Label(new Rect(box.x + 10, box.yMax - 22, 180, 16), "Space: 내리기", UIStyle.Small);
             }
+            // 11/08 마우스: X = Esc(건너뛰기·내리기), 빈 곳 클릭 = Space(노 젓기)
+            if (CuteUI.CloseButton(field.xMax - 16f, field.y - 8f)) InputReader.Press('\x1b');
+            InputReader.ClickAsSpace();
         }
 
         void Draw(string name, Rect r)

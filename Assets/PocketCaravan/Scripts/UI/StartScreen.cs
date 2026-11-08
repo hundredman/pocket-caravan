@@ -117,8 +117,10 @@ namespace PocketCaravan
                 CuteUI.Box(r, 8, on ? CuteUI.Interact : CuteUI.Paper, on ? CuteUI.Ink : CuteUI.Line, 1, on ? 2 : 0, CuteUI.InteractLo);
                 if (on) CuteUI.Fill(new Rect(r.x + 5, r.y + 2, r.width - 10, 1), CuteUI.InteractHi);
                 CuteUI.LabelCenter(r.center.x, r.center.y, items[i], on ? CuteUI.OnInteract : CuteUI.Text, false, on);
+                // 11/08 마우스로 눌러도 고르고 결정 (위에 접속 창이 떠 있으면 무시)
+                if (!Held && GUI.Button(r, GUIContent.none, GUIStyle.none)) { menuIndex = i; InputReader.Press(' '); }
             }
-            CuteUI.LabelCenter(W / 2, H - 20, "↑ ↓ 고르기 · Space 결정", CuteUI.Sub, true);
+            CuteUI.LabelCenter(W / 2, H - 20, "↑ ↓ 고르기 · Space 결정 · 마우스로 눌러도 돼요", CuteUI.Sub, true);
         }
 
         void DrawPick(float W, float H)
@@ -134,7 +136,7 @@ namespace PocketCaravan
             var sel = all.choices[Mathf.Clamp(pick, 0, all.choices.Count - 1)];
             string who = sel.origin != null ? sel.origin.displayName : "";
             string intro = $"{sel.region} · {who} ({sel.animal}) · 강점: {sel.strength}";
-            string hint = $"{sel.startTown}에서 출발 · ← → ↑ ↓ 고르기 · Space 출발" + (hasSave ? " · Esc 뒤로" : "");
+            string hint = $"{sel.startTown}에서 출발 · ← → ↑ ↓ 또는 카드를 눌러 고르기 · Space·출발 단추로 떠나기" + (hasSave ? " · Esc 뒤로" : "");
             float bw = Mathf.Min(W - 24, Mathf.Max(430, CuteUI.Width(intro) + 30));
             float introHeight = CuteUI.WrapHeight(intro, bw - 20);
             float hintHeight = CuteUI.WrapHeight(hint, bw - 20, true);
@@ -184,9 +186,24 @@ namespace PocketCaravan
                 var tag = new Rect(mapR.x + 4, mapR.yMax - 22, tw, 17);
                 CuteUI.Box(tag, 7, on ? CuteUI.Interact : CuteUI.Paper, CuteUI.Ink);
                 CuteUI.LabelCenter(tag.center.x, tag.center.y, name, on ? CuteUI.OnInteract : CuteUI.Text, false, true);
+                // 11/08 카드를 누르면 고르고, 고른 카드를 한 번 더 누르면 출발 (위에 접속 창이 떠 있으면 무시)
+                if (!Held && GUI.Button(r, GUIContent.none, GUIStyle.none))
+                {
+                    if (on) InputReader.Press(' ');
+                    else { pick = i; visiblePick = i; Sfx.Play("open"); }
+                }
             }
 
             GUI.EndScrollView();
+
+            // 11/08 출발·뒤로 단추 (마우스만으로도). 카드 칸을 줄이면 스크롤이 생겨서, 질문 줄 양 끝(카드 왼쪽·오른쪽 끝에 맞춰)에 둔다
+            if (!Held)
+            {
+                float gridL = pickViewport.x + x0, gridR = gridL + columns * cw + (columns - 1) * gap;
+                if (gridR - gridL < 360) { gridL = 12; gridR = W - 12; }
+                if (CuteUI.Button(new Rect(gridR - 96, 46, 96, 20), "출발 (Space)")) InputReader.Press(' ');
+                if (hasSave && CuteUI.SoftButton(new Rect(gridL, 46, 80, 20), "뒤로 (Esc)")) InputReader.Press('\x1b');
+            }
 
             // 목록과 분리한 고정 소개. 긴 강점/키 안내도 창 안에서 줄바꿈한다.
             CuteUI.Box(pickFooter, 9, CuteUI.Paper, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);

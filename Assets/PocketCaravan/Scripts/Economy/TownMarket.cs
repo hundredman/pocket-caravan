@@ -185,7 +185,8 @@ namespace PocketCaravan
             }
             right -= CuteUI.KeycapWidth("L") + CuteUI.Width("장부", true) + 4;
             float kx = CuteUI.Keycap(right, fy - 6, "L", true);
-            CuteUI.Label(right + kx + 3, fy, "장부", CuteUI.Sub, true);
+            float lx = CuteUI.Label(right + kx + 3, fy, "장부", CuteUI.Sub, true);
+            if (GUI.Button(new Rect(right - 2, fy - 9, lx - right + 4, 18), GUIContent.none, GUIStyle.none)) InputReader.Press('l');   // 11/08 눌러도 장부가 열린다
             if (!string.IsNullOrEmpty(message)) CuteUI.Label(r.x + 18, fy, Fit(CuteUI.Plain(message), right - r.x - 30, true, false), CuteUI.Text, true);
         }
 

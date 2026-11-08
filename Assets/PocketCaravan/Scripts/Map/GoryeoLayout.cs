@@ -21,7 +21,7 @@ namespace PocketCaravan
             return null;
         }
         /// <summary>3: T3 외곽 경계(2026-11-08). v2까지의 위치 이주는 GoryeoBoundaryLayout이 먼저 처리한다.</summary>
-        public const int Current = 3;
+        public const int Current = 4;
         /// <summary>옛 배치 저장(1 이하): 같은 맵(옛 ID는 별칭으로)의 도착 자리에서 다시 시작한다. 맵·재산·진행은 그대로다.</summary>
         public static bool TryPosition(SaveData data,out Vector3 position)
         {

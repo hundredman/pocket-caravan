@@ -573,7 +573,8 @@ namespace PocketCaravan
 
         void OnGUI()
         {
-            if (Status == State.Offline || StartScreen.IsOpen) return;
+            // 11/08 혼자 할 때도 '혼자 하기' 알약을 띄워, 눌러서 온라인 창을 열 수 있게 (예전엔 O 키로만)
+            if (StartScreen.IsOpen || MapRoot.Current == null || GameManager.I == null) return;
             UIStyle.Begin();
             DrawStatus();
         }
@@ -589,6 +590,7 @@ namespace PocketCaravan
             string label = Status switch
             {
                 State.Online => $"{OnlineCount}명",
+                State.Offline => "혼자 하기",
                 State.Waiting => $"다시 연결 {Mathf.CeilToInt(Mathf.Max(0f, retryAt - Time.unscaledTime))}초",
                 _ => retries > 0 ? "다시 연결 중…" : "접속 중…",
             };
@@ -597,8 +599,9 @@ namespace PocketCaravan
             ScreenZones.Mark("online", r);   // 11/08 위 가운데 알약이 이 왼쪽에서 멈춘다
             CuteUI.Pill(r);
             if (online) CuteUI.Icon(CuteUI.Pic.People, r.x + 6, r.y + 5);
-            else CuteUI.Circle(r.x + 8, r.y + 5, 8, Status == State.Waiting || retries > 0 ? CuteUI.Alert : CuteUI.Deco, CuteUI.Ink);
-            CuteUI.Label(r.x + 22, r.y + 9, label, CuteUI.Text, false, true);
+            else CuteUI.Circle(r.x + 8, r.y + 5, 8, Status == State.Offline ? CuteUI.ZeroSoft : Status == State.Waiting || retries > 0 ? CuteUI.Alert : CuteUI.Deco, CuteUI.Ink);
+            CuteUI.Label(r.x + 22, r.y + 9, label, Status == State.Offline ? CuteUI.Sub : CuteUI.Text, false, true);
+            if (!UIState.Blocking && GUI.Button(r, GUIContent.none, GUIStyle.none)) NetLogin.OpenGame();   // 11/08 눌러도 O처럼 온라인 창
             if (online && r.Contains(Event.current.mousePosition))
             {
                 string here = sentMap != null && !waitingRoom ? $"이 맵 {peers.Count + 1}명" : "이 맵 확인 중";

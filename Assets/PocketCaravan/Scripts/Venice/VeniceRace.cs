@@ -73,14 +73,7 @@ namespace PocketCaravan
             return false;
 #endif
         }
-        static bool Boost()
-        {
-#if ENABLE_INPUT_SYSTEM
-            return Keyboard.current != null && Keyboard.current.spaceKey.isPressed;
-#else
-            return false;
-#endif
-        }
+        static bool Boost() => InputReader.SpaceHeld();   // 11/08 마우스 왼쪽 누르고 있기도
 
         void Update()
         {
@@ -261,7 +254,9 @@ namespace PocketCaravan
                 float bx = Mathf.Round(r.center.x - (CuteUI.KeycapWidth("Space") + 3f + CuteUI.Width("닫기", true)) / 2f);
                 bx += CuteUI.Keycap(bx, r.yMax - 20f, "Space", true) + 3f;
                 CuteUI.Label(bx, r.yMax - 13.5f, "닫기", CuteUI.Text, true);
+                if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) InputReader.Press('\x1b');   // 11/08 X = 닫기
             }
+            InputReader.ClickAsSpace();   // 11/08 클릭 = Space (누르고 있기 = 힘껏 젓기 · 결과 닫기)
         }
     }
 }

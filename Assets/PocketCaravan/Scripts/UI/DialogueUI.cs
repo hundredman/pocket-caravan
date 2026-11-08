@@ -237,7 +237,8 @@ namespace PocketCaravan
             }
             if (choices.Count == 0)
             {
-                GUI.Label(new Rect(bx - 120, r.yMax - 22, 120, 16), "<color=#6a5464>계속 (Space)</color>", CuteUI.PaperRight);
+                // 11/08 마우스로도 닫게 단추로 (예전엔 글씨라 Space로만 닫혔다)
+                if (GUI.Button(new Rect(bx - 104, r.yMax - 26, 104, 18), "닫기 (Space)", CuteUI.PaperButtonOn)) Close();
                 return;
             }
             if (stacked)

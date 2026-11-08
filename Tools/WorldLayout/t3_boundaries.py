@@ -106,6 +106,102 @@ def generate(config,sources):
     for idx,mid in enumerate(ids):
         yy,xx=np.nonzero(known&(owners==idx));boxes[mid]=[int(xx.min()),int(yy.min()+oy),int(xx.max()+1),int(yy.max()+oy+1)]
     for mid,override in config.get('boundsOverrides',{}).items():boxes[mid]=override
+    # 2026-11-08 v4: no black void inside a scene. Empty cells in each scene rectangle get blocked forest,
+    # copied from one approved 16x16 forest patch (tiles only move; no new art). Walkable land and links are unchanged.
+    fill=config.get('voidFill')
+    if fill:
+        px,py,pw,ph=fill['patch']
+        patch={k:tile_world[k][py-oy:py-oy+ph,px:px+pw].copy()for k in LAYERS}
+        if not (known[py-oy:py-oy+ph,px:px+pw].all() and not walk[py-oy:py-oy+ph,px:px+pw].any() and not water[py-oy:py-oy+ph,px:px+pw].any() and (patch['obj']!='').all()):raise ValueError('Void fill patch is not solid forest')
+        # Next to the sea the void continues as open sea (same plain sea tile as the earlier sea fill), inland as forest.
+        _,(ny,nx)=ndimage.distance_transform_edt(~known,return_indices=True)
+        sea=(tile_world['ground']=='pond_center')|water
+        filled=np.zeros_like(known)
+        for mid,(x0,y0,x1,y1)in boxes.items():
+            for wy in range(y0,y1):
+                for wx in range(x0,x1):
+                    r=wy-oy
+                    if known[r,wx]or filled[r,wx]:continue
+                    if sea[ny[r,wx],nx[r,wx]]:
+                        for k in LAYERS:tile_world[k][r,wx]=''
+                        tile_world['ground'][r,wx]='pond_center'
+                    else:
+                        for k in LAYERS:tile_world[k][r,wx]=patch[k][(wy-py)%ph,(wx-px)%pw]
+                    filled[r,wx]=True
+        known|=filled;walk&=~filled
+        filled_forest=filled&(tile_world['ground']!='pond_center')
+    # 2026-11-08 v4: small approved road reshapes (e.g. remove a dead-end stub). Road tiles are re-chosen from the
+    # existing 9-slice + inner-corner road set by neighbour shape; removed cells become plain grass. No new art.
+    forest_cells=[]
+    if not fill:filled_forest=np.zeros_like(known)
+    for edit in config.get('roadEdits',[]):
+        ex0,ey0,ex1,ey1=edit['region'];keep=edit.get('keepMaxY',10**6)
+        mask=road>0;new=mask.copy()
+        for wy in range(ey0,ey1):
+            for wx in range(ex0,ex1):
+                if wy>keep:new[wy-oy,wx]=False
+        for rx0,ry0,rx1,ry1 in edit.get('removeRects',[]):
+            new[ry0-oy:ry1-oy,rx0:rx1]=False
+        for ax0,ay0,ax1,ay1 in edit.get('addRects',[]):
+            new[ay0-oy:ay1-oy,ax0:ax1]=True
+        grade=int(np.median(road[mask[ey0-oy:ey1-oy,ex0:ex1].nonzero()[0]+ey0-oy,mask[ey0-oy:ey1-oy,ex0:ex1].nonzero()[1]+ex0]))if mask[ey0-oy:ey1-oy,ex0:ex1].any()else 1
+        grass=edit.get('grass','floor_0_12_goryeo_jade')
+        if edit.get('throughForest'):
+            # The road continues through the forest to the scene edge: trees on the new road and one cell beside it
+            # are cleared (existing tiles only), so the cut reads as a path between trees, not a hole.
+            added=new&~mask
+            side=ndimage.binary_dilation(added,np.ones((3,3),bool))&~new
+            for rr,cc in zip(*np.nonzero(added|side)):
+                if walk[rr,cc]and not added[rr,cc]:continue
+                if owners[rr,cc]<0:continue
+                bx0,by0,bx1,by1=boxes[ids[owners[rr,cc]]]
+                if not(bx0<=cc<bx1 and by0<=rr+oy<by1):continue
+                for k in('deco','obj','high'):tile_world[k][rr,cc]=''
+                if not walk[rr,cc]:forest_cells.append([int(cc),int(rr+oy)])
+                tile_world['ground'][rr,cc]=grass;walk[rr,cc]=True;known[rr,cc]=True
+        edge_box=boxes.get(edit.get('map'))if edit.get('openEdge')else None
+        def R(x,y):
+            # A road that reaches the scene edge keeps going off-map (no end cap), like the main roads across borders.
+            if edge_box:
+                bx0,by0,bx1,by1=edge_box
+                if not(bx0<=x<bx1 and by0<=y<by1):
+                    cx,cy=min(max(x,bx0),bx1-1),min(max(y,by0),by1-1)
+                    if (cx,cy)!=(x,y)and abs(cx-x)+abs(cy-y)==1:return bool(new[cy-oy,cx])
+            return 0<=y-oy<height and 0<=x<width and new[y-oy,x]
+        for wy in range(ey0-1,ey1+1):
+            for wx in range(ex0-1,ex1+1):
+                r=wy-oy
+                if edge_box and not(edge_box[0]<=wx<edge_box[2]and edge_box[1]<=wy<edge_box[3]):continue
+                if not new[r,wx]:
+                    if mask[r,wx]:road[r,wx]=0;tile_world['ground'][r,wx]=grass
+                    continue
+                if not mask[r,wx]:road[r,wx]=grade
+                N,S,W_,E=R(wx,wy-1),R(wx,wy+1),R(wx-1,wy),R(wx+1,wy)
+                if N and S and W_ and E:
+                    t=('floor_6_9_goryeo_jade'if not R(wx-1,wy-1)else'floor_5_9_goryeo_jade'if not R(wx+1,wy-1)else
+                       'floor_6_8_goryeo_jade'if not R(wx-1,wy+1)else'floor_5_8_goryeo_jade'if not R(wx+1,wy+1)else'floor_1_8_goryeo_harvest')
+                else:
+                    col=0 if not W_ else 2 if not E else 1;row=7 if not N else 9 if not S else 8
+                    t=f'floor_{col}_{row}_goryeo_jade'
+                tile_world['ground'][r,wx]=t
+    # 11/08: a sign removed by signEdits takes its sign tile and its blocked cell with it (before seams/exits are found).
+    sign_cells=0
+    for e in config.get('signEdits',{}).get('edits',[]):
+        if not e.get('remove'):continue
+        sx,sy=e['world'];r=sy-oy
+        if tile_world['obj'][r,sx]=='element_0_2':tile_world['obj'][r,sx]='';sign_cells+=int(not walk[r,sx]);walk[r,sx]=True
+    # 11/08 v4: re-draw the new forest (void fill) and the forest beside new roads with the original forest lattice,
+    # so edges show whole trees like the native forest instead of square cuts. Walk/blocked are unchanged.
+    forest_render=None
+    if config.get('forestRender'):
+        import t3_forest
+        changed=filled_forest.copy()
+        for cx,cy in forest_cells:changed[cy-oy,cx]=True
+        forest_render=t3_forest.render(tile_world,walk,water,owners,boxes,ids,oy,changed)
+    lotus_render=None
+    if config.get('lotusRender'):
+        import t3_lotus
+        lotus_render=t3_lotus.render(tile_world,water,owners,boxes,ids,oy)
     # Dirt and grass use the same rule: the shared outer face must be reachable
     # from the town/start component on both sides. Do not open detached pockets.
     portal_walk=np.zeros_like(walk)
@@ -217,6 +313,9 @@ def generate(config,sources):
     covered=np.zeros_like(known)
     for mid,(x0,y0,x1,y1)in boxes.items():covered[y0-oy:y1-oy,x0:x1]=True
     report['trimmedReviewCells']=[[int(x),int(y+oy)]for y,x in zip(*np.nonzero(known&~covered))]
+    report['roadForestCells']=len(forest_cells);report['signCellsOpened']=sign_cells
+    if lotus_render:report['lotusRender']=dict(removedCells=lotus_render['removedCells'],lotus=lotus_render['lotus'],ripples=lotus_render['ripples'],newTiles=sorted(lotus_render['tiles']));report['_lotusTiles']=lotus_render
+    if forest_render:report['forestRender']=dict(cells=forest_render['cells'],changedCells=forest_render['changedCells'],newTiles=sorted(forest_render['tiles']));report['_forestTiles']=forest_render
     report['trimmedWalkableCells']=int((walk&~covered).sum())
     report['trimNote']='Review-only: west tip is shortened by one column to fit two separate existing foreign portals on the same true outer face. No new land or foreign file changes.'
     surfaces=Counter();samples=[];actual={}
