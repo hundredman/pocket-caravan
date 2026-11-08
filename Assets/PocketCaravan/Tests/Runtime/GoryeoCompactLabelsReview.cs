@@ -159,7 +159,7 @@ namespace PocketCaravan.EditorTools
                     for(int step=1;step<=10;step++){
                         gm.SetMemo("goryeo:intro",step);yield return Frames();
                         var r=intro.GuideRect;
-                        Check(r.height>=24&&Mathf.Abs(r.yMax-(UIStyle.VirtualHeight-4))<.1f&&r.width==168&&Mathf.Abs(r.xMax-UIStyle.VirtualWidth)<.1f,"compact tutorial tracker bottom right step "+step+" "+size);
+                        Check(r.height>=24&&Mathf.Abs(r.yMax-(UIStyle.VirtualHeight-4-HUD.BottomReserved))<.1f&&r.width==168&&Mathf.Abs(r.xMax-UIStyle.VirtualWidth)<.1f,"compact tutorial tracker bottom right step "+step+" "+size);
                         Check(r.xMin>=10&&r.xMax<=UIStyle.VirtualWidth&&r.yMax<=UIStyle.VirtualHeight-4,"tutorial guide fits viewport step "+step+" "+size);
                         var hints=gm.GetComponent<ActivityHints>();
                         if(hints!=null&&hints.EdgeRect.width>0){Check(!hints.EdgeRect.Overlaps(r),"activity arrow separate from tutorial");Check(hints.EdgeRect.xMin>=4&&hints.EdgeRect.xMax<=UIStyle.VirtualWidth-4,"activity arrow inside viewport");}

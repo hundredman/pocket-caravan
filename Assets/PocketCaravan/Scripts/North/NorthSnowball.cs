@@ -526,12 +526,15 @@ namespace PocketCaravan
             for (float x = r.xMin; x < r.xMax; x += 8f) { Fill(new Rect(x, r.yMin, 4, 1), line); Fill(new Rect(x, r.yMax, 4, 1), line); }
             for (float y = r.yMin; y < r.yMax; y += 8f) { Fill(new Rect(r.xMin, y, 1, 4), line); Fill(new Rect(r.xMax, y, 1, 4), line); }
             // 위 가운데 점수판
+            // 11/08 할 일·이야기 알약 아래에 쌓는다 (y 6 고정이라 할 일 줄과 겹쳤다). 너비는 아래 도움말이 한 줄에 들어가게
             float vw = UIStyle.VirtualWidth;
-            var box = new Rect(vw / 2 - 90, 6, 180, 34);
+            const string help = "Space 던지기 · 눈벽 뒤에 숨기 · 밖으로 나가면 기권";
+            float bw = Mathf.Min(vw - 12, Mathf.Max(180f, Mathf.Ceil(UIStyle.Small.CalcSize(new GUIContent(help)).x) + 16f));
+            var box = new Rect(Mathf.Round((vw - bw) / 2), CuteUI.TopStack(50, 34), bw, 34);
             Fill(box, new Color(0.08f, 0.07f, 0.14f, 0.82f));
             string head = state == S.Ready ? $"<b>눈싸움</b>  준비… {Mathf.CeilToInt(timer)}" : $"<b>눈싸움</b>  남은 시간 <b>{Mathf.CeilToInt(Mathf.Max(0f, timer))}</b>   점수 <b>{score}</b>";
             GUI.Label(new Rect(box.x, box.y + 2, box.width, 16), head, UIStyle.CenterRich);
-            GUI.Label(new Rect(box.x, box.y + 18, box.width, 14), "Space 던지기 · 눈벽 뒤에 숨기 · 밖으로 나가면 기권", UIStyle.Small);
+            GUI.Label(new Rect(box.x, box.y + 18, box.width, 14), help, UIStyle.Small);
         }
 
         Vector3 CellCorner(int jx, int jy)

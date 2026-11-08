@@ -163,11 +163,10 @@ namespace PocketCaravan
                     GUI.color = old;
                 }
                 GUI.depth = -11;
-                string text = f.items.Length > 0 ? $"  {f.name} · {f.itemText} {Mathf.RoundToInt(f.bonus * 10)}할 더" : $"  {f.name}";
-                float w = Mathf.Max(140f, text.Length * 9f + 16f);
-                var r = new Rect(vw / 2f - w / 2f, 34f, w, 18f);
-                GUI.Box(r, "", UIStyle.Box);
-                GUI.Label(r, text, UIStyle.Rich);
+                // 11/08 UI B안: 검은 띠(y 34 고정, 이야기 줄과 겹쳤다) 대신 위 가운데 알약들 아래에 쌓는 종이 알약 (Tab 펼친 동안은 숨긴다)
+                if (HUD.Expanded) return;
+                string where = f.items.Length > 0 ? $"{f.itemText} {Mathf.RoundToInt(f.bonus * 10)}할 더" : "";
+                CuteUI.TopPill(CuteUI.TopStack(40), false, CuteUI.Pic.Star4, CuteUI.Plain(f.name), CuteUI.Plain(where), false);
             }
         }
 

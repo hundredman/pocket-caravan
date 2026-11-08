@@ -59,6 +59,16 @@ const roomC = await c.wait((m) => m.t === "room" && m.map === "test_rialto");
 const aInC = roomC?.players?.find((p) => p.id === a.id);
 check(aInC?.x === 12.5, "나중에 들어온 C도 A의 마지막 위치를 받는다");
 
+// 11/08 생김새: 시작 화면에서 로그인한 뒤 출신을 고르면, 같은 맵에 enter를 다시 보내며 look을 고친다
+const joinsOfA = () => b.got.filter((m) => m.t === "join" && m.id === a.id);
+a.send({ t: "enter", map: "test_rialto", look: "arabia" });
+const lookB = await b.wait((m) => m.t === "join" && m.id === a.id && m.look === "arabia");
+const roomA = await a.wait((m) => m.t === "room" && m.players?.some((p) => p.id === b.id));
+check(!!lookB && !!roomA, "같은 맵에 look을 실어 다시 들어오면 B는 A의 새 생김새를 받고, A는 맵 사람 목록을 다시 받는다");
+a.send({ t: "enter", map: "test_rialto" });
+await b.wait((m) => m.t === "join" && m.id === a.id && joinsOfA().length >= 2);
+check(joinsOfA().length === 2 && joinsOfA()[1].look === "arabia", "look 없이 들어오면 생김새는 그대로 (예전 게임)");
+
 // 실제 서버엔 다른 사람이 있을 수 있으니, A가 나가기 전 수에서 1 줄었는지 본다
 const before = [...b.got].reverse().find((m) => m.t === "online" || m.t === "welcome")?.online ?? 0;
 const seen = b.got.length;

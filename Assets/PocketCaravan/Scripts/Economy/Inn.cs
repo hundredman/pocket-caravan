@@ -220,7 +220,7 @@ namespace PocketCaravan
         void DrawRestedBadge()
         {
             var gm = GameManager.I;
-            if (gm == null || !RestBuff.Rested || UIState.Blocking || MapRoot.Current == null || gm.IsTravelling) return;
+            if (gm == null || !RestBuff.Rested || UIState.Blocking || HUD.Expanded || MapRoot.Current == null || gm.IsTravelling) return;   // 11/08 Tab으로 펼친 상태 카드 안에 겹쳐 그려졌다
             UIStyle.Begin();
             if (style == null) style = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow };
             var r = new Rect(6f, 92f, 96f, 16f);

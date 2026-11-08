@@ -18,6 +18,8 @@
  *   게임 → 서버  {"t":"who"}  →  서버 → 게임 {"t":"who","players":[{id,name,map}…]}   접속자 목록(시험용)
  *  5단계 (2026-10-30) 생김새: hello에 "look"(출신 아이디: venice · goryeo · viking · arabia)을 실어 보내면
  *   room · join의 플레이어 정보에 "look"이 함께 간다. 게임이 그 출신의 캐릭터 그림으로 그린다.
+ *   (2026-11-08) enter에도 "look"을 실을 수 있다. 시작 화면에서 로그인하면 hello의 look은 아직 고르기 전 기본 출신이라
+ *   맵에 들어갈 때(출신이 바뀌면 같은 맵에 다시 enter) 고친다. 같은 맵 사람들에게는 join으로 새 생김새가 간다
  *  6단계 (2026-10-30) 끊겨도 다시 붙기 · 서버 보호
  *   hello에 "key"(게임을 켤 때마다 새로 만드는 비밀 글자)를 실어 보낸다. 같은 key로 다시 들어오면
  *   예전 접속을 닫고 예전 번호(id)를 그대로 준다. welcome의 "name"이 실제로 쓰인 이름이다(겹치면 "윤채(2)").
@@ -66,6 +68,14 @@
  *         서버 → 보낸 사람 {"t":"giftResult","gid":"a1","ok":…,"why":…,"to":…}  (받는 사람이 없거나 10초 안에 답이 없으면 ok:false)
  *         보낸 게임은 보낼 때 돈·짐을 빼 두고, ok:false면 돌려받는다
  *   사용량: 접속·메시지·관리 요청 수를 날마다(UTC) 세어 GET /admin/status의 "usage"로 보여 준다 (무료 한도 하루 10만 번 어림)
+ *  12단계 (2026-11-08) 백업 · 되살리기 · 자동 백업
+ *   GET /admin/backup?after=<키>&limit=<수>  저장소를 키 순서대로 조금씩 통째로 준다 (계정의 접속키 해시·소금 포함)
+ *     → {"at":…,"entries":[[키,값]…],"next":"마지막 키" 또는 null}   next가 null이 될 때까지 after=next로 이어 받는다
+ *   POST /admin/load {"confirm":true,"put":[[키,값]…],"del":[키…],"done":true,"names":[이름…]}  백업을 되살린다
+ *     put·del은 나눠 여러 번 보낼 수 있다. "nextId"는 줄이지 않는다(예전 번호를 새 손님에게 주면 계정 번호와 겹친다)
+ *     done이면 접속한 사람(names가 있으면 그 계정만)에게 알리고 1012로 닫는다. 게임은 저절로 다시 접속해서 되살린 저장을 받는다
+ *   자동 백업: 매일 한국 새벽 3시(cron, index.ts scheduled)에 저장소 통째로를 gzip해서 KV(BACKUPS) "auto:날짜:칸"에 둔다 (최근 7일치)
+ *     GET /admin/autobackups 목록 · POST /admin/autobackup 지금 하기 · GET /admin/autobackup?day=2026-11-08 받기(gzip, 백업 파일과 같은 JSON)
  */
 import { DurableObject } from "cloudflare:workers";
 import type { Env } from "./index";
@@ -92,6 +102,10 @@ const BOARD_MAX = 30, BOARD_KEEP = 20, BOARD_SHOW = 10, SCORE_GAP_MS = 1000;
 const GIFT_GAP_MS = 2000, GIFT_WAIT_MS = 10_000, GIFT_MONEY_MAX = 1_000_000, GIFT_COUNT_MAX = 1000;
 /** 사용량을 저장소에 적는 간격 */
 const USAGE_SAVE_MS = 60_000;
+/** 백업: 한 번에 읽는 키 수 · 한 번에 보내는 글자 수 (게임 저장 하나가 12만 자까지라 나눠 보낸다) */
+const BACKUP_PAGE = 100, BACKUP_CHARS = 4_000_000;
+/** 자동 백업: 남기는 날 수 · KV 값 하나의 크기 (무료 KV는 값 하나 25MB까지라 넘으면 칸을 나눈다) */
+const AUTO_KEEP = 7, AUTO_PART = 20 * 1024 * 1024;
 /** 짐 저장: 물건 종류 수 */
 const SAVE_ITEMS = 200;
 /** 거래 기록: 남겨 두는 수 · 새로 들어온 사람에게 다시 보내 주는 기간 */
@@ -124,6 +138,9 @@ interface BoardRow { name: string; value: number; at: number; }
 
 /** 받는 사람의 답을 기다리는 선물 */
 interface PendingGift { from: WebSocket; clientGid: string; to: WebSocket; toName: string; at: number; }
+
+/** 자동 백업 한 날의 정보 (KV "auto:날짜:칸"마다 같은 값을 붙여 둔다) */
+interface AutoMeta { at: number; keys: number; bytes: number; parts: number; }
 
 /** 날마다(UTC) 센 사용량 (저장소 키 "usage:" + 날짜) */
 interface Usage { day: string; opens: number; msgs: number; admin: number; }
@@ -179,8 +196,10 @@ export class WorldRoom extends DurableObject<Env> {
     if (want && mine && Date.parse(want) > Date.parse(mine)) this.ctx.abort("새 코드로 다시 켭니다");
 
     const path = new URL(request.url).pathname;
-    await this.tally(path.startsWith("/admin/") ? "admin" : "opens");
+    const inside = path === "/cron/backup";   // 입구의 scheduled만 보낸다 (입구는 /ws·/admin/만 방으로 넘긴다)
+    await this.tally(path.startsWith("/admin/") || inside ? "admin" : "opens");
     if (path.startsWith("/admin/")) return this.admin(request, path.slice("/admin/".length));
+    if (inside) return this.autoBackup();
 
     const pair = new WebSocketPair();
     const [client, server] = Object.values(pair);
@@ -391,6 +410,8 @@ export class WorldRoom extends DurableObject<Env> {
         const map = cleanMap(msg.map);
         if (!map) { ws.serializeAttachment(me); return send(ws, { t: "error", why: "맵 이름이 이상합니다" }); }
         if (me.map && me.map !== map) this.toMap(me.map, { t: "leave", id: me.id }, ws);
+        const look = cleanMap(msg.look);
+        if (look) me.look = look;
         me.map = map;
         me.m = false;
         ws.serializeAttachment(me);
@@ -462,7 +483,8 @@ export class WorldRoom extends DurableObject<Env> {
   private async admin(request: Request, what: string): Promise<Response> {
     let body: any = {};
     if (request.method === "POST") {
-      try { body = await request.json(); } catch { return reply({ error: "JSON이 아닙니다" }, 400); }
+      const text = await request.text();   // 비어 있으면 {} (자동백업 지금처럼 넣을 것이 없는 요청)
+      try { body = text ? JSON.parse(text) : {}; } catch { return reply({ error: "JSON이 아닙니다" }, 400); }
       if (!body || typeof body !== "object") body = {};
     }
     const now = Date.now();
@@ -567,6 +589,67 @@ export class WorldRoom extends DurableObject<Env> {
         this.broadcast({ t: "notice", text }, () => true);
         return reply({ sent: this.count(), text });
       }
+      case "GET backup": {
+        const q = new URL(request.url).searchParams;
+        const after = q.get("after") ?? "";
+        const limit = Math.min(BACKUP_PAGE, Math.max(1, Number.parseInt(q.get("limit") ?? "", 10) || BACKUP_PAGE));
+        const page = await this.ctx.storage.list({ ...(after ? { startAfter: after } : {}), limit });
+        const entries: [string, unknown][] = [];
+        let chars = 0, cut = false;
+        for (const [k, v] of page) {
+          const len = k.length + (JSON.stringify(v)?.length ?? 0);
+          if (entries.length > 0 && chars + len > BACKUP_CHARS) { cut = true; break; }
+          entries.push([k, v]);
+          chars += len;
+        }
+        const more = cut || page.size === limit;
+        return reply({ at: now, entries, next: more && entries.length > 0 ? entries[entries.length - 1][0] : null });
+      }
+      case "POST load": {
+        if (body.confirm !== true) return reply({ error: "되살리려면 confirm:true를 넣어 주세요" }, 400);
+        const put: unknown[] = Array.isArray(body.put) ? body.put : [];
+        const del: unknown[] = Array.isArray(body.del) ? body.del : [];
+        const okKey = (k: unknown): k is string => typeof k === "string" && k.length > 0 && k.length <= 2048;
+        if (!put.every((e) => Array.isArray(e) && e.length === 2 && okKey(e[0]))) return reply({ error: "put은 [[키,값]…] 모양이어야 해요" }, 400);
+        if (!del.every(okKey)) return reply({ error: "del은 [키…] 모양이어야 해요" }, 400);
+        const nextId = (await this.ctx.storage.get<number>("nextId")) ?? 0;
+        const puts = (put as [string, unknown][]).map(([k, v]): [string, unknown] => [k, k === "nextId" ? Math.max(nextId, Number(v) || 0) : v]);
+        for (let i = 0; i < puts.length; i += 128) await this.ctx.storage.put(Object.fromEntries(puts.slice(i, i + 128)));
+        for (let i = 0; i < del.length; i += 128) await this.ctx.storage.delete((del as string[]).slice(i, i + 128));
+        let closed = 0;
+        if (body.done === true) {
+          const only = Array.isArray(body.names) ? new Set(body.names.map(acctKey).filter(Boolean)) : null;
+          for (const [s, p] of this.live()) {
+            if (only && !(p.acct && only.has(p.acct))) continue;
+            send(s, { t: "notice", text: "관리자가 서버 저장을 되살렸어요. 잠깐 끊겼다가 다시 접속해요" });
+            this.shut(s, p, 1012, "restored");
+            closed++;
+          }
+        }
+        return reply({ ok: true, put: puts.length, del: del.length, closed });
+      }
+      case "GET autobackups": {
+        if (!this.env.BACKUPS) return reply({ error: "자동 백업 저장소(KV)가 없어요" }, 404);
+        const days = (await this.autoDays()).map((d) => ({ day: d.day, ...(d.meta ?? { at: 0, keys: 0, bytes: 0, parts: d.keys.length }) }));
+        return reply({ keep: AUTO_KEEP, days });
+      }
+      case "POST autobackup":
+        return this.autoBackup();
+      case "GET autobackup": {
+        const kv = this.env.BACKUPS;
+        if (!kv) return reply({ error: "자동 백업 저장소(KV)가 없어요" }, 404);
+        const day = new URL(request.url).searchParams.get("day") ?? "";
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return reply({ error: "day=2026-11-08 모양으로 날짜를 넣어 주세요" }, 400);
+        const first = await kv.getWithMetadata<AutoMeta>(`auto:${day}:0`, "arrayBuffer");
+        if (!first.value) return reply({ error: `${day} 자동 백업이 없어요` }, 404);
+        const bufs = [first.value];
+        for (let i = 1; i < (first.metadata?.parts ?? 1); i++) {
+          const b = await kv.get(`auto:${day}:${i}`, "arrayBuffer");
+          if (!b) return reply({ error: `${day} 자동 백업의 ${i}번째 칸이 없어요` }, 500);
+          bufs.push(b);
+        }
+        return new Response(new Blob(bufs), { headers: { "content-type": "application/gzip" } });
+      }
       default:
         return reply({ error: `모르는 관리 요청: ${request.method} /admin/${what}` }, 404);
     }
@@ -575,6 +658,49 @@ export class WorldRoom extends DurableObject<Env> {
   /** 모든 계정 (저장소 키 → 계정) */
   private async accounts(): Promise<Map<string, Account>> {
     return this.ctx.storage.list<Account>({ prefix: "acct:" });
+  }
+
+  /** 자동 백업 하나: 저장소 통째로(백업 파일과 같은 JSON)를 gzip해서 KV에 둔다. 같은 날 다시 하면 덮고, 최근 AUTO_KEEP일치만 남긴다 */
+  private async autoBackup(): Promise<Response> {
+    const kv = this.env.BACKUPS;
+    if (!kv) return reply({ error: "자동 백업 저장소(KV)가 없어요" }, 404);
+    const now = Date.now();
+    const entries = Object.fromEntries(await this.ctx.storage.list());
+    const keys = Object.keys(entries).length;
+    const json = JSON.stringify({ kind: "pocket-caravan-backup", v: 1, server: "auto", at: now, count: keys, entries });
+    const zip = new Uint8Array(await new Response(new Blob([json]).stream().pipeThrough(new CompressionStream("gzip"))).arrayBuffer());
+    const day = new Date(now).toISOString().slice(0, 10);
+    const parts = Math.max(1, Math.ceil(zip.length / AUTO_PART));
+    const meta: AutoMeta = { at: now, keys, bytes: zip.length, parts };
+    for (let i = 0; i < parts; i++) await kv.put(`auto:${day}:${i}`, zip.subarray(i * AUTO_PART, (i + 1) * AUTO_PART), { metadata: meta });
+    // 오래된 날을 지운다. 오늘 것을 덮으며 칸이 줄었으면 남은 칸도 지운다 (KV 목록은 몇십 초 늦을 수 있어 오늘은 늘 남긴다)
+    const days = await this.autoDays();
+    const keep = new Set([day, ...days.map((d) => d.day).filter((d) => d < day).slice(0, AUTO_KEEP - 1)]);
+    let removed = 0;
+    for (const d of days) {
+      const gone = !keep.has(d.day) ? d.keys : d.day === day ? d.keys.filter((k) => Number(k.split(":")[2]) >= parts) : [];
+      for (const k of gone) await kv.delete(k);
+      if (!keep.has(d.day)) removed++;
+    }
+    return reply({ ok: true, day, keys, bytes: zip.length, parts, removed });
+  }
+
+  /** KV에 있는 자동 백업을 날짜별로 (최근 날이 앞) */
+  private async autoDays(): Promise<{ day: string; meta: AutoMeta | null; keys: string[] }[]> {
+    const byDay = new Map<string, { meta: AutoMeta | null; keys: string[] }>();
+    let cursor: string | undefined;
+    do {
+      const page = await this.env.BACKUPS!.list<AutoMeta>({ prefix: "auto:", cursor });
+      for (const k of page.keys) {
+        const [, day, part] = k.name.split(":");
+        const d = byDay.get(day) ?? { meta: null, keys: [] };
+        d.keys.push(k.name);
+        if (part === "0") d.meta = k.metadata ?? null;
+        byDay.set(day, d);
+      }
+      cursor = page.list_complete ? undefined : page.cursor;
+    } while (cursor);
+    return [...byDay].map(([day, d]) => ({ day, ...d })).sort((a, b) => b.day.localeCompare(a.day));
   }
 
   /** 예전 게임 저장 하나를 기록 칸에 남긴다 (칸은 돌아가며 쓴다). 저장소에 쓸 것은 puts에 더하고 acct를 고친다 */

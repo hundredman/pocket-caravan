@@ -1,0 +1,47 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace PocketCaravan
+{
+    /// <summary>
+    /// 11/08 화면 가장자리에 붙는 UI가 이번 프레임 차지한 자리.
+    /// 왼쪽 위 상태 카드 · 오른쪽 위 단추·온라인 알약·길 장애 알약 · 왼쪽 아래 채팅 · 오른쪽 아래 고려 배우기 카드가 OnGUI마다 Mark로 알리고,
+    /// 가운데에 뜨는 것(위 가운데 알약 · 아래 알림)이 FreeRow로 그 사이 빈 너비를 재서 겹치지 않게 한다.
+    /// 그리는 차례가 스크립트마다 달라 한 프레임 늦게 알 수 있다 (1프레임 지난 자리까지 살아 있는 것으로 본다).
+    /// </summary>
+    public static class ScreenZones
+    {
+        struct Zone { public Rect rect; public int frame; }
+        static readonly Dictionary<string, Zone> zones = new Dictionary<string, Zone>();
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics() => zones.Clear();
+
+        /// <summary>이번 프레임 id가 r을 차지한다 (OnGUI마다 부른다. 안 부르면 다음 프레임 뒤에 비워진다)</summary>
+        public static void Mark(string id, Rect r) => zones[id] = new Zone { rect = r, frame = Time.frameCount };
+
+        static bool Live(Zone z) => Time.frameCount - z.frame <= 1;
+
+        /// <summary>y0~y1 줄에서 양옆 가장자리 UI를 뺀 빈 구간. 화면 가운데보다 왼쪽에 놓인 것은 왼쪽 벽, 오른쪽은 오른쪽 벽이다</summary>
+        public static (float left, float right) FreeRow(float y0, float y1, float gap = 6f)
+        {
+            float cx = UIStyle.VirtualWidth / 2f, left = gap, right = UIStyle.VirtualWidth - gap;
+            foreach (var z in zones.Values)
+            {
+                if (!Live(z) || z.rect.yMax <= y0 || z.rect.y >= y1) continue;
+                if (z.rect.center.x < cx) left = Mathf.Max(left, z.rect.xMax + gap);
+                else right = Mathf.Min(right, z.rect.x - gap);
+            }
+            return (left, right);
+        }
+
+        /// <summary>y0~y1 줄을 가리는 가장자리 UI 가운데 가장 위쪽 y (없으면 y1). 알림이 그 위로 올라갈 때 쓴다</summary>
+        public static float TopOf(float y0, float y1)
+        {
+            float top = y1;
+            foreach (var z in zones.Values)
+                if (Live(z) && z.rect.yMax > y0 && z.rect.y < y1) top = Mathf.Min(top, z.rect.y);
+            return top;
+        }
+    }
+}

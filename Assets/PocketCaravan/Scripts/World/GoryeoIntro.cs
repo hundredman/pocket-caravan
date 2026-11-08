@@ -228,6 +228,7 @@ namespace PocketCaravan
             string title=s==1?"처음 배우기":s==10?"배우기 완료":$"배우기 {s-1}/{Tasks.Length}";
             string text=TaskText(s);var r=ReservedGuideRect;
             GuideRect=r;GuideText=text;
+            ScreenZones.Mark("goryeo.intro",r);   // 11/08 위 가운데 알약·알림이 이 카드를 비키게
             CuteUI.Card(r);
             textStyle.normal.textColor=textStyle.hover.textColor=textStyle.active.textColor=textStyle.focused.textColor=UIStyle.Lin(CuteUI.Sub);
             GUI.Label(new Rect(r.x+8,r.y+8,r.width-16,14),title,textStyle);
