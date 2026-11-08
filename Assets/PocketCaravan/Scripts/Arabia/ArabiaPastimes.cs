@@ -102,7 +102,9 @@ namespace PocketCaravan
                     CuteUI.Box(band, 6, CuteUI.Paper, CuteUI.Ink, 1, 2);
                     CuteUI.WrapCenter(band.x + 8, band.y + 4, band.width - 16, result, CuteUI.Text);
                 }
-                if (CuteUI.Button(new Rect(r.x + w - 112, r.y + h - 30, 98, 22), finished ? "닫기 · Space" : "그만 · Esc")) Close();
+                if (CuteUI.Button(new Rect(r.x + w - 112, r.y + h - 30, 98, 22), finished ? "닫기 · Space" : "그만 · Esc")) { Close(); return; }
+                if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { Close(); return; }   // 11/08 X
+                InputReader.ClickAsSpace();   // 11/08 빈 곳 클릭 = Space
             }
         }
 

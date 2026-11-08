@@ -40,6 +40,7 @@ namespace PocketCaravan
             float h = UIStyle.WindowHeight(Mathf.Min(344, 192+issueHeight)) - 6;
             var r = lastWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round((UIStyle.VirtualHeight - h) / 2 + 6), w, h);
             CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, "게임 메뉴");
+            if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { Close(); return; }   // 11/08 오른쪽 위 X
             float y = r.y + 18;
             if (issueHeight > 0)
             {

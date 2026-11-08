@@ -426,59 +426,105 @@ namespace PocketCaravan
                 var labels = MapRoot.Current != null ? MapRoot.Current.GetComponent<GoryeoPlaceLabels>() : null;
                 if (labels != null && labels.OwnsOriginal)
                 {
-                    if (pc.TalkTarget == it) labels.DrawFriendHint(HeartText(Hearts(Friends[fi])));
+                    if (pc.TalkTarget == it && labels.DrawFriendHint(PaperHearts(Hearts(Friends[fi])))) OpenGift(fi);   // 11/08 눌러도 선물 창
                     continue;
                 }
                 if ((it.transform.position - pc.transform.position).sqrMagnitude > 4.5f * 4.5f) continue;
                 var sp = Camera.main.WorldToScreenPoint(it.transform.position + new Vector3(0, 2.3f, 0));
                 if (sp.z < 0f) continue;
                 var p = new Vector2(sp.x / UIStyle.Scale, (Screen.height - sp.y) / UIStyle.Scale);
+                // 11/08 이름표처럼 배경 없이 글씨만 (빨간 하트·크림 빈 하트 + 그림자). 말 걸 수 있는 사람이면 "G 선물"이 붙고 누르면 선물 창
                 int h = Hearts(Friends[fi]);
-                string g = pc.TalkTarget == it ? " <size=9><color=#ffe08a>G</color> 선물</size>" : "";
-                string text = $"<color=#F05A78>{new string('♥', h)}</color><color=#FFFFFF88>{new string('♡', 3 - h)}</color>{g}";
-                float w = OneLine.CalcSize(new GUIContent(text)).x + 10f;
-                var r = new Rect(p.x - w / 2f, p.y - 9, w, 15);
-                if (g.Length > 0) GUI.Box(r, GUIContent.none, UIStyle.Box);
-                GUI.Label(r, text, CenterLine);
+                bool target = pc.TalkTarget == it;
+                string full = new string('♥', h), empty = new string('♡', 3 - h);
+                float w = CuteUI.Width(full + empty, true) + (target ? 6f + CuteUI.KeycapWidth("G") + 3f + CuteUI.Width("선물", true) : 0f);
+                var r = new Rect(Mathf.Round(p.x - w / 2f), Mathf.Round(p.y - 7f), Mathf.Round(w), 14f);
+                float x = CuteUI.ShadowLabel(r.x, r.center.y, full, HeartRed);
+                x = CuteUI.ShadowLabel(x, r.center.y, empty, CuteUI.Paper);
+                if (target)
+                {
+                    x += 6f + CuteUI.Keycap(x + 6f, r.y, "G", true) + 3f;
+                    CuteUI.ShadowLabel(x, r.center.y, "선물", CuteUI.Paper);
+                    if (GUI.Button(r, GUIContent.none, GUIStyle.none)) OpenGift(fi);
+                }
             }
         }
 
+        /// <summary>머리 위 하트 색 (배경 없는 글씨라 밝게)</summary>
+        static readonly Color32 HeartRed = new Color32(0xFF, 0x6B, 0x86, 0xFF);
+        /// <summary>하트 글: 찬 하트는 빨강, 빈 하트는 보조색 (종이 위에서 읽히게)</summary>
+        static string PaperHearts(int h) => CuteUI.PaperColors($"<color=#ff9a8a>{new string('♥', h)}</color><color=#9a93ad>{new string('♡', 3 - h)}</color>");
+
+        /// <summary>
+        /// 11/08 선물 고르기: 종이 창 + 이름표 + ◀ 물건 ▶ + 주기·그만 버튼 + 오른쪽 위 X. 키보드(방향키·Space·G/Esc)도 그대로.
+        /// </summary>
         void DrawPicker(float vw, float vh)
         {
             var f = Friends[pickFriend];
-            float w = 260, h = 60;
-            var r = new Rect((vw - w) / 2f, vh - h - 70, w, h);
-            GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(new Rect(r.x + 10, r.y + 6, w - 20, 16), $"{f.name}에게 선물  {HeartText(Hearts(f))}", UIStyle.Rich);
+            float w = 288, h = 104;
+            var r = new Rect(Mathf.Round((vw - w) / 2f), Mathf.Round(vh - h - 70), w, h);
+            CuteUI.Window(r);
+            string title = $"{f.name}에게 선물";
+            var tag = new Rect(r.x + 12f, r.y - 9f, CuteUI.Width(title, false, true) + 22f, 18f);
+            CuteUI.Box(tag, 7, CuteUI.Frame, CuteUI.Ink, 2, 2);
+            CuteUI.LabelCenter(tag.center.x, tag.center.y + 1f, title, CuteUI.Ink, false, true);
+            CuteUI.LabelCenter(tag.center.x, tag.center.y, title, CuteUI.White, false, true);
+            if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { Close(); return; }
+
+            int hts = Hearts(f);
+            GUI.Label(new Rect(r.x + 14, r.y + 13, 60, 16), PaperHearts(hts), CuteUI.PaperRich);
+            CuteUI.Label(r.x + 62, r.y + 21, $"좋아하는 것: {(hts >= 1 ? f.likedName : "?")}", CuteUI.Sub, true);
+            CuteUI.Label(r.xMax - 14 - CuteUI.Width($"{pickSel + 1}/{pickItems.Count}", true), r.y + 21, $"{pickSel + 1}/{pickItems.Count}", CuteUI.Sub, true);
+
+            // ◀ [물건 ×개수 (♥좋아함)] ▶
             var it = pickItems[pickSel];
-            bool liked = it.id == f.liked && Hearts(f) >= 1;
-            GUI.Label(new Rect(r.x + 10, r.y + 24, w - 20, 16),
-                $"◀  {it.displayName} ×{GM.Player.cargo.Count(it)}{(liked ? "  <color=#F05A78>♥좋아함</color>" : "")}  ▶", UIStyle.CenterRich);
-            GUI.Label(new Rect(r.x + 10, r.y + 42, w - 20, 14), "<size=9>방향키 고르기 · Space 주기 · G/Esc 그만</size>", UIStyle.CenterRich);
+            bool liked = it.id == f.liked && hts >= 1;
+            var card = new Rect(r.x + 40, r.y + 32, w - 80, 26);
+            CuteUI.Box(card, 8, CuteUI.Paper, liked ? CuteUI.Alert : CuteUI.Ink, liked ? 2 : 1, 2, CuteUI.SoftShadow);
+            string name = $"{it.displayName} ×{GM.Player.cargo.Count(it)}";
+            float nw = CuteUI.Width(name, false, true) + (liked ? CuteUI.Width("♥좋아함", true, true) + 8 : 0);
+            float nx = CuteUI.Label(Mathf.Round(card.center.x - nw / 2f), card.center.y, name, CuteUI.Text, false, true);
+            if (liked) CuteUI.Label(nx + 8, card.center.y, "♥좋아함", CuteUI.Alert, true, true);
+            if (pickItems.Count > 1)
+            {
+                if (CuteUI.SoftButton(new Rect(r.x + 12, card.y + 3, 24, 20), "◀")) pickSel = (pickSel + pickItems.Count - 1) % pickItems.Count;
+                if (CuteUI.SoftButton(new Rect(r.xMax - 36, card.y + 3, 24, 20), "▶")) pickSel = (pickSel + 1) % pickItems.Count;
+            }
+
+            float by = r.y + 66;
+            if (CuteUI.Button(new Rect(r.center.x - 96, by, 110, 20), "주기 (Space)")) InputReader.Press(' ');
+            if (CuteUI.SoftButton(new Rect(r.center.x + 22, by, 74, 20), "그만 (Esc)")) InputReader.Press('\x1b');
+            CuteUI.LabelCenter(r.center.x, r.yMax - 10, "←→ 고르기 · 하루 한 번 · 좋아하는 것은 +5", CuteUI.Sub, true);
         }
 
-        static GUIStyle oneLine, centerLine;
-        // Same profile invalidation as the shared CuteUI paper styles / NetChat.
-        static void LineStyles()
-        {
-            if(oneLine!=null&&centerLine!=null&&oneLine.font==UIStyle.RegularFont&&oneLine.fontSize==UIStyle.BodySize)return;
-            oneLine=new GUIStyle(UIStyle.Rich) { wordWrap=false, clipping=TextClipping.Overflow };
-            centerLine=new GUIStyle(UIStyle.CenterRich) { wordWrap=false, clipping=TextClipping.Overflow };
-        }
-        static GUIStyle OneLine { get { LineStyles(); return oneLine; } }
-        static GUIStyle CenterLine { get { LineStyles(); return centerLine; } }
-
+        /// <summary>
+        /// 11/08 친구 수첩: 종이 창 + 지역 탭(누르면 넘어간다) + 친구마다 종이 카드(하트·이름·오늘 말 건 표시 / 좋아함·다음 목표).
+        /// 예전 어두운 상자·작은 회색 글씨는 종이 UI에서 읽기 힘들어서 바꿨다. 오른쪽 위 X·Esc·F로 닫는다.
+        /// </summary>
         void DrawBook(float vw, float vh)
         {
             var region = Pages[page];
             var list = new List<Friend>();
             foreach (var f in Friends) if (f.region == region) list.Add(f);
-            float w = 380, h = 62 + list.Count * 20;
-            var r = new Rect((vw - w) / 2f, (vh - h) / 2f, w, h);
-            GUI.Box(r, "", UIStyle.Box);
-            string here = region == Reactions.Here ? "" : " <size=9><color=#9a93a8>(다른 지역)</color></size>";
-            GUI.Label(new Rect(r.x + 12, r.y + 6, w - 24, 16), $"◀ {RegionName(region)} 친구 수첩 ▶{here}", OneLine);
-            GUI.Label(new Rect(r.x + 12, r.y + 23, w - 24, 14), "<size=9><color=#CFC6B8>하루 한 번 말 걸기 +1 · G 선물 +2 · 좋아하는 것 +5 · 하트 2에서 리액션을 배운다</color></size>", OneLine);
+            const float rowH = 30f;
+            float w = Mathf.Min(420f, vw - 16f), h = 56f + list.Count * rowH + 22f;
+            var r = new Rect(Mathf.Round((vw - w) / 2f), Mathf.Round((vh - h) / 2f + 10f), w, h);
+            CuteUI.Dim();
+            CuteUI.Window(r);
+            CuteUI.TitlePlate(r.center.x, r.y - 11, "친구 수첩");
+            if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { Close(); return; }
+
+            // 지역 탭: 지금 있는 지역에 작은 점
+            var c = new Rect(r.x + 12, r.y + 40, w - 24, h - 40 - 22);
+            CuteUI.Box(c, 7, CuteUI.Paper, CuteUI.Ink);
+            float tx = c.x + 6;
+            for (int i = 0; i < Pages.Length; i++)
+            {
+                string label = RegionName(Pages[i]) + (Pages[i] == Reactions.Here ? " ·" : "");
+                if (CuteUI.Tab(tx, c.y, label, CuteUI.Pic.People, i == page, out float tw)) page = i;
+                tx += tw + 3;
+            }
+
             for (int i = 0; i < list.Count; i++)
             {
                 var f = list[i];
@@ -489,12 +535,27 @@ namespace PocketCaravan
                             : $"다음: {(hts == 1 ? (move != null ? $"리액션 '{move}'" : "답례") : "가까워지기")} ({pts}/{Need[hts]})";
                 string liked = hts >= 1 ? f.likedName : "?";
                 bool today = DoneToday(f, "talk");
-                float y = r.y + 42 + i * 20;
-                GUI.Label(new Rect(r.x + 12, y, 44, 18), $"<color=#F05A78>{HeartText(hts)}</color>", OneLine);
-                GUI.Label(new Rect(r.x + 58, y, 130, 18), f.name + (today ? " <size=9>✓</size>" : ""), OneLine);
-                GUI.Label(new Rect(r.x + 190, y + 2, w - 202, 16), $"<size=9>좋아함 {liked} · {next}</size>", OneLine);
+                var row = new Rect(c.x + 6, c.y + 8 + i * rowH, c.width - 12, rowH - 4);
+                CuteUI.Box(row, 6, i % 2 == 0 ? CuteUI.Paper2 : CuteUI.Paper, CuteUI.Line);
+                GUI.Label(new Rect(row.x + 6, row.y + 1, 48, row.height), PaperHearts(hts), CuteUI.PaperRich);
+                float nx = CuteUI.Label(row.x + 56, row.y + 8, f.name, CuteUI.Text, false, true);
+                if (today)
+                {
+                    float bw = CuteUI.Width("오늘 인사함", true) + 10;
+                    CuteUI.Box(new Rect(nx + 6, row.y + 2, bw, 12), 5, CuteUI.ZeroSoft, CuteUI.Line);
+                    CuteUI.LabelCenter(nx + 6 + bw / 2, row.y + 8, "오늘 인사함", CuteUI.Up, true);
+                }
+                CuteUI.Label(row.x + 56, row.y + 19, Fit($"좋아함 {liked} · {next}", row.width - 62), CuteUI.Sub, true);
             }
-            GUI.Label(new Rect(r.x + 12, r.yMax - 18, w - 24, 14), "<size=9><color=#9a93a8>← → 지역 넘기기 · F/Esc 닫기</color></size>", OneLine);
+            CuteUI.LabelCenter(r.center.x, r.yMax - 11, "하루 한 번: 말 걸기 +1 · 선물(G) +2 · 좋아하는 것 +5", CuteUI.Sub, true);
+        }
+
+        /// <summary>작은 글이 칸을 넘으면 뒤를 "…"로</summary>
+        static string Fit(string text, float width)
+        {
+            if (CuteUI.Width(text, true) <= width) return text;
+            while (text.Length > 1 && CuteUI.Width(text + "…", true) > width) text = text.Substring(0, text.Length - 1);
+            return text + "…";
         }
     }
 }

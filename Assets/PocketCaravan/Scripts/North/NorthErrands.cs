@@ -353,7 +353,10 @@ namespace PocketCaravan
                 GUI.Label(new Rect(box.x + 10, box.y + 58, 200, 40), chopResult, UIStyle.Wrap);
                 GUI.Label(new Rect(box.xMax - 70, box.yMax - 14, 70, 12), "Space: 닫기", UIStyle.Small);
             }
-            else GUI.Label(new Rect(box.x + 10, box.yMax - 18, 200, 14), "초록 칸에서 Space · Esc 그만두기", UIStyle.Small);
+            else GUI.Label(new Rect(box.x + 10, box.yMax - 18, 200, 14), "초록 칸에서 Space·클릭 · Esc 그만두기", UIStyle.Small);
+            // 11/08 마우스: X = Esc(그만), 빈 곳 클릭 = Space
+            if (CuteUI.CloseButton(box.xMax - 16f, box.y - 8f)) InputReader.Press(chopState == C.Result ? ' ' : '\x1b');
+            InputReader.ClickAsSpace();
         }
 
         static Texture2D white;

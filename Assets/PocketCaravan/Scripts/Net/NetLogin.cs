@@ -127,7 +127,9 @@ namespace PocketCaravan
                 if (InputReader.CancelPressed() || (OPressed() && !typing)) CloseGame();
                 return;
             }
-            if (!OPressed() || UIState.Blocking || UIState.JustClosed || StartScreen.IsOpen) return;
+            bool want = OPressed() || openRequested;   // 11/08 오른쪽 위 접속 알약을 눌러도 연다
+            openRequested = false;
+            if (!want || UIState.Blocking || UIState.JustClosed || StartScreen.IsOpen) return;
             if (GameManager.I != null && GameManager.I.IsTravelling) return;
             panel = Panel.Game;
             UIState.Blocking = true;
@@ -135,6 +137,10 @@ namespace PocketCaravan
             if (!Online) Focus(nameBox.Text.Trim().Length == 0 ? nameBox : null);
             Sfx.Play("open", .5f);
         }
+
+        static bool openRequested;
+        /// <summary>11/08 온라인 창 열기 (O와 같다): 오른쪽 위 접속 알약을 누르면 부른다</summary>
+        public static void OpenGame() => openRequested = true;
 
         void CloseGame()
         {
@@ -395,6 +401,7 @@ namespace PocketCaravan
             var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2f), Mathf.Round((UIStyle.VirtualHeight - h) / 2f + 6), w, h);
             CuteUI.Window(r);
             CuteUI.TitlePlate(r.center.x, r.y - 11, "온라인");
+            if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { CloseGame(); return; }   // 11/08 마우스로 닫기
             float x = r.x + 18, fw = w - 36, y = r.y + 22;
             if (!Online) { DrawForm(x, y, fw, false); return; }
 
@@ -418,7 +425,9 @@ namespace PocketCaravan
             CuteUI.Label(x, y + 6, "공유 장터: 리알토 · 개경 · 비르카 · 제다", CuteUI.Sub, true);
             y += 20;
             // 11/07 순위표: 온라인 창을 닫고 연다
-            if (CuteUI.Button(new Rect(x, y, fw, 20), "순위표 보기", CuteUI.Pic.Star4)) { CloseGame(); NetScores.Open(); }
+            float hw = (fw - 8) / 2;
+            if (CuteUI.Button(new Rect(x, y, hw, 20), "순위표 보기", CuteUI.Pic.Star4)) { CloseGame(); NetScores.Open(); }
+            if (CuteUI.Button(new Rect(x + hw + 8, y, hw, 20), "채팅하기", CuteUI.Pic.People)) { CloseGame(); NetChat.OpenInput(); }   // 11/08 Enter 말고 마우스로도
             y += 28;
             float bw = (fw - 16) / 3;
             if (CuteUI.SoftButton(new Rect(x, y, bw, 22), "끊기")) { net.Disconnect(); Say("접속을 끊었어요", false); }

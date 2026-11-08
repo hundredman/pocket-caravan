@@ -9,7 +9,7 @@ namespace PocketCaravan
     public sealed class GoryeoPlaceLabels : MonoBehaviour
     {
         static Texture2D arrowTex, downTex;
-        static GUIStyle nameStyle, shadowStyle, guideStyle;
+        static GUIStyle nameStyle;
 
         static readonly Color QuestColor = new Color(1f, 0.85f, 0.25f);
         static readonly Color MarketColor = new Color(0.55f, 0.95f, 0.6f);
@@ -51,13 +51,21 @@ namespace PocketCaravan
         static string DisplayLabel(Interactable it)=>WorldDisplayNames.For(it);
         public static string ShortName(string text)=>WorldDisplayNames.ShortName(text);
         public Rect FriendHintRect { get; private set; }
-        public void DrawFriendHint(string hearts)
+        /// <summary>하트(색 태그 글) + "G 선물" 종이 알약. 11/08 눌리면 true (선물 창을 연다)</summary>
+        public bool DrawFriendHint(string hearts)
         {
             // One contextual footer, rather than another floating panel over a name/head.
-            string text=hearts+"  G 선물";
-            float w=Mathf.Ceil(CuteUI.Width(text,true))+2;
-            FriendHintRect=new Rect((UIStyle.VirtualWidth-w)/2,HUD.BottomLine(0,12),w,12);   // 11/08 아래 쌓는 줄 맨 아래 (알림·조작 안내와 겹쳤다)
-            CuteUI.WorldText(FriendHintRect.center.x,FriendHintRect.center.y,text,true);
+            float hw=CuteUI.PaperRich.CalcSize(new GUIContent(hearts)).x;
+            float w=Mathf.Round(hw+6+CuteUI.KeycapWidth("G")+3+CuteUI.Width("선물",true)+12);
+            FriendHintRect=new Rect(Mathf.Round((UIStyle.VirtualWidth-w)/2),HUD.BottomLine(0,15),w,15);   // 11/08 아래 쌓는 줄 맨 아래 (알림·조작 안내와 겹쳤다)
+            var r=FriendHintRect;
+            bool hover=r.Contains(Event.current.mousePosition);
+            CuteUI.Box(r,7,hover?CuteUI.Paper2:CuteUI.Paper,hover?CuteUI.Interact:CuteUI.Ink,1,1,CuteUI.SoftShadow);
+            GUI.Label(new Rect(r.x+5,r.y-1,hw+2,17),hearts,CuteUI.PaperRich);
+            float x=r.x+5+hw+6;
+            x+=CuteUI.Keycap(x,r.y+1,"G",true)+3;
+            CuteUI.Label(x,r.center.y,"선물",CuteUI.Text,true);
+            return GUI.Button(r,GUIContent.none,GUIStyle.none);
         }
         Rect NameRect(Vector2 p,string text)
         {
@@ -98,7 +106,7 @@ namespace PocketCaravan
             DrawnRects.Add(rect);DrawnNames.Add(text);
             var ink=UIStyle.Lin(CuteUI.Text);
             nameStyle.normal.textColor=nameStyle.hover.textColor=nameStyle.active.textColor=nameStyle.focused.textColor=ink;
-            CuteUI.WorldText(rect.center.x,rect.center.y,text,true);return rect;
+            CuteUI.NameTag(rect.center.x,rect.center.y,text);return rect;   // 11/08 네 지역 같은 이름표 (배경 없는 글씨 + 그림자. 예전: 흰 테두리 글씨)
         }
         void OnGUI()
         {
@@ -160,9 +168,8 @@ namespace PocketCaravan
                     GUI.matrix = m;
                 }
                 string guide = n.exit ? $"{n.label}  ({Mathf.RoundToInt(dist)}칸)" : $"{n.label}  {Mathf.RoundToInt(dist)}칸";
-                float gw = 220;
                 if (!GoryeoIntro.Showing)
-                    Outlined(new Rect((UIStyle.VirtualWidth - gw) / 2, HUD.BottomLine(10, 14), gw, 14), "목표 · " + guide, QuestColor, guideStyle);   // 11/08 아래 쌓는 줄로 (알림·조작 안내와 겹쳤다)
+                    CuteUI.GoalPill("목표 · " + guide);   // 11/08 아래 쌓는 줄로 (알림·조작 안내와 겹쳤다). 흰 테두리 글씨 → 종이 알약
             }
         }
 
@@ -264,23 +271,13 @@ namespace PocketCaravan
         {
             var body=BodyBounds(target);
             var bottom=ToGui(cam,new Vector3(body.center.x,body.min.y,body.center.z));
-            float w=Mathf.Ceil(CuteUI.Width("Space",true))+2;
-            var rect=new Rect(Mathf.Round(bottom.x-w/2-guiOrigin.x)+guiOrigin.x,Mathf.Round(bottom.y+3-guiOrigin.y)+guiOrigin.y,w,12);
+            float w=CuteUI.KeycapWidth("Space");
+            var rect=new Rect(Mathf.Round(bottom.x-w/2-guiOrigin.x)+guiOrigin.x,Mathf.Round(bottom.y+3-guiOrigin.y)+guiOrigin.y,w,13);
             if(rect.x<4||rect.xMax>UIStyle.VirtualWidth-4||rect.y<25||rect.yMax>UIStyle.VirtualHeight-44)return default;
-            CuteUI.WorldText(rect.center.x,rect.center.y,"Space",true);return rect;
+            CuteUI.Keycap(rect.x,rect.y,"Space",true);   // 11/08 흰 테두리 글씨 → 키캡 (다른 지역 말 걸기 안내와 같은 모양)
+            if(GUI.Button(new Rect(rect.x-4,rect.y-3,rect.width+8,rect.height+6),GUIContent.none,GUIStyle.none))InputReader.Press(' ');   // 11/08 마우스로 눌러도 말 걸기
+            return rect;
         }
-        static void Outlined(Rect r, string text, Color c, GUIStyle style)
-        {
-            shadowStyle.alignment = style.alignment;
-            shadowStyle.fontSize = style.fontSize;
-            var sr = r; sr.x += 1; sr.y += 1;
-            GUI.Label(sr, text, shadowStyle);
-            style.normal.textColor = c;
-            style.hover.textColor=style.active.textColor=style.focused.textColor=c;
-            shadowStyle.hover.textColor=shadowStyle.active.textColor=shadowStyle.focused.textColor=shadowStyle.normal.textColor;
-            GUI.Label(r, text, style);
-        }
-
         static void DrawDown(Vector2 p)
         {
             float bob = Mathf.Floor(Mathf.Sin(Time.time * 5f) * 2f + 2f);
@@ -299,9 +296,6 @@ namespace PocketCaravan
             if (nameStyle == null || nameStyle.font != UIStyle.SmallFont || nameStyle.fontSize != UIStyle.SmallSize)
             {
                 nameStyle = new GUIStyle() { font = UIStyle.SmallFont, alignment = TextAnchor.MiddleCenter, fontSize = UIStyle.SmallSize, clipping = TextClipping.Clip, padding = new RectOffset(0,0,0,0), richText = false };
-                shadowStyle = new GUIStyle(nameStyle);
-                shadowStyle.normal.textColor = new Color(0f, 0f, 0f, 0.8f);
-                guideStyle = new GUIStyle(nameStyle) { font = GUI.skin.font, fontSize = UIStyle.BodySize };
             }
         }
 

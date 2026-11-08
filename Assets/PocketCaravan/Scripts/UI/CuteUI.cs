@@ -203,7 +203,7 @@ namespace PocketCaravan
         static Rect Snap(Rect r) => new Rect(Mathf.Round(r.x), Mathf.Round(r.y), Mathf.Round(r.width), Mathf.Round(r.height));
 
         // ---------------- 그림 (픽셀 아이콘) ----------------
-        public enum Pic { Coin, Coin7, Basket, Bolt, Scroll, Compass, OpenBook, People, Sack, Chart, Arrow, Pin, Bulb, XMark, Star4 }
+        public enum Pic { Coin, Coin7, Basket, Bolt, Scroll, Compass, OpenBook, People, Sack, Chart, Arrow, Pin, Bulb, XMark, Star4, Menu }
 
         static readonly Dictionary<Pic, (string[] rows, Dictionary<char, Color32> pal)> pics = new Dictionary<Pic, (string[], Dictionary<char, Color32>)>
         {
@@ -230,6 +230,8 @@ namespace PocketCaravan
                 Pal(('#', 0x2A1A2E), ('y', 0xFFCF33), ('w', 0xFFFFFF), ('g', 0x6A5464))) },
             { Pic.XMark, (new[] { "##...##", "###.###", ".#####.", "..###..", ".#####.", "###.###", "##...##" }, Pal(('#', 0x2A1A2E))) },
             { Pic.Star4, (new[] { "...y...", "...y...", "..yWy..", "yyWWWyy", "..yWy..", "...y...", "...y..." }, Pal(('y', 0xFFCF33), ('W', 0xFFFFFF))) },
+            // 11/08 메뉴 (세 줄, HUD 오른쪽 위 단추 = Esc)
+            { Pic.Menu, (new[] { "#########", "#hhhhhhh#", "#########", ".........", "#########", "#hhhhhhh#", "#########", ".........", "#########", "#hhhhhhh#", "#########" }, Pal(('#', 0x2A1A2E), ('h', 0xFFF0DC))) },
         };
 
         static Dictionary<char, Color32> CoinPal() => Pal(('#', 0x6B3F10), ('h', 0xFFF3B0), ('y', 0xF7C843), ('d', 0xD08F22));
@@ -381,6 +383,100 @@ namespace PocketCaravan
         /// <summary>고른 탭·줄·버튼 (청록 = 상호작용)</summary>
         public static GUIStyle PaperButtonOn { get { PaperStyles(); return paperButtonOn; } }
         public static GUIStyle PaperButtonIf(bool on) => on ? PaperButtonOn : PaperButton;
+
+        // ---------------- 11/08 카드 목록 (여정 수첩·마을 시설): 항목마다 종이 카드 + 굵은 제목 + 상태 알약 ----------------
+        // GUILayout.BeginVertical(CuteUI.PaperCard) … EndVertical로 감싸면 카드가 된다. 제목은 PaperTitle, 설명은 PaperNote, 상태는 Badge
+        public enum BadgeKind { On, Ok, Locked, Alert, Note }
+        static GUIStyle paperCard, paperCardOn, paperTitle, paperNote;
+        static readonly Dictionary<BadgeKind, GUIStyle> badges = new Dictionary<BadgeKind, GUIStyle>();
+
+        static void CardStyles()
+        {
+            PaperStyles();
+            if (paperCard != null && paperCard.normal.background != null && paperTitle.font == paperRich.font) return;
+            paperCard = CardStyle(RoundTex(6, Paper2, Line, 1));
+            paperCardOn = CardStyle(RoundTex(6, Paper, Interact, 2));
+            paperTitle = new GUIStyle(paperRich) { fontStyle = FontStyle.Bold, wordWrap = true };
+            paperNote = new GUIStyle(paperSmall) { wordWrap = true };
+            badges.Clear();
+        }
+
+        static GUIStyle CardStyle(Texture2D bg)
+        {
+            var s = new GUIStyle { border = new RectOffset(6, 6, 6, 6), padding = new RectOffset(10, 10, 7, 8), margin = new RectOffset(0, 0, 0, 6) };
+            s.normal.background = bg;
+#if UNITY_EDITOR
+            s.normal.scaledBackgrounds = new Texture2D[0];
+#endif
+            return s;
+        }
+
+        /// <summary>종이 카드 (목록 한 항목)</summary>
+        public static GUIStyle PaperCard { get { CardStyles(); return paperCard; } }
+        /// <summary>고른 카드 (청록 테)</summary>
+        public static GUIStyle PaperCardOn { get { CardStyles(); return paperCardOn; } }
+        /// <summary>카드 제목 (굵게)</summary>
+        public static GUIStyle PaperTitle { get { CardStyles(); return paperTitle; } }
+        /// <summary>카드 설명 (작고 흐리게, 줄바꿈)</summary>
+        public static GUIStyle PaperNote { get { CardStyles(); return paperNote; } }
+
+        /// <summary>상태 알약: On 청록(고름·안내 중) · Ok 초록(이용 가능) · Locked 회색(조건 부족) · Alert 빨강 · Note 종이</summary>
+        public static GUIStyle Badge(BadgeKind k)
+        {
+            CardStyles();
+            if (badges.TryGetValue(k, out var s) && s != null && s.normal.background != null) return s;
+            (Color32 fill, Color32 line, Color32 text) c = k switch
+            {
+                BadgeKind.On => (Interact, InteractLo, White),
+                BadgeKind.Ok => (Hex(0xE3F6E8), Up, Hex(0x167A35)),
+                BadgeKind.Alert => (AlertSoft, Alert, Hex(0xC0203F)),
+                BadgeKind.Note => (Paper, Line, Sub),
+                _ => (ZeroSoft, KeyLine, Sub),
+            };
+            s = new GUIStyle(paperSmall) { alignment = TextAnchor.MiddleCenter, wordWrap = false, border = new RectOffset(6, 6, 6, 6),
+                padding = new RectOffset(7, 7, 1, 1), margin = new RectOffset(4, 0, 2, 0), fixedHeight = 15, stretchWidth = false };
+            s.normal.background = RoundTex(6, c.fill, c.line, 1);
+#if UNITY_EDITOR
+            s.normal.scaledBackgrounds = new Texture2D[0];
+#endif
+            s.normal.textColor = UIStyle.Lin(c.text);
+            return badges[k] = s;
+        }
+
+        /// <summary>
+        /// 11/08 기본 스킨의 굵은 검은 스크롤 막대를 얇은 종이 막대로 (모든 창). UIStyle이 스킨을 만들 때 부른다.
+        /// 스크롤 막대는 이름으로 짝(thumb·단추)을 찾기 때문에 새 스타일로 바꾸지 않고 있는 스타일을 고친다
+        /// </summary>
+        public static void PaperScrollbars()
+        {
+            var sk = GUI.skin;
+            void Paint(GUIStyle s, Texture2D bg, bool vertical)
+            {
+                if (s == null) return;
+                foreach (var st in new[] { s.normal, s.hover, s.active, s.focused, s.onNormal, s.onHover, s.onActive, s.onFocused })
+                {
+                    st.background = bg;
+#if UNITY_EDITOR
+                    st.scaledBackgrounds = new Texture2D[0];
+#endif
+                }
+                s.border = new RectOffset(3, 3, 3, 3);
+                if (vertical) s.fixedWidth = 7; else s.fixedHeight = 7;
+            }
+            void Hide(GUIStyle s)
+            {
+                if (s == null) return;
+                s.fixedWidth = 0; s.fixedHeight = 0;
+                foreach (var st in new[] { s.normal, s.hover, s.active, s.focused }) st.background = null;
+            }
+            var track = RoundTex(3, Paper2, Line, 1);
+            var thumb = RoundTex(3, FrameHi, FrameLo, 1);
+            Paint(sk.verticalScrollbar, track, true); Paint(sk.verticalScrollbarThumb, thumb, true);
+            Paint(sk.horizontalScrollbar, track, false); Paint(sk.horizontalScrollbarThumb, thumb, false);
+            sk.verticalScrollbar.margin = new RectOffset(4, 0, 0, 0);
+            Hide(sk.verticalScrollbarUpButton); Hide(sk.verticalScrollbarDownButton);
+            Hide(sk.horizontalScrollbarLeftButton); Hide(sk.horizontalScrollbarRightButton);
+        }
 
         /// <summary>어두운 바탕용 색 태그를 종이 위에서 읽히는 색으로 (금색 → 갈주황, 연두 → 진초록, 연빨강 → 빨강, 연보라 → 보조)</summary>
         static readonly Dictionary<string, string> linearPaperTags = new Dictionary<string, string>();
@@ -667,13 +763,58 @@ namespace PocketCaravan
         }
 
         /// <summary>"[Space] 말 걸기" 같은 상호작용 안내 (11/05 종이 알약 + 키캡, 색은 빼서 덜 튀게)</summary>
-        public static void SpacePrompt(float cx, float y, string verb)
+        /// <summary>말 걸기 알약. 11/08 누르면 Space와 같다 (마우스로 말 걸기·사고팔기). 그린 자리를 돌려준다</summary>
+        public static Rect SpacePrompt(float cx, float y, string verb)
         {
             float kw = KeycapWidth("Space");
             float w = Mathf.Round(3 + kw + 5 + Width(verb, true) + 7), x = Mathf.Round(cx - w / 2f);
-            Box(new Rect(x, y, w, 17), 7, Paper, Ink, 1, 2, SoftShadow);
+            var r = new Rect(x, y, w, 17);
+            bool hover = r.Contains(Event.current.mousePosition);
+            Box(r, 7, hover ? Paper2 : Paper, hover ? Interact : Ink, 1, 2, SoftShadow);
             Keycap(x + 3, y + 2, "Space", true);
             Label(x + 3 + kw + 5, y + 8.5f, verb, Text, true);
+            if (GUI.Button(r, GUIContent.none, GUIStyle.none)) InputReader.Press(' ');
+            return r;
+        }
+
+        static readonly Color32 NameShadow = new Color32(42, 26, 46, 210);
+
+        /// <summary>배경 없는 머리 위 글씨: 아래로 진한 그림자 1px + 글씨. 오른쪽 끝 x를 돌려준다</summary>
+        public static float ShadowLabel(float x, float cy, string s, Color32 col)
+        {
+            Label(x + 1, cy + 1, s, NameShadow, true);
+            Label(x, cy + 1, s, NameShadow, true);
+            return Label(x, cy, s, col, true);
+        }
+
+        /// <summary>
+        /// 11/08 머리 위 이름표: 배경 없이 글씨만 (흰 테두리 글씨·흰 알약 모두 무드와 안 맞았다).
+        /// 크림색 글씨 + 아래 진한 그림자라 눈밭·모래·밤에도 읽힌다. dot = 종류 색 (글씨를 그 색 쪽으로 옅게 물들인다).
+        /// alpha로 멀리 있는 이름표를 흐리게 한다. 그린 자리를 돌려준다
+        /// </summary>
+        public static Rect NameTag(float cx, float cy, string text, Color32? dot = null, float alpha = 1f)
+        {
+            float w = Mathf.Round(Width(text, true)), h = 13f;
+            var r = new Rect(Mathf.Round(cx - w / 2f), Mathf.Round(cy - h / 2f), w, h);
+            var old = GUI.color;
+            GUI.color = new Color(old.r, old.g, old.b, old.a * Mathf.Clamp01(alpha));
+            ShadowLabel(r.x, r.center.y, text, dot.HasValue ? Color32.Lerp(dot.Value, Paper, .55f) : Paper);
+            GUI.color = old;
+            return r;
+        }
+
+        /// <summary>
+        /// 11/08 "목표 · ○○ N칸" 길 안내 줄: 종이 알약 + 노란 점. 흰 테두리 글씨가 종이 UI 무드와 안 맞아서 바꿨다.
+        /// 아래 쌓는 줄(HUD.BottomLine 10)에 놓는다. 그린 자리를 돌려준다
+        /// </summary>
+        public static Rect GoalPill(string text)
+        {
+            float w = Mathf.Round(Width(text, true) + 22f);
+            var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2f), HUD.BottomLine(10, 15), w, 15);
+            Box(r, 7, Paper, Ink, 1, 1, SoftShadow);
+            Circle(r.x + 6, r.y + 5, 5, Deco, Ink, 0);
+            Label(r.x + 14, r.center.y, text, Text, true);
+            return r;
         }
 
         /// <summary>배경 없이 한 픽셀 밝은 외곽선을 두른 월드 글씨.</summary>

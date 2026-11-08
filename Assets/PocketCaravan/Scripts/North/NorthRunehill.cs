@@ -369,6 +369,9 @@ namespace PocketCaravan
                 GUI.Label(new Rect(box.x + 8, box.y + 6, box.width - 16, 76), lastResult, UIStyle.Wrap);
                 GUI.Label(new Rect(box.x + 8, box.yMax - 18, box.width - 16, 14), "Space: 닫기", UIStyle.Small);
             }
+            // 11/08 마우스: X = Esc(그만), 빈 곳 클릭 = Space(떨어뜨리기·닫기)
+            if (CuteUI.CloseButton(field.xMax - 16f, field.y - 8f)) InputReader.Press(state == S.Result ? ' ' : '\x1b');
+            InputReader.ClickAsSpace();
         }
 
         static void DrawStone(Rect r, int look, Rect clip)

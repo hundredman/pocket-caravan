@@ -26,7 +26,6 @@ namespace PocketCaravan
         Vector3 bodyRest;
         Vector3 standPos;            // 앉기 전에 서 있던 자리 (일어날 때 돌아감: 의자 칸이 돌·불에 붙어 있어도 갇히지 않게)
         Vector2Int standFace;
-        GUIStyle hint;
 
         static readonly string[] Murmurs =
         {
@@ -149,12 +148,15 @@ namespace PocketCaravan
         {
             if (sitting < 0) return;
             UIStyle.Begin();
-            if (hint == null) hint = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow };
-            string t = "<color=#ffcf7a>모닥불을 쬐는 중</color>   방향키·Space: 일어나기";
-            float w = hint.CalcSize(new GUIContent(t)).x + 24f;   // 10/27 글자 길이에 맞춰 상자 폭
-            var r = new Rect(UIStyle.VirtualWidth / 2f - w / 2f, UIStyle.VirtualHeight - 60f, w, 18f);
-            GUI.Box(r, GUIContent.none, UIStyle.Box);
-            GUI.Label(r, t, hint);
+            // 11/08 종이 알약 + "일어나기" 단추 (어두운 상자 → 다른 안내와 같은 종이 모양, 마우스로도 일어난다)
+            const string t = "모닥불을 쬐는 중 · 방향키·Space";
+            float tw = CuteUI.Width(t, true), bw = Mathf.Round(CuteUI.Width("일어나기", true) + 16f);
+            float w = Mathf.Round(tw + 22f + bw);
+            var r = new Rect(Mathf.Round(UIStyle.VirtualWidth / 2f - w / 2f), UIStyle.VirtualHeight - 62f, w, 20f);
+            CuteUI.Pill(r);
+            CuteUI.Circle(r.x + 7f, r.y + 7f, 6, CuteUI.Sell, CuteUI.Ink, 0);
+            CuteUI.Label(r.x + 16f, r.center.y, t, CuteUI.Text, true);
+            if (CuteUI.SoftButton(new Rect(r.xMax - bw - 3f, r.y + 2f, bw, 16f), "일어나기")) InputReader.Press(' ');
         }
 
         static bool StandPressed()

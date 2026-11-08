@@ -75,6 +75,7 @@ namespace PocketCaravan
             float width = Mathf.Min(470, UIStyle.VirtualWidth - 16), height = UIStyle.WindowHeight(300) - 6;
             var r = lastWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - width) / 2), Mathf.Round((UIStyle.VirtualHeight - height) / 2 + 6), width, height);
             CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, "소지품");
+            if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { Close(); return; }   // 11/08 오른쪽 위 X
             string vehicle = p.vehicle != null ? p.vehicle.displayName : "등짐";
             string summary = $"돈 {p.money}냥 · 신용 {p.credit} · 운반 {vehicle}";
             float summaryHeight = Mathf.Max(18, CuteUI.PaperWrap.CalcHeight(new GUIContent(summary), width - 28));

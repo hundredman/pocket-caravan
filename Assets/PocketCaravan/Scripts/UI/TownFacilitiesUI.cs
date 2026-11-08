@@ -56,6 +56,17 @@ namespace PocketCaravan
         }
         static readonly int[] DonationSteps = { 50, 100, 200 };
 
+        static readonly System.Text.RegularExpressions.Regex NeedRule = new System.Text.RegularExpressions.Regex(@"^(신용|거점) ?(\d+)(등급)? ?이상 필요");
+        /// <summary>11/08 막힌 까닭을 알약에 들어갈 만큼 짧게: "신용 1 이상 필요 (현재 0)" → "신용 1 필요"</summary>
+        public static string ShortDenial(string denial)
+        {
+            if (string.IsNullOrEmpty(denial)) return "";
+            var m = NeedRule.Match(denial);
+            if (m.Success) return $"{m.Groups[1].Value} {m.Groups[2].Value}{m.Groups[3].Value} 필요";
+            string plain = CuteUI.Plain(denial).Trim().TrimEnd('.');
+            return plain.Length <= 12 ? plain : plain.Substring(0, 11) + "…";
+        }
+
         // R4: 마이너스일 때만 보인다. 세 길 모두 중립(0점)까지만 올린다.
         void DrawRecovery(GameManager gm, PlayerState p)
         {
@@ -123,9 +134,18 @@ namespace PocketCaravan
             CuteUI.Dim();
             CuteUI.Window(rect);
             CuteUI.TitlePlate(rect.center.x, rect.y - 11, town.displayName + " 시설");
-            GUILayout.BeginArea(new Rect(rect.x+14, rect.y+14, w-28, h-68));
-            GUILayout.Label($"돈 {p.money}냥 · 거점 {town.SettlementTier}등급 · 신용 {p.credit}", CuteUI.PaperRich);
-            GUILayout.Label("마을 방문·기본 매매는 신용과 관계없이 가능합니다.", CuteUI.PaperSmall);
+            if (CuteUI.CloseButton(rect.xMax - 16f, rect.y - 8f)) { Close(); return; }   // 11/08 마우스로 닫기
+            GUILayout.BeginArea(new Rect(rect.x+14, rect.y+18, w-28, h-72));
+            // 11/08 읽기 쉽게: 위에 내 상태 카드, 시설마다 종이 카드 (이름 굵게 · 상태 알약 · 작은 설명 · 이용 단추)
+            GUILayout.BeginVertical(CuteUI.PaperCardOn);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label($"돈 {p.money}냥", CuteUI.PaperTitle);
+            GUILayout.FlexibleSpace();
+            GUILayout.Label($"거점 {town.SettlementTier}등급", CuteUI.Badge(CuteUI.BadgeKind.Note));
+            GUILayout.Label($"신용 {p.credit}", CuteUI.Badge(CuteUI.BadgeKind.On));
+            GUILayout.EndHorizontal();
+            GUILayout.Label("마을 방문과 기본 매매는 신용과 관계없이 할 수 있어요.", CuteUI.PaperNote);
+            GUILayout.EndVertical();
             scroll = GUILayout.BeginScrollView(scroll);
             DrawRecovery(gm, p);
             if (!string.IsNullOrEmpty(detail))
@@ -137,16 +157,22 @@ namespace PocketCaravan
             {
                 if (f == null) continue;
                 string denial = FacilityAccess.Denial(town, f, p);
-                GUILayout.Label($"{f.displayName} · 거점 {f.minTier}등급 / 신용 {f.minCredit}", CuteUI.PaperRich);
+                GUILayout.BeginVertical(CuteUI.PaperCard);
                 GUILayout.BeginHorizontal();
-                GUILayout.Label(denial ?? (f.kind == FacilityKind.Warehouse ? $"보관 한도 {f.storageCapacity:0} · 일반 교역품" : f.kind == FacilityKind.Rest ? (GameManager.I != null && GameManager.I.Clock.Shared ? $"{Inn.Price}냥 · 푹 쉬고 {Inn.BuffHours:0}시간 덜 지침" : $"{Inn.Price}냥 · 자고 체력 가득 · {Inn.BuffHours:0}시간 덜 지침") : "주변 길과 거래처 안내"), CuteUI.PaperSmall);
+                GUILayout.Label(f.displayName, CuteUI.PaperTitle);
+                GUILayout.FlexibleSpace();
+                GUILayout.Label(denial == null ? "이용 가능" : ShortDenial(denial), CuteUI.Badge(denial == null ? CuteUI.BadgeKind.Ok : CuteUI.BadgeKind.Locked));
                 GUI.enabled = denial == null;
-                if (GUILayout.Button("이용", CuteUI.PaperButton, GUILayout.Width(52))) Use(f);
-                GUI.enabled = true; GUILayout.EndHorizontal();
+                if (GUILayout.Button("이용", denial == null ? CuteUI.PaperButtonOn : CuteUI.PaperButton, GUILayout.Width(52), GUILayout.Height(18))) Use(f);
+                GUI.enabled = true;
+                GUILayout.EndHorizontal();
+                GUILayout.Label((f.kind == FacilityKind.Warehouse ? $"보관 한도 {f.storageCapacity:0} · 일반 교역품" : f.kind == FacilityKind.Rest ? (GameManager.I != null && GameManager.I.Clock.Shared ? $"{Inn.Price}냥 · 푹 쉬고 {Inn.BuffHours:0}시간 덜 지침" : $"{Inn.Price}냥 · 자고 체력 가득 · {Inn.BuffHours:0}시간 덜 지침") : "주변 길과 거래처 안내")
+                    + $" · 거점 {f.minTier}등급 · 신용 {f.minCredit}", CuteUI.PaperNote);
+                GUILayout.EndVertical();
             }
             if (warehouse != null)
             {
-                GUILayout.Label("창고 · 한 개씩 맡기기 / 찾기", CuteUI.PaperRich);
+                GUILayout.Label("창고 · 한 개씩 맡기기 / 찾기", CuteUI.PaperTitle);
                 foreach (var item in gm.Db.items)
                 {
                     if (item == null || item.questItem || p.cargo.Count(item) == 0) continue;

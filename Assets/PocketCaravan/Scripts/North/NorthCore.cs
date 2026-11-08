@@ -131,15 +131,7 @@ namespace PocketCaravan
             return Sprite.Create(t, new Rect(0, 0, t.width, t.height), pivot, 16f);
         }
 
-        public static bool SpaceHeld()
-        {
-#if ENABLE_INPUT_SYSTEM
-            var k = Keyboard.current;
-            return k != null && k.spaceKey.isPressed;
-#else
-            return Input.GetKey(KeyCode.Space);
-#endif
-        }
+        public static bool SpaceHeld() => InputReader.SpaceHeld();   // 11/08 마우스 왼쪽 누르고 있기도 (미니게임 클릭)
 
         public static AudioClip Tone(string name, float seconds, float[] notes, float volume = 0.35f)
         {

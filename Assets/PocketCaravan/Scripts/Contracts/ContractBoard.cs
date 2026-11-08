@@ -90,6 +90,7 @@ namespace PocketCaravan
             CuteUI.Dim();
             CuteUI.Window(rect);
             CuteUI.TitlePlate(rect.center.x, rect.y - 11, Cm.TownName(town) + " 의뢰 게시판");
+            if (CuteUI.CloseButton(rect.xMax - 16f, rect.y - 8f)) { Close(); return; }   // 11/08 오른쪽 위 X
             GUILayout.BeginArea(new Rect(rect.x + 14, rect.y + 14, w - 28, h - 28));
             GUILayout.Label($"돈 {p.money} · 신용 {p.credit} · 짐 {p.TotalWeight:0.#}/{p.Capacity:0.#} · 의뢰 {p.contracts.Count}/{ContractManager.MaxActive}", CuteUI.PaperRich);
 
