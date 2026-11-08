@@ -15,9 +15,9 @@ namespace PocketCaravan
     /// </summary>
     public sealed class GoryeoStalls : MonoBehaviour
     {
-        [Serializable] public class Keeper { public int at; public int stall = -1; public string name, title, sprite, hello; public string[] wants; }   // stall: 이 맵 stalls의 번호(새 좌판), -1이면 at = 기존 좌판 번호
+        [Serializable] public class Keeper { public int at; public int stall = -1; public int cx = -1, cy = -1; public string name, title, sprite, hello; public string[] wants; }   // stall: 이 맵 stalls의 번호(새 좌판). cx,cy: 기존 장터 그림 왼쪽 아래 칸(옮긴 뒤). 둘 다 없으면 at = 기존 좌판 번호
         [Serializable] public class Stall { public string asset; public int x, y; }   // 11/08 빈 공터에 더 놓는 승인 좌판 그림(왼쪽 아래 칸)
-        [Serializable] public class Lift { public int at, dy; }   // 11/08 공터 아래 끝에 붙은 기존 좌판을 dy칸 안쪽(위)으로 뺀다. at = 기존 좌판 번호
+        [Serializable] public class Lift { public int x, y, dy; }   // 11/08 공터 아래 끝에 붙은 기존 장터 그림(왼쪽 아래 칸 x,y)을 dy칸 안쪽(위)으로 뺀다
         [Serializable] public class Map { public string id; public Stall[] stalls; public Keeper[] keepers; public Lift[] lift; }
         [Serializable] public class Config { public int schemaVersion; public string status; public float markup = 1.25f; public int dailyLimit = 5; public Map[] maps; }
 
@@ -81,20 +81,24 @@ namespace PocketCaravan
                 if (sr.sprite != null && Array.IndexOf(CounterArt, sr.sprite.name) >= 0) counters.Add(sr);
             counters.Sort((a, b) => a.transform.position.x != b.transform.position.x ? a.transform.position.x.CompareTo(b.transform.position.x) : a.transform.position.y.CompareTo(b.transform.position.y));
             // 11/08 은샘 "살짝 뒤로 빼서": 공터 아래 끝에 붙은 기존 좌판을 안쪽으로. 그림과 막힌 칸(맨 아랫줄)을 같이 옮긴다
+            var art = new List<SpriteRenderer>();
+            foreach (var sp in dressing.spaces)
+                if (sp.normal != null) art.AddRange(sp.normal.GetComponentsInChildren<SpriteRenderer>(true));
             if (row.lift != null)
+            {
                 foreach (var l in row.lift)
                 {
-                    if (l == null || l.dy == 0 || l.at < 0 || l.at >= counters.Count) continue;
-                    var c = counters[l.at];
-                    if (c.name.EndsWith(" (moved)")) continue;
-                    var bl = map.WorldToCell(c.transform.position + new Vector3(0.5f, 0.5f, 0f));
+                    if (l == null || l.dy == 0) continue;
+                    var c = art.Find(r => r != null && !r.name.EndsWith(" (moved)") && map.WorldToCell(r.transform.position + new Vector3(0.5f, 0.5f, 0f)) == new Vector3Int(l.x, l.y, 0));
+                    if (c == null) { Debug.LogWarning($"[GoryeoStalls] {map.mapId}: 옮길 장터 그림이 ({l.x},{l.y})에 없다"); continue; }
                     c.transform.position += new Vector3(0f, l.dy, 0f);
                     c.name += " (moved)";
                     foreach (var sp in dressing.spaces)
                         for (int f = 0; f < sp.footprints.Length; f++)
-                            if (sp.footprints[f].x == bl.x && sp.footprints[f].y == bl.y)
-                                sp.footprints[f] = new RectInt(bl.x, bl.y + l.dy, sp.footprints[f].width, sp.footprints[f].height);
+                            if (sp.footprints[f].x == l.x && sp.footprints[f].y == l.y)
+                                sp.footprints[f] = new RectInt(l.x, l.y + l.dy, sp.footprints[f].width, sp.footprints[f].height);
                 }
+            }
             var root = new GameObject("Goryeo stall keepers").transform;
             root.SetParent(map.transform, false);
             var footprints = new List<RectInt>();
@@ -103,20 +107,22 @@ namespace PocketCaravan
             if (row.stalls != null)
                 foreach (var st in row.stalls)
                 {
-                    var art = st != null ? Resources.Load<Sprite>("Goryeo/Stalls/Art/" + st.asset) : null;
-                    if (art == null) { extra.Add(null); continue; }
+                    var pic = st != null ? Resources.Load<Sprite>("Goryeo/Stalls/Art/" + st.asset) : null;
+                    if (pic == null) { extra.Add(null); continue; }
                     var go = new GameObject(st.asset);
                     go.transform.SetParent(root, false);
                     var cc = map.CellCenter(new Vector3Int(st.x, st.y, 0)); go.transform.position = new Vector3(cc.x - .5f, cc.y - .5f, 0f);
-                    var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = art; sr.sortingOrder = 4;
+                    var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = pic; sr.sortingOrder = 4;
                     extra.Add(sr);
-                    footprints.Add(new RectInt(st.x, st.y, Mathf.RoundToInt(art.rect.width / art.pixelsPerUnit), 1));
+                    footprints.Add(new RectInt(st.x, st.y, Mathf.RoundToInt(pic.rect.width / pic.pixelsPerUnit), 1));
                 }
             for (int i = 0; i < row.keepers.Length; i++)
             {
                 var k = row.keepers[i];
                 if (k == null) continue;
-                SpriteRenderer c = k.stall >= 0 ? (k.stall < extra.Count ? extra[k.stall] : null) : (k.at >= 0 && k.at < counters.Count ? counters[k.at] : null);
+                SpriteRenderer c = k.stall >= 0 ? (k.stall < extra.Count ? extra[k.stall] : null)
+                    : k.cx >= 0 ? art.Find(r => r != null && map.WorldToCell(r.transform.position + new Vector3(0.5f, 0.5f, 0f)) == new Vector3Int(k.cx, k.cy, 0))
+                    : (k.at >= 0 && k.at < counters.Count ? counters[k.at] : null);
                 var sprite = Resources.Load<Sprite>("Goryeo/Stalls/Keepers/" + k.sprite);
                 if (c == null || sprite == null) continue;
                 float w = c.sprite.rect.width / c.sprite.pixelsPerUnit;

@@ -6,7 +6,8 @@ namespace PocketCaravan
 {
     public static class GoryeoVillageLifeDirector
     {
-        [Serializable]public class Map{public string id;public int w,h;public GoryeoVillageLife.Point[] points;}
+        [Serializable]public class Map{public string id;public int w,h;public GoryeoVillageLife.Point[] points;public Nudge[] nudge;}
+        [Serializable]public class Nudge{public string kind;public float x,y,dy;}   // 11/08 Extra.json: 좌판을 한 칸 올린 자리와 겹치는 원본 점을 dy만큼 옮긴다(원본 파일은 그대로)
         [Serializable]public class Asset{public string key,path;}
         [Serializable]public class Config{public string status;public Map[] maps;public Asset[] assets;}
         static Config config,extra;static GoryeoVillageLife.Art[] art;static Sprite[] trader;
@@ -36,7 +37,13 @@ namespace PocketCaravan
             LoadExtra();
             var add=extra!=null&&extra.maps!=null?Array.Find(extra.maps,v=>v.id==row.id):null;
             if(add==null||add.points==null||add.w!=row.w||add.h!=row.h)return row.points;
-            var list=new List<GoryeoVillageLife.Point>(row.points);list.AddRange(add.points);
+            var list=new List<GoryeoVillageLife.Point>();
+            foreach(var p in row.points)
+            {
+                var n=add.nudge!=null?Array.Find(add.nudge,v=>v.kind==p.kind&&Mathf.Approximately(v.x,p.x)&&Mathf.Approximately(v.y,p.y)):null;
+                list.Add(n==null?p:new GoryeoVillageLife.Point{kind=p.kind,reason=p.reason,x=p.x,y=p.y+n.dy,bx=p.bx,by=p.by+n.dy,via=p.via});
+            }
+            list.AddRange(add.points);
             while(list.Count>GoryeoVillageLife.RendererLimit)list.RemoveAt(list.Count-1);
             return list.ToArray();
         }
