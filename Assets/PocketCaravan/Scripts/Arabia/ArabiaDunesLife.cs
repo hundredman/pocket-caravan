@@ -134,8 +134,18 @@ namespace PocketCaravan
 
             // 1) 행렬: 낮에 와디를 따라, 밤엔 오아시스 근처에 멈춤
             // 밤엔 조금 느리게 (11/08 밤에도 움직이게)
-            caravanX += caravanDir * dt * (night ? 0.6f : 0.9f);
-            if (caravanX > CaravanX1) caravanDir = -1f; if (caravanX < CaravanX0) caravanDir = 1f;
+            if (WorldClock.Active)
+            {   // 11/08 온라인: 행렬 자리도 세상 시각으로 정해 같은 맵 사람은 같은 곳에서 본다 (낮 0.9 · 밤 0.6칸/초 대신 0.8칸/초로 왕복)
+                float span = CaravanX1 - CaravanX0, cycle = span * 2f / 0.8f;
+                float u = (float)((WorldClock.NowMs / 1000.0) % cycle) / cycle;   // 0~1
+                caravanDir = u < .5f ? 1f : -1f;
+                caravanX = CaravanX0 + span * (u < .5f ? u * 2f : 2f - u * 2f);
+            }
+            else
+            {
+                caravanX += caravanDir * dt * (night ? 0.6f : 0.9f);
+                if (caravanX > CaravanX1) caravanDir = -1f; if (caravanX < CaravanX0) caravanDir = 1f;
+            }
             for (int i = 0; i < caravan.Count; i++)
             {
                 float x = caravanX - caravanDir * i * 1.1f;

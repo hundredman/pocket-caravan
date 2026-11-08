@@ -362,9 +362,9 @@ namespace PocketCaravan.EditorTools
                     q.objectives.Add(O(ObjectiveType.BuyVehicle, "비르카 장터에서 손수레 사기", null, null, 1, null, cart));
                 }
                 q.objectives.Add(O(ObjectiveType.Talk, "목수 하르에게 보여주기", Har, null, 1,
-                    "잘 굴러가지? 이제 고개 너머 다른 나라 상인들도 만나 보게. 눈이 녹는 남쪽에 큰 장이 선다더군."));
+                    "잘 굴러가지? 그런데 순록 고원 썰매 장인 영감이 내 손수레는 눈길에서 못 쓴다고 큰소리를 치더군.\n비르카 서쪽 길로 모피 사냥꾼 마을에 가서, 북쪽 길로 더 올라가면 순록 고원 마을이야. 한번 찾아가 보게."));
                 q.rewardMoney = 0; q.rewardCredit = 2;
-                q.finishNote = "손수레를 샀다! 1장 끝. (관문과 다른 지역 연결은 지역을 합칠 때 열린다)";
+                q.finishNote = "손수레를 샀다! 1장 끝.\n다음: 순록 고원 마을의 썰매 장인을 찾아가 보자. (비르카 서쪽 → 모피 사냥꾼 마을 → 북쪽 길)";
             });
 
             // Q8 (10/24): 눈보라를 달리는 썰매 — 하르와 순록 고원 썰매 장인이 함께 만든 짐 썰매. 대표 장면 "눈보라 속 순록 썰매"

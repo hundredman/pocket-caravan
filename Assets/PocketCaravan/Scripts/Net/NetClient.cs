@@ -46,6 +46,10 @@ namespace PocketCaravan
             public string id;
             public string name;
             public string look;
+            public string veh;      // 11/08 운반 수단 (join · room에만 온다)
+            public bool s;          // 11/08 앉기 (pos · join · room)
+            public float sy, sq;
+            public int ld;          // 11/08 짐 상자 수
             public int online;
             public string why;
             public string map;
@@ -148,17 +152,21 @@ namespace PocketCaravan
             public string id;
             public string name;
             public string look;     // 출신 아이디 (venice · goryeo · viking · arabia) → 캐릭터 그림
+            public string veh;      // 11/08 운반 수단 아이디 (handcart · north_sled · arabia_camel, 걷기면 "") → VehicleLook이 그린다
             public float x, y;
             public int fx, fy;
             public bool m;
+            public bool s;          // 11/08 앉아 있음
+            public float sy, sq;    // 11/08 앉은 모습: 그림이 오르내린 높이 · 세로 눌림 비율 (지역마다 자리 모양이 달라서)
+            public int ld;          // 11/08 손수레 짐 상자 수 (0~3)
             [NonSerialized] public float heardAt;
         }
 
         // 보내는 메시지 (필요한 칸만)
         [Serializable] class HelloOut { public string t = "hello"; public int v = Protocol; public string name; public string look; public string key; public string pass; public int since; public bool snap = true; }   // snap: 공유 장터 재고를 통째로 받는다(11/08)
         /// <summary>11/08: look도 싣는다. 시작 화면에서 로그인하면 hello의 look은 아직 고르기 전 기본 출신이라, 맵에 들어갈 때 고친다</summary>
-        [Serializable] class EnterOut { public string t = "enter"; public string map; public string look; }
-        [Serializable] class PosOut { public string t = "pos"; public float x, y; public int fx, fy; public bool m; }
+        [Serializable] class EnterOut { public string t = "enter"; public string map; public string look; public string veh; }   // veh: 11/08 운반 수단
+        [Serializable] class PosOut { public string t = "pos"; public float x, y; public int fx, fy; public bool m; public bool s; public float sy, sq; public int ld; }   // s·sy·sq: 11/08 앉기, ld: 짐 상자 수
         [Serializable] class SayOut { public string t = "say"; public string text; }
         [Serializable] class EmoteOut { public string t = "emote"; public string e; public string name; }
 
@@ -188,7 +196,8 @@ namespace PocketCaravan
         readonly Dictionary<string, Peer> peers = new Dictionary<string, Peer>();
         string sentMap;
         /// <summary>서버에 알린 내 생김새(출신 아이디). 출신이 바뀌면(새 게임·저장 불러오기) 같은 맵이어도 다시 알린다</summary>
-        string sentLook;
+        string sentLook, sentVeh;
+        bool lastSit; int lastLd; float restBodyY, restBodyScaleY = 1f;   // 11/08 앉기
         bool waitingRoom;
         float lastPosAt;
         Vector2 lastPos;
@@ -328,7 +337,7 @@ namespace PocketCaravan
             OnlineCount = 0;
             peers.Clear();
             sentMap = null;
-            sentLook = null;
+            sentLook = null; sentVeh = null;
             waitingRoom = false;
             if (!string.IsNullOrEmpty(reason)) LastError = reason;
             var ws = socket; var c = cts;
@@ -470,12 +479,14 @@ namespace PocketCaravan
             var map = MapRoot.Current;
             if (map == null || (gm != null && gm.IsTravelling)) return;
             string look = gm != null && gm.Player != null && gm.Player.origin != null ? gm.Player.origin.id : "";
-            if (map.mapId != sentMap || look != sentLook)
+            // 11/08 기우: 운반 수단도 enter에 싣는다. 바뀌면 같은 맵에 enter를 다시 보내 같은 맵 사람들이 join으로 새로 그린다
+            string veh = gm != null && gm.Player != null && gm.Player.vehicle != null && gm.Player.vehicle.id != "walk" ? gm.Player.vehicle.id : "";
+            if (map.mapId != sentMap || look != sentLook || veh != sentVeh)
             {
                 if (map.mapId != sentMap) { waitingRoom = true; peers.Clear(); }   // 생김새만 바뀌면 같은 맵: 다른 사람 목록은 그대로
                 sentMap = map.mapId;
-                sentLook = look;
-                Send(new EnterOut { map = sentMap, look = look });
+                sentLook = look; sentVeh = veh;
+                Send(new EnterOut { map = sentMap, look = look, veh = veh });
                 lastPosAt = -10f;
             }
             var pc = PlayerController.Instance;
@@ -483,12 +494,22 @@ namespace PocketCaravan
             Vector2 pos = pc.transform.position;
             var facing = pc.anim != null ? pc.anim.facing : lastFacing;
             bool moving = pc.Motor != null && pc.Motor.IsMoving;
+            // 11/08 기우: 앉기. 서 있을 때의 그림 자리·크기를 기억해 두고, 앉으면 그 차이를 함께 보낸다
+            bool sit = SeatRest.Active;
+            float sy = 0f, sq = 1f;
+            var body = pc.anim != null ? pc.anim.transform : null;
+            if (body != null)
+            {
+                if (!sit) { restBodyY = body.localPosition.y; restBodyScaleY = Mathf.Max(0.01f, body.localScale.y); }
+                else { sy = body.localPosition.y - restBodyY; sq = body.localScale.y / restBodyScaleY; }
+            }
+            int ld = gm != null && gm.Player != null ? VehicleLook.Crates(gm.Player.LoadRatio) : 0;   // 11/08 짐 상자 수
             float since = Time.unscaledTime - lastPosAt;
-            bool changed = (pos - lastPos).sqrMagnitude > 0.0004f || facing != lastFacing || moving != lastMoving;
+            bool changed = (pos - lastPos).sqrMagnitude > 0.0004f || facing != lastFacing || moving != lastMoving || sit != lastSit || ld != lastLd;
             if (since < 0.1f || (!changed && since < 1f)) return;
             lastPosAt = Time.unscaledTime;
-            lastPos = pos; lastFacing = facing; lastMoving = moving;
-            Send(new PosOut { x = pos.x, y = pos.y, fx = facing.x, fy = facing.y, m = moving });
+            lastPos = pos; lastFacing = facing; lastMoving = moving; lastSit = sit; lastLd = ld;
+            Send(new PosOut { x = pos.x, y = pos.y, fx = facing.x, fy = facing.y, m = moving, s = sit, sy = sit ? sy : 0f, sq = sit ? sq : 1f, ld = ld });
         }
 
         void Handle(Msg msg)
@@ -529,7 +550,10 @@ namespace PocketCaravan
                     if (!peers.TryGetValue(msg.id, out var peer)) peers[msg.id] = peer = new Peer { id = msg.id };
                     if (!string.IsNullOrEmpty(msg.name)) peer.name = msg.name;
                     if (!string.IsNullOrEmpty(msg.look)) peer.look = msg.look;
+                    if (msg.t == "join") peer.veh = msg.veh ?? "";   // 운반 수단은 join(들어옴·바꿈)에만 실려 온다
                     peer.x = msg.x; peer.y = msg.y; peer.fx = msg.fx; peer.fy = msg.fy; peer.m = msg.m;
+                    peer.s = msg.s; peer.sy = msg.sy; peer.sq = msg.sq > 0f ? msg.sq : 1f;   // 11/08 앉기 (예전 서버면 늘 서 있음)
+                    peer.ld = msg.ld;   // 11/08 짐 상자 수
                     peer.heardAt = Time.unscaledTime;
                     break;
                 case "leave":
@@ -549,7 +573,8 @@ namespace PocketCaravan
 
         void OnGUI()
         {
-            if (Status == State.Offline || StartScreen.IsOpen) return;
+            // 11/08 혼자 할 때도 '혼자 하기' 알약을 띄워, 눌러서 온라인 창을 열 수 있게 (예전엔 O 키로만)
+            if (StartScreen.IsOpen || MapRoot.Current == null || GameManager.I == null) return;
             UIStyle.Begin();
             DrawStatus();
         }
@@ -565,6 +590,7 @@ namespace PocketCaravan
             string label = Status switch
             {
                 State.Online => $"{OnlineCount}명",
+                State.Offline => "혼자 하기",
                 State.Waiting => $"다시 연결 {Mathf.CeilToInt(Mathf.Max(0f, retryAt - Time.unscaledTime))}초",
                 _ => retries > 0 ? "다시 연결 중…" : "접속 중…",
             };
@@ -573,8 +599,9 @@ namespace PocketCaravan
             ScreenZones.Mark("online", r);   // 11/08 위 가운데 알약이 이 왼쪽에서 멈춘다
             CuteUI.Pill(r);
             if (online) CuteUI.Icon(CuteUI.Pic.People, r.x + 6, r.y + 5);
-            else CuteUI.Circle(r.x + 8, r.y + 5, 8, Status == State.Waiting || retries > 0 ? CuteUI.Alert : CuteUI.Deco, CuteUI.Ink);
-            CuteUI.Label(r.x + 22, r.y + 9, label, CuteUI.Text, false, true);
+            else CuteUI.Circle(r.x + 8, r.y + 5, 8, Status == State.Offline ? CuteUI.ZeroSoft : Status == State.Waiting || retries > 0 ? CuteUI.Alert : CuteUI.Deco, CuteUI.Ink);
+            CuteUI.Label(r.x + 22, r.y + 9, label, Status == State.Offline ? CuteUI.Sub : CuteUI.Text, false, true);
+            if (!UIState.Blocking && GUI.Button(r, GUIContent.none, GUIStyle.none)) NetLogin.OpenGame();   // 11/08 눌러도 O처럼 온라인 창
             if (online && r.Contains(Event.current.mousePosition))
             {
                 string here = sentMap != null && !waitingRoom ? $"이 맵 {peers.Count + 1}명" : "이 맵 확인 중";

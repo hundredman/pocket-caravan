@@ -34,7 +34,7 @@ namespace PocketCaravan
         void Awake()
         {
             bells = gameObject.AddComponent<AudioSource>();
-            bells.clip = MakeBells(); bells.loop = true; bells.volume = 0f; bells.playOnAwake = false;
+            bells.clip = BellsClip; bells.loop = true; bells.volume = 0f; bells.playOnAwake = false;
             puff = NorthUtil.Pixel(new Color32(250, 250, 255, 255), 2, 2);
         }
 
@@ -130,6 +130,9 @@ namespace PocketCaravan
         }
 
         /// <summary>썰매 방울 소리 (2초 반복): 높은 방울 두 개가 엇갈려 딸랑</summary>
+        static AudioClip bellsClip;
+        /// <summary>11/08: 다른 사람 썰매(VehicleLook)도 같은 방울 소리를 쓴다</summary>
+        public static AudioClip BellsClip => bellsClip != null ? bellsClip : (bellsClip = MakeBells());
         static AudioClip MakeBells()
         {
             const int rate = 22050; int n = rate * 2;

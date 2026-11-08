@@ -33,7 +33,7 @@ namespace PocketCaravan
             { "north_herbalist", ("약초꾼", "라우가르 온천 마을 장터 아래") },
             { "north_bathkeeper", ("목욕 회관 주인", "라우가르 온천 마을 목욕 회관 앞") },
             { "north_herd_granny", ("순록 목동 할머니", "순록 고원 마을 남쪽 모닥불 옆") },
-            { "north_sledmaker", ("썰매 장인", "순록 고원 마을 남쪽, 목동 할머니 옆") },
+            { "north_sledmaker", ("썰매 장인", "순록 고원 마을 남쪽 (비르카 서쪽→사냥꾼 마을→북쪽)") },
             { "north_runekeeper", ("룬 지기 노인", "룬돌 언덕 고리 앞") },
             { "north_miner", ("광부 할아범", "얼음 동굴 골짜기 남쪽 동굴 입구") },
             // 베네치아

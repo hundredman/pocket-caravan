@@ -9,7 +9,7 @@ namespace PocketCaravan
     public class WorldLabels : MonoBehaviour
     {
         static Texture2D arrowTex, downTex;
-        static GUIStyle nameStyle, shadowStyle, guideStyle;
+        static GUIStyle nameStyle, shadowStyle;
 
         static readonly Color QuestColor = new Color(1f, 0.85f, 0.25f);
         static readonly Color MarketColor = new Color(0.55f, 0.95f, 0.6f);
@@ -80,8 +80,7 @@ namespace PocketCaravan
                     GUI.matrix = m;
                 }
                 string guide = n.exit ? $"{n.label}  ({Mathf.RoundToInt(dist)}칸)" : $"{n.label}  {Mathf.RoundToInt(dist)}칸";
-                float gw = 220;
-                Outlined(new Rect((UIStyle.VirtualWidth - gw) / 2, HUD.BottomLine(10, 14), gw, 14), "목표 · " + guide, QuestColor, guideStyle);   // 11/08 아래 쌓는 줄로 (알림·조작 안내와 겹쳤다)
+                CuteUI.GoalPill("목표 · " + guide);   // 11/08 아래 쌓는 줄로 (알림·조작 안내와 겹쳤다). 흰 테두리 글씨 → 종이 알약
             }
         }
 
@@ -121,7 +120,6 @@ namespace PocketCaravan
                 nameStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.SmallFont, alignment = TextAnchor.MiddleCenter, fontSize = UIStyle.SmallSize, clipping = TextClipping.Overflow };
                 shadowStyle = new GUIStyle(nameStyle);
                 shadowStyle.normal.textColor = new Color(0f, 0f, 0f, 0.8f);
-                guideStyle = new GUIStyle(nameStyle) { font = GUI.skin.font, fontSize = UIStyle.BodySize };
             }
         }
 

@@ -32,6 +32,9 @@ namespace PocketCaravan
             public Vector3 bodyPos, bodyScale;   // 그림의 원래 자리·크기 (리액션 뒤에 되돌린다)
             public string emote, emoteName;      // 하고 있는 리액션 (동작 모양 · 보여 줄 이름)
             public float emoteStart, emoteLength;
+            public string vehicle;               // 11/08 운반 수단 (서버 veh, VehicleLook이 그린다)
+            public SpriteRenderer vehicleSr;
+            public VehicleTrail trail;
         }
 
         static readonly Vector2Int[] SpinFacings = { new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(0, 1), new Vector2Int(-1, 0) };
@@ -247,6 +250,7 @@ namespace PocketCaravan
                 if (Time.unscaledTime - p.heardAt > StaleSeconds) continue;
                 if (!avatars.TryGetValue(p.id, out var a)) avatars[p.id] = a = Create(p, pc);
                 if (a.look != p.look) { a.look = p.look; a.anim.frames = FramesFor(p.look, pc); }
+                a.vehicle = p.veh;
                 a.name = string.IsNullOrEmpty(p.name) ? p.id : p.name;
 
                 Vector3 target = new Vector3(p.x, p.y, pc.transform.position.z);
@@ -257,6 +261,15 @@ namespace PocketCaravan
                 a.anim.walking = p.m || dist > 0.05f;
                 if (p.m) a.emote = null;   // 걷기 시작하면 리액션은 멈춘다
                 ApplyEmote(a);
+                if (p.s && a.emote == null)
+                {   // 11/08 기우: 앉아 있으면 그 사람 화면과 같은 높이·눌림으로 앞을 보고 앉힌다
+                    var bt = a.anim.transform;
+                    float sq = p.sq > 0.3f && p.sq < 1.5f ? p.sq : 1f;
+                    bt.localPosition = a.bodyPos + new Vector3(0f, Mathf.Clamp(p.sy, -1f, 1f), 0f);
+                    bt.localScale = new Vector3(a.bodyScale.x * (sq < 0.99f ? 1.04f : 1f), a.bodyScale.y * sq, a.bodyScale.z);
+                    a.anim.facing = Vector2Int.down; a.anim.walking = false;
+                }
+                VehicleLook.Draw(ref a.vehicleSr, ref a.trail, a.root.transform, a.sr, a.vehicle, new Vector2(a.anim.facing.x, a.anim.facing.y), a.anim.walking, p.ld);
             }
         }
 
@@ -281,7 +294,7 @@ namespace PocketCaravan
             }
             anim.frames = FramesFor(p.look, pc);
             if (anim.frames != null && anim.frames.Length > 0) sr.sprite = anim.frames[0];
-            return new Avatar { root = root, anim = anim, sr = sr, look = p.look, name = p.name, bodyPos = body.transform.localPosition, bodyScale = body.transform.localScale };
+            return new Avatar { root = root, anim = anim, sr = sr, look = p.look, name = p.name, bodyPos = body.transform.localPosition, bodyScale = body.transform.localScale, vehicle = p.veh };
         }
 
         /// <summary>출신 아이디 → 그 출신의 캐릭터 그림 16장. 모르면 내 그림을 빌린다</summary>

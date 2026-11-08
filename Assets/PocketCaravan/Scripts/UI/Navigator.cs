@@ -113,12 +113,24 @@ namespace PocketCaravan
 
             string next = index.NextStep(map.mapId, targetMap);
             if (next == null) return null;
+            // 11/08 기우: 같은 맵으로 가는 출구가 여러 토막이면(아라비아 빈 사막 남쪽 등) 목록 맨 앞 토막의 가운데가 아니라
+            // 플레이어에게 가장 가까운 출구 칸을 가리킨다. 출구가 하나인 맵은 그 출구 안에서 가장 가까운 칸.
+            var player = PlayerController.Instance;
+            Vector3Int me = player != null ? map.WorldToCell(player.transform.position) : Vector3Int.zero;
+            Vector3? best = null; int bestD = int.MaxValue;
             foreach (var e in MapExit.All)
             {
                 if (e.targetScene != next) continue;
-                var center = e.transform.position + new Vector3(e.size.x * 0.5f, e.size.y * 0.5f, 0f);
+                var o = map.WorldToCell(e.transform.position);
+                var c = new Vector3Int(Mathf.Clamp(me.x, o.x, o.x + e.size.x - 1), Mathf.Clamp(me.y, o.y, o.y + e.size.y - 1), 0);
+                int dist = Mathf.Abs(c.x - me.x) + Mathf.Abs(c.y - me.y);
+                if (player == null) { best = e.transform.position + new Vector3(e.size.x * 0.5f, e.size.y * 0.5f, 0f); break; }
+                if (dist < bestD) { bestD = dist; best = map.CellCenter(c); }
+            }
+            if (best.HasValue)
+            {
                 string where = next == targetMap ? index.MapName(targetMap) : $"{index.MapName(next)} 지나 {index.MapName(targetMap)}";
-                return new Result { position = center, label = $"{where} 방면", exit = true };
+                return new Result { position = best.Value, label = $"{where} 방면", exit = true };
             }
             return null;
         }

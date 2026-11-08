@@ -37,7 +37,7 @@ namespace PocketCaravan
         // 불꽃
         struct Spark { public Vector2 p, v; public Color c; public float born, life; }
         readonly System.Collections.Generic.List<Spark> sparks = new System.Collections.Generic.List<Spark>();
-        float nextRocket;
+        double nextRocket;   // 11/08 온라인이면 세상 시각 칸 (WorldBeat)
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Attach()
@@ -132,16 +132,15 @@ namespace PocketCaravan
             UIStyle.Begin();
             GUI.depth = 6;
             float vw = UIStyle.VirtualWidth, vh = UIStyle.VirtualHeight, now = Time.time;
-            if (Event.current.type == EventType.Repaint && now > nextRocket)
+            if (Event.current.type == EventType.Repaint && WorldBeat.Due(ref nextRocket, now, .6f, 1.4f, 51, out var rr))   // 11/08 온라인: 모두 같은 때 같은 불꽃
             {
-                nextRocket = now + Random.Range(.6f, 1.4f);
-                var center = new Vector2(Random.Range(vw * .15f, vw * .85f), Random.Range(vh * .1f, vh * .35f));
+                var center = new Vector2(rr.Range(vw * .15f, vw * .85f), rr.Range(vh * .1f, vh * .35f));
                 var cols = new[] { new Color(1f, .4f, .45f), new Color(1f, .85f, .35f), new Color(.45f, .7f, 1f), new Color(.6f, 1f, .6f), new Color(1f, .6f, 1f) };
-                var col = cols[Random.Range(0, cols.Length)];
+                var col = cols[rr.Range(0, cols.Length)];
                 for (int i = 0; i < 26; i++)
                 {
                     float ang = i / 26f * Mathf.PI * 2f;
-                    sparks.Add(new Spark { p = center, v = new Vector2(Mathf.Cos(ang), Mathf.Sin(ang)) * Random.Range(28f, 40f), c = col, born = now, life = 1.3f });
+                    sparks.Add(new Spark { p = center, v = new Vector2(Mathf.Cos(ang), Mathf.Sin(ang)) * rr.Range(28f, 40f), c = col, born = now, life = 1.3f });
                 }
                 Sfx.Play("bump", .25f);
             }

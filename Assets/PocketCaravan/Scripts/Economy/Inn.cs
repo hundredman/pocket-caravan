@@ -42,8 +42,12 @@ namespace PocketCaravan
     public static class SeatRest
     {
         public const float ExtraRegen = 2f;
+        static int lastFrame = -10;
+        /// <summary>11/08 기우: 지금 앉아 있는지 (어느 지역 자리든 앉아 있는 동안 매 프레임 Tick을 부른다) — 온라인에 알려 남들도 앉은 모습을 본다</summary>
+        public static bool Active => Time.frameCount - lastFrame <= 2;
         public static void Tick(PlayerController pc, float dt)
         {
+            lastFrame = Time.frameCount;
             var gm = GameManager.I;
             if (pc == null || gm == null || !(dt > 0f)) return;
             gm.Player.stamina = Mathf.Min(1f, gm.Player.stamina + pc.staminaRegen * ExtraRegen * dt);
@@ -287,6 +291,7 @@ namespace PocketCaravan
             float h = Mathf.Max(106, textHeight + 54);
             var r = askWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round(UIStyle.VirtualHeight - h - 50), w, h);
             CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, askHost);
+            if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { CloseAsk(); return; }   // 11/08 오른쪽 위 X
             askTextRect = new Rect(r.x + 14, r.y + 14, w - 28, textHeight);
             GUI.Label(askTextRect, text, wrap);
             float yesWidth = Mathf.Floor((w - 36) * .56f);

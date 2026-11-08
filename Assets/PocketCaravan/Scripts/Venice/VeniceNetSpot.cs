@@ -116,8 +116,10 @@ namespace PocketCaravan
                 x = CuteUI.Label(x + 3f, r.y + 112.5f, "던지기", CuteUI.Text, true) + 14f;
                 x += CuteUI.Keycap(x, r.y + 106f, "Esc", true);
                 CuteUI.Label(x + 3f, r.y + 112.5f, "그만", CuteUI.Text, true);
-                CuteUI.LabelCenter(r.center.x, r.y + 129f, "막대 끝이 물고기 떼에 닿을 때 던져요", CuteUI.Sub, true);
+                CuteUI.LabelCenter(r.center.x, r.y + 129f, "막대 끝이 물고기 떼에 닿을 때 던져요 (클릭해도 돼요)", CuteUI.Sub, true);
             }
+            if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) InputReader.Press('\x1b');   // 11/08 X = Esc(그만)
+            InputReader.ClickAsSpace();   // 11/08 빈 곳 클릭 = Space(던지기)
         }
     }
 }

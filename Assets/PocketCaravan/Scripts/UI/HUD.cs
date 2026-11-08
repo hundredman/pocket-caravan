@@ -75,11 +75,12 @@ namespace PocketCaravan
         }
 
         /// <summary>오른쪽 위 단추 줄의 왼쪽 끝 (온라인 표시가 그 왼쪽에 붙는다)</summary>
-        public static float ButtonsLeft => UIStyle.VirtualWidth - 6 - (3 * ButtonSize + 2 * ButtonGap);
+        public static float ButtonsLeft => UIStyle.VirtualWidth - 6 - (Buttons.Length * ButtonSize + (Buttons.Length - 1) * ButtonGap);
 
+        /// <summary>11/08 소지품(I)·메뉴(Esc)도 단추로 (마우스만으로도 할 수 있게)</summary>
         static readonly (CuteUI.Pic pic, char key, string label)[] Buttons =
         {
-            (CuteUI.Pic.Scroll, 'q', "Q"), (CuteUI.Pic.Compass, 'm', "M"), (CuteUI.Pic.OpenBook, 'l', "L"),
+            (CuteUI.Pic.Sack, 'i', "I"), (CuteUI.Pic.Scroll, 'q', "Q"), (CuteUI.Pic.Compass, 'm', "M"), (CuteUI.Pic.OpenBook, 'l', "L"), (CuteUI.Pic.Menu, '\x1b', "Esc"),
         };
 
         static readonly (string key, string what)[] Keys =
@@ -124,6 +125,7 @@ namespace PocketCaravan
             var card = new Rect(22, 5, w, 40);
             ScreenZones.Mark("hud.card", Rect.MinMaxRect(4, 4, card.xMax, card.yMax));   // 초상까지
             CuteUI.Card(card);
+            if (!UIState.Blocking && GUI.Button(Rect.MinMaxRect(4, 4, card.xMax, card.yMax), GUIContent.none, GUIStyle.none)) InputReader.Press('\t');   // 11/08 눌러도 Tab처럼 펼치기
             CuteUI.Icon(CuteUI.Pic.Coin, 42, 14);
             float x = CuteUI.Label(54, 18.5f, money, CuteUI.Text, false, true);
             CuteUI.Label(x + 3, 19, "냥", CuteUI.Sub, true);
@@ -161,6 +163,7 @@ namespace PocketCaravan
             float h = 30 + 16 + 6 + 12 + repH + 4 + 15 + 15 + 7 + 12 + (p.HasAnyCargo ? 12 : 0) + 8;
             ScreenZones.Mark("hud.card", Rect.MinMaxRect(4, 4, x + w, y + h));
             CuteUI.Card(new Rect(x, y, w, h));
+            if (!UIState.Blocking && GUI.Button(Rect.MinMaxRect(4, 4, x + w, y + h), GUIContent.none, GUIStyle.none)) InputReader.Press('\t');   // 11/08 눌러도 접기
 
             // 맵 이름 + 장날 (초상 오른쪽)
             float tx = CuteUI.Label(46, y + 13, map.displayName, CuteUI.Text, false, true);

@@ -30,6 +30,8 @@ namespace PocketCaravan
         static void OnReaction(string id)
         {
             if (id != "pray" || GameManager.I == null || !NorthUtil.InNorth) return;
+            // 11/08 기우: 온라인에선 모두 같은 하늘이라 혼자 날씨를 바꾸면 사람마다 다르게 보인다 → 기도는 혼자 할 때만 닿는다
+            if (WorldClock.Active) { Notify.Show("함께하는 세상의 하늘은 혼자 바꿀 수 없다. (날씨 기도는 혼자 할 때만)", 2.5f); return; }
             int block = Mathf.FloorToInt(GameManager.I.Clock.TotalHours / 4f);
             if (NorthSave.Get("prayday", -1f) < Today && NorthAtmosphere.Shown >= NorthAtmosphere.Weather.Heavy)
             {

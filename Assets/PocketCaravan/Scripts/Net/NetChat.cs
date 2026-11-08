@@ -164,8 +164,9 @@ namespace PocketCaravan
                 else if (sendFrame < 0 && EnterPressed() && Time.unscaledTime - openedAt > 0.15f)
                     sendFrame = Time.frameCount + 2;   // 입력기가 마지막 글자를 확정할 시간을 준다
             }
-            else if (EnterPressed() && !UIState.Blocking && !UIState.JustClosed && !(GameManager.I != null && GameManager.I.IsTravelling))
+            else if ((EnterPressed() || (openRequested && Time.unscaledTime - openRequestedAt < 0.5f)) && !UIState.Blocking && !UIState.JustClosed && !(GameManager.I != null && GameManager.I.IsTravelling))
             {
+                openRequested = false;
                 typing = true;
                 box.Text = "";
                 box.Begin();
@@ -230,7 +231,9 @@ namespace PocketCaravan
             if (typing) bottom = DrawInput(bottom);
             float top = DrawLines(bottom);
             // 11/08 알림이 채팅을 덮지 않게 차지한 자리를 알린다 (알림은 그 오른쪽 · 너무 좁으면 위로)
-            if (top < floor) ScreenZones.Mark("chat", Rect.MinMaxRect(6f, top, 6f + LogWidth + (typing ? 40f : 12f), floor));
+            if (top < floor) ScreenZones.Mark("chat", Rect.MinMaxRect(6f, top, 6f + LogWidth + (typing ? 40f + 52f : 12f), floor));
+            // 11/08 채팅 목록을 누르면 입력 칸이 열린다 (Enter와 같다)
+            if (!typing && top < floor && GUI.Button(Rect.MinMaxRect(6f, top, 6f + LogWidth + 12f, floor), GUIContent.none, GUIStyle.none)) OpenInput();
         }
 
         void Styles()
@@ -257,8 +260,16 @@ namespace PocketCaravan
             box.TextColor = (Color)CuteUI.Text;
             box.Draw(new Rect(fieldRect.x + 4f, fieldRect.y, fieldRect.width - 6f, fieldRect.height), field);
             CuteUI.Label(panel.x + 8f, panel.y + 28.5f, $"Enter 보내기 · Esc 닫기 · /리액션 · 가/A: 오른쪽 Alt · {box.Full.Length}/{MaxChars}", CuteUI.Sub, true);
+            // 11/08 마우스로도 보내고 닫기 (입력 칸 오른쪽)
+            if (CuteUI.Button(new Rect(panel.xMax + 4f, panel.y, 48f, 18f), "보내기") && sendFrame < 0) sendFrame = Time.frameCount + 2;
+            if (CuteUI.SoftButton(new Rect(panel.xMax + 4f, panel.y + 20f, 48f, 16f), "닫기")) Close();
             return panel.y - 4f;
         }
+
+        static bool openRequested;
+        static float openRequestedAt;
+        /// <summary>11/08 채팅 입력 열기 (Enter와 같다): 온라인 창 "채팅하기"·채팅 목록을 누르면 부른다</summary>
+        public static void OpenInput() { openRequested = true; openRequestedAt = Time.unscaledTime; }
 
         /// <summary>채팅 목록 (11/05 B안: 반투명 종이 카드 위 진한 글씨, 오래되면 카드째 흐려진다). 그린 카드의 위쪽 y (없으면 bottom)</summary>
         float DrawLines(float bottom)

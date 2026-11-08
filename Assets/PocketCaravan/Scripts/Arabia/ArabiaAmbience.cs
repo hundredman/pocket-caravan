@@ -199,6 +199,30 @@ namespace PocketCaravan
         readonly List<SpriteRenderer> grains = new List<SpriteRenderer>();
         AudioSource windSrc;
 
+        /// <summary>
+        /// 온라인 모래바람 일정 (11/08 기우): 서버 세상 시각을 맵 종류별 칸(사막 55초·협곡 70초·그 밖 115초)으로 나누고,
+        /// 칸 번호로 정한 때·길이·바람 방향에 분다. 같은 맵에 있는 사람은 늦게 들어와도 같은 모래바람을 본다 (걸음 배율도 같음).
+        /// 미니게임·길 잃은 나그네 연출의 모래바람(StartGust 직접 호출)은 그 사람 혼자 보는 연출이라 그대로.
+        /// </summary>
+        void SyncGust()
+        {
+            int kind = desert ? 1 : canyon ? 2 : 3;
+            float slotLen = desert ? 55f : canyon ? 70f : 115f;
+            double sec = WorldClock.NowMs / 1000.0;
+            long slot = (long)System.Math.Floor(sec / slotLen);
+            uint h = unchecked((uint)slot * 2654435761u ^ (uint)kind * 0x9e3779b9u);
+            h ^= h >> 13; h = unchecked(h * 0x5bd1e995u); h ^= h >> 15;
+            if (kind == 3 && (h & 1u) == 0) return;                      // 마을·초원은 두 칸에 한 번꼴
+            float len = 7f + (h % 400u) / 100f;                          // 7~11초
+            float start = ((h >> 9) % 1000u) / 1000f * (slotLen - len - 1f);
+            float t = (float)(sec - slot * (double)slotLen);
+            if (t < start || t >= start + len) return;
+            if (gusting && Mathf.Abs(gustLen - len) < 0.01f) return;     // 이미 이 바람
+            StartGust(len);
+            gustTime = t - start;
+            wind = new Vector2((h & 2u) != 0 ? 1f : -1f, -0.25f + ((h >> 3) % 35u) / 100f);
+        }
+
         public void StartGust(float seconds = 9f)
         {
             if (root == null) return;
@@ -209,7 +233,8 @@ namespace PocketCaravan
 
         void UpdateGust(float dt)
         {
-            if (!gusting && Time.time >= nextGust && !green)
+            if (WorldClock.Active && !green) SyncGust();   // 11/08 온라인: 같은 맵 사람은 같은 때 같은 모래바람 (세상 시계 기준)
+            else if (!gusting && Time.time >= nextGust && !green)
             {
                 StartGust(Random.Range(7f, 11f));
                 nextGust = Time.time + (desert ? Random.Range(35f, 70f) : canyon ? Random.Range(50f, 90f) : Random.Range(80f, 150f));

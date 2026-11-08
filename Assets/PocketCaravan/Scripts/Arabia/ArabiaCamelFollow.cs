@@ -11,7 +11,8 @@ namespace PocketCaravan
     {
         const string CamelId = "arabia_camel";
         Transform camel; SpriteRenderer sr; PlayerController owner;
-        float phase; bool faceRight = true;
+        float phase;
+        readonly VehicleTrail trail = new VehicleTrail();   // 11/08: 내가 지나온 길을 1.1칸 뒤에서 따라온다 (공용 VehicleLook과 같은 방식)
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Boot()
@@ -25,8 +26,8 @@ namespace PocketCaravan
             var pc = PlayerController.Instance;
             var st = GameManager.I != null ? GameManager.I.Player : null;
             bool show = pc != null && st != null && st.vehicle != null && st.vehicle.id == CamelId && !GameManager.I.IsTravelling;
-            if (pc != owner) { if (camel != null) Destroy(camel.gameObject); camel = null; owner = pc; }   // 맵이 바뀌면 새 플레이어에 다시 붙인다
-            if (!show) { if (camel != null) camel.gameObject.SetActive(false); return; }
+            if (pc != owner) { if (camel != null) Destroy(camel.gameObject); camel = null; owner = pc; trail.Reset(); }   // 맵이 바뀌면 새 플레이어에 다시 붙인다
+            if (!show) { if (camel != null) camel.gameObject.SetActive(false); trail.Reset(); return; }
             if (camel == null)
             {
                 camel = new GameObject("내 낙타").transform;
@@ -37,19 +38,20 @@ namespace PocketCaravan
             }
             camel.gameObject.SetActive(true);
 
-            Vector2 facing = pc.Motor.Facing;
-            if (facing.x > 0.1f) faceRight = true; else if (facing.x < -0.1f) faceRight = false;   // 위·아래로 갈 땐 마지막 좌우 방향 유지
+            // 보이는 캐릭터 방향(anim.facing) 기준. 처음엔 그 뒤에 서고, 걸으면 지나온 길을 따라온다
+            Vector2 facing = pc.anim != null ? new Vector2(pc.anim.facing.x, pc.anim.facing.y) : (Vector2)pc.Motor.Facing;
             bool moving = pc.Motor.Velocity.sqrMagnitude > 0.01f;
             if (moving) phase += Time.deltaTime * 10f;
             float bob = moving ? Mathf.Abs(Mathf.Sin(phase)) * .06f : 0f;
-            camel.localPosition = -(Vector3)(facing * 1.1f) + new Vector3(0f, .15f + bob, 0f);
-            sr.flipX = faceRight;   // 그림이 왼쪽을 보니 오른쪽으로 갈 때 뒤집는다
+            var at = trail.Step(pc.transform.position, facing, moving);
+            camel.position = new Vector3(at.x, at.y + .15f + bob, pc.transform.position.z);
+            sr.flipX = trail.FaceRight;   // 그림이 왼쪽을 보니 오른쪽으로 갈 때 뒤집는다
 
             var body = pc.anim != null ? pc.anim.GetComponent<SpriteRenderer>() : null;
             if (body != null) sr.sortingLayerID = body.sortingLayerID;
-            // 위로 걸으면 낙타가 내 앞(화면 아래)에 오니 위에 그리고, 그 밖엔 내 뒤에
+            // 낙타가 나보다 화면 아래에 있으면 내 앞에, 위에 있으면 내 뒤에 그린다
             int baseOrder = body != null ? body.sortingOrder : 10;
-            sr.sortingOrder = facing.y > 0.1f ? baseOrder + 1 : baseOrder - 2;
+            sr.sortingOrder = at.y < pc.transform.position.y ? baseOrder + 1 : baseOrder - 2;
         }
     }
 }
