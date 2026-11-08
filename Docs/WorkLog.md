@@ -454,3 +454,5 @@
 - 2026-11-08 Codex 고려첫이야기(이 커밋): 선택창중기본고려Arrive가step1선기록/예약대사취소→누락 재현. 선택후하단이야기1페이지/일꾼부름·Space안내/확인메모·옛step1복구/단계2·4·7·10·11보존·중복Start/이탈취소·타출신보존검사. 초기격리누락으로 StartScreen자동로그인/돈짐요약전송발견후즉시차단(전체저장업로드0·기존서버요약복구미확인), NetSave시험칸welcome/요약·전체차단9줄보완·일반칸수신메모리검사. 이후로그인억제Offline/SaveOFF재검사/최종캡처. Unity컴파일/콘솔0·최종431/23skip·세계883/0·로컬저장9동일. 그림확인/원격미반영·실키8단계/장시간/빌드미검사·최신main포함·개인설정3D보존. Docs/Validation/Goryeo-Opening-2026-11-08/README.md.
 
 - 2026-11-08 Codex 매매안내문구(이 커밋): 사용자 문구수정 정정/최종문장/다른문명도수정 지시에 따라4Intro Tasks구매/판매2개씩만 통일(상인에게물건하나구매하기/산물건을다른마을상인에게판매하기). 완료판정/교역규칙/ID/대사/저장불변HEAD대조. Unity컴파일/콘솔0·로그인억제Offline/SaveOFF4문명8실제화면. 전체Python/세계/실매매/빌드재검사없음·최신main포함·로컬만·개인설정3D보존. Docs/Validation/Trade-Wording-2026-11-08/README.md.
+
+- 2026-11-08 Codex 지역일관성통합준비(이 커밋): 사용자GitHub업로드지시로region/goryeo→integration준비·최신main/integration포함확인. 최종Python431/23skip·세계883/0·UnityNaru격리이주/대화30·콘솔0·개인저장9SHA동일. 상인호칭/일꾼원본좌표/튜토리얼이주·첫이야기/공용고정이름표/4문명안내/시험저장전송차단/Aseprite도구대상. 공용UI/Quests/Net명시·맵/씬/DB/색인/연결/타지역그림/서버변경0·개인설정3D제외. 온라인/장시간/FPS/빌드미검사. Docs/Validation/Region-Consistency-Integration-2026-11-08/README.md.

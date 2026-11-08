@@ -1,0 +1,14 @@
+{
+  "scene": "Naru",
+  "migrationAndGuideDialogueChecks": 30,
+  "consoleErrors": 0,
+  "autosave": false,
+  "network": "Offline",
+  "personalSaveFiles": 9,
+  "personalSaveHashesUnchanged": true,
+  "notRun": [
+    "full physical-key playthrough of all origins",
+    "live online multiplayer",
+    "FPS and build"
+  ]
+}
