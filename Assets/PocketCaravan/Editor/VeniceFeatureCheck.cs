@@ -287,7 +287,7 @@ namespace PocketCaravan.EditorTools
                     step = 10; waitUntil = now + .8f; break;
                 }
                 case 10:
-                    report.AppendLine($"   물 찬 칸 걸음 속도 {p.Motor.walkSpeed:0.00}");
+                    report.AppendLine($"   물 찬 칸 걸음 배율 {SpeedMods.Get("venice_acqua_alta"):0.00} (기본 걸음 {p.Motor.walkSpeed:0.00})");
                     Shot("life_8_acqua_alta");
                     for (int d = 1; d < 60; d++)            // 길 잃은 순례자: 맑지 않은 시각을 찾는다
                     {
@@ -549,7 +549,7 @@ namespace PocketCaravan.EditorTools
                     var feed = UnityEngine.Object.FindAnyObjectByType<VeniceFeed>();
                     var museum = UnityEngine.Object.FindAnyObjectByType<Museum.Spot>();
                     report.AppendLine($"모이 주머니 {(feed != null ? "있음" : "없음")}, 전시실 {(museum != null ? "있음" : "없음")}, 날씨 {VeniceAtmosphere.Now}");
-                    if (feed != null) { int m0 = gm.Player.money; feed.Interact(PlayerController.Instance); report.AppendLine($"   모이 주기: 돈 {m0}→{gm.Player.money}, 오늘 함 {VeniceSave.DoneToday("feed")}"); }
+                    if (feed != null) { int m0 = gm.Player.money; feed.Interact(PlayerController.Instance); report.AppendLine($"   모이 주기: 돈 {m0}→{gm.Player.money}, 오늘 함 {VeniceFeed.FedToday}"); }
                     var snd = gm.GetComponent<VeniceSound>();
                     report.AppendLine($"베네치아 음악: {(snd != null ? "붙음" : "없음")}");
                     while (gm.Clock.day % 7 != 5) gm.Clock.day++;

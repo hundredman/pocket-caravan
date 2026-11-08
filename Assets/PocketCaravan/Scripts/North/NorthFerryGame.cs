@@ -61,6 +61,7 @@ namespace PocketCaravan
         static void Arrive(string destMap, Vector2Int face)
         {
             if (GameManager.I == null) return;
+            GameManager.I.Clock.Advance(NorthDaily.FerryHours);   // 11/08 공용 기준: 배 타는 시간도 의뢰 시간에서 쓴다 (전엔 0)
             landing = destMap; landingFace = face;
             GameEvents.MapEntered -= OnLanded;
             GameEvents.MapEntered += OnLanded;

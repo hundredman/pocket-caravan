@@ -53,7 +53,7 @@ namespace PocketCaravan
             float org = p.origin != null ? p.origin.speedMultiplier * (grade == 0 ? p.origin.offroadSpeedMultiplier : 1f) : 1f;
             float load = Mathf.Lerp(1f, pc.fullLoadSpeed, p.LoadRatio);
             float baseWalk = 3.8f;
-            float world = pc.Motor.walkSpeed / baseWalk;          // 날씨·썰매 지역 배율 (NorthTravel), 베네치아 물웅덩이 등
+            float world = SpeedMods.Product;          // 날씨·썰매 지역 배율 (NorthTravel), 베네치아 물웅덩이 등 (11/08 공용 SpeedMods)
             float total = pc.CurrentSpeed();
             float plain = baseWalk * (p.vehicle != null ? p.vehicle.SpeedOn(3) : 1f) * (p.origin != null ? p.origin.speedMultiplier : 1f);   // 큰길에서 그냥 걸을 때
             text = $"<b>속도 점검 (F9)</b>  {total:0.00}칸/초  (큰길 걷기 {plain:0.00})\n"

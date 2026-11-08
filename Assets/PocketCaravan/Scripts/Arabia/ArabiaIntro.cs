@@ -21,17 +21,7 @@ namespace PocketCaravan
         static readonly Vector2Int GuideCell = new Vector2Int(35, 38);   // 시작 자리(남문 S0 (31,37)) 오른쪽 아래 (하산 (29,36) 이름표와 안 겹치게)
         const string Guide = "하산의 조카 아미르";
 
-        static readonly string[] Tasks =
-        {
-            "Shift를 누른 채 걸어서 달려 보기",
-            "Tab을 눌러 내 상태 보기",
-            "I를 눌러 소지품 주머니 열어 보기",
-            "M을 눌러 지도 펼쳐 보기",
-            "Q를 눌러 할 일(퀘스트) 목록 보기",
-            "상인에게 물건 하나 구매하기",
-            "산 물건을 다른 마을 상인에게 판매하기",
-            "L을 눌러 장부에서 방금 거래 기록 확인하기",
-        };
+        static readonly string[] Tasks = ControlLesson.Tasks();   // 11/08 공통화 4단계: 조작 배우기 여덟 가지는 공용 ControlLesson
 
         public static bool Active => Step >= 1 && Step <= 10;
         static int Step { get => GameManager.I != null ? Mathf.RoundToInt(GameManager.I.GetMemo("arabia:intro")) : 0; set { if (GameManager.I != null) GameManager.I.SetMemo("arabia:intro", value); } }
@@ -193,15 +183,8 @@ namespace PocketCaravan
         {
             int s = Step;
             if (s < 2 || s > 9 || !IsCat || GameManager.I == null) return;
-            if (s == 2 && !UIState.Blocking && InputReader.Run() && InputReader.MoveVector().sqrMagnitude > 0.1f)
-            {
-                runTime += Time.unscaledDeltaTime;
-                if (runTime > 1f) { runTime = 0f; Done(0); }
-            }
-            else if (s == 3 && InputReader.StatusPressed()) Done(1);
-            else if (s == 5 && InputReader.MapPressed()) Done(3);
-            else if (s == 6 && InputReader.QuestLogPressed()) Done(4);
-            else if (s == 9 && InputReader.LedgerPressed()) Done(7);
+            int task = ControlLesson.KeyTask(s, ref runTime);   // 11/08 공용 키 확인 (달리기·Tab·M·Q·L)
+            if (task >= 0) Done(task);
         }
 
         void OnGUI()

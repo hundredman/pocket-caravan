@@ -35,6 +35,30 @@ namespace PocketCaravan
     /// 지역 기능(여관 푹 쉼, 벤치 한숨 돌림 등)이 각자 staminaDrain을 덮어쓰면 서로 되돌리다 꼬이므로,
     /// 각자 자기 id로 배율만 등록하고 실제 적용은 Inn이 매 프레임 한 번 한다.
     /// </summary>
+    /// <summary>
+    /// 11/08 공통화 3단계 (팀 기준): 앉아 쉬기 기본 효과는 모든 지역이 같다 — 앉아 있는 동안 체력이 평소의 3배로 찬다
+    /// (평소 회복 1배 + 여기서 2배 더). 지역 덤(베 "한숨 돌림", 아 "더위 식힘", 북 "몸 녹임")은 각 지역에 둔다.
+    /// </summary>
+    public static class SeatRest
+    {
+        public const float ExtraRegen = 2f;
+        public static void Tick(PlayerController pc, float dt)
+        {
+            var gm = GameManager.I;
+            if (pc == null || gm == null || !(dt > 0f)) return;
+            gm.Player.stamina = Mathf.Min(1f, gm.Player.stamina + pc.staminaRegen * ExtraRegen * dt);
+        }
+    }
+
+    /// <summary>
+    /// 11/08 공통화 3단계 (팀 기준): 배 타기 뱃삯은 걸리는 시간에 비례한다 — 4냥 + 시간당 4냥.
+    /// 곤돌라 30분 6냥, 고려 나룻배 1시간 8냥, 북유럽 피오르 나룻배 2시간 12냥. 걸린 시간은 의뢰 시간에서 쓴다(Clock.Advance).
+    /// </summary>
+    public static class BoatFare
+    {
+        public static int For(float hours) => Mathf.RoundToInt(4f + 4f * Mathf.Max(0f, hours));
+    }
+
     public static class StaminaMods
     {
         static readonly Dictionary<string, float> mods = new Dictionary<string, float>();
