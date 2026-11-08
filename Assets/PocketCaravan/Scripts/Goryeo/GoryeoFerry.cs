@@ -50,7 +50,7 @@ namespace PocketCaravan
             var choices=new List<DialogueUI.Choice>{new DialogueUI.Choice("이야기하기",()=>{try{telling=npc;npc.Interact(player);}finally{telling=null;}})};
             foreach(var target in config.ports)if(Route(port.mapId,target.mapId)){string id=target.mapId;choices.Add(new DialogueUI.Choice(target.name+"로",()=>{var error=TryStart(npc,player,id);if(error!=null)DialogueUI.Show(npc.DisplayName,error);}));}
             choices.Add(new DialogueUI.Choice("다음에",null));
-            DialogueUI.Show(npc.DisplayName,"물길 이야기를 듣고 싶으면 얼마든지 해 주겠소.\n배를 탄다면 뱃삯 "+config.fare+"냥 · "+config.hours.ToString("0.#")+"시간 걸리오. 짐과 수레도 함께 싣소.\n어느 나루로 가겠소?",choices.ToArray());return true;
+            DialogueUI.Show(npc.DisplayName,"뱃삯 "+config.fare+"냥 · "+config.hours.ToString("0.#")+"시간 걸리오. 짐과 수레도 함께 싣소.\n물길 이야기를 들려줄까, 아니면 배를 타겠소?",choices.ToArray());return true;
         }
         public static string TryStart(TalkNpc npc,PlayerController actor,string destination)
         {
