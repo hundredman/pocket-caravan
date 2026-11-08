@@ -198,6 +198,10 @@ def generate(config,sources):
         changed=filled_forest.copy()
         for cx,cy in forest_cells:changed[cy-oy,cx]=True
         forest_render=t3_forest.render(tile_world,walk,water,owners,boxes,ids,oy,changed)
+    lotus_render=None
+    if config.get('lotusRender'):
+        import t3_lotus
+        lotus_render=t3_lotus.render(tile_world,water,owners,boxes,ids,oy)
     # Dirt and grass use the same rule: the shared outer face must be reachable
     # from the town/start component on both sides. Do not open detached pockets.
     portal_walk=np.zeros_like(walk)
@@ -310,6 +314,7 @@ def generate(config,sources):
     for mid,(x0,y0,x1,y1)in boxes.items():covered[y0-oy:y1-oy,x0:x1]=True
     report['trimmedReviewCells']=[[int(x),int(y+oy)]for y,x in zip(*np.nonzero(known&~covered))]
     report['roadForestCells']=len(forest_cells);report['signCellsOpened']=sign_cells
+    if lotus_render:report['lotusRender']=dict(removedCells=lotus_render['removedCells'],lotus=lotus_render['lotus'],ripples=lotus_render['ripples'],newTiles=sorted(lotus_render['tiles']));report['_lotusTiles']=lotus_render
     if forest_render:report['forestRender']=dict(cells=forest_render['cells'],changedCells=forest_render['changedCells'],newTiles=sorted(forest_render['tiles']));report['_forestTiles']=forest_render
     report['trimmedWalkableCells']=int((walk&~covered).sum())
     report['trimNote']='Review-only: west tip is shortened by one column to fit two separate existing foreign portals on the same true outer face. No new land or foreign file changes.'

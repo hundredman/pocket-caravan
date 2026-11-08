@@ -73,6 +73,10 @@ def proposal():
    if o['kind']!='spawn'or o['id']in existing:continue
    q=copy.deepcopy(fallback);q['id']=o['id'];d['objects'].append(q);existing.add(q['id'])
   out[b['paths'][mid]]=d
+ # 11/08 연꽃 무리 옆 물결(기존 goryeo_ripples 움직임)
+ for wx,wy in report.get('lotusRender',{}).get('ripples',[]):
+  mid=owner(wx+.5,wy+.5);d=maps[mid]
+  d['objects'].append(dict(w=1,h=1,id='',npc='',town='',target='',spawn='',edge='',text='',name='',character='',lines=[],variant=0,idx=0,sheet='goryeo_ripples',frames=4,fps=3.5,radius=0.0,type='',path=[],kind='anim',x=wx-d['terrainX'],y=wy-d['terrainY']))
  if set(edits)-used:raise ValueError(('Sign edit without sign',sorted(set(edits)-used)))
  for p,key,cell in [('Resources/Goryeo/PlaceLabels.json','places',False),('Resources/Goryeo/Life/Anchors.json','points',True),('Resources/Goryeo/VillageLife/Anchors.json','points',False)]:
   rows={m:{'id':m,'w':d['w'],'h':d['h'],key:[]}for m,d in maps.items()}
@@ -198,14 +202,15 @@ def install(write=False):
    path=BASE/p;path.parent.mkdir(parents=True,exist_ok=True);path.write_text((json.dumps(d,ensure_ascii=False,indent=2) if p=='World/Connections/region_links.json' else json.dumps(d,ensure_ascii=False,separators=(',',':')))+'\n')
   STATE.write_text(json.dumps({p:digest(d)for p,d in out.items()},indent=2)+'\n')
   # 11/08: 다시 그린 숲 가장자리 칸 그림(원본 나무 그림을 겹친 것)과 그 겹친 기록
-  fr=report.get('_forestTiles')
-  if fr and fr['tiles']:
-   import t3_forest
-   tiles_dir=ROOT/'Assets/PocketCaravan/Art/NinjaAdventure/Tiles';m=json.loads(t3_forest.MANIFEST.read_text())
+  import t3_forest
+  tiles_dir=ROOT/'Assets/PocketCaravan/Art/NinjaAdventure/Tiles';m=json.loads(t3_forest.MANIFEST.read_text());grew=False
+  for fr in(report.get('_forestTiles'),report.get('_lotusTiles')):   # 11/08 숲 가장자리·연꽃 칸 그림과 겹친 기록
+   if not fr or not fr['tiles']:continue
    for n,im in fr['tiles'].items():
     if not(tiles_dir/f'{n}.png').exists():im.save(tiles_dir/f'{n}.png')
-   m['tiles'].update({n:e for n,e in fr['entries'].items()if n not in m['tiles']})
-   t3_forest.MANIFEST.write_text(json.dumps(m,ensure_ascii=False,indent=0))
+   for n,e in fr['entries'].items():
+    if n not in m['tiles']:m['tiles'][n]=e;grew=True
+  if grew:t3_forest.MANIFEST.write_text(json.dumps(m,ensure_ascii=False,indent=0))
  print(json.dumps(dict(outputs=len(out),maps=len(report['maps']),exits=sum(m['exits']for m in report['maps']),write=write),ensure_ascii=False))
 def worldmaps():
  sys.path.insert(0,str(ROOT/'Tools/MapGen'))

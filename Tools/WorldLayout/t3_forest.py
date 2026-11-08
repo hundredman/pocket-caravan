@@ -24,6 +24,28 @@ def lattice():
             for oy,ox in((0,0),(1,1)):lat[((gy+oy)%P,(gx+ox)%P)]=KINDS[int(r.integers(len(KINDS)))]
     return lat
 
+class Namer:
+    """Compose a 16px cell from whole approved sprites at offsets (m4_certify rule); reuse an existing tile name by hash."""
+    def __init__(self,manifest,sprite):
+        self.by_sha={e['sha256']:n for n,e in manifest['tiles'].items()};self.spr=sprite;self.cache={};self.tiles={};self.entries={}
+    def image(self,parts):
+        canvas=Image.new('RGBA',(T,T),(0,0,0,0))
+        for sid,dx,dy in parts:
+            src=self.spr(sid[7:]);sx,sy=max(0,-dx),max(0,-dy);tx,ty=max(0,dx),max(0,dy)
+            if sx>=src.width or sy>=src.height or tx>=T or ty>=T:continue
+            canvas.alpha_composite(src,dest=(tx,ty),source=(sx,sy,min(src.width,sx+T-tx),min(src.height,sy+T-ty)))
+        return canvas
+    def name(self,layer,parts):
+        key=(layer,tuple(tuple(p)for p in parts))
+        if key in self.cache:return self.cache[key]
+        canvas=self.image(parts)
+        if canvas.getbbox()is None:self.cache[key]='';return ''
+        sha=hashlib.sha256(canvas.tobytes()).hexdigest();n=self.by_sha.get(sha)
+        if not n:
+            n='m4_'+sha[:12];self.by_sha[sha]=n;self.tiles[n]=canvas
+            self.entries[n]=dict(sha256=sha,layer=layer,base=None,parts=[list(p)for p in parts])
+        self.cache[key]=n;return n
+
 def render(tile_world,walk,water,owners,boxes,ids,oy,changed,radius=4):
     m=json.loads(MANIFEST.read_text());tiles=m['tiles'];sources=m['sources']
     forest_src={'sprite:'+k for k in KINDS}
@@ -71,23 +93,8 @@ def render(tile_world,walk,water,owners,boxes,ids,oy,changed,radius=4):
                 if 0<=yy<H and 0<=xx<W and region[yy,xx]:
                     layer='obj'if(forest[yy,xx]or ty<=yy)else'high'
                     pieces.setdefault((layer,yy,xx),[]).append(('sprite:'+k,(x0-xx)*T,(y0-yy)*T))
-    by_sha={e['sha256']:n for n,e in tiles.items()}
-    new_tiles={};new_entries={}
-    def name_for(layer,parts):
-        key=(layer,tuple(parts))
-        if key in cache:return cache[key]
-        canvas=Image.new('RGBA',(T,T),(0,0,0,0))
-        for sid,dx,dy in parts:
-            src=spr(sid[7:]);sx,sy=max(0,-dx),max(0,-dy);tx,ty=max(0,dx),max(0,dy)
-            if sx>=src.width or sy>=src.height or tx>=T or ty>=T:continue
-            canvas.alpha_composite(src,dest=(tx,ty),source=(sx,sy,min(src.width,sx+T-tx),min(src.height,sy+T-ty)))
-        if canvas.getbbox()is None:cache[key]='';return ''
-        sha=hashlib.sha256(canvas.tobytes()).hexdigest()
-        n=by_sha.get(sha)or new_entries.get(sha,{}).get('name')
-        if not n:
-            n='m4_'+sha[:12];new_tiles[n]=canvas
-            new_entries[sha]=dict(name=n,entry=dict(sha256=sha,layer=layer,base=None,parts=[list(p)for p in parts]))
-        cache[key]=n;return n
+    namer=Namer(m,spr)
+    def name_for(layer,parts):return namer.name(layer,parts)
     changed_cells=0
     for r,c in zip(*np.nonzero(region)):
         before=tuple(tile_world[k][r,c]for k in('ground','deco','obj','high'))
@@ -97,4 +104,4 @@ def render(tile_world,walk,water,owners,boxes,ids,oy,changed,radius=4):
         obj[r,c]=name_for('obj',pieces.get(('obj',r,c),[]))
         high[r,c]=name_for('high',pieces.get(('high',r,c),[]))
         if before!=tuple(tile_world[k][r,c]for k in('ground','deco','obj','high')):changed_cells+=1
-    return dict(tiles=new_tiles,entries={v['name']:v['entry']for v in new_entries.values()},cells=int(region.sum()),changedCells=changed_cells)
+    return dict(tiles=namer.tiles,entries=namer.entries,cells=int(region.sum()),changedCells=changed_cells)
