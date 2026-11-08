@@ -549,7 +549,7 @@ namespace PocketCaravan.EditorTools
                     var feed = UnityEngine.Object.FindAnyObjectByType<VeniceFeed>();
                     var museum = UnityEngine.Object.FindAnyObjectByType<Museum.Spot>();
                     report.AppendLine($"모이 주머니 {(feed != null ? "있음" : "없음")}, 전시실 {(museum != null ? "있음" : "없음")}, 날씨 {VeniceAtmosphere.Now}");
-                    if (feed != null) { int m0 = gm.Player.money; feed.Interact(PlayerController.Instance); report.AppendLine($"   모이 주기: 돈 {m0}→{gm.Player.money}, 오늘 함 {VeniceSave.DoneToday("feed")}"); }
+                    if (feed != null) { int m0 = gm.Player.money; feed.Interact(PlayerController.Instance); report.AppendLine($"   모이 주기: 돈 {m0}→{gm.Player.money}, 오늘 함 {VeniceFeed.FedToday}"); }
                     var snd = gm.GetComponent<VeniceSound>();
                     report.AppendLine($"베네치아 음악: {(snd != null ? "붙음" : "없음")}");
                     while (gm.Clock.day % 7 != 5) gm.Clock.day++;

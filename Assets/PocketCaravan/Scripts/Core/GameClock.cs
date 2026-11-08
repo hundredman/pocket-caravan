@@ -32,6 +32,11 @@ namespace PocketCaravan
         public float TotalHours => (day - 1) * 24f + minuteOfDay / 60f;
         /// <summary>내 의뢰 시간: 의뢰 기한·푹 쉼처럼 나에게만 흐르는 시간</summary>
         public float PlayHours => playHours;
+        /// <summary>
+        /// 2026-11-08 내 플레이 날짜 (PlayHours로 센 날, 1일째부터). "연속 며칠"처럼 접속하지 않은 동안 끊기면 안 되는 기록에 쓴다.
+        /// 세상 날짜(day)는 온라인에서 접속하지 않아도 흐르므로 연속 기록에는 맞지 않는다.
+        /// </summary>
+        public int PlayDay => Mathf.FloorToInt(Mathf.Max(0f, playHours) / 24f) + 1;
         public bool Shared => WorldClock.Active;
         public string Label => $"{day}일째 {Hour:00}:{(int)(minuteOfDay % 60):00}";
 
