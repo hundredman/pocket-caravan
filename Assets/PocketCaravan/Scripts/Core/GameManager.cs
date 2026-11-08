@@ -539,7 +539,7 @@ namespace PocketCaravan
             d.tradeActivity = Player.tradeActivity.Export();
             d.contracts.AddRange(Player.contracts);
             Quests.Export(d);
-            foreach (var m in markets.Values) d.markets.Add(m.Export());
+            foreach (var m in markets.Values) d.markets.Add(m.ExportForSave());
             d.boards.AddRange(Contracts.boards);
             d.traders.AddRange(Traders.traders);
             d.drops.AddRange(Drops);

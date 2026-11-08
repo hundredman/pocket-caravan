@@ -30,7 +30,7 @@ namespace PocketCaravan
         // 등급이 높을수록 적정 재고가 커서 많이 팔아도 값이 덜 떨어진다.
         float LevelMultiplier => 1f + 0.5f * (Level - 1);
 
-        public float Optimal(ItemData item) => town.OptimalFor(item) * LevelMultiplier;
+        public float Optimal(ItemData item) => town.OptimalFor(item) * LevelMultiplier * NetMarket.ScaleFor(town);
 
         public IEnumerable<ItemData> KnownItems => stock.Keys;
 
@@ -155,6 +155,20 @@ namespace PocketCaravan
             public float volume;
             public List<string> items = new List<string>();
             public List<float> stocks = new List<float>();
+        }
+
+        /// <summary>저장 파일용: 온라인 공유 장터 배율을 뺀 재고(차이는 그대로)로 남긴다. 혼자 하기로 불러와도 값이 튀지 않는다.</summary>
+        public Save ExportForSave()
+        {
+            float scale = NetMarket.ScaleFor(town);
+            if (scale == 1f) return Export();
+            var s = new Save { town = town.id, level = Level, volume = TradeVolume };
+            foreach (var kv in stock)
+            {
+                float opt = Optimal(kv.Key);
+                s.items.Add(kv.Key.id); s.stocks.Add(Mathf.Max(0f, kv.Value - opt + opt / scale));
+            }
+            return s;
         }
 
         public Save Export()

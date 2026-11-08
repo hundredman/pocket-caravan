@@ -122,6 +122,12 @@ const WORLD_EPOCH_MS = Date.UTC(2026, 10, 1), WORLD_SECONDS_PER_DAY = 360;
  */
 const MARKET_RECOVERY_PER_HOUR = 0.04, MARKET_KEEP_MIN = 0.01, MARKET_ITEMS_MAX = 2000;
 interface MarketDev { dev: number; at: number; }
+/**
+ * 공유 장터 크기 (2026-11-08): 사람이 많아도 한 사람이 값에 주는 영향이 비슷하게, 최근 1시간 동안 접속한 사람 수만큼 장터를 키운다.
+ * 배율 = 1 + (사람 − 1) / MARKET_SCALE_PER, 최대 MARKET_SCALE_MAX. 1시간 동안의 수라 잠깐 들어왔다 나가도 출렁이지 않는다.
+ * 게임은 공유 장터의 적정 재고에 이 배율을 곱한다(재고와의 차이는 그대로라 값이 튀지 않는다).
+ */
+const ACTIVE_WINDOW_MS = 60 * 60_000, MARKET_SCALE_PER = 3, MARKET_SCALE_MAX = 3;
 /** 세상 시간으로 now까지 줄어든 차이 */
 function decayedDev(m: MarketDev, now: number): number {
   const hours = Math.max(0, now - m.at) / 1000 / WORLD_SECONDS_PER_DAY * 24;
@@ -195,6 +201,9 @@ export class WorldRoom extends DurableObject<Env> {
   private lastGift = new Map<string, number>();
   /** "보낸 사람 번호:보낸 게임의 gid" → 받는 사람 답을 기다리는 선물. 방이 잠들면 지워진다(보낸 게임이 시간이 지나 돌려받는다) */
   private gifts = new Map<string, PendingGift>();
+  /** 공유 장터 크기용: 사람(계정·게임 키) → 마지막으로 접속해 있던 시각. 방이 잠들면 지워져도 된다(그때는 지금 접속자만 센다) */
+  private recent = new Map<string, number>();
+  private lastScale = 1;
   /** 오늘 사용량 (저장소와 USAGE_SAVE_MS마다 맞춘다) */
   private usage: Usage = { day: "", opens: 0, msgs: 0, admin: 0 };
   private usageSaved = 0;
@@ -295,10 +304,10 @@ export class WorldRoom extends DurableObject<Env> {
           account: !!me.acct, hasSave: !!acct?.save && !!me.acct, save: me.acct ? acct?.save ?? null : null,
           fullOk: true, extras: true, ...(me.acct && acct?.full ? { full: acct.full } : {}),
           clock: { now, epoch: WORLD_EPOCH_MS, secondsPerDay: WORLD_SECONDS_PER_DAY },
-          ...(msg.snap === true ? { marketOk: true, market: await this.marketNow(now) } : {}),
+          ...(msg.snap === true ? { marketOk: true, market: await this.marketNow(now), marketScale: this.seen(me, now) } : {}),
           ...(newPass ? { newPass: true } : {}),
         });
-        this.broadcast({ t: "online", online: this.count() }, (o) => o !== ws);
+        this.broadcast({ t: "online", online: this.count(), marketScale: this.marketScale(now) }, (o) => o !== ws);
         // 공유 장터 재고를 통째로 받은 게임은 지난 거래를 다시 받으면 두 번 더해진다
         if (msg.snap !== true) await this.replayTrades(ws, me, msg.since, seq, now);
         return;
@@ -496,6 +505,9 @@ export class WorldRoom extends DurableObject<Env> {
     }
     for (const [gid, g] of this.gifts)   // 받는 사람이 답이 없는 선물: 보낸 사람이 돌려받게 한다
       if (now - g.at > GIFT_WAIT_MS) { this.gifts.delete(gid); send(g.from, { t: "giftResult", gid: g.clientGid, ok: false, why: "받는 쪽이 답이 없어요", to: g.toName }); }
+    // 1시간이 지나 사람 수가 줄면 공유 장터 크기도 바꿔 알린다
+    const before = this.lastScale, scale = this.marketScale(now);
+    if (scale !== before) this.broadcast({ t: "online", online: this.count(), marketScale: scale }, () => true);
     await this.saveUsage(false);
     if (this.live().length > 0) await this.ctx.storage.setAlarm(Date.now() + SWEEP_MS);
     else await this.saveUsage(true);
@@ -766,6 +778,25 @@ export class WorldRoom extends DurableObject<Env> {
   }
 
   /** 들어온 사람이 아직 못 받은 남의 거래(30분 안)를 한 번에 보낸다 */
+  /** 이 사람이 지금 접속해 있음을 남기고 공유 장터 배율을 돌려준다 */
+  private seen(me: Player, now: number): number {
+    this.recent.set(me.acct || me.key || me.id, now);
+    return this.marketScale(now);
+  }
+
+  /** 지금 접속자 + 최근 1시간 안에 접속해 있던 사람 수로 정한 공유 장터 배율 */
+  private marketScale(now: number): number {
+    const people = new Set<string>();
+    for (const [key, at] of this.recent) {
+      if (now - at <= ACTIVE_WINDOW_MS) people.add(key);
+      else this.recent.delete(key);
+    }
+    for (const [, p] of this.live()) people.add(p.acct || p.key || p.id);
+    const scale = Math.min(MARKET_SCALE_MAX, 1 + (Math.max(1, people.size) - 1) / MARKET_SCALE_PER);
+    this.lastScale = Math.round(scale * 1000) / 1000;
+    return this.lastScale;
+  }
+
   /** 공유 장터 재고 차이를 지금 시각으로 줄여서 보낸다. 거의 0이 된 것은 지운다 */
   private async marketNow(now: number): Promise<{ town: string; item: string; dev: number }[]> {
     const market = (await this.ctx.storage.get<Record<string, MarketDev>>("market")) ?? {};
@@ -852,7 +883,8 @@ export class WorldRoom extends DurableObject<Env> {
       else if (g.from === ws) this.gifts.delete(gid);
     }
     if (me.map) this.toMap(me.map, { t: "leave", id: me.id }, ws);
-    this.broadcast({ t: "online", online: this.count(ws) }, (o) => o !== ws);
+    this.seen(me, Date.now());
+    this.broadcast({ t: "online", online: this.count(ws), marketScale: this.marketScale(Date.now()) }, (o) => o !== ws);
   }
 
   /** 살아 있는 접속 (서버가 닫는 중인 것은 뺀다) */

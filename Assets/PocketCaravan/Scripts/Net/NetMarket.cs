@@ -40,8 +40,33 @@ namespace PocketCaravan
 
         /// <summary>이번 접속에서 서버가 공유 장터 재고를 통째로 줬다 (11/08). 예전 서버면 false: 지난 거래를 다시 받아 더한다.</summary>
         public static bool ServerShared { get; private set; }
+        /// <summary>
+        /// 공유 장터 크기 배율 (11/08): 최근 1시간 접속한 사람이 많으면 서버가 키운다(1~3). 공유 장터의 적정 재고에 곱한다.
+        /// 사람이 많아도 한 사람의 거래가 값에 주는 영향이 비슷하다. 혼자 하기·예전 서버는 1.
+        /// </summary>
+        public static float Scale { get; private set; } = 1f;
+        public static float ScaleFor(TownData town) => IsShared(town) ? Scale : 1f;
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void ResetShared() => ServerShared = false;
+        static void ResetShared() { ServerShared = false; Scale = 1f; }
+
+        /// <summary>배율을 바꾼다. 적정 재고와의 차이는 그대로 두어 값이 갑자기 튀지 않게 한다.</summary>
+        static void ChangeScale(float scale)
+        {
+            scale = Mathf.Clamp(float.IsNaN(scale) ? 1f : scale, 1f, 10f);
+            if (Mathf.Approximately(scale, Scale)) return;
+            var gm = GameManager.I;
+            var shift = new List<(MarketState market, ItemData item, float dev)>();
+            if (gm != null && gm.Db != null)
+                foreach (var id in SharedTowns)
+                {
+                    var town = gm.Db.towns.Find(t => t != null && t.id == id);
+                    if (town == null) continue;
+                    var market = gm.GetMarket(town);
+                    foreach (var it in market.KnownItems) shift.Add((market, it, market.Stock(it) - market.Optimal(it)));
+                }
+            Scale = scale;
+            foreach (var (market, item, dev) in shift) market.SetStock(item, market.Optimal(item) + dev);
+        }
 
         // ---------- 받은 마지막 거래 번호 (서버 주소마다) ----------
 
@@ -93,6 +118,8 @@ namespace PocketCaravan
 
         void Update()
         {
+            // 끊겨서 혼자 하기로 돌아가면 공유 장터도 원래 크기로 (잠깐 끊겨 다시 붙는 중에는 그대로)
+            if (ServerShared && !WorldClock.Active) { ChangeScale(1f); ServerShared = false; }
             if (pending.Count == 0 || Time.unscaledTime < nextFlush) return;
             if (Online)
                 foreach (var p in pending.Values)
@@ -109,12 +136,15 @@ namespace PocketCaravan
                 case "welcome":
                     Saw(m.seq);
                     ServerShared = m.marketOk;
-                    if (m.marketOk) ApplySnapshot(m.market);
+                    if (m.marketOk) { ChangeScale(m.marketScale > 0f ? m.marketScale : 1f); ApplySnapshot(m.market); }
                     if (!toldTowns)
                     {
                         toldTowns = true;
                         NetChat.System($"공유 장터: {TownList()} · 여기서 사고팔면 접속한 모두의 값이 같이 바뀌어요");
                     }
+                    break;
+                case "online":
+                    if (ServerShared && m.marketScale > 0f) ChangeScale(m.marketScale);
                     break;
                 case "trade":
                     Saw(m.seq);

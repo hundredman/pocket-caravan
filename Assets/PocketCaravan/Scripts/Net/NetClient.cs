@@ -81,6 +81,8 @@ namespace PocketCaravan
             // 11/08 공유 장터 재고: marketOk = 이 서버가 재고를 들고 있다, market = 물건마다 적정 재고와의 차이
             public bool marketOk;
             public List<MarketRow> market;
+            // 공유 장터 크기 배율 (welcome·online). 0이면 예전 서버
+            public float marketScale;
         }
 
         [Serializable]
