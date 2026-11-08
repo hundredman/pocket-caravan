@@ -153,5 +153,10 @@ namespace PocketCaravan
         public static void Clear(string id) => mods.Remove(id);
         public static float Get(string id) => mods.TryGetValue(id, out var v) ? v : 1f;
         public static float Product { get { float m = 1f; foreach (var v in mods.Values) m *= v; return m; } }
+
+        /// <summary>11/08 공통화 3단계 (팀 기준): 약한 궂은 날씨(비·함박눈) 걸음 배율</summary>
+        public const float LightWeather = .95f;
+        /// <summary>11/08 공통화 3단계 (팀 기준): 센 궂은 날씨(장맛비·눈보라·모래바람) 걸음 배율</summary>
+        public const float HeavyWeather = .85f;
     }
 }

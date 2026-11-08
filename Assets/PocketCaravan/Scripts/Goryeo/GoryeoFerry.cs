@@ -50,7 +50,7 @@ namespace PocketCaravan
             var choices=new List<DialogueUI.Choice>{new DialogueUI.Choice("이야기하기",()=>{try{telling=npc;npc.Interact(player);}finally{telling=null;}})};
             foreach(var target in config.ports)if(Route(port.mapId,target.mapId)){string id=target.mapId;choices.Add(new DialogueUI.Choice(target.name+"로",()=>{var error=TryStart(npc,player,id);if(error!=null)DialogueUI.Show(npc.DisplayName,error);}));}
             choices.Add(new DialogueUI.Choice("다음에",null));
-            DialogueUI.Show(npc.DisplayName,"뱃삯 "+config.fare+"냥 · "+config.hours.ToString("0.#")+"시간 걸리오. 짐과 수레도 함께 싣소.\n물길 이야기를 들려줄까, 아니면 배를 타겠소?",choices.ToArray());return true;
+            DialogueUI.Show(npc.DisplayName,"뱃삯 "+BoatFare.For(config.hours)+"냥 · "+config.hours.ToString("0.#")+"시간 걸리오. 짐과 수레도 함께 싣소.\n물길 이야기를 들려줄까, 아니면 배를 타겠소?",choices.ToArray());return true;
         }
         public static string TryStart(TalkNpc npc,PlayerController actor,string destination)
         {
@@ -59,10 +59,10 @@ namespace PocketCaravan
             if(from!=null&&to!=null&&!Route(from.mapId,to.mapId))return "그 나루로 가는 배는 없소. 예성 나루를 거쳐 가시오.";
             if(from==null||to==null||from==to||!Matches(npc,map,from)||actor==null||actor!=PlayerController.Instance||Vector2.Distance(actor.transform.position,npc.transform.position)>actor.talkRange+.01f)return "사공 가까이에서 목적지를 골라 주시오.";
             if(pending!=null||gm.IsTravelling||UIState.Blocking)return "지금은 이동할 수 없소.";
-            if(gm.Player.money<config.fare)return "뱃삯 "+config.fare+"냥이 필요하오.";
+            if(gm.Player.money<BoatFare.For(config.hours))return "뱃삯 "+BoatFare.For(config.hours)+"냥이 필요하오.";
             var info=WorldIndex.Get()?.Map(to.mapId);if(info==null||info.height!=to.height||!Application.CanStreamedLevelBeLoaded(to.mapId))return "그 나루로는 지금 출항할 수 없소.";
             if(!review&&gm.AutosaveEnabled&&!gm.SaveNow())return "진행 상황을 저장하지 못해 출항하지 않았소. 잠시 뒤 다시 부탁하오.";
-            pending=new Voyage{from=from.mapId,to=to.mapId,fare=config.fare,hours=config.hours,owner=gm,slot=SaveSystem.FileName};LastError="";
+            pending=new Voyage{from=from.mapId,to=to.mapId,fare=BoatFare.For(config.hours),hours=config.hours,owner=gm,slot=SaveSystem.FileName};LastError="";
             try{gm.TravelTo(to.mapId,SpawnId(to.mapId),0,Vector2Int.right);}catch(Exception){pending=null;return "출항하지 못했소. 뱃삯은 받지 않았소.";}
             return null;
         }

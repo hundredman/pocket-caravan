@@ -6,7 +6,7 @@ namespace PocketCaravan
     /// 북유럽 이동 (10/24): 날씨와 순록 썰매가 걷는 속도에 주는 영향, 그리고 썰매 모습·방울 소리·눈보라 자국.
     /// 2026-11-08 (은샘, 기우 님께 전달): walkSpeed를 직접 바꾸지 않고 공용 SpeedMods "north_travel"에 배율만 넣는다.
     /// (예전엔 매 프레임 walkSpeed를 덮어써서 다른 지역 배율 — 베네치아 아쿠아 알타 — 이 지워졌다.)
-    /// - 걷기: 함박눈 0.92배, 눈보라 0.8배 (중앙 구역은 날씨 자체가 약해짐)
+    /// - 걷기: 함박눈 0.95배, 눈보라 0.85배 (11/08 팀 기준 SpeedMods.LightWeather/HeavyWeather. 중앙 구역은 날씨 자체가 약해짐)
     /// - 순록 썰매(north_sled): 함박눈 1배, 눈보라 0.94배 → "눈보라 속 순록 썰매". 눈 없는 땅에선 느려짐
     ///   (중앙 가운데 줄 0.9배, 북문 큰길 0.8배, 다른 나라 0.7배). 길 등급별 속도는 VehicleData가 맡음 (눈밭 1.45배)
     /// - 온천에서 몸을 녹이면(NorthSave "warm") 몇 시간 동안 날씨 영향 없음
@@ -51,7 +51,7 @@ namespace PocketCaravan
             {
                 var w = NorthAtmosphere.Shown;
                 if (OnSled) f *= w == NorthAtmosphere.Weather.Blizzard ? 0.94f : 1f;
-                else f *= w == NorthAtmosphere.Weather.Blizzard ? 0.8f : w == NorthAtmosphere.Weather.Heavy ? 0.92f : 1f;
+                else f *= w == NorthAtmosphere.Weather.Blizzard ? SpeedMods.HeavyWeather : w == NorthAtmosphere.Weather.Heavy ? SpeedMods.LightWeather : 1f;   // 11/08 팀 기준 (전 눈보라 .8·함박눈 .92)
             }
             if (OnSled)
             {

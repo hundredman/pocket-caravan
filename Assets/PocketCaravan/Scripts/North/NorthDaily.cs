@@ -328,7 +328,9 @@ namespace PocketCaravan
 
         // ---------------- 나룻배 ----------------
 
-        const int FerryFare = 12;
+        // 11/08 공용 뱃삯 기준: 피오르 나룻배는 2시간 (의뢰 시간에서 씀), 뱃삯 4 + 4×2 = 12냥 (전과 같음)
+        public const float FerryHours = 2f;
+        static int FerryFare => BoatFare.For(FerryHours);
 
         void Ferry()
         {

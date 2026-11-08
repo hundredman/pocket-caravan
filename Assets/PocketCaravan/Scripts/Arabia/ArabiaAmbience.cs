@@ -54,6 +54,7 @@ namespace PocketCaravan
         void OnDestroy()
         {
             if (Current == this) Current = null;
+            SpeedMods.Clear("arabia_sandstorm");
             SetPetals(true);
         }
 
@@ -222,6 +223,8 @@ namespace PocketCaravan
                 if (gustTime >= gustLen) gusting = false;
             }
             gustLevel = target;
+            // 11/08 팀 기준 (은샘, 기우 님께 전달): 모래바람이 화면에 보이는 동안은 센 궂은 날씨 걸음 배율
+            SpeedMods.Set("arabia_sandstorm", gustLevel > 0.3f ? SpeedMods.HeavyWeather : 1f);
             var view = View(1f);
             // 화면을 덮는 모래빛
             if (haze == null) { haze = MakeSr("sand_haze", Art.White, OrderHaze); }

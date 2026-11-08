@@ -59,6 +59,7 @@ namespace PocketCaravan
         {
             if(!Sitting(pc))return false;
             if(locked || move.sqrMagnitude>.01f || interact || !current.Safe(pc))current.Stand();
+            else SeatRest.Tick(pc,Time.deltaTime);   // 11/08 공용 앉기 기본 효과 (다른 지역 벤치·그늘·모닥불과 같은 3배)
             return true;
         }
         public void Stand()

@@ -47,7 +47,7 @@ namespace PocketCaravan
         }
 
         void OnEnable() { inst = this; SceneManager.sceneLoaded += OnLoaded; Build(); }
-        void OnDisable() { SceneManager.sceneLoaded -= OnLoaded; SpeedMods.Clear("venice_acqua_alta"); ShowFlood(false); if (root != null) Destroy(root.gameObject); }
+        void OnDisable() { SceneManager.sceneLoaded -= OnLoaded; SpeedMods.Clear("venice_acqua_alta"); SpeedMods.Clear("venice_weather"); ShowFlood(false); if (root != null) Destroy(root.gameObject); }
         void OnLoaded(Scene s, LoadSceneMode m) => Build();
 
         void Build()
@@ -76,6 +76,8 @@ namespace PocketCaravan
                 bool wet = inVenice && AcquaAlta && floodCells.Contains(pc.Motor.Cell);
                 // 11/08 (은샘, 윤채 님께 전달): walkSpeed 대신 공용 SpeedMods에 넣는다 (북유럽 NorthTravel이 덮어써서 안 먹던 것 고침)
                 SpeedMods.Set("venice_acqua_alta", wet ? .8f : 1f);
+                // 11/08 팀 기준: 비는 약한 궂은 날씨 (안개는 걸음에 영향 없음)
+                SpeedMods.Set("venice_weather", inVenice && VeniceAtmosphere.Now == VeniceAtmosphere.Weather.Rain ? SpeedMods.LightWeather : 1f);
             }
             if (root == null) return;
             bool alta = AcquaAlta && floodCells.Count > 0;

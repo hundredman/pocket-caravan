@@ -60,7 +60,9 @@ namespace PocketCaravan
 
         static void Arrive(string destMap, Vector2Int face)
         {
-            if (GameManager.I != null) GameManager.I.TravelTo(destMap, "ferry", 0f, face);
+            if (GameManager.I == null) return;
+            GameManager.I.Clock.Advance(NorthDaily.FerryHours);   // 11/08 공용 기준: 배 타는 시간도 의뢰 시간에서 쓴다 (전엔 0)
+            GameManager.I.TravelTo(destMap, "ferry", 0f, face);
         }
 
         bool Fresh => Time.frameCount - startFrame < 2;   // 시작한 Space가 바로 노 젓기로 먹지 않게

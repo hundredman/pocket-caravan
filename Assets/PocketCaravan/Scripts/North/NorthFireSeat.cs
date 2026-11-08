@@ -125,7 +125,7 @@ namespace PocketCaravan
             sitT += dt;
             if (gm != null)
             {
-                gm.Player.stamina = Mathf.Min(1f, gm.Player.stamina + dt * 0.12f);
+                SeatRest.Tick(PlayerController.Instance, dt);   // 11/08 공용 앉기 기본 효과 (전 초당 0.12 → 다른 지역과 같은 3배)
                 if (!warmed && sitT > 3f)
                 {
                     warmed = true;
