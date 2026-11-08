@@ -10,5 +10,9 @@
     "bindings": [{ "name": "WORLD", "class_name": "WorldRoom" }]
   },
   // 무료 플랜은 SQLite 저장 방식 Durable Object만 쓸 수 있다
-  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["WorldRoom"] }]
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["WorldRoom"] }],
+  // 자동 백업 (2026-11-08): 하루 한 번 세계 방 저장소를 통째로 이 KV에 남긴다 (7일치). 무료 KV는 하루 쓰기 1,000번·값 하나 25MB까지
+  "kv_namespaces": [{ "binding": "BACKUPS", "id": "2d67484a647f457db6e0b57e6cb1fb26" }],
+  // 매일 UTC 18:00 = 한국 새벽 3시 (src/index.ts scheduled)
+  "triggers": { "crons": ["0 18 * * *"] }
 }
