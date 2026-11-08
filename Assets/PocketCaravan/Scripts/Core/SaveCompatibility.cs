@@ -70,6 +70,7 @@ namespace PocketCaravan
                 Require(Finite(contract.weight) && contract.weight>0 && contract.reward>=0 && Finite(contract.condition) && contract.condition>=0 && contract.condition<=1,"맡은 배달의 화물/보수가 올바르지 않습니다.");
                 Require(Finite(contract.hours) && Finite(contract.acceptedAt) && Finite(contract.deadline) && Finite(contract.finalDeadline),"맡은 배달의 기한이 올바르지 않습니다.");
             }
+            Require(Finite(data.playHours) && data.playHours>=0,"의뢰 시간 기록이 올바르지 않습니다.");   // 0 = 2026-11-08 이전 저장
             // Unknown storedCargo/drop IDs intentionally remain recoverable records under existing migration rules.
         }
         static bool Finite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);

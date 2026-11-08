@@ -20,7 +20,7 @@ namespace PocketCaravan
             if (!Write(gm)) return false;
             var p=gm.Player;
             int money=p.money, credit=p.credit, day=gm.Clock.day, nextId=gm.Contracts.nextId;
-            float minute=gm.Clock.minuteOfDay;
+            float minute=gm.Clock.minuteOfDay; float playHours=gm.Clock.playHours;
             var reputation=p.reputation.Export(); var activity=p.tradeActivity.Export();
             var quests=new SaveData(); gm.Quests.Export(quests);
             var contracts=new List<Contract>(p.contracts);
@@ -50,7 +50,7 @@ namespace PocketCaravan
             gm.Contracts.boards.Clear(); gm.Contracts.boards.AddRange(boards); gm.Contracts.nextId=nextId;
             foreach(var c in originals) JsonUtility.FromJsonOverwrite(c.Value,c.Key);
             foreach(var b in boards) { b.list.Clear(); b.list.AddRange(boardLists[b]); b.lastAdded=added[b]; }
-            gm.Clock.day=day; gm.Clock.minuteOfDay=minute;
+            gm.Clock.day=day; gm.Clock.minuteOfDay=minute; gm.Clock.playHours=playHours;
             foreach(var m in markets) m.Key.Import(m.Value,gm.ItemById);
             gm.Traders.traders.Clear(); gm.Traders.traders.AddRange(traders);
             foreach(var t in traderStates) JsonUtility.FromJsonOverwrite(t.Value,t.Key);

@@ -139,7 +139,7 @@ namespace PocketCaravan
                 string denial = FacilityAccess.Denial(town, f, p);
                 GUILayout.Label($"{f.displayName} · 거점 {f.minTier}등급 / 신용 {f.minCredit}", CuteUI.PaperRich);
                 GUILayout.BeginHorizontal();
-                GUILayout.Label(denial ?? (f.kind == FacilityKind.Warehouse ? $"보관 한도 {f.storageCapacity:0} · 일반 교역품" : f.kind == FacilityKind.Rest ? $"{Inn.Price}냥 · {Inn.SleepHours:0}시간 자고 체력 가득 · {Inn.BuffHours:0}시간 덜 지침" : "주변 길과 거래처 안내"), CuteUI.PaperSmall);
+                GUILayout.Label(denial ?? (f.kind == FacilityKind.Warehouse ? $"보관 한도 {f.storageCapacity:0} · 일반 교역품" : f.kind == FacilityKind.Rest ? (GameManager.I != null && GameManager.I.Clock.Shared ? $"{Inn.Price}냥 · 푹 쉬고 {Inn.BuffHours:0}시간 덜 지침" : $"{Inn.Price}냥 · 자고 체력 가득 · {Inn.BuffHours:0}시간 덜 지침") : "주변 길과 거래처 안내"), CuteUI.PaperSmall);
                 GUI.enabled = denial == null;
                 if (GUILayout.Button("이용", CuteUI.PaperButton, GUILayout.Width(52))) Use(f);
                 GUI.enabled = true; GUILayout.EndHorizontal();

@@ -76,7 +76,12 @@ namespace PocketCaravan
             public float cost;
             public bool ok;
             public List<Board> boards;
+            // 11/08 공용 세상 시계: welcome에 서버 시각(now)·기준 시각(epoch, ms)·하루 길이(secondsPerDay)
+            public ClockInfo clock;
         }
+
+        [Serializable]
+        public class ClockInfo { public long now, epoch; public float secondsPerDay; }
 
         /// <summary>순위표 한 판 (id: "money" 부자 상인 · "gondola" 곤돌라 경주 …)</summary>
         [Serializable]
@@ -273,6 +278,7 @@ namespace PocketCaravan
         public void Disconnect()
         {
             wantOnline = false;
+            WorldClock.Leave();   // 혼자 하기: 세상 시간은 지금 값에서 이 컴퓨터로 이어 흐른다
             retries = 0;
             Drop(null);
         }
@@ -285,7 +291,7 @@ namespace PocketCaravan
             bool final = code == 4001 || code == 4002 || code == 4004 || code == 4005 || code == 4006;
             if (final) wantOnline = false;
             Drop(reason);
-            if (!wantOnline) { retries = 0; return; }
+            if (!wantOnline) { retries = 0; WorldClock.Leave(); return; }   // 잠깐 끊겨 다시 붙는 동안은 세상 시계를 그대로 쓴다
             retries++;
             Status = State.Waiting;
             retryAt = Time.unscaledTime + Mathf.Min(MaxRetryDelay, 2f * (1 << Mathf.Min(retries - 1, 5)));
@@ -483,6 +489,8 @@ namespace PocketCaravan
             {
                 case "welcome":
                     Status = State.Online;
+                    // 공용 세상 시계: 예전 서버(clock 없음)면 이 컴퓨터의 세계 표준시로 같은 계산을 한다
+                    WorldClock.Join(msg.clock != null ? msg.clock.now : 0, msg.clock != null ? msg.clock.epoch : 0, msg.clock != null ? msg.clock.secondsPerDay : 0);
                     MyId = msg.id;
                     MyName = string.IsNullOrEmpty(msg.name) ? msg.id : msg.name;
                     IsAccount = msg.account;

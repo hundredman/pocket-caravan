@@ -109,7 +109,12 @@ const AUTO_KEEP = 7, AUTO_PART = 20 * 1024 * 1024;
 /** 짐 저장: 물건 종류 수 */
 const SAVE_ITEMS = 200;
 /** 거래 기록: 남겨 두는 수 · 새로 들어온 사람에게 다시 보내 주는 기간 */
-const TRADE_KEEP = 300, TRADE_REPLAY_MS = 30 * 60_000;
+const TRADE_KEEP = 300, TRADE_REPLAY_MS = 24 * 60 * 60_000;   // 2026-11-08: 접속하지 않은 동안의 시세도 움직이게 하루치(최대 300건)
+/**
+ * 공용 세상 시계 (2026-11-08 팀 승인 규칙): 모두 같은 게임 시간. 서버는 기준 시각만 알려 주고, 시계는 각 게임이 계산한다.
+ * 게임 시간 = 아침 8시 1일째 + (지금 − WORLD_EPOCH_MS) × 하루/현실 WORLD_SECONDS_PER_DAY초. 값을 바꾸면 모두의 날짜가 바뀐다.
+ */
+const WORLD_EPOCH_MS = Date.UTC(2026, 10, 1), WORLD_SECONDS_PER_DAY = 360;
 /** 리액션 최소 간격 */
 const EMOTE_GAP_MS = 400;
 /** 관리자 알림 글자 수 */
@@ -277,6 +282,7 @@ export class WorldRoom extends DurableObject<Env> {
           t: "welcome", v: PROTOCOL, id: me.id, name: me.name, online: this.count(), seq,
           account: !!me.acct, hasSave: !!acct?.save && !!me.acct, save: me.acct ? acct?.save ?? null : null,
           fullOk: true, extras: true, ...(me.acct && acct?.full ? { full: acct.full } : {}),
+          clock: { now, epoch: WORLD_EPOCH_MS, secondsPerDay: WORLD_SECONDS_PER_DAY },
           ...(newPass ? { newPass: true } : {}),
         });
         this.broadcast({ t: "online", online: this.count() }, (o) => o !== ws);
