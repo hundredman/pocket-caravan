@@ -41,7 +41,7 @@ namespace PocketCaravan
         // 2026-11-08 은샘: 화면 안의 사람(NPC)은 거리와 상관없이 늘 이름표를 띄운다(베네치아·공용 이름표와 같은 규칙).
         // 장터 상인·객주 주인·낚시하는 아이처럼 사람 모습이 있으면 사람으로 본다. 우물·게시판·자리·공방·이정표 같은 장소만 가까이(4칸)에서.
         public static bool IsPerson(Interactable it)=>it!=null&&it.GetComponentInChildren<CharacterAnimator>()!=null;
-        public static bool IsPlace(Interactable it)=>!IsPerson(it)&&(it is TownMarket||it is ContractBoard||it is WorkshopSpot||it is GoryeoDailyActivity||it is GoryeoPastime||it is GoryeoSeat||Inn.IsHost(it)||it is TalkNpc);
+        public static bool IsPlace(Interactable it)=>!IsPerson(it)&&(it is TownMarket||it is ContractBoard||it is WorkshopSpot||it is GoryeoDailyActivity||it is GoryeoPastime||it is GoryeoSeat||it is GoryeoFishingSpot||Inn.IsHost(it)||it is TalkNpc);
         public static string LabelFor(Interactable it,Vector2 feet)
         {
             if(it==null)return "";if(IsPlace(it)&&!Nearby(feet,it.transform.position))return "";

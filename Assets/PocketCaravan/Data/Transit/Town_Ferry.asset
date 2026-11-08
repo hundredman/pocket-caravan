@@ -15,7 +15,10 @@ MonoBehaviour:
   id: transit_ferry
   displayName: "\uBC84\uB4E4\uB098\uB8E8 \uB9C8\uC744"
   region: {fileID: 11400000, guid: 33ac5d5fe768644189807a1d29eda36b, type: 2}
-  journeyNote: "\uac15\uacfc \ubc14\ub2f7\uae38\uc774 \ub9cc\ub098\ub294 \ud3ec\uad6c\uc785\ub2c8\ub2e4. \ub9d0\ub9b0 \uc0dd\uc120\u00b7\uc18c\uae08\uacfc \uace0\ub824\uc5d0\uc11c \uac00\uc838\uc628 \uc9d0\uc744 \ube44\uad50\ud574 \ubcf4\uc138\uc694. \uadc0\ud658 \uc9d0\uc740 \ud604\uc7ac \uc2dc\uc138\ub97c \ubcf4\uace0 \uace0\ub974\uc138\uc694."
+  journeyNote: "\uAC15\uACFC \uBC14\uB2F7\uAE38\uC774 \uB9CC\uB098\uB294 \uD3EC\uAD6C\uC785\uB2C8\uB2E4.
+    \uB9D0\uB9B0 \uC0DD\uC120\xB7\uC18C\uAE08\uACFC \uACE0\uB824\uC5D0\uC11C \uAC00\uC838\uC628
+    \uC9D0\uC744 \uBE44\uAD50\uD574 \uBCF4\uC138\uC694. \uADC0\uD658 \uC9D0\uC740
+    \uD604\uC7AC \uC2DC\uC138\uB97C \uBCF4\uACE0 \uACE0\uB974\uC138\uC694."
   worldCoord: {x: 8, y: 0}
   startLevel: 1
   settlementTier: 2
@@ -37,20 +40,37 @@ MonoBehaviour:
       \uC11C\uCABD \uCD08\uC6D0 \uC9C4\uC785\uB85C\uB97C \uC9C0\uB098\uBA74 \uB300\uB959
       \uB0B4\uB959 \uAE38\uBAA9\uC785\uB2C8\uB2E4. \uACE0\uB824 \uBC18\uB3C4\uB85C
       \uB3CC\uC544\uAC00\uB824\uBA74 \uB3D9\uCABD \uAE38\uC744 \uB530\uB77C \uC1A1\uC545
-      \uC0B0\uB85D\uC744 \uACBD\uC720\uD558\uC138\uC694. \uB2E4\uB978 \uBB38\uBA85\uC73C\uB85C \uAC00\uB294 \uAD50\uC5ED\uB85C\uB294 \uC11C\uCABD \uB0B4\uB959 \uAD50\uC5ED \uAE38\uBAA9\uC5D0\uC11C \uC774\uC5B4\uC9D1\uB2C8\uB2E4."
+      \uC0B0\uB85D\uC744 \uACBD\uC720\uD558\uC138\uC694. \uB2E4\uB978 \uBB38\uBA85\uC73C\uB85C
+      \uAC00\uB294 \uAD50\uC5ED\uB85C\uB294 \uC11C\uCABD \uB0B4\uB959 \uAD50\uC5ED
+      \uAE38\uBAA9\uC5D0\uC11C \uC774\uC5B4\uC9D1\uB2C8\uB2E4."
     storageCapacity: 120
   stock:
   - item: {fileID: 11400000, guid: be3a5de9ae7594a3389e4078a55c7e19, type: 2}
     optimal: 48
+    localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: 432a10a42612648bcba79fd3b0f4b7a7, type: 2}
     optimal: 64
+    localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: 9b0a33b14044448d8962b7818d9d0df6, type: 2}
     optimal: 30
+    localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: 26670207d8df843b19235b8d81286a8d, type: 2}
     optimal: 24
+    localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: c7b553013268140eca99e3276caecd4f, type: 2}
     optimal: 12
+    localPriceMultiplier: 1
   - item: {fileID: 11400000, guid: cb00db234c4f1496797b7984a9849509, type: 2}
     optimal: 14
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 2e26417d801524770afb13785b65a3ed, type: 2}
+    optimal: 6
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 617c288469c9546caab06680f4721faa, type: 2}
+    optimal: 3
+    localPriceMultiplier: 1
+  - item: {fileID: 11400000, guid: 13eb26ad1fc164c15846a13c31b15cb5, type: 2}
+    optimal: 1
+    localPriceMultiplier: 1
   defaultOptimal: 3
   vehiclesForSale: []
