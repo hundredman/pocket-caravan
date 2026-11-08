@@ -82,6 +82,11 @@ class R2SafetyChecks(unittest.TestCase):
                     new,old=change['new'].encode(),change['old'].encode()
                     self.assertEqual(data.count(new),1,name+' exact approved fishing stock')
                     data=data.replace(new,old,1)
+                # 11/08 고려 퀘스트 정리: 승인된 새 파일이면 예전 내용으로 되돌려 비교한다.
+                quests=json.loads((OUT/'goryeo-quest-1108.json').read_text())['files']
+                if name in quests:
+                    self.assertEqual(hashlib.sha256(data).hexdigest(),quests[name]['newSha256'],name+' approved 11/08 quest edit')
+                    data=quests[name]['old'].encode()
                 self.assertEqual(hashlib.sha256(data).hexdigest(),digest,name)
         frozen=OUT/'LegacyMarketState.cs.txt'
         self.assertEqual(hashlib.sha256(frozen.read_bytes()).hexdigest(),manifest['files']['Assets/PocketCaravan/Scripts/Economy/MarketState.cs'])
