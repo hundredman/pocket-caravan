@@ -222,9 +222,9 @@ NPC 상인 넷(쇠돌 · 막순 · 개똥 · 언년)도 같은 규칙으로 사�
 
 | 알고 싶은 것 | 문서 |
 |---|---|
-| 확정 방향(아트, 에셋 규칙, 세계 면적, 고려 구조) | [Docs/Direction.md](Docs/Direction.md) |
-| 할 일과 결정 대기 | [Docs/Plan.md](Docs/Plan.md) |
-| 지금 구현된 것 | [Docs/CurrentState.md](Docs/CurrentState.md) |
+| 확정 방향(아트, 에셋 규칙, 세계 면적, 고려 구조) | [Docs/Direction.md](https://github.com/hundredman/pocket-caravan/blob/integration/Docs/Direction.md) |
+| 할 일과 결정 대기 | [Docs/Plan.md](https://github.com/hundredman/pocket-caravan/blob/integration/Docs/Plan.md) |
+| 지금 구현된 것 | [Docs/CurrentState.md](https://github.com/hundredman/pocket-caravan/blob/integration/Docs/CurrentState.md) |
 | 문서 전체 목록 | [Docs/README.md](Docs/README.md) |
 
 > 2026-10-24 기준으로 고려·중앙 대륙 동쪽의 맵과 아트를 새 방향에 맞춰 다시 만드는 중이다. 지금 맵과 그림은 이전 버전이다.
