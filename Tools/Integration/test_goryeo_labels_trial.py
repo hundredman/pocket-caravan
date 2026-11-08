@@ -27,5 +27,5 @@ class LabelsTrial(unittest.TestCase):
   start='            // 3) 퀘스트 길 안내';end='        static Vector2 ToGui'
   own_guide=code[code.index(start):code.index(end)]
   common_guide=common[common.index(start):common.index(end)]
-  self.assertEqual(own_guide,common_guide.replace('                Outlined(new Rect((UIStyle.VirtualWidth - gw) / 2, UIStyle.VirtualHeight - 40, gw, 14)', '                if (!GoryeoIntro.Showing)\n                    Outlined(new Rect((UIStyle.VirtualWidth - gw) / 2, UIStyle.VirtualHeight - 40, gw, 14)'))
+  self.assertEqual(own_guide,common_guide.replace('                Outlined(new Rect((UIStyle.VirtualWidth - gw) / 2, HUD.BottomLine(10, 14), gw, 14)', '                if (!GoryeoIntro.Showing)\n                    Outlined(new Rect((UIStyle.VirtualWidth - gw) / 2, HUD.BottomLine(10, 14), gw, 14)'))
 if __name__=='__main__':unittest.main()

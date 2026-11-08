@@ -4,7 +4,9 @@
  * - GET /ws  : 게임 접속(WebSocket). 지금은 세계 방 하나("world")로 모두 보낸다.
  * - /admin/… : 관리 도구 (2026-11-05). "Authorization: Bearer <ADMIN_KEY>"가 맞을 때만 세계 방으로 보낸다.
  *              ADMIN_KEY는 올린 서버는 `npx wrangler secret put ADMIN_KEY`, 내 컴퓨터는 Server/.dev.vars에 둔다.
- *              없으면 관리 기능이 꺼진다. 쓰는 법은 tools/admin.mjs, 요청 목록은 src/world.ts 9단계.
+ *              없으면 관리 기능이 꺼진다. 쓰는 법은 tools/admin.mjs, 요청 목록은 src/world.ts 9단계부터.
+ * - scheduled: 매일 한국 새벽 3시(wrangler.jsonc triggers) 세계 방에 자동 백업을 시킨다 (2026-11-08, KV BACKUPS에 7일치).
+ *              실패하면 Cloudflare 대시보드의 Worker → Cron 기록에 남는다.
  * 나중에 사람이 늘면 맵마다 방을 나눈다(idFromName(mapId)).
  * 2026-10-30: 누군가 계속 접속해 있으면 방이 쉬지 않아 새로 올린 코드가 반영되지 않았다.
  *   그래서 방 이름을 "world-2"로 옮기고(예전 "world" 방은 남은 사람이 나가면 저절로 꺼진다),
@@ -19,6 +21,8 @@ export interface Env {
   VERSION: WorkerVersionMetadata;
   /** 관리 키 (16자 이상). 없으면 관리 기능이 꺼진다 */
   ADMIN_KEY?: string;
+  /** 자동 백업을 두는 KV */
+  BACKUPS?: KVNamespace;
 }
 
 /** 세계 방 이름 */
@@ -63,6 +67,19 @@ export default {
       return new Response("Pocket Caravan server OK");
     }
     return new Response("Not found", { status: 404 });
+  },
+
+  /** 자동 백업 (매일 한 번) */
+  async scheduled(_event: ScheduledController, env: Env): Promise<void> {
+    const make = () => new Request("https://world/cron/backup", { method: "POST", headers: { "x-pc-version": env.VERSION?.timestamp ?? "" } });
+    const id = env.WORLD.idFromName(ROOM);
+    let res: Response;
+    try {
+      res = await env.WORLD.get(id).fetch(make());
+    } catch {
+      res = await env.WORLD.get(id).fetch(make());
+    }
+    if (!res.ok) throw new Error(`자동 백업 실패 (${res.status}): ${await res.text()}`);
   },
 } satisfies ExportedHandler<Env>;
 

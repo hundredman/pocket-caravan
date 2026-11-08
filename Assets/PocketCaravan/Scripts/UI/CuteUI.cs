@@ -728,18 +728,40 @@ namespace PocketCaravan
         }
 
         // ---------------- 위 가운데 줄 (할 일·다음 이야기) ----------------
+        /// <summary>위 가운데 알약(할 일 줄 · 다음 이야기) 아래 첫 빈 자리의 y. 지역 첫 안내 같은 알약은 여기에 TopPill로 그린다 (11/08)</summary>
+        public static float TopFree => 6f + (QuestTracker.LineVisible ? 24f : 0f) + (StoryGuide.Showing ? 24f : 0f);
+
+        static readonly Dictionary<int, (int frame, float h)> topStack = new Dictionary<int, (int frame, float h)>();
+
+        /// <summary>
+        /// 11/08 할 일·이야기 줄 아래에 차례로 쌓는 위 가운데 것의 y. order가 작을수록 위:
+        /// 10 지역 첫 안내(배우기) · 20 베네치아 구역 이름 · 30 큰 장 · 40 밤 축제 · 50 눈싸움 점수판. OnGUI마다 부른다 (안 부르면 다음 프레임 뒤에 빠진다)
+        /// </summary>
+        public static float TopStack(int order, float height = 20f)
+        {
+            topStack[order] = (Time.frameCount, height);
+            float y = TopFree + 2f;
+            foreach (var kv in topStack)
+                if (kv.Key < order && Time.frameCount - kv.Value.frame <= 1) y += kv.Value.h + 4f;
+            return y;
+        }
+
         /// <summary>
         /// 위 가운데 알약: 왼쪽 동그라미(알림 "!" 또는 그림) + 굵은 할 일 + 덧붙임(pin이면 핀과 장소).
         /// 너무 길면 덧붙임을 빼고, 그래도 길면 할 일을 줄인다.
+        /// 11/08 너비는 그 줄의 왼쪽 위 카드·오른쪽 위 단추·온라인·길 장애 알약 사이 빈 자리(ScreenZones)까지 (좁은 고려 화면에서도 안 겹치게)
         /// </summary>
         public static void TopPill(float y, bool alert, Pic? pic, string main, string where, bool pin = true)
         {
-            float maxW = Mathf.Max(200f, UIStyle.VirtualWidth - 330f);   // 왼쪽 위 카드·오른쪽 위 단추와 겹치지 않게
+            var (left, right) = ScreenZones.FreeRow(y - 2, y + 22);
+            left += 9;   // 왼쪽 동그라미가 알약 밖으로 9 나온다
+            float maxW = Mathf.Max(120f, right - left);
             float whereW = string.IsNullOrEmpty(where) ? 0 : 8 + (pin ? 7 : 0) + Width(where, true);
             float mainW = Width(main, false, true);
             if (22 + mainW + whereW + 10 > maxW) whereW = 0;
             while (22 + mainW + 10 > maxW && main.Length > 4) { main = main.Substring(0, main.Length - 2) + "…"; mainW = Width(main, false, true); }
             float w = Mathf.Round(22 + mainW + whereW + 10), x = Mathf.Round((UIStyle.VirtualWidth - w) / 2f + 8);
+            x = Mathf.Round(Mathf.Clamp(x, left, Mathf.Max(left, right - w)));
             Pill(new Rect(x, y, w, 20));
             if (alert) Medallion(x - 9, y - 2, 24, Alert);
             else

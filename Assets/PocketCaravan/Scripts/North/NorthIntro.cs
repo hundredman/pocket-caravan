@@ -37,7 +37,6 @@ namespace PocketCaravan
 
         Transform root;
         float runTime;
-        GUIStyle style;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Boot()
@@ -173,16 +172,14 @@ namespace PocketCaravan
         void OnGUI()
         {
             int s = Step;
-            if (s < 1 || s > 10 || UIState.Blocking || !IsReindeer || NorthUtil.Map == null || !NorthUtil.InNorth) return;
+            if (s < 1 || s > 10 || UIState.Blocking || HUD.Expanded || !IsReindeer || NorthUtil.Map == null || !NorthUtil.InNorth) return;
             UIStyle.Begin();
-            style ??= new GUIStyle(UIStyle.Rich) { alignment = TextAnchor.MiddleCenter };
-            string t = s == 1 ? "옆에 계신 <b>어머니</b>께 Space로 말을 걸어 보세요"
-                     : s == 10 ? "할 일을 다 했어요! <b>어머니</b>께 돌아가 말을 걸어 보세요"
-                     : $"<color=#ffde59>배우기 {s - 1}/{Tasks.Length}</color>  {Tasks[s - 2]}";
-            float w = Mathf.Min(420, UIStyle.VirtualWidth - 20);
-            var r = new Rect((UIStyle.VirtualWidth - w) / 2, 30, w, 20);
-            GUI.Box(r, "", UIStyle.Box);
-            GUI.Label(r, t, style);
+            // 11/08 UI B안: 검은 줄(왼쪽 위 상태 카드·오른쪽 길 장애 알약을 덮었다) 대신 할 일 줄 아래 위 가운데 알약 (전구 = 배우기). Tab 펼친 동안은 숨긴다
+            string main = s == 1 ? "어머니께 말 걸기"
+                        : s == 10 ? "어머니께 돌아가 말 걸기"
+                        : CuteUI.Plain(Tasks[s - 2]);
+            string where = s == 1 ? "바로 옆 · Space" : s == 10 ? "다 했어요!" : $"배우기 {s - 1}/{Tasks.Length}";
+            CuteUI.TopPill(CuteUI.TopStack(10), false, CuteUI.Pic.Bulb, main, where, false);
         }
     }
 }

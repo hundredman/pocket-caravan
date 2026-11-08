@@ -179,7 +179,7 @@ namespace PocketCaravan
         }
 
         /// <summary>위 가운데 배우기 알약이 떠 있다 (구역 이름 알약이 그 아래로 비킨다)</summary>
-        public static bool Showing { get { int s = Step; return s >= 1 && s <= 10 && !UIState.Blocking && IsCat && VeniceUtil.InVenice; } }
+        public static bool Showing { get { int s = Step; return s >= 1 && s <= 10 && !UIState.Blocking && !HUD.Expanded && IsCat && VeniceUtil.InVenice; } }   // 11/08 Tab 펼친 동안은 숨긴다 (상태 카드와 겹쳤다)
 
         void OnGUI()
         {
@@ -191,7 +191,7 @@ namespace PocketCaravan
                         : s == 10 ? "안내원 조반나에게 돌아가기"
                         : CuteUI.Plain(Tasks[s - 2]);
             string where = s == 1 ? "바로 옆 · Space" : s == 10 ? "다 했어요!" : $"배우기 {s - 1}/{Tasks.Length}";
-            CuteUI.TopPill(VeniceUtil.TopFree + 2f, false, CuteUI.Pic.Bulb, main, where, false);
+            CuteUI.TopPill(CuteUI.TopStack(10), false, CuteUI.Pic.Bulb, main, where, false);
         }
     }
 }

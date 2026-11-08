@@ -1,4 +1,4 @@
-// 9단계 시험: 관리 도구 (관리 키 · 접속자/계정 보기 · 접속키 초기화 · 내보내기 · 알림 · 계정 지우기)
+// 9단계 시험: 관리 도구 (관리 키 · 접속자/계정 보기 · 접속키 초기화 · 내보내기 · 알림 · 백업 · 계정 지우기)
 // 사용: Server/.dev.vars에 ADMIN_KEY를 넣고 npm run dev 를 켠 상태에서 npm run test:admin [주소]
 // 만든 "관리시험…" 계정은 마지막에 지운다
 import { readFileSync } from "node:fs";
@@ -122,7 +122,27 @@ check(kk.data?.kicked === 1, "내보내기가 한 명을 끊었다고 답한다"
 check((await a3.waitClose()) === 4006 && a3.got.some((m) => m.t === "error" && m.why.includes("관리자")), "내보낸 사람은 이유를 받고 4006으로 닫힌다");
 check((await admin("POST", "kick", { name: `없는이름${RUN}` })).data?.kicked === 0, "없는 사람을 내보내면 0");
 
-// 6. 지우기: 확인 없이 부르면 목록만, 확인하면 지운다
+// 6. 백업: 저장소를 키 순서대로 나눠 받는다
+async function backup(limit) {
+  const all = new Map();
+  let after = "", pages = 0;
+  do {
+    const r = await admin("GET", `backup?limit=${limit}` + (after ? `&after=${encodeURIComponent(after)}` : ""));
+    if (r.status !== 200 || !Array.isArray(r.data?.entries)) return null;
+    for (const [k, v] of r.data.entries) all.set(k, v);
+    after = r.data.next ?? "";
+    pages++;
+  } while (after && pages < 10000);
+  return { all, pages };
+}
+check((await admin("GET", "backup", null, ADMIN + "x")).status === 401, "백업도 관리 키가 틀리면 401");
+const whole = await backup(100), bits = await backup(2);
+const mine = whole?.all.get("acct:" + name.toLowerCase());
+check(mine?.save?.money === 777 && typeof mine.hash === "string" && mine.hash.length > 0, "백업에 계정(접속키 해시 포함)과 돈·짐 저장이 들어 있다");
+check(!!bits && bits.pages > 1 && bits.all.size === whole.all.size && [...whole.all.keys()].every((k) => bits.all.has(k)),
+  `2개씩 나눠 받아도 같은 키를 다 받는다 (${bits?.pages}번, 키 ${bits?.all.size}개)`);
+
+// 7. 지우기: 확인 없이 부르면 목록만, 확인하면 지운다
 check((await admin("POST", "delete", { prefix: "관" })).status === 400, "prefix가 1자면 거절한다");
 check((await admin("POST", "delete", {})).status === 400, "names·prefix가 없으면 거절한다");
 const online = await hello({ name, pass: "second-pass" });

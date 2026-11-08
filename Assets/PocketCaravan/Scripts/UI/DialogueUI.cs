@@ -32,6 +32,10 @@ namespace PocketCaravan
         Vector2 choiceScroll;
         Rect lastWindow, choiceViewport;
         readonly List<Rect> choiceRects = new List<Rect>();
+        static Rect shownRect;
+        static int shownFrame = -9;
+        /// <summary>11/08 대화창이 지금 화면에 그려져 있으면 그 자리 (알림이 그 위로 비킨다)</summary>
+        public static Rect? ShownRect => Time.frameCount - shownFrame <= 1 ? shownRect : (Rect?)null;
         GUIStyle wrappedChoice, wrappedChoiceOn;
         const float BodyHeight = 52f; // 기본 글꼴 3줄 + 레이블 패딩
 
@@ -193,6 +197,7 @@ namespace PocketCaravan
                 h = Mathf.Min(maxHeight, 104 + totalHeight - 18 + pageReserve);
             }
             var r = lastWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), UIStyle.VirtualHeight - h - 26, w, h);
+            shownRect = r; shownFrame = Time.frameCount;
             choiceRects.Clear(); choiceViewport = default;
             // 11/05 UI B안: 종이 창 + 왼쪽 위에 걸친 주황 이름표
             CuteUI.Window(r);

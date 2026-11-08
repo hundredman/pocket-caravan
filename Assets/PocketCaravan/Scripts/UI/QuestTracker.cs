@@ -97,18 +97,27 @@ namespace PocketCaravan
             }
             if (!any) return;   // 11/05 보일 게 없으면 카드를 띄우지 않는다 (예전 "자유 교역 · ! 의뢰…" 안내는 뺐다)
 
-            float h = 14;
-            foreach (var l in lines) h += CuteUI.WrapHeight(l.text, inner - l.indent, l.small) + 2;
             float y = 44 + ObstacleField.TopRightUsed;   // 길 장애 알약이 있으면 그 아래
+            // 11/08 아래 조작 안내 위까지만 (좁은 고려 화면에서 카드가 화면 밖으로 나갔다). 제목·자세히 두 줄씩 통째로 넣고 남는 것은 뺀다
+            float room = UIStyle.VirtualHeight - 6 - HUD.BottomReserved - y, h = 14;
+            int shown = 0;
+            for (int i = 0; i < lines.Count; i += 2)
+            {
+                float pair = 0;
+                for (int k = i; k < Mathf.Min(i + 2, lines.Count); k++) pair += CuteUI.WrapHeight(lines[k].text, inner - lines[k].indent, lines[k].small) + 2;
+                if (shown > 0 && h + pair > room) break;
+                h += pair;
+                shown = Mathf.Min(i + 2, lines.Count);
+            }
             CuteUI.Card(new Rect(x, y, w, h));
             y += 8;
-            foreach (var l in lines) y += CuteUI.Wrap(x + 10 + l.indent, y, inner - l.indent, l.text, l.col, l.small, l.bold) + 2;
+            for (int i = 0; i < shown; i++) { var l = lines[i]; y += CuteUI.Wrap(x + 10 + l.indent, y, inner - l.indent, l.text, l.col, l.small, l.bold) + 2; }
         }
 
         void DrawLog(QuestManager qm)
         {
             // 11/05 UI B안: 종이 창 + 제목 리본, 글씨·버튼은 CuteUI 종이 모양 (내용·기능은 그대로)
-            float w = 380, h = 260;
+            float w = 380, h = UIStyle.WindowHeight(260);   // 11/08 고려 화면(높이 270)에서 아래가 잘렸다
             var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round((UIStyle.VirtualHeight - h) / 2 + 6), w, h);
             CuteUI.Dim();
             CuteUI.Window(r);

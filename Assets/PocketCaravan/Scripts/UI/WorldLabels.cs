@@ -81,7 +81,7 @@ namespace PocketCaravan
                 }
                 string guide = n.exit ? $"{n.label}  ({Mathf.RoundToInt(dist)}칸)" : $"{n.label}  {Mathf.RoundToInt(dist)}칸";
                 float gw = 220;
-                Outlined(new Rect((UIStyle.VirtualWidth - gw) / 2, UIStyle.VirtualHeight - 40, gw, 14), "목표 · " + guide, QuestColor, guideStyle);
+                Outlined(new Rect((UIStyle.VirtualWidth - gw) / 2, HUD.BottomLine(10, 14), gw, 14), "목표 · " + guide, QuestColor, guideStyle);   // 11/08 아래 쌓는 줄로 (알림·조작 안내와 겹쳤다)
             }
         }
 

@@ -49,14 +49,14 @@ namespace PocketCaravan
         void OnGUI()
         {
             float t = Time.unscaledTime - shownAt;
-            if (t > labelSeconds || string.IsNullOrEmpty(current)) return;
+            if (t > labelSeconds || string.IsNullOrEmpty(current) || HUD.Expanded) return;   // 11/08 Tab 펼친 동안은 숨긴다
             UIStyle.Begin();
             float a = Mathf.Clamp01(Mathf.Min(t / 0.25f, (labelSeconds - t) / 0.5f));
             var c = GUI.color;
             GUI.color = new Color(1f, 1f, 1f, a);
             // 11/07 UI B안: 위 가운데 알약들 아래에 핀 + 구역 이름 종이 알약 (살짝 내려오며 나타난다)
             float w = Mathf.Round(CuteUI.Width(current, false, true) + 30f);
-            float y = Mathf.Round(VeniceUtil.TopFree + 2f + (VeniceIntro.Showing ? 24f : 0f) - (1f - Mathf.Clamp01(t / 0.25f)) * 4f);
+            float y = Mathf.Round(CuteUI.TopStack(20) - (1f - Mathf.Clamp01(t / 0.25f)) * 4f);   // 11/08 첫 안내·큰 장·축제 알약과 같이 쌓는다
             var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2f), y, w, 20f);
             CuteUI.Pill(r);
             CuteUI.Icon(CuteUI.Pic.Pin, r.x + 9f, r.y + 6f, 1, CuteUI.Frame);
