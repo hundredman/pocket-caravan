@@ -1,0 +1,21 @@
+{
+ "schemaVersion": 1,
+ "status": "trial",
+ "note": "11/08 은샘: 장단 강 건너 논(장승 자리)으로 가는 작은 다리. x,y = 그림 왼쪽 아래 칸(데크는 y+0.5~y+1.5), walk = 막힘을 푸는 물 칸",
+ "bridges": [
+  {
+   "mapId": "goryeo_jangdan",
+   "art": "bridge",
+   "x": 46,
+   "y": 92.5,
+   "walk": [
+    47,
+    93,
+    48,
+    93,
+    49,
+    93
+   ]
+  }
+ ]
+}
