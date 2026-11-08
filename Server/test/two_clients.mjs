@@ -74,6 +74,17 @@ a.send({ t: "enter", map: "test_rialto" });
 await b.wait((m) => m.t === "join" && m.id === a.id && joinsOfA().length >= 2);
 check(joinsOfA().length === 2 && joinsOfA()[1].look === "arabia", "look 없이 들어오면 생김새는 그대로 (예전 게임)");
 
+// 11/08 운반 수단: enter에 veh를 실으면 같은 맵 사람에게 join으로, 나중에 온 사람에게 room으로 간다
+a.send({ t: "enter", map: "test_rialto", veh: "arabia_camel" });
+const vehB = await b.wait((m) => m.t === "join" && m.id === a.id && m.veh === "arabia_camel");
+check(!!vehB, "운반 수단을 실어 다시 들어오면 B는 A의 운반 수단을 받는다");
+a.send({ t: "enter", map: "test_rialto" });
+await b.wait((m) => m.t === "join" && m.id === a.id && joinsOfA().length >= 4);
+check(joinsOfA()[3]?.veh === "arabia_camel", "veh 없이 들어오면 운반 수단은 그대로 (예전 게임)");
+a.send({ t: "enter", map: "test_rialto", veh: "" });
+const walkB = await b.wait((m) => m.t === "join" && m.id === a.id && m.veh === "" && joinsOfA().length >= 5);
+check(!!walkB, "veh를 빈칸으로 실으면 걷기로 돌아간다");
+
 // 실제 서버엔 다른 사람이 있을 수 있으니, A가 나가기 전 수에서 1 줄었는지 본다
 const before = [...b.got].reverse().find((m) => m.t === "online" || m.t === "welcome")?.online ?? 0;
 const seen = b.got.length;

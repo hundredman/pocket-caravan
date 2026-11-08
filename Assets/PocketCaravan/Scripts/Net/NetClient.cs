@@ -46,6 +46,7 @@ namespace PocketCaravan
             public string id;
             public string name;
             public string look;
+            public string veh;      // 11/08 운반 수단 (join · room에만 온다)
             public int online;
             public string why;
             public string map;
@@ -148,6 +149,7 @@ namespace PocketCaravan
             public string id;
             public string name;
             public string look;     // 출신 아이디 (venice · goryeo · viking · arabia) → 캐릭터 그림
+            public string veh;      // 11/08 운반 수단 아이디 (handcart · north_sled · arabia_camel, 걷기면 "") → VehicleLook이 그린다
             public float x, y;
             public int fx, fy;
             public bool m;
@@ -157,7 +159,7 @@ namespace PocketCaravan
         // 보내는 메시지 (필요한 칸만)
         [Serializable] class HelloOut { public string t = "hello"; public int v = Protocol; public string name; public string look; public string key; public string pass; public int since; public bool snap = true; }   // snap: 공유 장터 재고를 통째로 받는다(11/08)
         /// <summary>11/08: look도 싣는다. 시작 화면에서 로그인하면 hello의 look은 아직 고르기 전 기본 출신이라, 맵에 들어갈 때 고친다</summary>
-        [Serializable] class EnterOut { public string t = "enter"; public string map; public string look; }
+        [Serializable] class EnterOut { public string t = "enter"; public string map; public string look; public string veh; }   // veh: 11/08 운반 수단
         [Serializable] class PosOut { public string t = "pos"; public float x, y; public int fx, fy; public bool m; }
         [Serializable] class SayOut { public string t = "say"; public string text; }
         [Serializable] class EmoteOut { public string t = "emote"; public string e; public string name; }
@@ -188,7 +190,7 @@ namespace PocketCaravan
         readonly Dictionary<string, Peer> peers = new Dictionary<string, Peer>();
         string sentMap;
         /// <summary>서버에 알린 내 생김새(출신 아이디). 출신이 바뀌면(새 게임·저장 불러오기) 같은 맵이어도 다시 알린다</summary>
-        string sentLook;
+        string sentLook, sentVeh;
         bool waitingRoom;
         float lastPosAt;
         Vector2 lastPos;
@@ -328,7 +330,7 @@ namespace PocketCaravan
             OnlineCount = 0;
             peers.Clear();
             sentMap = null;
-            sentLook = null;
+            sentLook = null; sentVeh = null;
             waitingRoom = false;
             if (!string.IsNullOrEmpty(reason)) LastError = reason;
             var ws = socket; var c = cts;
@@ -470,12 +472,14 @@ namespace PocketCaravan
             var map = MapRoot.Current;
             if (map == null || (gm != null && gm.IsTravelling)) return;
             string look = gm != null && gm.Player != null && gm.Player.origin != null ? gm.Player.origin.id : "";
-            if (map.mapId != sentMap || look != sentLook)
+            // 11/08 기우: 운반 수단도 enter에 싣는다. 바뀌면 같은 맵에 enter를 다시 보내 같은 맵 사람들이 join으로 새로 그린다
+            string veh = gm != null && gm.Player != null && gm.Player.vehicle != null && gm.Player.vehicle.id != "walk" ? gm.Player.vehicle.id : "";
+            if (map.mapId != sentMap || look != sentLook || veh != sentVeh)
             {
                 if (map.mapId != sentMap) { waitingRoom = true; peers.Clear(); }   // 생김새만 바뀌면 같은 맵: 다른 사람 목록은 그대로
                 sentMap = map.mapId;
-                sentLook = look;
-                Send(new EnterOut { map = sentMap, look = look });
+                sentLook = look; sentVeh = veh;
+                Send(new EnterOut { map = sentMap, look = look, veh = veh });
                 lastPosAt = -10f;
             }
             var pc = PlayerController.Instance;
@@ -529,6 +533,7 @@ namespace PocketCaravan
                     if (!peers.TryGetValue(msg.id, out var peer)) peers[msg.id] = peer = new Peer { id = msg.id };
                     if (!string.IsNullOrEmpty(msg.name)) peer.name = msg.name;
                     if (!string.IsNullOrEmpty(msg.look)) peer.look = msg.look;
+                    if (msg.t == "join") peer.veh = msg.veh ?? "";   // 운반 수단은 join(들어옴·바꿈)에만 실려 온다
                     peer.x = msg.x; peer.y = msg.y; peer.fx = msg.fx; peer.fy = msg.fy; peer.m = msg.m;
                     peer.heardAt = Time.unscaledTime;
                     break;

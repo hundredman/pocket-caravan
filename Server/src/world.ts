@@ -20,6 +20,8 @@
  *   room · join의 플레이어 정보에 "look"이 함께 간다. 게임이 그 출신의 캐릭터 그림으로 그린다.
  *   (2026-11-08) enter에도 "look"을 실을 수 있다. 시작 화면에서 로그인하면 hello의 look은 아직 고르기 전 기본 출신이라
  *   맵에 들어갈 때(출신이 바뀌면 같은 맵에 다시 enter) 고친다. 같은 맵 사람들에게는 join으로 새 생김새가 간다
+ *   (2026-11-08) enter에 "veh"(운반 수단 아이디: handcart · north_sled · arabia_camel, 걷기면 "")도 실을 수 있다.
+ *   room · join의 플레이어 정보에 "veh"가 함께 가고, 게임이 그 사람 옆에 손수레·썰매·낙타를 그린다. 바꾸면 같은 맵에 다시 enter.
  *  6단계 (2026-10-30) 끊겨도 다시 붙기 · 서버 보호
  *   hello에 "key"(게임을 켤 때마다 새로 만드는 비밀 글자)를 실어 보낸다. 같은 key로 다시 들어오면
  *   예전 접속을 닫고 예전 번호(id)를 그대로 준다. welcome의 "name"이 실제로 쓰인 이름이다(겹치면 "윤채(2)").
@@ -178,6 +180,8 @@ interface Player {
   acct?: string;
   name: string;
   look: string;
+  /** 운반 수단 아이디 (handcart · north_sled · arabia_camel, 걷기면 "") — 11/08 */
+  veh: string;
   map: string;
   x: number;
   y: number;
@@ -232,7 +236,7 @@ export class WorldRoom extends DurableObject<Env> {
     this.ctx.acceptWebSocket(server);
     const n = ((await this.ctx.storage.get<number>("nextId")) ?? 0) + 1;
     await this.ctx.storage.put("nextId", n);
-    const me: Player = { id: `p${n}`, key: "", name: "", look: "", map: "", x: 0, y: 0, fx: 0, fy: -1, m: false, heard: Date.now() };
+    const me: Player = { id: `p${n}`, key: "", name: "", look: "", veh: "", map: "", x: 0, y: 0, fx: 0, fy: -1, m: false, heard: Date.now() };
     server.serializeAttachment(me);
     if ((await this.ctx.storage.getAlarm()) === null) await this.ctx.storage.setAlarm(Date.now() + SWEEP_MS);
     return new Response(null, { status: 101, webSocket: client });
@@ -445,6 +449,7 @@ export class WorldRoom extends DurableObject<Env> {
         if (me.map && me.map !== map) this.toMap(me.map, { t: "leave", id: me.id }, ws);
         const look = cleanMap(msg.look);
         if (look) me.look = look;
+        if (typeof msg.veh === "string") me.veh = cleanMap(msg.veh);   // 11/08 운반 수단 ("" = 걷기). 안 실으면(예전 게임) 그대로
         me.map = map;
         me.m = false;
         ws.serializeAttachment(me);
@@ -918,7 +923,7 @@ export class WorldRoom extends DurableObject<Env> {
 }
 
 function publicInfo(p: Player) {
-  return { id: p.id, name: p.name, look: p.look, x: p.x, y: p.y, fx: p.fx, fy: p.fy, m: p.m };
+  return { id: p.id, name: p.name, look: p.look, veh: p.veh ?? "", x: p.x, y: p.y, fx: p.fx, fy: p.fy, m: p.m };
 }
 
 function send(ws: WebSocket, msg: unknown): void {
