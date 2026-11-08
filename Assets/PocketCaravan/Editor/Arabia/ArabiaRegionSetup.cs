@@ -153,7 +153,7 @@ namespace PocketCaravan.EditorTools
 
             // 탈것: 낙타 (모래·험한 길에서 빠름). 제다·사나에서 판다
             var camel = Get<VehicleData>(DataDir + "/Vehicle_ArabiaCamel.asset");
-            camel.id = CamelId; camel.displayName = "낙타"; camel.capacity = 45f; camel.price = 300; camel.minTownLevel = 2;
+            camel.id = CamelId; camel.displayName = "낙타"; camel.capacity = 45f; camel.price = 300; camel.minTownLevel = 1;   // 11/08 다른 지역 탈것처럼 1등급부터 (Q5 튜토리얼 의뢰에서 바로 살 수 있게)
             camel.speedByGrade = new[] { 1.25f, 1.15f, 1.05f, 1f };
             if (!db.vehicles.Contains(camel)) db.vehicles.Add(camel);
             EditorUtility.SetDirty(camel);
