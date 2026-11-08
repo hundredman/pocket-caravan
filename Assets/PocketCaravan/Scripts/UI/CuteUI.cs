@@ -758,8 +758,9 @@ namespace PocketCaravan
             Fill(new Rect(x + 4, y + 3, w - 8, 1), FrameHi);
             Icon(Pic.Star4, x + 9, y + 7);
             Icon(Pic.Star4, x + w - 16, y + 7);
-            LabelCenter(cx, y + 12, label, Ink, false, true);
-            LabelCenter(cx, y + 11, label, White, false, true);
+            // 11/08 은샘: 흰 굵은 글씨 + 한 칸 아래 진한 그림자를 겹치면 화면 배율이 정수가 아닐 때 획이 섞여 번져 보였다.
+            // 같은 색 한 겹(진한 굵은 글씨)으로 그린다.
+            LabelCenter(cx, y + 11, label, Ink, false, true);
         }
 
         /// <summary>"[Space] 말 걸기" 같은 상호작용 안내 (11/05 종이 알약 + 키캡, 색은 빼서 덜 튀게)</summary>
@@ -833,13 +834,9 @@ namespace PocketCaravan
             Box(head, 8, Frame, Ink, 2, 3);
             Fill(new Rect(head.x + 5, head.y + 3, head.width - 10, 1), FrameHi);
             Icon(Pic.Star4, head.x + 10, head.y + 11);
-            Label(head.x + 22, head.center.y + 1, "바리바리", Ink, false, true);
-            Label(head.x + 22, head.center.y, "바리바리", White, false, true);
+            Label(head.x + 22, head.center.y, "바리바리", Ink, false, true);   // 11/08 번짐 방지: 한 겹(TitlePlate와 같은 이유)
             if (!string.IsNullOrEmpty(right))
-            {
-                LabelRight(head.xMax - 12, head.center.y + 1, right, Ink, true, true);
-                LabelRight(head.xMax - 12, head.center.y, right, White, true, true);
-            }
+                LabelRight(head.xMax - 12, head.center.y, right, Ink, true, true);
         }
 
         // ---------------- 위 가운데 줄 (할 일·다음 이야기) ----------------

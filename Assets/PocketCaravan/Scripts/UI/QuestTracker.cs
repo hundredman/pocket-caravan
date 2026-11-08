@@ -138,10 +138,10 @@ namespace PocketCaravan
                 { logTab = i; scroll = Vector2.zero; }
             GUILayout.EndHorizontal();
             GUILayout.Space(6);
-            scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(h - 30 - 26 - 18));
+            scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(h - 30 - 26 - 24));   // 11/08 아래 조작 안내 줄이 잘려 번져 보였다: 줄 높이만큼 비움
             if (logTab == 0) DrawQuests(qm); else DrawJourney();
             GUILayout.EndScrollView();
-            GUILayout.Label("←→ 탭 · ↑↓·휠 넘기기 · Q·Esc 닫기", new GUIStyle(CuteUI.PaperSmall) { alignment = TextAnchor.MiddleCenter });
+            GUILayout.Label("←→ 탭 · ↑↓·휠 넘기기 · Q·Esc 닫기", new GUIStyle(CuteUI.PaperSmall) { alignment = TextAnchor.MiddleCenter }, GUILayout.Height(14));
             GUILayout.EndArea();
         }
 
