@@ -112,7 +112,7 @@ def generate(config,sources):
     if fill:
         px,py,pw,ph=fill['patch']
         patch={k:tile_world[k][py-oy:py-oy+ph,px:px+pw].copy()for k in LAYERS}
-        if not (known[py-oy:py-oy+ph,px:px+pw].all() and not walk[py-oy:py-oy+ph,px:px+pw].any()):raise ValueError('Void fill patch is not solid forest')
+        if not (known[py-oy:py-oy+ph,px:px+pw].all() and not walk[py-oy:py-oy+ph,px:px+pw].any() and not water[py-oy:py-oy+ph,px:px+pw].any() and (patch['obj']!='').all()):raise ValueError('Void fill patch is not solid forest')
         for mid,(x0,y0,x1,y1)in boxes.items():
             for wy in range(y0,y1):
                 for wx in range(x0,x1):
