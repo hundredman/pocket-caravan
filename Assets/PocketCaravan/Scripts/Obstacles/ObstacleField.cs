@@ -232,6 +232,8 @@ namespace PocketCaravan
                 Effects(pc.Motor.Cell,out float speed,out _,out _,out _,out float visibility);
                 if(visibility<1){GUI.depth=10;var color=GUI.color;GUI.color=new Color(.32f,.37f,.4f,(1-visibility)*.65f);GUI.DrawTexture(new Rect(0,0,UIStyle.VirtualWidth,UIStyle.VirtualHeight),Texture2D.whiteTexture);GUI.color=color;GUI.depth=-24;}
             }
+            // 11/08 창(소지품·장부·지도·수첩)이 열려 있으면 알약·카드는 숨긴다 (창 위에 그려져 장부 닫기 단추 누름을 가로챘다)
+            if(UIState.Blocking)return;
             // 11/05 UI B안: 오른쪽 위 단추를 가리던 큰 검은 창 대신, 단추 아래 한 줄 알약 (누르면 자세히 카드)
             var s=focus ?? states[0];var d=s.definition;
             float vw=UIStyle.VirtualWidth,top=44;
@@ -240,13 +242,14 @@ namespace PocketCaravan
             string more=showDetails?"접기":"자세히";
             float pw=Mathf.Round(21+CuteUI.Width(line,true)+8+CuteUI.Width(more,true)+10);
             var pill=new Rect(vw-6-pw,top,pw,18);
+            ScreenZones.Mark("obstacle",pill);
             CuteUI.Pill(pill);
             CuteUI.Circle(pill.x+8,pill.y+5,8,dot,dot,0);
             float tx=CuteUI.Label(pill.x+21,pill.y+9,line,CuteUI.Text,true);
             CuteUI.Label(tx+8,pill.y+9,more,CuteUI.Interact,true);
             if(GUI.Button(pill,GUIContent.none,GUIStyle.none))showDetails=!showDetails;
             float bottom=pill.yMax;
-            if(showDetails)
+            if(showDetails&&!HUD.Expanded)   // 11/08 Tab으로 펼친 동안은 접어 둔다 (좁은 화면에서 왼쪽 상태 카드·오른쪽 할 일 카드와 겹쳤다)
             {
                 float w=Mathf.Min(260,vw-16),x=vw-6-w,inner=w-20;
                 string detail=CuteUI.Plain(string.IsNullOrWhiteSpace(d.description)?d.category+" · 우회로와 대응 방법을 비교하세요.":d.description);
@@ -257,6 +260,7 @@ namespace PocketCaravan
                 string act=d.action==ObstacleAction.Pay?"비용 지불 (Space)":d.action==ObstacleAction.Repair?"보수 시작 (Space)":"제거 시작 (Space)";
                 float h=8+CuteUI.WrapHeight(detail,inner)+4+CuteUI.WrapHeight(stats,inner,true)+(timer!=null?14:0)+(work!=null?14:0)+6+22+6+CuteUI.WrapHeight(msg,inner,true)+10;
                 var card=new Rect(x,pill.yMax+4,w,h);
+                ScreenZones.Mark("obstacle.card",card);
                 CuteUI.Card(card);
                 float y=card.y+8;
                 y+=CuteUI.Wrap(x+10,y,inner,detail,CuteUI.Text)+4;

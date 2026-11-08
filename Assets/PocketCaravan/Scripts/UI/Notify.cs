@@ -33,12 +33,22 @@ namespace PocketCaravan
             entries.RemoveAll(e => Time.unscaledTime > e.until);
             float vw = UIStyle.VirtualWidth;
             float bottom = UIStyle.VirtualHeight - 8 - HUD.BottomReserved;
+            var talk = DialogueUI.ShownRect;   // 11/08 대화창이 떠 있으면 그 위로 (대화창이 알림을 덮었다)
+            if (talk.HasValue) bottom = Mathf.Min(bottom, talk.Value.y - 14f);   // 왼쪽 위에 걸친 이름표까지 비킨다
             for (int i = entries.Count - 1; i >= 0; i--)   // 새 알림이 맨 아래
             {
                 string text = CuteUI.Plain(entries[i].text);
-                float w = Mathf.Min(340f, vw - 40f, CuteUI.Width(text) + 28f);
+                float want = Mathf.Min(340f, vw - 40f, CuteUI.Width(text) + 28f);
+                // 11/08 아래 양옆 카드(왼쪽 채팅 · 오른쪽 고려 배우기 카드) 사이 가운데로. 너무 좁으면 그 카드들 위로 올린다
+                var (left, right) = ScreenZones.FreeRow(bottom - CuteUI.WrapHeight(text, want - 24f) - 12f, bottom);
+                if (right - left < Mathf.Min(want, 180f))
+                {
+                    bottom = ScreenZones.TopOf(bottom - CuteUI.WrapHeight(text, want - 24f) - 12f, bottom) - 5f;
+                    (left, right) = ScreenZones.FreeRow(bottom - CuteUI.WrapHeight(text, want - 24f) - 12f, bottom);
+                }
+                float w = Mathf.Max(80f, Mathf.Min(want, right - left));
                 float th = CuteUI.WrapHeight(text, w - 24f);
-                var r = new Rect(Mathf.Round((vw - w) / 2f), Mathf.Round(bottom - th - 12f), w, th + 12f);
+                var r = new Rect(Mathf.Round(left + (right - left - w) / 2f), Mathf.Round(bottom - th - 12f), w, th + 12f);
                 CuteUI.Box(r, 8, CuteUI.Paper, CuteUI.Ink, 1, 2);
                 CuteUI.WrapCenter(r.x + 12f, r.y + 6f, w - 24f, text, CuteUI.Text);
                 bottom = r.y - 5f;

@@ -19,16 +19,59 @@ namespace PocketCaravan
         /// <summary>Tab으로 펼친 동안 true (상태창·할 일 모두)</summary>
         public static bool Expanded => Time.unscaledTime < expandedUntil;
 
-        /// <summary>화면 아래에서 HUD가 차지한 높이 (조작 안내·저장 문제 줄). 알림은 그 위에 뜬다</summary>
-        public static float BottomReserved
+        /// <summary>
+        /// 화면 아래에서 HUD가 차지한 높이 (조작 안내 · 저장 문제 줄 · 아래 가운데 한 줄 안내). 알림·채팅·고려 배우기 카드는 그 위에 뜬다.
+        /// 11/08 아래에서부터 조작 안내(1~2줄) → 저장 문제 줄 → 한 줄 안내(BottomLine) 차례로 쌓아 서로 덮지 않게 했다
+        /// </summary>
+        public static float BottomReserved => BaseReserved + LinesHeight();
+
+        /// <summary>조작 안내 · 저장 문제 줄이 차지한 높이 (한 줄 안내는 이 위에 쌓는다)</summary>
+        static float BaseReserved
         {
             get
             {
                 var gm = GameManager.I;
-                float h = gm != null && !string.IsNullOrEmpty(gm.LoadIssue) ? 26f : 0f;
-                if (Expanded && MapRoot.Current != null) h += UIStyle.VirtualWidth - 20 < 500 ? 44f : 23f;
-                return h;
+                bool issue = gm != null && !string.IsNullOrEmpty(gm.LoadIssue);
+                float strip = KeyStripHeight();
+                return strip + (issue ? (strip > 0 ? 22f : 24f) : 0f);
             }
+        }
+
+        /// <summary>펼친 조작 안내의 줄 수에 따른 높이 (아래 끝에서 윗변까지). 펼치지 않았으면 0</summary>
+        static float KeyStripHeight() => !Expanded || MapRoot.Current == null ? 0f : KeySplit() < Keys.Length ? 45f : 24f;
+
+        /// <summary>조작 안내를 한 줄에 몇 개까지 놓는지 (화면보다 길면 나머지는 둘째 줄)</summary>
+        static int KeySplit()
+        {
+            float maxW = UIStyle.VirtualWidth - 20, rowW = 0;
+            for (int i = 0; i < Keys.Length; i++)
+            {
+                rowW += CuteUI.KeycapWidth(Keys[i].key) + 3 + CuteUI.Width(Keys[i].what, true) + 8;
+                if (rowW > maxW) return i;
+            }
+            return Keys.Length;
+        }
+
+        static readonly System.Collections.Generic.Dictionary<int, (int frame, float h)> lines = new System.Collections.Generic.Dictionary<int, (int frame, float h)>();
+
+        /// <summary>
+        /// 11/08 아래 가운데 한 줄 안내(목표 길잡이 · 고려 친구 선물 안내 등)의 y. order가 작을수록 아래 (0 친구 안내 · 10 목표 길잡이).
+        /// OnGUI마다 부른다. 부른 줄만큼 BottomReserved가 늘어 알림·채팅이 그 위로 비킨다
+        /// </summary>
+        public static float BottomLine(int order, float height)
+        {
+            lines[order] = (Time.frameCount, height);
+            float y = UIStyle.VirtualHeight - BaseReserved - 6f - height;
+            foreach (var kv in lines)
+                if (kv.Key < order && Time.frameCount - kv.Value.frame <= 1) y -= kv.Value.h + 2f;
+            return y;
+        }
+
+        static float LinesHeight()
+        {
+            float h = 0f;
+            foreach (var kv in lines) if (Time.frameCount - kv.Value.frame <= 1) h += kv.Value.h + 2f;
+            return h > 0f ? h + 4f : 0f;
         }
 
         /// <summary>오른쪽 위 단추 줄의 왼쪽 끝 (온라인 표시가 그 왼쪽에 붙는다)</summary>
@@ -79,6 +122,7 @@ namespace PocketCaravan
             float tabW = CuteUI.KeycapWidth("Tab");
             float w = Mathf.Max(108f, 32f + CuteUI.Width(money, false, true) + 3f + CuteUI.Width("냥", true) + 8f + tabW + 8f);
             var card = new Rect(22, 5, w, 40);
+            ScreenZones.Mark("hud.card", Rect.MinMaxRect(4, 4, card.xMax, card.yMax));   // 초상까지
             CuteUI.Card(card);
             CuteUI.Icon(CuteUI.Pic.Coin, 42, 14);
             float x = CuteUI.Label(54, 18.5f, money, CuteUI.Text, false, true);
@@ -115,6 +159,7 @@ namespace PocketCaravan
             // 10/28 평판이 두 줄로 늘어나면 아래 줄을 덮던 문제: 높이를 재서 칸을 늘린다
             float repH = CuteUI.WrapHeight(repText, inner, true);
             float h = 30 + 16 + 6 + 12 + repH + 4 + 15 + 15 + 7 + 12 + (p.HasAnyCargo ? 12 : 0) + 8;
+            ScreenZones.Mark("hud.card", Rect.MinMaxRect(4, 4, x + w, y + h));
             CuteUI.Card(new Rect(x, y, w, h));
 
             // 맵 이름 + 장날 (초상 오른쪽)
@@ -162,6 +207,7 @@ namespace PocketCaravan
         static void DrawButtons()
         {
             float x = ButtonsLeft;
+            ScreenZones.Mark("hud.buttons", new Rect(x, 4, 3 * ButtonSize + 2 * ButtonGap, ButtonSize + 8));
             foreach (var b in Buttons)
             {
                 CuteUI.FramedCircle(x, 4, ButtonSize);
@@ -179,23 +225,18 @@ namespace PocketCaravan
             float vh = UIStyle.VirtualHeight, vw = UIStyle.VirtualWidth;
             if (!string.IsNullOrEmpty(gm.LoadIssue))
             {
+                // 11/08 조작 안내가 펼쳐져 있으면 그 위, 아니면 맨 아래 (예전엔 늘 vh-44라 알림·채팅이 이 줄 안에 떴다)
                 const string issue = "저장 복원 중단 · 이번 세션 저장 안 됨 · Esc에서 원인 확인";
                 float iw = Mathf.Min(vw - 12, 30 + CuteUI.Width(issue, true) + 8);
-                CuteUI.Box(new Rect(6, vh - 44, iw - 10, 18), 8, CuteUI.AlertSoft, CuteUI.Alert, 1, 2, CuteUI.SoftShadow);
-                CuteUI.Circle(13, vh - 39, 8, CuteUI.Alert, CuteUI.Alert, 0);
-                CuteUI.Label(26, vh - 35, issue, CuteUI.Text, true);
+                float strip = KeyStripHeight(), iy = strip > 0 ? vh - strip - 22 : vh - 24;
+                CuteUI.Box(new Rect(6, iy, iw - 10, 18), 8, CuteUI.AlertSoft, CuteUI.Alert, 1, 2, CuteUI.SoftShadow);
+                CuteUI.Circle(13, iy + 5, 8, CuteUI.Alert, CuteUI.Alert, 0);
+                CuteUI.Label(26, iy + 9, issue, CuteUI.Text, true);
             }
             if (!Expanded) return;
 
             // 조작 안내 (Tab으로 펼쳤을 때만): 키캡 + 설명, 화면보다 길면 두 줄
-            float maxW = vw - 20, rowW = 0;
-            int split = Keys.Length;
-            for (int i = 0; i < Keys.Length; i++)
-            {
-                float gw = CuteUI.KeycapWidth(Keys[i].key) + 3 + CuteUI.Width(Keys[i].what, true) + 8;
-                if (rowW + gw > maxW) { split = i; break; }
-                rowW += gw;
-            }
+            int split = KeySplit();
             DrawKeyRow(0, split, split < Keys.Length ? vh - 42 : vh - 21);
             if (split < Keys.Length) DrawKeyRow(split, Keys.Length, vh - 21);
         }

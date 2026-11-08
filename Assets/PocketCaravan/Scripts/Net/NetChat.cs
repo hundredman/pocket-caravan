@@ -226,8 +226,11 @@ namespace PocketCaravan
             if (UIState.Blocking && !typing) return;   // 다른 창이 열려 있으면 목록은 숨긴다
 
             float bottom = UIStyle.VirtualHeight - 10f - HUD.BottomReserved;   // 11/05 접속 표시는 오른쪽 위로 옮김: 아래 조작 안내·저장 문제 줄 바로 위
+            float floor = bottom;
             if (typing) bottom = DrawInput(bottom);
-            DrawLines(bottom);
+            float top = DrawLines(bottom);
+            // 11/08 알림이 채팅을 덮지 않게 차지한 자리를 알린다 (알림은 그 오른쪽 · 너무 좁으면 위로)
+            if (top < floor) ScreenZones.Mark("chat", Rect.MinMaxRect(6f, top, 6f + LogWidth + (typing ? 40f : 12f), floor));
         }
 
         void Styles()
@@ -257,8 +260,8 @@ namespace PocketCaravan
             return panel.y - 4f;
         }
 
-        /// <summary>채팅 목록 (11/05 B안: 반투명 종이 카드 위 진한 글씨, 오래되면 카드째 흐려진다)</summary>
-        void DrawLines(float bottom)
+        /// <summary>채팅 목록 (11/05 B안: 반투명 종이 카드 위 진한 글씨, 오래되면 카드째 흐려진다). 그린 카드의 위쪽 y (없으면 bottom)</summary>
+        float DrawLines(float bottom)
         {
             var old = GUI.color;
             var shown = new List<(string text, float h, float alpha)>();
@@ -272,7 +275,7 @@ namespace PocketCaravan
                 total += h;
                 top = Mathf.Max(top, alpha);
             }
-            if (shown.Count == 0) return;
+            if (shown.Count == 0) return bottom;
             GUI.color = new Color(1f, 1f, 1f, top);
             CuteUI.Box(new Rect(6f, bottom - total - 8f, LogWidth + 12f, total + 8f), 8, LogFill, LogFill, 0, 2, CuteUI.SoftShadow);
             float y = bottom - 4f;
@@ -283,6 +286,7 @@ namespace PocketCaravan
                 GUI.Label(new Rect(12f, y, LogWidth, h), text, lineStyle);
             }
             GUI.color = old;
+            return bottom - total - 8f;
         }
 
         void DrawBubbles(NetClient net)

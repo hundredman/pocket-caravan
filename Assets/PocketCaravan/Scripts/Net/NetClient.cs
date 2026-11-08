@@ -143,7 +143,8 @@ namespace PocketCaravan
 
         // 보내는 메시지 (필요한 칸만)
         [Serializable] class HelloOut { public string t = "hello"; public int v = Protocol; public string name; public string look; public string key; public string pass; public int since; }
-        [Serializable] class EnterOut { public string t = "enter"; public string map; }
+        /// <summary>11/08: look도 싣는다. 시작 화면에서 로그인하면 hello의 look은 아직 고르기 전 기본 출신이라, 맵에 들어갈 때 고친다</summary>
+        [Serializable] class EnterOut { public string t = "enter"; public string map; public string look; }
         [Serializable] class PosOut { public string t = "pos"; public float x, y; public int fx, fy; public bool m; }
         [Serializable] class SayOut { public string t = "say"; public string text; }
         [Serializable] class EmoteOut { public string t = "emote"; public string e; public string name; }
@@ -173,6 +174,8 @@ namespace PocketCaravan
 
         readonly Dictionary<string, Peer> peers = new Dictionary<string, Peer>();
         string sentMap;
+        /// <summary>서버에 알린 내 생김새(출신 아이디). 출신이 바뀌면(새 게임·저장 불러오기) 같은 맵이어도 다시 알린다</summary>
+        string sentLook;
         bool waitingRoom;
         float lastPosAt;
         Vector2 lastPos;
@@ -311,6 +314,7 @@ namespace PocketCaravan
             OnlineCount = 0;
             peers.Clear();
             sentMap = null;
+            sentLook = null;
             waitingRoom = false;
             if (!string.IsNullOrEmpty(reason)) LastError = reason;
             var ws = socket; var c = cts;
@@ -451,12 +455,13 @@ namespace PocketCaravan
             var gm = GameManager.I;
             var map = MapRoot.Current;
             if (map == null || (gm != null && gm.IsTravelling)) return;
-            if (map.mapId != sentMap)
+            string look = gm != null && gm.Player != null && gm.Player.origin != null ? gm.Player.origin.id : "";
+            if (map.mapId != sentMap || look != sentLook)
             {
+                if (map.mapId != sentMap) { waitingRoom = true; peers.Clear(); }   // 생김새만 바뀌면 같은 맵: 다른 사람 목록은 그대로
                 sentMap = map.mapId;
-                waitingRoom = true;
-                peers.Clear();
-                Send(new EnterOut { map = sentMap });
+                sentLook = look;
+                Send(new EnterOut { map = sentMap, look = look });
                 lastPosAt = -10f;
             }
             var pc = PlayerController.Instance;
@@ -549,6 +554,7 @@ namespace PocketCaravan
             };
             float w = Mathf.Round(6 + 11 + 5 + CuteUI.Width(label, false, true) + 9);
             var r = new Rect(Mathf.Round(HUD.ButtonsLeft - 7 - w), 9, w, 18);
+            ScreenZones.Mark("online", r);   // 11/08 위 가운데 알약이 이 왼쪽에서 멈춘다
             CuteUI.Pill(r);
             if (online) CuteUI.Icon(CuteUI.Pic.People, r.x + 6, r.y + 5);
             else CuteUI.Circle(r.x + 8, r.y + 5, 8, Status == State.Waiting || retries > 0 ? CuteUI.Alert : CuteUI.Deco, CuteUI.Ink);

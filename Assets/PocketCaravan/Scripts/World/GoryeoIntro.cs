@@ -213,8 +213,10 @@ namespace PocketCaravan
             float textHeight=Mathf.Ceil(style.CalcHeight(new GUIContent(t),w-2*padding));
             // Compact quest tracker at the lower-right screen edge.
             float h=30+textHeight;
-            var r=new Rect(Mathf.Round(UIStyle.VirtualWidth-w),Mathf.Round(UIStyle.VirtualHeight-h-4),w,h);
+            // 11/08 아래 쌓는 줄(조작 안내·목표 길잡이) 위로 올리고, 차지한 자리를 알려 알림이 비키게 한다
+            var r=new Rect(Mathf.Round(UIStyle.VirtualWidth-w),Mathf.Round(UIStyle.VirtualHeight-h-4-HUD.BottomReserved),w,h);
             GuideRect=r;GuideText=t;
+            ScreenZones.Mark("goryeo.intro",r);
             CuteUI.Card(r);
             style.normal.textColor=style.hover.textColor=style.active.textColor=style.focused.textColor=UIStyle.Lin(CuteUI.Sub);
             GUI.Label(new Rect(r.x+padding,r.y+padding,w-2*padding,14),title,style);
