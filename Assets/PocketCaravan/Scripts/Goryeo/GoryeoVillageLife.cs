@@ -7,7 +7,7 @@ namespace PocketCaravan
     /// <summary>A7 approved production or preview visual life. Whole sprites, bounded renderers, no collision or save writes.</summary>
     public sealed class GoryeoVillageLife:MonoBehaviour
     {
-        [Serializable]public class Point{public string kind,reason;public float x,y,bx,by;}
+        [Serializable]public class Point{public string kind,reason;public float x,y,bx,by;public float[] via;}   // 11/08 via: 걷는 사람이 꺾어 지나는 점들(x,y 쌍)
         [Serializable]public class Art{public string key;public Sprite sprite;}
         public Point[] points;public Art[] art;public Sprite[] traderFrames;public bool approvedForProduction;
         public const int RendererLimit=64;
@@ -31,17 +31,21 @@ namespace PocketCaravan
                 for(int p=0;p<count&&items.Count<RendererLimit;p++)
                 {
                     var go=new GameObject(point.kind);go.transform.SetParent(owned,false);go.transform.position=At(point.x,point.y);
-                    var sr=go.AddComponent<SpriteRenderer>();sr.sprite=SpriteFor(point.kind=="chicken"||point.kind=="dog"||point.kind=="bird"||point.kind=="gull"?point.kind+"_0":point.kind);sr.sortingOrder=point.kind=="smoke"||point.kind=="gull"||point.kind=="bird"?22:point.kind=="boat"||point.kind=="lamp"?4:point.kind=="cart"?8:10;
+                    var sr=go.AddComponent<SpriteRenderer>();sr.sprite=SpriteFor(point.kind=="chicken"||point.kind=="dog"||point.kind=="bird"||point.kind=="gull"||point.kind=="laundry"?point.kind+"_0":point.kind);sr.sortingOrder=point.kind=="smoke"||point.kind=="gull"||point.kind=="bird"?22:point.kind=="boat"||point.kind=="lamp"?4:point.kind=="cart"||point.kind=="jars"||point.kind=="laundry"?8:10;
                     var item=new Item{point=point,renderer=sr,phase=items.Count*.73f,puff=point.kind=="smoke"?p:-1};items.Add(item);
                     if(point.kind=="lamp")
                     {
                         var light=go.AddComponent<Light2D>();light.lightType=Light2D.LightType.Point;light.targetSortingLayers=new[]{SortingLayer.NameToID("Default")};light.color=new Color(1,.73f,.38f);light.pointLightOuterRadius=2.6f;light.pointLightInnerRadius=.3f;
                         var glow=go.AddComponent<GoryeoLantern>();glow.lamp=light;glow.phase=item.phase;item.light=light;
                     }
+                    if(point.kind=="idle")   // 11/08 좌판 앞 구경꾼: 걷는 사람 그림으로 서서 좌판 쪽(위)을 본다
+                    {
+                        var anim=go.AddComponent<CharacterAnimator>();anim.frames=traderFrames;anim.facing=Vector2Int.up;sr.sprite=traderFrames!=null&&traderFrames.Length==16?traderFrames[4]:null;
+                    }
                     if(point.kind=="walker")
                     {
                         var anim=go.AddComponent<CharacterAnimator>();anim.frames=traderFrames;sr.sprite=traderFrames!=null&&traderFrames.Length==16?traderFrames[12]:null;
-                        var walker=go.AddComponent<GoryeoVisualWalker>();walker.path=new List<Vector3>{At(point.x,point.y),At(point.bx,point.by)};walker.anim=anim;walker.speed=.7f;walker.blocksMovement=false;item.walker=walker;
+                        var walker=go.AddComponent<GoryeoVisualWalker>();walker.path=new List<Vector3>{At(point.x,point.y)};if(point.via!=null)for(int v=0;v+1<point.via.Length;v+=2)walker.path.Add(At(point.via[v],point.via[v+1]));walker.path.Add(At(point.bx,point.by));walker.anim=anim;walker.speed=.7f;walker.blocksMovement=false;item.walker=walker;
                     }
                     sr.enabled=false;
                 }
@@ -63,7 +67,9 @@ namespace PocketCaravan
                     case"bird":case"gull":at+=new Vector3(Mathf.Sin(now*.35f+item.phase)*1.5f,Mathf.Sin(now*.65f+item.phase)*.35f+.35f,0);sr.sprite=SpriteFor(p.kind+"_"+((int)(now*3+item.phase)%2));show=hour>=5&&hour<20;break;
                     case"boat":at=Vector3.Lerp(at,At(p.bx,p.by),.5f+.5f*Mathf.Sin(now*.12f+item.phase));break;
                     case"cart":show=hour>=6&&hour<19;break; // 끄는 사람이 없는 생활 수레는 제자리에 세운다.
+                    case"laundry":sr.sprite=SpriteFor("laundry_"+((int)(now*.9f+item.phase)%2));show=hour>=7&&hour<18;break; // 11/08 낮에만 널어 둔 빨래
                     case"walker":at=item.walker.transform.position;show=hour>=6&&hour<19;break;
+                    case"idle":show=hour>=7&&hour<18;{var a=sr.GetComponent<CharacterAnimator>();if(a!=null){int t=(int)(now*.25f+item.phase)%4;a.facing=t==2?Vector2Int.left:t==3?Vector2Int.right:Vector2Int.up;}}break;
                 }
                 if(item.walker==null){at.x=Mathf.Round(at.x*16)/16;at.y=Mathf.Round(at.y*16)/16;sr.transform.position=at;}show=show&&Visible(at);sr.enabled=show;
                 if(item.walker!=null){item.walker.enabled=show;item.walker.anim.enabled=show;}

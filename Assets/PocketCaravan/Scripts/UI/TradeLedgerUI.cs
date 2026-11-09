@@ -370,20 +370,20 @@ namespace PocketCaravan
 
         // ---------------- 도우미 ----------------
 
-        static void Tip(Rect c, string text)
+        internal static void Tip(Rect c, string text)
         {
             CuteUI.Icon(CuteUI.Pic.Bulb, c.x + 8, c.yMax - 16);
             CuteUI.Label(c.x + 19, c.yMax - 11, text, CuteUI.Sub, true);
         }
 
-        static void ItemIcon(ItemData item, float x, float y, int scale)
+        internal static void ItemIcon(ItemData item, float x, float y, int scale)
         {
             if (item != null && item.icon != null) CuteUI.Sprite(item.icon, new Rect(x, y, 16 * scale, 16 * scale));
             else CuteUI.Icon(CuteUI.Pic.Sack, x + 3 * scale, y + 4 * scale, scale);
         }
 
         /// <summary>칸보다 길면 끝을 "…"로 줄인다</summary>
-        static string Fit(string s, float width, bool small, bool bold)
+        internal static string Fit(string s, float width, bool small, bool bold)
         {
             if (string.IsNullOrEmpty(s) || width <= 0 || CuteUI.Width(s, small, bold) <= width) return s;
             while (s.Length > 1 && CuteUI.Width(s + "…", small, bold) > width) s = s.Substring(0, s.Length - 1);
@@ -391,7 +391,7 @@ namespace PocketCaravan
         }
 
         /// <summary>마우스 휠로 굴리기 + 오른쪽 가는 막대. 새 위치를 돌려준다</summary>
-        static float Scroll(Rect area, float offset, float contentH)
+        internal static float Scroll(Rect area, float offset, float contentH)
         {
             var e = Event.current;
             float max = Mathf.Max(0f, contentH - area.height);

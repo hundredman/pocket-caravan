@@ -117,6 +117,7 @@ namespace PocketCaravan
         string pendingHost;           // 말을 건 여관 사람 이름 (대화가 끝나길 기다림)
         bool sawDialogue;
         float pendingSince;
+        int pendingFrame;
         string askHost;               // 묻는 창이 열려 있으면 그 사람·시설 이름
         string askNote;
         float askOpenedAt;
@@ -170,7 +171,7 @@ namespace PocketCaravan
             // (PlayerController가 먼저 돌면 같은 프레임에 이미 대화창이 열려 있을 수 있어, 직전 프레임의 말 걸 대상을 쓴다)
             if (askHost == null && pendingHost == null && !UIState.JustClosed && InputReader.InteractPressed() && IsHost(lastTarget))
             {
-                pendingHost = lastTarget.DisplayName; sawDialogue = UIState.Blocking; pendingSince = Time.unscaledTime;
+                pendingHost = lastTarget.DisplayName; sawDialogue = UIState.Blocking; pendingSince = Time.unscaledTime; pendingFrame = Time.frameCount;
                 return;
             }
             if (!UIState.Blocking) lastTarget = pc.TalkTarget;
@@ -182,7 +183,8 @@ namespace PocketCaravan
                 if (dialogueDone || noDialogue)
                 {
                     string host = pendingHost; pendingHost = null;
-                    Offer(host);
+                    // 11/08 퀘스트를 받거나 완료한 대화 뒤에는 묻지 않는다 (인사만 나눴을 때만 쉬어 갈지 묻는다)
+                    if (QuestNpc.QuestTalkFrame < pendingFrame) Offer(host);
                 }
             }
         }
@@ -285,20 +287,52 @@ namespace PocketCaravan
             float w = Mathf.Min(360, UIStyle.VirtualWidth - 16);
             var clock = GameManager.I != null ? GameManager.I.Clock : null;
             float sleep = HoursToSleep(clock);
-            string rest = sleep <= 0f ? "잠깐 푹 쉬기" : clock != null && clock.minuteOfDay / 60f + sleep >= 24f || clock != null && clock.minuteOfDay < 300f ? $"아침 {WakeHour}시까지 휴식" : $"{sleep:0}시간 휴식";
-            string text = askNote ?? $"따뜻한 방 있어요. 쉬어 갈래요?\n{Price}냥 · {rest} · 체력 가득\n{BuffHours:0}시간 동안 달릴 때 덜 지침";
-            float textHeight = wrap.CalcHeight(new GUIContent(text), w - 28);
-            float h = Mathf.Max(106, textHeight + 54);
+            // 11/08 시간이 실제로 지나는지 분명히: 혼자 하기는 낮 4시간·밤은 아침까지 지나고, 온라인은 시간이 그대로다
+            string rest = sleep <= 0f ? "그대로 흘러요 (온라인)" : clock != null && clock.minuteOfDay / 60f + sleep >= 24f || clock != null && clock.minuteOfDay < 300f ? $"아침 {WakeHour}시까지 자요" : $"{sleep:0}시간이 지나요";
+            // 11/08 은샘: 값·쉬는 시간·체력 변화를 그림 줄로. 지금 체력 → 가득을 막대로 보여 준다
+            var gm = GameManager.I;
+            string text = askNote ?? "따뜻한 방 있어요. 쉬어 갈래요?";
+            float textHeight = Mathf.Max(16, CuteUI.WrapHeight(text, w - 28));
+            float rowsH = askNote == null ? 4 * 19 + 4 : 0;
+            float h = textHeight + rowsH + 58;
             var r = askWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round(UIStyle.VirtualHeight - h - 50), w, h);
             CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, askHost);
             if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { CloseAsk(); return; }   // 11/08 오른쪽 위 X
-            askTextRect = new Rect(r.x + 14, r.y + 14, w - 28, textHeight);
-            GUI.Label(askTextRect, text, wrap);
+            askTextRect = new Rect(r.x + 14, r.y + 16, w - 28, textHeight + rowsH);
+            CuteUI.Wrap(r.x + 14, r.y + 16, w - 28, text, CuteUI.Text);
+            if (askNote == null && gm != null)
+            {
+                float ry = r.y + 20 + textHeight, rx = r.x + 16, rw = w - 32;
+                bool poor = gm.Player.money < Price;
+                InnRow(rx, ry, rw, CuteUI.Pic.Coin7, "값", $"{Price}냥" + (poor ? $" (가진 돈 {gm.Player.money}냥)" : ""), poor ? CuteUI.Down : CuteUI.Text);
+                ry += 19;
+                CuteUI.Box(new Rect(rx, ry, rw, 17), 5, CuteUI.Paper2, CuteUI.Paper2, 0);
+                CuteUI.Icon(CuteUI.Pic.Bolt, rx + 4, ry + 3);
+                CuteUI.Label(rx + 16, ry + 8.5f, "체력", CuteUI.Sub, true);
+                float bx = rx + 50, bw = rw - 50 - 46;
+                CuteUI.Bar(new Rect(bx, ry + 5, bw, 7), 1f, CuteUI.StaminaHi, CuteUI.StaminaHi);
+                CuteUI.Bar(new Rect(bx, ry + 5, bw, 7), gm.Player.stamina, CuteUI.Stamina, CuteUI.StaminaHi);
+                CuteUI.LabelRight(rx + rw - 6, ry + 8.5f, "→ 가득", CuteUI.Up, true, true);
+                ry += 19;
+                InnRow(rx, ry, rw, CuteUI.Pic.Clock, "시간", rest, CuteUI.Text);
+                ry += 19;
+                InnRow(rx, ry, rw, CuteUI.Pic.Star4, "푹 쉼", $"{BuffHours:0}시간 동안 달릴 때 덜 지침", CuteUI.Text);
+            }
             float yesWidth = Mathf.Floor((w - 36) * .56f);
-            yesRect = new Rect(r.x + 14, r.yMax - 28, yesWidth, 20);
-            noRect = new Rect(r.x + 22 + yesWidth, r.yMax - 28, w - 36 - yesWidth, 20);
-            if (askNote == null && GUI.Button(yesRect, $"쉬어 갈래요 ({Price}냥)", CuteUI.PaperButtonOn)) Rest();
-            if (GUI.Button(noRect, "괜찮아요 Esc", CuteUI.PaperButton)) CloseAsk();
+            yesRect = new Rect(r.x + 14, r.yMax - 30, yesWidth, 22);
+            noRect = new Rect(r.x + 22 + yesWidth, r.yMax - 30, w - 36 - yesWidth, 22);
+            if (askNote == null && CuteUI.Button(yesRect, $"쉬어 갈래요 ({Price}냥)")) Rest();
+            if (CuteUI.SoftButton(noRect, askNote == null ? "괜찮아요" : "알겠어요")) CloseAsk();
         }
+
+        static void InnRow(float x, float y, float w, CuteUI.Pic pic, string label, string value, Color32 col)
+        {
+            CuteUI.Box(new Rect(x, y, w, 17), 5, CuteUI.Paper2, CuteUI.Paper2, 0);
+            var ps = CuteUI.PicSize(pic);
+            CuteUI.Icon(pic, x + 9 - ps.x / 2f, y + 8.5f - ps.y / 2f);
+            CuteUI.Label(x + 16, y + 8.5f, label, CuteUI.Sub, true);
+            CuteUI.LabelRight(x + w - 6, y + 8.5f, value, col, true, true);
+        }
+
     }
 }

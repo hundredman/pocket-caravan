@@ -35,6 +35,8 @@ namespace PocketCaravan
             { Reactions.Region.Goryeo, new Set {
                 name = "말 없는 장승", readName = "말 건넨 장승", sprite = "Common/jangseung", glow = null, autoPlace = true, roadside = true,
                 blessingName = "장승의 보살핌",
+                // 11/08 은샘: 자동 자리가 강 건너 빈 땅(장단)·막힌 칸 사이(나루터)·상태 카드 밑(나루)이라 고정. 장단은 GoryeoBridges 징검다리로 강을 건너 논 어귀
+                fixedAt = new Dictionary<string, Vector2Int> { { "goryeo_jangdan", new Vector2Int(50, 7) }, { "transit_ferry", new Vector2Int(49, 43) }, { "Naru", new Vector2Int(26, 9) } },
                 maps = new[] { "Gaegyeong", "Dakmok", "Naru", "goryeo_jangdan", "goryeo_songak", "transit_ferry", "transit_woodtown" },
                 lore = new[] {
                     "개경 어귀 장승이 말했다.\n\"밤마다 우리 일곱은 서로 말을 건넨다네. 자네 발소리도 벌써 송악까지 갔지.\"",

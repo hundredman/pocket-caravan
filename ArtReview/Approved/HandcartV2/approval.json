@@ -1,0 +1,139 @@
+{
+  "status": "approved",
+  "approvedBy": "은샘",
+  "approvedOn": "2026-11-09",
+  "note": "\"훨씬 낫다. 이렇게 하자\" 손수레 그림 업그레이드: 방향별(옆·앞·뒤) × 짐 상자 0~3단계, =자 손잡이, 옆모습 손잡이 앞 겹. 코드 도트 Tools/ArtGen/handcart_v3.py, 모든 지역 공용(HandcartLook)",
+  "productionApplied": true,
+  "assets": [
+    {
+      "key": "side_0",
+      "production": "Assets/PocketCaravan/Resources/Transport/Handcart/side_0.png",
+      "source": "ArtReview/Approved/HandcartV2/side.aseprite",
+      "size": [
+        32,
+        30
+      ],
+      "decodedRGBAsha256": "5ddc44518dd4ba8106c4d432e62425185327f53e70654863ad98eeaca6a2e498"
+    },
+    {
+      "key": "side_1",
+      "production": "Assets/PocketCaravan/Resources/Transport/Handcart/side_1.png",
+      "source": "ArtReview/Approved/HandcartV2/side.aseprite",
+      "size": [
+        32,
+        30
+      ],
+      "decodedRGBAsha256": "e634f52ad6af5248f8815b8fa8958b99956b9fa7434b861f89404d638341f4ab"
+    },
+    {
+      "key": "side_2",
+      "production": "Assets/PocketCaravan/Resources/Transport/Handcart/side_2.png",
+      "source": "ArtReview/Approved/HandcartV2/side.aseprite",
+      "size": [
+        32,
+        30
+      ],
+      "decodedRGBAsha256": "c004aa7d672d2b00d154a564503006c781319cf750830918b5ae0b7433957d6b"
+    },
+    {
+      "key": "side_3",
+      "production": "Assets/PocketCaravan/Resources/Transport/Handcart/side_3.png",
+      "source": "ArtReview/Approved/HandcartV2/side.aseprite",
+      "size": [
+        32,
+        30
+      ],
+      "decodedRGBAsha256": "a8a90964f1bee588d038496eaff364676e5c8f44fc37df29b7706342b2ae0960"
+    },
+    {
+      "key": "front_0",
+      "production": "Assets/PocketCaravan/Resources/Transport/Handcart/front_0.png",
+      "source": "ArtReview/Approved/HandcartV2/front.aseprite",
+      "size": [
+        28,
+        32
+      ],
+      "decodedRGBAsha256": "f3e5a9ce62451bce58dd1431bfa139663e965e83479738a882f3df17130423a8"
+    },
+    {
+      "key": "front_1",
+      "production": "Assets/PocketCaravan/Resources/Transport/Handcart/front_1.png",
+      "source": "ArtReview/Approved/HandcartV2/front.aseprite",
+      "size": [
+        28,
+        32
+      ],
+      "decodedRGBAsha256": "13cc79457e5b556db4d052aab10ecd1a79318d49fcf6bc4e394dd945438eb0fe"
+    },
+    {
+      "key": "front_2",
+      "production": "Assets/PocketCaravan/Resources/Transport/Handcart/front_2.png",
+      "source": "ArtReview/Approved/HandcartV2/front.aseprite",
+      "size": [
+        28,
+        32
+      ],
+      "decodedRGBAsha256": "58fbabe56d76b7ef7e6f10f3d0ec7bb9d3bb94acb517ff35e78efb9674cfb929"
+    },
+    {
+      "key": "front_3",
+      "production": "Assets/PocketCaravan/Resources/Transport/Handcart/front_3.png",
+      "source": "ArtReview/Approved/HandcartV2/front.aseprite",
+      "size": [
+        28,
+        32
+      ],
+      "decodedRGBAsha256": "c5967699b357965203a2acb00519aa5aa2065d459c81a9c739b978dcf144b0e1"
+    },
+    {
+      "key": "back_0",
+      "production": "Assets/PocketCaravan/Resources/Transport/Handcart/back_0.png",
+      "source": "ArtReview/Approved/HandcartV2/back.aseprite",
+      "size": [
+        28,
+        35
+      ],
+      "decodedRGBAsha256": "1aacf0fd9292fc9b336a1ff55b5ef55358d572e87938a94b8244f33967dce852"
+    },
+    {
+      "key": "back_1",
+      "production": "Assets/PocketCaravan/Resources/Transport/Handcart/back_1.png",
+      "source": "ArtReview/Approved/HandcartV2/back.aseprite",
+      "size": [
+        28,
+        35
+      ],
+      "decodedRGBAsha256": "a17f61a8a5f127e8ab8773c7723e01e79098bf33942321193cafe54cc77d728e"
+    },
+    {
+      "key": "back_2",
+      "production": "Assets/PocketCaravan/Resources/Transport/Handcart/back_2.png",
+      "source": "ArtReview/Approved/HandcartV2/back.aseprite",
+      "size": [
+        28,
+        35
+      ],
+      "decodedRGBAsha256": "a7649077485dffdb2a3945316389f354163039142834a215a862be4bc9ad88f0"
+    },
+    {
+      "key": "back_3",
+      "production": "Assets/PocketCaravan/Resources/Transport/Handcart/back_3.png",
+      "source": "ArtReview/Approved/HandcartV2/back.aseprite",
+      "size": [
+        28,
+        35
+      ],
+      "decodedRGBAsha256": "610ce6182d09e11cafa09c93960453125726268248b52875c805cc6daf51a4e8"
+    },
+    {
+      "key": "side_handle",
+      "production": "Assets/PocketCaravan/Resources/Transport/Handcart/side_handle.png",
+      "source": "ArtReview/Approved/HandcartV2/side_handle.aseprite",
+      "size": [
+        37,
+        30
+      ],
+      "decodedRGBAsha256": "defcf77c9360a6cc7e86cd22acd9ca83d6550198a7b55bf85a17efea6d167839"
+    }
+  ]
+}

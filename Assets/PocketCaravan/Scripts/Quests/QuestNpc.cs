@@ -21,6 +21,9 @@ namespace PocketCaravan
         public override string DisplayName => displayName;
         public override Kind Category => Kind.Quest;
 
+        /// <summary>11/08 마지막으로 퀘스트 대화(받기·완료·조건 부족)가 열린 프레임. 여관 주인이 퀘스트 대화 뒤에는 "쉬어 갈래요?"를 묻지 않게 한다</summary>
+        public static int QuestTalkFrame { get; private set; } = -1;
+
         public override void Interact(PlayerController player)
         {
             var qm = GameManager.I.Quests;
@@ -29,11 +32,13 @@ namespace PocketCaravan
             string line = qm.TryCompleteAt(npcId, out string fail);
             if (line != null)
             {
+                QuestTalkFrame = Time.frameCount;
                 DialogueUI.Show(displayName, line, new DialogueUI.Choice("확인", () => OfferNextIfAny()));
                 return;
             }
             if (fail != null)
             {
+                QuestTalkFrame = Time.frameCount;
                 DialogueUI.Show(displayName, fail,
                     new DialogueUI.Choice("다른 의뢰", () => { if (!OfferNextIfAny()) DialogueUI.Show(displayName, greeting); }),
                     new DialogueUI.Choice("닫기", null));
@@ -41,7 +46,8 @@ namespace PocketCaravan
             }
 
             // 2) 새로 줄 퀘스트
-            if (!OfferNextIfAny()) DialogueUI.Show(displayName, greeting);
+            if (OfferNextIfAny()) QuestTalkFrame = Time.frameCount;
+            else DialogueUI.Show(displayName, greeting);
         }
 
         /// <summary>한 번에 한 의뢰를 읽고 다른 제안을 넘겨 볼 수 있다. Esc는 항상 닫기.</summary>

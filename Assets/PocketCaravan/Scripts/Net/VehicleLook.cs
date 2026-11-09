@@ -71,34 +71,16 @@ namespace PocketCaravan
                     fx.Tick(owner.position, facing, moving);
                     break;
                 }
-                default:   // handcart (모르는 운반 수단도 손수레로)
-                    sr.sprite = Resources.Load<Sprite>("Transport/handcart");
-                    sr.flipX = false; sr.flipY = false;
-                    tr.localScale = Vector3.one;
-                    tr.localPosition = -(Vector3)(facing * .95f) + new Vector3(0f, -.1f, 0f);
-                    tr.localRotation = Quaternion.Euler(0, 0, -Mathf.Atan2(facing.x, facing.y) * Mathf.Rad2Deg);
-                    sr.sortingOrder = baseOrder - 2;
+                default:   // handcart (모르는 운반 수단도 손수레로). 11/09 내 손수레와 같은 HandcartLook 그림·자리 (짐 단계 = crates)
+                    HandcartLook.Place(sr, owner, body, facing, crates);
                     break;
             }
-            // 11/08 손수레 짐 상자 (내 손수레와 같은 자리·크기). 다른 운반 수단엔 안 그린다
-            bool cart = vehicle != "arabia_camel" && vehicle != "north_sled";
+            if (vehicle == "arabia_camel" || vehicle == "north_sled") HandcartLook.HideHandle(sr);
+            // 11/08에 붙였던 축소 상자 짐은 그림 안 짐 단계로 바뀌어 쓰지 않는다 (예전 것이 남아 있으면 끈다)
             for (int i = 0; i < 3; i++)
             {
                 var c = tr.Find("짐 " + i);
-                if (c == null)
-                {
-                    if (!cart || i >= crates) continue;
-                    c = new GameObject("짐 " + i).transform;
-                    c.SetParent(tr, false);
-                    c.localPosition = new Vector3((i - 1) * .28f, -.14f, 0);
-                    c.localScale = Vector3.one * .42f;
-                    var cs = c.gameObject.AddComponent<SpriteRenderer>();
-                    cs.sprite = Resources.Load<Sprite>("Transport/crate");
-                    cs.sortingLayerID = sr.sortingLayerID; cs.sharedMaterial = sr.sharedMaterial;
-                }
-                var csr = c.GetComponent<SpriteRenderer>();
-                csr.enabled = cart && i < crates;
-                csr.sortingOrder = sr.sortingOrder + 1;
+                if (c != null) c.gameObject.SetActive(false);
             }
         }
     }

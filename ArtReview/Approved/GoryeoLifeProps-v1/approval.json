@@ -1,0 +1,50 @@
+{
+  "status": "approved",
+  "approvedBy": "은샘",
+  "approvedOn": "2026-11-08",
+  "note": "\"좋아. 잘 만든 것 같은데? 승인할게.\" 코드 도트, 원본 .aseprite는 Tools/ArtGen/aseprite_rgba.py로 씀 · 11/09 은샘: 장독대 밑 돌 받침 제거(항아리 픽셀은 그대로), 같은 승인으로 갱신",
+  "productionApplied": true,
+  "assets": [
+    {
+      "key": "jars",
+      "path": "ArtReview/Approved/GoryeoLifeProps-v1/jars.png",
+      "production": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Art/jars.png",
+      "size": [
+        32,
+        32
+      ],
+      "decodedRGBAsha256": "ba4de4992956ed218021370615543ab8b894802d58f4ab9e6869bfb05a90a52c"
+    },
+    {
+      "key": "laundry_0",
+      "path": "ArtReview/Approved/GoryeoLifeProps-v1/laundry_0.png",
+      "production": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Art/laundry_0.png",
+      "size": [
+        48,
+        32
+      ],
+      "decodedRGBAsha256": "222b78a0dff173630b16c011bb308c80a54bf74a68a8745a936984d4955b98bf"
+    },
+    {
+      "key": "laundry_1",
+      "path": "ArtReview/Approved/GoryeoLifeProps-v1/laundry_1.png",
+      "production": "Assets/PocketCaravan/Resources/Goryeo/VillageLife/Art/laundry_1.png",
+      "size": [
+        48,
+        32
+      ],
+      "decodedRGBAsha256": "25629b4c3c19e96dbab488a98a92e794a55fb3148d8f96276e9026b792d8a5db"
+    },
+    {
+      "key": "sack",
+      "path": "ArtReview/Approved/GoryeoLifeProps-v1/sack.png",
+      "production": "Assets/PocketCaravan/Resources/Goryeo/Events/sack.png",
+      "size": [
+        16,
+        16
+      ],
+      "decodedRGBAsha256": "3bfb7b275a4e7b2497986cfbfa146be266f31a35acb8dda50389372edfb221ef"
+    }
+  ],
+  "updatedOn": "2026-11-09"
+}
