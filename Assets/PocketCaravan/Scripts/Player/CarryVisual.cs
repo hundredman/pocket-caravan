@@ -2,7 +2,8 @@ using UnityEngine;
 
 namespace PocketCaravan
 {
-    /// <summary>손수레와 적재량을 보여 주는 표현. 충돌·속도·화물 상태는 기존 운반 코드가 담당한다.</summary>
+    /// <summary>손수레와 적재량을 보여 주는 표현. 충돌·속도·화물 상태는 기존 운반 코드가 담당한다.
+    /// 11/09 손수레 그림은 HandcartLook(방향별 그림 + 짐 단계, 옆모습 손잡이 앞 겹)으로. 수레·짐은 흔들지 않는다(사람 몸 흔들림만 남김).</summary>
     public sealed class CarryVisual : MonoBehaviour
     {
         PlayerController player;
@@ -15,7 +16,6 @@ namespace PocketCaravan
         public static float SwayStrength(int grade, float load, float speed)
             => Mathf.Clamp01(speed / 3.8f) * Mathf.Clamp01(load) * (grade == 0 ? 1f : grade == 1 ? .55f : .12f);
         SpriteRenderer cartSprite;
-        readonly SpriteRenderer[] crates = new SpriteRenderer[3];
 
         void Start()
         {
@@ -24,16 +24,6 @@ namespace PocketCaravan
             cart = new GameObject("Handcart visual").transform;
             cart.SetParent(transform, false);
             cartSprite = cart.gameObject.AddComponent<SpriteRenderer>();
-            cartSprite.sprite = Resources.Load<Sprite>("Transport/handcart");
-            var crate = Resources.Load<Sprite>("Transport/crate");
-            for (int i = 0; i < crates.Length; i++)
-            {
-                crates[i] = new GameObject("Cargo " + i).AddComponent<SpriteRenderer>();
-                crates[i].transform.SetParent(cart, false);
-                crates[i].transform.localPosition = new Vector3((i - 1) * .28f, -.14f, 0);
-                crates[i].transform.localScale = Vector3.one * .42f;
-                crates[i].sprite = crate;
-            }
             UpdateVisual();
         }
 
@@ -52,19 +42,8 @@ namespace PocketCaravan
             bool show = state != null && state.vehicle != null && state.vehicle.id == "handcart";
             cart.gameObject.SetActive(show);
             if (!show) return;
-            Vector2 facing = player.Motor.Facing;
-            cart.localPosition = -(Vector3)(facing * .95f) + new Vector3(wobble * .08f, -.1f + Mathf.Abs(wobble) * .05f, 0);
-            cart.localRotation = Quaternion.Euler(0, 0, -Mathf.Atan2(facing.x, facing.y) * Mathf.Rad2Deg + wobble * 4f);
             var body = player.anim != null ? player.anim.GetComponent<SpriteRenderer>() : null;
-            int order = body != null ? body.sortingOrder - 2 : 8;
-            if (body != null) cartSprite.sortingLayerID = body.sortingLayerID;
-            cartSprite.sortingOrder = order;
-            for (int i = 0; i < crates.Length; i++)
-            {
-                crates[i].enabled = state.LoadRatio > i / 3f;
-                crates[i].sortingOrder = order + 1;
-                if (body != null) crates[i].sortingLayerID = body.sortingLayerID;
-            }
+            HandcartLook.Place(cartSprite, transform, body, player.Motor.Facing, HandcartLook.Stage(state.LoadRatio));
         }
 
         void OnDisable()
