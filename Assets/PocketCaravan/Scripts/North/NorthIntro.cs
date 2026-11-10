@@ -176,14 +176,21 @@ namespace PocketCaravan
         void OnGUI()
         {
             int s = Step;
-            if (s < 1 || s > 10 || UIState.Blocking || HUD.Expanded || !IsReindeer || NorthUtil.Map == null || !NorthUtil.InNorth) return;
+            // 11/09 윤채(시연 준비): 북유럽 밖에서도 띄운다. "다른 마을에서 팔기"를 하러 나가면 알약이 사라져 튜토리얼이 끝난 줄 알았다
+            if (s < 1 || s > 10 || UIState.Blocking || HUD.Expanded || !IsReindeer || NorthUtil.Map == null) return;
             UIStyle.Begin();
             // 11/08 UI B안: 검은 줄(왼쪽 위 상태 카드·오른쪽 길 장애 알약을 덮었다) 대신 할 일 줄 아래 위 가운데 알약 (전구 = 배우기). Tab 펼친 동안은 숨긴다
+            // 11/09 비르카를 떠나 있으면 앞에 "튜토리얼"을 붙이고, 어머니께 가야 하는 단계는 어디로 가는지 알려 준다
+            bool home = NorthUtil.Map == Home;
+            string place = WorldIndex.Get()?.MapName(Home) ?? Home;
             string main = s == 1 ? "어머니께 말 걸기"
                         : s == 10 ? "어머니께 돌아가 말 걸기"
                         : CuteUI.Plain(Tasks[s - 2]);
-            string where = s == 1 ? "바로 옆 · Space" : s == 10 ? "다 했어요!" : $"배우기 {s - 1}/{Tasks.Length}";
-            CuteUI.TopPill(CuteUI.TopStack(10), false, CuteUI.Pic.Bulb, main, where, false);
+            if (!home) main = "튜토리얼 · " + main;
+            string where = s == 1 ? (home ? "바로 옆 · Space" : place)
+                         : s == 10 ? (home ? "다 했어요!" : place + " · 지도(M)")
+                         : $"배우기 {s - 1}/{Tasks.Length}";
+            CuteUI.TopPill(CuteUI.TopStack(10), false, CuteUI.Pic.Bulb, main, where, !home && (s == 1 || s == 10));
         }
     }
 }

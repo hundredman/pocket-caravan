@@ -193,7 +193,7 @@ namespace PocketCaravan
                 Add($"<color={DimColor}>/선물 이름 물건 개수 · /선물 이름 100냥 · /순위</color>");
                 return;
             }
-            if (NetGift.TryCommand(word) || NetScores.TryCommand(word)) return;   // 11/07 선물 · 순위표
+            if (NetGift.TryCommand(word) || NetScores.TryCommand(word) || NetGuild.TryCommand(word)) return;   // 11/07 선물 · 순위표, 11/09 상인회(시험용)
             foreach (var c in Commands)
                 if (global::System.Array.IndexOf(c.words, w) >= 0)
                 {

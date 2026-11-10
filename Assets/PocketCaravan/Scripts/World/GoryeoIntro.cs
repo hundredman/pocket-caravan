@@ -298,7 +298,8 @@ namespace PocketCaravan
 
         public Rect GuideRect { get; private set; }
         public string GuideText { get; private set; }
-        public static bool Showing => Active && !UIState.Blocking && !HUD.Expanded && IsCat && InGoryeo;
+        // 11/09 윤채(시연 준비): 고려 밖에서도 띄운다. "다른 마을에서 팔기"를 하러 나가면 알약이 사라져 튜토리얼이 끝난 줄 알았다
+        public static bool Showing => Active && !UIState.Blocking && !HUD.Expanded && IsCat && MapRoot.Current != null;
         // Compatibility for older review tools and notification layout; the bottom card is retired.
         public static Rect ReservedGuideRect => default;
         void OnGUI()
@@ -308,9 +309,13 @@ namespace PocketCaravan
             UIStyle.Begin();
             int s=Step;
             string main=s==1?"선착장 일꾼에게 말 걸기":s==10?"선착장 일꾼에게 돌아가 말 걸기":CuteUI.Plain(Tasks[s-2]);
-            string where=s==1?"바로 옆 · Space":s==10?"다 했어요!":$"배우기 {s-1}/{Tasks.Length}";
+            // 11/09 나루를 떠나 있으면 앞에 "튜토리얼"을 붙이고, 선착장 일꾼에게 가야 하는 단계는 어디로 가는지 알려 준다
+            bool home=MapRoot.Current.mapId==Home;
+            string place=WorldIndex.Get()?.MapName(Home)??Home;
+            string where=s==1?(home?"바로 옆 · Space":place):s==10?(home?"다 했어요!":place+" · 지도(M)"):$"배우기 {s-1}/{Tasks.Length}";
             GuideText=main;
-            CuteUI.TopPill(CuteUI.TopStack(10),false,CuteUI.Pic.Bulb,main,where,false);
+            if(!home)main="튜토리얼 · "+main;
+            CuteUI.TopPill(CuteUI.TopStack(10),false,CuteUI.Pic.Bulb,main,where,!home&&(s==1||s==10));
         }
     }
 }

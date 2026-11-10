@@ -10,6 +10,7 @@ namespace PocketCaravan
     /// - 보낼 때 돈·짐을 먼저 빼 두고, 받는 쪽이 받았다는 답(ok)이 오면 끝이다.
     ///   못 받았거나(접속 안 함 · 짐이 꽉 참 · 그 게임에 없는 물건) 15초 안에 답이 없으면 돌려받는다. 서버는 10초에 끊으니 그 전에 답이 온다.
     /// - 받는 쪽은 저절로 받는다. 맡은 물건(questItem)은 보낼 수 없다.
+    /// - 11/09: 다른 플레이어 앞 Space 창(NetMeet)도 Give로 같은 길을 쓴다. 상대에게 닿으면 Delivered를 알린다(만국 상인회 수첩).
     /// 공용 코드는 공개된 것만 쓴다 (PlayerState.money · cargo.Add/Remove/Count/AverageCost · GameManager.ItemById).
     /// </summary>
     public class NetGift : MonoBehaviour
@@ -43,6 +44,12 @@ namespace PocketCaravan
         static PlayerState Player => GameManager.I != null ? GameManager.I.Player : null;
         static bool InGame => Player != null && MapRoot.Current != null && !StartScreen.IsOpen && !NetLogin.IsOpen;
 
+        /// <summary>11/09 선물이 상대에게 닿았다 (받는 사람 이름). 만국 상인회 수첩(NetGuild)이 듣는다</summary>
+        public static event Action<string> Delivered;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics() => Delivered = null;
+
         /// <summary>채팅 "/선물 …"이면 처리하고 true (NetChat이 부른다)</summary>
         public static bool TryCommand(string text)
         {
@@ -54,38 +61,56 @@ namespace PocketCaravan
             return true;
         }
 
+        /// <summary>11/09 다른 플레이어 앞 Space 창(NetMeet)에서 고른 선물: 물건 n개 또는 돈(item이 null이면 money냥). 보내기 시작했으면 true</summary>
+        public static bool Give(string to, ItemData item, int n, int money)
+        {
+            if (inst == null || string.IsNullOrEmpty(to)) return false;
+            return inst.Begin(to, item, n, money);
+        }
+
         void Send(string[] parts)
         {
-            var net = NetClient.I;
             var p = Player;
             string to = parts[1];
-            if (net == null || net.Status != NetClient.State.Online) { NetChat.System("온라인일 때만 선물할 수 있어요"); return; }
-            if (!net.ServerExtras) { NetChat.System("지금 서버는 아직 선물을 몰라요 (서버를 새로 올리면 쓸 수 있어요)"); return; }
-            if (!InGame) { NetChat.System("게임을 시작한 뒤에 선물할 수 있어요"); return; }
-            if (string.Equals(to, net.MyName, StringComparison.OrdinalIgnoreCase)) { NetChat.System("나에게는 선물할 수 없어요"); return; }
-
-            var h = new Held { gid = "g" + (++nextGid) + UnityEngine.Random.Range(1000, 10000), to = to, until = Time.unscaledTime + Wait };
+            if (!Ready(to)) return;
             string last = parts[parts.Length - 1];
             if (parts.Length == 3 && last.EndsWith("냥") && int.TryParse(last.Substring(0, last.Length - 1), out int money))
             {
-                if (money < 1 || money > MoneyMax) { NetChat.System($"돈은 1냥부터 {MoneyMax}냥까지 보낼 수 있어요"); return; }
-                if (p.money < money) { NetChat.System($"돈이 모자라요 (가진 돈 {p.money}냥)"); return; }
+                Begin(to, null, 0, money);
+                return;
+            }
+            int n = 1, end = parts.Length;
+            if (parts.Length > 3 && int.TryParse(last, out int c)) { n = c; end--; }
+            string asked = string.Join(" ", parts, 2, end - 2);
+            var item = p != null ? FindCargo(p, asked) : null;
+            if (item == null) { NetChat.System($"짐에 '{asked}'이(가) 없어요 (맡은 물건은 보낼 수 없어요)"); return; }
+            Begin(to, item, n, 0);
+        }
+
+        /// <summary>돈·짐을 맡아 두고 서버에 보낸다 (채팅 명령과 Space 창이 같이 쓴다). 못 보내면 까닭을 채팅에 남기고 false</summary>
+        bool Begin(string to, ItemData item, int n, int money)
+        {
+            var net = NetClient.I;
+            var p = Player;
+            if (!Ready(to)) return false;
+
+            var h = new Held { gid = "g" + (++nextGid) + UnityEngine.Random.Range(1000, 10000), to = to, until = Time.unscaledTime + Wait };
+            if (item == null)
+            {
+                if (money < 1 || money > MoneyMax) { NetChat.System($"돈은 1냥부터 {MoneyMax}냥까지 보낼 수 있어요"); return false; }
+                if (p.money < money) { NetChat.System($"돈이 모자라요 (가진 돈 {p.money}냥)"); return false; }
                 p.money -= money;
                 h.money = money;
                 h.label = $"{money}냥";
             }
             else
             {
-                int n = 1, end = parts.Length;
-                if (parts.Length > 3 && int.TryParse(last, out int c)) { n = c; end--; }
-                string asked = string.Join(" ", parts, 2, end - 2);
-                var item = FindCargo(p, asked);
-                if (item == null) { NetChat.System($"짐에 '{asked}'이(가) 없어요 (맡은 물건은 보낼 수 없어요)"); return; }
-                if (n < 1 || n > CountMax) { NetChat.System($"한 번에 1~{CountMax}개 보낼 수 있어요"); return; }
+                if (item.questItem) { NetChat.System("맡은 물건은 보낼 수 없어요"); return false; }
+                if (n < 1 || n > CountMax) { NetChat.System($"한 번에 1~{CountMax}개 보낼 수 있어요"); return false; }
                 int have = p.cargo.Count(item);
-                if (have < n) { NetChat.System($"{Josa.Eun(item.displayName)} {have}개밖에 없어요"); return; }
+                if (have < n) { NetChat.System($"{Josa.Eun(item.displayName)} {have}개밖에 없어요"); return false; }
                 h.cost = p.cargo.AverageCost(item) * n;
-                if (!p.cargo.Remove(item, n)) { NetChat.System("짐에서 꺼내지 못했어요"); return; }
+                if (!p.cargo.Remove(item, n)) { NetChat.System("짐에서 꺼내지 못했어요"); return false; }
                 h.item = item;
                 h.n = n;
                 h.label = $"{item.displayName} {n}개";
@@ -93,6 +118,18 @@ namespace PocketCaravan
             held.Add(h);
             net.Send(new GiftOut { gid = h.gid, to = to, item = h.item != null ? h.item.id : "", n = h.n, money = h.money, cost = Mathf.Round(h.cost * 100f) / 100f });
             NetChat.System($"{to} 님에게 {h.label} 보내는 중…");
+            return true;
+        }
+
+        /// <summary>지금 선물을 보낼 수 있는지 (온라인 · 새 서버 · 게임 중 · 나 아님). 안 되면 까닭을 채팅에 남긴다</summary>
+        static bool Ready(string to)
+        {
+            var net = NetClient.I;
+            if (net == null || net.Status != NetClient.State.Online) { NetChat.System("온라인일 때만 선물할 수 있어요"); return false; }
+            if (!net.ServerExtras) { NetChat.System("지금 서버는 아직 선물을 몰라요 (서버를 새로 올리면 쓸 수 있어요)"); return false; }
+            if (!InGame) { NetChat.System("게임을 시작한 뒤에 선물할 수 있어요"); return false; }
+            if (string.Equals(to, net.MyName, StringComparison.OrdinalIgnoreCase)) { NetChat.System("나에게는 선물할 수 없어요"); return false; }
+            return true;
         }
 
         /// <summary>짐에서 이름(띄어쓰기 무시)이나 아이디가 같은 교역품</summary>
@@ -133,6 +170,7 @@ namespace PocketCaravan
                         NetChat.System($"{who} 님에게 {Josa.Eul(h.label)} 보냈어요");
                         Notify.Show($"{who} 님에게 {Josa.Eul(h.label)} 선물했어요", 3f);
                         Sfx.Play("coin");
+                        Delivered?.Invoke(who);
                     }
                     else
                     {
