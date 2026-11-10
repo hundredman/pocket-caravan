@@ -28,7 +28,7 @@ namespace PocketCaravan
         static readonly Color NameColor = new Color(0.56f, 0.83f, 1f);
 
         /// <summary>11/09 다른 플레이어 앞 Space 자리. 이름표는 RemotePlayers가 하늘색으로 그리니 이름은 비워 둔다</summary>
-        class Target : Interactable
+        internal class Target : Interactable
         {
             public string id, who;
             public override string DisplayName => "";

@@ -902,6 +902,57 @@ namespace PocketCaravan
             }
         }
 
+        /// <summary>
+        /// 11/10 윤채: TopPill과 같은 위 가운데 알약인데, 길면 "…"로 자르지 않고 두 줄로 편다
+        /// (첫 안내 알약이 고향 밖에서 "튜토리얼 · …"로 길어져 할 일 글이 잘렸다).
+        /// 한 줄에 다 들어가면 TopPill 그대로 "kicker · main" + 덧붙임(where).
+        /// 안 들어가면 위 작은 줄에 kicker · where(pin이면 핀), 아래 굵은 줄에 main. main도 길면 여러 줄로 감싼다.
+        /// order = TopStack 순서. 키가 커지면 그 아래 쌓이는 알약도 그만큼 내려간다
+        /// </summary>
+        public static void StackPill(int order, bool alert, Pic? pic, string kicker, string main, string where, bool pin = false)
+        {
+            main ??= "";
+            float y = TopStack(order);   // y는 나보다 위에 쌓인 것으로만 정해진다 (키는 아래에서 다시 알린다)
+            string one = string.IsNullOrEmpty(kicker) ? main : kicker + " · " + main;
+            var (left, right) = ScreenZones.FreeRow(y - 2, y + 22);
+            float maxW = Mathf.Max(120f, right - left - 9f);
+            float whereW = string.IsNullOrEmpty(where) ? 0f : 8f + (pin ? 7f : 0f) + Width(where, true);
+            if (22f + Width(one, false, true) + whereW + 10f <= maxW) { TopPill(y, alert, pic, one, where, pin); return; }
+
+            string head = string.IsNullOrEmpty(kicker) ? where : string.IsNullOrEmpty(where) ? kicker : kicker + " · " + where;
+            bool hasHead = !string.IsNullOrEmpty(head);
+            float headW = hasHead ? (pin ? 8f : 0f) + Width(head, true) : 0f;
+            float tw = 0f, h = 20f;
+            for (int pass = 0; pass < 2; pass++)   // 키가 커지면 그 높이만큼 비어 있는 너비를 다시 잰다
+            {
+                (left, right) = ScreenZones.FreeRow(y - 2, y + h + 2);
+                maxW = Mathf.Max(120f, right - left - 9f);
+                tw = Mathf.Min(maxW - 32f, Mathf.Max(headW, Width(main, false, true)));
+                float mainH = Mathf.Ceil(WrapHeight(main, tw + 1f));   // 재는 너비와 그리는 너비를 같게 (한 줄에 딱 맞을 때 끝 글자가 넘어가지 않게)
+                h = Mathf.Max(20f, 4f + (hasHead ? 11f : 0f) + mainH + 3f);
+            }
+            TopStack(order, h);
+            float w = Mathf.Round(22f + tw + 10f), x = Mathf.Round((UIStyle.VirtualWidth - w) / 2f + 8f);
+            x = Mathf.Round(Mathf.Clamp(x, left + 9f, Mathf.Max(left + 9f, right - w)));
+            Box(new Rect(x, y, w, h), 9, Paper, Ink, 1, 2, SoftShadow);
+            float cy = Mathf.Round(y + h / 2f - 12f);
+            if (alert) Medallion(x - 9, cy, 24, Alert);
+            else
+            {
+                FramedCircle(x - 9, cy, 24);
+                if (pic.HasValue) { var s = PicSize(pic.Value); Icon(pic.Value, x - 9 + (24 - s.x) / 2f, cy + (24 - s.y) / 2f); }
+            }
+            float ty = y + 4f;
+            if (hasHead)
+            {
+                float hx = x + 21f;
+                if (pin) { Icon(Pic.Pin, hx, ty - .5f, 1, Sub); hx += 8f; }
+                Label(hx, ty + 5f, head, Sub, true);
+                ty += 11f;
+            }
+            Wrap(x + 21f, ty, tw + 1f, main, Text, false, true);
+        }
+
 
         /// <summary>받침 "을/를" (마지막 글자에 받침이 있으면 을)</summary>
         public static string Eul(string word)

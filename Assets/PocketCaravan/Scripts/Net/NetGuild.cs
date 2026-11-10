@@ -24,6 +24,7 @@ namespace PocketCaravan
     ///   "net:guild:welcomed"(라일라 첫인사를 들음). 누구와 했는지는 이번 실행에만 기억한다.
     /// 지역 Intro는 읽기만 한다 (끝났는지: 각 지역 저장의 intro 단계 11).
     /// </summary>
+    [DefaultExecutionOrder(-50)]   // 11/10 PlayerController보다 먼저: Space로 누구에게 말을 거는지 창이 열리기 전에 본다 (HelloByTalk)
     public class NetGuild : MonoBehaviour
     {
         public const string Bazaar = "arabia_central_bazaar";
@@ -38,11 +39,21 @@ namespace PocketCaravan
         public enum Task { Hello, Emote, Gift, Trade }
         static readonly string[] TaskKeys = { "net:guild:hello", "net:guild:emote", "net:guild:gift", "net:guild:trade" };
         static readonly string[] TaskTitle = { "반갑게 인사하기", "리액션으로 마음 전하기", "작은 선물 건네기", "상인회 노점에서 사고팔기" };
-        /// <summary>지금 할 일 아래 방법 줄: 앞말 [키] 뒷말</summary>
-        static readonly (string pre, string key, string post)[] TaskHow =
+        /// <summary>
+        /// 지금 할 일 아래 방법 줄: 앞말 [키] 뒷말. 11/10 누구에게 가면 되는지 이름으로 (노란 화살표가 가리키는 상대).
+        /// 인사는 장터 누구에게나 Space로 말을 걸면 된다 (HelloByTalk)
+        /// </summary>
+        (string pre, string key, string post) How(int task)
         {
-            ("상인 앞에서", "Space", "인사하기"), ("상인 앞에서", "Space", "리액션 고르기"), ("상인 앞에서", "Space", "선물 고르기"), ("노점 앞에서", "Space", "하나 사 보기"),
-        };
+            string who = markName ?? "상인회 상인";
+            switch ((Task)task)
+            {
+                case Task.Hello: return markPeer != null ? ($"{who} 앞에서", "Space", "→ 인사") : ("장터 사람 누구에게나", "Space", "말 걸기");
+                case Task.Emote: return ($"{who} 앞에서", "Space", "→ 리액션");
+                case Task.Gift: return ($"{who} 앞에서", "Space", "→ 선물");
+                default: return ("상인회 노점 앞에서", "Space", "사고팔기");
+            }
+        }
         static readonly CuteUI.Pic[] TaskPic = { CuteUI.Pic.People, CuteUI.Pic.Star4, CuteUI.Pic.Sack, CuteUI.Pic.Coin7 };
 
         static readonly string[] InvitePara =
@@ -108,8 +119,8 @@ namespace PocketCaravan
         float letterAt; int letterFrame;
         bool ceremony; float ceremonyAt; int ceremonyFrame;
         NetGuildArt.Bit[] confetti;
-        // 찾아갈 상대 (다른 플레이어 아이디 또는 사람 자리) · 머리 위 높이
-        Transform markTf; string markPeer; float markLift;
+        // 찾아갈 상대 (다른 플레이어 아이디 또는 사람 자리) · 머리 위 높이 · 수첩에 적을 짧은 이름
+        Transform markTf; string markPeer, markName; float markLift;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void Boot()
@@ -163,6 +174,7 @@ namespace PocketCaravan
         void Update()
         {
             AnimateHops();
+            HelloByTalk();
             HandleWindows();
             if (Time.unscaledTime < nextCheck) return;
             nextCheck = Time.unscaledTime + 0.2f;
@@ -243,6 +255,26 @@ namespace PocketCaravan
         {
             // 채팅으로 한마디 = 인사 (서버가 받아서 나에게도 돌려준 말만)
             if (m.t == "say" && NetClient.I != null && m.id == NetClient.I.MyId && !string.IsNullOrEmpty(m.text)) Mark(Task.Hello, "채팅");
+        }
+
+        /// <summary>
+        /// 11/10 장터 누구에게나 Space로 말을 걸면 인사 (윤채: 아라비아 큰 장 상인에게 Space를 눌렀는데 수첩이 안 찼다).
+        /// 상인회 상인·다른 플레이어는 Space 창(NetMeet)에서 고른 인사로 세고, 노점은 거래 칸이라 뺀다.
+        /// PlayerController보다 먼저 돌아(DefaultExecutionOrder) 대화창이 열리기 전에, 지난 프레임에 정해 둔 말 걸 대상을 본다
+        /// </summary>
+        void HelloByTalk()
+        {
+            if (Step != 1 || !AtBazaar || GM == null || Has((int)Task.Hello) || !InputReader.InteractPressed()) return;
+            if (UIState.Blocking || UIState.JustClosed || GM.IsTravelling) return;
+            var pc = PlayerController.Instance;
+            var t = pc != null ? pc.TalkTarget : null;
+            if (t == null || !t.isActiveAndEnabled || t is RemotePlayers.Target || t.transform == stallTf) return;
+            foreach (var n in merchants) if (n.anchor == t.transform) return;
+            bool person = t.Category == Interactable.Kind.Person || t.Category == Interactable.Kind.Quest || t is TownMarket
+                || t.GetComponentInChildren<CharacterAnimator>() != null;
+            if (!person) return;
+            string name = t.transform == clerkTf ? "라일라" : WorldDisplayNames.ShortName(t.DisplayName);
+            Mark(Task.Hello, string.IsNullOrEmpty(name) ? "장터 사람" : name);
         }
 
         void OnEmote(string id)
@@ -529,7 +561,7 @@ namespace PocketCaravan
 
         void FindMark()
         {
-            markTf = null; markPeer = null;
+            markTf = null; markPeer = null; markName = null;
             var pc = PlayerController.Instance;
             if (!AtBazaar || yard == null || pc == null) return;
             int s = Step;
@@ -547,7 +579,7 @@ namespace PocketCaravan
                 {
                     if (!RemotePlayers.TryGetPosition(p.id, out var pos)) continue;
                     float d = ((Vector2)pos - me).sqrMagnitude;
-                    if (d < best) { best = d; markPeer = p.id; }
+                    if (d < best) { best = d; markPeer = p.id; markName = (string.IsNullOrEmpty(p.name) ? "접속한 상인" : p.name) + " 님"; }
                 }
             if (markPeer != null) { markLift = 2.05f; return; }
             best = float.MaxValue;
@@ -555,7 +587,7 @@ namespace PocketCaravan
             {
                 if (n.anchor == null) continue;
                 float d = ((Vector2)n.anchor.position - me).sqrMagnitude;
-                if (d < best) { best = d; markTf = n.anchor; }
+                if (d < best) { best = d; markTf = n.anchor; markName = n.shortName; }
             }
             markLift = 1.55f;
         }
@@ -717,7 +749,46 @@ namespace PocketCaravan
             if (s == 2) { main = "라일라에게 가서 상인회 가입하기"; where = "만국 장터 상인회 마당"; pin = true; }
             else if (!AtBazaar) { main = "만국 장터로 가기"; where = "수첩의 상인회 마차"; pin = false; }
             else { main = cur >= 0 ? TaskTitle[cur] : "상인회 수첩 다 채움"; where = $"수첩 {DoneCount}/{TaskKeys.Length}"; pin = false; }
-            CuteUI.TopPill(CuteUI.TopStack(12), s == 2, CuteUI.Pic.OpenBook, main, where, pin);
+            CuteUI.StackPill(12, s == 2, CuteUI.Pic.OpenBook, null, main, where, pin);   // 11/10 길면 두 줄로 (잘리지 않게)
+        }
+
+        const float FlowLine = 15f, RowPad = 4f;
+
+        /// <summary>
+        /// "앞말 [키] 뒷말"을 띄어쓰기 단위로 이어 쓰다가 넘치면 다음 줄로 (11/10: 이름이 길어도 잘리지 않게).
+        /// 쓴 높이를 돌려준다. draw=false면 재기만 한다
+        /// </summary>
+        static float Flow(float x, float y, float maxW, (string pre, string key, string post) how, bool draw)
+        {
+            float cx = x, cy = y; bool first = true, lastKey = false;
+            void Put(string text, bool key)
+            {
+                if (string.IsNullOrEmpty(text)) return;
+                float pw = key ? CuteUI.KeycapWidth(text) : CuteUI.Width(text, true);
+                float gap = first ? 0f : key || lastKey ? 4f : 3f;
+                if (!first && cx + gap + pw > x + maxW) { cx = x; cy += FlowLine; gap = 0f; }
+                cx += gap;
+                if (draw)
+                {
+                    if (key) CuteUI.Keycap(cx, cy, text, true);
+                    else CuteUI.Label(cx, cy + 6.5f, text, CuteUI.Sub, true);
+                }
+                cx += pw; first = false; lastKey = key;
+            }
+            foreach (var word in how.pre.Split(' ')) Put(word, false);
+            Put(how.key, true);
+            foreach (var word in how.post.Split(' ')) Put(word, false);
+            return cy - y + FlowLine;
+        }
+
+        /// <summary>수첩 한 칸의 높이 (지금 할 일이면 방법 줄까지, 한 칸이면 같이 한 사람이 제목 옆에 안 들어갈 때 둘째 줄)</summary>
+        float RowHeight(int i, float rowW, int cur)
+        {
+            float title = CuteUI.Width(TaskTitle[i], false, i == cur);
+            float h = 19f;
+            if (i == cur) h = 17f + Flow(0f, 0f, rowW - 27f, How(i), false) + RowPad;
+            else if (Has(i) && !string.IsNullOrEmpty(partners[i]) && 21f + title + 4f + CuteUI.Width("· " + partners[i], true) > rowW - 26f) h = 30f;
+            return h;
         }
 
         /// <summary>
@@ -731,9 +802,11 @@ namespace PocketCaravan
             int s = Step;
             bool away = s == 1 && !AtBazaar;
             int cur = s == 1 && !away ? Current : -1;
-            float rows = 0f;
-            for (int i = 0; i < TaskKeys.Length; i++) rows += i == cur ? 34f : 19f;
-            float h = 7f + 18f + 6f + rows + (away ? 28f : s == 2 ? 28f : 0f) + 5f;
+            float rowW = w - 12f, rows = 0f;
+            for (int i = 0; i < TaskKeys.Length; i++) rows += RowHeight(i, rowW, cur);
+            const string doneLine = "다 채웠어요! 라일라에게 가서 가입하기";
+            float doneH = s == 2 ? Mathf.Max(22f, Mathf.Ceil(CuteUI.WrapHeight(doneLine, rowW - 16f, true)) + 9f) : 0f;
+            float h = 7f + 18f + 6f + rows + (away ? 28f : s == 2 ? doneH + 6f : 0f) + 5f;
 
             if (cardSince < 0f) cardSince = now;
             float slide = Mathf.Round((1f - Ease((now - cardSince) / .4f)) * 50f);
@@ -757,8 +830,8 @@ namespace PocketCaravan
             for (int i = 0; i < TaskKeys.Length; i++)
             {
                 bool done = Has(i), here = i == cur;
-                float rh = here ? 34f : 19f;
-                var row = new Rect(r.x + 6f, y, w - 12f, rh - 2f);
+                float rh = RowHeight(i, rowW, cur);
+                var row = new Rect(r.x + 6f, y, rowW, rh - 2f);
                 if (here)
                 {
                     float glow = .5f + .5f * Mathf.Sin(now * 3f);
@@ -771,18 +844,13 @@ namespace PocketCaravan
                 float tx = CuteUI.Label(row.x + 21f, cy, TaskTitle[i], col, false, here);
                 if (done && !string.IsNullOrEmpty(partners[i]))
                 {
+                    // 같이 한 사람: 제목 옆에 들어가면 옆에, 아니면 둘째 줄에 (11/10 자리가 모자라면 아예 안 보이던 것)
                     string with = "· " + partners[i];
-                    if (tx + 4f + CuteUI.Width(with, true) < row.xMax - 26f) CuteUI.Label(tx + 4f, cy + .5f, with, CuteUI.Sub, true);
+                    if (rh < 30f) CuteUI.Label(tx + 4f, cy + .5f, with, CuteUI.Sub, true);
+                    else CuteUI.Label(row.x + 21f, cy + 12f, with, CuteUI.Sub, true);
                 }
-                if (here)
-                {
-                    var (pre, key, post) = TaskHow[i];
-                    float hy = row.y + 17f;
-                    float hx = CuteUI.Label(row.x + 21f, hy + 6.5f, pre, CuteUI.Sub, true);
-                    hx += 4f + CuteUI.Keycap(hx + 4f, hy, key, true);
-                    CuteUI.Label(hx + 4f, hy + 6.5f, post, CuteUI.Sub, true);
-                }
-                if (done) NetGuildArt.Stamp(row.xMax - 13f, cy, now - stampAt[i]);
+                if (here) Flow(row.x + 21f, row.y + 17f, rowW - 27f, How(i), true);
+                if (done) NetGuildArt.Stamp(row.xMax - 13f, row.y + (rh - 2f) / 2f, now - stampAt[i]);
                 y += rh;
             }
 
@@ -794,9 +862,9 @@ namespace PocketCaravan
             else if (s == 2)
             {
                 y += 3f;
-                var b = new Rect(r.x + 6f, y, w - 12f, 22f);
+                var b = new Rect(r.x + 6f, y, rowW, doneH);
                 CuteUI.Box(b, 6, CuteUI.AlertSoft, CuteUI.Alert, 1);
-                CuteUI.Label(b.x + 8f, b.center.y, "다 채웠어요! 라일라에게 가서 가입하기", CuteUI.Alert, true, true);
+                CuteUI.Wrap(b.x + 8f, b.y + 4f, rowW - 16f, doneLine, CuteUI.Alert, true, true);
             }
         }
 
