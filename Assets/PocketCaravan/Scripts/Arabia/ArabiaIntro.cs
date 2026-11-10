@@ -55,6 +55,7 @@ namespace PocketCaravan
             GameEvents.ItemBought += OnBought;
             GameEvents.ItemSold += OnSold;
             InventoryUI.Opened += OnInventory;
+            if (!Navigator.Tutorials.Contains(NavHint)) Navigator.Tutorials.Add(NavHint);
         }
 
         void OnDisable()
@@ -63,6 +64,90 @@ namespace PocketCaravan
             GameEvents.ItemBought -= OnBought;
             GameEvents.ItemSold -= OnSold;
             InventoryUI.Opened -= OnInventory;
+            Navigator.Tutorials.Remove(NavHint);
+        }
+
+        // 11/10 윤채: "아라비아에서 팔고 싶은데 도대체 어떤 상인에게 팔아야 하냐" → 고려 첫걸음 안내(GoryeoIntro.NavHint)처럼
+        //   길 안내 화살표 + 아래 "목표" 줄을 띄운다. 1·10단계 아미르, 사기 단계는 이 맵 장터(없으면 가장 가까운 아라비아 장터),
+        //   팔기 단계는 산 마을이 아닌 가장 가까운 아라비아 장터 (알 아흐사에서 사면 제다·타이즈, 맵 두 개 건너).
+        Navigator.Hint? NavHint()
+        {
+            if (!Active || !IsCat || StartScreen.IsOpen || MapRoot.Current == null) return null;
+            int s = Step;
+            if (s == 1 || s == 10)
+            {
+                var guide = root != null ? root.GetComponentInChildren<Person>() : null;
+                if (guide != null) return new Navigator.Hint { target = guide, label = Guide };
+                return new Navigator.Hint { kind = "map", id = Home, label = Guide };
+            }
+            if (s != 7 && s != 8) return null;
+            string avoid = s == 8 ? BuyTownId() : null;
+            foreach (var it in Interactable.All)
+                if (it is TownMarket m && m.isActiveAndEnabled && m.town != null && m.town.id != avoid) return new Navigator.Hint { target = it, label = $"{TownName(m.town.id)} 장터 상인" };
+            string best = NearestMarket(avoid);
+            return best != null ? new Navigator.Hint { kind = "market", id = best } : (Navigator.Hint?)null;
+        }
+
+        /// <summary>사기 단계에서 산 마을 (모르면 null)</summary>
+        static string BuyTownId()
+        {
+            var gm = GameManager.I;
+            if (gm == null || gm.Db == null || !gm.HasMemo(BuyTownMemo)) return null;
+            int i = Mathf.RoundToInt(gm.GetMemo(BuyTownMemo));
+            return i >= 0 && i < gm.Db.towns.Count && gm.Db.towns[i] != null ? gm.Db.towns[i].id : null;
+        }
+
+        static string TownName(string townId)
+        {
+            var index = WorldIndex.Get();
+            string map = index != null ? index.MapOf("market", townId) : null;
+            return map != null ? index.MapName(map) : townId;
+        }
+
+        static string cachedFrom, cachedAvoid, cachedBest; static float cachedAt = -9f;
+
+        /// <summary>지금 맵에서 맵을 건너는 수가 가장 적은 아라비아 장터 (avoid 마을은 빼고). 1초마다 다시 잰다</summary>
+        static string NearestMarket(string avoid)
+        {
+            var index = WorldIndex.Get(); var map = MapRoot.Current;
+            if (index == null || map == null) return null;
+            if (cachedFrom == map.mapId && cachedAvoid == avoid && Time.unscaledTime - cachedAt < 1f) return cachedBest;
+            string best = null; int bestHops = int.MaxValue;
+            foreach (var p in index.places)
+            {
+                if (p.kind != "market" || p.id == avoid || string.IsNullOrEmpty(p.mapId) || !p.mapId.StartsWith("arabia_")) continue;
+                int h = Hops(index, map.mapId, p.mapId);
+                if (h >= 0 && h < bestHops) { bestHops = h; best = p.id; }
+            }
+            cachedFrom = map.mapId; cachedAvoid = avoid; cachedBest = best; cachedAt = Time.unscaledTime;
+            return best;
+        }
+
+        static int Hops(WorldIndex index, string from, string to)
+        {
+            if (from == to) return 0;
+            var seen = new System.Collections.Generic.Dictionary<string, int> { [from] = 0 };
+            var q = new System.Collections.Generic.Queue<string>(); q.Enqueue(from);
+            while (q.Count > 0)
+            {
+                var cur = q.Dequeue(); var info = index.Map(cur); if (info == null) continue;
+                foreach (var n in info.neighbors)
+                {
+                    if (seen.ContainsKey(n)) continue;
+                    seen[n] = seen[cur] + 1; if (n == to) return seen[n]; q.Enqueue(n);
+                }
+            }
+            return -1;
+        }
+
+        /// <summary>팔기 단계 할 일 글: 팔 곳 이름을 넣는다 ("산 물건을 제다 장터 상인에게 팔기")</summary>
+        static string SellTask()
+        {
+            string buy = BuyTownId();
+            string here = null;
+            foreach (var it in Interactable.All) if (it is TownMarket m && m.isActiveAndEnabled && m.town != null && m.town.id != buy) { here = m.town.id; break; }
+            string to = here ?? NearestMarket(buy);
+            return to != null ? $"산 물건을 {TownName(to)} 장터 상인에게 팔기" : CuteUI.Plain(Tasks[6]);
         }
 
         void Start() { if (MapRoot.Current != null && MapRoot.Current.mapId == Home) OnMap(Home); }
@@ -122,6 +207,13 @@ namespace PocketCaravan
                     new DialogueUI.Choice("해 볼게", () => { Step = 2; Notify.Show("지도와 소지품 주머니를 받았다!", 3f); Sfx.Play("coin"); }));
                 return;
             }
+            if (s == 8)
+            {
+                string buy = BuyTownId();
+                DialogueUI.Show(Guide, $"아직 남았어.\n\n지금 할 일: {SellTask()}\n\n" +
+                    $"{(buy != null ? TownName(buy) : "산 곳")}에서 산 걸 거기서 되팔면 안 돼. 다른 마을 장터로 가져가야 값 차이가 나지. 화살표랑 아래 '목표' 줄을 따라가!");
+                return;
+            }
             if (s >= 2 && s <= 9) { DialogueUI.Show(Guide, $"아직 남았어.\n\n지금 할 일: {Tasks[s - 2]}"); return; }
             if (s == 10)
             {
@@ -173,7 +265,8 @@ namespace PocketCaravan
             var gm = GameManager.I;
             if (gm != null && gm.Db != null && gm.HasMemo(BuyTownMemo) && gm.Db.towns.IndexOf(town) == Mathf.RoundToInt(gm.GetMemo(BuyTownMemo)))
             {
-                Notify.Show("산 마을이 아닌 다른 마을 상인에게 팔아 보세요", 3f);
+                string to = NearestMarket(BuyTownId());
+                Notify.Show(to != null ? $"산 마을에서는 안 돼요! {TownName(to)} 장터처럼 다른 마을 상인에게 팔아 보세요 · 화살표를 따라가요" : "산 마을이 아닌 다른 마을 상인에게 팔아 보세요", 4f);
                 return;
             }
             Done(6);
@@ -199,6 +292,7 @@ namespace PocketCaravan
             string place = WorldIndex.Get()?.MapName(Home) ?? Home;
             string main = s == 1 ? "아미르에게 말 걸기"
                         : s == 10 ? "아미르에게 돌아가 말 걸기"
+                        : s == 8 ? SellTask()   // 11/10 어디서 팔지 이름으로
                         : CuteUI.Plain(Tasks[s - 2]);
             string where = s == 1 ? (home ? "바로 옆 · Space" : place)
                          : s == 10 ? (home ? "다 했어요!" : place + " · 지도(M)")

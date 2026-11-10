@@ -235,6 +235,23 @@ namespace PocketCaravan
         }
 
         /// <summary>화면에 그려진 다른 플레이어의 발밑 위치 (채팅 말풍선이 따라간다)</summary>
+        /// <summary>11/10 만국 상인회 기념 사진: at에서 range 안의 다른 플레이어 (정면 그림 · 이름)</summary>
+        public static void Collect(Vector2 at, float range, List<(Sprite sprite, string name)> into)
+        {
+            if (inst == null || into == null) return;
+            foreach (var a in inst.avatars.Values)
+            {
+                if (a.root == null || ((Vector2)a.root.transform.position - at).sqrMagnitude > range * range) continue;
+                Sprite sp = a.anim != null && a.anim.frames != null && a.anim.frames.Length > 0 && a.anim.frames[0] != null ? a.anim.frames[0]
+                          : a.sr != null ? a.sr.sprite : null;
+                if (sp != null) into.Add((sp, string.IsNullOrEmpty(a.name) ? "상인" : a.name));
+            }
+        }
+
+        /// <summary>11/10 그 사람 앞 Space 자리 (만국 상인회 길 안내가 가리킨다). 없으면 null</summary>
+        public static Interactable TargetOf(string id) =>
+            inst != null && id != null && inst.avatars.TryGetValue(id, out var a) ? a.target : null;
+
         public static bool TryGetPosition(string id, out Vector3 pos)
         {
             pos = default;

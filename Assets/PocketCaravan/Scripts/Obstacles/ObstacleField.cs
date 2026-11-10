@@ -181,6 +181,22 @@ namespace PocketCaravan
             var tint=appearance!=null && appearance.weather!=null?appearance.weather.sceneTint:Color.white;
             tint.a=s.active && !s.resolved?.9f:.16f;s.renderer.color=tint;
         }
+        const float ShowRange=6f;
+        /// <summary>알약에 띄울 장애물: 발밑에서 ShowRange 칸 안의 가장 가까운 것 (해결한 것은 방금 손댄 것만). 없으면 null</summary>
+        State NearestShown(PlayerController p)
+        {
+            if(p==null||p.Motor==null)return null;
+            State best=null;float bd=ShowRange;var feet=p.Motor.Feet;
+            foreach(var st in states)
+            {
+                if(st.resolved&&st!=focus)continue;
+                Vector2 lo=map.CellCenter(new Vector3Int(st.area.x,st.area.y,0))-(Vector3)Vector2.one*.5f;
+                Vector2 hi=lo+new Vector2(st.area.width,st.area.height);
+                float dist=Vector2.Distance(feet,new Vector2(Mathf.Clamp(feet.x,lo.x,hi.x),Mathf.Clamp(feet.y,lo.y,hi.y)));
+                if(dist<=bd){bd=dist;best=st;}
+            }
+            return best;
+        }
         public bool Near(State s,PlayerController p)
         {
             Vector2 lo=map.CellCenter(new Vector3Int(s.area.x,s.area.y,0))-(Vector3)Vector2.one*.5f;
@@ -235,7 +251,10 @@ namespace PocketCaravan
             // 11/08 창(소지품·장부·지도·수첩)이 열려 있으면 알약·카드는 숨긴다 (창 위에 그려져 장부 닫기 단추 누름을 가로챘다)
             if(UIState.Blocking)return;
             // 11/05 UI B안: 오른쪽 위 단추를 가리던 큰 검은 창 대신, 단추 아래 한 줄 알약 (누르면 자세히 카드)
-            var s=focus ?? states[0];var d=s.definition;
+            // 11/10 윤채: 맵에 장애물이 있기만 하면 알약이 늘 떠 있었다 → 장애물 가까이(ShowRange 칸 안)일 때만. 작업 중이면 그것
+            var s=working ?? NearestShown(pc);
+            if(s==null)return;
+            var d=s.definition;
             float vw=UIStyle.VirtualWidth,top=44;
             string line=d.displayName+" · "+(s.resolved?"해결":s.active?"활성":"통행 가능");
             Color32 dot=s.resolved?CuteUI.Sub:s.active?CuteUI.Alert:CuteUI.Up;
