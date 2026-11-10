@@ -314,8 +314,8 @@ namespace PocketCaravan
             string place=WorldIndex.Get()?.MapName(Home)??Home;
             string where=s==1?(home?"바로 옆 · Space":place):s==10?(home?"다 했어요!":place+" · 지도(M)"):$"배우기 {s-1}/{Tasks.Length}";
             GuideText=main;
-            if(!home)main="튜토리얼 · "+main;
-            CuteUI.TopPill(CuteUI.TopStack(10),false,CuteUI.Pic.Bulb,main,where,!home&&(s==1||s==10));
+            // 11/10 길면 줄이지 않고 두 줄로 편다 (위 작은 줄 "튜토리얼 · 배우기 n/8", 아래 굵은 할 일)
+            CuteUI.StackPill(10,false,CuteUI.Pic.Bulb,home?null:"튜토리얼",main,where,!home&&(s==1||s==10));
         }
     }
 }

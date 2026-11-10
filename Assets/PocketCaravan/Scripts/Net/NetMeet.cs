@@ -210,21 +210,29 @@ namespace PocketCaravan
                 markStyle = new GUIStyle(GUI.skin.label) { font = UIStyle.RegularFont, fontSize = UIStyle.BodySize + 4, alignment = TextAnchor.MiddleCenter, clipping = TextClipping.Overflow, fontStyle = FontStyle.Bold };
 
             float h = page == Page.Main ? 98f : page == Page.Moves ? 90f : 34f + gifts.Count * 18f + 18f;
+            // 11/10 너비는 글에 맞춰 넓힌다 (긴 이름·긴 물건 이름이 "Esc 닫기"·"가진 N개"와 겹치거나 잘리지 않게)
+            string back = page == Page.Main ? "Esc 닫기" : "Esc 뒤로", kind = npc != null ? "만국 상인회" : "접속한 상인";
+            float nameW = CuteUI.Width(who, false, true), backW = CuteUI.Width(back, true);
+            float need = 9f + nameW + 8f + backW + 9f;
+            if (page == Page.Gift)
+                foreach (var (item, have) in gifts)
+                    need = Mathf.Max(need, 6f + 16f + CuteUI.Width(item != null ? item.displayName + " 1개" : GiftMoney + "냥", false, true) + 12f
+                                           + CuteUI.Width(item != null ? $"가진 {have}개" : $"가진 {have}냥", true) + 6f + 6f + (item == null ? 11f : 0f));
+            float cardW = Mathf.Round(Mathf.Clamp(need, CardW, Mathf.Max(CardW, UIStyle.VirtualWidth - 12f)));
             // 카드는 상대 머리 위 (꼬리가 상대를 가리킨다). 화면 밖으로 나가면 안쪽으로
             Vector3 world = default; bool has = false;
             if (npc != null && npc.anchor != null) { world = npc.anchor.position + new Vector3(0f, 1.3f, 0f); has = true; }
             else if (peerId != null && RemotePlayers.TryGetPosition(peerId, out var pos)) { world = pos + new Vector3(0f, 1.75f, 0f); has = true; }
             Vector2 tail = new Vector2(UIStyle.VirtualWidth / 2f, UIStyle.VirtualHeight / 2f);
             if (has && NetGuildArt.ToGui(Camera.main, world, out var g)) tail = g;
-            float x = Mathf.Round(Mathf.Clamp(tail.x - CardW / 2f, 6f, UIStyle.VirtualWidth - CardW - 6f));
+            float x = Mathf.Round(Mathf.Clamp(tail.x - cardW / 2f, 6f, UIStyle.VirtualWidth - cardW - 6f));
             float y = Mathf.Round(Mathf.Clamp(tail.y - h - 4f, 34f, UIStyle.VirtualHeight - h - 60f));
             float pop = Mathf.Clamp01((Time.unscaledTime - openedAt) / .12f);
-            var r = new Rect(x, y + Mathf.Round((1f - pop) * 6f), CardW, h);
+            var r = new Rect(x, y + Mathf.Round((1f - pop) * 6f), cardW, h);
             CuteUI.Bubble(r, Mathf.Clamp(tail.x, r.x + 12f, r.xMax - 12f), CuteUI.Interact);
 
-            // 머리: 이름 + 어떤 사람인지
+            // 머리: 이름 + 어떤 사람인지 (어떤 사람인지는 자리가 남을 때만)
             float top = r.y + 6f;
-            string back = page == Page.Main ? "Esc 닫기" : "Esc 뒤로", kind = npc != null ? "만국 상인회" : "접속한 상인";
             float nx = CuteUI.Label(r.x + 9f, top + 6f, who, CuteUI.Text, false, true);
             float backX = r.xMax - 9f - CuteUI.Width(back, true);
             if (nx + 5f + CuteUI.Width(kind, true) < backX - 4f) CuteUI.Label(nx + 5f, top + 6.5f, kind, CuteUI.Sub, true);   // 이름이 길면 빼고

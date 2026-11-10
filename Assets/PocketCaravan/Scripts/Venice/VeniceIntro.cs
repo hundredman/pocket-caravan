@@ -197,11 +197,11 @@ namespace PocketCaravan
             string main = s == 1 ? "상인회 안내원에게 말 걸기"
                         : s == 10 ? "안내원 조반나에게 돌아가기"
                         : CuteUI.Plain(Tasks[s - 2]);
-            if (!home) main = "튜토리얼 · " + main;
             string where = s == 1 ? (home ? "바로 옆 · Space" : "리알토 부두 광장")
                          : s == 10 ? (home ? "다 했어요!" : "리알토 부두 광장 · 지도(M)")
                          : $"배우기 {s - 1}/{Tasks.Length}";
-            CuteUI.TopPill(CuteUI.TopStack(10), false, CuteUI.Pic.Bulb, main, where, !home && (s == 1 || s == 10));
+            // 11/10 길면 줄이지 않고 두 줄로 편다 (위 작은 줄 "튜토리얼 · 배우기 n/8", 아래 굵은 할 일)
+            CuteUI.StackPill(10, false, CuteUI.Pic.Bulb, home ? null : "튜토리얼", main, where, !home && (s == 1 || s == 10));
         }
     }
 }
