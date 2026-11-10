@@ -21,6 +21,7 @@ namespace PocketCaravan
         {
             ["money"] = ("부자 상인", "냥"),
             ["gondola"] = ("곤돌라 경주", "점"),
+            [NetStackGame.Board] = ("상인회 짐 쌓기", "단"),   // 11/10 만국 상인회 수첩 미니게임
         };
 
         static NetScores inst;

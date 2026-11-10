@@ -30,8 +30,9 @@ namespace PocketCaravan
         /// <summary>
         /// 빨간 "완료" 도장. 비스듬히(-14도) 찍히고, 찍은 직후 0.22초는 크게 내려앉는다. age = 찍은 뒤 지난 초
         /// </summary>
-        public static void Stamp(float cx, float cy, float age)
+        public static void Stamp(float cx, float cy, float age, int size = 22)
         {
+            if (age < 0f) return;   // 아직 찍기 전
             var m = GUI.matrix; var c = GUI.color;
             float k = Mathf.Clamp01(age / 0.22f);
             float s = Mathf.Lerp(2.4f, 1f, k * k);
@@ -39,8 +40,10 @@ namespace PocketCaravan
             GUIUtility.ScaleAroundPivot(new Vector2(s, s), pivot);
             GUIUtility.RotateAroundPivot(-14f, pivot);
             GUI.color = new Color(c.r, c.g, c.b, c.a * Mathf.Lerp(.25f, 1f, k));
-            CuteUI.Circle(cx - 11, cy - 11, 22, StampFill, CuteUI.Alert, 2);
-            CuteUI.LabelCenter(cx, cy, "완료", CuteUI.Alert, true, true);
+            int half = size / 2;
+            CuteUI.Circle(cx - half, cy - half, size, StampFill, CuteUI.Alert, 2);
+            if (size >= 30) CuteUI.Circle(cx - half + 4, cy - half + 4, size - 8, new Color32(0, 0, 0, 0), CuteUI.Alert, 1);
+            CuteUI.LabelCenter(cx, cy, "완료", CuteUI.Alert, size < 30, true);
             GUI.matrix = m; GUI.color = c;
         }
 

@@ -909,7 +909,7 @@ namespace PocketCaravan
         /// 안 들어가면 위 작은 줄에 kicker · where(pin이면 핀), 아래 굵은 줄에 main. main도 길면 여러 줄로 감싼다.
         /// order = TopStack 순서. 키가 커지면 그 아래 쌓이는 알약도 그만큼 내려간다
         /// </summary>
-        public static void StackPill(int order, bool alert, Pic? pic, string kicker, string main, string where, bool pin = false)
+        public static Rect StackPill(int order, bool alert, Pic? pic, string kicker, string main, string where, bool pin = false)
         {
             main ??= "";
             float y = TopStack(order);   // y는 나보다 위에 쌓인 것으로만 정해진다 (키는 아래에서 다시 알린다)
@@ -917,7 +917,13 @@ namespace PocketCaravan
             var (left, right) = ScreenZones.FreeRow(y - 2, y + 22);
             float maxW = Mathf.Max(120f, right - left - 9f);
             float whereW = string.IsNullOrEmpty(where) ? 0f : 8f + (pin ? 7f : 0f) + Width(where, true);
-            if (22f + Width(one, false, true) + whereW + 10f <= maxW) { TopPill(y, alert, pic, one, where, pin); return; }
+            if (22f + Width(one, false, true) + whereW + 10f <= maxW)
+            {
+                TopPill(y, alert, pic, one, where, pin);
+                float w1 = Mathf.Round(22 + Width(one, false, true) + whereW + 10), x1 = Mathf.Round((UIStyle.VirtualWidth - w1) / 2f + 8);
+                x1 = Mathf.Round(Mathf.Clamp(x1, left + 9f, Mathf.Max(left + 9f, right - w1)));
+                return new Rect(x1 - 9f, y - 2f, w1 + 9f, 24f);   // 그린 자리 (왼쪽 동그라미까지)
+            }
 
             string head = string.IsNullOrEmpty(kicker) ? where : string.IsNullOrEmpty(where) ? kicker : kicker + " · " + where;
             bool hasHead = !string.IsNullOrEmpty(head);
@@ -951,6 +957,7 @@ namespace PocketCaravan
                 ty += 11f;
             }
             Wrap(x + 21f, ty, tw + 1f, main, Text, false, true);
+            return new Rect(x - 9f, y, w + 9f, h);
         }
 
 
