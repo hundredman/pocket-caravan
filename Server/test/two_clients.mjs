@@ -85,6 +85,17 @@ a.send({ t: "enter", map: "test_rialto", veh: "" });
 const walkB = await b.wait((m) => m.t === "join" && m.id === a.id && m.veh === "" && joinsOfA().length >= 5);
 check(!!walkB, "veh를 빈칸으로 실으면 걷기로 돌아간다");
 
+// 11/09 이름표 표시(만국 상인회): enter에 tag를 실으면 같은 맵 사람에게 join으로, 나중에 온 사람에게 room으로 간다
+a.send({ t: "enter", map: "test_rialto", tag: "guild" });
+const tagB = await b.wait((m) => m.t === "join" && m.id === a.id && m.tag === "guild");
+check(!!tagB, "tag를 실어 다시 들어오면 B는 A의 이름표 표시를 받는다");
+a.send({ t: "enter", map: "test_rialto" });
+await b.wait((m) => m.t === "join" && m.id === a.id && joinsOfA().length >= 7);
+check(joinsOfA()[6]?.tag === "guild", "tag 없이 들어오면 표시는 그대로 (예전 게임)");
+a.send({ t: "enter", map: "test_rialto", tag: "<b>" });
+await b.wait((m) => m.t === "join" && m.id === a.id && joinsOfA().length >= 8);
+check(joinsOfA()[7]?.tag === "", "이상한 글자의 tag는 빈칸으로 막는다");
+
 // 11/08 앉기 · 짐 상자 수: pos에 실으면 같은 맵 사람에게 그대로 간다 (범위 밖은 막음)
 a.send({ t: "pos", x: 12.5, y: -3.25, fx: 0, fy: -1, m: false, s: true, sy: 0.5, sq: 0.86, ld: 2 });
 const sitB = await b.wait((m) => m.t === "pos" && m.id === a.id && m.s === true);

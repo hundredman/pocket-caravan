@@ -15,20 +15,34 @@ namespace PocketCaravan
     ///   머리 위에 리액션 이름이 크게 뜨고 기호(★ ♪ ♥ z !)가 떠오른다. 동작 모양은 아이디로 고른다(NetEmote 설명 참고).
     /// - 채팅 리액션 명령(/춤 등)은 내 캐릭터에도 같은 동작과 머리 위 표시를 한다(PlaySelf).
     ///   공용 CarryVisual이 그림 자리를 정한 뒤에 덧입히고(실행 순서 1000), 다음 프레임 처음에 되돌린다. 걷기 시작하면 멈춘다.
-    /// 공용 코드는 읽기만 한다(PlayerController · StartChoices · PlayerAppearance).
+    /// - 11/09 다른 플레이어 앞에서 Space: 인사·리액션·선물 창(NetMeet). 장터·NPC 같은 다른 대상이 가까이 있으면 그쪽이 먼저다
+    ///   (사람이 노점 앞에 몰려 있어도 Space가 사고팔기로 간다). 만국 상인회에 가입한 사람(tag "guild")은 이름 위에 금빛 표시.
+    /// 공용 코드는 읽기만 한다(PlayerController · StartChoices · PlayerAppearance · Interactable).
     /// </summary>
     [DefaultExecutionOrder(1000)]
     public class RemotePlayers : MonoBehaviour
     {
         const float StaleSeconds = 5f, Snap = 4f, Smooth = 14f;
+        /// <summary>내 발밑에서 이 거리 안에 장터·NPC가 있으면 다른 플레이어는 Space 대상에서 잠깐 빠진다 (PlayerController.talkRange 1.8칸보다 조금 넓게)</summary>
+        const float OtherTargetRange = 2.2f;
         static readonly Color NameColor = new Color(0.56f, 0.83f, 1f);
+
+        /// <summary>11/09 다른 플레이어 앞 Space 자리. 이름표는 RemotePlayers가 하늘색으로 그리니 이름은 비워 둔다</summary>
+        class Target : Interactable
+        {
+            public string id, who;
+            public override string DisplayName => "";
+            public override string ActionVerb => "어울리기";
+            public override void Interact(PlayerController player) => NetMeet.OpenPlayer(id, who);
+        }
 
         class Avatar
         {
             public GameObject root;
             public CharacterAnimator anim;
             public SpriteRenderer sr;
-            public string look, name;
+            public Target target;
+            public string look, name, tag;
             public Vector3 bodyPos, bodyScale;   // 그림의 원래 자리·크기 (리액션 뒤에 되돌린다)
             public string emote, emoteName;      // 하고 있는 리액션 (동작 모양 · 보여 줄 이름)
             public float emoteStart, emoteLength;
@@ -245,13 +259,16 @@ namespace PocketCaravan
                     gone.Add(kv.Key);
             foreach (var id in gone) Remove(id);
 
+            bool otherNear = OtherTargetNear(pc.transform.position);
             foreach (var p in net.Peers.Values)
             {
                 if (Time.unscaledTime - p.heardAt > StaleSeconds) continue;
                 if (!avatars.TryGetValue(p.id, out var a)) avatars[p.id] = a = Create(p, pc);
                 if (a.look != p.look) { a.look = p.look; a.anim.frames = FramesFor(p.look, pc); }
                 a.vehicle = p.veh;
+                a.tag = p.tag;
                 a.name = string.IsNullOrEmpty(p.name) ? p.id : p.name;
+                if (a.target != null) { a.target.who = a.name; if (a.target.enabled == otherNear) a.target.enabled = !otherNear; }
 
                 Vector3 target = new Vector3(p.x, p.y, pc.transform.position.z);
                 Vector3 now = a.root.transform.position;
@@ -294,7 +311,22 @@ namespace PocketCaravan
             }
             anim.frames = FramesFor(p.look, pc);
             if (anim.frames != null && anim.frames.Length > 0) sr.sprite = anim.frames[0];
-            return new Avatar { root = root, anim = anim, sr = sr, look = p.look, name = p.name, bodyPos = body.transform.localPosition, bodyScale = body.transform.localScale, vehicle = p.veh };
+            var target = root.AddComponent<Target>();
+            target.blocksMovement = false;   // 겹쳐 지나간다 (칸을 막지 않는다)
+            target.id = p.id;
+            target.who = string.IsNullOrEmpty(p.name) ? p.id : p.name;
+            return new Avatar { root = root, anim = anim, sr = sr, target = target, look = p.look, name = p.name, tag = p.tag, bodyPos = body.transform.localPosition, bodyScale = body.transform.localScale, vehicle = p.veh };
+        }
+
+        /// <summary>내 곁에 다른 플레이어가 아닌 Space 대상(장터·NPC·게시판 등)이 있는지</summary>
+        static bool OtherTargetNear(Vector2 me)
+        {
+            foreach (var it in Interactable.All)
+            {
+                if (it == null || it is Target || !it.isActiveAndEnabled) continue;
+                if (((Vector2)it.transform.position - me).sqrMagnitude <= OtherTargetRange * OtherTargetRange) return true;
+            }
+            return false;
         }
 
         /// <summary>출신 아이디 → 그 출신의 캐릭터 그림 16장. 모르면 내 그림을 빌린다</summary>
@@ -319,6 +351,17 @@ namespace PocketCaravan
             foreach (var a in avatars.Values) if (a.root != null) Destroy(a.root);
             avatars.Clear();
             shownMap = null;
+        }
+
+        /// <summary>11/09 만국 상인회 표시: 이름 바로 위 금빛 알약 "★ 상인회" (리액션 이름이 뜨는 동안은 숨긴다)</summary>
+        public static void DrawBadge(float cx, float bottom)
+        {
+            const string text = "상인회";
+            float w = Mathf.Round(CuteUI.Width(text, true, true) + 18f);
+            var r = new Rect(Mathf.Round(cx - w / 2f), Mathf.Round(bottom - 11f), w, 11f);
+            CuteUI.Box(r, 5, CuteUI.Deco, CuteUI.Ink, 1, 1, CuteUI.SoftShadow);
+            CuteUI.Icon(CuteUI.Pic.Star4, r.x + 3, r.y + 2, 1, CuteUI.Ink);
+            CuteUI.Label(r.x + 12, r.center.y, text, CuteUI.Ink, true, true);
         }
 
         /// <summary>머리 위 리액션 이름(톡 튀어나오며 커진다)과 떠오르는 기호 셋</summary>
@@ -381,6 +424,7 @@ namespace PocketCaravan
                 foreach (var o in new[] { new Vector2(1, 0), new Vector2(-1, 0), new Vector2(0, 1), new Vector2(0, -1) })
                     GUI.Label(new Rect(r.x + o.x, r.y + o.y, r.width, r.height), a.name, shadowStyle);
                 GUI.Label(r, a.name, nameStyle);
+                if (a.tag == NetGuild.BadgeId && a.emote == null) DrawBadge(r.center.x, r.y - 6f);
                 if (a.emote != null) DrawEmote(cam, a.root.transform.position, a.emote, a.emoteName, a.emoteStart, a.emoteLength, scale);
             }
             if (selfShow) DrawEmote(cam, me.transform.position, selfKind, selfName, selfStart, selfLength, scale);

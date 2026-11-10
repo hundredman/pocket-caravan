@@ -15,6 +15,12 @@ namespace PocketCaravan
         static string lastId;
         static float lastAt = -10f;
 
+        /// <summary>11/09 내가 리액션을 했다 (접속하지 않아도 알린다). 만국 상인회 수첩(NetGuild)이 듣는다</summary>
+        public static event System.Action<string> Sent;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics() { Sent = null; lastId = null; lastAt = -10f; }
+
         public static void Send(string id, string name)
         {
             if (id == lastId && Time.unscaledTime - lastAt < 0.5f) return;   // 같은 리액션을 두 곳에서 알려도 한 번만
@@ -22,6 +28,7 @@ namespace PocketCaravan
             lastAt = Time.unscaledTime;
             var net = NetClient.I;
             if (net != null) net.Emote(id, name);
+            Sent?.Invoke(id);
         }
     }
 }

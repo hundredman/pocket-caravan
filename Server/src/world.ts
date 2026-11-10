@@ -24,6 +24,8 @@
  *   room · join의 플레이어 정보에 "veh"가 함께 가고, 게임이 그 사람 옆에 손수레·썰매·낙타를 그린다. 바꾸면 같은 맵에 다시 enter.
  *   (2026-11-08) pos에 손수레 짐 상자 수 "ld"(0~3)도 싣는다. pos · room · join으로 간다.
  *   (2026-11-08) pos에 앉기 "s"(true/false)와 앉은 모습 "sy"(그림 높이 -1~1)·"sq"(세로 눌림 0.3~1.5)를 실을 수 있다. pos · room · join으로 간다.
+ *   (2026-11-09) enter에 "tag"(이름표 표시 아이디: 만국 상인회에 가입하면 "guild", 없으면 "")를 실을 수 있다.
+ *   room · join의 플레이어 정보에 "tag"가 함께 가고, 게임이 이름표 위에 표시를 그린다. 바뀌면 같은 맵에 다시 enter. 안 실으면(예전 게임) 그대로
  *  6단계 (2026-10-30) 끊겨도 다시 붙기 · 서버 보호
  *   hello에 "key"(게임을 켤 때마다 새로 만드는 비밀 글자)를 실어 보낸다. 같은 key로 다시 들어오면
  *   예전 접속을 닫고 예전 번호(id)를 그대로 준다. welcome의 "name"이 실제로 쓰인 이름이다(겹치면 "윤채(2)").
@@ -196,6 +198,8 @@ interface Player {
   sq?: number;
   /** 손수레 짐 상자 수 0~3 — 11/08 */
   ld?: number;
+  /** 이름표 표시 ("guild" = 만국 상인회, 없으면 "") — 11/09 */
+  tag?: string;
   /** 마지막으로 메시지를 받은 시각 (ms) */
   heard: number;
   /** 서버가 닫기로 한 접속 (닫히는 중) */
@@ -458,6 +462,7 @@ export class WorldRoom extends DurableObject<Env> {
         const look = cleanMap(msg.look);
         if (look) me.look = look;
         if (typeof msg.veh === "string") me.veh = cleanMap(msg.veh);   // 11/08 운반 수단 ("" = 걷기). 안 실으면(예전 게임) 그대로
+        if (typeof msg.tag === "string") me.tag = cleanMap(msg.tag);   // 11/09 이름표 표시 ("" = 없음). 안 실으면 그대로
         me.map = map;
         me.m = false;
         ws.serializeAttachment(me);
@@ -935,7 +940,7 @@ export class WorldRoom extends DurableObject<Env> {
 }
 
 function publicInfo(p: Player) {
-  return { id: p.id, name: p.name, look: p.look, veh: p.veh ?? "", x: p.x, y: p.y, fx: p.fx, fy: p.fy, m: p.m, s: p.s ?? false, sy: p.sy ?? 0, sq: p.sq ?? 1, ld: p.ld ?? 0 };
+  return { id: p.id, name: p.name, look: p.look, veh: p.veh ?? "", tag: p.tag ?? "", x: p.x, y: p.y, fx: p.fx, fy: p.fy, m: p.m, s: p.s ?? false, sy: p.sy ?? 0, sq: p.sq ?? 1, ld: p.ld ?? 0 };
 }
 
 function send(ws: WebSocket, msg: unknown): void {

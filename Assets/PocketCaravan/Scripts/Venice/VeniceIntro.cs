@@ -183,7 +183,8 @@ namespace PocketCaravan
         }
 
         /// <summary>위 가운데 배우기 알약이 떠 있다 (구역 이름 알약이 그 아래로 비킨다)</summary>
-        public static bool Showing { get { int s = Step; return s >= 1 && s <= 10 && !UIState.Blocking && !HUD.Expanded && IsCat && VeniceUtil.InVenice; } }   // 11/08 Tab 펼친 동안은 숨긴다 (상태 카드와 겹쳤다)
+        /// <remarks>11/09 윤채: 베네치아 밖에서도 띄운다. "다른 마을에서 팔기"를 하러 나가면 알약이 사라져 튜토리얼이 끝난 줄 알았다</remarks>
+        public static bool Showing { get { int s = Step; return s >= 1 && s <= 10 && !UIState.Blocking && !HUD.Expanded && IsCat && MapRoot.Current != null; } }   // 11/08 Tab 펼친 동안은 숨긴다 (상태 카드와 겹쳤다)
 
         void OnGUI()
         {
@@ -191,11 +192,16 @@ namespace PocketCaravan
             int s = Step;
             UIStyle.Begin();
             // 11/07 UI B안: 할 일 줄과 같은 위 가운데 알약 (전구 = 배우기, 오른쪽 작은 글 = 몇 번째). 위 알약들 아래 빈 자리에
+            // 11/09 리알토를 떠나 있으면 앞에 "튜토리얼"을 붙이고, 안내원에게 가야 하는 단계는 어디로 가는지 알려 준다
+            bool home = VeniceUtil.Map == Home;
             string main = s == 1 ? "상인회 안내원에게 말 걸기"
                         : s == 10 ? "안내원 조반나에게 돌아가기"
                         : CuteUI.Plain(Tasks[s - 2]);
-            string where = s == 1 ? "바로 옆 · Space" : s == 10 ? "다 했어요!" : $"배우기 {s - 1}/{Tasks.Length}";
-            CuteUI.TopPill(CuteUI.TopStack(10), false, CuteUI.Pic.Bulb, main, where, false);
+            if (!home) main = "튜토리얼 · " + main;
+            string where = s == 1 ? (home ? "바로 옆 · Space" : "리알토 부두 광장")
+                         : s == 10 ? (home ? "다 했어요!" : "리알토 부두 광장 · 지도(M)")
+                         : $"배우기 {s - 1}/{Tasks.Length}";
+            CuteUI.TopPill(CuteUI.TopStack(10), false, CuteUI.Pic.Bulb, main, where, !home && (s == 1 || s == 10));
         }
     }
 }
