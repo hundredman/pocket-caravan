@@ -75,6 +75,9 @@ namespace PocketCaravan
             var gm = GameManager.I;
             string key = "hint:" + Map;
             if (gm == null || spots.Count == 0 || Mathf.RoundToInt(gm.GetMemo(key, -1f)) == gm.Clock.day) return;
+            // 11/11 기우: 시작 이야기·튜토리얼 중에는 알리지 않는다 (시작 화면에 뜨는 것 줄이기). 대화가 떠 있으면 끝난 뒤에 다시 본다.
+            if (UIState.Blocking) { announceAt = Time.time + 1f; return; }
+            if (StoryGuide.IntroActive) { gm.SetMemo(key, gm.Clock.day); return; }   // 오늘 이 맵 알림은 조용히 넘긴다 (튜토리얼 끝나자마자 뜨지 않게)
             var names = new List<string>();
             foreach (var s in spots) if (!s.done && !names.Contains(s.name)) names.Add(s.name);
             if (names.Count == 0) return;
@@ -89,6 +92,8 @@ namespace PocketCaravan
             var cam = Camera.main; var pc = PlayerController.Instance;
             if (Map == null || cam == null || pc == null || UIState.Blocking || spots.Count == 0) return;
             if (GameManager.I != null && GameManager.I.IsTravelling) return;
+            if (UIState.PhotoMode) return;        // 11/11 기념 사진 찍는 중
+            if (StoryGuide.IntroActive) return;   // 11/11 튜토리얼 중에는 ★ 놀거리 표시·가장자리 화살표도 쉰다 (길 안내 화살표와 헷갈린다)
             if (star == null) star = Collectibles.LoadSprite("Common/fx_star", new Vector2(0.5f, 0.5f));
             UIStyle.Begin();
             GUI.depth = -4;

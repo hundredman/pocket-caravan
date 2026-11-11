@@ -65,7 +65,8 @@ namespace PocketCaravan
         }
         static bool In(QuestData q, Reactions.Region r) => RegionOf(q, out var x) && x == r;
 
-        static bool IntroActive => NorthIntro.Active || VeniceIntro.Active || GoryeoIntro.Active || ArabiaIntro.Active;
+        /// <summary>어느 지역이든 시작 튜토리얼(첫걸음 안내)을 하는 중. 이 동안은 다른 알림을 줄인다 (11/11 기우: 시작 화면이 복잡하다는 의견)</summary>
+        public static bool IntroActive => NorthIntro.Active || VeniceIntro.Active || GoryeoIntro.Active || ArabiaIntro.Active;
 
         // ---------------- 동시 제한 ----------------
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]

@@ -13,6 +13,11 @@ namespace PocketCaravan
         public static int ClosedFrame = -1;
         public static int ResetVersion { get; private set; }
         public static bool JustClosed => Time.frameCount == ClosedFrame;
+        /// <summary>
+        /// 기념 사진을 찍는 중 (셋 세는 동안 ~ 찰칵). 2026-11-11 기우: 사진에는 게임 화면이 그대로 찍히므로,
+        /// 이 동안 사람·자리 이름표, Space 안내, 길 안내 화살표, 놀거리 ★ 표시, 상인 말풍선을 감춘다. 접속한 사람 이름은 그대로 보인다.
+        /// </summary>
+        public static bool PhotoMode;
 
         public static bool TryOpen(UnityEngine.Object next, System.Action close)
         {

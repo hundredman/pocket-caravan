@@ -170,7 +170,7 @@ namespace PocketCaravan
                 case "trade":
                     Saw(m.seq);
                     if (m.id == NetClient.I.MyId) break;
-                    if (Apply(m.town, m.item, m.d, out var town, out var item))
+                    if (Apply(m.town, m.item, m.d, out var town, out var item) && !StoryGuide.IntroActive)   // 11/11 튜토리얼 중에는 남의 거래 줄을 띄우지 않는다 (값은 그대로 반영)
                         NetChat.System($"{m.name} 님이 {town.displayName}에서 {Josa.Eul(item.displayName)} {m.n}개 {(m.sell ? "팔았어요 (값 ↓)" : "샀어요 (값 ↑)")}");
                     break;
                 case "trades":

@@ -22,6 +22,7 @@ namespace PocketCaravan
             var gm = GameManager.I;
             var cam = Camera.main;
             if (gm == null || cam == null || MapRoot.Current == null || UIState.Blocking) return;
+            if (UIState.PhotoMode) return;   // 11/11 기념 사진 찍는 중: 이름표·Space 안내·길 안내 화살표를 모두 감춘다
             UIStyle.Begin();
             Init();
 

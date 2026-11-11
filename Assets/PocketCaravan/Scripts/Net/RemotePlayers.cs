@@ -89,6 +89,8 @@ namespace PocketCaravan
             var pc = PlayerController.Instance;
             float k = (Time.unscaledTime - selfStart) / selfLength;
             if (pc == null || pc.anim == null || k >= 1f || (pc.Motor != null && pc.Motor.IsMoving)) { selfKind = null; return; }
+            // 11/11 기우: R 리액션(Reactions)이 같은 그림을 움직이는 중이면 겹쳐 덧입히지 않는다 (둘이 겹치면 그림이 눌린 채 남았다)
+            if (Reactions.Animating(pc.anim)) { selfKind = null; return; }
             selfBody = pc.anim.transform;
             selfPos = selfBody.localPosition; selfScale = selfBody.localScale; selfRot = selfBody.localRotation;
             Pose(selfKind, k, out var lift, out var sx, out var sy, out var tilt);
@@ -421,7 +423,11 @@ namespace PocketCaravan
             var cam = Camera.main;
             var me = PlayerController.Instance;
             bool selfShow = selfKind != null && me != null;
-            if ((avatars.Count == 0 && !selfShow) || cam == null || UIState.Blocking) return;
+            // 11/11 기우: 기념 사진을 찍는 동안에는 내 머리 위에도 내 닉네임을 띄운다 (사진에 접속한 사람 이름만 남기기로 해서, 나도 같이)
+            var net = NetClient.I;
+            string myName = UIState.PhotoMode && me != null && net != null && net.Status == NetClient.State.Online ? net.MyName : null;
+            bool selfTag = !string.IsNullOrEmpty(myName);
+            if ((avatars.Count == 0 && !selfShow && !selfTag) || cam == null || UIState.Blocking) return;
             UIStyle.Begin();
             GUI.depth = -3;
             if (nameStyle == null || nameStyle.font != UIStyle.SmallFont)
@@ -443,6 +449,17 @@ namespace PocketCaravan
                 GUI.Label(r, a.name, nameStyle);
                 if (a.tag == NetGuild.BadgeId && a.emote == null) DrawBadge(r.center.x, r.y - 6f);
                 if (a.emote != null) DrawEmote(cam, a.root.transform.position, a.emote, a.emoteName, a.emoteStart, a.emoteLength, scale);
+            }
+            if (selfTag)
+            {
+                var sp = cam.WorldToScreenPoint(me.transform.position + new Vector3(0f, 1.15f, 0f));
+                if (sp.z >= 0f)
+                {
+                    var r = new Rect(sp.x / scale - 60f, (Screen.height - sp.y) / scale - 8f, 120f, 12f);
+                    foreach (var o in new[] { new Vector2(1, 0), new Vector2(-1, 0), new Vector2(0, 1), new Vector2(0, -1) })
+                        GUI.Label(new Rect(r.x + o.x, r.y + o.y, r.width, r.height), myName, shadowStyle);
+                    GUI.Label(r, myName, nameStyle);
+                }
             }
             if (selfShow) DrawEmote(cam, me.transform.position, selfKind, selfName, selfStart, selfLength, scale);
         }
