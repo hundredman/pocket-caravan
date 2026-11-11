@@ -49,7 +49,13 @@ namespace PocketCaravan
             public string vehicle;               // 11/08 운반 수단 (서버 veh, VehicleLook이 그린다)
             public SpriteRenderer vehicleSr;
             public VehicleTrail trail;
+            public float spawnAt;                // 11/11 나타난 시각 (등장 반짝임)
         }
+
+        // 11/11 윤채: 다른 사람이 같은 맵에 들어오면 반짝이며 나타나고 머리 위에 "입장!", 떠나면 연기가 퐁 (내가 맵에 막 들어왔을 때 이미 있던 사람은 조용히)
+        float mapSince;
+        readonly List<(Vector3 at, float born)> poofs = new List<(Vector3, float)>();
+        const float JoinSeconds = 2.2f, PoofSeconds = .5f;
 
         static readonly Vector2Int[] SpinFacings = { new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(0, 1), new Vector2Int(-1, 0) };
 
@@ -270,7 +276,7 @@ namespace PocketCaravan
             var pc = PlayerController.Instance;
             bool on = net != null && net.Status == NetClient.State.Online && map != null && pc != null && net.CurrentMap == map.mapId;
             if (!on) { ClearAll(); return; }
-            if (shownMap != map.mapId) { ClearAll(); shownMap = map.mapId; }
+            if (shownMap != map.mapId) { ClearAll(); shownMap = map.mapId; mapSince = Time.unscaledTime; }
 
             gone.Clear();
             foreach (var kv in avatars)
@@ -334,7 +340,7 @@ namespace PocketCaravan
             target.blocksMovement = false;   // 겹쳐 지나간다 (칸을 막지 않는다)
             target.id = p.id;
             target.who = string.IsNullOrEmpty(p.name) ? p.id : p.name;
-            return new Avatar { root = root, anim = anim, sr = sr, target = target, look = p.look, name = p.name, tag = p.tag, bodyPos = body.transform.localPosition, bodyScale = body.transform.localScale, vehicle = p.veh };
+            return new Avatar { root = root, anim = anim, sr = sr, target = target, look = p.look, name = p.name, tag = p.tag, bodyPos = body.transform.localPosition, bodyScale = body.transform.localScale, vehicle = p.veh, spawnAt = Time.unscaledTime };
         }
 
         /// <summary>내 곁에 다른 플레이어가 아닌 Space 대상(장터·NPC·게시판 등)이 있는지</summary>
@@ -361,7 +367,11 @@ namespace PocketCaravan
 
         void Remove(string id)
         {
-            if (avatars.TryGetValue(id, out var a) && a.root != null) Destroy(a.root);
+            if (avatars.TryGetValue(id, out var a) && a.root != null)
+            {
+                poofs.Add((a.root.transform.position, Time.unscaledTime));   // 11/11 떠날 때 연기
+                Destroy(a.root);
+            }
             avatars.Remove(id);
         }
 
@@ -384,6 +394,59 @@ namespace PocketCaravan
         }
 
         /// <summary>머리 위 리액션 이름(톡 튀어나오며 커진다)과 떠오르는 기호 셋</summary>
+        /// <summary>11/11 등장: 몸 둘레로 별 여섯 개가 퍼지며 반짝이고, 이름 위에 "입장!" 알약이 톡 떴다가 사라진다</summary>
+        void DrawJoin(Camera cam, Avatar a, Rect name, float scale)
+        {
+            float t = Time.unscaledTime - a.spawnAt;
+            var old = GUI.color;
+            if (t < .8f)
+            {
+                var c = cam.WorldToScreenPoint(a.root.transform.position + new Vector3(0f, .55f, 0f));
+                Vector2 center = new Vector2(c.x / scale, (Screen.height - c.y) / scale);
+                float q = t / .8f, rad = Mathf.Lerp(8f, 22f, 1f - (1f - q) * (1f - q));
+                GUI.color = new Color(old.r, old.g, old.b, old.a * (1f - q));
+                for (int i = 0; i < 6; i++)
+                {
+                    float ang = (i * 60f + q * 70f) * Mathf.Deg2Rad;
+                    CuteUI.Icon(CuteUI.Pic.Star4, Mathf.Round(center.x + Mathf.Cos(ang) * rad - 3.5f), Mathf.Round(center.y + Mathf.Sin(ang) * rad * .8f - 3.5f));
+                }
+            }
+            const string tag = "입장!";
+            float k = Mathf.Clamp01(t / .18f), fade = Mathf.Clamp01((JoinSeconds - t) / .4f);
+            float w = Mathf.Round(CuteUI.Width(tag, true, true) + 10f), y = name.y - (a.tag == NetGuild.BadgeId ? 20f : 10f);
+            var m = GUI.matrix;
+            float s = k < .6f ? Mathf.Lerp(.6f, 1.12f, k / .6f) : Mathf.Lerp(1.12f, 1f, (k - .6f) / .4f);
+            GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(name.center.x, y + 6f) * scale);
+            GUI.color = new Color(old.r, old.g, old.b, old.a * fade);
+            var pill = new Rect(Mathf.Round(name.center.x - w / 2f), Mathf.Round(y), w, 12f);
+            CuteUI.Box(pill, 6, CuteUI.Interact, CuteUI.InteractLo, 1, 1);
+            CuteUI.LabelCenter(pill.center.x, pill.center.y, tag, CuteUI.White, true, true);
+            GUI.matrix = m; GUI.color = old;
+        }
+
+        /// <summary>11/11 떠남: 그 자리에서 작은 연기 여덟 점이 퍼지며 옅어진다</summary>
+        void DrawPoofs(Camera cam, float scale)
+        {
+            float now = Time.unscaledTime;
+            poofs.RemoveAll(x => now - x.born > PoofSeconds);
+            var old = GUI.color;
+            foreach (var (at, born) in poofs)
+            {
+                float q = (now - born) / PoofSeconds;
+                var c = cam.WorldToScreenPoint(at + new Vector3(0f, .45f, 0f));
+                if (c.z < 0f) continue;
+                Vector2 center = new Vector2(c.x / scale, (Screen.height - c.y) / scale);
+                GUI.color = new Color(.95f, .93f, .9f, old.a * .8f * (1f - q));
+                float rad = Mathf.Lerp(3f, 14f, q), d = Mathf.Round(Mathf.Lerp(5f, 3f, q));
+                for (int i = 0; i < 8; i++)
+                {
+                    float ang = i * 45f * Mathf.Deg2Rad;
+                    GUI.DrawTexture(new Rect(Mathf.Round(center.x + Mathf.Cos(ang) * rad - d / 2f), Mathf.Round(center.y + Mathf.Sin(ang) * rad * .7f - d / 2f), d, d), Texture2D.whiteTexture);
+                }
+            }
+            GUI.color = old;
+        }
+
         void DrawEmote(Camera cam, Vector3 feet, string kind, string label, float start, float length, float scale)
         {
             float k = Mathf.Clamp01((Time.unscaledTime - start) / length);
@@ -427,7 +490,7 @@ namespace PocketCaravan
             var net = NetClient.I;
             string myName = UIState.PhotoMode && me != null && net != null && net.Status == NetClient.State.Online ? net.MyName : null;
             bool selfTag = !string.IsNullOrEmpty(myName);
-            if ((avatars.Count == 0 && !selfShow && !selfTag) || cam == null || UIState.Blocking) return;
+            if ((avatars.Count == 0 && !selfShow && !selfTag && poofs.Count == 0) || cam == null || UIState.Blocking) return;
             UIStyle.Begin();
             GUI.depth = -3;
             if (nameStyle == null || nameStyle.font != UIStyle.SmallFont)
@@ -449,7 +512,9 @@ namespace PocketCaravan
                 GUI.Label(r, a.name, nameStyle);
                 if (a.tag == NetGuild.BadgeId && a.emote == null) DrawBadge(r.center.x, r.y - 6f);
                 if (a.emote != null) DrawEmote(cam, a.root.transform.position, a.emote, a.emoteName, a.emoteStart, a.emoteLength, scale);
+                if (Time.unscaledTime - a.spawnAt < JoinSeconds && a.spawnAt - mapSince > 1.2f) DrawJoin(cam, a, r, scale);
             }
+            DrawPoofs(cam, scale);
             if (selfTag)
             {
                 var sp = cam.WorldToScreenPoint(me.transform.position + new Vector3(0f, 1.15f, 0f));

@@ -44,7 +44,7 @@ namespace PocketCaravan
             ("joy", "기쁨", new[] { "기쁨", "야호", "joy" }),
             ("think", "생각", new[] { "생각", "음", "think" }),
         };
-        class Bubble { public string text; public float until; }
+        class Bubble { public string text; public float until, at = -9f; }   // at: 뜬 시각 (11/11 톡 튀어나오게)
 
         static NetChat inst;
         readonly List<Line> lines = new List<Line>();
@@ -100,7 +100,7 @@ namespace PocketCaravan
                     string who = string.IsNullOrEmpty(m.name) ? m.id : m.name;
                     string where = here || string.IsNullOrEmpty(m.map) ? "" : $" <color={DimColor}>({MapName(m.map)})</color>";
                     Add($"<color={(mine ? MeColor : OtherColor)}>{who}</color>{where}: {m.text}");
-                    if (here) bubbles[m.id ?? ""] = new Bubble { text = m.text, until = Time.unscaledTime + Mathf.Clamp(3f + m.text.Length * 0.08f, 3f, 8f) };
+                    if (here) bubbles[m.id ?? ""] = new Bubble { text = m.text, until = Time.unscaledTime + Mathf.Clamp(3f + m.text.Length * 0.08f, 3f, 8f), at = Time.unscaledTime };
                     if (!mine) Sfx.Play("open", here ? .25f : .12f);
                     break;
                 case "error":
@@ -335,8 +335,13 @@ namespace PocketCaravan
                 float cx = Mathf.Round(sp.x / scale), by = Mathf.Round((Screen.height - sp.y) / scale);
                 // 11/05 B안 말풍선: 종이 + 테두리(내 말은 청록) + 아래 꼬리
                 var r = new Rect(Mathf.Round(cx - w / 2f - 6f), by - h - 10f, Mathf.Round(w + 12f), Mathf.Round(h + 7f));
+                // 11/11 윤채: 말풍선은 꼬리 끝을 기준으로 톡 튀어나온다 (0.6 → 1.06 → 1, 0.16초)
+                var m = GUI.matrix;
+                float k = Mathf.Clamp01((Time.unscaledTime - kv.Value.at) / .16f);
+                if (k < 1f) { float s = k < .6f ? Mathf.Lerp(.6f, 1.06f, k / .6f) : Mathf.Lerp(1.06f, 1f, (k - .6f) / .4f); GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(cx, by - 3f) * scale); }
                 CuteUI.Bubble(r, cx, kv.Key == net.MyId ? CuteUI.Interact : CuteUI.Ink);
                 GUI.Label(new Rect(r.x + 6f, r.y + 3f, w, h), content, bubbleStyle);
+                GUI.matrix = m;
             }
         }
     }

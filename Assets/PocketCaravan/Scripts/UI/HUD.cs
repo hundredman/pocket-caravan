@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PocketCaravan
@@ -117,24 +118,87 @@ namespace PocketCaravan
         }
 
         /// <summary>평소: 초상 + 돈 · 체력 막대 (Tab 키캡)</summary>
+        // ---------------- 11/11 윤채: 돈이 오갈 때 ----------------
+        // 숫자는 0.4초쯤 걸려 새 값까지 올라가거나 내려가고, 동전이 한 번 통 튀고, 숫자가 잠깐 초록(+)·빨강(−)으로 물든다.
+        // 바뀐 만큼은 "+35냥" 칩이 돈 칸 아래에서 떠올라 돈 칸으로 들어가며 사라진다
+        static float shownMoney = float.NaN, moneyAt = -9f, moneyCalled = -9f;
+        static int lastMoney = int.MinValue, lastDelta;
+        struct MoneyFloat { public int delta; public float at; }
+        static readonly List<MoneyFloat> moneyFloats = new List<MoneyFloat>();
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetMoneyFx() { shownMoney = float.NaN; lastMoney = int.MinValue; moneyAt = -9f; moneyFloats.Clear(); }
+
+        /// <summary>그릴 돈 (새 값으로 다가가는 중인 숫자). 그리기(Repaint) 때만 움직인다</summary>
+        static int MoneyShown(int actual)
+        {
+            if (Event.current == null || Event.current.type != EventType.Repaint) return float.IsNaN(shownMoney) ? actual : Mathf.RoundToInt(shownMoney);
+            float now = Time.unscaledTime;
+            // 상태 창이 한동안 안 그려졌으면(시작 화면 · 불러오기 · 맵 이동) 그 사이 바뀐 돈은 칩 없이 그대로 맞춘다
+            bool fresh = now - moneyCalled > .5f;
+            moneyCalled = now;
+            if (fresh || lastMoney == int.MinValue || float.IsNaN(shownMoney)) { lastMoney = actual; shownMoney = actual; return actual; }
+            if (actual != lastMoney)
+            {
+                lastDelta = actual - lastMoney; lastMoney = actual; moneyAt = now;
+                moneyFloats.Add(new MoneyFloat { delta = lastDelta, at = now });
+                if (moneyFloats.Count > 3) moneyFloats.RemoveAt(0);
+            }
+            float diff = actual - shownMoney;
+            shownMoney = Mathf.Abs(diff) < .5f ? actual : shownMoney + diff * Mathf.Clamp01(Time.unscaledDeltaTime * 9f);
+            return Mathf.RoundToInt(shownMoney);
+        }
+
+        static Color32 MoneyColor => Time.unscaledTime - moneyAt < .5f ? (lastDelta >= 0 ? CuteUI.Up : CuteUI.Down) : CuteUI.Text;
+
+        /// <summary>동전 그림 (돈이 바뀐 직후 통 튄다)</summary>
+        static void MoneyCoin(float x, float y)
+        {
+            float k = Mathf.Clamp01((Time.unscaledTime - moneyAt) / .28f);
+            var m = GUI.matrix;
+            if (k < 1f) { float s = 1f + .45f * Mathf.Sin(k * Mathf.PI); GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(x + 4.5f, y + 4.5f) * UIStyle.Scale); }
+            CuteUI.Icon(CuteUI.Pic.Coin, x, y);
+            GUI.matrix = m;
+        }
+
+        /// <summary>"+35냥" 칩: (x, y) 아래에서 떠올라 위로 들어가며 옅어진다 (1.1초)</summary>
+        static void MoneyFloats(float x, float y)
+        {
+            float now = Time.unscaledTime;
+            moneyFloats.RemoveAll(f => now - f.at > 1.1f);
+            var old = GUI.color;
+            foreach (var f in moneyFloats)
+            {
+                float t = (now - f.at) / 1.1f, ease = 1f - (1f - t) * (1f - t);
+                string s = (f.delta > 0 ? "+" : "−") + Mathf.Abs(f.delta) + "냥";
+                float w = Mathf.Round(CuteUI.Width(s, true, true) + 10f), cy = Mathf.Round(y + 18f - ease * 16f);
+                GUI.color = new Color(old.r, old.g, old.b, old.a * Mathf.Clamp01((1f - t) / .35f));
+                bool up = f.delta > 0;
+                CuteUI.Box(new Rect(x, cy, w, 13f), 6, up ? CuteUI.SellSoft : CuteUI.AlertSoft, up ? CuteUI.Up : CuteUI.Down, 1, 1);
+                CuteUI.LabelCenter(x + w / 2f, cy + 6.5f, s, up ? CuteUI.Up : CuteUI.Down, true, true);
+            }
+            GUI.color = old;
+        }
+
         static void DrawCompact(GameManager gm)
         {
             var p = gm.Player;
-            string money = p.money.ToString();
+            string money = MoneyShown(p.money).ToString();
             float tabW = CuteUI.KeycapWidth("Tab");
             float w = Mathf.Max(108f, 32f + CuteUI.Width(money, false, true) + 3f + CuteUI.Width("냥", true) + 8f + tabW + 8f);
             var card = new Rect(22, 5, w, 40);
             ScreenZones.Mark("hud.card", Rect.MinMaxRect(4, 4, card.xMax, card.yMax));   // 초상까지
             CuteUI.Card(card);
             if (!UIState.Blocking && GUI.Button(Rect.MinMaxRect(4, 4, card.xMax, card.yMax), GUIContent.none, GUIStyle.none)) InputReader.Press('\t');   // 11/08 눌러도 Tab처럼 펼치기
-            CuteUI.Icon(CuteUI.Pic.Coin, 42, 14);
-            float x = CuteUI.Label(54, 18.5f, money, CuteUI.Text, false, true);
+            MoneyCoin(42, 14);
+            float x = CuteUI.Label(54, 18.5f, money, MoneyColor, false, true);
             CuteUI.Label(x + 3, 19, "냥", CuteUI.Sub, true);
             CuteUI.Keycap(card.xMax - 8 - tabW, 12, "Tab");
             CuteUI.Icon(CuteUI.Pic.Bolt, 40, 27);
             CuteUI.Label(51, 32, "체력", CuteUI.Sub, true);
             CuteUI.Bar(new Rect(75, 28, card.xMax - 8 - 75, 8), p.stamina, CuteUI.Stamina, CuteUI.StaminaHi);
             CuteUI.Portrait(4, 5, 36);
+            MoneyFloats(54, card.yMax - 2f);
         }
 
         /// <summary>Tab: 맵 · 장날 · 돈·신용 · 평판 · 짐 · 체력 · 발밑</summary>
@@ -176,8 +240,9 @@ namespace PocketCaravan
             }
             // 돈 · 신용
             float cy = y + 30;
-            CuteUI.Icon(CuteUI.Pic.Coin, 46, cy - 4);
-            float mx = CuteUI.Label(58, cy, p.money.ToString(), CuteUI.Text, false, true);
+            MoneyCoin(46, cy - 4);
+            float mx = CuteUI.Label(58, cy, MoneyShown(p.money).ToString(), MoneyColor, false, true);
+            MoneyFloats(mx + 22f, cy - 18f);
             CuteUI.Label(mx + 3, cy + 0.5f, "냥", CuteUI.Sub, true);
             CuteUI.LabelRight(x + w - 10, cy, $"신용 {p.credit}", CuteUI.Sub, true);
             cy += 16;

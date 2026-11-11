@@ -19,7 +19,7 @@ namespace PocketCaravan
         enum Kind { Plain, Event, QuestNew, QuestDone, Story, News }
         struct Entry
         {
-            public string text, key, title, note, head, chip; public float until, seconds, added; public Kind kind; public int money, credit;
+            public string text, key, title, note, head, chip; public float until, seconds, added, shownAt; public Kind kind; public int money, credit;
             public CuteUI.Pic pic; public Color32 accent;
         }
         static readonly List<Entry> entries = new List<Entry>();
@@ -27,15 +27,45 @@ namespace PocketCaravan
         const int MaxVisible = 1, MaxQueued = 6;
         /// <summary>뒤에 기다리는 알림이 있을 때 한 장이 적어도 떠 있는 시간</summary>
         const float MinShown = 1.8f;
-        const float MaxW = 300f, Medal = 22f, TextX = 34f, PadR = 10f, ChipGap = 4f, NoteX = 30f, ArriveSeconds = 2.6f;
+        const float MaxW = 440f, Medal = 22f, TextX = 34f, PadR = 10f, ChipGap = 4f, NoteX = 30f, ArriveSeconds = 2.6f;
 
         static readonly Regex DoneRx = new Regex(@"^퀘스트 완료: (.+?)(?: 돈 \+(\d+))?(?: 신용 \+(\d+))?$");
         static readonly Regex NewRx = new Regex(@"^퀘스트 수락: (.+)$");
         static readonly Regex PercentRx = new Regex(@"(\d+)%");
+        static readonly Regex TownRx = new Regex(@"^(.+?)(?:이|가) (.+?)(?:으로|로) 커졌다!");
         static readonly Color32 CreditSoft = new Color32(0xDD, 0xF1, 0xEF, 0xFF);
 
         // 맵 이름 리본 (도착)
         static string arriveText; static float arriveAt = -99f;
+
+        // 11/11 윤채: 퀘스트 완료 · 이벤트 카드가 뜰 때 동그라미에서 꽃가루가 톡 터진다 (0.9초)
+        struct Bit { public Vector2 p, v; public float born, size; public Color32 col; }
+        static readonly List<Bit> bits = new List<Bit>();
+        static float burstFor = -1f;   // 이미 터뜨린 카드 (Entry.added)
+        static readonly Color32[] BitColors = { CuteUI.Deco, CuteUI.Frame, CuteUI.Up, CuteUI.Interact, CuteUI.Alert, CuteUI.White };
+
+        static void Burst(Vector2 at, float now)
+        {
+            for (int i = 0; i < 16; i++)
+            {
+                float ang = Random.Range(200f, 340f) * Mathf.Deg2Rad, sp = Random.Range(50f, 110f);
+                bits.Add(new Bit { p = at, v = new Vector2(Mathf.Cos(ang) * sp, Mathf.Sin(ang) * sp), born = now, size = Random.Range(2, 4), col = BitColors[Random.Range(0, BitColors.Length)] });
+            }
+        }
+
+        static void DrawBits(float now)
+        {
+            bits.RemoveAll(b => now - b.born > .9f);
+            var old = GUI.color;
+            foreach (var b in bits)
+            {
+                float t = now - b.born;
+                var p = b.p + b.v * t + new Vector2(0f, 160f * t * t);   // 위로 튀었다가 떨어진다 (GUI는 y가 아래로)
+                GUI.color = new Color(old.r, old.g, old.b, old.a * Mathf.Clamp01((.9f - t) / .3f));
+                CuteUI.Fill(new Rect(Mathf.Round(p.x), Mathf.Round(p.y), b.size, b.size), b.col);
+            }
+            GUI.color = old;
+        }
 
         /// <summary>
         /// 11/11 은샘: 알림에서 띄어 쓴 괄호 안 덧붙임은 뺀다 ("(★ 표시를 찾아가 보자)", "(팔면 20% 더)" 등). 짧게 한 줄로.
@@ -109,6 +139,13 @@ namespace PocketCaravan
                 var p = PercentRx.Match(t); if (p.Success) e.chip = "+" + p.Groups[1].Value + "%";
                 return;
             }
+            var tm = TownRx.Match(t);
+            if (tm.Success)
+            {   // 11/11 "○○ 마을이 장터 마을로 커졌다! 거래가 늘어 값이 덜 흔들린다." → 마을 발전 카드 한 줄 + 칩
+                e.kind = Kind.News; e.head = "마을 발전"; e.pic = CuteUI.Pic.Chart; e.accent = CuteUI.Up;
+                e.title = $"{tm.Groups[1].Value} → {tm.Groups[2].Value}"; e.chip = "값 안정";
+                return;
+            }
             if (t.StartsWith("오늘 ") && t.Contains("떠돌이"))
             {
                 e.kind = Kind.News; e.head = "떠돌이 상인"; e.pic = CuteUI.Pic.Sack; e.accent = CuteUI.Buy;
@@ -167,23 +204,74 @@ namespace PocketCaravan
             return w;
         }
 
+        /// <summary>
+        /// 11/11 윤채: 글이 두 줄로 꺾이면(그것도 낱말 가운데서) 보기 싫다 → 줄 정하기 순서:
+        /// ① 보통 글씨 한 줄 ② 작은 글씨 한 줄 ③ 문장에서 나눠 굵은 첫 문장 + 작은 둘째 문장 (각각 한 줄) ④ 그래도 안 되면 감싸기
+        /// </summary>
+        struct Lines { public string a, b; public bool smallA, wrap; }
+        static Lines Lay(Entry e, float avail)
+        {
+            string body = Body(e); bool bold = BoldBody(e);
+            if (body.Contains("\n")) return new Lines { a = body, wrap = true };
+            if (CuteUI.Width(body, false, bold) <= avail) return new Lines { a = body };
+            if (CuteUI.Width(body, true, bold) <= avail) return new Lines { a = body, smallA = true };
+            var (s1, s2) = SplitSentence(body);
+            if (s1 != null && CuteUI.Width(s2, true) <= avail)
+            {
+                if (CuteUI.Width(s1, false, true) <= avail) return new Lines { a = s1, b = s2 };
+                if (CuteUI.Width(s1, true, true) <= avail) return new Lines { a = s1, b = s2, smallA = true };
+            }
+            return new Lines { a = body, wrap = true };
+        }
+
+        /// <summary>첫 문장과 나머지 ("…커졌다! 거래가…" → "…커졌다!" · "거래가…"). 나눌 데가 없으면 (null, null)</summary>
+        static (string, string) SplitSentence(string t)
+        {
+            foreach (var sep in new[] { "! ", ". ", "? ", " · ", ", " })
+            {
+                int i = t.IndexOf(sep, System.StringComparison.Ordinal);
+                if (i <= 0 || i >= t.Length - sep.Length) continue;
+                int cut = sep[0] == ' ' ? i : i + 1;   // " · "는 빼고, "!"·"."는 앞 문장에 둔다
+                return (t.Substring(0, cut).Trim(), t.Substring(i + sep.Length).Trim());
+            }
+            return (null, null);
+        }
+
+        static float LinesHeight(Lines l, Entry e, float tw) =>
+            l.wrap ? CuteUI.WrapHeight(l.a, tw) : (l.smallA ? 11f : 13f) + (l.b != null ? 11f : 0f);
+
+        static float LinesWidth(Lines l, Entry e) =>
+            l.wrap ? 0f : Mathf.Max(CuteUI.Width(l.a, l.smallA, BoldBody(e) || l.b != null), l.b != null ? CuteUI.Width(l.b, true) : 0f);
+
         /// <summary>그릴 크기. maxW 안에서 글에 맞춘다</summary>
         static Vector2 Measure(Entry e, float maxW)
         {
-            string body = Body(e);
             bool head = !string.IsNullOrEmpty(e.head);
             float chips = ChipsWidth(e), chipsRoom = chips > 0f ? chips + 8f : 0f;
-            float natural = TextX + Mathf.Max(head ? CuteUI.Width(e.head, true, true) : 0f, CuteUI.Width(body, false, BoldBody(e))) + chipsRoom + PadR;
+            var lines = Lay(e, maxW - TextX - PadR - chipsRoom);
+            float textW = lines.wrap ? maxW : LinesWidth(lines, e) + 2f;
+            float natural = TextX + Mathf.Max(head ? CuteUI.Width(e.head, true, true) : 0f, textW) + chipsRoom + PadR;
             if (!string.IsNullOrEmpty(e.note)) natural = Mathf.Max(natural, TextX + NoteX + CuteUI.Width(e.note, true) + PadR);
             float w = Mathf.Max(120f, Mathf.Min(maxW, natural));
             float tw = w - TextX - PadR - chipsRoom;
-            float bh = CuteUI.WrapHeight(body, tw);
+            float bh = LinesHeight(lines, e, tw);
             float nh = string.IsNullOrEmpty(e.note) ? 0f : 5f + CuteUI.WrapHeight(e.note, w - TextX - PadR - NoteX, true);
             float h = head ? 5f + 11f + bh + nh + 5f : 6f + bh + nh + 6f;
             return new Vector2(Mathf.Round(w), Mathf.Round(Mathf.Max(30f, h)));
         }
 
-        static void Paint(Rect r, Entry e)
+        /// <summary>정한 줄대로 쓴다 (y = 위 끝). 쓴 높이를 돌려준다</summary>
+        static float WriteLines(Lines l, Entry e, float x, float y, float tw)
+        {
+            if (l.wrap) return CuteUI.Wrap(x, y, tw, l.a, CuteUI.Text, false, BoldBody(e));
+            float ha = l.smallA ? 11f : 13f;
+            CuteUI.Label(x, y + ha / 2f, l.a, CuteUI.Text, l.smallA, BoldBody(e) || l.b != null);
+            if (l.b == null) return ha;
+            CuteUI.Label(x, y + ha + 5.5f, l.b, CuteUI.Sub, true);
+            return ha + 11f;
+        }
+
+        static void Paint(Rect r, Entry e, float since = 9f)
         {
             bool rich = e.kind != Kind.Plain, hasNote = !string.IsNullOrEmpty(e.note), head = !string.IsNullOrEmpty(e.head);
             if (e.kind == Kind.Event) CuteUI.Box(r, 8, CuteUI.EventPaper, CuteUI.EventLine, 2, 2);
@@ -191,12 +279,17 @@ namespace PocketCaravan
             // 왼쪽 동그란 그림: 종류가 있는 알림은 색 원판 + 흰 그림, 그 밖은 옅은 원판 + 색 그림 (덜 튀게)
             float topH = hasNote ? 32f : r.height;
             float my = Mathf.Round(r.y + topH / 2f - Medal / 2f);
+            // 11/11 동그라미는 도장처럼 크게 내려앉는다 (1.5 → 1, 0.22초. 퀘스트 완료 · 이벤트만)
+            var gm = GUI.matrix;
+            float stamp = e.kind == Kind.QuestDone || e.kind == Kind.Event ? Mathf.Clamp01(since / .22f) : 1f;
+            if (stamp < 1f) { float s = Mathf.Lerp(1.5f, 1f, stamp * stamp); GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(r.x + 7f + Medal / 2f, my + Medal / 2f) * UIStyle.Scale); }
             if (rich) CuteUI.Circle(r.x + 7f, my, (int)Medal, e.accent, CuteUI.Ink, 1);
             else CuteUI.Circle(r.x + 7f, my, (int)Medal, CuteUI.Paper2, CuteUI.Line, 1);
             // 작은 그림(★ 7칸 · 동전 9칸 등)은 두 배로 (한 배면 22칸 동그라미 안에서 "+"처럼 작게 보였다)
             var ps = CuteUI.PicSize(e.pic);
             int sc = Mathf.Max(ps.x, ps.y) <= 10 ? 2 : 1;
-            CuteUI.Icon(e.pic, Mathf.Round(r.x + 7f + (Medal - ps.x * sc) / 2f), Mathf.Round(my + (Medal - ps.y * sc) / 2f), sc, rich ? CuteUI.White : e.accent);
+            CuteUI.Icon(e.pic, Mathf.Round(r.x + 7f + (Medal - ps.x * sc) / 2f), Mathf.Round(my + (Medal - ps.y * sc) / 2f), sc, rich ? CuteUI.White : (Color32?)null);   // 그 밖의 알림은 그림 제 색 (한 가지 색이면 전구가 버섯처럼 보였다)
+            GUI.matrix = gm;
             // 칩 (오른쪽): 돈 · 신용 · 덤
             float chips = ChipsWidth(e), right = r.xMax - PadR;
             if (chips > 0f)
@@ -227,16 +320,17 @@ namespace PocketCaravan
             }
             // 머리글 + 글
             float tx = r.x + TextX, tw = right - tx, by;
+            var lines = Lay(e, tw + 2f);
             if (head)
             {
                 CuteUI.Label(tx, r.y + 10f, e.head, e.accent, true, true);
-                by = r.y + 16f + CuteUI.Wrap(tx, r.y + 16f, tw, Body(e), CuteUI.Text, false, BoldBody(e));
+                by = r.y + 16f + WriteLines(lines, e, tx, r.y + 16f, tw);
             }
             else
             {
-                float bh = CuteUI.WrapHeight(Body(e), tw);
+                float bh = LinesHeight(lines, e, tw);
                 float y0 = hasNote ? r.y + 6f : Mathf.Round(r.y + (r.height - bh) / 2f);
-                by = y0 + CuteUI.Wrap(tx, y0, tw, Body(e), CuteUI.Text);
+                by = y0 + WriteLines(lines, e, tx, y0, tw);
             }
             if (hasNote)
             {
@@ -290,11 +384,11 @@ namespace PocketCaravan
             for (int i = 0; i < entries.Count && shown < MaxVisible; i++)
             {
                 var e = entries[i];
-                if (e.until < 0f) { e.until = now + e.seconds; entries[i] = e; }
+                if (e.until < 0f) { e.until = now + e.seconds; e.shownAt = now; entries[i] = e; }
                 // 뒤에 기다리는 알림이 있으면 적어도 MinShown초는 보이고 넘긴다 (하나씩 띄우니 줄이 길어지지 않게)
                 if (entries.Count > MaxVisible)
                 {
-                    float start = e.until - e.seconds, early = start + Mathf.Max(MinShown, Mathf.Min(e.seconds, 2.6f));
+                    float start = e.shownAt, early = start + Mathf.Max(MinShown, Mathf.Min(e.seconds, 2.6f));
                     if (early < e.until) { e.until = Mathf.Max(early, now + .35f); entries[i] = e; }
                 }
                 shown++;
@@ -307,7 +401,7 @@ namespace PocketCaravan
             for (int i = Mathf.Min(entries.Count, MaxVisible) - 1; i >= 0; i--)   // 새 알림이 맨 아래 (보이는 것만)
             {
                 var e = entries[i];
-                var size = Measure(e, Mathf.Min(MaxW, vw - 40f));
+                var size = Measure(e, Mathf.Min(MaxW, vw - 60f));
                 // 11/11 늘 화면 가운데 (목표 줄과 한 줄로). 양옆 카드(왼쪽 채팅 · 오른쪽 고려 배우기 카드) 사이가 좁으면
                 //   옆으로 밀지 않고 좁히고, 그래도 안 되면 그 카드들 위로 올린다
                 for (int pass = 0; pass < 4; pass++)
@@ -323,14 +417,21 @@ namespace PocketCaravan
                     r.y=Mathf.Min(r.y,reserved.yMin-r.height-6);
                 if(record)DrawnRects.Add(r);
                 // 11/11 나타날 때 아래에서 살짝 올라오고, 끝날 때 옅어진다
-                float since = now - (e.until - e.seconds), k = Mathf.Clamp01(since / .18f), fade = Mathf.Clamp01((e.until - now) / .35f);
+                float since = now - e.shownAt, k = Mathf.Clamp01(since / .18f), fade = Mathf.Clamp01((e.until - now) / .35f);
                 GUI.color = new Color(old.r, old.g, old.b, old.a * k * fade);
                 var drawn = r; drawn.y = Mathf.Round(r.y + (1f - k) * 6f);
-                Paint(drawn, e);
+                Paint(drawn, e, since);
+                if ((e.kind == Kind.QuestDone || e.kind == Kind.Event) && e.added != burstFor && since > .2f && since < .5f)
+                {   // 도장이 내려앉은 뒤 그 자리에서 꽃가루
+                    burstFor = e.added;
+                    float topH = string.IsNullOrEmpty(e.note) ? drawn.height : 32f;
+                    Burst(new Vector2(drawn.x + 7f + Medal / 2f, drawn.y + topH / 2f), now);
+                }
                 if (i == 0) Waiting(drawn, entries.Count - MaxVisible);
                 GUI.color = old;
                 bottom = r.y - 5f;
             }
+            DrawBits(now);   // 꽃가루는 카드 위에
         }
     }
 }

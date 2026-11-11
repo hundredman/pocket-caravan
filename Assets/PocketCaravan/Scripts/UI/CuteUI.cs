@@ -525,7 +525,27 @@ namespace PocketCaravan
         public static void Fill(Rect r, Color32 c) { if (Repaint) GUI.DrawTexture(Snap(r), SolidTex(c)); }
 
         /// <summary>창 뒤 화면을 어둡게</summary>
-        public static void Dim() => Fill(new Rect(0, 0, UIStyle.VirtualWidth, UIStyle.VirtualHeight), DimColor);
+        static int dimFrame = -10; static float dimStart;
+        /// <summary>
+        /// 창 뒤 어두운 막. 11/11 윤채: 창이 열릴 때(지난 프레임에 Dim이 없었으면) 0.16초 동안 막이 서서히 깔리고,
+        /// 이 OnGUI에서 뒤에 그리는 창은 화면 가운데를 기준으로 96% → 100%로 커지며 나타난다.
+        /// 모든 창(소지품·장터·장부·지도·편지 …)이 Dim 다음에 그리므로 여기 한 곳만 고쳐 전부 바뀐다.
+        /// 크기는 GUI.matrix로만 바꾸고(다음 OnGUI의 UIStyle.Begin이 되돌린다) 색은 건드리지 않는다
+        /// </summary>
+        public static void Dim()
+        {
+            float now = Time.unscaledTime;
+            if (Time.frameCount - dimFrame > 1) dimStart = now;
+            dimFrame = Time.frameCount;
+            float k = Mathf.Clamp01((now - dimStart) / .16f), e = 1f - (1f - k) * (1f - k) * (1f - k);
+            var c = GUI.color;
+            GUI.color = new Color(c.r, c.g, c.b, c.a * e);
+            Fill(new Rect(0, 0, UIStyle.VirtualWidth, UIStyle.VirtualHeight), DimColor);
+            GUI.color = c;
+            if (k >= 1f) return;
+            float s = Mathf.Lerp(.96f, 1f, e);
+            GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(UIStyle.VirtualWidth / 2f, UIStyle.VirtualHeight / 2f) * UIStyle.Scale);
+        }
 
         /// <summary>둥근 상자. lw = 0이면 테두리 없음, shadow = 아래 그림자 두께</summary>
         public static void Box(Rect r, int radius, Color32 fill, Color32 line, int lw = 1, int shadow = 0, Color32? shadowColor = null)
@@ -777,15 +797,28 @@ namespace PocketCaravan
 
         /// <summary>"[Space] 말 걸기" 같은 상호작용 안내 (11/05 종이 알약 + 키캡, 색은 빼서 덜 튀게)</summary>
         /// <summary>말 걸기 알약. 11/08 누르면 Space와 같다 (마우스로 말 걸기·사고팔기). 그린 자리를 돌려준다</summary>
+        static int promptFrame = -10; static Vector2 promptPos; static float promptAt;
         public static Rect SpacePrompt(float cx, float y, string verb)
         {
             float kw = KeycapWidth("Space");
             float w = Mathf.Round(3 + kw + 5 + Width(verb, true) + 7), x = Mathf.Round(cx - w / 2f);
             var r = new Rect(x, y, w, 17);
+            // 11/11 윤채: 새로 뜨거나 다른 대상으로 바뀌면 톡 튀어나온다 (0.7 → 1.08 → 1, 0.18초)
+            var here = new Vector2(cx, y);
+            if (Time.frameCount - promptFrame > 1 || (here - promptPos).sqrMagnitude > 64f) promptAt = Time.unscaledTime;
+            promptFrame = Time.frameCount; promptPos = here;
+            float k = Mathf.Clamp01((Time.unscaledTime - promptAt) / .18f);
+            var m = GUI.matrix;
+            if (k < 1f)
+            {
+                float s = k < .6f ? Mathf.Lerp(.7f, 1.08f, k / .6f) : Mathf.Lerp(1.08f, 1f, (k - .6f) / .4f);
+                GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(cx, y + 8.5f) * UIStyle.Scale);
+            }
             bool hover = r.Contains(Event.current.mousePosition);
             Box(r, 7, hover ? Paper2 : Paper, hover ? Interact : Ink, 1, 2, SoftShadow);
             Keycap(x + 3, y + 2, "Space", true);
             Label(x + 3 + kw + 5, y + 8.5f, verb, Text, true);
+            GUI.matrix = m;
             if (GUI.Button(r, GUIContent.none, GUIStyle.none)) InputReader.Press(' ');
             return r;
         }
