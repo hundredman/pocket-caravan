@@ -36,7 +36,6 @@ namespace PocketCaravan
         public static bool IsOpen => inst != null && inst.open;
         static int Score => Mathf.Max(0, (inst != null ? inst.tower.Count : 1) - 1);
         static int Best => GameManager.I == null ? 0 : Mathf.RoundToInt(GameManager.I.GetMemo(BestKey, 0f));
-        public static int MyBest => Best;   // 11/11 은샘: 놀이판 위 "최고 기록" 표 (NetGuild)
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void Boot()
