@@ -429,6 +429,7 @@ namespace PocketCaravan
                 return y + 60;
             }
             const float iconsW = 92f;
+            ItemData hoverItem = null; Rect hoverRect = default;   // 11/11 은샘: 특산 아이콘에 마우스를 올리면 이름
             foreach (var (town, hops) in rows)
             {
                 bool recorded = JourneyGuide.MarketRecorded(gm.Player.ledger, town.id);
@@ -450,9 +451,19 @@ namespace PocketCaravan
                     if (item == null || item.questItem || item.originTown != town || n >= 4) continue;
                     if (n == 0) CuteUI.Label(ix, y + 33, "특산", CuteUI.Sub, true);
                     TradeLedgerUI.ItemIcon(item, ix + 22 + n * 18, y + 25, 1);
+                    var ir = new Rect(ix + 22 + n * 18, y + 25, 16, 16);
+                    if (ir.Contains(Event.current.mousePosition)) { hoverItem = item; hoverRect = ir; }
                     n++;
                 }
                 y += ch + 5;
+            }
+            if (hoverItem != null)   // 카드보다 위에 그리도록 다 그린 뒤
+            {
+                string nm = hoverItem.displayName;
+                float tw = CuteUI.Width(nm, true) + 12f;
+                var tip = new Rect(Mathf.Round(Mathf.Clamp(hoverRect.center.x - tw / 2f, 2f, w - tw - 2f)), hoverRect.y - 17f, tw, 15f);
+                CuteUI.Box(tip, 6, CuteUI.Paper, CuteUI.Ink, 1, 1);
+                CuteUI.Label(tip.x + 6f, tip.center.y, nm, CuteUI.Text, true);
             }
             float th = CuteUI.WrapHeight("장부(L)의 시세는 직접 가서 본 값이에요. 가는 동안 값이 바뀔 수 있어요.", w - 20, true);
             CuteUI.Icon(CuteUI.Pic.Bulb, 3, y + 2);
