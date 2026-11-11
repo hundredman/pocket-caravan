@@ -116,11 +116,19 @@ namespace PocketCaravan
                 bannerFor = IsFairMap(map) ? map : null;
                 if (chunk == null || GameManager.I == null) return;
                 var t = Today(chunk);
-                if (IsFairMap(map)) { Notify.Show($"큰 장이 섰다! 오늘 {t.name} 장터에서 팔면 {Pct(Bonus(t.chunk))}을 더 받는다.", 4f); return; }
+                if (IsFairMap(map)) { Say($"큰 장이 섰다! 오늘 {t.name} 장터에서 팔면 {Pct(Bonus(t.chunk))}을 더 받는다.", 4f); return; }
                 string key = "fair:note:" + chunk;
                 if (Mathf.RoundToInt(GameManager.I.GetMemo(key, -1f)) == Day) return;
                 GameManager.I.SetMemo(key, Day);
-                Notify.Show(News(chunk), 4f);
+                Say(News(chunk), 4f);
+            }
+
+            /// <summary>11/11 은샘: 맵에 들어설 때 소식은 한 프레임 뒤에 띄운다. 그때 시작 튜토리얼 중이면 띄우지 않는다 (새로 시작한 첫 화면에 알림이 몰리던 것)</summary>
+            void Say(string text, float seconds) => StartCoroutine(SayLater(text, seconds));
+            System.Collections.IEnumerator SayLater(string text, float seconds)
+            {
+                yield return null;
+                if (!StoryGuide.IntroActive) Notify.Show(text, seconds);
             }
 
             void OnSold(ItemData item, TownData town, int price, int profit)

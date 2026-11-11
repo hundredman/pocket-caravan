@@ -282,7 +282,8 @@ namespace PocketCaravan
                 lastMap = map.mapId;
                 bodies.Clear(); bits.Clear(); says.Clear();
                 CheckRegionLessons(map.mapId);
-                if (!GameManager.I.HasMemo("react:tips")) { GameManager.I.SetMemo("react:tips", 1f); Notify.Show("R: 리액션 바퀴 (인사·끄덕·박수부터, 나머지는 배워서)", 5f); }
+                if (!GameManager.I.HasMemo("react:tips") && !StoryGuide.IntroActive && !StartScreen.IsOpen) {   // 11/11 은샘: 시작 화면·시작 튜토리얼 중에는 미룬다 (끝난 뒤 다음 맵에서)
+                    GameManager.I.SetMemo("react:tips", 1f); Notify.Show("R: 리액션 바퀴 (인사·끄덕·박수부터, 나머지는 배워서)", 5f); }
             }
             if (Here == Region.North && NorthAtmosphere.Shown == NorthAtmosphere.Weather.Blizzard && player.Motor.IsMoving) Teach("shiver", true);
 

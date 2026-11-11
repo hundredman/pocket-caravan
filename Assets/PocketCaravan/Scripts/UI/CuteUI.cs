@@ -795,6 +795,7 @@ namespace PocketCaravan
         {
             float w = Mathf.Round(Width(text, true) + 22f);
             var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2f), HUD.BottomLine(10, 15), w, 15);
+            ScreenZones.MarkCenter("goal", r);   // 11/11 떠다니는 표가 이 줄을 피한다
             Box(r, 7, Paper, Ink, 1, 1, SoftShadow);
             Circle(r.x + 6, r.y + 5, 5, Deco, Ink, 0);
             Label(r.x + 14, r.center.y, text, Text, true);
@@ -876,6 +877,31 @@ namespace PocketCaravan
         /// 너무 길면 덧붙임을 빼고, 그래도 길면 할 일을 줄인다.
         /// 11/08 너비는 그 줄의 왼쪽 위 카드·오른쪽 위 단추·온라인·길 장애 알약 사이 빈 자리(ScreenZones)까지 (좁은 고려 화면에서도 안 겹치게)
         /// </summary>
+        /// <summary>11/11 은샘: 이벤트 퀘스트(만국 상인회 등) 알약·카드를 금빛으로. 그리기 전에 켜고 다 그린 뒤 끈다</summary>
+        public static bool EventStyle;
+        public static readonly Color32 EventPaper = Hex(0xFFF1BF), EventLine = Hex(0xE0702A);
+
+        /// <summary>알약 바탕 (이벤트면 금빛 종이 + 주황 굵은 테)</summary>
+        static void PillBox(Rect r, int radius)
+        {
+            if (EventStyle) Box(r, radius, EventPaper, EventLine, 2, 2, SoftShadow);
+            else Box(r, radius, Paper, Ink, 1, 2, SoftShadow);
+        }
+
+        /// <summary>알약 왼쪽 동그라미 (이벤트면 금빛 메달에 별)</summary>
+        static void PillBadge(float x, float y, bool alert, Pic? pic)
+        {
+            if (alert) { Medallion(x, y, 24, Alert); return; }
+            if (EventStyle)
+            {
+                Circle(x, y, 24, Deco, EventLine, 2, 2);
+                var st = PicSize(Pic.Star4); Icon(Pic.Star4, x + (24 - st.x) / 2f, y + (24 - st.y) / 2f, 1, White);
+                return;
+            }
+            FramedCircle(x, y, 24);
+            if (pic.HasValue) { var s = PicSize(pic.Value); Icon(pic.Value, x + (24 - s.x) / 2f, y + (24 - s.y) / 2f); }
+        }
+
         public static void TopPill(float y, bool alert, Pic? pic, string main, string where, bool pin = true)
         {
             var (left, right) = ScreenZones.FreeRow(y - 2, y + 22);
@@ -887,13 +913,9 @@ namespace PocketCaravan
             while (22 + mainW + 10 > maxW && main.Length > 4) { main = main.Substring(0, main.Length - 2) + "…"; mainW = Width(main, false, true); }
             float w = Mathf.Round(22 + mainW + whereW + 10), x = Mathf.Round((UIStyle.VirtualWidth - w) / 2f + 8);
             x = Mathf.Round(Mathf.Clamp(x, left, Mathf.Max(left, right - w)));
-            Pill(new Rect(x, y, w, 20));
-            if (alert) Medallion(x - 9, y - 2, 24, Alert);
-            else
-            {
-                FramedCircle(x - 9, y - 2, 24);
-                if (pic.HasValue) { var s = PicSize(pic.Value); Icon(pic.Value, x - 9 + (24 - s.x) / 2f, y - 2 + (24 - s.y) / 2f); }
-            }
+            PillBox(new Rect(x, y, w, 20), 9);
+            ScreenZones.MarkCenter("top" + Mathf.RoundToInt(y), new Rect(x - 9, y - 2, w + 9, 24));   // 11/11 떠다니는 표가 피한다
+            PillBadge(x - 9, y - 2, alert, pic);
             float tx = Label(x + 21, y + 10, main, Text, false, true);
             if (whereW > 0)
             {
@@ -940,14 +962,10 @@ namespace PocketCaravan
             TopStack(order, h);
             float w = Mathf.Round(22f + tw + 10f), x = Mathf.Round((UIStyle.VirtualWidth - w) / 2f + 8f);
             x = Mathf.Round(Mathf.Clamp(x, left + 9f, Mathf.Max(left + 9f, right - w)));
-            Box(new Rect(x, y, w, h), 9, Paper, Ink, 1, 2, SoftShadow);
+            PillBox(new Rect(x, y, w, h), 9);
+            ScreenZones.MarkCenter("top" + Mathf.RoundToInt(y), new Rect(x - 9, y, w + 9, h));   // 11/11 떠다니는 표가 피한다
             float cy = Mathf.Round(y + h / 2f - 12f);
-            if (alert) Medallion(x - 9, cy, 24, Alert);
-            else
-            {
-                FramedCircle(x - 9, cy, 24);
-                if (pic.HasValue) { var s = PicSize(pic.Value); Icon(pic.Value, x - 9 + (24 - s.x) / 2f, cy + (24 - s.y) / 2f); }
-            }
+            PillBadge(x - 9, cy, alert, pic);
             float ty = y + 4f;
             if (hasHead)
             {

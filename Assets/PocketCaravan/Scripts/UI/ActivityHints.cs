@@ -32,6 +32,7 @@ namespace PocketCaravan
         float nextScan;
         string lastMap;
         float announceAt = -1f;
+        string announceMap;   // 11/11 은샘: 알림을 예약한 맵. 그 맵을 떠났으면 버린다 (시작 화면 뒤 나루 알림이 다른 문명 첫 마을에서 뜨던 것)
         Sprite star;
 
         static string Map => MapRoot.Current != null ? MapRoot.Current.mapId : null;
@@ -46,7 +47,7 @@ namespace PocketCaravan
         void Update()
         {
             if (Map == null) { spots.Clear(); lastMap = null; return; }
-            if (Map != lastMap) { lastMap = Map; announceAt = Time.time + .8f; nextScan = 0f; }   // 자리가 다 놓인 뒤 알린다
+            if (Map != lastMap) { lastMap = Map; announceMap = Map; announceAt = Time.time + .8f; nextScan = 0f; }   // 자리가 다 놓인 뒤 알린다
             if (Time.time >= nextScan) { nextScan = Time.time + .5f; Scan(); }
             if (announceAt > 0f && Time.time >= announceAt) { announceAt = -1f; Announce(); }
         }
@@ -73,6 +74,8 @@ namespace PocketCaravan
         void Announce()
         {
             var gm = GameManager.I;
+            if (gm != null && gm.IsTravelling) { announceAt = Time.time + .5f; return; }   // 11/11 이동 중이면 도착한 뒤에 다시 본다
+            if (Map != announceMap) return;   // 11/11 예약한 맵을 떠났다
             string key = "hint:" + Map;
             if (gm == null || spots.Count == 0 || Mathf.RoundToInt(gm.GetMemo(key, -1f)) == gm.Clock.day) return;
             // 11/11 기우: 시작 이야기·튜토리얼 중에는 알리지 않는다 (시작 화면에 뜨는 것 줄이기). 대화가 떠 있으면 끝난 뒤에 다시 본다.
@@ -134,6 +137,7 @@ namespace PocketCaravan
                 r.y=Mathf.Clamp(r.y,4,Mathf.Max(4,UIStyle.VirtualHeight-r.height-4));
                 var guide=GoryeoIntro.ReservedGuideRect;
                 if(guide.width>0&&r.Overlaps(guide))r.y=Mathf.Max(4,guide.yMin-r.height-4);
+                r=ScreenZones.Dodge(r);   // 11/11 은샘: 아래 알림·목표 줄·위 알약과 겹치지 않게
             }
             GUI.Box(r, GUIContent.none, UIStyle.Box);
             if (withStar && star != null) DrawSprite(star, new Rect(r.x + 3f, r.y + 2f, 12f, 12f));

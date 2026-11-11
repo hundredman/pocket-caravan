@@ -91,11 +91,20 @@ namespace PocketCaravan
 
         // ---------------- 길잡이 ----------------
         static StoryGuide instance;
-        string who, where;
+        string who, where, giver;
+        bool firstJob;
         float nextCheck;
+        bool wasIntro;
 
-        /// <summary>다음 이야기 줄이 떠 있는지 (알림이 그 아래로 비킨다)</summary>
-        public static bool Showing => Ready && !HUD.Expanded;
+        /// <summary>다음 이야기 줄이 떠 있는지 (알림이 그 아래로 비킨다). 11/11 길 안내 대상이 다음 이야기일 때만</summary>
+        public static bool Showing => Ready && !HUD.Expanded && QuestFocus.Current == QuestFocus.Kind.Lead;
+
+        /// <summary>11/11 은샘: 받을 수 있는 다음 이야기가 있다 (수첩의 "첫 일거리"/"다음 이야기" 카드, QuestFocus.Lead)</summary>
+        public static bool LeadAvailable => instance != null && instance.isActiveAndEnabled && !string.IsNullOrEmpty(instance.who);
+        /// <summary>다음 이야기를 주는 사람 id (길 안내 화살표)</summary>
+        public static string LeadNpc => LeadAvailable ? instance.giver : null;
+        /// <summary>이 지역에서 아직 끝낸 이야기가 없으면 "첫 일거리", 아니면 "다음 이야기"</summary>
+        public static string LeadTitle => LeadAvailable && instance.firstJob ? "첫 일거리" : "다음 이야기";
 
         static bool Ready => instance != null && instance.isActiveAndEnabled && !string.IsNullOrEmpty(instance.who)
             && !UIState.Blocking && GM != null && !GM.IsTravelling;
@@ -122,8 +131,12 @@ namespace PocketCaravan
         {
             if (Time.unscaledTime < nextCheck) return;
             nextCheck = Time.unscaledTime + 0.5f;
-            who = where = null;
-            if (GM == null || GM.Quests == null || MapRoot.Current == null || IntroActive) return;
+            who = where = giver = null;
+            // 11/11 은샘: 시작 튜토리얼이 끝나면 첫 일거리를 길 안내 대상으로 (가장 최근에 생긴 것 우선)
+            bool intro = IntroActive;
+            bool introEnded = wasIntro && !intro;
+            wasIntro = intro;
+            if (GM == null || GM.Quests == null || MapRoot.Current == null || intro) return;
             var here = Reactions.Here;
             foreach (var p in GM.Quests.Active) if (p != null && In(p.quest, here)) return;   // 진행 중이면 공용 퀘스트 안내가 맡는다
             foreach (var q in GM.Db.quests)
@@ -132,7 +145,10 @@ namespace PocketCaravan
                 string name = q.giverNpc, place = null;
                 if (Givers.TryGetValue(q.giverNpc, out var g)) { name = g.name; place = g.where; }
                 if (string.IsNullOrEmpty(place)) { var map = WorldIndex.Get()?.MapOf("npc", q.giverNpc); if (map != null) place = WorldIndex.Get().MapName(map); }
-                who = WorldDisplayNames.ShortName(name); where = place;
+                who = WorldDisplayNames.ShortName(name); where = place; giver = q.giverNpc;
+                firstJob = true;
+                foreach (var f in GM.Db.quests) if (f != null && GM.Quests.IsFinished(f) && In(f, here)) { firstJob = false; break; }
+                if (introEnded) QuestFocus.Set(QuestFocus.Kind.Lead);
                 return;
             }
         }

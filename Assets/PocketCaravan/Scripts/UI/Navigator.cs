@@ -121,11 +121,14 @@ namespace PocketCaravan
             var hint = TutorialHint();
             if (hint.HasValue && hint.Value.target != null && hint.Value.target.isActiveAndEnabled)
                 return new Result { position = hint.Value.target.transform.position, label = hint.Value.label ?? WorldDisplayNames.For(hint.Value.target), target = hint.Value.target };
-            var p = gm.Quests.Tracked;
+            // 11/11 은샘: 길 안내 대상 하나만 (QuestFocus). 받은 퀘스트는 수첩에서 고른 것일 때만, 다음 이야기는 그 사람에게
+            var focus = QuestFocus.Current;
+            var p = focus == QuestFocus.Kind.Quest ? gm.Quests.Tracked : null;
             (string, string)? t = hint.HasValue && !string.IsNullOrEmpty(hint.Value.kind) ? (hint.Value.kind, hint.Value.id)
                 : p != null && p.Current != null ? gm.Quests.TargetOf(p.Current) : null;
-            // 퀘스트 안내가 없으면 맡은 의뢰의 목적지 게시판으로
-            if (!t.HasValue && gm.Player.contracts.Count > 0) t = ("board", gm.Player.contracts[0].toTown);
+            if (!t.HasValue && focus == QuestFocus.Kind.Lead && !string.IsNullOrEmpty(StoryGuide.LeadNpc)) t = ("npc", StoryGuide.LeadNpc);
+            // 퀘스트 안내가 없으면 맡은 의뢰의 목적지 게시판으로 (다음 이야기·이벤트를 안내 중이면 그쪽만)
+            if (!t.HasValue && (focus == QuestFocus.Kind.Quest || focus == QuestFocus.Kind.None) && gm.Player.contracts.Count > 0) t = ("board", gm.Player.contracts[0].toTown);
             if (!t.HasValue) return null;
             var index = WorldIndex.Get();
             var (kind, id) = t.Value;

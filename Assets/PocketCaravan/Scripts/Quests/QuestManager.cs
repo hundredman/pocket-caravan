@@ -37,6 +37,8 @@ namespace PocketCaravan
         /// <summary>수첩에서 선택한 길 안내 퀘스트. 새 수락 시 그 의뢰를 선택한다.</summary>
         public Progress Tracked { get; private set; }
         public bool IsFinished(QuestData q) => finished.Contains(q);
+        /// <summary>11/11 은샘: 퀘스트를 받았을 때 (길 안내 대상을 이 퀘스트로 바꾸는 데 쓴다)</summary>
+        public static event System.Action<Progress> Accepted;
         public void Track(Progress progress)
         {
             if (progress != null && active.TryGetValue(progress.quest, out var current) && current == progress) Tracked = progress;
@@ -229,6 +231,7 @@ namespace PocketCaravan
                 acceptedReputationScope = q.rewardReputationScope, acceptedReputationTarget = q.rewardReputationTarget, acceptedReputationSize = q.rewardReputationSize };
             active[q] = p;
             Tracked = p;
+            Accepted?.Invoke(p);   // 11/11 은샘: 가장 최근에 받은 것을 길 안내 (QuestFocus)
             if (q.giveItem != null && q.giveCount > 0) GameManager.I.Player.cargo.Add(q.giveItem, q.giveCount);
             Notify.Show($"퀘스트 수락: {q.title}");
             Sfx.Play("accept");

@@ -15,12 +15,37 @@ namespace PocketCaravan
         static readonly Dictionary<string, Zone> zones = new Dictionary<string, Zone>();
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void ResetStatics() => zones.Clear();
+        static void ResetStatics() { zones.Clear(); centers.Clear(); }
 
         /// <summary>이번 프레임 id가 r을 차지한다 (OnGUI마다 부른다. 안 부르면 다음 프레임 뒤에 비워진다)</summary>
         public static void Mark(string id, Rect r) => zones[id] = new Zone { rect = r, frame = Time.frameCount };
 
         static bool Live(Zone z) => Time.frameCount - z.frame <= 1;
+
+        // 11/11 은샘: 화면 가운데에 뜨는 것(위 가운데 알약 · 아래 목표 줄). 양옆 벽(FreeRow)에는 넣지 않고, 떠다니는 작은 표가 피할 때만 쓴다
+        static readonly Dictionary<string, Zone> centers = new Dictionary<string, Zone>();
+        public static void MarkCenter(string id, Rect r) => centers[id] = new Zone { rect = r, frame = Time.frameCount };
+
+        /// <summary>
+        /// 11/11 은샘: 떠다니는 작은 표(놀거리 가장자리 화살표 등)를 다른 UI와 겹치지 않게 위아래로 비킨다.
+        /// 가장자리 UI · 가운데 알약·목표 줄 · 아래 알림(Notify)과 겹치면 그 위(아래쪽 절반이면) 또는 아래(위쪽 절반이면)로 옮긴다
+        /// </summary>
+        public static Rect Dodge(Rect r)
+        {
+            float vh = UIStyle.VirtualHeight;
+            for (int pass = 0; pass < 8; pass++)
+            {
+                Rect? hit = null;
+                foreach (var z in zones.Values) if (Live(z) && z.rect.Overlaps(r)) { hit = z.rect; break; }
+                if (!hit.HasValue) foreach (var z in centers.Values) if (Live(z) && z.rect.Overlaps(r)) { hit = z.rect; break; }
+                if (!hit.HasValue) foreach (var n in Notify.DrawnRects) if (n.Overlaps(r)) { hit = n; break; }
+                if (!hit.HasValue) return r;
+                var h = hit.Value;
+                if (r.center.y > vh / 2f) r.y = h.y - r.height - 4f; else r.y = h.yMax + 4f;
+                r.y = Mathf.Clamp(r.y, 4f, vh - r.height - 4f);
+            }
+            return r;
+        }
 
         /// <summary>y0~y1 줄에서 양옆 가장자리 UI를 뺀 빈 구간. 화면 가운데보다 왼쪽에 놓인 것은 왼쪽 벽, 오른쪽은 오른쪽 벽이다</summary>
         public static (float left, float right) FreeRow(float y0, float y1, float gap = 6f)

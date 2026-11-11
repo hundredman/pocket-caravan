@@ -6,12 +6,19 @@ namespace PocketCaravan
     /// <summary>화면 아래쪽 가운데에 잠깐 뜨는 알림 (퀘스트 수락·완료, 마을 발전 등). 11/05 전엔 위쪽 가운데.</summary>
     public static class Notify
     {
-        struct Entry { public string text, key; public float until; }
+        struct Entry { public string text, key; public float until; public bool special; }
         static readonly List<Entry> entries = new List<Entry>();
 
         public static void Show(string text, float seconds = 3.5f)
         {
             entries.Add(new Entry { text = text, until = Time.unscaledTime + seconds });
+            if (entries.Count > 4) entries.RemoveAt(0);
+        }
+
+        /// <summary>11/11 은샘: 이벤트 퀘스트 알림 (만국 상인회 등). 금빛 종이·주황 테로 다른 알림과 구분한다</summary>
+        public static void Event(string text, float seconds = 4f)
+        {
+            entries.Add(new Entry { text = text, until = Time.unscaledTime + seconds, special = true });
             if (entries.Count > 4) entries.RemoveAt(0);
         }
 
@@ -58,7 +65,8 @@ namespace PocketCaravan
                     else r.y=Mathf.Min(r.y,reserved.yMin-r.height-6);
                 }
                 if(record)DrawnRects.Add(r);
-                CuteUI.Box(r, 8, CuteUI.Paper, CuteUI.Ink, 1, 2);
+                if (entries[i].special) CuteUI.Box(r, 8, CuteUI.EventPaper, CuteUI.EventLine, 2, 2);
+                else CuteUI.Box(r, 8, CuteUI.Paper, CuteUI.Ink, 1, 2);
                 CuteUI.WrapCenter(r.x + 12f, r.y + 6f, w - 24f, text, CuteUI.Text);
                 bottom = r.y - 5f;
             }

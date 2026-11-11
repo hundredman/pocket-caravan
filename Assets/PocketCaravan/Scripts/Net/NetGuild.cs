@@ -252,6 +252,7 @@ namespace PocketCaravan
         {
             int s = Step;
             if ((s != 1 && s != 2) || MapRoot.Current == null) return null;
+            if (QuestFocus.Current != QuestFocus.Kind.Event) return null;   // 11/11 은샘: 수첩에서 다른 것을 길 안내 중이면 비킨다
             if (!AtBazaar) return new Navigator.Hint { kind = "map", id = Bazaar, label = "만국 장터" };
             Interactable it = markTf != null ? markTf.GetComponent<Interactable>() : markPeer != null ? RemotePlayers.TargetOf(markPeer) : null;
             if (it != null && it.isActiveAndEnabled) return new Navigator.Hint { target = it, label = markPeer != null ? PeerName(markPeer) + " 님" : null };
@@ -303,7 +304,7 @@ namespace PocketCaravan
             {
                 if (!IntroDone() || IntroActive) { readyAt = -1f; return; }
                 if (readyAt < 0f) readyAt = now + LetterDelay;   // 튜토리얼 마지막 말이 끝나고 잠깐 뒤에
-                if (now >= readyAt) { Step = 1; OpenLetter(Letter.Invite); }
+                if (now >= readyAt) { Step = 1; QuestFocus.Set(QuestFocus.Kind.Event); OpenLetter(Letter.Invite); }   // 11/11 가장 최근에 받은 것을 길 안내
                 return;
             }
             if (s == 1 && AtBazaar && GM.GetMemo(WelcomeKey) < 1f)
@@ -313,7 +314,7 @@ namespace PocketCaravan
                 if (clerkTf != null && pc != null && ((Vector2)clerkTf.position - (Vector2)pc.transform.position).sqrMagnitude < 4.5f * 4.5f) Welcome();
                 return;
             }
-            if (s == 1 && DoneCount >= TaskKeys.Length && pendingStamps.Count == 0 && now - lastStamp > ReplyDelay) { Step = 2; Sfx.Play("levelup", .6f); OpenLetter(Letter.Reply); }
+            if (s == 1 && DoneCount >= TaskKeys.Length && pendingStamps.Count == 0 && now - lastStamp > ReplyDelay) { Step = 2; QuestFocus.Set(QuestFocus.Kind.Event); Sfx.Play("levelup", .6f); OpenLetter(Letter.Reply); }
         }
 
         static bool NotebookKey()
@@ -331,7 +332,7 @@ namespace PocketCaravan
         {
             if (inst != null) inst.CloseLetter();
             Sfx.Play("accept");
-            Notify.Show(AtBazaar ? $"{Parcel}를 받았다! 남쪽 상인회 안뜰의 라일라에게 전해요"
+            Notify.Event(AtBazaar ? $"{Parcel}를 받았다! 남쪽 상인회 안뜰의 라일라에게 전해요"
                 : $"{Parcel}를 받았다! 만국 장터의 라일라에게 배달해요 · 화살표와 아래 '목표' 줄을 따라가요", 5f);
         }
 
@@ -351,7 +352,7 @@ namespace PocketCaravan
             GM.SetMemo(WelcomeKey, 1f);
             GM.Player.money += DeliveryPay;
             Sfx.Play("coin");
-            Notify.Show($"배달 완료! 배달 삯 {DeliveryPay}냥을 받았다", 3.5f);
+            Notify.Event($"배달 완료! 배달 삯 {DeliveryPay}냥을 받았다", 3.5f);
             Say(clerkTf, "어서 와요!");
             Hop(clerkTf);
             DialogueUI.Show(Clerk,
@@ -457,7 +458,7 @@ namespace PocketCaravan
             if (was != Book.Stamp) return;
             lastStamp = Time.unscaledTime;
             int cur = Current;
-            if (cur >= 0) Notify.Show($"다음: {TaskTitle[cur]} · 노란 화살표를 따라가요", 3f);
+            if (cur >= 0) Notify.Event($"다음: {TaskTitle[cur]} · 노란 화살표를 따라가요", 3f);
         }
 
         float LastSlam { get { float t = -1f; foreach (var s in slamAt) t = Mathf.Max(t, s); return t; } }
@@ -491,7 +492,7 @@ namespace PocketCaravan
             BuildYard();
             riding = false;
             if (Step == 1 && GM != null && GM.GetMemo(WelcomeKey) < 1f)
-                Notify.Show($"만국 장터에 도착했다! 남쪽 상인회 안뜰의 라일라에게 {Parcel}를 전해요", 5f);
+                Notify.Event($"만국 장터에 도착했다! 남쪽 상인회 안뜰의 라일라에게 {Parcel}를 전해요", 5f);
         }
 
         void BuildYard()
@@ -982,7 +983,7 @@ namespace PocketCaravan
             if (was == Letter.Reply)
             {
                 Say(clerkTf, "이리 와요!");
-                Notify.Show("상인회 마당의 라일라에게 가서 이름을 올리세요 · 노란 화살표를 따라가요", 4.5f);
+                Notify.Event("상인회 마당의 라일라에게 가서 이름을 올리세요 · 노란 화살표를 따라가요", 4.5f);
             }
         }
 
@@ -1104,7 +1105,7 @@ namespace PocketCaravan
         {
             Sfx.Play("gold");
             Say(clerkTf, "좋은 장사길 되세요!");
-            Notify.Show("만국 상인회 상인이 되었다! 이제 어디로든, 나만의 장사길로", 5f);
+            Notify.Event("만국 상인회 상인이 되었다! 이제 어디로든, 나만의 장사길로", 5f);
             NetChat.System("만국 상인회에 가입했어요 · 다른 사람 화면의 내 이름표에 '★ 상인회'가 붙어요");
         }
 
@@ -1140,6 +1141,8 @@ namespace PocketCaravan
         // ---------------- 그리기 ----------------
 
         static bool Showing => Active && InGame && !UIState.Blocking && !HUD.Expanded && !GM.IsTravelling;
+        /// <summary>11/11 은샘: 위 알약은 이벤트를 길 안내 중일 때만 (안내 대상 하나만 위에)</summary>
+        static bool PillShowing => Showing && QuestFocus.Current == QuestFocus.Kind.Event;
 
         void OnGUI()
         {
@@ -1151,6 +1154,7 @@ namespace PocketCaravan
             if (shot != Shot.None) { GUI.depth = -30; DrawPhoto(); return; }
             if (book != Book.None) { GUI.depth = -30; DrawBook(); return; }
             GUI.depth = -4;
+            if (!PillShowing) return;
             var pill = DrawPill();
             if (GUI.Button(pill, GUIContent.none, GUIStyle.none)) wantBook = true;   // 위 알약을 누르면 수첩
         }
@@ -1242,15 +1246,24 @@ namespace PocketCaravan
         }
 
         /// <summary>위 가운데 알약: 지금 할 일 + 수첩 몇 개 (누르면 수첩). 그린 자리를 돌려준다</summary>
-        Rect DrawPill()
+        /// <summary>11/11 은샘: 지금 할 일 한 줄과 덧붙임 (위 알약 · Q 수첩 이벤트 카드가 같이 쓴다)</summary>
+        public static (string main, string where, bool pin) Summary()
         {
             int s = Step, cur = Current;
-            string main, where; bool pin;
-            if (s == 2) { main = "라일라에게 가서 상인회 가입하기"; where = "만국 장터 상인회 마당"; pin = true; }
-            else if (!AtBazaar) { main = $"{Parcel} 배달하기"; where = "만국 장터 라일라 · 지도(M) 한가운데"; pin = true; }
-            else if (GM.GetMemo(WelcomeKey) < 1f) { main = "라일라에게 꾸러미 전하기"; where = "만국 장터 남쪽 상인회 안뜰"; pin = true; }
-            else { main = cur >= 0 ? TaskTitle[cur] : "상인회 수첩 다 채움"; where = $"수첩(N) {DoneCount}/{TaskKeys.Length}"; pin = false; }
-            return CuteUI.StackPill(12, s == 2, CuteUI.Pic.OpenBook, null, main, where, pin);
+            if (s == 2) return ("라일라에게 가서 상인회 가입하기", "만국 장터 상인회 마당", true);
+            if (!AtBazaar) return ($"{Parcel} 배달하기", "만국 장터 라일라 · 지도(M) 한가운데", true);
+            if (GM.GetMemo(WelcomeKey) < 1f) return ("라일라에게 꾸러미 전하기", "만국 장터 남쪽 상인회 안뜰", true);
+            return (cur >= 0 ? TaskTitle[cur] : "상인회 수첩 다 채움", $"수첩(N) {DoneCount}/{TaskKeys.Length}", false);
+        }
+
+        Rect DrawPill()
+        {
+            var (main, where, pin) = Summary();
+            // 11/11 은샘: 이벤트 퀘스트는 금빛 알약 + "이벤트" 머리말로 다른 퀘스트와 구분
+            CuteUI.EventStyle = true;
+            var r = CuteUI.StackPill(12, false, CuteUI.Pic.OpenBook, "이벤트", main, where, false);
+            CuteUI.EventStyle = false;
+            return r;
         }
 
         /// <summary>
