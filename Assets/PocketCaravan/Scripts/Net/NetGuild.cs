@@ -358,7 +358,7 @@ namespace PocketCaravan
                 $"어서 와요, {PlayerName} 님! 만국 상인회 접수원 라일라예요.\n" +
                 $"어머, {Parcel}! 먼 길 배달해 줘서 고마워요. 여기 배달 삯 {DeliveryPay}냥이에요.\n\n" +
                 "상인회 패를 받으려면 이 수첩에 도장 네 개를 모아 와요. 함께 춤추고, 선물을 주고받고, 놀이판에서 짐을 쌓고, 다 같이 사진도 찍는 거예요.\n\n" +
-                "찾아갈 곳은 노란 화살표가, 수첩은 N 키가 보여 줘요. 혼자 왔어도 괜찮아요. 길보, 비요른, 하킴이 같이 놀아 줄 거예요!",
+                "찾아갈 곳은 노란 화살표가, 수첩은 N 키가 보여 줘요. 혼자 왔어도 괜찮아요. 길보, 비요른, 파리드가 같이 놀아 줄 거예요!",
                 new DialogueUI.Choice("수첩 볼게요!", () => { Say(clerkTf, "화이팅!"); wantBook = true; }));
         }
 
@@ -543,7 +543,7 @@ namespace PocketCaravan
             }, pc);
             Merchant("arabia", 23, 47, new NetMeet.Npc
             {
-                name = "대상 하킴", shortName = "하킴",
+                name = "대상 파리드", shortName = "파리드",
                 hello = "평안을 빕니다, 친구여. 잘 왔어요.",
                 cheer = "하하, 사막 바람보다 시원하군요!",
                 thanks = "선물은 길동무를 만든다지요. 고마워요!",

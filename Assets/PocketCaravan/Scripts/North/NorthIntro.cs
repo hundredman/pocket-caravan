@@ -43,6 +43,7 @@ namespace PocketCaravan
             GameEvents.ItemBought += OnBought;
             GameEvents.ItemSold += OnSold;
             InventoryUI.Opened += OnInventory;
+            if (!Navigator.Tutorials.Contains(NavHint)) Navigator.Tutorials.Add(NavHint);
         }
 
         void OnDisable()
@@ -51,9 +52,83 @@ namespace PocketCaravan
             GameEvents.ItemBought -= OnBought;
             GameEvents.ItemSold -= OnSold;
             InventoryUI.Opened -= OnInventory;
+            Navigator.Tutorials.Remove(NavHint);
         }
 
         void Start() { if (NorthUtil.Map == Home) OnMap(Home); }
+
+        // 11/11 은샘: 북유럽·베네치아 첫걸음 안내에는 길 안내 화살표 연결(Navigator.Tutorials)이 없어서,
+        //   사기·팔기 단계에서 화살표가 뜨지 않았다 (기우·윤채 시연 확인). 고려·아라비아 첫걸음 안내(NavHint)와 같은 방식:
+        //   1·10단계 어머니, 사기 단계는 이 맵 장터(없으면 가장 가까운 북유럽 장터), 팔기 단계는 산 마을이 아닌 가장 가까운 북유럽 장터.
+        Navigator.Hint? NavHint()
+        {
+            if (!Active || !IsReindeer || StartScreen.IsOpen || MapRoot.Current == null) return null;
+            int s = Step;
+            if (s == 1 || s == 10)
+            {
+                var guide = root != null ? root.GetComponentInChildren<NorthSpot>() : null;
+                if (guide != null) return new Navigator.Hint { target = guide, label = Mom };
+                return new Navigator.Hint { kind = "map", id = Home, label = Mom };
+            }
+            if (s != 7 && s != 8) return null;
+            string avoid = s == 8 ? BuyTownId() : null;
+            foreach (var it in Interactable.All)
+                if (it is TownMarket m && m.isActiveAndEnabled && m.town != null && m.town.id != avoid) return new Navigator.Hint { target = it, label = $"{TownName(m.town.id)} 장터 상인" };
+            string best = NearestMarket(avoid);
+            return best != null ? new Navigator.Hint { kind = "market", id = best } : (Navigator.Hint?)null;
+        }
+
+        /// <summary>사기 단계에서 산 마을 (모르면 null)</summary>
+        static string BuyTownId()
+        {
+            var gm = GameManager.I;
+            if (gm == null || gm.Db == null || !gm.HasMemo(BuyTownMemo)) return null;
+            int i = Mathf.RoundToInt(gm.GetMemo(BuyTownMemo));
+            return i >= 0 && i < gm.Db.towns.Count && gm.Db.towns[i] != null ? gm.Db.towns[i].id : null;
+        }
+
+        static string TownName(string townId)
+        {
+            var index = WorldIndex.Get();
+            string map = index != null ? index.MapOf("market", townId) : null;
+            return map != null ? index.MapName(map) : townId;
+        }
+
+        static string cachedFrom, cachedAvoid, cachedBest; static float cachedAt = -9f;
+
+        /// <summary>지금 맵에서 맵을 건너는 수가 가장 적은 북유럽 장터 (avoid 마을은 빼고). 1초마다 다시 잰다</summary>
+        static string NearestMarket(string avoid)
+        {
+            var index = WorldIndex.Get(); var map = MapRoot.Current;
+            if (index == null || map == null) return null;
+            if (cachedFrom == map.mapId && cachedAvoid == avoid && Time.unscaledTime - cachedAt < 1f) return cachedBest;
+            string best = null; int bestHops = int.MaxValue;
+            foreach (var p in index.places)
+            {
+                if (p.kind != "market" || p.id == avoid || string.IsNullOrEmpty(p.mapId) || !p.mapId.StartsWith("north_")) continue;
+                int h = Hops(index, map.mapId, p.mapId);
+                if (h >= 0 && h < bestHops) { bestHops = h; best = p.id; }
+            }
+            cachedFrom = map.mapId; cachedAvoid = avoid; cachedBest = best; cachedAt = Time.unscaledTime;
+            return best;
+        }
+
+        static int Hops(WorldIndex index, string from, string to)
+        {
+            if (from == to) return 0;
+            var seen = new System.Collections.Generic.Dictionary<string, int> { [from] = 0 };
+            var q = new System.Collections.Generic.Queue<string>(); q.Enqueue(from);
+            while (q.Count > 0)
+            {
+                var cur = q.Dequeue(); var info = index.Map(cur); if (info == null) continue;
+                foreach (var n in info.neighbors)
+                {
+                    if (seen.ContainsKey(n)) continue;
+                    seen[n] = seen[cur] + 1; if (n == to) return seen[n]; q.Enqueue(n);
+                }
+            }
+            return -1;
+        }
 
         static bool IsReindeer => GameManager.I != null && GameManager.I.Player.origin != null && GameManager.I.Player.origin.id == "viking";
 
