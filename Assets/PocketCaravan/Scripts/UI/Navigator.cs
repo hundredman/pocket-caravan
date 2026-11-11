@@ -77,6 +77,30 @@ namespace PocketCaravan
             return id == "Naru" || id == "Gaegyeong" || id == "Dakmok" || id.StartsWith("goryeo_") || id.StartsWith("transit_");
         }
 
+        // 11/11 은샘: 고려·중앙 대륙 동쪽에서 서쪽(교역 길목 너머: 만국 장터·다른 지역)으로 갈 때 맵마다 다음 맵을 정해 둔다.
+        //   맵 건너는 수만 보면 나루는 장단→남쪽 포구(길 없는 1칸 출구), 개경은 송악(길 없는 연결)으로 제각각 갔다.
+        //   길로 이어진 큰길 하나: 나루→장단→송악, 개경→닥목→송악 → 나무꾼 길목 → 중앙 진입로 → 교역 길목
+        static readonly Dictionary<string, string> WestRoadNext = new Dictionary<string, string>
+        {
+            ["Naru"] = "goryeo_jangdan", ["goryeo_jangdan"] = "goryeo_songak",
+            ["Gaegyeong"] = "Dakmok", ["Dakmok"] = "goryeo_songak",
+            ["goryeo_songak"] = "transit_woodtown", ["transit_pass"] = "transit_woodtown",
+            ["transit_woodtown"] = "transit_central_approach", ["transit_ferry"] = "transit_wetroad",
+            ["transit_wetroad"] = "transit_central_approach", ["transit_central_approach"] = "transit_crossroads",
+            ["transit_southport"] = "transit_south_inland", ["transit_south_inland"] = "transit_crossroads",
+        };
+
+        static string WestRoad(string here, string target)
+        {
+            if (string.IsNullOrEmpty(here) || string.IsNullOrEmpty(target)) return null;
+            here = GoryeoLayout.Resolve(here);
+            if (!WestRoadNext.TryGetValue(here, out var next)) return null;
+            string t = GoryeoLayout.Resolve(target);
+            if (t == "transit_crossroads" || WestRoadNext.ContainsKey(t)) return null;   // 고려·중앙 동쪽 안에서는 예전처럼 가장 짧은 길
+            var info = WorldIndex.Get()?.Map(here);
+            return info != null && info.neighbors.Contains(next) ? next : null;
+        }
+
         const int MaxSearch = 20000;      // 탐색 칸 수 상한 (큰 맵에서도 한 번에 끝나는 크기)
         static Vector3Int cachedFrom, cachedGoal;
         static MapRoot cachedMap;
@@ -207,7 +231,7 @@ namespace PocketCaravan
                 return null;
             }
 
-            string next = index.NextStep(map.mapId, targetMap);
+            string next = WestRoad(map.mapId, targetMap) ?? index.NextStep(map.mapId, targetMap);
             if (next == null) return null;
             // 11/08 기우: 같은 맵으로 가는 출구가 여러 토막이면(아라비아 빈 사막 남쪽 등) 목록 맨 앞 토막의 가운데가 아니라
             // 플레이어에게 가장 가까운 출구 칸을 가리킨다. 출구가 하나인 맵은 그 출구 안에서 가장 가까운 칸.
