@@ -94,6 +94,14 @@ namespace PocketCaravan
             return new Vector2(s.x / UIStyle.Scale, (Screen.height - s.y) / UIStyle.Scale);
         }
 
+        /// <summary>11/11 Space 알약에 쓸 동사 (말 걸기 · 사고팔기 · 줍기 …). 고려 이름표(GoryeoPlaceLabels)도 같이 쓴다</summary>
+        public static string VerbFor(Interactable t)
+        {
+            if (t == null) return "말 걸기";
+            if (!string.IsNullOrEmpty(t.ActionVerb)) return t.ActionVerb;
+            return t is DroppedCargo ? "줍기" : t is ContractBoard ? "게시판 보기" : t is TownMarket ? "사고팔기" : "말 걸기";
+        }
+
         static void Outlined(Rect r, string text, Color c, GUIStyle style)
         {
             shadowStyle.alignment = style.alignment;

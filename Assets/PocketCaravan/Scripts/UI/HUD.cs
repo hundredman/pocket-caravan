@@ -14,7 +14,7 @@ namespace PocketCaravan
     {
         const float ExpandSeconds = 5f;
         static float expandedUntil = -1f;
-        const int ButtonSize = 26, ButtonGap = 7;
+        const int ButtonSize = 22, ButtonGap = 5;   // 11/11 윤채: 26·7 → 22·5 (오른쪽 위 단추 다섯 개가 화면을 많이 차지했다)
 
         /// <summary>Tab으로 펼친 동안 true (상태창·할 일 모두)</summary>
         public static bool Expanded => Time.unscaledTime < expandedUntil;
@@ -211,7 +211,7 @@ namespace PocketCaravan
         static void DrawButtons()
         {
             float x = ButtonsLeft;
-            ScreenZones.Mark("hud.buttons", new Rect(x, 4, 3 * ButtonSize + 2 * ButtonGap, ButtonSize + 8));
+            ScreenZones.Mark("hud.buttons", new Rect(x, 4, Buttons.Length * ButtonSize + (Buttons.Length - 1) * ButtonGap, ButtonSize + 8));   // 11/11 단추 다섯 개 전부 (전에는 셋만 쳤다)
             foreach (var b in Buttons)
             {
                 CuteUI.FramedCircle(x, 4, ButtonSize);

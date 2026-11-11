@@ -203,7 +203,7 @@ namespace PocketCaravan
         static Rect Snap(Rect r) => new Rect(Mathf.Round(r.x), Mathf.Round(r.y), Mathf.Round(r.width), Mathf.Round(r.height));
 
         // ---------------- 그림 (픽셀 아이콘) ----------------
-        public enum Pic { Coin, Coin7, Basket, Bolt, Scroll, Compass, OpenBook, People, Sack, Chart, Arrow, Pin, Bulb, XMark, Star4, Menu, Speaker, Clock }
+        public enum Pic { Coin, Coin7, Basket, Bolt, Scroll, Compass, OpenBook, People, Sack, Chart, Arrow, Pin, Bulb, XMark, Star4, Menu, Speaker, Clock, Check, Star5 }   // 11/11 Check · Star5: 알림 동그라미용 (흰색 한 가지로 칠해도 모양이 보이게)
 
         static readonly Dictionary<Pic, (string[] rows, Dictionary<char, Color32> pal)> pics = new Dictionary<Pic, (string[], Dictionary<char, Color32>)>
         {
@@ -229,6 +229,9 @@ namespace PocketCaravan
             { Pic.Bulb, (new[] { "..###..", ".#yyy#.", "#yywyy#", "#yyyyy#", ".#yyy#.", "..#y#..", "..###..", "..#g#..", "..###.." },
                 Pal(('#', 0x2A1A2E), ('y', 0xFFCF33), ('w', 0xFFFFFF), ('g', 0x6A5464))) },
             { Pic.XMark, (new[] { "##...##", "###.###", ".#####.", "..###..", ".#####.", "###.###", "##...##" }, Pal(('#', 0x2A1A2E))) },
+            // 11/11 윤채: 알림 카드 동그라미 안 그림 (퀘스트 완료 = 체크, 이벤트 = 다섯 꼭짓점 별). Star4는 두 배로 키우면 "+"처럼 보였다
+            { Pic.Check, (new[] { "........##", ".......###", "##....###.", "###..###..", ".######...", "..####....", "...##....." }, Pal(('#', 0x2A1A2E))) },
+            { Pic.Star5, (new[] { "....#....", "...###...", "...###...", "#########", ".#######.", "..#####..", "..##.##..", ".##...##.", ".#.....#." }, Pal(('#', 0xFFCF33))) },
             { Pic.Star4, (new[] { "...y...", "...y...", "..yWy..", "yyWWWyy", "..yWy..", "...y...", "...y..." }, Pal(('y', 0xFFCF33), ('W', 0xFFFFFF))) },
             // 11/08 메뉴 (세 줄, HUD 오른쪽 위 단추 = Esc)
             // 11/08 시계 (쉼터 시간 줄)
@@ -793,12 +796,39 @@ namespace PocketCaravan
         /// </summary>
         public static Rect GoalPill(string text)
         {
-            float w = Mathf.Round(Width(text, true) + 22f);
-            var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2f), HUD.BottomLine(10, 15), w, 15);
+            // 11/11 윤채: "목표 · 타이즈 지나 알 아흐사 방면  (14칸)"이 한 줄 글이라 한눈에 안 들어왔다 →
+            //   [나침반(출구)·핀(사람·장터)] 굵은 목적지 · 작은 덧말(○○ 지나 / 방면) · 오른쪽 칸 수 칩. 부르는 쪽 글은 그대로 받아 나눈다
+            string s = text ?? "";
+            if (s.StartsWith("목표 · ")) s = s.Substring(5);
+            string cells = null;
+            var m = System.Text.RegularExpressions.Regex.Match(s, @"\s*\(?(\d+)칸\)?\s*$");
+            if (m.Success) { cells = m.Groups[1].Value + "칸"; s = s.Substring(0, m.Index).TrimEnd(); }
+            bool exit = s.EndsWith(" 방면");
+            if (exit) s = s.Substring(0, s.Length - 3).TrimEnd();
+            string sub = null;   // 11/11 "방면"은 화살표 그림이 대신한다 ("초원 진입로 지나 · 방면"이 어색했다)
+            int via = s.IndexOf(" 지나 ", System.StringComparison.Ordinal);
+            if (via > 0) { sub = s.Substring(0, via) + " 지나"; s = s.Substring(via + 4); }
+            string dest = s;
+
+            const float h = 18f, dot = 14f;
+            float destW = Width(dest, false, true), subW = sub != null ? Width(sub, true) : 0f, chipW = cells != null ? Mathf.Round(Width(cells, true, true) + 10f) : 0f;
+            float w = Mathf.Round(3f + dot + 5f + destW + (sub != null ? 5f + subW : 0f) + (cells != null ? 7f + chipW : 0f) + 4f);
+            // 11/11 윤채: 아래 쌓는 줄 → 위 할 일 알약 바로 밑 (TopStack 14: 지역 첫 안내 10 · 상인회 12 다음, 구역 이름 20보다 위).
+            //   할 일과 가는 길을 한곳에서 보게 (위 "촌장을 만나기"와 아래 "촌장 8칸"을 따로 봐야 했다). 아래는 알림만 남는다
+            var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2f), TopStack(14, h), w, h);
             ScreenZones.MarkCenter("goal", r);   // 11/11 떠다니는 표가 이 줄을 피한다
-            Box(r, 7, Paper, Ink, 1, 1, SoftShadow);
-            Circle(r.x + 6, r.y + 5, 5, Deco, Ink, 0);
-            Label(r.x + 14, r.center.y, text, Text, true);
+            Box(r, 8, Paper, Ink, 1, 1, SoftShadow);
+            Circle(r.x + 3f, r.y + 2f, (int)dot, Interact, InteractLo, 1);
+            var pic = exit ? Pic.Arrow : Pic.Pin; var ps = PicSize(pic);   // 11/11 나침반은 동그란 그림이라 흰색으로 칠하면 원판만 보였다 → 화살표
+            Icon(pic, r.x + 3f + (dot - ps.x) / 2f, r.y + 2f + (dot - ps.y) / 2f, 1, White);
+            float x = Label(r.x + 3f + dot + 5f, r.center.y, dest, Text, false, true);
+            if (sub != null) x = Label(x + 5f, r.center.y + .5f, sub, Sub, true);
+            if (cells != null)
+            {
+                var chip = new Rect(r.xMax - 4f - chipW, r.y + 3f, chipW, h - 6f);
+                Box(chip, 5, Paper2, Line, 1);
+                LabelCenter(chip.center.x, chip.center.y, cells, Text, true, true);
+            }
             return r;
         }
 

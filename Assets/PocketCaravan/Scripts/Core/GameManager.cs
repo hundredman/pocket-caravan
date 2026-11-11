@@ -54,12 +54,12 @@ namespace PocketCaravan
             autosave = false;
             LoadIssue = "저장 복원을 중단했습니다. " + reason + " 기존 파일은 보존되며 이번 세션은 저장되지 않습니다.";
             Debug.LogWarning("[불러오기] " + LoadIssue);
-            Notify.Show("저장 복원 중단 · 원본 보존/저장 차단. Esc 메뉴에서 원인을 확인하세요.", 8f);
+            // 11/11 윤채: 같은 말이 아래 빨간 줄(HUD)에도 계속 떠 있어 알림은 뺐다 (알림이 겹쳐 조잡했다)
         }
 
         bool TryApplySave(SaveData data)
         {
-            try { GoryeoBoundaryLayout.Migrate(data); Apply(data); return true; }
+            try { GoryeoBoundaryLayout.Migrate(data); SaveCompatibility.DropRuntimeOnly(data); Apply(data); return true; }
             catch (System.Exception e) { BlockFailedLoad(e.Message); return false; }
         }
 
@@ -534,7 +534,13 @@ namespace PocketCaravan
                 day = Clock.day, minute = Clock.minuteOfDay, playHours = Clock.playHours,
                 nextContractId = Contracts.nextId,
             };
-            foreach (var kv in Player.cargo.Items) { d.cargoItems.Add(kv.Key.id); d.cargoCounts.Add(kv.Value); d.cargoCosts.Add(Player.cargo.TotalCost(kv.Key)); }
+            foreach (var kv in Player.cargo.Items)
+            {
+                // 11/11 윤채: 실행 중에만 있는 물건(만국 상인회 꾸러미 등, 게임 데이터에 없음)은 저장하지 않는다.
+                //   저장에 들어가면 다음에 켤 때 "현재 데이터에 없는 화물"로 저장 복원이 통째로 막혔다. 그런 물건은 만든 쪽이 다시 넣는다
+                if (kv.Key == null || !Db.items.Contains(kv.Key)) continue;
+                d.cargoItems.Add(kv.Key.id); d.cargoCounts.Add(kv.Value); d.cargoCosts.Add(Player.cargo.TotalCost(kv.Key));
+            }
             d.storedCargo = Player.warehouse.Export();
             d.tradeActivity = Player.tradeActivity.Export();
             d.contracts.AddRange(Player.contracts);

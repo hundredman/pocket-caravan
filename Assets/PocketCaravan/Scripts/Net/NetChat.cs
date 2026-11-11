@@ -21,7 +21,10 @@ namespace PocketCaravan
     public class NetChat : MonoBehaviour
     {
         const int MaxLines = 8, MaxChars = 80;
-        const float LineSeconds = 12f, FadeSeconds = 2f, LogWidth = 230f;
+        const float LineSeconds = 8f, FadeSeconds = 1.5f, LogWidth = 230f;
+        /// <summary>11/11 윤채: 입력하지 않을 때는 최근 몇 줄만 작게 (큰 반투명 상자가 이름표·알림을 가렸다). Enter로 열면 다 보인다</summary>
+        const int IdleLines = 3;
+        float logW = LogWidth;
         // 11/05 UI B안: 종이 바탕 위 글씨라 진한 색 (전엔 어두운 바탕용 밝은 색)
         const string MeColor = "#1f625e", OtherColor = "#a8541c", DimColor = "#6a5464", ErrorColor = "#d6334f", SystemColor = "#3f7a3a", NoticeColor = "#c0611a";
 
@@ -68,7 +71,7 @@ namespace PocketCaravan
         /// <summary>알림 한 줄 (공유 장터 거래, 저장 등). 채팅 목록에 연두색으로 남는다</summary>
         public static void System(string text)
         {
-            if (inst != null && !string.IsNullOrEmpty(text)) inst.Add($"<color={SystemColor}>· {text}</color>");
+            if (inst != null && !string.IsNullOrEmpty(text)) inst.Add($"<color={SystemColor}>· {text}</color>", 5f);   // 11/11 안내 줄은 더 빨리 사라진다
         }
 
         void OnEnable() => NetClient.Received += OnReceived;
@@ -232,9 +235,9 @@ namespace PocketCaravan
             if (typing) bottom = DrawInput(bottom);
             float top = DrawLines(bottom);
             // 11/08 알림이 채팅을 덮지 않게 차지한 자리를 알린다 (알림은 그 오른쪽 · 너무 좁으면 위로)
-            if (top < floor) ScreenZones.Mark("chat", Rect.MinMaxRect(6f, top, 6f + LogWidth + (typing ? 40f + 52f : 12f), floor));
+            if (top < floor) ScreenZones.Mark("chat", Rect.MinMaxRect(6f, top, 6f + (typing ? LogWidth + 40f + 52f : logW + 12f), floor));
             // 11/08 채팅 목록을 누르면 입력 칸이 열린다 (Enter와 같다)
-            if (!typing && top < floor && GUI.Button(Rect.MinMaxRect(6f, top, 6f + LogWidth + 12f, floor), GUIContent.none, GUIStyle.none)) OpenInput();
+            if (!typing && top < floor && GUI.Button(Rect.MinMaxRect(6f, top, 6f + logW + 12f, floor), GUIContent.none, GUIStyle.none)) OpenInput();
         }
 
         void Styles()
@@ -276,26 +279,36 @@ namespace PocketCaravan
         float DrawLines(float bottom)
         {
             var old = GUI.color;
-            var shown = new List<(string text, float h, float alpha)>();
-            float total = 0f, top = 0f;
+            var picked = new List<(string text, float alpha)>();
+            float top = 0f, natural = 0f;
             for (int i = lines.Count - 1; i >= 0; i--)
             {
                 float alpha = LineAlpha(lines[i], Time.unscaledTime);
                 if (alpha <= 0f) continue;
-                float h = lineStyle.CalcHeight(new GUIContent(lines[i].text), LogWidth);
-                shown.Add((lines[i].text, h, alpha));
-                total += h;
+                if (!typing && picked.Count >= IdleLines) break;   // 11/11 입력하지 않을 때는 최근 몇 줄만
+                picked.Add((lines[i].text, alpha));
+                natural = Mathf.Max(natural, lineStyle.CalcSize(new GUIContent(lines[i].text)).x + 2f);
                 top = Mathf.Max(top, alpha);
             }
-            if (shown.Count == 0) return bottom;
+            if (picked.Count == 0) return bottom;
+            // 11/11 상자 너비는 글에 맞춘다 (짧은 말 한 줄에도 넓은 상자가 떴다). 입력 중에는 입력 칸과 같은 너비
+            logW = typing ? LogWidth : Mathf.Clamp(natural, 60f, LogWidth);
+            var shown = new List<(string text, float h, float alpha)>();
+            float total = 0f;
+            foreach (var (text, alpha) in picked)
+            {
+                float h = lineStyle.CalcHeight(new GUIContent(text), logW);
+                shown.Add((text, h, alpha));
+                total += h;
+            }
             GUI.color = new Color(1f, 1f, 1f, top);
-            CuteUI.Box(new Rect(6f, bottom - total - 8f, LogWidth + 12f, total + 8f), 8, LogFill, LogFill, 0, 2, CuteUI.SoftShadow);
+            CuteUI.Box(new Rect(6f, bottom - total - 8f, logW + 12f, total + 8f), 8, LogFill, LogFill, 0, 2, CuteUI.SoftShadow);
             float y = bottom - 4f;
             foreach (var (text, h, alpha) in shown)
             {
                 y -= h;
                 GUI.color = new Color(1f, 1f, 1f, alpha);
-                GUI.Label(new Rect(12f, y, LogWidth, h), text, lineStyle);
+                GUI.Label(new Rect(12f, y, logW, h), text, lineStyle);
             }
             GUI.color = old;
             return bottom - total - 8f;

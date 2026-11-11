@@ -329,7 +329,7 @@ namespace PocketCaravan
             if (p.RewardCredit > 0) reward += $" 신용 +{p.RewardCredit}";
             Notify.Show($"퀘스트 완료: {q.title}{reward}");
             Sfx.Play("success");
-            if (!string.IsNullOrEmpty(q.finishNote)) Notify.Show(q.finishNote, 6f);
+            if (!string.IsNullOrEmpty(q.finishNote)) Notify.Story(q.finishNote, 6f);   // 11/11 "다음 이야기" 모양 (책 그림 + 머리글)
         }
 
         /// <summary>

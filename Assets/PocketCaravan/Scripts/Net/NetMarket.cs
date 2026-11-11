@@ -158,11 +158,8 @@ namespace PocketCaravan
                     Saw(m.seq);
                     ServerShared = m.marketOk;
                     if (m.marketOk) { ChangeScale(m.marketScale > 0f ? m.marketScale : 1f); ApplySnapshot(m.market); SendOffline(); }
-                    if (!toldTowns)
-                    {
-                        toldTowns = true;
-                        NetChat.System($"공유 장터: {TownList()} · 여기서 사고팔면 접속한 모두의 값이 같이 바뀌어요");
-                    }
+                    // 11/11 윤채: 접속할 때마다 채팅에 "공유 장터: …" 두 줄이 떠 화면 알림이 겹쳐 보였다. 온라인 창(O)에 같은 줄이 있어 뺐다
+                    toldTowns = true;
                     break;
                 case "online":
                     if (ServerShared && m.marketScale > 0f) ChangeScale(m.marketScale);
@@ -181,7 +178,7 @@ namespace PocketCaravan
                         Saw(r.seq);
                         if (r.id != NetClient.I.MyId && Apply(r.town, r.item, r.d, out _, out _)) applied++;
                     }
-                    if (applied > 0) NetChat.System($"접속하지 않은 동안 다른 사람 거래 {applied}건을 공유 장터에 반영했어요");
+                    // 11/11 윤채: "접속하지 않은 동안 다른 사람 거래 N건 반영" 안내는 뺐다 (접속할 때 채팅 상자가 알림과 겹쳐 떴다)
                     break;
             }
         }
@@ -228,7 +225,7 @@ namespace PocketCaravan
                     offlineOut.Enqueue(new TradeOut { town = id, item = it.id, n = Mathf.Clamp(Mathf.RoundToInt(Mathf.Abs(d)), 1, 1000), d = Mathf.Clamp(d, -10000f, 10000f), sell = d > 0f });
                     kinds++;
                 }
-            if (kinds > 0) NetChat.System($"혼자 하는 동안 공유 장터에서 사고판 것 {kinds}가지를 모두의 장터에 반영했어요");
+            // 11/11 윤채: "혼자 하는 동안 사고판 것 N가지 반영" 안내는 뺐다 (접속할 때 채팅 상자가 알림과 겹쳐 떴다)
         }
 
         /// <summary>장터 재고에 변화를 더한다. 모르는 마을·물건이면 false</summary>

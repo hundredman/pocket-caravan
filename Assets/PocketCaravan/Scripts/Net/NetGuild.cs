@@ -492,7 +492,7 @@ namespace PocketCaravan
             BuildYard();
             riding = false;
             if (Step == 1 && GM != null && GM.GetMemo(WelcomeKey) < 1f)
-                Notify.Event($"만국 장터에 도착했다! 남쪽 상인회 안뜰의 라일라에게 {Parcel}를 전해요", 5f);
+                Notify.Event($"남쪽 상인회 안뜰의 라일라에게 {Parcel}를 전해요", 5f);   // 11/11 "만국 장터" 이름은 도착 리본이 먼저 보여 준다 (알림은 짧게)
         }
 
         void BuildYard()

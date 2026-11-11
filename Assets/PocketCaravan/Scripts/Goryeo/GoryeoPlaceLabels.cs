@@ -274,12 +274,12 @@ namespace PocketCaravan
         {
             var body=BodyBounds(target);
             var bottom=ToGui(cam,new Vector3(body.center.x,body.min.y,body.center.z));
-            float w=CuteUI.KeycapWidth("Space");
-            var rect=new Rect(Mathf.Round(bottom.x-w/2-guiOrigin.x)+guiOrigin.x,Mathf.Round(bottom.y+3-guiOrigin.y)+guiOrigin.y,w,13);
+            // 11/11 윤채: 키캡만 있으면 무엇을 하는지 몰라서 다른 지역과 같은 [Space 말 걸기] 알약으로 (누르면 Space와 같다)
+            string verb=WorldLabels.VerbFor(target);
+            float w=Mathf.Round(3+CuteUI.KeycapWidth("Space")+5+CuteUI.Width(verb,true)+7);
+            var rect=new Rect(Mathf.Round(bottom.x-w/2-guiOrigin.x)+guiOrigin.x,Mathf.Round(bottom.y+3-guiOrigin.y)+guiOrigin.y,w,17);
             if(rect.x<4||rect.xMax>UIStyle.VirtualWidth-4||rect.y<25||rect.yMax>UIStyle.VirtualHeight-44)return default;
-            CuteUI.Keycap(rect.x,rect.y,"Space",true);   // 11/08 흰 테두리 글씨 → 키캡 (다른 지역 말 걸기 안내와 같은 모양)
-            if(GUI.Button(new Rect(rect.x-4,rect.y-3,rect.width+8,rect.height+6),GUIContent.none,GUIStyle.none))InputReader.Press(' ');   // 11/08 마우스로 눌러도 말 걸기
-            return rect;
+            return CuteUI.SpacePrompt(rect.center.x,rect.y,verb);
         }
         static void DrawDown(Vector2 p)
         {
