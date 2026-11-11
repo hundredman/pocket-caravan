@@ -7,7 +7,7 @@ namespace PocketCaravan
 {
     /// <summary>
     /// 화면 아래 대화창. DialogueUI.Show(이름, 대사, 선택지...)로 연다.
-    /// 실제 글꼴·창 크기로 페이지를 나눈다. Space로 다음 페이지, 마지막 페이지에서만 선택/닫기.
+    /// 실제 글꼴·창 크기로 줄과 쪽을 나눈다 (WrapLines·Layout, 한 쪽에 글 두 줄까지). Space로 다음 쪽, 마지막 쪽에서만 선택/닫기.
     /// </summary>
     public class DialogueUI : MonoBehaviour
     {
@@ -26,8 +26,7 @@ namespace PocketCaravan
         readonly Queue<Pending> pending = new Queue<Pending>();
         int openedFrame;
         readonly List<string> pages = new List<string>();
-        readonly List<int> pageStarts = new List<int>();   // 쪽마다 줄 나눈 글(wrapped)에서 시작하는 글자 위치
-        string wrapped = "";   // 문장·단어 단위로 미리 줄을 나눈 대사 (Wrap)
+        readonly List<int> pageSeen = new List<int>();   // 쪽마다 그 앞까지 나온 글자 수 (빈칸 빼고)
         int pageIndex;
         float pageWidth;
         GUIStyle bodyStyle;
@@ -62,7 +61,7 @@ namespace PocketCaravan
             }
             d.speaker = speaker;
             d.text = (text ?? "").Replace("\r\n", "\n").Replace('\r', '\n');
-            d.pages.Clear(); d.pageStarts.Clear();
+            d.pages.Clear(); d.pageSeen.Clear();
             d.pageIndex = 0;
             d.pageWidth = 0;
             d.choices.Clear(); d.choiceScroll = Vector2.zero; d.focus = 0;
@@ -122,28 +121,33 @@ namespace PocketCaravan
             openedFrame = Time.frameCount;
         }
 
+        /// <summary>미리 나눈 한 줄. start = 대사 한 줄(원문의 줄)의 첫 줄, unit = 원문의 몇 번째 줄에서 나왔는지</summary>
+        public struct Line { public string text; public bool start; public int unit; }
+
         /// <summary>
         /// 11/11 은샘: 대사를 창 너비에 맞춰 미리 줄을 나눈다. Unity 글자 배치는 한글을 글자마다 줄바꿈해서
         /// "주고받 / 고", "비 / 요른"처럼 단어가 갈리고, 바뀐 줄 앞에 빈칸이 남았다.
+        /// 원문의 한 줄(\n 사이)을 한 덩어리로 보고, 그 안에서
         /// 1) 다음 문장이 이 줄에 다 안 들어가면(그 문장이 한 줄에는 들어갈 때) 다음 줄에서 문장을 시작한다.
         /// 2) 한 줄보다 긴 문장은 이어 쓰되 띄어쓰기에서 줄을 바꾼다. 한 줄보다 긴 단어만 글자 단위로 자른다.
-        /// 원래 줄바꿈(\n)은 그대로 둔다.
+        /// 원문의 빈 줄은 덩어리 사이 구분으로만 쓴다 (쪽 안의 여백은 Layout이 정한다).
         /// </summary>
-        public static string Wrap(string source, GUIStyle style, float width)
+        public static List<Line> WrapLines(string source, GUIStyle style, float width)
         {
-            if (string.IsNullOrEmpty(source) || style == null || width <= 0f) return source ?? "";
+            var lines = new List<Line>();
+            if (string.IsNullOrEmpty(source) || style == null || width <= 0f) return lines;
             var plain = new GUIStyle(style) { wordWrap = false };
             float limit = width - 2f;   // 재는 너비와 실제 줄바꿈의 반올림 차이로 한 줄이 두 줄이 되지 않게
             System.Func<string, bool> fits = line => plain.CalcSize(new GUIContent(line)).x <= limit;
-            var sb = new System.Text.StringBuilder(source.Length + 16);
-            string[] paras = source.Split('\n');
-            for (int pi = 0; pi < paras.Length; pi++)
+            int unit = -1;
+            foreach (string para in source.Split('\n'))
             {
-                if (pi > 0) sb.Append('\n');
-                string cur = "";
+                if (para.Trim().Length == 0) continue;
+                unit++;
                 bool first = true;
-                System.Action<string> push = line => { if (!first) sb.Append('\n'); sb.Append(line); first = false; };
-                foreach (string sentence in Sentences(paras[pi]))
+                string cur = "";
+                System.Action<string> push = t => { lines.Add(new Line { text = t, start = first, unit = unit }); first = false; };
+                foreach (string sentence in Sentences(para))
                 {
                     string joined = cur.Length == 0 ? sentence : cur + " " + sentence;
                     if (fits(joined)) { cur = joined; continue; }
@@ -164,9 +168,51 @@ namespace PocketCaravan
                         }
                     }
                 }
-                if (cur.Length > 0 || first) push(cur);
+                if (cur.Length > 0) push(cur);
             }
+            return lines;
+        }
+
+        /// <summary>미리 나눈 줄을 한 글로 (확인·시험용)</summary>
+        public static string Wrap(string source, GUIStyle style, float width)
+        {
+            var sb = new System.Text.StringBuilder();
+            foreach (var l in WrapLines(source, style, width)) { if (sb.Length > 0) sb.Append('\n'); sb.Append(l.text); }
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// 11/11 은샘: 쪽 나누기. 한 쪽에 글은 두 줄까지 (세 줄이 붙어 있으면 읽기 어렵다).
+        /// - 원문의 다른 줄 두 개면 가운데 빈 줄을 두고, 원문 한 줄이 두 줄로 이어지면 붙여 둔다.
+        /// - 지금 쪽에 한 줄이 있는데 다음 덩어리가 두 줄 이상이면 그 덩어리는 다음 쪽에서 시작한다 (덩어리가 쪽 사이로 갈리지 않게).
+        /// - 그리는 쪽에서 글 높이에 맞춰 위아래 가운데에 놓는다.
+        /// seen = 쪽마다 그 앞까지 나온 글자 수 (창 크기가 바뀌어도 보던 쪽을 찾는다)
+        /// </summary>
+        public static List<string> Layout(List<Line> lines, List<int> seen = null)
+        {
+            var pages = new List<string>();
+            seen?.Clear();
+            int i = 0, shown = 0;
+            while (i < lines.Count)
+            {
+                var a = lines[i];
+                seen?.Add(shown);
+                string page = a.text; int used = 1;
+                if (i + 1 < lines.Count)
+                {
+                    var b = lines[i + 1];
+                    bool sameSentence = b.unit == a.unit;
+                    int bLen = 1; while (i + 1 + bLen < lines.Count && lines[i + 1 + bLen].unit == b.unit) bLen++;
+                    if (sameSentence) { page = a.text + "\n" + b.text; used = 2; }
+                    else if (!a.start) { }   // 긴 덩어리의 마지막 줄이면 혼자 둔다
+                    else if (bLen == 1) { page = a.text + "\n\n" + b.text; used = 2; }
+                }
+                for (int k = 0; k < used; k++) foreach (char c in lines[i + k].text) if (!char.IsWhiteSpace(c)) shown++;
+                pages.Add(page);
+                i += used;
+            }
+            if (pages.Count == 0) { pages.Add(""); seen?.Add(0); }
+            return pages;
         }
 
         /// <summary>문단을 문장으로 나눈다: . ? ! 뒤에 띄어쓰기가 오면 문장 끝 (문장 부호는 앞 문장에 붙는다)</summary>
@@ -186,66 +232,6 @@ namespace PocketCaravan
             if (rest.Length > 0) yield return rest;
         }
 
-        /// <summary>글의 앞 upto 글자 가운데 빈칸·줄바꿈이 아닌 글자 수</summary>
-        static int Visible(string s, int upto)
-        {
-            int n = 0;
-            for (int i = 0; i < upto && i < s.Length; i++) if (!char.IsWhiteSpace(s[i])) n++;
-            return n;
-        }
-
-        /// <summary>글자 누락 없이 분할 (쪽 사이 빈칸·빈 줄만 뺀다). 결합 문자·이모지를 나누지 않고, 들어가는 범위에서 문장 끝을 우선한다.
-        /// 11/11 은샘: 둘째 쪽부터는 앞의 빈칸·빈 줄을 건너뛴다 (예전엔 마침표 뒤 빈칸·빈 줄이 다음 쪽 맨 앞에 남아 줄을 차지해,
-        /// 북유럽 어머니 대사의 "있던데."처럼 한 단어만 다음 쪽으로 밀리기도 했다). 문장 끝이 없으면 글자 중간 대신 띄어쓰기에서 자른다.
-        /// starts를 주면 쪽마다 원문에서 시작하는 글자 위치를 담는다 (창 크기가 바뀌어 다시 나눌 때 보던 쪽을 찾는 데 쓴다).</summary>
-        public static List<string> Paginate(string source, GUIStyle style, float width, float height, List<int> starts = null)
-        {
-            var result = new List<string>();
-            starts?.Clear();
-            if (string.IsNullOrEmpty(source)) { result.Add(""); starts?.Add(0); return result; }
-            int[] chars = StringInfo.ParseCombiningCharacters(source);
-            int start = 0;
-            while (start < chars.Length)
-            {
-                if (result.Count > 0)
-                {
-                    while (start < chars.Length && char.IsWhiteSpace(source[chars[start]])) start++;
-                    if (start >= chars.Length) break;
-                }
-                int lo = start + 1, hi = chars.Length, fit = start;
-                while (lo <= hi)
-                {
-                    int mid = (lo + hi) / 2;
-                    int end = mid < chars.Length ? chars[mid] : source.Length;
-                    string candidate = source.Substring(chars[start], end - chars[start]);
-                    if (style.CalcHeight(new GUIContent(candidate), width) <= height - 1f)
-                    { fit = mid; lo = mid + 1; }
-                    else hi = mid - 1;
-                }
-                // 최소 한 글자도 못 담는 잘못된 레이아웃에서도 무한 루프는 막는다.
-                fit = Mathf.Max(start + 1, fit);
-                int split = fit;
-                if (fit < chars.Length)
-                {
-                    bool found = false;
-                    for (int i = fit; i > start + (fit - start) / 2; i--)
-                    {
-                        char last = source[chars[i] - 1];
-                        if (last == '\n' || last == '.' || last == '?' || last == '!' || last == '。')
-                        { split = i; found = true; break; }
-                    }
-                    if (!found)
-                        for (int i = fit; i > start + (fit - start) / 2; i--)
-                            if (char.IsWhiteSpace(source[chars[i] - 1])) { split = i; break; }
-                }
-                int lastChar = split < chars.Length ? chars[split] : source.Length;
-                starts?.Add(chars[start]);
-                result.Add(source.Substring(chars[start], lastChar - chars[start]).TrimEnd());
-                start = split;
-            }
-            if (result.Count == 0) { result.Add(""); starts?.Add(0); }
-            return result;
-        }
 
         void OnGUI()
         {
@@ -262,12 +248,11 @@ namespace PocketCaravan
             if (pages.Count == 0 || !Mathf.Approximately(pageWidth, bodyWidth))
             {
                 // 보던 쪽 앞까지의 글자 수 (빈칸·줄바꿈 빼고). 창 크기가 바뀌어 줄을 다시 나눠도 그 쪽을 이어 본다
-                int seen = pageIndex < pageStarts.Count ? Visible(wrapped, pageStarts[pageIndex]) : 0;
-                wrapped = Wrap(text, bodyStyle, bodyWidth);
+                int seen = pageIndex < pageSeen.Count ? pageSeen[pageIndex] : 0;
                 pages.Clear();
-                pages.AddRange(Paginate(wrapped, bodyStyle, bodyWidth, BodyHeight, pageStarts));
+                pages.AddRange(Layout(WrapLines(text, bodyStyle, bodyWidth), pageSeen));
                 pageIndex = 0;
-                while (pageIndex < pages.Count - 1 && Visible(wrapped, pageStarts[pageIndex + 1]) <= seen) pageIndex++;
+                while (pageIndex < pages.Count - 1 && pageSeen[pageIndex + 1] <= seen) pageIndex++;
                 pageWidth = bodyWidth;
             }
             if (wrappedChoice == null || wrappedChoice.font != UIStyle.RegularFont)
@@ -315,7 +300,9 @@ namespace PocketCaravan
                 CuteUI.LabelCenter(tag.center.x, tag.center.y + 1, speaker, CuteUI.Ink, false, true);
                 CuteUI.LabelCenter(tag.center.x, tag.center.y, speaker, CuteUI.White, false, true);
             }
-            GUI.Label(new Rect(r.x + 10, r.y + 15, bodyWidth, BodyHeight), CurrentPage, bodyStyle);   // 이름이 창 위 이름표로 올라가서 본문도 위로
+            // 11/11 은샘: 글 높이에 맞춰 위아래 가운데 (한 줄이면 위아래 여백, 두 줄이면 고르게)
+            float textH = Mathf.Min(BodyHeight, bodyStyle.CalcHeight(new GUIContent(CurrentPage), bodyWidth));
+            GUI.Label(new Rect(r.x + 10, r.y + 15 + Mathf.Round((BodyHeight - textH) * 0.5f), bodyWidth, textH + 2f), CurrentPage, bodyStyle);   // 이름이 창 위 이름표로 올라가서 본문도 위로
 
             if (pages.Count > 1)
                 GUI.Label(new Rect(r.x + 10, stacked ? r.y + 72 : r.yMax - 22, 60, 16), $"<color=#6a5464>{pageIndex + 1} / {pages.Count}</color>", CuteUI.PaperSmall);
