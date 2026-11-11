@@ -526,14 +526,14 @@ namespace PocketCaravan
             Deco("bunting", photoTf.position, -1f, 2.1f, 21);
             Deco("bunting", photoTf.position, 1f, 2.1f, 21);
 
-            // 11/11 은샘: 43,41 → 44,44. 사진 자리에서 자리를 고를 때 길보 말풍선이 사진 자리를 거의 다 덮었다 (팀 시연)
-            Merchant("goryeo", 44, 44, new NetMeet.Npc
+            // 11/11 은샘: 43,41 → 44,43. 사진 자리에서 자리를 고를 때 길보 말풍선이 사진 자리를 거의 다 덮었다 (팀 시연)
+            Merchant("goryeo", 44, 43, new NetMeet.Npc
             {
                 name = "고려 보부상 길보", shortName = "길보",
                 hello = "어이쿠, 반갑소! 개경에서 등짐 지고 왔다오.",
                 cheer = "허허, 흥이 나는구먼!",
                 thanks = "이리 귀한 걸! 받은 정은 꼭 갚으리다.",
-                near = "어이, 새 얼굴이구먼! 옆 사진 자리에서 같이 한 장 찍겠소?",
+                near = "어이, 새 얼굴이구먼! 사진 자리에서 같이 한 장 찍겠소?",
             }, pc);
             Merchant("viking", 19, 36, new NetMeet.Npc
             {
