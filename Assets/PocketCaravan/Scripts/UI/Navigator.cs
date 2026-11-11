@@ -67,7 +67,7 @@ namespace PocketCaravan
             return true;
         }
 
-        const int OffRoadCost = 3;        // 11/11 길 따라가기: 길 아닌 칸 값 (길 칸은 1)
+        const int OffRoadCost = 6;        // 11/11 길 따라가기: 길 아닌 칸 값 (길 칸은 1). 3이면 장단처럼 길이 멀리 돌면 풀밭을 가로질렀다
 
         /// <summary>11/11 은샘 담당 맵(고려·중앙 대륙 동쪽)만 길을 따라간다</summary>
         static bool FollowsRoads(string mapId)
@@ -187,8 +187,12 @@ namespace PocketCaravan
             // 11/08 기우: 칸 길은 가로·세로로만 꺾여서, 비스듬히 바로 갈 수 있어도 화살표가 옆(→)만 가리켰다.
             // 길 위 12칸 앞까지 중에 곧게 걸어 닿는(사이가 막히지 않은) 가장 먼 칸을 가리킨다 → 목적지(▼)와 방향이 맞는다.
             Vector3 fromW = player.transform.position;
+            // 11/11 길 밖에 있으면 곧게 가리키는 것도 길에 올라서는 첫 칸까지만 (길을 건너뛰어 가로지르지 않게)
+            int firstRoad = path.Count - 1;
+            if (roadMode && !OnRoad(from)) for (int k = 0; k < path.Count; k++) if (OnRoad(path[k])) { firstRoad = k; break; }
             for (int i = Mathf.Min(SightAhead, path.Count) - 1; i >= Lookahead; i--)
             {
+                if (roadMode && !OnRoad(from) && i > firstRoad) continue;
                 var c = path[i];
                 Vector3 to = (i == path.Count - 1) ? goalWorld : map.CellCenter(c);
                 if (ClearLine(map, fromW, to, IsGoal) && (!roadMode || !OnRoad(from) || RoadLine(map, roads, fromW, to, IsGoal))) { steer = to; break; }
@@ -231,13 +235,32 @@ namespace PocketCaravan
                 return null;
             }
 
-            string next = WestRoad(map.mapId, targetMap) ?? index.NextStep(map.mapId, targetMap);
+            string west = WestRoad(map.mapId, targetMap);
+            string next = west ?? index.NextStep(map.mapId, targetMap);
             if (next == null) return null;
             // 11/08 기우: 같은 맵으로 가는 출구가 여러 토막이면(아라비아 빈 사막 남쪽 등) 목록 맨 앞 토막의 가운데가 아니라
             // 플레이어에게 가장 가까운 출구 칸을 가리킨다. 출구가 하나인 맵은 그 출구 안에서 가장 가까운 칸.
             var player = PlayerController.Instance;
             Vector3Int me = player != null ? map.WorldToCell(player.transform.position) : Vector3Int.zero;
             Vector3? best = null; int bestD = int.MaxValue;
+            // 11/11 은샘: 만국 장터 큰길(WestRoad)로 갈 때는 맵 끝 출구 중 길이 닿는 칸(길목)만 목적지로 한다.
+            //   장단→송악처럼 맵 끝 전체가 출구면 가장 가까운 끝 칸을 골라 길을 벗어나 가로질렀다. (나루→개경 같은 지역 안 길은 그대로)
+            var roads = RoadGrid.Current;
+            if (west != null && player != null && roads != null)
+                foreach (var e in MapExit.All)
+                {
+                    if (e.targetScene != next) continue;
+                    var o = map.WorldToCell(e.transform.position);
+                    for (int x = 0; x < e.size.x; x++)
+                        for (int y = 0; y < e.size.y; y++)
+                        {
+                            var c = o + new Vector3Int(x, y, 0);
+                            if (roads.GradeAt(c) <= 0) continue;
+                            int dist = Mathf.Abs(c.x - me.x) + Mathf.Abs(c.y - me.y);
+                            if (dist < bestD) { bestD = dist; best = map.CellCenter(c); }
+                        }
+                }
+            if (!best.HasValue)
             foreach (var e in MapExit.All)
             {
                 if (e.targetScene != next) continue;
