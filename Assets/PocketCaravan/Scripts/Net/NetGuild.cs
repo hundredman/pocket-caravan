@@ -1423,6 +1423,22 @@ namespace PocketCaravan
             GUI.color = old;
         }
 
+        /// <summary>11/11 은샘(팀 시연 의견): 짐 쌓기 놀이판 옆 최고 기록 표. 온라인이면 순위표 1위, 아니면 내 최고</summary>
+        void BoardRecord(Camera cam)
+        {
+            if (boardTf == null) return;
+            NetScores.Peek();
+            var top = NetScores.Top(NetStackGame.Board);
+            int mine = NetStackGame.MyBest;
+            string text = top != null && top.value > 0 ? $"최고 기록 {top.value}단 · {top.name}" : mine > 0 ? $"내 최고 {mine}단" : null;
+            // 놀이판 오른쪽 옆 (아래에 두면 놀이판 앞에 선 사람을 가린다)
+            if (text == null || !NetGuildArt.ToGui(cam, boardTf.position + new Vector3(1.3f, 0.2f, 0f), out var p) || !NetGuildArt.OnScreen(p, -40f)) return;
+            float w = Mathf.Round(CuteUI.Width("★ " + text, true) + 14f);
+            var r = new Rect(Mathf.Round(p.x), Mathf.Round(p.y - 7f), w, 15f);
+            CuteUI.Box(r, 7, CuteUI.EventPaper, CuteUI.Deco, 1, 1);
+            CuteUI.LabelCenter(r.center.x, r.center.y, "★ " + text, CuteUI.Text, true);
+        }
+
         /// <summary>마당 위: 접수처 간판 · 상인 말풍선 · 찾아갈 상대 화살표 (창이 열려 있으면 숨긴다)</summary>
         void DrawWorld()
         {
@@ -1435,6 +1451,7 @@ namespace PocketCaravan
             if (clerkTf != null && NetGuildArt.ToGui(cam, clerkTf.position + new Vector3(0f, 3.9f, 0f), out var sign) && NetGuildArt.OnScreen(sign, -60f))
                 CuteUI.TitlePlate(sign.x, sign.y, "만국 상인회");
             if (UIState.PhotoMode) return;   // 11/11 사진 찍는 중에는 말풍선·찾아갈 사람 화살표를 감춘다
+            BoardRecord(cam);
             foreach (var kv in bubbles)
                 if (kv.Key != null && now < kv.Value.until && NetGuildArt.ToGui(cam, kv.Key.position + new Vector3(0f, 1.45f, 0f), out var p))
                     NetGuildArt.Bubble(p, kv.Value.text);

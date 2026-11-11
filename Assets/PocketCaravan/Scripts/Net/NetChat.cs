@@ -224,6 +224,7 @@ namespace PocketCaravan
             GUI.depth = -6;
 
             DrawBubbles(net);
+            if (UIState.PhotoMode && !typing) return;   // 11/11 은샘: 기념 사진 찍는 동안 채팅 목록은 감춘다 (머리 위 말풍선은 그대로)
             if (UIState.Blocking && !typing) return;   // 다른 창이 열려 있으면 목록은 숨긴다
 
             float bottom = UIStyle.VirtualHeight - 10f - HUD.BottomReserved;   // 11/05 접속 표시는 오른쪽 위로 옮김: 아래 조작 안내·저장 문제 줄 바로 위

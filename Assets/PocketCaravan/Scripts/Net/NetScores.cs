@@ -27,6 +27,26 @@ namespace PocketCaravan
         static NetScores inst;
         bool open, wantOpen, loading;
         float askedAt;
+        float peekedAt = -999f;
+
+        /// <summary>11/11 은샘: 받아 둔 순위표에서 그 판 1위 (아직 못 받았으면 null). 상인회 놀이판 위 "최고 기록" 표에 쓴다</summary>
+        public static NetClient.BoardRow Top(string board)
+        {
+            if (inst == null) return null;
+            var b = inst.boards.Find(x => x != null && x.id == board);
+            NetClient.BoardRow top = null;
+            if (b != null && b.rows != null) foreach (var row in b.rows) if (row != null && (top == null || row.value > top.value)) top = row;
+            return top;
+        }
+
+        /// <summary>11/11 순위표를 창 없이 조용히 받아 둔다 (30초에 한 번까지)</summary>
+        public static void Peek(bool force = false)
+        {
+            if (inst == null || !Online || !NetClient.I.ServerExtras) return;
+            if (!force && Time.unscaledTime - inst.peekedAt < 30f) return;
+            inst.peekedAt = Time.unscaledTime;
+            NetClient.I.Send(new GetOut());
+        }
         int tab;
         Vector2 lastMove = Vector2.one;
         List<NetClient.Board> boards = new List<NetClient.Board>();
@@ -84,8 +104,11 @@ namespace PocketCaravan
                 boards.RemoveAll(b => b == null || string.IsNullOrEmpty(b.id));
                 tab = Mathf.Clamp(tab, 0, Mathf.Max(0, boards.Count - 1));
             }
-            else if (m.t == "scored" && m.rank > 0 && m.value >= m.best)
-                NetChat.System($"{Title(m.board)} 순위 {m.rank}위! ({m.best}{Unit(m.board)})");
+            else if (m.t == "scored")
+            {
+                if (m.rank > 0 && m.value >= m.best) NetChat.System($"{Title(m.board)} 순위 {m.rank}위! ({m.best}{Unit(m.board)})");
+                if (!open) Peek(true);   // 11/11 놀이판 위 최고 기록을 바로 새로
+            }
         }
 
         void Update()

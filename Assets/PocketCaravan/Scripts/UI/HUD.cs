@@ -99,6 +99,7 @@ namespace PocketCaravan
         {
             var gm = GameManager.I;
             if (gm == null || MapRoot.Current == null) return;
+            if (UIState.PhotoMode) return;   // 11/11 은샘: 기념 사진 찍는 동안 상태 카드·단추·아래 목표 줄을 감춘다
             UIStyle.Begin();
 
             string roadName = "";

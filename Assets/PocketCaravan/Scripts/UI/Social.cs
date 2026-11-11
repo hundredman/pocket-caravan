@@ -410,7 +410,7 @@ namespace PocketCaravan
                 GUI.DrawTexture(r, preview);
             }
 
-            if (!UIState.Blocking) DrawHearts();
+            if (!UIState.Blocking && !UIState.PhotoMode) DrawHearts();   // 11/11 기념 사진에는 하트·선물 줄을 빼고 찍는다
             if (picking) DrawPicker(vw, vh);
             if (book) DrawBook(vw, vh);
         }

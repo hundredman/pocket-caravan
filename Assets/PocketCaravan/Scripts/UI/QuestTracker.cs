@@ -36,6 +36,7 @@ namespace PocketCaravan
         {
             var gm = GameManager.I;
             if (gm == null) return;
+            if (UIState.PhotoMode) return;   // 11/11 은샘: 기념 사진 찍는 동안 알림·할 일 줄이 사진에 찍히지 않게 (팀 시연: 아래 대사가 플레이어를 가렸다)
             UIStyle.Begin();
             GUI.depth = logOpen ? -10 : 0;
             Notify.Draw(GoryeoIntro.ReservedGuideRect);

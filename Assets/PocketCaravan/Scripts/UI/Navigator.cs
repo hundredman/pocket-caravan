@@ -54,6 +54,29 @@ namespace PocketCaravan
             }
             return true;
         }
+        /// <summary>11/11 길에 서 있으면 곧게 가리킬 때도 길 위로만 (모퉁이를 풀밭으로 자르지 않게)</summary>
+        static bool RoadLine(MapRoot map, RoadGrid roads, Vector3 a, Vector3 b, System.Func<Vector3Int, bool> isGoal)
+        {
+            float len = Vector2.Distance(a, b);
+            int steps = Mathf.Max(1, Mathf.CeilToInt(len / 0.25f));
+            for (int k = 1; k <= steps; k++)
+            {
+                var c = map.WorldToCell(Vector3.Lerp(a, b, k / (float)steps));
+                if (roads.GradeAt(c) <= 0 && !isGoal(c)) return false;
+            }
+            return true;
+        }
+
+        const int OffRoadCost = 3;        // 11/11 길 따라가기: 길 아닌 칸 값 (길 칸은 1)
+
+        /// <summary>11/11 은샘 담당 맵(고려·중앙 대륙 동쪽)만 길을 따라간다</summary>
+        static bool FollowsRoads(string mapId)
+        {
+            if (string.IsNullOrEmpty(mapId)) return false;
+            string id = GoryeoLayout.Resolve(mapId);
+            return id == "Naru" || id == "Gaegyeong" || id == "Dakmok" || id.StartsWith("goryeo_") || id.StartsWith("transit_");
+        }
+
         const int MaxSearch = 20000;      // 탐색 칸 수 상한 (큰 맵에서도 한 번에 끝나는 크기)
         static Vector3Int cachedFrom, cachedGoal;
         static MapRoot cachedMap;
@@ -78,21 +101,56 @@ namespace PocketCaravan
 
             // 사람·장터는 그 칸이 막혀 있으므로 바로 옆 칸에 닿으면 도착으로 본다.
             bool IsGoal(Vector3Int c) => c == goal || (goalIsObject && Mathf.Abs(c.x - goal.x) + Mathf.Abs(c.y - goal.y) == 1);
+            // 11/11 은샘: 고려·중앙 대륙 동쪽 맵은 길(오솔길·길·큰길)을 따라 가리킨다. 길 아닌 칸은 OffRoadCost배로 쳐서
+            //   조금 돌아가더라도 길로 간다 (팀 시연: 화살표가 풀밭을 가로질렀다). 다른 지역은 예전처럼 가장 짧은 길
+            var roads = RoadGrid.Current;
+            bool roadMode = roads != null && FollowsRoads(map.mapId);
+            bool OnRoad(Vector3Int c) => roads.GradeAt(c) > 0;
             var prev = new Dictionary<Vector3Int, Vector3Int> { [from] = from };
-            var queue = new Queue<Vector3Int>();
-            queue.Enqueue(from);
             Vector3Int? found = null;
             var dirs = new[] { Vector3Int.right, Vector3Int.left, Vector3Int.up, Vector3Int.down };
-            while (queue.Count > 0 && prev.Count < MaxSearch)
+            if (!roadMode)
             {
-                var c = queue.Dequeue();
-                if (IsGoal(c)) { found = c; break; }
-                foreach (var d in dirs)
+                var queue = new Queue<Vector3Int>();
+                queue.Enqueue(from);
+                while (queue.Count > 0 && prev.Count < MaxSearch)
                 {
-                    var n = c + d;
-                    if (prev.ContainsKey(n) || !(IsGoal(n) || Walkable(n))) continue;
-                    prev[n] = c;
-                    queue.Enqueue(n);
+                    var c = queue.Dequeue();
+                    if (IsGoal(c)) { found = c; break; }
+                    foreach (var d in dirs)
+                    {
+                        var n = c + d;
+                        if (prev.ContainsKey(n) || !(IsGoal(n) || Walkable(n))) continue;
+                        prev[n] = c;
+                        queue.Enqueue(n);
+                    }
+                }
+            }
+            else
+            {
+                // 칸 값이 1 또는 OffRoadCost뿐이라 값별 줄(버킷)로 가장 싼 칸부터 꺼낸다
+                var cost = new Dictionary<Vector3Int, int> { [from] = 0 };
+                var buckets = new List<List<Vector3Int>> { new List<Vector3Int> { from } };
+                var done = new HashSet<Vector3Int>();
+                for (int k = 0; k < buckets.Count && !found.HasValue && done.Count < MaxSearch; k++)
+                {
+                    var list = buckets[k];
+                    for (int j = 0; j < list.Count; j++)
+                    {
+                        var c = list[j];
+                        if (cost[c] != k || !done.Add(c)) continue;
+                        if (IsGoal(c)) { found = c; break; }
+                        foreach (var d in dirs)
+                        {
+                            var n = c + d;
+                            if (done.Contains(n) || !(IsGoal(n) || Walkable(n))) continue;
+                            int nc = k + (OnRoad(n) || IsGoal(n) ? 1 : OffRoadCost);
+                            if (cost.TryGetValue(n, out var old) && old <= nc) continue;
+                            cost[n] = nc; prev[n] = c;
+                            while (buckets.Count <= nc) buckets.Add(new List<Vector3Int>());
+                            buckets[nc].Add(n);
+                        }
+                    }
                 }
             }
             if (!found.HasValue) return;     // 길을 못 찾으면 예전처럼 직선 방향
@@ -109,7 +167,7 @@ namespace PocketCaravan
             {
                 var c = path[i];
                 Vector3 to = (i == path.Count - 1) ? goalWorld : map.CellCenter(c);
-                if (ClearLine(map, fromW, to, IsGoal)) { steer = to; break; }
+                if (ClearLine(map, fromW, to, IsGoal) && (!roadMode || !OnRoad(from) || RoadLine(map, roads, fromW, to, IsGoal))) { steer = to; break; }
             }
             cachedSteer = steer; cachedCells = cells;
         }
