@@ -101,6 +101,11 @@ def catmull(pts, step=0.35):
     return out
 
 
+# 11/11 만국 장터 시각 개선: 장터 조각만 광장 바닥(plaza)을 큰 사암 판석(slab)으로, 회색 자갈(cobble)을 따뜻한 사암 연석(curb)으로.
+#   다른 맵이 쓰는 plaza·cobble 타일 그림은 그대로 두고 장터 전용 바닥 종류를 쓴다 (arabia_art.TEX). 통행(막힘·길 등급)은 바뀌지 않는다.
+BAZAAR_FLOOR = {'plaza': 'slab', 'cobble': 'curb'}
+
+
 class Piece:
     """틀 좌표로 그리면 이 조각 안에 드는 것만 그려지는 붓."""
 
@@ -122,6 +127,7 @@ class Piece:
 
     # 바닥
     def cell(self, kind, x, y, grade=0, reserve=True):
+        kind = BAZAAR_FLOOR.get(kind, kind) if self.mid == 'arabia_central_bazaar' else kind
         if self.has(x, y) and tri_e(x, y) >= 0:
             lx, ly = self.lc(x, y)
             self.m.paint(kind, lx, ly, lx, ly, grade=grade, reserve=reserve)
@@ -260,20 +266,16 @@ def geometry(P):
     # ---- 만국 장터 대광장 (bazaar) ----
     P.curve('paving', [(141.5, 111), (142, 102), (150, 95), (154, 92)], 4, 3)        # 남문 → 광장
     P.curve('paving', [(187.5, 111), (184, 101), (176, 94), (170, 91)], 3, 3)        # 남동문 → 광장
-    # 북서: 거울 연못 정원 (잔디 위 긴 연못, 아치 다리 둘)
-    P.rect('grass', 114, 59, 145, 77)
-    P.rect('water', 117, 66, 143, 68)
-    P.rect('plaza', 114, 63, 145, 64, grade=2)                                         # 연못 북쪽 산책로
-    P.rect('plaza', 114, 70, 145, 71, grade=2)                                         # 연못 남쪽 산책로
+    # 북서: 축제 마당 (2026-11-11: 거울 연못 정원 → 축제 천막·점술·열기구. 북동 천막 거리에서 옮겨 옴)
+    P.rect('dry', 114, 59, 145, 77, reserve=False)
+    P.rect('cobble', 114, 65, 145, 66, grade=2)                                        # 천막 줄 사이 골목
+    P.rect('cobble', 114, 73, 145, 74, grade=2)                                        # 노점 줄 앞 골목
     P.rect('plaza', 114, 63, 115, 78, grade=2)                                         # 서쪽 끝 → 서문 거리
     P.rect('plaza', 144, 63, 145, 78, grade=2)                                         # 동쪽 끝 → 광장
-    P.bridge(124, 66, 125, 68, 'v', 2)
-    P.bridge(136, 66, 137, 68, 'v', 2)
     # 가운데: 별빛 대광장 (자갈 테두리 + 석판 바닥)
     P.ellipse('cobble', 160, 82, 19, 12, grade=3)
     P.ellipse('plaza', 160, 82, 17, 10.5, grade=3)
-    P.ellipse('cobble', 160, 80.5, 8.5, 5.5, grade=3)                                 # 분수 둘레 돌 띠
-    P.ellipse('plaza', 160, 80.5, 7, 4.2, grade=3)
+    P.rect('mosaic', 151, 76, 168, 87, grade=3)                                        # 11/11 분수 바닥 문양 (18×12칸, 중심 160,82 = 분수 수반 바닥)
     P.rect('plaza', 158, 56, 161, 72, grade=3)                                         # 북문 대로 → 한가운데 초원
     P.rect('cobble', 112, 79, 142, 81, grade=3)                                        # 서문 거리
     P.rect('road', 176, 86, 207, 88, grade=3)                                          # 동문 거리 = 야시장
@@ -281,13 +283,21 @@ def geometry(P):
     P.rect('cobble', 176, 70, 205, 72, grade=2)                                        # 축제 골목
     P.rect('cobble', 176, 62, 177, 86, grade=2)                                        # 광장 동쪽 → 축제 골목 · 야시장
     P.rect('dry', 178, 60, 206, 69, reserve=False)
-    # 남쪽: 공연 마당 · 남서: 상인 야영지 · 남동: 가축 우리
-    P.ellipse('cobble', 161, 101, 10, 5.5, grade=2)
-    P.curve('cobble', [(160, 92), (161, 96)], 3, 2)
+    # 남쪽 가운데: 만국 상인회 광장 (2026-11-11: 공연 마당 + 조합 회관 자리를 합쳐 넓힘. NetGuild 상인회 마당이 여기 선다)
+    #   가장자리 두 줄(y110~111)은 건드리지 않는다: 이음새(seam) 번호가 바뀌면 이웃 맵·NetGuild 도착 자리가 어긋난다
+    #   11/11 오후 2차: 회관이 길을 막지 않게. 대광장 → 남쪽 끝 큰길(x157~163)은 곧게 비우고,
+    #   상인회 마당은 큰길 서쪽 안뜰(x137~156 × 92~106)로. 회관은 안뜰 위쪽, 문이 안뜰을 본다.
+    #   11/11 3차: 안뜰을 서쪽으로 넓힘 (20칸 → 28칸 폭) — 네 귀퉁이에 춤·놀이판·사진관·노점
+    P.rect('cobble', 129, 92, 156, 107, grade=2)                                       # 상인회 안뜰 테두리
+    P.rect('plaza', 130, 93, 155, 106, grade=3)
+    P.rect('plaza', 156, 97, 156, 103, grade=3)                                        # 큰길 쪽 안뜰 어귀 (담 없이 열어 둠)
+    P.rect('plaza', 157, 92, 163, 109, grade=3)                                        # 대광장 → 남쪽 끝 큰길 (가장자리 두 줄 앞에서 멈춤)
+    P.rect('cobble', 164, 92, 164, 109, grade=2)
+    # 남서: 상인 야영지
     P.ellipse('dry', 125, 97, 11, 8, reserve=False)
     P.curve('road', [(131, 82), (132, 92), (130, 101), (124, 107)], 2, 1)
-    # 큰 건물 앞마당 (2026-10-27 저녁): 상인 조합 회관 · 만국 백화점 · 큰 상점 둘
-    P.rect('plaza', 133, 95, 148, 96, grade=2)                                         # 조합 회관 앞 → 남문 길
+    # 큰 건물 앞마당 (2026-10-27 저녁): 만국 백화점 · 큰 상점 둘 (조합 회관은 11/11 상인회 광장으로)
+    P.rect('plaza', 128, 100, 136, 101, grade=2)                                       # 야영지 → 상인회 안뜰
     P.rect('plaza', 192, 96, 205, 97, grade=2)                                         # 백화점 앞
     P.rect('plaza', 181, 97, 193, 98, grade=2)                                         # 백화점 앞 → 남동문 길
     P.rect('plaza', 187, 106, 205, 107, grade=2)                                       # 큰 상점 앞 → 남동문 길
@@ -638,10 +648,12 @@ def rockfield(P, x0, y0, x1, y1, names, density):
 
 
 def bazaar(P):
-    """만국 장터 대광장 (2026-10-27 개편): 특정 나라 마을 대신 화려한 축제 광장과 볼거리.
-    가운데 3단 대분수와 별빛 바닥 · 북쪽 등불 탑(랜드마크) · 북서 거울 연못 정원 · 북동 축제 천막 거리(놀이 노점·점술·열기구)
-    · 동쪽 야시장 · 남쪽 공연 마당 · 남서 상인 조합 회관과 떠돌이 상인 야영지
-    · 남동 만국 백화점(유리 지붕) · 관람차 · 보석 상회 · 여행 장비 상회.
+    """만국 장터 대광장 (2026-10-27 개편, 2026-11-11 재배치): 특정 나라 마을 대신 화려한 축제 광장과 볼거리.
+    가운데 3단 대분수와 별빛 바닥 · 북쪽 등불 탑(랜드마크) · 북서 축제 마당(천막·점술·열기구) · 북동 관람차와 놀이 노점
+    · 동쪽 야시장 · 남쪽 가운데 만국 상인회 광장(조합 회관·길드 깃발 넷, NetGuild 상인회 마당 자리) · 남서 떠돌이 상인 야영지
+    · 남동 만국 백화점(유리 지붕) · 보석 상회 · 여행 장비 상회.
+    11/11 3차: 상인회 안뜰 칸 (틀 좌표) 접수처 143,100 · 노점 152,105 · 놀이판 131,105 · 사진 자리 152,99
+           · 상인 154,102 / 131,100(춤 양탄자) / 135,103 은 NetGuild가 실행 중에 세우므로 비워 둔다 (NetGuild.cs와 같이 고칠 것).
     회의 기준: 아라비아풍 고급 상점은 3곳만 (비단 상관·향료 궁전·등불 찻집)."""
     T = P.talker
     miss = []
@@ -655,34 +667,37 @@ def bazaar(P):
 
     # ---- 가운데: 별빛 대광장 · 3단 대분수 · 여행자 동상 넷 ----
     put('drawn_grandFountain', 156, 77, foot=3, force=True)
-    for (x, y) in [(147, 74), (171, 74), (147, 86), (171, 86)]:
+    P.m.mosaic = ('drawn_floorMedallion', 151 - P.ox, 76 - P.oy)          # 11/11 분수 바닥 문양 (geometry의 mosaic 칸 151~168 × 76~87)
+    for (x, y) in [(147, 74), (171, 74)]:                                   # 11/11 넷 → 둘 (광장 둘레를 덜 빽빽하게)
         put('drawn_statue', x, y, foot=1, force=True)
     for (x, y) in [(151, 73), (168, 73), (151, 90), (168, 90), (144, 81), (176, 81)]:
         put('plaza_lamp', x, y - 1, foot=1, force=True)
-    for (x, y) in [(153, 86), (166, 86)]:                                   # 분수를 보는 벤치
-        P.stamp('bench', x, y, force=True)
-    for (cx, cy) in [(151, 77), (168, 77)]:                                 # 장날 양탄자 노점 (광장 안쪽 양옆)
+    for (x, y) in [(147, 83), (171, 83)]:                                   # 분수를 보는 벤치 (11/11 문양 밖 양옆으로)
+        put('drawn_benchWood', x, y, foot=1, force=True)
+    # 장날 양탄자 노점 (11/11: 분수 문양 밖 광장 양옆으로 한 칸씩 물림. 노점상·구슬 장수 자리는 그대로)
+    for (cx, cy, jar, tray) in [(146, 80, (148, 79), (146, 78)), (172, 80, (171, 79), (173, 78))]:
         put('prop_carpet', cx, cy, layer='deco', force=True)
-        put('drawn_jar', cx + 2, cy - 1, foot=1, force=True)
-        put('prop_spiceTray', cx - 1, cy - 1, foot=1, force=True)
+        put('drawn_jar', jar[0], jar[1], foot=1, force=True)
+        put('prop_spiceTray', tray[0], tray[1], foot=1, force=True)
     T(150, 79, '양탄자 위의 노점상', 'arabia_npc_weaver_tall', '장날이면 이 광장에 양탄자를 깔고 장사해요. 자리는 해 뜨기 전에 맡아야 해요!')
     T(170, 79, '구슬 장수', 'arabia_woman_girl_tall', '바다 건너 유리구슬, 초원의 뼈 구슬, 사막의 호박… 하나씩 골라 봐요.')
-    for (x, y) in [(150, 88), (170, 88), (155, 75), (165, 75)]:             # 꽃 화단
-        for dx, dy in ((0, 0), (1, 0), (0, 1), (1, 1)):
-            if P.has(x + dx, y + dy):
-                lx, ly = P.lc(x + dx, y + dy)
-                P.m.paint('grass', lx, ly, lx, ly)
-                P.m.road[ly][lx] = 0
-            put(['drawn_roseBush', 'drawn_marigold', 'drawn_jasmineBush', 'drawn_oleanderBush'][(dx + dy * 2 + x) % 4], x + dx, y + dy, layer='deco', force=True)
-    for k, (x, y) in enumerate([(146, 71), (167, 71), (146, 93), (167, 93)]):
+    # 11/11 분수 옆 잔디 화단 둘은 바닥 문양을 가려서 뺌. 대신 광장 가장자리에 쉼터(낮은 화단 + 벤치 + 그늘나무)를 묶어 둔다.
+    for (n_, x, y) in [('drawn_planterRose', 147, 87), ('drawn_planterSaffron', 171, 87),
+                       ('drawn_planterSaffron', 153, 71), ('drawn_planterRose', 165, 71)]:
+        put(n_, x, y, foot=1, force=True)
+    for (x, y) in [(147, 89), (171, 89)]:
+        put('drawn_benchWood', x, y, foot=1, force=True)
+    for (n_, x, y) in [('tree_palmDates', 137, 86), ('tree_palmDates', 182, 89), ('drawn_oasisTree', 138, 83), ('drawn_oasisTree', 178, 77)]:
+        put(n_, x, y, foot=1)
+    for k, (x, y) in enumerate([(146, 71), (167, 71)]):                     # 11/11 남쪽 둘은 상인회 광장 깃발 줄과 겹쳐서 뺌
         flags(x, y, k)
     T(160, 88, '장터지기 카림', 'arabia_npc_merchant_tall',
       '만국 장터 대광장에 온 걸 환영해요! 닷새마다 큰 장이 서면 네 대륙 상인이 다 모여요.',
-      '길을 잃으면 등불 탑을 봐요. 북쪽은 초원 대로, 서쪽은 거울 연못 정원, 동쪽은 축제 천막과 야시장이에요.')
+      '길을 잃으면 등불 탑을 봐요. 북쪽은 초원 대로, 북서는 축제 마당, 북동은 관람차, 남쪽이 만국 상인회 광장이에요.')
     T(150, 84, '동상 닦는 아이', 'arabia_npc_child_tall',
-      '이 동상 넷은 처음으로 이 장터까지 걸어온 상인들이래요. 동서남북에서 한 명씩!',
+      '이 동상들은 처음으로 이 장터까지 걸어온 상인들이래요. 먼 동쪽과 서쪽에서 한 명씩!',
       '등불을 든 손을 만지면 길을 잃지 않는대요. 다들 그래서 반들반들해요.')
-    P.sign(141, 84, '만국 장터 대광장\n가운데: 대분수 · 북: 등불 탑과 초원 대로 · 북서: 거울 연못 정원\n북동: 축제 천막 거리(놀이·점술·열기구) · 동: 야시장 · 남동: 만국 백화점·관람차·보석·여행 장비\n남: 공연 마당 · 남서: 상인 조합 회관·떠돌이 상인 야영지')
+    P.sign(141, 84, '만국 장터 대광장\n가운데: 대분수 · 북: 등불 탑과 초원 대로 · 북서: 축제 마당(천막·점술·열기구·공연)\n북동: 관람차·놀이 노점 · 동: 야시장 · 남동: 만국 백화점·보석·여행 장비\n남: 만국 상인회 광장(조합 회관·길드 깃발) · 남서: 떠돌이 상인 야영지')
     P.villager(158, 86, 0)
     P.villager(166, 79, 2)
     P.villager(152, 80, 1)
@@ -697,38 +712,54 @@ def bazaar(P):
     T(168, 71, '향료 궁전 주인', 'arabia_npc_merchant_tall', '이 궁전의 향료는 사나에서도 귀해요. 금빛 상자에 담아 드리지요.')
     for k, y in enumerate((57, 61, 65)):                                    # 초원 대로 위 깃발 줄
         flags(157, y, k)
-    # ---- 북서: 거울 연못 정원 ----
-    for x in range(119, 143, 3):
-        put('drawn_lily', x, 66 + (x % 2), layer='deco', force=True)
-    beds = ['drawn_roseBush', 'drawn_jasmineBush', 'drawn_oleanderBush', 'drawn_marigold']
-    for i, x in enumerate(range(116, 145, 2)):
-        put(beds[i % 4], x, 61, layer='deco', force=True)
-        put(beds[(i + 2) % 4], x, 62, layer='deco', force=True)
-    for x in range(117, 145, 4):
-        put('drawn_cypress', x, 72, foot=1, force=True)
-    for x in (119, 131, 141):
+    # ---- 북서: 축제 마당 (11/11 거울 연못 정원 자리. 큰 천막 셋 · 열기구 · 줄무늬 천막 노점 · 깃발 줄) ----
+    for k, (n, x) in enumerate([('drawn_pavilion', 118), ('drawn_pavilion2', 124), ('drawn_pavilion3', 130)]):
+        put(n, x, 60, foot=2, force=True)
+    put('drawn_balloon2', 137, 58, foot=2, force=True)                 # y58~66: 골목(65~66) 위에 바구니가 닿지 않게
+    for k, (n, x) in enumerate([('drawn_tentStripe', 117), ('drawn_booth', 122), ('drawn_tentStripe3', 127),
+                                ('drawn_booth2', 132), ('drawn_tentStripe2', 137)]):
+        put(n, x, 69, foot=1, force=True)
+    for k, x in enumerate((116, 123, 130)):
+        flags(x, 64, k)                                                     # 137은 열기구 자리
+    for k, x in enumerate((116, 123, 130, 137)):
+        flags(x, 72, k + 1)
+    for (x, y) in [(116, 67), (143, 67), (116, 76), (143, 76)]:
+        put('plaza_lamp', x, y - 1, foot=1, force=True)
+    for x in (120, 134):
         P.stamp('bench', x, 76, force=True)
-    put('drawn_pottedOrange', 126, 76, foot=1, force=True)
-    T(129, 73, '연못 정원사', 'arabia_woman_grandma_tall', '물에 등불 탑이 비치면 장터가 두 개가 된 것 같지요.',
-      '연꽃은 장날 아침에만 활짝 펴요. 다리 위에서 보면 제일 예뻐요.')
-    # ---- 북동: 축제 천막 거리 (놀이 노점 · 점술 · 열기구) ----
-    for k, (n, x) in enumerate([('drawn_pavilion', 179), ('drawn_pavilion2', 185), ('drawn_pavilion3', 191)]):
-        put(n, x, 64, foot=2, force=True)
+    for x in (126, 140):
+        put('prop_lantern', x, 77, foot=1, force=True)
+    T(127, 67, '불 재주꾼 자이드', 'arabia_npc_sailor_tall', '횃불 세 개! 아니 네 개! 장날 밤엔 다섯 개까지 돌려요!',
+      '경품 노점에서 고리 던지기 해 봐요. 잘 던지면 저 인형이 당신 거예요.')
+    T(121, 75, '별 읽는 점술가', 'arabia_woman_qayna_tall', '당신 짐 속에서 먼 길 냄새가 나는군요… 다음 장은 북쪽 초원에서 운이 좋겠어요.',
+      '별은 장터 시세는 안 알려 줘요. 그건 발로 뛰어야 알지요.')
+    T(140, 67, '열기구 사공', 'arabia_npc_bedouin_tall', '바람이 좋은 날엔 이걸 타고 초원 너머까지 내려다본다오.',
+      '아직은 줄에 묶어 둔 채라오. 언젠가 하늘길이 열리면 태워 주지.')
+    T(124, 75, '피리 부는 악사', 'arabia_npc_scholar_tall', '이 가락은 사막 대상들이 밤마다 부르던 노래요. 초원 사람들은 손뼉으로 박자를 맞추지.')
+    T(138, 75, '방울 춤꾼', 'arabia_woman_perfumer_tall', '발목 방울 소리 들려요? 축제 마당 끝까지 들리게 출 거예요!')
+    T(134, 67, '떠돌이 곡예사', 'arabia_woman_girl_tall', '우린 장이 서는 곳마다 따라다녀요! 축제 마당에서 공연 보고 가요.',
+      '서남쪽 상인 야영지 뒤 덤불을 치우면 서문 거리로 빠지는 지름길이 있어요.')
+    T(131, 75, '축제 마당지기', 'arabia_woman_grandma_tall', '장날이면 이 마당에 천막이 가득 서요. 밤엔 등불이 줄줄이 켜지지요.',
+      '남쪽 상인회 광장에 가 봤어요? 새내기 상인은 거기서 수첩을 받는대요.')
+    # ---- 북동: 관람차 (11/11 남동 끝에서 올림: 장터 어디서나 보이는 두 번째 랜드마크) · 놀이 노점 ----
+    put('drawn_ferrisWheel', 192, 60, foot=2, force=True)                  # 192~199 × 60~68, 매표소가 골목(70~72)을 본다
+    T(190, 69, '관람차 사공', 'arabia_npc_sailor_tall', '꼭대기에 오르면 등불 탑, 열기구, 저 멀리 사막까지 다 보여요!',
+      '한 바퀴 도는 데 노래 한 곡이에요. 장날 밤엔 불꽃이 바로 눈앞에서 터지죠.')
+    put('drawn_pavilion3', 181, 62, foot=2, force=True)
     put('drawn_booth', 180, 74, foot=1, force=True)
     put('drawn_booth2', 185, 74, foot=1, force=True)
     put('drawn_tentStripe2', 190, 74, foot=1, force=True)
-    put('drawn_balloon2', 198, 61, foot=2, force=True)
-    for k, x in enumerate((178, 185, 191)):
+    for k, x in enumerate((178, 185)):
         flags(x, 69, k)
-    T(184, 73, '불 재주꾼 자이드', 'arabia_npc_sailor_tall', '횃불 세 개! 아니 네 개! 장날 밤엔 다섯 개까지 돌려요!',
-      '경품 노점에서 고리 던지기 해 봐요. 잘 던지면 저 인형이 당신 거예요.')
-    T(193, 77, '별 읽는 점술가', 'arabia_woman_qayna_tall', '당신 짐 속에서 먼 길 냄새가 나는군요… 다음 장은 북쪽 초원에서 운이 좋겠어요.',
-      '별은 장터 시세는 안 알려 줘요. 그건 발로 뛰어야 알지요.')
-    T(197, 71, '열기구 사공', 'arabia_npc_bedouin_tall', '바람이 좋은 날엔 이걸 타고 초원 너머까지 내려다본다오.',
-      '아직은 줄에 묶어 둔 채라오. 언젠가 하늘길이 열리면 태워 주지.')
     # ---- 동쪽: 야시장 (먹거리 노점 · 등불 줄) + 아라비아풍 고급 상점 3 ----
-    for (n, x) in [('stall_bread', 179), ('stall_fruit', 183), ('stall_dates', 187), ('stall_pottery', 191), ('stall_cloth', 195), ('stall_spice', 199)]:
+    # 11/11 노점 여섯을 셋씩 두 무리로 묶고 (먹거리 / 공예품), 무리 사이와 뒤에 상자·항아리·자루·직물. 앞 길(86~88)은 비운다.
+    for (n, x) in [('stall_bread', 179), ('stall_fruit', 182), ('stall_dates', 185), ('stall_pottery', 192), ('stall_cloth', 195), ('stall_spice', 198)]:
         put(n, x, 83)
+    for (n_, x, y) in [('drawn_crates', 188, 83), ('drawn_jar', 190, 83), ('drawn_jarSmall', 191, 84),
+                       ('prop_carpetstack', 201, 83), ('drawn_barrel', 203, 83),
+                       ('prop_orangecrate', 180, 82), ('prop_grainsacks', 183, 81), ('drawn_barrel', 186, 81),
+                       ('prop_watermelons', 192, 81), ('prop_silk', 195, 81), ('prop_qulla', 198, 81)]:
+        put(n_, x, y, foot=1, force=True)
     for x in (178, 186):
         put('prop_lantern', x, 89, foot=1)
     for k, x in enumerate((179, 187, 195)):
@@ -738,46 +769,68 @@ def bazaar(P):
     put('prop_lantern', 186, 95, foot=1, force=True)
     put('prop_rugseat', 189, 96, layer='deco', force=True)
     T(190, 98, '등불 찻집 주인', 'arabia_woman_qayna_tall', '사막 장미차 한 잔 하고 가요. 등불이 켜지면 장터가 제일 예뻐요.')
-    # ---- 남쪽: 공연 마당 ----
-    put('drawn_stage', 158, 95, foot=1, force=True)
-    for (n, x, y) in [('drawn_tentStripe', 150, 98), ('drawn_tentStripe3', 169, 98)]:
-        put(n, x, y, foot=1, force=True)
-    for (x, y) in [(156, 103), (163, 103)]:
+    # ---- 남쪽 가운데: 만국 상인회 안뜰 (11/11 2차. 큰길 서쪽. 회관 · 길드 깃발 넷 · 춤 양탄자.
+    #      접수처·노점·놀이판·사진 자리·상인은 NetGuild가 세운다 — NetGuild.cs BuildYard 칸과 같이 고칠 것) ----
+    P.rect('cobble', 129, 92, 156, 107, grade=2)                           # 안뜰 바닥을 옛 흙길 위에 다시 깐다 (북서 귀퉁이)
+    P.rect('plaza', 130, 93, 155, 106, grade=3)
+    P.rect('plaza', 156, 97, 156, 103, grade=3)
+    put('drawn_guildHall', 139, 93, foot=2, force=True)                    # 139~146 × 93~98, 문 앞 가운데에 접수처(143,100)
+    for n_, x in [('drawn_guildFlagScale', 134), ('drawn_guildFlagWind', 136),   # 회관 양옆 길드 깃발 넷
+                  ('drawn_guildFlagCraft', 147), ('drawn_guildFlagKin', 149)]:
+        put(n_, x, 94, foot=1, force=True)
+    T(138, 101, '상인 조합장 하킴', 'arabia_npc_scholar_tall', '네 대륙 상인이 모두 이 회관에 장부를 맡기지. 신용이 쌓이면 문이 더 넓게 열린다네.',
+      '깃발 넷은 상인회의 네 길드라네. 금저울, 바람길, 솜씨, 동무회. 패를 받으면 어느 깃발 아래 설지 골라 보게.')
+    # 북서 귀퉁이: 춤 마당 (합동 공연. 비요른이 양탄자 위에 선다)
+    for (x, y) in [(130, 99), (132, 99), (130, 101), (132, 101)]:
+        put('prop_carpet', x, y, layer='deco', force=True)
+    put('prop_lantern', 134, 98, foot=1, force=True)
+    put('drawn_planterRose', 130, 97, foot=1, force=True)
+    # 남서 귀퉁이: 짐 쌓기 놀이판 (상자·자루를 쌓아 둔 놀이 자리)
+    put('drawn_crates', 130, 103, foot=1, force=True)
+    put('prop_grainsacks', 133, 105, foot=1, force=True)
+    put('plaza_board', 137, 104, foot=1, force=True)                       # 상인회 게시판
+    # 북동 귀퉁이: 사진관 (아치 문 배경 + 화분 + 화단)
+    put('plaza_gate', 151, 95, foot=1, force=True)
+    put('drawn_planterSaffron', 149, 99, foot=1, force=True)
+    put('drawn_pottedOrange', 155, 98, foot=1, force=True)
+    # 남동 귀퉁이: 상인회 노점 (짐 상자·통)
+    put('drawn_crates', 148, 104, foot=1, force=True)
+    put('drawn_barrel', 155, 104, foot=1, force=True)
+    for k, x in enumerate((136, 144)):                                      # 안뜰 아래쪽 깃발 줄
+        flags(x, 107, k)
+    for (x, y) in [(156, 95), (156, 104)]:                                  # 큰길 쪽 안뜰 어귀 양쪽 등불
+        put('prop_lantern', x, y, foot=1, force=True)
+    for k, x in enumerate((146, 165)):                                      # 대광장에서 내려오는 큰길 양옆 깃발 줄
+        flags(x, 91, k + 2)
+    put('drawn_cart', 126, 94, foot=1, force=True)                         # 안뜰 밖 서쪽: 짐수레
+    # 큰길 동쪽: 쉼터 (벤치 · 나무)
+    for (x, y) in [(168, 97), (168, 103)]:
         P.stamp('bench', x, y, force=True)
-    for k, x in enumerate((154, 162)):
-        flags(x, 94, k)
-    T(160, 99, '떠돌이 곡예사', 'arabia_woman_girl_tall', '우린 장이 서는 곳마다 따라다녀요! 다음 장날에 공연 보러 와요.',
-      '서남쪽 상인 야영지 뒤 덤불을 치우면 서문 거리로 빠지는 지름길이 있어요.')
-    T(155, 100, '피리 부는 악사', 'arabia_npc_scholar_tall', '이 가락은 사막 대상들이 밤마다 부르던 노래요. 초원 사람들은 손뼉으로 박자를 맞추지.')
-    T(166, 101, '방울 춤꾼', 'arabia_woman_perfumer_tall', '발목 방울 소리 들려요? 광장 끝까지 들리게 출 거예요!')
+    for (x, y) in [(173, 95), (173, 101)]:
+        put('drawn_olive', x, y, foot=1)
     # ---- 남서: 떠돌이 상인 야영지 + 열기구 ----
     for (n, x, y) in [('drawn_tentStripe2', 115, 89), ('drawn_tentStripe', 121, 92), ('drawn_tentStripe3', 115, 97),
                       ('building_tent', 121, 100)]:
         put(n, x, y, foot=1)
     for (n, x, y) in [('drawn_crates', 126, 90), ('drawn_barrel', 127, 96), ('drawn_cart', 116, 104), ('drawn_camelRest', 126, 103)]:
         put(n, x, y, foot=1)
-    # 상인 조합 회관 (야영지 동쪽, 남문 길에서 보이는 자리)
-    put('drawn_guildHall', 133, 89, foot=2, force=True)
-    T(141, 97, '상인 조합장 하킴', 'arabia_npc_scholar_tall', '네 대륙 상인이 모두 이 회관에 장부를 맡기지. 신용이 쌓이면 문이 더 넓게 열린다네.',
-      '장날 시세는 회관 앞 게시판보다 광장 소문이 더 빠르지. 둘 다 들어 보게.')
+    # (상인 조합 회관과 조합장 하킴은 11/11 남쪽 가운데 만국 상인회 광장으로 옮김)
     barrier(P, [(x, 84) for x in range(113, 130) if x not in (116, 117)], ['drawn_bush', 'drawn_sage', 'drawn_bush', 'drawn_oleanderBush'])
     T(124, 97, '떠돌이 상인 오마르', 'arabia_npc_sailor_tall', '우린 장이 끝나면 다음 장터로 떠나요. 사막 너머, 초원 너머로.',
       '천막 뒤 덤불을 치우면 서문 거리로 빠지는 뒷길이 있지.')
     P.obstacle('thorn_brush', 116, 85, 2, 2, 'tents')
-    # ---- 남동: 만국 백화점 · 관람차 · 큰 상점 둘 ----
+    # ---- 남동: 만국 백화점 · 큰 상점 둘 ----
     put('drawn_grandArcade', 194, 89, foot=2, force=True)
     T(200, 98, '백화점 지배인 셀린', 'arabia_woman_perfumer_tall', '만국 백화점에 어서 오세요! 네 대륙 물건이 한 지붕 아래 다 있어요.',
       '유리 지붕 아래선 비가 와도 장을 볼 수 있지요. 사막엔 비가 잘 안 오지만요.')
-    put('drawn_ferrisWheel', 176, 100, foot=2, force=True)
-    T(175, 109, '관람차 사공', 'arabia_npc_sailor_tall', '꼭대기에 오르면 등불 탑, 열기구, 저 멀리 사막까지 다 보여요!',
-      '한 바퀴 도는 데 노래 한 곡이에요. 장날 밤엔 불꽃이 바로 눈앞에서 터지죠.')
+    # (관람차는 11/11 북동 높은 자리로 옮김)
     put('drawn_shopJewel', 192, 101, foot=2, force=True)
     put('drawn_shopOutfitter', 199, 101, foot=2, force=True)
     T(195, 108, '보석 상인 야스민', 'arabia_woman_girl_tall', '자수정, 호박, 바다 진주… 상인의 행운은 반짝이는 데서 온대요.')
     T(202, 108, '여행 장비 상인 바쉬르', 'arabia_npc_bedouin_tall', '물주머니, 나침반, 튼튼한 짐끈! 먼 길 가는 상인한테 필요한 건 다 있지.',
       '짐이 무거우면 걸음이 느려져. 좋은 짐끈 하나가 하루를 벌어 준다네.')
     # ---- 길가 나무 ----
-    for (x, y) in [(138, 104), (146, 99), (179, 92), (170, 108), (150, 108)]:
+    for (x, y) in [(179, 92), (170, 108), (150, 108)]:                    # 11/11 (138,104)·(146,99)는 원래도 못 놓이던 자리라 뺌
         put(['drawn_oasisTree', 'drawn_olive', 'drawn_cypress'][x % 3], x, y)
     # ---- 경비병 순찰: 광장 둘레 · 초원 대로 → 축제 거리 → 야시장 ----
     P.patrol('대광장 경비병', [(143, 82), (150, 73), (160, 71), (170, 73), (177, 82), (170, 91), (160, 93), (150, 91)],

@@ -13,7 +13,7 @@ namespace PocketCaravan
     ///    길 안내 화살표 + 아래 "목표 · ○○ 지나 만국 장터 방면" 줄로 알려 준다 (Navigator.Tutorials). 시험용 순간 이동은 "/상인회 마차".
     ///    11/10 윤채: 가는 길이 심심하지 않게 "고향 특산품 꾸러미 배달"로 (출신마다 무라노 유리 · 고려 인삼 · 북쪽 호박 · 유향).
     ///    짐·데이터는 늘리지 않고 이야기 단계로만 센다 (초대장 받음 ~ 라일라 첫인사 = 배달 중).
-    /// 2) 도착: 만국 장터에 들어서면 동쪽 상인회 마당으로 안내하고, 접수원 라일라 가까이 가면 꾸러미를 받고(배달 삯 30냥) 수첩을 펼쳐 보여 준다.
+    /// 2) 도착: 만국 장터에 들어서면 남쪽 가운데 만국 상인회 광장으로 안내하고, 접수원 라일라 가까이 가면 꾸러미를 받고(배달 삯 30냥) 수첩을 펼쳐 보여 준다.
     /// 3) 상인회 수첩 (11/10 윤채: 늘 떠 있는 카드가 화면을 가려서, 도장을 받을 때만 가운데에 펼쳐지는 도장판으로 바꿈.
     ///    언제든 N 또는 위 알약을 눌러 볼 수 있다). 네 칸 (11/10 윤채: 인사·거래는 재미없어서, 다른 사람과 같이 하거나 놀이로):
     ///    - 합동 공연: 누군가 옆에서 리액션. 접속한 사람과 6초 안에 같이 하면 합동 공연, 혼자면 상인회 상인이 따라 춘다
@@ -23,7 +23,9 @@ namespace PocketCaravan
     ///    순서와 상관없이 채워지고, 찾아갈 곳은 머리 위 노란 화살표(화면 밖이면 가장자리 화살표). 만국 장터 안에서 한 것만 센다.
     /// 4) 답장: 다 채우면 상인회장의 답장 → 라일라에게 가서 이름 올리기 → 상인패 수여식(메달 · 꽃가루). 보상 50냥,
     ///    온라인 이름표에 금빛 "★ 상인회"(서버 tag "guild").
-    /// 상인회 마당은 만국 장터 동쪽 빈터(맵 JSON 칸 70~90, 23~26. 27~28줄은 건물 지붕 밑이라 피했다)에 실행 중에만 세운다.
+    /// 상인회 마당은 만국 장터 남쪽 가운데 만국 상인회 광장(맵 JSON 칸 19~42, 43~49. 큰길 서쪽 안뜰, 네 귀퉁이)에 실행 중에만 세운다.
+    ///   11/11 은인: 동쪽 4줄 빈터가 비좁아 광장으로 옮김. 칸은 arabia_central.py bazaar()가 비워 둔다 (거기 주석과 같이 고칠 것).
+    ///   (옛 자리: 동쪽 빈터 칸 70~90, 23~26)
     ///   접수처·노점·놀이판·사진 자리는 아라비아 큰 장 그림(Resources/Arabia/Fair)을 빌려 쓰고, 아라비아 씬·데이터는 고치지 않는다.
     ///   노점은 제다 공유 장터 시세 (만국 장터엔 장터가 없어서, 11/09 윤채 결정). 선물할 물건을 여기서 산다.
     /// 진행은 공용 진행 메모 "net:guild:step"(0 없음 · 1 초대장 받음 · 2 수첩 다 채움 · 3 가입), "net:guild:duet|gift|stack|photo"(1 = 함),
@@ -268,11 +270,11 @@ namespace PocketCaravan
         {
             if (inst != null) inst.CloseLetter();
             Sfx.Play("accept");
-            Notify.Show(AtBazaar ? $"{Parcel}를 받았다! 동쪽 상인회 마당의 라일라에게 전해요"
+            Notify.Show(AtBazaar ? $"{Parcel}를 받았다! 남쪽 상인회 안뜰의 라일라에게 전해요"
                 : $"{Parcel}를 받았다! 만국 장터의 라일라에게 배달해요 · 화살표와 아래 '목표' 줄을 따라가요", 5f);
         }
 
-        /// <summary>시험용 (채팅 "/상인회 마차", 개발 키): 만국 장터 동쪽 어귀(상인회 마당 옆)로 바로 간다</summary>
+        /// <summary>시험용 (채팅 "/상인회 마차", 개발 키): 만국 장터 동쪽 어귀로 바로 간다 (상인회 광장까지는 야시장 길로 조금 걷는다)</summary>
         static void Ride()
         {
             if (GM == null || inst == null || AtBazaar || GM.IsTravelling) return;
@@ -399,7 +401,7 @@ namespace PocketCaravan
 
         float LastSlam { get { float t = -1f; foreach (var s in slamAt) t = Mathf.Max(t, s); return t; } }
 
-        // ---------------- 상인회 마당 (만국 장터 동쪽) ----------------
+        // ---------------- 상인회 마당 (만국 장터 남쪽 가운데 상인회 광장, 11/11) ----------------
 
         class Person : Interactable
         {
@@ -426,7 +428,7 @@ namespace PocketCaravan
             BuildYard();
             riding = false;
             if (Step == 1 && GM != null && GM.GetMemo(WelcomeKey) < 1f)
-                Notify.Show($"만국 장터에 도착했다! 동쪽 상인회 마당의 라일라에게 {Parcel}를 전해요", 5f);
+                Notify.Show($"만국 장터에 도착했다! 남쪽 상인회 안뜰의 라일라에게 {Parcel}를 전해요", 5f);
         }
 
         void BuildYard()
@@ -435,34 +437,34 @@ namespace PocketCaravan
             if (pc == null || MapRoot.Current == null || GM == null) return;
             yard = new GameObject("만국 상인회 마당").transform;
 
-            clerkTf = Spawn("arabia", 84, 24, () => Clerk + (Step == 0 || Step == 2 ? " !" : ""), TalkClerk, true, pc).transform;
+            clerkTf = Spawn("arabia", 31, 44, () => Clerk + (Step == 0 || Step == 2 ? " !" : ""), TalkClerk, true, pc).transform;
             Booth(clerkTf.position, true);
 
             var town = GM.Db != null ? GM.Db.towns.Find(t => t != null && t.id == StallTown) : null;
             if (town != null)
             {
-                var go = Body("venice", 78, 24, pc);
+                var go = Body("venice", 40, 49, pc);
                 go.AddComponent<Stall>().town = town;
                 stallTf = go.transform;
                 Booth(stallTf.position, false);
             }
 
-            // 짐 쌓기 놀이판 (동쪽 어귀)
-            boardTf = Place(90, 23, "짐 쌓기 놀이판", "한 판 하기", NetStackGame.Open, true).transform;
+            // 짐 쌓기 놀이판 (안뜰 서쪽 아래, 춤 양탄자 밑)
+            boardTf = Place(19, 49, "짐 쌓기 놀이판", "한 판 하기", NetStackGame.Open, true).transform;
             Deco("prop_carpet", boardTf.position, 0f, -0.35f, 4);
             Deco("prop_spiceSack", boardTf.position, -0.55f, 0.3f, 9);
             Deco("prop_pepperSack", boardTf.position, 0.55f, 0.3f, 9);
             Deco("prop_dates", boardTf.position, 0f, 1.05f, 10);
 
-            // 기념 사진 자리 (서쪽 끝, 깃발 아치 밑 양탄자)
-            photoTf = Place(70, 23, "기념 사진 자리", "사진 찍기", TakePhoto, false).transform;
+            // 기념 사진 자리 (안뜰 동쪽, 큰길 어귀)
+            photoTf = Place(40, 43, "기념 사진 자리", "사진 찍기", TakePhoto, false).transform;
             Deco("prop_carpet", photoTf.position, 0f, -0.25f, 4);
             Deco("prop_lantern", photoTf.position, -1.4f, 0.75f, 10);
             Deco("prop_lantern", photoTf.position, 1.4f, 0.75f, 10);
             Deco("bunting", photoTf.position, -1f, 2.1f, 21);
             Deco("bunting", photoTf.position, 1f, 2.1f, 21);
 
-            Merchant("goryeo", 74, 26, new NetMeet.Npc
+            Merchant("goryeo", 42, 46, new NetMeet.Npc
             {
                 name = "고려 보부상 길보", shortName = "길보",
                 hello = "어이쿠, 반갑소! 개경에서 등짐 지고 왔다오.",
@@ -470,15 +472,15 @@ namespace PocketCaravan
                 thanks = "이리 귀한 걸! 받은 정은 꼭 갚으리다.",
                 near = "어이, 새 얼굴이구먼! 옆 사진 자리에서 같이 한 장 찍겠소?",
             }, pc);
-            Merchant("viking", 81, 26, new NetMeet.Npc
+            Merchant("viking", 19, 44, new NetMeet.Npc
             {
                 name = "북쪽 상인 비요른", shortName = "비요른",
                 hello = "하하! 피오르에서 배 타고 왔지. 반갑다!",
                 cheer = "좋아, 나도 발 구르기다!",
                 thanks = "오, 고맙다! 오늘은 꿀술로 건배다!",
-                near = "같이 춤 한판 어때? 리액션하면 나도 따라 한다!",
+                near = "이 춤 양탄자에서 같이 춤 한판 어때? 리액션하면 나도 따라 한다!",
             }, pc);
-            Merchant("arabia", 88, 26, new NetMeet.Npc
+            Merchant("arabia", 23, 47, new NetMeet.Npc
             {
                 name = "대상 하킴", shortName = "하킴",
                 hello = "평안을 빕니다, 친구여. 잘 왔어요.",
@@ -980,7 +982,7 @@ namespace PocketCaravan
             string main, where; bool pin;
             if (s == 2) { main = "라일라에게 가서 상인회 가입하기"; where = "만국 장터 상인회 마당"; pin = true; }
             else if (!AtBazaar) { main = $"{Parcel} 배달하기"; where = "만국 장터 라일라 · 지도(M) 한가운데"; pin = true; }
-            else if (GM.GetMemo(WelcomeKey) < 1f) { main = "라일라에게 꾸러미 전하기"; where = "만국 장터 동쪽 상인회 마당"; pin = true; }
+            else if (GM.GetMemo(WelcomeKey) < 1f) { main = "라일라에게 꾸러미 전하기"; where = "만국 장터 남쪽 상인회 안뜰"; pin = true; }
             else { main = cur >= 0 ? TaskTitle[cur] : "상인회 수첩 다 채움"; where = $"수첩(N) {DoneCount}/{TaskKeys.Length}"; pin = false; }
             return CuteUI.StackPill(12, s == 2, CuteUI.Pic.OpenBook, null, main, where, pin);
         }

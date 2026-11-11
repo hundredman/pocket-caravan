@@ -585,54 +585,66 @@ def _ellipse_px(px, w, h, cx, cy, rx, ry, fill, edge=OUTLINE, shade=None):
 
 
 def grand_fountain(name, seed=301):
-    """3단 대리석 분수 (128×96 = 8×6칸): 금테 받침, 떨어지는 물줄기, 꼭대기 금 구슬, 수반 둘레 꽃."""
+    """3단 분수 (128×96 = 8×6칸). 11/11 장터 개선: 흰 대리석 → 따뜻한 사암, 수조 테두리 두께·명암, 청록 물, 황토 테.
+    그릇 위치·물줄기 곡선·크기는 예전 그대로 (ArabiaAmbience 물방울 좌표 cx=64, 그릇 y=20·42·74에 맞춤)."""
     rng = random.Random(seed)
     w, h = 128, 96
     im = canvas(w, h)
     shadow(im, 64, h - 6, 62, 6)
     px = im.load()
+    S = WARMSTONE
+    TW = [(36, 110, 122, 255), (56, 150, 158, 255), (96, 188, 190, 255), (196, 238, 230, 255)]   # 청록 물
     cx = 64
-    for y in range(66, 90):                              # 큰 수반 옆면
+    for y in range(66, 90):                              # 큰 수반 옆면: 사암 벽돌 + 아래 그늘
         for x in range(4, 124):
             if ((x + .5 - cx) / 60) ** 2 + ((y + .5 - 76) / 14) ** 2 <= 1 and y >= 74:
-                px[x, y] = OUTLINE if y == 89 else MARBLE[2] if x < 84 else MARBLE[1]
-    _ellipse_px(px, w, h, cx, 74, 60, 13, MARBLE[3])
-    _ellipse_px(px, w, h, cx, 74, 55, 10, WATER[1], edge=GOLD[2],
-                shade=lambda x, y: WATER[3] if rng.random() < 0.05 else WATER[2] if (x + y) % 9 == 0 else WATER[1])
+                if y == 89:
+                    px[x, y] = OUTLINE
+                elif y in (78, 79):
+                    px[x, y] = OCHRE[2] if (x // 6) % 2 else TEAL[2]          # 황토·청록 타일 띠
+                elif (y - 80) % 5 == 0 or ((x + (y // 5) * 7) % 14 == 0 and y > 80):
+                    px[x, y] = S[1]                                          # 벽돌 줄눈
+                else:
+                    shade = 3 if x < 44 else 2 if x < 88 else 1
+                    px[x, y] = S[shade] if y < 86 else S[max(0, shade - 1)]
+    _ellipse_px(px, w, h, cx, 74, 60, 13, S[4], edge=OUTLINE)                  # 테두리 윗면 (밝음)
+    _ellipse_px(px, w, h, cx, 74.5, 57, 11.2, S[2])                           # 테두리 안쪽 턱 (두께)
+    _ellipse_px(px, w, h, cx, 75, 54, 9.6, TW[1], edge=TEAL[0],
+                shade=lambda x, y: TW[3] if rng.random() < 0.04 else TW[2] if (x + y) % 9 == 0 or y < 70 else TW[1])
     for y in range(40, 74):                              # 가운데 기둥
         for x in range(57, 72):
-            px[x, y] = OUTLINE if x in (57, 71) else MARBLE[3] if x < 63 else MARBLE[2]
-    _ellipse_px(px, w, h, cx, 42, 28, 8, MARBLE[3])
-    _ellipse_px(px, w, h, cx, 41, 23, 5.5, WATER[1], edge=GOLD[2], shade=lambda x, y: WATER[2] if (x * 3 + y) % 7 == 0 else WATER[1])
+            px[x, y] = OUTLINE if x in (57, 71) else S[4] if x < 61 else S[3] if x < 66 else S[2]
+    for y in (52, 60, 68):
+        for x in range(58, 71):
+            px[x, y] = OCHRE[1]
+    _ellipse_px(px, w, h, cx, 42, 28, 8, S[4], edge=OUTLINE)
+    _ellipse_px(px, w, h, cx, 42.5, 25, 6.5, S[2])
+    _ellipse_px(px, w, h, cx, 42, 22, 5, TW[1], edge=TEAL[0], shade=lambda x, y: TW[2] if (x * 3 + y) % 7 == 0 else TW[1])
     for x in range(36, 93):
         if ((x + .5 - cx) / 28) ** 2 <= 1:
-            px[x, 50] = MARBLE[1]; px[x, 51] = OUTLINE
+            px[x, 50] = S[1]; px[x, 51] = OUTLINE
     for y in range(18, 40):                              # 꼭대기 기둥
         for x in range(60, 69):
-            px[x, y] = OUTLINE if x in (60, 68) else MARBLE[3]
-    _ellipse_px(px, w, h, cx, 20, 13, 4, MARBLE[3])
-    _ellipse_px(px, w, h, cx, 19.5, 9, 2.5, WATER[2], edge=GOLD[2])
-    _ellipse_px(px, w, h, cx, 10, 5, 5, GOLD[2], shade=lambda x, y: GOLD[3] if x < 64 and y < 10 else GOLD[2] if x < 65 else GOLD[1])
-    for side in (-1, 1):                                 # 물줄기
+            px[x, y] = OUTLINE if x in (60, 68) else S[4] if x < 64 else S[3]
+    _ellipse_px(px, w, h, cx, 20, 13, 4, S[4], edge=OUTLINE)
+    _ellipse_px(px, w, h, cx, 19.5, 9, 2.5, TW[2], edge=TEAL[0])
+    _ellipse_px(px, w, h, cx, 10, 5, 5, OCHRE[2], shade=lambda x, y: OCHRE[3] if x < 64 and y < 10 else OCHRE[2] if x < 65 else OCHRE[1])
+    for side in (-1, 1):                                 # 물줄기 (곡선은 예전과 같음)
         for t in range(0, 50):
             u = t / 49
             x = cx + side * (11 + 13 * u)
             y = 20 + 21 * u * u
-            px[int(x), int(y)] = WATER[3] if t % 3 else WATER[2]
+            px[int(x), int(y)] = TW[3] if t % 3 else TW[2]
         for t in range(0, 80):
             u = t / 79
             x = cx + side * (25 + 24 * u)
             y = 42 + 31 * u * u
-            px[int(x), int(y)] = WATER[3] if t % 4 else WATER[2]
+            px[int(x), int(y)] = TW[3] if t % 4 else TW[2]
             if t % 5 == 0:
-                px[int(x) + side, int(y)] = WATER[2]
+                px[int(x) + side, int(y)] = TW[2]
     for k in range(16):                                  # 물보라
         a = rng.uniform(0, 6.28)
-        px[int(cx + math.cos(a) * rng.uniform(40, 52)), int(73 + math.sin(a) * rng.uniform(5, 8))] = WATER[3]
-    for k, x in enumerate(range(10, 120, 9)):            # 수반 둘레 꽃
-        y = int(76 + 13 * (1 - ((x - cx) / 60) ** 2) ** 0.5) if abs(x - cx) < 60 else 76
-        if y < h - 2:
-            px[x, y] = FESTIVE[k % 4]; px[x + 1, y] = FESTIVE[k % 4]; px[x, y + 1] = (70, 140, 60, 255)
+        px[int(cx + math.cos(a) * rng.uniform(38, 50)), int(75 + math.sin(a) * rng.uniform(4, 7))] = TW[3]
     return save(name, im)
 
 
@@ -1167,9 +1179,248 @@ def big_shop(name, wall, roof, awn, icon, seed=404):
     return save(name, im)
 
 
+GUILDS = {   # 11/11 만국 상인회 길드 깃발 넷 (상인회 광장 회관 양옆). 이름은 가칭.
+    'drawn_guildFlagScale': ((236, 196, 80, 255), (150, 104, 30, 255), 'scale'),     # 금저울 상단
+    'drawn_guildFlagWind': ((110, 176, 222, 255), (40, 84, 140, 255), 'compass'),    # 바람길 개척단
+    'drawn_guildFlagCraft': ((234, 136, 64, 255), (120, 56, 24, 255), 'hammer'),     # 솜씨 공방
+    'drawn_guildFlagKin': ((122, 186, 92, 255), (40, 96, 44, 255), 'heart'),          # 동무회
+}
+
+
+def guild_flag(name, cloth, ink, emblem):
+    """길드 깃발 (32×64 = 2×4칸): 돌 받침 + 나무 깃대 + 금 꼭지, 금 테두리 제비꼬리 깃발에 문장 하나."""
+    w, h = 32, 64
+    im = canvas(w, h)
+    shadow(im, 9, h - 3, 9, 2)
+    px = im.load()
+    for y in range(h - 9, h - 3):                        # 돌 받침 (깃대 밑)
+        for x in range(2, 15):
+            px[x, y] = OUTLINE if x in (2, 14) or y in (h - 9, h - 4) else MARBLE[3] if x < 8 else MARBLE[2]
+    for y in range(4, h - 9):                            # 깃대
+        px[6, y] = OUTLINE; px[7, y] = TIMBER[3]; px[8, y] = TIMBER[2]; px[9, y] = OUTLINE
+    for (x, y) in [(7, 1), (8, 1), (6, 2), (7, 2), (8, 2), (9, 2), (7, 3), (8, 3)]:   # 금 꼭지
+        px[x, y] = GOLD[3] if y == 1 else GOLD[2]
+    for x in range(6, 29):                               # 가로대
+        px[x, 6] = OUTLINE; px[x, 7] = GOLD[1]
+    bx0, bx1, by0, by1 = 11, 27, 8, 40                  # 깃발 천 (제비꼬리)
+    for y in range(by0, by1 + 1):
+        for x in range(bx0, bx1 + 1):
+            notch = y > by1 - 6 and abs(x - (bx0 + bx1) / 2) < (y - (by1 - 6)) * 1.2
+            if notch:
+                continue
+            border = x in (bx0, bx1) or y == by0
+            trim = x in (bx0 + 1, bx1 - 1) or y == by0 + 1
+            shade = 0.86 if x > bx1 - 4 else 1.0
+            c = tuple(int(v * shade) for v in cloth[:3]) + (255,)
+            px[x, y] = OUTLINE if border else GOLD[2] if trim else c
+    for x in range(bx0, bx1 + 1):                        # 아래 끝 테두리
+        for y in range(by0, by1 + 1):
+            if px[x, y][3] and (y == by1 or (y + 1 <= by1 and px[x, y + 1][3] == 0)):
+                px[x, y] = OUTLINE
+    cx, cy = 19, 21
+    if emblem == 'scale':                                # 저울
+        for x in range(cx - 4, cx + 5): px[x, cy - 3] = ink
+        for y in range(cy - 5, cy + 5): px[cx, y] = ink
+        for d in (-4, 4):
+            for x in range(cx + d - 1, cx + d + 2): px[x, cy + 1] = ink
+            px[cx + d, cy - 2] = ink; px[cx + d, cy] = ink
+        for x in range(cx - 3, cx + 4): px[x, cy + 5] = ink
+    elif emblem == 'compass':                            # 나침반 별
+        for k in range(0, 8):
+            px[cx, cy - k] = ink; px[cx, cy + k] = ink
+            if k < 6: px[cx - k, cy] = ink; px[cx + k, cy] = ink
+            if k < 3: px[cx - 1, cy - k] = ink; px[cx + 1, cy + k] = ink; px[cx - k, cy + 1] = ink; px[cx + k, cy - 1] = ink
+        for k in range(1, 3):
+            for (dx, dy) in ((k, k), (-k, k), (k, -k), (-k, -k)): px[cx + dx, cy + dy] = ink
+        px[cx, cy] = GOLD[3]
+    elif emblem == 'hammer':                             # 망치
+        for y in range(cy - 4, cy - 1):
+            for x in range(cx - 5, cx + 5): px[x, y] = ink
+        for y in range(cy - 1, cy + 7): px[cx - 1, y] = ink; px[cx, y] = ink
+    else:                                                # 두 손 = 하트
+        for (x, y) in [(-4, -3), (-3, -4), (-2, -4), (-1, -3), (1, -3), (2, -4), (3, -4), (4, -3)]:
+            px[cx + x, cy + y] = ink
+        for y in range(-3, 5):
+            half = 5 - max(0, y)
+            for x in range(-half + (1 if y < -1 else 0), half + 1 - (1 if y < -1 else 0)):
+                if not (y == -3 and x in (0,)):
+                    px[cx + x, cy + y] = ink
+    return save(name, im)
+
+
+# =====================================================================
+#  11/11 만국 장터 시각 개선 (장터 전용 그림. 다른 맵이 쓰는 drawn_texPlaza·drawn_texCobble은 그대로 둔다)
+# =====================================================================
+SLAB = [(232, 212, 172), (226, 205, 163), (237, 219, 181), (229, 209, 168)]
+SLAB_JOINT = (209, 186, 146)
+TEAL = [(30, 92, 104, 255), (46, 130, 140, 255), (76, 168, 172, 255), (150, 214, 208, 255)]
+OCHRE = [(150, 100, 40, 255), (196, 142, 62, 255), (226, 180, 92, 255), (246, 216, 150, 255)]
+BRICK = [(120, 58, 40, 255), (164, 84, 56, 255), (196, 116, 80, 255)]
+WARMSTONE = [(120, 88, 60, 255), (170, 132, 92, 255), (214, 178, 132, 255), (236, 210, 168, 255), (248, 232, 200, 255)]
+
+
+def tex_slab(name, seed=331):
+    """장터 광장 바닥 128×128 (8×8칸): 큰 사암 판석을 엇갈려 깔고 줄눈은 옅게. 띠·금 마름모 없음 (격자 대비 완화)."""
+    rng = random.Random(seed)
+    W = 128
+    im = Image.new('RGBA', (W, W), (0, 0, 0, 255))
+    px = im.load()
+    rows = []
+    y = 0
+    while y < W:                                         # 줄 높이 16·24 섞기 (128 = 16+24+16+24+16+16+16)
+        hgt = [16, 24, 16, 24, 16, 16, 16][len(rows) % 7]
+        rows.append((y, min(W, y + hgt)))
+        y += hgt
+    for ri, (y0, y1) in enumerate(rows):
+        x = (ri * 13) % 32
+        cuts = []
+        while True:                                      # 판석 길이 24~40 (가로로 이어 붙여 128에서 감김)
+            cuts.append(x % W)
+            x += rng.choice([24, 28, 32, 36, 40])
+            if x - cuts[0] >= W:
+                break
+        cuts = sorted(set(cuts))
+        for ci, c0 in enumerate(cuts):
+            c1 = cuts[(ci + 1) % len(cuts)] + (W if ci + 1 == len(cuts) else 0)
+            base = SLAB[rng.randrange(len(SLAB))]
+            k = rng.uniform(0.985, 1.015)
+            for yy in range(y0, y1):
+                for xx in range(c0, c1):
+                    X = xx % W
+                    joint = yy == y0 or xx == c0
+                    if joint:
+                        px[X, yy] = SLAB_JOINT + (255,)
+                        continue
+                    j = k * (0.975 if rng.random() < 0.05 else 1.0)
+                    if yy == y0 + 1 or xx == c0 + 1:
+                        j *= 1.03                         # 판석 위·왼쪽 모서리 살짝 밝게 (빛: 왼쪽 위)
+                    px[X, yy] = tuple(min(255, int(v * j)) for v in base) + (255,)
+    return save(name, im)
+
+
+def tex_curb(name, seed=332):
+    """장터 길 가장자리·골목 바닥 64×64: 따뜻한 사암 벽돌돌(작은 직사각 돌)을 엇갈려 깐다 (회색 자갈 대신)."""
+    rng = random.Random(seed)
+    im = Image.new('RGBA', (64, 64), (0, 0, 0, 255))
+    px = im.load()
+    stones = [(214, 182, 134), (204, 170, 124), (220, 190, 142), (198, 164, 118)]
+    for r in range(8):
+        y0 = r * 8
+        off = 0 if r % 2 == 0 else 6
+        for c in range(-1, 6):
+            x0 = c * 12 + off
+            col = stones[rng.randrange(4)]
+            for yy in range(y0, y0 + 8):
+                for xx in range(x0, x0 + 12):
+                    X = xx % 64
+                    if yy == y0 or xx == x0:
+                        px[X, yy] = (176, 140, 98, 255)
+                    elif yy == y0 + 1 or xx == x0 + 1:
+                        px[X, yy] = tuple(min(255, v + 10) for v in col) + (255,)
+                    else:
+                        px[X, yy] = tuple(int(v * rng.uniform(0.98, 1.02)) for v in col) + (255,)
+    return save(name, im)
+
+
+def floor_medallion(name):
+    """분수 바닥 문양 288×192 (18×12칸, 분수 중심에 맞춤): 팔각 테두리(청록 띠 + 황토 선)와 팔각 별.
+    바깥은 투명이라 바닥 판석 위에 겹쳐 그린다 (arabia_art.ArabiaMap.mosaic)."""
+    from PIL import ImageDraw
+    W, H = 288, 192
+    cx, cy = W / 2, H / 2
+    im = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+
+    def octo(rx, ry, cut=0.42):
+        return [(cx - rx * (1 - cut), cy - ry), (cx + rx * (1 - cut), cy - ry), (cx + rx, cy - ry * (1 - cut)),
+                (cx + rx, cy + ry * (1 - cut)), (cx + rx * (1 - cut), cy + ry), (cx - rx * (1 - cut), cy + ry),
+                (cx - rx, cy + ry * (1 - cut)), (cx - rx, cy - ry * (1 - cut))]
+
+    def star(rx, ry, inner):
+        pts = []
+        for k in range(16):
+            a = math.pi * k / 8 - math.pi / 2
+            r = 1.0 if k % 2 == 0 else inner
+            pts.append((cx + math.cos(a) * rx * r, cy + math.sin(a) * ry * r))
+        return pts
+    d.polygon(octo(140, 92), fill=OCHRE[1])                       # 바깥 황토 선
+    d.polygon(octo(137, 90), fill=TEAL[1])                        # 청록 띠
+    d.polygon(octo(131, 85), fill=OCHRE[2])                       # 안쪽 황토 선
+    d.polygon(octo(129, 83), fill=SLAB[0] + (255,))               # 안쪽 바탕 (판석색)
+    d.polygon(star(124, 80, 0.62), fill=OCHRE[2])                 # 팔각 별 (황토 테)
+    d.polygon(star(120, 77, 0.62), fill=OCHRE[3])
+    d.polygon(star(116, 75, 0.62), fill=SLAB[2] + (255,))
+    d.polygon(star(108, 70, 0.6), fill=TEAL[2])                   # 별 안쪽 청록 선
+    d.polygon(star(105, 68, 0.6), fill=SLAB[1] + (255,))
+    for k in range(8):                                            # 별 끝 작은 마름모 장식
+        a = math.pi * k / 4 - math.pi / 2
+        x, y = cx + math.cos(a) * 131, cy + math.sin(a) * 85
+        d.polygon([(x, y - 5), (x + 5, y), (x, y + 5), (x - 5, y)], fill=OCHRE[2], outline=OCHRE[0])
+    fy = cy + 4                                                   # 분수 수반 바닥 둘레 (윗부분은 분수 그림이 가린다)
+    d.ellipse([cx - 74, fy - 22, cx + 74, fy + 22], fill=OCHRE[2])
+    d.ellipse([cx - 71, fy - 20, cx + 71, fy + 20], fill=TEAL[1])
+    d.ellipse([cx - 66, fy - 17, cx + 66, fy + 17], fill=SLAB[2] + (255,))
+    px = im.load()
+    for y in range(H):                                            # 판석 줄눈이 문양 위로 살짝 비치게 (덜 납작하게)
+        for x in range(W):
+            if px[x, y][3] and (y % 24 == 0 or (x + (y // 24) * 12) % 36 == 0):
+                r, g, b, a = px[x, y]
+                px[x, y] = (int(r * 0.93), int(g * 0.93), int(b * 0.93), a)
+    return save(name, im)
+
+
+def planter(name, flowers):
+    """낮은 화단 (32×16 = 2×1칸): 사암 화분 상자에 꽃. 사람보다 낮아 이름표를 가리지 않는다."""
+    im = canvas(32, 16)
+    px = im.load()
+    for y in range(7, 15):
+        for x in range(1, 31):
+            edge = x in (1, 30) or y in (7, 14)
+            px[x, y] = OUTLINE if edge else WARMSTONE[3] if y < 9 else WARMSTONE[2] if x < 22 else WARMSTONE[1]
+    for x in range(2, 30):
+        px[x, 9] = BRICK[1]
+    rng = random.Random(hash(name) & 0xffff)
+    for k in range(10):                                            # 잎 + 꽃
+        x = 3 + k * 3 + rng.randrange(2)
+        for (dx, dy) in ((0, 0), (1, 0), (0, -1)):
+            px[min(29, x + dx), 6 + dy] = (84, 132, 60, 255)
+        c = flowers[k % len(flowers)]
+        px[min(29, x), 3 + rng.randrange(2)] = c
+        px[min(29, x + 1), 4] = c
+    return save(name, im)
+
+
+def bench_wood(name):
+    """광장 벤치 (32×16 = 2×1칸): 나무 등받이 없는 긴 의자, 사암 다리. 위에서 내려다본 납작한 모양."""
+    im = canvas(32, 16)
+    shadow(im, 16, 14, 14, 2)
+    px = im.load()
+    for y in range(5, 11):
+        for x in range(2, 30):
+            edge = x in (2, 29) or y in (5, 10)
+            px[x, y] = OUTLINE if edge else TIMBER[3] if y < 7 else TIMBER[2] if (x % 7) else TIMBER[1]
+    for x0 in (4, 25):
+        for y in range(11, 14):
+            for x in range(x0, x0 + 3):
+                px[x, y] = OUTLINE if x in (x0, x0 + 2) or y == 13 else WARMSTONE[2]
+    return save(name, im)
+
+
+def build_bazaar_upgrade():
+    tex_slab('drawn_texSlab')
+    tex_curb('drawn_texCurb')
+    floor_medallion('drawn_floorMedallion')
+    bench_wood('drawn_benchWood')
+    planter('drawn_planterRose', [(212, 58, 66, 255), (240, 196, 70, 255), (230, 120, 160, 255)])
+    planter('drawn_planterSaffron', [(120, 90, 190, 255), (246, 216, 150, 255), (212, 58, 66, 255)])
+
+
 def build_landmarks():
     grand_arcade('drawn_grandArcade')
     ferris_wheel('drawn_ferrisWheel')
     guild_hall('drawn_guildHall')
+    for n_, (c_, i_, e_) in GUILDS.items():                      # 11/11 길드 깃발 넷
+        guild_flag(n_, c_, i_, e_)
+    build_bazaar_upgrade()                                     # 11/11 장터 바닥·화단
     big_shop('drawn_shopJewel', (196, 176, 214, 255), SLATE, ((120, 90, 190, 255), (240, 196, 70, 255)), 'gem', seed=404)
     big_shop('drawn_shopOutfitter', (212, 196, 160, 255), TERRACOTTA, ((70, 130, 80, 255), (246, 238, 220, 255)), 'compass', seed=405)
