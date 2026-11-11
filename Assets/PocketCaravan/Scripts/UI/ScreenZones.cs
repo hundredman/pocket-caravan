@@ -25,6 +25,31 @@ namespace PocketCaravan
         // 11/11 은샘: 화면 가운데에 뜨는 것(위 가운데 알약 · 아래 목표 줄). 양옆 벽(FreeRow)에는 넣지 않고, 떠다니는 작은 표가 피할 때만 쓴다
         static readonly Dictionary<string, Zone> centers = new Dictionary<string, Zone>();
         public static void MarkCenter(string id, Rect r) => centers[id] = new Zone { rect = r, frame = Time.frameCount };
+        /// <summary>가운데 UI 하나의 자리 (이번·지난 프레임에 그렸으면)</summary>
+        public static Rect? Center(string id) => centers.TryGetValue(id, out var z) && Live(z) ? z.rect : (Rect?)null;
+
+        static Rect? Hit(Rect r)
+        {
+            foreach (var z in zones.Values) if (Live(z) && z.rect.Overlaps(r)) return z.rect;
+            foreach (var z in centers.Values) if (Live(z) && z.rect.Overlaps(r)) return z.rect;
+            foreach (var n in Notify.DrawnRects) if (n.Overlaps(r)) return n;
+            return null;
+        }
+
+        /// <summary>11/11 은샘: Dodge와 같은데 옆으로 비킨다 (화면 위·아래 가장자리 표). 화면 가운데보다 오른쪽이면 오른쪽으로</summary>
+        public static Rect DodgeSideways(Rect r)
+        {
+            float vw = UIStyle.VirtualWidth;
+            for (int pass = 0; pass < 8; pass++)
+            {
+                var hit = Hit(r);
+                if (!hit.HasValue) return r;
+                var h = hit.Value;
+                if (r.center.x >= h.center.x) r.x = h.xMax + 4f; else r.x = h.x - r.width - 4f;
+                if (r.x < 4f || r.xMax > vw - 4f) { r.x = Mathf.Clamp(r.x, 4f, vw - r.width - 4f); return Dodge(r); }
+            }
+            return r;
+        }
 
         /// <summary>
         /// 11/11 은샘: 떠다니는 작은 표(놀거리 가장자리 화살표 등)를 다른 UI와 겹치지 않게 위아래로 비킨다.
@@ -35,10 +60,7 @@ namespace PocketCaravan
             float vh = UIStyle.VirtualHeight;
             for (int pass = 0; pass < 8; pass++)
             {
-                Rect? hit = null;
-                foreach (var z in zones.Values) if (Live(z) && z.rect.Overlaps(r)) { hit = z.rect; break; }
-                if (!hit.HasValue) foreach (var z in centers.Values) if (Live(z) && z.rect.Overlaps(r)) { hit = z.rect; break; }
-                if (!hit.HasValue) foreach (var n in Notify.DrawnRects) if (n.Overlaps(r)) { hit = n; break; }
+                var hit = Hit(r);
                 if (!hit.HasValue) return r;
                 var h = hit.Value;
                 if (r.center.y > vh / 2f) r.y = h.y - r.height - 4f; else r.y = h.yMax + 4f;

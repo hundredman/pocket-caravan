@@ -27,12 +27,10 @@ namespace PocketCaravan
         };
         public static readonly Dictionary<string, Func<Interactable, (string name, bool done)>> NameRules = new Dictionary<string, Func<Interactable, (string, bool)>>();
 
-        const float Far = 14f, Near = 4f;
+        const float Far = 9f, Near = 4f, EdgeFar = 18f;   // 11/11 은샘: 가까이 있을 때만 (머리 위 ★ 9칸, 화면 밖 화살표 18칸)
         readonly List<(Interactable spot, string name, bool done)> spots = new List<(Interactable, string, bool)>();
         float nextScan;
         string lastMap;
-        float announceAt = -1f;
-        string announceMap;   // 11/11 은샘: 알림을 예약한 맵. 그 맵을 떠났으면 버린다 (시작 화면 뒤 나루 알림이 다른 문명 첫 마을에서 뜨던 것)
         Sprite star;
 
         static string Map => MapRoot.Current != null ? MapRoot.Current.mapId : null;
@@ -47,9 +45,8 @@ namespace PocketCaravan
         void Update()
         {
             if (Map == null) { spots.Clear(); lastMap = null; return; }
-            if (Map != lastMap) { lastMap = Map; announceMap = Map; announceAt = Time.time + .8f; nextScan = 0f; }   // 자리가 다 놓인 뒤 알린다
+            if (Map != lastMap) { lastMap = Map; nextScan = 0f; }
             if (Time.time >= nextScan) { nextScan = Time.time + .5f; Scan(); }
-            if (announceAt > 0f && Time.time >= announceAt) { announceAt = -1f; Announce(); }
         }
 
         static bool Rule(Interactable it, out (string name, bool done) r)
@@ -71,21 +68,15 @@ namespace PocketCaravan
             }
         }
 
-        void Announce()
+        // 11/11 은샘: 맵에 들어설 때 "여기서 할 수 있는 것" 알림은 뺐다 (★ 놀거리 표시가 같은 것을 알려 준다. 알림이 화면을 채웠다)
+
+        /// <summary>11/11 은샘: 이 자리가 놀거리인지 (WorldLabels가 이름표 앞에 ★를 붙일 때 쓴다)</summary>
+        public static bool IsActivity(Interactable it, out bool done)
         {
-            var gm = GameManager.I;
-            if (gm != null && gm.IsTravelling) { announceAt = Time.time + .5f; return; }   // 11/11 이동 중이면 도착한 뒤에 다시 본다
-            if (Map != announceMap) return;   // 11/11 예약한 맵을 떠났다
-            string key = "hint:" + Map;
-            if (gm == null || spots.Count == 0 || Mathf.RoundToInt(gm.GetMemo(key, -1f)) == gm.Clock.day) return;
-            // 11/11 기우: 시작 이야기·튜토리얼 중에는 알리지 않는다 (시작 화면에 뜨는 것 줄이기). 대화가 떠 있으면 끝난 뒤에 다시 본다.
-            if (UIState.Blocking) { announceAt = Time.time + 1f; return; }
-            if (StoryGuide.IntroActive) { gm.SetMemo(key, gm.Clock.day); return; }   // 오늘 이 맵 알림은 조용히 넘긴다 (튜토리얼 끝나자마자 뜨지 않게)
-            var names = new List<string>();
-            foreach (var s in spots) if (!s.done && !names.Contains(s.name)) names.Add(s.name);
-            if (names.Count == 0) return;
-            gm.SetMemo(key, gm.Clock.day);
-            Notify.Show("여기서 할 수 있는 것\n" + string.Join(" · ", names) + "\n(★ 표시를 찾아가 보자)", 5f);   // 11/07(기우) 긴 문장이 어중간하게 접혀서 세 줄로
+            done = false;
+            if (it == null || !Rule(it, out var r)) return false;
+            done = r.done;
+            return true;
         }
 
         public Rect EdgeRect { get; private set; }
@@ -102,6 +93,8 @@ namespace PocketCaravan
             GUI.depth = -4;
             float scale = UIStyle.Scale, bob = Mathf.Round(Mathf.Sin(Time.time * 3f) * 2f);
             (Interactable spot, string name, bool done) nearest = (null, null, false); float best = float.MaxValue;
+            var labels = GameManager.I != null ? GameManager.I.GetComponent<WorldLabels>() : null;
+            bool namesStarred = labels != null && labels.isActiveAndEnabled;   // 고려 맵은 GoryeoPlaceLabels가 공용 이름표를 끄니 그때는 ★ 표를 그대로
             foreach (var s in spots)
             {
                 if (s.spot == null) continue;
@@ -109,11 +102,12 @@ namespace PocketCaravan
                 float dist = d.magnitude;
                 if (!s.done && dist < best) { best = dist; nearest = s; }
                 if (dist > Far || dist < Near) continue;
+                if (namesStarred && !string.IsNullOrEmpty(s.spot.DisplayName)) continue;   // 11/11 이름표가 있는 자리는 WorldLabels가 이름 앞에 ★를 붙인다 (표가 둘 겹치지 않게)
                 var sp = cam.WorldToScreenPoint(s.spot.transform.position + new Vector3(0f, 1.6f, 0f));
                 if (sp.z < 0f) continue;
                 Badge(new Vector2(sp.x / scale, (Screen.height - sp.y) / scale + bob), s.done ? $"<color=#9a94a8>{s.name} · 내일 다시</color>" : $"<color=#ffde59>{s.name}</color>", !s.done);
             }
-            if (nearest.spot != null) EdgeArrow(cam, nearest.spot.transform.position, nearest.name, scale);
+            if (nearest.spot != null && best <= EdgeFar) EdgeArrow(cam, nearest.spot.transform.position, nearest.name, scale);
         }
 
         static GUIStyle line;
@@ -127,7 +121,7 @@ namespace PocketCaravan
             }
         }
 
-        Rect Badge(Vector2 at, string text, bool withStar, bool screenEdge=false)
+        Rect Badge(Vector2 at, string text, bool withStar, bool screenEdge=false, char side=' ')
         {
             float w = Line.CalcSize(new GUIContent(text)).x + (withStar ? 22f : 12f);
             var r = new Rect(at.x - w / 2f, at.y - 18f, w, 16f);
@@ -137,7 +131,15 @@ namespace PocketCaravan
                 r.y=Mathf.Clamp(r.y,4,Mathf.Max(4,UIStyle.VirtualHeight-r.height-4));
                 var guide=GoryeoIntro.ReservedGuideRect;
                 if(guide.width>0&&r.Overlaps(guide))r.y=Mathf.Max(4,guide.yMin-r.height-4);
-                r=ScreenZones.Dodge(r);   // 11/11 은샘: 아래 알림·목표 줄·위 알약과 겹치지 않게
+                // 11/11 은샘: 다른 UI와 겹치지 않게 옆으로 뺀다. 아래(▼)면 목표 줄 옆, 위(▲)면 옆으로 비키고, 양옆(◀▶)이면 위아래로 비킨다
+                var goal=ScreenZones.Center("goal");
+                if(side=='v'&&goal.HasValue)
+                {
+                    var g=goal.Value;
+                    r.y=Mathf.Round(g.center.y-r.height/2f);
+                    r.x=at.x>=UIStyle.VirtualWidth/2f?g.xMax+6f:g.x-r.width-6f;
+                }
+                r=side=='^'||side=='v'?ScreenZones.DodgeSideways(r):ScreenZones.Dodge(r);
             }
             GUI.Box(r, GUIContent.none, UIStyle.Box);
             if (withStar && star != null) DrawSprite(star, new Rect(r.x + 3f, r.y + 2f, 12f, 12f));
@@ -158,7 +160,8 @@ namespace PocketCaravan
             string arrow = Mathf.Abs(dir.x) > Mathf.Abs(dir.y) ? (dir.x > 0 ? "▶" : "◀") : (dir.y > 0 ? "▲" : "▼");
             float a = .75f + .25f * Mathf.Sin(Time.time * 4f);
             var old = GUI.color; GUI.color = new Color(1f, 1f, 1f, a);
-            EdgeRect=Badge(p + new Vector2(0f, 8f), $"<color=#ffde59>{arrow} {name}</color>", false, true);
+            char side = arrow == "▼" ? 'v' : arrow == "▲" ? '^' : '>';
+            EdgeRect=Badge(p + new Vector2(0f, 8f), $"<color=#ffde59>{arrow} {name}</color>", false, true, side);
             GUI.color = old;
         }
 

@@ -16,6 +16,7 @@ namespace PocketCaravan
         static readonly Color PersonColor = new Color(0.95f, 0.95f, 0.95f);
         static readonly Color BoardColor = new Color(0.62f, 0.85f, 1f);
         static readonly Color DangerColor = new Color(1f, 0.42f, 0.38f);
+        static readonly Color ActivityColor = new Color(1f, 0.87f, 0.35f);   // 11/11 놀거리 (ActivityHints와 같은 노랑)
 
         void OnGUI()
         {
@@ -44,6 +45,8 @@ namespace PocketCaravan
                     Interactable.Kind.Danger => DangerColor,
                     _ => PersonColor,
                 };
+                // 11/11 은샘: 오늘 할 수 있는 놀거리 자리는 이름 앞에 ★ (머리 위 놀거리 표와 이름표가 겹쳐 두 번 보이던 것을 하나로)
+                if (!StoryGuide.IntroActive && ActivityHints.IsActivity(it, out bool doneToday) && !doneToday) { label = "★ " + label; c = ActivityColor; }
                 bool target = nav.HasValue && nav.Value.target == it;
                 Outlined(new Rect(p.x - 60, p.y - 8, 120, 12), label, c, nameStyle);
                 // 퀘스트 NPC는 머리 위 !·? 표시가 있으니, 나머지(장터 등)만 화살표로 짚어 준다
