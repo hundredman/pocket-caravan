@@ -79,6 +79,15 @@ namespace PocketCaravan
             return true;
         }
 
+        /// <summary>11/11 은샘: 놀거리 이름까지 (지도 마을 카드가 쓴다)</summary>
+        public static bool Activity(Interactable it, out string name, out bool done)
+        {
+            name = null; done = false;
+            if (it == null || !Rule(it, out var r)) return false;
+            name = r.name; done = r.done;
+            return true;
+        }
+
         public Rect EdgeRect { get; private set; }
         void OnGUI()
         {

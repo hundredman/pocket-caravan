@@ -17,6 +17,7 @@ namespace PocketCaravan
             public Vector2 at;
             public bool destination;   // 맡은 배달의 목적지
             public bool minor;         // 마을이 아닌 이름 (고려 정착지 등): 점 없이 작게
+            public string mapId;       // 11/11 이름을 누르면 마을 카드(MapTownCard). 비면 이름으로 WorldIndex에서 찾는다
         }
 
         public struct Result { public bool close, toggle; }
@@ -38,6 +39,7 @@ namespace PocketCaravan
             string current, string legend, List<(string text, Vector2 at)> notes = null, string toggleLabel = null, bool sideLabels = false)
         {
             var result = new Result();
+            MapTownCard.BeginFrame();
             CuteUI.Dim();
             float vw = UIStyle.VirtualWidth, vh = UIStyle.VirtualHeight;
             float w = Mathf.Min(620, vw - 16), h = Mathf.Min(344, vh - 26);
@@ -79,8 +81,34 @@ namespace PocketCaravan
             NearLabels(places, Project, canvas, area, me.HasValue ? (Vector2?)Project(me.Value) : null, sideLabels);
 
             if (me.HasValue) Pin(Project(me.Value));
-            Footer(r, area, current, legend, stackKeys, stackSwatches);
+            Footer(r, area, current, string.IsNullOrEmpty(legend) ? "이름을 누르면 마을 정보" : legend + " · 이름을 누르면 마을 정보", stackKeys, stackSwatches);
+            // 11/11 은샘: 이름표를 누르면 마을 카드. 카드는 다른 것보다 위에 그리고, 카드 밖을 누르면 닫는다
+            var e = Event.current;
+            bool overCard = MapTownCard.Draw(area);   // 지도 칸 안에만 (아래 범례를 가리지 않게)
+            if (e.type == EventType.MouseDown && e.button == 0 && !overCard)
+            {
+                int hit = HitLabel(places, e.mousePosition);
+                if (hit >= 0) { MapTownCard.Select(MapIdOf(places[hit]), lastLabels.rects[hit]); e.Use(); }
+                else if (area.Contains(e.mousePosition) && MapTownCard.Selected != null) { MapTownCard.Clear(); e.Use(); }
+            }
             return result;
+        }
+
+        static int HitLabel(List<Place> places, Vector2 mouse)
+        {
+            var layout = lastLabels;
+            if (layout == null || layout.rects.Length != places.Count) return -1;
+            for (int i = places.Count - 1; i >= 0; i--)
+                if (!places[i].minor && !string.IsNullOrEmpty(MapIdOf(places[i])) && layout.rects[i].Contains(mouse)) return i;
+            return -1;
+        }
+
+        static string MapIdOf(Place p)
+        {
+            if (!string.IsNullOrEmpty(p.mapId)) return p.mapId;
+            var index = WorldIndex.Get();
+            var m = index != null && !string.IsNullOrEmpty(p.name) ? index.maps.Find(x => x.displayName == p.name) : null;
+            return m != null ? m.mapId : null;
         }
 
         sealed class LabelLayout
@@ -155,7 +183,8 @@ namespace PocketCaravan
             }
             for(int i=0;i<places.Count;i++) if(sideLabels) Elbow(layout.points[i],layout.rects[i]); else Leader(layout.points[i],layout.rects[i]);
             for(int i=0;i<places.Count;i++) Dot(layout.points[i],places[i]);
-            for(int i=0;i<places.Count;i++) Tag(layout.rects[i],layout.labels[i],places[i]);
+            int hover = HitLabel(places, Event.current.mousePosition);
+            for(int i=0;i<places.Count;i++) Tag(layout.rects[i],layout.labels[i],places[i], i==hover || (MapTownCard.Selected!=null && !places[i].minor && MapIdOf(places[i])==MapTownCard.Selected));
         }
 
         // 두 열의 총 높이를 제한하면서 각 점에 가까운 쪽을 고른다.
@@ -309,9 +338,9 @@ namespace PocketCaravan
 
         static void Dot(Vector2 p, Place pl) => CuteUI.Circle(p.x - 3, p.y - 3, 7, pl.destination ? CuteUI.Deco : CuteUI.Paper, CuteUI.Ink);
 
-        static void Tag(Rect lr, string label, Place pl)
+        static void Tag(Rect lr, string label, Place pl, bool lit = false)
         {
-            CuteUI.Box(lr, 5, pl.destination ? DestFill : LabelFill, CuteUI.Ink);
+            CuteUI.Box(lr, 5, pl.destination ? DestFill : LabelFill, lit ? CuteUI.Frame : CuteUI.Ink, lit ? 2 : 1);
             GUI.Label(lr, label, TagStyle);
         }
 

@@ -1,0 +1,162 @@
+{
+    "maps": [
+        {
+            "map": "Gaegyeong",
+            "names": [
+                "전시실 기증"
+            ]
+        },
+        {
+            "map": "Naru",
+            "names": [
+                "물가 낚시"
+            ]
+        },
+        {
+            "map": "arabia_ahsa",
+            "names": [
+                "대추야자 따기"
+            ]
+        },
+        {
+            "map": "arabia_central_canyon",
+            "names": [
+                "붉은 돌 캐기"
+            ]
+        },
+        {
+            "map": "arabia_central_dunes",
+            "names": [
+                "모래 배 돛 돌리기"
+            ]
+        },
+        {
+            "map": "arabia_jeddah",
+            "names": [
+                "낙타 경주"
+            ]
+        },
+        {
+            "map": "arabia_sanaa",
+            "names": [
+                "전시실 기증"
+            ]
+        },
+        {
+            "map": "arabia_shortcut",
+            "names": [
+                "모래바람 건너기"
+            ]
+        },
+        {
+            "map": "north_birka",
+            "names": [
+                "룬돌 전설",
+                "얼음 낚시"
+            ]
+        },
+        {
+            "map": "north_c_creek",
+            "names": [
+                "얼음 낚시"
+            ]
+        },
+        {
+            "map": "north_c_road_ne",
+            "names": [
+                "얼음 낚시"
+            ]
+        },
+        {
+            "map": "north_c_road_nw",
+            "names": [
+                "얼음 낚시"
+            ]
+        },
+        {
+            "map": "north_c_road_se",
+            "names": [
+                "얼음 낚시"
+            ]
+        },
+        {
+            "map": "north_c_runeway",
+            "names": [
+                "룬돌 전설"
+            ]
+        },
+        {
+            "map": "north_c_snowwood",
+            "names": [
+                "썰매",
+                "눈싸움"
+            ]
+        },
+        {
+            "map": "north_hunter",
+            "names": [
+                "룬돌 전설"
+            ]
+        },
+        {
+            "map": "north_icecave",
+            "names": [
+                "룬돌 전설",
+                "얼음 낚시"
+            ]
+        },
+        {
+            "map": "north_laugar",
+            "names": [
+                "룬돌 전설"
+            ]
+        },
+        {
+            "map": "north_naru",
+            "names": [
+                "룬돌 전설",
+                "얼음 낚시"
+            ]
+        },
+        {
+            "map": "north_runehill",
+            "names": [
+                "돌탑 쌓기"
+            ]
+        },
+        {
+            "map": "transit_ferry",
+            "names": [
+                "물가 낚시"
+            ]
+        },
+        {
+            "map": "transit_southport",
+            "names": [
+                "물가 낚시"
+            ]
+        },
+        {
+            "map": "venice_burano",
+            "names": [
+                "그물 던지기",
+                "레이스 공방"
+            ]
+        },
+        {
+            "map": "venice_murano",
+            "names": [
+                "유리 불기",
+                "유리 장식 공방"
+            ]
+        },
+        {
+            "map": "venice_rialto",
+            "names": [
+                "곤돌라 경주",
+                "비둘기 모이 주기",
+                "전시실 기증"
+            ]
+        }
+    ]
+}
