@@ -26,6 +26,8 @@ namespace PocketCaravan
         readonly Queue<Pending> pending = new Queue<Pending>();
         int openedFrame;
         readonly List<string> pages = new List<string>();
+        readonly List<int> pageStarts = new List<int>();   // 쪽마다 줄 나눈 글(wrapped)에서 시작하는 글자 위치
+        string wrapped = "";   // 문장·단어 단위로 미리 줄을 나눈 대사 (Wrap)
         int pageIndex;
         float pageWidth;
         GUIStyle bodyStyle;
@@ -60,7 +62,7 @@ namespace PocketCaravan
             }
             d.speaker = speaker;
             d.text = (text ?? "").Replace("\r\n", "\n").Replace('\r', '\n');
-            d.pages.Clear();
+            d.pages.Clear(); d.pageStarts.Clear();
             d.pageIndex = 0;
             d.pageWidth = 0;
             d.choices.Clear(); d.choiceScroll = Vector2.zero; d.focus = 0;
@@ -120,15 +122,96 @@ namespace PocketCaravan
             openedFrame = Time.frameCount;
         }
 
-        /// <summary>문자 누락 없이 분할. 결합 문자·이모지를 나누지 않고, 들어가는 범위에서 문장 끝을 우선한다.</summary>
-        public static List<string> Paginate(string source, GUIStyle style, float width, float height)
+        /// <summary>
+        /// 11/11 은샘: 대사를 창 너비에 맞춰 미리 줄을 나눈다. Unity 글자 배치는 한글을 글자마다 줄바꿈해서
+        /// "주고받 / 고", "비 / 요른"처럼 단어가 갈리고, 바뀐 줄 앞에 빈칸이 남았다.
+        /// 1) 다음 문장이 이 줄에 다 안 들어가면(그 문장이 한 줄에는 들어갈 때) 다음 줄에서 문장을 시작한다.
+        /// 2) 한 줄보다 긴 문장은 이어 쓰되 띄어쓰기에서 줄을 바꾼다. 한 줄보다 긴 단어만 글자 단위로 자른다.
+        /// 원래 줄바꿈(\n)은 그대로 둔다.
+        /// </summary>
+        public static string Wrap(string source, GUIStyle style, float width)
+        {
+            if (string.IsNullOrEmpty(source) || style == null || width <= 0f) return source ?? "";
+            var plain = new GUIStyle(style) { wordWrap = false };
+            float limit = width - 2f;   // 재는 너비와 실제 줄바꿈의 반올림 차이로 한 줄이 두 줄이 되지 않게
+            System.Func<string, bool> fits = line => plain.CalcSize(new GUIContent(line)).x <= limit;
+            var sb = new System.Text.StringBuilder(source.Length + 16);
+            string[] paras = source.Split('\n');
+            for (int pi = 0; pi < paras.Length; pi++)
+            {
+                if (pi > 0) sb.Append('\n');
+                string cur = "";
+                bool first = true;
+                System.Action<string> push = line => { if (!first) sb.Append('\n'); sb.Append(line); first = false; };
+                foreach (string sentence in Sentences(paras[pi]))
+                {
+                    string joined = cur.Length == 0 ? sentence : cur + " " + sentence;
+                    if (fits(joined)) { cur = joined; continue; }
+                    if (cur.Length > 0 && fits(sentence)) { push(cur); cur = sentence; continue; }   // 1) 다음 줄에서 문장 시작
+                    foreach (string word in sentence.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))   // 2) 단어 묶음
+                    {
+                        string next = cur.Length == 0 ? word : cur + " " + word;
+                        if (fits(next)) { cur = next; continue; }
+                        if (cur.Length > 0) push(cur);
+                        cur = word;
+                        while (cur.Length > 1 && !fits(cur))   // 한 줄보다 긴 단어
+                        {
+                            int[] cs = StringInfo.ParseCombiningCharacters(cur);
+                            int n = cs.Length - 1;
+                            while (n > 1 && !fits(cur.Substring(0, cs[n]))) n--;
+                            push(cur.Substring(0, cs[n]));
+                            cur = cur.Substring(cs[n]);
+                        }
+                    }
+                }
+                if (cur.Length > 0 || first) push(cur);
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>문단을 문장으로 나눈다: . ? ! 뒤에 띄어쓰기가 오면 문장 끝 (문장 부호는 앞 문장에 붙는다)</summary>
+        static IEnumerable<string> Sentences(string para)
+        {
+            int start = 0;
+            for (int i = 0; i < para.Length; i++)
+            {
+                char c = para[i];
+                bool end = (c == '.' || c == '?' || c == '!') && i + 1 < para.Length && para[i + 1] == ' ';
+                if (!end) continue;
+                string s = para.Substring(start, i + 1 - start).Trim();
+                if (s.Length > 0) yield return s;
+                start = i + 1;
+            }
+            string rest = para.Substring(start).Trim();
+            if (rest.Length > 0) yield return rest;
+        }
+
+        /// <summary>글의 앞 upto 글자 가운데 빈칸·줄바꿈이 아닌 글자 수</summary>
+        static int Visible(string s, int upto)
+        {
+            int n = 0;
+            for (int i = 0; i < upto && i < s.Length; i++) if (!char.IsWhiteSpace(s[i])) n++;
+            return n;
+        }
+
+        /// <summary>글자 누락 없이 분할 (쪽 사이 빈칸·빈 줄만 뺀다). 결합 문자·이모지를 나누지 않고, 들어가는 범위에서 문장 끝을 우선한다.
+        /// 11/11 은샘: 둘째 쪽부터는 앞의 빈칸·빈 줄을 건너뛴다 (예전엔 마침표 뒤 빈칸·빈 줄이 다음 쪽 맨 앞에 남아 줄을 차지해,
+        /// 북유럽 어머니 대사의 "있던데."처럼 한 단어만 다음 쪽으로 밀리기도 했다). 문장 끝이 없으면 글자 중간 대신 띄어쓰기에서 자른다.
+        /// starts를 주면 쪽마다 원문에서 시작하는 글자 위치를 담는다 (창 크기가 바뀌어 다시 나눌 때 보던 쪽을 찾는 데 쓴다).</summary>
+        public static List<string> Paginate(string source, GUIStyle style, float width, float height, List<int> starts = null)
         {
             var result = new List<string>();
-            if (string.IsNullOrEmpty(source)) { result.Add(""); return result; }
+            starts?.Clear();
+            if (string.IsNullOrEmpty(source)) { result.Add(""); starts?.Add(0); return result; }
             int[] chars = StringInfo.ParseCombiningCharacters(source);
             int start = 0;
             while (start < chars.Length)
             {
+                if (result.Count > 0)
+                {
+                    while (start < chars.Length && char.IsWhiteSpace(source[chars[start]])) start++;
+                    if (start >= chars.Length) break;
+                }
                 int lo = start + 1, hi = chars.Length, fit = start;
                 while (lo <= hi)
                 {
@@ -143,16 +226,24 @@ namespace PocketCaravan
                 fit = Mathf.Max(start + 1, fit);
                 int split = fit;
                 if (fit < chars.Length)
+                {
+                    bool found = false;
                     for (int i = fit; i > start + (fit - start) / 2; i--)
                     {
                         char last = source[chars[i] - 1];
                         if (last == '\n' || last == '.' || last == '?' || last == '!' || last == '。')
-                        { split = i; break; }
+                        { split = i; found = true; break; }
                     }
+                    if (!found)
+                        for (int i = fit; i > start + (fit - start) / 2; i--)
+                            if (char.IsWhiteSpace(source[chars[i] - 1])) { split = i; break; }
+                }
                 int lastChar = split < chars.Length ? chars[split] : source.Length;
-                result.Add(source.Substring(chars[start], lastChar - chars[start]));
+                starts?.Add(chars[start]);
+                result.Add(source.Substring(chars[start], lastChar - chars[start]).TrimEnd());
                 start = split;
             }
+            if (result.Count == 0) { result.Add(""); starts?.Add(0); }
             return result;
         }
 
@@ -170,13 +261,13 @@ namespace PocketCaravan
             float bodyWidth = w - 20;
             if (pages.Count == 0 || !Mathf.Approximately(pageWidth, bodyWidth))
             {
-                int offset = 0;
-                for (int i = 0; i < pageIndex; i++) offset += pages[i].Length;
+                // 보던 쪽 앞까지의 글자 수 (빈칸·줄바꿈 빼고). 창 크기가 바뀌어 줄을 다시 나눠도 그 쪽을 이어 본다
+                int seen = pageIndex < pageStarts.Count ? Visible(wrapped, pageStarts[pageIndex]) : 0;
+                wrapped = Wrap(text, bodyStyle, bodyWidth);
                 pages.Clear();
-                pages.AddRange(Paginate(text, bodyStyle, bodyWidth, BodyHeight));
+                pages.AddRange(Paginate(wrapped, bodyStyle, bodyWidth, BodyHeight, pageStarts));
                 pageIndex = 0;
-                for (int consumed = 0; pageIndex < pages.Count - 1 && consumed + pages[pageIndex].Length <= offset; pageIndex++)
-                    consumed += pages[pageIndex].Length;
+                while (pageIndex < pages.Count - 1 && Visible(wrapped, pageStarts[pageIndex + 1]) <= seen) pageIndex++;
                 pageWidth = bodyWidth;
             }
             if (wrappedChoice == null || wrappedChoice.font != UIStyle.RegularFont)

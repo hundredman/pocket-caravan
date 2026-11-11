@@ -185,7 +185,7 @@ namespace PocketCaravan
             if (s == 10)
             {
                 DialogueUI.Show(Mom,
-                    "잘했다! 이제 상인의 기본은 다 익혔구나.\n\n" +
+                    "잘했다! 이제 상인의 기본은 다 익혔구나.\n" +
                     "산 곳과 판 곳의 값이 달랐지? 장사는 싼 곳에서 사서 그 물건이 귀한 곳에 가져가 파는 거란다.\n" +
                     "좋은 물건을 좋은 값에 사려면 사람들의 믿음, 신용이 필요해. 신용은 사람들의 부탁을 들어주며 쌓이지.",
                     new DialogueUI.Choice("은빛 순록은요?", () => DialogueUI.Show(Mom,
