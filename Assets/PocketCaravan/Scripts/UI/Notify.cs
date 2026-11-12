@@ -26,7 +26,7 @@ namespace PocketCaravan
         /// <summary>11/11 은샘: 한 번에 보이는 알림 수 (윤채: 둘도 조잡해서 한 장). 나머지는 앞 알림이 사라지면 이어서 뜬다</summary>
         const int MaxVisible = 1, MaxQueued = 6;
         /// <summary>뒤에 기다리는 알림이 있을 때 한 장이 적어도 떠 있는 시간</summary>
-        const float MinShown = 1.8f;
+        const float MinShown = 1.2f, StaleSeconds = 5f;   // 11/12 1.8 → 1.2초: 알림이 실제 진행을 못 따라왔다. 일반 알림은 줄에서 5초 넘게 기다리면 버린다
         const float MaxW = 440f, Medal = 22f, TextX = 34f, PadR = 10f, ChipGap = 4f, NoteX = 30f, ArriveSeconds = 2.6f;
 
         static readonly Regex DoneRx = new Regex(@"^퀘스트 완료: (.+?)(?: 돈 \+(\d+))?(?: 신용 \+(\d+))?$");
@@ -108,6 +108,16 @@ namespace PocketCaravan
             }
             e.added = Time.unscaledTime;
             e.until = -1f;   // 자리가 나면 그때부터 시간이 간다
+            // 11/12 윤채: 튜토리얼을 빨리 깨면 "잘했어요! 다음: …"이 단계마다 줄을 서서, 이미 지난 단계의 "다음"이 뒤늦게 떴다 →
+            //   진행 알림(같은 key)은 새것이 오면 떠 있던 것·기다리던 것을 버리고 그 자리에서 바로 새것으로 바꾼다
+            string plain = CuteUI.Plain(e.text);
+            if (string.IsNullOrEmpty(e.key) && (plain.StartsWith("잘했어요! 다음") || plain.StartsWith("다 했어요!"))) e.key = "lesson";
+            if (!string.IsNullOrEmpty(e.key))
+            {
+                int at = entries.FindIndex(x => x.key == e.key);
+                if (at >= 0) { entries.RemoveAll(x => x.key == e.key); entries.Insert(Mathf.Min(at, entries.Count), e); return; }
+                if (e.key == "lesson" && entries.Count > MaxVisible) { entries.Insert(MaxVisible, e); return; }   // 진행 알림은 기다리는 줄 맨 앞으로
+            }
             entries.Add(e);
             while (entries.Count > MaxQueued) entries.RemoveAt(0);
         }
@@ -379,6 +389,9 @@ namespace PocketCaravan
             float now = Time.unscaledTime;
             DrawArrive(now);
             entries.RemoveAll(e => e.until > 0f && now > e.until);
+            // 11/12 줄에서 오래 기다린 일반 알림은 이미 지난 이야기라 버린다 (퀘스트·이벤트·다음 이야기·소식은 남긴다)
+            for (int i = entries.Count - 1; i >= MaxVisible; i--)
+                if (entries[i].until < 0f && entries[i].kind == Kind.Plain && now - entries[i].added > StaleSeconds) entries.RemoveAt(i);
             // 11/11 앞에서부터 MaxVisible개만 보인다. 기다리던 알림은 보이기 시작할 때부터 시간을 잰다
             int shown = 0;
             for (int i = 0; i < entries.Count && shown < MaxVisible; i++)
