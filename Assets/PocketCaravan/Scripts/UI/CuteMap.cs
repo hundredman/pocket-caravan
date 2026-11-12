@@ -137,6 +137,23 @@ namespace PocketCaravan
             }
         }
 
+        static GUIStyle tagStyleOne;
+        /// <summary>한 줄 이름표: 줄바꿈 없이, 칸을 조금 넘쳐도 자르지 않는다</summary>
+        static GUIStyle TagStyleOneLine
+        {
+            get
+            {
+                var wrap = TagStyle;
+                if (tagStyleOne == null || tagStyleOne.font != wrap.font || tagStyleOne.fontSize != wrap.fontSize)
+                    tagStyleOne = new GUIStyle(wrap) { wordWrap = false, clipping = TextClipping.Overflow };
+                tagStyleOne.normal.textColor = wrap.normal.textColor;
+                return tagStyleOne;
+            }
+        }
+
+        /// <summary>이름표 너비: 글자 너비 + 양옆 여백 10 + 여유 2 (배율에 따라 글자가 반 점쯤 넓게 그려져도 안 꺾이게)</summary>
+        static float TagWidth(string label) => Mathf.Ceil(CuteUI.Width(label, true)) + 12;
+
         static bool SamePlaces(LabelLayout layout, List<Place> places)
         {
             if (layout.places.Length != places.Count) return false;
@@ -173,7 +190,7 @@ namespace PocketCaravan
                 foreach (int i in order)
                 {
                     float maxWidth = sideLabels ? Mathf.Max(20, Mathf.Min(canvas.x-area.x,area.xMax-canvas.xMax)-8) : 160;
-                    float width=Mathf.Min(Mathf.Max(20,area.width-8), Mathf.Min(maxWidth,CuteUI.Width(layout.labels[i],true)+10));
+                    float width=Mathf.Min(Mathf.Max(20,area.width-8), Mathf.Min(maxWidth,TagWidth(layout.labels[i])));
                     float height=Mathf.Max(13,Mathf.Ceil(TagStyle.CalcHeight(new GUIContent(layout.labels[i]),width)));
                     layout.rects[i]=PlaceLabel(layout.points[i],width,height,canvas,area,placed,markers,sideLabels);
                     placed.Add(layout.rects[i]);
@@ -199,7 +216,7 @@ namespace PocketCaravan
             cost[0,0]=0;int used=0;
             for(int row=0;row<n;row++)
             {
-                int i=order[row];widths[i]=Mathf.Min(maxWidth,CuteUI.Width(layout.labels[i],true)+10);
+                int i=order[row];widths[i]=Mathf.Min(maxWidth,TagWidth(layout.labels[i]));
                 heights[i]=Mathf.Max(13,Mathf.Ceil(TagStyle.CalcHeight(new GUIContent(layout.labels[i]),widths[i])));
                 int weight=weights[i]=Mathf.CeilToInt(heights[i])+2;
                 float leftDistance=Mathf.Abs(layout.points[i].x-layout.canvas.x),rightDistance=Mathf.Abs(layout.canvas.xMax-layout.points[i].x);
@@ -341,7 +358,9 @@ namespace PocketCaravan
         static void Tag(Rect lr, string label, Place pl, bool lit = false)
         {
             CuteUI.Box(lr, 5, pl.destination ? DestFill : LabelFill, lit ? CuteUI.Frame : CuteUI.Ink, lit ? 2 : 1);
-            GUI.Label(lr, label, TagStyle);
+            // 2026-11-12 기우: 빌드에서 한 줄짜리 이름표의 마지막 글자가 다음 줄로 꺾여 위아래가 잘렸다 (칸 너비가 글자 너비에 딱 맞아
+            //   화면 배율에 따라 아슬아슬하게 넘침). 한 줄 높이로 잡힌 이름표는 줄바꿈 없이 그린다. 두 줄 높이로 잡힌 것만 꺾는다.
+            GUI.Label(lr, label, lr.height < 20f ? TagStyleOneLine : TagStyle);
         }
 
         /// <summary>내 위치 핀 (2026-11-08 모든 지역 통일): 주황으로 채운 작은 원 + 아래 뾰족</summary>
