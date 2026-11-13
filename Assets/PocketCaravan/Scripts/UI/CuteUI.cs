@@ -801,7 +801,8 @@ namespace PocketCaravan
         public static Rect SpacePrompt(float cx, float y, string verb)
         {
             float kw = KeycapWidth("Space");
-            float w = Mathf.Round(3 + kw + 5 + Width(verb, true) + 7), x = Mathf.Round(cx - w / 2f);
+            bool keyOnly = string.IsNullOrEmpty(verb);   // 11/13 동사가 없으면 키캡만 (사람에게 말 걸기, 튜토리얼 뒤)
+            float w = keyOnly ? Mathf.Round(3 + kw + 3) : Mathf.Round(3 + kw + 5 + Width(verb, true) + 7), x = Mathf.Round(cx - w / 2f);
             var r = new Rect(x, y, w, 17);
             // 11/11 윤채: 새로 뜨거나 다른 대상으로 바뀌면 톡 튀어나온다 (0.7 → 1.08 → 1, 0.18초)
             var here = new Vector2(cx, y);
@@ -817,7 +818,7 @@ namespace PocketCaravan
             bool hover = r.Contains(Event.current.mousePosition);
             Box(r, 7, hover ? Paper2 : Paper, hover ? Interact : Ink, 1, 2, SoftShadow);
             Keycap(x + 3, y + 2, "Space", true);
-            Label(x + 3 + kw + 5, y + 8.5f, verb, Text, true);
+            if (!keyOnly) Label(x + 3 + kw + 5, y + 8.5f, verb, Text, true);
             GUI.matrix = m;
             if (GUI.Button(r, GUIContent.none, GUIStyle.none)) InputReader.Press(' ');
             return r;
@@ -843,26 +844,9 @@ namespace PocketCaravan
             if (via > 0) { sub = s.Substring(0, via) + " 지나"; s = s.Substring(via + 4); }
             string dest = s;
 
-            const float h = 18f, dot = 14f;
-            float destW = Width(dest, false, true), subW = sub != null ? Width(sub, true) : 0f, chipW = cells != null ? Mathf.Round(Width(cells, true, true) + 10f) : 0f;
-            float w = Mathf.Round(3f + dot + 5f + destW + (sub != null ? 5f + subW : 0f) + (cells != null ? 7f + chipW : 0f) + 4f);
-            // 11/11 윤채: 아래 쌓는 줄 → 위 할 일 알약 바로 밑 (TopStack 14: 지역 첫 안내 10 · 상인회 12 다음, 구역 이름 20보다 위).
-            //   할 일과 가는 길을 한곳에서 보게 (위 "촌장을 만나기"와 아래 "촌장 8칸"을 따로 봐야 했다). 아래는 알림만 남는다
-            var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2f), TopStack(14, h), w, h);
-            ScreenZones.MarkCenter("goal", r);   // 11/11 떠다니는 표가 이 줄을 피한다
-            Box(r, 8, Paper, Ink, 1, 1, SoftShadow);
-            Circle(r.x + 3f, r.y + 2f, (int)dot, Interact, InteractLo, 1);
-            var pic = exit ? Pic.Arrow : Pic.Pin; var ps = PicSize(pic);   // 11/11 나침반은 동그란 그림이라 흰색으로 칠하면 원판만 보였다 → 화살표
-            Icon(pic, r.x + 3f + (dot - ps.x) / 2f, r.y + 2f + (dot - ps.y) / 2f, 1, White);
-            float x = Label(r.x + 3f + dot + 5f, r.center.y, dest, Text, false, true);
-            if (sub != null) x = Label(x + 5f, r.center.y + .5f, sub, Sub, true);
-            if (cells != null)
-            {
-                var chip = new Rect(r.xMax - 4f - chipW, r.y + 3f, chipW, h - 6f);
-                Box(chip, 5, Paper2, Line, 1);
-                LabelCenter(chip.center.x, chip.center.y, cells, Text, true, true);
-            }
-            return r;
+            // 11/13 기우: 위 가운데 알약 대신 왼쪽 할 일 카드의 목표 줄 (할 일과 가는 길을 한 카드에서)
+            TaskCard.Goal(dest, sub, cells, exit);
+            return TaskCard.Current;
         }
 
         /// <summary>배경 없이 한 픽셀 밝은 외곽선을 두른 월드 글씨.</summary>
@@ -918,7 +902,7 @@ namespace PocketCaravan
 
         // ---------------- 위 가운데 줄 (할 일·다음 이야기) ----------------
         /// <summary>위 가운데 알약(할 일 줄 · 다음 이야기) 아래 첫 빈 자리의 y. 지역 첫 안내 같은 알약은 여기에 TopPill로 그린다 (11/08)</summary>
-        public static float TopFree => 6f + (QuestTracker.LineVisible ? 24f : 0f) + (StoryGuide.Showing ? 24f : 0f);
+        public static float TopFree => 6f;   // 11/13 할 일·이야기 줄은 왼쪽 할 일 카드로 옮겼다 (위 가운데는 잠깐 뜨는 것만)
 
         static readonly Dictionary<int, (int frame, float h)> topStack = new Dictionary<int, (int frame, float h)>();
 
@@ -996,49 +980,10 @@ namespace PocketCaravan
         /// </summary>
         public static Rect StackPill(int order, bool alert, Pic? pic, string kicker, string main, string where, bool pin = false)
         {
-            main ??= "";
-            float y = TopStack(order);   // y는 나보다 위에 쌓인 것으로만 정해진다 (키는 아래에서 다시 알린다)
-            string one = string.IsNullOrEmpty(kicker) ? main : kicker + " · " + main;
-            var (left, right) = ScreenZones.FreeRow(y - 2, y + 22);
-            float maxW = Mathf.Max(120f, right - left - 9f);
-            float whereW = string.IsNullOrEmpty(where) ? 0f : 8f + (pin ? 7f : 0f) + Width(where, true);
-            if (22f + Width(one, false, true) + whereW + 10f <= maxW)
-            {
-                TopPill(y, alert, pic, one, where, pin);
-                float w1 = Mathf.Round(22 + Width(one, false, true) + whereW + 10), x1 = Mathf.Round((UIStyle.VirtualWidth - w1) / 2f + 8);
-                x1 = Mathf.Round(Mathf.Clamp(x1, left + 9f, Mathf.Max(left + 9f, right - w1)));
-                return new Rect(x1 - 9f, y - 2f, w1 + 9f, 24f);   // 그린 자리 (왼쪽 동그라미까지)
-            }
-
-            string head = string.IsNullOrEmpty(kicker) ? where : string.IsNullOrEmpty(where) ? kicker : kicker + " · " + where;
-            bool hasHead = !string.IsNullOrEmpty(head);
-            float headW = hasHead ? (pin ? 8f : 0f) + Width(head, true) : 0f;
-            float tw = 0f, h = 20f;
-            for (int pass = 0; pass < 2; pass++)   // 키가 커지면 그 높이만큼 비어 있는 너비를 다시 잰다
-            {
-                (left, right) = ScreenZones.FreeRow(y - 2, y + h + 2);
-                maxW = Mathf.Max(120f, right - left - 9f);
-                tw = Mathf.Min(maxW - 32f, Mathf.Max(headW, Width(main, false, true)));
-                float mainH = Mathf.Ceil(WrapHeight(main, tw + 1f));   // 재는 너비와 그리는 너비를 같게 (한 줄에 딱 맞을 때 끝 글자가 넘어가지 않게)
-                h = Mathf.Max(20f, 4f + (hasHead ? 11f : 0f) + mainH + 3f);
-            }
-            TopStack(order, h);
-            float w = Mathf.Round(22f + tw + 10f), x = Mathf.Round((UIStyle.VirtualWidth - w) / 2f + 8f);
-            x = Mathf.Round(Mathf.Clamp(x, left + 9f, Mathf.Max(left + 9f, right - w)));
-            PillBox(new Rect(x, y, w, h), 9);
-            ScreenZones.MarkCenter("top" + Mathf.RoundToInt(y), new Rect(x - 9, y, w + 9, h));   // 11/11 떠다니는 표가 피한다
-            float cy = Mathf.Round(y + h / 2f - 12f);
-            PillBadge(x - 9, cy, alert, pic);
-            float ty = y + 4f;
-            if (hasHead)
-            {
-                float hx = x + 21f;
-                if (pin) { Icon(Pic.Pin, hx, ty - .5f, 1, Sub); hx += 8f; }
-                Label(hx, ty + 5f, head, Sub, true);
-                ty += 11f;
-            }
-            Wrap(x + 21f, ty, tw + 1f, main, Text, false, true);
-            return new Rect(x - 9f, y, w + 9f, h);
+            // 11/13 기우: 위 가운데에 그리지 않고 왼쪽 할 일 카드(TaskCard)에 올린다. order가 작을수록 먼저 (튜토리얼 10 · 이벤트 12).
+            //   돌려주는 자리는 이 할 일이 카드에 보일 때 그 카드 자리 (누르면 따로 여는 곳: 상인회 수첩)
+            TaskCard.Task(order, pic, alert, kicker, main, where);
+            return TaskCard.RectFor(order);
         }
 
 

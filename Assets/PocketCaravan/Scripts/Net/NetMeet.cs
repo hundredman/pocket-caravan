@@ -11,7 +11,7 @@ namespace PocketCaravan
     ///   채팅 명령(/선물 이름 물건)을 몰라도 처음 온 사람이 Space만으로 어울릴 수 있게.
     /// - 만국 장터 상인회 상인(NetGuild가 세운 NPC)에게: 같은 세 가지를 혼자서도 한다. 상인이 말풍선으로 답하고 깡총 뛴다.
     /// 만국 상인회 수첩 체크는 NetGuild.Mark (선물만 여기서. 리액션 = 합동 공연은 NetEmote.Sent로 NetGuild가 직접 듣는다).
-    /// 11/10 상인회 상인에게 선물하면 답례 20냥을 돌려받는다.
+    /// 11/10 상인회 상인에게 선물하면 답례 20냥을 돌려받았다 → 11/13 기우: 선물했는데 내가 돈을 받는 게 이상해서 뺐다 (상인은 기뻐하며 깡총·말풍선으로 답한다).
     /// 공용 코드는 공개된 것만 쓴다 (UIState · InputReader · PlayerState.cargo · CuteUI).
     /// </summary>
     public class NetMeet : MonoBehaviour
@@ -186,15 +186,13 @@ namespace PocketCaravan
                 label = GiftMoney + "냥";
             }
             Sfx.Play("coin");
-            // 11/10 주고받기: 상인회 상인은 답례를 준다 (선물이 손해로 끝나지 않게)
-            p.money += ReturnGift;
-            Notify.Show($"{npc.shortName}에게 {Josa.Eul(label)} 건넸다 · 답례로 {ReturnGift}냥을 받았다", 3.5f);
+            // 11/13 기우: 답례 돈은 뺐다 (선물을 줬는데 내가 돈을 받으면 이상하다). 상인은 하트·깡총·고맙다는 말로 답한다
+            Notify.Show($"{npc.shortName}에게 {Josa.Eul(label)} 건넸다", 3f);
             NetGuild.Mark(NetGuild.Task.Gift, npc.shortName);
             npc.react?.Invoke("love");
             npc.say?.Invoke(npc.thanks);
         }
 
-        const int ReturnGift = 20;
 
         // ---------------- 그리기 ----------------
 

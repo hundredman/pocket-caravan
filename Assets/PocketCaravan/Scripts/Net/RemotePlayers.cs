@@ -467,8 +467,12 @@ namespace PocketCaravan
             string text = $"{symbol} {label}";
             float tw = CuteUI.Width(text, false, true) + 14f;
             var pill = new Rect(Mathf.Round(hx - tw / 2f), Mathf.Round(hy - 9f + pop), Mathf.Round(tw), 17f);
-            CuteUI.Box(pill, 7, CuteUI.Paper, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
-            CuteUI.LabelCenter(pill.center.x, pill.center.y, text, CuteUI.Text, false, true);
+            // 11/13 기우: 기념 사진에는 리액션 이름 알약("★ 기쁨")을 빼고 닉네임만 남긴다 (떠오르는 기호는 그대로)
+            if (!UIState.PhotoMode)
+            {
+                CuteUI.Box(pill, 7, CuteUI.Paper, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
+                CuteUI.LabelCenter(pill.center.x, pill.center.y, text, CuteUI.Text, false, true);
+            }
             for (int i = 0; i < 3; i++)
             {
                 float phase = Mathf.Repeat(k * 1.6f + i / 3f, 1f);

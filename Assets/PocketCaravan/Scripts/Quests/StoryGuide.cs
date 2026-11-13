@@ -97,7 +97,7 @@ namespace PocketCaravan
         bool wasIntro;
 
         /// <summary>다음 이야기 줄이 떠 있는지 (알림이 그 아래로 비킨다). 11/11 길 안내 대상이 다음 이야기일 때만</summary>
-        public static bool Showing => Ready && !HUD.Expanded && QuestFocus.Current == QuestFocus.Kind.Lead;
+        public static bool Showing => Ready && QuestFocus.Current == QuestFocus.Kind.Lead;   // 11/13 Tab으로 펼친 동안에도 할 일 카드에 남는다
 
         /// <summary>11/11 은샘: 받을 수 있는 다음 이야기가 있다 (수첩의 "첫 일거리"/"다음 이야기" 카드, QuestFocus.Lead)</summary>
         public static bool LeadAvailable => instance != null && instance.isActiveAndEnabled && !string.IsNullOrEmpty(instance.who);
@@ -156,9 +156,8 @@ namespace PocketCaravan
         void OnGUI()
         {
             if (!Showing) return;
-            UIStyle.Begin();
-            GUI.depth = -5;   // 머리 위 이름표보다 앞에
-            CuteUI.TopPill(6 + (QuestTracker.LineVisible ? 24 : 0), true, null, who + CuteUI.Eul(who) + " 만나기", where);
+            // 11/13 기우: 위 가운데 알약 대신 왼쪽 할 일 카드 ("첫 일거리" 머리말 + 누구 만나기 + 어디)
+            TaskCard.Task(TaskCard.Lead, null, true, LeadTitle, who + CuteUI.Eul(who) + " 만나기", where);
         }
     }
 }

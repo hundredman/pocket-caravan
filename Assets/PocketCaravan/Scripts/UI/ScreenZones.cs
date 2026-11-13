@@ -25,6 +25,8 @@ namespace PocketCaravan
         // 11/11 은샘: 화면 가운데에 뜨는 것(위 가운데 알약 · 아래 목표 줄). 양옆 벽(FreeRow)에는 넣지 않고, 떠다니는 작은 표가 피할 때만 쓴다
         static readonly Dictionary<string, Zone> centers = new Dictionary<string, Zone>();
         public static void MarkCenter(string id, Rect r) => centers[id] = new Zone { rect = r, frame = Time.frameCount };
+        /// <summary>11/13 id 자리를 비운다 (지난 프레임 내 자리와 부딪히지 않게 비킬 때 · 더 안 그릴 때)</summary>
+        public static void Clear(string id) { zones.Remove(id); centers.Remove(id); }
         /// <summary>가운데 UI 하나의 자리 (이번·지난 프레임에 그렸으면)</summary>
         public static Rect? Center(string id) => centers.TryGetValue(id, out var z) && Live(z) ? z.rect : (Rect?)null;
 

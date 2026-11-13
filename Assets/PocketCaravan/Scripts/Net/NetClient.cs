@@ -590,6 +590,7 @@ namespace PocketCaravan
         {
             GUI.depth = -6;
             bool online = Status == State.Online;
+            if (online && OnlineCount <= 1) return;   // 11/13 기우: 나 혼자 접속해 있으면 "1명" 알약은 감춘다 (화면 글 줄이기)
             string label = Status switch
             {
                 State.Online => $"{OnlineCount}명",

@@ -183,7 +183,7 @@ namespace PocketCaravan
             }
         }
 
-        public static void Show(string text, float seconds = 3.5f) => Add(new Entry { text = text, seconds = seconds });
+        public static void Show(string text, float seconds = 3f) => Add(new Entry { text = text, seconds = seconds });
 
         /// <summary>11/11 은샘: 이벤트 퀘스트 알림 (만국 상인회 등). 금빛 종이·주황 테로 다른 알림과 구분한다</summary>
         public static void Event(string text, float seconds = 4f) => Add(new Entry { text = text, seconds = seconds, kind = Kind.Event });

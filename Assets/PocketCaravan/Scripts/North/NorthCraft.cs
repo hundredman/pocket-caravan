@@ -462,14 +462,20 @@ namespace PocketCaravan
                 stallShadowStyle = new GUIStyle(stallLabelStyle);
                 stallShadowStyle.normal.textColor = new Color(0f, 0f, 0f, 0.75f);
             }
+            var baseColor = GUI.color;
+            // 11/13 기우(시연 피드백 "글이 너무 많다"): 좌판·공방 이름표도 다른 이름표처럼 가까이에서만 (WorldLabels.NearAlpha)
             foreach (var l in stallLabels)
             {
+                float a = WorldLabels.NearAlpha(l.at);
+                if (a <= 0f) continue;
                 var lp = cam.WorldToScreenPoint(l.at);
                 if (lp.z < 0f) continue;
                 float lx = lp.x / sc, ly = (Screen.height - lp.y) / sc;
+                GUI.color = new Color(baseColor.r, baseColor.g, baseColor.b, baseColor.a * a);
                 GUI.Label(new Rect(lx - 79f, ly - 7f, 160f, 12f), l.text, stallShadowStyle);
                 GUI.Label(new Rect(lx - 80f, ly - 8f, 160f, 12f), l.text, stallLabelStyle);
             }
+            GUI.color = baseColor;
             if (sideLabelStyle == null)
             {
                 sideLabelStyle = new GUIStyle(stallLabelStyle) { alignment = TextAnchor.MiddleRight };
@@ -479,15 +485,21 @@ namespace PocketCaravan
             }
             foreach (var l in sideLabels)
             {
+                float a = WorldLabels.NearAlpha(l.at);
+                if (a <= 0f) continue;
                 var lp = cam.WorldToScreenPoint(l.at);
                 if (lp.z < 0f) continue;
                 float lx = lp.x / sc, ly = (Screen.height - lp.y) / sc;
                 string sideText = l.text();
+                GUI.color = new Color(baseColor.r, baseColor.g, baseColor.b, baseColor.a * a);
                 GUI.Label(new Rect(lx - 199f, ly - 7f, 200f, 12f), sideText, sideShadowStyle);
                 GUI.Label(new Rect(lx - 200f, ly - 8f, 200f, 12f), sideText, sideLabelStyle);
             }
-            if (shoutWho < 0 || shoutWho >= shouters.Count) return;
+            GUI.color = baseColor;
+            if (shoutWho < 0 || shoutWho >= shouters.Count || UIState.PhotoMode) return;   // 11/13 사진 찍는 동안 외침 말풍선 빼기
             var sh = shouters[shoutWho];
+            var pl = PlayerController.Instance;   // 11/13 외침 말풍선은 이름표 거리 + 3칸 안에서만
+            if (pl != null && Vector2.Distance(pl.transform.position, sh.at) > WorldLabels.NearCells + 3f) return;
             var sp = cam.WorldToScreenPoint(sh.at);
             if (sp.z < 0f) return;
             if (shoutStyle == null) shoutStyle = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow };

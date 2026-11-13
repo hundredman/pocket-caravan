@@ -265,12 +265,9 @@ namespace PocketCaravan
         void DrawRestedBadge()
         {
             var gm = GameManager.I;
-            if (gm == null || !RestBuff.Rested || UIState.Blocking || HUD.Expanded || MapRoot.Current == null || gm.IsTravelling) return;   // 11/08 Tab으로 펼친 상태 카드 안에 겹쳐 그려졌다
-            UIStyle.Begin();
-            if (style == null) style = new GUIStyle(UIStyle.CenterRich) { wordWrap = false, clipping = TextClipping.Overflow };
-            var r = new Rect(6f, 92f, 96f, 16f);
-            GUI.Box(r, GUIContent.none, UIStyle.Box);
-            GUI.Label(r, $"<color=#9fe0a0>푹 쉼</color> <size=9>({RestBuff.HoursLeft}시간)</size>", style);
+            if (gm == null || !RestBuff.Rested || UIState.Blocking || MapRoot.Current == null || gm.IsTravelling) return;
+            // 11/13 기우: 검은 상자(6, 92 고정)가 할 일 카드와 겹쳤다 → 상태 카드 밑 작은 표 줄 (TaskCard.Badge, HUD가 그린다)
+            TaskCard.Badge("rest", CuteUI.Pic.Bolt, $"푹 쉼 {RestBuff.HoursLeft}시간", CuteUI.Up);
         }
 
         void DrawAsk()

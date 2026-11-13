@@ -113,7 +113,7 @@
       "id": "arabia_hasan",
       "name": "길잡이 하산",
       "sprite": "arabia_npc_scholar_tall",
-      "greeting": "매듭은 튼튼하네. 이제 어디로 갈지 정하면 되겠어. 동쪽 큰길로 가면 농원길, 그 끝이 자비드야. 짐이 무거울수록 걸음이 느려지니 실을 양을 골라 봐. (Space 대화 · Q 수첩 · L 장부 · Shift 달리기)"
+      "greeting": "매듭은 튼튼하네. 이제 어디로 갈지 정하면 되겠어. 동쪽 큰길로 가면 농원길, 그 끝이 자비드야. 짐이 무거울수록 걸음이 느려지니 실을 양을 골라 봐. (Space 대화 · L 장부 · Shift 달리기)"
     },
     {
       "id": "arabia_maryam",

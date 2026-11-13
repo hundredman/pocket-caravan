@@ -50,7 +50,7 @@ namespace PocketCaravan
         static readonly string[] TaskHow =
         {
             "상인 앞에서 Space → 리액션! 상인이 따라 춰요. 접속한 사람과 6초 안에 같이 해도 돼요",
-            "상인이나 접속한 사람 앞에서 Space → 선물. 상인회 상인은 답례를 줘요",
+            "상인이나 접속한 사람 앞에서 Space → 선물. 받은 사람이 기뻐해요",
             $"마당 놀이판에서 {NetStackGame.Goal}단 넘기. 기록은 온라인 순위표에 올라가요",
             "사진 자리에서 Space. 옆에 있는 사람이 다 같이 찍혀요",
         };

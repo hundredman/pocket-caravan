@@ -6,7 +6,7 @@ namespace PocketCaravan
     /// <summary>
     /// 화면 왼쪽 위 상태 창: 맵, 돈·신용, 짐 무게, 체력, 노면/감속 안내. 오른쪽 위 퀘스트·지도·장부 단추.
     /// 10/28 UI 통일: 평소엔 돈·체력 한 줄만, Tab을 누르면 5초 동안 펼친다 (자동으로 펼치지 않음).
-    /// 오른쪽 위 할 일(QuestTracker)도 Expanded를 보고 같이 펼친다.
+    /// 11/13 상태 카드 바로 밑에 할 일 카드(TaskCard)를 그린다. Tab이면 할 일 카드도 같이 펼친다.
     /// 11/05 B안(CuteUI): 초상 + 돈·체력 카드, 오른쪽 위 모양이 다른 단추 3개(누르면 Q·M·L과 같다)와 중립색 키캡.
     ///   아래 조작 안내 줄은 Tab으로 펼쳤을 때만 보인다 (평소 화면 글씨 줄이기).
     /// GameManager가 자동으로 붙인다. 임시 UI(OnGUI)다.
@@ -15,10 +15,14 @@ namespace PocketCaravan
     {
         const float ExpandSeconds = 5f;
         static float expandedUntil = -1f;
-        const int ButtonSize = 22, ButtonGap = 5;   // 11/11 윤채: 26·7 → 22·5 (오른쪽 위 단추 다섯 개가 화면을 많이 차지했다)
+        const int ButtonSize = 22, ButtonGap = 5;
+        /// <summary>11/13 왼쪽 위 줄(상태 카드 · 작은 표 · 할 일 카드)의 오른쪽 끝. 셋 다 이 너비에 맞춘다</summary>
+        public const float ColumnRight = 214f;   // 11/11 윤채: 26·7 → 22·5 (오른쪽 위 단추 다섯 개가 화면을 많이 차지했다)
 
         /// <summary>Tab으로 펼친 동안 true (상태창·할 일 모두)</summary>
         public static bool Expanded => Time.unscaledTime < expandedUntil;
+        /// <summary>11/13 마지막으로 펼친 프레임 (할 일 카드가 펼치기 전에 올라온 것을 펼친 동안 그대로 보여 준다)</summary>
+        public static int ExpandedFrame { get; private set; } = -10;
 
         /// <summary>
         /// 화면 아래에서 HUD가 차지한 높이 (조작 안내 · 저장 문제 줄 · 아래 가운데 한 줄 안내). 알림·채팅·고려 배우기 카드는 그 위에 뜬다.
@@ -78,22 +82,25 @@ namespace PocketCaravan
         /// <summary>오른쪽 위 단추 줄의 왼쪽 끝 (온라인 표시가 그 왼쪽에 붙는다)</summary>
         public static float ButtonsLeft => UIStyle.VirtualWidth - 6 - (Buttons.Length * ButtonSize + (Buttons.Length - 1) * ButtonGap);
 
-        /// <summary>11/08 소지품(I)·메뉴(Esc)도 단추로 (마우스만으로도 할 수 있게)</summary>
+        /// <summary>11/08 소지품(I)·메뉴(Esc)도 단추로 (마우스만으로도 할 수 있게). 11/13 Q(여정 수첩) 단추는 뺐다: 왼쪽 할 일 카드를 누르면 열린다</summary>
         static readonly (CuteUI.Pic pic, char key, string label)[] Buttons =
         {
-            (CuteUI.Pic.Sack, 'i', "I"), (CuteUI.Pic.Scroll, 'q', "Q"), (CuteUI.Pic.Compass, 'm', "M"), (CuteUI.Pic.OpenBook, 'l', "L"), (CuteUI.Pic.Menu, '\x1b', "Esc"),
+            (CuteUI.Pic.Sack, 'i', "I"), (CuteUI.Pic.Compass, 'm', "M"), (CuteUI.Pic.OpenBook, 'l', "L"), (CuteUI.Pic.Menu, '\x1b', "Esc"),
         };
 
         static readonly (string key, string what)[] Keys =
         {
-            ("WASD", "이동"), ("Shift", "달리기"), ("Space", "말 걸기"), ("Tab", "상태"),
-            ("Q", "퀘스트"), ("I", "소지품"), ("M", "지도"), ("L", "장부"), ("Esc", "메뉴"),
+            ("WASD", "이동"), ("Shift", "달리기"), ("Space", "대화·행동"), ("Tab", "상태·할 일"),
+            ("I", "소지품"), ("M", "지도"), ("L", "장부"), ("Esc", "메뉴"),
         };
 
         void Update()
         {
             if (InputReader.StatusPressed() && !UIState.Blocking)
+            {
                 expandedUntil = Expanded ? -1f : Time.unscaledTime + ExpandSeconds;   // 펼친 채로 다시 누르면 접기
+                if (Expanded) ExpandedFrame = Time.frameCount;
+            }
         }
 
         void OnGUI()
@@ -102,6 +109,7 @@ namespace PocketCaravan
             if (gm == null || MapRoot.Current == null) return;
             if (UIState.PhotoMode) return;   // 11/11 은샘: 기념 사진 찍는 동안 상태 카드·단추·아래 목표 줄을 감춘다
             UIStyle.Begin();
+            GUI.depth = -2;   // 11/13 머리 위 이름표·놀거리 표(깊이 0 이상)보다 앞에 (왼쪽 위 카드 위로 이름표가 겹쳐 보였다)
 
             string roadName = "";
             var player = PlayerController.Instance;
@@ -112,7 +120,13 @@ namespace PocketCaravan
                 roadName = g < names.Length ? names[g] : g.ToString();
             }
 
-            if (Expanded) DrawExpanded(gm, roadName); else DrawCompact(gm);
+            // 11/13 캐릭터가 상태 카드 뒤로 지나가면 옅게
+            var oldColor = GUI.color;
+            if (TaskCard.PlayerBehind(new Rect(4, 4, ColumnRight - 4, Expanded ? 150 : 42))) GUI.color = new Color(oldColor.r, oldColor.g, oldColor.b, oldColor.a * .4f);
+            float bottom = Expanded ? DrawExpanded(gm, roadName) : DrawCompact(gm);
+            GUI.color = oldColor;
+            bottom = TaskCard.DrawBadges(bottom + 4f);   // 11/13 작은 표 (푹 쉼 등)
+            TaskCard.Draw(bottom + 4f);   // 11/13 할 일 카드: 상태 카드 바로 밑 (예전 위 가운데 알약들)
             DrawButtons();
             DrawBottom(gm);
         }
@@ -180,12 +194,12 @@ namespace PocketCaravan
             GUI.color = old;
         }
 
-        static void DrawCompact(GameManager gm)
+        static float DrawCompact(GameManager gm)
         {
             var p = gm.Player;
             string money = MoneyShown(p.money).ToString();
             float tabW = CuteUI.KeycapWidth("Tab");
-            float w = Mathf.Max(108f, 32f + CuteUI.Width(money, false, true) + 3f + CuteUI.Width("냥", true) + 8f + tabW + 8f);
+            float w = ColumnRight - 22f;   // 11/13 아래 할 일 카드와 같은 오른쪽 끝
             var card = new Rect(22, 5, w, 40);
             ScreenZones.Mark("hud.card", Rect.MinMaxRect(4, 4, card.xMax, card.yMax));   // 초상까지
             CuteUI.Card(card);
@@ -199,10 +213,11 @@ namespace PocketCaravan
             CuteUI.Bar(new Rect(75, 28, card.xMax - 8 - 75, 8), p.stamina, CuteUI.Stamina, CuteUI.StaminaHi);
             CuteUI.Portrait(4, 5, 36);
             MoneyFloats(54, card.yMax - 2f);
+            return card.yMax;
         }
 
         /// <summary>Tab: 맵 · 장날 · 돈·신용 · 평판 · 짐 · 체력 · 발밑</summary>
-        static void DrawExpanded(GameManager gm, string roadName)
+        static float DrawExpanded(GameManager gm, string roadName)
         {
             var p = gm.Player;
             var map = MapRoot.Current;
@@ -221,7 +236,7 @@ namespace PocketCaravan
             }
             else { repTitle = "마을별 평판"; repText = "지도에서 확인"; }
 
-            const float w = 210f;
+            const float w = ColumnRight - 22f;   // 11/13 210 → 192 (아래 할 일 카드와 같은 오른쪽 끝)
             float x = 22, y = 5, inner = w - 20;
             // 10/28 평판이 두 줄로 늘어나면 아래 줄을 덮던 문제: 높이를 재서 칸을 늘린다
             float repH = CuteUI.WrapHeight(repText, inner, true);
@@ -270,9 +285,10 @@ namespace PocketCaravan
             if (p.HasAnyCargo) CuteUI.Label(x + 10, cy + 6, "거친 길·무거운 짐은 느려요", CuteUI.Sub, true);
 
             CuteUI.Portrait(4, 5, 36);
+            return y + h;
         }
 
-        /// <summary>오른쪽 위 단추: 세로 두루마리(퀘스트)·나침반(지도)·펼친 책(장부). 아래에 중립 키캡</summary>
+        /// <summary>오른쪽 위 단추: 자루(소지품)·나침반(지도)·펼친 책(장부)·메뉴. 아래에 중립 키캡</summary>
         static void DrawButtons()
         {
             float x = ButtonsLeft;

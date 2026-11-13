@@ -8,7 +8,6 @@ namespace PocketCaravan
     /// </summary>
     public sealed class GoryeoPlaceLabels : MonoBehaviour
     {
-        static Texture2D arrowTex, downTex;
         static GUIStyle nameStyle;
 
         static readonly Color QuestColor = new Color(1f, 0.85f, 0.25f);
@@ -45,6 +44,10 @@ namespace PocketCaravan
         public static string LabelFor(Interactable it,Vector2 feet)
         {
             if(it==null)return "";if(IsPlace(it)&&!Nearby(feet,it.transform.position))return "";
+            // 2026-11-13 기우(시연 피드백 "글이 너무 많다", 팀 UI 통일): 사람 이름표도 가까이(WorldLabels.NearCells)에서만. 말 걸 대상은 늘.
+            // 멀리 있는 퀘스트 사람은 이름 없이 !·? 표만 (DrawName)
+            var pc=PlayerController.Instance;
+            if(!IsPlace(it)&&(feet-(Vector2)it.transform.position).sqrMagnitude>WorldLabels.NearCells*WorldLabels.NearCells&&(pc==null||pc.TalkTarget!=it))return "";
             return DisplayLabel(it);
         }
         // Person sprites use occupations, while wells/boards/workshops keep their facility labels.
@@ -147,30 +150,16 @@ namespace PocketCaravan
                 compactPrompt=DrawSpace(cam,player.TalkTarget);
             }
 
-            // 3) 퀘스트 길 안내
+            // 3) 퀘스트 길 안내 (11/13 기우: 캐릭터 둘레의 작은 삼각형 대신 목적지 위 ▼ · 화면 밖이면 화면 끝 핀, GuideMarker)
             if (nav.HasValue && player != null && !UIState.Blocking)
             {
                 var n = nav.Value;
                 Vector2 from = player.transform.position;
-                Vector2 d = (Vector2)n.steer - from;                 // 걸을 수 있는 길의 앞쪽을 가리킨다
                 float dist = n.walkCells >= 0 ? n.walkCells : ((Vector2)n.position - from).magnitude;
-                if (n.exit) DrawDown(ToGui(cam, n.position + new Vector3(0f, 0.9f, 0f)));
-                if (dist > 2.2f && d.sqrMagnitude > 0.01f)
-                {
-                    Vector2 c = ToGui(cam, player.transform.position);
-                    float ang = Mathf.Atan2(-d.y, d.x) * Mathf.Rad2Deg;   // GUI는 y가 아래로
-                    Vector2 dir = new Vector2(d.x, -d.y).normalized;
-                    Vector2 a = c + dir * 26f;
-                    var m = GUI.matrix;
-                    GUIUtility.RotateAroundPivot(ang, a * UIStyle.Scale);
-                    GUI.color = QuestColor;
-                    GUI.DrawTexture(new Rect(a.x - 6, a.y - 6, 12, 12), arrowTex);
-                    GUI.color = Color.white;
-                    GUI.matrix = m;
-                }
+                GuideMarker.Draw(ToGui(cam, n.position + new Vector3(0f, 0.9f, 0f)), ToGui(cam, player.transform.position), n, Mathf.RoundToInt(dist));
                 string guide = n.exit ? $"{n.label}  ({Mathf.RoundToInt(dist)}칸)" : $"{n.label}  {Mathf.RoundToInt(dist)}칸";
                 if (!GoryeoIntro.Showing)
-                    CuteUI.GoalPill("목표 · " + guide);   // 11/08 아래 쌓는 줄로 (알림·조작 안내와 겹쳤다). 흰 테두리 글씨 → 종이 알약
+                    CuteUI.GoalPill("목표 · " + guide);   // 11/13 왼쪽 할 일 카드의 목표 줄로 (TaskCard)
             }
         }
 
@@ -239,10 +228,11 @@ namespace PocketCaravan
                 TargetBodyRects[it]=Rect.MinMaxRect(Mathf.Min(a.x,b.x),Mathf.Min(a.y,b.y),Mathf.Max(a.x,b.x),Mathf.Max(a.y,b.y));
             }
             var state=BadgeFor(it);
-            if(state!=QuestMarker.None && rect.height>0)
+            if(state!=QuestMarker.None && (rect.height>0||string.IsNullOrEmpty(label)))
             {
                 string symbol=state==QuestMarker.Available?"!":"?";
-                var badge=new Rect(rect.xMax+3,rect.center.y-7,12,14);
+                // 11/13 이름표가 숨었으면(멀리) 이름 자리에 표만
+                var badge=rect.height>0?new Rect(rect.xMax+3,rect.center.y-7,12,14):new Rect(Mathf.Round(p.x-6),Mathf.Round(p.y-7),12,14);
                 if(badge.x>=4&&badge.xMax<=UIStyle.VirtualWidth-4&&badge.y>=25&&badge.yMax<=UIStyle.VirtualHeight-44)
                 {
                     var gold=state==QuestMarker.InProgress?CuteUI.KeyLine:CuteUI.Deco;
@@ -253,7 +243,7 @@ namespace PocketCaravan
                     QuestBadgeRects[it]=badge;QuestBadgeStates[it]=state;
                 }
             }
-            else if(state==QuestMarker.None && target && it.Category!=Interactable.Kind.Quest)DrawDown(p+new Vector2(0,-12));
+            else if(state==QuestMarker.None && target && it.Category!=Interactable.Kind.Quest)GuideMarker.Down(p+new Vector2(0,-12));   // 11/13 진한 테두리 ▼ (공용)
         }
         void CollectBoards(Camera cam)
         {
@@ -273,49 +263,21 @@ namespace PocketCaravan
         Rect DrawSpace(Camera cam,Interactable target)
         {
             var body=BodyBounds(target);
-            var bottom=ToGui(cam,new Vector3(body.center.x,body.min.y,body.center.z));
             // 11/11 윤채: 키캡만 있으면 무엇을 하는지 몰라서 다른 지역과 같은 [Space 말 걸기] 알약으로 (누르면 Space와 같다)
+            // 11/13 기우(팀 UI 통일): 발밑 → 머리 위 이름표 바로 위 (이름표가 없으면 이름 자리)
+            var head=TargetNameRects.TryGetValue(target,out var nr)?new Vector2(nr.center.x,nr.y-19):NamePoint(cam,body)+new Vector2(0,-8);
             string verb=WorldLabels.VerbFor(target);
-            float w=Mathf.Round(3+CuteUI.KeycapWidth("Space")+5+CuteUI.Width(verb,true)+7);
-            var rect=new Rect(Mathf.Round(bottom.x-w/2-guiOrigin.x)+guiOrigin.x,Mathf.Round(bottom.y+3-guiOrigin.y)+guiOrigin.y,w,17);
+            float w=string.IsNullOrEmpty(verb)?Mathf.Round(3+CuteUI.KeycapWidth("Space")+3):Mathf.Round(3+CuteUI.KeycapWidth("Space")+5+CuteUI.Width(verb,true)+7);   // 11/13 동사가 없으면 키캡만
+            var rect=new Rect(Mathf.Round(head.x-w/2-guiOrigin.x)+guiOrigin.x,Mathf.Round(head.y-guiOrigin.y)+guiOrigin.y,w,17);
             if(rect.x<4||rect.xMax>UIStyle.VirtualWidth-4||rect.y<25||rect.yMax>UIStyle.VirtualHeight-44)return default;
             return CuteUI.SpacePrompt(rect.center.x,rect.y,verb);
         }
-        static void DrawDown(Vector2 p)
-        {
-            float bob = Mathf.Floor(Mathf.Sin(Time.time * 5f) * 2f + 2f);
-            GUI.color = QuestColor;
-            GUI.DrawTexture(new Rect(p.x - 5, p.y - 8 + bob, 10, 8), downTex);
-            GUI.color = Color.white;
-        }
-
         static void Init()
         {
-            if (arrowTex == null)
-            {
-                arrowTex = Triangle(12, 12, true);
-                downTex = Triangle(10, 8, false);
-            }
             if (nameStyle == null || nameStyle.font != UIStyle.SmallFont || nameStyle.fontSize != UIStyle.SmallSize)
             {
                 nameStyle = new GUIStyle() { font = UIStyle.SmallFont, alignment = TextAnchor.MiddleCenter, fontSize = UIStyle.SmallSize, clipping = TextClipping.Clip, padding = new RectOffset(0,0,0,0), richText = false };
             }
-        }
-
-        /// <summary>오른쪽(right=true) 또는 아래(false)를 가리키는 흰 삼각형</summary>
-        static Texture2D Triangle(int w, int h, bool right)
-        {
-            var t = new Texture2D(w, h, TextureFormat.RGBA32, false) { filterMode = FilterMode.Point };
-            for (int y = 0; y < h; y++)
-            for (int x = 0; x < w; x++)
-            {
-                bool inside = right
-                    ? Mathf.Abs(y - (h - 1) / 2f) <= (w - 1 - x) * 0.5f
-                    : Mathf.Abs(x - (w - 1) / 2f) <= y * 0.6f + 0.5f; // 텍스처 y는 아래부터: 아래가 뾰족
-                t.SetPixel(x, y, inside ? Color.white : Color.clear);
-            }
-            t.Apply();
-            return t;
         }
     }
 }

@@ -142,10 +142,9 @@ namespace PocketCaravan
 
             void OnGUI()
             {
-                if (bannerFor == null || MapRoot.Current == null || MapRoot.Current.mapId != bannerFor || UIState.Blocking || HUD.Expanded) return;
-                UIStyle.Begin();
-                // 11/08 UI B안: 검은 띠(y 34 고정, 이야기 줄과 겹쳤다) 대신 위 가운데 알약들 아래에 쌓는 종이 알약 (Tab 펼친 동안은 숨긴다)
-                CuteUI.TopPill(CuteUI.TopStack(30), false, CuteUI.Pic.Coin, "오늘 큰 장", CuteUI.Plain($"팔면 {Pct(Bonus(ChunkOfMap(bannerFor)))} 덤"), false);
+                if (bannerFor == null || MapRoot.Current == null || MapRoot.Current.mapId != bannerFor || UIState.Blocking) return;
+                // 11/13 기우: 위 가운데 알약 대신 할 일 카드의 오늘 소식 (Tab으로 펼쳤을 때. 들어설 때는 아래 알림이 알려 준다)
+                TaskCard.News("fair", CuteUI.Pic.Coin, "오늘 큰 장", CuteUI.Plain($"팔면 {Pct(Bonus(ChunkOfMap(bannerFor)))} 덤"));
             }
         }
 

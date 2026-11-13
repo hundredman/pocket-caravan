@@ -21,7 +21,7 @@ namespace PocketCaravan
     public class NetChat : MonoBehaviour
     {
         const int MaxLines = 8, MaxChars = 80;
-        const float LineSeconds = 8f, FadeSeconds = 1.5f, LogWidth = 230f;
+        const float LineSeconds = 6f, FadeSeconds = 1.5f, LogWidth = 230f;   // 11/13 8 → 6초 (화면 글 줄이기)
         /// <summary>11/11 윤채: 입력하지 않을 때는 최근 몇 줄만 작게 (큰 반투명 상자가 이름표·알림을 가렸다). Enter로 열면 다 보인다</summary>
         const int IdleLines = 3;
         float logW = LogWidth;
@@ -55,7 +55,7 @@ namespace PocketCaravan
         int sendFrame = -1;
         float openedAt;
         GUIStyle field, lineStyle, bubbleStyle;
-        static readonly Color32 LogFill = new Color32(0xFF, 0xFA, 0xF2, 228);
+        static readonly Color32 LogFill = new Color32(0xFF, 0xFA, 0xF2, 170);   // 11/13 반투명 (뒤 화면이 비치게)
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void Boot()
@@ -227,7 +227,7 @@ namespace PocketCaravan
             GUI.depth = -6;
 
             DrawBubbles(net);
-            if (UIState.PhotoMode && !typing) return;   // 11/11 은샘: 기념 사진 찍는 동안 채팅 목록은 감춘다 (머리 위 말풍선은 그대로)
+            if (UIState.PhotoMode && !typing) return;   // 11/11 은샘: 기념 사진 찍는 동안 채팅 목록은 감춘다 (11/13 머리 위 말풍선도 감춘다: DrawBubbles)
             if (UIState.Blocking && !typing) return;   // 다른 창이 열려 있으면 목록은 숨긴다
 
             float bottom = UIStyle.VirtualHeight - 10f - HUD.BottomReserved;   // 11/05 접속 표시는 오른쪽 위로 옮김: 아래 조작 안내·저장 문제 줄 바로 위
@@ -316,6 +316,7 @@ namespace PocketCaravan
 
         void DrawBubbles(NetClient net)
         {
+            if (UIState.PhotoMode) return;   // 11/13 기우: 기념 사진에는 말풍선 없이 닉네임만 ("사진 자리로 모여요~" 말풍선이 찍혔다)
             var cam = Camera.main;
             var pc = PlayerController.Instance;
             if (cam == null) return;
