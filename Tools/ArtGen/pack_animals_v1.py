@@ -306,8 +306,8 @@ CAMEL_NECK_LOW=[       # 목 아래쪽 절반: 몸과 한 덩어리로 (테두�
 VIEW={  # 그림, 안장 띠 줄, 띠 색, 짐 기준 줄, 몸 앞에 얹는 부위[(그림, 줄)], 몸 뒤에 두는 부위, 몸에 테두리 없이 섞는 부위
  ('horse','back'):(HORSE_BACK,9,'rRr',8,[],[],[]),
  ('horse','front'):(HORSE_FRONT,6,'rRr',6,[(HORSE_FACE,12)],[],[]),
- ('camel','back'):(CAMEL_BACK,9,'aAy',8,[],[(CAMEL_BACK_HEAD,0)],[]),
- ('camel','front'):(CAMEL_FRONT,5,'aAy',4,[(CAMEL_NECK,6,10),(CAMEL_FACE,-2)],[],[(CAMEL_NECK_LOW,10)]),
+ ('camel','back'):(CAMEL_BACK,9,'aAy',8,[(CAMEL_BACK_HEAD[:3],0)],[(CAMEL_BACK_HEAD,0)],[]),   # 머리(위 3줄)는 짐 더미보다 위에 다시 얹는다 (높이 든 머리가 짐 너머로 보인다)
+ ('camel','front'):(CAMEL_FRONT,5,'aAy',4,[(CAMEL_NECK,6,10),(CAMEL_FACE,-2)],[],[]),   # 목은 짐 더미 앞에 (가깝다). 아래 절반은 테두리만 지운다
 }
 def end_view3(kind,view,stage,frame=''):
     from PIL import Image
@@ -328,14 +328,25 @@ def end_view3(kind,view,stage,frame=''):
     layer(body)
     if stage>=1:
         layer(lambda L:L.draw(SACK,ox-4,oy+pack_y));layer(lambda L:L.draw(SACK,ox+11,oy+pack_y))
-    if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy+pack_y-1))
-    if stage>=3:layer(lambda L:L.draw(SMALL,ox+2,oy+pack_y-5))
+    if kind=='camel':
+        # 11/14 낙타는 머리·목이 등 가운데를 가리므로 (앞) 또는 짐 더미가 머리를 덮지 않게 (뒤) 짐을 양옆 자루 위로 쌓는다
+        if view=='front':
+            if stage>=2:layer(lambda L:L.draw(SMALL,ox-5,oy+pack_y-3));layer(lambda L:L.draw(SMALL,ox+10,oy+pack_y-3))
+            if stage>=3:layer(lambda L:L.draw(JAR,ox-3,oy+pack_y-7));layer(lambda L:L.draw(JAR,ox+12,oy+pack_y-7))
+        else:
+            if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy+pack_y-1))
+            if stage>=3:layer(lambda L:L.draw(SMALL,ox-5,oy+pack_y-3));layer(lambda L:L.draw(SMALL,ox+10,oy+pack_y-3))
+    else:
+        if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy+pack_y-1))
+        if stage>=3:layer(lambda L:L.draw(SMALL,ox+2,oy+pack_y-5))
     for item in over:   # 얼굴·목은 따로 테두리 → 몸·짐과 구분된다. (그림, 줄, 자를 줄)이면 그 줄부터 아래는 지운다
         part,py=item[0],item[1];cut=item[2] if len(item)>2 else None
         L=Cv(W,H);L.draw(part,ox+(13-len(part[0]))//2,oy+py);L.outline()
-        if cut is not None:
+        if cut is not None:   # 이 줄부터 아래는 테두리만 지운다 (목 색은 남아 가슴에 이어진다)
+            O=P['O']+(255,)
             for y in range(oy+cut,H):
-                for x in range(W):L.p[x,y]=(0,0,0,0)
+                for x in range(W):
+                    if L.p[x,y]==O:L.p[x,y]=(0,0,0,0)
         layers.append(L.im)
     out=Image.new('RGBA',(W,H),(0,0,0,0))
     for im in layers:out.alpha_composite(im)
