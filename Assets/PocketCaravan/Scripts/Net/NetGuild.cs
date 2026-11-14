@@ -1444,6 +1444,11 @@ namespace PocketCaravan
             // 바로 앞이면 Space 안내가 대신한다
             Vector3 at;
             if (markPeer == null || !RemotePlayers.TryGetPosition(markPeer, out at)) return;
+            // 11/14 UT "다른 플레이어 머리 위 화살표가 두 개": 길 안내(NavHint → WorldLabels ▼ · 화면 끝 핀)가 이미 그 사람을 가리키면 여기서는 그리지 않는다.
+            //   길 안내가 그 사람이 아닌 곳을 가리킬 때(내 옆에 장터·NPC가 있어 그 사람 Space 자리가 꺼졌을 때 등)만 이 화살표가 대신한다
+            var navTarget = RemotePlayers.TargetOf(markPeer);
+            var nav = navTarget != null ? Navigator.Compute(GM) : null;
+            if (nav.HasValue && nav.Value.target == navTarget) return;
             var pc = PlayerController.Instance;
             if (pc != null && ((Vector2)at - (Vector2)pc.transform.position).sqrMagnitude < 1.7f * 1.7f) return;
             float lift = markLift + (markTf != null && bubbles.ContainsKey(markTf) ? .9f : 0f);
