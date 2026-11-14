@@ -10,30 +10,30 @@ P=dict(O=(46,36,29),B=(150,94,56),b=(116,70,42),L=(181,124,78),M=(62,44,34),m=(8
        w=(104,69,45),h=(183,124,62),H=(193,139,82),d=(91,67,47),
        C=(242,223,179),X=(246,228,191),s=(221,198,150),n=(196,150,88),r=(150,58,52),R=(176,78,66),
        j=(84,126,106),J=(109,148,130),K=(134,162,139))
-HORSE=[
-"......MM.............................",
-".....MBBM............................",
-"....MBBBBM...........................",
-"...LBBBBBBMM.........................",
-"..LBBeBBBBBMM........................",
-".LBBBBBBBBBBMM.......................",
-"LBBBBBBBBBBBBMM......................",
-"LcBBBBbBBBBBBBMM.....................",
-"ccBBBb.bBBBBBBBMM....................",
-"ccc.....bBBBBBBBBMLLLLLLLLLLLLL......",
-"........bBBBBBBBBBBBBBBBBBBBBBBBM....",
-".........BBBBBBBBBBBBBBBBBBBBBBBBMM..",
-".........BBBBBBBBBBBBBBBBBBBBBBBBBMM.",
-".........BBBBBBBBBBBBBBBBBBBBBBBBBmM.",
-".........bBBBBBBBBBBBBBBBBBBBBBBBbmMM",
-".........bbBBBBBBBBBBBBBBBBBBBBBbbmmM",
-"..........bbbbbbbbbbbbbbbbbbbbbbbb.mM",
-"...........bBBb.mmm.....mmm.bBBb...mM",
-"...........bBBb.mmm.....mmm.bBBb...mM",
-"...........bBBb.mmm.....mmm.bBBb....M",
-"...........bBBb.mmm.....mmm.bBBb.....",
-"...........bbbb.mmm.....mmm.bbbb.....",
-"...........kkkk.kkk.....kkk.kkkk.....",
+HORSE=[   # 11/14 허리를 3칸 줄여 뒷몸을 앞으로 (짧고 다부진 과하마)
+"......MM..........................",
+".....MBBM.........................",
+"....MBBBBM........................",
+"...LBBBBBBMM......................",
+"..LBBeBBBBBMM.....................",
+".LBBBBBBBBBBMM....................",
+"LBBBBBBBBBBBBMM...................",
+"LcBBBBbBBBBBBBMM..................",
+"ccBBBb.bBBBBBBBMM.................",
+"ccc.....bBBBBBBBBMLLLLLLLLLL......",
+"........bBBBBBBBBBBBBBBBBBBBBM....",
+".........BBBBBBBBBBBBBBBBBBBBBMM..",
+".........BBBBBBBBBBBBBBBBBBBBBBMM.",
+".........BBBBBBBBBBBBBBBBBBBBBBmM.",
+".........bBBBBBBBBBBBBBBBBBBBBbmMM",
+".........bbBBBBBBBBBBBBBBBBBBbbmmM",
+"..........bbbbbbbbbbbbbbbbbbbbb.mM",
+"...........bBBb.mmm..mmm.bBBb...mM",
+"...........bBBb.mmm..mmm.bBBb...mM",
+"...........bBBb.mmm..mmm.bBBb....M",
+"...........bBBb.mmm..mmm.bBBb.....",
+"...........bbbb.mmm..mmm.bbbb.....",
+"...........kkkk.kkk..kkk.kkkk.....",
 ]
 class Cv:
     def __init__(s,w,h):s.im=Image.new('RGBA',(w,h),(0,0,0,0));s.p=s.im.load();s.w,s.h=w,h
@@ -55,8 +55,8 @@ class Cv:
         pts=[(x,y) for y in range(s.h) for x in range(s.w) if s.get(x,y)[3]==0 and any(s.get(x+a,y+b)[3] and s.get(x+a,y+b)!=o for a,b in((1,0),(-1,0),(0,1),(0,-1)))]
         for x,y in pts:s.p[x,y]=o
 # 길마(나무 안장틀)·안장 천과 짐
-CLOTH=["rrrrrrrrrrrrrrr","RRRRRRRRRRRRRRR","RRRRRRRRRRRRRRR","rrrrrrrrrrrrrrr"]
-FRAME=["dHd.....dHd","dhHdddddHhd","ddddddddddd"]
+CLOTH=["rrrrrrrrrrrr","RRRRRRRRRRRR","RRRRRRRRRRRR","rrrrrrrrrrrr"]
+FRAME=["dHd...dHd","dhHdddHhd","ddddddddd"]
 SACK=[".s..s.",".nnnn.","XCCCCs","CCCCCs","CCCCCs","CCCCss",".ssss."]
 JAR=[".JJ.","KJJj","KJJj",".jj."]
 BUNDLE=["..s....s..",".CnnnnnnC.","XCCCCCCCCs","CCCCCCCCss",".ssssssss."]
@@ -99,9 +99,9 @@ def make(stage,frame=''):
     c.draw(CLOTH,13,oy+9)
     c.draw(FRAME,15,oy+7)
     parts=[]
-    if stage==1: parts+=[(SACK,17,oy+9)]
-    if stage>=2: parts+=[(SACK,14,oy+9),(SACK,21,oy+9),(BUNDLE,15,oy+3)]
-    if stage>=3: parts+=[(SMALL,17,oy-1),(JAR,15,oy+5),(JAR,22,oy+5)]   # 11/14 항아리는 옆 자루 위에 (낙타와 같게)
+    if stage==1: parts+=[(SACK,16,oy+9)]
+    if stage>=2: parts+=[(SACK,13,oy+9),(SACK,19,oy+9),(BUNDLE,14,oy+3)]   # 안장 가운데(x 18.5)에 맞춘다
+    if stage>=3: parts+=[(SMALL,15,oy-1),(JAR,14,oy+5),(JAR,20,oy+5)]   # 11/14 항아리는 옆 자루 위에 (낙타와 같게)
     return with_parts(c,parts)
 
 # ---------------- 낙타 ----------------
@@ -320,8 +320,8 @@ CAMEL_NECK_LOW=[       # 목 아래쪽 절반: 몸과 한 덩어리로 (테두�
 "..tTt..",
 ]
 SACK_END=[".n.",".n.","XCs","XCs","XCs","CCs","CCs",".s."]                # 11/14 앞·뒤에서 본 옆구리 자루: 몸에 붙어 길게 늘어진 모서리 (폭 3)
-BUNDLE_END=["..s.s..",".CnnnC.","XCCCCCs",".sssss."]                     # 등 위에 가로로 누운 낮은 보따리 (폭 7)
-SMALL_END=[".CnC.","XCCCs",".sss."]                                      # 그 위 작은 보따리 (폭 5)
+BUNDLE_END=["..s.s..",".XCCCC.","XCnnnCs","XCCCCCs","XCCCCCs","XCnnnCs","CCCCCss",".sssss."]   # 11/14 등을 따라 놓인 보따리를 위에서 비스듬히: 폭 7, 윗면이 위아래로 길다 (끈 두 줄)
+SMALL_END=[".XCC.","Xnnns","XCCCs","Xnnns",".sss."]                      # 그 위 작은 보따리 (폭 5, 위아래로 길게)
 BUNDLE_C=["..s.....s..",".CnnnnnnnC.","XCCCCCCCCCs","CCCCCCCCCss",".sssssssss."]   # 11/14 앞·뒤 가운데 짐: 폭 11 (좌우 대칭)
 SMALL_C=["..s...s..",".CnnnnnC.","XCCCCCCCs",".sssssss."]                                   # 폭 9
 VIEW={  # 그림, 안장 띠 줄, 띠 색, 짐 기준 줄, 몸 앞에 얹는 부위[(그림, 줄)], 몸 뒤에 두는 부위, 몸에 테두리 없이 섞는 부위
@@ -365,8 +365,8 @@ def end_view3(kind,view,stage,frame=''):
     else:
         # 11/14 짐말 앞·뒤: 옆모습 짐 그림을 그대로 쓰지 않고 앞·뒤에서 본 모양 (옆구리 자루 모서리, 보따리 끝면). 순서는 낙타와 같다
         if stage>=1:layer(lambda L:L.draw(SACK_END,ox-1,oy+pack_y));layer(lambda L:L.draw(SACK_END,ox+11,oy+pack_y))   # 몸 가장자리에 한 칸 걸친다
-        if stage>=2:layer(lambda L:L.draw(BUNDLE_END,ox+3,oy+pack_y-1))   # 안장 띠 위
-        if stage>=3:layer(lambda L:L.draw(SMALL_END,ox+4,oy+pack_y-3))
+        if stage>=2:layer(lambda L:L.draw(BUNDLE_END,ox+3,oy+pack_y-3))   # 안장 띠를 가운데로 등을 따라
+        if stage>=3:layer(lambda L:L.draw(SMALL_END,ox+4,oy+pack_y-4))
         if stage>=3:layer(lambda L:L.draw(JAR,ox-2,oy+pack_y-3));layer(lambda L:L.draw(JAR,ox+11,oy+pack_y-3))   # 항아리는 옆 자루 위
     for item in over:   # 얼굴·목은 따로 테두리 → 몸·짐과 구분된다. (그림, 줄, 자를 줄)이면 그 줄부터 아래는 지운다
         part,py=item[0],item[1];cut=item[2] if len(item)>2 else None
