@@ -22,7 +22,9 @@ namespace PocketCaravan
     [DefaultExecutionOrder(1000)]
     public class RemotePlayers : MonoBehaviour
     {
-        const float StaleSeconds = 5f, Snap = 4f, Smooth = 14f;
+        const float StaleSeconds = 5f, Snap = 4f;
+        /// <summary>11/14 UT "다른 유저 움직임이 끊겨 보인다": 받은 위치를 이만큼 늦게 그리며 받은 두 위치 사이를 잇는다 (보내는 간격 0.1초의 1.5배)</summary>
+        const float Delay = 0.15f;
         /// <summary>내 발밑에서 이 거리 안에 장터·NPC가 있으면 다른 플레이어는 Space 대상에서 잠깐 빠진다 (PlayerController.talkRange 1.8칸보다 조금 넓게)</summary>
         const float OtherTargetRange = 2.2f;
         static readonly Color NameColor = new Color(0.56f, 0.83f, 1f);
@@ -50,6 +52,34 @@ namespace PocketCaravan
             public SpriteRenderer vehicleSr;
             public VehicleTrail trail;
             public float spawnAt;                // 11/11 나타난 시각 (등장 반짝임)
+            public readonly List<Vector2> path = new List<Vector2>();   // 11/14 받은 위치와 받은 시각 (보간용)
+            public readonly List<float> times = new List<float>();
+            public float lastHeard = -1f;
+        }
+
+        /// <summary>받은 위치를 쌓는다. 멀리 뛰면(순간 이동) 지난 것은 버리고, 오래 멈춰 있다 움직이면 출발 시각을 새 위치 바로 앞에 둔다</summary>
+        static void Push(Avatar a, Vector2 at, float t)
+        {
+            int n = a.path.Count;
+            if (n > 0 && Vector2.Distance(a.path[n - 1], at) > Snap) { a.path.Clear(); a.times.Clear(); n = 0; }
+            if (n > 0 && t - a.times[n - 1] > 0.25f) { a.path.Add(a.path[n - 1]); a.times.Add(t - 0.1f); }
+            a.path.Add(at); a.times.Add(t);
+            while (a.path.Count > 16) { a.path.RemoveAt(0); a.times.RemoveAt(0); }
+        }
+
+        /// <summary>t 시각의 위치. 받은 것보다 이르면 첫 위치, 늦으면 마지막 위치에 머문다</summary>
+        static Vector2 Sample(Avatar a, float t)
+        {
+            int n = a.path.Count;
+            if (t <= a.times[0]) return a.path[0];
+            for (int i = 0; i < n - 1; i++)
+                if (t < a.times[i + 1])
+                {
+                    if (i > 0) { a.path.RemoveRange(0, i); a.times.RemoveRange(0, i); i = 0; }
+                    float span = a.times[1] - a.times[0];
+                    return Vector2.Lerp(a.path[0], a.path[1], span > 0f ? (t - a.times[0]) / span : 1f);
+                }
+            return a.path[n - 1];
         }
 
         // 11/11 윤채: 다른 사람이 같은 맵에 들어오면 반짝이며 나타나고 머리 위에 "입장!", 떠나면 연기가 퐁 (내가 맵에 막 들어왔을 때 이미 있던 사람은 조용히)
@@ -295,12 +325,13 @@ namespace PocketCaravan
                 a.name = string.IsNullOrEmpty(p.name) ? p.id : p.name;
                 if (a.target != null) { a.target.who = a.name; if (a.target.enabled == otherNear) a.target.enabled = !otherNear; }
 
-                Vector3 target = new Vector3(p.x, p.y, pc.transform.position.z);
+                if (p.heardAt != a.lastHeard) { a.lastHeard = p.heardAt; Push(a, new Vector2(p.x, p.y), p.heardAt); }
                 Vector3 now = a.root.transform.position;
-                float dist = Vector2.Distance(now, target);
-                a.root.transform.position = dist > Snap ? target : Vector3.Lerp(now, target, 1f - Mathf.Exp(-Smooth * Time.deltaTime));
+                Vector2 at = a.path.Count > 0 ? Sample(a, Time.unscaledTime - Delay) : (Vector2)now;
+                a.root.transform.position = new Vector3(at.x, at.y, pc.transform.position.z);
+                float moved = Vector2.Distance(now, at);
                 if (p.fx != 0 || p.fy != 0) a.anim.facing = new Vector2Int(p.fx, p.fy);
-                a.anim.walking = p.m || dist > 0.05f;
+                a.anim.walking = p.m || moved > 0.002f;
                 if (p.m) a.emote = null;   // 걷기 시작하면 리액션은 멈춘다
                 ApplyEmote(a);
                 if (p.s && a.emote == null)
