@@ -145,7 +145,7 @@ def make_camel(stage,frame=''):
     if stage==1: c.draw(SACK,hx-3,oy+11)
     if stage>=2: c.draw(SACK,hx-7,oy+11); c.draw(SACK,hx+1,oy+11)
     if stage>=2: c.draw(BUNDLE,hx-5,oy+2)
-    if stage>=3: c.draw(JAR,hx-9,oy+1); c.draw(JAR,hx+5,oy+1); c.draw(SMALL,hx-4,oy-2)   # 항아리는 양옆 (앞·뒷모습과 같게)
+    if stage>=3: c.draw(SMALL,hx-4,oy-2); c.draw(JAR,hx-6,oy+7); c.draw(JAR,hx+2,oy+7)   # 항아리는 옆 자루 위에 얹는다 (앞·뒷모습과 같게)
     c.outline(); return c.im
 
 
@@ -339,7 +339,7 @@ def end_view3(kind,view,stage,frame=''):
         # 11/14 낙타는 머리·목이 등 가운데를 가리므로 (앞) 또는 짐 더미가 머리를 덮지 않게 (뒤) 짐을 양옆 자루 위로 쌓는다
         # 옆모습과 같은 순서: 1 양옆 자루 → 2 혹 위 가운데 보따리 → 3 그 위 작은 보따리 + 양옆 항아리
         # 앞모습은 머리가 혹 앞을 가리므로 혹 위 짐이 머리 너머(위)로 보인다
-        top=-7 if view=='front' else pack_y-2
+        top=-4 if view=='front' else pack_y-4   # 앞: 머리 바로 뒤 혹 위, 뒤: 혹 꼭대기 위
         if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy+top))
         if stage>=3:layer(lambda L:L.draw(SMALL,ox+2,oy+top-4))
         if stage>=3:layer(lambda L:L.draw(JAR,ox-3,oy+pack_y-3));layer(lambda L:L.draw(JAR,ox+12,oy+pack_y-3))
