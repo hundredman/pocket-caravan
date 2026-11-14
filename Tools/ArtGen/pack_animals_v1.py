@@ -119,136 +119,103 @@ def make_camel(stage):
 
 
 # ---------------- 앞(아래로 올 때)·뒤(위로 갈 때) ----------------
-# 옆모습과 같은 작은 몸 비율. 앞: 머리가 가장 앞(가깝게 크게), 머리 양옆으로 어깨·자루, 짐 더미는 머리 너머 등 위로 보인다.
-# 뒤: 엉덩이·꼬리가 앞, 등 위 안장·짐, 머리는 등 너머 귀만. 캔버스 폭 20, 발바닥이 맨 아래에서 2줄 위.
-HORSE_FRONT=[
-"....bM......Mb....",
-"....bBM....MBb....",
-"....bBBBMMBBBb....",
-"....bBBMMMMBBb....",
-"....bBBBMMBBBb....",
-"....bLeBBBBeBb....",
-"..LLbBBBBBBBBbBB..",
-".LBBbBBBBBBBBbBBb.",
-".LBBBbBBBBBBbBBBb.",
-".LBBBbBccccBbBBBb.",
-".LBBBbccccccbBBBb.",
-".LBBBbceccecbBBBb.",
-".bBBBBbccccbBBBBb.",
-"..bBBBBbbbbBBBBb..",
-"..bbBBBBBBBBBBbb..",
-"...bBBBBBBBBBBb...",
-"....bBb....bBb....",
-"....bBb....bBb....",
-"....bBb....bBb....",
-"....bBb....bBb....",
-"....bBb....bBb....",
-"....kkk....kkk....",
-]
-HORSE_BACK=[
-".....M......M.....",
-".....MB....BM.....",
-"......BBBBBB......",
-"....LLMMMMMMLL....",
-"..LLBBBMMMMBBBb...",
-".LBBBBBBBBBBBBBb..",
-".LBBBBBBBBBBBBBb..",
-"LBBBBBBBBBBBBBBBb.",
-"LBBBBBBBBBBBBBBBb.",
-"LBBBBBBBMMBBBBBBb.",
-"LBBBBBBMMMMBBBBBb.",
-".bBBBBBMMMMBBBBb..",
-".bBBBBbMMMMbBBBb..",
-"..bBBbbMMMMbbBBb..",
-"..bBBb.MMMM.bBBb..",
-"..bBBb.MMMM.bBBb..",
-"..bBBb..MM..bBBb..",
-"..bBBb......bBBb..",
-"..bBBb......bBBb..",
-"..bBBb......bBBb..",
-"..kkkk......kkkk..",
-]
-CAMEL_FRONT=[
-"......t......t....",
-"......tTTTTTTt....",
-"......TTTTTTTT....",
-"......TeTTTTeT....",
-"......TTTTTTTT....",
-".......TccccT.....",
-".......cecccT.....",
-"........tTTt......",
-"...UUU..tTTt.UUU..",
-"..UTTTU.tTTt.TTTt.",
-".UTTTTTttTTttTTTTt",
-".TTTTTTTTTTTTTTTTt",
-".TTTTTTTTTTTTTTTTt",
-".tTTTTTTTTTTTTTTtt",
-"..tTTTTTTTTTTTTtt.",
-"...tttttttttttt...",
-"....tTt....tTt....",
-"....tTt....tTt....",
-"....tTt....tTt....",
-"....tTt....tTt....",
-"....UTU....UTU....",
-"....tTt....tTt....",
-"....tTt....tTt....",
-"....tTt....tTt....",
-"....tTt....tTt....",
-"....kkk....kkk....",
-]
-CAMEL_BACK=[
-"......t.....t.....",
-"......tTTTTTt.....",
-"......tTTTTTt.....",
-".......tTTTt......",
-"........tTt.......",
-".....UUUUTUUUU....",
-"....UTTTTTTTTTTt..",
-"...UTTTTTTTTTTTTt.",
-"..UTTTTTTTTTTTTTt.",
-".UTTTTTTTTTTTTTTTt",
-".TTTTTTTTTTTTTTTTt",
-".TTTTTTTTtTTTTTTTt",
-".tTTTTTTTtTTTTTTtt",
-"..tTTTTTTtTTTTTtt.",
-"...tttttttttttt...",
-"....tTt..t.tTt....",
-"....tTt..k.tTt....",
-"....tTt....tTt....",
-"....tTt....tTt....",
-"....UTU....UTU....",
-"....tTt....tTt....",
-"....tTt....tTt....",
-"....tTt....tTt....",
-"....tTt....tTt....",
-"....kkk....kkk....",
-]
-def end_view(rows,stage,sack_y,band_y,band,top_y,front):
-    """짐 높이 자리를 위에 비워 둔 캔버스(20 x 몸+12)에 몸·안장 띠·자루·짐 더미를 그린다"""
-    c=Cv(20,len(rows)+14);oy=12;ox=1
+# 11/14 v2: 3/4 내려다보기라 몸통(등)이 화면 위아래로 길게 보인다 (손수레 앞·뒤 그림처럼 위에서 본 짐칸).
+# 앞: 머리·가슴이 아래(가까이), 등과 짐이 그 위, 엉덩이·꼬리가 맨 위(멀리). 뒤: 반대로 머리가 위, 엉덩이·꼬리가 아래.
+# 다리는 몸 아래로 짧게만 보인다. 자루는 양옆구리, 짐 더미는 등 위 가운데. 캔버스 20 x 44, 발바닥이 맨 아래에서 2줄 위.
+HEAD_FRONT={'horse':[
+"BM....MB",
+"BBM..MBB",
+"LBBMMBBb",
+"LBBMMBBb",
+"LeBBBBeb",
+".LBBBBb.",
+".LBBBBb.",
+"..cccc..",
+"..cccc..",
+"..ecce..",
+"...cc..."],'camel':[
+".t....t.",
+".tTTTTt.",
+".TTTTTT.",
+".TeTTeT.",
+".TTTTTT.",
+"..TTTT..",
+"..cccc..",
+"..ecce..",
+"..cccc.."]}
+HEAD_BACK={'horse':[
+"M....M",
+"BM..MB",
+"BBMMBB",
+".BMMB.",
+".BMMB.",
+"..MM.."],'camel':[
+"t....t",
+"tTTTTt",
+"TTTTTT",
+".TTTT.",
+"..TT..",
+"..TT.."]}
+KIND={'horse':dict(base='B',light='L',dark='b',leg='B',legd='b',tail='M',band='rRr',legs=5,neck=3,hump=False),
+      'camel':dict(base='T',light='U',dark='t',leg='T',legd='t',tail='t',band='aAy',legs=8,neck=6,hump=True)}
+def body_mask(c,cx,cy,rx,ry,k):
+    pts=[]
+    for y in range(int(cy-ry)-1,int(cy+ry)+2):
+        for x in range(int(cx-rx)-1,int(cx+rx)+2):
+            if ((x+.5-cx)/rx)**2+((y+.5-cy)/ry)**2<=1:pts.append((x,y))
+    for x,y in pts:
+        dx=(x+.5-cx)/rx
+        c.px(x,y,k['light'] if dx<-.45 else k['dark'] if dx>.55 else k['base'])
+    return set(pts)
+def end_view2(kind,stage,front):
+    """부위마다 따로 그려 테두리를 두르고 겹친다 (머리·자루·짐이 몸통과 섞이지 않게)"""
+    from PIL import Image
+    k=KIND[kind];W,H=20,44;cx=10;ground=41
+    legtop=ground-k['legs'];ry=8.5
+    cy=(legtop-ry+1-(k['neck']-1)) if front else (legtop-ry+3)
+    layers=[]
+    def layer(fn):
+        L=Cv(W,H);fn(L);L.outline();layers.append(L.im)
+    def legs(L):
+        for x in (5,13):
+            L.vline(x,legtop,ground-1,k['leg']);L.vline(x+1,legtop,ground-1,k['legd']);L.px(x,ground,'k');L.px(x+1,ground,'k')
+            if kind=='camel':L.px(x,legtop+k['legs']//2,'U')
+    layer(legs)
     if not front:
-        c.draw(rows,ox,oy)
-        for x in range(ox+2,ox+16):
-            for i,k in enumerate(band):c.px(x,oy+band_y+i,k)
-    if stage>=2:c.draw(BUNDLE,ox+4,oy+top_y)
-    if stage>=3:c.draw(SMALL,ox+5,oy+top_y-4)
+        h=HEAD_BACK[kind];layer(lambda L:L.draw(h,cx-3,int(cy-ry)-len(h)+3))
+    by=int(cy)-1
+    def body(L):
+        m=body_mask(L,cx,cy,6.5,ry,k)
+        if k['hump']:
+            for x,y in m:
+                if ((x+.5-cx)/3.5)**2+((y+.5-cy+1)/3.5)**2<=1:L.px(x,y,'U' if x<cx else 'T')
+        for i,ch in enumerate(k['band']):
+            for x in range(W):
+                if (x,by+i) in m:L.px(x,by+i,ch)
+        if front:
+            t=int(cy-ry);L.px(cx-1,t,k['tail']);L.px(cx,t,k['tail']);L.px(cx-1,t-1,k['tail'])
+        else:
+            bot=int(cy+ry)
+            for y in range(bot-4,bot+4):L.px(cx-1,y,k['tail']);L.px(cx,y,k['tail'])
+            if kind=='horse':L.px(cx-2,bot+2,'M');L.px(cx+1,bot+2,'M');L.px(cx-2,bot+3,'M');L.px(cx+1,bot+3,'M')
+    layer(body)
+    if stage>=1:
+        layer(lambda L:L.draw(SACK,-1,by-2));layer(lambda L:L.draw(SACK,15,by-2))
+    if stage>=2:layer(lambda L:L.draw(BUNDLE,cx-5,by-3))
+    if stage>=3:layer(lambda L:L.draw(SMALL,cx-4,by-6))
     if front:
-        c.draw(rows,ox,oy)
-    if stage>=1:c.draw(SACK,ox-1,oy+sack_y);c.draw(SACK,ox+13,oy+sack_y)
-    c.outline();return c.im
-def horse_front(stage):return end_view(HORSE_FRONT,stage,6,0,'',-4,True)
-def horse_back(stage):return end_view(HORSE_BACK,stage,4,4,'rRr',-1,False)
-def camel_front(stage):
-    """낙타 앞: 머리가 목 위 높이 있어 등짐이 가려지므로, 혹 위 짐을 목 양옆 바구니처럼 그린다"""
-    c=Cv(20,len(CAMEL_FRONT)+14);oy=12;ox=1
-    if stage>=2:c.draw(SMALL,ox-1,oy+5);c.draw(SMALL,ox+11,oy+5)
-    if stage>=3:c.draw(SMALL,ox,oy+1);c.draw(SMALL,ox+10,oy+1)
-    c.draw(CAMEL_FRONT,ox,oy)
-    for x in list(range(ox+1,ox+8))+list(range(ox+12,ox+17)):
-        for i,k in enumerate('aAy'):c.px(x,oy+10+i,k)
-    if stage>=1:c.draw(SACK,ox-1,oy+9);c.draw(SACK,ox+13,oy+9)
-    c.outline();return c.im
-def camel_back(stage):return end_view(CAMEL_BACK,stage,6,5,'aAy',1,False)
+        top=int(cy+ry)-2
+        def head(L):
+            L.rect(cx-2,top-k['neck']+3,cx+1,top+2,k['base']);L.vline(cx+1,top-k['neck']+3,top+2,k['dark'])
+            L.draw(HEAD_FRONT[kind],cx-4,top+1)
+        layer(head)
+    out=Image.new('RGBA',(W,H),(0,0,0,0))
+    for im in layers:out.alpha_composite(im)
+    return out
+def horse_front(stage):return end_view2('horse',stage,True)
+def horse_back(stage):return end_view2('horse',stage,False)
+def camel_front(stage):return end_view2('camel',stage,True)
+def camel_back(stage):return end_view2('camel',stage,False)
 
 if __name__=='__main__':
     import os

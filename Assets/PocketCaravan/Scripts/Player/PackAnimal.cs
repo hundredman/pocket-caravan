@@ -43,6 +43,7 @@ namespace PocketCaravan
             sr.sprite = Art(folder, !upDown ? "side" : h.y < 0f ? "front" : "back", stage);
             float bob = moving ? Mathf.Round(Mathf.Abs(Mathf.Sin(phase))) / 16f : 0f;   // 걸을 때 1픽셀 들썩
             float lift = sr.sprite != null ? sr.sprite.rect.height / 32f - .55f : .45f;   // 발이 사람 발높이쯤 오게 (그림 가운데가 중심)
+            if (upDown && h.y < 0f) lift -= .4f;   // 앞모습(내 위에서 따라 내려올 때)은 머리가 아래 끝이라 조금 당겨 고삐 거리를 옆모습과 비슷하게
             tr.position = new Vector3(at.x, at.y + lift + bob, owner.position.z);
             sr.flipY = false;                 // 썰매에서 바꿨을 때
             sr.flipX = !upDown && trail.FaceRight;   // 옆모습 그림이 왼쪽을 보니 오른쪽으로 갈 때 뒤집는다
