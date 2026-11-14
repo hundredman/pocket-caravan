@@ -85,17 +85,24 @@ def lift(rows,frame):
             if rows[last-1][x]!='.':rows[last-1][x]='k'
     return [''.join(r) for r in rows]
 
+def with_parts(c,parts):
+    """11/14 몸 그림(c)에 테두리를 두르고, 짐 하나하나도 따로 테두리를 둘러 순서대로 얹는다 (짐이 몸·서로와 섞이지 않게)"""
+    c.outline();out=c.im
+    for rows,x,y in parts:
+        L=Cv(c.w,c.h);L.draw(rows,x,y);L.outline();out.alpha_composite(L.im)
+    return out
+
 def make(stage,frame=''):
     c=Cv(40,32)
     oy=8
     c.draw(lift(HORSE,frame),1,oy)
     c.draw(CLOTH,13,oy+9)
     c.draw(FRAME,15,oy+7)
-    if stage==1: c.draw(SACK,17,oy+9)
-    if stage>=2: c.draw(SACK,14,oy+9); c.draw(SACK,21,oy+9)
-    if stage>=2: c.draw(BUNDLE,15,oy+3)
-    if stage>=3: c.draw(SMALL,17,oy-1); c.draw(JAR,24,oy)
-    c.outline();return c.im
+    parts=[]
+    if stage==1: parts+=[(SACK,17,oy+9)]
+    if stage>=2: parts+=[(SACK,14,oy+9),(SACK,21,oy+9),(BUNDLE,15,oy+3)]
+    if stage>=3: parts+=[(SMALL,17,oy-1),(JAR,24,oy)]
+    return with_parts(c,parts)
 
 # ---------------- 낙타 ----------------
 P.update(T=(208,160,104),t=(170,124,76),U=(228,190,138),f=(140,100,62),
@@ -142,11 +149,11 @@ def make_camel(stage,frame=''):
         for i,k in enumerate(('A','a','r','a','y' if x%2 else 'a')):
             if c.get(x,top+i) in body:c.px(x,top+i,k)
     hx=1+23                                                          # 혹 꼭대기 가운데 (짐을 여기 맞춘다)
-    if stage==1: c.draw(SACK,hx-3,oy+11)
-    if stage>=2: c.draw(SACK,hx-7,oy+11); c.draw(SACK,hx+1,oy+11)
-    if stage>=2: c.draw(BUNDLE,hx-5,oy+2)
-    if stage>=3: c.draw(SMALL,hx-4,oy-2); c.draw(JAR,hx-6,oy+7); c.draw(JAR,hx+2,oy+7)   # 항아리는 옆 자루 위에 얹는다 (앞·뒷모습과 같게)
-    c.outline(); return c.im
+    parts=[]
+    if stage==1: parts+=[(SACK,hx-3,oy+11)]
+    if stage>=2: parts+=[(SACK,hx-7,oy+11),(SACK,hx+1,oy+11),(BUNDLE,hx-5,oy+2)]
+    if stage>=3: parts+=[(SMALL,hx-4,oy-2),(JAR,hx-6,oy+7),(JAR,hx+2,oy+7)]   # 항아리는 옆 자루 위에 얹는다 (앞·뒷모습과 같게)
+    return with_parts(c,parts)
 
 
 # ---------------- 앞(아래로 올 때)·뒤(위로 갈 때) ----------------
