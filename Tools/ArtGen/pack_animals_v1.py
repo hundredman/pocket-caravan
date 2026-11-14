@@ -101,7 +101,7 @@ def make(stage,frame=''):
     parts=[]
     if stage==1: parts+=[(SACK,17,oy+9)]
     if stage>=2: parts+=[(SACK,14,oy+9),(SACK,21,oy+9),(BUNDLE,15,oy+3)]
-    if stage>=3: parts+=[(SMALL,17,oy-1),(JAR,24,oy)]
+    if stage>=3: parts+=[(SMALL,17,oy-1),(JAR,15,oy+5),(JAR,22,oy+5)]   # 11/14 항아리는 옆 자루 위에 (낙타와 같게)
     return with_parts(c,parts)
 
 # ---------------- 낙타 ----------------
@@ -160,16 +160,16 @@ def make_camel(stage,frame=''):
 # 11/14 v3: LPC horses·OGA horse(opengameart) 4방향 그림을 참고. 위에서 비스듬히 본 말은 폭이 좁고(옆 길이의 1/3쯤)
 # 위아래로 길다(옆모습 키의 1.3배쯤). 뒤: 귀·뒤통수 → 갈기 있는 목 → 안장 → 넓은 엉덩이 → 꼬리 → 뒷다리.
 # 앞: 꼬리 끝 → 엉덩이·등·안장 → 그 앞에 귀·이마·얼굴(아래를 봄) → 양옆 어깨 아래 앞다리. 몸 폭 13, 캔버스 21 x 42.
-HORSE_BACK=[            # 11/14 v5: 귀 사이부터 목을 따라 갈기(가운데 진하게), 엉덩이 과장 없이 몸 폭 고르게
+HORSE_BACK=[            # 11/14 v6: 귀 사이부터 목 뒤 기갑까지 갈기를 풍성하게, 몸 폭 고르게
 "....M...M....",
 "....BMMMB....",
 "....BmMmB....",
 "....bmMmb....",
 "....bmMmb....",
-"...bBmMmBb...",
-"...bBmMmBb...",
-"..bBBmMmBBb..",
-".bBBBBMBBBBb.",
+"...bmMMMmb...",
+"...bmMMMmb...",
+"..bBmMMMmBb..",
+".bBBBmMmBBBb.",
 ".bBBBBBBBBBb.",
 ".bBBBBBBBBBb.",
 ".bBBBBBBBBBb.",
@@ -189,7 +189,7 @@ HORSE_BACK=[            # 11/14 v5: 귀 사이부터 목을 따라 갈기(가운
 "..bBb...bBb..",
 "..kkk...kkk..",
 ]
-HORSE_FRONT=[           # 몸(꼬리 끝·엉덩이·등·가슴·앞다리). 머리는 HORSE_FACE를 따로 테두리 둘러 위에 얹는다
+HORSE_FRONT=[           # 몸(꼬리 끝·엉덩이·등·갈기·가슴·앞다리). 머리는 HORSE_FACE를 따로 테두리 둘러 위에 얹는다
 "......M......",
 "......M......",
 ".....MMM.....",
@@ -199,11 +199,11 @@ HORSE_FRONT=[           # 몸(꼬리 끝·엉덩이·등·가슴·앞다리). �
 ".bBBBBBBBBBb.",
 ".bBBBBBBBBBb.",
 ".bBBBBBBBBBb.",
-".bBBBBBBBBBb.",
-".bBBBBBBBBBb.",
-".bBBBBBBBBBb.",
-".bBBBBBBBBBb.",
-".bBBBBBBBBBb.",
+".bBBBmMmBBBb.",
+".bBBmMMMmBBb.",
+".bBBmMMMmBBb.",
+".bBBmMMMmBBb.",
+".bBBBmMmBBBb.",
 ".bBBBBBBBBBb.",
 ".bBBBBBBBBBb.",
 ".bBBBBBBBBBb.",
@@ -217,17 +217,17 @@ HORSE_FRONT=[           # 몸(꼬리 끝·엉덩이·등·가슴·앞다리). �
 ".bBb.....bBb.",
 ".kkk.....kkk.",
 ]
-HORSE_FACE=[            # 11/14 앞머리 갈기를 귀 사이로 넓게
+HORSE_FACE=[            # 11/14 앞머리는 귀 사이 작은 술만 (갈기는 목 뒤로 풍성하게: HORSE_FRONT)
 "M.....M",
-"BM.M.MB",
-"BBMMMBB",
-"LBMMMBb",
-"LeBMBeb",
+"BM...MB",
+"BBBMBBB",
+"LBBMBBb",
+"LeBBBeb",
 "LBBBBBb",
 ".LBBBb.",
 ".LBBBb.",
 ".ccccc.",
-".ccccc.",   # 11/14 콧구멍 뺌
+".ccccc.",
 "..ccc..",
 ]
 CAMEL_BACK=[
@@ -319,9 +319,9 @@ CAMEL_NECK_LOW=[       # 목 아래쪽 절반: 몸과 한 덩어리로 (테두�
 "..tTt..",
 "..tTt..",
 ]
-SACK_END=["..n.",".nn.","XCCs","XCCs","CCCs","CCss",".ss."]          # 11/14 앞·뒤에서 본 옆구리 자루 (폭 4: 옆으로 매달린 자루의 모서리)
-BUNDLE_END=["...s...",".CnnnC.","XCCCCCs","CCCCCss",".sssss."]           # 앞·뒤에서 본 등 위 보따리 끝면 (폭 7)
-SMALL_END=["..s..",".CnC.","XCCCs",".sss."]                              # 그 위 작은 보따리 끝면 (폭 5)
+SACK_END=[".n.",".n.","XCs","XCs","XCs","CCs","CCs",".s."]                # 11/14 앞·뒤에서 본 옆구리 자루: 몸에 붙어 길게 늘어진 모서리 (폭 3)
+BUNDLE_END=["..s.s..",".CnnnC.","XCCCCCs",".sssss."]                     # 등 위에 가로로 누운 낮은 보따리 (폭 7)
+SMALL_END=[".CnC.","XCCCs",".sss."]                                      # 그 위 작은 보따리 (폭 5)
 BUNDLE_C=["..s.....s..",".CnnnnnnnC.","XCCCCCCCCCs","CCCCCCCCCss",".sssssssss."]   # 11/14 앞·뒤 가운데 짐: 폭 11 (좌우 대칭)
 SMALL_C=["..s...s..",".CnnnnnC.","XCCCCCCCs",".sssssss."]                                   # 폭 9
 VIEW={  # 그림, 안장 띠 줄, 띠 색, 짐 기준 줄, 몸 앞에 얹는 부위[(그림, 줄)], 몸 뒤에 두는 부위, 몸에 테두리 없이 섞는 부위
@@ -364,10 +364,10 @@ def end_view3(kind,view,stage,frame=''):
         if stage>=3:layer(lambda L:L.draw(JAR,ox-3,oy+pack_y-3));layer(lambda L:L.draw(JAR,ox+12,oy+pack_y-3))
     else:
         # 11/14 짐말 앞·뒤: 옆모습 짐 그림을 그대로 쓰지 않고 앞·뒤에서 본 모양 (옆구리 자루 모서리, 보따리 끝면). 순서는 낙타와 같다
-        if stage>=1:layer(lambda L:L.draw(SACK_END,ox-2,oy+pack_y));layer(lambda L:L.draw(SACK_END,ox+11,oy+pack_y))
-        if stage>=2:layer(lambda L:L.draw(BUNDLE_END,ox+3,oy+pack_y-3))
-        if stage>=3:layer(lambda L:L.draw(SMALL_END,ox+4,oy+pack_y-6))
-        if stage>=3:layer(lambda L:L.draw(JAR,ox-2,oy+pack_y-4));layer(lambda L:L.draw(JAR,ox+11,oy+pack_y-4))
+        if stage>=1:layer(lambda L:L.draw(SACK_END,ox-1,oy+pack_y));layer(lambda L:L.draw(SACK_END,ox+11,oy+pack_y))   # 몸 가장자리에 한 칸 걸친다
+        if stage>=2:layer(lambda L:L.draw(BUNDLE_END,ox+3,oy+pack_y-1))   # 안장 띠 위
+        if stage>=3:layer(lambda L:L.draw(SMALL_END,ox+4,oy+pack_y-3))
+        if stage>=3:layer(lambda L:L.draw(JAR,ox-2,oy+pack_y-3));layer(lambda L:L.draw(JAR,ox+11,oy+pack_y-3))   # 항아리는 옆 자루 위
     for item in over:   # 얼굴·목은 따로 테두리 → 몸·짐과 구분된다. (그림, 줄, 자를 줄)이면 그 줄부터 아래는 지운다
         part,py=item[0],item[1];cut=item[2] if len(item)>2 else None
         if kind=='camel' and view=='back' and stage>=3:continue   # 3단계는 위 보따리가 머리 앞에 온다 (머리를 덮어 그리면 보따리 끈·띠가 가려진다). 머리는 몸 뒤 그림이 짐 위로 귀·정수리만 보인다
