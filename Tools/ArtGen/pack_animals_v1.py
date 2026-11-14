@@ -317,7 +317,7 @@ VIEW={  # 그림, 안장 띠 줄, 띠 색, 짐 기준 줄, 몸 앞에 얹는 부
  ('horse','back'):(HORSE_BACK,9,'rRr',8,[],[],[]),
  ('horse','front'):(HORSE_FRONT,6,'rRr',6,[(HORSE_FACE,12)],[],[]),
  ('camel','back'):(CAMEL_BACK,7,'AaaraY',8,[(CAMEL_BACK_HEAD[:3],-3)],[(CAMEL_BACK_HEAD,-3)],[]),   # 머리(위 3줄)는 짐 더미보다 위에 다시 얹는다 (높이 든 머리가 짐 너머로 보인다)
- ('camel','front'):(CAMEL_FRONT,3,'AaaraY',4,[(CAMEL_FACE,6)],[],[]),   # 11/14 머리를 가슴 앞으로 내려 혹·천·짐이 머리 너머로 보이게 (말 앞모습과 같은 짜임)
+ ('camel','front'):(CAMEL_FRONT,3,'AaaraY',4,[(CAMEL_NECK,6,10),(CAMEL_FACE,-2)],[],[]),   # 머리를 높이 든 모습 (목 위쪽 절반만 테두리)
 }
 def end_view3(kind,view,stage,frame=''):
     from PIL import Image
