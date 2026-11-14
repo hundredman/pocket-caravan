@@ -118,6 +118,7 @@ namespace PocketCaravan
             held.Add(h);
             net.Send(new GiftOut { gid = h.gid, to = to, item = h.item != null ? h.item.id : "", n = h.n, money = h.money, cost = Mathf.Round(h.cost * 100f) / 100f });
             NetChat.System($"{to} 님에게 {h.label} 보내는 중…");
+            Notify.Gift(Notify.GiftStep.Sending, to, h.label);   // 11/15 화면 카드로도 (채팅만으로는 놓쳤다)
             return true;
         }
 
@@ -168,7 +169,8 @@ namespace PocketCaravan
                     if (m.ok)
                     {
                         NetChat.System($"{who} 님에게 {Josa.Eul(h.label)} 보냈어요");
-                        Notify.Show($"{who} 님에게 {Josa.Eul(h.label)} 선물했어요", 3f);
+                        Notify.Gift(Notify.GiftStep.Done, who, h.label);   // 11/15 보내는 중 카드가 그 자리에서 "전달 완료!"로
+                        RemotePlayers.Cheer(who, "love", "선물 받음");      // 받은 사람 머리 위에도 하트 (내 화면에서)
                         Sfx.Play("coin");
                         Delivered?.Invoke(who);
                     }
@@ -176,6 +178,7 @@ namespace PocketCaravan
                     {
                         Refund(h);
                         NetChat.System($"선물을 못 보냈어요: {m.why} (돌려받았어요)");
+                        Notify.Gift(Notify.GiftStep.Failed, who, h.label, m.why);
                         Sfx.Play("cancel");
                     }
                     break;
@@ -202,7 +205,7 @@ namespace PocketCaravan
                 string label;
                 if (m.money > 0) { p.money = (int)Math.Min(int.MaxValue, (long)p.money + m.money); label = $"{m.money}냥"; }
                 else { p.cargo.Add(item, m.n, m.cost / m.n); label = $"{item.displayName} {m.n}개"; }
-                Notify.Show($"{m.from} 님이 {Josa.Eul(label)} 선물했어요!", 4f);
+                Notify.Gift(Notify.GiftStep.Received, m.from, label);
                 NetChat.System($"{m.from} 님에게서 {Josa.Eul(label)} 받았어요");
                 Sfx.Play("levelup", .6f);
             }
@@ -218,6 +221,8 @@ namespace PocketCaravan
                 held.RemoveAt(i);
                 Refund(h);
                 NetChat.System($"{h.to} 님에게 보낸 선물이 답이 없어서 돌려받았어요");
+                Notify.Gift(Notify.GiftStep.Failed, h.to, h.label, "답이 없어서 돌려받았어요");
+                Sfx.Play("cancel");
             }
         }
     }

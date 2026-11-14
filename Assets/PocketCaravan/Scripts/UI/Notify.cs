@@ -16,11 +16,11 @@ namespace PocketCaravan
     /// </summary>
     public static class Notify
     {
-        enum Kind { Plain, Event, QuestNew, QuestDone, Story, News }
+        enum Kind { Plain, Event, QuestNew, QuestDone, Story, News, Gift }
         struct Entry
         {
             public string text, key, title, note, head, chip; public float until, seconds, added, shownAt; public Kind kind; public int money, credit;
-            public CuteUI.Pic pic; public Color32 accent;
+            public CuteUI.Pic pic; public Color32 accent; public bool celebrate;
         }
         static readonly List<Entry> entries = new List<Entry>();
         /// <summary>11/11 은샘: 한 번에 보이는 알림 수 (윤채: 둘도 조잡해서 한 장). 나머지는 앞 알림이 사라지면 이어서 뜬다</summary>
@@ -172,7 +172,7 @@ namespace PocketCaravan
                 case Kind.QuestDone: e.head = "퀘스트 완료"; e.pic = CuteUI.Pic.Check; e.accent = CuteUI.Up; break;
                 case Kind.Story: e.head = "다음 이야기"; e.pic = CuteUI.Pic.OpenBook; e.accent = CuteUI.FrameLo; break;
                 case Kind.Event: e.head = "이벤트"; e.pic = CuteUI.Pic.Star5; e.accent = CuteUI.EventLine; break;
-                case Kind.News: break;   // Classify에서 정했다
+                case Kind.News: case Kind.Gift: break;   // Classify · Gift에서 정했다
                 default:
                     string t = e.text;
                     if (t.Contains("냥")) { e.pic = CuteUI.Pic.Coin7; e.accent = CuteUI.Sell; }
@@ -192,6 +192,34 @@ namespace PocketCaravan
         public static void Story(string text, float seconds = 6f) => Add(new Entry { text = text, seconds = seconds, kind = Kind.Story });
 
         public static void Clear() { entries.Clear(); arriveAt = -99f; }
+
+        public enum GiftStep { Sending, Done, Failed, Received }
+
+        /// <summary>
+        /// 11/15 윤채(UT "선물이 보내진 건지 아닌지 헷갈린다"): 선물 카드. 전에는 보내는 중·못 보냄이 채팅 한 줄뿐이라 놓쳤다.
+        /// 보내는 중 → 전달 완료 / 못 보냄이 같은 카드 자리에서 바로 바뀐다 (받는 사람마다 하나). 전달·받음은 도장 + 꽃가루
+        /// </summary>
+        public static void Gift(GiftStep step, string who, string what, string why = null)
+        {
+            var e = new Entry { kind = Kind.Gift };
+            switch (step)
+            {
+                case GiftStep.Sending:
+                    e.head = "선물 보내는 중…"; e.title = $"{who} 님에게 {what}"; e.pic = CuteUI.Pic.Sack; e.accent = CuteUI.Interact;
+                    e.seconds = 8f; e.key = "gift:" + who; break;
+                case GiftStep.Done:
+                    e.head = "선물 전달 완료!"; e.title = $"{who} 님이 {Josa.Eul(what)} 받았어요"; e.pic = CuteUI.Pic.Check; e.accent = CuteUI.Up;
+                    e.seconds = 3.5f; e.key = "gift:" + who; e.celebrate = true; break;
+                case GiftStep.Failed:
+                    e.head = "선물을 못 보냈어요 · 돌려받았어요"; e.title = string.IsNullOrEmpty(why) ? $"{who} 님에게 닿지 않았어요" : why;
+                    e.pic = CuteUI.Pic.XMark; e.accent = CuteUI.Alert; e.seconds = 4.5f; e.key = "gift:" + who; break;
+                default:
+                    e.head = "선물 받음!"; e.title = $"{who} 님이 {Josa.Eul(what)} 보냈어요"; e.pic = CuteUI.Pic.Sack; e.accent = CuteUI.Frame;
+                    e.seconds = 4.5f; e.celebrate = true; break;
+            }
+            e.text = e.head + " " + e.title;
+            Add(e);
+        }
 
         /// <summary>맵 이름 (고려 맵이 부른다). 11/11 화면 위쪽 가운데 리본으로</summary>
         public static void Location(string text,float seconds) => Add(new Entry{text=text,key="location",seconds=seconds});
@@ -291,7 +319,7 @@ namespace PocketCaravan
             float my = Mathf.Round(r.y + topH / 2f - Medal / 2f);
             // 11/11 동그라미는 도장처럼 크게 내려앉는다 (1.5 → 1, 0.22초. 퀘스트 완료 · 이벤트만)
             var gm = GUI.matrix;
-            float stamp = e.kind == Kind.QuestDone || e.kind == Kind.Event ? Mathf.Clamp01(since / .22f) : 1f;
+            float stamp = e.kind == Kind.QuestDone || e.kind == Kind.Event || e.celebrate ? Mathf.Clamp01(since / .22f) : 1f;
             if (stamp < 1f) { float s = Mathf.Lerp(1.5f, 1f, stamp * stamp); GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(r.x + 7f + Medal / 2f, my + Medal / 2f) * UIStyle.Scale); }
             if (rich) CuteUI.Circle(r.x + 7f, my, (int)Medal, e.accent, CuteUI.Ink, 1);
             else CuteUI.Circle(r.x + 7f, my, (int)Medal, CuteUI.Paper2, CuteUI.Line, 1);
@@ -434,7 +462,7 @@ namespace PocketCaravan
                 GUI.color = new Color(old.r, old.g, old.b, old.a * k * fade);
                 var drawn = r; drawn.y = Mathf.Round(r.y + (1f - k) * 6f);
                 Paint(drawn, e, since);
-                if ((e.kind == Kind.QuestDone || e.kind == Kind.Event) && e.added != burstFor && since > .2f && since < .5f)
+                if ((e.kind == Kind.QuestDone || e.kind == Kind.Event || e.celebrate) && e.added != burstFor && since > .2f && since < .5f)
                 {   // 도장이 내려앉은 뒤 그 자리에서 꽃가루
                     burstFor = e.added;
                     float topH = string.IsNullOrEmpty(e.note) ? drawn.height : 32f;

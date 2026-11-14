@@ -290,6 +290,17 @@ namespace PocketCaravan
         public static Interactable TargetOf(string id) =>
             inst != null && id != null && inst.avatars.TryGetValue(id, out var a) ? a.target : null;
 
+        /// <summary>11/15 그 이름의 다른 플레이어 머리 위에 리액션을 내 화면에서만 보인다 (선물이 닿았을 때 하트 "선물 받음")</summary>
+        public static void Cheer(string name, string emote, string label)
+        {
+            if (inst == null || string.IsNullOrEmpty(name)) return;
+            foreach (var a in inst.avatars.Values)
+            {
+                if (a.root == null || !string.Equals(a.name, name, System.StringComparison.OrdinalIgnoreCase)) continue;
+                a.emote = Kind(emote); a.emoteName = label; a.emoteStart = Time.unscaledTime; a.emoteLength = Length(a.emote);
+            }
+        }
+
         public static bool TryGetPosition(string id, out Vector3 pos)
         {
             pos = default;
