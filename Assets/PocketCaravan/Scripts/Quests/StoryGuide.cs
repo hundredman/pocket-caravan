@@ -65,8 +65,6 @@ namespace PocketCaravan
         }
         static bool In(QuestData q, Reactions.Region r) => RegionOf(q, out var x) && x == r;
 
-        /// <summary>11/14 시작 튜토리얼 동안 달리기 체력 소모 배율 (1 = 평소)</summary>
-        public const float TutorialStamina = 0.4f;
         /// <summary>어느 지역이든 시작 튜토리얼(첫걸음 안내)을 하는 중. 이 동안은 다른 알림을 줄인다 (11/11 기우: 시작 화면이 복잡하다는 의견)</summary>
         public static bool IntroActive => NorthIntro.Active || VeniceIntro.Active || GoryeoIntro.Active || ArabiaIntro.Active;
 
@@ -136,7 +134,6 @@ namespace PocketCaravan
             who = where = giver = null;
             // 11/11 은샘: 시작 튜토리얼이 끝나면 첫 일거리를 길 안내 대상으로 (가장 최근에 생긴 것 우선)
             bool intro = IntroActive;
-            StaminaMods.Set("tutorial", intro ? TutorialStamina : 1f);   // 11/14 은샘(UT "튜토리얼 때는 체력 덜 닳게"): 시작 튜토리얼 동안 달리기 체력 소모를 줄인다
             bool introEnded = wasIntro && !intro;
             wasIntro = intro;
             if (GM == null || GM.Quests == null || MapRoot.Current == null || intro) return;

@@ -28,7 +28,6 @@ namespace PocketCaravan
         [Tooltip("멈추거나 좋은 길에서 초당 가라앉는 양")] public float shakeDecay = 0.15f;
         [Tooltip("손수레가 길 없는 곳을 지날 때 배율")] public float cartOffroadShake = 1.8f;
 
-        bool exhausted;
         /// <summary>지금 달리는 중</summary>
         public bool Running { get; private set; }
         public bool StaminaEnabled { get; set; } = true;
@@ -36,7 +35,6 @@ namespace PocketCaravan
 
         public void ResetCarryState()
         {
-            exhausted = false;
             if (GameManager.I == null) return;
             GameManager.I.Player.stamina = 1f;
             GameManager.I.Player.shake = 0f;
@@ -67,7 +65,7 @@ namespace PocketCaravan
             if (GameManager.I.IsTravelling) { motor.Teleport(transform.position, Vector2Int.zero); TalkTarget = null; UpdateBody(); return; }
             bool seatHandled = GoryeoSeat.BeforeMove(this, locked);
             Vector2 input = locked || GoryeoSeat.Sitting(this) ? Vector2.zero : InputReader.MoveVector();
-            Running = !locked && !exhausted && InputReader.Run() && input.sqrMagnitude > 0.01f;
+            Running = !locked && InputReader.Run() && input.sqrMagnitude > 0.01f;   // 11/14 체력이 바닥나도 달리기를 막지 않는다 (RunFactor)
             // Modal UI stops motion immediately, including residual velocity and ground drift.
             if(locked || GoryeoSeat.Sitting(this))motor.Teleport(transform.position,Vector2Int.zero);
             else motor.Tick(input, CurrentSpeed(), Time.deltaTime);
@@ -96,7 +94,7 @@ namespace PocketCaravan
             s = GoryeoGroundSpeed.Apply(s,p,motor.Cell);
             s *= SpeedMods.Product;   // 11/08 지역·날씨 배율 (북유럽 썰매·눈보라, 베네치아 물 찬 칸)
             s *= Mathf.Lerp(1f, fullLoadSpeed, p.LoadRatio);
-            if (Running) s *= runMultiplier;
+            if (Running) s *= RunFactor(p.stamina);
             if (InputReader.DebugFast()) s *= DebugFastMultiplier;   // 임시 시험용 (C, 6배)
             var obstacles=MapRoot.Current!=null?MapRoot.Current.GetComponent<ObstacleField>():null;
             if(obstacles!=null){obstacles.Effects(motor.Cell,out float multiplier,out _,out _,out _,out _);s*=multiplier;}
@@ -105,21 +103,27 @@ namespace PocketCaravan
 
         int Grade => RoadGrid.Current != null ? RoadGrid.Current.GradeAt(motor.Cell) : 0;
 
+        // 11/14 은샘(UT "체력이 너무 빨리 닳는다"): 체력은 거의 부담이 없게, 제한은 최소한으로.
+        //   - 소모는 짐이 적재 한도(수레·썰매·낙타면 그만큼 큰 한도)에 비해 얼마나 찼는지로: 빈 몸 약 1분, 가득 약 25초 달려야 바닥.
+        //     수레가 생기면 한도가 커져 같은 짐에도 덜 닳는다. (예전: 짐과 상관없이 5초)
+        //   - 바닥나도 달리기를 막지 않는다(예전엔 멈추고 35%까지 기다렸다). 끝 15%에서 달리기 빠르기만 1.6배 → 1.25배로 서서히 줄고, 걸으면 금방 찬다
+        public const float EmptyLoadDrain = 0.08f, FullLoadDrain = 0.2f, TiredRun = 1.25f, TiredBelow = 0.15f;
+        public static float LoadDrain(float loadRatio) => Mathf.Lerp(EmptyLoadDrain, FullLoadDrain, Mathf.Pow(Mathf.Clamp01(loadRatio), 1.5f));
+        float RunFactor(float stamina) => Mathf.Lerp(Mathf.Min(TiredRun, runMultiplier), runMultiplier, Mathf.Clamp01(stamina / TiredBelow));
+
         /// <summary>달리기 체력만 계산한다. 시각 흔들림은 CarryVisual, 낙하는 사용하지 않는다.</summary>
         void UpdateCarry(float dt)
         {
             var p = GameManager.I.Player;
             // 체력
-            if (!StaminaEnabled) { p.stamina = 1f; exhausted = false; }
+            if (!StaminaEnabled) p.stamina = 1f;
             else if (Running)
             {
-                p.stamina -= staminaDrain * dt;
-                if (p.stamina <= 0f) { p.stamina = 0f; exhausted = true; Notify.Show("숨이 차서 더 달릴 수 없다."); }
+                p.stamina = Mathf.Max(0f, p.stamina - staminaDrain * LoadDrain(p.LoadRatio) * dt);   // 11/14 바닥나도 멈추지 않고 조금 느리게 달린다
             }
             else
             {
                 p.stamina = Mathf.Min(1f, p.stamina + staminaRegen * dt * (motor.IsMoving ? 0.6f : 1f));
-                if (exhausted && p.stamina >= 0.35f) exhausted = false;
             }
 
             // 이전 저장/시험 도구와 필드 호환만 유지한다. 주행 낙하·정차 안정화는 사용하지 않는다.
