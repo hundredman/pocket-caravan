@@ -1,5 +1,7 @@
-"""11/14 은샘: 고려 짐말(과하마) 그림 1차. 왼쪽을 보는 옆모습 한 장 + 짐 단계 0~3 (안장 천·길마 나무틀 → 자루 1 → 자루 2·보따리 → 보따리 2단·항아리).
-손수레(handcart_v3.py)와 같은 짐 색. 실행: python Tools/ArtGen/packhorse_v1.py <출력 폴더>
+"""11/14 은샘: 짐 싣는 짐승 그림 (짐말·낙타). 왼쪽을 보는 옆모습 한 장 + 짐 단계 0~3
+(안장 → 자루 1 → 자루 2·보따리 → 보따리 2단·항아리). 짐 색은 손수레(handcart_v3.py)와 같다.
+짐말: 과하마처럼 작고 다부진 말, 붉은 안장 천과 나무 길마. 낙타: 단봉낙타, 파란 줄무늬 안장 천. 낙타가 말보다 키가 크다.
+실행: python Tools/ArtGen/pack_animals_v1.py <출력 폴더>  → <출력>/PackHorse/side_0~3.png, <출력>/Camel/side_0~3.png
 """
 import sys
 from PIL import Image
@@ -64,11 +66,54 @@ def make(stage):
     if stage>=2: c.draw(BUNDLE,15,oy+3)
     if stage>=3: c.draw(SMALL,17,oy-1); c.draw(JAR,24,oy)
     c.outline();return c.im
+
+# ---------------- 낙타 ----------------
+P.update(T=(208,160,104),t=(170,124,76),U=(228,190,138),f=(140,100,62),
+         a=(52,96,150),A=(78,128,182),y=(214,170,70))
+CAMEL=[
+"....tTT.............................",
+"...UTTTt............................",
+"..UTeTTTt...........................",
+"UUTTTTTTTt..........................",
+"cTTTTTTTTTt.........................",
+".cTTt..tTTTt........................",
+"........tTTTt.......................",
+".........tTTt........UUUU...........",
+".........tTTt......UTTTTTTt.........",
+".........tTTTt....UTTTTTTTTTt.......",
+".........tTTTTt..UTTTTTTTTTTTt......",
+"..........tTTTTUUTTTTTTTTTTTTTTt....",
+"..........tTTTTTTTTTTTTTTTTTTTTTt...",
+"..........tTTTTTTTTTTTTTTTTTTTTTTt..",
+"..........tTTTTTTTTTTTTTTTTTTTTTTtt.",
+"...........tTTTTTTTTTTTTTTTTTTTTTt.t",
+"...........ttTTTTTTTTTTTTTTTTTTTtt.t",
+"............tttttttttttttttttttttt.t",
+".............tTt.fff.......fff.tTt..",
+".............tTt.fff.......fff.tTt..",
+".............tTt.fff.......fff.tTt..",
+".............tTt.fff.......fff.tTt..",
+".............tTt.fff.......fff.tTt..",
+".............UTU.fUf.......fUf.UTU..",
+".............tTt.fff.......fff.tTt..",
+".............tTt.fff.......fff.tTt..",
+".............tTt.fff.......fff.tTt..",
+".............kkk.kkk.......kkk.kkk..",
+]
+BLANKET=["..aaaaaaa..",".aAAAAAAAa.","rrrrrrrrrrr","aAAAAAAAAAa","yayayayayay"]
+def make_camel(stage):
+    c=Cv(40,40); oy=10
+    c.draw(CAMEL,1,oy)
+    c.draw(BLANKET,16,oy+8)
+    if stage==1: c.draw(SACK,19,oy+11)
+    if stage>=2: c.draw(SACK,15,oy+11); c.draw(SACK,23,oy+11)
+    if stage>=2: c.draw(BUNDLE,16,oy+3)
+    if stage>=3: c.draw(SMALL,17,oy-1); c.draw(JAR,24,oy)
+    c.outline(); return c.im
+
 if __name__=='__main__':
+    import os
     out=sys.argv[1]
-    ims=[make(i) for i in range(4)]
-    for i,im in enumerate(ims): im.save(f'{out}/side_{i}.png')
-    W=sum(i.width+8 for i in ims)+8;H=ims[0].height+8
-    sheet=Image.new('RGBA',(W,H),(120,160,100,255));x=8
-    for im in ims: sheet.alpha_composite(im,(x,4)); x+=im.width+8
-    sheet.resize((W*6,H*6),Image.NEAREST).save(f'{out}/sheet.png')
+    for folder,fn in (('PackHorse',make),('Camel',make_camel)):
+        os.makedirs(f'{out}/{folder}',exist_ok=True)
+        for i in range(4): fn(i).save(f'{out}/{folder}/side_{i}.png')

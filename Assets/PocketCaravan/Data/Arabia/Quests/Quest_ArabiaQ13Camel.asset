@@ -25,7 +25,7 @@ MonoBehaviour:
   requiresAny: []
   choiceGroup: 
   offerLine: "\uC190\uC218\uB808\uB294 \uBAA8\uB798\uC5D0 \uBC14\uD034\uAC00 \uBE60\uC9C0\uC9C0.
-    300\uB0E5\uC744 \uBAA8\uC73C\uBA74 \uC81C\uB2E4\uB098 \uC0AC\uB098\uC5D0\uC11C
+    360\uB0E5\uC744 \uBAA8\uC73C\uBA74 \uC81C\uB2E4\uB098 \uC0AC\uB098\uC5D0\uC11C
     \uB099\uD0C0\uB97C \uC0B4 \uC218 \uC788\uC5B4.\n\uB099\uD0C0\uB294 \uBAA8\uB798
     \uC704\uC5D0\uC11C \uC0AC\uB78C\uBCF4\uB2E4 \uBE68\uB77C."
   giveItem: {fileID: 0}
@@ -35,11 +35,11 @@ MonoBehaviour:
   offerPrice: 0
   objectives:
   - type: 7
-    text: "300\uB0E5 \uBAA8\uC73C\uAE30"
+    text: "360\uB0E5 \uBAA8\uC73C\uAE30"
     targetId: 
     item: {fileID: 0}
     vehicle: {fileID: 0}
-    count: 300
+    count: 360
     completeLine: 
   - type: 6
     text: "\uC81C\uB2E4 \uC7A5\uD130\uC5D0\uC11C \uB099\uD0C0 \uC0AC\uAE30"

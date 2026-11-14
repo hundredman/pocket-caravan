@@ -153,7 +153,7 @@ namespace PocketCaravan
             public string id;
             public string name;
             public string look;     // 출신 아이디 (venice · goryeo · viking · arabia) → 캐릭터 그림
-            public string veh;      // 11/08 운반 수단 아이디 (handcart · north_sled · arabia_camel, 걷기면 "") → VehicleLook이 그린다
+            public string veh;      // 11/08 운반 수단 아이디 (handcart · north_sled · packhorse · arabia_camel, 걷기면 "") → VehicleLook이 그린다
             public string tag;      // 11/09 이름표 표시 ("guild" = 만국 상인회, 없으면 "") → RemotePlayers가 이름 위에 그린다
             public float x, y;
             public int fx, fy;

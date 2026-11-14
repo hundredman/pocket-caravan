@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95623e32ed894f73bd31e7c86a0f8de, type: 3}
   m_Name: Vehicle_PackHorse
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.VehicleData
-  id: goryeo_packhorse
+  id: packhorse
   displayName: "\uC9D0\uB9D0"
   sprite: {fileID: 0}
-  capacity: 45
+  capacity: 50
   price: 360
   minTownLevel: 1
   speedByGrade:
