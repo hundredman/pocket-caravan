@@ -4,7 +4,7 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// 온라인에서 다른 사람의 운반 수단(손수레·순록 썰매·낙타)도 보이게 (2026-11-08 기우).
+    /// 온라인에서 다른 사람의 운반 수단(손수레·순록 썰매·낙타·짐말)도 보이게 (2026-11-08 기우, 11/14 짐말 추가).
     /// 게임이 enter에 "veh"(운반 수단 아이디, 걷기면 "")를 싣고, 서버가 room · join으로 같은 맵 사람들에게 전한다 (Server/src/world.ts).
     /// 그림은 표시만 (충돌·속도·저장 무관). 내 낙타도 같은 VehicleTrail로 내 지나온 길을 따라온다.
     /// </summary>
@@ -58,6 +58,10 @@ namespace PocketCaravan
                     sr.flipX = trail.FaceRight;
                     sr.sortingOrder = at.y < owner.position.y ? baseOrder + 1 : baseOrder - 2;
                     break;
+                case GoryeoPackHorse.Id:   // 11/14 은샘: 고려 짐말 (내 것과 같은 그림·자리, 짐 단계 = crates)
+                    if (trail == null) trail = new VehicleTrail();
+                    GoryeoPackHorse.Place(sr, trail, owner, body, facing, moving, crates, moving ? Time.time * 9f : 0f);
+                    break;
                 case "north_sled":
                 {
                     bool side = Mathf.Abs(facing.x) > Mathf.Abs(facing.y);
@@ -75,7 +79,7 @@ namespace PocketCaravan
                     HandcartLook.Place(sr, owner, body, facing, crates);
                     break;
             }
-            if (vehicle == "arabia_camel" || vehicle == "north_sled") HandcartLook.HideHandle(sr);
+            if (vehicle == "arabia_camel" || vehicle == "north_sled" || vehicle == GoryeoPackHorse.Id) HandcartLook.HideHandle(sr);
             // 11/08에 붙였던 축소 상자 짐은 그림 안 짐 단계로 바뀌어 쓰지 않는다 (예전 것이 남아 있으면 끈다)
             for (int i = 0; i < 3; i++)
             {
