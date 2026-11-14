@@ -253,10 +253,13 @@ CAMEL_BACK=[
 "..tTt...tTt..",
 "..kkk...kkk..",
 ]
-CAMEL_BACK_HEAD=[            # 뒤: 등 너머 머리·목 (몸 뒤에 따로 그려 몸 테두리가 목 아래를 가른다)
+CAMEL_BACK_HEAD=[            # 뒤: 등 너머 머리·긴 목 (몸 뒤에 따로 그려 몸 테두리가 목 아래를 가른다). 짐을 쌓아도 머리가 짐 위로 솟게 목을 길게
 "....t...t....",
 "....tTTTt....",
 "....tTTTt....",
+".....tTt.....",
+".....tTt.....",
+".....tTt.....",
 ".....tTt.....",
 ".....tTt.....",
 ".....tTt.....",
@@ -313,8 +316,8 @@ CAMEL_NECK_LOW=[       # 목 아래쪽 절반: 몸과 한 덩어리로 (테두�
 VIEW={  # 그림, 안장 띠 줄, 띠 색, 짐 기준 줄, 몸 앞에 얹는 부위[(그림, 줄)], 몸 뒤에 두는 부위, 몸에 테두리 없이 섞는 부위
  ('horse','back'):(HORSE_BACK,9,'rRr',8,[],[],[]),
  ('horse','front'):(HORSE_FRONT,6,'rRr',6,[(HORSE_FACE,12)],[],[]),
- ('camel','back'):(CAMEL_BACK,7,'AaaraY',8,[(CAMEL_BACK_HEAD[:3],0)],[(CAMEL_BACK_HEAD,0)],[]),   # 머리(위 3줄)는 짐 더미보다 위에 다시 얹는다 (높이 든 머리가 짐 너머로 보인다)
- ('camel','front'):(CAMEL_FRONT,3,'AaaraY',4,[(CAMEL_NECK,6,10),(CAMEL_FACE,-2)],[],[]),   # 목은 짐 더미 앞에 (가깝다). 아래 절반은 테두리만 지운다
+ ('camel','back'):(CAMEL_BACK,7,'AaaraY',8,[(CAMEL_BACK_HEAD[:3],-3)],[(CAMEL_BACK_HEAD,-3)],[]),   # 머리(위 3줄)는 짐 더미보다 위에 다시 얹는다 (높이 든 머리가 짐 너머로 보인다)
+ ('camel','front'):(CAMEL_FRONT,3,'AaaraY',4,[(CAMEL_FACE,6)],[],[]),   # 11/14 머리를 가슴 앞으로 내려 혹·천·짐이 머리 너머로 보이게 (말 앞모습과 같은 짜임)
 }
 def end_view3(kind,view,stage,frame=''):
     from PIL import Image
@@ -339,9 +342,14 @@ def end_view3(kind,view,stage,frame=''):
         # 11/14 낙타는 머리·목이 등 가운데를 가리므로 (앞) 또는 짐 더미가 머리를 덮지 않게 (뒤) 짐을 양옆 자루 위로 쌓는다
         # 옆모습과 같은 순서: 1 양옆 자루 → 2 혹 위 가운데 보따리 → 3 그 위 작은 보따리 + 양옆 항아리
         # 앞모습은 머리가 혹 앞을 가리므로 혹 위 짐이 머리 너머(위)로 보인다
-        top=-4 if view=='front' else pack_y-4   # 앞: 머리 바로 뒤 혹 위, 뒤: 혹 꼭대기 위
-        if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy+top))
-        if stage>=3:layer(lambda L:L.draw(SMALL,ox+2,oy+top-4))
+        # 앞: 혹 위 짐이 목 뒤에서 양옆으로 보인다 (목·머리가 앞에 그려진다). 3단계는 보따리를 한 단 더
+        # 뒤: 혹 꼭대기 위에 쌓고, 긴 목·머리가 짐 너머로 솟는다
+        if view=='front':
+            if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy-1))
+            if stage>=3:layer(lambda L:L.draw(SMALL,ox+2,oy-5))
+        else:
+            if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy+pack_y-4))
+            if stage>=3:layer(lambda L:L.draw(SMALL,ox+2,oy+pack_y-8))
         if stage>=3:layer(lambda L:L.draw(JAR,ox-3,oy+pack_y-3));layer(lambda L:L.draw(JAR,ox+12,oy+pack_y-3))
     else:
         if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy+pack_y-1))
