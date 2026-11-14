@@ -218,7 +218,7 @@ HORSE_FRONT=[           # 몸(꼬리 끝·엉덩이·등·갈기·가슴·앞다
 ".bBBBBBBBBBb.",
 ".bBBBBBBBBBb.",
 ".bBBBBBBBBBb.",
-"..bBBBBBBBb..",
+".bBBBBBBBBBb.",   # 11/14 가슴 폭을 다리 폭과 같게 (다리·몸 사이 테두리 없음)
 ".bBb.....bBb.",
 ".bBb.....bBb.",
 ".bBb.....bBb.",
