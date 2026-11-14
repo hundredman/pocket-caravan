@@ -55,7 +55,7 @@ class Cv:
         pts=[(x,y) for y in range(s.h) for x in range(s.w) if s.get(x,y)[3]==0 and any(s.get(x+a,y+b)[3] and s.get(x+a,y+b)!=o for a,b in((1,0),(-1,0),(0,1),(0,-1)))]
         for x,y in pts:s.p[x,y]=o
 # 길마(나무 안장틀)·안장 천과 짐
-CLOTH=["rrrrrrrrrrrrrrr","RRRRRRRRRRRRRRR","RRRRRRRRRRRRRRR","rrrrrrrrrrrrrrr"]
+CLOTH=["rrrrrrrrrrrrr","RRRRRRRRRRRRR","RRRRRRRRRRRRR","rrrrrrrrrrrrr"]
 FRAME=["dHd.....dHd","dhHdddddHhd","ddddddddddd"]
 SACK=[".s..s.",".nnnn.","XCCCCs","CCCCCs","CCCCCs","CCCCss",".ssss."]
 JAR=[".JJ.","KJJj","KJJj",".jj."]
@@ -96,7 +96,7 @@ def make(stage,frame=''):
     c=Cv(40,32)
     oy=8
     c.draw(lift(HORSE,frame),1,oy)
-    c.draw(CLOTH,12,oy+9)   # 11/14 안장·짐 크기는 그대로, 짧아진 몸의 등 가운데(x 19)로 한 칸 당김
+    c.draw(CLOTH,14,oy+9)   # 11/14 안장 천 앞(머리 쪽) 2칸을 잘라 길마 앞으로 튀어나오지 않게. 뒤끝은 그대로
     c.draw(FRAME,14,oy+7)
     parts=[]
     if stage==1: parts+=[(SACK,16,oy+9)]
