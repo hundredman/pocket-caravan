@@ -122,7 +122,7 @@ def make_camel(stage):
 # 11/14 v3: LPC horses·OGA horse(opengameart) 4방향 그림을 참고. 위에서 비스듬히 본 말은 폭이 좁고(옆 길이의 1/3쯤)
 # 위아래로 길다(옆모습 키의 1.3배쯤). 뒤: 귀·뒤통수 → 갈기 있는 목 → 안장 → 넓은 엉덩이 → 꼬리 → 뒷다리.
 # 앞: 꼬리 끝 → 엉덩이·등·안장 → 그 앞에 귀·이마·얼굴(아래를 봄) → 양옆 어깨 아래 앞다리. 몸 폭 13, 캔버스 21 x 42.
-HORSE_BACK=[
+HORSE_BACK=[            # 11/14 v4: 엉덩이를 과장하지 않고 몸 폭을 고르게 (어깨 9 → 몸통·엉덩이 11)
 "....M...M....",
 "....BM.MB....",
 "....BBMBB....",
@@ -131,29 +131,27 @@ HORSE_BACK=[
 "...bBBMBBb...",
 "...bBBMBBb...",
 "..bBBBMBBBb..",
-"..bBBBBBBBb..",
 ".bBBBBBBBBBb.",
 ".bBBBBBBBBBb.",
 ".bBBBBBBBBBb.",
 ".bBBBBBBBBBb.",
 ".bBBBBBBBBBb.",
 ".bBBBBBBBBBb.",
-".bLBBBBBBBLb.",
-"bLBBBBBBBBBLb",
-"bBBBBBBBBBBBb",
-"bBBBBBMBBBBBb",
-"bBBBBMMMBBBBb",
+".bBBBBBBBBBb.",
+".bBBBBBBBBBb.",
+".bBBBBMBBBBb.",
 ".bBBBMMMBBBb.",
-".bBBbMMMbBBb.",
+".bBBBMMMBBBb.",
+"..bBBMMMBBb..",
 "..bBbMMMbBb..",
-"..bBb.MM.bBb.",
-"..bBb.MM.bBb.",
-"..bBb.M..bBb.",
-"..bBb....bBb.",
-"..bBb....bBb.",
-"..kkk....kkk.",
+"..bBb.M.bBb..",
+"..bBb.M.bBb..",
+"..bBb...bBb..",
+"..bBb...bBb..",
+"..bBb...bBb..",
+"..kkk...kkk..",
 ]
-HORSE_FRONT=[
+HORSE_FRONT=[           # 몸(꼬리 끝·엉덩이·등·가슴·앞다리). 머리는 HORSE_FACE를 따로 테두리 둘러 위에 얹는다
 "......M......",
 "......M......",
 ".....MMM.....",
@@ -167,22 +165,32 @@ HORSE_FRONT=[
 ".bBBBBBBBBBb.",
 ".bBBBBBBBBBb.",
 ".bBBBBBBBBBb.",
-".bBM.....MBb.",
-".bBMB...BMBb.",
-".bBBBBMBBBBb.",
-".bBBBBMBBBBb.",
-".bBBeBBBeBBb.",
-".bbBBBBBBBbb.",
-".bBbBBBBBbBb.",
-".bBbBBBBBbBb.",
-".bBbcccccbBb.",
-".bBbceccebBb.",
-".bBb.ccc.bBb.",
+".bBBBBBBBBBb.",
+".bBBBBBBBBBb.",
+".bBBBBBBBBBb.",
+".bBBBBBBBBBb.",
+"..bBBBBBBBb..",
+".bBb.....bBb.",
+".bBb.....bBb.",
+".bBb.....bBb.",
 ".bBb.....bBb.",
 ".bBb.....bBb.",
 ".bBb.....bBb.",
 ".bBb.....bBb.",
 ".kkk.....kkk.",
+]
+HORSE_FACE=[
+"M.....M",
+"BM...MB",
+"BBBMBBB",
+"LBBMBBb",
+"LeBBBeb",
+"LBBBBBb",
+".LBBBb.",
+".LBBBb.",
+".ccccc.",
+".cecec.",
+"..ccc..",
 ]
 CAMEL_BACK=[
 "....t...t....",
@@ -200,11 +208,9 @@ CAMEL_BACK=[
 ".tTTUUUUTTTt.",
 ".tTTTTTTTTTt.",
 ".tTTTTTTTTTt.",
-"tUTTTTTTTTTUt",
-"tTTTTTTTTTTTt",
-"tTTTTTtTTTTTt",
+".tTTTTTTTTTt.",
 ".tTTTTtTTTTt.",
-".tTTTttTTTTt.",
+"..tTTTtTTTt..",
 "..tTt.t.tTt..",
 "..tTt.k.tTt..",
 "..tTt...tTt..",
@@ -216,9 +222,10 @@ CAMEL_BACK=[
 "..tTt...tTt..",
 "..kkk...kkk..",
 ]
-CAMEL_FRONT=[
+CAMEL_FRONT=[           # 몸(꼬리 끝·엉덩이·혹·가슴·긴 앞다리). 목·머리는 CAMEL_FACE를 따로 얹는다
 "......t......",
 "......k......",
+"...tTTTTTt...",
 "..tTTTTTTTt..",
 ".tTTTTTTTTTt.",
 ".tTTUUUUTTTt.",
@@ -226,17 +233,9 @@ CAMEL_FRONT=[
 ".tTUUUUUUTTt.",
 ".tTTUUUUTTTt.",
 ".tTTTTTTTTTt.",
-".tTTtTTTtTTt.",
-".tTt.tTt.tTt.",
-"..t..tTt..t..",
-".....tTt.....",
-"...t.....t...",
-"...tTTTTTt...",
-"...TeTTTeT...",
-"...TTTTTTT...",
-"...tTTTTTt...",
-"....ccccc....",
-".....ccc.....",
+".tTTTTTTTTTt.",
+"..tTTTTTTTt..",
+"..tTt...tTt..",
 "..tTt...tTt..",
 "..tTt...tTt..",
 "..tTt...tTt..",
@@ -247,15 +246,31 @@ CAMEL_FRONT=[
 "..tTt...tTt..",
 "..kkk...kkk..",
 ]
-VIEW={  # 그림, 안장 띠 줄(시작), 띠 색, 짐(자루·더미) 기준 줄
- ('horse','back'):(HORSE_BACK,8,'rRr',8),
- ('horse','front'):(HORSE_FRONT,6,'rRr',6),
- ('camel','back'):(CAMEL_BACK,8,'aAy',8),
- ('camel','front'):(CAMEL_FRONT,3,'aAy',3),
+CAMEL_FACE=[           # 낙타는 머리를 높이 들어 위에서 보면 머리가 혹 근처에 오고, 긴 목이 가슴으로 내려온다
+".t...t.",
+".tTTTt.",
+"tTTTTTt",
+"TeTTTeT",
+"tTTTTTt",
+".TTTTT.",
+".ccccc.",
+"..ccc..",
+"..tTt..",
+"..tTt..",
+"..tTt..",
+"..tTt..",
+"..tTt..",
+"..tTt..",
+]
+VIEW={  # 그림, 안장 띠 줄, 띠 색, 짐 기준 줄, (얼굴 그림, 얼굴 위치 줄)
+ ('horse','back'):(HORSE_BACK,9,'rRr',8,None,0),
+ ('horse','front'):(HORSE_FRONT,6,'rRr',6,HORSE_FACE,12),
+ ('camel','back'):(CAMEL_BACK,9,'aAy',8,None,0),
+ ('camel','front'):(CAMEL_FRONT,5,'aAy',4,CAMEL_FACE,-2),
 }
 def end_view3(kind,view,stage):
     from PIL import Image
-    rows,band_y,band,pack_y=VIEW[(kind,view)]
+    rows,band_y,band,pack_y,face,face_y=VIEW[(kind,view)]
     W,H=21,44;ox=4;oy=H-2-len(rows)
     for r in rows:assert len(r)==13,(kind,view,r)
     layers=[]
@@ -268,12 +283,11 @@ def end_view3(kind,view,stage):
             for x in range(W):
                 if L.get(x,y)[3] and L.get(x,y)[:3] not in (P['M'],P['e'],P['k'],P['c']):L.px(x,y,ch)
     layer(body)
-    if view=='front':                           # 앞모습은 얼굴이 안장 앞에 오도록 얼굴 부분을 다시 위에 그린다
-        face=[r if oy+band_y<=0 else r for r in rows]
     if stage>=1:
         layer(lambda L:L.draw(SACK,ox-4,oy+pack_y));layer(lambda L:L.draw(SACK,ox+11,oy+pack_y))
     if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy+pack_y-1))
     if stage>=3:layer(lambda L:L.draw(SMALL,ox+2,oy+pack_y-5))
+    if face:layer(lambda L:L.draw(face,ox+3,oy+face_y))   # 얼굴은 따로 테두리 → 몸·짐과 구분된다
     out=Image.new('RGBA',(W,H),(0,0,0,0))
     for im in layers:out.alpha_composite(im)
     return out
