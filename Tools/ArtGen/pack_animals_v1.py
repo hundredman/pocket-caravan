@@ -40,6 +40,12 @@ class Cv:
     def px(s,x,y,k):
         if 0<=x<s.w and 0<=y<s.h:s.p[x,y]=P[k]+(255,)
     def get(s,x,y):return s.p[x,y] if 0<=x<s.w and 0<=y<s.h else (0,0,0,0)
+    def hline(s,x0,x1,y,k):
+        for x in range(x0,x1+1):s.px(x,y,k)
+    def vline(s,x,y0,y1,k):
+        for y in range(y0,y1+1):s.px(x,y,k)
+    def rect(s,x0,y0,x1,y1,k):
+        for y in range(y0,y1+1):s.hline(x0,x1,y,k)
     def draw(s,rows,ox,oy):
         for y,r in enumerate(rows):
             for x,ch in enumerate(r):
@@ -111,9 +117,143 @@ def make_camel(stage):
     if stage>=3: c.draw(SMALL,17,oy-1); c.draw(JAR,24,oy)
     c.outline(); return c.im
 
+
+# ---------------- 앞(아래로 올 때)·뒤(위로 갈 때) ----------------
+# 옆모습과 같은 작은 몸 비율. 앞: 머리가 가장 앞(가깝게 크게), 머리 양옆으로 어깨·자루, 짐 더미는 머리 너머 등 위로 보인다.
+# 뒤: 엉덩이·꼬리가 앞, 등 위 안장·짐, 머리는 등 너머 귀만. 캔버스 폭 20, 발바닥이 맨 아래에서 2줄 위.
+HORSE_FRONT=[
+"....bM......Mb....",
+"....bBM....MBb....",
+"....bBBBMMBBBb....",
+"....bBBMMMMBBb....",
+"....bBBBMMBBBb....",
+"....bLeBBBBeBb....",
+"..LLbBBBBBBBBbBB..",
+".LBBbBBBBBBBBbBBb.",
+".LBBBbBBBBBBbBBBb.",
+".LBBBbBccccBbBBBb.",
+".LBBBbccccccbBBBb.",
+".LBBBbceccecbBBBb.",
+".bBBBBbccccbBBBBb.",
+"..bBBBBbbbbBBBBb..",
+"..bbBBBBBBBBBBbb..",
+"...bBBBBBBBBBBb...",
+"....bBb....bBb....",
+"....bBb....bBb....",
+"....bBb....bBb....",
+"....bBb....bBb....",
+"....bBb....bBb....",
+"....kkk....kkk....",
+]
+HORSE_BACK=[
+".....M......M.....",
+".....MB....BM.....",
+"......BBBBBB......",
+"....LLMMMMMMLL....",
+"..LLBBBMMMMBBBb...",
+".LBBBBBBBBBBBBBb..",
+".LBBBBBBBBBBBBBb..",
+"LBBBBBBBBBBBBBBBb.",
+"LBBBBBBBBBBBBBBBb.",
+"LBBBBBBBMMBBBBBBb.",
+"LBBBBBBMMMMBBBBBb.",
+".bBBBBBMMMMBBBBb..",
+".bBBBBbMMMMbBBBb..",
+"..bBBbbMMMMbbBBb..",
+"..bBBb.MMMM.bBBb..",
+"..bBBb.MMMM.bBBb..",
+"..bBBb..MM..bBBb..",
+"..bBBb......bBBb..",
+"..bBBb......bBBb..",
+"..bBBb......bBBb..",
+"..kkkk......kkkk..",
+]
+CAMEL_FRONT=[
+"......t......t....",
+"......tTTTTTTt....",
+"......TTTTTTTT....",
+"......TeTTTTeT....",
+"......TTTTTTTT....",
+".......TccccT.....",
+".......cecccT.....",
+"........tTTt......",
+"...UUU..tTTt.UUU..",
+"..UTTTU.tTTt.TTTt.",
+".UTTTTTttTTttTTTTt",
+".TTTTTTTTTTTTTTTTt",
+".TTTTTTTTTTTTTTTTt",
+".tTTTTTTTTTTTTTTtt",
+"..tTTTTTTTTTTTTtt.",
+"...tttttttttttt...",
+"....tTt....tTt....",
+"....tTt....tTt....",
+"....tTt....tTt....",
+"....tTt....tTt....",
+"....UTU....UTU....",
+"....tTt....tTt....",
+"....tTt....tTt....",
+"....tTt....tTt....",
+"....tTt....tTt....",
+"....kkk....kkk....",
+]
+CAMEL_BACK=[
+"......t.....t.....",
+"......tTTTTTt.....",
+"......tTTTTTt.....",
+".......tTTTt......",
+"........tTt.......",
+".....UUUUTUUUU....",
+"....UTTTTTTTTTTt..",
+"...UTTTTTTTTTTTTt.",
+"..UTTTTTTTTTTTTTt.",
+".UTTTTTTTTTTTTTTTt",
+".TTTTTTTTTTTTTTTTt",
+".TTTTTTTTtTTTTTTTt",
+".tTTTTTTTtTTTTTTtt",
+"..tTTTTTTtTTTTTtt.",
+"...tttttttttttt...",
+"....tTt..t.tTt....",
+"....tTt..k.tTt....",
+"....tTt....tTt....",
+"....tTt....tTt....",
+"....UTU....UTU....",
+"....tTt....tTt....",
+"....tTt....tTt....",
+"....tTt....tTt....",
+"....tTt....tTt....",
+"....kkk....kkk....",
+]
+def end_view(rows,stage,sack_y,band_y,band,top_y,front):
+    """짐 높이 자리를 위에 비워 둔 캔버스(20 x 몸+12)에 몸·안장 띠·자루·짐 더미를 그린다"""
+    c=Cv(20,len(rows)+14);oy=12;ox=1
+    if not front:
+        c.draw(rows,ox,oy)
+        for x in range(ox+2,ox+16):
+            for i,k in enumerate(band):c.px(x,oy+band_y+i,k)
+    if stage>=2:c.draw(BUNDLE,ox+4,oy+top_y)
+    if stage>=3:c.draw(SMALL,ox+5,oy+top_y-4)
+    if front:
+        c.draw(rows,ox,oy)
+    if stage>=1:c.draw(SACK,ox-1,oy+sack_y);c.draw(SACK,ox+13,oy+sack_y)
+    c.outline();return c.im
+def horse_front(stage):return end_view(HORSE_FRONT,stage,6,0,'',-4,True)
+def horse_back(stage):return end_view(HORSE_BACK,stage,4,4,'rRr',-1,False)
+def camel_front(stage):
+    """낙타 앞: 머리가 목 위 높이 있어 등짐이 가려지므로, 혹 위 짐을 목 양옆 바구니처럼 그린다"""
+    c=Cv(20,len(CAMEL_FRONT)+14);oy=12;ox=1
+    if stage>=2:c.draw(SMALL,ox-1,oy+5);c.draw(SMALL,ox+11,oy+5)
+    if stage>=3:c.draw(SMALL,ox,oy+1);c.draw(SMALL,ox+10,oy+1)
+    c.draw(CAMEL_FRONT,ox,oy)
+    for x in list(range(ox+1,ox+8))+list(range(ox+12,ox+17)):
+        for i,k in enumerate('aAy'):c.px(x,oy+10+i,k)
+    if stage>=1:c.draw(SACK,ox-1,oy+9);c.draw(SACK,ox+13,oy+9)
+    c.outline();return c.im
+def camel_back(stage):return end_view(CAMEL_BACK,stage,6,5,'aAy',1,False)
+
 if __name__=='__main__':
     import os
     out=sys.argv[1]
-    for folder,fn in (('PackHorse',make),('Camel',make_camel)):
+    for folder,views in (('PackHorse',(('side',make),('front',horse_front),('back',horse_back))),('Camel',(('side',make_camel),('front',camel_front),('back',camel_back)))):
         os.makedirs(f'{out}/{folder}',exist_ok=True)
-        for i in range(4): fn(i).save(f'{out}/{folder}/side_{i}.png')
+        for view,fn in views:
+            for i in range(4): fn(i).save(f'{out}/{folder}/{view}_{i}.png')

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Vehicle_NorthSled
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.VehicleData
   id: north_sled
-  displayName: "\uC21C\uB85D \uC370\uB9E4"
+  displayName: "\uC9D0 \uC370\uB9E4"
   sprite: {fileID: 0}
   capacity: 30
   price: 150
