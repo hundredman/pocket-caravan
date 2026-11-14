@@ -85,6 +85,17 @@ def lift(rows,frame):
             if rows[last-1][x]!='.':rows[last-1][x]='k'
     return [''.join(r) for r in rows]
 
+def far_legs_up(rows,far='m'):
+    """11/14 옆모습 안쪽(먼) 다리는 한 칸 짧게: 먼 다리 색(far) 열의 발굽을 한 줄 위로"""
+    rows=[list(r) for r in rows]
+    for x in range(len(rows[0])):
+        ys=[y for y in range(len(rows)) if rows[y][x]=='k']
+        if not ys:continue
+        y=max(ys)
+        if y>=2 and rows[y-1][x]==far:
+            rows[y][x]='.';rows[y-1][x]='k'
+    return [''.join(r) for r in rows]
+
 def with_parts(c,parts):
     """11/14 몸 그림(c)에 테두리를 두르고, 짐 하나하나도 따로 테두리를 둘러 순서대로 얹는다 (짐이 몸·서로와 섞이지 않게)"""
     c.outline();out=c.im
@@ -95,7 +106,7 @@ def with_parts(c,parts):
 def make(stage,frame=''):
     c=Cv(40,32)
     oy=8
-    c.draw(lift(HORSE,frame),1,oy)
+    c.draw(far_legs_up(lift(HORSE,frame)),1,oy)
     c.draw(CLOTH,14,oy+9)   # 11/14 안장 천 앞(머리 쪽) 2칸을 잘라 길마 앞으로 튀어나오지 않게. 뒤끝은 그대로
     c.draw(FRAME,14,oy+7)
     parts=[]
