@@ -336,6 +336,15 @@ namespace PocketCaravan
             }
         }
 
+        /// <summary>11/14 은샘: 로그인한 계정이 이 컴퓨터 저장의 주인이 아니면 시작 화면을 "새로 시작"부터 연다 (Net/NetSave). 파일은 지우지 않는다</summary>
+        public bool ForgetLocalSave()
+        {
+            if (!StartScreen.IsOpen || skipStartScreen || SaveSystem.UsingSeparateSlot) return false;
+            saveToLoad = null;
+            StartScreen.Open(false);
+            return true;
+        }
+
         /// <summary>
         /// 온라인 계정에 저장된 게임으로 이 컴퓨터 저장을 바꾼다 (2026-11-07, Net/NetSave). 시작 화면이 떠 있고 아직 게임을 시작하지 않았을 때만.
         /// 저장 파일에 쓰고(예전 파일은 SaveSystem이 .bak으로 남긴다) 다시 읽어서, "이어하기"가 그 저장으로 시작하게 한다.
@@ -364,6 +373,7 @@ namespace PocketCaravan
         /// 시작 돈은 네 문명 모두 같다(Db.startMoney). 지난 저장은 출발 마을에 도착하면서 덮어쓴다.</summary>
         public void BeginNewGame(StartChoices.Choice choice)
         {
+            NetSave.NewGameStarted();   // 11/14 이 컴퓨터 저장의 주인 계정을 새로 정한다 (Net/NetSave)
             skipStartScreen = true;
             saveToLoad = null;
             Player.origin = choice.origin;

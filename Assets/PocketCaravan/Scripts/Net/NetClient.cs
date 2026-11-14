@@ -534,6 +534,7 @@ namespace PocketCaravan
                     else if (StartScreen.IsOpen || NetLogin.IsOpen) { }   // 첫 화면: 로그인 화면이 알아서 넘어간다
                     else if (retries > 0) Notify.Show($"다시 연결됐어요 · 지금 {msg.online}명", 2.5f);
                     else if (asked.Length > 0 && MyName != asked) Notify.Show($"이름이 겹쳐서 '{MyName}'(으)로 들어왔어요", 4f);
+                    else if (StoryGuide.IntroActive) NetChat.System($"온라인 접속: {msg.id}");   // 11/14 은샘: 시작 튜토리얼 화면에는 튜토리얼·마을 이름만 (11/11 정함). 접속 소식은 채팅으로
                     else Notify.Show($"온라인 접속: {msg.id} · 지금 {msg.online}명", 3f);
                     retries = 0;
                     break;
