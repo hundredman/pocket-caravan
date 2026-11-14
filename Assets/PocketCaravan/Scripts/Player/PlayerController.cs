@@ -41,6 +41,9 @@ namespace PocketCaravan
         }
 
         PlayerMotor motor;
+        // 11/14 UT "사막 맵 전환 오류": 아라비아 맵은 모서리에서 두 출구가 겹치고, 도착 칸이 다른 출구 위인 곳이 있다.
+        //   맵에 막 도착한 칸에 서 있는 동안은 출구를 쓰지 않는다 (한 칸이라도 움직이면 풀린다)
+        MapRoot arrivalMap; Vector3Int arrivalCell; bool arrivalHold;
 
         /// <summary>지금 Space를 누르면 말을 걸 대상 (머리 위 안내 표시용)</summary>
         public Interactable TalkTarget { get; private set; }
@@ -75,7 +78,9 @@ namespace PocketCaravan
             if (!locked && !seatHandled)
             {
                 if (InputReader.InteractPressed() && !UIState.JustClosed && TalkTarget != null) TalkTarget.Interact(this);
-                var exit = MapExit.At(motor.Cell,motor.Facing);
+                if (MapRoot.Current != arrivalMap) { arrivalMap = MapRoot.Current; arrivalCell = motor.Cell; arrivalHold = true; }
+                else if (arrivalHold && motor.Cell != arrivalCell) arrivalHold = false;
+                var exit = arrivalHold ? null : MapExit.At(motor.Cell,motor.Facing);
                 if (exit != null) exit.TryUseAtBoundary(motor, input);
             }
             UpdateBody();
