@@ -265,7 +265,7 @@ CAMEL_FACE=[           # 낙타는 머리를 높이 들어 위에서 보면 머�
 ".ccccc.",
 "..ccc..",
 ]
-CAMEL_NECK=[           # 긴 목: 머리 아래에서 가슴으로
+CAMEL_NECK=[           # 긴 목 전체. 위쪽 절반만 테두리를 남기고 아래 절반은 지운다 (아래는 CAMEL_NECK_LOW가 몸과 한 덩어리로)
 "..tTt..",
 "..tTt..",
 "..tTt..",
@@ -274,15 +274,20 @@ CAMEL_NECK=[           # 긴 목: 머리 아래에서 가슴으로
 "..tTt..",
 "..tTt..",
 ]
-VIEW={  # 그림, 안장 띠 줄, 띠 색, 짐 기준 줄, 몸 앞에 얹는 부위[(그림, 줄)], 몸 뒤에 두는 부위[(그림, 줄)]
- ('horse','back'):(HORSE_BACK,9,'rRr',8,[],[]),
- ('horse','front'):(HORSE_FRONT,6,'rRr',6,[(HORSE_FACE,12)],[]),
- ('camel','back'):(CAMEL_BACK,9,'aAy',8,[],[(CAMEL_BACK_HEAD,0)]),
- ('camel','front'):(CAMEL_FRONT,5,'aAy',4,[(CAMEL_NECK,6),(CAMEL_FACE,-2)],[]),
+CAMEL_NECK_LOW=[       # 목 아래쪽 절반: 몸과 한 덩어리로 (테두리 없이 가슴에 이어진다)
+"..tTt..",
+"..tTt..",
+"..tTt..",
+]
+VIEW={  # 그림, 안장 띠 줄, 띠 색, 짐 기준 줄, 몸 앞에 얹는 부위[(그림, 줄)], 몸 뒤에 두는 부위, 몸에 테두리 없이 섞는 부위
+ ('horse','back'):(HORSE_BACK,9,'rRr',8,[],[],[]),
+ ('horse','front'):(HORSE_FRONT,6,'rRr',6,[(HORSE_FACE,12)],[],[]),
+ ('camel','back'):(CAMEL_BACK,9,'aAy',8,[],[(CAMEL_BACK_HEAD,0)],[]),
+ ('camel','front'):(CAMEL_FRONT,5,'aAy',4,[(CAMEL_NECK,6,10),(CAMEL_FACE,-2)],[],[(CAMEL_NECK_LOW,10)]),
 }
 def end_view3(kind,view,stage):
     from PIL import Image
-    rows,band_y,band,pack_y,over,under=VIEW[(kind,view)]
+    rows,band_y,band,pack_y,over,under,inline=VIEW[(kind,view)]
     W,H=21,44;ox=4;oy=H-2-len(rows)
     for r in rows:assert len(r)==13,(kind,view,r)
     layers=[]
@@ -295,12 +300,19 @@ def end_view3(kind,view,stage):
             y=oy+band_y+i
             for x in range(W):
                 if L.get(x,y)[3] and L.get(x,y)[:3] not in (P['M'],P['e'],P['k'],P['c']):L.px(x,y,ch)
+        for part,py in inline:L.draw(part,ox+(13-len(part[0]))//2,oy+py)
     layer(body)
     if stage>=1:
         layer(lambda L:L.draw(SACK,ox-4,oy+pack_y));layer(lambda L:L.draw(SACK,ox+11,oy+pack_y))
     if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy+pack_y-1))
     if stage>=3:layer(lambda L:L.draw(SMALL,ox+2,oy+pack_y-5))
-    for part,py in over:layer(lambda L,part=part,py=py:L.draw(part,ox+(13-len(part[0]))//2,oy+py))   # 얼굴·목은 따로 테두리 → 몸·짐과 구분된다
+    for item in over:   # 얼굴·목은 따로 테두리 → 몸·짐과 구분된다. (그림, 줄, 자를 줄)이면 그 줄부터 아래는 지운다
+        part,py=item[0],item[1];cut=item[2] if len(item)>2 else None
+        L=Cv(W,H);L.draw(part,ox+(13-len(part[0]))//2,oy+py);L.outline()
+        if cut is not None:
+            for y in range(oy+cut,H):
+                for x in range(W):L.p[x,y]=(0,0,0,0)
+        layers.append(L.im)
     out=Image.new('RGBA',(W,H),(0,0,0,0))
     for im in layers:out.alpha_composite(im)
     return out
