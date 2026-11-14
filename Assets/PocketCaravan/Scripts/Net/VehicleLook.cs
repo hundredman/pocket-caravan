@@ -51,7 +51,7 @@ namespace PocketCaravan
                 case PackAnimal.CamelId:   // 11/14 은샘: 낙타·짐말은 내 것과 같은 PackAnimal 그림·자리 (짐 단계 = crates)
                 case PackAnimal.HorseId:
                     if (trail == null) trail = new VehicleTrail();
-                    PackAnimal.Place(sr, trail, owner, body, vehicle, facing, moving, crates, moving ? Time.time * 9f : 0f);
+                    PackAnimal.Place(sr, trail, owner, body, vehicle, facing, moving, crates, moving ? Time.time * 8f : 0f);
                     break;
                 case "north_sled":
                 {   // 11/14 은샘: 짐 썰매는 손수레와 같은 HandcartLook 자리·그림 방식 (폴더만 Sled)
@@ -96,6 +96,7 @@ namespace PocketCaravan
                 pos = leader - facing.normalized * Gap;
                 pts.Add(pos); pts.Add(leader);
                 has = true;
+                if (facing.sqrMagnitude > 0.01f) Heading = facing.normalized;   // 11/14 처음 놓일 때는 사람이 보는 쪽 (이전 수단의 방향이 남지 않게)
                 if (Mathf.Abs(facing.x) > .1f) FaceRight = facing.x > 0;
                 return pos;
             }
@@ -112,9 +113,9 @@ namespace PocketCaravan
             Vector2 before = pos;
             pos = Vector2.Lerp(pos, target, 1f - Mathf.Exp(-12f * Time.deltaTime));
             float dx = pos.x - before.x;
-            if (Mathf.Abs(dx) > 0.002f) FaceRight = dx > 0;
+            if (Mathf.Abs(dx) > 0.002f) FaceRight = dx > 0;   // 위·아래로만 가거나 서 있으면 마지막 좌우 방향 유지
             var step = pos - before;
-            if (step.sqrMagnitude > 0.002f * 0.002f) Heading = Vector2.Lerp(Heading, step.normalized, 0.25f);   // 살짝 부드럽게 (모퉁이에서 그림이 깜빡이지 않게)   // 위·아래로만 가거나 서 있으면 마지막 좌우 방향 유지
+            if (step.sqrMagnitude > 0.002f * 0.002f) Heading = Vector2.Lerp(Heading, step.normalized, 0.25f);   // 살짝 부드럽게 (모퉁이에서 그림이 깜빡이지 않게)
             return pos;
         }
     }

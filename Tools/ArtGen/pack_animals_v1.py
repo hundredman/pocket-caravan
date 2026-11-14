@@ -61,10 +61,34 @@ SACK=[".s..s.",".nnnn.","XCCCCs","CCCCCs","CCCCCs","CCCCss",".ssss."]
 JAR=[".JJ.","KJJj","KJJj",".jj."]
 BUNDLE=["..s....s..",".CnnnnnnC.","XCCCCCCCCs","CCCCCCCCss",".ssssssss."]
 SMALL=["..s..s..",".CnnnnC.","XCCCCCCs",".ssssss."]
-def make(stage):
+
+# ---------------- 걸음 프레임 (11/14) ----------------
+# 맨 아래 발굽 줄(k)의 다리 묶음을 왼쪽부터 센다. 옆모습 4개(가까운 앞·먼 앞·먼 뒤·가까운 뒤), 앞·뒷모습 2개.
+# 'a' 프레임: 0·2번(옆) 또는 0번(앞뒤) 다리를 한 칸 든다, 'b': 1·3번 또는 1번. 걷는 순서는 기본 → a → 기본 → b.
+def lift(rows,frame):
+    if not frame:return rows
+    rows=[list(r) for r in rows]
+    last=len(rows)-1
+    groups=[];x=0;w=len(rows[last])
+    while x<w:
+        if rows[last][x]=='k':
+            x0=x
+            while x<w and rows[last][x]=='k':x+=1
+            groups.append((x0,x-1))
+        else:x+=1
+    pick=([0,2] if frame=='a' else [1,3]) if len(groups)>=4 else ([0] if frame=='a' else [1])
+    for gi in pick:
+        if gi>=len(groups):continue
+        x0,x1=groups[gi]
+        for x in range(x0,x1+1):
+            rows[last][x]='.'
+            if rows[last-1][x]!='.':rows[last-1][x]='k'
+    return [''.join(r) for r in rows]
+
+def make(stage,frame=''):
     c=Cv(40,32)
     oy=8
-    c.draw(HORSE,1,oy)
+    c.draw(lift(HORSE,frame),1,oy)
     c.draw(CLOTH,13,oy+9)
     c.draw(FRAME,15,oy+7)
     if stage==1: c.draw(SACK,17,oy+9)
@@ -107,9 +131,9 @@ CAMEL=[
 ".............kkk.kkk.......kkk.kkk..",
 ]
 BLANKET=["..aaaaaaa..",".aAAAAAAAa.","rrrrrrrrrrr","aAAAAAAAAAa","yayayayayay"]
-def make_camel(stage):
+def make_camel(stage,frame=''):
     c=Cv(40,40); oy=10
-    c.draw(CAMEL,1,oy)
+    c.draw(lift(CAMEL,frame),1,oy)
     c.draw(BLANKET,16,oy+8)
     if stage==1: c.draw(SACK,19,oy+11)
     if stage>=2: c.draw(SACK,15,oy+11); c.draw(SACK,23,oy+11)
@@ -285,7 +309,7 @@ VIEW={  # 그림, 안장 띠 줄, 띠 색, 짐 기준 줄, 몸 앞에 얹는 부
  ('camel','back'):(CAMEL_BACK,9,'aAy',8,[],[(CAMEL_BACK_HEAD,0)],[]),
  ('camel','front'):(CAMEL_FRONT,5,'aAy',4,[(CAMEL_NECK,6,10),(CAMEL_FACE,-2)],[],[(CAMEL_NECK_LOW,10)]),
 }
-def end_view3(kind,view,stage):
+def end_view3(kind,view,stage,frame=''):
     from PIL import Image
     rows,band_y,band,pack_y,over,under,inline=VIEW[(kind,view)]
     W,H=23,44;ox=5;oy=H-2-len(rows)   # 11/14 양옆 자루 바깥 테두리가 캔버스 끝에 잘리지 않게 폭 23
@@ -295,7 +319,7 @@ def end_view3(kind,view,stage):
         L=Cv(W,H);fn(L);L.outline();layers.append(L.im)
     for part,py in under:layer(lambda L,part=part,py=py:L.draw(part,ox+(13-len(part[0]))//2,oy+py))
     def body(L):
-        L.draw(rows,ox,oy)
+        L.draw(lift(rows,frame),ox,oy)
         for i,ch in enumerate(band):            # 안장 천: 몸 위에만
             y=oy+band_y+i
             for x in range(W):
@@ -316,10 +340,10 @@ def end_view3(kind,view,stage):
     out=Image.new('RGBA',(W,H),(0,0,0,0))
     for im in layers:out.alpha_composite(im)
     return out
-def horse_front(stage):return end_view3('horse','front',stage)
-def horse_back(stage):return end_view3('horse','back',stage)
-def camel_front(stage):return end_view3('camel','front',stage)
-def camel_back(stage):return end_view3('camel','back',stage)
+def horse_front(stage,frame=''):return end_view3('horse','front',stage,frame)
+def horse_back(stage,frame=''):return end_view3('horse','back',stage,frame)
+def camel_front(stage,frame=''):return end_view3('camel','front',stage,frame)
+def camel_back(stage,frame=''):return end_view3('camel','back',stage,frame)
 
 if __name__=='__main__':
     import os
@@ -327,4 +351,6 @@ if __name__=='__main__':
     for folder,views in (('PackHorse',(('side',make),('front',horse_front),('back',horse_back))),('Camel',(('side',make_camel),('front',camel_front),('back',camel_back)))):
         os.makedirs(f'{out}/{folder}',exist_ok=True)
         for view,fn in views:
-            for i in range(4): fn(i).save(f'{out}/{folder}/{view}_{i}.png')
+            for i in range(4):
+                fn(i).save(f'{out}/{folder}/{view}_{i}.png')
+                for fr in 'ab':fn(i,fr).save(f'{out}/{folder}/{view}_{i}_{fr}.png')   # 걸음 프레임

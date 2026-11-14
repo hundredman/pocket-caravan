@@ -23,9 +23,9 @@ namespace PocketCaravan
         public static bool Is(string vehicleId) => Is(vehicleId, out _, out _);
 
         static readonly System.Collections.Generic.Dictionary<string, Sprite> art = new System.Collections.Generic.Dictionary<string, Sprite>();
-        static Sprite Art(string folder, string view, int stage)
+        static Sprite Art(string folder, string view, int stage, string frame)
         {
-            string key = folder + "/" + view + "_" + Mathf.Clamp(stage, 0, 3);
+            string key = folder + "/" + view + "_" + Mathf.Clamp(stage, 0, 3) + frame;
             if (art.TryGetValue(key, out var s) && s != null) return s;
             return art[key] = Resources.Load<Sprite>("Transport/" + key);
         }
@@ -39,18 +39,37 @@ namespace PocketCaravan
             tr.localScale = Vector3.one; tr.localRotation = Quaternion.identity;
             var at = trail.Step(owner.position, facing, moving);
             var h = trail.Heading;
-            bool upDown = Mathf.Abs(h.y) > Mathf.Abs(h.x) * 1.2f;   // 11/14 위아래로 걸으면 앞·뒷모습 (Tools/ArtGen/pack_animals_v1.py front·back)
-            sr.sprite = Art(folder, !upDown ? "side" : h.y < 0f ? "front" : "back", stage);
-            float bob = moving ? Mathf.Round(Mathf.Abs(Mathf.Sin(phase))) / 16f : 0f;   // 걸을 때 1픽셀 들썩
+            // 11/14 위아래로 걸으면 앞·뒷모습. 옆모습은 좌우까지 한 방향으로 쳐서, 방향이 바뀔 때 뒤집힘·앞뒤 바뀜이 같이 0.1초 기다린다
+            string want = Mathf.Abs(h.y) > Mathf.Abs(h.x) * 1.2f ? (h.y < 0f ? "front" : "back") : trail.FaceRight ? "side_r" : "side_l";
+            string shown = SteadyView(sr, want);
+            bool upDown = !shown.StartsWith("side");
+            string view = upDown ? shown : "side";
+            // 11/14 걸음: 기본 → a(다리 한 쌍 듦) → 기본 → b(다른 쌍). 서 있으면 기본 (Tools/ArtGen/pack_animals_v1.py lift)
+            int step = moving ? Mathf.FloorToInt(phase) & 3 : 0;
+            sr.sprite = Art(folder, view, stage, step == 1 ? "_a" : step == 3 ? "_b" : "");
+            float bob = 0f;   // 11/14 다리 걸음 프레임으로 바꿔 들썩임은 뺐다
             float lift = sr.sprite != null ? sr.sprite.rect.height / 32f - .55f : .45f;   // 발이 사람 발높이쯤 오게 (그림 가운데가 중심)
             if (upDown && h.y < 0f) lift -= .4f;   // 앞모습(내 위에서 따라 내려올 때)은 머리가 아래 끝이라 조금 당겨 고삐 거리를 옆모습과 비슷하게
             tr.position = new Vector3(at.x, at.y + lift + bob, owner.position.z);
             sr.flipY = false;                 // 썰매에서 바꿨을 때
-            sr.flipX = !upDown && trail.FaceRight;   // 옆모습 그림이 왼쪽을 보니 오른쪽으로 갈 때 뒤집는다
+            sr.flipX = shown == "side_r";   // 옆모습 그림이 왼쪽을 보니 오른쪽으로 갈 때 뒤집는다
             int baseOrder = body != null ? body.sortingOrder : 10;
             if (body != null) sr.sortingLayerID = body.sortingLayerID;
             sr.sortingOrder = at.y < owner.position.y ? baseOrder + 1 : baseOrder - 2;   // 짐승이 나보다 아래면 앞에, 위면 뒤에
             return true;
+        }
+
+        /// <summary>모퉁이에서 그림이 한두 프레임만 바뀌었다 돌아오는 깜빡임을 막는다: 새 방향이 0.1초 이어져야 바꾼다</summary>
+        static readonly System.Collections.Generic.Dictionary<int, (string shown, string pending, float since)> views = new System.Collections.Generic.Dictionary<int, (string, string, float)>();
+        static string SteadyView(SpriteRenderer sr, string want)
+        {
+            if (views.Count > 64) views.Clear();   // 맵이 바뀌며 사라진 그림 칸이 쌓이지 않게
+            int key = sr.GetInstanceID();
+            if (!views.TryGetValue(key, out var v) || v.shown == null) { views[key] = (want, want, Time.time); return want; }
+            if (want == v.shown) { views[key] = (v.shown, want, Time.time); return v.shown; }
+            if (want != v.pending) { views[key] = (v.shown, want, Time.time); return v.shown; }
+            if (Time.time - v.since >= .1f) { views[key] = (want, want, Time.time); return want; }
+            return v.shown;
         }
 
         Transform animal; SpriteRenderer sr; PlayerController owner; string shownId; float phase;
@@ -80,7 +99,7 @@ namespace PocketCaravan
             animal.gameObject.SetActive(true);
             Vector2 facing = pc.anim != null ? new Vector2(pc.anim.facing.x, pc.anim.facing.y) : (Vector2)pc.Motor.Facing;
             bool moving = pc.Motor.Velocity.sqrMagnitude > 0.01f;
-            if (moving) phase += Time.deltaTime * 9f;
+            if (moving) phase += Time.deltaTime * 8f;   // 걸음 프레임 1초에 8장 (사람 걸음과 비슷하게)
             var body = pc.anim != null ? pc.anim.GetComponent<SpriteRenderer>() : null;
             Place(sr, trail, pc.transform, body, id, facing, moving, HandcartLook.Stage(st.LoadRatio), phase);
         }
