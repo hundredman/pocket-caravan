@@ -313,10 +313,12 @@ CAMEL_NECK_LOW=[       # 목 아래쪽 절반: 몸과 한 덩어리로 (테두�
 "..tTt..",
 "..tTt..",
 ]
+BUNDLE_C=["..s.....s..",".CnnnnnnnC.","XCCCCCCCCCs","CCCCCCCCCss",".sssssssss."]   # 11/14 앞·뒤 가운데 짐: 폭 11 (좌우 대칭)
+SMALL_C=["..s...s..",".CnnnnnC.","XCCCCCCCs",".sssssss."]                                   # 폭 9
 VIEW={  # 그림, 안장 띠 줄, 띠 색, 짐 기준 줄, 몸 앞에 얹는 부위[(그림, 줄)], 몸 뒤에 두는 부위, 몸에 테두리 없이 섞는 부위
  ('horse','back'):(HORSE_BACK,9,'rRr',8,[],[],[]),
  ('horse','front'):(HORSE_FRONT,6,'rRr',6,[(HORSE_FACE,12)],[],[]),
- ('camel','back'):(CAMEL_BACK,7,'AaaraY',8,[(CAMEL_BACK_HEAD[:3],-3)],[(CAMEL_BACK_HEAD,-3)],[]),   # 머리(위 3줄)는 짐 더미보다 위에 다시 얹는다 (높이 든 머리가 짐 너머로 보인다)
+ ('camel','back'):(CAMEL_BACK,7,'AaaraY',8,[(CAMEL_BACK_HEAD[:3],-3,0)],[(CAMEL_BACK_HEAD,-3)],[]),   # 머리(위 3줄)는 짐 더미보다 위에 다시 얹는다 (높이 든 머리가 짐 너머로 보인다)
  ('camel','front'):(CAMEL_FRONT,3,'AaaraY',4,[(CAMEL_NECK,6,10),(CAMEL_FACE,-2)],[],[]),   # 머리를 높이 든 모습 (목 위쪽 절반만 테두리)
 }
 def end_view3(kind,view,stage,frame=''):
@@ -345,15 +347,15 @@ def end_view3(kind,view,stage,frame=''):
         # 앞: 혹 위 짐이 목 뒤에서 양옆으로 보인다 (목·머리가 앞에 그려진다). 3단계는 보따리를 한 단 더
         # 뒤: 혹 꼭대기 위에 쌓고, 긴 목·머리가 짐 너머로 솟는다
         if view=='front':
-            if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy-1))
-            if stage>=3:layer(lambda L:L.draw(SMALL,ox+2,oy-5))
+            if stage>=2:layer(lambda L:L.draw(BUNDLE_C,ox+1,oy-1))
+            if stage>=3:layer(lambda L:L.draw(SMALL_C,ox+2,oy-5))
         else:
-            if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy+pack_y-4))
-            if stage>=3:layer(lambda L:L.draw(SMALL,ox+2,oy+pack_y-8))
+            if stage>=2:layer(lambda L:L.draw(BUNDLE_C,ox+1,oy+pack_y-4))
+            if stage>=3:layer(lambda L:L.draw(SMALL_C,ox+2,oy+pack_y-8))
         if stage>=3:layer(lambda L:L.draw(JAR,ox-3,oy+pack_y-3));layer(lambda L:L.draw(JAR,ox+12,oy+pack_y-3))
     else:
-        if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy+pack_y-1))
-        if stage>=3:layer(lambda L:L.draw(SMALL,ox+2,oy+pack_y-5))
+        if stage>=2:layer(lambda L:L.draw(BUNDLE_C,ox+1,oy+pack_y-1))
+        if stage>=3:layer(lambda L:L.draw(SMALL_C,ox+2,oy+pack_y-5))
     for item in over:   # 얼굴·목은 따로 테두리 → 몸·짐과 구분된다. (그림, 줄, 자를 줄)이면 그 줄부터 아래는 지운다
         part,py=item[0],item[1];cut=item[2] if len(item)>2 else None
         L=Cv(W,H);L.draw(part,ox+(13-len(part[0]))//2,oy+py);L.outline()
