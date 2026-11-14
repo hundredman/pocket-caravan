@@ -134,11 +134,18 @@ BLANKET=["..aaaaaaa..",".aAAAAAAAa.","rrrrrrrrrrr","aAAAAAAAAAa","yayayayayay"]
 def make_camel(stage,frame=''):
     c=Cv(40,40); oy=10
     c.draw(lift(CAMEL,frame),1,oy)
-    c.draw(BLANKET,16,oy+8)
-    if stage==1: c.draw(SACK,19,oy+11)
-    if stage>=2: c.draw(SACK,15,oy+11); c.draw(SACK,23,oy+11)
-    if stage>=2: c.draw(BUNDLE,16,oy+3)
-    if stage>=3: c.draw(SMALL,17,oy-1); c.draw(JAR,24,oy)
+    # 11/14 안장 천이 혹을 위에서부터 덮는다: 혹 칸마다 맨 위 줄부터 밝은 파랑·파랑·빨강 띠·파랑·술(노랑)
+    body=[P[k]+(255,) for k in 'TtU']
+    for x in range(1+17,1+30):
+        top=next((y for y in range(oy,oy+14) if c.get(x,y) in body),None)
+        if top is None or top>oy+10:continue
+        for i,k in enumerate(('A','a','r','a','y' if x%2 else 'a')):
+            if c.get(x,top+i) in body:c.px(x,top+i,k)
+    hx=1+23                                                          # 혹 꼭대기 가운데 (짐을 여기 맞춘다)
+    if stage==1: c.draw(SACK,hx-3,oy+11)
+    if stage>=2: c.draw(SACK,hx-7,oy+11); c.draw(SACK,hx+1,oy+11)
+    if stage>=2: c.draw(BUNDLE,hx-5,oy+2)
+    if stage>=3: c.draw(SMALL,hx-5,oy-2); c.draw(JAR,hx+2,oy-1)
     c.outline(); return c.im
 
 
@@ -306,8 +313,8 @@ CAMEL_NECK_LOW=[       # 목 아래쪽 절반: 몸과 한 덩어리로 (테두�
 VIEW={  # 그림, 안장 띠 줄, 띠 색, 짐 기준 줄, 몸 앞에 얹는 부위[(그림, 줄)], 몸 뒤에 두는 부위, 몸에 테두리 없이 섞는 부위
  ('horse','back'):(HORSE_BACK,9,'rRr',8,[],[],[]),
  ('horse','front'):(HORSE_FRONT,6,'rRr',6,[(HORSE_FACE,12)],[],[]),
- ('camel','back'):(CAMEL_BACK,9,'aAy',8,[(CAMEL_BACK_HEAD[:3],0)],[(CAMEL_BACK_HEAD,0)],[]),   # 머리(위 3줄)는 짐 더미보다 위에 다시 얹는다 (높이 든 머리가 짐 너머로 보인다)
- ('camel','front'):(CAMEL_FRONT,5,'aAy',4,[(CAMEL_NECK,6,10),(CAMEL_FACE,-2)],[],[]),   # 목은 짐 더미 앞에 (가깝다). 아래 절반은 테두리만 지운다
+ ('camel','back'):(CAMEL_BACK,8,'AaraY',8,[(CAMEL_BACK_HEAD[:3],0)],[(CAMEL_BACK_HEAD,0)],[]),   # 머리(위 3줄)는 짐 더미보다 위에 다시 얹는다 (높이 든 머리가 짐 너머로 보인다)
+ ('camel','front'):(CAMEL_FRONT,4,'AaraY',4,[(CAMEL_NECK,6,10),(CAMEL_FACE,-2)],[],[]),   # 목은 짐 더미 앞에 (가깝다). 아래 절반은 테두리만 지운다
 }
 def end_view3(kind,view,stage,frame=''):
     from PIL import Image
@@ -320,10 +327,10 @@ def end_view3(kind,view,stage,frame=''):
     for part,py in under:layer(lambda L,part=part,py=py:L.draw(part,ox+(13-len(part[0]))//2,oy+py))
     def body(L):
         L.draw(lift(rows,frame),ox,oy)
-        for i,ch in enumerate(band):            # 안장 천: 몸 위에만
+        for i,ch in enumerate(band):            # 안장 천: 몸 위에만 ('Y'는 노랑·파랑이 번갈아 드리운 술)
             y=oy+band_y+i
             for x in range(W):
-                if L.get(x,y)[3] and L.get(x,y)[:3] not in (P['M'],P['e'],P['k'],P['c']):L.px(x,y,ch)
+                if L.get(x,y)[3] and L.get(x,y)[:3] not in (P['M'],P['e'],P['k'],P['c']):L.px(x,y,('y' if x%2 else 'a') if ch=='Y' else ch)
         for part,py in inline:L.draw(part,ox+(13-len(part[0]))//2,oy+py)
     layer(body)
     if stage>=1:
