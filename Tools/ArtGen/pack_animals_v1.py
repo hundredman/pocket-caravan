@@ -106,7 +106,7 @@ def with_parts(c,parts):
 def make(stage,frame=''):
     c=Cv(40,32)
     oy=8
-    c.draw(far_legs_up(lift(HORSE,frame)),1,oy)
+    c.draw(lift(HORSE,frame),1,oy)   # 11/14 안쪽 다리 길이는 바깥과 같게 (은샘)
     c.draw(CLOTH,14,oy+9)   # 11/14 안장 천 앞(머리 쪽) 2칸을 잘라 길마 앞으로 튀어나오지 않게. 뒤끝은 그대로
     c.draw(FRAME,14,oy+7)
     parts=[]
