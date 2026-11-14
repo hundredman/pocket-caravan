@@ -357,6 +357,7 @@ def end_view3(kind,view,stage,frame=''):
         if stage>=3:layer(lambda L:L.draw(SMALL_C,ox+2,oy+pack_y-5))
     for item in over:   # 얼굴·목은 따로 테두리 → 몸·짐과 구분된다. (그림, 줄, 자를 줄)이면 그 줄부터 아래는 지운다
         part,py=item[0],item[1];cut=item[2] if len(item)>2 else None
+        if kind=='camel' and view=='back' and stage>=3:cut=None   # 3단계는 머리 바로 아래가 목이 아니라 짐 → 머리 아래 테두리를 남겨 짐 윗선이 보이게
         L=Cv(W,H);L.draw(part,ox+(13-len(part[0]))//2,oy+py);L.outline()
         if cut is not None:   # 이 줄부터 아래는 테두리만 지운다 (목 색은 남아 가슴에 이어진다)
             O=P['O']+(255,)
