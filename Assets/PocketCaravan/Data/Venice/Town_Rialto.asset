@@ -79,3 +79,4 @@ MonoBehaviour:
   defaultOptimal: 3
   vehiclesForSale:
   - {fileID: 11400000, guid: 913f67411fb2e4eb9868cba57a9545f6, type: 2}
+  - {fileID: 11400000, guid: 7a710966b3c1443d81d7c58ffc6c17ac, type: 2}

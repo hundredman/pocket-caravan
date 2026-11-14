@@ -4316,7 +4316,7 @@ GameObject:
   - component: {fileID: 497509696}
   - component: {fileID: 497509695}
   m_Layer: 0
-  m_Name: Anim ripples
+  m_Name: Anim goryeo_ripples
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4350,10 +4350,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.SpriteAnim
   frames:
-  - {fileID: 21300000, guid: a326a926188f542938184b23f7d722dc, type: 3}
-  - {fileID: 21300000, guid: fd198f075a1ac43d8913394e1bcbd39f, type: 3}
-  - {fileID: 21300000, guid: 4d3c12bc9230846f9af61e15b6686df4, type: 3}
-  - {fileID: 21300000, guid: fcb4cb36c851d410fb8c8f7ccb3a0997, type: 3}
+  - {fileID: 21300000, guid: 897d4ca3602624412a64aea08c1063f9, type: 3}
+  - {fileID: 21300000, guid: 44e4ebdd1896c4719826332f5c536cf1, type: 3}
+  - {fileID: 21300000, guid: b5df5e60df17c463f9e8d2d58fccd708, type: 3}
+  - {fileID: 21300000, guid: ab89a9ac2535547d39a475a581ac4ff7, type: 3}
   fps: 3.9231582
 --- !u!212 &497509696
 SpriteRenderer:
@@ -4404,7 +4404,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: a326a926188f542938184b23f7d722dc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 897d4ca3602624412a64aea08c1063f9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

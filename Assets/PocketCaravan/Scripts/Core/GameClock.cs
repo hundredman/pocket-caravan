@@ -25,6 +25,8 @@ namespace PocketCaravan
         public event Action<int> NewDay;
         /// <summary>온라인 세상 시계에 맞추며 한 번에 앞으로 건너뛴 시간(접속·다시 접속). 놓친 시세 회복 등에 쓴다.</summary>
         public event Action<float> Jumped;
+        /// <summary>11/15 온라인 세상 시계에 한 번이라도 맞췄는지 (창이 열린 채로 시작해도 처음 한 번은 맞춘다)</summary>
+        [NonSerialized] bool synced;
 
         public int Hour => (int)(minuteOfDay / 60f);
         public bool IsMarketDay => day % marketDayInterval == 0;
@@ -73,7 +75,10 @@ namespace PocketCaravan
         public void Tick(float deltaSeconds)
         {
             if (deltaSeconds > 0f) playHours += deltaSeconds * 24f / Mathf.Max(1f, realSecondsPerDay);
-            if (WorldClock.Active) SetWorld(WorldClock.NowHours);
+            // 11/15 윤채(UT "장부·퀘스트 창을 열면 시간이 잠시 멈추게"): 창이 열려 있으면 GameManager가 0을 준다.
+            //   혼자 할 때는 원래 멈췄는데, 온라인이면 서버 시각을 그대로 따라 계속 흘렀다 →
+            //   온라인도 창이 열린 동안은 내 화면의 세상 시간을 멈춰 두고, 닫으면 서버 시각으로 다시 맞춘다 (의뢰 기한 playHours는 원래 멈춘다)
+            if (WorldClock.Active) { if (deltaSeconds > 0f || !synced) { SetWorld(WorldClock.NowHours); synced = true; } }
             else Step(deltaSeconds);
         }
 

@@ -175,7 +175,7 @@ namespace PocketCaravan
             contentH = y + scroll.y;
             GUI.EndGroup();
 
-            string note = string.IsNullOrEmpty(message) ? "닫은 뒤 Q: 성장·주변 거래처 · L: 방문 시세" : CuteUI.Plain(message).Replace("\n", " ");
+            string note = string.IsNullOrEmpty(message) ? "할 일 카드: 성장·주변 거래처 · L: 방문 시세" : CuteUI.Plain(message).Replace("\n", " ");
             CuteUI.Icon(CuteUI.Pic.Bulb, content.x + 4, r.yMax - 22);
             CuteUI.Label(content.x + 15, r.yMax - 17, TradeLedgerUI.Fit(note, content.width - 20, true, false), CuteUI.Sub, true);
         }

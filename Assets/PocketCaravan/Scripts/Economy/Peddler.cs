@@ -267,13 +267,21 @@ namespace PocketCaravan
                     go.transform.position = pos.Value;
                     var spot = go.AddComponent<Spot>();
                     spot.SetSprite(LoadSprite(region));
-                    Notify.Show("떠돌이 상인이 이 마을 장터에 와 있다!", 3f);
+                    Say("떠돌이 상인이 이 마을 장터에 와 있다!", 3f);
                     return;
                 }
                 string key = "peddler:note:" + (int)region;
                 if (Mathf.RoundToInt(GameManager.I.GetMemo(key, -1f)) == Day) return;
                 GameManager.I.SetMemo(key, Day);
-                Notify.Show("오늘 " + News(region), 4f);
+                Say("오늘 " + News(region), 4f);
+            }
+
+            /// <summary>11/11 은샘: 맵에 들어설 때 소식은 한 프레임 뒤에 띄운다. 그때 시작 튜토리얼 중이면 띄우지 않는다 (새로 시작한 첫 화면에 알림이 몰리던 것)</summary>
+            void Say(string text, float seconds) => StartCoroutine(SayLater(text, seconds));
+            System.Collections.IEnumerator SayLater(string text, float seconds)
+            {
+                yield return null;
+                if (!StoryGuide.IntroActive) Notify.Show(text, seconds);
             }
         }
 

@@ -80,7 +80,7 @@ namespace PocketCaravan
                     string name = info != null && !string.IsNullOrEmpty(info.displayName) ? info.displayName
                         : !string.IsNullOrEmpty(area.name) ? area.name : area.mapId;
                     bool destination = info != null && !string.IsNullOrEmpty(info.town) && gm.Player.contracts.Exists(c => c.toTown == info.town);
-                    places.Add(new CuteMap.Place { name = ShortLabel(name), at = new Vector2(area.labelX, area.labelY), destination = destination });
+                    places.Add(new CuteMap.Place { name = ShortLabel(name), at = new Vector2(area.labelX, area.labelY), destination = destination, mapId = area.mapId });
                 }
                 if (activeAtlas.settlements != null)
                     foreach (var settlement in activeAtlas.settlements)

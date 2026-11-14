@@ -116,11 +116,19 @@ namespace PocketCaravan
                 bannerFor = IsFairMap(map) ? map : null;
                 if (chunk == null || GameManager.I == null) return;
                 var t = Today(chunk);
-                if (IsFairMap(map)) { Notify.Show($"큰 장이 섰다! 오늘 {t.name} 장터에서 팔면 {Pct(Bonus(t.chunk))}을 더 받는다.", 4f); return; }
+                if (IsFairMap(map)) { Say($"큰 장이 섰다! 오늘 {t.name} 장터에서 팔면 {Pct(Bonus(t.chunk))}을 더 받는다.", 4f); return; }
                 string key = "fair:note:" + chunk;
                 if (Mathf.RoundToInt(GameManager.I.GetMemo(key, -1f)) == Day) return;
                 GameManager.I.SetMemo(key, Day);
-                Notify.Show(News(chunk), 4f);
+                Say(News(chunk), 4f);
+            }
+
+            /// <summary>11/11 은샘: 맵에 들어설 때 소식은 한 프레임 뒤에 띄운다. 그때 시작 튜토리얼 중이면 띄우지 않는다 (새로 시작한 첫 화면에 알림이 몰리던 것)</summary>
+            void Say(string text, float seconds) => StartCoroutine(SayLater(text, seconds));
+            System.Collections.IEnumerator SayLater(string text, float seconds)
+            {
+                yield return null;
+                if (!StoryGuide.IntroActive) Notify.Show(text, seconds);
             }
 
             void OnSold(ItemData item, TownData town, int price, int profit)
@@ -134,10 +142,9 @@ namespace PocketCaravan
 
             void OnGUI()
             {
-                if (bannerFor == null || MapRoot.Current == null || MapRoot.Current.mapId != bannerFor || UIState.Blocking || HUD.Expanded) return;
-                UIStyle.Begin();
-                // 11/08 UI B안: 검은 띠(y 34 고정, 이야기 줄과 겹쳤다) 대신 위 가운데 알약들 아래에 쌓는 종이 알약 (Tab 펼친 동안은 숨긴다)
-                CuteUI.TopPill(CuteUI.TopStack(30), false, CuteUI.Pic.Coin, "오늘 큰 장", CuteUI.Plain($"팔면 {Pct(Bonus(ChunkOfMap(bannerFor)))} 덤"), false);
+                if (bannerFor == null || MapRoot.Current == null || MapRoot.Current.mapId != bannerFor || UIState.Blocking) return;
+                // 11/13 기우: 위 가운데 알약 대신 할 일 카드의 오늘 소식 (Tab으로 펼쳤을 때. 들어설 때는 아래 알림이 알려 준다)
+                TaskCard.News("fair", CuteUI.Pic.Coin, "오늘 큰 장", CuteUI.Plain($"팔면 {Pct(Bonus(ChunkOfMap(bannerFor)))} 덤"));
             }
         }
 

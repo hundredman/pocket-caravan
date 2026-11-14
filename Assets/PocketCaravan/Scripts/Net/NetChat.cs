@@ -21,7 +21,10 @@ namespace PocketCaravan
     public class NetChat : MonoBehaviour
     {
         const int MaxLines = 8, MaxChars = 80;
-        const float LineSeconds = 12f, FadeSeconds = 2f, LogWidth = 230f;
+        const float LineSeconds = 6f, FadeSeconds = 1.5f, LogWidth = 230f;   // 11/13 8 → 6초 (화면 글 줄이기)
+        /// <summary>11/11 윤채: 입력하지 않을 때는 최근 몇 줄만 작게 (큰 반투명 상자가 이름표·알림을 가렸다). Enter로 열면 다 보인다</summary>
+        const int IdleLines = 3;
+        float logW = LogWidth;
         // 11/05 UI B안: 종이 바탕 위 글씨라 진한 색 (전엔 어두운 바탕용 밝은 색)
         const string MeColor = "#1f625e", OtherColor = "#a8541c", DimColor = "#6a5464", ErrorColor = "#d6334f", SystemColor = "#3f7a3a", NoticeColor = "#c0611a";
 
@@ -41,7 +44,7 @@ namespace PocketCaravan
             ("joy", "기쁨", new[] { "기쁨", "야호", "joy" }),
             ("think", "생각", new[] { "생각", "음", "think" }),
         };
-        class Bubble { public string text; public float until; }
+        class Bubble { public string text; public float until, at = -9f; }   // at: 뜬 시각 (11/11 톡 튀어나오게)
 
         static NetChat inst;
         readonly List<Line> lines = new List<Line>();
@@ -52,7 +55,7 @@ namespace PocketCaravan
         int sendFrame = -1;
         float openedAt;
         GUIStyle field, lineStyle, bubbleStyle;
-        static readonly Color32 LogFill = new Color32(0xFF, 0xFA, 0xF2, 228);
+        static readonly Color32 LogFill = new Color32(0xFF, 0xFA, 0xF2, 170);   // 11/13 반투명 (뒤 화면이 비치게)
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void Boot()
@@ -68,7 +71,7 @@ namespace PocketCaravan
         /// <summary>알림 한 줄 (공유 장터 거래, 저장 등). 채팅 목록에 연두색으로 남는다</summary>
         public static void System(string text)
         {
-            if (inst != null && !string.IsNullOrEmpty(text)) inst.Add($"<color={SystemColor}>· {text}</color>");
+            if (inst != null && !string.IsNullOrEmpty(text)) inst.Add($"<color={SystemColor}>· {text}</color>", 5f);   // 11/11 안내 줄은 더 빨리 사라진다
         }
 
         void OnEnable() => NetClient.Received += OnReceived;
@@ -97,7 +100,7 @@ namespace PocketCaravan
                     string who = string.IsNullOrEmpty(m.name) ? m.id : m.name;
                     string where = here || string.IsNullOrEmpty(m.map) ? "" : $" <color={DimColor}>({MapName(m.map)})</color>";
                     Add($"<color={(mine ? MeColor : OtherColor)}>{who}</color>{where}: {m.text}");
-                    if (here) bubbles[m.id ?? ""] = new Bubble { text = m.text, until = Time.unscaledTime + Mathf.Clamp(3f + m.text.Length * 0.08f, 3f, 8f) };
+                    if (here) bubbles[m.id ?? ""] = new Bubble { text = m.text, until = Time.unscaledTime + Mathf.Clamp(3f + m.text.Length * 0.08f, 3f, 8f), at = Time.unscaledTime };
                     if (!mine) Sfx.Play("open", here ? .25f : .12f);
                     break;
                 case "error":
@@ -224,6 +227,7 @@ namespace PocketCaravan
             GUI.depth = -6;
 
             DrawBubbles(net);
+            if (UIState.PhotoMode && !typing) return;   // 11/11 은샘: 기념 사진 찍는 동안 채팅 목록은 감춘다 (11/13 머리 위 말풍선도 감춘다: DrawBubbles)
             if (UIState.Blocking && !typing) return;   // 다른 창이 열려 있으면 목록은 숨긴다
 
             float bottom = UIStyle.VirtualHeight - 10f - HUD.BottomReserved;   // 11/05 접속 표시는 오른쪽 위로 옮김: 아래 조작 안내·저장 문제 줄 바로 위
@@ -231,9 +235,9 @@ namespace PocketCaravan
             if (typing) bottom = DrawInput(bottom);
             float top = DrawLines(bottom);
             // 11/08 알림이 채팅을 덮지 않게 차지한 자리를 알린다 (알림은 그 오른쪽 · 너무 좁으면 위로)
-            if (top < floor) ScreenZones.Mark("chat", Rect.MinMaxRect(6f, top, 6f + LogWidth + (typing ? 40f + 52f : 12f), floor));
+            if (top < floor) ScreenZones.Mark("chat", Rect.MinMaxRect(6f, top, 6f + (typing ? LogWidth + 40f + 52f : logW + 12f), floor));
             // 11/08 채팅 목록을 누르면 입력 칸이 열린다 (Enter와 같다)
-            if (!typing && top < floor && GUI.Button(Rect.MinMaxRect(6f, top, 6f + LogWidth + 12f, floor), GUIContent.none, GUIStyle.none)) OpenInput();
+            if (!typing && top < floor && GUI.Button(Rect.MinMaxRect(6f, top, 6f + logW + 12f, floor), GUIContent.none, GUIStyle.none)) OpenInput();
         }
 
         void Styles()
@@ -275,26 +279,36 @@ namespace PocketCaravan
         float DrawLines(float bottom)
         {
             var old = GUI.color;
-            var shown = new List<(string text, float h, float alpha)>();
-            float total = 0f, top = 0f;
+            var picked = new List<(string text, float alpha)>();
+            float top = 0f, natural = 0f;
             for (int i = lines.Count - 1; i >= 0; i--)
             {
                 float alpha = LineAlpha(lines[i], Time.unscaledTime);
                 if (alpha <= 0f) continue;
-                float h = lineStyle.CalcHeight(new GUIContent(lines[i].text), LogWidth);
-                shown.Add((lines[i].text, h, alpha));
-                total += h;
+                if (!typing && picked.Count >= IdleLines) break;   // 11/11 입력하지 않을 때는 최근 몇 줄만
+                picked.Add((lines[i].text, alpha));
+                natural = Mathf.Max(natural, lineStyle.CalcSize(new GUIContent(lines[i].text)).x + 2f);
                 top = Mathf.Max(top, alpha);
             }
-            if (shown.Count == 0) return bottom;
+            if (picked.Count == 0) return bottom;
+            // 11/11 상자 너비는 글에 맞춘다 (짧은 말 한 줄에도 넓은 상자가 떴다). 입력 중에는 입력 칸과 같은 너비
+            logW = typing ? LogWidth : Mathf.Clamp(natural, 60f, LogWidth);
+            var shown = new List<(string text, float h, float alpha)>();
+            float total = 0f;
+            foreach (var (text, alpha) in picked)
+            {
+                float h = lineStyle.CalcHeight(new GUIContent(text), logW);
+                shown.Add((text, h, alpha));
+                total += h;
+            }
             GUI.color = new Color(1f, 1f, 1f, top);
-            CuteUI.Box(new Rect(6f, bottom - total - 8f, LogWidth + 12f, total + 8f), 8, LogFill, LogFill, 0, 2, CuteUI.SoftShadow);
+            CuteUI.Box(new Rect(6f, bottom - total - 8f, logW + 12f, total + 8f), 8, LogFill, LogFill, 0, 2, CuteUI.SoftShadow);
             float y = bottom - 4f;
             foreach (var (text, h, alpha) in shown)
             {
                 y -= h;
                 GUI.color = new Color(1f, 1f, 1f, alpha);
-                GUI.Label(new Rect(12f, y, LogWidth, h), text, lineStyle);
+                GUI.Label(new Rect(12f, y, logW, h), text, lineStyle);
             }
             GUI.color = old;
             return bottom - total - 8f;
@@ -302,6 +316,7 @@ namespace PocketCaravan
 
         void DrawBubbles(NetClient net)
         {
+            if (UIState.PhotoMode) return;   // 11/13 기우: 기념 사진에는 말풍선 없이 닉네임만 ("사진 자리로 모여요~" 말풍선이 찍혔다)
             var cam = Camera.main;
             var pc = PlayerController.Instance;
             if (cam == null) return;
@@ -321,8 +336,13 @@ namespace PocketCaravan
                 float cx = Mathf.Round(sp.x / scale), by = Mathf.Round((Screen.height - sp.y) / scale);
                 // 11/05 B안 말풍선: 종이 + 테두리(내 말은 청록) + 아래 꼬리
                 var r = new Rect(Mathf.Round(cx - w / 2f - 6f), by - h - 10f, Mathf.Round(w + 12f), Mathf.Round(h + 7f));
+                // 11/11 윤채: 말풍선은 꼬리 끝을 기준으로 톡 튀어나온다 (0.6 → 1.06 → 1, 0.16초)
+                var m = GUI.matrix;
+                float k = Mathf.Clamp01((Time.unscaledTime - kv.Value.at) / .16f);
+                if (k < 1f) { float s = k < .6f ? Mathf.Lerp(.6f, 1.06f, k / .6f) : Mathf.Lerp(1.06f, 1f, (k - .6f) / .4f); GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(cx, by - 3f) * scale); }
                 CuteUI.Bubble(r, cx, kv.Key == net.MyId ? CuteUI.Interact : CuteUI.Ink);
                 GUI.Label(new Rect(r.x + 6f, r.y + 3f, w, h), content, bubbleStyle);
+                GUI.matrix = m;
             }
         }
     }

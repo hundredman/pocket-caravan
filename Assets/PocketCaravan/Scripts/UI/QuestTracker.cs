@@ -4,7 +4,8 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// 화면 위 가운데에 진행 중 퀘스트와 지금 할 일을 보여 준다 (Tab이면 오른쪽 위 단추 아래 자세히). Q로 퀘스트 목록을 연다.
+    /// 진행 중 퀘스트와 지금 할 일을 왼쪽 할 일 카드(TaskCard)에 올린다 (Tab이면 다른 퀘스트·배달까지). 카드를 누르면 여정 수첩.
+    /// 11/13 Q 단추·Q 키는 뺐다 (InputReader.QuestLogPressed는 카드·튜토리얼이 누르는 가상 'q'만).
     /// GameManager가 자동으로 붙인다. 임시 UI(OnGUI)다.
     /// </summary>
     public class QuestTracker : MonoBehaviour
@@ -36,6 +37,7 @@ namespace PocketCaravan
         {
             var gm = GameManager.I;
             if (gm == null) return;
+            if (UIState.PhotoMode) return;   // 11/11 은샘: 기념 사진 찍는 동안 알림·할 일 줄이 사진에 찍히지 않게 (팀 시연: 아래 대사가 플레이어를 가렸다)
             UIStyle.Begin();
             GUI.depth = logOpen ? -10 : 0;
             Notify.Draw(GoryeoIntro.ReservedGuideRect);
@@ -48,8 +50,10 @@ namespace PocketCaravan
             get
             {
                 var gm = GameManager.I;
-                return gm != null && gm.Quests != null && MapRoot.Current != null && !HUD.Expanded
-                    && (gm.Quests.Tracked != null || gm.Player.contracts.Count > 0);
+                if (gm == null || gm.Quests == null || MapRoot.Current == null || HUD.Expanded) return false;
+                var focus = QuestFocus.Current;   // 11/11 DrawCompact와 같은 조건
+                if (focus == QuestFocus.Kind.Event || focus == QuestFocus.Kind.Lead) return false;
+                return (focus == QuestFocus.Kind.Quest && gm.Quests.Tracked != null) || gm.Player.contracts.Count > 0;
             }
         }
 
@@ -60,66 +64,62 @@ namespace PocketCaravan
         void DrawCompact(QuestManager qm)
         {
             var gm = GameManager.I;
-            if (qm.Tracked != null)
+            var focus = QuestFocus.Current;   // 11/11 은샘: 길 안내 대상 하나만 (이벤트·다음 이야기는 각자 올린다)
+            if (focus == QuestFocus.Kind.Event || focus == QuestFocus.Kind.Lead) return;
+            if (focus == QuestFocus.Kind.Quest && qm.Tracked != null)
             {
                 int others = 0; foreach (var ap in qm.Active) if (ap != qm.Tracked) others++;
-                string tail = qm.Tracked.quest.title + (others > 0 ? $" 외 {others}개" : "");   // 11/01 진행 중인 다른 퀘스트 수 (Q 수첩에서 안내 바꾸기)
-                CuteUI.TopPill(6, false, CuteUI.Pic.Scroll, CuteUI.Plain(qm.ProgressText(qm.Tracked)), tail, false);
+                string kicker = qm.Tracked.quest.title + (others > 0 ? $" 외 {others}개" : "");   // 11/01 진행 중인 다른 퀘스트 수 (수첩에서 안내 바꾸기)
+                TaskCard.Task(TaskCard.Quest, CuteUI.Pic.Scroll, false, kicker, CuteUI.Plain(qm.ProgressText(qm.Tracked)), null);
             }
             else if (gm.Player.contracts.Count > 0)
             {
                 var c = gm.Player.contracts[0];
-                string tail = CuteUI.Plain(gm.Contracts.TimeLeftText(c)) + (gm.Player.contracts.Count > 1 ? $" 외 {gm.Player.contracts.Count - 1}건" : "");
-                CuteUI.TopPill(6, false, CuteUI.Pic.Sack, $"{c.cargo} → {gm.Contracts.TownName(c.toTown)}", tail, false);
+                string kicker = "배달" + (gm.Player.contracts.Count > 1 ? $" 외 {gm.Player.contracts.Count - 1}건" : "");
+                TaskCard.Task(TaskCard.Delivery, CuteUI.Pic.Sack, false, kicker, $"{c.cargo} → {gm.Contracts.TownName(c.toTown)}", CuteUI.Plain(gm.Contracts.TimeLeftText(c)));
             }
         }
 
-        /// <summary>Tab으로 펼쳤을 때: 오른쪽 위 단추 아래 카드에 퀘스트·배달 자세히</summary>
+        static readonly List<(string text, bool small, bool bold, Color32 col)> detailLines = new List<(string, bool, bool, Color32)>();
+
+        /// <summary>
+        /// 11/13 할 일 카드에 올린다. Tab으로 펼쳤으면 카드 아래 자세히 (카드 위 할 일 말고 다른 퀘스트·배달·다음 이야기)
+        /// </summary>
         void DrawTracker(QuestManager qm)
         {
-            if (!HUD.Expanded) { DrawCompact(qm); return; }
+            if (MapRoot.Current == null) return;
+            DrawCompact(qm);
+            if (!HUD.Expanded) return;
             var gm = GameManager.I;
-            const float w = 212f;
-            float x = UIStyle.VirtualWidth - w - 6, inner = w - 20;
-            var lines = new List<(string text, bool small, bool bold, Color32 col, float indent)>();
-            bool any = false;
-            if (qm.Tracked != null)
+            var focus = QuestFocus.Current;
+            bool trackedOnCard = focus == QuestFocus.Kind.Quest && qm.Tracked != null;
+            detailLines.Clear();
+            if (qm.Tracked != null && !trackedOnCard)
             {
-                any = true;
-                lines.Add((qm.Tracked.quest.title, false, true, CuteUI.Text, 0));
-                lines.Add(("· " + CuteUI.Plain(qm.ProgressText(qm.Tracked)), true, false, CuteUI.Text, 6));
+                detailLines.Add((qm.Tracked.quest.title, false, true, CuteUI.Text));
+                detailLines.Add(("· " + CuteUI.Plain(qm.ProgressText(qm.Tracked)), true, false, CuteUI.Sub));
             }
-            foreach (var c in gm.Player.contracts)
+            foreach (var ap in qm.Active)
             {
-                any = true;
+                if (ap == null || ap == qm.Tracked) continue;
+                detailLines.Add((ap.quest.title, false, true, CuteUI.Text));
+                detailLines.Add(("· " + CuteUI.Plain(qm.ProgressText(ap)), true, false, CuteUI.Sub));
+            }
+            bool firstOnCard = !trackedOnCard && focus != QuestFocus.Kind.Event && focus != QuestFocus.Kind.Lead;
+            for (int i = 0; i < gm.Player.contracts.Count; i++)
+            {
+                var c = gm.Player.contracts[i];
                 string state = c.dropped ? "떨어뜨림!" : $"상태 {Mathf.RoundToInt(c.condition * 100)}%";
-                lines.Add(($"{c.cargo} → {gm.Contracts.TownName(c.toTown)}", false, true, CuteUI.Text, 0));
-                lines.Add(($"· {CuteUI.Plain(gm.Contracts.TimeLeftText(c))} · {state} · 보수 {c.reward}냥", true, false, c.dropped ? CuteUI.Alert : CuteUI.Text, 6));
+                if (!(i == 0 && firstOnCard)) detailLines.Add(($"{c.cargo} → {gm.Contracts.TownName(c.toTown)}", false, true, CuteUI.Text));
+                detailLines.Add(($"· {CuteUI.Plain(gm.Contracts.TimeLeftText(c))} · {state} · 보수 {c.reward}냥", true, false, c.dropped ? CuteUI.Alert : CuteUI.Sub));
             }
             var next = StoryGuide.Next;
-            if (next.HasValue)
+            if (next.HasValue && focus != QuestFocus.Kind.Lead)
             {
-                any = true;
-                lines.Add(("다음 이야기", true, false, CuteUI.Alert, 0));
-                lines.Add((next.Value.action + (string.IsNullOrEmpty(next.Value.where) ? "" : " · " + next.Value.where), false, true, CuteUI.Text, 0));
+                detailLines.Add((StoryGuide.LeadTitle, true, false, CuteUI.Alert));
+                detailLines.Add((next.Value.action + (string.IsNullOrEmpty(next.Value.where) ? "" : " · " + next.Value.where), false, true, CuteUI.Text));
             }
-            if (!any) return;   // 11/05 보일 게 없으면 카드를 띄우지 않는다 (예전 "자유 교역 · ! 의뢰…" 안내는 뺐다)
-
-            float y = 44 + ObstacleField.TopRightUsed;   // 길 장애 알약이 있으면 그 아래
-            // 11/08 아래 조작 안내 위까지만 (좁은 고려 화면에서 카드가 화면 밖으로 나갔다). 제목·자세히 두 줄씩 통째로 넣고 남는 것은 뺀다
-            float room = UIStyle.VirtualHeight - 6 - HUD.BottomReserved - y, h = 14;
-            int shown = 0;
-            for (int i = 0; i < lines.Count; i += 2)
-            {
-                float pair = 0;
-                for (int k = i; k < Mathf.Min(i + 2, lines.Count); k++) pair += CuteUI.WrapHeight(lines[k].text, inner - lines[k].indent, lines[k].small) + 2;
-                if (shown > 0 && h + pair > room) break;
-                h += pair;
-                shown = Mathf.Min(i + 2, lines.Count);
-            }
-            CuteUI.Card(new Rect(x, y, w, h));
-            y += 8;
-            for (int i = 0; i < shown; i++) { var l = lines[i]; y += CuteUI.Wrap(x + 10 + l.indent, y, inner - l.indent, l.text, l.col, l.small, l.bold) + 2; }
+            TaskCard.Details(detailLines);
         }
 
         // 11/08 은샘: 여정 수첩을 장부·게시판과 같은 모양으로 (아이콘 탭 + 종이 칸 + 카드).
@@ -134,7 +134,6 @@ namespace PocketCaravan
             CuteUI.Dim();
             CuteUI.Window(r);
             CuteUI.TitlePlate(r.center.x, r.y - 11, "여정 수첩");
-            CuteUI.Keycap(r.xMax - 32 - CuteUI.KeycapWidth("Q") - 3, r.y - 3, "Q");
             if (CuteUI.CloseButton(r.xMax - 32, r.y - 9)) { CloseLog(); return; }
 
             var content = new Rect(r.x + 15, r.y + 50, w - 30, h - 50 - 24);
@@ -157,7 +156,7 @@ namespace PocketCaravan
             float end = logTab == 0 ? DrawQuests(qm, gm, -scroll.y, cw, area.height) : logTab == 1 ? DrawGrowth(gm, -scroll.y, cw) : DrawTowns(gm, -scroll.y, cw);
             logContentH = end + scroll.y;
             GUI.EndGroup();
-            CuteUI.LabelCenter(r.center.x, r.yMax - 13, "←→ 탭 · ↑↓·휠 넘기기 · Q·Esc 닫기", CuteUI.Sub, true);
+            CuteUI.LabelCenter(r.center.x, r.yMax - 13, "←→ 탭 · ↑↓·휠 넘기기 · Esc 닫기", CuteUI.Sub, true);
         }
 
         static float Pill(float x, float cy, string text, CuteUI.BadgeKind k)
@@ -182,15 +181,75 @@ namespace PocketCaravan
         }
 
         // ---------------- 의뢰 ----------------
+        /// <summary>11/11 은샘: 카드 오른쪽 위 단추. 안내 중이면 청록 "안내 중"(누르면 끔), 아니면 "길 안내". 단추 왼쪽 x를 돌려준다</summary>
+        static float FocusButton(float right, float y, bool on, System.Action click)
+        {
+            if (on)
+            {
+                float x = Pill(right, y + 12, "안내 중", CuteUI.BadgeKind.On);
+                if (GUI.Button(new Rect(x, y + 4, right - x, 17), new GUIContent("", "누르면 길 안내를 끕니다"), GUIStyle.none)) click();
+                return x;
+            }
+            var b = new Rect(right - 60, y + 4, 60, 17);
+            if (CuteUI.SoftButton(b, "길 안내")) click();
+            return b.x;
+        }
+
+        /// <summary>
+        /// 11/11 은샘: 받은 퀘스트 말고도 길 안내를 고를 수 있는 카드 둘.
+        /// 이벤트(만국 상인회)는 금빛 카드 + "이벤트" 표, 다음 이야기(튜토리얼 뒤 첫 일거리 등)는 받기 전 퀘스트로.
+        /// </summary>
+        float DrawSpecialCards(float y, float w)
+        {
+            var focus = QuestFocus.Current;
+            if (NetGuild.Active)
+            {
+                var (main, where, _) = NetGuild.Summary();
+                bool on = focus == QuestFocus.Kind.Event;
+                float ch = 22 + 14 + 14 + 8;
+                var card = new Rect(0, y, w, ch);
+                CuteUI.Box(card, 7, CuteUI.EventPaper, CuteUI.EventLine, 2, 2);
+                float right = FocusButton(w - 7, y, on, () => QuestFocus.Toggle(QuestFocus.Kind.Event));
+                right = ContractBoard.Pill(right - 4, y + 12, "★ 이벤트", CuteUI.Deco, CuteUI.EventLine, CuteUI.Text, true);
+                CuteUI.Label(10, y + 12, TradeLedgerUI.Fit("만국 큰 장으로 · 만국 상인회", right - 16, false, true), CuteUI.Text, false, true);
+                CuteUI.Icon(CuteUI.Pic.Arrow, 10, y + 25, 1, CuteUI.EventLine);
+                CuteUI.Label(22, y + 29, TradeLedgerUI.Fit(CuteUI.Plain(main), w - 32, true, true), CuteUI.Text, true, true);
+                CuteUI.Icon(CuteUI.Pic.Pin, 22, y + 39, 1, CuteUI.Sub);
+                CuteUI.Label(30, y + 43, TradeLedgerUI.Fit(where, w - 40, true, false), CuteUI.Sub, true);
+                y += ch + 5;
+            }
+            var lead = StoryGuide.Pending;
+            if (lead.HasValue && StoryGuide.LeadAvailable)
+            {
+                bool on = focus == QuestFocus.Kind.Lead;
+                float ch = 22 + 14 + 14 + 8;
+                var card = new Rect(0, y, w, ch);
+                CuteUI.Box(card, 7, on ? CuteUI.Paper : CuteUI.Paper2, on ? CuteUI.Interact : CuteUI.Line, on ? 2 : 1);
+                float right = FocusButton(w - 7, y, on, () => QuestFocus.Toggle(QuestFocus.Kind.Lead));
+                right = Pill(right - 4, y + 12, "받기 전", CuteUI.BadgeKind.Note);
+                CuteUI.Label(10, y + 12, TradeLedgerUI.Fit(StoryGuide.LeadTitle, right - 16, false, true), CuteUI.Text, false, true);
+                CuteUI.Icon(CuteUI.Pic.Arrow, 10, y + 25, 1, CuteUI.Interact);
+                CuteUI.Label(22, y + 29, TradeLedgerUI.Fit(lead.Value.action, w - 32, true, true), CuteUI.Text, true, true);
+                if (!string.IsNullOrEmpty(lead.Value.where))
+                {
+                    CuteUI.Icon(CuteUI.Pic.Pin, 22, y + 39, 1, CuteUI.Sub);
+                    CuteUI.Label(30, y + 43, TradeLedgerUI.Fit(lead.Value.where, w - 40, true, false), CuteUI.Sub, true);
+                }
+                y += ch + 5;
+            }
+            return y;
+        }
+
         float DrawQuests(QuestManager qm, GameManager gm, float y, float w, float viewH)
         {
-            bool any = false;
+            bool any = NetGuild.Active || StoryGuide.LeadAvailable;
+            y = DrawSpecialCards(y, w);
             int qn = 0; foreach (var _ in qm.Active) qn++;
             if (qn > 0) y = Section(y, "이야기 의뢰", qn + "개");
             foreach (var p in qm.Active)
             {
                 any = true;
-                bool on = p == qm.Tracked;
+                bool on = p == qm.Tracked && QuestFocus.Current == QuestFocus.Kind.Quest;
                 string progress = CuteUI.Plain(qm.ProgressText(p));
                 string summary = string.IsNullOrEmpty(p.quest.summary) ? null : CuteUI.Plain(p.quest.summary);
                 float inner = w - 20;
@@ -199,15 +258,9 @@ namespace PocketCaravan
                 float ch = 24 + ph + (summary != null ? sh + 3 : 0) + (reward ? 18 : 0) + 6;
                 var card = new Rect(0, y, w, ch);
                 CuteUI.Box(card, 7, on ? CuteUI.Paper : CuteUI.Paper2, on ? CuteUI.Interact : CuteUI.Line, on ? 2 : 1);
-                // 오른쪽 위: 안내 중 / 길 안내
-                float right = w - 7;
-                if (on) right = Pill(right, y + 12, "안내 중", CuteUI.BadgeKind.On);
-                else
-                {
-                    var b = new Rect(right - 60, y + 4, 60, 17);
-                    if (CuteUI.SoftButton(b, "길 안내")) qm.Track(p);
-                    right = b.x;
-                }
+                // 오른쪽 위: 안내 중(누르면 끔) / 길 안내
+                var pp = p;
+                float right = FocusButton(w - 7, y, on, () => { if (on) QuestFocus.Set(QuestFocus.Kind.None); else { qm.Track(pp); QuestFocus.Set(QuestFocus.Kind.Quest); } });
                 if (!string.IsNullOrEmpty(p.quest.chain)) right = Pill(right - 4, y + 12, p.quest.chain, CuteUI.BadgeKind.Note);
                 CuteUI.Label(10, y + 12, TradeLedgerUI.Fit(p.quest.title, right - 16, false, true), CuteUI.Text, false, true);
                 float yy = y + 22;
@@ -371,6 +424,7 @@ namespace PocketCaravan
                 return y + 60;
             }
             const float iconsW = 92f;
+            ItemData hoverItem = null; Rect hoverRect = default;   // 11/11 은샘: 특산 아이콘에 마우스를 올리면 이름
             foreach (var (town, hops) in rows)
             {
                 bool recorded = JourneyGuide.MarketRecorded(gm.Player.ledger, town.id);
@@ -392,9 +446,19 @@ namespace PocketCaravan
                     if (item == null || item.questItem || item.originTown != town || n >= 4) continue;
                     if (n == 0) CuteUI.Label(ix, y + 33, "특산", CuteUI.Sub, true);
                     TradeLedgerUI.ItemIcon(item, ix + 22 + n * 18, y + 25, 1);
+                    var ir = new Rect(ix + 22 + n * 18, y + 25, 16, 16);
+                    if (ir.Contains(Event.current.mousePosition)) { hoverItem = item; hoverRect = ir; }
                     n++;
                 }
                 y += ch + 5;
+            }
+            if (hoverItem != null)   // 카드보다 위에 그리도록 다 그린 뒤
+            {
+                string nm = hoverItem.displayName;
+                float tw = CuteUI.Width(nm, true) + 12f;
+                var tip = new Rect(Mathf.Round(Mathf.Clamp(hoverRect.center.x - tw / 2f, 2f, w - tw - 2f)), hoverRect.y - 17f, tw, 15f);
+                CuteUI.Box(tip, 6, CuteUI.Paper, CuteUI.Ink, 1, 1);
+                CuteUI.Label(tip.x + 6f, tip.center.y, nm, CuteUI.Text, true);
             }
             float th = CuteUI.WrapHeight("장부(L)의 시세는 직접 가서 본 값이에요. 가는 동안 값이 바뀔 수 있어요.", w - 20, true);
             CuteUI.Icon(CuteUI.Pic.Bulb, 3, y + 2);

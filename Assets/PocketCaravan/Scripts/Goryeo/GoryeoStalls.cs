@@ -273,7 +273,11 @@ namespace PocketCaravan
                 float k = UIStyle.Scale > 0 ? UIStyle.Scale : 1f;
                 var gp = new Vector2(sp.x / k, (Screen.height - sp.y) / k);
                 if (gp.x < -60 || gp.x > UIStyle.VirtualWidth + 60 || gp.y < -20 || gp.y > UIStyle.VirtualHeight + 20) continue;
+                float a = WorldLabels.NearAlpha(s.head.position);   // 11/13 기우(팀 UI 통일): 좌판 이름표도 가까이에서만
+                if (a <= 0f) continue;
+                var oc = GUI.color; GUI.color = new Color(oc.r, oc.g, oc.b, oc.a * a);
                 CuteUI.WorldText(gp.x, gp.y, s.keeper.title, true);   // 좌판이 붙어 있어 이름까지 쓰면 겹친다 (이름은 창 제목에)
+                GUI.color = oc;
             }
         }
 

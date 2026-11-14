@@ -205,7 +205,8 @@ namespace PocketCaravan
             if (map.mapId != lastMap)
             {
                 lastMap = map.mapId;
-                if (!GM.HasMemo("social:tips")) { GM.SetMemo("social:tips", 1f); Notify.Show("R 리액션 · G 주요 인물에게 선물 · F 친구 수첩 · P 사진", 6f); }
+                if (!GM.HasMemo("social:tips") && !StoryGuide.IntroActive && !StartScreen.IsOpen) {   // 11/11 은샘: 시작 화면·시작 튜토리얼 중에는 미룬다 (끝난 뒤 다음 맵에서)
+                    GM.SetMemo("social:tips", 1f); Notify.Show("R 리액션 · G 주요 인물에게 선물 · F 친구 수첩 · P 사진", 6f); }
             }
 
             if (picking)
@@ -409,7 +410,7 @@ namespace PocketCaravan
                 GUI.DrawTexture(r, preview);
             }
 
-            if (!UIState.Blocking) DrawHearts();
+            if (!UIState.Blocking && !UIState.PhotoMode) DrawHearts();   // 11/11 기념 사진에는 하트·선물 줄을 빼고 찍는다
             if (picking) DrawPicker(vw, vh);
             if (book) DrawBook(vw, vh);
         }

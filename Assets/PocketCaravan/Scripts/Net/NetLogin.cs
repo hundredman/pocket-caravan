@@ -51,8 +51,10 @@ namespace PocketCaravan
         {
             inst = this;
             address = PlayerPrefs.GetString("net.address", NetClient.DefaultAddress);
-            remember = PlayerPrefs.GetInt("net.remember", 1) == 1;
-            nameBox.Text = PlayerPrefs.GetString("net.name", "");
+            // 11/12 윤채(시연): 한 컴퓨터를 여러 사람이 돌아가며 쓰면 앞사람 이름이 채워져 있었다 →
+            //   "기억하기"는 처음엔 꺼 두고, 이름도 기억하기를 켰을 때만 채운다 (켜 두면 다음 사람이 앞사람 계정으로 저절로 접속했다)
+            remember = PlayerPrefs.GetInt("net.remember", 0) == 1;
+            nameBox.Text = remember ? PlayerPrefs.GetString("net.name", "") : "";
             keyBox.Text = remember ? PlayerPrefs.GetString("net.pass", "") : "";
             addressBox.Text = address;
         }
@@ -170,7 +172,7 @@ namespace PocketCaravan
             if (key.Length > 0 && key.Length < 4) { Say("접속키는 4자 이상으로 정해 주세요", true); Focus(keyBox); return; }
             if (showServer) address = addressBox.Full.Trim();
             nameBox.Text = name;
-            PlayerPrefs.SetString("net.name", name);
+            if (remember) PlayerPrefs.SetString("net.name", name); else PlayerPrefs.DeleteKey("net.name");   // 11/12 이름도 기억하기를 켰을 때만
             PlayerPrefs.SetString("net.address", address);
             PlayerPrefs.SetInt("net.remember", remember ? 1 : 0);
             if (remember) PlayerPrefs.SetString("net.pass", key); else PlayerPrefs.DeleteKey("net.pass");

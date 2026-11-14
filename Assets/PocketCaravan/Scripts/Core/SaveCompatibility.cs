@@ -8,6 +8,21 @@ namespace PocketCaravan
     public static class SaveCompatibility
     {
         static void Require(bool condition,string message) { if(!condition)throw new InvalidDataException(message); }
+
+        /// <summary>
+        /// 11/11 윤채: 실행 중에만 있는 물건 아이디. 게임 데이터(.asset)에 없고 만든 쪽이 이야기 단계에 맞춰 다시 넣는다.
+        /// 예전 저장에 들어가 버린 것은 불러오기 전에 그 한 줄만 뺀다 (모르는 화물로 저장 복원이 통째로 막혔다).
+        /// 새 저장에는 처음부터 들어가지 않는다 (GameManager 저장: 게임 데이터에 없는 물건은 건너뜀)
+        /// </summary>
+        public static readonly HashSet<string> RuntimeOnlyItems=new HashSet<string>{"guild_parcel"};
+
+        public static void DropRuntimeOnly(SaveData data)
+        {
+            if(data?.cargoItems==null||data.cargoCounts==null||data.cargoCosts==null)return;
+            if(data.cargoItems.Count!=data.cargoCounts.Count||data.cargoItems.Count!=data.cargoCosts.Count)return;   // 모양이 틀리면 Validate가 알린다
+            for(int i=data.cargoItems.Count-1;i>=0;i--)
+                if(RuntimeOnlyItems.Contains(data.cargoItems[i])){data.cargoItems.RemoveAt(i);data.cargoCounts.RemoveAt(i);data.cargoCosts.RemoveAt(i);}
+        }
         public static void Validate(SaveData data,GameDatabase db,Func<string,bool> sceneAvailable)
         {
             SaveSystem.Validate(data);

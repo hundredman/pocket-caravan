@@ -133,6 +133,17 @@ namespace PocketCaravan
             foreach (var kv in Alias) if (kv.Value == id && gm.HasMemo(prefix + kv.Key)) return true;
             return false;
         }
+        /// <summary>
+        /// 이 그림이 지금 리액션 동작 중인가 (2026-11-11 기우). 온라인 쪽 내 동작(RemotePlayers.PlaySelf)이 같은 그림에 겹쳐 덧입히면
+        /// 서로 상대가 바꾼 크기를 '원래 크기'로 기억해 버려서 그림이 납작하게 눌린 채 남았다. 한쪽이 하는 동안 다른 쪽은 쉰다.
+        /// </summary>
+        public static bool Animating(CharacterAnimator anim)
+        {
+            if (inst == null || anim == null) return false;
+            foreach (var b in inst.bodies) if (b.anim == anim) return true;
+            return false;
+        }
+
         public static bool Knows(string id)
         {
             var m = Find(id);
@@ -271,7 +282,8 @@ namespace PocketCaravan
                 lastMap = map.mapId;
                 bodies.Clear(); bits.Clear(); says.Clear();
                 CheckRegionLessons(map.mapId);
-                if (!GameManager.I.HasMemo("react:tips")) { GameManager.I.SetMemo("react:tips", 1f); Notify.Show("R: 리액션 바퀴 (인사·끄덕·박수부터, 나머지는 배워서)", 5f); }
+                if (!GameManager.I.HasMemo("react:tips") && !StoryGuide.IntroActive && !StartScreen.IsOpen) {   // 11/11 은샘: 시작 화면·시작 튜토리얼 중에는 미룬다 (끝난 뒤 다음 맵에서)
+                    GameManager.I.SetMemo("react:tips", 1f); }   // 11/11 은샘: R 팁은 Social의 조작 팁 한 줄(R 리액션 · G · F · P)에 이미 있어 따로 띄우지 않는다
             }
             if (Here == Region.North && NorthAtmosphere.Shown == NorthAtmosphere.Weather.Blizzard && player.Motor.IsMoving) Teach("shiver", true);
 

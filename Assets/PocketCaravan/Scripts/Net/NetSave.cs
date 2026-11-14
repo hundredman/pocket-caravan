@@ -58,6 +58,9 @@ namespace PocketCaravan
         NetClient.FullInfo fullOffer;   // 고르는 창: 서버 게임 저장
         LocalSave localOffer;           // 고르는 창: 이 컴퓨터 게임 저장 (없으면 null)
         bool fetching;                  // 서버 게임 저장을 받는 중
+        // 11/14 이 컴퓨터 저장이 다른 계정(또는 누구 것인지 모르는) 것: 잠근 동안은 무엇도 올리지 않는다.
+        //   풀리는 때: 서버 저장을 받아 왔거나, 서버 저장이 없는 계정이 새로 시작했을 때 (NewGameStarted)
+        static bool foreignLocked, foreignServerHas;
         float fetchUntil;
         string fullNote;                // 처음 올라가면 채팅에 남길 말
         bool warnedBig;
@@ -149,12 +152,43 @@ namespace PocketCaravan
             var server = m.full != null && !string.IsNullOrEmpty(m.full.h) ? m.full : null;
             if (fullDecidedFor == NetClient.I.MyName) { StartFull(null, server?.h); return; }   // 같은 실행에서 다시 붙었다: 묻지 않는다
             var local = ReadLocal();
+            // 11/14 은샘(UT "처음 계정인데 이어하기가 눌린다"): 저장은 컴퓨터에 하나라, 한 컴퓨터를 돌려 쓰면 앞사람 저장이
+            //   새 계정의 "이어하기"가 되고 그 계정 서버 저장으로 올라갔다. 이 컴퓨터 저장에 마지막으로 올린 계정을 적어 두고(.account),
+            //   다른 계정 것이면 올리지도 이어하지도 않는다. 누구 것인지 모르는 옛 저장은: 새 계정이면 남의 것으로, 서버 저장이 있으면 고르게 한다
+            string me = NetClient.I.MyName, owner = ReadOwner();
+            foreignLocked = false;   // 계정마다 새로 정한다
+            bool same = local != null && server != null && local.hash == server.h;
+            bool foreign = local != null && !same && owner != me && (owner != null || server == null);
+            if (same) WriteOwner(me);
+            if (foreign)
+            {
+                foreignLocked = true; foreignServerHas = server != null;
+                if (server == null)
+                {
+                    if (ForgetForeign(owner)) NetChat.System("이 컴퓨터의 게임 저장은 다른 사람 것이라 새로 시작해요 (그 저장은 따로 남겨 두었어요)");
+                    else NetChat.System("이 컴퓨터 게임 저장은 다른 계정 것이라 서버에 올리지 않아요");
+                    StartFull(null, null);   // 잠금이 풀리기 전(새로 시작 전)에는 올리지 않는다
+                    return;
+                }
+                if (StartScreen.IsOpen) { BackupForeign(owner); fullOffer = server; localOffer = null; fullDecidedFor = me; ChooseServer(); return; }   // 이 계정 서버 저장을 불러온다 (앞사람 파일은 옆에 남긴다)
+                fullDecidedFor = me;   // 이미 게임 중: 덮어쓰지도 올리지도 않는다 (잠금은 이번 실행 동안 유지)
+                NetChat.System("이 컴퓨터 게임 저장은 다른 계정 것이라 서버에 올리지 않아요. 게임을 다시 켜고 로그인하면 이 계정 저장을 불러와요");
+                return;
+            }
             if (server == null) { StartFull(local != null ? "이 컴퓨터 게임 저장을 서버에 처음 올렸어요" : null, null); return; }
-            if (local != null && (local.hash == server.h || local.at >= server.at - 2000)) { StartFull(null, server.h); return; }   // 같거나 이 컴퓨터 것이 더 최근
+            if (same || (owner == me && local != null && local.at >= server.at - 2000)) { StartFull(null, server.h); return; }   // 같거나, 내 것이고 이 컴퓨터 것이 더 최근
+            if (local != null && owner == null && local.at >= server.at - 2000 && !StartScreen.IsOpen)
+            {
+                // 누구 것인지 모르는 저장으로 이미 게임 중: 서버 저장을 덮지 않는다 (다시 켜서 로그인하면 고르는 창)
+                fullDecidedFor = me; foreignLocked = true;   // 같은 실행에서 다시 붙어도 올리지 않게
+                NetChat.System("이 컴퓨터 게임 저장이 이 계정 것인지 몰라서 서버에 올리지 않아요. 게임을 다시 켜고 로그인하면 고를 수 있어요");
+                return;
+            }
             // 서버 것이 더 최근이다 (다른 컴퓨터에서 했다)
             if (!StartScreen.IsOpen)
             {
                 fullDecidedFor = NetClient.I.MyName;
+                foreignLocked = true;   // 11/14 다시 붙어도 더 오래된 이 컴퓨터 저장이 서버 것을 덮지 않게 (이번 실행 동안)
                 NetChat.System($"서버에 더 최근 게임 저장이 있어요 ({When(server.at)} · {server.day}일째). 게임을 다시 켜고 로그인하면 고를 수 있어요");
                 return;
             }
@@ -190,7 +224,7 @@ namespace PocketCaravan
             var local = ReadLocal();
             if (local == null) return;   // 게임이 쓰는 중이었다: 다음에
             fullSeenWrite = write;
-            if (local.hash == fullSentHash) return;
+            if (foreignLocked || local.hash == fullSentHash) return;   // 11/14 다른 계정 저장은 올리지 않는다
             string zip = Zip(local.json);
             if (zip.Length > FullZipMax)
             {
@@ -199,6 +233,7 @@ namespace PocketCaravan
             }
             net.Send(new FullOut { at = local.at, h = local.hash, zip = zip, day = local.day, money = local.money, map = local.map ?? "", origin = local.origin ?? "" });
             fullSentHash = local.hash;
+            WriteOwner(net.MyName);   // 11/14 이 컴퓨터 저장 = 이 계정 것
             nextFullSend = Time.unscaledTime + FullSendGap;
         }
 
@@ -224,6 +259,8 @@ namespace PocketCaravan
             }
             CloseOffer();
             var now = ReadLocal();
+            WriteOwner(NetClient.I.MyName);   // 11/14 받아 온 서버 저장 = 이 계정 것
+            foreignLocked = false;
             StartFull(null, now != null ? now.hash : m.h);
             NetChat.System($"서버 게임 저장을 불러왔어요 ({d.day}일째 · {d.money}냥). 이 컴퓨터 저장은 .bak 파일로 남겼어요");
             Notify.Show($"서버 게임 저장을 불러왔어요 · {d.day}일째 · {d.money}냥", 3.5f);
@@ -235,7 +272,66 @@ namespace PocketCaravan
             string serverHash = fullOffer?.h;
             bool hasLocal = localOffer != null;
             CloseOffer();
+            if (foreignLocked)
+            {
+                // 11/14 이 컴퓨터 것은 남의 것인데 이 계정 서버 저장을 못 받았다: 잠근 채로 둔다 (새로 시작해도 서버 저장을 덮지 않게)
+                CloseOffer();
+                fullDecidedFor = NetClient.I.MyName;
+                ForgetForeign(ReadOwner());   // 남의 저장을 이어서 하지 않게 "새로 시작"부터 (서버 저장이 있는 계정이라 새로 시작해도 잠금은 그대로)
+                NetChat.System("이 계정 서버 저장을 받지 못했어요. 이 컴퓨터 저장은 다른 계정 것이라 올리지 않아요. 게임을 다시 켜고 로그인해 주세요");
+                return;
+            }
             StartFull(hasLocal ? "이 컴퓨터 게임 저장을 서버에 올렸어요" : null, serverHash);
+        }
+
+        // 11/14 이 컴퓨터 저장을 마지막으로 서버에 올린(또는 서버에서 받아 온) 계정 이름. 저장 파일 옆 .account 파일
+        static string OwnerPath => SaveSystem.CurrentPath + ".account";
+        static string ReadOwner()
+        {
+            try { return File.Exists(OwnerPath) ? File.ReadAllText(OwnerPath).Trim() : null; }
+            catch (Exception) { return null; }
+        }
+        static void WriteOwner(string name)
+        {
+            if (string.IsNullOrEmpty(name) || SaveSystem.UsingSeparateSlot) return;
+            try { if (ReadOwner() != name) File.WriteAllText(OwnerPath, name); } catch (Exception) { }
+        }
+        /// <summary>11/14 다른 계정 저장: 파일을 옆에 복사해 두고(.other-계정) 시작 화면을 "새로 시작"부터 연다</summary>
+        static bool ForgetForeign(string owner)
+        {
+            if (GameManager.I == null || !StartScreen.IsOpen) return false;
+            BackupForeign(owner);
+            if (!GameManager.I.ForgetLocalSave()) return false;
+            ClearOwner();
+            return true;
+        }
+
+        /// <summary>
+        /// 11/14 새로 시작(GameManager.BeginNewGame): 이 컴퓨터 저장의 주인 표시를 지운다. 새 게임이 서버에 올라갈 때 FullTick이 다시 적는다
+        /// (새 게임이 저장되기 전에 꺼져도 앞사람 파일에 내 이름이 붙지 않게).
+        /// 남의 저장을 숨기고 새로 시작한 계정은 잠금을 푼다. 단 그 계정 서버 저장을 못 받은 채라면 덮지 않게 잠근 채로 둔다
+        /// </summary>
+        public static void NewGameStarted()
+        {
+            if (SaveSystem.UsingSeparateSlot) return;
+            ClearOwner();
+            if (!(foreignLocked && foreignServerHas)) foreignLocked = false;
+        }
+
+        /// <summary>11/14 남의 저장 파일을 옆에 복사해 둔다 (.other-계정, 모르면 .other-unknown)</summary>
+        static void BackupForeign(string owner)
+        {
+            try
+            {
+                string tag = string.IsNullOrEmpty(owner) ? "unknown" : string.Join("_", owner.Split(Path.GetInvalidFileNameChars()));
+                if (File.Exists(SaveSystem.CurrentPath)) File.Copy(SaveSystem.CurrentPath, SaveSystem.CurrentPath + ".other-" + tag, true);
+            }
+            catch (Exception) { }
+        }
+
+        static void ClearOwner()
+        {
+            try { if (File.Exists(OwnerPath)) File.Delete(OwnerPath); } catch (Exception) { }
         }
 
         static LocalSave ReadLocal()

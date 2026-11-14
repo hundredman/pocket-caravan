@@ -19,11 +19,34 @@ namespace PocketCaravan
             "Tab을 눌러 내 상태 보기",
             $"I를 눌러 {bag} 열어 보기",
             string.IsNullOrEmpty(mapGoal) ? "M을 눌러 지도 펼쳐 보기" : $"M을 눌러 지도 펼치고 {mapGoal}",
-            "Q를 눌러 할 일(퀘스트) 목록 보기",
+            "왼쪽 할 일 카드를 눌러 여정 수첩 열어 보기",   // 11/13 Q 키 대신 할 일 카드
             "상인에게 물건 하나 구매하기",
             "산 물건을 다른 마을 상인에게 판매하기",
             "L을 눌러 장부에서 방금 거래 기록 확인하기",
         };
+
+        /// <summary>
+        /// 11/13 기우(시연 피드백 "튜토리얼 카드가 너무 크다"): 할 일 카드에 띄우는 짧은 이름 (키캡 + 두세 낱말).
+        /// 긴 문장(Tasks)은 안내 인물 대사와 "잘했어요! 다음: …" 알림에 그대로 쓴다.
+        /// full = 그 단계의 긴 문장 (지도에서 해 볼 것이 있으면 "M을 눌러 지도 펼치고 ○○" → [M] ○○)
+        /// </summary>
+        public static (string key, string text) Short(int task, string full = null)
+        {
+            switch (task)
+            {
+                case Run: return ("Shift", "달리기");
+                case Status: return ("Tab", "상태 보기");
+                case Inventory: return ("I", "소지품 열기");
+                case Map:
+                    int at = full != null ? full.IndexOf("펼치고 ", System.StringComparison.Ordinal) : -1;
+                    return ("M", at >= 0 ? full.Substring(at + 4) : "지도 펴기");
+                case Quests: return (null, "이 카드 누르기");
+                case Bought: return (null, "장터에서 하나 사기");
+                case Sold: return (null, "다른 마을에서 팔기");
+                case Ledger: return ("L", "장부 보기");
+            }
+            return (null, full);
+        }
 
         /// <summary>
         /// 이번 프레임에 키로 끝낸 배우기 번호(없으면 -1). step은 Intro 순서 번호(2 = 첫 배우기).

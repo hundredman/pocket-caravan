@@ -193,8 +193,9 @@ namespace PocketCaravan
             while (GameManager.I != null && GameManager.I.IsTravelling) yield return null;
             arrival=null;
             if(!IsCat||MapRoot.Current==null||MapRoot.Current.mapId!=Home||StartScreen.IsOpen||Step!=1)yield break;
-            DialogueUI.Show("나루의 아침",
-                "아침 짐배가 닿자 나루가 분주해졌다.\n" +
+            // 11/14 은샘: 온라인 세상 시간을 같이 써서 밤·저녁에도 시작한다. "나루의 아침"을 지금 시간에 맞춘다 (시간은 그대로 흐른다)
+            DialogueUI.Show("나루의 " + TimeWord(),
+                "짐배가 닿자 나루가 분주해졌다.\n" +
                 "“이보게, 새내기! 장삿길에 나서려면 채비부터 해야지.”\n" +
                 "선착장 일꾼이 당신을 향해 손짓한다.",
                 new DialogueUI.Choice("일꾼에게 가기", () =>
@@ -202,6 +203,13 @@ namespace PocketCaravan
                     if(GameManager.I!=null)GameManager.I.SetMemo("goryeo:intro_opening",1);
                     Notify.Show("선착장 일꾼에게 다가가 Space로 말을 걸어 보세요.",5f);
                 }));
+        }
+
+        /// <summary>11/14 첫 대사 제목에 쓰는 지금 때: 아침(5~10시) · 낮(~17시) · 저녁(~20시) · 밤</summary>
+        static string TimeWord()
+        {
+            float h = GameManager.I != null ? GameManager.I.Clock.minuteOfDay / 60f : 8f;
+            return h >= 5f && h < 10f ? "아침" : h >= 10f && h < 17f ? "낮" : h >= 17f && h < 20f ? "저녁" : "밤";
         }
 
         /// <summary>같은 맵에 서 있는 사람(이름으로 찾음)의 지금 그림을 빌린다. 없으면 null</summary>

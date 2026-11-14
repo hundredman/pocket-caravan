@@ -7,8 +7,8 @@ namespace PocketCaravan
     /// 2026-11-08 (은샘, 기우 님께 전달): walkSpeed를 직접 바꾸지 않고 공용 SpeedMods "north_travel"에 배율만 넣는다.
     /// (예전엔 매 프레임 walkSpeed를 덮어써서 다른 지역 배율 — 베네치아 아쿠아 알타 — 이 지워졌다.)
     /// - 걷기: 함박눈 0.95배, 눈보라 0.85배 (11/08 팀 기준 SpeedMods.LightWeather/HeavyWeather. 중앙 구역은 날씨 자체가 약해짐)
-    /// - 순록 썰매(north_sled): 함박눈 1배, 눈보라 0.94배 → "눈보라 속 순록 썰매". 눈 없는 땅에선 느려짐
-    ///   (중앙 가운데 줄 0.9배, 북문 큰길 0.8배, 다른 나라 0.7배). 길 등급별 속도는 VehicleData가 맡음 (눈밭 1.45배)
+    /// - 짐 썰매(north_sled, 11/14부터 북유럽 2단계 = 손수레 대신): 함박눈 1배, 눈보라 0.94배. 눈 없는 땅에선 느려짐
+    ///   (중앙 가운데 줄 0.9배, 북문 큰길 0.8배, 다른 나라 0.7배). 길 등급별 속도는 VehicleData가 맡음 (눈밭 1.2배)
     /// - 온천에서 몸을 녹이면(NorthSave "warm") 몇 시간 동안 날씨 영향 없음
     /// </summary>
     public class NorthTravel : MonoBehaviour
@@ -16,7 +16,6 @@ namespace PocketCaravan
         PlayerMotor motor;
         Transform sled;
         SpriteRenderer sledSr;
-        Sprite sledV, sledH;   // 11/01 세로(위에서 본, 앞=위)·가로(옆모습, 앞=오른쪽) 그림. 돌리지 않고 방향마다 골라 쓴다
         AudioSource bells;
         Sprite puff;
         readonly System.Collections.Generic.List<(SpriteRenderer sr, float born)> puffs = new System.Collections.Generic.List<(SpriteRenderer, float)>();
@@ -80,9 +79,7 @@ namespace PocketCaravan
             go.transform.SetParent(player, false);
             sled = go.transform;
             sledSr = go.AddComponent<SpriteRenderer>();
-            sledV = NorthUtil.Load("cargo_v", new Vector2(0.5f, 0.5f));
-            sledH = NorthUtil.Load("cargo_h", new Vector2(0.5f, 0.2f));
-            sledSr.sprite = sledV;
+            sledSr.sprite = Resources.Load<Sprite>("Transport/Sled/side_0");   // 11/14 짐 썰매 그림 (방향·짐 단계는 HandcartLook.Place가 고른다)
             go.SetActive(false);
         }
 
@@ -97,13 +94,9 @@ namespace PocketCaravan
             else if (bells.volume <= 0f && bells.isPlaying) bells.Stop();
             if (!show) { ClearPuffs(); return; }
             Vector2 facing = (Vector2)motor.Facing;
-            bool side = Mathf.Abs(facing.x) > Mathf.Abs(facing.y);
-            sledSr.sprite = side && sledH != null ? sledH : sledV;
-            sledSr.flipX = side && facing.x < 0;          // 왼쪽으로 가면 옆모습을 뒤집어 앞(말린 활대)이 순록 쪽
-            sledSr.flipY = !side && facing.y < 0;         // 아래로 가면 위에 끌려오므로 앞이 아래(순록 쪽)
-            sled.localPosition = side ? new Vector3(-facing.x * 1.15f, -0.45f, 0f) : -(Vector3)(facing * 0.95f) + new Vector3(0f, -0.15f, 0f);
-            sled.localRotation = Quaternion.identity;
-            sledSr.sortingOrder = facing.y > 0 ? 12 : 8;
+            // 11/14 은샘: 2단계 짐 썰매 (손수레 대신). 손수레와 같은 자리·손잡이·짐 상자 0~3단계 그림 (Resources/Transport/Sled)
+            var body = pc.anim != null ? pc.anim.GetComponent<SpriteRenderer>() : null;
+            HandcartLook.Place(sledSr, pc.transform, body, facing, HandcartLook.Stage(GameManager.I.Player.LoadRatio), "Sled");
             // 눈 위를 달리면 썰매 뒤로 눈가루가 날린다
             if (NorthUtil.InNorth && moving > 1f && Time.time >= puffAt)
             {

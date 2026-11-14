@@ -82,6 +82,13 @@ class R2SafetyChecks(unittest.TestCase):
                     new,old=change['new'].encode(),change['old'].encode()
                     self.assertEqual(data.count(new),1,name+' exact approved fishing stock')
                     data=data.replace(new,old,1)
+                # 11/14 운반 수단 단계 정리: 개경 장터 짐말 한 줄과 손수레·걷기 속도만 되돌린다 (UT: 길은 빠르게, 길 밖은 느리게).
+                horse=json.loads((OUT/'vehicles-1114.json').read_text())['files']
+                self.assertEqual(set(horse),{'Assets/PocketCaravan/Data/Goryeo/Town_Gaegyeong.asset','Assets/PocketCaravan/Data/Goryeo/Vehicle_Handcart.asset','Assets/PocketCaravan/Data/Goryeo/Vehicle_Walk.asset'})
+                for change in horse.get(name,[]):
+                    new,old=change['new'].encode(),change['old'].encode()
+                    self.assertEqual(data.count(new),1,name+' exact approved 11/14 vehicle change')
+                    data=data.replace(new,old,1)
                 # 11/08 고려 퀘스트 정리: 승인된 새 파일이면 예전 내용으로 되돌려 비교한다.
                 quests=json.loads((OUT/'goryeo-quest-1108.json').read_text())['files']
                 if name in quests:

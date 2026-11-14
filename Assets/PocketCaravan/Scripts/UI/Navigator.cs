@@ -54,6 +54,53 @@ namespace PocketCaravan
             }
             return true;
         }
+        /// <summary>11/11 길에 서 있으면 곧게 가리킬 때도 길 위로만 (모퉁이를 풀밭으로 자르지 않게)</summary>
+        static bool RoadLine(MapRoot map, RoadGrid roads, Vector3 a, Vector3 b, System.Func<Vector3Int, bool> isGoal)
+        {
+            float len = Vector2.Distance(a, b);
+            int steps = Mathf.Max(1, Mathf.CeilToInt(len / 0.25f));
+            for (int k = 1; k <= steps; k++)
+            {
+                var c = map.WorldToCell(Vector3.Lerp(a, b, k / (float)steps));
+                if (roads.GradeAt(c) <= 0 && !isGoal(c)) return false;
+            }
+            return true;
+        }
+
+        const int OffRoadCost = 6;        // 11/11 길 따라가기: 길 아닌 칸 값 (길 칸은 1). 3이면 장단처럼 길이 멀리 돌면 풀밭을 가로질렀다
+
+        /// <summary>11/11 은샘 담당 맵(고려·중앙 대륙 동쪽)만 길을 따라간다</summary>
+        static bool FollowsRoads(string mapId)
+        {
+            if (string.IsNullOrEmpty(mapId)) return false;
+            string id = GoryeoLayout.Resolve(mapId);
+            return id == "Naru" || id == "Gaegyeong" || id == "Dakmok" || id.StartsWith("goryeo_") || id.StartsWith("transit_");
+        }
+
+        // 11/11 은샘: 고려·중앙 대륙 동쪽에서 서쪽(교역 길목 너머: 만국 장터·다른 지역)으로 갈 때 맵마다 다음 맵을 정해 둔다.
+        //   맵 건너는 수만 보면 나루는 장단→남쪽 포구(길 없는 1칸 출구), 개경은 송악(길 없는 연결)으로 제각각 갔다.
+        //   길로 이어진 큰길 하나: 나루→장단→송악, 개경→닥목→송악 → 나무꾼 길목 → 중앙 진입로 → 교역 길목
+        static readonly Dictionary<string, string> WestRoadNext = new Dictionary<string, string>
+        {
+            ["Naru"] = "goryeo_jangdan", ["goryeo_jangdan"] = "goryeo_songak",
+            ["Gaegyeong"] = "Dakmok", ["Dakmok"] = "goryeo_songak",
+            ["goryeo_songak"] = "transit_woodtown", ["transit_pass"] = "transit_woodtown",
+            ["transit_woodtown"] = "transit_central_approach", ["transit_ferry"] = "transit_wetroad",
+            ["transit_wetroad"] = "transit_central_approach", ["transit_central_approach"] = "transit_crossroads",
+            ["transit_southport"] = "transit_south_inland", ["transit_south_inland"] = "transit_crossroads",
+        };
+
+        static string WestRoad(string here, string target)
+        {
+            if (string.IsNullOrEmpty(here) || string.IsNullOrEmpty(target)) return null;
+            here = GoryeoLayout.Resolve(here);
+            if (!WestRoadNext.TryGetValue(here, out var next)) return null;
+            string t = GoryeoLayout.Resolve(target);
+            if (t == "transit_crossroads" || WestRoadNext.ContainsKey(t)) return null;   // 고려·중앙 동쪽 안에서는 예전처럼 가장 짧은 길
+            var info = WorldIndex.Get()?.Map(here);
+            return info != null && info.neighbors.Contains(next) ? next : null;
+        }
+
         const int MaxSearch = 20000;      // 탐색 칸 수 상한 (큰 맵에서도 한 번에 끝나는 크기)
         static Vector3Int cachedFrom, cachedGoal;
         static MapRoot cachedMap;
@@ -78,21 +125,56 @@ namespace PocketCaravan
 
             // 사람·장터는 그 칸이 막혀 있으므로 바로 옆 칸에 닿으면 도착으로 본다.
             bool IsGoal(Vector3Int c) => c == goal || (goalIsObject && Mathf.Abs(c.x - goal.x) + Mathf.Abs(c.y - goal.y) == 1);
+            // 11/11 은샘: 고려·중앙 대륙 동쪽 맵은 길(오솔길·길·큰길)을 따라 가리킨다. 길 아닌 칸은 OffRoadCost배로 쳐서
+            //   조금 돌아가더라도 길로 간다 (팀 시연: 화살표가 풀밭을 가로질렀다). 다른 지역은 예전처럼 가장 짧은 길
+            var roads = RoadGrid.Current;
+            bool roadMode = roads != null && FollowsRoads(map.mapId);
+            bool OnRoad(Vector3Int c) => roads.GradeAt(c) > 0;
             var prev = new Dictionary<Vector3Int, Vector3Int> { [from] = from };
-            var queue = new Queue<Vector3Int>();
-            queue.Enqueue(from);
             Vector3Int? found = null;
             var dirs = new[] { Vector3Int.right, Vector3Int.left, Vector3Int.up, Vector3Int.down };
-            while (queue.Count > 0 && prev.Count < MaxSearch)
+            if (!roadMode)
             {
-                var c = queue.Dequeue();
-                if (IsGoal(c)) { found = c; break; }
-                foreach (var d in dirs)
+                var queue = new Queue<Vector3Int>();
+                queue.Enqueue(from);
+                while (queue.Count > 0 && prev.Count < MaxSearch)
                 {
-                    var n = c + d;
-                    if (prev.ContainsKey(n) || !(IsGoal(n) || Walkable(n))) continue;
-                    prev[n] = c;
-                    queue.Enqueue(n);
+                    var c = queue.Dequeue();
+                    if (IsGoal(c)) { found = c; break; }
+                    foreach (var d in dirs)
+                    {
+                        var n = c + d;
+                        if (prev.ContainsKey(n) || !(IsGoal(n) || Walkable(n))) continue;
+                        prev[n] = c;
+                        queue.Enqueue(n);
+                    }
+                }
+            }
+            else
+            {
+                // 칸 값이 1 또는 OffRoadCost뿐이라 값별 줄(버킷)로 가장 싼 칸부터 꺼낸다
+                var cost = new Dictionary<Vector3Int, int> { [from] = 0 };
+                var buckets = new List<List<Vector3Int>> { new List<Vector3Int> { from } };
+                var done = new HashSet<Vector3Int>();
+                for (int k = 0; k < buckets.Count && !found.HasValue && done.Count < MaxSearch; k++)
+                {
+                    var list = buckets[k];
+                    for (int j = 0; j < list.Count; j++)
+                    {
+                        var c = list[j];
+                        if (cost[c] != k || !done.Add(c)) continue;
+                        if (IsGoal(c)) { found = c; break; }
+                        foreach (var d in dirs)
+                        {
+                            var n = c + d;
+                            if (done.Contains(n) || !(IsGoal(n) || Walkable(n))) continue;
+                            int nc = k + (OnRoad(n) || IsGoal(n) ? 1 : OffRoadCost);
+                            if (cost.TryGetValue(n, out var old) && old <= nc) continue;
+                            cost[n] = nc; prev[n] = c;
+                            while (buckets.Count <= nc) buckets.Add(new List<Vector3Int>());
+                            buckets[nc].Add(n);
+                        }
+                    }
                 }
             }
             if (!found.HasValue) return;     // 길을 못 찾으면 예전처럼 직선 방향
@@ -105,11 +187,15 @@ namespace PocketCaravan
             // 11/08 기우: 칸 길은 가로·세로로만 꺾여서, 비스듬히 바로 갈 수 있어도 화살표가 옆(→)만 가리켰다.
             // 길 위 12칸 앞까지 중에 곧게 걸어 닿는(사이가 막히지 않은) 가장 먼 칸을 가리킨다 → 목적지(▼)와 방향이 맞는다.
             Vector3 fromW = player.transform.position;
+            // 11/11 길 밖에 있으면 곧게 가리키는 것도 길에 올라서는 첫 칸까지만 (길을 건너뛰어 가로지르지 않게)
+            int firstRoad = path.Count - 1;
+            if (roadMode && !OnRoad(from)) for (int k = 0; k < path.Count; k++) if (OnRoad(path[k])) { firstRoad = k; break; }
             for (int i = Mathf.Min(SightAhead, path.Count) - 1; i >= Lookahead; i--)
             {
+                if (roadMode && !OnRoad(from) && i > firstRoad) continue;
                 var c = path[i];
                 Vector3 to = (i == path.Count - 1) ? goalWorld : map.CellCenter(c);
-                if (ClearLine(map, fromW, to, IsGoal)) { steer = to; break; }
+                if (ClearLine(map, fromW, to, IsGoal) && (!roadMode || !OnRoad(from) || RoadLine(map, roads, fromW, to, IsGoal))) { steer = to; break; }
             }
             cachedSteer = steer; cachedCells = cells;
         }
@@ -121,11 +207,14 @@ namespace PocketCaravan
             var hint = TutorialHint();
             if (hint.HasValue && hint.Value.target != null && hint.Value.target.isActiveAndEnabled)
                 return new Result { position = hint.Value.target.transform.position, label = hint.Value.label ?? WorldDisplayNames.For(hint.Value.target), target = hint.Value.target };
-            var p = gm.Quests.Tracked;
+            // 11/11 은샘: 길 안내 대상 하나만 (QuestFocus). 받은 퀘스트는 수첩에서 고른 것일 때만, 다음 이야기는 그 사람에게
+            var focus = QuestFocus.Current;
+            var p = focus == QuestFocus.Kind.Quest ? gm.Quests.Tracked : null;
             (string, string)? t = hint.HasValue && !string.IsNullOrEmpty(hint.Value.kind) ? (hint.Value.kind, hint.Value.id)
                 : p != null && p.Current != null ? gm.Quests.TargetOf(p.Current) : null;
-            // 퀘스트 안내가 없으면 맡은 의뢰의 목적지 게시판으로
-            if (!t.HasValue && gm.Player.contracts.Count > 0) t = ("board", gm.Player.contracts[0].toTown);
+            if (!t.HasValue && focus == QuestFocus.Kind.Lead && !string.IsNullOrEmpty(StoryGuide.LeadNpc)) t = ("npc", StoryGuide.LeadNpc);
+            // 퀘스트 안내가 없으면 맡은 의뢰의 목적지 게시판으로 (다음 이야기·이벤트를 안내 중이면 그쪽만)
+            if (!t.HasValue && (focus == QuestFocus.Kind.Quest || focus == QuestFocus.Kind.None) && gm.Player.contracts.Count > 0) t = ("board", gm.Player.contracts[0].toTown);
             if (!t.HasValue) return null;
             var index = WorldIndex.Get();
             var (kind, id) = t.Value;
@@ -146,13 +235,32 @@ namespace PocketCaravan
                 return null;
             }
 
-            string next = index.NextStep(map.mapId, targetMap);
+            string west = WestRoad(map.mapId, targetMap);
+            string next = west ?? index.NextStep(map.mapId, targetMap);
             if (next == null) return null;
             // 11/08 기우: 같은 맵으로 가는 출구가 여러 토막이면(아라비아 빈 사막 남쪽 등) 목록 맨 앞 토막의 가운데가 아니라
             // 플레이어에게 가장 가까운 출구 칸을 가리킨다. 출구가 하나인 맵은 그 출구 안에서 가장 가까운 칸.
             var player = PlayerController.Instance;
             Vector3Int me = player != null ? map.WorldToCell(player.transform.position) : Vector3Int.zero;
             Vector3? best = null; int bestD = int.MaxValue;
+            // 11/11 은샘: 만국 장터 큰길(WestRoad)로 갈 때는 맵 끝 출구 중 길이 닿는 칸(길목)만 목적지로 한다.
+            //   장단→송악처럼 맵 끝 전체가 출구면 가장 가까운 끝 칸을 골라 길을 벗어나 가로질렀다. (나루→개경 같은 지역 안 길은 그대로)
+            var roads = RoadGrid.Current;
+            if (west != null && player != null && roads != null)
+                foreach (var e in MapExit.All)
+                {
+                    if (e.targetScene != next) continue;
+                    var o = map.WorldToCell(e.transform.position);
+                    for (int x = 0; x < e.size.x; x++)
+                        for (int y = 0; y < e.size.y; y++)
+                        {
+                            var c = o + new Vector3Int(x, y, 0);
+                            if (roads.GradeAt(c) <= 0) continue;
+                            int dist = Mathf.Abs(c.x - me.x) + Mathf.Abs(c.y - me.y);
+                            if (dist < bestD) { bestD = dist; best = map.CellCenter(c); }
+                        }
+                }
+            if (!best.HasValue)
             foreach (var e in MapExit.All)
             {
                 if (e.targetScene != next) continue;

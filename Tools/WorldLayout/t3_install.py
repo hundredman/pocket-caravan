@@ -77,6 +77,11 @@ def proposal():
  for wx,wy in report.get('lotusRender',{}).get('ripples',[]):
   mid=owner(wx+.5,wy+.5);d=maps[mid]
   d['objects'].append(dict(w=1,h=1,id='',npc='',town='',target='',spawn='',edge='',text='',name='',character='',lines=[],variant=0,idx=0,sheet='goryeo_ripples',frames=4,fps=3.5,radius=0.0,type='',path=[],kind='anim',x=wx-d['terrainX'],y=wy-d['terrainY']))
+ # 11/14 (은샘): 물결 움직임은 고려 물빛 그림(goryeo_ripples)만 쓴다. 기본 ripples는 하늘빛 네모 바탕이라
+ #   초원 진입로·버들 물가·나루터 물 위에 하늘빛 칸이 떠 보였다 (UT "연꽃이 하늘빛 네모 밑에 있는 것 같다")
+ for d in maps.values():
+  for o in d['objects']:
+   if o['kind']=='anim'and o.get('sheet')=='ripples':o['sheet']='goryeo_ripples'
  if set(edits)-used:raise ValueError(('Sign edit without sign',sorted(set(edits)-used)))
  for p,key,cell in [('Resources/Goryeo/PlaceLabels.json','places',False),('Resources/Goryeo/Life/Anchors.json','points',True),('Resources/Goryeo/VillageLife/Anchors.json','points',False)]:
   rows={m:{'id':m,'w':d['w'],'h':d['h'],key:[]}for m,d in maps.items()}

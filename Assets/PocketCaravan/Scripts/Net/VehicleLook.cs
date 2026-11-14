@@ -4,7 +4,7 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// 온라인에서 다른 사람의 운반 수단(손수레·순록 썰매·낙타)도 보이게 (2026-11-08 기우).
+    /// 온라인에서 다른 사람의 운반 수단(손수레·순록 썰매·낙타·짐말)도 보이게 (2026-11-08 기우, 11/14 짐말 추가).
     /// 게임이 enter에 "veh"(운반 수단 아이디, 걷기면 "")를 싣고, 서버가 room · join으로 같은 맵 사람들에게 전한다 (Server/src/world.ts).
     /// 그림은 표시만 (충돌·속도·저장 무관). 내 낙타도 같은 VehicleTrail로 내 지나온 길을 따라온다.
     /// </summary>
@@ -48,24 +48,14 @@ namespace PocketCaravan
             var tr = sr.transform;
             switch (vehicle)
             {
-                case "arabia_camel":
-                    sr.sprite = Resources.Load<Sprite>("Arabia/Fair/animal_camel");
-                    tr.localScale = Vector3.one * 0.45f;
-                    tr.localRotation = Quaternion.identity;
+                case PackAnimal.CamelId:   // 11/14 은샘: 낙타·짐말은 내 것과 같은 PackAnimal 그림·자리 (짐 단계 = crates)
+                case PackAnimal.HorseId:
                     if (trail == null) trail = new VehicleTrail();
-                    var at = trail.Step(owner.position, facing, moving);
-                    tr.position = new Vector3(at.x, at.y + .15f, owner.position.z);
-                    sr.flipX = trail.FaceRight;
-                    sr.sortingOrder = at.y < owner.position.y ? baseOrder + 1 : baseOrder - 2;
+                    PackAnimal.Place(sr, trail, owner, body, vehicle, facing, moving, crates, moving ? Time.time * 8f : 0f);
                     break;
                 case "north_sled":
-                {
-                    bool side = Mathf.Abs(facing.x) > Mathf.Abs(facing.y);
-                    sr.sprite = side ? Tex("North/Minigame/cargo_h", new Vector2(.5f, .2f)) : Tex("North/Minigame/cargo_v", new Vector2(.5f, .5f));
-                    sr.flipX = side && facing.x < 0; sr.flipY = !side && facing.y < 0;
-                    tr.localScale = Vector3.one; tr.localRotation = Quaternion.identity;
-                    tr.localPosition = side ? new Vector3(-facing.x * 1.15f, -0.45f, 0f) : -(Vector3)(facing * 0.95f) + new Vector3(0f, -0.15f, 0f);
-                    sr.sortingOrder = facing.y > 0 ? baseOrder + 1 : baseOrder - 2;
+                {   // 11/14 은샘: 짐 썰매는 손수레와 같은 HandcartLook 자리·그림 방식 (폴더만 Sled)
+                    HandcartLook.Place(sr, owner, body, facing, crates, "Sled");
                     var fx = sr.GetComponent<RemoteSledFx>();   // 11/08 방울 소리·눈가루도
                     if (fx == null) fx = sr.gameObject.AddComponent<RemoteSledFx>();
                     fx.Tick(owner.position, facing, moving);
@@ -75,7 +65,7 @@ namespace PocketCaravan
                     HandcartLook.Place(sr, owner, body, facing, crates);
                     break;
             }
-            if (vehicle == "arabia_camel" || vehicle == "north_sled") HandcartLook.HideHandle(sr);
+            if (PackAnimal.Is(vehicle)) HandcartLook.HideHandle(sr);
             // 11/08에 붙였던 축소 상자 짐은 그림 안 짐 단계로 바뀌어 쓰지 않는다 (예전 것이 남아 있으면 끈다)
             for (int i = 0; i < 3; i++)
             {
@@ -92,6 +82,8 @@ namespace PocketCaravan
         readonly List<Vector2> pts = new List<Vector2>();
         Vector2 pos; bool has;
         public bool FaceRight { get; private set; } = true;
+        /// <summary>11/14 마지막으로 움직인 쪽 (짐말·낙타가 위아래로 갈 때 앞·뒷모습을 고른다). 서 있으면 그대로</summary>
+        public Vector2 Heading { get; private set; } = Vector2.left;
 
         public void Reset() { pts.Clear(); has = false; }
 
@@ -104,6 +96,7 @@ namespace PocketCaravan
                 pos = leader - facing.normalized * Gap;
                 pts.Add(pos); pts.Add(leader);
                 has = true;
+                if (facing.sqrMagnitude > 0.01f) Heading = facing.normalized;   // 11/14 처음 놓일 때는 사람이 보는 쪽 (이전 수단의 방향이 남지 않게)
                 if (Mathf.Abs(facing.x) > .1f) FaceRight = facing.x > 0;
                 return pos;
             }
@@ -121,6 +114,8 @@ namespace PocketCaravan
             pos = Vector2.Lerp(pos, target, 1f - Mathf.Exp(-12f * Time.deltaTime));
             float dx = pos.x - before.x;
             if (Mathf.Abs(dx) > 0.002f) FaceRight = dx > 0;   // 위·아래로만 가거나 서 있으면 마지막 좌우 방향 유지
+            var step = pos - before;
+            if (step.sqrMagnitude > 0.002f * 0.002f) Heading = Vector2.Lerp(Heading, step.normalized, 0.25f);   // 살짝 부드럽게 (모퉁이에서 그림이 깜빡이지 않게)
             return pos;
         }
     }

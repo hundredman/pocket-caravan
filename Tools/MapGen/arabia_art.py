@@ -234,7 +234,9 @@ def unplace(m, name, x, y):
 TEX = {'sand': 'tile_sand', 'road': 'tile_road', 'paving': 'tile_paving', 'grass': 'tile_oasisGrass',
        'water': 'tile_water', 'zellige': 'tile_zellige', 'brick': 'tile_mudBrick', 'dune': 'tile_dune',
        'rock': 'drawn_texRock', 'gravel': 'drawn_texGravel', 'dry': 'drawn_texDry',
-       'red': 'drawn_texRed', 'cobble': 'drawn_texCobble', 'boards': 'drawn_texBoards', 'plaza': 'drawn_texPlaza'}
+       'red': 'drawn_texRed', 'cobble': 'drawn_texCobble', 'boards': 'drawn_texBoards', 'plaza': 'drawn_texPlaza',
+       # 11/11 만국 장터 전용 (다른 맵의 plaza·cobble 타일은 그대로): 큰 사암 판석 · 따뜻한 사암 연석 · 분수 바닥 문양
+       'slab': 'drawn_texSlab', 'curb': 'drawn_texCurb', 'mosaic': 'drawn_texSlab'}
 STREET = {'paving', 'zellige'}
 # 경계를 그리지 않고 이어지는 바닥 묶음
 JOIN = {'paving': {'paving', 'zellige', 'road', 'bridge'}, 'zellige': {'zellige'},
@@ -243,7 +245,9 @@ JOIN = {'paving': {'paving', 'zellige', 'road', 'bridge'}, 'zellige': {'zellige'
         'grass': {'grass', 'water', 'bridge'}, 'water': {'water', 'bridge'}, 'brick': {'brick'}, 'dune': {'dune'},
         'dry': {'dry', 'grass', 'water', 'bridge'},   # 건초지: 초원 쪽 경계는 초원이 그린다
         'red': {'red'}, 'cobble': {'cobble', 'boards', 'bridge', 'zellige', 'plaza'}, 'boards': {'boards', 'bridge'},
-        'plaza': {'plaza', 'cobble', 'bridge'}}
+        'plaza': {'plaza', 'cobble', 'bridge'},
+        'slab': {'slab', 'curb', 'mosaic', 'bridge'}, 'mosaic': {'slab', 'curb', 'mosaic'},
+        'curb': {'curb', 'slab', 'mosaic', 'bridge'}}
 UNDER = ('grass', 'dry', 'sand', 'red')       # 경계 바깥에 깔 바닥 후보
 
 
@@ -298,6 +302,11 @@ def compose(kind, under, mask, x, y):
                 elif d < 1.5: px[i, j] = (104, 74, 46, 255)          # 연석 바깥 윤곽
                 elif d < 3.5: px[i, j] = (222, 190, 136, 255) if (i + j) % 5 else (204, 168, 116, 255)  # 사암 연석
                 elif d < 4.5: px[i, j] = (170, 140, 100, 255)        # 연석 안쪽 그늘
+            elif kind in ('slab', 'curb', 'mosaic'):          # 11/11 장터: 회색 대신 따뜻한 갈색 윤곽 + 밝은 사암 테
+                if d < 0.5: px[i, j] = bp[i, j]
+                elif d < 1.5: px[i, j] = (128, 92, 60, 255)
+                elif d < 2.5: px[i, j] = (238, 214, 168, 255) if kind != 'curb' else (226, 196, 148, 255)
+                elif d < 3.5 and kind == 'curb': px[i, j] = (190, 156, 112, 255)
             elif kind in ('cobble', 'boards', 'plaza'):
                 if d < 0.5: px[i, j] = bp[i, j]
                 elif d < 1.5: px[i, j] = (64, 58, 56, 255) if kind == 'cobble' else (70, 46, 30, 255) if kind == 'boards' else (120, 84, 58, 255)
@@ -354,6 +363,22 @@ def bridge_key(axis, edge, x, y):
     name = k.replace(':', '_')
     if name not in USED:
         USED[name] = bridge_tile(axis, edge, x % 4, y % 4)
+    return k
+
+
+def mosaic_key(spec, x, y):
+    """11/11 장터 분수 바닥 문양: 판석 바닥 위에 큰 문양 그림(spec = (그림, 왼쪽 위 x, y))의 한 칸을 겹친다.
+    문양 그림 크기만큼만 칠하므로 칸마다 이름이 다르다 (반복 무늬 아님)."""
+    name_, ox, oy = spec
+    u, v = x - ox, y - oy
+    k = f'arabia:tmosaic:{u}:{v}'
+    key_ = k.replace(':', '_')
+    if key_ not in USED:
+        tile = tex('slab', x, y).copy()
+        over = sprite(name_)
+        if 0 <= u * T < over.width and 0 <= v * T < over.height:
+            tile.alpha_composite(over.crop((u * T, v * T, u * T + T, v * T + T)))
+        USED[key_] = tile
     return k
 
 
@@ -644,6 +669,9 @@ class ArabiaMap(Map):
                 if z == 'bridge':
                     self.ground[y][x] = bridge_key(*self.bridges.get((x, y), ('h', 'm')), x, y)
                     self.blocked[y][x] = False
+                    continue
+                if z == 'mosaic' and getattr(self, 'mosaic', None):
+                    self.ground[y][x] = mosaic_key(self.mosaic, x, y)
                     continue
                 join = JOIN.get(z, {z})
                 mask = 0

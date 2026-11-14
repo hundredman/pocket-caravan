@@ -153,7 +153,7 @@ namespace PocketCaravan
             public string id;
             public string name;
             public string look;     // 출신 아이디 (venice · goryeo · viking · arabia) → 캐릭터 그림
-            public string veh;      // 11/08 운반 수단 아이디 (handcart · north_sled · arabia_camel, 걷기면 "") → VehicleLook이 그린다
+            public string veh;      // 11/08 운반 수단 아이디 (handcart · north_sled · packhorse · arabia_camel, 걷기면 "") → VehicleLook이 그린다
             public string tag;      // 11/09 이름표 표시 ("guild" = 만국 상인회, 없으면 "") → RemotePlayers가 이름 위에 그린다
             public float x, y;
             public int fx, fy;
@@ -534,6 +534,7 @@ namespace PocketCaravan
                     else if (StartScreen.IsOpen || NetLogin.IsOpen) { }   // 첫 화면: 로그인 화면이 알아서 넘어간다
                     else if (retries > 0) Notify.Show($"다시 연결됐어요 · 지금 {msg.online}명", 2.5f);
                     else if (asked.Length > 0 && MyName != asked) Notify.Show($"이름이 겹쳐서 '{MyName}'(으)로 들어왔어요", 4f);
+                    else if (StoryGuide.IntroActive) NetChat.System($"온라인 접속: {msg.id}");   // 11/14 은샘: 시작 튜토리얼 화면에는 튜토리얼·마을 이름만 (11/11 정함). 접속 소식은 채팅으로
                     else Notify.Show($"온라인 접속: {msg.id} · 지금 {msg.online}명", 3f);
                     retries = 0;
                     break;
@@ -590,6 +591,7 @@ namespace PocketCaravan
         {
             GUI.depth = -6;
             bool online = Status == State.Online;
+            if (online && OnlineCount <= 1) return;   // 11/13 기우: 나 혼자 접속해 있으면 "1명" 알약은 감춘다 (화면 글 줄이기)
             string label = Status switch
             {
                 State.Online => $"{OnlineCount}명",

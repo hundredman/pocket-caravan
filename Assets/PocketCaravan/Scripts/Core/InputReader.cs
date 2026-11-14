@@ -69,7 +69,7 @@ namespace PocketCaravan
         public static bool InteractPressed() => (K != null && K.spaceKey.wasPressedThisFrame) || Virtual(' ');
         public static bool ConfirmPressed() => InteractPressed();
         public static bool CancelPressed() => (K != null && K.escapeKey.wasPressedThisFrame) || Virtual('\x1b');
-        public static bool QuestLogPressed() => (K != null && K.qKey.wasPressedThisFrame) || Virtual('q');
+        public static bool QuestLogPressed() => Virtual('q');   // 11/13 Q 키는 뺐다: 할 일 카드를 누르면 여정 수첩 (카드가 'q'를 누른다)
         public static bool MapPressed() => (K != null && K.mKey.wasPressedThisFrame) || Virtual('m');
         public static bool LedgerPressed() => (K != null && K.lKey.wasPressedThisFrame) || Virtual('l');
         /// <summary>상태창·할 일 펼치기 (5초 뒤 다시 한 줄)</summary>
@@ -108,7 +108,7 @@ namespace PocketCaravan
         public static bool InteractPressed() => Input.GetKeyDown(KeyCode.Space) || Virtual(' ');
         public static bool ConfirmPressed() => InteractPressed();
         public static bool CancelPressed() => Input.GetKeyDown(KeyCode.Escape) || Virtual('\x1b');
-        public static bool QuestLogPressed() => Input.GetKeyDown(KeyCode.Q) || Virtual('q');
+        public static bool QuestLogPressed() => Virtual('q');   // 11/13 Q 키는 뺐다 (위와 같이)
         public static bool MapPressed() => Input.GetKeyDown(KeyCode.M) || Virtual('m');
         public static bool LedgerPressed() => Input.GetKeyDown(KeyCode.L) || Virtual('l');
         public static bool StatusPressed() => Input.GetKeyDown(KeyCode.Tab) || Virtual('\t');
