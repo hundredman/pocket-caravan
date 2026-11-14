@@ -19,7 +19,7 @@ MonoBehaviour:
   price: 360
   minTownLevel: 1
   speedByGrade:
-  - 1.15
+  - 1
   - 1.2
   - 1.25
   - 1.3

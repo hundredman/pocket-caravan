@@ -19,7 +19,7 @@ MonoBehaviour:
   price: 0
   minTownLevel: 1
   speedByGrade:
-  - 1
+  - 0.85
   - 1.05
   - 1.1
-  - 1.1
+  - 1.15
