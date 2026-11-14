@@ -193,13 +193,13 @@ HORSE_FACE=[
 "..ccc..",
 ]
 CAMEL_BACK=[
-"....t...t....",
-"....tTTTt....",
-"....tTTTt....",
-".....tTt.....",
-".....tTt.....",
-".....tTt.....",
-"....tTTTt....",
+".............",
+".............",
+".............",
+".............",
+".............",
+".............",
+".............",
 "...tTTTTTt...",
 "..tTTTTTTTt..",
 ".tTTUUUUTTTt.",
@@ -221,6 +221,15 @@ CAMEL_BACK=[
 "..tTt...tTt..",
 "..tTt...tTt..",
 "..kkk...kkk..",
+]
+CAMEL_BACK_HEAD=[            # 뒤: 등 너머 머리·목 (몸 뒤에 따로 그려 몸 테두리가 목 아래를 가른다)
+"....t...t....",
+"....tTTTt....",
+"....tTTTt....",
+".....tTt.....",
+".....tTt.....",
+".....tTt.....",
+"....tTTTt....",
 ]
 CAMEL_FRONT=[           # 몸(꼬리 끝·엉덩이·혹·가슴·긴 앞다리). 목·머리는 CAMEL_FACE를 따로 얹는다
 "......t......",
@@ -246,15 +255,18 @@ CAMEL_FRONT=[           # 몸(꼬리 끝·엉덩이·혹·가슴·긴 앞다리)
 "..tTt...tTt..",
 "..kkk...kkk..",
 ]
-CAMEL_FACE=[           # 낙타는 머리를 높이 들어 위에서 보면 머리가 혹 근처에 오고, 긴 목이 가슴으로 내려온다
+CAMEL_FACE=[           # 낙타는 머리를 높이 들어 위에서 보면 머리가 혹 근처에 온다. 머리는 따로 테두리 (목·몸과 구분)
 ".t...t.",
 ".tTTTt.",
 "tTTTTTt",
 "TeTTTeT",
 "tTTTTTt",
-".TTTTT.",
+".tTTTt.",
 ".ccccc.",
 "..ccc..",
+]
+CAMEL_NECK=[           # 긴 목: 머리 아래에서 가슴으로
+"..tTt..",
 "..tTt..",
 "..tTt..",
 "..tTt..",
@@ -262,20 +274,21 @@ CAMEL_FACE=[           # 낙타는 머리를 높이 들어 위에서 보면 머�
 "..tTt..",
 "..tTt..",
 ]
-VIEW={  # 그림, 안장 띠 줄, 띠 색, 짐 기준 줄, (얼굴 그림, 얼굴 위치 줄)
- ('horse','back'):(HORSE_BACK,9,'rRr',8,None,0),
- ('horse','front'):(HORSE_FRONT,6,'rRr',6,HORSE_FACE,12),
- ('camel','back'):(CAMEL_BACK,9,'aAy',8,None,0),
- ('camel','front'):(CAMEL_FRONT,5,'aAy',4,CAMEL_FACE,-2),
+VIEW={  # 그림, 안장 띠 줄, 띠 색, 짐 기준 줄, 몸 앞에 얹는 부위[(그림, 줄)], 몸 뒤에 두는 부위[(그림, 줄)]
+ ('horse','back'):(HORSE_BACK,9,'rRr',8,[],[]),
+ ('horse','front'):(HORSE_FRONT,6,'rRr',6,[(HORSE_FACE,12)],[]),
+ ('camel','back'):(CAMEL_BACK,9,'aAy',8,[],[(CAMEL_BACK_HEAD,0)]),
+ ('camel','front'):(CAMEL_FRONT,5,'aAy',4,[(CAMEL_NECK,6),(CAMEL_FACE,-2)],[]),
 }
 def end_view3(kind,view,stage):
     from PIL import Image
-    rows,band_y,band,pack_y,face,face_y=VIEW[(kind,view)]
+    rows,band_y,band,pack_y,over,under=VIEW[(kind,view)]
     W,H=21,44;ox=4;oy=H-2-len(rows)
     for r in rows:assert len(r)==13,(kind,view,r)
     layers=[]
     def layer(fn):
         L=Cv(W,H);fn(L);L.outline();layers.append(L.im)
+    for part,py in under:layer(lambda L,part=part,py=py:L.draw(part,ox+(13-len(part[0]))//2,oy+py))
     def body(L):
         L.draw(rows,ox,oy)
         for i,ch in enumerate(band):            # 안장 천: 몸 위에만
@@ -287,7 +300,7 @@ def end_view3(kind,view,stage):
         layer(lambda L:L.draw(SACK,ox-4,oy+pack_y));layer(lambda L:L.draw(SACK,ox+11,oy+pack_y))
     if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy+pack_y-1))
     if stage>=3:layer(lambda L:L.draw(SMALL,ox+2,oy+pack_y-5))
-    if face:layer(lambda L:L.draw(face,ox+3,oy+face_y))   # 얼굴은 따로 테두리 → 몸·짐과 구분된다
+    for part,py in over:layer(lambda L,part=part,py=py:L.draw(part,ox+(13-len(part[0]))//2,oy+py))   # 얼굴·목은 따로 테두리 → 몸·짐과 구분된다
     out=Image.new('RGBA',(W,H),(0,0,0,0))
     for im in layers:out.alpha_composite(im)
     return out
