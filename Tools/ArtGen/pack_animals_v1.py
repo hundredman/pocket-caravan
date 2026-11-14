@@ -288,7 +288,7 @@ VIEW={  # 그림, 안장 띠 줄, 띠 색, 짐 기준 줄, 몸 앞에 얹는 부
 def end_view3(kind,view,stage):
     from PIL import Image
     rows,band_y,band,pack_y,over,under,inline=VIEW[(kind,view)]
-    W,H=21,44;ox=4;oy=H-2-len(rows)
+    W,H=23,44;ox=5;oy=H-2-len(rows)   # 11/14 양옆 자루 바깥 테두리가 캔버스 끝에 잘리지 않게 폭 23
     for r in rows:assert len(r)==13,(kind,view,r)
     layers=[]
     def layer(fn):
