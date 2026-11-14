@@ -330,12 +330,9 @@ def end_view3(kind,view,stage,frame=''):
         layer(lambda L:L.draw(SACK,ox-4,oy+pack_y));layer(lambda L:L.draw(SACK,ox+11,oy+pack_y))
     if kind=='camel':
         # 11/14 낙타는 머리·목이 등 가운데를 가리므로 (앞) 또는 짐 더미가 머리를 덮지 않게 (뒤) 짐을 양옆 자루 위로 쌓는다
-        if view=='front':
-            if stage>=2:layer(lambda L:L.draw(SMALL,ox-5,oy+pack_y-3));layer(lambda L:L.draw(SMALL,ox+10,oy+pack_y-3))
-            if stage>=3:layer(lambda L:L.draw(JAR,ox-3,oy+pack_y-7));layer(lambda L:L.draw(JAR,ox+12,oy+pack_y-7))
-        else:
-            if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy+pack_y-1))
-            if stage>=3:layer(lambda L:L.draw(SMALL,ox-5,oy+pack_y-3));layer(lambda L:L.draw(SMALL,ox+10,oy+pack_y-3))
+        # 앞·뒤 같은 순서: 1 자루 → 2 자루 위 보따리 → 3 그 위 항아리
+        if stage>=2:layer(lambda L:L.draw(SMALL,ox-5,oy+pack_y-3));layer(lambda L:L.draw(SMALL,ox+10,oy+pack_y-3))
+        if stage>=3:layer(lambda L:L.draw(JAR,ox-3,oy+pack_y-7));layer(lambda L:L.draw(JAR,ox+12,oy+pack_y-7))
     else:
         if stage>=2:layer(lambda L:L.draw(BUNDLE,ox+1,oy+pack_y-1))
         if stage>=3:layer(lambda L:L.draw(SMALL,ox+2,oy+pack_y-5))
