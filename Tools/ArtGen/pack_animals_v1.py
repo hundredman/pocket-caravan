@@ -55,8 +55,8 @@ class Cv:
         pts=[(x,y) for y in range(s.h) for x in range(s.w) if s.get(x,y)[3]==0 and any(s.get(x+a,y+b)[3] and s.get(x+a,y+b)!=o for a,b in((1,0),(-1,0),(0,1),(0,-1)))]
         for x,y in pts:s.p[x,y]=o
 # 길마(나무 안장틀)·안장 천과 짐
-CLOTH=["rrrrrrrrrrrr","RRRRRRRRRRRR","RRRRRRRRRRRR","rrrrrrrrrrrr"]
-FRAME=["dHd...dHd","dhHdddHhd","ddddddddd"]
+CLOTH=["rrrrrrrrrrrrrrr","RRRRRRRRRRRRRRR","RRRRRRRRRRRRRRR","rrrrrrrrrrrrrrr"]
+FRAME=["dHd.....dHd","dhHdddddHhd","ddddddddddd"]
 SACK=[".s..s.",".nnnn.","XCCCCs","CCCCCs","CCCCCs","CCCCss",".ssss."]
 JAR=[".JJ.","KJJj","KJJj",".jj."]
 BUNDLE=["..s....s..",".CnnnnnnC.","XCCCCCCCCs","CCCCCCCCss",".ssssssss."]
@@ -96,12 +96,12 @@ def make(stage,frame=''):
     c=Cv(40,32)
     oy=8
     c.draw(lift(HORSE,frame),1,oy)
-    c.draw(CLOTH,13,oy+9)
-    c.draw(FRAME,15,oy+7)
+    c.draw(CLOTH,12,oy+9)   # 11/14 안장·짐 크기는 그대로, 짧아진 몸의 등 가운데(x 19)로 한 칸 당김
+    c.draw(FRAME,14,oy+7)
     parts=[]
     if stage==1: parts+=[(SACK,16,oy+9)]
-    if stage>=2: parts+=[(SACK,13,oy+9),(SACK,19,oy+9),(BUNDLE,14,oy+3)]   # 안장 가운데(x 18.5)에 맞춘다
-    if stage>=3: parts+=[(SMALL,15,oy-1),(JAR,14,oy+5),(JAR,20,oy+5)]   # 11/14 항아리는 옆 자루 위에 (낙타와 같게)
+    if stage>=2: parts+=[(SACK,13,oy+9),(SACK,20,oy+9),(BUNDLE,14,oy+3)]   # 원래 간격·크기 그대로, 안장 가운데(x 19)에 맞춘다
+    if stage>=3: parts+=[(SMALL,15,oy-1),(JAR,14,oy+5),(JAR,21,oy+5)]   # 11/14 항아리는 옆 자루 위에 (낙타와 같게)
     return with_parts(c,parts)
 
 # ---------------- 낙타 ----------------
@@ -319,9 +319,10 @@ CAMEL_NECK_LOW=[       # 목 아래쪽 절반: 몸과 한 덩어리로 (테두�
 "..tTt..",
 "..tTt..",
 ]
-SACK_END=[".n.",".n.","XCs","XCs","XCs","CCs","CCs",".s."]                # 11/14 앞·뒤에서 본 옆구리 자루: 몸에 붙어 길게 늘어진 모서리 (폭 3)
-BUNDLE_END=["..s.s..",".XCCCC.","XCnnnCs","XCCCCCs","XCCCCCs","XCnnnCs","CCCCCss",".sssss."]   # 11/14 등을 따라 놓인 보따리를 위에서 비스듬히: 폭 7, 윗면이 위아래로 길다 (끈 두 줄)
-SMALL_END=[".XCC.","Xnnns","XCCCs","Xnnns",".sss."]                      # 그 위 작은 보따리 (폭 5, 위아래로 길게)
+SACK_L=["...nn","..XCn",".XCCC","XCCCs","XCCCs","XCCss",".sss."]   # 11/14 앞·뒤에서 본 왼쪽 옆구리 자루: 위는 몸 가장자리에 매달리고 아래로 갈수록 바깥으로 불룩
+SACK_R=["nn...","nCs..","CCCs.","XCCCs","XCCCs","XCCss",".sss."]   # 오른쪽 (거울)
+BUNDLE_END=["..s.s..",".XCCCC.","XCnnnCs","XCCCCCs","XCnnnCs",".sssss."]   # 11/14 등을 따라 놓인 보따리를 위에서 비스듬히: 폭 7, 윗면이 보인다 (끈 두 줄)
+SMALL_END=[".XCC.","Xnnns","XCCCs",".sss."]                      # 그 위 작은 보따리 (폭 5, 위아래로 길게)
 BUNDLE_C=["..s.....s..",".CnnnnnnnC.","XCCCCCCCCCs","CCCCCCCCCss",".sssssssss."]   # 11/14 앞·뒤 가운데 짐: 폭 11 (좌우 대칭)
 SMALL_C=["..s...s..",".CnnnnnC.","XCCCCCCCs",".sssssss."]                                   # 폭 9
 VIEW={  # 그림, 안장 띠 줄, 띠 색, 짐 기준 줄, 몸 앞에 얹는 부위[(그림, 줄)], 몸 뒤에 두는 부위, 몸에 테두리 없이 섞는 부위
@@ -364,10 +365,10 @@ def end_view3(kind,view,stage,frame=''):
         if stage>=3:layer(lambda L:L.draw(JAR,ox-3,oy+pack_y-3));layer(lambda L:L.draw(JAR,ox+12,oy+pack_y-3))
     else:
         # 11/14 짐말 앞·뒤: 옆모습 짐 그림을 그대로 쓰지 않고 앞·뒤에서 본 모양 (옆구리 자루 모서리, 보따리 끝면). 순서는 낙타와 같다
-        if stage>=1:layer(lambda L:L.draw(SACK_END,ox-1,oy+pack_y));layer(lambda L:L.draw(SACK_END,ox+11,oy+pack_y))   # 몸 가장자리에 한 칸 걸친다
-        if stage>=2:layer(lambda L:L.draw(BUNDLE_END,ox+3,oy+pack_y-3))   # 안장 띠를 가운데로 등을 따라
+        if stage>=1:layer(lambda L:L.draw(SACK_L,ox-3,oy+pack_y));layer(lambda L:L.draw(SACK_R,ox+11,oy+pack_y))   # 안장 띠 높이에 매달려 아래로
+        if stage>=2:layer(lambda L:L.draw(BUNDLE_END,ox+3,oy+pack_y-2))   # 안장 위 등을 따라
         if stage>=3:layer(lambda L:L.draw(SMALL_END,ox+4,oy+pack_y-4))
-        if stage>=3:layer(lambda L:L.draw(JAR,ox-2,oy+pack_y-3));layer(lambda L:L.draw(JAR,ox+11,oy+pack_y-3))   # 항아리는 옆 자루 위
+        if stage>=3:layer(lambda L:L.draw(JAR,ox-4,oy+pack_y-1));layer(lambda L:L.draw(JAR,ox+13,oy+pack_y-1))   # 항아리는 옆 자루 위 바깥쪽
     for item in over:   # 얼굴·목은 따로 테두리 → 몸·짐과 구분된다. (그림, 줄, 자를 줄)이면 그 줄부터 아래는 지운다
         part,py=item[0],item[1];cut=item[2] if len(item)>2 else None
         if kind=='camel' and view=='back' and stage>=3:continue   # 3단계는 위 보따리가 머리 앞에 온다 (머리를 덮어 그리면 보따리 끈·띠가 가려진다). 머리는 몸 뒤 그림이 짐 위로 귀·정수리만 보인다
