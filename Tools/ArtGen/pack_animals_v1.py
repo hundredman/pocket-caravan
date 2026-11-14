@@ -227,7 +227,7 @@ HORSE_FACE=[
 ".LBBBb.",
 ".LBBBb.",
 ".ccccc.",
-".cecec.",
+".ccccc.",   # 11/14 콧구멍 뺌
 "..ccc..",
 ]
 CAMEL_BACK=[
