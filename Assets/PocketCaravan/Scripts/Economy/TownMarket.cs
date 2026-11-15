@@ -297,8 +297,7 @@ namespace PocketCaravan
             float haggle = DealFor(selling);
             int unit = selling ? m.SellPrice(item, haggle) : m.BuyPrice(item, haggle);
             float vx = d.x + 48;
-            if (haggle != 0) vx = Struck(vx, d.y + 29, (selling ? m.SellPrice(item) : m.BuyPrice(item)).ToString()) + 5;   // 흥정 전 값 취소선
-            vx = CuteUI.Label(vx, d.y + 29, $"{unit}냥", selling ? CuteUI.Sell : CuteUI.Buy, false, true);
+            vx = CuteUI.Label(vx, d.y + 29, $"{unit}냥", selling ? CuteUI.Sell : CuteUI.Buy, false, true);   // 11/15 취소선은 쓰지 않는다
             if (selling)
             {
                 float avg = p.cargo.AverageCost(item);
@@ -306,7 +305,20 @@ namespace PocketCaravan
                 string perk = OriginPerks.SellTag(p.origin, item, town);   // 11/15 출신 강점 ("아라비아 강점 +5%")
                 if (perk.Length > 0) CuteUI.Label(d.x + 48, d.y + 44, perk, CuteUI.Up, true);
             }
-            else CuteUI.Label(vx + 8, d.y + 29, $"남은 {Mathf.FloorToInt(m.Stock(item))}개", CuteUI.Sub, true);
+            else
+            {
+                CuteUI.Label(vx + 8, d.y + 29, $"남은 {Mathf.FloorToInt(m.Stock(item))}개", CuteUI.Sub, true);
+                // 11/15 살 때 얻을 이득 (UT 9번): 장부에 적힌 다른 장터 중 가장 비싸게 사 주는 곳
+                var best = p.ledger.BestSell(item.id, town.id);
+                var bt = best != null && gm.Db != null ? gm.Db.towns.Find(t => t != null && t.id == best.town) : null;
+                if (bt != null)
+                {
+                    int gain = best.sell - unit;
+                    float lx = CuteUI.Label(d.x + 48, d.y + 44, $"장부 · {bt.displayName}에서 {best.sell}냥", CuteUI.Sub, true);
+                    CuteUI.Label(lx + 4, d.y + 44, gain > 0 ? $"+{gain}" : gain.ToString(), gain > 0 ? CuteUI.Up : CuteUI.Down, true);
+                }
+                else CuteUI.Label(d.x + 48, d.y + 44, "장부 · 다른 장터 값은 아직 몰라요", CuteUI.Zero, true);
+            }
 
             float banLeft = p.tradeActivity.BanRemaining(town.id, gm.Clock.TotalHours);
             if (banLeft > 0)
@@ -340,9 +352,11 @@ namespace PocketCaravan
                 CuteUI.Label(d.x, sy, "합계", CuteUI.Sub, true);
                 CuteUI.Icon(CuteUI.Pic.Coin7, d.x + 30, sy - 4);
                 float ex = d.x + 41;
-                if (haggle != 0) ex = Struck(ex, sy, m.Preview(item, p, est.count, selling).total.ToString()) + 5;
                 ex = CuteUI.Label(ex, sy, $"{est.total}냥", CuteUI.Text, false, true);
                 if (selling && est.profit != 0) CuteUI.GainBadge(ex + 8 + CuteUI.Width(CuteUI.GainText(est.profit), true, true) + 10, sy, est.profit);
+                // 11/15 짐 무게 (UT 10번): 사고팔면 짐이 어떻게 되는지
+                float after = p.TotalWeight + (selling ? -1f : 1f) * item.weight * est.count;
+                CuteUI.LabelRight(d.xMax, sy, $"짐 {p.TotalWeight:0.#} → {after:0.#}/{p.Capacity:0.#}", after > p.Capacity ? CuteUI.Down : CuteUI.Sub, true);
             }
             else CuteUI.Wrap(d.x, sy - 6, d.width, est.blocker ?? "", CuteUI.Down, true);
 
@@ -365,7 +379,7 @@ namespace PocketCaravan
 
         }
 
-        // 흥정 (11/15 저울 흥정, HaggleDuel). 살 때는 사기 버튼을 누르면 꼭 한다(TradeBatch). 팔 때는 수량 줄 오른쪽 "흥정" 버튼으로 골라서.
+        // 흥정 (11/15 저울 흥정, HaggleDuel). 사기·팔기 버튼을 누르면 꼭 한다(TradeBatch).
         // 결과는 다음 한 번의 거래에만 적용된다. 빨강을 밟아도 거래는 막지 않고 그 거래만 2% 불리하다.
         int haggleSalt;   // 같은 날 같은 물건을 여러 번 사도 저울이 판마다 다르게
         void DrawHaggle(GameManager gm, Rect button, Rect panel, int count, int baseTotal)
@@ -507,14 +521,6 @@ namespace PocketCaravan
         }
 
         static string Signed(float value) => value.ToString("+0.#;-0.#;0");
-
-        /// <summary>회색 글씨 + 가운데 취소선. 오른쪽 끝 x를 돌려준다</summary>
-        static float Struck(float x, float cy, string s)
-        {
-            float xr = CuteUI.Label(x, cy, s, CuteUI.Zero, true);
-            CuteUI.Fill(new Rect(x - 1, Mathf.Round(cy), xr - x + 2, 1), CuteUI.Zero);
-            return xr;
-        }
 
         static void ItemIcon(ItemData item, float x, float y, int scale)
         {

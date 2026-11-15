@@ -12,6 +12,12 @@ namespace PocketCaravan
 
         public override string DisplayName => displayName;
 
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            if (GetComponent<DepthActor>() == null) gameObject.AddComponent<DepthActor>();   // 11/15 좌판 등과 앞뒤 맞추기 (발이 좌판 안이면 뒤)
+        }
+
         public override void Interact(PlayerController player)
         {
             if (GoryeoFerry.TryInteract(this,player)) return;
