@@ -46,28 +46,12 @@ namespace PocketCaravan
         /// <summary>플레이어가 살 때 값</summary>
         public int BaseBuyPrice(ItemData item) => MarketMath.Price(town.BasePriceFor(item), Optimal(item), Stock(item), Demand);
 
-        static OriginData Origin => GameManager.I != null ? GameManager.I.Player.origin : null;
+        /// <summary>팔 때 재고가 늘어나는 양. 11/15 출신 강점을 다시 정하며 베네치아의 "값이 덜 떨어짐"을 없앴다 → 늘 1</summary>
+        public float SellStockDelta(ItemData item) => 1f;
 
-        /// <summary>팔 때 재고가 늘어나는 양. 베네치아는 다른 지역 물건을 팔 때 덜 늘어 값이 덜 떨어진다.</summary>
-        public float SellStockDelta(ItemData item)
-        {
-            return SellStockDelta(item,Origin);
-        }
-        float SellStockDelta(ItemData item,OriginData o)
-        {
-            bool foreign = item.originTown != null && item.originTown.region != town.region;
-            return foreign && o != null ? o.resaleDropMultiplier : 1f;
-        }
-
-        /// <summary>플레이어가 팔 때 받는 값 (한 개를 더 넣었을 때 기준)</summary>
-        public int BaseSellPrice(ItemData item) => BaseSellPrice(item,Origin);
-        public int BaseSellPrice(ItemData item,OriginData o)
-        {
-            int p = MarketMath.Buyback(MarketMath.Price(town.BasePriceFor(item), Optimal(item), Stock(item) + SellStockDelta(item,o), Demand));
-            if (o != null && o.longHaulBonus > 0 && item.MapsFrom(town) >= o.longHaulMinMaps)
-                p = Mathf.RoundToInt(p * (1f + o.longHaulBonus));
-            return p;
-        }
+        /// <summary>플레이어가 팔 때 받는 값 (한 개를 더 넣었을 때 기준). 출신 강점(이익 보너스)은 ReputationPricing.Quote에서 더한다</summary>
+        public int BaseSellPrice(ItemData item) => MarketMath.Buyback(MarketMath.Price(town.BasePriceFor(item), Optimal(item), Stock(item) + 1f, Demand));
+        public int BaseSellPrice(ItemData item,OriginData o) => BaseSellPrice(item);
 
         public int BuyPrice(ItemData item) => BuyPrice(item,0);
         public int SellPrice(ItemData item) => SellPrice(item,0);
@@ -92,10 +76,10 @@ namespace PocketCaravan
             AddVolume(price);
         }
 
-        public void RecordSell(ItemData item, int price) => RecordSell(item,price,Origin);
+        public void RecordSell(ItemData item, int price) => RecordSell(item,price,null);
         public void RecordSell(ItemData item,int price,OriginData origin)
         {
-            stock[item] = Stock(item) + SellStockDelta(item,origin);
+            stock[item] = Stock(item) + 1f;
             AddVolume(price);
         }
 

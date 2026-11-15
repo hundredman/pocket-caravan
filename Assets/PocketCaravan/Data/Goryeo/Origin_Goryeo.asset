@@ -35,7 +35,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9fc26ac892c664509829e623c4d400cf, type: 3}
   speedMultiplier: 1
   offroadSpeedMultiplier: 1
-  ledgerStaleMultiplier: 0.5
-  resaleDropMultiplier: 1
-  longHaulMinMaps: 3
-  longHaulBonus: 0
+  capacityBonus: 0
+  profitBonus: 0.06
+  crossCivProfitBonus: 0

@@ -20,7 +20,13 @@ namespace PocketCaravan
         [Tooltip("달리기 체력 0~1")] public float stamina = 1f;
         [Tooltip("짐 흔들림 0~1. 노면·적재 감속의 시각 표현이며 주행 중 낙하는 없다")] public float shake;
 
-        public float Capacity => vehicle != null ? vehicle.capacity : 10f;
+        public float Capacity => CapacityOf(vehicle);
+        /// <summary>이 운반 수단으로 실을 수 있는 무게. 11/15 베네치아 강점(짐 +10%)을 더해 반올림한다 (등짐 10 → 11, 손수레 30 → 33)</summary>
+        public float CapacityOf(VehicleData v)
+        {
+            float c = v != null ? v.capacity : 10f;
+            return origin != null && origin.capacityBonus > 0f ? Mathf.Round(c * (1f + origin.capacityBonus)) : c;
+        }
 
         public float ContractWeight
         {

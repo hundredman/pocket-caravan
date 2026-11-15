@@ -302,6 +302,8 @@ namespace PocketCaravan
             {
                 float avg = p.cargo.AverageCost(item);
                 if (avg > 0) CuteUI.GainBadge(vx + 6 + CuteUI.Width(CuteUI.GainText(unit - avg), true, true) + 10, d.y + 29, unit - avg);
+                int perk = OriginPerks.PartOf(p, item, town, unit);   // 11/15 출신 강점 몫 ("아라비아 강점 +4냥")
+                if (perk > 0) CuteUI.Label(d.x + 48, d.y + 44, OriginPerks.SellTag(p, perk), CuteUI.Up, true);
             }
             else CuteUI.Label(vx + 8, d.y + 29, $"남은 {Mathf.FloorToInt(m.Stock(item))}개", CuteUI.Sub, true);
 
@@ -438,11 +440,11 @@ namespace PocketCaravan
                 float y = i * rowH - vehicleListScroll;
                 if (y + rowH < 0 || y > area.height) continue;
                 bool owned = player.vehicle == v;
-                bool can = !owned && player.money >= v.price && player.TotalWeight <= v.capacity;
+                bool can = !owned && player.money >= v.price && player.TotalWeight <= player.CapacityOf(v);
                 CuteUI.Box(new Rect(0, y, area.width - 6, rowH - 4), 8, i % 2 == 0 ? CuteUI.Paper2 : CuteUI.Paper, CuteUI.Line);
                 CuteUI.Label(10, y + 12, v.displayName, CuteUI.Text, false, true);
                 CuteUI.Icon(CuteUI.Pic.Sack, 10, y + 21);
-                CuteUI.Label(22, y + 25, $"짐 {v.capacity:0}", CuteUI.Sub, true);
+                CuteUI.Label(22, y + 25, $"짐 {player.CapacityOf(v):0}", CuteUI.Sub, true);
                 var b = new Rect(area.width - 98, y + 7, 86, 22);
                 if (owned) { CuteUI.Box(b, 8, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter(b.center.x, b.center.y, "쓰는 중", CuteUI.Zero, false, true); }
                 else if (can) { if (CuteUI.Button(b, $"{v.price}냥")) BuyVehicle(v); }
@@ -584,6 +586,7 @@ namespace PocketCaravan
             if((long)p.money+price>int.MaxValue) { message="보유금 한도를 확인하세요.";return; }
             float averageCost = p.cargo.AverageCost(item);
             int profit = Mathf.RoundToInt(price - averageCost);
+            int perk = OriginPerks.PartOf(p, item, town, price);   // 11/15 이 값에 들어간 출신 강점 몫 (표시용)
             p.cargo.Remove(item);
             p.money += price;
             m.RecordSell(item, price);
@@ -594,7 +597,7 @@ namespace PocketCaravan
             revenueThisVisit += price;
             profitThisVisit += price - averageCost;
             Sfx.Play("coin");
-            message = $"{Josa.Eul(item.displayName)} {price}냥에 팔았습니다. 손익 {Signed(profit)}냥.";
+            message = $"{Josa.Eul(item.displayName)} {price}냥에 팔았습니다. 손익 {Signed(profit)}냥." + (perk > 0 ? $" ({OriginPerks.SellTag(p, perk)})" : "");
             p.ledger.Record(true, town, item, price, profit, GameManager.I.Clock.day);   // 11/08 장부 최근 거래
             GameEvents.RaiseItemSold(item, town, price, profit);
         }
@@ -605,7 +608,7 @@ namespace PocketCaravan
             if(v==null || !town.vehiclesForSale.Contains(v) || v.minTownLevel>Market.Level) { message="이 장터에서 구입할 수 없는 수단입니다.";return; }
             if (p.vehicle == v) { message = "이미 사용 중인 이동 수단입니다."; return; }
             if (p.money < v.price) { message = "돈이 모자랍니다."; Sfx.Play("cancel"); return; }
-            if (p.TotalWeight > v.capacity) { message = "지금 짐이 너무 많습니다."; Sfx.Play("cancel"); return; }
+            if (p.TotalWeight > p.CapacityOf(v)) { message = "지금 짐이 너무 많습니다."; Sfx.Play("cancel"); return; }
             p.money -= v.price;
             p.vehicle = v;
             message = $"{v.displayName} 구입 · 남은 돈 {p.money}냥." + (p.money==0?" 일반 배달로 매입 자금을 마련할 수 있습니다.":" 상품 매입비를 남겨 두세요.");
