@@ -15,9 +15,7 @@ MonoBehaviour:
   id: north_herd
   displayName: "\uC21C\uB85D \uACE0\uC6D0 \uB9C8\uC744"
   region: {fileID: 11400000, guid: 053dda2cee1b84de7bdb3dcc5c7849c8, type: 2}
-  journeyNote: "\uC21C\uB85D \uCE58\uC988\uC758 \uACE0\uC6D0 \uB9C8\uC744. \uC21C\uB85D
-    \uC370\uB9E4\uB97C \uD314\uC544\uC694. \uAE38 \uC5C6\uB294 \uB208\uBC2D\uC5D0\uC11C
-    \uC370\uB9E4\uAC00 \uAC00\uC7A5 \uBE68\uB77C\uC694."
+  journeyNote: "\uC21C\uB85D \uCE58\uC988\uC758 \uACE0\uC6D0 \uB9C8\uC744. \uACE0\uC6D0 \uB9D0(\uC9D0\uB9D0)\uC744 \uD314\uC544\uC694. \uC9D0\uC744 50\uAE4C\uC9C0 \uC2E4\uC744 \uC218 \uC788\uC5B4\uC694."
   worldCoord: {x: 28, y: 1}
   startLevel: 1
   settlementTier: 1
