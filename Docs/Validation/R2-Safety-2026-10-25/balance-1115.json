@@ -1,40 +1,40 @@
 {
- "note": "11/15 은샘: 지역마다 수입이 비슷하게 맵당 비율을 맞춤 (고려 물건 0.5 → 0.25, 길목 송진·말린 생선 0.35 → 0.3). Docs/Feedback.md 기획 변경",
+ "note": "11/15 은샘: 지역마다 수입이 비슷하고 너무 빠르지 않게 맵당 비율을 맞춤 (고려 물건 0.5 → 0.22, 길목 송진·말린 생선 0.35 → 0.15). Docs/Feedback.md 기획 변경",
  "files": {
   "Assets/PocketCaravan/Data/Goryeo/Item_ginseng.asset": [
    {
     "old": "  pricePerMap: 0.5\n",
-    "new": "  pricePerMap: 0.25\n"
+    "new": "  pricePerMap: 0.22\n"
    }
   ],
   "Assets/PocketCaravan/Data/Goryeo/Item_najeon.asset": [
    {
     "old": "  pricePerMap: 0.5\n",
-    "new": "  pricePerMap: 0.25\n"
+    "new": "  pricePerMap: 0.22\n"
    }
   ],
   "Assets/PocketCaravan/Data/Goryeo/Item_paper.asset": [
    {
     "old": "  pricePerMap: 0.5\n",
-    "new": "  pricePerMap: 0.25\n"
+    "new": "  pricePerMap: 0.22\n"
    }
   ],
   "Assets/PocketCaravan/Data/Goryeo/Item_salt.asset": [
    {
     "old": "  pricePerMap: 0.5\n",
-    "new": "  pricePerMap: 0.25\n"
+    "new": "  pricePerMap: 0.22\n"
    }
   ],
   "Assets/PocketCaravan/Data/Transit/Item_DriedFish.asset": [
    {
     "old": "  pricePerMap: 0.35\n",
-    "new": "  pricePerMap: 0.3\n"
+    "new": "  pricePerMap: 0.15\n"
    }
   ],
   "Assets/PocketCaravan/Data/Transit/Item_Resin.asset": [
    {
     "old": "  pricePerMap: 0.35\n",
-    "new": "  pricePerMap: 0.3\n"
+    "new": "  pricePerMap: 0.15\n"
    }
   ]
  }

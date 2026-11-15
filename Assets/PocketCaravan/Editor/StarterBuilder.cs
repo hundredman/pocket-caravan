@@ -59,7 +59,7 @@ namespace PocketCaravan.EditorTools
                 Upsert<ItemData>($"{DataDir}/Item_{id}.asset", i =>
                 {
                     i.id = id; i.displayName = name; i.weight = weight; i.basePrice = price; i.originTown = origin;
-                    i.pricePerMap = origin != null ? 0.25f : 0.5f; i.questItem = quest;   // 11/15 은샘: 지역마다 수입이 비슷하게 맵당 비율을 맞춤 (Docs/Feedback.md 기획 변경)
+                    i.pricePerMap = origin != null ? 0.22f : 0.5f; i.questItem = quest;   // 11/15 은샘: 지역마다 수입이 비슷하게 맵당 비율을 맞춤 (Docs/Feedback.md 기획 변경)
                     i.icon = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Items/{id}.png");
                 });
             var ginseng = Item("ginseng", "인삼", 1f, 40f, gaegyeong);

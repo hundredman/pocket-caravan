@@ -10,8 +10,8 @@ TOWNS = {   # id: (좌표, 등급)
 }
 # 상품: (무게, 기준가, 맵당 비율, 산지)
 GOODS = {
-    "salt": (2, 8, 0.6, "chioggia"), "glass": (1, 24, 0.6, "murano"),
-    "fruit": (2, 7, 0.6, "santerasmo"), "fish": (2, 9, 0.6, "burano"),
+    "salt": (2, 8, 0.5, "chioggia"), "glass": (1, 24, 0.5, "murano"),
+    "fruit": (2, 7, 0.5, "santerasmo"), "fish": (2, 9, 0.5, "burano"),
 }
 # 마을별 재고: 상품 → (적정 재고, 지역 수요 배율)
 STOCK = {
@@ -22,7 +22,7 @@ STOCK = {
     "burano": {"fish": (80, 1), "salt": (14, 1.3), "fruit": (14, 1), "glass": (8, 1)},
 }
 DEFAULT_OPTIMAL = 3
-STOCK_DEPTH = 2   # 11/15 GameDatabase.stockDepth (모든 적정 재고에 곱함)
+STOCK_DEPTH = 1.5   # 11/15 GameDatabase.stockDepth (모든 적정 재고에 곱함)
 BUYBACK = 0.85
 
 

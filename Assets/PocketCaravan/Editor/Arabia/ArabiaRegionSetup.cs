@@ -104,7 +104,7 @@ namespace PocketCaravan.EditorTools
             {
                 var i = Get<ItemData>(DataDir + "/" + file + ".asset");
                 i.id = id; i.displayName = label; i.weight = weight; i.basePrice = price; i.originTown = origin;
-                i.pricePerMap = 0.35f; i.questItem = quest; i.icon = icon;
+                i.pricePerMap = quest ? 0.35f : 0.3f; i.questItem = quest; i.icon = icon;   // 11/15 은샘: 지역마다 수입이 비슷하게 맵당 비율을 맞춤 (Docs/Feedback.md 기획 변경)
                 if (!db.items.Contains(i)) db.items.Add(i);
                 EditorUtility.SetDirty(i);
                 return i;
