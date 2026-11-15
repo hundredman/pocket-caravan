@@ -15,7 +15,7 @@ MonoBehaviour:
   choices:
   - region: "\uBD81\uC720\uB7FD"
     origin: {fileID: 11400000, guid: 95705474567144e318cacfe1ee205836, type: 2}
-    animal: "\uC21C\uB85D"
+    animal: "\uD1A0\uBE44"
     strength: "\uBAA8\uB4E0 \uC774\uB3D9\uC774 10% \uBE60\uB984"
     startScene: north_birka
     startTown: "\uBE44\uB974\uCE74"
@@ -23,7 +23,7 @@ MonoBehaviour:
     preview: StartScreen/start_north
   - region: "\uBCA0\uB124\uCE58\uC544"
     origin: {fileID: 11400000, guid: 24994a5ed25904090a8d7dd72646f12a, type: 2}
-    animal: "\uD770 \uACE0\uC591\uC774"
+    animal: "\uB8E8\uB098"
     strength: "\uC7A5\uD130 \uC218\uC218\uB8CC 13% (\uBCF4\uD1B5 15%)"
     startScene: venice_rialto
     startTown: "\uB9AC\uC54C\uD1A0"
@@ -31,7 +31,7 @@ MonoBehaviour:
     preview: StartScreen/start_venice
   - region: "\uACE0\uB824"
     origin: {fileID: 11400000, guid: baa3df4a3e3ea42e999ffb10319d746e, type: 2}
-    animal: "\uB108\uAD6C\uB9AC"
+    animal: "\uBCF4\uB9AC"
     strength: "\uC9D0\uC744 10% \uB354 \uC2E4\uC74C (\uC9C0\uAC8C)"
     startScene: Naru
     startTown: "\uC608\uC131 \uB098\uB8E8"
@@ -39,7 +39,7 @@ MonoBehaviour:
     preview: StartScreen/start_goryeo
   - region: "\uC544\uB77C\uBE44\uC544"
     origin: {fileID: 11400000, guid: 2d07d3c710574423e87eaa2655025233, type: 2}
-    animal: "\uC0AC\uB9C9\uC5EC\uC6B0"
+    animal: "\uC0AC\uD53C"
     strength: "\uB2E4\uB978 \uBB38\uBA85 \uBB3C\uAC74\uC744 \uD314\uBA74 +5%"
     startScene: arabia_ahsa
     startTown: "\uC54C \uC544\uD750\uC0AC"
