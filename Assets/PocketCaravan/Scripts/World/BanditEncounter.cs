@@ -58,7 +58,7 @@ namespace PocketCaravan
             banditFace = ba != null && ba.frames != null && ba.frames.Length > 0 ? ba.frames[0] : null;
             if (banditFace == null) banditFace = Resources.Load<Sprite>($"Bandit/Looks/bandit_{BanditLook.For(mapId)}_d0");   // 도적 몸이 없을 때도 얼굴 칸이 비지 않게
             sel = GameManager.I.Player.money >= toll ? 0 : 1;
-            phase = Phase.Choose; openedAt = Time.unscaledTime; openedFrame = Time.frameCount;
+            phase = Phase.Choose; openedAt = Time.unscaledTime; openedFrame = Time.frameCount; lastMouse = new Vector2(-1, -1);
             Sfx.Play("alert");
         }
 
