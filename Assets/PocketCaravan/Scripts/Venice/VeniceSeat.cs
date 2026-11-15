@@ -11,6 +11,7 @@ namespace PocketCaravan
     public class VeniceSeat : Interactable
     {
         public override string DisplayName => VeniceLabels.Place(this, "벤치에 앉기");   // 가까이 가야 이름표가 뜬다
+        public override string ActionVerb => "앉기";   // 11/15 기우: 기본 "대화"가 떴다
         public override Kind Category => Kind.Market;
 
         static VeniceSeat sitting;

@@ -8,7 +8,7 @@ namespace PocketCaravan
     /// 1) 알 아흐사에 처음 들어오면 프롤로그 자막(할아버지의 낡은 장부, 빈 도장 칸 셋)
     /// 2) 바로 옆 하산의 조카 아미르에게 Space로 말 걸기 → 지도·소지품 주머니를 받고 할 일을 차례로:
     ///    달리기(Shift) · 상태(Tab) · 소지품(I) · 지도(M) · 퀘스트 목록(Q) · 장터에서 사기 · 팔기 · 장부(L)
-    /// 3) 아미르에게 돌아가면 장부 첫 줄·신용·도장, 아라비아 출신의 강점(멀리서 가져온 물건 +5%) → 짐꾼 힌드바드(Q1 arabia_q01_first_delivery)로 보냄
+    /// 3) 아미르에게 돌아가면 장부 첫 줄·신용·도장, 아라비아 출신의 강점(다른 문명에서 난 물건을 팔면 +5%) → 짐꾼 힌드바드(Q1 arabia_q01_first_delivery)로 보냄
     /// 진행은 GameManager 진행 메모 "arabia:intro" (0 없음 · 1 말 걸기 · 2~9 할 일 · 10 돌아가기 · 11 끝). 새 파일만 더했고 기존 아라비아 파일·씬·퀘스트는 그대로다.
     /// 그림은 북유럽 대상 캠프에 옮겨 둔 아라비아 사람 그림(Resources/North/Minigame/caravan1_d0, 32×48 · 26PPU)을 빌려 쓴다.
     /// 이미 아라비아 퀘스트를 시작했거나 다른 문명 캐릭터면 나오지 않는다.
@@ -18,7 +18,8 @@ namespace PocketCaravan
         const string Home = "arabia_ahsa";
         const int MapH = 44;   // arabia_ahsa.json 높이 (맵 칸은 위가 0)
         const string FirstQuest = "arabia_q01_first_delivery";
-        static readonly Vector2Int GuideCell = new Vector2Int(35, 38);   // 시작 자리(남문 S0 (31,37)) 오른쪽 아래 (하산 (29,36) 이름표와 안 겹치게)
+        // 11/15 기우: (35,38)은 차양(high 층) 밑이라 아미르가 가려 안 보였다 → 시작 자리(남문 S0 (31,37)) 바로 왼쪽 아래 빈 길 (위·자기 칸에 high·물건 없음, 하산 (29,36) 이름표와 2줄 떨어짐)
+        static readonly Vector2Int GuideCell = new Vector2Int(30, 38);
         const string Guide = "하산의 조카 아미르";
 
         static readonly string[] Tasks = ControlLesson.Tasks();   // 11/08 공통화 4단계: 조작 배우기 여덟 가지는 공용 ControlLesson
@@ -178,7 +179,7 @@ namespace PocketCaravan
             p.act = TalkGuide;
             var tex = Resources.Load<Texture2D>("North/Minigame/caravan1_d0");
             Sprite s = null;
-            if (tex != null) { tex.filterMode = FilterMode.Point; s = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.1f), 26f); }
+            if (tex != null) { tex.filterMode = FilterMode.Point; s = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.1f), 16f); }   // 11/15 기우: 아라비아 그림 16x24로 통일 → 다른 사람과 같은 16픽셀=1칸 (전 26)
             if (s != null) { var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = s; sr.sortingOrder = 10; }
             if (FreshStart()) StartCoroutine(Arrive());
         }
@@ -221,7 +222,7 @@ namespace PocketCaravan
                     "다 했네! 산 곳과 판 곳의 값이 달랐지? 상인은 어디서 사고, 어느 길로 가고, 어디서 파는지만 알면 돼.\n" +
                     "그리고 장부 첫 줄 기억해. 짐은 목적지까지, 약속은 사람에게까지. 약속을 지키면 신용이 쌓이고, 신용이 쌓이면 마을 어른들이 장부에 도장을 찍어 줄 거야.",
                     new DialogueUI.Choice("사막여우 상인은 뭐가 좋아?", () => DialogueUI.Show(Guide,
-                        "우리 아라비아 대상은 멀리서 가져온 물건을 팔면 값을 더 쳐 받아(+5%). 먼 길을 겁내지 않는 게 우리 장기지.\n\n" +
+                        "우리 아라비아 대상은 다른 문명에서 난 물건을 팔면 값을 5% 더 받아. 고려 인삼을 베네치아에서, 우리 향신료를 중앙 대륙에서 파는 식이지. 같은 문명 안에서 팔 때는 없어. 문명 사이를 잇는 게 우리 장기지.\n\n" +
                         "첫 일거리는 짐꾼 힌드바드 아저씨가 찾고 있어. 광장 위쪽 여관 근처에 있을 거야. 하산 삼촌도 너 기다리셔!",
                         new DialogueUI.Choice("다녀올게!", Finish))));
                 return;

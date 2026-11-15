@@ -19,6 +19,19 @@ namespace PocketCaravan
         static readonly Color DangerColor = new Color(1f, 0.42f, 0.38f);
         static readonly Color ActivityColor = new Color(1f, 0.87f, 0.35f);   // 11/11 놀거리 (ActivityHints와 같은 노랑)
 
+        /// <summary>
+        /// 11/15 기우: 앉는 자리(아라비아 양탄자 그늘 · 베네치아 벤치 · 고려 쉼터 의자)의 이름표·[Space] 안내를 숨길지.
+        /// 앉아 있거나(SeatRest) 그 자리(양탄자) 위에 올라서 있으면 숨긴다. 고려 이름표(GoryeoPlaceLabels)도 같이 쓴다
+        /// </summary>
+        public static bool HideSeatUi(Interactable it)
+        {
+            var pc = PlayerController.Instance;
+            if (it == null || pc == null) return false;
+            bool seat = it is ArabiaSeat || it is VeniceSeat || it is GoryeoSeat;
+            if (SeatRest.Active && (seat || pc.TalkTarget == it)) return true;
+            return seat && ((Vector2)pc.transform.position - (Vector2)it.transform.position).sqrMagnitude < .6f * .6f;
+        }
+
         /// <summary>11/13 이름표가 보이는 거리(칸). 모든 지역 이름표(북유럽 좌판·고려 이름표 포함)가 같이 쓴다</summary>
         public const float NearCells = 5f;
         const float FadeCells = 1f;
@@ -45,6 +58,7 @@ namespace PocketCaravan
             var nav = Navigator.Compute(gm);
 
             var talk = player != null ? player.TalkTarget : null;
+            // 11/15 기우: 앉아 있거나 앉는 자리(양탄자) 위에 있으면 그 자리의 이름표와 [Space] 안내를 띄우지 않는다 (HideSeatUi)
             Vector2? talkName = null;
             // 1) 이름표 (11/13 가까이에서만 · 말 걸 대상은 늘)
             foreach (var it in Interactable.All)
@@ -56,6 +70,7 @@ namespace PocketCaravan
                 if (p.x < -50 || p.y < -20 || p.x > UIStyle.VirtualWidth + 50 || p.y > UIStyle.VirtualHeight + 20) continue;
                 string label = it.DisplayName;
                 if (string.IsNullOrEmpty(label)) continue;   // 이름 없는 자리(같은 모닥불의 두 번째 의자 등)는 이름표를 띄우지 않는다
+                if (HideSeatUi(it)) continue;
                 float alpha = it == talk ? 1f : NearAlpha(it.transform.position);
                 if (alpha <= 0f)
                 {
@@ -82,7 +97,7 @@ namespace PocketCaravan
 
             // 2) 말 걸기 안내 (11/05 B안: 알약 = 상호작용, 안에 중립 키캡 [Space])
             //    11/13 기우: 발밑(큰 그림이면 몸을 가렸다) → 머리 위 이름표 바로 위. 이름표가 없는 자리는 이름표 자리에
-            if (player != null && player.TalkTarget != null && !UIState.Blocking)
+            if (player != null && player.TalkTarget != null && !UIState.Blocking && !HideSeatUi(player.TalkTarget))
             {
                 Vector2 head = talkName ?? ToGui(cam, player.TalkTarget.transform.position + new Vector3(0f, 1.0f, 0f));
                 CuteUI.SpacePrompt(head.x, head.y - (talkName.HasValue ? 26f : 10f), VerbFor(player.TalkTarget));

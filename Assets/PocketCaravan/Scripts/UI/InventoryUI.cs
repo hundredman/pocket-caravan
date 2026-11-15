@@ -160,7 +160,7 @@ namespace PocketCaravan
             float nx = CuteUI.Label(x0 + 48, d.y + 13, TradeLedgerUI.Fit(item.displayName, w0 - 90, false, true), CuteUI.Text, false, true);
             CuteUI.Label(nx + 4, d.y + 13, "× " + n, CuteUI.Sub, true);
             CuteUI.Icon(CuteUI.Pic.Pin, x0 + 48, d.y + 21, 1, CuteUI.Sub);
-            CuteUI.Label(x0 + 56, d.y + 25, item.questItem ? "부탁받은 물건" : item.originTown != null ? item.originTown.displayName + " 특산" : "여러 마을", CuteUI.Sub, true);
+            CuteUI.Label(x0 + 56, d.y + 25, item.questItem ? "부탁받은 물건" : item.originTown != null ? OriginPerks.ItemCivName(item) + " · " + item.originTown.displayName + " 특산" : "여러 마을", CuteUI.Sub, true);
 
             float y = d.y + 48;
             float avg = p.cargo.AverageCost(item);

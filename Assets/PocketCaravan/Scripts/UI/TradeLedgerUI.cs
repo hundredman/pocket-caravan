@@ -134,7 +134,7 @@ namespace PocketCaravan
             ItemIcon(s.item, x0 + 4, d.y + 11, 2);
             CuteUI.Label(x0 + 48, d.y + 18, Fit(s.item.displayName, w0 - 50, false, true), CuteUI.Text, false, true);
             CuteUI.Icon(CuteUI.Pic.Pin, x0 + 48, d.y + 26, 1, CuteUI.Sub);
-            CuteUI.Label(x0 + 56, d.y + 30, s.item.originTown != null ? s.item.originTown.displayName + " 특산" : "여러 마을", CuteUI.Sub, true);
+            CuteUI.Label(x0 + 56, d.y + 30, s.item.originTown != null ? OriginPerks.ItemCivName(s.item) + " · " + s.item.originTown.displayName + " 특산" : "여러 마을", CuteUI.Sub, true);
             if (s.known == 0)
             {
                 CuteUI.Label(x0 + 4, d.y + 66, "아직 이 물건 시세를 본 적이 없어요", CuteUI.Text, true, true);

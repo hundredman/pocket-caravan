@@ -19,14 +19,15 @@ class GoryeoSeatVisitorTests(unittest.TestCase):
             with Image.open(ROOT/p['file']) as pose,Image.open(ROOT/f"Assets/PocketCaravan/Art/Characters/{names[p['originId']]}_tall_d0.png") as old:
                 self.assertEqual(pose.size,old.size)
                 self.assertEqual(set(pose.convert('RGBA').getchannel('A').tobytes()),{0,255})
-            self.assertEqual(p['ppu'],32 if p['originId']=='arabia' else 16)
+            self.assertEqual(p['ppu'],16)   # 2026-11-15 아라비아도 16x24·PPU 16으로 통일
 
     def test_fennec_retains_actual_face_ears_coat_and_belt_pixels(self):
         with Image.open(REVIEW/'Expanded/arabia-seated-front.png') as new,Image.open(ROOT/'Assets/PocketCaravan/Art/Characters/arabia_player_fennec_tall_d0.png') as old:
             # Comparison only: never cuts a source asset for use in the game.
+            # 2026-11-15 16x24 사막여우: 귀·얼굴·목도리(0~15줄)는 그대로 2줄 아래에 있다
             a=new.convert('RGBA');b=old.convert('RGBA')
-            for y in range(31):
-                for x in range(32):self.assertEqual(a.getpixel((x,y)),b.getpixel((x,y)),(x,y))
+            for y in range(16):
+                for x in range(16):self.assertEqual(a.getpixel((x,y+2)),b.getpixel((x,y)),(x,y))
             self.assertNotEqual(a.tobytes(),b.tobytes())
 
     def test_approved_motion_keeps_original_whole_frame_pixels(self):

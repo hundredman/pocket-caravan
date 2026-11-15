@@ -125,14 +125,13 @@ namespace PocketCaravan
             }
         }
 
-        /// <summary>사람 그림: 16×24는 16픽셀=1칸(북유럽 사람), 32×48(아라비아·베네치아 일부)은 26픽셀=1칸. 발끝 높이를 맞춘다</summary>
+        /// <summary>사람 그림: 16×24, 16픽셀=1칸 (11/15 아라비아 대상 그림도 16×24로 통일해서 예전 32×48·26픽셀 분기는 뺐다)</summary>
         static Sprite LoadPerson(string name)
         {
             var t = Resources.Load<Texture2D>("North/Minigame/" + name);
             if (t == null) return null;
             t.filterMode = FilterMode.Point;
-            bool big = t.height > 30;
-            return Sprite.Create(t, new Rect(0, 0, t.width, t.height), new Vector2(0.5f, big ? (8f + 3.9f) / 48f : 0.1f), big ? 26f : 16f);   // 10/30 기우: B안(26픽셀=1칸, 토르보다 머리 하나쯤 큼)
+            return Sprite.Create(t, new Rect(0, 0, t.width, t.height), new Vector2(0.5f, 0.1f), 16f);
         }
 
         static Sprite LoadArt(string name)

@@ -21,6 +21,8 @@ namespace PocketCaravan
         public static int Price(float basePrice, float optimal, float stock, float demand = 1f) =>
             Mathf.Max(1, Mathf.RoundToInt(basePrice * Multiplier(optimal, stock) * demand));
 
-        public static int Buyback(int price) => Mathf.Max(1, Mathf.FloorToInt(price * BuybackRate));
+        public static int Buyback(int price) => Buyback(price, BuybackRate);
+        /// <summary>11/15 출신 강점: 베네치아는 수수료 13% → 사기 값의 87%</summary>
+        public static int Buyback(int price, float rate) => Mathf.Max(1, Mathf.FloorToInt(price * rate));
     }
 }

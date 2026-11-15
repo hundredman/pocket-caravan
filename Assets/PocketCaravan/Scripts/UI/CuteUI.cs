@@ -654,16 +654,7 @@ namespace PocketCaravan
             var sprite = PortraitSource();
             if (sprite == null) { Icon(Pic.Coin, x + d / 2f - 4, y + d / 2f - 4); return; }
             var tr = sprite.rect;
-            var origin = GameManager.I != null ? GameManager.I.Player.origin : null;
-            if (origin != null && origin.id == "arabia")
-            {
-                // 이전 얼굴 구도/정면을 유지하고 사막여우만 약10% 작게 표시한다.
-                float showW = Mathf.Min(tr.width, d - 8), showH = Mathf.Min(tr.height * .6f, d - 8);
-                var oldPart = new Rect((1f - showW / tr.width) / 2f, 1f - showH / tr.height, showW / tr.width, showH / tr.height);
-                float portraitW=Mathf.Round(showW*.9f),portraitH=Mathf.Round(showH*(portraitW/showW));
-                Sprite(sprite, new Rect(x + (d - portraitW) / 2f, y + 4 + (showH-portraitH)/2f, portraitW, portraitH), oldPart);
-                return;
-            }
+            // 11/15 기우: 아라비아만 따로 자르던 것(32x48 그림용, 16x24에선 귀만 보였다)은 뺐다. 이제 모든 출신이 같은 16x24 틀
             float headHeight = Mathf.Min(tr.height, Mathf.Ceil(tr.height * .75f));
             float scale = Mathf.Min((d - 10f) / tr.width, (d - 10f) / headHeight);
             float w = tr.width * scale, h = headHeight * scale;

@@ -29,7 +29,9 @@ class SeatBindingTests(unittest.TestCase):
             self.assertAlmostEqual(approved['lift'],live['lift'],places=6)
             self.assertEqual({k:v for k,v in approved.items()if k!='lift'},{k:v for k,v in live.items()if k!='lift'})
         refs={p['originId']:p for p in original['poses']}
-        for pose in config['poses']:
+        # 2026-11-15 아라비아 16x24 통일: 그림·PPU는 지금 쓰는 설정(Config.json)과 맞춘다 (자리·높이 비교는 위에서 그대로 승인본과)
+        live_config=json.loads((RESOURCE/'Config.json').read_text())
+        for pose in live_config['poses']:
             path=ROOT/'Assets/PocketCaravan/Resources'/Path(pose['file']+'.png')
             with Image.open(path)as live,Image.open(ROOT/refs[pose['originId']]['file'])as approved:
                 self.assertEqual(live.size,approved.size)

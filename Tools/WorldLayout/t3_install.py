@@ -115,6 +115,9 @@ def proposal():
  for p in ('Resources/Goryeo/Daily/Config.json','Data/Goryeo/LogPlacement.json'):
   v=res[p];m,x,y=xy(v['mapId'],v['x'],v['y']);assert m==v['mapId'];v.update(x=x,y=y)
   if 'memoKey'in v:v.update(width=maps[m]['w'],height=maps[m]['h'])
+ # 11/15 기우(도트 크기 통일): 앉은 사막여우를 16x24 · PPU 16 · 기준점 0.25로 다시 그렸다 (승인 ArtReview/Goryeo-Seats-20261105/AlignedV2)
+ for pose in res['Resources/Goryeo/Seats/Config.json'].get('poses',[]):
+  if pose.get('originId')=='arabia':pose.update(ppu=16.0,pivotY=0.25)
  for seat in res['Resources/Goryeo/Seats/Config.json']['seats']:
   mid=seat['mapId'];m,x,y=xy(mid,seat['x'],seat['y']);assert m==mid;seat.update(x=x,y=y)
   if seat['fire']:
