@@ -801,7 +801,9 @@ namespace PocketCaravan
         public static Rect SpacePrompt(float cx, float y, string verb)
         {
             float kw = KeycapWidth("Space");
-            bool keyOnly = string.IsNullOrEmpty(verb);   // 11/13 동사가 없으면 키캡만 (사람에게 말 걸기, 튜토리얼 뒤)
+            // 11/13 동사가 없으면 키캡만 (사람에게 말 걸기, 튜토리얼 뒤)
+            // 11/15 윤채: 이정표에도 "Space 대화"가 떠서 어색했다 → 무엇 앞이든 [Space] 키캡만 보인다 (동사는 그리지 않는다)
+            const bool keyOnly = true;
             float w = keyOnly ? Mathf.Round(3 + kw + 3) : Mathf.Round(3 + kw + 5 + Width(verb, true) + 7), x = Mathf.Round(cx - w / 2f);
             var r = new Rect(x, y, w, 17);
             // 11/11 윤채: 새로 뜨거나 다른 대상으로 바뀌면 톡 튀어나온다 (0.7 → 1.08 → 1, 0.18초)

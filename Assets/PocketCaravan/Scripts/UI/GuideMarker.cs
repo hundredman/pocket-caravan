@@ -9,6 +9,8 @@ namespace PocketCaravan
     /// - 화면 밖: 그쪽 화면 끝에 [핀 · N칸] + 바깥을 가리키는 작은 화살촉. 붙은 쪽이 곧 방향이라 모양을 읽지 않아도 된다
     /// - 처음 뜨거나 목적지가 바뀌면 한 번 톡 튀어나온다. 이벤트 안내 중이면 금빛 (할 일 카드와 같은 색)
     /// - 핀을 누르면 지도(M). 왼쪽 위 카드·오른쪽 위 단추·아래 알림과 겹치면 가장자리를 따라 비킨다 (ScreenZones)
+    /// 11/15 윤채(UT "화살표를 더 얇고 직관적으로"): 모양만 바꿨다. 굵은 삼각형 ▼ → 얇은 꺾쇠 ∨ (목적지 위 표시 · 화면 끝 화살촉 둘 다).
+    ///   화면 끝 [핀 · N칸]과 목적지 쪽을 따라 도는 화살촉 동작은 그대로다.
     /// 공용 이름표(WorldLabels)와 고려 이름표(GoryeoPlaceLabels)가 같이 쓴다.
     /// </summary>
     public static class GuideMarker
@@ -25,12 +27,12 @@ namespace PocketCaravan
         {
             Init();
             float bob = Mathf.Floor(Mathf.Sin(Time.time * 5f) * 2f + 2f);
-            var r = new Rect(Mathf.Round(p.x - 6f), Mathf.Round(p.y - 10f + bob), 12f, 10f);
+            var r = new Rect(Mathf.Round(p.x - CW / 2f), Mathf.Round(p.y - CH + bob), CW, CH);   // 11/15 얇은 꺾쇠 (테두리 포함 13×9)
             var old = GUI.color;
             GUI.color = new Color(1f, 1f, 1f, old.a);
             GUI.DrawTexture(r, triInk);
             GUI.color = new Color(1f, 0.85f, 0.25f, old.a);   // 노랑 (예전 길 안내 색)
-            GUI.DrawTexture(new Rect(r.x + 2f, r.y + 1f, 8f, 7f), tri);
+            GUI.DrawTexture(r, tri);
             GUI.color = old;
         }
 
@@ -85,9 +87,10 @@ namespace PocketCaravan
             var mm = GUI.matrix;
             GUIUtility.RotateAroundPivot(Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f, tip * UIStyle.Scale);
             var old = GUI.color;
-            GUI.DrawTexture(new Rect(Mathf.Round(tip.x - 5f), Mathf.Round(tip.y - 4f), 10f, 8f), triInk);
+            var cr = new Rect(Mathf.Round(tip.x - CW / 2f), Mathf.Round(tip.y - CH / 2f), CW, CH);   // 11/15 얇은 꺾쇠 화살촉 (목적지 쪽으로 돈다)
+            GUI.DrawTexture(cr, triInk);
             GUI.color = new Color(fill.r / 255f, fill.g / 255f, fill.b / 255f, old.a);
-            GUI.DrawTexture(new Rect(Mathf.Round(tip.x - 3f), Mathf.Round(tip.y - 3f), 6f, 4f), tri);
+            GUI.DrawTexture(cr, tri);
             GUI.color = old;
             GUI.matrix = mm;
 
@@ -103,23 +106,41 @@ namespace PocketCaravan
             if (!UIState.Blocking && GUI.Button(r, GUIContent.none, GUIStyle.none)) InputReader.Press('m');   // 누르면 지도
         }
 
+        const int CW = 13, CH = 9;
+        /// <summary>얇은 꺾쇠 ∨ (아래가 꼭짓점)</summary>
+        static readonly string[] ChevronRows =
+        {
+            "##.......##",
+            "###.....###",
+            ".###...###.",
+            "..###.###..",
+            "...#####...",
+            "....###....",
+            ".....#.....",
+        };
+
         static void Init()
         {
             if (tri != null) return;
-            tri = Tri(12, 10); triInk = Tri(12, 10);   // tri는 흰색 (GUI.color로 물들인다), triInk는 테두리용 잉크색
-            var ink = (Color)CuteUI.Ink;
-            for (int y = 0; y < 10; y++) for (int x = 0; x < 12; x++) if (triInk.GetPixel(x, y).a > 0) triInk.SetPixel(x, y, ink);
-            triInk.Apply();
+            // tri = 꺾쇠 칸만 흰색 (GUI.color로 물들인다), triInk = 꺾쇠와 바깥 한 칸 테두리를 잉크색으로
+            tri = Chevron(false); triInk = Chevron(true);
         }
 
-        /// <summary>아래를 가리키는 삼각형 (텍스처 y는 아래부터: y=0이 꼭짓점)</summary>
-        static Texture2D Tri(int w, int h)
+        static Texture2D Chevron(bool outline)
         {
-            var t = new Texture2D(w, h, TextureFormat.RGBA32, false) { filterMode = FilterMode.Point };
-            for (int y = 0; y < h; y++)
-            for (int x = 0; x < w; x++)
-                t.SetPixel(x, y, Mathf.Abs(x - (w - 1) / 2f) <= y * (w / 2f) / (h - 1) + 0.5f ? Color.white : Color.clear);
-            t.Apply();
+            var t = new Texture2D(CW, CH, TextureFormat.RGBA32, false) { filterMode = FilterMode.Point, wrapMode = TextureWrapMode.Clamp };
+            bool On(int x, int y) => y >= 0 && y < ChevronRows.Length && x >= 0 && x < ChevronRows[y].Length && ChevronRows[y][x] == '#';
+            var px = new Color32[CW * CH];
+            Color32 ink = CuteUI.Ink, white = new Color32(255, 255, 255, 255), clear = new Color32(0, 0, 0, 0);
+            for (int y = 0; y < CH; y++)
+                for (int x = 0; x < CW; x++)
+                {
+                    int gx = x - 1, gy = y - 1;
+                    bool on = On(gx, gy), near = false;
+                    for (int dy = -1; dy <= 1 && !near; dy++) for (int dx = -1; dx <= 1; dx++) if (On(gx + dx, gy + dy)) { near = true; break; }
+                    px[(CH - 1 - y) * CW + x] = outline ? (near ? ink : clear) : (on ? white : clear);   // 텍스처는 아래 줄부터
+                }
+            t.SetPixels32(px); t.Apply();
             return t;
         }
     }
