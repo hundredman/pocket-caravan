@@ -10,3 +10,5 @@
 삿갓이 떠 보이고 옆모습이 어색하던 도적을 같은 틀로 다시 그렸다. `frames/bandit_*`는 A안(패랭이 + 복면)으로 바꾸고 sha256.json을 고쳤다.
 B안(상투 + 붉은 머리띠 + 복면)·C안(패랭이 + 텁수룩 수염)은 `Assets/PocketCaravan/Resources/Bandit/Looks/`에 있고, 맵마다 `BanditLook`이 고른다.
 `bandit.aseprite`는 예전 그림 그대로다 (PNG가 기준).
+
+2026-11-15 패랭이·갓 보완 (은샘 "일단 다 수정해줘"): 행상(trader)·농부(farmer)의 패랭이가 떠 보여 머리에 닿게 낮추고 챙 아래 그늘 줄을 넣음, 옆모습 챙은 머리 가운데에. 닥목 촌장(dakmok_chief) 갓에 챙을 닮. 앞·뒤 챙은 좌우 대칭. 정면 승인본(`*-front-c1-expand-*.png`)도 새 d0로 맞춤. `.aseprite`는 예전 그림 그대로 (PNG가 기준).
