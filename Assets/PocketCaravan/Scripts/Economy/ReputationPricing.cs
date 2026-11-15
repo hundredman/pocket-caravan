@@ -7,7 +7,7 @@ namespace PocketCaravan
     public static class ReputationPricing
     {
         static readonly float[] BuyDeltas={.15f,.07f,0,-.03f,-.06f,-.10f};
-        static readonly float[] Haggles={0,0,.03f,.05f,.08f,.10f};
+        static readonly float[] Haggles={0,.05f,.08f,.10f,.13f,.15f};   // 11/15 흥정 미니게임: 마음을 다 채우면 깎는 최대치 (경계 5% · 중립 8% … 존경 15%)
         public static ReputationScope Scope(TownData town)=>town.region.townReputation?ReputationScope.Town:ReputationScope.Civilization;
         public static string Target(TownData town)=>town.region.townReputation?town.id:town.region.id;
         public static ReputationState.Entry Entry(PlayerState p,TownData town)=>p!=null&&town!=null&&town.region!=null?p.reputation.Get(Scope(town),Target(town)):new ReputationState.Entry();
@@ -23,8 +23,8 @@ namespace PocketCaravan
         {
             var stage=Entry(player,m.town).standing;float max=MaxHaggle(stage);
             int buy=Mathf.Max(1,Mathf.RoundToInt(m.BaseBuyPrice(item)*(1+BuyDelta(stage))));
-            buy=Mathf.Max(1,Mathf.RoundToInt(buy*(1-Mathf.Clamp(buyHaggle,0,max))));
-            int sell=Mathf.Max(1,Mathf.RoundToInt(m.BaseSellPrice(item,player?.origin)*(1+Mathf.Clamp(sellHaggle,0,max))));
+            buy=Mathf.Max(1,Mathf.RoundToInt(buy*(1-Mathf.Clamp(buyHaggle,-HaggleDuel.FailPenalty,max))));   // 11/15 흥정 실패는 그 거래만 +2%
+            int sell=Mathf.Max(1,Mathf.RoundToInt(m.BaseSellPrice(item,player?.origin)*(1+Mathf.Clamp(sellHaggle,-HaggleDuel.FailPenalty,max))));
             buy=Mathf.Max(buy,sell+1); // simultaneous fully modified quote rule remains
             if(selling)return activity!=null?activity.LimitSale(m.town.id,item.id,now,sell):sell;
             return buy;

@@ -64,6 +64,7 @@ namespace PocketCaravan
         void Update()
         {
             if (!open || Time.frameCount == openedFrame) return;
+            if (HaggleDuel.IsOpen || Time.frameCount == HaggleDuel.ClosedFrame) return;   // 11/15 흥정 미니게임 중
             if (InputReader.LedgerPressed()) { OpenLedger(); return; }
             if (InputReader.CancelPressed()) { Close(); return; }
             // 11/11 Space = 화면의 큰 사기·팔기 버튼. 살(팔) 수 없거나 흥정 칸·운반 수단 탭이면 아무 일도 없다
@@ -296,7 +297,7 @@ namespace PocketCaravan
             float haggle = DealFor(selling);
             int unit = selling ? m.SellPrice(item, haggle) : m.BuyPrice(item, haggle);
             float vx = d.x + 48;
-            if (haggle > 0) vx = Struck(vx, d.y + 29, (selling ? m.SellPrice(item) : m.BuyPrice(item)).ToString()) + 5;   // 흥정 전 값 취소선
+            if (haggle != 0) vx = Struck(vx, d.y + 29, (selling ? m.SellPrice(item) : m.BuyPrice(item)).ToString()) + 5;   // 흥정 전 값 취소선
             vx = CuteUI.Label(vx, d.y + 29, $"{unit}냥", selling ? CuteUI.Sell : CuteUI.Buy, false, true);
             if (selling)
             {
@@ -318,7 +319,7 @@ namespace PocketCaravan
 
             // 수량: − n + 최대
             int max = m.Preview(item, p, MarketState.MaxBatch, selling, haggle).count;
-            if (haggle > 0) max = Mathf.Min(max, deal.count);
+            if (haggle != 0) max = Mathf.Min(max, deal.count);
             int want = Mathf.Clamp(RequestedCount, 1, Mathf.Max(1, max));
             float qy = d.y + 60;
             CuteUI.Label(d.x, qy + 9, "수량", CuteUI.Sub, true);
@@ -330,16 +331,16 @@ namespace PocketCaravan
             if (CuteUI.SoftButton(plus, "+")) { customQuantity = Mathf.Min(Mathf.Max(1, max), want + 1); quantityMode = 3; }
             if (CuteUI.SoftButton(new Rect(d.x + 116, qy, 38, 18), "최대")) quantityMode = 2;
 
-            var est = m.Preview(item, p, haggle > 0 ? deal.count : want, selling, haggle);
+            var est = m.Preview(item, p, haggle != 0 ? deal.count : want, selling, haggle);
             // 흥정을 열면 합계·거래 버튼 자리에 3단계를 띄운다 (겹친 버튼이 눌리지 않게 거래 버튼은 그리지 않는다)
-            if (haggleOpen) { DrawHaggle(gm, new Rect(d.xMax - 58, qy, 58, 18), new Rect(d.x, qy + 26, d.width, d.yMax - qy - 26), est.count); return; }
+            
             float sy = qy + 30;
             if (est.count > 0)
             {
                 CuteUI.Label(d.x, sy, "합계", CuteUI.Sub, true);
                 CuteUI.Icon(CuteUI.Pic.Coin7, d.x + 30, sy - 4);
                 float ex = d.x + 41;
-                if (haggle > 0) ex = Struck(ex, sy, m.Preview(item, p, est.count, selling).total.ToString()) + 5;
+                if (haggle != 0) ex = Struck(ex, sy, m.Preview(item, p, est.count, selling).total.ToString()) + 5;
                 ex = CuteUI.Label(ex, sy, $"{est.total}냥", CuteUI.Text, false, true);
                 if (selling && est.profit != 0) CuteUI.GainBadge(ex + 8 + CuteUI.Width(CuteUI.GainText(est.profit), true, true) + 10, sy, est.profit);
             }
@@ -360,47 +361,40 @@ namespace PocketCaravan
                 CuteUI.LabelCenter(btn.center.x, btn.center.y, label, CuteUI.Zero, false, true);
             }
 
-            DrawHaggle(gm, new Rect(d.xMax - 58, qy, 58, 18), new Rect(d.x, btn.yMax + 6, d.width, d.yMax - btn.yMax - 6), est.count);
+            DrawHaggle(gm, new Rect(d.xMax - 58, qy, 58, 18), new Rect(d.x, btn.yMax + 6, d.width, d.yMax - btn.yMax - 6), est.count, m.Preview(item, p, est.count, selling).total);
 
         }
 
-        // 흥정: 수량 줄 오른쪽 "흥정" 버튼. 누르면 아래에 3단계(살짝·적당히·세게: 깎는 폭 · 성공 확률)가 열린다.
-        // 결과는 다음 한 번의 거래에만 적용된다.
-        void DrawHaggle(GameManager gm, Rect button, Rect panel, int count)
+        // 흥정: 수량 줄 오른쪽 "흥정" 버튼 → 말솜씨 대결 미니게임(HaggleDuel, 11/15). 결과는 다음 한 번의 거래에만 적용된다.
+        // 물건·사고팔기마다 하루 한 번. 실패해도 거래는 막지 않고 그 거래만 2% 불리하다.
+        void DrawHaggle(GameManager gm, Rect button, Rect panel, int count, int baseTotal)
         {
-            if (count <= 0) { haggleOpen = false; return; }
+            haggleOpen = false;
+            if (count <= 0) return;
             var p = gm.Player; var entry = ReputationPricing.Entry(p, town); float max = ReputationPricing.MaxHaggle(entry.standing);
-            string denial = Haggle.Denial(p.tradeActivity, town.id, gm.Clock.day, gm.Clock.TotalHours, max);
-            bool done = DealFor(haggleSelling) > 0;
+            string denial = Haggle.Denial(p.tradeActivity, town.id, selected != null ? selected.id : "", haggleSelling, gm.Clock.day, gm.Clock.TotalHours, max);
+            bool done = DealFor(haggleSelling) != 0;
             if (done || denial != null)
             {
-                haggleOpen = false;
                 CuteUI.Box(button, 8, CuteUI.ZeroSoft, CuteUI.Line);
                 CuteUI.LabelCenter(button.center.x, button.center.y, "흥정", CuteUI.Zero, false, true);
                 if (denial != null && !done) CuteUI.Label(panel.x, panel.y + 8, Fit(denial, panel.width, true, false), CuteUI.Zero, true);
                 return;
             }
-            if (haggleOpen) { CuteUI.Box(button, 8, CuteUI.Interact, CuteUI.Ink, 1, 2, CuteUI.InteractLo); CuteUI.LabelCenter(button.center.x, button.center.y, "흥정", CuteUI.OnInteract, false, true); if (GUI.Button(button, GUIContent.none, GUIStyle.none)) haggleOpen = false; }
-            else if (CuteUI.SoftButton(button, "흥정")) haggleOpen = true;
-            if (!haggleOpen) return;
+            if (!CuteUI.SoftButton(button, "흥정")) return;
+            var item = selected; bool sell = haggleSelling; var standing = entry.standing;
+            HaggleDuel.Open(town, item, sell, count, max, standing, baseTotal, (discount, failed) => SettleHaggle(item, sell, count, discount, failed));
+        }
 
-            float bh = 22, gap = 3;
-            var box = new Rect(panel.x, panel.y, panel.width, Mathf.Min(panel.height, 3 * bh + 2 * gap + 8));
-            CuteUI.Box(box, 8, CuteUI.Paper2, CuteUI.Line);
-            int i = 0;
-            foreach (HaggleStrength k in new[] { HaggleStrength.Light, HaggleStrength.Fair, HaggleStrength.Hard })
-            {
-                float chance = HaggleRules.Chance(max, entry.standing, k, town.id, count);
-                var b = new Rect(box.x + 4, box.y + 4 + i * (bh + gap), box.width - 8, bh);
-                if (b.yMax > box.yMax) break;
-                bool hover = b.Contains(Event.current.mousePosition);
-                CuteUI.Box(b, 7, hover ? CuteUI.White : CuteUI.Paper, CuteUI.Ink);
-                CuteUI.Label(b.x + 8, b.center.y, HaggleRules.Name(k), CuteUI.Text, false, true);
-                CuteUI.Label(b.x + 64, b.center.y, $"{HaggleRules.Discount(max, k) * 100:0.#}% {(haggleSelling ? "더 받기" : "깎기")}", CuteUI.Sub, true);
-                CuteUI.LabelRight(b.xMax - 8, b.center.y, $"성공 {chance * 100:0}%", chance >= .6f ? CuteUI.Up : chance >= .4f ? CuteUI.Sell : CuteUI.Down, true, true);
-                if (GUI.Button(b, GUIContent.none, GUIStyle.none)) { TryHaggle(k, max, entry.standing, count); haggleOpen = false; }
-                i++;
-            }
+        void SettleHaggle(ItemData item, bool sell, int count, float discount, bool failed)
+        {
+            var gm = GameManager.I;
+            if (!open || gm == null || item == null || selected != item || haggleSelling != sell) return;
+            HaggleResult r = default;
+            if (!SavedEconomyChange.Try(gm, () => r = Haggle.Settle(gm.Player.tradeActivity, town.id, item.id, sell, count, discount, failed, gm.Clock.day)))
+            { message = SavedEconomyChange.Failure; return; }
+            deal = r.deal;
+            message = r.message;
         }
 
         float DealFor(bool selling,ItemData item=null)
@@ -459,7 +453,7 @@ namespace PocketCaravan
             var p=GameManager.I.Player; var m=Market;
             if(estimate!=null && p.tradeActivity.BanRemaining(town.id,GameManager.I.Clock.TotalHours)>0){message="상인이 지금은 거래하지 않겠다고 합니다.";return 0;}
             float haggle=estimate!=null?DealFor(estimate.selling,estimate.item):0;
-            if((haggle>0 && estimate.count!=deal.count) || estimate==null || estimate.town!=town || estimate.count<1 || !estimate.Matches(m.Preview(estimate.item,p,estimate.count,estimate.selling,haggle)))
+            if((haggle!=0 && estimate.count!=deal.count) || estimate==null || estimate.town!=town || estimate.count<1 || !estimate.Matches(m.Preview(estimate.item,p,estimate.count,estimate.selling,haggle)))
             { message="시세·잔고·화물이 달라졌습니다. 수량과 총액을 다시 확인하세요.";return 0; }
             int completed=0,total=0;float basis=p.cargo.AverageCost(estimate.item);
             for(int i=0;i<estimate.count;i++)
