@@ -193,9 +193,13 @@ namespace PocketCaravan
             CuteUI.Fill(new Rect(nx, bar.y - 8, 1, bar.height + 12), stopped && zone == 2 ? Gold : CuteUI.White);
             // 바늘 머리 (작은 추)
             CuteUI.Circle(nx - 5, bar.y - 16, 11, stopped && zone == 2 ? Gold : Brass, CuteUI.Ink, 1, 1);
-            // 받침
-            CuteUI.Fill(new Rect(bar.x + bar.width / 2f - 14, bar.yMax + 8, 28, 4), WoodLo);
-            CuteUI.Fill(new Rect(bar.x + bar.width / 2f - 2, bar.yMax + 2, 4, 6), WoodLo);
+            // 받침 (ㅗ): 11/15 은샘 — 다른 그림처럼 테두리를 두르고 저울 막대 테두리에 붙인다
+            float cx = Mathf.Round(bar.x + bar.width / 2f), top = bar.yMax + 2;   // 저울 막대 테두리 아래 끝
+            CuteUI.Fill(new Rect(cx - 3, top - 1, 6, 8), CuteUI.Ink);            // 기둥 테두리 (막대 테두리와 이어짐)
+            CuteUI.Fill(new Rect(cx - 15, top + 6, 30, 6), CuteUI.Ink);          // 바닥 테두리
+            CuteUI.Fill(new Rect(cx - 14, top + 7, 28, 4), WoodLo);              // 바닥
+            CuteUI.Fill(new Rect(cx - 14, top + 7, 28, 1), Wood);                // 바닥 윗면 빛
+            CuteUI.Fill(new Rect(cx - 2, top, 4, 8), WoodLo);                    // 기둥 (바닥과 한 덩어리)
 
             // 결과 한 줄 또는 첫 판 안내
             float ly = bar.yMax + 26;
