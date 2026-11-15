@@ -150,7 +150,7 @@ namespace PocketCaravan.EditorTools
             ItemData Good(string file, string id, string label, float weight, int price, float perMap, TownData origin, string icon, bool quest = false)
             {
                 var i = Get<ItemData>(file); i.id = id; i.displayName = label; i.weight = weight; i.basePrice = price;
-                i.originTown = origin; i.pricePerMap = perMap; i.questItem = quest;
+                i.originTown = origin; i.pricePerMap = quest ? perMap : 0.6f; i.questItem = quest;   // 11/15 은샘: 지역마다 수입이 비슷하게 맵당 비율을 맞춤 (Docs/Feedback.md 기획 변경)
                 i.icon = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Items/{icon}.png");
                 if (!db.items.Contains(i)) db.items.Add(i);
                 EditorUtility.SetDirty(i); return i;

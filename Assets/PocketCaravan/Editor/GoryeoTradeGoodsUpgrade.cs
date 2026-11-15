@@ -25,7 +25,7 @@ namespace PocketCaravan.EditorTools
                 if(registered!=null&&registered!=item)throw new InvalidDataException("ID belongs to another asset: "+id);
                 if(item==null){item=ScriptableObject.CreateInstance<ItemData>();AssetDatabase.CreateAsset(item,path);}
                 item.id=id;item.displayName=label;item.basePrice=price;item.weight=weight;item.originTown=origin;
-                item.pricePerMap=.25f; // ItemData 기본값 유지. 새 거리식/추가 조정 없음.
+                item.pricePerMap=.3f; // 11/15 은샘: 지역마다 수입이 비슷하게 맵당 비율을 맞춤 (Docs/Feedback.md 기획 변경)
                 item.questItem=false;item.icon=AssetDatabase.LoadAssetAtPath<Sprite>(Art+id+".png");
                 if(!db.items.Contains(item))db.items.Add(item);EditorUtility.SetDirty(item);return item;
             }

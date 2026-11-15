@@ -14,10 +14,12 @@
 | 마을 매입가 | 파는 값의 **85%** (장터 수수료 15%) | 〃 |
 | 재고 복원 | 매시간 적정치로 **4%** Lerp (산지는 생산, 소비지는 소비로 돌아감) | `MarketState.RecoverOneHour`, `GameDatabase.stockRecoveryPerHour` |
 | 마을 등급 | 적정재고 × (1 + 0.5×(등급-1)) → 큰 마을은 많이 팔아도 값이 덜 떨어짐 | `MarketState.LevelMultiplier` |
+| 장터 깊이 (11/15) | 모든 적정재고 × **2** → 한 번에 많이 사고팔아도 값이 덜 움직여 짐 무게·운반 수단이 의미 있음. 옛 저장은 불러올 때 재고를 같은 비율로 늘려 값이 이어짐 | `GameDatabase.stockDepth`, `MarketState.Save.stockDepth` |
+| 거리 값 (11/15) | 기준가 × (1 + 맵당 비율 × 산지에서 맵 수). 맵당 비율: 고려 0.25 · 중앙 동쪽 길목 0.3 · 베네치아 0.6 · 아라비아 0.35 · 북유럽 0.4 · 물고기 0.1 · 생필품(산지 없음) 0 | `ItemData.pricePerMap` |
 | 수요 충격 | 장날 ×1.15, 밤 축제 특산품 +3할, 큰 장 2할 덤 | `GameDatabase.marketDayDemand`, `NightFestival`, `CentralFair` |
-| 평판·흥정 | 6단계(Hostile~Respected) 매입가 +15% ~ −10%, 흥정 상한 0~10% | `ReputationPricing.cs` |
+| 평판·흥정 | 6단계(Hostile~Respected) 매입가 +15% ~ −10%. 저울 흥정(11/15, 사고팔 때마다) 상한 0·5·8·10·13·15% | `ReputationPricing.cs`, `HaggleDuel.cs` |
 | 반복거래 감쇠 | 같은 마을에서 산 물건은 **12시간** 안엔 산 값 미만으로만 되팔림 (되팔기 차익 봉쇄) | `TradeActivity.LimitSale`, `WindowHours` |
-| 출신 보정 | 베네치아: 타지역 물건 팔 때 재고 증가 0.8배 / 아라비아: 3맵 이상 원거리 판매 +5% | `Data/Origins/*.asset` |
+| 출신 보정 (11/15) | 북유럽 이동 +10% · 베네치아 수수료 13% · 고려 짐 +10% · 아라비아 다른 문명 물건 팔면 +5% | `Data/Origins/*.asset`, `OriginPerks.cs` |
 | 규모 | 품목 45, 마을 29, 기준가 1~120냥, 시작금 100냥 | `Data/`, `GameDatabase.startMoney` |
 
 ## 3. 비어 있는 것
@@ -113,7 +115,7 @@
 | 다른 문명권 | 0 | — | 안 넣음 |
 
 - 문명권 = 북유럽+중앙북 / 베네치아+본토 서부 / 고려+중간권 / 아라비아. 중앙 조각(허브)은 산지가 없어도 되고 다른 문명권 물건을 4개까지 둘 수 있다.
-- 값은 어디서나 기준가 × (적정/현재 재고) × (1 + 0.35 × 산지에서 떨어진 맵 수) — 그래서 멀리 가져갈수록 비싸게 팔린다. 생필품은 산지가 없어 어디서나 같은 값(교역용이 아니라 소비용).
+- 값은 어디서나 기준가 × (적정/현재 재고) × (1 + 맵당 비율 × 산지에서 떨어진 맵 수) — 그래서 멀리 가져갈수록 비싸게 팔린다. 맵당 비율은 지역마다 다르다(위 표, 11/15 지역 수입 맞추기). 생필품은 산지가 없어 어디서나 같은 값(교역용이 아니라 소비용).
 - 검사: `python3 -m unittest Tools/Integration/test_market_rule.py` — 깨지면 어느 마을이 왜 어긋나는지 바로 나온다.
 - 예외: 장단 들마을(4개)은 R2 고정 자산(`test_r2_safety`·`test_distance_calibration`이 해시로 묶음)이라 통합 담당이 못 고침 → 은샘이 1개 채우고 두 검사의 해시를 갱신하면 예외를 뺀다.
 - 데이터는 각 지역 빌더에 있음: `NorthBuilder`·`VeniceRegionSetup`·`ArabiaRegionSetup`(전체 준비가 돌림), `GoryeoRegionUpgrade`(`고려/수도와 네 마을·시설 데이터 갱신` 메뉴).

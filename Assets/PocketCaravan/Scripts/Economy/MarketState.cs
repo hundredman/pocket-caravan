@@ -30,7 +30,10 @@ namespace PocketCaravan
         // 등급이 높을수록 적정 재고가 커서 많이 팔아도 값이 덜 떨어진다.
         float LevelMultiplier => 1f + 0.5f * (Level - 1);
 
-        public float Optimal(ItemData item) => town.OptimalFor(item) * LevelMultiplier * NetMarket.ScaleFor(town);
+        /// <summary>11/15 장터 깊이 (GameDatabase.stockDepth). 0 이하·잘못된 값이면 1</summary>
+        float Depth => db.stockDepth > 0f && !float.IsNaN(db.stockDepth) && !float.IsInfinity(db.stockDepth) ? db.stockDepth : 1f;
+
+        public float Optimal(ItemData item) => town.OptimalFor(item) * LevelMultiplier * Depth * NetMarket.ScaleFor(town);
 
         public IEnumerable<ItemData> KnownItems => stock.Keys;
 
@@ -145,6 +148,8 @@ namespace PocketCaravan
             public float volume;
             public List<string> items = new List<string>();
             public List<float> stocks = new List<float>();
+            /// <summary>11/15 저장할 때의 장터 깊이. 0 = 그 전 저장(깊이 1)</summary>
+            public float stockDepth;
         }
 
         /// <summary>저장 파일용: 온라인 공유 장터 배율을 뺀 재고(차이는 그대로)로 남긴다. 혼자 하기로 불러와도 값이 튀지 않는다.</summary>
@@ -152,7 +157,7 @@ namespace PocketCaravan
         {
             float scale = NetMarket.ScaleFor(town);
             if (scale == 1f) return Export();
-            var s = new Save { town = town.id, level = Level, volume = TradeVolume };
+            var s = new Save { town = town.id, level = Level, volume = TradeVolume, stockDepth = Depth };
             foreach (var kv in stock)
             {
                 float opt = Optimal(kv.Key);
@@ -163,7 +168,7 @@ namespace PocketCaravan
 
         public Save Export()
         {
-            var s = new Save { town = town.id, level = Level, volume = TradeVolume };
+            var s = new Save { town = town.id, level = Level, volume = TradeVolume, stockDepth = Depth };
             foreach (var kv in stock) { s.items.Add(kv.Key.id); s.stocks.Add(kv.Value); }
             return s;
         }
@@ -173,10 +178,13 @@ namespace PocketCaravan
             Level = Mathf.Clamp(s.level, 1, db.maxTownLevel);
             TradeVolume = s.volume;
             stock.Clear();
+            // 11/15 장터 깊이가 바뀐 저장(그 전 저장은 깊이 1): 재고를 같은 비율로 늘려 값이 그대로 이어지게 한다
+            float from = s.stockDepth > 0f && !float.IsNaN(s.stockDepth) && !float.IsInfinity(s.stockDepth) ? s.stockDepth : 1f;
+            float ratio = Depth / from;
             for (int i = 0; i < s.items.Count && i < s.stocks.Count; i++)
             {
                 var it = item(s.items[i]);
-                if (it != null) stock[it] = s.stocks[i];
+                if (it != null) stock[it] = s.stocks[i] * ratio;
             }
         }
 

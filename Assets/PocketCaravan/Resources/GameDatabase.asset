@@ -179,6 +179,7 @@ MonoBehaviour:
   crateIcon: {fileID: 21300000, guid: ec46ec01583204ea6bbd211cd1094e76, type: 3}
   realSecondsPerDay: 360
   stockRecoveryPerHour: 0.04
+  stockDepth: 2
   marketDayDemand: 1.15
   townLevelVolume: 00000000f401000008070000401f0000
   maxTownLevel: 3
