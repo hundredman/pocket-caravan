@@ -227,20 +227,26 @@ namespace PocketCaravan
         {
             CuteUI.Box(new Rect(bar.x - 2, bar.y - 2, bar.width + 4, bar.height + 4), 4, Wood, CuteUI.Ink);
             var inner = new Rect(bar.x, bar.y, bar.width, bar.height);
-            float g0 = inner.x + inner.width * GreyEnd, gs = inner.x + inner.width * GoldStart, rs = inner.x + inner.width * redStart;
-            CuteUI.Fill(new Rect(inner.x, inner.y, g0 - inner.x, inner.height), Grey);
-            // 초록은 오른쪽으로 갈수록 진하게 (여러 칸으로 나눠 칠한다)
-            int steps = 8; float gw = (gs - g0) / steps;
-            for (int i = 0; i < steps; i++)
-                CuteUI.Fill(new Rect(Mathf.Round(g0 + i * gw), inner.y, Mathf.Ceil(gw) + 1, inner.height), Color32.Lerp(GreenLo, GreenHi, (i + 0.5f) / steps));
+            // 11/15 은샘: 칸 사이 선 없이 회색 → 초록 → 금색 → 빨강을 그라데이션으로. 판정 경계는 그대로(ZoneOf)
             float shine = 0.5f + 0.5f * Mathf.Sin(now * 8f);
-            CuteUI.Fill(new Rect(gs, inner.y, rs - gs, inner.height), Color32.Lerp(Gold, GoldHi, shine * 0.6f));
-            CuteUI.Fill(new Rect(rs, inner.y, inner.xMax - rs, inner.height), Red);
+            var gold = Color32.Lerp(Gold, GoldHi, shine * 0.5f);
+            float blend = 0.03f;
+            for (float px = 0; px < inner.width; px += 1f)
+            {
+                float x = (px + 0.5f) / inner.width;
+                Color32 c;
+                float gm = GoldStart + goldW * 0.5f;
+                if (x < GreyEnd - blend) c = Grey;
+                else if (x < GreyEnd + blend) c = Color32.Lerp(Grey, GreenLo, Mathf.InverseLerp(GreyEnd - blend, GreyEnd + blend, x));
+                else if (x < GoldStart - blend) c = Color32.Lerp(GreenLo, GreenHi, Mathf.InverseLerp(GreyEnd + blend, GoldStart - blend, x));
+                else if (x < gm) c = Color32.Lerp(GreenHi, gold, Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(GoldStart - blend, gm, x)));
+                else if (x < redStart + blend) c = Color32.Lerp(gold, Red, Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(gm, redStart + blend, x)));
+                else c = Red;
+                CuteUI.Fill(new Rect(inner.x + px, inner.y, 1, inner.height), c);
+            }
             CuteUI.Fill(new Rect(inner.x, inner.y, inner.width, 2), new Color32(255, 255, 255, 70));
             // 눈금
-            for (int i = 1; i < 10; i++) CuteUI.Fill(new Rect(Mathf.Round(inner.x + inner.width * i / 10f), inner.yMax - 4, 1, 4), new Color32(42, 26, 46, 90));
-            CuteUI.Fill(new Rect(gs, inner.y, 1, inner.height), CuteUI.Ink);
-            CuteUI.Fill(new Rect(rs, inner.y, 1, inner.height), CuteUI.Ink);
+            for (int i = 1; i < 10; i++) CuteUI.Fill(new Rect(Mathf.Round(inner.x + inner.width * i / 10f), inner.yMax - 4, 1, 4), new Color32(42, 26, 46, 70));
         }
 
         static ulong Hash(string s)

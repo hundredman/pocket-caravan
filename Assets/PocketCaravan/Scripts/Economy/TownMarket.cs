@@ -361,7 +361,7 @@ namespace PocketCaravan
                 CuteUI.LabelCenter(btn.center.x, btn.center.y, label, CuteUI.Zero, false, true);
             }
 
-            DrawHaggle(gm, new Rect(d.xMax - 58, qy, 58, 18), new Rect(d.x, btn.yMax + 6, d.width, d.yMax - btn.yMax - 6), est.count, m.Preview(item, p, est.count, selling).total);
+            // 11/15 흥정은 사기·팔기 버튼을 누르면 저울 흥정으로 (TradeBatch)
 
         }
 
@@ -399,12 +399,12 @@ namespace PocketCaravan
         }
 
         bool buyHaggled;
-        void FinishBuyHaggle(ItemData item,int count,float discount,bool failed)
+        void FinishBuyHaggle(ItemData item,int count,float discount,bool failed,bool sell)
         {
-            SettleHaggle(item,false,count,discount,failed,false);
+            SettleHaggle(item,sell,count,discount,failed,false);
             if(!open||selected!=item)return;
             var gm=GameManager.I;
-            var est=Market.Preview(item,gm.Player,count,false,DealFor(false,item));
+            var est=Market.Preview(item,gm.Player,count,sell,DealFor(sell,item));
             buyHaggled=true;
             int done=TradeBatch(est);
             if(done==0)buyHaggled=false;
@@ -466,12 +466,12 @@ namespace PocketCaravan
             var p=GameManager.I.Player; var m=Market;
             if(estimate!=null && p.tradeActivity.BanRemaining(town.id,GameManager.I.Clock.TotalHours)>0){message="상인이 지금은 거래하지 않겠다고 합니다.";return 0;}
             float haggle=estimate!=null?DealFor(estimate.selling,estimate.item):0;
-            // 11/15 살 때는 꼭 저울 흥정부터. 끝나면 그 값으로 이 거래를 이어서 한다 (신용이 너무 낮아 흥정할 수 없으면 그냥 산다)
-            if(estimate!=null && !estimate.selling && haggle==0 && !buyHaggled && estimate.count>0)
+            // 11/15 사고팔 때는 꼭 저울 흥정부터. 끝나면 그 값으로 이 거래를 이어서 한다 (신용이 너무 낮아 흥정할 수 없으면 그냥 산다)
+            if(estimate!=null && haggle==0 && !buyHaggled && estimate.count>0)
             {
                 float max=ReputationPricing.MaxHaggle(ReputationPricing.Entry(p,town).standing);
-                var item=estimate.item; int n=estimate.count;
-                if(max>0 && HaggleDuel.Open(town,item,false,n,max,estimate.total,++haggleSalt,(d,fail)=>FinishBuyHaggle(item,n,d,fail)))return 0;
+                var item=estimate.item; int n=estimate.count; bool sell=estimate.selling;
+                if(max>0 && HaggleDuel.Open(town,item,sell,n,max,estimate.total,++haggleSalt,(d,fail)=>FinishBuyHaggle(item,n,d,fail,sell)))return 0;
             }
             buyHaggled=false;
             if((haggle!=0 && estimate.count!=deal.count) || estimate==null || estimate.town!=town || estimate.count<1 || !estimate.Matches(m.Preview(estimate.item,p,estimate.count,estimate.selling,haggle)))
