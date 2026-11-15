@@ -52,7 +52,7 @@ def build(west, east):
     m.put('stall_fruit', 13, PORT + 4, foot=1)
     m.maybe('prop_grainsacks', 4, PORT + 5, foot=1)
     m.maybe('prop_grainsacks', 6, PORT + 7, foot=1)
-    m.maybe('prop_watermelons', 16, PORT + 5, foot=1)
+    # 11/15 수박 더미는 뺌
     m.talker(7, PORT + 3, '곡물 장수', 'arabia_woman_bedouinWoman_tall', '갓 거둔 곡물이에요. 알 아흐사 여관에서도 이 곡물을 기다리지요.')
 
     # ---- 북쪽 주택가 (문 앞 길 → 북쪽 골목) ----

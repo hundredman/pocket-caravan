@@ -973,3 +973,34 @@ def build_central():
 if __name__ == '__main__':
     build_all()
     print('drawn:', sorted(os.listdir(OUT)))
+
+
+# ---------- 11/15 은인: 다시 그린 그림 덮어쓰기 ----------
+# Tools/MapGen/ArabiaOverrides/<Sprites 안 경로>.png 가 있으면 build_all이 그린 그림 위에 그대로 덮는다.
+# (나무·바위·자루·돌탑·동상·모래언덕·길 바닥을 손으로 다시 그림. 크기는 원래와 같아 맵 칸·막힘은 그대로)
+OVERRIDES = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ArabiaOverrides')
+
+
+def apply_overrides():
+    import shutil
+    n = 0
+    sprites = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'Assets/PocketCaravan/Art/Arabia/Sprites')
+    for r, _, fs in os.walk(OVERRIDES):
+        for f in fs:
+            if not f.endswith('.png'):
+                continue
+            src = os.path.join(r, f)
+            dst = os.path.normpath(os.path.join(sprites, os.path.relpath(src, OVERRIDES)))
+            if os.path.exists(dst) and open(dst, 'rb').read() == open(src, 'rb').read():
+                continue
+            shutil.copyfile(src, dst)
+            n += 1
+    return n
+
+
+_build_all_base = build_all
+
+
+def build_all():
+    _build_all_base()
+    apply_overrides()
