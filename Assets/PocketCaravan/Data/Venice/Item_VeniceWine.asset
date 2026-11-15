@@ -18,5 +18,5 @@ MonoBehaviour:
   weight: 2
   basePrice: 12
   originTown: {fileID: 11400000, guid: 5df684bc3ea1ccf49bf354c1733c8772, type: 2}
-  pricePerMap: 0.5
+  pricePerMap: 0.45
   questItem: 0
