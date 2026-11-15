@@ -46,6 +46,7 @@ namespace PocketCaravan
             var dressing = GetComponent<VillageDressing>();
             if (dressing != null && dressing.Blocks(c)) return false;
             if (Interactable.BlockerAt(c) != null) return false;
+            if (SolidProps.Blocks(this, c)) return false;   // 11/16 말 못 거는 서 있는 사람·큰 물건
             var fire=GetComponent<GoryeoFireFootprint>();
             if(fire!=null&&fire.Blocks(c,actor))return false;
             var obstacles=GetComponent<ObstacleField>();

@@ -7,7 +7,7 @@ namespace PocketCaravan
     /// <summary>
     /// 11/16 은샘: 짐 싣기 퍼즐. 큰 짐(무게 5 이상)이나 신용 의뢰를 게시판에서 맡을 때 뜬다 (속죄 의뢰는 빼고).
     /// 수레 앞칸에서 의뢰 짐 조각(보자기)을 빈 칸에 맞춰 싣는다. 다 실으면 끈으로 묶고 보수 +10% (최소 1냥).
-    /// "그냥 싣기"는 언제든 되고 보수만 그대로. Esc는 의뢰를 맡지 않고 닫는다.
+    /// "그냥 싣기"(X)는 언제든 되고 보수만 그대로. Esc는 의뢰를 맡지 않고 닫는다.
     /// 난이도는 실은 짐 양과 상관없이 의뢰 크기로만 정한다.
     ///   무게 5~7: 조각 2~3개(2~3칸), 남는 칸 2, 판 5×3 · 무게 8 이상: 조각 3~4개(2~4칸, 4칸 하나 이상), 남는 칸 1, 판 7×4.
     /// 정답 배치를 먼저 만들고 잘라 내므로 언제나 풀 수 있다. 시간 제한 없음. 놓은 조각은 다시 들 수 있다.
@@ -303,6 +303,7 @@ namespace PocketCaravan
             if (KeyPressed('r')) RotateSel();
             if (KeyPressed('\t')) Select(NextUnplaced(sel < 0 ? -1 : sel), at);
             if (KeyPressed('z') && placeOrder.Count > 0) Lift(placeOrder[placeOrder.Count - 1]);
+            if (KeyPressed('x')) { Close(true, false); Sfx.Play("accept"); return; }
             if (InputReader.InteractPressed()) TryPlace();
         }
 
@@ -310,9 +311,9 @@ namespace PocketCaravan
         {
 #if ENABLE_INPUT_SYSTEM
             var kb = UnityEngine.InputSystem.Keyboard.current; if (kb == null) return false;
-            return k == 'r' ? kb.rKey.wasPressedThisFrame : k == 'z' ? kb.zKey.wasPressedThisFrame : k == '\t' && kb.tabKey.wasPressedThisFrame;
+            return k == 'r' ? kb.rKey.wasPressedThisFrame : k == 'z' ? kb.zKey.wasPressedThisFrame : k == 'x' ? kb.xKey.wasPressedThisFrame : k == '\t' && kb.tabKey.wasPressedThisFrame;
 #else
-            return Input.GetKeyDown(k == 'r' ? KeyCode.R : k == 'z' ? KeyCode.Z : KeyCode.Tab);
+            return Input.GetKeyDown(k == 'r' ? KeyCode.R : k == 'z' ? KeyCode.Z : k == 'x' ? KeyCode.X : KeyCode.Tab);
 #endif
         }
 
@@ -445,11 +446,15 @@ namespace PocketCaravan
 
             // 아래: 그냥 싣기 + 키 안내
             float ky = r.y + 172;
-            var skip = new Rect(r.x + 12, ky - 3, 62, 18);
-            CuteUI.Box(skip, 6, CuteUI.White, CuteUI.KeyLine, 1);
-            CuteUI.LabelCenter(skip.center.x, skip.center.y, "그냥 싣기", CuteUI.Sub, true);
+            // 그냥 싣기: 다른 창의 작은 버튼과 같은 모양 (종이 + 잉크 선, 올리면 청록 선) + [X]
+            float sw = Mathf.Round(4 + CuteUI.KeycapWidth("X") + 4 + CuteUI.Width("그냥 싣기", true) + 7);
+            var skip = new Rect(r.x + 12, ky - 3, sw, 19);
+            bool sh = !tied && skip.Contains(e.mousePosition);
+            CuteUI.Box(skip, 6, sh ? CuteUI.Paper2 : CuteUI.Paper, sh ? CuteUI.Interact : CuteUI.Ink, 1, 1, CuteUI.SoftShadow);
+            float sx = skip.x + 4 + CuteUI.Keycap(skip.x + 4, skip.y + 3, "X", true) + 4;
+            CuteUI.Label(sx, skip.center.y, "그냥 싣기", tied ? CuteUI.Zero : CuteUI.Text, true);
             if (!tied && e.type == EventType.MouseDown && e.button == 0 && skip.Contains(e.mousePosition)) { e.Use(); Close(true, false); Sfx.Play("accept"); return; }
-            float kx = r.x + 116;
+            float kx = Mathf.Max(r.x + 116, skip.xMax + 12);
             kx += CuteUI.Keycap(kx, ky, "방향키") + 3; kx = CuteUI.Label(kx, ky + 6.5f, "옮기기", CuteUI.Sub, true) + 8;
             if (now - rotAt < .2f) CuteUI.Box(new Rect(kx - 2, ky - 2, CuteUI.KeycapWidth("R") + 4, 17), 4, Teal, Teal, 0);
             kx += CuteUI.Keycap(kx, ky, "R") + 3; kx = CuteUI.Label(kx, ky + 6.5f, "돌리기", CuteUI.Sub, true) + 8;

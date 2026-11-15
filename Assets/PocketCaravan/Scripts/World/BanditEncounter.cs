@@ -21,7 +21,7 @@ namespace PocketCaravan
 
         enum Phase { Closed, Choose, Haggle, Run }
         Phase phase = Phase.Closed;
-        int toll, sel = 1; float openedAt; int openedFrame;
+        int toll, sel = 1; float openedAt; int openedFrame; Vector2 lastMouse = new Vector2(-1, -1);
         Sprite banditFace; Sprite[] banditRun = new Sprite[4], playerRun = new Sprite[4];
         string mapId;
         Action<Result> done;
@@ -56,6 +56,7 @@ namespace PocketCaravan
                 banditRun[i] = ba != null && ba.frames != null && ba.frames.Length >= 16 ? ba.frames[12 + i] : null;
             }
             banditFace = ba != null && ba.frames != null && ba.frames.Length > 0 ? ba.frames[0] : null;
+            if (banditFace == null) banditFace = Resources.Load<Sprite>($"Bandit/Looks/bandit_{BanditLook.For(mapId)}_d0");   // 도적 몸이 없을 때도 얼굴 칸이 비지 않게
             sel = GameManager.I.Player.money >= toll ? 0 : 1;
             phase = Phase.Choose; openedAt = Time.unscaledTime; openedFrame = Time.frameCount;
             Sfx.Play("alert");
@@ -272,43 +273,27 @@ namespace PocketCaravan
 
             string[] title = { "통행세", "흥정", "도망" };
             string[] sub = { $"{toll}냥", "깎기", "짐 걸기" };
+            // 마우스가 움직였을 때만 고른 카드를 옮긴다 (MouseMove는 빌드에서 오지 않으므로 그리는 때 위치를 잰다)
+            var ev = Event.current;
+            bool moved = ev.type == EventType.Repaint && lastMouse.x >= 0 && (ev.mousePosition - lastMouse).sqrMagnitude > 0.01f;
+            if (ev.type == EventType.Repaint) lastMouse = ev.mousePosition;
             for (int i = 0; i < 3; i++)
             {
                 var c = new Rect(r.x + 92 + i * 80, r.y + 52, 74, 76);
                 bool on = sel == i, off = i == 0 && !CanPay;
                 if (Event.current.type == EventType.MouseDown && Event.current.button == 0 && c.Contains(Event.current.mousePosition)) { sel = i; Pick(i); Event.current.Use(); return; }
-                if (Event.current.type == EventType.MouseMove && c.Contains(Event.current.mousePosition)) sel = i;
+                if (moved && sel != i && c.Contains(ev.mousePosition)) { sel = i; Sfx.Play("move", .4f); }
                 if (on) CuteUI.Box(new Rect(c.x - 2, c.y - 2, c.width + 4, c.height + 4), 9, Teal, Teal, 0);
                 CuteUI.Box(c, 8, on ? new Color32(0xE3, 0xF4, 0xF2, 255) : CuteUI.White, CuteUI.Ink, 2);
                 CuteUI.Keycap(c.x + 4, c.y + 4, (i + 1).ToString(), true);
                 float icy = c.y + 22, icx = c.center.x;
-                if (i == 0) CuteUI.Icon(CuteUI.Pic.Coin, icx - 9, icy - 9, 2);
-                else if (i == 1) MiniScale(new Rect(icx - 14, icy - 5, 28, 10));
-                else RunnerIcon(icx - 12, icy - 11);
+                var pic = i == 0 ? CuteUI.Pic.Coin : i == 1 ? CuteUI.Pic.Scales : CuteUI.Pic.Runner;
+                int sc = i == 0 ? 3 : 2; var psz = CuteUI.PicSize(pic) * sc;
+                CuteUI.Icon(pic, Mathf.Round(icx - psz.x / 2f), Mathf.Round(icy - psz.y / 2f), sc, off ? CuteUI.Zero : (Color32?)null);
                 Color32 tc = off ? CuteUI.Zero : CuteUI.Text;
                 CuteUI.LabelCenter(c.center.x, c.y + 46, title[i], tc, false, true);
                 CuteUI.LabelCenter(c.center.x, c.y + 61, off ? "돈 모자람" : sub[i], off ? CuteUI.Down : CuteUI.Sub, true);
             }
-        }
-
-        static void MiniScale(Rect b)
-        {
-            CuteUI.Box(b, 3, CuteUI.White, CuteUI.Ink, 2);
-            Color32[] cs = { Hex(0xD9D2CC), Hex(0xB7E4A8), Hex(0x3FB85A), Hex(0xFFCF33), Hex(0xF0555A) };
-            float[] at = { 0f, .25f, .45f, .7f, .86f, 1f };
-            float iw = b.width - 4;
-            for (int k = 0; k < 5; k++) CuteUI.Fill(new Rect(b.x + 2 + Mathf.Round(iw * at[k]), b.y + 2, Mathf.Round(iw * at[k + 1]) - Mathf.Round(iw * at[k]), b.height - 4), cs[k]);
-        }
-
-        static readonly string[] Runner = { ".....###....", ".....###....", "....####....", "..##.####...", "....####.##.", "...##..##...", "..##....##..", "..#......##." };
-        static void RunnerIcon(float x, float y)
-        {
-            for (int j = 0; j < Runner.Length; j++)
-                for (int i = 0; i < Runner[j].Length; i++)
-                    if (Runner[j][i] == '#') CuteUI.Fill(new Rect(x + i * 2, y + 3 + j * 2, 2, 2), CuteUI.Ink);
-            CuteUI.Fill(new Rect(x - 2, y + 9, 4, 2), Hex(0x9FD0E6));
-            CuteUI.Fill(new Rect(x - 4, y + 13, 6, 2), Hex(0x9FD0E6));
-            CuteUI.Fill(new Rect(x - 2, y + 17, 4, 2), Hex(0x9FD0E6));
         }
 
         // ---- 도망 창 ----

@@ -203,7 +203,7 @@ namespace PocketCaravan
         static Rect Snap(Rect r) => new Rect(Mathf.Round(r.x), Mathf.Round(r.y), Mathf.Round(r.width), Mathf.Round(r.height));
 
         // ---------------- 그림 (픽셀 아이콘) ----------------
-        public enum Pic { Coin, Coin7, Basket, Bolt, Scroll, Compass, OpenBook, People, Sack, Chart, Arrow, Pin, Bulb, XMark, Star4, Menu, Speaker, Clock, Check, Star5 }   // 11/11 Check · Star5: 알림 동그라미용 (흰색 한 가지로 칠해도 모양이 보이게)
+        public enum Pic { Coin, Coin7, Basket, Bolt, Scroll, Compass, OpenBook, People, Sack, Chart, Arrow, Pin, Bulb, XMark, Star4, Menu, Speaker, Clock, Check, Star5, Scales, Runner }   // 11/11 Check · Star5: 알림 동그라미용 (흰색 한 가지로 칠해도 모양이 보이게)
 
         static readonly Dictionary<Pic, (string[] rows, Dictionary<char, Color32> pal)> pics = new Dictionary<Pic, (string[], Dictionary<char, Color32>)>
         {
@@ -238,6 +238,10 @@ namespace PocketCaravan
             { Pic.Clock, (new[] { "..#####..", ".#wwwww#.", "#www#www#", "#www#www#", "#www##ww#", "#wwwwwww#", "#wwwwwww#", ".#wwwww#.", "..#####.." }, Pal(('#', 0x2A1A2E), ('w', 0xFFF4DC))) },
             // 11/08 소리 (게임 메뉴)
             { Pic.Speaker, (new[] { "...#......", "..##...#..", "####.#..#.", "#hh#..#.#.", "#hh#..#.#.", "####.#..#.", "..##...#..", "...#......" }, Pal(('#', 0x2A1A2E), ('h', 0xFFCF33))) },
+            // 11/16 도적 창 카드: 흥정 = 저울, 도망 = 달리는 사람 (다른 아이콘처럼 진한 테두리 + 색)
+            { Pic.Scales, (new[] { ".......#.......", "......#h#......", "#######y#######", "#hhyyyyyyyyyyd#", "#######y#######", ".#....#y#....#.", ".#....#y#....#.", "#.#...#y#...#.#", "#####.#y#.#####", "#hyd#.#y#.#hyd#", ".###..#y#..###.", "....#######....", "....#hyyyd#....", "....#######...." }, CoinPal()) },
+            { Pic.Runner, (new[] { "......###....", ".....#hhh#...", ".....#hhh#...", "......###....", "....#bbbb#...", "..##bbbbbb##.", "....#bbbb#...", ".--.#bb#bb#..", "...#bb#.#bb#.", ".-#bb#...#bb#", "..###.....###" },
+                Pal(('#', 0x2A1A2E), ('h', 0xFFD9B0), ('b', 0x4A7FB8), ('-', 0x9FD0E6))) },
             { Pic.Menu, (new[] { "#########", "#hhhhhhh#", "#########", ".........", "#########", "#hhhhhhh#", "#########", ".........", "#########", "#hhhhhhh#", "#########" }, Pal(('#', 0x2A1A2E), ('h', 0xFFF0DC))) },
         };
 

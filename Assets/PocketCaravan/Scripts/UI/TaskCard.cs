@@ -39,21 +39,30 @@ namespace PocketCaravan
         }
         static int hidden = -1;
 
-        /// <summary>접힌 카드: [Q] 할 일 (누르면 편다)</summary>
-        static Rect DrawFolded(float top)
+        /// <summary>접힌 카드: 할 일 카드와 같은 모양으로 작게 (왼쪽 청록 동그라미 · 할 일 · 진행 중 알림 점 · [Q]). 누르면 편다</summary>
+        static Rect DrawFolded(float top, bool alert, CuteUI.Pic? pic)
         {
-            string label = "할 일";
-            float w = Mathf.Round(8f + CuteUI.KeycapWidth("Q") + 4f + CuteUI.Width(label, true, true) + 8f);
-            var r = new Rect(X, Mathf.Round(top), w, 19f);
+            const string label = "할 일";
+            float w = Mathf.Round(8f + Dot + 6f + CuteUI.Width(label, false, true) + 8f + CuteUI.KeycapWidth("Q") + 7f);
+            var r = new Rect(X, Mathf.Round(top), w, 24f);
             lastRect = r; lastFrame = Time.frameCount;
             ScreenZones.Mark("task.card", r);
+            var old = GUI.color;
+            if (PlayerBehind(r)) GUI.color = new Color(old.r, old.g, old.b, old.a * .4f);
             bool hover = !UIState.Blocking && r.Contains(Event.current.mousePosition);
             CuteUI.Box(r, 8, hover ? CuteUI.Paper2 : CuteUI.Paper, hover ? CuteUI.Interact : CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
-            float x = r.x + 8f;
-            x += CuteUI.Keycap(x, r.y + 3f, "Q") + 4f;
-            CuteUI.Label(x, r.center.y, label, CuteUI.Sub, true, true);
-            if (!UIState.Blocking && Event.current.type == EventType.MouseDown && Event.current.button == 0 && r.Contains(Event.current.mousePosition))
-            { Hidden = false; Sfx.Play("move", .6f); Event.current.Use(); }
+            float dy = r.y + (r.height - Dot) / 2f;
+            if (alert) CuteUI.Medallion(r.x + 7f, dy - 1f, (int)Dot + 2, CuteUI.Alert);
+            else
+            {
+                CuteUI.Circle(r.x + 8f, dy, (int)Dot, CuteUI.Interact, CuteUI.InteractLo, 1);
+                var pc = pic ?? CuteUI.Pic.Scroll; var ps = CuteUI.PicSize(pc);
+                CuteUI.Icon(pc, r.x + 8f + (Dot - ps.x) / 2f, dy + (Dot - ps.y) / 2f, 1, CuteUI.White);
+            }
+            float x = CuteUI.Label(r.x + 8f + Dot + 6f, r.center.y, label, CuteUI.Text, false, true) + 8f;
+            CuteUI.Keycap(x, r.center.y - 6.5f, "Q", true);
+            GUI.color = old;
+            if (!UIState.Blocking && GUI.Button(r, GUIContent.none, GUIStyle.none)) { Hidden = false; Sfx.Play("move", .6f); }
             return r;
         }
 
@@ -156,7 +165,7 @@ namespace PocketCaravan
                 }
                 else if (where.Contains("Space")) where = null;   // 말 걸 대상 머리 위 [Space] 알약이 같은 말을 한다
             }
-            if (Hidden && !expanded && stepAll == 0) { shownOrder = -1; return DrawFolded(top); }   // 11/16 Q로 접음 (조작 배우기 n/8 단계만 늘 보인다)
+            if (Hidden && !expanded && stepAll == 0) { shownOrder = -1; return DrawFolded(top, order >= 0 && main.alert, order >= 0 ? main.pic : null); }   // 11/16 Q로 접음 (조작 배우기 n/8 단계만 늘 보인다)
             if (hasGoal) where = null;                              // 가는 길은 목표 줄이 알려 준다
             string goalDest = hasGoal ? goal.dest : null;
             if (hasGoal && order >= 0 && mainText.Contains(goalDest)) goalDest = null;   // "어머니께 말 걸기" + "어머니" → 칸 수만
