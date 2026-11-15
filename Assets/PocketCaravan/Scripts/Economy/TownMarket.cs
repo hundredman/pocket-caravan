@@ -28,6 +28,7 @@ namespace PocketCaravan
         // 11/11 방금 한 거래 (오른쪽 '보유 N개' 칸이 잠깐 물들고 +N/−N이 떠오른다. Space로 연달아 살 때 샀는지 알 수 있게)
         ItemData lastTradeItem; int lastTradeCount; bool lastTradeSell; float lastTradeAt = -9f;
         const float TradeFlash = 1.2f;
+        float loadPreview;   // 11/15 지금 고른 거래로 짐이 얼마나 늘거나 주는지 (위쪽 짐 막대에 미리 보여 준다, 지난 화면 값)
         MarketEstimate readyEst;   // 지금 큰 사기·팔기 버튼이 가리키는 거래. 버튼이 눌릴 수 있을 때만 채워진다 (Space용, 11/11)
         HaggleDeal deal;
         bool haggleSelling => marketTab == 1;
@@ -164,8 +165,9 @@ namespace PocketCaravan
             CuteUI.Icon(CuteUI.Pic.Coin, r.x + 18, hy - 5);
             float x = CuteUI.Label(r.x + 31, hy, $"{p.money}냥", CuteUI.Text, false, true) + 12;
             CuteUI.Icon(CuteUI.Pic.Sack, x, hy - 4);
-            CuteUI.Bar(new Rect(x + 13, hy - 4, 56, 8), p.Capacity > 0 ? p.TotalWeight / p.Capacity : 0, CuteUI.Load, CuteUI.LoadHi);
+            LoadBar(new Rect(x + 13, hy - 4, 56, 8), p.TotalWeight, loadPreview, p.Capacity);
             x = CuteUI.Label(x + 73, hy, $"{p.TotalWeight:0.#}/{p.Capacity:0.#}", CuteUI.Sub, true) + 10;
+            loadPreview = 0f;   // 아래 거래 칸이 이번 화면에 다시 채운다
             if (gm.Clock.IsMarketDay)
             {
                 float bw = CuteUI.Width("장날", true, true) + 12;
@@ -307,7 +309,10 @@ namespace PocketCaravan
             }
             else
             {
-                CuteUI.Label(vx + 8, d.y + 29, $"남은 {Mathf.FloorToInt(m.Stock(item))}개", CuteUI.Sub, true);
+                float sx2 = CuteUI.Label(vx + 8, d.y + 29, $"남은 {Mathf.FloorToInt(m.Stock(item))}개", CuteUI.Sub, true);
+                // 11/15 무게도 값 옆에 (값만 보고 사다가 짐이 넘쳤다)
+                CuteUI.Icon(CuteUI.Pic.Sack, sx2 + 8, d.y + 25);
+                CuteUI.Label(sx2 + 20, d.y + 29, $"{item.weight:0.#}", CuteUI.Text, true, true);
                 // 11/15 살 때 얻을 이득 (UT 9번): 장부에 적힌 다른 장터 중 가장 비싸게 사 주는 곳
                 var best = p.ledger.BestSell(item.id, town.id);
                 var bt = best != null && gm.Db != null ? gm.Db.towns.Find(t => t != null && t.id == best.town) : null;
@@ -355,8 +360,13 @@ namespace PocketCaravan
                 ex = CuteUI.Label(ex, sy, $"{est.total}냥", CuteUI.Text, false, true);
                 if (selling && est.profit != 0) CuteUI.GainBadge(ex + 8 + CuteUI.Width(CuteUI.GainText(est.profit), true, true) + 10, sy, est.profit);
                 // 11/15 짐 무게 (UT 10번): 사고팔면 짐이 어떻게 되는지
-                float after = p.TotalWeight + (selling ? -1f : 1f) * item.weight * est.count;
-                CuteUI.LabelRight(d.xMax, sy, $"짐 {p.TotalWeight:0.#} → {after:0.#}/{p.Capacity:0.#}", after > p.Capacity ? CuteUI.Down : CuteUI.Sub, true);
+                float delta = (selling ? -1f : 1f) * item.weight * est.count, after = p.TotalWeight + delta;
+                loadPreview = delta;
+                string lt = $"{after:0.#}/{p.Capacity:0.#}";
+                float ltw = CuteUI.Width(lt, true, true);
+                CuteUI.Label(d.xMax - ltw, sy, lt, after > p.Capacity ? CuteUI.Down : CuteUI.Text, true, true);
+                LoadBar(new Rect(d.xMax - ltw - 60, sy - 4, 54, 8), p.TotalWeight, delta, p.Capacity);
+                CuteUI.Icon(CuteUI.Pic.Sack, d.xMax - ltw - 73, sy - 4);
             }
             else CuteUI.Wrap(d.x, sy - 6, d.width, est.blocker ?? "", CuteUI.Down, true);
 
@@ -521,6 +531,31 @@ namespace PocketCaravan
         }
 
         static string Signed(float value) => value.ToString("+0.#;-0.#;0");
+
+        /// <summary>
+        /// 11/15 짐 막대 + 이번 거래 미리보기. 살 때 늘어날 만큼은 하늘색으로 깜빡이고, 넘치면 끝이 빨갛다.
+        /// 팔 때 줄어들 만큼은 옅게 남긴다
+        /// </summary>
+        static void LoadBar(Rect r, float now, float delta, float cap)
+        {
+            CuteUI.Box(r, 3, CuteUI.Track, CuteUI.Ink);
+            if (cap <= 0f) return;
+            float inner = r.width - 2;
+            float a = Mathf.Clamp01(now / cap), b = Mathf.Clamp01((now + delta) / cap);
+            float keep = Mathf.Min(a, b);
+            float kw = Mathf.Round(inner * keep);
+            if (kw > 0) { CuteUI.Fill(new Rect(r.x + 1, r.y + 1, kw, r.height - 2), CuteUI.Load); CuteUI.Fill(new Rect(r.x + 1, r.y + 1, kw, 1), CuteUI.LoadHi); }
+            float ew = Mathf.Round(inner * Mathf.Max(a, b)) - kw;
+            if (ew > 0)
+            {
+                var c = delta > 0 ? (Color)CuteUI.Buy : (Color)CuteUI.LoadHi;
+                float pulse = delta > 0 ? .65f + .35f * Mathf.Sin(Time.unscaledTime * 6f) : .55f;
+                var old = GUI.color; GUI.color = new Color(old.r, old.g, old.b, old.a * pulse);
+                CuteUI.Fill(new Rect(r.x + 1 + kw, r.y + 1, ew, r.height - 2), c);
+                GUI.color = old;
+            }
+            if (now + delta > cap + 0.001f) CuteUI.Fill(new Rect(r.xMax - 4, r.y + 1, 3, r.height - 2), CuteUI.Down);   // 넘침
+        }
 
         static void ItemIcon(ItemData item, float x, float y, int scale)
         {
