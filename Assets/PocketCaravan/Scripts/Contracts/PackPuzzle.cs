@@ -22,6 +22,9 @@ namespace PocketCaravan
         /// <summary>창을 닫은 프레임 (게시판이 같은 Esc·Space를 또 받지 않게)</summary>
         public static int ClosedFrame = -1;
 
+        /// <summary>맡지 않고 닫는다 (게시판이 닫히거나 장면이 바뀔 때)</summary>
+        public static void Cancel() { if (inst != null) inst.Close(false, false); }
+
         /// <summary>이 의뢰를 맡을 때 퍼즐을 하는지</summary>
         public static bool Wants(Contract c) => c != null && !c.atonement && (c.weight >= 5f || c.Premium);
         public static int BonusFor(Contract c) => c == null ? 0 : Mathf.Max(1, Mathf.RoundToInt(c.reward * BonusRate));
@@ -35,7 +38,7 @@ namespace PocketCaravan
         bool[,] region;                       // 의뢰 짐을 실을 수 있는 칸 (나머지는 이미 실은 짐)
         readonly List<Piece> pieces = new List<Piece>();
         readonly List<(List<Vector2Int> cells, Sprite icon)> cargo = new List<(List<Vector2Int>, Sprite)>();
-        int sel = -1; Vector2Int at; bool mouseOnBoard;
+        int sel = -1; Vector2Int at; Vector2 lastMouse = new Vector2(-1, -1); int resetVersion;
         readonly List<int> placeOrder = new List<int>();
         float tiedAt = -1f, bumpAt = -9f, rotAt = -9f; int lastPlaced = -1; float lastPlacedAt = -9f;
 
@@ -67,6 +70,7 @@ namespace PocketCaravan
             placeOrder.Clear(); tiedAt = -1f; bumpAt = rotAt = lastPlacedAt = -9f; lastPlaced = -1;
             sel = 0; at = DefaultAt(pieces[0]);
             open = true; openedFrame = Time.frameCount; openedAt = Time.unscaledTime;
+            resetVersion = UIState.ResetVersion; lastMouse = new Vector2(-1, -1);
             Sfx.Play("open");
             return true;
         }
@@ -288,12 +292,14 @@ namespace PocketCaravan
 
         void Update()
         {
-            if (!open || Time.frameCount == openedFrame) return;
+            if (!open) return;
+            if (UIState.ResetVersion != resetVersion || !UIState.Blocking) { Cancel(); return; }   // 장면 전환·창 초기화로 게시판이 사라졌으면 맡지 않고 닫는다
+            if (Time.frameCount == openedFrame) return;
             if (tiedAt >= 0f) { if (Time.unscaledTime - tiedAt > 1.4f) Close(true, true); return; }
             if (InputReader.CancelPressed()) { Close(false, false); Sfx.Play("cancel"); return; }
             if (Time.unscaledTime - openedAt < 0.2f) return;
             var mv = InputReader.MovePressed();
-            if (mv != Vector2Int.zero && sel >= 0) { at = Clamp(pieces[sel], at + new Vector2Int(mv.x, -mv.y)); mouseOnBoard = false; }
+            if (mv != Vector2Int.zero && sel >= 0) at = Clamp(pieces[sel], at + new Vector2Int(mv.x, -mv.y));
             if (KeyPressed('r')) RotateSel();
             if (KeyPressed('\t')) Select(NextUnplaced(sel < 0 ? -1 : sel), at);
             if (KeyPressed('z') && placeOrder.Count > 0) Lift(placeOrder[placeOrder.Count - 1]);
@@ -367,7 +373,8 @@ namespace PocketCaravan
                 if (p.placed || i == sel) continue;
                 var s = Size(p.cells);
                 var sr = slots[i];
-                DrawPiece(p.cells, new Vector2(Mathf.Round(sr.center.x - s.x * 6), Mathf.Round(sr.center.y - s.y * 6)), 12, Cloth[p.look], 1f);
+                float ts = Mathf.Min(12f, Mathf.Floor((sr.width - 2) / s.x), Mathf.Floor((sr.height - 2) / s.y));   // 칸을 넘지 않게
+                DrawPiece(p.cells, new Vector2(Mathf.Round(sr.center.x - s.x * ts / 2f), Mathf.Round(sr.center.y - s.y * ts / 2f)), ts, Cloth[p.look], 1f);
                 if (e.type == EventType.MouseDown && e.button == 0 && sr.Contains(e.mousePosition) && !tied) { Select(i, at); e.Use(); }
             }
             if (sel >= 0 && !tied) Corners(slots[sel], Mathf.FloorToInt(now * 3f) % 2);
@@ -395,7 +402,9 @@ namespace PocketCaravan
 
             // 마우스: 판 위에서 조각을 끌고 다님
             var board = new Rect(g.x, g.y, cols * cs, rows * cs);
-            if (!tied && (e.type == EventType.MouseMove || e.type == EventType.MouseDrag || e.type == EventType.MouseDown) && board.Contains(e.mousePosition))
+            bool moved = e.type == EventType.Repaint && (e.mousePosition - lastMouse).sqrMagnitude > 0.01f;
+            if (e.type == EventType.Repaint) lastMouse = e.mousePosition;
+            if (!tied && (moved || e.type == EventType.MouseMove || e.type == EventType.MouseDrag || e.type == EventType.MouseDown) && board.Contains(e.mousePosition))
             {
                 var cell = new Vector2Int(Mathf.FloorToInt((e.mousePosition.x - g.x) / cs), Mathf.FloorToInt((e.mousePosition.y - g.y) / cs));
                 if (e.type == EventType.MouseDown && e.button == 0)
@@ -406,7 +415,7 @@ namespace PocketCaravan
                     e.Use();
                 }
                 else if (e.type == EventType.MouseDown && e.button == 1) { RotateSel(); e.Use(); }
-                else if (sel >= 0) { mouseOnBoard = true; at = Clamp(pieces[sel], cell - Size(pieces[sel].cells) / 2); }
+                else if (sel >= 0 && e.type != EventType.MouseDown) at = Clamp(pieces[sel], cell - Size(pieces[sel].cells) / 2);
             }
 
             // 든 조각: 놓일 자리(초록·빨강) + 살짝 떠 있는 조각
@@ -512,8 +521,9 @@ namespace PocketCaravan
             float bx = g.x - 10, by = g.y - 10, bw = cols * cs + 20, bh = rows * cs + 20;
             FillA(new Rect(bx + 6, by + bh + 10, bw - 12, 7), CuteUI.Ink, .22f);
             // 손잡이
-            CuteUI.Fill(new Rect(bx - 18, by + bh - 16, 22, 6), CuteUI.Ink); CuteUI.Fill(new Rect(bx - 17, by + bh - 15, 20, 3), WoodLo); CuteUI.Fill(new Rect(bx - 17, by + bh - 15, 20, 1), Hex(0xC98A4B));
-            CuteUI.Fill(new Rect(bx - 20, by + bh - 18, 4, 10), CuteUI.Ink); CuteUI.Fill(new Rect(bx - 19, by + bh - 17, 2, 8), WoodDk);
+            // 손잡이 (짧게: 큰 판에서도 왼쪽 의뢰 카드에 닿지 않게)
+            CuteUI.Fill(new Rect(bx - 6, by + bh - 16, 10, 6), CuteUI.Ink); CuteUI.Fill(new Rect(bx - 5, by + bh - 15, 8, 3), WoodLo); CuteUI.Fill(new Rect(bx - 5, by + bh - 15, 8, 1), Hex(0xC98A4B));
+            CuteUI.Fill(new Rect(bx - 8, by + bh - 18, 4, 10), CuteUI.Ink); CuteUI.Fill(new Rect(bx - 7, by + bh - 17, 2, 8), WoodDk);
             // 짐받이 테
             CuteUI.Box(new Rect(bx, by, bw, bh), 4, Wood, CuteUI.Ink, 2);
             CuteUI.Fill(new Rect(bx + 3, by + 3, bw - 6, 2), WoodHi);

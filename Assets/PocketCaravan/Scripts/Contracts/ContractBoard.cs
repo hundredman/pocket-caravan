@@ -31,6 +31,7 @@ namespace PocketCaravan
         void Close()
         {
             open = false;
+            PackPuzzle.Cancel();   // 11/16 게시판이 닫히면 짐 싣기 퍼즐도 맡지 않고 닫는다
             UIState.Release(this);
         }
 
@@ -94,7 +95,7 @@ namespace PocketCaravan
             CuteUI.Window(r);
             CuteUI.TitlePlate(r.center.x, r.y - 11, Cm.TownName(town) + " 의뢰 게시판");
             CuteUI.Keycap(r.xMax - 32 - CuteUI.KeycapWidth("Esc") - 3, r.y - 3, "Esc");
-            if (CuteUI.CloseButton(r.xMax - 32, r.y - 9)) { Close(); return; }
+            if (CuteUI.CloseButton(r.xMax - 32, r.y - 9) && !PackPuzzle.IsOpen) { Close(); return; }
 
             DrawStatus(p, new Rect(r.x + 15, r.y + 17, w - 30, 20));
 
@@ -157,7 +158,7 @@ namespace PocketCaravan
                         {
                             message = AcceptSaved(cc, solved ? bonus : 0);
                             if (solved && message.Contains("맡았다")) message = $"꽉 묶었다! 보수 +{bonus}냥. " + message;
-                        })) message = AcceptSaved(c);
+                        }) && !PackPuzzle.IsOpen) message = AcceptSaved(c);
                     }
                     else message = AcceptSaved(c);
                 }
@@ -234,12 +235,12 @@ namespace PocketCaravan
             float bw = locked != null ? Mathf.Max(56, Mathf.Round(CuteUI.Width(locked, true) + 14)) : 56;
             var b = new Rect(r.xMax - 7 - bw, r.y + 11, bw, 20);
             bool pressed;
-            if (locked == null) pressed = CuteUI.Button(b, action);
+            if (locked == null) pressed = CuteUI.Button(b, action) && !PackPuzzle.IsOpen;   // 11/16 짐 싣기 퍼즐 중에는 게시판 단추를 막는다
             else
             {
                 CuteUI.Box(b, 8, CuteUI.ZeroSoft, CuteUI.KeyLine);
                 CuteUI.LabelCenter(b.center.x, b.center.y, locked, CuteUI.Sub, true);
-                pressed = GUI.Button(b, GUIContent.none, GUIStyle.none);
+                pressed = GUI.Button(b, GUIContent.none, GUIStyle.none) && !PackPuzzle.IsOpen;
             }
             float payR = b.x - 10, payL = payR;
             if (pay != null)
