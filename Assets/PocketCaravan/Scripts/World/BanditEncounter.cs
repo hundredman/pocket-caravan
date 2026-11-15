@@ -421,6 +421,7 @@ namespace PocketCaravan
             bool end = endAt >= 0f;
             CuteUI.Box(l, 6, LaneBg, CuteUI.Ink, 2);
             var inner = new Rect(l.x + 2, l.y + 2, l.width - 4, l.height - 4);
+            float tn = end ? endAt : t;   // 끝나면 음표·박자선은 그 자리에 멈춘다
             GUI.BeginGroup(inner);
             float w = inner.width, h = inner.height, rx = 28f, ry = h / 2f;
             CuteUI.Fill(new Rect(0, 0, w, 6), LaneEdge); CuteUI.Fill(new Rect(0, h - 6, w, 6), LaneEdge);
@@ -431,7 +432,7 @@ namespace PocketCaravan
                 float beat = 60f / (112f + 40f * GameManager.I.Player.LoadRatio);
                 for (float b = Lead; b < notes[notes.Count - 1].t + 2f; b += beat)
                 {
-                    float x = Mathf.Round(rx + (b - t) * speed);
+                    float x = Mathf.Round(rx + (b - tn) * speed);
                     if (x < 0 || x > w) continue;
                     bool bar = Mathf.RoundToInt((b - Lead) / beat) % 4 == 0;
                     CuteUI.Fill(new Rect(x, 1, bar ? 2 : 1, h - 2), bar ? new Color32(255, 207, 51, 56) : new Color32(255, 255, 255, 20));
@@ -452,12 +453,12 @@ namespace PocketCaravan
             if (!end || caught)
                 foreach (var n in notes)
                 {
-                    float x = rx + (n.t - t) * speed;
+                    float x = rx + (n.t - tn) * speed;
                     if (x > w + 14) break;
                     if (n.judge == 1 || n.judge == 2) continue;
                     if (n.judge == 3)
                     {
-                        if (t > n.t) Arrow(x, ry, n.dir, 2, Hex(0x8A7F90), Hex(0x5E5466), Hex(0xB4AABA), Mathf.Clamp01(1f - (t - n.t) / .5f));
+                        if (tn > n.t) Arrow(x, ry, n.dir, 2, Hex(0x8A7F90), Hex(0x5E5466), Hex(0xB4AABA), Mathf.Clamp01(1f - (tn - n.t) / .5f));
                         continue;
                     }
                     Arrow(x, ry, n.dir, 2, Col[n.dir], ColLo[n.dir], ColHi[n.dir], 1f);

@@ -18,6 +18,8 @@
 | 거리 값 (11/15) | 기준가 × (1 + 맵당 비율 × 산지에서 맵 수). 맵당 비율: 고려 0.25 · 중앙 동쪽 길목 0.15 · 베네치아 0.45 · 아라비아 0.35 · 북유럽 0.5 · 물고기 0.1 · 생필품(산지 없음) 0 | `ItemData.pricePerMap` |
 | 수요 충격 | 장날 ×1.15, 밤 축제 특산품 +3할, 큰 장 2할 덤 | `GameDatabase.marketDayDemand`, `NightFestival`, `CentralFair` |
 | 평판·흥정 | 6단계(Hostile~Respected) 매입가 +15% ~ −10%. 저울 흥정(11/15, 사고팔 때마다) 상한 0·5·8·10·13·15% | `ReputationPricing.cs`, `HaggleDuel.cs` |
+| 도적 (11/15) | 잡히면 통행세(돈 15%, 최소 10냥) · 저울 흥정으로 깎기(초록 최대 −42%, 금색 반값, 빨강 1.5배) · 리듬 도망(실패하면 가장 비싼 짐 3개). 돈이 줄어드는 곳 | `BanditEncounter.cs`, `HaggleDuel.OpenBandit` |
+| 짐 싣기 (11/16) | 무게 5 이상·신용 의뢰를 맡을 때 짐 싣기 퍼즐을 다 풀면 보수 +10% (최소 1냥). 의뢰 하나에 몇 냥이라 수입 속도는 거의 그대로 | `PackPuzzle.cs` |
 | 반복거래 감쇠 | 같은 마을에서 산 물건은 **12시간** 안엔 산 값 미만으로만 되팔림 (되팔기 차익 봉쇄) | `TradeActivity.LimitSale`, `WindowHours` |
 | 출신 보정 (11/15) | 북유럽 이동 +10% · 베네치아 수수료 13% · 고려 짐 +10% · 아라비아 다른 문명 물건 팔면 +5% | `Data/Origins/*.asset`, `OriginPerks.cs` |
 | 규모 | 품목 45, 마을 29, 기준가 1~120냥, 시작금 100냥 | `Data/`, `GameDatabase.startMoney` |
