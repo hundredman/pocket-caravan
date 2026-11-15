@@ -3,12 +3,12 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// 출신 강점 (2026-11-15 은샘, UT "강점이 애매하다"). 네 강점을 한 문장·숫자 하나로, 기준은 북유럽 이동 +10%.
+    /// 출신 강점 (2026-11-15 은샘, UT "강점이 애매하다"). 한 문장·숫자 하나로, 기준은 북유럽 이동 +10%.
     /// - 북유럽: 모든 이동 +10% (OriginData.speedMultiplier, PlayerController)
-    /// - 베네치아: 짐 +10% (capacityBonus, PlayerState.CapacityOf)
-    /// - 고려: 이익이 난 판매마다 이익 +6% (profitBonus)
-    /// - 아라비아: 물건이 난 문명과 다른 문명에서 팔면 이익 +10% (crossCivProfitBonus)
-    /// 판매 보너스는 ReputationPricing.Quote에서 판매가에 더해, 장터 값 표시·미리보기·실제 판매가 같은 값을 쓴다.
+    /// - 베네치아: 장터 수수료 15% → 13% (marketFee)
+    /// - 아라비아: 물건이 난 문명과 다른 문명의 장터에서 팔면 +5% (crossCivSellBonus)
+    /// - 고려: 짐 +10%, 지게 (capacityBonus, PlayerState.CapacityOf)
+    /// 판매 강점은 MarketState.BaseSellPrice(item, origin)에 들어가 장터 값 표시·미리보기·실제 판매가 같은 값을 쓴다.
     /// </summary>
     public static class OriginPerks
     {
@@ -32,36 +32,22 @@ namespace PocketCaravan
             item != null && item.originTown != null && item.originTown.region != null && town != null && town.region != null
             && Civ(item.originTown.region) != Civ(town.region);
 
-        /// <summary>이 판매의 이익에 더해 주는 비율 (고려 + 아라비아 조건)</summary>
-        public static float ProfitRate(OriginData o, ItemData item, TownData town)
-        {
-            if (o == null) return 0f;
-            float r = o.profitBonus;
-            if (o.crossCivProfitBonus > 0f && CrossCiv(item, town)) r += o.crossCivProfitBonus;
-            return r;
-        }
+        /// <summary>장터 수수료 (출신이 없으면 기본 15%)</summary>
+        public static float Fee(OriginData o) => o != null ? Mathf.Clamp(o.marketFee, 0f, 0.5f) : 1f - MarketMath.BuybackRate;
 
-        /// <summary>판매가 price에 붙는 강점 몫 (냥). 이익 = 판 값 − 산 값 평균, 이익이 없으면 0</summary>
-        public static int SellExtra(PlayerState p, ItemData item, TownData town, int price)
-        {
-            if (p == null || item == null) return 0;
-            float rate = ProfitRate(p.origin, item, town);
-            if (rate <= 0f) return 0;
-            float profit = price - p.cargo.AverageCost(item);
-            return profit > 0f ? Mathf.RoundToInt(profit * rate) : 0;
-        }
+        /// <summary>판매가에 더하는 비율 (아라비아: 다른 문명 물건)</summary>
+        public static float SellBonus(OriginData o, ItemData item, TownData town) =>
+            o != null && o.crossCivSellBonus > 0f && CrossCiv(item, town) ? o.crossCivSellBonus : 0f;
 
-        /// <summary>강점 몫이 이미 들어간 판매가 price에서 그 몫만 되짚는다 (표시용). price = 기본 + (기본 − 산 값)×비율 이므로 몫 = (price − 산 값)×비율÷(1+비율)</summary>
-        public static int PartOf(PlayerState p, ItemData item, TownData town, int price)
+        /// <summary>장터 판매 칸에 붙이는 짧은 글. 강점이 이 판매에 들어가면 "아라비아 강점 +5%"·"베네치아 수수료 13%", 아니면 빈 글</summary>
+        public static string SellTag(OriginData o, ItemData item, TownData town)
         {
-            if (p == null || item == null) return 0;
-            float rate = ProfitRate(p.origin, item, town);
-            float profit = price - p.cargo.AverageCost(item);
-            return rate > 0f && profit > 0f ? Mathf.RoundToInt(profit * rate / (1f + rate)) : 0;
+            if (o == null) return "";
+            float b = SellBonus(o, item, town);
+            if (b > 0f) return $"아라비아 강점 +{b * 100f:0}%";
+            float fee = Fee(o);
+            if (fee < 1f - MarketMath.BuybackRate - 0.001f) return $"베네치아 수수료 {fee * 100f:0}%";
+            return "";
         }
-
-        /// <summary>장터 판매 줄에 붙이는 짧은 글 ("고려 +3냥")</summary>
-        public static string SellTag(PlayerState p, int extra) =>
-            extra > 0 && p != null && p.origin != null ? $"{CivName(p.origin.id == "viking" ? "north" : p.origin.id)} 강점 +{extra}냥" : "";
     }
 }

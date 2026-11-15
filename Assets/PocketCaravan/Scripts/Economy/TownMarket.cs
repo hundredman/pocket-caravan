@@ -302,8 +302,8 @@ namespace PocketCaravan
             {
                 float avg = p.cargo.AverageCost(item);
                 if (avg > 0) CuteUI.GainBadge(vx + 6 + CuteUI.Width(CuteUI.GainText(unit - avg), true, true) + 10, d.y + 29, unit - avg);
-                int perk = OriginPerks.PartOf(p, item, town, unit);   // 11/15 출신 강점 몫 ("아라비아 강점 +4냥")
-                if (perk > 0) CuteUI.Label(d.x + 48, d.y + 44, OriginPerks.SellTag(p, perk), CuteUI.Up, true);
+                string perk = OriginPerks.SellTag(p.origin, item, town);   // 11/15 출신 강점 ("아라비아 강점 +5%")
+                if (perk.Length > 0) CuteUI.Label(d.x + 48, d.y + 44, perk, CuteUI.Up, true);
             }
             else CuteUI.Label(vx + 8, d.y + 29, $"남은 {Mathf.FloorToInt(m.Stock(item))}개", CuteUI.Sub, true);
 
@@ -586,7 +586,7 @@ namespace PocketCaravan
             if((long)p.money+price>int.MaxValue) { message="보유금 한도를 확인하세요.";return; }
             float averageCost = p.cargo.AverageCost(item);
             int profit = Mathf.RoundToInt(price - averageCost);
-            int perk = OriginPerks.PartOf(p, item, town, price);   // 11/15 이 값에 들어간 출신 강점 몫 (표시용)
+            string perk = OriginPerks.SellTag(p.origin, item, town);   // 11/15 이 판매에 들어간 출신 강점 (표시용)
             p.cargo.Remove(item);
             p.money += price;
             m.RecordSell(item, price);
@@ -597,7 +597,7 @@ namespace PocketCaravan
             revenueThisVisit += price;
             profitThisVisit += price - averageCost;
             Sfx.Play("coin");
-            message = $"{Josa.Eul(item.displayName)} {price}냥에 팔았습니다. 손익 {Signed(profit)}냥." + (perk > 0 ? $" ({OriginPerks.SellTag(p, perk)})" : "");
+            message = $"{Josa.Eul(item.displayName)} {price}냥에 팔았습니다. 손익 {Signed(profit)}냥." + (perk.Length > 0 ? $" ({perk})" : "");
             p.ledger.Record(true, town, item, price, profit, GameManager.I.Clock.day);   // 11/08 장부 최근 거래
             GameEvents.RaiseItemSold(item, town, price, profit);
         }

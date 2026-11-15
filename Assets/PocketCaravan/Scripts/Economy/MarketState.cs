@@ -49,9 +49,15 @@ namespace PocketCaravan
         /// <summary>팔 때 재고가 늘어나는 양. 11/15 출신 강점을 다시 정하며 베네치아의 "값이 덜 떨어짐"을 없앴다 → 늘 1</summary>
         public float SellStockDelta(ItemData item) => 1f;
 
-        /// <summary>플레이어가 팔 때 받는 값 (한 개를 더 넣었을 때 기준). 출신 강점(이익 보너스)은 ReputationPricing.Quote에서 더한다</summary>
-        public int BaseSellPrice(ItemData item) => MarketMath.Buyback(MarketMath.Price(town.BasePriceFor(item), Optimal(item), Stock(item) + 1f, Demand));
-        public int BaseSellPrice(ItemData item,OriginData o) => BaseSellPrice(item);
+        /// <summary>플레이어가 팔 때 받는 값 (한 개를 더 넣었을 때 기준). 출신 강점 없이</summary>
+        public int BaseSellPrice(ItemData item) => BaseSellPrice(item,null);
+        /// <summary>11/15 출신 강점: 베네치아 수수료 13%, 아라비아 다른 문명 물건 +5% (OriginPerks)</summary>
+        public int BaseSellPrice(ItemData item,OriginData o)
+        {
+            int p = MarketMath.Buyback(MarketMath.Price(town.BasePriceFor(item), Optimal(item), Stock(item) + 1f, Demand), 1f - OriginPerks.Fee(o));
+            float bonus = OriginPerks.SellBonus(o, item, town);
+            return bonus > 0f ? Mathf.RoundToInt(p * (1f + bonus)) : p;
+        }
 
         public int BuyPrice(ItemData item) => BuyPrice(item,0);
         public int SellPrice(ItemData item) => SellPrice(item,0);

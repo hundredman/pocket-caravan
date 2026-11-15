@@ -52,9 +52,9 @@ namespace PocketCaravan.EditorTools
         static readonly (string origin, string region, string animal, string strength, string scene, string town, string preview)[] Starts =
         {
             ("Data/Origins/Origin_Viking.asset", "북유럽", "순록", "모든 이동이 10% 빠름", "north_birka", "비르카", "StartScreen/start_north"),
-            ("Data/Origins/Origin_Venice.asset", "베네치아", "흰 고양이", "짐을 10% 더 실음", "venice_rialto", "리알토", "StartScreen/start_venice"),
-            ("Data/Goryeo/Origin_Goryeo.asset", "고려", "너구리", "이익이 난 판매마다 이익 +6%", "Naru", "예성 나루", "StartScreen/start_goryeo"),
-            ("Data/Origins/Origin_Arabia.asset", "아라비아", "사막여우", "다른 문명에서 난 물건을 팔면 이익 +10%", "arabia_ahsa", "알 아흐사", "StartScreen/start_arabia"),
+            ("Data/Origins/Origin_Venice.asset", "베네치아", "흰 고양이", "장터 수수료 13% (보통 15%)", "venice_rialto", "리알토", "StartScreen/start_venice"),
+            ("Data/Goryeo/Origin_Goryeo.asset", "고려", "너구리", "짐을 10% 더 실음 (지게)", "Naru", "예성 나루", "StartScreen/start_goryeo"),
+            ("Data/Origins/Origin_Arabia.asset", "아라비아", "사막여우", "다른 문명 물건을 팔면 +5%", "arabia_ahsa", "알 아흐사", "StartScreen/start_arabia"),
         };
 
         static void BuildStartChoices()

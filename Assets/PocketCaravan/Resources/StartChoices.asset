@@ -24,7 +24,7 @@ MonoBehaviour:
   - region: "\uBCA0\uB124\uCE58\uC544"
     origin: {fileID: 11400000, guid: 24994a5ed25904090a8d7dd72646f12a, type: 2}
     animal: "\uD770 \uACE0\uC591\uC774"
-    strength: "\uC9D0\uC744 10% \uB354 \uC2E4\uC74C"
+    strength: "\uC7A5\uD130 \uC218\uC218\uB8CC 13% (\uBCF4\uD1B5 15%)"
     startScene: venice_rialto
     startTown: "\uB9AC\uC54C\uD1A0"
     startSpawn: S0
@@ -32,7 +32,7 @@ MonoBehaviour:
   - region: "\uACE0\uB824"
     origin: {fileID: 11400000, guid: baa3df4a3e3ea42e999ffb10319d746e, type: 2}
     animal: "\uB108\uAD6C\uB9AC"
-    strength: "\uC774\uC775\uC774 \uB09C \uD310\uB9E4\uB9C8\uB2E4 \uC774\uC775 +6%"
+    strength: "\uC9D0\uC744 10% \uB354 \uC2E4\uC74C (\uC9C0\uAC8C)"
     startScene: Naru
     startTown: "\uC608\uC131 \uB098\uB8E8"
     startSpawn: S0
@@ -40,7 +40,7 @@ MonoBehaviour:
   - region: "\uC544\uB77C\uBE44\uC544"
     origin: {fileID: 11400000, guid: 2d07d3c710574423e87eaa2655025233, type: 2}
     animal: "\uC0AC\uB9C9\uC5EC\uC6B0"
-    strength: "\uB2E4\uB978 \uBB38\uBA85\uC5D0\uC11C \uB09C \uBB3C\uAC74\uC744 \uD314\uBA74 \uC774\uC775 +10%"
+    strength: "\uB2E4\uB978 \uBB38\uBA85 \uBB3C\uAC74\uC744 \uD314\uBA74 +5%"
     startScene: arabia_ahsa
     startTown: "\uC54C \uC544\uD750\uC0AC"
     startSpawn: S0

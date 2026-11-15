@@ -26,11 +26,7 @@ namespace PocketCaravan
             buy=Mathf.Max(1,Mathf.RoundToInt(buy*(1-Mathf.Clamp(buyHaggle,0,max))));
             int sell=Mathf.Max(1,Mathf.RoundToInt(m.BaseSellPrice(item,player?.origin)*(1+Mathf.Clamp(sellHaggle,0,max))));
             buy=Mathf.Max(buy,sell+1); // simultaneous fully modified quote rule remains
-            if(selling)
-            {
-                sell+=OriginPerks.SellExtra(player,item,m.town,sell);   // 11/15 출신 강점: 고려 이익 +6% · 아라비아 다른 문명 이익 +10% (사는 값 규칙 뒤에 더해 사는 값은 그대로)
-                return activity!=null?activity.LimitSale(m.town.id,item.id,now,sell):sell;
-            }
+            if(selling)return activity!=null?activity.LimitSale(m.town.id,item.id,now,sell):sell;
             return buy;
         }
         public static void Bought(PlayerState p,TownData town,ItemData item,int price,float hours)=>p.tradeActivity.Bought(town.id,item.id,hours,price);

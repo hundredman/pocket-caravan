@@ -90,10 +90,10 @@ namespace PocketCaravan.EditorTools
 
             var origin = Upsert<OriginData>($"{DataDir}/Origin_Goryeo.asset", o =>
             {
-                o.id = "goryeo"; o.displayName = "고려 개경상인"; o.homeRegion = goryeo; o.profitBonus = 0.06f;   // 11/15 출신 강점 다시 정함 (OriginPerks)
+                o.id = "goryeo"; o.displayName = "고려 개경상인"; o.homeRegion = goryeo; o.capacityBonus = 0.1f;   // 11/15 출신 강점: 짐 +10% (지게)
             });
-            Upsert<OriginData>($"{OriginDir}/Origin_Arabia.asset", o => { o.id = "arabia"; o.displayName = "아라비아 대상"; o.crossCivProfitBonus = 0.1f; });
-            Upsert<OriginData>($"{OriginDir}/Origin_Venice.asset", o => { o.id = "venice"; o.displayName = "베네치아 상인"; o.capacityBonus = 0.1f; });
+            Upsert<OriginData>($"{OriginDir}/Origin_Arabia.asset", o => { o.id = "arabia"; o.displayName = "아라비아 대상"; o.crossCivSellBonus = 0.05f; });
+            Upsert<OriginData>($"{OriginDir}/Origin_Venice.asset", o => { o.id = "venice"; o.displayName = "베네치아 상인"; o.marketFee = 0.13f; });
             Upsert<OriginData>($"{OriginDir}/Origin_Viking.asset", o => { o.id = "viking"; o.displayName = "바이킹 교역상"; o.speedMultiplier = 1.1f; o.offroadSpeedMultiplier = 1f; o.startingCredit = 0; });
 
             var herbs = Item("herbs_parcel", "약재 꾸러미", 2f, 1f, null, quest: true);

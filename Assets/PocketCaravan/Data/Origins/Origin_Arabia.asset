@@ -36,5 +36,5 @@ MonoBehaviour:
   speedMultiplier: 1
   offroadSpeedMultiplier: 1
   capacityBonus: 0
-  profitBonus: 0
-  crossCivProfitBonus: 0.1
+  marketFee: 0.15
+  crossCivSellBonus: 0.05
