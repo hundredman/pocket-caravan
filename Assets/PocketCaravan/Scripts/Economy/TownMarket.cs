@@ -365,12 +365,13 @@ namespace PocketCaravan
 
         }
 
-        // 흥정: 수량 줄 오른쪽 "흥정" 버튼 → 말솜씨 대결 미니게임(HaggleDuel, 11/15). 결과는 다음 한 번의 거래에만 적용된다.
-        // 물건·사고팔기마다 하루 한 번. 실패해도 거래는 막지 않고 그 거래만 2% 불리하다.
+        // 흥정 (11/15 저울 흥정, HaggleDuel). 살 때는 사기 버튼을 누르면 꼭 한다(TradeBatch). 팔 때는 수량 줄 오른쪽 "흥정" 버튼으로 골라서.
+        // 결과는 다음 한 번의 거래에만 적용된다. 빨강을 밟아도 거래는 막지 않고 그 거래만 2% 불리하다.
+        int haggleSalt;   // 같은 날 같은 물건을 여러 번 사도 저울이 판마다 다르게
         void DrawHaggle(GameManager gm, Rect button, Rect panel, int count, int baseTotal)
         {
             haggleOpen = false;
-            if (count <= 0) return;
+            if (count <= 0 || !haggleSelling) return;   // 사기는 거래 때 저절로
             var p = gm.Player; var entry = ReputationPricing.Entry(p, town); float max = ReputationPricing.MaxHaggle(entry.standing);
             string denial = Haggle.Denial(p.tradeActivity, town.id, selected != null ? selected.id : "", haggleSelling, gm.Clock.day, gm.Clock.TotalHours, max);
             bool done = DealFor(haggleSelling) != 0;
@@ -383,18 +384,30 @@ namespace PocketCaravan
             }
             if (!CuteUI.SoftButton(button, "흥정")) return;
             var item = selected; bool sell = haggleSelling; var standing = entry.standing;
-            HaggleDuel.Open(town, item, sell, count, max, standing, baseTotal, (discount, failed) => SettleHaggle(item, sell, count, discount, failed));
+            HaggleDuel.Open(town, item, sell, count, max, baseTotal, ++haggleSalt, (discount, failed) => SettleHaggle(item, sell, count, discount, failed, true));
         }
 
-        void SettleHaggle(ItemData item, bool sell, int count, float discount, bool failed)
+        void SettleHaggle(ItemData item, bool sell, int count, float discount, bool failed, bool lockToday)
         {
             var gm = GameManager.I;
             if (!open || gm == null || item == null || selected != item || haggleSelling != sell) return;
             HaggleResult r = default;
-            if (!SavedEconomyChange.Try(gm, () => r = Haggle.Settle(gm.Player.tradeActivity, town.id, item.id, sell, count, discount, failed, gm.Clock.day)))
+            if (!SavedEconomyChange.Try(gm, () => r = Haggle.Settle(gm.Player.tradeActivity, town.id, item.id, sell, count, discount, failed, gm.Clock.day, lockToday)))
             { message = SavedEconomyChange.Failure; return; }
             deal = r.deal;
             message = r.message;
+        }
+
+        bool buyHaggled;
+        void FinishBuyHaggle(ItemData item,int count,float discount,bool failed)
+        {
+            SettleHaggle(item,false,count,discount,failed,false);
+            if(!open||selected!=item)return;
+            var gm=GameManager.I;
+            var est=Market.Preview(item,gm.Player,count,false,DealFor(false,item));
+            buyHaggled=true;
+            int done=TradeBatch(est);
+            if(done==0)buyHaggled=false;
         }
 
         float DealFor(bool selling,ItemData item=null)
@@ -453,6 +466,14 @@ namespace PocketCaravan
             var p=GameManager.I.Player; var m=Market;
             if(estimate!=null && p.tradeActivity.BanRemaining(town.id,GameManager.I.Clock.TotalHours)>0){message="상인이 지금은 거래하지 않겠다고 합니다.";return 0;}
             float haggle=estimate!=null?DealFor(estimate.selling,estimate.item):0;
+            // 11/15 살 때는 꼭 저울 흥정부터. 끝나면 그 값으로 이 거래를 이어서 한다 (신용이 너무 낮아 흥정할 수 없으면 그냥 산다)
+            if(estimate!=null && !estimate.selling && haggle==0 && !buyHaggled && estimate.count>0)
+            {
+                float max=ReputationPricing.MaxHaggle(ReputationPricing.Entry(p,town).standing);
+                var item=estimate.item; int n=estimate.count;
+                if(max>0 && HaggleDuel.Open(town,item,false,n,max,estimate.total,++haggleSalt,(d,fail)=>FinishBuyHaggle(item,n,d,fail)))return 0;
+            }
+            buyHaggled=false;
             if((haggle!=0 && estimate.count!=deal.count) || estimate==null || estimate.town!=town || estimate.count<1 || !estimate.Matches(m.Preview(estimate.item,p,estimate.count,estimate.selling,haggle)))
             { message="시세·잔고·화물이 달라졌습니다. 수량과 총액을 다시 확인하세요.";return 0; }
             int completed=0,total=0;float basis=p.cargo.AverageCost(estimate.item);
@@ -472,7 +493,7 @@ namespace PocketCaravan
                 }
                 completed++;total+=price;
             }
-            if(completed>0 && haggle>0)deal=null; // 흥정은 이 거래 한 번에만 쓴다.
+            if(completed>0 && haggle!=0)deal=null; // 흥정은 이 거래 한 번에만 쓴다 (빨강의 +2%도)
             if(completed>0){lastTradeItem=estimate.item;lastTradeCount=completed;lastTradeSell=estimate.selling;lastTradeAt=Time.unscaledTime;}
             string partial=completed<estimate.count?" · 도중 조건 변경으로 중단":"";
             message=estimate.selling?$"{completed}개 판매 · {total}냥 · 매매 손익 {Signed(total-basis*completed)}냥{partial}":$"{completed}개 매입 · {total}냥 · 남은 돈 {p.money}냥{partial}";

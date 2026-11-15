@@ -88,14 +88,14 @@ namespace PocketCaravan
             return null;
         }
         /// <summary>11/15 흥정 미니게임 결과를 거래 한 번에 쓸 약속으로. 실패해도 거래는 할 수 있고 그 거래만 불리하다</summary>
-        public static HaggleResult Settle(TradeActivity activity, string townId, string itemId, bool selling, int count, float discount, bool failed, int day)
+        public static HaggleResult Settle(TradeActivity activity, string townId, string itemId, bool selling, int count, float discount, bool failed, int day, bool lockToday = true)
         {
-            activity.LockHaggle(LockKey(townId, itemId, selling), day);
+            if (lockToday) activity.LockHaggle(LockKey(townId, itemId, selling), day);
             if (Math.Abs(discount) < 0.0001f)
-                return new HaggleResult { outcome = HaggleOutcome.Refused, message = "흥정 · 원래 값대로" };
+                return new HaggleResult { outcome = HaggleOutcome.Refused, message = "흥정 · 정가" };
             var deal = new HaggleDeal(townId, itemId, selling, day, discount, HaggleStrength.Fair, count);
             if (failed)
-                return new HaggleResult { outcome = HaggleOutcome.Refused, deal = deal, message = $"흥정 실패 · 이번 거래만 {(selling ? "−" : "+")}{-discount * 100:0.#}%" };
+                return new HaggleResult { outcome = HaggleOutcome.Refused, deal = deal, message = $"흥정 · 욕심이 지나쳤다 {(selling ? "−" : "+")}{-discount * 100:0.#}%" };
             return new HaggleResult { outcome = HaggleOutcome.Success, deal = deal, message = $"흥정 성공 · 이번 거래만 {(selling ? "더 받기" : "깎기")} {discount * 100:0.#}%" };
         }
         public static string Denial(TradeActivity activity, string townId, int day, float now, float maxHaggle)
