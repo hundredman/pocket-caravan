@@ -31,6 +31,32 @@ namespace PocketCaravan
         static int shownOrder = -1;
         static Rect lastRect;
 
+        /// <summary>11/16 Q로 접은 상태 (다음에 켜도 그대로). 접으면 [Q] 할 일 작은 표만 남는다. 조작 배우기(n/8) 단계와 Tab 펼침은 접어도 보인다</summary>
+        public static bool Hidden
+        {
+            get { if (hidden < 0) hidden = PlayerPrefs.GetInt("ui.taskHidden", 0); return hidden == 1; }
+            set { hidden = value ? 1 : 0; PlayerPrefs.SetInt("ui.taskHidden", hidden); }
+        }
+        static int hidden = -1;
+
+        /// <summary>접힌 카드: [Q] 할 일 (누르면 편다)</summary>
+        static Rect DrawFolded(float top)
+        {
+            string label = "할 일";
+            float w = Mathf.Round(8f + CuteUI.KeycapWidth("Q") + 4f + CuteUI.Width(label, true, true) + 8f);
+            var r = new Rect(X, Mathf.Round(top), w, 19f);
+            lastRect = r; lastFrame = Time.frameCount;
+            ScreenZones.Mark("task.card", r);
+            bool hover = !UIState.Blocking && r.Contains(Event.current.mousePosition);
+            CuteUI.Box(r, 8, hover ? CuteUI.Paper2 : CuteUI.Paper, hover ? CuteUI.Interact : CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
+            float x = r.x + 8f;
+            x += CuteUI.Keycap(x, r.y + 3f, "Q") + 4f;
+            CuteUI.Label(x, r.center.y, label, CuteUI.Sub, true, true);
+            if (!UIState.Blocking && Event.current.type == EventType.MouseDown && Event.current.button == 0 && r.Contains(Event.current.mousePosition))
+            { Hidden = false; Sfx.Play("move", .6f); Event.current.Use(); }
+            return r;
+        }
+
         struct BadgeLine { public int frame; public CuteUI.Pic pic; public string text; public Color32 col; }
         static readonly SortedDictionary<string, BadgeLine> badges = new SortedDictionary<string, BadgeLine>();
 
@@ -130,6 +156,7 @@ namespace PocketCaravan
                 }
                 else if (where.Contains("Space")) where = null;   // 말 걸 대상 머리 위 [Space] 알약이 같은 말을 한다
             }
+            if (Hidden && !expanded && stepAll == 0) { shownOrder = -1; return DrawFolded(top); }   // 11/16 Q로 접음 (조작 배우기 n/8 단계만 늘 보인다)
             if (hasGoal) where = null;                              // 가는 길은 목표 줄이 알려 준다
             string goalDest = hasGoal ? goal.dest : null;
             if (hasGoal && order >= 0 && mainText.Contains(goalDest)) goalDest = null;   // "어머니께 말 걸기" + "어머니" → 칸 수만
