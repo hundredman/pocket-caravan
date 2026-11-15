@@ -178,7 +178,7 @@ namespace PocketCaravan
             p.act = TalkGuide;
             var tex = Resources.Load<Texture2D>("North/Minigame/caravan1_d0");
             Sprite s = null;
-            if (tex != null) { tex.filterMode = FilterMode.Point; s = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.1f), 26f); }
+            if (tex != null) { tex.filterMode = FilterMode.Point; s = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.1f), 16f); }   // 11/15 기우: 아라비아 그림 16x24로 통일 → 다른 사람과 같은 16픽셀=1칸 (전 26)
             if (s != null) { var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = s; sr.sortingOrder = 10; }
             if (FreshStart()) StartCoroutine(Arrive());
         }

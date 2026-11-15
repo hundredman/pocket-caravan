@@ -107,7 +107,7 @@ namespace PocketCaravan
                 var r = go.AddComponent<SpriteRenderer>();
                 r.sprite = VeniceUtil.Sprite("mask");
                 r.sortingOrder = 11;
-                r.transform.localScale = Vector3.one * 1.5f;
+                // 11/15 기우(도트 크기 통일): 1.5배로 키워 가면만 도트가 굵어 보였다 → 배율 1 (가면 장수의 가면과 같은 크기)
             }
             Notify.Show("카니발 밤! 리알토에서 유리·레이스를 3할 더 쳐 준다", 5f);
         }

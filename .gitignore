@@ -74,3 +74,4 @@ mono_crash.*
 
 /Assets/PocketCaravan/Editor/C6Preview/
 /Assets/PocketCaravan/Editor/C6Preview.meta
+Docs/Validation/PixelDensity/cache.json

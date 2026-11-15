@@ -19,16 +19,18 @@ class SeatAlignmentTests(unittest.TestCase):
                     self.assertEqual((min(xs)+max(xs))/2,7.5,(key,y))
 
     def test_fennec_lowers_intact_head_and_widens_folded_knees(self):
+        # 2026-11-15 기우: 아라비아 캐릭터를 16x24(PPU 16)로 통일(팀 승인). 앉은 사막여우도 순록(viking)과 같은 방법:
+        # 머리·목(0~15줄)은 그대로 2줄 내리고, 위 2줄은 비우고, 접은 무릎은 서 있을 때보다 넓다
         with Image.open(REVIEW/'arabia-seated-front.png')as new,Image.open(ROOT/'Assets/PocketCaravan/Art/Characters/arabia_player_fennec_tall_d0.png')as old:
             a=new.convert('RGBA');b=old.convert('RGBA')
             self.assertEqual(a.size,b.size)
-            for y in range(26):
-                for x in range(32):self.assertEqual(a.getpixel((x,y+4)),b.getpixel((x,y)),(x,y))
-            self.assertFalse(any(a.getpixel((x,y))[3]for y in range(4)for x in range(32)))
-            pants={(59,75,126),(108,118,152),(59,61,90)}
-            folded=sum(a.getpixel((x,34))[:3]in pants for x in range(32))
-            standing=sum(b.getpixel((x,34))[:3]in pants for x in range(32))
+            self.assertEqual(a.size,(16,24))
+            for y in range(16):
+                for x in range(16):self.assertEqual(a.getpixel((x,y+2)),b.getpixel((x,y)),(x,y))
+            self.assertFalse(any(a.getpixel((x,y))[3]for y in range(2)for x in range(16)))
+            pants={(59,75,126)}
+            folded=sum(a.getpixel((x,22))[:3]in pants for x in range(16))
+            standing=sum(b.getpixel((x,22))[:3]in pants for x in range(16))
             self.assertGreater(folded,standing)
-
 
 if __name__=='__main__':unittest.main()

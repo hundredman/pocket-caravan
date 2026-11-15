@@ -3,7 +3,7 @@
   "userQuote": "좋다.",
   "date": "2026-11-06",
   "scope": "AlignedV2 네 출신 앉기 그림·앞서 제시한 쉼터 세 자리 본편 연결. 모닥불 움직임은 별도 승인 유지",
-  "sourceSha256": "ceda6673b30f7280557a0a05393e310a7a1c07f7412422ae60a18e0e1ffe582b",
+  "sourceSha256": "b8820063ad765f8bf0349502ba3d4650d8a0038f293f5adbf441b72d87f01bd3",
   "art": [
     {
       "file": "ArtReview/Goryeo-Seats-20261105/AlignedV2/goryeo-seated-front.png",
@@ -19,7 +19,7 @@
     },
     {
       "file": "ArtReview/Goryeo-Seats-20261105/AlignedV2/arabia-seated-front.png",
-      "rgbaSha256": "28ee97be265abca760c9226c92a5824274e25535a88f5d89bcb3311b536b3da5"
+      "rgbaSha256": "e044f375103ab3d4236d56a2ee340cb6873381859edabeda4daf3a4488c7b78b"
     },
     {
       "file": "Assets/PocketCaravan/Art/NinjaAdventure/Tiles/camp_12_5.png",
@@ -38,5 +38,12 @@
       "rgbaSha256": "ffde4343bd339677b03affc3acf56ff612992b4cd1872762ddfcf548a9e07191"
     }
   ],
-  "reviewCommit": "b54f8deb4"
+  "reviewCommit": "b54f8deb4",
+  "revisions": [
+    {
+      "date": "2026-11-15",
+      "by": "기우",
+      "scope": "아라비아 캐릭터 16x24(PPU 16) 통일에 맞춰 앉은 사막여우도 16x24로 다시 그림 (순록 앉은 그림과 같은 방법: 머리·목 그대로 2줄 내리고 무릎 넓힘). 팀 승인"
+    }
+  ]
 }

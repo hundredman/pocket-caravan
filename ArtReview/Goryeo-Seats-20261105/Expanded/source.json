@@ -56,8 +56,8 @@
     {
       "originId": "arabia",
       "file": "ArtReview/Goryeo-Seats-20261105/Expanded/arabia-seated-front.png",
-      "ppu": 32,
-      "pivotY": 0.4166666666666667
+      "ppu": 16,
+      "pivotY": 0.25
     }
   ]
 }

@@ -1,0 +1,4939 @@
+{
+ "done": true,
+ "images": [
+  {
+   "path": "MapModules/Previews/autumn_lane.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/border_checkpoint.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/bridge_pair.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/canyon_bridge.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/canyon_switchback.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/caravanserai.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/coastal_harbor.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/coastal_road.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/deep_forest_fork.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/desert_oasis.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/dune_detour.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/estuary.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/fishing_hamlet.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/flower_fork.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/forest_clearing.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/frozen_lake.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/grassland_camp.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/hill_switchback.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/hill_village.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/lake_shore.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/lakeside_hamlet.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/logging_camp.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/market_crossroads.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/meadow_lane.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/mountain_pass.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/orchard_hamlet.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/pine_corridor.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/reed_marsh.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/ridge_loop.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/river_bends.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/river_crossing.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/river_island.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/rocky_choke.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/ruin_courtyard.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/snow_pass.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/steppe_crossroads.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/tundra_camp.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/volcanic_detour.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/wetland_boardwalk.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "MapModules/Previews/wheat_crossing.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    320,
+    320
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "Resources/Goryeo/Fishing/rod.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    24,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/chicken_0_0_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/chicken_0_0_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/chicken_0_1_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/chicken_0_1_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/chicken_1_0_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/chicken_1_0_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/chicken_1_1_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/chicken_1_1_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/dog_0_0_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/dog_0_0_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/dog_0_1_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/dog_0_1_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/dog_1_0_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/dog_1_0_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/dog_1_1_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/Goryeo/VillageLife/Cells/dog_1_1_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "unused"
+  },
+  {
+   "path": "Resources/North/Critters/goat_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Critters/goat_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Critters/gull_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Critters/gull_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Critters/raven_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Critters/raven_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Critters/reindeer_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    26,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Critters/reindeer_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    26,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Critters/reindeer_2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    26,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Critters/reindeer_3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    26,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Critters/reindeer_graze_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    26,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/amber.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    10,
+    10
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/antler.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    14,
+    12
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/ashes.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    14,
+    8
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/bait.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    12,
+    6
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/bard_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/bard_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/bard_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/bard_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/bard_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/bard_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/bard_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/bard_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/bee.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    3,
+    3
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/beekeeper_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/beekeeper_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/beekeeper_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/beekeeper_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/beekeeper_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/beekeeper_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/beekeeper_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/beekeeper_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/bigflame_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    20
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/bigflame_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    20
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/bobber.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    6,
+    9
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/book.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    10,
+    12
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/bottle.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    8,
+    12
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/cairn_deco.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    12,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/cairnstone0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    10,
+    4
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/cairnstone1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    10,
+    4
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/cairnstone2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    10,
+    4
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan0_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan0_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan0_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan0_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan0_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan0_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan0_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan0_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan1_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan1_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan1_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan1_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan1_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan1_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan1_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan1_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan2_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan2_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan2_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan2_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan2_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan2_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan2_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan2_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan_barrel.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    18
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan_cart.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    32,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan_crates.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    32,
+    28
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan_jar.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    18
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan_rack.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    32,
+    28
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan_tent_b.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    48,
+    48
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/caravan_tent_r.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    48,
+    48
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/cargo_h.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    24,
+    13
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/cargo_v.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    14,
+    23
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_brew_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_brew_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_brew_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_brew_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_brew_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_brew_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_brew_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_brew_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fish_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fish_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fish_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fish_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fish_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fish_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fish_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fish_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fur_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fur_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fur_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fur_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fur_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fur_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fur_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/craft_fur_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/dealer_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/dealer_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/dealer_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/dealer_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/dealer_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/dealer_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/dealer_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/dealer_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/dummy.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    14,
+    22
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_a_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_a_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_a_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_a_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_a_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_a_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_a_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_a_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_b_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_b_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_b_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_b_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_b_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_b_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_b_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_b_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_c_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_c_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_c_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_c_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_c_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_c_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_c_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_c_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_d_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_d_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_d_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_d_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_d_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_d_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_d_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_d_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_flags.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    64,
+    12
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fair_stall.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    48,
+    32
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/ferry_boat_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    30,
+    34
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/ferry_boat_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    30,
+    34
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/ferry_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/ferry_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/ferry_ice_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    30,
+    18
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/ferry_ice_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    18,
+    13
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/ferry_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/ferry_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/ferry_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/ferry_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/ferry_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/ferry_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fire_seat.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    10
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fish_char.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    8
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fish_cod.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    8
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fish_salmon.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    20,
+    9
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/flake.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    9,
+    9
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fortune_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fortune_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fortune_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fortune_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fortune_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fortune_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fortune_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/fortune_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/gunnar_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/gunnar_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/gunnar_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/gunnar_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/gunnar_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/gunnar_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/gunnar_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/gunnar_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/heart.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    9,
+    8
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/heart_empty.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    9,
+    8
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/keeper_fish_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/keeper_fish_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/keeper_fur_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/keeper_fur_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/keeper_mead_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/keeper_mead_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/keeper_salt_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/keeper_salt_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/keeper_spit_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/keeper_spit_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener0_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener0_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener0_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener0_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener0_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener0_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener0_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener0_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener1_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener1_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener1_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener1_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener1_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener1_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener1_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener1_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener2_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener2_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener2_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener2_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener2_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener2_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener2_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/listener2_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/log.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    32,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/lost_pack.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    12
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/merchant_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/merchant_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/merchant_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/merchant_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/merchant_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/merchant_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/merchant_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/merchant_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/moss.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    14,
+    8
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pedestal.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    10
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim0_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim0_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim0_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim0_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim0_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim0_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim0_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim0_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim1_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim1_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim1_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim1_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim1_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim1_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim1_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim1_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim2_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim2_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim2_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim2_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim2_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim2_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim2_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pilgrim2_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/pouch.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    10,
+    10
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/ring_center.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    36,
+    22
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/rock.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    32,
+    32
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/rubbing.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    12,
+    14
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/rune.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    32
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/skep_bare.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    14,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/skep_wrapped.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    14,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/sled.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    24,
+    32
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowball.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    8,
+    8
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_d2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_d3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_l2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_l3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_r2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_r3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_u2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid0_u3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_d2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_d3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_l2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_l3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_r2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_r3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_u2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid1_u3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_d2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_d3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_l2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_l3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_r2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_r3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_u2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowkid2_u3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/snowsplat.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    10,
+    6
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/stall_fish.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    48,
+    48
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/stall_fish_front.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    48,
+    48
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/stall_fur.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    48,
+    48
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/stall_fur_front.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    48,
+    48
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/stall_mead.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    48,
+    48
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/stall_mead_front.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    48,
+    48
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/stall_salt.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    48,
+    48
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/stall_salt_front.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    48,
+    48
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/straw_carry.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    10,
+    8
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/straw_pile.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    18,
+    14
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/tree.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    32,
+    32
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/tree2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    32,
+    32
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/tree3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    32,
+    32
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/wanderer_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/wanderer_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/wanderer_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/wanderer_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/wanderer_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/wanderer_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/wanderer_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/wanderer_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/woodcutter_d0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/woodcutter_d1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/woodcutter_l0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/woodcutter_l1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/woodcutter_r0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/woodcutter_r1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/woodcutter_u0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/woodcutter_u1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_fur_full.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    64,
+    46
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_fur_work.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    64,
+    46
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_herbs.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    24,
+    14
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_hjell_dried.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    60,
+    48
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_hjell_empty.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    60,
+    48
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_hjell_fresh.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    60,
+    48
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_kettle_a0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    30,
+    36
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_kettle_a1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    30,
+    36
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_kettle_a2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    30,
+    36
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_kettle_b0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    30,
+    36
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_kettle_b1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    30,
+    36
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_kettle_b2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    30,
+    36
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_skeps.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    40,
+    20
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_tap0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    26,
+    22
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_tap1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    26,
+    22
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_tap_idle.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    26,
+    22
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/Minigame/yard_vat.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    28,
+    32
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/flame_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/flame_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/flame_2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/flame_3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    16
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/glint_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    8,
+    8
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/glint_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    8,
+    8
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/glint_2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    8,
+    8
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/glint_3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    8,
+    8
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/smoke_0.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/smoke_1.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/smoke_2.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/North/smoke_3.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    16,
+    24
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/StartScreen/start_arabia.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    500,
+    380
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "Resources/StartScreen/start_goryeo.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    500,
+    380
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "Resources/StartScreen/start_north.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    500,
+    380
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "Resources/StartScreen/start_venice.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    500,
+    380
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "Resources/WorldMap/GoryeoRegionalTerrain.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    508,
+    880
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "Resources/WorldMap/GoryeoTerrain.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    1164,
+    1016
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "Resources/WorldMap/NorthTerrain.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    1052,
+    1480
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "Resources/WorldMap/Unified/ArabiaMap.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    1260,
+    1168
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/WorldMap/Unified/GoryeoMap.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    1164,
+    1016
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/WorldMap/Unified/GoryeoRegionalMap.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    508,
+    880
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/WorldMap/Unified/NorthMap.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    1052,
+    1480
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/WorldMap/Unified/VeniceMap.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    1712,
+    720
+   ],
+   "effective": 100.0,
+   "kind": "texture"
+  },
+  {
+   "path": "Resources/WorldMap/VeniceTerrain.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    2368,
+    1008
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "Resources/WorldMap/GoryeoRegionalWaterMask.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    508,
+    880
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  },
+  {
+   "path": "Resources/WorldMap/GoryeoWaterMask.png",
+   "ppu": 100.0,
+   "block": 1,
+   "size": [
+    1164,
+    1016
+   ],
+   "effective": 100.0,
+   "kind": "ui"
+  }
+ ],
+ "creates": [
+  {
+   "file": "Scripts/MapModules/WeatherOverlay.cs",
+   "line": 19,
+   "ppu": "2",
+   "code": "sprite=Sprite.Create(texture,new Rect(0,0,2,2),new Vector2(.5f,.5f),2);"
+  },
+  {
+   "file": "Scripts/Obstacles/ObstacleField.cs",
+   "line": 59,
+   "ppu": "1",
+   "code": "if(footprintSprite==null)footprintSprite=Sprite.Create(Texture2D.whiteTexture,new Rect(0,0,1,1),new Vector2(.5f,.5f),1);"
+  },
+  {
+   "file": "Scripts/Venice/VeniceQuestDirector.cs",
+   "line": 206,
+   "ppu": "1f",
+   "code": "white = Sprite.Create(t, new Rect(0, 0, 1, 1), new Vector2(.5f, .5f), 1f);"
+  }
+ ],
+ "scales": [
+  {
+   "file": "Scripts/Arabia/ArabiaAmbience.cs",
+   "line": 158,
+   "expr": "Random.Range(1f, 2f)",
+   "code": "p.sr.transform.localScale = Vector3.one * Random.Range(1f, 2f);"
+  },
+  {
+   "file": "Scripts/Arabia/ArabiaAmbience.cs",
+   "line": 280,
+   "expr": "(wind.x > 0 ? 1 : -1) * (0.8f + s.z), 1, 1",
+   "code": "streaks[i].transform.localScale = new Vector3((wind.x > 0 ? 1 : -1) * (0.8f + s.z), 1, 1);"
+  },
+  {
+   "file": "Scripts/Arabia/ArabiaAmbience.cs",
+   "line": 352,
+   "expr": "(1f + (i % 3) * 0.5f)",
+   "code": "b.transform.localScale = Vector3.one * (1f + (i % 3) * 0.5f);"
+  },
+  {
+   "file": "Scripts/Arabia/ArabiaAmbience.cs",
+   "line": 504,
+   "expr": "(u > 0.9f ? 2f : 1.2f)",
+   "code": "d.sr.transform.localScale = Vector3.one * (u > 0.9f ? 2f : 1.2f);               // 떨어질 때 물보라"
+  },
+  {
+   "file": "Scripts/Arabia/ArabiaAmbience.cs",
+   "line": 536,
+   "expr": "1.5f",
+   "code": "s.sr.transform.localScale = Vector3.one * 1.5f;"
+  },
+  {
+   "file": "Scripts/Arabia/ArabiaAmbience.cs",
+   "line": 551,
+   "expr": "1.5f",
+   "code": "s.sr.transform.localScale = Vector3.one * 1.5f;"
+  },
+  {
+   "file": "Scripts/Arabia/ArabiaAmbience.cs",
+   "line": 593,
+   "expr": "Mathf.Abs(Mathf.Sin(Time.time * 6f + s.max * 9f)) * 2f + 0.4f, 1f, 1f",
+   "code": "s.sr.transform.localScale = new Vector3(Mathf.Abs(Mathf.Sin(Time.time * 6f + s.max * 9f)) * 2f + 0.4f, 1f, 1f);"
+  },
+  {
+   "file": "Scripts/Arabia/ArabiaDunesLife.cs",
+   "line": 82,
+   "expr": "4.5f",
+   "code": "var g = new GameObject(\"불빛\"); g.transform.SetParent(fire, false); g.transform.localPosition = new Vector3(.5f, -.3f, 0f); g.transform.localScale = Vector3.one *"
+  },
+  {
+   "file": "Scripts/Economy/Peddler.cs",
+   "line": 209,
+   "expr": "1f, 1f + Mathf.Sin(Time.time * 2.4f) * .02f, 1f",
+   "code": "void Update() { if (body != null) body.transform.localScale = new Vector3(1f, 1f + Mathf.Sin(Time.time * 2.4f) * .02f, 1f); }   // 숨쉬기"
+  },
+  {
+   "file": "Scripts/Net/RemotePlayers.cs",
+   "line": 353,
+   "expr": "a.bodyScale.x * (sq < 0.99f ? 1.04f : 1f), a.bodyScale.y * sq, a.bodyScale.z",
+   "code": "bt.localScale = new Vector3(a.bodyScale.x * (sq < 0.99f ? 1.04f : 1f), a.bodyScale.y * sq, a.bodyScale.z);"
+  },
+  {
+   "file": "Scripts/North/NorthAtmosphere.cs",
+   "line": 177,
+   "expr": "w * 1.3f / 8f * (1f + 0.05f * Mathf.Sin(t * 0.5f + i)), (1.6f + 0.4f * Mathf.Sin(t * 0.7f ",
+   "code": "r.transform.localScale = new Vector3(w * 1.3f / 8f * (1f + 0.05f * Mathf.Sin(t * 0.5f + i)), (1.6f + 0.4f * Mathf.Sin(t * 0.7f + i * 2f)) / 2f, 1f);"
+  },
+  {
+   "file": "Scripts/North/NorthDaily.cs",
+   "line": 267,
+   "expr": "Mathf.Lerp(1f, 0.2f, eaten)",
+   "code": "mossPile.transform.localScale = Vector3.one * Mathf.Lerp(1f, 0.2f, eaten);"
+  },
+  {
+   "file": "Scripts/North/NorthDaily.cs",
+   "line": 420,
+   "expr": "(1f + Mathf.Sin(Time.time * 4f + i) * 0.08f)",
+   "code": "sr.transform.localScale = Vector3.one * (1f + Mathf.Sin(Time.time * 4f + i) * 0.08f);"
+  },
+  {
+   "file": "Scripts/North/NorthFireSeat.cs",
+   "line": 144,
+   "expr": "1.04f, 0.86f, 1f",
+   "code": "body.localScale = new Vector3(1.04f, 0.86f, 1f);"
+  },
+  {
+   "file": "Scripts/North/NorthLife.cs",
+   "line": 168,
+   "expr": "s, s * (1f + 0.1f * Mathf.Sin(t * 7f + phase)), 1f",
+   "code": "sr.transform.localScale = new Vector3(s, s * (1f + 0.1f * Mathf.Sin(t * 7f + phase)), 1f);"
+  },
+  {
+   "file": "Scripts/UI/AmbientFX.cs",
+   "line": 48,
+   "expr": "Mathf.Abs(flip) < 0.3f ? 0.5f : 1f, 1f, 1f",
+   "code": "b.t.localScale = new Vector3(Mathf.Abs(flip) < 0.3f ? 0.5f : 1f, 1f, 1f);"
+  },
+  {
+   "file": "Scripts/UI/AmbientFX.cs",
+   "line": 88,
+   "expr": "Random.Range(1f, 1.6f)",
+   "code": "b.t.localScale = Vector3.one * Random.Range(1f, 1.6f);"
+  },
+  {
+   "file": "Scripts/Venice/VeniceMaskSeller.cs",
+   "line": 31,
+   "expr": "1f, 1f + Mathf.Abs(Mathf.Sin(Time.time * 5f)) * .05f, 1f",
+   "code": "if (body != null) body.transform.localScale = new Vector3(1f, 1f + Mathf.Abs(Mathf.Sin(Time.time * 5f)) * .05f, 1f);"
+  },
+  {
+   "file": "Scripts/Venice/VeniceQuestDirector.cs",
+   "line": 212,
+   "expr": "px.x / 16f, px.y / 16f, 1f",
+   "code": "r.transform.localScale = new Vector3(px.x / 16f, px.y / 16f, 1f);"
+  },
+  {
+   "file": "Scripts/Venice/VeniceSeat.cs",
+   "line": 71,
+   "expr": "restScale.x * 1.06f, restScale.y * .86f, restScale.z",
+   "code": "t.localScale = new Vector3(restScale.x * 1.06f, restScale.y * .86f, restScale.z);"
+  },
+  {
+   "file": "Scripts/World/DroppedCargo.cs",
+   "line": 44,
+   "expr": "(1f + Mathf.Floor(Mathf.Sin(t * 4f) * 1.5f + 1.5f) * 0.04f)",
+   "code": "if (sr != null) sr.transform.localScale = Vector3.one * (1f + Mathf.Floor(Mathf.Sin(t * 4f) * 1.5f + 1.5f) * 0.04f);"
+  },
+  {
+   "file": "Scripts/World/LostTraveler.cs",
+   "line": 164,
+   "expr": "1f + Mathf.Sin(Time.time * 6f) * .02f, 1f, 1f",
+   "code": "void Update() { transform.localScale = new Vector3(1f + Mathf.Sin(Time.time * 6f) * .02f, 1f, 1f); }   // 덜덜"
+  },
+  {
+   "file": "Scripts/World/LostTraveler.cs",
+   "line": 219,
+   "expr": "1f, 1f + Mathf.Abs(Mathf.Sin(Time.time * 8f)) * .04f, 1f",
+   "code": "follower.localScale = new Vector3(1f, 1f + Mathf.Abs(Mathf.Sin(Time.time * 8f)) * .04f, 1f);"
+  }
+ ]
+}

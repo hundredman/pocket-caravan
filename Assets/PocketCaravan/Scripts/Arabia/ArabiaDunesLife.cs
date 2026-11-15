@@ -42,6 +42,8 @@ namespace PocketCaravan
 
         Vector3 Cell(int x, int y) => map.CellCenter(new Vector3Int(x, road.height - 1 - y, 0));
         static Sprite Art(string n) => Resources.Load<Sprite>("Arabia/Fair/" + n) ?? Resources.Load<Sprite>("Arabia/Pastimes/" + n);
+        /// <summary>11/15 대상 낙타 옆모습 걷기 그림 0~3 (37x37·PPU 16, 왼쪽을 봄). 탈것 낙타(Transport/Camel/side_*)를 사람 키의 1.5배쯤으로 줄여 다시 찍은 그림</summary>
+        static Sprite CamelFrame(int k) => Resources.Load<Sprite>("Arabia/Fair/caravan_camel_" + k);
 
         void Teardown() { if (root != null) Destroy(root.gameObject); root = null; caravan.Clear(); fire = null; mirage = null; }
 
@@ -60,8 +62,8 @@ namespace PocketCaravan
             {
                 var go = new GameObject(i == 0 ? "대상 길잡이" : "대상 낙타"); go.transform.SetParent(root, false);
                 var sr = go.AddComponent<SpriteRenderer>(); sr.sortingOrder = 9;
-                sr.sprite = i == 0 ? (Art("bedouin_r0") ?? Art("animal_camel")) : Art("animal_camel");
-                go.transform.localScale = Vector3.one * (i == 0 ? 1f : 0.45f);   // 낙타 그림(48px)은 사람보다 커서 1.3칸쯤으로
+                sr.sprite = i == 0 ? (Art("bedouin_r0") ?? Art("animal_camel")) : (CamelFrame(0) ?? Art("animal_camel"));
+                // 11/15 기우(도트 크기 통일): 낙타를 0.45배로 줄여 그 그림만 도트가 작아 보였다 → 탈것 낙타를 사람 키 1.5배로 다시 찍은 그림(16픽셀=1칸)을 배율 1로
                 caravan.Add(go.transform);
             }
             caravanX = Random.Range(CaravanX0 + 6f, CaravanX1 - 6f); caravanDir = Random.value < .5f ? 1f : -1f;
@@ -148,11 +150,14 @@ namespace PocketCaravan
             }
             for (int i = 0; i < caravan.Count; i++)
             {
-                float x = caravanX - caravanDir * i * 1.1f;
+                // 11/15 낙타가 2.2칸 길이라 간격을 넓히고(길잡이 뒤 1.6칸, 낙타끼리 2.4칸), 발이 땅에 닿게 올린다
+                float x = caravanX - caravanDir * (i == 0 ? 0f : 1.6f + (i - 1) * 2.4f);
                 int xi = Mathf.Clamp(Mathf.RoundToInt(x), 0, road.width - 1);
-                var p = Cell(xi, CaravanY) + new Vector3(x - xi, .3f + Mathf.Abs(Mathf.Sin(Time.time * 5f + i)) * .08f, 0f);
+                float lift = i == 0 ? .55f : .85f;
+                var p = Cell(xi, CaravanY) + new Vector3(x - xi, lift + Mathf.Abs(Mathf.Sin(Time.time * 5f + i)) * .08f, 0f);
                 caravan[i].position = p;
                 var sr = caravan[i].GetComponent<SpriteRenderer>(); if (sr != null) sr.flipX = i == 0 ? caravanDir < 0f : caravanDir > 0f;   // 낙타 그림은 원래 왼쪽을 봄, 길잡이(r0)는 오른쪽
+                if (sr != null && i > 0) { var f = CamelFrame(Mathf.FloorToInt(Time.time * 6f + i) % 4); if (f != null) sr.sprite = f; }   // 걷는 다리
             }
 
             // 2) 모닥불
