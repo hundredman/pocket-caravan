@@ -8,7 +8,7 @@ namespace PocketCaravan
     /// 외길 맵(들어가는 곳·나가는 곳 하나씩)과 대륙 한가운데(모두 지나는 곳)는 피한다.
     /// 북쪽·서쪽은 지역 담당이 정한 자리 그대로 둔다 (베네치아 본토: 직행로는 빠르지만 밤 도적, 습지·고갯길은 안전 — 길 고르기 설계).
     /// 씬 파일은 고치지 않고, 맵이 열릴 때 도적 출몰 자리를 더한다.
-    /// 그림은 Resources/Bandit (고려·중앙 동쪽은 C1 도적, 다른 곳은 예전 도적 그림).
+    /// 도적 몸은 Resources/Bandit 프리팹, 모습은 깨어날 때 BanditLook이 사람 도적 세 가지 중 하나로 바꾼다.
     /// 쫓기·잡히면 통행료·한동안 조용함은 기존 Bandit·BanditSpot 그대로다.
     /// </summary>
     public sealed class BanditPlacement : MonoBehaviour

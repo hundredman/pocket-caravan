@@ -38,6 +38,8 @@ namespace PocketCaravan
             motor = GetComponent<PlayerMotor>();
             blocksMovement = false;
             myRoot = GetComponentInParent<MapRoot>();
+            if (anim == null) anim = GetComponent<CharacterAnimator>();
+            BanditLook.Apply(anim, myRoot != null ? myRoot.mapId : "");
         }
 
         bool PlayerSettledHere()
@@ -256,6 +258,46 @@ namespace PocketCaravan
         void OnDestroy()
         {
             if (state == State.Chase) AudioManager.SetDanger(false);
+        }
+    }
+
+    /// <summary>
+    /// 11/15 은샘: 도적은 모두 사람. 세 가지 모습을 맵마다 정해 쓴다 (씬 파일은 그대로, 깨어날 때 그림만 바꾼다).
+    /// A 패랭이+복면 · B 상투+붉은 머리띠+복면 · C 패랭이+텁수룩 수염. 그림: Resources/Bandit/Looks/bandit_{a,b,c}_{d,u,l,r}{0~3}
+    /// </summary>
+    public static class BanditLook
+    {
+        static readonly System.Collections.Generic.Dictionary<string, char> ByMap = new System.Collections.Generic.Dictionary<string, char>
+        {
+            { "transit_pass", 'a' },            // 솔바람 고개
+            { "arabia_central_canyon", 'c' },   // 붉은 바위 협곡
+            { "north_c_road_sw", 'b' }, { "north_c_runeway", 'c' }, { "north_naru", 'b' },
+            { "venice_c_landing", 'a' }, { "venice_c_post", 'b' },
+        };
+
+        public static char For(string mapId)
+        {
+            if (!string.IsNullOrEmpty(mapId) && ByMap.TryGetValue(mapId, out var k)) return k;
+            int h = 0; foreach (char c in mapId ?? "") h = h * 31 + c;
+            return "abc"[(h & 0x7fffffff) % 3];
+        }
+
+        public static void Apply(CharacterAnimator anim, string mapId)
+        {
+            if (anim == null) return;
+            char k = For(mapId);
+            var frames = new Sprite[16];
+            string dirs = "dulr";
+            for (int d = 0; d < 4; d++)
+                for (int i = 0; i < 4; i++)
+                {
+                    var s = Resources.Load<Sprite>($"Bandit/Looks/bandit_{k}_{dirs[d]}{i}");
+                    if (s == null) return;   // 그림이 없으면 원래 그림 그대로
+                    frames[d * 4 + i] = s;
+                }
+            anim.frames = frames;
+            var sr = anim.GetComponent<SpriteRenderer>();
+            if (sr != null) sr.sprite = frames[0];
         }
     }
 }
