@@ -219,6 +219,7 @@ namespace PocketCaravan
         void DrawName(Camera cam,Interactable it,Vector2 feet,bool target)
         {
             if(it==null)return;
+            if(WorldLabels.HideSeatUi(it))return;   // 11/15 앉아 있거나 자리(양탄자) 위면 그 자리 이름표 없음 (공용과 같게)
             var body=BodyBounds(it);var p=NamePoint(cam,body);string label=LabelFor(it,feet);
             var rect=Name(p,label);
             if(rect.height>0)
@@ -262,6 +263,7 @@ namespace PocketCaravan
         }
         Rect DrawSpace(Camera cam,Interactable target)
         {
+            if(WorldLabels.HideSeatUi(target))return default;   // 11/15 기우: 앉아 있거나 자리(양탄자) 위면 [Space] 안내 없음 (공용과 같게)
             var body=BodyBounds(target);
             // 11/11 윤채: 키캡만 있으면 무엇을 하는지 몰라서 다른 지역과 같은 [Space 말 걸기] 알약으로 (누르면 Space와 같다)
             // 11/13 기우(팀 UI 통일): 발밑 → 머리 위 이름표 바로 위 (이름표가 없으면 이름 자리)

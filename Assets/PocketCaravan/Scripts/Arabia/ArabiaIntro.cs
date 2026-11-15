@@ -18,7 +18,8 @@ namespace PocketCaravan
         const string Home = "arabia_ahsa";
         const int MapH = 44;   // arabia_ahsa.json 높이 (맵 칸은 위가 0)
         const string FirstQuest = "arabia_q01_first_delivery";
-        static readonly Vector2Int GuideCell = new Vector2Int(35, 38);   // 시작 자리(남문 S0 (31,37)) 오른쪽 아래 (하산 (29,36) 이름표와 안 겹치게)
+        // 11/15 기우: (35,38)은 차양(high 층) 밑이라 아미르가 가려 안 보였다 → 시작 자리(남문 S0 (31,37)) 바로 왼쪽 아래 빈 길 (위·자기 칸에 high·물건 없음, 하산 (29,36) 이름표와 2줄 떨어짐)
+        static readonly Vector2Int GuideCell = new Vector2Int(30, 38);
         const string Guide = "하산의 조카 아미르";
 
         static readonly string[] Tasks = ControlLesson.Tasks();   // 11/08 공통화 4단계: 조작 배우기 여덟 가지는 공용 ControlLesson

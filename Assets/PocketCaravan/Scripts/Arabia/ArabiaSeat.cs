@@ -14,6 +14,7 @@ namespace PocketCaravan
     public class ArabiaSeat : Interactable
     {
         public override string DisplayName => "그늘에 앉기";
+        public override string ActionVerb => "앉기";   // 11/15 기우: 기본 "대화"가 떴다
         public override Kind Category => Kind.Market;
 
         /// <summary>맵 → 자리 칸 (여관·우물·오아시스 옆 빈 땅)</summary>
@@ -35,7 +36,7 @@ namespace PocketCaravan
         const float Lift = 0.3f;
 
         static ArabiaSeat sitting;
-        float since; bool rewarded;
+        float since; bool rewarded; int sitFrame = -10;
         Vector3 rest; bool applied; Sprite pose;
 
         public static bool IsSitting => sitting != null;
@@ -50,7 +51,7 @@ namespace PocketCaravan
             player.Motor.Teleport(transform.position, Vector2Int.down);
             var origin = GameManager.I != null && GameManager.I.Player != null ? GameManager.I.Player.origin : null;
             pose = origin != null ? Resources.Load<Sprite>("Goryeo/Seats/Art/" + origin.id) : null;
-            since = Time.time; rewarded = false;
+            since = Time.time; rewarded = false; sitFrame = Time.frameCount;
             Sfx.Play("step", .6f);
             Notify.Show("그늘에 앉았다. 방향키나 Space로 일어난다.", 2f);
         }
@@ -62,7 +63,7 @@ namespace PocketCaravan
             if (sitting != this) return;
             var pc = PlayerController.Instance;
             Undo();
-            if (pc == null || GameManager.I == null || (!UIState.Blocking && (InputReader.MoveVector().sqrMagnitude > .01f || InputReader.InteractPressed())))
+            if (pc == null || GameManager.I == null || (!UIState.Blocking && (InputReader.MoveVector().sqrMagnitude > .01f || (InputReader.InteractPressed() && Time.frameCount != sitFrame))))   // 11/15 앉은 그 프레임의 Space로 바로 일어나던 것 (양탄자에 올라서기만 했다)
             {
                 sitting = null;
                 return;
