@@ -37,6 +37,7 @@ namespace PocketCaravan
         void Update()
         {
             if (!open || Time.frameCount == openedFrame) return;
+            if (PackPuzzle.IsOpen || Time.frameCount == PackPuzzle.ClosedFrame) return;   // 11/16 짐 싣기 퍼즐 중
             if (InputReader.CancelPressed() || InputReader.InteractPressed()) Close();
         }
 
@@ -61,10 +62,11 @@ namespace PocketCaravan
             return gained > 0 ? $"마을 일을 마쳤습니다. 평판 +{gained}." : "마을 일을 마쳤습니다. 평판은 이미 중립입니다.";
         }
 
-        string AcceptSaved(Contract c)
+        /// <summary>bonus: 11/16 짐 싣기 퍼즐을 다 풀면 보수에 더하는 몫 (맡기 전에 더한다. 저장 실패면 함께 되돌려진다)</summary>
+        string AcceptSaved(Contract c, int bonus = 0)
         {
             bool accepted=false;
-            if (!SavedEconomyChange.Try(GameManager.I,()=>accepted=Cm.Accept(town,c))) return SavedEconomyChange.Failure;
+            if (!SavedEconomyChange.Try(GameManager.I,()=>{ if (bonus > 0) c.reward += bonus; accepted=Cm.Accept(town,c); if (!accepted && bonus > 0) c.reward -= bonus; })) return SavedEconomyChange.Failure;
             return !accepted ? "이 의뢰는 더 이상 맡을 수 없습니다. 게시판을 다시 확인해 주세요."
                 : c.atonement ? $"{c.cargo} 수락 · 보증금 {c.deposit}냥\n{Cm.TownName(c.toTown)} 게시판에 납품하세요."
                 : $"{Josa.Eul(c.cargo)} 맡았다. {Cm.TownName(c.toTown)} 게시판에 가져가자.";
@@ -147,6 +149,16 @@ namespace PocketCaravan
                 if (DrawCard(new Rect(0, y, cw, card - 4), CuteUI.Pic.Scroll, c.cargo, badge, sub, pay, c.weight, "맡기", why != null ? ShortWhy(c, p) : null, false, true, c.atonement))
                 {
                     if (why != null) { message = why; Sfx.Play("cancel"); }
+                    else if (PackPuzzle.Wants(c))
+                    {
+                        // 11/16 은샘: 큰 짐·신용 의뢰는 짐 싣기 퍼즐을 거쳐 맡는다 (Esc로 닫으면 맡지 않음)
+                        var cc = c; int bonus = PackPuzzle.BonusFor(cc);
+                        if (!PackPuzzle.Open(cc, Cm.TownName(cc.fromTown), Cm.TownName(cc.toTown), solved =>
+                        {
+                            message = AcceptSaved(cc, solved ? bonus : 0);
+                            if (solved && message.Contains("맡았다")) message = $"꽉 묶었다! 보수 +{bonus}냥. " + message;
+                        })) message = AcceptSaved(c);
+                    }
                     else message = AcceptSaved(c);
                 }
                 y += card;
