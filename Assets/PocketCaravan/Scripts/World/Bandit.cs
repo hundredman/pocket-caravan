@@ -244,6 +244,8 @@ namespace PocketCaravan
                 DialogueUI.Show("도적", $"그 짐은 우리한테 쓸모가 없겠군. 대신 이 길을 지나려면 통행료 {toll}냥을 내야지. 싫으면 주머니를 털어 가겠소.", picks);
                 return;
             }
+            // 11/15 은샘: 셋 중 고르는 창 (통행세 · 흥정 · 도망 리듬 놀이). 창이 못 열리면 예전 대화
+            if (BanditEncounter.Open(this, toll, _ => Leave())) return;
             var choices = p.money >= toll
                 ? new[] { new DialogueUI.Choice($"통행료 {toll}냥", () => { p.money -= toll; Sfx.Play("coin"); Notify.Show($"통행료 {toll}냥을 냈다."); Leave(); }),
                           new DialogueUI.Choice("거절한다", () => { gm.StealMostValuable(); Leave(); }) }

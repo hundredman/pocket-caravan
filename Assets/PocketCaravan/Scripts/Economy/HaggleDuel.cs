@@ -26,6 +26,7 @@ namespace PocketCaravan
 
         bool open; int openedFrame; float openedAt;
         TownData town; ItemData item; bool selling; int count; float max; int baseTotal; int temperament;
+        bool bandit;   // 11/15 은샘: 도적 흥정 (통행세를 깎는다. 금색 반값 · 빨강 ×1.5)
         Action<float, bool> done;
         // 판마다 다른 값
         float period, phase0, redStart, goldW, ease;
@@ -49,9 +50,31 @@ namespace PocketCaravan
             return true;
         }
 
+        /// <summary>11/15 은샘: 도적 흥정. 같은 저울로 통행세를 깎는다. 초록 최대 −42% · 금색 반값 · 빨강 1.5배. done(낼 통행세)</summary>
+        public static bool OpenBandit(Sprite face, int toll, string mapId, Action<int> done)
+        {
+            if (inst == null || inst.open || toll < 1) return false;
+            var gm = GameManager.I; int day = gm != null ? gm.Clock.day : 0;
+            var rng = new System.Random((int)(Hash($"bandit|{day}|{mapId}|{toll}") & 0x7fffffff));
+            var h = inst;
+            h.town = null; h.item = null; h.selling = false; h.count = 1; h.max = 0.5f; h.baseTotal = toll; h.bandit = true;
+            h.done = (d, f) => done?.Invoke(h.PriceFor(d));
+            h.temperament = 0;
+            h.period = 1.1f * (0.92f + (float)rng.NextDouble() * 0.16f);
+            h.goldW = 0.08f;
+            h.redStart = 0.78f + (float)rng.NextDouble() * 0.12f;
+            h.phase0 = (float)rng.NextDouble() * 0.3f;
+            h.ease = (float)rng.NextDouble();
+            h.stopped = false; h.failed = false; h.result = 0f; h.zone = 0;
+            h.merchant = face;
+            h.open = true; h.openedFrame = Time.frameCount; h.openedAt = Time.unscaledTime;
+            Sfx.Play("open");
+            return true;
+        }
+
         void Begin(TownData t, ItemData it, bool sell, int n, float mx, int total, int salt, Action<float, bool> cb)
         {
-            town = t; item = it; selling = sell; count = n; max = mx; baseTotal = total; done = cb;
+            town = t; item = it; selling = sell; count = n; max = mx; baseTotal = total; done = cb; bandit = false;
             var gm = GameManager.I; int day = gm != null ? gm.Clock.day : 0;
             var rng = new System.Random((int)(Hash($"{day}|{t.id}|{it.id}|{(sell ? 1 : 0)}|{salt}") & 0x7fffffff));
             temperament = HaggleRules.Temperament(t.id);
@@ -88,7 +111,7 @@ namespace PocketCaravan
                 case 0: return 0f;
                 case 1: return max * Mathf.Pow(Mathf.InverseLerp(GreyEnd, GoldStart, x), 1.5f) * 0.85f;
                 case 2: return max;
-                default: return -FailPenalty;
+                default: return bandit ? -0.5f : -FailPenalty;
             }
         }
 
@@ -101,7 +124,7 @@ namespace PocketCaravan
             zone = ZoneOf(x);
             result = Mathf.Round(DiscountAt(x) * 200f) / 200f;   // 0.5% 단위
             failed = zone == 3;
-            redStreak = failed ? redStreak + 1 : 0;
+            if (!bandit) redStreak = failed ? redStreak + 1 : 0;
             Sfx.Play(zone == 2 ? "coin" : zone == 3 ? "bump" : zone == 1 ? "accept" : "move", zone == 0 ? .6f : 1f);
             if (zone == 2) Sfx.Play("success", .6f);
         }
@@ -120,7 +143,7 @@ namespace PocketCaravan
             float t = Time.unscaledTime - openedAt - 0.25f;   // 패널이 열린 뒤 바늘 출발
             if (!stopped)
             {
-                if (InputReader.CancelPressed()) { Close(false); Sfx.Play("cancel"); return; }
+                if (!bandit && InputReader.CancelPressed()) { Close(false); Sfx.Play("cancel"); return; }   // 도적 앞에서는 물러설 수 없다
                 if (t > 0f && InputReader.InteractPressed()) { Stop(NeedleAt(t)); return; }
                 if (t > period * 2f * AutoTrips) { Stop(0f); }   // 안 누르면 정가
                 return;
@@ -159,7 +182,8 @@ namespace PocketCaravan
             CuteUI.Fill(new Rect(face.x + 1, face.yMax - 14, face.width - 2, 1), new Color32(0xE6, 0xB0, 0x78, 255));
             if (stopped)
             {
-                string emo = zone == 2 ? "졌소!" : zone == 3 ? "!!" : zone == 1 ? "흠" : "…";
+                string emo = bandit ? (zone == 2 ? "에잇!" : zone == 3 ? "뭐라고?!" : zone == 1 ? "쳇" : "…")
+                    : zone == 2 ? "졌소!" : zone == 3 ? "!!" : zone == 1 ? "흠" : "…";
                 Color32 ec = zone == 2 ? CuteUI.Up : zone == 3 ? CuteUI.Down : CuteUI.Sub;
                 float bw = CuteUI.Width(emo, true, true) + 12, by = face.y - 2 - Mathf.Min(since, .2f) * 20f;
                 var b = new Rect(face.xMax - bw + 6, by, bw, 15);
@@ -178,8 +202,8 @@ namespace PocketCaravan
             float pop = stopped && since < .25f ? -Mathf.Round(Mathf.Sin(since / .25f * Mathf.PI) * 4f) : 0f;   // 멈추면 값이 통 튄다
             float px = CuteUI.Label(sx, r.y + 30 + pop, $"{price}냥", pc, false, true);
             // 11/15 은샘: 취소선 대신 정가와의 차이를 적는다
-            if (diff != 0) CuteUI.Label(px + 8, r.y + 31, $"정가 {baseTotal}냥 · {(diff > 0 ? "+" : "−")}{Mathf.Abs(diff)}냥", CuteUI.Sub, true);
-            string what = $"{item.displayName} ×{count}";
+            if (diff != 0) CuteUI.Label(px + 8, r.y + 31, $"{(bandit ? "통행세" : "정가")} {baseTotal}냥 · {(diff > 0 ? "+" : "−")}{Mathf.Abs(diff)}냥", CuteUI.Sub, true);
+            string what = bandit ? "통행세" : $"{item.displayName} ×{count}";
             CuteUI.LabelRight(r.xMax - 16, r.y + 30, what, CuteUI.Sub, true);
 
             // 저울 눈금
@@ -205,7 +229,8 @@ namespace PocketCaravan
             float ly = bar.yMax + 26;
             if (stopped)
             {
-                string res = zone == 2 ? $"최고! {(selling ? "+" : "−")}{max * 100f:0.#}%" : zone == 3 ? $"욕심이 지나쳤다 {(selling ? "−" : "+")}2%"
+                string res = bandit ? (zone == 2 ? "반값!" : zone == 3 ? "화났다 ×1.5" : zone == 1 ? $"−{result * 100f:0.#}%" : "그대로")
+                    : zone == 2 ? $"최고! {(selling ? "+" : "−")}{max * 100f:0.#}%" : zone == 3 ? $"욕심이 지나쳤다 {(selling ? "−" : "+")}2%"
                     : zone == 1 ? $"{(selling ? "+" : "−")}{result * 100f:0.#}%" : "정가";
                 Color32 rc = zone == 2 ? new Color32(0xC9, 0x8A, 0x00, 255) : zone == 3 ? CuteUI.Down : zone == 1 ? CuteUI.Up : CuteUI.Sub;
                 CuteUI.LabelCenter(bar.center.x, ly, res, rc, false, true);
