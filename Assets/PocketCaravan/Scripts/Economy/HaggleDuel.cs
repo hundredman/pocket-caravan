@@ -34,7 +34,7 @@ namespace PocketCaravan
         {
             new Card("praise", "칭찬", Tag.Talk, 12, 0, "물건 보는 눈을 추어올린다"),
             new Card("praise", "칭찬", Tag.Talk, 12, 0, "물건 보는 눈을 추어올린다"),
-            new Card("banter", "너스레", Tag.Talk, 0, 0, "농담 한마디. 4~26, 운에 맡긴다"),
+            new Card("banter", "너스레", Tag.Talk, 0, 0, "농담 한마디. 마음 +4~26, 운에 맡긴다"),
             new Card("quote", "시세 들먹이기", Tag.Count, 22, 1, "옆 장터 값을 꺼낸다"),
             new Card("quote", "시세 들먹이기", Tag.Count, 22, 1, "옆 장터 값을 꺼낸다"),
             new Card("bulk", "대량 거래", Tag.Count, 0, 0, "많이 거래한다고 내세운다. 수량만큼"),
@@ -155,8 +155,8 @@ namespace PocketCaravan
             return Mathf.RoundToInt(g);
         }
 
-        /// <summary>미리 보기용: 운(너스레)은 평균, 좋고 싫음은 아는 것만</summary>
-        string Preview(Card c)
+        /// <summary>카드에 보일 효과: 운(너스레)은 "?", 좋고 싫음은 알게 된 것만 반영</summary>
+        void Effect(Card c, out string gain, out int irkDelta)
         {
             float g = c.id == "banter" ? 15 : c.id == "bulk" ? 6 + Mathf.Min(count, 14) : c.mind;
             if (c.id == "regular" && standing >= ReputationStanding.Friendly) g += 8;
@@ -166,9 +166,8 @@ namespace PocketCaravan
             if (likeKnown && (int)c.tag == like) { g *= 1.5f; ik -= 1; }
             if (dislikeKnown && (int)c.tag == dislike) { g *= 0.5f; if (c.id != "contract") ik += 1; }
             g *= temperament < 0 ? 0.85f : temperament > 0 ? 1.15f : 1f;
-            string s = (c.id == "banter" ? "마음 ?" : $"마음 +{Mathf.RoundToInt(g)}");
-            if (ik > 0) s += $" · 짜증 +{ik}"; else if (ik < 0) s += $" · 짜증 {ik}";
-            return s;
+            gain = c.id == "banter" ? "+?" : $"+{Mathf.RoundToInt(g)}";
+            irkDelta = ik;
         }
 
         void Play(int index, Rect from)
@@ -265,8 +264,12 @@ namespace PocketCaravan
         }
 
         // ---------- 그리기 ----------
+        // 11/15 2판: 번잡하다는 의견 → 한 화면에 눈이 가는 곳을 셋(상인 · 값 · 카드)으로 줄였다.
+        // 카드에는 갈래·이름·마음 숫자만, 설명은 고른 카드 한 줄로. 남은 말·짜증은 점 몇 개, 단축키 안내는 키캡만.
         readonly Rect[] cardRects = new Rect[HandSize];
-        const float W = 440f, H = 286f;
+        const float W = 400f, H = 250f;
+        static readonly Color32 Pink = new Color32(0xE8, 0x5D, 0x8A, 255), PinkFill = new Color32(0xF2, 0x7A, 0xA0, 255), PinkHi = new Color32(0xFF, 0xC2, 0xD4, 255);
+        static readonly Color32 Wood = new Color32(0xC9, 0x8A, 0x4B, 255), WoodHi = new Color32(0xE6, 0xB0, 0x78, 255), Cream = new Color32(0xFF, 0xF4, 0xE6, 255);
 
         void OnGUI()
         {
@@ -274,166 +277,153 @@ namespace PocketCaravan
             UIStyle.Begin();
             GUI.depth = -30;
             float vw = UIStyle.VirtualWidth, vh = UIStyle.VirtualHeight, now = Time.unscaledTime;
-            CuteUI.Fill(new Rect(0, 0, vw, vh), new Color32(30, 15, 35, 110));
+            CuteUI.Fill(new Rect(0, 0, vw, vh), new Color32(30, 15, 35, 120));
             float appear = Mathf.Clamp01((now - openedAt) / .18f);
             var r = new Rect(Mathf.Round((vw - W) / 2f), Mathf.Round((vh - H) / 2f + (1f - appear) * 10f), W, H);
             CuteUI.Window(r);
             CuteUI.TitlePlate(r.center.x, r.y - 6, "흥정");
-
-            // 머리줄: 무엇을 · 남은 턴
-            string what = $"{item.displayName} ×{count} {(selling ? "팔기" : "사기")}";
-            if (item.icon != null) CuteUI.Sprite(item.icon, new Rect(r.x + 14, r.y + 13, 16, 16));
-            CuteUI.Label(r.x + 34, r.y + 21, what, CuteUI.Text, false, true);
-            float tx = r.xMax - 14;
-            for (int i = Turns - 1; i >= 0; i--) { bool used = i < turn; CuteUI.Circle(tx - 9, r.y + 15, 9, used ? CuteUI.ZeroSoft : CuteUI.Deco, CuteUI.Ink); tx -= 13; }
-            CuteUI.LabelRight(tx - 2, r.y + 21, "남은 말", CuteUI.Sub, true);
-
-            // 상인 무대
-            var stage = new Rect(r.x + 12, r.y + 34, 112, 132);
-            CuteUI.Box(stage, 8, new Color32(0xFF, 0xF0, 0xDC, 255), CuteUI.Line);
-            CuteUI.Fill(new Rect(stage.x + 1, stage.y + 1, stage.width - 2, 10), new Color32(0xE8, 0x5D, 0x5D, 255));
-            for (float sx = stage.x + 1; sx < stage.xMax - 1; sx += 14) CuteUI.Fill(new Rect(sx, stage.y + 1, 7, 10), new Color32(0xFF, 0xF4, 0xE6, 255));
-            for (float sx = stage.x + 4; sx < stage.xMax - 4; sx += 14) CuteUI.Fill(new Rect(sx, stage.y + 11, 7, 3), new Color32(0xE8, 0x5D, 0x5D, 255));
             float react = phase == Phase.React ? now - phaseAt : 9f;
-            float bob = Mathf.Round(Mathf.Sin(now * 2.2f) * 1.5f);
-            float shake = react < .35f && lastFeel < 0 ? Mathf.Round(Mathf.Sin(react * 60f) * 2f) : 0f;
-            float hop = react < .35f && lastFeel > 0 ? -Mathf.Round(Mathf.Sin(react / .35f * Mathf.PI) * 8f) : 0f;
-            if (phase == Phase.Result && failed) shake = (now - phaseAt) < .4f ? Mathf.Round(Mathf.Sin((now - phaseAt) * 60f) * 3f) : 0f;
-            if (merchant != null) CuteUI.Sprite(merchant, new Rect(stage.center.x - 40 + shake, stage.yMax - 26 - 98 + bob + hop, 80, 120));   // 다리는 좌판 뒤로
-            CuteUI.Fill(new Rect(stage.x + 6, stage.yMax - 26, stage.width - 12, 20), new Color32(0xC9, 0x8A, 0x4B, 255));
-            CuteUI.Fill(new Rect(stage.x + 6, stage.yMax - 26, stage.width - 12, 2), new Color32(0xE6, 0xB0, 0x78, 255));
-            CuteUI.Fill(new Rect(stage.x + 6, stage.yMax - 6, stage.width - 12, 1), CuteUI.Ink);
-            string temp = temperament < 0 ? "깐깐함" : temperament > 0 ? "너그러움" : "보통";
-            CuteUI.LabelCenter(stage.center.x, stage.yMax - 15, $"{town.displayName} 상인 · {temp}", new Color32(0xFF, 0xF4, 0xE6, 255), true, true);
-            // 감정 표시
-            if (phase == Phase.React && react < .9f || phase == Phase.Result)
+
+            // 머리줄: 물건 · 남은 말(점)
+            float hx = r.x + 16;
+            if (item.icon != null) { CuteUI.Sprite(item.icon, new Rect(hx, r.y + 14, 16, 16)); hx += 20; }
+            CuteUI.Label(hx, r.y + 22, $"{item.displayName} ×{count} {(selling ? "팔기" : "사기")}", CuteUI.Text, false, true);
+            for (int i = 0; i < Turns; i++)
             {
-                string emo = phase == Phase.Result ? (failed ? "!!" : "♪") : lastFeel > 0 ? "♥" : lastFeel < 0 ? "!!" : lastGain >= 20 ? "…!" : "…";
-                Color32 ec = (phase == Phase.Result ? failed : lastFeel < 0) ? CuteUI.Down : lastFeel > 0 || (phase == Phase.Result && !failed) ? new Color32(0xE8, 0x5D, 0x8A, 255) : CuteUI.Sub;
-                float ey = stage.y + 26 - Mathf.Min(react, .3f) * 20f;
-                CuteUI.Circle(stage.xMax - 30, ey - 8, 20, CuteUI.White, CuteUI.Ink, 1, 1);
-                CuteUI.LabelCenter(stage.xMax - 20, ey + 2, emo, ec, false, true);
+                bool left = i >= turn;
+                CuteUI.Circle(r.xMax - 18 - (Turns - 1 - i) * 11, r.y + 18, 8, left ? CuteUI.Deco : CuteUI.ZeroSoft, left ? CuteUI.Ink : CuteUI.Line);
             }
 
-            // 말풍선
-            var bub = new Rect(stage.xMax + 10, r.y + 34, r.xMax - 14 - (stage.xMax + 10), 44);
-            CuteUI.Box(bub, 7, CuteUI.White, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
-            CuteUI.Fill(new Rect(bub.x - 4, bub.y + 14, 5, 1), CuteUI.Ink); CuteUI.Fill(new Rect(bub.x - 4, bub.y + 20, 5, 1), CuteUI.Ink);
-            CuteUI.Fill(new Rect(bub.x - 4, bub.y + 14, 1, 7), CuteUI.Ink); CuteUI.Fill(new Rect(bub.x - 3, bub.y + 15, 4, 5), CuteUI.White);
-            CuteUI.Wrap(bub.x + 8, bub.y + 6, bub.width - 16, line, CuteUI.Text, true);
-
-            // 값과 마음 · 짜증
-            var pr = new Rect(bub.x, bub.yMax + 8, bub.width, 80);
-            CuteUI.Box(pr, 8, CuteUI.Paper2, CuteUI.Line);
-            int nowPrice = phase == Phase.Result && failed ? PriceFail : Mathf.Max(1, Mathf.RoundToInt(baseTotal * (selling ? 1f + max * shownMind / 100f : 1f - max * shownMind / 100f)));
-            int diff = nowPrice - baseTotal;
-            float px = CuteUI.Label(pr.x + 10, pr.y + 16, $"{baseTotal}냥", CuteUI.Sub, false, false);
-            if (diff != 0) CuteUI.Fill(new Rect(pr.x + 10, pr.y + 16, px - pr.x - 10, 1), CuteUI.Sub);
-            px = CuteUI.Label(px + 6, pr.y + 16, "→", CuteUI.Sub, true);
-            bool good = selling ? diff > 0 : diff < 0;
-            px = CuteUI.Label(px + 6, pr.y + 16, $"{nowPrice}냥", diff == 0 ? CuteUI.Text : good ? CuteUI.Up : CuteUI.Down, false, true);
-            if (diff != 0) CuteUI.Label(px + 6, pr.y + 16, $"({(diff > 0 ? "+" : "−")}{Mathf.Abs(diff)}냥)", good ? CuteUI.Up : CuteUI.Down, true, true);
-            CuteUI.LabelRight(pr.xMax - 10, pr.y + 16, $"최대 {max * 100f:0.#}% (신용)", CuteUI.Sub, true);
-            // 마음 막대
-            CuteUI.Label(pr.x + 10, pr.y + 38, "마음", new Color32(0xE8, 0x5D, 0x8A, 255), true, true);
-            var bar = new Rect(pr.x + 40, pr.y + 32, pr.width - 50, 12);
-            CuteUI.Bar(bar, shownMind / 100f, new Color32(0xF2, 0x7A, 0xA0, 255), new Color32(0xFF, 0xC2, 0xD4, 255));
-            for (int q = 1; q < 4; q++) CuteUI.Fill(new Rect(bar.x + bar.width * q / 4f, bar.y + 1, 1, bar.height - 2), new Color32(255, 255, 255, 140));
-            if (now - popAt < 1f && lastGain > 0)
+            // 왼쪽: 상인과 좌판
+            var stage = new Rect(r.x + 14, r.y + 38, 104, 118);
+            CuteUI.Box(stage, 8, CuteUI.Paper2, CuteUI.Line);
+            float bob = Mathf.Round(Mathf.Sin(now * 2.2f) * 1f);
+            float shake = react < .35f && lastFeel < 0 ? Mathf.Round(Mathf.Sin(react * 60f) * 2f) : 0f;
+            float hop = react < .35f && lastFeel > 0 ? -Mathf.Round(Mathf.Sin(react / .35f * Mathf.PI) * 6f) : 0f;
+            if (phase == Phase.Result && failed && now - phaseAt < .4f) shake = Mathf.Round(Mathf.Sin((now - phaseAt) * 60f) * 3f);
+            float counterY = stage.yMax - 24;
+            if (merchant != null) CuteUI.Sprite(merchant, new Rect(stage.center.x - 36 + shake, counterY - 86 + bob + hop, 72, 108));
+            CuteUI.Fill(new Rect(stage.x + 1, counterY, stage.width - 2, stage.yMax - counterY - 1), Wood);
+            CuteUI.Fill(new Rect(stage.x + 1, counterY, stage.width - 2, 2), WoodHi);
+            string temp = temperament < 0 ? "깐깐함" : temperament > 0 ? "너그러움" : "보통";
+            CuteUI.LabelCenter(stage.center.x, counterY + 12, temp, Cream, true, true);
+            // 감정 (반응할 때만)
+            if ((phase == Phase.React && react < .9f) || phase == Phase.Result)
             {
-                float k = (now - popAt); var oc = GUI.color; GUI.color = new Color(oc.r, oc.g, oc.b, 1f - k * k);
-                CuteUI.LabelCenter(Mathf.Min(bar.xMax - 10, bar.x + bar.width * Mathf.Clamp01(mind / 100f) + 12), bar.y + 6 - k * 6f, $"+{lastGain}", new Color32(0xE8, 0x5D, 0x8A, 255), false, true);
+                bool bad = phase == Phase.Result ? failed : lastFeel < 0;
+                bool love = phase == Phase.Result ? !failed && result > 0f : lastFeel > 0;
+                string emo = bad ? "!!" : love ? "♥" : "…";
+                float ey = stage.y + 14 - Mathf.Min(react, .25f) * 16f;
+                CuteUI.Circle(stage.xMax - 28, ey, 20, CuteUI.White, CuteUI.Ink, 1, 1);
+                CuteUI.LabelCenter(stage.xMax - 18, ey + 10, emo, bad ? CuteUI.Down : love ? Pink : CuteUI.Sub, false, true);
+            }
+
+            // 오른쪽: 말풍선
+            float rx = stage.xMax + 12, rw = r.xMax - 16 - rx;
+            var bub = new Rect(rx, stage.y, rw, 40);
+            CuteUI.Box(bub, 7, CuteUI.White, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
+            CuteUI.Fill(new Rect(bub.x - 4, bub.y + 13, 5, 1), CuteUI.Ink); CuteUI.Fill(new Rect(bub.x - 4, bub.y + 19, 5, 1), CuteUI.Ink);
+            CuteUI.Fill(new Rect(bub.x - 4, bub.y + 13, 1, 7), CuteUI.Ink); CuteUI.Fill(new Rect(bub.x - 3, bub.y + 14, 4, 5), CuteUI.White);
+            CuteUI.Wrap(bub.x + 8, bub.y + 5, bub.width - 16, line, CuteUI.Text, true);
+
+            // 오른쪽: 값 (한눈에)
+            int nowPrice = phase == Phase.Result && failed ? PriceFail : Mathf.Max(1, Mathf.RoundToInt(baseTotal * (selling ? 1f + max * shownMind / 100f : 1f - max * shownMind / 100f)));
+            int diff = nowPrice - baseTotal; bool good = selling ? diff > 0 : diff < 0;
+            float py = bub.yMax + 22;
+            float px = CuteUI.Label(rx, py, $"{nowPrice}냥", diff == 0 ? CuteUI.Text : good ? CuteUI.Up : CuteUI.Down, false, true);
+            if (diff != 0)
+            {
+                float ox = CuteUI.Label(px + 8, py, $"{baseTotal}냥", CuteUI.Zero, true);
+                CuteUI.Fill(new Rect(px + 8, py, ox - px - 8, 1), CuteUI.Zero);
+                CuteUI.Label(ox + 6, py, $"{(diff > 0 ? "+" : "−")}{Mathf.Abs(diff)}", good ? CuteUI.Up : CuteUI.Down, true, true);
+            }
+            // 마음 막대 + 짜증 점
+            var bar = new Rect(rx, py + 14, rw - 52, 10);
+            CuteUI.Bar(bar, shownMind / 100f, PinkFill, PinkHi);
+            CuteUI.Label(rx, bar.yMax + 9, "마음", Pink, true, true);
+            if (now - popAt < .9f && lastGain > 0)
+            {
+                float k = (now - popAt) / .9f; var oc = GUI.color; GUI.color = new Color(oc.r, oc.g, oc.b, 1f - k * k);
+                CuteUI.Label(bar.x + bar.width * Mathf.Clamp01(mind / 100f) - 8, bar.yMax + 9 - k * 4f, $"+{lastGain}", Pink, true, true);
                 GUI.color = oc;
             }
-            // 짜증
-            CuteUI.Label(pr.x + 10, pr.y + 62, "짜증", CuteUI.Down, true, true);
             for (int i = 0; i < IrkLimit; i++)
             {
-                bool on = i < irk; float ix = pr.x + 40 + i * 20;
+                bool on = i < irk; float ix = bar.xMax + 10 + i * 14;
                 float pulse = on && phase == Phase.React && react < .4f && i == irk - 1 ? Mathf.Round(Mathf.Sin(react * 40f) * 1.5f) : 0f;
-                CuteUI.Box(new Rect(ix, pr.y + 55 + pulse, 15, 14), 4, on ? CuteUI.Down : CuteUI.White, on ? new Color32(0x9C, 0x1C, 0x36, 255) : CuteUI.Line);
-                if (on) CuteUI.LabelCenter(ix + 7.5f, pr.y + 62 + pulse, "!", CuteUI.White, true, true);
+                CuteUI.Box(new Rect(ix, bar.y - 1 + pulse, 11, 12), 3, on ? CuteUI.Down : CuteUI.White, on ? new Color32(0x9C, 0x1C, 0x36, 255) : CuteUI.Line);
+                if (on) CuteUI.LabelCenter(ix + 5.5f, bar.y + 5 + pulse, "!", CuteUI.White, true, true);
             }
-            // 상인 취향 (알게 된 것만)
-            string taste = (likeKnown ? $"좋아함 {TagNames[like]}" : "좋아함 ?") + "  " + (dislikeKnown ? $"싫어함 {TagNames[dislike]}" : "싫어함 ?");
-            CuteUI.LabelRight(pr.xMax - 10, pr.y + 62, taste, CuteUI.Sub, true);
+            CuteUI.Label(bar.xMax + 10, bar.yMax + 9, "짜증", CuteUI.Zero, true);
+            // 알게 된 취향 (알 때만)
+            string taste = (likeKnown ? $"♥ {TagNames[like]}" : "") + (likeKnown && dislikeKnown ? "   " : "") + (dislikeKnown ? $"✕ {TagNames[dislike]}" : "");
+            if (taste.Length > 0) CuteUI.LabelRight(r.xMax - 16, bub.yMax + 22, taste, CuteUI.Sub, true);
 
-            // 카드
-            float cy = r.y + 178, cw = 98, ch = 80, gap = 8;
-            float total = HandSize * cw + (HandSize - 1) * gap, cx0 = r.x + 12;
+            // 아래: 카드 · 이 값으로
+            float cy = r.y + 166, cw = 82, ch = 60, gap = 8, cx0 = r.x + 14;
             for (int i = 0; i < HandSize; i++) cardRects[i] = new Rect(cx0 + i * (cw + gap), cy, cw, ch);
+            float sideX = cx0 + HandSize * (cw + gap) + 4;
+            var side = new Rect(sideX, cy, r.xMax - 14 - sideX, ch);
             if (phase == Phase.Play)
             {
                 for (int i = 0; i < hand.Count; i++)
                 {
                     var cr = cardRects[i];
-                    bool hover = cr.Contains(Event.current.mousePosition);
-                    if (hover && Event.current.type == EventType.MouseMove) selected = i;
+                    if (cr.Contains(Event.current.mousePosition) && Event.current.type == EventType.MouseMove) selected = i;
                     bool sel = i == selected;
-                    float lift = sel ? -5f : 0f;
                     float deal = Mathf.Clamp01((now - phaseAt - i * .06f) / .18f);
-                    var dr = new Rect(cr.x, cr.y + lift + (1f - deal) * 16f, cr.width, cr.height);
+                    var dr = new Rect(cr.x, cr.y + (sel ? -4f : 0f) + (1f - deal) * 14f, cr.width, cr.height);
                     var oc = GUI.color; GUI.color = new Color(oc.r, oc.g, oc.b, deal);
                     DrawCard(dr, hand[i], sel, i + 1);
                     GUI.color = oc;
                     if (GUI.Button(dr, GUIContent.none, GUIStyle.none)) Play(i, dr);
                 }
+                if (selected < hand.Count) CuteUI.Label(cx0, cy + ch + 12, hand[selected].desc, CuteUI.Sub, true);
             }
             else if (phase == Phase.React && flying != null)
             {
-                float k = Mathf.Clamp01((now - flyAt) / .35f), e = 1f - (1f - k) * (1f - k);
-                var to = new Rect(stage.center.x - 30, stage.y + 40, 60, 43);
+                float k = Mathf.Clamp01((now - flyAt) / .3f), e = 1f - (1f - k) * (1f - k);
+                var to = new Rect(stage.center.x - 25, stage.y + 30, 50, 37);
                 var fr = new Rect(Mathf.Lerp(flyFrom.x, to.x, e), Mathf.Lerp(flyFrom.y, to.y, e), Mathf.Lerp(flyFrom.width, to.width, e), Mathf.Lerp(flyFrom.height, to.height, e));
-                var oc = GUI.color; GUI.color = new Color(oc.r, oc.g, oc.b, 1f - Mathf.Clamp01((now - flyAt - .35f) / .3f));
+                var oc = GUI.color; GUI.color = new Color(oc.r, oc.g, oc.b, 1f - Mathf.Clamp01((now - flyAt - .3f) / .25f));
                 DrawCard(fr, flying, false, 0);
                 GUI.color = oc;
             }
-
-            if (phase == Phase.Result)
+            else if (phase == Phase.Result)
             {
-                // 낸 카드 돌아보기
                 for (int i = 0; i < played.Count && i < HandSize; i++)
                 {
-                    var pc = played[i]; var cr = cardRects[i]; int t = (int)pc.card.tag;
-                    var rr = new Rect(cr.x, cr.y + 10, cr.width, 50);
-                    CuteUI.Box(rr, 7, CuteUI.White, CuteUI.KeyLine, 1, 2, CuteUI.SoftShadow);
-                    CuteUI.Box(new Rect(rr.x + 3, rr.y + 3, rr.width - 6, 15), 5, TagSoft[t], TagColors[t]);
-                    CuteUI.Label(rr.x + 8, rr.y + 10.5f, $"{i + 1}. {TagNames[t]}", TagColors[t], true, true);
-                    if (pc.feel != 0) CuteUI.LabelRight(rr.xMax - 8, rr.y + 10.5f, pc.feel > 0 ? "♥ 좋아함" : "✕ 싫어함", pc.feel > 0 ? new Color32(0xE8, 0x5D, 0x8A, 255) : CuteUI.Down, true, true);
-                    CuteUI.Label(rr.x + 7, rr.y + 28, pc.card.name, CuteUI.Text, false, true);
-                    CuteUI.Label(rr.x + 7, rr.y + 42, $"마음 +{pc.gain}", TagColors[t], true, true);
+                    var p = played[i]; var cr = cardRects[i]; int t = (int)p.card.tag;
+                    CuteUI.Box(cr, 7, CuteUI.Paper2, CuteUI.Line);
+                    CuteUI.Box(new Rect(cr.x, cr.y, 4, cr.height), 2, TagColors[t], TagColors[t], 0);
+                    CuteUI.Label(cr.x + 10, cr.y + 14, p.card.name, CuteUI.Text, true, true);
+                    CuteUI.Label(cr.x + 10, cr.y + 32, $"+{p.gain}", Pink, false, true);
+                    if (p.feel != 0) CuteUI.LabelRight(cr.xMax - 8, cr.y + 32, p.feel > 0 ? "♥" : "✕", p.feel > 0 ? Pink : CuteUI.Down, false, true);
                 }
             }
 
-            // 오른쪽 아래: 값 정하기 · 그만두기 / 결과
-            var side = new Rect(cx0 + total + 10, cy, r.xMax - 12 - (cx0 + total + 10), ch);
             if (phase == Phase.Result)
             {
-                // 결과 도장
-                float k = Mathf.Clamp01((now - phaseAt) / .25f); float s = Mathf.Lerp(1.6f, 1f, k);
+                float k = Mathf.Clamp01((now - phaseAt) / .22f); float s = Mathf.Lerp(1.5f, 1f, k);
                 string stamp = failed ? "토라짐" : result > 0 ? "흥정 성공" : "그대로";
                 Color32 sc = failed ? CuteUI.Down : result > 0 ? CuteUI.Up : CuteUI.Sub;
-                var m = GUI.matrix; GUIUtility.RotateAroundPivot(-8f, new Vector2(side.center.x, side.y + 20) * UIStyle.Scale);
-                GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(side.center.x, side.y + 20) * UIStyle.Scale);
-                var st = new Rect(side.center.x - 40, side.y + 8, 80, 24);
-                CuteUI.Box(st, 5, new Color32(255, 255, 255, 220), sc, 2);
+                var pivot = new Vector2(side.center.x, side.y + 14);
+                var m = GUI.matrix; GUIUtility.RotateAroundPivot(-8f, pivot * UIStyle.Scale); GUIUtility.ScaleAroundPivot(new Vector2(s, s), pivot * UIStyle.Scale);
+                var st = new Rect(side.center.x - 36, side.y + 3, 72, 22);
+                CuteUI.Box(st, 5, new Color32(255, 255, 255, 230), sc, 2);
                 CuteUI.LabelCenter(st.center.x, st.center.y, stamp, sc, false, true);
                 GUI.matrix = m;
-                string res = failed ? $"이번만 {(selling ? "−" : "+")}2%" : result > 0 ? $"{(selling ? "+" : "−")}{result * 100f:0.#}%" : "0%";
-                CuteUI.LabelCenter(side.center.x, side.y + 44, res, sc, false, true);
-                if (now - phaseAt > .35f && CuteUI.Button(new Rect(side.x + 4, side.yMax - 20, side.width - 8, 20), "확인")) Close(true);
+                if (now - phaseAt > .35f && CuteUI.Button(new Rect(side.x, side.yMax - 24, side.width, 24), "확인")) Close(true);
             }
             else
             {
                 bool can = phase == Phase.Play && turn > 0;
-                var sb = new Rect(side.x + 4, side.y, side.width - 8, 30);
+                var sb = new Rect(side.x, side.y + 8, side.width, 28);
                 if (can) { if (CuteUI.Button(sb, "이 값으로")) Finish(false); }
                 else { CuteUI.Box(sb, 8, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter(sb.center.x, sb.center.y, "이 값으로", CuteUI.Zero, false, true); }
-                CuteUI.Keycap(sb.xMax - 16, sb.y - 6, "4", true);
-                var qb = new Rect(side.x + 4, side.y + 40, side.width - 8, 22);
-                if (CuteUI.SoftButton(qb, "그만두기")) { Close(false); Sfx.Play("cancel"); }
+                CuteUI.Keycap(sb.xMax - 12, sb.y - 6, "4", true);
+                CuteUI.LabelCenter(side.center.x, sb.yMax + 14, "Esc 그만두기", CuteUI.Zero, true);
             }
-            CuteUI.LabelCenter(r.center.x, r.yMax - 14, phase == Phase.Result ? "Space 확인" : "1·2·3 또는 ←→ Space 카드 내기  ·  4 이 값으로  ·  Esc 그만두기", CuteUI.Sub, true);
 
             // 장터 창이 클릭을 받지 않게
             if (Event.current.isMouse || Event.current.type == EventType.ScrollWheel) Event.current.Use();
@@ -442,18 +432,19 @@ namespace PocketCaravan
         void DrawCard(Rect c, Card card, bool sel, int key)
         {
             int t = (int)card.tag;
-            CuteUI.Box(c, 7, CuteUI.White, sel ? CuteUI.Ink : CuteUI.KeyLine, sel ? 2 : 1, sel ? 3 : 2, CuteUI.SoftShadow);
-            CuteUI.Box(new Rect(c.x + 3, c.y + 3, c.width - 6, 15), 5, TagSoft[t], TagColors[t]);
-            CuteUI.Label(c.x + 8, c.y + 10.5f, TagNames[t], TagColors[t], true, true);
-            if (likeKnown && t == like) CuteUI.LabelRight(c.xMax - 8, c.y + 10.5f, "♥", new Color32(0xE8, 0x5D, 0x8A, 255), true, true);
-            else if (dislikeKnown && t == dislike) CuteUI.LabelRight(c.xMax - 8, c.y + 10.5f, "✕", CuteUI.Down, true, true);
-            CuteUI.Label(c.x + 7, c.y + 28, card.name, CuteUI.Text, false, true);
-            if (c.height >= 60)
-            {
-                CuteUI.Wrap(c.x + 7, c.y + 36, c.width - 12, card.desc, CuteUI.Sub, true);
-                CuteUI.Label(c.x + 7, c.yMax - 8, Preview(card), TagColors[t], true, true);
-            }
-            if (key > 0) CuteUI.Keycap(c.xMax - 14, c.y - 5, key.ToString(), true);
+            CuteUI.Box(c, 7, CuteUI.White, sel ? CuteUI.Ink : CuteUI.Line, sel ? 2 : 1, sel ? 3 : 2, CuteUI.SoftShadow);
+            float hh = Mathf.Min(16, c.height / 3f);
+            CuteUI.Box(new Rect(c.x + 1, c.y + 1, c.width - 2, hh), 6, TagSoft[t], TagSoft[t], 0);
+            CuteUI.Fill(new Rect(c.x + 1, c.y + hh / 2f, c.width - 2, hh / 2f + 1), TagSoft[t]);
+            CuteUI.Label(c.x + 8, c.y + 8, TagNames[t], TagColors[t], true, true);
+            if (likeKnown && t == like) CuteUI.LabelRight(c.xMax - 8, c.y + 8, "♥", Pink, true, true);
+            else if (dislikeKnown && t == dislike) CuteUI.LabelRight(c.xMax - 8, c.y + 8, "✕", CuteUI.Down, true, true);
+            if (c.height < 40) return;
+            CuteUI.Label(c.x + 8, c.y + 27, card.name, CuteUI.Text, true, true);
+            Effect(card, out string gain, out int ik);
+            float x = CuteUI.Label(c.x + 8, c.yMax - 12, gain, Pink, false, true);
+            if (ik != 0) CuteUI.Label(x + 5, c.yMax - 11, ik > 0 ? $"짜증+{ik}" : $"짜증{ik}", ik > 0 ? CuteUI.Down : CuteUI.Up, true);
+            if (key > 0) CuteUI.Keycap(c.xMax - 10, c.y - 5, key.ToString(), true);
         }
 
         static ulong Hash(string s)
