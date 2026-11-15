@@ -339,7 +339,7 @@ namespace PocketCaravan
                 // 11/11 윤채: 말풍선은 꼬리 끝을 기준으로 톡 튀어나온다 (0.6 → 1.06 → 1, 0.16초)
                 var m = GUI.matrix;
                 float k = Mathf.Clamp01((Time.unscaledTime - kv.Value.at) / .16f);
-                if (k < 1f) { float s = k < .6f ? Mathf.Lerp(.6f, 1.06f, k / .6f) : Mathf.Lerp(1.06f, 1f, (k - .6f) / .4f); GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(cx, by - 3f) * scale); }
+                if (k < 1f) { float s = k < .6f ? Mathf.Lerp(.6f, 1.06f, k / .6f) : Mathf.Lerp(1.06f, 1f, (k - .6f) / .4f); CuteUI.ScaleAround(s, new Vector2(cx, by - 3f)); }
                 CuteUI.Bubble(r, cx, kv.Key == net.MyId ? CuteUI.Interact : CuteUI.Ink);
                 GUI.Label(new Rect(r.x + 6f, r.y + 3f, w, h), content, bubbleStyle);
                 GUI.matrix = m;

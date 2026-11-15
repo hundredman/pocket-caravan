@@ -134,7 +134,6 @@ namespace PocketCaravan
         static readonly Color32 Grey = new Color32(0xD9, 0xD2, 0xCC, 255), GreenLo = new Color32(0xB7, 0xE4, 0xA8, 255), GreenHi = new Color32(0x3F, 0xB8, 0x5A, 255),
             Gold = new Color32(0xFF, 0xCF, 0x33, 255), GoldHi = new Color32(0xFF, 0xF1, 0xA8, 255), Red = new Color32(0xF0, 0x55, 0x5A, 255),
             Wood = new Color32(0xC9, 0x8A, 0x4B, 255), WoodLo = new Color32(0x8E, 0x5A, 0x2C, 255), Brass = new Color32(0xE0, 0xA8, 0x3A, 255);
-        static bool seenHint;
 
         void OnGUI()
         {
@@ -152,7 +151,7 @@ namespace PocketCaravan
 
             // 상인
             var face = new Rect(r.x + 14, r.y + 16, 66, 84);
-            CuteUI.Box(face, 8, CuteUI.Paper2, CuteUI.Line);
+            CuteUI.Box(face, 8, CuteUI.Paper2, CuteUI.Ink, 2);   // 11/15 은샘: 상인 그림 둘레 선
             float hop = stopped && zone == 2 && since < .3f ? -Mathf.Round(Mathf.Sin(since / .3f * Mathf.PI) * 5f) : 0f;
             float bob = Mathf.Round(Mathf.Sin(now * 2.4f));
             if (merchant != null) CuteUI.Sprite(merchant, new Rect(face.center.x - 24, face.y + 10 + bob + hop, 48, 72));
@@ -178,11 +177,8 @@ namespace PocketCaravan
             float sx = r.x + 92, sw = r.xMax - 16 - sx;
             float pop = stopped && since < .25f ? -Mathf.Round(Mathf.Sin(since / .25f * Mathf.PI) * 4f) : 0f;   // 멈추면 값이 통 튄다
             float px = CuteUI.Label(sx, r.y + 30 + pop, $"{price}냥", pc, false, true);
-            if (diff != 0)
-            {
-                float ox = CuteUI.Label(px + 8, r.y + 31, $"{baseTotal}냥", CuteUI.Zero, true);
-                CuteUI.Fill(new Rect(px + 8, r.y + 31, ox - px - 8, 1), CuteUI.Zero);
-            }
+            // 11/15 은샘: 취소선 대신 정가와의 차이를 적는다
+            if (diff != 0) CuteUI.Label(px + 8, r.y + 31, $"정가 {baseTotal}냥 · {(diff > 0 ? "+" : "−")}{Mathf.Abs(diff)}냥", CuteUI.Sub, true);
             string what = $"{item.displayName} ×{count}";
             CuteUI.LabelRight(r.xMax - 16, r.y + 30, what, CuteUI.Sub, true);
 
@@ -210,13 +206,12 @@ namespace PocketCaravan
                 Color32 rc = zone == 2 ? new Color32(0xC9, 0x8A, 0x00, 255) : zone == 3 ? CuteUI.Down : zone == 1 ? CuteUI.Up : CuteUI.Sub;
                 CuteUI.LabelCenter(bar.center.x, ly, res, rc, false, true);
             }
-            else if (!seenHint || t < 1.2f)
+            else   // 11/15 은샘: 멈추기 전까지 늘 보인다
             {
                 float kx = bar.center.x - (CuteUI.KeycapWidth("Space") + 4 + CuteUI.Width("멈추기", true)) / 2f;
                 kx += CuteUI.Keycap(kx, ly - 6.5f, "Space") + 4;
                 CuteUI.Label(kx, ly, "멈추기", CuteUI.Sub, true);
             }
-            if (stopped) seenHint = true;
 
             if (Event.current.type == EventType.MouseDown && Event.current.button == 0 && !stopped && t > 0f) Stop(NeedleAt(t));
             // 장터 창이 클릭을 받지 않게

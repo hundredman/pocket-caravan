@@ -1360,7 +1360,7 @@ namespace PocketCaravan
             float pw = Mathf.Min(268f, W - 40f), ph = 222f;
             var r = new Rect(Mathf.Round((W - pw) / 2f), Mathf.Round((H - ph) / 2f - 4f + (1f - ease) * 24f), pw, ph);
             var m = GUI.matrix;
-            GUIUtility.RotateAroundPivot(-2.5f, r.center * UIStyle.Scale);
+            CuteUI.RotateAround(-2.5f, r.center);
             CuteUI.Box(r, 3, CuteUI.White, CuteUI.Line, 1, 3, CuteUI.SoftShadow);
             var photo = new Rect(r.x + 10f, r.y + 10f, r.width - 20f, 150f);
             if (photoTex != null)

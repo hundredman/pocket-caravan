@@ -544,7 +544,20 @@ namespace PocketCaravan
             GUI.color = c;
             if (k >= 1f) return;
             float s = Mathf.Lerp(.96f, 1f, e);
-            GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(UIStyle.VirtualWidth / 2f, UIStyle.VirtualHeight / 2f) * UIStyle.Scale);
+            ScaleAround(s, new Vector2(UIStyle.VirtualWidth / 2f, UIStyle.VirtualHeight / 2f));
+        }
+
+        /// <summary>
+        /// 11/15 은샘: 가상 화면 좌표(UIStyle.Begin 뒤) 한 점을 기준으로 키우기·돌리기.
+        /// GUIUtility.ScaleAroundPivot(…, p * UIStyle.Scale)는 기준점이 화면 밖으로 밀려 [Space] 알약 등이 엉뚱한 데서 날아왔다
+        /// </summary>
+        public static void ScaleAround(float s, Vector2 pivot)
+        {
+            GUI.matrix = GUI.matrix * Matrix4x4.TRS(pivot, Quaternion.identity, new Vector3(s, s, 1f)) * Matrix4x4.TRS(-pivot, Quaternion.identity, Vector3.one);
+        }
+        public static void RotateAround(float degrees, Vector2 pivot)
+        {
+            GUI.matrix = GUI.matrix * Matrix4x4.TRS(pivot, Quaternion.Euler(0f, 0f, degrees), Vector3.one) * Matrix4x4.TRS(-pivot, Quaternion.identity, Vector3.one);
         }
 
         /// <summary>둥근 상자. lw = 0이면 테두리 없음, shadow = 아래 그림자 두께</summary>
@@ -804,7 +817,7 @@ namespace PocketCaravan
             if (k < 1f)
             {
                 float s = k < .6f ? Mathf.Lerp(.7f, 1.08f, k / .6f) : Mathf.Lerp(1.08f, 1f, (k - .6f) / .4f);
-                GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(cx, y + 8.5f) * UIStyle.Scale);
+                ScaleAround(s, new Vector2(cx, y + 8.5f));
             }
             bool hover = r.Contains(Event.current.mousePosition);
             Box(r, 7, hover ? Paper2 : Paper, hover ? Interact : Ink, 1, 2, SoftShadow);

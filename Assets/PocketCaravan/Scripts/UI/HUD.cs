@@ -170,7 +170,7 @@ namespace PocketCaravan
         {
             float k = Mathf.Clamp01((Time.unscaledTime - moneyAt) / .28f);
             var m = GUI.matrix;
-            if (k < 1f) { float s = 1f + .45f * Mathf.Sin(k * Mathf.PI); GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(x + 4.5f, y + 4.5f) * UIStyle.Scale); }
+            if (k < 1f) { float s = 1f + .45f * Mathf.Sin(k * Mathf.PI); CuteUI.ScaleAround(s, new Vector2(x + 4.5f, y + 4.5f)); }
             CuteUI.Icon(CuteUI.Pic.Coin, x, y);
             GUI.matrix = m;
         }
