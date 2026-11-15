@@ -391,16 +391,17 @@ namespace PocketCaravan
             CuteUI.Box(new Rect(Mathf.Round(tx + 3 + bp * (tw - 6) - 5), ty - 1, 10, 10), 5, Red, CuteUI.Ink, 2);
             CuteUI.Box(new Rect(Mathf.Round(tx + 3 + p * (tw - 6) - 5), ty - 1, 10, 10), 5, Teal, CuteUI.Ink, 2);
             CuteUI.Fill(new Rect(tx + tw - 2, ty - 8, 2, 14), CuteUI.Ink); CuteUI.Fill(new Rect(tx + tw, ty - 8, 7, 5), Red); CuteUI.Fill(new Rect(tx + tw, ty - 3, 7, 1), CuteUI.Ink);
-            // 끝 글자
+            GUI.EndGroup();
+            // 끝 글자 (그룹 밖에서: 그룹 안에서 키우면 기준점이 어긋나 창 밖에 그려졌다)
             if (end && et > .15f)
             {
                 float k = Back((et - .15f) / .35f);
+                var c = new Vector2(inner.x + w / 2f, inner.y + h / 2f + 4);
                 var m = GUI.matrix;
-                CuteUI.ScaleAround(2f * k, new Vector2(w / 2f, h / 2f + 4));
-                Outlined(w / 2f, h / 2f + 4, won ? "따돌렸다!" : "붙잡혔다!", won ? CuteUI.White : Hex(0xFFC2C4), CuteUI.Ink, false);
+                CuteUI.ScaleAround(2f * k, c);
+                Outlined(c.x, c.y, won ? "따돌렸다!" : "붙잡혔다!", won ? CuteUI.White : Hex(0xFFC2C4), CuteUI.Ink, false);
                 GUI.matrix = m;
             }
-            GUI.EndGroup();
         }
 
         static void DrawChar(Sprite s, float x, float ground, float lift)

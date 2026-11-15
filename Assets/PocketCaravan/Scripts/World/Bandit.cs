@@ -39,7 +39,7 @@ namespace PocketCaravan
             blocksMovement = false;
             myRoot = GetComponentInParent<MapRoot>();
             if (anim == null) anim = GetComponent<CharacterAnimator>();
-            BanditLook.Apply(anim, myRoot != null ? myRoot.mapId : "");
+            BanditLook.Apply(anim, myRoot != null ? myRoot.mapId : MapRoot.Current != null ? MapRoot.Current.mapId : gameObject.scene.name);   // 도적이 MapRoot 밖에 있는 씬도 있다
         }
 
         bool PlayerSettledHere()

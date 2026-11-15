@@ -677,7 +677,7 @@ namespace PocketCaravan
             {
                 float s = Back((tt - .4f) / .35f);
                 var c = new Vector2(g.x + gw / 2f, g.y + gh / 2f - 2);
-                var m = GUI.matrix; CuteUI.ScaleAround(1.6f * s, c);
+                var m = GUI.matrix; CuteUI.ScaleAround((cols >= 7 ? 1.6f : 1.3f) * s, c);   // 작은 판에서는 글자가 수레를 넘지 않게
                 for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) if (x != 0 || y != 0) CuteUI.LabelCenter(c.x + x, c.y + y, "꽉 묶었다!", CuteUI.Ink, false, true);
                 CuteUI.LabelCenter(c.x, c.y, "꽉 묶었다!", CuteUI.White, false, true);
                 GUI.matrix = m;
