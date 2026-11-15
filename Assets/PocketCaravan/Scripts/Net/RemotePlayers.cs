@@ -364,6 +364,7 @@ namespace PocketCaravan
             root.transform.position = new Vector3(p.x, p.y, pc.transform.position.z);
             var body = new GameObject("그림");
             body.transform.SetParent(root.transform, false);
+            root.AddComponent<DepthActor>();   // 11/15 좌판 등과 앞뒤 맞추기
             var sr = body.AddComponent<SpriteRenderer>();
             var anim = body.AddComponent<CharacterAnimator>();
             var mine = pc.anim != null ? pc.anim.GetComponent<SpriteRenderer>() : null;
