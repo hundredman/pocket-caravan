@@ -156,7 +156,8 @@ namespace PocketCaravan
         const float W = 340f, H = 132f;
         static readonly Color32 Grey = new Color32(0xD9, 0xD2, 0xCC, 255), GreenLo = new Color32(0xB7, 0xE4, 0xA8, 255), GreenHi = new Color32(0x3F, 0xB8, 0x5A, 255),
             Gold = new Color32(0xFF, 0xCF, 0x33, 255), GoldHi = new Color32(0xFF, 0xF1, 0xA8, 255), Red = new Color32(0xF0, 0x55, 0x5A, 255),
-            Wood = new Color32(0xC9, 0x8A, 0x4B, 255), WoodLo = new Color32(0x8E, 0x5A, 0x2C, 255), Brass = new Color32(0xE0, 0xA8, 0x3A, 255);
+            Wood = new Color32(0xC9, 0x8A, 0x4B, 255), WoodLo = new Color32(0x8E, 0x5A, 0x2C, 255), Brass = new Color32(0xE0, 0xA8, 0x3A, 255),
+            GoldEdge = new Color32(0xB0, 0x7D, 0x00, 255);
 
         void OnGUI()
         {
@@ -214,9 +215,10 @@ namespace PocketCaravan
             float settle = stopped ? Mathf.Sin(since * 30f) * Mathf.Max(0f, 1f - since * 4f) * 2f : 0f;   // 멈출 때 덜컥
             nx += Mathf.Round(settle);
             CuteUI.Fill(new Rect(nx - 1, bar.y - 9, 3, bar.height + 14), CuteUI.Ink);
-            CuteUI.Fill(new Rect(nx, bar.y - 8, 1, bar.height + 12), stopped && zone == 2 ? Gold : CuteUI.White);
+            bool onGold = stopped ? zone == 2 : ZoneOf(x) == 2;   // 11/17 기우: 금색 위를 지나는 동안에도 추가 빛난다 (지금 누르면 된다)
+            CuteUI.Fill(new Rect(nx, bar.y - 8, 1, bar.height + 12), onGold ? Gold : CuteUI.White);
             // 바늘 머리 (작은 추)
-            CuteUI.Circle(nx - 5, bar.y - 16, 11, stopped && zone == 2 ? Gold : Brass, CuteUI.Ink, 1, 1);
+            CuteUI.Circle(nx - 5, bar.y - 16, 11, onGold ? Gold : Brass, CuteUI.Ink, 1, 1);
             // 받침 (ㅗ): 11/15 은샘 — 다른 그림처럼 테두리를 두르고 저울 막대 테두리에 붙인다
             float cx = Mathf.Round(bar.x + bar.width / 2f), top = bar.yMax + 2;   // 저울 막대 테두리 아래 끝
             CuteUI.Fill(new Rect(cx - 3, top - 1, 6, 8), CuteUI.Ink);            // 기둥 테두리 (막대 테두리와 이어짐)
@@ -224,6 +226,10 @@ namespace PocketCaravan
             CuteUI.Fill(new Rect(cx - 14, top + 7, 28, 4), WoodLo);              // 바닥
             CuteUI.Fill(new Rect(cx - 14, top + 7, 28, 1), Wood);                // 바닥 윗면 빛
             CuteUI.Fill(new Rect(cx - 2, top, 4, 8), WoodLo);                    // 기둥 (바닥과 한 덩어리)
+
+            // 11/17 기우: 양 끝에 정가 ↔ 욕심 (어디로 갈수록 무엇인지)
+            CuteUI.Label(bar.x, bar.yMax + 12, bandit ? "그대로" : "정가", CuteUI.Sub, true);
+            CuteUI.LabelRight(bar.xMax, bar.yMax + 12, "욕심", CuteUI.Down, true);
 
             // 결과 한 줄 또는 첫 판 안내
             float ly = bar.yMax + 26;
@@ -268,6 +274,12 @@ namespace PocketCaravan
                 else c = Red;
                 CuteUI.Fill(new Rect(inner.x + px, inner.y, 1, inner.height), c);
             }
+            // 11/17 기우: 금색 칸은 번지지 않게 또렷이 (테두리) — 빨강도 금색 끝에서 바로 시작
+            float g0 = Mathf.Round(inner.x + inner.width * GoldStart), g1 = Mathf.Round(inner.x + inner.width * redStart);
+            CuteUI.Fill(new Rect(g1, inner.y, inner.xMax - g1, inner.height), Red);
+            CuteUI.Fill(new Rect(g0, inner.y, g1 - g0, inner.height), gold);
+            CuteUI.Fill(new Rect(g0 - 1, inner.y, 1, inner.height), GoldEdge);
+            CuteUI.Fill(new Rect(g1, inner.y, 1, inner.height), GoldEdge);
             CuteUI.Fill(new Rect(inner.x, inner.y, inner.width, 2), new Color32(255, 255, 255, 70));
             // 눈금
             for (int i = 1; i < 10; i++) CuteUI.Fill(new Rect(Mathf.Round(inner.x + inner.width * i / 10f), inner.yMax - 4, 1, 4), new Color32(42, 26, 46, 70));
