@@ -235,7 +235,7 @@ namespace PocketCaravan
             if (typing) bottom = DrawInput(bottom);
             float top = DrawLines(bottom);
             // 11/08 알림이 채팅을 덮지 않게 차지한 자리를 알린다 (알림은 그 오른쪽 · 너무 좁으면 위로)
-            if (top < floor) ScreenZones.Mark("chat", Rect.MinMaxRect(6f, top, 6f + (typing ? LogWidth + 40f + 52f : logW + 12f), floor));
+            if (top < floor) ScreenZones.Mark("chat", Rect.MinMaxRect(6f, top, 6f + (typing ? LogWidth + 40f + 88f : logW + 12f), floor));
             // 11/08 채팅 목록을 누르면 입력 칸이 열린다 (Enter와 같다)
             if (!typing && top < floor && GUI.Button(Rect.MinMaxRect(6f, top, 6f + logW + 12f, floor), GUIContent.none, GUIStyle.none)) OpenInput();
         }
@@ -252,21 +252,26 @@ namespace PocketCaravan
         }
 
         /// <summary>
-        /// 입력 칸 (11/05 B안: 종이 카드 + 흰 칸 + 청록 테두리, 아래 줄에 도움말). 위쪽 끝 y를 돌려준다 (목록을 그 위에 쌓는다)
+        /// 입력 칸 (11/05 B안: 종이 카드 + 흰 칸 + 청록 테두리). 위쪽 끝 y를 돌려준다 (목록을 그 위에 쌓는다)
+        /// 11/17 한 줄로 정리: 아래 도움말 줄(Enter·Esc·가/A 안내)은 뺐다. 빈 칸에 흐린 안내만, 글자 수는 끝 10자 남았을 때만.
+        /// 보내기·닫기는 칸 오른쪽에 나란히 (Enter·Esc도 그대로 된다).
         /// </summary>
         float DrawInput(float bottom)
         {
-            var panel = new Rect(6f, bottom - 38f, LogWidth + 40f, 36f);
+            var panel = new Rect(6f, bottom - 26f, LogWidth + 40f, 24f);
             CuteUI.Box(panel, 8, CuteUI.Paper, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
-            CuteUI.Label(panel.x + 8f, panel.y + 11.5f, "말", CuteUI.Text, false, true);
+            CuteUI.Label(panel.x + 8f, panel.y + 12f, "말", CuteUI.Text, false, true);
             var fieldRect = new Rect(panel.x + 26f, panel.y + 4f, panel.width - 32f, 16f);
             CuteUI.Box(fieldRect, 4, CuteUI.White, CuteUI.Interact, 2);
             box.TextColor = (Color)CuteUI.Text;
-            box.Draw(new Rect(fieldRect.x + 4f, fieldRect.y, fieldRect.width - 6f, fieldRect.height), field);
-            CuteUI.Label(panel.x + 8f, panel.y + 28.5f, $"Enter 보내기 · Esc 닫기 · /리액션 · 가/A: 오른쪽 Alt · {box.Full.Length}/{MaxChars}", CuteUI.Sub, true);
+            box.Placeholder = "할 말을 쓰세요 · /로 리액션";
+            int left = MaxChars - box.Full.Length;
+            float countW = left <= 10 ? 22f : 0f;
+            box.Draw(new Rect(fieldRect.x + 4f, fieldRect.y, fieldRect.width - 6f - countW, fieldRect.height), field);
+            if (countW > 0f) CuteUI.LabelRight(fieldRect.xMax - 5f, fieldRect.center.y, left.ToString(), left <= 0 ? CuteUI.Alert : CuteUI.Sub, true);
             // 11/08 마우스로도 보내고 닫기 (입력 칸 오른쪽)
-            if (CuteUI.Button(new Rect(panel.xMax + 4f, panel.y, 48f, 18f), "보내기") && sendFrame < 0) sendFrame = Time.frameCount + 2;
-            if (CuteUI.SoftButton(new Rect(panel.xMax + 4f, panel.y + 20f, 48f, 16f), "닫기")) Close();
+            if (CuteUI.Button(new Rect(panel.xMax + 4f, panel.y + 2f, 44f, 20f), "보내기") && sendFrame < 0) sendFrame = Time.frameCount + 2;
+            if (CuteUI.SoftButton(new Rect(panel.xMax + 50f, panel.y + 2f, 34f, 20f), "닫기")) Close();
             return panel.y - 4f;
         }
 

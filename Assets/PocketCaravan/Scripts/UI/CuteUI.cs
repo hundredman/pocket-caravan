@@ -752,13 +752,22 @@ namespace PocketCaravan
         /// <summary>상호작용 버튼 (보라). 눌리면 true</summary>
         public static bool Button(Rect r, string label, Pic? pic = null)
         {
+            // 11/17 화살표로 고르기: 다른 단추가 골라져 있으면 흰 단추로, 골라졌으면 초록 + 톡 튀기
+            bool key = KeyNav.Item(r, out bool focused);
+            if (KeyNav.Active && !focused) { DrawSoft(r, label); return GUI.Button(r, GUIContent.none, GUIStyle.none) || key; }
+            DrawGreen(focused ? KeyNav.Pop(r) : r, label, pic);
+            return GUI.Button(r, GUIContent.none, GUIStyle.none) || key;
+        }
+
+        /// <summary>초록(주) 단추 모양만 그린다</summary>
+        public static void DrawGreen(Rect r, string label, Pic? pic = null)
+        {
             Box(r, 8, Interact, Ink, 1, 2, InteractLo);
             Fill(new Rect(r.x + 5, r.y + 2, r.width - 10, 1), InteractHi);
             float w = Width(label, false, true) + (pic.HasValue ? 14 : 0);
             float x = r.center.x - w / 2f;
             if (pic.HasValue) { Icon(pic.Value, x, r.center.y - 3, 1, White); x += 14; }
             Label(x, r.center.y, label, OnInteract, false, true);
-            return GUI.Button(r, GUIContent.none, GUIStyle.none);
         }
 
         /// <summary>닫기 (중립색 동그라미 X). 눌리면 true</summary>
@@ -868,10 +877,18 @@ namespace PocketCaravan
         /// <summary>보조 버튼 (종이색 + 진한 테). 눌리면 true</summary>
         public static bool SoftButton(Rect r, string label)
         {
+            bool key = KeyNav.Item(r, out bool focused);   // 11/17 골라지면 초록 + 톡 튀기
+            if (focused) DrawGreen(KeyNav.Pop(r), label);
+            else DrawSoft(r, label);
+            return GUI.Button(r, GUIContent.none, GUIStyle.none) || key;
+        }
+
+        /// <summary>흰(보조) 단추 모양만 그린다</summary>
+        public static void DrawSoft(Rect r, string label)
+        {
             bool hover = r.Contains(Event.current.mousePosition);
             Box(r, 8, hover ? Paper2 : Paper, Ink, 1, 2, SoftShadow);
             LabelCenter(r.center.x, r.center.y, label, Text, false, false);
-            return GUI.Button(r, GUIContent.none, GUIStyle.none);
         }
 
         /// <summary>네모 칸 + 글: 누르면 켜고 끈다. 새 값을 돌려준다</summary>

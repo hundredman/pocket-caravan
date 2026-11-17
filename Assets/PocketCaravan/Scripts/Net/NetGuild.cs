@@ -1047,6 +1047,8 @@ namespace PocketCaravan
             signTex.Apply();
         }
 
+        static readonly object SignNav = new object();
+
         void DrawSign()
         {
             float W = UIStyle.VirtualWidth, H = UIStyle.VirtualHeight, ease = Ease((Time.unscaledTime - signAt) / .3f);
@@ -1075,8 +1077,13 @@ namespace PocketCaravan
             }
             y += SignH + 8f;
             float half = Mathf.Floor((SignW - 6f) / 2f);
-            if (CuteUI.SoftButton(new Rect(x, y, half, 22f), "다시 쓰기")) ClearSign();
-            if (CuteUI.Button(new Rect(x + half + 6f, y, SignW - half - 6f, 22f), Signed ? "서명 완료" : "이름으로 대신")) ConfirmSign();
+            KeyNav.Begin(SignNav);   // 11/17 ← →로 다시 쓰기·이름으로 대신 고르기
+            try
+            {
+                if (CuteUI.SoftButton(new Rect(x, y, half, 22f), "다시 쓰기")) ClearSign();
+                if (CuteUI.Button(new Rect(x + half + 6f, y, SignW - half - 6f, 22f), Signed ? "서명 완료" : "이름으로 대신")) { KeyNav.Clear(SignNav); ConfirmSign(); }
+            }
+            finally { KeyNav.End(); }
             CuteUI.LabelCenter(r.center.x, y + 33f, Signed ? "Space 서명 완료 · Esc 다음에" : "마우스로 서명해요 · Space 이름으로 대신", CuteUI.Sub, true);
             GUI.color = old;
         }
@@ -1122,7 +1129,7 @@ namespace PocketCaravan
             if (signing && Time.frameCount > signFrame && now - signAt > .3f)
             {
                 if (no) CancelSign();
-                else if (ok) { ConfirmSign(); return; }   // 같은 Space로 수여식까지 닫히지 않게
+                else if (ok && !KeyNav.HasFocus(SignNav)) { ConfirmSign(); return; }   // 같은 Space로 수여식까지 닫히지 않게 (11/17 화살표로 단추를 골랐으면 그 단추가 받는다)
             }
             if (ceremony && Time.frameCount > ceremonyFrame && now - ceremonyAt > .8f && (ok || no))
                 CloseCeremony();

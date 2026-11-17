@@ -35,6 +35,12 @@ namespace PocketCaravan
             if (!open) return;
             UIStyle.Begin();
             GUI.depth = -10;   // 다른 글자들 위에
+            KeyNav.Begin(this);   // 11/17 ↑↓로 고르고 Enter·Space
+            try { DrawMenu(); } finally { KeyNav.End(); }
+        }
+
+        void DrawMenu()
+        {
             var gm = GameManager.I;
             var issue = gm != null ? gm.LoadIssue : null;
             float w = Mathf.Min(340, UIStyle.VirtualWidth - 16);
@@ -98,6 +104,16 @@ namespace PocketCaravan
                 CuteUI.Keycap(b.xMax - 8 - CuteUI.KeycapWidth(note), b.center.y - 6, note, true);
                 return pressed;
             }
+            bool key = KeyNav.Item(b, out bool focused);   // 11/17 화살표로 고른 줄은 초록 + 톡 튀기
+            if (focused)
+            {
+                var d = KeyNav.Pop(b);
+                CuteUI.DrawGreen(d, "");
+                if (pic.HasValue) { var ps0 = CuteUI.PicSize(pic.Value); CuteUI.Icon(pic.Value, d.x + 14 - ps0.x / 2f, d.center.y - ps0.y / 2f, 1, CuteUI.White); }
+                CuteUI.Label(d.x + 28, d.center.y, label, CuteUI.OnInteract, false, true);
+                CuteUI.LabelRight(d.xMax - 10, d.center.y, note, CuteUI.OnInteract, true);
+                return GUI.Button(b, GUIContent.none, GUIStyle.none) || key;
+            }
             bool hover = b.Contains(Event.current.mousePosition);
             CuteUI.Box(b, 8, danger ? (hover ? CuteUI.AlertSoft : CuteUI.Paper) : hover ? CuteUI.Paper2 : CuteUI.Paper, danger ? CuteUI.Alert : CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
             if (pic.HasValue)
@@ -107,7 +123,7 @@ namespace PocketCaravan
             }
             CuteUI.Label(b.x + 28, b.center.y, label, danger ? CuteUI.Down : CuteUI.Text, false, true);
             CuteUI.LabelRight(b.xMax - 10, b.center.y, note, CuteUI.Sub, true);
-            return GUI.Button(b, GUIContent.none, GUIStyle.none);
+            return GUI.Button(b, GUIContent.none, GUIStyle.none) || key;
         }
     }
 }

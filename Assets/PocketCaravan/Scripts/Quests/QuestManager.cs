@@ -297,7 +297,7 @@ namespace PocketCaravan
             if (o == null) return;
             var player = GameManager.I.Player;
             if (o.type == ObjectiveType.HaveMoney && player.money >= o.count) NextStep(p);
-            else if (o.type == ObjectiveType.BuyVehicle && o.vehicle != null && player.vehicle == o.vehicle) NextStep(p);
+            else if (o.type == ObjectiveType.BuyVehicle && o.vehicle != null && (player.vehicle == o.vehicle || player.stowedVehicle == o.vehicle)) NextStep(p);
             else if (o.type == ObjectiveType.VisitMap && MapRoot.Current != null && MapRoot.Current.mapId == GoryeoLayout.Resolve(o.targetId)) NextStep(p);
         }
 

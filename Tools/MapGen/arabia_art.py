@@ -161,10 +161,19 @@ def alias(name, x, y):
     return a
 
 
+# 11/17 팀 피드백 "말을 걸 수 없는 물건 일부를 그냥 지나간다": 나무 밑동은 줄기만 있어도 막는다 (불투명 8% 이상)
+TREE_TRUNKS = {'drawn_datePalm', 'drawn_datePalm2', 'drawn_datePalm3', 'drawn_acaciaRound', 'drawn_olive', 'drawn_oasisTree',
+               'drawn_oasisTree2', 'drawn_almond', 'drawn_pomegranate', 'drawn_orange', 'drawn_lemon', 'drawn_cypress',
+               'drawn_grove', 'drawn_oliveGrove'}
+TRUNK_SOLID = 0.08
+
+
 def place(m, name, x, y, foot=1, block=True, solid=0.25, layer='auto', force=False, clip=False):
     """(x,y)=그림 격자의 왼쪽 위 칸. 겹치거나 길을 막게 되면 놓지 않고 False (clip이면 찬 칸만 건너뜀).
     나무 이름은 TREE_ALIAS로 직접 그린 나무로 바뀌고, 크기가 달라도 원래 자리의 아래·가운데에 맞춘다."""
     a = alias(name, x, y)
+    if a in TREE_TRUNKS and solid == 0.25:
+        solid = TRUNK_SOLID   # 11/17: 줄기가 가는 나무(야자 등)도 밑동 칸을 막는다 (전에는 25% 미만이라 그냥 지나갔다)
     if a != name:
         ow, oh = size(name)
         nw, nh = size(a)

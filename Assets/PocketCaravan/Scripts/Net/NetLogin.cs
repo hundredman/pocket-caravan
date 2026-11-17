@@ -9,7 +9,8 @@ namespace PocketCaravan
     /// 로그인 화면 · 온라인 창 (2026-10-31, feature/online).
     /// - 게임을 켜면 시작 화면(이어하기 · 새로 시작)보다 먼저 로그인 화면이 뜬다. 이름 + 접속키로 접속하거나 "혼자 하기".
     ///   처음 쓰는 이름이면 그 이름과 접속키로 계정이 만들어진다. 접속키가 틀리면 그 자리에서 알려 준다.
-    ///   "이 컴퓨터에 기억"을 켜 두면 다음부터는 켜자마자 저절로 접속한다(실패하면 로그인 화면이 그대로 남는다).
+    ///   "이 컴퓨터에 기억"을 켜 두면 다음부터 이름·접속키가 채워진 채로 뜬다. 11/12 은인: 저절로 접속하지 않고 Enter로 들어간다
+    ///   (앱을 켤 때마다 다른 이름으로도 들어갈 수 있게. 게임 중 O 창의 "다른 이름으로"는 그대로).
     ///   접속되면 시작 화면으로 넘어간다. 로그인 화면이 떠 있는 동안 시작 화면은 키를 받지 않는다(StartScreen.Held).
     /// - 게임 중 O 키: 온라인 창. 접속해 있으면 내 이름·계정·접속자 수와 끊기 · 다른 이름으로 접속, 아니면 로그인 칸.
     ///   (2026-11-05 UI B안: 게임 중 창은 CuteUI 모양. 첫 화면 로그인은 시작 화면과 같은 크림·초록 그대로)
@@ -53,7 +54,9 @@ namespace PocketCaravan
             address = PlayerPrefs.GetString("net.address", NetClient.DefaultAddress);
             // 11/12 윤채(시연): 한 컴퓨터를 여러 사람이 돌아가며 쓰면 앞사람 이름이 채워져 있었다 →
             //   "기억하기"는 처음엔 꺼 두고, 이름도 기억하기를 켰을 때만 채운다 (켜 두면 다음 사람이 앞사람 계정으로 저절로 접속했다)
-            remember = PlayerPrefs.GetInt("net.remember", 0) == 1;
+            // 11/17 은인: 켤 때 마지막으로 접속한 이름·접속키가 채워져 있게 → 기억하기를 처음부터 켜 둔다 (끄면 예전처럼 지운다).
+            //   예전 값(net.remember=0, 처음 꺼 두기)은 읽지 않으려고 새 이름 net.remember2를 쓴다. 저절로 접속하지는 않는다 (Enter로 들어감)
+            remember = PlayerPrefs.GetInt("net.remember2", 1) == 1;
             nameBox.Text = remember ? PlayerPrefs.GetString("net.name", "") : "";
             keyBox.Text = remember ? PlayerPrefs.GetString("net.pass", "") : "";
             addressBox.Text = address;
@@ -80,10 +83,11 @@ namespace PocketCaravan
             UIState.Blocking = true;
             note = null;
             Focus(nameBox.Text.Trim().Length == 0 ? nameBox : keyBox.Text.Length == 0 ? keyBox : null);
+            // 11/12: 기억한 이름·접속키는 채워 두기만 하고 저절로 접속하지 않는다 (Enter = 그 이름으로 접속, 이름을 바꾸면 다른 계정)
             if (!autoTried && remember && nameBox.Text.Trim().Length > 0 && keyBox.Text.Length >= 4)
             {
                 autoTried = true;
-                Submit(auto: true);
+                Say($"{nameBox.Text.Trim()}(으)로 들어가려면 Enter · 다른 이름은 이름 칸을 고쳐 주세요", false);
             }
         }
 
@@ -174,7 +178,7 @@ namespace PocketCaravan
             nameBox.Text = name;
             if (remember) PlayerPrefs.SetString("net.name", name); else PlayerPrefs.DeleteKey("net.name");   // 11/12 이름도 기억하기를 켰을 때만
             PlayerPrefs.SetString("net.address", address);
-            PlayerPrefs.SetInt("net.remember", remember ? 1 : 0);
+            PlayerPrefs.SetInt("net.remember2", remember ? 1 : 0);
             if (remember) PlayerPrefs.SetString("net.pass", key); else PlayerPrefs.DeleteKey("net.pass");
             PlayerPrefs.Save();
             if (!Net.Connect(address, name, key)) { Say(Net.LastError, true); return; }
@@ -236,13 +240,38 @@ namespace PocketCaravan
             UIStyle.Begin();
             Styles();
             var e = Event.current;
+            // 11/17 화살표로 단추 고르기: 칸에 쓰는 중이면 ↓(이름→접속키→단추) · ↑(단추→접속키→이름)로 오가고, 단추 줄에서는 ← →
+            bool typing = nameBox.Active || keyBox.Active || addressBox.Active;
+            if (e.type == EventType.KeyDown && FormShown)
+            {
+                if (e.keyCode == KeyCode.DownArrow && typing)
+                {
+                    if (nameBox.Active) Focus(keyBox);
+                    else if (keyBox.Active && showServer) Focus(addressBox);
+                    else { Focus(null); KeyNav.FocusFirst(this); typing = false; }
+                    e.Use();
+                }
+                else if (e.keyCode == KeyCode.UpArrow && (typing || KeyNav.HasFocus(this)))
+                {
+                    if (KeyNav.HasFocus(this)) { KeyNav.Clear(this); Focus(showServer ? addressBox : keyBox); }
+                    else if (addressBox.Active) Focus(keyBox);
+                    else if (keyBox.Active) Focus(nameBox);
+                    typing = true;
+                    e.Use();
+                }
+            }
+            KeyNav.Begin(this, !typing);   // 골라진 단추가 있으면 Enter·Space가 그 단추를 누른다 (아래 Enter=접속보다 먼저)
             if (e.type == EventType.KeyDown)
             {
                 if (e.keyCode == KeyCode.Tab) { NextField(); e.Use(); }
                 else if ((e.keyCode == KeyCode.Return || e.keyCode == KeyCode.KeypadEnter) && FormShown) { Submit(); e.Use(); }
             }
-            if (panel == Panel.Start) DrawStart();
-            else DrawGame();
+            try
+            {
+                if (panel == Panel.Start) DrawStart();
+                else DrawGame();
+            }
+            finally { KeyNav.End(); }
         }
 
         bool FormShown => panel == Panel.Start || !Online;
@@ -252,7 +281,8 @@ namespace PocketCaravan
             if (!FormShown) return;
             if (nameBox.Active) Focus(keyBox);
             else if (keyBox.Active && showServer) Focus(addressBox);
-            else Focus(nameBox);
+            else if (keyBox.Active || addressBox.Active) { Focus(null); KeyNav.FocusFirst(this); }   // 11/17 마지막 칸 다음은 단추 줄
+            else { KeyNav.Clear(this); Focus(nameBox); }
         }
 
         void Styles()
@@ -289,12 +319,17 @@ namespace PocketCaravan
         bool Button(Rect r, string text, bool primary)
         {
             if (!light) return primary ? CuteUI.Button(r, text) : CuteUI.SoftButton(r, text);
+            // 11/17 화살표로 고르기: 고른 단추가 초록이 되고 톡 튀어 오른다 (다른 단추는 흰색)
+            bool key = KeyNav.Item(r, out bool focused);
+            if (KeyNav.Active) primary = focused;
+            var hit = r;
+            if (focused) r = KeyNav.Pop(r);
             bool hover = r.Contains(Event.current.mousePosition);
             Fill(new Rect(r.x + 2, r.y + 3, r.width, r.height), Shadow);
             Fill(r, primary ? (hover ? GreenDark : Green) : (hover ? Cream : White));
             Frame(r, primary ? GreenDark : BrownLight, 1);
             Text(r, text, primary ? White : Brown, label, TextAnchor.MiddleCenter);
-            return GUI.Button(r, GUIContent.none, GUIStyle.none);
+            return GUI.Button(hit, GUIContent.none, GUIStyle.none) || key;
         }
 
         /// <summary>입력 칸 하나 (칸을 누르면 그 칸에 쓴다)</summary>
@@ -350,7 +385,7 @@ namespace PocketCaravan
                 Field(new Rect(x, y + 13, w, 18), addressBox);
                 y += 35;
             }
-            bool r = Check(new Rect(x, y, w, 14), remember, "이 컴퓨터에 기억하고 다음에는 바로 접속");
+            bool r = Check(new Rect(x, y, w, 14), remember, "이 컴퓨터에 이름·접속키 기억");
             if (r != remember) { remember = r; Sfx.Play("open", .4f); }
             y += 22;
             float bw = (w - 10) / 2;
@@ -388,7 +423,7 @@ namespace PocketCaravan
             CuteUI.TitlePlate(card.center.x, card.y - 11, "접속");
             DrawForm(card.x + 18, card.y + 22, cw - 36, true);
 
-            CuteUI.LabelCenter(W / 2, H - 20, "Tab 칸 바꾸기 · Enter 접속 · 한글/영어: 오른쪽 Alt", CuteUI.Sub, true);
+            CuteUI.LabelCenter(W / 2, H - 20, "Tab·↑↓ 칸 바꾸기 · ←→ 단추 고르기 · Enter 접속 · 한글/영어: 오른쪽 Alt", CuteUI.Sub, true);
             var server = new Rect(W - 96, H - 27, 82, 14);
             CuteUI.LabelRight(server.xMax, server.center.y, showServer ? "서버 주소 숨기기" : "서버 바꾸기", CuteUI.Interact, true);
             if (GUI.Button(server, GUIContent.none, GUIStyle.none)) { showServer = !showServer; addressBox.Text = address; }

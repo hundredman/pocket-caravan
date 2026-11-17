@@ -470,14 +470,14 @@ namespace PocketCaravan
                 var v = list[i];
                 float y = i * rowH - vehicleListScroll;
                 if (y + rowH < 0 || y > area.height) continue;
-                bool owned = player.vehicle == v;
+                bool owned = player.vehicle == v || player.stowedVehicle == v;   // 11/17 넣어 둔 수단도 가진 것
                 bool can = !owned && player.money >= v.price && player.TotalWeight <= player.CapacityOf(v);
                 CuteUI.Box(new Rect(0, y, area.width - 6, rowH - 4), 8, i % 2 == 0 ? CuteUI.Paper2 : CuteUI.Paper, CuteUI.Line);
                 CuteUI.Label(10, y + 12, v.displayName, CuteUI.Text, false, true);
                 CuteUI.Icon(CuteUI.Pic.Sack, 10, y + 21);
                 CuteUI.Label(22, y + 25, $"짐 {player.CapacityOf(v):0}", CuteUI.Sub, true);
                 var b = new Rect(area.width - 98, y + 7, 86, 22);
-                if (owned) { CuteUI.Box(b, 8, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter(b.center.x, b.center.y, "쓰는 중", CuteUI.Zero, false, true); }
+                if (owned) { CuteUI.Box(b, 8, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter(b.center.x, b.center.y, player.stowedVehicle == v ? "넣어 둠 · V" : "쓰는 중", CuteUI.Zero, false, true); }
                 else if (can) { if (CuteUI.Button(b, $"{v.price}냥")) BuyVehicle(v); }
                 else { CuteUI.Box(b, 8, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter(b.center.x, b.center.y, $"{v.price}냥", CuteUI.Zero, false, true); }
             }
@@ -663,10 +663,12 @@ namespace PocketCaravan
             var p = GameManager.I.Player;
             if(v==null || !town.vehiclesForSale.Contains(v) || v.minTownLevel>Market.Level) { message="이 장터에서 구입할 수 없는 수단입니다.";return; }
             if (p.vehicle == v) { message = "이미 사용 중인 이동 수단입니다."; return; }
+            if (p.stowedVehicle == v) { message = "넣어 둔 수단입니다. V를 누르면 꺼냅니다."; return; }
             if (p.money < v.price) { message = "돈이 모자랍니다."; Sfx.Play("cancel"); return; }
             if (p.TotalWeight > p.CapacityOf(v)) { message = "지금 짐이 너무 많습니다."; Sfx.Play("cancel"); return; }
             p.money -= v.price;
             p.vehicle = v;
+            p.stowedVehicle = null;   // 11/17 새 수단으로 바꾸면 넣어 둔 것은 없앤다 (하나만 가진다)
             message = $"{v.displayName} 구입 · 남은 돈 {p.money}냥." + (p.money==0?" 일반 배달로 매입 자금을 마련할 수 있습니다.":" 상품 매입비를 남겨 두세요.");
             Sfx.Play("levelup");
             GameEvents.RaiseVehicleBought(v);

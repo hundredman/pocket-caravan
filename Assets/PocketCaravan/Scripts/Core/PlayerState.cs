@@ -8,6 +8,8 @@ namespace PocketCaravan
         public int money;
         public int credit;
         public VehicleData vehicle;
+        /// <summary>11/17 V로 넣어 둔 운반 수단 (넣어 두면 vehicle은 등짐). 다시 V를 누르면 꺼낸다. 새 수단을 사면 비운다</summary>
+        public VehicleData stowedVehicle;
         public OriginData origin;
         public readonly Inventory cargo = new Inventory();
         public readonly TradeLedger ledger = new TradeLedger();

@@ -22,6 +22,7 @@ namespace PocketCaravan
         public int money, credit;
         public string origin; // 출신 id (viking·venice·arabia·goryeo). 없으면 기본 출신
         public string vehicle;
+        public string stowedVehicle; // 11/17 V로 넣어 둔 운반 수단 (옛 저장에는 없음 = 없음)
         public float stamina;
         public float shake; // 이전 저장에는 없으므로 0으로 읽는다.
         public List<StoredCargo> storedCargo = new List<StoredCargo>();
