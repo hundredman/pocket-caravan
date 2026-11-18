@@ -42,6 +42,20 @@ namespace PocketCaravan
 
         void Awake() => inst = this;
 
+        /// <summary>11/18 창 안 설명(장부 탭 · 수첩 튜토리얼 카드)을 보여 주는 중. 그 창을 여는 키(L·Q)로는 닫지 않는다</summary>
+        public static bool HoldsWindow => Time.frameCount - holdFrame <= 1;
+        static int holdFrame = -9;
+        static bool journalTourShown;   // 이번 수첩 단계에서 튜토리얼 카드 설명이 떴다
+        /// <summary>11/18 창 설명을 다 보지 않고 닫았다 → 그 배우기 단계는 아직 안 끝난다 (ControlLesson). 다시 열면 남은 설명부터</summary>
+        public static bool TourLeft(int task)
+        {
+            if (task == ControlLesson.Ledger) { for (int i = 0; i < LedgerTour.Length; i++) if (!Seen("ledger.tab" + i)) return true; return false; }
+            if (task == ControlLesson.Quests) return journalTourShown && !Seen("journal.tutorial");
+            return false;
+        }
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetHold() { holdFrame = -9; journalTourShown = false; }
+
         static bool Seen(string id) { var gm = GameManager.I; return gm != null && gm.GetMemo(MemoPrefix + id, 0f) >= 1f; }
         static void MarkSeen(string id) { var gm = GameManager.I; if (gm != null) gm.SetMemo(MemoPrefix + id, 1f); }
 
@@ -88,7 +102,7 @@ namespace PocketCaravan
             if (TradeLedgerUI.Showing)
             {
                 for (int i = 0; i < LedgerTour.Length; i++)
-                    if (!Seen("ledger.tab" + i)) return Zone("ledger.tab" + i, "ledger.tab" + i, LedgerTour[i], false);
+                    if (!Seen("ledger.tab" + i)) { holdFrame = Time.frameCount; return Zone("ledger.tab" + i, "ledger.tab" + i, LedgerTour[i], false); }
                 return null;
             }
             if (ControlLesson.IsActive(ControlLesson.Quests))
@@ -97,10 +111,16 @@ namespace PocketCaravan
                 if (QuestTracker.JournalOpen)
                 {
                     if (!Seen("journal.tutorial") && ScreenZones.Live("journal.tutorial"))
+                    {
+                        holdFrame = Time.frameCount; journalTourShown = true;
                         return Zone("journal.tutorial", "journal.tutorial", "튜토리얼 할 일은 수첩 의뢰 목록 맨 위에도 있어요", false);
+                    }
                     return Zone("journal.close", "journal.close", "다 봤으면 Esc나 이 단추로 닫아요", true);
                 }
-                return blocking ? null : Zone("quests", "task.card", "Q나 이 카드로 여정 수첩을 열어요", false);
+                if (blocking) return null;
+                if (TourLeft(ControlLesson.Quests))   // 설명 중에 닫았다 → 다시 열게
+                    return Zone("quests.again", "task.card", "설명이 남았어요. Q나 이 카드로 다시 열어요", false);
+                return Zone("quests", "task.card", "Q나 이 카드로 여정 수첩을 열어요", false);
             }
             // 단추는 네모 테두리 (11/18 은샘: 동그라미보다 낫다)
             if (ControlLesson.IsActive(ControlLesson.Inventory))
@@ -108,7 +128,12 @@ namespace PocketCaravan
             if (ControlLesson.IsActive(ControlLesson.Map))
                 return blocking ? null : Zone("map", "hud.btn.m", "M이나 이 단추로 지도를 펼쳐요", false);
             if (ControlLesson.IsActive(ControlLesson.Ledger))
-                return blocking ? null : Zone("ledger", "hud.btn.l", "L이나 이 단추로 장부를 열어요", false);
+            {
+                if (blocking) return null;
+                if (Seen("ledger.tab0") && TourLeft(ControlLesson.Ledger))   // 탭 설명 중에 닫았다 → 다시 열면 이어서
+                    return Zone("ledger.again", "hud.btn.l", "탭 설명이 남았어요. L을 다시 눌러 이어서 봐요", false);
+                return Zone("ledger", "hud.btn.l", "L이나 이 단추로 장부를 열어요", false);
+            }
             bool buy = ControlLesson.IsActive(ControlLesson.Bought), sell = ControlLesson.IsActive(ControlLesson.Sold);
             // 11/18 은샘: 시계도 튜토리얼에서 (사기 단계 처음, 장터 창이 열리기 전에).
             // 시계 누르기 → 펼친 달력 설명 → 다시 눌러 닫기 → ︿로 위로 접기까지 하면 다음으로

@@ -21,7 +21,8 @@ namespace PocketCaravan
             // 11/16 팀 피드백: 할 일 카드가 늘 떠 있어 거슬린다 → Q로 접고 편다 (조작 배우기 단계는 접어도 보인다)
             if (InputReader.TaskTogglePressed() && !UIState.Blocking && MapRoot.Current != null && !GameManager.I.IsTravelling)
             { TaskCard.Hidden = !TaskCard.Hidden; Sfx.Play("move", .6f); }
-            if (logOpen && (InputReader.QuestLogPressed() || InputReader.CancelPressed())) CloseLog();
+            // 11/18 은샘: 튜토리얼 카드 설명 중엔 Q로 닫지 않는다 (Esc·닫기 단추는 닫는다, 다시 열면 이어서)
+            if (logOpen && ((InputReader.QuestLogPressed() && !TutorialSpot.HoldsWindow) || InputReader.CancelPressed())) CloseLog();
             else if (InputReader.QuestLogPressed() && !UIState.Blocking && !UIState.JustClosed && !GameManager.I.IsTravelling
                 && UIState.TryOpen(this, CloseLog)) { logOpen = true; JournalOpen = true; if (StoryGuide.IntroActive) { logTab = 0; scroll = Vector2.zero; } }   // 튜토리얼 중엔 의뢰 칸 맨 위부터
             else if (logOpen)

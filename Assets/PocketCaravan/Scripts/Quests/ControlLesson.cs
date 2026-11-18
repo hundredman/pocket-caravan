@@ -105,17 +105,22 @@ namespace PocketCaravan
                 }
                 return -1;
             }
-            // 11/18 은샘: Tab·수첩은 열자마자 다음으로 넘어가지 않고, 연 뒤 닫았을 때 끝난다 (연 채로 다음 단계 안내가 겹쳤다)
-            if (task == Status || task == Quests)
+            // 11/18 은샘: Tab·수첩·장부는 열자마자 다음으로 넘어가지 않고, 연 뒤 닫았을 때 끝난다 (연 채로 다음 단계 안내가 겹쳤다).
+            // 창 안 설명(수첩 튜토리얼 카드 · 장부 탭 셋)을 다 보기 전에 닫으면 끝나지 않는다 (다시 열면 남은 설명부터)
+            if (task == Status || task == Quests || task == Ledger)
             {
-                bool isOpen = task == Status ? HUD.Expanded : QuestTracker.JournalOpen;
+                bool isOpen = task == Status ? HUD.Expanded : task == Quests ? QuestTracker.JournalOpen : TradeLedgerUI.Showing;
                 if (openedTask != task) { openedTask = task; openedSeen = false; }
                 if (isOpen) openedSeen = true;
-                else if (openedSeen) { openedSeen = false; openedTask = -1; return task; }
+                else if (openedSeen)
+                {
+                    openedSeen = false;
+                    if (TutorialSpot.TourLeft(task)) return -1;
+                    openedTask = -1; return task;
+                }
                 return -1;
             }
             if (task == Map && InputReader.MapPressed()) return Map;
-            if (task == Ledger && InputReader.LedgerPressed()) return Ledger;
             return -1;
         }
     }

@@ -51,7 +51,8 @@ namespace PocketCaravan
 
         void Update()
         {
-            if (IsOpen && Time.frameCount != openedFrame && (InputReader.LedgerPressed() || InputReader.CancelPressed())) Close();
+            // 11/18 은샘: 탭 설명 중에 L을 또 누르면 창이 닫혀 설명이 끊겼다 → 설명 중엔 L은 다음 설명으로만 (Esc·X는 닫는다, 다시 열면 이어서)
+            if (IsOpen && Time.frameCount != openedFrame && ((InputReader.LedgerPressed() && !TutorialSpot.HoldsWindow) || InputReader.CancelPressed())) Close();
             else if (InputReader.LedgerPressed() && !UIState.JustClosed) Open();
         }
 

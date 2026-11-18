@@ -189,7 +189,7 @@ namespace PocketCaravan
             {
                 fullDecidedFor = NetClient.I.MyName;
                 foreignLocked = true;   // 11/14 다시 붙어도 더 오래된 이 컴퓨터 저장이 서버 것을 덮지 않게 (이번 실행 동안)
-                NetChat.System($"서버에 더 최근 게임 저장이 있어요 ({When(server.at)} · {server.day}일째). 게임을 다시 켜고 로그인하면 고를 수 있어요");
+                NetChat.System($"서버에 더 최근 게임 저장이 있어요 ({When(server.at)} · {HudClock.FullDateText(server.day)}). 게임을 다시 켜고 로그인하면 고를 수 있어요");
                 return;
             }
             fullOffer = server;
@@ -262,8 +262,8 @@ namespace PocketCaravan
             WriteOwner(NetClient.I.MyName);   // 11/14 받아 온 서버 저장 = 이 계정 것
             foreignLocked = false;
             StartFull(null, now != null ? now.hash : m.h);
-            NetChat.System($"서버 게임 저장을 불러왔어요 ({d.day}일째 · {d.money}냥). 이 컴퓨터 저장은 .bak 파일로 남겼어요");
-            Notify.Show($"서버 게임 저장을 불러왔어요 · {d.day}일째 · {d.money}냥", 3.5f);
+            NetChat.System($"서버 게임 저장을 불러왔어요 ({HudClock.FullDateText(d.day)} · {d.money}냥). 이 컴퓨터 저장은 .bak 파일로 남겼어요");
+            Notify.Show($"서버 게임 저장을 불러왔어요 · {HudClock.FullDateText(d.day)} · {d.money}냥", 3.5f);
         }
 
         /// <summary>이 컴퓨터 저장을 쓴다: 다음 확인 때 올린다 (저장이 없으면 새 게임이 저장될 때 올라간다)</summary>
@@ -540,8 +540,8 @@ namespace PocketCaravan
             var right = new Rect(left.xMax + 12f, cy, cw, ch);
             if (full)
             {
-                DrawCard(left, "서버", When(fullOffer.at), $"{fullOffer.day}일째 · {fullOffer.money}냥", Place(fullOffer.map), 0);
-                if (localOffer != null) DrawCard(right, "이 컴퓨터", When(localOffer.at), $"{localOffer.day}일째 · {localOffer.money}냥", Place(localOffer.map), 1);
+                DrawCard(left, "서버", When(fullOffer.at), $"{fullOffer.money}냥", Sub(fullOffer.day, Place(fullOffer.map), cw), 0);
+                if (localOffer != null) DrawCard(right, "이 컴퓨터", When(localOffer.at), $"{localOffer.money}냥", Sub(localOffer.day, Place(localOffer.map), cw), 1);
                 else DrawCard(right, "이 컴퓨터", null, null, null, 1);
             }
             else
@@ -580,6 +580,15 @@ namespace PocketCaravan
                 kx += CuteUI.Keycap(kx, ky - 6.5f, "Enter") + 4f;
                 CuteUI.Label(kx, ky, "결정", CuteUI.Text, true);
             }
+        }
+
+        /// <summary>11/18 카드 아랫줄: "12년 3월 23일 · 예성 나루" (예전엔 "4043일째"가 돈 줄에 있었다). 칸이 좁으면 날짜만</summary>
+        static string Sub(int day, string place, float width)
+        {
+            string date = HudClock.FullDateText(day);
+            if (string.IsNullOrEmpty(place)) return date;
+            string both = date + " · " + place;
+            return CuteUI.Width(both, true) <= width - 18f ? both : date;
         }
 
         /// <summary>서버 / 이 컴퓨터 카드. 고른 쪽은 청록 테. when이 null이면 "저장 없음"</summary>

@@ -172,6 +172,9 @@ namespace PocketCaravan
             }
         }
 
+        /// <summary>11/18 해까지 넣은 날짜 "12년 3월 23일" (저장 불러오기 알림 등. "4043일째"는 읽기 힘들었다)</summary>
+        public static string FullDateText(int day) => YearText(day) + " " + DateText(day);
+
         /// <summary>몇 년인지 (360일 = 1년, 1일째 = 1년)</summary>
         public static string YearText(int day) => (Mathf.Max(0, day - 1) / 360 + 1) + "년";
 
