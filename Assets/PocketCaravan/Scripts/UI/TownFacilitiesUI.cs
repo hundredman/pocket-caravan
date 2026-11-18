@@ -209,7 +209,7 @@ namespace PocketCaravan
             }
             CuteUI.Label(42, y + 13, f.displayName, ok ? CuteUI.Text : CuteUI.Sub, false, true);
             string effect = f.kind == FacilityKind.Warehouse ? $"맡겨 둘 수 있는 무게 {f.storageCapacity:0} · 일반 교역품"
-                : f.kind == FacilityKind.Rest ? (gm.Clock.Shared ? $"푹 쉬고 {Inn.BuffHours:0}시간 덜 지침" : $"자고 체력 가득 · {Inn.BuffHours:0}시간 덜 지침")
+                : f.kind == FacilityKind.Rest ? (gm.Clock.Shared ? $"하루 동안 걸음 +{Mathf.RoundToInt((Inn.RestSpeed - 1f) * 100f)}%" : $"자고 체력 가득 · 하루 동안 걸음 +{Mathf.RoundToInt((Inn.RestSpeed - 1f) * 100f)}%")
                 : "주변 길과 거래처를 알려 줘요";
             float ex = 42;
             if (f.kind == FacilityKind.Rest)

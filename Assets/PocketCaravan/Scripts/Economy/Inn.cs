@@ -5,7 +5,9 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// "푹 쉼" 버프 (2026-11-03 통합: 북유럽 NorthInn + 베네치아 VeniceInn을 공용으로 합침).
+    /// 여관 버프 (2026-11-03 통합: 북유럽 NorthInn + 베네치아 VeniceInn을 공용으로 합침).
+    /// 11/18 은샘: "푹 쉼(달릴 때 체력 절반만 닳음)" → "개운함(걷기·달리기 +5%, 게임 하루 = 현실 6분)". 체력이 이미 넉넉해서 체감이 없었다.
+    /// 속도는 출신·지역·날씨 배율과 곱해지므로 북유럽(+10%)도 같이 받아 차이가 그대로 남는다. 옛 저장의 남은 푹 쉼 시간은 개운함으로 이어진다.
     /// 여관에서 자면 8시간 동안 달릴 때 체력이 절반만 닳는다. 끝나는 시각을 공용 메모 "rest:until"에 저장한다.
     /// 2026-11-08: 시각은 내 의뢰 시간(GameClock.PlayHours) 기준. 옛 저장은 PlayHours가 세상 시간에서 이어받으므로 그대로 맞는다.
     /// 옛 저장(north:rested, venice:rested_until)도 읽어서 기존 버프가 끊기지 않게 한다.
@@ -81,7 +83,7 @@ namespace PocketCaravan
     /// 여관에서 쉬어 가기 (전 지역 공용). 들어가는 길은 두 가지, 결과는 같다:
     /// 1) 이름에 "여관"·"숙소"·"객주"가 든 사람에게 말 걸기 → 대화(퀘스트 포함)가 먼저 나오고 끝나면 "쉬어 갈래요?"
     /// 2) 장터 시설창의 손님방(FacilityKind.Rest) "이용"
-    /// 쉬면 15냥, 화면이 어두워졌다 밝아진다: 체력 가득, 짐 흔들림 0, 8시간 동안 달려도 덜 지침(RestBuff).
+    /// 쉬면 15냥, 화면이 어두워졌다 밝아진다: 체력 가득, 짐 흔들림 0, 하루 동안 개운함(걷기·달리기 +5%, RestBuff).
     /// 2026-11-08 여관 = 버프를 주는 곳 (은샘 결정):
     /// - 온라인(공용 세상 시계): 시간을 건너뛰지 않고 의뢰 시간도 쓰지 않는다. 버프만.
     /// - 혼자 하기: 밤(18시~새벽 5시)에 자면 다음 아침 7시에 깨고, 낮에는 예전처럼 4시간 뒤 깬다.
@@ -92,7 +94,9 @@ namespace PocketCaravan
     {
         Rect askWindow, askTextRect, yesRect, noRect;
         public const int Price = 15;
-        public const float SleepHours = 4f, BuffHours = 8f;
+        public const float SleepHours = 4f, BuffHours = 24f;
+        /// <summary>11/18 개운함: 걷기·달리기 배율 (SpeedMods "rest")</summary>
+        public const float RestSpeed = 1.05f;
         public const int WakeHour = 7;
 
         /// <summary>지금 자면 건너뛸 시간. 온라인은 0 (세상 시계는 아무도 넘길 수 없다)</summary>
@@ -237,19 +241,20 @@ namespace PocketCaravan
                     rumorOpen = false;
                     UIState.Release();
                     Sfx.Play("levelup", .6f);
-                    Notify.Show($"푹 쉬었다! {BuffHours:0}시간 동안 달려도 덜 지친다.", 4f);
+                    Notify.Show($"개운하다! 하루 동안 걸음이 {Mathf.RoundToInt((RestSpeed - 1f) * 100f)}% 빨라진다.", 4f);
                     Rested?.Invoke();
                 });
             }
         }
 
-        /// <summary>체력 소모 배율 적용: 푹 쉼이면 절반, 그 밖의 지역 배율(StaminaMods)도 함께 곱한다</summary>
+        /// <summary>체력 소모 배율 적용: 지역 배율(StaminaMods)을 곱한다. 11/18 개운함은 체력 대신 걸음 배율(SpeedMods "rest")</summary>
         void ApplyDrain()
         {
             var pc = PlayerController.Instance;
             if (pc == null) return;
             if (pc != drainOwner) { drainOwner = pc; baseDrain = pc.staminaDrain; }
-            float want = baseDrain * (RestBuff.Rested ? 0.5f : 1f) * StaminaMods.Product;
+            float want = baseDrain * StaminaMods.Product;
+            if (RestBuff.Rested) SpeedMods.Set("rest", RestSpeed); else SpeedMods.Clear("rest");
             if (!Mathf.Approximately(pc.staminaDrain, want)) pc.staminaDrain = want;
         }
 
@@ -269,13 +274,13 @@ namespace PocketCaravan
             GUI.color = old;
         }
 
-        /// <summary>쉰 효과가 남아 있으면 왼쪽 위 상태창 바로 아래에 "푹 쉼 (○시간)"</summary>
+        /// <summary>쉰 효과가 남아 있으면 왼쪽 위 상태창 바로 아래에 "개운함 +5% · ○시간"</summary>
         void DrawRestedBadge()
         {
             var gm = GameManager.I;
             if (gm == null || !RestBuff.Rested || UIState.Blocking || MapRoot.Current == null || gm.IsTravelling) return;
             // 11/13 기우: 검은 상자(6, 92 고정)가 할 일 카드와 겹쳤다 → 상태 카드 밑 작은 표 줄 (TaskCard.Badge, HUD가 그린다)
-            TaskCard.Badge("rest", CuteUI.Pic.Bolt, $"푹 쉼 {RestBuff.HoursLeft}시간", CuteUI.Up);
+            TaskCard.Badge("rest", CuteUI.Pic.Bolt, $"개운함 +{Mathf.RoundToInt((RestSpeed - 1f) * 100f)}% · {RestBuff.HoursLeft}시간", CuteUI.Up);
         }
 
         void DrawAsk()
@@ -321,7 +326,7 @@ namespace PocketCaravan
                 ry += 19;
                 InnRow(rx, ry, rw, CuteUI.Pic.Clock, "시간", rest, CuteUI.Text);
                 ry += 19;
-                InnRow(rx, ry, rw, CuteUI.Pic.Star4, "푹 쉼", $"{BuffHours:0}시간 동안 달릴 때 덜 지침", CuteUI.Text);
+                InnRow(rx, ry, rw, CuteUI.Pic.Star4, "개운함", $"하루 동안 걸음 +{Mathf.RoundToInt((RestSpeed - 1f) * 100f)}%", CuteUI.Text);
             }
             float yesWidth = Mathf.Floor((w - 36) * .56f);
             yesRect = new Rect(r.x + 14, r.yMax - 34, yesWidth, 22);
