@@ -98,10 +98,17 @@ namespace PocketCaravan
             int price = Mathf.Max(1, Mathf.RoundToInt(m.SellPrice(item) * mult));
             // 이 장터에서 12시간 안에 산 물건은 장터처럼 산 값 밑으로만 (같은 곳에서 사서 손님 맞이 덤으로 남기는 일이 없게, TradeActivity)
             price = Mathf.Max(1, p.tradeActivity.LimitSale(t.id, item.id, (float)gm.Clock.TotalHours, price));
+            // 손님 맞이 덤을 붙여도 그 장터 사는 값보다 싸게 (사서 바로 올려 남기는 일이 없게. 장터 규칙 "사는 값 ≥ 파는 값+1")
+            if (mult > 1f) price = Mathf.Max(1, Mathf.Min(price, m.BuyPrice(item) - 1));
+            float cost = p.stallStock.AverageCost(item);
             p.stallStock.Remove(item);
             m.RecordSell(item, price);
             if (toPurse) p.money += price; else p.stallEarned += price;
             p.stallSold++;
+            // 장터에서 판 것과 같이: 매입 기록 소진·평판 · 장부 · 판매 이벤트(의뢰·온라인 장터)
+            ReputationPricing.Sold(p, t, item, price, gm.Clock.TotalHours, gm.Clock.day);
+            p.ledger.Record(true, t, item, price, Mathf.RoundToInt(price - cost), gm.Clock.day);
+            GameEvents.RaiseItemSold(item, t, price, Mathf.RoundToInt(price - cost));
             return price;
         }
 
@@ -170,7 +177,7 @@ namespace PocketCaravan
             if (key == lastKey && (spot != null || key == null || !PlayerStall.Has(gm.Player) || Time.unscaledTime > retryUntil)) return;
             if (key != lastKey) retryUntil = Time.unscaledTime + 2f;
             lastKey = key;
-            if (spot != null) { Destroy(spot.gameObject); spot = null; }
+            if (spot != null) { DestroyImmediate(spot.gameObject); spot = null; }   // 바로 없애야 옛 자리가 새 자리 찾기를 막지 않는다
             if (key == null || !PlayerStall.Has(gm.Player)) return;
             TownMarket market = null;
             foreach (var m in FindObjectsByType<TownMarket>(FindObjectsSortMode.None))

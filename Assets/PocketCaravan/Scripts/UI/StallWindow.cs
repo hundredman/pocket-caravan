@@ -33,12 +33,12 @@ namespace PocketCaravan
             Sfx.Play("open");
         }
 
-        void Close() { open = false; UIState.Release(this); }
+        void Close() { open = false; UIState.Release(this); StallRush.ForceClose(); }
         void OnDisable() { if (open) Close(); }
 
         void Update()
         {
-            if (!open || Time.frameCount == openedFrame || StallRush.IsOpen) return;
+            if (!open || Time.frameCount == openedFrame || StallRush.IsOpen || Time.frameCount == StallRush.ClosedFrame) return;   // 손님 맞이를 닫은 그 키로 좌판 창까지 닫지 않게
             if (TutorialSpot.HoldsWindow) return;   // 처음 설명 중엔 키로 닫지 않는다
             if (InputReader.CancelPressed() || InputReader.InteractPressed()) Close();
         }

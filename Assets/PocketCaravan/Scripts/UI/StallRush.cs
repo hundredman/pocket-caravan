@@ -17,6 +17,9 @@ namespace PocketCaravan
     {
         static StallRush inst;
         public static bool IsOpen => inst != null && inst.phase != Phase.Closed;
+        public static int ClosedFrame = -1;
+        public static void ForceClose() { if (inst != null && inst.phase != Phase.Closed) inst.Shut(); }
+        void Shut() { phase = Phase.Closed; ClosedFrame = Time.frameCount; }
 
         enum Phase { Closed, Intro, Play, Done }
         Phase phase;
@@ -95,15 +98,15 @@ namespace PocketCaravan
         void Update()
         {
             if (phase == Phase.Closed) return;
-            var gm = GameManager.I; if (gm == null) { phase = Phase.Closed; return; }
+            var gm = GameManager.I; if (gm == null || !StallWindow.Showing) { Shut(); return; }
             bool esc = InputReader.CancelPressed();
             if (phase == Phase.Intro)
             {
-                if (esc) { phase = Phase.Closed; return; }
+                if (esc) { Shut(); return; }
                 if (Pressed(-1)) StartPlay(gm);
                 return;
             }
-            if (phase == Phase.Done) { if (esc || Pressed(-1)) phase = Phase.Closed; return; }
+            if (phase == Phase.Done) { if (esc || Pressed(-1)) Shut(); return; }
             if (esc) { phase = Phase.Done; return; }
             left -= Time.unscaledDeltaTime;
             if (left <= 0f) { streak = 0; React("너무 오래 걸리네요…", -1); Sfx.Play("cancel", .6f); NextCustomer(gm); return; }
@@ -155,7 +158,7 @@ namespace PocketCaravan
                 if (earned > 0) { CuteUI.Icon(CuteUI.Pic.Coin, r.center.x - 34, r.y + 84); CuteUI.Label(r.center.x - 20, r.y + 89, $"{earned}냥 받음", CuteUI.Up, false, true); }
                 CuteUI.LabelCenter(r.center.x, r.y + 116, "내일 또 손님이 와요. 좌판 물건은 그동안에도 천천히 팔려요", CuteUI.Sub, true);
                 var b = new Rect(r.center.x - 50, r.yMax - 34, 100, 22);
-                if (CuteUI.Button(b, "닫기")) phase = Phase.Closed;
+                if (CuteUI.Button(b, "닫기")) Shut();
                 return;
             }
 

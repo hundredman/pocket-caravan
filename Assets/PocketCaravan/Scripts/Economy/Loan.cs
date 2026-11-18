@@ -19,11 +19,15 @@ namespace PocketCaravan
 
         public static int Limit(PlayerState p)
         {
-            int lv = Credit.Level(p);
+            // 한도는 지금 점수로 따진다 (단계는 내려가지 않아도, 외상을 떼먹어 깎인 점수만큼 한도도 준다)
+            int lv = p == null ? 0 : Credit.LevelOfPoints(p.credit);
             return lv >= 6 ? 800 : lv == 5 ? 500 : lv == 4 ? 300 : 0;
         }
         public static bool Unlocked(PlayerState p) => Limit(p) > 0;
-        public static int Room(PlayerState p) => p == null ? 0 : Mathf.Max(0, Limit(p) - p.debt);
+        /// <summary>더 받을 수 있는 돈. 기한이 하루도 안 남았거나 넘긴 외상이 있으면 0 (다 갚아야 다시 받는다)</summary>
+        public static int Room(PlayerState p) => p == null || Late(p) ? 0 : Mathf.Max(0, Limit(p) - p.debt);
+        public static bool Late(PlayerState p) { var gm = GameManager.I; return p != null && p.debt > 0 && gm != null && p.debtDue - gm.Clock.PlayHours < ExtendHours + 0.01f; }
+        public const int MaxDebt = 2400;   // 1할씩 붙어도 이 위로는 안 는다 (넘쳐 0이 되는 일 막기)
 
         /// <summary>남은 기한 (게임 시간). 외상이 없으면 0</summary>
         public static float HoursLeft(PlayerState p, GameClock clock) => p == null || p.debt <= 0 || clock == null ? 0f : p.debtDue - clock.PlayHours;
@@ -62,6 +66,8 @@ namespace PocketCaravan
         public static void OnHour(PlayerState p, GameClock clock)
         {
             if (p == null || clock == null || p.debt <= 0 || clock.PlayHours < p.debtDue) return;
+            // 좌판에 모인 판 돈도 먼저 거둔다
+            if (p.stallEarned > 0) { int fromStall = Mathf.Min(p.stallEarned, p.debt); p.stallEarned -= fromStall; p.debt -= fromStall; if (p.debt <= 0) { p.debt = 0; p.debtDue = 0f; Notify.Show($"외상 기한이 되어 좌판 판 돈에서 {fromStall}냥을 거둬 갔다. 외상을 다 갚았어요.", 5f); return; } }
             int paid = Repay(p);
             if (p.debt <= 0)
             {
@@ -69,7 +75,7 @@ namespace PocketCaravan
                 return;
             }
             p.credit -= LatePoints;
-            p.debt = Mathf.CeilToInt(p.debt * 1.1f);
+            p.debt = (int)Mathf.Min(MaxDebt, Mathf.Ceil(p.debt * 1.1f));
             p.debtDue = clock.PlayHours + ExtendHours;
             Sfx.Play("fail");
             Notify.Show($"외상을 다 못 갚았다! 신용 −{LatePoints}점 · 남은 외상에 1할이 붙어 {p.debt}냥 · 하루 안에 갚아요", 6f);
