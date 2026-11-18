@@ -46,11 +46,12 @@ def cargo(stage):
     """수레 짐 0~3: 상자 둘 → 자루 둘 더 → 보따리·항아리 → 위에 상자·보따리 산더미"""
     g = HC.C(30, 22)
     base = 22
-    if stage == 1:   # 11/19 은샘: 짐 1단계 옆모습은 상자 둘을 붙여서 (앞·뒷모습처럼)
+    if stage in (1, 2):   # 11/19 은샘: 짐 1·2단계 옆모습은 상자 둘을 붙여서 (앞·뒷모습처럼)
         g.paste(HC.crate(), 4, base - 10); g.paste(HC.crate(), 14, base - 10)
-    if stage >= 2:
+    if stage == 2:        # 2단계 자루는 두 상자 위에 (앞·뒷모습처럼)
+        g.paste(HC.sack(), 10, base - 16)
+    if stage >= 3:
         g.paste(HC.crate(), 0, base - 10); g.paste(HC.crate(), 20, base - 10)
-    if stage >= 2:   # 11/19 앞·뒤와 같은 짐: 2단계는 상자 둘 + 자루 하나 (항아리는 3단계부터)
         g.paste(HC.sack(), 9, base - 9)
     if stage >= 3:
         g.paste(HC.jar(), 15, base - 9)
