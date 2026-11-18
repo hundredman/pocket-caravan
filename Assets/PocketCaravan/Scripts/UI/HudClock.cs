@@ -4,9 +4,10 @@ namespace PocketCaravan
 {
     /// <summary>
     /// 위 가운데 작은 시계 (2026-11-18 은샘 C안). 그리기만 하고 진행·저장과 상관없다.
-    /// - "N일째 · 오후 2:20"(10분 단위) + 장날까지 남은 날(D-2, 당일은 "장날").
-    /// - 왼쪽 반원: 해가 새벽 5시에 수평선 아래에서 떠올라 반원을 따라 지나고 저녁 7시에 진다. 밤에는 달이 같은 길로 뜨고 진다.
-    ///   해·달은 수평선(가로줄) 아래로는 잘려 보이지 않는다. 달은 초승달 모양 그림 (빈 칸이 줄을 가리지 않게).
+    /// - "N일째 · 오후 2:23"(분 단위, 바뀐 분에만 글을 새로 만든다) + 장날까지 남은 날(D-2, 당일은 "장날").
+    /// - 왼쪽 반원: 해가 새벽 5시에 수평선 아래에서 떠올라 반원을 따라 지나고 저녁 7시에 진다 (줄 아래는 잘려 안 보임).
+    ///   반원과 해·달 자리는 칸에 맞춰 반올림하지 않아 화면 점 단위로 부드럽게 움직인다 (11/18 은샘 "매끄럽지 않다").
+    ///   밤(19시~5시)에는 보름달이 같은 길로, 시계 칸도 어두운 밤 색으로 바뀐다.
     /// - 시계를 누르면 아래로 5일 달력(이번 장 돌이: 오늘 · 장날 · 지난 날)과 오늘 큰 장 마을이 펼쳐진다. 다시 누르면 접힌다.
     /// 다른 화면 위에 그리지 않도록 깊이는 상태 카드(HUD)와 같고, 창이 열리면 누를 수 없다. 기념 사진 동안 감춘다.
     /// </summary>
@@ -22,6 +23,11 @@ namespace PocketCaravan
         const float W = 132f, H = 30f, Rise = 5f, Set = 19f, ArcR = 15f;
         static Texture2D sunTex, moonTex;
         bool open; float openK;
+        int shownMinute = -1, shownDay = -1; string dayText = "", timeText = "";
+        static readonly Color32 NightFill = new Color32(0x1E, 0x21, 0x44, 255), NightHover = new Color32(0x2A, 0x2E, 0x58, 255),
+            NightText = new Color32(0xF3, 0xEE, 0xDC, 255), NightSub = new Color32(0xB9, 0xBE, 0xDF, 255),
+            NightArc = new Color32(0x6A, 0x6F, 0xA0, 255), NightLine = new Color32(0x9A, 0xA0, 0xCF, 255);
+        static bool IsNight(GameClock c) { float h = c.minuteOfDay / 60f; return h < Rise || h >= Set; }
 
         void Update()
         {
@@ -41,16 +47,23 @@ namespace PocketCaravan
             var r = new Rect(cx - W / 2f, y, W, H);
             ScreenZones.Mark("hud.clock", new Rect(r.x - 2, r.y, r.width + 4, r.height + 2 + (openK > 0f ? 64f * openK : 0f)));
             bool hover = !UIState.Blocking && r.Contains(Event.current.mousePosition);
-            CuteUI.Box(r, 9, hover || open ? CuteUI.Paper2 : CuteUI.Paper, open ? CuteUI.Interact : CuteUI.Ink, 1, 1, CuteUI.SoftShadow);
+            bool night = IsNight(clock);
+            // 11/18 밤에는 시계 칸이 어두운 밤 색 (색은 두 가지로만 바꾼다: 색마다 그림이 생기므로 서서히 섞지 않는다)
+            CuteUI.Box(r, 9, night ? (hover || open ? NightHover : NightFill) : hover || open ? CuteUI.Paper2 : CuteUI.Paper, open ? CuteUI.Interact : CuteUI.Ink, 1, 1, CuteUI.SoftShadow);
 
-            DrawSky(r, clock);
+            DrawSky(r, clock, night);
 
-            // 날짜 · 시각
-            int hh = clock.Hour, mm = (int)(clock.minuteOfDay % 60f) / 10 * 10;
-            string ampm = hh < 12 ? "오전" : "오후";
-            int h12 = (hh + 11) % 12 + 1;
-            CuteUI.Label(r.x + 45, r.y + 10, $"{clock.day}일째", CuteUI.Text, false, true);
-            CuteUI.Label(r.x + 45, r.y + 22, $"{ampm} {h12}:{mm:00}", CuteUI.Sub, true);
+            // 날짜 · 시각 (분 단위. 글은 분이 바뀔 때만 새로 만든다)
+            int minute = (int)clock.minuteOfDay;
+            if (minute != shownMinute || clock.day != shownDay)
+            {
+                shownMinute = minute; shownDay = clock.day;
+                int hh = minute / 60, mm = minute % 60, h12 = (hh + 11) % 12 + 1;
+                dayText = clock.day + "일째";
+                timeText = (hh < 12 ? "오전 " : "오후 ") + h12 + ":" + mm.ToString("00");
+            }
+            CuteUI.Label(r.x + 45, r.y + 10, dayText, night ? NightText : CuteUI.Text, false, true);
+            CuteUI.Label(r.x + 45, r.y + 22, timeText, night ? NightSub : CuteUI.Sub, true);
             // 장날까지
             int left = DaysToMarket(clock);
             string chip = left == 0 ? "장날" : $"D-{left}";
@@ -73,33 +86,40 @@ namespace PocketCaravan
 
         // ---------------- 해 · 달 ----------------
 
-        void DrawSky(Rect r, GameClock clock)
+        void DrawSky(Rect r, GameClock clock, bool night)
         {
             float baseY = r.y + 24f, ax = r.x + 22f;   // 수평선 높이 · 반원 가운데
             float h = clock.minuteOfDay / 60f;
-            bool day = h >= Rise && h < Set;
             // 0~1: 떠서 질 때까지. 밤은 19시~다음 날 5시 (10시간)
-            float p = day ? (h - Rise) / (Set - Rise) : ((h - Set + 24f) % 24f) / (24f - (Set - Rise));
-            // 반원 (옅은 선)
-            var arcCol = new Color32(0xD2, 0xB2, 0x84, 255);
-            for (int i = 0; i <= 28; i++)
+            float p = !night ? (h - Rise) / (Set - Rise) : ((h - Set + 24f) % 24f) / (24f - (Set - Rise));
+            // 반원: 11/18 은샘 "매끄럽지 않다" → 칸에 맞춰 반올림하지 않고 잘게(반 칸 점 90개) 찍는다
+            var arcCol = night ? NightArc : new Color32(0xD2, 0xB2, 0x84, 255);
+            for (int i = 0; i <= 90; i++)
             {
-                float a = Mathf.PI * i / 28f;
-                CuteUI.Fill(new Rect(Mathf.Round(ax - Mathf.Cos(a) * ArcR), Mathf.Round(baseY - Mathf.Sin(a) * ArcR), 1, 1), arcCol);
+                float a = Mathf.PI * i / 90f;
+                Dot(new Rect(ax - Mathf.Cos(a) * ArcR - .45f, baseY - Mathf.Sin(a) * ArcR - .45f, .9f, .9f), arcCol);
             }
-            // 해·달: 양 끝에서는 수평선 아래(6칸)에서 올라오고 내려간다 → 줄 아래는 잘라서 뜨고 지는 모습
+            // 해·달: 양 끝에서는 수평선 아래에서 올라오고 내려간다 (줄 아래는 잘려 뜨고 지는 모습).
+            // 자리는 반올림하지 않아 화면 점 단위로 부드럽게 움직인다
             float t = Mathf.Clamp01(p);
             float x = ax - Mathf.Cos(t * Mathf.PI) * ArcR;
-            // 반원 위를 지나되, 처음·끝 7% 동안만 수평선 아래(5칸)에서 올라오고 내려간다 (약 1시간: 숨었다 → 반쯤 → 다 보임)
             float dip = 1f - Mathf.SmoothStep(0f, 1f, Mathf.Min(t, 1f - t) / .07f);
             float yy = baseY - Mathf.Sin(t * Mathf.PI) * ArcR + dip * 5f;
-            var tex = day ? Sun() : Moon();
             var clip = new Rect(r.x + 2, r.y + 2, 40f, baseY - (r.y + 2));   // 수평선 위만 보인다
             GUI.BeginGroup(clip);
-            GUI.DrawTexture(new Rect(Mathf.Round(x - 4.5f - clip.x), Mathf.Round(yy - 4.5f - clip.y), 9, 9), tex);
+            GUI.DrawTexture(new Rect(x - 4.5f - clip.x, yy - 4.5f - clip.y, 9, 9), night ? Moon() : Sun());
             GUI.EndGroup();
             // 수평선
-            CuteUI.Fill(new Rect(ax - ArcR - 2f, baseY, ArcR * 2f + 5f, 1), CuteUI.Ink);
+            CuteUI.Fill(new Rect(ax - ArcR - 2f, baseY, ArcR * 2f + 5f, 1), night ? NightLine : CuteUI.Ink);
+        }
+
+        /// <summary>반올림하지 않는 작은 점 (흰 그림 + 색, 그림이 새로 생기지 않는다)</summary>
+        static void Dot(Rect r, Color32 c)
+        {
+            if (Event.current.type != EventType.Repaint) return;
+            var old = GUI.color; GUI.color = (Color)c * old;
+            GUI.DrawTexture(r, Texture2D.whiteTexture);
+            GUI.color = old;
         }
 
         static Texture2D Sun()
@@ -113,16 +133,17 @@ namespace PocketCaravan
             return sunTex;
         }
 
-        /// <summary>초승달: 둥근 달에서 오른쪽 위로 비킨 원을 파낸 모양 (파낸 곳은 투명이라 뒤 선이 그대로 보인다)</summary>
+        /// <summary>보름달: 둥근 달 + 테두리 + 작은 얼룩 둘 (11/18 은샘: 초승달은 파인 곳이 줄을 가려 보였다)</summary>
         static Texture2D Moon()
         {
             if (moonTex != null) return moonTex;
             moonTex = Make((x, y) =>
             {
                 float d = Vector2.Distance(new Vector2(x, y), new Vector2(4f, 4f));
-                float cut = Vector2.Distance(new Vector2(x, y), new Vector2(6.5f, 5.5f));
-                if (d > 4.3f || cut < 3.6f) return new Color32(0, 0, 0, 0);
-                return d > 3.4f ? new Color32(0xB0, 0x8A, 0x1E, 255) : new Color32(0xF5, 0xD9, 0x6B, 255);
+                if (d > 4.3f) return new Color32(0, 0, 0, 0);
+                if (d > 3.4f) return new Color32(0xC9, 0xB0, 0x5A, 255);
+                if ((x == 3 && y == 5) || (x == 5 && y == 3) || (x == 6 && y == 5)) return new Color32(0xE2, 0xD3, 0x96, 255);
+                return new Color32(0xFB, 0xF1, 0xC6, 255);
             });
             return moonTex;
         }
