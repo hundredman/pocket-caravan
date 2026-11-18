@@ -3,14 +3,14 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// 11/14 은샘: 짐 싣는 짐승(3단계 운반 수단) 그림. 짐말(고려·베네치아·북유럽 장터)과 낙타(아라비아 장터, 짐말 대신)가 같이 쓴다.
+    /// 11/14 은샘: 짐 싣는 짐승(3단계 운반 수단) 그림. 11/19 마차(4단계, Tools/ArtGen/wagon_v1.py)도 같은 방식. 짐말(고려·베네치아·북유럽 장터)과 낙타(아라비아 장터, 짐말 대신)가 같이 쓴다.
     /// 내가 지나온 길을 고삐 거리만큼 뒤에서 따라오고, 짐 비율에 따라 등에 실린 짐이 0~3단계로 바뀐다.
     /// 그림: Resources/Transport/PackHorse·Camel/{side,front,back}_0~3 (옆은 왼쪽을 봄, 앞=아래로 올 때, 뒤=위로 갈 때. 1배 크기. Tools/ArtGen/pack_animals_v1.py).
     /// 예전 낙타(ArabiaCamelFollow, 장터 그림을 0.45배로 줄여 사람만 했다)를 대신한다. 온라인 다른 사람 것은 VehicleLook이 Place로 그린다. 그림만, 충돌·속도·저장과 무관.
     /// </summary>
     public class PackAnimal : MonoBehaviour
     {
-        public const string HorseId = "packhorse", CamelId = "arabia_camel";
+        public const string HorseId = "packhorse", CamelId = "arabia_camel", WagonId = "wagon";
 
         /// <summary>이 운반 수단이 짐승이면 그림 폴더와 고삐 거리</summary>
         public static bool Is(string vehicleId, out string folder, out float gap)
@@ -18,6 +18,8 @@ namespace PocketCaravan
             folder = null; gap = 0f;
             if (vehicleId == HorseId) { folder = "PackHorse"; gap = 1.45f; return true; }
             if (vehicleId == CamelId) { folder = "Camel"; gap = 1.5f; return true; }
+            // 11/19 은샘: 마차 (짐말 다음 단계, 네 지역 공용). 옆모습이 68px로 길어 말 머리가 짐말과 같은 자리에 오게 고삐를 길게
+            if (vehicleId == WagonId) { folder = "Wagon"; gap = 2.45f; return true; }
             return false;
         }
         public static bool Is(string vehicleId) => Is(vehicleId, out _, out _);
@@ -39,8 +41,15 @@ namespace PocketCaravan
             tr.localScale = Vector3.one; tr.localRotation = Quaternion.identity;
             var at = trail.Step(owner.position, facing, moving);
             var h = trail.Heading;
+            bool wagon = folder == "Wagon";
+            bool faceRight = trail.FaceRight;
+            if (wagon)
+            {   // 11/19 마차는 길어서(고삐 2.45칸) 모퉁이에서 지나온 길 방향을 보면 말 머리가 나와 반대쪽을 향했다 → 말이 늘 나를 향한다
+                var toMe = (Vector2)owner.position - at;
+                if (toMe.sqrMagnitude > .01f) { h = toMe.normalized; if (Mathf.Abs(h.x) > .05f) faceRight = h.x > 0f; }
+            }
             // 11/14 위아래로 걸으면 앞·뒷모습. 옆모습은 좌우까지 한 방향으로 쳐서, 방향이 바뀔 때 뒤집힘·앞뒤 바뀜이 같이 0.1초 기다린다
-            string want = Mathf.Abs(h.y) > Mathf.Abs(h.x) * 1.2f ? (h.y < 0f ? "front" : "back") : trail.FaceRight ? "side_r" : "side_l";
+            string want = Mathf.Abs(h.y) > Mathf.Abs(h.x) * 1.2f ? (h.y < 0f ? "front" : "back") : faceRight ? "side_r" : "side_l";
             string shown = SteadyView(sr, want);
             bool upDown = !shown.StartsWith("side");
             string view = upDown ? shown : "side";
@@ -50,6 +59,8 @@ namespace PocketCaravan
             float bob = 0f;   // 11/14 다리 걸음 프레임으로 바꿔 들썩임은 뺐다
             float lift = sr.sprite != null ? sr.sprite.rect.height / 32f - .55f : .45f;   // 발이 사람 발높이쯤 오게 (그림 가운데가 중심)
             if (upDown && h.y < 0f) lift -= .4f;   // 앞모습(내 위에서 따라 내려올 때)은 머리가 아래 끝이라 조금 당겨 고삐 거리를 옆모습과 비슷하게
+            // 11/19 마차 앞·뒷모습(30x58)은 옆모습보다 짧다: 앞(내려올 때)은 말 머리가 나에게 가깝게 당기고, 뒤(올라갈 때)는 말 귀가 내 다리를 덮지 않게 조금 뒤로
+            if (wagon && upDown) lift += h.y < 0f ? -.5f : -.6f;
             tr.position = new Vector3(at.x, at.y + lift + bob, owner.position.z);
             sr.flipY = false;                 // 썰매에서 바꿨을 때
             sr.flipX = shown == "side_r";   // 옆모습 그림이 왼쪽을 보니 오른쪽으로 갈 때 뒤집는다
@@ -92,7 +103,7 @@ namespace PocketCaravan
             if (!show) { if (animal != null) animal.gameObject.SetActive(false); trail.Reset(); return; }
             if (animal == null)
             {
-                animal = new GameObject(id == CamelId ? "내 낙타" : "내 짐말").transform;
+                animal = new GameObject(id == CamelId ? "내 낙타" : id == WagonId ? "내 마차" : "내 짐말").transform;
                 animal.SetParent(pc.transform, false);
                 sr = animal.gameObject.AddComponent<SpriteRenderer>();
             }

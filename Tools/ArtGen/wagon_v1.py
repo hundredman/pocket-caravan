@@ -101,9 +101,59 @@ def side(stage, frame=''):
     return out
 
 
+# ---------------- 앞·뒤 (짐말 앞·뒷모습 + 수레 짐칸 끝면) ----------------
+EW, EH = 30, 58
+
+
+def end_cargo(stage):
+    """앞·뒤에서 본 짐: 손수레 짐(상자 0~3)에 3단계는 양옆 자루를 더 얹는다"""
+    g = HC.C(26, 22)
+    if stage >= 1: g.paste(HC.crate(), 0, 12)
+    if stage >= 2: g.paste(HC.crate(), 15, 12)
+    if stage >= 2: g.paste(HC.sack(), 8, 13)
+    if stage >= 3:
+        g.paste(HC.bundle(), 0, 5); g.paste(HC.crate(False), 9, 4); g.paste(HC.bundle(), 14, 5)
+    return g
+
+
+def box_end(c, oy, stage, front):
+    """짐칸 끝면 (앞에서 보면 앞판, 뒤에서 보면 뒤판) + 양옆 바퀴 두께. 짐칸 너비 26"""
+    x0, x1 = 2, 27
+    HC.edge_wheel(c, 0, oy + 4, 14); HC.edge_wheel(c, x1, oy + 4, 14)
+    c.rect(x0 + 1, oy, x1 - 1, oy + 6, 'd')                      # 짐칸 바닥 안쪽
+    for x in range(x0 + 2, x1 - 1):
+        if (x - x0) % 4 == 3: c.vline(x, oy + 1, oy + 6, 'i')
+    c.hline(x0 + 1, x1 - 1, oy, 'i')
+    if stage: c.paste(end_cargo(stage), x0 + 1, oy - 15)
+    for i, k in enumerate(['H', 'h', 'w', 'd', 'w', 'm', 'd']):
+        c.hline(x0, x1, oy + 7 + i, k)
+    for x in (x0 + 6, x1 - 8): c.px(x, oy + 9, 'm'); c.px(x + 2, oy + 12, 'd')
+    for x in (x0, x1 - 1):
+        c.vline(x, oy - 1, oy + 13, 'l'); c.vline(x + 1, oy - 1, oy + 13, 'm'); c.px(x, oy - 1, 'H'); c.px(x + 1, oy - 1, 'h')
+
+
+def front(stage, frame=''):
+    """아래로 올 때: 말이 앞(아래), 짐칸이 말 뒤(위)로 보인다"""
+    out = Image.new('RGBA', (EW, EH), (0, 0, 0, 0))
+    cv = Cv(EW, EH); box_end(cv, 18, stage, True); cv.outline()
+    out.alpha_composite(cv.im, (0, 0))
+    out.alpha_composite(PA.end_view3('horse', 'front', 0, frame), (3, EH - 44))
+    return out
+
+
+def back(stage, frame=''):
+    """위로 갈 때: 짐칸 뒤판이 앞(아래), 말은 짐칸 너머(위)로 엉덩이·귀가 보인다"""
+    out = Image.new('RGBA', (EW, EH), (0, 0, 0, 0))
+    out.alpha_composite(PA.end_view3('horse', 'back', 0, frame), (3, 0))
+    cv = Cv(EW, EH); box_end(cv, EH - 19, stage, False); cv.outline()
+    out.alpha_composite(cv.im, (0, 0))
+    return out
+
+
 if __name__ == '__main__':
     out = Path(sys.argv[1] if len(sys.argv) > 1 else '.'); out.mkdir(parents=True, exist_ok=True)
     for s in range(4):
-        side(s).save(out / f'side_{s}.png')
-        for fr in 'ab':
-            side(s, fr).save(out / f'side_{s}_{fr}.png')
+        for view, fn in (('side', side), ('front', front), ('back', back)):
+            fn(s).save(out / f'{view}_{s}.png')
+            for fr in 'ab':
+                fn(s, fr).save(out / f'{view}_{s}_{fr}.png')

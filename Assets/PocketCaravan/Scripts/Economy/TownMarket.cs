@@ -521,10 +521,31 @@ namespace PocketCaravan
             else{deal=null;Sfx.Play("cancel");}
         }
 
+        /// <summary>
+        /// 11/19 은샘: 이 장터에서 파는 운반 수단. 마을 데이터(vehiclesForSale)에 더해, 짐말·낙타를 파는 장터는 마차도 판다
+        /// (마차는 네 지역 공용 4단계라 마을 에셋 다섯 개를 고치지 않고 여기서 붙인다: 개경 · 리알토 · 북쪽 순록 마을 · 사나 · 제다).
+        /// </summary>
+        public static List<VehicleData> ForSale(TownData town)
+        {
+            var list = new List<VehicleData>();
+            if (town == null) return list;
+            bool big = false;
+            foreach (var v in town.vehiclesForSale)
+            {
+                if (v == null || list.Contains(v)) continue;
+                list.Add(v);
+                if (v.id == PackAnimal.HorseId || v.id == PackAnimal.CamelId) big = true;
+            }
+            var db = GameManager.I != null ? GameManager.I.Db : null;
+            var wagon = big && db != null ? db.vehicles.Find(v => v != null && v.id == PackAnimal.WagonId) : null;
+            if (wagon != null && !list.Contains(wagon)) list.Add(wagon);
+            return list;
+        }
+
         void DrawVehicles(PlayerState player, MarketState market, Rect c)
         {
             var list = new List<VehicleData>();
-            foreach (var v in town.vehiclesForSale) if (v != null && v.minTownLevel <= market.Level) list.Add(v);
+            foreach (var v in ForSale(town)) if (v != null && v.minTownLevel <= market.Level) list.Add(v);
             var area = new Rect(c.x + 6, c.y + 8, c.width - 10, c.height - 12);
             const float rowH = 40f;
             vehicleListScroll = Scroll(area, vehicleListScroll, list.Count * rowH);
@@ -727,7 +748,7 @@ namespace PocketCaravan
         void BuyVehicle(VehicleData v)
         {
             var p = GameManager.I.Player;
-            if(v==null || !town.vehiclesForSale.Contains(v) || v.minTownLevel>Market.Level) { message="이 장터에서 구입할 수 없는 수단입니다.";return; }
+            if(v==null || !ForSale(town).Contains(v) || v.minTownLevel>Market.Level) { message="이 장터에서 구입할 수 없는 수단입니다.";return; }
             if (p.vehicle == v) { message = "이미 사용 중인 이동 수단입니다."; return; }
             if (p.stowedVehicle == v) { message = "넣어 둔 수단입니다. V를 누르면 꺼냅니다."; return; }
             if (p.money < v.price) { message = "돈이 모자랍니다."; Sfx.Play("cancel"); return; }

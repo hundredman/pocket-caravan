@@ -77,6 +77,37 @@ namespace PocketCaravan
         public static float DrawBadges(float top)
         {
             float x = X, h = 14f; bool any = false;
+            // 11/19 다음 목표 운반 수단 (마일스톤): 돈 막대. 다 모이면 초록으로 "살 수 있어요"
+            var gm = GameManager.I;
+            var goalV = VehicleGoal.Visible ? VehicleGoal.Next(gm.Player, gm.Db) : null;
+            if (goalV != null)
+            {
+                int have = Mathf.Max(0, gm.Player.money), need = Mathf.Max(1, goalV.price);
+                bool ready = have >= need;
+                string head = "다음 목표 · " + goalV.displayName;
+                string num = ready ? "살 수 있어요!" : $"{have}/{need}냥";
+                const float barW = 34f;
+                float bw = Mathf.Round(6f + 9f + 3f + CuteUI.Width(head, true, true) + 5f + (ready ? 0f : barW + 4f) + CuteUI.Width(num, true, true) + 7f);
+                var r = new Rect(x, Mathf.Round(top), Mathf.Min(bw, HUD.ColumnRight - x), h);
+                CuteUI.Box(r, 6, ready ? CuteUI.StaminaHi : CuteUI.Paper, CuteUI.Ink, 1, 1, CuteUI.SoftShadow);
+                CuteUI.Icon(CuteUI.Pic.Coin, r.x + 5f, r.y + 2.5f);
+                float tx = r.x + 6f + 9f + 3f;
+                CuteUI.Label(tx, r.center.y, head, CuteUI.Text, true, true);
+                tx += CuteUI.Width(head, true, true) + 5f;
+                if (!ready)
+                {
+                    var bar = new Rect(tx, r.center.y - 2f, barW, 4f);
+                    var oc = GUI.color;
+                    GUI.color = (Color)CuteUI.KeyLine * oc;   // 빈 칸은 회색, 모인 돈은 동전 주황 (노랑·베이지는 너무 옅었다)
+                    GUI.DrawTexture(bar, Texture2D.whiteTexture);
+                    GUI.color = (Color)CuteUI.Sell * oc;
+                    GUI.DrawTexture(new Rect(bar.x, bar.y, Mathf.Round(barW * Mathf.Clamp01(have / (float)need)), bar.height), Texture2D.whiteTexture);
+                    GUI.color = oc;
+                    tx += barW + 4f;
+                }
+                CuteUI.Label(tx, r.center.y, num, ready ? CuteUI.Text : CuteUI.Sub, true, ready);
+                x += r.width + 4f; any = true;
+            }
             foreach (var b in badges.Values)
             {
                 if (Time.frameCount - b.frame > 1) continue;
