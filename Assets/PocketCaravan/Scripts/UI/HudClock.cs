@@ -96,13 +96,16 @@ namespace PocketCaravan
             float y = CuteUI.TopStack(0, Mathf.Lerp(H + 98f * openK, TabH - 2f, fe)) - 4f;   // 위 가운데 맨 위. 다른 위 알약(상인회·축제 등)은 이 아래로 쌓인다
             // 11/18 접기: 시계가 위로 올라가 화면 밖으로, 작은 탭이 내려온다
             var tab = new Rect(cx - TabW / 2f, Mathf.Round(-TabH + (TabH + y - 2f) * fe), TabW, TabH + 4f);
-            if (fe > 0f) DrawTab(tab, IsNight(gm.Clock), fe);
-            if (fe >= 1f) { ScreenZones.Mark("hud.clock", tab); return; }
+            // 11/18 은샘: 접힌 탭 위로 사람 동그라미가 뚫고 나왔다 → 그린 칸 전체(위로 숨은 부분 · 그림자까지)를 UI 자리로 알린다
+            var tabZone = Rect.MinMaxRect(tab.x - 1f, 0f, tab.xMax + 1f, tab.yMax + 2f);
+            if (fe > 0f) { DrawTab(tab, IsNight(gm.Clock), fe); ScreenZones.Mark("hud.clock.tab.zone", tabZone); }
+            if (fe >= 1f) { ScreenZones.Mark("hud.clock", tabZone); return; }
             y -= (H + y + 6f) * fe;
             var r = new Rect(cx - W / 2f, y, W, H);
             // 펼치면 달력 판(204) 너비까지 (튜토리얼 테두리가 시계와 달력을 함께 감싼다)
             float zw = Mathf.Lerp(W + 4f, 208f, openK);
-            if (fe <= 0f) ScreenZones.Mark("hud.clock", new Rect(Mathf.Round(cx - zw / 2f), r.y, Mathf.Round(zw), r.height + 2 + (openK > 0f ? 98f * openK : 0f)));
+            if (fe > 0f) ScreenZones.Mark("hud.clock", Rect.MinMaxRect(r.x - 2f, Mathf.Max(0f, r.y), r.xMax + 2f, Mathf.Max(0f, r.yMax + 2f)));   // 접히는 중
+            else ScreenZones.Mark("hud.clock", new Rect(Mathf.Round(cx - zw / 2f), r.y, Mathf.Round(zw), r.height + 2 + (openK > 0f ? 98f * openK : 0f)));
             var foldR = new Rect(r.xMax - FoldW - 2f, r.y + 2f, FoldW, H - 4f);
             var mainR = new Rect(r.x, r.y, W - FoldW - 2f, H);
             bool hover = !UIState.Blocking && mainR.Contains(Event.current.mousePosition);
