@@ -14,6 +14,8 @@ namespace PocketCaravan
         public const int BoardSize = 3;
         public const int PremiumCredit = 3;
         public const int MaxActive = 3;
+        /// <summary>11/19 신용 2단계부터 한 번에 4개 (Credit.PerkText). 맡은 일이 늘어나는 게 신용의 쓰임</summary>
+        public static int MaxActiveFor(PlayerState p) => Credit.Level(p) >= 2 ? MaxActive + 1 : MaxActive;
         const float RefillHours = 4f;
 
         [Serializable]
@@ -72,7 +74,7 @@ namespace PocketCaravan
                 }
                 var b = new Board { town = t.id, lastAdded = clock.TotalHours };
                 boards.Add(b);
-                for (int i = 0; i < BoardSize; i++)
+                for (int i = 0; i < BoardSizeFor(); i++)
                 {
                     var offer = Generate(t);
                     if (offer != null) b.list.Add(offer);
@@ -84,6 +86,19 @@ namespace PocketCaravan
         // 신용이 낮은 상인도 다시 시작할 수 있도록 비어 있지 않은 게시판에 일반 의뢰 하나를 남긴다.
         void EnsureBasic(Board b, TownData town)
         {
+            // 11/19 아직 못 맡는 귀한 짐(신용 3단계 전)은 게시판에 미리 보기로 하나만. 나머지 자리는 맡을 수 있는 의뢰로 (열린 것은 실제로 쓸 수 있게)
+            if (Credit.Level(player) < PremiumCredit)
+            {
+                bool seen = false;
+                for (int i = 0; i < b.list.Count; i++)
+                {
+                    var c = b.list[i];
+                    if (c == null || !c.Premium || player.contracts.Contains(c)) continue;
+                    if (!seen) { seen = true; continue; }
+                    var basicOffer = Generate(town, true);
+                    if (basicOffer != null) b.list[i] = basicOffer;
+                }
+            }
             if (b.list.Count == 0 || b.list.Exists(c => !c.Premium && !c.atonement)) return;
             var basic = Generate(town, true);
             int last = b.list.FindLastIndex(c => c != null && !c.atonement);
@@ -110,6 +125,22 @@ namespace PocketCaravan
 
         TownData Town(string id) => db.towns.Find(t => t != null && t.id == id);
 
+        /// <summary>
+        /// 11/19 게시판 의뢰를 기한 안에 온전히 납품했을 때 신용 점수 (Core/Credit.cs): 기본 1 · 먼 마을(거리 2 이상) +1 · 귀한 짐 +1 · 빨리 옴(기한의 70% 안) +1.
+        /// 덜 받은 납품 0 · 실패 −1은 그대로.
+        /// </summary>
+        public int CreditPoints(Contract c, bool fast)
+        {
+            if (c == null) return 0;
+            int pts = 1;
+            var a = Town(c.fromTown); var b = Town(c.toTown);
+            if (a != null && b != null && Distance(a, b) >= 2) pts++;
+            if (c.Premium) pts++;
+            if (c.kind != ContractKind.Normal) pts++;   // 급한 짐·깨지기 쉬운 짐·큰 주문
+            if (fast) pts++;
+            return pts;
+        }
+
         public static int Distance(TownData a, TownData b)
         {
             return TownDistance.Between(a.id, b.id, a.worldCoord, b.worldCoord);
@@ -123,25 +154,126 @@ namespace PocketCaravan
             int dist = Mathf.Max(1, Distance(from, to));
             var names = CargoNames.TryGetValue(from.id, out var n) ? n : new[] { "짐 꾸러미" };
             float weight = rng.Next(2, 7);
-            bool premium = !basic && rng.NextDouble() < 0.25;
+            bool premium = forceKind == ForcePremium || (forceKind < 0 && !basic && rng.NextDouble() < 0.25);
+            int kind = premium || basic ? ContractKind.Normal : PickKind(forceKind);
+            forceKind = -1;
             var rules = DeliveryReward.Rules(from);
             if (rules != null && premium)
                 weight = rng.Next(Mathf.Max(1, rules.premiumMinWeight), Mathf.Max(rules.premiumMinWeight, rules.premiumMaxWeight) + 1);
+            if (kind == ContractKind.Bulk) weight = rng.Next(10, 17);
+            // 11/19 해금된 의뢰는 실제로 맡을 수 있게: 귀한 짐·큰 주문이 지금 짐 한도(빈 몸 기준)를 넘지 않게 줄인다 (귀한 짐 8, 큰 주문 10 밑으로는 안 줄임)
+            if (premium || kind == ContractKind.Bulk) weight = Mathf.Min(weight, Mathf.Max(premium ? 8f : 10f, Mathf.Floor(player.Capacity)));
+            else if (kind == ContractKind.Fragile) weight = rng.Next(2, 5);
             int steps = rules != null ? DeliveryReward.RouteSteps(world, from.id, to.id) : 0;
             int reward = DeliveryReward.Quote(rules, dist, steps, weight, premium, 0.85f + (float)rng.NextDouble() * 0.3f);
+            reward = Mathf.Max(1, Mathf.RoundToInt(reward * KindPay(kind)));
+            string cargoName = kind == ContractKind.Fragile ? FragileName(from) : kind == ContractKind.Bulk ? BulkName(from) : names[rng.Next(names.Length)];
             return new Contract
             {
                 id = nextId++,
+                kind = kind,
                 fromTown = from.id,
                 toTown = to.id,
-                cargo = (premium ? "귀한 " : "") + names[rng.Next(names.Length)],
+                cargo = (premium ? "귀한 " : "") + cargoName,
                 weight = weight,
                 reward = reward,
                 rewardRuleVersion = rules != null ? rules.revision : 0,
                 quotedRouteSteps = steps,
                 minCredit = premium ? PremiumCredit : 0,
-                hours = dist * 9 + 8,
+                hours = KindHours(kind, dist),
             };
+        }
+
+        // ---------------- 11/19 의뢰 종류 ----------------
+
+        int forceKind = -1;   // 다음 Generate가 이 종류로 (새 단계에 닿았을 때 게시판에 꼭 하나 나오게)
+        const int ForcePremium = 99;   // 3단계: 귀한 짐
+
+        /// <summary>지금 신용 단계로 열린 종류 중 하나. 보통 4 : 새 종류 각 2. 아무것도 안 열렸으면 rng를 쓰지 않는다 (옛 시험의 의뢰 순서 유지)</summary>
+        int PickKind(int force)
+        {
+            int lv = Credit.Level(player);
+            if (force >= 0 && ContractKind.LevelOf(force) <= lv) return force;
+            var open = new List<int>();
+            foreach (int k in new[] { ContractKind.Express, ContractKind.Fragile, ContractKind.Bulk })
+                if (ContractKind.LevelOf(k) <= lv) open.Add(k);
+            if (open.Count == 0) return ContractKind.Normal;
+            int roll = rng.Next(4 + open.Count * 2);
+            return roll < 4 ? ContractKind.Normal : open[(roll - 4) / 2];
+        }
+
+        static float KindPay(int kind) => kind == ContractKind.Express ? 1.35f : kind == ContractKind.Fragile ? 1.25f : kind == ContractKind.Bulk ? 1.6f : 1f;
+        static float KindHours(int kind, int dist) =>
+            kind == ContractKind.Express ? Mathf.Round((dist * 9 + 8) * 0.6f) : kind == ContractKind.Bulk ? dist * 12 + 12 : dist * 9 + 8;
+
+        static string BulkName(TownData from)
+        {
+            string r = from != null && from.region != null ? from.region.id : "";
+            if (r == "goryeo") return "곡식 섬 더미";
+            if (r == "venice" || r == "center_venice") return "소금 가마니 더미";
+            if (r == "arabia") return "대추야자 자루 더미";
+            if (r == "north" || r == "center_north") return "말린 대구 더미";
+            return "장터 물건 더미";
+        }
+
+        static string FragileName(TownData from)
+        {
+            string r = from != null && from.region != null ? from.region.id : "";
+            if (r == "goryeo") return "청자 그릇 상자";
+            if (r == "venice" || r == "center_venice") return "유리그릇 상자";
+            if (r == "arabia") return "향유 병 상자";
+            if (r == "north" || r == "center_north") return "꿀술 단지";
+            return "옹기 항아리";
+        }
+
+        /// <summary>게시판 크기: 신용 2단계부터 4개 (한 번에 4개 맡을 수 있으니 실제로 고를 만큼 나와야 한다), 4단계부터 5개</summary>
+        public int BoardSizeFor() => BoardSize + (Credit.Level(player) >= 2 ? 1 : 0) + (Credit.Level(player) >= 4 ? 1 : 0);
+
+        /// <summary>
+        /// 신용 단계가 올랐을 때: 모든 게시판을 새 크기로 채우고, 이번 단계에 열린 종류가 게시판마다 하나는 있게 한다.
+        /// 맡은 의뢰는 건드리지 않는다. GameManager가 단계 오름 알림과 함께 부른다.
+        /// </summary>
+        public void OnCreditLevel(int level)
+        {
+            int unlocked = level == 1 ? ContractKind.Express : level == 2 ? ContractKind.Fragile : level == PremiumCredit ? ForcePremium : level == 4 ? ContractKind.Bulk : -1;
+            foreach (var b in boards)
+            {
+                var t = Town(b.town);
+                if (t == null) continue;
+                if (unlocked >= 0 && !b.list.Exists(c => c != null && (unlocked == ForcePremium ? c.Premium : c.kind == unlocked)))
+                {
+                    int i = b.list.FindIndex(c => c != null && !c.atonement && !c.Premium && c.kind == ContractKind.Normal);
+                    forceKind = unlocked;
+                    var offer = Generate(t);
+                    forceKind = -1;
+                    if (offer != null) { if (i >= 0 && b.list.FindAll(c => c != null && !c.atonement).Count >= BoardSizeFor()) b.list[i] = offer; else b.list.Add(offer); }
+                }
+                while (b.list.FindAll(c => c != null && !c.atonement).Count < BoardSizeFor())
+                {
+                    var offer = Generate(t);
+                    if (offer == null) break;
+                    b.list.Add(offer);
+                }
+                EnsureBasic(b, t);
+            }
+        }
+
+        /// <summary>
+        /// 깨지기 쉬운 짐: 달리면 초당 1% 상한다 (PlayerController가 부른다). 걸으면 안 상한다 — 규칙을 하나로 두어 처음 하는 사람도 알기 쉽게.
+        /// 10초 넘게 달리면 90% 아래(덜 받음)로 떨어진다. 그때 한 번 알린다.
+        /// </summary>
+        public void TickFragile(float dt, bool moving, bool running)
+        {
+            if (!moving || !running || dt <= 0f) return;
+            const float loss = 0.01f;
+            foreach (var c in player.contracts)
+            {
+                if (c == null || !c.Fragile || c.dropped) continue;
+                float before = c.condition;
+                c.condition = Mathf.Max(0f, c.condition - loss * dt);
+                if (before >= 0.9f && c.condition < 0.9f)
+                    Notify.Show($"{c.cargo}이(가) 흔들려 상했다! 깨지기 쉬운 짐은 걸어서 날라요.", 4f);
+            }
         }
 
         // 새 밸런스는 게시판에 남은 제안만 갱신. 기수락 보수·팁·무게·기한은 그대로 둔다.
@@ -165,7 +297,7 @@ namespace PocketCaravan
             float played = clock.PlayHours;    // 의뢰 기한: 내 의뢰 시간
             foreach (var b in boards)
             {
-                if (b.list.FindAll(c => c != null && !c.atonement).Count < BoardSize && now - b.lastAdded >= RefillHours)
+                if (b.list.FindAll(c => c != null && !c.atonement).Count < BoardSizeFor() && now - b.lastAdded >= RefillHours)
                 {
                     var t = Town(b.town);
                     if (t != null)
@@ -207,8 +339,8 @@ namespace PocketCaravan
             if (c == null) return "의뢰가 없습니다.";
             if (!CanOffer(Town(c.fromTown), Town(c.toTown))) return "현재 지역에서 도달 가능한 목적지의 의뢰만 맡을 수 있습니다.";
             if (player.contracts.Exists(active => active.id == c.id)) return "이미 맡은 의뢰입니다.";
-            if (player.contracts.Count >= MaxActive) return $"의뢰는 한 번에 {MaxActive}개까지 맡을 수 있습니다.";
-            if (c.Premium && player.credit < c.minCredit) return $"신용 {c.minCredit} 이상이어야 맡길 수 있다고 합니다.";
+            if (player.contracts.Count >= MaxActiveFor(player)) return $"의뢰는 한 번에 {MaxActiveFor(player)}개까지 맡을 수 있습니다.";
+            if (c.Premium && Credit.Level(player) < c.minCredit) return $"신용 {c.minCredit} 이상이어야 맡길 수 있다고 합니다.";
             if (c.atonement)
             {
                 if (!StandingRecovery.Negative(player.reputation, (ReputationScope)c.atonementScope, c.atonementTarget)) return "평판이 이미 중립 이상입니다.";
@@ -259,9 +391,9 @@ namespace PocketCaravan
             {
                 bool fast = now - c.acceptedAt <= c.Window * 0.7f;
                 r.paid = Mathf.RoundToInt(c.reward * (fast ? 1.15f : 1f));
-                r.credit = 1;
+                r.credit = CreditPoints(c, fast);
                 r.success = true;
-                r.message = fast ? $"빨리 왔구먼! 수고비에 웃돈을 얹었네. (+{r.paid}, 신용 +1)" : $"틀림없이 받았네. (+{r.paid}, 신용 +1)";
+                r.message = fast ? $"빨리 왔구먼! 수고비에 웃돈을 얹었네. (+{r.paid}, 신용 +{r.credit})" : $"틀림없이 받았네. (+{r.paid}, 신용 +{r.credit})";
             }
             else if (now <= c.finalDeadline && c.condition >= 0.3f)
             {
@@ -355,6 +487,7 @@ namespace PocketCaravan
             CloseAtonement(c);
             var scope = (ReputationScope)c.atonementScope;
             if (!r.success) { r.message = $"이걸로는 안 되겠네. (보증금 {c.deposit}냥 잃음, 신용 −1)"; return; }
+            if (r.credit > 0) r.credit = 1;   // 11/19 속죄 의뢰는 평판을 되찾는 일이라 신용은 1점만 (게시판 점수 규칙은 쓰지 않는다)
             int gained = StandingRecovery.Raise(player.reputation, scope, c.atonementTarget,
                 ReputationAwards.PointsFor(r.credit > 0 ? StandingRecovery.AtonementSize : StandingRecovery.AtonementPartialSize));
             r.paid += c.deposit;

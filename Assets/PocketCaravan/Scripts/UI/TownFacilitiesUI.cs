@@ -156,7 +156,7 @@ namespace PocketCaravan
             CuteUI.LabelRight(xr, cy, money, CuteUI.Text, false, true);
             xr -= CuteUI.Width(money, false, true) + 11;
             CuteUI.Icon(CuteUI.Pic.Coin7, xr, cy - 4);
-            ContractBoard.Pill(xr - 12, cy, "신용 " + p.credit, CuteUI.Interact, CuteUI.InteractLo, CuteUI.White, true);
+            ContractBoard.Pill(xr - 12, cy, "신용 " + Credit.Level(p), CuteUI.Interact, CuteUI.InteractLo, CuteUI.White, true);
 
             var content = new Rect(r.x + 15, r.y + 43, w - 30, h - 43 - 30);
             CuteUI.Box(content, 7, CuteUI.Paper, CuteUI.Ink);

@@ -26,11 +26,11 @@ namespace PocketCaravan.EditorTools
             var r = new Report { unityVersion = Application.unityVersion };
             var db = Resources.Load<GameDatabase>("GameDatabase");
             var civilian = new HashSet<string> { "tutorial_3", "tutorial_5", "naru_board", "goryeo_jangdan_trade", "goryeo_songak_trade", "goryeo_return_trade" };
-            Check(r, "all 12 existing quests retained", db.quests.Count(q => q != null && !q.id.StartsWith("q1_") && UnityEditor.AssetDatabase.GetAssetPath(q).Contains("/Data/Goryeo/")) == 12);   // 통합 브랜치의 다른 지역 퀘스트는 세지 않음
+            Check(r, "all 12 existing quests retained (+3 고려 상단 11/19)", db.quests.Count(q => q != null && !q.id.StartsWith("q1_") && UnityEditor.AssetDatabase.GetAssetPath(q).Contains("/Data/Goryeo/")) == 15);   // 통합 브랜치의 다른 지역 퀘스트는 세지 않음
             foreach (var q in db.quests.Where(q => q != null && !q.id.StartsWith("q1_") && UnityEditor.AssetDatabase.GetAssetPath(q).Contains("/Data/Goryeo/")))   // 고려 퀘스트 규칙만
             {
                 bool civil = civilian.Contains(q.id);
-                Check(r, q.id + " new credit classification", q.rewardCredit == (civil ? 0 : 1));
+                Check(r, q.id + " new credit classification", civil ? q.rewardCredit == 0 : q.rewardCredit >= 1);   // 11/19 맡은 일은 1~3점 (Core/Credit.cs)
                 Check(r, q.id + " reputation metadata", civil ? q.rewardReputationScope == ReputationScope.Civilization
                     && q.rewardReputationTarget == "goryeo" && q.rewardReputationSize == ReputationSize.Small
                     : q.rewardReputationSize == ReputationSize.None);
@@ -93,14 +93,14 @@ namespace PocketCaravan.EditorTools
                     var cm = new ContractManager(db, cclock, p);
                     var c = new Contract { id = 999, fromTown = from.id, toTown = "transit_ferry", reward = 10, weight = 1,
                         acceptedAt = 7, deadline = kind == "partial" ? 7 : 10, finalDeadline = kind == "expired" ? 7 : 12, condition = kind == "failed" ? .2f : 1f };
-                    p.contracts.Add(c);
+                    p.contracts.Add(c); var delivered = new ContractResult();
                     if (kind == "expired") { cm.OnHour(); cm.OnHour(); }
                     else if (kind == "lost") { cm.Lose(c); cm.Lose(c); }
-                    else { cm.Deliver(c, "transit_ferry"); cm.Deliver(c, "transit_ferry"); }
+                    else { delivered = cm.Deliver(c, "transit_ferry"); cm.Deliver(c, "transit_ferry"); }
                     var scope = from == central ? ReputationScope.Town : ReputationScope.Civilization;
                     string target = from == central ? from.id : "goryeo";
                     Check(r, from.id + " " + kind + " one issuer-only contribution", events.Count == 1 && events[0].scope == scope && events[0].targetId == target);
-                    Check(r, from.id + " " + kind + " credit retained", p.credit == -3 + (kind == "success" ? 1 : kind == "partial" ? 0 : -1));
+                    Check(r, from.id + " " + kind + " credit retained", p.credit == -3 + (kind == "success" ? delivered.credit : kind == "partial" ? 0 : -1) && (kind != "success" || delivered.credit >= 1));
                     Check(r, from.id + " " + kind + " size/direction/approved points", events[0].size == (kind == "lost" ? ReputationSize.Small : kind == "partial" ? ReputationSize.VerySmall : ReputationSize.Medium)
                         && events[0].direction == (kind == "success" ? 1 : -1) && events[0].Points == events[0].direction * ReputationAwards.PointsFor(events[0].size));
                 }

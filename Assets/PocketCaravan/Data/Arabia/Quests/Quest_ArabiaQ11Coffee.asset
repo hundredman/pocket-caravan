@@ -49,7 +49,7 @@ MonoBehaviour:
     completeLine: "\uC774 \uD5A5! \uB0B4\uC77C\uBD80\uD130 \uB0B4 \uAC00\uAC8C \uC55E\uC5D0
       \uC904\uC774 \uC124 \uAC70\uC57C."
   rewardMoney: 50
-  rewardCredit: 1
+  rewardCredit: 2
   rewardReputationScope: 0
   rewardReputationTarget: 
   rewardReputationSize: 0

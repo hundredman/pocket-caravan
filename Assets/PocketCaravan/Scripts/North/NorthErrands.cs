@@ -6,10 +6,10 @@ namespace PocketCaravan
     /// <summary>
     /// 10/30 남은 빈 곳 채우기 (기우 기획). 공용 코드는 고치지 않는다. 자리는 NorthLife.json (n4_build.py place_extras).
     /// - 얼음 동굴 골짜기: 길 잃은 행상 군나르의 잃어버린 짐 3개 "gunnar", "gunnarPacks", "gunnarHint"(0 물가·1 나무 사이·2 바위 뒤).
-    ///   말 걸면 찾아 주기 시작 → 군나르가 대략의 방향만 알려 줌(화살표 없음) → 짐에서 Space로 줍기 → 셋 다 찾으면 레이스 손수건 + 신용 +1.
+    ///   말 걸면 찾아 주기 시작 → 군나르가 대략의 방향만 알려 줌(화살표 없음) → 짐에서 Space로 줍기 → 셋 다 찾으면 레이스 손수건 + 북유럽 평판(중간).
     ///   한 번만: 끝나면 군나르는 떠나고 꺼진 모닥불 자국이 남는다.
     /// - 개울 나루: 나무꾼 엘크 "woodcutter", 장작 패는 그루터기 "woodBlock", 모닥불 쉼터 "woodFire".
-    ///   거들기 → 타이밍 놀이(움직이는 표시가 초록 칸에 올 때 Space, 6번 중 3번) → 장작 한 아름 → 모닥불에 넣으면 그날은 불이 활활. 처음엔 신용 +1.
+    ///   거들기 → 타이밍 놀이(움직이는 표시가 초록 칸에 올 때 Space, 6번 중 3번) → 장작 한 아름 → 모닥불에 넣으면 그날은 불이 활활. 처음엔 북유럽 평판(작음).
     /// - 북문 마을 경비 훈련장 "dummies": 짚 허수아비 그림(가끔 흔들림). 경비병 둘은 맵 talker(말만 함).
     /// - 저장: NorthSave "gunnar:start", "gunnar:pack:0~2", "gunnar:done", "wood:day", "wood:carry", "wood:fire", "wood:first"
     /// </summary>
@@ -212,11 +212,11 @@ namespace PocketCaravan
             var gift = gm.ItemById(GiftId);
             if (gift != null && !gm.Player.CanCarry(gift)) { DialogueUI.Show("길 잃은 행상 군나르", "짐을 다 찾아 왔구려! 그런데 자네 짐이 가득하군. 답례품 넣을 자리를 비우고 오시오."); return; }
             if (gift != null) gm.Player.cargo.Add(gift, 1, 0f);
-            gm.Player.credit += 1;
+            int rep = GoodDeeds.ForRegion(Reactions.Region.North, ReputationSize.Medium, "north:gunnar");   // 11/19 선행은 평판
             NorthSave.Set("gunnar:done", 1f);
             Play(done);
             DialogueUI.Show("길 잃은 행상 군나르", "세상에, 하나도 빠짐없이! 이건 남쪽 운하 도시에서 떼어 온 레이스 손수건이오. 귀한 거니 좋은 값에 파시오.\n이제 썰매를 다시 꾸려 길을 떠나야겠소. 언젠가 또 길에서 만납시다!"
-                + $"\n({(gift != null ? gift.displayName + " 1개 · " : "")}신용 +1)");
+                + $"\n({(gift != null ? gift.displayName + " 1개 · " : "")}평판 +{rep})");
             Rebuild(NorthUtil.Map);
         }
 
@@ -313,7 +313,7 @@ namespace PocketCaravan
             NorthSave.Set("wood:carry", 0f);
             var gm = GameManager.I;
             string extra = "";
-            if (!NorthSave.Has("wood:first") && gm != null) { NorthSave.Set("wood:first", 1f); gm.Player.credit += 1; extra = "\n(나무꾼 엘크: 고맙네! 자네 같은 사람이 있어 마을이 따뜻하지. · 신용 +1)"; }
+            if (!NorthSave.Has("wood:first") && gm != null) { NorthSave.Set("wood:first", 1f); int rep = GoodDeeds.ForRegion(Reactions.Region.North, ReputationSize.Small, "north:wood"); extra = $"\n(나무꾼 엘크: 고맙네! 자네 같은 사람이 있어 마을이 따뜻하지. · 평판 +{rep})"; }
             Play(done);
             DialogueUI.Show("모닥불 쉼터", "장작을 넣자 불길이 활활 솟아오른다! 둘러앉은 사람들이 손을 쬔다." + extra);
         }

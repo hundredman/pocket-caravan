@@ -51,7 +51,7 @@ MonoBehaviour:
     completeLine: "\uC774\uC81C \uCABD\uBE5B\uC774 \uC81C\uB300\uB85C \uBD99\uACA0\uC5B4\uC694.
       \uACE0\uB9C8\uC6CC\uC694."
   rewardMoney: 35
-  rewardCredit: 1
+  rewardCredit: 2
   rewardReputationScope: 0
   rewardReputationTarget: 
   rewardReputationSize: 0

@@ -69,7 +69,7 @@ namespace PocketCaravan.EditorTools
                 GameEvents.ContractFinished += counted;
                 int previousCredit = p.credit;
                 var delivered = cm.Deliver(c, b.id);
-                Check("실제 배달로 잔고와 신용 회복", delivered.success && delivered.paid > 0 && p.money == delivered.paid && p.credit == previousCredit + 1);
+                Check("실제 배달로 잔고와 신용 회복", delivered.success && delivered.paid > 0 && p.money == delivered.paid && delivered.credit >= 1 && p.credit == previousCredit + delivered.credit);
                 int money = p.money, credit = p.credit;
                 var duplicate = cm.Deliver(c, b.id);
                 Check("납품 재호출 지급·신용·이벤트 중복 없음", !duplicate.success && duplicate.paid == 0 && p.money == money && p.credit == credit && events == 1);

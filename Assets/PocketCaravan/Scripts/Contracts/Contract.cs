@@ -32,6 +32,8 @@ namespace PocketCaravan
         public int deposit;
         public int atonementScope;    // ReputationScope 값
         public string atonementTarget;
+        /// <summary>11/19 의뢰 종류 (ContractKind). 옛 저장은 0 = 보통</summary>
+        public int kind;
 
         public void ValidateRecovery()
         {
@@ -43,6 +45,25 @@ namespace PocketCaravan
 
         public float Window => Mathf.Max(1f, deadline - acceptedAt);
         public bool Premium => minCredit > 0;
+        public bool Express => kind == ContractKind.Express;
+        public bool Fragile => kind == ContractKind.Fragile;
+        public bool Bulk => kind == ContractKind.Bulk;
+    }
+
+    /// <summary>
+    /// 11/19 은샘 레벨 디자인: 신용 단계가 오르면 게시판에 새 종류의 의뢰가 나온다 (Core/Credit.cs 단계표).
+    /// 짐마다 다루는 법이 달라 같은 배달도 다르게 논다 (Sea of Thieves 화물 운송, Oolite 계약 참고).
+    ///  1단계 급한 짐: 기한이 보통의 6할, 보수 1.35배. 길 고르기·달리기 체력
+    ///  2단계 깨지기 쉬운 짐: 달리거나 길 밖을 걸으면 짐 상태가 깎인다 (90% 아래면 덜 받음), 보수 1.25배. 조심히 걷기
+    ///  3단계 귀한 짐: 예전부터 있던 것 (minCredit = 3). 도적이 노린다
+    ///  4단계 큰 주문: 무게 10~16, 기한 넉넉, 보수 1.6배, 큰 판 짐 싣기 퍼즐 (9×4)
+    /// 종류마다 신용 +1점 (ContractManager.CreditPoints).
+    /// </summary>
+    public static class ContractKind
+    {
+        public const int Normal = 0, Express = 1, Fragile = 2, Bulk = 3;
+        public static int LevelOf(int kind) => kind == Express ? 1 : kind == Fragile ? 2 : kind == Bulk ? 4 : 0;
+        public static string Name(int kind) => kind == Express ? "급한 짐" : kind == Fragile ? "깨지기 쉬움" : kind == Bulk ? "큰 주문" : null;
     }
 
     /// <summary>납품 결과</summary>

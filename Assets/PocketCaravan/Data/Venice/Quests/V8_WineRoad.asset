@@ -64,10 +64,10 @@ MonoBehaviour:
     completeLine: "\uD3EC\uB3C4\uC8FC \uBC30\uAC00 \uB298\uACA0\uAD70. \uC7A5\uBD80\uC5D0
       \uC801\uC5B4 \uB450\uC9C0."
   rewardMoney: 80
-  rewardCredit: 1
+  rewardCredit: 0
   rewardReputationScope: 0
-  rewardReputationTarget: 
-  rewardReputationSize: 0
+  rewardReputationTarget: venice
+  rewardReputationSize: 2
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

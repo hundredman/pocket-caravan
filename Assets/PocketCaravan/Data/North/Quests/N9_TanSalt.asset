@@ -55,7 +55,7 @@ MonoBehaviour:
       \uBAA8\uD53C\uB97C \uB0A8\uCABD\uC5D0 \uAC00\uC838\uAC00\uBA74 \uBC18\uB300\uB85C
       \uB418\uB294 \uAC70\uACE0."
   rewardMoney: 70
-  rewardCredit: 1
+  rewardCredit: 2
   rewardReputationScope: 0
   rewardReputationTarget: 
   rewardReputationSize: 0

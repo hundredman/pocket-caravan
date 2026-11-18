@@ -50,10 +50,10 @@ MonoBehaviour:
     completeLine: "\uC9C0\uB984\uAE38\uC744 \uAC74\uB10C \uC0C1\uC778\uC740 \uB300\uC0C1\uC774
       \uC778\uC815\uD574 \uC8FC\uC9C0."
   rewardMoney: 45
-  rewardCredit: 1
+  rewardCredit: 0
   rewardReputationScope: 0
-  rewardReputationTarget: 
-  rewardReputationSize: 0
+  rewardReputationTarget: arabia
+  rewardReputationSize: 2
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

@@ -25,13 +25,13 @@ namespace PocketCaravan.EditorTools
             Check(report, "missing region offers no destination", JourneyGuide.Destinations(db, null, WorldIndex.Get(), "transit_pass").Count == 0);
             var p = new PlayerState();
             Check(report, "credit zero previews info at one", JourneyGuide.NextUnlock(towns, p).Contains("다음 신용 1"));
-            p.credit = 1;
+            p.credit = Credit.PointsFor(1);   // 11/19 신용은 점수, 조건은 단계
             Check(report, "credit one previews warehouse at three", JourneyGuide.NextUnlock(towns, p).Contains("다음 신용 3") && JourneyGuide.NextUnlock(towns, p).Contains("객주"));
             Check(report, "premium preview mentions conditional board availability", JourneyGuide.NextUnlock(towns, p).Contains("제안이 있을 때"));
-            p.credit = 3;
+            p.credit = Credit.PointsFor(3);
             Check(report, "credit three does not invent further tier", !JourneyGuide.NextUnlock(towns, p).Contains("다음 신용"));
             p.credit = -1;
-            Check(report, "lost credit previews basic rest access at zero", JourneyGuide.NextUnlock(towns, p).Contains("다음 신용 0"));
+            Check(report, "lost credit never drops below level 0 (rest stays open)", Credit.Level(p) == 0 && !JourneyGuide.NextUnlock(towns, p).Contains("다음 신용 0"));
             Check(report, "empty region has no phantom premium unlock", !JourneyGuide.NextUnlock(new List<TownData>(), p).Contains("다음 신용"));
             var ledger = new TradeLedger();
             Check(report, "unobserved town not treated as visited market", !JourneyGuide.MarketRecorded(ledger, "naru"));

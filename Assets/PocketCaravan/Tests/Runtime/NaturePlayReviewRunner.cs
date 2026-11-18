@@ -230,7 +230,7 @@ namespace PocketCaravan.EditorTools
                 Freeze();
             }
             var state=new SaveData{scene=MapRoot.Current.mapId,layoutVersion=GoryeoLayout.Current,mapHeight=MapRoot.Current.GetComponent<RoadGrid>().height,
-                px=Motor.transform.position.x,py=Motor.transform.position.y,money=1234,credit=21,stamina=.8f,
+                px=Motor.transform.position.x,py=Motor.transform.position.y,money=1234,credit=Credit.Level(new PlayerState{credit=21}),creditPoints=21,creditVersion=Credit.Version,stamina=.8f,
                 origin=GameManager.I.Player.origin.id,vehicle=GameManager.I.Player.vehicle.id};
             GameManager.I.Player.reputation.ExportTo(state);GameManager.I.Quests.Export(state);
             string temporary=Output+"/roundtrip-save.json";
@@ -285,7 +285,7 @@ namespace PocketCaravan.EditorTools
             {
                 yield return LoadProduction(point.map);
                 var map=MapRoot.Current;var oldPosition=map.CellCenter(new Vector3Int(point.x,point.y,0))-(Vector3)Motor.feetOffset;
-                var saved=new SaveData{scene=point.map,layoutVersion=GoryeoLayout.Current,mapHeight=map.GetComponent<RoadGrid>().height,px=oldPosition.x,py=oldPosition.y,money=1234,credit=21,stamina=.8f,origin=GameManager.I.Player.origin.id,vehicle=GameManager.I.Player.vehicle.id};
+                var saved=new SaveData{scene=point.map,layoutVersion=GoryeoLayout.Current,mapHeight=map.GetComponent<RoadGrid>().height,px=oldPosition.x,py=oldPosition.y,money=1234,credit=Credit.Level(new PlayerState{credit=21}),creditPoints=21,creditVersion=Credit.Version,stamina=.8f,origin=GameManager.I.Player.origin.id,vehicle=GameManager.I.Player.vehicle.id};
                 GameManager.I.Player.reputation.ExportTo(saved);GameManager.I.Quests.Export(saved);
                 string file=Output+"/legacy-"+point.map+".json";Check(SaveSystem.WriteAt(file,saved),"isolated old-position save written",point.map);
                 var loaded=JsonUtility.FromJson<SaveData>(File.ReadAllText(file));SaveSystem.Validate(loaded);

@@ -259,7 +259,7 @@ namespace PocketCaravan
             float mx = CuteUI.Label(58, cy, MoneyShown(p.money).ToString(), MoneyColor, false, true);
             MoneyFloats(mx + 22f, cy - 18f);
             CuteUI.Label(mx + 3, cy + 0.5f, "냥", CuteUI.Sub, true);
-            CuteUI.LabelRight(x + w - 10, cy, $"신용 {p.credit}", CuteUI.Sub, true);
+            CuteUI.LabelRight(x + w - 10, cy, $"신용 {Credit.Level(p)}", CuteUI.Sub, true);
             cy += 16;
             CuteUI.Fill(new Rect(x + 10, cy, w - 20, 1), CuteUI.Line);
             cy += 6;

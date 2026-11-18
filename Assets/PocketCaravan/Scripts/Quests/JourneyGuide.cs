@@ -33,18 +33,18 @@ namespace PocketCaravan
             foreach (var t in towns)
                 foreach (var f in t.facilities)
                 {
-                    if (f == null || t.SettlementTier < f.minTier || f.minCredit <= player.credit) continue;
+                    if (f == null || t.SettlementTier < f.minTier || f.minCredit <= Credit.Level(player)) continue;
                     if (f.minCredit < next) { next = f.minCredit; names.Clear(); }
                     if (f.minCredit == next) names.Add(t.displayName + " " + f.displayName);
                 }
-            if (towns.Count > 0 && player.credit < ContractManager.PremiumCredit && ContractManager.PremiumCredit <= next)
+            if (towns.Count > 0 && Credit.Level(player) < ContractManager.PremiumCredit && ContractManager.PremiumCredit <= next)
             {
                 if (ContractManager.PremiumCredit < next) { next = ContractManager.PremiumCredit; names.Clear(); }
                 next = ContractManager.PremiumCredit;
                 names.Add("게시판의 귀한 짐 의뢰 (제안이 있을 때)");
             }
             return next == int.MaxValue ? "현재 지역에 신용으로 추가 해금할 시설은 없습니다. 물량·귀환품·경로를 바꿔 보세요."
-                : $"다음 신용 {next} (현재 {player.credit}): " + string.Join(" / ", names);
+                : $"다음 신용 {next}단계 (지금 {Credit.Level(player)}단계): " + string.Join(" / ", names);
         }
 
         public static string FacilityEffect(TownFacility facility)

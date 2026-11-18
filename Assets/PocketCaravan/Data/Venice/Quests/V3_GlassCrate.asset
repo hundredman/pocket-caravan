@@ -42,7 +42,7 @@ MonoBehaviour:
     completeLine: "\uAC1C\uC218\uB3C4 \uB9DE\uACE0 \uAE68\uC9C4 \uAC83\uB3C4 \uC5C6\uAD70.
       \uC7A5\uBD80\uC5D0 \uC801\uC5B4 \uB450\uC9C0."
   rewardMoney: 40
-  rewardCredit: 2
+  rewardCredit: 1
   rewardReputationScope: 0
   rewardReputationTarget: 
   rewardReputationSize: 0

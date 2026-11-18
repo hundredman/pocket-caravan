@@ -57,7 +57,7 @@ namespace PocketCaravan.EditorTools
             cm.InitBoards();
             Check(r,"accepted contract untouched during profile refresh",p.contracts.Count==active && p.contracts[0].reward==initial);
             var result=cm.Deliver(offer,offer.toTown); int paid=p.money;
-            Check(r,"delivery pays and increases credit",result.success && paid>0 && p.credit==-1);
+            Check(r,"delivery pays and increases credit",result.success && paid>0 && result.credit>=1 && p.credit==-2+result.credit);
             Check(r,"repeat delivery cannot pay twice",!cm.Deliver(offer,offer.toTown).success && p.money==paid);
             var oldOffer = new Contract { id=99990,fromTown="naru",toTown="gaegyeong",weight=4,reward=999,hours=26,minCredit=0 };
             cm.BoardOf("naru").list.Clear(); cm.BoardOf("naru").list.Add(oldOffer);
@@ -115,7 +115,7 @@ namespace PocketCaravan.EditorTools
             SaveData Intro()=>new SaveData{finishedQuests=new List<string>{"tutorial_1","tutorial_2","tutorial_5","goryeo_jangdan_trade"}};
             try
             {
-                UIState.Blocking=true;p.money=200;p.credit=3;p.origin=null;p.cargo.Clear();p.contracts.Clear();p.vehicle=db.vehicles.Find(v=>v.id=="handcart");
+                UIState.Blocking=true;p.money=200;p.credit=Credit.PointsFor(3);p.origin=null;p.cargo.Clear();p.contracts.Clear();p.vehicle=db.vehicles.Find(v=>v.id=="handcart");
                 var basic=Quest("dakmok_firewood");var supply=Quest("goryeo_cart_supply");var returning=Quest("goryeo_return_trade");
                 gm.Quests.Import(Intro());
                 Check(r,"both introduction alternatives initially available",gm.Quests.CanStart(basic)&&gm.Quests.CanStart(supply));

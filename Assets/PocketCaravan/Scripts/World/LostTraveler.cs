@@ -8,7 +8,7 @@ namespace PocketCaravan
     /// <summary>
     /// 날씨 사건: 길 잃은 사람 데려다주기 (전 지역 공용, 2026-11-05 통합: 북유럽 NorthEvents 길 잃은 상인 + 베네치아 VeniceEvents 길 잃은 순례자).
     /// 궂은 날씨(Weather[지역])인 4시간 블록마다 한 번, 장터 없는 길 맵에 길 잃은 사람이 나타난다.
-    /// "따라오세요" → 맵을 넘어서도 뒤따라오고, 장터 있는 마을에 함께 들어가면 사례 40냥·신용 +1·지역 선물 1개(실을 수 있으면).
+    /// "따라오세요" → 맵을 넘어서도 뒤따라오고, 장터 있는 마을에 함께 들어가면 사례 40냥·평판(중간)·지역 선물 1개(실을 수 있으면).
     /// 동행 중에 그 지역을 벗어나면 거기서 헤어진다.
     /// - 날씨: 북(함박눈·눈보라)·베(안개·비)는 자기 날씨를 등록. 아라비아는 블록 규칙(세 블록에 하나 "모래바람 때") + 화면 모래바람 연출.
     ///   고려는 아직 날씨가 없어 블록 규칙만 쓴다(네 블록에 하나 "궂은 때"). 은샘이 날씨를 넣으면 Weather[Goryeo]에 한 줄 등록.
@@ -131,12 +131,13 @@ namespace PocketCaravan
         {
             var gm = GameManager.I; var p = Of(r);
             gm.SetMemo("lost:follow", 0f);
-            gm.Player.money += Reward; gm.Player.credit += 1;
+            gm.Player.money += Reward;
+            int rep = GoodDeeds.ForRegion(r, ReputationSize.Medium, "lost:arrive");   // 11/19 선행은 평판 (신용 아님)
             Sfx.Play("levelup", .7f);
             string extra = "";
             var gift = !string.IsNullOrEmpty(p.gift) ? gm.ItemById(p.gift) : null;
             if (gift != null && gm.Player.CanCarry(gift, 1)) { gm.Player.cargo.Add(gift, 1, 0f); extra = $" · {gift.displayName} 1개"; }
-            DialogueUI.Show(p.name, $"{p.arrive}\n(사례 {Reward}냥 · 신용 +1{extra})");
+            DialogueUI.Show(p.name, $"{p.arrive}\n(사례 {Reward}냥" + (rep > 0 ? $" · 평판 +{rep}" : "") + $"{extra})");
         }
 
         static void Farewell(Reactions.Region r)

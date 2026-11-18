@@ -48,10 +48,10 @@ MonoBehaviour:
     count: 1
     completeLine: "\uBC14\uD034 \uC18C\uB9AC\uAC00 \uC88B\uAD70. \uCD95\uD558\uD558\uB124."
   rewardMoney: 0
-  rewardCredit: 1
+  rewardCredit: 0
   rewardReputationScope: 0
-  rewardReputationTarget: 
-  rewardReputationSize: 0
+  rewardReputationTarget: venice
+  rewardReputationSize: 2
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

@@ -25,7 +25,7 @@ namespace PocketCaravan
             if (town == null || facility == null || player == null || town.facilities == null
                 || !town.facilities.Contains(facility)) return "이 마을에서 제공하지 않는 시설입니다.";
             if (town.SettlementTier < facility.minTier) return $"거점 {facility.minTier}등급부터 제공하는 시설입니다.";
-            if (player.credit < facility.minCredit) return $"신용 {facility.minCredit} 이상 필요 (현재 {player.credit})";
+            if (Credit.Level(player) < facility.minCredit) return $"신용 {facility.minCredit}단계 필요";
             return null;
         }
     }

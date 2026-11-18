@@ -54,10 +54,10 @@ MonoBehaviour:
     count: 2
     completeLine: 
   rewardMoney: 50
-  rewardCredit: 1
+  rewardCredit: 0
   rewardReputationScope: 0
-  rewardReputationTarget: 
-  rewardReputationSize: 0
+  rewardReputationTarget: north
+  rewardReputationSize: 2
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

@@ -61,10 +61,10 @@ MonoBehaviour:
     completeLine: "\uBB50, \uBB50\uC57C? \uB0B4\uAC00 \uD310 \uC7A5\uC744 \uD53C\uD574\uC11C
       \uD314\uC558\uB2E4\uACE0? \u2026\uB2E4\uC74C\uC5D4 \uC548 \uC9C4\uB2E4!"
   rewardMoney: 30
-  rewardCredit: 1
+  rewardCredit: 0
   rewardReputationScope: 0
-  rewardReputationTarget: 
-  rewardReputationSize: 0
+  rewardReputationTarget: north
+  rewardReputationSize: 2
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

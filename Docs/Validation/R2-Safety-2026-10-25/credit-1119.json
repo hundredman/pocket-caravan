@@ -1,0 +1,17 @@
+{
+ "note": "11/19 은샘 신용 레벨 디자인: 주문 납품(땔감) 의뢰 신용 1→2. Docs/CreditLevelDesign.md",
+ "files": {
+  "Assets/PocketCaravan/Data/Goryeo/Quests/Goryeo_CartSupply.asset": [
+   {
+    "new": "  rewardCredit: 2\n",
+    "old": "  rewardCredit: 1\n"
+   }
+  ],
+  "Assets/PocketCaravan/Data/Goryeo/Quests/S1_Firewood.asset": [
+   {
+    "new": "  rewardCredit: 2\n",
+    "old": "  rewardCredit: 1\n"
+   }
+  ]
+ }
+}

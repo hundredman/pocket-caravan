@@ -49,10 +49,10 @@ MonoBehaviour:
     completeLine: "\uC131\uBCBD\uC5D0 \uC0AC\uC790 \uAE43\uBC1C\uC774 \uAC78\uB838\uB2E4\uACE0?
       \uC6B0\uB9AC \uC12C \uC0C1\uC778\uB4E4 \uC19C\uC528\uC9C0."
   rewardMoney: 50
-  rewardCredit: 1
+  rewardCredit: 0
   rewardReputationScope: 0
-  rewardReputationTarget: 
-  rewardReputationSize: 0
+  rewardReputationTarget: venice
+  rewardReputationSize: 2
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

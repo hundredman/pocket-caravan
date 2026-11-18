@@ -53,10 +53,10 @@ MonoBehaviour:
       \uBC25\uC744 \uC548 \uBA39\uC9C0. \uC88B\uC740 \uAC12\uC5D0 \uD314\uB838\uC744
       \uAC70\uC57C."
   rewardMoney: 50
-  rewardCredit: 1
+  rewardCredit: 0
   rewardReputationScope: 0
-  rewardReputationTarget: 
-  rewardReputationSize: 0
+  rewardReputationTarget: arabia
+  rewardReputationSize: 2
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

@@ -127,7 +127,7 @@ namespace PocketCaravan
                 Header(y, "이 마을에 납품할 짐", deliver.Count + "개"); y += head;
                 foreach (var c in deliver)
                 {
-                    string badge = c.dropped ? "길에 떨어뜨림" : null;
+                    string badge = c.dropped ? "길에 떨어뜨림" : ContractKind.Name(c.kind);
                     string sub = $"상태 {Mathf.RoundToInt(c.condition * 100)}% · 남은 시간 {Cm.TimeLeftText(c)}";
                     string pay = c.atonement ? $"보증금 {c.deposit}" : c.reward.ToString();
                     if (DrawCard(new Rect(0, y, cw, card - 4), CuteUI.Pic.Sack, c.cargo, badge, sub, pay, null, "납품", c.dropped ? "주워 오기" : null, true))
@@ -145,9 +145,9 @@ namespace PocketCaravan
             {
                 string why = Cm.CanAccept(c);
                 string sub = $"{Cm.TownName(c.toTown)}" + (c.quotedRouteSteps > 0 ? $" · {c.quotedRouteSteps}구간" : "") + $" · 기한 {c.hours:0}시간";
-                string badge = c.atonement ? "속죄 의뢰" : c.Premium ? $"신용 {c.minCredit}" : null;
+                string badge = c.atonement ? "속죄 의뢰" : c.Premium ? $"신용 {c.minCredit}" : ContractKind.Name(c.kind);   // 11/19 종류 배지
                 string pay = c.atonement ? $"보증금 {c.deposit}" : c.reward.ToString();
-                if (DrawCard(new Rect(0, y, cw, card - 4), CuteUI.Pic.Scroll, c.cargo, badge, sub, pay, c.weight, "맡기", why != null ? ShortWhy(c, p) : null, false, true, c.atonement))
+                if (DrawCard(new Rect(0, y, cw, card - 4), CuteUI.Pic.Scroll, c.cargo, badge, sub, pay, c.weight, "맡기", why != null ? ShortWhy(c, p) : null, false, true, c.atonement, c.atonement ? 0 : Cm.CreditPoints(c, false)))
                 {
                     if (why != null) { message = why; Sfx.Play("cancel"); }
                     else if (PackPuzzle.Wants(c))
@@ -188,13 +188,13 @@ namespace PocketCaravan
             // 맡은 의뢰 칸
             CuteUI.Icon(CuteUI.Pic.Scroll, x, cy - 6);
             x = CuteUI.Label(x + 13, cy, "맡은 의뢰", CuteUI.Text, true, true) + 5;
-            for (int i = 0; i < ContractManager.MaxActive; i++)
+            for (int i = 0; i < ContractManager.MaxActiveFor(p); i++)
             {
                 bool on = i < p.contracts.Count;
                 CuteUI.Circle(x, cy - 4, 9, on ? CuteUI.Interact : CuteUI.Paper2, on ? CuteUI.InteractLo : CuteUI.Line);
                 x += 11;
             }
-            CuteUI.Label(x + 2, cy, $"{p.contracts.Count}/{ContractManager.MaxActive}", CuteUI.Sub, true);
+            CuteUI.Label(x + 2, cy, $"{p.contracts.Count}/{ContractManager.MaxActiveFor(p)}", CuteUI.Sub, true);
             // 오른쪽: 신용 · 돈
             float xr = s.xMax;
             string money = p.money.ToString("N0") + "냥";
@@ -202,7 +202,7 @@ namespace PocketCaravan
             xr -= CuteUI.Width(money, false, true) + 11;
             CuteUI.Icon(CuteUI.Pic.Coin7, xr, cy - 4);
             xr -= 12;
-            Pill(xr, cy, "신용 " + p.credit, CuteUI.Interact, CuteUI.InteractLo, CuteUI.White, true);
+            Pill(xr, cy, "신용 " + Credit.Level(p), CuteUI.Interact, CuteUI.InteractLo, CuteUI.White, true);
         }
 
         static void Header(float y, string label, string count)
@@ -223,7 +223,7 @@ namespace PocketCaravan
 
         /// <summary>의뢰 한 장. locked가 있으면 버튼이 회색이고 locked 글을 적는다. 버튼을 누르면 true</summary>
         bool DrawCard(Rect r, CuteUI.Pic pic, string title, string badge, string sub, string pay, float? weight, string action, string locked,
-            bool deliver = false, bool pin = false, bool warn = false)
+            bool deliver = false, bool pin = false, bool warn = false, int creditPts = 0)
         {
             var p = GameManager.I.Player;
             CuteUI.Box(r, 7, CuteUI.Paper2, warn ? CuteUI.Alert : CuteUI.Line);
@@ -258,7 +258,9 @@ namespace PocketCaravan
                     CuteUI.Label(payR - CuteUI.Width("냥", true), r.y + 18, "냥", CuteUI.Up, true);
                     float cx = payR - CuteUI.Width("냥", true) - 2 - CuteUI.Width(pay, false, true) - 11;
                     CuteUI.Icon(CuteUI.Pic.Coin7, cx, r.y + 13);
-                    CuteUI.LabelRight(payR, r.y + 31, "보수", CuteUI.Sub, true);
+                    // 11/19 맡기 전에 신용 점수를 보여 준다 (빨리 오면 +1은 납품 때)
+                    if (creditPts > 0) CuteUI.LabelRight(payR, r.y + 31, $"신용 +{creditPts}", CuteUI.Interact, true, true);
+                    else CuteUI.LabelRight(payR, r.y + 31, "보수", CuteUI.Sub, true);
                     payL = cx;
                 }
             }
@@ -268,8 +270,11 @@ namespace PocketCaravan
             float ex = CuteUI.Label(tx, r.y + 13, TradeLedgerUI.Fit(title, room, false, true), CuteUI.Text, false, true);
             if (badge != null)
             {
-                bool lackCredit = badge.StartsWith("신용") && locked != null && p.credit < CreditOf(badge);
+                bool lackCredit = badge.StartsWith("신용") && locked != null && Credit.Level(p) < CreditOf(badge);
                 if (badge == "속죄 의뢰" || badge == "길에 떨어뜨림") Pill(ex + 5, r.y + 13, badge, CuteUI.AlertSoft, CuteUI.Alert, CuteUI.Down);
+                else if (badge == "급한 짐") Pill(ex + 5, r.y + 13, badge, CuteUI.AlertSoft, CuteUI.Down, CuteUI.Down);
+                else if (badge == "깨지기 쉬움") Pill(ex + 5, r.y + 13, badge, CuteUI.BuySoft, CuteUI.Buy, CuteUI.Buy);
+                else if (badge == "큰 주문") Pill(ex + 5, r.y + 13, badge, CuteUI.SellSoft, CuteUI.Sell, CuteUI.Sell);
                 else Pill(ex + 5, r.y + 13, lackCredit ? badge + " 필요" : "귀한 의뢰", lackCredit ? CuteUI.ZeroSoft : CuteUI.SellSoft, lackCredit ? CuteUI.KeyLine : CuteUI.Sell, lackCredit ? CuteUI.Sub : CuteUI.Sell);
             }
             float sx = tx;
@@ -291,8 +296,8 @@ namespace PocketCaravan
         /// <summary>못 맡는 이유를 버튼에 들어갈 만큼 짧게</summary>
         string ShortWhy(Contract c, PlayerState p)
         {
-            if (p.contracts.Count >= ContractManager.MaxActive) return "의뢰 가득";
-            if (c.Premium && p.credit < c.minCredit) return $"신용 {c.minCredit} 필요";
+            if (p.contracts.Count >= ContractManager.MaxActiveFor(p)) return "의뢰 가득";
+            if (c.Premium && Credit.Level(p) < c.minCredit) return $"신용 {c.minCredit} 필요";
             if (c.atonement && p.money < c.deposit) return "보증금 부족";
             if (!p.CanCarryWeight(c.weight)) return "짐 자리 부족";
             return "못 맡아요";

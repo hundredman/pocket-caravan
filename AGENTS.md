@@ -12,11 +12,11 @@
 | 은인 | 아라비아 | 담당자가 정함 |
 | 기우 | 북유럽 | 담당자가 정함 |
 
-자기 지역 작업을 할 때는 해당 안내를 따른다. 다른 지역의 안내·작업 계획은 그 지역 담당자에게만 적용된다.
+지역 작업을 할 때는 그 지역 안내를 따른다.
 
 ## 모두 지킬 것
 
-- **다른 지역은 고치지 않는다.** 다른 담당의 씬·데이터·그림·브랜치를 다시 만들거나 덮어쓰지 않는다.
+- **필요하면 전 지역을 다룬다 (11/19).** 담당 지역은 주로 맡는 곳이고, 필요하면 누구나 다른 지역도 고친다. 다른 사람이 만든 씬·데이터·그림을 고칠 때는 PR에 적고 팀에 알리며, 통째로 다시 만들거나 덮어쓰지 않는다.
 - **공용 파일은 조심해서 고친다.** `Assets/PocketCaravan/Scripts/Core·Economy·Quests·UI`, `Resources/GameDatabase.asset`·`WorldIndex.asset`, `ProjectSettings/EditorBuildSettings.asset`, `World/Connections`는 여러 지역이 함께 쓴다. 고칠 때는 PR에 적고 팀에 알린다.
 - **.asset 충돌은 양쪽을 다 살린다.** `.gitattributes`에서 `.asset`·`.unity`가 `merge=binary`라, 서로 다른 항목을 추가해도 충돌로 표시된다. "한쪽 선택"으로 풀면 다른 지역 항목이 사라진다.
 - **합치기 전 검사:** `python Tools/Integration/validate_world.py`, `python -m unittest discover -s Tools/Integration -p 'test_*.py'`, Unity 컴파일·시작 맵 실행.

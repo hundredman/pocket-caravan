@@ -44,7 +44,7 @@ MonoBehaviour:
     completeLine: "\uBE5B\uC774 \uACF1\uAD70. \uC8FC\uBB38\uD55C \uC190\uB2D8\uC774
       \uC88B\uC544\uD558\uACA0\uC5B4."
   rewardMoney: 110
-  rewardCredit: 1
+  rewardCredit: 3
   rewardReputationScope: 0
   rewardReputationTarget: 
   rewardReputationSize: 0

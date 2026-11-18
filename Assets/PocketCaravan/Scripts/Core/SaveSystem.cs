@@ -20,6 +20,9 @@ namespace PocketCaravan
         public int fx, fy;
 
         public int money, credit;
+        public int creditPoints;  // 11/19 신용 점수 (credit 칸은 옛 빌드도 읽게 단계를 그대로 쓴다)
+        public int creditFloor;   // 11/19 한 번 오른 신용 단계
+        public int creditVersion; // 0: 옛 저장(credit = 단계) → 불러올 때 점수로 옮김 (Credit.MigratePoints). 1: 점수는 creditPoints
         public string origin; // 출신 id (viking·venice·arabia·goryeo). 없으면 기본 출신
         public string vehicle;
         public string stowedVehicle; // 11/17 V로 넣어 둔 운반 수단 (옛 저장에는 없음 = 없음)

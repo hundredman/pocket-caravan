@@ -27,7 +27,7 @@ namespace PocketCaravan.EditorTools
             QuestData Q(string id)=>db.quests.Find(q=>q.id==id);
             var ids=new[]{"q1_naru","q1_jangdan","q1_songak","q1_dakmok","q1_gaegyeong"};
             var mine=db.quests.Where(q=>q!=null&&UnityEditor.AssetDatabase.GetAssetPath(q).Contains("/Data/Goryeo/")).ToList();   // 통합 브랜치에는 다른 지역 퀘스트도 있다
-            Check("17 quests, unique IDs",mine.Count==17&&db.quests.Select(q=>q.id).Distinct().Count()==db.quests.Count);
+            Check("20 quests (17 + 고려 상단 3, 11/19), unique IDs",mine.Count==20&&db.quests.Select(q=>q.id).Distinct().Count()==db.quests.Count);
             var go=new GameObject("Q1 isolated tests");go.SetActive(false);var gm=go.AddComponent<GameManager>();
             typeof(GameManager).GetProperty("I").SetValue(null,gm);Set(gm,"Db",db);Set(gm,"Clock",new GameClock());
             PlayerState Fresh(){var p=new PlayerState{money=100,vehicle=db.startVehicle,origin=db.startOrigin};p.reputation.Initialize(ReputationState.HomeOf(p.origin));Set(gm,"Player",p);GameEvents.ClearAll();return p;}
@@ -42,7 +42,7 @@ namespace PocketCaravan.EditorTools
                 Trade(jangdan,"Buy",grain);Check("market buy without main",player.cargo.Count(grain)==1);Trade(songak,"Sell",grain);Check("market sell without main",player.cargo.Count(grain)==0);
                 var contracts=new ContractManager(db,gm.Clock,player,null,21);contracts.InitBoards();var offer=contracts.Available("goryeo_songak").Find(c=>!c.Premium);
                 Check("contract available without main",offer!=null&&contracts.Accept("goryeo_songak",offer));
-                var delivery=contracts.Deliver(offer,offer.toTown);Check("contract completion without main",delivery.success&&player.credit==1);
+                var delivery=contracts.Deliver(offer,offer.toTown);Check("contract completion without main",delivery.success&&delivery.credit>=1&&player.credit==delivery.credit);
                 // Reset both player and market state before the 100-money scenario.
                 var marketField=typeof(GameManager).GetField("markets",BindingFlags.Instance|BindingFlags.NonPublic);
                 ((Dictionary<string,MarketState>)marketField.GetValue(gm)).Clear();player=Fresh();qm=new QuestManager(db.quests);Set(gm,"Quests",qm);
@@ -55,12 +55,12 @@ namespace PocketCaravan.EditorTools
                 cash=player.money;for(int i=0;i<3;i++)Trade(songak,"Sell",grain);r.grainSell=player.money-cash-Q(ids[1]).rewardMoney;r.grainProfit=r.grainSell-r.grainBuy;
                 Check("Jangdan to Songak actual sequential trade profitable",r.grainProfit>0&&qm.IsFinished(Q(ids[1])));
                 qm.Accept(Q(ids[2]));contracts=new ContractManager(db,gm.Clock,player,null,21);contracts.InitBoards();offer=contracts.Available("goryeo_songak").Find(c=>!c.Premium);
-                Check("tutorial board contract can be accepted",contracts.Accept("goryeo_songak",offer));contracts.Deliver(offer,offer.toTown);qm.TryCompleteAt("goryeo_songak_merchant",out _);
-                Check("board tutorial does not double credit",qm.IsFinished(Q(ids[2]))&&player.credit==2);
+                Check("tutorial board contract can be accepted",contracts.Accept("goryeo_songak",offer));int boardPts=contracts.Deliver(offer,offer.toTown).credit;qm.TryCompleteAt("goryeo_songak_merchant",out _);
+                Check("board tutorial does not double credit",qm.IsFinished(Q(ids[2]))&&player.credit==1+boardPts);
                 qm.Accept(Q(ids[3]));for(int i=0;i<2;i++)Trade(dakmok,"Buy",paper);qm.TryCompleteAt("dakmok_chief",out _);
                 Check("paper affordable and quest completed",player.cargo.Count(paper)==2&&qm.IsFinished(Q(ids[3]))&&player.money>=0);
                 qm.Accept(Q(ids[4]));GameEvents.RaiseMapEntered("Gaegyeong");qm.TryCompleteAt("gaekju",out _);for(int i=0;i<2;i++)Trade(capital,"Sell",paper);
-                Check("100-money scenario all five complete",ids.All(id=>qm.IsFinished(Q(id)))&&player.money>=0&&player.credit==3);r.finalMoney=player.money;
+                Check("100-money scenario all five complete",ids.All(id=>qm.IsFinished(Q(id)))&&player.money>=0&&player.credit==2+boardPts);r.finalMoney=player.money;
                 var full=new SaveData{version=2,money=100,credit=-7,finishedQuests=new List<string>{"tutorial_2","tutorial_5"}};
                 player=Fresh();qm=new QuestManager(db.quests);int before=player.money;
                 qm.Import(JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(full)));qm.MigrateMainProgress();

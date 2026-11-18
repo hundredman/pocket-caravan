@@ -8,7 +8,7 @@ namespace PocketCaravan
 {
     /// <summary>
     /// 숨은 수집물 7개 + 전설 (전 지역 공용, 2026-11-05 통합: 북유럽 NorthLegends 룬돌 + 베네치아 VeniceLion 사자 문장).
-    /// 지역마다 맵 일곱 곳에 하나씩, 길에서 먼 구석에 숨어 있다. 읽을 때마다 전설 한 조각, 일곱을 다 읽으면 300냥·신용 +2 + 지역 축복(OnComplete).
+    /// 지역마다 맵 일곱 곳에 하나씩, 길에서 먼 구석에 숨어 있다. 읽을 때마다 전설 한 조각, 일곱을 다 읽으면 300냥·그 문명 평판(큼) + 지역 축복(OnComplete).
     /// - 북유럽: 자리·전설·축복 의식(룬돌 고리)은 NorthLegends가 예전 그대로. 여기엔 이름·키만 등록해 수첩 표시·놀거리 알림이 같이 보이게 한다.
     /// - 베네치아: 자리는 VeniceLife가 세우고(VeniceLife.json "lion"), 전설·저장·보상은 공용. 축복(큰 장 덤 2할 5푼)은 OnComplete.
     /// - 고려(장승, 길가 어귀)·아라비아(별 돌, 길에서 먼 구석): 맵 일곱 곳(Set.maps)에서 자리를 맵을 열 때 계산해 세운다. 일곱 다 읽으면 그 지역 안에서 달릴 때 체력 소모 1할 감소.
@@ -47,7 +47,7 @@ namespace PocketCaravan
                     "버들나루 장승이 말했다.\n\"강 건너 사람들은 말이 달라도 저울은 같아. 저울을 속이지 않는 자에게 길이 열리지.\"",
                     "솔재 장승이 말했다.\n\"일곱 장승의 말을 다 들은 상인은 어느 어귀에서든 우리가 지켜 준다네. 잘 가게.\"",
                 },
-                completeText = "일곱 장승의 말을 모두 들었다! 상금 300냥, 신용 +2, '장승의 보살핌'(고려 안에서 달릴 때 덜 지침)",
+                completeText = "일곱 장승의 말을 모두 들었다! 상금 300냥, 평판 +250, '장승의 보살핌'(고려 안에서 달릴 때 덜 지침)",
             } },
             { Reactions.Region.Arabia, new Set {
                 name = "별을 새긴 돌", readName = "읽은 별 돌", sprite = "Common/starstone", glow = "Common/glow", autoPlace = true, roadside = false,
@@ -64,7 +64,7 @@ namespace PocketCaravan
                     "제다의 뱃사람들도 바다로 나가기 전에\n별 돌을 한 번씩 쓰다듬었다.",
                     "일곱 별 돌을 다 읽은 상인은\n어느 대상에 끼어도 맨 앞자리를 내주었다고 한다.",
                 },
-                completeText = "일곱 별 돌을 모두 읽었다! 상금 300냥, 신용 +2, '별의 길잡이'(아라비아 안에서 달릴 때 덜 지침)",
+                completeText = "일곱 별 돌을 모두 읽었다! 상금 300냥, 평판 +250, '별의 길잡이'(아라비아 안에서 달릴 때 덜 지침)",
             } },
         };
 
@@ -95,11 +95,12 @@ namespace PocketCaravan
             if (found >= Total && !gm.HasMemo(doneKey))
             {
                 gm.SetMemo(doneKey, 1f);
-                gm.Player.money += Reward; gm.Player.credit += 2;
+                gm.Player.money += Reward;
+                int rep = GoodDeeds.ForRegion(r, ReputationSize.Large, "collect:complete");   // 11/19 수집은 평판
                 Sfx.Play("levelup");
                 if (OnComplete.TryGetValue(r, out var more)) more?.Invoke();
                 if (!string.IsNullOrEmpty(set.blessingName)) StaminaMods.Set("collect:blessing", 0.9f);
-                Notify.Show(set.completeText ?? $"일곱 개를 모두 찾았다! 상금 {Reward}냥, 신용 +2", 6f);
+                Notify.Show(set.completeText ?? $"일곱 개를 모두 찾았다! 상금 {Reward}냥, 평판 +{rep}", 6f);
             }
             else Notify.Show($"{set.name}을(를) 찾았다 ({found} / {Total})", 3f);
         }

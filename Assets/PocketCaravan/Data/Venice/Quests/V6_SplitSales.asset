@@ -56,10 +56,10 @@ MonoBehaviour:
     count: 1
     completeLine: "\uB450 \uACF3 \uB2E4 \uAC12\uC744 \uC798 \uBC1B\uC558\uAD70."
   rewardMoney: 30
-  rewardCredit: 1
+  rewardCredit: 0
   rewardReputationScope: 0
-  rewardReputationTarget: 
-  rewardReputationSize: 0
+  rewardReputationTarget: venice
+  rewardReputationSize: 2
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

@@ -508,7 +508,7 @@ namespace PocketCaravan
                     yield return Shot("pilgrim_follow");
                     int m0 = gm.Player.money, c0 = gm.Player.credit;
                     yield return Travel("venice_c_post");
-                    Ok(!VeniceEvents.Following && gm.Player.money - m0 == 40 && gm.Player.credit - c0 == 1, $"대상 숙소에 데려다줌: 돈 +{gm.Player.money - m0}, 신용 +{gm.Player.credit - c0}");
+                    Ok(!VeniceEvents.Following && gm.Player.money - m0 == 40 && gm.Player.credit == c0, $"대상 숙소에 데려다줌: 돈 +{gm.Player.money - m0}, 신용 변화 {gm.Player.credit - c0} (11/19 선행은 평판)");
                 }
                 if (map == "venice_c_gate")
                 {

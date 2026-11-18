@@ -60,9 +60,9 @@ namespace PocketCaravan
         bool Begin(Contract c, string from, string to, Action<bool> cb)
         {
             contract = c; fromName = from; toName = to; done = cb; bonus = BonusFor(c);
-            int w = Mathf.Clamp(Mathf.RoundToInt(c.weight), 2, 12);
+            int w = Mathf.Clamp(Mathf.RoundToInt(c.weight), 2, c.Bulk ? 16 : 12);
             bool big = w >= 8;
-            cols = big ? 7 : 5; rows = big ? 4 : 3;
+            cols = c.Bulk ? 9 : big ? 7 : 5; rows = big ? 4 : 3;   // 11/19 큰 주문(신용 4단계)은 9×4 큰 판
             var gm = GameManager.I;
             int seed = (int)(Hash($"{c.id}|{c.cargo}|{(gm != null ? gm.Clock.day : 0)}") & 0x7fffffff);
             if (!Generate(Sizes(w, big), big ? 1 : 2, new System.Random(seed))) return false;

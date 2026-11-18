@@ -56,7 +56,7 @@ MonoBehaviour:
       \uC0B6\uC544\uC57C \uD558\uC9C0. \uB554\uAC10\uC774 \uC81C\uB54C \uC640\uC11C
       \uC0B4\uC558\uB124."
   rewardMoney: 20
-  rewardCredit: 1
+  rewardCredit: 2
   rewardReputationScope: 0
   rewardReputationTarget: 
   rewardReputationSize: 0

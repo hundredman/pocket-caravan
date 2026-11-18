@@ -63,7 +63,7 @@ namespace PocketCaravan
             GUI.Box(rect, "", UIStyle.Box);
             GUILayout.BeginArea(new Rect(rect.x + 12, rect.y + 8, w - 24, h - 16));
             GUILayout.Label($"<color=#FFE08A>{Cm.TownName(town)} 의뢰 게시판</color>", UIStyle.Rich);
-            GUILayout.Label($"돈 {p.money}   신용 {p.credit}   짐 {p.TotalWeight:0.#}/{p.Capacity:0.#}   맡은 의뢰 {p.contracts.Count}/{ContractManager.MaxActive}", UIStyle.Small);
+            GUILayout.Label($"돈 {p.money}   신용 {p.credit}   짐 {p.TotalWeight:0.#}/{p.Capacity:0.#}   맡은 의뢰 {p.contracts.Count}/{ContractManager.MaxActiveFor(p)}", UIStyle.Small);
 
             GUILayout.Label($"남는 적재 공간 {Mathf.Max(0, p.Capacity-p.TotalWeight):0.#} · 배달 짐도 공간을 씁니다. 귀환 상품과 비교하세요.", UIStyle.Small);
             scroll = GUILayout.BeginScrollView(scroll, GUILayout.Height(Mathf.Max(72f, h - 108f)));

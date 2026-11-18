@@ -46,7 +46,7 @@ MonoBehaviour:
       \uC228\uC740 \uB8EC\uB3CC\uC744 \uCC3E\uAC70\uB4E0 \uC5B8\uC81C\uB4E0 \uB2E4\uC2DC
       \uC624\uAC8C."
   rewardMoney: 40
-  rewardCredit: 1
+  rewardCredit: 2
   rewardReputationScope: 0
   rewardReputationTarget: 
   rewardReputationSize: 0

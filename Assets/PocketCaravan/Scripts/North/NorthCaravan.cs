@@ -10,7 +10,7 @@ namespace PocketCaravan
     ///   동물은 낙타 대신 국경에서 빌린 순록(North/Critters)과 짐 썰매(10/30 사용자).
     /// - 부탁 들어주기: 하루에 한 명씩 돌아가며(날 % 3) 북유럽 특산품을 부탁한다. 짐에 있으면 말 걸어 건네기.
     ///   길잡이 = 꿀술, 낙타 상인 = 털옷, 유리 상인 = 생선(대구·곤들매기·연어 중 하나)
-    ///   보상: 다른 지역 물건 1(직물 꾸러미·향신료 자루·유리그릇) + 신용 +1. 세 명 모두 한 번씩 들어주면 칭호 '남쪽 손님의 벗'.
+    ///   보상: 다른 지역 물건 1(직물 꾸러미·향신료 자루·유리그릇) + 북유럽 평판(작음). 세 명 모두 한 번씩 들어주면 칭호 '남쪽 손님의 벗'.
     /// - 부탁이 없는 날·사람은 다른 지역 이야기와 시세 소문.
     /// - 저장: NorthSave "caravan:day"(오늘 부탁 끝낸 날), "caravan:helped:0~2", "caravan:friend"
     /// </summary>
@@ -201,10 +201,10 @@ namespace PocketCaravan
             if (!gm.Player.cargo.Remove(have, 1)) return;
             NorthSave.Set("caravan:day", Today);
             NorthSave.Set("caravan:helped:" + k, 1f);
-            gm.Player.credit += 1;
+            int rep = GoodDeeds.ForRegion(Reactions.Region.North, ReputationSize.Small, "north:caravan");   // 11/19 부탁 들어주기는 평판
             string got = "";
             if (gift != null && gm.Player.CanCarry(gift)) { gm.Player.cargo.Add(gift, 1, 0f); got = $"{gift.displayName} 1개 · "; }
-            string text = Thanks[k] + $"\n({got}신용 +1)";
+            string text = Thanks[k] + $"\n({got}평판 +{rep})";
             if (!Friend && NorthSave.Has("caravan:helped:0") && NorthSave.Has("caravan:helped:1") && NorthSave.Has("caravan:helped:2"))
             {
                 NorthSave.Set("caravan:friend", 1f);

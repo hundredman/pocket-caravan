@@ -56,10 +56,10 @@ MonoBehaviour:
     completeLine: "\uBCF8\uD1A0 \uC0C1\uC778\uB4E4 \uC0AC\uC774\uC5D0\uB3C4 \uC790\uB124
       \uC774\uB984\uC774 \uB3CC\uACA0\uAD70."
   rewardMoney: 90
-  rewardCredit: 2
+  rewardCredit: 0
   rewardReputationScope: 0
-  rewardReputationTarget: 
-  rewardReputationSize: 0
+  rewardReputationTarget: venice
+  rewardReputationSize: 2
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

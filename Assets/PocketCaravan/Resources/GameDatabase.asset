@@ -16,6 +16,7 @@ MonoBehaviour:
   startVehicle: {fileID: 11400000, guid: 2605f065f1d0f40fd90f0c5955299f57, type: 2}
   startOrigin: {fileID: 11400000, guid: baa3df4a3e3ea42e999ffb10319d746e, type: 2}
   items:
+  - {fileID: 11400000, guid: 2639c4cf047941dfa2a794341d54faa8, type: 2}
   - {fileID: 11400000, guid: 34ab4741f86eb44b3bae564c5daa0f12, type: 2}
   - {fileID: 11400000, guid: 3b1d3708de2364a25ad4a9d27b2306a1, type: 2}
   - {fileID: 11400000, guid: c7b553013268140eca99e3276caecd4f, type: 2}
@@ -121,6 +122,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7a710966b3c1443d81d7c58ffc6c17ac, type: 2}
   - {fileID: 11400000, guid: 4e84bacbef75411f805284e2bdc314f7, type: 2}
   quests:
+  - {fileID: 11400000, guid: 55acea92bfc946ffa3b245c4329ffe0f, type: 2}
+  - {fileID: 11400000, guid: 6cd6250073664ca2911955a2765affe2, type: 2}
+  - {fileID: 11400000, guid: 44a6635f8e8b4b7eb76337f0ab2a43b1, type: 2}
   - {fileID: 11400000, guid: eefd3152bcc904f108dc17237dbff5e9, type: 2}
   - {fileID: 11400000, guid: 5f1b114771f824928af105094288dc10, type: 2}
   - {fileID: 11400000, guid: 6bae5cc8d980f47b2ada23154ca5d297, type: 2}

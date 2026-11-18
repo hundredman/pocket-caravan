@@ -82,7 +82,7 @@ namespace PocketCaravan
             {
                 var c = gm.Player.contracts[0];
                 string kicker = "배달" + (gm.Player.contracts.Count > 1 ? $" 외 {gm.Player.contracts.Count - 1}건" : "");
-                TaskCard.Task(TaskCard.Delivery, CuteUI.Pic.Sack, false, kicker, $"{c.cargo} → {gm.Contracts.TownName(c.toTown)}", CuteUI.Plain(gm.Contracts.TimeLeftText(c)));
+                TaskCard.Task(TaskCard.Delivery, CuteUI.Pic.Sack, false, kicker, $"{c.cargo} → {gm.Contracts.TownName(c.toTown)}", CuteUI.Plain(gm.Contracts.TimeLeftText(c)) + (c.Fragile ? $" · 상태 {Mathf.RoundToInt(c.condition * 100)}% (달리면 상함)" : ""));
             }
         }
 
@@ -312,7 +312,7 @@ namespace PocketCaravan
             }
             if (gm.Player.contracts.Count > 0)
             {
-                y = Section(y + 2, "게시판 배달", $"{gm.Player.contracts.Count}/{ContractManager.MaxActive}");
+                y = Section(y + 2, "게시판 배달", $"{gm.Player.contracts.Count}/{ContractManager.MaxActiveFor(gm.Player)}");
                 foreach (var c in gm.Player.contracts)
                 {
                     any = true;
@@ -325,6 +325,7 @@ namespace PocketCaravan
                     CuteUI.LabelRight(w - 8, y + 26, "보수", CuteUI.Sub, true);
                     float tx2 = CuteUI.Label(38, y + 12, TradeLedgerUI.Fit(c.cargo, w - 160, false, true), CuteUI.Text, false, true);
                     if (c.dropped) ContractBoard.Pill(tx2 + 5, y + 12, "길에 떨어뜨림", CuteUI.AlertSoft, CuteUI.Alert, CuteUI.Down);
+                    else if (ContractKind.Name(c.kind) != null) ContractBoard.Pill(tx2 + 5, y + 12, ContractKind.Name(c.kind), c.Express ? CuteUI.AlertSoft : c.Fragile ? CuteUI.BuySoft : CuteUI.SellSoft, c.Express ? CuteUI.Down : c.Fragile ? CuteUI.Buy : CuteUI.Sell, c.Express ? CuteUI.Down : c.Fragile ? CuteUI.Buy : CuteUI.Sell);
                     CuteUI.Icon(CuteUI.Pic.Pin, 38, y + 22, 1, CuteUI.Sub);
                     CuteUI.Label(46, y + 26, $"{gm.Contracts.TownName(c.toTown)} · 남은 시간 {CuteUI.Plain(gm.Contracts.TimeLeftText(c))} · 상태 {Mathf.RoundToInt(c.condition * 100)}%", CuteUI.Sub, true);
                     y += 40;
@@ -415,19 +416,25 @@ namespace PocketCaravan
             var p = gm.Player;
             var map = MapRoot.Current;
             var towns = JourneyGuide.Destinations(gm.Db, map != null ? map.region : null, WorldIndex.Get(), map != null ? map.mapId : null);
+            // 11/19 신용은 점수·단계 (Core/Credit.cs). 지금 단계보다 높은 단계 중 무언가 열리는 가장 가까운 단계를 보여 준다
+            int lv = Credit.Level(p);
             int next = int.MaxValue; var unlocks = new List<string>();
             foreach (var t in towns)
                 foreach (var f in t.facilities)
                 {
-                    if (f == null || t.SettlementTier < f.minTier || f.minCredit <= p.credit) continue;
+                    if (f == null || t.SettlementTier < f.minTier || f.minCredit <= lv) continue;
                     if (f.minCredit < next) { next = f.minCredit; unlocks.Clear(); }
                     if (f.minCredit == next) unlocks.Add(t.displayName + " " + f.displayName);
                 }
-            if (towns.Count > 0 && p.credit < ContractManager.PremiumCredit && ContractManager.PremiumCredit <= next)
+            for (int k = lv + 1; k <= Mathf.Min(next, lv + 10); k++)
             {
-                if (ContractManager.PremiumCredit < next) unlocks.Clear();
-                next = ContractManager.PremiumCredit; unlocks.Add("게시판 귀한 짐 의뢰");
+                string perk = Credit.PerkText(k);
+                if (perk == null || (k == ContractManager.PremiumCredit && towns.Count == 0)) continue;
+                if (k < next) { next = k; unlocks.Clear(); }
+                unlocks.Insert(0, perk);
+                break;
             }
+            Credit.Progress(p, out int haveP, out int needP);
 
             y = DrawVehicleGoal(gm, y, w);   // 11/19 운반 수단 마일스톤
 
@@ -437,14 +444,16 @@ namespace PocketCaravan
             var card = new Rect(0, y, w, ch);
             CuteUI.Box(card, 7, CuteUI.Paper, CuteUI.Interact, 2);
             CuteUI.Circle(10, y + 9, 34, CuteUI.Interact, CuteUI.InteractLo);
-            CuteUI.LabelCenter(27, y + 22, p.credit.ToString(), CuteUI.White, false, true);
+            CuteUI.LabelCenter(27, y + 22, lv.ToString(), CuteUI.White, false, true);
             CuteUI.LabelCenter(27, y + 33, "신용", CuteUI.White, true);
             if (next != int.MaxValue)
             {
-                // 11/18 한 줄로: "신용 N이 되면 열려요" + 막대 + 열리는 것 (설명 줄은 뺐다. 의뢰 탭·게시판이 알려 준다)
-                float lx = CuteUI.Label(54, y + 14, $"신용 {next}이 되면 열려요", CuteUI.Text, false, true);
-                CuteUI.Label(lx + 6, y + 14.5f, "의뢰를 마치면 올라요", CuteUI.Sub, true);
-                CuteUI.Bar(new Rect(54, y + 24, w - 66, 6), next > 0 ? p.credit / (float)next : 1f, CuteUI.Interact, CuteUI.InteractHi);
+                // 11/19 "신용 N단계가 되면 열려요" + 다음 단계까지 점수 막대 + 열리는 것
+                float lx = CuteUI.Label(54, y + 14, $"신용 {next}단계가 되면 열려요", CuteUI.Text, false, true);
+                CuteUI.Label(lx + 6, y + 14.5f, "맡은 일을 해내면 올라요", CuteUI.Sub, true);
+                string pts = $"{lv + 1}단계까지 {haveP}/{needP}점";
+                CuteUI.LabelRight(w - 12, y + 14.5f, pts, CuteUI.Sub, true, true);
+                CuteUI.Bar(new Rect(54, y + 24, w - 66, 6), Mathf.Max(0, haveP) / (float)Mathf.Max(1, needP), CuteUI.Interact, CuteUI.InteractHi);
                 float cx = 54, cy = y + 36;
                 foreach (var u in unlocks)
                 {
@@ -458,7 +467,7 @@ namespace PocketCaravan
             }
             else
             {
-                CuteUI.Label(54, y + 17, "이 지역 시설은 다 열렸어요", CuteUI.Text, false, true);
+                CuteUI.Label(54, y + 17, "신용으로 열 것은 다 열었어요", CuteUI.Text, false, true);
                 CuteUI.Label(54, y + 33, "물량·귀환품·길을 바꿔 더 벌어 보세요", CuteUI.Sub, true);
             }
             y += ch + 8;

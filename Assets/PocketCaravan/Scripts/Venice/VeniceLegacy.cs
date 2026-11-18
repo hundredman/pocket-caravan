@@ -43,7 +43,7 @@ namespace PocketCaravan
                     "본토로 건너간 상인들도 길목마다 작은 사자를 숨겼다.\n돌아오는 길을 잊지 않으려고.",
                     "일곱 사자를 다 찾은 상인은\n어느 항구에서든 믿을 사람으로 통했다고 한다.",
                 },
-                completeText = "일곱 사자를 모두 찾았다! 상금 300냥, 신용 +2, '사자의 축복'(큰 장 덤 2할 5푼)",
+                completeText = "일곱 사자를 모두 찾았다! 상금 300냥, 평판 +250, '사자의 축복'(큰 장 덤 2할 5푼)",
             };
             Collectibles.KeyFor[V] = i => i == 99 ? "venice:lion_blessing" : "venice:lion:" + i;
             Collectibles.OnComplete[V] = () => VeniceSave.Set("lion_blessing", 1f);
@@ -61,9 +61,10 @@ namespace PocketCaravan
                 {
                     var gm = GameManager.I;
                     if (gm.Player.money < 5) { Notify.Show("돈이 모자란다.", 2.5f); return; }
-                    gm.Player.money -= 5; gm.Player.credit += 1;
+                    gm.Player.money -= 5;
+                    GoodDeeds.ForRegion(Reactions.Region.Venice, ReputationSize.Small, "venice:pilgrim");   // 11/19 선행은 평판
                     Sfx.Play("success", .7f);
-                    Notify.Show("순례자가 고마워하며 길을 물어 떠났다. 신용 +1", 3.5f);
+                    Notify.Show($"순례자가 고마워하며 길을 물어 떠났다. 평판 +{ReputationAwards.PointsFor(ReputationSize.Small)}", 3.5f);
                     LostTraveler.Dismiss(spot);
                 }),
             };

@@ -7,7 +7,7 @@ namespace PocketCaravan
     /// 숨은 룬돌 7개와 은빛 순록의 전설 (10/24).
     /// 북유럽 곳곳(길에서 떨어진 숲 뒤·바위 뒤)에 이끼 낀 룬돌이 숨어 있고, 밤에는 은은히 빛난다 (NorthLife 불빛).
     /// 읽을 때마다 전설 조각 하나 (NorthSave "rune:n"). 일곱 개를 다 읽고 밤에 룬돌 언덕 고리 한가운데에 서면
-    /// 고리가 깨어나 오로라가 내려온다 → 상금 300냥, 신용 +2, "은빛 순록의 축복" (얼음 낚시 황금 연어·썰매 상금에 보너스).
+    /// 고리가 깨어나 오로라가 내려온다 → 상금 300냥, 북유럽 평판(큼), "은빛 순록의 축복" (얼음 낚시 황금 연어·썰매 상금에 보너스).
     /// 자리: NorthLife.json "secrets" [x, y, 번호], "ring" [x, y].
     /// </summary>
     public class NorthLegends : MonoBehaviour
@@ -147,12 +147,12 @@ namespace PocketCaravan
             // 깨어나는 고리
             NorthSave.Set("blessed", 1f);
             var gm = GameManager.I;
-            if (gm != null) { gm.Player.money += 300; gm.Player.credit += 2; }
+            if (gm != null) { gm.Player.money += 300; GoodDeeds.ForRegion(Reactions.Region.North, ReputationSize.Large, "north:legend"); }
             ceremony = 0f;
             if (!AudioManager.Muted) sfx.PlayOneShot(choir, 0.7f);
             DialogueUI.Show("은빛 순록의 축복",
                 "일곱 조각을 읊자 룬돌 고리가 하나씩 빛나기 시작했다. 하늘의 초록 강이 고리 위로 내려오고, 은빛 순록이 그 안을 걸어 지나갔다.\n\n'길을 나누는 상인에게 복이 있으라.'\n\n"
-                + "[상금 300냥 · 신용 +2 · 은빛 순록의 축복]\n(얼음 낚시 황금 연어 확률 증가, 썰매 언덕 상금 최대치 +20)");
+                + "[상금 300냥 · 북유럽 평판 +250 · 은빛 순록의 축복]\n(얼음 낚시 황금 연어 확률 증가, 썰매 언덕 상금 최대치 +20)");
             Notify.Show("은빛 순록의 축복을 받았다!", 4f);
             NorthSocial.Teach("pray");   // 고리가 하늘에 비는 법을 가르쳐 준다
         }

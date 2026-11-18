@@ -49,7 +49,7 @@ MonoBehaviour:
     count: 2
     completeLine: "\uC774 \uBB34\uB2AC\uC57C. \uC190\uB2D8\uC774 \uAE30\uBED0\uD558\uACA0\uAD70."
   rewardMoney: 55
-  rewardCredit: 1
+  rewardCredit: 2
   rewardReputationScope: 0
   rewardReputationTarget: 
   rewardReputationSize: 0

@@ -195,14 +195,14 @@ namespace PocketCaravan.EditorTools
             string target=WorldIndex.Get().MapOf("market",offer.toTown);Check(!string.IsNullOrEmpty(target),"delivery town resolves to actual map");
             yield return Load(target);board=null;foreach(var b in FindObjectsByType<ContractBoard>(FindObjectsSortMode.None))if(b.town==offer.toTown)board=b;
             Check(board!=null,"real destination board exists");Near(board);yield return Keypress(Key.Space);
-            var delivered=gm.Contracts.Deliver(offer,offer.toTown);Check(delivered.success&&gm.Player.credit==2,"ordinary delivery handler pays single credit");
+            var delivered=gm.Contracts.Deliver(offer,offer.toTown);Check(delivered.success&&delivered.credit>=1&&gm.Player.credit==1+delivered.credit,"ordinary delivery handler pays board credit points");int boardPts=delivered.credit;
             int paidMoney=gm.Player.money;var repeated=gm.Contracts.Deliver(offer,offer.toTown);Check(!repeated.success&&gm.Player.money==paidMoney,"same contract cannot pay twice");yield return Keypress(Key.Escape);
-            yield return Load("Goryeo/goryeo_songak");yield return Talk("goryeo_songak_merchant");Check(gm.Quests.IsFinished(Q("q1_songak"))&&gm.Player.credit==2,"board tutorial report does not double credit");
+            yield return Load("Goryeo/goryeo_songak");yield return Talk("goryeo_songak_merchant");Check(gm.Quests.IsFinished(Q("q1_songak"))&&gm.Player.credit==1+boardPts,"board tutorial report does not double credit");
             yield return Load("Goryeo/Dakmok");yield return Accept("q1_dakmok");yield return Trade("paper",2,false);yield return Talk("dakmok_chief");
             Check(gm.Quests.IsFinished(Q("q1_dakmok"))&&gm.Player.cargo.Count(gm.ItemById("paper"))==2,"paper purchase/report preserves sale cargo");
             yield return Accept("q1_gaegyeong");yield return Load("Goryeo/Gaegyeong");yield return Talk("gaekju");yield return Trade("paper",2,true);
             foreach(string id in new[]{"q1_naru","q1_jangdan","q1_songak","q1_dakmok","q1_gaegyeong"})Check(gm.Quests.IsFinished(Q(id)),"full live Q1 chain finished "+id);
-            Check(gm.Player.credit==3&&gm.Player.money>=100,"100-money fixture completes Q1 with three credit and no insolvency");yield return Photo("capital-q1-complete");
+            Check(gm.Player.credit==2+boardPts&&gm.Player.money>=100,"100-money fixture completes Q1 with quest + board credit and no insolvency");yield return Photo("capital-q1-complete");
             // Return to registered starting scene so Continue follows the actual startup path.
             yield return Load("Goryeo/Naru");yield return RestoreFromMenu();int finalMoney=gm.Player.money;int finalCredit=gm.Player.credit;
             yield return Talk("naru_chief");Check(gm.Player.money==finalMoney&&gm.Player.credit==finalCredit,"finished first quest cannot award twice after Continue");

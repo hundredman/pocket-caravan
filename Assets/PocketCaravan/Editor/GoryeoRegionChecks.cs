@@ -26,15 +26,15 @@ namespace PocketCaravan.EditorTools
             var vehicle = ScriptableObject.CreateInstance<VehicleData>(); vehicle.capacity = 10;
             var facility = new TownFacility { id = "test_warehouse", kind = FacilityKind.Warehouse, minTier = 3, minCredit = 3, storageCapacity = 6 };
             town.facilities.Add(facility);
-            var p = new PlayerState { vehicle = vehicle, credit = 2 };
-            var b = new PlayerState { vehicle = vehicle, credit = 3 };
+            var p = new PlayerState { vehicle = vehicle, credit = Credit.PointsFor(3) - 1 };   // 11/19 신용은 점수: 3단계 문턱 바로 아래
+            var b = new PlayerState { vehicle = vehicle, credit = Credit.PointsFor(3) };
             ItemData Find(string id) => id == item.id ? item : null;
             try
             {
                 p.cargo.Add(item, 3, 13.5f);
                 Check("문턱 직전 시설 거절·재산 불변", p.warehouse.Transfer(town,facility,p,item,true,Find) != null && p.cargo.Count(item)==3);
                 Check("다른 플레이어 신용은 공유 안 함", FacilityAccess.Denial(town,facility,b)==null && FacilityAccess.Denial(town,facility,p)!=null);
-                p.credit = 3;
+                p.credit = Credit.PointsFor(3);
                 Check("정확한 문턱에서 해금", FacilityAccess.Denial(town,facility,p)==null);
                 Check("다른 마을의 시설 참조 거절", FacilityAccess.Denial(other,facility,p)!=null);
                 town.settlementTier=2;

@@ -51,10 +51,10 @@ MonoBehaviour:
     completeLine: "\uBC14\uD034 \uC18C\uB9AC\uAC00 \uC88B\uAD70. \uC774\uC81C \uC9D0
       \uAC71\uC815\uC740 \uB35C\uC5C8\uC5B4."
   rewardMoney: 40
-  rewardCredit: 1
+  rewardCredit: 0
   rewardReputationScope: 0
-  rewardReputationTarget: 
-  rewardReputationSize: 0
+  rewardReputationTarget: arabia
+  rewardReputationSize: 2
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0

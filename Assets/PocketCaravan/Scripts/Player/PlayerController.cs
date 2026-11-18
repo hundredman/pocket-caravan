@@ -133,6 +133,8 @@ namespace PocketCaravan
 
             // 이전 저장/시험 도구와 필드 호환만 유지한다. 주행 낙하·정차 안정화는 사용하지 않는다.
             p.shake = 0f;
+            // 11/19 깨지기 쉬운 짐(신용 2단계 게시판 의뢰)은 달리면 상한다
+            GameManager.I.Contracts?.TickFragile(dt, motor.IsMoving, Running);
         }
 
         void UpdateBody()

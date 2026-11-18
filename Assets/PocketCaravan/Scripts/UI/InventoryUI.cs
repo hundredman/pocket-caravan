@@ -129,7 +129,7 @@ namespace PocketCaravan
             // 왼쪽 아래: 맡은 배달 짐
             float cy0 = itemViewport.yMax + 10;
             CuteUI.Label(gx + 1, cy0 + 4, "맡은 배달 짐", CuteUI.Sub, true, true);
-            CuteUI.Label(gx + 1 + CuteUI.Width("맡은 배달 짐", true, true) + 5, cy0 + 4, $"{p.contracts.Count}/{ContractManager.MaxActive}", CuteUI.Sub, true);
+            CuteUI.Label(gx + 1 + CuteUI.Width("맡은 배달 짐", true, true) + 5, cy0 + 4, $"{p.contracts.Count}/{ContractManager.MaxActiveFor(p)}", CuteUI.Sub, true);
             contractViewport = new Rect(gx, cy0 + 12, itemViewport.width, content.yMax - 6 - (cy0 + 12));
             DrawContracts(gm, p, contractViewport);
             for (float yy = content.y + 8; yy < content.yMax - 8; yy += 3) CuteUI.Fill(new Rect(itemViewport.xMax + 5, yy, 1, 1), CuteUI.Line);

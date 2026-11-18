@@ -149,7 +149,7 @@ namespace PocketCaravan
             Player.contracts.Clear();
             Player.origin = null;
             Player.reputation.Initialize(null);
-            Player.money = Player.credit = 0;
+            Player.money = Player.credit = Player.creditFloor = 0;
             Player.stamina = 1f;
             Player.shake = 0f;
             Drops.Clear();
@@ -171,12 +171,33 @@ namespace PocketCaravan
             // 창이 열린 동안은 의뢰 시간이 멈춘다. 온라인 세상 시간은 그래도 서버 기준으로 맞춘다
             Clock.Tick(UIState.Blocking ? 0f : Time.deltaTime);
             ApplyDaylight();
+            CreditLevelCheck();
             // 11/18 윤채 ("알아서 저장이 되어야지"): 맵을 옮길 때·거래할 때·끌 때 말고도 1분마다 저절로 저장한다 (게임 메뉴 저장 단추는 뺐다)
             if (autosave && !IsTravelling && Time.unscaledTime - lastAutoSaveTry >= AutoSaveEvery)
             {
                 lastAutoSaveTry = Time.unscaledTime;
                 SaveNow();
             }
+        }
+
+        /// <summary>
+        /// 11/19 신용 점수가 새 단계에 닿으면: 단계마다 게시판에 새 의뢰를 실제로 내놓고(한 번에 두 단계 넘어도) 한 번 알린다.
+        /// 점수는 여러 곳에서 바뀌니 매 프레임과 저장 직전에 본다 (저장된 단계 바닥이 늦어서 불러올 때 다시 알리는 일이 없게).
+        /// </summary>
+        void CreditLevelCheck()
+        {
+            int from = Player.creditFloor;
+            int up = Credit.CheckLevelUp(Player);
+            if (up <= 0) return;
+            var perks = new List<string>();
+            for (int k = from + 1; k <= up; k++)
+            {
+                Contracts?.OnCreditLevel(k);
+                string perk = Credit.PerkText(k);
+                if (perk != null) perks.Add(perk);
+            }
+            Notify.Show($"신용 {up}단계가 되었어요!" + (perks.Count > 0 ? "  — " + string.Join(" · ", perks) : ""), 5f);
+            Sfx.Play("levelup", .7f);
         }
 
         const float AutoSaveEvery = 60f;
@@ -340,7 +361,7 @@ namespace PocketCaravan
                 if (c.origin == null || string.IsNullOrEmpty(c.startScene) || !c.startScene.StartsWith(prefix)) continue;
                 if (Player.origin == c.origin) return;
                 Player.origin = c.origin;
-                Player.credit = c.origin.startingCredit;
+                Player.credit = c.origin.startingCredit; Player.creditFloor = 0;
                 Player.reputation.Initialize(ReputationState.HomeOf(Player.origin));
                 Debug.Log($"[개발 시작] {map.mapId}에서 바로 Play: 출신을 {c.origin.displayName}(으)로 맞춤");
                 return;
@@ -392,6 +413,7 @@ namespace PocketCaravan
             saveToLoad = null;
             Player.origin = choice.origin;
             Player.credit = choice.origin != null ? choice.origin.startingCredit : 0;
+            Player.creditFloor = 0;
             Player.money = Db.startMoney;
             Player.reputation.Initialize(ReputationState.HomeOf(Player.origin));
             UIState.Reset();
@@ -410,7 +432,7 @@ namespace PocketCaravan
             SaveSystem.UseSlot(session.saveFileName);
             autosave = true;
             Player.money = session.startMoney;
-            if (session.startOrigin != null) { Player.origin = session.startOrigin; Player.credit = session.startOrigin.startingCredit; }
+            if (session.startOrigin != null) { Player.origin = session.startOrigin; Player.credit = session.startOrigin.startingCredit; Player.creditFloor = 0; }
             if (session.startVehicle != null) { Player.vehicle = session.startVehicle; Player.stowedVehicle = null; }
             saveToLoad = SaveSystem.Read();
             Debug.Log($"[저장] {session.regionId} 시험 세션: 본편 저장 대신 전용 파일 {SaveSystem.FileName} 사용"
@@ -543,6 +565,7 @@ namespace PocketCaravan
         {
             // 시작 화면에서 고르는 중에는 저장하지 않는다 (지난 저장을 덮지 않게)
             if (!autosave || MapRoot.Current == null || StartScreen.IsOpen) return false;
+            CreditLevelCheck();
             var pc = PlayerController.Instance;
             var d = new SaveData
             {
@@ -551,7 +574,7 @@ namespace PocketCaravan
                 mapHeight = MapRoot.Current.ground.cellBounds.size.y,
                 px = pc != null ? pc.transform.position.x : 0, py = pc != null ? pc.transform.position.y : 0,
                 fx = pc != null ? pc.Motor.Facing.x : 0, fy = pc != null ? pc.Motor.Facing.y : -1,
-                money = Player.money, credit = Player.credit,
+                money = Player.money, credit = Credit.Level(Player), creditPoints = Player.credit, creditFloor = Player.creditFloor, creditVersion = Credit.Version,   // 11/19 credit 칸은 옛 빌드가 읽어도 맞게 단계, 점수는 creditPoints
                 origin = Player.origin != null ? Player.origin.id : null,
                 vehicle = Player.vehicle != null ? Player.vehicle.id : null,
                 stowedVehicle = Player.stowedVehicle != null ? Player.stowedVehicle.id : null,
@@ -593,7 +616,13 @@ namespace PocketCaravan
             Player.ledger.Import(d.marketQuotes);
             Player.ledger.ImportRecent(d.recentTrades);
             Player.money = d.money;
-            Player.credit = d.credit;
+            bool creditMigrated = d.creditVersion < Credit.Version;
+            if (creditMigrated)
+            {   // 11/19 옛 저장(또는 옛 빌드가 다시 쓴 저장)의 credit은 단계다: 그 단계의 누적 점수로 옮기고 단계를 바닥으로 둔다
+                Player.credit = Credit.MigratePoints(d.credit);
+                Player.creditFloor = Mathf.Max(0, d.credit);
+            }
+            else { Player.credit = d.creditPoints; Player.creditFloor = Mathf.Max(0, d.creditFloor); }
             // 출신은 시작 화면이 생기면서 저장에 들어감. 옛 저장(값 없음)은 기본 출신 그대로.
             var savedOrigin = StartChoices.FindOrigin(d.origin);
             if (savedOrigin != null) Player.origin = savedOrigin;
@@ -626,6 +655,7 @@ namespace PocketCaravan
             foreach (var b in Contracts.boards)
                 foreach (var c in b.list) Contracts.nextId = Mathf.Max(Contracts.nextId, c.id + 1);
             Contracts.InitBoards();
+            if (creditMigrated) for (int k = 1; k <= Player.creditFloor; k++) Contracts.OnCreditLevel(k);   // 옛 저장도 그 단계의 게시판으로
             if (d.traders.Count > 0) Traders.traders = new List<NpcTraders.Trader>(d.traders);
             GoryeoLayout.MigrateDrops(d);   // 옛 배치 저장의 떨어진 짐 → 새 맵 도착 자리 옆
             Drops.Clear(); if (d.drops != null) Drops.AddRange(d.drops);

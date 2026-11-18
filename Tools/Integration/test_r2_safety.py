@@ -95,6 +95,12 @@ class R2SafetyChecks(unittest.TestCase):
                     new,old=change['new'].encode(),change['old'].encode()
                     self.assertEqual(data.count(new),1,name+' exact approved 11/15 balance change')
                     data=data.replace(new,old,1)
+                # 11/19 신용 레벨 디자인: 주문 납품 의뢰의 신용 한 줄만 되돌린다 (Docs/CreditLevelDesign.md)
+                credit=json.loads((OUT/'credit-1119.json').read_text())['files']
+                for change in credit.get(name,[]):
+                    new,old=change['new'].encode(),change['old'].encode()
+                    self.assertEqual(data.count(new),1,name+' exact approved 11/19 credit change')
+                    data=data.replace(new,old,1)
                 # 11/08 고려 퀘스트 정리: 승인된 새 파일이면 예전 내용으로 되돌려 비교한다.
                 quests=json.loads((OUT/'goryeo-quest-1108.json').read_text())['files']
                 if name in quests:

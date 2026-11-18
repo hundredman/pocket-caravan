@@ -7,7 +7,7 @@ namespace PocketCaravan
 {
     /// <summary>
     /// 전시실 기증 (전 지역 공용, 2026-11-05 통합: 북유럽 NorthDaily 회관 전시실 + 베네치아 VeniceMuseum).
-    /// 지역마다 전시실 한 곳. 진열 목록(6칸)을 하나씩 채우면 되고, 다 채우면 칭호 + 200냥 + 신용 +1.
+    /// 지역마다 전시실 한 곳. 진열 목록(6칸)을 하나씩 채우면 되고, 다 채우면 칭호 + 200냥 + 그 문명 평판(큼).
     /// - 북유럽·베네치아: 자리는 지역 코드가 예전처럼 세우고(Shelf에 자기 목록과 옛 저장 키를 등록), 기증 창은 공용.
     /// - 고려·아라비아: 진열 목록은 그 지역 산지 물건 6개(데이터에서 자동), 자리는 으뜸 마을(개경·사나) 장터 옆에 공용 Runner가 세운다.
     ///   지역 담당이 이름·자리·그림을 바꾸고 싶으면 Shelf/Place에 등록하면 된다.
@@ -131,11 +131,12 @@ namespace PocketCaravan
             if (Complete(r) && !gm.HasMemo(doneKey))
             {
                 gm.SetMemo(doneKey, 1f);
-                gm.Player.money += Reward; gm.Player.credit += 1;
+                gm.Player.money += Reward;
+                int rep = GoodDeeds.ForRegion(r, ReputationSize.Large, "museum:complete");   // 11/19 기증은 평판
                 Sfx.Play("levelup");
                 if (OnComplete.TryGetValue(r, out var more)) more?.Invoke();
                 string title = Title.TryGetValue(r, out var t) ? t : "전시실 후원자";
-                Notify.Show($"전시실이 다 찼다! '{title}' 상금 {Reward}냥, 신용 +1", 6f);
+                Notify.Show($"전시실이 다 찼다! '{title}' 상금 {Reward}냥, 평판 +{rep}", 6f);
             }
             else Notify.Show($"'{e.name}'을(를) 기증했다 ({Count(r)}/{Total(r)})", 3f);
         }

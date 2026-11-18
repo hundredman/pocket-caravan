@@ -6,7 +6,10 @@ namespace PocketCaravan
     public class PlayerState
     {
         public int money;
+        /// <summary>신용 점수 (11/19부터 점수, 단계는 Credit.Level)</summary>
         public int credit;
+        /// <summary>11/19 한 번 오른 신용 단계 (점수가 깎여도 이 밑으로 안 내려감)</summary>
+        public int creditFloor;
         public VehicleData vehicle;
         /// <summary>11/17 V로 넣어 둔 운반 수단 (넣어 두면 vehicle은 등짐). 다시 V를 누르면 꺼낸다. 새 수단을 사면 비운다</summary>
         public VehicleData stowedVehicle;
