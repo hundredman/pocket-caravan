@@ -117,21 +117,23 @@ def harness(im):
     return im
 
 
-def end_cargo(stage):
+def end_cargo(stage, front=False):
     """앞·뒤에서 본 짐 (폭 24): 1 상자 둘 나란히 → 2 그 위로 자루 하나 → 3 위에 자루·작은 상자·자루를 한 단 더, 새끼줄 두 가닥"""
     g = HC.C(24, 22)
     # 11/19 옆모습과 같은 짐: 1 상자 둘 → 2 + 자루 하나(두 상자 사이 위로 보인다) → 3 위 한 단
     if stage >= 1: g.paste(HC.crate(), 1, 11); g.paste(HC.crate(), 12, 11)
-    if stage == 2: g.paste(HC.sack(), 7, 6)
+    # 11/19 은샘: 앞모습(말이 앞)은 위에 얹은 작은 짐을 말 쪽(아래)으로 조금 당긴다
+    dy = 3 if front else 0
+    if stage == 2: g.paste(HC.sack(), 7, 6 + dy)
     if stage >= 3:
-        g.paste(HC.sack(), 0, 4); g.paste(HC.crate(False), 8, 5); g.paste(HC.sack(), 15, 4)
+        g.paste(HC.sack(), 0, 4 + dy); g.paste(HC.crate(False), 8, 5 + dy); g.paste(HC.sack(), 15, 4 + dy)
         for x in (6, 17):
-            for y in range(6, 21):
+            for y in range(6 + dy, 21):
                 if g.get(x, y)[3] and g.get(x, y)[:3] != P['O']: g.px(x, y, 'n')
     return g
 
 
-def box_end(c, oy, stage):
+def box_end(c, oy, stage, front=False):
     """짐칸 끝면 + 양옆 바퀴 두께. 짐칸 너비 26 (x 2~27). oy = 짐칸 윗면 줄"""
     x0, x1 = 2, 27
     HC.edge_wheel(c, 0, oy + 4, 14); HC.edge_wheel(c, x1, oy + 4, 14)
@@ -139,7 +141,7 @@ def box_end(c, oy, stage):
     for x in range(x0 + 2, x1 - 1):
         if (x - x0) % 4 == 3: c.vline(x, oy - 1, oy + 6, 'i')
     c.hline(x0 + 1, x1 - 1, oy - 2, 'i')
-    if stage: c.paste(end_cargo(stage), x0 + 1, oy - 14)
+    if stage: c.paste(end_cargo(stage, front), x0 + 1, oy - 14)
     for i, k in enumerate(['H', 'h', 'w', 'd', 'w', 'm', 'd']):
         c.hline(x0, x1, oy + 7 + i, k)
     for x in (x0 + 6, x1 - 8): c.px(x, oy + 9, 'm'); c.px(x + 2, oy + 12, 'd')
@@ -157,7 +159,7 @@ def front(stage, frame=''):
     """아래로 올 때: 말이 앞(아래)에서 나를 보고, 짐칸이 말 바로 뒤(위). 말 등이 짐칸 앞판 아래쪽을 가린다"""
     out = Image.new('RGBA', (EW, EH), (0, 0, 0, 0))
     oy = 16
-    cv = Cv(EW, EH); box_end(cv, oy, stage); shafts(cv, oy + 13, oy + 24); cv.outline()
+    cv = Cv(EW, EH); box_end(cv, oy, stage, True); shafts(cv, oy + 13, oy + 24); cv.outline()
     out.alpha_composite(cv.im, (0, 0))
     out.alpha_composite(harness(PA.end_view3('horse', 'front', 0, frame)), (3, EH - 44 - 2))
     return out
