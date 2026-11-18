@@ -335,17 +335,6 @@ namespace PocketCaravan
             float by = below ? hole.yMax + gap + 9f : hole.y - gap - 9f - bh;
             float bx = Mathf.Clamp(hole.center.x - tw / 2f, 6f, W - tw - 6f);
             var r = new Rect(Mathf.Round(bx), Mathf.Round(by), Mathf.Round(tw), bh);
-            // 11/18 은샘: 말풍선은 다른 UI 위에 떠도 되지만 시계는 가리지 않는다 (밝히는 것이 시계 자신이면 그대로)
-            var clock = ScreenZones.Get("hud.clock");
-            if (clock.HasValue && !clock.Value.Overlaps(hole) && r.Overlaps(clock.Value))
-            {
-                var ck = clock.Value;
-                float other = below ? hole.y - gap - 9f - bh : hole.yMax + gap + 9f;   // 반대쪽 (위 ↔ 아래)
-                var alt = new Rect(r.x, Mathf.Round(other), r.width, r.height);
-                if (alt.y >= 4f && alt.yMax <= H - 4f && !alt.Overlaps(ck)) { r = alt; below = !below; }
-                else if (below) r.y = Mathf.Max(r.y, ck.yMax + 4f);   // 시계 아래로 내린다 (꼬리는 목표 쪽 그대로)
-                else r.x = r.center.x < ck.center.x ? Mathf.Max(6f, ck.x - r.width - 4f) : Mathf.Min(W - r.width - 6f, ck.xMax + 4f);   // 옆으로 비킨다
-            }
             CuteUI.Box(r, 6, CuteUI.Paper, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
             float tx = Mathf.Round(Mathf.Clamp(hole.center.x, r.x + 10f, r.xMax - 10f));
             for (int i = 0; i < 6; i++)   // 꼬리: 말풍선 쪽이 넓은 세모 (테두리 잉크)
