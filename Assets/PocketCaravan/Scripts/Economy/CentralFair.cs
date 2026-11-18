@@ -60,13 +60,16 @@ namespace PocketCaravan
         }
 
         /// <summary>오늘 이 조각의 큰 장 마을 (Whole 모드면 조각과 관계없이 오늘의 한 곳)</summary>
-        public static Town Today(string chunk)
+        public static Town Today(string chunk) => On(chunk, Day);
+
+        /// <summary>11/18 그날(day)의 큰 장 마을 (시계 달력이 내일 것도 보여 준다)</summary>
+        public static Town On(string chunk, int day)
         {
-            if (mode == Mode.Whole) return Towns[Mod(Day, Towns.Length)];
+            if (mode == Mode.Whole) return Towns[Mod(day, Towns.Length)];
             var list = new List<Town>();
             foreach (var t in Towns) if (t.chunk == chunk) list.Add(t);
-            if (list.Count == 0) return Towns[Mod(Day, Towns.Length)];
-            return list[Mod(Day, list.Count)];
+            if (list.Count == 0) return Towns[Mod(day, Towns.Length)];
+            return list[Mod(day, list.Count)];
         }
 
         public static bool IsFairTown(string townId)

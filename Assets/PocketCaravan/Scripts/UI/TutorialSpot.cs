@@ -110,6 +110,9 @@ namespace PocketCaravan
             if (ControlLesson.IsActive(ControlLesson.Ledger))
                 return blocking ? null : Zone("ledger", "hud.btn.l", "L이나 이 단추로 장부를 열어요", false);
             bool buy = ControlLesson.IsActive(ControlLesson.Bought), sell = ControlLesson.IsActive(ControlLesson.Sold);
+            // 11/18 은샘: 시계도 튜토리얼에서 한 번 (사기 단계 처음, 장터 창이 열리기 전에). 아무 키나·시계를 누르면 지나간다
+            if (buy && IntroActive && !blocking && !Seen("clock") && ScreenZones.Live("hud.clock"))
+                return Zone("clock", "hud.clock", "시계를 누르면 다음 장날과 큰 장 마을이 보여요", false);
             if (buy || sell)
             {
                 // 튜토리얼이 이 맵의 장터를 가리킬 때만 (팔기는 산 마을이 아닌 곳이라야 한다: 그 판단은 Intro의 길 안내가 한다)
