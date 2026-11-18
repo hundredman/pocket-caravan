@@ -164,7 +164,7 @@ namespace PocketCaravan.EditorTools
             float until=Time.realtimeSinceStartup+6;while((float)Get(inn,"fade")>=0&&Time.realtimeSinceStartup<until)yield return null;
             Check((float)Get(inn,"fade")<0&&!UIState.Blocking,"existing sleep fade finishes");Check(p.money==100-Inn.Price&&Mathf.Abs(gm.Clock.TotalHours-before-Inn.SleepHours)<.01&&p.stamina==1,"existing inn price/time/stamina unchanged");Check(RestBuff.Rested&&Mathf.Abs(RestBuff.Until-gm.Clock.TotalHours-Inn.BuffHours)<.01,"existing rest buff duration unchanged");
             yield return Size(960,540);yield return Keypress(Key.I);yield return Settle();InventoryBounds(bag);yield return Photo("12-inventory-960");yield return Keypress(Key.Escape);
-            yield return Load("Venice/venice_rialto");guide.Open();yield return Settle();Check(object.ReferenceEquals(guide.Content,Get(guide,"venice")),"Venice guide still selects existing Venice content");GuideBounds(guide);yield return Photo("13-venice-guide");guide.Close();
+            yield return Load("Venice/venice_rialto");guide.Open();yield return Settle();Check((int)Get(guide,"bookIndex")==2,"Venice guide opens the Venice book")   /* 11/18 책 여섯 권 */;GuideBounds(guide);yield return Photo("13-venice-guide");guide.Close();
             Check(!gm.AutosaveEnabled&&SaveSystem.CurrentPath==slotPath&&!File.Exists(slotPath),"all four windows retained saves-OFF isolated slot");
         }
     }

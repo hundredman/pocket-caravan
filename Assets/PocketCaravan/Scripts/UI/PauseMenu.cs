@@ -77,7 +77,7 @@ namespace PocketCaravan
                 y += shownIssue + 8;
             }
             if (Row(ref y, r, null, "계속하기", "Esc", true)) Close();
-            if (Row(ref y, r, CuteUI.Pic.OpenBook, "상업 백과", "고려와 교역 이야기"))
+            if (Row(ref y, r, CuteUI.Pic.OpenBook, "상업 백과", "지역별 교역 이야기"))
             {
                 Close();
                 gm.GetComponent<CommerceGuideUI>().Open();

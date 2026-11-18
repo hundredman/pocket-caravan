@@ -454,7 +454,7 @@ namespace PocketCaravan
         }
 
         // 흥정 (11/15 저울 흥정, HaggleDuel). 사기·팔기 버튼을 누르면 꼭 한다(TradeBatch).
-        // 결과는 다음 한 번의 거래에만 적용된다. 빨강을 밟아도 거래는 막지 않고 그 거래만 2% 불리하다.
+        // 결과는 다음 한 번의 거래에만 적용된다. 빨강을 밟아도 거래는 막지 않고 그 거래만 1~4% 불리하다 (11/18 깊이 따라).
         int haggleSalt;   // 같은 날 같은 물건을 여러 번 사도 저울이 판마다 다르게
         void DrawHaggle(GameManager gm, Rect button, Rect panel, int count, int baseTotal)
         {
@@ -581,7 +581,7 @@ namespace PocketCaravan
                 }
                 completed++;total+=price;
             }
-            if(completed>0 && haggle!=0)deal=null; // 흥정은 이 거래 한 번에만 쓴다 (빨강의 +2%도)
+            if(completed>0 && haggle!=0)deal=null; // 흥정은 이 거래 한 번에만 쓴다 (빨강의 손해도)
             if(completed>0){lastTradeItem=estimate.item;lastTradeCount=completed;lastTradeSell=estimate.selling;lastTradeAt=Time.unscaledTime;
                 fxItem=estimate.item;fxCount=completed;fxTotal=total;fxSell=estimate.selling;fxAt=Time.unscaledTime;fxFrom=tradeBtn;   // 11/18 사고판 느낌
                 Sfx.Play("success",.55f);}

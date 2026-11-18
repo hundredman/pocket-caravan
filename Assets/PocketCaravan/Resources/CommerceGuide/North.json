@@ -1,0 +1,82 @@
+{
+  "heading": "북유럽 · 피오르와 눈길의 상인들",
+  "cards": [
+    {
+      "id": "north_world",
+      "title": "북유럽의 장사",
+      "history": "8~11세기 스칸디나비아 사람들은 배를 타고 발트해, 북해, 강을 따라 멀리까지 교역했습니다. 모피, 호박, 말린 생선을 팔고 은과 소금, 직물을 사 왔습니다.",
+      "adaptation": "게임 속 북유럽은 비르카를 중심으로 피오르, 사냥꾼 마을, 온천 마을, 순록 고원을 한 지역에 모았습니다. 실제로는 스웨덴, 노르웨이, 아이슬란드에 흩어진 모습들입니다.",
+      "travel": "북유럽 출신은 모든 이동이 10% 빠릅니다. 눈길에는 짐 썰매가 어울립니다.",
+      "sources": [
+        {
+          "title": "Wikipedia · Birka",
+          "url": "https://en.wikipedia.org/wiki/Birka"
+        }
+      ]
+    },
+    {
+      "id": "north_birka",
+      "title": "비르카, 섬의 장터",
+      "history": "비르카는 8~10세기 스웨덴 멜라렌 호수의 섬에 있던 교역 도시입니다. 동쪽에서 온 은화와 비단 조각이 발굴되었습니다. 북쪽 숲의 모피도 이곳으로 모였습니다.",
+      "adaptation": "게임 속 비르카는 북유럽의 수도 역할을 하는 장터입니다. 광장과 여관, 집들의 배치는 창작입니다.",
+      "travel": "북유럽의 큰 장터라 여러 마을 물건이 모입니다. 다른 지역에서 가져온 소금과 향신료를 팔아 보세요.",
+      "sources": []
+    },
+    {
+      "id": "north_fish",
+      "title": "말린 대구와 연어",
+      "history": "노르웨이 북쪽에서는 대구를 바닷바람에 말린 스톡피시를 만들었습니다. 몇 년을 두어도 상하지 않아 유럽 곳곳으로 팔려 나갔습니다.",
+      "adaptation": "대구 덕장에 얼음 대구 3개를 맡기면 말린 대구가 됩니다. 덕장의 모습과 걸리는 시간은 게임에 맞게 줄였습니다.",
+      "travel": "생선은 무거우니 가까운 마을에 파는 편이 낫습니다. 말린 대구는 오래가서 먼 길에도 괜찮습니다.",
+      "sources": [
+        {
+          "title": "Wikipedia · Stockfish",
+          "url": "https://en.wikipedia.org/wiki/Stockfish"
+        }
+      ]
+    },
+    {
+      "id": "north_fur",
+      "title": "모피와 호박",
+      "history": "북쪽 숲의 모피는 남쪽 도시와 이슬람 세계까지 팔려 간 비싼 물건이었습니다. 발트해 바닷가에서 줍는 호박도 오래전부터 장신구로 귀하게 거래되었습니다.",
+      "adaptation": "모피 사냥꾼 마을은 숲속 천막 마을로 만들었습니다. 털옷 공방에 모피 2개를 맡기면 털옷이 됩니다.",
+      "travel": "모피와 호박은 무게당 값이 높아 다른 문명으로 가져가기 좋습니다.",
+      "sources": [
+        {
+          "title": "Wikipedia · Fur trade",
+          "url": "https://en.wikipedia.org/wiki/Fur_trade"
+        },
+        {
+          "title": "Wikipedia · Baltic amber",
+          "url": "https://en.wikipedia.org/wiki/Baltic_amber"
+        }
+      ]
+    },
+    {
+      "id": "north_reindeer",
+      "title": "순록 고원",
+      "history": "스칸디나비아 북쪽에서는 사미 사람들이 오래전부터 순록을 기르며 살았습니다. 순록은 고기, 젖, 가죽을 주고 썰매도 끌었습니다.",
+      "adaptation": "순록 고원 마을과 순록 치즈는 이 생활을 빌린 창작입니다. 특정 사람들의 문화를 그대로 재현하지는 않았습니다.",
+      "travel": "건초와 소금 덩이는 순록 고원에서 잘 팔립니다. 돌아올 때는 치즈와 말린 고기를 실어 보세요.",
+      "sources": [
+        {
+          "title": "Wikipedia · Reindeer herding",
+          "url": "https://en.wikipedia.org/wiki/Reindeer_herding"
+        }
+      ]
+    },
+    {
+      "id": "north_mead",
+      "title": "꿀술과 온천",
+      "history": "꿀을 발효한 꿀술은 북유럽 잔치에 빠지지 않는 술이었습니다. 화산섬 아이슬란드에서는 땅에서 솟는 뜨거운 물로 목욕을 했습니다.",
+      "adaptation": "라우가르 온천 마을은 아이슬란드 온천의 분위기를 빌린 마을입니다. 양조장에 꿀술 2개와 온천 약초 1개를 맡기면 온천 약초 꿀술이 됩니다.",
+      "travel": "벌꿀과 꿀술은 단지에 담아 팔면 값이 달라집니다. 같은 물건이라도 담는 그릇에 따라 무게와 값이 다르니 장부에서 비교하세요.",
+      "sources": [
+        {
+          "title": "Wikipedia · Mead",
+          "url": "https://en.wikipedia.org/wiki/Mead"
+        }
+      ]
+    }
+  ]
+}

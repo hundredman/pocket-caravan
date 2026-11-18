@@ -1,0 +1,104 @@
+{
+  "heading": "아라비아 · 향과 커피, 대상의 길",
+  "cards": [
+    {
+      "id": "arabia_world",
+      "title": "아라비아의 장사",
+      "history": "아라비아 반도 남서쪽(예멘)과 동쪽 걸프 연안은 인도양과 홍해를 잇는 교역의 길목이었습니다. 유향은 고대부터 이 길로 실려 나갔습니다. 중세에는 홍해 항구와 사막의 대상로가 바다와 육지를 이었습니다.",
+      "adaptation": "게임 속 아라비아는 제다, 사나, 타이즈, 자비드, 알 아흐사의 다섯 마을로 줄였습니다. 실제로는 서로 먼 곳들을 걸어서 갈 수 있게 가깝게 붙였습니다.",
+      "travel": "아라비아 출신은 물건을 난 곳과 다른 문명의 장터에 팔면 5% 더 받습니다. 낙타는 아라비아에서만 팝니다.",
+      "sources": [
+        {
+          "title": "Wikipedia · Incense trade route",
+          "url": "https://en.wikipedia.org/wiki/Incense_trade_route"
+        }
+      ]
+    },
+    {
+      "id": "arabia_jeddah",
+      "title": "제다, 홍해의 항구",
+      "history": "제다는 7세기부터 메카로 가는 순례자와 물자가 드나든 홍해의 항구입니다. 인도양에서 온 향신료와 직물이 이곳에서 내륙으로 옮겨졌습니다.",
+      "adaptation": "게임 속 제다는 항구와 물류 창고가 있는 큰 장터로 만들었습니다. 바다 소금과 진주가 이곳에 모입니다.",
+      "travel": "큰 장터라 많이 팔아도 값이 덜 떨어집니다. 먼 길에서 가져온 짐을 한꺼번에 풀기 좋습니다.",
+      "sources": [
+        {
+          "title": "Wikipedia · Jeddah",
+          "url": "https://en.wikipedia.org/wiki/Jeddah"
+        }
+      ]
+    },
+    {
+      "id": "arabia_coffee",
+      "title": "커피와 자비드·타이즈",
+      "history": "커피를 끓여 마시는 풍습은 15세기 예멘에서 처음 기록됩니다. 수피들이 밤 기도 때 졸음을 쫓으려고 마셨다고 합니다. 자비드는 9~12세기 여러 왕조의 수도로 이름난 학문 도시였습니다. 타이즈는 13~15세기 라술 왕조 때 크게 번성했습니다.",
+      "adaptation": "타이즈의 커피 볶는 집에 커피 열매 자루 2개를 맡기면 볶은 커피가 됩니다. 볶는 공방과 그 값의 흐름은 게임에서 만들었습니다.",
+      "travel": "커피 열매는 산지 가까이에서 싸고, 볶은 커피는 멀리 갈수록 비쌉니다. 같은 길에서 두 물건의 값을 비교해 보세요.",
+      "sources": [
+        {
+          "title": "Wikipedia · History of coffee",
+          "url": "https://en.wikipedia.org/wiki/History_of_coffee"
+        },
+        {
+          "title": "Wikipedia · Zabid",
+          "url": "https://en.wikipedia.org/wiki/Zabid"
+        }
+      ]
+    },
+    {
+      "id": "arabia_incense",
+      "title": "유향과 향유",
+      "history": "유향은 아라비아 남부와 아프리카 뿔 지역의 나무 수지입니다. 신전과 교회에서 피워 고대 지중해까지 비싸게 팔렸습니다. 향유도 아라비아 상인의 이름난 물건이었습니다.",
+      "adaptation": "사나 향유 공방에 유향 덩이 2개를 맡기면 향유가 됩니다. 유향의 실제 산지인 남부 해안은 따로 만들지 않았습니다.",
+      "travel": "가볍고 비싸서 먼 문명에 가져가기 좋습니다. 북유럽이나 고려에서 얼마에 팔리는지 장부로 확인해 보세요.",
+      "sources": [
+        {
+          "title": "Wikipedia · Frankincense",
+          "url": "https://en.wikipedia.org/wiki/Frankincense"
+        }
+      ]
+    },
+    {
+      "id": "arabia_ahsa",
+      "title": "알 아흐사, 대추야자와 진주",
+      "history": "알 아흐사는 샘이 많은 큰 오아시스로, 지금도 대추야자 숲이 넓게 펼쳐져 있습니다. 가까운 걸프 바다에서는 오래전부터 진주를 캐 팔았습니다.",
+      "adaptation": "게임 속 알 아흐사는 대추야자와 진주가 나는 오아시스 마을입니다. 바다와 오아시스의 거리를 줄여 한 마을에 모았습니다.",
+      "travel": "대추야자는 싸고 오래가서 먼 길 장사의 첫 물건으로 좋습니다. 진주는 비싸니 평판을 올린 뒤 흥정해 보세요.",
+      "sources": [
+        {
+          "title": "Wikipedia · Al-Ahsa Oasis",
+          "url": "https://en.wikipedia.org/wiki/Al-Ahsa_Oasis"
+        },
+        {
+          "title": "Wikipedia · Pearl hunting",
+          "url": "https://en.wikipedia.org/wiki/Pearl_hunting"
+        }
+      ]
+    },
+    {
+      "id": "arabia_sanaa",
+      "title": "사나와 고원의 장인",
+      "history": "사나는 해발 2,000m가 넘는 고원에 있는 오래된 도시입니다. 흙벽돌로 지은 높은 탑 모양 집으로 이름이 높습니다. 고원과 골짜기에서는 가죽, 직물, 염료를 다루는 장인들이 일했습니다.",
+      "adaptation": "게임에서는 낙타 가죽, 직물, 붉은 염료 돌을 고원 마을의 물건으로 묶었습니다. 염료 돌이 직물 값에 이어지는 이야기는 창작입니다.",
+      "travel": "무거운 물건이 많으니 낙타를 들인 뒤에 실어 나르는 편이 낫습니다.",
+      "sources": [
+        {
+          "title": "Wikipedia · Sanaa",
+          "url": "https://en.wikipedia.org/wiki/Sanaa"
+        }
+      ]
+    },
+    {
+      "id": "arabia_caravan",
+      "title": "대상과 숙소",
+      "history": "사막을 건너는 상인은 여럿이 무리를 이룬 대상으로 다녔습니다. 길가에는 짐승과 짐을 들이고 하룻밤 묵는 숙소(카라반사라이)가 있었습니다.",
+      "adaptation": "게임 속 대상 숙소와 낙타 무리는 이 풍경을 빌렸습니다. 길 위의 도적과 통행세 이야기는 게임 사건입니다.",
+      "travel": "도적을 만나면 통행세를 내거나, 흥정하거나, 달아날 수 있습니다. 짐이 무거울수록 달아나기 어렵습니다.",
+      "sources": [
+        {
+          "title": "Wikipedia · Caravanserai",
+          "url": "https://en.wikipedia.org/wiki/Caravanserai"
+        }
+      ]
+    }
+  ]
+}

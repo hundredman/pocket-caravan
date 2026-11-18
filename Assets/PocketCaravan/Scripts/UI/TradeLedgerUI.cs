@@ -8,12 +8,15 @@ namespace PocketCaravan
     /// 11/05 B안(CuteUI):
     /// - 전체 시세: 왼쪽 물건 목록(최대 차익 = 가장 비싸게 파는 값 − 가장 싸게 사는 값, 이득 초록·0 회색·손해 빨강)
     ///   + 오른쪽 고른 물건의 경로 요약(살 곳 → 팔 곳)과 장터별 값·본 날짜. 살 때는 파랑, 팔 때는 주황.
-    /// - 내 짐 판매처: 실은 물건마다 본 판매처와 원가 대비. 짐이 없으면 지금 차익이 가장 큰 물건을 추천한다.
+    /// - 내 짐 판매처: 실은 물건마다 본 판매처와 원가 대비. 짐이 없으면 빈 안내만 (11/18 은샘: 차익 큰 물건 추천은 뺐다).
+    /// - 11/18 은샘: 처음 열면 탭 셋을 하나씩 밝혀 소개한다 (TutorialSpot "ledger.tab0~2", 그동안 그 탭을 보여 준다).
     /// 마우스 휠로 목록을 굴린다.
     /// </summary>
     public sealed class TradeLedgerUI : MonoBehaviour
     {
         public bool IsOpen { get; private set; }
+        /// <summary>11/18 장부가 열려 있다 (튜토리얼 탭 소개)</summary>
+        public static bool Showing { get; private set; }
         int tab;   // 0 내 짐 판매처 · 1 전체 시세 · 2 최근 거래 (11/08)
         bool showCargo { get => tab == 0; set => tab = value ? 0 : 1; }
         int openedFrame;
@@ -34,7 +37,7 @@ namespace PocketCaravan
             var gm = GameManager.I;
             if (IsOpen || UIState.Blocking || gm == null || gm.IsTravelling) return;
             if (!UIState.TryOpen(this, Close)) return;
-            IsOpen = true;
+            IsOpen = true; Showing = true;
             openedFrame = Time.frameCount;
             Sfx.Play("open");
         }
@@ -42,7 +45,7 @@ namespace PocketCaravan
         public void Close()
         {
             if (!IsOpen) return;
-            IsOpen = false;
+            IsOpen = false; Showing = false;
             UIState.Release(this);
         }
 
@@ -70,9 +73,16 @@ namespace PocketCaravan
 
             var content = new Rect(r.x + 15, r.y + 50, r.width - 30, r.height - 63);
             CuteUI.Box(content, 7, CuteUI.Paper, CuteUI.Ink);
+            // 11/18 처음 열면 탭 소개 (TutorialSpot): 소개 중인 탭을 펼쳐 둔다
+            string tour = TutorialSpot.CurrentId;
+            if (tour != null && tour.StartsWith("ledger.tab") && tour.Length == 11) tab = tour[10] - '0';
             if (CuteUI.Tab(content.x + 6, content.y, "내 짐 판매처", CuteUI.Pic.Sack, tab == 0, out float w1)) tab = 0;
             if (CuteUI.Tab(content.x + 6 + w1 + 3, content.y, "전체 시세", CuteUI.Pic.Chart, tab == 1, out float w2)) tab = 1;
-            if (CuteUI.Tab(content.x + 6 + w1 + 3 + w2 + 3, content.y, "최근 거래", CuteUI.Pic.Coin, tab == 2, out _)) tab = 2;
+            if (CuteUI.Tab(content.x + 6 + w1 + 3 + w2 + 3, content.y, "최근 거래", CuteUI.Pic.Coin, tab == 2, out float w3)) tab = 2;
+            // 소개는 탭과 그 아래 내용 칸을 같이 밝힌다
+            ScreenZones.MarkSpot("ledger.tab0", new Rect(content.x + 6, content.y - 21, w1, 21));
+            ScreenZones.MarkSpot("ledger.tab1", new Rect(content.x + 6 + w1 + 3, content.y - 21, w2, 21));
+            ScreenZones.MarkSpot("ledger.tab2", new Rect(content.x + 6 + w1 + 3 + w2 + 3, content.y - 21, w3, 21));
             CuteUI.LabelRight(content.xMax - 4, content.y - 9,
                 tab == 0 ? "실은 물건을 어디에 팔면 좋을지 알려 줘요" : tab == 1 ? "직접 본 값이에요 · 가면 달라질 수 있어요" : $"최근 {TradeLedger.RecentMax}번 사고판 것", CuteUI.Sub, true);
             if (tab == 0) DrawCargo(gm, content); else if (tab == 1) DrawAll(gm, content); else DrawRecent(gm, content);
@@ -302,31 +312,11 @@ namespace PocketCaravan
             }
             CuteUI.LabelCenter(mid, top + 8, "실은 교역품이 없어요", CuteUI.Text, false, true);
 
-            // 지금 차익이 가장 큰 물건
-            Summary best = default;
-            foreach (var item in gm.Db.items)
-            {
-                if (item == null || item.questItem) continue;
-                var s = Summarize(gm, item);
-                if (s.known > 0 && s.Gain > 0 && (best.item == null || s.Gain > best.Gain)) best = s;
-            }
-            if (best.item != null)
-            {
-                CuteUI.LabelCenter(mid, top + 25, "지금 차익이 가장 큰 물건", CuteUI.Sub, true);
-                string name = best.item.displayName;
-                float badgeW = CuteUI.Width(CuteUI.GainText(best.Gain), false, true) + 14;
-                float total = 19 + CuteUI.Width(name, false, true) + 8 + CuteUI.RouteWidth(best.buyTown.displayName, best.buy, best.sellTown.displayName, best.sell) + 8 + badgeW;
-                float rx = Mathf.Round(mid - total / 2f);
-                CuteUI.Box(new Rect(rx - 8, top + 33, total + 16, 26), 8, CuteUI.Paper2, CuteUI.Line);
-                ItemIcon(best.item, rx, top + 38, 1);
-                float nx = CuteUI.Label(rx + 19, top + 46, name, CuteUI.Text, false, true) + 8;
-                CuteUI.Route(nx, top + 46, best.buyTown.displayName, best.buy, best.sellTown.displayName, best.sell);
-                CuteUI.GainBadge(rx + total, top + 46, best.Gain, true);
-            }
-            else CuteUI.LabelCenter(mid, top + 34, "장터에 들러 시세를 적어 보세요", CuteUI.Sub, true);
+            // 11/18 은샘: 짐이 없을 때 "지금 차익이 가장 큰 물건" 추천은 뺐다 (이 탭은 내 짐 이야기만)
+            CuteUI.LabelCenter(mid, top + 26, "물건을 사면 어디에 팔면 좋을지 여기 적혀요", CuteUI.Sub, true);
 
             float bw = CuteUI.Width("전체 시세 보기", false, true) + 34;
-            if (CuteUI.Button(new Rect(mid - Mathf.Round(bw / 2f), top + 68, bw, 22), "전체 시세 보기", CuteUI.Pic.Chart)) showCargo = false;
+            if (CuteUI.Button(new Rect(mid - Mathf.Round(bw / 2f), top + 42, bw, 22), "전체 시세 보기", CuteUI.Pic.Chart)) showCargo = false;
             Tip(c, "배달 짐과 창고 물건은 여기 나오지 않아요");
         }
 

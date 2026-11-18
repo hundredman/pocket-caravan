@@ -291,7 +291,7 @@ namespace PocketCaravan
             string text = askNote ?? "따뜻한 방 있어요. 쉬어 갈래요?";
             float textHeight = Mathf.Max(16, CuteUI.WrapHeight(text, w - 28));
             float rowsH = askNote == null ? 4 * 19 + 4 : 0;
-            float h = textHeight + rowsH + 58;
+            float h = textHeight + rowsH + 62;   // 11/18 은샘: 아래 단추 여백 +4
             var r = askWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round(UIStyle.VirtualHeight - h - 50), w, h);
             CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, askHost);
             if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { CloseAsk(); return; }   // 11/08 오른쪽 위 X
@@ -316,8 +316,8 @@ namespace PocketCaravan
                 InnRow(rx, ry, rw, CuteUI.Pic.Star4, "푹 쉼", $"{BuffHours:0}시간 동안 달릴 때 덜 지침", CuteUI.Text);
             }
             float yesWidth = Mathf.Floor((w - 36) * .56f);
-            yesRect = new Rect(r.x + 14, r.yMax - 30, yesWidth, 22);
-            noRect = new Rect(r.x + 22 + yesWidth, r.yMax - 30, w - 36 - yesWidth, 22);
+            yesRect = new Rect(r.x + 14, r.yMax - 34, yesWidth, 22);
+            noRect = new Rect(r.x + 22 + yesWidth, r.yMax - 34, w - 36 - yesWidth, 22);
             if (askNote == null && CuteUI.Button(yesRect, $"쉬어 갈래요 ({Price}냥)")) Rest();
             if (CuteUI.SoftButton(noRect, askNote == null ? "괜찮아요" : "알겠어요")) CloseAsk();
         }

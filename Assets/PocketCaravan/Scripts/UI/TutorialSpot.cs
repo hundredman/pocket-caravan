@@ -24,7 +24,7 @@ namespace PocketCaravan
         const float DimAlpha = .58f, FadeIn = .25f, FadeOut = .22f;
         const string MemoPrefix = "tutorial:spot:";
 
-        struct Spot { public string id; public Rect hole; public bool round; public string bubble; public bool noDim; }
+        struct Spot { public string id; public Rect hole; public bool round; public string bubble; public bool noDim, noRing; }
 
         static TutorialSpot inst;
         string shownId;          // 지금 밝힌 것
@@ -70,6 +70,7 @@ namespace PocketCaravan
             if (cur == null) { shownId = null; dimWanted = false; dim = Mathf.MoveTowards(dim, 0f, dt / FadeOut); return; }
             var s = cur.Value;
             if (s.id != shownId) { shownId = s.id; dimWanted = !s.noDim && !Seen(s.id); }
+            if (s.noDim) dimWanted = false;   // 가까이 와서 동그라미가 사라지면 어둠도 걷는다
             // 어둠이 다 내려온 뒤(잠깐) 누른 키만 받는다 (단계가 바뀌는 그 키로 바로 지나가지 않게)
             if (dimWanted && dim > .6f && AnyPress()) { dimWanted = false; MarkSeen(s.id); }
             dim = dimWanted ? Mathf.MoveTowards(dim, 1f, dt / FadeIn) : Mathf.MoveTowards(dim, 0f, dt / FadeOut);
@@ -83,6 +84,13 @@ namespace PocketCaravan
             bool blocking = UIState.Blocking;
             if (HaggleDuel.IsOpen || PackPuzzle.IsOpen) return null;   // 장터 위에 뜨는 창
 
+            // 11/18 은샘: 장부를 처음 열면 탭 셋을 하나씩 소개 (튜토리얼이 아니어도 처음 한 번. 아무 키나 누르면 다음 탭)
+            if (TradeLedgerUI.Showing)
+            {
+                for (int i = 0; i < LedgerTour.Length; i++)
+                    if (!Seen("ledger.tab" + i)) return Zone("ledger.tab" + i, "ledger.tab" + i, LedgerTour[i], false);
+                return null;
+            }
             if (ControlLesson.IsActive(ControlLesson.Quests))
             {
                 // 11/18 은샘: 열기 → 목록에서 튜토리얼 카드 보기(어둡게, 아무 키나) → 닫기. 닫으면 이 단계가 끝난다 (ControlLesson)
@@ -136,6 +144,15 @@ namespace PocketCaravan
             return null;
         }
 
+        static readonly string[] LedgerTour =
+        {
+            "내 짐 판매처 · 실은 물건을 어느 장터에 팔면 이득인지 보여 줘요",
+            "전체 시세 · 장터에서 직접 본 사는 값·파는 값을 물건마다 비교해요",
+            "최근 거래 · 최근에 사고판 기록과 남긴 돈이에요",
+        };
+        /// <summary>지금 밝히는 것의 아이디 (없으면 null). 장부가 소개 중인 탭을 펼치는 데 쓴다</summary>
+        public static string CurrentId => inst != null && inst.cur.HasValue ? inst.cur.Value.id : null;
+
         static bool IntroActive => GoryeoIntro.Active || VeniceIntro.Active || NorthIntro.Active || ArabiaIntro.Active;
 
         static Spot? Zone(string id, string zone, string bubble, bool round)
@@ -152,9 +169,9 @@ namespace PocketCaravan
         {
             var cam = Camera.main;
             if (cam == null || target == null) return null;
-            // 11/18 은샘: 동그라미 안으로 들어오면(말 걸 수 있을 만큼 가까우면) 동그라미는 사라진다 (발밑 노란 고리 · Space 알약이 이어 받는다)
+            // 11/18 은샘: 동그라미 안으로 들어오면(말 걸 수 있을 만큼 가까우면) 동그라미는 사라지고 말풍선만 남는다 (발밑 노란 고리 · Space 알약이 이어 받는다)
             var pc = PlayerController.Instance;
-            if (pc != null && (pc.TalkTarget == target || ((Vector2)(pc.transform.position - target.transform.position)).sqrMagnitude < 1.6f * 1.6f)) return null;
+            bool near = pc != null && (pc.TalkTarget == target || ((Vector2)(pc.transform.position - target.transform.position)).sqrMagnitude < 1.6f * 1.6f);
             Bounds b;
             var sr = target.GetComponentInChildren<SpriteRenderer>();
             if (sr != null && sr.sprite != null) b = sr.bounds; else b = new Bounds(target.transform.position + Vector3.up * .5f, new Vector3(1f, 1.5f, 0f));
@@ -164,7 +181,7 @@ namespace PocketCaravan
             var c = r.center;
             var hole = new Rect(c.x - s * 1.15f, c.y - s, s * 2.3f, s * 2f);
             if (hole.xMax < 0 || hole.yMax < 0 || hole.x > UIStyle.VirtualWidth || hole.y > UIStyle.VirtualHeight) return null;
-            return new Spot { id = id, hole = hole, round = true, bubble = bubble, noDim = noDim };
+            return new Spot { id = id, hole = hole, round = true, bubble = bubble, noDim = noDim || near, noRing = near };
         }
 
         static Vector2 ToGui(Camera cam, Vector3 world)
@@ -192,8 +209,11 @@ namespace PocketCaravan
             // 깜빡이는 테두리: 흰 줄 밖 + 청록 줄 안, 조금씩 커졌다 작아진다
             float p = .5f + .5f * Mathf.Sin(now * 5f);
             float g = 1f + Mathf.Round(p * 2f);
-            Band(hole, sp.round, g, g + 2f, Color.white);
-            Band(hole, sp.round, g + .5f, g + 1.5f, (Color)CuteUI.Interact);
+            if (!sp.noRing)
+            {
+                Band(hole, sp.round, g, g + 2f, Color.white);
+                Band(hole, sp.round, g + .5f, g + 1.5f, (Color)CuteUI.Interact);
+            }
 
             Bubble(hole, sp.bubble, g + 2f, W, H);
             if (dim > .3f)

@@ -23,7 +23,7 @@ namespace PocketCaravan
         {
             var stage=Entry(player,m.town).standing;float max=MaxHaggle(stage);
             int buy=Mathf.Max(1,Mathf.RoundToInt(m.BaseBuyPrice(item)*(1+BuyDelta(stage))));
-            buy=Mathf.Max(1,Mathf.RoundToInt(buy*(1-Mathf.Clamp(buyHaggle,-HaggleDuel.FailPenalty,max))));   // 11/15 흥정 실패는 그 거래만 +2%
+            buy=Mathf.Max(1,Mathf.RoundToInt(buy*(1-Mathf.Clamp(buyHaggle,-HaggleDuel.FailPenalty,max))));   // 11/15 흥정 실패는 그 거래만 +1~4% (11/18)
             int sell=Mathf.Max(1,Mathf.RoundToInt(m.BaseSellPrice(item,player?.origin)*(1+Mathf.Clamp(sellHaggle,-HaggleDuel.FailPenalty,max))));
             buy=Mathf.Max(buy,sell+1); // simultaneous fully modified quote rule remains
             if(selling)return activity!=null?activity.LimitSale(m.town.id,item.id,now,sell):sell;
