@@ -117,13 +117,13 @@ def harness(im):
     return im
 
 
-def end_cargo(stage, front=False):
+def end_cargo(stage, front=False, back=False):
     """앞·뒤에서 본 짐 (폭 24): 1 상자 둘 나란히 → 2 그 위로 자루 하나 → 3 위에 자루·작은 상자·자루를 한 단 더, 새끼줄 두 가닥"""
     g = HC.C(24, 22)
     # 11/19 옆모습과 같은 짐: 1 상자 둘 → 2 + 자루 하나(두 상자 사이 위로 보인다) → 3 위 한 단
     if stage >= 1: g.paste(HC.crate(), 1, 11); g.paste(HC.crate(), 12, 11)
-    # 11/19 은샘: 앞모습(말이 앞)은 위에 얹은 작은 짐을 말 쪽(아래)으로 조금 당긴다
-    dy = 3 if front else 0
+    # 11/19 은샘: 앞모습(말이 앞)은 위에 얹은 작은 짐을 말 쪽(아래)으로 조금 당긴다. 뒷모습도 짐칸 뒤쪽(아래)으로 살짝
+    dy = 3 if front else 2 if back else 0
     if stage == 2: g.paste(HC.sack(), 7, 6 + dy)
     if stage >= 3:
         g.paste(HC.sack(), 0, 4 + dy); g.paste(HC.crate(False), 8, 5 + dy); g.paste(HC.sack(), 15, 4 + dy)
@@ -133,7 +133,7 @@ def end_cargo(stage, front=False):
     return g
 
 
-def box_end(c, oy, stage, front=False):
+def box_end(c, oy, stage, front=False, back=False):
     """짐칸 끝면 + 양옆 바퀴 두께. 짐칸 너비 26 (x 2~27). oy = 짐칸 윗면 줄"""
     x0, x1 = 2, 27
     HC.edge_wheel(c, 0, oy + 4, 14); HC.edge_wheel(c, x1, oy + 4, 14)
@@ -141,7 +141,7 @@ def box_end(c, oy, stage, front=False):
     for x in range(x0 + 2, x1 - 1):
         if (x - x0) % 4 == 3: c.vline(x, oy - 1, oy + 6, 'i')
     c.hline(x0 + 1, x1 - 1, oy - 2, 'i')
-    if stage: c.paste(end_cargo(stage, front), x0 + 1, oy - 14)
+    if stage: c.paste(end_cargo(stage, front, back), x0 + 1, oy - 14)
     for i, k in enumerate(['H', 'h', 'w', 'd', 'w', 'm', 'd']):
         c.hline(x0, x1, oy + 7 + i, k)
     for x in (x0 + 6, x1 - 8): c.px(x, oy + 9, 'm'); c.px(x + 2, oy + 12, 'd')
@@ -170,7 +170,7 @@ def back(stage, frame=''):
     out = Image.new('RGBA', (EW, EH), (0, 0, 0, 0))
     out.alpha_composite(harness(PA.end_view3('horse', 'back', 0, frame)), (3, 2))
     cv = Cv(EW, EH); shafts(cv, 22, EH - 20); cv.outline(); out.alpha_composite(cv.im, (0, 0))
-    cv = Cv(EW, EH); box_end(cv, EH - 18, stage); cv.outline()
+    cv = Cv(EW, EH); box_end(cv, EH - 18, stage, back=True); cv.outline()
     out.alpha_composite(cv.im, (0, 0))
     return out
 
