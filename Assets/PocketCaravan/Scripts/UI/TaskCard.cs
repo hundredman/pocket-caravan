@@ -77,9 +77,22 @@ namespace PocketCaravan
         public static float DrawBadges(float top)
         {
             float x = X, h = 14f; bool any = false;
+            foreach (var b in badges.Values)
+            {
+                if (Time.frameCount - b.frame > 1) continue;
+                var ps = CuteUI.PicSize(b.pic);
+                float bw = Mathf.Round(6f + ps.x + 3f + CuteUI.Width(b.text, true, true) + 7f);
+                if (x + bw > HUD.ColumnRight) break;
+                var r = new Rect(x, Mathf.Round(top), bw, h);
+                CuteUI.Box(r, 6, CuteUI.Paper, CuteUI.Ink, 1, 1, CuteUI.SoftShadow);
+                CuteUI.Icon(b.pic, r.x + 6f, r.y + (h - ps.y) / 2f, 1, b.col);
+                CuteUI.Label(r.x + 6f + ps.x + 3f, r.center.y, b.text, CuteUI.Text, true, true);
+                x += bw + 4f; any = true;
+            }
             // 11/19 다음 목표 운반 수단 (마일스톤): 돈 막대. 다 모이면 초록으로 "살 수 있어요"
             var gm = GameManager.I;
             var goalV = VehicleGoal.Visible ? VehicleGoal.Next(gm.Player, gm.Db) : null;
+            float gy = any ? top + h + 3f : top, gw = 0f;   // 11/19 다른 작은 표(개운함 등)가 있으면 그 다음 줄 (한 줄에 두면 뒤 표가 밀려 안 보였다)
             if (goalV != null)
             {
                 int have = Mathf.Max(0, gm.Player.money), need = Mathf.Max(1, goalV.price);
@@ -88,7 +101,7 @@ namespace PocketCaravan
                 string num = ready ? "살 수 있어요!" : $"{have}/{need}냥";
                 const float barW = 34f;
                 float bw = Mathf.Round(6f + 9f + 3f + CuteUI.Width(head, true, true) + 5f + (ready ? 0f : barW + 4f) + CuteUI.Width(num, true, true) + 7f);
-                var r = new Rect(x, Mathf.Round(top), Mathf.Min(bw, HUD.ColumnRight - x), h);
+                var r = new Rect(X, Mathf.Round(gy), Mathf.Min(bw, HUD.ColumnRight - X), h);
                 CuteUI.Box(r, 6, ready ? CuteUI.StaminaHi : CuteUI.Paper, CuteUI.Ink, 1, 1, CuteUI.SoftShadow);
                 CuteUI.Icon(CuteUI.Pic.Coin, r.x + 5f, r.y + 2.5f);
                 float tx = r.x + 6f + 9f + 3f;
@@ -106,23 +119,12 @@ namespace PocketCaravan
                     tx += barW + 4f;
                 }
                 CuteUI.Label(tx, r.center.y, num, ready ? CuteUI.Text : CuteUI.Sub, true, ready);
-                x += r.width + 4f; any = true;
-            }
-            foreach (var b in badges.Values)
-            {
-                if (Time.frameCount - b.frame > 1) continue;
-                var ps = CuteUI.PicSize(b.pic);
-                float bw = Mathf.Round(6f + ps.x + 3f + CuteUI.Width(b.text, true, true) + 7f);
-                if (x + bw > HUD.ColumnRight) break;
-                var r = new Rect(x, Mathf.Round(top), bw, h);
-                CuteUI.Box(r, 6, CuteUI.Paper, CuteUI.Ink, 1, 1, CuteUI.SoftShadow);
-                CuteUI.Icon(b.pic, r.x + 6f, r.y + (h - ps.y) / 2f, 1, b.col);
-                CuteUI.Label(r.x + 6f + ps.x + 3f, r.center.y, b.text, CuteUI.Text, true, true);
-                x += bw + 4f; any = true;
+                gw = r.width; any = true;
             }
             if (!any) return top - 4f;
-            ScreenZones.Mark("hud.badges", new Rect(X, top, x - X, h));
-            return top + h;
+            float bottom = gw > 0f ? gy + h : top + h;
+            ScreenZones.Mark("hud.badges", new Rect(X, top, Mathf.Max(x - X, gw), bottom - top));
+            return bottom;
         }
 
         static readonly Regex StepRx = new Regex(@"배우기\s*(\d+\s*/\s*\d+)");

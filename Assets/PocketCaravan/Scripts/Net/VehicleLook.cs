@@ -11,6 +11,7 @@ namespace PocketCaravan
     public static class VehicleLook
     {
         static readonly Dictionary<string, Sprite> cache = new Dictionary<string, Sprite>();
+        static readonly Dictionary<int, string> lastVehicle = new Dictionary<int, string>();
         public static Sprite Tex(string path, Vector2 pivot)
         {
             if (cache.TryGetValue(path, out var s) && s != null) return s;
@@ -42,6 +43,9 @@ namespace PocketCaravan
                 if (body != null) { sr.sortingLayerID = body.sortingLayerID; sr.sharedMaterial = body.sharedMaterial; }
             }
             sr.gameObject.SetActive(true);
+            // 11/19 수단이 바뀌면(짐말 → 마차 등) 따라오는 길을 새로 (고삐 거리가 달라 잠깐 사람에게 겹쳐 보였다)
+            int key = sr.GetInstanceID();
+            if (!lastVehicle.TryGetValue(key, out var was) || was != vehicle) { if (lastVehicle.Count > 64) lastVehicle.Clear(); lastVehicle[key] = vehicle; trail?.Reset(); }
             if (vehicle != "north_sled") { var old = sr.GetComponent<RemoteSledFx>(); if (old != null) Object.Destroy(old); }   // 썰매에서 바꿨으면 방울 소리 끄기
             if (facing.sqrMagnitude < 0.01f) facing = Vector2.down;
             int baseOrder = body != null ? body.sortingOrder : 10;

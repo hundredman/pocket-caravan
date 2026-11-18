@@ -286,7 +286,7 @@ namespace PocketCaravan
             foreach (var p in new List<Progress>(active.Values))
             {
                 var o = p.Current;
-                if (o != null && o.type == ObjectiveType.BuyVehicle && (o.vehicle == null || o.vehicle == v)) NextStep(p);
+                if (o != null && o.type == ObjectiveType.BuyVehicle && (o.vehicle == null || o.vehicle == v || AtLeast(v, o.vehicle))) NextStep(p);
             }
         }
 
@@ -302,9 +302,13 @@ namespace PocketCaravan
             if (o == null) return;
             var player = GameManager.I.Player;
             if (o.type == ObjectiveType.HaveMoney && player.money >= o.count) NextStep(p);
-            else if (o.type == ObjectiveType.BuyVehicle && o.vehicle != null && (player.vehicle == o.vehicle || player.stowedVehicle == o.vehicle)) NextStep(p);
+            else if (o.type == ObjectiveType.BuyVehicle && o.vehicle != null && (player.vehicle == o.vehicle || player.stowedVehicle == o.vehicle || AtLeast(player.vehicle, o.vehicle) || AtLeast(player.stowedVehicle, o.vehicle))) NextStep(p);
             else if (o.type == ObjectiveType.VisitMap && MapRoot.Current != null && MapRoot.Current.mapId == GoryeoLayout.Resolve(o.targetId)) NextStep(p);
         }
+
+        /// <summary>11/19 "짐말(낙타) 사기" 의뢰 전에 마차를 먼저 산 사람: 그보다 짐을 더 싣는 수단이 있으면 그 단계는 된 것으로 본다
+        /// (마차는 짐말·낙타 장터에서 같이 팔고, 사면 넣어 둔 수단이 지워져 짐말을 다시 사야만 넘어갔다)</summary>
+        static bool AtLeast(VehicleData have, VehicleData want) => have != null && want != null && want.price > 0 && have.price > 0 && have.capacity > want.capacity;
 
         void NextStep(Progress p)
         {
