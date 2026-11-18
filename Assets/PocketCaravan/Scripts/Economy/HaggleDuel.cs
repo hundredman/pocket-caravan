@@ -338,14 +338,26 @@ namespace PocketCaravan
                     float d = Mathf.InverseLerp(redStart, 1f, x);
                     c = d < .5f ? Color32.Lerp(RedLo, Red, d / .5f) : Color32.Lerp(Red, RedDeep, (d - .5f) / .5f);
                 }
-                CuteUI.Fill(new Rect(inner.x + px, inner.y, 1, inner.height), c);
+                Tint(new Rect(inner.x + px, inner.y, 1, inner.height), c);
             }
             // 11/17 기우: 금색 칸은 번지지 않게 또렷이 — 빨강도 금색 끝에서 바로 시작
             float g0 = Mathf.Round(inner.x + inner.width * GoldStart), g1 = Mathf.Round(inner.x + inner.width * redStart);
-            CuteUI.Fill(new Rect(g0, inner.y, g1 - g0, inner.height), gold);   // 11/18 은샘: 금색 양옆 세로 테두리는 뺐다 (부자연스럽다)
+            Tint(new Rect(g0, inner.y, g1 - g0, inner.height), gold);   // 11/18 은샘: 금색 양옆 세로 테두리는 뺐다 (부자연스럽다)
             CuteUI.Fill(new Rect(inner.x, inner.y, inner.width, 2), new Color32(255, 255, 255, 70));
             // 눈금
             for (int i = 1; i < 10; i++) CuteUI.Fill(new Rect(Mathf.Round(inner.x + inner.width * i / 10f), inner.yMax - 4, 1, 4), new Color32(42, 26, 46, 70));
+        }
+
+        /// <summary>
+        /// 11/18 한 색 칸을 흰 그림 + GUI.color로. CuteUI.Fill은 색마다 1×1 그림을 만들어 두는데(글자 열쇠도 매번 만든다),
+        /// 그라데이션 300여 줄 + 금색 반짝임은 프레임마다 새 색이라 그림이 끝없이 쌓였다
+        /// </summary>
+        static void Tint(Rect r, Color32 c)
+        {
+            if (Event.current.type != EventType.Repaint) return;
+            var old = GUI.color; GUI.color = (Color)c * old;
+            GUI.DrawTexture(r, Texture2D.whiteTexture);
+            GUI.color = old;
         }
 
         static ulong Hash(string s)
