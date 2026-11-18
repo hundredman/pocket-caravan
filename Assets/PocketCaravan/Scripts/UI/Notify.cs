@@ -320,7 +320,7 @@ namespace PocketCaravan
             // 11/11 동그라미는 도장처럼 크게 내려앉는다 (1.5 → 1, 0.22초. 퀘스트 완료 · 이벤트만)
             var gm = GUI.matrix;
             float stamp = e.kind == Kind.QuestDone || e.kind == Kind.Event || e.celebrate ? Mathf.Clamp01(since / .22f) : 1f;
-            if (stamp < 1f) { float s = Mathf.Lerp(1.5f, 1f, stamp * stamp); GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(r.x + 7f + Medal / 2f, my + Medal / 2f) * UIStyle.Scale); }
+            if (stamp < 1f) { float s = Mathf.Lerp(1.5f, 1f, stamp * stamp); CuteUI.ScaleAround(s, new Vector2(r.x + 7f + Medal / 2f, my + Medal / 2f)); }
             if (rich) CuteUI.Circle(r.x + 7f, my, (int)Medal, e.accent, CuteUI.Ink, 1);
             else CuteUI.Circle(r.x + 7f, my, (int)Medal, CuteUI.Paper2, CuteUI.Line, 1);
             // 작은 그림(★ 7칸 · 동전 9칸 등)은 두 배로 (한 배면 22칸 동그라미 안에서 "+"처럼 작게 보였다)

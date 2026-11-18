@@ -40,6 +40,9 @@ EXITS = {   # 2026-10-27 오픈월드: 조각 사이는 이음새(seam)로 자�
 OUTER_EXITS = set(EXITS)   # 아라비아 지역과 맞닿는 출구
 
 
+DUNES = ('nature_dune', 'nature_duneB', 'nature_duneC')   # 11/15 같은 언덕이 도장처럼 반복되지 않게
+
+
 def tri_e(x, y):
     """삼각형 안에서 대각선 경계까지 칸 수 (음수 = 바깥)."""
     return min(x - (159 - y), (160 + y) - x)
@@ -493,7 +496,7 @@ def dress(P):
     for (n, x, y) in [('drawn_cart', 64, 128), ('drawn_crates', 67, 129), ('drawn_barrel', 70, 128), ('drawn_camelRest', 62, 131)]:
         P.put(n, x, y, foot=1)
     for (x, y) in [(36, 140), (100, 128), (118, 152), (56, 155), (138, 140), (28, 152)]:
-        P.put('nature_dune', x, y, foot=1)
+        P.put(DUNES[(x * 7 + y * 3) % 3], x, y, foot=1)   # 11/15 모래언덕 세 가지를 섞는다
     for (cx, cy) in [(70, 120), (30, 146), (140, 118)]:
         for k in range(5):
             P.put(['drawn_datePalm', 'drawn_datePalm2', 'drawn_datePalm3'][k % 3],
@@ -759,7 +762,7 @@ def bazaar(P):
     for (n_, x, y) in [('drawn_crates', 188, 83), ('drawn_jar', 190, 83), ('drawn_jarSmall', 191, 84),
                        ('prop_carpetstack', 201, 83), ('drawn_barrel', 203, 83),
                        ('prop_orangecrate', 180, 82), ('prop_grainsacks', 183, 81), ('drawn_barrel', 186, 81),
-                       ('prop_watermelons', 192, 81), ('prop_silk', 195, 81), ('prop_qulla', 198, 81)]:
+                       ('prop_silk', 195, 81), ('prop_qulla', 198, 81)]:
         put(n_, x, y, foot=1, force=True)
     for x in (178, 186):
         put('prop_lantern', x, 89, foot=1)

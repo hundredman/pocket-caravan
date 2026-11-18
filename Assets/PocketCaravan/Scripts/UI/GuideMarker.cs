@@ -79,13 +79,13 @@ namespace PocketCaravan
             if (k < 1f)
             {
                 float s = k < .6f ? Mathf.Lerp(.7f, 1.1f, k / .6f) : Mathf.Lerp(1.1f, 1f, (k - .6f) / .4f);
-                GUIUtility.ScaleAroundPivot(new Vector2(s, s), r.center * UIStyle.Scale);
+                CuteUI.ScaleAround(s, r.center);
             }
             // 바깥을 가리키는 화살촉 (동그라미 밖, 목적지 쪽)
             var dc = new Vector2(r.x + Dot / 2f, r.y + Dot / 2f);
             var tip = dc + dir * (Dot / 2f + 4f);
             var mm = GUI.matrix;
-            GUIUtility.RotateAroundPivot(Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f, tip * UIStyle.Scale);
+            CuteUI.RotateAround(Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f, tip);
             var old = GUI.color;
             var cr = new Rect(Mathf.Round(tip.x - CW / 2f), Mathf.Round(tip.y - CH / 2f), CW, CH);   // 11/15 얇은 꺾쇠 화살촉 (목적지 쪽으로 돈다)
             GUI.DrawTexture(cr, triInk);

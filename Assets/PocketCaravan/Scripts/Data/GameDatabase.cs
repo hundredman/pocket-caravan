@@ -26,6 +26,7 @@ namespace PocketCaravan
 
         [Header("시세")]
         [Tooltip("시간당 재고가 적정치로 돌아가는 비율")] public float stockRecoveryPerHour = 0.04f;
+        [Tooltip("11/15 장터 깊이: 모든 마을의 적정 재고에 곱한다. 클수록 많이 사고팔아도 값이 덜 움직여 짐 무게·운반 수단이 의미 있어진다")] public float stockDepth = 1.5f;
         [Tooltip("장날 수요 배율")] public float marketDayDemand = 1.15f;
 
         [Header("마을 등급 (누적 거래액 기준, 1~4등급)")]

@@ -203,7 +203,7 @@ namespace PocketCaravan
         static Rect Snap(Rect r) => new Rect(Mathf.Round(r.x), Mathf.Round(r.y), Mathf.Round(r.width), Mathf.Round(r.height));
 
         // ---------------- 그림 (픽셀 아이콘) ----------------
-        public enum Pic { Coin, Coin7, Basket, Bolt, Scroll, Compass, OpenBook, People, Sack, Chart, Arrow, Pin, Bulb, XMark, Star4, Menu, Speaker, Clock, Check, Star5 }   // 11/11 Check · Star5: 알림 동그라미용 (흰색 한 가지로 칠해도 모양이 보이게)
+        public enum Pic { Coin, Coin7, Basket, Bolt, Scroll, Compass, OpenBook, People, Sack, Chart, Arrow, Pin, Bulb, XMark, Star4, Menu, Speaker, Clock, Check, Star5, Scales, Runner }   // 11/11 Check · Star5: 알림 동그라미용 (흰색 한 가지로 칠해도 모양이 보이게)
 
         static readonly Dictionary<Pic, (string[] rows, Dictionary<char, Color32> pal)> pics = new Dictionary<Pic, (string[], Dictionary<char, Color32>)>
         {
@@ -238,6 +238,10 @@ namespace PocketCaravan
             { Pic.Clock, (new[] { "..#####..", ".#wwwww#.", "#www#www#", "#www#www#", "#www##ww#", "#wwwwwww#", "#wwwwwww#", ".#wwwww#.", "..#####.." }, Pal(('#', 0x2A1A2E), ('w', 0xFFF4DC))) },
             // 11/08 소리 (게임 메뉴)
             { Pic.Speaker, (new[] { "...#......", "..##...#..", "####.#..#.", "#hh#..#.#.", "#hh#..#.#.", "####.#..#.", "..##...#..", "...#......" }, Pal(('#', 0x2A1A2E), ('h', 0xFFCF33))) },
+            // 11/16 도적 창 카드: 흥정 = 저울, 도망 = 달리는 사람 (다른 아이콘처럼 진한 테두리 + 색)
+            { Pic.Scales, (new[] { ".......#.......", "......#h#......", "#######y#######", "#hhyyyyyyyyyyd#", "#######y#######", ".#....#y#....#.", ".#....#y#....#.", "#.#...#y#...#.#", "#####.#y#.#####", "#hyd#.#y#.#hyd#", ".###..#y#..###.", "....#######....", "....#hyyyd#....", "....#######...." }, CoinPal()) },
+            { Pic.Runner, (new[] { "......###....", ".....#hhh#...", ".....#hhh#...", "......###....", "....#bbbb#...", "..##bbbbbb##.", "....#bbbb#...", ".--.#bb#bb#..", "...#bb#.#bb#.", ".-#bb#...#bb#", "..###.....###" },
+                Pal(('#', 0x2A1A2E), ('h', 0xFFD9B0), ('b', 0x4A7FB8), ('-', 0x9FD0E6))) },
             { Pic.Menu, (new[] { "#########", "#hhhhhhh#", "#########", ".........", "#########", "#hhhhhhh#", "#########", ".........", "#########", "#hhhhhhh#", "#########" }, Pal(('#', 0x2A1A2E), ('h', 0xFFF0DC))) },
         };
 
@@ -544,7 +548,20 @@ namespace PocketCaravan
             GUI.color = c;
             if (k >= 1f) return;
             float s = Mathf.Lerp(.96f, 1f, e);
-            GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(UIStyle.VirtualWidth / 2f, UIStyle.VirtualHeight / 2f) * UIStyle.Scale);
+            ScaleAround(s, new Vector2(UIStyle.VirtualWidth / 2f, UIStyle.VirtualHeight / 2f));
+        }
+
+        /// <summary>
+        /// 11/15 은샘: 가상 화면 좌표(UIStyle.Begin 뒤) 한 점을 기준으로 키우기·돌리기.
+        /// GUIUtility.ScaleAroundPivot(…, p * UIStyle.Scale)는 기준점이 화면 밖으로 밀려 [Space] 알약 등이 엉뚱한 데서 날아왔다
+        /// </summary>
+        public static void ScaleAround(float s, Vector2 pivot)
+        {
+            GUI.matrix = GUI.matrix * Matrix4x4.TRS(pivot, Quaternion.identity, new Vector3(s, s, 1f)) * Matrix4x4.TRS(-pivot, Quaternion.identity, Vector3.one);
+        }
+        public static void RotateAround(float degrees, Vector2 pivot)
+        {
+            GUI.matrix = GUI.matrix * Matrix4x4.TRS(pivot, Quaternion.Euler(0f, 0f, degrees), Vector3.one) * Matrix4x4.TRS(-pivot, Quaternion.identity, Vector3.one);
         }
 
         /// <summary>둥근 상자. lw = 0이면 테두리 없음, shadow = 아래 그림자 두께</summary>
@@ -735,13 +752,22 @@ namespace PocketCaravan
         /// <summary>상호작용 버튼 (보라). 눌리면 true</summary>
         public static bool Button(Rect r, string label, Pic? pic = null)
         {
+            // 11/17 화살표로 고르기: 다른 단추가 골라져 있으면 흰 단추로, 골라졌으면 초록 + 톡 튀기
+            bool key = KeyNav.Item(r, out bool focused);
+            if (KeyNav.Active && !focused) { DrawSoft(r, label); return GUI.Button(r, GUIContent.none, GUIStyle.none) || key; }
+            DrawGreen(focused ? KeyNav.Pop(r) : r, label, pic);
+            return GUI.Button(r, GUIContent.none, GUIStyle.none) || key;
+        }
+
+        /// <summary>초록(주) 단추 모양만 그린다</summary>
+        public static void DrawGreen(Rect r, string label, Pic? pic = null)
+        {
             Box(r, 8, Interact, Ink, 1, 2, InteractLo);
             Fill(new Rect(r.x + 5, r.y + 2, r.width - 10, 1), InteractHi);
             float w = Width(label, false, true) + (pic.HasValue ? 14 : 0);
             float x = r.center.x - w / 2f;
             if (pic.HasValue) { Icon(pic.Value, x, r.center.y - 3, 1, White); x += 14; }
             Label(x, r.center.y, label, OnInteract, false, true);
-            return GUI.Button(r, GUIContent.none, GUIStyle.none);
         }
 
         /// <summary>닫기 (중립색 동그라미 X). 눌리면 true</summary>
@@ -806,7 +832,7 @@ namespace PocketCaravan
             if (k < 1f)
             {
                 float s = k < .6f ? Mathf.Lerp(.7f, 1.08f, k / .6f) : Mathf.Lerp(1.08f, 1f, (k - .6f) / .4f);
-                GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(cx, y + 8.5f) * UIStyle.Scale);
+                ScaleAround(s, new Vector2(cx, y + 8.5f));
             }
             bool hover = r.Contains(Event.current.mousePosition);
             Box(r, 7, hover ? Paper2 : Paper, hover ? Interact : Ink, 1, 2, SoftShadow);
@@ -853,10 +879,18 @@ namespace PocketCaravan
         /// <summary>보조 버튼 (종이색 + 진한 테). 눌리면 true</summary>
         public static bool SoftButton(Rect r, string label)
         {
+            bool key = KeyNav.Item(r, out bool focused);   // 11/17 골라지면 초록 + 톡 튀기
+            if (focused) DrawGreen(KeyNav.Pop(r), label);
+            else DrawSoft(r, label);
+            return GUI.Button(r, GUIContent.none, GUIStyle.none) || key;
+        }
+
+        /// <summary>흰(보조) 단추 모양만 그린다</summary>
+        public static void DrawSoft(Rect r, string label)
+        {
             bool hover = r.Contains(Event.current.mousePosition);
             Box(r, 8, hover ? Paper2 : Paper, Ink, 1, 2, SoftShadow);
             LabelCenter(r.center.x, r.center.y, label, Text, false, false);
-            return GUI.Button(r, GUIContent.none, GUIStyle.none);
         }
 
         /// <summary>네모 칸 + 글: 누르면 켜고 끈다. 새 값을 돌려준다</summary>

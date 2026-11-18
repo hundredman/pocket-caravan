@@ -79,7 +79,8 @@ namespace PocketCaravan
         {
             if (!open || Time.frameCount == openedFrame) return;
             float dt = Mathf.Min(Time.unscaledDeltaTime, 1f / 20f);
-            bool drop = InputReader.InteractPressed();
+            // 11/17 끝난 화면에서 화살표로 단추를 골랐으면 Space는 그 단추가 받는다 (KeyNav)
+            bool drop = InputReader.InteractPressed() && !(state == State.Over && KeyNav.HasFocus(this));
             if (InputReader.CancelPressed()) { if (state == State.Play && Score > 0) End(); Close(); return; }
 
             if (state == State.Ready) { if (drop) { state = State.Play; Sfx.Play("accept", .6f); } }
@@ -261,9 +262,14 @@ namespace PocketCaravan
             {
                 // 11/10 단추 셋을 놀이판 너비에 고르게 (순위표·닫기가 겹쳤다)
                 float bw = Mathf.Floor((AreaW - 12f) / 3f), bx = a.x;
-                if (CuteUI.Button(new Rect(bx, by - 6f, bw, 20f), "다시")) Reset(State.Play);
-                if (CuteUI.SoftButton(new Rect(bx + bw + 6f, by - 6f, bw, 20f), "순위표")) { Close(); NetScores.Open(); }
-                if (CuteUI.SoftButton(new Rect(bx + (bw + 6f) * 2f, by - 6f, bw, 20f), "닫기")) Close();
+                KeyNav.Begin(this);   // 11/17 ← →로 다시·순위표·닫기 고르기
+                try
+                {
+                    if (CuteUI.Button(new Rect(bx, by - 6f, bw, 20f), "다시")) { KeyNav.Clear(this); Reset(State.Play); }
+                    if (CuteUI.SoftButton(new Rect(bx + bw + 6f, by - 6f, bw, 20f), "순위표")) { KeyNav.Clear(this); Close(); NetScores.Open(); }
+                    if (CuteUI.SoftButton(new Rect(bx + (bw + 6f) * 2f, by - 6f, bw, 20f), "닫기")) { KeyNav.Clear(this); Close(); }
+                }
+                finally { KeyNav.End(); }
             }
             else CuteUI.LabelCenter(r.center.x, by + 4f, "Space 놓기 · Esc 그만", CuteUI.Sub, true);
         }

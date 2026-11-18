@@ -59,8 +59,11 @@ namespace PocketCaravan
             // Whole sprites retain their authored pixels; sort using the bottom edge.
             foreach (var space in spaces)
                 if (space.normal != null && space.normal.activeInHierarchy)
+                {
                     foreach (var renderer in space.renderers)
                         renderer.sortingOrder = renderer.bounds.min.y < player.Motor.Feet.y ? 12 : 4;
+                    DepthActor.AddProps(space.renderers);   // 11/15 움직이는 NPC도 이 그림과 앞뒤를 맞춘다
+                }
         }
     }
 }

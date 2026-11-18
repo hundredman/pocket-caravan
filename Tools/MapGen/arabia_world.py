@@ -332,7 +332,7 @@ def _dress_wild(w):
                 if ((x + .5 - cx) / rx) ** 2 + ((y + .5 - cy) / ry) ** 2 <= 1 and in_world(ex + x, ey + y) and not w.road[ey + y][ex + x]:
                     w.paint('dune', ex + x, ey + y, ex + x, ey + y, reserve=False)
     for k in range(18):
-        _put(w, 'nature_dune', ex + 3 + (k * 13) % 56, ey + 4 + (k * 7) % 36, foot=1)
+        _put(w, ('nature_dune', 'nature_duneB', 'nature_duneC')[k % 3], ex + 3 + (k * 13) % 56, ey + 4 + (k * 7) % 36, foot=1)   # 11/15 세 가지 언덕
     # 숨은 오아시스 (모래 언덕 사이)
     ox_, oy_ = ex + 48, ey + 34
     for y in range(oy_ - 4, oy_ + 5):

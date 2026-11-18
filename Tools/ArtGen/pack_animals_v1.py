@@ -2,6 +2,7 @@
 (안장 → 자루 1 → 자루 2·보따리 → 보따리 2단·항아리). 짐 색은 손수레(handcart_v3.py)와 같다.
 짐말: 과하마처럼 작고 다부진 말, 붉은 안장 천과 나무 길마. 낙타: 단봉낙타, 파란 줄무늬 안장 천. 낙타가 말보다 키가 크다.
 실행: python Tools/ArtGen/pack_animals_v1.py <출력 폴더>  → <출력>/PackHorse/side_0~3.png, <출력>/Camel/side_0~3.png
+11/16 짐말 옆모습은 이어서 Tools/ArtGen/packhorse_side_1116.py로 다듬었다 (허리·다리 사이·짐 위치).
 """
 import sys
 from PIL import Image

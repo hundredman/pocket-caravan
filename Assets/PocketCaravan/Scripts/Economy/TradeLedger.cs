@@ -64,6 +64,15 @@ namespace PocketCaravan
         }
 
         public Quote Find(string town, string item) => quotes.Find(q => q.town == town && q.item == item);
+
+        /// <summary>11/15 살 때 "어디서 팔면 얼마": 장부에 적힌 다른 장터 중 이 물건을 가장 비싸게 사 주는 곳. 없으면 null</summary>
+        public Quote BestSell(string item, string exceptTown)
+        {
+            Quote best = null;
+            foreach (var q in quotes)
+                if (q.item == item && q.town != exceptTown && q.sell > 0 && (best == null || q.sell > best.sell)) best = q;
+            return best;
+        }
         public void Clear() { quotes.Clear(); recent.Clear(); }
 
         /// <summary>장터를 열었을 때 그곳 값을 적는다. day = 오늘 게임 날짜 (장부에 "N일 전 확인"으로 나온다)</summary>

@@ -91,7 +91,7 @@ namespace PocketCaravan
         static readonly (string key, string what)[] Keys =
         {
             ("WASD", "이동"), ("Shift", "달리기"), ("Space", "대화·행동"), ("Tab", "상태·할 일"),
-            ("I", "소지품"), ("M", "지도"), ("L", "장부"), ("Esc", "메뉴"),
+            ("I", "소지품"), ("M", "지도"), ("L", "장부"), ("V", "수단 넣기"), ("Esc", "메뉴"),
         };
 
         void Update()
@@ -170,7 +170,7 @@ namespace PocketCaravan
         {
             float k = Mathf.Clamp01((Time.unscaledTime - moneyAt) / .28f);
             var m = GUI.matrix;
-            if (k < 1f) { float s = 1f + .45f * Mathf.Sin(k * Mathf.PI); GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(x + 4.5f, y + 4.5f) * UIStyle.Scale); }
+            if (k < 1f) { float s = 1f + .45f * Mathf.Sin(k * Mathf.PI); CuteUI.ScaleAround(s, new Vector2(x + 4.5f, y + 4.5f)); }
             CuteUI.Icon(CuteUI.Pic.Coin, x, y);
             GUI.matrix = m;
         }

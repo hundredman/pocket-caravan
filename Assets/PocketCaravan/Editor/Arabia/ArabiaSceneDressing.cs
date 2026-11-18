@@ -26,6 +26,9 @@ namespace PocketCaravan.EditorTools
                 if (!System.IO.Path.GetFileName(path).StartsWith("arabia_")) continue;
                 var ti = AssetImporter.GetAtPath(path) as TextureImporter;
                 if (ti == null) continue;
+                // 11/15: 기우가 16×24(PPU 16)로 다시 그린 캐릭터는 다른 지역과 같은 설정 그대로 둔다 (PPU 32로 바꾸면 반 크기로 보임)
+                ti.GetSourceTextureWidthAndHeight(out int tw, out int th);
+                if (th <= 24) continue;
                 var s = new TextureImporterSettings();
                 ti.ReadTextureSettings(s);
                 var pivot = new Vector2(0.5f, 20f / 48f);   // 캔버스 아래 8px 여백 + 발 아래 0.375칸

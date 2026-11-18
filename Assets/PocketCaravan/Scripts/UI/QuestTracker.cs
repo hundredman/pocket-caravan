@@ -18,6 +18,9 @@ namespace PocketCaravan
         {
             if (GameManager.I == null) return;
             GameManager.I.Quests.Tick();
+            // 11/16 팀 피드백: 할 일 카드가 늘 떠 있어 거슬린다 → Q로 접고 편다 (조작 배우기 단계는 접어도 보인다)
+            if (InputReader.TaskTogglePressed() && !UIState.Blocking && MapRoot.Current != null && !GameManager.I.IsTravelling)
+            { TaskCard.Hidden = !TaskCard.Hidden; Sfx.Play("move", .6f); }
             if (logOpen && (InputReader.QuestLogPressed() || InputReader.CancelPressed())) CloseLog();
             else if (InputReader.QuestLogPressed() && !UIState.Blocking && !UIState.JustClosed && !GameManager.I.IsTravelling
                 && UIState.TryOpen(this, CloseLog)) logOpen = true;

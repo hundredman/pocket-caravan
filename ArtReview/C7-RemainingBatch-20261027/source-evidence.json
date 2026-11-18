@@ -1005,112 +1005,112 @@
       16,
       24
     ],
-    "rgbaSHA256": "1eb22078d1284f225ede59c69ec077ea1531fc886f52984ab4577206c593d5a6"
+    "rgbaSHA256": "3df7a2cd7e555889442ed1a61414880c87f6f42f8e22090d26dfc04bf52bab39"
   },
   "ArtReview/Approved/C1-Walk/frames/bandit_d1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "82311cb093110b361fb88e76e8bfad65572c0fce364358e540f30bc0cd17ead8"
+    "rgbaSHA256": "e3cb5289b48b16ec64a33e40a2ca21ec9e144e5fe62e0c7697caa03e84c9829f"
   },
   "ArtReview/Approved/C1-Walk/frames/bandit_d2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "1eb22078d1284f225ede59c69ec077ea1531fc886f52984ab4577206c593d5a6"
+    "rgbaSHA256": "3df7a2cd7e555889442ed1a61414880c87f6f42f8e22090d26dfc04bf52bab39"
   },
   "ArtReview/Approved/C1-Walk/frames/bandit_d3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "daf27a012b97e44773d5fac1fbec01b0e91239f91bbb232ec235cc326b397ece"
+    "rgbaSHA256": "dd615deb4e0bf6eaea56ed867fbf914bfe629016c34f1a3301387d56797f1d86"
   },
   "ArtReview/Approved/C1-Walk/frames/bandit_l0.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "c94eb35474fa0c0cc8a47107e778043d5c2609df37b5a4a2935b0050f8dadd24"
+    "rgbaSHA256": "d783cfbddab556f31e2590b08617e7449763321e36e2b9c348aace463a8695f0"
   },
   "ArtReview/Approved/C1-Walk/frames/bandit_l1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "a06e65da3a3709aefc7711d24b35cbc930893e3d2f7a932f91eca67e97fa21d0"
+    "rgbaSHA256": "61748468f49067f5d33ed910ab656bebd794adf029ebe1f71123c459cb0e6150"
   },
   "ArtReview/Approved/C1-Walk/frames/bandit_l2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "c94eb35474fa0c0cc8a47107e778043d5c2609df37b5a4a2935b0050f8dadd24"
+    "rgbaSHA256": "d783cfbddab556f31e2590b08617e7449763321e36e2b9c348aace463a8695f0"
   },
   "ArtReview/Approved/C1-Walk/frames/bandit_l3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "2fa30ba0cd1fcb84838e164cd7c6fbbfffb260eeda5cdda11370d82731196a18"
+    "rgbaSHA256": "0b5060efa3bbcb50e3e82286a608dac1947699ae6ae39c8ae888add8b00e2f3a"
   },
   "ArtReview/Approved/C1-Walk/frames/bandit_r0.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "8245b88fabc7782fef7930ba0e63820080518b90960741b44a3fba7c4bf5bf3b"
+    "rgbaSHA256": "b37b83d0034509e99aaa707e0eaf732631c8637ac66164156271c46556f89045"
   },
   "ArtReview/Approved/C1-Walk/frames/bandit_r1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "ffc71935a06166368149ef5c2227cdf3a699719742faeda1c668265bcea74f6f"
+    "rgbaSHA256": "d7b89f6d560d1db1b47b45573f67859609e637f1be91c9b0b8274224af294f9d"
   },
   "ArtReview/Approved/C1-Walk/frames/bandit_r2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "8245b88fabc7782fef7930ba0e63820080518b90960741b44a3fba7c4bf5bf3b"
+    "rgbaSHA256": "b37b83d0034509e99aaa707e0eaf732631c8637ac66164156271c46556f89045"
   },
   "ArtReview/Approved/C1-Walk/frames/bandit_r3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "d90ea1e7cda4810e348029b7d1b5a5f7f92ebc879ed6d2ef86b8a982793188df"
+    "rgbaSHA256": "649a5dc2a5ff30fb3eaa2478f73fa96e661142d3e66bcccd3cd72865a6d28a88"
   },
   "ArtReview/Approved/C1-Walk/frames/bandit_u0.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "9405d251b679f4dbb01b0909d790243f8b1f456fb9a028c8b8387d554bfe14ac"
+    "rgbaSHA256": "f01d5d1be413a17291756618fc1b6f8c514f12b9fb1e70314252e4529d4a1f8c"
   },
   "ArtReview/Approved/C1-Walk/frames/bandit_u1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "9428e6944d8d5e301b0ef2f051e4eb4a095fb80b9c713d218a98432664cea489"
+    "rgbaSHA256": "ea7a9e27551070c0e14a140bd247074652e989d39421e7a064c4f8f2498cfe3c"
   },
   "ArtReview/Approved/C1-Walk/frames/bandit_u2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "9405d251b679f4dbb01b0909d790243f8b1f456fb9a028c8b8387d554bfe14ac"
+    "rgbaSHA256": "f01d5d1be413a17291756618fc1b6f8c514f12b9fb1e70314252e4529d4a1f8c"
   },
   "ArtReview/Approved/C1-Walk/frames/bandit_u3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "c9f71548dce8d56287db28e76b03a0b2e3c1dae4383b95765d9515c0c8e2b797"
+    "rgbaSHA256": "bfe9a4e216082008ba5b72aca58a957a5df3e55eae97ee8a5ec7e41bfb87a6da"
   },
   "ArtReview/Approved/C1-Walk/frames/boatman_d0.png": {
     "size": [
@@ -1453,224 +1453,224 @@
       16,
       24
     ],
-    "rgbaSHA256": "9501c5294b0313ae60a2e1c8d83d98aafb57b445579090c40e3f10dac7599121"
+    "rgbaSHA256": "2bf9081936584eb492cdc50e8ef016ecbb930ee60329e30dd18e698d2cd89b10"
   },
   "ArtReview/Approved/C1-Walk/frames/dakmok_chief_d1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "4782bbcbc83b2db745379479ff544f08a353880e54ea594dfc8e500ddafe4cac"
+    "rgbaSHA256": "8abf1ce05ed79d87029a6f1921aa8549ca77cdf78f8d17c97412fd410dd8cdbf"
   },
   "ArtReview/Approved/C1-Walk/frames/dakmok_chief_d2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "9501c5294b0313ae60a2e1c8d83d98aafb57b445579090c40e3f10dac7599121"
+    "rgbaSHA256": "2bf9081936584eb492cdc50e8ef016ecbb930ee60329e30dd18e698d2cd89b10"
   },
   "ArtReview/Approved/C1-Walk/frames/dakmok_chief_d3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "b009dd35cf5a44bdf864fcca906a1c4b06e1fe34a6f7f12412d9f4d21cad0dcf"
+    "rgbaSHA256": "a248d5eb607e3907946f3474fc25a1286f2c47a55372a593900df4fd975555e5"
   },
   "ArtReview/Approved/C1-Walk/frames/dakmok_chief_l0.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "450a62480253cc4b4289c6daf2c0702efd2619cc3f4ed6c0b4dc1030d51d351b"
+    "rgbaSHA256": "31a5bc4979d926eaad2571c7c59843ce704a12694f39a7b78fe1613a8e95caa3"
   },
   "ArtReview/Approved/C1-Walk/frames/dakmok_chief_l1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "268f32f0bfeac298f7c698180bf9529b879e29311c72017418376ae439fb8b84"
+    "rgbaSHA256": "8150255f770661f2b4ca8f47e7ae7886f970d6e0d158b967eee68e729b6fa1a7"
   },
   "ArtReview/Approved/C1-Walk/frames/dakmok_chief_l2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "450a62480253cc4b4289c6daf2c0702efd2619cc3f4ed6c0b4dc1030d51d351b"
+    "rgbaSHA256": "31a5bc4979d926eaad2571c7c59843ce704a12694f39a7b78fe1613a8e95caa3"
   },
   "ArtReview/Approved/C1-Walk/frames/dakmok_chief_l3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "bea40fd7f5973dfad8d29c7b87e5f62080845e58cbd33e3688de5e5d4579ad60"
+    "rgbaSHA256": "dd5cd17a3bf36a5549b756640a1360295ffa4d18fea92bc238e02781c53db721"
   },
   "ArtReview/Approved/C1-Walk/frames/dakmok_chief_r0.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "c10cae773a49a1aa9e596efa26d1db277d1fe94618ff08cf630d6b72e62c535b"
+    "rgbaSHA256": "1572677e2f8b07ca19f72a39aadcfd34cd772c40c51214d6d0731f44d45dfb68"
   },
   "ArtReview/Approved/C1-Walk/frames/dakmok_chief_r1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "d5148a75ee33d146c9567e525918e9f75bada0c8f26769300423ae7bbfdd78d8"
+    "rgbaSHA256": "f74b8d184e8930aed84f7087084806b24affa3321ebe24d1a3f91c8e86776596"
   },
   "ArtReview/Approved/C1-Walk/frames/dakmok_chief_r2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "c10cae773a49a1aa9e596efa26d1db277d1fe94618ff08cf630d6b72e62c535b"
+    "rgbaSHA256": "1572677e2f8b07ca19f72a39aadcfd34cd772c40c51214d6d0731f44d45dfb68"
   },
   "ArtReview/Approved/C1-Walk/frames/dakmok_chief_r3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "d6491e66610a9240a4a713eaf2254863f05066424cbb63e6f0de6b2e83f12ff7"
+    "rgbaSHA256": "c844ad6a4197678e6dc67658c6e9b36832ad8edadb84700f3b0b71e85b5d84cb"
   },
   "ArtReview/Approved/C1-Walk/frames/dakmok_chief_u0.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "c1b89b9b33d09d00cc27a2a6c1bd4e314f7d6eb10b2371b8a141a5762c9deb38"
+    "rgbaSHA256": "59f344642ced95ecf4cc8f2bd653c9eaf37f99b1b71bdab1f3e1b4a4c53744be"
   },
   "ArtReview/Approved/C1-Walk/frames/dakmok_chief_u1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "0e58bd4c1b22fe5f80fd366ccf358c7a2188c79ba5ad3689d73eb8e4b728685b"
+    "rgbaSHA256": "9513eebfc71c93b5691c5ea5c8f879ddfc1c150458ba5af835d5e756d57cefdd"
   },
   "ArtReview/Approved/C1-Walk/frames/dakmok_chief_u2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "c1b89b9b33d09d00cc27a2a6c1bd4e314f7d6eb10b2371b8a141a5762c9deb38"
+    "rgbaSHA256": "59f344642ced95ecf4cc8f2bd653c9eaf37f99b1b71bdab1f3e1b4a4c53744be"
   },
   "ArtReview/Approved/C1-Walk/frames/dakmok_chief_u3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "d7881fc4fbf5b526268edf049566bdd89b256210f749ef27a3321eca37463038"
+    "rgbaSHA256": "453778b8284eaa694ab9e59f7f52828a2ca14d3ce85786fe8e68b0fb4eb3b1f2"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_d0.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "19edc19323b991881ec3f14fd72463c31b7319ae4f56ad6cc7def7423627f16e"
+    "rgbaSHA256": "533fad44ba3eb7cf8b80ac110d76ba2b4d0f8f1575971b89f2a805968ae02618"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_d1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "8c1dca3bec55c6acddaf5af90cb7d9d600a5453d435fc1811a92f27e0103cab5"
+    "rgbaSHA256": "fe87de7d42a76e4b7fbe9063c3b50b15047316a1ea387b33defe642f74d800dc"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_d2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "19edc19323b991881ec3f14fd72463c31b7319ae4f56ad6cc7def7423627f16e"
+    "rgbaSHA256": "533fad44ba3eb7cf8b80ac110d76ba2b4d0f8f1575971b89f2a805968ae02618"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_d3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "f974d77fa204eccb7bca2287a1b9e095f6e8ea3eb4e619e6b872821d12e84539"
+    "rgbaSHA256": "f910d024f471e0ffdf5caceec47f52ba3cb5fe7a2cc43ea5bb6ea2c07197cdd7"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_l0.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "99eb24c5f8e16051c7684eab1477bcfe923bfd4e29f0f60075a5e939a31635d8"
+    "rgbaSHA256": "9754cbd722f612f45dda68ea57448779bdb51de63b694b68984bc9369305c65e"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_l1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "1238a9fab1b77422e2cd25884934b2bab5c5d697f96f43d263b0e892ff9dfa31"
+    "rgbaSHA256": "d3e45acd4ac34c25d291a7bdbf6c6ac96cecd2bfb14e441a1466b1eb7c0e513c"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_l2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "99eb24c5f8e16051c7684eab1477bcfe923bfd4e29f0f60075a5e939a31635d8"
+    "rgbaSHA256": "9754cbd722f612f45dda68ea57448779bdb51de63b694b68984bc9369305c65e"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_l3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "cb7f8df2e43022fd93c9b70962c7deadda7bf92359f429a929f693571948f81e"
+    "rgbaSHA256": "8ad7af32e4d33f7ceed5a663c745e000877d46a7068bbbf30a561cf641ae6adb"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_r0.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "fa035bb19fc98b9b6faa34d1720b02232a36444670eba5fca44583ac023d9251"
+    "rgbaSHA256": "d0ac5b0d9f8c81e94d563f7a7cc772d24bbf96815bcb6c3b7b0351576cffcb41"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_r1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "987403222420ebf1b4d8320803dd7b5908d456393eb06ed04fc94c0095721649"
+    "rgbaSHA256": "c61b0ae6ae9976bf6d8be5810441c8f3bed5081ef9b1a79c4548105d39a68722"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_r2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "fa035bb19fc98b9b6faa34d1720b02232a36444670eba5fca44583ac023d9251"
+    "rgbaSHA256": "d0ac5b0d9f8c81e94d563f7a7cc772d24bbf96815bcb6c3b7b0351576cffcb41"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_r3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "db471b3d23cb02b0d37a3950885ea6d9d54016a9655983ca24f60f3089b7dc8d"
+    "rgbaSHA256": "5c7c103f619dec0a50e11f65b2360a30d68c20d9cf75d506cafc3b033a1e8351"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_u0.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "8bb21365238b91cd9f40321e51b6df14fd78104e37b28dfd32689c8b44260c49"
+    "rgbaSHA256": "260bb3504ad7d10964cdf7e11ebc14f19ab7aebac89b4b6af2a52e72e1f42799"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_u1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "fa19cc5902527605b1e868b6bd4247a156d0a395f5bfbd129bcd4834442e2d5c"
+    "rgbaSHA256": "0731475524de18f9e97e06ca5984b1617bfddb6c8fdcd08cd491b77684a09039"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_u2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "8bb21365238b91cd9f40321e51b6df14fd78104e37b28dfd32689c8b44260c49"
+    "rgbaSHA256": "260bb3504ad7d10964cdf7e11ebc14f19ab7aebac89b4b6af2a52e72e1f42799"
   },
   "ArtReview/Approved/C1-Walk/frames/farmer_u3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "ba8abb8346909824cdc6e4201df19508d9ae9ed140ea53e7ee227aa0dfcf1c84"
+    "rgbaSHA256": "b9a904b50a65c5f87aa4b31ee7054ed33c44ed3ef32c80e23cd5ba3e34bcd198"
   },
   "ArtReview/Approved/C1-Walk/frames/gaekju_d0.png": {
     "size": [
@@ -1901,112 +1901,112 @@
       16,
       24
     ],
-    "rgbaSHA256": "44167351239c701a9e63c03301d2cf32fcf7639e0ad083b131318df0d35bb8ab"
+    "rgbaSHA256": "f1ac2ae2ceb22cbb3c7e6bd12cf6dd8c7d0d82f29895316e0f1762f1de49fab9"
   },
   "ArtReview/Approved/C1-Walk/frames/trader_d1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "d0c5b570f4aa364e87b5c2e8b69d3c63398ac171060216c9c9a8a770b5ca737d"
+    "rgbaSHA256": "16439f2f4665a776ab921b1f86780b67ff1378d3efffaaa3cad3349e10d2f47e"
   },
   "ArtReview/Approved/C1-Walk/frames/trader_d2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "44167351239c701a9e63c03301d2cf32fcf7639e0ad083b131318df0d35bb8ab"
+    "rgbaSHA256": "f1ac2ae2ceb22cbb3c7e6bd12cf6dd8c7d0d82f29895316e0f1762f1de49fab9"
   },
   "ArtReview/Approved/C1-Walk/frames/trader_d3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "af8a77dc5d35bc007a85777acf4a6990b2003b0c165dcbaccaabc3e3175bb0cc"
+    "rgbaSHA256": "a953e12aaa6fa1c0e3682b4f34cccf7ce93c4b9d7ac90ee90ac4078fade385bc"
   },
   "ArtReview/Approved/C1-Walk/frames/trader_l0.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "0dd8a45eaa326c9bbfdd0a56f2a03e5d961ce898c29573bc19a71ecb1eed5bdf"
+    "rgbaSHA256": "620ea2027a8af68582ecf882ecd44350623829114796d608645871411e8c6311"
   },
   "ArtReview/Approved/C1-Walk/frames/trader_l1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "0db4dba481bef5823ca8630e398a54a3b32134c1876e0de860495b3e4c647ab4"
+    "rgbaSHA256": "8ce9e257954980ea5ed0ac95dec66da67c7732b5edfaa8d33299c9f444df45ce"
   },
   "ArtReview/Approved/C1-Walk/frames/trader_l2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "0dd8a45eaa326c9bbfdd0a56f2a03e5d961ce898c29573bc19a71ecb1eed5bdf"
+    "rgbaSHA256": "620ea2027a8af68582ecf882ecd44350623829114796d608645871411e8c6311"
   },
   "ArtReview/Approved/C1-Walk/frames/trader_l3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "e85aa5112f350457f84feb7df817b83e6c5e323e3ef757db619ebf16d8ce7db0"
+    "rgbaSHA256": "1640a844536eccda473841697e6ae09d892bd87e4e27df988ce59e2a448289e7"
   },
   "ArtReview/Approved/C1-Walk/frames/trader_r0.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "e11ddcec2497030e250d46e7b14a70c5ca867ef676ecc3c1090cb6ac6c73cb6a"
+    "rgbaSHA256": "13a915636332db4391060666dddec2f8a57bf307c45f517230520bed33c8a5b1"
   },
   "ArtReview/Approved/C1-Walk/frames/trader_r1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "26e93200c3846b17b0513cc24c233f7dac9ce61d523351adf23bac6b7b40ebe1"
+    "rgbaSHA256": "cc46d163731a5f4f25221101c4b2049389bfc645166a6617fb05b4f69719cdc0"
   },
   "ArtReview/Approved/C1-Walk/frames/trader_r2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "e11ddcec2497030e250d46e7b14a70c5ca867ef676ecc3c1090cb6ac6c73cb6a"
+    "rgbaSHA256": "13a915636332db4391060666dddec2f8a57bf307c45f517230520bed33c8a5b1"
   },
   "ArtReview/Approved/C1-Walk/frames/trader_r3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "2459b1a68afdc791d6169e5a6cc52c998f24e2a7cd51e8afb578a64599c57104"
+    "rgbaSHA256": "712c8495fcd9b36f907e5fe9b5e57d73233f7eb5a443b2de23ca0114069398fe"
   },
   "ArtReview/Approved/C1-Walk/frames/trader_u0.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "0f32de649e8733e690d769f98b932deadb0a5b3dbd51e6ae134421a2029a8aa3"
+    "rgbaSHA256": "192e723a35106273da33aef1d5124bef330dddf651f9c20f671f7fc0f287e55b"
   },
   "ArtReview/Approved/C1-Walk/frames/trader_u1.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "3acdafd600e95e9fdad2b445267e94716581f2c3a66014c00959b0e389139163"
+    "rgbaSHA256": "4c9cb478ecd1692002a56e5092d6e4d55d8f013546a52ee177a3c05e7fcdf126"
   },
   "ArtReview/Approved/C1-Walk/frames/trader_u2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "0f32de649e8733e690d769f98b932deadb0a5b3dbd51e6ae134421a2029a8aa3"
+    "rgbaSHA256": "192e723a35106273da33aef1d5124bef330dddf651f9c20f671f7fc0f287e55b"
   },
   "ArtReview/Approved/C1-Walk/frames/trader_u3.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "33ddd2368bf6aed24a8f94f469aac49c667a444d6c108db9ed8efc5f75ae47bc"
+    "rgbaSHA256": "ec195555042320ee6ac347f20d15e0187a5acc630e9ddf7b13894ae27ede1ec7"
   },
   "ArtReview/Approved/C1-Walk/frames/woman_d0.png": {
     "size": [
@@ -2321,7 +2321,7 @@
       16,
       24
     ],
-    "rgbaSHA256": "1eb22078d1284f225ede59c69ec077ea1531fc886f52984ab4577206c593d5a6"
+    "rgbaSHA256": "3df7a2cd7e555889442ed1a61414880c87f6f42f8e22090d26dfc04bf52bab39"
   },
   "ArtReview/Approved/boatman-front-c1-expand-2.png": {
     "size": [
@@ -2349,14 +2349,14 @@
       16,
       24
     ],
-    "rgbaSHA256": "9501c5294b0313ae60a2e1c8d83d98aafb57b445579090c40e3f10dac7599121"
+    "rgbaSHA256": "2bf9081936584eb492cdc50e8ef016ecbb930ee60329e30dd18e698d2cd89b10"
   },
   "ArtReview/Approved/farmer-front-c1-expand-2.png": {
     "size": [
       16,
       24
     ],
-    "rgbaSHA256": "19edc19323b991881ec3f14fd72463c31b7319ae4f56ad6cc7def7423627f16e"
+    "rgbaSHA256": "533fad44ba3eb7cf8b80ac110d76ba2b4d0f8f1575971b89f2a805968ae02618"
   },
   "ArtReview/Approved/gaekju-front-c1-expand-2.png": {
     "size": [
@@ -2377,7 +2377,7 @@
       16,
       24
     ],
-    "rgbaSHA256": "44167351239c701a9e63c03301d2cf32fcf7639e0ad083b131318df0d35bb8ab"
+    "rgbaSHA256": "f1ac2ae2ceb22cbb3c7e6bd12cf6dd8c7d0d82f29895316e0f1762f1de49fab9"
   },
   "ArtReview/Approved/woman-front-v4.png": {
     "size": [

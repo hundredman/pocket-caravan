@@ -31,12 +31,14 @@ namespace PocketCaravan
         void Close()
         {
             open = false;
+            PackPuzzle.Cancel();   // 11/16 게시판이 닫히면 짐 싣기 퍼즐도 맡지 않고 닫는다
             UIState.Release(this);
         }
 
         void Update()
         {
             if (!open || Time.frameCount == openedFrame) return;
+            if (PackPuzzle.IsOpen || Time.frameCount == PackPuzzle.ClosedFrame) return;   // 11/16 짐 싣기 퍼즐 중
             if (InputReader.CancelPressed() || InputReader.InteractPressed()) Close();
         }
 
@@ -61,10 +63,11 @@ namespace PocketCaravan
             return gained > 0 ? $"마을 일을 마쳤습니다. 평판 +{gained}." : "마을 일을 마쳤습니다. 평판은 이미 중립입니다.";
         }
 
-        string AcceptSaved(Contract c)
+        /// <summary>bonus: 11/16 짐 싣기 퍼즐을 다 풀면 보수에 더하는 몫 (맡기 전에 더한다. 저장 실패면 함께 되돌려진다)</summary>
+        string AcceptSaved(Contract c, int bonus = 0)
         {
             bool accepted=false;
-            if (!SavedEconomyChange.Try(GameManager.I,()=>accepted=Cm.Accept(town,c))) return SavedEconomyChange.Failure;
+            if (!SavedEconomyChange.Try(GameManager.I,()=>{ if (bonus > 0) c.reward += bonus; accepted=Cm.Accept(town,c); if (!accepted && bonus > 0) c.reward -= bonus; })) return SavedEconomyChange.Failure;
             return !accepted ? "이 의뢰는 더 이상 맡을 수 없습니다. 게시판을 다시 확인해 주세요."
                 : c.atonement ? $"{c.cargo} 수락 · 보증금 {c.deposit}냥\n{Cm.TownName(c.toTown)} 게시판에 납품하세요."
                 : $"{Josa.Eul(c.cargo)} 맡았다. {Cm.TownName(c.toTown)} 게시판에 가져가자.";
@@ -92,7 +95,7 @@ namespace PocketCaravan
             CuteUI.Window(r);
             CuteUI.TitlePlate(r.center.x, r.y - 11, Cm.TownName(town) + " 의뢰 게시판");
             CuteUI.Keycap(r.xMax - 32 - CuteUI.KeycapWidth("Esc") - 3, r.y - 3, "Esc");
-            if (CuteUI.CloseButton(r.xMax - 32, r.y - 9)) { Close(); return; }
+            if (CuteUI.CloseButton(r.xMax - 32, r.y - 9) && !PackPuzzle.IsOpen) { Close(); return; }
 
             DrawStatus(p, new Rect(r.x + 15, r.y + 17, w - 30, 20));
 
@@ -147,6 +150,16 @@ namespace PocketCaravan
                 if (DrawCard(new Rect(0, y, cw, card - 4), CuteUI.Pic.Scroll, c.cargo, badge, sub, pay, c.weight, "맡기", why != null ? ShortWhy(c, p) : null, false, true, c.atonement))
                 {
                     if (why != null) { message = why; Sfx.Play("cancel"); }
+                    else if (PackPuzzle.Wants(c))
+                    {
+                        // 11/16 은샘: 큰 짐·신용 의뢰는 짐 싣기 퍼즐을 거쳐 맡는다 (Esc로 닫으면 맡지 않음)
+                        var cc = c; int bonus = PackPuzzle.BonusFor(cc);
+                        if (!PackPuzzle.Open(cc, Cm.TownName(cc.fromTown), Cm.TownName(cc.toTown), solved =>
+                        {
+                            message = AcceptSaved(cc, solved ? bonus : 0);
+                            if (solved && message.Contains("맡았다")) message = $"꽉 묶었다! 보수 +{bonus}냥. " + message;
+                        }) && !PackPuzzle.IsOpen) message = AcceptSaved(c);
+                    }
                     else message = AcceptSaved(c);
                 }
                 y += card;
@@ -222,12 +235,12 @@ namespace PocketCaravan
             float bw = locked != null ? Mathf.Max(56, Mathf.Round(CuteUI.Width(locked, true) + 14)) : 56;
             var b = new Rect(r.xMax - 7 - bw, r.y + 11, bw, 20);
             bool pressed;
-            if (locked == null) pressed = CuteUI.Button(b, action);
+            if (locked == null) pressed = CuteUI.Button(b, action) && !PackPuzzle.IsOpen;   // 11/16 짐 싣기 퍼즐 중에는 게시판 단추를 막는다
             else
             {
                 CuteUI.Box(b, 8, CuteUI.ZeroSoft, CuteUI.KeyLine);
                 CuteUI.LabelCenter(b.center.x, b.center.y, locked, CuteUI.Sub, true);
-                pressed = GUI.Button(b, GUIContent.none, GUIStyle.none);
+                pressed = GUI.Button(b, GUIContent.none, GUIStyle.none) && !PackPuzzle.IsOpen;
             }
             float payR = b.x - 10, payL = payR;
             if (pay != null)

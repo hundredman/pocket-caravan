@@ -36,9 +36,9 @@ namespace PocketCaravan
             var m = GUI.matrix; var c = GUI.color;
             float k = Mathf.Clamp01(age / 0.22f);
             float s = Mathf.Lerp(2.4f, 1f, k * k);
-            var pivot = new Vector2(cx, cy) * UIStyle.Scale;   // 회전·크기 기준점은 실제 화면 픽셀 (WorldLabels 화살표와 같다)
-            GUIUtility.ScaleAroundPivot(new Vector2(s, s), pivot);
-            GUIUtility.RotateAroundPivot(-14f, pivot);
+            var pivot = new Vector2(cx, cy);   // 11/15 기준점은 가상 화면 좌표 (CuteUI.ScaleAround)
+            CuteUI.ScaleAround(s, pivot);
+            CuteUI.RotateAround(-14f, pivot);
             GUI.color = new Color(c.r, c.g, c.b, c.a * Mathf.Lerp(.25f, 1f, k));
             int half = size / 2;
             CuteUI.Circle(cx - half, cy - half, size, StampFill, CuteUI.Alert, 2);
@@ -68,7 +68,7 @@ namespace PocketCaravan
             a = new Vector2(Mathf.Round(a.x), Mathf.Round(a.y));
             CuteUI.FramedCircle(a.x - 11, a.y - 11, 22);
             var m = GUI.matrix;
-            GUIUtility.RotateAroundPivot(Mathf.Atan2(d.y, d.x) * Mathf.Rad2Deg, a * UIStyle.Scale);
+            CuteUI.RotateAround(Mathf.Atan2(d.y, d.x) * Mathf.Rad2Deg, a);
             CuteUI.Icon(CuteUI.Pic.Arrow, a.x - 4, a.y - 3, 1, CuteUI.Interact);
             GUI.matrix = m;
         }

@@ -89,6 +89,12 @@ class R2SafetyChecks(unittest.TestCase):
                     new,old=change['new'].encode(),change['old'].encode()
                     self.assertEqual(data.count(new),1,name+' exact approved 11/14 vehicle change')
                     data=data.replace(new,old,1)
+                # 11/15 지역 수입 맞추기: 고려·길목 물건 맵당 비율 한 줄만 되돌린다
+                balance=json.loads((OUT/'balance-1115.json').read_text())['files']
+                for change in balance.get(name,[]):
+                    new,old=change['new'].encode(),change['old'].encode()
+                    self.assertEqual(data.count(new),1,name+' exact approved 11/15 balance change')
+                    data=data.replace(new,old,1)
                 # 11/08 고려 퀘스트 정리: 승인된 새 파일이면 예전 내용으로 되돌려 비교한다.
                 quests=json.loads((OUT/'goryeo-quest-1108.json').read_text())['files']
                 if name in quests:

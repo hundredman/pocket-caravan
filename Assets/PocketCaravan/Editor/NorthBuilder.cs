@@ -104,7 +104,7 @@ namespace PocketCaravan.EditorTools
                 Upsert<ItemData>($"{DataDir}/Item_{id}.asset", i =>
                 {
                     i.id = id; i.displayName = name; i.weight = weight; i.basePrice = price; i.originTown = origin;
-                    i.pricePerMap = 0.5f; i.questItem = false;
+                    i.pricePerMap = 0.5f; i.questItem = false;   // 11/15 은샘: 지역마다 수입이 비슷하게 맵당 비율을 맞춤 (Docs/Feedback.md 기획 변경)
                     i.icon = AssetDatabase.LoadAssetAtPath<Sprite>($"{Root}/Art/Items/{id}.png");
                 });
             // 산지: 모피·말린 고기 = 사냥꾼 마을, 꿀술 = 비르카, 호박 = 피오르 나루 (호박 해안이 생기면 옮김)

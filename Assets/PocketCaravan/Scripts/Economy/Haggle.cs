@@ -79,6 +79,25 @@ namespace PocketCaravan
     /// <summary>시도 처리. 평판은 바꾸지 않는다(무리한 흥정도 평판 하락 없음).</summary>
     public static class Haggle
     {
+        /// <summary>11/15 흥정 미니게임: 물건·사고팔기마다 하루 한 번 (마을 전체를 막지 않는다)</summary>
+        public static string LockKey(string townId, string itemId, bool selling) => $"{townId}|{itemId}|{(selling ? "s" : "b")}";
+        public static string Denial(TradeActivity activity, string townId, string itemId, bool selling, int day, float now, float maxHaggle)
+        {
+            if (maxHaggle <= 0) return "신용이 너무 낮아 흥정할 수 없어요.";
+            if (activity.HaggleLocked(LockKey(townId, itemId, selling), day)) return $"오늘은 이 물건을 더 흥정할 수 없어요.";
+            return null;
+        }
+        /// <summary>11/15 흥정 미니게임 결과를 거래 한 번에 쓸 약속으로. 실패해도 거래는 할 수 있고 그 거래만 불리하다</summary>
+        public static HaggleResult Settle(TradeActivity activity, string townId, string itemId, bool selling, int count, float discount, bool failed, int day, bool lockToday = true)
+        {
+            if (lockToday) activity.LockHaggle(LockKey(townId, itemId, selling), day);
+            if (Math.Abs(discount) < 0.0001f)
+                return new HaggleResult { outcome = HaggleOutcome.Refused, message = "흥정 · 정가" };
+            var deal = new HaggleDeal(townId, itemId, selling, day, discount, HaggleStrength.Fair, count);
+            if (failed)
+                return new HaggleResult { outcome = HaggleOutcome.Refused, deal = deal, message = $"흥정 · 욕심이 지나쳤다 {(selling ? "−" : "+")}{-discount * 100:0.#}%" };
+            return new HaggleResult { outcome = HaggleOutcome.Success, deal = deal, message = $"흥정 성공 · 이번 거래만 {(selling ? "더 받기" : "깎기")} {discount * 100:0.#}%" };
+        }
         public static string Denial(TradeActivity activity, string townId, int day, float now, float maxHaggle)
         {
             if (maxHaggle <= 0) return "평판 경계 이하에서는 흥정할 수 없습니다.";

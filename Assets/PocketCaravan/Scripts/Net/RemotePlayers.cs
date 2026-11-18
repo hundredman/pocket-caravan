@@ -364,6 +364,7 @@ namespace PocketCaravan
             root.transform.position = new Vector3(p.x, p.y, pc.transform.position.z);
             var body = new GameObject("그림");
             body.transform.SetParent(root.transform, false);
+            root.AddComponent<DepthActor>();   // 11/15 좌판 등과 앞뒤 맞추기
             var sr = body.AddComponent<SpriteRenderer>();
             var anim = body.AddComponent<CharacterAnimator>();
             var mine = pc.anim != null ? pc.anim.GetComponent<SpriteRenderer>() : null;
@@ -458,7 +459,7 @@ namespace PocketCaravan
             float w = Mathf.Round(CuteUI.Width(tag, true, true) + 10f), y = name.y - (a.tag == NetGuild.BadgeId ? 20f : 10f);
             var m = GUI.matrix;
             float s = k < .6f ? Mathf.Lerp(.6f, 1.12f, k / .6f) : Mathf.Lerp(1.12f, 1f, (k - .6f) / .4f);
-            GUIUtility.ScaleAroundPivot(new Vector2(s, s), new Vector2(name.center.x, y + 6f) * scale);
+            CuteUI.ScaleAround(s, new Vector2(name.center.x, y + 6f));
             GUI.color = new Color(old.r, old.g, old.b, old.a * fade);
             var pill = new Rect(Mathf.Round(name.center.x - w / 2f), Mathf.Round(y), w, 12f);
             CuteUI.Box(pill, 6, CuteUI.Interact, CuteUI.InteractLo, 1, 1);

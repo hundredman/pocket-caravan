@@ -91,7 +91,7 @@ def build(link_target, link_spawn, my_spawn):
     m.put('prop_carpethang', 3, 13, foot=1)
     m.put('prop_carpetstack', 6, 14, foot=1)
     m.put('prop_grainsacks', 12, 14, foot=1)
-    m.put('prop_watermelons', 15, 14, foot=1)
+    # 11/15 수박 더미는 뺌 (무엇인지 잘 안 읽힘)
     m.put('prop_spiceSack', 18, 14, foot=1)
     m.add('villager', 9, 14, variant=1)
     m.talker(9, 19, '향수 장수', 'arabia_woman_perfumer_tall', '장미와 유향을 섞은 향이에요. 멀리 갈수록 귀하게 쳐 주지요.')

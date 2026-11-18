@@ -13,7 +13,8 @@ namespace PocketCaravan
     /// - 영어 키(r k s …)가 들어오면 '가' 상태일 때 자모(ㄱ ㅏ ㄴ …)로 바꿔 글자를 만든다. 운영체제 한/영은 영어로 두면 된다.
     /// - 운영체제가 이미 자모나 완성된 한글을 보내 주면(맥 등) 그대로 받는다.
     /// - 가/A 바꾸기: 오른쪽 Alt(한/영 키) · Shift+Space · 칸 오른쪽 '가/A'를 누르기. 고른 것은 이 컴퓨터에 기억한다.
-    /// - Backspace는 조합 중이면 자모 하나씩, 아니면 글자 하나씩 지운다. 커서 옮기기는 없다(끝에만 쓴다).
+    /// - Backspace는 조합 중이면 자모 하나씩, 아니면 커서 앞 글자 하나씩 지운다. Delete는 커서 뒤 글자.
+    /// - 11/17 ← → 로 커서를 옮겨 가운데를 고칠 수 있다 (Home·End 처음·끝). 옮기면 조합 중이던 글자는 확정된다.
     /// 글자는 IMGUI 키 이벤트로 받는다(그리는 동안만 받으므로 Draw를 매 OnGUI에 불러야 한다).
     /// 접속키 칸처럼 Masked면 글자를 *로 가리고, AllowKorean이 false면 한글 조합과 가/A 표시를 끈다. 글자색은 TextColor.
     /// </summary>
@@ -28,11 +29,13 @@ namespace PocketCaravan
         /// <summary>글자·커서 색 (밝은 바탕 칸이면 어둡게)</summary>
         public Color TextColor = new Color(0.97f, 0.95f, 0.9f);
         /// <summary>확정된 글. 바꾸면 조합 중이던 글자는 버린다</summary>
-        public string Text { get => text; set { text = value ?? ""; hangul = default; } }
+        public string Text { get => text; set { text = value ?? ""; hangul = default; caret = text.Length; } }
+        /// <summary>11/17 비어 있을 때 흐리게 보이는 안내 (예: "할 말 · /로 리액션")</summary>
+        public string Placeholder = "";
         /// <summary>아직 조합 중인 글자 (예: "ㅎ", "한")</summary>
         public string Composing => hangul.Render();
         /// <summary>확정된 글 + 조합 중인 글자</summary>
-        public string Full { get { var s = text + hangul.Render(); return s.Length > Max ? s.Substring(0, Max) : s; } }
+        public string Full { get { var s = text.Insert(caret, hangul.Render()); return s.Length > Max ? s.Substring(0, Max) : s; } }
 
         /// <summary>true면 영어 키를 한글로 조합한다 (모든 칸이 같이 쓴다)</summary>
         public static bool Korean
@@ -43,6 +46,7 @@ namespace PocketCaravan
         static int korean = -1;
 
         string text = "";
+        int caret;   // 11/17 확정된 글 안에서 커서 자리 (조합 중인 글자는 이 자리에 끼어 있다)
         Hangul hangul;
         int altCheckedFrame = -1;
         static GUIStyle plainStyle, badgeStyle;
@@ -67,9 +71,31 @@ namespace PocketCaravan
         void Toggle()
         {
             if (!AllowKorean) return;
-            text = Full;
-            hangul = default;
+            Commit();
             Korean = !Korean;
+        }
+
+        /// <summary>조합 중인 글자를 커서 자리에 확정한다</summary>
+        void Commit()
+        {
+            string d = hangul.Flush();
+            if (d.Length == 0) return;
+            if (text.Length + d.Length > Max) return;
+            text = text.Insert(caret, d);
+            caret += d.Length;
+        }
+
+        void Insert(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return;
+            text = text.Insert(caret, s);
+            caret += s.Length;
+        }
+
+        void MoveCaret(int to)
+        {
+            Commit();
+            caret = Mathf.Clamp(to, 0, text.Length);
         }
 
         void Type(char c)
@@ -79,18 +105,29 @@ namespace PocketCaravan
             {
                 var saved = hangul;
                 string done = hangul.Put(j);
-                if ((text + done + hangul.Render()).Length > Max) { hangul = saved; return; }
-                text += done;
+                if (text.Length + done.Length + hangul.Render().Length > Max) { hangul = saved; return; }
+                Insert(done);
                 return;
             }
-            text += hangul.Flush();
-            if (text.Length < Max) text += c;
+            Commit();
+            if (text.Length < Max) Insert(c.ToString());
         }
 
         void Backspace()
         {
             if (hangul.Back()) return;
-            if (text.Length > 0) text = text.Substring(0, text.Length - (text.Length >= 2 && char.IsLowSurrogate(text[text.Length - 1]) ? 2 : 1));
+            if (caret <= 0) return;
+            int n = caret >= 2 && char.IsLowSurrogate(text[caret - 1]) ? 2 : 1;
+            text = text.Remove(caret - n, n);
+            caret -= n;
+        }
+
+        void Delete()
+        {
+            Commit();
+            if (caret >= text.Length) return;
+            int n = caret + 1 < text.Length && char.IsHighSurrogate(text[caret]) ? 2 : 1;
+            text = text.Remove(caret, n);
         }
 
         /// <summary>
@@ -120,29 +157,43 @@ namespace PocketCaravan
             var inner = new Rect(r.x + 3f, r.y, r.width - (AllowKorean ? 24f : 6f), r.height);
             string comp = Masked ? "" : hangul.Render();
             string shown = Masked ? new string('*', text.Length) : text;
-            float textW = plain.CalcSize(new GUIContent(shown)).x;
+            int cut = Mathf.Clamp(caret, 0, shown.Length);
+            string left = shown.Substring(0, cut), right = shown.Substring(cut);
+            float leftW = left.Length > 0 ? plain.CalcSize(new GUIContent(left)).x : 0f;
             float compW = comp.Length > 0 ? plain.CalcSize(new GUIContent(comp)).x : 0f;
-            float shift = Mathf.Min(0f, inner.width - (textW + compW + 4f));
+            float rightW = right.Length > 0 ? plain.CalcSize(new GUIContent(right)).x : 0f;
+            float caretX = leftW + compW;
+            float shift = Mathf.Min(0f, inner.width - (caretX + 4f));   // 커서가 늘 보이게 민다
+            bool lightBg = TextColor.grayscale < .5f;
 
             var old = plain.normal.textColor;
             GUI.BeginGroup(inner);
+            if (shown.Length == 0 && comp.Length == 0 && !string.IsNullOrEmpty(Placeholder))
+            {
+                plain.normal.textColor = new Color(TextColor.r, TextColor.g, TextColor.b, .38f);
+                GUI.Label(new Rect(4f, 0f, inner.width, inner.height), Placeholder, plain);
+            }
             plain.normal.textColor = TextColor;
-            GUI.Label(new Rect(shift, 0f, textW + 2f, inner.height), shown, plain);
+            if (left.Length > 0) GUI.Label(new Rect(shift, 0f, leftW + 2f, inner.height), left, plain);
+            if (right.Length > 0) GUI.Label(new Rect(shift + caretX, 0f, rightW + 2f, inner.height), right, plain);
             if (compW > 0f)
             {
-                var yellow = new Color(1f, 0.87f, 0.35f);   // 조합 중인 글자는 노랗게, 밑줄
-                plain.normal.textColor = yellow;
-                GUI.Label(new Rect(shift + textW, 0f, compW + 2f, inner.height), comp, plain);
+                // 11/17 조합 중인 글자: 흰 칸에서는 노란 글자가 안 보였다 → 글자색 그대로 + 연한 바탕 + 진한 밑줄
+                var accent = lightBg ? new Color(.16f, .55f, .52f) : new Color(1f, 0.87f, 0.35f);
                 var ink = GUI.color;
-                GUI.color = yellow;
-                GUI.DrawTexture(new Rect(shift + textW, inner.height - 3f, compW, 1f), Texture2D.whiteTexture);
+                GUI.color = new Color(accent.r, accent.g, accent.b, .18f);
+                GUI.DrawTexture(new Rect(shift + leftW, 2f, compW + 1f, inner.height - 4f), Texture2D.whiteTexture);
+                GUI.color = accent;
+                GUI.DrawTexture(new Rect(shift + leftW, inner.height - 3f, compW + 1f, 1.5f), Texture2D.whiteTexture);
                 GUI.color = ink;
+                plain.normal.textColor = lightBg ? TextColor : accent;
+                GUI.Label(new Rect(shift + leftW, 0f, compW + 2f, inner.height), comp, plain);
             }
             if (Active && (Time.unscaledTime * 2f) % 2f < 1.2f)
             {
                 var ink = GUI.color;
                 GUI.color = TextColor;
-                GUI.DrawTexture(new Rect(shift + textW + compW + 1f, 3f, 1f, inner.height - 6f), Texture2D.whiteTexture);
+                GUI.DrawTexture(new Rect(shift + caretX + 1f, 3f, 1f, inner.height - 6f), Texture2D.whiteTexture);
                 GUI.color = ink;
             }
             plain.normal.textColor = old;
@@ -172,6 +223,13 @@ namespace PocketCaravan
 #endif
             if (e.type != EventType.KeyDown) return;
             if (e.keyCode == KeyCode.Backspace) { Backspace(); e.Use(); return; }
+            if (e.keyCode == KeyCode.Delete) { Delete(); e.Use(); return; }
+            // 11/17 커서 옮기기 (가운데 글자 고치기). 조합 중이던 글자는 먼저 확정한다
+            bool cmd = e.command || e.control;
+            if (e.keyCode == KeyCode.Home || (cmd && e.keyCode == KeyCode.LeftArrow)) { MoveCaret(0); e.Use(); return; }
+            if (e.keyCode == KeyCode.End || (cmd && e.keyCode == KeyCode.RightArrow)) { MoveCaret(int.MaxValue); e.Use(); return; }
+            if (e.keyCode == KeyCode.LeftArrow) { Commit(); MoveCaret(caret - 1); e.Use(); return; }
+            if (e.keyCode == KeyCode.RightArrow) { bool had = hangul.Render().Length > 0; Commit(); if (!had) MoveCaret(caret + 1); e.Use(); return; }
             char ch = e.character;
             if (ch == ' ' && e.shift && AllowKorean) { Toggle(); e.Use(); return; }
             if (ch == '\0' || char.IsControl(ch)) return;   // Enter · Tab · Esc · 글자 없는 키

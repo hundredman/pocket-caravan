@@ -397,7 +397,7 @@ namespace PocketCaravan
             autosave = true;
             Player.money = session.startMoney;
             if (session.startOrigin != null) { Player.origin = session.startOrigin; Player.credit = session.startOrigin.startingCredit; }
-            if (session.startVehicle != null) Player.vehicle = session.startVehicle;
+            if (session.startVehicle != null) { Player.vehicle = session.startVehicle; Player.stowedVehicle = null; }
             saveToLoad = SaveSystem.Read();
             Debug.Log($"[저장] {session.regionId} 시험 세션: 본편 저장 대신 전용 파일 {SaveSystem.FileName} 사용"
                 + (saveToLoad != null ? " (이어서 하기)" : " (새로 시작)"));
@@ -540,6 +540,7 @@ namespace PocketCaravan
                 money = Player.money, credit = Player.credit,
                 origin = Player.origin != null ? Player.origin.id : null,
                 vehicle = Player.vehicle != null ? Player.vehicle.id : null,
+                stowedVehicle = Player.stowedVehicle != null ? Player.stowedVehicle.id : null,
                 stamina = Player.stamina, shake = Player.shake,
                 day = Clock.day, minute = Clock.minuteOfDay, playHours = Clock.playHours,
                 nextContractId = Contracts.nextId,
@@ -580,6 +581,7 @@ namespace PocketCaravan
             var savedOrigin = StartChoices.FindOrigin(d.origin);
             if (savedOrigin != null) Player.origin = savedOrigin;
             Player.vehicle = Db.vehicles.Find(v => v != null && v.id == d.vehicle) ?? Db.startVehicle;
+            Player.stowedVehicle = string.IsNullOrEmpty(d.stowedVehicle) ? null : Db.vehicles.Find(v => v != null && v.id == d.stowedVehicle);
             Player.stamina = d.stamina;
             Player.shake = 0f;
             Player.cargo.Clear();

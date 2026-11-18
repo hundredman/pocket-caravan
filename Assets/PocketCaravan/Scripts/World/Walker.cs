@@ -27,7 +27,11 @@ namespace PocketCaravan
 
         public override string DisplayName => Trader != null ? $"상인 {Trader.name}" : "상인";
 
-        void Awake() => blocksMovement = false;
+        void Awake()
+        {
+            blocksMovement = false;
+            if (GetComponent<DepthActor>() == null) gameObject.AddComponent<DepthActor>();   // 11/15 좌판 등과 앞뒤 맞추기
+        }
 
         void Update()
         {

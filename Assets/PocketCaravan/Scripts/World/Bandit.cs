@@ -38,6 +38,8 @@ namespace PocketCaravan
             motor = GetComponent<PlayerMotor>();
             blocksMovement = false;
             myRoot = GetComponentInParent<MapRoot>();
+            if (anim == null) anim = GetComponent<CharacterAnimator>();
+            BanditLook.Apply(anim, myRoot != null ? myRoot.mapId : MapRoot.Current != null ? MapRoot.Current.mapId : gameObject.scene.name);   // 도적이 MapRoot 밖에 있는 씬도 있다
         }
 
         bool PlayerSettledHere()
@@ -244,6 +246,8 @@ namespace PocketCaravan
                 DialogueUI.Show("도적", $"그 짐은 우리한테 쓸모가 없겠군. 대신 이 길을 지나려면 통행료 {toll}냥을 내야지. 싫으면 주머니를 털어 가겠소.", picks);
                 return;
             }
+            // 11/15 은샘: 셋 중 고르는 창 (통행세 · 흥정 · 도망 리듬 놀이). 창이 못 열리면 예전 대화
+            if (BanditEncounter.Open(this, toll, _ => Leave())) return;
             var choices = p.money >= toll
                 ? new[] { new DialogueUI.Choice($"통행료 {toll}냥", () => { p.money -= toll; Sfx.Play("coin"); Notify.Show($"통행료 {toll}냥을 냈다."); Leave(); }),
                           new DialogueUI.Choice("거절한다", () => { gm.StealMostValuable(); Leave(); }) }
@@ -254,6 +258,46 @@ namespace PocketCaravan
         void OnDestroy()
         {
             if (state == State.Chase) AudioManager.SetDanger(false);
+        }
+    }
+
+    /// <summary>
+    /// 11/15 은샘: 도적은 모두 사람. 세 가지 모습을 맵마다 정해 쓴다 (씬 파일은 그대로, 깨어날 때 그림만 바꾼다).
+    /// A 패랭이+복면 · B 상투+붉은 머리띠+복면 · C 패랭이+텁수룩 수염. 그림: Resources/Bandit/Looks/bandit_{a,b,c}_{d,u,l,r}{0~3}
+    /// </summary>
+    public static class BanditLook
+    {
+        static readonly System.Collections.Generic.Dictionary<string, char> ByMap = new System.Collections.Generic.Dictionary<string, char>
+        {
+            { "transit_pass", 'a' },            // 솔바람 고개
+            { "arabia_central_canyon", 'c' },   // 붉은 바위 협곡
+            { "north_c_road_sw", 'b' }, { "north_c_runeway", 'c' }, { "north_naru", 'b' },
+            { "venice_c_landing", 'a' }, { "venice_c_post", 'b' },
+        };
+
+        public static char For(string mapId)
+        {
+            if (!string.IsNullOrEmpty(mapId) && ByMap.TryGetValue(mapId, out var k)) return k;
+            int h = 0; foreach (char c in mapId ?? "") h = h * 31 + c;
+            return "abc"[(h & 0x7fffffff) % 3];
+        }
+
+        public static void Apply(CharacterAnimator anim, string mapId)
+        {
+            if (anim == null) return;
+            char k = For(mapId);
+            var frames = new Sprite[16];
+            string dirs = "dulr";
+            for (int d = 0; d < 4; d++)
+                for (int i = 0; i < 4; i++)
+                {
+                    var s = Resources.Load<Sprite>($"Bandit/Looks/bandit_{k}_{dirs[d]}{i}");
+                    if (s == null) return;   // 그림이 없으면 원래 그림 그대로
+                    frames[d * 4 + i] = s;
+                }
+            anim.frames = frames;
+            var sr = anim.GetComponent<SpriteRenderer>();
+            if (sr != null) sr.sprite = frames[0];
         }
     }
 }

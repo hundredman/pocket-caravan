@@ -501,13 +501,13 @@ namespace PocketCaravan
             if (pc == null || MapRoot.Current == null || GM == null) return;
             yard = new GameObject("만국 상인회 마당").transform;
 
-            clerkTf = Spawn("arabia", 31, 44, () => Clerk + (Step == 0 || Step == 2 ? " !" : ""), TalkClerk, true, pc).transform;
+            clerkTf = Spawn("arabia_woman_calligrapher", 31, 44, () => Clerk + (Step == 0 || Step == 2 ? " !" : ""), TalkClerk, true, pc).transform;
             Booth(clerkTf.position, true);
 
             var town = GM.Db != null ? GM.Db.towns.Find(t => t != null && t.id == StallTown) : null;
             if (town != null)
             {
-                var go = Body("venice", 40, 49, pc);
+                var go = Body("venice_merchant", 40, 49, pc);
                 go.AddComponent<Stall>().town = town;
                 stallTf = go.transform;
                 Booth(stallTf.position, false);
@@ -527,7 +527,7 @@ namespace PocketCaravan
             Deco("bunting", photoTf.position, 1f, 2.1f, 21);
 
             // 11/11 은샘: 43,41 → 45,43 (화분과 한 칸 띄움). 사진 자리에서 자리를 고를 때 길보 말풍선이 사진 자리를 거의 다 덮었다 (팀 시연)
-            Merchant("goryeo", 45, 43, new NetMeet.Npc
+            Merchant("trader", 45, 43, new NetMeet.Npc
             {
                 name = "고려 보부상 길보", shortName = "길보",
                 hello = "어이쿠, 반갑소! 개경에서 등짐 지고 왔다오.",
@@ -535,7 +535,7 @@ namespace PocketCaravan
                 thanks = "이리 귀한 걸! 받은 정은 꼭 갚으리다.",
                 near = "어이, 새 얼굴이구먼! 사진 자리에서 같이 한 장 찍겠소?",
             }, pc);
-            Merchant("viking", 19, 36, new NetMeet.Npc
+            Merchant("north_p_trader", 19, 36, new NetMeet.Npc
             {
                 name = "북쪽 상인 비요른", shortName = "비요른",
                 hello = "하하! 피오르에서 배 타고 왔지. 반갑다!",
@@ -543,7 +543,7 @@ namespace PocketCaravan
                 thanks = "오, 고맙다! 오늘은 꿀술로 건배다!",
                 near = "이 춤 양탄자에서 같이 춤 한판 어때? 리액션하면 나도 따라 한다!",
             }, pc);
-            Merchant("arabia", 23, 47, new NetMeet.Npc
+            Merchant("arabia_npc_merchant", 23, 47, new NetMeet.Npc
             {
                 name = "대상 파리드", shortName = "파리드",
                 hello = "평안을 빕니다, 친구여. 잘 왔어요.",
@@ -619,7 +619,8 @@ namespace PocketCaravan
             return go;
         }
 
-        /// <summary>맵 JSON 칸(위가 0)에 사람 하나를 세운다. 그림은 그 출신의 플레이어 캐릭터 (아래를 보고 서 있다)</summary>
+        /// <summary>맵 JSON 칸(위가 0)에 사람 하나를 세운다 (아래를 보고 서 있다).
+        /// 11/17 기우: 주인공 그림(출신 캐릭터)은 NPC에 쓰지 않는다. look = Resources/Arabia/Fair/People/{look}_tall_{d,u,l,r}{0~3}</summary>
         GameObject Body(string look, int x, int y, PlayerController pc)
         {
             var root = new GameObject(look + " " + x + "," + y);
@@ -638,13 +639,22 @@ namespace PocketCaravan
                 sr.sharedMaterial = mine.sharedMaterial;
                 sr.spriteSortPoint = mine.spriteSortPoint;
             }
-            var origin = StartChoices.FindOrigin(look);
-            anim.frames = PlayerAppearance.HasFrames(origin) ? (Sprite[])origin.playerFrames.Clone()
-                : pc.anim != null && pc.anim.frames != null ? (Sprite[])pc.anim.frames.Clone() : new Sprite[16];
+            anim.frames = NpcFrames(look);
             anim.facing = Vector2Int.down;
             anim.walking = false;
             if (anim.frames.Length > 0) sr.sprite = anim.frames[0];
             return root;
+        }
+
+        static Sprite[] NpcFrames(string look)
+        {
+            var f = new Sprite[16];
+            const string dirs = "dulr";
+            for (int d = 0; d < 4; d++)
+                for (int i = 0; i < 4; i++)
+                    f[d * 4 + i] = Resources.Load<Sprite>($"Arabia/Fair/People/{look}_tall_{dirs[d]}{i}");
+            if (f[0] == null) Debug.LogWarning("[상인회] NPC 그림이 없습니다: " + look);
+            return f;
         }
 
         bool Speaking(Transform who) => who != null && bubbles.TryGetValue(who, out var b) && Time.unscaledTime < b.until;
@@ -808,16 +818,10 @@ namespace PocketCaravan
             StartCoroutine(SnapRoutine());
         }
 
-        /// <summary>찰칵: 다 같이 기쁨 리액션 → 잠깐 뒤 그 순간의 게임 화면을 그대로 찍는다 → 사진을 보여 준다</summary>
+        /// <summary>찰칵: 그대로 그 순간의 게임 화면을 그대로 찍는다 → 사진을 보여 준다</summary>
         System.Collections.IEnumerator SnapRoutine()
         {
-            NetEmote.Send("joy", "기쁨");
-            RemotePlayers.PlaySelf("joy", "기쁨");
-            var pc = PlayerController.Instance;
-            if (pc != null)
-                foreach (var n in merchants)
-                    if (n.anchor != null && Vector2.Distance(n.anchor.position, pc.transform.position) < PhotoRange + 1f) Hop(n.anchor);
-            yield return new WaitForSecondsRealtime(.3f);   // 리액션·깡총이 화면에 보일 때
+            // 11/17 기우: 찍는 순간 저절로 기쁨 리액션·깡총 하지 않는다 (찌그러져 보임). 포즈는 유저가 세는 동안 리액션으로 고른다
             yield return new WaitForEndOfFrame();
             if (shot != Shot.Snap) yield break;   // 그 사이 맵이 바뀌었거나 취소됨
             if (photoTex != null) { Destroy(photoTex); photoTex = null; }
@@ -1047,6 +1051,8 @@ namespace PocketCaravan
             signTex.Apply();
         }
 
+        static readonly object SignNav = new object();
+
         void DrawSign()
         {
             float W = UIStyle.VirtualWidth, H = UIStyle.VirtualHeight, ease = Ease((Time.unscaledTime - signAt) / .3f);
@@ -1075,8 +1081,13 @@ namespace PocketCaravan
             }
             y += SignH + 8f;
             float half = Mathf.Floor((SignW - 6f) / 2f);
-            if (CuteUI.SoftButton(new Rect(x, y, half, 22f), "다시 쓰기")) ClearSign();
-            if (CuteUI.Button(new Rect(x + half + 6f, y, SignW - half - 6f, 22f), Signed ? "서명 완료" : "이름으로 대신")) ConfirmSign();
+            KeyNav.Begin(SignNav);   // 11/17 ← →로 다시 쓰기·이름으로 대신 고르기
+            try
+            {
+                if (CuteUI.SoftButton(new Rect(x, y, half, 22f), "다시 쓰기")) ClearSign();
+                if (CuteUI.Button(new Rect(x + half + 6f, y, SignW - half - 6f, 22f), Signed ? "서명 완료" : "이름으로 대신")) { KeyNav.Clear(SignNav); ConfirmSign(); }
+            }
+            finally { KeyNav.End(); }
             CuteUI.LabelCenter(r.center.x, y + 33f, Signed ? "Space 서명 완료 · Esc 다음에" : "마우스로 서명해요 · Space 이름으로 대신", CuteUI.Sub, true);
             GUI.color = old;
         }
@@ -1122,7 +1133,7 @@ namespace PocketCaravan
             if (signing && Time.frameCount > signFrame && now - signAt > .3f)
             {
                 if (no) CancelSign();
-                else if (ok) { ConfirmSign(); return; }   // 같은 Space로 수여식까지 닫히지 않게
+                else if (ok && !KeyNav.HasFocus(SignNav)) { ConfirmSign(); return; }   // 같은 Space로 수여식까지 닫히지 않게 (11/17 화살표로 단추를 골랐으면 그 단추가 받는다)
             }
             if (ceremony && Time.frameCount > ceremonyFrame && now - ceremonyAt > .8f && (ok || no))
                 CloseCeremony();
@@ -1360,7 +1371,7 @@ namespace PocketCaravan
             float pw = Mathf.Min(268f, W - 40f), ph = 222f;
             var r = new Rect(Mathf.Round((W - pw) / 2f), Mathf.Round((H - ph) / 2f - 4f + (1f - ease) * 24f), pw, ph);
             var m = GUI.matrix;
-            GUIUtility.RotateAroundPivot(-2.5f, r.center * UIStyle.Scale);
+            CuteUI.RotateAround(-2.5f, r.center);
             CuteUI.Box(r, 3, CuteUI.White, CuteUI.Line, 1, 3, CuteUI.SoftShadow);
             var photo = new Rect(r.x + 10f, r.y + 10f, r.width - 20f, 150f);
             if (photoTex != null)
