@@ -137,6 +137,7 @@ namespace PocketCaravan
             CuteUI.Dim();
             CuteUI.Window(r);
             CuteUI.TitlePlate(r.center.x, r.y - 11, "여정 수첩");
+            ScreenZones.MarkSpot("journal.close", new Rect(r.xMax - 32, r.y - 9, 22, 22));   // 11/18 튜토리얼: 수첩을 연 다음 닫기 단추를 밝힌다 (TutorialSpot)
             if (CuteUI.CloseButton(r.xMax - 32, r.y - 9)) { CloseLog(); return; }
 
             var content = new Rect(r.x + 15, r.y + 50, w - 30, h - 50 - 24);

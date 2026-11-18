@@ -103,7 +103,8 @@ namespace PocketCaravan
             // 발밑: 그림이 있으면 그림 아래 끝 가운데, 없으면 자리 조금 아래. 너비는 그림 너비에 맞추되 너무 넓지 않게
             var sr = t.GetComponentInChildren<SpriteRenderer>();
             Vector3 feet; float wUnits;
-            if (sr != null && sr.sprite != null && sr.bounds.size.x < 4f) { var b = sr.bounds; feet = new Vector3(b.center.x, b.min.y + .1f, 0f); wUnits = Mathf.Clamp(b.size.x * .9f, .8f, 2.2f); }
+            // 11/18 은샘: 내 고리처럼 발 가운데에 (전엔 0.1칸 위·좁아서 몸 뒤에 있는 듯했다). 너비도 내 고리(사람 그림 1칸 → 1.25칸)와 같게
+            if (sr != null && sr.sprite != null && sr.bounds.size.x < 4f) { var b = sr.bounds; feet = new Vector3(b.center.x, b.min.y + .04f, 0f); wUnits = Mathf.Clamp(b.size.x * 1.25f, 1.1f, 2.4f); }
             else { feet = t.transform.position + new Vector3(0f, -.42f, 0f); wUnits = 1f; }
             feet = new Vector3(Mathf.Round(feet.x * 16f) / 16f, Mathf.Round(feet.y * 16f) / 16f, t.transform.position.z);
             // 순서: 대상 그림과 내 몸 그림 중 낮은 쪽보다 3 아래 (그림자 9보다도 아래)

@@ -83,12 +83,15 @@ namespace PocketCaravan
             bool blocking = UIState.Blocking;
             if (HaggleDuel.IsOpen || PackPuzzle.IsOpen) return null;   // 장터 위에 뜨는 창
 
+            // 11/18 은샘: 할 일 카드로 수첩을 연 다음에는 닫는 법도 (다음 단계 달리기 동안 수첩이 열려 있으면)
+            if (IntroActive && ControlLesson.IsActive(ControlLesson.Run) && ScreenZones.Live("journal.close"))
+                return Zone("journal.close", "journal.close", "Esc나 이 단추로 수첩을 닫아요", true);
             if (ControlLesson.IsActive(ControlLesson.Quests))
                 return blocking ? null : Zone("quests", "task.card", "이 카드를 누르면 여정 수첩이 열려요", false);
             if (ControlLesson.IsActive(ControlLesson.Inventory))   // 11/18 은샘: 단추가 있는 I·M도 밝힌다
-                return blocking ? null : Zone("inventory", "hud.btn.i", "I나 이 단추로 소지품을 열어요", true);
+                return blocking ? null : Zone("inventory", "hud.btn.i", "I나 이 단추로 소지품을 열어요", false);   // 11/18 은샘 검토용: 단추는 네모 테두리
             if (ControlLesson.IsActive(ControlLesson.Map))
-                return blocking ? null : Zone("map", "hud.btn.m", "M이나 이 단추로 지도를 펼쳐요", true);
+                return blocking ? null : Zone("map", "hud.btn.m", "M이나 이 단추로 지도를 펼쳐요", false);
             if (ControlLesson.IsActive(ControlLesson.Ledger))
                 return blocking ? null : Zone("ledger", "hud.btn.l", "L이나 이 단추로 장부를 열어요", true);
             bool buy = ControlLesson.IsActive(ControlLesson.Bought), sell = ControlLesson.IsActive(ControlLesson.Sold);

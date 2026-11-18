@@ -107,7 +107,7 @@ namespace PocketCaravan
             if (!UIState.Blocking && GUI.Button(r, GUIContent.none, GUIStyle.none)) InputReader.Press('m');   // 누르면 지도
         }
 
-        /// <summary>11/18 캐릭터 옆 화살표 (몸 가운데에서 22칸 떨어져 길 쪽을 가리키고, 그쪽으로 살짝 들락날락)</summary>
+        /// <summary>11/18 캐릭터 옆 화살표 (목 높이에서 22칸 떨어져 길 쪽을 가리키고, 그쪽으로 살짝 들락날락)</summary>
         static void NearArrow(Vector2 player, Navigator.Result n, int cells)
         {
             var cam = Camera.main;
@@ -118,7 +118,10 @@ namespace PocketCaravan
             Vector2 d = (Vector2)n.steer - (Vector2)pc.transform.position;
             if (d.sqrMagnitude < 0.01f) return;
             var dir = new Vector2(d.x, -d.y).normalized;   // GUI는 y가 아래로
-            var body = player + new Vector2(0f, -8f);
+            // 11/18 은샘: 머리 높이 → 목 높이 (발에서 반 칸 위)
+            Vector3 neckW = (pc.Motor != null ? (Vector3)pc.Motor.Feet : pc.transform.position) + new Vector3(0f, .5f, 0f);
+            var ns = cam.WorldToScreenPoint(neckW);
+            var body = new Vector2(ns.x / UIStyle.Scale, (Screen.height - ns.y) / UIStyle.Scale);
             float bob = Mathf.Round(Mathf.Sin(Time.unscaledTime * 5f) * 1.5f + 1.5f);
             var c = body + dir * (22f + bob);
             var m = GUI.matrix;
