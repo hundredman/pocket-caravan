@@ -39,7 +39,7 @@ namespace PocketCaravan
         const string StallTown = "arabia_jeddah";
         const string ArriveSpawn = "arabia_central_bazaar_spawn_seam_east_3";
         const int BazaarHeight = 56, Reward = 50, MaxCast = 6, DeliveryPay = 30;
-        const float LetterDelay = 2.5f, ReplyDelay = 1.0f, MarkRange = 14f, DuetWindow = 6f, DuetRange = 4f, PhotoRange = 4.5f, CountSeconds = 3.6f;
+        const float LetterDelay = 0.8f, ReplyDelay = 1.0f, MarkRange = 14f, DuetWindow = 6f, DuetRange = 4f, PhotoRange = 4.5f, CountSeconds = 3.6f;
         const string Clerk = "상인회 접수원 라일라", Chief = "만국 상인회장 아지즈 드림";
         const string StepKey = "net:guild:step", WelcomeKey = "net:guild:welcomed";
 
@@ -305,7 +305,7 @@ namespace PocketCaravan
             if (s == 0)
             {
                 if (!IntroDone() || IntroActive) { readyAt = -1f; return; }
-                if (readyAt < 0f) readyAt = now + LetterDelay;   // 튜토리얼 마지막 말이 끝나고 잠깐 뒤에
+                if (readyAt < 0f) readyAt = now + LetterDelay;   // 튜토리얼 마지막 말이 끝나고 잠깐 뒤에 (11/18 은샘 "살짝 느리다": 2.5초 → 0.8초)
                 if (now >= readyAt) { Step = 1; QuestFocus.Set(QuestFocus.Kind.Event); OpenLetter(Letter.Invite); }   // 11/11 가장 최근에 받은 것을 길 안내
                 return;
             }

@@ -86,6 +86,7 @@ namespace PocketCaravan
     /// - 온라인(공용 세상 시계): 시간을 건너뛰지 않고 의뢰 시간도 쓰지 않는다. 버프만.
     /// - 혼자 하기: 밤(18시~새벽 5시)에 자면 다음 아침 7시에 깨고, 낮에는 예전처럼 4시간 뒤 깬다.
     /// 푹 쉼 중에는 다시 쉴 수 없다(이유를 알려 줌). 따로 이름표나 자리를 만들지 않는다.
+    /// 11/18 은샘 B안: 깨고 나면 여관 사랑방에서 나그네 소문 카드 셋 중 하나를 골라 듣는다 (InnRumor, 들은 시세는 장부에).
     /// </summary>
     public class Inn : MonoBehaviour
     {
@@ -109,6 +110,7 @@ namespace PocketCaravan
         /// <summary>여관에서 자고 깬 순간 (지역 리액션 배우기 등이 듣는다)</summary>
         public static event Action Rested;
         float fade = -1f;             // -1 꺼짐, 0→2 어두워졌다가 밝아짐
+        bool rumorOpen;               // 11/18 깬 뒤 나그네 소문 창이 떠 있다 (그동안 멈춰 있게)
         bool slept;
         float baseDrain = -1f;
         PlayerController drainOwner;
@@ -164,6 +166,7 @@ namespace PocketCaravan
         {
             ApplyDrain();
             if (fade >= 0f) { UpdateFade(); return; }
+            if (rumorOpen) { UIState.Blocking = true; return; }
             var pc = PlayerController.Instance;
             if (pc == null || GameManager.I == null) { pendingHost = null; return; }
 
@@ -227,11 +230,16 @@ namespace PocketCaravan
             }
             if (fade >= 2f)
             {
-                fade = -1f;
-                UIState.Release();
-                Sfx.Play("levelup", .6f);
-                Notify.Show($"푹 쉬었다! {BuffHours:0}시간 동안 달려도 덜 지친다.", 4f);
-                Rested?.Invoke();
+                // 11/18 은샘 B안: 깨고 나면 사랑방에서 나그네 소문 하나 (InnRumor). 닫히면 깬다
+                fade = -1f; rumorOpen = true;
+                InnRumor.Begin(() =>
+                {
+                    rumorOpen = false;
+                    UIState.Release();
+                    Sfx.Play("levelup", .6f);
+                    Notify.Show($"푹 쉬었다! {BuffHours:0}시간 동안 달려도 덜 지친다.", 4f);
+                    Rested?.Invoke();
+                });
             }
         }
 
@@ -248,7 +256,7 @@ namespace PocketCaravan
         void OnGUI()
         {
             if (askHost != null) { DrawAsk(); return; }
-            if (fade < 0f) { DrawRestedBadge(); return; }
+            if (fade < 0f) { if (!rumorOpen) DrawRestedBadge(); return; }
             GUI.depth = -900;
             UIStyle.Begin();
             float a = fade < 1f ? fade : 2f - fade;
