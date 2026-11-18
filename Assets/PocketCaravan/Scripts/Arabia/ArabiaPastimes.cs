@@ -240,7 +240,7 @@ namespace PocketCaravan
                     float x = 44 + Mathf.Clamp01(pos[i] / Track) * (r.width - 100);
                     float bob = gallop[i] > 0f ? Mathf.Abs(Mathf.Sin((t + i) * 14f)) * 3f : 0f;
                     bool tripping = i == 0 && stumble > 0f;
-                    Pic(tripping ? "animal_camelRest" : "animal_camel", x, y + laneH - 2 - bob, laneH / 44f * 1.15f);
+                    Pic(tripping ? "animal_camelRest" : "animal_camel", x, y + laneH - 2 - bob, laneH / 44f * 1.15f, true);   // 11/18 그림이 왼쪽을 봐서 결승선(오른쪽) 쪽으로 뒤집음
                     if (gallop[i] > 0f && !tripping) for (int d = 0; d < 3; d++) CuteUI.Fill(new Rect(x - 4 - d * 5 - (t * 30f % 5f), y + laneH - 6 - d, 3, 2), new Color32(226, 196, 140, 200));
                 }
                 // 바늘 띠
@@ -307,7 +307,7 @@ namespace PocketCaravan
                 CuteUI.Fill(new Rect(0, r.height - 18, r.width, 6), new Color32(214, 180, 120, 255));
                 // 낙타 (걸을 때 흔들)
                 float bob = step > 0f ? Mathf.Abs(Mathf.Sin(Time.unscaledTime * 16f)) * 3f : 0f;
-                Pic("animal_camel", CamelX(), r.height - 12 - bob, .9f);
+                Pic("animal_camel", CamelX(), r.height - 12 - bob, .9f, true);   // 11/18 그림이 왼쪽을 봐서 목적지(오른쪽 천막) 쪽으로 뒤집음
                 // 날아가는 짐
                 for (int i = flying.Count - 1; i >= 0; i--)
                 {

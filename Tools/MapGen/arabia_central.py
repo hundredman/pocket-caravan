@@ -503,8 +503,7 @@ def dress(P):
                   cx + int((_h('px', cx, k) - .5) * 10), cy + int((_h('py', cy, k) - .5) * 6))
     for (x, y) in [(52, 132), (96, 144), (134, 152), (78, 126), (40, 128)]:
         P.stamp('module_cactus', x, y)
-    P.obstacle('loose_sand', 60, 142, 5, 3, 'sand1')
-    P.obstacle('loose_sand', 76, 139, 5, 3, 'sand2')
+    # 푹신한 모랫길(loose_sand)은 헷갈려서 뺐다 (2026-11-18)
     P.obstacle('sand_gust', 138, 147, 3, 3, 'gust')
     for (x0, y0, x1, y1) in [(60, 124, 74, 132), (20, 128, 34, 134), (98, 118, 112, 126)]:
         rockfield(P, x0, y0, x1, y1, ['drawn_rockWall', 'drawn_boulder', 'drawn_boulderSmall'], 0.5)
