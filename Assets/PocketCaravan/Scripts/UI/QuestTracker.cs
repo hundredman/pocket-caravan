@@ -391,23 +391,38 @@ namespace PocketCaravan
                 cx += cw;
                 CuteUI.Label(cx + 2, cy + 7.5f, "›", CuteUI.Sub, true); cx += 10;
             }
-            {   // 11/19 은샘 "마일스톤에 좌판까지": 마차 다음 목표. 아직 기능이 없어 "준비 중"으로만 보여 준다 (살 수 없음)
-                bool isNext = next == null;
-                string label = VehicleGoal.StallName;
+            bool hasStall = PlayerStall.Has(p);
+            {   // 11/19 은샘 "마일스톤에 좌판까지": 마차 다음 목표 (신용 5단계 + 1000냥, 장터 창에서 연다)
+                bool isNext = next == null && !hasStall;
+                string label = (hasStall ? "✓ " : "") + VehicleGoal.StallName;
                 float cw = Mathf.Round(CuteUI.Width(label, true, isNext) + 12);
                 var chip = new Rect(cx, cy, cw, 15);
-                CuteUI.Box(chip, 6, isNext ? CuteUI.SellSoft : CuteUI.ZeroSoft, isNext ? CuteUI.Sell : CuteUI.KeyLine);
-                CuteUI.LabelCenter(chip.center.x, chip.center.y, label, isNext ? CuteUI.Text : CuteUI.Sub, true, isNext);
+                CuteUI.Box(chip, 6, isNext ? CuteUI.SellSoft : hasStall ? CuteUI.Paper2 : CuteUI.ZeroSoft, isNext ? CuteUI.Sell : CuteUI.KeyLine);
+                CuteUI.LabelCenter(chip.center.x, chip.center.y, label, isNext || hasStall ? CuteUI.Text : CuteUI.Sub, true, isNext);
+            }
+            if (next == null && hasStall)
+            {   // 좌판을 열었다: 어디에 · 진열 · 모인 돈
+                float sx = CuteUI.Label(44, y + 33, $"내 좌판 · {PlayerStall.TownName(p, gm.Db)}", CuteUI.Text, false, true);
+                CuteUI.Label(sx + 6, y + 33.5f, $"진열 {PlayerStall.Count(p)}개 · 지금까지 {p.stallSold}개 팔림", CuteUI.Sub, true);
+                if (p.stallEarned > 0) CuteUI.LabelRight(w - 10, y + 33, $"판 돈 {p.stallEarned}냥", CuteUI.Up, true, true);
+                CuteUI.Bar(new Rect(44, y + 42, w - 54, 6), PlayerStall.Weight(p) / PlayerStall.Capacity, CuteUI.Sell, CuteUI.SellSoft);
+                CuteUI.Icon(CuteUI.Pic.Pin, 44, y + 51, 1, CuteUI.Sub);
+                string tip = PlayerStall.Count(p) == 0 ? "좌판이 비었어요. 들러서 짐을 올려 두면 저절로 팔려요" : p.stallEarned > 0 ? "판 돈은 좌판에 말 걸어 받아요" : "떠나 있어도 한 시간마다 조금씩 팔려요 · 하루 한 번 손님 맞이";
+                CuteUI.Label(53, y + 55, TradeLedgerUI.Fit(tip, w - 64, true, false), CuteUI.Sub, true);
+                return y + ch + 8;
             }
             if (next == null)
             {
                 int m = Mathf.Max(0, p.money), price = VehicleGoal.StallPrice;
+                int lv = Credit.Level(p);
+                bool canLv = lv >= VehicleGoal.StallCredit, stallReady = canLv && m >= price;
                 float sx = CuteUI.Label(44, y + 33, $"다음 목표 · {VehicleGoal.StallName}", CuteUI.Text, false, true);
-                CuteUI.Label(sx + 6, y + 33.5f, $"신용 {VehicleGoal.StallCredit}단계 · 준비 중", CuteUI.Sub, true);
-                CuteUI.LabelRight(w - 10, y + 33, $"{Mathf.Min(m, price)} / {price}냥", CuteUI.Sub, true, true);
+                CuteUI.Label(sx + 6, y + 33.5f, canLv ? $"신용 {VehicleGoal.StallCredit}단계 ✓" : $"신용 {VehicleGoal.StallCredit}단계 필요 (지금 {lv})", canLv ? CuteUI.Up : CuteUI.Sub, true);
+                if (stallReady) CuteUI.LabelRight(w - 10, y + 33, "열 수 있어요!", CuteUI.Up, true, true);
+                else CuteUI.LabelRight(w - 10, y + 33, $"{Mathf.Min(m, price)} / {price}냥", CuteUI.Sub, true, true);
                 CuteUI.Bar(new Rect(44, y + 42, w - 54, 6), m / (float)price, CuteUI.Sell, CuteUI.SellSoft);
                 CuteUI.Icon(CuteUI.Pic.Pin, 44, y + 51, 1, CuteUI.Sub);
-                CuteUI.Label(53, y + 55, TradeLedgerUI.Fit("장터 한 자리에 내 좌판을 열어, 맡긴 짐이 내가 없어도 팔려요 (곧 열려요)", w - 64, true, false), CuteUI.Sub, true);
+                CuteUI.Label(53, y + 55, TradeLedgerUI.Fit("우호 이상인 마을의 장터 창에서 열어요. 맡긴 짐이 내가 없어도 팔려요", w - 64, true, false), CuteUI.Sub, true);
                 return y + ch + 8;
             }
             int money = Mathf.Max(0, p.money), need = Mathf.Max(1, next.price);

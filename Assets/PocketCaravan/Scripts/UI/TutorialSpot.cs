@@ -57,6 +57,14 @@ namespace PocketCaravan
         static void ResetHold() { holdFrame = -9; journalTourShown = false; }
 
         static bool Seen(string id) { var gm = GameManager.I; return gm != null && gm.GetMemo(MemoPrefix + id, 0f) >= 1f; }
+        static readonly System.Collections.Generic.KeyValuePair<string, string>[] StallTour =
+        {
+            new System.Collections.Generic.KeyValuePair<string, string>("stall.cargo", "내 짐이에요. [올리기]로 좌판에 진열해요\n진열한 짐은 수레 무게에서 빠져요"),
+            new System.Collections.Generic.KeyValuePair<string, string>("stall.shelf", "진열한 물건이에요. 한 시간마다 반쯤은 하나씩 팔려요\n값은 이 마을 장터 파는 값 그대로예요"),
+            new System.Collections.Generic.KeyValuePair<string, string>("stall.earn", "판 돈은 여기 모여요. 들를 때 [받기]로 챙겨요"),
+            new System.Collections.Generic.KeyValuePair<string, string>("stall.rush", "하루 한 번, 직접 손님을 맞을 수 있어요 (7시~21시)\n손님이 바라는 물건을 빨리 건네면 더 비싸게 팔려요"),
+        };
+
         static void MarkSeen(string id) { var gm = GameManager.I; if (gm != null) gm.SetMemo(MemoPrefix + id, 1f); }
 
         static bool AnyPress()
@@ -96,7 +104,21 @@ namespace PocketCaravan
             var gm = GameManager.I;
             if (gm == null || StartScreen.IsOpen || gm.IsTravelling || UIState.PhotoMode || MapRoot.Current == null) return null;
             bool blocking = UIState.Blocking;
-            if (HaggleDuel.IsOpen || PackPuzzle.IsOpen) return null;   // 장터 위에 뜨는 창
+            if (HaggleDuel.IsOpen || PackPuzzle.IsOpen || StallRush.IsOpen) return null;   // 장터·좌판 위에 뜨는 창
+
+            // 11/19 신용 4·5단계 혜택: 장터 창에서 외상·좌판 단추를 처음 보면 설명 (아무 키나 = 다음)
+            if (!Seen("market.loan") && ScreenZones.Live("market.loan"))
+            { holdFrame = Time.frameCount; return Zone("market.loan", "market.loan", $"신용 4단계 혜택 외상이에요. 장터 상인이 돈을 먼저 빌려줘요 (지금 한도 {Loan.Limit(gm.Player)}냥)\n사흘 안에 아무 장터에서 갚아요. 넘기면 신용이 깎이고 1할이 붙어요", false); }
+            if (!Seen("market.stall") && ScreenZones.Live("market.stall"))
+            { holdFrame = Time.frameCount; return Zone("market.stall", "market.stall", $"신용 5단계: 이 마을에 내 좌판을 열 수 있어요 ({PlayerStall.Price}냥, 마을과 우호 이상)\n짐을 올려 두면 내가 떠나 있는 동안에도 조금씩 팔려요", false); }
+            // 내 좌판 창을 처음 열면 하나씩 소개
+            if (StallWindow.Showing)
+            {
+                for (int i = 0; i < StallTour.Length; i++)
+                    if (!Seen(StallTour[i].Key) && ScreenZones.Live(StallTour[i].Key))
+                    { holdFrame = Time.frameCount; return Zone(StallTour[i].Key, StallTour[i].Key, StallTour[i].Value, false); }
+                return null;
+            }
 
             // 11/18 은샘: 장부를 처음 열면 탭 셋을 하나씩 소개 (튜토리얼이 아니어도 처음 한 번. 아무 키나 누르면 다음 탭)
             if (TradeLedgerUI.Showing)

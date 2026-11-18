@@ -150,6 +150,7 @@ namespace PocketCaravan
             Player.origin = null;
             Player.reputation.Initialize(null);
             Player.money = Player.credit = Player.creditFloor = 0;
+            Player.ResetLoanAndStall();
             Player.stamina = 1f;
             Player.shake = 0f;
             Drops.Clear();
@@ -361,7 +362,7 @@ namespace PocketCaravan
                 if (c.origin == null || string.IsNullOrEmpty(c.startScene) || !c.startScene.StartsWith(prefix)) continue;
                 if (Player.origin == c.origin) return;
                 Player.origin = c.origin;
-                Player.credit = c.origin.startingCredit; Player.creditFloor = 0;
+                Player.credit = c.origin.startingCredit; Player.creditFloor = 0; Player.ResetLoanAndStall();
                 Player.reputation.Initialize(ReputationState.HomeOf(Player.origin));
                 Debug.Log($"[개발 시작] {map.mapId}에서 바로 Play: 출신을 {c.origin.displayName}(으)로 맞춤");
                 return;
@@ -414,6 +415,7 @@ namespace PocketCaravan
             Player.origin = choice.origin;
             Player.credit = choice.origin != null ? choice.origin.startingCredit : 0;
             Player.creditFloor = 0;
+            Player.ResetLoanAndStall();
             Player.money = Db.startMoney;
             Player.reputation.Initialize(ReputationState.HomeOf(Player.origin));
             UIState.Reset();
@@ -432,7 +434,7 @@ namespace PocketCaravan
             SaveSystem.UseSlot(session.saveFileName);
             autosave = true;
             Player.money = session.startMoney;
-            if (session.startOrigin != null) { Player.origin = session.startOrigin; Player.credit = session.startOrigin.startingCredit; Player.creditFloor = 0; }
+            if (session.startOrigin != null) { Player.origin = session.startOrigin; Player.credit = session.startOrigin.startingCredit; Player.creditFloor = 0; Player.ResetLoanAndStall(); }
             if (session.startVehicle != null) { Player.vehicle = session.startVehicle; Player.stowedVehicle = null; }
             saveToLoad = SaveSystem.Read();
             Debug.Log($"[저장] {session.regionId} 시험 세션: 본편 저장 대신 전용 파일 {SaveSystem.FileName} 사용"
@@ -476,6 +478,8 @@ namespace PocketCaravan
             foreach (var t in Db.towns) if (t != null) GetMarket(t);   // NPC 상인도 거래하므로 모든 장터를 깨운다
             foreach (var m in markets.Values) m.RecoverOneHour();
             Contracts.OnHour();
+            Loan.OnHour(Player, Clock);      // 11/19 외상 기한
+            PlayerStall.OnHour(this);        // 11/19 내 좌판이 저절로 판다
             Traders.OnHour();
             if (hour == 6 && Clock.IsMarketDay) Notify.Show("오늘은 장날! 장터 값이 오른다.", 4f);
         }
@@ -574,7 +578,7 @@ namespace PocketCaravan
                 mapHeight = MapRoot.Current.ground.cellBounds.size.y,
                 px = pc != null ? pc.transform.position.x : 0, py = pc != null ? pc.transform.position.y : 0,
                 fx = pc != null ? pc.Motor.Facing.x : 0, fy = pc != null ? pc.Motor.Facing.y : -1,
-                money = Player.money, credit = Credit.Level(Player), creditPoints = Player.credit, creditFloor = Player.creditFloor, creditVersion = Credit.Version,   // 11/19 credit 칸은 옛 빌드가 읽어도 맞게 단계, 점수는 creditPoints
+                money = Player.money, credit = Credit.Level(Player), creditPoints = Player.credit, creditFloor = Player.creditFloor, creditVersion = Credit.Version, debt = Player.debt, debtDue = Player.debtDue,   // 11/19 credit 칸은 옛 빌드가 읽어도 맞게 단계, 점수는 creditPoints
                 origin = Player.origin != null ? Player.origin.id : null,
                 vehicle = Player.vehicle != null ? Player.vehicle.id : null,
                 stowedVehicle = Player.stowedVehicle != null ? Player.stowedVehicle.id : null,
@@ -601,6 +605,7 @@ namespace PocketCaravan
             d.recentTrades.AddRange(Player.ledger.ExportRecent());
             foreach (var kv in cooldowns) { d.cooldownKeys.Add(kv.Key); d.cooldownUntil.Add(kv.Value); }
             Player.reputation.ExportTo(d);
+            PlayerStall.Export(Player, d);
             if (!SaveSystem.Write(d)) return false;
             LastSavedAt = Time.unscaledTime;
             lastAutoSaveTry = Time.unscaledTime;
@@ -623,6 +628,7 @@ namespace PocketCaravan
                 Player.creditFloor = Mathf.Max(0, d.credit);
             }
             else { Player.credit = d.creditPoints; Player.creditFloor = Mathf.Max(0, d.creditFloor); }
+            Player.debt = Mathf.Max(0, d.debt); Player.debtDue = d.debtDue;   // 11/19 외상 (옛 저장 0)
             // 출신은 시작 화면이 생기면서 저장에 들어감. 옛 저장(값 없음)은 기본 출신 그대로.
             var savedOrigin = StartChoices.FindOrigin(d.origin);
             if (savedOrigin != null) Player.origin = savedOrigin;
@@ -655,6 +661,7 @@ namespace PocketCaravan
             foreach (var b in Contracts.boards)
                 foreach (var c in b.list) Contracts.nextId = Mathf.Max(Contracts.nextId, c.id + 1);
             Contracts.InitBoards();
+            PlayerStall.Import(Player, d, ItemById);   // 11/19 내 좌판 (옛 저장 = 없음)
             if (creditMigrated) for (int k = 1; k <= Player.creditFloor; k++) Contracts.OnCreditLevel(k);   // 옛 저장도 그 단계의 게시판으로
             if (d.traders.Count > 0) Traders.traders = new List<NpcTraders.Trader>(d.traders);
             GoryeoLayout.MigrateDrops(d);   // 옛 배치 저장의 떨어진 짐 → 새 맵 도착 자리 옆

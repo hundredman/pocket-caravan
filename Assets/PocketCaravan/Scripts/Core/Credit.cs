@@ -59,8 +59,9 @@ namespace PocketCaravan
                 case 1: return "게시판에 급한 짐 의뢰";
                 case 2: return "깨지기 쉬운 짐 의뢰 · 한 번에 4개";
                 case 3: return "게시판 귀한 짐 의뢰";
-                case 4: return "큰 주문 의뢰";
-                // 5 좌판 · 6 중앙 대륙 장거리는 만들면 여기에 (아직 없는 것은 열린다고 알리지 않는다)
+                case 4: return "큰 주문 의뢰 · 장터 외상";
+                case 5: return "내 좌판 (장터 창에서 열기) · 외상 한도 500냥";
+                // 6 중앙 대륙 장거리는 만들면 여기에 (아직 없는 것은 열린다고 알리지 않는다)
                 default: return null;
             }
         }

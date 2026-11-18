@@ -10,6 +10,19 @@ namespace PocketCaravan
         public int credit;
         /// <summary>11/19 한 번 오른 신용 단계 (점수가 깎여도 이 밑으로 안 내려감)</summary>
         public int creditFloor;
+        /// <summary>11/19 외상 (신용 4단계, Economy/Loan.cs): 갚을 돈과 기한(내 의뢰 시간 PlayHours)</summary>
+        public int debt; public float debtDue;
+        /// <summary>11/19 내 좌판 (신용 5단계, Economy/PlayerStall.cs): 연 장터(없으면 null) · 진열한 물건 · 모인 판 돈 · 판 개수 · 손님 맞이 한 날</summary>
+        public string stallTown;
+        public readonly Inventory stallStock = new Inventory();
+        public int stallEarned, stallSold, stallRushDay = -1;
+
+        /// <summary>새 게임·시험 판: 외상과 좌판을 비운다</summary>
+        public void ResetLoanAndStall()
+        {
+            debt = 0; debtDue = 0f;
+            stallTown = null; stallStock.Clear(); stallEarned = 0; stallSold = 0; stallRushDay = -1;
+        }
         public VehicleData vehicle;
         /// <summary>11/17 V로 넣어 둔 운반 수단 (넣어 두면 vehicle은 등짐). 다시 V를 누르면 꺼낸다. 새 수단을 사면 비운다</summary>
         public VehicleData stowedVehicle;

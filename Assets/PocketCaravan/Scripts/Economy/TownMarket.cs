@@ -63,7 +63,7 @@ namespace PocketCaravan
         void Close()
         {
             open = false;
-            deal = null;
+            deal = null; loanOpen = false; stallConfirm = false;
             UIState.Release(this);
         }
 
@@ -71,6 +71,7 @@ namespace PocketCaravan
         {
             if (!open || Time.frameCount == openedFrame) return;
             if (HaggleDuel.IsOpen || Time.frameCount == HaggleDuel.ClosedFrame) return;   // 11/15 흥정 미니게임 중
+            if (TutorialSpot.HoldsWindow) return;   // 11/19 외상·좌판 처음 설명 중엔 키로 닫지 않는다
             if (InputReader.LedgerPressed()) { OpenLedger(); return; }
             if (InputReader.CancelPressed()) { Close(); return; }
             // 11/11 Space = 화면의 큰 사기·팔기 버튼. 살(팔) 수 없거나 흥정 칸·운반 수단 탭이면 아무 일도 없다
@@ -179,12 +180,13 @@ namespace PocketCaravan
             LoadBar(new Rect(x + 13, hy - 4, 56, 8), p.TotalWeight, loadPreview, p.Capacity);
             x = CuteUI.Label(x + 73, hy, $"{p.TotalWeight:0.#}/{p.Capacity:0.#}", CuteUI.Sub, true) + 10;
             loadPreview = 0f;   // 아래 거래 칸이 이번 화면에 다시 채운다
-            if (gm.Clock.IsMarketDay)
+            if (gm.Clock.IsMarketDay && !loanOpen)   // 외상 단추를 펼치면 그 자리를 쓴다
             {
                 float bw = CuteUI.Width("장날", true, true) + 12;
                 CuteUI.Box(new Rect(x, hy - 7, bw, 14), 6, CuteUI.SellSoft, CuteUI.Sell);
                 CuteUI.LabelCenter(x + bw / 2, hy, "장날", CuteUI.Sell, true, true);
             }
+            DrawLoan(gm, p, r, hy);
 
             var c = new Rect(r.x + 15, r.y + 60, r.width - 30, r.height - 92);
             CuteUI.Box(c, 7, CuteUI.Paper, CuteUI.Ink);
@@ -206,6 +208,7 @@ namespace PocketCaravan
             float fy = r.yMax - 17;
             bool recover = town.region != null && StandingRecovery.Negative(p.reputation, ReputationPricing.Scope(town), ReputationPricing.Target(town));
             float right = r.xMax - 15;
+            right = DrawStallButton(p, right, fy);
             if (town.facilities.Count > 0 || recover)
             {
                 string fl = recover ? "평판 회복·시설" : "마을 시설";
@@ -690,6 +693,78 @@ namespace PocketCaravan
             foreach (var item in Market.KnownItems) if (item != null && seen.Add(item)) result.Add(item);
             foreach (var kv in p.cargo.Items) if (seen.Add(kv.Key)) result.Add(kv.Key);
             return result;
+        }
+
+        // ---------------- 11/19 외상 (신용 4단계, Loan) · 좌판 열기 (신용 5단계, PlayerStall) ----------------
+
+        bool loanOpen, stallConfirm;
+
+        /// <summary>위 줄 오른쪽 "외상" 알약. 누르면 아래에 받기·갚기 칸</summary>
+        void DrawLoan(GameManager gm, PlayerState p, Rect r, float hy)
+        {
+            if (!Loan.Unlocked(p) && p.debt <= 0) { loanOpen = false; return; }
+            // 펼치면 알약을 줄여 받기·갚기 단추 자리를 낸다 (기한은 아래 알림 줄에)
+            string t = loanOpen ? (p.debt > 0 ? $"외상 {p.debt}냥" : "외상") : p.debt > 0 ? $"외상 {p.debt}냥 · {Loan.DueText(p, gm.Clock)}" : $"외상 0/{Loan.Limit(p)}냥";
+            float bw = Mathf.Round(CuteUI.Width(t, true, true) + 16);
+            var b = new Rect(r.xMax - 52 - bw, hy - 9, bw, 18);
+            ScreenZones.MarkSpot("market.loan", b);
+            bool late = p.debt > 0 && Loan.HoursLeft(p, gm.Clock) < 12f;
+            CuteUI.Box(b, 7, late ? CuteUI.AlertSoft : CuteUI.Paper2, late ? CuteUI.Alert : CuteUI.KeyLine);
+            CuteUI.LabelCenter(b.center.x, b.center.y, t, late ? CuteUI.Down : CuteUI.Text, true, true);
+            if (CuteUI.Hit(b, GUIContent.none, GUIStyle.none) && !HaggleDuel.IsOpen)
+            {
+                loanOpen = !loanOpen; Sfx.Play("open", .4f);
+                if (loanOpen) message = LoanHint(gm, p);
+            }
+            if (!loanOpen) return;
+            // 펼치면 같은 줄 알약 왼쪽에 받기·갚기 단추 (아래 칸에 겹치지 않게. 설명은 아래 알림 줄)
+            float bx = b.x - 6;
+            var pay = new Rect(bx - 62, b.y, 62, 18); bx = pay.x - 4;
+            if (p.debt > 0 && p.money > 0)
+            {
+                if (CuteUI.Button(pay, p.money >= p.debt ? "다 갚기" : $"{p.money}냥 갚기"))
+                { int paid = Loan.Repay(p); message = p.debt <= 0 ? $"외상 {paid}냥을 다 갚았다." : $"외상 {paid}냥을 갚았다. 남은 외상 {p.debt}냥."; Sfx.Play("success", .6f); gm.SaveNow(); }
+            }
+            else { CuteUI.Box(pay, 7, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter(pay.center.x, pay.center.y, "갚기", CuteUI.Zero, true); }
+            foreach (int amt in new[] { Loan.Step * 2, Loan.Step })
+            {
+                var ab = new Rect(bx - 66, b.y, 66, 18); bx = ab.x - 4;
+                if (Loan.Room(p) >= amt)
+                {
+                    if (CuteUI.SoftButton(ab, $"+{amt}냥 받기"))
+                    { int got = Loan.Borrow(p, gm.Clock, amt); message = $"외상으로 {got}냥을 받았다 (모두 {p.debt}냥). {Loan.DueText(p, gm.Clock)}, 아무 장터에서 갚자."; Sfx.Play("coin"); gm.SaveNow(); }
+                }
+                else { CuteUI.Box(ab, 6, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter(ab.center.x, ab.center.y, $"+{amt}냥", CuteUI.Zero, true); }
+            }
+        }
+
+        static string LoanHint(GameManager gm, PlayerState p) =>
+            p.debt > 0 ? $"외상 {p.debt}냥 · {Loan.DueText(p, gm.Clock)} · 더 받을 수 있는 돈 {Loan.Room(p)}냥"
+                       : $"한도 {Loan.Limit(p)}냥 · 이자 없음 · 사흘 안에 아무 장터에서 갚기 (넘기면 신용 −{Loan.LatePoints}점)";
+
+        /// <summary>아래 줄 "좌판 열기" (신용 5단계부터 보임). 두 번 눌러야 연다 (1000냥이라). 그린 단추 왼쪽 x를 돌려준다</summary>
+        float DrawStallButton(PlayerState p, float right, float fy)
+        {
+            if (!PlayerStall.Unlocked(p) && !PlayerStall.Has(p)) return right;
+            bool here = PlayerStall.At(p, town);
+            string label = here ? "내 좌판이 있는 장터" : stallConfirm ? $"정말 열기 ({PlayerStall.Price}냥)" : PlayerStall.Has(p) ? "좌판 옮겨 열기" : "좌판 열기";
+            float bw = CuteUI.Width(label, true) + 18;
+            var b = new Rect(right - bw, fy - 9, bw, 18);
+            ScreenZones.MarkSpot("market.stall", b);
+            if (here) { CuteUI.Box(b, 7, CuteUI.SellSoft, CuteUI.Sell); CuteUI.LabelCenter(b.center.x, b.center.y, label, CuteUI.Sell, true, true); return right - bw - 8; }
+            string why = PlayerStall.Denial(p, town);
+            if (CuteUI.SoftButton(b, label) && !HaggleDuel.IsOpen)
+            {
+                if (why != null) { message = why; stallConfirm = false; Sfx.Play("cancel"); }
+                else if (!stallConfirm) { stallConfirm = true; message = $"한 번 더 누르면 {PlayerStall.Price}냥으로 이 장터에 내 좌판을 열어요."; }
+                else if (PlayerStall.Open(p, town))
+                {
+                    stallConfirm = false;
+                    message = "내 좌판을 열었다! 장터 상인 근처 좌판에 말을 걸어 물건을 올려요.";
+                    Sfx.Play("levelup"); GameManager.I.SaveNow();
+                }
+            }
+            return right - bw - 8;
         }
 
         void Buy(ItemData item) => BuyHaggled(item,0);
