@@ -55,8 +55,8 @@ namespace PocketCaravan
             var player = PlayerController.Instance;
             var gm = GameManager.I;
             if (player == null || gm == null) return;
-            stateTime += Time.deltaTime;
             bool locked = UIState.Blocking || gm.IsTravelling;
+            if (!locked) stateTime += Time.deltaTime;   // 11/18 도적 창·대화가 떠 있는 동안은 쫓기 시간이 흐르지 않게
             Vector2 to = player.transform.position - transform.position;
             float dist = to.magnitude;
             Vector2 dir = Vector2.zero;
@@ -82,7 +82,7 @@ namespace PocketCaravan
                     speed = chaseSpeed;
                     if (alert != null) alert.enabled = stateTime < 1.2f;
                     if (dist < 0.75f && !locked) Catch();
-                    else if (dist > giveUpRange || stateTime > 14f)
+                    else if (!met && !locked && (dist > giveUpRange || stateTime > 14f))   // 11/18 잡힌 뒤(도적 창)엔 '따돌렸다'로 끝내지 않는다
                     {
                         Notify.Show("도적을 따돌렸다!");
                         Sfx.Play("success");

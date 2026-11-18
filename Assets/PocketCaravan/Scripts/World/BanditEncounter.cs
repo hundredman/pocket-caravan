@@ -380,7 +380,7 @@ namespace PocketCaravan
             // 끝 글자 (그룹 밖에서: 그룹 안에서 키우면 기준점이 어긋나 창 밖에 그려졌다)
             if (end && et > .15f)
             {
-                float k = Back((et - .15f) / .35f);
+                float k = Mathf.Max(0.05f, Back((et - .15f) / .35f));   // 11/18 크기 0이면 GUI.matrix가 무효 → 경고가 프레임마다 쌓여 멈춤
                 var c = new Vector2(inner.x + w / 2f, inner.y + h / 2f + 4);
                 var m = GUI.matrix;
                 CuteUI.ScaleAround(2f * k, c);
@@ -471,7 +471,7 @@ namespace PocketCaravan
             CuteUI.Box(pan, 6, Hex(0x1A1220), CuteUI.Ink, 2);
             if (!end && combo >= 2)
             {
-                float k = (j == 1 || j == 2) ? Back(dt / .15f) : 1f;
+                float k = (j == 1 || j == 2) ? Mathf.Max(0.05f, Back(dt / .15f)) : 1f;   // 11/18 크기 0 방지 (위와 같음)
                 var m = GUI.matrix;
                 var c = new Vector2(pan.center.x, pan.center.y - 5);
                 CuteUI.ScaleAround(1.6f * k, c);

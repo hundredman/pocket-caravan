@@ -625,6 +625,7 @@ namespace PocketCaravan
         /// </summary>
         public static void ScaleAround(float s, Vector2 pivot)
         {
+            if (Mathf.Abs(s) < 0.01f) s = s < 0f ? -0.01f : 0.01f;   // 11/18 크기 0 행렬은 Unity가 거부하고 경고를 쏟아낸다
             GUI.matrix = GUI.matrix * Matrix4x4.TRS(pivot, Quaternion.identity, new Vector3(s, s, 1f)) * Matrix4x4.TRS(-pivot, Quaternion.identity, Vector3.one);
         }
         public static void RotateAround(float degrees, Vector2 pivot)
