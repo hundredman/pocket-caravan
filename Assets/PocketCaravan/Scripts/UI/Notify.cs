@@ -429,8 +429,11 @@ namespace PocketCaravan
                 // 뒤에 기다리는 알림이 있으면 적어도 MinShown초는 보이고 넘긴다 (하나씩 띄우니 줄이 길어지지 않게)
                 if (entries.Count > MaxVisible)
                 {
+                    // 11/18 은샘 "처음 팝업이 튜토리얼 7단계까지 남아 있다": 앞 알림이 2.25초 넘게 떠 있을 때 뒤 알림이 오면
+                    //   끝 시각을 매 프레임 "지금 + 0.35초"로 다시 미뤄 영영 안 사라졌다 → 앞당길 때만 바꾼다
                     float start = e.shownAt, early = start + Mathf.Max(MinShown, Mathf.Min(e.seconds, 2.6f));
-                    if (early < e.until) { e.until = Mathf.Max(early, now + .35f); entries[i] = e; }
+                    float target = Mathf.Max(early, now + .35f);
+                    if (target < e.until) { e.until = target; entries[i] = e; }
                 }
                 shown++;
             }
