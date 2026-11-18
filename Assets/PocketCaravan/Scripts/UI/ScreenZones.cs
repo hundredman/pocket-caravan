@@ -15,12 +15,19 @@ namespace PocketCaravan
         static readonly Dictionary<string, Zone> zones = new Dictionary<string, Zone>();
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void ResetStatics() { zones.Clear(); centers.Clear(); }
+        static void ResetStatics() { zones.Clear(); centers.Clear(); spots.Clear(); }
 
         /// <summary>이번 프레임 id가 r을 차지한다 (OnGUI마다 부른다. 안 부르면 다음 프레임 뒤에 비워진다)</summary>
         public static void Mark(string id, Rect r) => zones[id] = new Zone { rect = r, frame = Time.frameCount };
 
         static bool Live(Zone z) => Time.frameCount - z.frame <= 1;
+
+        // 11/18 튜토리얼 스포트라이트(TutorialSpot)가 밝힐 자리: 창 안 단추 등. 다른 UI가 피하지 않게 zones와 따로 둔다
+        static readonly Dictionary<string, Zone> spots = new Dictionary<string, Zone>();
+        public static void MarkSpot(string id, Rect r) => spots[id] = new Zone { rect = r, frame = Time.frameCount };
+        /// <summary>id 자리 (이번·지난 프레임에 올렸으면). zones · spots 둘 다 본다</summary>
+        public static Rect? Get(string id) => zones.TryGetValue(id, out var z) && Live(z) ? z.rect : spots.TryGetValue(id, out var s) && Live(s) ? s.rect : (Rect?)null;
+        public static bool Live(string id) => Get(id).HasValue;
 
         // 11/11 은샘: 화면 가운데에 뜨는 것(위 가운데 알약 · 아래 목표 줄). 양옆 벽(FreeRow)에는 넣지 않고, 떠다니는 작은 표가 피할 때만 쓴다
         static readonly Dictionary<string, Zone> centers = new Dictionary<string, Zone>();

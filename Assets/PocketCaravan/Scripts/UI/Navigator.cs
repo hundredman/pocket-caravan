@@ -27,6 +27,8 @@ namespace PocketCaravan
         /// </summary>
         public struct Hint { public string kind, id, label; public Interactable target; }
         public static readonly List<System.Func<Hint?>> Tutorials = new List<System.Func<Hint?>>();
+        /// <summary>11/18 지금 튜토리얼이 가리키는 곳 (TutorialSpot이 본다)</summary>
+        public static Hint? Tutorial => TutorialHint();
         static Hint? TutorialHint() { foreach (var f in Tutorials) { var h = f != null ? f() : null; if (h.HasValue) return h; } return null; }
 
         public static Result? Compute(GameManager gm)

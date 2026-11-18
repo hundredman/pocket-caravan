@@ -11,6 +11,13 @@ namespace PocketCaravan
         public const int Count = 8;
         public const int Run = 0, Status = 1, Inventory = 2, Map = 3, Quests = 4, Bought = 5, Sold = 6, Ledger = 7;
 
+        // 11/18 지금 배우는 것 (지역 Intro가 매 프레임 KeyTask를 부를 때 적는다). 튜토리얼 스포트라이트(TutorialSpot)가 본다
+        static int current = -1, currentFrame = -9;
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics() { current = -1; currentFrame = -9; }
+        /// <summary>지금 이 배우기 단계인가 (이번·지난 프레임에 Intro가 알렸으면)</summary>
+        public static bool IsActive(int task) => current == task && Time.frameCount - currentFrame <= 2;
+
         /// <param name="bag">소지품 이름 (고려 "보따리(소지품)")</param>
         /// <param name="mapGoal">지도에서 해 볼 것 (고려 "장단 찾아보기"). 없으면 펼쳐 보기만</param>
         public static string[] Tasks(string bag = "소지품 주머니", string mapGoal = null) => new[]
@@ -55,6 +62,7 @@ namespace PocketCaravan
         public static int KeyTask(int step, ref float runTime)
         {
             int task = step - 2;
+            current = task; currentFrame = Time.frameCount;
             if (task == Run)
             {
                 if (!UIState.Blocking && InputReader.Run() && InputReader.MoveVector().sqrMagnitude > 0.1f)

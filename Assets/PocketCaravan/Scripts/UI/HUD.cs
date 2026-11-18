@@ -300,6 +300,7 @@ namespace PocketCaravan
                 CuteUI.Icon(b.pic, x + Mathf.Floor((ButtonSize - s.x + 1) / 2f), 4 + Mathf.Floor((ButtonSize - s.y) / 2f));
                 float kw = CuteUI.KeycapWidth(b.label);
                 CuteUI.Keycap(x + Mathf.Round((ButtonSize - kw) / 2f), 4 + ButtonSize - 5, b.label);
+                ScreenZones.MarkSpot("hud.btn." + b.key, new Rect(x, 4, ButtonSize, ButtonSize + 6));   // 11/18 튜토리얼 스포트라이트 (장부 단추)
                 if (!UIState.Blocking && GUI.Button(new Rect(x, 4, ButtonSize, ButtonSize + 8), GUIContent.none, GUIStyle.none)) InputReader.Press(b.key);
                 x += ButtonSize + ButtonGap;
             }

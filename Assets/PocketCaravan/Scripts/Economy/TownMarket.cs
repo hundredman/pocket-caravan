@@ -180,7 +180,10 @@ namespace PocketCaravan
             float tx = c.x + 6;
             if (CuteUI.Tab(tx, c.y, "사기", CuteUI.Pic.Basket, marketTab == 0, out float w0) && marketTab != 0) SetTab(0);
             tx += w0 + 3;
+            float sellX = tx;
             if (CuteUI.Tab(tx, c.y, "팔기", CuteUI.Pic.Coin7, marketTab == 1, out float w1) && marketTab != 1) SetTab(1);
+            ScreenZones.MarkSpot("market.window", r); ScreenZones.MarkSpot("market.window." + town.id, r);   // 11/18 튜토리얼 스포트라이트: 장터 창이 열려 있다 · "팔기" 칸 · 사기·팔기 단추
+            if (marketTab != 1) ScreenZones.MarkSpot("market.sellTab", new Rect(sellX, c.y - 17, w1, 17));
             tx += w1 + 3;
             if (town.vehiclesForSale.Count > 0 && CuteUI.Tab(tx, c.y, "운반 수단", CuteUI.Pic.Sack, marketTab == 2, out _) && marketTab != 2) SetTab(2);
             if (marketTab > 1 && town.vehiclesForSale.Count == 0) SetTab(0);
@@ -375,6 +378,7 @@ namespace PocketCaravan
             string label = est.count > 0 ? $"{est.count}개 {(selling ? "팔기" : "사기")}" : selling ? "팔 수 없어요" : "살 수 없어요";
             if (est.count > 0)
             {
+                ScreenZones.MarkSpot(selling ? "market.sell" : "market.buy", btn);
                 bool pressed = CuteUI.Button(btn, label, selling ? CuteUI.Pic.Coin7 : CuteUI.Pic.Basket);
                 CuteUI.Keycap(btn.xMax - CuteUI.KeycapWidth("Space") - 6, btn.center.y - 6.5f, "Space", true);
                 if (pressed) TradeBatch(est); else readyEst = est;
