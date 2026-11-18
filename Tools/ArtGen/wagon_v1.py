@@ -48,10 +48,10 @@ def cargo(stage):
     base = 22
     if stage >= 1:
         g.paste(HC.crate(), 0, base - 10); g.paste(HC.crate(), 20, base - 10)
-    if stage >= 2:
+    if stage >= 2:   # 11/19 앞·뒤와 같은 짐: 2단계는 상자 둘 + 자루 하나 (항아리는 3단계부터)
         g.paste(HC.sack(), 9, base - 9)
-        g.paste(HC.jar(), 15, base - 9)
     if stage >= 3:
+        g.paste(HC.jar(), 15, base - 9)
         g.paste(HC.bundle(), 2, base - 15); g.paste(HC.crate(False), 12, base - 17); g.paste(HC.bundle(), 18, base - 15)
         for x in (7, 22):   # 새끼줄 (고려도경: 짐은 새끼줄로 단단히 묶는다)
             for y in range(base - 14, base - 1):
@@ -118,10 +118,11 @@ def harness(im):
 
 
 def end_cargo(stage):
-    """앞·뒤에서 본 짐 (폭 24): 1 상자 하나 → 2 상자 둘 나란히 → 3 위에 자루·작은 상자·자루를 한 단 더, 새끼줄 두 가닥"""
+    """앞·뒤에서 본 짐 (폭 24): 1 상자 둘 나란히 → 2 그 위로 자루 하나 → 3 위에 자루·작은 상자·자루를 한 단 더, 새끼줄 두 가닥"""
     g = HC.C(24, 22)
-    if stage == 1: g.paste(HC.crate(), 7, 11)
-    if stage >= 2: g.paste(HC.crate(), 1, 11); g.paste(HC.crate(), 12, 11)
+    # 11/19 옆모습과 같은 짐: 1 상자 둘 → 2 + 자루 하나(두 상자 사이 위로 보인다) → 3 위 한 단
+    if stage >= 1: g.paste(HC.crate(), 1, 11); g.paste(HC.crate(), 12, 11)
+    if stage == 2: g.paste(HC.sack(), 7, 6)
     if stage >= 3:
         g.paste(HC.sack(), 0, 4); g.paste(HC.crate(False), 8, 5); g.paste(HC.sack(), 15, 4)
         for x in (6, 17):
