@@ -96,56 +96,78 @@ def side(stage, frame=''):
     out = Image.new('RGBA', (W, H), (0, 0, 0, 0))
     hb = horse(frame)
     # 먼 쪽 끌채는 말 몸 뒤 (말보다 먼저), 가까운 쪽 끌채·수레는 말 위에 그린다
-    out.alpha_composite(hb, (0, H - 32))
+    out.alpha_composite(harness(hb), (0, H - 32))
     out.alpha_composite(cart(stage, frame).im, (0, 0))
     return out
 
 
 # ---------------- 앞·뒤 (짐말 앞·뒷모습 + 수레 짐칸 끝면) ----------------
+# 11/19 은샘 "짐 실은 앞뒤가 이상해" 2판: 말을 짐칸에 붙이고(끌채 두 개가 말 양옆으로), 짐은 틈 없이 고르게 쌓고(뒤 말 꼬리가 짐 틈으로 비치지 않게),
+# 짐말의 붉은 안장 천은 마차에선 가죽 끈 색으로.
 EW, EH = 30, 58
+STRAP = {(150, 58, 52): (91, 67, 47), (176, 78, 66): (120, 82, 48)}   # 붉은 안장 천 → 가죽 끈 (d · e)
+
+
+def harness(im):
+    px = im.load()
+    for y in range(im.height):
+        for x in range(im.width):
+            c = px[x, y]
+            if c[3] and c[:3] in STRAP: px[x, y] = STRAP[c[:3]] + (255,)
+    return im
 
 
 def end_cargo(stage):
-    """앞·뒤에서 본 짐: 손수레 짐(상자 0~3)에 3단계는 양옆 자루를 더 얹는다"""
-    g = HC.C(26, 22)
-    if stage >= 1: g.paste(HC.crate(), 0, 12)
-    if stage >= 2: g.paste(HC.crate(), 15, 12)
-    if stage >= 2: g.paste(HC.sack(), 8, 13)
+    """앞·뒤에서 본 짐 (폭 24): 1 상자 하나 → 2 상자 둘 나란히 → 3 위에 자루·작은 상자·자루를 한 단 더, 새끼줄 두 가닥"""
+    g = HC.C(24, 22)
+    if stage == 1: g.paste(HC.crate(), 7, 11)
+    if stage >= 2: g.paste(HC.crate(), 1, 11); g.paste(HC.crate(), 12, 11)
     if stage >= 3:
-        g.paste(HC.bundle(), 0, 5); g.paste(HC.crate(False), 9, 4); g.paste(HC.bundle(), 14, 5)
+        g.paste(HC.sack(), 0, 4); g.paste(HC.crate(False), 8, 5); g.paste(HC.sack(), 15, 4)
+        for x in (6, 17):
+            for y in range(6, 21):
+                if g.get(x, y)[3] and g.get(x, y)[:3] != P['O']: g.px(x, y, 'n')
     return g
 
 
-def box_end(c, oy, stage, front):
-    """짐칸 끝면 (앞에서 보면 앞판, 뒤에서 보면 뒤판) + 양옆 바퀴 두께. 짐칸 너비 26"""
+def box_end(c, oy, stage):
+    """짐칸 끝면 + 양옆 바퀴 두께. 짐칸 너비 26 (x 2~27). oy = 짐칸 윗면 줄"""
     x0, x1 = 2, 27
     HC.edge_wheel(c, 0, oy + 4, 14); HC.edge_wheel(c, x1, oy + 4, 14)
-    c.rect(x0 + 1, oy, x1 - 1, oy + 6, 'd')                      # 짐칸 바닥 안쪽
+    c.rect(x0 + 1, oy - 2, x1 - 1, oy + 6, 'd')                  # 짐칸 안쪽 (짐 아래·사이가 비치지 않게 조금 높게)
     for x in range(x0 + 2, x1 - 1):
-        if (x - x0) % 4 == 3: c.vline(x, oy + 1, oy + 6, 'i')
-    c.hline(x0 + 1, x1 - 1, oy, 'i')
-    if stage: c.paste(end_cargo(stage), x0 + 1, oy - 15)
+        if (x - x0) % 4 == 3: c.vline(x, oy - 1, oy + 6, 'i')
+    c.hline(x0 + 1, x1 - 1, oy - 2, 'i')
+    if stage: c.paste(end_cargo(stage), x0 + 1, oy - 14)
     for i, k in enumerate(['H', 'h', 'w', 'd', 'w', 'm', 'd']):
         c.hline(x0, x1, oy + 7 + i, k)
     for x in (x0 + 6, x1 - 8): c.px(x, oy + 9, 'm'); c.px(x + 2, oy + 12, 'd')
     for x in (x0, x1 - 1):
-        c.vline(x, oy - 1, oy + 13, 'l'); c.vline(x + 1, oy - 1, oy + 13, 'm'); c.px(x, oy - 1, 'H'); c.px(x + 1, oy - 1, 'h')
+        c.vline(x, oy - 3, oy + 13, 'l'); c.vline(x + 1, oy - 3, oy + 13, 'm'); c.px(x, oy - 3, 'H'); c.px(x + 1, oy - 3, 'h')
+
+
+def shafts(c, y0, y1):
+    """끌채 두 개 (말 양옆, 앞·뒷모습)"""
+    for x in (4, 24):
+        c.vline(x, y0, y1, 'h'); c.vline(x + 1, y0, y1, 'd')
 
 
 def front(stage, frame=''):
-    """아래로 올 때: 말이 앞(아래), 짐칸이 말 뒤(위)로 보인다"""
+    """아래로 올 때: 말이 앞(아래)에서 나를 보고, 짐칸이 말 바로 뒤(위). 말 등이 짐칸 앞판 아래쪽을 가린다"""
     out = Image.new('RGBA', (EW, EH), (0, 0, 0, 0))
-    cv = Cv(EW, EH); box_end(cv, 18, stage, True); cv.outline()
+    oy = 16
+    cv = Cv(EW, EH); box_end(cv, oy, stage); shafts(cv, oy + 13, oy + 24); cv.outline()
     out.alpha_composite(cv.im, (0, 0))
-    out.alpha_composite(PA.end_view3('horse', 'front', 0, frame), (3, EH - 44))
+    out.alpha_composite(harness(PA.end_view3('horse', 'front', 0, frame)), (3, EH - 44 - 2))
     return out
 
 
 def back(stage, frame=''):
-    """위로 갈 때: 짐칸 뒤판이 앞(아래), 말은 짐칸 너머(위)로 엉덩이·귀가 보인다"""
+    """위로 갈 때: 짐칸 뒤판이 앞(아래), 말은 짐칸 너머(위). 짐이 많으면 말 몸은 짐에 가리고 머리·귀만 보인다"""
     out = Image.new('RGBA', (EW, EH), (0, 0, 0, 0))
-    out.alpha_composite(PA.end_view3('horse', 'back', 0, frame), (3, 0))
-    cv = Cv(EW, EH); box_end(cv, EH - 19, stage, False); cv.outline()
+    out.alpha_composite(harness(PA.end_view3('horse', 'back', 0, frame)), (3, 2))
+    cv = Cv(EW, EH); shafts(cv, 22, EH - 20); cv.outline(); out.alpha_composite(cv.im, (0, 0))
+    cv = Cv(EW, EH); box_end(cv, EH - 18, stage); cv.outline()
     out.alpha_composite(cv.im, (0, 0))
     return out
 
