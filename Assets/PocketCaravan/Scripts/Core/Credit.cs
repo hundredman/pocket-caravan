@@ -5,7 +5,7 @@ namespace PocketCaravan
     /// <summary>
     /// 11/19 은샘 "신용 1을 올리는 데 채워야 할 수치가 있는 것": 신용 점수와 신용 단계.
     /// - PlayerState.credit은 점수다. 맡은 일(배달·납품·게시판 의뢰)과 맡은 짐 속 정직 선택에서만 오르내린다 (Docs/Standing.md 원칙).
-    /// - 단계 n이 되려면 누적 n×(n+1)점: 1단계 2 · 2단계 6 · 3단계 12 · 4단계 20 · 5단계 30. 단계마다 2점씩 더 든다.
+    /// - 단계 n이 되려면 누적 점수: 1단계 1 · 2단계 6 · 3단계 12 · 4단계 20 · 5단계 30 · 6단계 42 (2단계부터 n×(n+1)).
     /// - 한 번 오른 단계는 점수가 깎여도 내려가지 않는다 (PlayerState.creditFloor). 열렸던 시설이 다시 닫히지 않게.
     /// - 시설·귀한 짐 의뢰·좌판 같은 조건(minCredit 등)은 모두 단계로 따진다.
     /// - 옛 저장(creditVersion 0)의 신용 c는 그때 단계였으니 c×(c+1)점으로 옮겨 단계를 그대로 둔다 (GameManager.Apply).
@@ -14,8 +14,8 @@ namespace PocketCaravan
     {
         public const int Version = 1;
 
-        /// <summary>n단계가 되는 누적 점수</summary>
-        public static int PointsFor(int level) => level <= 0 ? 0 : level * (level + 1);
+        /// <summary>n단계가 되는 누적 점수: 1단계 1점(첫 맡은 일 하나 · 5분 시연 안), 2단계부터 n×(n+1) (6·12·20·30·42). 11/19 성장 속도 측정으로 1단계만 앞당김</summary>
+        public static int PointsFor(int level) => level <= 0 ? 0 : level == 1 ? 1 : level * (level + 1);
 
         /// <summary>점수만으로 닿는 단계</summary>
         public static int LevelOfPoints(int points)

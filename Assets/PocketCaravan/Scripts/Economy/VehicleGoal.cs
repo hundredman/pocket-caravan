@@ -9,6 +9,11 @@ namespace PocketCaravan
     /// </summary>
     public static class VehicleGoal
     {
+        /// <summary>11/19 은샘 "마일스톤에 좌판까지": 마차 다음 목표. 기능은 아직 없어 수첩에 "준비 중"으로만 보인다.
+        /// 값·신용은 성장 속도 측정(처음 하는 유저 마차 약 62분 → 좌판 약 105분, 신용 5단계 약 84분)으로 정함 (Docs/CreditLevelDesign.md)</summary>
+        public const string StallName = "좌판";
+        public const int StallPrice = 1000, StallCredit = 5;
+
         /// <summary>다음 목표 운반 수단 (없으면 null: 마차까지 샀다)</summary>
         public static VehicleData Next(PlayerState p, GameDatabase db)
         {

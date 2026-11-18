@@ -371,7 +371,7 @@ namespace PocketCaravan
             var ladder = VehicleGoal.Ladder(p, gm.Db);
             var next = VehicleGoal.Next(p, gm.Db);
             float have = Mathf.Max(p.vehicle != null ? p.vehicle.capacity : 0f, p.stowedVehicle != null ? p.stowedVehicle.capacity : 0f);
-            float ch = next != null ? 64 : 44;
+            float ch = 64;
             var card = new Rect(0, y, w, ch);
             ScreenZones.MarkSpot("journal.vehicle", new Rect(logOrigin.x + card.x, logOrigin.y + card.y, card.width, card.height));   // 11/19 처음 보면 설명 (TutorialSpot)
             CuteUI.Box(card, 7, CuteUI.Paper, CuteUI.Sell, 2);
@@ -389,11 +389,25 @@ namespace PocketCaravan
                 CuteUI.Box(chip, 6, isNext ? CuteUI.SellSoft : owned ? CuteUI.Paper2 : CuteUI.ZeroSoft, isNext ? CuteUI.Sell : CuteUI.KeyLine);
                 CuteUI.LabelCenter(chip.center.x, chip.center.y, label, owned || isNext ? CuteUI.Text : CuteUI.Sub, true, isNext);
                 cx += cw;
-                if (i < ladder.Count - 1) { CuteUI.Label(cx + 2, cy + 7.5f, "›", CuteUI.Sub, true); cx += 10; }
+                CuteUI.Label(cx + 2, cy + 7.5f, "›", CuteUI.Sub, true); cx += 10;
+            }
+            {   // 11/19 은샘 "마일스톤에 좌판까지": 마차 다음 목표. 아직 기능이 없어 "준비 중"으로만 보여 준다 (살 수 없음)
+                bool isNext = next == null;
+                string label = VehicleGoal.StallName;
+                float cw = Mathf.Round(CuteUI.Width(label, true, isNext) + 12);
+                var chip = new Rect(cx, cy, cw, 15);
+                CuteUI.Box(chip, 6, isNext ? CuteUI.SellSoft : CuteUI.ZeroSoft, isNext ? CuteUI.Sell : CuteUI.KeyLine);
+                CuteUI.LabelCenter(chip.center.x, chip.center.y, label, isNext ? CuteUI.Text : CuteUI.Sub, true, isNext);
             }
             if (next == null)
             {
-                CuteUI.Label(44, y + 33, "운반 수단을 다 모았어요", CuteUI.Text, true, true);
+                int m = Mathf.Max(0, p.money), price = VehicleGoal.StallPrice;
+                float sx = CuteUI.Label(44, y + 33, $"다음 목표 · {VehicleGoal.StallName}", CuteUI.Text, false, true);
+                CuteUI.Label(sx + 6, y + 33.5f, $"신용 {VehicleGoal.StallCredit}단계 · 준비 중", CuteUI.Sub, true);
+                CuteUI.LabelRight(w - 10, y + 33, $"{Mathf.Min(m, price)} / {price}냥", CuteUI.Sub, true, true);
+                CuteUI.Bar(new Rect(44, y + 42, w - 54, 6), m / (float)price, CuteUI.Sell, CuteUI.SellSoft);
+                CuteUI.Icon(CuteUI.Pic.Pin, 44, y + 51, 1, CuteUI.Sub);
+                CuteUI.Label(53, y + 55, TradeLedgerUI.Fit("장터 한 자리에 내 좌판을 열어, 맡긴 짐이 내가 없어도 팔려요 (곧 열려요)", w - 64, true, false), CuteUI.Sub, true);
                 return y + ch + 8;
             }
             int money = Mathf.Max(0, p.money), need = Mathf.Max(1, next.price);
