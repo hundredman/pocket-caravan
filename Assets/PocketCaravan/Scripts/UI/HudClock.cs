@@ -11,6 +11,8 @@ namespace PocketCaravan
     ///   밤(19시~5시)에는 보름달이 같은 길로, 시계 칸도 어두운 밤 색으로 바뀐다.
     /// - 시계를 누르면 아래로 다음 장날(날짜 · D-n), 이번 장 돌이 5일, 오늘·내일 큰 장 마을이 펼쳐진다. 다시 누르면 접힌다.
     ///   튜토리얼 사기 단계 처음에 시계 → 펼친 달력 설명 → 닫기까지 안내한다 (TutorialSpot "clock"). 큰 장 마을을 누르면 지도에서 그 마을 카드가 펼쳐진다.
+    /// - 11/18 팀 의견("화면에서 거슬린다") → 오른쪽 ︿ 단추로 위로 접는다. 접으면 맨 위에 작은 탭(시계 그림 ﹀)만 남고, 누르면 다시 편다.
+    ///   접은 채로 다음에 켜도 그대로 (PlayerPrefs ui.clockFolded). 튜토리얼 시계 단계는 접기까지 안내한다.
     /// 다른 화면 위에 그리지 않도록 깊이는 상태 카드(HUD)와 같고, 창이 열리면 누를 수 없다. 기념 사진 동안 감춘다.
     /// </summary>
     public class HudClock : MonoBehaviour
@@ -22,9 +24,16 @@ namespace PocketCaravan
             var go = new GameObject("HudClock"); DontDestroyOnLoad(go); go.AddComponent<HudClock>();
         }
 
-        const float W = 108f, H = 30f, Rise = 5f, Set = 19f, ArcR = 15f;
+        const float W = 122f, FoldW = 14f, H = 30f, TabW = 34f, TabH = 13f, Rise = 5f, Set = 19f, ArcR = 15f;
         static Texture2D sunTex, moonTex;
-        bool open; float openK;
+        bool open; float openK, foldK = -1f;
+        static int folded = -1;
+        /// <summary>시계를 위로 접어 두었다 (다음에 켜도 그대로)</summary>
+        public static bool Folded
+        {
+            get { if (folded < 0) folded = PlayerPrefs.GetInt("ui.clockFolded", 0); return folded == 1; }
+            set { folded = value ? 1 : 0; PlayerPrefs.SetInt("ui.clockFolded", folded); }
+        }
         int shownMinute = -1, shownDay = -1; string dayText = "", timeText = "", prevTime, fullDate = ""; float changedAt = -9f;
         /// <summary>달력이 펼쳐져 있다 (튜토리얼: 펼치고 → 설명 → 닫으면 다음)</summary>
         public static bool IsOpen { get; private set; }
@@ -68,8 +77,11 @@ namespace PocketCaravan
         void Update()
         {
             if (UIState.Blocking || UIState.PhotoMode) open = false;
+            if (Folded) open = false;
             IsOpen = open;
             openK = Mathf.MoveTowards(openK, open ? 1f : 0f, Time.unscaledDeltaTime / .18f);
+            if (foldK < 0f) foldK = Folded ? 1f : 0f;   // 처음엔 움직이지 않고 그 자리에서
+            foldK = Mathf.MoveTowards(foldK, Folded ? 1f : 0f, Time.unscaledDeltaTime / .22f);
         }
 
         void OnGUI()
@@ -80,12 +92,21 @@ namespace PocketCaravan
             GUI.depth = openK > 0f ? -5 : -2;   // 달력을 펼치면 할 일 카드보다 위
             var clock = gm.Clock;
             float vw = UIStyle.VirtualWidth, cx = Mathf.Round(vw / 2f);
-            float y = CuteUI.TopStack(0, H + 98f * openK) - 4f;   // 위 가운데 맨 위. 다른 위 알약(상인회·축제 등)은 이 아래로 쌓인다
+            float fe = foldK * foldK * (3f - 2f * foldK);   // 접기 움직임 (부드럽게)
+            float y = CuteUI.TopStack(0, Mathf.Lerp(H + 98f * openK, TabH - 2f, fe)) - 4f;   // 위 가운데 맨 위. 다른 위 알약(상인회·축제 등)은 이 아래로 쌓인다
+            // 11/18 접기: 시계가 위로 올라가 화면 밖으로, 작은 탭이 내려온다
+            var tab = new Rect(cx - TabW / 2f, Mathf.Round(-TabH + (TabH + y - 2f) * fe), TabW, TabH + 4f);
+            if (fe > 0f) DrawTab(tab, IsNight(gm.Clock), fe);
+            if (fe >= 1f) { ScreenZones.Mark("hud.clock", tab); return; }
+            y -= (H + y + 6f) * fe;
             var r = new Rect(cx - W / 2f, y, W, H);
             // 펼치면 달력 판(204) 너비까지 (튜토리얼 테두리가 시계와 달력을 함께 감싼다)
             float zw = Mathf.Lerp(W + 4f, 208f, openK);
-            ScreenZones.Mark("hud.clock", new Rect(Mathf.Round(cx - zw / 2f), r.y, Mathf.Round(zw), r.height + 2 + (openK > 0f ? 98f * openK : 0f)));
-            bool hover = !UIState.Blocking && r.Contains(Event.current.mousePosition);
+            if (fe <= 0f) ScreenZones.Mark("hud.clock", new Rect(Mathf.Round(cx - zw / 2f), r.y, Mathf.Round(zw), r.height + 2 + (openK > 0f ? 98f * openK : 0f)));
+            var foldR = new Rect(r.xMax - FoldW - 2f, r.y + 2f, FoldW, H - 4f);
+            var mainR = new Rect(r.x, r.y, W - FoldW - 2f, H);
+            bool hover = !UIState.Blocking && mainR.Contains(Event.current.mousePosition);
+            bool hoverFold = !UIState.Blocking && foldR.Contains(Event.current.mousePosition);
             bool night = IsNight(clock);
             // 11/18 밤에는 시계 칸이 어두운 밤 색 (색은 두 가지로만 바꾼다: 색마다 그림이 생기므로 서서히 섞지 않는다)
             CuteUI.Box(r, 9, night ? (hover || open ? NightHover : NightFill) : hover || open ? CuteUI.Paper2 : CuteUI.Paper, open ? CuteUI.Interact : CuteUI.Ink, 1, 1, CuteUI.SoftShadow);
@@ -106,10 +127,45 @@ namespace PocketCaravan
                 fullDate = YearText(clock.day) + " " + dayText + " " + timeText;
             }
             CuteUI.Label(r.x + 45, r.y + 10, dayText, night ? NightText : CuteUI.Text, false, true);
-            DrawTime(new Rect(r.x + 44, r.y + 16, W - 48, 12), night ? NightSub : CuteUI.Sub);
-            if (!UIState.Blocking && CuteUI.Hit(r, GUIContent.none, GUIStyle.none)) { open = !open; Sfx.Play(open ? "open" : "move", .4f); }
+            DrawTime(new Rect(r.x + 44, r.y + 16, W - 48 - FoldW, 12), night ? NightSub : CuteUI.Sub);
+            // 접기 단추 ︿ (오른쪽 끝)
+            if (hoverFold) Dot(new Rect(foldR.x, foldR.y, foldR.width, foldR.height), night ? NightHover : CuteUI.Paper2);
+            Dot(new Rect(foldR.x - 1f, r.y + 6f, 1f, H - 12f), night ? NightArc : new Color32(0xD2, 0xB2, 0x84, 255));   // 가르는 줄
+            Chevron(foldR.center.x, foldR.center.y, true, hoverFold ? CuteUI.Interact : night ? NightSub : CuteUI.Sub);
+            ScreenZones.MarkSpot("hud.clock.fold", new Rect(foldR.x - 1f, r.y, foldR.width + 3f, H));
+            if (fe <= 0f && !UIState.Blocking)
+            {
+                if (CuteUI.Hit(foldR, GUIContent.none, GUIStyle.none)) { Folded = true; open = false; Sfx.Play("move", .4f); }
+                else if (CuteUI.Hit(mainR, GUIContent.none, GUIStyle.none)) { open = !open; Sfx.Play(open ? "open" : "move", .4f); }
+            }
             ScreenZones.MarkSpot("hud.clock.btn", r);   // 튜토리얼이 밝히는 자리
             if (openK > 0f) DrawCalendar(r, gm, clock);
+        }
+
+
+        /// <summary>접은 시계 탭: 위 가장자리에 붙은 작은 반쪽 알약 (시계 그림 + ﹀). 누르면 편다</summary>
+        void DrawTab(Rect t, bool night, float a)
+        {
+            var oc = GUI.color; GUI.color = new Color(oc.r, oc.g, oc.b, oc.a * a);
+            bool hover = !UIState.Blocking && t.Contains(Event.current.mousePosition);
+            CuteUI.Box(new Rect(t.x, t.y - 6f, t.width, t.height + 6f), 6, night ? (hover ? NightHover : NightFill) : hover ? CuteUI.Paper2 : CuteUI.Paper, CuteUI.Ink, 1, 1, CuteUI.SoftShadow);
+            CuteUI.Icon(CuteUI.Pic.Clock, t.x + 7f, t.yMax - 13f);
+            Chevron(t.x + 24f, t.yMax - 7f, false, hover ? CuteUI.Interact : night ? NightSub : CuteUI.Sub);
+            GUI.color = oc;
+            ScreenZones.MarkSpot("hud.clock.tab", t);
+            if (a >= 1f && !UIState.Blocking && CuteUI.Hit(t, GUIContent.none, GUIStyle.none)) { Folded = false; Sfx.Play("open", .4f); }
+        }
+
+        /// <summary>작은 꺾쇠 (︿ 또는 ﹀): 5칸 너비 3줄</summary>
+        static void Chevron(float cx, float cy, bool up, Color32 c)
+        {
+            cx = Mathf.Round(cx); cy = Mathf.Round(cy);
+            for (int i = 0; i < 3; i++)
+            {
+                float yy = up ? cy - 1f + i : cy + 1f - i;   // 위 꺾쇠: 가운데가 위
+                Dot(new Rect(cx - .5f - i, yy, 1f, 1f), c);
+                Dot(new Rect(cx - .5f + i, yy, 1f, 1f), c);
+            }
         }
 
         /// <summary>몇 년인지 (360일 = 1년, 1일째 = 1년)</summary>

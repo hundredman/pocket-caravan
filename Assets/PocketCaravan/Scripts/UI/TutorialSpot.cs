@@ -110,18 +110,31 @@ namespace PocketCaravan
             if (ControlLesson.IsActive(ControlLesson.Ledger))
                 return blocking ? null : Zone("ledger", "hud.btn.l", "L이나 이 단추로 장부를 열어요", false);
             bool buy = ControlLesson.IsActive(ControlLesson.Bought), sell = ControlLesson.IsActive(ControlLesson.Sold);
-            // 11/18 은샘: 시계도 튜토리얼에서 (사기 단계 처음, 장터 창이 열리기 전에). 시계 누르기 → 펼친 달력 설명 → 다시 눌러 닫으면 다음으로
+            // 11/18 은샘: 시계도 튜토리얼에서 (사기 단계 처음, 장터 창이 열리기 전에).
+            // 시계 누르기 → 펼친 달력 설명 → 다시 눌러 닫기 → ︿로 위로 접기까지 하면 다음으로
             if (buy && IntroActive && !Seen("clock.done"))
             {
-                if (HudClock.IsOpen)
+                if (!Seen("clock.seen"))
                 {
-                    clockOpened = true;
-                    return Zone("clock.open", "hud.clock", "날짜 · 다음 장날 · 이번 5일 · 오늘 큰 장 마을이에요\n큰 장 마을을 누르면 지도에서 보여 줘요\n다 봤으면 시계를 다시 눌러 닫아요", false);
+                    if (HudClock.IsOpen)
+                    {
+                        clockOpened = true;
+                        return Zone("clock.open", "hud.clock", "날짜 · 다음 장날 · 이번 5일 · 오늘 큰 장 마을이에요\n큰 장 마을을 누르면 지도에서 보여 줘요\n다 봤으면 시계를 다시 눌러 닫아요", false);
+                    }
+                    if (clockOpened) { clockOpened = false; MarkSeen("clock.seen"); }   // 펼쳤다가 닫았다 → 접기 안내로
+                    else if (blocking) return null;
+                    else if (HudClock.Folded && ScreenZones.Live("hud.clock.tab"))   // 미리 접어 두었으면 먼저 펴게
+                        return Zone("clock.unfold", "hud.clock.tab", "접힌 시계예요. 눌러서 펴 보세요", false);
+                    else if (ScreenZones.Live("hud.clock.btn"))
+                        return Zone("clock", "hud.clock.btn", "시계를 눌러 보세요. 다음 장날과 큰 장 마을이 보여요", false);
                 }
-                if (clockOpened) { clockOpened = false; MarkSeen("clock.done"); }   // 펼쳤다가 닫았다
-                else if (!blocking && ScreenZones.Live("hud.clock.btn"))
-                    return Zone("clock", "hud.clock.btn", "시계를 눌러 보세요. 다음 장날과 큰 장 마을이 보여요", false);
-                else if (blocking) return null;
+                if (Seen("clock.seen"))
+                {
+                    if (HudClock.Folded) MarkSeen("clock.done");   // 접었다 → 다음 단계
+                    else if (blocking) return null;
+                    else if (ScreenZones.Live("hud.clock.fold"))
+                        return Zone("clock.fold", "hud.clock.fold", "평소엔 이 단추로 시계를 위로 접어 둘 수 있어요\n다시 볼 땐 맨 위 작은 탭을 눌러요", false);
+                }
             }
             if (buy || sell)
             {
