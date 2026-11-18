@@ -249,7 +249,7 @@ namespace PocketCaravan
         void Tile(Rect t, int i)
         {
             if (mouseMoved && t.Contains(Event.current.mousePosition)) focus = i;
-            if (GUI.Button(t, GUIContent.none, GUIStyle.none)) Pick(i);
+            if (CuteUI.Hit(t, GUIContent.none, GUIStyle.none)) Pick(i);
         }
 
         Vector2 lastMouse;

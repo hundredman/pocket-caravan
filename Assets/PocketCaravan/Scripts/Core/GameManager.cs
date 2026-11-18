@@ -171,7 +171,18 @@ namespace PocketCaravan
             // 창이 열린 동안은 의뢰 시간이 멈춘다. 온라인 세상 시간은 그래도 서버 기준으로 맞춘다
             Clock.Tick(UIState.Blocking ? 0f : Time.deltaTime);
             ApplyDaylight();
+            // 11/18 윤채 ("알아서 저장이 되어야지"): 맵을 옮길 때·거래할 때·끌 때 말고도 1분마다 저절로 저장한다 (게임 메뉴 저장 단추는 뺐다)
+            if (autosave && !IsTravelling && Time.unscaledTime - lastAutoSaveTry >= AutoSaveEvery)
+            {
+                lastAutoSaveTry = Time.unscaledTime;
+                SaveNow();
+            }
         }
+
+        const float AutoSaveEvery = 60f;
+        float lastAutoSaveTry;
+        /// <summary>11/18 마지막으로 저장에 성공한 때 (Time.unscaledTime, 아직 없으면 -1). 게임 메뉴의 "자동 저장 · 방금" 표시에 쓴다</summary>
+        public float LastSavedAt { get; private set; } = -1f;
 
         /// <summary>낮·밤: 맵의 전역 2D 빛 색과 밝기를 시간에 맞춘다.</summary>
         void ApplyDaylight()
@@ -359,6 +370,9 @@ namespace PocketCaravan
             StartScreen.Open(true);
             return true;
         }
+
+        /// <summary>11/18 시작 화면 "이어하기" 카드에 보여 줄 저장 (출신·날짜·돈·있던 맵). 읽기만 한다</summary>
+        public SaveData SaveToContinue => saveToLoad;
 
         /// <summary>시작 화면 "이어하기": 붙잡아 둔 첫 씬 처리를 그대로 이어간다 (저장 불러오기 포함).</summary>
         public void ContinueFromStartScreen()
@@ -564,7 +578,10 @@ namespace PocketCaravan
             d.recentTrades.AddRange(Player.ledger.ExportRecent());
             foreach (var kv in cooldowns) { d.cooldownKeys.Add(kv.Key); d.cooldownUntil.Add(kv.Value); }
             Player.reputation.ExportTo(d);
-            return SaveSystem.Write(d);
+            if (!SaveSystem.Write(d)) return false;
+            LastSavedAt = Time.unscaledTime;
+            lastAutoSaveTry = Time.unscaledTime;
+            return true;
         }
 
         void Apply(SaveData d)

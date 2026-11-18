@@ -103,7 +103,7 @@ namespace PocketCaravan
             CuteUI.Icon(pic, r.x + (Dot - ps.x) / 2f, r.y + (Dot - ps.y) / 2f, 1, CuteUI.White);
             GUI.matrix = m;
 
-            if (!UIState.Blocking && GUI.Button(r, GUIContent.none, GUIStyle.none)) InputReader.Press('m');   // 누르면 지도
+            if (!UIState.Blocking && CuteUI.Hit(r, GUIContent.none, GUIStyle.none)) InputReader.Press('m');   // 누르면 지도
         }
 
         const int CW = 13, CH = 9;

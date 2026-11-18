@@ -587,7 +587,7 @@ namespace PocketCaravan
                 CuteUI.Label(r.x + 22f, r.y + 35f, main, CuteUI.Text, false, true);
                 CuteUI.Label(r.x + 9f, r.y + 54f, sub, CuteUI.Sub, true);
             }
-            if (!fetching && GUI.Button(r, GUIContent.none, GUIStyle.none) && pickIdx != idx) { pickIdx = idx; Sfx.Play("open"); }
+            if (!fetching && CuteUI.Hit(r, GUIContent.none, GUIStyle.none) && pickIdx != idx) { pickIdx = idx; Sfx.Play("open"); }
         }
 
         static string When(long ms) =>

@@ -138,6 +138,8 @@ namespace PocketCaravan
         {
             var e = Event.current;
             var badge = new Rect(r.xMax - 18f, r.y + 1f, 17f, r.height - 2f);
+            GameCursor.HoverText(r);   // 11/18 글 쓰는 칸 위에서는 글 막대 커서 (가/A 표시 위는 손가락)
+            if (AllowKorean) GameCursor.Hover(badge);
             if (AllowKorean && e.type == EventType.MouseDown && badge.Contains(e.mousePosition)) { Toggle(); Begin(); e.Use(); }
             else if (clickToToggle && e.type == EventType.MouseDown)
             {
@@ -170,10 +172,10 @@ namespace PocketCaravan
             GUI.BeginGroup(inner);
             if (shown.Length == 0 && comp.Length == 0 && !string.IsNullOrEmpty(Placeholder))
             {
-                plain.normal.textColor = new Color(TextColor.r, TextColor.g, TextColor.b, .38f);
+                plain.normal.textColor = plain.hover.textColor = new Color(TextColor.r, TextColor.g, TextColor.b, .38f);
                 GUI.Label(new Rect(4f, 0f, inner.width, inner.height), Placeholder, plain);
             }
-            plain.normal.textColor = TextColor;
+            plain.normal.textColor = plain.hover.textColor = TextColor;
             if (left.Length > 0) GUI.Label(new Rect(shift, 0f, leftW + 2f, inner.height), left, plain);
             if (right.Length > 0) GUI.Label(new Rect(shift + caretX, 0f, rightW + 2f, inner.height), right, plain);
             if (compW > 0f)
@@ -186,7 +188,7 @@ namespace PocketCaravan
                 GUI.color = accent;
                 GUI.DrawTexture(new Rect(shift + leftW, inner.height - 3f, compW + 1f, 1.5f), Texture2D.whiteTexture);
                 GUI.color = ink;
-                plain.normal.textColor = lightBg ? TextColor : accent;
+                plain.normal.textColor = plain.hover.textColor = lightBg ? TextColor : accent;
                 GUI.Label(new Rect(shift + leftW, 0f, compW + 2f, inner.height), comp, plain);
             }
             if (Active && (Time.unscaledTime * 2f) % 2f < 1.2f)
@@ -196,7 +198,7 @@ namespace PocketCaravan
                 GUI.DrawTexture(new Rect(shift + caretX + 1f, 3f, 1f, inner.height - 6f), Texture2D.whiteTexture);
                 GUI.color = ink;
             }
-            plain.normal.textColor = old;
+            plain.normal.textColor = plain.hover.textColor = old;
             GUI.EndGroup();
             if (!AllowKorean) return;
 
@@ -205,7 +207,7 @@ namespace PocketCaravan
             bool lightField = TextColor.grayscale < .5f;   // 밝은 바탕 칸(글자가 어두움)
             GUI.color = Korean ? (lightField ? new Color(.23f, .44f, .33f) : new Color(1f, 0.87f, 0.35f))
                                : (lightField ? new Color(.5f, .42f, .33f) : new Color(0.75f, 0.8f, 0.9f));
-            badgeStyle.normal.textColor = Color.white;
+            badgeStyle.normal.textColor = badgeStyle.hover.textColor = Color.white;
             GUI.Label(badge, Korean ? "가" : "A", badgeStyle);
             GUI.color = c;
         }

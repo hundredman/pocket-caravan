@@ -172,7 +172,7 @@ namespace PocketCaravan
         static Texture2D SpeckleTex()
         {
             if (tex.TryGetValue("speckle", out var t) && t != null) return t;
-            return tex["speckle"] = Paint(17, 17, (x, y) => (x * 3 + y * 5) % 17 == 0 ? Paper2 : Clear, TextureWrapMode.Repeat);
+            return tex["speckle"] = Paint(17, 17, (x, y) => (x * 3 + y * 5) % 17 == 0 ? Hex(0xFFF5E8) : Clear, TextureWrapMode.Repeat);   // 11/18 창 안 점무늬를 더 옅게
         }
 
         /// <summary>제목 리본 꼬리 (V자 홈)</summary>
@@ -317,7 +317,7 @@ namespace PocketCaravan
         public static float Label(float x, float cy, string s, Color32 col, bool isSmall = false, bool bold = false)
         {
             var st = St(isSmall);
-            st.normal.textColor = UIStyle.Lin(col);
+            st.normal.textColor = st.hover.textColor = UIStyle.Lin(col);   // 11/18 마우스를 올려도 글씨색이 바뀌지 않게
             var size = st.CalcSize(new GUIContent(s));
             var r = new Rect(Snap(x), Snap(cy - size.y / 2f), size.x + 2, size.y);
             GUI.Label(r, s, st);
@@ -333,6 +333,31 @@ namespace PocketCaravan
 
         public static float WrapHeight(string s, float w, bool isSmall = false) => St(isSmall, true).CalcHeight(new GUIContent(s), w);
 
+        /// <summary>
+        /// 11/18 윤채: 낱말을 끊지 않고 띄어쓰기에서만 줄을 바꾼다 (기본 줄바꿈은 "아닙/니다"처럼 글자 사이에서 끊었다).
+        /// 줄 사이를 조금 띄워(글 높이의 1.4배) 긴 글도 읽기 쉽게. 그린 높이를 돌려준다. draw=false면 높이만 잰다
+        /// </summary>
+        public static float WrapWords(float x, float y, float w, string s, Color32 col, bool isSmall = false, bool draw = true)
+        {
+            if (string.IsNullOrEmpty(s)) return 0f;
+            var st = St(isSmall);
+            float lh = Mathf.Round(st.CalcSize(new GUIContent("가")).y * 1.4f);
+            var lines = new List<string>();
+            foreach (var para in s.Split('\n'))
+            {
+                string line = "";
+                foreach (var word in para.Split(' '))
+                {
+                    string next = line.Length == 0 ? word : line + " " + word;
+                    if (line.Length > 0 && st.CalcSize(new GUIContent(next)).x > w) { lines.Add(line); line = word; }
+                    else line = next;
+                }
+                lines.Add(line);
+            }
+            if (draw) for (int i = 0; i < lines.Count; i++) Label(x, y + i * lh + lh / 2f, lines[i], col, isSmall);
+            return lines.Count * lh;
+        }
+
         /// <summary>가운데 맞춤 여러 줄 (알림). 높이를 돌려준다</summary>
         public static float WrapCenter(float x, float y, float w, string s, Color32 col)
         {
@@ -347,7 +372,7 @@ namespace PocketCaravan
         public static float Wrap(float x, float y, float w, string s, Color32 col, bool isSmall = false, bool bold = false)
         {
             var st = St(isSmall, true);
-            st.normal.textColor = UIStyle.Lin(col);
+            st.normal.textColor = st.hover.textColor = UIStyle.Lin(col);
             float h = st.CalcHeight(new GUIContent(s), w);
             var r = new Rect(Snap(x), Snap(y), w, h);
             GUI.Label(r, s, st);
@@ -371,7 +396,50 @@ namespace PocketCaravan
             foreach (var s in new[] { paperRich, paperSmall, paperWrap, paperRight })
                 foreach (var st in new[] { s.normal, s.hover, s.active, s.focused }) st.textColor = UIStyle.Lin(s == paperSmall ? Sub : Text);
             paperButton = ButtonStyle(Paper, Paper2, Line, Text, Text);
-            paperButtonOn = ButtonStyle(Interact, InteractLo, InteractLo, Text, Text);
+            // 11/18 윤채 (UT "초록 바탕에 검정 글씨가 눈에 안 들어온다"): 청록 단추 글씨는 흰색 (CuteUI.Button과 같게)
+            paperButtonOn = ButtonStyle(Interact, InteractLo, InteractLo, OnInteract, OnInteract);
+            boldOver.Clear();
+        }
+
+        static readonly Dictionary<GUIStyle, GUIStyle> boldOver = new Dictionary<GUIStyle, GUIStyle>();
+
+        // ---------------- 누르는 자리 (11/18 커서) ----------------
+        // GUI.Button · GUILayout.Button과 똑같고, 마우스가 위에 있으면 커서를 손가락으로 바꾼다 (GameCursor)
+        public static bool Hit(Rect r, GUIContent c, GUIStyle s) { GameCursor.Hover(r); return GUI.Button(r, c, s); }
+        public static bool Hit(Rect r, string t, GUIStyle s) { GameCursor.Hover(r); return GUI.Button(r, t, s); }
+        public static bool Hit(Rect r, Texture t, GUIStyle s) { GameCursor.Hover(r); return GUI.Button(r, t, s); }
+        public static bool Hit(Rect r, GUIContent c) { GameCursor.Hover(r); return GUI.Button(r, c); }
+        public static bool Hit(Rect r, string t) { GameCursor.Hover(r); return GUI.Button(r, t); }
+        public static bool LayoutButton(string t, GUIStyle s, params GUILayoutOption[] o) { bool b = GUILayout.Button(t, s, o); GameCursor.Hover(GUILayoutUtility.GetLastRect()); return b; }
+        public static bool LayoutButton(GUIContent c, GUIStyle s, params GUILayoutOption[] o) { bool b = GUILayout.Button(c, s, o); GameCursor.Hover(GUILayoutUtility.GetLastRect()); return b; }
+        public static bool LayoutButton(string t, params GUILayoutOption[] o) { bool b = GUILayout.Button(t, o); GameCursor.Hover(GUILayoutUtility.GetLastRect()); return b; }
+
+        /// <summary>
+        /// 11/18 청록(고른) 종이 단추를 굵은 글씨로: 단추를 그린 뒤 같은 글씨를 화면 한 칸 옆에 한 번 더 그린다 (Label의 bold와 같은 방식).
+        /// style을 주면 그 모양(예: 줄바꿈하는 사본)을 쓴다. 대화창 "다음·닫기"·고른 선택지에 쓴다.
+        /// </summary>
+        public static bool PaperButtonBold(Rect r, string label, GUIStyle style = null)
+        {
+            PaperStyles();
+            style ??= paperButtonOn;
+            bool hit = Hit(r, label, style);
+            if (Event.current.type == EventType.Repaint)
+            {
+                if (!boldOver.TryGetValue(style, out var over))
+                {
+                    over = new GUIStyle(style);
+                    foreach (var st in new[] { over.normal, over.hover, over.active, over.focused, over.onNormal, over.onHover, over.onActive, over.onFocused })
+                    {
+                        st.background = null;
+#if UNITY_EDITOR
+                        st.scaledBackgrounds = new Texture2D[0];
+#endif
+                    }
+                    boldOver[style] = over;
+                }
+                over.Draw(new Rect(r.x + BoldStep, r.y, r.width, r.height), new GUIContent(label), false, false, false, false);
+            }
+            return hit;
         }
 
         static GUIStyle ButtonStyle(Color32 fill, Color32 hover, Color32 press, Color32 text, Color32 pressText)
@@ -754,9 +822,9 @@ namespace PocketCaravan
         {
             // 11/17 화살표로 고르기: 다른 단추가 골라져 있으면 흰 단추로, 골라졌으면 초록 + 톡 튀기
             bool key = KeyNav.Item(r, out bool focused);
-            if (KeyNav.Active && !focused) { DrawSoft(r, label); return GUI.Button(r, GUIContent.none, GUIStyle.none) || key; }
+            if (KeyNav.Active && !focused) { DrawSoft(r, label); return Hit(r, GUIContent.none, GUIStyle.none) || key; }
             DrawGreen(focused ? KeyNav.Pop(r) : r, label, pic);
-            return GUI.Button(r, GUIContent.none, GUIStyle.none) || key;
+            return Hit(r, GUIContent.none, GUIStyle.none) || key;
         }
 
         /// <summary>초록(주) 단추 모양만 그린다</summary>
@@ -775,7 +843,7 @@ namespace PocketCaravan
         {
             Circle(x, y, 22, Paper, Ink, 2, 2);
             Icon(Pic.XMark, x + 8, y + 8, 1, Ink);
-            return GUI.Button(new Rect(x, y, 22, 22), GUIContent.none, GUIStyle.none);
+            return Hit(new Rect(x, y, 22, 22), GUIContent.none, GUIStyle.none);
         }
 
         /// <summary>탭 (고른 탭은 아래 내용 칸과 이어진다). contentTop = 내용 칸 위 끝. 눌리면 true</summary>
@@ -792,7 +860,7 @@ namespace PocketCaravan
             if (pic == Pic.Chart) Icon(pic, r.x + 11, r.y + (on ? 7 : 5), 1, on ? Interact : Sub);
             else Icon(pic, r.x + 11, r.y + (on ? 6 : 4));
             Label(r.x + 12 + PicSize(pic).x + 5, r.y + (on ? 12 : 9), label, on ? Text : Sub, false, on);
-            return GUI.Button(r, GUIContent.none, GUIStyle.none);
+            return Hit(r, GUIContent.none, GUIStyle.none);
         }
 
         /// <summary>창 제목 리본 (양쪽 꼬리 + 별)</summary>
@@ -839,7 +907,7 @@ namespace PocketCaravan
             Keycap(x + 3, y + 2, "Space", true);
             if (!keyOnly) Label(x + 3 + kw + 5, y + 8.5f, verb, Text, true);
             GUI.matrix = m;
-            if (GUI.Button(r, GUIContent.none, GUIStyle.none)) InputReader.Press(' ');
+            if (Hit(r, GUIContent.none, GUIStyle.none)) InputReader.Press(' ');
             return r;
         }
 
@@ -882,7 +950,14 @@ namespace PocketCaravan
             bool key = KeyNav.Item(r, out bool focused);   // 11/17 골라지면 초록 + 톡 튀기
             if (focused) DrawGreen(KeyNav.Pop(r), label);
             else DrawSoft(r, label);
-            return GUI.Button(r, GUIContent.none, GUIStyle.none) || key;
+            return Hit(r, GUIContent.none, GUIStyle.none) || key;
+        }
+
+        /// <summary>11/18 메뉴 고름 표시 ▶ (픽셀 삼각형, 4×7). x = 왼쪽 끝, cy = 가운데 높이</summary>
+        public static void Pointer(float x, float cy, Color32 c)
+        {
+            x = Mathf.Round(x); cy = Mathf.Round(cy);
+            for (int i = 0; i < 4; i++) Fill(new Rect(x + i, cy - 3 + i, 1, 7 - 2 * i), c);
         }
 
         /// <summary>흰(보조) 단추 모양만 그린다</summary>
@@ -900,20 +975,21 @@ namespace PocketCaravan
             Box(b, 3, White, Ink);
             if (on) Fill(new Rect(b.x + 3, b.y + 3, 5, 5), Interact);
             Label(b.xMax + 5, r.center.y, label, Text, true);
-            return GUI.Button(r, GUIContent.none, GUIStyle.none) ? !on : on;
+            return Hit(r, GUIContent.none, GUIStyle.none) ? !on : on;
         }
 
         // ---------------- 시작·로그인 화면 바탕 ----------------
-        static readonly Color32 BackA = Hex(0xFFF0DC), BackB = Hex(0xFBE5C8);
+        static readonly Color32 BackA = Hex(0xFFF3E6), BackB = Hex(0xFDECD9);   // 11/18 두 칸 차이를 줄였다 (가운데 카드보다 바탕이 튀지 않게)
 
         /// <summary>시작 화면·첫 로그인 화면 바탕: 종이 바둑판 + 주황 머리띠 "바리바리" (오른쪽 글씨는 선택). 11/08 게임 이름을 바리바리로</summary>
-        public static void Backdrop(string right = null)
+        public static void Backdrop(string right = null, bool header = true)
         {
             float W = UIStyle.VirtualWidth, H = UIStyle.VirtualHeight;
             Fill(new Rect(0, 0, W, H), BackA);
             for (int y = 0; y < H; y += 20)
                 for (int x = 0; x < W; x += 20)
                     if (((x / 20) + (y / 20)) % 2 == 1) Fill(new Rect(x, y, 20, 20), BackB);
+            if (!header) return;   // 11/18 로그인·내 상인 화면은 머리띠 대신 왼쪽 장면의 큰 로고 (StartScreen.DrawScene)
             var head = new Rect(20, 12, W - 40, 30);
             Box(head, 8, Frame, Ink, 2, 3);
             Fill(new Rect(head.x + 5, head.y + 3, head.width - 10, 1), FrameHi);

@@ -2,11 +2,10 @@ using UnityEngine;
 
 namespace PocketCaravan
 {
-    /// <summary>Esc 메뉴: 계속, 저장, 소리, 처음부터.</summary>
+    /// <summary>Esc 메뉴: 계속, 상업 백과, 소리, 처음부터. 11/18 저장은 저절로 된다 (단추 대신 아래에 "자동 저장 · 방금")</summary>
     public class PauseMenu : MonoBehaviour
     {
         bool open, confirmNew;
-        string message = "";
         Vector2 issueScroll;
         Rect lastWindow, issueViewport;
 
@@ -16,7 +15,8 @@ namespace PocketCaravan
             if (open) { Close(); return; }
             if (UIState.Blocking || UIState.JustClosed || GameManager.I == null || GameManager.I.IsTravelling) return;
             if (!UIState.TryOpen(this, Close)) return;
-            open = true; confirmNew = false; message = "";
+            open = true; confirmNew = false;
+            GameManager.I.SaveNow();   // 11/18 메뉴를 열 때도 한 번 저장해 둔다 (아래 "자동 저장 · 방금")
             Sfx.Play("open");
         }
 
@@ -46,7 +46,7 @@ namespace PocketCaravan
             float w = Mathf.Min(340, UIStyle.VirtualWidth - 16);
             float issueHeight = string.IsNullOrEmpty(issue) ? 0 : CuteUI.WrapHeight(issue, w - 50, true) + 8;
             float shownIssue = Mathf.Min(issueHeight, 60);
-            float h = Mathf.Min(UIStyle.VirtualHeight - 34, 42 + 5 * 30 + (string.IsNullOrEmpty(message) ? 4 : 20) + shownIssue + (shownIssue > 0 ? 8 : 0));
+            float h = Mathf.Min(UIStyle.VirtualHeight - 34, 42 + 4 * 30 + 20 + shownIssue + (shownIssue > 0 ? 8 : 0));
             var r = lastWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round((UIStyle.VirtualHeight - h) / 2 + 8), w, h);
             CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, "게임 메뉴");
             CuteUI.Keycap(r.xMax - 32 - CuteUI.KeycapWidth("Esc") - 3, r.y - 3, "Esc");
@@ -77,20 +77,28 @@ namespace PocketCaravan
                 y += shownIssue + 8;
             }
             if (Row(ref y, r, null, "계속하기", "Esc", true)) Close();
-            if (Row(ref y, r, CuteUI.Pic.OpenBook, "상업 백과", "고려와 교역 이야기"))
+            if (Row(ref y, r, CuteUI.Pic.OpenBook, "상업 백과", "지역과 교역 이야기"))
             {
                 Close();
                 gm.GetComponent<CommerceGuideUI>().Open();
                 return;
             }
-            if (Row(ref y, r, CuteUI.Pic.Scroll, "저장하기", "지금 진행을 남겨요")) { bool saved = gm.SaveNow(); message = saved ? "저장했어요." : "저장하지 못했어요. 기존 파일은 그대로예요."; Sfx.Play(saved ? "accept" : "cancel"); }
             if (Row(ref y, r, CuteUI.Pic.Speaker, AudioManager.Muted ? "소리 켜기" : "소리 끄기", AudioManager.Muted ? "지금 꺼져 있어요" : "지금 켜져 있어요")) AudioManager.ToggleMute();
             if (Row(ref y, r, CuteUI.Pic.XMark, confirmNew ? "정말 처음부터?" : "처음부터 시작", confirmNew ? "한 번 더 누르면 지워져요" : "지금 저장을 지워요", false, true))
             {
                 if (confirmNew) { open = false; UIState.Release(this); GameManager.NewGame(); return; }
                 confirmNew = true;
             }
-            if (!string.IsNullOrEmpty(message)) CuteUI.LabelCenter(r.center.x, y + 2, message, CuteUI.Text, true);
+            // 11/18 저장 단추 대신: 저절로 저장된다는 것과 마지막 저장 때
+            if (gm != null)
+            {
+                float ago = gm.LastSavedAt < 0f ? -1f : Time.unscaledTime - gm.LastSavedAt;
+                string when = ago < 0f ? "아직 저장 전" : ago < 15f ? "방금 저장됨" : ago < 90f ? $"{Mathf.RoundToInt(ago)}초 전 저장됨" : $"{Mathf.RoundToInt(ago / 60f)}분 전 저장됨";
+                string line = $"진행은 저절로 저장돼요 · {when}";
+                float lw = CuteUI.Width(line, true) + 14f;
+                CuteUI.Icon(CuteUI.Pic.Check, r.center.x - lw / 2f, y - 2, 1, ago >= 0f ? CuteUI.Up : CuteUI.Sub);
+                CuteUI.Label(r.center.x - lw / 2f + 14f, y + 2, line, CuteUI.Sub, true);
+            }
         }
 
         /// <summary>메뉴 한 줄: 그림 + 이름 + 오른쪽 작은 설명. primary = 청록, danger = 빨강 테</summary>
@@ -112,7 +120,7 @@ namespace PocketCaravan
                 if (pic.HasValue) { var ps0 = CuteUI.PicSize(pic.Value); CuteUI.Icon(pic.Value, d.x + 14 - ps0.x / 2f, d.center.y - ps0.y / 2f, 1, CuteUI.White); }
                 CuteUI.Label(d.x + 28, d.center.y, label, CuteUI.OnInteract, false, true);
                 CuteUI.LabelRight(d.xMax - 10, d.center.y, note, CuteUI.OnInteract, true);
-                return GUI.Button(b, GUIContent.none, GUIStyle.none) || key;
+                return CuteUI.Hit(b, GUIContent.none, GUIStyle.none) || key;
             }
             bool hover = b.Contains(Event.current.mousePosition);
             CuteUI.Box(b, 8, danger ? (hover ? CuteUI.AlertSoft : CuteUI.Paper) : hover ? CuteUI.Paper2 : CuteUI.Paper, danger ? CuteUI.Alert : CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
@@ -123,7 +131,7 @@ namespace PocketCaravan
             }
             CuteUI.Label(b.x + 28, b.center.y, label, danger ? CuteUI.Down : CuteUI.Text, false, true);
             CuteUI.LabelRight(b.xMax - 10, b.center.y, note, CuteUI.Sub, true);
-            return GUI.Button(b, GUIContent.none, GUIStyle.none) || key;
+            return CuteUI.Hit(b, GUIContent.none, GUIStyle.none) || key;
         }
     }
 }

@@ -137,9 +137,11 @@ namespace PocketCaravan
             CuteUI.Dim();
             CuteUI.Window(r);
             CuteUI.TitlePlate(r.center.x, r.y - 11, "여정 수첩");
+            CuteUI.Keycap(r.xMax - 32 - CuteUI.KeycapWidth("Esc") - 3, r.y - 3, "Esc");
             if (CuteUI.CloseButton(r.xMax - 32, r.y - 9)) { CloseLog(); return; }
 
-            var content = new Rect(r.x + 15, r.y + 50, w - 30, h - 50 - 24);
+            // 11/18 윤채: 탭 오른쪽 설명 줄 · 맨 아래 키 안내 줄은 뺐다 (칸을 더 넓게)
+            var content = new Rect(r.x + 15, r.y + 50, w - 30, h - 50 - 14);
             CuteUI.Box(content, 7, CuteUI.Paper, CuteUI.Ink);
             float tx = content.x + 6;
             for (int i = 0; i < LogTabs.Length; i++)
@@ -148,9 +150,6 @@ namespace PocketCaravan
                 tx += tw + 3;
             }
             var gm = GameManager.I;
-            int qn = 0; foreach (var _ in qm.Active) qn++;
-            string sub = logTab == 0 ? $"맡은 일 {qn + gm.Player.contracts.Count}개" : logTab == 1 ? "신용이 오르면 시설이 열려요" : "이 맵에서 갈 수 있는 거래처";
-            CuteUI.LabelRight(content.xMax - 4, content.y - 9, sub, CuteUI.Sub, true);
 
             var area = new Rect(content.x + 6, content.y + 6, content.width - 12, content.height - 10);
             scroll.y = TradeLedgerUI.Scroll(area, scroll.y, logContentH);
@@ -159,7 +158,6 @@ namespace PocketCaravan
             float end = logTab == 0 ? DrawQuests(qm, gm, -scroll.y, cw, area.height) : logTab == 1 ? DrawGrowth(gm, -scroll.y, cw) : DrawTowns(gm, -scroll.y, cw);
             logContentH = end + scroll.y;
             GUI.EndGroup();
-            CuteUI.LabelCenter(r.center.x, r.yMax - 13, "←→ 탭 · ↑↓·휠 넘기기 · Esc 닫기", CuteUI.Sub, true);
         }
 
         static float Pill(float x, float cy, string text, CuteUI.BadgeKind k)
@@ -190,7 +188,7 @@ namespace PocketCaravan
             if (on)
             {
                 float x = Pill(right, y + 12, "안내 중", CuteUI.BadgeKind.On);
-                if (GUI.Button(new Rect(x, y + 4, right - x, 17), new GUIContent("", "누르면 길 안내를 끕니다"), GUIStyle.none)) click();
+                if (CuteUI.Hit(new Rect(x, y + 4, right - x, 17), new GUIContent("", "누르면 길 안내를 끕니다"), GUIStyle.none)) click();
                 return x;
             }
             var b = new Rect(right - 60, y + 4, 60, 17);
@@ -354,7 +352,7 @@ namespace PocketCaravan
 
             // 내 신용 카드
             float chipsH = 0; { float cx = 54; foreach (var u in unlocks) { float cwid = Mathf.Round(CuteUI.Width(u, true) + 16); if (cx + cwid > w - 26) { cx = 54; chipsH += 18; } cx += cwid + 4; } if (unlocks.Count > 0) chipsH += 18; }
-            float ch = next != int.MaxValue ? 52 + chipsH + 4 : 50;
+            float ch = next != int.MaxValue ? 40 + chipsH + 6 : 50;
             var card = new Rect(0, y, w, ch);
             CuteUI.Box(card, 7, CuteUI.Paper, CuteUI.Interact, 2);
             CuteUI.Circle(10, y + 9, 34, CuteUI.Interact, CuteUI.InteractLo);
@@ -362,10 +360,11 @@ namespace PocketCaravan
             CuteUI.LabelCenter(27, y + 33, "신용", CuteUI.White, true);
             if (next != int.MaxValue)
             {
-                CuteUI.Label(54, y + 14, $"신용 {next}까지 {next - p.credit} 남았어요", CuteUI.Text, false, true);
-                CuteUI.Bar(new Rect(54, y + 24, w - 66, 8), next > 0 ? p.credit / (float)next : 1f, CuteUI.Interact, CuteUI.InteractHi);
-                CuteUI.Label(54, y + 41, "의뢰를 마치면 신용이 올라요 · 이때 열려요", CuteUI.Sub, true);
-                float cx = 54, cy = y + 52;
+                // 11/18 한 줄로: "신용 N이 되면 열려요" + 막대 + 열리는 것 (설명 줄은 뺐다. 의뢰 탭·게시판이 알려 준다)
+                float lx = CuteUI.Label(54, y + 14, $"신용 {next}이 되면 열려요", CuteUI.Text, false, true);
+                CuteUI.Label(lx + 6, y + 14.5f, "의뢰를 마치면 올라요", CuteUI.Sub, true);
+                CuteUI.Bar(new Rect(54, y + 24, w - 66, 6), next > 0 ? p.credit / (float)next : 1f, CuteUI.Interact, CuteUI.InteractHi);
+                float cx = 54, cy = y + 36;
                 foreach (var u in unlocks)
                 {
                     float cwid = Mathf.Round(CuteUI.Width(u, true) + 16);
@@ -389,26 +388,23 @@ namespace PocketCaravan
                 var list = new List<TownFacility>();
                 foreach (var f in town.facilities) if (f != null && f.kind != FacilityKind.Rest && town.SettlementTier >= f.minTier) list.Add(f);
                 if (list.Count == 0) continue;
-                y = Section(y, town.displayName, $"거점 {town.SettlementTier}등급");
+                y = Section(y, town.displayName);
                 foreach (var f in list)
                 {
+                    // 11/18 한 줄: 그림 · 이름 · 하는 일(흐리게) · 오른쪽 상태
                     string denial = FacilityAccess.Denial(town, f, p);
-                    CuteUI.Box(new Rect(0, y, w, 30), 7, CuteUI.Paper2, CuteUI.Line);
+                    CuteUI.Box(new Rect(0, y, w, 24), 7, CuteUI.Paper2, CuteUI.Line);
                     var pic = f.kind == FacilityKind.Warehouse ? CuteUI.Pic.Sack : CuteUI.Pic.Compass;
                     var ps = CuteUI.PicSize(pic);
-                    CuteUI.Circle(5, y + 4, 22, CuteUI.Paper, CuteUI.Line);
-                    CuteUI.Icon(pic, 16 - ps.x / 2f, y + 15 - ps.y / 2f);
-                    float bl = Pill(w - 7, y + 15, denial == null ? "이용 가능" : TownFacilitiesUI.ShortDenial(denial), denial == null ? CuteUI.BadgeKind.Ok : CuteUI.BadgeKind.Locked);
-                    CuteUI.Label(33, y + 9, f.displayName, denial == null ? CuteUI.Text : CuteUI.Sub, true, true);
-                    CuteUI.Label(33, y + 22, TradeLedgerUI.Fit(CuteUI.Plain(JourneyGuide.FacilityEffect(f)), bl - 40, true, false), CuteUI.Sub, true);
-                    y += 33;
+                    CuteUI.Icon(pic, 13 - ps.x / 2f, y + 12 - ps.y / 2f);
+                    float bl = Pill(w - 7, y + 12, denial == null ? "이용 가능" : TownFacilitiesUI.ShortDenial(denial), denial == null ? CuteUI.BadgeKind.Ok : CuteUI.BadgeKind.Locked);
+                    float nx = CuteUI.Label(26, y + 12, f.displayName, denial == null ? CuteUI.Text : CuteUI.Sub, true, true);
+                    CuteUI.Label(nx + 8, y + 12, TradeLedgerUI.Fit(CuteUI.Plain(JourneyGuide.FacilityEffect(f)), bl - nx - 16, true, false), CuteUI.Sub, true);
+                    y += 27;
                 }
                 y += 4;
             }
-            float th = CuteUI.WrapHeight("수레를 사기 전에 다음 매입 자금을 남기세요. 의뢰 짐도 짐칸을 써요. 창고에 맡긴 물건은 판 것이 아니에요.", w - 20, true);
-            CuteUI.Icon(CuteUI.Pic.Bulb, 3, y + 2);
-            CuteUI.Wrap(15, y, w - 20, "수레를 사기 전에 다음 매입 자금을 남기세요. 의뢰 짐도 짐칸을 써요. 창고에 맡긴 물건은 판 것이 아니에요.", CuteUI.Sub, true);
-            return y + th + 4;
+            return y;
         }
 
         // ---------------- 주변 거래처 ----------------
@@ -426,47 +422,63 @@ namespace PocketCaravan
                 CuteUI.LabelCenter(w / 2f, y + 40, "이 맵과 이어진 거래처 정보가 없어요", CuteUI.Text, true, true);
                 return y + 60;
             }
-            const float iconsW = 92f;
+            // 11/18 윤채: 카드마다 두 줄 설명 + "특산" · "시세 모름" 글씨가 겹쳐 어지러웠다 →
+            //   한 줄(이름 · 거리 · 특산 그림 · 시세를 본 곳만 작은 표시), 카드를 누르면 그 마을 설명이 펼쳐진다 (지금 있는 마을은 처음부터 펼침)
             ItemData hoverItem = null; Rect hoverRect = default;   // 11/11 은샘: 특산 아이콘에 마우스를 올리면 이름
             foreach (var (town, hops) in rows)
             {
                 bool recorded = JourneyGuide.MarketRecorded(gm.Player.ledger, town.id);
                 string note = string.IsNullOrEmpty(town.journeyNote) ? null : CuteUI.Plain(town.journeyNote);
-                float nw = w - 20 - iconsW - 8;
-                float nh = note != null ? CuteUI.WrapHeight(note, nw, true) : 0;
-                float ch = Mathf.Max(48, 24 + nh + 6);
-                CuteUI.Box(new Rect(0, y, w, ch), 7, CuteUI.Paper2, CuteUI.Line);
-                float tx = CuteUI.Label(10, y + 12, town.displayName, CuteUI.Text, false, true);
+                bool open = note != null && (openTown == town.id || (openTown == null && hops == 0));
+                float nh = open ? CuteUI.WrapHeight(note, w - 20, true) + 6 : 0;
+                float ch = 26 + nh;
+                var card = new Rect(0, y, w, ch);
+                bool hover = new Rect(0, y, w, 26).Contains(Event.current.mousePosition);
+                CuteUI.Box(card, 7, open ? CuteUI.Paper : hover ? CuteUI.Paper : CuteUI.Paper2, open ? CuteUI.Interact : CuteUI.Line, open ? 2 : 1);
+                float tx = CuteUI.Label(10, y + 13, town.displayName, CuteUI.Text, false, true);
                 string hop = hops == 0 ? "지금 여기" : hops > 0 ? $"{hops}구간" : "길 모름";
-                ContractBoard.Pill(tx + 6, y + 12, hop, hops == 0 ? CuteUI.Interact : CuteUI.Paper, hops == 0 ? CuteUI.InteractLo : CuteUI.Line, hops == 0 ? CuteUI.White : CuteUI.Sub);
-                if (note != null) CuteUI.Wrap(10, y + 22, nw, note, CuteUI.Sub, true);
-                // 오른쪽: 시세 기록 + 특산품
-                float ix = w - 8 - iconsW;
-                Pill(w - 8, y + 12, recorded ? "시세 기록 있음" : "시세 모름", recorded ? CuteUI.BadgeKind.On : CuteUI.BadgeKind.Locked);
-                int n = 0;
-                foreach (var item in gm.Db.items)
+                tx = ContractBoard.Pill(tx + 6, y + 13, hop, hops == 0 ? CuteUI.Interact : CuteUI.Paper, hops == 0 ? CuteUI.InteractLo : CuteUI.Line, hops == 0 ? CuteUI.White : CuteUI.Sub);
+                // 오른쪽: 특산 그림 (최대 4) · 시세를 본 곳이면 작은 장부 표시
+                float ix = w - 10;
+                if (recorded)
                 {
-                    if (item == null || item.questItem || item.originTown != town || n >= 4) continue;
-                    if (n == 0) CuteUI.Label(ix, y + 33, "특산", CuteUI.Sub, true);
-                    TradeLedgerUI.ItemIcon(item, ix + 22 + n * 18, y + 25, 1);
-                    var ir = new Rect(ix + 22 + n * 18, y + 25, 16, 16);
-                    if (ir.Contains(Event.current.mousePosition)) { hoverItem = item; hoverRect = ir; }
-                    n++;
+                    var bp = CuteUI.PicSize(CuteUI.Pic.OpenBook);
+                    ix -= bp.x;
+                    CuteUI.Icon(CuteUI.Pic.OpenBook, ix, y + 13 - bp.y / 2f, 1, CuteUI.Interact);
+                    var br = new Rect(ix - 2, y + 4, bp.x + 4, 18);
+                    if (br.Contains(Event.current.mousePosition)) { hoverItem = null; hoverRect = br; tipText = "시세를 장부에 적어 둔 곳"; }
+                    ix -= 8;
+                }
+                var mine = new List<ItemData>();
+                foreach (var item in gm.Db.items) if (item != null && !item.questItem && item.originTown == town && mine.Count < 4) mine.Add(item);
+                for (int k = mine.Count - 1; k >= 0; k--)
+                {
+                    ix -= 18;
+                    TradeLedgerUI.ItemIcon(mine[k], ix, y + 5, 1);
+                    var ir = new Rect(ix, y + 5, 16, 16);
+                    if (ir.Contains(Event.current.mousePosition)) { hoverItem = mine[k]; hoverRect = ir; tipText = null; }
+                }
+                if (open) CuteUI.Wrap(10, y + 25, w - 20, note, CuteUI.Sub, true);
+                if (note != null && CuteUI.Hit(new Rect(0, y, w, 26), GUIContent.none, GUIStyle.none))
+                {
+                    openTown = open ? "" : town.id;   // "" = 다 접음 (지금 마을도)
+                    Sfx.Play("open", .35f);
                 }
                 y += ch + 5;
             }
-            if (hoverItem != null)   // 카드보다 위에 그리도록 다 그린 뒤
+            if (hoverItem != null || tipText != null)   // 카드보다 위에 그리도록 다 그린 뒤
             {
-                string nm = hoverItem.displayName;
+                string nm = hoverItem != null ? hoverItem.displayName : tipText;
                 float tw = CuteUI.Width(nm, true) + 12f;
                 var tip = new Rect(Mathf.Round(Mathf.Clamp(hoverRect.center.x - tw / 2f, 2f, w - tw - 2f)), hoverRect.y - 17f, tw, 15f);
                 CuteUI.Box(tip, 6, CuteUI.Paper, CuteUI.Ink, 1, 1);
                 CuteUI.Label(tip.x + 6f, tip.center.y, nm, CuteUI.Text, true);
             }
-            float th = CuteUI.WrapHeight("장부(L)의 시세는 직접 가서 본 값이에요. 가는 동안 값이 바뀔 수 있어요.", w - 20, true);
-            CuteUI.Icon(CuteUI.Pic.Bulb, 3, y + 2);
-            CuteUI.Wrap(15, y, w - 20, "장부(L)의 시세는 직접 가서 본 값이에요. 가는 동안 값이 바뀔 수 있어요.", CuteUI.Sub, true);
-            return y + th + 4;
+            tipText = null;
+            return y;
         }
+
+        string openTown;          // 11/18 주변 거래처에서 펼친 마을 (null = 지금 마을만 펼침, "" = 다 접음)
+        static string tipText;    // 11/18 장부 표시에 마우스를 올렸을 때 말
     }
 }

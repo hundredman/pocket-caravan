@@ -606,7 +606,7 @@ namespace PocketCaravan
             if (online) CuteUI.Icon(CuteUI.Pic.People, r.x + 6, r.y + 5);
             else CuteUI.Circle(r.x + 8, r.y + 5, 8, Status == State.Offline ? CuteUI.ZeroSoft : Status == State.Waiting || retries > 0 ? CuteUI.Alert : CuteUI.Deco, CuteUI.Ink);
             CuteUI.Label(r.x + 22, r.y + 9, label, Status == State.Offline ? CuteUI.Sub : CuteUI.Text, false, true);
-            if (!UIState.Blocking && GUI.Button(r, GUIContent.none, GUIStyle.none)) NetLogin.OpenGame();   // 11/08 눌러도 O처럼 온라인 창
+            if (!UIState.Blocking && CuteUI.Hit(r, GUIContent.none, GUIStyle.none)) NetLogin.OpenGame();   // 11/08 눌러도 O처럼 온라인 창
             if (online && r.Contains(Event.current.mousePosition))
             {
                 string here = sentMap != null && !waitingRoom ? $"이 맵 {peers.Count + 1}명" : "이 맵 확인 중";

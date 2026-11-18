@@ -151,7 +151,7 @@ namespace PocketCaravan
                 bool on = i == tab;
                 CuteUI.Box(pr, 7, on ? CuteUI.Interact : CuteUI.Paper2, on ? CuteUI.Ink : CuteUI.Line);
                 CuteUI.LabelCenter(pr.center.x, pr.center.y, label, on ? CuteUI.OnInteract : CuteUI.Text, true, true);
-                if (GUI.Button(pr, GUIContent.none, GUIStyle.none) && !on) { tab = i; Sfx.Play("open", .3f); }
+                if (CuteUI.Hit(pr, GUIContent.none, GUIStyle.none) && !on) { tab = i; Sfx.Play("open", .3f); }
                 px += pw + 5f;
             }
             y += 24f;

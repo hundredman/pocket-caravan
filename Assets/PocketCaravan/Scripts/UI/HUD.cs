@@ -203,7 +203,7 @@ namespace PocketCaravan
             var card = new Rect(22, 5, w, 40);
             ScreenZones.Mark("hud.card", Rect.MinMaxRect(4, 4, card.xMax, card.yMax));   // 초상까지
             CuteUI.Card(card);
-            if (!UIState.Blocking && GUI.Button(Rect.MinMaxRect(4, 4, card.xMax, card.yMax), GUIContent.none, GUIStyle.none)) InputReader.Press('\t');   // 11/08 눌러도 Tab처럼 펼치기
+            if (!UIState.Blocking && CuteUI.Hit(Rect.MinMaxRect(4, 4, card.xMax, card.yMax), GUIContent.none, GUIStyle.none)) InputReader.Press('\t');   // 11/08 눌러도 Tab처럼 펼치기
             MoneyCoin(42, 14);
             float x = CuteUI.Label(54, 18.5f, money, MoneyColor, false, true);
             CuteUI.Label(x + 3, 19, "냥", CuteUI.Sub, true);
@@ -243,7 +243,7 @@ namespace PocketCaravan
             float h = 30 + 16 + 6 + 12 + repH + 4 + 15 + 15 + 7 + 12 + (p.HasAnyCargo ? 12 : 0) + 8;
             ScreenZones.Mark("hud.card", Rect.MinMaxRect(4, 4, x + w, y + h));
             CuteUI.Card(new Rect(x, y, w, h));
-            if (!UIState.Blocking && GUI.Button(Rect.MinMaxRect(4, 4, x + w, y + h), GUIContent.none, GUIStyle.none)) InputReader.Press('\t');   // 11/08 눌러도 접기
+            if (!UIState.Blocking && CuteUI.Hit(Rect.MinMaxRect(4, 4, x + w, y + h), GUIContent.none, GUIStyle.none)) InputReader.Press('\t');   // 11/08 눌러도 접기
 
             // 맵 이름 + 장날 (초상 오른쪽)
             float tx = CuteUI.Label(46, y + 13, map.displayName, CuteUI.Text, false, true);
@@ -300,7 +300,7 @@ namespace PocketCaravan
                 CuteUI.Icon(b.pic, x + Mathf.Floor((ButtonSize - s.x + 1) / 2f), 4 + Mathf.Floor((ButtonSize - s.y) / 2f));
                 float kw = CuteUI.KeycapWidth(b.label);
                 CuteUI.Keycap(x + Mathf.Round((ButtonSize - kw) / 2f), 4 + ButtonSize - 5, b.label);
-                if (!UIState.Blocking && GUI.Button(new Rect(x, 4, ButtonSize, ButtonSize + 8), GUIContent.none, GUIStyle.none)) InputReader.Press(b.key);
+                if (!UIState.Blocking && CuteUI.Hit(new Rect(x, 4, ButtonSize, ButtonSize + 8), GUIContent.none, GUIStyle.none)) InputReader.Press(b.key);
                 x += ButtonSize + ButtonGap;
             }
         }

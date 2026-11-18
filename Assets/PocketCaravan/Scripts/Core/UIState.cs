@@ -137,7 +137,7 @@ namespace PocketCaravan
         static GUIStyle box, button;
         /// <summary>창 바탕 스타일 (GUI.Box(rect, "", UIStyle.Box))</summary>
         public static GUIStyle Box => box;
-        /// <summary>버튼 스타일 (GUI.Button(rect, label, UIStyle.Button))</summary>
+        /// <summary>버튼 스타일 (CuteUI.Hit(rect, label, UIStyle.Button))</summary>
         public static GUIStyle Button => button;
 
         static void Skin()

@@ -205,7 +205,7 @@ namespace PocketCaravan
             {
                 CuteUI.Box(b, 8, CuteUI.ZeroSoft, CuteUI.KeyLine);
                 CuteUI.LabelCenter(b.center.x, b.center.y, label, CuteUI.Sub, true);
-                if (GUI.Button(b, GUIContent.none, GUIStyle.none)) { message = denial; Sfx.Play("cancel"); }
+                if (CuteUI.Hit(b, GUIContent.none, GUIStyle.none)) { message = denial; Sfx.Play("cancel"); }
             }
             CuteUI.Label(42, y + 13, f.displayName, ok ? CuteUI.Text : CuteUI.Sub, false, true);
             string effect = f.kind == FacilityKind.Warehouse ? $"맡겨 둘 수 있는 무게 {f.storageCapacity:0} · 일반 교역품"

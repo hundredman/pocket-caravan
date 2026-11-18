@@ -310,13 +310,13 @@ namespace PocketCaravan
             float bx = r.xMax - 10;
             if (!ChoicesVisible)
             {
-                if (GUI.Button(new Rect(bx - 104, r.yMax - 26, 104, 18), "다음 (Space)", CuteUI.PaperButtonOn)) NextPage();
+                if (CuteUI.PaperButtonBold(new Rect(bx - 104, r.yMax - 26, 104, 18), "다음 (Space)")) NextPage();   // 11/18 청록 단추는 흰 굵은 글씨
                 return;
             }
             if (choices.Count == 0)
             {
                 // 11/08 마우스로도 닫게 단추로 (예전엔 글씨라 Space로만 닫혔다)
-                if (GUI.Button(new Rect(bx - 104, r.yMax - 26, 104, 18), "닫기 (Space)", CuteUI.PaperButtonOn)) Close();
+                if (CuteUI.PaperButtonBold(new Rect(bx - 104, r.yMax - 26, 104, 18), "닫기 (Space)")) Close();
                 return;
             }
             if (stacked)
@@ -329,7 +329,7 @@ namespace PocketCaravan
                 for (int i = 0; i < choices.Count; i++)
                 {
                     var row = new Rect(0, y, contentWidth, heights[i]); choiceRects.Add(row);
-                    if (GUI.Button(row, labels[i], i == focus ? wrappedChoiceOn : wrappedChoice))   // 11/08 키보드로 고른 것을 강조
+                    if (i == focus ? CuteUI.PaperButtonBold(row, labels[i], wrappedChoiceOn) : CuteUI.Hit(row, labels[i], wrappedChoice))   // 11/08 키보드로 고른 것을 강조
                     {
                         GUI.EndScrollView(); Pick(choices[i]); return;
                     }
@@ -343,7 +343,7 @@ namespace PocketCaravan
                 for (int i = choices.Count - 1; i >= 0; i--)
                 {
                     bx -= widths[i]; var row = new Rect(bx, r.yMax - 26, widths[i], 18); choiceRects.Add(row);
-                    if (GUI.Button(row, labels[i], i == focus ? CuteUI.PaperButtonOn : CuteUI.PaperButton)) { Pick(choices[i]); return; }   // 11/08 키보드로 고른 것을 강조
+                    if (i == focus ? CuteUI.PaperButtonBold(row, labels[i]) : CuteUI.Hit(row, labels[i], CuteUI.PaperButton)) { Pick(choices[i]); return; }   // 11/08 키보드로 고른 것을 강조
                     bx -= 6;
                 }
             }

@@ -1168,7 +1168,7 @@ namespace PocketCaravan
             GUI.depth = -4;
             if (!PillShowing) return;
             var pill = DrawPill();
-            if (GUI.Button(pill, GUIContent.none, GUIStyle.none)) wantBook = true;   // 위 알약을 누르면 수첩
+            if (CuteUI.Hit(pill, GUIContent.none, GUIStyle.none)) wantBook = true;   // 위 알약을 누르면 수첩
         }
 
         static float Ease(float t) { t = Mathf.Clamp01(t); return 1f - (1f - t) * (1f - t) * (1f - t); }

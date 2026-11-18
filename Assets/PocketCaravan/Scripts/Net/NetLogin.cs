@@ -14,7 +14,8 @@ namespace PocketCaravan
     ///   접속되면 시작 화면으로 넘어간다. 로그인 화면이 떠 있는 동안 시작 화면은 키를 받지 않는다(StartScreen.Held).
     /// - 게임 중 O 키: 온라인 창. 접속해 있으면 내 이름·계정·접속자 수와 끊기 · 다른 이름으로 접속, 아니면 로그인 칸.
     ///   (2026-11-05 UI B안: 게임 중 창은 CuteUI 모양. 첫 화면 로그인은 시작 화면과 같은 크림·초록 그대로)
-    /// - Tab 칸 바꾸기 · Enter 접속 · 한글은 NetTextBox(가/A: 오른쪽 Alt). 서버 주소는 "서버 바꾸기"를 눌러야 보인다(개발용).
+    /// - Tab 칸 바꾸기 · Enter 접속 · 한글은 NetTextBox(가/A: 오른쪽 Alt). 서버 주소는 F8을 눌러야 보인다(개발용).
+    ///   11/18 윤채: 화면 아래 "서버 바꾸기" 글씨는 뺐다. 칸 옆 작은 안내는 빈 칸 안 흐린 글씨로, 접속 단추에 들어갈 이름을 보여 준다.
     /// - 다른 씬에서 바로 Play하면 시작 화면이 없어서 로그인 화면도 안 뜬다. 편집기에서 볼 때는 Preview를 켠다(메뉴 온라인/화면 캡처).
     /// 이름·접속키·주소·기억 여부는 이 컴퓨터 설정(PlayerPrefs)에만 남는다. 게임 저장 파일과는 무관하다.
     /// </summary>
@@ -60,7 +61,13 @@ namespace PocketCaravan
             nameBox.Text = remember ? PlayerPrefs.GetString("net.name", "") : "";
             keyBox.Text = remember ? PlayerPrefs.GetString("net.pass", "") : "";
             addressBox.Text = address;
+            nameBox.Placeholder = "모두에게 보이는 이름";
+            keyBox.Placeholder = "비밀번호 입력 (4자 이상)";
+            rememberedName = nameBox.Text.Trim();
         }
+
+        /// <summary>11/18 켤 때 기억해 둔 이름 (위 인사 "다시 왔어요"에 쓴다. 이름 칸을 고치면 인사도 바뀐다)</summary>
+        string rememberedName = "";
 
         static NetClient Net => NetClient.I;
         static bool Online => Net != null && Net.Status == NetClient.State.Online;
@@ -84,11 +91,8 @@ namespace PocketCaravan
             note = null;
             Focus(nameBox.Text.Trim().Length == 0 ? nameBox : keyBox.Text.Length == 0 ? keyBox : null);
             // 11/12: 기억한 이름·접속키는 채워 두기만 하고 저절로 접속하지 않는다 (Enter = 그 이름으로 접속, 이름을 바꾸면 다른 계정)
-            if (!autoTried && remember && nameBox.Text.Trim().Length > 0 && keyBox.Text.Length >= 4)
-            {
-                autoTried = true;
-                Say($"{nameBox.Text.Trim()}(으)로 들어가려면 Enter · 다른 이름은 이름 칸을 고쳐 주세요", false);
-            }
+            // 11/18: 안내 줄 대신 위 인사("다시 왔어요, 이름 님!")와 접속 단추 글("이름으로 접속하기")로 보여 준다 (DrawStart · PrimaryLabel)
+            autoTried = true;
         }
 
         void CloseStart()
@@ -263,7 +267,15 @@ namespace PocketCaravan
             KeyNav.Begin(this, !typing);   // 골라진 단추가 있으면 Enter·Space가 그 단추를 누른다 (아래 Enter=접속보다 먼저)
             if (e.type == EventType.KeyDown)
             {
-                if (e.keyCode == KeyCode.Tab) { NextField(); e.Use(); }
+                if (e.keyCode == KeyCode.F8 && FormShown)
+                {
+                    // 11/18 서버 주소 칸 (개발용): 화면에 단추 없이 F8로 보이고 숨긴다
+                    showServer = !showServer;
+                    addressBox.Text = address;
+                    if (!showServer && addressBox.Active) Focus(keyBox);
+                    e.Use();
+                }
+                else if (e.keyCode == KeyCode.Tab) { NextField(); e.Use(); }
                 else if ((e.keyCode == KeyCode.Return || e.keyCode == KeyCode.KeypadEnter) && FormShown) { Submit(); e.Use(); }
             }
             try
@@ -312,7 +324,8 @@ namespace PocketCaravan
         void Text(Rect r, string s, Color32 c, GUIStyle st, TextAnchor a = TextAnchor.MiddleLeft)
         {
             st.alignment = a;
-            st.normal.textColor = UIStyle.Lin(c);
+            // 11/18 윤채: 글씨 위에 마우스를 올리면 회색으로 바뀌던 것 (기본 글씨 모양의 hover 색) → 모든 상태를 같은 색으로
+            st.normal.textColor = st.hover.textColor = st.active.textColor = st.focused.textColor = UIStyle.Lin(c);
             GUI.Label(r, s, st);
         }
 
@@ -329,7 +342,7 @@ namespace PocketCaravan
             Fill(r, primary ? (hover ? GreenDark : Green) : (hover ? Cream : White));
             Frame(r, primary ? GreenDark : BrownLight, 1);
             Text(r, text, primary ? White : Brown, label, TextAnchor.MiddleCenter);
-            return GUI.Button(hit, GUIContent.none, GUIStyle.none) || key;
+            return CuteUI.Hit(hit, GUIContent.none, GUIStyle.none) || key;
         }
 
         /// <summary>입력 칸 하나 (칸을 누르면 그 칸에 쓴다)</summary>
@@ -346,7 +359,8 @@ namespace PocketCaravan
             }
             else
             {
-                CuteUI.Box(r, 5, CuteUI.White, box.Active ? CuteUI.Interact : CuteUI.Line, box.Active ? 2 : 1);
+                // 11/18 카드·간판처럼 각지고 진한 테 (예전엔 둥글고 연한 테라 따로 놀았다). 쓰는 중이면 청록 두 줄
+                CuteUI.Box(r, 3, CuteUI.White, box.Active ? CuteUI.Interact : CuteUI.Ink, box.Active ? 2 : 1);
                 box.TextColor = UIStyle.Lin(CuteUI.Text);
                 box.Draw(new Rect(r.x + 4, r.y, r.width - 6, r.height), plainField);
             }
@@ -359,77 +373,145 @@ namespace PocketCaravan
             var box = new Rect(r.x, r.y + (r.height - 10) / 2, 10, 10);
             Fill(box, White); Frame(box, BrownLight, 1); if (on) Fill(new Rect(box.x + 2, box.y + 2, 6, 6), Green);
             Text(new Rect(box.xMax + 5, r.y, r.width - 15, r.height), text, Brown, small);
-            return GUI.Button(r, GUIContent.none, GUIStyle.none) ? !on : on;
+            return CuteUI.Hit(r, GUIContent.none, GUIStyle.none) ? !on : on;
         }
 
         /// <summary>DrawForm이 차지하는 높이 (그리기 전에 카드 크기를 정한다)</summary>
-        float FormHeight => 41 + 37 + 17 + (showServer ? 35 : 0) + 22 + 24 + (string.IsNullOrEmpty(note) ? 0 : 20);
+        float FormHeight => 43 + 39 + 17 + (showServer ? 35 : 0) + 22 + 26 + (string.IsNullOrEmpty(note) ? 0 : 24);
+
+        /// <summary>11/18 접속 단추 글: 이름을 넣었으면 "이름으로 접속하기" (단추에 다 들어가지 않으면 "접속하기")</summary>
+        string PrimaryLabel(float bw)
+        {
+            if (submitting) return "접속하는 중…";
+            string n = nameBox.Full.Trim();
+            if (n.Length == 0) return "접속하기";
+            string s = $"{Josa.Ro(n)} 접속하기";
+            return CuteUI.Width(s, false, true) <= bw - 16 ? s : "접속하기";
+        }
 
         /// <summary>이름 · 접속키 · (서버 주소) · 기억 · 버튼 · 안내. 다 그린 아래쪽 y를 돌려준다</summary>
         float DrawForm(float x, float y, float w, bool start)
         {
+            // 11/18 윤채: 칸 옆에 작게 붙던 안내는 빈 칸 안 흐린 글씨(Placeholder)로 옮기고, 칸·단추를 키웠다
             Color32 ink = light ? Brown : CuteUI.Text, soft = light ? BrownLight : CuteUI.Sub;
             Text(new Rect(x, y, w, 14), "이름", ink, label);
-            Text(new Rect(x, y, w, 14), "다른 사람에게 보이는 이름 · 16자까지", soft, small, TextAnchor.MiddleRight);
-            Field(new Rect(x, y + 15, w, 20), nameBox);
-            y += 41;
+            Field(new Rect(x, y + 15, w, 22), nameBox);
+            y += 43;
             Text(new Rect(x, y, w, 14), "접속키", ink, label);
-            Text(new Rect(x, y, w, 14), "비밀번호처럼 나만 아는 글자 · 4자 이상", soft, small, TextAnchor.MiddleRight);
-            Field(new Rect(x, y + 15, w, 20), keyBox);
-            y += 37;
-            Text(new Rect(x, y, w, 12), "처음 쓰는 이름이면 새 계정이 만들어져요", soft, small);
+            Field(new Rect(x, y + 15, w, 22), keyBox);
+            y += 39;
+            Text(new Rect(x, y, w, 12), "처음 쓰는 이름이면 그 이름과 접속키로 새 계정이 만들어져요", soft, small);
             y += 17;
             if (showServer)
             {
-                Text(new Rect(x, y, w, 14), "서버 주소 (개발용)", ink, small);
+                Text(new Rect(x, y, w, 14), "서버 주소 (개발용 · F8로 숨기기)", ink, small);
                 Field(new Rect(x, y + 13, w, 18), addressBox);
                 y += 35;
             }
-            bool r = Check(new Rect(x, y, w, 14), remember, "이 컴퓨터에 이름·접속키 기억");
+            bool r = Check(new Rect(x, y, w, 14), remember, "이 컴퓨터에 기억하기");
             if (r != remember) { remember = r; Sfx.Play("open", .4f); }
             y += 22;
             float bw = (w - 10) / 2;
-            if (submitting)
-            {
-                Button(new Rect(x, y, bw, 24), "접속하는 중…", true);
-            }
-            else if (Button(new Rect(x, y, bw, 24), "접속하기", true)) Submit();
+            if (Button(new Rect(x, y, bw, 26), PrimaryLabel(bw), true) && !submitting) Submit();
             if (start)
             {
-                if (Button(new Rect(x + bw + 10, y, bw, 24), "혼자 하기", false)) PlayAlone();
+                if (Button(new Rect(x + bw + 10, y, bw, 26), "혼자 하기", false)) PlayAlone();
             }
-            else if (Button(new Rect(x + bw + 10, y, bw, 24), "닫기", false)) CloseGame();
-            y += 24;
+            else if (Button(new Rect(x + bw + 10, y, bw, 26), "닫기", false)) CloseGame();
+            y += 26;
             if (!string.IsNullOrEmpty(note))
             {
-                Text(new Rect(x - 10, y + 6, w + 20, 14), note, noteBad ? (light ? Pick : CuteUI.Alert) : (light ? Green : CuteUI.Up), small, TextAnchor.MiddleCenter);
-                y += 20;
+                // 11/18 틀렸을 때는 연한 빨간 띠로 (예전엔 작은 글씨 한 줄이라 지나치기 쉬웠다)
+                var nr = new Rect(x, y + 6, w, 18);
+                if (noteBad)
+                {
+                    CuteUI.Box(nr, 6, CuteUI.AlertSoft, CuteUI.Alert, 1);
+                    CuteUI.LabelCenter(nr.center.x, nr.center.y, note, CuteUI.Alert, true, true);
+                }
+                else CuteUI.LabelCenter(nr.center.x, nr.center.y, note, CuteUI.Sub, true);
+                y += 24;
             }
             return y;
         }
 
         void DrawStart()
         {
-            // 11/05 UI B안: 시작 화면과 같은 종이 바둑판 + 주황 머리띠, 로그인 칸은 게임 중 온라인 창과 같은 종이 창
+            // 11/18 7판 (디자인 의견 "작은 동물 상인들이 함께하는 아기자기한 여행 상점"):
+            //   왼쪽 = 네 상인(토비 · 루나 · 보리 · 사피)이 함께 장사를 준비하는 상점 (TitleUI.Scene, 말풍선은 돌아가며 하나),
+            //   오른쪽 = "상인 수첩" 패널: 인사 → 상인 이름(이름표 그림) → 접속키(열쇠 그림) → 기억하기 · Enter 안내 →
+            //   접속하기(청록 통통 단추) → 오프라인으로 놀기(크림 보조 단추) → 짧은 계정 안내. 동작·입력 조건은 그대로
             light = false;
             GUI.depth = -600;   // 시작 화면(-500) 위
             float W = UIStyle.VirtualWidth, H = UIStyle.VirtualHeight;
-            CuteUI.Backdrop("온라인");
-            CuteUI.LabelCenter(W / 2, 62, "함께 떠나는 상인 길", CuteUI.Text, false, true);
+            CuteUI.Backdrop(null, false);
+            TitleUI.Scene(W, H, null, null, null, "오늘은 어느 장터로 떠날까?");
 
-            float cw = 320, ch = 36 + FormHeight;
-            var card = new Rect(Mathf.Round((W - cw) / 2), 90, cw, ch);
-            CuteUI.Window(card);
-            CuteUI.TitlePlate(card.center.x, card.y - 11, "접속");
-            DrawForm(card.x + 18, card.y + 22, cw - 36, true);
-
-            CuteUI.LabelCenter(W / 2, H - 20, "Tab·↑↓ 칸 바꾸기 · ←→ 단추 고르기 · Enter 접속 · 한글/영어: 오른쪽 Alt", CuteUI.Sub, true);
-            var server = new Rect(W - 96, H - 27, 82, 14);
-            CuteUI.LabelRight(server.xMax, server.center.y, showServer ? "서버 주소 숨기기" : "서버 바꾸기", CuteUI.Interact, true);
-            if (GUI.Button(server, GUIContent.none, GUIStyle.none)) { showServer = !showServer; addressBox.Text = address; }
+            string n = nameBox.Full.Trim();
+            bool back = n.Length > 0 && n == rememberedName;
+            float ph = 16 + 26 + 42 + 42 + (showServer ? 36 : 0) + 24 + 44 + 38 + 26 + 10;
+            var p = TitleUI.MenuPanel(W, H, ph);
+            TitleUI.Panel(p, "상인 수첩");
+            float x = p.x + 20, w = p.width - 40, y = p.y + 16;
+            CuteUI.Label(x, y + 8, TradeLedgerUI.Fit(back ? $"어서 와요, {n} 님!" : "어서 와요, 상인님!", w, false, true), TitleUI.Choco, false, true);
+            y += 26;
+            CuteUI.Label(x, y + 5, "상인 이름", TitleUI.ChocoSoft, true);
+            NoteField(new Rect(x, y + 12, w, 24), nameBox, TitleUI.FieldIcon.Tag);
+            y += 42;
+            CuteUI.Label(x, y + 5, "접속키", TitleUI.ChocoSoft, true);
+            NoteField(new Rect(x, y + 12, w, 24), keyBox, TitleUI.FieldIcon.Key);
+            y += 42;
+            if (showServer)
+            {
+                CuteUI.Label(x, y + 5, "서버 주소 (개발용 · F8)", TitleUI.ChocoSoft, true);
+                NoteField(new Rect(x, y + 12, w, 22), addressBox, TitleUI.FieldIcon.Globe);
+                y += 36;
+            }
+            float ew = CuteUI.Width("접속", true) + 4 + CuteUI.KeycapWidth("Enter");
+            bool rem = NoteCheck(new Rect(x, y, w - ew - 6, 14), remember, "이 컴퓨터에 기억하기");
+            if (rem != remember) { remember = rem; Sfx.Play("open", .4f); }
+            CuteUI.Keycap(x + w - ew, y + 1, "Enter", true);
+            CuteUI.LabelRight(x + w, y + 7, "접속", TitleUI.ChocoSoft, true);
+            y += 24;
+            // 접속하기 (청록 = 주요 행동) · 오프라인으로 놀기 (크림 보조). 화살표로 고르면 모서리 꺾쇠 + ▶
+            var go = new Rect(x + 8, y, w - 16, 32);
+            bool k1 = KeyNav.Item(go, out bool f1);
+            if ((TitleUI.Button(go, PrimaryLabel(w - 30), true, f1) || k1) && !submitting) Submit();
+            y += 44;
+            var off = new Rect(x + 26, y, w - 52, 24);
+            bool k2 = KeyNav.Item(off, out bool f2);
+            if (TitleUI.Button(off, "오프라인으로 놀기", false, f2, true) || k2) PlayAlone();
+            y += 38;
+            // 짧은 계정 안내 (두 줄까지). 틀렸으면 빨간 띠, 접속 중이면 그 말
+            if (!string.IsNullOrEmpty(note) && noteBad)
+            {
+                var nr = new Rect(x - 4, y - 4, w + 8, 20);
+                CuteUI.Box(nr, 3, CuteUI.AlertSoft, CuteUI.Alert, 1);
+                CuteUI.LabelCenter(nr.center.x, nr.center.y, TradeLedgerUI.Fit(note, w, true, true), CuteUI.Alert, true, true);
+            }
+            else CuteUI.WrapWords(x, y - 6, w, !string.IsNullOrEmpty(note) ? note : "처음이면 이름과 접속키를 정하세요. 계정이 자동으로 만들어져요", TitleUI.ChocoSoft, true);
         }
 
-        void DrawGame()
+        /// <summary>11/18 상인 수첩 입력 칸 (아이보리 · 초콜릿 테 · 왼쪽 작은 그림). 누르면 그 칸에 쓴다</summary>
+        void NoteField(Rect r, NetTextBox box, TitleUI.FieldIcon icon)
+        {
+            var e = Event.current;
+            if (e.type == EventType.MouseDown && r.Contains(e.mousePosition)) { Focus(box); e.Use(); }
+            var inner = TitleUI.Field(r, box.Active, icon);
+            box.TextColor = UIStyle.Lin(TitleUI.Choco);
+            box.Draw(inner, plainField);
+        }
+
+        /// <summary>11/18 상인 수첩 체크 칸 (아이보리 네모 · 켜면 청록)</summary>
+        static bool NoteCheck(Rect r, bool on, string text)
+        {
+            var b = new Rect(r.x, Mathf.Round(r.y + (r.height - 11) / 2f), 11, 11);
+            CuteUI.Box(b, 2, TitleUI.Ivory, TitleUI.Choco, 1);
+            if (on) CuteUI.Fill(new Rect(b.x + 3, b.y + 3, 5, 5), TitleUI.Teal);
+            CuteUI.Label(b.xMax + 6, r.center.y, text, TitleUI.Choco, true);
+            return CuteUI.Hit(r, GUIContent.none, GUIStyle.none) ? !on : on;
+        }
+
+void DrawGame()
         {
             light = false;
             GUI.depth = -11;

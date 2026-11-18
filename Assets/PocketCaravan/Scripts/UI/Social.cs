@@ -441,7 +441,7 @@ namespace PocketCaravan
                 var r = new Rect(p.x - w / 2f, p.y - 9, w, 15);
                 if (g.Length > 0) GUI.Box(r, GUIContent.none, UIStyle.Box);
                 GUI.Label(r, text, CenterLine);
-                if (g.Length > 0 && GUI.Button(r, GUIContent.none, GUIStyle.none)) OpenGift(fi);   // 11/08 "G 선물"을 눌러도 선물 창
+                if (g.Length > 0 && CuteUI.Hit(r, GUIContent.none, GUIStyle.none)) OpenGift(fi);   // 11/08 "G 선물"을 눌러도 선물 창
             }
         }
 

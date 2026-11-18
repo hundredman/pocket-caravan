@@ -202,7 +202,7 @@ namespace PocketCaravan
             right -= CuteUI.KeycapWidth("L") + CuteUI.Width("장부", true) + 4;
             float kx = CuteUI.Keycap(right, fy - 6, "L", true);
             float lx = CuteUI.Label(right + kx + 3, fy, "장부", CuteUI.Sub, true);
-            if (GUI.Button(new Rect(right - 2, fy - 9, lx - right + 4, 18), GUIContent.none, GUIStyle.none)) InputReader.Press('l');   // 11/08 눌러도 장부가 열린다
+            if (CuteUI.Hit(new Rect(right - 2, fy - 9, lx - right + 4, 18), GUIContent.none, GUIStyle.none)) InputReader.Press('l');   // 11/08 눌러도 장부가 열린다
             if (!string.IsNullOrEmpty(message)) CuteUI.Label(r.x + 18, fy, Fit(CuteUI.Plain(message), right - r.x - 30, true, false), CuteUI.Text, true);
         }
 
@@ -258,7 +258,7 @@ namespace PocketCaravan
                     int have = p.cargo.Count(item);   // 11/11 사기 탭에도 가진 수 (팔기 탭과 같은 ×n)
                     CuteUI.Label(26, y + 12, Fit(item.displayName + (have > 0 ? $" ×{have}" : ""), valueLeft - 30, false, on), on ? CuteUI.OnInteract : can ? CuteUI.Text : CuteUI.Zero, false, on);
                 }
-                if (GUI.Button(row, GUIContent.none, GUIStyle.none) && selected != item) { selected = item; haggleOpen = false; }
+                if (CuteUI.Hit(row, GUIContent.none, GUIStyle.none) && selected != item) { selected = item; haggleOpen = false; }
             }
             GUI.EndGroup();
             for (float yy = c.y + 8; yy < c.yMax - 8; yy += 3) CuteUI.Fill(new Rect(c.x + lw + 14, yy, 1, 1), CuteUI.Line);

@@ -62,7 +62,7 @@ namespace PocketCaravan
             float x = CuteUI.Label(r.x + 8f + Dot + 6f, r.center.y, label, CuteUI.Text, false, true) + 8f;
             CuteUI.Keycap(x, r.center.y - 6.5f, "Q", true);
             GUI.color = old;
-            if (!UIState.Blocking && GUI.Button(r, GUIContent.none, GUIStyle.none)) { Hidden = false; Sfx.Play("move", .6f); }
+            if (!UIState.Blocking && CuteUI.Hit(r, GUIContent.none, GUIStyle.none)) { Hidden = false; Sfx.Play("move", .6f); }
             return r;
         }
 
@@ -306,7 +306,7 @@ namespace PocketCaravan
             CuteUI.Label(r.xMax - 6f - CuteUI.Width("›", false, true), arrowY, "›", hover ? CuteUI.Interact : CuteUI.Sub, false, true);
             GUI.color = old;
 
-            if (!UIState.Blocking && GUI.Button(r, GUIContent.none, GUIStyle.none)) InputReader.Press('q');
+            if (!UIState.Blocking && CuteUI.Hit(r, GUIContent.none, GUIStyle.none)) InputReader.Press('q');
             return r;
         }
 

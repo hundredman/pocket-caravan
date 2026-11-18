@@ -122,7 +122,7 @@ namespace PocketCaravan
                 float nw = Mathf.Round(CuteUI.Width(n, true, true) + 6);
                 CuteUI.Box(new Rect(at.xMax - nw - 1, at.yMax - 12, nw, 12), 5, CuteUI.White, CuteUI.Ink);
                 CuteUI.LabelCenter(at.xMax - 1 - nw / 2f, at.yMax - 6, n, CuteUI.Ink, true, true);
-                if (GUI.Button(at, GUIContent.none, GUIStyle.none)) { selected = i; detailScroll = Vector2.zero; }
+                if (CuteUI.Hit(at, GUIContent.none, GUIStyle.none)) { selected = i; detailScroll = Vector2.zero; }
             }
             GUI.EndGroup();
 

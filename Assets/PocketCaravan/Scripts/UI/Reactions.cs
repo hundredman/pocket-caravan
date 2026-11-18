@@ -598,7 +598,7 @@ namespace PocketCaravan
                 if (local) { CuteUI.Icon(CuteUI.Pic.Star4, lx, r.center.y - 3f, 1, on ? CuteUI.White : CuteUI.Deco); lx += 11f; }
                 CuteUI.Label(lx, r.center.y, label, on ? CuteUI.OnInteract : known ? CuteUI.Text : CuteUI.Sub, false, on);
                 if (mouseMoved && r.Contains(Event.current.mousePosition)) sel = i;   // 11/08 마우스를 올린 칸이 골라진다
-                if (GUI.Button(r, GUIContent.none, GUIStyle.none)) { sel = i; InputReader.Press(' '); }   // 누르면 Space와 같다
+                if (CuteUI.Hit(r, GUIContent.none, GUIStyle.none)) { sel = i; InputReader.Press(' '); }   // 누르면 Space와 같다
             }
             // 아래 키캡 안내: ← → 고르기 · Space 하기 · R 닫기 (마우스: 칸 누르기 = 하기, 빈 곳 누르기 = 닫기)
             string[] keys = { "← →", "Space", "R" }, says = { "고르기", "하기", "닫기" };
@@ -613,7 +613,7 @@ namespace PocketCaravan
                 x = CuteUI.Label(x, strip.center.y, says[i], CuteUI.Text, true) + 10f;   // Label은 글 끝 x를 돌려준다
             }
             // 11/08 칸 밖(가운데·빈 곳)을 누르면 닫힌다 (Esc와 같다). 칸 버튼이 먼저 그려져서 칸 클릭은 여기까지 오지 않는다
-            if (GUI.Button(new Rect(0f, 0f, UIStyle.VirtualWidth, UIStyle.VirtualHeight), GUIContent.none, GUIStyle.none)) InputReader.Press('\x1b');
+            if (CuteUI.Hit(new Rect(0f, 0f, UIStyle.VirtualWidth, UIStyle.VirtualHeight), GUIContent.none, GUIStyle.none)) InputReader.Press('\x1b');
         }
 
         void OnDisable() => Restore();

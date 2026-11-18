@@ -237,7 +237,7 @@ namespace PocketCaravan
             // 11/08 알림이 채팅을 덮지 않게 차지한 자리를 알린다 (알림은 그 오른쪽 · 너무 좁으면 위로)
             if (top < floor) ScreenZones.Mark("chat", Rect.MinMaxRect(6f, top, 6f + (typing ? LogWidth + 40f + 88f : logW + 12f), floor));
             // 11/08 채팅 목록을 누르면 입력 칸이 열린다 (Enter와 같다)
-            if (!typing && top < floor && GUI.Button(Rect.MinMaxRect(6f, top, 6f + logW + 12f, floor), GUIContent.none, GUIStyle.none)) OpenInput();
+            if (!typing && top < floor && CuteUI.Hit(Rect.MinMaxRect(6f, top, 6f + logW + 12f, floor), GUIContent.none, GUIStyle.none)) OpenInput();
         }
 
         void Styles()

@@ -172,7 +172,7 @@ namespace PocketCaravan
             bool over = b.Contains(Event.current.mousePosition);
             CuteUI.Circle(x, y, 12, over ? CuteUI.Paper2 : CuteUI.Paper, CuteUI.Line);
             CuteUI.LabelCenter(x + 6f, y + 6f, "×", CuteUI.Sub, true);
-            return GUI.Button(b, GUIContent.none, GUIStyle.none);
+            return CuteUI.Hit(b, GUIContent.none, GUIStyle.none);
         }
 
         static float Heading(float x, float y, string text)

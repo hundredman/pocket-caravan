@@ -119,7 +119,7 @@ namespace PocketCaravan
                 ItemIcon(s.item, 6, y + 5, 1);
                 float badgeLeft = s.known > 0 ? CuteUI.GainBadge(lw - 5, y + 13.5f, s.Gain) : CuteUI.UnknownBadge(lw - 5, y + 13.5f);
                 CuteUI.Label(30, y + 13.5f, Fit(s.item.displayName, badgeLeft - 36, false, on), on ? CuteUI.OnInteract : CuteUI.Text, false, on);
-                if (GUI.Button(row, GUIContent.none, GUIStyle.none)) { selected = s.item.id; detailScroll = 0; }
+                if (CuteUI.Hit(row, GUIContent.none, GUIStyle.none)) { selected = s.item.id; detailScroll = 0; }
             }
             GUI.EndGroup();
             for (float yy = c.y + 8; yy < c.yMax - 8; yy += 3) CuteUI.Fill(new Rect(c.x + 192, yy, 1, 1), CuteUI.Line);
