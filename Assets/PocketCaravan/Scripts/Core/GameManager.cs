@@ -196,7 +196,7 @@ namespace PocketCaravan
                 string perk = Credit.PerkText(k);
                 if (perk != null) perks.Add(perk);
             }
-            Notify.Show($"신용 {up}단계가 되었어요!" + (perks.Count > 0 ? "  — " + string.Join(" · ", perks) : ""), 5f);
+            Notify.Show($"신용 {up}단계가 되었어요!" + (perks.Count > 0 ? "  — " + string.Join(" · ", perks) : "") + "  (Q 여정 수첩 성장 탭)", 6f);
             Sfx.Play("levelup", .7f);
         }
 

@@ -17,12 +17,21 @@ namespace PocketCaravan
         ContractManager Cm => GameManager.I.Contracts;
 
         public override string DisplayName => "의뢰 게시판";
+
+        /// <summary>11/19 게시판 창이 열려 있다 (TutorialSpot이 새 의뢰 종류를 처음 보여 줄 때)</summary>
+        public static bool Showing { get; private set; }
+        static readonly string[] KindKeys = { "express", "fragile", ContractKind.PremiumKey, "bulk" };
+        public static System.Collections.Generic.IEnumerable<string> TourKeys => KindKeys;
+        string hoverHelp; Vector2 groupOrigin;
+        /// <summary>화면 확인 도구용: 이 자리(화면 좌표)에 마우스가 있는 것처럼 (null이면 실제 마우스)</summary>
+        public static Vector2? TestMouse;
+        static Vector2 MouseAt(Vector2 groupOffset) => TestMouse.HasValue ? TestMouse.Value - groupOffset : Event.current.mousePosition;
         public override Kind Category => Kind.Board;
 
         public override void Interact(PlayerController player)
         {
             if (!UIState.TryOpen(this, Close)) return;
-            open = true;
+            open = true; Showing = true;
             openedFrame = Time.frameCount;
             message = "";
             Sfx.Play("open");
@@ -30,7 +39,7 @@ namespace PocketCaravan
 
         void Close()
         {
-            open = false;
+            open = false; Showing = false;
             PackPuzzle.Cancel();   // 11/16 게시판이 닫히면 짐 싣기 퍼즐도 맡지 않고 닫는다
             UIState.Release(this);
         }
@@ -39,6 +48,7 @@ namespace PocketCaravan
         {
             if (!open || Time.frameCount == openedFrame) return;
             if (PackPuzzle.IsOpen || Time.frameCount == PackPuzzle.ClosedFrame) return;   // 11/16 짐 싣기 퍼즐 중
+            if (TutorialSpot.HoldsWindow) return;   // 11/19 새 의뢰 설명 중엔 Space로 닫지 않는다 (아무 키나 = 설명 넘기기)
             if (InputReader.CancelPressed() || InputReader.InteractPressed()) Close();
         }
 
@@ -70,7 +80,7 @@ namespace PocketCaravan
             if (!SavedEconomyChange.Try(GameManager.I,()=>{ if (bonus > 0) c.reward += bonus; accepted=Cm.Accept(town,c); if (!accepted && bonus > 0) c.reward -= bonus; })) return SavedEconomyChange.Failure;
             return !accepted ? "이 의뢰는 더 이상 맡을 수 없습니다. 게시판을 다시 확인해 주세요."
                 : c.atonement ? $"{c.cargo} 수락 · 보증금 {c.deposit}냥\n{Cm.TownName(c.toTown)} 게시판에 납품하세요."
-                : $"{Josa.Eul(c.cargo)} 맡았다. {Cm.TownName(c.toTown)} 게시판에 가져가자.";
+                : $"{Josa.Eul(c.cargo)} 맡았다. {Cm.TownName(c.toTown)} 게시판에 가져가자." + (ContractKind.Reminder(c) != null ? $" ({ContractKind.Reminder(c)})" : "");
         }
 
         string DeliverSaved(Contract c)
@@ -113,6 +123,7 @@ namespace PocketCaravan
             var area = new Rect(content.x + 6, content.y + 4, content.width - 12, content.height - 8);
             scroll.y = TradeLedgerUI.Scroll(area, scroll.y, total);
             GUI.BeginGroup(area);
+            groupOrigin = area.position; hoverHelp = null;
             float y = -scroll.y, cw = area.width - (total > area.height ? 7 : 0);
             if (hasChore)
             {
@@ -147,7 +158,17 @@ namespace PocketCaravan
                 string sub = $"{Cm.TownName(c.toTown)}" + (c.quotedRouteSteps > 0 ? $" · {c.quotedRouteSteps}구간" : "") + $" · 기한 {c.hours:0}시간";
                 string badge = c.atonement ? "속죄 의뢰" : c.Premium ? $"신용 {c.minCredit}" : ContractKind.Name(c.kind);   // 11/19 종류 배지
                 string pay = c.atonement ? $"보증금 {c.deposit}" : c.reward.ToString();
-                if (DrawCard(new Rect(0, y, cw, card - 4), CuteUI.Pic.Scroll, c.cargo, badge, sub, pay, c.weight, "맡기", why != null ? ShortWhy(c, p) : null, false, true, c.atonement, c.atonement ? 0 : Cm.CreditPoints(c, false)))
+                var cardRect = new Rect(0, y, cw, card - 4);
+                string kindKey = ContractKind.Key(c);
+                if (kindKey != null)
+                {
+                    // 11/19 마우스를 올리면 자세히 · 열린 종류는 처음 볼 때 튜토리얼처럼 밝힌다 (TutorialSpot "board.kind.*")
+                    var mouse = MouseAt(area.position);
+                    if (cardRect.Contains(mouse) && area.Contains(mouse + area.position)) hoverHelp = ContractKind.Help(kindKey);
+                    bool usable = kindKey != ContractKind.PremiumKey || Credit.Level(p) >= ContractManager.PremiumCredit;
+                    if (usable && y >= 0 && y + card <= area.height) ScreenZones.MarkSpot("board.kind." + kindKey, new Rect(area.x + cardRect.x, area.y + cardRect.y, cardRect.width, cardRect.height));
+                }
+                if (DrawCard(cardRect, CuteUI.Pic.Scroll, c.cargo, badge, sub, pay, c.weight, "맡기", why != null ? ShortWhy(c, p) : null, false, true, c.atonement, c.atonement ? 0 : Cm.CreditPoints(c, false)))
                 {
                     if (why != null) { message = why; Sfx.Play("cancel"); }
                     else if (PackPuzzle.Wants(c))
@@ -171,6 +192,19 @@ namespace PocketCaravan
             string note = string.IsNullOrEmpty(message) ? tip : message.Replace("\n", " ");
             CuteUI.Icon(CuteUI.Pic.Bulb, content.x + 4, r.yMax - 22);
             CuteUI.Label(content.x + 15, r.yMax - 17, TradeLedgerUI.Fit(note, content.width - 20, true, false), string.IsNullOrEmpty(message) ? CuteUI.Sub : CuteUI.Text, true);
+            if (hoverHelp != null && !PackPuzzle.IsOpen) HelpBox(MouseAt(Vector2.zero), hoverHelp);
+        }
+
+        /// <summary>11/19 의뢰 종류 설명 상자 (마우스 오른쪽 아래, 창 밖으로 안 나가게). 첫 줄은 굵게</summary>
+        internal static void HelpBox(Vector2 at, string text)
+        {
+            var lines = text.Split('\n');
+            float w = 0; for (int i = 0; i < lines.Length; i++) w = Mathf.Max(w, CuteUI.Width(lines[i], true, i == 0));
+            w = Mathf.Round(w + 16); float h = 8 + lines.Length * 12 + 4;
+            float x = Mathf.Clamp(at.x + 12, 4, UIStyle.VirtualWidth - w - 4), y = Mathf.Clamp(at.y + 12, 4, UIStyle.VirtualHeight - h - 4);
+            if (at.y + 12 + h > UIStyle.VirtualHeight - 4) y = Mathf.Max(4, at.y - h - 6);
+            CuteUI.Box(new Rect(x, y, w, h), 6, CuteUI.Paper, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
+            for (int i = 0; i < lines.Length; i++) CuteUI.Label(x + 8, y + 10 + i * 12, lines[i], i == 0 ? CuteUI.Text : CuteUI.Sub, true, i == 0);
         }
 
         internal static void DrawStatus(PlayerState p, Rect s, bool showVehicle = false)

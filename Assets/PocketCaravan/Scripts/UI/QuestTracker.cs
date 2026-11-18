@@ -373,6 +373,7 @@ namespace PocketCaravan
             float have = Mathf.Max(p.vehicle != null ? p.vehicle.capacity : 0f, p.stowedVehicle != null ? p.stowedVehicle.capacity : 0f);
             float ch = next != null ? 64 : 44;
             var card = new Rect(0, y, w, ch);
+            ScreenZones.MarkSpot("journal.vehicle", new Rect(logOrigin.x + card.x, logOrigin.y + card.y, card.width, card.height));   // 11/19 처음 보면 설명 (TutorialSpot)
             CuteUI.Box(card, 7, CuteUI.Paper, CuteUI.Sell, 2);
             CuteUI.Circle(10, y + 9, 26, CuteUI.Sell, CuteUI.FrameLo);
             CuteUI.Icon(CuteUI.Pic.Sack, 18, y + 17, 1, CuteUI.White);
@@ -442,6 +443,7 @@ namespace PocketCaravan
             float chipsH = 0; { float cx = 54; foreach (var u in unlocks) { float cwid = Mathf.Round(CuteUI.Width(u, true) + 16); if (cx + cwid > w - 26) { cx = 54; chipsH += 18; } cx += cwid + 4; } if (unlocks.Count > 0) chipsH += 18; }
             float ch = next != int.MaxValue ? 40 + chipsH + 6 : 50;
             var card = new Rect(0, y, w, ch);
+            ScreenZones.MarkSpot("journal.credit", new Rect(logOrigin.x + card.x, logOrigin.y + card.y, card.width, card.height));   // 11/19 처음 보면 설명 (TutorialSpot)
             CuteUI.Box(card, 7, CuteUI.Paper, CuteUI.Interact, 2);
             CuteUI.Circle(10, y + 9, 34, CuteUI.Interact, CuteUI.InteractLo);
             CuteUI.LabelCenter(27, y + 22, lv.ToString(), CuteUI.White, false, true);

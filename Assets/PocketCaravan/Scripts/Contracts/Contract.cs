@@ -64,6 +64,37 @@ namespace PocketCaravan
         public const int Normal = 0, Express = 1, Fragile = 2, Bulk = 3;
         public static int LevelOf(int kind) => kind == Express ? 1 : kind == Fragile ? 2 : kind == Bulk ? 4 : 0;
         public static string Name(int kind) => kind == Express ? "급한 짐" : kind == Fragile ? "깨지기 쉬움" : kind == Bulk ? "큰 주문" : null;
+
+        // 11/19 은샘 "새 시스템은 튜토리얼처럼 설명, 마우스를 올리면 자세히": 게시판 카드에 마우스를 올리면 Help, 처음 볼 때 스포트라이트 말풍선은 Intro
+        public const string PremiumKey = "premium";
+        public static string Key(Contract c) => c == null || c.atonement ? null : c.Premium ? PremiumKey : c.kind == Express ? "express" : c.kind == Fragile ? "fragile" : c.kind == Bulk ? "bulk" : null;
+
+        public static string Help(string key)
+        {
+            switch (key)
+            {
+                case "express": return "급한 짐\n기한이 보통의 6할로 짧아요\n대신 보수 1.35배 · 신용 +1\n가까운 길로 서둘러 가요";
+                case "fragile": return "깨지기 쉬운 짐\n달리면 1초에 1%씩 상해요 (걸으면 괜찮아요)\n90% 아래로 상하면 덜 받고 신용도 못 받아요\n온전히 나르면 보수 1.25배 · 신용 +1";
+                case "bulk": return "큰 주문\n무게 10~16의 큰 짐이라 수레·짐말이 있어야 해요\n기한은 넉넉하고, 맡을 때 큰 짐 싣기 퍼즐\n보수 1.6배 · 신용 +1";
+                case PremiumKey: return "귀한 짐\n신용 3단계부터 맡을 수 있어요\n도적이 다니는 길에서는 노리니 조심해요\n보수 1.8배 · 신용 +1";
+                default: return null;
+            }
+        }
+
+        public static string Intro(string key)
+        {
+            switch (key)
+            {
+                case "express": return "새 의뢰: 급한 짐! 기한이 짧은 대신 보수가 많아요\n카드에 마우스를 올리면 자세히 볼 수 있어요";
+                case "fragile": return "새 의뢰: 깨지기 쉬운 짐! 달리면 상하니 걸어서 날라요\n카드에 마우스를 올리면 자세히 볼 수 있어요";
+                case "bulk": return "새 의뢰: 큰 주문! 무거운 짐이라 수레·짐말이 필요해요\n카드에 마우스를 올리면 자세히 볼 수 있어요";
+                case PremiumKey: return "이제 귀한 짐을 맡을 수 있어요! 보수가 크지만 도적이 노려요\n카드에 마우스를 올리면 자세히 볼 수 있어요";
+                default: return null;
+            }
+        }
+
+        /// <summary>맡을 때 알림 끝에 붙이는 한마디</summary>
+        public static string Reminder(Contract c) => c == null ? null : c.Fragile ? "달리면 상해요, 걸어서" : c.Express ? "기한이 짧아요" : c.Bulk ? "기한은 넉넉해요" : null;
     }
 
     /// <summary>납품 결과</summary>

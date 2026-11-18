@@ -105,6 +105,21 @@ namespace PocketCaravan
                     if (!Seen("ledger.tab" + i)) { holdFrame = Time.frameCount; return Zone("ledger.tab" + i, "ledger.tab" + i, LedgerTour[i], false); }
                 return null;
             }
+            // 11/19 은샘 "새 시스템·내용은 튜토리얼처럼": 게시판에 새 종류 의뢰가 처음 보이면 그 카드를 밝히고 설명 (아무 키나 = 다음)
+            if (ContractBoard.Showing)
+            {
+                foreach (var key in ContractBoard.TourKeys)
+                    if (!Seen("board.kind." + key) && ScreenZones.Live("board.kind." + key))
+                    { holdFrame = Time.frameCount; return Zone("board.kind." + key, "board.kind." + key, ContractKind.Intro(key), false); }
+            }
+            // 11/19 여정 수첩 성장 탭의 운반 수단·신용 카드를 처음 보면 설명 (튜토리얼 수첩 단계가 아닐 때)
+            if (QuestTracker.JournalOpen && !ControlLesson.IsActive(ControlLesson.Quests))
+            {
+                if (!Seen("journal.vehicle") && ScreenZones.Live("journal.vehicle"))
+                { holdFrame = Time.frameCount; return Zone("journal.vehicle", "journal.vehicle", "다음에 살 운반 수단이에요. 돈이 모이면 막대가 차요\n더 큰 수단일수록 짐을 많이 실어요", false); }
+                if (!Seen("journal.credit") && ScreenZones.Live("journal.credit"))
+                { holdFrame = Time.frameCount; return Zone("journal.credit", "journal.credit", "신용 단계예요. 맡은 일(배달·납품)을 해내면 점수가 차요\n단계가 오를 때마다 게시판에 새 의뢰가 열려요", false); }
+            }
             if (ControlLesson.IsActive(ControlLesson.Quests))
             {
                 // 11/18 은샘: 열기 → 목록에서 튜토리얼 카드 보기(어둡게, 아무 키나) → 닫기. 닫으면 이 단계가 끝난다 (ControlLesson)
