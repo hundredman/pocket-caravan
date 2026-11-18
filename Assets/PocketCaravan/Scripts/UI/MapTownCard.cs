@@ -71,6 +71,8 @@ namespace PocketCaravan
             anchor = label;
         }
         public static void Clear() => selected = null;
+        /// <summary>11/18 다음에 지도가 열리면 이 맵의 마을 카드를 바로 펼친다 (시계 달력의 큰 장 마을을 눌렀을 때). CuteMap.Draw가 한 번 쓰고 비운다</summary>
+        public static string Pending;
 
         // ---------------- 그리기 ----------------
         const float W = 196f;

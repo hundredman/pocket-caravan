@@ -49,6 +49,7 @@ namespace PocketCaravan
             nextDevil = Time.time + Random.Range(15f, 35f);
             nextFlyover = Time.time + Random.Range(10f, 25f);
             BuildWind();
+            if (GetComponent<ArabiaLiving>() == null) gameObject.AddComponent<ArabiaLiving>();   // 11/18 물결·배·동물 움직임
         }
 
         void OnDestroy()

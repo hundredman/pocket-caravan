@@ -200,6 +200,11 @@ namespace PocketCaravan
             }
             for(int i=0;i<places.Count;i++) if(sideLabels) Elbow(layout.points[i],layout.rects[i]); else Leader(layout.points[i],layout.rects[i]);
             for(int i=0;i<places.Count;i++) Dot(layout.points[i],places[i]);
+            if(MapTownCard.Pending!=null)   // 11/18 시계 달력에서 큰 장 마을을 눌러 열었으면 그 마을 카드부터
+            {
+                for(int i=0;i<places.Count;i++) if(!places[i].minor && MapIdOf(places[i])==MapTownCard.Pending){ MapTownCard.Select(MapTownCard.Pending,layout.rects[i]); break; }
+                MapTownCard.Pending=null;
+            }
             int hover = HitLabel(places, Event.current.mousePosition);
             for(int i=0;i<places.Count;i++) Tag(layout.rects[i],layout.labels[i],places[i], i==hover || (MapTownCard.Selected!=null && !places[i].minor && MapIdOf(places[i])==MapTownCard.Selected));
         }

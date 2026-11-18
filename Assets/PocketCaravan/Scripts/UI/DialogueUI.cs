@@ -243,7 +243,7 @@ namespace PocketCaravan
                 bodyStyle = new GUIStyle(CuteUI.PaperWrap) { richText = false, clipping = TextClipping.Clip };   // 11/05 UI B안: 종이 위 진한 글씨
                 pageWidth = -1;
             }
-            float w = Mathf.Min(460, UIStyle.VirtualWidth - 20), h = 104;
+            float w = Mathf.Min(460, UIStyle.VirtualWidth - 20), h = 108;   // 11/18 은샘: 아래 단추 여백 +4
             float bodyWidth = w - 20;
             if (pages.Count == 0 || !Mathf.Approximately(pageWidth, bodyWidth))
             {
@@ -274,18 +274,18 @@ namespace PocketCaravan
             bool stacked = ChoicesVisible && (totalWidth > bodyWidth || multiline);
             float pageReserve = stacked && pages.Count > 1 ? 16 : 0;
             var heights = new List<float>(); float totalHeight = 0;
-            float maxHeight = Mathf.Max(104, UIStyle.VirtualHeight - 48), contentWidth = bodyWidth;
+            float maxHeight = Mathf.Max(108, UIStyle.VirtualHeight - 48), contentWidth = bodyWidth;
             if (stacked)
             {
                 foreach (string label in labels) { float height = Mathf.Max(18, wrappedChoice.CalcHeight(new GUIContent(label), contentWidth)); heights.Add(height); totalHeight += height + 6; }
                 totalHeight -= 6;
-                if (104 + totalHeight - 18 + pageReserve > maxHeight)
+                if (108 + totalHeight - 18 + pageReserve > maxHeight)
                 {
                     contentWidth -= 18; heights.Clear(); totalHeight = 0;
                     foreach (string label in labels) { float height = Mathf.Max(18, wrappedChoice.CalcHeight(new GUIContent(label), contentWidth)); heights.Add(height); totalHeight += height + 6; }
                     totalHeight -= 6;
                 }
-                h = Mathf.Min(maxHeight, 104 + totalHeight - 18 + pageReserve);
+                h = Mathf.Min(maxHeight, 108 + totalHeight - 18 + pageReserve);
             }
             var r = lastWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), UIStyle.VirtualHeight - h - 26, w, h);
             shownRect = r; shownFrame = Time.frameCount;
@@ -305,24 +305,24 @@ namespace PocketCaravan
             GUI.Label(new Rect(r.x + 10, r.y + 15 + Mathf.Round((BodyHeight - textH) * 0.5f), bodyWidth, textH + 2f), CurrentPage, bodyStyle);   // 이름이 창 위 이름표로 올라가서 본문도 위로
 
             if (pages.Count > 1)
-                GUI.Label(new Rect(r.x + 10, stacked ? r.y + 72 : r.yMax - 22, 60, 16), $"<color=#6a5464>{pageIndex + 1} / {pages.Count}</color>", CuteUI.PaperSmall);
+                GUI.Label(new Rect(r.x + 10, stacked ? r.y + 72 : r.yMax - 26, 60, 16), $"<color=#6a5464>{pageIndex + 1} / {pages.Count}</color>", CuteUI.PaperSmall);
 
             float bx = r.xMax - 10;
             if (!ChoicesVisible)
             {
-                if (CuteUI.PaperButtonBold(new Rect(bx - 104, r.yMax - 26, 104, 18), "다음 (Space)")) NextPage();   // 11/18 청록 단추는 흰 굵은 글씨
+                if (CuteUI.PaperButtonBold(new Rect(bx - 104, r.yMax - 30, 104, 18), "다음 (Space)")) NextPage();   // 11/18 청록 단추는 흰 굵은 글씨
                 return;
             }
             if (choices.Count == 0)
             {
                 // 11/08 마우스로도 닫게 단추로 (예전엔 글씨라 Space로만 닫혔다)
-                if (CuteUI.PaperButtonBold(new Rect(bx - 104, r.yMax - 26, 104, 18), "닫기 (Space)")) Close();
+                if (CuteUI.PaperButtonBold(new Rect(bx - 104, r.yMax - 30, 104, 18), "닫기 (Space)")) Close();
                 return;
             }
             if (stacked)
             {
-                float shownHeight = h - 104 + 18 - pageReserve;
-                choiceViewport = new Rect(r.x + 10, r.yMax - 8 - shownHeight, bodyWidth, shownHeight);
+                float shownHeight = h - 108 + 18 - pageReserve;
+                choiceViewport = new Rect(r.x + 10, r.yMax - 12 - shownHeight, bodyWidth, shownHeight);
                 choiceScroll.y = Mathf.Round(choiceScroll.y);
                 choiceScroll = GUI.BeginScrollView(choiceViewport, choiceScroll, new Rect(0, 0, contentWidth, totalHeight));
                 float y = 0;
@@ -339,10 +339,10 @@ namespace PocketCaravan
             }
             else
             {
-                choiceViewport = new Rect(r.x + 10, r.yMax - 26, bodyWidth, 18);
+                choiceViewport = new Rect(r.x + 10, r.yMax - 30, bodyWidth, 18);
                 for (int i = choices.Count - 1; i >= 0; i--)
                 {
-                    bx -= widths[i]; var row = new Rect(bx, r.yMax - 26, widths[i], 18); choiceRects.Add(row);
+                    bx -= widths[i]; var row = new Rect(bx, r.yMax - 30, widths[i], 18); choiceRects.Add(row);
                     if (i == focus ? CuteUI.PaperButtonBold(row, labels[i]) : CuteUI.Hit(row, labels[i], CuteUI.PaperButton)) { Pick(choices[i]); return; }   // 11/08 키보드로 고른 것을 강조
                     bx -= 6;
                 }

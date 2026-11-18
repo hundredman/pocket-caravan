@@ -5,17 +5,19 @@ namespace PocketCaravan
 {
     /// <summary>
     /// 흥정 미니게임 "저울 흥정" (2026-11-15 은샘 4판, Fable 설계 A안). 살 때마다 꼭 한다 (TownMarket).
-    /// 흔들리는 저울 바늘을 Space(또는 클릭)로 멈춘다. 눈금은 왼쪽부터 회색(정가) → 초록(점점 싸짐) → 좁은 금색(최대) → 빨강(+2%).
+    /// 흔들리는 저울 바늘을 Space(또는 클릭)로 멈춘다. 눈금은 왼쪽부터 회색(정가) → 초록(점점 싸짐) → 좁은 금색(최대) → 빨강(1~4%, 깊을수록 손해, 11/18).
     /// 금색 바로 옆이 빨강이라 "안전한 초록에서 멈출까, 금색 끝을 노릴까"를 매번 고른다. 참고: Gears of War Active Reload.
-    /// - 금색: 신용 최대치(ReputationPricing.MaxHaggle) 그대로. 초록: 최대치 × 위치^1.5 × 0.85. 회색 0. 빨강 −2%(살 때 +2%), 거래는 그대로.
+    /// - 금색: 신용 최대치(ReputationPricing.MaxHaggle) 그대로. 초록: 최대치 × 위치^1.5 × 0.85. 회색 0. 빨강 1~4% 손해(깊이 따라, 11/18), 거래는 그대로.
     /// - 바늘 빠르기 · 가감속 · 시작 자리 · 빨강 시작(78~90%)은 날짜·마을·물건·거래 횟수로 정해 판마다 다르다. 결과는 손 실력이라 저장을 되돌려도 소용없다.
     /// - 상인 성격: 깐깐함 빠르고 금색 좁음 · 너그러움 느리고 넓음. 3왕복 동안 안 누르면 정가.
     /// - 빨강을 두 번 잇달아 밟으면 다음 한 판은 바늘이 10% 느리다.
+    /// - 11/18 은샘: 처음 한 번은 바늘이 서 있고 아래에 색깔별 뜻을 보여 준다. Space를 누르면 그때 바늘이 움직인다 (메모 haggle:intro, 팔 때는 haggle:intro.sell)
     /// 장터 창 위에 그리는 창이라 UIState는 장터가 그대로 쥔다.
     /// </summary>
     public class HaggleDuel : MonoBehaviour
     {
-        public const float FailPenalty = 0.02f;
+        // 11/18 은샘: 빨강도 깊이에 따라 다르게. 금색 바로 옆은 1%, 끝까지 가면 4% (전엔 어디든 2%)
+        public const float FailPenalty = 0.04f, FailPenaltyMin = 0.01f;
         const float GreyEnd = 0.25f, AutoTrips = 3f;
 
         static HaggleDuel inst;
@@ -25,8 +27,11 @@ namespace PocketCaravan
         static int redStreak;
 
         bool open; int openedFrame; float openedAt;
+        bool intro;   // 11/18 처음 한 번: 설명을 보여 주고 바늘은 Space를 누를 때까지 멈춰 있다
+        // 살 때 · 팔 때 따로 한 번씩 (11/18 은샘: 팔 때도 흥정 안내). 도적은 살 때 것과 같이 쓴다
+        string IntroMemo => selling && !bandit ? "haggle:intro.sell" : "haggle:intro";
         TownData town; ItemData item; bool selling; int count; float max; int baseTotal; int temperament;
-        bool bandit;   // 11/15 은샘: 도적 흥정 (통행세를 깎는다. 금색 반값 · 빨강 ×1.5)
+        bool bandit;   // 11/15 은샘: 도적 흥정 (통행세를 깎는다. 금색 반값 · 빨강 ×1.3~1.7)
         Action<float, bool> done;
         // 판마다 다른 값
         float period, phase0, redStart, goldW, ease;
@@ -50,7 +55,7 @@ namespace PocketCaravan
             return true;
         }
 
-        /// <summary>11/15 은샘: 도적 흥정. 같은 저울로 통행세를 깎는다. 초록 최대 −42% · 금색 반값 · 빨강 1.5배. done(낼 통행세)</summary>
+        /// <summary>11/15 은샘: 도적 흥정. 같은 저울로 통행세를 깎는다. 초록 최대 −42% · 금색 반값 · 빨강 1.3~1.7배. done(낼 통행세)</summary>
         public static bool OpenBandit(Sprite face, int toll, string mapId, Action<int> done)
         {
             if (inst == null || inst.open || toll < 1) return false;
@@ -67,7 +72,7 @@ namespace PocketCaravan
             h.ease = (float)rng.NextDouble();
             h.stopped = false; h.failed = false; h.result = 0f; h.zone = 0;
             h.merchant = face;
-            h.open = true; h.openedFrame = Time.frameCount; h.openedAt = Time.unscaledTime;
+            h.open = true; h.openedFrame = Time.frameCount; h.openedAt = Time.unscaledTime; h.intro = !h.IntroSeen();
             Sfx.Play("open");
             return true;
         }
@@ -87,8 +92,19 @@ namespace PocketCaravan
             ease = (float)rng.NextDouble();                     // 0 고르게 · 1 양 끝에서 머뭇
             stopped = false; failed = false; result = 0f; zone = 0;
             merchant = Resources.Load<Sprite>("Haggle/merchant_" + OriginPerks.Civ(t.region)) ?? Resources.Load<Sprite>("Haggle/merchant_center");
-            open = true; openedFrame = Time.frameCount; openedAt = Time.unscaledTime;
+            open = true; openedFrame = Time.frameCount; openedAt = Time.unscaledTime; intro = !IntroSeen();
             Sfx.Play("open");
+        }
+
+        bool IntroSeen() { var gm = GameManager.I; return gm == null || gm.GetMemo(IntroMemo, 0f) >= 1f; }
+
+        /// <summary>설명을 닫고 바늘을 출발시킨다</summary>
+        void StartNeedle()
+        {
+            intro = false;
+            openedAt = Time.unscaledTime - 0.1f;   // 0.15초 뒤 출발
+            var gm = GameManager.I; if (gm != null) gm.SetMemo(IntroMemo, 1f);
+            Sfx.Play("accept");
         }
 
         float GoldStart => redStart - goldW;
@@ -111,7 +127,11 @@ namespace PocketCaravan
                 case 0: return 0f;
                 case 1: return max * Mathf.Pow(Mathf.InverseLerp(GreyEnd, GoldStart, x), 1.5f) * 0.85f;
                 case 2: return max;
-                default: return bandit ? -0.5f : -FailPenalty;
+                default:
+                {
+                    float d = Mathf.InverseLerp(redStart, 1f, x);   // 빨강 안에서 얼마나 깊이 갔나
+                    return bandit ? -Mathf.Lerp(0.3f, 0.7f, d) : -Mathf.Lerp(FailPenaltyMin, FailPenalty, d);
+                }
             }
         }
 
@@ -141,6 +161,12 @@ namespace PocketCaravan
         {
             if (!open || Time.frameCount == openedFrame) return;
             float t = Time.unscaledTime - openedAt - 0.25f;   // 패널이 열린 뒤 바늘 출발
+            if (intro)
+            {
+                if (!bandit && InputReader.CancelPressed()) { Close(false); Sfx.Play("cancel"); return; }
+                if (t > 0f && InputReader.InteractPressed()) StartNeedle();
+                return;
+            }
             if (!stopped)
             {
                 if (!bandit && InputReader.CancelPressed()) { Close(false); Sfx.Play("cancel"); return; }   // 도적 앞에서는 물러설 수 없다
@@ -156,6 +182,8 @@ namespace PocketCaravan
         const float W = 340f, H = 132f;
         static readonly Color32 Grey = new Color32(0xD9, 0xD2, 0xCC, 255), GreenLo = new Color32(0xB7, 0xE4, 0xA8, 255), GreenHi = new Color32(0x3F, 0xB8, 0x5A, 255),
             Gold = new Color32(0xFF, 0xCF, 0x33, 255), GoldHi = new Color32(0xFF, 0xF1, 0xA8, 255), Red = new Color32(0xF0, 0x55, 0x5A, 255),
+            GreenPale = new Color32(0xE2, 0xF2, 0xD2, 255), YellowGreen = new Color32(0xC8, 0xDC, 0x3A, 255),
+            RedLo = new Color32(0xF8, 0xB0, 0x9A, 255), RedDeep = new Color32(0xB0, 0x1E, 0x32, 255),
             Wood = new Color32(0xC9, 0x8A, 0x4B, 255), WoodLo = new Color32(0x8E, 0x5A, 0x2C, 255), Brass = new Color32(0xE0, 0xA8, 0x3A, 255),
             GoldEdge = new Color32(0xB0, 0x7D, 0x00, 255);
 
@@ -193,7 +221,7 @@ namespace PocketCaravan
             }
 
             // 값 (오른쪽 위, 크게) — 바늘이 가리키는 값이 실시간으로 보인다
-            float t = now - openedAt - 0.25f;
+            float t = intro ? 0f : now - openedAt - 0.25f;
             float x = stopped ? stopX : Mathf.Max(0f, t) > 0f ? NeedleAt(t) : NeedleAt(0f);
             float d = stopped ? result : DiscountAt(x);
             int price = PriceFor(d);
@@ -235,54 +263,101 @@ namespace PocketCaravan
             float ly = bar.yMax + 26;
             if (stopped)
             {
-                string res = bandit ? (zone == 2 ? "반값!" : zone == 3 ? "화났다 ×1.5" : zone == 1 ? $"−{result * 100f:0.#}%" : "그대로")
-                    : zone == 2 ? $"최고! {(selling ? "+" : "−")}{max * 100f:0.#}%" : zone == 3 ? $"욕심이 지나쳤다 {(selling ? "−" : "+")}2%"
+                string res = bandit ? (zone == 2 ? "반값!" : zone == 3 ? $"화났다 ×{1f - result:0.0#}" : zone == 1 ? $"−{result * 100f:0.#}%" : "그대로")
+                    : zone == 2 ? $"최고! {(selling ? "+" : "−")}{max * 100f:0.#}%" : zone == 3 ? $"욕심이 지나쳤다 {(selling ? "−" : "+")}{-result * 100f:0.#}%"
                     : zone == 1 ? $"{(selling ? "+" : "−")}{result * 100f:0.#}%" : "정가";
                 Color32 rc = zone == 2 ? new Color32(0xC9, 0x8A, 0x00, 255) : zone == 3 ? CuteUI.Down : zone == 1 ? CuteUI.Up : CuteUI.Sub;
                 CuteUI.LabelCenter(bar.center.x, ly, res, rc, false, true);
             }
             else   // 11/15 은샘: 멈추기 전까지 늘 보인다
             {
-                float kx = bar.center.x - (CuteUI.KeycapWidth("Space") + 4 + CuteUI.Width("멈추기", true)) / 2f;
-                kx += CuteUI.Keycap(kx, ly - 6.5f, "Space") + 4;
-                CuteUI.Label(kx, ly, "멈추기", CuteUI.Sub, true);
+                string kl = intro ? "흥정 시작" : "멈추기";
+                float kx = bar.center.x - (CuteUI.KeycapWidth("Space") + 4 + CuteUI.Width(kl, true)) / 2f;
+                if (intro) { float pulse = .5f + .5f * Mathf.Sin(now * 5f); var oc = GUI.color; GUI.color = new Color(oc.r, oc.g, oc.b, oc.a * (.55f + .45f * pulse)); kx += CuteUI.Keycap(kx, ly - 6.5f, "Space") + 4; GUI.color = oc; }
+                else kx += CuteUI.Keycap(kx, ly - 6.5f, "Space") + 4;
+                CuteUI.Label(kx, ly, kl, intro ? CuteUI.Text : CuteUI.Sub, true, intro);
             }
+            if (intro) DrawIntro(r, now);
 
-            if (Event.current.type == EventType.MouseDown && Event.current.button == 0 && !stopped && t > 0f) Stop(NeedleAt(t));
+            if (Event.current.type == EventType.MouseDown && Event.current.button == 0 && intro && now - openedAt > .25f) StartNeedle();
+            else if (Event.current.type == EventType.MouseDown && Event.current.button == 0 && !stopped && t > 0f) Stop(NeedleAt(t));
             // 장터 창이 클릭을 받지 않게
             if (Event.current.isMouse || Event.current.type == EventType.ScrollWheel) Event.current.Use();
+        }
+
+        /// <summary>11/18 처음 한 번: 창 아래에 붙는 설명 (색깔마다 무슨 뜻인지)</summary>
+        void DrawIntro(Rect win, float now)
+        {
+            string good = bandit ? "통행세가 줄어요" : selling ? "값을 더 받아요" : "값이 깎여요";
+            var rows = new (Color32 c, string s)[]
+            {
+                (GreenHi, $"초록에서 멈추면 {good}. 노랗게 될수록 더"),
+                (Gold, bandit ? "금색에서 멈추면 반값!" : "금색에서 멈추면 가장 크게"),
+                (Red, bandit ? "빨강은 화를 내서 1.3~1.7배 (깊을수록)" : $"빨강은 욕심이 지나쳐 1~4% {(selling ? "덜 받아요" : "비싸져요")} (깊을수록)"),
+            };
+            const float rowH = 15f;
+            var p = new Rect(win.x + 18, win.yMax + 6, win.width - 36, 22 + rows.Length * rowH + 6);
+            float k = Mathf.Clamp01((now - openedAt) / .25f);
+            var oc = GUI.color; GUI.color = new Color(oc.r, oc.g, oc.b, oc.a * k);
+            CuteUI.Box(p, 8, CuteUI.White, CuteUI.Ink, 1, 2);
+            // 꼬리 (창을 가리킨다)
+            CuteUI.Fill(new Rect(p.center.x - 4, p.y - 3, 8, 3), CuteUI.Ink);
+            CuteUI.Fill(new Rect(p.center.x - 3, p.y - 2, 6, 3), CuteUI.White);
+            CuteUI.LabelCenter(p.center.x, p.y + 12, "흔들리는 바늘을 Space로 멈춰요", CuteUI.Text, true, true);
+            float y = p.y + 26;
+            foreach (var row in rows)
+            {
+                CuteUI.Box(new Rect(p.x + 14, y - 4, 16, 9), 3, row.c, CuteUI.Ink);
+                CuteUI.Label(p.x + 36, y + .5f, row.s, CuteUI.Text, true);
+                y += rowH;
+            }
+            GUI.color = oc;
         }
 
         void DrawScale(Rect bar, float now)
         {
             CuteUI.Box(new Rect(bar.x - 2, bar.y - 2, bar.width + 4, bar.height + 4), 4, Wood, CuteUI.Ink);
             var inner = new Rect(bar.x, bar.y, bar.width, bar.height);
-            // 11/15 은샘: 칸 사이 선 없이 회색 → 초록 → 금색 → 빨강을 그라데이션으로. 판정 경계는 그대로(ZoneOf)
+            // 11/18 은샘 "같은 비율처럼 보인다": 값이 실제로 바뀌는 만큼 색도 바뀌게.
+            // 회색(정가) → 연초록 → 초록 → 연두 → (금색 직전) 노랑에 가깝게, 금색은 따로 또렷이, 빨강은 연한 주황빛 → 진한 빨강 (깊을수록 손해)
             float shine = 0.5f + 0.5f * Mathf.Sin(now * 8f);
             var gold = Color32.Lerp(Gold, GoldHi, shine * 0.5f);
-            float blend = 0.03f;
             for (float px = 0; px < inner.width; px += 1f)
             {
                 float x = (px + 0.5f) / inner.width;
                 Color32 c;
-                float gm = GoldStart + goldW * 0.5f;
-                if (x < GreyEnd - blend) c = Grey;
-                else if (x < GreyEnd + blend) c = Color32.Lerp(Grey, GreenLo, Mathf.InverseLerp(GreyEnd - blend, GreyEnd + blend, x));
-                else if (x < GoldStart - blend) c = Color32.Lerp(GreenLo, GreenHi, Mathf.InverseLerp(GreyEnd + blend, GoldStart - blend, x));
-                else if (x < gm) c = Color32.Lerp(GreenHi, gold, Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(GoldStart - blend, gm, x)));
-                else if (x < redStart + blend) c = Color32.Lerp(gold, Red, Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(gm, redStart + blend, x)));
-                else c = Red;
-                CuteUI.Fill(new Rect(inner.x + px, inner.y, 1, inner.height), c);
+                if (x < GreyEnd) c = Grey;
+                else if (x < GoldStart)
+                {
+                    float g = Mathf.InverseLerp(GreyEnd, GoldStart, x);
+                    c = g < .45f ? Color32.Lerp(GreenPale, GreenHi, g / .45f) : Color32.Lerp(GreenHi, YellowGreen, (g - .45f) / .55f);
+                }
+                else if (x < redStart) c = gold;
+                else
+                {
+                    float d = Mathf.InverseLerp(redStart, 1f, x);
+                    c = d < .5f ? Color32.Lerp(RedLo, Red, d / .5f) : Color32.Lerp(Red, RedDeep, (d - .5f) / .5f);
+                }
+                Tint(new Rect(inner.x + px, inner.y, 1, inner.height), c);
             }
-            // 11/17 기우: 금색 칸은 번지지 않게 또렷이 (테두리) — 빨강도 금색 끝에서 바로 시작
+            // 11/17 기우: 금색 칸은 번지지 않게 또렷이 — 빨강도 금색 끝에서 바로 시작
             float g0 = Mathf.Round(inner.x + inner.width * GoldStart), g1 = Mathf.Round(inner.x + inner.width * redStart);
-            CuteUI.Fill(new Rect(g1, inner.y, inner.xMax - g1, inner.height), Red);
-            CuteUI.Fill(new Rect(g0, inner.y, g1 - g0, inner.height), gold);
-            CuteUI.Fill(new Rect(g0 - 1, inner.y, 1, inner.height), GoldEdge);
-            CuteUI.Fill(new Rect(g1, inner.y, 1, inner.height), GoldEdge);
+            Tint(new Rect(g0, inner.y, g1 - g0, inner.height), gold);   // 11/18 은샘: 금색 양옆 세로 테두리는 뺐다 (부자연스럽다)
             CuteUI.Fill(new Rect(inner.x, inner.y, inner.width, 2), new Color32(255, 255, 255, 70));
             // 눈금
             for (int i = 1; i < 10; i++) CuteUI.Fill(new Rect(Mathf.Round(inner.x + inner.width * i / 10f), inner.yMax - 4, 1, 4), new Color32(42, 26, 46, 70));
+        }
+
+        /// <summary>
+        /// 11/18 한 색 칸을 흰 그림 + GUI.color로. CuteUI.Fill은 색마다 1×1 그림을 만들어 두는데(글자 열쇠도 매번 만든다),
+        /// 그라데이션 300여 줄 + 금색 반짝임은 프레임마다 새 색이라 그림이 끝없이 쌓였다
+        /// </summary>
+        static void Tint(Rect r, Color32 c)
+        {
+            if (Event.current.type != EventType.Repaint) return;
+            var old = GUI.color; GUI.color = (Color)c * old;
+            GUI.DrawTexture(r, Texture2D.whiteTexture);
+            GUI.color = old;
         }
 
         static ulong Hash(string s)

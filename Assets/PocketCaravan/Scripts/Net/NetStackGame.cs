@@ -9,24 +9,29 @@ namespace PocketCaravan
     /// - 딱 맞추면(2픽셀 안) "딱!" 너비 그대로, 세 번 잇달아 맞추면 조금 넓어진다. 높이 쌓을수록 빨라진다.
     /// - 5단을 넘기면 수첩 도장 (NetGuild.Mark). 끝나면 온라인 순위표 "guild_stack"에 올린다 (NetScores. 서버는 새 판도 받는다).
     /// 최고 기록은 공용 진행 메모 "net:guild:stack:best". 창(OnGUI) 안에서만 하고 맵·씬은 건드리지 않는다.
+    /// 11/18 "둘이서" (팀 UT 1번 같이 하는 미니게임): 열면 혼자 / 둘이서를 고른다. 둘이서는 번갈아 하나씩 놓는다 → NetStackDuo.cs
     /// </summary>
-    public class NetStackGame : MonoBehaviour
+    public partial class NetStackGame : MonoBehaviour
     {
         public const string Board = "guild_stack";
         public const int Goal = 5;
         const string BestKey = "net:guild:stack:best";
         const float AreaW = 200f, AreaH = 178f, BlockH = 12f, StartW = 64f, BaseW = 84f, Ground = 16f, Perfect = 2f, Gravity = 520f;
+        // 11/18 놓을 짐은 탑 위 한 뼘(Hover) 떠서 오가고, 놓으면 FallTime 동안 툭 떨어진 뒤 SquashTime 동안 살짝 눌린다
+        const float Hover = 9f, FallTime = .12f, SquashTime = .1f;
+        // 둘이서는 놓은 뒤 잠깐(Beat) 쉬고 다음 사람 짐이 나온다 ("딱!"이 다음 짐·이름표와 겹치지 않게, 차례가 넘어가는 느낌)
+        const float Beat = .75f;
 
         struct Block { public float x, w; public int look; }
         struct Chip { public float x, y, w, vx, vy; public int look; }
-        enum State { Ready, Play, Over }
+        enum State { Choose, Wait, Ready, Play, Over }
 
         static NetStackGame inst;
         bool open;
         State state;
         readonly List<Block> tower = new List<Block>();
         readonly List<Chip> chips = new List<Chip>();
-        float moverX, moverW, dir = 1f, speed, view, openedAt, overAt, popAt = -9f, popY;
+        float moverX, moverW, dir = 1f, speed, view, openedAt, overAt, popAt = -9f, popY, landAt = -9f;
         int combo, openedFrame, lastScore;
         string popText;
         bool marked, newBest;
@@ -46,7 +51,7 @@ namespace PocketCaravan
             inst = go.AddComponent<NetStackGame>();
         }
 
-        void Awake() => inst = this;
+        void Awake() { inst = this; Hook(); }
         void OnDisable() => Close();
 
         /// <summary>놀이판 앞 Space</summary>
@@ -55,13 +60,18 @@ namespace PocketCaravan
             if (inst == null || inst.open || !UIState.TryOpen(inst, inst.Close)) return;
             inst.open = true;
             inst.openedAt = Time.unscaledTime; inst.openedFrame = Time.frameCount;
-            inst.Reset(State.Ready);
+            inst.mode = Mode.Solo;
+            KeyNav.Clear(inst);   // 지난번 끝난 화면에서 고른 단추가 남지 않게
+            // 11/18 둘이서는 혼자 5단(수첩 도장)을 넘긴 뒤에 열린다. 그 전에는 예전처럼 바로 혼자 판
+            inst.Reset(DuoUnlocked ? State.Choose : State.Ready);
+            if (DuoUnlocked) inst.JoinIfInvited();   // 누가 같이 하자고 했으면 바로 둘이서
             Sfx.Play("open");
         }
 
         void Close()
         {
             if (!open) return;
+            DuoQuit();
             open = false;
             UIState.Release(this);
         }
@@ -72,7 +82,9 @@ namespace PocketCaravan
             tower.Clear(); chips.Clear();
             tower.Add(new Block { x = (AreaW - BaseW) / 2f, w = BaseW, look = -1 });
             moverW = StartW; dir = 1f; moverX = 0f; speed = 72f; view = 0f; combo = 0;
-            marked = false; newBest = false; popAt = -9f;
+            marked = false; newBest = false; popAt = -9f; landAt = -9f;
+            lockedAtStart = !DuoUnlocked;   // 이 판으로 둘이서가 열리는지 (도장은 판 중간에 찍힌다)
+            TurnStarted();
         }
 
         void Update()
@@ -82,16 +94,22 @@ namespace PocketCaravan
             // 11/17 끝난 화면에서 화살표로 단추를 골랐으면 Space는 그 단추가 받는다 (KeyNav)
             bool drop = InputReader.InteractPressed() && !(state == State.Over && KeyNav.HasFocus(this));
             if (InputReader.CancelPressed()) { if (state == State.Play && Score > 0) End(); Close(); return; }
+            DuoUpdate();
+            if (!open) return;
 
-            if (state == State.Ready) { if (drop) { state = State.Play; Sfx.Play("accept", .6f); } }
-            else if (state == State.Play)
+            if (state == State.Choose) { if (drop && !KeyNav.HasFocus(this)) ChooseDuo(); }   // Space = 둘이서 (단추는 OnGUI, ← →로 고르기)
+            else if (state == State.Wait) { }
+            else if (state == State.Ready) { if (drop) { state = State.Play; TurnStarted(); Sfx.Play("accept", .6f); } }
+            else if (state == State.Play && !InBeat)
             {
                 moverX += dir * speed * dt;
                 if (moverX < 0f) { moverX = 0f; dir = 1f; }
                 if (moverX > AreaW - moverW) { moverX = AreaW - moverW; dir = -1f; }
-                if (drop) Drop();
+                if (MyTurn) { if (drop) LocalDrop(); }
+                else PartnerTurn(dt);
             }
-            else if (drop && Time.unscaledTime - overAt > .6f) Reset(State.Play);
+            else if (state == State.Play) { }   // 둘이서: 놓은 뒤 잠깐 쉰다
+            else if (drop && Time.unscaledTime - overAt > .6f) Again();
 
             for (int i = chips.Count - 1; i >= 0; i--)
             {
@@ -103,6 +121,8 @@ namespace PocketCaravan
             view = Mathf.Lerp(view, want, 1f - Mathf.Exp(-dt * 8f));
         }
 
+        bool InBeat => mode != Mode.Solo && Time.unscaledTime - landAt < Beat;
+
         /// <summary>층의 아래쪽 y (놀이판 안, 위가 0). level 0 = 수레</summary>
         float LevelY(int level) => AreaH - Ground - (level + 1) * BlockH + view;
 
@@ -110,8 +130,9 @@ namespace PocketCaravan
         {
             var top = tower[tower.Count - 1];
             float left = Mathf.Max(moverX, top.x), right = Mathf.Min(moverX + moverW, top.x + top.w), overlap = right - left;
-            int look = tower.Count % 5;
-            float y = LevelY(tower.Count);
+            int look = LookOf(tower.Count, tower.Count % 5);
+            float y = LevelY(tower.Count) - Hover;   // 떠 있던 높이에서 잘려 떨어진다
+            string who = mode != Mode.Solo && !IsMine(tower.Count) ? partnerName + " " : "";   // 짝이 맞추면 "루나 딱!"
             if (overlap <= 0f)
             {
                 chips.Add(new Chip { x = moverX, y = y, w = moverW, vx = dir * 30f, vy = 0f, look = look });
@@ -124,8 +145,8 @@ namespace PocketCaravan
             {
                 combo++;
                 float w = top.w;
-                if (combo >= 3 && w < StartW) { w = Mathf.Min(StartW, w + 6f); combo = 0; Pop("딱! 넓어졌다"); }
-                else Pop(combo >= 2 ? $"딱! x{combo}" : "딱!");
+                if (combo >= 3 && w < StartW) { w = Mathf.Min(StartW, w + 6f); combo = 0; Pop(who + "딱! 넓어졌다"); }
+                else Pop(who + (combo >= 2 ? $"딱! x{combo}" : "딱!"));
                 b = new Block { x = top.x - (w - top.w) / 2f, w = w, look = look };
                 b.x = Mathf.Clamp(b.x, 0f, AreaW - b.w);
                 Sfx.Play("coin", .7f);
@@ -139,8 +160,9 @@ namespace PocketCaravan
                 Sfx.Play("drop", .8f);
             }
             tower.Add(b);
+            landAt = Time.unscaledTime;
             int score = Score;
-            if (score >= Goal && !marked)
+            if (score >= Goal && !marked && mode == Mode.Solo)
             {
                 marked = true;
                 Pop($"{Goal}단 돌파! 수첩 도장");
@@ -150,6 +172,7 @@ namespace PocketCaravan
             dir = tower.Count % 2 == 0 ? 1f : -1f;
             moverX = dir > 0f ? 0f : AreaW - moverW;
             speed = Mathf.Min(200f, 72f + score * 7f);
+            TurnStarted();
         }
 
         void Pop(string text) { popText = text; popAt = Time.unscaledTime; popY = LevelY(tower.Count) - 6f; }
@@ -160,9 +183,14 @@ namespace PocketCaravan
             state = State.Over; overAt = Time.unscaledTime;
             lastScore = Score;
             var gm = GameManager.I;
-            if (gm != null && lastScore > Best) { gm.SetMemo(BestKey, lastScore); newBest = lastScore > 0; }
+            if (mode == Mode.Solo)
+            {
+                if (gm != null && lastScore > Best) { gm.SetMemo(BestKey, lastScore); newBest = lastScore > 0; }
+                justUnlocked = lockedAtStart && DuoUnlocked;
+                if (lastScore > 0) NetScores.Report(Board, lastScore);
+            }
+            else DuoEnd(gm);
             if (newBest) Sfx.Play("levelup", .6f);
-            if (lastScore > 0) NetScores.Report(Board, lastScore);
         }
 
         // ---------------- 그리기 ----------------
@@ -204,14 +232,16 @@ namespace PocketCaravan
             float w = AreaW + 36f, h = AreaH + 78f;
             var r = new Rect(Mathf.Round((W - w) / 2f), Mathf.Round((H - h) / 2f + 8f + (1f - ease) * 14f), w, h);
             CuteUI.Window(r);
-            CuteUI.TitlePlate(r.center.x, r.y - 11f, "상인회 짐 쌓기");
+            CuteUI.TitlePlate(r.center.x, r.y - 11f, mode == Mode.Solo ? "상인회 짐 쌓기" : "상인회 짐 쌓기 · 둘이서");
 
             // 머리: 지금 단 · 최고 · 목표
             int score = state == State.Over ? lastScore : Score;
             CuteUI.Label(r.x + 18f, r.y + 24f, $"{score}단", CuteUI.Text, false, true);
-            CuteUI.LabelRight(r.xMax - 18f, r.y + 24f, $"최고 {Mathf.Max(Best, score)}단", CuteUI.Sub, true);
-            string goal = score >= Goal || marked ? "수첩 도장 받았어요!" : $"{Goal}단을 넘기면 수첩 도장";
-            CuteUI.LabelCenter(r.center.x, r.y + 24f, goal, score >= Goal || marked ? CuteUI.Sell : CuteUI.Sub, true, true);
+            int best = mode == Mode.Solo ? Best : DuoBest;
+            CuteUI.LabelRight(r.xMax - 18f, r.y + 24f, mode == Mode.Solo ? $"최고 {Mathf.Max(best, score)}단" : $"둘이 최고 {Mathf.Max(best, score)}단", CuteUI.Sub, true);
+            bool stamped = mode == Mode.Solo && (score >= Goal || marked);
+            string goal = mode != Mode.Solo ? "번갈아 놓기" : stamped ? "수첩 도장 받았어요!" : state == State.Choose ? "혼자 또는 둘이서" : $"{Goal}단을 넘기면 수첩 도장";
+            CuteUI.LabelCenter(r.center.x, r.y + 24f, goal, stamped ? CuteUI.Sell : CuteUI.Sub, true, true);
 
             // 놀이판
             var a = new Rect(r.x + 18f, r.y + 36f, AreaW, AreaH);
@@ -222,25 +252,34 @@ namespace PocketCaravan
             if (gy < AreaH) CuteUI.Fill(new Rect(0, gy, AreaW, AreaH - gy + 1), Sand);
             // 높이 눈금: 목표 줄
             float goalY = LevelY(Goal);
-            if (goalY > -2f && goalY < AreaH) { for (float x = 2; x < AreaW; x += 8) CuteUI.Fill(new Rect(x, goalY, 4, 1), CuteUI.Sell); CuteUI.Label(AreaW - 30f, goalY - 6f, $"{Goal}단", CuteUI.Sell, true); }
+            if (mode == Mode.Solo && state != State.Choose && goalY > -2f && goalY < AreaH) { for (float x = 2; x < AreaW; x += 8) CuteUI.Fill(new Rect(x, goalY, 4, 1), CuteUI.Sell); CuteUI.Label(AreaW - 30f, goalY - 6f, $"{Goal}단", CuteUI.Sell, true); }
             for (int i = 0; i < tower.Count; i++)
             {
                 var b = tower[i];
                 float y = LevelY(i);
                 if (y > AreaH || y < -BlockH * 2) continue;
-                if (b.look < 0) Cart(new Rect(b.x, y - 2f, b.w, BlockH + 6f));
-                else Cargo(new Rect(Mathf.Round(b.x), Mathf.Round(y), Mathf.Round(b.w), BlockH), b.look);
+                if (b.look < 0) { Cart(new Rect(b.x, y - 2f, b.w, BlockH + 6f)); continue; }
+                float bh = BlockH, lt = now - landAt;
+                if (i == tower.Count - 1 && lt < FallTime + SquashTime)
+                {
+                    if (lt < FallTime) { float k = lt / FallTime; y -= Hover * (1f - k * k); }     // 툭 떨어진다
+                    else { bh -= 1f; y += 1f; }                                                    // 닿으면 한 칸 눌린다
+                }
+                Cargo(new Rect(Mathf.Round(b.x), Mathf.Round(y), Mathf.Round(b.w), bh), LookOf(i, b.look));
             }
             foreach (var c in chips) Cargo(new Rect(Mathf.Round(c.x), Mathf.Round(c.y), Mathf.Round(c.w), BlockH), c.look);
-            if (state != State.Over)
+            if ((state == State.Ready || state == State.Play) && !PartnerChoosing && !InBeat)
             {
-                float my = LevelY(tower.Count);
+                float my = LevelY(tower.Count) - Hover;
                 // 떨어질 자리 안내: 옅은 세로줄
                 var guide = new Color32(43, 37, 51, 40);
                 CuteUI.Fill(new Rect(Mathf.Round(moverX), my + BlockH, 1, Mathf.Max(0, LevelY(tower.Count - 1) - my - BlockH)), guide);
                 CuteUI.Fill(new Rect(Mathf.Round(moverX + moverW - 1), my + BlockH, 1, Mathf.Max(0, LevelY(tower.Count - 1) - my - BlockH)), guide);
-                Cargo(new Rect(Mathf.Round(moverX), Mathf.Round(my), Mathf.Round(moverW), BlockH), tower.Count % 5);
+                if (now - landAt >= FallTime) Cargo(new Rect(Mathf.Round(moverX), Mathf.Round(my), Mathf.Round(moverW), BlockH), LookOf(tower.Count, tower.Count % 5));
+                DrawTurn(my);
             }
+            else if (state == State.Play && !InBeat) DrawPartnerChoosing(LevelY(tower.Count) - Hover, now);
+            DrawDuoNames();
             if (now - popAt < .9f)
             {
                 float k = (now - popAt) / .9f;
@@ -251,27 +290,33 @@ namespace PocketCaravan
             GUI.EndGroup();
 
             // 시작 · 끝 안내
-            if (state == State.Ready) Banner(a, "짐을 수레 위에 쌓아요!", "Space · 클릭으로 놓기");
+            if (state == State.Choose) ChooseBanner(a);
+            else if (state == State.Wait) WaitBanner(a);
+            else if (state == State.Ready) Banner(a, "짐을 수레 위에 쌓아요!", "Space · 클릭으로 놓기");
             else if (state == State.Over)
-                Banner(a, newBest ? $"{lastScore}단! 새 최고 기록" : $"{lastScore}단!", lastScore >= Goal ? "잘 쌓았어요! 기록은 순위표에" : $"{Goal}단까지 다시 해 볼까요?");
-            if (Event.current.type == EventType.MouseDown && a.Contains(Event.current.mousePosition)) { InputReader.Press(' '); Event.current.Use(); }
+            {
+                if (mode == Mode.Solo) Banner(a, newBest ? $"{lastScore}단! 새 최고 기록" : $"{lastScore}단!", DuoUnlocked && InviteFresh ? $"{PeerName(invFrom)} 님이 같이 하재요! 다시를 누르면 둘이서" : justUnlocked ? "이제 둘이서도 쌓을 수 있어요!" : lastScore >= Goal ? "잘 쌓았어요! 기록은 순위표에" : $"{Goal}단까지 다시 해 볼까요?");
+                else DuoOverBanner(a);
+            }
+            if ((state == State.Ready || state == State.Play) && Event.current.type == EventType.MouseDown && a.Contains(Event.current.mousePosition)) { InputReader.Press(' '); Event.current.Use(); }
 
             // 아래 단추 · 키
             float by = r.yMax - 22f;
-            if (state == State.Over)
+            if (state == State.Choose || state == State.Wait) DuoButtons(a, by);
+            else if (state == State.Over)
             {
                 // 11/10 단추 셋을 놀이판 너비에 고르게 (순위표·닫기가 겹쳤다)
                 float bw = Mathf.Floor((AreaW - 12f) / 3f), bx = a.x;
                 KeyNav.Begin(this);   // 11/17 ← →로 다시·순위표·닫기 고르기
                 try
                 {
-                    if (CuteUI.Button(new Rect(bx, by - 6f, bw, 20f), "다시")) { KeyNav.Clear(this); Reset(State.Play); }
+                    if (CuteUI.Button(new Rect(bx, by - 6f, bw, 20f), "다시")) { KeyNav.Clear(this); Again(); }
                     if (CuteUI.SoftButton(new Rect(bx + bw + 6f, by - 6f, bw, 20f), "순위표")) { KeyNav.Clear(this); Close(); NetScores.Open(); }
                     if (CuteUI.SoftButton(new Rect(bx + (bw + 6f) * 2f, by - 6f, bw, 20f), "닫기")) { KeyNav.Clear(this); Close(); }
                 }
                 finally { KeyNav.End(); }
             }
-            else CuteUI.LabelCenter(r.center.x, by + 4f, "Space 놓기 · Esc 그만", CuteUI.Sub, true);
+            else CuteUI.LabelCenter(r.center.x, by + 4f, mode == Mode.Solo ? "Space 놓기 · Esc 그만" : "Space 놓기 · 1 박수 2 하트 · Esc 그만", CuteUI.Sub, true);
         }
 
         static void Banner(Rect a, string big, string small)

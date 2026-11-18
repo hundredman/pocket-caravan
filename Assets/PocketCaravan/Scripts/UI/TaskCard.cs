@@ -43,7 +43,7 @@ namespace PocketCaravan
         static Rect DrawFolded(float top, bool alert, CuteUI.Pic? pic)
         {
             const string label = "할 일";
-            float w = Mathf.Round(8f + Dot + 6f + CuteUI.Width(label, false, true) + 8f + CuteUI.KeycapWidth("Q") + 7f);
+            float w = Mathf.Round(8f + Dot + 6f + CuteUI.Width(label, false, true) + 8f + CuteUI.KeycapWidth("H") + 7f);
             var r = new Rect(X, Mathf.Round(top), w, 24f);
             lastRect = r; lastFrame = Time.frameCount;
             ScreenZones.Mark("task.card", r);
@@ -60,7 +60,7 @@ namespace PocketCaravan
                 CuteUI.Icon(pc, r.x + 8f + (Dot - ps.x) / 2f, dy + (Dot - ps.y) / 2f, 1, CuteUI.White);
             }
             float x = CuteUI.Label(r.x + 8f + Dot + 6f, r.center.y, label, CuteUI.Text, false, true) + 8f;
-            CuteUI.Keycap(x, r.center.y - 6.5f, "Q", true);
+            CuteUI.Keycap(x, r.center.y - 6.5f, "H", true);   // 11/18 접기 키 Q → H (Q는 여정 수첩)
             GUI.color = old;
             if (!UIState.Blocking && CuteUI.Hit(r, GUIContent.none, GUIStyle.none)) { Hidden = false; Sfx.Play("move", .6f); }
             return r;
@@ -158,7 +158,7 @@ namespace PocketCaravan
                     if (order == Intro && parts.Length == 2 && int.TryParse(parts[0], out stepNow) && int.TryParse(parts[1], out stepAll))
                     {
                         // 11/13 "배우기 n/8" 단계: 긴 문장 대신 [키] 짧은 이름, 칩 대신 머리말 옆 진행 막대
-                        var sh = ControlLesson.Short(stepNow - 1, main.main);
+                        var sh = ControlLesson.Short(ControlLesson.TaskAt(stepNow + 1), main.main);   // 11/18 순서와 할 일 아이디가 다르다 ("배우기 n" = 단계 n+1)
                         key = sh.key; mainText = sh.text; chip = null;
                     }
                     else stepNow = stepAll = 0;

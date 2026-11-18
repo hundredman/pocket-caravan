@@ -46,7 +46,7 @@ namespace PocketCaravan
             float w = Mathf.Min(340, UIStyle.VirtualWidth - 16);
             float issueHeight = string.IsNullOrEmpty(issue) ? 0 : CuteUI.WrapHeight(issue, w - 50, true) + 8;
             float shownIssue = Mathf.Min(issueHeight, 60);
-            float h = Mathf.Min(UIStyle.VirtualHeight - 34, 42 + 4 * 30 + 20 + shownIssue + (shownIssue > 0 ? 8 : 0));
+            float h = Mathf.Min(UIStyle.VirtualHeight - 34, 42 + 4 * 30 + 28   /* 11/18 저장 단추 대신 자동 저장 줄 · 은샘: 마지막 단추 아래 여백 +8 */ + shownIssue + (shownIssue > 0 ? 8 : 0));
             var r = lastWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round((UIStyle.VirtualHeight - h) / 2 + 8), w, h);
             CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, "게임 메뉴");
             CuteUI.Keycap(r.xMax - 32 - CuteUI.KeycapWidth("Esc") - 3, r.y - 3, "Esc");
@@ -77,7 +77,7 @@ namespace PocketCaravan
                 y += shownIssue + 8;
             }
             if (Row(ref y, r, null, "계속하기", "Esc", true)) Close();
-            if (Row(ref y, r, CuteUI.Pic.OpenBook, "상업 백과", "지역과 교역 이야기"))
+            if (Row(ref y, r, CuteUI.Pic.OpenBook, "상업 백과", "지역별 교역 이야기"))
             {
                 Close();
                 gm.GetComponent<CommerceGuideUI>().Open();

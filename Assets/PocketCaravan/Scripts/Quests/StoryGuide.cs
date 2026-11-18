@@ -70,7 +70,7 @@ namespace PocketCaravan
 
         // ---------------- 동시 제한 ----------------
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void Register() { QuestManager.ExtraAcceptBlocker = Check; }
+        static void Register() { QuestManager.ExtraAcceptBlocker = Check; QuestManager.OffersPaused = () => IntroActive; }   // 11/18 튜토리얼 중엔 퀘스트를 내놓지 않는다
 
         static string Check(QuestData q)
         {

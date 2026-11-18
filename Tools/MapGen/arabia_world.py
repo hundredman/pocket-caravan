@@ -347,8 +347,7 @@ def _dress_wild(w):
       '북쪽 모래길을 따라가면 중앙 대륙 오아시스가 나온다네. 사나를 거치지 않는 옛길이지.')
     _put(w, 'building_malwiya', ex + 26, ey + 18, foot=2)
     w.asign(ex + 30, ey + 22, '룹알할리 빈 사막\n모래가 깊어 느립니다. 탑을 보고 방향을 잡으세요.\n동: 타이즈 · 남: 알 아흐사 · 북: 중앙 대륙 모래길')
-    w.obstacles += [dict(id='arabia_shortcut_sand1', definitionId='loose_sand', x=ex + 14, y=ey + 26, width=5, height=3, enabled=True, phaseOffset=0.0),
-                    dict(id='arabia_shortcut_sand2', definitionId='loose_sand', x=ex + 34, y=ey + 6, width=4, height=3, enabled=True, phaseOffset=0.0)]
+    # 푹신한 모랫길(loose_sand)은 헷갈려서 뺐다 (2026-11-18)
     # ---- 고원 (사나·타이즈 둘레): 계단밭 · 커피 ----
     for (x0, y0) in [(CW + 2, CH - 2), (CW + 48, CH - 3)]:
         for k in range(3):

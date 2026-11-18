@@ -23,7 +23,7 @@ namespace PocketCaravan
             { TaskCard.Hidden = !TaskCard.Hidden; Sfx.Play("move", .6f); }
             if (logOpen && (InputReader.QuestLogPressed() || InputReader.CancelPressed())) CloseLog();
             else if (InputReader.QuestLogPressed() && !UIState.Blocking && !UIState.JustClosed && !GameManager.I.IsTravelling
-                && UIState.TryOpen(this, CloseLog)) logOpen = true;
+                && UIState.TryOpen(this, CloseLog)) { logOpen = true; JournalOpen = true; if (StoryGuide.IntroActive) { logTab = 0; scroll = Vector2.zero; } }   // 튜토리얼 중엔 의뢰 칸 맨 위부터
             else if (logOpen)
             {
                 // 11/08 ←→ 탭 바꾸기 · ↑↓ 넘기기 (마우스는 탭 단추 · 휠 · 막대)
@@ -33,7 +33,9 @@ namespace PocketCaravan
             }
         }
         static readonly string[] LogTabs = { "의뢰", "성장·시설", "주변 거래처" };
-        void CloseLog() { logOpen = false; UIState.Release(this); }
+        void CloseLog() { logOpen = false; JournalOpen = false; UIState.Release(this); }
+        /// <summary>11/18 여정 수첩이 열려 있다 (튜토리얼: 열고 → 목록 보고 → 닫으면 끝)</summary>
+        public static bool JournalOpen { get; private set; }
         void OnDisable() { if (logOpen) CloseLog(); }
 
         void OnGUI()
@@ -128,6 +130,7 @@ namespace PocketCaravan
         // 11/08 은샘: 여정 수첩을 장부·게시판과 같은 모양으로 (아이콘 탭 + 종이 칸 + 카드).
         // 의뢰 = 할 일·보상을 한눈에, 비면 다음에 할 만한 일. 성장 = 다음 신용까지 막대와 열리는 시설. 거래처 = 거리·특산품·시세 기록.
         float logContentH;
+        static Vector2 logOrigin;   // 수첩 목록 칸 왼쪽 위 (그룹 안 자리 → 화면 자리)
         static readonly CuteUI.Pic[] LogPics = { CuteUI.Pic.Scroll, CuteUI.Pic.Star4, CuteUI.Pic.Pin };
 
         void DrawLog(QuestManager qm)
@@ -138,6 +141,7 @@ namespace PocketCaravan
             CuteUI.Window(r);
             CuteUI.TitlePlate(r.center.x, r.y - 11, "여정 수첩");
             CuteUI.Keycap(r.xMax - 32 - CuteUI.KeycapWidth("Esc") - 3, r.y - 3, "Esc");
+            ScreenZones.MarkSpot("journal.close", new Rect(r.xMax - 32, r.y - 9, 22, 22));   // 11/18 튜토리얼: 수첩을 연 다음 닫기 단추를 밝힌다 (TutorialSpot)
             if (CuteUI.CloseButton(r.xMax - 32, r.y - 9)) { CloseLog(); return; }
 
             // 11/18 윤채: 탭 오른쪽 설명 줄 · 맨 아래 키 안내 줄은 뺐다 (칸을 더 넓게)
@@ -154,6 +158,7 @@ namespace PocketCaravan
             var area = new Rect(content.x + 6, content.y + 6, content.width - 12, content.height - 10);
             scroll.y = TradeLedgerUI.Scroll(area, scroll.y, logContentH);
             GUI.BeginGroup(area);
+            logOrigin = area.position;
             float cw = area.width - (logContentH > area.height ? 7 : 0);
             float end = logTab == 0 ? DrawQuests(qm, gm, -scroll.y, cw, area.height) : logTab == 1 ? DrawGrowth(gm, -scroll.y, cw) : DrawTowns(gm, -scroll.y, cw);
             logContentH = end + scroll.y;
@@ -200,9 +205,32 @@ namespace PocketCaravan
         /// 11/11 은샘: 받은 퀘스트 말고도 길 안내를 고를 수 있는 카드 둘.
         /// 이벤트(만국 상인회)는 금빛 카드 + "이벤트" 표, 다음 이야기(튜토리얼 뒤 첫 일거리 등)는 받기 전 퀘스트로.
         /// </summary>
+        /// <summary>11/18 은샘 "튜토리얼이 뜨는데 의뢰 목록에 없으면 이상하다": 네 지역 시작 튜토리얼의 지금 할 일</summary>
+        static bool TutorialNow(out string main, out string where)
+            => GoryeoIntro.Summary(out main, out where, out _) || VeniceIntro.Summary(out main, out where, out _)
+            || NorthIntro.Summary(out main, out where, out _) || ArabiaIntro.Summary(out main, out where, out _);
+
         float DrawSpecialCards(float y, float w)
         {
             var focus = QuestFocus.Current;
+            if (TutorialNow(out string tMain, out string tWhere))
+            {
+                // 맨 위 청록 테 카드: 튜토리얼은 늘 길 안내 중이라 단추는 없다
+                float ch = 22 + 14 + 14 + 8;
+                var card = new Rect(0, y, w, ch);
+                CuteUI.Box(card, 7, CuteUI.Paper, CuteUI.Interact, 2, 2);
+                ScreenZones.MarkSpot("journal.tutorial", new Rect(logOrigin.x + card.x, logOrigin.y + card.y, card.width, card.height));   // 11/18 튜토리얼이 목록에서 이 카드를 밝힌다
+                float right = Pill(w - 7, y + 12, "튜토리얼", CuteUI.BadgeKind.On);
+                CuteUI.Label(10, y + 12, TradeLedgerUI.Fit("장사 첫걸음 · 조작 배우기", right - 16, false, true), CuteUI.Text, false, true);
+                CuteUI.Icon(CuteUI.Pic.Arrow, 10, y + 25, 1, CuteUI.Interact);
+                CuteUI.Label(22, y + 29, TradeLedgerUI.Fit(CuteUI.Plain(tMain), w - 32, true, true), CuteUI.Text, true, true);
+                if (!string.IsNullOrEmpty(tWhere))
+                {
+                    CuteUI.Icon(CuteUI.Pic.Pin, 22, y + 39, 1, CuteUI.Sub);
+                    CuteUI.Label(30, y + 43, TradeLedgerUI.Fit(tWhere, w - 40, true, false), CuteUI.Sub, true);
+                }
+                y += ch + 5;
+            }
             if (NetGuild.Active)
             {
                 var (main, where, _) = NetGuild.Summary();
@@ -243,7 +271,7 @@ namespace PocketCaravan
 
         float DrawQuests(QuestManager qm, GameManager gm, float y, float w, float viewH)
         {
-            bool any = NetGuild.Active || StoryGuide.LeadAvailable;
+            bool any = NetGuild.Active || StoryGuide.LeadAvailable || TutorialNow(out _, out _);
             y = DrawSpecialCards(y, w);
             int qn = 0; foreach (var _ in qm.Active) qn++;
             if (qn > 0) y = Section(y, "이야기 의뢰", qn + "개");

@@ -63,10 +63,10 @@ namespace PocketCaravan
 
             if (mode == Mode.Menu && confirmNew)
             {
-                // 11/18 "지금 기록을 덮어쓰고 새로 시작할까요?" ← → 고르기 · Space 결정 · Esc 취소 (처음엔 취소에)
+                // 11/18 "지금 기록을 덮어쓰고 새로 시작할까요?" ← → 고르기 · Enter 결정 · Esc 취소 (처음엔 취소에)
                 if (step.x != 0 || step.y != 0) { confirmIndex = 1 - confirmIndex; Sfx.Play("open"); }
                 if (InputReader.CancelPressed()) { confirmNew = false; Sfx.Play("cancel"); return; }
-                if (InputReader.ConfirmPressed())
+                if (InputReader.EnterPressed())
                 {
                     confirmNew = false;
                     if (confirmIndex == 0) { Sfx.Play("accept"); mode = Mode.Pick; pick = 0; pickScroll = Vector2.zero; visiblePick = -1; }
@@ -77,7 +77,7 @@ namespace PocketCaravan
             if (mode == Mode.Menu)
             {
                 if (step.y != 0) { menuIndex = 1 - menuIndex; Sfx.Play("open"); }
-                if (InputReader.ConfirmPressed())
+                if (InputReader.EnterPressed())
                 {
                     if (menuIndex == 0) { Sfx.Play("accept"); mode = Mode.Closed; GameManager.I.ContinueFromStartScreen(); }
                     else { Sfx.Play("open"); confirmNew = true; confirmIndex = 1; }   // 11/18 바로 넘어가지 않고 한 번 묻는다
@@ -92,7 +92,7 @@ namespace PocketCaravan
             if (step.x != 0) { int col = pick % columns, row = pick / columns; col = Mathf.Clamp(col + (int)step.x, 0, columns - 1); int p = row * columns + col; if (p < n && p != pick) { pick = p; Sfx.Play("open"); } }
             if (step.y != 0) { int p = pick - columns * (int)step.y; if (p >= 0 && p < n) { pick = p; Sfx.Play("open"); } }
             if (hasSave && InputReader.CancelPressed()) { mode = Mode.Menu; Sfx.Play("cancel"); return; }
-            if (InputReader.ConfirmPressed())
+            if (InputReader.EnterPressed())
             {
                 var c = choices.choices[pick];
                 if (c.origin == null || string.IsNullOrEmpty(c.startScene)) { Sfx.Play("cancel"); return; }
@@ -190,10 +190,10 @@ namespace PocketCaravan
 
             bool canClick = !Held && !confirmNew;
             var go = new Rect(x + 8, y + 104, iw - 16, 32);
-            if (TitleUI.Button(go, "이어하기", true, menuIndex == 0, false, canClick)) { menuIndex = 0; InputReader.Press(' '); }
+            if (TitleUI.Button(go, "이어하기", true, menuIndex == 0, false, canClick)) { menuIndex = 0; InputReader.Press('\n'); }
             var nr = new Rect(x + 28, go.yMax + 14, iw - 56, 24);
-            if (TitleUI.Button(nr, "새로 시작", false, menuIndex == 1, true, canClick)) { menuIndex = 1; InputReader.Press(' '); }
-            CuteUI.LabelCenter(p.center.x, nr.yMax + 15, "↑ ↓ 고르기 · Space 결정", TitleUI.ChocoSoft, true);
+            if (TitleUI.Button(nr, "새로 시작", false, menuIndex == 1, true, canClick)) { menuIndex = 1; InputReader.Press('\n'); }
+            CuteUI.LabelCenter(p.center.x, nr.yMax + 15, "↑ ↓ 고르기 · Enter 결정", TitleUI.ChocoSoft, true);
 
             if (confirmNew) DrawConfirmNew(W, H, save);
         }
@@ -209,8 +209,8 @@ namespace PocketCaravan
             CuteUI.LabelCenter(r.center.x, r.y + 46, detail, CuteUI.Alert, true);
             var yes = new Rect(r.x + 26, r.yMax - 44, 106, 28);
             var no = new Rect(r.xMax - 26 - 106, r.yMax - 44, 106, 28);
-            if (TitleUI.Button(yes, "새로 시작", false, confirmIndex == 0, false, !Held)) { confirmIndex = 0; InputReader.Press(' '); }
-            if (TitleUI.Button(no, "취소", true, confirmIndex == 1, false, !Held)) { confirmIndex = 1; InputReader.Press(' '); }
+            if (TitleUI.Button(yes, "새로 시작", false, confirmIndex == 0, false, !Held)) { confirmIndex = 0; InputReader.Press('\n'); }
+            if (TitleUI.Button(no, "취소", true, confirmIndex == 1, false, !Held)) { confirmIndex = 1; InputReader.Press('\n'); }
         }
 
         static string PlayTime(float hours)
@@ -304,7 +304,7 @@ namespace PocketCaravan
                 // 11/08 카드를 누르면 고르고, 고른 카드를 한 번 더 누르면 출발 (위에 접속 창이 떠 있으면 무시)
                 if (!Held && CuteUI.Hit(r, GUIContent.none, GUIStyle.none))
                 {
-                    if (on) InputReader.Press(' ');
+                    if (on) InputReader.Press('\n');
                     else { pick = i; visiblePick = i; Sfx.Play("open"); }
                 }
             }
@@ -313,7 +313,7 @@ namespace PocketCaravan
             // 아래 설명칸: 고른 상인 이름 · 문명 · 강점 + 오른쪽 출발(·뒤로)
             TitleUI.Card(pickFooter);
             var go = new Rect(pickFooter.xMax - 12 - 88, pickFooter.y + 6, 88, 28);
-            if (TitleUI.Button(go, "출발", true, false, false, !Held)) InputReader.Press(' ');
+            if (TitleUI.Button(go, "출발", true, false, false, !Held)) InputReader.Press('\n');
             float textRight = go.x - 10;
             if (hasSave)
             {
@@ -330,7 +330,7 @@ namespace PocketCaravan
             CuteUI.Label(sx + 6, pickFooter.y + 31, TradeLedgerUI.Fit(sel.strength, textRight - sx - 6, true, false), TitleUI.Choco, true);
 
             // 맨 아래 조작 한 줄
-            CuteUI.LabelCenter(W / 2, H - 13, "방향키 / 클릭으로 선택 · Space 출발" + (hasSave ? " · Esc 뒤로" : ""), TitleUI.ChocoSoft, true);
+            CuteUI.LabelCenter(W / 2, H - 13, "방향키 / 클릭으로 선택 · Enter 출발" + (hasSave ? " · Esc 뒤로" : ""), TitleUI.ChocoSoft, true);
         }
 
     }

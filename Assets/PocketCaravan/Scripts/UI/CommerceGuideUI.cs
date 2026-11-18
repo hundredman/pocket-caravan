@@ -10,6 +10,8 @@ namespace PocketCaravan
     /// - 위 머리말·안내 줄, 아래 "목록에서 항목을 고르세요"·닫기 단추는 뺐다 (오른쪽 위 X · Esc).
     /// - 글은 띄어쓰기에서만 줄을 바꾸고(CuteUI.WrapWords) 줄 사이를 띄운다. 참고 자료는 "역사 속에서" 탭 아래 작은 링크로.
     /// - ↑↓ 항목 · ←→ 탭. 마우스로도 누른다. 내용(JSON)은 그대로 쓴다.
+    /// 11/18 은샘 "고려만 있고 퀄리티가 낮다": 기본 · 고려 · 베네치아 · 아라비아 · 북유럽 · 중앙 대륙 여섯 권을 위 단추로 고른다.
+    /// 열면 지금 있는 지역 책부터. 글은 Resources/CommerceGuide/*.json
     /// </summary>
     public sealed class CommerceGuideUI : MonoBehaviour
     {
@@ -21,29 +23,25 @@ namespace PocketCaravan
         }
         [Serializable] public class Book { public string heading; public Card[] cards; }
 
-        Book goryeo, venice;
-        /// <summary>
-        /// 보고 있는 지역 백과. 11/18 윤채 ("베네치아에 있는데 왜 고려가 뜨니"): 예전엔 맵 이름이 venice_로 시작할 때만 베네치아,
-        /// 그 밖(북유럽·아라비아·가운데 대륙 포함)은 모두 고려였다 → 열 때 맵의 지역(MapRoot.region)으로 고르고,
-        /// 그 지역 백과가 아직 없으면 내 출신 지역, 그것도 없으면 고려. 위 지역 단추로 직접 바꿔 볼 수도 있다.
-        /// </summary>
-        public Book Content => book == "venice" && venice != null ? venice : goryeo != null ? goryeo : venice;
-        string RegionName => Content == venice && venice != null ? "베네치아" : "고려";
-        string book = "goryeo", missingRegion;
+        static readonly string[] BookFiles = { "Common", "Goryeo", "Venice", "Arabia", "North", "Center" };
+        static readonly string[] BookNames = { "기본", "고려", "베네치아", "아라비아", "북유럽", "중앙 대륙" };
+        readonly Book[] books = new Book[BookFiles.Length];
+        int bookIndex = 1;
+        /// <summary>지금 고른 책</summary>
+        public Book Content => books[bookIndex];
 
-        Book BookOf(string civ) => civ == "venice" ? venice : civ == "goryeo" ? goryeo : null;
-
-        /// <summary>열 때 고르는 백과: 지금 맵의 지역 → 내 출신 → 고려. 지역 백과가 없으면 그 지역 이름을 남겨 "준비 중"으로 알려 준다</summary>
-        void PickBook()
+        /// <summary>지금 맵의 지역 책 번호 (중앙 대륙 길목 transit_ 맵은 중앙 대륙)</summary>
+        static int HereBook()
         {
-            var map = MapRoot.Current;
-            string here = map != null ? OriginPerks.Civ(map.region) : "";
-            missingRegion = null;
-            if (BookOf(here) != null) { book = here; return; }
-            if (!string.IsNullOrEmpty(here)) missingRegion = OriginPerks.CivName(here);
-            var origin = GameManager.I != null ? GameManager.I.Player.origin : null;
-            string home = origin == null ? "" : origin.id == "viking" ? "north" : origin.id;
-            book = BookOf(home) != null ? home : "goryeo";
+            string map = MapRoot.Current != null ? MapRoot.Current.mapId : null;
+            if (!string.IsNullOrEmpty(map) && map.StartsWith("transit_")) return 5;
+            switch (Reactions.RegionOfMap(map))
+            {
+                case Reactions.Region.Venice: return 2;
+                case Reactions.Region.Arabia: return 3;
+                case Reactions.Region.North: return 4;
+                default: return 1;
+            }
         }
         public bool IsOpen { get; private set; }
         int selected, tab;
@@ -55,10 +53,11 @@ namespace PocketCaravan
 
         void Awake()
         {
-            var text = Resources.Load<TextAsset>("CommerceGuide/Goryeo");
-            if (text != null) goryeo = JsonUtility.FromJson<Book>(text.text);
-            var v = Resources.Load<TextAsset>("CommerceGuide/Venice");
-            if (v != null) venice = JsonUtility.FromJson<Book>(v.text);
+            for (int i = 0; i < BookFiles.Length; i++)
+            {
+                var text = Resources.Load<TextAsset>("CommerceGuide/" + BookFiles[i]);
+                if (text != null) books[i] = JsonUtility.FromJson<Book>(text.text);
+            }
         }
 
         public void Open()
@@ -67,8 +66,7 @@ namespace PocketCaravan
             if (IsOpen || UIState.Blocking || gm == null || gm.IsTravelling) return;
             if (!UIState.TryOpen(this, Close)) return;
             IsOpen = true;
-            PickBook();
-            selected = 0; tab = 0; listScroll = pageScroll = 0f;
+            bookIndex = HereBook(); selected = 0; tab = 0; listScroll = pageScroll = 0f;
             lastMove = Vector2.one;   // 열 때 눌려 있던 방향키는 무시
             Sfx.Play("open");
         }
@@ -104,6 +102,23 @@ namespace PocketCaravan
 
         void OnDisable() => Close();
 
+        /// <summary>11/18 책 고르기 (은샘 여섯 권): 위 한 줄 작은 단추, 고른 책은 주황</summary>
+        void DrawBooks(Rect r)
+        {
+            float bx = r.x + 16;
+            for (int i = 0; i < BookNames.Length; i++)
+            {
+                bool on = i == bookIndex;
+                float bw = Mathf.Round(CuteUI.Width(BookNames[i], true, on) + 16);
+                var br = new Rect(bx, r.y + 20, bw, 16);
+                bool hv = !on && br.Contains(Event.current.mousePosition);
+                CuteUI.Box(br, 7, on ? CuteUI.Frame : hv ? CuteUI.Paper2 : CuteUI.Paper, on ? CuteUI.Ink : CuteUI.Line, 1);
+                CuteUI.LabelCenter(br.center.x, br.center.y, BookNames[i], on ? CuteUI.White : CuteUI.Sub, true, on);
+                if (CuteUI.Hit(br, GUIContent.none, GUIStyle.none) && !on) { bookIndex = i; selected = 0; tab = 0; listScroll = pageScroll = 0f; Sfx.Play("open", .4f); }
+                bx = br.xMax + 4;
+            }
+        }
+
         void OnGUI()
         {
             if (!IsOpen) return;
@@ -111,34 +126,17 @@ namespace PocketCaravan
             GUI.depth = -10;
             float width = Mathf.Min(560, UIStyle.VirtualWidth - 16), height = UIStyle.WindowHeight(300) - 6;
             var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - width) / 2), Mathf.Round((UIStyle.VirtualHeight - height) / 2 + 6), width, height);
-            CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, $"상업 백과 · {RegionName}");
+            CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, "상업 백과");
             CuteUI.Keycap(r.xMax - 32 - CuteUI.KeycapWidth("Esc") - 3, r.y - 3, "Esc");
             if (CuteUI.CloseButton(r.xMax - 32f, r.y - 9f)) { Close(); return; }
-            if (Content == null || Content.cards == null || Content.cards.Length == 0)
-            {
-                CuteUI.LabelCenter(r.center.x, r.center.y, "백과를 아직 준비하지 못했어요", CuteUI.Sub);
-                return;
-            }
+            bool empty = Content == null || Content.cards == null || Content.cards.Length == 0;
+            if (empty) { DrawBooks(r); CuteUI.LabelCenter(r.center.x, r.center.y, "이 책은 아직 준비하지 못했어요", CuteUI.Sub); return; }
             selected = Mathf.Clamp(selected, 0, Content.cards.Length - 1);
 
             // ---- 왼쪽: 항목 목록 ----
             float listW = Mathf.Round(Mathf.Clamp(width * .27f, 112, 140));
-            // 11/18 지역 단추 (백과가 있는 지역만): 누르면 그 지역 백과
-            float bx = r.x + 16;
-            foreach (var (civ, label) in new[] { ("goryeo", "고려"), ("venice", "베네치아") })
-            {
-                if (BookOf(civ) == null) continue;
-                bool on = BookOf(civ) == Content;
-                float bw = CuteUI.Width(label, true, on) + 16;
-                var br = new Rect(bx, r.y + 20, bw, 16);
-                bool hv = !on && br.Contains(Event.current.mousePosition);
-                CuteUI.Box(br, 7, on ? CuteUI.Frame : hv ? CuteUI.Paper2 : CuteUI.Paper, on ? CuteUI.Ink : CuteUI.Line, 1);
-                CuteUI.LabelCenter(br.center.x, br.center.y, label, on ? CuteUI.White : CuteUI.Sub, true, on);
-                if (CuteUI.Hit(br, GUIContent.none, GUIStyle.none) && !on) { book = civ; selected = 0; tab = 0; listScroll = pageScroll = 0f; Sfx.Play("open", .4f); }
-                bx = br.xMax + 4;
-            }
-            float listBottom = r.yMax - 16 - (missingRegion != null ? 18 : 0);
-            if (missingRegion != null) CuteUI.Label(r.x + 16, listBottom + 9, $"{missingRegion} 백과는 준비 중이에요", CuteUI.Sub, true);
+            DrawBooks(r);
+            float listBottom = r.yMax - 16;
             var list = new Rect(r.x + 16, r.y + 44, listW, listBottom - (r.y + 44));
             const float rowH = 24, gap = 5;
             float listH = Content.cards.Length * (rowH + gap) - gap;

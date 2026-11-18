@@ -7,7 +7,7 @@ namespace PocketCaravan
     /// 2026-10-30 시작 이야기 + 조작 튜토리얼 (사막여우 · 아라비아 대상). 북유럽·베네치아 Intro와 같은 흐름, 이야기는 「향료길 장부」 초안의 0~1장만 따랐다(2~7장은 지역 담당이 이어서).
     /// 1) 알 아흐사에 처음 들어오면 프롤로그 자막(할아버지의 낡은 장부, 빈 도장 칸 셋)
     /// 2) 바로 옆 하산의 조카 아미르에게 Space로 말 걸기 → 지도·소지품 주머니를 받고 할 일을 차례로:
-    ///    달리기(Shift) · 상태(Tab) · 소지품(I) · 지도(M) · 퀘스트 목록(Q) · 장터에서 사기 · 팔기 · 장부(L)
+    ///    할 일 카드(여정 수첩) · 달리기(Shift) · 상태(Tab) · 소지품(I) · 지도(M) · 장터에서 사기 · 팔기 · 장부(L)  (11/18 카드를 맨 앞으로, ControlLesson.Order)
     /// 3) 아미르에게 돌아가면 장부 첫 줄·신용·도장, 아라비아 출신의 강점(다른 문명에서 난 물건을 팔면 +5%) → 짐꾼 힌드바드(Q1 arabia_q01_first_delivery)로 보냄
     /// 진행은 GameManager 진행 메모 "arabia:intro" (0 없음 · 1 말 걸기 · 2~9 할 일 · 10 돌아가기 · 11 끝). 새 파일만 더했고 기존 아라비아 파일·씬·퀘스트는 그대로다.
     /// 그림은 북유럽 대상 캠프에 옮겨 둔 아라비아 사람 그림(Resources/North/Minigame/caravan1_d0, 32×48 · 26PPU)을 빌려 쓴다.
@@ -26,6 +26,16 @@ namespace PocketCaravan
 
         public static bool Active => Step >= 1 && Step <= 10;
         static int Step { get => GameManager.I != null ? Mathf.RoundToInt(GameManager.I.GetMemo("arabia:intro")) : 0; set { if (GameManager.I != null) GameManager.I.SetMemo("arabia:intro", value); } }
+        /// <summary>11/18 끝낸 배우기 (할 일 아이디 비트). 순서를 바꾸며 예전에 한 것을 건너뛰려고</summary>
+        static int DoneMask { get => Mathf.RoundToInt((GameManager.I != null ? GameManager.I.GetMemo("arabia:intro_done") : 0f)); set { if (GameManager.I != null) GameManager.I.SetMemo("arabia:intro_done", value); } }
+        /// <summary>11/18 예전 순서(달리기 먼저)로 저장된 배우기 단계를 새 순서(할 일 카드 먼저)로 한 번 옮긴다</summary>
+        static void MigrateOrder3()
+        {
+            if (GameManager.I == null || (GameManager.I != null && GameManager.I.HasMemo("arabia:intro_order3"))) return;
+            int s = Step;
+            if (s >= 3 && s <= 9) { int mask = DoneMask; Step = ControlLesson.MigrateFromOld(s, ref mask, false); DoneMask = mask; }
+            GameManager.I.SetMemo("arabia:intro_order3", 1);
+        }
         static bool Started => GameManager.I != null && GameManager.I.HasMemo("arabia:intro");
         static Vector3 Cell(int x, int y) => MapRoot.Current.CellCenter(new Vector3Int(x, MapH - 1 - y, 0));
         static bool InArabia => MapRoot.Current != null && MapRoot.Current.mapId != null && MapRoot.Current.mapId.StartsWith("arabia_");
@@ -215,7 +225,7 @@ namespace PocketCaravan
                     $"{(buy != null ? TownName(buy) : "산 곳")}에서 산 걸 거기서 되팔면 안 돼. 다른 마을 장터로 가져가야 값 차이가 나지. 화살표랑 아래 '목표' 줄을 따라가!");
                 return;
             }
-            if (s >= 2 && s <= 9) { DialogueUI.Show(Guide, $"아직 남았어.\n\n지금 할 일: {Tasks[s - 2]}"); return; }
+            if (s >= 2 && s <= 9) { DialogueUI.Show(Guide, $"아직 남았어.\n\n지금 할 일: {Tasks[ControlLesson.TaskAt(s)]}"); return; }
             if (s == 10)
             {
                 DialogueUI.Show(Guide,
@@ -241,10 +251,12 @@ namespace PocketCaravan
 
         void Done(int task)
         {
-            if (Step != task + 2) return;
-            Step = task + 3;
+            // 11/18 순서와 할 일 아이디가 다르다 (ControlLesson.Order): 지금 단계의 일이면 다음 단계로, 이미 한 것은 건너뛴다
+            int mask = DoneMask, next = ControlLesson.NextStep(Step, task, ref mask);
+            if (next < 0) { if (mask != DoneMask) DoneMask = mask; return; }   // 미리 한 조작도 적어 둔다
+            DoneMask = mask; Step = next;
             Sfx.Play("coin");
-            Notify.Show(Step <= 9 ? $"잘했어요! 다음: {Tasks[Step - 2]}" : "다 했어요! 아미르에게 돌아가 말을 걸어 보세요.", 4f);
+            Notify.Show(Step <= 9 ? $"잘했어요! 다음: {Tasks[ControlLesson.TaskAt(Step)]}" : "다 했어요! 아미르에게 돌아가 말을 걸어 보세요.", 4f);
         }
 
         void OnInventory() { if (IsCat) Done(2); }
@@ -256,7 +268,7 @@ namespace PocketCaravan
         {
             if (!IsCat) return;
             var gm = GameManager.I;
-            if (Step == 7 && gm != null && gm.Db != null) gm.SetMemo(BuyTownMemo, gm.Db.towns.IndexOf(town));
+            if (Step >= 2 && Step <= 7 && gm != null && gm.Db != null) gm.SetMemo(BuyTownMemo, gm.Db.towns.IndexOf(town));
             Done(5);
         }
 
@@ -275,10 +287,29 @@ namespace PocketCaravan
 
         void Update()
         {
+            if (IsCat) MigrateOrder3();
             int s = Step;
             if (s < 2 || s > 9 || !IsCat || GameManager.I == null) return;
             int task = ControlLesson.KeyTask(s, ref runTime);   // 11/08 공용 키 확인 (달리기·Tab·M·Q·L)
             if (task >= 0) Done(task);
+        }
+
+        /// <summary>11/18 지금 튜토리얼 할 일 (위 할 일 카드 · 여정 수첩 목록이 같이 쓴다). 튜토리얼 중이 아니면 false</summary>
+        public static bool Summary(out string main, out string where, out bool home)
+        {
+            main = where = null; home = false;
+            int s = Step;
+            if (s < 1 || s > 10 || !IsCat || MapRoot.Current == null) return false;
+            home = MapRoot.Current.mapId == Home;
+            string place = WorldIndex.Get()?.MapName(Home) ?? Home;
+            main = s == 1 ? "아미르에게 말 걸기"
+            : s == 10 ? "아미르에게 돌아가 말 걸기"
+            : s == 8 ? SellTask()   // 11/10 어디서 팔지 이름으로
+            : CuteUI.Plain(Tasks[ControlLesson.TaskAt(s)]);
+            where = s == 1 ? (home ? "바로 옆 · Space" : place)
+            : s == 10 ? (home ? "다 했어요!" : place + " · 지도(M)")
+            : $"배우기 {s - 1}/{Tasks.Length}";
+            return true;
         }
 
         void OnGUI()
@@ -289,15 +320,7 @@ namespace PocketCaravan
             UIStyle.Begin();
             // 11/08 UI B안: 검은 줄(왼쪽 위 상태 카드·오른쪽 길 장애 알약을 덮었다) 대신 할 일 줄 아래 위 가운데 알약 (전구 = 배우기). Tab 펼친 동안은 숨긴다
             // 11/09 출발 마을을 떠나 있으면 앞에 "튜토리얼"을 붙이고, 아미르에게 가야 하는 단계는 어디로 가는지 알려 준다
-            bool home = MapRoot.Current.mapId == Home;
-            string place = WorldIndex.Get()?.MapName(Home) ?? Home;
-            string main = s == 1 ? "아미르에게 말 걸기"
-                        : s == 10 ? "아미르에게 돌아가 말 걸기"
-                        : s == 8 ? SellTask()   // 11/10 어디서 팔지 이름으로
-                        : CuteUI.Plain(Tasks[s - 2]);
-            string where = s == 1 ? (home ? "바로 옆 · Space" : place)
-                         : s == 10 ? (home ? "다 했어요!" : place + " · 지도(M)")
-                         : $"배우기 {s - 1}/{Tasks.Length}";
+            Summary(out string main, out string where, out bool home);   // 11/18 여정 수첩에도 같은 글
             // 11/10 길면 줄이지 않고 두 줄로 편다 (위 작은 줄 "튜토리얼 · 배우기 n/8", 아래 굵은 할 일)
             CuteUI.StackPill(10, false, CuteUI.Pic.Bulb, home ? null : "튜토리얼", main, where, !home && (s == 1 || s == 10));
         }

@@ -7,7 +7,7 @@ namespace PocketCaravan
     /// 2026-10-30 시작 이야기 + 조작 튜토리얼 (흰 고양이 · 베네치아 상인). 북유럽 NorthIntro와 같은 흐름, 이야기는 윤채 님 「베네치아 스토리」 정리를 따랐다.
     /// 1) 리알토에 처음 들어오면 날개 달린 사자 이야기 → 리알토 부두 광장에 도착한 새내기 행상
     /// 2) 바로 옆 상인회 안내원에게 Space로 말 걸기 → 지도·소지품 주머니를 받고 할 일을 차례로:
-    ///    달리기(Shift) · 상태(Tab) · 소지품(I) · 지도(M) · 퀘스트 목록(Q) · 장터에서 사기 · 팔기 · 장부(L)
+    ///    할 일 카드(여정 수첩) · 달리기(Shift) · 상태(Tab) · 소지품(I) · 지도(M) · 장터에서 사기 · 팔기 · 장부(L)  (11/18 카드를 맨 앞으로, ControlLesson.Order)
     /// 3) 안내원에게 돌아가면 돈·신용·부탁, 베네치아 출신의 강점, 숨은 사자 문장 이야기 → 여관 주인(1장 첫 배달 venice_q1_delivery)으로 보냄
     /// 진행은 VeniceSave "intro" (0 없음 · 1 말 걸기 · 2~9 할 일 · 10 돌아가기 · 11 끝). 새 파일만 더했고 기존 베네치아 파일·씬은 그대로다.
     /// 이미 베네치아 퀘스트를 시작했거나 다른 문명 캐릭터면 나오지 않는다.
@@ -23,6 +23,16 @@ namespace PocketCaravan
 
         public static bool Active => Step >= 1 && Step <= 10;
         static int Step { get => Mathf.RoundToInt(VeniceSave.Get("intro")); set => VeniceSave.Set("intro", value); }
+        /// <summary>11/18 끝낸 배우기 (할 일 아이디 비트). 순서를 바꾸며 예전에 한 것을 건너뛰려고</summary>
+        static int DoneMask { get => Mathf.RoundToInt(VeniceSave.Get("intro_done")); set { VeniceSave.Set("intro_done", value); } }
+        /// <summary>11/18 예전 순서(달리기 먼저)로 저장된 배우기 단계를 새 순서(할 일 카드 먼저)로 한 번 옮긴다</summary>
+        static void MigrateOrder3()
+        {
+            if (GameManager.I == null || VeniceSave.Has("intro_order3")) return;
+            int s = Step;
+            if (s >= 3 && s <= 9) { int mask = DoneMask; Step = ControlLesson.MigrateFromOld(s, ref mask, false); DoneMask = mask; }
+            VeniceSave.Set("intro_order3", 1);
+        }
 
         Transform root;
         float runTime;
@@ -190,7 +200,7 @@ namespace PocketCaravan
                     new DialogueUI.Choice("해 볼게요", () => { Step = 2; Notify.Show("지도와 소지품 주머니를 받았다!", 3f); Sfx.Play("coin"); }));
                 return;
             }
-            if (s >= 2 && s <= 9) { DialogueUI.Show(Guide, $"아직 할 일이 남았어요.\n\n지금 할 일: {Tasks[s - 2]}"); return; }
+            if (s >= 2 && s <= 9) { DialogueUI.Show(Guide, $"아직 할 일이 남았어요.\n\n지금 할 일: {Tasks[ControlLesson.TaskAt(s)]}"); return; }
             if (s == 10)
             {
                 DialogueUI.Show(Guide,
@@ -218,10 +228,12 @@ namespace PocketCaravan
 
         void Done(int task)
         {
-            if (Step != task + 2) return;
-            Step = task + 3;
+            // 11/18 순서와 할 일 아이디가 다르다 (ControlLesson.Order): 지금 단계의 일이면 다음 단계로, 이미 한 것은 건너뛴다
+            int mask = DoneMask, next = ControlLesson.NextStep(Step, task, ref mask);
+            if (next < 0) { if (mask != DoneMask) DoneMask = mask; return; }   // 미리 한 조작도 적어 둔다
+            DoneMask = mask; Step = next;
             Sfx.Play("coin");
-            Notify.Show(Step <= 9 ? $"잘했어요! 다음: {Tasks[Step - 2]}" : "다 했어요! 안내원 조반나에게 돌아가 말을 걸어 보세요.", 4f);
+            Notify.Show(Step <= 9 ? $"잘했어요! 다음: {Tasks[ControlLesson.TaskAt(Step)]}" : "다 했어요! 안내원 조반나에게 돌아가 말을 걸어 보세요.", 4f);
         }
 
         void OnInventory() { if (IsCat) Done(2); }
@@ -233,7 +245,7 @@ namespace PocketCaravan
         {
             if (!IsCat) return;
             var gm = GameManager.I;
-            if (Step == 7 && gm != null && gm.Db != null) gm.SetMemo(BuyTownMemo, gm.Db.towns.IndexOf(town));
+            if (Step >= 2 && Step <= 7 && gm != null && gm.Db != null) gm.SetMemo(BuyTownMemo, gm.Db.towns.IndexOf(town));
             Done(5);
         }
 
@@ -251,6 +263,7 @@ namespace PocketCaravan
 
         void Update()
         {
+            if (IsCat) MigrateOrder3();
             int s = Step;
             if (s < 2 || s > 9 || !IsCat || GameManager.I == null) return;
             int task = ControlLesson.KeyTask(s, ref runTime);   // 11/08 공용 키 확인 (달리기·Tab·M·Q·L)
@@ -261,6 +274,22 @@ namespace PocketCaravan
         /// <remarks>11/09 윤채: 베네치아 밖에서도 띄운다. "다른 마을에서 팔기"를 하러 나가면 알약이 사라져 튜토리얼이 끝난 줄 알았다</remarks>
         public static bool Showing { get { int s = Step; return s >= 1 && s <= 10 && !UIState.Blocking && !HUD.Expanded && IsCat && MapRoot.Current != null; } }   // 11/08 Tab 펼친 동안은 숨긴다 (상태 카드와 겹쳤다)
 
+        /// <summary>11/18 지금 튜토리얼 할 일 (위 할 일 카드 · 여정 수첩 목록이 같이 쓴다). 튜토리얼 중이 아니면 false</summary>
+        public static bool Summary(out string main, out string where, out bool home)
+        {
+            main = where = null; home = false;
+            int s = Step;
+            if (s < 1 || s > 10 || !IsCat || MapRoot.Current == null) return false;
+            home = VeniceUtil.Map == Home;
+            main = s == 1 ? "상인회 안내원에게 말 걸기"
+            : s == 10 ? "안내원 조반나에게 돌아가기"
+            : CuteUI.Plain(Tasks[ControlLesson.TaskAt(s)]);
+            where = s == 1 ? (home ? "바로 옆 · Space" : "리알토 부두 광장")
+            : s == 10 ? (home ? "다 했어요!" : "리알토 부두 광장 · 지도(M)")
+            : $"배우기 {s - 1}/{Tasks.Length}";
+            return true;
+        }
+
         void OnGUI()
         {
             if (!Showing) return;
@@ -268,13 +297,7 @@ namespace PocketCaravan
             UIStyle.Begin();
             // 11/07 UI B안: 할 일 줄과 같은 위 가운데 알약 (전구 = 배우기, 오른쪽 작은 글 = 몇 번째). 위 알약들 아래 빈 자리에
             // 11/09 리알토를 떠나 있으면 앞에 "튜토리얼"을 붙이고, 안내원에게 가야 하는 단계는 어디로 가는지 알려 준다
-            bool home = VeniceUtil.Map == Home;
-            string main = s == 1 ? "상인회 안내원에게 말 걸기"
-                        : s == 10 ? "안내원 조반나에게 돌아가기"
-                        : CuteUI.Plain(Tasks[s - 2]);
-            string where = s == 1 ? (home ? "바로 옆 · Space" : "리알토 부두 광장")
-                         : s == 10 ? (home ? "다 했어요!" : "리알토 부두 광장 · 지도(M)")
-                         : $"배우기 {s - 1}/{Tasks.Length}";
+            Summary(out string main, out string where, out bool home);   // 11/18 여정 수첩에도 같은 글
             // 11/10 길면 줄이지 않고 두 줄로 편다 (위 작은 줄 "튜토리얼 · 배우기 n/8", 아래 굵은 할 일)
             CuteUI.StackPill(10, false, CuteUI.Pic.Bulb, home ? null : "튜토리얼", main, where, !home && (s == 1 || s == 10));
         }

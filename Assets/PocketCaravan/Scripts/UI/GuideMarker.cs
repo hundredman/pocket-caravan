@@ -11,12 +11,15 @@ namespace PocketCaravan
     /// - 핀을 누르면 지도(M). 왼쪽 위 카드·오른쪽 위 단추·아래 알림과 겹치면 가장자리를 따라 비킨다 (ScreenZones)
     /// 11/15 윤채(UT "화살표를 더 얇고 직관적으로"): 모양만 바꿨다. 굵은 삼각형 ▼ → 얇은 꺾쇠 ∨ (목적지 위 표시 · 화면 끝 화살촉 둘 다).
     ///   화면 끝 [핀 · N칸]과 목적지 쪽을 따라 도는 화살촉 동작은 그대로다.
+    /// - 11/18 은샘(첫 플레이 피드백 "NPC·다른 마을 가는 길을 못 찾겠다"): 캐릭터 옆 화살표를 다시 넣는다.
+    ///   예전 작은 정삼각형은 방향이 안 읽혀서, 이번엔 몸통 달린 화살표(➜)에 진한 테두리. 걸을 수 있는 길 앞쪽(steer)을 가리키고
+    ///   다른 마을이면 다음 출구 쪽 길을 따라간다. 목적지 2칸 안이면 감춘다
     /// 공용 이름표(WorldLabels)와 고려 이름표(GoryeoPlaceLabels)가 같이 쓴다.
     /// </summary>
     public static class GuideMarker
     {
         const float Margin = 12f, Top = 34f, Dot = 16f;
-        static Texture2D tri, triInk;
+        static Texture2D tri, triInk, arrow;
         static Vector3 lastPos; static bool lastOff; static int lastFrame = -10; static float popAt = -9f;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -43,6 +46,7 @@ namespace PocketCaravan
         public static void Draw(Vector2 target, Vector2 player, Navigator.Result n, int cells)
         {
             Init();
+            NearArrow(player, n, cells);
             float vw = UIStyle.VirtualWidth, vh = UIStyle.VirtualHeight;
             bool off = target.x < 4f || target.x > vw - 4f || target.y < 4f || target.y > vh - 4f;
             int f = Time.frameCount;
@@ -119,11 +123,61 @@ namespace PocketCaravan
             ".....#.....",
         };
 
+        /// <summary>11/18 캐릭터 옆 화살표 (목 높이에서 22칸 떨어져 길 쪽을 가리키고, 그쪽으로 살짝 들락날락)</summary>
+        static void NearArrow(Vector2 player, Navigator.Result n, int cells)
+        {
+            var cam = Camera.main;
+            var pc = PlayerController.Instance;
+            if (cam == null || pc == null || UIState.PhotoMode) return;
+            float dist = n.walkCells >= 0 ? n.walkCells : cells;
+            if (dist <= 2f) return;
+            Vector2 d = (Vector2)n.steer - (Vector2)pc.transform.position;
+            if (d.sqrMagnitude < 0.01f) return;
+            var dir = new Vector2(d.x, -d.y).normalized;   // GUI는 y가 아래로
+            // 11/18 은샘: 머리 높이 → 목 높이 (발에서 반 칸 위)
+            Vector3 neckW = (pc.Motor != null ? (Vector3)pc.Motor.Feet : pc.transform.position) + new Vector3(0f, .5f, 0f);
+            var ns = cam.WorldToScreenPoint(neckW);
+            var body = new Vector2(ns.x / UIStyle.Scale, (Screen.height - ns.y) / UIStyle.Scale);
+            float bob = Mathf.Round(Mathf.Sin(Time.unscaledTime * 5f) * 1.5f + 1.5f);
+            var c = body + dir * (22f + bob);
+            var m = GUI.matrix;
+            var old = GUI.color;
+            GUI.color = new Color(1f, 1f, 1f, old.a * Mathf.Clamp01(dist - 2f));   // 가까워지면 옅어진다
+            CuteUI.RotateAround(Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg, c);
+            GUI.DrawTexture(new Rect(Mathf.Round(c.x - 8f), Mathf.Round(c.y - 6f), 16f, 12f), arrow);
+            GUI.matrix = m;
+            GUI.color = old;
+        }
+
         static void Init()
         {
             if (tri != null) return;
-            // tri = 꺾쇠 칸만 흰색 (GUI.color로 물들인다), triInk = 꺾쇠와 바깥 한 칸 테두리를 잉크색으로
+            arrow = Arrow();   // 11/18 은샘: 캐릭터 옆 화살표
+            // tri = 꺾쇠 칸만 흰색 (GUI.color로 물들인다), triInk = 꺾쇠와 바깥 한 칸 테두리를 잉크색으로 (11/15 윤채 얇은 꺾쇠)
             tri = Chevron(false); triInk = Chevron(true);
+        }
+
+        /// <summary>오른쪽을 가리키는 몸통 달린 화살표 16×12. 노란 속 + 잉크 테두리를 구워 넣는다</summary>
+        static Texture2D Arrow()
+        {
+            const int W = 16, H = 12;
+            bool In(int x, int y)
+            {
+                float cy = (H - 1) / 2f, dy = Mathf.Abs(y - cy);
+                if (x >= 8 && x <= 14) return dy <= (14 - x) * 5f / 6f + .3f;   // 머리
+                return x >= 2 && x < 8 && dy <= 1.6f;                          // 몸통
+            }
+            var t = new Texture2D(W, H, TextureFormat.RGBA32, false) { filterMode = FilterMode.Point, wrapMode = TextureWrapMode.Clamp };
+            Color fill = new Color(1f, 0.85f, 0.25f), hi = new Color(1f, 0.95f, 0.65f), ink = CuteUI.Ink;
+            for (int y = 0; y < H; y++)
+                for (int x = 0; x < W; x++)
+                {
+                    bool inside = In(x, y);
+                    bool edge = !inside && (In(x - 1, y) || In(x + 1, y) || In(x, y - 1) || In(x, y + 1));
+                    t.SetPixel(x, y, inside ? (y >= H / 2 + 1 && x < 12 ? hi : fill) : edge ? ink : Color.clear);
+                }
+            t.Apply();
+            return t;
         }
 
         static Texture2D Chevron(bool outline)

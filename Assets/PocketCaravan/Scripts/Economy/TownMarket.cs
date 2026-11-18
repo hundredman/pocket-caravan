@@ -28,6 +28,10 @@ namespace PocketCaravan
         // 11/11 방금 한 거래 (오른쪽 '보유 N개' 칸이 잠깐 물들고 +N/−N이 떠오른다. Space로 연달아 살 때 샀는지 알 수 있게)
         ItemData lastTradeItem; int lastTradeCount; bool lastTradeSell; float lastTradeAt = -9f;
         const float TradeFlash = 1.2f;
+        // 11/18 은샘: 사고팔았다는 느낌. 산 물건이 단추에서 위쪽 짐 자루로 날아가 쏙 들어가고, 돈이 줄어든 만큼 떠오르고, 단추 위에 "샀어요!"가 통 튄다
+        Rect tradeBtn, fxFrom; Vector2 sackAt, moneyAt;
+        float fxAt = -9f; int fxCount, fxTotal; bool fxSell; ItemData fxItem;
+        const float FxFly = .55f, FxLen = 1.6f;
         float loadPreview;   // 11/15 지금 고른 거래로 짐이 얼마나 늘거나 주는지 (위쪽 짐 막대에 미리 보여 준다, 지난 화면 값)
         MarketEstimate readyEst;   // 지금 큰 사기·팔기 버튼이 가리키는 거래. 버튼이 눌릴 수 있을 때만 채워진다 (Space용, 11/11)
         HaggleDeal deal;
@@ -43,6 +47,7 @@ namespace PocketCaravan
             if (town == null) { Debug.LogWarning($"{name}: TownData가 비어 있습니다."); return; }
             if (!UIState.TryOpen(this, Close)) return;
             open = true;
+            fxAt = -9f;   // 11/18 다시 열면 지난 거래 연출을 되풀이하지 않게
             openedFrame = Time.frameCount;
             message = "";
             soldThisVisit = revenueThisVisit = 0; profitThisVisit = 0;
@@ -158,13 +163,19 @@ namespace PocketCaravan
             CuteUI.Window(r);
             CuteUI.TitlePlate(r.center.x, r.y - 11, town.displayName.EndsWith("장터") ? town.displayName : town.displayName + " 장터");
             CuteUI.Keycap(r.xMax - 32 - CuteUI.KeycapWidth("Esc") - 3, r.y - 3, "Esc");
+            ScreenZones.MarkSpot("market.close", new Rect(r.xMax - 32, r.y - 9, 22, 22));   // 11/18 튜토리얼: 사고 난 뒤 닫기 단추를 밝힌다
             if (CuteUI.CloseButton(r.xMax - 32, r.y - 9)) { Close(); return; }
 
             // 위: 돈 · 짐 (+ 장날)
             float hy = r.y + 24;
-            CuteUI.Icon(CuteUI.Pic.Coin, r.x + 18, hy - 5);
+            float fxk = Time.unscaledTime - fxAt;
+            // 날아온 물건이 닿으면 자루·돈이 한 번 통 튄다
+            float bump = fxk >= FxFly && fxk < FxFly + .3f ? -Mathf.Round(Mathf.Sin((fxk - FxFly) / .3f * Mathf.PI) * 3f) : 0f;
+            moneyAt = new Vector2(r.x + 31, hy);
+            CuteUI.Icon(CuteUI.Pic.Coin, r.x + 18, hy - 5 + (fxSell ? bump : 0f));
             float x = CuteUI.Label(r.x + 31, hy, $"{p.money}냥", CuteUI.Text, false, true) + 12;
-            CuteUI.Icon(CuteUI.Pic.Sack, x, hy - 4);
+            sackAt = new Vector2(x + 5, hy);
+            CuteUI.Icon(CuteUI.Pic.Sack, x, hy - 4 + (fxSell ? 0f : bump));
             LoadBar(new Rect(x + 13, hy - 4, 56, 8), p.TotalWeight, loadPreview, p.Capacity);
             x = CuteUI.Label(x + 73, hy, $"{p.TotalWeight:0.#}/{p.Capacity:0.#}", CuteUI.Sub, true) + 10;
             loadPreview = 0f;   // 아래 거래 칸이 이번 화면에 다시 채운다
@@ -180,7 +191,10 @@ namespace PocketCaravan
             float tx = c.x + 6;
             if (CuteUI.Tab(tx, c.y, "사기", CuteUI.Pic.Basket, marketTab == 0, out float w0) && marketTab != 0) SetTab(0);
             tx += w0 + 3;
+            float sellX = tx;
             if (CuteUI.Tab(tx, c.y, "팔기", CuteUI.Pic.Coin7, marketTab == 1, out float w1) && marketTab != 1) SetTab(1);
+            ScreenZones.MarkSpot("market.window", r); ScreenZones.MarkSpot("market.window." + town.id, r);   // 11/18 튜토리얼 스포트라이트: 장터 창이 열려 있다 · "팔기" 칸 · 사기·팔기 단추
+            if (marketTab != 1) ScreenZones.MarkSpot("market.sellTab", new Rect(sellX, c.y - 17, w1, 17));
             tx += w1 + 3;
             if (town.vehiclesForSale.Count > 0 && CuteUI.Tab(tx, c.y, "운반 수단", CuteUI.Pic.Sack, marketTab == 2, out _) && marketTab != 2) SetTab(2);
             if (marketTab > 1 && town.vehiclesForSale.Count == 0) SetTab(0);
@@ -204,6 +218,54 @@ namespace PocketCaravan
             float lx = CuteUI.Label(right + kx + 3, fy, "장부", CuteUI.Sub, true);
             if (CuteUI.Hit(new Rect(right - 2, fy - 9, lx - right + 4, 18), GUIContent.none, GUIStyle.none)) InputReader.Press('l');   // 11/08 눌러도 장부가 열린다
             if (!string.IsNullOrEmpty(message)) CuteUI.Label(r.x + 18, fy, Fit(CuteUI.Plain(message), right - r.x - 30, true, false), CuteUI.Text, true);
+            DrawTradeFx();
+        }
+
+        /// <summary>11/18 사고팔기 끝난 느낌 (그리기만, 1.5초)</summary>
+        void DrawTradeFx()
+        {
+            float k = Time.unscaledTime - fxAt;
+            if (k < 0f || k > FxLen || fxCount < 1) return;
+            var oc = GUI.color;
+            // 1) 단추 자리에 "샀어요!" 도장 (통 튀었다가 옅어진다. 합계 줄을 가리지 않게 단추 위에 겹친다)
+            {
+                float a = k < .12f ? k / .12f : k > FxLen - .35f ? (FxLen - k) / .35f : 1f;
+                float pop = k < .18f ? Mathf.Lerp(1.35f, 1f, k / .18f) : 1f;
+                string t = fxSell ? $"팔았어요! {fxTotal}냥 받음" : $"샀어요! 짐에 {fxCount}개 실음";
+                float w = (CuteUI.Width(t, false, true) + 20) * pop, h = 20f * pop;
+                var b = new Rect(Mathf.Round(fxFrom.center.x - w / 2f), Mathf.Round(fxFrom.center.y - h / 2f), Mathf.Round(w), Mathf.Round(h));
+                GUI.color = new Color(oc.r, oc.g, oc.b, oc.a * Mathf.Clamp01(a));
+                CuteUI.Box(b, 8, fxSell ? CuteUI.SellSoft : CuteUI.BuySoft, fxSell ? CuteUI.Sell : CuteUI.Buy, 2, 2);
+                CuteUI.LabelCenter(b.center.x, b.center.y, t, CuteUI.Text, false, true);
+                GUI.color = oc;
+            }
+            // 2) 날아가는 물건(살 때: 단추 → 짐 자루) · 엽전(팔 때: 단추 → 돈)
+            var to = fxSell ? moneyAt : sackAt;
+            int n = Mathf.Min(fxCount, 5);
+            for (int i = 0; i < n; i++)
+            {
+                float q = (k - i * .06f) / FxFly;
+                if (q < 0f || q > 1f) continue;
+                float e = q * q * (3f - 2f * q);
+                var from = new Vector2(fxFrom.center.x + (i - (n - 1) / 2f) * 10f, fxFrom.y);
+                float px = Mathf.Lerp(from.x, to.x, e), py = Mathf.Lerp(from.y, to.y, e) - Mathf.Sin(q * Mathf.PI) * 40f;   // 위로 둥글게
+                if (fxSell) CuteUI.Icon(CuteUI.Pic.Coin, Mathf.Round(px - 4), Mathf.Round(py - 4));
+                else
+                {
+                    int sc = q < .7f ? 2 : 1; float half = 8f * sc;
+                    ItemIcon(fxItem, Mathf.Round(px - half), Mathf.Round(py - half), sc);
+                }
+            }
+            // 3) 닿은 뒤: 자루(돈) 옆에 +N개 / 돈 옆에 −N냥이 떠오른다
+            if (k >= FxFly)
+            {
+                float u = (k - FxFly) / (FxLen - FxFly);
+                GUI.color = new Color(oc.r, oc.g, oc.b, oc.a * (1f - u * u));
+                float rise = Mathf.Round(u * 6f);   // 위 줄 바로 아래에서 살짝 떠오른다 (창 위 이름판과 겹치지 않게)
+                if (!fxSell) CuteUI.Label(sackAt.x - 4, sackAt.y + 13 - rise, $"+{fxCount}개", CuteUI.Buy, true, true);
+                CuteUI.Label(moneyAt.x, moneyAt.y + 13 - rise, $"{(fxSell ? "+" : "−")}{fxTotal}냥", fxSell ? CuteUI.Up : CuteUI.Down, true, true);
+                GUI.color = oc;
+            }
         }
 
         void DrawGoods(GameManager gm, MarketState m, Rect c)
@@ -375,6 +437,8 @@ namespace PocketCaravan
             string label = est.count > 0 ? $"{est.count}개 {(selling ? "팔기" : "사기")}" : selling ? "팔 수 없어요" : "살 수 없어요";
             if (est.count > 0)
             {
+                ScreenZones.MarkSpot(selling ? "market.sell" : "market.buy", btn);
+                tradeBtn = btn;
                 bool pressed = CuteUI.Button(btn, label, selling ? CuteUI.Pic.Coin7 : CuteUI.Pic.Basket);
                 CuteUI.Keycap(btn.xMax - CuteUI.KeycapWidth("Space") - 6, btn.center.y - 6.5f, "Space", true);
                 if (pressed) TradeBatch(est); else readyEst = est;
@@ -390,7 +454,7 @@ namespace PocketCaravan
         }
 
         // 흥정 (11/15 저울 흥정, HaggleDuel). 사기·팔기 버튼을 누르면 꼭 한다(TradeBatch).
-        // 결과는 다음 한 번의 거래에만 적용된다. 빨강을 밟아도 거래는 막지 않고 그 거래만 2% 불리하다.
+        // 결과는 다음 한 번의 거래에만 적용된다. 빨강을 밟아도 거래는 막지 않고 그 거래만 1~4% 불리하다 (11/18 깊이 따라).
         int haggleSalt;   // 같은 날 같은 물건을 여러 번 사도 저울이 판마다 다르게
         void DrawHaggle(GameManager gm, Rect button, Rect panel, int count, int baseTotal)
         {
@@ -517,8 +581,10 @@ namespace PocketCaravan
                 }
                 completed++;total+=price;
             }
-            if(completed>0 && haggle!=0)deal=null; // 흥정은 이 거래 한 번에만 쓴다 (빨강의 +2%도)
-            if(completed>0){lastTradeItem=estimate.item;lastTradeCount=completed;lastTradeSell=estimate.selling;lastTradeAt=Time.unscaledTime;}
+            if(completed>0 && haggle!=0)deal=null; // 흥정은 이 거래 한 번에만 쓴다 (빨강의 손해도)
+            if(completed>0){lastTradeItem=estimate.item;lastTradeCount=completed;lastTradeSell=estimate.selling;lastTradeAt=Time.unscaledTime;
+                fxItem=estimate.item;fxCount=completed;fxTotal=total;fxSell=estimate.selling;fxAt=Time.unscaledTime;fxFrom=tradeBtn;   // 11/18 사고판 느낌
+                Sfx.Play("success",.55f);}
             string partial=completed<estimate.count?" · 도중 조건 변경으로 중단":"";
             message=estimate.selling?$"{completed}개 판매 · {total}냥 · 매매 손익 {Signed(total-basis*completed)}냥{partial}":$"{completed}개 매입 · {total}냥 · 남은 돈 {p.money}냥{partial}";
             return completed;

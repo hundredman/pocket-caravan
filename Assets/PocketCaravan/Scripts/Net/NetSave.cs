@@ -500,7 +500,7 @@ namespace PocketCaravan
                 if (p != pickIdx) { pickIdx = p; Sfx.Play("open"); }
             }
             lastMove = mv;
-            if (InputReader.ConfirmPressed()) Pick(pickIdx);
+            if (InputReader.EnterPressed()) Pick(pickIdx);   // 11/18 게임 들어가기 전 화면은 Enter
         }
 
         void Pick(int idx)
@@ -567,7 +567,19 @@ namespace PocketCaravan
                 if (c0) Pick(0);
                 else if (c1) Pick(1);
             }
-            CuteUI.LabelCenter(box.center.x, box.yMax + 12f, "← → 고르기 · Space 결정", full ? CuteUI.Sub : CuteUI.White, true);
+            // 11/18 은샘: 창 밖 글씨가 배경 그림 위에서 안 보였다 → 키캡 + 종이 알약
+            {
+                float kw0 = CuteUI.KeycapWidth("← →"), kw1 = CuteUI.KeycapWidth("Enter");
+                float tw0 = CuteUI.Width("고르기", true), tw1 = CuteUI.Width("결정", true);
+                float pw = 10f + kw0 + 4f + tw0 + 12f + kw1 + 4f + tw1 + 10f;
+                var pill = new Rect(Mathf.Round(box.center.x - pw / 2f), Mathf.Round(box.yMax + 5f), Mathf.Round(pw), 19f);
+                CuteUI.Box(pill, 8, CuteUI.Paper, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
+                float kx = pill.x + 10f, ky = pill.center.y;
+                kx += CuteUI.Keycap(kx, ky - 6.5f, "← →") + 4f;
+                kx = CuteUI.Label(kx, ky, "고르기", CuteUI.Text, true) + 12f;
+                kx += CuteUI.Keycap(kx, ky - 6.5f, "Enter") + 4f;
+                CuteUI.Label(kx, ky, "결정", CuteUI.Text, true);
+            }
         }
 
         /// <summary>서버 / 이 컴퓨터 카드. 고른 쪽은 청록 테. when이 null이면 "저장 없음"</summary>

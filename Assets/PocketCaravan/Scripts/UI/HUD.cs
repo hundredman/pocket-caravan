@@ -90,7 +90,7 @@ namespace PocketCaravan
 
         static readonly (string key, string what)[] Keys =
         {
-            ("WASD", "이동"), ("Shift", "달리기"), ("Space", "대화·행동"), ("Tab", "상태·할 일"),
+            ("WASD", "이동"), ("Shift", "달리기"), ("Space", "대화·행동"), ("Tab", "상태·할 일"), ("Q", "수첩"),
             ("I", "소지품"), ("M", "지도"), ("L", "장부"), ("V", "수단 넣기"), ("Esc", "메뉴"),
         };
 
@@ -300,6 +300,7 @@ namespace PocketCaravan
                 CuteUI.Icon(b.pic, x + Mathf.Floor((ButtonSize - s.x + 1) / 2f), 4 + Mathf.Floor((ButtonSize - s.y) / 2f));
                 float kw = CuteUI.KeycapWidth(b.label);
                 CuteUI.Keycap(x + Mathf.Round((ButtonSize - kw) / 2f), 4 + ButtonSize - 5, b.label);
+                ScreenZones.MarkSpot("hud.btn." + b.key, new Rect(x, 4, ButtonSize, ButtonSize + 6));   // 11/18 튜토리얼 스포트라이트 (장부 단추)
                 if (!UIState.Blocking && CuteUI.Hit(new Rect(x, 4, ButtonSize, ButtonSize + 8), GUIContent.none, GUIStyle.none)) InputReader.Press(b.key);
                 x += ButtonSize + ButtonGap;
             }

@@ -39,7 +39,7 @@ namespace PocketCaravan
         const string StallTown = "arabia_jeddah";
         const string ArriveSpawn = "arabia_central_bazaar_spawn_seam_east_3";
         const int BazaarHeight = 56, Reward = 50, MaxCast = 6, DeliveryPay = 30;
-        const float LetterDelay = 2.5f, ReplyDelay = 1.0f, MarkRange = 14f, DuetWindow = 6f, DuetRange = 4f, PhotoRange = 4.5f, CountSeconds = 3.6f;
+        const float LetterDelay = 1.6f, ReplyDelay = 1.0f, MarkRange = 14f, DuetWindow = 6f, DuetRange = 4f, PhotoRange = 4.5f, CountSeconds = 3.6f;
         const string Clerk = "상인회 접수원 라일라", Chief = "만국 상인회장 아지즈 드림";
         const string StepKey = "net:guild:step", WelcomeKey = "net:guild:welcomed";
 
@@ -93,6 +93,8 @@ namespace PocketCaravan
             set { if (GM != null) GM.SetMemo(StepKey, value); }
         }
         static bool Has(int t) => GM != null && GM.GetMemo(TaskKeys[t]) >= 1f;
+        /// <summary>11/18 짐 쌓기 도장을 받았다 (NetStackGame 둘이서가 열리는 조건 중 하나)</summary>
+        public static bool StackStamped => Has((int)Task.Stack);
         static int DoneCount { get { int n = 0; for (int i = 0; i < TaskKeys.Length; i++) if (Has(i)) n++; return n; } }
         /// <summary>지금 할 일 (아직 안 한 첫 칸, 다 했으면 -1)</summary>
         static int Current { get { for (int i = 0; i < TaskKeys.Length; i++) if (!Has(i)) return i; return -1; } }
@@ -303,7 +305,7 @@ namespace PocketCaravan
             if (s == 0)
             {
                 if (!IntroDone() || IntroActive) { readyAt = -1f; return; }
-                if (readyAt < 0f) readyAt = now + LetterDelay;   // 튜토리얼 마지막 말이 끝나고 잠깐 뒤에
+                if (readyAt < 0f) readyAt = now + LetterDelay;   // 튜토리얼 마지막 말이 끝나고 잠깐 뒤에 (11/18 은샘: 2.5초는 느리고 0.8초는 빨라서 1.6초)
                 if (now >= readyAt) { Step = 1; QuestFocus.Set(QuestFocus.Kind.Event); OpenLetter(Letter.Invite); }   // 11/11 가장 최근에 받은 것을 길 안내
                 return;
             }
@@ -379,7 +381,7 @@ namespace PocketCaravan
         {
             // 합동 공연: 다른 사람이 리액션했다 (내 것은 OnEmote)
             var net = NetClient.I;
-            if (m.t != "emote" || net == null || string.IsNullOrEmpty(m.id) || m.id == net.MyId) return;
+            if (m.t != "emote" || net == null || string.IsNullOrEmpty(m.id) || m.id == net.MyId || NetStackGame.IsSignal(m.e)) return;   // 11/18 짐 쌓기 둘이서 신호는 리액션이 아니다
             float now = Time.unscaledTime;
             peerEmoteAt[m.id] = now;
             if (Step != 1 || !AtBazaar || Has((int)Task.Duet) || !PeerNear(m.id, DuetRange)) return;
