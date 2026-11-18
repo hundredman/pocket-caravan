@@ -163,6 +163,7 @@ namespace PocketCaravan
             CuteUI.Window(r);
             CuteUI.TitlePlate(r.center.x, r.y - 11, town.displayName.EndsWith("장터") ? town.displayName : town.displayName + " 장터");
             CuteUI.Keycap(r.xMax - 32 - CuteUI.KeycapWidth("Esc") - 3, r.y - 3, "Esc");
+            ScreenZones.MarkSpot("market.close", new Rect(r.xMax - 32, r.y - 9, 22, 22));   // 11/18 튜토리얼: 사고 난 뒤 닫기 단추를 밝힌다
             if (CuteUI.CloseButton(r.xMax - 32, r.y - 9)) { Close(); return; }
 
             // 위: 돈 · 짐 (+ 장날)

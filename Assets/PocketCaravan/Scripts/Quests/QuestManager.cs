@@ -156,8 +156,12 @@ namespace PocketCaravan
             return true;
         }
 
+        /// <summary>11/18 은샘: 시작 튜토리얼 중에는 사람이 주는 퀘스트를 내놓지 않는다 (촌장 ! 등). StoryGuide가 정한다</summary>
+        public static System.Func<bool> OffersPaused;
+
         public QuestData AvailableFrom(string npcId)
         {
+            if (OffersPaused != null && OffersPaused()) return null;
             // MarkerFor가 매 프레임 호출하므로 전체 제안 목록은 대화창을 열 때만 만든다.
             foreach (var q in all) if (q != null && q.giverNpc == npcId && CanStart(q)) return q;
             return null;
@@ -167,6 +171,7 @@ namespace PocketCaravan
         public List<QuestData> AvailableAllFrom(string npcId)
         {
             var offers = new List<QuestData>();
+            if (OffersPaused != null && OffersPaused()) return offers;
             foreach (var q in all)
                 if (q != null && q.giverNpc == npcId && CanStart(q) && !offers.Contains(q)) offers.Add(q);
             return offers;

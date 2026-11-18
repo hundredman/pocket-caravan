@@ -43,7 +43,8 @@ namespace PocketCaravan
         // 11/18 지금 배우는 것 (지역 Intro가 매 프레임 KeyTask를 부를 때 적는다). 튜토리얼 스포트라이트(TutorialSpot)가 본다
         static int current = -1, currentFrame = -9;
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void ResetStatics() { current = -1; currentFrame = -9; }
+        static void ResetStatics() { current = -1; currentFrame = -9; openedTask = -1; openedSeen = false; }
+        static int openedTask = -1; static bool openedSeen;   // Tab·수첩: 이 단계에서 연 적이 있다 (닫으면 끝)
         /// <summary>지금 이 배우기 단계인가 (이번·지난 프레임에 Intro가 알렸으면)</summary>
         public static bool IsActive(int task) => current == task && Time.frameCount - currentFrame <= 2;
 
@@ -52,10 +53,10 @@ namespace PocketCaravan
         public static string[] Tasks(string bag = "소지품 주머니", string mapGoal = null) => new[]
         {
             "Shift를 누른 채 걸어서 달려 보기",
-            "Tab을 눌러 내 상태 보기",
+            "Tab을 눌러 내 상태 보고 다시 닫기",
             $"I를 눌러 {bag} 열어 보기",
             string.IsNullOrEmpty(mapGoal) ? "M을 눌러 지도 펼쳐 보기" : $"M을 눌러 지도 펼치고 {mapGoal}",
-            "왼쪽 할 일 카드를 눌러 여정 수첩 열어 보기",   // 11/13 Q 키 대신 할 일 카드
+            "왼쪽 할 일 카드를 눌러 여정 수첩을 열고, 목록을 본 뒤 닫기",   // 11/13 Q 키 대신 할 일 카드
             "상인에게 물건 하나 구매하기",
             "산 물건을 다른 마을 상인에게 판매하기",
             "L을 눌러 장부에서 방금 거래 기록 확인하기",
@@ -104,9 +105,16 @@ namespace PocketCaravan
                 }
                 return -1;
             }
-            if (task == Status && InputReader.StatusPressed()) return Status;
+            // 11/18 은샘: Tab·수첩은 열자마자 다음으로 넘어가지 않고, 연 뒤 닫았을 때 끝난다 (연 채로 다음 단계 안내가 겹쳤다)
+            if (task == Status || task == Quests)
+            {
+                bool isOpen = task == Status ? HUD.Expanded : QuestTracker.JournalOpen;
+                if (openedTask != task) { openedTask = task; openedSeen = false; }
+                if (isOpen) openedSeen = true;
+                else if (openedSeen) { openedSeen = false; openedTask = -1; return task; }
+                return -1;
+            }
             if (task == Map && InputReader.MapPressed()) return Map;
-            if (task == Quests && InputReader.QuestLogPressed()) return Quests;
             if (task == Ledger && InputReader.LedgerPressed()) return Ledger;
             return -1;
         }

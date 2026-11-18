@@ -46,7 +46,7 @@ namespace PocketCaravan
             float w = Mathf.Min(340, UIStyle.VirtualWidth - 16);
             float issueHeight = string.IsNullOrEmpty(issue) ? 0 : CuteUI.WrapHeight(issue, w - 50, true) + 8;
             float shownIssue = Mathf.Min(issueHeight, 60);
-            float h = Mathf.Min(UIStyle.VirtualHeight - 34, 42 + 5 * 30 + (string.IsNullOrEmpty(message) ? 4 : 20) + shownIssue + (shownIssue > 0 ? 8 : 0));
+            float h = Mathf.Min(UIStyle.VirtualHeight - 34, 42 + 5 * 30 + (string.IsNullOrEmpty(message) ? 12 : 28)   /* 11/18 은샘: 마지막 단추 아래 여백 +8 */ + shownIssue + (shownIssue > 0 ? 8 : 0));
             var r = lastWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round((UIStyle.VirtualHeight - h) / 2 + 8), w, h);
             CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, "게임 메뉴");
             CuteUI.Keycap(r.xMax - 32 - CuteUI.KeycapWidth("Esc") - 3, r.y - 3, "Esc");

@@ -24,7 +24,7 @@ namespace PocketCaravan
         const float DimAlpha = .58f, FadeIn = .25f, FadeOut = .22f;
         const string MemoPrefix = "tutorial:spot:";
 
-        struct Spot { public string id; public Rect hole; public bool round; public string bubble; }
+        struct Spot { public string id; public Rect hole; public bool round; public string bubble; public bool noDim; }
 
         static TutorialSpot inst;
         string shownId;          // 지금 밝힌 것
@@ -69,7 +69,7 @@ namespace PocketCaravan
             float dt = Time.unscaledDeltaTime;
             if (cur == null) { shownId = null; dimWanted = false; dim = Mathf.MoveTowards(dim, 0f, dt / FadeOut); return; }
             var s = cur.Value;
-            if (s.id != shownId) { shownId = s.id; dimWanted = !Seen(s.id); }
+            if (s.id != shownId) { shownId = s.id; dimWanted = !s.noDim && !Seen(s.id); }
             // 어둠이 다 내려온 뒤(잠깐) 누른 키만 받는다 (단계가 바뀌는 그 키로 바로 지나가지 않게)
             if (dimWanted && dim > .6f && AnyPress()) { dimWanted = false; MarkSeen(s.id); }
             dim = dimWanted ? Mathf.MoveTowards(dim, 1f, dt / FadeIn) : Mathf.MoveTowards(dim, 0f, dt / FadeOut);
@@ -83,22 +83,33 @@ namespace PocketCaravan
             bool blocking = UIState.Blocking;
             if (HaggleDuel.IsOpen || PackPuzzle.IsOpen) return null;   // 장터 위에 뜨는 창
 
-            // 11/18 은샘: 할 일 카드로 수첩을 연 다음에는 닫는 법도 (다음 단계 달리기 동안 수첩이 열려 있으면)
-            if (IntroActive && ControlLesson.IsActive(ControlLesson.Run) && ScreenZones.Live("journal.close"))
-                return Zone("journal.close", "journal.close", "Esc나 이 단추로 수첩을 닫아요", true);
             if (ControlLesson.IsActive(ControlLesson.Quests))
+            {
+                // 11/18 은샘: 열기 → 목록에서 튜토리얼 카드 보기(어둡게, 아무 키나) → 닫기. 닫으면 이 단계가 끝난다 (ControlLesson)
+                if (QuestTracker.JournalOpen)
+                {
+                    if (!Seen("journal.tutorial") && ScreenZones.Live("journal.tutorial"))
+                        return Zone("journal.tutorial", "journal.tutorial", "튜토리얼 할 일은 수첩 의뢰 목록 맨 위에도 있어요", false);
+                    return Zone("journal.close", "journal.close", "다 봤으면 Esc나 이 단추로 닫아요", true);
+                }
                 return blocking ? null : Zone("quests", "task.card", "이 카드를 누르면 여정 수첩이 열려요", false);
-            if (ControlLesson.IsActive(ControlLesson.Inventory))   // 11/18 은샘: 단추가 있는 I·M도 밝힌다
-                return blocking ? null : Zone("inventory", "hud.btn.i", "I나 이 단추로 소지품을 열어요", false);   // 11/18 은샘 검토용: 단추는 네모 테두리
+            }
+            // 단추는 네모 테두리 (11/18 은샘: 동그라미보다 낫다)
+            if (ControlLesson.IsActive(ControlLesson.Inventory))
+                return blocking ? null : Zone("inventory", "hud.btn.i", "I나 이 단추로 소지품을 열어요", false);
             if (ControlLesson.IsActive(ControlLesson.Map))
                 return blocking ? null : Zone("map", "hud.btn.m", "M이나 이 단추로 지도를 펼쳐요", false);
             if (ControlLesson.IsActive(ControlLesson.Ledger))
-                return blocking ? null : Zone("ledger", "hud.btn.l", "L이나 이 단추로 장부를 열어요", true);
+                return blocking ? null : Zone("ledger", "hud.btn.l", "L이나 이 단추로 장부를 열어요", false);
             bool buy = ControlLesson.IsActive(ControlLesson.Bought), sell = ControlLesson.IsActive(ControlLesson.Sold);
             if (buy || sell)
             {
                 // 튜토리얼이 이 맵의 장터를 가리킬 때만 (팔기는 산 마을이 아닌 곳이라야 한다: 그 판단은 Intro의 길 안내가 한다)
                 var h = Navigator.Tutorial;
+                // 11/18 은샘: 사고 나면 장터 창 닫기도 밝힌다 (팔기는 다른 마을이라 이 창에서는 할 일이 없다)
+                if (sell && ScreenZones.Live("market.window") && ScreenZones.Live("market.close")
+                    && (!h.HasValue || !(h.Value.target is TownMarket hm) || !ScreenZones.Live("market.window." + (hm.town != null ? hm.town.id : ""))))
+                    return Zone("market.close", "market.close", "다 샀으면 Esc나 이 단추로 장터를 닫아요", true);
                 if (!h.HasValue || !(h.Value.target is TownMarket m)) return null;
                 if (ScreenZones.Live("market.window"))
                 {
@@ -111,7 +122,8 @@ namespace PocketCaravan
                 }
                 if (blocking) return null;
                 string who = h.Value.label ?? "장터 상인";
-                return World(buy ? "buy.market" : "sell.market", m, buy ? $"{who}에게 Space로 말 걸어 사기" : $"{who}에게 Space로 말 걸어 팔기");
+                // 11/18 은샘: 다른 마을에서 팔기는 어둡게 하지 않는다 (동그라미·말풍선만)
+                return World(buy ? "buy.market" : "sell.market", m, buy ? $"{who}에게 Space로 말 걸어 사기" : $"{who}에게 Space로 말 걸어 팔기", sell);
             }
             if (blocking || !IntroActive) return null;   // 시작 튜토리얼일 때만 (만국 상인회 이야기도 길 안내를 쓰지만 여기서는 밝히지 않는다)
             var hint = Navigator.Tutorial;
@@ -119,7 +131,7 @@ namespace PocketCaravan
             {
                 // 배우기를 다 하고 안내 인물에게 돌아갈 때는 따로 (처음 한 번 어둡게)
                 bool back = Seen("quests") || Seen("ledger");
-                return World(back ? "guide.back" : "guide", hint.Value.target, back ? $"{hint.Value.label}에게 돌아가 Space로 말 걸기" : $"{hint.Value.label}에게 다가가 Space로 말 걸기");
+                return World(back ? "guide.back" : "guide", hint.Value.target, back ? $"{hint.Value.label}에게 돌아가 Space로 말 걸기" : $"{hint.Value.label}에게 다가가 Space로 말 걸기", back);   // 돌아갈 때도 어둡게 하지 않는다
             }
             return null;
         }
@@ -136,10 +148,13 @@ namespace PocketCaravan
         }
 
         /// <summary>맵 위 사람: 그림 둘레 동그라미 (화면 밖이면 null)</summary>
-        static Spot? World(string id, Component target, string bubble)
+        static Spot? World(string id, Component target, string bubble, bool noDim = false)
         {
             var cam = Camera.main;
             if (cam == null || target == null) return null;
+            // 11/18 은샘: 동그라미 안으로 들어오면(말 걸 수 있을 만큼 가까우면) 동그라미는 사라진다 (발밑 노란 고리 · Space 알약이 이어 받는다)
+            var pc = PlayerController.Instance;
+            if (pc != null && (pc.TalkTarget == target || ((Vector2)(pc.transform.position - target.transform.position)).sqrMagnitude < 1.6f * 1.6f)) return null;
             Bounds b;
             var sr = target.GetComponentInChildren<SpriteRenderer>();
             if (sr != null && sr.sprite != null) b = sr.bounds; else b = new Bounds(target.transform.position + Vector3.up * .5f, new Vector3(1f, 1.5f, 0f));
@@ -149,7 +164,7 @@ namespace PocketCaravan
             var c = r.center;
             var hole = new Rect(c.x - s * 1.15f, c.y - s, s * 2.3f, s * 2f);
             if (hole.xMax < 0 || hole.yMax < 0 || hole.x > UIStyle.VirtualWidth || hole.y > UIStyle.VirtualHeight) return null;
-            return new Spot { id = id, hole = hole, round = true, bubble = bubble };
+            return new Spot { id = id, hole = hole, round = true, bubble = bubble, noDim = noDim };
         }
 
         static Vector2 ToGui(Camera cam, Vector3 world)

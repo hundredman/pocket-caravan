@@ -11,7 +11,7 @@ namespace PocketCaravan
     /// - 바늘 빠르기 · 가감속 · 시작 자리 · 빨강 시작(78~90%)은 날짜·마을·물건·거래 횟수로 정해 판마다 다르다. 결과는 손 실력이라 저장을 되돌려도 소용없다.
     /// - 상인 성격: 깐깐함 빠르고 금색 좁음 · 너그러움 느리고 넓음. 3왕복 동안 안 누르면 정가.
     /// - 빨강을 두 번 잇달아 밟으면 다음 한 판은 바늘이 10% 느리다.
-    /// - 11/18 은샘: 처음 한 번은 바늘이 서 있고 아래에 색깔별 뜻을 보여 준다. Space를 누르면 그때 바늘이 움직인다 (메모 haggle:intro)
+    /// - 11/18 은샘: 처음 한 번은 바늘이 서 있고 아래에 색깔별 뜻을 보여 준다. Space를 누르면 그때 바늘이 움직인다 (메모 haggle:intro, 팔 때는 haggle:intro.sell)
     /// 장터 창 위에 그리는 창이라 UIState는 장터가 그대로 쥔다.
     /// </summary>
     public class HaggleDuel : MonoBehaviour
@@ -27,7 +27,8 @@ namespace PocketCaravan
 
         bool open; int openedFrame; float openedAt;
         bool intro;   // 11/18 처음 한 번: 설명을 보여 주고 바늘은 Space를 누를 때까지 멈춰 있다
-        const string IntroMemo = "haggle:intro";
+        // 살 때 · 팔 때 따로 한 번씩 (11/18 은샘: 팔 때도 흥정 안내). 도적은 살 때 것과 같이 쓴다
+        string IntroMemo => selling && !bandit ? "haggle:intro.sell" : "haggle:intro";
         TownData town; ItemData item; bool selling; int count; float max; int baseTotal; int temperament;
         bool bandit;   // 11/15 은샘: 도적 흥정 (통행세를 깎는다. 금색 반값 · 빨강 ×1.5)
         Action<float, bool> done;
@@ -70,7 +71,7 @@ namespace PocketCaravan
             h.ease = (float)rng.NextDouble();
             h.stopped = false; h.failed = false; h.result = 0f; h.zone = 0;
             h.merchant = face;
-            h.open = true; h.openedFrame = Time.frameCount; h.openedAt = Time.unscaledTime; h.intro = !IntroSeen();
+            h.open = true; h.openedFrame = Time.frameCount; h.openedAt = Time.unscaledTime; h.intro = !h.IntroSeen();
             Sfx.Play("open");
             return true;
         }
@@ -94,7 +95,7 @@ namespace PocketCaravan
             Sfx.Play("open");
         }
 
-        static bool IntroSeen() { var gm = GameManager.I; return gm == null || gm.GetMemo(IntroMemo, 0f) >= 1f; }
+        bool IntroSeen() { var gm = GameManager.I; return gm == null || gm.GetMemo(IntroMemo, 0f) >= 1f; }
 
         /// <summary>설명을 닫고 바늘을 출발시킨다</summary>
         void StartNeedle()

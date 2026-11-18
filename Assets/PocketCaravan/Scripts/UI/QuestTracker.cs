@@ -23,7 +23,7 @@ namespace PocketCaravan
             { TaskCard.Hidden = !TaskCard.Hidden; Sfx.Play("move", .6f); }
             if (logOpen && (InputReader.QuestLogPressed() || InputReader.CancelPressed())) CloseLog();
             else if (InputReader.QuestLogPressed() && !UIState.Blocking && !UIState.JustClosed && !GameManager.I.IsTravelling
-                && UIState.TryOpen(this, CloseLog)) logOpen = true;
+                && UIState.TryOpen(this, CloseLog)) { logOpen = true; JournalOpen = true; if (StoryGuide.IntroActive) { logTab = 0; scroll = Vector2.zero; } }   // 튜토리얼 중엔 의뢰 칸 맨 위부터
             else if (logOpen)
             {
                 // 11/08 ←→ 탭 바꾸기 · ↑↓ 넘기기 (마우스는 탭 단추 · 휠 · 막대)
@@ -33,7 +33,9 @@ namespace PocketCaravan
             }
         }
         static readonly string[] LogTabs = { "의뢰", "성장·시설", "주변 거래처" };
-        void CloseLog() { logOpen = false; UIState.Release(this); }
+        void CloseLog() { logOpen = false; JournalOpen = false; UIState.Release(this); }
+        /// <summary>11/18 여정 수첩이 열려 있다 (튜토리얼: 열고 → 목록 보고 → 닫으면 끝)</summary>
+        public static bool JournalOpen { get; private set; }
         void OnDisable() { if (logOpen) CloseLog(); }
 
         void OnGUI()
@@ -128,6 +130,7 @@ namespace PocketCaravan
         // 11/08 은샘: 여정 수첩을 장부·게시판과 같은 모양으로 (아이콘 탭 + 종이 칸 + 카드).
         // 의뢰 = 할 일·보상을 한눈에, 비면 다음에 할 만한 일. 성장 = 다음 신용까지 막대와 열리는 시설. 거래처 = 거리·특산품·시세 기록.
         float logContentH;
+        static Vector2 logOrigin;   // 수첩 목록 칸 왼쪽 위 (그룹 안 자리 → 화면 자리)
         static readonly CuteUI.Pic[] LogPics = { CuteUI.Pic.Scroll, CuteUI.Pic.Star4, CuteUI.Pic.Pin };
 
         void DrawLog(QuestManager qm)
@@ -156,6 +159,7 @@ namespace PocketCaravan
             var area = new Rect(content.x + 6, content.y + 6, content.width - 12, content.height - 10);
             scroll.y = TradeLedgerUI.Scroll(area, scroll.y, logContentH);
             GUI.BeginGroup(area);
+            logOrigin = area.position;
             float cw = area.width - (logContentH > area.height ? 7 : 0);
             float end = logTab == 0 ? DrawQuests(qm, gm, -scroll.y, cw, area.height) : logTab == 1 ? DrawGrowth(gm, -scroll.y, cw) : DrawTowns(gm, -scroll.y, cw);
             logContentH = end + scroll.y;
@@ -217,6 +221,7 @@ namespace PocketCaravan
                 float ch = 22 + 14 + 14 + 8;
                 var card = new Rect(0, y, w, ch);
                 CuteUI.Box(card, 7, CuteUI.Paper, CuteUI.Interact, 2, 2);
+                ScreenZones.MarkSpot("journal.tutorial", new Rect(logOrigin.x + card.x, logOrigin.y + card.y, card.width, card.height));   // 11/18 튜토리얼이 목록에서 이 카드를 밝힌다
                 float right = Pill(w - 7, y + 12, "튜토리얼", CuteUI.BadgeKind.On);
                 CuteUI.Label(10, y + 12, TradeLedgerUI.Fit("장사 첫걸음 · 조작 배우기", right - 16, false, true), CuteUI.Text, false, true);
                 CuteUI.Icon(CuteUI.Pic.Arrow, 10, y + 25, 1, CuteUI.Interact);
