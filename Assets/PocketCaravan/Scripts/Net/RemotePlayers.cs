@@ -155,7 +155,7 @@ namespace PocketCaravan
 
         void OnReceived(NetClient.Msg m)
         {
-            if (m.t != "emote" || string.IsNullOrEmpty(m.id) || !avatars.TryGetValue(m.id, out var a)) return;
+            if (m.t != "emote" || string.IsNullOrEmpty(m.id) || NetStackGame.IsSignal(m.e) || !avatars.TryGetValue(m.id, out var a)) return;   // 11/18 짐 쌓기 둘이서 신호는 리액션으로 보이지 않게
             a.emote = Kind(m.e);
             a.emoteName = string.IsNullOrEmpty(m.name) ? m.e : m.name;
             a.emoteStart = Time.unscaledTime;

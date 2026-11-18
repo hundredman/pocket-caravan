@@ -93,6 +93,8 @@ namespace PocketCaravan
             set { if (GM != null) GM.SetMemo(StepKey, value); }
         }
         static bool Has(int t) => GM != null && GM.GetMemo(TaskKeys[t]) >= 1f;
+        /// <summary>11/18 짐 쌓기 도장을 받았다 (NetStackGame 둘이서가 열리는 조건 중 하나)</summary>
+        public static bool StackStamped => Has((int)Task.Stack);
         static int DoneCount { get { int n = 0; for (int i = 0; i < TaskKeys.Length; i++) if (Has(i)) n++; return n; } }
         /// <summary>지금 할 일 (아직 안 한 첫 칸, 다 했으면 -1)</summary>
         static int Current { get { for (int i = 0; i < TaskKeys.Length; i++) if (!Has(i)) return i; return -1; } }
@@ -379,7 +381,7 @@ namespace PocketCaravan
         {
             // 합동 공연: 다른 사람이 리액션했다 (내 것은 OnEmote)
             var net = NetClient.I;
-            if (m.t != "emote" || net == null || string.IsNullOrEmpty(m.id) || m.id == net.MyId) return;
+            if (m.t != "emote" || net == null || string.IsNullOrEmpty(m.id) || m.id == net.MyId || NetStackGame.IsSignal(m.e)) return;   // 11/18 짐 쌓기 둘이서 신호는 리액션이 아니다
             float now = Time.unscaledTime;
             peerEmoteAt[m.id] = now;
             if (Step != 1 || !AtBazaar || Has((int)Task.Duet) || !PeerNear(m.id, DuetRange)) return;
