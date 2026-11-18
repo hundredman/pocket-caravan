@@ -207,7 +207,12 @@ namespace PocketCaravan
             public override void Interact(PlayerController player) => Open();
             SpriteRenderer body;
             void Update() { if (body != null) body.transform.localScale = new Vector3(1f, 1f + Mathf.Sin(Time.time * 2.4f) * .02f, 1f); }   // 숨쉬기
-            public void SetSprite(Sprite s) { body = gameObject.AddComponent<SpriteRenderer>(); body.sprite = s; body.sortingOrder = 10; }
+            public void SetSprite(Sprite s)
+            {
+                body = gameObject.AddComponent<SpriteRenderer>(); body.sprite = s; body.sortingOrder = 10;
+                // 11/18 은샘: 좌판 그림과 앞뒤를 내 캐릭터 위치가 아니라 상인 발로 정한다 (멀리서 보면 좌판 위에 떠 보였다)
+                if (GetComponent<DepthActor>() == null) gameObject.AddComponent<DepthActor>();
+            }
         }
 
         static Sprite LoadSprite(Reactions.Region region)

@@ -24,7 +24,7 @@ namespace PocketCaravan
         const float DimAlpha = .58f, FadeIn = .25f, FadeOut = .22f;
         const string MemoPrefix = "tutorial:spot:";
 
-        struct Spot { public string id; public Rect hole; public bool round; public string bubble; public bool noDim, noRing; }
+        struct Spot { public string id; public Rect hole; public bool round; public string bubble; public bool noDim, noRing, world; }
 
         static TutorialSpot inst;
         string shownId;          // 지금 밝힌 것
@@ -195,7 +195,7 @@ namespace PocketCaravan
             var c = r.center;
             var hole = new Rect(c.x - s * 1.15f, c.y - s, s * 2.3f, s * 2f);
             if (hole.xMax < 0 || hole.yMax < 0 || hole.x > UIStyle.VirtualWidth || hole.y > UIStyle.VirtualHeight) return null;
-            return new Spot { id = id, hole = hole, round = true, bubble = bubble, noDim = noDim || near, noRing = near };
+            return new Spot { id = id, hole = hole, round = true, bubble = bubble, noDim = noDim || near, noRing = near, world = true };
         }
 
         static Vector2 ToGui(Camera cam, Vector3 world)
@@ -225,8 +225,11 @@ namespace PocketCaravan
             float g = 1f + Mathf.Round(p * 2f);
             if (!sp.noRing)
             {
+                // 11/18 은샘: 맵 위 사람 동그라미는 UI(시계·카드·단추 등)를 덮지 않는다 (UI 자리는 빼고 그린다)
+                if (sp.world) ScreenZones.UiRects(clip); else clip.Clear();
                 Band(hole, sp.round, g, g + 2f, Color.white);
                 Band(hole, sp.round, g + .5f, g + 1.5f, (Color)CuteUI.Interact);
+                clip.Clear();
             }
 
             Bubble(hole, sp.bubble, g + 2f, W, H);
@@ -282,6 +285,26 @@ namespace PocketCaravan
             }
         }
 
+        static readonly List<Rect> clip = new List<Rect>();
+        /// <summary>한 줄(높이 1) 칠하기. clip에 든 UI 자리는 비운다</summary>
+        static void RowFill(Rect r, Color c)
+        {
+            if (clip.Count == 0) { Fill(r, c); return; }
+            float y = r.y + .5f, x0 = r.x, x1 = r.xMax;
+            for (int pass = 0; pass < 8 && x1 > x0; pass++)
+            {
+                bool cut = false;
+                foreach (var u in clip)
+                {
+                    if (y < u.y || y >= u.yMax || u.xMax <= x0 || u.x >= x1) continue;
+                    if (u.x > x0) Fill(new Rect(x0, r.y, u.x - x0, 1f), c);
+                    x0 = Mathf.Max(x0, u.xMax); cut = true; break;
+                }
+                if (!cut) break;
+            }
+            if (x1 > x0) Fill(new Rect(x0, r.y, x1 - x0, 1f), c);
+        }
+
         /// <summary>도형 둘레 띠 (안쪽 e0 ~ 바깥 e1)</summary>
         static void Band(Rect h, bool round, float e0, float e1, Color c)
         {
@@ -292,10 +315,10 @@ namespace PocketCaravan
                 if (wo < 0f) continue;
                 float wi = HalfWidth(h, round, e0, y + .5f);
                 float cx = h.center.x;
-                if (wi < 0f) { Fill(new Rect(Mathf.Round(cx - wo), y, Mathf.Round(wo * 2f), 1f), c); continue; }
+                if (wi < 0f) { RowFill(new Rect(Mathf.Round(cx - wo), y, Mathf.Round(wo * 2f), 1f), c); continue; }
                 float lo = Mathf.Round(cx - wo), li = Mathf.Round(cx - wi), ri = Mathf.Round(cx + wi), ro = Mathf.Round(cx + wo);
-                if (li > lo) Fill(new Rect(lo, y, li - lo, 1f), c); else Fill(new Rect(lo, y, 1f, 1f), c);
-                if (ro > ri) Fill(new Rect(ri, y, ro - ri, 1f), c); else Fill(new Rect(ro - 1f, y, 1f, 1f), c);
+                if (li > lo) RowFill(new Rect(lo, y, li - lo, 1f), c); else RowFill(new Rect(lo, y, 1f, 1f), c);
+                if (ro > ri) RowFill(new Rect(ri, y, ro - ri, 1f), c); else RowFill(new Rect(ro - 1f, y, 1f, 1f), c);
             }
         }
 
@@ -312,6 +335,17 @@ namespace PocketCaravan
             float by = below ? hole.yMax + gap + 9f : hole.y - gap - 9f - bh;
             float bx = Mathf.Clamp(hole.center.x - tw / 2f, 6f, W - tw - 6f);
             var r = new Rect(Mathf.Round(bx), Mathf.Round(by), Mathf.Round(tw), bh);
+            // 11/18 은샘: 말풍선은 다른 UI 위에 떠도 되지만 시계는 가리지 않는다 (밝히는 것이 시계 자신이면 그대로)
+            var clock = ScreenZones.Get("hud.clock");
+            if (clock.HasValue && !clock.Value.Overlaps(hole) && r.Overlaps(clock.Value))
+            {
+                var ck = clock.Value;
+                float other = below ? hole.y - gap - 9f - bh : hole.yMax + gap + 9f;   // 반대쪽 (위 ↔ 아래)
+                var alt = new Rect(r.x, Mathf.Round(other), r.width, r.height);
+                if (alt.y >= 4f && alt.yMax <= H - 4f && !alt.Overlaps(ck)) { r = alt; below = !below; }
+                else if (below) r.y = Mathf.Max(r.y, ck.yMax + 4f);   // 시계 아래로 내린다 (꼬리는 목표 쪽 그대로)
+                else r.x = r.center.x < ck.center.x ? Mathf.Max(6f, ck.x - r.width - 4f) : Mathf.Min(W - r.width - 6f, ck.xMax + 4f);   // 옆으로 비킨다
+            }
             CuteUI.Box(r, 6, CuteUI.Paper, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
             float tx = Mathf.Round(Mathf.Clamp(hole.center.x, r.x + 10f, r.xMax - 10f));
             for (int i = 0; i < 6; i++)   // 꼬리: 말풍선 쪽이 넓은 세모 (테두리 잉크)

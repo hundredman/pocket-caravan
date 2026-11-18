@@ -37,6 +37,15 @@ namespace PocketCaravan
         /// <summary>가운데 UI 하나의 자리 (이번·지난 프레임에 그렸으면)</summary>
         public static Rect? Center(string id) => centers.TryGetValue(id, out var z) && Live(z) ? z.rect : (Rect?)null;
 
+        /// <summary>11/18 지금 화면에 떠 있는 UI 자리 (가장자리 · 가운데 알약 · 아래 알림). 맵 위 표시가 UI를 덮지 않게 비킬 때</summary>
+        public static void UiRects(List<Rect> into)
+        {
+            into.Clear();
+            foreach (var z in zones.Values) if (Live(z)) into.Add(z.rect);
+            foreach (var z in centers.Values) if (Live(z)) into.Add(z.rect);
+            foreach (var n in Notify.DrawnRects) into.Add(n);
+        }
+
         static Rect? Hit(Rect r)
         {
             foreach (var z in zones.Values) if (Live(z) && z.rect.Overlaps(r)) return z.rect;
