@@ -5,7 +5,7 @@ namespace PocketCaravan
     /// <summary>
     /// 11/19 은샘 "돈을 벌어서 접근 가능한 미니 목표(마일스톤)": 다음에 살 운반 수단. 등짐 → 손수레(썰매) → 짐말(낙타) → 마차.
     /// 지금 운반 수단보다 짐을 더 싣는 것 중 가장 작은 단계. 같은 단계가 둘이면 출신 지역 것 (북유럽 썰매 · 아라비아 낙타).
-    /// 할 일 카드 위 작은 표 줄(TaskCard.DrawBadges)에 "다음 목표 · 짐말 210/360냥" 막대로 보인다. 시작 튜토리얼 중에는 숨긴다.
+    /// 평소 화면에는 없고, Tab으로 상태 카드를 펼치면 "다음 목표 · 짐말 [막대] 210/360" 한 줄로 보인다 (HUD.DrawExpanded, 11/19 은샘).
     /// </summary>
     public static class VehicleGoal
     {
@@ -33,8 +33,5 @@ namespace PocketCaravan
             if (v.id == PackAnimal.HorseId) return origin != "arabia";
             return true;
         }
-
-        /// <summary>지금 보여 줄지: 게임 중, 시작 튜토리얼이 끝난 뒤</summary>
-        public static bool Visible => GameManager.I != null && !GameManager.I.IsTravelling && !TutorialSpot.IntroActive && !StartScreen.IsOpen;
     }
 }

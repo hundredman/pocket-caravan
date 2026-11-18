@@ -205,7 +205,7 @@ namespace PocketCaravan
         public static string CurrentId => inst != null && inst.cur.HasValue ? inst.cur.Value.id : null;
 
         static bool clockOpened;   // 튜토리얼 시계 단계: 달력을 한 번 펼쳤다 (닫으면 끝)
-        public static bool IntroActive => GoryeoIntro.Active || VeniceIntro.Active || NorthIntro.Active || ArabiaIntro.Active;
+        static bool IntroActive => GoryeoIntro.Active || VeniceIntro.Active || NorthIntro.Active || ArabiaIntro.Active;
 
         static Spot? Zone(string id, string zone, string bubble, bool round)
         {

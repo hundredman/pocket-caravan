@@ -89,42 +89,9 @@ namespace PocketCaravan
                 CuteUI.Label(r.x + 6f + ps.x + 3f, r.center.y, b.text, CuteUI.Text, true, true);
                 x += bw + 4f; any = true;
             }
-            // 11/19 다음 목표 운반 수단 (마일스톤): 돈 막대. 다 모이면 초록으로 "살 수 있어요"
-            var gm = GameManager.I;
-            var goalV = VehicleGoal.Visible ? VehicleGoal.Next(gm.Player, gm.Db) : null;
-            float gy = any ? top + h + 3f : top, gw = 0f;   // 11/19 다른 작은 표(개운함 등)가 있으면 그 다음 줄 (한 줄에 두면 뒤 표가 밀려 안 보였다)
-            if (goalV != null)
-            {
-                int have = Mathf.Max(0, gm.Player.money), need = Mathf.Max(1, goalV.price);
-                bool ready = have >= need;
-                string head = "다음 목표 · " + goalV.displayName;
-                string num = ready ? "살 수 있어요!" : $"{have}/{need}냥";
-                const float barW = 34f;
-                float bw = Mathf.Round(6f + 9f + 3f + CuteUI.Width(head, true, true) + 5f + (ready ? 0f : barW + 4f) + CuteUI.Width(num, true, true) + 7f);
-                var r = new Rect(X, Mathf.Round(gy), Mathf.Min(bw, HUD.ColumnRight - X), h);
-                CuteUI.Box(r, 6, ready ? CuteUI.StaminaHi : CuteUI.Paper, CuteUI.Ink, 1, 1, CuteUI.SoftShadow);
-                CuteUI.Icon(CuteUI.Pic.Coin, r.x + 5f, r.y + 2.5f);
-                float tx = r.x + 6f + 9f + 3f;
-                CuteUI.Label(tx, r.center.y, head, CuteUI.Text, true, true);
-                tx += CuteUI.Width(head, true, true) + 5f;
-                if (!ready)
-                {
-                    var bar = new Rect(tx, r.center.y - 2f, barW, 4f);
-                    var oc = GUI.color;
-                    GUI.color = (Color)CuteUI.KeyLine * oc;   // 빈 칸은 회색, 모인 돈은 동전 주황 (노랑·베이지는 너무 옅었다)
-                    GUI.DrawTexture(bar, Texture2D.whiteTexture);
-                    GUI.color = (Color)CuteUI.Sell * oc;
-                    GUI.DrawTexture(new Rect(bar.x, bar.y, Mathf.Round(barW * Mathf.Clamp01(have / (float)need)), bar.height), Texture2D.whiteTexture);
-                    GUI.color = oc;
-                    tx += barW + 4f;
-                }
-                CuteUI.Label(tx, r.center.y, num, ready ? CuteUI.Text : CuteUI.Sub, true, ready);
-                gw = r.width; any = true;
-            }
             if (!any) return top - 4f;
-            float bottom = gw > 0f ? gy + h : top + h;
-            ScreenZones.Mark("hud.badges", new Rect(X, top, Mathf.Max(x - X, gw), bottom - top));
-            return bottom;
+            ScreenZones.Mark("hud.badges", new Rect(X, top, x - X, h));
+            return top + h;
         }
 
         static readonly Regex StepRx = new Regex(@"배우기\s*(\d+\s*/\s*\d+)");
