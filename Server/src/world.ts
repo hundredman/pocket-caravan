@@ -82,6 +82,14 @@
  *     done이면 접속한 사람(names가 있으면 그 계정만)에게 알리고 1012로 닫는다. 게임은 저절로 다시 접속해서 되살린 저장을 받는다
  *   자동 백업: 매일 한국 새벽 3시(cron, index.ts scheduled)에 저장소 통째로를 gzip해서 KV(BACKUPS) "auto:날짜:칸"에 둔다 (최근 7일치)
  *     GET /admin/autobackups 목록 · POST /admin/autobackup 지금 하기 · GET /admin/autobackup?day=2026-11-08 받기(gzip, 백업 파일과 같은 JSON)
+ *  13단계 (2026-11-18) 만국 경매 · 보물 상자. welcome에 "games":true (이 서버가 안다). 상태는 방 메모리에만 둔다(방이 잠들면 = 아무도 없으면 지워진다)
+ *   경매: 게임 → 서버 {"t":"auc"}  (경매대를 열 때. 물건이 없고 쉬는 시간이 지났으면 새 물건을 올린다)
+ *         서버 → 게임/모두 {"t":"auc","lot":"sultan_carpet","price":160,"top":"윤채","left":83000,"next":0}  (lot이 ""면 쉬는 중, next = 다음 물건까지 ms)
+ *         게임 → 서버 {"t":"bid","price":170}  최고가 + 10냥부터 (처음엔 시작가부터). 부르면 남은 시간이 15초 아래면 15초로 늘린다
+ *         서버 → 모두 {"t":"aucEnd","lot":…,"price":…,"top":"윤채","topId":"p3"}  끝나면 (top이 ""면 유찰). 돈을 내고 물건을 받는 것은 낙찰자 게임이 한다
+ *   보물: 게임 → 서버 {"t":"trs"}  →  서버 → 게임 {"t":"trs","tid":<숨긴 시각>,"idx":…,"seed":…,"age":ms,"found":"","next":ms}  (tid 0 = 지금 없음)
+ *         idx·seed로 게임이 맵(세계 맵 목록에서 idx번째)과 칸을 똑같이 고른다. 새 상자가 숨겨지면 모두에게 "trs"가 간다
+ *         게임 → 서버 {"t":"trsFind","tid":…}  먼저 연 사람: {"t":"trsWon","tid"} + 모두에게 "trs"(found = 이름). 늦으면 {"t":"trsLate","tid","found"}
  */
 import { DurableObject } from "cloudflare:workers";
 import type { Env } from "./index";
@@ -141,6 +149,16 @@ function decayedDev(m: MarketDev, now: number): number {
 }
 /** 리액션 최소 간격 */
 const EMOTE_GAP_MS = 400;
+/** 13단계 만국 경매: 물건(희귀품 아이디) → 시작가 · 한 판 길이 · 부를 때 늘리는 시간 · 판 사이 쉬는 시간 · 최소 올림 · 최대 값 · 부르기 간격 */
+const AUCTION_LOTS: Record<string, number> = {
+  gold_ginseng: 120, royal_najeon: 140, murano_master: 150, queen_lace: 130,
+  sultan_carpet: 160, moon_pearl: 150, sun_amber: 140, silver_fur: 130,
+};
+const AUCTION_MS = 120_000, AUCTION_BUMP_MS = 15_000, AUCTION_GAP_MS = 45_000, BID_STEP = 10, BID_MAX = 1_000_000, BID_GAP_MS = 400;
+/** 13단계 보물 상자: 못 찾으면 사라지는 시간 · 찾은 뒤 다음 상자까지 */
+const TREASURE_LIFE_MS = 40 * 60_000, TREASURE_GAP_MS = 15 * 60_000;
+interface Auction { lot: string; price: number; top: string; topId: string; ends: number; }
+interface Treasure { id: number; idx: number; seed: number; at: number; found: string; }
 /** 관리자 알림 글자 수 */
 const NOTICE_MAX = 120;
 
@@ -220,6 +238,12 @@ export class WorldRoom extends DurableObject<Env> {
   /** 공유 장터 크기용: 사람(계정·게임 키) → 마지막으로 접속해 있던 시각. 방이 잠들면 지워져도 된다(그때는 지금 접속자만 센다) */
   private recent = new Map<string, number>();
   private lastScale = 1;
+  /** 13단계 만국 경매 · 보물 상자 (방이 잠들면 지워진다 — 그때는 아무도 없다) */
+  private auction: Auction | null = null;
+  private nextAuction = 0;
+  private lastBid = new Map<string, number>();
+  private treasure: Treasure | null = null;
+  private nextTreasure = 0;
   /** 오늘 사용량 (저장소와 USAGE_SAVE_MS마다 맞춘다) */
   private usage: Usage = { day: "", opens: 0, msgs: 0, admin: 0 };
   private usageSaved = 0;
@@ -318,7 +342,7 @@ export class WorldRoom extends DurableObject<Env> {
         send(ws, {
           t: "welcome", v: PROTOCOL, id: me.id, name: me.name, online: this.count(), seq,
           account: !!me.acct, hasSave: !!acct?.save && !!me.acct, save: me.acct ? acct?.save ?? null : null,
-          fullOk: true, extras: true, ...(me.acct && acct?.full ? { full: acct.full } : {}),
+          fullOk: true, extras: true, games: true, ...(me.acct && acct?.full ? { full: acct.full } : {}),
           clock: { now, epoch: WORLD_EPOCH_MS, secondsPerDay: WORLD_SECONDS_PER_DAY },
           ...(msg.snap === true ? { marketOk: true, market: await this.marketNow(now), marketScale: this.seen(me, now) } : {}),
           ...(newPass ? { newPass: true } : {}),
@@ -495,6 +519,51 @@ export class WorldRoom extends DurableObject<Env> {
         this.lastSay.set(me.id, now);
         return this.broadcast({ t: "say", id: me.id, name: me.name, map: me.map, text }, () => true);
       }
+      case "auc": {   // 13단계 경매대를 열었다
+        ws.serializeAttachment(me);
+        this.settleAuction(now);
+        if (!this.auction && now >= this.nextAuction) {
+          const lots = Object.keys(AUCTION_LOTS);
+          const lot = lots[Math.floor(Math.random() * lots.length)];
+          this.auction = { lot, price: AUCTION_LOTS[lot], top: "", topId: "", ends: now + AUCTION_MS };
+          this.broadcast(this.aucInfo(now), (o) => o !== ws);
+          await this.ctx.storage.setAlarm(Math.min(now + SWEEP_MS, this.auction.ends + 100));
+        }
+        return send(ws, this.aucInfo(now));
+      }
+      case "bid": {
+        ws.serializeAttachment(me);
+        this.settleAuction(now);
+        const a = this.auction;
+        const price = Number.isInteger(msg.price) ? msg.price as number : -1;
+        if (!a) return send(ws, { ...this.aucInfo(now), why: "지금은 경매 중인 물건이 없어요" });
+        if (now - (this.lastBid.get(me.id) ?? 0) < BID_GAP_MS) return;
+        if (a.topId === me.id) return send(ws, { ...this.aucInfo(now), why: "이미 가장 높이 불렀어요" });
+        const min = a.top ? a.price + BID_STEP : a.price;
+        if (price < min || price > BID_MAX) return send(ws, { ...this.aucInfo(now), why: `${min}냥부터 부를 수 있어요` });
+        this.lastBid.set(me.id, now);
+        a.price = price; a.top = me.name; a.topId = me.id;
+        a.ends = Math.max(a.ends, now + AUCTION_BUMP_MS);
+        this.broadcast(this.aucInfo(now), () => true);
+        await this.ctx.storage.setAlarm(Math.min(now + SWEEP_MS, a.ends + 100));
+        return;
+      }
+      case "trs": {   // 13단계 보물 상자 소문
+        ws.serializeAttachment(me);
+        this.tickTreasure(now);
+        return send(ws, this.trsInfo(now));
+      }
+      case "trsFind": {
+        ws.serializeAttachment(me);
+        const t = this.treasure;
+        const id = Number.isInteger(msg.tid) ? msg.tid as number : 0;
+        if (!t || t.id !== id) return send(ws, { t: "trsLate", tid: id, found: "" });
+        if (t.found) return send(ws, { t: "trsLate", tid: id, found: t.found });
+        t.found = me.name;
+        this.nextTreasure = now + TREASURE_GAP_MS;
+        send(ws, { t: "trsWon", tid: id });
+        return this.broadcast(this.trsInfo(now), () => true);
+      }
       case "ping":   // 자동 응답이 못 받은 경우(글자가 조금 다를 때)
         ws.serializeAttachment(me);
         return send(ws, { t: "pong" });
@@ -530,8 +599,10 @@ export class WorldRoom extends DurableObject<Env> {
     // 1시간이 지나 사람 수가 줄면 공유 장터 크기도 바꿔 알린다
     const before = this.lastScale, scale = this.marketScale(now);
     if (scale !== before) this.broadcast({ t: "online", online: this.count(), marketScale: scale }, () => true);
+    this.settleAuction(now);   // 13단계 경매가 끝났으면 알린다
+    this.tickTreasure(now);    // 13단계 보물 상자를 숨기거나(때가 됐으면) 치운다(너무 오래 못 찾았으면)
     await this.saveUsage(false);
-    if (this.live().length > 0) await this.ctx.storage.setAlarm(Date.now() + SWEEP_MS);
+    if (this.live().length > 0) await this.ctx.storage.setAlarm(Math.min(Date.now() + SWEEP_MS, this.auction ? this.auction.ends + 100 : Infinity));
     else await this.saveUsage(true);
   }
 
@@ -910,6 +981,46 @@ export class WorldRoom extends DurableObject<Env> {
   }
 
   /** 살아 있는 접속 (서버가 닫는 중인 것은 뺀다) */
+  // ---------------- 13단계 만국 경매 · 보물 상자 (2026-11-18) ----------------
+
+  private aucInfo(now: number) {
+    const a = this.auction;
+    return a
+      ? { t: "auc", lot: a.lot, price: a.price, top: a.top, left: Math.max(0, a.ends - now), next: 0 }
+      : { t: "auc", lot: "", price: 0, top: "", left: 0, next: Math.max(0, this.nextAuction - now) };
+  }
+
+  /** 시간이 다 된 경매를 끝내고 모두에게 알린다 (낙찰자 게임이 돈을 내고 물건을 받는다) */
+  private settleAuction(now: number): void {
+    const a = this.auction;
+    if (!a || now < a.ends) return;
+    this.auction = null;
+    this.nextAuction = now + AUCTION_GAP_MS;
+    this.broadcast({ t: "aucEnd", lot: a.lot, price: a.price, top: a.top, topId: a.topId }, () => true);
+  }
+
+  private trsInfo(now: number) {
+    const t = this.treasure;
+    return t
+      ? { t: "trs", tid: t.id, idx: t.idx, seed: t.seed, age: Math.max(0, now - t.at), found: t.found, next: Math.max(0, this.nextTreasure - now) }
+      : { t: "trs", tid: 0, idx: 0, seed: 0, age: 0, found: "", next: Math.max(0, this.nextTreasure - now) };
+  }
+
+  /** 보물 상자: 찾은 뒤 쉬는 시간이 지났으면 새로 숨기고, 너무 오래 못 찾았으면 치운다. 바뀌면 모두에게 알린다 */
+  private tickTreasure(now: number): void {
+    const t = this.treasure;
+    if (t && !t.found && now - t.at > TREASURE_LIFE_MS) {
+      this.treasure = null;
+      this.nextTreasure = now + TREASURE_GAP_MS / 3;
+      this.broadcast(this.trsInfo(now), () => true);
+      return;
+    }
+    if ((t && !t.found) || now < this.nextTreasure || this.live().length === 0) return;
+    this.treasure = { id: now, idx: Math.floor(Math.random() * 100000), seed: Math.floor(Math.random() * 1_000_000_000), at: now, found: "" };
+    this.nextTreasure = now + TREASURE_GAP_MS;
+    this.broadcast(this.trsInfo(now), () => true);
+  }
+
   private live(): [WebSocket, Player][] {
     const out: [WebSocket, Player][] = [];
     for (const s of this.ctx.getWebSockets()) {

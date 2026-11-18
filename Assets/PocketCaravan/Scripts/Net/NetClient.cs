@@ -88,6 +88,12 @@ namespace PocketCaravan
             public List<MarketRow> market;
             // 공유 장터 크기 배율 (welcome·online). 0이면 예전 서버
             public float marketScale;
+            // 13단계 (11/18) 만국 경매 · 보물 상자: games = 이 서버가 안다 (welcome)
+            public bool games;
+            public string lot, top, topId, found;   // auc · aucEnd: 물건 · 최고가 부른 사람(이름 · 번호), trs · trsLate: 먼저 찾은 사람
+            public int price, left, next;           // auc: 지금 값 · 남은 ms · 다음 물건까지 ms (trs의 next도 같은 뜻)
+            public long tid;                        // trs · trsWon · trsLate: 보물 상자 번호 (숨긴 시각)
+            public int idx, seed, age;              // trs: 맵 고르기 · 칸 고르기 · 숨긴 지 몇 ms
         }
 
         [Serializable]
@@ -186,6 +192,8 @@ namespace PocketCaravan
         public bool IsAccount { get; private set; }
         /// <summary>서버가 순위표·선물(11단계)을 안다 (welcome.extras). 예전 서버면 false</summary>
         public bool ServerExtras { get; private set; }
+        /// <summary>서버가 만국 경매 · 보물 상자(13단계)를 안다 (welcome.games). 예전 서버면 false — 게임이 혼자 놀이로 바꾼다</summary>
+        public bool ServerGames { get; private set; }
         /// <summary>접속한 서버 주소 (공유 장터가 서버마다 받은 거래 번호를 따로 기억한다)</summary>
         public string Address => target != null ? target.ToString() : "";
         public int OnlineCount { get; private set; }
@@ -336,6 +344,7 @@ namespace PocketCaravan
             MyId = "";
             IsAccount = false;
             ServerExtras = false;
+            ServerGames = false;
             OnlineCount = 0;
             peers.Clear();
             sentMap = null;
@@ -483,7 +492,7 @@ namespace PocketCaravan
             string look = gm != null && gm.Player != null && gm.Player.origin != null ? gm.Player.origin.id : "";
             // 11/08 기우: 운반 수단도 enter에 싣는다. 바뀌면 같은 맵에 enter를 다시 보내 같은 맵 사람들이 join으로 새로 그린다
             string veh = gm != null && gm.Player != null && gm.Player.vehicle != null && gm.Player.vehicle.id != "walk" ? gm.Player.vehicle.id : "";
-            string tag = NetGuild.Badge;   // 11/09 만국 상인회에 가입하면 "guild"
+            string tag = NetCollection.Tag;   // 11/09 만국 상인회에 가입하면 "guild", 11/18 칭호를 달면 뒤에 "__칭호아이디"
             if (map.mapId != sentMap || look != sentLook || veh != sentVeh || tag != sentTag)
             {
                 if (map.mapId != sentMap) { waitingRoom = true; peers.Clear(); }   // 생김새만 바뀌면 같은 맵: 다른 사람 목록은 그대로
@@ -527,6 +536,7 @@ namespace PocketCaravan
                     MyName = string.IsNullOrEmpty(msg.name) ? msg.id : msg.name;
                     IsAccount = msg.account;
                     ServerExtras = msg.extras;
+                    ServerGames = msg.games;
                     OnlineCount = msg.online;
                     LastError = "";
                     string asked = askedName;

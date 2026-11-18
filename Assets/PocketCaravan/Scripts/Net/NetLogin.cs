@@ -516,7 +516,7 @@ void DrawGame()
             light = false;
             GUI.depth = -11;
             CuteUI.Dim();
-            float w = 320, h = Online ? 196 : 36 + FormHeight;
+            float w = 320, h = Online ? 224 : 36 + FormHeight;
             var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2f), Mathf.Round((UIStyle.VirtualHeight - h) / 2f + 6), w, h);
             CuteUI.Window(r);
             CuteUI.TitlePlate(r.center.x, r.y - 11, "온라인");
@@ -547,6 +547,9 @@ void DrawGame()
             float hw = (fw - 8) / 2;
             if (CuteUI.Button(new Rect(x, y, hw, 20), "순위표 보기", CuteUI.Pic.Star4)) { CloseGame(); NetScores.Open(); }
             if (CuteUI.Button(new Rect(x + hw + 8, y, hw, 20), "채팅하기", CuteUI.Pic.People)) { CloseGame(); NetChat.OpenInput(); }   // 11/08 Enter 말고 마우스로도
+            y += 28;
+            // 11/18 희귀품 · 칭호 (미니게임 보상)
+            if (CuteUI.Button(new Rect(x, y, fw, 20), "수집 · 칭호 (희귀품 · 보물 소문)", CuteUI.Pic.Star5)) { CloseGame(); NetCollection.Open(); }
             y += 28;
             float bw = (fw - 16) / 3;
             if (CuteUI.SoftButton(new Rect(x, y, bw, 22), "끊기")) { net.Disconnect(); Say("접속을 끊었어요", false); }

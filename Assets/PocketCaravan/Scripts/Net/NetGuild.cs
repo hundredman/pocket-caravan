@@ -522,6 +522,18 @@ namespace PocketCaravan
             Deco("prop_pepperSack", boardTf.position, 0.55f, 0.3f, 9);
             Deco("prop_dates", boardTf.position, 0f, 1.05f, 10);
 
+            // 11/18 윤채 미니게임: 경매대 (안뜰 북쪽 벽 앞) · 감정 탁자 (접수처 오른쪽 아래)
+            var auction = Place(26, 38, "만국 경매대", "경매 보기", NetAuction.Open, true).transform;
+            Deco("building_stall", auction.position, 0f, 1.4f, 8);
+            Deco("prop_carpet", auction.position, 0f, -1.0f, 4);
+            Deco("bunting", auction.position, 0f, 2.6f, 21);
+            Deco("prop_lantern", auction.position, -1.6f, 0.75f, 10);
+            Deco("prop_lantern", auction.position, 1.6f, 0.75f, 10);
+            var appraise = Place(35, 47, "감정 탁자", "감정하기", NetAppraise.Open, true).transform;
+            Deco("prop_carpet", appraise.position, 0f, -0.35f, 4);
+            Deco("prop_spiceSack", appraise.position, -0.7f, 0.3f, 9);
+            Deco("prop_dates", appraise.position, 0.7f, 0.3f, 9);
+
             // 기념 사진 자리 (11/11 기우: 안뜰 북동 귀퉁이 포토존. 아치 문·대추야자·장미·양탄자 석 장은 맵에 그려져 있다 — arabia_central.py와 같이 고칠 것)
             //   옛 자리 40,43 → 41,41 → 41,38. 여기서 깔던 양탄자·등불 둘은 맵 그림과 겹쳐서 뺐다
             photoTf = Place(41, 38, "기념 사진 자리", "사진 찍기", TakePhoto, false).transform;

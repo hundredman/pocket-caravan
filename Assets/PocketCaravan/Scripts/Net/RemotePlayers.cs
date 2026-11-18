@@ -528,6 +528,19 @@ namespace PocketCaravan
             GUI.color = old;
         }
 
+        /// <summary>11/18 칭호 한 줄 (이름 바로 위, 금빛 글씨 + 진한 그림자)</summary>
+        void DrawTitle(float cx, float y, string title)
+        {
+            string s = "「" + title + "」";
+            var r = new Rect(cx - 60f, y - 6f, 120f, 12f);
+            var old = nameStyle.normal.textColor;
+            foreach (var o in new[] { new Vector2(1, 0), new Vector2(-1, 0), new Vector2(0, 1), new Vector2(0, -1) })
+                GUI.Label(new Rect(r.x + o.x, r.y + o.y, r.width, r.height), s, shadowStyle);
+            nameStyle.normal.textColor = new Color(1f, .85f, .3f);
+            GUI.Label(r, s, nameStyle);
+            nameStyle.normal.textColor = old;
+        }
+
         void OnGUI()
         {
             var cam = Camera.main;
@@ -557,7 +570,10 @@ namespace PocketCaravan
                 foreach (var o in new[] { new Vector2(1, 0), new Vector2(-1, 0), new Vector2(0, 1), new Vector2(0, -1) })
                     GUI.Label(new Rect(r.x + o.x, r.y + o.y, r.width, r.height), a.name, shadowStyle);
                 GUI.Label(r, a.name, nameStyle);
-                if (a.tag == NetGuild.BadgeId && a.emote == null) DrawBadge(r.center.x, r.y - 6f);
+                // 11/18 칭호: 이름 위에 「칭호」 작은 금빛 글씨, 상인회 표시는 그 위
+                string title = NetCollection.TitleOfTag(a.tag);
+                if (title != null && a.emote == null) DrawTitle(r.center.x, r.y - 4f, title);
+                if (NetCollection.HasBadge(a.tag) && a.emote == null) DrawBadge(r.center.x, r.y - (title != null ? 16f : 6f));
                 if (a.emote != null) DrawEmote(cam, a.root.transform.position, a.emote, a.emoteName, a.emoteStart, a.emoteLength, scale);
                 if (Time.unscaledTime - a.spawnAt < JoinSeconds && a.spawnAt - mapSince > 1.2f) DrawJoin(cam, a, r, scale);
             }
