@@ -158,7 +158,7 @@ namespace PocketCaravan
                     if (order == Intro && parts.Length == 2 && int.TryParse(parts[0], out stepNow) && int.TryParse(parts[1], out stepAll))
                     {
                         // 11/13 "배우기 n/8" 단계: 긴 문장 대신 [키] 짧은 이름, 칩 대신 머리말 옆 진행 막대
-                        var sh = ControlLesson.Short(stepNow - 1, main.main);
+                        var sh = ControlLesson.Short(ControlLesson.TaskAt(stepNow + 1), main.main);   // 11/18 순서와 할 일 아이디가 다르다 ("배우기 n" = 단계 n+1)
                         key = sh.key; mainText = sh.text; chip = null;
                     }
                     else stepNow = stepAll = 0;

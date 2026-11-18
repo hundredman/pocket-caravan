@@ -7,7 +7,7 @@ namespace PocketCaravan
     /// 2026-10-30 유저테스트 반영: 순록(바이킹 교역상)으로 새로 시작하면 바로 광장에 떨어지지 않고 시작 이야기 + 조작 튜토리얼.
     /// 1) 비르카에 처음 들어오면 은빛 순록 꿈 이야기 → 우리 집 문 앞에서 깨어남
     /// 2) 옆의 어머니에게 Space로 말 걸기 → 지도·소지품 주머니를 받고 할 일을 차례로:
-    ///    달리기(Shift) · 상태(Tab) · 소지품(I) · 지도(M) · 퀘스트 목록(Q) · 장터에서 사기 · 팔기 · 장부(L)
+    ///    할 일 카드(여정 수첩) · 달리기(Shift) · 상태(Tab) · 소지품(I) · 지도(M) · 장터에서 사기 · 팔기 · 장부(L)  (11/18 카드를 맨 앞으로, ControlLesson.Order)
     /// 3) 어머니에게 돌아가면 돈·신용·부탁 이야기와 은빛 순록 이야기 → 집 보는 남편(첫 퀘스트 north_q1_butter)으로 보냄
     /// 진행은 NorthSave "intro" (0 없음 · 1 어머니에게 말 걸기 · 2~9 할 일 · 10 어머니에게 돌아가기 · 11 끝).
     /// 이미 북유럽 퀘스트를 시작했거나 다른 문명 캐릭터면 나오지 않는다. 공용 코드는 읽기만 한다(소지품 창 Opened 이벤트 구독).
@@ -24,6 +24,16 @@ namespace PocketCaravan
 
         public static bool Active => Step >= 1 && Step <= 10;
         static int Step { get => Mathf.RoundToInt(NorthSave.Get("intro")); set => NorthSave.Set("intro", value); }
+        /// <summary>11/18 끝낸 배우기 (할 일 아이디 비트). 순서를 바꾸며 예전에 한 것을 건너뛰려고</summary>
+        static int DoneMask { get => Mathf.RoundToInt(NorthSave.Get("intro_done")); set { NorthSave.Set("intro_done", value); } }
+        /// <summary>11/18 예전 순서(달리기 먼저)로 저장된 배우기 단계를 새 순서(할 일 카드 먼저)로 한 번 옮긴다</summary>
+        static void MigrateOrder3()
+        {
+            if (GameManager.I == null || NorthSave.Has("intro_order3")) return;
+            int s = Step;
+            if (s >= 3 && s <= 9) { int mask = DoneMask; Step = ControlLesson.MigrateFromOld(s, ref mask, false); DoneMask = mask; }
+            NorthSave.Set("intro_order3", 1);
+        }
 
         Transform root;
         float runTime;
@@ -181,7 +191,7 @@ namespace PocketCaravan
                     new DialogueUI.Choice("네, 해 볼게요", () => { Step = 2; Notify.Show("지도와 소지품 주머니를 받았다!", 3f); Sfx.Play("coin"); }));
                 return;
             }
-            if (s >= 2 && s <= 9) { DialogueUI.Show(Mom, $"아직 할 일이 남았구나.\n\n지금 할 일: {Tasks[s - 2]}"); return; }
+            if (s >= 2 && s <= 9) { DialogueUI.Show(Mom, $"아직 할 일이 남았구나.\n\n지금 할 일: {Tasks[ControlLesson.TaskAt(s)]}"); return; }
             if (s == 10)
             {
                 DialogueUI.Show(Mom,
@@ -209,10 +219,12 @@ namespace PocketCaravan
 
         void Done(int task)
         {
-            if (Step != task + 2) return;
-            Step = task + 3;
+            // 11/18 순서와 할 일 아이디가 다르다 (ControlLesson.Order): 지금 단계의 일이면 다음 단계로, 이미 한 것은 건너뛴다
+            int mask = DoneMask, next = ControlLesson.NextStep(Step, task, ref mask);
+            if (next < 0) { if (mask != DoneMask) DoneMask = mask; return; }   // 미리 한 조작도 적어 둔다
+            DoneMask = mask; Step = next;
             Sfx.Play("coin");
-            Notify.Show(Step <= 9 ? $"잘했어요! 다음: {Tasks[Step - 2]}" : "다 했어요! 어머니께 돌아가 말을 걸어 보세요.", 4f);
+            Notify.Show(Step <= 9 ? $"잘했어요! 다음: {Tasks[ControlLesson.TaskAt(Step)]}" : "다 했어요! 어머니께 돌아가 말을 걸어 보세요.", 4f);
         }
 
         void OnInventory() { if (IsReindeer) Done(2); }
@@ -224,7 +236,7 @@ namespace PocketCaravan
         {
             if (!IsReindeer) return;
             var gm = GameManager.I;
-            if (Step == 7 && gm != null && gm.Db != null) gm.SetMemo(BuyTownMemo, gm.Db.towns.IndexOf(town));
+            if (Step >= 2 && Step <= 7 && gm != null && gm.Db != null) gm.SetMemo(BuyTownMemo, gm.Db.towns.IndexOf(town));
             Done(5);
         }
 
@@ -242,10 +254,28 @@ namespace PocketCaravan
 
         void Update()
         {
+            if (IsReindeer) MigrateOrder3();
             int s = Step;
             if (s < 2 || s > 9 || !IsReindeer || GameManager.I == null) return;
             int task = ControlLesson.KeyTask(s, ref runTime);   // 11/08 공용 키 확인 (달리기·Tab·M·Q·L)
             if (task >= 0) Done(task);
+        }
+
+        /// <summary>11/18 지금 튜토리얼 할 일 (위 할 일 카드 · 여정 수첩 목록이 같이 쓴다). 튜토리얼 중이 아니면 false</summary>
+        public static bool Summary(out string main, out string where, out bool home)
+        {
+            main = where = null; home = false;
+            int s = Step;
+            if (s < 1 || s > 10 || !IsReindeer || NorthUtil.Map == null) return false;
+            home = NorthUtil.Map == Home;
+            string place = WorldIndex.Get()?.MapName(Home) ?? Home;
+            main = s == 1 ? "어머니께 말 걸기"
+            : s == 10 ? "어머니께 돌아가 말 걸기"
+            : CuteUI.Plain(Tasks[ControlLesson.TaskAt(s)]);
+            where = s == 1 ? (home ? "바로 옆 · Space" : place)
+            : s == 10 ? (home ? "다 했어요!" : place + " · 지도(M)")
+            : $"배우기 {s - 1}/{Tasks.Length}";
+            return true;
         }
 
         void OnGUI()
@@ -256,14 +286,7 @@ namespace PocketCaravan
             UIStyle.Begin();
             // 11/08 UI B안: 검은 줄(왼쪽 위 상태 카드·오른쪽 길 장애 알약을 덮었다) 대신 할 일 줄 아래 위 가운데 알약 (전구 = 배우기). Tab 펼친 동안은 숨긴다
             // 11/09 비르카를 떠나 있으면 앞에 "튜토리얼"을 붙이고, 어머니께 가야 하는 단계는 어디로 가는지 알려 준다
-            bool home = NorthUtil.Map == Home;
-            string place = WorldIndex.Get()?.MapName(Home) ?? Home;
-            string main = s == 1 ? "어머니께 말 걸기"
-                        : s == 10 ? "어머니께 돌아가 말 걸기"
-                        : CuteUI.Plain(Tasks[s - 2]);
-            string where = s == 1 ? (home ? "바로 옆 · Space" : place)
-                         : s == 10 ? (home ? "다 했어요!" : place + " · 지도(M)")
-                         : $"배우기 {s - 1}/{Tasks.Length}";
+            Summary(out string main, out string where, out bool home);   // 11/18 여정 수첩에도 같은 글
             // 11/10 길면 줄이지 않고 두 줄로 편다 (위 작은 줄 "튜토리얼 · 배우기 n/8", 아래 굵은 할 일)
             CuteUI.StackPill(10, false, CuteUI.Pic.Bulb, home ? null : "튜토리얼", main, where, !home && (s == 1 || s == 10));
         }

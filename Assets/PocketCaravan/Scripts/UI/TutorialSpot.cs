@@ -12,11 +12,11 @@ namespace PocketCaravan
     /// 1) 그 단계를 처음 만나면 화면이 반쯤 어두워지고 목표만 밝게 뚫린다 (청록 테두리가 깜빡) + 짧은 말풍선 + "아무 키나 누르면 계속".
     /// 2) 아무 키나(Space·방향키 등) 누르거나 클릭하면 어둠이 걷힌다. 그 키는 원래 일도 그대로 한다 (먹지 않는다).
     ///    어둠은 단계마다 처음 한 번만 (진행 메모 "tutorial:spot:아이디"). 테두리와 말풍선은 그 단계를 끝낼 때까지 남는다.
-    /// 쓰는 단계 (네 지역 시작 튜토리얼 공통. 키만 누르는 달리기·Tab·I·M은 쓰지 않는다):
+    /// 쓰는 단계 (네 지역 시작 튜토리얼 공통. 키만 누르는 달리기·Tab은 쓰지 않는다):
     /// - 안내 인물에게 말 걸기 (Navigator.Tutorial이 같은 맵의 사람을 가리킬 때) — 사람 둘레 동그라미
     /// - 할 일 카드 누르기 — 카드 ("task.card")
     /// - 사기 / 팔기 — 창이 닫혀 있으면 장터 상인 둘레, 열려 있으면 "팔기" 칸이나 사기·팔기 단추 ("market.*")
-    /// - 장부 보기 — 오른쪽 위 장부 단추 ("hud.btn.l")
+    /// - 소지품(I) · 지도(M) · 장부(L) 보기 — 오른쪽 위 단추 ("hud.btn.i" · "hud.btn.m" · "hud.btn.l")
     /// 목표 자리는 그 화면이 그릴 때 ScreenZones에 올린 것을 쓴다 (이 파일은 그리기만 한다). 다른 창(대화·흥정 등)이 떠 있으면 감춘다.
     /// </summary>
     public class TutorialSpot : MonoBehaviour
@@ -85,6 +85,10 @@ namespace PocketCaravan
 
             if (ControlLesson.IsActive(ControlLesson.Quests))
                 return blocking ? null : Zone("quests", "task.card", "이 카드를 누르면 여정 수첩이 열려요", false);
+            if (ControlLesson.IsActive(ControlLesson.Inventory))   // 11/18 은샘: 단추가 있는 I·M도 밝힌다
+                return blocking ? null : Zone("inventory", "hud.btn.i", "I나 이 단추로 소지품을 열어요", true);
+            if (ControlLesson.IsActive(ControlLesson.Map))
+                return blocking ? null : Zone("map", "hud.btn.m", "M이나 이 단추로 지도를 펼쳐요", true);
             if (ControlLesson.IsActive(ControlLesson.Ledger))
                 return blocking ? null : Zone("ledger", "hud.btn.l", "L이나 이 단추로 장부를 열어요", true);
             bool buy = ControlLesson.IsActive(ControlLesson.Bought), sell = ControlLesson.IsActive(ControlLesson.Sold);

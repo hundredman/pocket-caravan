@@ -149,7 +149,7 @@ namespace PocketCaravan
             }
             var gm = GameManager.I;
             int qn = 0; foreach (var _ in qm.Active) qn++;
-            string sub = logTab == 0 ? $"맡은 일 {qn + gm.Player.contracts.Count}개" : logTab == 1 ? "신용이 오르면 시설이 열려요" : "이 맵에서 갈 수 있는 거래처";
+            string sub = logTab == 0 ? $"맡은 일 {qn + gm.Player.contracts.Count + (TutorialNow(out _, out _) ? 1 : 0)}개" : logTab == 1 ? "신용이 오르면 시설이 열려요" : "이 맵에서 갈 수 있는 거래처";
             CuteUI.LabelRight(content.xMax - 4, content.y - 9, sub, CuteUI.Sub, true);
 
             var area = new Rect(content.x + 6, content.y + 6, content.width - 12, content.height - 10);
@@ -202,9 +202,31 @@ namespace PocketCaravan
         /// 11/11 은샘: 받은 퀘스트 말고도 길 안내를 고를 수 있는 카드 둘.
         /// 이벤트(만국 상인회)는 금빛 카드 + "이벤트" 표, 다음 이야기(튜토리얼 뒤 첫 일거리 등)는 받기 전 퀘스트로.
         /// </summary>
+        /// <summary>11/18 은샘 "튜토리얼이 뜨는데 의뢰 목록에 없으면 이상하다": 네 지역 시작 튜토리얼의 지금 할 일</summary>
+        static bool TutorialNow(out string main, out string where)
+            => GoryeoIntro.Summary(out main, out where, out _) || VeniceIntro.Summary(out main, out where, out _)
+            || NorthIntro.Summary(out main, out where, out _) || ArabiaIntro.Summary(out main, out where, out _);
+
         float DrawSpecialCards(float y, float w)
         {
             var focus = QuestFocus.Current;
+            if (TutorialNow(out string tMain, out string tWhere))
+            {
+                // 맨 위 청록 테 카드: 튜토리얼은 늘 길 안내 중이라 단추는 없다
+                float ch = 22 + 14 + 14 + 8;
+                var card = new Rect(0, y, w, ch);
+                CuteUI.Box(card, 7, CuteUI.Paper, CuteUI.Interact, 2, 2);
+                float right = Pill(w - 7, y + 12, "튜토리얼", CuteUI.BadgeKind.On);
+                CuteUI.Label(10, y + 12, TradeLedgerUI.Fit("장사 첫걸음 · 조작 배우기", right - 16, false, true), CuteUI.Text, false, true);
+                CuteUI.Icon(CuteUI.Pic.Arrow, 10, y + 25, 1, CuteUI.Interact);
+                CuteUI.Label(22, y + 29, TradeLedgerUI.Fit(CuteUI.Plain(tMain), w - 32, true, true), CuteUI.Text, true, true);
+                if (!string.IsNullOrEmpty(tWhere))
+                {
+                    CuteUI.Icon(CuteUI.Pic.Pin, 22, y + 39, 1, CuteUI.Sub);
+                    CuteUI.Label(30, y + 43, TradeLedgerUI.Fit(tWhere, w - 40, true, false), CuteUI.Sub, true);
+                }
+                y += ch + 5;
+            }
             if (NetGuild.Active)
             {
                 var (main, where, _) = NetGuild.Summary();
@@ -245,7 +267,7 @@ namespace PocketCaravan
 
         float DrawQuests(QuestManager qm, GameManager gm, float y, float w, float viewH)
         {
-            bool any = NetGuild.Active || StoryGuide.LeadAvailable;
+            bool any = NetGuild.Active || StoryGuide.LeadAvailable || TutorialNow(out _, out _);
             y = DrawSpecialCards(y, w);
             int qn = 0; foreach (var _ in qm.Active) qn++;
             if (qn > 0) y = Section(y, "이야기 의뢰", qn + "개");
