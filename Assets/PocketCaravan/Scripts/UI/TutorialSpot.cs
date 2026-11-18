@@ -100,7 +100,7 @@ namespace PocketCaravan
                         return Zone("journal.tutorial", "journal.tutorial", "튜토리얼 할 일은 수첩 의뢰 목록 맨 위에도 있어요", false);
                     return Zone("journal.close", "journal.close", "다 봤으면 Esc나 이 단추로 닫아요", true);
                 }
-                return blocking ? null : Zone("quests", "task.card", "이 카드를 누르면 여정 수첩이 열려요", false);
+                return blocking ? null : Zone("quests", "task.card", "Q나 이 카드로 여정 수첩을 열어요", false);
             }
             // 단추는 네모 테두리 (11/18 은샘: 동그라미보다 낫다)
             if (ControlLesson.IsActive(ControlLesson.Inventory))
@@ -110,9 +110,19 @@ namespace PocketCaravan
             if (ControlLesson.IsActive(ControlLesson.Ledger))
                 return blocking ? null : Zone("ledger", "hud.btn.l", "L이나 이 단추로 장부를 열어요", false);
             bool buy = ControlLesson.IsActive(ControlLesson.Bought), sell = ControlLesson.IsActive(ControlLesson.Sold);
-            // 11/18 은샘: 시계도 튜토리얼에서 한 번 (사기 단계 처음, 장터 창이 열리기 전에). 아무 키나·시계를 누르면 지나간다
-            if (buy && IntroActive && !blocking && !Seen("clock") && ScreenZones.Live("hud.clock"))
-                return Zone("clock", "hud.clock", "시계를 누르면 다음 장날과 큰 장 마을이 보여요", false);
+            // 11/18 은샘: 시계도 튜토리얼에서 (사기 단계 처음, 장터 창이 열리기 전에). 시계 누르기 → 펼친 달력 설명 → 다시 눌러 닫으면 다음으로
+            if (buy && IntroActive && !Seen("clock.done"))
+            {
+                if (HudClock.IsOpen)
+                {
+                    clockOpened = true;
+                    return Zone("clock.open", "hud.clock", "날짜 · 다음 장날 · 이번 5일 · 오늘 큰 장 마을이에요\n큰 장 마을을 누르면 지도에서 보여 줘요\n다 봤으면 시계를 다시 눌러 닫아요", false);
+                }
+                if (clockOpened) { clockOpened = false; MarkSeen("clock.done"); }   // 펼쳤다가 닫았다
+                else if (!blocking && ScreenZones.Live("hud.clock.btn"))
+                    return Zone("clock", "hud.clock.btn", "시계를 눌러 보세요. 다음 장날과 큰 장 마을이 보여요", false);
+                else if (blocking) return null;
+            }
             if (buy || sell)
             {
                 // 튜토리얼이 이 맵의 장터를 가리킬 때만 (팔기는 산 마을이 아닌 곳이라야 한다: 그 판단은 Intro의 길 안내가 한다)
@@ -156,6 +166,7 @@ namespace PocketCaravan
         /// <summary>지금 밝히는 것의 아이디 (없으면 null). 장부가 소개 중인 탭을 펼치는 데 쓴다</summary>
         public static string CurrentId => inst != null && inst.cur.HasValue ? inst.cur.Value.id : null;
 
+        static bool clockOpened;   // 튜토리얼 시계 단계: 달력을 한 번 펼쳤다 (닫으면 끝)
         static bool IntroActive => GoryeoIntro.Active || VeniceIntro.Active || NorthIntro.Active || ArabiaIntro.Active;
 
         static Spot? Zone(string id, string zone, string bubble, bool round)
@@ -292,7 +303,11 @@ namespace PocketCaravan
         static void Bubble(Rect hole, string text, float gap, float W, float H)
         {
             if (string.IsNullOrEmpty(text)) return;
-            float tw = CuteUI.Width(text, false) + 16f, bh = 20f;
+            // 11/18 여러 줄 말풍선 ("\n"으로 나눈다)
+            string[] lines = text.IndexOf('\n') >= 0 ? text.Split('\n') : null;
+            float tw = 16f, bh = 20f;
+            if (lines == null) tw += CuteUI.Width(text, false);
+            else { foreach (var l in lines) tw = Mathf.Max(tw, CuteUI.Width(l, false) + 16f); bh = 6f + lines.Length * 14f; }
             bool below = hole.yMax + gap + 10f + bh < H - 28f;
             float by = below ? hole.yMax + gap + 9f : hole.y - gap - 9f - bh;
             float bx = Mathf.Clamp(hole.center.x - tw / 2f, 6f, W - tw - 6f);
@@ -306,7 +321,8 @@ namespace PocketCaravan
                 CuteUI.Fill(new Rect(tx - w / 2f - 1f, y, w + 2f, 1f), CuteUI.Ink);
                 if (w > 1f) CuteUI.Fill(new Rect(tx - w / 2f, y, w, 1f), CuteUI.Paper);
             }
-            CuteUI.LabelCenter(r.center.x, r.center.y, text, CuteUI.Text, false);
+            if (lines == null) CuteUI.LabelCenter(r.center.x, r.center.y, text, CuteUI.Text, false);
+            else for (int i = 0; i < lines.Length; i++) CuteUI.LabelCenter(r.center.x, r.y + 10f + i * 14f, lines[i], CuteUI.Text, false);
         }
     }
 }

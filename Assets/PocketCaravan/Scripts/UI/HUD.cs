@@ -90,7 +90,7 @@ namespace PocketCaravan
 
         static readonly (string key, string what)[] Keys =
         {
-            ("WASD", "이동"), ("Shift", "달리기"), ("Space", "대화·행동"), ("Tab", "상태·할 일"),
+            ("WASD", "이동"), ("Shift", "달리기"), ("Space", "대화·행동"), ("Tab", "상태·할 일"), ("Q", "수첩"),
             ("I", "소지품"), ("M", "지도"), ("L", "장부"), ("V", "수단 넣기"), ("Esc", "메뉴"),
         };
 

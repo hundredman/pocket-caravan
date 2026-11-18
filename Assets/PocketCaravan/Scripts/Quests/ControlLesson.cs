@@ -56,7 +56,7 @@ namespace PocketCaravan
             "Tab을 눌러 내 상태 보고 다시 닫기",
             $"I를 눌러 {bag} 열어 보기",
             string.IsNullOrEmpty(mapGoal) ? "M을 눌러 지도 펼쳐 보기" : $"M을 눌러 지도 펼치고 {mapGoal}",
-            "왼쪽 할 일 카드를 눌러 여정 수첩을 열고, 목록을 본 뒤 닫기",   // 11/13 Q 키 대신 할 일 카드
+            "Q나 왼쪽 할 일 카드로 여정 수첩을 열고, 목록을 본 뒤 닫기",   // 11/13 Q 키 대신 할 일 카드
             "상인에게 물건 하나 구매하기",
             "산 물건을 다른 마을 상인에게 판매하기",
             "L을 눌러 장부에서 방금 거래 기록 확인하기",
@@ -77,7 +77,7 @@ namespace PocketCaravan
                 case Map:
                     int at = full != null ? full.IndexOf("펼치고 ", System.StringComparison.Ordinal) : -1;
                     return ("M", at >= 0 ? full.Substring(at + 4) : "지도 펴기");
-                case Quests: return (null, "이 카드 누르기");
+                case Quests: return ("Q", "여정 수첩 보기");   // 11/18 Q 키로도
                 case Bought: return (null, "장터에서 하나 사기");
                 case Sold: return (null, "다른 마을에서 팔기");
                 case Ledger: return ("L", "장부 보기");

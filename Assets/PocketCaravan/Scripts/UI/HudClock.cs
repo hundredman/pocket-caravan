@@ -10,7 +10,7 @@ namespace PocketCaravan
     ///   반원과 해·달 자리는 칸에 맞춰 반올림하지 않아 화면 점 단위로 부드럽게 움직인다 (11/18 은샘 "매끄럽지 않다").
     ///   밤(19시~5시)에는 보름달이 같은 길로, 시계 칸도 어두운 밤 색으로 바뀐다.
     /// - 시계를 누르면 아래로 다음 장날(날짜 · D-n), 이번 장 돌이 5일, 오늘·내일 큰 장 마을이 펼쳐진다. 다시 누르면 접힌다.
-    ///   튜토리얼 사기 단계 처음에 시계를 한 번 밝혀 알려 준다 (TutorialSpot "clock").
+    ///   튜토리얼 사기 단계 처음에 시계 → 펼친 달력 설명 → 닫기까지 안내한다 (TutorialSpot "clock"). 큰 장 마을을 누르면 지도에서 그 마을 카드가 펼쳐진다.
     /// 다른 화면 위에 그리지 않도록 깊이는 상태 카드(HUD)와 같고, 창이 열리면 누를 수 없다. 기념 사진 동안 감춘다.
     /// </summary>
     public class HudClock : MonoBehaviour
@@ -25,25 +25,41 @@ namespace PocketCaravan
         const float W = 108f, H = 30f, Rise = 5f, Set = 19f, ArcR = 15f;
         static Texture2D sunTex, moonTex;
         bool open; float openK;
-        int shownMinute = -1, shownDay = -1; string dayText = "", timeText = "", prevTime; float changedAt = -9f;
+        int shownMinute = -1, shownDay = -1; string dayText = "", timeText = "", prevTime, fullDate = ""; float changedAt = -9f;
+        /// <summary>달력이 펼쳐져 있다 (튜토리얼: 펼치고 → 설명 → 닫으면 다음)</summary>
+        public static bool IsOpen { get; private set; }
 
-        /// <summary>시각 줄: 바뀌는 0.25초 동안 옛 글은 위로, 새 글은 아래에서 (줄 칸 밖은 잘린다)</summary>
+        float[] timeX, prevX;   // 글자마다 x (바뀔 때만 잰다)
+        /// <summary>11/18 시각 줄: 바뀐 글자만 0.25초 동안 위로 밀려 올라가고 새 글자가 아래에서 올라온다 (줄 칸 밖은 잘린다)</summary>
         void DrawTime(Rect row, Color32 col)
         {
             float k = Mathf.Clamp01((Time.unscaledTime - changedAt) / .25f), e = 1f - (1f - k) * (1f - k);
+            bool rolling = k < 1f && prevTime != null && prevTime.Length == timeText.Length;
             GUI.BeginGroup(row);
             float cy = row.height / 2f;
             var oc = GUI.color;
-            if (k < 1f && prevTime != null)
+            for (int i = 0; i < timeText.Length; i++)
             {
+                string ch = Chars(timeText[i]);
+                if (!rolling || prevTime[i] == timeText[i]) { CuteUI.Label(1 + timeX[i], cy, ch, col, true); continue; }
                 GUI.color = new Color(oc.r, oc.g, oc.b, oc.a * (1f - e));
-                CuteUI.Label(1, cy - e * row.height, prevTime, col, true);
+                CuteUI.Label(1 + prevX[i], cy - e * row.height, Chars(prevTime[i]), col, true);
+                GUI.color = new Color(oc.r, oc.g, oc.b, oc.a * e);
+                CuteUI.Label(1 + timeX[i], cy + (1f - e) * row.height, ch, col, true);
+                GUI.color = oc;
             }
-            GUI.color = new Color(oc.r, oc.g, oc.b, oc.a * (k < 1f ? e : 1f));
-            CuteUI.Label(1, cy + (1f - e) * row.height, timeText, col, true);
             GUI.color = oc;
             GUI.EndGroup();
         }
+        static readonly System.Collections.Generic.Dictionary<char, string> charText = new System.Collections.Generic.Dictionary<char, string>();
+        static string Chars(char c) { if (!charText.TryGetValue(c, out var s)) charText[c] = s = c.ToString(); return s; }
+        static float[] Xs(string t)
+        {
+            var xs = new float[t.Length];
+            for (int i = 1; i < t.Length; i++) xs[i] = CuteUI.Width(t.Substring(0, i), true);
+            return xs;
+        }
+
         static readonly Color32 NightFill = new Color32(0x1E, 0x21, 0x44, 255), NightHover = new Color32(0x2A, 0x2E, 0x58, 255),
             NightText = new Color32(0xF3, 0xEE, 0xDC, 255), NightSub = new Color32(0xB9, 0xBE, 0xDF, 255),
             NightArc = new Color32(0x6A, 0x6F, 0xA0, 255), NightLine = new Color32(0x9A, 0xA0, 0xCF, 255);
@@ -52,6 +68,7 @@ namespace PocketCaravan
         void Update()
         {
             if (UIState.Blocking || UIState.PhotoMode) open = false;
+            IsOpen = open;
             openK = Mathf.MoveTowards(openK, open ? 1f : 0f, Time.unscaledDeltaTime / .18f);
         }
 
@@ -63,9 +80,11 @@ namespace PocketCaravan
             GUI.depth = openK > 0f ? -5 : -2;   // 달력을 펼치면 할 일 카드보다 위
             var clock = gm.Clock;
             float vw = UIStyle.VirtualWidth, cx = Mathf.Round(vw / 2f);
-            float y = CuteUI.TopStack(0, H + 84f * openK) - 4f;   // 위 가운데 맨 위. 다른 위 알약(상인회·축제 등)은 이 아래로 쌓인다
+            float y = CuteUI.TopStack(0, H + 98f * openK) - 4f;   // 위 가운데 맨 위. 다른 위 알약(상인회·축제 등)은 이 아래로 쌓인다
             var r = new Rect(cx - W / 2f, y, W, H);
-            ScreenZones.Mark("hud.clock", new Rect(r.x - 2, r.y, r.width + 4, r.height + 2 + (openK > 0f ? 84f * openK : 0f)));
+            // 펼치면 달력 판(204) 너비까지 (튜토리얼 테두리가 시계와 달력을 함께 감싼다)
+            float zw = Mathf.Lerp(W + 4f, 208f, openK);
+            ScreenZones.Mark("hud.clock", new Rect(Mathf.Round(cx - zw / 2f), r.y, Mathf.Round(zw), r.height + 2 + (openK > 0f ? 98f * openK : 0f)));
             bool hover = !UIState.Blocking && r.Contains(Event.current.mousePosition);
             bool night = IsNight(clock);
             // 11/18 밤에는 시계 칸이 어두운 밤 색 (색은 두 가지로만 바꾼다: 색마다 그림이 생기므로 서서히 섞지 않는다)
@@ -78,20 +97,25 @@ namespace PocketCaravan
             if (step != shownMinute || clock.day != shownDay)
             {
                 bool first = shownMinute < 0;
-                if (!first) { prevTime = timeText; changedAt = Time.unscaledTime; }
+                if (!first) { prevTime = timeText; prevX = timeX; changedAt = Time.unscaledTime; }
                 shownMinute = step; shownDay = clock.day;
                 int hour = step / 6, mm = step % 6 * 10, h12 = (hour + 11) % 12 + 1;
                 dayText = DateText(clock.day);
                 timeText = (hour < 12 ? "오전 " : "오후 ") + h12 + ":" + mm.ToString("00");
+                timeX = Xs(timeText);
+                fullDate = YearText(clock.day) + " " + dayText + " " + timeText;
             }
             CuteUI.Label(r.x + 45, r.y + 10, dayText, night ? NightText : CuteUI.Text, false, true);
             DrawTime(new Rect(r.x + 44, r.y + 16, W - 48, 12), night ? NightSub : CuteUI.Sub);
             if (!UIState.Blocking && GUI.Button(r, GUIContent.none, GUIStyle.none)) { open = !open; Sfx.Play(open ? "open" : "move", .4f); }
-            ScreenZones.MarkSpot("hud.clock", r);   // 튜토리얼이 밝히는 자리
+            ScreenZones.MarkSpot("hud.clock.btn", r);   // 튜토리얼이 밝히는 자리
             if (openK > 0f) DrawCalendar(r, gm, clock);
         }
 
-        /// <summary>게임 날짜: 한 달 30일 · 열두 달 (1일째 = 1월 1일). 해는 세지 않는다</summary>
+        /// <summary>몇 년인지 (360일 = 1년, 1일째 = 1년)</summary>
+        public static string YearText(int day) => (Mathf.Max(0, day - 1) / 360 + 1) + "년";
+
+        /// <summary>게임 날짜: 한 달 30일 · 열두 달 (1일째 = 1월 1일). 해는 YearText</summary>
         public static string DateText(int day)
         {
             int d = Mathf.Max(0, day - 1);
@@ -185,21 +209,24 @@ namespace PocketCaravan
         void DrawCalendar(Rect top, GameManager gm, GameClock clock)
         {
             float ease = 1f - (1f - openK) * (1f - openK);
-            const float bw = 204f, bh = 78f;   // 왼쪽 할 일 카드(오른쪽 끝 214)와 겹치지 않는 너비
+            const float bw = 204f, bh = 92f;   // 왼쪽 할 일 카드(오른쪽 끝 214)와 겹치지 않는 너비
             var b = new Rect(Mathf.Round(top.center.x - bw / 2f), Mathf.Round(top.yMax + 4f - (1f - ease) * 6f), bw, bh);
+            ScreenZones.MarkSpot("hud.clock.panel", b);   // 튜토리얼이 펼친 달력을 밝힌다
             var oc = GUI.color; GUI.color = new Color(oc.r, oc.g, oc.b, oc.a * ease);
             CuteUI.Box(b, 8, CuteUI.Paper, CuteUI.Ink, 1, 1, CuteUI.SoftShadow);
             int n = Mathf.Max(1, clock.marketDayInterval), left = DaysToMarket(clock);
-            // 머리줄: 다음 장날
+            // 1) 오늘 날짜 (해까지)  2) 다음 장날
+            CuteUI.LabelCenter(b.center.x, b.y + 10, fullDate, CuteUI.Text, true, true);
             if (calDay != clock.day) { calDay = clock.day; nextText = left == 0 ? "오늘 장날!" : $"다음 장날 {DateText(clock.day + left)} · D-{left}"; }
-            CuteUI.LabelCenter(b.center.x, b.y + 9, nextText, CuteUI.Sell, true, true);
+            CuteUI.LabelCenter(b.center.x, b.y + 22, nextText, CuteUI.Sell, true, true);
+            // 3) 이번 장 돌이 5일
             int start = clock.day - ((clock.day - 1) % n);   // 이번 장 돌이 첫날 (장날이 끝날)
             float cw = (bw - 16f - (n - 1) * 4f) / n;
             for (int i = 0; i < n; i++)
             {
                 int d = start + i;
                 bool today = d == clock.day, market = d % n == 0, past = d < clock.day;
-                var cell = new Rect(Mathf.Round(b.x + 8 + i * (cw + 4f)), b.y + 17, Mathf.Floor(cw), 32);
+                var cell = new Rect(Mathf.Round(b.x + 8 + i * (cw + 4f)), b.y + 31, Mathf.Floor(cw), 32);
                 CuteUI.Box(cell, 5, today ? new Color32(0xE6, 0xF6, 0xF3, 255) : market ? CuteUI.SellSoft : CuteUI.Paper2,
                     today ? CuteUI.Interact : market ? CuteUI.Sell : CuteUI.Line, today ? 2 : 1);
                 CuteUI.LabelCenter(cell.center.x, cell.y + 9, DayLabel(d), today ? CuteUI.Interact : past ? CuteUI.Sub : CuteUI.Text, true, true);
@@ -207,23 +234,37 @@ namespace PocketCaravan
                 if (sub.Length > 0) CuteUI.LabelCenter(cell.center.x, cell.y + 22, sub, market ? CuteUI.Sell : CuteUI.Interact, true, market || today);
                 if (past) CuteUI.Fill(new Rect(cell.x + 6, cell.y + 22, cell.width - 12, 1), CuteUI.Line);   // 지난 날
             }
-            // 큰 장: 오늘 · 내일
+            // 4) 큰 장: 오늘 · 내일 (누르면 지도에서 오늘 큰 장 마을)
             string mapNow = MapRoot.Current != null ? MapRoot.Current.mapId : null;
             if (fairDay != clock.day || fairMap != mapNow)
             {
-                fairDay = clock.day; fairMap = mapNow; fairText = FairText(clock.day, false);
-                if (fairText != null && CuteUI.Width(fairText, true, true) > bw - 12f) fairText = FairText(clock.day, true);   // 길면 오늘 것만
+                fairDay = clock.day; fairMap = mapNow; fairText = FairText(clock.day, false, out fairMapId);
+                if (fairText != null && CuteUI.Width(fairText, true, true) + 22 > bw - 12f) fairText = FairText(clock.day, true, out fairMapId);   // 길면 오늘 것만
             }
-            if (fairText != null) CuteUI.LabelCenter(b.center.x, b.yMax - 12, fairText, CuteUI.Interact, true, true);
+            if (fairText != null)
+            {
+                float fw = CuteUI.Width(fairText, true, true) + 22f;
+                var fr = new Rect(Mathf.Round(b.center.x - fw / 2f), b.y + 68, Mathf.Round(fw), 17);
+                bool fh = !UIState.Blocking && fr.Contains(Event.current.mousePosition);
+                CuteUI.Box(fr, 6, fh ? CuteUI.Paper2 : CuteUI.Paper, fh ? CuteUI.Interact : CuteUI.Line, 1);
+                CuteUI.Icon(CuteUI.Pic.Pin, fr.x + 5, fr.center.y - 4, 1, CuteUI.Interact);
+                CuteUI.Label(fr.x + 15, fr.center.y, fairText, CuteUI.Interact, true, true);
+                ScreenZones.MarkSpot("hud.clock.fair", fr);
+                if (ease >= 1f && !UIState.Blocking && GUI.Button(fr, GUIContent.none, GUIStyle.none))
+                {
+                    // 지도를 열고 그 마을 카드부터 (11/18 은샘)
+                    MapTownCard.Pending = fairMapId; open = false; IsOpen = false; InputReader.Press('m'); Sfx.Play("open", .5f);
+                }
+            }
             GUI.color = oc;
         }
 
-        int calDay = -1, fairDay = -1; string nextText = "", fairText, fairMap;
+        int calDay = -1, fairDay = -1; string nextText = "", fairText, fairMap, fairMapId;
         readonly System.Collections.Generic.Dictionary<int, string> dayLabels = new System.Collections.Generic.Dictionary<int, string>();
         string DayLabel(int d) { int m = DayOfMonth(d); if (!dayLabels.TryGetValue(m, out var s)) dayLabels[m] = s = m + "일"; return s; }
 
         /// <summary>오늘·내일 큰 장 마을 한 줄 (지금 지역 쪽 중앙 조각). 고려는 동쪽, 베네치아는 서쪽, 북유럽은 북쪽, 아라비아는 남쪽</summary>
-        static string FairText(int day, bool todayOnly)
+        static string FairText(int day, bool todayOnly, out string todayMap)
         {
             string map = MapRoot.Current != null ? MapRoot.Current.mapId : null;
             string chunk = CentralFair.ChunkOfMap(map);
@@ -236,6 +277,7 @@ namespace PocketCaravan
                     default: chunk = "east"; break;
                 }
             var a = CentralFair.On(chunk, day); var b = CentralFair.On(chunk, day + 1);
+            todayMap = a.mapId;
             if (string.IsNullOrEmpty(a.name)) return null;
             return todayOnly || a.name == b.name ? $"오늘 큰 장: {a.name}" : $"큰 장: 오늘 {a.name} · 내일 {b.name}";
         }

@@ -48,6 +48,14 @@ namespace PocketCaravan
                 KeyCode.UpArrow => Vector2Int.down, KeyCode.DownArrow => Vector2Int.up,   // 화면 y는 아래로 커진다
                 _ => Vector2Int.zero,
             };
+            // 11/18 은샘: WASD로도 고른다 (글 칸에 글을 쓰는 중이면 빼고)
+            if (dir == Vector2Int.zero && GUIUtility.keyboardControl == 0)
+                dir = e.keyCode switch
+                {
+                    KeyCode.A => Vector2Int.left, KeyCode.D => Vector2Int.right,
+                    KeyCode.W => Vector2Int.down, KeyCode.S => Vector2Int.up,
+                    _ => Vector2Int.zero,
+                };
             if (dir != Vector2Int.zero)
             {
                 cur.focus = cur.focus < 0 || cur.focus >= cur.last.Count ? 0 : Nearest(cur.last, cur.focus, dir);

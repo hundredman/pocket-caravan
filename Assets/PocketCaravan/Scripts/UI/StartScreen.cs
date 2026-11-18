@@ -63,7 +63,7 @@ namespace PocketCaravan
             if (mode == Mode.Menu)
             {
                 if (step.y != 0) { menuIndex = 1 - menuIndex; Sfx.Play("open"); }
-                if (InputReader.ConfirmPressed())
+                if (InputReader.EnterPressed())
                 {
                     Sfx.Play("accept");
                     if (menuIndex == 0) { mode = Mode.Closed; GameManager.I.ContinueFromStartScreen(); }
@@ -79,7 +79,7 @@ namespace PocketCaravan
             if (step.x != 0) { int col = pick % columns, row = pick / columns; col = Mathf.Clamp(col + (int)step.x, 0, columns - 1); int p = row * columns + col; if (p < n && p != pick) { pick = p; Sfx.Play("open"); } }
             if (step.y != 0) { int p = pick - columns * (int)step.y; if (p >= 0 && p < n) { pick = p; Sfx.Play("open"); } }
             if (hasSave && InputReader.CancelPressed()) { mode = Mode.Menu; Sfx.Play("cancel"); return; }
-            if (InputReader.ConfirmPressed())
+            if (InputReader.EnterPressed())
             {
                 var c = choices.choices[pick];
                 if (c.origin == null || string.IsNullOrEmpty(c.startScene)) { Sfx.Play("cancel"); return; }
@@ -118,9 +118,9 @@ namespace PocketCaravan
                 if (on) CuteUI.Fill(new Rect(r.x + 5, r.y + 2, r.width - 10, 1), CuteUI.InteractHi);
                 CuteUI.LabelCenter(r.center.x, r.center.y, items[i], on ? CuteUI.OnInteract : CuteUI.Text, false, on);
                 // 11/08 마우스로 눌러도 고르고 결정 (위에 접속 창이 떠 있으면 무시)
-                if (!Held && GUI.Button(r, GUIContent.none, GUIStyle.none)) { menuIndex = i; InputReader.Press(' '); }
+                if (!Held && GUI.Button(r, GUIContent.none, GUIStyle.none)) { menuIndex = i; InputReader.Press('\n'); }
             }
-            CuteUI.LabelCenter(W / 2, H - 20, "↑ ↓ 고르기 · Space 결정 · 마우스로 눌러도 돼요", CuteUI.Sub, true);
+            CuteUI.LabelCenter(W / 2, H - 20, "↑ ↓ 고르기 · Enter 결정 · 마우스로 눌러도 돼요", CuteUI.Sub, true);
         }
 
         void DrawPick(float W, float H)
@@ -136,7 +136,7 @@ namespace PocketCaravan
             var sel = all.choices[Mathf.Clamp(pick, 0, all.choices.Count - 1)];
             string who = sel.origin != null ? sel.origin.displayName : "";
             string intro = $"{sel.region} · {who} ({sel.animal}) · 강점: {sel.strength}";
-            string hint = $"{sel.startTown}에서 출발 · ← → ↑ ↓ 또는 카드를 눌러 고르기 · Space·출발 단추로 떠나기" + (hasSave ? " · Esc 뒤로" : "");
+            string hint = $"{sel.startTown}에서 출발 · ← → ↑ ↓ 또는 카드를 눌러 고르기 · Enter·출발 단추로 떠나기" + (hasSave ? " · Esc 뒤로" : "");
             float bw = Mathf.Min(W - 24, Mathf.Max(430, CuteUI.Width(intro) + 30));
             float introHeight = CuteUI.WrapHeight(intro, bw - 20);
             float hintHeight = CuteUI.WrapHeight(hint, bw - 20, true);
@@ -189,7 +189,7 @@ namespace PocketCaravan
                 // 11/08 카드를 누르면 고르고, 고른 카드를 한 번 더 누르면 출발 (위에 접속 창이 떠 있으면 무시)
                 if (!Held && GUI.Button(r, GUIContent.none, GUIStyle.none))
                 {
-                    if (on) InputReader.Press(' ');
+                    if (on) InputReader.Press('\n');
                     else { pick = i; visiblePick = i; Sfx.Play("open"); }
                 }
             }
@@ -201,7 +201,7 @@ namespace PocketCaravan
             {
                 float gridL = pickViewport.x + x0, gridR = gridL + columns * cw + (columns - 1) * gap;
                 if (gridR - gridL < 360) { gridL = 12; gridR = W - 12; }
-                if (CuteUI.Button(new Rect(gridR - 96, 46, 96, 20), "출발 (Space)")) InputReader.Press(' ');
+                if (CuteUI.Button(new Rect(gridR - 96, 46, 96, 20), "출발 (Enter)")) InputReader.Press('\n');
                 if (hasSave && CuteUI.SoftButton(new Rect(gridL, 46, 80, 20), "뒤로 (Esc)")) InputReader.Press('\x1b');
             }
 
