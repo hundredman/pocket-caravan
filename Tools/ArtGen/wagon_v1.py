@@ -123,7 +123,7 @@ def end_cargo(stage, front=False, back=False):
     # 11/19 옆모습과 같은 짐: 1 상자 둘 → 2 + 자루 하나(두 상자 사이 위로 보인다) → 3 위 한 단
     if stage >= 1: g.paste(HC.crate(), 1, 11); g.paste(HC.crate(), 12, 11)
     # 11/19 은샘: 앞모습(말이 앞)은 위에 얹은 작은 짐을 말 쪽(아래)으로 조금 당긴다. 뒷모습도 짐칸 뒤쪽(아래)으로 살짝
-    dy = 3 if front else 2 if back else 0
+    dy = 5 if front else 2 if back else 0
     if stage == 2: g.paste(HC.sack(), 7, 6 + dy)
     if stage >= 3:
         g.paste(HC.sack(), 0, 4 + dy); g.paste(HC.crate(False), 8, 5 + dy); g.paste(HC.sack(), 15, 4 + dy)
