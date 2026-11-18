@@ -17,7 +17,10 @@ namespace PocketCaravan
     ///   신호 = "sgI_받는이"(같이 하자) · "sgA_받는이"(좋아) · "sgQ_받는이"(그만) · "sgL_받는이"(아직 안 열림) · "sgD_받는이_몇번째_x×10"(놓음).
     ///   서버가 0.4초 안에 겹친 리액션을 버릴 수 있어서, 기다리는 쪽에 닿을 때까지 "같이 하자"는 2초마다, 마지막 놓음은 1.5초마다 다시 보낸다 (받는 쪽은 겹친 것을 건너뛴다).
     ///   놓은 자리만 보내고 탑은 양쪽이 같은 계산으로 쌓는다. 리액션으로 보이지 않게 RemotePlayers·NetGuild는 IsSignal을 건너뛴다.
-    /// - 짝이 맵을 떠나거나 25초 동안 놓지 않으면 끝.
+    /// - 짝이 맵을 떠나거나 25초 동안 놓지 않으면 끝. 10초가 넘으면 짐 위에 남은 초를 보인다.
+    /// 11/18 다듬기: 접속한 짝의 차례에는 짐을 흐리게 띄워 두고 "루나 고르는 중…" (내 화면의 짐은 짝 화면과 위치가 달라 놓을 때 튀었다).
+    ///   짝이 놓으면 그 자리에서 툭 떨어진다. 짝이 맞추면 "루나 딱!". 판 중 1 박수 · 2 하트 (짝 화면 이름표 위에 뜬다, 파리드는 따라 한다).
+    ///   옆에 접속한 사람이 여럿이면 고르는 화면에서 Tab으로 같이 할 사람을 바꾼다 (가까운 순).
     /// </summary>
     public partial class NetStackGame
     {
@@ -33,6 +36,9 @@ namespace PocketCaravan
         bool iFirst;
         float turnAt, waitAt, npcAt, npcErr;
         bool justUnlocked, lockedAtStart;
+        int pick;                                    // 고르는 화면: 같이 하자고 할 사람 (가까운 순 몇 번째)
+        string myReact, partnerReact, npcReact;      // 판 중 리액션 (이름표 위 말풍선)
+        float myReactAt = -9f, partnerReactAt = -9f, npcReactAt = -9f;
         string lastDrop;      // 내가 마지막으로 보낸 놓음 신호 (짝이 놓을 때까지 1.5초마다 다시 보낸다: 서버가 0.4초 안에 겹친 리액션을 버릴 수 있어서)
         float lastDropSent;
 
@@ -103,19 +109,29 @@ namespace PocketCaravan
 
         static bool InviteFresh => invFrom != null && Time.unscaledTime - invAt < InviteLife && PeerHere(invFrom);
 
-        /// <summary>내 옆(6칸 안)에서 가장 가까운 접속한 사람</summary>
-        static string NearestPeer()
+        /// <summary>내 옆(6칸 안)의 접속한 사람들 (가까운 순)</summary>
+        static List<string> NearPeers()
         {
+            var list = new List<string>();
             var net = NetClient.I; var pc = PlayerController.Instance;
-            if (net == null || pc == null || net.Status != NetClient.State.Online) return null;
-            string best = null; float bd = InviteRange * InviteRange;
+            if (net == null || pc == null || net.Status != NetClient.State.Online) return list;
+            var dist = new Dictionary<string, float>();
             foreach (var kv in net.Peers)
             {
                 if (!RemotePlayers.TryGetPosition(kv.Key, out var pos)) continue;
                 float d = ((Vector2)pos - (Vector2)pc.transform.position).sqrMagnitude;
-                if (d <= bd) { bd = d; best = kv.Key; }
+                if (d <= InviteRange * InviteRange) { dist[kv.Key] = d; list.Add(kv.Key); }
             }
-            return best;
+            list.Sort((x, y) => dist[x].CompareTo(dist[y]));
+            return list;
+        }
+
+        /// <summary>같이 하자고 할 사람 (Tab으로 고른 사람, 없으면 null)</summary>
+        string PickedPeer(out int count)
+        {
+            var list = NearPeers();
+            count = list.Count;
+            return count == 0 ? null : list[((pick % count) + count) % count];
         }
 
         // ---------------- 받기 ----------------
@@ -123,7 +139,14 @@ namespace PocketCaravan
         static void OnNet(NetClient.Msg m)
         {
             var net = NetClient.I;
-            if (m.t != "emote" || net == null || !IsSignal(m.e) || string.IsNullOrEmpty(m.id) || m.id == net.MyId) return;
+            if (m.t != "emote" || net == null || string.IsNullOrEmpty(m.id) || m.id == net.MyId) return;
+            if (!IsSignal(m.e))
+            {
+                // 같이 쌓는 짝의 리액션은 창 안 이름표 위에도
+                if (inst != null && inst.open && inst.mode == Mode.Online && inst.partnerId == m.id)
+                { inst.partnerReact = string.IsNullOrEmpty(m.name) ? "리액션" : m.name; inst.partnerReactAt = Time.unscaledTime; }
+                return;
+            }
             var part = m.e.Split('_');
             if (part.Length < 2 || part[1] != net.MyId) return;
             char kind = m.e[2];
@@ -192,9 +215,10 @@ namespace PocketCaravan
         {
             mode = Mode.Online; partnerId = id; partnerName = PeerName(id); iFirst = first;
             if (invFrom == id) invFrom = null;
-            endWhy = null; lastDrop = null;
+            endWhy = null; lastDrop = null; myReactAt = partnerReactAt = -9f; npcReact = null;
             Reset(State.Play);
             Pop(first ? "내가 먼저!" : $"{partnerName} 님 먼저");
+            landAt = Time.unscaledTime;   // 첫 짐은 잠깐 쉬었다가 나온다 (알림이 이름표와 겹치지 않게)
             Sfx.Play("accept", .6f);
         }
 
@@ -204,7 +228,7 @@ namespace PocketCaravan
         {
             endWhy = null;
             if (InviteFresh) { JoinIfInvited(); return; }
-            var peer = NearestPeer();
+            var peer = PickedPeer(out _);
             if (peer != null)
             {
                 mode = Mode.Online; partnerId = peer; partnerName = PeerName(peer);
@@ -238,6 +262,15 @@ namespace PocketCaravan
 
         void DuoUpdate()
         {
+            float now = Time.unscaledTime;
+            if (state == State.Choose && InputReader.StatusPressed()) { pick++; Sfx.Play("move", .5f); }   // Tab: 같이 할 사람 바꾸기
+            if (mode != Mode.Solo && (state == State.Play || state == State.Over))
+            {
+                int n = InputReader.NumberPressed();
+                if (n == 1) React("clap", "박수");
+                else if (n == 2) React("love", "하트");
+            }
+            if (npcReact != null && now >= npcReactAt) { partnerReact = npcReact; partnerReactAt = now; npcReact = null; }
             // 짝이 내 놓음을 못 받았을 수도 있다: 짝 차례이거나 방금 끝났으면 마지막 놓음을 다시 보낸다 (받는 쪽은 이미 쌓은 번호를 건너뛴다)
             if (mode == Mode.Online && lastDrop != null && Time.unscaledTime - lastDropSent > ResendGap
                 && ((state == State.Play && !MyTurn) || (state == State.Over && Time.unscaledTime - overAt < ResendAfterEnd)))
@@ -294,6 +327,16 @@ namespace PocketCaravan
             else if (now - turnAt > TurnLimit) { endWhy = $"{partnerName} 님이 한참 안 놓았어요"; Signal("sgQ_" + partnerId); End(); }
         }
 
+        void React(string id, string name)
+        {
+            float now = Time.unscaledTime;
+            if (now - myReactAt < .5f) return;
+            myReact = name; myReactAt = now;
+            Sfx.Play("voice", .35f);
+            if (mode == Mode.Online) NetEmote.Send(id, name);   // 맵에 있는 사람들에게도 보인다
+            else if (mode == Mode.Npc) { npcReact = name; npcReactAt = now + .6f; }   // 파리드가 따라 한다
+        }
+
         // ---------------- 끝 ----------------
 
         void DuoEnd(GameManager gm)
@@ -310,8 +353,10 @@ namespace PocketCaravan
             if (InviteFresh) small = $"{PeerName(invFrom)} 님이 같이 하재요! 둘이서를 누르면 시작";
             else
             {
-                var peer = NearestPeer();
-                small = peer != null ? $"둘이서: {PeerName(peer)} 님에게 같이 하자고 해요" : $"둘이서: 상인회 {NpcName}와 번갈아 쌓아요";
+                var peer = PickedPeer(out int count);
+                small = peer == null ? $"둘이서: 상인회 {NpcName}와 번갈아 쌓아요"
+                    : count > 1 ? $"둘이서: {PeerName(peer)} 님에게 같이 하자고 해요 · Tab 다른 사람 ({count}명)"
+                    : $"둘이서: {PeerName(peer)} 님에게 같이 하자고 해요";
             }
             Banner(a, "누구랑 쌓을까요?", small);
         }
@@ -365,6 +410,30 @@ namespace PocketCaravan
             CuteUI.LabelCenter(r.center.x, r.center.y, t, mine ? CuteUI.Text : CuteUI.Text, true);
         }
 
+        /// <summary>접속한 짝이 고르는 중 (내 화면의 짐은 짝 화면과 위치가 달라서 보이지 않는다)</summary>
+        bool PartnerChoosing => mode == Mode.Online && state == State.Play && !MyTurn;
+
+        /// <summary>짝 차례: 탑 위에 흐린 짐 + "루나 고르는 중…" (10초가 넘으면 남은 초)</summary>
+        void DrawPartnerChoosing(float my, float now)
+        {
+            if (now - landAt < FallTime) return;
+            var top = tower[tower.Count - 1];
+            float gx = Mathf.Round(top.x + (top.w - moverW) / 2f);
+            var old = GUI.color; GUI.color = new Color(1f, 1f, 1f, .35f);
+            Cargo(new Rect(gx, Mathf.Round(my), Mathf.Round(moverW), BlockH), LookOf(tower.Count, 3));
+            GUI.color = old;
+            float waited = now - turnAt;
+            string t = waited > 10f ? $"{partnerName} 기다리는 중 · {Mathf.Max(0, Mathf.CeilToInt(TurnLimit - waited))}초"
+                : $"{partnerName} 고르는 중" + new string('.', 1 + (int)(now * 2.5f) % 3);
+            float w = CuteUI.Width(partnerName + " 고르는 중...", true) + 12f;
+            if (waited > 10f) w = CuteUI.Width(t, true) + 12f;
+            float cx = Mathf.Clamp(gx + moverW / 2f, w / 2f + 2f, AreaW - w / 2f - 2f);
+            var r = new Rect(Mathf.Round(cx - w / 2f), Mathf.Round(my - 17f), Mathf.Round(w), 14f);
+            if (r.y < 2f) r.y = Mathf.Round(my + BlockH + 3f);
+            CuteUI.Box(r, 5, CuteUI.White, PartnerCol, 1);
+            CuteUI.Label(r.x + 6f, r.center.y, t, waited > 10f ? CuteUI.Down : CuteUI.Text, true);
+        }
+
         /// <summary>바닥 양옆: 나 · 짝 이름과 놓은 개수</summary>
         void DrawDuoNames()
         {
@@ -372,11 +441,29 @@ namespace PocketCaravan
             int mineN = 0, theirN = 0;
             for (int i = 1; i < tower.Count; i++) if (IsMine(i)) mineN++; else theirN++;
             float y = AreaH - 9f + view * 0f;
-            NameChip(4f, y, "나", mineN, MineCol, false);
-            NameChip(AreaW - 4f, y, partnerName, theirN, PartnerCol, true);
+            float now = Time.unscaledTime;
+            var l = NameChip(4f, y, "나", mineN, MineCol, false);
+            var rr = NameChip(AreaW - 4f, y, partnerName, theirN, PartnerCol, true);
+            if (now - myReactAt < 1.4f) Bubble(l, myReact, now - myReactAt, MineCol);
+            if (now - partnerReactAt < 1.4f) Bubble(rr, partnerReact, now - partnerReactAt, PartnerCol);
         }
 
-        static void NameChip(float x, float cy, string name, int n, Color32 col, bool right)
+        /// <summary>이름표 위 말풍선 (리액션): 톡 튀어 올랐다가 사라진다</summary>
+        static void Bubble(Rect chip, string text, float t, Color32 col)
+        {
+            if (string.IsNullOrEmpty(text)) return;
+            string s = text + "!";
+            float w = CuteUI.Width(s, true) + 12f, lift = t < .15f ? 6f * (t / .15f) : 6f;
+            var r = new Rect(Mathf.Round(chip.center.x - w / 2f), Mathf.Round(chip.y - 17f - lift), Mathf.Round(w), 14f);
+            var old = GUI.color; if (t > 1.1f) GUI.color = new Color(1f, 1f, 1f, 1f - (t - 1.1f) / .3f);
+            CuteUI.Box(r, 6, CuteUI.White, col, 1);
+            CuteUI.Fill(new Rect(Mathf.Round(r.center.x) - 1, r.yMax, 3, 1), col);
+            CuteUI.Fill(new Rect(Mathf.Round(r.center.x), r.yMax + 1, 1, 1), col);
+            CuteUI.LabelCenter(r.center.x, r.center.y, s, CuteUI.Text, true);
+            GUI.color = old;
+        }
+
+        static Rect NameChip(float x, float cy, string name, int n, Color32 col, bool right)
         {
             string t = $"{name} {n}";
             float w = CuteUI.Width(t, true) + 18f;
@@ -384,6 +471,7 @@ namespace PocketCaravan
             CuteUI.Box(r, 5, CuteUI.Paper, CuteUI.Ink, 1);
             CuteUI.Circle(r.x + 4f, r.y + 3f, 8, col, CuteUI.Ink, 1);
             CuteUI.Label(r.x + 14f, r.center.y, t, CuteUI.Text, true);
+            return r;
         }
     }
 }
