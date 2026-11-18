@@ -5,7 +5,7 @@ namespace PocketCaravan
     /// <summary>
     /// 11/19 은샘 "돈을 벌어서 접근 가능한 미니 목표(마일스톤)": 다음에 살 운반 수단. 등짐 → 손수레(썰매) → 짐말(낙타) → 마차.
     /// 지금 운반 수단보다 짐을 더 싣는 것 중 가장 작은 단계. 같은 단계가 둘이면 출신 지역 것 (북유럽 썰매 · 아라비아 낙타).
-    /// 평소 화면에는 없고, Tab으로 상태 카드를 펼치면 "다음 목표 · 짐말 [막대] 210/360" 한 줄로 보인다 (HUD.DrawExpanded, 11/19 은샘).
+    /// 평소 화면에는 없고, 여정 수첩(Q) "성장·시설" 탭 맨 위 운반 수단 카드에 단계 · 다음 목표 돈 막대 · 파는 곳이 보인다 (QuestTracker.DrawGrowth, 11/19 은샘).
     /// </summary>
     public static class VehicleGoal
     {
@@ -22,6 +22,40 @@ namespace PocketCaravan
                 if (best == null || v.capacity < best.capacity || (Mathf.Approximately(v.capacity, best.capacity) && Home(v, origin) && !Home(best, origin))) best = v;
             }
             return best;
+        }
+
+        /// <summary>내 출신의 운반 수단 단계 (짐 한도 순: 등짐 → 손수레(썰매) → 짐말(낙타) → 마차)</summary>
+        public static System.Collections.Generic.List<VehicleData> Ladder(PlayerState p, GameDatabase db)
+        {
+            var list = new System.Collections.Generic.List<VehicleData>();
+            if (db == null) return list;
+            string origin = p != null && p.origin != null ? p.origin.id : "";
+            foreach (var v in db.vehicles)
+            {
+                if (v == null) continue;
+                int at = list.FindIndex(o => Mathf.Approximately(o.capacity, v.capacity));
+                if (at >= 0) { if (Home(v, origin) && !Home(list[at], origin)) list[at] = v; continue; }
+                list.Add(v);
+            }
+            list.Sort((a, b) => a.capacity.CompareTo(b.capacity));
+            return list;
+        }
+
+        /// <summary>이 수단을 파는 장터 이름. 지금 있는 지역(없으면 출신 지역) 장터가 먼저, 최대 max곳</summary>
+        public static string WhereSold(VehicleData v, PlayerState p, GameDatabase db, int max = 3)
+        {
+            if (v == null || db == null) return "";
+            var here = MapRoot.Current != null && MapRoot.Current.region != null ? MapRoot.Current.region : p != null && p.origin != null ? p.origin.homeRegion : null;
+            var near = new System.Collections.Generic.List<string>();
+            var far = new System.Collections.Generic.List<string>();
+            foreach (var t in db.towns)
+            {
+                if (t == null || !TownMarket.ForSale(t).Contains(v) || near.Contains(t.displayName) || far.Contains(t.displayName)) continue;
+                (here != null && t.region == here ? near : far).Add(t.displayName);
+            }
+            near.AddRange(far);
+            if (near.Count > max) return string.Join(" · ", near.GetRange(0, max)) + " 등";
+            return string.Join(" · ", near);
         }
 
         // 같은 단계가 둘이면 출신 지역에서 파는 것 (북유럽 썰매 · 아라비아 낙타, 나머지는 손수레 · 짐말)

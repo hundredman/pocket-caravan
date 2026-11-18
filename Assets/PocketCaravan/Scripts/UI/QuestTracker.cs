@@ -360,6 +360,56 @@ namespace PocketCaravan
         }
 
         // ---------------- 성장·시설 ----------------
+        /// <summary>
+        /// 11/19 은샘 "마일스톤은 여정 수첩에": 운반 수단 카드. 위 줄 단계 칩(등짐 › 손수레 › 짐말 › 마차, 가진 것 ✓ · 다음 것 강조),
+        /// 아래 줄 다음 목표와 돈 막대 (다 모이면 "살 수 있어요!") · 파는 장터. 마차까지 샀으면 "운반 수단을 다 모았어요".
+        /// </summary>
+        static float DrawVehicleGoal(GameManager gm, float y, float w)
+        {
+            var p = gm.Player;
+            var ladder = VehicleGoal.Ladder(p, gm.Db);
+            var next = VehicleGoal.Next(p, gm.Db);
+            float have = Mathf.Max(p.vehicle != null ? p.vehicle.capacity : 0f, p.stowedVehicle != null ? p.stowedVehicle.capacity : 0f);
+            float ch = next != null ? 64 : 44;
+            var card = new Rect(0, y, w, ch);
+            CuteUI.Box(card, 7, CuteUI.Paper, CuteUI.Sell, 2);
+            CuteUI.Circle(10, y + 9, 26, CuteUI.Sell, CuteUI.FrameLo);
+            CuteUI.Icon(CuteUI.Pic.Sack, 18, y + 17, 1, CuteUI.White);
+            // 단계 칩
+            float cx = 44, cy = y + 8;
+            for (int i = 0; i < ladder.Count; i++)
+            {
+                var v = ladder[i];
+                bool owned = v.capacity <= have, isNext = v == next;
+                string label = (owned ? "✓ " : "") + v.displayName;
+                float cw = Mathf.Round(CuteUI.Width(label, true, isNext) + 12);
+                var chip = new Rect(cx, cy, cw, 15);
+                CuteUI.Box(chip, 6, isNext ? CuteUI.SellSoft : owned ? CuteUI.Paper2 : CuteUI.ZeroSoft, isNext ? CuteUI.Sell : CuteUI.KeyLine);
+                CuteUI.LabelCenter(chip.center.x, chip.center.y, label, owned || isNext ? CuteUI.Text : CuteUI.Sub, true, isNext);
+                cx += cw;
+                if (i < ladder.Count - 1) { CuteUI.Label(cx + 2, cy + 7.5f, "›", CuteUI.Sub, true); cx += 10; }
+            }
+            if (next == null)
+            {
+                CuteUI.Label(44, y + 33, "운반 수단을 다 모았어요", CuteUI.Text, true, true);
+                return y + ch + 8;
+            }
+            int money = Mathf.Max(0, p.money), need = Mathf.Max(1, next.price);
+            bool ready = money >= need;
+            float lx = CuteUI.Label(44, y + 33, $"다음 목표 · {next.displayName}", CuteUI.Text, false, true);
+            CuteUI.Label(lx + 6, y + 33.5f, $"짐 {p.CapacityOf(next):0}칸", CuteUI.Sub, true);
+            if (ready) CuteUI.LabelRight(w - 10, y + 33, "살 수 있어요!", CuteUI.Up, true, true);
+            else CuteUI.LabelRight(w - 10, y + 33, $"{money} / {need}냥", CuteUI.Sub, true, true);
+            CuteUI.Bar(new Rect(44, y + 42, w - 54, 6), money / (float)need, CuteUI.Sell, CuteUI.SellSoft);
+            string where = VehicleGoal.WhereSold(next, p, gm.Db);
+            if (where.Length > 0)
+            {
+                CuteUI.Icon(CuteUI.Pic.Pin, 44, y + 51, 1, CuteUI.Sub);
+                CuteUI.Label(53, y + 55, TradeLedgerUI.Fit("파는 곳 · " + where, w - 64, true, false), CuteUI.Sub, true);
+            }
+            return y + ch + 8;
+        }
+
         float DrawGrowth(GameManager gm, float y, float w)
         {
             var p = gm.Player;
@@ -378,6 +428,8 @@ namespace PocketCaravan
                 if (ContractManager.PremiumCredit < next) unlocks.Clear();
                 next = ContractManager.PremiumCredit; unlocks.Add("게시판 귀한 짐 의뢰");
             }
+
+            y = DrawVehicleGoal(gm, y, w);   // 11/19 운반 수단 마일스톤
 
             // 내 신용 카드
             float chipsH = 0; { float cx = 54; foreach (var u in unlocks) { float cwid = Mathf.Round(CuteUI.Width(u, true) + 16); if (cx + cwid > w - 26) { cx = 54; chipsH += 18; } cx += cwid + 4; } if (unlocks.Count > 0) chipsH += 18; }

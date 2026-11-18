@@ -240,8 +240,7 @@ namespace PocketCaravan
             float x = 22, y = 5, inner = w - 20;
             // 10/28 평판이 두 줄로 늘어나면 아래 줄을 덮던 문제: 높이를 재서 칸을 늘린다
             float repH = CuteUI.WrapHeight(repText, inner, true);
-            var goalV = VehicleGoal.Next(p, gm.Db);   // 11/19 다음에 살 운반 수단 (마일스톤): 평소 화면엔 없고 Tab으로 펼칠 때만 (은샘)
-            float h = 30 + 16 + 6 + 12 + repH + 4 + 15 + 15 + (goalV != null ? 15 : 0) + 7 + 12 + (p.HasAnyCargo ? 12 : 0) + 8;
+            float h = 30 + 16 + 6 + 12 + repH + 4 + 15 + 15 + 7 + 12 + (p.HasAnyCargo ? 12 : 0) + 8;
             ScreenZones.Mark("hud.card", Rect.MinMaxRect(4, 4, x + w, y + h));
             CuteUI.Card(new Rect(x, y, w, h));
             if (!UIState.Blocking && CuteUI.Hit(Rect.MinMaxRect(4, 4, x + w, y + h), GUIContent.none, GUIStyle.none)) InputReader.Press('\t');   // 11/08 눌러도 접기
@@ -279,22 +278,6 @@ namespace PocketCaravan
             CuteUI.Label(x + 23, cy + 7, "체력", CuteUI.Text, true);
             CuteUI.Bar(new Rect(barX, cy + 3, 76, 8), p.stamina, CuteUI.Stamina, CuteUI.StaminaHi);
             cy += 15;
-            if (goalV != null)
-            {   // 다음 목표 · 짐말   [■■■□□] 214/360  (다 모이면 "살 수 있어요!")
-                int have = Mathf.Max(0, p.money), need = Mathf.Max(1, goalV.price);
-                bool ready = have >= need;
-                CuteUI.Icon(CuteUI.Pic.Coin, x + 10, cy + 2);
-                CuteUI.Label(x + 23, cy + 7, "다음 목표 · " + goalV.displayName, CuteUI.Text, true);
-                if (ready) CuteUI.LabelRight(x + w - 10, cy + 7, "살 수 있어요!", CuteUI.Up, true, true);
-                else
-                {
-                    string num = $"{have}/{need}";
-                    float nw = CuteUI.Width(num, true);
-                    CuteUI.LabelRight(x + w - 10, cy + 7, num, CuteUI.Sub, true);
-                    CuteUI.Bar(new Rect(barX, cy + 3, 76 - nw - 4, 8), have / (float)need, CuteUI.Sell, CuteUI.SellSoft);
-                }
-                cy += 15;
-            }
             CuteUI.Fill(new Rect(x + 10, cy + 2, w - 20, 1), CuteUI.Line);
             cy += 7;
             CuteUI.Label(x + 10, cy + 6, $"발밑: {roadName}", CuteUI.Sub, true);
