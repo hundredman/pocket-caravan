@@ -129,7 +129,8 @@ namespace PocketCaravan
             CuteUI.Label(r.x + 45, r.y + 10, dayText, night ? NightText : CuteUI.Text, false, true);
             DrawTime(new Rect(r.x + 44, r.y + 16, W - 48 - FoldW, 12), night ? NightSub : CuteUI.Sub);
             // 접기 단추 ︿ (오른쪽 끝)
-            if (hoverFold) Dot(new Rect(foldR.x, foldR.y, foldR.width, foldR.height), night ? NightHover : CuteUI.Paper2);
+            // 11/18 은샘: 올렸을 때 밝은 칸이 시계 둥근 모서리 밖으로 뾰족하게 나왔다 → 안쪽에 작은 둥근 칸으로
+            if (hoverFold) { var hc = night ? NightHover : CuteUI.Paper2; CuteUI.Box(new Rect(foldR.x + 1f, r.y + 4f, foldR.width - 3f, H - 8f), 4, hc, hc, 0); }
             Dot(new Rect(foldR.x - 1f, r.y + 6f, 1f, H - 12f), night ? NightArc : new Color32(0xD2, 0xB2, 0x84, 255));   // 가르는 줄
             Chevron(foldR.center.x, foldR.center.y, true, hoverFold ? CuteUI.Interact : night ? NightSub : CuteUI.Sub);
             ScreenZones.MarkSpot("hud.clock.fold", new Rect(foldR.x - 1f, r.y, foldR.width + 3f, H));
