@@ -47,6 +47,34 @@ namespace PocketCaravan
         public string CurrentPage => pages.Count > 0 ? pages[pageIndex] : "";
         public bool ChoicesVisible => open && pages.Count > 0 && pageIndex == pages.Count - 1;
 
+        // 11/19 글자가 한 자씩 나온다 (타자기). 쪽이 넘어가면 처음부터. 나오는 중에 Space·클릭 = 그 쪽을 한 번에 다 보여 준다.
+        //   . ! ? … 뒤에서 잠깐, 쉼표 뒤에서 조금 쉰다. 선택지는 글이 다 나온 뒤에 보인다. 말소리(ArabiaVoice 등)가 Revealed를 따라 간다
+        const float CharsPerSecond = 34f;
+        float typed, holdUntil; int pauseAt = -1;
+        public static DialogueUI Instance => instance;
+        public bool IsOpen => open;
+        public string Speaker => speaker;
+        /// <summary>지금 쪽에서 보이는 글자 수</summary>
+        public int Revealed => Mathf.Min(CurrentPage.Length, Mathf.FloorToInt(typed));
+        /// <summary>글자가 아직 나오는 중</summary>
+        public bool Typing => open && pages.Count > 0 && typed < CurrentPage.Length;
+        void ResetTyping() { typed = 0f; holdUntil = 0f; pauseAt = -1; }
+        void FinishTyping() { typed = CurrentPage.Length; }
+
+        void AdvanceTyping()
+        {
+            if (!Typing || Time.unscaledTime < holdUntil) return;
+            string page = CurrentPage;
+            typed = Mathf.Min(page.Length, typed + Time.unscaledDeltaTime * CharsPerSecond);
+            int n = Revealed;
+            if (n > 0 && n < page.Length && n != pauseAt)
+            {
+                char c = page[n - 1];
+                float hold = c == '.' || c == '!' || c == '?' || c == '…' ? .22f : c == ',' || c == '~' ? .09f : c == '\n' ? .06f : 0f;
+                if (hold > 0f) { pauseAt = n; holdUntil = Time.unscaledTime + hold; typed = n; }
+            }
+        }
+
         void Awake() => instance = this;
 
         public static void Show(string speaker, string text, params Choice[] choices)
@@ -65,6 +93,7 @@ namespace PocketCaravan
             d.pageIndex = 0;
             d.pageWidth = 0;
             d.choices.Clear(); d.choiceScroll = Vector2.zero; d.focus = 0;
+            d.ResetTyping();
             if (choices != null) d.choices.AddRange(choices);
             d.open = true;
             d.openedFrame = Time.frameCount;
@@ -92,7 +121,14 @@ namespace PocketCaravan
                 if(next.version==UIState.ResetVersion && next.scene==UnityEngine.SceneManagement.SceneManager.GetActiveScene().handle) Show(next.speaker,next.text,next.choices);
                 return;
             }
-            if (!open || pages.Count == 0 || Time.frameCount == openedFrame) return;
+            if (!open || pages.Count == 0) return;
+            AdvanceTyping();
+            if (Time.frameCount == openedFrame) return;
+            if (Typing)
+            {
+                if (InputReader.InteractPressed() || InputReader.ConfirmPressed() || InputReader.CancelPressed()) FinishTyping();
+                return;
+            }
             if (!ChoicesVisible)
             {
                 if (InputReader.InteractPressed() || InputReader.ConfirmPressed() || InputReader.CancelPressed()) NextPage();
@@ -119,6 +155,7 @@ namespace PocketCaravan
             if (pageIndex >= pages.Count - 1) return;
             pageIndex++;
             openedFrame = Time.frameCount;
+            ResetTyping();
         }
 
         /// <summary>미리 나눈 한 줄. start = 대사 한 줄(원문의 줄)의 첫 줄, unit = 원문의 몇 번째 줄에서 나왔는지</summary>
@@ -302,12 +339,19 @@ namespace PocketCaravan
             }
             // 11/11 은샘: 글 높이에 맞춰 위아래 가운데 (한 줄이면 위아래 여백, 두 줄이면 고르게)
             float textH = Mathf.Min(BodyHeight, bodyStyle.CalcHeight(new GUIContent(CurrentPage), bodyWidth));
-            GUI.Label(new Rect(r.x + 10, r.y + 15 + Mathf.Round((BodyHeight - textH) * 0.5f), bodyWidth, textH + 2f), CurrentPage, bodyStyle);   // 이름이 창 위 이름표로 올라가서 본문도 위로
+            GUI.Label(new Rect(r.x + 10, r.y + 15 + Mathf.Round((BodyHeight - textH) * 0.5f), bodyWidth, textH + 2f), CurrentPage.Substring(0, Revealed), bodyStyle);   // 11/19 나온 글자까지만 (자리는 쪽 전체 기준이라 줄이 흔들리지 않는다)   // 이름이 창 위 이름표로 올라가서 본문도 위로
 
             if (pages.Count > 1)
                 GUI.Label(new Rect(r.x + 10, stacked ? r.y + 72 : r.yMax - 26, 60, 16), $"<color=#6a5464>{pageIndex + 1} / {pages.Count}</color>", CuteUI.PaperSmall);
 
             float bx = r.xMax - 10;
+            if (Typing)
+            {
+                // 11/19 글이 나오는 중: 창 아무 데나 누르면 다 보여 준다 (단추·선택지는 다 나온 뒤에)
+                var ev = Event.current;
+                if (ev.type == EventType.MouseDown && ev.button == 0 && r.Contains(ev.mousePosition)) { FinishTyping(); ev.Use(); }
+                return;
+            }
             if (!ChoicesVisible)
             {
                 if (CuteUI.PaperButtonBold(new Rect(bx - 104, r.yMax - 30, 104, 18), "다음 (Space)")) NextPage();   // 11/18 청록 단추는 흰 굵은 글씨

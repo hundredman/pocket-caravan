@@ -240,8 +240,10 @@ namespace PocketCaravan
 
         void OnGUI()
         {
+            if (panel != Panel.Start) startShown = false;   // 11/19 다시 열면 다시 하나씩
             if (panel == Panel.None) return;
             UIStyle.Begin();
+            UIAppear.Reset();
             Styles();
             var e = Event.current;
             // 11/17 화살표로 단추 고르기: 칸에 쓰는 중이면 ↓(이름→접속키→단추) · ↑(단추→접속키→이름)로 오가고, 단추 줄에서는 ← →
@@ -434,8 +436,14 @@ namespace PocketCaravan
             return y;
         }
 
+        // 11/19 첫 화면 연출: 패널이 열린 때부터 하나씩. 게임을 켜고 맨 처음 한 번은 어둠에서 밝아진다
+        float startAt = -9f; bool startShown; static bool launchedOnce;
+        static readonly Color32 Divider = new Color32(0xDD, 0xCC, 0xBC, 0xFF);
+        float A(float delay, float dur = .36f) => UIAppear.K(startAt, delay, dur);
+
         void DrawStart()
         {
+            if (!startShown) { startShown = true; startAt = Time.unscaledTime; }
             // 11/18 7판 (디자인 의견 "작은 동물 상인들이 함께하는 아기자기한 여행 상점"):
             //   왼쪽 = 네 상인(토비 · 루나 · 보리 · 사피)이 함께 장사를 준비하는 상점 (TitleUI.Scene, 말풍선은 돌아가며 하나),
             //   오른쪽 = "상인 수첩" 패널: 인사 → 상인 이름(이름표 그림) → 접속키(열쇠 그림) → 기억하기 · Enter 안내 →
@@ -444,51 +452,79 @@ namespace PocketCaravan
             GUI.depth = -600;   // 시작 화면(-500) 위
             float W = UIStyle.VirtualWidth, H = UIStyle.VirtualHeight;
             CuteUI.Backdrop(null, false);
+            UIAppear.Push(A(.1f, .5f), -18f, 0f);   // 왼쪽 상점 장면이 옆에서 스르르
             TitleUI.Scene(W, H, null, null, null, "오늘은 어느 장터로 떠날까?");
+            UIAppear.Pop();
 
             string n = nameBox.Full.Trim();
             bool back = n.Length > 0 && n == rememberedName;
-            float ph = 16 + 26 + 42 + 42 + (showServer ? 36 : 0) + 24 + 44 + 38 + 26 + 10;
+            // 11/19 정돈: 위·아래 여백을 같게(18), 칸과 단추의 왼쪽·오른쪽 끝을 한 줄로 맞춘다. 안내가 없으면 그 자리도 비우지 않는다
+            bool hasNote = !string.IsNullOrEmpty(note);
+            float ph = 18 + 30 + 44 + 44 + (showServer ? 36 : 0) + 26 + 40 + 24 + (hasNote ? 26 : 0) + 18;
             var p = TitleUI.MenuPanel(W, H, ph);
+            UIAppear.Push(A(.24f, .45f), 18f, 0f);   // 수첩이 오른쪽에서
             TitleUI.Panel(p, "상인 수첩");
-            float x = p.x + 20, w = p.width - 40, y = p.y + 16;
+            float x = p.x + 20, w = p.width - 40, y = p.y + 18;
+            UIAppear.Push(A(.4f), 0f, 6f);
             CuteUI.Label(x, y + 8, TradeLedgerUI.Fit(back ? $"어서 와요, {n} 님!" : "어서 와요, 상인님!", w, false, true), TitleUI.Choco, false, true);
-            y += 26;
+            for (float dx = 0; dx < w; dx += 4) CuteUI.Fill(new Rect(x + dx, y + 22, 2, 1), Divider);   // 인사 아래 점선
+            UIAppear.Pop();
+            y += 30;
+            UIAppear.Push(A(.48f), 0f, 6f);
             CuteUI.Label(x, y + 5, "상인 이름", TitleUI.ChocoSoft, true);
             NoteField(new Rect(x, y + 12, w, 24), nameBox, TitleUI.FieldIcon.Tag);
-            y += 42;
+            UIAppear.Pop();
+            y += 44;
+            UIAppear.Push(A(.56f), 0f, 6f);
             CuteUI.Label(x, y + 5, "접속키", TitleUI.ChocoSoft, true);
             NoteField(new Rect(x, y + 12, w, 24), keyBox, TitleUI.FieldIcon.Key);
-            y += 42;
+            UIAppear.Pop();
+            y += 44;
             if (showServer)
             {
                 CuteUI.Label(x, y + 5, "서버 주소 (개발용 · F8)", TitleUI.ChocoSoft, true);
                 NoteField(new Rect(x, y + 12, w, 22), addressBox, TitleUI.FieldIcon.Globe);
                 y += 36;
             }
+            UIAppear.Push(A(.64f), 0f, 6f);
             float ew = CuteUI.Width("접속", true) + 4 + CuteUI.KeycapWidth("Enter");
             bool rem = NoteCheck(new Rect(x, y, w - ew - 6, 14), remember, "이 컴퓨터에 기억하기");
             if (rem != remember) { remember = rem; Sfx.Play("open", .4f); }
             CuteUI.Keycap(x + w - ew, y + 1, "Enter", true);
             CuteUI.LabelRight(x + w, y + 7, "접속", TitleUI.ChocoSoft, true);
-            y += 24;
+            UIAppear.Pop();
+            y += 26;
             // 접속하기 (청록 = 주요 행동) · 오프라인으로 놀기 (크림 보조). 화살표로 고르면 모서리 꺾쇠 + ▶
-            var go = new Rect(x + 8, y, w - 16, 32);
+            var go = new Rect(x, y, w, 30);
             bool k1 = KeyNav.Item(go, out bool f1);
-            if ((TitleUI.Button(go, PrimaryLabel(w - 30), true, f1) || k1) && !submitting) Submit();
-            y += 44;
-            var off = new Rect(x + 26, y, w - 52, 24);
+            UIAppear.Push(A(.72f, .4f), 0f, 8f);
+            if ((TitleUI.Button(go, PrimaryLabel(w - 20), true, f1) || k1) && !submitting) Submit();
+            UIAppear.Pop();
+            y += 40;
+            var off = new Rect(x, y, w, 24);
             bool k2 = KeyNav.Item(off, out bool f2);
+            UIAppear.Push(A(.82f, .4f), 0f, 8f);
             if (TitleUI.Button(off, "오프라인으로 놀기", false, f2, true) || k2) PlayAlone();
-            y += 38;
+            UIAppear.Pop();
+            y += 24 + 14;
             // 짧은 계정 안내 (두 줄까지). 틀렸으면 빨간 띠, 접속 중이면 그 말
+            UIAppear.Push(A(.95f, .5f), 0f, 0f);
             if (!string.IsNullOrEmpty(note) && noteBad)
             {
                 var nr = new Rect(x - 4, y - 4, w + 8, 20);
                 CuteUI.Box(nr, 3, CuteUI.AlertSoft, CuteUI.Alert, 1);
                 CuteUI.LabelCenter(nr.center.x, nr.center.y, TradeLedgerUI.Fit(note, w, true, true), CuteUI.Alert, true, true);
             }
-            else CuteUI.WrapWords(x, y - 6, w, !string.IsNullOrEmpty(note) ? note : "처음이면 이름과 접속키를 정하세요. 계정이 자동으로 만들어져요", TitleUI.ChocoSoft, true);
+            else if (!string.IsNullOrEmpty(note)) CuteUI.WrapWords(x, y - 6, w, note, TitleUI.ChocoSoft, true);   // 11/19 평소 안내 문구는 빼고, 접속 중·알림이 있을 때만
+            UIAppear.Pop();
+            UIAppear.Pop();   // 수첩
+            // 게임을 켜고 맨 처음: 어둠에서 천천히 밝아진다
+            float lk = A(0f, .8f);
+            if (!launchedOnce)
+            {
+                if (lk < 1f) CuteUI.Fill(new Rect(0, 0, W, H), new Color32(0x1E, 0x14, 0x12, (byte)Mathf.RoundToInt(255f * (1f - lk))));
+                else launchedOnce = true;
+            }
         }
 
         /// <summary>11/18 상인 수첩 입력 칸 (아이보리 · 초콜릿 테 · 왼쪽 작은 그림). 누르면 그 칸에 쓴다</summary>

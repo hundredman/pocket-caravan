@@ -51,9 +51,26 @@ namespace PocketCaravan
         /// 짧고 통통한 도트 단추. primary = 밝은 청록(윗면 빛, 아래 4px 초콜릿 그림자), 아니면 크림(3px 그림자).
         /// 마우스를 누르고 있으면 2px 내려가고 그림자가 준다. selected = 키보드로 고른 것 (색은 그대로, 모서리 꺾쇠 + ▶). 누르면 true
         /// </summary>
+        // 11/19 마우스를 올리면 작은 '톡', 누르면 '딸깍' (시작·로그인 화면 단추·카드)
+        static int hoverKey;
+        /// <summary>r 위에 마우스가 처음 올라왔을 때 한 번 소리. 누르는 순간엔 딸깍</summary>
+        public static void Hover(Rect r, string key, bool enabled = true)
+        {
+            var e = Event.current;
+            bool over = enabled && r.Contains(e.mousePosition);
+            int k = key.GetHashCode() ^ ((int)r.x * 73856093) ^ ((int)r.y * 19349663);
+            if (e.type == EventType.Repaint)
+            {
+                if (over && hoverKey != k) { hoverKey = k; Sfx.Play("hover", .32f); }
+                else if (!over && hoverKey == k) hoverKey = 0;
+            }
+            if (over && e.type == EventType.MouseDown && e.button == 0) Sfx.Play("click", .42f);
+        }
+
         public static bool Button(Rect r, string label, bool primary, bool selected = false, bool small = false, bool enabled = true)
         {
             var e = Event.current;
+            Hover(r, label, enabled);
             bool hover = enabled && r.Contains(e.mousePosition);
             bool pressed = hover && GUIUtility.hotControl != 0;
             float sh = primary ? 4 : 3;
@@ -159,7 +176,10 @@ namespace PocketCaravan
 
             // 좌판 (뒤판) 자리
             var back = Tex("stallBack");
-            var stall = new Rect(Mathf.Round(cx - back.width * k / 2f - (saved != null ? 26 : 0)), gy + 6 - back.height * k, back.width * k, back.height * k);
+            // 11/19 이어하기: 화분 · 좌판 · 상인을 한 줄로 나란히 두고, 셋을 합친 너비의 가운데를 로고 가운데(cx)에 맞춘다
+            float potW = saved != null ? Tex("plant").width * k : 0f, heroW = saved != null ? 16f * k : 0f, gapL = 4f, gapR = 6f;
+            float shift = saved != null ? ((potW + gapL) - (gapR + heroW)) / 2f : 0f;
+            var stall = new Rect(Mathf.Round(cx - back.width * k / 2f + shift), gy + 6 - back.height * k, back.width * k, back.height * k);
             float counterTop = stall.y + 37 * k;
             CuteUI.Box(new Rect(stall.x + 6, gy - 2, stall.width - 12, 10), 4, ChocoShadow, ChocoShadow, 0);
             Draw(back, stall);
@@ -219,11 +239,11 @@ namespace PocketCaravan
                 CuteUI.LabelCenter(tr.center.x, tr.center.y, sign, Choco, true, true);
             }
             var pot2 = Tex("plant");
-            Draw(pot2, new Rect(stall.x - pot2.width * k + 2, gy + 8 - pot2.height * k, pot2.width * k, pot2.height * k));
+            Draw(pot2, new Rect(stall.x - gapL - pot2.width * k, gy + 6 - pot2.height * k, pot2.width * k, pot2.height * k));
             float open = t - openedAt;
             if (open < 0f || open > 60f) { openedAt = t; open = 0f; }
-            var hd = Hero(saved, 0, new Vector2(stall.xMax + 30, gy + 14), k, open < 1.2f ? open : 9f, true, 0f);
-            if (!string.IsNullOrEmpty(say) && hd.width > 0) Bubble(say, hd, Mathf.Min(open, 0.5f), sw, true);
+            var hd = Hero(saved, 0, new Vector2(stall.xMax + gapR + heroW / 2f, gy + 10), k, open < 1.2f ? open : 9f, true, 0f);
+            if (!string.IsNullOrEmpty(say) && hd.width > 0) Bubble(say, hd, Mathf.Min(open, 0.5f), sw);   // 말풍선은 머리 위 가운데 (장면 밖으로 안 나가게)
         }
 
         static float openedAt = -99f;

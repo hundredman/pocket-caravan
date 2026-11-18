@@ -25,6 +25,18 @@ namespace PocketCaravan
         long tid; int idx, seed; float bornAt; string foundBy = "";
         bool online, claimed;
         long announced = -1;
+        // 11/19 소문 알림은 게임을 막 켰을 때(시작 화면·시작 연출·맵 불러오기) 바로 띄우지 않고, 맵에 도착해 몇 초 지난 뒤에 띄운다
+        string pendingRumor; float settledSince = -1f;
+        const float RumorDelay = 6f;
+        void QueueRumor(string text) { pendingRumor = text; }
+        void FlushRumor()
+        {
+            bool settled = GM != null && !StartScreen.IsOpen && !StartLaunch.Active && !GM.IsTravelling && MapRoot.Current != null && PlayerController.Instance != null;
+            if (!settled) { settledSince = -1f; return; }
+            if (settledSince < 0f) settledSince = Time.unscaledTime;
+            if (pendingRumor == null || Time.unscaledTime - settledSince < RumorDelay) return;
+            Notify.Event(pendingRumor, 5f); pendingRumor = null;
+        }
         bool dev; Vector3Int devCell;   // 시험용: 지금 맵 가까이에 숨긴 상자 (/시험 보물)
         // 이 맵의 상자
         GameObject chest; SpriteRenderer chestSr; Vector3Int chestCell; string chestMap;
@@ -59,11 +71,11 @@ namespace PocketCaravan
                 if (fresh) claimed = false;
                 tid = m.tid; idx = m.idx; seed = m.seed; foundBy = m.found ?? "";
                 bornAt = Time.unscaledTime - m.age / 1000f;
-                if (!string.IsNullOrEmpty(foundBy)) { RemoveChest(); return; }
+                if (!string.IsNullOrEmpty(foundBy)) { RemoveChest(); pendingRumor = null; return; }
                 if (tid != 0 && announced != tid)
                 {
                     announced = tid;
-                    if (!StartScreen.IsOpen) Notify.Event($"보물 상자 소문! {RegionName(TargetMap)} 어딘가에 상자가 숨겨졌대요", 5f);
+                    QueueRumor($"보물 상자 소문! {RegionName(TargetMap)} 어딘가에 상자가 숨겨졌대요");
                 }
                 Place();
                 return;
@@ -92,7 +104,7 @@ namespace PocketCaravan
             bornAt = Time.unscaledTime - MapHintAfter;   // 혼자일 때는 맵 이름까지 바로
             foundBy = "";
             claimed = GM.GetMemo("trs:local", -1f) >= day;
-            if (!claimed && announced != tid) { announced = tid; Notify.Event($"보물 상자 소문! 오늘은 {MapName(TargetMap)}에 상자가 숨겨졌대요", 5f); }
+            if (!claimed && announced != tid) { announced = tid; QueueRumor($"보물 상자 소문! 오늘은 {MapName(TargetMap)}에 상자가 숨겨졌대요"); }
             Place();
         }
 
@@ -211,6 +223,7 @@ namespace PocketCaravan
 
         void Claim()
         {
+            pendingRumor = null;   // 11/19 이미 찾았으면 소문은 띄우지 않는다
             claimed = true;
             RemoveChest();
             NetCollection.AddStat(NetCollection.StatTreasure);
@@ -223,6 +236,7 @@ namespace PocketCaravan
 
         void Update()
         {
+            FlushRumor();
             if (!(online && Online) && !(dev && !claimed)) LocalTick();
             // 처음 들어온 맵(저장 불러오기)에는 맵 들어옴 알림이 소문보다 먼저 올 수 있다: 2초마다 자리를 확인한다
             if (chest == null && Active && Time.frameCount % 120 == 0) Place();

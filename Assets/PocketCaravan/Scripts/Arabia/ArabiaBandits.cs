@@ -122,10 +122,31 @@ namespace PocketCaravan
         bool Locked => UIState.Blocking || (GameManager.I != null && GameManager.I.IsTravelling);
         bool MyMap { get { var r = GetComponentInParent<MapRoot>(); return r == null || r == MapRoot.Current; } }
 
+        // 11/19: 아라비아 시작 튜토리얼(ArabiaIntro) 동안은 도적이 숨어 있다 (보이지도, 쫓지도 않는다).
+        //   튜토리얼이 끝나는 순간 그 자리에서 모래 먼지와 함께 나타나고, 몇 초 뒤부터 평소처럼 매복한다
+        bool hidden;
+
+        void SetHidden(bool h)
+        {
+            hidden = h;
+            foreach (var r in GetComponentsInChildren<Renderer>(true)) r.enabled = !h;
+            foreach (var c in GetComponentsInChildren<Collider2D>(true)) c.enabled = !h;
+            if (h) { bandit.enabled = false; moving = false; return; }
+            if (phase == Phase.Reveal) phase = Phase.Ambush;
+            if (phase == Phase.Warmup) { warm = 0; bandit.enabled = true; }
+            else bandit.enabled = phase == Phase.Free;
+            readyAt = Time.time + 3.5f;
+            Puff(8);
+        }
+
         void Update()
         {
             var pc = PlayerController.Instance; var gm = GameManager.I;
-            if (pc == null || gm == null || phase == Phase.Free) return;
+            if (bandit == null) return;
+            bool hold = ArabiaIntro.Active;
+            if (hold != hidden) SetHidden(hold);
+            if (hidden) { if (bandit.enabled) bandit.enabled = false; TickDust(Time.deltaTime); return; }
+            if (pc == null || gm == null || phase == Phase.Free) { TickDust(Time.deltaTime); return; }
             switch (phase)
             {
                 case Phase.Warmup:

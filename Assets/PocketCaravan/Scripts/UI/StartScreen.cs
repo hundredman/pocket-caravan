@@ -21,6 +21,29 @@ namespace PocketCaravan
         int visiblePick = -1;
         Rect pickViewport, pickFooter;
         readonly System.Collections.Generic.List<Rect> pickRects = new System.Collections.Generic.List<Rect>();
+        Rect menuGoRect; Vector2 pickCardCenter;   // 11/19 시작 연출(StartLaunch)이 오므라들 곳
+        // 11/19 화면이 처음 뜰 때 요소가 하나씩 나타나는 연출: 화면(모드)이 바뀐 때부터 잰다. 위에 접속 창이 떠 있으면 닫힌 뒤부터.
+        float shownAt = -9f, firstAt = -9f, confirmAt = -9f; Mode shownMode = Mode.Closed; bool shownConfirm;
+        readonly System.Collections.Generic.Stack<(Color, Matrix4x4)> appear = new System.Collections.Generic.Stack<(Color, Matrix4x4)>();
+        float Appear(float delay, float dur = .36f, float from = -1f)
+        {
+            float x = Mathf.Clamp01((Time.unscaledTime - (from >= 0f ? from : shownAt) - delay) / dur);
+            return 1f - (1f - x) * (1f - x) * (1f - x);
+        }
+        /// <summary>k(0→1)만큼 나타난 모습으로 그리기 시작: 투명도 + (dx,dy)만큼 밀려 있다가 제자리로</summary>
+        void Push(float k, float dx = 0f, float dy = 10f)
+        {
+            appear.Push((GUI.color, GUI.matrix));
+            var c = GUI.color; c.a *= k; GUI.color = c;
+            GUI.matrix = GUI.matrix * Matrix4x4.Translate(new Vector3(Mathf.Round((1f - k) * dx), Mathf.Round((1f - k) * dy), 0f));
+        }
+        void Pop() { if (appear.Count == 0) return; var (c, m) = appear.Pop(); GUI.color = c; GUI.matrix = m; }
+        /// <summary>게임을 켜고 처음 뜰 때만: 어둠에서 천천히 밝아진다</summary>
+        void LaunchFade(float W, float H)
+        {
+            float k = Appear(0f, .7f, firstAt);
+            if (k < 1f) CuteUI.Fill(new Rect(0, 0, W, H), new Color32(0x1E, 0x14, 0x12, (byte)Mathf.RoundToInt(255f * (1f - k))));
+        }
         static int PickColumns(float width) => width >= 444f ? 2 : 1;
 
         public static bool IsOpen => inst != null && inst.mode != Mode.Closed;
@@ -46,6 +69,7 @@ namespace PocketCaravan
             inst.pick = 0; inst.pickScroll = Vector2.zero; inst.visiblePick = -1;
             inst.mode = saveExists ? Mode.Menu : Mode.Pick;
             inst.lastMove = Vector2.one;   // 첫 프레임에 눌려 있던 키는 무시
+            inst.shownMode = Mode.Closed; inst.firstAt = -9f;   // 11/19 다시 열 때도 처음처럼 하나씩
             UIState.Blocking = true;
         }
 
@@ -53,6 +77,7 @@ namespace PocketCaravan
         {
             if (mode == Mode.Closed || GameManager.I == null) return;
             UIState.Blocking = true;
+            if (StartLaunch.Busy) { lastMove = Vector2.one; return; }   // 11/19 시작 연출 중엔 키를 받지 않는다
             if (Held) { lastMove = Vector2.one; return; }   // 위에 다른 화면이 떠 있다. 돌아올 때 눌려 있던 키는 무시
             var choices = StartChoices.Get();
             Vector2 mv = InputReader.MoveVector();
@@ -79,7 +104,7 @@ namespace PocketCaravan
                 if (step.y != 0) { menuIndex = 1 - menuIndex; Sfx.Play("open"); }
                 if (InputReader.EnterPressed())
                 {
-                    if (menuIndex == 0) { Sfx.Play("accept"); mode = Mode.Closed; GameManager.I.ContinueFromStartScreen(); }
+                    if (menuIndex == 0) { Sfx.Play("accept"); StartLaunch.Play(menuGoRect.center, false, () => { mode = Mode.Closed; GameManager.I.ContinueFromStartScreen(); }); }
                     else { Sfx.Play("open"); confirmNew = true; confirmIndex = 1; }   // 11/18 바로 넘어가지 않고 한 번 묻는다
                 }
                 return;
@@ -97,8 +122,7 @@ namespace PocketCaravan
                 var c = choices.choices[pick];
                 if (c.origin == null || string.IsNullOrEmpty(c.startScene)) { Sfx.Play("cancel"); return; }
                 Sfx.Play("accept");
-                mode = Mode.Closed;
-                GameManager.I.BeginNewGame(c);
+                StartLaunch.Play(pickCardCenter, true, () => { mode = Mode.Closed; GameManager.I.BeginNewGame(c); });   // 11/19 시작 연출 뒤에 떠난다
             }
         }
 
@@ -112,6 +136,13 @@ namespace PocketCaravan
             UIStyle.Begin();
             GUI.depth = -500;   // HUD·대화창 위, 맵 이동 페이드(-1000) 아래
             float W = UIStyle.VirtualWidth, H = UIStyle.VirtualHeight;
+            if (Event.current.type == EventType.Layout || Event.current.type == EventType.Repaint)
+            {
+                if (Held) { shownAt = Time.unscaledTime; firstAt = -100f; }   // 접속 창이 떠 있으면: 닫힌 뒤부터 하나씩 (뒤가 어두워지지 않게 어둠 걷힘은 생략)
+                if (mode != shownMode) { shownMode = mode; shownAt = Time.unscaledTime; if (firstAt == -9f) firstAt = shownAt; }   // -9 = 아직, -100 = 어둠 걷힘 생략
+                if (confirmNew != shownConfirm) { shownConfirm = confirmNew; confirmAt = Time.unscaledTime; }
+            }
+            appear.Clear();
             var net = NetClient.I;
             bool online = net != null && net.Status == NetClient.State.Online;
             CuteUI.Backdrop(null, false);
@@ -128,16 +159,20 @@ namespace PocketCaravan
                     CuteUI.Label(cr.x + 14, cr.center.y, chip, TitleUI.Choco, true, true);
                 }
                 DrawMenu(W, H);
+                LaunchFade(W, H);
                 return;
             }
             // 11/18 상인 고르기: 낮고 덜 꾸민 코랄 띠 안에 질문 (카드보다 덜 눈에 띄게)
             var bar = new Rect(16, 8, W - 32, 22);
+            Push(Appear(.05f, .4f), 0f, -12f);   // 11/19 위 띠가 위에서 내려온다
             CuteUI.Box(bar, 3, TitleUI.Coral, TitleUI.Choco, 1, 2, TitleUI.ChocoShadow);
             CuteUI.Label(bar.x + 10, bar.center.y, "바리바리", CuteUI.White, true, true);
             CuteUI.LabelCenter(bar.center.x, bar.center.y + 1, "어느 문명의 상인으로 떠날까?", TitleUI.Choco, false, true);
             CuteUI.LabelCenter(bar.center.x, bar.center.y, "어느 문명의 상인으로 떠날까?", CuteUI.White, false, true);
             if (online) CuteUI.LabelRight(bar.xMax - 10, bar.center.y, $"온라인 · {net.MyName}", CuteUI.White, true);
+            Pop();
             DrawPick(W, H);
+            LaunchFade(W, H);
         }
 
         /// <summary>
@@ -153,11 +188,15 @@ namespace PocketCaravan
             if (save != null && all != null) mine = all.choices.Find(c => c.origin != null && c.origin.id == save.origin && PlayerAppearance.HasFrames(c.origin));
             var map = save != null ? WorldIndex.Get()?.Map(save.scene) : null;
             string place = map != null && !string.IsNullOrEmpty(map.displayName) ? map.displayName : null;
+            Push(Appear(.08f, .5f), -18f, 0f);   // 11/19 왼쪽 상점 장면이 옆에서 스르르
             if (mine != null) TitleUI.Scene(W, H, mine, place, "오늘도 장사하러 가요!", "지난 장사를 이어서 할까요?");
             else TitleUI.Scene(W, H, null, null, null, "지난 장사를 이어서 할까요?");
+            Pop();
 
             var p = TitleUI.MenuPanel(W, H, 222);
+            Push(Appear(.22f, .45f), 18f, 0f);   // 수첩이 오른쪽에서
             TitleUI.Panel(p, "내 상인");
+            Push(Appear(.38f), 0f, 6f);
             float x = p.x + 20, y = p.y + 18, iw = p.width - 40;
             string name = mine != null && !string.IsNullOrEmpty(mine.animal) ? mine.animal : "지난 상인";
             var m = GUI.matrix;
@@ -172,6 +211,8 @@ namespace PocketCaravan
                 CuteUI.Box(tr, 3, TitleUI.Coral, TitleUI.Choco, 1);
                 CuteUI.LabelCenter(tr.center.x, tr.center.y, tag, CuteUI.White, true, true);
             }
+            Pop();
+            Push(Appear(.48f), 0f, 6f);
             float cellW = Mathf.Floor((iw - 6) / 2f);
             var c1 = new Rect(x, y + 34, cellW, 32);
             var c2 = new Rect(x + cellW + 6, y + 34, cellW, 32);
@@ -181,19 +222,30 @@ namespace PocketCaravan
                 CuteUI.Label(cell.x + 7, cell.y + 9, cap, TitleUI.ChocoSoft, true);
                 CuteUI.Label(cell.x + 7, cell.y + 22, val, TitleUI.Choco, false, true);
             }
+            Pop();
+            Push(Appear(.56f), 0f, 6f);
             if (place != null)
             {
                 CuteUI.Fill(new Rect(x + 1, y + 77, 4, 4), CuteUI.Up);
                 CuteUI.Label(x + 10, y + 79, $"{place}에서 쉬는 중", TitleUI.ChocoSoft, true);
             }
             CuteUI.Fill(new Rect(x, y + 92, iw, 1), TitleUI.HoneyHi);
+            Pop();
 
             bool canClick = !Held && !confirmNew;
             var go = new Rect(x + 8, y + 104, iw - 16, 32);
+            menuGoRect = go;
+            Push(Appear(.66f, .4f), 0f, 8f);
             if (TitleUI.Button(go, "이어하기", true, menuIndex == 0, false, canClick)) { menuIndex = 0; InputReader.Press('\n'); }
+            Pop();
             var nr = new Rect(x + 28, go.yMax + 14, iw - 56, 24);
+            Push(Appear(.76f, .4f), 0f, 8f);
             if (TitleUI.Button(nr, "새로 시작", false, menuIndex == 1, true, canClick)) { menuIndex = 1; InputReader.Press('\n'); }
+            Pop();
+            Push(Appear(.9f, .5f), 0f, 0f);
             CuteUI.LabelCenter(p.center.x, nr.yMax + 15, "↑ ↓ 고르기 · Enter 결정", TitleUI.ChocoSoft, true);
+            Pop();
+            Pop();   // 수첩
 
             if (confirmNew) DrawConfirmNew(W, H, save);
         }
@@ -201,8 +253,10 @@ namespace PocketCaravan
         /// <summary>11/18 새로 시작 확인창 (기록을 덮어쓰기 전에 한 번 묻는다. 처음엔 취소에 · 취소 = 청록)</summary>
         void DrawConfirmNew(float W, float H, SaveData save)
         {
-            CuteUI.Fill(new Rect(0, 0, W, H), new Color32(0x5B, 0x3A, 0x29, 90));
+            float ck = Appear(0f, .25f, confirmAt);
+            CuteUI.Fill(new Rect(0, 0, W, H), new Color32(0x5B, 0x3A, 0x29, (byte)Mathf.RoundToInt(90 * ck)));
             var r = new Rect(Mathf.Round(W / 2 - 142), Mathf.Round(H / 2 - 56), 284, 112);
+            Push(ck, 0f, 10f);   // 11/19 확인창이 살짝 떠오르며 나타난다
             TitleUI.Panel(r, "새로 시작");
             CuteUI.LabelCenter(r.center.x, r.y + 28, "지금 기록을 덮어쓰고 새로 시작할까요?", TitleUI.Choco, false, true);
             string detail = save != null ? $"{save.money:N0}냥{(save.playHours > 0f ? " · " + PlayTime(save.playHours) : "")} 기록이 지워져요" : "지난 기록이 지워져요";
@@ -211,6 +265,7 @@ namespace PocketCaravan
             var no = new Rect(r.xMax - 26 - 106, r.yMax - 44, 106, 28);
             if (TitleUI.Button(yes, "새로 시작", false, confirmIndex == 0, false, !Held)) { confirmIndex = 0; InputReader.Press('\n'); }
             if (TitleUI.Button(no, "취소", true, confirmIndex == 1, false, !Held)) { confirmIndex = 1; InputReader.Press('\n'); }
+            Pop();
         }
 
         static string PlayTime(float hours)
@@ -263,6 +318,9 @@ namespace PocketCaravan
                 var r = new Rect(x0 + (i % columns) * (cw + gap), y0 + (i / columns) * (ch + rowGap), cw, ch);
                 pickRects.Add(r);
                 bool on = i == pick, hover = !on && r.Contains(Event.current.mousePosition);
+                if (on) pickCardCenter = new Vector2(pickViewport.x + r.center.x - pickScroll.x, pickViewport.y + r.center.y - pickScroll.y);   // 11/19 시작 연출이 이 카드로 오므라든다
+                Push(Appear(.18f + i * .09f, .4f), 0f, 14f);   // 11/19 카드가 차례로 떠오른다
+                TitleUI.Hover(r, "pick" + i, !Held);   // 11/19 카드에 올리면 톡 · 누르면 딸깍
                 TitleUI.Card(r);
                 var inner = new Rect(r.x + 5, r.y + 5, r.width - 10, r.height - 10);
                 var mapR = new Rect(inner.x, inner.y, inner.width, inner.height - 20);
@@ -307,10 +365,13 @@ namespace PocketCaravan
                     if (on) InputReader.Press('\n');
                     else { pick = i; visiblePick = i; Sfx.Play("open"); }
                 }
+                Pop();
             }
             GUI.EndScrollView();
 
             // 아래 설명칸: 고른 상인 이름 · 문명 · 강점 + 오른쪽 출발(·뒤로)
+            float footAt = .18f + Mathf.Min(4, all.choices.Count) * .09f + .04f;
+            Push(Appear(footAt, .4f), 0f, 12f);   // 11/19 카드 다음에 아래 설명칸이 올라온다
             TitleUI.Card(pickFooter);
             var go = new Rect(pickFooter.xMax - 12 - 88, pickFooter.y + 6, 88, 28);
             if (TitleUI.Button(go, "출발", true, false, false, !Held)) InputReader.Press('\n');
@@ -329,8 +390,11 @@ namespace PocketCaravan
             float sx = CuteUI.Label(fx, pickFooter.y + 31, "강점", TitleUI.Teal, true, true);
             CuteUI.Label(sx + 6, pickFooter.y + 31, TradeLedgerUI.Fit(sel.strength, textRight - sx - 6, true, false), TitleUI.Choco, true);
 
+            Pop();
             // 맨 아래 조작 한 줄
+            Push(Appear(footAt + .15f, .5f), 0f, 0f);
             CuteUI.LabelCenter(W / 2, H - 13, "방향키 / 클릭으로 선택 · Enter 출발" + (hasSave ? " · Esc 뒤로" : ""), TitleUI.ChocoSoft, true);
+            Pop();
         }
 
     }
