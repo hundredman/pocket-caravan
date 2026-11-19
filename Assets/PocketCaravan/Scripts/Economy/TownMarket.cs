@@ -894,7 +894,7 @@ namespace PocketCaravan
             string why = PlayerStall.Denial(p, town);
             if (CuteUI.SoftButton(b, label) && !HaggleDuel.IsOpen)
             {
-                if (why != null) { message = why; stallConfirm = false; Sfx.Play("cancel"); }
+                if (why != null) { message = why; stallConfirm = false; Sfx.Play("deny", .55f); }
                 else if (!stallConfirm) { stallConfirm = true; message = $"한 번 더 누르면 {PlayerStall.Price}냥으로 이 장터에 내 좌판을 열어요."; }
                 else if (PlayerStall.Open(p, town))
                 {
