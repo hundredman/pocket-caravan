@@ -11,7 +11,8 @@ namespace PocketCaravan
     public class PackAnimal : MonoBehaviour
     {
         public const string HorseId = "packhorse", CamelId = "arabia_camel", WagonId = "wagon",
-            ReindeerId = "north_reindeer", ReindeerSledId = "north_reindeer_sled";   // 11/19 은샘 "북유럽은 순록으로": 짐말 대신 순록, 마차 대신 순록 썰매 (그림 Tools/ArtGen/reindeer_v3.py)
+            ReindeerId = "north_reindeer", ReindeerSledId = "north_reindeer_sled",
+            CamelCaravanId = "arabia_camel_caravan";   // 11/19 은샘 "낙타 대상": 아라비아는 마차 대신 낙타 두 마리를 고삐로 이은 대상 (Tools/ArtGen/camel_caravan_v1.py)   // 11/19 은샘 "북유럽은 순록으로": 짐말 대신 순록, 마차 대신 순록 썰매 (그림 Tools/ArtGen/reindeer_v3.py)
 
         /// <summary>이 운반 수단이 짐승이면 그림 폴더와 고삐 거리</summary>
         public static bool Is(string vehicleId, out string folder, out float gap)
@@ -23,6 +24,7 @@ namespace PocketCaravan
             if (vehicleId == WagonId) { folder = "Wagon"; gap = 2.45f; return true; }
             if (vehicleId == ReindeerId) { folder = "Reindeer"; gap = 1.6f; return true; }           // 11/19 순록 3판: 옆 그림이 짐말보다 4칸 길다 (44px)
             if (vehicleId == ReindeerSledId) { folder = "ReindeerSled"; gap = 2.6f; return true; }   // 마차 틀, 옆 그림 72px (마차 68px)
+            if (vehicleId == CamelCaravanId) { folder = "CamelCaravan"; gap = 2.6f; return true; }   // 옆 72px (낙타 둘), 앞뒤 23x66
             return false;
         }
         public static bool Is(string vehicleId) => Is(vehicleId, out _, out _);
@@ -64,6 +66,8 @@ namespace PocketCaravan
             if (upDown && h.y < 0f) lift -= .4f;   // 앞모습(내 위에서 따라 내려올 때)은 머리가 아래 끝이라 조금 당겨 고삐 거리를 옆모습과 비슷하게
             // 11/19 마차 앞·뒷모습(30x58)은 옆모습보다 짧다: 앞(내려올 때)은 말 머리가 나에게 가깝게 당기고, 뒤(올라갈 때)는 말 귀가 내 다리를 덮지 않게 조금 뒤로
             if (wagon && upDown) lift += h.y < 0f ? -.5f : -.6f;
+            // 11/19 낙타 대상 앞·뒷모습(23x66)은 두 마리가 위아래로 서 있어 길다: 내려올 때는 앞 낙타가 나에게 가깝게, 올라갈 때는 앞 낙타 머리가 내 발을 덮지 않게
+            if (folder == "CamelCaravan" && upDown) lift += h.y < 0f ? -1f : -.6f;
             tr.position = new Vector3(at.x, at.y + lift + bob, owner.position.z);
             sr.flipY = false;                 // 썰매에서 바꿨을 때
             sr.flipX = shown == "side_r";   // 옆모습 그림이 왼쪽을 보니 오른쪽으로 갈 때 뒤집는다
@@ -152,7 +156,7 @@ namespace PocketCaravan
             }
             if (animal == null)
             {
-                animal = new GameObject(id == CamelId ? "내 낙타" : id == WagonId ? "내 마차" : id == ReindeerId ? "내 순록" : id == ReindeerSledId ? "내 순록 썰매" : "내 짐말").transform;
+                animal = new GameObject(id == CamelId ? "내 낙타" : id == WagonId ? "내 마차" : id == ReindeerId ? "내 순록" : id == ReindeerSledId ? "내 순록 썰매" : id == CamelCaravanId ? "내 낙타 대상" : "내 짐말").transform;
                 animal.SetParent(pc.transform, false);
                 sr = animal.gameObject.AddComponent<SpriteRenderer>();
             }

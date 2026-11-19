@@ -72,7 +72,8 @@ namespace PocketCaravan
             if (v.id == PackAnimal.ReindeerId) return origin == "viking";   // 11/19 북유럽: 짐말 대신 순록 (순록 고원 마을)
             if (v.id == PackAnimal.HorseId) return origin != "arabia" && origin != "viking";
             if (v.id == PackAnimal.ReindeerSledId) return origin == "viking";   // 북유럽: 마차 대신 순록 썰매
-            if (v.id == PackAnimal.WagonId) return origin != "viking";
+            if (v.id == PackAnimal.CamelCaravanId) return origin == "arabia";   // 11/19 아라비아: 마차 대신 낙타 대상
+            if (v.id == PackAnimal.WagonId) return origin != "viking" && origin != "arabia";
             return true;
         }
     }

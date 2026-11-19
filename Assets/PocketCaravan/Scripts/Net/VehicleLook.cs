@@ -57,6 +57,7 @@ namespace PocketCaravan
                 case PackAnimal.WagonId:   // 11/19 마차도 같은 자리 규칙
                 case PackAnimal.ReindeerId:       // 11/19 북유럽 순록 · 순록 썰매
                 case PackAnimal.ReindeerSledId:
+                case PackAnimal.CamelCaravanId:   // 11/19 아라비아 낙타 대상
                     if (trail == null) trail = new VehicleTrail();
                     PackAnimal.Place(sr, trail, owner, body, vehicle, facing, moving, crates, moving ? Time.time * 8f : 0f);
                     break;

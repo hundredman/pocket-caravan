@@ -580,22 +580,24 @@ namespace PocketCaravan
 
         /// <summary>
         /// 11/19 은샘: 이 장터에서 파는 운반 수단. 마을 데이터(vehiclesForSale)에 더해, 짐말·낙타를 파는 장터는 마차도 판다
-        /// (마차는 네 지역 공용 4단계라 마을 에셋 다섯 개를 고치지 않고 여기서 붙인다: 개경 · 리알토 · 북쪽 순록 마을 · 사나 · 제다).
+        /// (마차는 4단계라 마을 에셋 다섯 개를 고치지 않고 여기서 붙인다: 개경 · 리알토 · 북쪽 순록 마을 · 사나 · 제다).
+        /// 북유럽(순록 파는 곳)은 순록 썰매, 아라비아(낙타 파는 곳: 사나 · 제다)는 낙타 대상 (11/19).
         /// </summary>
         public static List<VehicleData> ForSale(TownData town)
         {
             var list = new List<VehicleData>();
             if (town == null) return list;
-            bool big = false, deer = false;
+            bool big = false, deer = false, camel = false;
             foreach (var v in town.vehiclesForSale)
             {
                 if (v == null || list.Contains(v)) continue;
                 list.Add(v);
                 if (v.id == PackAnimal.HorseId || v.id == PackAnimal.CamelId) big = true;
                 if (v.id == PackAnimal.ReindeerId) deer = true;   // 11/19 북유럽: 순록을 파는 곳은 마차 대신 순록 썰매
+                if (v.id == PackAnimal.CamelId) camel = true;      // 11/19 아라비아: 낙타를 파는 곳은 마차 대신 낙타 대상 (중세 중동은 수레 대신 낙타)
             }
             var db = GameManager.I != null ? GameManager.I.Db : null;
-            string bigId = deer ? PackAnimal.ReindeerSledId : big ? PackAnimal.WagonId : null;
+            string bigId = deer ? PackAnimal.ReindeerSledId : camel ? PackAnimal.CamelCaravanId : big ? PackAnimal.WagonId : null;
             var wagon = bigId != null && db != null ? db.vehicles.Find(v => v != null && v.id == bigId) : null;
             if (wagon != null && !list.Contains(wagon)) list.Add(wagon);
             return list;
