@@ -80,9 +80,17 @@ namespace PocketCaravan
                 }
             }
             shelf.Clear();
-            // 11/19 은샘: 진열한 물건이 아니라 아무 교역품 넷 (진열이 하나뿐이면 늘 같은 번호라 너무 쉬웠다)
-            var pool = gm.Db.items.FindAll(it => it != null && !it.questItem && it.icon != null);
+            // 11/19 은샘: 진열한 물건이 아니라 물건 넷을 무작위로 (진열이 하나뿐이면 늘 같은 번호라 너무 쉬웠다).
+            // "그 지역 장터에서 파는 물품으로만": 좌판을 연 마을 장터의 물건(사기 칸 목록)에서 고른다. 넷이 안 되면 남는 칸만 다른 교역품으로
+            var town = PlayerStall.Has(p) ? gm.Db.towns.Find(t => t != null && t.id == p.stallTown) : null;
+            var pool = new List<ItemData>();
+            if (town != null) foreach (var st in town.stock) if (st.item != null && !st.item.questItem && st.item.icon != null && !pool.Contains(st.item)) pool.Add(st.item);
             for (int i = 0; i < 4 && pool.Count > 0; i++) { int k = Random.Range(0, pool.Count); shelf.Add(pool[k]); pool.RemoveAt(k); }
+            if (shelf.Count < 4)
+            {
+                var rest = gm.Db.items.FindAll(it => it != null && !it.questItem && it.icon != null && !shelf.Contains(it));
+                while (shelf.Count < 4 && rest.Count > 0) { int k = Random.Range(0, rest.Count); shelf.Add(rest[k]); rest.RemoveAt(k); }
+            }
             guests.Clear();
             score = served = missed = streak = bestStreak = buzzGot = 0; buzzSet = false; pop = ""; shoutItem = null; shoutAt = -9f;
             bestBefore = Best; buzzBefore = PlayerStall.BuzzLevel(gm); epoch = gm.GameEpoch;
