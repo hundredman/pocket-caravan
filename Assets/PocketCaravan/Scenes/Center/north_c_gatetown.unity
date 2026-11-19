@@ -456,6 +456,7 @@ MonoBehaviour:
   terrainOrigin: {x: 0, y: 0}
   travelHours: 0
   previewOnly: 0
+  boundaryLayoutVersion: 0
   ground: {fileID: 613832977}
   road: {fileID: 0}
   blocked: {fileID: 1260626901}
@@ -98857,7 +98858,7 @@ Transform:
   m_GameObject: {fileID: 1847063176}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 33.5, y: 28.5, z: 0.5}
+  m_LocalPosition: {x: 34.5, y: 29.5, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

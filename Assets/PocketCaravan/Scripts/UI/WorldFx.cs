@@ -171,6 +171,8 @@ namespace PocketCaravan
                 Vector3Int? start = null;
                 foreach (var d in Near) if (o.HasTile(c0 + d)) { start = c0 + d; break; }
                 if (!start.HasValue) continue;
+                // 11/19 같은 그림 묶음(타일 이름 앞머리: element·house 등)끼리만 잇는다 (북유럽 북문 게시판이 옆 오두막과 한 덩어리로 읽혔다)
+                string kind = Kind(o.GetTile(start.Value));
                 open.Clear(); seen.Clear(); open.Enqueue(start.Value); seen.Add(start.Value);
                 int low = int.MaxValue;
                 while (open.Count > 0 && seen.Count < 64)
@@ -180,7 +182,9 @@ namespace PocketCaravan
                     foreach (var d in Dirs)
                     {
                         var n = c + d;
-                        if (seen.Contains(n) || !(o.HasTile(n) || (a != null && a.HasTile(n)))) continue;
+                        if (seen.Contains(n)) continue;
+                        var nt = o.GetTile(n) ?? (a != null ? a.GetTile(n) : null);
+                        if (nt == null || Kind(nt) != kind) continue;
                         seen.Add(n); open.Enqueue(n);
                     }
                 }
@@ -194,6 +198,12 @@ namespace PocketCaravan
                 return true;
             }
             return false;
+        }
+        static string Kind(UnityEngine.Tilemaps.TileBase t)
+        {
+            if (t == null) return null;
+            int i = t.name.IndexOf('_');
+            return i > 0 ? t.name.Substring(0, i) : t.name;
         }
         // 자리 칸 → 위 칸 → 옆 → 아래 → 두 칸 위 순으로 (게시판·우물은 보통 자리 바로 위, 북유럽 게시판은 한 칸 띄고 위)
         static readonly Vector3Int[] Near = { Vector3Int.zero, Vector3Int.up, Vector3Int.left, Vector3Int.right, new Vector3Int(-1, 1, 0), new Vector3Int(1, 1, 0), Vector3Int.down,

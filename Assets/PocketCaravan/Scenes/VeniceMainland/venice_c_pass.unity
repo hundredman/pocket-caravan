@@ -2723,6 +2723,7 @@ MonoBehaviour:
   terrainOrigin: {x: 0, y: 0}
   travelHours: 0
   previewOnly: 0
+  boundaryLayoutVersion: 0
   ground: {fileID: 1298551390}
   road: {fileID: 0}
   blocked: {fileID: 1098251232}
@@ -17000,6 +17001,16 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1
+  - first: {x: 55, y: 19, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 10
+      m_TileSpriteIndex: 10
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1
   - first: {x: 10, y: 20, z: 0}
     second:
       serializedVersion: 2
@@ -17912,7 +17923,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: a27f3a2e190f74b4198fc241699a9c50, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 105c018d2e9ffbb43baee0d4a5b3d20a, type: 2}
-  - m_RefCount: 2
+  - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: 248f0251615614525bd3913394f505cf, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 5024c5c489e32114bb925162c3daf099, type: 2}
@@ -17967,7 +17978,7 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: 753ae9a2230a7e544a8bed9687c59ef7, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: 092f9ad94b27e054f8aca62d903f67e5, type: 3}
-  - m_RefCount: 2
+  - m_RefCount: 3
     m_Data: {fileID: 21300000, guid: 9fd80b4d674b542fdb8afaa4d145183c, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 1d2f01f67273a3547a78a05e11d32049, type: 3}
@@ -18002,7 +18013,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: e08703fefcff5764cb9c585276122023, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 133
+  - m_RefCount: 134
     m_Data:
       e00: 1
       e01: 0
@@ -18021,7 +18032,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 133
+  - m_RefCount: 134
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
