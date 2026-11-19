@@ -133,7 +133,7 @@ namespace PocketCaravan
                 if (pick > 0 && !StallRush.IsOpen)
                 {
                     int n = PlayerStall.Take(p, kv.Key, pick == 1 ? 1 : kv.Value);
-                    message = n > 0 ? $"{Josa.Eul(kv.Key.displayName)} {n}개 짐으로 내렸어요." : "짐 자리가 없어요.";
+                    int want = pick == 1 ? 1 : kv.Value; message = n <= 0 ? "짐 자리가 없어요." : n < want ? $"짐이 가득해 {n}개만 내렸어요." : $"{Josa.Eul(kv.Key.displayName)} {n}개 짐으로 내렸어요.";
                     Sfx.Play(n > 0 ? "coin" : "cancel");
                 }
                 y += rh;

@@ -62,7 +62,7 @@ namespace PocketCaravan
                 case 4: return "큰 주문 의뢰 · 장터 외상";
                 case 5: return "내 좌판 (장터 창에서 열기) · 외상 한도 500냥";
                 case 6: return "외상 한도 800냥";
-                // 6 중앙 대륙 장거리는 만들면 여기에 (아직 없는 것은 열린다고 알리지 않는다)
+                // 중앙 대륙 장거리 의뢰(6단계)는 만들면 case 6에 더한다 (아직 없는 것은 열린다고 알리지 않는다)
                 default: return null;
             }
         }

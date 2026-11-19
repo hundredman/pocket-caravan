@@ -11,7 +11,7 @@ namespace PocketCaravan
     /// - 진열: 내 짐의 교역품을 올린다 (무게 30까지, 맡은 짐은 못 올림). 게임 한 시간마다 반쯤의 확률로 하나가 그 장터 지금 시세로 팔리고(장터 재고도 움직임),
     ///   판 돈은 좌판에 모인다 → 들러서 받는다. 사서 바로 그 장터에 올리면 되팔기 규칙(TradeActivity.LimitSale) 그대로라 이득이 없다.
     /// - 손님 맞이(StallRush): 하루 한 번, 좌판 앞에서 손님이 원하는 물건을 골라 주는 놀이. 맞히면 시세의 1.2배로 바로 판다.
-    /// - 맵에 내 좌판 그림(Resources/Stall/stall_0~2, Tools/ArtGen/player_stall_v1.py)이 장터 상인 근처 빈자리에 선다. 말 걸면 좌판 창 (StallWindow).
+    /// - 맵에 내 좌판 그림(Resources/Stall/stall_0, Tools/ArtGen/player_stall_v2.py, 진열칸에 올린 물건 그림)이 장터 상인 근처 빈자리에 선다. 말 걸면 좌판 창 (StallWindow).
     /// 저장: SaveData.stall* (옛 저장 = 좌판 없음).
     /// </summary>
     public static class PlayerStall
@@ -38,11 +38,14 @@ namespace PocketCaravan
             return null;
         }
 
+        public const string SlotKey = "stall:slot";
         public static bool Open(PlayerState p, TownData town)
         {
             if (Denial(p, town) != null) return false;
             p.money -= Price;
             p.stallTown = town.id; p.stallStock.Clear(); p.stallEarned = 0; p.stallRushDay = -1;
+            // 11/19 여러 사람이 한 마을에 열 때 자리를 나누려고, 열 때 자리 번호(0~2)를 하나 골라 저장 메모에 둔다 (맵을 다시 들어와도 같은 자리)
+            var gm = GameManager.I; if (gm != null) gm.SetMemo(SlotKey, Random.Range(0, 3));
             StallPlacement.Refresh();
             return true;
         }
@@ -209,13 +212,11 @@ namespace PocketCaravan
             if (list.Count == 0) list = Search(map, from, props, false);
             if (list.Count == 0) return null;
             // 11/19 은샘 "2명 이상의 유저가 한 마을에 좌판을 열 수도": 가까운 자리 몇 곳 중 내 이름으로 늘 같은 한 곳을 고른다
-            // (지금은 내 좌판만 보이지만, 나중에 다른 사람 좌판도 보이게 할 때 서로 덜 겹치게)
-            string who = NetClient.I != null ? NetClient.I.MyName : "";
-            int slot = string.IsNullOrEmpty(who) ? 0 : (int)((uint)StableHash(who) % (uint)Mathf.Min(3, list.Count));
-            return list[slot];
+            // (열 때 고른 자리 번호, 저장 메모. 지금은 내 좌판만 보이지만, 나중에 다른 사람 좌판도 보이게 할 때 서로 덜 겹치게)
+            var gm = GameManager.I;
+            int slot = gm != null ? Mathf.Clamp(Mathf.RoundToInt(gm.GetMemo(PlayerStall.SlotKey)), 0, 2) : 0;
+            return list[Mathf.Min(slot, list.Count - 1)];
         }
-
-        static int StableHash(string s) { unchecked { int h = 17; foreach (char ch in s) h = h * 31 + ch; return h; } }
 
         /// <summary>좌판을 둘 수 있는 자리들 (가까운 순, 서로 3칸 넘게 떨어진 것만)</summary>
         static List<Vector3Int> Search(MapRoot map, Vector3Int from, List<Bounds> props, bool roomy)
@@ -260,11 +261,11 @@ namespace PocketCaravan
     {
         SpriteRenderer sr, coin;
         readonly SpriteRenderer[] goods = new SpriteRenderer[3];
-        string goodsKey;
+        string goodsKey, goodsQuick;
         static Sprite art;
         // 진열칸 위 물건 자리 (그림 48×48, 아래 가운데 기준, 1칸 = 16픽셀): 가운데 x 14·24·34, 진열칸 바닥 y 33(위에서)
-        static readonly float[] GoodsX = { -10f / 16f, 0f, 10f / 16f };
-        const float ShelfY = (48f - 33f) / 16f, GoodsScale = 0.55f;
+        static readonly float[] GoodsX = { -9f / 16f, 0f, 9f / 16f };   // 왼쪽 기둥(x≈10)에 안 걸리게 15·24·33
+        const float ShelfY = (48f - 33f) / 16f, GoodsScale = 0.5f;   // 16픽셀 그림을 딱 8픽셀로 (점 크기가 고르게)
 
         public override string DisplayName => "내 좌판";
         public override Kind Category => Kind.Market;
@@ -308,8 +309,12 @@ namespace PocketCaravan
         /// <summary>진열한 물건 중 많은 것 셋을 진열칸에 올린다 (바뀔 때만)</summary>
         void UpdateGoods(PlayerState p)
         {
+            // 진열이 바뀔 때만 다시 고른다 (개수·무게가 같으면 그대로)
+            string quick = PlayerStall.Count(p) + "/" + PlayerStall.Weight(p);
+            if (quick == goodsQuick) return;
+            goodsQuick = quick;
             var list = new List<KeyValuePair<ItemData, int>>();
-            foreach (var kv in p.stallStock.Items) if (kv.Key != null && kv.Value > 0) list.Add(new KeyValuePair<ItemData, int>(kv.Key, kv.Value));
+            foreach (var kv in p.stallStock.Items) if (kv.Key != null && kv.Key.icon != null && kv.Value > 0) list.Add(new KeyValuePair<ItemData, int>(kv.Key, kv.Value));
             list.Sort((a, b) => b.Value != a.Value ? b.Value.CompareTo(a.Value) : string.CompareOrdinal(a.Key.id, b.Key.id));
             string key = "";
             for (int i = 0; i < list.Count && i < 3; i++) key += list[i].Key.id + ",";
@@ -325,7 +330,8 @@ namespace PocketCaravan
                 if (icon == null) continue;
                 g.sprite = icon; g.enabled = true;
                 var b = icon.bounds;   // 그림 기준점이 어디든 바닥이 진열칸에 닿게
-                g.transform.localPosition = new Vector3(GoodsX[slots[i]] - b.center.x * GoodsScale, ShelfY - b.min.y * GoodsScale, 0f);
+                float px = Mathf.Round((GoodsX[slots[i]] - b.center.x * GoodsScale) * 16f) / 16f, py = Mathf.Round((ShelfY - b.min.y * GoodsScale) * 16f) / 16f;   // 픽셀 단위로 맞춘다
+                g.transform.localPosition = new Vector3(px, py, 0f);
             }
         }
 
