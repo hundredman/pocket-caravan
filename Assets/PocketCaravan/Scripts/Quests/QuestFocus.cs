@@ -9,7 +9,8 @@ namespace PocketCaravan
     /// - Event: 이벤트 퀘스트 (만국 상인회, NetGuild)
     /// - None: 수첩에서 길 안내를 끈 상태
     /// 가장 최근에 받은 것이 대상이 된다 (퀘스트 수락 · 상인회 초대장/답장 · 튜토리얼이 끝나 첫 일거리가 생김). Q 수첩에서 바꿀 수 있다.
-    /// 고른 대상이 끝나서 없어지면 남은 것 중에서 고른다 (퀘스트 → 이벤트 → 다음 이야기). 저장: 공용 메모 "focus:kind".
+    /// 11/19 은샘: 고른 대상이 끝나서 없어지면 안내를 멈춘다 (다른 것으로 저절로 넘기지 않는다). 다음 안내는 Q 수첩에서 [길 안내]로 고른다.
+    /// 저장: 공용 메모 "focus:kind".
     /// </summary>
     public static class QuestFocus
     {
@@ -41,17 +42,13 @@ namespace PocketCaravan
             }
         }
 
-        /// <summary>지금 길 안내 대상. 고른 것이 없어졌으면 남은 것 중에서 (끈 상태면 None 그대로)</summary>
+        /// <summary>지금 길 안내 대상. 고른 것이 없어졌으면 None</summary>
         public static Kind Current
         {
             get
             {
                 var k = Chosen;
-                if (k == Kind.None || Has(k)) return k;
-                if (Has(Kind.Quest)) return Kind.Quest;
-                if (Has(Kind.Event)) return Kind.Event;
-                if (Has(Kind.Lead)) return Kind.Lead;
-                return Kind.None;
+                return k == Kind.None || Has(k) ? k : Kind.None;   // 11/19 은샘: 끝나서 없어지면 다른 것으로 넘기지 않는다 (수첩에서 고른다)
             }
         }
 

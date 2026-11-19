@@ -137,7 +137,11 @@ namespace PocketCaravan
             bool introEnded = wasIntro && !intro;
             wasIntro = intro;
             if (GM == null || GM.Quests == null || MapRoot.Current == null || intro) return;
+            // 11/19 은샘 "첫 일거리는 각 지역 첫 일거리로": 출신 지역 이야기를 하나도 끝내지 않았으면 다른 지역(만국 장터·아라비아 등)에 있어도
+            //   출신 지역의 첫 일거리를 안내한다. 하나라도 끝냈으면 지금 있는 지역의 다음 이야기.
             var here = Reactions.Here;
+            var home = HomeRegion();
+            if (!FinishedIn(home)) here = home;
             foreach (var p in GM.Quests.Active) if (p != null && In(p.quest, here)) return;   // 진행 중이면 공용 퀘스트 안내가 맡는다
             foreach (var q in GM.Db.quests)
             {
@@ -146,10 +150,29 @@ namespace PocketCaravan
                 if (Givers.TryGetValue(q.giverNpc, out var g)) { name = g.name; place = g.where; }
                 if (string.IsNullOrEmpty(place)) { var map = WorldIndex.Get()?.MapOf("npc", q.giverNpc); if (map != null) place = WorldIndex.Get().MapName(map); }
                 who = WorldDisplayNames.ShortName(name); where = place; giver = q.giverNpc;
-                firstJob = true;
-                foreach (var f in GM.Db.quests) if (f != null && GM.Quests.IsFinished(f) && In(f, here)) { firstJob = false; break; }
+                firstJob = !FinishedIn(here);
                 if (introEnded) QuestFocus.Set(QuestFocus.Kind.Lead);
                 return;
+            }
+        }
+
+        /// <summary>이 지역 이야기(사람이 주는 퀘스트)를 하나라도 끝냈는지</summary>
+        static bool FinishedIn(Reactions.Region r)
+        {
+            foreach (var f in GM.Db.quests) if (f != null && GM.Quests.IsFinished(f) && In(f, r)) return true;
+            return false;
+        }
+
+        /// <summary>출신 지역 (고른 출신 id: goryeo·venice·arabia·viking)</summary>
+        static Reactions.Region HomeRegion()
+        {
+            var id = GM != null && GM.Player != null && GM.Player.origin != null ? GM.Player.origin.id : null;
+            switch (id)
+            {
+                case "viking": return Reactions.Region.North;
+                case "venice": return Reactions.Region.Venice;
+                case "arabia": return Reactions.Region.Arabia;
+                default: return Reactions.Region.Goryeo;
             }
         }
 

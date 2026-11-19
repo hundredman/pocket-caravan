@@ -139,11 +139,17 @@ namespace PocketCaravan
             // 11/19 여정 수첩 성장 탭의 운반 수단·신용 카드를 처음 보면 설명 (튜토리얼 수첩 단계가 아닐 때)
             if (QuestTracker.JournalOpen && !ControlLesson.IsActive(ControlLesson.Quests))
             {
+                // 11/19 은샘 "퀘스트 길 안내는 튜토리얼 설명이 필요": 의뢰 목록의 [길 안내] 단추를 처음 보면 설명 (시작 튜토리얼 뒤)
+                if (!IntroActive && !Seen("journal.guide") && ScreenZones.Live("journal.guide"))
+                { holdFrame = Time.frameCount; return Zone("journal.guide", "journal.guide", "#길 안내 고르기\n누르면 그 일로 화살표가 안내해요\n일이 끝나면 다음 안내는 여기서 골라요", false); }
                 if (!Seen("journal.vehicle") && ScreenZones.Live("journal.vehicle"))
                 { holdFrame = Time.frameCount; return Zone("journal.vehicle", "journal.vehicle", "#다음 운반 수단\n막대: 돈이 모이면 차요\n더 큰 수단: 짐을 더 많이 실어요", false); }
                 if (!Seen("journal.credit") && ScreenZones.Live("journal.credit"))
                 { holdFrame = Time.frameCount; return Zone("journal.credit", "journal.credit", "#신용 단계\n배달·납품: 해내면 점수가 차요\n단계가 오르면: 게시판에 새 의뢰가 열려요", false); }
             }
+            // 11/19 은샘: 안내하던 일이 끝나 길 안내가 멈췄다 → 할 일 카드에서 수첩을 여는 법 (처음 한 번 어둡게, 아무 키나)
+            if (!IntroActive && !blocking && !Seen("guide.pick") && QuestTracker.PickShowing)
+            { return Zone("guide.pick", "task.card", "#길 안내가 멈췄어요\n끝낸 일 다음은 저절로 안내하지 않아요\n▶이 카드나 Q로 수첩을 열고 [길 안내]를 눌러요", false); }
             if (ControlLesson.IsActive(ControlLesson.Quests))
             {
                 // 11/18 은샘: 열기 → 목록에서 튜토리얼 카드 보기(어둡게, 아무 키나) → 닫기. 닫으면 이 단계가 끝난다 (ControlLesson)

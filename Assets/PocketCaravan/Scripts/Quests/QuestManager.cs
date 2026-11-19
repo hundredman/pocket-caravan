@@ -98,7 +98,7 @@ namespace PocketCaravan
                     acceptedReputationScope = s.acceptedReputationScope, acceptedReputationTarget = s.acceptedReputationTarget,
                     acceptedReputationSize = s.rewardCaptured ? s.acceptedReputationSize : ReputationSize.None };
                 active[q] = p;
-                if (q.id == d.trackedQuest || Tracked == null) Tracked = p;
+                if (q.id == d.trackedQuest) Tracked = p;   // 11/19 은샘: 길 안내를 고르지 않았던 저장은 비워 둔다 (아무거나 고르지 않는다)
             }
             MigrateMainProgress();
         }
@@ -323,7 +323,7 @@ namespace PocketCaravan
             var q = p.quest;
             active.Remove(q);
             finished.Add(q);
-            if (Tracked == p) { Tracked = null; foreach (var other in active.Values) Tracked = other; }
+            if (Tracked == p) Tracked = null;   // 11/19 은샘: 끝나면 다른 퀘스트로 길 안내를 넘기지 않는다 (수첩에서 [길 안내]로 고른다)
             if (p.legacyMainMigrationEligible)
             {
                 legacyMainFinished.Add(q.id);

@@ -78,12 +78,29 @@ namespace PocketCaravan
                 string kicker = qm.Tracked.quest.title + (others > 0 ? $" 외 {others}개" : "");   // 11/01 진행 중인 다른 퀘스트 수 (수첩에서 안내 바꾸기)
                 TaskCard.Task(TaskCard.Quest, CuteUI.Pic.Scroll, false, kicker, CuteUI.Plain(qm.ProgressText(qm.Tracked)), null);
             }
+            else if (focus == QuestFocus.Kind.None && gm.Player.contracts.Count == 0 && CanPick(qm) && !StoryGuide.IntroActive)
+            {
+                // 11/19 은샘 "다른 퀘스트 길 안내는 퀘스트 목록에서 유저가 눌러야": 안내가 멈추면 고르는 법만 알려 준다
+                PickShowing = true; pickFrame = Time.frameCount;
+                TaskCard.Task(TaskCard.Quest, null, false, "길 안내 없음", "수첩에서 다음 할 일 고르기", "의뢰 카드의 [길 안내]를 눌러요");
+            }
             else if (gm.Player.contracts.Count > 0)
             {
                 var c = gm.Player.contracts[0];
                 string kicker = "배달" + (gm.Player.contracts.Count > 1 ? $" 외 {gm.Player.contracts.Count - 1}건" : "");
                 TaskCard.Task(TaskCard.Delivery, CuteUI.Pic.Sack, false, kicker, $"{c.cargo} → {gm.Contracts.TownName(c.toTown)}", CuteUI.Plain(gm.Contracts.TimeLeftText(c)) + (c.Fragile ? $" · 상태 {Mathf.RoundToInt(c.condition * 100)}% (달리면 상함)" : ""));
             }
+        }
+
+        /// <summary>11/19 할 일 카드에 "길 안내 없음 · 수첩에서 고르기"가 떠 있다 (TutorialSpot이 처음 한 번 설명)</summary>
+        public static bool PickShowing { get => pickShowing && Time.frameCount - pickFrame <= 2; private set => pickShowing = value; }
+        static bool pickShowing; static int pickFrame = -10;
+
+        /// <summary>길 안내로 고를 수 있는 것이 있다 (받은 퀘스트 · 다음 이야기 · 이벤트)</summary>
+        static bool CanPick(QuestManager qm)
+        {
+            foreach (var _ in qm.Active) return true;
+            return StoryGuide.LeadAvailable || NetGuild.Active;
         }
 
         static readonly List<(string text, bool small, bool bold, Color32 col)> detailLines = new List<(string, bool, bool, Color32)>();
@@ -189,6 +206,7 @@ namespace PocketCaravan
 
         // ---------------- 의뢰 ----------------
         /// <summary>11/11 은샘: 카드 오른쪽 위 단추. 안내 중이면 청록 "안내 중"(누르면 끔), 아니면 "길 안내". 단추 왼쪽 x를 돌려준다</summary>
+        static int guideMarked = -1;
         static float FocusButton(float right, float y, bool on, System.Action click)
         {
             if (on)
@@ -198,6 +216,7 @@ namespace PocketCaravan
                 return x;
             }
             var b = new Rect(right - 60, y + 4, 60, 17);
+            if (guideMarked != Time.frameCount) { guideMarked = Time.frameCount; ScreenZones.MarkSpot("journal.guide", new Rect(logOrigin.x + b.x, logOrigin.y + b.y, b.width, b.height)); }   // 11/19 맨 위 [길 안내] 단추를 처음 한 번 설명 (TutorialSpot)
             if (CuteUI.SoftButton(b, "길 안내")) click();
             return b.x;
         }
