@@ -3,14 +3,15 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// 11/14 은샘: 짐 싣는 짐승(3단계 운반 수단) 그림. 11/19 마차(4단계, Tools/ArtGen/wagon_v1.py)도 같은 방식. 짐말(고려·베네치아·북유럽 장터)과 낙타(아라비아 장터, 짐말 대신)가 같이 쓴다.
+    /// 11/14 은샘: 짐 싣는 짐승(3단계 운반 수단) 그림. 11/19 마차(4단계, Tools/ArtGen/wagon_v1.py)도 같은 방식. 짐말(고려·베네치아 장터)·낙타(아라비아, 짐말 대신)·순록(북유럽, 짐말 대신)과 순록 썰매(북유럽, 마차 대신)가 같이 쓴다.
     /// 내가 지나온 길을 고삐 거리만큼 뒤에서 따라오고, 짐 비율에 따라 등에 실린 짐이 0~3단계로 바뀐다.
     /// 그림: Resources/Transport/PackHorse·Camel/{side,front,back}_0~3 (옆은 왼쪽을 봄, 앞=아래로 올 때, 뒤=위로 갈 때. 1배 크기. Tools/ArtGen/pack_animals_v1.py).
     /// 예전 낙타(ArabiaCamelFollow, 장터 그림을 0.45배로 줄여 사람만 했다)를 대신한다. 온라인 다른 사람 것은 VehicleLook이 Place로 그린다. 그림만, 충돌·속도·저장과 무관.
     /// </summary>
     public class PackAnimal : MonoBehaviour
     {
-        public const string HorseId = "packhorse", CamelId = "arabia_camel", WagonId = "wagon";
+        public const string HorseId = "packhorse", CamelId = "arabia_camel", WagonId = "wagon",
+            ReindeerId = "north_reindeer", ReindeerSledId = "north_reindeer_sled";   // 11/19 은샘 "북유럽은 순록으로": 짐말 대신 순록, 마차 대신 순록 썰매 (Tools/ArtGen/reindeer_v1.py)
 
         /// <summary>이 운반 수단이 짐승이면 그림 폴더와 고삐 거리</summary>
         public static bool Is(string vehicleId, out string folder, out float gap)
@@ -20,6 +21,8 @@ namespace PocketCaravan
             if (vehicleId == CamelId) { folder = "Camel"; gap = 1.5f; return true; }
             // 11/19 은샘: 마차 (짐말 다음 단계, 네 지역 공용). 옆모습이 68px로 길어 말 머리가 짐말과 같은 자리에 오게 고삐를 길게
             if (vehicleId == WagonId) { folder = "Wagon"; gap = 2.45f; return true; }
+            if (vehicleId == ReindeerId) { folder = "Reindeer"; gap = 1.45f; return true; }          // 짐말과 같은 틀
+            if (vehicleId == ReindeerSledId) { folder = "ReindeerSled"; gap = 2.45f; return true; }  // 마차와 같은 틀
             return false;
         }
         public static bool Is(string vehicleId) => Is(vehicleId, out _, out _);
@@ -41,7 +44,7 @@ namespace PocketCaravan
             tr.localScale = Vector3.one; tr.localRotation = Quaternion.identity;
             var at = trail.Step(owner.position, facing, moving);
             var h = trail.Heading;
-            bool wagon = folder == "Wagon";
+            bool wagon = folder == "Wagon" || folder == "ReindeerSled";
             bool faceRight = trail.FaceRight;
             if (wagon)
             {   // 11/19 마차는 길어서(고삐 2.45칸) 모퉁이에서 지나온 길 방향을 보면 말 머리가 나와 반대쪽을 향했다 → 말이 늘 나를 향한다
@@ -103,7 +106,7 @@ namespace PocketCaravan
             if (!show) { if (animal != null) animal.gameObject.SetActive(false); trail.Reset(); return; }
             if (animal == null)
             {
-                animal = new GameObject(id == CamelId ? "내 낙타" : id == WagonId ? "내 마차" : "내 짐말").transform;
+                animal = new GameObject(id == CamelId ? "내 낙타" : id == WagonId ? "내 마차" : id == ReindeerId ? "내 순록" : id == ReindeerSledId ? "내 순록 썰매" : "내 짐말").transform;
                 animal.SetParent(pc.transform, false);
                 sr = animal.gameObject.AddComponent<SpriteRenderer>();
             }

@@ -55,6 +55,8 @@ namespace PocketCaravan
                 case PackAnimal.CamelId:   // 11/14 은샘: 낙타·짐말은 내 것과 같은 PackAnimal 그림·자리 (짐 단계 = crates)
                 case PackAnimal.HorseId:
                 case PackAnimal.WagonId:   // 11/19 마차도 같은 자리 규칙
+                case PackAnimal.ReindeerId:       // 11/19 북유럽 순록 · 순록 썰매
+                case PackAnimal.ReindeerSledId:
                     if (trail == null) trail = new VehicleTrail();
                     PackAnimal.Place(sr, trail, owner, body, vehicle, facing, moving, crates, moving ? Time.time * 8f : 0f);
                     break;

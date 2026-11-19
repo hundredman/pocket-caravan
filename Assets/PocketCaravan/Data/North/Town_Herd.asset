@@ -15,7 +15,7 @@ MonoBehaviour:
   id: north_herd
   displayName: "\uC21C\uB85D \uACE0\uC6D0 \uB9C8\uC744"
   region: {fileID: 11400000, guid: 053dda2cee1b84de7bdb3dcc5c7849c8, type: 2}
-  journeyNote: "\uC21C\uB85D \uCE58\uC988\uC758 \uACE0\uC6D0 \uB9C8\uC744. \uACE0\uC6D0 \uB9D0(\uC9D0\uB9D0)\uC744 \uD314\uC544\uC694. \uC9D0\uC744 50\uAE4C\uC9C0 \uC2E4\uC744 \uC218 \uC788\uC5B4\uC694."
+  journeyNote: "\uC21C\uB85D \uCE58\uC988\uC758 \uACE0\uC6D0 \uB9C8\uC744. \uC9D0 \uC2E3\uB294 \uC21C\uB85D\uC744 \uD314\uC544\uC694. \uC9D0\uC744 50\uAE4C\uC9C0 \uC2E4\uC744 \uC218 \uC788\uC5B4\uC694."
   worldCoord: {x: 28, y: 1}
   startLevel: 1
   settlementTier: 1
@@ -63,4 +63,4 @@ MonoBehaviour:
     localPriceMultiplier: 1
   defaultOptimal: 4
   vehiclesForSale:
-  - {fileID: 11400000, guid: 7a710966b3c1443d81d7c58ffc6c17ac, type: 2}
+  - {fileID: 11400000, guid: fe684c3e4c2b4cab8a3cba6b2e630bd9, type: 2}

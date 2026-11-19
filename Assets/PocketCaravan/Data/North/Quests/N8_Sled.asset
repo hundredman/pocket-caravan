@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketCaravan.QuestData
   id: north_q8_sled
   retired: 0
-  title: "\uB208\uAE38\uC744 \uACAC\uB514\uB294 \uC9D0\uB9D0"
+  title: "\uB208\uAE38\uC744 \uACAC\uB514\uB294 \uC21C\uB85D"
   chain: "\uBD81\uCABD\uC758 \uAE38"
-  summary: "\uC21C\uB85D \uACE0\uC6D0\uC758 \uC370\uB9E4 \uC7A5\uC778\uC774 \uC9D0\uB9D0\uC5D0 \uC5B9\uC744 \uC548\uC7A5\uC744 \uC9D3\uB294\uB2E4. \uAE54\uAC1C\uB85C \uC4F8 \uBAA8\uD53C\uB97C \uAC00\uC838\uB2E4\uC8FC\uACE0, \uACE0\uC6D0 \uC7A5\uD130\uC5D0\uC11C \uC9D0\uB9D0\uC744 \uC0AC\uC11C \uBE44\uB974\uCE74 \uB0A8\uCABD \uBD81\uBB38 \uB9C8\uC744\uAE4C\uC9C0 \uBAB0\uACE0 \uAC00 \uBCF8\uB2E4."
+  summary: "\uC21C\uB85D \uACE0\uC6D0\uC758 \uC370\uB9E4 \uC7A5\uC778\uC774 \uC21C\uB85D\uC5D0 \uC5B9\uC744 \uC548\uC7A5\uC744 \uC9D3\uB294\uB2E4. \uAE54\uAC1C\uB85C \uC4F8 \uBAA8\uD53C\uB97C \uAC00\uC838\uB2E4\uC8FC\uACE0, \uACE0\uC6D0 \uC7A5\uD130\uC5D0\uC11C \uC21C\uB85D\uC744 \uC0AC\uC11C \uBE44\uB974\uCE74 \uB0A8\uCABD \uBD81\uBB38 \uB9C8\uC744\uAE4C\uC9C0 \uBAB0\uACE0 \uAC00 \uBCF8\uB2E4."
   giverNpc: north_sledmaker
   requires:
   - {fileID: 11400000, guid: ac84adc9db6ec4c3bb27dcb61b94b8c5, type: 2}
@@ -37,28 +37,28 @@ MonoBehaviour:
     count: 3
     completeLine: "\uC88B\uC740 \uBAA8\uD53C\uB85C\uAD70! \uBC14\uB85C \uC548\uC7A5\uC5D0 \uAE54\uACA0\uB124. \uAC12\uC774 \uC880 \uB098\uAC00\uB2C8 \uB3C8\uC744 \uBAA8\uC544 \uB450\uAC8C."
   - type: 7
-    text: "\uC9D0\uB9D0 \uAC12 360\uB0E5 \uBAA8\uC73C\uAE30"
+    text: "\uC21C\uB85D \uAC12 360\uB0E5 \uBAA8\uC73C\uAE30"
     targetId: 
     item: {fileID: 0}
     vehicle: {fileID: 0}
     count: 360
     completeLine: 
   - type: 6
-    text: "\uC21C\uB85D \uACE0\uC6D0 \uC7A5\uD130\uC5D0\uC11C \uC9D0\uB9D0 \uC0AC\uAE30"
+    text: "\uC21C\uB85D \uACE0\uC6D0 \uC7A5\uD130\uC5D0\uC11C \uC21C\uB85D \uC0AC\uAE30"
     targetId: 
     item: {fileID: 0}
-    vehicle: {fileID: 11400000, guid: 7a710966b3c1443d81d7c58ffc6c17ac, type: 2}
+    vehicle: {fileID: 11400000, guid: fe684c3e4c2b4cab8a3cba6b2e630bd9, type: 2}
     count: 1
     completeLine: 
   - type: 5
-    text: "\uC9D0\uB9D0\uC744 \uBAB0\uACE0 \uBE44\uB974\uCE74 \uB0A8\uCABD \uBD81\uBB38 \uB9C8\uC744\uAE4C\uC9C0 \uAC00\uAE30"
+    text: "\uC21C\uB85D\uC744 \uBAB0\uACE0 \uBE44\uB974\uCE74 \uB0A8\uCABD \uBD81\uBB38 \uB9C8\uC744\uAE4C\uC9C0 \uAC00\uAE30"
     targetId: north_c_gatetown
     item: {fileID: 0}
     vehicle: {fileID: 0}
     count: 1
     completeLine: 
   - type: 0
-    text: "\uC370\uB9E4 \uC7A5\uC778\uC5D0\uAC8C \uC9D0\uB9D0 \uC790\uB791\uD558\uAE30"
+    text: "\uC370\uB9E4 \uC7A5\uC778\uC5D0\uAC8C \uC21C\uB85D \uC790\uB791\uD558\uAE30"
     targetId: north_sledmaker
     item: {fileID: 0}
     vehicle: {fileID: 0}
@@ -72,4 +72,4 @@ MonoBehaviour:
   hasLegacyReward: 0
   legacyRewardMoney: 0
   legacyRewardCredit: 0
-  finishNote: "\uC9D0\uB9D0\uC744 \uC5BB\uC5C8\uB2E4! \uC9D0\uC744 50\uAE4C\uC9C0 \uC2E3\uB294\uB2E4."
+  finishNote: "\uC21C\uB85D\uC744 \uC5BB\uC5C8\uB2E4! \uC9D0\uC744 50\uAE4C\uC9C0 \uC2E3\uB294\uB2E4."

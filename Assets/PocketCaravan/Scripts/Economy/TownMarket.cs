@@ -586,15 +586,17 @@ namespace PocketCaravan
         {
             var list = new List<VehicleData>();
             if (town == null) return list;
-            bool big = false;
+            bool big = false, deer = false;
             foreach (var v in town.vehiclesForSale)
             {
                 if (v == null || list.Contains(v)) continue;
                 list.Add(v);
                 if (v.id == PackAnimal.HorseId || v.id == PackAnimal.CamelId) big = true;
+                if (v.id == PackAnimal.ReindeerId) deer = true;   // 11/19 북유럽: 순록을 파는 곳은 마차 대신 순록 썰매
             }
             var db = GameManager.I != null ? GameManager.I.Db : null;
-            var wagon = big && db != null ? db.vehicles.Find(v => v != null && v.id == PackAnimal.WagonId) : null;
+            string bigId = deer ? PackAnimal.ReindeerSledId : big ? PackAnimal.WagonId : null;
+            var wagon = bigId != null && db != null ? db.vehicles.Find(v => v != null && v.id == bigId) : null;
             if (wagon != null && !list.Contains(wagon)) list.Add(wagon);
             return list;
         }
