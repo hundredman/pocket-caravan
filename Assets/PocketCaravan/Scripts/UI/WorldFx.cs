@@ -102,10 +102,10 @@ namespace PocketCaravan
             float now = Time.unscaledTime;
             // 발밑: 그림이 있으면 그림 아래 끝 가운데, 없으면 자리 조금 아래. 너비는 그림 너비에 맞추되 너무 넓지 않게
             var sr = t.GetComponentInChildren<SpriteRenderer>();
-            Vector3 feet; float wUnits;
+            Vector3 feet; float wUnits; int assetOrder = -1;
             // 11/18 은샘: 내 고리처럼 발 가운데에 (전엔 0.1칸 위·좁아서 몸 뒤에 있는 듯했다). 너비도 내 고리(사람 그림 1칸 → 1.25칸)와 같게
             if (sr != null && sr.sprite != null && sr.bounds.size.x < 4f) { var b = sr.bounds; feet = new Vector3(b.center.x, b.min.y + .04f, 0f); wUnits = Mathf.Clamp(b.size.x * 1.25f, 1.1f, 2.4f); }
-            else if (AssetBase(t, out var ab)) { feet = new Vector3(ab.center.x, ab.min.y + .04f, 0f); wUnits = Mathf.Clamp(ab.size.x * 1.25f, 1.1f, 2.4f); }   // 11/19 은샘: 게시판·우물·이정표도 사람처럼 그 물건 밑 가운데
+            else if (AssetBase(t, out var ab, out assetOrder)) { feet = new Vector3(ab.center.x, ab.min.y + .04f, 0f); wUnits = Mathf.Clamp(ab.size.x * 1.25f, 1.1f, 2.4f); }   // 11/19 은샘: 게시판·우물·이정표도 사람처럼 그 물건 밑 가운데
             else { feet = t.transform.position + new Vector3(0f, -.42f, 0f); wUnits = 1f; }
             feet = new Vector3(Mathf.Round(feet.x * 16f) / 16f, Mathf.Round(feet.y * 16f) / 16f, t.transform.position.z);
             // 순서: 대상 그림과 내 몸 그림 중 낮은 쪽보다 3 아래 (그림자 9보다도 아래)
@@ -113,6 +113,8 @@ namespace PocketCaravan
             // 대상의 첫 그림이 바닥 자국·배처럼 낮은 순서(8 미만)면 무시한다. 땅 그림(타일 2~5) 밑으로 숨지 않게 6 이상
             int bo = body != null ? PackAnimal.BodyOrder(body) : 11;
             int order = Mathf.Max(6, (sr != null && sr.sortingOrder >= 8 ? Mathf.Min(sr.sortingOrder, bo) : bo) - 3);
+            // 11/19 은샘: 물건은 사람처럼 고리 뒤 절반이 그 물건 그림에 가려지게 물건 바로 아래 순서로 (땅 0·1 위)
+            if (assetOrder >= 0) order = Mathf.Max(2, assetOrder - 1);
             var mat = body != null ? body.sharedMaterial : null;   // 밤 조명을 같이 받게
             float age = now - targetAt, k = Mathf.Clamp01(age / .22f), ease = 1f - (1f - k) * (1f - k);
             // 처음: 크게 퍼졌다가 자리 잡는다. 그 뒤로는 은은하게 숨쉰다
@@ -128,20 +130,20 @@ namespace PocketCaravan
         }
 
         // ---- 11/19 그림이 따로 없는 대상(게시판·우물·이정표·자리): 옆에 놓인 물건 그림이나 맵 물건 타일을 찾아 그 밑동 ----
-        Interactable baseFor; bool baseFound; Bounds baseBounds;
+        Interactable baseFor; bool baseFound; Bounds baseBounds; int baseOrder;
         static readonly Queue<Vector3Int> open = new Queue<Vector3Int>();
         static readonly HashSet<Vector3Int> seen = new HashSet<Vector3Int>();
 
-        bool AssetBase(Interactable t, out Bounds b)
+        bool AssetBase(Interactable t, out Bounds b, out int order)
         {
-            if (t != baseFor) { baseFor = t; baseFound = FindAssetBase(t.transform.position, out baseBounds); }
-            b = baseBounds; return baseFound;
+            if (t != baseFor) { baseFor = t; baseFound = FindAssetBase(t.transform.position, out baseBounds, out baseOrder); }
+            b = baseBounds; order = baseFound ? baseOrder : -1; return baseFound;
         }
 
         /// <summary>대상 자리(칸 가운데) 바로 위·옆에 놓인 물건. 1) 물건 그림(순서 3~7, 사람·그림자·고리는 8 이상) 2) Objects 타일 덩어리의 가장 아래 줄</summary>
-        static bool FindAssetBase(Vector3 at, out Bounds b)
+        static bool FindAssetBase(Vector3 at, out Bounds b, out int order)
         {
-            b = default;
+            b = default; order = -1;
             float best = float.MaxValue;
             foreach (var r in FindObjectsByType<SpriteRenderer>(FindObjectsSortMode.None))
             {
@@ -152,7 +154,7 @@ namespace PocketCaravan
                 float dy = rb.min.y - at.y;
                 if (dy < -1.05f || dy > 1.2f) continue;                           // 밑동이 자리 칸 근처 (위 칸·같은 칸·아래 칸)
                 float d = Mathf.Abs(rb.center.x - at.x) + Mathf.Abs(dy);
-                if (d < best) { best = d; b = rb; }
+                if (d < best) { best = d; b = rb; order = r.sortingOrder; }
             }
             if (best < float.MaxValue) return true;
 
@@ -185,6 +187,8 @@ namespace PocketCaravan
                 if (minX > maxX) continue;
                 var lo = o.CellToWorld(new Vector3Int(minX, low, 0)); var hi = o.CellToWorld(new Vector3Int(maxX + 1, low + 1, 0));
                 b = new Bounds((lo + hi) / 2f, hi - lo);
+                var tr = o.GetComponent<UnityEngine.Tilemaps.TilemapRenderer>();
+                order = tr != null ? tr.sortingOrder : 5;
                 return true;
             }
             return false;
