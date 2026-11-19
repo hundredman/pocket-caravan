@@ -120,7 +120,7 @@ namespace PocketCaravan
             if (InputReader.EnterPressed())
             {
                 var c = choices.choices[pick];
-                if (c.origin == null || string.IsNullOrEmpty(c.startScene)) { Sfx.Play("cancel"); return; }
+                if (c.origin == null || string.IsNullOrEmpty(c.startScene)) { Sfx.Play("deny", .55f); return; }
                 Sfx.Play("accept");
                 StartLaunch.Play(pickCardCenter, true, () => { mode = Mode.Closed; GameManager.I.BeginNewGame(c); });   // 11/19 시작 연출 뒤에 떠난다
             }

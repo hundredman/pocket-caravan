@@ -59,6 +59,7 @@ namespace PocketCaravan
                     babbleLeft = Mathf.Min(1.6f, (text?.Length ?? 0) * .03f);
                     var who = PlayerController.Instance != null && PlayerController.Instance.TalkTarget != null ? PlayerController.Instance.TalkTarget.DisplayName : text;
                     voice = Mathf.Abs((who ?? "").GetHashCode()) % 6;
+                    if (ArabiaVoice.Silent(dialogue.Speaker)) babbleLeft = 0f;   // 11/19 이정표 등은 말소리 없이
                 }
             }
             else babbleLeft = 0f;
@@ -76,7 +77,7 @@ namespace PocketCaravan
         void Update()
         {
             var gm = GameManager.I;
-            bool here = VeniceUtil.InVenice && gm != null;
+            bool here = VeniceUtil.InVenice && gm != null && !StartScreen.IsOpen;   // 11/19 시작 화면에서는 시작 화면 곡
             if (common == null) common = FindAnyObjectByType<AudioManager>();
             // 11/08 (은샘, 윤채 님께 전달): 공용 음악은 musicVolume을 바꾸지 않고 AudioManager.Silence로 끈다
             AudioManager.Silence(this, here);

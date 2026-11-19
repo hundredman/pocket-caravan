@@ -97,7 +97,7 @@ namespace PocketCaravan
                 }
             }
             string shared = audioMgr != null && curClipField != null ? curClipField.GetValue(audioMgr) as string : null;
-            bool ours = north && shared != "danger" && songs[1] != null;   // 위험 음악은 공용 그대로
+            bool ours = north && shared != "danger" && songs[1] != null && !StartScreen.IsOpen;   // 11/19 시작 화면에서는 시작 화면 곡   // 위험 음악은 공용 그대로
 
             // 공용 음악: 우리 곡을 트는 동안만 볼륨 0, 아니면 원래대로
             // 11/08 (은샘, 기우 님께 전달): musicVolume을 바꾸지 않고 AudioManager.Silence로 끈다
@@ -184,7 +184,7 @@ namespace PocketCaravan
                 string speaker = dlgSpeaker != null ? dlgSpeaker.GetValue(dlg) as string : "";
                 int len = 40;
                 if (dlgPages != null && dlgPages.GetValue(dlg) is IList pages && page < pages.Count && pages[page] is string s) len = s.Length;
-                babbleLeft = Mathf.Min(1.8f, len * 0.035f);
+                babbleLeft = ArabiaVoice.Silent(speaker) ? 0f : Mathf.Min(1.8f, len * 0.035f);   // 11/19 이정표 등은 말소리 없이
                 int hsh = string.IsNullOrEmpty(speaker) ? 0 : speaker.GetHashCode();
                 bool kid = speaker != null && (speaker.Contains("아이") || speaker.Contains("소녀") || speaker.Contains("꼬마"));
                 bool old = speaker != null && (speaker.Contains("할머니") || speaker.Contains("노인") || speaker.Contains("할아"));

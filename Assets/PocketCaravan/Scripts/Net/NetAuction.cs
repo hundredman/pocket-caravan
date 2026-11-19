@@ -180,7 +180,7 @@ namespace PocketCaravan
         void Bid(int extra)
         {
             int bid = MinBid + extra;
-            if (GM.Player.money < bid) { why = $"돈이 모자라요 ({bid}냥)"; whyAt = Time.unscaledTime; Sfx.Play("cancel"); return; }
+            if (GM.Player.money < bid) { why = $"돈이 모자라요 ({bid}냥)"; whyAt = Time.unscaledTime; Sfx.Play("deny", .55f); return; }
             if (mineTop) { why = "이미 가장 높이 불렀어요"; whyAt = Time.unscaledTime; return; }
             if (local) Place("나", bid, true);
             else { Net.Send(new BidOut { price = bid }); Sfx.Play("coin", .5f); }

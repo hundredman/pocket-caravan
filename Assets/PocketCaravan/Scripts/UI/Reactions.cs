@@ -303,7 +303,7 @@ namespace PocketCaravan
                     var m = list[sel];
                     if (!Knows(m.id))
                     {
-                        Sfx.Play("cancel", .5f);
+                        Sfx.Play("deny", .55f);
                         Notify.Show($"아직 모르는 리액션이야. {m.teacher} 배울 수 있어.", 2.5f);
                         return;
                     }

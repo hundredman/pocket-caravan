@@ -56,7 +56,7 @@ namespace PocketCaravan
         {
             var gm = GameManager.I;
             if (common == null) common = FindAnyObjectByType<AudioManager>();
-            bool here = InArabia && gm != null && songs[1] != null && !CommonDanger(common);
+            bool here = InArabia && gm != null && songs[1] != null && !CommonDanger(common) && !StartScreen.IsOpen;   // 11/19 시작 화면에서는 시작 화면 곡
 
             // 공용 음악: 우리 곡을 트는 동안만 끈다 (11/08 은샘, 기우 님께 전달: musicVolume 대신 AudioManager.Silence)
             AudioManager.Silence(this, here);

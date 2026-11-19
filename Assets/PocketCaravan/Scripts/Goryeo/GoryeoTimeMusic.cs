@@ -25,7 +25,7 @@ namespace PocketCaravan
         void Update()=>Tick(Time.unscaledDeltaTime);
         public void Tick(float dt)
         {
-            var gm=GameManager.I;var map=MapRoot.Current;bool allowed=gm!=null&&map!=null&&GoryeoTravelTransition.RegionOf(map.mapId)!=null&&(map.previewOnly||approvedForProduction);
+            var gm=GameManager.I;var map=MapRoot.Current;bool allowed=gm!=null&&map!=null&&GoryeoTravelTransition.RegionOf(map.mapId)!=null&&(map.previewOnly||approvedForProduction)&&!StartScreen.IsOpen;   // 11/19 시작 화면에서는 시작 화면 곡(title)
             if(!allowed||A==null||B==null||Current==null){Release();return;}
             master=gm.GetComponent<AudioManager>();if(master==null){Release();return;}
             var a=A.GetValue(master)as AudioSource;var b=B.GetValue(master)as AudioSource;

@@ -170,7 +170,7 @@ namespace PocketCaravan
                 }
                 if (DrawCard(cardRect, CuteUI.Pic.Scroll, c.cargo, badge, sub, pay, c.weight, "맡기", why != null ? ShortWhy(c, p) : null, false, true, c.atonement, c.atonement ? 0 : Cm.CreditPoints(c, false)))
                 {
-                    if (why != null) { message = why; Sfx.Play("cancel"); }
+                    if (why != null) { message = why; Sfx.Play("deny", .55f); }
                     else if (PackPuzzle.Wants(c))
                     {
                         // 11/16 은샘: 큰 짐·신용 의뢰는 짐 싣기 퍼즐을 거쳐 맡는다 (Esc로 닫으면 맡지 않음)

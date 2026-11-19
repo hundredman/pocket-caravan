@@ -700,11 +700,11 @@ namespace PocketCaravan
             var p = GameManager.I.Player;
             var m = Market;
             string denial=ReputationPricing.BuyDenial(p,town,item);
-            if(denial!=null){message=denial;Sfx.Play("cancel");return;}
+            if(denial!=null){message=denial;Sfx.Play("deny", .55f);return;}
             int price = m.BuyPrice(item,haggle);
-            if (!m.CanBuy(item)) { message = "재고가 없습니다."; Sfx.Play("cancel"); return; }
-            if (p.money < price) { message = "돈이 모자랍니다."; Sfx.Play("cancel"); return; }
-            if (!p.CanCarry(item)) { message = "더 실을 수 없습니다."; Sfx.Play("cancel"); return; }
+            if (!m.CanBuy(item)) { message = "재고가 없습니다."; Sfx.Play("deny", .55f); return; }
+            if (p.money < price) { message = "돈이 모자랍니다."; Sfx.Play("deny", .55f); return; }
+            if (!p.CanCarry(item)) { message = "더 실을 수 없습니다."; Sfx.Play("deny", .55f); return; }
             p.money -= price;
             p.cargo.Add(item, 1, price);
             m.RecordBuy(item, price);
@@ -751,8 +751,8 @@ namespace PocketCaravan
             if(v==null || !ForSale(town).Contains(v) || v.minTownLevel>Market.Level) { message="이 장터에서 구입할 수 없는 수단입니다.";return; }
             if (p.vehicle == v) { message = "이미 사용 중인 이동 수단입니다."; return; }
             if (p.stowedVehicle == v) { message = "넣어 둔 수단입니다. V를 누르면 꺼냅니다."; return; }
-            if (p.money < v.price) { message = "돈이 모자랍니다."; Sfx.Play("cancel"); return; }
-            if (p.TotalWeight > p.CapacityOf(v)) { message = "지금 짐이 너무 많습니다."; Sfx.Play("cancel"); return; }
+            if (p.money < v.price) { message = "돈이 모자랍니다."; Sfx.Play("deny", .55f); return; }
+            if (p.TotalWeight > p.CapacityOf(v)) { message = "지금 짐이 너무 많습니다."; Sfx.Play("deny", .55f); return; }
             p.money -= v.price;
             p.vehicle = v;
             p.stowedVehicle = null;   // 11/17 새 수단으로 바꾸면 넣어 둔 것은 없앤다 (하나만 가진다)

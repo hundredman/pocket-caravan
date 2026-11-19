@@ -38,7 +38,7 @@ namespace PocketCaravan
                 if (p.TotalWeight > cap + 0.001f)
                 {
                     Notify.Show($"짐이 {p.TotalWeight:0.#}이라 {Josa.Eul(p.vehicle.displayName)} 넣을 수 없어요 (등짐은 {cap:0}까지)");
-                    Sfx.Play("cancel");
+                    Sfx.Play("deny", .55f);   // 11/19 낮은 나무 "톡톡" (예전 cancel은 거슬렸다)
                     return;
                 }
                 p.stowedVehicle = p.vehicle;
@@ -56,7 +56,7 @@ namespace PocketCaravan
             else
             {
                 Notify.Show("넣어 둘 운반 수단이 없어요 · 장터에서 살 수 있어요");
-                Sfx.Play("cancel");
+                Sfx.Play("deny", .55f);   // 11/19 낮은 나무 "톡톡" (예전 cancel은 거슬렸다)
             }
         }
     }

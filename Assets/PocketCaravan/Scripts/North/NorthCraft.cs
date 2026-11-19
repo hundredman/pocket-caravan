@@ -320,10 +320,10 @@ namespace PocketCaravan
         void BuyFromKeeper(ItemData item, TownData town)
         {
             var gm = GameManager.I; var p = gm.Player;
-            if (Left(item.id) <= 0) { shopMsg = "그건 오늘 다 팔렸어. 내일 또 와!"; Sfx.Play("cancel"); return; }
+            if (Left(item.id) <= 0) { shopMsg = "그건 오늘 다 팔렸어. 내일 또 와!"; Sfx.Play("deny", .55f); return; }
             int price = KeeperPrice(item, town);
-            if (p.money < price) { shopMsg = "돈이 조금 모자라네…"; Sfx.Play("cancel"); return; }
-            if (!p.CanCarry(item)) { shopMsg = "짐이 꽉 찼어. 수레가 있으면 더 실을 텐데."; Sfx.Play("cancel"); return; }
+            if (p.money < price) { shopMsg = "돈이 조금 모자라네…"; Sfx.Play("deny", .55f); return; }
+            if (!p.CanCarry(item)) { shopMsg = "짐이 꽉 찼어. 수레가 있으면 더 실을 텐데."; Sfx.Play("deny", .55f); return; }
             if (Mathf.RoundToInt(NorthSave.Get($"kpday:{shopMap}:{shopIdx}", -1f)) != Today)
             {
                 NorthSave.Set($"kpday:{shopMap}:{shopIdx}", Today);

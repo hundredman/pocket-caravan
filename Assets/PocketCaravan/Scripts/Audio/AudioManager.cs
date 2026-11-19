@@ -106,7 +106,7 @@ namespace PocketCaravan
         }
 
         /// <summary>11/19 윤채 ("로그인 때 음악이 있으면 좋겠다"): 로그인 · 시작 화면(맵에 들어가기 전) 음악. 맵에 들어가면 그 맵 음악으로 넘어간다</summary>
-        const string TitleMusic = "road";
+        const string TitleMusic = "title";   // 11/19 시작 화면 전용 곡 "Welcome to the Realm" (road는 길 맵에서 그대로)
 
         void Update()
         {

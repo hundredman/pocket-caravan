@@ -227,8 +227,8 @@ namespace PocketCaravan
         {
             var gm = GameManager.I; var p = gm.Player;
             int have = p.cargo.Count(item), left = Limit - BoughtToday(open);
-            if (have <= 0) { message = $"{Josa.Eul(item.displayName)} 갖고 있지 않아요."; Sfx.Play("cancel"); return; }
-            if (left <= 0) { message = "오늘은 더 못 사요. 내일 또 와요."; Sfx.Play("cancel"); return; }
+            if (have <= 0) { message = $"{Josa.Eul(item.displayName)} 갖고 있지 않아요."; Sfx.Play("deny", .55f); return; }
+            if (left <= 0) { message = "오늘은 더 못 사요. 내일 또 와요."; Sfx.Play("deny", .55f); return; }
             int n = Mathf.Min(count, Mathf.Min(have, left));
             int total = 0; float profitSum = 0;
             bool ok = SavedEconomyChange.Try(gm, () =>
@@ -246,7 +246,7 @@ namespace PocketCaravan
                 }
                 gm.SetMemo(DayKey(open), BoughtToday(open) + n);
             });
-            if (!ok) { message = SavedEconomyChange.Failure; Sfx.Play("cancel"); return; }
+            if (!ok) { message = SavedEconomyChange.Failure; Sfx.Play("deny", .55f); return; }
             Sfx.Play("coin");
             message = $"{item.displayName} {n}개 · {total}냥 받았어요 (손익 {(profitSum >= 0 ? "+" : "")}{Mathf.RoundToInt(profitSum)}냥)";
         }

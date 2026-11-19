@@ -50,6 +50,7 @@ namespace PocketCaravan
             if (d == null || !d.IsOpen || !InArabia) { lastPage = -1; speaker = null; return; }
             string who = d.Speaker ?? "";
             if (who != speaker) { speaker = who; prof = ProfileFor(who); count = 0; }
+            if (Silent(who)) { lastRevealed = d.Revealed; return; }   // 11/19 이정표·팻말 같은 물건은 말소리 없이
             if (d.PageIndex != lastPage) { lastPage = d.PageIndex; lastRevealed = 0; count = 0; }
             int n = d.Revealed;
             if (n < lastRevealed) lastRevealed = 0;
@@ -91,6 +92,9 @@ namespace PocketCaravan
         }
 
         // ---------------- 사람마다 목소리 ----------------
+
+        /// <summary>사람이 아닌 것 (이정표·팻말·게시판·비석 등, 이름이 없는 글) → 말소리 없음</summary>
+        public static bool Silent(string name) => string.IsNullOrEmpty(name) || Has(name, "이정표", "표지판", "안내판", "게시판", "팻말", "비석", "푯말", "알림판");
 
         static bool Has(string s, params string[] keys) { foreach (var k in keys) if (s.Contains(k)) return true; return false; }
 
