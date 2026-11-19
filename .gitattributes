@@ -13,6 +13,11 @@
 *.anim text eol=lf merge=binary
 *.controller text eol=lf merge=binary
 
+# 11/19 승인·검증 기록: 테스트가 파일 해시로 비교하므로 어느 컴퓨터에서나 LF 그대로 꺼낸다.
+# Windows git 기본값(core.autocrlf=true)이 CRLF로 바꿔 꺼내면 해시가 달라져 합치기 전 검사가 틀렸다. 글 파일만 해당 (그림은 아래 binary)
+ArtReview/** eol=lf
+Docs/Validation/** eol=lf
+
 # 바이너리
 *.png binary
 *.jpg binary
