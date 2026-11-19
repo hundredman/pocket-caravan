@@ -35,7 +35,7 @@ namespace PocketCaravan
         readonly List<Vector3> fireSpots = new List<Vector3>();
         readonly List<(SpriteRenderer sr, float phase)> smokes = new List<(SpriteRenderer, float)>();
         Sprite[] smoke, flame, glint;
-        Sprite dot, print, grazeSprite;
+        Sprite dot, footprint, grazeSprite;   // 11/19 print → footprint (MonoBehaviour.print과 이름이 겹친다는 빌드 경고)
         readonly List<(SpriteRenderer sr, float phase, float size)> flames = new List<(SpriteRenderer, float, float)>();
         readonly List<(SpriteRenderer sr, float next)> glints = new List<(SpriteRenderer, float)>();
         class Ember { public Transform t; public SpriteRenderer sr; public Vector3 home; public float age, life; public Vector2 v; }
@@ -63,7 +63,7 @@ namespace PocketCaravan
             flame = LoadFrames("North/flame_", 4, new Vector2(0.5f, 0.1f));
             glint = LoadFrames("North/glint_", 4, new Vector2(0.5f, 0.5f));
             dot = Pixel(new Color32(255, 200, 120, 255), 1, 1);
-            print = Pixel(new Color32(150, 146, 170, 255), 2, 1);
+            footprint = Pixel(new Color32(150, 146, 170, 255), 2, 1);
             foreach (var k in new[] { "reindeer", "goat", "raven", "gull" })
                 sprites[k] = LoadFrames($"North/Critters/{k}_", 4, new Vector2(0.5f, 0.1f));   // 순록은 4프레임, 나머지는 2프레임 (없는 프레임은 건너뜀)
             var g = LoadFrames("North/Critters/reindeer_graze_", 1, new Vector2(0.5f, 0.1f));
@@ -336,7 +336,7 @@ namespace PocketCaravan
                         go.transform.position = feet + side;
                         go.transform.rotation = Quaternion.FromToRotation(Vector3.right, new Vector3(-dir.y, dir.x, 0f));
                         var sr = go.AddComponent<SpriteRenderer>();
-                        sr.sprite = print; sr.sortingOrder = 2;
+                        sr.sprite = footprint; sr.sortingOrder = 2;
                         prints.Add((sr, t));
                         leftFoot = !leftFoot;
                         if (prints.Count > 90) { if (prints[0].sr != null) Destroy(prints[0].sr.gameObject); prints.RemoveAt(0); }
