@@ -88,6 +88,9 @@ namespace PocketCaravan
         {
             e.text = Clean(e.text);
             if (string.IsNullOrEmpty(e.text)) return;
+            // 11/19 윤채 ("튜토리얼 중에는 이벤트 알림 같은 것도 안 떴으면"): 시작 튜토리얼 동안 이벤트 카드(상인회 · 보물 소문 · 칭호 · 경매 등)는
+            //   따로 모아 두었다가 튜토리얼이 끝나면 띄운다 (튜토리얼 안내는 이벤트 카드를 쓰지 않는다)
+            if (e.kind == Kind.Event && StoryGuide.IntroActive) { if (!tutorialHeld.Exists(x => x.text == e.text)) tutorialHeld.Add(e); return; }
             // 맵 이름 = 도착 리본 (아래 알림 줄에 끼지 않는다)
             if (e.key == "location" || IsMapName(e.text)) { arriveText = CuteUI.Plain(e.text); arriveAt = Time.unscaledTime; return; }
             foreach (var x in entries) if (x.text == e.text) return;   // 같은 알림이 떠 있거나 기다리면 또 넣지 않는다
@@ -410,13 +413,40 @@ namespace PocketCaravan
         /// 어두운 바탕용 색 태그는 종이 위에서 안 읽혀서 뺀다.
         /// </summary>
         public static readonly List<Rect> DrawnRects=new List<Rect>();
+        static float lastDrawAt = -1f;
+        static readonly List<Entry> tutorialHeld = new List<Entry>();   // 11/19 튜토리얼 동안 미룬 이벤트 카드   // 11/19 대화창이 떠 있는 동안 알림 시간을 멈추려고 (지난 그리기 시각)
         public static void Draw(Rect reserved=default)
         {
             bool record=!Application.isEditor||Camera.main==null||(Camera.main.pixelWidth==Screen.width&&Camera.main.pixelHeight==Screen.height);
             if(record)DrawnRects.Clear();
             float now = Time.unscaledTime;
+            if (tutorialHeld.Count > 0 && !StoryGuide.IntroActive)   // 튜토리얼이 끝났다: 미뤄 둔 이벤트 카드를 이제 줄에 세운다
+            {
+                var held = new List<Entry>(tutorialHeld);
+                tutorialHeld.Clear();
+                foreach (var h in held) { var e = h; e.added = now; e.until = -1f; Add(e); }
+            }
+            // 11/19 윤채 ("이야기가 나오는데 위에 알림도 뜨니까 둘 다 보기 어렵다"): 대화·이야기 창이 떠 있는 동안 알림은 그리지 않고
+            //   보이던 알림의 남은 시간도 멈춰 둔다 → 창을 닫으면 그때 이어서 보인다 (줄에서 기다린 시간도 세지 않는다)
+            if (DialogueUI.ShownRect.HasValue)
+            {
+                entries.RemoveAll(e => e.key == "location");   // 도착한 곳 이름은 이야기가 끝난 뒤엔 늦은 소식이라 버린다
+                float dt = lastDrawAt > 0f ? now - lastDrawAt : 0f;
+                for (int i = 0; i < entries.Count; i++)
+                {
+                    var h = entries[i];
+                    if (h.until > 0f) { h.until += dt; h.shownAt += dt; } else h.added += dt;
+                    entries[i] = h;
+                }
+                lastDrawAt = now;
+                return;
+            }
+            lastDrawAt = now;
             DrawArrive(now);
             entries.RemoveAll(e => e.until > 0f && now > e.until);
+            // 11/19 윤채 ("알림이 두 개씩 뜨는 게 별로"): 튜토리얼 스포트라이트(TutorialSpot)가 "○○에게 Space로 말 걸기" 말풍선을 띄우고 있으면
+            //   같은 일을 말하는 일반 알림("…다가가 Space로 말을 걸어 보세요")은 버린다 (네 지역 시작 이야기가 따로 띄우던 것)
+            if (TutorialSpot.CurrentId != null) entries.RemoveAll(e => e.kind == Kind.Plain && !string.IsNullOrEmpty(e.text) && e.text.Contains("Space로"));
             // 11/12 줄에서 오래 기다린 일반 알림은 이미 지난 이야기라 버린다 (퀘스트·이벤트·다음 이야기·소식은 남긴다)
             for (int i = entries.Count - 1; i >= MaxVisible; i--)
                 if (entries[i].until < 0f && entries[i].kind == Kind.Plain && now - entries[i].added > StaleSeconds) entries.RemoveAt(i);

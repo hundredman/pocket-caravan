@@ -187,7 +187,7 @@ namespace PocketCaravan
             PlayerPrefs.Save();
             if (!Net.Connect(address, name, key)) { Say(Net.LastError, true); return; }
             submitting = true;
-            Say(auto ? $"{name}(으)로 저절로 접속하는 중…" : "접속하는 중…", false);
+            Say(null, false);   // 11/19 "접속하는 중…"은 단추가 움직임으로 보여 준다 (글이 두 번 나왔다)
         }
 
         void PlayAlone()
@@ -498,7 +498,8 @@ namespace PocketCaravan
             var go = new Rect(x, y, w, 30);
             bool k1 = KeyNav.Item(go, out bool f1);
             UIAppear.Push(A(.72f, .4f), 0f, 8f);
-            if ((TitleUI.Button(go, PrimaryLabel(w - 20), true, f1) || k1) && !submitting) Submit();
+            if (submitting) TitleUI.Loading(go);   // 11/19 접속 중: 글자 대신 달리는 상인 (아래 안내 줄에 같은 말을 또 쓰지 않는다)
+            else if (TitleUI.Button(go, PrimaryLabel(w - 20), true, f1) || k1) Submit();
             UIAppear.Pop();
             y += 40;
             var off = new Rect(x, y, w, 24);

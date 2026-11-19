@@ -53,6 +53,29 @@ namespace PocketCaravan
         float typed, holdUntil; int pauseAt = -1;
         public static DialogueUI Instance => instance;
         public bool IsOpen => open;
+
+        /// <summary>
+        /// 11/19 윤채 ("Space 단추가 심심하고 색도 별로"): 대화 단추를 도트 단추로. 고른 것 = 청록 + 흰 굵은 글씨 + 왼쪽에서 살짝 움직이는 ▶ + 키캡,
+        /// 나머지 = 종이색 + 키캡(Esc). 아래 짧은 그림자, 누르면 1px 내려간다. 예전 종이 단추 모양(GUIStyle 배경)은 그림이 빠지면 회색 기본 단추로 보였다
+        /// </summary>
+        static bool ChoiceButton(Rect r, string label, string key, bool on)
+        {
+            bool hover = r.Contains(Event.current.mousePosition);
+            int sh = 2;
+            if (hover && GUIUtility.hotControl != 0) { r.y += 1; sh = 1; }
+            CuteUI.Box(r, 3, on ? (hover ? CuteUI.InteractLo : CuteUI.Interact) : (hover ? CuteUI.Paper2 : CuteUI.Paper), CuteUI.Ink, 1, sh, CuteUI.Ink);
+            if (on) CuteUI.Fill(new Rect(r.x + 3, r.y + 2, r.width - 6, 1), CuteUI.InteractHi);
+            string text = TradeLedgerUI.Fit(label.Replace("\n", " "), r.width - 16 - (key != null ? CuteUI.KeycapWidth(key) + 6 : 0) - (on ? 9 : 0), false, on);
+            float kw = key != null ? CuteUI.KeycapWidth(key) : 0f, lw = CuteUI.Width(text, false, on);
+            float x = Mathf.Round(r.center.x - (lw + (kw > 0f ? kw + 6f : 0f) + (on ? 9f : 0f)) / 2f);
+            if (on) { CuteUI.Pointer(x + Mathf.Floor((Time.unscaledTime * 2.5f) % 2f), r.center.y, CuteUI.White); x += 9f; }
+            CuteUI.Label(x, r.center.y, text, on ? CuteUI.White : CuteUI.Text, false, on);
+            if (kw > 0f) CuteUI.Keycap(x + lw + 6f, Mathf.Round(r.center.y - 6.5f), key, !on);
+            return CuteUI.Hit(r, GUIContent.none, GUIStyle.none);
+        }
+
+        static float ChoiceWidth(string label, string key, bool on) =>
+            CuteUI.Width(label.Replace("\n", " "), false, on) + (key != null ? CuteUI.KeycapWidth(key) + 6f : 0f) + (on ? 9f : 0f) + 18f;
         public string Speaker => speaker;
         /// <summary>지금 쪽에서 보이는 글자 수</summary>
         public int Revealed => Mathf.Min(CurrentPage.Length, Mathf.FloorToInt(typed));
@@ -298,14 +321,17 @@ namespace PocketCaravan
                 wrappedChoiceOn = new GUIStyle(CuteUI.PaperButtonOn) { wordWrap = true, clipping = TextClipping.Clip };
             }
             var labels = new List<string>(); var widths = new List<float>();
+            var bases = new List<string>(); var keys = new List<string>();
             float totalWidth = 0; bool multiline = false;
             for (int i = 0; i < choices.Count; i++)
             {
                 // 11/08 Space는 지금 고른 선택지에 붙는다. 셋 이상이면 숫자도 붙여 바로 고를 수 있게
-                string label = (choices.Count >= 3 ? (i + 1) + ". " : "") + choices[i].label
-                    + (i == focus ? " (Space)" : i == choices.Count - 1 ? " (Esc)" : "");
-                labels.Add(label); multiline |= label.IndexOf('\n') >= 0 || label.IndexOf('\r') >= 0;
-                float width = Mathf.Max(60f, CuteUI.PaperButton.CalcSize(new GUIContent(label)).x + 14f);
+                // 11/19 "(Space)" 글 대신 단추 안 키캡으로 (ChoiceButton)
+                string bl = (choices.Count >= 3 ? (i + 1) + ". " : "") + choices[i].label;
+                string key = i == focus ? "Space" : i == choices.Count - 1 ? "Esc" : null;
+                string label = bl + (key != null ? " (" + key + ")" : "");
+                labels.Add(label); bases.Add(bl); keys.Add(key); multiline |= label.IndexOf('\n') >= 0 || label.IndexOf('\r') >= 0;
+                float width = Mathf.Max(60f, ChoiceWidth(bl, key, i == focus));
                 widths.Add(width); totalWidth += width + (i > 0 ? 6 : 0);
             }
             bool stacked = ChoicesVisible && (totalWidth > bodyWidth || multiline);
@@ -354,13 +380,13 @@ namespace PocketCaravan
             }
             if (!ChoicesVisible)
             {
-                if (CuteUI.PaperButtonBold(new Rect(bx - 104, r.yMax - 30, 104, 18), "다음 (Space)")) NextPage();   // 11/18 청록 단추는 흰 굵은 글씨
+                if (ChoiceButton(new Rect(bx - 96, r.yMax - 30, 96, 18), "다음", "Space", true)) NextPage();   // 11/19 도트 단추 + 키캡
                 return;
             }
             if (choices.Count == 0)
             {
                 // 11/08 마우스로도 닫게 단추로 (예전엔 글씨라 Space로만 닫혔다)
-                if (CuteUI.PaperButtonBold(new Rect(bx - 104, r.yMax - 30, 104, 18), "닫기 (Space)")) Close();
+                if (ChoiceButton(new Rect(bx - 96, r.yMax - 30, 96, 18), "닫기", "Space", true)) Close();
                 return;
             }
             if (stacked)
@@ -373,7 +399,7 @@ namespace PocketCaravan
                 for (int i = 0; i < choices.Count; i++)
                 {
                     var row = new Rect(0, y, contentWidth, heights[i]); choiceRects.Add(row);
-                    if (i == focus ? CuteUI.PaperButtonBold(row, labels[i], wrappedChoiceOn) : CuteUI.Hit(row, labels[i], wrappedChoice))   // 11/08 키보드로 고른 것을 강조
+                    if (ChoiceButton(row, bases[i], keys[i], i == focus))   // 11/08 키보드로 고른 것을 강조 (11/19 도트 단추)
                     {
                         GUI.EndScrollView(); Pick(choices[i]); return;
                     }
@@ -387,7 +413,7 @@ namespace PocketCaravan
                 for (int i = choices.Count - 1; i >= 0; i--)
                 {
                     bx -= widths[i]; var row = new Rect(bx, r.yMax - 30, widths[i], 18); choiceRects.Add(row);
-                    if (i == focus ? CuteUI.PaperButtonBold(row, labels[i]) : CuteUI.Hit(row, labels[i], CuteUI.PaperButton)) { Pick(choices[i]); return; }   // 11/08 키보드로 고른 것을 강조
+                    if (ChoiceButton(row, bases[i], keys[i], i == focus)) { Pick(choices[i]); return; }   // 11/08 키보드로 고른 것을 강조 (11/19 도트 단추)
                     bx -= 6;
                 }
             }

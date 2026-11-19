@@ -122,8 +122,7 @@ namespace PocketCaravan
                 case Phase.Hold:
                 {
                     CuteUI.Fill(new Rect(0, 0, W, H), Dark);
-                    int dots = 1 + (int)(Time.unscaledTime * 3f) % 3;   // 불러오는 중 · · ·
-                    for (int i = 0; i < dots; i++) CuteUI.Fill(new Rect(W / 2f - 9 + i * 7, H / 2f - 2, 4, 4), new Color32(0xF7, 0xD7, 0x9E, 200));
+                    DrawLoading(W, H);   // 11/19 윤채 ("로딩 화면이 심심해"): 점 두세 개 → 길을 걷는 내 상인 + 한 줄 팁
                     break;
                 }
                 case Phase.In:
@@ -139,7 +138,8 @@ namespace PocketCaravan
                         }
                     }
                     // 도착한 곳 이름표 (아래 가운데, 천천히 떴다 사라짐)
-                    if (!string.IsNullOrEmpty(place) && t > 0.25f)
+                    // 11/19 윤채: 이야기 창이 같이 뜨면 그 칸 위에 "리알토"가 겹쳐 거슬렸다 → 대화·이야기 창이 떠 있으면 이름표는 건너뛴다
+                    if (!string.IsNullOrEmpty(place) && t > 0.25f && !DialogueUI.ShownRect.HasValue)
                     {
                         float a = Mathf.Clamp01((t - 0.25f) / 0.25f) * Mathf.Clamp01((NameLen - t) / 0.35f);
                         if (a > 0.01f)
@@ -159,6 +159,88 @@ namespace PocketCaravan
         }
 
         static readonly Color32 Dark = new Color32(0x1E, 0x14, 0x12, 255);
+
+        // ---------------- 11/19 불러오는 화면 (윤채) ----------------
+        static readonly string[] Tips =
+        {
+            "같은 장터에 계속 팔면 값이 조금씩 떨어져요",
+            "큰 장날엔 장터가 붐벼요 · 시계를 눌러 확인해요",
+            "장부(L)에는 직접 본 장터 값이 적혀요",
+            "여정 수첩(Q)에서 맡은 일과 성장을 볼 수 있어요",
+            "보물 상자 소문이 돌면 따뜻해요 · 뜨거워요를 따라가요",
+            "만국 상인회 마당에서 경매와 진품 감정을 해 봐요",
+        };
+        static int tipPick = -1; static float tipAt = -9f;
+
+        /// <summary>
+        /// 불러오는 동안: 가운데 길 위를 내 상인(고른 출신, 없으면 첫 문명)이 걷는다 — 길 무늬가 뒤로 흘러가고 발밑에 흙먼지.
+        /// 아래 "장터로 가는 중" + 통통 튀는 점, 그 아래 팁 한 줄 (불러올 때마다 하나). 도트는 정수배로만
+        /// </summary>
+        static void DrawLoading(float W, float H)
+        {
+            float t = Time.unscaledTime;
+            if (t - tipAt > 6f) { tipPick = (tipPick + 1 + UnityEngine.Random.Range(0, Tips.Length - 1)) % Tips.Length; tipAt = t; }
+            var cream = new Color32(0xF7, 0xD7, 0x9E, 255);
+            float cx = W / 2f, gy = Mathf.Round(H / 2f + 18f);
+            // 길: 가운데가 밝고 양끝이 어두워지는 띠 + 뒤로 흘러가는 점선
+            for (int i = 0; i < 12; i++)
+            {
+                float half = 110f - i * 8f;
+                CuteUI.Fill(new Rect(Mathf.Round(cx - half), gy + 2, Mathf.Round(half * 2f), 2), new Color32(0x6B, 0x4E, 0x3A, (byte)(30 + i * 9)));
+            }
+            float off = (t * 40f) % 16f;
+            for (float x = cx - 104f - off; x < cx + 104f; x += 16f)
+            {
+                float a = 1f - Mathf.Abs(x + 4f - cx) / 110f;
+                if (a > 0f) CuteUI.Fill(new Rect(Mathf.Round(x), gy + 8, 8, 1), new Color32(cream.r, cream.g, cream.b, (byte)(110 * a)));
+            }
+            // 걷는 상인 (오른쪽 걸음 그림 12~15)
+            var who = Walker();
+            if (who != null)
+            {
+                var s = who.playerFrames[Mathf.Clamp(12 + Mathf.FloorToInt(t * 7f) % 4, 0, who.playerFrames.Length - 1)];
+                float w = Mathf.Round(s.rect.width / s.pixelsPerUnit * 48f), h = Mathf.Round(s.rect.height / s.pixelsPerUnit * 48f);
+                float bob = (Mathf.FloorToInt(t * 7f) % 2) * 2f;
+                CuteUI.Box(new Rect(cx - 16, gy - 1, 32, 6), 3, new Color32(0, 0, 0, 90), new Color32(0, 0, 0, 90), 0);
+                CuteUI.Sprite(s, new Rect(Mathf.Round(cx - w / 2f), gy + 2 - h - bob, w, h));
+                for (int i = 0; i < 4; i++)   // 흙먼지: 뒤로 흘러가며 옅어진다
+                {
+                    float p = (t * 1.4f + i / 4f) % 1f;
+                    CuteUI.Fill(new Rect(Mathf.Round(cx - 14 - p * 26), Mathf.Round(gy - 2 - p * 5), 3, 3), new Color32(cream.r, cream.g, cream.b, (byte)(140 * (1f - p))));
+                }
+            }
+            // 장터로 가는 중 + 통통 튀는 점
+            const string label = "장터로 가는 중";
+            float lw = CuteUI.Width(label, false, true), lx = Mathf.Round(cx - (lw + 16f) / 2f), ly = gy + 26f;
+            CuteUI.Label(lx, ly, label, cream, false, true);
+            for (int i = 0; i < 3; i++)
+            {
+                float j = Mathf.Max(0f, Mathf.Sin(t * 7f - i * .9f));
+                CuteUI.Fill(new Rect(lx + lw + 5 + i * 5, Mathf.Round(ly + 1 - j * 3), 2, 2), cream);
+            }
+            // 팁 한 줄
+            if (tipPick >= 0)
+            {
+                string tip = "팁 · " + Tips[tipPick];
+                CuteUI.LabelCenter(cx, ly + 20f, tip, new Color32(0xC9, 0xB0, 0x8E, 230), true);
+            }
+        }
+
+        /// <summary>불러오는 화면에서 걸을 상인: 지금 출신 → 이어할 저장의 출신 → 첫 문명</summary>
+        static OriginData Walker()
+        {
+            var gm = GameManager.I;
+            var o = gm != null ? gm.Player.origin : null;
+            if (PlayerAppearance.HasFrames(o)) return o;
+            var all = StartChoices.Get();
+            var save = gm != null ? gm.SaveToContinue : null;
+            if (all != null)
+            {
+                if (save != null) { var c = all.choices.Find(x => x.origin != null && x.origin.id == save.origin); if (c != null && PlayerAppearance.HasFrames(c.origin)) return c.origin; }
+                foreach (var c in all.choices) if (PlayerAppearance.HasFrames(c.origin)) return c.origin;
+            }
+            return null;
+        }
 
         /// <summary>"출발!" 띠 (코랄 바탕 · 초코 테) + 아래 한 줄</summary>
         void Stamp(Vector2 c, float s)

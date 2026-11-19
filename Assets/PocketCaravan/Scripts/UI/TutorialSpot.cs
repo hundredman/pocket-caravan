@@ -116,9 +116,9 @@ namespace PocketCaravan
             if (QuestTracker.JournalOpen && !ControlLesson.IsActive(ControlLesson.Quests))
             {
                 if (!Seen("journal.vehicle") && ScreenZones.Live("journal.vehicle"))
-                { holdFrame = Time.frameCount; return Zone("journal.vehicle", "journal.vehicle", "다음에 살 운반 수단이에요. 돈이 모이면 막대가 차요\n더 큰 수단일수록 짐을 많이 실어요", false); }
+                { holdFrame = Time.frameCount; return Zone("journal.vehicle", "journal.vehicle", "#다음 운반 수단\n막대: 돈이 모이면 차요\n더 큰 수단: 짐을 더 많이 실어요", false); }
                 if (!Seen("journal.credit") && ScreenZones.Live("journal.credit"))
-                { holdFrame = Time.frameCount; return Zone("journal.credit", "journal.credit", "신용 단계예요. 맡은 일(배달·납품)을 해내면 점수가 차요\n단계가 오를 때마다 게시판에 새 의뢰가 열려요", false); }
+                { holdFrame = Time.frameCount; return Zone("journal.credit", "journal.credit", "#신용 단계\n배달·납품: 해내면 점수가 차요\n단계가 오르면: 게시판에 새 의뢰가 열려요", false); }
             }
             if (ControlLesson.IsActive(ControlLesson.Quests))
             {
@@ -159,7 +159,7 @@ namespace PocketCaravan
                     if (HudClock.IsOpen)
                     {
                         clockOpened = true;
-                        return Zone("clock.open", "hud.clock", "날짜 · 다음 장날 · 이번 5일 · 오늘 큰 장 마을이에요\n큰 장 마을을 누르면 지도에서 보여 줘요\n다 봤으면 시계를 다시 눌러 닫아요", false);
+                        return Zone("clock.open", "hud.clock", "#시계 보는 법\n빨간 글씨: 다음 장날까지 남은 날\n큰 장 마을: 누르면 지도에서 보여요\n▶다 봤으면 시계를 다시 눌러 닫아요", false);   // 11/19 윤채: 세 줄 긴 글 → 제목 · 짧은 줄 · 할 일
                     }
                     if (clockOpened) { clockOpened = false; MarkSeen("clock.seen"); }   // 펼쳤다가 닫았다 → 접기 안내로
                     else if (blocking) return null;
@@ -173,7 +173,7 @@ namespace PocketCaravan
                     if (HudClock.Folded) MarkSeen("clock.done");   // 접었다 → 다음 단계
                     else if (blocking) return null;
                     else if (ScreenZones.Live("hud.clock.fold"))
-                        return Zone("clock.fold", "hud.clock.fold", "평소엔 이 단추로 시계를 위로 접어 둘 수 있어요\n다시 볼 땐 맨 위 작은 탭을 눌러요", false);
+                        return Zone("clock.fold", "hud.clock.fold", "#시계 접기\n이 단추: 시계를 위로 접어요\n▶다시 볼 땐 맨 위 작은 탭을 눌러요", false);
                 }
             }
             if (buy || sell)
@@ -212,9 +212,9 @@ namespace PocketCaravan
 
         static readonly string[] LedgerTour =
         {
-            "내 짐 판매처 · 실은 물건을 어느 장터에 팔면 이득인지 보여 줘요",
-            "전체 시세 · 장터에서 직접 본 사는 값·파는 값을 물건마다 비교해요",
-            "최근 거래 · 최근에 사고판 기록과 남긴 돈이에요",
+            "#내 짐 판매처\n실은 물건을 어느 장터에 팔면 이득인지 보여 줘요",   // 11/19 제목 + 한 줄 (안내 카드)
+            "#전체 시세\n장터에서 직접 본 사는 값·파는 값을 비교해요",
+            "#최근 거래\n최근에 사고판 기록과 남긴 돈이에요",
         };
         /// <summary>지금 밝히는 것의 아이디 (없으면 null). 장부가 소개 중인 탭을 펼치는 데 쓴다</summary>
         public static string CurrentId => inst != null && inst.cur.HasValue ? inst.cur.Value.id : null;
@@ -376,14 +376,34 @@ namespace PocketCaravan
         }
 
         /// <summary>목표 아래(자리가 없으면 위) 말풍선 + 목표를 가리키는 꼬리</summary>
+        /// <summary>
+        /// 목표 옆 말풍선. 한 줄이면 가운데 한 줄.
+        /// 11/19 윤채 ("아래 뜨는 안내에 글이 너무 많아 보기 어렵다"): 여러 줄("\n")은 안내 카드로 —
+        ///   "#"로 시작하는 첫 줄 = 굵은 제목(전구 그림) · 보통 줄 = 점 목록(":" 앞은 굵게) · "▶"로 시작하는 줄 = 할 일(청록 굵게). 왼쪽 맞춤
+        /// </summary>
         static void Bubble(Rect hole, string text, float gap, float W, float H)
         {
             if (string.IsNullOrEmpty(text)) return;
-            // 11/18 여러 줄 말풍선 ("\n"으로 나눈다)
-            string[] lines = text.IndexOf('\n') >= 0 ? text.Split('\n') : null;
-            float tw = 16f, bh = 20f;
-            if (lines == null) tw += CuteUI.Width(text, false);
-            else { foreach (var l in lines) tw = Mathf.Max(tw, CuteUI.Width(l, false) + 16f); bh = 6f + lines.Length * 14f; }
+            string[] lines = text.Split('\n');
+            string title = lines.Length > 1 && lines[0].StartsWith("#") ? lines[0].Substring(1).Trim() : null;
+            var rows = new List<(string t, bool act)>();
+            for (int i = title != null ? 1 : 0; i < lines.Length; i++)
+            {
+                string l = lines[i].Trim();
+                if (l.Length == 0) continue;
+                bool act = l.StartsWith("▶");
+                rows.Add((act ? l.Substring(1).Trim() : l, act));
+            }
+            bool card = lines.Length > 1;
+            float tw, bh;
+            if (!card) { tw = 16f + CuteUI.Width(text, false); bh = 20f; }
+            else
+            {
+                tw = title != null ? CuteUI.Width(title, false, true) + 14f : 0f;
+                foreach (var row in rows) tw = Mathf.Max(tw, CuteUI.Width(row.t, false, true) + 10f);
+                tw += 24f;
+                bh = 10f + (title != null ? 22f : 0f) + rows.Count * 15f + 4f;
+            }
             bool below = hole.yMax + gap + 10f + bh < H - 28f;
             float by = below ? hole.yMax + gap + 9f : hole.y - gap - 9f - bh;
             float bx = Mathf.Clamp(hole.center.x - tw / 2f, 6f, W - tw - 6f);
@@ -397,8 +417,39 @@ namespace PocketCaravan
                 CuteUI.Fill(new Rect(tx - w / 2f - 1f, y, w + 2f, 1f), CuteUI.Ink);
                 if (w > 1f) CuteUI.Fill(new Rect(tx - w / 2f, y, w, 1f), CuteUI.Paper);
             }
-            if (lines == null) CuteUI.LabelCenter(r.center.x, r.center.y, text, CuteUI.Text, false);
-            else for (int i = 0; i < lines.Length; i++) CuteUI.LabelCenter(r.center.x, r.y + 10f + i * 14f, lines[i], CuteUI.Text, false);
+            if (!card) { CuteUI.LabelCenter(r.center.x, r.center.y, text, CuteUI.Text, false); return; }
+
+            float x = r.x + 12f, yy = r.y + 7f;
+            if (title != null)
+            {
+                var bp = CuteUI.PicSize(CuteUI.Pic.Bulb);
+                CuteUI.Icon(CuteUI.Pic.Bulb, x, yy + 7f - bp.y / 2f, 1, CuteUI.Deco);
+                CuteUI.Label(x + bp.x + 5f, yy + 7f, title, CuteUI.Text, false, true);
+                yy += 17f;
+                for (float dx = 0; dx < r.width - 24f; dx += 4f) CuteUI.Fill(new Rect(x + dx, yy, 2f, 1f), CuteUI.Line);
+                yy += 5f;
+            }
+            foreach (var row in rows)
+            {
+                float cy = yy + 7f;
+                if (row.act)
+                {
+                    CuteUI.Pointer(x + Mathf.Floor((Time.unscaledTime * 2.5f) % 2f), cy, CuteUI.Interact);
+                    CuteUI.Label(x + 9f, cy, row.t, CuteUI.Interact, false, true);
+                }
+                else
+                {
+                    CuteUI.Fill(new Rect(x + 1f, cy - 1f, 3f, 3f), CuteUI.Frame);
+                    int c = row.t.IndexOf(": ", System.StringComparison.Ordinal);
+                    if (c > 0)
+                    {
+                        float hx = CuteUI.Label(x + 9f, cy, row.t.Substring(0, c), CuteUI.Text, false, true);
+                        CuteUI.Label(hx + 4f, cy, row.t.Substring(c + 2), CuteUI.Sub, false);
+                    }
+                    else CuteUI.Label(x + 9f, cy, row.t, CuteUI.Text, false);
+                }
+                yy += 15f;
+            }
         }
     }
 }

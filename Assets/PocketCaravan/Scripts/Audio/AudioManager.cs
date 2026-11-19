@@ -105,8 +105,12 @@ namespace PocketCaravan
             current = next;
         }
 
+        /// <summary>11/19 윤채 ("로그인 때 음악이 있으면 좋겠다"): 로그인 · 시작 화면(맵에 들어가기 전) 음악. 맵에 들어가면 그 맵 음악으로 넘어간다</summary>
+        const string TitleMusic = "road";
+
         void Update()
         {
+            if (StartScreen.IsOpen && !danger && currentClip != TitleMusic) PlayMusic(TitleMusic);   // 로그인 화면도 시작 화면 위에 뜬다
             silencers.RemoveWhere(o => o == null || (o is Object u && u == null));   // 사라진 지역 부품
             float target = Muted || silencers.Count > 0 ? 0f : musicVolume;
             foreach (var m in new[] { musicA, musicB })

@@ -92,6 +92,46 @@ namespace PocketCaravan
             return enabled && CuteUI.Hit(r, GUIContent.none, GUIStyle.none);
         }
 
+        /// <summary>
+        /// 11/19 접속 중 단추 (윤채 "로딩은 글자 말고 로띠 같은 움직임으로"): 청록 단추 안 왼쪽에서 상인 하나가 제자리 달리기
+        /// (네 상인이 2초씩 돌아가며, 발밑에 흙먼지), 가운데 "장터로 가는 중" + 통통 튀는 점 셋. 누를 수 없다
+        /// </summary>
+        public static void Loading(Rect r)
+        {
+            float t = Time.unscaledTime;
+            CuteUI.Box(r, 3, Teal, Choco, 1, 4, Choco);
+            CuteUI.Fill(new Rect(r.x + 3, r.y + 2, r.width - 6, 2), TealHi);
+            CuteUI.Fill(new Rect(r.x + 3, r.yMax - 3, r.width - 6, 1), TealLo);
+            // 달리는 상인
+            var who = Who(Order[Mathf.FloorToInt(t / 2f) % 4]);
+            float runX = r.x + 20;
+            if (who != null)
+            {
+                var frames = who.origin.playerFrames;
+                var s = frames[Mathf.Clamp(12 + Mathf.FloorToInt(t * 9f) % 4, 0, frames.Length - 1)];
+                float w = Mathf.Round(s.rect.width / s.pixelsPerUnit * 16f), h = Mathf.Round(s.rect.height / s.pixelsPerUnit * 16f);
+                float bob = Mathf.FloorToInt(t * 9f) % 2;
+                CuteUI.Sprite(s, new Rect(runX - w / 2f, r.yMax - 4 - h - bob, w, h));
+                // 발밑 흙먼지: 뒤로 흘러가며 옅어진다
+                for (int i = 0; i < 3; i++)
+                {
+                    float p = (t * 1.6f + i / 3f) % 1f;
+                    var c = new Color32(0xFF, 0xFF, 0xFF, (byte)(150 * (1f - p)));
+                    CuteUI.Fill(new Rect(Mathf.Round(runX - 8 - p * 12), Mathf.Round(r.yMax - 7 - p * 3), 2, 2), c);
+                }
+            }
+            // 가운데 글 + 통통 튀는 점 셋
+            const string label = "장터로 가는 중";
+            float lw = CuteUI.Width(label, false, true), cx = r.center.x + 10;
+            CuteUI.Label(cx - (lw + 16) / 2f, r.center.y + 1, label, CuteUI.White, false, true);
+            float dx = cx - (lw + 16) / 2f + lw + 4;
+            for (int i = 0; i < 3; i++)
+            {
+                float j = Mathf.Max(0f, Mathf.Sin(t * 7f - i * .9f));
+                CuteUI.Fill(new Rect(dx + i * 5, Mathf.Round(r.center.y + 2 - j * 3), 2, 2), CuteUI.White);
+            }
+        }
+
         /// <summary>고른 표시: 네 모서리 바깥 꺾쇠 (초콜릿)</summary>
         public static void Corners(Rect r)
         {
@@ -206,13 +246,18 @@ namespace PocketCaravan
                 var tobi = Who(Order[0]);
                 Rect tobiHead = default;
                 if (tobi != null) tobiHead = Hero(tobi, 0, new Vector2(stall.xMax + 26, gy + 14), k, speaker == 0 ? since : 9f, true, 0f);
-                // 사피: 좌판 앞 보따리 옆에 앉음 (다리는 땅에 묻혀 앉은 모습)
+                // 사피: 좌판 앞 방석에 앉아 보따리 옆 (11/19 다리만 가려 땅에 묻힌 것처럼 보였다 → 코랄 방석 위에, 앞줄로 조금 내림)
                 var sapi = Who(Order[3]);
                 Rect sapiHead = default;
-                if (sapi != null) sapiHead = Hero(sapi, 0, new Vector2(stall.center.x - 6, gy + 22), k, speaker == 3 ? since : 9f, true, 6f / 24f);
+                var cushion = Tex("cushion");
+                float sx = stall.x + 60;
+                var cuR = new Rect(Mathf.Round(sx - cushion.width * k / 2f), gy + 32 - cushion.height * k, cushion.width * k, cushion.height * k);
+                CuteUI.Box(new Rect(cuR.x + 4, gy + 27, cuR.width - 8, 9), 4, ChocoShadow, ChocoShadow, 0);
+                Draw(cushion, cuR);
+                if (sapi != null) sapiHead = Hero(sapi, 0, new Vector2(sx, cuR.y + 9), k, speaker == 3 ? since : 9f, false, 6f / 24f);
                 var sack = Tex("sack");
-                var skR = new Rect(stall.center.x + 18, gy + 22 - sack.height * k, sack.width * k, sack.height * k);
-                CuteUI.Box(new Rect(skR.x + 4, gy + 16, skR.width - 8, 8), 4, ChocoShadow, ChocoShadow, 0);
+                var skR = new Rect(cuR.xMax + 2, gy + 32 - sack.height * k, sack.width * k, sack.height * k);
+                CuteUI.Box(new Rect(skR.x + 4, gy + 26, skR.width - 8, 8), 4, ChocoShadow, ChocoShadow, 0);
                 Draw(sack, skR);
                 // 화분 (토비 오른쪽. 16:10처럼 장면이 좁아 토비와 겹치면 그리지 않는다)
                 var pot = Tex("plant");
@@ -448,6 +493,16 @@ namespace PocketCaravan
                 ".XwcwwwwwwwcwX..",
                 "..XwwwcwcwwwX...",
                 "...XXXXXXXXX....",
+            },
+            ["cushion"] = new[]
+            {
+                "...XXXXXXXXXXXXXXXX...",
+                "..XccWccccccccccWccX..",
+                ".XccccccccccccccccccX.",
+                "XCccccccccccccccccccCX",
+                "XCCccccccccccccccccCCX",
+                ".XXCCCCCCCCCCCCCCCCXX.",
+                "..XXXXXXXXXXXXXXXXXX..",
             },
             ["plant"] = new[]
             {
