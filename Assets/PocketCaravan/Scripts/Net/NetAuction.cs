@@ -227,7 +227,7 @@ namespace PocketCaravan
             float nx = CuteUI.Label(tx, card.y + 14, rare.name, CuteUI.Text, false, true);
             CuteUI.Label(nx + 6, card.y + 14.5f, rare.region, CuteUI.Sub, true);
             CuteUI.WrapWords(tx, card.y + 22, card.xMax - tx - 8, rare.desc, CuteUI.Sub, true);
-            CuteUI.Label(tx, card.yMax - 9, $"감정가 {rare.value}냥", CuteUI.Interact, true);
+            CuteUI.Label(tx, card.yMax - 9, $"상인회 감정가 {rare.value}냥", CuteUI.Interact, true);
 
             // 지금 값 · 최고가 · 남은 시간
             float y = card.yMax + 8;
