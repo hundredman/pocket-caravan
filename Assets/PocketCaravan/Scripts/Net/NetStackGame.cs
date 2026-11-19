@@ -82,7 +82,7 @@ namespace PocketCaravan
             tower.Clear(); chips.Clear();
             tower.Add(new Block { x = (AreaW - BaseW) / 2f, w = BaseW, look = -1 });
             moverW = StartW; dir = 1f; moverX = 0f; speed = 72f; view = 0f; combo = 0;
-            marked = false; newBest = false; popAt = -9f; landAt = -9f;
+            marked = false; newBest = false; popAt = -9f; landAt = -9f; sliding = false;
             lockedAtStart = !DuoUnlocked;   // 이 판으로 둘이서가 열리는지 (도장은 판 중간에 찍힌다)
             TurnStarted();
         }
@@ -102,11 +102,15 @@ namespace PocketCaravan
             else if (state == State.Ready) { if (drop) { state = State.Play; TurnStarted(); Sfx.Play("accept", .6f); } }
             else if (state == State.Play && !InBeat)
             {
-                moverX += dir * speed * dt;
-                if (moverX < 0f) { moverX = 0f; dir = 1f; }
-                if (moverX > AreaW - moverW) { moverX = AreaW - moverW; dir = -1f; }
-                if (MyTurn) { if (drop) LocalDrop(); }
-                else PartnerTurn(dt);
+                if (mode == Mode.Online && !MyTurn) PartnerOnline();   // 11/19 접속한 짝 차례: 짐이 짝 화면처럼 오간다 (NetStackDuo)
+                else
+                {
+                    moverX += dir * speed * dt;
+                    if (moverX < 0f) { moverX = 0f; dir = 1f; }
+                    if (moverX > AreaW - moverW) { moverX = AreaW - moverW; dir = -1f; }
+                    if (MyTurn) { if (drop) LocalDrop(); }
+                    else PartnerTurn(dt);
+                }
             }
             else if (state == State.Play) { }   // 둘이서: 놓은 뒤 잠깐 쉰다
             else if (drop && Time.unscaledTime - overAt > .6f) Again();
@@ -268,7 +272,7 @@ namespace PocketCaravan
                 Cargo(new Rect(Mathf.Round(b.x), Mathf.Round(y), Mathf.Round(b.w), bh), LookOf(i, b.look));
             }
             foreach (var c in chips) Cargo(new Rect(Mathf.Round(c.x), Mathf.Round(c.y), Mathf.Round(c.w), BlockH), c.look);
-            if ((state == State.Ready || state == State.Play) && !PartnerChoosing && !InBeat)
+            if ((state == State.Ready || state == State.Play) && !InBeat)
             {
                 float my = LevelY(tower.Count) - Hover;
                 // 떨어질 자리 안내: 옅은 세로줄
@@ -278,7 +282,6 @@ namespace PocketCaravan
                 if (now - landAt >= FallTime) Cargo(new Rect(Mathf.Round(moverX), Mathf.Round(my), Mathf.Round(moverW), BlockH), LookOf(tower.Count, tower.Count % 5));
                 DrawTurn(my);
             }
-            else if (state == State.Play && !InBeat) DrawPartnerChoosing(LevelY(tower.Count) - Hover, now);
             DrawDuoNames();
             if (now - popAt < .9f)
             {

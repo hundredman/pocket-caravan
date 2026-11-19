@@ -21,6 +21,10 @@ namespace PocketCaravan
     /// 11/18 다듬기: 접속한 짝의 차례에는 짐을 흐리게 띄워 두고 "루나 고르는 중…" (내 화면의 짐은 짝 화면과 위치가 달라 놓을 때 튀었다).
     ///   짝이 놓으면 그 자리에서 툭 떨어진다. 짝이 맞추면 "루나 딱!". 판 중 1 박수 · 2 하트 (짝 화면 이름표 위에 뜬다, 파리드는 따라 한다).
     ///   옆에 접속한 사람이 여럿이면 고르는 화면에서 Tab으로 같이 할 사람을 바꾼다 (가까운 순).
+    /// 11/19 짝 차례에도 짐이 오가 보이게 (흐린 짐이 멈춰 있어 상대가 하는지 안 보였다):
+    ///   짐이 오가는 길은 양쪽이 같다 (차례 시작 자리·방향·속도). 그래서 짝 차례의 짐은 차례가 시작된 뒤 지난 시간으로 그린다 (PathX).
+    ///   짝 화면은 신호가 닿은 만큼 늦게 출발하므로 그만큼(lag) 늦춰 그리고, 짝이 놓은 자리로 짝이 몇 초에 놓았는지 거꾸로 셈해 lag를 맞춘다.
+    ///   그래도 남는 차이는 짝이 놓았다는 신호가 오면 SlideTime 동안 놓은 자리로 미끄러진 뒤 떨어뜨려 튀지 않게 한다.
     /// </summary>
     public partial class NetStackGame
     {
@@ -39,6 +43,11 @@ namespace PocketCaravan
         int pick;                                    // 고르는 화면: 같이 하자고 할 사람 (가까운 순 몇 번째)
         string myReact, partnerReact, npcReact;      // 판 중 리액션 (이름표 위 말풍선)
         float myReactAt = -9f, partnerReactAt = -9f, npcReactAt = -9f;
+        // 11/19 짝 차례 짐: 차례 시작 방향, 놓은 자리로 미끄러지기
+        const float SlideTime = .15f, LagStart = .3f, LagMax = 1.2f;
+        static float lag = LagStart;   // 짝 화면이 내 화면보다 늦게 출발하는 시간 (짝이 놓을 때마다 맞춘다)
+        float startDir = 1f, slideFrom, slideTo, slideAt;
+        bool sliding;
         string lastDrop;      // 내가 마지막으로 보낸 놓음 신호 (짝이 놓을 때까지 1.5초마다 다시 보낸다: 서버가 0.4초 안에 겹친 리액션을 버릴 수 있어서)
         float lastDropSent;
 
@@ -50,7 +59,7 @@ namespace PocketCaravan
         static float lastSent = -9f;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void ResetStatics() { invFrom = heardId = null; invAt = heardAt = -99f; outq.Clear(); lastSent = -9f; }   // 플레이 모드를 다시 켜도 (도메인 다시 읽기 꺼짐)
+        static void ResetStatics() { invFrom = heardId = null; invAt = heardAt = -99f; outq.Clear(); lastSent = -9f; lag = LagStart; }   // 플레이 모드를 다시 켜도 (도메인 다시 읽기 꺼짐)
 
         static readonly Color32 MineCol = new Color32(80, 178, 168, 255), PartnerCol = new Color32(232, 104, 96, 255);
 
@@ -193,12 +202,9 @@ namespace PocketCaravan
                 if (inst.state == State.Play) { inst.endWhy = $"{inst.partnerName} 님이 그만뒀어요"; inst.End(); }
                 else if (inst.state == State.Wait) { inst.state = State.Choose; Notify.Show($"{inst.partnerName} 님은 다음에 하재요", 3f); }
             }
-            else if (kind == 'D' && inst.state == State.Play && !inst.MyTurn && part.Length >= 4
+            else if (kind == 'D' && inst.state == State.Play && !inst.MyTurn && !inst.sliding && part.Length >= 4
                      && int.TryParse(part[2], out int idx) && int.TryParse(part[3], out int x10) && idx == inst.tower.Count - 1)
-            {
-                inst.moverX = Mathf.Clamp(x10 / 10f, 0f, AreaW - inst.moverW);
-                inst.Drop();
-            }
+                inst.PartnerLanded(Mathf.Clamp(x10 / 10f, 0f, AreaW - inst.moverW));   // 11/19 바로 떨어뜨리지 않고 놓은 자리로 미끄러진 뒤 (PartnerOnline)
         }
 
         // ---------------- 고르기 · 시작 ----------------
@@ -290,6 +296,7 @@ namespace PocketCaravan
         void TurnStarted()
         {
             turnAt = Time.unscaledTime;
+            startDir = dir;   // 차례 시작 방향 (짐은 오가며 dir이 바뀐다)
             if (mode == Mode.Npc && state == State.Play && !MyTurn)
             {
                 npcAt = turnAt + Random.Range(.5f, 1.2f);
@@ -325,6 +332,56 @@ namespace PocketCaravan
             if (mode != Mode.Online) return;
             if (!PeerHere(partnerId)) { endWhy = $"{partnerName} 님이 떠났어요"; End(); }
             else if (now - turnAt > TurnLimit) { endWhy = $"{partnerName} 님이 한참 안 놓았어요"; Signal("sgQ_" + partnerId); End(); }
+        }
+
+        /// <summary>11/19 접속한 짝 차례 (Update에서 매 프레임): 짐을 짝 화면처럼 오가게 두고, 짝이 놓았으면 그 자리로 미끄러진 뒤 떨어뜨린다</summary>
+        void PartnerOnline()
+        {
+            float now = Time.unscaledTime;
+            if (sliding)
+            {
+                float k = (now - slideAt) / SlideTime;
+                if (k >= 1f) { moverX = slideTo; sliding = false; Drop(); return; }
+                k = 1f - (1f - k) * (1f - k);
+                moverX = Mathf.Lerp(slideFrom, slideTo, k);
+                return;
+            }
+            PartnerTurn(0f);   // 떠났나 · 너무 오래 안 놓았나
+            if (state != State.Play) return;
+            moverX = PathX(now - (landAt + Beat) - lag, out dir);
+        }
+
+        /// <summary>차례가 시작된 뒤 t초 지난 짐의 x (양 끝에서 튕기며 오간다). 짐이 오가는 길은 양쪽 화면이 같다</summary>
+        float PathX(float t, out float d)
+        {
+            float span = AreaW - moverW;
+            d = startDir;
+            if (span <= 0f) return 0f;
+            float m = Mathf.Repeat(Mathf.Max(0f, t) * speed, 2f * span), a = m;
+            if (m > span) { a = 2f * span - m; d = -startDir; }
+            return startDir > 0f ? a : span - a;
+        }
+
+        /// <summary>짝이 놓았다는 신호가 왔다: 짝이 차례 몇 초에 놓았는지 거꾸로 셈해 lag를 맞추고, 놓은 자리로 미끄러지기 시작</summary>
+        void PartnerLanded(float x)
+        {
+            float now = Time.unscaledTime, span = AreaW - moverW, elapsed = now - (landAt + Beat);
+            if (span > .5f && speed > 0f && elapsed > 0f)
+            {
+                // 같은 자리를 지나는 때는 왕복마다 두 번: 그중 지금 lag로 그린 때에 가장 가까운 것
+                float a = startDir > 0f ? x : span - x, period = 2f * span / speed, t1 = a / speed, t2 = (2f * span - a) / speed;
+                float want = elapsed - lag, best = -1f, bestErr = float.MaxValue;
+                for (int k = 0; k < 4000 && k * period <= elapsed + .05f; k++)
+                    for (int j = 0; j < 2; j++)
+                    {
+                        float c = k * period + (j == 0 ? t1 : t2), got = elapsed - c;
+                        if (got < -.05f || got > LagMax + .3f) continue;
+                        float err = Mathf.Abs(c - want);
+                        if (err < bestErr) { bestErr = err; best = got; }
+                    }
+                if (best > -1f) lag = Mathf.Clamp(Mathf.Lerp(lag, best, .5f), 0f, LagMax);
+            }
+            slideFrom = moverX; slideTo = x; slideAt = now; sliding = true;
         }
 
         void React(string id, string name)
@@ -402,36 +459,14 @@ namespace PocketCaravan
         {
             if (mode == Mode.Solo || state != State.Play) return;
             bool mine = MyTurn;
-            string t = mine ? "내 차례" : $"{partnerName} 차례";
+            float waited = Time.unscaledTime - turnAt;   // 접속한 짝이 10초 넘게 안 놓으면 남은 초
+            string t = mine ? "내 차례" : mode == Mode.Online && waited > 10f && !sliding
+                ? $"{partnerName} 차례 · {Mathf.Max(0, Mathf.CeilToInt(TurnLimit - waited))}초" : $"{partnerName} 차례";
             float w = CuteUI.Width(t, true) + 12f, cx = Mathf.Clamp(moverX + moverW / 2f, w / 2f + 2f, AreaW - w / 2f - 2f);
             var r = new Rect(Mathf.Round(cx - w / 2f), Mathf.Round(my - 17f), Mathf.Round(w), 14f);
             if (r.y < 2f) r.y = Mathf.Round(my + BlockH + 3f);
             CuteUI.Box(r, 5, CuteUI.White, mine ? MineCol : PartnerCol, 1);
             CuteUI.LabelCenter(r.center.x, r.center.y, t, mine ? CuteUI.Text : CuteUI.Text, true);
-        }
-
-        /// <summary>접속한 짝이 고르는 중 (내 화면의 짐은 짝 화면과 위치가 달라서 보이지 않는다)</summary>
-        bool PartnerChoosing => mode == Mode.Online && state == State.Play && !MyTurn;
-
-        /// <summary>짝 차례: 탑 위에 흐린 짐 + "루나 고르는 중…" (10초가 넘으면 남은 초)</summary>
-        void DrawPartnerChoosing(float my, float now)
-        {
-            if (now - landAt < FallTime) return;
-            var top = tower[tower.Count - 1];
-            float gx = Mathf.Round(top.x + (top.w - moverW) / 2f);
-            var old = GUI.color; GUI.color = new Color(1f, 1f, 1f, .35f);
-            Cargo(new Rect(gx, Mathf.Round(my), Mathf.Round(moverW), BlockH), LookOf(tower.Count, 3));
-            GUI.color = old;
-            float waited = now - turnAt;
-            string t = waited > 10f ? $"{partnerName} 기다리는 중 · {Mathf.Max(0, Mathf.CeilToInt(TurnLimit - waited))}초"
-                : $"{partnerName} 고르는 중" + new string('.', 1 + (int)(now * 2.5f) % 3);
-            float w = CuteUI.Width(partnerName + " 고르는 중...", true) + 12f;
-            if (waited > 10f) w = CuteUI.Width(t, true) + 12f;
-            float cx = Mathf.Clamp(gx + moverW / 2f, w / 2f + 2f, AreaW - w / 2f - 2f);
-            var r = new Rect(Mathf.Round(cx - w / 2f), Mathf.Round(my - 17f), Mathf.Round(w), 14f);
-            if (r.y < 2f) r.y = Mathf.Round(my + BlockH + 3f);
-            CuteUI.Box(r, 5, CuteUI.White, PartnerCol, 1);
-            CuteUI.Label(r.x + 6f, r.center.y, t, waited > 10f ? CuteUI.Down : CuteUI.Text, true);
         }
 
         /// <summary>바닥 양옆: 나 · 짝 이름과 놓은 개수</summary>
