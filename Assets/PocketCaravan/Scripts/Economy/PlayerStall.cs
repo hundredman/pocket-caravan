@@ -194,8 +194,21 @@ namespace PocketCaravan
             if (gm.Player.stallEarned > 0) Notify.Show($"내 좌판에 판 돈 {gm.Player.stallEarned}냥이 모였어요. 좌판에 말 걸어 받아요", 4f);
         }
 
-        /// <summary>장터 상인에서 2~7칸 안, 좌판(3칸 × 2칸)과 그 앞 한 줄이 모두 걸을 수 있고 말 걸 것이 없는 자리. 가까운 곳부터</summary>
+        /// <summary>장터 상인에서 3~7칸 안, 좌판(3칸 × 3칸)과 그 앞 한 줄이 모두 걸을 수 있고 말 걸 것이 없는 자리. 가까운 곳부터.
+        /// 11/19 먼저 옆 좌판·집 그림과 겹치지 않는 자리를 찾고, 없으면 칸만 보고 찾는다 (둘 다 늘 같은 자리가 나오게 움직이는 것은 안 본다)</summary>
         static Vector3Int? FindPlace(MapRoot map, Vector3Int from)
+        {
+            var props = new List<Bounds>();
+            foreach (var sr in map.GetComponentsInChildren<SpriteRenderer>())
+            {
+                if (sr == null || !sr.enabled || sr.GetComponentInParent<Interactable>() != null || sr.GetComponentInParent<PlayerController>() != null) continue;
+                var bd = sr.bounds;
+                if (bd.size.x >= 1.5f && bd.size.y >= 1.5f) props.Add(bd);   // 좌판·집·나무처럼 큰 그림만 (풀·돌·그림자는 빼고)
+            }
+            return Search(map, from, props, true) ?? Search(map, from, props, false);
+        }
+
+        static Vector3Int? Search(MapRoot map, Vector3Int from, List<Bounds> props, bool roomy)
         {
             Vector3Int? best = null; float bestD = float.MaxValue;
             for (int dx = -7; dx <= 7; dx++)
@@ -211,6 +224,12 @@ namespace PocketCaravan
                             var k = new Vector3Int(c.x + x, c.y + y, 0);
                             if (!map.IsWalkable(k) || Interactable.At(k) != null) ok = false;
                         }
+                    if (ok && roomy)
+                    {
+                        var w = map.CellCenter(c);
+                        var area = new Bounds(new Vector3(w.x, w.y - 0.5f + 1.4f, 0f), new Vector3(3.6f, 2.9f, 10f));
+                        foreach (var bd in props) { var q = bd; q.extents = new Vector3(q.extents.x, q.extents.y, 10f); if (q.Intersects(area)) { ok = false; break; } }
+                    }
                     if (ok) { best = c; bestD = d; }
                 }
             return best;

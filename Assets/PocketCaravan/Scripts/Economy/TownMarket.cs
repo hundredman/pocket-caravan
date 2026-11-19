@@ -421,7 +421,7 @@ namespace PocketCaravan
                 if (now != on && !HaggleDuel.IsOpen)
                 {
                     Loan.SetOn(now); Sfx.Play("open", .4f);
-                    message = now ? (Loan.Room(p) > 0 ? $"외상 쓰기 켬 · 가진 돈보다 더 사면 모자란 만큼 외상 (더 달 수 있는 {Loan.Room(p)}냥 · 사흘 안에 갚기)" : LoanHint(gm, p))
+                    message = now ? (Loan.Room(p) > 0 ? $"외상 쓰기 켬 · 모자란 만큼 외상으로 (더 달 수 있는 {Loan.Room(p)}냥)" : LoanHint(gm, p))
                                   : "외상 쓰기 끔 · 가진 돈 안에서만 사요";
                 }
             }

@@ -134,7 +134,7 @@ namespace PocketCaravan
             UIStyle.Begin();
             GUI.depth = -20;   // 좌판 창 위
             var gm = GameManager.I; var p = gm.Player;
-            float w = Mathf.Min(420, UIStyle.VirtualWidth - 24), h = phase == Phase.Intro ? 250 : 230;   // 처음 화면은 규칙 아래 진열대·시작 단추가 겹치지 않게 조금 더 높게
+            float w = Mathf.Min(420, UIStyle.VirtualWidth - 24), h = phase == Phase.Intro ? 250 : phase == Phase.Done ? 170 : 230;   // 처음 화면은 규칙 아래 진열대·시작 단추가 겹치지 않게 조금 더 높게
             var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round((UIStyle.VirtualHeight - h) / 2 + 6), w, h);
             CuteUI.Dim();
             CuteUI.Window(r);
@@ -154,9 +154,9 @@ namespace PocketCaravan
             }
             if (phase == Phase.Done)
             {
-                CuteUI.LabelCenter(r.center.x, r.y + 60, served > 0 ? $"손님 {customer}명 중 {served}명에게 팔았어요" : "오늘은 손님을 놓쳤어요", CuteUI.Text, false, true);
-                if (earned > 0) { CuteUI.Icon(CuteUI.Pic.Coin, r.center.x - 34, r.y + 84); CuteUI.Label(r.center.x - 20, r.y + 89, $"{earned}냥 받음", CuteUI.Up, false, true); }
-                CuteUI.LabelCenter(r.center.x, r.y + 116, "내일 또 손님이 와요. 좌판 물건은 그동안에도 천천히 팔려요", CuteUI.Sub, true);
+                CuteUI.LabelCenter(r.center.x, r.y + 44, served > 0 ? $"손님 {customer}명 중 {served}명에게 팔았어요" : "오늘은 손님을 놓쳤어요", CuteUI.Text, false, true);
+                if (earned > 0) { CuteUI.Icon(CuteUI.Pic.Coin, r.center.x - 34, r.y + 64); CuteUI.Label(r.center.x - 20, r.y + 69, $"{earned}냥 받음", CuteUI.Up, false, true); }
+                CuteUI.LabelCenter(r.center.x, r.y + 96, "내일 또 손님이 와요. 좌판 물건은 그동안에도 천천히 팔려요", CuteUI.Sub, true);
                 var b = new Rect(r.center.x - 50, r.yMax - 34, 100, 22);
                 if (CuteUI.Button(b, "닫기")) Shut();
                 return;
@@ -190,7 +190,8 @@ namespace PocketCaravan
             if (ra > 0f && reaction.Length > 0)
             {
                 var old = GUI.color; GUI.color = new Color(old.r, old.g, old.b, ra);
-                CuteUI.LabelCenter(r.center.x + 70, r.y + 52, reaction, mood > 0 ? CuteUI.Up : mood < 0 ? CuteUI.Down : CuteUI.Sell, true, true);
+                CuteUI.LabelCenter(r.center.x, r.y + 30 - (1f - ra) * 8f, reaction,   // 위쪽 빈 줄에서 떠오르며 사라진다 (말풍선과 겹치지 않게)
+                     mood > 0 ? CuteUI.Up : mood < 0 ? CuteUI.Down : CuteUI.Sell, true, true);
                 GUI.color = old;
             }
             DrawShelf(gm, p, r, true);
