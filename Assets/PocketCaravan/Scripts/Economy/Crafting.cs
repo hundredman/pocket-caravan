@@ -202,12 +202,4 @@ namespace PocketCaravan
         }
     }
 
-    /// <summary>맵에 놓는 공방 자리 (지역 담당이 공방을 더할 때 이걸 붙이고 recipeId만 적으면 된다)</summary>
-    public class WorkshopSpot : Interactable
-    {
-        public string recipeId;
-        public override string DisplayName => Crafting.Label(recipeId);
-        public override Kind Category => Kind.Market;
-        public override void Interact(PlayerController player) => Crafting.Open(recipeId);
-    }
 }
