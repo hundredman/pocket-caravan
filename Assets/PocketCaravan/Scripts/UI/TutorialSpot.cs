@@ -62,7 +62,7 @@ namespace PocketCaravan
             new System.Collections.Generic.KeyValuePair<string, string>("stall.cargo", "내 짐이에요. [올리기]로 좌판에 진열해요\n진열한 짐은 수레 무게에서 빠져요"),
             new System.Collections.Generic.KeyValuePair<string, string>("stall.shelf", "진열한 물건이에요. 한 시간마다 반쯤은 하나씩 팔려요\n값은 이 마을 장터 파는 값 그대로예요"),
             new System.Collections.Generic.KeyValuePair<string, string>("stall.earn", "판 돈은 여기 모여요. 들를 때 [받기]로 챙겨요"),
-            new System.Collections.Generic.KeyValuePair<string, string>("stall.rush", "하루 한 번, 직접 손님을 맞을 수 있어요 (7시~21시)\n손님이 바라는 물건을 빨리 건네면 더 비싸게 팔려요"),
+            new System.Collections.Generic.KeyValuePair<string, string>("stall.rush", "직접 손님을 맞는 놀이예요 (7시~21시)\n점수가 높으면 좌판에 등롱·깃발이 달려요"),
         };
 
         static void MarkSeen(string id) { var gm = GameManager.I; if (gm != null) gm.SetMemo(MemoPrefix + id, 1f); }

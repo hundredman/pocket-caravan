@@ -209,7 +209,7 @@ namespace PocketCaravan
             }
             // 11/19 외상 탭 (은샘 "외상을 새 탭으로, 갚기는 따로"). 신용 4단계 전엔 자물쇠 · 누르면 까닭만
             bool loanOn = Loan.Unlocked(p);
-            string lt = !loanOn ? "외상" : p.debt > 0 ? $"외상 {p.debt}" : "외상";
+            string lt = loanOn && p.debt > 0 ? $"외상({p.debt}냥)" : "외상";   // 11/19 은샘 "외상(166냥)처럼"
             var lockedTabX = tx;
             if (CuteUI.Tab(tx, c.y, lt, loanOn ? CuteUI.Pic.Scroll : CuteUI.Pic.Lock, marketTab == 3, out float w3) && marketTab != 3 && !HaggleDuel.IsOpen)
             {

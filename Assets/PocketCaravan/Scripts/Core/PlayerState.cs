@@ -12,7 +12,7 @@ namespace PocketCaravan
         public int creditFloor;
         /// <summary>11/19 외상 (신용 4단계, Economy/Loan.cs): 갚을 돈과 기한(내 의뢰 시간 PlayHours)</summary>
         public int debt; public float debtDue; public bool debtLate;   // debtLate: 기한을 넘겨 연체 중 (Loan)
-        /// <summary>11/19 내 좌판 (신용 5단계, Economy/PlayerStall.cs): 연 장터(없으면 null) · 진열한 물건 · 모인 판 돈 · 판 개수 · 손님 맞이 한 날</summary>
+        /// <summary>11/19 내 좌판 (신용 5단계, Economy/PlayerStall.cs): 연 장터(없으면 null) · 진열한 물건 · 모인 판 돈 · 판 개수 · stallRushDay(11/19부터 안 씀, 옛 저장 호환으로만 남김)</summary>
         public string stallTown;
         public readonly Inventory stallStock = new Inventory();
         public int stallEarned, stallSold, stallRushDay = -1;

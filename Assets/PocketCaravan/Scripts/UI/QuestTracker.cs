@@ -407,7 +407,7 @@ namespace PocketCaravan
                 if (p.stallEarned > 0) CuteUI.LabelRight(w - 10, y + 33, $"판 돈 {p.stallEarned}냥", CuteUI.Up, true, true);
                 CuteUI.Bar(new Rect(44, y + 42, w - 54, 6), PlayerStall.Weight(p) / PlayerStall.Capacity, CuteUI.Sell, CuteUI.SellSoft);
                 CuteUI.Icon(CuteUI.Pic.Pin, 44, y + 51, 1, CuteUI.Sub);
-                string tip = PlayerStall.Count(p) == 0 ? "좌판이 비었어요. 들러서 짐을 올려 두면 저절로 팔려요" : p.stallEarned > 0 ? "판 돈은 좌판에 말 걸어 받아요" : "떠나 있어도 한 시간마다 조금씩 팔려요 · 하루 한 번 손님 맞이";
+                string tip = PlayerStall.Count(p) == 0 ? "좌판이 비었어요. 들러서 짐을 올려 두면 저절로 팔려요" : p.stallEarned > 0 ? "판 돈은 좌판에 말 걸어 받아요" : "떠나 있어도 한 시간마다 조금씩 팔려요 · 손님 맞이 놀이";
                 CuteUI.Label(53, y + 55, TradeLedgerUI.Fit(tip, w - 64, true, false), CuteUI.Sub, true);
                 return y + ch + 8;
             }

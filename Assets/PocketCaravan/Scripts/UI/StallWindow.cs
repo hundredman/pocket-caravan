@@ -6,7 +6,7 @@ namespace PocketCaravan
     /// <summary>
     /// 11/19 내 좌판 창 (PlayerStall). 맵 위 내 좌판에 말을 걸면 열린다.
     /// 위: 판 돈 [받기] · 진열 무게 · 지금까지 판 개수. 왼쪽: 진열한 물건(지금 이 장터 값, [내리기]). 오른쪽: 내 짐의 교역품([올리기] · [모두]).
-    /// 아래: [손님 맞이] (하루 한 번, StallRush) + 도움말. 처음 열면 네 부분을 튜토리얼처럼 하나씩 밝힌다 (TutorialSpot "stall.*").
+    /// 아래: [손님 맞이] (놀이, StallRush · 값은 시세 그대로) + 도움말. 처음 열면 네 부분을 튜토리얼처럼 하나씩 밝힌다 (TutorialSpot "stall.*").
     /// </summary>
     public sealed class StallWindow : MonoBehaviour
     {
@@ -91,7 +91,7 @@ namespace PocketCaravan
             string why = RushDenial(gm);
             if (why == null) { if (CuteUI.Button(rush, "손님 맞이", CuteUI.Pic.People) && !StallRush.IsOpen) StallRush.Open(); }
             else { CuteUI.Box(rush, 8, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter(rush.center.x, rush.center.y, "손님 맞이", CuteUI.Zero, false, true); }
-            string tip = why ?? "하루 한 번 손님이 몰려와요. 직접 팔면 2할 더 받아요";
+            string tip = why ?? (StallRush.Best > 0 ? $"최고 {StallRush.Best}점 · " : "") + "손님에게 바라는 물건을 건네는 놀이예요 (값은 시세 그대로)";
             CuteUI.Label(rush.xMax + 10, rush.center.y, TradeLedgerUI.Fit(tip, r.xMax - rush.xMax - 26, true, false), CuteUI.Sub, true);
             string note = string.IsNullOrEmpty(message) ? "올려 둔 물건은 내가 없어도 한두 시간마다 이 장터 시세로 팔려요" : message;
             CuteUI.Icon(CuteUI.Pic.Bulb, r.x + 16, r.yMax - 22);
@@ -103,7 +103,6 @@ namespace PocketCaravan
         {
             var p = gm.Player;
             if (PlayerStall.Count(p) <= 0) return "물건을 올려 두면 손님이 와요";
-            if (p.stallRushDay == gm.Clock.day) return "오늘 손님은 다 왔어요. 내일 또 와요";
             int hr = gm.Clock.Hour;
             if (hr < 7 || hr >= 21) return "밤에는 손님이 없어요 (아침 7시부터)";
             return null;

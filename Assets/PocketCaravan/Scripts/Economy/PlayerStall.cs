@@ -10,14 +10,14 @@ namespace PocketCaravan
     /// - 여는 곳: 장터 창 아래 "좌판 열기". 조건: 신용 5단계 · 1000냥 · 그 장터 평판 우호 이상. 좌판은 하나 (빈 좌판이면 다른 장터로 옮겨 열 수 있다, 다시 1000냥)
     /// - 진열: 내 짐의 교역품을 올린다 (무게 30까지, 맡은 짐은 못 올림). 게임 한 시간마다 반쯤의 확률로 하나가 그 장터 지금 시세로 팔리고(장터 재고도 움직임),
     ///   판 돈은 좌판에 모인다 → 들러서 받는다. 사서 바로 그 장터에 올리면 되팔기 규칙(TradeActivity.LimitSale) 그대로라 이득이 없다.
-    /// - 손님 맞이(StallRush): 하루 한 번, 좌판 앞에서 손님이 원하는 물건을 골라 주는 놀이. 맞히면 시세의 1.2배로 바로 판다.
+    /// - 손님 맞이(StallRush): 좌판 앞을 지나는 손님에게 바라는 물건을 건네는 놀이 (11/19 순수 재미로 바꿈: 값은 시세 그대로, 보상은 점수·최고 기록·좌판 꾸미기 StallDeco).
     /// - 맵에 내 좌판 그림(Resources/Stall/stall_0, Tools/ArtGen/player_stall_v2.py, 진열칸에 올린 물건 그림)이 장터 상인 근처 빈자리에 선다. 말 걸면 좌판 창 (StallWindow).
     /// 저장: SaveData.stall* (옛 저장 = 좌판 없음).
     /// </summary>
     public static class PlayerStall
     {
         public const int Price = VehicleGoal.StallPrice, NeedLevel = VehicleGoal.StallCredit;
-        public const float Capacity = 30f, SellChance = 0.5f, RushBonus = 1.2f;
+        public const float Capacity = 30f, SellChance = 0.5f;
 
         public static bool Has(PlayerState p) => p != null && !string.IsNullOrEmpty(p.stallTown);
         public static bool At(PlayerState p, TownData t) => Has(p) && t != null && p.stallTown == t.id;
@@ -99,10 +99,11 @@ namespace PocketCaravan
             if (t == null) return 0;
             var m = gm.GetMarket(t);
             int price = Mathf.Max(1, Mathf.RoundToInt(m.SellPrice(item) * mult));
-            // 이 장터에서 12시간 안에 산 물건은 장터처럼 산 값 밑으로만 (같은 곳에서 사서 손님 맞이 덤으로 남기는 일이 없게, TradeActivity)
+            // 이 장터에서 12시간 안에 산 물건은 장터처럼 산 값 밑으로만 (장터와 같은 되팔기 규칙, TradeActivity)
             price = Mathf.Max(1, p.tradeActivity.LimitSale(t.id, item.id, (float)gm.Clock.TotalHours, price));
-            // 손님 맞이 덤을 붙여도 그 장터 사는 값보다 싸게 (사서 바로 올려 남기는 일이 없게. 장터 규칙 "사는 값 ≥ 파는 값+1")
+            // 배율이 1보다 크면 그 장터 사는 값보다 싸게 (11/19부터 배율>1로 부르는 곳은 없음. 장터 규칙 "사는 값 ≥ 파는 값+1")
             if (mult > 1f) price = Mathf.Max(1, Mathf.Min(price, m.BuyPrice(item) - 1));
+            if (toPurse && (long)p.money + price > int.MaxValue) return 0;   // 장터처럼 돈 넘침은 팔지 않는다
             float cost = p.stallStock.AverageCost(item);
             p.stallStock.Remove(item);
             m.RecordSell(item, price);
@@ -259,7 +260,7 @@ namespace PocketCaravan
     /// 판 돈이 모이면 머리 위에 엽전이 깜빡인다</summary>
     public sealed class StallSpot : Interactable
     {
-        SpriteRenderer sr, coin;
+        SpriteRenderer sr, coin, lantern, flag;
         readonly SpriteRenderer[] goods = new SpriteRenderer[3];
         string goodsKey, goodsQuick;
         static Sprite art;
@@ -286,6 +287,23 @@ namespace PocketCaravan
             coin = c.gameObject.AddComponent<SpriteRenderer>();
             coin.sprite = CoinSprite();
             coin.enabled = false;
+            // 11/19 손님 맞이 최고 점수로 달리는 꾸미기 (StallDeco). 지붕 오른쪽 끝에 등롱, 왼쪽 지붕 꼭지에 깃발
+            lantern = Child("등롱", LanternSprite(), new Vector3(21f / 16f, 30f / 16f, 0f));
+            flag = Child("깃발", FlagSprite(), new Vector3(-15f / 16f, 42f / 16f, 0f));
+            RefreshDeco();
+        }
+
+        SpriteRenderer Child(string name, Sprite s, Vector3 at)
+        {
+            var t = new GameObject(name).transform; t.SetParent(transform, false); t.localPosition = at;
+            var r = t.gameObject.AddComponent<SpriteRenderer>(); r.sprite = s; return r;
+        }
+
+        /// <summary>최고 점수가 바뀌면 (손님 맞이가 끝날 때·불러올 때) 꾸미기를 다시 단다</summary>
+        public void RefreshDeco()
+        {
+            if (lantern != null) lantern.enabled = StallDeco.HasLantern;
+            if (flag != null) flag.enabled = StallDeco.HasFlag;
         }
 
         void LateUpdate()
@@ -301,6 +319,8 @@ namespace PocketCaravan
             bool front = pc != null && pc.transform.position.y > transform.position.y + 0.35f;
             sr.sortingOrder = front ? baseOrder + 2 : baseOrder - 2;
             foreach (var g in goods) { g.sortingLayerID = sr.sortingLayerID; g.sortingOrder = sr.sortingOrder + 1; }
+            lantern.sortingLayerID = flag.sortingLayerID = sr.sortingLayerID; lantern.sortingOrder = flag.sortingOrder = sr.sortingOrder + 1;
+            if (Time.frameCount % 60 == 0) RefreshDeco();
             coin.sortingOrder = baseOrder + 20;
             coin.enabled = p.stallEarned > 0;
             if (coin.enabled) coin.transform.localPosition = new Vector3(0f, 3.1f + Mathf.Sin(Time.time * 3f) * 0.08f, 0f);
@@ -348,6 +368,60 @@ namespace PocketCaravan
             if (s == null || root == null || s.gameObject.scene != root.gameObject.scene) return false;
             var b = root.WorldToCell(s.transform.position);
             return c.y == b.y && Mathf.Abs(c.x - b.x) == 1;
+        }
+
+        static Sprite lanternSprite, flagSprite;
+        /// <summary>작은 붉은 등롱 (7×10, 위 가운데 매달림)</summary>
+        static Sprite LanternSprite()
+        {
+            if (lanternSprite != null) return lanternSprite;
+            string[] rows = {   // 위에서 아래
+                "...k...",
+                "..kkk..",
+                ".krrrk.",
+                "krrhrrk",
+                "krrhrrk",
+                "krrrrrk",
+                "krrrrrk",
+                ".krrrk.",
+                "..kkk..",
+                "...y...",
+            };
+            return lanternSprite = Paint(rows, new Vector2(0.5f, 1f));
+        }
+        /// <summary>작은 천 깃발 (8×12, 아래 왼쪽 깃대)</summary>
+        static Sprite FlagSprite()
+        {
+            if (flagSprite != null) return flagSprite;
+            string[] rows = {
+                "w.......",
+                "kbbbbbk.",
+                "kbbbbbbk",
+                "kbyybbbk",
+                "kbyybbk.",
+                "kbbbbbbk",
+                "kkkkkkk.",
+                "k.......",
+                "k.......",
+                "k.......",
+                "k.......",
+                "k.......",
+            };
+            return flagSprite = Paint(rows, new Vector2(0f, 0f));
+        }
+        static Sprite Paint(string[] rows, Vector2 pivot)
+        {
+            int h = rows.Length, w = rows[0].Length;
+            var tex = new Texture2D(w, h, TextureFormat.RGBA32, false) { filterMode = FilterMode.Point };
+            for (int y = 0; y < h; y++)
+                for (int x = 0; x < w; x++)
+                {
+                    char ch = rows[h - 1 - y][x];
+                    tex.SetPixel(x, y, ch == 'k' ? new Color32(74, 46, 32, 255) : ch == 'r' ? new Color32(206, 64, 48, 255) : ch == 'h' ? new Color32(250, 170, 90, 255)
+                        : ch == 'y' ? new Color32(240, 196, 80, 255) : ch == 'b' ? new Color32(56, 110, 150, 255) : ch == 'w' ? new Color32(240, 196, 80, 255) : new Color32(0, 0, 0, 0));
+                }
+            tex.Apply();
+            return Sprite.Create(tex, new Rect(0, 0, w, h), pivot, 16f);
         }
 
         static Sprite coinSprite;
