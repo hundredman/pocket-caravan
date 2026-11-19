@@ -417,6 +417,7 @@ namespace PocketCaravan
                     r.credit > 0 ? 1 : -1, r.credit > 0 ? "contract:success" : r.success ? "contract:partial" : "contract:failed");
             }
             player.money += r.paid;
+            Loan.FromProfit(player, r.paid, "의뢰 보수");   // 11/19 연체 중이면 보수의 절반은 외상으로
             player.credit += r.credit;
             Sfx.Play(r.success ? "success" : "fail");
             GameEvents.RaiseContractFinished(c, r.success);

@@ -10,8 +10,9 @@ namespace PocketCaravan
     /// 현금을 빌려주지는 않는다 (떼먹고 돈만 챙기는 길을 막으려고).
     /// - 한도: 지금 점수의 단계로 4단계 300 · 5단계 500 · 6단계 이상 800냥. 이자 없음
     /// - 처음 외상을 단 때부터 사흘(게임 72시간 = 현실 18분) 안에 아무 장터에서 갚는다. 기한이 하루도 안 남으면 더 달 수 없다
-    /// - 기한을 넘기면 좌판 판 돈·가진 돈에서 거두고, 모자라면 "연체": 신용 −2점, 남은 외상에 1할(2400냥까지), 하루 더 (날마다)
-    /// - 연체 중에는 들어오는 돈(장터에서 판 값·의뢰 보수·좌판 판 돈)이 먼저 외상으로 가고,
+    /// - 갚기: 장터 [−][50냥 단위 갚기][+] · [다 갚기]. 갚고 나서 밑천 50냥(Reserve)은 꼭 남는다 (파산 방지)
+    /// - 기한을 넘기면 좌판 판 돈·가진 돈의 절반까지만 거두고(밑천은 남김), 모자라면 "연체": 날마다 신용 −(남은 외상 100냥당 1점, 1~5점), 남은 외상에 1할(2400냥까지), 하루 더 (날마다)
+    /// - 연체 중에는 이익(판 값 − 산 값, 의뢰 보수)의 절반이 외상으로 가고 (손해 본 거래는 안 가져감),
     ///   귀한 짐·큰 주문을 맡을 수 없고, 좌판도 저절로 팔지 않는다 (단계는 그대로여도 "믿음을 잃었다"가 바로 느껴지게)
     /// - 제때 갚아도 점수는 주지 않는다 (달고 바로 갚아 점수 벌기 막기). 신용은 "믿고 맡김"에서만 오른다
     /// 저장: SaveData.debt · debtDue · debtLate (옛 저장 0 = 없음).
@@ -19,7 +20,8 @@ namespace PocketCaravan
     public static class Loan
     {
         public const float DueHours = 72f, ExtendHours = 24f;
-        public const int LatePoints = 2;
+        /// <summary>11/19 은샘 "못 갚는 동안 빌린 금액에 따라": 연체 하루마다 남은 외상 100냥당 1점 (1~5점)</summary>
+        public static int LatePoints(int debt) => Mathf.Clamp(Mathf.CeilToInt(debt / 100f), 1, 5);
         public const int MaxDebt = 2400;   // 1할씩 붙어도 이 위로는 안 는다 (넘쳐 0이 되는 일 막기)
 
         /// <summary>잠깐 켜면 견적이 가진 돈만으로 계산된다 (장터 [최대] 계산용)</summary>
@@ -77,6 +79,15 @@ namespace PocketCaravan
             return h >= 24f ? $"{Mathf.FloorToInt(h / 24f)}일 {Mathf.FloorToInt(h % 24f)}시간 남음" : $"{Mathf.CeilToInt(h)}시간 남음";
         }
 
+        /// <summary>11/19 은샘 "파산 방지": 장터에서 갚을 때 손에 꼭 남기는 장사 밑천</summary>
+        public const int Reserve = 50, PayStep = 50;
+        /// <summary>밑천을 남기고 갚을 수 있는 가장 큰 돈</summary>
+        public static int MaxPay(PlayerState p) => p == null || p.debt <= 0 ? 0 : Mathf.Max(0, Mathf.Min(p.debt, p.money - Reserve));
+        /// <summary>[다 갚기]를 쓸 수 있는지 (다 갚아도 밑천이 남는지)</summary>
+        public static bool CanPayAll(PlayerState p) => p != null && p.debt > 0 && p.money - p.debt >= Reserve;
+        /// <summary>[−][n냥 갚기][+]에서 고를 수 있는 가장 큰 50냥 단위 (다 갚기보다 적게). 0이면 못 고름</summary>
+        public static int MaxStep(PlayerState p) => p == null ? 0 : Mathf.Min(MaxPay(p), p.debt - 1) / PayStep * PayStep;
+
         /// <summary>가진 돈으로 갚을 수 있는 만큼 갚기. 갚은 냥을 돌려준다</summary>
         public static int Repay(PlayerState p, int amount = int.MaxValue)
         {
@@ -93,25 +104,34 @@ namespace PocketCaravan
         /// <summary>마지막으로 저절로 갚은 알림 (장터 창이 열려 있으면 창 알림 줄에도 띄운다)</summary>
         public static string Notice; public static int NoticeId;
 
-        /// <summary>매 프레임 (GameManager): 연체 중이면 들어온 돈을 바로 외상으로 (장터 판 값·의뢰 보수·좌판 판 돈을 받으면)</summary>
-        public static void Garnish(PlayerState p)
+        /// <summary>11/19 은샘 "이득 볼 때만, 이익만으로": 연체 중 이익(판 값 − 산 값, 의뢰 보수)의 절반을 외상으로. 손해 본 거래는 안 가져간다</summary>
+        public static void FromProfit(PlayerState p, int profit, string what)
         {
-            if (!Late(p) || p.money <= 0) return;
-            int paid = Repay(p);
-            if (paid <= 0) return;
-            Notice = p.debt <= 0 ? $"번 돈 {paid}냥으로 밀린 외상을 다 갚았어요. 다시 믿고 맡겨 줘요!" : $"연체 중이라 번 돈 {paid}냥이 외상으로 갔어요 (남은 외상 {p.debt}냥)";
+            if (!Late(p) || profit <= 0) return;
+            int take = Mathf.Min(p.debt, Mathf.Min(p.money, (profit + 1) / 2));
+            if (take <= 0) return;
+            Repay(p, take);
+            Notice = p.debt <= 0 ? $"{what} 이익에서 {take}냥으로 밀린 외상을 다 갚았어요. 다시 믿고 맡겨 줘요!" : $"연체 중이라 {what} 이익의 절반 {take}냥이 외상으로 갔어요 (남은 외상 {p.debt}냥)";
             NoticeId++;
             Notify.Show(Notice, 4f);
         }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        static void Hook()
+        {
+            GameEvents.ItemSold -= OnSold; GameEvents.ItemSold += OnSold;   // 장터·손님 맞이에서 판 것
+        }
+        static void OnSold(ItemData item, TownData town, int price, int profit) { var gm = GameManager.I; if (gm != null) FromProfit(gm.Player, profit, "판"); }
 
         /// <summary>게임 한 시간마다 (GameManager). 기한이 지났으면 거두고, 모자라면 연체 벌칙</summary>
         public static void OnHour(PlayerState p, GameClock clock)
         {
             if (p == null || clock == null || p.debt <= 0 || clock.PlayHours < p.debtDue) return;
-            // 좌판에 모인 판 돈도 먼저 거둔다
-            int fromStall = Mathf.Min(p.stallEarned, p.debt);
+            // 11/19 은샘 "파산 방지": 좌판 판 돈·가진 돈에서 절반까지만 거둔다 (가진 돈은 밑천 Reserve를 남긴다)
+            int fromStall = Mathf.Min(p.debt, (p.stallEarned + 1) / 2);
             p.stallEarned -= fromStall; p.debt -= fromStall;
-            int paid = fromStall + (p.debt > 0 ? Repay(p) : 0);
+            int cash = p.debt > 0 ? Mathf.Min(p.debt, Mathf.Max(0, Mathf.Min(p.money / 2, p.money - Reserve))) : 0;
+            int paid = fromStall + (cash > 0 ? Repay(p, cash) : 0);
             if (p.debt <= 0)
             {
                 Clear(p);
@@ -120,13 +140,14 @@ namespace PocketCaravan
             }
             bool first = !p.debtLate;
             p.debtLate = true;
-            p.credit -= LatePoints;
+            int lose = LatePoints(p.debt);
+            p.credit -= lose;
             p.debt = (int)Mathf.Min(MaxDebt, Mathf.Ceil(p.debt * 1.1f));
             p.debtDue = clock.PlayHours + ExtendHours;
             Sfx.Play("fail");
             Notify.Show(first
-                ? $"외상을 못 갚아 연체가 됐어요! 신용 −{LatePoints}점 · 1할이 붙어 {p.debt}냥\n다 갚을 때까지 번 돈은 먼저 외상으로 가고, 귀한 짐·큰 주문을 맡을 수 없고, 좌판도 쉬어요"
-                : $"연체 하루가 더 지났다. 신용 −{LatePoints}점 · 남은 외상 {p.debt}냥", 7f);
+                ? $"외상 기한이 지나 {paid}냥을 거뒀지만 모자라 연체가 됐어요! 신용 −{lose}점(외상 100냥당 1점) · 1할이 붙어 {p.debt}냥\n다 갚을 때까지 이익의 절반은 외상으로 가고, 귀한 짐·큰 주문을 맡을 수 없고, 좌판도 쉬어요"
+                : $"연체 하루가 더 지났다. 신용 −{lose}점 · 남은 외상 {p.debt}냥", 7f);
         }
     }
 }

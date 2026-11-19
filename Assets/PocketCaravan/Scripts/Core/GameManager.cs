@@ -173,7 +173,6 @@ namespace PocketCaravan
             Clock.Tick(UIState.Blocking ? 0f : Time.deltaTime);
             ApplyDaylight();
             CreditLevelCheck();
-            Loan.Garnish(Player);   // 11/19 연체 중 들어온 돈은 먼저 외상으로
             // 11/18 윤채 ("알아서 저장이 되어야지"): 맵을 옮길 때·거래할 때·끌 때 말고도 1분마다 저절로 저장한다 (게임 메뉴 저장 단추는 뺐다)
             if (autosave && !IsTravelling && Time.unscaledTime - lastAutoSaveTry >= AutoSaveEvery)
             {
