@@ -195,8 +195,9 @@ namespace PocketCaravan
             }
             return false;
         }
-        // 자리 칸 → 위 칸 → 옆 → 아래 순으로 (게시판·우물은 보통 자리 바로 위)
-        static readonly Vector3Int[] Near = { Vector3Int.zero, Vector3Int.up, Vector3Int.left, Vector3Int.right, new Vector3Int(-1, 1, 0), new Vector3Int(1, 1, 0), Vector3Int.down };
+        // 자리 칸 → 위 칸 → 옆 → 아래 → 두 칸 위 순으로 (게시판·우물은 보통 자리 바로 위, 북유럽 게시판은 한 칸 띄고 위)
+        static readonly Vector3Int[] Near = { Vector3Int.zero, Vector3Int.up, Vector3Int.left, Vector3Int.right, new Vector3Int(-1, 1, 0), new Vector3Int(1, 1, 0), Vector3Int.down,
+            new Vector3Int(0, 2, 0), new Vector3Int(-1, 2, 0), new Vector3Int(1, 2, 0) };
         static readonly Vector3Int[] Dirs = { Vector3Int.down, Vector3Int.left, Vector3Int.right, Vector3Int.up };
 
         static void Place(SpriteRenderer r, Vector3 at, float scale, int order, Material mat, Color c)
