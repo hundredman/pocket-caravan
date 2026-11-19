@@ -171,7 +171,7 @@ namespace PocketCaravan
             chestSr.sprite = ChestSprite();
             var pc = PlayerController.Instance;
             var mine = pc != null && pc.anim != null ? pc.anim.GetComponent<SpriteRenderer>() : null;
-            if (mine != null) { chestSr.sortingLayerID = mine.sortingLayerID; chestSr.sortingOrder = mine.sortingOrder; chestSr.sharedMaterial = mine.sharedMaterial; }
+            if (mine != null) { chestSr.sortingLayerID = mine.sortingLayerID; chestSr.sortingOrder = PackAnimal.BodyOrder(mine); chestSr.sharedMaterial = mine.sharedMaterial; }
             body.transform.localPosition = new Vector3(0f, -.42f, 0f);
             var it = chest.AddComponent<Chest>();
             it.blocksMovement = false;

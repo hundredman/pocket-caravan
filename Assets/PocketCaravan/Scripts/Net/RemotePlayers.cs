@@ -373,7 +373,7 @@ namespace PocketCaravan
                 // 내 캐릭터와 같은 높이·그리는 순서·재질(밤 조명 등)로
                 body.transform.localPosition = pc.anim.transform.localPosition;
                 sr.sortingLayerID = mine.sortingLayerID;
-                sr.sortingOrder = mine.sortingOrder;
+                sr.sortingOrder = PackAnimal.BodyOrder(mine);   // 11/19 짐승 때문에 잠깐 올린 값이 아니라 원래 값
                 sr.sharedMaterial = mine.sharedMaterial;
                 sr.spriteSortPoint = mine.spriteSortPoint;
             }

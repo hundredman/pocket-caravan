@@ -67,10 +67,50 @@ namespace PocketCaravan
             tr.position = new Vector3(at.x, at.y + lift + bob, owner.position.z);
             sr.flipY = false;                 // 썰매에서 바꿨을 때
             sr.flipX = shown == "side_r";   // 옆모습 그림이 왼쪽을 보니 오른쪽으로 갈 때 뒤집는다
-            int baseOrder = body != null ? body.sortingOrder : 10;
+            bool mine = PlayerController.Instance != null && owner == PlayerController.Instance.transform;
+            int baseOrder = body != null ? (mine ? BodyOrder(body) : body.sortingOrder) : 10;
             if (body != null) sr.sortingLayerID = body.sortingLayerID;
-            sr.sortingOrder = at.y < owner.position.y ? baseOrder + 1 : baseOrder - 2;   // 짐승이 나보다 아래면 앞에, 위면 뒤에
+            bool ahead = at.y < owner.position.y;   // 짐승이 나보다 아래면 앞에, 위면 뒤에
+            int order = ahead ? baseOrder + 1 : baseOrder - 2;
+            // 11/19 은샘 "발이 땅에 있는데 기둥 윗부분에 뿔이 가려진다": 사람과 같은 규칙으로 물건 윗부분(Above)과 앞뒤를 맞춘다.
+            // 발이 물건 밑동보다 아래면 그 위로 올리고, 밑동을 지나 뒤에 있으면 그대로 가려진다 (AboveDepth)
+            var ab = sr.bounds;
+            bool raise = AboveDepth.InFront(ab, ab.min.y);
+            // 주인이 짐승 앞(아래)에서 겹치면 주인도 짐승 위에 와야 한다. 내 몸은 같이 올리고(다른 물건 뒤에 서 있으면 못 올린다),
+            // 다른 사람 몸은 DepthActor가 맡고 있어 올릴 수 없으니 그때는 짐승을 올리지 않는다
+            bool overlap = body != null && !ahead && body.bounds.Intersects(ab);
+            bool bodyUp = false;
+            if (raise && overlap)
+            {
+                if (mine && !AboveDepth.Behind(body.bounds, body.bounds.min.y)) bodyUp = true;
+                else raise = false;
+            }
+            if (raise) order += AboveDepth.Raise;
+            sr.sortingOrder = order;
+            if (body != null && mine) SetBodyUp(body, bodyUp ? baseOrder + AboveDepth.Raise + 1 : baseOrder);
+            DepthActor.AddProp(sr);   // NPC·다른 사람도 발 높이로 짐승과 앞뒤를 맞춘다 (발이 짐승 발보다 아래면 짐승을 가린다)
             return true;
+        }
+
+        // 11/19 내 몸을 잠깐 올렸다 내리기 위해 원래 순서를 기억한다 (다른 코드가 순서를 새로 정하면 그것을 원래 값으로)
+        static SpriteRenderer upBody; static int upNormal, upSet = int.MinValue;
+        /// <summary>내 몸의 원래 그리는 순서 (짐승 때문에 잠깐 올린 값이 아니라). 내 몸 순서를 기준으로 삼는 그림은 이 값을 쓴다</summary>
+        public static int BodyOrder(SpriteRenderer body)
+        {
+            if (body == null) return 10;
+            return body == upBody && body.sortingOrder == upSet ? upNormal : body.sortingOrder;   // 다른 사람 몸이나 다른 코드가 새로 정한 값은 그대로
+        }
+        static void SetBodyUp(SpriteRenderer body, int order)
+        {
+            int normal = BodyOrder(body);
+            body.sortingOrder = order; upBody = body; upNormal = normal; upSet = order;
+        }
+        /// <summary>짐승을 넣거나 맵을 옮기면 내 몸 순서를 원래대로</summary>
+        public static void Restore(SpriteRenderer body)
+        {
+            if (body == null || body != upBody) return;
+            if (body.sortingOrder == upSet) body.sortingOrder = upNormal;
+            upSet = upNormal;
         }
 
         /// <summary>모퉁이에서 그림이 한두 프레임만 바뀌었다 돌아오는 깜빡임을 막는다: 새 방향이 0.1초 이어져야 바꾼다</summary>
@@ -103,7 +143,13 @@ namespace PocketCaravan
             string id = st != null && st.vehicle != null ? st.vehicle.id : null;
             bool show = pc != null && Is(id) && !GameManager.I.IsTravelling;
             if (pc != owner || id != shownId) { if (animal != null) Destroy(animal.gameObject); animal = null; owner = pc; shownId = id; trail.Reset(); }   // 맵·수단이 바뀌면 다시 붙인다
-            if (!show) { if (animal != null) animal.gameObject.SetActive(false); trail.Reset(); return; }
+            if (!show)
+            {
+                if (animal != null) animal.gameObject.SetActive(false);
+                trail.Reset();
+                if (pc != null && pc.anim != null) Restore(pc.anim.GetComponent<SpriteRenderer>());   // 11/19 올려 둔 내 몸 순서를 원래대로
+                return;
+            }
             if (animal == null)
             {
                 animal = new GameObject(id == CamelId ? "내 낙타" : id == WagonId ? "내 마차" : id == ReindeerId ? "내 순록" : id == ReindeerSledId ? "내 순록 썰매" : "내 짐말").transform;

@@ -346,7 +346,7 @@ namespace PocketCaravan
             // 장터 좌판 그림처럼: 내 발이 좌판 아래 끝보다 위(좌판 안쪽)면 좌판이 앞, 아니면 뒤
             var pc = PlayerController.Instance;
             var body = pc != null && pc.anim != null ? pc.anim.GetComponent<SpriteRenderer>() : null;
-            int baseOrder = body != null ? body.sortingOrder : 10;
+            int baseOrder = body != null ? PackAnimal.BodyOrder(body) : 10;   // 11/19 짐승 때문에 잠깐 올린 값이 아니라 원래 값
             if (body != null) sr.sortingLayerID = coin.sortingLayerID = body.sortingLayerID;
             bool front = pc != null && pc.transform.position.y > transform.position.y + 0.35f;
             sr.sortingOrder = front ? baseOrder + 2 : baseOrder - 2;

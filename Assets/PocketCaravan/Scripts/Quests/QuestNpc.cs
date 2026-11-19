@@ -21,6 +21,13 @@ namespace PocketCaravan
         public override string DisplayName => displayName;
         public override Kind Category => Kind.Quest;
 
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            // 11/19 은샘 "npc나 유저가 순록의 발보다 아래에 있으면 순록이 가려진다": 이야기 NPC도 짐승·좌판과 발 높이로 앞뒤를 맞춘다 (TalkNpc와 같다)
+            if (GetComponent<DepthActor>() == null) gameObject.AddComponent<DepthActor>();
+        }
+
         /// <summary>11/08 마지막으로 퀘스트 대화(받기·완료·조건 부족)가 열린 프레임. 여관 주인이 퀘스트 대화 뒤에는 "쉬어 갈래요?"를 묻지 않게 한다</summary>
         public static int QuestTalkFrame { get; private set; } = -1;
 

@@ -36,7 +36,7 @@ namespace PocketCaravan
             stage = Mathf.Clamp(stage, 0, 3);
             bool side = Mathf.Abs(facing.x) > Mathf.Abs(facing.y);
             int dir = facing.x > 0 ? 1 : -1;
-            int baseOrder = body != null ? body.sortingOrder : 10;
+            int baseOrder = body != null ? PackAnimal.BodyOrder(body) : 10;
             var tr = cart.transform;
             tr.localRotation = Quaternion.identity;
             tr.localScale = Vector3.one;

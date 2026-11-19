@@ -41,7 +41,7 @@ namespace PocketCaravan
             if (ring == null || pc == null) return;
             // 그림자(9) 바로 아래. 몸 그림 순서가 앞뒤 정렬로 바뀌면 같이 따라간다
             var body = pc.anim != null ? pc.anim.GetComponent<SpriteRenderer>() : null;
-            int baseOrder = body != null ? body.sortingOrder : 11;
+            int baseOrder = body != null ? PackAnimal.BodyOrder(body) : 11;
             ring.sortingOrder = baseOrder - 3;
             if (body != null) ring.sharedMaterial = body.sharedMaterial;   // 밤 조명을 같이 받게
             var feet = pc.Motor != null ? (Vector3)pc.Motor.Feet : pc.transform.position;

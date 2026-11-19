@@ -23,6 +23,15 @@ namespace PocketCaravan
             foreach (var r in rs) if (r != null && r.enabled && r.gameObject.activeInHierarchy) props.Add(r);
         }
 
+        /// <summary>11/19 짐승·마차 그림도 같은 규칙으로 (발이 그림 아래 끝보다 아래면 사람이 앞, 위면 뒤)</summary>
+        public static void AddProp(SpriteRenderer r)
+        {
+            if (propsFrame != Time.frameCount) { props.Clear(); propsFrame = Time.frameCount; }
+            if (r != null && r.enabled && r.gameObject.activeInHierarchy) props.Add(r);
+        }
+
+        public const string VehicleChild = "운반 수단";
+        const int Overhead = 20;   // 11/19 이 순서 이상(머리 위 퀘스트 표시 등)은 몸과 같이 옮기지 않는다
         SpriteRenderer[] rs = new SpriteRenderer[0];
         int[] setTo = new int[0];
         int[] baseOrder = new int[0];
@@ -30,7 +39,8 @@ namespace PocketCaravan
 
         void Cache()
         {
-            var now = GetComponentsInChildren<SpriteRenderer>(true);
+            // 11/19 다른 사람이 끄는 짐승·수레("운반 수단", VehicleLook)는 빼 둔다. 그 그림은 이미 옮긴 몸 순서를 기준으로 놓이니 여기서 또 옮기면 두 번 옮겨진다
+            var now = System.Array.FindAll(GetComponentsInChildren<SpriteRenderer>(true), r => r.gameObject.name != VehicleChild);
             var b = new int[now.Length]; var s = new int[now.Length];
             for (int i = 0; i < now.Length; i++)
             {
@@ -58,7 +68,7 @@ namespace PocketCaravan
             int lo = int.MaxValue, hi = int.MinValue;
             for (int i = 0; i < rs.Length; i++)
             {
-                var r = rs[i]; if (r == null || !r.enabled || r.sprite == null) continue;
+                var r = rs[i]; if (r == null || !r.enabled || r.sprite == null || baseOrder[i] >= Overhead) continue;
                 lo = Mathf.Min(lo, baseOrder[i]); hi = Mathf.Max(hi, baseOrder[i]);
                 if (r.name == "Shadow") continue;
                 float a = r.bounds.size.x * r.bounds.size.y;
@@ -68,22 +78,25 @@ namespace PocketCaravan
             int delta = 0;
             if (body != null && propsFrame == Time.frameCount)
             {
+                // 11/19 겹친 그림을 모두 본다: 앞에 선 그림들보다는 위, 뒤에 선 그림들보다는 아래 (앞이 우선)
                 var bb = body.bounds; float feet = bb.min.y;
+                int needAbove = int.MinValue, needBelow = int.MaxValue;
                 foreach (var p in props)
                 {
+                    if (p == null || p.transform.IsChildOf(transform)) continue;   // 11/19 내가 끄는 짐승·마차는 나와 비교하지 않는다
                     var pb = p.bounds;
                     if (bb.max.x <= pb.min.x || bb.min.x >= pb.max.x || bb.max.y <= pb.min.y || bb.min.y >= pb.max.y) continue;   // 안 겹침
-                    bool behind = feet > pb.min.y;
-                    if (behind && hi >= p.sortingOrder) delta = p.sortingOrder - 1 - hi;
-                    else if (!behind && lo <= p.sortingOrder) delta = p.sortingOrder + 1 - lo;
-                    else continue;
-                    break;
+                    if (feet > pb.min.y) needBelow = Mathf.Min(needBelow, p.sortingOrder - 1);
+                    else if (p.sortingOrder < Overhead || !AboveDepth.Behind(bb, feet)) needAbove = Mathf.Max(needAbove, p.sortingOrder + 1);
+                    // 기둥 앞으로 올린 짐승(20 이상) 앞에 섰더라도 내가 다른 물건 뒤면 올리지 않는다 (그 물건에 가려지는 게 맞다)
                 }
+                if (needAbove != int.MinValue && lo < needAbove) delta = needAbove - lo;
+                else if (needAbove == int.MinValue && needBelow != int.MaxValue && hi > needBelow) delta = needBelow - hi;
             }
             for (int i = 0; i < rs.Length; i++)
             {
                 if (rs[i] == null) continue;
-                setTo[i] = baseOrder[i] + delta;
+                setTo[i] = baseOrder[i] + (baseOrder[i] >= Overhead ? 0 : delta);   // 머리 위 표시(퀘스트 표시 등)는 그대로
                 rs[i].sortingOrder = setTo[i];
             }
         }

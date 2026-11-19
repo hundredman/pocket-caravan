@@ -110,7 +110,7 @@ namespace PocketCaravan
             // 순서: 대상 그림과 내 몸 그림 중 낮은 쪽보다 3 아래 (그림자 9보다도 아래)
             var body = pc.anim != null ? pc.anim.GetComponent<SpriteRenderer>() : null;
             // 대상의 첫 그림이 바닥 자국·배처럼 낮은 순서(8 미만)면 무시한다. 땅 그림(타일 2~5) 밑으로 숨지 않게 6 이상
-            int bo = body != null ? body.sortingOrder : 11;
+            int bo = body != null ? PackAnimal.BodyOrder(body) : 11;
             int order = Mathf.Max(6, (sr != null && sr.sortingOrder >= 8 ? Mathf.Min(sr.sortingOrder, bo) : bo) - 3);
             var mat = body != null ? body.sharedMaterial : null;   // 밤 조명을 같이 받게
             float age = now - targetAt, k = Mathf.Clamp01(age / .22f), ease = 1f - (1f - k) * (1f - k);
