@@ -482,7 +482,7 @@ namespace PocketCaravan
                 // 11/19 "신용 N단계가 되면 열려요" + 다음 단계까지 점수 막대 + 열리는 것
                 float lx = CuteUI.Label(54, y + 14, $"신용 {next}단계가 되면 열려요", CuteUI.Text, false, true);
                 CuteUI.Label(lx + 6, y + 14.5f, "맡은 일을 해내면 올라요", CuteUI.Sub, true);
-                string pts = $"{lv + 1}단계까지 {haveP}/{needP}점";
+                string pts = haveP < 0 ? $"깎인 {-haveP}점부터 되찾아요" : $"{lv + 1}단계까지 {haveP}/{needP}점";   // 11/19 외상 연체로 깎이면
                 CuteUI.LabelRight(w - 12, y + 14.5f, pts, CuteUI.Sub, true, true);
                 CuteUI.Bar(new Rect(54, y + 24, w - 66, 6), Mathf.Max(0, haveP) / (float)Mathf.Max(1, needP), CuteUI.Interact, CuteUI.InteractHi);
                 float cx = 54, cy = y + 36;
@@ -499,6 +499,7 @@ namespace PocketCaravan
             else
             {
                 CuteUI.Label(54, y + 17, "신용으로 열 것은 다 열었어요", CuteUI.Text, false, true);
+                CuteUI.LabelRight(w - 12, y + 17.5f, $"신용 점수 {p.credit}점", CuteUI.Sub, true, true);   // 11/19 외상 연체로 깎이면 보이게
                 CuteUI.Label(54, y + 33, "물량·귀환품·길을 바꿔 더 벌어 보세요", CuteUI.Sub, true);
             }
             y += ch + 8;

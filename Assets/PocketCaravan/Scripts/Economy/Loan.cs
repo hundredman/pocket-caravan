@@ -111,7 +111,7 @@ namespace PocketCaravan
             int take = Mathf.Min(p.debt, Mathf.Min(p.money, (profit + 1) / 2));
             if (take <= 0) return;
             Repay(p, take);
-            Notice = p.debt <= 0 ? $"{what} 이익에서 {take}냥으로 밀린 외상을 다 갚았어요. 다시 믿고 맡겨 줘요!" : $"연체 중이라 {what} 이익의 절반 {take}냥이 외상으로 갔어요 (남은 외상 {p.debt}냥)";
+            Notice = p.debt <= 0 ? $"이익 {take}냥으로 밀린 외상을 다 갚았어요!" : $"연체: 이익의 절반 {take}냥이 외상으로 (남은 {p.debt}냥)";
             NoticeId++;
             Notify.Show(Notice, 4f);
         }
@@ -135,7 +135,7 @@ namespace PocketCaravan
             if (p.debt <= 0)
             {
                 Clear(p);
-                Notify.Show($"외상 기한이 되어 {paid}냥을 거둬 갔다. 외상을 다 갚았어요.", 5f);
+                Notify.Show($"외상 기한: {paid}냥을 거둬 다 갚았어요", 4f);
                 return;
             }
             bool first = !p.debtLate;
@@ -146,8 +146,8 @@ namespace PocketCaravan
             p.debtDue = clock.PlayHours + ExtendHours;
             Sfx.Play("fail");
             Notify.Show(first
-                ? $"외상 기한이 지나 {paid}냥을 거뒀지만 모자라 연체가 됐어요! 신용 −{lose}점(외상 100냥당 1점) · 1할이 붙어 {p.debt}냥\n다 갚을 때까지 이익의 절반은 외상으로 가고, 귀한 짐·큰 주문을 맡을 수 없고, 좌판도 쉬어요"
-                : $"연체 하루가 더 지났다. 신용 −{lose}점 · 남은 외상 {p.debt}냥", 7f);
+                ? $"외상 연체! 신용 −{lose}점 · 남은 외상 {p.debt}냥\n자세한 건 장터 [외상] 탭에서"
+                : $"연체 하루 더: 신용 −{lose}점 · 남은 외상 {p.debt}냥", 7f);
         }
     }
 }

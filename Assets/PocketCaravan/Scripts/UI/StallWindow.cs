@@ -125,14 +125,15 @@ namespace PocketCaravan
                 var row = new Rect(0, y, cw, rh - 3);
                 CuteUI.Box(row, 6, CuteUI.Paper2, CuteUI.Line);
                 TradeLedgerUI.ItemIcon(kv.Key, 4, y + 2, 1);
-                float lx = CuteUI.Label(24, y + 10, TradeLedgerUI.Fit(kv.Key.displayName, cw - 140, true, true), CuteUI.Text, true, true);
+                float lx = CuteUI.Label(24, y + 10, TradeLedgerUI.Fit(kv.Key.displayName, cw - 175, true, true), CuteUI.Text, true, true);
                 CuteUI.Label(lx + 4, y + 10, $"×{kv.Value}", CuteUI.Sub, true);
-                var b = new Rect(cw - 44, y + 2, 40, 16);
+                var b = new Rect(cw - 78, y + 2, 74, 16);
                 CuteUI.LabelRight(b.x - 6, y + 10, $"하나 {PlayerStall.PriceNow(gm, kv.Key)}냥", CuteUI.Up, true);
-                if (CuteUI.SoftButton(b, "내리기") && !StallRush.IsOpen)
+                int pick = Segmented(b, "내리기", "모두", false);
+                if (pick > 0 && !StallRush.IsOpen)
                 {
-                    int n = PlayerStall.Take(p, kv.Key, 1);
-                    message = n > 0 ? $"{Josa.Eul(kv.Key.displayName)} 짐으로 내렸어요." : "짐 자리가 없어요.";
+                    int n = PlayerStall.Take(p, kv.Key, pick == 1 ? 1 : kv.Value);
+                    message = n > 0 ? $"{Josa.Eul(kv.Key.displayName)} {n}개 짐으로 내렸어요." : "짐 자리가 없어요.";
                     Sfx.Play(n > 0 ? "coin" : "cancel");
                 }
                 y += rh;
@@ -159,20 +160,39 @@ namespace PocketCaravan
                 TradeLedgerUI.ItemIcon(kv.Key, 4, y + 2, 1);
                 float lx = CuteUI.Label(24, y + 10, TradeLedgerUI.Fit(kv.Key.displayName, cw - 170, true, true), CuteUI.Text, true, true);
                 CuteUI.Label(lx + 4, y + 10, $"×{kv.Value}", CuteUI.Sub, true);
-                var one = new Rect(cw - 84, y + 2, 40, 16); var all = new Rect(cw - 42, y + 2, 38, 16);
-                CuteUI.LabelRight(one.x - 6, y + 10, $"무게 {kv.Key.weight:0.#} · 여기 {PlayerStall.PriceNow(gm, kv.Key)}냥", CuteUI.Sub, true);
+                var seg = new Rect(cw - 78, y + 2, 74, 16);
+                CuteUI.LabelRight(seg.x - 6, y + 10, $"무게 {kv.Key.weight:0.#} · 여기 {PlayerStall.PriceNow(gm, kv.Key)}냥", CuteUI.Sub, true);
                 bool room = PlayerStall.Weight(p) + kv.Key.weight <= PlayerStall.Capacity + 0.001f;
                 if (room)
                 {
-                    int n = 0;
-                    if (CuteUI.SoftButton(one, "올리기") && !StallRush.IsOpen) n = PlayerStall.Put(p, kv.Key, 1);
-                    if (CuteUI.SoftButton(all, "모두") && !StallRush.IsOpen) n = PlayerStall.Put(p, kv.Key, kv.Value);
+                    int pick = Segmented(seg, "올리기", "모두", true), n = 0;
+                    if (pick > 0 && !StallRush.IsOpen) n = PlayerStall.Put(p, kv.Key, pick == 1 ? 1 : kv.Value);
                     if (n > 0) { message = $"{Josa.Eul(kv.Key.displayName)} {n}개 진열했어요."; Sfx.Play("coin"); }
                 }
-                else { CuteUI.Box(new Rect(one.x, one.y, all.xMax - one.x, 16), 6, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter((one.x + all.xMax) / 2f, one.center.y, "자리 없음", CuteUI.Zero, true); }
+                else { CuteUI.Box(seg, 7, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter(seg.center.x, seg.center.y, "자리 없음", CuteUI.Zero, true); }
                 y += rh;
             }
             GUI.EndGroup();
+        }
+
+        /// <summary>11/19 은샘 "내리기·올리기·모두가 대충 만든 것 같아": 한 덩어리 두 칸 단추 [하나 | 모두].
+        /// primary면 청록(올리기), 아니면 흰 종이(내리기). 마우스를 올린 칸만 밝게. 누른 칸 1·2, 아니면 0</summary>
+        static int Segmented(Rect r, string a, string b, bool primary)
+        {
+            float split = Mathf.Round(r.x + r.width * 0.58f);
+            var ra = new Rect(r.x, r.y, split - r.x, r.height); var rb = new Rect(split, r.y, r.xMax - split, r.height);
+            var mouse = Event.current.mousePosition;
+            Color32 fill = primary ? CuteUI.Interact : CuteUI.White, hi = primary ? CuteUI.InteractHi : CuteUI.Paper2;
+            Color32 line = primary ? CuteUI.InteractLo : CuteUI.KeyLine, text = primary ? CuteUI.White : CuteUI.Text;
+            CuteUI.Box(r, 7, fill, line, 1, 2, primary ? CuteUI.InteractLo : CuteUI.Line);
+            if (ra.Contains(mouse)) CuteUI.Box(new Rect(ra.x + 1, ra.y + 1, ra.width - 1, ra.height - 2), 6, hi, hi);
+            if (rb.Contains(mouse)) CuteUI.Box(new Rect(rb.x, rb.y + 1, rb.width - 1, rb.height - 2), 6, hi, hi);
+            CuteUI.Fill(new Rect(split, r.y + 3, 1, r.height - 6), line);
+            CuteUI.LabelCenter(ra.center.x, ra.center.y, a, primary && !ra.Contains(mouse) ? text : primary ? CuteUI.Text : text, true, true);
+            CuteUI.LabelCenter(rb.center.x, rb.center.y, b, primary && !rb.Contains(mouse) ? text : primary ? CuteUI.Text : CuteUI.Sub, true, !primary ? false : true);
+            if (CuteUI.Hit(ra, GUIContent.none, GUIStyle.none)) return 1;
+            if (CuteUI.Hit(rb, GUIContent.none, GUIStyle.none)) return 2;
+            return 0;
         }
     }
 }

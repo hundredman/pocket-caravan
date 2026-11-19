@@ -341,7 +341,7 @@ namespace PocketCaravan
             if (player.contracts.Exists(active => active.id == c.id)) return "이미 맡은 의뢰입니다.";
             if (player.contracts.Count >= MaxActiveFor(player)) return $"의뢰는 한 번에 {MaxActiveFor(player)}개까지 맡을 수 있습니다.";
             if (c.Premium && Credit.Level(player) < c.minCredit) return $"신용 {c.minCredit} 이상이어야 맡길 수 있다고 합니다.";
-            if ((c.Premium || c.Bulk) && Loan.Late(player)) return "외상이 연체 중이라 귀한 짐·큰 주문은 맡길 수 없다고 합니다. 먼저 갚아요.";
+            if ((c.Premium || c.Bulk) && Loan.Late(player)) return "외상 연체 중엔 귀한 짐·큰 주문을 맡길 수 없어요.";
             if (c.atonement)
             {
                 if (!StandingRecovery.Negative(player.reputation, (ReputationScope)c.atonementScope, c.atonementTarget)) return "평판이 이미 중립 이상입니다.";

@@ -205,17 +205,27 @@ namespace PocketCaravan
                 var bd = sr.bounds;
                 if (bd.size.x >= 1.5f && bd.size.y >= 1.5f) props.Add(bd);   // 좌판·집·나무처럼 큰 그림만 (풀·돌·그림자는 빼고)
             }
-            return Search(map, from, props, true) ?? Search(map, from, props, false);
+            var list = Search(map, from, props, true);
+            if (list.Count == 0) list = Search(map, from, props, false);
+            if (list.Count == 0) return null;
+            // 11/19 은샘 "2명 이상의 유저가 한 마을에 좌판을 열 수도": 가까운 자리 몇 곳 중 내 이름으로 늘 같은 한 곳을 고른다
+            // (지금은 내 좌판만 보이지만, 나중에 다른 사람 좌판도 보이게 할 때 서로 덜 겹치게)
+            string who = NetClient.I != null ? NetClient.I.MyName : "";
+            int slot = string.IsNullOrEmpty(who) ? 0 : (int)((uint)StableHash(who) % (uint)Mathf.Min(3, list.Count));
+            return list[slot];
         }
 
-        static Vector3Int? Search(MapRoot map, Vector3Int from, List<Bounds> props, bool roomy)
+        static int StableHash(string s) { unchecked { int h = 17; foreach (char ch in s) h = h * 31 + ch; return h; } }
+
+        /// <summary>좌판을 둘 수 있는 자리들 (가까운 순, 서로 3칸 넘게 떨어진 것만)</summary>
+        static List<Vector3Int> Search(MapRoot map, Vector3Int from, List<Bounds> props, bool roomy)
         {
-            Vector3Int? best = null; float bestD = float.MaxValue;
+            var found = new List<KeyValuePair<float, Vector3Int>>();
             for (int dx = -7; dx <= 7; dx++)
                 for (int dy = -6; dy <= 6; dy++)
                 {
                     float d = Mathf.Abs(dx) + Mathf.Abs(dy) * 1.2f + (dy > 0 ? 0.5f : 0f);
-                    if (d < 3f || d >= bestD) continue;
+                    if (d < 3f) continue;
                     var c = new Vector3Int(from.x + dx, from.y + dy, 0);
                     bool ok = true;
                     for (int x = -1; x <= 1 && ok; x++)
@@ -230,17 +240,31 @@ namespace PocketCaravan
                         var area = new Bounds(new Vector3(w.x, w.y - 0.5f + 1.4f, 0f), new Vector3(3.6f, 2.9f, 10f));
                         foreach (var bd in props) { var q = bd; q.extents = new Vector3(q.extents.x, q.extents.y, 10f); if (q.Intersects(area)) { ok = false; break; } }
                     }
-                    if (ok) { best = c; bestD = d; }
+                    if (ok) found.Add(new KeyValuePair<float, Vector3Int>(d, c));
                 }
-            return best;
+            found.Sort((a, b) => a.Key != b.Key ? a.Key.CompareTo(b.Key) : a.Value.x != b.Value.x ? a.Value.x.CompareTo(b.Value.x) : a.Value.y.CompareTo(b.Value.y));
+            var picked = new List<Vector3Int>();
+            foreach (var kv in found)
+            {
+                bool far = true;
+                foreach (var q in picked) if (Mathf.Abs(q.x - kv.Value.x) < 4 && Mathf.Abs(q.y - kv.Value.y) < 4) { far = false; break; }
+                if (far) picked.Add(kv.Value);
+            }
+            return picked;
         }
     }
 
-    /// <summary>맵 위 내 좌판. 말 걸면 좌판 창. 진열 양에 따라 그림 0~2, 판 돈이 모이면 머리 위에 엽전이 깜빡인다</summary>
+    /// <summary>맵 위 내 좌판. 말 걸면 좌판 창. 11/19 고려 장터 좌판 그림을 바탕으로 한 빈 진열칸에 진열한 물건 그림(많은 것 셋)을 올린다.
+    /// 판 돈이 모이면 머리 위에 엽전이 깜빡인다</summary>
     public sealed class StallSpot : Interactable
     {
         SpriteRenderer sr, coin;
-        static Sprite[] art;
+        readonly SpriteRenderer[] goods = new SpriteRenderer[3];
+        string goodsKey;
+        static Sprite art;
+        // 진열칸 위 물건 자리 (그림 48×48, 아래 가운데 기준, 1칸 = 16픽셀): 가운데 x 14·24·34, 진열칸 바닥 y 33(위에서)
+        static readonly float[] GoodsX = { -10f / 16f, 0f, 10f / 16f };
+        const float ShelfY = (48f - 33f) / 16f, GoodsScale = 0.55f;
 
         public override string DisplayName => "내 좌판";
         public override Kind Category => Kind.Market;
@@ -249,9 +273,14 @@ namespace PocketCaravan
         void Awake()
         {
             blocksMovement = true;
-            if (art == null) { art = new Sprite[3]; for (int i = 0; i < 3; i++) art[i] = Resources.Load<Sprite>("Stall/stall_" + i); }
+            if (art == null) art = Resources.Load<Sprite>("Stall/stall_0");
             sr = gameObject.AddComponent<SpriteRenderer>();
-            sr.sprite = art[0];
+            sr.sprite = art;
+            for (int i = 0; i < goods.Length; i++)
+            {
+                var g = new GameObject("진열 " + i).transform; g.SetParent(transform, false); g.localScale = Vector3.one * GoodsScale;
+                goods[i] = g.gameObject.AddComponent<SpriteRenderer>();
+            }
             var c = new GameObject("판 돈").transform; c.SetParent(transform, false); c.localPosition = new Vector3(0f, 3.1f, 0f);
             coin = c.gameObject.AddComponent<SpriteRenderer>();
             coin.sprite = CoinSprite();
@@ -262,8 +291,7 @@ namespace PocketCaravan
         {
             var gm = GameManager.I; if (gm == null) return;
             var p = gm.Player;
-            float w = PlayerStall.Weight(p);
-            sr.sprite = art[w <= 0f ? 0 : w < PlayerStall.Capacity * 0.5f ? 1 : 2];
+            UpdateGoods(p);
             // 장터 좌판 그림처럼: 내 발이 좌판 아래 끝보다 위(좌판 안쪽)면 좌판이 앞, 아니면 뒤
             var pc = PlayerController.Instance;
             var body = pc != null && pc.anim != null ? pc.anim.GetComponent<SpriteRenderer>() : null;
@@ -271,9 +299,34 @@ namespace PocketCaravan
             if (body != null) sr.sortingLayerID = coin.sortingLayerID = body.sortingLayerID;
             bool front = pc != null && pc.transform.position.y > transform.position.y + 0.35f;
             sr.sortingOrder = front ? baseOrder + 2 : baseOrder - 2;
+            foreach (var g in goods) { g.sortingLayerID = sr.sortingLayerID; g.sortingOrder = sr.sortingOrder + 1; }
             coin.sortingOrder = baseOrder + 20;
             coin.enabled = p.stallEarned > 0;
             if (coin.enabled) coin.transform.localPosition = new Vector3(0f, 3.1f + Mathf.Sin(Time.time * 3f) * 0.08f, 0f);
+        }
+
+        /// <summary>진열한 물건 중 많은 것 셋을 진열칸에 올린다 (바뀔 때만)</summary>
+        void UpdateGoods(PlayerState p)
+        {
+            var list = new List<KeyValuePair<ItemData, int>>();
+            foreach (var kv in p.stallStock.Items) if (kv.Key != null && kv.Value > 0) list.Add(new KeyValuePair<ItemData, int>(kv.Key, kv.Value));
+            list.Sort((a, b) => b.Value != a.Value ? b.Value.CompareTo(a.Value) : string.CompareOrdinal(a.Key.id, b.Key.id));
+            string key = "";
+            for (int i = 0; i < list.Count && i < 3; i++) key += list[i].Key.id + ",";
+            if (key == goodsKey) return;
+            goodsKey = key;
+            // 하나면 가운데, 둘이면 양옆, 셋이면 셋 다
+            int n = Mathf.Min(3, list.Count);
+            int[] slots = n == 1 ? new[] { 1 } : n == 2 ? new[] { 0, 2 } : new[] { 0, 1, 2 };
+            for (int i = 0; i < goods.Length; i++) goods[i].enabled = false;
+            for (int i = 0; i < n; i++)
+            {
+                var g = goods[slots[i]]; var icon = list[i].Key.icon;
+                if (icon == null) continue;
+                g.sprite = icon; g.enabled = true;
+                var b = icon.bounds;   // 그림 기준점이 어디든 바닥이 진열칸에 닿게
+                g.transform.localPosition = new Vector3(GoodsX[slots[i]] - b.center.x * GoodsScale, ShelfY - b.min.y * GoodsScale, 0f);
+            }
         }
 
         public override void Interact(PlayerController player) => StallWindow.Show();
