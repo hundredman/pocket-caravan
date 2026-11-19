@@ -105,7 +105,7 @@ namespace PocketCaravan
             Vector3 feet; float wUnits; int assetOrder = -1;
             // 11/18 은샘: 내 고리처럼 발 가운데에 (전엔 0.1칸 위·좁아서 몸 뒤에 있는 듯했다). 너비도 내 고리(사람 그림 1칸 → 1.25칸)와 같게
             if (sr != null && sr.sprite != null && sr.bounds.size.x < 4f) { var b = sr.bounds; feet = new Vector3(b.center.x, b.min.y + .04f, 0f); wUnits = Mathf.Clamp(b.size.x * 1.25f, 1.1f, 2.4f); }
-            else if (AssetBase(t, out var ab, out assetOrder)) { feet = new Vector3(ab.center.x, ab.min.y + .04f, 0f); wUnits = Mathf.Clamp(ab.size.x * 1.25f, 1.1f, 2.4f); }   // 11/19 은샘: 게시판·우물·이정표도 사람처럼 그 물건 밑 가운데
+            else if (AssetBase(t, out var ab, out assetOrder)) { feet = new Vector3(ab.center.x, ab.min.y + AssetLift, 0f); wUnits = Mathf.Clamp(ab.size.x * 1.25f, 1.1f, 2.4f); }   // 11/19 은샘: 게시판·우물·이정표도 사람처럼 그 물건 밑 가운데
             else { feet = t.transform.position + new Vector3(0f, -.42f, 0f); wUnits = 1f; }
             feet = new Vector3(Mathf.Round(feet.x * 16f) / 16f, Mathf.Round(feet.y * 16f) / 16f, t.transform.position.z);
             // 순서: 대상 그림과 내 몸 그림 중 낮은 쪽보다 3 아래 (그림자 9보다도 아래)
@@ -130,6 +130,8 @@ namespace PocketCaravan
         }
 
         // ---- 11/19 그림이 따로 없는 대상(게시판·우물·이정표·자리): 옆에 놓인 물건 그림이나 맵 물건 타일을 찾아 그 밑동 ----
+        /// <summary>11/19 은샘 "물건 고리가 앞에 있는 느낌": 물건 밑동보다 조금 뒤(위)로. 2픽셀</summary>
+        public static float AssetLift = .125f;
         Interactable baseFor; bool baseFound; Bounds baseBounds; int baseOrder;
         static readonly Queue<Vector3Int> open = new Queue<Vector3Int>();
         static readonly HashSet<Vector3Int> seen = new HashSet<Vector3Int>();
