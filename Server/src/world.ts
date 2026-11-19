@@ -154,7 +154,7 @@ const AUCTION_LOTS: Record<string, number> = {
   gold_ginseng: 120, royal_najeon: 140, murano_master: 150, queen_lace: 130,
   sultan_carpet: 160, moon_pearl: 150, sun_amber: 140, silver_fur: 130,
 };
-const AUCTION_MS = 120_000, AUCTION_BUMP_MS = 15_000, AUCTION_GAP_MS = 45_000, BID_STEP = 10, BID_MAX = 1_000_000, BID_GAP_MS = 400;
+const AUCTION_MS = 60_000, AUCTION_BUMP_MS = 15_000, AUCTION_GAP_MS = 45_000, BID_STEP = 10, BID_MAX = 1_000_000, BID_GAP_MS = 400;
 /** 13단계 보물 상자: 못 찾으면 사라지는 시간 · 찾은 뒤 다음 상자까지 */
 const TREASURE_LIFE_MS = 40 * 60_000, TREASURE_GAP_MS = 15 * 60_000;
 interface Auction { lot: string; price: number; top: string; topId: string; ends: number; }

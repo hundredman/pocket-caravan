@@ -39,7 +39,7 @@ check(wa?.games === true && wb?.games === true, "welcome에 games:true");
 // 경매
 a.send({ t: "auc" });
 const s1 = await a.wait((m) => m.t === "auc");
-check(!!s1 && typeof s1.lot === "string" && s1.lot.length > 0 && s1.price > 0 && s1.left > 100000, `경매대를 열면 물건이 올라온다 (${s1?.lot} ${s1?.price}냥, ${Math.round((s1?.left ?? 0) / 1000)}초)`);
+check(!!s1 && typeof s1.lot === "string" && s1.lot.length > 0 && s1.price > 0 && s1.left > 50000, `경매대를 열면 물건이 올라온다 (${s1?.lot} ${s1?.price}냥, ${Math.round((s1?.left ?? 0) / 1000)}초)`);
 const bcast = await b.wait((m) => m.t === "auc" && m.lot === s1?.lot);
 check(!!bcast, "다른 사람에게도 새 물건이 알려진다");
 a.send({ t: "bid", price: s1.price - 1 });

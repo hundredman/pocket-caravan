@@ -6,7 +6,7 @@ namespace PocketCaravan
 {
     /// <summary>
     /// 만국 경매 (2026-11-18 윤채, 미니게임 기획 "여럿이 · 희귀품 · 돈 쓰는 곳").
-    /// 만국 상인회 마당 경매대에서 Space. 희귀품(NetCollection) 하나가 올라오고, 값을 불러 가장 높이 부른 사람이 2분 뒤 가져간다.
+    /// 만국 상인회 마당 경매대에서 Space. 희귀품(NetCollection) 하나가 올라오고, 값을 불러 가장 높이 부른 사람이 1분 뒤 가져간다 (11/19 은샘: 2분 → 60초).
     /// 누가 부르면 남은 시간이 15초 아래일 때 15초로 늘어난다. 한 번에 10냥 · 50냥 더.
     /// - 온라인(서버 13단계 "games"): 서버가 물건·값·최고가를 들고 있고 접속한 사람 모두가 같이 부른다 (world.ts auc · bid · aucEnd).
     ///   낙찰되면 그 사람 게임이 돈을 내고 수집함에 넣는다(돈이 모자라면 무효). 경매가 끝나면 45초 쉬었다가 다음 물건.
@@ -16,7 +16,7 @@ namespace PocketCaravan
     public class NetAuction : MonoBehaviour
     {
         const int Step = 10, Big = 50;
-        const float LocalLength = 75f, Bump = 15f, Rest = 45f;
+        const float LocalLength = 60f, OnlineLength = 60f, Bump = 15f, Rest = 45f;
 
         [Serializable] class AucOut { public string t = "auc"; }
         [Serializable] class BidOut { public string t = "bid"; public int price; }
@@ -170,7 +170,7 @@ namespace PocketCaravan
         public static void DevFast()
         {
             if (inst == null) return;
-            if (!inst.local && Online) { NetChat.System("시험: 온라인 경매는 서버 시간대로 가요 (2분)"); return; }
+            if (!inst.local && Online) { NetChat.System("시험: 온라인 경매는 서버 시간대로 가요 (60초)"); return; }
             inst.local = true;
             if (string.IsNullOrEmpty(inst.lot)) { inst.nextAt = 0f; inst.EnsureLocal(); }
             inst.endsAt = Time.unscaledTime + 10f;
@@ -227,7 +227,7 @@ namespace PocketCaravan
             float nx = CuteUI.Label(tx, card.y + 14, rare.name, CuteUI.Text, false, true);
             CuteUI.Label(nx + 6, card.y + 14.5f, rare.region, CuteUI.Sub, true);
             CuteUI.WrapWords(tx, card.y + 22, card.xMax - tx - 8, rare.desc, CuteUI.Sub, true);
-            CuteUI.Label(tx, card.yMax - 9, $"상인회 매입가 {rare.value}냥", CuteUI.Interact, true);
+            CuteUI.Label(tx, card.yMax - 9, $"감정가 {rare.value}냥", CuteUI.Interact, true);
 
             // 지금 값 · 최고가 · 남은 시간
             float y = card.yMax + 8;
@@ -240,7 +240,7 @@ namespace PocketCaravan
             CuteUI.LabelRight(r.xMax - 16, y + 10, who, mineTop ? CuteUI.Up : CuteUI.Text, true, mineTop);
             float left = Left;
             var bar = new Rect(r.x + 16, y + 26, w - 32, 6);
-            CuteUI.Bar(bar, Mathf.Clamp01(left / (local ? LocalLength : 120f)), left > 15f ? CuteUI.Interact : CuteUI.Alert, CuteUI.InteractHi);
+            CuteUI.Bar(bar, Mathf.Clamp01(left / (local ? LocalLength : OnlineLength)), left > 15f ? CuteUI.Interact : CuteUI.Alert, CuteUI.InteractHi);
             CuteUI.LabelRight(r.xMax - 16, bar.yMax + 7, $"{Mathf.CeilToInt(left)}초 남음", left > 15f ? CuteUI.Sub : CuteUI.Down, true);
 
             // 부르기
