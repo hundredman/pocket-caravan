@@ -105,6 +105,7 @@ namespace PocketCaravan
             Vector3 feet; float wUnits;
             // 11/18 은샘: 내 고리처럼 발 가운데에 (전엔 0.1칸 위·좁아서 몸 뒤에 있는 듯했다). 너비도 내 고리(사람 그림 1칸 → 1.25칸)와 같게
             if (sr != null && sr.sprite != null && sr.bounds.size.x < 4f) { var b = sr.bounds; feet = new Vector3(b.center.x, b.min.y + .04f, 0f); wUnits = Mathf.Clamp(b.size.x * 1.25f, 1.1f, 2.4f); }
+            else if (AssetBase(t, out var ab)) { feet = new Vector3(ab.center.x, ab.min.y + .04f, 0f); wUnits = Mathf.Clamp(ab.size.x * 1.25f, 1.1f, 2.4f); }   // 11/19 은샘: 게시판·우물·이정표도 사람처럼 그 물건 밑 가운데
             else { feet = t.transform.position + new Vector3(0f, -.42f, 0f); wUnits = 1f; }
             feet = new Vector3(Mathf.Round(feet.x * 16f) / 16f, Mathf.Round(feet.y * 16f) / 16f, t.transform.position.z);
             // 순서: 대상 그림과 내 몸 그림 중 낮은 쪽보다 3 아래 (그림자 9보다도 아래)
@@ -125,6 +126,72 @@ namespace PocketCaravan
                 Place(waveSr, feet, Mathf.Lerp(1f, 2f, q) * wUnits / 2f, order, mat, new Color(1f, 1f, 1f, .7f * (1f - q)));
             }
         }
+
+        // ---- 11/19 그림이 따로 없는 대상(게시판·우물·이정표·자리): 옆에 놓인 물건 그림이나 맵 물건 타일을 찾아 그 밑동 ----
+        Interactable baseFor; bool baseFound; Bounds baseBounds;
+        static readonly Queue<Vector3Int> open = new Queue<Vector3Int>();
+        static readonly HashSet<Vector3Int> seen = new HashSet<Vector3Int>();
+
+        bool AssetBase(Interactable t, out Bounds b)
+        {
+            if (t != baseFor) { baseFor = t; baseFound = FindAssetBase(t.transform.position, out baseBounds); }
+            b = baseBounds; return baseFound;
+        }
+
+        /// <summary>대상 자리(칸 가운데) 바로 위·옆에 놓인 물건. 1) 물건 그림(순서 3~7, 사람·그림자·고리는 8 이상) 2) Objects 타일 덩어리의 가장 아래 줄</summary>
+        static bool FindAssetBase(Vector3 at, out Bounds b)
+        {
+            b = default;
+            float best = float.MaxValue;
+            foreach (var r in FindObjectsByType<SpriteRenderer>(FindObjectsSortMode.None))
+            {
+                if (!r.enabled || r.sprite == null || r.sortingOrder < 3 || r.sortingOrder > 7) continue;
+                var rb = r.bounds;
+                if (rb.size.x > 4f || rb.size.y > 4f) continue;
+                if (at.x < rb.min.x - .25f || at.x > rb.max.x + .25f) continue;   // 가로로 겹쳐야
+                float dy = rb.min.y - at.y;
+                if (dy < -1.05f || dy > 1.2f) continue;                           // 밑동이 자리 칸 근처 (위 칸·같은 칸·아래 칸)
+                float d = Mathf.Abs(rb.center.x - at.x) + Mathf.Abs(dy);
+                if (d < best) { best = d; b = rb; }
+            }
+            if (best < float.MaxValue) return true;
+
+            var root = MapRoot.Current;
+            if (root == null) return false;
+            foreach (var o in root.GetComponentsInChildren<UnityEngine.Tilemaps.Tilemap>())
+            {
+                if (o.name != "Objects") continue;
+                UnityEngine.Tilemaps.Tilemap a = null;
+                foreach (var t in root.GetComponentsInChildren<UnityEngine.Tilemaps.Tilemap>()) if (t.name == "Above" && t.layoutGrid == o.layoutGrid) { a = t; break; }
+                var c0 = o.WorldToCell(at);
+                Vector3Int? start = null;
+                foreach (var d in Near) if (o.HasTile(c0 + d)) { start = c0 + d; break; }
+                if (!start.HasValue) continue;
+                open.Clear(); seen.Clear(); open.Enqueue(start.Value); seen.Add(start.Value);
+                int low = int.MaxValue;
+                while (open.Count > 0 && seen.Count < 64)
+                {
+                    var c = open.Dequeue();
+                    if (o.HasTile(c) && c.y < low) low = c.y;
+                    foreach (var d in Dirs)
+                    {
+                        var n = c + d;
+                        if (seen.Contains(n) || !(o.HasTile(n) || (a != null && a.HasTile(n)))) continue;
+                        seen.Add(n); open.Enqueue(n);
+                    }
+                }
+                int minX = int.MaxValue, maxX = int.MinValue;
+                foreach (var c in seen) if (c.y == low && o.HasTile(c)) { minX = Mathf.Min(minX, c.x); maxX = Mathf.Max(maxX, c.x); }
+                if (minX > maxX) continue;
+                var lo = o.CellToWorld(new Vector3Int(minX, low, 0)); var hi = o.CellToWorld(new Vector3Int(maxX + 1, low + 1, 0));
+                b = new Bounds((lo + hi) / 2f, hi - lo);
+                return true;
+            }
+            return false;
+        }
+        // 자리 칸 → 위 칸 → 옆 → 아래 순으로 (게시판·우물은 보통 자리 바로 위)
+        static readonly Vector3Int[] Near = { Vector3Int.zero, Vector3Int.up, Vector3Int.left, Vector3Int.right, new Vector3Int(-1, 1, 0), new Vector3Int(1, 1, 0), Vector3Int.down };
+        static readonly Vector3Int[] Dirs = { Vector3Int.down, Vector3Int.left, Vector3Int.right, Vector3Int.up };
 
         static void Place(SpriteRenderer r, Vector3 at, float scale, int order, Material mat, Color c)
         {
