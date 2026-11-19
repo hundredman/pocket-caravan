@@ -29,7 +29,8 @@ namespace PocketCaravan
         public const string BestKey = "stall:best";
         const float Duration = 45f, ZoneHalf = 26f, PerfectHalf = 8f;
         static readonly string[] People = { "trader_tall", "venice_merchant_tall", "arabia_npc_merchant_tall", "north_p_trader_tall", "arabia_woman_calligrapher_tall" };
-        static Sprite[][] walk;
+        Sprite[][] walk;
+        StallStyle style;
 
         enum Phase { Closed, Intro, Play, Done }
         enum Mood { Walk, Happy, Sad, Shrug }
@@ -43,7 +44,6 @@ namespace PocketCaravan
         float clock;   // 이 놀이의 시계: 한 프레임에 0.1초까지만 흐른다 (창 밖에 나갔다 와도 손님이 한꺼번에 지나가지 않게)
         int pickFrame = -1;
         int epoch;   // 이 판을 시작한 게임 (도중에 불러오기·새 게임이면 다른 게임에 보상을 쓰지 않게, GameManager.GameEpoch)
-        static Sprite stallArt;
         int score, served, missed, streak, bestStreak, bestBefore, buzzBefore, buzzGot; bool buzzSet;
         float shoutAt; ItemData shoutItem;
         string pop = ""; Color32 popCol; float popAt;
@@ -67,6 +67,9 @@ namespace PocketCaravan
         void Begin(GameManager gm)
         {
             var p = gm.Player;
+            style = StallStyle.Current();   // 11/19 은샘 "지역 그림에 맞춰야지": 그 지역 좌판 · 그 지역 사람들
+            walk = style.People();
+            LaneColors(style.id);
             if (walk == null)
             {
                 walk = new Sprite[People.Length][];
@@ -98,7 +101,7 @@ namespace PocketCaravan
         void Spawn(PlayerState p)
         {
             var have = shelf;
-            var g = new Guest { x = LaneW + 20f, look = Random.Range(0, People.Length), at = clock };
+            var g = new Guest { x = LaneW + 20f, look = Random.Range(0, walk.Length), at = clock };
             g.speed = Mathf.Lerp(46f, 82f, Ramp) * Random.Range(0.9f, 1.12f);
             g.wish = have.Count > 0 && Random.value > 0.2f ? have[Random.Range(0, have.Count)] : null;   // 다섯에 하나는 구경꾼
             guests.Add(g);
@@ -247,7 +250,18 @@ namespace PocketCaravan
             }
         }
 
-        static readonly Color32 Dirt = new Color32(196, 160, 112, 255), DirtLo = new Color32(176, 140, 96, 255), DirtHi = new Color32(214, 182, 136, 255), Grass = new Color32(120, 164, 92, 255), GrassLo = new Color32(98, 140, 76, 255);
+        // 11/19 길 색도 지역마다: 고려 풀·흙길 · 베네치아 운하·돌바닥 · 아라비아 사암 벽·모래 · 북유럽 눈
+        Color32 Dirt, DirtLo, DirtHi, Grass, GrassLo;
+        void LaneColors(string id)
+        {
+            switch (id)
+            {
+                case "venice": Grass = new Color32(70, 128, 140, 255); GrassLo = new Color32(96, 156, 166, 255); Dirt = new Color32(222, 210, 186, 255); DirtLo = new Color32(196, 182, 156, 255); DirtHi = new Color32(236, 226, 206, 255); break;
+                case "arabia": Grass = new Color32(214, 190, 146, 255); GrassLo = new Color32(190, 164, 120, 255); Dirt = new Color32(232, 206, 150, 255); DirtLo = new Color32(212, 184, 128, 255); DirtHi = new Color32(244, 224, 176, 255); break;
+                case "north": Grass = new Color32(240, 236, 244, 255); GrassLo = new Color32(218, 210, 226, 255); Dirt = new Color32(206, 194, 212, 255); DirtLo = new Color32(182, 168, 192, 255); DirtHi = new Color32(226, 218, 232, 255); break;   // 눈밭 · 밟힌 길
+                default: Grass = new Color32(120, 164, 92, 255); GrassLo = new Color32(98, 140, 76, 255); Dirt = new Color32(196, 160, 112, 255); DirtLo = new Color32(176, 140, 96, 255); DirtHi = new Color32(214, 182, 136, 255); break;
+            }
+        }
 
         void DrawLane(Rect lane, PlayerState p)
         {
@@ -259,8 +273,8 @@ namespace PocketCaravan
             CuteUI.Fill(new Rect(0, road, W, 2), DirtLo);
             for (int i = 0; i < 30; i++) { float dx = (i * 47 + 11) % W, dy = road + 6 + (i * 13) % (H - road - 10); CuteUI.Fill(new Rect(dx, dy, 3, 2), i % 2 == 0 ? DirtLo : DirtHi); }
             // 좌판 (내 좌판 그림 2배) + 좌판 앞 자리
-            var art = stallArt != null ? stallArt : (stallArt = Resources.Load<Sprite>("Stall/stall_0"));
-            if (art != null) CuteUI.Sprite(art, new Rect(ZoneX - 48, road - 70, 96, 96));
+            var art = style != null ? style.Art : null;   // 내 좌판 그림 2배, 아래를 길 위에 맞춘다
+            if (art != null) { float aw = art.rect.width * 2f, ah = art.rect.height * 2f; CuteUI.Sprite(art, new Rect(ZoneX - aw / 2f, road + 26 - ah, aw, ah)); }
             float zx = ZoneX, feet = road + 46;
             bool live = phase == Phase.Play;
             var zone = new Rect(zx - ZoneHalf, road + 4, ZoneHalf * 2, H - road - 8);

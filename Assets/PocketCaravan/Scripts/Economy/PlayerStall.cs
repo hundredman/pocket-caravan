@@ -289,17 +289,16 @@ namespace PocketCaravan
         }
     }
 
-    /// <summary>맵 위 내 좌판. 말 걸면 좌판 창. 11/19 고려 장터 좌판 그림을 바탕으로 한 빈 진열칸에 진열한 물건 그림(많은 것 셋)을 올린다.
+    /// <summary>맵 위 내 좌판. 말 걸면 좌판 창. 11/19 지역 장터 좌판 그림(StallStyle)의 빈 진열칸에 진열한 물건 그림(많은 것 셋)을 올린다.
     /// 판 돈이 모이면 머리 위에 엽전이 깜빡인다</summary>
     public sealed class StallSpot : Interactable
     {
         SpriteRenderer sr, coin, lantern, flag;
         readonly SpriteRenderer[] goods = new SpriteRenderer[3];
         string goodsKey, goodsQuick;
-        static Sprite art;
-        // 진열칸 위 물건 자리 (그림 48×48, 아래 가운데 기준, 1칸 = 16픽셀): 가운데 x 14·24·34, 진열칸 바닥 y 33(위에서)
-        static readonly float[] GoodsX = { -9f / 16f, 0f, 9f / 16f };   // 왼쪽 기둥(x≈10)에 안 걸리게 15·24·33
-        const float ShelfY = (48f - 33f) / 16f, GoodsScale = 0.5f;   // 16픽셀 그림을 딱 8픽셀로 (점 크기가 고르게)
+        StallStyle style;
+        // 진열칸 위 물건 자리 · 등롱·깃발 자리는 그림마다 다르다 (StallStyle)
+        const float GoodsScale = 0.5f;   // 16픽셀 그림을 딱 8픽셀로 (점 크기가 고르게). 진열칸 자리·꾸미기 자리는 지역 그림마다 (StallStyle)
 
         public override string DisplayName => "내 좌판";
         public override Kind Category => Kind.Market;
@@ -308,21 +307,21 @@ namespace PocketCaravan
         void Awake()
         {
             blocksMovement = true;
-            if (art == null) art = Resources.Load<Sprite>("Stall/stall_0");
+            style = StallStyle.Current();   // 11/19 은샘 "지역 그림에 맞춰야지": 좌판을 연 마을 지역의 좌판 그림
             sr = gameObject.AddComponent<SpriteRenderer>();
-            sr.sprite = art;
+            sr.sprite = style.Art;
             for (int i = 0; i < goods.Length; i++)
             {
                 var g = new GameObject("진열 " + i).transform; g.SetParent(transform, false); g.localScale = Vector3.one * GoodsScale;
                 goods[i] = g.gameObject.AddComponent<SpriteRenderer>();
             }
-            var c = new GameObject("판 돈").transform; c.SetParent(transform, false); c.localPosition = new Vector3(0f, 3.1f, 0f);
+            var c = new GameObject("판 돈").transform; c.SetParent(transform, false); c.localPosition = new Vector3(0f, style.CoinY, 0f);
             coin = c.gameObject.AddComponent<SpriteRenderer>();
             coin.sprite = CoinSprite();
             coin.enabled = false;
             // 11/19 손님 부르기 최고 점수로 달리는 꾸미기 (StallDeco). 지붕 오른쪽 끝에 등롱, 왼쪽 지붕 꼭지에 깃발
-            lantern = Child("등롱", LanternSprite(), new Vector3(21f / 16f, 30f / 16f, 0f));
-            flag = Child("깃발", FlagSprite(), new Vector3(-15f / 16f, 42f / 16f, 0f));
+            lantern = Child("등롱", LanternSprite(), new Vector3(style.lantern.x / 16f, style.lantern.y / 16f, 0f));
+            flag = Child("깃발", FlagSprite(), new Vector3(style.flag.x / 16f, style.flag.y / 16f, 0f));
             RefreshDeco();
         }
 
@@ -356,7 +355,7 @@ namespace PocketCaravan
             if (Time.frameCount % 60 == 0) RefreshDeco();
             coin.sortingOrder = baseOrder + 20;
             coin.enabled = p.stallEarned > 0;
-            if (coin.enabled) coin.transform.localPosition = new Vector3(0f, 3.1f + Mathf.Sin(Time.time * 3f) * 0.08f, 0f);
+            if (coin.enabled) coin.transform.localPosition = new Vector3(0f, style.CoinY + Mathf.Sin(Time.time * 3f) * 0.08f, 0f);
         }
 
         /// <summary>진열한 물건 중 많은 것 셋을 진열칸에 올린다 (바뀔 때만)</summary>
@@ -383,7 +382,7 @@ namespace PocketCaravan
                 if (icon == null) continue;
                 g.sprite = icon; g.enabled = true;
                 var b = icon.bounds;   // 그림 기준점이 어디든 바닥이 진열칸에 닿게
-                float px = Mathf.Round((GoodsX[slots[i]] - b.center.x * GoodsScale) * 16f) / 16f, py = Mathf.Round((ShelfY - b.min.y * GoodsScale) * 16f) / 16f;   // 픽셀 단위로 맞춘다
+                float px = Mathf.Round((style.goodsX[slots[i]] / 16f - b.center.x * GoodsScale) * 16f) / 16f, py = Mathf.Round((style.shelfY / 16f - b.min.y * GoodsScale) * 16f) / 16f;   // 픽셀 단위로 맞춘다
                 g.transform.localPosition = new Vector3(px, py, 0f);
             }
         }
@@ -473,6 +472,62 @@ namespace PocketCaravan
                 }
             tex.Apply();
             return coinSprite = Sprite.Create(tex, new Rect(0, 0, n, n), new Vector2(0.5f, 0f), 16f);
+        }
+    }
+
+    /// <summary>11/19 은샘 "지역 그림에 맞춰야지": 좌판을 연 마을 지역마다 그 지역 장터 좌판을 바탕으로 한 그림 (Tools/ArtGen/player_stall_regions.py)
+    /// 과 손님 부르기에 지나가는 그 지역 사람들 (Resources/Stall/StallPeople). 숫자는 그림 픽셀(아래 가운데 기준)</summary>
+    public sealed class StallStyle
+    {
+        public string id, artName;
+        public float shelfY;          // 진열칸 윗면 (아래에서)
+        public float[] goodsX;        // 진열 물건 셋의 가운데 x
+        public Vector2 lantern, flag; // 등롱(위 가운데 매달림) · 깃발(깃대 아래)
+        public float height;          // 그림 높이
+
+        Sprite art;
+        public Sprite Art { get { if (art == null) { art = Resources.Load<Sprite>("Stall/" + artName); if (art == null) art = Resources.Load<Sprite>("Stall/stall_0"); } return art; } }
+        public float CoinY => (height + 2f) / 16f;   // 판 돈 엽전은 그림 위
+
+        static readonly StallStyle Goryeo = new StallStyle { id = "goryeo", artName = "stall_0", shelfY = 15, goodsX = new[] { -9f, 0f, 9f }, lantern = new Vector2(21, 30), flag = new Vector2(-15, 42), height = 48 };
+        static readonly StallStyle Venice = new StallStyle { id = "venice", artName = "stall_venice", shelfY = 9, goodsX = new[] { -10f, 0f, 10f }, lantern = new Vector2(23, 18), flag = new Vector2(-21, 30), height = 32 };
+        static readonly StallStyle Arabia = new StallStyle { id = "arabia", artName = "stall_arabia", shelfY = 13, goodsX = new[] { -9f, 0f, 9f }, lantern = new Vector2(19, 28), flag = new Vector2(-19, 36), height = 38 };
+        static readonly StallStyle North = new StallStyle { id = "north", artName = "stall_north", shelfY = 15, goodsX = new[] { -10f, 0f, 10f }, lantern = new Vector2(22, 32), flag = new Vector2(-22, 44), height = 48 };
+
+        /// <summary>지역 id → 그림. 중앙 동쪽(transit)은 고려, 중앙 서쪽은 베네치아, 중앙 북쪽은 북유럽</summary>
+        public static StallStyle For(string regionId)
+        {
+            switch (regionId)
+            {
+                case "venice": case "center_venice": return Venice;
+                case "arabia": return Arabia;
+                case "north": case "center_north": return North;
+                default: return Goryeo;
+            }
+        }
+
+        /// <summary>내 좌판이 있는 마을의 지역 그림</summary>
+        public static StallStyle Current()
+        {
+            var gm = GameManager.I;
+            var t = gm != null && gm.Player != null && PlayerStall.Has(gm.Player) ? gm.Db.towns.Find(x => x != null && x.id == gm.Player.stallTown) : null;
+            return For(t != null && t.region != null ? t.region.id : null);
+        }
+
+        /// <summary>손님 부르기에 지나가는 사람들: 사람마다 왼쪽으로 걷는 4장 (StallPeople 에셋)</summary>
+        public Sprite[][] People()
+        {
+            var set = Resources.Load<StallPeople>("Stall/StallPeople");
+            var flat = set != null ? set.For(id) : null;
+            if (flat == null || flat.Length < 4) return null;
+            var res = new List<Sprite[]>();
+            for (int i = 0; i + 3 < flat.Length; i += 4)
+            {
+                var four = new Sprite[4]; bool ok = true;
+                for (int f = 0; f < 4; f++) { four[f] = flat[i + f]; if (four[f] == null) ok = false; }   // 빠진 그림이 있는 사람은 뺀다
+                if (ok) res.Add(four);
+            }
+            return res.Count > 0 ? res.ToArray() : null;   // 아무도 없으면 기본 사람들 (StallRush)
         }
     }
 }
