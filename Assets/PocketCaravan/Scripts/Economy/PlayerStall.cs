@@ -10,7 +10,7 @@ namespace PocketCaravan
     /// - 여는 곳: 장터 창 아래 "좌판 열기". 조건: 신용 5단계 · 1000냥 · 그 장터 평판 우호 이상. 좌판은 하나 (빈 좌판이면 다른 장터로 옮겨 열 수 있다, 다시 1000냥)
     /// - 진열: 내 짐의 교역품을 올린다 (무게 30까지, 맡은 짐은 못 올림). 게임 한 시간마다 반쯤의 확률로 하나가 그 장터 지금 시세로 팔리고(장터 재고도 움직임),
     ///   판 돈은 좌판에 모인다 → 들러서 받는다. 사서 바로 그 장터에 올리면 되팔기 규칙(TradeActivity.LimitSale) 그대로라 이득이 없다.
-    /// - 손님 맞이(StallRush): 좌판 앞을 지나는 손님에게 바라는 물건을 건네는 놀이 (11/19 순수 재미로 바꿈: 값은 시세 그대로, 보상은 점수·최고 기록·좌판 꾸미기 StallDeco).
+    /// - 손님 부르기(StallRush): 좌판 앞을 지나는 사람에게 바라는 물건을 외쳐 부르는 놀이. 물건은 팔지 않고, 점수로 12시간 "북적임"(저절로 팔리는 빈도↑, 값은 그대로) + 최고 기록으로 좌판 꾸미기(StallDeco). 11/19 은샘 "미니게임은 좌판 버프로".
     /// - 맵에 내 좌판 그림(Resources/Stall/stall_0, Tools/ArtGen/player_stall_v2.py, 진열칸에 올린 물건 그림)이 장터 상인 근처 빈자리에 선다. 말 걸면 좌판 창 (StallWindow).
     /// 저장: SaveData.stall* (옛 저장 = 좌판 없음).
     /// </summary>
@@ -44,6 +44,7 @@ namespace PocketCaravan
             if (Denial(p, town) != null) return false;
             p.money -= Price;
             p.stallTown = town.id; p.stallStock.Clear(); p.stallEarned = 0; p.stallRushDay = -1;
+            if (GameManager.I != null) GameManager.I.SetMemo(BuzzLvKey, 0);   // 옮겨 열면 북적임은 새로
             // 11/19 여러 사람이 한 마을에 열 때 자리를 나누려고, 열 때 자리 번호(0~2)를 하나 골라 저장 메모에 둔다 (맵을 다시 들어와도 같은 자리)
             var gm = GameManager.I; if (gm != null) gm.SetMemo(SlotKey, Random.Range(0, 3));
             StallPlacement.Refresh();
@@ -118,12 +119,20 @@ namespace PocketCaravan
 
         static readonly System.Random rng = new System.Random();
 
-        /// <summary>게임 한 시간마다 (GameManager): 반쯤의 확률로 진열한 물건 하나가 팔린다 (많이 올린 물건일수록 먼저)</summary>
+        /// <summary>게임 한 시간마다 (GameManager): 반쯤의 확률로 진열한 물건 하나가 팔린다 (많이 올린 물건일수록 먼저).
+        /// 11/19 "손님 부르기"로 좌판이 북적이면(Buzz) 더 자주 팔린다. 값은 그대로 그 장터 시세</summary>
         public static void OnHour(GameManager gm)
         {
             if (gm != null && Loan.Late(gm.Player)) return;   // 11/19 외상 연체 중에는 좌판도 쉰다
             var p = gm != null ? gm.Player : null;
-            if (!Has(p) || rng.NextDouble() >= SellChance) return;
+            if (!Has(p)) return;
+            int lv = BuzzLevel(gm);
+            if (rng.NextDouble() < BuzzChance[lv]) SellRandom(gm, p);
+            if (lv >= 3 && rng.NextDouble() < 0.5) SellRandom(gm, p);   // 3단계: 한 시간에 하나 더 (반쯤)
+        }
+
+        static void SellRandom(GameManager gm, PlayerState p)
+        {
             int total = Count(p);
             if (total <= 0) return;
             int pick = rng.Next(total);
@@ -133,6 +142,30 @@ namespace PocketCaravan
                 pick -= kv.Value;
             }
         }
+
+        // ---------------- 11/19 북적임: 손님 부르기(StallRush) 점수로 몇 시간 동안 좌판 손님이 더 자주 온다 (은샘 "미니게임은 좌판 버프로")
+        public const string BuzzLvKey = "stall:buzz", BuzzUntilKey = "stall:buzzUntil";
+        public const float BuzzHours = 12f;
+        /// <summary>단계별 한 시간에 하나 팔릴 확률 (0 = 보통). 3단계는 반쯤 하나 더</summary>
+        public static readonly float[] BuzzChance = { SellChance, 0.75f, 1f, 1f };
+        /// <summary>단계 문턱 (손님 부르기 점수)</summary>
+        public static readonly int[] BuzzScore = { 0, 50, 120, 200 };
+        public static int BuzzOfScore(int score) { int lv = 0; for (int i = 1; i < BuzzScore.Length; i++) if (score >= BuzzScore[i]) lv = i; return lv; }
+        public static int BuzzLevel(GameManager gm)
+        {
+            if (gm == null || gm.Player == null || !Has(gm.Player)) return 0;
+            int lv = Mathf.Clamp(Mathf.RoundToInt(gm.GetMemo(BuzzLvKey)), 0, 3);
+            return lv > 0 && gm.Clock.TotalHours < gm.GetMemo(BuzzUntilKey) ? lv : 0;
+        }
+        public static float BuzzHoursLeft(GameManager gm) => BuzzLevel(gm) > 0 ? Mathf.Max(0f, gm.GetMemo(BuzzUntilKey) - gm.Clock.TotalHours) : 0f;
+        /// <summary>새 북적임을 건다. 지금 것보다 낮으면 그대로 두고 false</summary>
+        public static bool SetBuzz(GameManager gm, int lv)
+        {
+            if (gm == null || lv <= 0 || (lv < BuzzLevel(gm) && BuzzHoursLeft(gm) > 1f)) return false;   // 더 센 북적임이 한 시간 넘게 남았으면 그대로
+            gm.SetMemo(BuzzLvKey, lv); gm.SetMemo(BuzzUntilKey, gm.Clock.TotalHours + BuzzHours);
+            return true;
+        }
+        public static string BuzzEffect(int lv) => lv >= 3 ? "한 시간에 하나 반꼴로" : lv == 2 ? "한 시간에 꼭 하나씩" : lv == 1 ? "보통보다 1.5배 자주" : "두 시간에 하나꼴로";
 
         public static void Export(PlayerState p, SaveData d)
         {
@@ -287,7 +320,7 @@ namespace PocketCaravan
             coin = c.gameObject.AddComponent<SpriteRenderer>();
             coin.sprite = CoinSprite();
             coin.enabled = false;
-            // 11/19 손님 맞이 최고 점수로 달리는 꾸미기 (StallDeco). 지붕 오른쪽 끝에 등롱, 왼쪽 지붕 꼭지에 깃발
+            // 11/19 손님 부르기 최고 점수로 달리는 꾸미기 (StallDeco). 지붕 오른쪽 끝에 등롱, 왼쪽 지붕 꼭지에 깃발
             lantern = Child("등롱", LanternSprite(), new Vector3(21f / 16f, 30f / 16f, 0f));
             flag = Child("깃발", FlagSprite(), new Vector3(-15f / 16f, 42f / 16f, 0f));
             RefreshDeco();
@@ -299,7 +332,7 @@ namespace PocketCaravan
             var r = t.gameObject.AddComponent<SpriteRenderer>(); r.sprite = s; return r;
         }
 
-        /// <summary>최고 점수가 바뀌면 (손님 맞이가 끝날 때·불러올 때) 꾸미기를 다시 단다</summary>
+        /// <summary>최고 점수가 바뀌면 (손님 부르기가 끝날 때·불러올 때) 꾸미기를 다시 단다</summary>
         public void RefreshDeco()
         {
             if (lantern != null) lantern.enabled = StallDeco.HasLantern;

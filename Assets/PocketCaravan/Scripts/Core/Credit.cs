@@ -51,6 +51,20 @@ namespace PocketCaravan
             return lv;
         }
 
+        /// <summary>11/19 단계 알림용 대표 한 가지 (짧게). 한도처럼 "생기는" 게 아닌 것은 null</summary>
+        public static string PerkShort(int level)
+        {
+            switch (level)
+            {
+                case 1: return "급한 짐 의뢰";
+                case 2: return "깨지기 쉬운 짐 의뢰";
+                case 3: return "귀한 짐 의뢰";
+                case 4: return "장터 외상";
+                case 5: return "내 좌판";
+                default: return null;
+            }
+        }
+
         /// <summary>단계별 혜택 (여정 수첩·알림에 쓰는 글). 시설 조건은 TownData에 따로 있다</summary>
         public static string PerkText(int level)
         {

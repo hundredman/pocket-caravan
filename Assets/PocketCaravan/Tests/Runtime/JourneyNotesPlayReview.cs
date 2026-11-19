@@ -28,7 +28,7 @@ namespace PocketCaravan.EditorTools
             foreach(var id in new[]{"transit_woodtown","transit_ferry","transit_southport","transit_crossroads"})Check(destinations.Exists(t=>t.id==id&&!string.IsNullOrWhiteSpace(t.journeyNote)),"visible journey note "+id);
             previous=Keyboard.current;keyboard=InputSystem.AddDevice<Keyboard>();keyboard.MakeCurrent();yield return Press(Key.Q);
             var tracker=UnityEngine.Object.FindFirstObjectByType<QuestTracker>();var flags=BindingFlags.Instance|BindingFlags.NonPublic;Check((bool)typeof(QuestTracker).GetField("logOpen",flags).GetValue(tracker),"Q opens journey notebook");
-            typeof(QuestTracker).GetField("logTab",flags).SetValue(tracker,2);typeof(QuestTracker).GetField("scroll",flags).SetValue(tracker,Vector2.zero);yield return Photo("journey-top");
+            typeof(QuestTracker).GetField("logTab",flags).SetValue(tracker,3);typeof(QuestTracker).GetField("scroll",flags).SetValue(tracker,Vector2.zero);yield return Photo("journey-top");
             typeof(QuestTracker).GetField("scroll",flags).SetValue(tracker,new Vector2(0,10000));yield return Photo("journey-bottom");
             yield return Press(Key.Escape);Check(!GameManager.I.AutosaveEnabled,"no save enabled");
         }

@@ -43,8 +43,13 @@ namespace PocketCaravan
 
         /// <summary>거래창 [외상 쓰기]를 켰는지 (지역 메모 "pref:loan"에 저장, 처음엔 꺼짐)</summary>
         public const string PrefKey = "pref:loan";
-        public static bool On(PlayerState p) { var gm = GameManager.I; return Unlocked(p) && gm != null && gm.Player == p && gm.GetMemo(PrefKey) > 0f; }
-        public static void SetOn(bool on) { var gm = GameManager.I; if (gm != null) gm.SetMemo(PrefKey, on ? 1f : 0f); }
+        public static bool On(PlayerState p) { var gm = GameManager.I; return Shown(p) && gm.GetMemo(PrefKey) > 0f; }
+        public static void SetOn(bool on) { var gm = GameManager.I; if (gm != null) { gm.SetMemo(PrefKey, on ? 1f : 0f); gm.SetMemo(ShowKey, 1f); } }   // 체크 칸이 보일 때만 불린다 → 보이는 상태로 고정 (옛 저장에서 끄면 칸이 사라지지 않게)
+        /// <summary>11/19 은샘 "외상 쓰기보다 외상 옵션 보이게 하기": [외상] 탭에서 켜면 사기 칸에 [외상 쓰기]가 나온다 (메모 "pref:loanShow", 처음엔 꺼짐).
+        /// 끄면 사기 칸 [외상 쓰기]도 꺼진다. 옛 설정(pref:loan 켬)은 보이는 것으로 친다</summary>
+        public const string ShowKey = "pref:loanShow";
+        public static bool Shown(PlayerState p) { var gm = GameManager.I; return Unlocked(p) && gm != null && gm.Player == p && (gm.GetMemo(ShowKey) > 0f || gm.GetMemo(PrefKey) > 0f); }
+        public static void SetShown(bool show) { var gm = GameManager.I; if (gm == null) return; gm.SetMemo(ShowKey, show ? 1f : 0f); if (!show) gm.SetMemo(PrefKey, 0f); }
 
         /// <summary>살 때 쓸 수 있는 돈: 가진 돈 (+ [외상 쓰기]를 켰으면 남은 외상 한도)</summary>
         public static long BuyBudget(PlayerState p) => p == null ? 0 : (long)Mathf.Max(0, p.money) + (CashOnly || !On(p) ? 0 : Room(p));
@@ -119,7 +124,7 @@ namespace PocketCaravan
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Hook()
         {
-            GameEvents.ItemSold -= OnSold; GameEvents.ItemSold += OnSold;   // 장터·손님 맞이에서 판 것
+            GameEvents.ItemSold -= OnSold; GameEvents.ItemSold += OnSold;   // 장터·좌판에서 판 것
         }
         static void OnSold(ItemData item, TownData town, int price, int profit) { var gm = GameManager.I; if (gm != null) FromProfit(gm.Player, profit, "판"); }
 

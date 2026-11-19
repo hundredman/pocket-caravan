@@ -15,6 +15,8 @@ namespace PocketCaravan
 
         public GameDatabase Db { get; private set; }
         public PlayerState Player { get; private set; }
+        /// <summary>11/19 새 게임·불러오기마다 1씩 오른다. 창이 열린 채로 게임이 바뀌었는지 알 때 (StallRush 보상)</summary>
+        public int GameEpoch { get; private set; }
         public GameClock Clock { get; private set; }
         public QuestManager Quests { get; private set; }
         public ContractManager Contracts { get; private set; }
@@ -190,14 +192,16 @@ namespace PocketCaravan
             int from = Player.creditFloor;
             int up = Credit.CheckLevelUp(Player);
             if (up <= 0) return;
-            var perks = new List<string>();
+            // 11/19 은샘 "신용 알림은 줄여야": 한 줄로. 새로 생긴 대표 하나(가장 높은 단계 것)만 이름, 더 있으면 "외 n가지" (자세한 건 수첩 성장 탭)
+            var items = new List<string>();
             for (int k = from + 1; k <= up; k++)
             {
                 Contracts?.OnCreditLevel(k);
-                string perk = Credit.PerkText(k);
-                if (perk != null) perks.Add(perk);
+                string s = Credit.PerkShort(k);
+                if (s != null) items.Insert(0, s);
             }
-            Notify.Show($"신용 {up}단계가 되었어요!" + (perks.Count > 0 ? "  — " + string.Join(" · ", perks) : "") + "  (Q 여정 수첩 성장 탭)", 6f);
+            string what = items.Count == 0 ? (up >= 6 ? " 외상 한도가 800냥으로 올랐어요" : "") : items.Count == 1 ? $" {Josa.Ga(items[0])} 생겼어요" : $" {items[0]} 외 {items.Count - 1}가지가 생겼어요";
+            Notify.Show($"신용 {up}단계!{what} · Q 수첩 성장 탭", 6f);
             Sfx.Play("levelup", .7f);
         }
 
@@ -409,6 +413,7 @@ namespace PocketCaravan
         /// 시작 돈은 네 문명 모두 같다(Db.startMoney). 지난 저장은 출발 마을에 도착하면서 덮어쓴다.</summary>
         public void BeginNewGame(StartChoices.Choice choice)
         {
+            GameEpoch++;
             NetSave.NewGameStarted();   // 11/14 이 컴퓨터 저장의 주인 계정을 새로 정한다 (Net/NetSave)
             skipStartScreen = true;
             saveToLoad = null;
@@ -614,6 +619,7 @@ namespace PocketCaravan
 
         void Apply(SaveData d)
         {
+            GameEpoch++;
             SaveCompatibility.Validate(d, Db, Application.CanStreamedLevelBeLoaded);
             Player.reputation.ImportFrom(d, Db.startOrigin);
             Player.warehouse.Import(d.storedCargo);

@@ -84,8 +84,8 @@ namespace PocketCaravan
             ScreenZones.MarkSpot("ledger.tab0", new Rect(content.x + 6, content.y - 21, w1, 21));
             ScreenZones.MarkSpot("ledger.tab1", new Rect(content.x + 6 + w1 + 3, content.y - 21, w2, 21));
             ScreenZones.MarkSpot("ledger.tab2", new Rect(content.x + 6 + w1 + 3 + w2 + 3, content.y - 21, w3, 21));
-            CuteUI.LabelRight(content.xMax - 4, content.y - 9,
-                tab == 0 ? "실은 물건을 어디에 팔면 좋을지 알려 줘요" : tab == 1 ? "직접 본 값이에요 · 가면 달라질 수 있어요" : $"최근 {TradeLedger.RecentMax}번 사고판 것", CuteUI.Sub, true);
+            // 11/19 은샘 "필요 없는 설명은 빼기": 탭 이름·처음 말풍선과 같은 말은 뺐다. 전체 시세의 주의만 남김
+            if (tab == 1) CuteUI.LabelRight(content.xMax - 4, content.y - 9, "직접 본 값이에요 · 가면 달라질 수 있어요", CuteUI.Sub, true);
             if (tab == 0) DrawCargo(gm, content); else if (tab == 1) DrawAll(gm, content); else DrawRecent(gm, content);
         }
 

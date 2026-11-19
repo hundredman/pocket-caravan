@@ -4,14 +4,14 @@ using UnityEngine;
 namespace PocketCaravan
 {
     /// <summary>
-    /// 11/19 좌판 미니게임 "손님 맞이" 2판. 은샘 "미니게임은 이득을 직접 주거나 거래를 대체하지 않게. 순수 재미·해금·간접 도움으로" → 3안(순수 재미)으로 다시 만듦.
-    /// - 장터 길을 손님들이 오른쪽에서 왼쪽으로 지나간다 (게임의 실제 상인 그림, 걷는 4장). 머리 위 말풍선에 바라는 물건, "…"은 구경꾼.
-    /// - 손님이 좌판 앞 밝은 자리에 들어오면 그 물건 칸 번호(1~4)나 클릭으로 건넨다. 자리 한가운데서 건네면 "딱!" 점수 더, 내리 맞히면 더.
-    ///   틀린 물건 · 구경꾼 부르기 · 빈자리에 누르기 · 놓치기는 연속만 끊긴다 (돈 손해는 없다).
-    /// - 45초. 갈수록 손님이 빨라지고 자주 온다.
-    /// - 값은 장터 시세 그대로 (PlayerStall.SellOne 배율 1). 장터에서 파는 것과 같아서 돈으로 이득은 없다. 보상은 점수 · 최고 기록 · 좌판 꾸미기(등롱·깃발).
-    /// - 하루 몇 번이든 (진열한 물건이 있고 아침 7시~밤 9시). 손님과 판매는 내 화면의 NPC 손님이라, 한 마을에 좌판이 여럿이어도 서로 손님을 뺏지 않는다.
-    /// 최고 기록: 저장 메모 "stall:best". 꾸미기 문턱: StallDeco.
+    /// 11/19 좌판 미니게임 "손님 부르기" (3판). 은샘 "미니게임은 직접 거래가 아니라 좌판 버프로" → 물건을 팔지 않고, 지나가는 사람을 외쳐 불러 좌판을 북적이게 한다.
+    /// - 장터 길을 사람들이 오른쪽에서 왼쪽으로 지나간다 (게임의 실제 상인 그림, 걷는 4장). 머리 위 말풍선에 찾는 물건, "…"은 구경꾼.
+    /// - 좌판 앞 밝은 자리에 오면 그 물건 칸 번호(1~4)나 클릭으로 "○○ 있어요!" 하고 부른다. 한가운데면 "딱!", 내리 맞히면 점수 더.
+    ///   틀린 물건 · 구경꾼 부르기 · 빈자리에 외치기 · 놓치기는 연속만 끊긴다.
+    /// - 45초. 갈수록 빨라지고 자주 온다. 진열한 물건은 그대로 (안 팔림, 돈 변화 없음).
+    /// - 보상: 점수 단계(PlayerStall.BuzzScore 50·120·200)만큼 12시간 "북적임" → 저절로 팔리는 빈도가 오른다 (값은 그대로 시세, PlayerStall.OnHour).
+    ///   최고 기록(메모 "stall:best")으로 좌판 꾸미기 (StallDeco 등롱·깃발).
+    /// - 몇 번이든 (진열한 물건이 있고 아침 7시~밤 9시). 지금 북적임보다 낮으면 그대로 둔다. 사람들은 내 화면의 NPC라 한 마을 좌판 여럿이 서로 뺏지 않는다.
     /// </summary>
     public sealed class StallRush : MonoBehaviour
     {
@@ -22,7 +22,7 @@ namespace PocketCaravan
         void Shut()
         {
             // 판 도중에 창이 닫혀도(불러오기·새 게임 등) 이번 판 최고 기록은 남긴다
-            if (phase == Phase.Play && GameManager.I != null && score > bestBefore) { GameManager.I.SetMemo(BestKey, score); var s = StallSpot.Current; if (s != null) s.RefreshDeco(); }
+            if (phase == Phase.Play && GameManager.I != null && GameManager.I.GameEpoch == epoch) { Reward(GameManager.I); GameManager.I.SaveNow(); }
             phase = Phase.Closed; ClosedFrame = Time.frameCount;
         }
 
@@ -42,8 +42,10 @@ namespace PocketCaravan
         float startedAt, nextSpawn, flashAt, flashX;
         float clock;   // 이 놀이의 시계: 한 프레임에 0.1초까지만 흐른다 (창 밖에 나갔다 와도 손님이 한꺼번에 지나가지 않게)
         int pickFrame = -1;
+        int epoch;   // 이 판을 시작한 게임 (도중에 불러오기·새 게임이면 다른 게임에 보상을 쓰지 않게, GameManager.GameEpoch)
         static Sprite stallArt;
-        int score, served, missed, earned, streak, bestStreak, bestBefore;
+        int score, served, missed, streak, bestStreak, bestBefore, buzzBefore, buzzGot; bool buzzSet;
+        float shoutAt; ItemData shoutItem;
         string pop = ""; Color32 popCol; float popAt;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -79,8 +81,8 @@ namespace PocketCaravan
             rows.Sort((a, b) => b.Value.CompareTo(a.Value));
             for (int i = 0; i < rows.Count && shelf.Count < 4; i++) if (rows[i].Key != null && rows[i].Value > 0) shelf.Add(rows[i].Key);
             guests.Clear();
-            score = served = missed = earned = streak = bestStreak = 0; pop = "";
-            bestBefore = Best;
+            score = served = missed = streak = bestStreak = buzzGot = 0; buzzSet = false; pop = ""; shoutItem = null; shoutAt = -9f;
+            bestBefore = Best; buzzBefore = PlayerStall.BuzzLevel(gm); epoch = gm.GameEpoch;
             phase = Phase.Intro;
             Sfx.Play("open");
         }
@@ -95,7 +97,7 @@ namespace PocketCaravan
 
         void Spawn(PlayerState p)
         {
-            var have = shelf.FindAll(it => p.stallStock.Count(it) > 0);
+            var have = shelf;
             var g = new Guest { x = LaneW + 20f, look = Random.Range(0, People.Length), at = clock };
             g.speed = Mathf.Lerp(46f, 82f, Ramp) * Random.Range(0.9f, 1.12f);
             g.wish = have.Count > 0 && Random.value > 0.2f ? have[Random.Range(0, have.Count)] : null;   // 다섯에 하나는 구경꾼
@@ -121,23 +123,21 @@ namespace PocketCaravan
         {
             if (slot < 0 || slot >= shelf.Count || pickFrame == Time.frameCount) return;   // 숫자 키와 클릭이 같은 프레임에 둘 다 들어와도 한 번만
             pickFrame = Time.frameCount;
-            var p = gm.Player; var it = shelf[slot];
-            if (p.stallStock.Count(it) <= 0) { Sfx.Play("cancel", .4f); return; }
+            var it = shelf[slot];
+            shoutItem = it; shoutAt = clock;   // 좌판에서 "○○ 있어요!"
             var g = InZone();
-            if (g == null) { Break("아직 손님이 앞에 없어요"); Sfx.Play("cancel", .4f); return; }
+            if (g == null) { Break("아직 앞에 아무도 없어요"); Sfx.Play("cancel", .4f); return; }
             g.tried = true;
-            if (g.wish == null) { g.mood = Mood.Shrug; g.moodAt = clock; Break("구경만 하는 손님이에요"); Sfx.Play("cancel", .5f); return; }
-            if (g.wish != it) { g.mood = Mood.Sad; g.moodAt = clock; Break("그게 아닌데요…"); Sfx.Play("cancel"); return; }
-            // 맞혔다: 시세 그대로 판다 (배율 1). 점수 = 10 + 딱 10 + 연속 (최대 +10)
-            int price = PlayerStall.SellOne(gm, it, 1f, true);
-            if (price <= 0) { g.tried = false; Sfx.Play("cancel", .4f); return; }
+            if (g.wish == null) { g.mood = Mood.Shrug; g.moodAt = clock; Break("구경만 하는 사람이에요"); Sfx.Play("cancel", .5f); return; }
+            if (g.wish != it) { g.mood = Mood.Sad; g.moodAt = clock; Break("그건 안 찾는데요…"); Sfx.Play("cancel"); return; }
+            // 맞혔다: 좌판에 들렀다 간다 (물건은 안 판다). 점수 = 10 + 딱 10 + 연속 (최대 +10)
             bool perfect = Mathf.Abs(g.x - ZoneX) <= PerfectHalf;
             int pts = 10 + (perfect ? 10 : 0) + Mathf.Min(streak, 5) * 2;
-            score += pts; earned += price; served++; streak++; bestStreak = Mathf.Max(bestStreak, streak);
+            score += pts; served++; streak++; bestStreak = Mathf.Max(bestStreak, streak);
             g.mood = Mood.Happy; g.moodAt = clock;
             flashAt = clock; flashX = g.x;
             Pop(perfect ? $"딱! +{pts}" : $"+{pts}", perfect ? CuteUI.Sell : CuteUI.Up);
-            Sfx.Play(perfect ? "success" : "coin", perfect ? .7f : 1f);
+            Sfx.Play(perfect ? "success" : "accept", perfect ? .7f : .8f);
         }
 
         void Break(string why) { streak = 0; Pop(why, CuteUI.Down); }
@@ -145,11 +145,19 @@ namespace PocketCaravan
 
         void Finish(GameManager gm)
         {
+            Reward(gm);
             phase = Phase.Done;
-            if (score > bestBefore) gm.SetMemo(BestKey, score);
-            Sfx.Play(served > 0 ? "levelup" : "cancel", .7f);
-            { var s = StallSpot.Current; if (s != null) s.RefreshDeco(); }
+            Sfx.Play(buzzGot > 0 ? "levelup" : "cancel", .7f);
             gm.SaveNow();
+        }
+
+        /// <summary>이번 점수로 북적임을 걸고 최고 기록을 남긴다 (끝날 때 · 도중에 닫힐 때)</summary>
+        void Reward(GameManager gm)
+        {
+            buzzGot = PlayerStall.BuzzOfScore(score);
+            buzzSet = PlayerStall.SetBuzz(gm, buzzGot);
+            if (score > bestBefore) gm.SetMemo(BestKey, score);
+            var s = StallSpot.Current; if (s != null) s.RefreshDeco();
         }
 
         void Update()
@@ -167,21 +175,20 @@ namespace PocketCaravan
             foreach (var g in guests)
             {
                 if (g.gone) continue;
-                bool stop = g.mood == Mood.Happy && clock - g.moodAt < 0.7f;   // 산 손님은 잠깐 서서 받는다
-                if (!stop) g.x -= g.speed * dt * (g.mood == Mood.Happy ? 1.4f : 1f);
+                bool stop = g.mood == Mood.Happy && clock - g.moodAt < 0.9f;   // 부른 사람은 좌판 앞에 잠깐 서서 구경한다
+                if (!stop) g.x -= g.speed * dt;
                 if (g.x < -24f)
                 {
                     g.gone = true;
                     if (g.mood == Mood.Walk && !g.tried)
                     {
-                        if (g.wish != null && p.stallStock.Count(g.wish) > 0) { missed++; Break("손님을 놓쳤어요"); }
+                        if (g.wish != null) { missed++; Break("지나가 버렸어요"); }
                         else if (g.wish == null) { score += 2; }   // 구경꾼을 그냥 보냈다
                     }
                 }
             }
             int n = InputReader.NumberPressed(); if (n >= 1 && n <= shelf.Count) Pick(gm, n - 1);
-            bool empty = shelf.TrueForAll(it => p.stallStock.Count(it) <= 0);
-            if (T >= Duration || empty) Finish(gm);
+            if (T >= Duration) Finish(gm);
         }
 
         static bool Go() => InputReader.InteractPressed() || InputReader.EnterPressed();   // 시작·닫기 (Space·Enter)
@@ -194,11 +201,11 @@ namespace PocketCaravan
             GUI.depth = -20;   // 좌판 창 위
             var gm = GameManager.I; var p = gm.Player;
             float w = Mathf.Min(420, UIStyle.VirtualWidth - 24); LaneW = Mathf.Min(380f, w - 40f);
-            float h = phase == Phase.Done ? 200 : 262;
+            float h = phase == Phase.Done ? 200 : 270;
             var r = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round((UIStyle.VirtualHeight - h) / 2 + 6), w, h);
             CuteUI.Dim();
             CuteUI.Window(r);
-            CuteUI.TitlePlate(r.center.x, r.y - 11, "손님 맞이");
+            CuteUI.TitlePlate(r.center.x, r.y - 11, "손님 부르기");
             if (phase == Phase.Done) { DrawDone(r); return; }
 
             // 위 줄: 점수 · 연속 · 남은 시간
@@ -216,7 +223,7 @@ namespace PocketCaravan
             {
                 var card = new Rect(lane.x + 120, lane.y + 10, lane.width - 132, lane.height - 20);
                 CuteUI.Box(card, 8, CuteUI.White, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
-                string[] rules = { "손님이 좌판 앞 밝은 자리에 오면", "바라는 물건 번호(1~4)를 눌러 건네요", "한가운데서 건네면 \"딱!\" · 내리 맞히면 점수 더", "\"…\" 손님은 구경꾼, 부르지 마세요", "45초 · 값은 장터 시세 그대로" };
+                string[] rules = { "지나가는 사람이 좌판 앞 밝은 자리에 오면", $"찾는 물건 번호(1~{shelf.Count})를 눌러 불러요", "한가운데서 부르면 \"딱!\" · 내리 맞히면 점수 더", "\"…\" 사람은 구경꾼, 부르지 마세요", "점수만큼 12시간 좌판이 북적여요 (놀이 중엔 물건이 나가지 않아요)" };
                 for (int i = 0; i < rules.Length; i++) CuteUI.Label(card.x + 10, card.y + 13 + i * 17, rules[i], i == 4 ? CuteUI.Sub : CuteUI.Text, true, i < 2);
             }
             DrawShelf(gm, p, new Rect(r.x, lane.yMax + 8, r.width, 52), phase == Phase.Play);
@@ -227,7 +234,8 @@ namespace PocketCaravan
                 CuteUI.Keycap(b.xMax - CuteUI.KeycapWidth("Space") - 6, b.center.y - 6.5f, "Space", true);
                 if (bestBefore > 0) CuteUI.LabelRight(r.xMax - 16, r.yMax - 19, $"최고 {bestBefore}점", CuteUI.Sub, true);
             }
-            else CuteUI.LabelCenter(r.center.x, r.yMax - 16, "번호 키 1~4 또는 칸 클릭 · Esc 그만", CuteUI.Sub, true);
+            else CuteUI.LabelCenter(r.center.x, r.yMax - 12, $"번호 키 1~{shelf.Count} 또는 칸 클릭 · Esc 그만", CuteUI.Sub, true);
+            if (phase == Phase.Play) DrawBuzzBar(new Rect(r.x + 60, r.yMax - 36, r.width - 120, 8));
 
             // 떠오르는 글 (점수 · 까닭)
             float pa = 1f - Mathf.Clamp01((clock - popAt) / 1.1f);
@@ -262,13 +270,23 @@ namespace PocketCaravan
             GUI.color = oc;
             CuteUI.Fill(new Rect(zx - PerfectHalf, zone.yMax - 4, PerfectHalf * 2, 2), CuteUI.Sell);   // 한가운데 표시
             if (live && clock - flashAt < 0.25f) CuteUI.Box(new Rect(flashX - 14, road + 2, 28, H - road - 4), 6, CuteUI.White, CuteUI.Sell);
+            if (live && shoutItem != null && clock - shoutAt < 0.8f)   // 좌판에서 외치는 말풍선 "○○ 있어요!"
+            {
+                string say = $"{shoutItem.displayName} 있어요!";
+                float sw = CuteUI.Width(say, true) + 30, sx = Mathf.Min(ZoneX + 40, W - sw - 4);
+                var sb = new Rect(sx, 6, sw, 20);
+                CuteUI.Box(sb, 8, CuteUI.White, CuteUI.Ink, 1, 1, CuteUI.SoftShadow);
+                CuteUI.Fill(new Rect(sb.x - 3, sb.center.y - 1, 4, 2), CuteUI.Ink);
+                if (shoutItem.icon != null) CuteUI.Sprite(shoutItem.icon, new Rect(sb.x + 4, sb.y + 2, 16, 16));
+                CuteUI.Label(sb.x + 22, sb.center.y, say, CuteUI.Text, true, true);
+            }
 
             // 손님 (뒤에서 앞 순서: x가 큰 쪽이 먼저)
             var order = new List<Guest>(guests); order.Sort((a, b) => b.x.CompareTo(a.x));
             foreach (var g in order)
             {
                 if (g.gone) continue;
-                var set = walk[g.look]; int f = g.mood == Mood.Happy && clock - g.moodAt < 0.7f ? 0 : (int)((clock - g.at) * 8f) % 4;
+                var set = walk[g.look]; int f = g.mood == Mood.Happy && clock - g.moodAt < 0.9f ? 0 : (int)((clock - g.at) * 8f) % 4;
                 var spr = set[f] ?? set[0];
                 float bob = g.mood == Mood.Happy && clock - g.moodAt < 0.4f ? -Mathf.Sin((clock - g.moodAt) / 0.4f * Mathf.PI) * 4f : 0f;
                 if (spr != null) CuteUI.Sprite(spr, new Rect(Mathf.Round(g.x - 16), Mathf.Round(feet - 48 + bob), 32, 48));
@@ -280,13 +298,12 @@ namespace PocketCaravan
         void DrawBubble(Guest g, PlayerState p, float x, float y)
         {
             float since = clock - g.moodAt;
-            if (g.mood == Mood.Happy && since < 1.2f) { CuteUI.Icon(CuteUI.Pic.Coin7, x - 3, y - 12); return; }
+            if (g.mood == Mood.Happy) { if (since < 1.2f) CuteUI.Icon(CuteUI.Pic.Star4, x - 4, y - 14); return; }
             if (g.mood == Mood.Sad) { if (since < 1f) CuteUI.LabelCenter(x, y - 6, "…", CuteUI.Down, false, true); return; }
             if (g.mood == Mood.Shrug) { if (since < 1f) CuteUI.LabelCenter(x, y - 6, "?", CuteUI.Sub, false, true); return; }
             if (g.mood != Mood.Walk) return;
             var b = new Rect(Mathf.Round(x - 13), Mathf.Round(y - 24), 26, 22);
-            bool soldOut = g.wish != null && p.stallStock.Count(g.wish) <= 0;
-            CuteUI.Box(b, 7, soldOut ? CuteUI.ZeroSoft : CuteUI.White, CuteUI.Ink, 1, 1, CuteUI.SoftShadow);
+            CuteUI.Box(b, 7, CuteUI.White, CuteUI.Ink, 1, 1, CuteUI.SoftShadow);
             CuteUI.Fill(new Rect(x - 2, b.yMax, 4, 2), CuteUI.Ink);
             if (g.wish == null) CuteUI.LabelCenter(b.center.x, b.center.y - 1, "…", CuteUI.Sub, false, true);
             else if (g.wish.icon != null) CuteUI.Sprite(g.wish.icon, new Rect(b.center.x - 8, b.center.y - 8, 16, 16));
@@ -297,38 +314,59 @@ namespace PocketCaravan
         {
             float sw = 70, gap = 8, total = shelf.Count * sw + Mathf.Max(0, shelf.Count - 1) * gap;
             float sx = row.center.x - total / 2f;
-            var target = live ? InZone() : null;
             for (int i = 0; i < shelf.Count; i++)
             {
-                var it = shelf[i]; int n = p.stallStock.Count(it);
+                var it = shelf[i];
                 var b = new Rect(sx + i * (sw + gap), row.y, sw, 44);
-                bool hover = live && n > 0 && b.Contains(Event.current.mousePosition);
-                CuteUI.Box(b, 7, n > 0 ? (hover ? CuteUI.Paper2 : CuteUI.White) : CuteUI.ZeroSoft, n > 0 ? CuteUI.Ink : CuteUI.Line, 1, 2, CuteUI.SoftShadow);
+                bool hover = live && b.Contains(Event.current.mousePosition);
+                bool lit = live && shoutItem == it && clock - shoutAt < 0.25f;
+                CuteUI.Box(b, 7, lit ? CuteUI.SellSoft : hover ? CuteUI.Paper2 : CuteUI.White, CuteUI.Ink, 1, 2, CuteUI.SoftShadow);
                 CuteUI.Keycap(b.x + 4, b.y + 4, (i + 1).ToString(), true);
-                if (it.icon != null) CuteUI.Sprite(it.icon, new Rect(b.center.x - 14, b.y + 6, 28, 28));
-                CuteUI.LabelRight(b.xMax - 5, b.yMax - 7, $"×{n}", n > 0 ? CuteUI.Sub : CuteUI.Zero, true);
-                if (live && n > 0 && CuteUI.Hit(b, GUIContent.none, GUIStyle.none)) Pick(gm, i);
+                if (it.icon != null) CuteUI.Sprite(it.icon, new Rect(b.center.x - 14, b.y + 4, 28, 28));
+                CuteUI.LabelCenter(b.center.x, b.yMax - 7, TradeLedgerUI.Fit(it.displayName, sw - 6, true, false), CuteUI.Sub, true);
+                if (live && CuteUI.Hit(b, GUIContent.none, GUIStyle.none)) Pick(gm, i);
             }
+        }
+
+        /// <summary>북적임 막대: 점수가 단계 문턱(50·120·200)을 넘을수록 찬다</summary>
+        void DrawBuzzBar(Rect bar)
+        {
+            int top = PlayerStall.BuzzScore[PlayerStall.BuzzScore.Length - 1];
+            int lv = PlayerStall.BuzzOfScore(score);
+            CuteUI.Label(bar.x - 50, bar.center.y, "북적임", CuteUI.Sub, true, true);
+            CuteUI.Bar(bar, Mathf.Clamp01(score / (float)top), CuteUI.Sell, CuteUI.SellSoft);
+            for (int i = 1; i < PlayerStall.BuzzScore.Length; i++)
+            {
+                float x = Mathf.Round(bar.x + bar.width * PlayerStall.BuzzScore[i] / (float)top);
+                if (i < PlayerStall.BuzzScore.Length - 1) CuteUI.Fill(new Rect(x - 1, bar.y - 2, 2, bar.height + 4), CuteUI.Ink);
+                CuteUI.LabelCenter(Mathf.Min(x, bar.xMax - 4), bar.y - 7, i.ToString(), lv >= i ? CuteUI.Sell : CuteUI.Zero, true, true);
+            }
+            CuteUI.Label(bar.xMax + 8, bar.center.y, lv > 0 ? $"{lv}단계" : "", CuteUI.Sell, true, true);
         }
 
         void DrawDone(Rect r)
         {
             bool record = score > bestBefore && score > 0;
-            CuteUI.LabelCenter(r.center.x, r.y + 36, record ? "새 기록!" : "손님 맞이 끝", record ? CuteUI.Sell : CuteUI.Text, false, true);
-            CuteUI.LabelCenter(r.center.x, r.y + 62, $"점수 {score}  ·  최고 {Mathf.Max(score, bestBefore)}", CuteUI.Text, false, true);
-            CuteUI.LabelCenter(r.center.x, r.y + 84, $"손님 {served}명에게 팔았어요 · 가장 긴 연속 {bestStreak}명 · 놓친 손님 {missed}명", CuteUI.Sub, true);
-            if (earned > 0) CuteUI.LabelCenter(r.center.x, r.y + 102, $"판 돈 {earned}냥 (장터 시세 그대로)", CuteUI.Sub, true);
+            CuteUI.LabelCenter(r.center.x, r.y + 34, record ? "새 기록!" : "손님 부르기 끝", record ? CuteUI.Sell : CuteUI.Text, false, true);
+            CuteUI.LabelCenter(r.center.x, r.y + 58, $"점수 {score}  ·  최고 {Mathf.Max(score, bestBefore)}", CuteUI.Text, false, true);
+            CuteUI.LabelCenter(r.center.x, r.y + 78, $"부른 사람 {served}명 · 가장 긴 연속 {bestStreak}명 · 지나간 사람 {missed}명", CuteUI.Sub, true);
+            // 북적임 결과
+            string buzz = buzzGot <= 0 ? $"{PlayerStall.BuzzScore[1]}점부터 좌판이 북적여요"
+                : buzzSet ? $"좌판 북적임 {buzzGot}단계 · {PlayerStall.BuzzHours:0}시간 동안 {PlayerStall.BuzzEffect(buzzGot)} 팔려요"
+                : $"지금 북적임 {buzzBefore}단계가 더 커서 그대로 둬요";
+            CuteUI.LabelCenter(r.center.x, r.y + 102, buzz, buzzGot > 0 && buzzSet ? CuteUI.Up : CuteUI.Sub, true, buzzGot > 0 && buzzSet);
+            CuteUI.LabelCenter(r.center.x, r.y + 118, "(값은 그대로 장터 시세)", CuteUI.Sub, true);
             // 꾸미기: 이번에 열린 것 · 다음 것
             string unlocked = StallDeco.NewlyUnlocked(bestBefore, Mathf.Max(score, bestBefore));
             string next = StallDeco.NextGoal(Mathf.Max(score, bestBefore));
-            if (unlocked != null) CuteUI.LabelCenter(r.center.x, r.y + 126, $"좌판에 {unlocked}이 달렸어요!", CuteUI.Up, false, true);
-            else if (next != null) CuteUI.LabelCenter(r.center.x, r.y + 126, next, CuteUI.Sub, true);
+            if (unlocked != null) CuteUI.LabelCenter(r.center.x, r.y + 140, $"좌판에 {unlocked}이 달렸어요!", CuteUI.Up, false, true);
+            else if (next != null) CuteUI.LabelCenter(r.center.x, r.y + 140, next, CuteUI.Sub, true);
             var b = new Rect(r.center.x - 50, r.yMax - 32, 100, 22);
             if (CuteUI.Button(b, "닫기")) Shut();
         }
     }
 
-    /// <summary>11/19 손님 맞이 최고 점수로 열리는 좌판 꾸미기 (돈·거래와 상관없는 순수 보상). 문턱을 넘으면 맵 위 내 좌판에 달린다</summary>
+    /// <summary>11/19 손님 부르기 최고 점수로 열리는 좌판 꾸미기 (돈·거래와 상관없는 순수 보상). 문턱을 넘으면 맵 위 내 좌판에 달린다</summary>
     public static class StallDeco
     {
         public const int Lantern = 150, Flag = 350;

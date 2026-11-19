@@ -33,7 +33,7 @@ namespace PocketCaravan
                 if (mv.y != 0) scroll.y = Mathf.Max(0f, scroll.y - mv.y * 40f);
             }
         }
-        static readonly string[] LogTabs = { "의뢰", "성장·시설", "주변 거래처" };
+        static readonly string[] LogTabs = { "의뢰", "성장", "마을 시설", "주변 거래처" };   // 11/19 은샘: 마을 시설을 따로
         void CloseLog() { logOpen = false; JournalOpen = false; UIState.Release(this); }
         /// <summary>11/18 여정 수첩이 열려 있다 (튜토리얼: 열고 → 목록 보고 → 닫으면 끝)</summary>
         public static bool JournalOpen { get; private set; }
@@ -129,10 +129,10 @@ namespace PocketCaravan
         }
 
         // 11/08 은샘: 여정 수첩을 장부·게시판과 같은 모양으로 (아이콘 탭 + 종이 칸 + 카드).
-        // 의뢰 = 할 일·보상을 한눈에, 비면 다음에 할 만한 일. 성장 = 다음 신용까지 막대와 열리는 시설. 거래처 = 거리·특산품·시세 기록.
+        // 의뢰 = 할 일·보상을 한눈에, 비면 다음에 할 만한 일. 성장 = 운반 수단·다음 신용까지 막대와 열리는 것. 마을 시설 = 시설 목록(11/19 따로). 거래처 = 거리·특산품·시세 기록.
         float logContentH;
         static Vector2 logOrigin;   // 수첩 목록 칸 왼쪽 위 (그룹 안 자리 → 화면 자리)
-        static readonly CuteUI.Pic[] LogPics = { CuteUI.Pic.Scroll, CuteUI.Pic.Star4, CuteUI.Pic.Pin };
+        static readonly CuteUI.Pic[] LogPics = { CuteUI.Pic.Scroll, CuteUI.Pic.Star4, CuteUI.Pic.Compass, CuteUI.Pic.Pin };
 
         void DrawLog(QuestManager qm)
         {
@@ -161,7 +161,7 @@ namespace PocketCaravan
             GUI.BeginGroup(area);
             logOrigin = area.position;
             float cw = area.width - (logContentH > area.height ? 7 : 0);
-            float end = logTab == 0 ? DrawQuests(qm, gm, -scroll.y, cw, area.height) : logTab == 1 ? DrawGrowth(gm, -scroll.y, cw) : DrawTowns(gm, -scroll.y, cw);
+            float end = logTab == 0 ? DrawQuests(qm, gm, -scroll.y, cw, area.height) : logTab == 1 ? DrawGrowth(gm, -scroll.y, cw) : logTab == 2 ? DrawFacilities(gm, -scroll.y, cw) : DrawTowns(gm, -scroll.y, cw);
             logContentH = end + scroll.y;
             GUI.EndGroup();
         }
@@ -360,7 +360,7 @@ namespace PocketCaravan
             return y + 30;
         }
 
-        // ---------------- 성장·시설 ----------------
+        // ---------------- 성장 (11/19 마을 시설은 따로 탭) ----------------
         /// <summary>
         /// 11/19 은샘 "마일스톤은 여정 수첩에": 운반 수단 카드. 위 줄 단계 칩(등짐 › 손수레 › 짐말 › 마차, 가진 것 ✓ · 다음 것 강조),
         /// 아래 줄 다음 목표와 돈 막대 (다 모이면 "살 수 있어요!") · 파는 장터. 마차까지 샀으면 "운반 수단을 다 모았어요".
@@ -407,7 +407,7 @@ namespace PocketCaravan
                 if (p.stallEarned > 0) CuteUI.LabelRight(w - 10, y + 33, $"판 돈 {p.stallEarned}냥", CuteUI.Up, true, true);
                 CuteUI.Bar(new Rect(44, y + 42, w - 54, 6), PlayerStall.Weight(p) / PlayerStall.Capacity, CuteUI.Sell, CuteUI.SellSoft);
                 CuteUI.Icon(CuteUI.Pic.Pin, 44, y + 51, 1, CuteUI.Sub);
-                string tip = PlayerStall.Count(p) == 0 ? "좌판이 비었어요. 들러서 짐을 올려 두면 저절로 팔려요" : p.stallEarned > 0 ? "판 돈은 좌판에 말 걸어 받아요" : "떠나 있어도 한 시간마다 조금씩 팔려요 · 손님 맞이 놀이";
+                string tip = PlayerStall.Count(p) == 0 ? "좌판이 비었어요. 들러서 짐을 올려 두면 저절로 팔려요" : p.stallEarned > 0 ? "판 돈은 좌판에 말 걸어 받아요" : (PlayerStall.BuzzLevel(gm) > 0 ? $"북적임 {PlayerStall.BuzzLevel(gm)}단계 · 한 시간마다 더 자주 팔려요" : "떠나 있어도 한 시간마다 조금씩 팔려요 · 손님 부르기로 더 자주");
                 CuteUI.Label(53, y + 55, TradeLedgerUI.Fit(tip, w - 64, true, false), CuteUI.Sub, true);
                 return y + ch + 8;
             }
@@ -503,8 +503,16 @@ namespace PocketCaravan
                 CuteUI.Label(54, y + 33, "물량·귀환품·길을 바꿔 더 벌어 보세요", CuteUI.Sub, true);
             }
             y += ch + 8;
+            return y;
+        }
 
-            // 마을별 시설
+        /// <summary>11/19 은샘 "마을 시설을 따로": 이 맵에서 갈 수 있는 마을의 시설 (성장 탭에서 떼어 냄)</summary>
+        float DrawFacilities(GameManager gm, float y, float w)
+        {
+            var p = gm.Player;
+            var map = MapRoot.Current;
+            var towns = JourneyGuide.Destinations(gm.Db, map != null ? map.region : null, WorldIndex.Get(), map != null ? map.mapId : null);
+            float start = y;
             foreach (var town in towns)
             {
                 var list = new List<TownFacility>();
@@ -526,6 +534,7 @@ namespace PocketCaravan
                 }
                 y += 4;
             }
+            if (y == start) { CuteUI.LabelCenter(w / 2f, y + 40, "주변에 쓸 수 있는 시설이 없어요", CuteUI.Text, true, true); y += 60; }
             return y;
         }
 
@@ -578,7 +587,7 @@ namespace PocketCaravan
                     ix -= 18;
                     TradeLedgerUI.ItemIcon(mine[k], ix, y + 5, 1);
                     var ir = new Rect(ix, y + 5, 16, 16);
-                    if (ir.Contains(Event.current.mousePosition)) { hoverItem = mine[k]; hoverRect = ir; tipText = null; }
+                    if (ir.Contains(Event.current.mousePosition)) { hoverItem = mine[k]; hoverRect = ir; tipText = $"특산 {mine[k].displayName} · 이 마을에서 나서 싸게 살 수 있어요"; }   // 11/19 은샘: 아이콘 뜻을 마우스 오버로
                 }
                 if (open) CuteUI.Wrap(10, y + 25, w - 20, note, CuteUI.Sub, true);
                 if (note != null && CuteUI.Hit(new Rect(0, y, w, 26), GUIContent.none, GUIStyle.none))
@@ -590,7 +599,7 @@ namespace PocketCaravan
             }
             if (hoverItem != null || tipText != null)   // 카드보다 위에 그리도록 다 그린 뒤
             {
-                string nm = hoverItem != null ? hoverItem.displayName : tipText;
+                string nm = tipText ?? hoverItem.displayName;
                 float tw = CuteUI.Width(nm, true) + 12f;
                 var tip = new Rect(Mathf.Round(Mathf.Clamp(hoverRect.center.x - tw / 2f, 2f, w - tw - 2f)), hoverRect.y - 17f, tw, 15f);
                 CuteUI.Box(tip, 6, CuteUI.Paper, CuteUI.Ink, 1, 1);

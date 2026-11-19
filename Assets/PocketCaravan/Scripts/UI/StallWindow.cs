@@ -6,7 +6,7 @@ namespace PocketCaravan
     /// <summary>
     /// 11/19 내 좌판 창 (PlayerStall). 맵 위 내 좌판에 말을 걸면 열린다.
     /// 위: 판 돈 [받기] · 진열 무게 · 지금까지 판 개수. 왼쪽: 진열한 물건(지금 이 장터 값, [내리기]). 오른쪽: 내 짐의 교역품([올리기] · [모두]).
-    /// 아래: [손님 맞이] (놀이, StallRush · 값은 시세 그대로) + 도움말. 처음 열면 네 부분을 튜토리얼처럼 하나씩 밝힌다 (TutorialSpot "stall.*").
+    /// 아래: [손님 부르기] (놀이, StallRush · 점수로 12시간 북적임) + 도움말. 처음 열면 네 부분을 튜토리얼처럼 하나씩 밝힌다 (TutorialSpot "stall.*").
     /// </summary>
     public sealed class StallWindow : MonoBehaviour
     {
@@ -38,7 +38,7 @@ namespace PocketCaravan
 
         void Update()
         {
-            if (!open || Time.frameCount == openedFrame || StallRush.IsOpen || Time.frameCount == StallRush.ClosedFrame) return;   // 손님 맞이를 닫은 그 키로 좌판 창까지 닫지 않게
+            if (!open || Time.frameCount == openedFrame || StallRush.IsOpen || Time.frameCount == StallRush.ClosedFrame) return;   // 손님 부르기를 닫은 그 키로 좌판 창까지 닫지 않게
             if (TutorialSpot.HoldsWindow) return;   // 처음 설명 중엔 키로 닫지 않는다
             if (InputReader.CancelPressed() || InputReader.InteractPressed()) Close();
         }
@@ -85,24 +85,28 @@ namespace PocketCaravan
             DrawShelf(gm, p, left);
             DrawCargo(gm, p, right);
 
-            // 아래: 손님 맞이 + 도움말
+            // 아래: 손님 부르기 + 도움말
             var rush = new Rect(r.x + 14, r.yMax - 46, 150, 22);
             ScreenZones.MarkSpot("stall.rush", rush);
             string why = RushDenial(gm);
-            if (why == null) { if (CuteUI.Button(rush, "손님 맞이", CuteUI.Pic.People) && !StallRush.IsOpen) StallRush.Open(); }
-            else { CuteUI.Box(rush, 8, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter(rush.center.x, rush.center.y, "손님 맞이", CuteUI.Zero, false, true); }
-            string tip = why ?? (StallRush.Best > 0 ? $"최고 {StallRush.Best}점 · " : "") + "손님에게 바라는 물건을 건네는 놀이예요 (값은 시세 그대로)";
+            if (why == null) { if (CuteUI.Button(rush, "손님 부르기", CuteUI.Pic.People) && !StallRush.IsOpen) StallRush.Open(); }
+            else { CuteUI.Box(rush, 8, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter(rush.center.x, rush.center.y, "손님 부르기", CuteUI.Zero, false, true); }
+            int buzz = PlayerStall.BuzzLevel(gm);
+            string buzzText = buzz > 0 ? $"북적임 {buzz}단계 · {Mathf.Max(1, Mathf.CeilToInt(PlayerStall.BuzzHoursLeft(gm) - 0.05f))}시간 남음 · {PlayerStall.BuzzEffect(buzz)} 팔려요" : null;
+            string tip = why != null ? (buzzText != null ? why + " · " + buzzText : why)   // 밤에도 남은 북적임은 보이게
+                : buzzText ?? "지나가는 사람을 불러 좌판을 북적이게 해요 (12시간 더 자주 팔림)";
             CuteUI.Label(rush.xMax + 10, rush.center.y, TradeLedgerUI.Fit(tip, r.xMax - rush.xMax - 26, true, false), CuteUI.Sub, true);
             string note = string.IsNullOrEmpty(message) ? "올려 둔 물건은 내가 없어도 한두 시간마다 이 장터 시세로 팔려요" : message;
             CuteUI.Icon(CuteUI.Pic.Bulb, r.x + 16, r.yMax - 22);
             CuteUI.Label(r.x + 27, r.yMax - 17, TradeLedgerUI.Fit(note, w - 44, true, false), string.IsNullOrEmpty(message) ? CuteUI.Sub : CuteUI.Text, true);
         }
 
-        /// <summary>손님 맞이를 못 하는 까닭 (할 수 있으면 null)</summary>
+        /// <summary>손님 부르기를 못 하는 까닭 (할 수 있으면 null)</summary>
         public static string RushDenial(GameManager gm)
         {
             var p = gm.Player;
-            if (PlayerStall.Count(p) <= 0) return "물건을 올려 두면 손님이 와요";
+            if (PlayerStall.Count(p) <= 0) return "물건을 올려 두면 손님을 부를 수 있어요";
+            if (Loan.Late(p)) return "외상 연체 중엔 좌판이 쉬어요";
             int hr = gm.Clock.Hour;
             if (hr < 7 || hr >= 21) return "밤에는 손님이 없어요 (아침 7시부터)";
             return null;

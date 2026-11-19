@@ -219,6 +219,7 @@ namespace PocketCaravan
             if (loanOn && p.debt > 0 && marketTab != 3 && (p.debtLate || Loan.HoursLeft(p, gm.Clock) < 12f))
                 CuteUI.Circle(lockedTabX + w3 - 5, c.y - 19, 7, CuteUI.Alert, CuteUI.Ink);   // 기한이 가깝거나 연체면 빨간 점
             ScreenZones.MarkSpot("market.loanTab", new Rect(lockedTabX, c.y - 17, w3, 17));
+            if (loanOn && marketTab != 3) ScreenZones.MarkSpot("market.loanOpen", new Rect(lockedTabX, c.y - 17, w3, 17));   // 처음 풀렸을 때 탭을 밝힌다
             if (marketTab == 2 && town.vehiclesForSale.Count == 0) SetTab(0);
             if (marketTab == 3 && !loanOn) SetTab(0);
 
@@ -434,7 +435,7 @@ namespace PocketCaravan
             CuteUI.LabelCenter(d.x + 71, qy + 9, max > 0 ? want.ToString() : "0", CuteUI.Text, false, true);
             if (CuteUI.SoftButton(plus, "+")) { customQuantity = Mathf.Min(Mathf.Max(1, max), want + 1); quantityMode = 3; }
             // 11/19 [외상 쓰기] (신용 4단계부터): 켜면 가진 돈보다 더 살 때 모자란 만큼 외상. 부담·기한이 싫으면 꺼 둔다
-            if (!selling && Loan.Unlocked(p))
+            if (!selling && Loan.Shown(p))   // [외상] 탭에서 "사기 칸에 보이기"를 켰을 때만
             {
                 bool on = Loan.On(p);
                 var cr = new Rect(d.x + 164, qy, 74, 18);
@@ -483,7 +484,7 @@ namespace PocketCaravan
             else
             {
                 string why = est.blocker ?? "";
-                if (!selling && Loan.Unlocked(p) && !Loan.On(p) && Loan.Room(p) > 0 && why == "매입 자금이 부족합니다.") why += " 외상 쓰기를 켜면 살 수 있어요.";
+                if (!selling && Loan.Unlocked(p) && !Loan.On(p) && Loan.Room(p) > 0 && why == "매입 자금이 부족합니다.") why += Loan.Shown(p) ? " 외상 쓰기를 켜면 살 수 있어요." : " [외상] 탭에서 [외상 쓰기]를 보이게 하면 살 수 있어요.";
                 CuteUI.Wrap(d.x, sy - 6, d.width, why, CuteUI.Down, true);
             }
 
@@ -782,11 +783,15 @@ namespace PocketCaravan
             // 11/19 연체로 점수가 깎이면 단계는 그대로여도 한도는 점수로 준다 → 까닭을 보인다
             if (Credit.LevelOfPoints(p.credit) < Credit.Level(p))
             { y += 13; CuteUI.Label(lx, y, "깎인 신용 점수 때문에 한도가 줄었어요", CuteUI.Down, true); }
-            // 외상 쓰기 (사기 칸의 것과 같은 설정)
+            // 11/19 은샘: 사기 칸에 [외상 쓰기]를 보일지 (켜면 사기 칸에서 눌러 쓴다)
             y += 18;
-            bool on = Loan.On(p);
-            bool now = CuteUI.Check(new Rect(lx, y - 6, 120, 14), on, "사기 칸에서 외상 쓰기");
-            if (now != on && !HaggleDuel.IsOpen) { Loan.SetOn(now); Sfx.Play("open", .4f); message = ToggleText(p, now); }
+            bool shown = Loan.Shown(p);
+            bool nowShown = CuteUI.Check(new Rect(lx, y - 6, 150, 14), shown, "사기 칸에 [외상 쓰기] 보이기");
+            if (nowShown != shown && !HaggleDuel.IsOpen)
+            {
+                Loan.SetShown(nowShown); Sfx.Play("open", .4f);
+                message = nowShown ? "사기 칸에 [외상 쓰기]가 생겼어요. 켜면 모자란 만큼 외상으로 사요" : "사기 칸에서 외상을 숨겼어요 · 가진 돈으로만 사요";
+            }
             // 갚기
             float py = c.yMax - 46;
             CuteUI.Box(new Rect(lx - 6, py - 8, lw + 12, 40), 7, CuteUI.Paper2, CuteUI.Line);
@@ -798,9 +803,17 @@ namespace PocketCaravan
             CuteUI.Label(rx, ry + 5, "외상 규칙", CuteUI.Text, true, true);
             ry += 15;
             float lh = CuteUI.WrapWords(0, 0, 999, "가", CuteUI.Sub, true, false), bottom = c.yMax - 10;
+            bool ruled = false;
             foreach (var line in LoanRules)
             {
-                var col = line.StartsWith("연체") ? CuteUI.Down : CuteUI.Sub;
+                bool lateRule = line.StartsWith("연체");
+                if (lateRule && !ruled)
+                {   // 11/19 은샘: 외상 규칙 밑에 가로줄, 그 밑에 연체 규칙
+                    ruled = true;
+                    if (ry + 9 + CuteUI.WrapWords(rx + 8, ry, rw - 8, line, CuteUI.Down, true, false) > bottom) break;   // 줄만 남고 아래가 비지 않게
+                    ry += 4; CuteUI.Fill(new Rect(rx, ry, rw - 4, 1), CuteUI.Line); ry += 5;
+                }
+                var col = lateRule ? CuteUI.Down : CuteUI.Sub;
                 float h = CuteUI.WrapWords(rx + 8, ry, rw - 8, line, col, true, false);
                 if (ry + h > bottom) break;   // 칸을 넘치면 그 뒤는 줄인다 (작은 화면)
                 CuteUI.Label(rx, ry + lh / 2f, "·", col, true, true);
@@ -814,7 +827,7 @@ namespace PocketCaravan
 
         static readonly string[] LoanRules =
         {
-            "외상 쓰기를 켜면 모자란 만큼 외상으로 사요",
+            "사기 칸 [외상 쓰기]를 켜면 모자란 만큼 외상으로 사요",
             "한도는 점수로: 4단계 300 · 5단계 500 · 6단계 800",
             "이자 없이 사흘 안에 아무 장터에서 갚아요",
             "기한이 하루도 안 남으면 더 달 수 없어요",
@@ -869,12 +882,11 @@ namespace PocketCaravan
         float DrawStallButton(PlayerState p, float right, float fy)
         {
             if (!PlayerStall.Unlocked(p) && !PlayerStall.Has(p)) return right;
-            bool here = PlayerStall.At(p, town);
-            string label = here ? "내 좌판이 있는 장터" : stallConfirm ? $"정말 열기 ({PlayerStall.Price}냥)" : PlayerStall.Has(p) ? "좌판 옮겨 열기" : "좌판 열기";
+            if (PlayerStall.At(p, town)) return right;   // 11/19 UI 점검 2: 좌판 상태는 좌판 창·수첩에. 아래 줄엔 할 수 있는 일(열기·옮기기)만
+            string label = stallConfirm ? $"정말 열기 ({PlayerStall.Price}냥)" : PlayerStall.Has(p) ? "좌판 옮겨 열기" : "좌판 열기";
             float bw = CuteUI.Width(label, true) + 18;
             var b = new Rect(right - bw, fy - 9, bw, 18);
             ScreenZones.MarkSpot("market.stall", b);
-            if (here) { CuteUI.Box(b, 7, CuteUI.SellSoft, CuteUI.Sell); CuteUI.LabelCenter(b.center.x, b.center.y, label, CuteUI.Sell, true, true); return right - bw - 8; }
             string why = PlayerStall.Denial(p, town);
             if (CuteUI.SoftButton(b, label) && !HaggleDuel.IsOpen)
             {
@@ -901,7 +913,7 @@ namespace PocketCaravan
             if(denial!=null){message=denial;Sfx.Play("deny", .55f);return;}
             int price = m.BuyPrice(item,haggle);
             if (!m.CanBuy(item)) { message = "재고가 없습니다."; Sfx.Play("deny", .55f); return; }
-            if (Loan.BuyBudget(p) < price) { message = Loan.Unlocked(p) ? "돈과 외상 한도가 모자랍니다." : "돈이 모자랍니다."; Sfx.Play("deny", .55f); return; }
+            if (Loan.BuyBudget(p) < price) { message = Loan.On(p) && !Loan.CashOnly ? "돈과 외상 한도가 모자랍니다." : "돈이 모자랍니다."; Sfx.Play("deny", .55f); return; }
             if (!p.CanCarry(item)) { message = "더 실을 수 없습니다."; Sfx.Play("deny", .55f); return; }
             if (!Loan.Pay(p, GameManager.I.Clock, price)) { message = "돈이 모자랍니다."; Sfx.Play("deny", .55f); return; }   // 가진 돈 먼저, 모자란 만큼 외상
             p.cargo.Add(item, 1, price);
