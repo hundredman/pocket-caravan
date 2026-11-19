@@ -80,9 +80,9 @@ namespace PocketCaravan
                 }
             }
             shelf.Clear();
-            var rows = new List<KeyValuePair<ItemData, int>>(p.stallStock.Items);
-            rows.Sort((a, b) => b.Value.CompareTo(a.Value));
-            for (int i = 0; i < rows.Count && shelf.Count < 4; i++) if (rows[i].Key != null && rows[i].Value > 0) shelf.Add(rows[i].Key);
+            // 11/19 은샘: 진열한 물건이 아니라 아무 교역품 넷 (진열이 하나뿐이면 늘 같은 번호라 너무 쉬웠다)
+            var pool = gm.Db.items.FindAll(it => it != null && !it.questItem && it.icon != null);
+            for (int i = 0; i < 4 && pool.Count > 0; i++) { int k = Random.Range(0, pool.Count); shelf.Add(pool[k]); pool.RemoveAt(k); }
             guests.Clear();
             score = served = missed = streak = bestStreak = buzzGot = 0; buzzSet = false; pop = ""; shoutItem = null; shoutAt = -9f;
             bestBefore = Best; buzzBefore = PlayerStall.BuzzLevel(gm); epoch = gm.GameEpoch;
@@ -238,7 +238,7 @@ namespace PocketCaravan
                 if (bestBefore > 0) CuteUI.LabelRight(r.xMax - 16, r.yMax - 19, $"최고 {bestBefore}점", CuteUI.Sub, true);
             }
             else CuteUI.LabelCenter(r.center.x, r.yMax - 12, $"번호 키 1~{shelf.Count} 또는 칸 클릭 · Esc 그만", CuteUI.Sub, true);
-            if (phase == Phase.Play) DrawBuzzBar(new Rect(r.x + 60, r.yMax - 36, r.width - 120, 8));
+            if (phase == Phase.Play) DrawBuzzBar(new Rect(r.x + 16, r.yMax - 36, r.width - 32, 8));
 
             // 떠오르는 글 (점수 · 까닭)
             float pa = 1f - Mathf.Clamp01((clock - popAt) / 1.1f);
@@ -343,19 +343,32 @@ namespace PocketCaravan
         }
 
         /// <summary>북적임 막대: 점수가 단계 문턱(50·120·200)을 넘을수록 찬다</summary>
-        void DrawBuzzBar(Rect bar)
+        /// <summary>점수 → 막대 위치. 11/19 은샘 "1·2·3 눈금 간격을 같게, 3 뒤에 조금 여유": 단계마다 막대의 1/4씩, 3단계 뒤 1/4은 넘친 점수</summary>
+        static float BuzzFill(int score)
         {
-            int top = PlayerStall.BuzzScore[PlayerStall.BuzzScore.Length - 1];
-            int lv = PlayerStall.BuzzOfScore(score);
-            CuteUI.Label(bar.x - 50, bar.center.y, "북적임", CuteUI.Sub, true, true);
-            CuteUI.Bar(bar, Mathf.Clamp01(score / (float)top), CuteUI.Sell, CuteUI.SellSoft);
-            for (int i = 1; i < PlayerStall.BuzzScore.Length; i++)
+            var t = PlayerStall.BuzzScore; int n = t.Length - 1;   // 문턱 셋
+            for (int i = 1; i <= n; i++)
+                if (score < t[i]) return (i - 1 + (score - t[i - 1]) / (float)(t[i] - t[i - 1])) / (n + 1);
+            float over = t[n] - t[n - 1];   // 3단계 뒤: 앞 칸과 같은 폭만큼 더 차면 꽉
+            return Mathf.Clamp01((n + Mathf.Clamp01((score - t[n]) / over)) / (n + 1));
+        }
+
+        /// <summary>북적임 막대: [북적임] [막대 · 눈금 1 2 3] [n단계] 를 한 덩어리로 창 가운데에</summary>
+        void DrawBuzzBar(Rect area)
+        {
+            int lv = PlayerStall.BuzzOfScore(score), n = PlayerStall.BuzzScore.Length - 1;
+            float lw = CuteUI.Width("북적임", true, true), rw = CuteUI.Width("3단계", true, true), bw = Mathf.Min(220f, area.width - lw - rw - 24);
+            float x0 = Mathf.Round(area.center.x - (lw + 8 + bw + 8 + rw) / 2f);
+            var bar = new Rect(x0 + lw + 8, area.y, bw, area.height);
+            CuteUI.Label(x0, bar.center.y, "북적임", CuteUI.Sub, true, true);
+            CuteUI.Bar(bar, BuzzFill(score), CuteUI.Sell, CuteUI.SellSoft);
+            for (int i = 1; i <= n; i++)
             {
-                float x = Mathf.Round(bar.x + bar.width * PlayerStall.BuzzScore[i] / (float)top);
-                if (i < PlayerStall.BuzzScore.Length - 1) CuteUI.Fill(new Rect(x - 1, bar.y - 2, 2, bar.height + 4), CuteUI.Ink);
-                CuteUI.LabelCenter(Mathf.Min(x, bar.xMax - 4), bar.y - 7, i.ToString(), lv >= i ? CuteUI.Sell : CuteUI.Zero, true, true);
+                float x = Mathf.Round(bar.x + bar.width * i / (n + 1f));
+                CuteUI.Fill(new Rect(x - 1, bar.y - 2, 2, bar.height + 4), CuteUI.Ink);
+                CuteUI.LabelCenter(x, bar.y - 7, i.ToString(), lv >= i ? CuteUI.Sell : CuteUI.Zero, true, true);
             }
-            CuteUI.Label(bar.xMax + 8, bar.center.y, lv > 0 ? $"{lv}단계" : "", CuteUI.Sell, true, true);
+            if (lv > 0) CuteUI.Label(bar.xMax + 8, bar.center.y, $"{lv}단계", CuteUI.Sell, true, true);
         }
 
         void DrawDone(Rect r)
