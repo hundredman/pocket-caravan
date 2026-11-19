@@ -23,7 +23,7 @@ namespace PocketCaravan
         public int creditPoints;  // 11/19 신용 점수 (credit 칸은 옛 빌드도 읽게 단계를 그대로 쓴다)
         public int creditFloor;   // 11/19 한 번 오른 신용 단계
         public int creditVersion;
-        public int debt; public float debtDue;   // 11/19 외상 (옛 저장 0 = 없음)
+        public int debt; public float debtDue; public bool debtLate;   // 11/19 외상 (옛 저장 0 = 없음)
         public string stallTown;                 // 11/19 내 좌판 (옛 저장 비어 있음 = 없음)
         public List<string> stallItems = new List<string>();
         public List<int> stallCounts = new List<int>();

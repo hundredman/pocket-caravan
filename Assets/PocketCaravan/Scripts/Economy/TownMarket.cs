@@ -51,7 +51,7 @@ namespace PocketCaravan
             openedFrame = Time.frameCount;
             message = "";
             soldThisVisit = revenueThisVisit = 0; profitThisVisit = 0;
-            deal = null;
+            deal = null; loanNoticeSeen = Loan.NoticeId;
             // 팔 물건이 있으면 팔기부터 (상인에게 가면 먼저 팔고 그 돈으로 산다)
             bool canSell = false;
             foreach (var item in TabItems(GameManager.I.Player, true)) if (!item.questItem) { canSell = true; break; }
@@ -63,7 +63,7 @@ namespace PocketCaravan
         void Close()
         {
             open = false;
-            deal = null; loanOpen = false; stallConfirm = false;
+            deal = null; stallConfirm = false;
             UIState.Release(this);
         }
 
@@ -180,7 +180,7 @@ namespace PocketCaravan
             LoadBar(new Rect(x + 13, hy - 4, 56, 8), p.TotalWeight, loadPreview, p.Capacity);
             x = CuteUI.Label(x + 73, hy, $"{p.TotalWeight:0.#}/{p.Capacity:0.#}", CuteUI.Sub, true) + 10;
             loadPreview = 0f;   // 아래 거래 칸이 이번 화면에 다시 채운다
-            if (gm.Clock.IsMarketDay && !loanOpen)   // 외상 단추를 펼치면 그 자리를 쓴다
+            if (gm.Clock.IsMarketDay)
             {
                 float bw = CuteUI.Width("장날", true, true) + 12;
                 CuteUI.Box(new Rect(x, hy - 7, bw, 14), 6, CuteUI.SellSoft, CuteUI.Sell);
@@ -411,7 +411,31 @@ namespace PocketCaravan
             CuteUI.Box(new Rect(d.x + 53, qy, 36, 18), 5, CuteUI.White, CuteUI.Ink);
             CuteUI.LabelCenter(d.x + 71, qy + 9, max > 0 ? want.ToString() : "0", CuteUI.Text, false, true);
             if (CuteUI.SoftButton(plus, "+")) { customQuantity = Mathf.Min(Mathf.Max(1, max), want + 1); quantityMode = 3; }
-            if (CuteUI.SoftButton(new Rect(d.x + 116, qy, 38, 18), "최대")) quantityMode = 2;
+            // 11/19 [외상 쓰기] (신용 4단계부터): 켜면 가진 돈보다 더 살 때 모자란 만큼 외상. 부담·기한이 싫으면 꺼 둔다
+            if (!selling && Loan.Unlocked(p))
+            {
+                bool on = Loan.On(p);
+                var cr = new Rect(d.x + 164, qy, 74, 18);
+                ScreenZones.MarkSpot("market.loan", cr);
+                bool now = CuteUI.Check(cr, on, "외상 쓰기");
+                if (now != on && !HaggleDuel.IsOpen)
+                {
+                    Loan.SetOn(now); Sfx.Play("open", .4f);
+                    message = now ? (Loan.Room(p) > 0 ? $"외상 쓰기 켬 · 가진 돈보다 더 사면 모자란 만큼 외상 (더 달 수 있는 {Loan.Room(p)}냥 · 사흘 안에 갚기)" : LoanHint(gm, p))
+                                  : "외상 쓰기 끔 · 가진 돈 안에서만 사요";
+                }
+            }
+            if (CuteUI.SoftButton(new Rect(d.x + 116, qy, 38, 18), "최대"))
+            {
+                // 11/19 외상: 살 때 [최대]는 가진 돈까지만 (더 사려면 [+]로 늘려 외상으로). 팔 때는 그대로
+                if (!selling && Loan.On(p))
+                {
+                    Loan.CashOnly = true;
+                    int cashMax; try { cashMax = m.Preview(item, p, MarketState.MaxBatch, false, haggle).count; } finally { Loan.CashOnly = false; }
+                    customQuantity = Mathf.Max(1, cashMax); quantityMode = 3;
+                }
+                else quantityMode = 2;
+            }
 
             var est = m.Preview(item, p, haggle != 0 ? deal.count : want, selling, haggle);
             // 흥정을 열면 합계·거래 버튼 자리에 3단계를 띄운다 (겹친 버튼이 눌리지 않게 거래 버튼은 그리지 않는다)
@@ -423,6 +447,8 @@ namespace PocketCaravan
                 CuteUI.Icon(CuteUI.Pic.Coin7, d.x + 30, sy - 4);
                 float ex = d.x + 41;
                 ex = CuteUI.Label(ex, sy, $"{est.total}냥", CuteUI.Text, false, true);
+                int onCredit = selling ? 0 : Loan.CreditPart(p, est.total);
+                if (onCredit > 0) ex = CuteUI.Label(ex + 6, sy, $"그중 외상 {onCredit}냥", CuteUI.Interact, true, true);   // 11/19 가진 돈보다 많이 사면 모자란 만큼 외상
                 if (selling && est.profit != 0) CuteUI.GainBadge(ex + 8 + CuteUI.Width(CuteUI.GainText(est.profit), true, true) + 10, sy, est.profit);
                 // 11/15 짐 무게 (UT 10번): 사고팔면 짐이 어떻게 되는지
                 float delta = (selling ? -1f : 1f) * item.weight * est.count, after = p.TotalWeight + delta;
@@ -433,11 +459,17 @@ namespace PocketCaravan
                 LoadBar(new Rect(d.xMax - ltw - 60, sy - 4, 54, 8), p.TotalWeight, delta, p.Capacity);
                 CuteUI.Icon(CuteUI.Pic.Sack, d.xMax - ltw - 73, sy - 4);
             }
-            else CuteUI.Wrap(d.x, sy - 6, d.width, est.blocker ?? "", CuteUI.Down, true);
+            else
+            {
+                string why = est.blocker ?? "";
+                if (!selling && Loan.Unlocked(p) && !Loan.On(p) && Loan.Room(p) > 0 && why == "매입 자금이 부족합니다.") why += " [외상 쓰기]를 켜면 살 수 있어요.";
+                CuteUI.Wrap(d.x, sy - 6, d.width, why, CuteUI.Down, true);
+            }
 
             // 큰 버튼
             var btn = new Rect(d.x, sy + 16, d.width, 26);
-            string label = est.count > 0 ? $"{est.count}개 {(selling ? "팔기" : "사기")}" : selling ? "팔 수 없어요" : "살 수 없어요";
+            int creditPart = selling || est.count <= 0 ? 0 : Loan.CreditPart(p, est.total);
+            string label = est.count > 0 ? (selling ? $"{est.count}개 팔기" : creditPart > 0 ? $"{est.count}개 사기 · 외상 {creditPart}냥" : $"{est.count}개 사기") : selling ? "팔 수 없어요" : "살 수 없어요";
             if (est.count > 0)
             {
                 ScreenZones.MarkSpot(selling ? "market.sell" : "market.buy", btn);
@@ -588,7 +620,7 @@ namespace PocketCaravan
             buyHaggled=false;
             if((haggle!=0 && estimate.count!=deal.count) || estimate==null || estimate.town!=town || estimate.count<1 || !estimate.Matches(m.Preview(estimate.item,p,estimate.count,estimate.selling,haggle)))
             { message="시세·잔고·화물이 달라졌습니다. 수량과 총액을 다시 확인하세요.";return 0; }
-            int completed=0,total=0;float basis=p.cargo.AverageCost(estimate.item);
+            int completed=0,total=0;float basis=p.cargo.AverageCost(estimate.item);int debtBefore=p.debt;
             for(int i=0;i<estimate.count;i++)
             {
                 int price=estimate.selling?m.SellPrice(estimate.item,haggle):m.BuyPrice(estimate.item,haggle);
@@ -600,7 +632,7 @@ namespace PocketCaravan
                 }
                 else
                 {
-                    if(!m.CanBuy(estimate.item) || p.money<price || !p.CanCarry(estimate.item))break;
+                    if(!m.CanBuy(estimate.item) || Loan.BuyBudget(p)<price || !p.CanCarry(estimate.item))break;
                     BuyHaggled(estimate.item,haggle);
                 }
                 completed++;total+=price;
@@ -610,7 +642,9 @@ namespace PocketCaravan
                 fxItem=estimate.item;fxCount=completed;fxTotal=total;fxSell=estimate.selling;fxAt=Time.unscaledTime;fxFrom=tradeBtn;   // 11/18 사고판 느낌
                 Sfx.Play("success",.55f);}
             string partial=completed<estimate.count?" · 도중 조건 변경으로 중단":"";
-            message=estimate.selling?$"{completed}개 판매 · {total}냥 · 매매 손익 {Signed(total-basis*completed)}냥{partial}":$"{completed}개 매입 · {total}냥 · 남은 돈 {p.money}냥{partial}";
+            message=estimate.selling?$"{completed}개 판매 · {total}냥 · 매매 손익 {Signed(total-basis*completed)}냥{partial}"
+                :p.debt>debtBefore?$"{completed}개 매입 · {total}냥 · 그중 외상 {p.debt-debtBefore}냥 (외상 모두 {p.debt}냥, {Loan.DueText(p,GameManager.I.Clock)}){partial}"
+                :$"{completed}개 매입 · {total}냥 · 남은 돈 {p.money}냥{partial}";
             return completed;
         }
 
@@ -697,51 +731,38 @@ namespace PocketCaravan
 
         // ---------------- 11/19 외상 (신용 4단계, Loan) · 좌판 열기 (신용 5단계, PlayerStall) ----------------
 
-        bool loanOpen, stallConfirm;
+        bool stallConfirm;
+        int loanNoticeSeen;
 
-        /// <summary>위 줄 오른쪽 "외상" 알약. 누르면 아래에 받기·갚기 칸</summary>
+        /// <summary>위 줄 오른쪽 "외상" 알약 (한도·남은 기한). 누르면 설명. 외상이 있으면 왼쪽에 [갚기]</summary>
         void DrawLoan(GameManager gm, PlayerState p, Rect r, float hy)
         {
-            if (!Loan.Unlocked(p) && p.debt <= 0) { loanOpen = false; return; }
-            // 펼치면 알약을 줄여 받기·갚기 단추 자리를 낸다 (기한은 아래 알림 줄에)
-            string t = loanOpen ? (p.debt > 0 ? $"외상 {p.debt}냥" : "외상") : p.debt > 0 ? $"외상 {p.debt}냥 · {Loan.DueText(p, gm.Clock)}" : $"외상 0/{Loan.Limit(p)}냥";
+            if (Loan.NoticeId != loanNoticeSeen) { loanNoticeSeen = Loan.NoticeId; message = Loan.Notice; }   // 연체 중 판 돈이 외상으로 갔으면 창 안에서도 보이게
+            if (!Loan.Unlocked(p)) return;
+            string t = p.debt > 0 ? $"외상 {p.debt}냥 · {Loan.DueText(p, gm.Clock)}" : $"외상 0/{Loan.Limit(p)}냥";
             float bw = Mathf.Round(CuteUI.Width(t, true, true) + 16);
             var b = new Rect(r.xMax - 52 - bw, hy - 9, bw, 18);
-            ScreenZones.MarkSpot("market.loan", b);
-            bool late = p.debt > 0 && Loan.HoursLeft(p, gm.Clock) < 12f;
+            bool late = p.debt > 0 && (p.debtLate || Loan.HoursLeft(p, gm.Clock) < 12f);
             CuteUI.Box(b, 7, late ? CuteUI.AlertSoft : CuteUI.Paper2, late ? CuteUI.Alert : CuteUI.KeyLine);
             CuteUI.LabelCenter(b.center.x, b.center.y, t, late ? CuteUI.Down : CuteUI.Text, true, true);
-            if (CuteUI.Hit(b, GUIContent.none, GUIStyle.none) && !HaggleDuel.IsOpen)
+            if (CuteUI.Hit(b, GUIContent.none, GUIStyle.none) && !HaggleDuel.IsOpen) { message = LoanHint(gm, p); Sfx.Play("open", .4f); }
+            if (p.debt <= 0) return;
+            // 외상이 있으면 알약 왼쪽에 [갚기] (가진 돈만큼)
+            string payText = p.money <= 0 ? "갚기" : p.money >= p.debt ? "다 갚기" : $"{p.money}냥 갚기";
+            float pw = Mathf.Round(CuteUI.Width(payText, true, true) + 18);
+            var pay = new Rect(b.x - 4 - pw, b.y, pw, 18);
+            if (p.money > 0)
             {
-                loanOpen = !loanOpen; Sfx.Play("open", .4f);
-                if (loanOpen) message = LoanHint(gm, p);
-            }
-            if (!loanOpen) return;
-            // 펼치면 같은 줄 알약 왼쪽에 받기·갚기 단추 (아래 칸에 겹치지 않게. 설명은 아래 알림 줄)
-            float bx = b.x - 6;
-            var pay = new Rect(bx - 62, b.y, 62, 18); bx = pay.x - 4;
-            if (p.debt > 0 && p.money > 0)
-            {
-                if (CuteUI.Button(pay, p.money >= p.debt ? "다 갚기" : $"{p.money}냥 갚기") && !HaggleDuel.IsOpen)
-                { int paid = Loan.Repay(p); message = p.debt <= 0 ? $"외상 {paid}냥을 다 갚았다." : $"외상 {paid}냥을 갚았다. 남은 외상 {p.debt}냥."; Sfx.Play("success", .6f); gm.SaveNow(); }
+                if (CuteUI.Button(pay, payText) && !HaggleDuel.IsOpen)
+                { int paid = Loan.Repay(p); message = p.debt <= 0 ? $"외상 {paid}냥을 다 갚았다. 다시 믿고 맡겨 줘요." : $"외상 {paid}냥을 갚았다. 남은 외상 {p.debt}냥."; Sfx.Play("success", .6f); gm.SaveNow(); }
             }
             else { CuteUI.Box(pay, 7, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter(pay.center.x, pay.center.y, "갚기", CuteUI.Zero, true); }
-            foreach (int amt in new[] { Loan.Step * 2, Loan.Step })
-            {
-                var ab = new Rect(bx - 66, b.y, 66, 18); bx = ab.x - 4;
-                if (Loan.Room(p) >= amt)
-                {
-                    if (CuteUI.SoftButton(ab, $"+{amt}냥 받기") && !HaggleDuel.IsOpen)
-                    { int got = Loan.Borrow(p, gm.Clock, amt); message = $"외상으로 {got}냥을 받았다 (모두 {p.debt}냥). {Loan.DueText(p, gm.Clock)}, 아무 장터에서 갚자."; Sfx.Play("coin"); gm.SaveNow(); }
-                }
-                else { CuteUI.Box(ab, 6, CuteUI.ZeroSoft, CuteUI.Line); CuteUI.LabelCenter(ab.center.x, ab.center.y, $"+{amt}냥", CuteUI.Zero, true); }
-            }
         }
 
         static string LoanHint(GameManager gm, PlayerState p) =>
-            Loan.Late(p) ? $"외상 {p.debt}냥 · {Loan.DueText(p, gm.Clock)} · 기한이 가까워 먼저 갚아야 더 받을 수 있어요"
-            : p.debt > 0 ? $"외상 {p.debt}냥 · {Loan.DueText(p, gm.Clock)} · 더 받을 수 있는 돈 {Loan.Room(p)}냥"
-                       : $"한도 {Loan.Limit(p)}냥 · 이자 없음 · 사흘 안에 아무 장터에서 갚기 (넘기면 신용 −{Loan.LatePoints}점)";
+            p.debtLate ? $"외상 {p.debt}냥이 연체 중이에요. 다 갚을 때까지 번 돈은 먼저 외상으로 가요"
+            : Loan.Room(p) <= 0 && p.debt > 0 ? $"외상 {p.debt}냥 · {Loan.DueText(p, gm.Clock)} · 기한이 가까워 더 달 수 없어요. 먼저 갚아요"
+            : $"살 때 [외상 쓰기]를 켜면 가진 돈보다 더 사고 모자란 만큼 외상으로 달아요 (더 달 수 있는 {Loan.Room(p)}냥 · 이자 없음 · 사흘 안에 갚기)";
 
         /// <summary>아래 줄 "좌판 열기" (신용 5단계부터 보임). 두 번 눌러야 연다 (1000냥이라). 그린 단추 왼쪽 x를 돌려준다</summary>
         float DrawStallButton(PlayerState p, float right, float fy)
@@ -779,9 +800,9 @@ namespace PocketCaravan
             if(denial!=null){message=denial;Sfx.Play("deny", .55f);return;}
             int price = m.BuyPrice(item,haggle);
             if (!m.CanBuy(item)) { message = "재고가 없습니다."; Sfx.Play("deny", .55f); return; }
-            if (p.money < price) { message = "돈이 모자랍니다."; Sfx.Play("deny", .55f); return; }
+            if (Loan.BuyBudget(p) < price) { message = Loan.Unlocked(p) ? "돈과 외상 한도가 모자랍니다." : "돈이 모자랍니다."; Sfx.Play("deny", .55f); return; }
             if (!p.CanCarry(item)) { message = "더 실을 수 없습니다."; Sfx.Play("deny", .55f); return; }
-            p.money -= price;
+            if (!Loan.Pay(p, GameManager.I.Clock, price)) { message = "돈이 모자랍니다."; Sfx.Play("deny", .55f); return; }   // 가진 돈 먼저, 모자란 만큼 외상
             p.cargo.Add(item, 1, price);
             m.RecordBuy(item, price);
             ReputationPricing.Bought(p,town,item,price,GameManager.I.Clock.TotalHours);

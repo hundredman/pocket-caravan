@@ -173,6 +173,7 @@ namespace PocketCaravan
             Clock.Tick(UIState.Blocking ? 0f : Time.deltaTime);
             ApplyDaylight();
             CreditLevelCheck();
+            Loan.Garnish(Player);   // 11/19 연체 중 들어온 돈은 먼저 외상으로
             // 11/18 윤채 ("알아서 저장이 되어야지"): 맵을 옮길 때·거래할 때·끌 때 말고도 1분마다 저절로 저장한다 (게임 메뉴 저장 단추는 뺐다)
             if (autosave && !IsTravelling && Time.unscaledTime - lastAutoSaveTry >= AutoSaveEvery)
             {
@@ -578,7 +579,7 @@ namespace PocketCaravan
                 mapHeight = MapRoot.Current.ground.cellBounds.size.y,
                 px = pc != null ? pc.transform.position.x : 0, py = pc != null ? pc.transform.position.y : 0,
                 fx = pc != null ? pc.Motor.Facing.x : 0, fy = pc != null ? pc.Motor.Facing.y : -1,
-                money = Player.money, credit = Credit.Level(Player), creditPoints = Player.credit, creditFloor = Player.creditFloor, creditVersion = Credit.Version, debt = Player.debt, debtDue = Player.debtDue,   // 11/19 credit 칸은 옛 빌드가 읽어도 맞게 단계, 점수는 creditPoints
+                money = Player.money, credit = Credit.Level(Player), creditPoints = Player.credit, creditFloor = Player.creditFloor, creditVersion = Credit.Version, debt = Player.debt, debtDue = Player.debtDue, debtLate = Player.debtLate,   // 11/19 credit 칸은 옛 빌드가 읽어도 맞게 단계, 점수는 creditPoints
                 origin = Player.origin != null ? Player.origin.id : null,
                 vehicle = Player.vehicle != null ? Player.vehicle.id : null,
                 stowedVehicle = Player.stowedVehicle != null ? Player.stowedVehicle.id : null,
@@ -628,7 +629,7 @@ namespace PocketCaravan
                 Player.creditFloor = Mathf.Max(0, d.credit);
             }
             else { Player.credit = d.creditPoints; Player.creditFloor = Mathf.Max(0, d.creditFloor); }
-            Player.debt = Mathf.Max(0, d.debt); Player.debtDue = d.debtDue;   // 11/19 외상 (옛 저장 0)
+            Player.debt = Mathf.Max(0, d.debt); Player.debtDue = d.debtDue; Player.debtLate = d.debtLate && Player.debt > 0;   // 11/19 외상 (옛 저장 0)
             // 출신은 시작 화면이 생기면서 저장에 들어감. 옛 저장(값 없음)은 기본 출신 그대로.
             var savedOrigin = StartChoices.FindOrigin(d.origin);
             if (savedOrigin != null) Player.origin = savedOrigin;

@@ -332,6 +332,7 @@ namespace PocketCaravan
         {
             if (p.contracts.Count >= ContractManager.MaxActiveFor(p)) return "의뢰 가득";
             if (c.Premium && Credit.Level(p) < c.minCredit) return $"신용 {c.minCredit} 필요";
+            if ((c.Premium || c.Bulk) && Loan.Late(p)) return "외상 연체 중";
             if (c.atonement && p.money < c.deposit) return "보증금 부족";
             if (!p.CanCarryWeight(c.weight)) return "짐 자리 부족";
             return "못 맡아요";

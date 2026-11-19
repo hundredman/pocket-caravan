@@ -117,6 +117,7 @@ namespace PocketCaravan
         /// <summary>게임 한 시간마다 (GameManager): 반쯤의 확률로 진열한 물건 하나가 팔린다 (많이 올린 물건일수록 먼저)</summary>
         public static void OnHour(GameManager gm)
         {
+            if (gm != null && Loan.Late(gm.Player)) return;   // 11/19 외상 연체 중에는 좌판도 쉰다
             var p = gm != null ? gm.Player : null;
             if (!Has(p) || rng.NextDouble() >= SellChance) return;
             int total = Count(p);

@@ -130,13 +130,13 @@ namespace PocketCaravan
                     {
                         if(!copy.CanBuy(item)){blocker="재고가 없습니다.";break;}
                         int price=ReputationPricing.Quote(copy,item,false,player,activity,now,haggle,0);
-                        if(price<=0 || total+price>player.money){blocker="매입 자금이 부족합니다.";break;}
+                        if(price<=0 || total+price>Loan.BuyBudget(player)){blocker=Loan.On(player)&&!Loan.CashOnly?"돈과 외상 한도가 모자랍니다.":"매입 자금이 부족합니다.";break;}
                         if(!player.CanCarry(item,i+1)){blocker="남은 적재 공간이 부족합니다.";break;}
                         total+=price; prices.Add(price); activity.Bought(town.id,item.id,now,price);copy.RecordBuy(item,price);
                     }
                 }
             }
-            return new MarketEstimate(town,item,selling,prices,player!=null?player.cargo.AverageCost(item):0,blocker,player!=null?player.money:0);
+            return new MarketEstimate(town,item,selling,prices,player!=null?player.cargo.AverageCost(item):0,blocker,player!=null?(int)Mathf.Min(int.MaxValue,Loan.BuyBudget(player)):0);
         }
 
         // ---------- 저장 ----------

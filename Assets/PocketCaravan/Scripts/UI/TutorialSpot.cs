@@ -108,7 +108,7 @@ namespace PocketCaravan
 
             // 11/19 신용 4·5단계 혜택: 장터 창에서 외상·좌판 단추를 처음 보면 설명 (아무 키나 = 다음)
             if (!Seen("market.loan") && ScreenZones.Live("market.loan"))
-            { holdFrame = Time.frameCount; return Zone("market.loan", "market.loan", $"신용 4단계 혜택 외상이에요. 장터 상인이 돈을 먼저 빌려줘요 (지금 한도 {Loan.Limit(gm.Player)}냥)\n사흘 안에 아무 장터에서 갚아요. 넘기면 신용이 깎이고 1할이 붙어요", false); }
+            { holdFrame = Time.frameCount; return Zone("market.loan", "market.loan", $"신용 4단계 혜택 외상이에요. 켜 두면 가진 돈보다 더 살 때 모자란 만큼 외상으로 달아요 (한도 {Loan.Limit(gm.Player)}냥, 이자 없음)\n사흘 안에 아무 장터에서 갚아요. 빚이 싫으면 꺼 둔 채로 두면 돼요", false); }
             if (!Seen("market.stall") && ScreenZones.Live("market.stall"))
             { holdFrame = Time.frameCount; return Zone("market.stall", "market.stall", $"신용 5단계: 이 마을에 내 좌판을 열 수 있어요 ({PlayerStall.Price}냥, 마을과 우호 이상)\n짐을 올려 두면 내가 떠나 있는 동안에도 조금씩 팔려요", false); }
             // 내 좌판 창을 처음 열면 하나씩 소개
