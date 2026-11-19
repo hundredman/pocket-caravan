@@ -231,8 +231,8 @@ HORSE_FRONT=[           # 몸(꼬리 끝·엉덩이·등·갈기·가슴·앞다
 ]
 HORSE_FACE=[            # 11/14 앞머리는 귀 사이 작은 술만 (갈기는 목 뒤로 풍성하게: HORSE_FRONT)
 "M.....M",
-"BM...MB",
-"BBBMBBB",
+"BMM..MB",   # 11/19 은샘: 이마로 내려온 앞머리를 ㅜ가 아니라 왼쪽 위에서 가운데로 비스듬히
+"BBMMBBB",
 "LBBMBBb",
 "LeBBBeb",
 "LBBBBBb",
