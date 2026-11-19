@@ -11,7 +11,7 @@ namespace PocketCaravan
     public class PackAnimal : MonoBehaviour
     {
         public const string HorseId = "packhorse", CamelId = "arabia_camel", WagonId = "wagon",
-            ReindeerId = "north_reindeer", ReindeerSledId = "north_reindeer_sled";   // 11/19 은샘 "북유럽은 순록으로": 짐말 대신 순록, 마차 대신 순록 썰매 (Tools/ArtGen/reindeer_v1.py)
+            ReindeerId = "north_reindeer", ReindeerSledId = "north_reindeer_sled";   // 11/19 은샘 "북유럽은 순록으로": 짐말 대신 순록, 마차 대신 순록 썰매 (그림 Tools/ArtGen/reindeer_v3.py)
 
         /// <summary>이 운반 수단이 짐승이면 그림 폴더와 고삐 거리</summary>
         public static bool Is(string vehicleId, out string folder, out float gap)
@@ -21,8 +21,8 @@ namespace PocketCaravan
             if (vehicleId == CamelId) { folder = "Camel"; gap = 1.5f; return true; }
             // 11/19 은샘: 마차 (짐말 다음 단계, 네 지역 공용). 옆모습이 68px로 길어 말 머리가 짐말과 같은 자리에 오게 고삐를 길게
             if (vehicleId == WagonId) { folder = "Wagon"; gap = 2.45f; return true; }
-            if (vehicleId == ReindeerId) { folder = "Reindeer"; gap = 1.45f; return true; }          // 짐말과 같은 틀
-            if (vehicleId == ReindeerSledId) { folder = "ReindeerSled"; gap = 2.45f; return true; }  // 마차와 같은 틀
+            if (vehicleId == ReindeerId) { folder = "Reindeer"; gap = 1.6f; return true; }           // 11/19 순록 3판: 옆 그림이 짐말보다 4칸 길다 (44px)
+            if (vehicleId == ReindeerSledId) { folder = "ReindeerSled"; gap = 2.6f; return true; }   // 마차 틀, 옆 그림 72px (마차 68px)
             return false;
         }
         public static bool Is(string vehicleId) => Is(vehicleId, out _, out _);

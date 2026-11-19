@@ -1,186 +1,350 @@
-"""11/19 은샘 "말에 뿔만 붙인 것 같다" → v2 "비율·방향별 구도가 안 맞다" → v3.
-기준 그림 둘을 따른다:
-- 생김새·색: 북유럽 맵에 이미 있는 순록 (Resources/North/Critters/reindeer_0.png, 기우 그림). 밤색 몸 · 밝은 등 · 흰 가슴 털 · 흰 배 줄 ·
-  흰 짧은 꼬리 · 가는 짙은 다리 · 흰 주둥이 · 위로 솟는 크림색 뿔.
-- 크기·구도: 짐말·낙타(pack_animals_v1) 세 방향. 옆 40x32 (왼쪽을 봄), 앞·뒤 23x44 (몸 폭 13). 짐·안장 틀·테두리도 같은 그림.
-순록은 말보다 목이 짧고 굵게 서고 머리를 수평으로 든다, 다리가 가늘다, 뿔이 머리 위로 크게 솟는다.
-실행: python Tools/ArtGen/reindeer_v3.py <출력 폴더>   (시안: 그림과 비교 미리보기만)
+"""11/19 은샘 순록 3판 (v1 "말에 뿔만 붙인 것 같다", v2 "비율·방향별 구도가 안 맞다" 다음).
+실제 순록 생김새와 북유럽 순록 동물 그림(Resources/North/Critters/reindeer_0.png) 색을 따르고, 그리는 법은 짐말·낙타(pack_animals_v1)와 같다:
+글자 칸 그림 + 부위마다 따로 두른 테두리(몸 · 뿔 · 앞 얼굴), 다리는 몸에 붙고 발굽은 다리 폭 그대로.
+- 생김새: 머리를 낮게 앞으로 · 어깨가 솟고 등은 평평 · 목 아래 늘어진 흰 털 · 넓은 회색 주둥이 · 크고 흰 엉덩이와 짧은 꼬리 ·
+  짧고 튼튼한 다리 · 발굽 위 흰 털 · 뿔은 뒤 위로 굵게 오르다 끝이 앞으로 굽고, 이마 앞으로 눈가지.
+- 은샘 검토 반영: 앞 얼굴은 지난 시안처럼 크게(흰 수염털이 주둥이를 감싼다) · 발굽은 테두리보다 밝게(뾰족해 보이지 않게) ·
+  옆모습 뒷다리는 흰 엉덩이 앞에서 끝나게 · 허리 살짝 길게.
+- 크기: 옆 44x40 (짐말 40x32보다 조금 크다, 뿔 자리 포함), 앞·뒤 23x44 (짐말과 같다). 썰매 옆 72x42, 앞·뒤 30x58 (마차와 같다).
+- 짐: 짐말과 같은 길마·짐 그림, 안장 천만 북유럽 파랑. 순록 썰매: 마차 짐칸을 썰매 날 위에 (reindeer_v1과 같다), 끌개 끈 파랑.
+실행: python Tools/ArtGen/reindeer_v3.py → Assets/PocketCaravan/Resources/Transport/Reindeer · ReindeerSled (side/front/back_0~3 + _a/_b) + 미리보기
 """
 import sys
 from pathlib import Path
 from PIL import Image
+
 sys.path.insert(0, str(Path(__file__).parent))
 import pack_animals_v1 as PA
+import wagon_v1 as WG
+import reindeer_v1 as V1   # 썰매 날·짐칸 끝면 그림을 그대로 쓴다
 
+ROOT = Path(__file__).resolve().parents[2]
+OUT = ROOT / 'Assets/PocketCaravan/Resources/Transport'
 P = PA.P
-# 북유럽 순록(Critters/reindeer_0) 색
-P.update({'0': (196, 186, 170), 'G': (164, 150, 132), '1': (138, 98, 70), '2': (172, 130, 94), '3': (106, 72, 50), '4': (70, 48, 36), '5': (242, 236, 222), '6': (212, 202, 184),
-          '7': (224, 204, 160), '8': (252, 242, 214), '9': (34, 26, 30), 'E': (40, 32, 32), 'Z': (52, 96, 150), 'z': (78, 128, 182), 'Y': (214, 170, 70)})
+# 순록 색 (북유럽 순록 동물 그림에서). pack_animals_v1에 없는 글자만 쓴다
+P.update({'0': (196, 186, 170), 'G': (164, 150, 132),                       # 회색 주둥이 · 그늘
+          '1': (138, 98, 70), '2': (172, 130, 94), '3': (106, 72, 50),       # 몸 · 밝은 등 · 그늘
+          '4': (80, 56, 42), 'D': (64, 46, 36),                               # 다리 · 먼 다리
+          '5': (242, 236, 222), '6': (212, 202, 184),                         # 흰 털 · 그늘
+          '7': (224, 204, 160), '8': (252, 242, 214), 'F': (190, 170, 130), 'g': (158, 138, 104),   # 뿔 · 끝 · 그늘 · 먼 뿔 그늘
+          '9': (34, 26, 30), 'E': (30, 22, 26),                               # 코 · 눈
+          'Q': (52, 96, 150), 'q': (78, 128, 182)})                           # 북유럽 파랑 (안장 천 · 끌개 끈)
+HOOF = (96, 84, 74, 255)   # 발굽: 테두리보다 밝게. 걷기 프레임(PA.lift)이 'k'를 찾으므로 'k'로 그리고 마지막에 바꾼다
+BLUE = {'r': 'Q', 'R': 'q'}
 
-SIDE = [   # 왼쪽을 봄. 실제 순록: 다부진 몸 · 수평 등에 어깨가 조금 솟음 · 굵은 목을 앞으로 뻗어 머리를 등 높이쯤 · 목 아래 늘어진 밝은 목털 ·
-           # 길고 털 많은 회색 주둥이 · 짧은 둥근 귀 · 흰 엉덩이와 짧은 꼬리 · 굵은 짙은 다리 · 발굽 위 흰 털 · 넓은 발굽 ·
-           # 뿔은 뒤로 휘어 올라갔다 끝이 앞으로 굽고, 이마 앞으로 납작한 눈가지. 색은 북유럽 순록 그림(Critters/reindeer_0)
-           # 0 밝은 회색 주둥이 · G 그 그늘 · 1 몸 · 2 밝은 등 · 3 그늘 · 4 짙은 다리 · 5/6 흰 털 · 7/8 뿔 · 9 코 · E 눈
-"...........88.8...........................",
-"..........877.7.8.........................",
-"..............7.7.........................",
-"...............77.8.......................",
-"................7.7.......................",
-"................777.......................",
-"................77........................",
-"..88............7.........................",
-"..877..........77.........................",
-"....77.....3..77..........................",
-".....777.2112777..........................",
-"......7.211111123.........................",
-"....2211E11111111223......................",
-".900011111111111111122222222222222222.....",
-".900G111111111111111111111111111111115....",
-"..00GG66111111111111111111111111111155....",
-"...GG..666111111111111111111111111155.....",
-"........666611111111111111111111111113....",
-".........6666111111111111111111111113.....",
-"..........66631111111111111111111111133...",
-"...........663311111111111111111111133....",
-"............33333111111111111111113333....",
-".............3366666666666666666663.......",
-".............4433.4433.......4433.4433....",
-".............4433.4433.......4433.4433....",
-".............4433.4433.......4433.4433....",
-".............4433.4433.......4433.4433....",
-".............4433.4433.......4433.4433....",
-".............5555.5555.......5555.5555....",
-"............kkkkk.kkkk.......kkkk.kkkkk...",
+SIDE = [
+    "...........33...............................",
+    "......1111333...............................",
+    "....111111113...............................",
+    "..000111E1111...............................",
+    ".000001111111....22222......................",
+    "09000001111111222111112.....................",
+    "09000001111111111111111222222222............",
+    ".0GGG0111111111111111111111111112222........",
+    "..000....6611111111111111111111111112.55....",
+    ".........6556131111111111111111111111555....",
+    ".........66555631111111111111111111115555...",
+    "..........6555561111111111111111111115555...",
+    "...........655553111111111111111111115555...",
+    "...........655556311111111111111111115555...",
+    "............6555561111111111111111111555....",
+    ".............555644D11111111111144D555......",
+    "..............56644D11111111111144D.........",
+    "...............6644D3DD311333DD344D.........",
+    ".................44D.DD333333DD.44D.........",
+    ".................44D.DD......DD.44D.........",
+    ".................44D.DD......DD.44D.........",
+    ".................44D.DD......DD.44D.........",
+    ".................44D.DD......DD.44D.........",
+    ".................44D.DD......DD.44D.........",
+    ".................555.66......66.555.........",
+    ".................kkk.kk......kk.kkk.........",
+]
+FRONT = [
+    "....33333....",
+    "..331111133..",
+    ".31111111113.",
+    ".31111111113.",
+    ".31111111113.",
+    ".31111111113.",
+    ".31111111113.",
+    ".31111111113.",
+    ".31111111113.",
+    ".31111111113.",
+    ".31111111113.",
+    ".31111111113.",
+    ".31665556613.",
+    ".36555555563.",
+    ".36555555563.",
+    ".36555555563.",
+    ".36655555663.",
+    ".D4D65556D4D.",
+    ".D4D.666.D4D.",
+    ".D4D.....D4D.",
+    ".D4D.....D4D.",
+    ".D4D.....D4D.",
+    ".D4D.....D4D.",
+    ".D4D.....D4D.",
+    ".555.....555.",
+    ".kkk.....kkk.",
+]
+FACE = [
+    "3.........3",
+    "33.11111.33",
+    ".311111113.",
+    "..1111111..",
+    ".1E11111E1.",
+    ".111111111.",
+    ".110000011.",
+    ".600000006.",
+    ".500909005.",
+    ".550GGG055.",
+    ".655000556.",
+    "..5555555..",
+    "...65556...",
+]
+BACK = [
+    "..3.......3..",
+    "..33.111.33..",
+    "....11111....",
+    "....11111....",
+    "....31113....",
+    "...3111113...",
+    "..311111113..",
+    ".31111111113.",
+    ".31111111113.",
+    ".31111111113.",
+    ".31111111113.",
+    ".31155555113.",
+    ".31555665513.",
+    ".35555555553.",
+    ".35555555553.",
+    ".35555555553.",
+    ".35555555553.",
+    ".35555555553.",
+    ".36555555563.",
+    "..D4D555D4D..",
+    "..D4D.5.D4D..",
+    "..D4D...D4D..",
+    "..D4D...D4D..",
+    "..D4D...D4D..",
+    "..D4D...D4D..",
+    "..D4D...D4D..",
+    "..D4D...D4D..",
+    "..555...555..",
+    "..kkk...kkk..",
 ]
 
-def side(stage, frame='', saddle=True):
-    c = PA.Cv(44, 34)
-    oy = 34 - len(SIDE)
-    c.draw(PA.lift(SIDE, frame), 0, oy)
-    sx = 20; by = oy + 13   # 안장: 등(줄 13) 위
-    if saddle:
-        c.draw(["ZZZZZZZZZZZ", "zzzzzzzzzzz", "zzzzzzzzzzz", "YZYZYZYZYZY"], sx, by + 1)
-        c.draw(PA.FRAME, sx, by - 1)
-    else:   # 썰매 끌 때: 가죽 목줄 · 등 띠
-        for (x, y) in ((12, oy + 12), (13, oy + 13), (13, oy + 14), (14, oy + 15)): c.px(x, y, 'd'); c.px(x + 1, y, 'H')
-        for y in range(by, by + 9): c.px(22, y, 'd'); c.px(23, y, 'H')
+
+def blank(w, h): return ['.' * w for _ in range(h)]
+
+
+def layer(rows, ox, oy, w, h, outline=True):
+    c = PA.Cv(w, h); c.draw(rows, ox, oy)
+    if outline: c.outline()
+    return c
+
+
+def hoofs(im):
+    px = im.load(); k = PA.P['k'] + (255,)
+    for y in range(im.height):
+        for x in range(im.width):
+            if px[x, y] == k: px[x, y] = HOOF
+    return im
+
+
+def cells(c, w, h):
+    g = [['.'] * w for _ in range(h)]
+    for (x, y), ch in c.items():
+        if 0 <= x < w and 0 <= y < h: g[y][x] = ch
+    return [''.join(r) for r in g]
+
+
+def blue(rows): return [''.join(BLUE.get(ch, ch) for ch in r) for r in rows]
+
+
+# ---------------- 옆모습 (왼쪽을 봄) 44x40 ----------------
+SW, SH = 44, 40
+SY = 13   # SIDE 첫 줄이 놓이는 높이 (위로 뿔 자리)
+
+
+def side_antler(dx=0, dy=0, near=True):
+    """굵은 줄기(두 칸)가 이마에서 뒤 위로 오르고, 꼭대기는 앞으로 굽은 손바닥 + 곧게 선 뒤 가지. 가까운 뿔은 수평 앞 가지와 이마 앞 눈가지"""
+    A, S, T = ('7', 'F', '8') if near else ('F', 'g', '7')
+    c = {}
+    for x, y in [(11, 10), (12, 9), (13, 8), (14, 7), (15, 6), (16, 5), (17, 4), (17, 3)]:
+        c[(x, y)] = A; c[(x + 1, y)] = S
+    c[(10, 10)] = A
+    for x in range(14, 18): c[(x, 2)] = A
+    c[(18, 2)] = S; c[(14, 1)] = T; c[(14, 2)] = T
+    for y in range(0, 3): c[(20, y)] = A
+    c[(19, 2)] = S; c[(20, 0)] = T
+    if near:
+        for x in range(10, 14): c[(x, 6)] = A
+        c[(10, 6)] = T
+        for x in range(6, 10): c[(x, 9)] = A
+        c[(9, 10)] = A; c[(6, 9)] = T; c[(6, 10)] = A
+    return cells({(x + dx, y + dy + 2): v for (x, y), v in c.items()}, SW, SH)
+
+
+SADDLE = (21, SY + 6)   # 안장 천 왼쪽 위 (등 줄). 길마·짐은 짐말(PA.make)과 같은 상대 위치
+
+
+def side_parts(stage):
+    x, y = SADDLE
     parts = []
-    if saddle:
-        if stage == 1: parts += [(PA.SACK, sx + 2, by + 1)]
-        if stage >= 2: parts += [(PA.SACK, sx - 1, by + 1), (PA.SACK, sx + 6, by + 1), (PA.BUNDLE, sx, by - 5)]
-        if stage >= 3: parts += [(PA.SMALL, sx + 1, by - 9), (PA.JAR, sx, by - 3), (PA.JAR, sx + 7, by - 3)]
-    return PA.with_parts(c, parts)
+    if stage == 1: parts += [(PA.SACK, x + 2, y)]
+    if stage >= 2: parts += [(PA.SACK, x - 1, y), (PA.SACK, x + 6, y), (PA.BUNDLE, x, y - 6)]
+    if stage >= 3: parts += [(PA.SMALL, x + 1, y - 10), (PA.JAR, x, y - 4), (PA.JAR, x + 7, y - 4)]
+    return parts
 
-# ---------------- 앞(아래로 올 때) · 뒤(위로 갈 때): 짐말 앞·뒤와 같은 몸 폭 13 · 캔버스 23x44 ----------------
-FRONT_BODY = [   # 꼬리 끝(흰) · 엉덩이 · 등 · 가슴(흰 털) · 앞다리 (가늘게)
-"......5......",
-".....555.....",
-"..3222222223.",
-".312222222213",
-".311111111113",
-".311111111113",
-".311111111113",
-".311111111113",
-".311111111113",
-".311111111113",
-".311111111113",
-".311111111113",
-".311111111113",
-".335555555333",
-"..3555555553.",
-"..3.......3..",
-"..43.....34..",
-"..43.....34..",
-"..43.....34..",
-"..43.....34..",
-"..55.....55..",
-"..kk.....kk..",
-]
-FRONT_HEAD = [   # 아래(나)를 보는 머리: 이마 · 눈 · 흰 주둥이 · 코 · 턱 밑 흰 털 (따로 테두리)
-"..21112..",
-".2111112.",
-"1E11111E1",
-"111111111",
-".1155511.",
-".1555551.",
-"..59995..",
-"..55555..",
-"...555...",
-]
-ANTLER = [   # 앞·뒤에서 본 뿔: 머리 위 두 줄기가 바깥 위로, 가지 둘씩 (북유럽 순록 뿔처럼 위로 솟는다)
-"8.8.......8.8",
-".77..8.8..77.",
-"..7.77.77.7..",
-"..77.7.7.77..",
-"...7.7.7.7...",
-"....77.77....",
-".....7.7.....",
-]
-BACK_BODY = [    # 머리 뒤(귀) · 목 · 등 · 흰 엉덩이 · 흰 꼬리 · 뒷다리
-"....3...3....",
-"....31113....",
-"....21112....",
-"....31113....",
-"...3111113...",
-"..322222223..",
-".31111111113.",
-".31111111113.",
-".31111111113.",
-".31111111113.",
-".31111111113.",
-".31111111113.",
-".31155555113.",
-".31555555513.",
-"..355595553..",
-"..43.555.34..",
-"..43.....34..",
-"..43.....34..",
-"..43.....34..",
-"..55.....55..",
-"..kk.....kk..",
-]
-BACK_BODY = [r.replace('9', '5') for r in BACK_BODY]
 
-def end(view, stage, frame='', saddle=True):
-    W, H = 23, 44
-    ox = 5
-    body = FRONT_BODY if view == 'front' else BACK_BODY
-    oy = H - 2 - len(body)
-    layers = []
-    def layer(fn):
-        L = PA.Cv(W, H); fn(L); L.outline(); layers.append(L.im)
-    band = oy + (5 if view == 'front' else 7)
-    if view == 'back': layer(lambda L: L.draw(ANTLER, ox, oy - 7))   # 뒤: 뿔은 머리 뒤에서 위로 (몸보다 먼저)
-    def b(L):
-        L.draw(PA.lift(body, frame), ox, oy)
-        keys = ('Z', 'z', 'Y') if saddle else ('d', 'H')
-        for i, k in enumerate(keys):
-            for x in range(W):
-                if L.get(x, band + i)[3]: L.px(x, band + i, ('Y' if x % 2 else 'Z') if k == 'Y' else k)
-    layer(b)
+def side_body(frame='', saddle=True, harness=False):
+    c = PA.Cv(SW, SH); c.draw(PA.lift(SIDE, frame), 0, SY)
     if saddle:
-        if stage >= 1: layer(lambda L: L.draw(PA.SACK_L, ox - 3, band)); layer(lambda L: L.draw(PA.SACK_R, ox + 11, band))
-        if stage >= 2: layer(lambda L: L.draw(PA.BUNDLE_END, ox + 3, band - 2))
-        if stage >= 3: layer(lambda L: L.draw(PA.SMALL_END, ox + 4, band - 4)); layer(lambda L: L.draw(PA.JAR, ox - 4, band - 1)); layer(lambda L: L.draw(PA.JAR, ox + 13, band - 1))
-    if view == 'front':   # 앞: 머리를 들어 가슴 위에, 뿔은 머리 위로 등·짐을 덮는다
-        hy = oy + 9
-        layer(lambda L: L.draw(ANTLER, ox, hy - 7))
-        layer(lambda L: L.draw(FRONT_HEAD, ox + 2, hy))
-    out = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-    for im in layers: out.alpha_composite(im)
+        c.draw(blue(PA.CLOTH), SADDLE[0], SADDLE[1]); c.draw(PA.FRAME, SADDLE[0] + 1, SADDLE[1] - 2)
+    if harness:   # 썰매 끌개: 목 아래 목줄 + 앞다리 뒤 배띠 (몸 위에만)
+        for y in range(SY + 3, SY + 13):
+            for x, k in ((13, 'Q'), (14, 'q'), (24, 'Q'), (25, 'q')):
+                if c.get(x, y)[3] and c.get(x, y)[:3] not in (P['4'], P['D'], P['k']): c.px(x, y, k)
+    c.outline()
+    return hoofs(c.im)
+
+
+def side(stage, frame='', saddle=True, harness=False):
+    out = Image.new('RGBA', (SW, SH), (0, 0, 0, 0))
+    out.alpha_composite(layer(side_antler(4, 1, False), 0, 0, SW, SH).im)
+    out.alpha_composite(side_body(frame, saddle, harness))
+    for rows, x, y in side_parts(stage): out.alpha_composite(layer(rows, x, y, SW, SH).im)
+    out.alpha_composite(layer(side_antler(), 0, 0, SW, SH).im)
     return out
 
+
+# ---------------- 앞·뒤 23x44 ----------------
+EW, EH, OX = 23, 44, 5
+
+
+def end_antler(cx, base):
+    """앞·뒤에서 본 뿔: 머리 위에서 바깥 위로 굵게 오르다 곧게 서고 끝이 안으로 굽는다. 가지는 곧게 (안쪽 수평 · 바깥 위로)"""
+    c = {}
+    for s in (-1, 1):
+        x0 = cx + s * 2
+        path = [(x0, base), (x0 + s, base - 1), (x0 + 2 * s, base - 2), (x0 + 3 * s, base - 3)] + [(x0 + 4 * s, base - 4 - i) for i in range(5)]
+        for x, y in path:
+            c[(x, y)] = '7'
+            if (x - s, y) not in c: c[(x - s, y)] = 'F'
+        top = base - 9
+        c[(x0 + 3 * s, top)] = '7'; c[(x0 + 2 * s, top)] = '8'; c[(x0 + 4 * s, top)] = '7'
+        for i in range(1, 3): c[(x0 + 4 * s - i * s, base - 6)] = '7'
+        c[(x0 + 2 * s, base - 6)] = '8'
+        c[(x0 + 5 * s, base - 5)] = '7'; c[(x0 + 6 * s, base - 6)] = '7'; c[(x0 + 6 * s, base - 7)] = '8'
+    return cells(c, EW, EH)
+
+
+BAND = {'front': (1, 'QqqqQ'[:4]), 'back': (8, 'QqqqQ')}   # 안장 천(끌개 띠) 줄과 색. 앞은 얼굴 위로 보이는 등에 4줄
+PACK = {'front': 1, 'back': 8}                           # 옆구리 자루를 매다는 줄
+
+
+def end_body(view, frame, band):
+    rows = FRONT if view == 'front' else BACK
+    oy = EH - 2 - len(rows)
+    c = PA.Cv(EW, EH); c.draw(PA.lift(rows, frame), OX, oy)
+    if band:
+        by, cols = BAND[view]
+        for i, k in enumerate(cols):
+            for x in range(EW):
+                if c.get(x, oy + by + i)[3]: c.px(x, oy + by + i, k)
+    c.outline()
+    return hoofs(c.im), oy
+
+
+def end_parts(view, stage, oy):
+    py = oy + PACK[view]; parts = []
+    if stage >= 1: parts += [(PA.SACK_L, OX - 3, py), (PA.SACK_R, OX + 11, py)]
+    if stage >= 2: parts += [(PA.BUNDLE_END, OX + 3, py - 2)]
+    if stage >= 3: parts += [(PA.SMALL_END, OX + 4, py - 4), (PA.JAR, OX - 4, py - 1), (PA.JAR, OX + 13, py - 1)]
+    return parts
+
+
+def end(view, stage, frame='', band=True):
+    out = Image.new('RGBA', (EW, EH), (0, 0, 0, 0))
+    body, oy = end_body(view, frame, band)
+    if view == 'front':   # 몸 → 짐 → 뿔 → 얼굴 (얼굴은 따로 테두리)
+        out.alpha_composite(body)
+        for rows, x, y in end_parts(view, stage, oy): out.alpha_composite(layer(rows, x, y, EW, EH).im)
+        fy = oy + 5
+        out.alpha_composite(layer(end_antler(11, fy + 1), 0, 0, EW, EH).im)
+        out.alpha_composite(layer(FACE, 6, fy, EW, EH).im)
+    else:                 # 뿔 → 몸(뒤통수 포함) → 짐
+        out.alpha_composite(layer(end_antler(11, oy + 1), 0, 0, EW, EH).im)
+        out.alpha_composite(body)
+        for rows, x, y in end_parts(view, stage, oy): out.alpha_composite(layer(rows, x, y, EW, EH).im)
+    return out
+
+
+def front(stage, frame=''): return end('front', stage, frame)
+def back(stage, frame=''): return end('back', stage, frame)
+
+
+# ---------------- 순록 썰매 (마차 짐칸 + 썰매 날) ----------------
+LW, LH = 72, 42
+BX0, BX1, BTOP = 38, 68, 27   # 짐칸 앞·뒤 · 윗면 줄
+
+
+def sled_side(stage, frame=''):
+    out = Image.new('RGBA', (LW, LH), (0, 0, 0, 0))
+    out.alpha_composite(side(0, frame, saddle=False, harness=True), (0, LH - SH))
+    c = WG.Cv(LW, LH)
+    for x in range(14, BX0 + 1): c.px(x, BTOP + 2, 'h'); c.px(x, BTOP + 3, 'd')   # 끌채: 목줄에서 짐칸 앞까지
+    c.hline(BX0, BX1, BTOP - 1, 'i'); c.hline(BX0, BX1, BTOP, 'd')
+    if stage: c.paste(WG.cargo(stage), BX0 + 1, BTOP - 21)
+    for i, k in enumerate(['H', 'h', 'w', 'd', 'w', 'm', 'd']): c.hline(BX0, BX1, BTOP + 1 + i, k)
+    for x in range(BX0 + 4, BX1, 9): c.px(x, BTOP + 3, 'm'); c.px(x + 1, BTOP + 6, 'd')
+    for x in (BX0, (BX0 + BX1) // 2, BX1 - 1):
+        c.vline(x, BTOP - 2, BTOP + 7, 'l'); c.vline(x + 1, BTOP - 2, BTOP + 7, 'm'); c.px(x, BTOP - 2, 'H'); c.px(x + 1, BTOP - 2, 'h')
+    V1.runner_side(c, BX0 - 1, BX1, BTOP + 13)
+    c.outline()
+    out.alpha_composite(c.im)
+    return out
+
+
+def sled_front(stage, frame=''):
+    out = Image.new('RGBA', (WG.EW, WG.EH), (0, 0, 0, 0))
+    oy = 16
+    cv = WG.Cv(WG.EW, WG.EH); V1.sled_box_end(cv, oy, stage, True); WG.shafts(cv, oy + 13, oy + 24); cv.outline()
+    out.alpha_composite(cv.im)
+    out.alpha_composite(end('front', 0, frame), (3, WG.EH - EH - 2))
+    return out
+
+
+def sled_back(stage, frame=''):
+    out = Image.new('RGBA', (WG.EW, WG.EH), (0, 0, 0, 0))
+    out.alpha_composite(end('back', 0, frame), (3, 2))
+    cv = WG.Cv(WG.EW, WG.EH); WG.shafts(cv, 22, WG.EH - 20); cv.outline(); out.alpha_composite(cv.im)
+    cv = WG.Cv(WG.EW, WG.EH); V1.sled_box_end(cv, WG.EH - 18, stage, back=True); cv.outline()
+    out.alpha_composite(cv.im)
+    return out
+
+
+def preview(path):
+    names = ['PackHorse/side_2', 'Reindeer/side_2', 'PackHorse/front_2', 'Reindeer/front_2', 'PackHorse/back_2', 'Reindeer/back_2',
+             'Wagon/side_3', 'ReindeerSled/side_3', 'Wagon/front_3', 'ReindeerSled/front_3', 'Wagon/back_3', 'ReindeerSled/back_3']
+    ims = [Image.open(OUT / (n + '.png')).convert('RGBA') for n in names]
+    W = sum(i.width + 6 for i in ims); H = max(i.height for i in ims)
+    pv = Image.new('RGBA', (W, H), (236, 232, 240, 255)); x = 0
+    for i in ims: pv.alpha_composite(i, (x, H - i.height)); x += i.width + 6
+    pv.resize((W * 4, H * 4), Image.NEAREST).save(path)
+
+
 if __name__ == '__main__':
-    out = Path(sys.argv[1]); out.mkdir(parents=True, exist_ok=True)
-    T = Path(__file__).resolve().parents[2] / 'Assets/PocketCaravan/Resources'
-    ref = [Image.open(T / 'North/Critters/reindeer_0.png').convert('RGBA').transpose(Image.FLIP_LEFT_RIGHT),
-           Image.open(T / 'Transport/PackHorse/side_2.png').convert('RGBA'), Image.open(T / 'Transport/PackHorse/front_2.png').convert('RGBA'), Image.open(T / 'Transport/PackHorse/back_2.png').convert('RGBA')]
-    new = [side(0), side(2), side(3), side(0, 'a'), end('front', 0), end('front', 2), end('back', 0), end('back', 2)]
-    rows = [ref, new]
-    W = max(sum(i.width + 8 for i in r) for r in rows); H = 50
-    pv = Image.new('RGBA', (W, H * 2 + 6), (236, 232, 240, 255))
-    for ri, r in enumerate(rows):
-        x = 0
-        for i in r: pv.alpha_composite(i, (x, ri * (H + 6) + H - i.height)); x += i.width + 8
-    pv.resize((pv.width * 6, pv.height * 6), Image.NEAREST).save(out / 'v3.png')
+    out = Path(sys.argv[1]) if len(sys.argv) > 1 else OUT
+    sets = (('Reindeer', (('side', side), ('front', front), ('back', back))),
+            ('ReindeerSled', (('side', sled_side), ('front', sled_front), ('back', sled_back))))
+    for folder, views in sets:
+        d = out / folder; d.mkdir(parents=True, exist_ok=True)
+        for view, fn in views:
+            for s in range(4):
+                fn(s).save(d / f'{view}_{s}.png')
+                for fr in 'ab': fn(s, fr).save(d / f'{view}_{s}_{fr}.png')
+    if out == OUT: preview(ROOT / 'Tools/ArtGen/reindeer_v3_preview.png')
     print('ok')
