@@ -194,6 +194,48 @@ def arrow(dx, dy, w, h):
     return outlined(im)
 
 
+def arrow_at(deg):
+    """deg만큼 기운 화살 (0 = 오른쪽으로 수평, +는 아래로). 19x19 한가운데가 화살 가운데"""
+    import math
+    im, d = canvas(19, 19)
+    c, r = 9, 7
+    dx, dy = math.cos(math.radians(deg)), math.sin(math.radians(deg))
+    x0, y0, x1, y1 = round(c - dx * r), round(c - dy * r), round(c + dx * r), round(c + dy * r)
+    d.line([x0, y0, x1, y1], fill=(170, 124, 76, 255), width=1)
+    d.point((x1, y1), fill=(92, 92, 104, 255)); d.point((round(c + dx * (r - 1)), round(c + dy * (r - 1))), fill=(92, 92, 104, 255))
+    fx, fy = round(c - dx * (r - 1)), round(c - dy * (r - 1))
+    d.rectangle([fx - 1, fy - 1, fx + 1, fy + 1], fill=(206, 76, 62, 255))
+    d.point((fx, fy), fill=(250, 240, 230, 255))
+    return outlined(im)
+
+
+def mallet(deg):
+    """자루째 그린 떡메. 그림 한가운데가 손(돌리는 축), deg는 자루가 수평에서 위로 선 각도"""
+    import math
+    size, c, ln = 64, 32, 23
+    big = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    d = ImageDraw.Draw(big)
+    ux, uy = math.cos(math.radians(deg)), -math.sin(math.radians(deg))      # 자루 방향
+    vx, vy = -uy, ux                                                         # 메 머리 방향 (자루와 직각)
+    ex, ey = c + ux * ln, c + uy * ln
+    d.line([c - ux * 3, c - uy * 3, ex, ey], fill=(150, 108, 66, 255), width=2)
+    def quad(a0, a1, b0, b1):
+        return [(ex + ux * a0 + vx * b0, ey + uy * a0 + vy * b0), (ex + ux * a1 + vx * b0, ey + uy * a1 + vy * b0),
+                (ex + ux * a1 + vx * b1, ey + uy * a1 + vy * b1), (ex + ux * a0 + vx * b1, ey + uy * a0 + vy * b1)]
+    d.polygon(quad(-4, 4, -6, 7), fill=(196, 152, 100, 255))
+    d.polygon(quad(-4, -2, -6, 7), fill=(222, 184, 132, 255))                # 밝은 쪽
+    d.polygon(quad(-4, 4, 5, 7), fill=(150, 108, 66, 255))                   # 떡을 치는 면
+    return outlined(big)
+
+
+def gauge():
+    """투호 힘 게이지 틀 (속은 코드에서 채운다): 12x40, 안쪽 8x36"""
+    im, d = canvas(12, 40)
+    d.rectangle([1, 1, 10, 38], fill=(255, 252, 244, 255))
+    d.rectangle([2, 2, 9, 37], fill=(232, 222, 204, 255))
+    return outlined(im)
+
+
 def arrow_stuck():
     im, d = canvas(7, 13)
     d.line([4, 11, 2, 2], fill=(170, 124, 76, 255), width=1)
@@ -212,14 +254,14 @@ def mallet_head():
 
 
 def board():
-    """떡판 (안반)"""
-    im, d = canvas(44, 12)
-    d.rectangle([1, 1, 42, 6], fill=(176, 130, 84, 255))
-    d.rectangle([1, 1, 42, 2], fill=(210, 168, 116, 255))
-    d.rectangle([1, 6, 42, 6], fill=(138, 98, 62, 255))
-    for x in (8, 19, 31):
-        d.rectangle([x, 4, x + 5, 4], fill=(150, 108, 70, 255))
-    d.rectangle([4, 7, 8, 10], fill=(138, 98, 62, 255)); d.rectangle([35, 7, 39, 10], fill=(138, 98, 62, 255))
+    """떡판 (안반): 땅에 놓는 낮고 넓은 판"""
+    im, d = canvas(40, 8)
+    d.rectangle([1, 1, 38, 4], fill=(176, 130, 84, 255))
+    d.rectangle([1, 1, 38, 2], fill=(210, 168, 116, 255))
+    d.rectangle([1, 4, 38, 4], fill=(138, 98, 62, 255))
+    for x in (7, 17, 28):
+        d.rectangle([x, 3, x + 5, 3], fill=(150, 108, 70, 255))
+    d.rectangle([3, 5, 7, 6], fill=(138, 98, 62, 255)); d.rectangle([32, 5, 36, 6], fill=(138, 98, 62, 255))
     return outlined(im)
 
 
@@ -244,17 +286,17 @@ def tteok(stage):
 
 
 def jegi(up):
-    """제기: 엽전에 한지 술. up이면 술이 위로 (떨어질 때), 아니면 아래로 날린다 (차올린 직후)"""
-    im, d = canvas(11, 13)
+    """제기: 엽전에 한지 술 (작게, 7x9). up이면 술이 위로 (떨어질 때), 아니면 아래로 날린다 (차올린 직후)"""
+    im, d = canvas(7, 9)
     coin, hole = (226, 180, 70, 255), (120, 84, 40, 255)
     paper = [(250, 246, 236, 255), (120, 170, 214, 255), (236, 120, 110, 255)]
-    cy = 9 if up else 2
-    d.rectangle([2, cy, 8, cy + 2], fill=coin); d.rectangle([4, cy + 1, 6, cy + 1], fill=hole)
-    for i, x in enumerate((2, 5, 8)):
+    cy = 6 if up else 1
+    d.rectangle([1, cy, 5, cy + 1], fill=coin); d.point((3, cy), fill=hole)
+    for i, x in enumerate((1, 3, 5)):
         if up:
-            d.rectangle([x, 2 + (i % 2), x, 8], fill=paper[i]); d.point((x + (1 if i == 2 else -1 if i == 0 else 0), 1 + (i % 2)), fill=paper[i])
+            d.rectangle([x, 1 + (i % 2), x, 5], fill=paper[i])
         else:
-            d.rectangle([x, 5, x, 10 - (i % 2)], fill=paper[i]); d.point((x + (1 if i == 2 else -1 if i == 0 else 0), 11 - (i % 2)), fill=paper[i])
+            d.rectangle([x, 3, x, 7 - (i % 2)], fill=paper[i])
     return outlined(im)
 
 
@@ -336,7 +378,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 0
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {{x: 0.5, y: 0.5}}
   spritePixelsToUnits: 16
@@ -404,6 +446,12 @@ def save(name, im):
     if not os.path.exists(meta):                 # guid는 한 번 정하면 그대로 둔다
         with open(meta, "w", encoding="utf-8", newline="\n") as f:
             f.write(META.format(guid=uuid.uuid4().hex, sprite=uuid.uuid4().hex))
+    else:                                        # 꽉 찬 네모 그물로 (Tight면 Unity가 투명한 가장자리를 잘라 내 창에서 그림이 늘어난다)
+        with open(meta, encoding="utf-8") as f:
+            text = f.read()
+        if "spriteMeshType: 1" in text:
+            with open(meta, "w", encoding="utf-8", newline="\n") as f:
+                f.write(text.replace("spriteMeshType: 1", "spriteMeshType: 0"))
 
 
 def main():
@@ -411,6 +459,13 @@ def main():
     save("pot", pot())
     save("arrow_flat", arrow(1, 0, 16, 5)); save("arrow_up", arrow(1, -1, 14, 11)); save("arrow_down", arrow(1, 1, 14, 11))
     save("arrow_stuck", arrow_stuck())
+    for i in range(10):                                   # -60도(위로)부터 15도씩 75도(아래로)까지
+        save(f"arrow_a{i}", arrow_at(-60 + i * 15))
+    for i, deg in enumerate((128, 82, 40, 12)):          # 치켜든 자세 → 내려친 자세
+        save(f"mallet_{i}", mallet(deg))
+    save("gauge", gauge())
+    # 제기 차는 아이: 이미 있는 나루 아이 그림(정면)을 그대로 가져온다
+    save("child", art(os.path.join(ROOT, "Art", "Characters", "NPC", "npc_naru_fishing_child"), "npc_naru_fishing_child_tall_d0"))
     save("mallet_head", mallet_head()); save("board", board())
     for i in range(3):
         save(f"tteok_{i}", tteok(i))

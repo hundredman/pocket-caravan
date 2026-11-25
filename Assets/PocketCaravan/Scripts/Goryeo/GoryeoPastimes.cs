@@ -9,9 +9,10 @@ namespace PocketCaravan
     /// 고려 놀이 3개 (2026-11-25, 점검 2차: 고려는 미니게임이 낚시 하나뿐이었다. 같은 날 3차에서 화면·연출을 다시 만들었다).
     /// 창과 규칙은 아라비아 놀거리 틀(ArabiaPastimes.Game)을 쓴다:
     /// 참가비 없음 · Esc는 손해 없이 닫힘 · 끝나면 Space로 닫기 · 보상은 하루 한 번 소액(또는 평판) · 최고 기록은 남는다.
-    /// 1) 투호 (개경): 땅 위를 오가는 표시가 병 밑 노란 띠에 올 때 Space로 화살 던지기, 8번. 넣은 만큼 구경꾼 엽전 (하루 한 번).
+    /// 1) 투호 (개경): Space를 꾹 눌러 옆의 힘 게이지를 채우고 떼면 던진다, 8번. 어디 떨어질지는 표시하지 않는다 (11/25 4차, 은샘). 넣은 만큼 구경꾼 엽전 (하루 한 번).
     /// 2) 떡메치기 (예성 나루): 박자가 네모 칸에 들어올 때 Space로 내려치기. 빨간 손 박자(아주머니가 떡을 뒤집음)에는 치지 않기. 20초. 품삯 (하루 한 번).
     /// 3) 제기차기 (닭목): 제기가 발 높이에 왔을 때 Space. 떨어뜨리면 끝. 열 번 넘기면 마을 평판 (하루 한 번).
+    /// 시작 (11/25 4차, 은샘): 푯말 대신 투호는 마당의 항아리, 떡메치기는 떡집 아주머니, 제기차기는 아이에게 말을 걸면 시작한다.
     /// 그림: 배경은 이미 있는 고려 건물·나무 그림을 모아 구운 것, 사람은 내 캐릭터와 장터 사람들, 소품(병·화살·떡메·떡·제기)만 새로 찍었다
     /// (Resources/Goryeo/Pastimes, 만드는 도구 Tools/ArtGen/goryeo_pastimes_art.py). 저장: 공용 메모 "goryeo:pastime:이름:day" · ":best".
     /// </summary>
@@ -54,6 +55,12 @@ namespace PocketCaravan
         static void Pic(string path, float x, float bottom, float scale = 2f, bool flipX = false) => Put(Art(path), x, bottom, scale, flipX);
         /// <summary>놀이 소품(Resources/Goryeo/Pastimes/…)</summary>
         static void Prop(string name, float x, float bottom, bool flipX = false, float sx = 1f, float sy = 1f) => Put(Art("Pastimes/" + name), x, bottom, 2f, flipX, sx, sy);
+        /// <summary>놀이 소품을 가운데 기준으로 (돌려 구운 화살·떡메)</summary>
+        static void PropC(string name, float cx, float cy)
+        {
+            var sp = Art("Pastimes/" + name); if (sp == null) return;
+            Put(sp, cx, cy + sp.rect.height, 2f, false);
+        }
         const string Keeper = "Stalls/Keepers/";
         static bool Blink(int i) => ((int)(Time.unscaledTime * 6f) + i) % 2 == 0;
         static void Shadow(float x, float y, float w, byte a = 60)
@@ -83,6 +90,18 @@ namespace PocketCaravan
             struct Bit { public Vector2 p, v; public float life, max, size; public Color32 c; }
             readonly List<Bit> bits = new List<Bit>();
             float lastDraw;
+
+            /// <summary>말을 걸어 시작하는 놀이면 그 사람 이름 (비우면 바로 시작)</summary>
+            protected virtual string Greeter => null;
+            protected virtual string Greeting => "";
+            /// <summary>맵에 세울 그림 (Resources/Goryeo/…)</summary>
+            public virtual string MapSprite => "Pastimes/pot";
+            public override void Interact(PlayerController player)
+            {
+                if (string.IsNullOrEmpty(Greeter)) { base.Interact(player); return; }
+                DialogueUI.Show(Greeter, Greeting, new DialogueUI.Choice("해 볼게요", () => Open(player)), new DialogueUI.Choice("다음에 할게요", null));
+            }
+            void Open(PlayerController player) => base.Interact(player);
 
             protected void Fresh() { bits.Clear(); shake = cheer = 0f; grade = 0; lastDraw = Time.unscaledTime; }
             protected void Shake(float amount = 1f) { shake = Mathf.Max(shake, amount); }
@@ -183,32 +202,48 @@ namespace PocketCaravan
         public class Tuho : Stage
         {
             public override string Id => "tuho";
-            public override string DisplayName => "투호";
+            public override string DisplayName => "투호 항아리";
+            public override string ActionVerb => "투호 하기";
             public override string Title => "투호";
             public override string Where => "개경 장터 마당";
-            public override string Hint => "붉은 표시가 병 밑 노란 띠에 올 때 Space! 화살 여덟 대를 던집니다. 병은 던질 때마다 자리를 옮겨요.";
+            public override string Hint => "Space를 꾹 눌러 힘을 모으고, 떼면 던집니다. 힘이 셀수록 멀리 날아가요. 화살 여덟 대, 넣으면 병이 자리를 옮깁니다.";
             const int Arrows = 8;
-            int thrown, hits, combo; float aim, aimDir, pot, flyT, flyTo, wait, wobble, lean; bool flying, lastHit;
-            readonly List<float> stuck = new List<float>();
+            int thrown, hits, combo; float aim, aimDir, pot, flyT, flyTo, wait, wobble, lean, lastPower = -1f; bool flying, charging, lastHit, near;
+#pragma warning disable 0649
+            bool holdForTest;   // 자동 플레이 확인용 (에디터 점검 도구가 Space를 누르고 있는 것처럼 둔다)
+#pragma warning restore 0649
+            readonly List<float> stuck = new List<float>(), lying = new List<float>();
             protected override string Status => $"남은 화살 {Arrows - thrown} · 넣음 {hits} · 최고 {Best(Id)}";
-            protected override void Begin() { Fresh(); thrown = hits = combo = 0; flying = lastHit = false; wait = wobble = lean = 0f; stuck.Clear(); NextPot(); }
-            void NextPot() { pot = UnityEngine.Random.Range(.3f, .95f); aim = 0f; aimDir = 1f; }
-            float Speed => 0.75f + thrown * 0.09f;   // 갈수록 빨라진다
-            float Window => Mathf.Lerp(.09f, .055f, thrown / (float)Arrows);
-            float X(float v) => 78f + v * (W - 112f);
+            protected override void Begin()
+            {
+                Fresh(); thrown = hits = combo = 0; flying = charging = lastHit = near = false; wait = wobble = lean = aim = 0f; lastPower = -1f;
+                stuck.Clear(); lying.Clear(); pot = UnityEngine.Random.Range(.45f, .65f);
+            }
+            void NextPot() { float was = pot; do pot = UnityEngine.Random.Range(.25f, 1f); while (Mathf.Abs(pot - was) < .18f); lastPower = -1f; }
+            float Speed => 0.85f + thrown * 0.06f;   // 갈수록 게이지가 빨리 찬다
+            float Window => Mathf.Lerp(.07f, .05f, thrown / (float)Arrows);
+            float X(float v) => 96f + v * (W - 128f);
             float PotX => X(pot);
+            const float HandX = 60f;
+            Vector2 Fly(float k)
+            {
+                bool inPot = Mathf.Abs(flyTo - pot) <= Window;
+                float ex = inPot ? PotX : X(flyTo), ey = inPot ? Feet - 44f : Feet - 4f, sy = Feet - 30f;
+                return new Vector2(Mathf.Lerp(HandX, ex, k), Mathf.Lerp(sy, ey, k) - Mathf.Sin(k * Mathf.PI) * (44f + flyTo * 30f));
+            }
             protected override void Tick(float dt)
             {
                 wobble = Mathf.Max(0f, wobble - dt * 2.5f); lean = Mathf.Max(0f, lean - dt * 4f);
                 if (!Playing) return;
-                if (wait > 0f) { wait -= dt; if (wait <= 0f) { if (thrown >= Arrows) End(); else NextPot(); } return; }
+                if (wait > 0f) { wait -= dt; if (wait <= 0f) { if (thrown >= Arrows) End(); else if (lastHit) NextPot(); } return; }
                 if (flying)
                 {
-                    flyT += dt * 2.1f;
+                    flyT += dt * 1.9f;
                     if (flyT >= 1f)
                     {
                         flying = false; thrown++;
-                        lastHit = Mathf.Abs(flyTo - pot) <= Window;
+                        float off = Mathf.Abs(flyTo - pot);
+                        lastHit = off <= Window; near = !lastHit && off <= Window * 2.4f;
                         if (lastHit)
                         {
                             hits++; combo++; wobble = 1f; Shake(.6f); Cheer(); Sfx.Play("coin", .5f);
@@ -216,28 +251,42 @@ namespace PocketCaravan
                             Pop(combo >= 2 ? $"쏙! {combo}연속" : "쏙!", new Vector2(PotX, Feet - 70), CuteUI.Up);
                             Pop(Shouts[UnityEngine.Random.Range(0, Shouts.Length)], new Vector2(118 + UnityEngine.Random.Range(0, 5) * 50, Back - 62), CuteUI.Text);
                         }
+                        else if (near)
+                        {
+                            combo = 0; wobble = .6f; Sfx.Play("bump", .5f);
+                            lying.Add(X(flyTo) + (flyTo < pot ? -16f : 16f));
+                            Pop("아깝다! 병에 맞았다", new Vector2(PotX, Feet - 70), CuteUI.Text);
+                        }
                         else
                         {
                             combo = 0; stuck.Add(flyTo); Sfx.Play("step", .45f);
                             Burst(X(flyTo), Feet - 2, 6, Dust, 40f, 30f);
-                            Pop(flyTo < pot ? "짧다" : "길다", new Vector2(X(flyTo), Feet - 30), CuteUI.Down);
+                            Pop(flyTo < pot ? "힘이 모자랐다" : "너무 셌다", new Vector2(X(flyTo), Feet - 30), CuteUI.Down);
                         }
-                        wait = .6f;
+                        wait = .7f;
                     }
+                    return;
+                }
+                if (!charging)
+                {
+                    if (InputReader.InteractPressed()) { charging = true; aim = 0f; aimDir = 1f; Sfx.Play("click", .3f); }
                     return;
                 }
                 aim += aimDir * Speed * dt;
                 if (aim >= 1f) { aim = 1f; aimDir = -1f; } else if (aim <= 0f) { aim = 0f; aimDir = 1f; }
-                if (InputReader.InteractPressed()) { flying = true; flyT = 0f; flyTo = aim; lean = 1f; Sfx.Play("open", .35f); }
+                if (!(InputReader.SpaceHeld() || holdForTest))
+                {
+                    charging = false; flying = true; flyT = 0f; flyTo = aim; lastPower = aim; lean = 1f; Sfx.Play("open", .35f);
+                }
             }
             void End()
             {
-                bool rec = SetBest(Id, hits); grade = hits >= 7 ? 3 : hits >= 5 ? 2 : hits >= 3 ? 1 : 0;
+                bool rec = SetBest(Id, hits); grade = hits >= 6 ? 3 : hits >= 4 ? 2 : hits >= 2 ? 1 : 0;
                 Finale(W / 2f, 40f);
-                var gm = GameManager.I; int coins = hits >= 3 ? hits * 3 : 0;
+                var gm = GameManager.I; int coins = hits >= 2 ? hits * 3 : 0;
                 if (coins > 0 && !DoneToday(Id)) { gm.Player.money += coins; MarkToday(Id); result = $"여덟 대 중 {hits}대! 구경꾼들이 엽전 {coins}냥을 던져 줬다."; Sfx.Play("levelup", .6f); }
                 else if (coins > 0) result = $"여덟 대 중 {hits}대! (오늘 엽전은 이미 받았다)";
-                else result = $"여덟 대 중 {hits}대… 세 대는 넣어야 박수를 받는다.";
+                else result = $"여덟 대 중 {hits}대… 두 대는 넣어야 박수를 받는다.";
                 if (rec) result += " 최고 기록!";
             }
             static readonly string[] Crowd = { Keeper + "npc_capital_peddler", Keeper + "npc_resident_silk", Keeper + "npc_wood_seller", Keeper + "npc_resident_boatman", "VillageLife/Trader/0" };
@@ -246,28 +295,39 @@ namespace PocketCaravan
                 Backdrop(r, "bg_tuho");
                 for (int i = 0; i < Crowd.Length; i++) Fan(Crowd[i], i, 118 + i * 50, Back, i > 2);
                 Pic("VillageLife/Art/dog_" + (Blink(0) ? "0" : "1"), W - 24, Back + 6, 1f, true);
-                // 빗나가 땅에 꽂힌 화살
+                // 빗나간 화살: 땅에 꽂힌 것, 병에 맞고 누운 것
                 foreach (float s in stuck) Prop("arrow_stuck", X(s), Feet + 4);
-                // 병 밑 노란 띠: 여기에 표시가 올 때 던지면 들어간다
-                float px = PotX + (wobble > 0f ? Mathf.Round(Mathf.Sin(Time.unscaledTime * 40f) * 2f * wobble) : 0f);
-                if (!finished && Playing)
-                {
-                    float half = Window * (W - 112f);
-                    F(PotX - half, Feet + 4, half * 2f, 4, new Color32(246, 196, 72, 200)); F(PotX - half, Feet + 8, half * 2f, 1, new Color32(190, 140, 50, 220));
-                }
+                foreach (float lx in lying) PropC("arrow_a4", lx, Feet - 2);
                 // 병 (들어간 화살이 입 밖으로 삐죽)
+                float px = PotX + (wobble > 0f ? Mathf.Round(Mathf.Sin(Time.unscaledTime * 40f) * 2f * wobble) : 0f);
                 Shadow(PotX, Feet - 3, 34);
                 for (int i = 0; i < hits; i++) { float ax = px - 5 + (i % 4) * 3 + (i / 4); F(ax, Feet - 60 - (i % 3) * 3, 2, 22, Wood); F(ax - 1, Feet - 62 - (i % 3) * 3, 4, 4, Red); }
                 Prop("pot", px, Feet);
-                // 던지는 나
-                Me(30 + lean * 4f, Feet, lean > .3f);
-                // 과녁 표시 (땅 위를 오간다)
-                if (!flying && wait <= 0f && !finished && Playing) Prop("reticle", X(aim), Feet + 16);
-                // 날아가는 화살: 올라갈 땐 위로, 내려올 땐 아래로 기운다
+                // 던지는 나: 힘을 모을 땐 몸을 뒤로, 던질 땐 앞으로
+                bool canThrow = !flying && wait <= 0f && !finished && Playing;
+                float back = charging ? Mathf.Round(aim * 4f) : 0f;
+                Me(46 - back + lean * 5f, Feet, lean > .3f);
+                if (canThrow) PropC(charging ? "arrow_a1" : "arrow_a2", HandX - 4 - back * 1.5f, Feet - 26 - back);
+                // 날아가는 화살: 날아가는 방향대로 기운다
                 if (flying)
                 {
-                    float x = Mathf.Lerp(46, X(flyTo), flyT), y = Feet - 34 - Mathf.Sin(flyT * Mathf.PI) * 62f;
-                    Prop(flyT < .38f ? "arrow_up" : flyT < .62f ? "arrow_flat" : "arrow_down", x, y + 8);
+                    Vector2 a = Fly(flyT), b = Fly(Mathf.Min(1f, flyT + .04f));
+                    float deg = Mathf.Atan2(b.y - a.y, b.x - a.x) * Mathf.Rad2Deg;
+                    PropC("arrow_a" + Mathf.Clamp(Mathf.RoundToInt((deg + 60f) / 15f), 0, 9), a.x, a.y);
+                }
+                // 힘 게이지 (내 왼쪽): 누르고 있는 동안 차오른다. 지난번에 던진 힘은 작은 눈금으로 남는다
+                if (!finished && Playing)
+                {
+                    float gx = 14f, gb = Feet + 2f, ih = 72f;
+                    Prop("gauge", gx, gb);
+                    if (charging)
+                    {
+                        float h = Mathf.Round(ih * aim);
+                        F(gx - 8, gb - 4 - h, 16, h, aim < .34f ? Green : aim < .67f ? Gold : Red);
+                        F(gx - 8, gb - 4 - h, 16, 2, Ink);
+                    }
+                    if (lastPower >= 0f) { float ly = gb - 4 - Mathf.Round(ih * lastPower); F(gx + 10, ly - 1, 5, 2, Ink); F(gx + 12, ly - 2, 3, 4, Ink); }
+                    CuteUI.LabelCenter(gx + 2, gb - 90, "힘", CuteUI.Text, true, true);
                 }
                 // 남은 화살
                 for (int i = 0; i < Arrows - thrown; i++) Prop("arrow_stuck", W - 10 - i * 10, 30);
@@ -280,7 +340,13 @@ namespace PocketCaravan
         public class RiceCake : Stage
         {
             public override string Id => "tteok";
-            public override string DisplayName => "떡메치기";
+            public override string DisplayName => "떡집 아주머니";
+            public override Kind Category => Kind.Person;
+            public override string MapSprite => Keeper + "npc_resident_ricecake";
+            protected override string Greeter => "떡집 아주머니";
+            protected override string Greeting => DoneToday(Id)
+                ? "아까는 고마웠어요. 품삯은 드렸지만, 또 쳐 보고 싶으면 떡메는 저기 있어요."
+                : "마침 잘 왔네요! 떡메 칠 사람이 없어서요.\n내가 떡을 뒤집을 땐 멈추고, 손을 빼면 쿵 하고 쳐 줘요. 품삯은 드릴게요.";
             public override string Title => "떡메치기";
             public override string Where => "예성 나루 떡집 앞";
             public override string Hint => "초록 박자가 네모 칸에 들어올 때 Space로 내려치세요. 빨간 손 박자는 아주머니가 떡을 뒤집으니 치면 안 돼요!";
@@ -336,7 +402,7 @@ namespace PocketCaravan
                     }
                     else if (off > .2f)
                     {
-                        if (hands[k]) { good++; flip = 1f; Sfx.Play("open", .3f); Pop("척!", new Vector2(CX + 30, Feet - 50), CuteUI.Up); }
+                        if (hands[k]) { good++; flip = 1f; Sfx.Play("open", .3f); Burst(CX + 8, Feet - 30, 5, new Color32(170, 210, 232, 255), 40f, 50f, 2f); Pop("척!", new Vector2(CX + 30, Feet - 56), CuteUI.Up); }
                         else Bad("놓쳤다", false);
                         k++;
                     }
@@ -361,27 +427,21 @@ namespace PocketCaravan
                 float cx = CX, fy = Feet;
                 Fan(Keeper + "npc_resident_boatman", 0, 34, fy - 6); Fan(Keeper + "npc_paper_worker", 1, W - 36, fy - 6, true);
                 Pic("VillageLife/Art/chicken_" + (Blink(0) ? "0" : "1"), W - 70, fy + 6, 1f, true);
-                // 떡판과 떡 (잘 칠수록 매끈해진다)
-                Shadow(cx, fy - 2, 84);
+                // 떡판(땅에 놓인 안반)과 떡: 잘 칠수록 매끈해지고, 맞는 순간 납작해진다
+                Shadow(cx, fy - 1, 86);
                 Prop("board", cx, fy + 2);
                 float sq = swing > .55f ? (swing - .55f) / .45f : 0f;
-                Prop("tteok_" + Stage3, cx, fy - 12 + sq * 4f, flip > .5f, 1f + sq * .18f, 1f - sq * .3f);
-                // 떡집 아주머니: 손 박자에 떡을 뒤집는다
+                float turn = flip > 0f ? Mathf.Sin(flip * Mathf.PI) : 0f;        // 뒤집히는 동안 살짝 들렸다 놓인다
+                Prop("tteok_" + Stage3, cx, fy - 8 + sq * 4f - turn * 5f, flip > .5f, 1f + sq * .18f, (1f - sq * .3f) * (1f - turn * .35f));
+                // 떡집 아주머니: 손 박자가 오면 떡 쪽으로 다가와 허리를 숙이고 뒤집는다 (팔을 따로 그리지 않는다)
                 bool handNext = k < times.Count && hands[k];
                 float until = handNext ? times[k] - t : 9f;
-                float reach = handNext ? Mathf.Clamp01(1f - (until - .05f) / .4f) * (1f - flinch) : flip > 0f ? flip : 0f;
-                Fan(Keeper + "npc_resident_ricecake", 2, cx + 64 + flinch * 6f, fy + 2 - flinch * 4f, true);
-                if (reach > 0f)
-                {
-                    float hx = cx + 50 - reach * 34f;
-                    F(hx + 4, fy - 30, cx + 54 - hx, 5, Cloth); F(hx + 4, fy - 25, cx + 54 - hx, 1, Ink); F(hx + 4, fy - 31, cx + 54 - hx, 1, Ink);
-                    F(hx - 2, fy - 31, 7, 7, Skin); F(hx - 3, fy - 31, 1, 7, Ink);
-                }
-                // 메치는 나 + 떡메 (자루는 손에서 메 머리까지)
-                Me(cx - 62, fy + 2, swing > .5f);
-                float hxm = Mathf.Lerp(cx - 36, cx - 4, swing), hym = Mathf.Lerp(fy - 66, fy - 30, swing);
-                Line(cx - 52, fy - 26, hxm, hym + 8, 3, Wood);
-                Prop("mallet_head", hxm, hym + 18);
+                float reach = handNext ? Mathf.Clamp01(1f - (until - .05f) / .35f) * (1f - flinch) : flip > 0f ? flip : 0f;
+                Fan(Keeper + "npc_resident_ricecake", 2, cx + 62 - Mathf.Round(reach * 22f) + flinch * 10f, fy + 2 + Mathf.Round(reach * 3f) - flinch * 4f, true);
+                // 메치는 나 + 떡메: 치켜든 자세에서 내려쳤다가 다시 올라간다 (자루째 돌려 구운 그림 4장)
+                int mf = swing > .55f ? 3 : swing > .35f ? 2 : swing > .15f ? 1 : 0;
+                Me(cx - 60, fy + 2, mf >= 2);
+                PropC("mallet_" + mf, cx - (mf == 3 ? 49 : mf == 2 ? 50 : 52), fy - (mf == 3 ? 28 : mf == 2 ? 25 : 20));
                 // 박자 길: 오른쪽에서 흘러와 왼쪽 네모 칸에 닿는다
                 var lane = new Rect(40, 6, W - 80, 30); float hitX = lane.x + 32;
                 if (finished) { Overlay(); return; }
@@ -408,10 +468,16 @@ namespace PocketCaravan
         public class Jegi : Stage
         {
             public override string Id => "jegi";
-            public override string DisplayName => "제기차기";
+            public override string DisplayName => "제기 차는 아이";
+            public override Kind Category => Kind.Person;
+            public override string MapSprite => "Pastimes/child";
+            protected override string Greeter => "제기 차는 아이";
+            protected override string Greeting => DoneToday(Id)
+                ? "또 차러 왔어요? 이번엔 내 기록도 넘어 봐요!"
+                : "제기 찰 줄 알아요?\n열 번만 넘기면 마을 사람들이 다 알아줄걸요!";
             public override string Title => "제기차기";
             public override string Where => "닭목 고갯마을 장터 마당";
-            public override string Hint => "제기가 발 높이(초록 띠)에 내려왔을 때 Space! 떨어뜨리면 끝이에요. 찰수록 띠가 좁아집니다.";
+            public override string Hint => "제기가 발 높이(발 옆 연한 띠)까지 내려왔을 때 Space! 떨어뜨리면 끝이에요. 찰수록 띠가 낮아집니다.";
             int kicks; float y, vy, x, vx, kickAnim; bool dropped;
             protected override string Status => $"찬 횟수 {kicks} · 최고 {Best(Id)}";
             protected override void Begin() { Fresh(); kicks = 0; y = .7f; vy = .9f; x = 0f; vx = 0f; kickAnim = 0f; dropped = false; }
@@ -436,7 +502,7 @@ namespace PocketCaravan
                         vx = UnityEngine.Random.Range(-.5f, .5f);
                         Sfx.Play("step", .5f);
                         float jy = Feet - y * (Feet - Top);
-                        Burst(KX + 6, jy, sweet ? 6 : 3, sweet ? Gold : Dust, 50f, 20f, 2f);
+                        Burst(KX + 9, jy, sweet ? 6 : 3, sweet ? Gold : Dust, 50f, 20f, 2f);
                         if (kicks % 5 == 0)
                         {
                             Cheer(1f); Confetti(KX, 50f); Sfx.Play("coin", .4f);
@@ -465,7 +531,7 @@ namespace PocketCaravan
             {
                 Backdrop(r, "bg_jegi");
                 float fy = Feet, cx = W / 2f, kx = KX;
-                Fan(Keeper + "npc_capital_peddler", 0, 30, fy - 4); Fan(Keeper + "npc_resident_silk", 1, 62, fy);
+                Fan(Keeper + "npc_capital_peddler", 0, 30, fy - 4); Fan("Pastimes/child", 1, 62, fy);
                 Fan(Keeper + "npc_paper_worker", 2, W - 34, fy - 2, true); Pic("VillageLife/Art/dog_" + (Blink(0) ? "0" : "1"), W - 76, fy + 6, 1f, true);
                 // 찬 횟수 (하늘에 크게)
                 if (!finished)
@@ -479,16 +545,16 @@ namespace PocketCaravan
                 bool inZone = !dropped && Playing && vy < 0f && y <= Zone;
                 if (!finished)
                 {
-                    F(kx - 34, fy - zh, 68, zh, inZone ? new Color32(150, 226, 130, 170) : new Color32(255, 252, 244, 110));
-                    F(kx - 34, fy - zh, 68, 2, Green); F(kx - 34, fy - zh, 2, zh, Green); F(kx + 32, fy - zh, 2, zh, Green);
+                    F(kx - 4, fy - zh, 26, zh, inZone ? new Color32(150, 226, 130, 170) : new Color32(255, 252, 244, 90));
+                    for (int i = 0; i < 4; i++) F(kx - 4 + i * 7, fy - zh, 5, 2, inZone ? Green : Ink);
                 }
                 // 차는 나 (제기를 따라 좌우로 움직인다)
                 Me(kx - 12, fy - (kickAnim > .5f ? 3 : 0), kickAnim > .2f);
                 // 제기와 땅 위 그림자 (높을수록 작고 흐리게)
                 float h01 = Mathf.Clamp01(y);
-                Shadow(kx + 6, fy - 1, Mathf.Lerp(16, 8, h01), (byte)(Mathf.RoundToInt(Mathf.Lerp(80, 30, h01) / 10f) * 10));   // 10 단위 (단색 그림 캐시)
+                Shadow(kx + 9, fy - 1, Mathf.Lerp(12, 6, h01), (byte)(Mathf.RoundToInt(Mathf.Lerp(80, 30, h01) / 10f) * 10));   // 10 단위 (단색 그림 캐시)
                 float jy2 = fy - Mathf.Clamp(y, 0f, 1.15f) * (fy - Top);
-                Prop(vy > 0f && !dropped ? "jegi_down" : "jegi_up", kx + 6, jy2 + 4);
+                Prop(vy > 0f && !dropped ? "jegi_down" : "jegi_up", kx + 9, jy2 + 2);
                 Overlay();
             }
         }
@@ -551,9 +617,14 @@ namespace PocketCaravan
                     var go = new GameObject("고려 놀이");
                     go.transform.SetParent(mr.transform, true);
                     go.transform.position = pos.Value;
-                    go.AddComponent(p.game);
-                    var t = Resources.Load<Texture2D>("Common/signpost");
-                    if (t != null) { t.filterMode = FilterMode.Point; var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = Sprite.Create(t, new Rect(0, 0, t.width, t.height), new Vector2(0.5f, 0.1f), 16f); sr.sortingOrder = 9; }
+                    var game = (Stage)go.AddComponent(p.game);
+                    game.blocksMovement = true;      // 항아리·사람이라 그 칸은 지나가지 못한다 (자리를 고를 때 사방이 트인 칸만 고른다)
+                    var sp = Resources.Load<Sprite>("Goryeo/" + game.MapSprite);
+                    if (sp == null) continue;
+                    var pic = new GameObject("그림"); pic.transform.SetParent(go.transform, false);
+                    // 놀이 그림은 가운데가 기준점이라 발이 칸 아래쪽에 오게 올린다 (장터 사람 그림은 기준점이 이미 발밑)
+                    if (game.MapSprite.StartsWith("Pastimes/")) pic.transform.localPosition = new Vector3(0f, sp.bounds.extents.y - .4f, 0f);
+                    var sr = pic.AddComponent<SpriteRenderer>(); sr.sprite = sp; sr.sortingOrder = 10;
                 }
             }
         }
