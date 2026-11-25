@@ -243,6 +243,45 @@ namespace PocketCaravan
             CheckPassive(p);
         }
 
+        // ---------------- 11/25 의뢰 내려놓기 (포기) ----------------
+        /// <summary>저절로 시작되는 의뢰는 내려놓을 수 없다 (내려놓자마자 다시 시작된다)</summary>
+        static readonly HashSet<string> NoAbandon = new HashSet<string> { "north_q4_storm" };
+
+        /// <summary>내려놓을 수 없는 까닭. 내려놓을 수 있으면 null</summary>
+        public string AbandonBlocker(Progress p)
+        {
+            if (p == null || p.quest == null || !active.TryGetValue(p.quest, out var cur) || cur != p) return "받은 의뢰가 아니에요";
+            if (OffersPaused != null && OffersPaused()) return "첫걸음 안내를 마친 뒤에 내려놓을 수 있어요";
+            if (NoAbandon.Contains(p.quest.id)) return "급한 일이라 내려놓을 수 없어요";
+            if (string.IsNullOrEmpty(p.quest.giverNpc)) return "다시 받을 곳이 없는 일이라 내려놓을 수 없어요";
+            var q = p.quest;
+            // 맡긴 물건이 팔 수 있는 것인데 아직 한 단계도 안 했고 수가 모자라면: 팔거나 쓴 것 (그대로 내려놓으면 공짜 물건이 된다)
+            if (q.giveItem != null && q.giveCount > 0 && !q.giveItem.questItem && p.step == 0 && GameManager.I.Player.cargo.Count(q.giveItem) < q.giveCount)
+                return $"맡은 {q.giveItem.displayName} {q.giveCount}개가 있어야 돌려주고 내려놓을 수 있어요";
+            return null;
+        }
+
+        /// <summary>
+        /// 의뢰를 내려놓는다. 벌칙은 없고, 준 사람에게 가면 다시 받을 수 있다.
+        /// 맡은 물건(giveItem)은 가진 만큼 돌려준다. 돈을 주고 넘겨받은 물건(offerItem)은 내 것이라 그대로 둔다.
+        /// </summary>
+        public bool Abandon(Progress p)
+        {
+            if (AbandonBlocker(p) != null) return false;
+            var q = p.quest; var pl = GameManager.I.Player;
+            int back = 0;
+            if (q.giveItem != null && q.giveCount > 0)
+            {
+                back = Mathf.Min(q.giveCount, pl.cargo.Count(q.giveItem));
+                for (int i = 0; i < back; i++) pl.cargo.Remove(q.giveItem);
+            }
+            active.Remove(q);
+            if (Tracked == p) Tracked = null;
+            Notify.Show($"의뢰를 내려놓았어요: {q.title}" + (back > 0 ? $"\n맡은 {q.giveItem.displayName} {back}개는 돌려보냈어요" : "") + (q.retired ? "" : "\n준 사람에게 가면 다시 받을 수 있어요"), 5f);
+            Sfx.Play("open", .4f);
+            return true;
+        }
+
         /// <summary>Talk/Deliver 단계를 이 NPC에게서 끝낸다. 끝낸 단계의 대사를 돌려준다 (실패하면 null).</summary>
         public string TryCompleteAt(string npcId, out string failReason)
         {
