@@ -96,6 +96,11 @@ namespace PocketCaravan
             protected virtual string Greeting => "";
             /// <summary>맵에 세울 그림 (Resources/Goryeo/…)</summary>
             public virtual string MapSprite => "Pastimes/pot";
+            /// <summary>맵 그림을 칸 안에서 위로 올리는 높이 (앞에 소품을 둘 때)</summary>
+            public virtual float MapLift => 0f;
+            public struct Decor { public string name; public float x, y; public int order; }
+            /// <summary>맵에서 곁에 놓는 소품 (지나가는 길은 막지 않는다)</summary>
+            public virtual Decor[] MapDecor => new Decor[0];
             public override void Interact(PlayerController player)
             {
                 if (string.IsNullOrEmpty(Greeter)) { base.Interact(player); return; }
@@ -204,6 +209,7 @@ namespace PocketCaravan
             public override string Id => "tuho";
             public override string DisplayName => "투호 항아리";
             public override string ActionVerb => "투호 하기";
+            public override Decor[] MapDecor => new[] { new Decor { name = "arrow_stuck", x = -.62f, y = -.05f, order = 9 }, new Decor { name = "arrow_stuck", x = .58f, y = -.2f, order = 11 } };
             public override string Title => "투호";
             public override string Where => "개경 장터 마당";
             public override string Hint => "Space를 꾹 눌러 힘을 모으고, 떼면 던집니다. 힘이 셀수록 멀리 날아가요. 화살 여덟 대, 넣으면 병이 자리를 옮깁니다.";
@@ -219,7 +225,7 @@ namespace PocketCaravan
                 Fresh(); thrown = hits = combo = 0; flying = charging = lastHit = near = false; wait = wobble = lean = aim = 0f; lastPower = -1f;
                 stuck.Clear(); lying.Clear(); pot = UnityEngine.Random.Range(.45f, .65f);
             }
-            void NextPot() { float was = pot; do pot = UnityEngine.Random.Range(.25f, 1f); while (Mathf.Abs(pot - was) < .18f); lastPower = -1f; }
+            void NextPot() { float was = pot; do pot = UnityEngine.Random.Range(.25f, .9f); while (Mathf.Abs(pot - was) < .18f); lastPower = -1f; }
             float Speed => 0.85f + thrown * 0.06f;   // 갈수록 게이지가 빨리 찬다
             float Window => Mathf.Lerp(.07f, .05f, thrown / (float)Arrows);
             float X(float v) => 96f + v * (W - 128f);
@@ -343,6 +349,8 @@ namespace PocketCaravan
             public override string DisplayName => "떡집 아주머니";
             public override Kind Category => Kind.Person;
             public override string MapSprite => Keeper + "npc_resident_ricecake";
+            public override float MapLift => .3f;
+            public override Decor[] MapDecor => new[] { new Decor { name = "map_tteok", x = 0f, y = -.08f, order = 11 } };   // 아주머니 앞에 놓인 떡판
             protected override string Greeter => "떡집 아주머니";
             protected override string Greeting => DoneToday(Id)
                 ? "아까는 고마웠어요. 품삯은 드렸지만, 또 쳐 보고 싶으면 떡메는 저기 있어요."
@@ -427,17 +435,18 @@ namespace PocketCaravan
                 float cx = CX, fy = Feet;
                 Fan(Keeper + "npc_resident_boatman", 0, 34, fy - 6); Fan(Keeper + "npc_paper_worker", 1, W - 36, fy - 6, true);
                 Pic("VillageLife/Art/chicken_" + (Blink(0) ? "0" : "1"), W - 70, fy + 6, 1f, true);
+                // 떡집 아주머니: 떡판 오른쪽 끝 뒤에 서 있다가, 손 박자가 오면 판 쪽으로 다가와 허리를 숙이고 뒤집는다.
+                // 떡판보다 먼저 그려서 판 뒤에 선 것으로 보이게 한다 (판 위에 올라선 것처럼 보이면 안 된다)
+                bool handNext = k < times.Count && hands[k];
+                float until = handNext ? times[k] - t : 9f;
+                float reach = handNext ? Mathf.Clamp01(1f - (until - .05f) / .35f) * (1f - flinch) : flip > 0f ? flip : 0f;
+                Fan(Keeper + "npc_resident_ricecake", 2, cx + 54 - Mathf.Round(reach * 14f) + flinch * 10f, fy - 6 + Mathf.Round(reach * 3f) - flinch * 4f, true);
                 // 떡판(땅에 놓인 안반)과 떡: 잘 칠수록 매끈해지고, 맞는 순간 납작해진다
                 Shadow(cx, fy - 1, 86);
                 Prop("board", cx, fy + 2);
                 float sq = swing > .55f ? (swing - .55f) / .45f : 0f;
                 float turn = flip > 0f ? Mathf.Sin(flip * Mathf.PI) : 0f;        // 뒤집히는 동안 살짝 들렸다 놓인다
                 Prop("tteok_" + Stage3, cx, fy - 8 + sq * 4f - turn * 5f, flip > .5f, 1f + sq * .18f, (1f - sq * .3f) * (1f - turn * .35f));
-                // 떡집 아주머니: 손 박자가 오면 떡 쪽으로 다가와 허리를 숙이고 뒤집는다 (팔을 따로 그리지 않는다)
-                bool handNext = k < times.Count && hands[k];
-                float until = handNext ? times[k] - t : 9f;
-                float reach = handNext ? Mathf.Clamp01(1f - (until - .05f) / .35f) * (1f - flinch) : flip > 0f ? flip : 0f;
-                Fan(Keeper + "npc_resident_ricecake", 2, cx + 62 - Mathf.Round(reach * 22f) + flinch * 10f, fy + 2 + Mathf.Round(reach * 3f) - flinch * 4f, true);
                 // 메치는 나 + 떡메: 치켜든 자세에서 내려쳤다가 다시 올라간다 (자루째 돌려 구운 그림 4장)
                 int mf = swing > .55f ? 3 : swing > .35f ? 2 : swing > .15f ? 1 : 0;
                 Me(cx - 60, fy + 2, mf >= 2);
@@ -471,25 +480,28 @@ namespace PocketCaravan
             public override string DisplayName => "제기 차는 아이";
             public override Kind Category => Kind.Person;
             public override string MapSprite => "Pastimes/child";
+            public override Decor[] MapDecor => new[] { new Decor { name = "jegi_up", x = .5f, y = -.05f, order = 11 } };
             protected override string Greeter => "제기 차는 아이";
             protected override string Greeting => DoneToday(Id)
                 ? "또 차러 왔어요? 이번엔 내 기록도 넘어 봐요!"
                 : "제기 찰 줄 알아요?\n열 번만 넘기면 마을 사람들이 다 알아줄걸요!";
             public override string Title => "제기차기";
             public override string Where => "닭목 고갯마을 장터 마당";
-            public override string Hint => "제기가 발 높이(발 옆 연한 띠)까지 내려왔을 때 Space! 떨어뜨리면 끝이에요. 찰수록 띠가 낮아집니다.";
+            public override string Hint => "제기가 발등 높이(발 옆 연한 띠)까지 내려왔을 때 Space! 떨어뜨리면 끝이에요. 찰수록 제기가 빨리 떨어집니다.";
             int kicks; float y, vy, x, vx, kickAnim; bool dropped;
             protected override string Status => $"찬 횟수 {kicks} · 최고 {Best(Id)}";
-            protected override void Begin() { Fresh(); kicks = 0; y = .7f; vy = .9f; x = 0f; vx = 0f; kickAnim = 0f; dropped = false; }
-            float Zone => Mathf.Lerp(.24f, .12f, Mathf.Clamp01(kicks / 30f));   // 발 높이 띠 (0 = 바닥)
+            protected override void Begin() { Fresh(); kicks = 0; y = .75f; vy = .6f; x = 0f; vx = 0f; kickAnim = 0f; dropped = false; }
+            // 발등 높이 띠 (0 = 바닥, 놀이 칸에서 14픽셀쯤: 발목~무릎 아래). 11/25 5차 은샘: 띠가 허리까지 올라와 너무 높아 보였다.
+            // 띠를 낮추는 대신 제기가 술 때문에 천천히 내려오게 해서(내려오는 빠르기에 한계) 누를 틈은 전과 비슷하다
+            const float Zone = .135f;
+            float Fall => Mathf.Lerp(.7f, 1.1f, Mathf.Clamp01(kicks / 30f));   // 내려오는 빠르기 한계 (찰수록 빨라진다)
             const float Top = 14f;
             float KX => W / 2f + x * 40f;
             protected override void Tick(float dt)
             {
                 kickAnim = Mathf.Max(0f, kickAnim - dt * 5f);
                 if (!Playing || dropped) return;
-                float g = 2.6f + Mathf.Min(1.6f, kicks * .05f);
-                vy -= g * dt; y += vy * dt; x += vx * dt;
+                vy = Mathf.Max(-Fall, vy - 3f * dt); y += vy * dt; x += vx * dt;
                 if (Mathf.Abs(x) > 1f) { x = Mathf.Sign(x); vx = -vx; }
                 if (InputReader.InteractPressed())
                 {
@@ -498,7 +510,7 @@ namespace PocketCaravan
                     {
                         kicks++;
                         bool sweet = y <= Zone * .55f;
-                        vy = sweet ? 1.5f : 1.2f + UnityEngine.Random.Range(0f, .25f);
+                        vy = sweet ? 1.95f : 1.6f + UnityEngine.Random.Range(0f, .25f);
                         vx = UnityEngine.Random.Range(-.5f, .5f);
                         Sfx.Play("step", .5f);
                         float jy = Feet - y * (Feet - Top);
@@ -561,12 +573,14 @@ namespace PocketCaravan
 
         // ---------------- 자리 ----------------
 
-        struct Place { public string map; public Type game; }
+        // at = 맵에서 직접 고른 칸 (11/25 5차 은샘: 좌판 바로 앞·길 한가운데는 어색하다). 그 칸이 막혀 있으면 장터 근처 빈 칸을 찾는다.
+        // 개경 투호는 장터 옆 잔디 마당, 나루 아주머니는 장터 마당 가장자리, 닭목 아이는 장터 아래 풀밭
+        struct Place { public string map; public Type game; public Vector2Int at; }
         static readonly Place[] Places =
         {
-            new Place { map = "Gaegyeong", game = typeof(Tuho) },
-            new Place { map = "Naru", game = typeof(RiceCake) },
-            new Place { map = "Dakmok", game = typeof(Jegi) },
+            new Place { map = "Gaegyeong", game = typeof(Tuho), at = new Vector2Int(31, 22) },
+            new Place { map = "Naru", game = typeof(RiceCake), at = new Vector2Int(17, 53) },
+            new Place { map = "Dakmok", game = typeof(Jegi), at = new Vector2Int(4, 20) },
         };
 
         /// <summary>그 맵 장터에서 오른쪽 아래로 몇 칸 떨어진, 걸을 수 있고 비어 있는 칸 (장터가 없으면 길 가운데)</summary>
@@ -599,6 +613,13 @@ namespace PocketCaravan
         }
         static bool Free(MapRoot mr, Vector3Int c) => mr.IsWalkable(c) && Interactable.At(c) == null;
 
+        static void Deco(Transform parent, Sprite sp, Vector2 at, int order)
+        {
+            var pic = new GameObject("그림"); pic.transform.SetParent(parent, false);
+            pic.transform.localPosition = at;
+            var sr = pic.AddComponent<SpriteRenderer>(); sr.sprite = sp; sr.sortingOrder = order;
+        }
+
         class Runner : MonoBehaviour
         {
             void OnEnable() { SceneManager.sceneLoaded += OnLoaded; }
@@ -612,7 +633,8 @@ namespace PocketCaravan
                 foreach (var p in Places)
                 {
                     if (p.map != mr.mapId) continue;
-                    var pos = SpotNearMarket(mr);
+                    var want = new Vector3Int(p.at.x, p.at.y, 0);
+                    Vector3? pos = Free(mr, want) ? mr.CellCenter(want) : SpotNearMarket(mr);
                     if (pos == null) { Debug.LogWarning($"[고려 놀이] {p.map}: 자리가 없다"); continue; }
                     var go = new GameObject("고려 놀이");
                     go.transform.SetParent(mr.transform, true);
@@ -621,10 +643,14 @@ namespace PocketCaravan
                     game.blocksMovement = true;      // 항아리·사람이라 그 칸은 지나가지 못한다 (자리를 고를 때 사방이 트인 칸만 고른다)
                     var sp = Resources.Load<Sprite>("Goryeo/" + game.MapSprite);
                     if (sp == null) continue;
-                    var pic = new GameObject("그림"); pic.transform.SetParent(go.transform, false);
                     // 놀이 그림은 가운데가 기준점이라 발이 칸 아래쪽에 오게 올린다 (장터 사람 그림은 기준점이 이미 발밑)
-                    if (game.MapSprite.StartsWith("Pastimes/")) pic.transform.localPosition = new Vector3(0f, sp.bounds.extents.y - .4f, 0f);
-                    var sr = pic.AddComponent<SpriteRenderer>(); sr.sprite = sp; sr.sortingOrder = 10;
+                    bool centered = game.MapSprite.StartsWith("Pastimes/");
+                    Deco(go.transform, sp, new Vector2(0f, (centered ? sp.bounds.extents.y - .4f : 0f) + game.MapLift), 10);
+                    foreach (var d in game.MapDecor)
+                    {
+                        var ds = Resources.Load<Sprite>("Goryeo/Pastimes/" + d.name);
+                        if (ds != null) Deco(go.transform, ds, new Vector2(d.x, d.y + ds.bounds.extents.y - .4f), d.order);
+                    }
                 }
             }
         }

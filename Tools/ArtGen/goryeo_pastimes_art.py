@@ -228,6 +228,16 @@ def mallet(deg):
     return outlined(big)
 
 
+def map_tteok():
+    """맵에서 아주머니 앞에 놓는 작은 떡판과 떡 (18x10)"""
+    im, d = canvas(18, 10)
+    d.rectangle([1, 5, 16, 7], fill=(176, 130, 84, 255)); d.rectangle([1, 5, 16, 5], fill=(210, 168, 116, 255))
+    d.rectangle([2, 8, 4, 8], fill=(138, 98, 62, 255)); d.rectangle([13, 8, 15, 8], fill=(138, 98, 62, 255))
+    d.rectangle([4, 2, 13, 4], fill=(250, 246, 236, 255)); d.rectangle([6, 1, 11, 1], fill=(250, 246, 236, 255))
+    d.rectangle([5, 4, 12, 4], fill=(220, 210, 196, 255))
+    return outlined(im)
+
+
 def gauge():
     """투호 힘 게이지 틀 (속은 코드에서 채운다): 12x40, 안쪽 8x36"""
     im, d = canvas(12, 40)
@@ -463,7 +473,7 @@ def main():
         save(f"arrow_a{i}", arrow_at(-60 + i * 15))
     for i, deg in enumerate((128, 82, 40, 12)):          # 치켜든 자세 → 내려친 자세
         save(f"mallet_{i}", mallet(deg))
-    save("gauge", gauge())
+    save("gauge", gauge()); save("map_tteok", map_tteok())
     # 제기 차는 아이: 이미 있는 나루 아이 그림(정면)을 그대로 가져온다
     save("child", art(os.path.join(ROOT, "Art", "Characters", "NPC", "npc_naru_fishing_child"), "npc_naru_fishing_child_tall_d0"))
     save("mallet_head", mallet_head()); save("board", board())
