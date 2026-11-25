@@ -247,7 +247,11 @@ namespace PocketCaravan
         void UpdateFishing(float dt)
         {
             bob += dt;
-            if (InputReader.CancelPressed()) { EndFishing(); return; }
+            if (InputReader.CancelPressed())
+            {
+                if (fishing == FState.Bite || fishing == FState.Reel) Refreeze();   // 11/25 물고기를 보고 나서 그만두면 구멍이 다시 언다 (큰 물고기가 물 때까지 닫았다 열던 것)
+                EndFishing(); return;
+            }
             bool press = !Fresh && InputReader.InteractPressed();
             switch (fishing)
             {
@@ -328,14 +332,15 @@ namespace PocketCaravan
             else if (!gm.Player.CanCarry(item, 1)) result = $"{f.name}를 낚았지만 짐이 가득 차서 놓아 줬어.";
             else
             {
-                gm.Player.cargo.Add(item, 1, 0f);
+                bool kept = FishBasket.Take();   // 11/25 짐으로는 하루 3마리까지 (크기 기록·도감은 그대로)
+                if (kept) gm.Player.cargo.Add(item, 1, 0f);
                 // 크기: 빨리 끌어올릴수록(줄다리기 시간이 짧을수록) 큰 놈일 확률이 조금 높다
                 float luck = Mathf.Pow(UnityEngine.Random.value, 1.6f) * 0.85f + Mathf.Clamp01(1.6f / Mathf.Max(0.5f, reelTime)) * 0.15f;
                 int cm = Mathf.RoundToInt(Mathf.Lerp(f.minCm, f.maxCm, Mathf.Clamp01(luck)));
                 int best = NorthDaily.Best(f.id);
                 NorthSave.Add("fish:" + f.id + ":count", 1f);
                 if (cm > best) NorthSave.Set("fish:" + f.id + ":best", cm);
-                result = $"{f.name} {cm}cm를 낚았다!  (화물 +1)" + (cm > best && best > 0 ? "\n최고 기록!" : best == 0 ? "\n도감에 새로 올랐다!" : "");
+                result = $"{f.name} {cm}cm를 낚았다!  " + (kept ? $"(화물 +1 · 생선 통 {FishBasket.Max - FishBasket.Left}/{FishBasket.Max})" : "\n" + FishBasket.FullLine) + (cm > best && best > 0 ? "\n최고 기록!" : best == 0 ? "\n도감에 새로 올랐다!" : "");
             }
             fishing = FState.Result;
             Play(jingle, 0.6f);
@@ -363,6 +368,18 @@ namespace PocketCaravan
         float px, dist, speed, air, airCool, invuln, spawnAt, shake, runTime;
         int hearts, flakes, runes;
         int reward;
+        bool freeRun;
+        const string PrizeDayKey = "north:sled:prizeday";
+        const string PrizeSumKey = "north:sled:prizesum";
+        static int PrizeCap => SledRewardCap + (NorthLegends.Blessed ? 20 : 0);
+        /// <summary>오늘 더 받을 수 있는 썰매 상금 (하루 합계가 상한까지). 날이 바뀌면 다시 찬다</summary>
+        static int PrizeLeftToday(GameManager gm)
+        {
+            if (gm == null) return 0;
+            int got = Mathf.RoundToInt(gm.GetMemo(PrizeDayKey, -1f)) == gm.Clock.day ? Mathf.RoundToInt(gm.GetMemo(PrizeSumKey)) : 0;
+            return Mathf.Max(0, PrizeCap - got);
+        }
+        static bool PrizeTakenToday(GameManager gm) => gm != null && PrizeLeftToday(gm) <= 0;
         const float FieldW = 220f, FieldH = 300f, Goal = 4200f;
 
         public static void AskSled()
@@ -372,13 +389,21 @@ namespace PocketCaravan
             if (m == null || gm == null || m.sled != SState.None || m.fishing != FState.None) return;
             int best = PlayerPrefs.GetInt(BestKey, 0);
             string rec = best > 0 ? $"\n내 최고 기록: {best}점" : "";
+            if (PrizeTakenToday(gm))   // 11/25 상금은 하루 합계 상한까지. 그 뒤로는 값도 상금도 없이 기록만 잰다 (20냥 내고 60냥을 몇 번이고 받던 것)
+            {
+                DialogueUI.Show("썰매꾼",
+                    $"오늘 줄 상금은 다 받아 갔잖아. 그래도 또 타고 싶으면 그냥 타! 돈은 안 받을게. 기록은 재 줄 테니까.{rec}",
+                    new DialogueUI.Choice("탄다 (그냥 타기)", () => m.StartSled()),
+                    new DialogueUI.Choice("다음에", null));
+                return;
+            }
             if (gm.Player.money < SledFee)
             {
                 DialogueUI.Show("썰매꾼", $"언덕 썰매는 한 판에 {SledFee}냥이야. 돈이 모자라는걸? 장사 좀 하고 와.{rec}");
                 return;
             }
             DialogueUI.Show("썰매꾼",
-                $"언덕 썰매 한 판에 {SledFee}냥! 나무랑 바위는 피하고, 통나무는 Space로 뛰어넘어.\n눈송이와 룬돌을 모아서 끝까지 내려가면 상금을 줄게 (최대 {SledRewardCap}냥).{rec}",
+                $"언덕 썰매 한 판에 {SledFee}냥! 나무랑 바위는 피하고, 통나무는 Space로 뛰어넘어.\n눈송이와 룬돌을 모아서 끝까지 내려가면 상금을 줄게 (하루에 모두 {PrizeCap}냥까지).{rec}",
                 new DialogueUI.Choice($"탄다 ({SledFee}냥)", () => m.StartSled()),
                 new DialogueUI.Choice("다음에", null));
         }
@@ -386,8 +411,13 @@ namespace PocketCaravan
         void StartSled()
         {
             var gm = GameManager.I;
-            if (gm == null || gm.Player.money < SledFee) return;
-            gm.Player.money -= SledFee;
+            if (gm == null) return;
+            freeRun = PrizeTakenToday(gm);
+            if (!freeRun)
+            {
+                if (gm.Player.money < SledFee) return;
+                gm.Player.money -= SledFee;
+            }
             objs.Clear();
             px = 0f; dist = 0f; speed = 70f; air = 0f; airCool = 0f; invuln = 0f; spawnAt = 120f; shake = 0f; runTime = 0f;
             hearts = 3; flakes = 0; runes = 0; reward = 0;
@@ -484,12 +514,19 @@ namespace PocketCaravan
         void EndSled(bool done)
         {
             int score = flakes + runes * 10 + (done ? 20 + hearts * 5 : 0);
-            reward = Mathf.Min(SledRewardCap + (NorthLegends.Blessed ? 20 : 0), score);
-            if (GameManager.I != null) GameManager.I.Player.money += reward;
+            var gm = GameManager.I;
+            reward = freeRun || gm == null ? 0 : Mathf.Min(PrizeLeftToday(gm), score);
+            if (gm != null && reward > 0)
+            {
+                int left = PrizeLeftToday(gm);
+                gm.Player.money += reward;
+                gm.SetMemo(PrizeSumKey, PrizeCap - left + reward);
+                gm.SetMemo(PrizeDayKey, gm.Clock.day);
+            }
             if (score > PlayerPrefs.GetInt(BestKey, 0)) { PlayerPrefs.SetInt(BestKey, score); PlayerPrefs.Save(); }
             result = (done ? "완주!" : hearts <= 0 ? "꽈당! 썰매가 뒤집혔어." : "중간에 내렸어.")
                      + $"\n눈송이 {flakes} · 룬돌 {runes}" + (done ? $" · 남은 하트 {hearts}" : "")
-                     + $"\n점수 {score}  →  상금 {reward}냥" + (score >= PlayerPrefs.GetInt(BestKey, 0) && score > 0 ? "  (최고 기록!)" : "");
+                     + (freeRun ? $"\n점수 {score}  (상금은 내일 다시)" : $"\n점수 {score}  →  상금 {reward}냥") + (score >= PlayerPrefs.GetInt(BestKey, 0) && score > 0 ? "  (최고 기록!)" : "");
             sled = SState.Result;
             startFrame = Time.frameCount;
             Play(done ? jingle : thud, 0.6f);

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PocketCaravan
 {
-    /// <summary>Esc 메뉴: 계속, 상업 백과, 소리, 화면(전체·창, 11/19), 처음부터. 11/18 저장은 저절로 된다 (단추 대신 아래에 "자동 저장 · 방금")</summary>
+    /// <summary>Esc 메뉴: 계속, 상업 백과, 소리, 화면(전체·창, 11/19), 게임 끝내기(11/25), 처음부터. 11/18 저장은 저절로 된다 (단추 대신 아래에 "자동 저장 · 방금")</summary>
     public class PauseMenu : MonoBehaviour
     {
         bool open, confirmNew;
@@ -46,7 +46,7 @@ namespace PocketCaravan
             float w = Mathf.Min(340, UIStyle.VirtualWidth - 16);
             float issueHeight = string.IsNullOrEmpty(issue) ? 0 : CuteUI.WrapHeight(issue, w - 50, true) + 8;
             float shownIssue = Mathf.Min(issueHeight, 60);
-            float h = Mathf.Min(UIStyle.VirtualHeight - 34, 42 + 5 * 30 + 28   /* 11/18 저장 단추 대신 자동 저장 줄 · 은샘: 마지막 단추 아래 여백 +8 */ + shownIssue + (shownIssue > 0 ? 8 : 0));
+            float h = Mathf.Min(UIStyle.VirtualHeight - 34, 42 + 6 * 30 + 28   /* 11/18 저장 단추 대신 자동 저장 줄 · 은샘: 마지막 단추 아래 여백 +8 */ + shownIssue + (shownIssue > 0 ? 8 : 0));
             var r = lastWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round((UIStyle.VirtualHeight - h) / 2 + 8), w, h);
             CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, "게임 메뉴");
             CuteUI.Keycap(r.xMax - 32 - CuteUI.KeycapWidth("Esc") - 3, r.y - 3, "Esc");
@@ -86,6 +86,8 @@ namespace PocketCaravan
             if (Row(ref y, r, CuteUI.Pic.Speaker, AudioManager.Muted ? "소리 켜기" : "소리 끄기", AudioManager.Muted ? "지금 꺼져 있어요" : "지금 켜져 있어요")) AudioManager.ToggleMute();
             // 11/19 은샘: 전체 화면 ↔ 창 화면 (빌드에서만 바뀐다. 에디터 게임 창은 그대로)
             if (Row(ref y, r, CuteUI.Pic.Menu, FullScreen ? "창 화면으로" : "전체 화면으로", FullScreen ? "지금 전체 화면" : "지금 창 화면")) ToggleScreen();
+            // 11/25 게임 끝내기 (전체 화면에서 끄는 방법이 Alt+F4뿐이었다. 스팀 빌드 검토의 "종료" 항목). 저장하고 끈다
+            if (Row(ref y, r, CuteUI.Pic.Runner, "게임 끝내기", "저장하고 꺼요")) { QuitGame(); return; }
             if (Row(ref y, r, CuteUI.Pic.XMark, confirmNew ? "정말 처음부터?" : "처음부터 시작", confirmNew ? "한 번 더 누르면 지워져요" : "지금 저장을 지워요", false, true))
             {
                 if (confirmNew) { open = false; UIState.Release(this); GameManager.NewGame(); return; }
@@ -101,6 +103,17 @@ namespace PocketCaravan
                 CuteUI.Icon(CuteUI.Pic.Check, r.center.x - lw / 2f, y - 2, 1, ago >= 0f ? CuteUI.Up : CuteUI.Sub);
                 CuteUI.Label(r.center.x - lw / 2f + 14f, y + 2, line, CuteUI.Sub, true);
             }
+        }
+
+        static void QuitGame()
+        {
+            var gm = GameManager.I;
+            if (gm != null) gm.SaveNow();
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
 
         static bool FullScreen => Screen.fullScreenMode != FullScreenMode.Windowed;

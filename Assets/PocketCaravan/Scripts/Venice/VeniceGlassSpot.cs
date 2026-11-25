@@ -73,7 +73,12 @@ namespace PocketCaravan
                 if (round >= 3) Reward();
                 else NewRound();
             }
-            if (InputReader.CancelPressed() && resultUntil <= 0f) { round = 3; Reward(); }
+            if (InputReader.CancelPressed() && resultUntil <= 0f)
+            {
+                // 11/25 한 번도 불기 전에 Esc면 재료값을 돌려주고 오늘 기회도 그대로 (Esc 한 번에 10냥과 하루 기회가 같이 사라지던 것)
+                if (round == 0) { var gm = GameManager.I; if (gm != null) gm.Player.money += 10; message = "유리 불기를 그만뒀다. 재료값 10냥은 돌려받았다."; Finish(); return; }
+                round = 3; Reward();
+            }
         }
 
         void Reward()

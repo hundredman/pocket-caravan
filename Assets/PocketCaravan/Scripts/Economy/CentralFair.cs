@@ -137,6 +137,7 @@ namespace PocketCaravan
             void OnSold(ItemData item, TownData town, int price, int profit)
             {
                 if (town == null || price <= 0 || GameManager.I == null || !IsFairTown(town.id)) return;
+                if (ReputationPricing.LastSaleRestricted) return;   // 11/25 이 장터에서 방금 산 물건을 되판 것에는 덤이 없다
                 int bonus = Mathf.Max(1, Mathf.RoundToInt(price * Bonus(ChunkOfTown(town.id))));
                 GameManager.I.Player.money += bonus;
                 Notify.Show($"큰 장 덤 +{bonus}냥 ({Today(ChunkOfTown(town.id)).name})", 2f);

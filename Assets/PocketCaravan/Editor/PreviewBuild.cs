@@ -24,6 +24,13 @@ namespace PocketCaravan.EditorTools
         [MenuItem("Pocket Caravan/Build/Windows 고려 프리뷰")]
         public static void Windows() => Build(BuildTarget.StandaloneWindows64, "Builds/Windows", "Baribari.exe");   // 11/08 게임 이름 바리바리 (파일 이름은 압축·전송에서 안 깨지게 영문)
 
+        // 11/25 스팀 업로드용 본편 빌드. 프리뷰와 달리 CARAVAN_PREVIEW를 넣지 않아 본편 저장 파일(pocket_caravan_save.json)을 쓴다.
+        //   맵은 프리뷰와 같은 등록된 본편 맵만 (실험 씬은 안 들어간다). 스팀에는 이 폴더 전체를 올린다 (MMORPG는 클라이언트만)
+        [MenuItem("Pocket Caravan/Build/스팀 출시용 Windows")]
+        public static void ReleaseWindows() => Build(BuildTarget.StandaloneWindows64, "Builds/Release/Windows", "Baribari.exe", null, false);
+        [MenuItem("Pocket Caravan/Build/스팀 출시용 macOS")]
+        public static void ReleaseMac() => Build(BuildTarget.StandaloneOSX, "Builds/Release/macOS", "Baribari.app", null, false);
+
         [MenuItem("Pocket Caravan/Build/환경 원형 시험장 Windows")]
         public static void ModulesWindows() => Build(BuildTarget.StandaloneWindows64, "Builds/ModuleLibrary/Windows", "PocketCaravanModules.exe", new[]{MapModuleWorkbench.ScenePath,"Assets/PocketCaravan/Scenes/ModuleLab/ModuleComposition.unity"});
         [MenuItem("Pocket Caravan/Build/환경 원형 시험장 macOS")]
@@ -34,7 +41,7 @@ namespace PocketCaravan.EditorTools
         [MenuItem("Pocket Caravan/Build/장애물 시험장 macOS")]
         public static void ObstaclesMac()=>Build(BuildTarget.StandaloneOSX,"Builds/ObstacleLibrary/macOS","PocketCaravanObstacles.app",new[]{ObstacleWorkbench.ScenePath});
 
-        static void Build(BuildTarget target, string folder, string file, string[] selectedScenes = null)
+        static void Build(BuildTarget target, string folder, string file, string[] selectedScenes = null, bool preview = true)
         {
             if (EditorApplication.isPlaying || UnityEngine.SceneManagement.SceneManager.GetActiveScene().isDirty)
                 throw new InvalidOperationException("Play를 종료하고 현재 씬을 저장한 뒤 빌드하세요.");
@@ -47,7 +54,7 @@ namespace PocketCaravan.EditorTools
                 locationPathName = folder + "/" + file,
                 target = target,
                 options = BuildOptions.None,
-                extraScriptingDefines = new[] { "CARAVAN_PREVIEW" }
+                extraScriptingDefines = preview ? new[] { "CARAVAN_PREVIEW" } : new string[0]
             });
             var summary = report.summary;
             File.WriteAllText(folder + "/build-report.json", JsonUtility.ToJson(new Result {
@@ -58,7 +65,8 @@ namespace PocketCaravan.EditorTools
             }, true));
             if (summary.result != BuildResult.Succeeded)
                 throw new InvalidOperationException("프리뷰 빌드 실패: " + folder + "/build-report.json을 확인하세요.");
-            Debug.Log("고려 " + target + " 프리뷰 빌드 완료. pocket_caravan_preview_save.json을 사용합니다.");
+            Debug.Log(preview ? "고려 " + target + " 프리뷰 빌드 완료. pocket_caravan_preview_save.json을 사용합니다."
+                              : target + " 출시용 빌드 완료: " + folder + " (본편 저장 pocket_caravan_save.json)");
         }
     }
 }

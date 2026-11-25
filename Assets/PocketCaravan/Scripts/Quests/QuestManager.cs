@@ -368,6 +368,11 @@ namespace PocketCaravan
                     return !string.IsNullOrEmpty(o.targetId) ? ("market", o.targetId) : ((string, string)?)null;
                 case ObjectiveType.BuyVehicle:
                     if (!string.IsNullOrEmpty(o.targetId)) return ("market", o.targetId);   // 11/08 손수레처럼 여러 지역이 파는 수단은 의뢰가 장터를 정해 준다
+                    // 11/25 장터를 정하지 않은 의뢰는 지금 있는 지역에서 파는 마을을 먼저 (베네치아·북유럽 손수레 의뢰가 목록 첫 마을인 개경을 가리키던 것)
+                    var here = MapRoot.Current != null ? MapRoot.Current.region : null;
+                    if (here != null)
+                        foreach (var t in GameManager.I.Db.towns)
+                            if (t != null && t.region == here && t.vehiclesForSale.Contains(o.vehicle)) return ("market", t.id);
                     foreach (var t in GameManager.I.Db.towns)
                         if (t != null && t.vehiclesForSale.Contains(o.vehicle)) return ("market", t.id);
                     return null;

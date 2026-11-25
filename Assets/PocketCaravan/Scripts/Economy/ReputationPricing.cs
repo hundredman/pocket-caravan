@@ -30,9 +30,12 @@ namespace PocketCaravan
             return buy;
         }
         public static void Bought(PlayerState p,TownData town,ItemData item,int price,float hours)=>p.tradeActivity.Bought(town.id,item.id,hours,price);
+        /// <summary>방금 판 것이 그 장터에서 12시간 안에 산 물건(되팔기)이었는지. 축제·큰 장 덤은 되팔기에 붙지 않는다 (11/25: 사서 바로 팔아 덤만 챙기던 구멍)</summary>
+        public static bool LastSaleRestricted;
         public static void Sold(PlayerState p,TownData town,ItemData item,int price,float hours,int day)
         {
             bool restricted=p.tradeActivity.Sold(town.id,item.id,hours);
+            LastSaleRestricted=restricted;
             bool foreign=item.originTown!=null&&item.originTown.region!=null&&town.region!=null
                 && (item.originTown.region.id!=town.region.id || town.region.townReputation&&item.originTown.id!=town.id);
             var size=p.tradeActivity.EligibleSale(town.id,day,price,foreign,restricted);

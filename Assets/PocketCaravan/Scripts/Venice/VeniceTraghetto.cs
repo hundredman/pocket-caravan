@@ -62,7 +62,7 @@ namespace PocketCaravan
                 choices.Add(new VeniceMenu.Option($"{name}로 건너가기 ({Fare}냥)", () => Go(m)));
             }
             if (VeniceUtil.Map == "venice_rialto")
-                choices.Insert(0, new VeniceMenu.Option($"곤돌라 경주 ({VeniceRace.Fee}냥{(VeniceRace.Best > 0 ? $", 최고 {VeniceRace.Best}점" : "")})", VeniceRace.Begin));
+                choices.Insert(0, new VeniceMenu.Option(VeniceRace.MenuText + (VeniceRace.Best > 0 ? $" · 최고 {VeniceRace.Best}점" : ""), VeniceRace.Begin));
             choices.Add(new VeniceMenu.Option("그만", () => { }));
             VeniceMenu.Show("곤돌라 사공", VeniceUtil.Map == "venice_rialto" ? "어디로 모실까? 아니면 운하 경주 한판?" : "어디로 모실까? 둑길로 걷는 것보다 빠르지.", choices.ToArray());
         }

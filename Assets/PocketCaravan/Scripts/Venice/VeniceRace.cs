@@ -27,6 +27,10 @@ namespace PocketCaravan
         const float W = 220f, H = 260f, Duration = 40f;
 
         public const int Fee = 15;
+        bool freeRun;
+        public static bool PrizeTakenToday => VeniceSave.DoneToday("race_prize");
+        /// <summary>나루 선택지 글: 오늘 상금을 받았으면 "기록 재기"</summary>
+        public static string MenuText => PrizeTakenToday ? "곤돌라 경주 (기록 재기, 상금은 내일)" : $"곤돌라 경주 ({Fee}냥)";
         public static int Best => (int)VeniceSave.Get("race_best");
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -42,8 +46,13 @@ namespace PocketCaravan
         {
             var gm = GameManager.I;
             if (inst == null || gm == null) return;
-            if (gm.Player.money < Fee) { Notify.Show("경주 참가비가 모자란다.", 2.5f); return; }
-            gm.Player.money -= Fee;
+            // 11/25 상금은 하루 한 번 (15냥 내고 80냥을 몇 번이고 받던 것). 받은 뒤로는 참가비 없이 기록만 잰다
+            inst.freeRun = PrizeTakenToday;
+            if (!inst.freeRun)
+            {
+                if (gm.Player.money < Fee) { Notify.Show("경주 참가비가 모자란다.", 2.5f); return; }
+                gm.Player.money -= Fee;
+            }
             inst.StartRace();
         }
 
@@ -122,6 +131,7 @@ namespace PocketCaravan
             }
             score = Mathf.Max(score, 0);
             if (hits >= 3 || t >= Duration) Finish();
+            else if (t > .3f && InputReader.CancelPressed()) Finish();   // 11/25 Esc = 여기서 결승 (40초 동안 빠져나갈 수 없던 것. 지금까지 점수로 정산)
         }
 
         void Finish()
@@ -133,8 +143,9 @@ namespace PocketCaravan
             score = total;
             NetScores.Report("gondola", total);   // 11/07 온라인 순위표 (계정으로 접속했을 때만)
             var gm = GameManager.I;
-            int prize = Mathf.Min(80, total / 10);
+            int prize = freeRun ? 0 : Mathf.Min(80, total / 10);
             gm.Player.money += prize;
+            if (!freeRun) VeniceSave.MarkToday("race_prize");
             bool record = total > Best;
             if (record) VeniceSave.Set("race_best", total);
             string extra = "";
@@ -146,7 +157,7 @@ namespace PocketCaravan
                 extra = $"\n'명예 사공'이 되었다! 50냥{(taught != null ? $" · 동작 '{taught}'" : "")}";
             }
             Sfx.Play(record ? "levelup" : "success");
-            resultText = $"점수 {total}  (구슬 {beads} · 동전 {coins} · 거리 {Mathf.RoundToInt(t * 2f)})\n상금 {prize}냥{(record ? "  — 새 기록!" : $"  (최고 {Best})")}{extra}";
+            resultText = $"점수 {total}  (구슬 {beads} · 동전 {coins} · 거리 {Mathf.RoundToInt(t * 2f)})\n{(freeRun ? "상금은 내일 다시" : $"상금 {prize}냥")}{(record ? "  — 새 기록!" : $"  (최고 {Best})")}{extra}";
         }
 
         string resultText;
