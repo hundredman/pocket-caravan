@@ -122,7 +122,7 @@ namespace PocketCaravan
 
             // 11/13 캐릭터가 상태 카드 뒤로 지나가면 옅게
             var oldColor = GUI.color;
-            if (TaskCard.PlayerBehind(new Rect(4, 4, ColumnRight - 4, Expanded ? 150 : 42))) GUI.color = new Color(oldColor.r, oldColor.g, oldColor.b, oldColor.a * .4f);
+            if (TaskCard.PlayerBehind(new Rect(4, 4, ColumnRight - 4, Expanded ? 165 : 54))) GUI.color = new Color(oldColor.r, oldColor.g, oldColor.b, oldColor.a * .4f);
             float bottom = Expanded ? DrawExpanded(gm, roadName) : DrawCompact(gm);
             GUI.color = oldColor;
             bottom = TaskCard.DrawBadges(bottom + 4f);   // 11/13 작은 표 (푹 쉼 등)
@@ -200,7 +200,7 @@ namespace PocketCaravan
             string money = MoneyShown(p.money).ToString();
             float tabW = CuteUI.KeycapWidth("Tab");
             float w = ColumnRight - 22f;   // 11/13 아래 할 일 카드와 같은 오른쪽 끝
-            var card = new Rect(22, 5, w, 40);
+            var card = new Rect(22, 5, w, 52);   // 11/25 칭호 줄 12 (40 → 52)
             ScreenZones.Mark("hud.card", Rect.MinMaxRect(4, 4, card.xMax, card.yMax));   // 초상까지
             CuteUI.Card(card);
             if (!UIState.Blocking && CuteUI.Hit(Rect.MinMaxRect(4, 4, card.xMax, card.yMax), GUIContent.none, GUIStyle.none)) InputReader.Press('\t');   // 11/08 눌러도 Tab처럼 펼치기
@@ -211,9 +211,22 @@ namespace PocketCaravan
             CuteUI.Icon(CuteUI.Pic.Bolt, 40, 27);
             CuteUI.Label(51, 32, "체력", CuteUI.Sub, true);
             CuteUI.Bar(new Rect(75, 28, card.xMax - 8 - 75, 8), p.stamina, CuteUI.Stamina, CuteUI.StaminaHi);
+            RankLine(gm, 40, 39, card.xMax - 8);
             CuteUI.Portrait(4, 5, 36);
-            MoneyFloats(54, card.yMax - 2f);
+            MoneyFloats(54, 43f);
             return card.yMax;
+        }
+
+        /// <summary>
+        /// 11/25 은샘 "성장 체감": 상인 칭호 한 줄. 칭호 이름 + 다음 칭호까지 막대 (팔 때마다 조금씩 찬다). 오른 직후 2초는 금빛으로 반짝인다
+        /// </summary>
+        static void RankLine(GameManager gm, float x, float y, float right)
+        {
+            bool glow = Time.unscaledTime - MerchantRank.RaisedAt < 2f && ((int)(Time.unscaledTime * 6f) & 1) == 0;
+            CuteUI.Icon(CuteUI.Pic.Star5, x + 1, y + 1, 1, glow ? CuteUI.Deco : CuteUI.Sub);
+            float tx = CuteUI.Label(x + 11, y + 5, MerchantRank.Name(gm), glow ? CuteUI.Up : CuteUI.Text, true, true);
+            if (MerchantRank.Progress(gm, out int have, out int need, out _))
+                CuteUI.Bar(new Rect(tx + 6, y + 2, Mathf.Max(20f, right - tx - 6), 6), have / (float)Mathf.Max(1, need), CuteUI.Deco, CuteUI.SellSoft);
         }
 
         /// <summary>Tab: 맵 · 장날 · 돈·신용 · 평판 · 짐 · 체력 · 발밑</summary>
@@ -240,7 +253,7 @@ namespace PocketCaravan
             float x = 22, y = 5, inner = w - 20;
             // 10/28 평판이 두 줄로 늘어나면 아래 줄을 덮던 문제: 높이를 재서 칸을 늘린다
             float repH = CuteUI.WrapHeight(repText, inner, true);
-            float h = 30 + 16 + 6 + 12 + repH + 4 + 15 + 15 + 7 + 12 + (p.HasAnyCargo ? 12 : 0) + 8;
+            float h = 30 + 14 + 16 + 6 + 12 + repH + 4 + 15 + 15 + 7 + 12 + (p.HasAnyCargo ? 12 : 0) + 8;   // 11/25 칭호 줄 14
             ScreenZones.Mark("hud.card", Rect.MinMaxRect(4, 4, x + w, y + h));
             CuteUI.Card(new Rect(x, y, w, h));
             if (!UIState.Blocking && CuteUI.Hit(Rect.MinMaxRect(4, 4, x + w, y + h), GUIContent.none, GUIStyle.none)) InputReader.Press('\t');   // 11/08 눌러도 접기
@@ -260,6 +273,9 @@ namespace PocketCaravan
             MoneyFloats(mx + 22f, cy - 18f);
             CuteUI.Label(mx + 3, cy + 0.5f, "냥", CuteUI.Sub, true);
             CuteUI.LabelRight(x + w - 10, cy, $"신용 {Credit.Level(p)}", CuteUI.Sub, true);
+            cy += 10;
+            RankLine(gm, 44, cy, x + w - 10);
+            cy += 4;
             cy += 16;
             CuteUI.Fill(new Rect(x + 10, cy, w - 20, 1), CuteUI.Line);
             cy += 6;

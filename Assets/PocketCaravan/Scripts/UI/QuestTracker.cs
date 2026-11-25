@@ -404,6 +404,46 @@ namespace PocketCaravan
         /// 11/19 은샘 "마일스톤은 여정 수첩에": 운반 수단 카드. 위 줄 단계 칩(등짐 › 손수레 › 짐말 › 마차, 가진 것 ✓ · 다음 것 강조),
         /// 아래 줄 다음 목표와 돈 막대 (다 모이면 "살 수 있어요!") · 파는 장터. 마차까지 샀으면 "운반 수단을 다 모았어요".
         /// </summary>
+        /// <summary>11/25 은샘 "성장 체감": 상인 칭호 카드. 지금 칭호 · 다음 칭호까지 번 돈 막대 · 칭호 단계 칩 (Economy/MerchantRank.cs)</summary>
+        static float DrawRank(GameManager gm, float y, float w)
+        {
+            int at = MerchantRank.Index(gm), earned = MerchantRank.Earned(gm);
+            float ch = 64;
+            var card = new Rect(0, y, w, ch);
+            CuteUI.Box(card, 7, CuteUI.Paper, CuteUI.Deco, 2);
+            CuteUI.Circle(10, y + 9, 26, CuteUI.Deco, CuteUI.FrameLo);
+            CuteUI.Icon(CuteUI.Pic.Star5, 18, y + 17, 1, CuteUI.White);
+            float tx = CuteUI.Label(44, y + 14, MerchantRank.Titles[at].name, CuteUI.Text, false, true);
+            CuteUI.Label(tx + 6, y + 14.5f, "장사로 번 돈이 쌓이면 올라요", CuteUI.Sub, true);
+            if (MerchantRank.Progress(gm, out int have, out int need, out string next))
+            {
+                CuteUI.LabelRight(w - 10, y + 14.5f, $"'{next}'까지 {have}/{need}냥", CuteUI.Sub, true, true);
+                CuteUI.Bar(new Rect(44, y + 24, w - 54, 6), have / (float)Mathf.Max(1, need), CuteUI.Deco, CuteUI.SellSoft);
+            }
+            else
+            {
+                CuteUI.LabelRight(w - 10, y + 14.5f, $"지금까지 번 돈 {earned}냥", CuteUI.Sub, true, true);
+                CuteUI.Bar(new Rect(44, y + 24, w - 54, 6), 1f, CuteUI.Deco, CuteUI.SellSoft);
+            }
+            // 칭호 단계 칩: 지난 것은 ✓, 지금 것은 밝게. 줄이 넘치면 지금 칭호 둘레만 보여 준다
+            float cx = 44, cy = y + 38;
+            int from = Mathf.Max(0, at - 1);
+            if (from > 0) { CuteUI.Label(cx, cy + 7.5f, "…", CuteUI.Sub, true); cx += 10; }
+            for (int i = from; i < MerchantRank.Titles.Length; i++)
+            {
+                bool done = i < at, now = i == at;
+                string label = (done ? "✓ " : "") + MerchantRank.Titles[i].name;
+                float cw = Mathf.Round(CuteUI.Width(label, true, now) + 12);
+                if (cx + cw > w - 8) { CuteUI.Label(cx, cy + 7.5f, "…", CuteUI.Sub, true); break; }
+                var chip = new Rect(cx, cy, cw, 15);
+                CuteUI.Box(chip, 6, now ? CuteUI.SellSoft : done ? CuteUI.Paper2 : CuteUI.ZeroSoft, now ? CuteUI.Deco : CuteUI.KeyLine);
+                CuteUI.LabelCenter(chip.center.x, chip.center.y, label, done || now ? CuteUI.Text : CuteUI.Sub, true, now);
+                cx += cw;
+                if (i + 1 < MerchantRank.Titles.Length) { CuteUI.Label(cx + 2, cy + 7.5f, "›", CuteUI.Sub, true); cx += 10; }
+            }
+            return y + ch + 8;
+        }
+
         static float DrawVehicleGoal(GameManager gm, float y, float w)
         {
             var p = gm.Player;
@@ -505,6 +545,7 @@ namespace PocketCaravan
             }
             Credit.Progress(p, out int haveP, out int needP);
 
+            y = DrawRank(gm, y, w);          // 11/25 상인 칭호
             y = DrawVehicleGoal(gm, y, w);   // 11/19 운반 수단 마일스톤
 
             // 내 신용 카드
