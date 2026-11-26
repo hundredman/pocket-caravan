@@ -248,7 +248,24 @@ namespace PocketCaravan
         /// <summary>저절로 시작되는 의뢰는 내려놓을 수 없다 (내려놓자마자 다시 시작된다)</summary>
         static readonly HashSet<string> NoAbandon = new HashSet<string> { "north_q4_storm" };
 
-        /// <summary>11/26 아예 포기할 수 없는 의뢰 (수첩에 [포기] 단추를 그리지 않는다). 맡은 물건이 모자란 것처럼 잠깐 막힌 경우는 false</summary>
+        /// <summary>11/26 은샘 의견(수첩 카드의 포기 단추는 자리를 바꿔도 어색하다)에 따라: 포기는 수첩이 아니라 의뢰를 준 사람에게 말해서 한다.
+        /// 이 사람이 준 의뢰 가운데 물릴 수 있는 것 (없으면 null)</summary>
+        public Progress DroppableFrom(string npcId)
+        {
+            if (string.IsNullOrEmpty(npcId)) return null;
+            foreach (var p in active.Values) if (p.quest != null && p.quest.giverNpc == npcId && !AbandonNever(p)) return p;
+            return null;
+        }
+
+        /// <summary>물리겠다고 했을 때 준 사람이 되묻는 말 (지역 말투)</summary>
+        public string DropAskLine(Progress p)
+        {
+            var q = p.quest;
+            string back = q.giveItem != null && q.giveCount > 0 ? Speech(q, "\n맡긴 물건은 돌려받겠네.", "\n맡긴 물건은 돌려받을게요.") : "";
+            return $"[{q.title}]\n" + Speech(q, "그 일을 못 하겠다는 겐가? 알겠네. 다만 한번 물린 일은 오늘 다시 맡기지 않을 걸세.", "그 일을 못 하겠다는 건가요? 알겠어요. 다만 한번 물린 일은 오늘 다시 맡기지 않을 거예요.") + back;
+        }
+
+        /// <summary>11/26 아예 포기할 수 없는 의뢰. 맡은 물건이 모자란 것처럼 잠깐 막힌 경우는 false</summary>
         public bool AbandonNever(Progress p) =>
             p == null || p.quest == null || (OffersPaused != null && OffersPaused()) || NoAbandon.Contains(p.quest.id) || string.IsNullOrEmpty(p.quest.giverNpc);
 
@@ -288,7 +305,9 @@ namespace PocketCaravan
                 back = Mathf.Min(q.giveCount, pl.cargo.Count(q.giveItem));
                 for (int i = 0; i < back; i++) pl.cargo.Remove(q.giveItem);
             }
+            bool wasGuide = Tracked == p && QuestFocus.Current == QuestFocus.Kind.Quest;
             active.Remove(q);
+            if (wasGuide) QuestFocus.Set(QuestFocus.Kind.None);
             if (!q.retired && GameManager.I.Clock != null) GameManager.I.SetMemo("quest:dropped:" + q.id, GameManager.I.Clock.day);
             if (Tracked == p) Tracked = null;
             Notify.Show($"의뢰를 포기했어요: {q.title}" + (back > 0 ? $"\n맡은 {q.giveItem.displayName} {back}개는 돌려보냈어요" : "") + (q.retired ? "" : "\n오늘은 다시 받을 수 없고, 내일부터 준 사람에게 다시 받을 수 있어요"), 5f);

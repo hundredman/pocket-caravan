@@ -34,7 +34,7 @@ namespace PocketCaravan
             }
         }
         static readonly string[] LogTabs = { "의뢰", "성장", "마을 시설", "주변 거래처" };   // 11/19 은샘: 마을 시설을 따로
-        void CloseLog() { logOpen = false; JournalOpen = false; abandonAsk = null; UIState.Release(this); }
+        void CloseLog() { logOpen = false; JournalOpen = false; UIState.Release(this); }
         /// <summary>11/18 여정 수첩이 열려 있다 (튜토리얼: 열고 → 목록 보고 → 닫으면 끝)</summary>
         public static bool JournalOpen { get; private set; }
         void OnDisable() { if (logOpen) CloseLog(); }
@@ -289,7 +289,6 @@ namespace PocketCaravan
             return y;
         }
 
-        QuestData abandonAsk; QuestManager.Progress abandonNow;
         float DrawQuests(QuestManager qm, GameManager gm, float y, float w, float viewH)
         {
             bool any = NetGuild.Active || StoryGuide.LeadAvailable || TutorialNow(out _, out _);
@@ -305,30 +304,12 @@ namespace PocketCaravan
                 float inner = w - 20;
                 float ph = CuteUI.WrapHeight(progress, inner - 12, true), sh = summary != null ? CuteUI.WrapHeight(summary, inner, true) : 0;
                 bool reward = p.RewardMoney > 0 || p.RewardCredit > 0;
-                // 11/26 은샘 ("내려놓기 단추가 직관적이지 않고 자리를 너무 차지한다"): 맨 아래 줄을 늘 잡던 [내려놓기]를 없애고,
-                //   제목 줄의 옅은 점 셋(더보기)으로. 누르면 그 카드 아래에만 되묻는 한 줄이 열린다. 포기할 수 없는 의뢰에는 단추가 없다
-                bool asking = abandonAsk == p.quest, canDrop = !qm.AbandonNever(p);
-                if (asking && !canDrop) { abandonAsk = null; asking = false; }
-                float ch = 24 + ph + (summary != null ? sh + 3 : 0) + (reward ? 18 : 0) + (asking ? 34 : 0) + 6;
+                float ch = 24 + ph + (summary != null ? sh + 3 : 0) + (reward ? 18 : 0) + 6;
                 var card = new Rect(0, y, w, ch);
                 CuteUI.Box(card, 7, on ? CuteUI.Paper : CuteUI.Paper2, on ? CuteUI.Interact : CuteUI.Line, on ? 2 : 1);
                 // 오른쪽 위: 안내 중(누르면 끔) / 길 안내
                 var pp = p;
                 float right = FocusButton(w - 7, y, on, () => { if (on) QuestFocus.Set(QuestFocus.Kind.None); else { qm.Track(pp); QuestFocus.Set(QuestFocus.Kind.Quest); } });
-                if (canDrop)   // 11/26 은샘 ("[길 안내] 옆 [포기]가 너무 눈에 띈다"): 테두리 없는 옅은 점 셋(더보기). 눌러야 아래에 포기 줄이 열린다
-                {
-                    var dots = new Rect(right - 4 - 13, y + 4, 13, 17);
-                    bool key = KeyNav.Item(dots, out bool focused);
-                    if (focused || asking) CuteUI.Box(dots, 4, CuteUI.Paper, focused ? CuteUI.Interact : CuteUI.Line);
-                    for (int d = 0; d < 3; d++) CuteUI.Fill(new Rect(dots.x + 2 + d * 4, dots.y + 8, 2, 2), focused || asking ? CuteUI.Text : CuteUI.Line);
-                    if (CuteUI.Hit(dots, new GUIContent("", "더보기"), GUIStyle.none) || key)
-                    {
-                        string why = qm.AbandonBlocker(p);
-                        if (why != null) { abandonAsk = null; Notify.Show(why, 3f); Sfx.Play("deny", .55f); }
-                        else { abandonAsk = asking ? null : p.quest; Sfx.Play("open", .25f); }   // 다시 누르면 접는다
-                    }
-                    right = dots.x;
-                }
                 if (!string.IsNullOrEmpty(p.quest.chain)) right = Pill(right - 4, y + 12, p.quest.chain, CuteUI.BadgeKind.Note);
                 CuteUI.Label(10, y + 12, TradeLedgerUI.Fit(p.quest.title, right - 16, false, true), CuteUI.Text, false, true);
                 float yy = y + 22;
@@ -345,26 +326,8 @@ namespace PocketCaravan
                         rx = CuteUI.Label(rx + 10, yy + 8, p.RewardMoney + "냥", CuteUI.Up, true, true) + 6;
                     }
                     if (p.RewardCredit > 0) ContractBoard.Pill(rx, yy + 8, "신용 +" + p.RewardCredit, CuteUI.Interact, CuteUI.InteractLo, CuteUI.White);
-                    yy += 18;
-                }
-                if (asking)   // 되묻기: 이 카드 아래에만 열린다
-                {
-                    CuteUI.Fill(new Rect(8, yy + 2, w - 16, 1), CuteUI.Line);
-                    float nw = CuteUI.Width("닫기", false) + 18, yw = CuteUI.Width("의뢰 포기", false) + 18;
-                    float bx = w - 7 - nw;
-                    if (CuteUI.SoftButton(new Rect(bx, yy + 11, nw, 17), "닫기")) abandonAsk = null;
-                    bx -= 4 + yw;
-                    if (CuteUI.SoftButton(new Rect(bx, yy + 11, yw, 17), "의뢰 포기")) { abandonAsk = null; abandonNow = p; }
-                    CuteUI.Label(10, yy + 13, "이 의뢰를 그만둘까요?", CuteUI.Text, true, true);
-                    CuteUI.Label(10, yy + 25, TradeLedgerUI.Fit(p.quest.retired ? "다시 받을 수 없는 일이에요" : "포기하면 오늘은 다시 받을 수 없어요 (내일부터 가능)", bx - 16, true, false), CuteUI.Sub, true);
                 }
                 y += ch + 5;
-            }
-            if (abandonNow != null)   // 목록을 다 그린 뒤에 (그리는 중에 목록을 바꾸지 않게)
-            {
-                var gone = abandonNow; abandonNow = null;
-                bool wasGuide = gone == qm.Tracked && QuestFocus.Current == QuestFocus.Kind.Quest;
-                if (qm.Abandon(gone)) { if (wasGuide) QuestFocus.Set(QuestFocus.Kind.None); gm.SaveNow(); }
             }
             if (gm.Player.contracts.Count > 0)
             {
