@@ -261,15 +261,30 @@ namespace PocketCaravan
         public string DropAskLine(Progress p) =>
             $"[{p.quest.title}]\n" + Speech(p.quest, "이 일을 물리겠나? 물리면 오늘은 다시 맡기지 않을 걸세.", "이 일을 물릴 건가요? 물리면 오늘은 다시 맡기지 않을 거예요.");
 
+        /// <summary>11/26 은샘 ("튜토리얼 의뢰는 취소되면 안 된다"): 시작 튜토리얼이 끝나며 보내는 첫 의뢰 (출신 지역별. 각 지역 Intro의 FirstQuest와 같다).
+        /// 튜토리얼 안내(Intro.Active)는 이 의뢰를 받기 전에 끝나므로 OffersPaused만으로는 막히지 않는다</summary>
+        static readonly Dictionary<string, string> StarterQuest = new Dictionary<string, string>
+        {
+            { "goryeo", "q1_naru" }, { "venice", "venice_q1_delivery" }, { "viking", "north_q1_butter" }, { "arabia", "arabia_q01_first_delivery" },
+        };
+        public static bool IsTutorialQuest(QuestData q)
+        {
+            if (q == null || q.id == null) return false;
+            if (q.id.StartsWith("tutorial_")) return true;
+            var o = GameManager.I != null && GameManager.I.Player != null ? GameManager.I.Player.origin : null;
+            return o != null && o.id != null && StarterQuest.TryGetValue(o.id, out var first) && first == q.id;
+        }
+
         /// <summary>11/26 아예 포기할 수 없는 의뢰. 맡은 물건이 모자란 것처럼 잠깐 막힌 경우는 false</summary>
         public bool AbandonNever(Progress p) =>
-            p == null || p.quest == null || (OffersPaused != null && OffersPaused()) || NoAbandon.Contains(p.quest.id) || string.IsNullOrEmpty(p.quest.giverNpc);
+            p == null || p.quest == null || IsTutorialQuest(p.quest) || (OffersPaused != null && OffersPaused()) || NoAbandon.Contains(p.quest.id) || string.IsNullOrEmpty(p.quest.giverNpc);
 
         /// <summary>내려놓을 수 없는 까닭. 내려놓을 수 있으면 null</summary>
         public string AbandonBlocker(Progress p)
         {
             if (p == null || p.quest == null || !active.TryGetValue(p.quest, out var cur) || cur != p) return "받은 의뢰가 아니에요";
             if (OffersPaused != null && OffersPaused()) return "첫걸음 안내를 마친 뒤에 포기할 수 있어요";
+            if (IsTutorialQuest(p.quest)) return "첫걸음으로 맡은 일이라 포기할 수 없어요";
             if (NoAbandon.Contains(p.quest.id)) return "급한 일이라 포기할 수 없어요";
             if (string.IsNullOrEmpty(p.quest.giverNpc)) return "다시 받을 곳이 없는 일이라 포기할 수 없어요";
             var q = p.quest;
