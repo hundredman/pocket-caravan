@@ -257,13 +257,9 @@ namespace PocketCaravan
             return null;
         }
 
-        /// <summary>물리겠다고 했을 때 준 사람이 되묻는 말 (지역 말투)</summary>
-        public string DropAskLine(Progress p)
-        {
-            var q = p.quest;
-            string back = q.giveItem != null && q.giveCount > 0 ? Speech(q, "\n맡긴 물건은 돌려받겠네.", "\n맡긴 물건은 돌려받을게요.") : "";
-            return $"[{q.title}]\n" + Speech(q, "그 일을 못 하겠다는 겐가? 알겠네. 다만 한번 물린 일은 오늘 다시 맡기지 않을 걸세.", "그 일을 못 하겠다는 건가요? 알겠어요. 다만 한번 물린 일은 오늘 다시 맡기지 않을 거예요.") + back;
-        }
+        /// <summary>물리겠다고 했을 때 준 사람이 되묻는 말 (지역 말투). 대화창 한 쪽(두 줄)에 들어가게 짧게</summary>
+        public string DropAskLine(Progress p) =>
+            $"[{p.quest.title}]\n" + Speech(p.quest, "이 일을 물리겠나? 물리면 오늘은 다시 맡기지 않을 걸세.", "이 일을 물릴 건가요? 물리면 오늘은 다시 맡기지 않을 거예요.");
 
         /// <summary>11/26 아예 포기할 수 없는 의뢰. 맡은 물건이 모자란 것처럼 잠깐 막힌 경우는 false</summary>
         public bool AbandonNever(Progress p) =>
