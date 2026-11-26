@@ -353,7 +353,7 @@ namespace PocketCaravan
                     bx -= 4 + yw;
                     if (CuteUI.SoftButton(new Rect(bx, yy + 11, yw, 17), "포기하기")) { abandonAsk = null; abandonNow = p; }
                     CuteUI.Label(10, yy + 13, "이 의뢰를 포기할까요?", CuteUI.Text, true, true);
-                    CuteUI.Label(10, yy + 25, TradeLedgerUI.Fit(p.quest.retired ? "벌칙은 없어요" : "벌칙 없이, 준 사람에게 다시 받을 수 있어요", bx - 16, true, false), CuteUI.Sub, true);
+                    CuteUI.Label(10, yy + 25, TradeLedgerUI.Fit(p.quest.retired ? "다시 받을 수 없는 일이에요" : "오늘은 다시 받을 수 없어요 (내일부터 가능)", bx - 16, true, false), CuteUI.Sub, true);
                 }
                 y += ch + 5;
             }
