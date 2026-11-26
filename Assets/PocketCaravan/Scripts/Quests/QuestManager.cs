@@ -204,6 +204,7 @@ namespace PocketCaravan
         public string AcceptBlocker(QuestData q)
         {
             var p = GameManager.I.Player;
+            if (DroppedToday(q)) return Speech(q, "한번 물린 일을 그날로 다시 맡기기는 어렵네. 내일 다시 오게.", "한번 물린 일을 바로 다시 맡기기는 어려워요. 내일 다시 오세요.");
             if (q.offerItem != null && q.offerCount > 0)
             {
                 if (p.money < q.offerPrice * q.offerCount) return Speech(q, $"{q.offerPrice * q.offerCount}냥이 있어야 넘겨줄 수 있네. 돈을 좀 더 모아 오게.", $"{q.offerPrice * q.offerCount}냥이 있어야 넘겨줄 수 있어요. 돈을 좀 더 모아 오세요.");
@@ -265,8 +266,16 @@ namespace PocketCaravan
             return null;
         }
 
+        /// <summary>11/26 은샘 ("포기에 최소한의 벌칙은 있어야"): 포기한 의뢰는 그날에는 다시 받을 수 없다 (약속을 물렸으니 준 사람이 바로 다시 맡기지 않는다).
+        /// 공용 메모 "quest:dropped:아이디" = 포기한 날. 돈·신용·평판은 건드리지 않는다</summary>
+        public bool DroppedToday(QuestData q)
+        {
+            var gm = GameManager.I;
+            return q != null && gm != null && gm.Clock != null && gm.HasMemo("quest:dropped:" + q.id) && gm.Clock.day <= Mathf.RoundToInt(gm.GetMemo("quest:dropped:" + q.id));
+        }
+
         /// <summary>
-        /// 의뢰를 내려놓는다. 벌칙은 없고, 준 사람에게 가면 다시 받을 수 있다.
+        /// 의뢰를 포기한다. 벌칙은 하나: 그날에는 다시 받을 수 없고, 다음 날부터 준 사람에게 다시 받는다.
         /// 맡은 물건(giveItem)은 가진 만큼 돌려준다. 돈을 주고 넘겨받은 물건(offerItem)은 내 것이라 그대로 둔다.
         /// </summary>
         public bool Abandon(Progress p)
@@ -280,8 +289,9 @@ namespace PocketCaravan
                 for (int i = 0; i < back; i++) pl.cargo.Remove(q.giveItem);
             }
             active.Remove(q);
+            if (!q.retired && GameManager.I.Clock != null) GameManager.I.SetMemo("quest:dropped:" + q.id, GameManager.I.Clock.day);
             if (Tracked == p) Tracked = null;
-            Notify.Show($"의뢰를 포기했어요: {q.title}" + (back > 0 ? $"\n맡은 {q.giveItem.displayName} {back}개는 돌려보냈어요" : "") + (q.retired ? "" : "\n준 사람에게 가면 다시 받을 수 있어요"), 5f);
+            Notify.Show($"의뢰를 포기했어요: {q.title}" + (back > 0 ? $"\n맡은 {q.giveItem.displayName} {back}개는 돌려보냈어요" : "") + (q.retired ? "" : "\n오늘은 다시 받을 수 없고, 내일부터 준 사람에게 다시 받을 수 있어요"), 5f);
             Sfx.Play("open", .4f);
             return true;
         }
