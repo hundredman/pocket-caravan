@@ -74,8 +74,8 @@ namespace PocketCaravan
             string why = qm.AbandonBlocker(p);
             if (why != null) { DialogueUI.Show(displayName, why); return; }
             DialogueUI.Show(displayName, qm.DropAskLine(p),
-                new DialogueUI.Choice("계속 할게요", null),
-                new DialogueUI.Choice("의뢰 포기", () => { if (qm.Abandon(p)) GameManager.I.SaveNow(); }));
+                new DialogueUI.Choice("의뢰 포기", () => { if (qm.Abandon(p)) GameManager.I.SaveNow(); }),
+                new DialogueUI.Choice("계속 할게요", null));   // 마지막 선택지 = Esc (수락·나중에와 같은 차례)
         }
 
         /// <summary>한 번에 한 의뢰를 읽고 다른 제안을 넘겨 볼 수 있다. Esc는 항상 닫기.</summary>
