@@ -305,12 +305,27 @@ namespace PocketCaravan
                 float inner = w - 20;
                 float ph = CuteUI.WrapHeight(progress, inner - 12, true), sh = summary != null ? CuteUI.WrapHeight(summary, inner, true) : 0;
                 bool reward = p.RewardMoney > 0 || p.RewardCredit > 0;
-                float ch = 24 + ph + (summary != null ? sh + 3 : 0) + 18 + 6;   // 11/25 맨 아래 줄은 보상 + [내려놓기] (보상이 없어도 단추 자리)
+                // 11/26 은샘 ("내려놓기 단추가 직관적이지 않고 자리를 너무 차지한다"): 맨 아래 줄을 늘 잡던 [내려놓기]를 없애고,
+                //   제목 줄 [길 안내] 옆 작은 [포기]로. 누르면 그 카드 아래에만 되묻는 한 줄이 열린다. 포기할 수 없는 의뢰에는 단추가 없다
+                bool asking = abandonAsk == p.quest, canDrop = !qm.AbandonNever(p);
+                if (asking && !canDrop) { abandonAsk = null; asking = false; }
+                float ch = 24 + ph + (summary != null ? sh + 3 : 0) + (reward ? 18 : 0) + (asking ? 34 : 0) + 6;
                 var card = new Rect(0, y, w, ch);
                 CuteUI.Box(card, 7, on ? CuteUI.Paper : CuteUI.Paper2, on ? CuteUI.Interact : CuteUI.Line, on ? 2 : 1);
                 // 오른쪽 위: 안내 중(누르면 끔) / 길 안내
                 var pp = p;
                 float right = FocusButton(w - 7, y, on, () => { if (on) QuestFocus.Set(QuestFocus.Kind.None); else { qm.Track(pp); QuestFocus.Set(QuestFocus.Kind.Quest); } });
+                if (canDrop)
+                {
+                    float bw = CuteUI.Width("포기", false) + 14;
+                    if (CuteUI.SoftButton(new Rect(right - 4 - bw, y + 4, bw, 17), "포기"))
+                    {
+                        string why = qm.AbandonBlocker(p);
+                        if (why != null) { abandonAsk = null; Notify.Show(why, 3f); Sfx.Play("deny", .55f); }
+                        else abandonAsk = asking ? null : p.quest;   // 다시 누르면 접는다
+                    }
+                    right -= 4 + bw;
+                }
                 if (!string.IsNullOrEmpty(p.quest.chain)) right = Pill(right - 4, y + 12, p.quest.chain, CuteUI.BadgeKind.Note);
                 CuteUI.Label(10, y + 12, TradeLedgerUI.Fit(p.quest.title, right - 16, false, true), CuteUI.Text, false, true);
                 float yy = y + 22;
@@ -327,19 +342,18 @@ namespace PocketCaravan
                         rx = CuteUI.Label(rx + 10, yy + 8, p.RewardMoney + "냥", CuteUI.Up, true, true) + 6;
                     }
                     if (p.RewardCredit > 0) ContractBoard.Pill(rx, yy + 8, "신용 +" + p.RewardCredit, CuteUI.Interact, CuteUI.InteractLo, CuteUI.White);
+                    yy += 18;
                 }
-                // 11/25 의뢰 내려놓기: 벌칙 없이 내려놓고 준 사람에게 다시 받을 수 있다. 한 번 더 눌러야 내려놓는다
+                if (asking)   // 되묻기: 이 카드 아래에만 열린다
                 {
-                    bool asking = abandonAsk == p.quest;
-                    string label = asking ? "정말 내려놓기" : "내려놓기";
-                    float bw = CuteUI.Width(label, false) + 18;
-                    if (CuteUI.SoftButton(new Rect(w - 7 - bw, yy, bw, 16), label))
-                    {
-                        string why = qm.AbandonBlocker(p);
-                        if (why != null) { abandonAsk = null; Notify.Show(why, 3f); Sfx.Play("deny", .55f); }
-                        else if (!asking) abandonAsk = p.quest;
-                        else { abandonAsk = null; abandonNow = p; }
-                    }
+                    CuteUI.Fill(new Rect(8, yy + 2, w - 16, 1), CuteUI.Line);
+                    float nw = CuteUI.Width("아니요", false) + 18, yw = CuteUI.Width("포기하기", false) + 18;
+                    float bx = w - 7 - nw;
+                    if (CuteUI.SoftButton(new Rect(bx, yy + 11, nw, 17), "아니요")) abandonAsk = null;
+                    bx -= 4 + yw;
+                    if (CuteUI.SoftButton(new Rect(bx, yy + 11, yw, 17), "포기하기")) { abandonAsk = null; abandonNow = p; }
+                    CuteUI.Label(10, yy + 13, "이 의뢰를 포기할까요?", CuteUI.Text, true, true);
+                    CuteUI.Label(10, yy + 25, TradeLedgerUI.Fit(p.quest.retired ? "벌칙은 없어요" : "벌칙 없이, 준 사람에게 다시 받을 수 있어요", bx - 16, true, false), CuteUI.Sub, true);
                 }
                 y += ch + 5;
             }
