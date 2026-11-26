@@ -6,7 +6,7 @@ namespace PocketCaravan
     /// <summary>
     /// 상인 칭호 (2026-11-25 은샘 "성장 체감"): 성장이 돈과 신용 숫자로만 보이고, 좌판을 연 뒤에는 더 노릴 것이 없었다.
     /// - 지금까지 장사로 번 돈(판 이익 + 배달 보수)을 따로 쌓아 칭호가 오른다. 돈을 써도 줄지 않는다.
-    /// - 칭호는 보이는 것만 바꾼다 (상태 창 막대 · 여정 수첩 성장 탭 · 오를 때 알림). 값·한도 같은 규칙은 건드리지 않는다.
+    /// - 칭호는 보이는 것만 바꾼다 (여정 수첩 성장 탭 카드 · 펼친 상태 창의 칭호 이름 · 오를 때 알림. 11/26 상태 창 막대는 뺐다). 값·한도 같은 규칙은 건드리지 않는다.
     ///   그래서 사고팔기를 되풀이해 억지로 올려도 얻는 것이 없고, 못 올려도 손해가 없다.
     /// - 저장 형식은 그대로: 공용 메모 "rank:earned"(번 돈) · "rank:seeded"(옛 저장 한 번 맞춤) · "rank:told"(알린 칭호).
     /// - 이 기능이 없던 저장은 처음 한 번, 가진 돈과 산 운반 수단·좌판 값으로 번 돈을 어림해 맞춘다 (그동안 번 것을 잃은 느낌이 없게).
@@ -28,7 +28,7 @@ namespace PocketCaravan
         };
         const string EarnedKey = "rank:earned", SeededKey = "rank:seeded", ToldKey = "rank:told";
 
-        /// <summary>오른 직후 상태 창 막대가 반짝이는 시각</summary>
+        /// <summary>오른 직후 펼친 상태 창의 칭호 이름이 반짝이는 시각</summary>
         public static float RaisedAt { get; private set; } = -99f;
 
         public static int IndexFor(int earned)
