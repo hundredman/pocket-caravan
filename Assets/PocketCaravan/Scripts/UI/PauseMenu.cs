@@ -2,20 +2,22 @@ using UnityEngine;
 
 namespace PocketCaravan
 {
-    /// <summary>Esc 메뉴: 계속, 상업 백과, 소리, 화면(전체·창, 11/19), 게임 끝내기(11/25), 처음부터. 11/18 저장은 저절로 된다 (단추 대신 아래에 "자동 저장 · 방금")</summary>
+    /// <summary>Esc 메뉴: 계속, 상업 백과, 소리, 화면(전체·창, 11/19), 게임 끝내기(11/25), 처음부터, 아래 작은 글씨 '만든 사람들'(11/28). 11/18 저장은 저절로 된다 (단추 대신 아래에 "자동 저장 · 방금")</summary>
     public class PauseMenu : MonoBehaviour
     {
-        bool open, confirmNew;
+        bool open, confirmNew, credits;
         Vector2 issueScroll;
+        float creditScroll;
         Rect lastWindow, issueViewport;
 
         void Update()
         {
             if (!InputReader.CancelPressed()) return;
+            if (open && credits) { credits = false; Sfx.Play("open"); return; }   // 11/28 만든 사람들에서는 Esc가 메뉴로 돌아간다
             if (open) { Close(); return; }
             if (UIState.Blocking || UIState.JustClosed || GameManager.I == null || GameManager.I.IsTravelling) return;
             if (!UIState.TryOpen(this, Close)) return;
-            open = true; confirmNew = false;
+            open = true; confirmNew = false; credits = false;
             GameManager.I.SaveNow();   // 11/18 메뉴를 열 때도 한 번 저장해 둔다 (아래 "자동 저장 · 방금")
             Sfx.Play("open");
         }
@@ -36,7 +38,7 @@ namespace PocketCaravan
             UIStyle.Begin();
             GUI.depth = -10;   // 다른 글자들 위에
             KeyNav.Begin(this);   // 11/17 ↑↓로 고르고 Enter·Space
-            try { DrawMenu(); } finally { KeyNav.End(); }
+            try { if (credits) DrawCredits(); else DrawMenu(); } finally { KeyNav.End(); }
         }
 
         void DrawMenu()
@@ -99,10 +101,41 @@ namespace PocketCaravan
                 float ago = gm.LastSavedAt < 0f ? -1f : Time.unscaledTime - gm.LastSavedAt;
                 string when = ago < 0f ? "아직 저장 전" : ago < 15f ? "방금 저장됨" : ago < 90f ? $"{Mathf.RoundToInt(ago)}초 전 저장됨" : $"{Mathf.RoundToInt(ago / 60f)}분 전 저장됨";
                 string line = $"진행은 저절로 저장돼요 · {when}";
-                float lw = CuteUI.Width(line, true) + 14f;
-                CuteUI.Icon(CuteUI.Pic.Check, r.center.x - lw / 2f, y - 2, 1, ago >= 0f ? CuteUI.Up : CuteUI.Sub);
-                CuteUI.Label(r.center.x - lw / 2f + 14f, y + 2, line, CuteUI.Sub, true);
+                CuteUI.Icon(CuteUI.Pic.Check, r.x + 16, y - 2, 1, ago >= 0f ? CuteUI.Up : CuteUI.Sub);
+                CuteUI.Label(r.x + 30, y + 2, line, CuteUI.Sub, true);
             }
+            // 11/28 만든 사람들·쓴 자료 (스팀 준비). 단추 줄을 늘리지 않고 저장 줄 오른쪽 끝 작은 글씨로 둔다
+            const string link = "만든 사람들";
+            float kw = CuteUI.Width(link, true);
+            var lb = new Rect(r.xMax - 16 - kw - 4, y - 5, kw + 8, 14);
+            bool lkey = KeyNav.Item(lb, out bool lfocus);
+            bool lhover = lfocus || lb.Contains(Event.current.mousePosition);
+            CuteUI.Label(lb.x + 4, y + 2, link, lhover ? CuteUI.Text : CuteUI.Sub, true);
+            CuteUI.Fill(new Rect(lb.x + 4, y + 8, kw, 1), lhover ? CuteUI.Text : CuteUI.Line);
+            if (CuteUI.Hit(lb, GUIContent.none, GUIStyle.none) || lkey) { credits = true; creditScroll = 0f; Sfx.Play("open"); }
+        }
+
+        /// <summary>11/28 만든 사람들과 쓴 자료. 글은 CreditsText.Sections 한 곳에 있다</summary>
+        void DrawCredits()
+        {
+            float w = Mathf.Min(340, UIStyle.VirtualWidth - 16), h = Mathf.Min(UIStyle.VirtualHeight - 34, 236);
+            var r = lastWindow = new Rect(Mathf.Round((UIStyle.VirtualWidth - w) / 2), Mathf.Round((UIStyle.VirtualHeight - h) / 2 + 8), w, h);
+            CuteUI.Dim(); CuteUI.Window(r); CuteUI.TitlePlate(r.center.x, r.y - 11, "만든 사람들");
+            CuteUI.Keycap(r.xMax - 32 - CuteUI.KeycapWidth("Esc") - 3, r.y - 3, "Esc");
+            if (CuteUI.CloseButton(r.xMax - 32, r.y - 9)) { credits = false; return; }
+            var view = new Rect(r.x + 16, r.y + 20, w - 32, h - 34);
+            float tw = view.width - 8, total = 0f;
+            foreach (var s in CreditsText.Sections) total += 14 + CuteUI.WrapHeight(s.body, tw, true) + 8;
+            creditScroll = TradeLedgerUI.Scroll(view, creditScroll, total);
+            GUI.BeginGroup(view);
+            float y = -creditScroll;
+            foreach (var s in CreditsText.Sections)
+            {
+                CuteUI.Label(0, y + 6, s.title, CuteUI.Text, false, true);
+                y += 14;
+                y += CuteUI.Wrap(0, y, tw, s.body, CuteUI.Sub, true) + 8;
+            }
+            GUI.EndGroup();
         }
 
         static void QuitGame()
