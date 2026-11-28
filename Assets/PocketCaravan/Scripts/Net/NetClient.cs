@@ -32,6 +32,31 @@ namespace PocketCaravan
         public const int Protocol = 1;
         /// <summary>팀 시험 서버 (Cloudflare, 2026-10-30 배포). 내 컴퓨터 서버로 개발할 때는 접속 창에서 ws://127.0.0.1:8787/ws 로 바꾼다</summary>
         public const string DefaultAddress = "wss://pocket-caravan-server.baribari.workers.dev/ws";
+        /// <summary>
+        /// 예전 기본 주소들. 서버를 옮기면(2026-11-30 AWS 이전) DefaultAddress만 새 주소로 바꾸면 된다:
+        /// 이 컴퓨터에 여기 적힌 옛 주소가 저장돼 있으면 SavedAddress가 새 기본 주소로 돌려준다.
+        /// (접속 창이 접속할 때마다 주소를 저장해서, 이게 없으면 접속해 본 사람은 새 빌드에서도 옛 서버로 간다)
+        /// </summary>
+        static readonly string[] RetiredAddresses = { "wss://pocket-caravan-server.baribari.workers.dev/ws" };
+        const string AddressKey = "net.address";
+
+        /// <summary>이 컴퓨터에 저장된 서버 주소. 없거나 옛 기본 주소면 DefaultAddress</summary>
+        public static string SavedAddress() => ResolveAddress(PlayerPrefs.GetString(AddressKey, ""));
+
+        /// <summary>저장돼 있던 주소 → 실제로 쓸 주소 (비었거나 옛 기본 주소면 지금 기본 주소)</summary>
+        public static string ResolveAddress(string saved)
+        {
+            saved = (saved ?? "").Trim();
+            if (saved.Length == 0 || System.Array.IndexOf(RetiredAddresses, saved) >= 0) return DefaultAddress;
+            return saved;
+        }
+
+        /// <summary>서버 주소 저장. 기본 주소 그대로면 남기지 않는다 (다음에 서버를 옮겨도 따라가게)</summary>
+        public static void SaveAddress(string address)
+        {
+            if (ResolveAddress(address) == DefaultAddress) PlayerPrefs.DeleteKey(AddressKey);
+            else PlayerPrefs.SetString(AddressKey, address.Trim());
+        }
         /// <summary>Waiting: 끊겨서 다시 접속하기를 기다리는 중</summary>
         public enum State { Offline, Connecting, Online, Waiting }
         const float PingSeconds = 5f, DeadSeconds = 20f, MaxRetryDelay = 30f;
