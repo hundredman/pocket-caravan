@@ -1,0 +1,20 @@
+# systemd 서비스 (2026-11-28): 서버가 죽거나 EC2가 재부팅돼도 자동으로 다시 켠다.
+# 놓는 곳: /etc/systemd/system/baribari.service
+#   sudo systemctl daemon-reload && sudo systemctl enable --now baribari
+# 기록 보기: journalctl -u baribari -f      다시 켜기(배포 뒤): sudo systemctl restart baribari
+[Unit]
+Description=Baribari online server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/opt/baribari
+EnvironmentFile=/etc/baribari.env
+ExecStart=/usr/bin/node dist/index.js
+Restart=always
+RestartSec=3
+TimeoutStopSec=15
+
+[Install]
+WantedBy=multi-user.target

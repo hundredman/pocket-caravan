@@ -21,7 +21,7 @@
 //   자동백업 받기 <날짜>      그날 자동 백업을 backups/에 파일로 받는다. 받은 파일은 되살리기에 그대로 쓴다
 // 영어 명령도 된다: status · accounts · reset · delete (--prefix) · kick · notice · saves · restore · backup · load (--name, --exact) · auto (now · get)
 // 관리 키: 환경 변수 ADMIN_KEY, 없으면 Server/.dev.vars의 ADMIN_KEY. 올린 서버에도 같은 값을 넣어 둔다
-//   (npx wrangler secret put ADMIN_KEY)
+//   (EC2: /etc/baribari.env의 ADMIN_KEY. deploy/README.md)
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";

@@ -2,11 +2,13 @@
   "name": "pocket-caravan-server",
   "private": true,
   "version": "0.1.0",
-  "description": "Pocket Caravan 온라인 서버 (Cloudflare Workers + Durable Objects)",
+  "description": "바리바리 온라인 서버 (EC2의 Node.js + ws, 저장소 DynamoDB, 백업 S3)",
+  "type": "module",
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "check": "tsc --noEmit",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "dev": "tsc -p tsconfig.json && node --env-file-if-exists=.dev.vars dist/index.js --test-scheduled",
+    "check": "tsc --noEmit -p tsconfig.json",
     "test:two": "node test/two_clients.mjs",
     "test:safety": "node test/safety.mjs",
     "test:accounts": "node test/accounts.mjs",
@@ -17,9 +19,14 @@
     "test:backup": "node test/backup.mjs",
     "test:market": "node test/market.mjs"
   },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1179.0",
+    "@aws-sdk/client-s3": "^3.1179.0",
+    "ws": "^8.23.1"
+  },
   "devDependencies": {
-    "@cloudflare/workers-types": "^5.20261030.1",
-    "typescript": "^7.0.2",
-    "wrangler": "^4.156.0"
+    "@types/node": "^22.20.7",
+    "@types/ws": "^8.18.2",
+    "typescript": "^7.0.2"
   }
 }

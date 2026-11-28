@@ -1,6 +1,9 @@
 /**
- * 세계 방 (Durable Object 하나). 요청을 한 번에 하나씩 처리한다.
- * 쉬는 동안 방이 잠들어도(Hibernation) 접속은 유지되므로, 플레이어 정보는 소켓에 붙여 둔다(serializeAttachment).
+ * 세계 방 하나. 요청을 한 번에 하나씩 처리한다(run).
+ * 2026-11-28 AWS 이전: Cloudflare Durable Object → EC2의 Node.js 서버 안의 클래스 하나.
+ *   플레이어 정보는 서버 메모리의 Map(접속 → 플레이어)에 둔다. 저장소는 store.ts(DynamoDB), 자동 백업은 backups.ts(S3).
+ *   알람(10초마다 유령 접속 정리 · 경매 끝)은 setTimeout으로, ping은 아래 case "ping"이 직접 답한다.
+ *   게임과 주고받는 메시지 모양은 그대로다.
  *
  * 메시지는 JSON 한 줄, "t"가 종류다.
  *  2단계 (2026-10-30)
@@ -29,7 +32,7 @@
  *  6단계 (2026-10-30) 끊겨도 다시 붙기 · 서버 보호
  *   hello에 "key"(게임을 켤 때마다 새로 만드는 비밀 글자)를 실어 보낸다. 같은 key로 다시 들어오면
  *   예전 접속을 닫고 예전 번호(id)를 그대로 준다. welcome의 "name"이 실제로 쓰인 이름이다(겹치면 "윤채(2)").
- *   게임 → 서버  {"t":"ping"}  →  서버 → 게임 {"t":"pong"}      5초마다. 방을 깨우지 않는 자동 응답이다
+ *   게임 → 서버  {"t":"ping"}  →  서버 → 게임 {"t":"pong"}      5초마다. (Cloudflare 때는 자동 응답, 지금은 case "ping"이 답한다)
  *   30초 넘게 아무 소식이 없는 접속은 닫는다(와이파이가 끊긴 채 남은 유령 접속 정리).
  *   한 사람이 1초에 30개 넘게 보내면 넘친 것은 버리고, 90개를 넘으면 접속을 닫는다.
  *   서버가 닫을 때 이유(닫는 번호): 4001 너무 많이 보냄 · 4002 버전이 다름 · 4003 응답 없음 · 4004 같은 게임이 다시 접속함
@@ -73,14 +76,14 @@
  *         서버 → 받는 사람 {"t":"gift","gid":"p3:a1","from":"윤채",…}  →  받는 사람 → 서버 {"t":"giftAck","gid":"p3:a1","ok":true}
  *         서버 → 보낸 사람 {"t":"giftResult","gid":"a1","ok":…,"why":…,"to":…}  (받는 사람이 없거나 10초 안에 답이 없으면 ok:false)
  *         보낸 게임은 보낼 때 돈·짐을 빼 두고, ok:false면 돌려받는다
- *   사용량: 접속·메시지·관리 요청 수를 날마다(UTC) 세어 GET /admin/status의 "usage"로 보여 준다 (무료 한도 하루 10만 번 어림)
+ *   사용량: 접속·메시지·관리 요청 수를 날마다(UTC) 세어 GET /admin/status의 "usage"로 보여 준다 (Cloudflare 무료 한도 어림이던 것을 이제 접속 통계로 쓴다. ping도 센다)
  *  12단계 (2026-11-08) 백업 · 되살리기 · 자동 백업
  *   GET /admin/backup?after=<키>&limit=<수>  저장소를 키 순서대로 조금씩 통째로 준다 (계정의 접속키 해시·소금 포함)
  *     → {"at":…,"entries":[[키,값]…],"next":"마지막 키" 또는 null}   next가 null이 될 때까지 after=next로 이어 받는다
  *   POST /admin/load {"confirm":true,"put":[[키,값]…],"del":[키…],"done":true,"names":[이름…]}  백업을 되살린다
  *     put·del은 나눠 여러 번 보낼 수 있다. "nextId"는 줄이지 않는다(예전 번호를 새 손님에게 주면 계정 번호와 겹친다)
  *     done이면 접속한 사람(names가 있으면 그 계정만)에게 알리고 1012로 닫는다. 게임은 저절로 다시 접속해서 되살린 저장을 받는다
- *   자동 백업: 매일 한국 새벽 3시(cron, index.ts scheduled)에 저장소 통째로를 gzip해서 KV(BACKUPS) "auto:날짜:칸"에 둔다 (최근 7일치)
+ *   자동 백업: 매일 한국 새벽 3시(index.ts 예약 작업)에 저장소 통째로를 gzip해서 S3 "auto/날짜.json.gz"에 둔다 (최근 7일치, 2026-11-28 KV → S3)
  *     GET /admin/autobackups 목록 · POST /admin/autobackup 지금 하기 · GET /admin/autobackup?day=2026-11-08 받기(gzip, 백업 파일과 같은 JSON)
  *  13단계 (2026-11-18) 만국 경매 · 보물 상자. welcome에 "games":true (이 서버가 안다). 상태는 방 메모리에만 둔다(방이 잠들면 = 아무도 없으면 지워진다)
  *   경매: 게임 → 서버 {"t":"auc"}  (경매대를 열 때. 물건이 없고 쉬는 시간이 지났으면 새 물건을 올린다)
@@ -91,8 +94,13 @@
  *         idx·seed로 게임이 맵(세계 맵 목록에서 idx번째)과 칸을 똑같이 고른다. 새 상자가 숨겨지면 모두에게 "trs"가 간다
  *         게임 → 서버 {"t":"trsFind","tid":…}  먼저 연 사람: {"t":"trsWon","tid"} + 모두에게 "trs"(found = 이름). 늦으면 {"t":"trsLate","tid","found"}
  */
-import { DurableObject } from "cloudflare:workers";
-import type { Env } from "./index";
+import { promisify } from "node:util";
+import { gzip } from "node:zlib";
+import type { WebSocket } from "ws";
+import type { Store } from "./store.js";
+import { AUTO_KEEP, type BackupBox } from "./backups.js";
+
+const gzipAsync = promisify(gzip);
 
 export const PROTOCOL = 1;
 
@@ -118,8 +126,6 @@ const GIFT_GAP_MS = 2000, GIFT_WAIT_MS = 10_000, GIFT_MONEY_MAX = 1_000_000, GIF
 const USAGE_SAVE_MS = 60_000;
 /** 백업: 한 번에 읽는 키 수 · 한 번에 보내는 글자 수 (게임 저장 하나가 12만 자까지라 나눠 보낸다) */
 const BACKUP_PAGE = 100, BACKUP_CHARS = 4_000_000;
-/** 자동 백업: 남기는 날 수 · KV 값 하나의 크기 (무료 KV는 값 하나 25MB까지라 넘으면 칸을 나눈다) */
-const AUTO_KEEP = 7, AUTO_PART = 20 * 1024 * 1024;
 /** 짐 저장: 물건 종류 수 */
 const SAVE_ITEMS = 200;
 /** 거래 기록: 남겨 두는 수 · 새로 들어온 사람에게 다시 보내 주는 기간 */
@@ -186,9 +192,6 @@ interface BoardRow { name: string; value: number; at: number; }
 /** 받는 사람의 답을 기다리는 선물 */
 interface PendingGift { from: WebSocket; clientGid: string; to: WebSocket; toName: string; at: number; }
 
-/** 자동 백업 한 날의 정보 (KV "auto:날짜:칸"마다 같은 값을 붙여 둔다) */
-interface AutoMeta { at: number; keys: number; bytes: number; parts: number; }
-
 /** 날마다(UTC) 센 사용량 (저장소 키 "usage:" + 날짜) */
 interface Usage { day: string; opens: number; msgs: number; admin: number; }
 
@@ -224,7 +227,16 @@ interface Player {
   gone?: boolean;
 }
 
-export class WorldRoom extends DurableObject<Env> {
+export class WorldRoom {
+  private store: Store;
+  private backups: BackupBox;
+  /** 접속 → 플레이어 (Cloudflare 때 소켓에 붙여 두던 것) */
+  private players = new Map<WebSocket, Player>();
+  /** 처리 줄 (run) */
+  private chain: Promise<unknown> = Promise.resolve();
+  /** 알람: 걸린 시각 (없으면 null) */
+  private alarmAt: number | null = null;
+  private alarmTimer: ReturnType<typeof setTimeout> | undefined;
   /** 아이디 → 1초 칸의 시작 시각·받은 수. 방이 잠들면 지워져도 괜찮다 */
   private rate = new Map<string, { start: number; n: number; warned: boolean }>();
   private lastSay = new Map<string, number>();
@@ -248,38 +260,69 @@ export class WorldRoom extends DurableObject<Env> {
   private usage: Usage = { day: "", opens: 0, msgs: 0, admin: 0 };
   private usageSaved = 0;
 
-  constructor(ctx: DurableObjectState, env: Env) {
-    super(ctx, env);
-    // ping은 방을 깨우지 않고 Cloudflare가 바로 pong으로 답한다 (마지막 ping 시각은 따로 남는다)
-    ctx.setWebSocketAutoResponse(new WebSocketRequestResponsePair('{"t":"ping"}', '{"t":"pong"}'));
+  constructor(store: Store, backups: BackupBox) {
+    this.store = store;
+    this.backups = backups;
   }
 
-  async fetch(request: Request): Promise<Response> {
-    // 입구(Worker)가 이 방보다 새 코드면, 이 방은 예전 코드로 돌고 있는 것이다. 스스로 다시 켜서 새 코드로 바꾼다.
-    // (접속이 끊기면 게임이 저절로 다시 붙는다. 입구는 한 번 더 요청한다)
-    const want = request.headers.get("x-pc-version") ?? "";
-    const mine = this.env.VERSION?.timestamp ?? "";
-    if (want && mine && Date.parse(want) > Date.parse(mine)) this.ctx.abort("새 코드로 다시 켭니다");
+  /**
+   * 처리 줄: 접속·메시지·닫힘·알람·관리 요청을 온 순서대로 하나씩 처리한다.
+   * Durable Object는 이것을 Cloudflare가 지켜 줬다. Node.js에서는 저장소(DynamoDB)를 기다리는 동안
+   * 다음 메시지가 끼어들 수 있어서(장터 재고·경매 입찰이 꼬인다) 입구(server.ts)가 모든 일을 이 줄에 세운다.
+   */
+  run<T>(job: () => Promise<T> | T): Promise<T> {
+    const next = this.chain.then(job);
+    this.chain = next.catch(() => undefined);
+    return next;
+  }
 
-    const path = new URL(request.url).pathname;
-    const inside = path === "/cron/backup";   // 입구의 scheduled만 보낸다 (입구는 /ws·/admin/만 방으로 넘긴다)
-    await this.tally(path.startsWith("/admin/") || inside ? "admin" : "opens");
-    if (path.startsWith("/admin/")) return this.admin(request, path.slice("/admin/".length));
-    if (inside) return this.autoBackup();
-
-    const pair = new WebSocketPair();
-    const [client, server] = Object.values(pair);
-    this.ctx.acceptWebSocket(server);
-    const n = ((await this.ctx.storage.get<number>("nextId")) ?? 0) + 1;
-    await this.ctx.storage.put("nextId", n);
+  /** 새 접속 (Cloudflare의 fetch: 번호를 주고 플레이어 정보를 만든다) */
+  async open(ws: WebSocket): Promise<void> {
+    await this.tally("opens");
+    const n = ((await this.store.get<number>("nextId")) ?? 0) + 1;
+    await this.store.put("nextId", n);
     const me: Player = { id: `p${n}`, key: "", name: "", look: "", veh: "", map: "", x: 0, y: 0, fx: 0, fy: -1, m: false, heard: Date.now() };
-    server.serializeAttachment(me);
-    if ((await this.ctx.storage.getAlarm()) === null) await this.ctx.storage.setAlarm(Date.now() + SWEEP_MS);
-    return new Response(null, { status: 101, webSocket: client });
+    this.players.set(ws, me);
+    if (this.getAlarm() === null) this.setAlarm(Date.now() + SWEEP_MS);
+  }
+
+  /** 관리 요청 (관리 키는 입구가 이미 확인했다) */
+  async adminRequest(request: Request, what: string): Promise<Response> {
+    await this.tally("admin");
+    return this.admin(request, what);
+  }
+
+  /** 매일 자동 백업 (입구의 예약 작업이 부른다) */
+  async cronBackup(): Promise<Response> {
+    await this.tally("admin");
+    return this.autoBackup();
+  }
+
+  /** 서버를 끄기 전: 오늘 사용량을 적고, 접속한 사람을 1012로 닫는다(게임은 저절로 다시 접속한다) */
+  async shutdown(): Promise<void> {
+    clearTimeout(this.alarmTimer);
+    await this.saveUsage(true);
+    for (const [s, p] of this.live()) this.shut(s, p, 1012, "restart");
+  }
+
+  /** 알람 (Durable Object의 getAlarm·setAlarm과 같다: 하나만 걸리고, 새로 걸면 바뀐다). 울리면 줄에 서서 alarm()을 부른다 */
+  private getAlarm(): number | null {
+    return this.alarmAt;
+  }
+
+  private setAlarm(at: number): void {
+    clearTimeout(this.alarmTimer);
+    this.alarmAt = at;
+    this.alarmTimer = setTimeout(() => {
+      this.alarmAt = null;
+      this.run(() => this.alarm())
+        .catch((e) => console.error("알람 처리 실패", e))
+        .finally(() => { if (this.alarmAt === null && this.live().length > 0) this.setAlarm(Date.now() + SWEEP_MS); });
+    }, Math.max(0, at - Date.now()));
   }
 
   async webSocketMessage(ws: WebSocket, data: string | ArrayBuffer): Promise<void> {
-    const me = ws.deserializeAttachment() as Player;
+    const me = this.players.get(ws);
     if (!me || me.gone) return;
     const now = Date.now();
     await this.tally("msgs");
@@ -287,15 +330,14 @@ export class WorldRoom extends DurableObject<Env> {
     me.heard = now;
 
     const size = typeof data === "string" ? data.length : data.byteLength;
-    if (size > FULL_CHARS) { ws.serializeAttachment(me); return send(ws, { t: "error", why: "메시지가 너무 깁니다" }); }
+    if (size > FULL_CHARS) return send(ws, { t: "error", why: "메시지가 너무 깁니다" });
     let msg: any;
     try {
       msg = JSON.parse(typeof data === "string" ? data : new TextDecoder().decode(data));
     } catch {
-      ws.serializeAttachment(me);
       return send(ws, { t: "error", why: "JSON이 아닙니다" });
     }
-    if (size > MAX_CHARS && msg?.t !== "full") { ws.serializeAttachment(me); return send(ws, { t: "error", why: "메시지가 너무 깁니다" }); }
+    if (size > MAX_CHARS && msg?.t !== "full") return send(ws, { t: "error", why: "메시지가 너무 깁니다" });
     switch (msg?.t) {
       case "hello": {
         if (msg.v !== PROTOCOL) {
@@ -309,21 +351,21 @@ export class WorldRoom extends DurableObject<Env> {
         let newPass = false;
         if (name) {
           const ak = "acct:" + name.toLowerCase();
-          acct = await this.ctx.storage.get<Account>(ak);
+          acct = await this.store.get<Account>(ak);
           if (pass) {
             if (pass.length < 4 || pass.length > 32) return this.refuse(ws, me, "접속키는 4~32자로 정해 주세요");
             if (acct && !acct.hash) {
               // 관리자가 접속키를 지웠다: 이번에 넣은 접속키를 새 접속키로 정한다
               acct.salt = randomHex(16);
               acct.hash = await hashKey(acct.salt, pass);
-              await this.ctx.storage.put(ak, acct);
+              await this.store.put(ak, acct);
               newPass = true;
             } else if (acct) {
               if ((await hashKey(acct.salt, pass)) !== acct.hash) return this.refuse(ws, me, `'${acct.name}'은(는) 다른 접속키로 쓰고 있는 이름이에요`);
             } else {
               const salt = randomHex(16);
               acct = { name, salt, hash: await hashKey(salt, pass), id: me.id, created: now };
-              await this.ctx.storage.put(ak, acct);
+              await this.store.put(ak, acct);
             }
             me.acct = ak;
             me.id = acct.id;
@@ -337,8 +379,7 @@ export class WorldRoom extends DurableObject<Env> {
         if (me.key || me.acct) this.replaceOld(ws, me);
         if (!me.acct) me.name = this.uniqueName(name || me.id, ws);
         me.look = cleanMap(msg.look);
-        ws.serializeAttachment(me);
-        const seq = (await this.ctx.storage.get<number>("tradeSeq")) ?? 0;
+        const seq = (await this.store.get<number>("tradeSeq")) ?? 0;
         send(ws, {
           t: "welcome", v: PROTOCOL, id: me.id, name: me.name, online: this.count(), seq,
           account: !!me.acct, hasSave: !!acct?.save && !!me.acct, save: me.acct ? acct?.save ?? null : null,
@@ -353,20 +394,18 @@ export class WorldRoom extends DurableObject<Env> {
         return;
       }
       case "save": {
-        ws.serializeAttachment(me);
         if (!me.acct) return send(ws, { t: "error", why: "접속키로 들어와야 저장돼요" });
         if (now - (this.lastSave.get(me.id) ?? 0) < 1000) return;
         const save = cleanSave(msg, now);
         if (!save) return send(ws, { t: "error", why: "저장할 돈·짐 모양이 이상합니다" });
         this.lastSave.set(me.id, now);
-        const acct = await this.ctx.storage.get<Account>(me.acct);
+        const acct = await this.store.get<Account>(me.acct);
         if (!acct) return;
         acct.save = save;
-        await this.ctx.storage.put(me.acct, acct);
+        await this.store.put(me.acct, acct);
         return send(ws, { t: "saved", at: save.at });
       }
       case "full": {
-        ws.serializeAttachment(me);
         if (!me.acct) return send(ws, { t: "error", why: "접속키로 들어와야 저장돼요" });
         if (now - (this.lastFull.get(me.id) ?? 0) < FULL_GAP_MS) return send(ws, { t: "error", why: "게임 저장을 너무 자주 올립니다" });
         const zip = typeof msg.zip === "string" && msg.zip.length > 0 && msg.zip.length <= FULL_ZIP_MAX && /^[A-Za-z0-9+/]+={0,2}$/.test(msg.zip) ? msg.zip as string : "";
@@ -374,7 +413,7 @@ export class WorldRoom extends DurableObject<Env> {
         const at = Number.isInteger(msg.at) && msg.at > 0 && msg.at < 1e14 ? msg.at as number : 0;
         if (!zip || !h || !at) return send(ws, { t: "error", why: "게임 저장 모양이 이상합니다" });
         this.lastFull.set(me.id, now);
-        const acct = await this.ctx.storage.get<Account>(me.acct);
+        const acct = await this.store.get<Account>(me.acct);
         if (!acct) return;
         const int = (v: unknown) => Number.isInteger(v) && Math.abs(v as number) <= 2147483647 ? v as number : 0;
         const name = me.acct.slice("acct:".length);
@@ -382,56 +421,52 @@ export class WorldRoom extends DurableObject<Env> {
         // 11단계 저장 기록: 덮기 전에 예전 것을 남긴다 (10분에 한 번, 또는 날짜가 줄었으면 = 새로 시작했으면 바로)
         const prev = acct.full, last = acct.hist?.[0];
         if (prev && prev.h !== h && (!last || last.h !== prev.h) && (int(msg.day) < prev.day || !last || prev.saved - last.saved >= HISTORY_GAP_MS)) {
-          const prevZip = await this.ctx.storage.get<string>("full:" + name);
+          const prevZip = await this.store.get<string>("full:" + name);
           if (prevZip) this.keepHistory(acct, name, prev, prevZip, puts);
         }
         acct.full = { at, h, day: int(msg.day), money: int(msg.money), map: cleanMap(msg.map), origin: cleanMap(msg.origin), size: zip.length, saved: now };
-        await this.ctx.storage.put({ ...puts, [me.acct]: acct, ["full:" + name]: zip });
+        await this.store.put({ ...puts, [me.acct]: acct, ["full:" + name]: zip });
         return send(ws, { t: "fullSaved", at, h });
       }
       case "getFull": {
-        ws.serializeAttachment(me);
         if (!me.acct) return send(ws, { t: "error", why: "접속키로 들어와야 불러올 수 있어요" });
-        const acct = await this.ctx.storage.get<Account>(me.acct);
-        const zip = (await this.ctx.storage.get<string>("full:" + me.acct.slice("acct:".length))) ?? "";
+        const acct = await this.store.get<Account>(me.acct);
+        const zip = (await this.store.get<string>("full:" + me.acct.slice("acct:".length))) ?? "";
         return send(ws, { t: "fullData", at: acct?.full?.at ?? 0, h: acct?.full?.h ?? "", zip: acct?.full ? zip : "" });
       }
       case "score": {
-        ws.serializeAttachment(me);
         if (!me.acct) return send(ws, { t: "error", why: "접속키로 들어와야 순위에 올라요" });
         const board = cleanBoard(msg.board);
         const value = Number.isInteger(msg.value) && msg.value >= 0 && msg.value <= 1e9 ? msg.value as number : -1;
         if (!board || board === "money" || value < 0) return send(ws, { t: "error", why: "점수 모양이 이상합니다" });
         if (now - (this.lastScore.get(me.id) ?? 0) < SCORE_GAP_MS) return;
         this.lastScore.set(me.id, now);
-        const ids = (await this.ctx.storage.get<string[]>("boards")) ?? [];
+        const ids = (await this.store.get<string[]>("boards")) ?? [];
         if (!ids.includes(board) && ids.length >= BOARD_MAX) return send(ws, { t: "error", why: "순위표 종류가 너무 많아요" });
-        const rows = (await this.ctx.storage.get<BoardRow[]>("board:" + board)) ?? [];
+        const rows = (await this.store.get<BoardRow[]>("board:" + board)) ?? [];
         const mine = rows.find((r) => r.name.toLowerCase() === me.name.toLowerCase());
         if (!mine || value > mine.value) {
           const next = rows.filter((r) => r !== mine).concat({ name: me.name, value, at: now })
             .sort((a, b) => b.value - a.value || a.at - b.at).slice(0, BOARD_KEEP);
-          await this.ctx.storage.put({ ["board:" + board]: next, ...(ids.includes(board) ? {} : { boards: ids.concat(board) }) });
+          await this.store.put({ ["board:" + board]: next, ...(ids.includes(board) ? {} : { boards: ids.concat(board) }) });
           rows.splice(0, rows.length, ...next);
         }
         const rank = rows.findIndex((r) => r.name.toLowerCase() === me.name.toLowerCase()) + 1;
         return send(ws, { t: "scored", board, value, best: Math.max(value, mine?.value ?? 0), rank });
       }
       case "getBoards": {
-        ws.serializeAttachment(me);
         const boards: { id: string; rows: { name: string; value: number }[] }[] = [];
         const money = [...(await this.accounts()).values()]
           .map((a) => ({ name: a.name, value: a.full?.money ?? a.save?.money ?? -1 }))
           .filter((r) => r.value >= 0).sort((a, b) => b.value - a.value).slice(0, BOARD_SHOW);
         boards.push({ id: "money", rows: money });
-        for (const id of (await this.ctx.storage.get<string[]>("boards")) ?? []) {
-          const rows = (await this.ctx.storage.get<BoardRow[]>("board:" + id)) ?? [];
+        for (const id of (await this.store.get<string[]>("boards")) ?? []) {
+          const rows = (await this.store.get<BoardRow[]>("board:" + id)) ?? [];
           boards.push({ id, rows: rows.slice(0, BOARD_SHOW).map((r) => ({ name: r.name, value: r.value })) });
         }
         return send(ws, { t: "boards", boards });
       }
       case "gift": {
-        ws.serializeAttachment(me);
         const clientGid = typeof msg.gid === "string" && /^[A-Za-z0-9]{1,32}$/.test(msg.gid) ? msg.gid as string : "";
         const to = cleanName(msg.to);
         const money = Number.isInteger(msg.money) && msg.money > 0 && msg.money <= GIFT_MONEY_MAX ? msg.money as number : 0;
@@ -450,30 +485,27 @@ export class WorldRoom extends DurableObject<Env> {
         return send(ws, { t: "giftSent", gid: clientGid, to: target[1].name });
       }
       case "giftAck": {
-        ws.serializeAttachment(me);
         const g = typeof msg.gid === "string" ? this.gifts.get(msg.gid) : undefined;
         if (!g || g.to !== ws) return;
         this.gifts.delete(msg.gid);
         return send(g.from, { t: "giftResult", gid: g.clientGid, ok: msg.ok === true, why: cleanText(msg.why), to: me.name });
       }
       case "trade": {
-        ws.serializeAttachment(me);
         const town = cleanMap(msg.town), item = cleanMap(msg.item);
         const n = Number.isInteger(msg.n) && msg.n >= 1 && msg.n <= 1000 ? msg.n as number : 0;
         const d = typeof msg.d === "number" && Number.isFinite(msg.d) && Math.abs(msg.d) <= 10000 ? Math.round(msg.d * 1000) / 1000 : null;
         if (!town || !item || !n || d === null) return send(ws, { t: "error", why: "거래 모양이 이상합니다" });
-        const seq = ((await this.ctx.storage.get<number>("tradeSeq")) ?? 0) + 1;
+        const seq = ((await this.store.get<number>("tradeSeq")) ?? 0) + 1;
         const trade: Trade = { seq, at: now, id: me.id, name: me.name, town, item, n, d, sell: msg.sell === true };
-        const log = ((await this.ctx.storage.get<Trade[]>("trades")) ?? []).concat(trade).slice(-TRADE_KEEP);
-        const market = (await this.ctx.storage.get<Record<string, MarketDev>>("market")) ?? {};
+        const log = ((await this.store.get<Trade[]>("trades")) ?? []).concat(trade).slice(-TRADE_KEEP);
+        const market = (await this.store.get<Record<string, MarketDev>>("market")) ?? {};
         const key = town + "|" + item;
         const prev = market[key];
         if (prev || Object.keys(market).length < MARKET_ITEMS_MAX) market[key] = { dev: (prev ? decayedDev(prev, now) : 0) + d, at: now };
-        await this.ctx.storage.put({ tradeSeq: seq, trades: log, market });
+        await this.store.put({ tradeSeq: seq, trades: log, market });
         return this.broadcast({ t: "trade", ...trade }, (o) => o !== ws);
       }
       case "emote": {
-        ws.serializeAttachment(me);
         const e = cleanMap(msg.e);
         if (!e || !me.map || now - (this.lastEmote.get(me.id) ?? 0) < EMOTE_GAP_MS) return;
         this.lastEmote.set(me.id, now);
@@ -481,7 +513,7 @@ export class WorldRoom extends DurableObject<Env> {
       }
       case "enter": {
         const map = cleanMap(msg.map);
-        if (!map) { ws.serializeAttachment(me); return send(ws, { t: "error", why: "맵 이름이 이상합니다" }); }
+        if (!map) return send(ws, { t: "error", why: "맵 이름이 이상합니다" });
         if (me.map && me.map !== map) this.toMap(me.map, { t: "leave", id: me.id }, ws);
         const look = cleanMap(msg.look);
         if (look) me.look = look;
@@ -489,7 +521,6 @@ export class WorldRoom extends DurableObject<Env> {
         if (typeof msg.tag === "string") me.tag = cleanMap(msg.tag);   // 11/09 이름표 표시 ("" = 없음). 안 실으면 그대로
         me.map = map;
         me.m = false;
-        ws.serializeAttachment(me);
         const others = this.peers(map, ws).map(publicInfo);
         send(ws, { t: "room", map, players: others });
         this.toMap(map, { t: "join", ...publicInfo(me) }, ws);
@@ -497,7 +528,7 @@ export class WorldRoom extends DurableObject<Env> {
       }
       case "pos": {
         const x = num(msg.x), y = num(msg.y);
-        if (!me.map || x === null || y === null) { ws.serializeAttachment(me); return; }
+        if (!me.map || x === null || y === null) return;
         me.x = x;
         me.y = y;
         me.fx = dir(msg.fx);
@@ -507,12 +538,10 @@ export class WorldRoom extends DurableObject<Env> {
         me.sy = me.s ? clampNum(msg.sy, -1, 1, 0) : 0;
         me.sq = me.s ? clampNum(msg.sq, 0.3, 1.5, 1) : 1;
         me.ld = Number.isInteger(msg.ld) ? Math.min(3, Math.max(0, msg.ld as number)) : 0;   // 11/08 짐 상자 수
-        ws.serializeAttachment(me);
         this.toMap(me.map, { t: "pos", id: me.id, x: me.x, y: me.y, fx: me.fx, fy: me.fy, m: me.m, s: me.s, sy: me.sy, sq: me.sq, ld: me.ld }, ws);
         return;
       }
       case "say": {
-        ws.serializeAttachment(me);
         const text = cleanText(msg.text);
         if (!text) return;
         if (now - (this.lastSay.get(me.id) ?? 0) < SAY_GAP_MS) return send(ws, { t: "error", why: "조금 천천히 말해 주세요" });
@@ -520,19 +549,17 @@ export class WorldRoom extends DurableObject<Env> {
         return this.broadcast({ t: "say", id: me.id, name: me.name, map: me.map, text }, () => true);
       }
       case "auc": {   // 13단계 경매대를 열었다
-        ws.serializeAttachment(me);
         this.settleAuction(now);
         if (!this.auction && now >= this.nextAuction) {
           const lots = Object.keys(AUCTION_LOTS);
           const lot = lots[Math.floor(Math.random() * lots.length)];
           this.auction = { lot, price: AUCTION_LOTS[lot], top: "", topId: "", ends: now + AUCTION_MS };
           this.broadcast(this.aucInfo(now), (o) => o !== ws);
-          await this.ctx.storage.setAlarm(Math.min(now + SWEEP_MS, this.auction.ends + 100));
+          this.setAlarm(Math.min(now + SWEEP_MS, this.auction.ends + 100));
         }
         return send(ws, this.aucInfo(now));
       }
       case "bid": {
-        ws.serializeAttachment(me);
         this.settleAuction(now);
         const a = this.auction;
         const price = Number.isInteger(msg.price) ? msg.price as number : -1;
@@ -545,16 +572,14 @@ export class WorldRoom extends DurableObject<Env> {
         a.price = price; a.top = me.name; a.topId = me.id;
         a.ends = Math.max(a.ends, now + AUCTION_BUMP_MS);
         this.broadcast(this.aucInfo(now), () => true);
-        await this.ctx.storage.setAlarm(Math.min(now + SWEEP_MS, a.ends + 100));
+        this.setAlarm(Math.min(now + SWEEP_MS, a.ends + 100));
         return;
       }
       case "trs": {   // 13단계 보물 상자 소문
-        ws.serializeAttachment(me);
         this.tickTreasure(now);
         return send(ws, this.trsInfo(now));
       }
       case "trsFind": {
-        ws.serializeAttachment(me);
         const t = this.treasure;
         const id = Number.isInteger(msg.tid) ? msg.tid as number : 0;
         if (!t || t.id !== id) return send(ws, { t: "trsLate", tid: id, found: "" });
@@ -564,35 +589,28 @@ export class WorldRoom extends DurableObject<Env> {
         send(ws, { t: "trsWon", tid: id });
         return this.broadcast(this.trsInfo(now), () => true);
       }
-      case "ping":   // 자동 응답이 못 받은 경우(글자가 조금 다를 때)
-        ws.serializeAttachment(me);
+      case "ping":   // 5초마다 오는 살아 있음 확인 (Cloudflare 때는 자동 응답이 대신 답했다)
         return send(ws, { t: "pong" });
       case "who": {
-        ws.serializeAttachment(me);
         const players = this.live().map(([, p]) => ({ id: p.id, name: p.name, map: p.map }));
         return send(ws, { t: "who", players });
       }
       default:
-        ws.serializeAttachment(me);
         return send(ws, { t: "error", why: `모르는 메시지: ${String(msg?.t)}` });
     }
   }
 
-  async webSocketClose(ws: WebSocket, code: number, reason: string): Promise<void> {
+  /** 접속이 닫혔다 (게임이 닫았거나, 서버가 shut으로 닫은 뒤의 마무리). 오류로 끊겨도 ws 라이브러리가 close를 부른다 */
+  async webSocketClose(ws: WebSocket): Promise<void> {
     this.left(ws);
-    try { ws.close(code, reason); } catch { /* 이미 닫힘 */ }
+    this.players.delete(ws);
   }
 
-  async webSocketError(ws: WebSocket): Promise<void> {
-    this.left(ws);
-  }
-
-  /** 10초마다: 30초 넘게 소식 없는 접속(ping 포함)을 닫는다. 아무도 없으면 쉰다 */
+  /** 10초마다: 30초 넘게 소식 없는 접속(ping 포함: 모든 메시지가 heard를 갱신한다)을 닫는다. 아무도 없으면 쉰다 */
   async alarm(): Promise<void> {
     const now = Date.now();
     for (const [s, p] of this.live()) {
-      const pinged = this.ctx.getWebSocketAutoResponseTimestamp(s)?.getTime() ?? 0;
-      if (now - Math.max(p.heard, pinged) > STALE_MS) this.shut(s, p, Close.Timeout, "timeout");
+      if (now - p.heard > STALE_MS) this.shut(s, p, Close.Timeout, "timeout");
     }
     for (const [gid, g] of this.gifts)   // 받는 사람이 답이 없는 선물: 보낸 사람이 돌려받게 한다
       if (now - g.at > GIFT_WAIT_MS) { this.gifts.delete(gid); send(g.from, { t: "giftResult", gid: g.clientGid, ok: false, why: "받는 쪽이 답이 없어요", to: g.toName }); }
@@ -602,7 +620,7 @@ export class WorldRoom extends DurableObject<Env> {
     this.settleAuction(now);   // 13단계 경매가 끝났으면 알린다
     this.tickTreasure(now);    // 13단계 보물 상자를 숨기거나(때가 됐으면) 치운다(너무 오래 못 찾았으면)
     await this.saveUsage(false);
-    if (this.live().length > 0) await this.ctx.storage.setAlarm(Math.min(Date.now() + SWEEP_MS, this.auction ? this.auction.ends + 100 : Infinity));
+    if (this.live().length > 0) this.setAlarm(Math.min(Date.now() + SWEEP_MS, this.auction ? this.auction.ends + 100 : Infinity));
     else await this.saveUsage(true);
   }
 
@@ -619,41 +637,40 @@ export class WorldRoom extends DurableObject<Env> {
     const now = Date.now();
     switch (`${request.method} ${what}`) {
       case "GET status": {
-        const players = this.live().map(([s, p]) => {
-          const pinged = this.ctx.getWebSocketAutoResponseTimestamp(s)?.getTime() ?? 0;
-          return { id: p.id, name: p.name, map: p.map, look: p.look, account: !!p.acct, quietSec: Math.round((now - Math.max(p.heard, pinged)) / 1000) };
-        });
-        const trades = (await this.ctx.storage.get<Trade[]>("trades")) ?? [];
+        const players = this.live().map(([, p]) => (
+          { id: p.id, name: p.name, map: p.map, look: p.look, account: !!p.acct, quietSec: Math.round((now - p.heard) / 1000) }
+        ));
+        const trades = (await this.store.get<Trade[]>("trades")) ?? [];
         return reply({
           online: players.length, players,
           accounts: (await this.accounts()).size,
-          tradeSeq: (await this.ctx.storage.get<number>("tradeSeq")) ?? 0,
+          tradeSeq: (await this.store.get<number>("tradeSeq")) ?? 0,
           tradesKept: trades.length, lastTradeAt: trades.at(-1)?.at ?? 0,
-          // 무료 한도는 하루(UTC) 요청 10만 번. 웹소켓 메시지는 20개가 요청 1번으로 센다 (어림값: 방이 잠든 사이의 ping 자동 응답은 안 센다)
+          // 예전 Cloudflare 무료 한도 어림 (estimate · limit). 관리 도구·시험이 이 모양을 읽어서 그대로 둔다
           usage: { ...this.usage, estimate: this.usage.opens + this.usage.admin + Math.ceil(this.usage.msgs / 20), limit: 100_000 },
         });
       }
       case "POST saves": {
         const k = acctKey(body.name);
-        const acct = k ? await this.ctx.storage.get<Account>(k) : undefined;
+        const acct = k ? await this.store.get<Account>(k) : undefined;
         if (!acct) return reply({ error: `'${cleanName(body.name)}' 계정이 없어요` }, 404);
         const info = (f?: FullInfo) => f && { at: f.at, saved: f.saved, day: f.day, money: f.money, map: f.map, origin: f.origin, size: f.size };
         return reply({ name: acct.name, current: info(acct.full) ?? null, history: (acct.hist ?? []).map((x) => ({ slot: x.slot, ...info(x) })) });
       }
       case "POST restore": {
         const k = acctKey(body.name);
-        const acct = k ? await this.ctx.storage.get<Account>(k) : undefined;
+        const acct = k ? await this.store.get<Account>(k) : undefined;
         if (!acct) return reply({ error: `'${cleanName(body.name)}' 계정이 없어요` }, 404);
         const pick = (acct.hist ?? []).find((x) => x.slot === body.slot);
         const name = k.slice("acct:".length);
-        const zip = pick ? await this.ctx.storage.get<string>("fullv:" + name + ":" + pick.slot) : undefined;
+        const zip = pick ? await this.store.get<string>("fullv:" + name + ":" + pick.slot) : undefined;
         if (!pick || !zip) return reply({ error: "그 번호의 저장 기록이 없어요" }, 404);
         const puts: Record<string, unknown> = {};
-        const curZip = await this.ctx.storage.get<string>("full:" + name);
+        const curZip = await this.store.get<string>("full:" + name);
         if (acct.full && curZip && acct.full.h !== pick.h) this.keepHistory(acct, name, acct.full, curZip, puts);   // 되돌리기도 되돌릴 수 있게
         const { slot: _slot, ...picked } = pick;
         acct.full = { ...picked, at: now, saved: now };   // 지금 시각으로: 다음 로그인 때 게임이 고르는 창을 띄운다
-        await this.ctx.storage.put({ ...puts, [k]: acct, ["full:" + name]: zip });
+        await this.store.put({ ...puts, [k]: acct, ["full:" + name]: zip });
         return reply({ ok: true, name: acct.name, day: picked.day, money: picked.money, map: picked.map });
       }
       case "GET accounts": {
@@ -668,11 +685,11 @@ export class WorldRoom extends DurableObject<Env> {
       }
       case "POST reset": {
         const k = acctKey(body.name);
-        const acct = k ? await this.ctx.storage.get<Account>(k) : undefined;
+        const acct = k ? await this.store.get<Account>(k) : undefined;
         if (!acct) return reply({ error: `'${cleanName(body.name)}' 계정이 없어요` }, 404);
         acct.salt = "";
         acct.hash = "";
-        await this.ctx.storage.put(k, acct);
+        await this.store.put(k, acct);
         return reply({ ok: true, name: acct.name });
       }
       case "POST delete": {
@@ -695,13 +712,13 @@ export class WorldRoom extends DurableObject<Env> {
           const n = k.slice("acct:".length);
           return [k, "full:" + n, ...Array.from({ length: HISTORY_KEEP }, (_, i) => `fullv:${n}:${i}`)];
         });
-        for (let i = 0; i < withFull.length; i += 128) await this.ctx.storage.delete(withFull.slice(i, i + 128));
+        for (let i = 0; i < withFull.length; i += 128) await this.store.delete(withFull.slice(i, i + 128));
         // 순위표에서도 뺀다
         const lower = new Set(names.map((n) => n.toLowerCase()));
-        for (const id of (await this.ctx.storage.get<string[]>("boards")) ?? []) {
-          const rows = (await this.ctx.storage.get<BoardRow[]>("board:" + id)) ?? [];
+        for (const id of (await this.store.get<string[]>("boards")) ?? []) {
+          const rows = (await this.store.get<BoardRow[]>("board:" + id)) ?? [];
           const kept = rows.filter((r) => !lower.has(r.name.toLowerCase()));
-          if (kept.length !== rows.length) await this.ctx.storage.put("board:" + id, kept);
+          if (kept.length !== rows.length) await this.store.put("board:" + id, kept);
         }
         return reply({ deleted: names });
       }
@@ -722,7 +739,7 @@ export class WorldRoom extends DurableObject<Env> {
         const q = new URL(request.url).searchParams;
         const after = q.get("after") ?? "";
         const limit = Math.min(BACKUP_PAGE, Math.max(1, Number.parseInt(q.get("limit") ?? "", 10) || BACKUP_PAGE));
-        const page = await this.ctx.storage.list({ ...(after ? { startAfter: after } : {}), limit });
+        const page = await this.store.list({ ...(after ? { startAfter: after } : {}), limit });
         const entries: [string, unknown][] = [];
         let chars = 0, cut = false;
         for (const [k, v] of page) {
@@ -741,10 +758,10 @@ export class WorldRoom extends DurableObject<Env> {
         const okKey = (k: unknown): k is string => typeof k === "string" && k.length > 0 && k.length <= 2048;
         if (!put.every((e) => Array.isArray(e) && e.length === 2 && okKey(e[0]))) return reply({ error: "put은 [[키,값]…] 모양이어야 해요" }, 400);
         if (!del.every(okKey)) return reply({ error: "del은 [키…] 모양이어야 해요" }, 400);
-        const nextId = (await this.ctx.storage.get<number>("nextId")) ?? 0;
+        const nextId = (await this.store.get<number>("nextId")) ?? 0;
         const puts = (put as [string, unknown][]).map(([k, v]): [string, unknown] => [k, k === "nextId" ? Math.max(nextId, Number(v) || 0) : v]);
-        for (let i = 0; i < puts.length; i += 128) await this.ctx.storage.put(Object.fromEntries(puts.slice(i, i + 128)));
-        for (let i = 0; i < del.length; i += 128) await this.ctx.storage.delete((del as string[]).slice(i, i + 128));
+        for (let i = 0; i < puts.length; i += 128) await this.store.put(Object.fromEntries(puts.slice(i, i + 128)));
+        for (let i = 0; i < del.length; i += 128) await this.store.delete((del as string[]).slice(i, i + 128));
         let closed = 0;
         if (body.done === true) {
           const only = Array.isArray(body.names) ? new Set(body.names.map(acctKey).filter(Boolean)) : null;
@@ -758,26 +775,17 @@ export class WorldRoom extends DurableObject<Env> {
         return reply({ ok: true, put: puts.length, del: del.length, closed });
       }
       case "GET autobackups": {
-        if (!this.env.BACKUPS) return reply({ error: "자동 백업 저장소(KV)가 없어요" }, 404);
-        const days = (await this.autoDays()).map((d) => ({ day: d.day, ...(d.meta ?? { at: 0, keys: 0, bytes: 0, parts: d.keys.length }) }));
+        const days = (await this.backups.days()).map((d) => ({ day: d.day, ...d.meta }));
         return reply({ keep: AUTO_KEEP, days });
       }
       case "POST autobackup":
         return this.autoBackup();
       case "GET autobackup": {
-        const kv = this.env.BACKUPS;
-        if (!kv) return reply({ error: "자동 백업 저장소(KV)가 없어요" }, 404);
         const day = new URL(request.url).searchParams.get("day") ?? "";
         if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return reply({ error: "day=2026-11-08 모양으로 날짜를 넣어 주세요" }, 400);
-        const first = await kv.getWithMetadata<AutoMeta>(`auto:${day}:0`, "arrayBuffer");
-        if (!first.value) return reply({ error: `${day} 자동 백업이 없어요` }, 404);
-        const bufs = [first.value];
-        for (let i = 1; i < (first.metadata?.parts ?? 1); i++) {
-          const b = await kv.get(`auto:${day}:${i}`, "arrayBuffer");
-          if (!b) return reply({ error: `${day} 자동 백업의 ${i}번째 칸이 없어요` }, 500);
-          bufs.push(b);
-        }
-        return new Response(new Blob(bufs), { headers: { "content-type": "application/gzip" } });
+        const gz = await this.backups.get(day);
+        if (!gz) return reply({ error: `${day} 자동 백업이 없어요` }, 404);
+        return new Response(gz, { headers: { "content-type": "application/gzip" } });
       }
       default:
         return reply({ error: `모르는 관리 요청: ${request.method} /admin/${what}` }, 404);
@@ -786,50 +794,22 @@ export class WorldRoom extends DurableObject<Env> {
 
   /** 모든 계정 (저장소 키 → 계정) */
   private async accounts(): Promise<Map<string, Account>> {
-    return this.ctx.storage.list<Account>({ prefix: "acct:" });
+    return this.store.list<Account>({ prefix: "acct:" });
   }
 
-  /** 자동 백업 하나: 저장소 통째로(백업 파일과 같은 JSON)를 gzip해서 KV에 둔다. 같은 날 다시 하면 덮고, 최근 AUTO_KEEP일치만 남긴다 */
+  /**
+   * 자동 백업 하나: 저장소 통째로(백업 파일과 같은 JSON)를 gzip해서 S3에 파일 하나로 둔다. 같은 날 다시 하면 덮는다.
+   * 7일 지난 파일은 S3 수명 주기 규칙이 지운다 (Cloudflare KV 때의 조각 나누기·지우기 코드는 뺐다)
+   */
   private async autoBackup(): Promise<Response> {
-    const kv = this.env.BACKUPS;
-    if (!kv) return reply({ error: "자동 백업 저장소(KV)가 없어요" }, 404);
     const now = Date.now();
-    const entries = Object.fromEntries(await this.ctx.storage.list());
+    const entries = Object.fromEntries(await this.store.list());
     const keys = Object.keys(entries).length;
     const json = JSON.stringify({ kind: "pocket-caravan-backup", v: 1, server: "auto", at: now, count: keys, entries });
-    const zip = new Uint8Array(await new Response(new Blob([json]).stream().pipeThrough(new CompressionStream("gzip"))).arrayBuffer());
+    const zip = new Uint8Array(await gzipAsync(json));
     const day = new Date(now).toISOString().slice(0, 10);
-    const parts = Math.max(1, Math.ceil(zip.length / AUTO_PART));
-    const meta: AutoMeta = { at: now, keys, bytes: zip.length, parts };
-    for (let i = 0; i < parts; i++) await kv.put(`auto:${day}:${i}`, zip.subarray(i * AUTO_PART, (i + 1) * AUTO_PART), { metadata: meta });
-    // 오래된 날을 지운다. 오늘 것을 덮으며 칸이 줄었으면 남은 칸도 지운다 (KV 목록은 몇십 초 늦을 수 있어 오늘은 늘 남긴다)
-    const days = await this.autoDays();
-    const keep = new Set([day, ...days.map((d) => d.day).filter((d) => d < day).slice(0, AUTO_KEEP - 1)]);
-    let removed = 0;
-    for (const d of days) {
-      const gone = !keep.has(d.day) ? d.keys : d.day === day ? d.keys.filter((k) => Number(k.split(":")[2]) >= parts) : [];
-      for (const k of gone) await kv.delete(k);
-      if (!keep.has(d.day)) removed++;
-    }
-    return reply({ ok: true, day, keys, bytes: zip.length, parts, removed });
-  }
-
-  /** KV에 있는 자동 백업을 날짜별로 (최근 날이 앞) */
-  private async autoDays(): Promise<{ day: string; meta: AutoMeta | null; keys: string[] }[]> {
-    const byDay = new Map<string, { meta: AutoMeta | null; keys: string[] }>();
-    let cursor: string | undefined;
-    do {
-      const page = await this.env.BACKUPS!.list<AutoMeta>({ prefix: "auto:", cursor });
-      for (const k of page.keys) {
-        const [, day, part] = k.name.split(":");
-        const d = byDay.get(day) ?? { meta: null, keys: [] };
-        d.keys.push(k.name);
-        if (part === "0") d.meta = k.metadata ?? null;
-        byDay.set(day, d);
-      }
-      cursor = page.list_complete ? undefined : page.cursor;
-    } while (cursor);
-    return [...byDay].map(([day, d]) => ({ day, ...d })).sort((a, b) => b.day.localeCompare(a.day));
+    await this.backups.put(day, zip, { at: now, keys, bytes: zip.length, parts: 1 });
+    return reply({ ok: true, day, keys, bytes: zip.length, parts: 1, removed: 0 });
   }
 
   /** 예전 게임 저장 하나를 기록 칸에 남긴다 (칸은 돌아가며 쓴다). 저장소에 쓸 것은 puts에 더하고 acct를 고친다 */
@@ -845,7 +825,7 @@ export class WorldRoom extends DurableObject<Env> {
     const day = new Date().toISOString().slice(0, 10);
     if (this.usage.day !== day) {
       if (this.usage.day) await this.saveUsage(true);
-      this.usage = (await this.ctx.storage.get<Usage>("usage:" + day)) ?? { day, opens: 0, msgs: 0, admin: 0 };
+      this.usage = (await this.store.get<Usage>("usage:" + day)) ?? { day, opens: 0, msgs: 0, admin: 0 };
       this.usageSaved = Date.now();
     }
     this.usage[kind]++;
@@ -855,7 +835,7 @@ export class WorldRoom extends DurableObject<Env> {
   private async saveUsage(now: boolean): Promise<void> {
     if (!this.usage.day || (!now && Date.now() - this.usageSaved < USAGE_SAVE_MS)) return;
     this.usageSaved = Date.now();
-    await this.ctx.storage.put("usage:" + this.usage.day, this.usage);
+    await this.store.put("usage:" + this.usage.day, this.usage);
   }
 
   /** 관리자가 접속을 닫는다: 이유를 알리고 4006으로 닫는다 (게임은 다시 접속하지 않는다) */
@@ -892,7 +872,7 @@ export class WorldRoom extends DurableObject<Env> {
 
   /** 공유 장터 재고 차이를 지금 시각으로 줄여서 보낸다. 거의 0이 된 것은 지운다 */
   private async marketNow(now: number): Promise<{ town: string; item: string; dev: number }[]> {
-    const market = (await this.ctx.storage.get<Record<string, MarketDev>>("market")) ?? {};
+    const market = (await this.store.get<Record<string, MarketDev>>("market")) ?? {};
     const list: { town: string; item: string; dev: number }[] = [];
     let pruned = false;
     for (const [key, m] of Object.entries(market)) {
@@ -901,14 +881,14 @@ export class WorldRoom extends DurableObject<Env> {
       const [town, item] = key.split("|");
       list.push({ town, item, dev: Math.round(dev * 1000) / 1000 });
     }
-    if (pruned) await this.ctx.storage.put("market", market);
+    if (pruned) await this.store.put("market", market);
     return list;
   }
 
   private async replayTrades(ws: WebSocket, me: Player, since: unknown, seq: number, now: number): Promise<void> {
     let from = typeof since === "number" && Number.isInteger(since) ? since : -1;
     if (from > seq) from = -1;   // 서버 기록이 지워졌다
-    const log = (await this.ctx.storage.get<Trade[]>("trades")) ?? [];
+    const log = (await this.store.get<Trade[]>("trades")) ?? [];
     const list = log.filter((t) => t.seq > from && now - t.at < TRADE_REPLAY_MS && t.id !== me.id);
     if (list.length > 0) send(ws, { t: "trades", list });
   }
@@ -956,13 +936,12 @@ export class WorldRoom extends DurableObject<Env> {
   private shut(ws: WebSocket, me: Player, code: number, reason: string): void {
     this.left(ws);
     me.gone = true;
-    try { ws.serializeAttachment(me); } catch { /* 이미 닫힘 */ }
     try { ws.close(code, reason); } catch { /* 이미 닫힘 */ }
   }
 
   /** 접속이 끊긴 사람을 그 맵 사람들에게 알리고 접속자 수를 갱신한다 (한 번만) */
   private left(ws: WebSocket): void {
-    const me = ws.deserializeAttachment() as Player | null;
+    const me = this.players.get(ws);
     if (!me || me.gone) return;
     this.rate.delete(me.id);
     this.lastSay.delete(me.id);
@@ -1023,10 +1002,7 @@ export class WorldRoom extends DurableObject<Env> {
 
   private live(): [WebSocket, Player][] {
     const out: [WebSocket, Player][] = [];
-    for (const s of this.ctx.getWebSockets()) {
-      const p = s.deserializeAttachment() as Player | null;
-      if (p && !p.gone) out.push([s, p]);
-    }
+    for (const [s, p] of this.players) if (!p.gone) out.push([s, p]);
     return out;
   }
 

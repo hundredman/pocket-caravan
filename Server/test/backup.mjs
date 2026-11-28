@@ -1,5 +1,5 @@
 // 12단계 시험: 백업 · 되살리기 · 자동 백업 (관리 도구 tools/admin.mjs도 직접 돌려 본다)
-// 사용: Server/.dev.vars에 ADMIN_KEY를 넣고 npx wrangler dev --test-scheduled 를 켠 상태에서 npm run test:backup [주소]
+// 사용: Server/.dev.vars에 ADMIN_KEY를 넣고 npm run dev 를 켠 상태에서 (dev는 --test-scheduled로 켠다) npm run test:backup [주소]
 // 내 컴퓨터 서버에서만 돌린다: 서버 전체 되살리기(--똑같이)로 시험 뒤에 생긴 것을 지운다. 만든 "백업시험…" 계정은 마지막에 지운다
 import { readFileSync, mkdtempSync, readdirSync, rmSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -139,7 +139,7 @@ check(got.includes("받았어요") && auto?.kind === "pocket-caravan-backup" && 
 check(tool("되살리기", autoFile).includes("이미 백업과 같아요"), "방금 받은 자동 백업으로 되살리면 바뀔 것이 없다");
 check((await admin("GET", "autobackup?day=2000-01-01")).status === 404 && (await admin("GET", "autobackup?day=어제")).status === 400, "없는 날은 404, 날짜 모양이 틀리면 400");
 const t1 = Date.now();
-const cron = await fetch(`${BASE}/cdn-cgi/handler/scheduled?cron=${encodeURIComponent("0 18 * * *")}`);   // wrangler dev --test-scheduled
+const cron = await fetch(`${BASE}/test/scheduled`);   // npm run dev(--test-scheduled)에서만 열리는 "매일 자동 백업 지금 하기"
 await sleep(500);
 const autos2 = (await admin("GET", "autobackups")).data;
 check(cron.status === 200 && autos2?.days?.[0]?.day === today && autos2.days[0].at >= t1 && autos2.days.length === autos.days.length,

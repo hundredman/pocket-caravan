@@ -1,0 +1,5 @@
+{
+  "Rules": [
+    { "ID": "auto-backups-7-days", "Status": "Enabled", "Filter": { "Prefix": "auto/" }, "Expiration": { "Days": 7 } }
+  ]
+}

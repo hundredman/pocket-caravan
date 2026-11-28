@@ -17,6 +17,8 @@
 # Windows git 기본값(core.autocrlf=true)이 CRLF로 바꿔 꺼내면 해시가 달라져 합치기 전 검사가 틀렸다. 글 파일만 해당 (그림은 아래 binary)
 ArtReview/** eol=lf
 Docs/Validation/** eol=lf
+# EC2(리눅스)에 그대로 올리는 서버 설정 파일: CRLF면 systemd·환경 변수 값 끝에 이 붙는다 (2026-11-28)
+Server/deploy/** eol=lf
 
 # 바이너리
 *.png binary

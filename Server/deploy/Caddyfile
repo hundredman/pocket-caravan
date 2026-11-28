@@ -1,0 +1,7 @@
+# Caddy 설정 (2026-11-28): wss://도메인/ws 를 이 EC2 안의 Node.js 서버(127.0.0.1:8787)로 넘긴다.
+# game.example.com 을 우리 도메인으로 바꾼다. 도메인의 A 레코드는 EC2의 탄력적 IP를 가리켜야 한다.
+# 인증서는 Caddy가 자동으로 받고 갱신한다 (보안 그룹에서 80·443을 열어 둔다). WebSocket도 그대로 넘어간다.
+# 놓는 곳: /etc/caddy/Caddyfile  →  sudo systemctl reload caddy
+game.example.com {
+	reverse_proxy 127.0.0.1:8787
+}
