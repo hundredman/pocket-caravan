@@ -52,7 +52,7 @@ namespace PocketCaravan
         void Awake()
         {
             inst = this;
-            address = PlayerPrefs.GetString("net.address", NetClient.DefaultAddress);
+            address = NetClient.SavedAddress();   // 11/28 옛 기본 주소가 저장돼 있으면 새 기본 주소로 (서버 이전)
             // 11/12 윤채(시연): 한 컴퓨터를 여러 사람이 돌아가며 쓰면 앞사람 이름이 채워져 있었다 →
             //   "기억하기"는 처음엔 꺼 두고, 이름도 기억하기를 켰을 때만 채운다 (켜 두면 다음 사람이 앞사람 계정으로 저절로 접속했다)
             // 11/17 은인: 켤 때 마지막으로 접속한 이름·접속키가 채워져 있게 → 기억하기를 처음부터 켜 둔다 (끄면 예전처럼 지운다).
@@ -181,7 +181,7 @@ namespace PocketCaravan
             if (showServer) address = addressBox.Full.Trim();
             nameBox.Text = name;
             if (remember) PlayerPrefs.SetString("net.name", name); else PlayerPrefs.DeleteKey("net.name");   // 11/12 이름도 기억하기를 켰을 때만
-            PlayerPrefs.SetString("net.address", address);
+            NetClient.SaveAddress(address);
             PlayerPrefs.SetInt("net.remember2", remember ? 1 : 0);
             if (remember) PlayerPrefs.SetString("net.pass", key); else PlayerPrefs.DeleteKey("net.pass");
             PlayerPrefs.Save();
