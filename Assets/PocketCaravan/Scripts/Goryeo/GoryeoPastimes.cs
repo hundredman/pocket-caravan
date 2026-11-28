@@ -16,7 +16,7 @@ namespace PocketCaravan
     /// 그림: 배경은 이미 있는 고려 건물·나무 그림을 모아 구운 것, 사람은 내 캐릭터와 장터 사람들, 소품(병·화살·떡메·떡·제기)만 새로 찍었다
     /// (Resources/Goryeo/Pastimes, 만드는 도구 Tools/ArtGen/goryeo_pastimes_art.py). 저장: 공용 메모 "goryeo:pastime:이름:day" · ":best".
     /// </summary>
-    public static class GoryeoPastimes
+    public static partial class GoryeoPastimes
     {
         static readonly RegionMemo Memo = new RegionMemo("goryeo:pastime:");
         public static bool DoneToday(string id) => Memo.DoneToday($"{id}:day");

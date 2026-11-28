@@ -464,6 +464,105 @@ def save(name, im):
                 f.write(text.replace("spriteMeshType: 1", "spriteMeshType: 0"))
 
 
+
+# ---------------- 나룻배 노 젓기 (2026-11-28) ----------------
+WATER = 30                                       # 물이 시작하는 줄 (배경 176x66 기준)
+NPC = os.path.join(ROOT, "Art", "Characters", "NPC")
+
+
+def bg_ferry():
+    """하늘·먼 산·강물. 건너편 강둑은 따로 흘러가게 ferry_bank로 굽는다"""
+    im = sky((176, 214, 228), (236, 238, 218))
+    cloud(im, 24, 5, 22); cloud(im, 108, 9, 18); cloud(im, 148, 4, 18)
+    d = ImageDraw.Draw(im)
+    rnd = random.Random(21)
+    y, pts = 20, []
+    for x in range(0, W + 8, 8):
+        y = max(12, min(24, y + rnd.randint(-4, 4)))
+        pts.append((x, y))
+    d.polygon([(0, WATER)] + pts + [(W, WATER)], fill=(158, 192, 184, 255))
+    bands = [(104, 168, 184), (96, 160, 178), (88, 152, 172), (80, 144, 166)]
+    step = (H - WATER) // len(bands) + 1
+    for i, c in enumerate(bands):
+        d.rectangle([0, WATER + i * step, W, H], fill=c + (255,))
+    for _ in range(46):                           # 가만히 있는 잔물결 (흐르는 물결은 놀이에서 그린다)
+        x, yy = rnd.randrange(W), rnd.randrange(WATER + 3, H)
+        d.rectangle([x, yy, x + rnd.choice([2, 3, 4]), yy], fill=(124, 184, 196, 255) if rnd.random() < .6 else (72, 134, 158, 255))
+    return im
+
+
+def ferry_bank():
+    """건너편 강둑 한 바퀴 (352x38, 양 끝이 이어진다). 놀이에서 옆으로 흘려 배가 나아가는 것처럼 보이게 한다"""
+    w, h, land = 352, 38, 33
+    im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    rnd = random.Random(8)
+    def place(sp, x, bottom, fade):
+        sp = sp.copy(); px = sp.load()
+        for yy in range(sp.height):
+            for xx in range(sp.width):
+                r, g, b, a = px[xx, yy]
+                if a:
+                    px[xx, yy] = (round(r + (214 - r) * fade), round(g + (226 - g) * fade), round(b + (214 - b) * fade), a)
+        top = bottom - sp.height
+        crop = sp.crop((0, max(0, -top), sp.width, sp.height))
+        for ox in (x, x - w, x + w):              # 이음매에 걸친 그림은 반대쪽 끝에도 찍는다
+            layer = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            layer.paste(crop, (ox, max(0, top)))
+            im.alpha_composite(layer)
+    half = lambda sp: sp.resize((sp.width // 2, sp.height // 2), Image.NEAREST)   # 멀리 있어 절반 크기
+    trees = [baked("c6_goryeo_woodland%d" % i) for i in (5, 2, 4, 7, 1)]
+    xs = [6, 52, 84, 150, 196, 236, 300]
+    for i, x in enumerate(xs):
+        place(half(trees[i % len(trees)]), x, land + 1, .30)
+    place(half(baked("c6_goryeo_cottage")), 112, land + 1, .26)
+    place(half(baked("c6_goryeo_pavilion")), 262, land + 1, .26)
+    d.rectangle([0, land, w, h - 1], fill=(132, 168, 120, 255))                    # 강둑 풀밭
+    d.rectangle([0, land, w, land], fill=(108, 148, 100, 255))
+    d.rectangle([0, h - 2, w, h - 1], fill=(170, 160, 122, 255))                   # 물가 흙
+    for _ in range(60):                           # 갈대
+        x = rnd.randrange(w); t = rnd.randrange(2, 5)
+        d.rectangle([x, h - 2 - t, x, h - 2], fill=(150, 150, 96, 255) if rnd.random() < .6 else (186, 176, 120, 255))
+    return im
+
+
+def ferry_boat(front):
+    """나룻배(마을 그림 boat). front면 앞쪽 뱃전과 옆구리만 남겨 사람 발 위에 덧그린다"""
+    im = art(LIFE, "boat")
+    if front:
+        px = im.load()
+        for y in range(17):
+            for x in range(im.width):
+                px[x, y] = (0, 0, 0, 0)
+    return im
+
+
+def oar(deg):
+    """긴 노. 그림 한가운데가 손(돌리는 축), deg는 수평에서 아래로 내려간 각도 (0 = 오른쪽, 90 = 곧장 아래)"""
+    import math
+    size, c, ln = 64, 32, 19
+    big = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    d = ImageDraw.Draw(big)
+    ux, uy = math.cos(math.radians(deg)), math.sin(math.radians(deg))
+    vx, vy = -uy, ux
+    d.line([c - ux * 5, c - uy * 5, c + ux * ln, c + uy * ln], fill=(150, 108, 66, 255), width=2)
+    ex, ey = c + ux * (ln - 6), c + uy * (ln - 6)
+    blade = [(ex + vx * -1, ey + vy * -1), (ex + ux * 7 + vx * -2, ey + uy * 7 + vy * -2), (ex + ux * 7 + vx * 2, ey + uy * 7 + vy * 2), (ex + vx * 1, ey + vy * 1)]
+    d.polygon(blade, fill=(196, 152, 100, 255))
+    d.line([ex, ey, ex + ux * 7, ey + uy * 7], fill=(222, 184, 132, 255), width=1)
+    return outlined(big)
+
+
+def ferry_all():
+    save("bg_ferry", bg_ferry()); save("ferry_bank", ferry_bank())
+    save("ferry_boat", ferry_boat(False)); save("ferry_boat_front", ferry_boat(True))
+    for i, deg in enumerate((18, 52, 90, 128)):   # 들어 올림 → 물에 꽂음 → 당김 → 뒤로 뺌
+        save(f"ferry_oar_{i}", oar(deg))
+    for i in range(2):
+        save(f"ferry_boatman_{i}", art(os.path.join(NPC, "npc_naru_boatman"), f"npc_naru_boatman_tall_r{i * 2}"))
+    save("ferry_lotus", Image.open(os.path.join(BAKED, "lotus_2_1.png")).convert("RGBA"))
+
+
 def main():
     save("bg_tuho", bg_tuho()); save("bg_tteok", bg_tteok()); save("bg_jegi", bg_jegi())
     save("pot", pot())
@@ -482,6 +581,7 @@ def main():
     save("jegi_up", jegi(True)); save("jegi_down", jegi(False))
     save("star_on", star(True)); save("star_off", star(False))
     save("note_hit", note("hit")); save("note_hand", note("hand")); save("reticle", reticle())
+    ferry_all()
     print("wrote", len(os.listdir(OUT)) // 2, "sprites to", OUT)
 
 
