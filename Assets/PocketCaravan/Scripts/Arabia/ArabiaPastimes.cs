@@ -60,6 +60,9 @@ namespace PocketCaravan
             protected abstract void Tick(float dt);
             protected abstract void Draw(Rect r);
             protected virtual string Status => "";
+            /// <summary>아래 단추 글 (11/28 고려 나룻배: 그만두는 게 아니라 건너뛰는 놀이도 있어서)</summary>
+            protected virtual string QuitLabel => "그만 · Esc";
+            protected virtual string DoneLabel => "닫기 · Space";
             protected void Pop(string text, Vector2 at, Color32 col) => pops.Add((text, at, Time.unscaledTime, col));
             protected void Close() { if (!open) return; open = false; UIState.Release(this); }
             protected override void OnDisable() { Close(); base.OnDisable(); }
@@ -102,7 +105,7 @@ namespace PocketCaravan
                     CuteUI.Box(band, 6, CuteUI.Paper, CuteUI.Ink, 1, 2);
                     CuteUI.WrapCenter(band.x + 8, band.y + 4, band.width - 16, result, CuteUI.Text);
                 }
-                if (CuteUI.Button(new Rect(r.x + w - 112, r.y + h - 30, 98, 22), finished ? "닫기 · Space" : "그만 · Esc")) { Close(); return; }
+                if (CuteUI.Button(new Rect(r.x + w - 112, r.y + h - 30, 98, 22), finished ? DoneLabel : QuitLabel)) { Close(); return; }
                 if (CuteUI.CloseButton(r.xMax - 16f, r.y - 8f)) { Close(); return; }   // 11/08 X
                 InputReader.ClickAsSpace();   // 11/08 빈 곳 클릭 = Space
             }
