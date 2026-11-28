@@ -99,6 +99,7 @@ namespace PocketCaravan
             void OnSold(ItemData item, TownData town, int price, int profit)
             {
                 if (item == null || town == null || price <= 0 || GM == null) return;
+                if (ReputationPricing.LastSaleRestricted) return;   // 11/25 이 장터에서 방금 산 물건을 되판 것에는 덤이 없다
                 foreach (var f in Festivals)
                 {
                     if (f.townId != town.id || !Tonight(f) || Array.IndexOf(f.items, item.id) < 0) continue;

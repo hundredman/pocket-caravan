@@ -164,7 +164,7 @@ namespace PocketCaravan
             // 11/19 해금된 의뢰는 실제로 맡을 수 있게: 귀한 짐·큰 주문이 지금 짐 한도(빈 몸 기준)를 넘지 않게 줄인다 (귀한 짐 8, 큰 주문 10 밑으로는 안 줄임)
             if (premium || kind == ContractKind.Bulk) weight = Mathf.Min(weight, Mathf.Max(premium ? 8f : 10f, Mathf.Floor(player.Capacity)));
             else if (kind == ContractKind.Fragile) weight = rng.Next(2, 5);
-            int steps = rules != null ? DeliveryReward.RouteSteps(world, from.id, to.id) : 0;
+            int steps = rules != null ? dist : 0;   // 11/25 전 지역 통일: 가격·기한과 같은 거리를 쓴다 (고려는 예전과 같은 값)
             int reward = DeliveryReward.Quote(rules, dist, steps, weight, premium, 0.85f + (float)rng.NextDouble() * 0.3f);
             reward = Mathf.Max(1, Mathf.RoundToInt(reward * KindPay(kind)));
             string cargoName = kind == ContractKind.Fragile ? FragileName(from) : kind == ContractKind.Bulk ? BulkName(from) : names[rng.Next(names.Length)];
@@ -283,10 +283,9 @@ namespace PocketCaravan
             if (offer.atonement || rules == null || offer.rewardRuleVersion == rules.revision || player.contracts.Exists(c => c.id == offer.id)) return;
             var to = Town(offer.toTown);
             if (to == null) return;
-            int steps = DeliveryReward.RouteSteps(world, from.id, to.id);
-            if (steps < 0) return;
+            int steps = Mathf.Max(1, Distance(from, to));
             // 구 제안의 랜덤 계수는 저장돼 있지 않다. 중간값으로 한 번 갱신해 재로드 재추첨을 막는다.
-            offer.reward = DeliveryReward.Quote(rules, Distance(from, to), steps, offer.weight, offer.Premium);
+            offer.reward = Mathf.Max(1, Mathf.RoundToInt(DeliveryReward.Quote(rules, Distance(from, to), steps, offer.weight, offer.Premium) * KindPay(offer.kind)));   // 11/25 급한 짐·큰 주문 배율도 그대로
             offer.quotedRouteSteps = steps;
             offer.rewardRuleVersion = rules.revision;
         }

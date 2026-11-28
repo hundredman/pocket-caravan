@@ -119,6 +119,7 @@ namespace PocketCaravan
             d.ResetTyping();
             if (choices != null) d.choices.AddRange(choices);
             d.open = true;
+            d.openSerial++;
             d.openedFrame = Time.frameCount;
         }
 
@@ -162,6 +163,9 @@ namespace PocketCaravan
                 if (InputReader.InteractPressed() || InputReader.ConfirmPressed() || InputReader.CancelPressed()) Close();
                 return;
             }
+            // 11/25 선택지가 막 나타난 직후에는 Space·Enter로 고르지 않는다 (대사를 넘기려고 연타하다 의뢰가 그대로 수락되던 것). 방향키·숫자·Esc는 바로 된다
+            if (choicesShownFor != openSerial) { choicesShownFor = openSerial; choicesShownAt = Time.unscaledTime; }
+            bool settle = choices.Count >= 2 && Time.unscaledTime - choicesShownAt < ChoiceSettleSeconds;
             // 11/08 ←→·↑↓로 고르기 (가로 단추는 왼쪽부터, 세로 목록은 위부터) · 숫자 1~9로 바로 고르기 · Space = 고른 것 · Esc = 마지막 선택지
             var mv = InputReader.MovePressed();
             int step = mv.x != 0 ? mv.x : -mv.y;
@@ -170,8 +174,11 @@ namespace PocketCaravan
             int number = InputReader.NumberPressed();
             if (number > 0 && number <= choices.Count) Pick(choices[number - 1]);
             else if (InputReader.CancelPressed()) Pick(choices[choices.Count - 1]);
-            else if (InputReader.InteractPressed() || InputReader.ConfirmPressed()) Pick(choices[focus]);
+            else if (!settle && (InputReader.InteractPressed() || InputReader.ConfirmPressed())) Pick(choices[focus]);
         }
+        const float ChoiceSettleSeconds = .45f;
+        int openSerial, choicesShownFor = -1;
+        float choicesShownAt;
 
         void NextPage()
         {

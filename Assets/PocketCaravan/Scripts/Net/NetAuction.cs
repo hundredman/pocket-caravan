@@ -188,11 +188,12 @@ namespace PocketCaravan
 
         void Update()
         {
-            if (local || !Online) TickLocal();
+            // 11/25 온라인 경매 중에 접속이 끊기면 그 물건 상태를 버린다. 예전에는 창이 닫혀 있으면 서버 물건을 내 시계로 끝내서,
+            // 최고가인 채 끊기면 혼자 낙찰되고 다시 붙었을 때 서버 낙찰을 한 번 더 받았다
+            if (!local && !Online) { local = true; lot = ""; top = ""; mineTop = false; npcs.Clear(); if (open) EnsureLocal(); }
+            if (local) TickLocal();
             if (!open) return;
             if (InputReader.CancelPressed()) { Close(); return; }
-            // 온라인 접속이 끊기면 혼자 경매로
-            if (!local && !Online) { local = true; lot = ""; EnsureLocal(); }
         }
 
         void OnGUI()

@@ -758,6 +758,7 @@ namespace PocketCaravan
         // ---------------- 11/19 외상 (신용 4단계, Loan) · 좌판 열기 (신용 5단계, PlayerStall) ----------------
 
         bool stallConfirm;
+        VehicleData vehicleConfirm;   // 11/25 수단 바꾸기 확인 중인 것
         int payAmount = Loan.PayStep;   // 11/19 [n냥 갚기]에서 고른 냥 (50냥 단위)
         int loanNoticeSeen;
 
@@ -902,6 +903,7 @@ namespace PocketCaravan
                     message = "내 좌판을 열었다! 장터 상인 근처 좌판에 말을 걸어 물건을 올려요.";
                     Sfx.Play("levelup"); GameManager.I.SaveNow();
                 }
+                else if (stallConfirm) { stallConfirm = false; message = "장터 근처에 좌판을 펼 빈자리가 없어요. 돈은 받지 않았어요."; Sfx.Play("deny", .55f); }
             }
             return right - bw - 8;
         }
@@ -967,6 +969,17 @@ namespace PocketCaravan
             if (p.stowedVehicle == v) { message = "넣어 둔 수단입니다. V를 누르면 꺼냅니다."; return; }
             if (p.money < v.price) { message = "돈이 모자랍니다."; Sfx.Play("deny", .55f); return; }
             if (p.TotalWeight > p.CapacityOf(v)) { message = "지금 짐이 너무 많습니다."; Sfx.Play("deny", .55f); return; }
+            // 11/25 지금 수단(넣어 둔 것 포함)을 바꾸면 그 수단은 없어진다: 한 번 더 누르게 한다 (마차를 가진 채 손수레를 눌러 그대로 바뀌던 것)
+            var gone = p.vehicle != null ? p.vehicle : p.stowedVehicle;
+            if (gone != null && vehicleConfirm != v)
+            {
+                vehicleConfirm = v;
+                string old = p.vehicle != null && p.stowedVehicle != null ? $"{gone.displayName}·넣어 둔 {Josa.Eun(p.stowedVehicle.displayName)}" : Josa.Eun(gone.displayName);
+                message = $"{Josa.Ro(v.displayName)} 바꾸면 지금 {old} 없어져요. 한 번 더 누르면 바꿔요.";
+                Sfx.Play("open", .3f);
+                return;
+            }
+            vehicleConfirm = null;
             p.money -= v.price;
             p.vehicle = v;
             p.stowedVehicle = null;   // 11/17 새 수단으로 바꾸면 넣어 둔 것은 없앤다 (하나만 가진다)

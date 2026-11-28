@@ -204,6 +204,7 @@ namespace PocketCaravan
         public string AcceptBlocker(QuestData q)
         {
             var p = GameManager.I.Player;
+            if (DroppedToday(q)) return Speech(q, "한번 물린 일을 그날로 다시 맡기기는 어렵네. 내일 다시 오게.", "한번 물린 일을 바로 다시 맡기기는 어려워요. 내일 다시 오세요.");
             if (q.offerItem != null && q.offerCount > 0)
             {
                 if (p.money < q.offerPrice * q.offerCount) return Speech(q, $"{q.offerPrice * q.offerCount}냥이 있어야 넘겨줄 수 있네. 돈을 좀 더 모아 오게.", $"{q.offerPrice * q.offerCount}냥이 있어야 넘겨줄 수 있어요. 돈을 좀 더 모아 오세요.");
@@ -241,6 +242,88 @@ namespace PocketCaravan
             Notify.Show($"퀘스트 수락: {q.title}");
             Sfx.Play("accept");
             CheckPassive(p);
+        }
+
+        // ---------------- 11/25 의뢰 내려놓기 (포기) ----------------
+        /// <summary>저절로 시작되는 의뢰는 내려놓을 수 없다 (내려놓자마자 다시 시작된다)</summary>
+        static readonly HashSet<string> NoAbandon = new HashSet<string> { "north_q4_storm" };
+
+        /// <summary>11/26 은샘 의견(수첩 카드의 포기 단추는 자리를 바꿔도 어색하다)에 따라: 포기는 수첩이 아니라 의뢰를 준 사람에게 말해서 한다.
+        /// 이 사람이 준 의뢰 가운데 물릴 수 있는 것 (없으면 null)</summary>
+        public Progress DroppableFrom(string npcId)
+        {
+            if (string.IsNullOrEmpty(npcId)) return null;
+            foreach (var p in active.Values) if (p.quest != null && p.quest.giverNpc == npcId && !AbandonNever(p)) return p;
+            return null;
+        }
+
+        /// <summary>물리겠다고 했을 때 준 사람이 되묻는 말 (지역 말투). 대화창 한 쪽(두 줄)에 들어가게 짧게</summary>
+        public string DropAskLine(Progress p) =>
+            $"[{p.quest.title}]\n" + Speech(p.quest, "이 일을 물리겠나? 물리면 오늘은 다시 맡기지 않을 걸세.", "이 일을 물릴 건가요? 물리면 오늘은 다시 맡기지 않을 거예요.");
+
+        /// <summary>11/26 은샘 ("튜토리얼 의뢰는 취소되면 안 된다"): 시작 튜토리얼이 끝나며 보내는 첫 의뢰 (출신 지역별. 각 지역 Intro의 FirstQuest와 같다).
+        /// 튜토리얼 안내(Intro.Active)는 이 의뢰를 받기 전에 끝나므로 OffersPaused만으로는 막히지 않는다</summary>
+        static readonly Dictionary<string, string> StarterQuest = new Dictionary<string, string>
+        {
+            { "goryeo", "q1_naru" }, { "venice", "venice_q1_delivery" }, { "viking", "north_q1_butter" }, { "arabia", "arabia_q01_first_delivery" },
+        };
+        public static bool IsTutorialQuest(QuestData q)
+        {
+            if (q == null || q.id == null) return false;
+            if (q.id.StartsWith("tutorial_")) return true;
+            var o = GameManager.I != null && GameManager.I.Player != null ? GameManager.I.Player.origin : null;
+            return o != null && o.id != null && StarterQuest.TryGetValue(o.id, out var first) && first == q.id;
+        }
+
+        /// <summary>11/26 아예 포기할 수 없는 의뢰. 맡은 물건이 모자란 것처럼 잠깐 막힌 경우는 false</summary>
+        public bool AbandonNever(Progress p) =>
+            p == null || p.quest == null || IsTutorialQuest(p.quest) || (OffersPaused != null && OffersPaused()) || NoAbandon.Contains(p.quest.id) || string.IsNullOrEmpty(p.quest.giverNpc);
+
+        /// <summary>내려놓을 수 없는 까닭. 내려놓을 수 있으면 null</summary>
+        public string AbandonBlocker(Progress p)
+        {
+            if (p == null || p.quest == null || !active.TryGetValue(p.quest, out var cur) || cur != p) return "받은 의뢰가 아니에요";
+            if (OffersPaused != null && OffersPaused()) return "첫걸음 안내를 마친 뒤에 포기할 수 있어요";
+            if (IsTutorialQuest(p.quest)) return "첫걸음으로 맡은 일이라 포기할 수 없어요";
+            if (NoAbandon.Contains(p.quest.id)) return "급한 일이라 포기할 수 없어요";
+            if (string.IsNullOrEmpty(p.quest.giverNpc)) return "다시 받을 곳이 없는 일이라 포기할 수 없어요";
+            var q = p.quest;
+            // 맡긴 물건이 팔 수 있는 것인데 아직 한 단계도 안 했고 수가 모자라면: 팔거나 쓴 것 (그대로 내려놓으면 공짜 물건이 된다)
+            if (q.giveItem != null && q.giveCount > 0 && !q.giveItem.questItem && p.step == 0 && GameManager.I.Player.cargo.Count(q.giveItem) < q.giveCount)
+                return $"맡은 {q.giveItem.displayName} {q.giveCount}개가 있어야 돌려주고 포기할 수 있어요";
+            return null;
+        }
+
+        /// <summary>11/26 은샘 ("포기에 최소한의 벌칙은 있어야"): 포기한 의뢰는 그날에는 다시 받을 수 없다 (약속을 물렸으니 준 사람이 바로 다시 맡기지 않는다).
+        /// 공용 메모 "quest:dropped:아이디" = 포기한 날. 돈·신용·평판은 건드리지 않는다</summary>
+        public bool DroppedToday(QuestData q)
+        {
+            var gm = GameManager.I;
+            return q != null && gm != null && gm.Clock != null && gm.HasMemo("quest:dropped:" + q.id) && gm.Clock.day <= Mathf.RoundToInt(gm.GetMemo("quest:dropped:" + q.id));
+        }
+
+        /// <summary>
+        /// 의뢰를 포기한다. 벌칙은 하나: 그날에는 다시 받을 수 없고, 다음 날부터 준 사람에게 다시 받는다.
+        /// 맡은 물건(giveItem)은 가진 만큼 돌려준다. 돈을 주고 넘겨받은 물건(offerItem)은 내 것이라 그대로 둔다.
+        /// </summary>
+        public bool Abandon(Progress p)
+        {
+            if (AbandonBlocker(p) != null) return false;
+            var q = p.quest; var pl = GameManager.I.Player;
+            int back = 0;
+            if (q.giveItem != null && q.giveCount > 0)
+            {
+                back = Mathf.Min(q.giveCount, pl.cargo.Count(q.giveItem));
+                for (int i = 0; i < back; i++) pl.cargo.Remove(q.giveItem);
+            }
+            bool wasGuide = Tracked == p && QuestFocus.Current == QuestFocus.Kind.Quest;
+            active.Remove(q);
+            if (wasGuide) QuestFocus.Set(QuestFocus.Kind.None);
+            if (!q.retired && GameManager.I.Clock != null) GameManager.I.SetMemo("quest:dropped:" + q.id, GameManager.I.Clock.day);
+            if (Tracked == p) Tracked = null;
+            Notify.Show($"의뢰를 포기했어요: {q.title}" + (back > 0 ? $"\n맡은 {q.giveItem.displayName} {back}개는 돌려보냈어요" : "") + (q.retired ? "" : "\n오늘은 다시 받을 수 없고, 내일부터 준 사람에게 다시 받을 수 있어요"), 5f);
+            Sfx.Play("open", .4f);
+            return true;
         }
 
         /// <summary>Talk/Deliver 단계를 이 NPC에게서 끝낸다. 끝낸 단계의 대사를 돌려준다 (실패하면 null).</summary>
@@ -368,6 +451,11 @@ namespace PocketCaravan
                     return !string.IsNullOrEmpty(o.targetId) ? ("market", o.targetId) : ((string, string)?)null;
                 case ObjectiveType.BuyVehicle:
                     if (!string.IsNullOrEmpty(o.targetId)) return ("market", o.targetId);   // 11/08 손수레처럼 여러 지역이 파는 수단은 의뢰가 장터를 정해 준다
+                    // 11/25 장터를 정하지 않은 의뢰는 지금 있는 지역에서 파는 마을을 먼저 (베네치아·북유럽 손수레 의뢰가 목록 첫 마을인 개경을 가리키던 것)
+                    var here = MapRoot.Current != null ? MapRoot.Current.region : null;
+                    if (here != null)
+                        foreach (var t in GameManager.I.Db.towns)
+                            if (t != null && t.region == here && t.vehiclesForSale.Contains(o.vehicle)) return ("market", t.id);
                     foreach (var t in GameManager.I.Db.towns)
                         if (t != null && t.vehiclesForSale.Contains(o.vehicle)) return ("market", t.id);
                     return null;

@@ -36,7 +36,7 @@ namespace PocketCaravan.EditorTools
             var db = Resources.Load<GameDatabase>("GameDatabase"); var world = WorldIndex.Get();
             TownData Town(string id) => db.towns.Find(t => t != null && t.id == id);
             var rules = DeliveryReward.Rules(Town("gaegyeong"));
-            Check(r, "Goryeo-only reward profile enabled", rules != null && rules.revision == 1 && DeliveryReward.Rules(Town("transit_ferry")) == null);
+            Check(r, "unified reward profile for every region (11/25)", rules != null && rules.revision == 2 && DeliveryReward.Rules(Town("transit_ferry")) == rules);
             // M4(2026-10-28) layoutD: 배달 보수 거리 = 새 맵 실제 보행 초 × 환산 비율(TownRoutes.json). 이웃 수가 아니다.
             Check(r, "capital-Dakmok layoutD distance 2", DeliveryReward.RouteSteps(world,"gaegyeong","dakmok")==2);
             Check(r, "capital-Jangdan layoutD distance 4 (longer than Dakmok)", DeliveryReward.RouteSteps(world,"gaegyeong","goryeo_jangdan")==4);
@@ -63,7 +63,7 @@ namespace PocketCaravan.EditorTools
             cm.BoardOf("naru").list.Clear(); cm.BoardOf("naru").list.Add(oldOffer);
             var oldAccepted = new Contract { id=99991,fromTown="naru",toTown="gaegyeong",weight=4,reward=97,hours=26,deadline=26,finalDeadline=39,condition=1 };
             p.contracts.Add(oldAccepted); cm.InitBoards();
-            Check(r,"old unaccepted quote updates in place",oldOffer.id==99990 && oldOffer.weight==4 && oldOffer.hours==26 && oldOffer.reward<999 && oldOffer.rewardRuleVersion==1);
+            Check(r,"old unaccepted quote updates in place",oldOffer.id==99990 && oldOffer.weight==4 && oldOffer.hours==26 && oldOffer.reward<999 && oldOffer.rewardRuleVersion==2);
             int refreshed=oldOffer.reward; cm.InitBoards();
             Check(r,"reload cannot reroll quote",oldOffer.reward==refreshed);
             Check(r,"old accepted price/deadline preserved",oldAccepted.reward==97 && oldAccepted.deadline==26 && oldAccepted.rewardRuleVersion==0);
@@ -79,7 +79,7 @@ namespace PocketCaravan.EditorTools
                     if(DeliveryReward.Rules(town)==null)continue;
                     var offers=seeded.Available(town.id);
                     Check(r,"seed"+seed+" "+town.id+" basic recovery offer",offers.Exists(c=>!c.Premium && c.weight<=10 && c.reward>0));
-                    Check(r,"seed"+seed+" "+town.id+" premium capacity/quote stamp",offers.TrueForAll(c=>c.rewardRuleVersion==1 && (!c.Premium || (c.weight>=8 && c.weight<=12))));
+                    Check(r,"seed"+seed+" "+town.id+" premium capacity/quote stamp",offers.TrueForAll(c=>c.rewardRuleVersion==2 && (!c.Premium || (c.weight>=8 && c.weight<=12))));
                 }
             }
             foreach (string policy in new[]{"legacy","goryeo-v1"})

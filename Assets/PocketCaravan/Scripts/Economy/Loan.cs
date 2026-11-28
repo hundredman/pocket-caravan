@@ -125,7 +125,10 @@ namespace PocketCaravan
         static void Hook()
         {
             GameEvents.ItemSold -= OnSold; GameEvents.ItemSold += OnSold;   // 장터·좌판에서 판 것
+            // 11/25 "처음부터 시작"은 정적 구독을 지운다(GameEvents.ClearForNewGame). 씬이 열릴 때마다 다시 건다 (새 게임에서 연체 이익 환수가 빠지던 것)
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded -= Rehook; UnityEngine.SceneManagement.SceneManager.sceneLoaded += Rehook;
         }
+        static void Rehook(UnityEngine.SceneManagement.Scene s, UnityEngine.SceneManagement.LoadSceneMode m) { GameEvents.ItemSold -= OnSold; GameEvents.ItemSold += OnSold; }
         static void OnSold(ItemData item, TownData town, int price, int profit) { var gm = GameManager.I; if (gm != null) FromProfit(gm.Player, profit, "판"); }
 
         /// <summary>게임 한 시간마다 (GameManager). 기한이 지났으면 거두고, 모자라면 연체 벌칙</summary>
@@ -136,6 +139,8 @@ namespace PocketCaravan
             int fromStall = Mathf.Min(p.debt, (p.stallEarned + 1) / 2);
             p.stallEarned -= fromStall; p.debt -= fromStall;
             int cash = p.debt > 0 ? Mathf.Min(p.debt, Mathf.Max(0, Mathf.Min(p.money / 2, p.money - Reserve))) : 0;
+            // 11/25 몇 냥만 남아 연체되지 않게: 남는 외상이 10냥 이하이고 가진 돈으로 갚을 수 있으면 다 거둔다 (외상 30냥·돈 79냥이면 1냥이 남아 연체되던 것)
+            if (p.debt > 0 && p.debt - cash <= 10 && p.money >= p.debt) cash = p.debt;
             int paid = fromStall + (cash > 0 ? Repay(p, cash) : 0);
             if (p.debt <= 0)
             {
@@ -146,7 +151,7 @@ namespace PocketCaravan
             bool first = !p.debtLate;
             p.debtLate = true;
             int lose = LatePoints(p.debt);
-            p.credit -= lose;
+            p.credit = Mathf.Max(0, p.credit - lose);   // 11/25 신용 점수는 0 밑으로 가지 않는다
             p.debt = (int)Mathf.Min(MaxDebt, Mathf.Ceil(p.debt * 1.1f));
             p.debtDue = clock.PlayHours + ExtendHours;
             Sfx.Play("fail");

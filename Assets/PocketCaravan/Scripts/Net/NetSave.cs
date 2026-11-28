@@ -131,7 +131,7 @@ namespace PocketCaravan
 
             if (Offering && !showing) TryShow();
             if (showing) Keys();
-            if (fetching && Time.unscaledTime > fetchUntil) { Notify.Show("서버 게임 저장을 받지 못했어요. 이 컴퓨터 저장을 써요", 4f); UseLocal(); }
+            if (fetching && Time.unscaledTime > fetchUntil) FetchFailed();
 
             if (fullLive) FullTick(net);
 
@@ -176,7 +176,11 @@ namespace PocketCaravan
                 return;
             }
             if (server == null) { StartFull(local != null ? "이 컴퓨터 게임 저장을 서버에 처음 올렸어요" : null, null); return; }
-            if (same || (owner == me && local != null && local.at >= server.at - 2000)) { StartFull(null, server.h); return; }   // 같거나, 내 것이고 이 컴퓨터 것이 더 최근
+            // 11/25 이 컴퓨터가 마지막으로 맞춘 뒤 서버 저장이 다른 곳에서 바뀌었으면(.synced와 다름) 시각이 더 최근이어도 덮지 않고 아래에서 고르게 한다
+            //   (다른 PC에 남아 있던 옛 저장으로 잠깐 혼자 하고 로그인하면 파일 시각만 최근이라 서버의 최신 저장을 덮던 것)
+            string synced = ReadSynced();
+            bool movedElsewhere = !same && synced != null && synced != server.h;
+            if (same || (owner == me && local != null && local.at >= server.at - 2000 && !movedElsewhere)) { StartFull(null, server.h); return; }   // 같거나, 내 것이고 이 컴퓨터 것이 더 최근
             if (local != null && owner == null && local.at >= server.at - 2000 && !StartScreen.IsOpen)
             {
                 // 누구 것인지 모르는 저장으로 이미 게임 중: 서버 저장을 덮지 않는다 (다시 켜서 로그인하면 고르는 창)
@@ -189,7 +193,7 @@ namespace PocketCaravan
             {
                 fullDecidedFor = NetClient.I.MyName;
                 foreignLocked = true;   // 11/14 다시 붙어도 더 오래된 이 컴퓨터 저장이 서버 것을 덮지 않게 (이번 실행 동안)
-                NetChat.System($"서버에 더 최근 게임 저장이 있어요 ({When(server.at)} · {HudClock.FullDateText(server.day)}). 게임을 다시 켜고 로그인하면 고를 수 있어요");
+                NetChat.System($"서버에 다른 곳에서 한 게임 저장이 있어요 ({When(server.at)} · {HudClock.FullDateText(server.day)}). 게임을 다시 켜고 로그인하면 고를 수 있어요");
                 return;
             }
             fullOffer = server;
@@ -202,6 +206,7 @@ namespace PocketCaravan
             fullDecidedFor = NetClient.I.MyName;
             fullLive = true;
             fullSentHash = knownHash;
+            WriteSynced(knownHash);
             fullSeenWrite = 0;
             nextFullCheck = 0f;
             fullNote = note;
@@ -233,6 +238,7 @@ namespace PocketCaravan
             }
             net.Send(new FullOut { at = local.at, h = local.hash, zip = zip, day = local.day, money = local.money, map = local.map ?? "", origin = local.origin ?? "" });
             fullSentHash = local.hash;
+            WriteSynced(local.hash);
             WriteOwner(net.MyName);   // 11/14 이 컴퓨터 저장 = 이 계정 것
             nextFullSend = Time.unscaledTime + FullSendGap;
         }
@@ -253,8 +259,7 @@ namespace PocketCaravan
             var gm = GameManager.I;
             if (d == null || gm == null || !gm.UseSaveFromServer(d))
             {
-                Notify.Show("서버 게임 저장을 불러오지 못했어요. 이 컴퓨터 저장을 써요", 4f);
-                UseLocal();
+                FetchFailed();
                 return;
             }
             CloseOffer();
@@ -264,6 +269,21 @@ namespace PocketCaravan
             StartFull(null, now != null ? now.hash : m.h);
             NetChat.System($"서버 게임 저장을 불러왔어요 ({HudClock.FullDateText(d.day)} · {d.money}냥). 이 컴퓨터 저장은 .bak 파일로 남겼어요");
             Notify.Show($"서버 게임 저장을 불러왔어요 · {HudClock.FullDateText(d.day)} · {d.money}냥", 3.5f);
+        }
+
+        /// <summary>
+        /// 11/25 "서버 것"을 골랐는데 받지 못했다. 예전에는 이 컴퓨터 저장을 서버에 올려서, 고른 것과 반대로 서버 저장이 덮였다.
+        /// 이제는 이번 실행 동안 올리지 않고 서버 저장을 그대로 둔다 (다시 켜서 로그인하면 다시 고른다)
+        /// </summary>
+        void FetchFailed()
+        {
+            fetching = false;
+            if (foreignLocked) { Notify.Show("서버 게임 저장을 받지 못했어요", 4f); UseLocal(); return; }   // 남의 저장인 경우는 원래 처리 그대로
+            CloseOffer();
+            fullDecidedFor = NetClient.I.MyName;
+            foreignLocked = true; foreignServerHas = true;
+            Notify.Show("서버 게임 저장을 받지 못했어요. 서버 저장은 그대로 둘게요", 4f);
+            NetChat.System("서버 게임 저장을 받지 못했어요. 지금은 이 컴퓨터 저장으로 하고, 서버 저장은 덮지 않아요. 게임을 다시 켜고 로그인하면 다시 고를 수 있어요");
         }
 
         /// <summary>이 컴퓨터 저장을 쓴다: 다음 확인 때 올린다 (저장이 없으면 새 게임이 저장될 때 올라간다)</summary>
@@ -290,6 +310,18 @@ namespace PocketCaravan
         {
             try { return File.Exists(OwnerPath) ? File.ReadAllText(OwnerPath).Trim() : null; }
             catch (Exception) { return null; }
+        }
+        // 11/25 이 컴퓨터 저장이 서버와 마지막으로 맞았을 때의 서버 저장 해시. 저장 파일 옆 .synced 파일
+        static string SyncedPath => SaveSystem.CurrentPath + ".synced";
+        static string ReadSynced()
+        {
+            try { return File.Exists(SyncedPath) ? File.ReadAllText(SyncedPath).Trim() : null; }
+            catch (Exception) { return null; }
+        }
+        static void WriteSynced(string hash)
+        {
+            if (string.IsNullOrEmpty(hash) || SaveSystem.UsingSeparateSlot) return;
+            try { if (ReadSynced() != hash) File.WriteAllText(SyncedPath, hash); } catch (Exception) { }
         }
         static void WriteOwner(string name)
         {

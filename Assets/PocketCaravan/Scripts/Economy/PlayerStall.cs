@@ -42,6 +42,7 @@ namespace PocketCaravan
         public static bool Open(PlayerState p, TownData town)
         {
             if (Denial(p, town) != null) return false;
+            if (!StallPlacement.HasRoomNear(town)) return false;   // 11/25 자리를 먼저 확인하고 돈을 받는다 (1000냥을 낸 뒤 좌판이 안 서던 것)
             p.money -= Price;
             p.stallTown = town.id; p.stallStock.Clear(); p.stallEarned = 0; p.stallRushDay = -1;
             if (GameManager.I != null) GameManager.I.SetMemo(BuzzLvKey, 0);   // 옮겨 열면 북적임은 새로
@@ -233,6 +234,17 @@ namespace PocketCaravan
 
         /// <summary>장터 상인에서 3~7칸 안, 좌판(3칸 × 3칸)과 그 앞 한 줄이 모두 걸을 수 있고 말 걸 것이 없는 자리. 가까운 곳부터.
         /// 11/19 먼저 옆 좌판·집 그림과 겹치지 않는 자리를 찾고, 없으면 칸만 보고 찾는다 (둘 다 늘 같은 자리가 나오게 움직이는 것은 안 본다)</summary>
+        /// <summary>11/25 지금 맵의 이 마을 장터 근처에 좌판 자리가 있는지 (돈을 받기 전에 본다). 장터가 이 맵에 없으면 막지 않는다</summary>
+        public static bool HasRoomNear(TownData town)
+        {
+            var map = MapRoot.Current;
+            if (map == null || town == null) return true;
+            foreach (var m in FindObjectsByType<TownMarket>(FindObjectsSortMode.None))
+                if (m.town != null && m.town.id == town.id && m.gameObject.scene == map.gameObject.scene)
+                    return FindPlace(map, map.WorldToCell(m.transform.position)).HasValue;
+            return true;
+        }
+
         static Vector3Int? FindPlace(MapRoot map, Vector3Int from)
         {
             var props = new List<Bounds>();

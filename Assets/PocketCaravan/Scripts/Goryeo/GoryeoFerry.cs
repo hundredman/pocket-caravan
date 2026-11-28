@@ -21,6 +21,13 @@ namespace PocketCaravan
         public static bool Route(string from,string to)=>from!=to&&(from==Hub||to==Hub);
         public static Port Find(string id){EnsureConfig();return config?.ports==null?null:Array.Find(config.ports,p=>p.mapId==id);}
         public static string SpawnId(string id)=>"goryeo_ferry_arrival_"+id;
+        // 2026-11-28 은샘: 배에서 사공과 장단을 맞춰 노를 젓는다(GoryeoPastimes.FerryRow). 보상은 더 빨리 닿는 것뿐이라 기본 시간을 늘렸다.
+        // 건너뛰거나 못 맞추면 SlowHours, 다 맞추면 설정의 hours(전과 같은 1시간). 뱃삯은 전과 같이 설정 hours 기준(8냥)이라 오르지 않는다.
+        public const float SlowFactor=2f;
+        public static float SlowHours{get{EnsureConfig();return config==null?0f:config.hours*SlowFactor;}}
+        /// <summary>맞춘 비율(0~1)에 따른 걸리는 시간. 10분 단위로 맞춘다</summary>
+        public static float HoursFor(float ratio){EnsureConfig();if(config==null)return 0f;float h=Mathf.Lerp(config.hours*SlowFactor,config.hours,Mathf.Clamp01(ratio));return Mathf.Max(config.hours,Mathf.Round(h*6f)/6f);}
+        public static string TimeText(float hours){int m=Mathf.RoundToInt(hours*60f);return m>=60?(m%60==0?(m/60)+"시간":(m/60)+"시간 "+(m%60)+"분"):m+"분";}
         static void EnsureConfig()
         {
             if(config!=null||attempted)return;attempted=true;var asset=Resources.Load<TextAsset>("Goryeo/Ferry/Config");if(asset==null)return;
@@ -48,11 +55,27 @@ namespace PocketCaravan
             var map=MapRoot.Current;if(!Active||!Allowed(map)||npc==telling)return false;var port=Find(map.mapId);if(port==null||!Matches(npc,map,port))return false;
             // 이야기하기가 첫 선택지(Space). 그다음 갈 수 있는 나루, 마지막은 다음에(Esc)
             var choices=new List<DialogueUI.Choice>{new DialogueUI.Choice("이야기하기",()=>{try{telling=npc;npc.Interact(player);}finally{telling=null;}})};
-            foreach(var target in config.ports)if(Route(port.mapId,target.mapId)){string id=target.mapId;choices.Add(new DialogueUI.Choice(target.name+"로",()=>{var error=TryStart(npc,player,id);if(error!=null)DialogueUI.Show(npc.DisplayName,error);}));}
+            foreach(var target in config.ports)if(Route(port.mapId,target.mapId)){string id=target.mapId;string destName=target.name;choices.Add(new DialogueUI.Choice(target.name+"로",()=>{
+                var error=Blocker(npc,player,id);if(error!=null){DialogueUI.Show(npc.DisplayName,error);return;}
+                // 노 젓기 놀이를 하고(건너뛸 수 있다) 맞춘 만큼 줄어든 시간으로 떠난다
+                GoryeoPastimes.FerryRow.Play(player,port.name,destName,ratio=>{var late=TryStart(npc,player,id,HoursFor(ratio));if(late!=null)DialogueUI.Show(npc.DisplayName,late);});}));}
             choices.Add(new DialogueUI.Choice("다음에",null));
-            DialogueUI.Show(npc.DisplayName,"뱃삯 "+BoatFare.For(config.hours)+"냥 · "+config.hours.ToString("0.#")+"시간 걸리오. 짐과 수레도 함께 싣소.\n물길 이야기를 들려줄까, 아니면 배를 타겠소?",choices.ToArray());return true;
+            DialogueUI.Show(npc.DisplayName,"뱃삯 "+BoatFare.For(config.hours)+"냥 · "+TimeText(SlowHours)+"쯤 걸리오. 노를 같이 저어 주면 더 빨리 닿소.\n물길 이야기를 들려줄까, 아니면 배를 타겠소?",choices.ToArray());return true;
         }
-        public static string TryStart(TalkNpc npc,PlayerController actor,string destination)
+        public static string TryStart(TalkNpc npc,PlayerController actor,string destination)=>TryStart(npc,actor,destination,-1f);
+        /// <summary>떠나기 전 확인만 한다 (놀이를 열기 전에. 저장·이동은 하지 않는다). 문제가 없으면 null</summary>
+        static string Blocker(TalkNpc npc,PlayerController actor,string destination)
+        {
+            var gm=GameManager.I;var map=MapRoot.Current;if(!Active||!Allowed(map))return "지금은 배를 탈 수 없소.";
+            var from=Find(map.mapId);var to=Find(destination);
+            if(from!=null&&to!=null&&!Route(from.mapId,to.mapId))return "그 나루로 가는 배는 없소. 예성 나루를 거쳐 가시오.";
+            if(from==null||to==null||from==to||!Matches(npc,map,from)||actor==null||actor!=PlayerController.Instance||Vector2.Distance(actor.transform.position,npc.transform.position)>actor.talkRange+.01f)return "사공 가까이에서 목적지를 골라 주시오.";
+            if(pending!=null||gm.IsTravelling)return "지금은 이동할 수 없소.";
+            if(gm.Player.money<BoatFare.For(config.hours))return "뱃삯 "+BoatFare.For(config.hours)+"냥이 필요하오.";
+            return null;
+        }
+        /// <summary>hours가 0보다 크면 그 시간이 걸린다 (노 젓기 결과). 아니면 설정의 hours</summary>
+        public static string TryStart(TalkNpc npc,PlayerController actor,string destination,float hours)
         {
             var gm=GameManager.I;var map=MapRoot.Current;if(!Active||!Allowed(map))return "지금은 배를 탈 수 없소.";
             var from=Find(map.mapId);var to=Find(destination);
@@ -62,7 +85,7 @@ namespace PocketCaravan
             if(gm.Player.money<BoatFare.For(config.hours))return "뱃삯 "+BoatFare.For(config.hours)+"냥이 필요하오.";
             var info=WorldIndex.Get()?.Map(to.mapId);if(info==null||info.height!=to.height||!Application.CanStreamedLevelBeLoaded(to.mapId))return "그 나루로는 지금 출항할 수 없소.";
             if(!review&&gm.AutosaveEnabled&&!gm.SaveNow())return "진행 상황을 저장하지 못해 출항하지 않았소. 잠시 뒤 다시 부탁하오.";
-            pending=new Voyage{from=from.mapId,to=to.mapId,fare=BoatFare.For(config.hours),hours=config.hours,owner=gm,slot=SaveSystem.FileName};LastError="";
+            pending=new Voyage{from=from.mapId,to=to.mapId,fare=BoatFare.For(config.hours),hours=hours>0f?Mathf.Clamp(hours,config.hours,config.hours*SlowFactor):config.hours,owner=gm,slot=SaveSystem.FileName};LastError="";
             try{gm.TravelTo(to.mapId,SpawnId(to.mapId),0,Vector2Int.right);}catch(Exception){pending=null;return "출항하지 못했소. 뱃삯은 받지 않았소.";}
             return null;
         }

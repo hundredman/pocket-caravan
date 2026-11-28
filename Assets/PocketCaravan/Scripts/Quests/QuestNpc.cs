@@ -47,14 +47,35 @@ namespace PocketCaravan
             {
                 QuestTalkFrame = Time.frameCount;
                 DialogueUI.Show(displayName, fail,
-                    new DialogueUI.Choice("다른 의뢰", () => { if (!OfferNextIfAny()) DialogueUI.Show(displayName, greeting); }),
+                    new DialogueUI.Choice("다른 의뢰", () => { if (!OfferNextIfAny()) Greet(); }),
                     new DialogueUI.Choice("닫기", null));
                 return;
             }
 
             // 2) 새로 줄 퀘스트
             if (OfferNextIfAny()) QuestTalkFrame = Time.frameCount;
-            else DialogueUI.Show(displayName, greeting);
+            else Greet();
+        }
+
+        const string DropLabel = "맡은 일 물리기";
+
+        /// <summary>11/26 인사. 이 사람에게 받은 의뢰를 하고 있으면 [맡은 일 물리기]를 고를 수 있다 (의뢰 포기는 준 사람에게 말해서 한다)</summary>
+        void Greet()
+        {
+            var drop = GameManager.I.Quests.DroppableFrom(npcId);
+            if (drop == null) { DialogueUI.Show(displayName, greeting); return; }
+            QuestTalkFrame = Time.frameCount;
+            DialogueUI.Show(displayName, greeting, new DialogueUI.Choice(DropLabel, () => AskDrop(drop)), new DialogueUI.Choice("닫기", null));
+        }
+
+        void AskDrop(QuestManager.Progress p)
+        {
+            var qm = GameManager.I.Quests;
+            string why = qm.AbandonBlocker(p);
+            if (why != null) { DialogueUI.Show(displayName, why); return; }
+            DialogueUI.Show(displayName, qm.DropAskLine(p),
+                new DialogueUI.Choice("의뢰 포기", () => { if (qm.Abandon(p)) GameManager.I.SaveNow(); }),
+                new DialogueUI.Choice("계속 할게요", null));   // 마지막 선택지 = Esc (수락·나중에와 같은 차례)
         }
 
         /// <summary>한 번에 한 의뢰를 읽고 다른 제안을 넘겨 볼 수 있다. Esc는 항상 닫기.</summary>
@@ -82,6 +103,8 @@ namespace PocketCaravan
                 else qm.Accept(q);
             }));
             if (offers.Count > 1) choices.Add(new DialogueUI.Choice("다른 의뢰", () => OfferAt(index + 1)));
+            var drop = qm.DroppableFrom(npcId);
+            if (drop != null) choices.Add(new DialogueUI.Choice(DropLabel, () => AskDrop(drop)));
             choices.Add(new DialogueUI.Choice("나중에", null));
             DialogueUI.Show(displayName, $"의뢰 {index + 1}/{offers.Count} · [{q.title}]\n{q.offerLine}{cost}{reward}", choices.ToArray());
             return true;

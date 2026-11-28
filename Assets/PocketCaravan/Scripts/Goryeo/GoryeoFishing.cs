@@ -183,7 +183,14 @@ namespace PocketCaravan
             spot = s; openedFrame = Time.frameCount; UIState.Blocking = true;
             shadows.Clear();
             var tide = TideBonus(s.config.kind);
+            // 11/25 같은 자리·같은 시각에는 같은 물고기 떼 (닫았다 다시 열어 큰 물고기가 나올 때까지 고르던 것)
+            var keep = UnityEngine.Random.state;
+            int seed = 17; foreach (char c in s.Key) seed = seed * 31 + c;
+            var gm0 = GameManager.I;
+            if (gm0 != null) seed = seed * 31 + gm0.Clock.day * 24 + Mathf.FloorToInt(gm0.Clock.minuteOfDay / 60f);
+            UnityEngine.Random.InitState(seed);
             for (int i = 0; i < 3; i++) shadows.Add(NewShadow(s.config, tide, i));
+            UnityEngine.Random.state = keep;
             ToAim("그림자를 보고 힘 막대가 그 위에 올 때 Space로 던지세요.");
             Sfx.Play("open");
         }
@@ -312,7 +319,8 @@ namespace PocketCaravan
             string line;
             if (item == null) line = "(물건 정보가 없어 놓아 줬다)";
             else if (!gm.Player.CanCarry(item, 1)) line = "짐이 가득 차서 놓아 줬다.";
-            else { gm.Player.cargo.Add(item, 1, 0f); line = "짐 +1 · 장터에서 팔 수 있다."; }
+            else if (!FishBasket.Take()) line = FishBasket.FullLine;   // 11/25 짐으로는 하루 3마리까지 (기록은 그대로 남는다)
+            else { gm.Player.cargo.Add(item, 1, 0f); line = $"짐 +1 · 장터에서 팔 수 있다. (생선 통 {FishBasket.Max - FishBasket.Left}/{FishBasket.Max})"; }
             if (gm != null) { gm.SetMemo(countKey, gm.GetMemo(countKey, 0f) + 1f); if (cm > best) gm.SetMemo(bestKey, cm); }
             if (best == 0) line += "\n처음 낚은 물고기!"; else if (cm > best) line += $"\n최고 기록! (전 {best}cm)";
             Sfx.Play("success", .8f);
